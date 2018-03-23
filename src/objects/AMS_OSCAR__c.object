@@ -8771,6 +8771,10 @@ if(Change_effective_as_of__c - today() &gt; 0,&quot;30&quot;,&quot;0&quot;)))</f
                 <fullName>Yes</fullName>
                 <default>false</default>
             </values>
+            <values>
+                <fullName>Nil CC</fullName>
+                <default>false</default>
+            </values>
         </picklistValues>
         <picklistValues>
             <picklist>Local_Inspection_compliant__c</picklist>
@@ -11979,6 +11983,10 @@ if(Change_effective_as_of__c - today() &gt; 0,&quot;30&quot;,&quot;0&quot;)))</f
             </values>
             <values>
                 <fullName>Yes</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Nil CC</fullName>
                 <default>false</default>
             </values>
         </picklistValues>
@@ -15214,6 +15222,10 @@ if(Change_effective_as_of__c - today() &gt; 0,&quot;30&quot;,&quot;0&quot;)))</f
                 <fullName>Passed</fullName>
                 <default>false</default>
             </values>
+            <values>
+                <fullName>Nil CC</fullName>
+                <default>false</default>
+            </values>
         </picklistValues>
         <picklistValues>
             <picklist>Process__c</picklist>
@@ -18364,6 +18376,10 @@ if(Change_effective_as_of__c - today() &gt; 0,&quot;30&quot;,&quot;0&quot;)))</f
             </values>
             <values>
                 <fullName>Yes</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Nil CC</fullName>
                 <default>false</default>
             </values>
         </picklistValues>
@@ -21574,6 +21590,10 @@ if(Change_effective_as_of__c - today() &gt; 0,&quot;30&quot;,&quot;0&quot;)))</f
             </values>
             <values>
                 <fullName>Yes</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Nil CC</fullName>
                 <default>false</default>
             </values>
         </picklistValues>
@@ -24847,6 +24867,21 @@ if(Change_effective_as_of__c - today() &gt; 0,&quot;30&quot;,&quot;0&quot;)))</f
             </values>
             <values>
                 <fullName>Passed</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Is_PCI_compliant__c</picklist>
+            <values>
+                <fullName>No</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Yes</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Nil CC</fullName>
                 <default>false</default>
             </values>
         </picklistValues>
@@ -28789,6 +28824,21 @@ if(Change_effective_as_of__c - today() &gt; 0,&quot;30&quot;,&quot;0&quot;)))</f
             </values>
         </picklistValues>
         <picklistValues>
+            <picklist>Is_PCI_compliant__c</picklist>
+            <values>
+                <fullName>No</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Yes</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Nil CC</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
             <picklist>Invoice_status__c</picklist>
             <values>
                 <fullName>N%2FA</fullName>
@@ -30683,6 +30733,21 @@ if(Change_effective_as_of__c - today() &gt; 0,&quot;30&quot;,&quot;0&quot;)))</f
             </values>
             <values>
                 <fullName>Paid</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Is_PCI_compliant__c</picklist>
+            <values>
+                <fullName>No</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Yes</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Nil CC</fullName>
                 <default>false</default>
             </values>
         </picklistValues>
@@ -34446,6 +34511,10 @@ if(Change_effective_as_of__c - today() &gt; 0,&quot;30&quot;,&quot;0&quot;)))</f
                 <fullName>Yes</fullName>
                 <default>false</default>
             </values>
+            <values>
+                <fullName>Nil CC</fullName>
+                <default>false</default>
+            </values>
         </picklistValues>
         <picklistValues>
             <picklist>Local_Inspection_compliant__c</picklist>
@@ -37622,6 +37691,10 @@ if(Change_effective_as_of__c - today() &gt; 0,&quot;30&quot;,&quot;0&quot;)))</f
                 <fullName>Yes</fullName>
                 <default>false</default>
             </values>
+            <values>
+                <fullName>Nil CC</fullName>
+                <default>false</default>
+            </values>
         </picklistValues>
         <picklistValues>
             <picklist>Local_Inspection_compliant__c</picklist>
@@ -40764,6 +40837,21 @@ if(Change_effective_as_of__c - today() &gt; 0,&quot;30&quot;,&quot;0&quot;)))</f
             </values>
             <values>
                 <fullName>Passed</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Is_PCI_compliant__c</picklist>
+            <values>
+                <fullName>No</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Yes</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Nil CC</fullName>
                 <default>false</default>
             </values>
         </picklistValues>
