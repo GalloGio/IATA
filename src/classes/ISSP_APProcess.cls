@@ -185,7 +185,7 @@ public without sharing class ISSP_APProcess {
 
             isocountry = fetchISOCountry(newCase.IFAP_Country_ISO__c);
 
-            newForm.ANG_Enable_NewGen__c = isocountry.ANG_Enable_NewGen__c;
+            newForm.ANG_Enable_NewGen__c = (isocountry.ANG_Portal_Service__c != null);
 
             //if(newCase.Status != 'Draft'){
             //    redirectToCasesList();
@@ -559,7 +559,7 @@ public without sharing class ISSP_APProcess {
         newCase.BSPCountry__c =  isocountry.Case_BSP_Country__c ;
         newCase.Country_concerned_by_the_query__c = isocountry.Case_BSP_Country__c;
 
-        newForm.ANG_Enable_NewGen__c = isocountry.ANG_Enable_NewGen__c;
+        newForm.ANG_Enable_NewGen__c = (isocountry.ANG_Portal_Service__c != null);
        
         //AS - R03 SP03; for when GSSA create joining processs on behalf of Airline
         if (isGSSAUser){
@@ -783,9 +783,7 @@ public without sharing class ISSP_APProcess {
         
         try{
 
-            newForm.ANG_Enable_NewGen__c = isocountry.ANG_Enable_NewGen__c;
-
-            System.debug('alex newForm.ANG_Enable_NewGen__c : ' + newForm.ANG_Enable_NewGen__c);
+            newForm.ANG_Enable_NewGen__c = (isocountry.ANG_Portal_Service__c != null);
 
             newForm.Submitted_to_IATA__c = TRUE;
             if(strAreaType == 'Airline Joining') {               
@@ -1253,11 +1251,11 @@ public without sharing class ISSP_APProcess {
         IATA_ISO_Country__c isocountry = [
             SELECT Id, Name, CurrencyIsoCode, EU_Country__c, AMS_Pilot_Country__c, Case_BSP_Country__c,IATA_Country_FR__c,IATA_Country_SP__c,IATA_COUNTRY_EN__c,
             IATA_Contry_KR__c,IATA_Country_IT__c,IATA_Country_JP__c,IATA_Country_PT__c,IATA_Country_ZH__c,
-            Tax_Number_label__c,Tax_number_format__c,Tax_number_help_text__c, ANG_Enable_NewGen__c
+            Tax_Number_label__c,Tax_number_format__c,Tax_number_help_text__c, ANG_Enable_NewGen__c, ANG_Portal_Service__c
             FROM IATA_ISO_Country__c
             WHERE ISO_Code__c = :isocode
          ];
-
+         
         return isocountry;
     }
     
