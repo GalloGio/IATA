@@ -678,14 +678,18 @@ public without sharing class ISSP_AMS_Accreditation {
         isNoticeOfChange = false;
         newAccreditationModels = false;
 
+        popContact();  //Get the contact details of currently logged in user
+
         newCase = DAL_ISSP.getCase(attachCtrl.tmpCase.Id);
         
         if(newCase.IFAP_Country_ISO__c != null) {
             isocountry = fetchISOCountry(newCase.IFAP_Country_ISO__c);
             fetchAMSProcessForm();    
+        }else{
+            newCase.IFAP_Country_ISO__c = con.Account.IATA_ISO_Country__r.ISO_Code__c;
+            isocountry = fetchISOCountry(newCase.IFAP_Country_ISO__c);
+            fetchAMSProcessForm();  
         }
-        
-        popContact();  //Get the contact details of currently logged in user
         
          if (con.Account.Top_Parent__c == null) { //User is from HQ Account
             vHQAccountId = con.AccountId;
