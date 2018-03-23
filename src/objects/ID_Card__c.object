@@ -1107,11 +1107,15 @@ IF(TODAY()&lt;= Valid_To_Date__c, TRUE,FALSE)
                 <default>false</default>
             </values>
             <values>
-                <fullName>Preapproved</fullName>
+                <fullName>Expired ID Card</fullName>
                 <default>false</default>
             </values>
             <values>
                 <fullName>Sent ID Card</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Valid ID Card</fullName>
                 <default>false</default>
             </values>
         </picklistValues>
