@@ -54,6 +54,43 @@
     <enableSharing>true</enableSharing>
     <enableStreamingApi>true</enableStreamingApi>
     <fields>
+        <fullName>ANG_Airline_accepts_EasyPay_tr_in_BSP__c</fullName>
+        <description>Defines if an airline will accept EasyPay transactions in the BSP settlement.</description>
+        <externalId>false</externalId>
+        <inlineHelpText>Will you accept EasyPay transactions in the BSP settlement?</inlineHelpText>
+        <label>Airline accepts EasyPay trans. in BSP</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Picklist</type>
+        <valueSet>
+            <restricted>true</restricted>
+            <valueSetDefinition>
+                <sorted>false</sorted>
+                <value>
+                    <fullName>Yes</fullName>
+                    <default>false</default>
+                    <label>Yes</label>
+                </value>
+                <value>
+                    <fullName>No</fullName>
+                    <default>false</default>
+                    <label>No</label>
+                </value>
+            </valueSetDefinition>
+        </valueSet>
+    </fields>
+    <fields>
+        <fullName>ANG_Enable_NewGen__c</fullName>
+        <defaultValue>false</defaultValue>
+        <description>Is the country Nam Enabled?</description>
+        <externalId>false</externalId>
+        <label>New Accr. Model &amp; Risk Events enabled</label>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
         <fullName>AP_BR_Address_CNP__c</fullName>
         <externalId>false</externalId>
         <inlineHelpText>The CNPJ # must correspond with the address to be inserted in IATA Systems</inlineHelpText>
@@ -3012,6 +3049,17 @@ If(LEN(Case__r.Account.BillingCountry) &gt;0, Case__r.Account.BillingCountry,&qu
         <active>true</active>
         <label>BSP Change</label>
         <picklistValues>
+            <picklist>ANG_Airline_accepts_EasyPay_tr_in_BSP__c</picklist>
+            <values>
+                <fullName>No</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Yes</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
             <picklist>AP_BR_Address_CNP__c</picklist>
             <values>
                 <fullName>No</fullName>
@@ -3893,6 +3941,17 @@ If(LEN(Case__r.Account.BillingCountry) &gt;0, Case__r.Account.BillingCountry,&qu
         <active>true</active>
         <label>BSP Joining</label>
         <picklistValues>
+            <picklist>ANG_Airline_accepts_EasyPay_tr_in_BSP__c</picklist>
+            <values>
+                <fullName>No</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Yes</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
             <picklist>AP_BR_Address_CNP__c</picklist>
             <values>
                 <fullName>No</fullName>
@@ -4700,6 +4759,17 @@ If(LEN(Case__r.Account.BillingCountry) &gt;0, Case__r.Account.BillingCountry,&qu
         <fullName>CASS_Change</fullName>
         <active>true</active>
         <label>CASS Change</label>
+        <picklistValues>
+            <picklist>ANG_Airline_accepts_EasyPay_tr_in_BSP__c</picklist>
+            <values>
+                <fullName>No</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Yes</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
         <picklistValues>
             <picklist>AP_BR_Address_CNP__c</picklist>
             <values>
@@ -5582,6 +5652,17 @@ If(LEN(Case__r.Account.BillingCountry) &gt;0, Case__r.Account.BillingCountry,&qu
         <active>true</active>
         <label>CASS Joining</label>
         <picklistValues>
+            <picklist>ANG_Airline_accepts_EasyPay_tr_in_BSP__c</picklist>
+            <values>
+                <fullName>No</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Yes</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
             <picklist>AP_BR_Address_CNP__c</picklist>
             <values>
                 <fullName>No</fullName>
@@ -6399,6 +6480,17 @@ If(LEN(Case__r.Account.BillingCountry) &gt;0, Case__r.Account.BillingCountry,&qu
     <searchLayouts/>
     <sharingModel>ControlledByParent</sharingModel>
     <startsWith>Vowel</startsWith>
+    <validationRules>
+        <fullName>ANG_AP_Accept_EasyPay_in_BSP</fullName>
+        <active>true</active>
+        <description>Airlines in Newgen countries when signing into BSP must confirm whether they wish to accept Easy Pay transactions.</description>
+        <errorConditionFormula>AND(Submitted_to_IATA__c == TRUE,
+RecordType.DeveloperName == &quot;BSP_Joining&quot;,
+ANG_Enable_NewGen__c,				
+ISPICKVAL(ANG_Airline_accepts_EasyPay_tr_in_BSP__c, &quot;&quot;))</errorConditionFormula>
+        <errorDisplayField>ANG_Airline_accepts_EasyPay_tr_in_BSP__c</errorDisplayField>
+        <errorMessage>Please select whether or not you wish to accept IATA Easy Pay transactions in this BSP.</errorMessage>
+    </validationRules>
     <validationRules>
         <fullName>AP_CASS_HOT_File_EmailAddress</fullName>
         <active>true</active>
