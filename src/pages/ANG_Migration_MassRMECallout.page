@@ -99,7 +99,14 @@
         <apex:actionFunction action="{!SearchPerformed}" name="SearchPerformed" reRender="resultKO,resultOK,theResultPanel,pnlBtn,btnNewSearch,thePBT"/>
 
         <apex:pageBlock title="Mass Request to RME" tabStyle="Account" id="pbt01">
-            <apex:pageBlockSection title="Select a country" columns="1" collapsible="false" id="pbs02">
+            <apex:pageBlockSection title="Mass Request" columns="1" collapsible="false" id="pbs02">
+            	<apex:selectList label="How do you want to search?" id="TypeOfCAll" value="{!TypeOfCall}" size="1">
+                    <apex:selectOptions value="{!lsTypeOfCall}" />
+                </apex:selectList>
+                
+                <apex:outputPanel id="Description" rendered="{!OR(TypeOfCall=='AccountID', TypeOfCall='IATACode')}">
+                	Enter a list of IATA Code or Account IDs separated by comma (,)
+                </apex:outputPanel>
                 <apex:selectList label="Select a country" id="theCountry" value="{!selectedCnt}" size="1">
                     <apex:selectOptions value="{!lsCountry}" />
                 </apex:selectList>

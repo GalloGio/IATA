@@ -8,7 +8,6 @@ global class ANG_Migration_MassRMECallout {
     public boolean bHasSuccess							{get; set;}
     public string sType 								{get; set;}
     
-    
     public map<integer, list<RMEResponseWrapper>> mapRMEWrapperWSOk	{get; set;}
     public map<integer, list<RMEResponseWrapper>> mapRMEWrapperWSErr	{get; set;}
     
@@ -20,9 +19,21 @@ global class ANG_Migration_MassRMECallout {
     		
     		return lsCountry;
     	} set;}
+    	
+    public list<selectOption> lsTypeOfCall	{get{
+    		lsTypeOfCall = new list<SelectOption>();
+    		lsTypeOfCall.add(new selectOption('Country','Search by country'));
+    		lsTypeOfCall.add(new selectOption('AccountID','Search by Account IDs'));
+    		lsTypeOfCall.add(new selectOption('IATACode','Search by IATA Codes'));
+    	} set;}
+    
+    public string TypeOfCall	{get; set;}
+    public string lsCodeOrId	{get; set;}
     
     public ANG_Migration_MassRMECallout(){
         selectedCnt = '-';
+        TypeOfCall = 'Country';
+        lsCodeOrId = '';
         if(bHasError==null) bHasError = false;
         if(lsRMEWrapperWSOK==null) lsRMEWrapperWSOK = new  list<RMEResponseWrapper>();
         if(lsRMEWrapperWSErr==null) lsRMEWrapperWSErr = new  list<RMEResponseWrapper>();
