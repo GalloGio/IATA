@@ -1,4 +1,4 @@
-<aura:component implements="flexipage:availableForAllPageTypes,flexipage:availableForRecordHome,force:hasRecordId,forceCommunity:availableForAllPageTypes" access="global" >
+<aura:component extensible="true" abstract="true" access="global" >
 	<aura:attribute name="url" type="String" />
 	<aura:attribute name="paramsMap" type="Object" />
 	<aura:attribute name="checked" type="Boolean" />
@@ -6,4 +6,6 @@
 	<aura:handler event="c:oneIdURLParams" action="{!c.getParams}"/>
     <aura:registerEvent name="sendParams" type="c:oneIdURLParams"/>
     
+    {!v.body}
+
 </aura:component>

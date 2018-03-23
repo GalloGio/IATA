@@ -1,4 +1,4 @@
-<aura:component implements="forceCommunity:availableForAllPageTypes,force:hasRecordId,force:appHostable" access="global">	
+<aura:component extends="c:Base" implements="forceCommunity:availableForAllPageTypes,force:hasRecordId,force:appHostable" access="global">	
 	<aura:attribute name="loaded" type="Boolean" default="false" />
     <aura:attribute name="greeting" type="String" default="OneId" access="global" />
 	<aura:attribute name="vfHost" type="String" default=""/>	

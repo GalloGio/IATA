@@ -1,4 +1,4 @@
-<aura:component implements="forceCommunity:availableForAllPageTypes,force:hasRecordId,force:appHostable" access="global" controller="LightningConnectedAppHelper">
+<aura:component extends="c:Base" implements="forceCommunity:availableForAllPageTypes,force:hasRecordId,force:appHostable" access="global" controller="LightningConnectedAppHelper">
 	<aura:attribute name="greeting" type="String" default="OneId" access="global" />
 	<aura:handler name="init" value="{!this}" action="{!c.doInit}"/>
     <aura:attribute name="customCommunity" type="Boolean" default="false" />
