@@ -1,0 +1,171 @@
+@isTest
+public class ISSP_OperationalCalendarControllerTest {
+
+    public static User createUser(Profile profile) {
+        AMS_Settlement_System__c operation = new AMS_Settlement_System__c();
+        insert operation;
+                
+        IATA_ISO_Country__c country = new IATA_ISO_Country__c(
+            Name='Spain',
+            ISO_Code__c='SP',
+            AMS_Settlement_System__c = operation.Id
+        );
+        insert country;
+        country.AMS_Settlement_System__r = operation;
+        
+        String operationType = new list<String>(ISSP_OperationalCalendarController.MAP_OPERATION_TYPES.keyset()).get(0);
+        
+        Account account = ISSP_ObjectFactory.createNewAccount();
+        account.IATACode__c = '100';
+        account.IATA_ISO_Country__c = country.Id;
+        account.Remittance_frequency__c = 'M';
+        account.Location_Class__c = operationType;
+        insert account;
+        account.IATA_ISO_Country__r = country;
+        
+        Contact contact = ISSP_ObjectFactory.createNewContact();
+        contact.AccountId = account.Id;
+        contact.LastName = 'test';
+        contact.Email = 'test@email.com';
+        insert contact;
+        contact.Account = account;
+        
+        User user = ISSP_ObjectFactory.createPortalUser(contact);
+        user.Contact = contact;
+        user.profileId = profile.Id;
+        User thisuser = [SELECT Id FROM User WHERE Id = :UserInfo.getUserId()];
+        System.runAs(thisuser) {
+            update user;
+        }
+        return user;
+    }
+    
+    public static User createAirlineUser() {
+        Profile airlineProfile = [SELECT Id FROM Profile 
+            WHERE Name IN :ISSP_OperationalCalendarController.AIRLINE_PROFILES
+            LIMIT 1];
+        return createUser(airlineProfile);
+    }
+    
+    public static User createAgentUser() {
+        Profile agentProfile = [SELECT Id FROM Profile 
+            WHERE Name IN :ISSP_OperationalCalendarController.AGENT_PROFILES
+            LIMIT 1];
+        return createUser(agentProfile);
+    }
+    @isTest
+    public static void testController_AgentUserWithoutOperations() {
+        User user = createAgentUser();
+        
+        Test.StartTest();
+        System.runAs(user) {
+            ISSP_OperationalCalendarController.IS_AIRLINE = false;
+            ISSP_OperationalCalendarController controller = new ISSP_OperationalCalendarController();
+            controller.getMapFrequenciesJson();
+            controller.getMapOperationTypesJson();
+            controller.getMapCurrenciesJson();
+            controller.getListOperations();
+            controller.getIsAirline();
+            controller.getListEventsJSON();
+            ISSP_OperationalCalendarController.loadEventsRemote('','','','');
+            ISSP_OperationalCalendarController.loadDetailsRemote('','','','');
+        }
+        Test.StopTest();
+    }
+    
+    @isTest
+    public static void testController_AirlineUserWithoutOperations() {
+        User user = createAirlineUser();
+        
+        Test.StartTest();
+        System.runAs(user) {
+            ISSP_OperationalCalendarController.IS_AIRLINE = true;
+            ISSP_OperationalCalendarController controller = new ISSP_OperationalCalendarController();
+            controller.getMapFrequenciesJson();
+            controller.getMapOperationTypesJson();
+            controller.getMapCurrenciesJson();
+            controller.getListOperations();
+            controller.getIsAirline();
+            controller.getListEventsJSON();
+            try {
+                ISSP_OperationalCalendarController.loadEventsRemote('','','','');
+                System.assert(false, 'Exception expected');
+            } catch(Exception e) {
+                System.assert(true);
+            }
+            try {
+                ISSP_OperationalCalendarController.loadDetailsRemote('','','','');
+                System.assert(false, 'Exception expected');
+            } catch(Exception e) {
+                System.assert(true);
+            }
+        }
+        Test.StopTest();
+    }
+        
+    @isTest
+    public static void testController_AirlineUSerWithOperations() {
+        User user = createAirlineUser();
+        String operationType = ISSP_OperationalCalendarController.MAP_OPERATION_TYPES.get(user.contact.account.Location_Class__c);
+        list<Operational_Calendar__c> listOpCalendar = new list<Operational_Calendar__c>();
+        listOpCalendar.add(new Operational_Calendar__c(
+            Settlement_Day__c = Date.today(),
+            Airline_Input_Upload_Cut_Off__c = Date.today(),
+            Airline_Correction_Response_Cut_Off__c = Date.today(),
+            Remittance_Day__c = Date.today(),
+            Billing_Availability__c = Date.today(),
+            Agent_Correction_Cut_Off__c = Date.today(),
+            HAR_Day__c = Date.today(),
+            First_Day__c = Date.today(),
+            ISS_operation__c = user.contact.account.IATA_ISO_Country__r.AMS_Settlement_System__c,
+            Operation_Type__c = operationType,
+            frequency_code__c = user.contact.account.Remittance_frequency__c
+        ));
+        insert listOpCalendar;
+        
+        Test.StartTest();
+        System.runAs(user) {
+            ISSP_OperationalCalendarController.IS_AIRLINE = true;
+            ISSP_OperationalCalendarController controller = new ISSP_OperationalCalendarController();
+            String country = user.contact.account.IATA_ISO_Country__c;
+            String frequency = '';
+            String currencyCode = '';
+            ISSP_OperationalCalendarController.loadEventsRemote(country, frequency, operationType, currencyCode);
+            ISSP_OperationalCalendarController.loadDetailsRemote(country, frequency, operationType, currencyCode);
+        }
+        Test.StopTest();
+    }
+    @isTest
+    public static void testController_AgentUserWithOperations() {
+        User user = createAgentUser();
+        
+        String operationType = ISSP_OperationalCalendarController.MAP_OPERATION_TYPES.get(user.contact.account.Location_Class__c);
+        list<Operational_Calendar__c> listOpCalendar = new list<Operational_Calendar__c>();
+        listOpCalendar.add(new Operational_Calendar__c(
+            Settlement_Day__c = Date.today(),
+            Airline_Input_Upload_Cut_Off__c = Date.today(),
+            Airline_Correction_Response_Cut_Off__c = Date.today(),
+            Remittance_Day__c = Date.today(),
+            Billing_Availability__c = Date.today(),
+            Agent_Correction_Cut_Off__c = Date.today(),
+            HAR_Day__c = Date.today(),
+            First_Day__c = Date.today(),
+            ISS_operation__c = user.contact.account.IATA_ISO_Country__r.AMS_Settlement_System__c,
+            Operation_Type__c = operationType,
+            frequency_code__c = user.contact.account.Remittance_frequency__c
+        ));
+        insert listOpCalendar;
+        
+        Test.StartTest();
+        System.runAs(user) {
+            ISSP_OperationalCalendarController.IS_AIRLINE = false;
+            ISSP_OperationalCalendarController controller = new ISSP_OperationalCalendarController();
+            String country = user.contact.account.IATA_ISO_Country__c;
+            String frequency = '';
+            String currencyCode = '';
+            ISSP_OperationalCalendarController.loadEventsRemote(country, frequency, operationType, currencyCode);
+            ISSP_OperationalCalendarController.loadDetailsRemote(country, frequency, operationType, currencyCode);
+        }
+        Test.StopTest();
+    }
+}
