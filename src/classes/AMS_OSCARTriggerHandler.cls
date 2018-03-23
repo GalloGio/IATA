@@ -2746,8 +2746,8 @@ public class AMS_OSCARTriggerHandler {
 
             if(updatedOscar.Process__c == AMS_Utils.NEWHELITE || updatedOscar.Process__c == AMS_Utils.NEWHESTANDARD || updatedOscar.Process__c == AMS_Utils.NEWAE){
 
-                if (updatedOscar.Process__c == AMS_Utils.NEWHESTANDARD && updatedOscar.STEP12__c != AMS_Utils.PASSED)
-                     updatedOscar.addError('Approval can\'t be set if Manage Financial Security step is not Passed.');
+                if (updatedOscar.Process__c == AMS_Utils.NEWHESTANDARD && updatedOscar.STEP34__c != AMS_Utils.PASSED)
+                     updatedOscar.addError('Approval can\'t be set if Request financial security step is not Passed.');
 
                 System.debug('Sending the email for the user to anounce approval of the oscar');
 
