@@ -19915,6 +19915,22 @@ If you continue to experience issues registering for the CNS Customer Portal the
         <value>One Way Passenger Participating</value>
     </labels>
     <labels>
+        <fullName>ISSP_OperationalCalendar</fullName>
+        <categories>ISSP, OperationalCalendar</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_OperationalCalendar</shortDescription>
+        <value>Operational Calendar</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_OperationalCalendar_Billing_Period</fullName>
+        <categories>ISSP, OperationalCalendar</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_OperationalCalendar_Billing_Period</shortDescription>
+        <value>Billing Period</value>
+    </labels>
+    <labels>
         <fullName>ISSP_OperationalCalendar_BSPCASS_Filter_Required</fullName>
         <categories>ISSP, OperationalCalendar</categories>
         <language>en_US</language>
@@ -19985,6 +20001,14 @@ If you continue to experience issues registering for the CNS Customer Portal the
         <protected>false</protected>
         <shortDescription>ISSP_OperationalCalendar_No_Events</shortDescription>
         <value>No events to show</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_OperationalCalendar_Show_Calendar</fullName>
+        <categories>ISSP, OperationalCalendar</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_OperationalCalendar_Show_Calendar</shortDescription>
+        <value>Show Calendar</value>
     </labels>
     <labels>
         <fullName>ISSP_Opt_In</fullName>

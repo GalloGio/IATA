@@ -13,7 +13,7 @@
 <script src="{!URLFOR($Resource.fullcalendar, '/fullcalendar-3.9.0/lib/jquery.min.js')}"></script>
 <script src="{!URLFOR($Resource.fullcalendar, '/fullcalendar-3.9.0/lib/jquery-ui.min.js')}"></script>
 <script src="{!URLFOR($Resource.fullcalendar, '/fullcalendar-3.9.0/fullcalendar.min.js')}"></script>
-<link href="https://fonts.googleapis.com/css?family=Roboto:100,400,500" rel="stylesheet"/> 
+<link href="//fonts.googleapis.com/css?family=Roboto:100,400,500" rel="stylesheet"/> 
 
 <script>
     var MAP_FREQUENCIES = {!mapFrequenciesJson};
@@ -80,13 +80,14 @@
               showTable: {
                 text: '{!$Label.ISSP_OperationalCalendar_Full_Details}',
                 click: function() {
-                  showTable();
+                  var href="/ISSP_OperationalCalendarDetails?MainNav=resources&subNav=OperationalCalendar&mid=M2S4";
+                  window.location.href = href;
                 }
               }
             },
             validRange: {
-              start: '{!minYear}-01-01',
-              end: '{!maxYear+1}-01-01'
+              start: '{!TEXT(minDate)}',
+              end: '{!TEXT(maxDate)}'
             },
             themeSystem: 'standard',
             displayEventTime: false,
@@ -208,7 +209,7 @@
 
 <div class="container">
     <c:ISSP_CustomNavigation />
-
+    
     <div class="row">
         <div class="col-sm-1"></div>
         <div class="col-sm-10">
@@ -249,5 +250,4 @@
     </div> 
     <c:ISSP_CustomFooter />
 </div>
-
 </apex:page>

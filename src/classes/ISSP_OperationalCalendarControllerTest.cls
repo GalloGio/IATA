@@ -60,6 +60,8 @@ public class ISSP_OperationalCalendarControllerTest {
         Test.StartTest();
         System.runAs(user) {
             ISSP_OperationalCalendarController.IS_AIRLINE = false;
+            ISSP_OperationalCalendarController.IS_AGENT = false;
+            ISSP_OperationalCalendarController.isAllowedAccess();
             ISSP_OperationalCalendarController controller = new ISSP_OperationalCalendarController();
             controller.getMapFrequenciesJson();
             controller.getMapOperationTypesJson();
@@ -68,7 +70,8 @@ public class ISSP_OperationalCalendarControllerTest {
             controller.getIsAirline();
             controller.getListEventsJSON();
             ISSP_OperationalCalendarController.loadEventsRemote('','','','');
-            ISSP_OperationalCalendarController.loadDetailsRemote('','','','');
+            ISSP_OperationalCalendarController.loadDetailsRemoteForAirlines('','','','','');
+            ISSP_OperationalCalendarController.loadDetailsRemoteForAgents('');
         }
         Test.StopTest();
     }
@@ -80,6 +83,7 @@ public class ISSP_OperationalCalendarControllerTest {
         Test.StartTest();
         System.runAs(user) {
             ISSP_OperationalCalendarController.IS_AIRLINE = true;
+            ISSP_OperationalCalendarController.IS_AGENT = false;
             ISSP_OperationalCalendarController controller = new ISSP_OperationalCalendarController();
             controller.getMapFrequenciesJson();
             controller.getMapOperationTypesJson();
@@ -94,7 +98,8 @@ public class ISSP_OperationalCalendarControllerTest {
                 System.assert(true);
             }
             try {
-                ISSP_OperationalCalendarController.loadDetailsRemote('','','','');
+                ISSP_OperationalCalendarController.loadDetailsRemoteForAirlines('','','','','');
+                ISSP_OperationalCalendarController.loadDetailsRemoteForAgents('');
                 System.assert(false, 'Exception expected');
             } catch(Exception e) {
                 System.assert(true);
@@ -109,6 +114,7 @@ public class ISSP_OperationalCalendarControllerTest {
         String operationType = ISSP_OperationalCalendarController.MAP_OPERATION_TYPES.get(user.contact.account.Location_Class__c);
         list<Operational_Calendar__c> listOpCalendar = new list<Operational_Calendar__c>();
         listOpCalendar.add(new Operational_Calendar__c(
+            Operation_Currency__c = 'EUR',
             Settlement_Day__c = Date.today(),
             Airline_Input_Upload_Cut_Off__c = Date.today(),
             Airline_Correction_Response_Cut_Off__c = Date.today(),
@@ -126,12 +132,16 @@ public class ISSP_OperationalCalendarControllerTest {
         Test.StartTest();
         System.runAs(user) {
             ISSP_OperationalCalendarController.IS_AIRLINE = true;
+            ISSP_OperationalCalendarController.IS_AGENT = false;
             ISSP_OperationalCalendarController controller = new ISSP_OperationalCalendarController();
             String country = user.contact.account.IATA_ISO_Country__c;
             String frequency = '';
-            String currencyCode = '';
+            String currencyCode = 'EUR';
+            String billingPeriod = String.valueOf(Date.today().year());
             ISSP_OperationalCalendarController.loadEventsRemote(country, frequency, operationType, currencyCode);
-            ISSP_OperationalCalendarController.loadDetailsRemote(country, frequency, operationType, currencyCode);
+            ISSP_OperationalCalendarController.loadDetailsRemoteForAirlines(country, frequency, operationType, currencyCode, billingPeriod);
+            ISSP_OperationalCalendarController.loadDetailsRemoteForAirlines(country, frequency, operationType, currencyCode, '1');
+            ISSP_OperationalCalendarController.loadDetailsRemoteForAgents(billingPeriod);
         }
         Test.StopTest();
     }
@@ -159,12 +169,15 @@ public class ISSP_OperationalCalendarControllerTest {
         Test.StartTest();
         System.runAs(user) {
             ISSP_OperationalCalendarController.IS_AIRLINE = false;
+            ISSP_OperationalCalendarController.IS_AGENT = true;
             ISSP_OperationalCalendarController controller = new ISSP_OperationalCalendarController();
             String country = user.contact.account.IATA_ISO_Country__c;
             String frequency = '';
             String currencyCode = '';
+            String billingPeriod = String.valueOf(Date.today().year());
             ISSP_OperationalCalendarController.loadEventsRemote(country, frequency, operationType, currencyCode);
-            ISSP_OperationalCalendarController.loadDetailsRemote(country, frequency, operationType, currencyCode);
+            ISSP_OperationalCalendarController.loadDetailsRemoteForAirlines(country, frequency, operationType, currencyCode, billingPeriod);
+            ISSP_OperationalCalendarController.loadDetailsRemoteForAgents(billingPeriod);
         }
         Test.StopTest();
     }

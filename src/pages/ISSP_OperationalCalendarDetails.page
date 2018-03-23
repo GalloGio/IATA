@@ -1,0 +1,466 @@
+<apex:page cache="false"
+           sidebar="false"
+           showHeader="false"
+           standardStylesheets="false"
+           readonly="true"
+           controller="ISSP_OperationalCalendarController">
+
+<c:ISSP_Header ></c:ISSP_Header>
+
+<script src="{!URLFOR($Resource.ISSP_OperationalCalendar, '/lib/datatable/js/dataTables.buttons.min.js')}"></script>
+<script src="{!URLFOR($Resource.ISSP_OperationalCalendar, '/lib/datatable/js/buttons.html5.min.js')}"></script>
+<script src="{!URLFOR($Resource.ISSP_OperationalCalendar, '/lib/jszip/jszip.min.js')}"></script>
+<script src="{!URLFOR($Resource.ISSP_OperationalCalendar, '/lib/pdfmake/pdfmake.min.js')}"></script>
+<script src="{!URLFOR($Resource.ISSP_OperationalCalendar, '/lib/pdfmake/vfs_fonts.js')}"></script>
+<script src="{!URLFOR($Resource.ISSP_OperationalCalendar, '/js/iata_logo.js')}"></script>
+
+<link href="{!URLFOR($Resource.ISSP_OperationalCalendar, '/lib/datatable/css/buttons.dataTables.min.css')}" rel="stylesheet"/>
+<link href="{!URLFOR($Resource.ISSP_OperationalCalendar, '/css/details.min.css')}" rel="stylesheet"/>
+<link href="//fonts.googleapis.com/css?family=Roboto:100,400,500" rel="stylesheet"/> 
+
+<script>
+    var MAP_FREQUENCIES = {!mapFrequenciesJson};
+    var MAP_OPERATION_TYPES = {!mapOperationTypesJson};
+    var MAP_CURRENCIES = {!mapCurrenciesJson};
+    var isAirline = {!isAirline};
+    var defaultCountry = "{!defaultCountry}";
+    var defaultOperationType = "{!defaultOperationType}";
+    
+    $(document).ready(function() {
+        initTable();
+        
+        if (isAirline) {
+            $(".countryFilter").val(defaultCountry);
+            updateFrequencyPicklist(defaultCountry);
+            updateOperationTypesPicklist(defaultCountry);
+            updateCurrencyPicklist(defaultCountry);
+            refreshDetails();
+        }
+        if (!isAirline) {
+            refreshDetails();
+        }
+        $(".countryFilter").change(function() {
+            updateFrequencyPicklist($(this).val());
+            updateOperationTypesPicklist($(this).val());
+            updateCurrencyPicklist($(this).val());
+            refreshDetails();
+        });
+        $("#frequencyFilter").change(function() {
+            refreshDetails();
+        });
+        $("#typeFilter").change(function() {
+            var isCASS = $(this).val().includes("CASS");
+            if (isCASS) $("#frequencyFilter").val("");
+            $("#frequencyFilter").prop('disabled', isCASS);
+            refreshDetails();
+        });
+        $("#currencyFilter").change(function() {
+            refreshDetails();
+        });
+        $('#billingPeriodFilter').change(function() {
+            refreshDetails();
+        });
+    });
+    
+    function initTable() {
+        var table = $('.table-pagination').dataTable({
+            "dom": 'rtlp',
+            buttons: [
+                {
+                    extend: 'csvHtml5',
+                    exportOptions: {
+                        columns: ':visible'
+                    }
+                },
+                {
+                    extend: 'pdfHtml5',
+                    exportOptions: {
+                        columns: ':visible'
+                    }
+                }
+            ],
+            "language": {
+                  "lengthMenu": "{!$Label.ISSP_Display_Records_per_page}",
+                  "zeroRecords": "{!$Label.ISSP_Nothing_found}",
+                  "info": "{!$Label.ISSP_Showing_page}",
+                  "infoEmpty": "{!$Label.ISSP_No_records_available}",
+                  "infoFiltered": "{!$Label.ISSP_filtered_from_total_records}",
+                  "search": "{!$Label.ISSP_Search}",
+                  "paginate": {
+                    "next": "{!$Label.ISSP_Next}",
+                    "previous": "{!$Label.ISSP_Previous}"
+                  }
+              },
+            "paging":   true,
+            "ordering": true,
+            "info":     true
+        });
+        
+        new $.fn.dataTable.Buttons(table, {
+            buttons: [{
+                extend: 'csvHtml5',
+                exportOptions: {columns: ':visible'},
+                title: function () { return getExportFileName();}
+            }]
+        }).container().appendTo($('#exportCSV'));
+        new $.fn.dataTable.Buttons(table, {
+            buttons: [{
+                extend: 'pdfHtml5',
+                exportOptions: {columns: ':visible'},
+                title: function () { return getExportFileName();},
+                orientation: 'landscape',
+                customize: function ( doc ) {
+                    doc.content.splice( 0, 0, {
+                        margin: [ 0, 0, 0, 0 ],
+                        alignment: 'left',
+                        image: iata_logo
+                    } );
+                }
+            }]
+        }).container().appendTo($('#exportPDF'));
+    }
+    
+    function updateFrequencyPicklist(countryValue) {
+        var inputSelect = $("#frequencyFilter");
+        var listValues = MAP_FREQUENCIES[countryValue];
+        updatePicklist(inputSelect, listValues);
+    }
+    
+    function updateOperationTypesPicklist(countryValue) {
+        var inputSelect = $("#typeFilter");
+        var listValues = MAP_OPERATION_TYPES[countryValue];
+        updatePicklist(inputSelect, listValues);
+    }
+    
+    function updateCurrencyPicklist(countryValue) {
+        var inputSelect = $("#currencyFilter");
+        var listValues = MAP_CURRENCIES[countryValue];
+        updatePicklist(inputSelect, listValues);
+    }
+    
+    function updatePicklist(inputSelect, listValues) {
+        if (!isAirline) return;
+        inputSelect.find('option').remove();
+        if (listValues.length>1) {
+            inputSelect.append($('<option>', {
+                value: '',
+                text : '{!$Label.ANG_ISSP_Picklist_None}'
+            }));
+        }
+        $.each(listValues.sort(), function (i, item) {
+            inputSelect.append($('<option>', {
+                value: item,
+                text : item
+            }));
+        });
+    }
+    
+    function refreshDetails() {
+        if (isAirline) refreshDetailsForAirlines();
+        else refreshDetailsForAgents();
+    }
+    
+    function refreshDetailsForAirlines() {
+        hideError();
+        var country = $(".countryFilter").val();
+        var frequency = $("#frequencyFilter").val();
+        var operationType = $("#typeFilter").val();
+        var currency = $("#currencyFilter").val();
+        var billingPeriod = $("#billingPeriodFilter").val();
+        // validate country and operationtype
+        if (country=='') {
+            showError("{!$Label.ISSP_OperationalCalendar_Country_Filter_Required}");
+            return;
+        }
+        if (operationType=='') {
+            showError("{!$Label.ISSP_OperationalCalendar_BSPCASS_Filter_Required}");
+            return;
+        }
+        console.log("country: " + country + " frequency: " + frequency + " operationType: " + operationType + " currency: " + currency);
+        Visualforce.remoting.Manager.invokeAction(
+            '{!$RemoteAction.ISSP_OperationalCalendarController.loadDetailsRemoteForAirlines}',
+            country, frequency, operationType, currency, billingPeriod,
+            function(result, event){
+                if (event.status) {
+                    setTableDetails($.parseJSON(result), operationType);
+                } else if (event.type === 'exception') {
+                    showError(event.message);
+                } else {
+                    console.log('Unknown error in refreshDetails result: ' + unescape(result));
+                }
+            }, 
+            {escape: false}
+        );
+    }
+    
+    function refreshDetailsForAgents() {
+        hideError();
+        var billingPeriod = $("#billingPeriodFilter").val();
+        console.log("billingPeriod: " + billingPeriod);
+        Visualforce.remoting.Manager.invokeAction(
+            '{!$RemoteAction.ISSP_OperationalCalendarController.loadDetailsRemoteForAgents}',
+            billingPeriod,
+            function(result, event){
+                if (event.status) {
+                    setTableDetails($.parseJSON(result), defaultOperationType);
+                } else if (event.type === 'exception') {
+                    showError(event.message);
+                } else {
+                    console.log('Unknown error in refreshDetails result: ' + unescape(result));
+                }
+            }, 
+            {escape: false}
+        );
+    }
+    
+    function setTableDetails(listLines, operationType){
+        var table = $('.table-pagination').DataTable();
+        //remove existing details
+        table.clear();
+        var isCASS = operationType.includes("CASS");
+        if (isAirline) {
+            table.column(3).visible(isCASS);
+            table.column(4).visible(isCASS);
+            table.column(5).visible(isCASS);
+            table.column(6).visible(isCASS);
+        } else {
+            table.column(3).visible(isCASS);
+            table.column(4).visible(isCASS);
+        }
+        // add new lines to table
+        table.rows.add(listLines).draw();
+    }
+    
+    function showError(message) {
+        $("#errormessage")
+            .text(message)
+            .show();
+    }
+    function hideError(message) {
+        $("#errormessage").hide();
+    }
+    function showCalendar() {
+        var href="/ISSP_OperationalCalendar?MainNav=resources&subNav=OperationalCalendar&mid=M2S4";
+        window.location.href = href;
+    }
+    
+    function getExportFileName() {
+        var filename = "{!$Label.ISSP_OperationalCalendar}";
+        filename += "_" + $(".countryFilter option:selected").text();
+        filename += "_" + $("#typeFilter option:selected").text();
+        if ($("#frequencyFilter").val()!="") {
+            filename += "_" + $("#frequencyFilter option:selected").text();
+        }
+        if ($("#currencyFilter").val()!="") {
+            filename += "_" + $("#currencyFilter option:selected").text();
+        }
+        filename += "_" + $("#billingPeriodFilter option:selected").text();
+        console.log("filename " + filename);
+        return filename;
+    }
+</script>
+
+<div class="container">
+    <c:ISSP_CustomNavigation />
+
+    <div id='table'>
+        <div class="row">
+            <div class="col-sm-1"></div>
+            <div class="col-sm-10">
+                <div id="errormessage" class="alert alert-danger" style="display:none"></div>
+            </div>
+            <div class="col-sm-1"></div>
+        </div>
+        <div class="center">
+          <button type="button" class="btn btn-default btn-calendar center-block" onclick="showCalendar()">{!$Label.ISSP_OperationalCalendar_Show_Calendar}</button>
+        </div>
+    
+        <!-- FILTERS -->
+        <apex:outputPanel layout="block" styleclass="row">
+            <apex:form>
+                <div class="col-sm-2">
+                    <apex:outputPanel layout="block" styleclass="form-group" rendered="{!isAirline}">
+                        <label for="countryFilterInput">{!$Label.ISSP_OperationalCalendar_CountryFilter}</label>
+                        <apex:selectList styleclass="countryFilter form-control required" multiselect="false" size="1">
+                            <apex:selectOptions value="{!countryOptions}" />
+                        </apex:selectList>
+                    </apex:outputPanel>
+                </div>
+                <div class="col-sm-2">
+                    <apex:outputPanel layout="block" styleclass="form-group" rendered="{!isAirline}">
+                        <label for="typeFilter">{!$Label.ISSP_OperationalCalendar_BSPCASSFilter}</label>
+                        <select id="typeFilter" class="form-control required"></select>
+                    </apex:outputPanel>
+                </div>
+                <div class="col-sm-2">
+                    <apex:outputPanel layout="block" styleclass="form-group" rendered="{!isAirline}">
+                        <label for="frequencyFilter">{!$Label.ISSP_OperationalCalendar_FrequencyFilter}</label>
+                        <select id="frequencyFilter" class="form-control"></select>
+                    </apex:outputPanel>
+                </div>
+                <div class="col-sm-2">
+                    <apex:outputPanel layout="block" styleclass="form-group" rendered="{!isAirline}">
+                        <label for="currencyFilter">{!$Label.ISSP_OperationalCalendar_CurrencyFilter}</label>
+                        <select id="currencyFilter" class="form-control"></select>
+                    </apex:outputPanel>
+                </div>
+                <div class="col-sm-2">
+                    <div class="form-group">
+                        <label for="billingPeriodFilter">{!$Label.ISSP_OperationalCalendar_Billing_Peroiod}</label>
+                        <select id="billingPeriodFilter" class="form-control">
+                            <option value="{!YEAR(TODAY())}">{!YEAR(TODAY())} {!$Label.ISSP_OperationalCalendar_Billing_Period}</option>
+                            <option value="1">{!$Label.ISSP_AMS_Month_January} {!YEAR(TODAY())} {!$Label.ISSP_OperationalCalendar_Billing_Period}</option>
+                            <option value="2">{!$Label.ISSP_AMS_Month_February} {!YEAR(TODAY())} {!$Label.ISSP_OperationalCalendar_Billing_Period}</option>
+                            <option value="3">{!$Label.ISSP_AMS_Month_March} {!YEAR(TODAY())} {!$Label.ISSP_OperationalCalendar_Billing_Period}</option>
+                            <option value="4">{!$Label.ISSP_AMS_Month_April} {!YEAR(TODAY())} {!$Label.ISSP_OperationalCalendar_Billing_Period}</option>
+                            <option value="5">{!$Label.ISSP_AMS_Month_May} {!YEAR(TODAY())} {!$Label.ISSP_OperationalCalendar_Billing_Period}</option>
+                            <option value="6">{!$Label.ISSP_AMS_Month_June} {!YEAR(TODAY())} {!$Label.ISSP_OperationalCalendar_Billing_Period}</option>
+                            <option value="7">{!$Label.ISSP_AMS_Month_July} {!YEAR(TODAY())} {!$Label.ISSP_OperationalCalendar_Billing_Period}</option>
+                            <option value="8">{!$Label.ISSP_AMS_Month_August} {!YEAR(TODAY())} {!$Label.ISSP_OperationalCalendar_Billing_Period}</option>
+                            <option value="9">{!$Label.ISSP_AMS_Month_September} {!YEAR(TODAY())} {!$Label.ISSP_OperationalCalendar_Billing_Period}</option>
+                            <option value="10">{!$Label.ISSP_AMS_Month_October} {!YEAR(TODAY())} {!$Label.ISSP_OperationalCalendar_Billing_Period}</option>
+                            <option value="11">{!$Label.ISSP_AMS_Month_November} {!YEAR(TODAY())} {!$Label.ISSP_OperationalCalendar_Billing_Period}</option>
+                            <option value="12">{!$Label.ISSP_AMS_Month_December} {!YEAR(TODAY())} {!$Label.ISSP_OperationalCalendar_Billing_Period}</option>
+                        </select>
+                    </div>
+                </div>
+                <div id="exportCSV" class="col-sm-1">
+                    <label class="invisible">CSV</label>
+                </div>
+                <div id="exportPDF" class="col-sm-1">
+                    <label class="invisible">PDF</label>
+                </div>
+            </apex:form>
+        </apex:outputPanel>
+        
+      <!-- AIRLINE TABLE-->
+      <apex:DataTable value="{!listOperations}" var="op" styleClass="table table-condensed table-pagination" headerClass="table-header"
+        rendered="{!isAirline}">
+        
+        <apex:column styleclass="text-width-xs">
+          <apex:facet name="header">{!$ObjectType.operational_Calendar__c.fields.Period_Code__c.label}</apex:facet>
+          <apex:outputText value="{!op.Period_Code__c}"/>
+        </apex:column>
+        
+        <apex:column styleclass="text-width-xs">
+          <apex:facet name="header">{!$ObjectType.operational_Calendar__c.fields.First_Day__c.label}</apex:facet>
+          <apex:outputText value="{0,date,d MMM yyyy}">
+            <apex:param value="{!op.First_Day__c}" />
+          </apex:outputText>
+        </apex:column>
+        
+        <apex:column styleclass="text-width-xs">
+          <apex:facet name="header">{!$ObjectType.operational_Calendar__c.fields.Last_Day__c.label}</apex:facet>
+          <apex:outputText value="{0,date,d MMM yyyy}">
+            <apex:param value="{!op.Last_Day__c}" />
+          </apex:outputText>
+        </apex:column>
+        
+        <apex:column styleclass="text-width-xs">
+          <apex:facet name="header">{!$ObjectType.operational_Calendar__c.fields.Airline_Input_Upload_Cut_Off__c.label}</apex:facet>
+          <apex:outputText value="{0,date,d MMM yyyy}">
+            <apex:param value="{!op.Airline_Input_Upload_Cut_Off__c}" />
+          </apex:outputText>
+        </apex:column>
+        
+        <apex:column styleclass="text-width-xs">
+          <apex:facet name="header">{!$ObjectType.operational_Calendar__c.fields.CASS_reports_Availability__c.label}</apex:facet>
+          <apex:outputText value="{0,date,d MMM yyyy}">
+            <apex:param value="{!op.CASS_reports_Availability__c}" />
+          </apex:outputText>
+        </apex:column>
+        
+        <apex:column styleclass="text-width-xs">
+          <apex:facet name="header">{!$ObjectType.operational_Calendar__c.fields.Agent_Correction_Cut_Off__c.label}</apex:facet>
+          <apex:outputText value="{0,date,d MMM yyyy}">
+            <apex:param value="{!op.Agent_Correction_Cut_Off__c}" />
+          </apex:outputText>
+        </apex:column>
+        
+        <apex:column styleclass="text-width-xs" >
+          <apex:facet name="header">{!$ObjectType.operational_Calendar__c.fields.Airline_Correction_Response_Cut_Off__c.label}</apex:facet>
+          <apex:outputText value="{0,date,d MMM yyyy}">
+            <apex:param value="{!op.Airline_Correction_Response_Cut_Off__c}" />
+          </apex:outputText>
+        </apex:column>
+        
+        <apex:column styleclass="text-width-xs">
+          <apex:facet name="header">{!$ObjectType.operational_Calendar__c.fields.Billing_Availability__c.label}</apex:facet>
+          <apex:outputText value="{0,date,d MMM yyyy}">
+            <apex:param value="{!op.Billing_Availability__c}" />
+          </apex:outputText>
+        </apex:column>
+        
+        <apex:column styleclass="text-width-xs">
+          <apex:facet name="header">{!$ObjectType.operational_Calendar__c.fields.Remittance_Day__c.label}</apex:facet>
+          <apex:outputText value="{0,date,d MMM yyyy}">
+            <apex:param value="{!op.Remittance_Day__c}" />
+          </apex:outputText>
+        </apex:column>
+
+        <apex:column styleclass="text-width-xs">
+          <apex:facet name="header">{!$ObjectType.operational_Calendar__c.fields.Settlement_Day__c.label}</apex:facet>
+          <apex:outputText value="{0,date,d MMM yyyy}">
+            <apex:param value="{!op.Settlement_Day__c}" />
+          </apex:outputText>
+        </apex:column>
+        
+      </apex:DataTable>
+      <!-- AGENT TABLE-->
+      <apex:DataTable value="{!listOperations}" var="op" styleClass="table table-condensed table-pagination" headerClass="table-header"
+        rendered="{!NOT(IsAirline)}">
+        
+        <apex:column styleclass="text-width-xs">
+          <apex:facet name="header">{!$ObjectType.operational_Calendar__c.fields.Period_Code__c.label}</apex:facet>
+          <apex:outputText value="{!op.Period_Code__c}"/>
+        </apex:column>
+        
+        <apex:column styleclass="text-width-xs">
+          <apex:facet name="header">{!$ObjectType.operational_Calendar__c.fields.First_Day__c.label}</apex:facet>
+          <apex:outputText value="{0,date,d MMM yyyy}">
+            <apex:param value="{!op.First_Day__c}" />
+          </apex:outputText>
+        </apex:column>
+        
+        <apex:column styleclass="text-width-xs">
+          <apex:facet name="header">{!$ObjectType.operational_Calendar__c.fields.Last_Day__c.label}</apex:facet>
+          <apex:outputText value="{0,date,d MMM yyyy}">
+            <apex:param value="{!op.Last_Day__c}" />
+          </apex:outputText>
+        </apex:column>
+        
+        <apex:column styleclass="text-width-xs">
+          <apex:facet name="header">{!$ObjectType.operational_Calendar__c.fields.CASS_reports_Availability__c.label}</apex:facet>
+          <apex:outputText value="{0,date,d MMM yyyy}">
+            <apex:param value="{!op.CASS_reports_Availability__c}" />
+          </apex:outputText>
+        </apex:column>
+        
+        <apex:column styleclass="text-width-xs">
+          <apex:facet name="header">{!$ObjectType.operational_Calendar__c.fields.Agent_Correction_Cut_Off__c.label}</apex:facet>
+          <apex:outputText value="{0,date,d MMM yyyy}">
+            <apex:param value="{!op.Agent_Correction_Cut_Off__c}" />
+          </apex:outputText>
+        </apex:column>
+        
+        <apex:column styleclass="text-width-xs">
+          <apex:facet name="header">{!$ObjectType.operational_Calendar__c.fields.Billing_Availability__c.label}</apex:facet>
+          <apex:outputText value="{0,date,d MMM yyyy}">
+            <apex:param value="{!op.Billing_Availability__c}" />
+          </apex:outputText>
+        </apex:column>
+        
+        <apex:column styleclass="text-width-xs">
+          <apex:facet name="header">{!$ObjectType.operational_Calendar__c.fields.Remittance_Day__c.label}</apex:facet>
+          <apex:outputText value="{0,date,d MMM yyyy}">
+            <apex:param value="{!op.Remittance_Day__c}" />
+          </apex:outputText>
+        </apex:column>
+        
+      </apex:DataTable>
+
+    </div>
+
+</div>
+
+</apex:page>

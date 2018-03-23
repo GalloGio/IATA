@@ -232,6 +232,8 @@ public  class ISSP_TC_Accept {
     public Boolean getCountryRequirementPermission() {
         return ISSP_Ctrl_Country_Requirements.isAllowedAccess();
     }
-
+    public Boolean getOperationalCalendarPermission() {
+        return ISSP_OperationalCalendarController.isAllowedAccess();
+    }
 
 }
