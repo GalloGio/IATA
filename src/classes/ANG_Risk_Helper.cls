@@ -264,7 +264,9 @@ public with sharing class ANG_Risk_Helper{
 	}
 	
 
-	public static Decimal currencyConverter(String currentCurIso,Decimal ammount,String targetCurIso){
+	public static Decimal currencyConverter(String currentCurIso,Decimal amount,String targetCurIso){
+
+		if(currentCurIso == targetCurIso) return amount;
 
 		if(!convertionsRateMap.containsKey(currentCurIso.toUpperCase())) throw new invalidCurrencyException(INVALID_CUR_EXCEPTION_MESSAGE+currentCurIso);
 		if(!convertionsRateMap.containsKey(targetCurIso.toUpperCase()))  throw new invalidCurrencyException(INVALID_CUR_EXCEPTION_MESSAGE+targetCurIso);
@@ -273,7 +275,7 @@ public with sharing class ANG_Risk_Helper{
 		CurrencyType targetCur = convertionsRateMap.get(targetCurIso.toUpperCase());
 		Decimal toRate = targetCur==null?fromRate:targetCur.ConversionRate;
 
-		Decimal result = ammount==null?0:ammount * toRate/fromRate;
+		Decimal result = amount==null?0:amount * toRate/fromRate;
 		return result.setScale(targetCur.DecimalPlaces, System.RoundingMode.HALF_UP);
 	}
 
