@@ -35,7 +35,7 @@
 
         function UserAction(sType) {
             var cnt = document.getElementById('{!$Component.theForm.pbt01.pbs02.theCountry}').value;
-            var accnt = sforce.connection.query("select Id, ANG_AccountId__c, ANG_AccountId__r.IATACode__c from ANG_RHC_Information__c where ANG_AccountId__r.IATA_Iso_country__r.ISO_Code__c = '" + cnt + "' and ANG_AccountId__r.IATACode__c != ''");
+            var accnt = sforce.connection.query("select Id, ANG_AccountId__c, ANG_AccountId__r.IATACode__c from ANG_RHC_Information__c where ANG_AccountId__r.IATA_Iso_country__r.ISO_Code__c = '" + cnt + "' and ANG_AccountId__r.IATACode__c != '' and ANG_AccountId__r.Status in ('Approved','Cash basis/no commission','Cash basis/with commission','Changes processed','Under review')");
 
             var records = accnt.getArray("records");
 
@@ -133,6 +133,11 @@
             <br/> <br/>
             <apex:pageBlock id="resultKO" title="{!sType}: Error Results" rendered="{!AND(bQueryExecuted, bHasError)}" tabStyle="Account">
                 <apex:pageBlockTable value="{!lsRMEWrapperWSErr}" var="item" id="thePBTKO">
+                
+                	<apex:repeat value="{!mapRMEWrapperWSErr}" var="temp">
+                		<apex:repeat value="{!}"
+                	</apex:repeat>
+                	
                     <apex:column title="IATA Code" value="{!item.IataCode}" headerValue="IATA Code"/>
                     <apex:column title="Provisional Amount" value="{!item.ProvAmnt}" headerValue="Provisional Amount" rendered="{!sType=='ProvisionalRHC'}"/>
                     <apex:column title="Consumed RHC" value="{!item.ConsumedRHC}" headerValue="Consumed RHC" rendered="{!sType=='ConsumedRHC'}"/>
