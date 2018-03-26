@@ -165,6 +165,7 @@ public class AMS_InspectionHelper {
             if(acc.Location_Class__c == 'M' && acc.RecordTypeId == agencyRT) {
                 acc.Status__c = 'Terminated';
                 acc.Reason__c = '0-Terminated';
+                acc.Expiry_Date__c = Date.today();
             }
         }
 
