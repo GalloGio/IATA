@@ -248,20 +248,16 @@ public without sharing class ISSP_Login {
                 return null;
             }            
         }
-        else if(communityName == null && startUrl == null && !getUrl.contains('issp_login')){            
+        else if(communityName == null && startUrl == null){            
             if(oneIDStatus == 'ON'){                
-                PageReference pr = new PageReference('/identity');
+                PageReference pr = new PageReference('/identity/s/login/?startURL=%2F'+'ISSP_Homepage&serviceName=ISSP');
                 pr.setRedirect(true);
                 return pr;    
             }else{
                 return null;
             }
-        }                    
-        else if (getUrl.contains('issp_login')){                
-                    PageReference pr = new PageReference('/identity/s/login/?startURL=%2F'+'ISSP_Homepage&serviceName=ISSP');
-                    pr.setRedirect(true);
-                    return pr;                  
-       }else{                 
+        }
+        else{                 
             return null;
         }  
     }    
