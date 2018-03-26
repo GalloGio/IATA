@@ -15226,6 +15226,10 @@ if(Change_effective_as_of__c - today() &gt; 0,&quot;30&quot;,&quot;0&quot;)))</f
                 <fullName>Passed</fullName>
                 <default>false</default>
             </values>
+            <values>
+                <fullName>Nil CC</fullName>
+                <default>false</default>
+            </values>
         </picklistValues>
         <picklistValues>
             <picklist>Process__c</picklist>
