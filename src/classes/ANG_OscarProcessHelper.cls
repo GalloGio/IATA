@@ -525,8 +525,6 @@ global class ANG_OscarProcessHelper {
 		System.debug('[ANG_OscarProcessHelper] 1. Number of Queries used in this apex code so far: ' + Limits.getQueries());
 	    System.debug('[ANG_OscarProcessHelper] 2 .Number of rows queried in this apex code so far: ' + Limits.getDmlRows());
 	    System.debug('[ANG_OscarProcessHelper] 3. Number of script statements used so far : ' +  Limits.getDmlStatements());
-	    System.debug('[ANG_OscarProcessHelper] 4. Number of Queries used in this apex code so far: ' + Limits.getQueries());
-	    System.debug('[ANG_OscarProcessHelper] 5. Number of rows queried in this apex code so far: ' + Limits.getDmlRows());
     }
 
     webservice static String[] processRestrictFOP(String oscarId, Boolean restrictCreditCard , Boolean restrictCash){
