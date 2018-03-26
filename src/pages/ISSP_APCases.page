@@ -9,40 +9,12 @@
 <html>
     	<c:ISSP_Header ></c:ISSP_Header>    
  		<body>
-
-    <apex:stylesheet value="{!URLFOR($Resource.BootstrapCSS, 'css/bootstrap.min.css')}" />    
-    <!--apex:stylesheet value="{!URLFOR($Resource.DataTables, 'css/dataTables.bootstrap.min.css')}" />
-    <apex:stylesheet value="{!$Resource.InternalOrderCSS}" />
-    <apex:stylesheet value="{!URLFOR($Resource.BootstrapDatepicker, 'css/bootstrap-datepicker3.min.css')}" /-->     
-
-    <!-- Load JS -->  
-    <script language="JavaScript1.2" src="/js/functions.js"></script>
-    <script src="/soap/ajax/9.0/connection.js" type="text/javascript"></script>
-    <script id="clientEventHandlersJS" language="javascript"></script>
-    <!--<script src="{!URLFOR($Resource.jquery2_1_4)}"></script>--> 
-    <!--<script src="{!URLFOR($Resource.BootstrapCSS, 'js/bootstrap.min.js')}"></script> -->
-    <script src="{!URLFOR($Resource.BootstrapTable, 'bootstrap-table.min.js')}"></script>        
-
-    <!--script src="{!URLFOR($Resource.DataTables, 'js/jquery.dataTables.min.js')}"></script>
-    <script src="{!URLFOR($Resource.DataTables, 'js/dataTables.bootstrap.min.js')}"></script>
-    <script src="{!URLFOR($Resource.BootstrapDatepicker, 'js/bootstrap-datepicker.min.js')}"></script-->        
-
+      
   <script>
     function optInOut() {
-      showModal('#optInOutModal');
+       $('#optInOut').modal('toggle');      
     }
 
-    function showModal(modalName) {
-      if (! $(modalName).is(":visible")) {
-        $(modalName).modal('show');  
-      }
-    }
-
-    function hideModal(modalName) {
-      if ($(modalName).is(":visible")) {
-        $(modalName).modal('hide');  
-      }
-    }     
 
   </script>
     
@@ -61,10 +33,11 @@
     <apex:pageBlock rendered="{!IsNotEmpty}">
       <apex:pageBlockButtons location="top" style="Width:100%;margin-top:20px;">
         <apex:form >
-          <center>
+          <center>    
             <apex:commandButton rendered="{!strAreaType='Airline Joining'}" styleClass="btn btn-default" onClick="navigateToUrl('/ISSP_APProcess?retUrl=/ISSP_HomePage','LIST_VIEW','newCase');return false;" value="New Joining Application"/>
             <apex:commandButton rendered="{!APprocess=='chg'}" styleClass="btn btn-default" onClick="navigateToUrl('/ISSP_APProcess?proc=chg&retUrl=/ISSP_HomePage','LIST_VIEW','newCase');return false;" value="New Change Request"/>
             <apex:commandButton rendered="{!APprocess=='bnk'}" styleClass="btn btn-default" onClick="navigateToUrl('/ISSP_APProcess?proc=bnk&retUrl=/ISSP_HomePage','LIST_VIEW','newCase');return false;" value="New Change of bank details"/>
+            <apex:commandButton rendered="{!APprocess=='chg'}" styleClass="btn btn-default" onClick="optInOut();return false;" value="Option IATA EasyPay Opt-in"/>
           </center>
         </apex:form>
       </apex:pageBlockButtons>
@@ -86,10 +59,7 @@
     </apex:pageBlock>
 
     <apex:pageBlock rendered="{!IsEmpty}" mode="maindetail">
-      <div align="center" style="color:#00AEEF; padding-bottom:10px;padding-top:10px;">
-        <apex:form>
-          <apex:commandButton styleClass="btn btn-default" onClick="optInOut();;return false;" value="IATA Easy Pay Opt-in / Out"/>
-        </apex:form>
+      <div align="center" style="display: {!IF(APprocess=='chg','','none')}; color:#00AEEF; padding-bottom:10px;padding-top:10px;">
         <h3 style="color:#FFAE00"><a onclick="optInOut();">IATA Easy Pay Opt-in / Out</a></h3>
       </div>
 
@@ -103,19 +73,27 @@
     <c:ISSP_CustomFooter />
   </div><!-- end container-->
 
-  <div class="modal fade" id="optInOutModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-    <div class="modal-dialog">
+  <!-- Modal -->
+  <div id="optInOut" class="modal fade" role="dialog">
+    <div class="modal-dialog modal-lg">
+
+      <!-- Modal content-->
       <div class="modal-content">
         <div class="modal-header">
-          <button type="btn_iata" class="close" data-dismiss="modal" aria-hidden="true" onclick="location.reload(true);" >&times;</button>
-          <h4 class="modal-title">IATA Easy Pay Opt-in / Out</h4>
+          <button type="button" class="close" data-dismiss="modal">&times;</button>
+          <h4 class="modal-title">IATA EasyPay Opt-in / Out</h4>
         </div>
         <div class="modal-body">
-          <p>
-            jfxfdsjsjadfkljklfjdskjsfdkljkldfjklfdsjklsdjl
-          </p>
+
+
+        
+          <p>Some text in the modal.</p>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
         </div>
       </div>
+
     </div>
   </div>
 
