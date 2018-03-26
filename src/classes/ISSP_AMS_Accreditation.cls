@@ -676,15 +676,20 @@ public without sharing class ISSP_AMS_Accreditation {
 
     public ISSP_AMS_Accreditation(ISSP_AddAttachment attachCtrl) {
         isNoticeOfChange = false;
+        newAccreditationModels = false;
+
+        popContact();  //Get the contact details of currently logged in user
 
         newCase = DAL_ISSP.getCase(attachCtrl.tmpCase.Id);
         
         if(newCase.IFAP_Country_ISO__c != null) {
             isocountry = fetchISOCountry(newCase.IFAP_Country_ISO__c);
             fetchAMSProcessForm();    
+        }else{
+            newCase.IFAP_Country_ISO__c = con.Account.IATA_ISO_Country__r.ISO_Code__c;
+            isocountry = fetchISOCountry(newCase.IFAP_Country_ISO__c);
+            fetchAMSProcessForm();  
         }
-        
-        popContact();  //Get the contact details of currently logged in user
         
          if (con.Account.Top_Parent__c == null) { //User is from HQ Account
             vHQAccountId = con.AccountId;
@@ -720,6 +725,9 @@ public without sharing class ISSP_AMS_Accreditation {
         }
 
         applyLanguage = newCase.Case_Language__c;
+
+        // NewGen is only valid for Travel Agents
+        newAccreditationModels = (isocountry.ANG_Enable_NewGen__c == true && sectorValue.StartsWith('Travel_Agent')) ;
 
         if (sectorValue != null) {
             if (sectorValue.StartsWith('Cargo_Agent'))
@@ -3640,9 +3648,14 @@ System.DEBUG('validateCharactersInForm  - 4 - errorFound: '+errorFound);
 
             System.debug('SFSF accredModel ' + accredModel);
 
+            if(newAccreditationModels){ //AMSU-113
             //NEWGEN-583 start
             if(newForm.Enable_Credit_Card_FOP__c == 'Yes')
-                allowIdentifierSetTravel.add(AMS_UTILS.PCI_COMPLIANCE);
+                    allowIdentifierSetTravel.add(PCI_COMPLIANCE);
+            }
+            else{
+                allowIdentifierSetTravel.add(PCI_COMPLIANCE);    
+            }    
 
             Set<String> excludeIdentifierSetTravel = new Set<String>();
             for(String identifier : identifierSetTravel){

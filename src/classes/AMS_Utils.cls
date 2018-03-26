@@ -124,6 +124,9 @@ public without sharing class AMS_Utils {
     public static final String ANG_VMFR =  'VMFR';
     public static final String ANG_ACCREDITATION_TYPE = 'Accreditation type';
 
+    public static final Set<String> ANG_OSCAR_MAJOR_CHANGES_PROCESSES = new Set<String>{ANG_OWNERSHIP, ANG_HIERARCHY, ANG_LOCATION_TYPE_DIFFLEGALENTITY, ANG_LEGAL_NAME,
+                                                                                ANG_LEGAL_STATUS, ANG_MAJOR_SHAREHOLDING, ANG_ACCREDITATION_TYPE};
+
     public static final String OSCAR_CLOSED = 'Closed';
 
     public static final String BR = 'BR';
@@ -156,6 +159,7 @@ public without sharing class AMS_Utils {
     public static final String BANKACCCHANGES   = 'BANK.ACCOUNT.CHANGES';
     public static final String CERTIFICATION    = 'CERTIFICATION.1.0';
     public static final String IEPBANKACCOUNTSETUP = 'IEP.BANK.ACCOUNT.SETUP';
+    public static final String PCI_COMPLIANT    = 'PCI.COMPLIANT.1.0';
 
     //Process of type NewGen
     public static final String NEWHELITE        = 'ANG.NEW.HE.LITE.1.0';
@@ -165,12 +169,16 @@ public without sharing class AMS_Utils {
     public static final String NGCORRECTION     = 'NGCORRECTION.1.0';
     public static final String NGFOP            = 'ANG.FOPMANAGEMENT.1.0';
     public static final String NGVR             = 'VR.1.0';
+    public static final String NGOPTINOUT       = 'ANG.FS.OPTINOUT';
 
-    public static final Set<String> oscarNewGenProcesses = new Set <String>{NEWHELITE, NEWHESTANDARD, NEWAE, NGCHANGES, NGCORRECTION};
+	//AMSU-125
+    public static final Set<String> oscarNewProcesses = new Set<String> {new_HO, new_BR, new_BR_ABROAD, new_TIDS, new_MSO, new_GSA, new_GSA_BSP, new_GSSA, new_AHA, new_AHA_BSP, new_SA};
+
+    public static final Set<String> oscarNewGenProcesses = new Set <String>{NEWHELITE, NEWHESTANDARD, NEWAE, NGCHANGES, NGCORRECTION, NGOPTINOUT, NGFOP};
     public static final Set<String> changesRequiringManagerApproval = new Set<String>{ANG_LEGAL_NAME,ANG_LEGAL_STATUS,ANG_MAJOR_SHAREHOLDING,
                                                                                     ANG_LOCATION_TYPE_DIFFLEGALENTITY,ANG_OWNERSHIP,ANG_HIERARCHY,ANG_ACCREDITATION_TYPE};
 
-    public static final Set<String> oscarPCICompliantMigrationProcesses = new Set <String>{NEWHESTANDARD,NEWHELITE, NEWAE, NGCORRECTION};
+    public static final Set<String> oscarPCICompliantMigrationProcesses = new Set <String>{NEWHESTANDARD,NEWHELITE, NEWAE, NGCORRECTION}; 
 
     //other types of process
     public static final String CERTIFICATE      = 'CER.1.0'         ;
@@ -191,6 +199,7 @@ public without sharing class AMS_Utils {
     public static final String RECTYPE_NGCORRECTION = RecordTypeSingleton.getInstance().RtIDsPerDeveloperNamePerObj.get('AMS_OSCAR__c').get('NGCORRECTION');
     public static final String RECTYPE_CORRECTION   = Schema.AMS_OSCAR__c.sObjectType.getDescribe().getRecordTypeInfosByName().get('CORRECTION').getRecordTypeId();
     public static final String RECTYPE_NEWGENFOP   = Schema.AMS_OSCAR__c.sObjectType.getDescribe().getRecordTypeInfosByName().get('NGFormsOfPayment').getRecordTypeId();
+    public static final String RECTYPE_NEWGENOPTINOUT   = Schema.AMS_OSCAR__c.sObjectType.getDescribe().getRecordTypeInfosByName().get('ANG.FS.OPTINOUT').getRecordTypeId();
 
     public static final String RECTYPE_OSCARCOMM    = RecordTypeSingleton.getInstance().RtIDsPerDeveloperNamePerObj.get('Case').get('OSCAR_Communication');
     public static final String RECTYPE_SIDRALITE    = RecordTypeSingleton.getInstance().RtIDsPerDeveloperNamePerObj.get('Case').get('SIDRA_Lite');
@@ -310,7 +319,7 @@ public without sharing class AMS_Utils {
     public static final String TYPE_PAX_HO = buildOfficeType(CASE_REASON_NEW_HO, ACCREDITATIONMODEL_LEGACY);
     public static final String TYPE_HE_ST_CASH = buildOfficeType(CASE_REASON_HE_STANDARD, AGENTTYPE_WITHCASH);    
     public static final String TYPE_HE_LITE_NO_CASH = buildOfficeType(CASE_REASON_HE_LITE, AGENTTYPE_NOCASH); 
-    public static final Set<String> processesANGrequiredAttachValidation = new Set<String>{NEWHELITE,NEWHESTANDARD,NEWAE,NGCHANGES,VOLRELINQUISH};   
+    public static final Set<String> processesANGrequiredAttachValidation = new Set<String>{NEWHELITE,NEWHESTANDARD,NEWAE,NGCHANGES,VOLRELINQUISH,PCI_COMPLIANT};   
 
     public static final String OPEN = 'Open';
     public static final String NO_IEP_ACCOUNT = 'No IEP Account';
@@ -321,6 +330,8 @@ public without sharing class AMS_Utils {
     public static final String CGO_SIGNED_CONTRACT = 'CGO_SIGNED_CONTRACT';
     public static final String NOC_SIGNED_CONTRACT = 'NOC_SIGNED_CONTRACT';
     public static final String PCI_COMPLIANCE = 'PCI_COMPLIANCE';
+
+    public static final String RECTYPE_CASEIFAP   = RecordTypeSingleton.getInstance().RtIDsPerDeveloperNamePerObj.get('Case').get('IATA_Financial_Review');
 
     static {
         refreshCache();
@@ -2483,6 +2494,7 @@ public static String fetchTypeOfCustomer (String locationType , String category)
     // if secondvalue < firstValuue , returns 2
     // if there is a rate problem, return -1
     // if there is a amount problem, return -2
+    /*NEWGEN-2809
     public static Integer compareRates(String firstCurrencyISOCode, Decimal firstValue,String secondCurrencyISOCode, Decimal secondValue ){
 
         if(firstValue == null || secondValue == null){
@@ -2519,7 +2531,7 @@ public static String fetchTypeOfCustomer (String locationType , String category)
         System.debug('Returning 0');
         return 0;
     
-    }
+    }*/
 
     public static Contact getIEPContact(String conId) {
         return [SELECT User_Portal_Status__c,
@@ -2531,27 +2543,27 @@ public static String fetchTypeOfCustomer (String locationType , String category)
                        Account.Status__c
                   FROM Contact WHERE Id = :conId limit 1];                  
     }
-	
-	/**
-	Method to help the transformation of accrediation types to display on ebulletin
-	*/
-	public static String transformAccreditationType(String accredType) {
+    
+    /**
+    Method to help the transformation of accrediation types to display on ebulletin
+    */
+    public static String transformAccreditationType(String accredType) {
 
-		String result = accredType;
+        String result = accredType;
 
-		if (result == null)
-			return null;
+        if (result == null)
+            return null;
 
-		if (result.containsIgnoreCase('Cashless'))
-			result = result.replace('Cashless', 'GoLite');
-		if (result.containsIgnoreCase('Cash'))
-			result = result.replace('Cash', 'GoStandard');
-		if (result.containsIgnoreCase('Multicountry'))
-			result = result.replace('Multicountry', 'GoGlobal');
+        if (result.containsIgnoreCase('Cashless'))
+            result = result.replace('Cashless', 'GoLite');
+        if (result.containsIgnoreCase('Cash'))
+            result = result.replace('Cash', 'GoStandard');
+        if (result.containsIgnoreCase('Multicountry'))
+            result = result.replace('Multicountry', 'GoGlobal');
 
-		return result;
+        return result;
 
-	}
+    }
     
     public static Map<String, Schema.SObjectField> getOSCARFieldMap() {
 
@@ -2587,6 +2599,13 @@ public static String fetchTypeOfCustomer (String locationType , String category)
         } else {
             return labelName;
         }
-    } 
+    }
 
+    public static Date getBiggestDate(Date date1, Date date2) {
+        if(date1 != null && date2 != null) return (date1 > date2) ? date1 : date2;
+        if(date1 != null && date2 == null) return date1;
+        if(date1 == null && date2 != null) return date2;
+        return null;        
+    }
+    
 }
