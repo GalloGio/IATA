@@ -15,6 +15,7 @@ public with sharing class ISSP_TIP_Enrolment_Controller {
     public Contact newContact {get;set;} 
     public List <Contact> contactList {get; set;}
 
+
 	public ISSP_TIP_Enrolment_Controller() {
 
 		applyLanguage = UserInfo.getLanguage();
@@ -164,26 +165,36 @@ public with sharing class ISSP_TIP_Enrolment_Controller {
     }
 
     private void fillContactList() {
-    	contactList = [SELECT id,Name, Email, FirstName, LastName, Phone, Primary_Contact__c
+    	contactList = [SELECT id,Name, Email,Salutation, FirstName, LastName, Phone, Primary_Contact__c,MobileNational__c,Membership_Function__c,Title,MobilePhone
+
                 FROM Contact
                 WHERE Status__c = 'Active'];
     }
 
     public void updateRadioButtonStatus() {
-    	ID contactID = Apexpages.currentPage().getParameters().get('contactID');
+    	ID contactID = Apexpages.currentPage().getParameters().get('contactIDtoPrimary');
     	for (Contact c: contactList) {
     		c.Primary_Contact__c = false;
-    		
     		if(c.id == contactID) c.Primary_Contact__c = true;
     	}
     }
 
     public Pagereference createContact(){
 
-    	Contact conToInsert = newContact.clone();
-    	insert conToInsert;
-    	contactList.add(conToInsert);
+    	upsert newContact;
+    	//contactList.add(newContact);
+    	fillContactList();
     	newContact = new Contact();
     	return null;
+    }
+
+    public Pagereference setContactToEdit(){
+    	
+    	ID contactID = Apexpages.currentPage().getParameters().get('contactIDToEdit');
+    	for (Contact c: contactList) {
+    		if(c.id == contactID) newContact = c;
+    	}
+    	return null;
+
     }
 }
