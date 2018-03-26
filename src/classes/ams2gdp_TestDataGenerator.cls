@@ -1,5 +1,5 @@
 @isTest
-public class ams2gdp_TestDataGenerator 
+public class ams2gdp_TestDataGenerator
 {
 	public static List<Account> generateAccounts(Integer nb, Boolean doInsert)
 	{
@@ -14,7 +14,7 @@ public class ams2gdp_TestDataGenerator
                 Sector__c = 'IATA',
                 Category__c = 'IATA HEAD OFFICE',
                 CurrencyIsoCode = 'USD',
-                BillingStreet ='42 Edmond', 
+                BillingStreet ='42 Edmond',
                 BillingCity= 'Montreal',
                 BillingPostalCode ='h1v1f8',
                 BillingState='Quebec',
@@ -37,7 +37,7 @@ public class ams2gdp_TestDataGenerator
             ));
         }
 
-        //Each Account should have at least one accreditation 
+        //Each Account should have at least one accreditation
         //'Id IN (SELECT Related_Account__c FROM Accreditation__c WHERE Endorsed_Accredited_By__r.Code__c IN (\'IATA\',\'IATAN\',\'DOM\')
          //AND Status__r.Code__c IN (\'0\',\'4\',\'5\',\'6\',\'7\',\'8\',\'9\'))';
 
@@ -79,7 +79,7 @@ public class ams2gdp_TestDataGenerator
                 Sector__c = 'IATA',
                 Category__c = 'IATA HEAD OFFICE',
                 CurrencyIsoCode = 'USD',
-                BillingStreet ='42 Edmond', 
+                BillingStreet ='42 Edmond',
                 BillingCity= 'Montreal',
                 BillingPostalCode ='h1v1f8',
                 BillingState='Quebec',
@@ -105,71 +105,71 @@ public class ams2gdp_TestDataGenerator
 	}
 	public static List<GDP_Reference_Table__c> generateReferenceTables(Integer nb, Boolean doInsert)
 	{
-		List<GDP_Reference_Table__c> result = new List<GDP_Reference_Table__c>(); 
+		List<GDP_Reference_Table__c> result = new List<GDP_Reference_Table__c>();
 
 		for(Integer x=0; x<nb; x++)
 		{
 			result.add(new GDP_Reference_Table__c(
-				Name = 'Ref '+x 
+				Name = 'Ref '+x
 				, Code__c = 'C'+x
-				, Definition__c = 'Ref '+x 
+				, Definition__c = 'Ref '+x
 			));
 		}
 
 		if(doInsert)
 			insert result;
 
-		return result; 
+		return result;
 	}
 
 	public static List<GDP_Reference_Table__c> generateReferenceTables(String table, Integer nb, Boolean doInsert)
 	{
-		List<GDP_Reference_Table__c> result = new List<GDP_Reference_Table__c>(); 
+		List<GDP_Reference_Table__c> result = new List<GDP_Reference_Table__c>();
 
 		for(Integer x=0; x<nb; x++)
 		{
 			result.add(new GDP_Reference_Table__c(
-				Name = 'Ref '+x 
+				Name = 'Ref '+x
 				, Code__c = 'C'+x
 				, Table__c = table
-				, Definition__c = 'Ref '+x 
+				, Definition__c = 'Ref '+x
 			));
 		}
 
 		if(doInsert)
 			insert result;
 
-		return result; 
+		return result;
 	}
 	public static List<GDP_Reference_Table__c> generateReferenceTableswithTableName(Integer nb, Boolean doInsert)
 	{
-		List<GDP_Reference_Table__c> result = new List<GDP_Reference_Table__c>(); 
+		List<GDP_Reference_Table__c> result = new List<GDP_Reference_Table__c>();
 		List<String> tableName=new List<String>{'APENL2','APEN4L','APEN4A','APSALE','APSPEC','APDEST','APEN2C','APEN4S','APPRAC','APEN4H'};
 		List<String> codeValues=new List<String>{'L1','L2','A1','4','AD','A2','C1','S1','RT','H1'};
 
 		for(Integer x=0; x<nb; x++)
 		{
 			result.add(new GDP_Reference_Table__c(
-				Name = 'Ref '+x 
+				Name = 'Ref '+x
 				, Code__c = codeValues[x]
 				, Table__c = tableName[x]
-				, Definition__c = 'Ref '+x 
+				, Definition__c = 'Ref '+x
 			));
 		}
 
 		if(doInsert)
 			insert result;
 
-		return result; 
+		return result;
 	}
 
 	public static List<AMS_Affiliation__c> generateAffiliations(Integer  nb, Boolean doInsert)
 	{
-		List<AMS_Affiliation__c> result = new List<AMS_Affiliation__c>(); 
+		List<AMS_Affiliation__c> result = new List<AMS_Affiliation__c>();
 		for(Integer x=0; x<nb; x++)
 		{
 			result.add(new AMS_Affiliation__c(
-				Affiliation_Code__c = 'C'+x 
+				Affiliation_Code__c = 'C'+x
 			));
 		}
 
@@ -182,7 +182,7 @@ public class ams2gdp_TestDataGenerator
 
 	public static List<AMS_Agency_Affiliation__c> generateAMS_Agency_Affiliations(Integer nb, Boolean doInsert)
 	{
-		List<AMS_Agency_Affiliation__c> result = new List<AMS_Agency_Affiliation__c>(); 
+		List<AMS_Agency_Affiliation__c> result = new List<AMS_Agency_Affiliation__c>();
 
 		List<Account> accounts = generateAccounts(nb,true);
 		List<AMS_Affiliation__c> affiliations = generateAffiliations(nb,true);
@@ -191,7 +191,7 @@ public class ams2gdp_TestDataGenerator
 		for(Integer x=0; x<nb; x++)
 		{
 			result.add(new AMS_Agency_Affiliation__c(
-				Account__c = accounts[x].Id 
+				Account__c = accounts[x].Id
 				, Affiliation__c = affiliations[x].Id
 				, Legacy_System__c = (Math.mod(x, 2)==0) ? 'Webstar' : 'AIMS'
 				, Legacy_External_ID__c = (Math.mod(x, 2)==0) ? 'ABCD123'+x : 'ABCD123'+x+'-'+affiliations[x].Affiliation_Code__c
@@ -206,7 +206,7 @@ public class ams2gdp_TestDataGenerator
 
 	public static List<AMS_Accreditation_Organization__c> generateAccreditationEndorsementOrganisations(Integer nb, Boolean doInsert)
 	{
-		List<AMS_Accreditation_Organization__c> result = new List<AMS_Accreditation_Organization__c>(); 
+		List<AMS_Accreditation_Organization__c> result = new List<AMS_Accreditation_Organization__c>();
 		List<String> air_codes = new List<String>{'IATA','IATAN','DOM', 'VM', 'AB'};
 
 		for(Integer x=0; x<nb; x++)
@@ -225,7 +225,7 @@ public class ams2gdp_TestDataGenerator
 
 	public static List<AMS_OSCAR__c> generateAMS_Oscars(Integer nb, Boolean doInsert)
 	{
-		List<AMS_OSCAR__c> result = new List<AMS_OSCAR__c>(); 
+		List<AMS_OSCAR__c> result = new List<AMS_OSCAR__c>();
 
 		for(Integer x=0; x<nb; x++)
 		{
@@ -242,7 +242,7 @@ public class ams2gdp_TestDataGenerator
 
 	public static List<AMS_Airport__c> generateAMS_Airports(Integer nb, Boolean doInsert)
 	{
-		List<AMS_Airport__c> result = new List<AMS_Airport__c>(); 
+		List<AMS_Airport__c> result = new List<AMS_Airport__c>();
 
 		for(Integer x=0; x<nb; x++)
 		{
@@ -260,7 +260,7 @@ public class ams2gdp_TestDataGenerator
 
 	public static List<AMS_Territory__c> generateAMS_Territories(Integer nb, Boolean doInsert)
 	{
-		List<AMS_Territory__c> result = new List<AMS_Territory__c>(); 
+		List<AMS_Territory__c> result = new List<AMS_Territory__c>();
 		List<AMS_Inspection__c> appointments=generateAMS_Inspections(nb,true);
 		List<Account> accounts = generateAccounts(nb,true);
 		List<AMS_Accreditation_Organization__c> accreditations =  generateAccreditationEndorsementOrganisations(nb,true);
@@ -285,7 +285,7 @@ public class ams2gdp_TestDataGenerator
 
 	public static List<AMS_Inspection__c> generateAMS_Inspections(Integer nb, Boolean doInsert)
 	{
-		List<AMS_Inspection__c> result = new List<AMS_Inspection__c>(); 
+		List<AMS_Inspection__c> result = new List<AMS_Inspection__c>();
 
 		List<AMS_Accreditation_Organization__c> accreditations =  generateAccreditationEndorsementOrganisations(nb,true);
 		List<Account> accounts = generateAccounts(nb,true);
@@ -307,10 +307,10 @@ public class ams2gdp_TestDataGenerator
 
 		return result;
 	}
-	
+
 	public static List<AMS_Inspection__c> generateAMS_InspectionsOneTime(Integer nb, Boolean doInsert)
 	{
-		List<AMS_Inspection__c> result = new List<AMS_Inspection__c>(); 
+		List<AMS_Inspection__c> result = new List<AMS_Inspection__c>();
 
 		List<AMS_Accreditation_Organization__c> accreditations =  generateAccreditationEndorsementOrganisations(nb,true);
 		List<Account> accounts = generateAccounts(nb,true);
@@ -324,7 +324,7 @@ public class ams2gdp_TestDataGenerator
 				, Account__c = accounts[x].Id
 				, Legacy_System__c = (Math.mod(x, 2)==0) ? 'Webstar' : 'AIMS'
 				, Legacy_External_ID__c ='ABCD123'+x+'C'+x
-			));	
+			));
 		}
 
 		if(doInsert)
@@ -335,7 +335,7 @@ public class ams2gdp_TestDataGenerator
 	public static List<IATA_ISO_Country__c> generateISOCountryState() {
         List<IATA_ISO_Country__c> listCountry = new List<IATA_ISO_Country__c>();
         List<IATA_ISO_State__c> listState = new List<IATA_ISO_State__c>();
-        
+
         try
         {
             listCountry.add(new IATA_ISO_Country__c(Name='Canada', ISO_Code__c='CA', International_dialing_code_ISD__c='1',ISO_Code_Numeric__c=12));
@@ -345,7 +345,7 @@ public class ams2gdp_TestDataGenerator
             Database.upsert(listCountry, IATA_ISO_Country__c.ISO_Code__c, false);
         }
         catch (Exception e) {}
-        
+
         try
         {
             listState.add(new IATA_ISO_State__c(IEC_Valid_SAP__c=true, IATA_ISO_Country__c=listCountry[0].Id, Name='Ontario', ISO_Code__c='CA-ON'));
@@ -361,7 +361,7 @@ public class ams2gdp_TestDataGenerator
             Database.upsert(listState, IATA_ISO_State__c.ISO_Code__c, false);
         }
         catch (Exception e) {}
-        
+
         return [select Id, Name, ISO_Code__c, ISO_Code_Numeric__c, Region__c
                      , (select Id, Name, ISO_Code__c from IATA_ISO_States__r)
                 from IATA_ISO_Country__c];
@@ -370,7 +370,7 @@ public class ams2gdp_TestDataGenerator
 
 	public static List<AMS_Address__c> generateAMS_Addresses(Integer nb, Boolean doInsert)
 	{
-		List<AMS_Address__c> result = new List<AMS_Address__c>(); 
+		List<AMS_Address__c> result = new List<AMS_Address__c>();
 
 		List<Account> accounts = generateAccounts(nb,true);
 		List<IATA_ISO_Country__c> countries = generateISOCountryState();
@@ -379,14 +379,14 @@ public class ams2gdp_TestDataGenerator
 
 		for(Integer x=0; x<nb; x++)
 		{
-			result.add(new AMS_Address__c(Account__c = accounts[x].Id 
+			result.add(new AMS_Address__c(Account__c = accounts[x].Id
 				, Legacy_System__c = (Math.mod(x, 2)==0) ? 'Webstar' : 'AIMS'
-				, Legacy_External_ID__c = 'AGT-12345'+x 
+				, Legacy_External_ID__c = 'AGT-12345'+x
 				, Email__c = 'test_'+x+'@test.com'
 				, Telephone_Int__c = (Math.mod(x, 2)==0) ? '1' : ''
 				, Telephone_STD__c = (Math.mod(x, 2)==0) ? '514' : ''
 				, Telephone__c = '90000'+x
-				
+
 				, Fax_Int__c = (Math.mod(x, 2)==0) ? '1' : ''
 				, Fax_STD__c = (Math.mod(x, 2)==0) ? '514' : ''
 				, Fax__c = '80000'+x
@@ -407,18 +407,18 @@ public class ams2gdp_TestDataGenerator
 
 	}
 
-	public static String generateRandomString(Integer len) 
+	public static String generateRandomString(Integer len)
     {
         final String chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789abcdefghijklmnopqrstuvwxyz';
         String randStr = '';
-        
-        while (randStr.length() < len) 
+
+        while (randStr.length() < len)
         {
             Integer idx = Math.mod(Math.abs(Crypto.getRandomInteger()), chars.length());
             randStr += chars.substring(idx, idx+1);
         }
-    
-        return randStr; 
+
+        return randStr;
     }
 
 
@@ -447,7 +447,7 @@ public class ams2gdp_TestDataGenerator
 		return result;
 	}
 
-	
+
 
 	public static List<AMS_Agency_Airport__c> generateAMS_AgencyAirports(Integer nb, Boolean doInsert)
 	{
@@ -473,22 +473,22 @@ public class ams2gdp_TestDataGenerator
 
 	public static List<GDP_Reference_Table__c> generateReferenceTables(String table, String code, Integer nb, Boolean doInsert)
 	{
-		List<GDP_Reference_Table__c> result = new List<GDP_Reference_Table__c>(); 
+		List<GDP_Reference_Table__c> result = new List<GDP_Reference_Table__c>();
 
 		for(Integer x=0; x<nb; x++)
 		{
 			result.add(new GDP_Reference_Table__c(
-				Name = 'Ref '+x 
+				Name = 'Ref '+x
 				, Code__c = code+x
 				, Table__c = table
-				, Definition__c = 'Ref '+x 
+				, Definition__c = 'Ref '+x
 			));
 		}
 
 		if(doInsert)
 			insert result;
 
-		return result; 
+		return result;
 	}
 	public static List<AMS_Agency_Profile__c> generateAMS_AgencyProfiles(Integer nb, Boolean doInsert)
 	{
@@ -505,6 +505,32 @@ public class ams2gdp_TestDataGenerator
 				GR_Item__c=GRItems[x],
 				GR_Code__c=GRCodes[x]
 				));
+
+		}
+
+		if(doInsert)
+			insert result;
+
+		return result;
+	}
+
+	public static List<Agency_Authorization__c> generateAMS_AgencyAuthorizations(Integer nb, Boolean doInsert)
+	{
+		List<Agency_Authorization__c> result= new List<Agency_Authorization__c>();
+		List<Account> accounts = generateAccounts(nb,true);
+		List<String> FormsOfPayment=new List<String>{'CA','CC','EP'};
+		List<String> Statuses=new List<String>{'Active', 'Non-Active', 'Not Authorized'};
+		RecordType rt = [SELECT Id FROM RecordType WHERE SObjectType = 'Agency_Authorization__c' AND DeveloperName='FormOfPayment'];
+		for(Integer x=0;x<nb;x++)
+		{
+			for(Integer i = 0; i < FormsOfPayment.size(); i++) {
+				result.add(new Agency_Authorization__c(
+				Account__c = accounts[x].Id,
+				ANG_FormOfPayment_ID__c=FormsOfPayment[i],
+				Status__c=Statuses[i],
+				RecordTypeId = rt.Id
+				));
+			}
 
 		}
 
@@ -536,10 +562,10 @@ public class ams2gdp_TestDataGenerator
 	}
 
   // Id, RecordType.Name, Related_Account__c, AMS_GDP_Mapping_Key__c,Related_GDP_Products_Account_View__r.AMS_GDP_Key__c,Assoc_Affiliation_Code__r.Code__c
-		
+
 		public static List<Assoc_Affiliation_Membership__c> generateAssocAffiliation(Integer nb, Boolean doInsert)
 	{
-		List<Assoc_Affiliation_Membership__c> result = new List<Assoc_Affiliation_Membership__c>(); 
+		List<Assoc_Affiliation_Membership__c> result = new List<Assoc_Affiliation_Membership__c>();
 		List<Account> accounts = generateAccounts(nb,true);
 		List<GDP_Reference_Table__c> refTable = generateReferenceTables(nb, doInsert);
 		List<GDP_Products_Account_View__c> gdpProducts= generateGDPProductsView(nb,doInsert);
@@ -549,7 +575,7 @@ public class ams2gdp_TestDataGenerator
 		for(Integer x=0; x<nb; x++)
 		{
 			result.add(new Assoc_Affiliation_Membership__c(
-				Related_Account__c = accounts[x].Id 
+				Related_Account__c = accounts[x].Id
 				, Assoc_Affiliation_Code__c = refTable[x].Id
 				, RecordTypeId=recordTypes.get('Live')
 			));
@@ -558,7 +584,7 @@ public class ams2gdp_TestDataGenerator
 		for(Integer x=0; x<nb; x++)
 		{
 			result.add(new Assoc_Affiliation_Membership__c(
-				Related_GDP_Products_Account_View__c = gdpProducts[x].Id 
+				Related_GDP_Products_Account_View__c = gdpProducts[x].Id
 				, Assoc_Affiliation_Code__c = refTable[x].Id
 				, RecordTypeId=recordTypes.get('GDP')
 			));
@@ -615,10 +641,10 @@ public class ams2gdp_TestDataGenerator
 
 
 // SELECT AMS_GDP_Formula_Key__c, RecordType.Name, Related_Account__c, AMS_GDP_Key__c, Related_GDP_Products_Account_View__r.AMS_GDP_Key__c,AirportCode__r.Code__c FROM Adjacent_Airport__c
-	
+
 	public static List<Adjacent_Airport__c> generateAdjacentAirports(Integer nb, Boolean doInsert)
 	{
-		List<Adjacent_Airport__c> result = new List<Adjacent_Airport__c>(); 
+		List<Adjacent_Airport__c> result = new List<Adjacent_Airport__c>();
 		List<Account> accounts = generateAccounts(nb,true);
 		List<GDP_Reference_Table__c> refTable = generateReferenceTables(nb, doInsert);
 		List<GDP_Products_Account_View__c> gdpProducts= generateGDPProductsView(nb,doInsert);
@@ -628,7 +654,7 @@ public class ams2gdp_TestDataGenerator
 		for(Integer x=0; x<nb; x++)
 		{
 			result.add(new Adjacent_Airport__c(
-				Related_Account__c = accounts[x].Id 
+				Related_Account__c = accounts[x].Id
 				, RecordTypeId=recordTypes.get('Live')
 				, AirportCode__c=refTable[x].Id
 			));
@@ -637,7 +663,7 @@ public class ams2gdp_TestDataGenerator
 		for(Integer x=0; x<nb; x++)
 		{
 			result.add(new Adjacent_Airport__c(
-				Related_GDP_Products_Account_View__c = gdpProducts[x].Id 
+				Related_GDP_Products_Account_View__c = gdpProducts[x].Id
 				, RecordTypeId=recordTypes.get('GDP')
 				, AirportCode__c=refTable[x].Id
 			));
@@ -653,29 +679,29 @@ public class ams2gdp_TestDataGenerator
 
 	public static List<GDP_Address__c> generateGDP_Addresses(Integer nb, Boolean doInsert)
 	{
-		List<GDP_Address__c> result = new List<GDP_Address__c>(); 
+		List<GDP_Address__c> result = new List<GDP_Address__c>();
 
 		List<Account> accounts = generateAccounts(nb,true);
-		List<IATA_ISO_Country__c> countries = generateISOCountryState();		
+		List<IATA_ISO_Country__c> countries = generateISOCountryState();
 		List<GDP_Products_Account_View__c> gdpProducts= generateGDPProductsView(nb,doInsert);
 		Map<String, String> recordTypes = ams2gdp_Utils.getRecordTypeIdByName('GDP_Address__c');
 
 		// Live record Type
 		for(Integer x=0; x<nb; x++)
 		{
-			result.add(new GDP_Address__c(Related_Account__c = accounts[x].Id 
-				, AIMS_Id__c = (Math.mod(x, 2)==0) ? null : '12345'+x  
+			result.add(new GDP_Address__c(Related_Account__c = accounts[x].Id
+				, AIMS_Id__c = (Math.mod(x, 2)==0) ? null : '12345'+x
 				, Webstar_Id__c=(Math.mod(x, 2)==0) ?'12345'+x:null
 				, RecordTypeId = recordTypes.get('Live')
-				
+
 			));
 		}
 		// GDP record Type
 		for(Integer x=0; x<nb; x++)
 		{
-			result.add(new GDP_Address__c(Related_GDP_Products_Account_View__c = gdpProducts[x].Id 
+			result.add(new GDP_Address__c(Related_GDP_Products_Account_View__c = gdpProducts[x].Id
 				,  AIMS_Id__c = (Math.mod(x, 2)==0) ? null : '12345'+x+'GDP'
-				, Webstar_Id__c=(Math.mod(x, 2)==0) ?'12345'+x+'GDP':null 
+				, Webstar_Id__c=(Math.mod(x, 2)==0) ?'12345'+x+'GDP':null
 				, RecordTypeId = recordTypes.get('GDP')
 			));
 		}
@@ -688,27 +714,27 @@ public class ams2gdp_TestDataGenerator
 	}
 public static List<GDP_Phone__c> generateGDP_Phones(Integer nb, Boolean doInsert)
 	{
-		List<GDP_Phone__c> result = new List<GDP_Phone__c>(); 
+		List<GDP_Phone__c> result = new List<GDP_Phone__c>();
 
 		List<Account> accounts = generateAccounts(nb,true);
-		List<IATA_ISO_Country__c> countries = generateISOCountryState();		
+		List<IATA_ISO_Country__c> countries = generateISOCountryState();
 		List<GDP_Products_Account_View__c> gdpProducts= generateGDPProductsView(nb,doInsert);
 		Map<String, String> recordTypes = ams2gdp_Utils.getRecordTypeIdByName('GDP_Phone__c');
 
 		// Live record Type
 		for(Integer x=0; x<nb; x++)
 		{
-			//result.add(new GDP_Phone__c(Related_Account__c = accounts[x].Id 
-			//	, AIMS_Id__c = (Math.mod(x, 2)==0) ? null : '12345'+x+'67' 
+			//result.add(new GDP_Phone__c(Related_Account__c = accounts[x].Id
+			//	, AIMS_Id__c = (Math.mod(x, 2)==0) ? null : '12345'+x+'67'
 			//	, Webstar_Id__c=(Math.mod(x, 2)==0) ?'12345'+x+'67':null
 			//	, RecordTypeId = recordTypes.get('Live')
-				
+
 			//));
 		}
 		// GDP record Type
 		for(Integer x=0; x<nb; x++)
 		{
-			result.add(new GDP_Phone__c(Related_GDP_Products_Account_View__c = gdpProducts[x].Id 
+			result.add(new GDP_Phone__c(Related_GDP_Products_Account_View__c = gdpProducts[x].Id
 				, AIMS_Id__c = (Math.mod(x, 2)==0) ? null : '12345'+x+'67'+'GDP'
 				, Webstar_Id__c=(Math.mod(x, 2)==0) ?'12345'+x+'67'+'GDP':null
 				, RecordTypeId = recordTypes.get('GDP')
@@ -760,5 +786,5 @@ public static List<GDP_Phone__c> generateGDP_Phones(Integer nb, Boolean doInsert
 		return result;
 	}
 
-		
+
 }

@@ -1,6 +1,6 @@
 @isTest
 private class ANG_AgencyAuthorizationTriggerTest {
-	
+
 	@testSetup static void setup(){
 
 		IATA_ISO_Country__c ctry = new IATA_ISO_Country__c (Name='US',ISO_Code__c='US')  ;
@@ -9,12 +9,20 @@ private class ANG_AgencyAuthorizationTriggerTest {
         Id accountAgencyRT = AMS_Utils.getId('Account', 'IATA_Agency');
 
         Account a1 = new Account(IATA_ISO_Country__c = ctry.id, RecordTypeId = accountAgencyRT, IATACode__c='1234561',Location_Type__c='HE',Name='Test1 Agency OK',Short_Name__c='Test1 Agency', Sector__c = 'Travel Agent', Location_Class__c = 'P');
-        
+
         insert a1;
 
         Account a2 = new Account(IATA_ISO_Country__c = ctry.id, RecordTypeId = accountAgencyRT, IATACode__c='1234562',Location_Type__c='HE',Name='Test2 Agency OK',Short_Name__c='Test2 Agency', Sector__c = 'Travel Agent', Location_Class__c = 'P');
-        
+
         insert a2;
+
+		GDP_Products_Account_View__c prod1 = new GDP_Products_Account_View__c();
+		prod1.Name = a1.Id;
+		prod1.AMS_GDP_Key__c = a1.Id;
+		prod1.AIMS_ID__c = a1.Id;
+		prod1.Agency_Code_Uniqueness_Validation__c = a1.Id;
+		insert prod1;
+
 	}
 
 	@isTest static void testTriggerValidationOnInsert() {
@@ -22,7 +30,7 @@ private class ANG_AgencyAuthorizationTriggerTest {
 		List<Account> accts = [select Id from Account ];
 
         List<Agency_Authorization__c> authorizations = new List<Agency_Authorization__c>();
-        
+
         ID BSPLinkRT = AMS_Utils.getId('Agency_Authorization__c','BSPLink');
 
 		ID FormOfPaymentRT = AMS_Utils.getId('Agency_Authorization__c','FormOfPayment');
@@ -43,7 +51,7 @@ private class ANG_AgencyAuthorizationTriggerTest {
 		authorizations.add(new Agency_Authorization__c(Account__c = acct1.Id, ANG_FormOfPayment_ID__c = 'EP', Status__c = 'Active', RecordTypeId = BSPLinkRT));
 
 		try{
-			
+
 			insert authorizations;
 
 			System.assertEquals(true,false);
@@ -76,7 +84,7 @@ private class ANG_AgencyAuthorizationTriggerTest {
 		List<Account> accts = [select Id from Account ];
 
         List<Agency_Authorization__c> authorizations = new List<Agency_Authorization__c>();
-        
+
         ID BSPLinkRT = AMS_Utils.getId('Agency_Authorization__c','BSPLink');
 
 		ID FormOfPaymentRT = AMS_Utils.getId('Agency_Authorization__c','FormOfPayment');
@@ -102,7 +110,7 @@ private class ANG_AgencyAuthorizationTriggerTest {
 		System.assertEquals(1,aaFromAccountsBSPLink.size());
 
 		try{
-			
+
 			Agency_Authorization__c aa = aaFromAccountsBSPLink.get(0);
 
 			aa.RecordTypeId = FormOfPaymentRT;
@@ -142,15 +150,15 @@ private class ANG_AgencyAuthorizationTriggerTest {
 		aaFromAccounts = [Select ID,Account__c,ANG_FormOfPayment_ID__c, RecordTypeId from Agency_Authorization__c where RecordTypeId = :FormOfPaymentRT];
 
 		System.assertEquals(3,aaFromAccounts.size());
-			
+
 	}
-	
+
 	@isTest static void testTriggerValidationOnInsertMultipleAccounts() {
 
 		List<Account> accts = [select Id from Account];
 
         List<Agency_Authorization__c> authorizations = new List<Agency_Authorization__c>();
-        
+
         ID BSPLinkRT = AMS_Utils.getId('Agency_Authorization__c','BSPLink');
 
 		ID FormOfPaymentRT = AMS_Utils.getId('Agency_Authorization__c','FormOfPayment');
