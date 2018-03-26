@@ -2305,7 +2305,7 @@ public class AMS_OSCARTriggerHandler {
 
     }
     
-    private static Map<String, Id> ANGemailTemplates(String agencyType, String step, boolean wasApproved){
+    @TestVisible private static Map<String, Id> ANGemailTemplates(String agencyType, String step, boolean wasApproved){
 
         Map<String, Id> multilangTemplates = new Map<String, Id>();
 
@@ -2759,6 +2759,9 @@ public class AMS_OSCARTriggerHandler {
         if (oldOSCAR.RPM_Approval__c <> updatedOscar.RPM_Approval__c && updatedOscar.RPM_Approval__c == 'Authorize Approval') {
 
             if(updatedOscar.Process__c == AMS_Utils.NEWHELITE || updatedOscar.Process__c == AMS_Utils.NEWHESTANDARD || updatedOscar.Process__c == AMS_Utils.NEWAE){
+
+                if (updatedOscar.Process__c == AMS_Utils.NEWHESTANDARD && updatedOscar.STEP34__c != AMS_Utils.PASSED)
+                     updatedOscar.addError('Approval can\'t be set if Request financial security step is not Passed.');
 
                 System.debug('Sending the email for the user to anounce approval of the oscar');
 

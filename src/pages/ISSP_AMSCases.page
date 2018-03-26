@@ -29,9 +29,9 @@
     
   <!--link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css"/>
   <link rel="stylesheet" href="/resources/demos/style.css"/-->
-  <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+  <!--script src="https://code.jquery.com/jquery-1.12.4.js"></script>
   <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
-  <script src="{!URLFOR($Resource.datePickerFix)}" />  
+  <script src="{!URLFOR($Resource.datePickerFix)}" /-->
   <!--script src="i18n/datepicker-ar.js"></script>
   <script src="i18n/datepicker-fr.js"></script>
   <script src="i18n/datepicker-he.js"></script>
@@ -40,12 +40,12 @@
         
 
         <script type="text/javascript">
-                var $j = jQuery.noConflict();
+                //var $j = jQuery.noConflict();
             
                 var typeAccredSelected = '';
    
-                $j(function () {
-                    $j('[data-toggle="tooltip"]').tooltip();
+                $(function () {
+                    $('[data-toggle="tooltip"]').tooltip();
                 })
 
                 function checkEligibility(isBankAccountChange){
@@ -83,7 +83,7 @@
 
                 function newnAccreditationApplicationNavigateTo() {
                     if ('{!isoCountry.ANG_Enable_NewGen__c}' == 'true' && '{!isHOAccredited}' == 'false') {
-                        $j('#modalChooseAccreditationType').modal('toggle');
+                        $('#modalChooseAccreditationType').modal('toggle');
                     } else {
                         navigateToUrl('/ISSP_AMS_Accreditation?{!if(communityName=='CNS', 'CommunityName=CNS&', '')}retUrl=/ISSP_HomePage','LIST_VIEW','newCase');
                     }
@@ -91,12 +91,12 @@
                 }
 
                 function modalChooseAccreditationTypeClose() {
-                    $j('#modalChooseAccreditationType').modal('toggle');
+                    $('#modalChooseAccreditationType').modal('toggle');
                 }
 
                 function redirectAccreditationType() {
 
-                    typeAccredSelected = $j('input[type=radio]:checked').val();
+                    typeAccredSelected = $('input[type=radio]:checked').val();
 
                     if(typeAccredSelected == '') {
                         document.querySelector("[Id$='accreditationTypeRequired']").style.display = '';
@@ -122,15 +122,14 @@
                 }
 
                 function doOptInOut() {
-                    var date = $("#datepicker").val();
-
-                    if(date == '') {
+                    //var date = $("#datepicker").val();
+                    /*if(date == '') {
                         document.querySelector("[Id$='emptyDateErrorMessage']").style.display = '';
-                    } else {
-                        $('#ModalOptInOut').modal('toggle');
-                        startLoading();
-                        runOptInOut();
-                    }
+                    } else {*/
+                    $('#ModalOptInOut').modal('toggle');
+                    startLoading();
+                    runOptInOut();
+                    //}
                 }
 
                 function onCompleteOptInOut() {
@@ -139,6 +138,7 @@
                     window.location.reload();
                 }
 
+                /*
                 $( function() {
 
                   var lan = "";
@@ -159,6 +159,7 @@
                     $('[id$=effectiveDateOfChange]').val($("#datepicker").val());
                   });
                 });
+                */
 
                 function startLoading() {
                   $('.loadingBox').show();
@@ -374,20 +375,20 @@
               </div>
               <div class="modal-body">
 
-                <div class="alert alert-danger" id="emptyDateErrorMessage" style ="display: none">
+                <!--div class="alert alert-danger" id="emptyDateErrorMessage" style ="display: none">
                   <strong> {!optInOutErrorNoDate} </strong>
-                </div>
+                </div-->
 
                 <apex:outputText escape="false" value="{!optInOutMessage}"></apex:outputText>
 
                 <br></br>
                 <br></br>
-
+                <!--
                     <p>{!$Label.ANG_Effective_Date} <input type="text" id="datepicker"/></p>
 
                 <br></br>
                 <br></br>
-
+                -->
               </div>
               <div class="modal-footer">
                 <div class="col-md-12">
