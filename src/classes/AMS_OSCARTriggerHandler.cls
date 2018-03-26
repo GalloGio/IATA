@@ -2691,6 +2691,20 @@ public class AMS_OSCARTriggerHandler {
         }
         */
         
+        if(AMS_Utils.oscarNewGenNewAppProcesses.contains(updatedOscar.Process__c) && oldOSCAR.STEP6__c <> updatedOscar.STEP6__c && updatedOscar.STEP6__c == 'Passed'){
+
+            if(updatedOscar.Is_PCI_compliant__c == 'No' && updatedOscar.ANG_PCI_compliance_expiry_date__c <> null){
+                updatedOscar.addError('Cannot change the PCI compliance expiry date if the Agent is not PCI compliant.');
+                return;
+            }
+
+            if(updatedOscar.Is_PCI_compliant__c == 'Yes' && updatedOscar.ANG_PCI_compliance_expiry_date__c == null){
+                updatedOscar.addError('Please specify the PCI compliance expiry date.');
+                return;
+            }
+
+        }
+
         if (oldOSCAR.Send_inspection_request__c == false && updatedOscar.Send_inspection_request__c == true)
             updatedOSCAR.STEP13__c = 'In Progress';
 

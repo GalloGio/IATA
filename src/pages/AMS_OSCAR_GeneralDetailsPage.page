@@ -1,9 +1,7 @@
 <apex:page controller="AMS_OSCAR_Case_Detail_Controller">
    
     <!-- <c:AMS_CrossObjectViewer displayedObject="{!AMS_OSCAR__c}"/> -->
-    <script src="../../soap/ajax/34.0/connection.js" type="text/javascript"></script>
-    <script src="../../soap/ajax/34.0/apex.js" type="text/javascript"></script>
-    <apex:includeScript value="/support/console/42.0/integration.js"/>
+    <apex:includeScript value="/support/console/34.0/integration.js"/>
     <apex:includeScript value="{!$Resource.jquery2_1_4}"/>
 
     <script type="text/javascript">
@@ -77,51 +75,6 @@
             }, name);
           });
         }
-
-    function createChangesOscar(arg1){
-
-        setTimeout(function(){
-            sforce.connection.sessionId = "{!$Api.Session_ID}";
-
-            var accreditations = sforce.connection.query("Select Id, HO_Account__c, SAAM_Case__c, SAAM_Case__r.Casenumber from AMS_Pax_Accreditation_Form__c where HO_Account__c = '{!accreditationObj.HO_Account__c}' and Id != '{!accreditationObj.Id}' and SAAM_Case__r.ParentId = '{!accreditationObj.SAAM_Case__c}'");
-
-            if(accreditations.size > 0){
-                document.getElementById('loaderPageBlock').style.display = 'none';
-                alert('This Staging Area already has a case. Please refresh the page.');
-                return;
-            }
-
-            var result = sforce.apex.execute("ANG_OscarProcessHelper","createOscarChangesCase", {accreditationId: arg1}); 
-
-            if(result[0] == '-1')
-                alert("Error trying to create oscar case. Reason:" + result[1]);
-            else{
-
-                var oscarId = result[0];
-                var oscarNumber = result[1];
-
-                var openPrimarytab = function(result)
-                {               
-                    sforce.console.openPrimaryTab(null, '/'+oscarId, false, oscarNumber);     
-                };
-
-                sforce.console.getEnclosingPrimaryTabId(openPrimarytab);
-                }
-            },10);
-
-    }
-
-    function openCase(arg1,arg2){
-
-            var openPrimarytab = function(result)
-            {               
-                sforce.console.openPrimaryTab(null, '/'+arg1, true, arg2);     
-            };
-
-            sforce.console.getEnclosingPrimaryTabId(openPrimarytab);
-        
-    
-    }
     </script>
    
     <style type="text/css">
@@ -205,10 +158,6 @@
                 content: "*";
                 color: red;
                 font-weight: bold;
-            }
-            .warningMessage1{
-                color:red;
-                text-align: center;
             }
 
      </style>
@@ -349,28 +298,9 @@
     <apex:actionFunction name="rerenderDetailInfo" rerender="detailInfo" />
     <apex:actionFunction name="rerenderwarningInspPanel" rerender="warningInspPanelContainer" />
 
-    <apex:pageBlock rendered="{!isRevalidationOscar}" mode="maindetail" tabStyle="AMS_Pax_Accreditation_Form__c" id="mainPageBlock">
-            <apex:pageBlockButtons location="bottom" rendered="{!doNotHaveOscarYet}">
-                <apex:commandButton value="Create Change Process" style=" display:inline;" onclick="createChangesOscar('{!accreditationObj.Id}')" reRender="mainPageBlock"/>
-            </apex:pageBlockButtons>
-                  <apex:outputText  style="color: red;font-size: 14px;" rendered="{!!doNotHaveOscarYet}">
-                <div class="warningMessage1">
-                    <div>This Staging Area already has a case, click below to open the case</div>
-                    <br />
-                    <div>
-
-                            <apex:commandButton rendered="{!!doNotHaveOscarYet}" value="Go to Oscar Case" style=" display:inline;" onclick="openCase('{!existingOscarCaseId}','{!existingOscarCaseNumber}')"/>
-                    </div>
-                </div>
-                </apex:outputText>
-
-    </apex:pageBlock>
-
     </apex:form>
     
     <hr/>
-    
-
 
     <apex:detail id="detailInfo" subject="{!oscarObj}" relatedList="true"  title="false" rendered="{!IF(oscarObj != null, true, false)}" rerender="{!oscarObj}" inlineEdit="true" oncomplete="refreshTab()"/>
 
