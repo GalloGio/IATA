@@ -62,6 +62,15 @@ public class AMS_OSCARTriggerHandler {
         set;
     }
 
+    /*** AMSU-113 Start ***/
+    public static Set<String> pciCompliantProcesses {
+        get {
+            return new Set<String> {AMS_Utils.new_HO, AMS_Utils.new_BR, AMS_Utils.PCI_COMPLIANT};
+        }
+        set;
+    }
+    /*** AMSU-113 End ***/
+
     //*************************************
     //********* context methods ***********
     //*************************************
@@ -89,6 +98,10 @@ public class AMS_OSCARTriggerHandler {
 
         checkOwnershipOnProcess(oscars, (Map<Id,AMS_OSCAR__c>)Trigger.oldMap);
 
+        /*** AMSU-113 Start ***/
+        processPCICompliant(Trigger.new, (Map<Id, AMS_OSCAR__c>) Trigger.oldMap);
+        /*** AMSU-113 End ***/
+
         processGeneralActionsOnOscarBeforeUpdate((List<AMS_OSCAR__c>)Trigger.New, (Map<Id,AMS_OSCAR__c>)Trigger.oldMap);
 
         handleNewgenFOPActionsBeforeUpdate(oscars, (Map<Id,AMS_OSCAR__c>)Trigger.oldMap);
@@ -114,7 +127,56 @@ public class AMS_OSCARTriggerHandler {
         updateCaseKPIFields();
         updateCaseInfo();
         createHoAdminNotifications();
+        /*** AMSU-113 Start ***/
+        updateAccountPCICompliant((List<AMS_OSCAR__c>) Trigger.new, (Map<Id, AMS_OSCAR__c>) Trigger.oldMap);
+        /*** AMSU-113 End ***/
+	}
+
+    /*** AMSU-113 Start ***/
+    public static void processPCICompliant(List<AMS_OSCAR__c> oscars, Map<Id,AMS_OSCAR__c> oldMap) {
+        System.debug('processPCICompliant - start ' );
+        for(AMS_Oscar__c oscar : oscars) {
+            AMS_Oscar__c oldOscar = oldMap.get(oscar.Id);
+            if(!String.isBlank(oscar.Account__c) && pciCompliantProcesses.contains(oscar.Process__c) && oscar.Location_Class__c == AMS_Utils.LC_PASSENGER && oldOscar.STEP6__c != oscar.STEP6__c && oscar.STEP6__c == AMS_Utils.PASSED && oscar.Is_PCI_compliant__c == 'No') {
+                oscar.Change_Code__c = 'PCI';
+                System.debug('processPCICompliant - oscar: ' + oscar);
+            }
+        }
+    } 
+
+    public static void updateAccountPCICompliant(List<AMS_OSCAR__c> oscars, Map<Id, AMS_OSCAR__c> oldMap) {
+        Map<Id, String> mapExpiryDates = new Map<Id,String>();
+        for(AMS_Oscar__c oscar : oscars) {
+            AMS_OSCAR__c oldOscar = oldMap.get(oscar.id);
+            if(!String.isBlank(oscar.Account__c) && pciCompliantProcesses.contains(oscar.Process__c) && oscar.Location_Class__c == AMS_Utils.LC_PASSENGER && oldOscar.STEP6__c != oscar.STEP6__c && oscar.STEP6__c == AMS_Utils.PASSED) {
+                if(oscar.Is_PCI_compliant__c == 'Yes' || oscar.Is_PCI_compliant__c == 'Nil CC') {
+                    mapExpiryDates.put(oscar.Account__c, oscar.ANG_PCI_compliance_expiry_date__c + ',' + oscar.Is_PCI_compliant__c);
+                }else if(oscar.Is_PCI_compliant__c == 'No') {
+                    mapExpiryDates.put(oscar.Account__c,  'empty,' + oscar.Is_PCI_compliant__c);
+                }
+            }
+        }
+
+        if(!mapExpiryDates.isEmpty()) {
+            asyncUpdateAccPCI(mapExpiryDates);
+        }
     }
+
+    @future
+    public static void asyncUpdateAccPCI(Map<Id, String> mapValues) {
+        List<Account> accounts = new List<Account>();
+        for(Id accountId : mapValues.keySet()) {
+            List<String> values = mapValues.get(accountId).split(',');
+            accounts.add(new Account(Id= accountId, 
+                                     ANG_PCI_compliance_expiry_date__c= values[0]=='empty'?null:Date.valueOf(values[0]), 
+                                     Is_PCI_compliant__c= (String) values[1],
+                                     PCI_DSS_Compliant__c= null));
+        }
+
+        update accounts;
+    }
+
+    /*** AMSU-113 End ***/
 
     private static void processGeneralActionsOnOscarBeforeUpdate(List<AMS_OSCAR__c> oscarsToInsert, Map<Id,AMS_OSCAR__c> oldOscars){
 
@@ -2377,12 +2439,16 @@ public class AMS_OSCARTriggerHandler {
 
             if(oldMap.get(oscar.Id).STEP6__c <> AMS_Utils.PASSED && oscar.STEP6__c == AMS_Utils.PASSED){
 
-                if(AMS_Utils.processesANGrequiredAttachValidation.contains(oscar.Process__c)){
+				if(AMS_Utils.processesANGrequiredAttachValidation.contains(oscar.Process__c)){
                     
                     boolean isToValidate = true;
                     
                     if(oscar.Process__c == AMS_Utils.NGCHANGES && (oscar.ANG_Type_Of_Change__c == null || oscar.ANG_Type_Of_Change__c == AMS_Utils.ANG_VMFR)){
                             isToValidate = false; // we can skipp this validation
+                    }
+                    //AMSU-113
+                    if(oscar.Process__c == AMS_Utils.PCI_COMPLIANT && oscar.Is_PCI_compliant__c != 'Yes' && oscar.Is_PCI_compliant__c != 'Nil CC'){
+                        isToValidate = false; // we can skipp this validation
                     }
 
                     if(isToValidate){
@@ -2403,10 +2469,23 @@ public class AMS_OSCARTriggerHandler {
                                 System.debug(e.getStackTraceString());
                             }
 
-                            List<AmazonFile__c> amazonFiles = [SELECT Id FROM AmazonFile__c WHERE case__c =: c.Id];
+							List<AmazonFile__c> amazonFiles = new List<AmazonFile__c>();
 
-                            if((attchs == null || attchs.isEmpty()) && amazonFiles.isEmpty())
+                            //AMSU-113 - added validation for PCI Compliant
+                            if(oscar.Process__c == AMS_Utils.PCI_COMPLIANT){
+                                amazonFiles = [SELECT Id FROM AmazonFile__c WHERE case__c =: c.Id AND File_Identifier_picklist__c = 'PCI_COMPLIANCE'];
+                            }else{
+                                amazonFiles = [SELECT Id FROM AmazonFile__c WHERE case__c =: c.Id];        
+                            }
+                            
+							if((attchs == null || attchs.isEmpty()) && amazonFiles.isEmpty()){
+                                //AMSU-113 - added error msg for PCI Compliant
+                                if(oscar.Process__c == AMS_Utils.PCI_COMPLIANT){
+                                    oscar.addError('Error - There are no PCI Compliant attachments with associated with this case/oscar.');
+                                }else{ 
                                 oscar.addError('Error - There are no attachments associated with this case/oscar.');
+								}
+							}
                         }
                     }
                 }
@@ -2837,6 +2916,8 @@ public class AMS_OSCARTriggerHandler {
         ID newNGRT = Schema.SObjectType.AMS_OSCAR__c.getRecordTypeInfosByName().get('NG New HE').getRecordTypeId();
 
         ID corrRT = Schema.SObjectType.AMS_OSCAR__c.getRecordTypeInfosByName().get('CORRECTION').getRecordTypeId();
+        ID certRT = Schema.SObjectType.AMS_OSCAR__c.getRecordTypeInfosByName().get('CERTIFICATION').getRecordTypeId(); //FM AMSU-113
+        
         if (updatedOscar.recordTypeID == newRT || updatedOscar.recordTypeID == newNGRT || updatedOSCAR.recordTypeID == AMS_Utils.RECTYPE_NEWAE){
             if (oldOSCAR.STEP2__c != 'Passed' && updatedOscar.STEP2__c == 'Passed') {
                 AMS_OSCAR_JSON.ChangeCode changeCode = new AMS_OSCAR_JSON.ChangeCode();
@@ -2893,9 +2974,9 @@ public class AMS_OSCARTriggerHandler {
                         }
                     }
 
-                    //Remove TERMINATED Accounts from list
-                    for(Account acc: [SELECT Id, Status__c FROM Account WHERE Id IN :allHierarchyAccountIds AND Status__c <> null]){
-                        if(acc.Status__c.equalsIgnoreCase(AMS_Utils.ACC_S0_TERMINATED)) allHierarchyAccountIds.remove(acc.Id);
+                    //Remove TERMINATED and NOT ACCREDITED Accounts from list
+                    for(Account acc: [SELECT Id, Status__c FROM Account WHERE Id IN :allHierarchyAccountIds]){
+                        if(acc.Status__c == null || acc.Status__c.equalsIgnoreCase(AMS_Utils.ACC_S0_TERMINATED) || acc.Status__c.equalsIgnoreCase(AMS_Utils.ACC_S1_NOTACCREDITED)) allHierarchyAccountIds.remove(acc.Id);
                     }
 
                     //RB: Bypass hierarchy verification when hierarchy is too big with many owners
@@ -2973,7 +3054,44 @@ public class AMS_OSCARTriggerHandler {
             }
             
             updatedOscar.Sanity_Check_Passed__c = true;
-        }
+        
+            }
+        //FM AMSU-113            
+        }else if (updatedOscar.recordTypeID == certRT){
+            System.debug('updatedOscar.Is_PCI_compliant__c: ' + updatedOscar.Is_PCI_compliant__c);
+            System.debug('updatedOscar.Change_Code__c: ' + updatedOscar.Change_Code__c);
+            System.debug('oldOSCAR.STEP6__c: ' + oldOSCAR.STEP6__c);
+            System.debug('updatedOscar.STEP6__c: ' + updatedOscar.STEP6__c);
+            if (oldOSCAR.STEP6__c != 'Passed' && updatedOscar.STEP6__c == 'Passed' && updatedOscar.Is_PCI_compliant__c == 'No'){
+            
+                System.debug('updatedOscar.Is_PCI_compliant__c: entrei' );
+
+                Savepoint sp = Database.setSavepoint();
+
+                try {
+                
+                    if(updatedOscar.Change_Code__c == 'PCI') {
+                        system.debug(LoggingLevel.ERROR,'applyChangeCodesWithDependencies() -> generate the change code');
+                        AMS_OSCAR_JSON.ChangeCode changeCode = new AMS_OSCAR_JSON.ChangeCode();
+
+                        changeCode.name = 'PCI';
+                        changeCode.reasonCode = '91';
+                        changeCode.memoText = 'PLS NOTE AGT HAS NOT SUBMITTED PCI DSS PROOF OF COMPLIANCE BY THE DEADLINE THEREFORE A NON COMPLIANCE NOTICE HAS BEEN ISSUED';
+                        changeCode.reasonDesc  = 'ACCREDITED–MEETS–STANDARDS';
+                        changeCode.status  = '9';
+
+                        Account acct = new Account(Id = updatedOscar.Account__c);
+                        AMS_ChangeCodesHelper.createAAChangeCodes(new List<AMS_OSCAR_JSON.ChangeCode> {changeCode}, new List<AMS_OSCAR__c> {updatedOscar}, new List<Account> {acct}, true);
+                    
+                        System.debug('updatedOscar.Is_PCI_compliant__c: criei CC' );
+                        //AMS_Utils.copyDataToAccount(new List<AMS_OSCAR__c>{updatedOscar}, false);
+                    }
+
+                } catch (Exception ex) {
+                    System.debug('Exception: ' + ex);
+                    Database.rollback(sp); throw ex;
+                }
+        	}
         }
     }
 

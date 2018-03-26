@@ -809,6 +809,7 @@ global without sharing class AMS_RecordCreatorWebservice {
 
         Account acctSA = new Account();
        
+        acctSA.RecordTypeId = AMS_Utils.getId('Account', 'Standard_Account');
         acctSA.Name = parentAccount.Name;
         acctSA.Short_Name__c = parentAccount.Short_Name__c;
         acctSA.Abbreviated_name__c = parentAccount.Abbreviated_name__c;
