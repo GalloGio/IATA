@@ -964,6 +964,7 @@ global class ANG_OscarProcessHelper {
 		fieldsOfObject = new Map<String,Object>();
         fieldsOfObject.put('Process__c',AMS_Utils.NGANNUALREVAL);
 		fieldsOfObject.put('Status__c','Open');
+		fieldsOfObject.put('Oscar_Communication_Case_Id__c',cse.Id);
 		fieldsOfObject.put('OwnerId',cseId);
 		//fieldsOfObject.put('AMS_Online_Accreditation__c',stagingArea.Id);
 
