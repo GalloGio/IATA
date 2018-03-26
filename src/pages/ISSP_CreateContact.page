@@ -124,24 +124,31 @@
 
                 <apex:inputField id="businessphoneinput" html-placeholder="" styleclass="form-control rec" value="{!con.PhoneNational__c}" onblur="setInternationalPhoneNo('phone');" 
                   onkeyup="setLengthPhone(this,0)"/>
-                  <div class="hiddenerror" style="display: none;">
-                    <p class="errormsg" style="line-height: 26px;">{!$Label.ISSP_Registration_Error_BusinessPhone}</p>
-                  </div>
+                <div class="hiddenerror" style="display: none;">
+                  <p class="errormsg" style="line-height: 26px;">{!$Label.ISSP_Registration_Error_BusinessPhone}</p>
+                </div>
+                <div class="hiddenerror invalidphone" style="display: none;">
+                  <p class="errormsg" style="line-height: 26px;">{!$Label.ISSP_Registration_BusinessPhone_Msg}</p>
+                </div>
               </div>
-
-
 
               <div class="form-group" id="Phone2">
                 <label   for="businessmobileinput">{!$Label.ISSP_Registration_MobilePhone}</label><br/>
                 <apex:inputHidden id="businessmobile" value="{!con.MobilePhone}" />
                 <apex:inputField id="businessmobileinput" styleclass="form-control" html-placeholder="" value="{!con.MobileNational__c}" onblur="setInternationalPhoneNo('mobile');"
                   onkeyup="setLengthPhone(this,1)"/>
+                  <div class="hiddenerror invalidmobile" style="display: none;">
+                    <p class="errormsg" style="line-height: 26px;">{!$Label.ISSP_Registration_MobilePhone_Msg}</p>
+                  </div>
               </div>
               <div class="form-group" id="Fax">
                 <label   for="businessfaxinput">{!$ObjectType.Contact.fields.Fax.Label}</label><br/>
                 <apex:inputHidden id="businessfax" value="{!con.Fax}" />
                 <apex:inputField id="businessfaxinput" styleclass="form-control" value="{!con.FAXNational__c}" onblur="setInternationalPhoneNo('fax');"
                   onkeyup="setLengthPhone(this,2)"/>
+                  <div class="hiddenerror invalidfax" style="display: none;">
+                    <p class="errormsg" style="line-height: 26px;">{!$Label.ISSP_Registration_FaxPhone_Msg}</p>
+                  </div>
               </div>
 
               <div class="form-group"><!--  onClick="if(!validateNewUser())return false;" {!registerContact}-->
@@ -226,57 +233,120 @@
             
         }
 
-        function validateInputs(){
+        function validatePhone(){
+          //the return value
+          var isValidPhone = false;
+          try{
+            //phone number validation
+            var phone = $j("input[name='{!$Component.newContact.businessphoneinput}']");
+            var phoneNumber = phone.intlTelInput("getNumber");
+            var isValidPhoneNumber = (typeof phoneNumber != "undefined" && phone.intlTelInput("isValidNumber"));
+            //var countryData = phone.intlTelInput("getSelectedCountryData");
+            if(isValidPhoneNumber){
+              var completePhoneNbr = '+' + phone.intlTelInput("getSelectedCountryData").dialCode;
+              phoneNumber = phoneNumber.replace(completePhoneNbr,"");
+              phoneNumber = phoneNumber.replace("+1","");
+              completePhoneNbr  = completePhoneNbr + phoneNumber;
+              //Save dial code and country values into the hidden field
+              var temp1 = document.getElementById('{!$Component.newContact.phone1}');
+              temp1.value = completePhoneNbr;
 
-          //Save dial code and country values into hidden fields
-          try {
-            var natphone = $j("input[name='{!$Component.newContact.businessphoneinput}']");
-            var natmobile = $j("input[name='{!$Component.newContact.businessmobileinput}']").intlTelInput("getSelectedCountryData");
-            var natfax = $j("input[name='{!$Component.newContact.businessfaxinput}']").intlTelInput("getSelectedCountryData");
+              $j('.invalidphone').hide();
+              isValidPhone = true;
 
-            var input1 = $j("input[name='{!$Component.newContact.businessphoneinput}']");
-            var final1 = '+' + input1.intlTelInput("getSelectedCountryData").dialCode;
-            var number1 = input1.intlTelInput("getNumber");
-            number1 = number1.replace(final1,"");
-            number1 = number1.replace("+1","");
-            final1 = final1 + number1;
-            // var temp1 = document.getElementById('j_id0:j_id43:newContact:phone1');
-            var temp1 = document.getElementById('{!$Component.newContact.phone1}');
-            temp1.value = final1;
-            //alert("Final 1: " + final1);
-
-            var input2 = $j("input[name='{!$Component.newContact.businessmobileinput}']");
-            var final2 = '+' + input2.intlTelInput("getSelectedCountryData").dialCode;
-            var number2 = input2.intlTelInput("getNumber");
-            if (number2 != "") {
-                number2 = number2.replace(final2,"");
-                number2 = number2.replace("+1","");
-                final2 = final2 + number2;
-                // var temp2 = document.getElementById('j_id0:j_id43:newContact:phone2');
-                var temp2 = document.getElementById('{!$Component.newContact.phone2}');
-                temp2.value = final2;
-                //alert("Final 2: " + final2);
+            }else{
+              $j('.invalidphone').show();
             }
-  
-            var input3 = $j("input[name='{!$Component.newContact.businessfaxinput}']");
-            var final3 = '+' + input3.intlTelInput("getSelectedCountryData").dialCode;
-            var number3 = input3.intlTelInput("getNumber");
-            if (number3 != "") {
-                number3 = number3.replace(final3,"");
-                number3 = number3.replace("+1","");
-                final3 = final3 + number3;
-                // var temp3 = document.getElementById('j_id0:j_id43:newContact:phone3');
-                var temp3 = document.getElementById('{!$Component.newContact.phone3}');
-                temp3.value = final3;
-                //alert("Final 3: " + final3);
-              }
-          }catch(e) {
-            console.log(e);
+          }catch(exception){
+            $j('.invalidphone').show();
           }
 
+          return isValidPhone;
+
+        }
+
+        function validateMobile(){
+          //the return value
+          var isValidMobile = true;
+          $j('.invalidmobile').hide();
+          try{
+            //mobile number
+            var mobile = $j("input[name='{!$Component.newContact.businessmobileinput}']");
+            var mobileValue = mobile[0].value;
+            //Check if mobile number was inserted
+            if(typeof mobileValue != "undefined" && mobileValue != ""){
+              var mobileNumber = mobile.intlTelInput("getNumber");
+              var isValidMobileNumber = (typeof mobileNumber != "undefined" && mobile.intlTelInput("isValidNumber"));
+              //mobile number validation
+              if(isValidMobileNumber){
+                var completeMobileNbr = '+' + mobile.intlTelInput("getSelectedCountryData").dialCode;
+                mobileNumber = mobileNumber.replace(completeMobileNbr,"");
+                mobileNumber = mobileNumber.replace("+1","");
+                completeMobileNbr  = completeMobileNbr + mobileNumber;
+                //Save dial code and country values into the hidden field
+                var temp2 = document.getElementById('{!$Component.newContact.phone2}');
+                temp2.value = completeMobileNbr;
+
+              }else{
+                $j('.invalidmobile').show();
+                isValidMobile = false;
+              }
+            }
+
+          }catch(exception){
+            $j('.invalidmobile').show();
+            isValidMobile = false;
+          }
+
+          return isValidMobile;
+
+        }
+
+        function validateFax(){
+          //the return value
+          var isValidFax = true;
+          $j('.invalidfax').hide();
+          try{
+            //fax number validation
+            var fax = $j("input[name='{!$Component.newContact.businessfaxinput}']");
+            faxValue = fax[0].value;
+            //Check if fax number was inserted
+            if(typeof faxValue != "undefined" && faxValue != ""){
+              var faxNumber = fax.intlTelInput("getNumber");
+              var isValidFaxNumber = (typeof faxNumber != "undefined" && fax.intlTelInput("isValidNumber"));
+              //fax number validation
+              if(isValidFaxNumber){
+                var completeFaxNbr = '+' + fax.intlTelInput("getSelectedCountryData").dialCode;
+                faxNumber = faxNumber.replace(completeFaxNbr,"");
+                faxNumber = faxNumber.replace("+1","");
+                completeFaxNbr  = completeFaxNbr + faxNumber;
+                //Save dial code and country values into the hidden field
+                var temp3 = document.getElementById('{!$Component.newContact.phone3}');
+                temp3.value = completeFaxNbr;
+
+              }else{
+                $j('.invalidfax').show();
+                isValidFax = false;
+              }
+            }
+
+          }catch(exception){
+            $j('.invalidfax').show();
+            isValidFax = false;
+          }
+
+          return isValidFax;
+        }
+
+        function validateInputs(){
+          //validate the format number for the phone, mobile and fax per country
+          var isPhoneOK = validatePhone();
+          var isMobileOK = validateMobile();
+          var isFaxOK = validateFax();
+          
+          var arePhoneFaxMobileNumbersValid = isPhoneOK && isMobileOK && isFaxOK;
           //validate mandatory input fields
-          var isMandatoryFieldsOK = validateMandatoryFields();
-          return isMandatoryFieldsOK;
+          return arePhoneFaxMobileNumbersValid && validateMandatoryFields();
 
         }
     </script>  
@@ -295,7 +365,10 @@
     
         var natphone = $j("input[name='{!$Component.newContact.businessphoneinput}']");
         var phone = $j("input[name='{!$Component.newContact.businessphone}']");
-        var countryCode = "{!communityName}" == "CNS" ? "us" : "{!country}" == "" ?  getGeoCode() : "{!country}";        
+        var countryCode = "{!communityName}" == "CNS" ? "us" : "{!country}" == "" ?  getGeoCode() : "{!country}";    
+
+        console.log("countryCode: " + countryCode);
+        //console.log("{!country}: " + {!country});    
 
         natphone.intlTelInput({
             defaultCountry: countryCode,
@@ -353,8 +426,6 @@
       var natphone = $j("input[name='{!$Component.newContact.businessphoneinput}']");
       var natmobile = $j("input[name='{!$Component.newContact.businessmobileinput}']");
       var natfax = $j("input[name='{!$Component.newContact.businessfaxinput}']");
-
-
 
       var phonenat = "{!con.Phone}";
       var phonemobile = "{!con.MobilePhone}";

@@ -685,10 +685,12 @@
     </relatedLists>
     <relatedLists>
         <fields>NAME</fields>
+        <fields>Hierarchy__c</fields>
         <relatedList>AMS_Agencies_relationhip__c.Child_Account__c</relatedList>
     </relatedLists>
     <relatedLists>
         <fields>NAME</fields>
+        <fields>Hierarchy__c</fields>
         <relatedList>AMS_Agencies_relationhip__c.Parent_Account__c</relatedList>
     </relatedLists>
     <relatedLists>

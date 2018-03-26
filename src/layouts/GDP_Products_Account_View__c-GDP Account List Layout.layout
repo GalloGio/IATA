@@ -90,6 +90,10 @@
             </layoutItems>
             <layoutItems>
                 <behavior>Readonly</behavior>
+                <field>Location_Type_Code_Interpreted__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Readonly</behavior>
                 <field>Related_Accreditation_Class_Code__c</field>
             </layoutItems>
             <layoutItems>

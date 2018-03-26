@@ -24,7 +24,7 @@
                 <field>Name_on_ID_Card__c</field>
             </layoutItems>
             <layoutItems>
-                <behavior>Readonly</behavior>
+                <behavior>Edit</behavior>
                 <field>VER_Number__c</field>
             </layoutItems>
             <layoutItems>
@@ -271,7 +271,7 @@
         <label>Photo</label>
         <layoutColumns>
             <layoutItems>
-                <behavior>Readonly</behavior>
+                <behavior>Edit</behavior>
                 <field>Photo__c</field>
             </layoutItems>
         </layoutColumns>
@@ -295,6 +295,10 @@
             <layoutItems>
                 <behavior>Readonly</behavior>
                 <field>JSON_WS_Complex__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Readonly</behavior>
+                <field>JSON_WS_IDCard_App__c</field>
             </layoutItems>
         </layoutColumns>
         <layoutColumns>

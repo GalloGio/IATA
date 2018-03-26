@@ -87,7 +87,7 @@ global Database.QueryLocator start(Database.BatchableContext BC){
          Messaging.SingleEmailMessage email = new Messaging.SingleEmailMessage(); 
         // Sets the 'BACK Up Accounts Pre Acli ' + dateTime.now()of the email
         email.setSubject('Acli Back Up STATUS ' + datetime.now());
-        list<string> emails = new list<string>{'salvatore.viticchie@b-i.com'};
+        list<string> emails = new list<string>{'sfdcadmin@iata.org'};
         if(userEmail <> null)emails.add(userEmail);
         email.setToAddresses( emails);
         email.setPlainTextBody( body );

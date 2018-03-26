@@ -37,6 +37,10 @@ public class AMS_OSCAR_ProcessViewerController {
         get{
             if(this.oscar.Account__c == null)
                 return false;
+
+            if(this.oscar.AMS_Online_Accreditation__c == null)
+                return false;
+                
             // NG Processes specific conditions
             If(AMS_Utils.oscarNewGenProcesses.contains(oscar.Process__c) && oscar.Process__c != AMS_Utils.NEWHELITE && oscar.Process__c != AMS_Utils.NEWHESTANDARD) {
                 return (
@@ -55,8 +59,25 @@ public class AMS_OSCAR_ProcessViewerController {
                 && (!(oscar.Process__c == AMS_Utils.BANKACCCHANGES && oscar.Account__r.ANG_IsNewGenAgency__c))
                 && oscar.Process__c != AMS_Utils.IEPBANKACCOUNTSETUP
                 && !oscar.AMS_Online_Accreditation__r.Ready_for_Accreditation__c
-            );
+            ) || isAMSCheckRemittance; //AMSU-125
         }
+    }
+	
+	//AMSU-125
+    public Boolean isAMSCheckRemittance {
+        get {
+            return oscar != null && checkAMSRemittance(oscar);
+        } 
+        set;
+    }
+    
+    public Boolean checkAMSRemittance(AMS_OSCAR__c oscar) { 
+        List<AMS_Operation__c> operationCodes =  ANG_AgencyChangesHelper.fetchOperationCodeConfiguration(AMS_Utils.getRecordType('AMS_Settlement_System__c','BSP').Id, oscar.AMS_Online_Accreditation__r.Branch_Office_Country__c, oscar.AMS_Online_Accreditation__r.Location_Class__c);       
+        Set<String> locationsClass = new Set<String> {'P', 'D'};
+        if(!String.isBlank(oscar.Process__c) && locationsClass.contains(oscar.Location_Class__c) && (AMS_Utils.oscarNewProcesses.contains(oscar.Process__c) || (oscar.Process__c == AMS_Utils.AGENCYCHANGES  && oscar.Type_of_change__c == AMS_Utils.VFMR)) && !operationCodes.isEmpty()) {
+            return String.isBlank(oscar.AMS_Online_Accreditation__r.Remittance_frequency__c);
+        }
+        return false;
     }
 
     public Boolean isNotNewGenProcess{
@@ -64,7 +85,7 @@ public class AMS_OSCAR_ProcessViewerController {
             return (
                 oscar != null
                 && !AMS_Utils.oscarNewGenProcesses.contains(oscar.Process__c)
-		&& !(oscar.Process__c == AMS_Utils.BANKACCCHANGES && oscar.AMS_Online_Accreditation__c == null)
+        && !(oscar.Process__c == AMS_Utils.BANKACCCHANGES && oscar.AMS_Online_Accreditation__c == null)
                 //&& oscar.Process__c != AMS_Utils.NEWHELITE
                 && !oscar.AMS_Online_Accreditation__r.Ready_for_Accreditation__c
             );
@@ -105,6 +126,29 @@ public class AMS_OSCAR_ProcessViewerController {
         }
     } 
 
+    /*** AMSU-113 Start ***/
+    public Set<String> processToRemoveFields {
+        get{
+            return new Set<String> {AMS_Utils.new_HO, AMS_Utils.new_BR};
+        }
+        set;
+    }
+
+    public Boolean isToRemoveFieldsUI {
+        get {
+            return oscar != null && oscar.Location_Class__c != AMS_Utils.LC_PASSENGER && processToRemoveFields.contains(oscar.Process__c);
+        }
+        set;
+    }
+
+    public Boolean isPCICompliant {
+        get {
+            return oscar.Process__c == AMS_Utils.PCI_COMPLIANT;
+        }
+        set;
+    }
+    /*** AMSU-113 End ***/
+
     public Boolean isAnalystProfile{
         get{
             List<Profile> analystProfileLst = [select id from profile where Name IN :analystProfiles];
@@ -140,6 +184,18 @@ public class AMS_OSCAR_ProcessViewerController {
     public boolean isNewgenRT{
         get{
             return oscar.RecordTypeID == AMS_Utils.RECTYPE_NEWHE && oscar.Process__c == AMS_Utils.NEWHESTANDARD;
+        }
+    }
+
+    public Boolean blockFAoptOut{
+        get{
+            return (oscar.ANG_Type_Of_Change__c != null && oscar.ANG_Type_Of_Change__c.contains(AMS_Utils.ANG_ACCREDITATION_TYPE));
+        }
+    }
+
+    public Boolean hideFAoptOut{
+        get{
+            return !ANG_AgencyChangesHelper.containsChange(new List<String>(AMS_Utils.ANG_OSCAR_MAJOR_CHANGES_PROCESSES), oscar.ANG_Type_Of_Change__c);
         }
     }
 
@@ -358,11 +414,11 @@ public class AMS_OSCAR_ProcessViewerController {
         for(Schema.SObjectField field : fMap.values()){
 
             Schema.DescribeFieldResult fd = field.getDescribe();
-            if(fd.isAccessible()) fields += fd.getName() + ', ';
+            if(fd.isAccessible() || Test.isRunningTest()) fields += fd.getName() + ', ';
         }
         fields = fields.substring(0,fields.lastIndexOf(','));
         
-        return 'SELECT ' + fields + ', AMS_Online_Accreditation__r.Ready_for_Accreditation__c , RecordType.Name, RecordType.DeveloperName, Account__r.Name, AMS_Online_Accreditation__r.ANG_IsNewGenAgency__c, AMS_Online_Accreditation__r.Remittance_Frequency__c, Account__r.ANG_IsNewGenAgency__c FROM AMS_OSCAR__c where Id =: oscarId LIMIT 1';
+		return 'SELECT ' + fields + ', AMS_Online_Accreditation__r.Ready_for_Accreditation__c , RecordType.Name, RecordType.DeveloperName, Account__r.Name, AMS_Online_Accreditation__r.ANG_IsNewGenAgency__c, AMS_Online_Accreditation__r.Remittance_Frequency__c, Account__r.ANG_IsNewGenAgency__c, AMS_Online_Accreditation__r.Branch_Office_Country__c, AMS_Online_Accreditation__r.Location_Class__c FROM AMS_OSCAR__c where Id =: oscarId LIMIT 1';
     }
 
     private AMS_OSCAR__c fetchOscarFields(ID oscarId){

@@ -565,4 +565,10 @@
         <label>Solution Provided</label>
         <closed>false</closed>
     </standardValue>
+    <standardValue>
+        <fullName>Closed Opt-out</fullName>
+        <default>false</default>
+        <label>Closed Opt-out</label>
+        <closed>false</closed>
+    </standardValue>
 </StandardValueSet>
