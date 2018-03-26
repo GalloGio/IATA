@@ -103,7 +103,7 @@
         .tooltip {
         position: relative;
         display: inline-block;
-        color:#818181;
+        color:green;
         font-size: 11px;
         }
 
@@ -164,7 +164,20 @@
 
                     <apex:image styleClass="verificationIcon" value="{!IF(accreditationAreasOKNOK[parentAccount.IATACode__c] == 'OK', URLFOR($Resource.AMS_Icons, 'passed.png') , IF(accreditationAreasOKNOK[parentAccount.IATACode__c] == 'NOK',URLFOR($Resource.AMS_Icons, 'failed.png') , URLFOR($Resource.AMS_Icons, 'in_progress.png') )) }" width="17" height="17"/>
 
+<!--
                     <div>{!parentAccount.Name}</div>
+-->
+                    <br></br>
+                    <apex:commandLink  onclick="openSubtab('/apex/ANG_AccreditationAreaViewer?Id={!accreditationAreas[parentAccount.Id]}','SA-{!parentAccount.IATACode__c}');return false;" rendered="{!currentAccount.id == parentAccount.id && accreditationAreas[parentAccount.Id] != 'XXX'}">
+                        <div class="tooltip" >{!parentAccount.Name}
+                            <span class="tooltiptext">Open this account's staging area</span>
+                        </div>
+                    </apex:commandLink>
+                    
+                    <apex:outputText rendered="{!currentAccount.id == parentAccount.id && accreditationAreas[parentAccount.Id] == 'XXX'}">
+                        <div> {!parentAccount.Name} </div>
+                    </apex:outputText>
+
                     <div>{!parentAccount.IATACode__c}</div>
                     <div>{!parentAccount.BillingCountry} - {!parentAccount.BillingCity}</div>
                     <div>{!parentAccount.Status__c}</div>
