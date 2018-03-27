@@ -85,6 +85,7 @@ private class AMS_OSCAR_Case_Detail_ControllerTest {
 
 			accredForm.Branch_Office_Country__c = country.Id;
 			accredForm.Location_Class__c = 'P';
+			accredForm.CASS_Number__c = '';
 
 			update accredForm;
 
@@ -209,6 +210,7 @@ private class AMS_OSCAR_Case_Detail_ControllerTest {
 
         accredForm.Branch_Office_Country__c = country.Id;
         accredForm.Location_Class__c = 'P';
+        accredForm.CASS_Number__c = '';
 
         update accredForm;      
 

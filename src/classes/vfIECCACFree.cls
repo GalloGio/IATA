@@ -17,14 +17,13 @@ public without sharing class vfIECCACFree  extends IECPageController {
     public String sProdCACPro               {get; set;}
     public Boolean hasPageAccess            {get; set;}
     
-    public Integer iUsageLeft               {get; set;}
-    public Integer iDaysLeft                {get; set;}
-    public Date dtAccessEndDate             {get; set;}
     public Boolean bShowNoAgencyResults     {get; set;}
     public Boolean bShowNoAgentResults      {get; set;}
     public Boolean bIsValid                 {get; set;}
     public String sAgencyCode               {get; set;}
     public String sAgentCode                {get; set;}
+    //RN-INC380530
+    public String whichcountry {get;set;}
 
 
     /* Each item in the result List will contain the information 
@@ -48,6 +47,7 @@ public without sharing class vfIECCACFree  extends IECPageController {
     public vfIECCACFree() {
 
         sProdCACPro = IEC_Settings__c.getOrgDefaults().Prod_CACPro__c;
+        if (!Test.isRunningTest())  findLocation();
         
         sValidationCode = '';
         bShowAgency = bShowAgent = baskCASSCode = bShowNoAgencyResults = bShowNoAgentResults = bIsValid = false;
@@ -55,7 +55,11 @@ public without sharing class vfIECCACFree  extends IECPageController {
         
         reCAPTCHA = new vfIECreCAPTCHA();
         reCAPTCHA.verified = false;
-        bShowRECAPTCHA = true;
+         if (whichcountry == 'CN'){
+            bShowRECAPTCHA = false;
+        }else{
+            bShowRECAPTCHA = true;
+        }
         iRECAPTCHACount = 0;
         bshowreCAPTCHAFail = false;
         bshowInvalidCode = false;
@@ -72,10 +76,7 @@ public without sharing class vfIECCACFree  extends IECPageController {
     
     
      public void validateCode() {
-        try {
-            
-            
-            
+        try {            
             // Reset showing the result sections
             bShowAgency = bShowAgent = false;
             oAgency = null;
@@ -91,34 +92,37 @@ public without sharing class vfIECCACFree  extends IECPageController {
             //Test code 8: 96826376
             //Test error: 60500296
             //Test ICCArd: 5990078523
-            //Test ICCArd:  5056008908      
-            
-            
-            if(!Test.isRunningTest() && !reCAPTCHA.verified && !reCAPTCHA.verify()){
-                //addErrorMessage('reCAPTCHA verification Failed' );
-                bshowreCAPTCHAFail = true;
-                reCAPTCHA.verified = false;
-                bShowRECAPTCHA = true;          
-        
-                return;
-            }
-        
-        
-            //Only increment recaptcha count if no CASS number was requested. 
-            // -- when CASS number is requested, it's considered part of the previous query
-            if (!baskCASSCode)
-                iRECAPTCHACount++;
-            
-            //Validate reCAPTCHA First
-            if (iRECAPTCHACount < 20) {
+            //Test ICCArd:  5056008908     
+
+            //exception for China INC380530
+            if (whichcountry == 'CN'){
                 reCAPTCHA.verified = true;
-                bShowRECAPTCHA = false;     
-            }   
-            else {
-                reCAPTCHA.verified = false;
-                bShowRECAPTCHA = true;  
-                iRECAPTCHACount= 0; 
-            }
+                bShowRECAPTCHA = false;
+            }else{      
+                if(!Test.isRunningTest() && !reCAPTCHA.verified && !reCAPTCHA.verify()){
+                    //addErrorMessage('reCAPTCHA verification Failed' );
+                    bshowreCAPTCHAFail = true;
+                    reCAPTCHA.verified = false;
+                    bShowRECAPTCHA = true;       
+                    return;
+                }
+
+                //Only increment recaptcha count if no CASS number was requested. 
+                // -- when CASS number is requested, it's considered part of the previous query
+                if (!baskCASSCode)
+                    iRECAPTCHACount++;
+                
+                //Validate reCAPTCHA First
+                if (iRECAPTCHACount < 20) {
+                    reCAPTCHA.verified = true;
+                    bShowRECAPTCHA = false;     
+                }   
+                else {
+                    reCAPTCHA.verified = false;
+                    bShowRECAPTCHA = true;  
+                    iRECAPTCHACount= 0; 
+                }              
+        }
                 
 
             //Trim any leading or trailing spaces
@@ -314,6 +318,37 @@ public without sharing class vfIECCACFree  extends IECPageController {
 
         hasPageAccess = true;
         return true;
+    }
+
+    //RN-INC380530 - find access user country
+    public void findLocation(){
+        ISSP_CS__c cs = ISSP_CS__c.getInstance('ipinfo_token');
+        String ipinfo_token = cs.value__c;
+        String ipAddress = ApexPages.currentPage().getHeaders().get('X-Salesforce-SIP');
+
+        String IP_LOOKUP_URL = 'https://ipinfo.io/' + ipAddress + '/json?token=' + ipinfo_token;
+        Http h = new Http();
+        HttpRequest req = new HttpRequest();
+        req.setEndpoint(IP_LOOKUP_URL);
+        req.setMethod('GET');
+        req.setTimeout(2000);
+        HttpResponse res;
+        try{
+            res = h.send(req);
+            JSONParser parser = JSON.createParser(res.getBody());
+            system.debug('message:' + String.valueOf(parser));
+            while (parser.nextToken() != null) {
+                system.debug('field name:' + JSONToken.FIELD_NAME);
+                system.debug('value:' + parser.getText());
+                if ((parser.getCurrentToken() == JSONToken.FIELD_NAME) &&
+                    (parser.getText() == 'country')) {
+                    parser.nextToken();
+                    system.debug('COUNTRY:' + parser.getText());
+                    whichcountry = parser.getText();
+                }
+            }
+        }catch(Exception e){
+        }
     }   
     
 
