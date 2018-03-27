@@ -4287,14 +4287,4 @@ public without sharing class Order_Svc
 
     }
 
-    /*******************************************************************
-        Delete Orders (Used when locations are deactivated)
-        INC376899
-      *******************************************************************/
-    public static void deleteOrders(List<Order> orders){
-
-        delete orders;
-
-    }
-
 }

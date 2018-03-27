@@ -1,4 +1,4 @@
-public without sharing class Location_Dom {
+public with sharing class Location_Dom {
 	/****************************************************************************************************
 	        Call trigger method corresponding to trigger event
 	****************************************************************************************************/
@@ -97,24 +97,22 @@ public without sharing class Location_Dom {
              
                 locationsToSync.add(newList[i]);
             }
-            //Check if the location was deactivated - INC376899
-            if(!newList[i].Active__c){
+            //Check if the location was deactivated by a Standard Type of user- INC376899
+            if(!newList[i].Active__c && UserInfo.getUserType().equals('Standard')){
             	deactivatedlocationsList.add(newList[i].Id);
             }
-
-
         }
+
         if(locationsToSync.size() > 0){
             Location_Svc.SendLocationToSAP(locationsToSync);
         }
 
 		//Verifies if there are deactivated locations - INC376899
 		if(deactivatedlocationsList.size() > 0 ){
-			
-			List<Order> ordersToUpdate = Order_Sel.getNewOrdersByLocation(deactivatedlocationsList);
-			Order_Svc.deleteOrders(ordersToUpdate);
+			//Retrieves the orders that have this locations and delete them
+			List<Order> ordersToDelete = Order_Sel.getNewOrdersByLocation(deactivatedlocationsList);
+			delete ordersToDelete;
 		}
-
 
 	}
 

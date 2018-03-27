@@ -723,8 +723,9 @@ public with sharing class IECOrder_Svc {
             System.debug('Pending order: ' + pendingOrder);
 
             Boolean updatePendding= false;
-            if(pendingOrder.BillTo_Location__c != oCurrentCustomer.sfContact.BillTo_Location__c)
-            {
+            if(pendingOrder.BillTo_Location__c != oCurrentCustomer.sfContact.BillTo_Location__c){
+                System.debug('angielaz, getPenddingOrder-->Inside billTo if-->oCurrentCustomer.sfContact.BillTo_Location__c: ' + oCurrentCustomer.sfContact.BillTo_Location__c);
+
                 pendingOrder.BillTo_Location__c = oCurrentCustomer.sfContact.BillTo_Location__c;
                 updatePendding = true;
             }
