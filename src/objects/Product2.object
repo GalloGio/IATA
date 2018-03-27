@@ -5366,35 +5366,10 @@ The product will only appear on the Online Store when the date entered in this f
         </filters>
         <filters>
             <field>PRODUCT2.NAME</field>
-            <operation>equals</operation>
-            <value>CheckACode Professional for Members</value>
+            <operation>startsWith</operation>
+            <value>CheckACode Professional</value>
         </filters>
-        <label>GDP/CAC PRO for Members</label>
-        <language>en_US</language>
-        <sharedTo>
-            <allInternalUsers></allInternalUsers>
-        </sharedTo>
-    </listViews>
-    <listViews>
-        <fullName>GDP_CAC_PRO_for_Non_Members</fullName>
-        <columns>PRODUCT2.NAME</columns>
-        <columns>IEC_Product_Information__c</columns>
-        <columns>IEC_Parent_Product__c</columns>
-        <columns>IEC_Product_Rate_Plan_Information__c</columns>
-        <columns>SAP_Material_Number__c</columns>
-        <columns>Product_Manager_lookup__c</columns>
-        <filterScope>Everything</filterScope>
-        <filters>
-            <field>PRODUCT2.FAMILY</field>
-            <operation>equals</operation>
-            <value>GDP</value>
-        </filters>
-        <filters>
-            <field>PRODUCT2.NAME</field>
-            <operation>equals</operation>
-            <value>CheckACode Professional for Non-Members</value>
-        </filters>
-        <label>GDP/CAC PRO for Non-Members</label>
+        <label>GDP/CAC PRO</label>
         <language>en_US</language>
         <sharedTo>
             <allInternalUsers></allInternalUsers>
@@ -6172,7 +6147,7 @@ The product will only appear on the Online Store when the date entered in this f
         <filters>
             <field>PRODUCT2.NAME</field>
             <operation>contains</operation>
-            <value>MITA Daily</value>
+            <value>MITA</value>
         </filters>
         <label>MITA Daily Master Files</label>
         <language>en_US</language>

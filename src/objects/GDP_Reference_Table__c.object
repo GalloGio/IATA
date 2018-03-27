@@ -47,6 +47,7 @@
         <fields>Name</fields>
         <fields>Code__c</fields>
         <fields>Definition__c</fields>
+        <fields>Table__c</fields>
         <label>Compact layout</label>
     </compactLayouts>
     <deploymentStatus>Deployed</deploymentStatus>
@@ -300,7 +301,7 @@
             <operation>startsWith</operation>
             <value>ORGABB</value>
         </filters>
-        <label>ORGABB</label>
+        <label>11 - ORGABB - Accredit. Org. Abbrev.</label>
         <language>en_US</language>
     </listViews>
     <listViews>
