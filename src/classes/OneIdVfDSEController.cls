@@ -155,6 +155,8 @@ public without sharing class OneIdVfDSEController {
     public ReturnToParentEnum returnToParent {get;set;}
     
     private String theContact = 'XX';
+        
+    public String serviceName {get;set;}
 
     public OneIdVfDSEController(){
 
@@ -696,8 +698,13 @@ public without sharing class OneIdVfDSEController {
      * Step 3.2: Account (and then Contact and User)
      */
     public Pagereference register() {
-
-        system.debug('in register');
+        system.debug('in register....');
+        
+        String url = ApexPages.currentPage().getURL();
+        
+        if(url.contains('ISSP'))
+            serviceName = 'ISSP';
+        
         // create new Account
         errorMessage.clear();
         infoMessage.clear();
@@ -787,17 +794,26 @@ public without sharing class OneIdVfDSEController {
                 return null;
             }
             con.AccountId = acc.Id;
+            if(serviceName == 'ISSP'){
+                con.User_Portal_Status__c ='Active';
+                con.Community__c = 'ISS Customer Portal';
+            }
 
             System.debug('*** Contact: ' + con);
         } else {
             // existing acount is selected
             system.debug('to register selectedAccId: ' + selectedAccId);
             system.debug('to register selectedAccId2: ' + selectedAccId2);
+            system.debug('to register serviceName: ' + serviceName);
             if (selectedAccId != '' && selectedAccId != null)
                 con.AccountId = selectedAccId;
             else if (selectedAccId2 != '' && selectedAccId2 != null)
                 con.AccountId = selectedAccId2;
-
+			
+            if(serviceName == 'ISSP'){
+                con.User_Portal_Status__c ='Pending Approval';
+                con.Community__c = 'ISS Customer Portal';
+            }
 
             if(acc <> null && con.AccountId <> null) acc.id = con.AccountId;
         }
@@ -826,7 +842,7 @@ public without sharing class OneIdVfDSEController {
 
             //EM: Copy account states to contact
             con.IATA_ISO_Billing_State__c = acc.IATA_ISO_Billing_State__c;
-            con.IATA_ISO_Shipping_State__c = acc.IATA_ISO_Shipping_State__c;
+            con.IATA_ISO_Shipping_State__c = acc.IATA_ISO_Shipping_State__c;            
 
             System.debug('Contact management upsert ' + con);
             //upsert con;
@@ -859,7 +875,8 @@ public without sharing class OneIdVfDSEController {
 
         Savepoint sp = Database.setSavepoint();
         try {
-            String returnedString = LightningRegistrationProcess.createContactAndAccount(con,acc,selectedCustomerType);
+            system.debug('calling LightningRegistrationProcess...');
+            String returnedString = LightningRegistrationProcess.createContactAndAccount(con,acc,selectedCustomerType,serviceName);
             if (returnedString.contains('line:')){
                 Database.rollback(sp);
 
@@ -872,7 +889,16 @@ public without sharing class OneIdVfDSEController {
             else {
                 showConfirmMessage = true;
                 returnToParent = ReturnToParentEnum.AccountContactAndUserSuccess;
-                errorMessage.add(System.Label.ISSP_Registration_Thank_you_GeneralAccount + ' ' + System.Label.ISSP_Registration_Redirection15s);
+                errorMessage.add(System.Label.ISSP_Registration_Thank_you_GeneralAccount + ' ' + System.Label.ISSP_Registration_Redirection15s);   
+                system.debug('aqui con.id ' + con.Id);   
+                if(serviceName == 'ISSP'){
+                    permissionCSPortal(returnedString); // assign Permission Set CS Portal, give access to CS Portal Connected App
+                }          
+                if(serviceName == 'ISSP' && isTravel){
+                    permissionNewAgency(returnedString);                    
+                    portalServiceNewAgency(con.Id);
+                }
+
                 //errorMessage.add(System.Label.ISSP_Registration_Thank_you_GeneralAccount);
                 //errorMessage.add(System.Label.ISSP_Registration_Redirection15s);
 
@@ -1286,10 +1312,10 @@ public without sharing class OneIdVfDSEController {
 
 
     //TF-SP08 - for first agency user, give access to custom permission set
-   /* @Future
+    @Future
     public static void permissionNewAgency(String userId){
         if (userId != null && userId != '') {
-            List <PermissionSet> permList = [SELECT Id FROM PermissionSet WHERE Name = 'ISSP_New_Agency_permission_set'];
+            List <PermissionSet> permList = [SELECT Id FROM PermissionSet WHERE Name = 'ISSP_New_Agency_permission_set'];            
             if (!permList.isEmpty()){
                 PermissionSetAssignment newAssign = new PermissionSetAssignment();
                 newAssign.AssigneeId = userId;
@@ -1297,14 +1323,46 @@ public without sharing class OneIdVfDSEController {
                 insert newAssign;
             }
         }
-    }*/
+    }
+
+    @Future
+    public static void permissionCSPortal(String userId){
+        if (userId != null && userId != '') {
+            List <PermissionSet> permListPortal = [SELECT Id FROM PermissionSet WHERE Name = 'CS_Portal'];
+            if(!permListPortal.isEmpty()){
+                PermissionSetAssignment newAssignCS = new PermissionSetAssignment();
+                newAssignCS.AssigneeId = userId;
+                newAssignCS.PermissionSetId = permListPortal[0].Id;
+                insert newAssignCS;
+            }
+        }
+    }
+
+    public static void portalServiceNewAgency(String conId){
+        system.debug('aqui portalServiceNewAgency....' + conId);
+        if (conId != null && conId != '') {
+            List<Portal_Applications__c> pApplication = [SELECT id FROM Portal_Applications__c WHERE Name = :AMS_UTILS.IATA_ACCREDITATION_AND_CHANGES];
+
+            if(!pApplication.isEmpty()){
+                Portal_Application_Right__c appRight = new Portal_Application_Right__c();
+                appRight.Contact__c = conId;
+                appRight.Portal_Application__c = pApplication[0].Id;
+                appRight.Right__c = 'Access Granted';
+                insert appRight;
+            }
+
+        }
+    }
+
+
+
     // to be used in visualforce page OneIdVfCreateAccount
     public Static String getHostURL(){
         return OneIdUtils.getOrgUrl();
     }
     public void PassingTheContact(){
         //String theContact=Apexpages.currentPage().getParameters().get('theContact');
-        System.debug('PassingTheContact ' + theContact);
+        System.debug('PassingTheContact ' + theContact);        
         con = (Contact)JSON.deserialize(theContact, Type.forName('Contact'));
         System.debug('PassingTheContact ' + con);
     }
@@ -1319,5 +1377,5 @@ public without sharing class OneIdVfDSEController {
 
     public Static String getCommunityName(){
         return OneIdUtils.getCommunityUrlName();
-    }    
+    }
 }

@@ -211,8 +211,17 @@
         //helper.getallCategorySectorOptions(component);
         helper.hideSpinner(component, event);
         helper.setLanguage(component, event);
-
-
+        
+    },
+    
+    jsLoaded: function(component, event, helper){
+    $(document).ready(function(){
+        console.log('aqui oi');
+        $.getJSON("https://jsonip.com/?callback=?", function (data) {                    
+            console.log('data.ip ' + data.ip);                    
+            helper.getFindLocation(data.ip,component);
+        });
+    })
     },
 
     showSpinner: function(component, event, helper) {
@@ -268,7 +277,7 @@
         // }
         //
         // if (!(country) && component.get("v.showCountry") == true) {
-        // 	alert("Please select a country");
+        //  alert("Please select a country");
         //     return;
         // }
         //
@@ -496,10 +505,11 @@
         //If new account is created, put designator code and iata code that had been entered by user in his search
 
         var companyType = component.get("v.AccountT");
+        var servName = component.get("v.serviceName");
         //alert("Company type: " +companyType);
-
+        console.log('aqui serviceName --> ' + serviceName);
         var action = component.get("c.createContactAndAccount");
-        action.setParams({ con: contact, acc: account, customerType: companyType });
+        action.setParams({ con: contact, acc: account, customerType: companyType, servName: servName});
         action.setCallback(this, function(a) {
             //alert("Saving");
             var state = a.getState();
@@ -558,12 +568,14 @@
         }
         var account = results[index];
         var companyType = component.get("v.AccountT");
+        var servName = component.get("v.serviceName");
         var action = component.get("c.createContactAndAccount");
         console.log("Customer type: " + companyType);
         console.log("contact: " + contact);
         console.log("account: " + account);
+        console.log('aqui serviceName --> 2 ' + serviceName);
 
-        action.setParams({ con: contact, acc: account, customerType: companyType });
+        action.setParams({ con: contact, acc: account, customerType: companyType,servName: servName});
         action.setCallback(this, function(a) {
             console.log("Execute");
             var state = a.getState();
@@ -701,6 +713,8 @@
         //    var whichOne = event.getSource().getLocalId();
         var whichOne = event.currentTarget.id;
         console.log('showPage3 wo2: ' + whichOne);
+        var servName = component.get("v.serviceName");
+        
         var emailLocked = component.get("v.emailLocked");
         var ShowPage4 = component.get("v.ShowPage4");
         var page;
@@ -739,6 +753,7 @@
                 console.log("vfWindow:" + vfWindow);
                 //vfWindow.postMessage(contact, vfOrigin);
                 vfWindow.postMessage({ action: "alohaSendingContact", sendingContact: contact }, vfOrigin);
+                vfWindow.postMessage({action:"alohaSendingSerName",servName : servName}, vfOrigin);
 
                 document.getElementById('accountManagement').scrollIntoView(true);
 
@@ -778,6 +793,13 @@
     },
     doInit: function(component, event, helper) {
         //var vfOrigin = "https://oneidconde-customer-portal-iata.cs83.force.com";
+
+        $A.get("e.c:oneIdURLParams").setParams({"state":"fetch"}).fire();
+        
+        setTimeout(function(){
+            component.set("v.loaded", true);
+        }, 2000);
+
         helper.getHostURL(component, event);
         helper.getCommunityName(component, event);
 
@@ -812,7 +834,7 @@
                         urlEvent.fire();
                     }, 15000);
                     //} 
-                }
+                } 
                 //var thisWidth = jQuery('.cLightningRegistrationProcess').width();
                 //var styl = "width:" + thisWidth + "px; height:" + event.data.height + "px;";
                 var styl = "height:" + event.data.height + "px;";
@@ -862,6 +884,27 @@
             "message": "The record has been updated successfully."
         });
         toastEvent.fire();
+    },
+
+    renderPage : function (component, event, helper){
+        var state = event.getParam("state");       
+
+        console.info("renderPage - state "+state);
+        if(state == "answer"){
+            var servName = event.getParam("paramsMap").serviceName;
+            console.info("renderPage - paramsMap ");
+            console.info(event.getParam("paramsMap"));
+            if(/\S/.test(servName)){
+                component.set("v.serviceName", servName);
+                component.set("v.customCommunity", true);
+                
+            }
+        }
+
+        
+        
+        
+        component.set("v.loaded", true);
     },
     /*,
     resizeIframe: function(component, event, helper) {

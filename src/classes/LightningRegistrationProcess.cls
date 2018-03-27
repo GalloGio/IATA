@@ -1,4 +1,6 @@
 public without sharing class LightningRegistrationProcess{
+    public static String whichcountry {get;set;}
+    
     @AuraEnabled
     public static contact createcontact() {
         return new Contact();
@@ -440,6 +442,7 @@ public without sharing class LightningRegistrationProcess{
 
     @AuraEnabled
     public Static String createContactAndAccount (Contact con, Account acc, String customerType) {
+    public Static String createContactAndAccount (Contact con, Account acc, String customerType, String servName) {
         // ISSP_Registration registration = new ISSP_Registration();
         // Boolean b = registration.pageIsValid();
         RecordType rt = [Select Id From RecordType WHERE SObjectType ='Contact' AND DeveloperName='Standard_Contact'];
@@ -505,6 +508,8 @@ public without sharing class LightningRegistrationProcess{
             string UID = Comm_User_Helper.NewGuid();
             User u = new User (CommunityNickname= thisNickname , title=con.title, contactid = con.id, Firstname = con.firstname, lastname = con.lastname, emailencodingkey = 'UTF-8', localesidkey = 'en_US', email = con.email, username=ISSP_Utilities.buildPortalUserName(con.email), Alias = ISSP_Utilities.buildPortalUserName(con.email).left(5), timezonesidkey = 'America/Los_Angeles', languagelocalekey = 'en_US',Date_ToU_accepted__c = system.Now(), ToU_accepted__c = true, UID__c = UID);
             //User u = new User (CommunityNickname= thisNickname , contactid = con.id, Firstname = con.firstname, lastname = con.lastname, emailencodingkey = 'UTF-8', localesidkey = 'en_US', email = con.email, username=ISSP_Utilities.buildPortalUserName(con.email), languagelocalekey = 'en_US', Date_ToU_accepted__c = system.Now(), ToU_accepted__c = true);
+            if(servName == 'ISSP')
+                u.Community__c = servName;
 
             System.debug('User ' + u);
             String password = Comm_User_Helper.generateRandomString(6) + '1a';
@@ -600,6 +605,43 @@ public without sharing class LightningRegistrationProcess{
     @AuraEnabled
     public Static String getCommunityName(){
         return OneIdUtils.getCommunityUrlName();
+    }
+
+	@AuraEnabled
+    public static String findLocation(String ipAddress){
+        system.debug('aqui find location ' + ipAddress);
+        ISSP_CS__c cs = ISSP_CS__c.getInstance('ipinfo_token');
+        String ipinfo_token = cs.value__c;
+        //String ipAddress = ApexPages.currentPage().getHeaders().get('X-Salesforce-SIP');
+
+        String IP_LOOKUP_URL = 'https://ipinfo.io/' + ipAddress + '/json?token=' + ipinfo_token;
+        Http h = new Http();
+        HttpRequest req = new HttpRequest();
+        req.setEndpoint(IP_LOOKUP_URL);
+        req.setMethod('GET');
+        req.setTimeout(2000);
+        HttpResponse res;
+        try{
+            res = h.send(req);
+            JSONParser parser = JSON.createParser(res.getBody());
+            system.debug('message:' + String.valueOf(parser));
+            while (parser.nextToken() != null) {
+                system.debug('field name:' + JSONToken.FIELD_NAME);
+                system.debug('value:' + parser.getText());
+                if ((parser.getCurrentToken() == JSONToken.FIELD_NAME) &&
+                    (parser.getText() == 'country')) {
+                    parser.nextToken();
+                    system.debug('COUNTRY:' + parser.getText());
+                    whichcountry = parser.getText();
+                    system.debug('aqui whichcountry ' + whichcountry);
+                }
+            }
+
+        }catch(Exception e){
+                system.debug('Exception findLocation LightningRegistrationProcess...' + e);
+        }
+    return whichcountry;
     }    
+    
     
 }

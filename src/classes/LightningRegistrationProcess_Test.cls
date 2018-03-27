@@ -39,13 +39,13 @@ private class LightningRegistrationProcess_Test {
         Account nc = new Account();
         nc.BillingCountry='test';
         nc.Iata_Iso_Country__c=ISO_Country.id;        
-        LightningRegistrationProcess.createContactAndAccount(new Contact(), nc, 'Airline');
+        LightningRegistrationProcess.createContactAndAccount(new Contact(), nc, 'Airline','');
         oAccount.BillingCountry='test';
         oAccount.Iata_Iso_Country__c=ISO_Country.id;
         update oAccount;
 		Test.stopTest();
 		
-        LightningRegistrationProcess.createContactAndAccount(oContact, oAccount, 'Airline');
+        LightningRegistrationProcess.createContactAndAccount(oContact, oAccount, 'Airline','');
         LightningRegistrationProcess.getHostURL();
         LightningRegistrationProcess.setFederationId(anUser.id, anUser.email);
         LightningRegistrationProcess.getCommunityName();
@@ -75,7 +75,7 @@ private class LightningRegistrationProcess_Test {
         checkedEmail = LightningRegistrationProcess.checkemail(c1.email);
         System.assertEquals('create_contactanduser', checkedEmail);
         
-        userId = LightningRegistrationProcess.createContactAndAccount(c1, oAccount, 'Airline');
+        userId = LightningRegistrationProcess.createContactAndAccount(c1, oAccount, 'Airline','');
         //System.assertEquals(null, userId);
         
         LightningRegistrationProcess.checkConAvailable(new Contact(FirstName = 'firstName2', LastName = 'L3', Email = 'test3@test.com', phone='(515) 146 2178',AccountId=oAccount.Id, RecordTypeId= rt.id));
