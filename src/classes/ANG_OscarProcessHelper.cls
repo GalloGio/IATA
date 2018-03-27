@@ -66,7 +66,7 @@ global class ANG_OscarProcessHelper {
 					Is_PCI_compliant__c, Account__r.Top_Parent__r.Id , AMS_Online_Accreditation__r.Id,Account__r.Location_Type__c,RecordType.DeveloperName,
 					Flag_Data_to_SAPECC__c,ID, STEP10__c,STEP17__c,STEP8__c,Process_Start_Date__c, Account__r.Due_Diligence_Status__c, AMS_Online_Accreditation__r.Location_Class__c, 
 					AMS_Online_Accreditation__r.Link_agent_name__c , AMS_Online_Accreditation__r.Branch_Office_Country__r.Due_diligence_mandatory__c, Account__r.Location_Class__c,
-					Account__r.Sector__c , Account__r.Company_type__C, STEP6__c, Is_NewGen__c, (SELECT Id FROM Agencies_Applied_Change_codes__r) , (select Id from Appointments__r)
+					Account__r.Sector__c , Account__r.Company_type__C, STEP6__c, Is_NewGen__c, Account__r.Top_Parent__r.Status__c, (SELECT Id FROM Agencies_Applied_Change_codes__r) , (select Id from Appointments__r)
 					from AMS_OSCAR__c where Id = : oscarId LIMIT 1];
 
 			System.debug('[ANG_OscarProcessHelper] Fetched Account:' + theAccount);
@@ -88,6 +88,11 @@ global class ANG_OscarProcessHelper {
 
             }
 
+            if(oscar.Process__c.containsIgnoreCase('NEW') && oscar.Account__r.Location_Type__c != 'HO' && oscar.Account__r.Location_Type__c != 'HE' && oscar.Account__r.Top_Parent__r.Status__c == AMS_Utils.ACC_S0_TERMINATED){
+            	isIATACodeGenerationRunning = false;
+            	System.debug('[ANG_OscarProcessHelper] IATA code generation is not allowed in hierarchies with HO/HE status Terminated.');
+            	return new String[]{'-1','IATA code generation is not allowed in hierarchies with HO/HE status Terminated.','-1'};
+            }
 
 			if((!oscar.Appointments__r.isEmpty()) && oscar.Appointments__r.size() > 1){
 				isIATACodeGenerationRunning = false;
