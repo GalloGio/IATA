@@ -23226,6 +23226,22 @@ msgErrorRenewalOrderExpired:Your renewal notification order link is either  expi
         <value>IATA Code</value>
     </labels>
     <labels>
+        <fullName>OneId_ISSP_Troubleshooting</fullName>
+        <categories>OneId</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>OneId_ISSP_Troubleshooting</shortDescription>
+        <value>Troubleshooting</value>
+    </labels>
+    <labels>
+        <fullName>OneId_ISSP_Troubleshooting_Link</fullName>
+        <categories>OneId</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>OneId_ISSP_Troubleshooting_Link</shortDescription>
+        <value>https://portal.iata.org/faq/articles/en_US/How_To/Customer-Portal-Troubleshooting</value>
+    </labels>
+    <labels>
         <fullName>OneId_IATA_represent_lead_and_serve_the_airline_industry</fullName>
         <categories>OneId</categories>
         <language>en_US</language>

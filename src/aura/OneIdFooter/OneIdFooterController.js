@@ -9,6 +9,7 @@
         }, 2000);
     },
     renderPage : function (component, event, helper){
+        console.log('renderpage...');
         var state = event.getParam("state");
 
         console.info("renderPage - state "+state);
@@ -19,6 +20,12 @@
             if(/\S/.test(servName)){
                 component.set("v.serviceName", servName);
                 component.set("v.customCommunity", true);
+                
+                
+                var labelHelpLink = $A.getReference("$Label.c.OneId_" + servName + "_Troubleshooting_Link");
+                var labelHelp = $A.getReference("$Label.c.OneId_" + servName + "_Troubleshooting");
+                component.set("v.labelHelpLink", labelHelpLink);
+                component.set("v.labelHelp", labelHelp);
             }
         }
         
