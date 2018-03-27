@@ -47,6 +47,7 @@
         <fields>Name</fields>
         <fields>Code__c</fields>
         <fields>Definition__c</fields>
+        <fields>Table__c</fields>
         <label>Compact layout</label>
     </compactLayouts>
     <deploymentStatus>Deployed</deploymentStatus>
