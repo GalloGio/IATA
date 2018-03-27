@@ -535,10 +535,12 @@ public without sharing class LightningRegistrationProcess{
         
         Map<String,String> emailWrap = new Map<String,String>();
         
-        emailWrap = Identity_PassWordBuilMessageWrapper(con, password, link);
+        //emailWrap = Identity_PassWordBuilMessageWrapper(con, password, link);  // OneIdEnh CSP-ID002: replaced by Comm_User_Helper method
+        emailWrap = Comm_User_Helper.ISSP_PassWordBuilMessageWrapper(con, password, link, Comm_User_Helper.ONEIDENTITY, serviceName);
         Comm_User_Helper.sendEmail(template, emailWrap, con, Comm_User_Helper.ONEIDENTITY);
     }
     
+    /* OneIdEnh CSP-ID002: method deprecated
     public static  Map<String, String> Identity_PassWordBuilMessageWrapper(Contact con, String password, String link){
         String portalName = Label.OneId_Community_Name;
 

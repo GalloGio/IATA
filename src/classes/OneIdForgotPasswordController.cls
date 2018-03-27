@@ -3,8 +3,15 @@ public without sharing class OneIdForgotPasswordController {
 
     }
 
+    // OneIdEnh CSP-ID002: entry point for older methods without service name
     @AuraEnabled
     public static String forgotPassword(String username, String checkEmailUrl) {
+        return forgotPassword(username, checkEmailUrl, '');
+    }
+
+    // OneIdEnh CSP-ID002: new entry point with service name
+    @AuraEnabled
+    public static String forgotPassword(String username, String checkEmailUrl, String serviceName) {
         System.debug('basto1p -> forgotPassword username='+username);
 
         Boolean success;
@@ -32,7 +39,8 @@ public without sharing class OneIdForgotPasswordController {
             
             success = Comm_User_Helper.resetPassword(username, //email in this case
                                                              Comm_User_Helper.ONEIDENTITY, 
-                                                             false);
+                                                             false,
+                                                     		 serviceName);  // OneIdEnh CSP-ID002: added service name
 			
 
             if (success) {
