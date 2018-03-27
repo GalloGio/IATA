@@ -440,8 +440,7 @@ public without sharing class LightningRegistrationProcess{
         }
     }
 
-    @AuraEnabled
-    public Static String createContactAndAccount (Contact con, Account acc, String customerType) {
+    @AuraEnabled    
     public Static String createContactAndAccount (Contact con, Account acc, String customerType, String servName) {
         // ISSP_Registration registration = new ISSP_Registration();
         // Boolean b = registration.pageIsValid();
