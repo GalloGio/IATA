@@ -124,7 +124,7 @@
       <table border="0" cellpadding="0" cellspacing="0">
       <tr>
       <td>
-      <img class="homeIcon" src="https://iata--c.eu3.content.force.com/servlet/servlet.ImageServer?id=015w00000057bD1&oid=00D2000000008TF&lastMod=1491942665000">
+      <img class="homeIcon" src="{!Community_Header}">
       </td>
       </tr>
       </table>
@@ -193,6 +193,7 @@ Your temporary password is
         <p>
           IATA Customer Service
         </p>
+<img src="https://iata--csp1idsre--c.cs88.content.force.com/servlet/servlet.ImageServer?id=0159E000000MBJj&oid=00D9E0000001L6b&lastMod=1521542953000">
       </td>
     </tr>
 
