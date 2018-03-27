@@ -267,8 +267,9 @@ global without sharing class Comm_User_Helper {
             '{!Receiving_User.FirstName}' =>con.Firstname,
             '{!Receiving_User.LastName}' => con.LastName,
             '{!Receiving_User.Email}' => con.Email,
-            '{!Community_Name}' => portalName + ' Customer Portal',
+            '{!Community_Name}' => communityName,
             '{!Community_Url}' => link, 
+            '{!Community_Header}' => imageURL,
             '{!$Label.ISSP_Email_Here}' => 'here',
             '{!$Label.ISSP_Email_do_not_reply}' => Label.ISSP_Email_do_not_reply,
             '{!$Label.OneId_IATA_represent_lead_and_serve_the_airline_industry}' => Label.OneId_IATA_represent_lead_and_serve_the_airline_industry
