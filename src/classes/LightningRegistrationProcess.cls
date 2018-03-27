@@ -1,5 +1,6 @@
 public without sharing class LightningRegistrationProcess{
     public static String whichcountry {get;set;}
+    public static String serviceName {get;set;}
     
     @AuraEnabled
     public static contact createcontact() {
@@ -444,6 +445,7 @@ public without sharing class LightningRegistrationProcess{
     public Static String createContactAndAccount (Contact con, Account acc, String customerType, String servName) {
         // ISSP_Registration registration = new ISSP_Registration();
         // Boolean b = registration.pageIsValid();
+        serviceName = servName;
         RecordType rt = [Select Id From RecordType WHERE SObjectType ='Contact' AND DeveloperName='Standard_Contact'];
         if(con.RecordType == null) con.RecordTypeId = rt.Id;
 
