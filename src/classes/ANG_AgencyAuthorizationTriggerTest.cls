@@ -79,6 +79,51 @@ private class ANG_AgencyAuthorizationTriggerTest {
 
 	}
 
+	@isTest static void testTriggerValidationOnDelete() {
+
+		List<Account> accts = [select Id from Account WHERE IATACode__c = '1234561' ];
+
+        List<Agency_Authorization__c> authorizations = new List<Agency_Authorization__c>();
+
+        // ID BSPLinkRT = AMS_Utils.getId('Agency_Authorization__c','BSPLink');
+
+		ID FormOfPaymentRT = AMS_Utils.getId('Agency_Authorization__c','FormOfPayment');
+
+		Account acct1 = accts.get(0);
+
+    	authorizations.add(new Agency_Authorization__c(Account__c = acct1.Id, ANG_FormOfPayment_ID__c = 'CC', Status__c = 'Active', RecordTypeId = FormOfPaymentRT));
+    	authorizations.add(new Agency_Authorization__c(Account__c = acct1.Id, ANG_FormOfPayment_ID__c = 'CA', Status__c = 'Active', RecordTypeId = FormOfPaymentRT));
+    	authorizations.add(new Agency_Authorization__c(Account__c = acct1.Id, ANG_FormOfPayment_ID__c = 'EP', Status__c = 'Active', RecordTypeId = FormOfPaymentRT));
+
+		insert authorizations;
+
+		List<GDP_Products_Account_View__c> lsGDP = [SELECT Id FROM GDP_Products_Account_View__c WHERE Name = :acct1.id];
+
+		List<Authorized_Forms_Of_Payment__c> lsAFP = new List<Authorized_Forms_Of_Payment__c>();
+		for(Agency_Authorization__c aa : authorizations) {
+			Authorized_Forms_Of_Payment__c afp = new Authorized_Forms_Of_Payment__c(AMS_GDP_Key__c = aa.Account__c+aa.ANG_FormOfPayment_ID__c
+				, Form_of_Payment_Code__c = aa.ANG_FormOfPayment_ID__c
+				, Status__c = aa.Status__c
+				, Related_GDP_Products_Account_View__c = lsGDP[0].Id);
+			lsAFP.add(afp);
+		}
+		try {
+			insert lsAFP;
+		} catch (Exception e) {
+
+		}
+
+
+
+		delete authorizations[0];
+		lsAFP = [SELECT Id FROM Authorized_Forms_Of_Payment__c ];
+		// aaFromAccounts = [Select ID,Account__c,ANG_FormOfPayment_ID__c, RecordTypeId from Agency_Authorization__c];
+		//
+		// System.assertEquals(2,lsAFP.size());
+
+
+	}
+
 	@isTest static void testTriggerValidationOnUpdate() {
 
 		List<Account> accts = [select Id from Account ];
