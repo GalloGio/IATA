@@ -104,7 +104,7 @@ public class ANG_RHCInformationTriggerHandler{
 			if(!r.ANG_CashCondition__c && oldMap.get(r.Id).ANG_CashCondition__c) accIds.add(r.ANG_AccountId__c);
 		}
 
-		if(!accIds.isEmpty()) System.enqueueJob(new ANG_UpdateRHCInformationBatch(accIds, ANG_UpdateRHCInformationBatch.Process.PROVISIONAL, true, 100));
+		if(!accIds.isEmpty()) System.enqueueJob(new ANG_UpdateRHCInformationBatch(accIds, ANG_UpdateRHCInformationBatch.Process.PROVISIONAL, true, 1));
 			
 	}
 
