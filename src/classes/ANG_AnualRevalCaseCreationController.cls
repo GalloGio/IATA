@@ -18,6 +18,8 @@ public without sharing class ANG_AnualRevalCaseCreationController {
 		public boolean pollerBool{get;set;}
 		public Integer getBatchStatus{get;set;}
 
+		private final Set<String> invalidOscarStatus = new Set<String>{'Closed (Closed)','Closed (Closed)','Closed','Closed_ Not Accepted','Closed_Rejected','Closed_Withdrawn'};
+
         public ANG_AnualRevalCaseCreationController() {
 		
 			countriesLst = new List<String>();
@@ -146,11 +148,11 @@ public without sharing class ANG_AnualRevalCaseCreationController {
         	System.debug('Running for IATA Code with value:'+ account.IATACode__c);
 
         	if(mode == 'Financial year end')
-				accountsToCreate = [Select Id , (select id,name from OSCARs__r where Process__c = 'ANG.ANNUAL.REVALIDATION' LIMIT 1), IATACode__c, Name, RecordType.Name, Status__c, Location_Class__c, Location_Type__c, IATA_ISO_Country__r.Region__c, IATA_ISO_Country__r.Name, Financial_Year_End__c from Account where Location_Type__c = 'HE' and Status__c NOT IN (null, 'Terminated', 'Listed', 'Not in operation', 'Not accreditated') and RecordType.Name = 'Agency' and IATA_ISO_Country__r.Region__c = :region and Financial_Year_End__c = :year];
+				accountsToCreate = [Select Id , (select id,name from OSCARs__r where Process__c = 'ANG.ANNUAL.REVALIDATION' AND STATUS__c NOT IN :invalidOscarStatus LIMIT 1), IATACode__c, Name, RecordType.Name, Status__c, Location_Class__c, Location_Type__c, IATA_ISO_Country__r.Region__c, IATA_ISO_Country__r.Name, Financial_Year_End__c from Account where Location_Type__c = 'HE' and Status__c NOT IN (null, 'Terminated', 'Listed', 'Not in operation', 'Not accreditated') and RecordType.Name = 'Agency' and IATA_ISO_Country__r.Region__c = :region and Financial_Year_End__c = :year];
 			else if(mode == 'Country')
-				accountsToCreate = [Select Id , (select id,name from OSCARs__r where Process__c = 'ANG.ANNUAL.REVALIDATION' LIMIT 1), IATACode__c, Name, RecordType.Name, Status__c, Location_Class__c, Location_Type__c, IATA_ISO_Country__r.Region__c, IATA_ISO_Country__r.Name, Financial_Year_End__c  from Account where Location_Type__c = 'HE' and Status__c NOT IN (null, 'Terminated', 'Listed', 'Not in operation', 'Not accreditated') and RecordType.Name = 'Agency' and IATA_ISO_Country__r.Region__c = :region and IATA_ISO_Country__c = :Country];
+				accountsToCreate = [Select Id , (select id,name from OSCARs__r where Process__c = 'ANG.ANNUAL.REVALIDATION' AND STATUS__c NOT IN :invalidOscarStatus  LIMIT 1), IATACode__c, Name, RecordType.Name, Status__c, Location_Class__c, Location_Type__c, IATA_ISO_Country__r.Region__c, IATA_ISO_Country__r.Name, Financial_Year_End__c  from Account where Location_Type__c = 'HE' and Status__c NOT IN (null, 'Terminated', 'Listed', 'Not in operation', 'Not accreditated') and RecordType.Name = 'Agency' and IATA_ISO_Country__r.Region__c = :region and IATA_ISO_Country__c = :Country];
 			else if(mode == 'IATA Code')
-				accountsToCreate = [Select Id , (select id,name from OSCARs__r where Process__c = 'ANG.ANNUAL.REVALIDATION' LIMIT 1), IATACode__c, Name, RecordType.Name, Status__c, Location_Class__c, Location_Type__c, IATA_ISO_Country__r.Region__c, IATA_ISO_Country__r.Name, Financial_Year_End__c  from Account where Location_Type__c = 'HE' and Status__c NOT IN (null, 'Terminated', 'Listed', 'Not in operation', 'Not accreditated') and RecordType.Name = 'Agency' and IATACode__c = :account.IATACode__c];
+				accountsToCreate = [Select Id , (select id,name from OSCARs__r where Process__c = 'ANG.ANNUAL.REVALIDATION' AND STATUS__c NOT IN :invalidOscarStatus  LIMIT 1), IATACode__c, Name, RecordType.Name, Status__c, Location_Class__c, Location_Type__c, IATA_ISO_Country__r.Region__c, IATA_ISO_Country__r.Name, Financial_Year_End__c  from Account where Location_Type__c = 'HE' and Status__c NOT IN (null, 'Terminated', 'Listed', 'Not in operation', 'Not accreditated') and RecordType.Name = 'Agency' and IATACode__c = :account.IATACode__c];
 			
 			Set<Id> oscarsId = new Set<Id>();
 

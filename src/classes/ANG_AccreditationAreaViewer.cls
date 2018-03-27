@@ -86,7 +86,6 @@ public with sharing class ANG_AccreditationAreaViewer {
                                                                 ,'Location_Type__c' => 'Location_Type__c' 
                                                                 ,'Mobile__c' => 'Mobile__c' 
                                                                 ,'Is_your_firm_handling_Dangerous_Goods__c' => 'Is_your_firm_handling_Dangerous_Goods__c' 
-                                                                ,'IATA_ISO_State__c' => 'IATA_ISO_Billing_State__c' 
                                                                 ,'Shipping_ISO_Country__c' => 'IATA_ISO_Shipping_Country__c' 
                                                                 ,'Shipping_ISO_State__c' => 'IATA_ISO_Shipping_State__c' 
                                                                 ,'Link_agent_name__c' => 'Link_agent_name__c'
