@@ -382,7 +382,7 @@
                 <field>SAP_Sales_Channel_Code__c</field>
             </layoutItems>
             <layoutItems>
-                <behavior>Readonly</behavior>
+                <behavior>Edit</behavior>
                 <field>Family</field>
             </layoutItems>
             <layoutItems>

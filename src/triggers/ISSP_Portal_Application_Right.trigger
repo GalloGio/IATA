@@ -1833,9 +1833,15 @@ trigger ISSP_Portal_Application_Right on Portal_Application_Right__c (after inse
 
 	if (!contactIdSet.isEmpty() || !contactRemoveIdSet.isEmpty()){
 		system.debug('WILL START FUTURE METHOD');
-		if (!ISSP_UserTriggerHandler.preventTrigger)
-			ISSP_UserTriggerHandler.updateSIS_permissionSet(contactIdSet, contactRemoveIdSet);
-		ISSP_UserTriggerHandler.preventTrigger = true;
+        if (!ISSP_UserTriggerHandler.preventSISIntegration) {
+            //call external WS to update SIS user
+            ISSP_UserTriggerHandler.calloutSIS_ActivateDeactivateUsers(contactIdSet, contactRemoveIdSet);
+        }
+        ISSP_UserTriggerHandler.preventSISIntegration = true;
+        if (!ISSP_UserTriggerHandler.preventTrigger) {
+            ISSP_UserTriggerHandler.updateSIS_permissionSet(contactIdSet, contactRemoveIdSet);
+        }
+        ISSP_UserTriggerHandler.preventTrigger = true;
 	}
 
 	//deleteTwoFactor

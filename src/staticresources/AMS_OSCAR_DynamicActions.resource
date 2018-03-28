@@ -1,4 +1,4 @@
-var dyn_functions = {
+var dyn_functions = { 
     generateIataCode:function (args) { 
         //$body = $("body");
       
@@ -284,6 +284,66 @@ var dyn_functions = {
         }
     
     },
+    SIDRALiteAction:function (arg) {
+        listArgs = arg.split(",");
+        var oscarId = listArgs[0].trim();
+        var stepNumber = listArgs[1].trim();
+        try {
+          var result = sforce.apex.execute("AMS_OSCAR_Webservice", "createSIDRALite", {oscarId: oscarId, step: stepNumber, createCase: false});
+          // if string is an error
+          if (result[0] != null && result[0].substring(0, 6) == 'ERROR:') {
+              alert(result);
+              return;
+          }
+          // if case was not found (with no Id) then ask the user to continue
+          if (result[0] == null) {
+              if(confirm('Do you want to proceed creating a SIDRA Lite case?')) {
+                  result = sforce.apex.execute("AMS_OSCAR_Webservice", "createSIDRALite", {oscarId: oscarId, step: stepNumber, createCase: true});
+              } else {
+                  return;
+              }
+          }
+
+          // get sidra lite case created and open it in a new tab
+          var caseId = result[0];
+          var changeTab = function(result1){
+            if(result1.success == true){
+              alert('SIDRA Lite Case created successfully.');
+            }
+          };
+          // Use the results primary tab id and open a new subtab
+          var openSubtab = function(result2) {
+            sforce.console.openSubtab(result2.id, '/'+caseId, true, 'SIDRA Lite Case', null, changeTab);
+          };
+          sforce.console.getEnclosingPrimaryTabId(openSubtab);
+
+        } catch (e) {
+          var exception = e.faultstring.split("\n")[0];
+
+          if (exception.startsWith("WSSidraLite.ShowConfirmationException") ) {
+            var message = exception.replace("WSSidraLite.ShowConfirmationException: ","");
+            if (confirm(message)) {
+                var updateResult = sforce.apex.execute("AMS_OSCAR_Webservice","updateSIDRALite",{oscarId:oscarId, step: stepNumber});
+                if (updateResult[0] != null && updateResult[0].substring(0, 6) == 'ERROR:') {
+                  alert(updateResult);
+                  return;
+                }
+                // refreshing tab
+                sforce.console.getFocusedPrimaryTabId(
+                    function(result) {
+                        sforce.console.refreshPrimaryTabById(result.id, true, function(res) {});
+                    }
+                );
+                alert("Case updated, refreshing");
+            }
+
+          }
+          if (exception.startsWith("WSSidraLite.SidraLiteException") ) {
+            var message = exception.replace("WSSidraLite.SidraLiteException: ","");
+            alert(message);
+          }
+        }
+    },
     createCommissionerCase:function (arg) {
         var result;
         result = sforce.apex.execute("AMS_OSCAR_Webservice", "createCommissionerCase", {oscarId: arg});
@@ -347,6 +407,8 @@ var dyn_functions = {
         var oscarIdsToRemove = [];
         var sMessageSuccess = "";
         var sMessageError = "";
+        var finalMessage = "";
+        var hasSuccess = "N";
 
         if(confirm('Do you want to proceed deactivating agencies?')){
             oscarIdsToRemove.push(arg);
@@ -355,13 +417,16 @@ var dyn_functions = {
 
             for (var i = 0; i < response.length; i++) {
                 if(response[i].result=='Ok'){
+                    hasSuccess = "Y";
                     sMessageSuccess = sMessageSuccess + "Success: " + response[i].IATACode + ": " + response[i].description + "\n";
                 }
                 if(response[i].result=='Error'){
                     sMessageError = sMessageError + "Error: " + response[i].IATACode + ": " + response[i].description + "\n";
                 }
             }
-            alert("Result: \n\n" + sMessageError + "\n\n" + sMessageSuccess);
+            finalMessage = "Result: \n\n" + sMessageError + "\n\n" + sMessageSuccess;
+            sforce.apex.execute("AMS_BSPLinkIntegration","SaveResponseInAttachmentFromOscar",{oscarIds:oscarIdsToRemove,process:"Deactivation",message:finalMessage,isSuccess:hasSuccess});
+            alert(finalMessage);
         }
     },
 
@@ -369,6 +434,8 @@ var dyn_functions = {
         var oscarIdsToRemove = [];
         var sMessageSuccess = "";
         var sMessageError = "";
+        var finalMessage = "";
+        var hasSuccess = "N";
 
         if(confirm('Do you want to proceed reactivating agencies?')){
             oscarIdsToRemove.push(arg);
@@ -377,13 +444,16 @@ var dyn_functions = {
 
             for (var i = 0; i < response.length; i++) {
                 if(response[i].result=='Ok'){
+                    hasSuccess = "Y";
                     sMessageSuccess = sMessageSuccess + "Success: " + response[i].IATACode + ": " + response[i].description + "\n";
                 }
                 if(response[i].result=='Error'){
                     sMessageError = sMessageError + "Error: " + response[i].IATACode + ": " + response[i].description + "\n";
                 }
             }
-            alert("Result: \n\n" + sMessageError + "\n\n" + sMessageSuccess);
+            finalMessage = "Result: \n\n" + sMessageError + "\n\n" + sMessageSuccess;
+            sforce.apex.execute("AMS_BSPLinkIntegration","SaveResponseInAttachmentFromOscar",{oscarIds:oscarIdsToRemove,process:"Reactivation",message:finalMessage,isSuccess:hasSuccess});
+            alert(finalMessage);
         }
     },
 
@@ -391,6 +461,8 @@ var dyn_functions = {
         var oscarIdsToRemove = [];
         var sMessageSuccess = "";
         var sMessageError = "";
+        var finalMessage = "";
+        var hasSuccess = "N";
 
         if(confirm('Do you want to proceed reactivating agencies?')){
             oscarIdsToRemove.push(arg);
@@ -399,13 +471,16 @@ var dyn_functions = {
 
             for (var i = 0; i < response.length; i++) {
                 if(response[i].result=='Ok'){
+                    hasSuccess = "Y";
                     sMessageSuccess = sMessageSuccess + "Success: " + response[i].IATACode + ": " + response[i].description + "\n";
                 }
                 if(response[i].result=='Error'){
                     sMessageError = sMessageError + "Error: " + response[i].IATACode + ": " + response[i].description + "\n";
                 }
             }
-            alert("Result: \n\n" + sMessageError + "\n\n" + sMessageSuccess);
+            finalMessage = "Result: \n\n" + sMessageError + "\n\n" + sMessageSuccess;
+            sforce.apex.execute("AMS_BSPLinkIntegration","SaveResponseInAttachmentFromOscar",{oscarIds:oscarIdsToRemove,process:"DeactivationUndo",message:finalMessage,isSuccess:hasSuccess});
+            alert(finalMessage);
         }
     },
     
@@ -493,6 +568,49 @@ var dyn_functions = {
         if (window.focus) {
             newWindow.focus();
         }
-    }
+    },
 
+    aNG_RestrictFOP:function (args) {
+
+        var argList = args.split(", ");
+
+        var result;
+
+        if(argList[1] == 'false' && argList[2] == 'false'){
+            alert('Before clicking the button Restrict Forms of Payment you need to select at least one form of payment to restrict.')
+        }
+        else{
+
+            result = sforce.apex.execute("ANG_OscarProcessHelper", "processRestrictFOP", {oscarId: argList[0],restrictCreditCard: argList[1], restrictCash: argList[2]});
+
+            if(result[0] == '0'){
+             
+                alert('Forms of Payment Restricted with success.')
+
+            }else
+                alert(result[1]);
+        }
+    },
+
+    aNG_RestoreFOP:function (args) {
+
+        var argList = args.split(", ");
+
+        var result;
+
+        if(argList[1] == 'false' && argList[2] == 'false'){
+            alert('Before clicking the button Restore Forms of Payment you need to select at least one form of payment to restore.')
+        }
+        else{
+
+            result = sforce.apex.execute("ANG_OscarProcessHelper", "processRestoreFOP", {oscarId: argList[0],restoreCreditCard: argList[1], restoreCash: argList[2]});
+
+            if(result[0] == '0'){
+             
+                alert('Forms of Payment Restored with success.')
+
+            }else
+                alert(result[1]);
+        }
+    }
 };

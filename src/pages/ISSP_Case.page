@@ -632,7 +632,7 @@
                                         <apex:outputpanel rendered="{!isDPCUser}">
                                             <apex:commandbutton action="{!edit}" value="Edit" rendered="{!AND(isACRAccepted, NOT(isEditMode), NOT(CaseStatus='CLOSED'))}" rerender="existingCaseForm" styleclass="btn btn_iata_primary" />
                                             <apex:commandbutton action="{!DPCAccept}" value="{!$Label.ISSP_Accept}" rendered="{!AND(NOT(IsInterDPCCase),OR(CaseType='DPCSR',CaseType='ACR'), NOT(OR(isDPCAccepted,isACRAccepted)))}" rerender="existingCaseForm" styleclass="btn btn_iata_primary" />
-                                            <apex:commandbutton action="{!InterDPCAccept}" value="{!$Label.ISSP_Accept}" rendered="{!AND(IsInterDPCCase,newCase.OwnerId!=$User.Id)}" />
+                                            <apex:commandbutton action="{!InterDPCAccept}" value="{!$Label.ISSP_Accept}" rendered="{!AND(IsInterDPCCase,dpcCanAccept)}" />
                                             <apex:commandbutton action="{!DPCCompleteDSR}" value="Complete DSR" rendered="{!AND(caseType='DPCSR',isDPCInvestigateMode)}" rerender="existingCaseForm" disabled="{!OR(newCase.Planned_Start_CR__c!=null, newCase.Planned_End_CR__c!=null)}" styleclass="btn btn_iata_primary" />
                                             <apex:commandbutton action="{!DPCSave}" value="{!$Label.ISSP_Save}" rendered="{!AND(OR(isDPCInvestigateMode, isACRAccepted), isEditMode)}" rerender="existingCaseForm" styleclass="btn btn_iata_primary" />
                                             <apex:commandbutton action="{!cancel}" value="{!$Label.ISSP_Cancel}" immediate="true" rendered="{!AND(OR(isDPCInvestigateMode, isACRAccepted), isEditMode)}" styleclass="btn btn_iata_primary" />
@@ -641,7 +641,8 @@
                                                 <input type="button" class="btn" value="Change DPC Owner" onclick="openCustomlkp('{!newCase.id}')" styleclass="btn btn_iata_primary" />
                                             </apex:outputpanel>
                                             <apex:actionfunction action="{!changeDpcOwner}" name="changeDpcOwner" rerender="existingCaseForm" status="changeOwnerStatus" />
-                                            <apex:commandbutton action="{!close}" value="Close Case" rendered="{!OR(AND(caseType='IATASR', newCase.isDPCCurrentUser__c, newCase.Status!='Closed'),AND(caseType='DPCSR', isDPCAdmin, newCase.Status!='Closed'),AND(IsInterDPCCase, newCase.OwnerId==$User.Id, newCase.Status!='Closed'))}" styleclass="btn btn_iata_primary" />
+                                            <apex:commandbutton action="{!close}" value="Close Case" rendered="{!AND(NOT(IsInterDPCCase), newCase.Status!='Closed',OR(AND(caseType='IATASR', newCase.isDPCCurrentUser__c),AND(caseType='DPCSR', isDPCAdmin)))}" styleclass="btn btn_iata_primary" />
+                                            <apex:commandbutton action="{!close}" value="Close Case" rendered="{!AND(IsInterDPCCase, newCase.OwnerId==$User.Id, newCase.Status!='Closed')}" styleclass="btn btn_iata_primary" />
                                         </apex:outputpanel>
                                     </apex:pageblockbuttons>
 
@@ -904,7 +905,7 @@
                                     <apex:pageblocksection rendered="{!OR(caseType='DPCSR', caseType='IATASR')}" title="{!$Label.IDCard_CaseDetails}" columns="1" id="DPCDescription">
                                         <apex:pageblocksectionItem rendered="{!isDPCUser}">
                                             <apex:outputLabel value="{!$ObjectType.Case.fields.Account_Concerned__c.label}" />
-                                            <apex:outputfield value="{!newCase.Account_Concerned__c}" />
+                                            <apex:outputText value="{!AccountConcernedName}" />
                                         </apex:pageblocksectionItem>
                                         <apex:outputfield value="{!newCase.CaseArea__c}" rendered="{!IsInterDPCCase}" />
                                         <apex:outputfield value="{!newCase.Reason1__c}" rendered="{!IsInterDPCCase}" />
@@ -930,7 +931,7 @@
                                             onfocus="this.oldValue=this.value" onchange="updatePritority(this);"/>
                                         <apex:outputfield value="{!newCase.Priority}" rendered="{!NOT(AND(isACCA,newCase.Status!='Closed'))}"/>
                                         
-                                        <apex:outputfield value="{!newCase.DPC_Software__c}" rendered="{!caseType='DPCSR'}" />
+                                        <apex:outputfield value="{!newCase.DPC_Software__c}" rendered="{!AND(NOT(IsInterDPCCase),caseType='DPCSR')}" />
                                         <apex:outputfield value="{!newCase.Status}" />
                                         <apex:outputfield value="{!newCase.CaseNumber}" />
                                         <!-- <apex:outputfield value="{!newCase.ParentId}" /> -->
@@ -942,7 +943,7 @@
                                             <apex:outputLink value="/ISSP_Account?id={!newCase.AccountId}&mid=M1S2">{!newCase.Account.Name}</apex:outputLink>
                                         </apex:outputText>
                                          -->
-                                        <apex:outputfield value="{!newCase.ContactId}" rendered="{!AND(isDPCUser, caseType='DPCSR')}" />
+                                        <apex:outputText value="{!CaseContactName}" label="{!$Label.ISSP_Contact}" rendered="{!AND(isDPCUser, caseType='DPCSR')}" />
 
                                         <apex:outputfield value="{!newCase.SuppliedEmail}" rendered="{!caseType='DPCSR'}" />
                                         <apex:outputfield value="{!newCase.ACCA_Owner__c}" rendered="{!AND(isDPCUser,OR(caseType='ACR', caseType='IATASR'))}" />
@@ -1210,7 +1211,7 @@
                                     </apex:pageblocktable>
                                 </apex:pageblock>
 
-                                <apex:pageblock title="{!$ObjectType.CaseHistory.label}" rendered="{!IsInterDPCCase}">
+                                <apex:pageblock title="{!$ObjectType.CaseHistory.label}" rendered="{!AND(NOT(isNewCase),IsInterDPCCase)}">
                                     <apex:pageblocktable value="{!listCaseHistory}" var="item" styleclass="table-hover table table-condensed table-responsive">
                                         <apex:column value="{!item.CreatedDate}" />
                                         <apex:column value="{!item.CreatedBy.Name}" headervalue="{!$ObjectType.CaseHistory.fields.CreatedById.label}"/>

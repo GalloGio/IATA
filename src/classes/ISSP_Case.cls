@@ -106,11 +106,6 @@ public without sharing class ISSP_Case {
             return (caseType == 'ACR' && newCase.Escalated_Status_ACCA__c != null && newCase.ACCA_Owner__c != null);
         }
     }
-    //AMSU-119
-    public boolean isMSOcase {get {
-            return (caseType == 'OSCAR' && newCase.Reason1__c == 'GSA / MSO / Handling Agent');
-        }
-    }
 
     public String CaseType { get {return ISSP_Constant.caseTypeMap.get(newCase.RecordType.Name);}   }
     public String CaseStatus { get {return ISSP_Constant.caseStatusMap.get(newCase.Status);}    }
@@ -168,9 +163,7 @@ public without sharing class ISSP_Case {
     **/
     public Boolean getHideForClosedCases() {
         set<String> validRecordtypes = new set<String>{AME_RECORD_TYPE_ID, AMERICAS_RECORD_TYPE_ID, APAC_RECORD_TYPE_ID, CHINA_RECORD_TYPE_ID, EUROPE_RECORD_TYPE_ID, IDFS_RECORD_TYPE_ID};
-        //AMSU-119
-        //return (validRecordtypes.contains(this.newCase.RecordtypeId) && this.newCase.ClosedDate < Date.today().addDays(-14));
-        return ((validRecordtypes.contains(this.newCase.RecordtypeId) && this.newCase.ClosedDate < Date.today().addDays(-14)) || isMSOcase );
+        return (validRecordtypes.contains(this.newCase.RecordtypeId) && this.newCase.ClosedDate < Date.today().addDays(-14));
     }
 
     public String fullnameNOCFile { get{
@@ -1731,11 +1724,35 @@ public without sharing class ISSP_Case {
         return newCase.RecordTypeId==INTER_DPC_RECORD_TYPE_ID;
     }
     
+    public String getAccountConcernedName() {
+        try {
+            return [SELECT Name FROM Account WHERE Id = :newCase.Account_Concerned__c].Name;
+        } catch (Exception e) {
+            return '';
+        }
+    }
+    
+    public String getCaseContactName() {
+        try {
+            return [SELECT Name FROM Contact WHERE Id = :newCase.contactId].Name;
+        } catch (Exception e) {
+            return '';
+        }
+    }
+    
     public list<CaseHistory> getListCaseHistory() {
+        list<String> listExcluded;
+        try {
+            listExcluded = ISSP_DPC__c.getValues('History Excluded Fields').Value__c.split(',');
+        } catch (Exception e) {
+            listExcluded = new list<String>();
+        }
+        
         list<CaseHistory> listHistory = new list<CaseHistory>();
         for (CaseHistory history: [SELECT Id,Field,NewValue,OldValue,CreatedBy.Name,CreatedDate
             FROM CaseHistory
             WHERE CaseId = :newCase.Id
+            AND Field NOT IN :listExcluded
             ORDER BY CreatedDate DESC]
         ) {
             try {

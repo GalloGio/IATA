@@ -256,7 +256,8 @@ public class IFAP_BusinessRulesTest {
     }
  
     static testmethod void testVFEmailTemplateController() {
-
+		
+		Test.startTest();
         //create IATA_ISO_Country__c
         createIsoCountry();
 
@@ -358,6 +359,7 @@ public class IFAP_BusinessRulesTest {
         e1.Template_Type__c = 'FA - Financial Assessment';
 
         insert e1;
+		Test.stopTest();
 
 
         Case cObj1 = new Case();

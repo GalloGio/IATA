@@ -673,6 +673,7 @@ ISPICKVAL( Right__c , &apos;Access Granted&apos;))</formula>
         <columns>Contact__c</columns>
         <columns>Portal_Application__c</columns>
         <columns>Right__c</columns>
+        <columns>LAST_UPDATE</columns>
         <filterScope>Everything</filterScope>
         <filters>
             <field>Restricted_App__c</field>
@@ -1011,6 +1012,19 @@ OR(ISPICKVAL(Right__c, &apos;Access Granted&apos;), ISPICKVAL(Right__c, &apos;Ac
         <errorConditionFormula>$User.ProfileId = &apos;00ew0000001QRzC&apos; &amp;&amp; Portal_Application__r.Name = &apos;IFAP&apos; &amp;&amp; (allowAssignFinContactFlowChange__c = False) &amp;&amp;  ISCHANGED(Right__c) &amp;&amp; NOT(ISPICKVAL(PRIORVALUE(Right__c), &apos;Access Requested&apos;)) &amp;&amp; ISPICKVAL(Right__c, &apos;Access Denied&apos;)</errorConditionFormula>
         <errorDisplayField>Right__c</errorDisplayField>
         <errorMessage>Please click on &apos;Cancel&apos; and use the &apos;Assign Financial Assessment Contact&apos; button on the Contact in order to Grant or Deny IFAP access.</errorMessage>
+    </validationRules>
+    <validationRules>
+        <fullName>Restrict_IEP_request</fullName>
+        <active>true</active>
+        <description>Internal users must not be able to assign an IATA EasyPay portal service with Access Status = Access Requested to a contact.</description>
+        <errorConditionFormula>and(
+Text(Right__c) = &apos;Access Requested&apos;,
+CONTAINS(Application_Name__c, &apos;IATA EasyPay&apos;),
+NOT(BEGINS($Profile.Name, &apos;System Administrator&apos;)),
+$Profile.Name != &apos;ISS Portal Agency Delegated Admin User&apos;,
+$Profile.Name != &apos;ISS Portal Agency User (Partner)&apos;
+)</errorConditionFormula>
+        <errorMessage>Access to an IATA EasyPay portal service cannot be requested internally. Please ask the user to request access from the CS Portal, or the portal admin to add this user to the service.</errorMessage>
     </validationRules>
     <validationRules>
         <fullName>Restrict_internal_selection</fullName>

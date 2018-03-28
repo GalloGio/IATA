@@ -1002,15 +1002,6 @@ The value is determined by ExactTarget, and this is is only populated once a cam
         <language>en_US</language>
     </listViews>
     <listViews>
-        <fullName>EBC_Approvers_EBC_Campaign</fullName>
-        <filterScope>Queue</filterScope>
-        <label>eBroadcast Approvers</label>
-        <queue>EBC_Approvers</queue>
-        <sharedTo>
-            <allInternalUsers></allInternalUsers>
-        </sharedTo>
-    </listViews>
-    <listViews>
         <fullName>Pending_Review</fullName>
         <columns>NAME</columns>
         <columns>Campaign_ID__c</columns>
@@ -1030,7 +1021,7 @@ The value is determined by ExactTarget, and this is is only populated once a cam
         <language>en_US</language>
     </listViews>
     <listViews>
-        <fullName>Scheduled_Campaigns</fullName>
+        <fullName>Scheduled_Campaigns1</fullName>
         <columns>NAME</columns>
         <columns>Campaign_ID__c</columns>
         <columns>Status__c</columns>
@@ -1038,7 +1029,7 @@ The value is determined by ExactTarget, and this is is only populated once a cam
         <columns>Billing_Account__c</columns>
         <columns>EBC_Master_Filter__c</columns>
         <columns>Scheduled_Date__c</columns>
-        <columns>Number_of_Recipients__c</columns>
+        <columns>Exact_Target_Campaign_Id__c</columns>
         <filterScope>Everything</filterScope>
         <filters>
             <field>Status__c</field>
@@ -1051,13 +1042,11 @@ The value is determined by ExactTarget, and this is is only populated once a cam
     <listViews>
         <fullName>Sent</fullName>
         <columns>NAME</columns>
-        <columns>Campaign_ID__c</columns>
-        <columns>Status__c</columns>
-        <columns>Audience__c</columns>
         <columns>Billing_Account__c</columns>
-        <columns>EBC_Master_Filter__c</columns>
-        <columns>Scheduled_Date__c</columns>
-        <columns>Exact_Target_Campaign_Id__c</columns>
+        <columns>Campaign_ID__c</columns>
+        <columns>Audience__c</columns>
+        <columns>Number_of_Recipients__c</columns>
+        <columns>Send_Datetime__c</columns>
         <filterScope>Everything</filterScope>
         <filters>
             <field>Status__c</field>

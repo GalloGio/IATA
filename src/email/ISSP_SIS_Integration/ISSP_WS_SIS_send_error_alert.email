@@ -1,0 +1,12 @@
+SIS Integration error:</br>
+</br>
+<a href="{!ISSP_Web_Service_Log__c.Link}">{!ISSP_Web_Service_Log__c.Link}</br></a></br>
+</br>
+<b>Web service:</b> {!ISSP_Web_Service_Log__c.Web_Service__c}</br>
+<b>Method:</b>          {!ISSP_Web_Service_Log__c.Method__c}</br>
+<b>Date:</b>               {!ISSP_Web_Service_Log__c.Started__c}</br>
+<b>Input description:</b></br>
+       <i>{!ISSP_Web_Service_Log__c.Input_Description__c}</i></br>
+</br>
+<b>Error Code:</b>          {!ISSP_Web_Service_Log__c.Error_Code__c}</br>
+<b>Error Message:</b>   {!ISSP_Web_Service_Log__c.Error_Message__c}</br>
