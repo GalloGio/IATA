@@ -134,6 +134,16 @@ public without sharing class ISSP_AMS_MSO_Update_Controller {
 
                 }
 
+            }else if (action == ACTION_TERMINATION) {
+                System.debug('action FM: ' + action);
+                System.debug('step: ' + step);
+                
+                Account acc = [Select Id, IATA_ISO_Country__c, Iso_State__c from Account where Id = :msoId];
+                
+                countrySelected = acc.IATA_ISO_Country__c;
+                billingState = acc.Iso_State__c;
+                System.debug('countrySelected: ' + countrySelected);
+                System.debug('billingState: ' + billingState);
             }
 
         }
@@ -246,6 +256,9 @@ public without sharing class ISSP_AMS_MSO_Update_Controller {
         }
 
         try {
+
+            IATA_ISO_Country__c selectedCountryInfo = [SELECT Name, Id, Region__c FROM IATA_ISO_Country__c WHERE Id = :countrySelected];
+
             if (oscarCase.Id == null) {
                 // create new OSCAR
                 oscar.RecordTypeId = TransformationHelper.RtIDsPerDeveloperNamePerObj(new list<string> {'AMS_OSCAR__c'}).get('AMS_OSCAR__c').get('CORRECTION');//oscarRT.Id;
@@ -263,7 +276,8 @@ public without sharing class ISSP_AMS_MSO_Update_Controller {
                 oscarCase.AccountId = currentUserContact.AccountId;
                 oscarCase.ContactId = noEmailContactId; //currentUser.ContactId;
                 oscarCase.RecordTypeId = TransformationHelper.RtIDsPerDeveloperNamePerObj(new list<string> {'Case'}).get('Case').get('OSCAR_Communication');//caseRT.Id;
-                oscarCase.Subject = 'Corrections - ' + currentUserContact.Account.Name + ' - Self-service (IATA Portal)';
+                //oscarCase.Subject = 'Corrections - ' + currentUserContact.Account.Name + ' - Self-service (IATA Portal)';
+                oscarCase.Subject = 'MSO code Corrections - (' + msoAccount.IATACode__c + ') - ' + currentUserContact.Account.Name;
                 oscarCase.CaseArea__c = 'Accreditation Process';
                 oscarCase.Reason1__c = 'Corrections';
                 oscarCase.Origin = 'Portal';
@@ -271,6 +285,7 @@ public without sharing class ISSP_AMS_MSO_Update_Controller {
                 oscarCase.OSCAR__c = oscar.Id;
                 oscarCase.Status = 'Draft';
                 oscarCase.IATAcode__c = msoAccount.IATACode__c;
+                oscarCase.Country_concerned_by_the_query__c = selectedCountryInfo.Name;
                 insert oscarCase;
 
                 oscarCase = [SELECT Id, CaseNumber FROM Case WHERE Id =:oscarCase.Id];
@@ -306,6 +321,8 @@ public without sharing class ISSP_AMS_MSO_Update_Controller {
 
     public PageReference terminate() {
         try {
+                IATA_ISO_Country__c selectedCountryInfo = [SELECT Name, Id, Region__c FROM IATA_ISO_Country__c WHERE Id = :countrySelected];
+                
                 // create new OSCAR
                 oscar.RecordTypeId = TransformationHelper.RtIDsPerDeveloperNamePerObj(new list<string> {'AMS_OSCAR__c'}).get('AMS_OSCAR__c').get('VOLUNTARY_RELINQUISHMENT');
                 oscar.Name = 'tempName'; 
@@ -322,7 +339,9 @@ public without sharing class ISSP_AMS_MSO_Update_Controller {
                 oscarCase.AccountId = currentUserContact.AccountId;
                 oscarCase.ContactId = noEmailContactId; //currentUser.ContactId;
                 oscarCase.RecordTypeId = TransformationHelper.RtIDsPerDeveloperNamePerObj(new list<string> {'Case'}).get('Case').get('OSCAR_Communication');
-                oscarCase.Subject = 'MSO code Termination - ' + currentUserContact.Account.Name + ' - Self-service (IATA Portal)';
+                //oscarCase.Subject = 'MSO code Termination - ' + currentUserContact.Account.Name + ' - Self-service (IATA Portal)';
+                //Termination of MSO code - (IATA Code) - Airline name
+                oscarCase.Subject = 'MSO code Termination - (' + msoAccount.IATACode__c + ') - ' + currentUserContact.Account.Name;
                 oscarCase.CaseArea__c = 'Accreditation Process';
                 oscarCase.Reason1__c = 'CLO - Closure';
                 oscarCase.Origin = 'Portal';
@@ -330,6 +349,7 @@ public without sharing class ISSP_AMS_MSO_Update_Controller {
                 oscarCase.OSCAR__c = oscar.Id;
                 oscarCase.Status = 'Draft';                
                 oscarCase.IATAcode__c = msoAccount.IATACode__c;
+                oscarCase.Country_concerned_by_the_query__c = selectedCountryInfo.Name;
                 insert oscarCase;
 
                 // AUTOMATICALLY APPROVE & TERMINATE

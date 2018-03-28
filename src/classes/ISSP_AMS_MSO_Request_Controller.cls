@@ -65,7 +65,7 @@ public without sharing class ISSP_AMS_MSO_Request_Controller {
             if (oscarCase.Id == null)
                 accreditationForm = new AMS_Pax_Accreditation_Form__c();
             else {
-                accreditationForm = [SELECT Id, Branch_Office_Street_name_number__c, Branch_Office_Postal_code__c, Branch_Office_City__c, Branch_Office_Phone__c, Branch_Office_Email__c, IATA_ISO_State__c, IATA_ISO_State__r.Name, Branch_Office_Country__c, Branch_Office_Country__r.Name, Accept_terms_and_conditions__c FROM AMS_Pax_Accreditation_Form__c WHERE SAAM_Case__c = :oscarCase.Id];
+                accreditationForm = [SELECT Id, Branch_Office_Street_name_number__c, Branch_Office_Postal_code__c, Branch_Office_City__c, Branch_Office_Phone__c, Branch_Office_Email__c, IATA_ISO_State__c, IATA_ISO_State__r.Name, Branch_Office_Country__c, Branch_Office_Country__r.Name,Branch_Office_Country__r.Region__c, Accept_terms_and_conditions__c FROM AMS_Pax_Accreditation_Form__c WHERE SAAM_Case__c = :oscarCase.Id limit 1];
                 countrySelected = accreditationForm.Branch_Office_Country__c;
                 refreshStates();
                 billingState = accreditationForm.IATA_ISO_State__c;
@@ -176,6 +176,10 @@ public without sharing class ISSP_AMS_MSO_Request_Controller {
         Boolean isValid = true;
         Pattern p = Pattern.compile(ISO_8859_1_regEx);
 
+        System.debug('accreditationForm: ' + accreditationForm);
+        System.debug('countrySelected: ' + countrySelected);
+
+
         if (countrySelected == null) {
             ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.ERROR, Label.ISSP_AMS_MSO_Country_ErrMsg));
             isValid = false;
@@ -245,7 +249,8 @@ public without sharing class ISSP_AMS_MSO_Request_Controller {
                 oscarCase.AccountId = currentUserContact.AccountId;
                 oscarCase.ContactId = noEmailContactId; //currentUser.ContactId;
                 oscarCase.RecordTypeId = TransformationHelper.RtIDsPerDeveloperNamePerObj(new list<string> {'Case'}).get('Case').get('OSCAR_Communication');//caseRT.Id;
-                oscarCase.Subject = 'New MSO Code - ' + currentUserContact.Account.Name + ' - Self-service (IATA Portal)';
+                //oscarCase.Subject = 'New MSO Code - ' + currentUserContact.Account.Name + ' - Self-service (IATA Portal)';
+                oscarCase.Subject = 'New MSO Code - ' + currentUserContact.Account.Name;
                 oscarCase.CaseArea__c = 'Accreditation Process';
                 oscarCase.Reason1__c = 'GSA / MSO / Handling Agent';
                 oscarCase.Origin = 'Portal';
@@ -287,6 +292,8 @@ public without sharing class ISSP_AMS_MSO_Request_Controller {
                 upsert accreditationForm;
             }
         } catch (Exception ex) {
+            System.debug('ex' + ex);
+            System.debug('ex' + ex.getStackTraceString());
             ApexPages.addMessages(ex);
             return null;
         }

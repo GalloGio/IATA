@@ -74,7 +74,7 @@ public without sharing class ISSP_AMS_MSO_Controller {
         List<Data> data = new List<Data>();
         data.add(new Data('Approved', iApproved));
         data.add(new Data('Terminated ', iClosed));
-        data.add(new Data('Total', iAll));
+        //data.add(new Data('Total', iAll));
         return data;
     }
     
