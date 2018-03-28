@@ -2698,7 +2698,7 @@ public class AMS_OSCARTriggerHandler {
                 return;
             }
 
-            if(updatedOscar.Is_PCI_compliant__c == 'Yes' && updatedOscar.ANG_PCI_compliance_expiry_date__c == null){
+            if(updatedOscar.Is_PCI_compliant__c == 'Yes' && ( updatedOscar.ANG_PCI_compliance_expiry_date__c == null || updatedOscar.ANG_PCI_compliance_expiry_date__c < Date.today() ) ) {
                 updatedOscar.addError('Please specify the PCI compliance expiry date.');
                 return;
             }

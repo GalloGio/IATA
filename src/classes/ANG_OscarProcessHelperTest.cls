@@ -99,6 +99,7 @@ private class ANG_OscarProcessHelperTest {
 		oscar.STEP6__c = AMS_Utils.PASSED;
 		oscar.AMS_Online_Accreditation__c = theAccreditation.Id;
 		oscar.Is_PCI_compliant__c = 'Yes';
+		oscar.ANG_PCI_compliance_expiry_date__c = Date.today();
         oscar.Oscar_Communication_Case_Id__c = oscarCase.Id;
 		update oscar;
 
@@ -590,7 +591,7 @@ private class ANG_OscarProcessHelperTest {
 
 		System.assertEquals(1, oscars.size(), '1 Oscar record should to be created for this account');
 		System.assertEquals(1, oscars[0].cases__r.size(), '1 case record should to be created for the account');
-
+		
 		// test Change Code and SIDRA Lite creation
 		oscars[0].step43__c = 'Failed';
 		oscars[0].step44__c = 'Failed';
