@@ -382,38 +382,42 @@ trigger CaseAfterTrigger on Case (after delete, after insert, after undelete, af
 
 		for(Case cse : cases) {
 			if(cse.RecordTypeId == IFAPcaseRecordTypeID){
-		    	caseRecType = true;
-		    	casesToConsider.add(cse);
-		    	sCaseIds.add(cse.Id);
-		    	caseAccsSet.add(cse.accountId);
-		    } 
+				casesToConsider.add(cse);
+			} 
 		}
 
+		Map<Id, Account> AcctToBeUpdatedPerId = new Map<Id, Account>(); 
 		if(!casesToConsider.isEmpty() && (trigger.isUpdate || trigger.isInsert)){
 			
-			//set containing Newgen Account Ids
-			Map<Id, Account> ngAccounts = new Map<Id, Account>([select id, Assessment_Performed_Date__c, Financial_Review_Result__c from account where id in :caseAccsSet and ANG_IsNewGenAgency__c=true]);
-			//IFAP P5 start   
-			map<Id,Account> AcctToBeUpdatedPerId = new map<Id,Account>(); 
-			list<Case> casesToUdpateTheAccts = new list<Case>();
-			map<id,case> casesToUpdateNGaccsMap = new map<id,case>();
-			for(Case c: casesToConsider){
-				if(!ngAccounts.containsKey(c.accountId) &&
-					c.status == 'Assessment Performed' && c.Financial_Review_Result__c <> null && c.Assessment_Performed_Date__c <> null &&
-					(trigger.isInsert || (trigger.newMap.get(c.id).Assessment_Performed_Date__c <> trigger.oldMap.get(c.id).Assessment_Performed_Date__c 
-					|| trigger.newMap.get(c.id).Financial_Review_Result__c <> trigger.oldMap.get(c.id).Financial_Review_Result__c
-					|| trigger.newMap.get(c.id).status  <> trigger.oldMap.get(c.id).status))
-				) casesToUdpateTheAccts.add(c);
-			}
-			map<id,account> ngAccMap=  ANG_CaseTriggerHandler.setFinancialReviewResultOnAccount(casesToConsider,ngAccounts,AMS_Utils.CASE_STATUS_UPDATE_FINANCIAL_REVIEW_SET);
-			if(ngAccMap !=null) AcctToBeUpdatedPerId.putAll(ngAccMap);
+			//IFAP P5 start
+			Map<Id, List<Case>> casesPerAccount = new Map<Id, List<Case>>();
 
-			if(!casesToUdpateTheAccts.isEmpty())  {              
+			//filter IFAP cases with the correct data and aggregate them per account
+			for(Case c : casesToConsider){
+				Case oldCase = trigger.oldMap.get(c.Id);
+				if(c.status == 'Assessment Performed' && c.Financial_Review_Result__c <> null && c.Assessment_Performed_Date__c <> null &&
+					(
+						trigger.isInsert || 
+						(c.Assessment_Performed_Date__c <> oldCase.Assessment_Performed_Date__c || c.Financial_Review_Result__c <> oldCase.Financial_Review_Result__c	|| c.status  <> oldCase.status)
+					)
+				){
+					if(!casesPerAccount.containsKey(c.AccountId)) casesPerAccount.put(c.AccountId, new List<Case>());
+					casesPerAccount.get(c.AccountId).add(c);
+				}
+			}
+
+			if(!casesPerAccount.isEmpty())  {
 				// throw new transformationException();
-				 map<Id,Account> temMap =IFAP_AfterTrigger.updateTheAcctsTrigger(casesToUdpateTheAccts);
-				 AcctToBeUpdatedPerId.putAll(temMap);
-			}   
-		
+
+				//NewGen agents will handled by the ANG_CaseTriggerHandler, so we filter them out
+				for(Account a : [SELECT Id, Assessment_Performed_Date__c, Financial_Review_Result__c FROM account WHERE Id IN :casesPerAccount.keySet() and ANG_IsNewGenAgency__c = true]){
+					if(a.ANG_IsNewGenAgency__c) casesPerAccount.remove(a.Id);
+				}
+
+				//copy relevant fields to the account and store them to update later
+				AcctToBeUpdatedPerId.putAll(IFAP_AfterTrigger.latestDate(casesPerAccount));
+			}
+		} 
 			System.debug('***Do blah blah blah only for IFAP case related accounts ');
 			Set<ID> acctIds = new Set<ID>();
 			for (Case cse : casesToConsider) {
@@ -843,15 +847,6 @@ trigger CaseAfterTrigger on Case (after delete, after insert, after undelete, af
 			 	}
 			}
 		}
-		if(Trigger.isBefore){
-			if(Trigger.isInsert)new ANG_CaseTriggerHandler().onBeforeInsert();
-			if(Trigger.isUpdate)new ANG_CaseTriggerHandler().onBeforeUpdate();
-  		}
-		if(Trigger.isAfter){
-			if(Trigger.isInsert)new ANG_CaseTriggerHandler().onAfterInsert();
-			if(Trigger.isUpdate)new ANG_CaseTriggerHandler().onAfterUpdate();
-  		}
-  	
 	}
 	/*Share trigger code*/
 	
@@ -1013,6 +1008,10 @@ trigger CaseAfterTrigger on Case (after delete, after insert, after undelete, af
 			SidraLiteManager.afterInsertSidraLiteCases(Trigger.new);
 		}
 		/*trgCase Trigger.isInsert*/
+
+		/*ANG Triggers*/
+		new ANG_CaseTriggerHandler().onAfterInsert();
+		/*ANG Triggers*/
 	/*Trigger.isInsert*/
 	}
 	/****************************************************************************************************************************************************/    
@@ -1165,6 +1164,9 @@ trigger CaseAfterTrigger on Case (after delete, after insert, after undelete, af
 		}
 		/*AMS_OSCARCaseTrigger Trigger.isUpdate*/
 
+		/*ANG Triggers*/
+		new ANG_CaseTriggerHandler().onAfterUpdate();
+		/*ANG Triggers*/
 	/*Trigger.isUpdate*/
 	}
 	/****************************************************************************************************************************************************/    
@@ -1175,6 +1177,10 @@ trigger CaseAfterTrigger on Case (after delete, after insert, after undelete, af
 			
 		}
 		/*trgCaseIFAP_AfterInsertDeleteUpdateUndelete Trigger.isDelete*/
+
+		/*ANG Triggers*/
+		new ANG_CaseTriggerHandler().onAfterDelete();
+		/*ANG Triggers*/
 	/*Trigger.isDelete*/
 	}
 }
