@@ -353,15 +353,12 @@
                 }
 
                 function saveContact(isEmailDuplicated){
-                    console.log("saving....." + isEmailDuplicated);
                   if (jQuery('.errorMsg').length == 0 && isEmailDuplicated == "false"){
-                    console.log("no duplicated email");
                     cleanModal();
                     closeModal();
                   }
                   else if(isEmailDuplicated == "true"){
-                    console.log("duplicated email");
-                    alert("Email duplicated");
+                    bootbox.alert("{!$label.ISSP_Application_for_Enlistment_Email_Duplicated}");
                   }
 
                 }
@@ -693,7 +690,7 @@
                         <apex:commandButton action="{!createContact}" onclick="rerenderModal();" status="WaitingStatus"  styleClass="btn btn-default"  value="{!$Label.ISSP_Submit}" oncomplete="saveContact('{!isEmailDuplicated}');rerenderContactSection();" >
                         </apex:commandButton>
                         &nbsp;
-                        <button type="button" class="btn btn-default" onclick="cleanModal();return false;">
+                        <button type="button" class="btn btn-default" onclick="cleanModal();closeModal();return false;">
                         {!$Label.ISSP_Cancel} </button>
                      </div>
                   </div>
