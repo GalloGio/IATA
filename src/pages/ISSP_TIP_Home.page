@@ -14,7 +14,7 @@
             })
 
             function changeRequestButtonStatus() {
-                document.getElementById("requestButton").disabled = {!btnEnabled};
+                document.getElementById("requestButton").disabled = {!!btnEnabled};
             }
 
             function validateIfportalAdmin() {
