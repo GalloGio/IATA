@@ -5677,6 +5677,11 @@ If(LEN(BillingCountry) &gt;0, BillingCountry,&quot;&quot;)</formula>
                     <label>IBCS consolidator</label>
                 </value>
                 <value>
+                    <fullName>Import Agent</fullName>
+                    <default>false</default>
+                    <label>Import Agent</label>
+                </value>
+                <value>
                     <fullName>Individual Government</fullName>
                     <default>false</default>
                     <label>Individual Government</label>
@@ -5785,11 +5790,6 @@ If(LEN(BillingCountry) &gt;0, BillingCountry,&quot;&quot;)</formula>
                     <fullName>Railway Line</fullName>
                     <default>false</default>
                     <label>Railway Line</label>
-                </value>
-                <value>
-                    <fullName>Recipient</fullName>
-                    <default>false</default>
-                    <label>Recipient</label>
                 </value>
                 <value>
                     <fullName>Resort</fullName>
@@ -5985,6 +5985,11 @@ If(LEN(BillingCountry) &gt;0, BillingCountry,&quot;&quot;)</formula>
             </valueSettings>
             <valueSettings>
                 <controllingFieldValue>Travel Agent</controllingFieldValue>
+                <controllingFieldValue>Cargo Agent</controllingFieldValue>
+                <valueName>Import Agent</valueName>
+            </valueSettings>
+            <valueSettings>
+                <controllingFieldValue>Travel Agent</controllingFieldValue>
                 <valueName>MSO Member Sales Office</valueName>
             </valueSettings>
             <valueSettings>
@@ -6000,11 +6005,6 @@ If(LEN(BillingCountry) &gt;0, BillingCountry,&quot;&quot;)</formula>
                 <controllingFieldValue>Travel Agent</controllingFieldValue>
                 <controllingFieldValue>Cargo Agent</controllingFieldValue>
                 <valueName>Non-IATA Travel Agent</valueName>
-            </valueSettings>
-            <valueSettings>
-                <controllingFieldValue>Travel Agent</controllingFieldValue>
-                <controllingFieldValue>Cargo Agent</controllingFieldValue>
-                <valueName>Recipient</valueName>
             </valueSettings>
             <valueSettings>
                 <controllingFieldValue>Travel Agent</controllingFieldValue>
@@ -29561,6 +29561,10 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
                 <default>false</default>
             </values>
             <values>
+                <fullName>Import Agent</fullName>
+                <default>false</default>
+            </values>
+            <values>
                 <fullName>Individual Government</fullName>
                 <default>false</default>
             </values>
@@ -29642,10 +29646,6 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
             </values>
             <values>
                 <fullName>Railway Line</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Recipient</fullName>
                 <default>false</default>
             </values>
             <values>
@@ -31043,6 +31043,10 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
             </values>
             <values>
                 <fullName>IGHC</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Import Agent</fullName>
                 <default>false</default>
             </values>
             <values>
@@ -32576,6 +32580,10 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
                 <default>false</default>
             </values>
             <values>
+                <fullName>Import Agent</fullName>
+                <default>false</default>
+            </values>
+            <values>
                 <fullName>Individual Government</fullName>
                 <default>false</default>
             </values>
@@ -32653,10 +32661,6 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
             </values>
             <values>
                 <fullName>Railway Line</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Recipient</fullName>
                 <default>false</default>
             </values>
             <values>
@@ -35265,6 +35269,10 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
                 <default>false</default>
             </values>
             <values>
+                <fullName>Import Agent</fullName>
+                <default>false</default>
+            </values>
+            <values>
                 <fullName>MSO Member Sales Office</fullName>
                 <default>false</default>
             </values>
@@ -35282,10 +35290,6 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
             </values>
             <values>
                 <fullName>Other</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Recipient</fullName>
                 <default>false</default>
             </values>
             <values>
@@ -37541,6 +37545,10 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
             </values>
             <values>
                 <fullName>IATA Passenger Sales Agent</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Import Agent</fullName>
                 <default>false</default>
             </values>
             <values>
@@ -39912,6 +39920,10 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
             </values>
             <values>
                 <fullName>IGHC</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Import Agent</fullName>
                 <default>false</default>
             </values>
             <values>
@@ -48033,6 +48045,10 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
             </values>
             <values>
                 <fullName>IGHC</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Import Agent</fullName>
                 <default>false</default>
             </values>
             <values>
@@ -58541,6 +58557,10 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
                 <default>false</default>
             </values>
             <values>
+                <fullName>Import Agent</fullName>
+                <default>false</default>
+            </values>
+            <values>
                 <fullName>Individual Government</fullName>
                 <default>false</default>
             </values>
@@ -58618,10 +58638,6 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
             </values>
             <values>
                 <fullName>Railway Line</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Recipient</fullName>
                 <default>false</default>
             </values>
             <values>
@@ -59655,6 +59671,10 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
             </values>
             <values>
                 <fullName>IGHC</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Import Agent</fullName>
                 <default>false</default>
             </values>
             <values>
@@ -62109,6 +62129,10 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
                 <default>false</default>
             </values>
             <values>
+                <fullName>Import Agent</fullName>
+                <default>false</default>
+            </values>
+            <values>
                 <fullName>Inspector</fullName>
                 <default>false</default>
             </values>
@@ -64559,6 +64583,10 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
                 <default>false</default>
             </values>
             <values>
+                <fullName>Import Agent</fullName>
+                <default>false</default>
+            </values>
+            <values>
                 <fullName>Inspector</fullName>
                 <default>false</default>
             </values>
@@ -66056,6 +66084,10 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
                 <default>false</default>
             </values>
             <values>
+                <fullName>Import Agent</fullName>
+                <default>false</default>
+            </values>
+            <values>
                 <fullName>Individual Government</fullName>
                 <default>false</default>
             </values>
@@ -66133,10 +66165,6 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
             </values>
             <values>
                 <fullName>Railway Line</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Recipient</fullName>
                 <default>false</default>
             </values>
             <values>
@@ -69208,6 +69236,10 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
                 <default>false</default>
             </values>
             <values>
+                <fullName>Import Agent</fullName>
+                <default>false</default>
+            </values>
+            <values>
                 <fullName>Individual Government</fullName>
                 <default>false</default>
             </values>
@@ -69289,10 +69321,6 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
             </values>
             <values>
                 <fullName>Railway Line</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Recipient</fullName>
                 <default>false</default>
             </values>
             <values>
@@ -74819,6 +74847,10 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
                 <default>false</default>
             </values>
             <values>
+                <fullName>Import Agent</fullName>
+                <default>false</default>
+            </values>
+            <values>
                 <fullName>Individual Governments</fullName>
                 <default>false</default>
             </values>
@@ -76859,6 +76891,10 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
                 <default>false</default>
             </values>
             <values>
+                <fullName>Import Agent</fullName>
+                <default>false</default>
+            </values>
+            <values>
                 <fullName>Individual Government</fullName>
                 <default>false</default>
             </values>
@@ -76940,10 +76976,6 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
             </values>
             <values>
                 <fullName>Railway Line</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Recipient</fullName>
                 <default>false</default>
             </values>
             <values>
@@ -81174,6 +81206,10 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
                 <default>false</default>
             </values>
             <values>
+                <fullName>Import Agent</fullName>
+                <default>false</default>
+            </values>
+            <values>
                 <fullName>Individual Government</fullName>
                 <default>false</default>
             </values>
@@ -81255,10 +81291,6 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
             </values>
             <values>
                 <fullName>Railway Line</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Recipient</fullName>
                 <default>false</default>
             </values>
             <values>
@@ -84001,6 +84033,10 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
                 <default>false</default>
             </values>
             <values>
+                <fullName>Import Agent</fullName>
+                <default>false</default>
+            </values>
+            <values>
                 <fullName>Individual Governments</fullName>
                 <default>false</default>
             </values>
@@ -84790,14 +84826,6 @@ OR(ISPICKVAL(Industry, &apos;Airline&apos;),ISPICKVAL(Industry, &apos;Travel Age
         <errorMessage>Please select the reason for creation.</errorMessage>
     </validationRules>
     <validationRules>
-        <fullName>Restrict_agency_BR_without_parent_accoun</fullName>
-        <active>false</active>
-        <description>Block users from creating or editing BR Agency RT without a parent account</description>
-        <errorConditionFormula>AND(RecordType.DeveloperName=&quot;IATA_Agency&quot;,ISPICKVAL(Location_Type__c,&apos;BR&apos;),ISBLANK(ParentId))</errorConditionFormula>
-        <errorDisplayField>ParentId</errorDisplayField>
-        <errorMessage>BR Accounts cannot be created without a parent.</errorMessage>
-    </validationRules>
-    <validationRules>
         <fullName>Virtual_Branch_Iso_Country</fullName>
         <active>true</active>
         <description>For a Virtual Branch Iso Country is mandatory</description>
@@ -85059,29 +85087,38 @@ var connection = sforce.connection;
 
 var recType = sforce.connection.query(&quot;SELECT Id, Name FROM RecordType WHERE developername = &apos;Standard_Account&apos; LIMIT 1&quot;);
 
-var newmsoagency= new sforce.SObject(&quot;Account&quot;);
+if(&apos;{!Account.Airline_designator__c}&apos; == null || &apos;{!Account.Airline_designator__c}&apos; == &apos;&apos;){
+    alert(&apos;Error: {!$Label.ISSP_AMS_MSO_Request_Issue_Airline_Designator}&apos;);
+    
+}else{
+    var newmsoagency= new sforce.SObject(&quot;Account&quot;);
 
-newmsoagency.RecordTypeId = recType.Id;
-newmsoagency.Name = &apos;{!Account.Name}&apos;;
-newmsoagency.Sector__c = &quot;Travel Agent&quot;;
-newmsoagency.Category__c = &quot;MSO Member Sales Office&quot;;
-newmsoagency.Location_Class__c = &quot;M&quot;;
-newmsoagency.Location_Type__c = &quot;HO&quot;;
-newmsoagency.Reason_for_creation__c = &quot;New Agent&quot;;
+    newmsoagency.RecordTypeId = recType.Id;
+    newmsoagency.Name = &apos;{!Account.Name}&apos;;
+    newmsoagency.Sector__c = &quot;Travel Agent&quot;;
+    newmsoagency.Category__c = &quot;MSO Member Sales Office&quot;;
+    newmsoagency.Location_Class__c = &quot;M&quot;;
+    newmsoagency.Location_Type__c = &quot;HO&quot;;
+    newmsoagency.Reason_for_creation__c = &quot;New Agent&quot;;
 
-if({!Account.IATA_Member__c} == true) { 
-newmsoagency.Location_Category__c = &quot;IC&quot;; 
-} 
-else { 
-newmsoagency.Location_Category__c = &quot;NI&quot;; 
-}
+    if({!Account.IATA_Member__c} == true) { 
+        newmsoagency.Location_Category__c = &quot;IC&quot;; 
+    } else { 
+        newmsoagency.Location_Category__c = &quot;NI&quot;; 
+    }
 
-result = sforce.connection.create([newmsoagency]);
-var accId = result[0].id;
+    result = sforce.connection.create([newmsoagency]);
+    var accId = result[0].id;
 
-var airlineId = &apos;{!Account.Id}&apos;;
+    var airlineId = &apos;{!Account.Id}&apos;;
 
-javascript:srcUp(&apos;/apex/AMS_AccountOSCARWizardPage?accountId=&apos;+accId+&apos;&amp;process=x&amp;Type_of_OSCAR_process_man=NEW.MSO.1.0&amp;airlineId=&apos;+airlineId);</url>
+    if (typeof srcUp == &apos;function&apos;) {	
+		javascript:srcUp(&apos;/apex/AMS_AccountOSCARWizardPage?accountId=&apos;+accId+&apos;&amp;process=x&amp;Type_of_OSCAR_process_man=NEW.MSO.1.0&amp;airlineId=&apos;+airlineId);
+	}else{
+		//window.location.href = &apos;/apex/AMS_AccountOSCARWizardPage?accountId=&apos;+accId+&apos;&amp;process=x&amp;Type_of_OSCAR_process_man=NEW.MSO.1.0&amp;airlineId=&apos;+airlineId;
+        alert(&apos;This option is to use on the console&apos;);
+	}
+}</url>
     </webLinks>
     <webLinks>
         <fullName>DSE__DS_AccountHierarchyButton</fullName>
