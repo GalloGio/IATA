@@ -68,7 +68,7 @@
         <fullName>PP_Accepted_transactions__c</fullName>
         <externalId>false</externalId>
         <label>Accepted transactions</label>
-        <required>true</required>
+        <required>false</required>
         <trackTrending>false</trackTrending>
         <type>MultiselectPicklist</type>
         <valueSet>
@@ -105,7 +105,7 @@
         <externalId>false</externalId>
         <inlineHelpText>Category of product</inlineHelpText>
         <label>Category</label>
-        <required>true</required>
+        <required>false</required>
         <trackTrending>false</trackTrending>
         <type>Picklist</type>
         <valueSet>
@@ -115,12 +115,12 @@
                 <value>
                     <fullName>CONSUMER</fullName>
                     <default>false</default>
-                    <label>CONSUMER</label>
+                    <label>Consumer</label>
                 </value>
                 <value>
                     <fullName>CORPORATE</fullName>
                     <default>false</default>
-                    <label>CORPORATE</label>
+                    <label>Corporate</label>
                 </value>
             </valueSetDefinition>
         </valueSet>
@@ -165,7 +165,7 @@
         <externalId>false</externalId>
         <inlineHelpText>Effective From Date</inlineHelpText>
         <label>Effective from Date</label>
-        <required>true</required>
+        <required>false</required>
         <trackTrending>false</trackTrending>
         <type>Date</type>
     </fields>
@@ -182,7 +182,7 @@
         <fullName>PP_Form_of_payment__c</fullName>
         <externalId>false</externalId>
         <label>Form of payment</label>
-        <required>true</required>
+        <required>false</required>
         <trackTrending>false</trackTrending>
         <type>Picklist</type>
         <valueSet>
@@ -247,7 +247,7 @@
         <externalId>false</externalId>
         <inlineHelpText>Type of Card</inlineHelpText>
         <label>Pay-in model</label>
-        <required>true</required>
+        <required>false</required>
         <trackTrending>false</trackTrending>
         <type>Picklist</type>
         <valueSet>
@@ -279,7 +279,7 @@
         <inlineHelpText>Code that identifies the provider product</inlineHelpText>
         <label>Payment Product Code</label>
         <length>2</length>
-        <required>true</required>
+        <required>false</required>
         <trackTrending>false</trackTrending>
         <type>Text</type>
         <unique>true</unique>
@@ -313,7 +313,7 @@
         <description>Payment guarantee for Airlines</description>
         <externalId>false</externalId>
         <label>Payment guarantee</label>
-        <required>true</required>
+        <required>false</required>
         <trackTrending>false</trackTrending>
         <type>MultiselectPicklist</type>
         <valueSet>
@@ -323,12 +323,12 @@
                 <value>
                     <fullName>COMMERCIAL_DISPUTE</fullName>
                     <default>false</default>
-                    <label>COMMERCIAL_DISPUTE</label>
+                    <label>Commercial Dispute</label>
                 </value>
                 <value>
                     <fullName>FRAUD_DISPUTE</fullName>
                     <default>false</default>
-                    <label>FRAUD_DISPUTE</label>
+                    <label>Fraud Dispute</label>
                 </value>
             </valueSetDefinition>
         </valueSet>
@@ -347,32 +347,32 @@
             <valueSetDefinition>
                 <sorted>false</sorted>
                 <value>
-                    <fullName>Amex (AX)</fullName>
+                    <fullName>AX</fullName>
                     <default>false</default>
                     <label>Amex (AX)</label>
                 </value>
                 <value>
-                    <fullName>MasterCard (CA)</fullName>
+                    <fullName>CA</fullName>
                     <default>false</default>
                     <label>MasterCard (CA)</label>
                 </value>
                 <value>
-                    <fullName>UATP (TP)</fullName>
+                    <fullName>TP</fullName>
                     <default>false</default>
                     <label>UATP (TP)</label>
                 </value>
                 <value>
-                    <fullName>Visa (VI)</fullName>
+                    <fullName>VI</fullName>
                     <default>false</default>
                     <label>Visa (VI)</label>
                 </value>
                 <value>
-                    <fullName>Diners (DC/DS)</fullName>
+                    <fullName>DC/DS</fullName>
                     <default>false</default>
                     <label>Diners (DC/DS)</label>
                 </value>
                 <value>
-                    <fullName>Other (OTH)</fullName>
+                    <fullName>OTH</fullName>
                     <default>false</default>
                     <label>Other (OTH)</label>
                 </value>
@@ -385,7 +385,7 @@
         <inlineHelpText>Settlement terms (days after ticketing issuance) Number of days</inlineHelpText>
         <label>Settlement terms (days)</label>
         <length>255</length>
-        <required>true</required>
+        <required>false</required>
         <trackTrending>false</trackTrending>
         <type>Text</type>
         <unique>false</unique>
@@ -395,7 +395,7 @@
         <externalId>false</externalId>
         <inlineHelpText>If the product is a single use VAN, Multi-use VANs?</inlineHelpText>
         <label>VAN type</label>
-        <required>true</required>
+        <required>false</required>
         <trackTrending>false</trackTrending>
         <type>Picklist</type>
         <valueSet>
@@ -596,27 +596,27 @@
         <picklistValues>
             <picklist>PP_Payment_network__c</picklist>
             <values>
-                <fullName>Amex %28AX%29</fullName>
+                <fullName>AX</fullName>
                 <default>false</default>
             </values>
             <values>
-                <fullName>Diners %28DC%2FDS%29</fullName>
+                <fullName>CA</fullName>
                 <default>false</default>
             </values>
             <values>
-                <fullName>MasterCard %28CA%29</fullName>
+                <fullName>DC%2FDS</fullName>
                 <default>false</default>
             </values>
             <values>
-                <fullName>Other %28OTH%29</fullName>
+                <fullName>OTH</fullName>
                 <default>false</default>
             </values>
             <values>
-                <fullName>UATP %28TP%29</fullName>
+                <fullName>TP</fullName>
                 <default>false</default>
             </values>
             <values>
-                <fullName>Visa %28VI%29</fullName>
+                <fullName>VI</fullName>
                 <default>false</default>
             </values>
         </picklistValues>
