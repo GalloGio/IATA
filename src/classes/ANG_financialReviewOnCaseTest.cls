@@ -141,21 +141,27 @@ private class ANG_financialReviewOnCaseTest {
 
         Account beforeUpdateAcc =[select id, ANG_HE_RiskStatus__c,Financial_Review_Result__c from account limit 1]; 
 
-        system.assertEquals('C',beforeUpdateAcc.ANG_HE_RiskStatus__c);
+    testMethod static void updateSAAMStatusToUpdateFinancialReview(){  
+        Account beforeUpdateAcc =[select id, ANG_HE_RiskStatus__c,Financial_Review_Result__c,(select id from contacts) from account limit 1];
+        system.assertEquals('B',beforeUpdateAcc.ANG_HE_RiskStatus__c);
         Test.startTest();
-            Portal_Applications__c par = new Portal_Applications__c (Name = 'RHC Information');
-            insert par;
-
-            insert new Portal_Application_Right__c(Portal_Application__c = par.Id, Right__c = 'Access Granted', Contact__c = [select id from Contact limit 1].get(0).Id);
-            case c=[select id,Financial_Review_Result__c from case limit 1];
-            c.status='Closed';
-            update c;
+           Case c = new Case(
+                   RecordTypeId = RecordTypeSingleton.getInstance().RtIDsPerDeveloperNamePerObj.get('Case').get('ProcessEuropeSCE'),
+                   AccountId = beforeUpdateAcc.Id, 
+                   Subject = 'rception case2',
+                   contactId=beforeUpdateAcc.contacts.get(0).Id,
+                   Status = 'Closed', 
+                   Assessment_Performed_Date__c= system.today(),
+                   Financial_Review_Result__c='Satisfactory - New Financial Security',
+                   CaseArea__c = ANG_Risk_Helper.CASE_AREA_RISK_MANAGEMENT_PROCESS,
+                   Reason1__c='Adhoc Review'
+                    );
+           insert c;
         Test.stopTest();
         account afterUpdateAcc =[select ANG_HE_RiskStatus__c,Financial_Review_Result__c, (select id from Agencies_Applied_Change_codes__r) from account limit 1];   
 
         system.assertEquals(c.Financial_Review_Result__c,afterUpdateAcc.Financial_Review_Result__c);
-        system.assertEquals('B',afterUpdateAcc.ANG_HE_RiskStatus__c);
-        System.assertEquals(1, [SELECT Id, Subject__c FROM Notification__c].size(), 'Notification was not created'); 
+        system.assertEquals('A',afterUpdateAcc.ANG_HE_RiskStatus__c);
         System.assertEquals(1, afterUpdateAcc.Agencies_Applied_Change_codes__r.size(), 'Change Code was not created');
     }
 
