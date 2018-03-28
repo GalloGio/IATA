@@ -38,7 +38,7 @@
                 <!--<aura:if isTrue="{!equals(v.serviceName, 'ISSP')}">-->
                     <a class="footerEl" href="{!v.labelHelpLink }" target="_blank">
                         <div class="iataItem_Icon">
-                            <span class="icon icon-community"></span>
+                            <span class="icon icon-questionMark"></span>
                         </div>
                         <p class="icon_subTitle">{!v.labelHelp}</p>
                     </a>
