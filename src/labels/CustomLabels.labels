@@ -14969,6 +14969,13 @@ Also note that the data contained in ICE is provided to IATA by third parties at
         <value>Application for Enlistment as a Payment Provider</value>
     </labels>
     <labels>
+        <fullName>ISSP_Application_for_Enlistment_Email_Duplicated</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP Application for Enlistment Email Duplicated</shortDescription>
+        <value>Email duplicated. Please insert other email</value>
+    </labels>
+    <labels>
         <fullName>ISSP_Apply_Filter</fullName>
         <categories>portal, S6</categories>
         <language>en_US</language>
