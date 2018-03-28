@@ -1,6 +1,7 @@
 public with sharing class ISSP_TIP_Enrolment_Controller {
 
-	private static String PROCESS_CASE_RECORD_TYPE_ID = RecordTypeSingleton.getInstance().RtIDsPerDeveloperNamePerObj.get('Case').get('CS_Process_IDFS_ISS');
+	private static String PROCESS_CASE_RECORD_TYPE_ID = RecordTypeSingleton.getInstance().RtIDsPerDeveloperNamePerObj.get('Case').get('CS_Process_IDFS_ISS');    
+    private static String STANDARD_ACCOUNT_RECORD_TYPE_ID = RecordTypeSingleton.getInstance().RtIDsPerDeveloperNamePerObj.get('Account').get('Standard_Account');  
 
     public String applyLanguage {get; set;}
     public String displayLanguage {get; set;}
@@ -14,6 +15,7 @@ public with sharing class ISSP_TIP_Enrolment_Controller {
     public String conID {get; set;}
     public Contact newContact {get;set;} 
     public List <Contact> contactList {get; set;}
+    public Boolean isEmailDuplicated {get; set;}
 
 
 	public ISSP_TIP_Enrolment_Controller() {
@@ -94,27 +96,6 @@ public with sharing class ISSP_TIP_Enrolment_Controller {
 
 	public Pagereference saveAsDraft() {
 
-		//create a case
-		//update case if already exists one for this
-
-		/*
-
-		Case Reason = Payment Provider Management (new Case Reason to be created)
-		Case description = Request for Enlistment as Payment provider [Custom label]
-		Subject = Request for Enlistment as Payment provider - <Name of Account>
-		Case region / Country set as per user's account [see Accreditation controller]
-
-		origin = portal
-		status = draft
-		case area = TIP
-		visible on iss portal
-		iso country
-		record type = process
-		BSPCountry__c = iata iso country
-		newCase.Country_concerned_by_the_query__c = isocountry.Name;
-
-		*/
-
 		updateCase();
 		update account;
 		upsert newCase;
@@ -129,7 +110,7 @@ public with sharing class ISSP_TIP_Enrolment_Controller {
                         Mobile__c, MobileNational__c , Location_Type__c, ParentId, ShippingStreet, ShippingCity, ShippingState,
                         ShippingPostalCode, ShippingCountry, VAT_Number__c, Short_Name__c, Location_Class__c, IATA_ISO_Country__c,TIP_Documents__c,
                         Iso_State__c, Abbreviated_name__c, Abbreviated_Address__c, Remittance_frequency__c, Solicitation_Flag__c,
-                        VAT_Number_2__c, CASS_Number__c,Company_Type__c,RecordType.DeveloperName,Status__c,IATA_ISO_Country__r.ISO_Code__c,ANG_Accreditation_Model__c,
+                        VAT_Number_2__c, CASS_Number__c,Company_Type__c,RecordTypeid, RecordType.DeveloperName,Status__c,IATA_ISO_Country__r.ISO_Code__c,ANG_Accreditation_Model__c,
                         IATA_ISO_Country__r.Name, IATA_ISO_Country__r.region__c, TIP_HQ_Location__c
                         FROM Account
                         WHERE Id = :accountID
@@ -168,7 +149,7 @@ public with sharing class ISSP_TIP_Enrolment_Controller {
     	contactList = [SELECT id,Name, Email,Salutation, FirstName, LastName, Phone, Primary_Contact__c,MobileNational__c,Membership_Function__c,Title,MobilePhone
 
                 FROM Contact
-                WHERE Status__c = 'Active'];
+                WHERE Status__c = 'Active' and Accountid = :accountID];
     }
 
     public void updateRadioButtonStatus() {
@@ -180,9 +161,16 @@ public with sharing class ISSP_TIP_Enrolment_Controller {
     }
 
     public void createContact(){
-
-    	upsert newContact;
-    	contactList.add(newContact);
+    	newContact.AccountId = accountID;
+    	try{
+    		upsert newContact;
+    		isEmailDuplicated = false;
+    		system.debug('##done inserting: ' +isEmailDuplicated);
+    	}catch(Exception e){
+    		system.debug('##Error inserting: ' +isEmailDuplicated);
+    		isEmailDuplicated = true;
+    		return;
+    	}
     	fillContactList();
     	newContact = new Contact();
     }
@@ -195,5 +183,10 @@ public with sharing class ISSP_TIP_Enrolment_Controller {
     	}
     	return null;
 
+    }
+
+    public PageReference securityCheck(){
+    	if(account.recordtypeid != STANDARD_ACCOUNT_RECORD_TYPE_ID || con.User_Portal_Status__c != ANG_Risk_Helper.USER_PORTAL_STATUS_APPROVED_ADIM ) return new Pagereference('/ISSP_TIP_Home');
+    	return null;
     }
 }

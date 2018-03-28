@@ -7,6 +7,7 @@
    applyBodyTag="false"
    applyHtmlTag="false"
    docType="html-5.0"
+   action="{!securityCheck}"
    >
    <html>
       <c:ISSP_Header ></c:ISSP_Header>
@@ -256,7 +257,6 @@
             
                     for (var i = 0; i < elements.length; i++){
                         elements[i].style.display = "none";
-                        console.log("found: " + i);
                     }
                 }
                 
@@ -350,6 +350,20 @@
                 
                 function removeReq(){
                     $j('[id$=legalname]').unwrap().prev('.requiredBlock').remove();
+                }
+
+                function saveContact(isEmailDuplicated){
+                    console.log("saving....." + isEmailDuplicated);
+                  if (jQuery('.errorMsg').length == 0 && isEmailDuplicated == "false"){
+                    console.log("no duplicated email");
+                    cleanModal();
+                    closeModal();
+                  }
+                  else if(isEmailDuplicated == "true"){
+                    console.log("duplicated email");
+                    alert("Email duplicated");
+                  }
+
                 }
                 
              
@@ -676,7 +690,7 @@
                         </apex:outputPanel>
                      </div>
                      <div class="modal-footer">
-                        <apex:commandButton action="{!createContact}" onclick="rerenderModal();" status="WaitingStatus"  styleClass="btn btn-default"  value="{!$Label.ISSP_Submit}" oncomplete="cleanModal();closeModal();rerenderContactSection();" >
+                        <apex:commandButton action="{!createContact}" onclick="rerenderModal();" status="WaitingStatus"  styleClass="btn btn-default"  value="{!$Label.ISSP_Submit}" oncomplete="saveContact('{!isEmailDuplicated}');rerenderContactSection();" >
                         </apex:commandButton>
                         &nbsp;
                         <button type="button" class="btn btn-default" onclick="cleanModal();return false;">
