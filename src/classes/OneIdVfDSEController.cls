@@ -699,6 +699,7 @@ public without sharing class OneIdVfDSEController {
      */
     public Pagereference register() {
         system.debug('in register....');
+        Boolean isNewAcc = false;
         
         String url = ApexPages.currentPage().getURL();
         
@@ -798,6 +799,8 @@ public without sharing class OneIdVfDSEController {
                 con.User_Portal_Status__c ='Active';
                 con.Community__c = 'ISS Customer Portal';
             }
+            
+            isNewAcc = true;            
 
             System.debug('*** Contact: ' + con);
         } else {
@@ -893,8 +896,8 @@ public without sharing class OneIdVfDSEController {
                 system.debug('aqui con.id ' + con.Id);   
                 if(serviceName == 'ISSP'){
                     permissionCSPortal(returnedString); // assign Permission Set CS Portal, give access to CS Portal Connected App
-                }          
-                if(serviceName == 'ISSP' && isTravel){
+                }
+                if(serviceName == 'ISSP' && isNewAcc == true){
                     permissionNewAgency(returnedString);                    
                     portalServiceNewAgency(con.Id);
                 }
