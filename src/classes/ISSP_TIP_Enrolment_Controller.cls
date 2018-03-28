@@ -179,13 +179,12 @@ public with sharing class ISSP_TIP_Enrolment_Controller {
     	}
     }
 
-    public Pagereference createContact(){
+    public void createContact(){
 
     	upsert newContact;
-    	//contactList.add(newContact);
+    	contactList.add(newContact);
     	fillContactList();
     	newContact = new Contact();
-    	return null;
     }
 
     public Pagereference setContactToEdit(){
