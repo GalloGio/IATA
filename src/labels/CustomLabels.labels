@@ -20992,6 +20992,20 @@ This Dashboard allows each airline Treasury Team to gain full visibility of thei
         <value>(in format TIESS_000XXXX)</value>
     </labels>
     <labels>
+        <fullName>ISSP_TIP_ADD_BIN_RANGE</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP TIP ADD BIN RANGE</shortDescription>
+        <value>Add BIN Range</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_TIP_MANDATORY_ON_SUBMIT</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP TIP MANDATORY ON SUBMIT</shortDescription>
+        <value>Mandatory fields upon submission to IATA</value>
+    </labels>
+    <labels>
         <fullName>ISSP_TOULink</fullName>
         <categories>RegTOU</categories>
         <language>en_US</language>
