@@ -125,7 +125,7 @@ public with sharing class ams2gdp_SchedulerPageController
 	            jobIds.add(Database.executeBatch(new ams2gdp_Batch_AMS_Agency_Profile(false,ids9, isManual)));
 
 	            //Start Job 10
-	            List<String> ids10 = ams2gdp_Selector.getAMS_Agency_AuthorizationByAccountIds(specificRecordIds);
+	            List<String> ids10 = specificRecordIds;
 	            if(ids10.isEmpty()) ids10.add('none');
 	            jobIds.add(Database.executeBatch(new ams2gdp_Batch_AMS_Agency_Authorization(false,ids10, isManual)));
 
