@@ -4,6 +4,7 @@
         <meta charset="utf-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.css" />
+        <script src="{!URLFOR($Resource.bootbox)}" />
         <c:ISSP_Header ></c:ISSP_Header>
         <c:iss_ap_css />
 
@@ -21,7 +22,7 @@
                 if ({!isAdmin}) {
                     window.location.href = '/apex/ISSP_TIP_Enrolment';
                 } else {
-                    alert("Only Portal Administrators can apply to Enlistment as a Payment Provider");
+                    alert("{!$label.ISSP_TIP_Home_Only_Portal_Administrators}");
                 }
             }
 
@@ -29,9 +30,9 @@
                 if ({!isAdmin} && {!isPaymentProvider}) {
                     window.location.href = '/apex/TIP_Product_Enrollment';
                 } else if ({!!isAdmin}){
-                    alert("Only Portal Administrators can Enrol Products");
+                    alert("{!$label.ISSP_TIP_Home_Only_Portal_Administrators_Enrol_Products}");
                 }else if({!!isPaymentProvider}){
-                    alert("Account must be of type Payment Provider");
+                    alert("{!$label.ISSP_TIP_Home_Account_must_be_Payment_Provider}");
                 }   
             }
 
@@ -40,9 +41,9 @@
                 if ({!isAdmin} && {!isPaymentProvider}) {
                     window.location.href = '/apex/TIP_Product_Enrollment?id=' + id;
                 } else if ({!!isAdmin}){
-                    alert("Only Portal Administrators can Enrol Products");
+                    alert("{!$label.ISSP_TIP_Home_Only_Portal_Administrators_Enrol_Products}");
                 }else if({!!isPaymentProvider}){
-                    alert("Account must be of type Payment Provider");
+                    alert("{!$label.ISSP_TIP_Home_Account_must_be_Payment_Provider}");
                 }
             }
 
