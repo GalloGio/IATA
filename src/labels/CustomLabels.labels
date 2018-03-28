@@ -10247,14 +10247,14 @@ IFG Customer Services</value>
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>ISSP_AMS_MSO_Alternatively</shortDescription>
-        <value>Alternatively enter the location reference you wish to assign to this new MSO account</value>
+        <value>Alternatively enter the location reference you wish to assign to this new MSO Code</value>
     </labels>
     <labels>
         <fullName>ISSP_AMS_MSO_Application_Review</fullName>
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>ISSP_AMS_MSO_Application_Review</shortDescription>
-        <value>Please review your application details before submitting to IATA.</value>
+        <value>Please review the details before submitting to IATA.</value>
     </labels>
     <labels>
         <fullName>ISSP_AMS_MSO_Application_Section_2</fullName>
@@ -10299,6 +10299,13 @@ IFG Customer Services</value>
         <value>Account Status</value>
     </labels>
     <labels>
+        <fullName>ISSP_AMS_MSO_GSA_Address</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_AMS_MSO_GSA_Address</shortDescription>
+        <value>Address</value>
+    </labels>
+    <labels>
         <fullName>ISSP_AMS_MSO_GSA_Appointment_Active</fullName>
         <language>en_US</language>
         <protected>false</protected>
@@ -10311,6 +10318,13 @@ IFG Customer Services</value>
         <protected>false</protected>
         <shortDescription>ISSP_AMS_MSO_GSA_Appointment_Status</shortDescription>
         <value>Status</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_AMS_MSO_GSA_Close_Date</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_AMS_MSO_GSA_Close_Date</shortDescription>
+        <value>Terminated Date</value>
     </labels>
     <labels>
         <fullName>ISSP_AMS_MSO_GSA_Appointment_Terminated</fullName>
@@ -10355,6 +10369,13 @@ IFG Customer Services</value>
         <value>Agent Accreditation Date</value>
     </labels>
     <labels>
+        <fullName>ISSP_AMS_MSO_GSA_Return_to_List</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_AMS_MSO_GSA_Return_to_List</shortDescription>
+        <value>Return to List</value>
+    </labels>
+    <labels>
         <fullName>ISSP_AMS_MSO_GSA_Download_CSV</fullName>
         <language>en_US</language>
         <protected>false</protected>
@@ -10373,7 +10394,7 @@ IFG Customer Services</value>
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>ISSP_AMS_MSO_GSA_Exclude_Terminated_Appointments</shortDescription>
-        <value>Exclude Terminated Agents</value>
+        <value>Exclude Terminated Codes</value>
     </labels>
     <labels>
         <fullName>ISSP_AMS_MSO_GSA_GSA_Introduction_Text</fullName>
@@ -10408,28 +10429,28 @@ IFG Customer Services</value>
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>ISSP_AMS_MSO_GSA_IATA_Code</shortDescription>
-        <value>IATA Code</value>
+        <value>Code</value>
     </labels>
     <labels>
         <fullName>ISSP_AMS_MSO_GSA_MSO_Introduction_Text</fullName>
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>ISSP_AMS_MSO_GSA_MSO_Introduction_Text</shortDescription>
-        <value>This service enables you to easily access information on active and terminated MSO accounts under your airline, request new MSO accounts and terminate/correct existing MSO accounts.</value>
+        <value>This service enables you to easily access information on active and terminated MSO Codes under your airline, request new MSO Codes and terminate/correct existing MSO Codes.</value>
     </labels>
     <labels>
         <fullName>ISSP_AMS_MSO_GSA_MSO_Service_Description</fullName>
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>ISSP_AMS_MSO_GSA_MSO_Service_Description</shortDescription>
-        <value>This service enables you to easily access information on active and terminated MSO accounts under your airline, request new MSO accounts and terminate/correct existing MSO accounts.</value>
+        <value>This service enables you to easily access information on active and terminated MSO Codes under your airline, request new MSO Codes and terminate/correct existing MSO Codes.</value>
     </labels>
     <labels>
         <fullName>ISSP_AMS_MSO_GSA_MSO_Service_Name</fullName>
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>ISSP_AMS_MSO_GSA_MSO_Service_Name</shortDescription>
-        <value>MSO Appointments</value>
+        <value>MSO Management</value>
     </labels>
     <labels>
         <fullName>ISSP_AMS_MSO_GSA_MSO_Terminate_MSO</fullName>
@@ -10443,7 +10464,14 @@ IFG Customer Services</value>
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>ISSP_AMS_MSO_GSA_MSO_Title</shortDescription>
-        <value>MSO Appointments</value>
+        <value>MSO Codes</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_AMS_MSO_GSA_MSO_Title_Details</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_AMS_MSO_GSA_MSO_Title</shortDescription>
+        <value>MSO Details</value>
     </labels>
     <labels>
         <fullName>ISSP_AMS_MSO_GSA_Next</fullName>
@@ -10451,6 +10479,13 @@ IFG Customer Services</value>
         <protected>false</protected>
         <shortDescription>ISSP_AMS_MSO_GSA_Next</shortDescription>
         <value>Next</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_AMS_MSO_GSA_Open_Date</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_AMS_MSO_GSA_Open_Date</shortDescription>
+        <value>Opened Date</value>
     </labels>
     <labels>
         <fullName>ISSP_AMS_MSO_GSA_Previous</fullName>
@@ -10464,7 +10499,7 @@ IFG Customer Services</value>
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>ISSP_AMS_MSO_GSA_Request_New_MSO</shortDescription>
-        <value>Request New MSO</value>
+        <value>Create New MSO</value>
     </labels>
     <labels>
         <fullName>ISSP_AMS_MSO_GSA_Search_Placeholder</fullName>
@@ -10492,7 +10527,7 @@ IFG Customer Services</value>
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>ISSP_AMS_MSO_Invalid_Request</shortDescription>
-        <value>This is an invalid request: MSO account or type of request information missing. Please go back and try again.</value>
+        <value>This is an invalid request: MSO Code or type of request information missing. Please go back and try again.</value>
     </labels>
     <labels>
         <fullName>ISSP_AMS_MSO_Legal_Status</fullName>
@@ -10514,7 +10549,14 @@ IFG Customer Services</value>
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>ISSP_AMS_MSO_Request_Successfull</shortDescription>
-        <value>A new MSO account has been successfully generated with the following IATA Code:</value>
+        <value>You have successfully created an new MSO Code:</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_AMS_MSO_Request_Issue_Airline_Designator</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_AMS_MSO_Request_Issue_Airline_Designator</shortDescription>
+        <value>Missing IATA Designator on the Account.</value>
     </labels>
     <labels>
         <fullName>ISSP_AMS_MSO_StepFinal_Thanks</fullName>
@@ -10528,21 +10570,21 @@ IFG Customer Services</value>
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>ISSP_AMS_MSO_Termination_Confirmation_Text</shortDescription>
-        <value>This will generate a voluntary relinquishment of the selected MSO account with the IATA Code</value>
+        <value>This will permanently terminate the selected MSO Code</value>
     </labels>
     <labels>
         <fullName>ISSP_AMS_MSO_Termination_Request</fullName>
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>ISSP_AMS_MSO_Termination_Request</shortDescription>
-        <value>Request to Terminate the MSO</value>
+        <value>MSO Termination</value>
     </labels>
     <labels>
         <fullName>ISSP_AMS_MSO_Termination_Request_Successfull</fullName>
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>ISSP_AMS_MSO_Termination_Request_Successfull</shortDescription>
-        <value>We have successfully terminated the MSO account with the IATA Code</value>
+        <value>Successfully terminated the MSO Code</value>
     </labels>
     <labels>
         <fullName>ISSP_AMS_MSO_Thank_You</fullName>
@@ -10556,7 +10598,7 @@ IFG Customer Services</value>
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>ISSP_AMS_MSO_Update_Request</shortDescription>
-        <value>Request to Update the MSO Details</value>
+        <value>MSO Update</value>
     </labels>
     <labels>
         <fullName>ISSP_AMS_MSO_Update_Request_Section1</fullName>
@@ -10570,7 +10612,7 @@ IFG Customer Services</value>
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>ISSP_AMS_MSO_Update_Request_Successfull</shortDescription>
-        <value>The requested changes have been successfully applied to the MSO account with IATA Code</value>
+        <value>The requested changes have been successfully applied to the MSO Code</value>
     </labels>
     <labels>
         <fullName>ISSP_AMS_Manager</fullName>
@@ -10807,7 +10849,7 @@ For each section below either:&lt;br/&gt;
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>ISSP_AMS_New_MSO_Application</shortDescription>
-        <value>Application for a new MSO</value>
+        <value>Create New MSO</value>
     </labels>
     <labels>
         <fullName>ISSP_AMS_NoC_Acreditation_Type_Section_Header</fullName>
@@ -15830,6 +15872,22 @@ Can you please confirm which country you&apos;ve previously received support for
         <protected>false</protected>
         <shortDescription>ISSP Case Payment status</shortDescription>
         <value>Payment status</value>
+	</labels>
+    <labels>
+        <fullName>ISSP_AMS_MSO_Case_Alert</fullName>
+        <categories>ISSP</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Case Closed For More Than 2 Months</shortDescription>
+        <value>For any concerns about this case, please contact support providing the case number.</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_Case_Closed_MSO_Code</fullName>
+        <categories>ISSP</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_Case_Closed_MSO_Code</shortDescription>
+        <value>For any further inquiries on this case please go to Contact Support.</value>
     </labels>
     <labels>
         <fullName>ISSP_Case_Status_Resolved</fullName>

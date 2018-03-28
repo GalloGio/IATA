@@ -493,7 +493,7 @@
                             <div class="col-lg-10" >{!accreditationForm.Branch_Office_Country__r.Name}</div>
                             </apex:outputPanel>
 
-                            <apex:outputPanel id="billingStatePanel6" styleClass="billingStreetPanel" rendered="{!step == 'review' }" style="display:{! IF(billingStatesList.size > 1,'','None')};">
+                            <apex:outputPanel id="billingStatePanel6" styleClass="billingStreetPanel" rendered="{!AND(step == 'review',billingStatesList.size > 1) }">
                                 <label for="billingstate" class="col-lg-2" style="text-align: right; font-size: 91%; padding-right: 0px;">* {!$ObjectType.AMS_Pax_Accreditation_Form__c.fields.Billing_State__c.Label}</label>
                                 
                                 <div class="col-lg-10" >{!accreditationForm.IATA_ISO_State__r.Name}</div>
@@ -504,11 +504,8 @@
                                     {!$Label.ISSP_AMS_MSO_GSA_Address}</label>
                                     
                                     <div class="col-lg-10">
-                                        <div class="requiredInput">
-                                            <div class="requiredBlock"></div>                          
                                 <apex:outputField id="billingStreet" value="{!accreditationForm.Branch_Office_Street_name_number__c}"/>
                             </div>
-                                    </div>
                                 </apex:outputPanel>
 
                                 <apex:outputPanel styleClass="billingStreetPanel">

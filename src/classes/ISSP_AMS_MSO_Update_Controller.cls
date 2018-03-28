@@ -106,7 +106,8 @@ public without sharing class ISSP_AMS_MSO_Update_Controller {
                 } else {
                     accreditationForm = [SELECT Id, Account_Name__c, Branch_Office_Street_name_number__c, Branch_Office_Postal_code__c, Branch_Office_City__c, Branch_Office_Phone__c, Branch_Office_Email__c, IATACode__c, IATA_ISO_State__c, IATA_ISO_State__r.Name, Branch_Office_Country__c, Branch_Office_Country__r.Name, Short_Name__c, Trade_Name__c, ISSP_AMS_License_No__c, ISSP_AMS_VAT_number__c, Website__c, Shipping_Street__c, Shipping_Postal_Code__c, Branch_Office_FAX__c, Shipping_City__c, Operation__c, Abbreviated_name__c, Abbreviated_Address__c, Remittance_frequency__c, Solicitation_Flag__c, VAT_Number_2__c, CASS_Number__c, Location_Class__c, Location_Type__c, Mobile__c, Is_your_firm_handling_Dangerous_Goods__c, Shipping_ISO_Country__c, Shipping_ISO_State__c, Link_agent_name__c FROM AMS_Pax_Accreditation_Form__c WHERE SAAM_Case__c = :oscarCase.Id];
                 }
-                
+                System.debug('oscarCase: ' + oscarCase);
+                System.debug('accreditationForm: ' + accreditationForm);
                 refreshStates();
                 countrySelected = accreditationForm.Branch_Office_Country__c;
                 billingState = accreditationForm.IATA_ISO_State__c;
@@ -134,6 +135,16 @@ public without sharing class ISSP_AMS_MSO_Update_Controller {
 
                 }
 
+            }else if (action == ACTION_TERMINATION) {
+                System.debug('action FM: ' + action);
+                System.debug('step: ' + step);
+                
+                Account acc = [Select Id, IATA_ISO_Country__c, Iso_State__c from Account where Id = :msoId];
+                
+                countrySelected = acc.IATA_ISO_Country__c;
+                billingState = acc.Iso_State__c;
+                System.debug('countrySelected: ' + countrySelected);
+                System.debug('billingState: ' + billingState);
             }
 
         }
@@ -246,6 +257,9 @@ public without sharing class ISSP_AMS_MSO_Update_Controller {
         }
 
         try {
+
+            IATA_ISO_Country__c selectedCountryInfo = [SELECT Name, Id, Region__c FROM IATA_ISO_Country__c WHERE Id = :countrySelected];
+
             if (oscarCase.Id == null) {
                 // create new OSCAR
                 oscar.RecordTypeId = TransformationHelper.RtIDsPerDeveloperNamePerObj(new list<string> {'AMS_OSCAR__c'}).get('AMS_OSCAR__c').get('CORRECTION');//oscarRT.Id;
@@ -263,7 +277,8 @@ public without sharing class ISSP_AMS_MSO_Update_Controller {
                 oscarCase.AccountId = currentUserContact.AccountId;
                 oscarCase.ContactId = noEmailContactId; //currentUser.ContactId;
                 oscarCase.RecordTypeId = TransformationHelper.RtIDsPerDeveloperNamePerObj(new list<string> {'Case'}).get('Case').get('OSCAR_Communication');//caseRT.Id;
-                oscarCase.Subject = 'Corrections - ' + currentUserContact.Account.Name + ' - Self-service (IATA Portal)';
+                //oscarCase.Subject = 'Corrections - ' + currentUserContact.Account.Name + ' - Self-service (IATA Portal)';
+                oscarCase.Subject = 'MSO code Corrections - (' + msoAccount.IATACode__c + ') - ' + currentUserContact.Account.Name;
                 oscarCase.CaseArea__c = 'Accreditation Process';
                 oscarCase.Reason1__c = 'Corrections';
                 oscarCase.Origin = 'Portal';
@@ -271,6 +286,7 @@ public without sharing class ISSP_AMS_MSO_Update_Controller {
                 oscarCase.OSCAR__c = oscar.Id;
                 oscarCase.Status = 'Draft';
                 oscarCase.IATAcode__c = msoAccount.IATACode__c;
+                oscarCase.Country_concerned_by_the_query__c = selectedCountryInfo.Name;
                 insert oscarCase;
 
                 oscarCase = [SELECT Id, CaseNumber FROM Case WHERE Id =:oscarCase.Id];
@@ -306,6 +322,8 @@ public without sharing class ISSP_AMS_MSO_Update_Controller {
 
     public PageReference terminate() {
         try {
+                IATA_ISO_Country__c selectedCountryInfo = [SELECT Name, Id, Region__c FROM IATA_ISO_Country__c WHERE Id = :countrySelected];
+                
                 // create new OSCAR
                 oscar.RecordTypeId = TransformationHelper.RtIDsPerDeveloperNamePerObj(new list<string> {'AMS_OSCAR__c'}).get('AMS_OSCAR__c').get('VOLUNTARY_RELINQUISHMENT');
                 oscar.Name = 'tempName'; 
@@ -322,7 +340,9 @@ public without sharing class ISSP_AMS_MSO_Update_Controller {
                 oscarCase.AccountId = currentUserContact.AccountId;
                 oscarCase.ContactId = noEmailContactId; //currentUser.ContactId;
                 oscarCase.RecordTypeId = TransformationHelper.RtIDsPerDeveloperNamePerObj(new list<string> {'Case'}).get('Case').get('OSCAR_Communication');
-                oscarCase.Subject = 'MSO code Termination - ' + currentUserContact.Account.Name + ' - Self-service (IATA Portal)';
+                //oscarCase.Subject = 'MSO code Termination - ' + currentUserContact.Account.Name + ' - Self-service (IATA Portal)';
+                //Termination of MSO code - (IATA Code) - Airline name
+                oscarCase.Subject = 'MSO code Termination - (' + msoAccount.IATACode__c + ') - ' + currentUserContact.Account.Name;
                 oscarCase.CaseArea__c = 'Accreditation Process';
                 oscarCase.Reason1__c = 'CLO - Closure';
                 oscarCase.Origin = 'Portal';
@@ -330,6 +350,7 @@ public without sharing class ISSP_AMS_MSO_Update_Controller {
                 oscarCase.OSCAR__c = oscar.Id;
                 oscarCase.Status = 'Draft';                
                 oscarCase.IATAcode__c = msoAccount.IATACode__c;
+                oscarCase.Country_concerned_by_the_query__c = selectedCountryInfo.Name;
                 insert oscarCase;
 
                 // AUTOMATICALLY APPROVE & TERMINATE

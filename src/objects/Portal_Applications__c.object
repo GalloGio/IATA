@@ -706,6 +706,7 @@ Name
       &quot;IATA EasyPay (EDENRED)&quot;, $Label.ANG_ISSP_IATA_EasyPay, 
       &quot;IATA EasyPay (MSTS)&quot;, $Label.ANG_ISSP_IATA_EasyPay, 
       &quot;Currency Center&quot;, $Label.ISSP_CurrencyCenter_Description,
+      &quot;MSO Management&quot;, $Label.ISSP_AMS_MSO_GSA_MSO_Service_Description, 
       &quot;&quot;
       )</formula>
         <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
