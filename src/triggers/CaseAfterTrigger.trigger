@@ -394,7 +394,7 @@ trigger CaseAfterTrigger on Case (after delete, after insert, after undelete, af
 
 			//filter IFAP cases with the correct data and aggregate them per account
 			for(Case c : casesToConsider){
-				Case oldCase = trigger.oldMap.get(c.Id);
+				Case oldCase = Trigger.isUpdate ? trigger.oldMap.get(c.Id) : null;
 				if(c.status == 'Assessment Performed' && c.Financial_Review_Result__c <> null && c.Assessment_Performed_Date__c <> null &&
 					(
 						trigger.isInsert || 
