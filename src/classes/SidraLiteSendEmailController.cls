@@ -14,6 +14,8 @@ public with sharing class SidraLiteSendEmailController {
 
     public static final APXTConga4__Conga_Merge_Query__c QUERY_PARENT_CASE = [SELECT Id FROM APXTConga4__Conga_Merge_Query__c where APXTConga4__Name__c = 'Parent Case'];
     public static final APXTConga4__Conga_Merge_Query__c QUERY_ACCOUNT = [SELECT Id FROM APXTConga4__Conga_Merge_Query__c where APXTConga4__Name__c = 'Parent Account'];
+    public static final APXTConga4__Conga_Merge_Query__c QUERY_FOP = [SELECT Id FROM APXTConga4__Conga_Merge_Query__c where APXTConga4__Name__c = 'Forms Of Payment'];
+    public static final APXTConga4__Conga_Merge_Query__c QUERY_RHC = [SELECT Id FROM APXTConga4__Conga_Merge_Query__c where APXTConga4__Name__c = 'RHC Information'];
 
     public SidraLiteSendEmailController(ApexPages.StandardController controller) {
         Id caseId = ApexPages.currentPage().getParameters().get('id');
@@ -178,6 +180,10 @@ public with sharing class SidraLiteSendEmailController {
         list<String> listQueries = new list<String>();
         listQueries.add('[PARENTACCOUNT]' + formatID15(QUERY_ACCOUNT.id) + '?pv0=' + formatID15(this.cse.AccountId));
         listQueries.add('[PARENTCASE]' + formatID15(QUERY_PARENT_CASE.id) + '?pv0=' + formatID15(this.cse.Parent.Id));
+
+        listQueries.add('[ANGRHCINFO]' + formatID15(QUERY_RHC.id) + '?pv0=' + formatID15(this.cse.AccountId));
+        listQueries.add('[FORMSOFPAYMENT]' + formatID15(QUERY_FOP.id) + '?pv0=' + formatID15(this.cse.AccountId));
+                
 
         // return conga url
         if (this.selectedCustomize == 'true') {

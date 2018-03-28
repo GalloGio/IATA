@@ -20,7 +20,7 @@ public with sharing class ANG_Risk_Helper{
 
 
 	//Account - Financial_Review_Result__c
-	public static final String FR_SATISFACTORY = 'Satisfactory';
+	public static final String FR_SATISFACTORY = 'Satisfactory - No Action';
 	public static final String FR_UNSATISFACTORY = 'Unsatisfactory - No action';
 
 
@@ -185,27 +185,34 @@ public with sharing class ANG_Risk_Helper{
 		if(!updateFSsHE.isEmpty()) update updateFSsHE;
 	}
 
-	public static List<Account> updateRiskStatus(List<Account> accs){
+	public static Map<String,ANG_Agency_Risk_Calculation__c> calculationTable{
+		get{
+			if(calculationTable == null || calculationTable.isEmpty()){
+				calculationTable = new Map<String,ANG_Agency_Risk_Calculation__c>();
 
-		Id riskStatusAssessmentRT = AMS_Utils.getRecordType('ANG_Agency_Risk_Calculation__c', 'Risk_Status_Assessment').Id;
-		
-		Map<String,ANG_Agency_Risk_Calculation__c> calculationTable = new Map<String,ANG_Agency_Risk_Calculation__c>();
-		for(ANG_Agency_Risk_Calculation__c arc: [SELECT Id, ANG_Financial_Review_Result__c , ANG_Risk_History_Assessment__c,ANG_Risk_History__c,ANG_Limit_Cash_Condition__c from ANG_Agency_Risk_Calculation__c where recordTypeId = :riskStatusAssessmentRT]){
-			calculationTable.put(arc.ANG_Financial_Review_Result__c + arc.ANG_Risk_History_Assessment__c , arc);
-		}
-
-		System.debug(loggingLevel.FINE, '____ [cls ANG_Risk_Helper - updateRiskStatus] calculationTable - ' + calculationTable);
-
-		if(!calculationTable.isEmpty()){
-			for(Account acc : accs){
-				ANG_Agency_Risk_Calculation__c arc = calculationTable.get(acc.Financial_Review_Result__c + acc.ANG_HE_RiskHistoryAssessment__c);
-				acc.ANG_HE_RiskStatus__c = arc==null?null:arc.ANG_Risk_History__c;
-				acc.ANG_Limit_Cash_Condition__c = arc==null?false:arc.ANG_Limit_Cash_Condition__c;
-			   
+				Id riskStatusAssessmentRT = AMS_Utils.getRecordType('ANG_Agency_Risk_Calculation__c', 'Risk_Status_Assessment').Id;
+				for(ANG_Agency_Risk_Calculation__c arc: [SELECT Id, ANG_Financial_Review_Result__c , ANG_Risk_History_Assessment__c,ANG_Risk_History__c,ANG_Limit_Cash_Condition__c FROM ANG_Agency_Risk_Calculation__c WHERE recordTypeId = :riskStatusAssessmentRT]){
+					calculationTable.put(arc.ANG_Financial_Review_Result__c + arc.ANG_Risk_History_Assessment__c , arc);
+				}
+				System.debug(loggingLevel.FINE, '____ [cls ANG_Risk_Helper - updateRiskStatus] calculationTable - ' + calculationTable);
 			}
+			return calculationTable;
 		}
+		private set;
+	}
+	
 
-		return accs;
+	public static void updateRiskStatus(List<Account> accs){
+
+		if(calculationTable.isEmpty()) return;
+
+		for(Account acc : accs){
+			System.debug(loggingLevel.FINE, '____ [cls ANG_Risk_Helper - updateRiskStatus] key - ' + (acc.Financial_Review_Result__c + acc.ANG_HE_RiskHistoryAssessment__c));
+			ANG_Agency_Risk_Calculation__c arc = calculationTable.get(acc.Financial_Review_Result__c + acc.ANG_HE_RiskHistoryAssessment__c);
+			acc.ANG_HE_RiskStatus__c = arc==null?null:arc.ANG_Risk_History__c;
+			acc.ANG_Limit_Cash_Condition__c = arc==null?false:arc.ANG_Limit_Cash_Condition__c;
+			if(acc.ANG_Limit_Cash_Condition__c) acc.ANG_HE_CashCondition__c = true;
+		}
 	}
 
 	public static void sumFSAmount(List<Account> accounts){
@@ -257,7 +264,9 @@ public with sharing class ANG_Risk_Helper{
 	}
 	
 
-	public static Decimal currencyConverter(String currentCurIso,Decimal ammount,String targetCurIso){
+	public static Decimal currencyConverter(String currentCurIso,Decimal amount,String targetCurIso){
+
+		if(currentCurIso == targetCurIso) return amount;
 
 		if(!convertionsRateMap.containsKey(currentCurIso.toUpperCase())) throw new invalidCurrencyException(INVALID_CUR_EXCEPTION_MESSAGE+currentCurIso);
 		if(!convertionsRateMap.containsKey(targetCurIso.toUpperCase()))  throw new invalidCurrencyException(INVALID_CUR_EXCEPTION_MESSAGE+targetCurIso);
@@ -266,7 +275,7 @@ public with sharing class ANG_Risk_Helper{
 		CurrencyType targetCur = convertionsRateMap.get(targetCurIso.toUpperCase());
 		Decimal toRate = targetCur==null?fromRate:targetCur.ConversionRate;
 
-		Decimal result = ammount==null?0:ammount * toRate/fromRate;
+		Decimal result = amount==null?0:amount * toRate/fromRate;
 		return result.setScale(targetCur.DecimalPlaces, System.RoundingMode.HALF_UP);
 	}
 

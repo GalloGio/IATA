@@ -11,6 +11,9 @@ public with sharing class AMS_PCI_Compliant_Mass_OSCAR_CreationCtr{
     public List<SelectOption> countrySelected {get; set;}
 
     /*** AMSU-113 Start ***/
+    public List<SelectOption> locationTypes {get;set;}
+    public List<SelectOption> selectedLocationTypes {get;set;}
+
     public AMS_PCI_Complaint_Batch batchClass {get;set;}
     public Datetime batchStartTime {get;set;}
     public Boolean isBatchRunning {get;set;}
@@ -35,6 +38,9 @@ public with sharing class AMS_PCI_Compliant_Mass_OSCAR_CreationCtr{
         isPollerActive = false;
         showResults = false;
         srw = new SearchResultWrapper();
+        locationTypes = new List<SelectOption> {new SelectOption('HO','HO'), new SelectOption('HE','HE'), 
+                                                new SelectOption('BR','BR'), new SelectOption('AE','AE')};
+        selectedLocationTypes = new List<SelectOption>();
     }
 
     public class SearchResultWrapper {
@@ -103,10 +109,26 @@ public with sharing class AMS_PCI_Compliant_Mass_OSCAR_CreationCtr{
 
     public void searchAccounts() {
         this.filter.country = getMultiSelectOptions(CountrySelected);
+        Boolean hasError = false;
+
         if(this.filter.country==null || this.filter.country.size()==0) {
-            ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.WARNING,'Select an Country'));
+            ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.WARNING,'Select a Country'));     
+            hasError = true;        
+        }
+
+        if(this.selectedLocationTypes.isEmpty()) {
+            ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.WARNING,'Select a Location'));
+            hasError = true; 
+        }
+
+        if(hasError) {
             reset();
             return;
+        }
+
+        Set<String> locationTypesFilter = new Set<String>();
+        for(SelectOption opt :selectedLocationTypes) {
+            locationTypesFilter.add(opt.getValue());
         }
 
         String locationClass = AMS_Utils.LC_PASSENGER;
@@ -120,6 +142,7 @@ public with sharing class AMS_PCI_Compliant_Mass_OSCAR_CreationCtr{
         query +=       'WHERE Location_Class__c = :locationClass AND Status__c IN :lstStatus AND Is_PCI_compliant__c NOT IN :isPCICompliantLst';
         query +=       ' AND RecordtypeId = :AGENCY_RECORDTYPE AND IATA_ISO_Country__c IN :countryIds';
         query +=       ' AND Id NOT IN (SELECT AccountId FROM Case WHERE Reason1__c = :reason AND IsClosed = false) ';
+        query +=       ' AND Location_Type__c IN :locationTypesFilter';
         query +=       ' LIMIT ' + (MAX_SEARCH_ELEMENTS + 1);
 
         List<Account> accounts = (List<Account>) Database.query(query);
@@ -263,6 +286,9 @@ public with sharing class AMS_PCI_Compliant_Mass_OSCAR_CreationCtr{
         isPollerActive = false;
         showResults = false;
         srw = new SearchResultWrapper();
+        locationTypes = new List<SelectOption> {new SelectOption('HO','HO'), new SelectOption('HE','HE'), 
+                                                new SelectOption('BR','BR'), new SelectOption('AE','AE')};
+        selectedLocationTypes = new List<SelectOption>();
         return null;
     }
 

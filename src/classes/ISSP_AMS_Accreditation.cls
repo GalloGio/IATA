@@ -676,15 +676,20 @@ public without sharing class ISSP_AMS_Accreditation {
 
     public ISSP_AMS_Accreditation(ISSP_AddAttachment attachCtrl) {
         isNoticeOfChange = false;
+        newAccreditationModels = false;
+
+        popContact();  //Get the contact details of currently logged in user
 
         newCase = DAL_ISSP.getCase(attachCtrl.tmpCase.Id);
         
         if(newCase.IFAP_Country_ISO__c != null) {
             isocountry = fetchISOCountry(newCase.IFAP_Country_ISO__c);
             fetchAMSProcessForm();    
+        }else{
+            newCase.IFAP_Country_ISO__c = con.Account.IATA_ISO_Country__r.ISO_Code__c;
+            isocountry = fetchISOCountry(newCase.IFAP_Country_ISO__c);
+            fetchAMSProcessForm();  
         }
-        
-        popContact();  //Get the contact details of currently logged in user
         
          if (con.Account.Top_Parent__c == null) { //User is from HQ Account
             vHQAccountId = con.AccountId;
@@ -720,6 +725,9 @@ public without sharing class ISSP_AMS_Accreditation {
         }
 
         applyLanguage = newCase.Case_Language__c;
+
+        // NewGen is only valid for Travel Agents
+        newAccreditationModels = (isocountry.ANG_Enable_NewGen__c == true && sectorValue.StartsWith('Travel_Agent')) ;
 
         if (sectorValue != null) {
             if (sectorValue.StartsWith('Cargo_Agent'))
@@ -1652,6 +1660,18 @@ public without sharing class ISSP_AMS_Accreditation {
                         newForm.Local_Agent_Type__c = 'International';
                     }
             }
+			
+			/*** AMSU-121 ***/
+            if(newForm.Is_change_location__c) {
+                newForm.Shipping_Street__c = null;
+                newForm.Shipping_City__c = null;
+                newForm.Shipping_State__c = null;
+                newForm.Shipping_Country__c = null;
+                newForm.Shipping_Postal_Code__c = null;
+                newForm.Shipping_ISO_State__c = null;
+                newForm.Shipping_ISO_Country__c = null;
+            }
+            /*** AMSU-121 ***/
             
             upsert newForm;
             
@@ -2973,6 +2993,18 @@ public without sharing class ISSP_AMS_Accreditation {
             }
            
             newForm.Submitted_to_IATA__c = TRUE;
+
+            //RB-INC381175: Oscar fields Shipping ISO Country & Shipping ISO State not populated by the account's equivalent fields
+            if (newCase.RecordTypeId == OSCAR_RECORD_TYPE_ID && (newCase.Reason1__c == AMS_Utils.CASE_REASON_NEW_HO || newCase.Reason1__c == AMS_Utils.CASE_REASON_BR_IP)) {
+                if (hqAccount.IATA_ISO_Shipping_Country__c != null) {
+                    newForm.Shipping_ISO_Country__c = hqAccount.IATA_ISO_Shipping_Country__c;
+                }
+
+                if (hqAccount.IATA_ISO_Shipping_State__c != null) {
+                    newForm.Shipping_ISO_State__c = hqAccount.IATA_ISO_Shipping_State__c;
+                }
+            }
+
             upsert newForm;
 
             // AMSU-110 assign Case via assignment rules
@@ -3285,6 +3317,25 @@ public without sharing class ISSP_AMS_Accreditation {
 
         return true;
     }
+	
+	/*** AMSU--112 Start ***/
+    public Set<String> accfieldsToCheck = new Set<String> {'BillingState', 'BillingStreet', 'BillingCity', 'TradeName__c', 'Name', 'BillingPostalCode'};
+    public Set<String> formfieldsToCheck = new Set<String> {'Account_Name__c', 'Trade_Name__c', 'Branch_Office_Street_name_number__c', 'Branch_Office_City__c', 'Branch_Office_Postal_code__c', 'State_Province__c',
+                                                            'Shipping_Street__c', 'Shipping_City__c', 'Shipping_Postal_Code__c', 'Shipping_State__c', 'Shipping_Country__c', 'ISSP_AMS_License_No__c', 
+                                                            'ISSP_AMS_Trade_Reg_No__c', 'ISSP_AMS_where_incorporated__c', 'ISSP_AMS_Principal_business_Org__c'};
+    public Set<String> confieldsToCheck = new Set<String> {'AddressStreet__c', 'AddressCity__c', 'First_name__c', 'Last_name__c'};
+    public void checkTabCharacters(AMS_Pax_Accreditation_Form__c form, Account acc, AMS_Accreditation_Contact__c con) {
+        for(String fieldToCheck : formfieldsToCheck) {
+            form.put(fieldToCheck, AMS_Utils.replaceTabCharcter((String) form.get(fieldToCheck)));
+        }
+        for(String fieldToCheck : accfieldsToCheck) {
+            acc.put(fieldToCheck, AMS_Utils.replaceTabCharcter((String) acc.get(fieldToCheck)));
+        }
+        for(String fieldToCheck : confieldsToCheck) {
+            con.put(fieldToCheck, AMS_Utils.replaceTabCharcter((String) con.get(fieldToCheck)));
+        }
+    }
+    /*** AMSU-112 End ***/
 
     public boolean validateCharactersInForm() {
         boolean errorFound = false;
@@ -3339,6 +3390,75 @@ public without sharing class ISSP_AMS_Accreditation {
             errorFound = true;
         }
         }
+        
+        /*** AMSU-112 - Start ***/  
+		//replace tab character
+        checkTabCharacters(newForm, hqAccount, newContact);
+		
+		//check non latin characters
+        if(!String.isBlank(newForm.Account_Name__c) && !p.matcher(newForm.Account_Name__c).matches()) {
+			newForm.Account_Name__c.addError(Label.ISSP_EnterValidString);
+			errorFound = true;
+		}      
+		if(!String.isBlank(newForm.Trade_Name__c) && !p.matcher(newForm.Trade_Name__c).matches()) {
+			newForm.Trade_Name__c.addError(Label.ISSP_EnterValidString);
+			errorFound = true;
+		} 
+		if(!String.isBlank(newForm.ISSP_AMS_License_No__c) && !p.matcher(newForm.ISSP_AMS_License_No__c).matches()) {
+			newForm.ISSP_AMS_License_No__c.addError(Label.ISSP_EnterValidString);
+			errorFound = true;
+		}   
+		if(!String.isBlank(newForm.ISSP_AMS_Trade_Reg_No__c) && !p.matcher(newForm.ISSP_AMS_Trade_Reg_No__c).matches()) {
+			newForm.ISSP_AMS_Trade_Reg_No__c.addError(Label.ISSP_EnterValidString);
+			errorFound = true;
+		}   
+		if(!String.isBlank(newForm.Branch_Office_Street_name_number__c) && !p.matcher(newForm.Branch_Office_Street_name_number__c).matches()) {
+			newForm.Branch_Office_Street_name_number__c.addError(Label.ISSP_EnterValidString);
+			errorFound = true;
+		}   
+		if(!String.isBlank(newForm.Branch_Office_City__c) && !p.matcher(newForm.Branch_Office_City__c).matches()) {
+			newForm.Branch_Office_City__c.addError(Label.ISSP_EnterValidString);
+			errorFound = true;
+		}  
+		if(!String.isBlank(newForm.Branch_Office_Postal_code__c) && !p.matcher(newForm.Branch_Office_Postal_code__c).matches()) {
+			newForm.Branch_Office_Postal_code__c.addError(Label.ISSP_EnterValidString);
+			errorFound = true;
+		} 
+		if(!String.isBlank(newForm.State_Province__c) && !p.matcher(newForm.State_Province__c).matches()) {
+			newForm.State_Province__c.addError(Label.ISSP_EnterValidString);
+			errorFound = true;
+		}
+		if(!String.isBlank(newForm.ISSP_AMS_VAT_Number_Input__c) && !p.matcher(newForm.ISSP_AMS_VAT_Number_Input__c).matches()) {
+			newForm.ISSP_AMS_VAT_Number_Input__c.addError(Label.ISSP_EnterValidString);
+			errorFound = true;
+		} 
+		if(!String.isBlank(newForm.ISSP_AMS_VAT_number__c) && !p.matcher(newForm.ISSP_AMS_VAT_number__c).matches()) {
+			newForm.ISSP_AMS_VAT_number__c.addError(Label.ISSP_EnterValidString);
+			errorFound = true;
+		}  
+		if(!String.isBlank(newForm.Shipping_Street__c) && !p.matcher(newForm.Shipping_Street__c).matches()) {
+			newForm.Shipping_Street__c.addError(Label.ISSP_EnterValidString);
+			errorFound = true;
+		}
+		if(!String.isBlank(newForm.Shipping_City__c) && !p.matcher(newForm.Shipping_City__c).matches()) {
+			newForm.Shipping_City__c.addError(Label.ISSP_EnterValidString);
+			errorFound = true;
+		}
+		if(!String.isBlank(newForm.Shipping_Postal_Code__c) && !p.matcher(newForm.Shipping_Postal_Code__c).matches()) {
+			newForm.Shipping_Postal_Code__c.addError(Label.ISSP_EnterValidString);
+			errorFound = true;
+		}
+		if(!String.isBlank(newForm.Shipping_State__c) && !p.matcher(newForm.Shipping_State__c).matches()) {
+			newForm.Shipping_State__c.addError(Label.ISSP_EnterValidString);
+			errorFound = true;
+		}
+		if(!String.isBlank(newForm.Shipping_Country__c) && !p.matcher(newForm.Shipping_Country__c).matches()) {
+			newForm.Shipping_Country__c.addError(Label.ISSP_EnterValidString);
+			errorFound = true;
+		}
+        /*** AMSU-112 - End ***/
+        
+        
 System.DEBUG('validateCharactersInForm  - 1 - isNoticeOfChange: '+isNoticeOfChange);
 System.DEBUG('validateCharactersInForm  - 1 - Notify_Change_Location__c: '+newForm.Notify_Change_Location__c);
 System.DEBUG('validateCharactersInForm  - 1 - errorFound: '+errorFound);
@@ -3723,7 +3843,8 @@ System.DEBUG('validateCharactersInForm  - 4 - errorFound: '+errorFound);
                         Mobile__c, MobileNational__c , Location_Type__c, ParentId, ShippingStreet, ShippingCity, ShippingState,
                         ShippingPostalCode, ShippingCountry, VAT_Number__c, Short_Name__c, Location_Class__c, IATA_ISO_Country__c,
                         Iso_State__c, Abbreviated_name__c, Abbreviated_Address__c, Remittance_frequency__c, Solicitation_Flag__c,
-                        VAT_Number_2__c, CASS_Number__c,Company_Type__c,RecordType.DeveloperName,Status__c,IATA_ISO_Country__r.ISO_Code__c,ANG_Accreditation_Model__c
+                        VAT_Number_2__c, CASS_Number__c,Company_Type__c,RecordType.DeveloperName,Status__c,IATA_ISO_Country__r.ISO_Code__c,ANG_Accreditation_Model__c, 
+                        IATA_ISO_Shipping_Country__c, IATA_ISO_Shipping_State__c
                         FROM Account
                         WHERE Id = :vHQAccountId
                                    LIMIT 1
@@ -3738,7 +3859,7 @@ System.DEBUG('validateCharactersInForm  - 4 - errorFound: '+errorFound);
                             Mobile__c, MobileNational__c , Location_Type__c, ParentId, ShippingStreet, ShippingCity, ShippingState,
                             ShippingPostalCode, ShippingCountry, VAT_Number__c, Short_Name__c, Location_Class__c, IATA_ISO_Country__c,
                             Iso_State__c, Abbreviated_name__c, Abbreviated_Address__c, Remittance_frequency__c, Solicitation_Flag__c,
-                            VAT_Number_2__c, CASS_Number__c,Company_Type__c
+                            VAT_Number_2__c, CASS_Number__c,Company_Type__c, IATA_ISO_Shipping_Country__c, IATA_ISO_Shipping_State__c
                                FROM Account
                                WHERE Id = :vAccountConcernedId
                                           LIMIT 1

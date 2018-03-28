@@ -1862,6 +1862,11 @@ Object used to store objectives that can be independent, related to other object
                     <default>false</default>
                     <label>At risk</label>
                 </value>
+                <value>
+                    <fullName>Not Delivered</fullName>
+                    <default>false</default>
+                    <label>Not Delivered</label>
+                </value>
             </valueSetDefinition>
         </valueSet>
     </fields>
@@ -6318,6 +6323,10 @@ AND(RecordType.DeveloperName == &quot;Account&quot;, Account__c == &quot;&quot;)
             </values>
             <values>
                 <fullName>Delivered</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Not Delivered</fullName>
                 <default>false</default>
             </values>
             <values>
