@@ -186,12 +186,12 @@
                                         </apex:pageBlockSectionItem>
                                         <apex:pageBlockSectionItem > </apex:pageBlockSectionItem>
                                         <apex:pageBlockSectionItem >
-                                            <apex:outputLabel value="*Mandatory fields upon submission to IATA"/>
+                                            <apex:outputLabel value="*{!$Label.ISSP_TIP_MANDATORY_ON_SUBMIT}"/>
                                         </apex:pageBlockSectionItem>
                                     </apex:pageBlockSection>
                                     <apex:pageBlockSection columns="2" collapsible="false" title="Section 2- Bin Ranges">
                                         <apex:pageBlockSectionItem > 
-                                            <input type="button" value="Add BIN Range" onclick="closeDialog()"/> 
+                                            <input type="button" value="$Label.ISSP_TIP_ADD_BIN_RANGE" onclick="closeDialog()"/> 
                                         </apex:pageBlockSectionItem>
                                     </apex:pageBlockSection>
                                     <apex:pageBlockSection columns="2">
