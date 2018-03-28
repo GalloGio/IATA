@@ -2,9 +2,11 @@ public with sharing class ISSP_TIP_Home_Controller {
 
     private static String STANDARD_ACCOUNT_RECORD_TYPE_ID = RecordTypeSingleton.getInstance().RtIDsPerDeveloperNamePerObj.get('Account').get('Standard_Account');      
     private static String PAYMENT_PROVIDER_RECORD_TYPE_ID = RecordTypeSingleton.getInstance().RtIDsPerDeveloperNamePerObj.get('Account').get('TIP_Payment_Provider');
+    
     private static String PROCESS_CASE_RECORD_TYPE_ID     = RecordTypeSingleton.getInstance().RtIDsPerDeveloperNamePerObj.get('Case').get('CS_Process_IDFS_ISS');
     private static String TIP_PRODUCT_RECORD_TYPE_ID      = RecordTypeSingleton.getInstance().RtIDsPerDeveloperNamePerObj.get('Partner_products__c').get('TIP_Product');
 
+    private static String TIP_PRODUCT_RECORD_TYPE_ID      = RecordTypeSingleton.getInstance().RtIDsPerDeveloperNamePerObj.get('Partner_products__c').get('TIP_Product');
 
     //##======================VARIABLES=================================##
 
@@ -83,13 +85,13 @@ public with sharing class ISSP_TIP_Home_Controller {
     }
 
     public List<Case> getCases(){
-        Set<string> closedStatusesList = createListOfClosedStatuses();
+    	Set<string> closedStatusesList = createListOfClosedStatuses();
 
-        return [SELECT id,status,CaseNumber, subject, createddate,CaseArea__c  FROM Case 
-        WHERE AccountId = :con.AccountId 
-        and recordtypeid = :PROCESS_CASE_RECORD_TYPE_ID 
-        and CaseArea__c like '%Transparency in Payments%'
-        AND (Status = 'Draft' OR Status Not In :closedStatusesList)];
+    	return [SELECT id,status,CaseNumber, subject, createddate,CaseArea__c  FROM Case 
+    	WHERE AccountId = :con.AccountId 
+    	and recordtypeid = :PROCESS_CASE_RECORD_TYPE_ID 
+    	and CaseArea__c like '%Transparency in Payments%'
+    	AND (Status = 'Draft' OR Status Not In :closedStatusesList)];
     }
     
     public Set<string> createListOfClosedStatuses() {
@@ -151,13 +153,18 @@ public with sharing class ISSP_TIP_Home_Controller {
             this.name = name;
             this.paymentNetwork = paymentNetwork;
             this.status = status;
-            
-            this.effectiveToDate =effectiveToDate==null?null:effectiveToDate.year() + '-' + effectiveToDate.month() + '-' + effectiveToDate.day();
-            this.effectiveFromDate =effectiveFromDate==null?null:effectiveFromDate.year() + '-' + effectiveFromDate.month() + '-' + effectiveFromDate.day();
-            
-        }
 
-    } 
+            if(effectiveToDate != null)
+                this.effectiveToDate = effectiveToDate.year() + '-' + effectiveToDate.month() + '-' + effectiveToDate.day();
+            else 
+                this.effectiveToDate = '';            
+
+            if(effectiveFromDate != null)
+                this.effectiveFromDate = effectiveFromDate.year() + '-' + effectiveFromDate.month() + '-' + effectiveFromDate.day();
+            else 
+                this.effectiveFromDate = '';
+                        
+        }
 
     //======================Product Enrollment Page Methods =====================================
     public Pagereference NewEditProduct(){
