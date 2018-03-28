@@ -880,106 +880,177 @@ global class ANG_OscarProcessHelper {
 
 	public static String createRevalidationOscar(Account acc, List<Contact> contactsAcc, Boolean toSendEmail ){
 
-		System.debug('[ANG_OscarProcessHelper.createRevalidationOscar] - BEGINNING INSERTING for ACCOUNT: '+acc.Id+' - '+acc.Name+' - '+acc.IataCode__c);
+		Set<Id> accsToSendEmail = new Set<Id>();
 
-		Contact keyContact = fetchKeyContact(acc, contactsAcc);
+		if (toSendEmail)
+			accsToSendEmail.add(acc.Id);
+
+		Map<Id,List<Contact>> mapContactsAcc = new Map<Id,List<Contact>>{acc.Id => contactsAcc};
+
+		return createRevalidationOscars(new List<Account>{acc}, mapContactsAcc, accsToSendEmail)[0].Id;
+
+	}
+
+	public static List<Case> createRevalidationOscars(List<Account> accs, Map<Id,List<Contact>> contactsAcc, Set<Id> accsToSendEmail){
+
+		Map<id,OscarObjectsWrapper> accOscarObjsMap = new Map<id,OscarObjectsWrapper>();
+		OscarObjectsWrapper oscarObjs;
 		
+		Map<String,Object> fieldsOfObject;
+
+		List<Case> casesToInsert = new List<Case>();
+
+		Contact keyContact;
+
 		//Case:
-		Map<String,Object> fieldsOfObject = new Map<String,Object>();
+		for(Account acc : accs){
 
-        fieldsOfObject.put('Account_Concerned__c',acc.Id);
-      	fieldsOfObject.put('ContactId',keyContact.Id);
-        fieldsOfObject.put('BSPCountry__c',acc.BillingCountry);
-        fieldsOfObject.put('Region__c',acc.Region_formula__c);
-        fieldsOfObject.put('CaseArea__c','Accreditation Process');
-        fieldsOfObject.put('Origin','Internal User');
-        fieldsOfObject.put('Reason1__c','Annual revalidation');
-        fieldsOfObject.put('Subject','Annual revalidation - ' + acc.ANG_Accreditation_Model__c + ' - ' + acc.Name);
-        fieldsOfObject.put('Type_of_customer__c','IATA Travel Agent');
+			System.debug('[ANG_OscarProcessHelper.createRevalidationOscar] - BEGINNING INSERTING for ACCOUNT: '+acc.Id+' - '+acc.Name+' - '+acc.IataCode__c);
 
+			keyContact = fetchKeyContact(acc, contactsAcc.get(acc.Id));
+			
+			fieldsOfObject = new Map<String,Object>();
+	        fieldsOfObject.put('Account_Concerned__c',acc.Id);
+	      	fieldsOfObject.put('ContactId',keyContact.Id);
+	        fieldsOfObject.put('BSPCountry__c',acc.BillingCountry);
+	        fieldsOfObject.put('Region__c',acc.Region_formula__c);
+	        fieldsOfObject.put('CaseArea__c','Accreditation Process');
+	        fieldsOfObject.put('Origin','Internal User');
+	        fieldsOfObject.put('Reason1__c','Annual revalidation');
+	        fieldsOfObject.put('Subject','Annual revalidation - ' + acc.ANG_Accreditation_Model__c + ' - ' + acc.Name);
+	        fieldsOfObject.put('Type_of_customer__c','IATA Travel Agent');
+	        
+	       	Case cse = ANG_EntityCreator.createCase(AMS_Utils.RECTYPE_OSCARCOMM, acc.Id, fieldsOfObject);
+
+	        //assign to queue
+	       	Database.DMLOptions dmo = new Database.DMLOptions();
+	        dmo.assignmentRuleHeader.useDefaultRule = true;
+	        cse.setOptions(dmo);
+
+	        oscarObjs = new OscarObjectsWrapper();
+	        oscarObjs.cse = cse;
+	        oscarObjs.con = keyContact;
+
+	        accOscarObjsMap.put(acc.id,oscarObjs);
+	        casesToInsert.add(cse);
+		}
+
+		if (!casesToInsert.isEmpty())
+       		insert casesToInsert;
+
+       	Set<Id> casesIds = new Set<Id>();
+	    for (Case cse : casesToInsert){
+	    	casesIds.add(cse.Id);
+	    }
+
+       	for(Case insertedCase : [Select ownerId, Account_Concerned__c from Case where Id in :casesIds]){
+       		accOscarObjsMap.get(insertedCase.Account_Concerned__c).ownerId = insertedCase.ownerId;
+       	}
+
+		/*//StagingArea:
+		List<AMS_Pax_Accreditation_Form__c> stagingAreasToInsert = new List<AMS_Pax_Accreditation_Form__c>();
+
+       	for (Account acc : accs){
+
+			fieldsOfObject = new Map<String,Object>();
+	        fieldsOfObject.put('Abbreviated_Address__c',acc.Abbreviated_address__c);
+	        fieldsOfObject.put('Abbreviated_name__c',acc.Abbreviated_name__c);
+	        fieldsOfObject.put('Accept_terms_and_conditions__c',true);
+			fieldsOfObject.put('Account_Name__c',acc.Name);
+	        fieldsOfObject.put('Billing_State__c',acc.BillingState);
+	        fieldsOfObject.put('Branch_Office_City__c',acc.BillingCity);
+	        fieldsOfObject.put('Branch_Office_Country__c',acc.IATA_ISO_Country__c);
+	        fieldsOfObject.put('Branch_Office_Email__c',acc.Email__c);
+	        fieldsOfObject.put('Branch_Office_FAX__c',acc.Fax);
+	        fieldsOfObject.put('Branch_Office_Phone__c',acc.Phone);
+	        fieldsOfObject.put('Branch_Office_Postal_code__c',acc.BillingPostalCode);
+	        fieldsOfObject.put('Branch_Office_Street_name_number__c',acc.BillingStreet);
+	        fieldsOfObject.put('CASS_Number__c',acc.CASS_Number__c);
+	        fieldsOfObject.put('HO_Account__c',acc.Id);
+	        fieldsOfObject.put('IATACode__c',acc.IATACode__c);
+	        fieldsOfObject.put('IATA_ISO_State__c',acc.Iso_State__c);
+	        fieldsOfObject.put('ISSP_AMS_GDS_with_signed_contract__c',acc.GDS__c);
+	        fieldsOfObject.put('ISSP_AMS_Legal_Status__c',AMS_Utils.transformLegalStatus(acc.Company_Type__c));
+	        fieldsOfObject.put('ISSP_AMS_License_No__c',acc.License_Number__c);
+	        fieldsOfObject.put('ISSP_AMS_VAT_number__c',acc.VAT_Number__c);
+	        fieldsOfObject.put('Is_your_firm_handling_Dangerous_Goods__c',acc.Is_your_firm_handling_Dangerous_Goods__c);
+	        fieldsOfObject.put('Link_agent_name__c',acc.Id);
+	        fieldsOfObject.put('Location_Class__c',acc.Location_Class__c);
+	        fieldsOfObject.put('Location_Type__c',acc.Location_Type__c);
+	        fieldsOfObject.put('Mobile__c',acc.Mobile__c);
+	        fieldsOfObject.put('Operation__c',acc.Operation__c);
+	        fieldsOfObject.put('Remittance_frequency__c',acc.Remittance_frequency__c);
+	        fieldsOfObject.put('Shipping_City__c',acc.ShippingCity);
+	        fieldsOfObject.put('Shipping_Country__c',acc.ShippingCountry);
+	        fieldsOfObject.put('Shipping_ISO_Country__c',acc.IATA_ISO_Shipping_Country__c);
+	        fieldsOfObject.put('Shipping_ISO_State__c',acc.IATA_ISO_Shipping_State__c);
+	        fieldsOfObject.put('Shipping_Postal_Code__c',acc.ShippingPostalCode);
+	        fieldsOfObject.put('Shipping_State__c',acc.ShippingState);
+	        fieldsOfObject.put('Shipping_Street__c',acc.ShippingStreet);
+	        fieldsOfObject.put('Short_Name__c',acc.Short_Name__c);
+	        fieldsOfObject.put('Solicitation_Flag__c',acc.Solicitation_Flag__c);
+	        fieldsOfObject.put('Trade_Name__c',acc.TradeName__c);
+	        fieldsOfObject.put('VAT_Number_2__c',acc.VAT_Number_2__c);
+	        fieldsOfObject.put('Website__c',acc.Website);
         
-       	Case cse = ANG_EntityCreator.createCase(AMS_Utils.RECTYPE_OSCARCOMM, acc.Id, fieldsOfObject);
+        	AMS_Pax_Accreditation_Form__c stagingArea = ANG_EntityCreator.createStagingArea(
+        		Schema.AMS_Pax_Accreditation_Form__c.sObjectType.getDescribe().getRecordTypeInfosByName().get('New Gen Changes').getRecordTypeId(), acc.name, accOscarObjsMap.get(acc.Id).cse.Id, fieldsOfObject);
+       	
+       		accOscarObjsMap.get(acc.id).stagingArea = stagingArea;
+       		stagingAreasToInsert.add(stagingArea);
+       	}
 
-        //assign to queue
-       	Database.DMLOptions dmo = new Database.DMLOptions();
-        dmo.assignmentRuleHeader.useDefaultRule = true;
-        cse.setOptions(dmo);
+       	if (!stagingAreasToInsert.isEmpty())
+        	insert stagingAreasToInsert;*/
 
-       	insert cse;
-
-		//StagingArea:
-		/*
-		fieldsOfObject = new Map<String,Object>();
-        fieldsOfObject.put('Abbreviated_Address__c',acc.Abbreviated_address__c);
-        fieldsOfObject.put('Abbreviated_name__c',acc.Abbreviated_name__c);
-        fieldsOfObject.put('Accept_terms_and_conditions__c',true);
-		fieldsOfObject.put('Account_Name__c',acc.Name);
-        fieldsOfObject.put('Billing_State__c',acc.BillingState);
-        fieldsOfObject.put('Branch_Office_City__c',acc.BillingCity);
-        fieldsOfObject.put('Branch_Office_Country__c',acc.IATA_ISO_Country__c);
-        fieldsOfObject.put('Branch_Office_Email__c',acc.Email__c);
-        fieldsOfObject.put('Branch_Office_FAX__c',acc.Fax);
-        fieldsOfObject.put('Branch_Office_Phone__c',acc.Phone);
-        fieldsOfObject.put('Branch_Office_Postal_code__c',acc.BillingPostalCode);
-        fieldsOfObject.put('Branch_Office_Street_name_number__c',acc.BillingStreet);
-        fieldsOfObject.put('CASS_Number__c',acc.CASS_Number__c);
-        fieldsOfObject.put('HO_Account__c',acc.Id);
-        fieldsOfObject.put('IATACode__c',acc.IATACode__c);
-        fieldsOfObject.put('IATA_ISO_State__c',acc.Iso_State__c);
-        fieldsOfObject.put('ISSP_AMS_GDS_with_signed_contract__c',acc.GDS__c);
-        fieldsOfObject.put('ISSP_AMS_Legal_Status__c',AMS_Utils.transformLegalStatus(acc.Company_Type__c));
-        fieldsOfObject.put('ISSP_AMS_License_No__c',acc.License_Number__c);
-        fieldsOfObject.put('ISSP_AMS_VAT_number__c',acc.VAT_Number__c);
-        fieldsOfObject.put('Is_your_firm_handling_Dangerous_Goods__c',acc.Is_your_firm_handling_Dangerous_Goods__c);
-        fieldsOfObject.put('Link_agent_name__c',acc.Id);
-        fieldsOfObject.put('Location_Class__c',acc.Location_Class__c);
-        fieldsOfObject.put('Location_Type__c',acc.Location_Type__c);
-        fieldsOfObject.put('Mobile__c',acc.Mobile__c);
-        fieldsOfObject.put('Operation__c',acc.Operation__c);
-        fieldsOfObject.put('Remittance_frequency__c',acc.Remittance_frequency__c);
-        fieldsOfObject.put('Shipping_City__c',acc.ShippingCity);
-        fieldsOfObject.put('Shipping_Country__c',acc.ShippingCountry);
-        fieldsOfObject.put('Shipping_ISO_Country__c',acc.IATA_ISO_Shipping_Country__c);
-        fieldsOfObject.put('Shipping_ISO_State__c',acc.IATA_ISO_Shipping_State__c);
-        fieldsOfObject.put('Shipping_Postal_Code__c',acc.ShippingPostalCode);
-        fieldsOfObject.put('Shipping_State__c',acc.ShippingState);
-        fieldsOfObject.put('Shipping_Street__c',acc.ShippingStreet);
-        fieldsOfObject.put('Short_Name__c',acc.Short_Name__c);
-        fieldsOfObject.put('Solicitation_Flag__c',acc.Solicitation_Flag__c);
-        fieldsOfObject.put('Trade_Name__c',acc.TradeName__c);
-        fieldsOfObject.put('VAT_Number_2__c',acc.VAT_Number_2__c);
-        fieldsOfObject.put('Website__c',acc.Website);
-
-        AMS_Pax_Accreditation_Form__c stagingArea = ANG_EntityCreator.createStagingArea(
-        	Schema.AMS_Pax_Accreditation_Form__c.sObjectType.getDescribe().getRecordTypeInfosByName().get('New Gen Changes').getRecordTypeId(), acc.name, cse.Id, fieldsOfObject);
-
-        insert stagingArea;
-*/
-
-		fieldsOfObject = new Map<String,Object>();
-
-        String cseId = [Select ownerId from Case where id = :cse.id][0].ownerId;
 
 		//AMS_OSCAR__c:
-		fieldsOfObject = new Map<String,Object>();
-        fieldsOfObject.put('Process__c',AMS_Utils.NGANNUALREVAL);
-		fieldsOfObject.put('Status__c','Open');
-		fieldsOfObject.put('OwnerId',cseId);
-		//fieldsOfObject.put('AMS_Online_Accreditation__c',stagingArea.Id);
+		List<AMS_Oscar__c> oscarsToInsert = new List<AMS_OSCAR__c>(); 
 
-		AMS_Oscar__c oscar = ANG_EntityCreator.createOscar(AMS_Utils.RECTYPE_NEWGENANNUALREVAL, acc.Id, fieldsOfObject);		
-        insert oscar;
+        for (Account acc : accs){
+        
+			fieldsOfObject = new Map<String,Object>();
+			//fieldsOfObject.put('AMS_Online_Accreditation__c', accOscarObjsMap.get(acc.Id).stagingArea.Id);
+	        fieldsOfObject.put('Process__c',AMS_Utils.NGANNUALREVAL);
+			fieldsOfObject.put('Status__c','Open');
+			fieldsOfObject.put('OwnerId',accOscarObjsMap.get(acc.Id).ownerId);
+			fieldsOfObject.put('Oscar_Communication_Case_Id__c',accOscarObjsMap.get(acc.Id).cse.Id);
 
-		cse.Oscar__c = oscar.Id;
-		update cse;
+			AMS_Oscar__c oscar = ANG_EntityCreator.createOscar(AMS_Utils.RECTYPE_NEWGENANNUALREVAL, acc.Id, fieldsOfObject);		
+	        oscarsToInsert.add(oscar);
+	        accOscarObjsMap.get(acc.Id).oscar = oscar;
+    	}
 
-		if(toSendEmail)
-			AMS_OSCARTriggerHandler.sendEmailAlert(oscar.Id, cse.Id, AMS_Utils.NGANNUALREVAL, null, true);
+    	if(!oscarsToInsert.isEmpty())
+    		insert oscarsToInsert;
 
-		System.debug('[ANG_OscarProcessHelper.createRevalidationOscar] - FINISHED INSERTING - OSCAR: '+oscar.Id + ' | Case: '+cse.Id );
 
-        return cse.Id;
-	}
+    	OrgWideEmailAddress[] owea;
+
+		if(!accsToSendEmail.isEmpty()){
+			owea = [select Id from OrgWideEmailAddress where Address = 'agencymanagement@iata.org'];
+		}
+
+		List<Case> casesToUpdate = new List<Case>();
+
+		for (Account acc: accs){
+		// fields needed on contact: Id, Name, Email, Preferred_Language__c, BSP_CASS_Payment_contact__c, Financial_Assessment_Contact__c
+
+			accOscarObjsMap.get(acc.Id).cse.Oscar__c = accOscarObjsMap.get(acc.Id).oscar.Id;
+			casesToUpdate.add(accOscarObjsMap.get(acc.Id).cse);
+
+			if(accsToSendEmail.contains(acc.Id))
+	            AMS_AgencyRegulationAutoRenewal.sendEmailAlert(new List<Contact>{accOscarObjsMap.get(acc.Id).con}, accOscarObjsMap.get(acc.Id).oscar.Id, AMS_OSCARTriggerHandler.ANGemailTemplates(AMS_Utils.NGANNUALREVAL, null, true), accOscarObjsMap.get(acc.Id).oscar.Oscar_Communication_Case_Id__c, owea[0], false);			
+
+			//System.debug('[ANG_OscarProcessHelper.createRevalidationOscar] - FINISHED INSERTING - OSCAR: '+ accOscarObjsMap.get(acc.id).oscar.Id + ' | Case: '+accOscarObjsMap.get(acc.id).cse.Id+ ' | StagingArea: '+accOscarObjsMap.get(acc.id).stagingArea.Id);
+			System.debug('[ANG_OscarProcessHelper.createRevalidationOscar] - FINISHING... INSERTING OSCARS: '+ accOscarObjsMap.get(acc.id).oscar.Id + ' | Case: '+accOscarObjsMap.get(acc.id).cse.Id);
+		}
+
+		if(!casesToUpdate.isEmpty())
+			update casesToUpdate;
+
+        return casesToUpdate;
+    }
 
 	private static Contact fetchKeyContact(Account acc, List<Contact> contacts){
 
@@ -1108,6 +1179,26 @@ global class ANG_OscarProcessHelper {
 			toUpdate = false;
 
 		}
+
+    }
+
+    public Class OscarObjectsWrapper{
+
+    	public Account acc;
+    	public Case cse;
+    	//public AMS_Pax_Accreditation_Form__c stagingArea;
+    	public AMS_Oscar__c oscar;
+    	public Id ownerId;
+    	public Contact con;
+
+    	public OscarObjectsWrapper(){
+
+        	acc = new Account();
+    		cse = new Case();
+    		//stagingArea = new AMS_Pax_Accreditation_Form__c();
+    		oscar = new AMS_Oscar__c();
+    		con = new Contact();
+    	}
 
     }
 
