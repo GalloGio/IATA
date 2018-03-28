@@ -87,8 +87,8 @@ public with sharing class ANG_Risk_Helper{
 	//Case - Reason1__c
 	public static final String CASE_REASON_FINANCIAL_SECURITY_UPDATE = 'Financial Security Update';
 	public static final String CASE_REASON_RHC_75 = 'RHC 75 Follow up';
-	public static final String CASE_REASON_ADOC_REVIEW = 'Adhoc Review';
-	public static final String CASE_REASON_YEARLY_REVIEW = 'Yearly Review';
+	public static final String CASE_REASON_ADOC_REVIEW = 'Adhoc review';
+	public static final String CASE_REASON_YEARLY_REVIEW = 'Yearly review';
 
 	//Case - BSP_CASS__c
 	public static final String CASE_BSP = 'BSP';    
