@@ -140,7 +140,7 @@
         <fullName>TIP_Status__c</fullName>
         <externalId>false</externalId>
         <label>Status</label>
-        <required>true</required>
+        <required>false</required>
         <trackTrending>false</trackTrending>
         <type>Picklist</type>
         <valueSet>
