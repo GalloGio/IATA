@@ -3505,6 +3505,11 @@ public class AMS_OSCARTriggerHandler {
         List<AMS_OSCAR__c> oscarsToProcess = new List<AMS_OSCAR__c>();
 
         for (AMS_OSCAR__c oscar : oscars){
+
+            if(oscar.Process__c == AMS_utils.NGANNUALREVAL && oldOscars.get(oscar.Id).Status__c <> oscar.Status__c && oscar.Status__c == 'Closed' && oscar.Step6__c <> AMS_Utils.PASSED && oscar.Step6__c <> AMS_Utils.FAILED) {
+                oscar.addError('The case cannot be closed if the sanity check is not passed or failed.');
+            }
+
             if (oscar.Process__c == AMS_Utils.NGANNUALREVAL && oscar.STEP43__c == AMS_Utils.FAILED && oldOscars.get(oscar.Id).STEP43__c != AMS_Utils.FAILED){
                 oscarsToProcess.add(oscar);
             }
