@@ -20992,6 +20992,55 @@ This Dashboard allows each airline Treasury Team to gain full visibility of thei
         <value>(in format TIESS_000XXXX)</value>
     </labels>
     <labels>
+        <fullName>ISSP_TIP_Home_Account_must_be_Payment_Provider</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP TIP Home Account must be Payment Provider</shortDescription>
+        <value>Account must be of type Payment Provider</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_TIP_Home_Manage_Products</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Manage Products</shortDescription>
+        <value>Manage Products</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_TIP_Home_Only_Portal_Administrators</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP TIP Home Only Portal Administrators</shortDescription>
+        <value>Only Portal Administrators can apply to Enlistment as a Payment Provider</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_TIP_Home_Only_Portal_Administrators_Enrol_Products</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP TIP Home Only Portal Administrators Enrol Products</shortDescription>
+        <value>Only Portal Administrators can Enrol Products</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_TIP_Home_Products_table_Edit_option</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Products table Edit option</shortDescription>
+        <value>Edit</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_TIP_Home_Products_table_View_Update_option</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Products table View/Update option</shortDescription>
+        <value>View/Update</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_TIP_Home_button_Enrol_new_Product</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Enrol new Product</shortDescription>
+        <value>Enrol new Product</value>
+    </labels>
+    <labels>
         <fullName>ISSP_TOULink</fullName>
         <categories>RegTOU</categories>
         <language>en_US</language>
