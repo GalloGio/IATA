@@ -20992,18 +20992,18 @@ This Dashboard allows each airline Treasury Team to gain full visibility of thei
         <value>(in format TIESS_000XXXX)</value>
     </labels>
     <labels>
+        <fullName>ISSP_TIP_ADD_BIN_RANGE</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP TIP ADD BIN RANGE</shortDescription>
+        <value>Add BIN Range</value>
+    </labels>
+    <labels>
         <fullName>ISSP_TIP_Home_Account_must_be_Payment_Provider</fullName>
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>ISSP TIP Home Account must be Payment Provider</shortDescription>
         <value>Account must be of type Payment Provider</value>
-    </labels>
-    <labels>
-        <fullName>ISSP_TIP_Home_Manage_Products</fullName>
-        <language>en_US</language>
-        <protected>false</protected>
-        <shortDescription>Manage Products</shortDescription>
-        <value>Manage Products</value>
     </labels>
     <labels>
         <fullName>ISSP_TIP_Home_Only_Portal_Administrators</fullName>
@@ -21039,6 +21039,12 @@ This Dashboard allows each airline Treasury Team to gain full visibility of thei
         <protected>false</protected>
         <shortDescription>Enrol new Product</shortDescription>
         <value>Enrol new Product</value>
+    </labels>
+        <fullName>ISSP_TIP_MANDATORY_ON_SUBMIT</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP TIP MANDATORY ON SUBMIT</shortDescription>
+        <value>Mandatory fields upon submission to IATA</value>
     </labels>
     <labels>
         <fullName>ISSP_TOULink</fullName>

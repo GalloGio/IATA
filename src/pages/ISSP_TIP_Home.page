@@ -1,4 +1,4 @@
-<apex:page controller="ISSP_TIP_Home_Controller" cache="false" sidebar="false" showHeader="false" standardStylesheets="false" applyBodyTag="false" applyHtmlTag="false">
+<apex:page id="topPage" controller="ISSP_TIP_Home_Controller" cache="false" sidebar="false" showHeader="false" standardStylesheets="false" applyBodyTag="false" applyHtmlTag="false">
 
     <head>
         <meta charset="utf-8" />
@@ -28,7 +28,8 @@
 
             function validateIfportalAdminToProducts() {
                 if ({!isAdmin} && {!isPaymentProvider}) {
-                    window.location.href = '/apex/TIP_Product_Enrollment';
+                    openProdDetailPage(null);
+                    // window.location.href = '/apex/TIP_Product_Enrollment';
                 } else if ({!!isAdmin}){
                     alert("{!$label.ISSP_TIP_Home_Only_Portal_Administrators_Enrol_Products}");
                 }else if({!!isPaymentProvider}){
@@ -39,12 +40,14 @@
             function validateIfportalAdminToProductsToEdit(id) {
 
                 if ({!isAdmin} && {!isPaymentProvider}) {
-                    window.location.href = '/apex/TIP_Product_Enrollment?id=' + id;
+                    //window.location.href = '/apex/TIP_Product_Enrollment?id=' + id;
+                   openProdDetailPage(id);return true;
                 } else if ({!!isAdmin}){
                     alert("{!$label.ISSP_TIP_Home_Only_Portal_Administrators_Enrol_Products}");
                 }else if({!!isPaymentProvider}){
                     alert("{!$label.ISSP_TIP_Home_Account_must_be_Payment_Provider}");
                 }
+                return false;
             }
 
         </script>
@@ -257,17 +260,24 @@
 
                             <apex:pageBlock>
                                 <apex:form>
-                                   <apex:pageBlockTable value="{!products}" var="item" styleClass="table-hover table table-condensed table-responsive">
+                                <apex:actionFunction action="{!NewEditProduct}" name="openProdDetailPage">
+                                </apex:actionFunction>
+                                   <apex:pageBlockTable  value="{!products}" var="item" styleClass="table-hover table table-condensed table-responsive">
                                         
                                         <apex:column >
                                             <apex:outputPanel rendered="{!item.status != 'Draft'}">
-                                                <apex:commandLink style="margin-right:5px" onclick="validateIfportalAdminToProductsToEdit('{!item.id}');return false;"><span class="glyphicon glyphicon-pencil"></span> {!$label.ISSP_TIP_Home_Products_table_View_Update_option}</apex:commandLink>
+                                                <apex:commandLink  style="margin-right:5px" onclick="validateIfportalAdminToProductsToEdit();" action="{!NewEditProduct}">
+                                                <span class="glyphicon glyphicon-pencil"/>{!$label.ISSP_TIP_Home_Products_table_View_Update_option}
+                                                <apex:param name="prodId" value="{!item.id}"/>
+                                                </apex:commandLink>
                                             </apex:outputPanel>
 
                                             <apex:outputPanel rendered="{!item.status == 'Draft'}">
-                                                <apex:commandLink style="margin-right:5px" onclick="validateIfportalAdminToProductsToEdit('{!item.id}');return false;"><span class="glyphicon glyphicon-pencil"></span> {!$label.ISSP_TIP_Home_Products_table_Edit_option}</apex:commandLink>
+                                                <apex:commandLink  style="margin-right:5px" onclick="validateIfportalAdminToProductsToEdit();" action="{!NewEditProduct}">
+                                                    <span class="glyphicon glyphicon-pencil"/>{!$label.ISSP_TIP_Home_Products_table_Edit_option}
+                                                    <apex:param name="prodId" value="{!item.id}"/>
+                                                </apex:commandLink>
                                             </apex:outputPanel>
-
                                         </apex:column> 
 
                                         <apex:column >
