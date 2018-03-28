@@ -106,6 +106,11 @@ public without sharing class ISSP_Case {
             return (caseType == 'ACR' && newCase.Escalated_Status_ACCA__c != null && newCase.ACCA_Owner__c != null);
         }
     }
+    //AMSU-119
+    public boolean isMSOcase {get {
+            return (caseType == 'OSCAR' && (newCase.Reason1__c == 'GSA / MSO / Handling Agent' || newCase.Subject.startsWith('MSO code ') ));
+        }
+    }
 
     public String CaseType { get {return ISSP_Constant.caseTypeMap.get(newCase.RecordType.Name);}   }
     public String CaseStatus { get {return ISSP_Constant.caseStatusMap.get(newCase.Status);}    }
@@ -151,10 +156,14 @@ public without sharing class ISSP_Case {
         Shows a disclaimer if current case was closed for more than 2 weeks
     **/
     public void showAlertMessage() {
-        if (getHideForClosedCases()) {
+		//AMSU-119
+        if (getHideForClosedCases() && !isMSOcase) {
             ApexPages.Message myMsg = new ApexPages.Message(ApexPages.Severity.INFO, System.Label.ISSP_Case_Closed_More_Than_2_Months);
             ApexPages.addMessage(myMsg);
-        }
+        }else if(isMSOcase){
+			ApexPages.Message myMsg = new ApexPages.Message(ApexPages.Severity.INFO, System.Label.ISSP_AMS_MSO_Case_Alert);
+			ApexPages.addMessage(myMsg);
+		}		
     }
 
     /**
