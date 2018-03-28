@@ -446,7 +446,9 @@ public class AMS_OscarCaseTriggerHelper {
             if(c.reason1__c != null)
                 if(oscars.get(c.Oscar__c).Account__r.Location_Type__c == AMS_Utils.AE)
                     newCaseSubject = c.reason1__c + ' - ' + oscars.get(c.Oscar__c).Account__r.ANG_Accreditation_Model__c + ' - ' + oscars.get(c.Oscar__c).Account__r.Name;
-                else
+                else if(oscars.get(c.Oscar__c).Process__c == AMS_Utils.new_MSO || (c.Subject != null && c.Subject.startsWith('MSO code '))) //AMSU-119
+					newCaseSubject = null;
+				else
                     newCaseSubject = c.reason1__c + ' - ' + oscars.get(c.Oscar__c).Account__r.Name;
 
             if(newCaseSubject != null && c.Subject != newCaseSubject && (c.Subject == null || !c.Subject.startsWith(newCaseSubject)) && AMS_OscarMigrationFromCase.changeSubject)
