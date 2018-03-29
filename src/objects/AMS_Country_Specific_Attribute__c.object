@@ -344,6 +344,20 @@ J-Joint Vent</description>
     </fields>
     <label>AMS Country Specific Attribute</label>
     <listViews>
+        <fullName>Minimum_RHC_Amount</fullName>
+        <columns>NAME</columns>
+        <columns>IATA_ISO_Country__c</columns>
+        <columns>ANG_Minimum_RHC_Amount__c</columns>
+        <filterScope>Everything</filterScope>
+        <filters>
+            <field>RECORDTYPE</field>
+            <operation>equals</operation>
+            <value>AMS_Country_Specific_Attribute__c.Minimum_RHC_Amount</value>
+        </filters>
+        <label>Minimum RHC Amount</label>
+        <language>en_US</language>
+    </listViews>
+    <listViews>
         <fullName>RHC_Risk_Alerts</fullName>
         <columns>NAME</columns>
         <columns>IATA_ISO_Country__c</columns>

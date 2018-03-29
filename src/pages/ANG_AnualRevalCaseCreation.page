@@ -171,7 +171,7 @@
 
                 <apex:outputText styleClass="processText" value="Anual Revalidation Process Status: {!batchJob.Status}"/>
 
-                <apex:outputText styleClass="processText" value="Anual Revalidation Cases Created: {!batchJob.JobItemsProcessed}"/>
+                <apex:outputText styleClass="processText" value="Anual Revalidation Cases Proccessed: {!batchJob.JobItemsProcessed}"/>
 
                 <apex:outputText styleClass="processText" value="Errors found: {!batchJob.NumberOfErrors}"/>
 

@@ -375,6 +375,7 @@ global class AMS_PCI_Complaint_Batch implements Database.Batchable<sObject>, Dat
         Boolean templateToIATA = false;
         List<EmailTemplate> tempIata = new List<EmailTemplate>();
         Map<Id, Id> mapContactsVs_User = new Map<Id, Id>();
+        Map<Id, String> mapUsersVsContactName = new Map<Id, String>();
         Map<Id, String> mapUserVsEmail = new Map<Id, String>();
         Set<Id> contactsId = new Set<Id>();
 
@@ -406,9 +407,10 @@ global class AMS_PCI_Complaint_Batch implements Database.Batchable<sObject>, Dat
             contactsId.add(c.Id);
         }
 
-        For(User u :  [Select Id, ContactId, Email FROM User WHERE ContactId in :contactsId]){
+        For(User u :  [Select Id, ContactId, Email, Name FROM User WHERE ContactId in :contactsId]){
             mapContactsVs_User.put(u.ContactId, u.Id);
             mapUserVsEmail.put(u.Id, u.Email);
+            mapUsersVsContactName.put(u.Id, u.Name);
         }        
         
         system.debug('DGR sendEmailAlert: mapContactsVs_User : ' + mapContactsVs_User);
@@ -572,19 +574,24 @@ global class AMS_PCI_Complaint_Batch implements Database.Batchable<sObject>, Dat
                 String textBody = template.Body == null?'':template.Body;
                 String caseNumber = casesInfo.get(oscarCommCaseId).CaseNumber == null?'':casesInfo.get(oscarCommCaseId).CaseNumber;
                 String iatacode = casesInfo.get(oscarCommCaseId).IATACodeProduct__c == null?'':casesInfo.get(oscarCommCaseId).IATACodeProduct__c;
+                String sContactName = mapUsersVsContactName.get(mail.getTargetObjectId());
                 
                 subject = subject.replace('{!Case.CaseNumber} ', caseNumber);
                 mail.setSubject(subject);
 
 
                 if(htmlBody != ''){
+                    htmlBody = htmlBody.replace('<![CDATA[', '');
+                    htmlBody = htmlBody.replace('{!Contact.Name}', sContactName);
                     htmlBody = htmlBody.replace('{!Case.CaseNumber}', caseNumber);
                     htmlBody = htmlBody.replace('{!Case.IATA_Code__c}', iatacode);
                     htmlBody = htmlBody.replace('{!Today()+30}', dTodayPlus30.format());
                     htmlBody = htmlBody.replace('{!Case.Id}', oscarCommCaseId);
+                    htmlBody = htmlBody.replace(']]>', '');
                 }
 
                 if(textBody != ''){
+                    textBody = textBody.replace('{!Contact.Name}', sContactName);
                     textBody = textBody.replace('{!Case.CaseNumber}', caseNumber);
                     textBody = textBody.replace('{!Case.IATA_Code__c}', iatacode);
                     textBody = textBody.replace('{!Today()+30}', dTodayPlus30.format());
