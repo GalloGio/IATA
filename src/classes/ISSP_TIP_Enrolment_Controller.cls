@@ -125,7 +125,7 @@ public with sharing class ISSP_TIP_Enrolment_Controller {
     	newcase.RecordTypeid = PROCESS_CASE_RECORD_TYPE_ID;
 		newcase.Accountid = account.id; 
 		newcase.Visible_on_ISS_Portal__c = true;
-		newcase.Reason = 'Payment Provider Management';
+		newcase.Reason1__c = 'Payment Provider Management';
 		newcase.CaseArea__c = 'Transparency in Payments (TIP)'; 
 		newcase.Status = 'Draft';
 		newcase.Subject = 'Request for Enlistment as Payment provider - ' + account.name;
