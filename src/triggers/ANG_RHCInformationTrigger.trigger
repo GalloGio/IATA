@@ -6,10 +6,10 @@ trigger ANG_RHCInformationTrigger on ANG_RHC_Information__c (before insert, afte
 	NewGenApp_Custom_Settings__c newgenCS = NewGenApp_Custom_Settings__c.getOrgDefaults();
 	
 	if(Trigger.isAfter && Trigger.isUpdate){
+		handler.onAfterUpdate();
 		if(newgenCS.Push_Notifications_State__c){
-			handler.onAfterUpdate();
 			newgenHandler.onAfterUpdate(Trigger.old, Trigger.new, Trigger.oldMap);
-		} 
+		}
 	} 
 
 	if(Trigger.isBefore && Trigger.isInsert) handler.onBeforeInsert();
