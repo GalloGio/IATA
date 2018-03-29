@@ -36,13 +36,13 @@
 			</apex:column>
 
 					<apex:column headerValue="Milestone">
-							<apex:outputLink value="/{!task.Id}" rendered="{!!AND(isTaskEditMode,idTaskConcerned==task.Id)}">{!task.Subject__c}</apex:outputLink>
-                    <apex:define name="requiredInputDiv">
-                        <div class="requiredInput">
-                           <apex:define name="requiredInputDiv"><div class="requiredBlock"/></apex:define>
-                           <apex:inputField value="{!task.Subject__c}" rendered="{!AND(isTaskEditMode,idTaskConcerned==task.Id)}" style="width: 80%; height: 40px" required="true"/>
-                       </div>
-                    </apex:define>
+							<apex:outputText rendered="{!!AND(isTaskEditMode,idTaskConcerned==task.Id)}">{!task.Subject__c}</apex:outputText>
+              <apex:define name="requiredInputDiv">
+                  <div class="requiredInput">
+                     <apex:define name="requiredInputDiv"><div class="requiredBlock"/></apex:define>
+                     <apex:inputField value="{!task.Subject__c}" rendered="{!AND(isTaskEditMode,idTaskConcerned==task.Id)}" style="width: 80%; height: 40px" required="true"/>
+                 </div>
+              </apex:define>
 					</apex:column>
 
 					<apex:column headerValue="Responsible" >

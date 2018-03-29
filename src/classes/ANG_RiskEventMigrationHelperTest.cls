@@ -6,17 +6,17 @@ private class ANG_RiskEventMigrationHelperTest {
 	@testSetup static void setup(){
 
 		List<ANG_Risk_Event_Type__c> eventTypes = new List<ANG_Risk_Event_Type__c>(); 
-		eventTypes.add(new ANG_Risk_Event_Type__c(Name = 'Auth. Cash Payment', ANG_Risk_ID__c = '1', ANG_Expiration__c = 24));
-		eventTypes.add(new ANG_Risk_Event_Type__c(Name = 'Common ownership default', ANG_Risk_ID__c = '10', ANG_Expiration__c = 24));
-		eventTypes.add(new ANG_Risk_Event_Type__c(Name = 'Prejudiced collection', ANG_Risk_ID__c = '11', ANG_Expiration__c = 12));
-		eventTypes.add(new ANG_Risk_Event_Type__c(Name = 'Late/Short payment', ANG_Risk_ID__c = '2', ANG_Expiration__c = 12));
-		eventTypes.add(new ANG_Risk_Event_Type__c(Name = 'Wrong currency payment', ANG_Risk_ID__c = '3', ANG_Expiration__c = 12));
-		eventTypes.add(new ANG_Risk_Event_Type__c(Name = 'Payment Default', ANG_Risk_ID__c = '4', ANG_Expiration__c = 24));
-		eventTypes.add(new ANG_Risk_Event_Type__c(Name = 'Fail Financial Statements', ANG_Risk_ID__c = '5', ANG_Expiration__c = 12));
-		eventTypes.add(new ANG_Risk_Event_Type__c(Name = 'Major change (owner or legal)', ANG_Risk_ID__c = '6', ANG_Expiration__c = 24));
-		eventTypes.add(new ANG_Risk_Event_Type__c(Name = 'Unreported Major Change', ANG_Risk_ID__c = '7', ANG_Expiration__c = 12));
-		eventTypes.add(new ANG_Risk_Event_Type__c(Name = 'Change HE location', ANG_Risk_ID__c = '8', ANG_Expiration__c = 12));
-		eventTypes.add(new ANG_Risk_Event_Type__c(Name = 'Fail Financial Security', ANG_Risk_ID__c = '9', ANG_Expiration__c = 12));
+		eventTypes.add(new ANG_Risk_Event_Type__c(Name = 'Auth. Cash Payment', ANG_Risk_ID__c = '1', ANG_Expiration__c = 24,ANG_Delay_Cash_Condition__c=null,Limit_Cash_conditions__c=true));
+		eventTypes.add(new ANG_Risk_Event_Type__c(Name = 'Common ownership default', ANG_Risk_ID__c = '10', ANG_Expiration__c = 24,ANG_Delay_Cash_Condition__c=null,Limit_Cash_conditions__c=false));
+		eventTypes.add(new ANG_Risk_Event_Type__c(Name = 'Prejudiced collection', ANG_Risk_ID__c = '11', ANG_Expiration__c = 12,ANG_Delay_Cash_Condition__c=null,Limit_Cash_conditions__c=false));
+		eventTypes.add(new ANG_Risk_Event_Type__c(Name = 'Late/Short payment', ANG_Risk_ID__c = '2', ANG_Expiration__c = 12,ANG_Delay_Cash_Condition__c=null,Limit_Cash_conditions__c=false));
+		eventTypes.add(new ANG_Risk_Event_Type__c(Name = 'Wrong currency payment', ANG_Risk_ID__c = '3', ANG_Expiration__c = 12,ANG_Delay_Cash_Condition__c=null,Limit_Cash_conditions__c=false));
+		eventTypes.add(new ANG_Risk_Event_Type__c(Name = 'Payment Default', ANG_Risk_ID__c = '4', ANG_Expiration__c = 24,ANG_Delay_Cash_Condition__c=null,Limit_Cash_conditions__c=true));
+		eventTypes.add(new ANG_Risk_Event_Type__c(Name = 'Fail Financial Statements', ANG_Risk_ID__c = '5', ANG_Expiration__c = 12,ANG_Delay_Cash_Condition__c=30,Limit_Cash_conditions__c=false));
+		eventTypes.add(new ANG_Risk_Event_Type__c(Name = 'Major change (owner or legal)', ANG_Risk_ID__c = '6', ANG_Expiration__c = 24,ANG_Delay_Cash_Condition__c=null,Limit_Cash_conditions__c=false));
+		eventTypes.add(new ANG_Risk_Event_Type__c(Name = 'Unreported Major Change', ANG_Risk_ID__c = '7', ANG_Expiration__c = 12,ANG_Delay_Cash_Condition__c=null,Limit_Cash_conditions__c=false));
+		eventTypes.add(new ANG_Risk_Event_Type__c(Name = 'Change HE location', ANG_Risk_ID__c = '8', ANG_Expiration__c = 12,ANG_Delay_Cash_Condition__c=null,Limit_Cash_conditions__c=false));
+		eventTypes.add(new ANG_Risk_Event_Type__c(Name = 'Fail Financial Security', ANG_Risk_ID__c = '9', ANG_Expiration__c = 12,ANG_Delay_Cash_Condition__c=null,Limit_Cash_conditions__c=false));
 		insert eventTypes;
 
 		
@@ -36,13 +36,23 @@ private class ANG_RiskEventMigrationHelperTest {
 		Account a = createAccount(true);
 		insert a;
 		setAccs.add(a);
-		Agency_Applied_Change_code__c cc 
-			= new Agency_Applied_Change_code__c(Account__c = a.id,
-												Change_Code__c = ANG_Risk_Helper.CHANGE_CODE_FIN 
-												);
+		Agency_Applied_Change_code__c cc = new Agency_Applied_Change_code__c(
+				Account__c = a.id,
+				Change_Code__c = ANG_Risk_Helper.CHANGE_CODE_FIN,
+				Bulletin_Information__c ='branch'
+				);
 		insert cc;
+
 		ANG_RiskEventMigrationHelper helper = new ANG_RiskEventMigrationHelper(setAccs);
 		List<ANG_Agency_Risk_Event__c> listRisks = helper.convertChangeCodesToRiskEvents();
+
+		system.assertEquals(listRisks.size() , 0);
+
+		cc.Bulletin_Information__c='';
+		update cc;
+		
+		helper = new ANG_RiskEventMigrationHelper(setAccs);
+		listRisks = helper.convertChangeCodesToRiskEvents();
 
 		system.assertEquals(listRisks.size() , 1);
 		system.assertEquals(reMap.get(listRisks.get(0).ANG_Risk_Type__c).name, ANG_Risk_Helper.RISK_TYPE_AUTH_CASH_PAYMENT);
@@ -119,10 +129,9 @@ private class ANG_RiskEventMigrationHelperTest {
 		setAccs.add(a);
 		Agency_Applied_Change_code__c cc 
 			= new Agency_Applied_Change_code__c(Account__c = a.id,
-												Change_Code__c = ANG_Risk_Helper.CHANGE_CODE_NOT ,
-												Reason_Code__c = '61',
-												Reason_Description__c = ANG_Risk_Helper.CHANGE_CODE_DESCRIPTION_NCFC
-
+												Change_Code__c = ANG_Risk_Helper.CHANGE_CODE_IRR ,
+												Irregularity_Type__c = ANG_Risk_Helper.CHANGE_CODE_IRR_SC2,
+												Date_time_of_change__c =system.today().addDays(-10)
 												);
 		insert cc;
 		ANG_RiskEventMigrationHelper helper = new ANG_RiskEventMigrationHelper(setAccs);
@@ -131,6 +140,89 @@ private class ANG_RiskEventMigrationHelperTest {
 		system.assertEquals(listRisks.size() , 1);
 		system.assertEquals(ANG_RiskEventMigrationHelperTest.reMap.get(listRisks.get(0).ANG_Risk_Type__c).name, ANG_Risk_Helper.RISK_TYPE_FAIL_FINANCIAL_STATEMENTS);
 		system.assertEquals(listRisks.get(0).ANG_Event_Status__c , ANG_Risk_Helper.STATUS_ACTIVE);
+		system.assertEquals(listRisks.get(0).ANG_Limit_Cash_Conditions__c , false);
+
+	}
+	@isTest
+	public static void failFinancialStatementsTestWithCashCondition() {
+
+		Set<Account> setAccs = new set<Account>();
+		Account a = createAccount(true);
+		insert a;
+		setAccs.add(a);
+		Agency_Applied_Change_code__c cc 
+			= new Agency_Applied_Change_code__c(Account__c = a.id,
+												Change_Code__c = ANG_Risk_Helper.CHANGE_CODE_IRR ,
+												Irregularity_Type__c = ANG_Risk_Helper.CHANGE_CODE_IRR_SC2,
+												Date_time_of_change__c =system.today().addDays(-40)
+												);
+		insert cc;
+		ANG_RiskEventMigrationHelper helper = new ANG_RiskEventMigrationHelper(setAccs);
+		List<ANG_Agency_Risk_Event__c> listRisks = helper.convertChangeCodesToRiskEvents();
+
+		system.assertEquals(listRisks.size() , 1);
+		system.assertEquals(ANG_RiskEventMigrationHelperTest.reMap.get(listRisks.get(0).ANG_Risk_Type__c).name, ANG_Risk_Helper.RISK_TYPE_FAIL_FINANCIAL_STATEMENTS);
+		system.assertEquals(listRisks.get(0).ANG_Event_Status__c , ANG_Risk_Helper.STATUS_ACTIVE);
+		system.assertEquals(listRisks.get(0).ANG_Limit_Cash_Conditions__c , true);
+
+	}
+	@isTest
+	public static void failFinancialStatementsTestWithoutCashConditionDueFRresult() {
+
+		Set<Account> setAccs = new set<Account>();
+		Account a = createAccount(true);
+		insert a;
+
+
+
+		Contact cont= new Contact(
+        		lastName='lastName',
+        		Financial_Assessment_Contact__c=true,
+                AccountId = a.Id, 
+        		email='test@test.com'
+        	);
+        insert cont;
+		 
+		 Case cFS = new Case(
+        		Subject = 'rception case',
+        		AccountId = a.Id, 
+        		contactId=cont.Id,
+        		Status = 'Open', 
+        		Assessment_Performed_Date__c= system.today(),
+        		Financial_Review_Result__c='Satisfactory - New Financial Security',
+                RecordTypeId = RecordTypeSingleton.getInstance().RtIDsPerDeveloperNamePerObj.get('Case').get('IATA_Financial_Review'),
+                IFAP_Area__c='asda44'
+                 );
+        insert cFS;
+
+        Test.startTest();
+		Case caseSIdra = new Case(
+							BSP_CASS__c = 'BSP',
+							parentId=cFS.id,
+							RecordTypeid=RecordTypeSingleton.getInstance().RtIDsPerDeveloperNamePerObj.get('Case').get('SIDRA_Lite'),
+							Status = 'Open',
+							Origin = 'IATA Internal User',
+							Subject = 'subject');
+
+		insert caseSIdra;
+
+		setAccs.add(a);
+		Agency_Applied_Change_code__c cc 
+			= new Agency_Applied_Change_code__c(Account__c = a.id,
+												Change_Code__c = ANG_Risk_Helper.CHANGE_CODE_IRR ,
+												Irregularity_Type__c = ANG_Risk_Helper.CHANGE_CODE_IRR_FC2,
+												Date_time_of_change__c =system.today().addDays(-40),
+												SIDRA_Case__c = caseSIdra.id 
+												);
+		
+		insert cc;
+		ANG_RiskEventMigrationHelper helper = new ANG_RiskEventMigrationHelper(setAccs);
+		List<ANG_Agency_Risk_Event__c> listRisks = helper.convertChangeCodesToRiskEvents();
+
+		system.assertEquals(listRisks.size() , 1);
+		system.assertEquals(ANG_RiskEventMigrationHelperTest.reMap.get(listRisks.get(0).ANG_Risk_Type__c).name, ANG_Risk_Helper.RISK_TYPE_FAIL_FINANCIAL_STATEMENTS);
+		system.assertEquals(listRisks.get(0).ANG_Event_Status__c , ANG_Risk_Helper.STATUS_ACTIVE);
+		system.assertEquals(listRisks.get(0).ANG_Limit_Cash_Conditions__c , false);
 
 	}
 
@@ -582,78 +674,37 @@ private class ANG_RiskEventMigrationHelperTest {
 
 		Agency_Applied_Change_code__c cc 
 			= new Agency_Applied_Change_code__c(Account__c = a.id,
-												Change_Code__c = ANG_Risk_Helper.CHANGE_CODE_NTW,
+												Change_Code__c = ANG_Risk_Helper.CHANGE_CODE_IRW,
 												SIDRA_Case__c = c.id,
-												PreviousReason__c = '61'
+												Irregularity_Type__c = ANG_Risk_Helper.CHANGE_CODE_IRR_SC2
 												);
 		listCCs.add(cc);								
 
 		Agency_Applied_Change_code__c cc1 
 			= new Agency_Applied_Change_code__c(Account__c = a.id,
-												Change_Code__c = ANG_Risk_Helper.CHANGE_CODE_NOT,
-												Reason_Code__c = '61',
-												Reason_Description__c = ANG_Risk_Helper.CHANGE_CODE_DESCRIPTION_NCFC,
+												Change_Code__c = ANG_Risk_Helper.CHANGE_CODE_IRR,
+												Irregularity_Type__c = ANG_Risk_Helper.CHANGE_CODE_IRR_SC2,
 												SIDRA_Case__c = c.id 
 
 												);
 		listCCs.add(cc1);
+
+		Case csl = createCase();
+		insert csl;
 		
-
-		//OSCAR
-		AMS_OSCAR__c oscar = new AMS_OSCAR__c(Name = 'Oscar');
-		insert oscar;
-
-		Agency_Applied_Change_code__c cc2 
-			= new Agency_Applied_Change_code__c(Account__c = a.id,
-												Change_Code__c = ANG_Risk_Helper.CHANGE_CODE_NTW,
-												OSCAR__c = oscar.id 
-												);
-		listCCs.add(cc2);
-
-		Agency_Applied_Change_code__c cc3 
-			= new Agency_Applied_Change_code__c(Account__c = a.id,
-												Change_Code__c = ANG_Risk_Helper.CHANGE_CODE_NOT,
-												Reason_Code__c = '61',
-												Reason_Description__c = ANG_Risk_Helper.CHANGE_CODE_DESCRIPTION_NCFC,
-												OSCAR__c = oscar.id 
-
-												);
-		listCCs.add(cc3);
-
-
-		//-----------------RVW----------------------------------
-		//SIDRA
-		Agency_Applied_Change_code__c cc4 = new Agency_Applied_Change_code__c(Account__c = a.id,
-												Change_Code__c = ANG_Risk_Helper.CHANGE_CODE_RVW,
-												SIDRA_Case__c = c.id 
-												);
-		listCCs.add(cc4);
-
-		Agency_Applied_Change_code__c cc5 = new Agency_Applied_Change_code__c(Account__c = a.id,
-												Change_Code__c = ANG_Risk_Helper.CHANGE_CODE_NOT,
-												Reason_Code__c = '61',
-												Reason_Description__c = ANG_Risk_Helper.CHANGE_CODE_DESCRIPTION_NCFC,
-												SIDRA_Case__c = c.id 
-
-												);
-		listCCs.add(cc5);
-
-		//OSCAR
-
 		Agency_Applied_Change_code__c cc6
 			= new Agency_Applied_Change_code__c(Account__c = a.id,
-												Change_Code__c = ANG_Risk_Helper.CHANGE_CODE_RVW,
-												OSCAR__c = oscar.id 
+												Change_Code__c = ANG_Risk_Helper.CHANGE_CODE_IRR,
+												Irregularity_Type__c = ANG_Risk_Helper.CHANGE_CODE_IRR_SC2,
+												SIDRA_Case__c = csl.id 
 												);
 		listCCs.add(cc6);
 
 		Agency_Applied_Change_code__c cc7 
 			= new Agency_Applied_Change_code__c(Account__c = a.id,
-												Change_Code__c = ANG_Risk_Helper.CHANGE_CODE_NOT,
-												Reason_Code__c = '61',
-												Reason_Description__c = ANG_Risk_Helper.CHANGE_CODE_DESCRIPTION_NCFC,
-												OSCAR__c = oscar.id 
-
+												Change_Code__c = ANG_Risk_Helper.CHANGE_CODE_IRW,
+												Irregularity_Type__c = ANG_Risk_Helper.CHANGE_CODE_IRR_SC2,
+												SIDRA_Case__c = csl.id 
 												);
 		listCCs.add(cc7);
 
@@ -679,7 +730,7 @@ private class ANG_RiskEventMigrationHelperTest {
 		ANG_RiskEventMigrationHelper.getRiskForecast(new Set<Account>{a});
 
 		System.assertEquals(ANG_Risk_Helper.RISK_ASSESSMENT_PASSED , a.ANG_HE_RiskHistoryAssessment__c);
-		System.assertEquals(false, a.ANG_HE_CashCondition__c);
+		System.assertEquals(true, a.ANG_HE_CashCondition__c);
 		
 		//final results are null because we didn't insert calculations
 		System.assertEquals(null, a.ANG_HE_RiskStatus__c);
@@ -689,18 +740,26 @@ private class ANG_RiskEventMigrationHelperTest {
 		IATA_ISO_Country__c isoTest = new IATA_ISO_Country__c(Name = 'Iso Country Name Test', 
 															CurrencyIsoCode = 'EUR', 
 															ISO_Code_Numeric__c = 620, 
-															ISO_Code__c = 'PT');
+															ISO_Code__c = 'PT',
+															AIMS_Area_ID__c='1');
 		insert isoTest;
 		
-		Account c = new Account(Name ='Test Name', 
-								IATA_ISO_Country__c = isoTest.id, 
-								Sector__c = 'Airline', 
-								Location_Type__c = (isHE ? AMS_Utils.HE : 'HO'), 
-								Location_Class__c = 'P'
-						);
+		Account c = new Account(
+						Name ='Test Name', 
+						IATA_ISO_Country__c = isoTest.id, 
+						Type = 'IATA Passenger Sales Agent',
+            			Sector__c='Travel Agent', 
+						Location_Type__c = (isHE ? AMS_Utils.HE : 'HO'), 
+						Location_Class__c = 'P',
+						iataCode__C='99999999',
+						BillingCountry='Iso Country Name Test'						
+            			
+					);
 
 		return c;
 	}
+           
+            
 
 	public static Case createCase(){
 		Id SIDRARecordTypeId = Schema.SObjectType.Case.getRecordTypeInfosByName().get('SIDRA').getRecordTypeId();

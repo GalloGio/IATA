@@ -58,9 +58,9 @@ public class trgIDCard_Contact_BeforeUpdateTest{
             idCardToInsert.add(IDCardUtil.CreateIDCardObjectFromApplication(testData.IDCards_IDCardApplications[1], relatedContact[0]));               
             idCardToInsert.add(IDCardUtil.CreateIDCardObjectFromApplication(testData.IDCards_IDCardApplications[3], relatedContact[1]));     
             idCardToInsert[0].Valid_To_Date__c = Date.today().addDays(365);
-            idCardToInsert[0].Card_Status__c = 'Printed/Delivered';
+            idCardToInsert[0].Card_Status__c = 'Valid ID Card';
             idCardToInsert[1].Valid_To_Date__c = Date.today().addDays(365);
-            idCardToInsert[1].Card_Status__c = 'Printed/Delivered';
+            idCardToInsert[1].Card_Status__c = 'Valid ID Card';
             
             insert idCardToInsert; 
             

@@ -25,19 +25,21 @@ public without sharing class AMS_EBulletinReportHelper {
 
 	public static final String IATACODE			= 	'2-Agency Code';
 	public static final String LEGALSTATUS		= 	'5-Legal Status';
-	public static final String LOCATIONCLASS	= 	'6-Program';
+    public static final String ACCREDITATIONTYPE	= 	'6-Accreditation Type';
+    public static final String CASHCONDITION    = '9-Cash Condition equal to FS';
+	public static final String LOCATIONCLASS	= 	'10-Program';
 	
-	public static final String HIERARCHY	= 	'7-Hierarchy';
+	public static final String HIERARCHY		= 	'11-Hierarchy';
 
-	public static final String STATE  	        = 	'10-Country or State';
-	public static final String COUNTRY  	    =	'11-Country or State';
+	public static final String STATE  	        = 	'14-Country or State';
+	public static final String COUNTRY  	    =	'15-Country or State';
 
-	public static final String STATUS			= 	'19-Status';
-	public static final String REASON			= 	'23-Reason';
+	public static final String STATUS			= 	'23-Status';
+	public static final String REASON			= 	'27-Reason';
 
 	public static final String CHANGECODE       = 	'1-Change Code';
 
-	public static final String OWNERS 	   	 	   =	'30-Owner1';
+	public static final String OWNERS 	   	 	   =	'34-Owner1';
 	public static final String OWNERAPINAME 	   =	'Account__r.Owners';
 	public static final String OWNERSTOTALAPINAME  =	'OwnersTotal';
 
@@ -45,19 +47,23 @@ public without sharing class AMS_EBulletinReportHelper {
 	public static final Integer OWNERPOS 			=	8;
 	public static final Integer NEWOWNERPOS 		=	12;
 
-	public static final String NEWLEGALSTATUS	= 	'49-New Legal Status';
-	public static final String NEWHIERARCHY	= 	'50-New Hierarchy';
+	public static final String NEWLEGALSTATUS	    = 	'53-New Legal Status';
+	public static final String NEWHIERARCHY	        = 	'54-New Hierarchy';
+    public static final String NEWACCREDITATIONTYPE	= 	'56-New Accreditation Type';
 
-	public static final String NEWSTATE 	    =	'51-New Country or State';
-	public static final String NEWCOUNTRY 		= 	'52-New Country or State';
+	public static final String NEWSTATE 	    =	'58-New Country or State';
+	public static final String NEWCOUNTRY 		= 	'59-New Country or State';
 
-	public static final String IRRREASON 		=	'80-IRR: Reason';
-	public static final String IRRPERIODSD 		= 	'81-IRR: Period';
-	public static final String IRRPERIODED		= 	'82-IRR: Period';
+	public static final String IRRREASON 		=	'85-IRR: Reason';
+	public static final String IRRPERIODSD 		= 	'86-IRR: Period';
+	public static final String IRRPERIODED		= 	'87-IRR: Period';
 
 	public static final String IRRCHANGECODE = 'IRR';
 	public static final Set<String> NEWCHANGECODESET = new Set<String> {'NEW','NWD','REC'};
 
+	private static final String NOTAPPLICABLE = 'Not Applicable'; 
+	private static final String ADDITIONALQUERYFIELDS = ',Account__r.ANG_IsNewGenAgency__c';
+ 
 	private static Decimal ownersTotalPercentage = 0;
 
 	public static String fieldsQuery;
@@ -288,7 +294,7 @@ public without sharing class AMS_EBulletinReportHelper {
 
 
 		String query = AMS_QueryUtils.getFieldsQuery(objectBaseQuery, 
-													fieldsQuery + ( ccFieldToReturn.isEmpty() ? '' : ',') + convertToCSV(ccFieldToReturn,','), 
+													fieldsQuery + ADDITIONALQUERYFIELDS + ( ccFieldToReturn.isEmpty() ? '' : ',') + convertToCSV(ccFieldToReturn,','), 
 												 	filterCC);
 
 		if(!isCNS) {
@@ -672,7 +678,6 @@ public without sharing class AMS_EBulletinReportHelper {
 		for (Integer position = 0 ; position < positionMax ; position++)
 		{
 			//Fields recovered without querying
-
 			if(customFields.headersCustomMap.containsKey(position))
 			{
 				AMSEBulletinSettings__c headerVal = customFields.headersCustomMap.get(position).eBulletinSetting;
@@ -694,6 +699,8 @@ public without sharing class AMS_EBulletinReportHelper {
 				else if(fieldsList.get(position - customFieldsCounter) == nameApiNameMap.get(LOCATIONCLASS)) strVal = AMS_Utils.getLocationClassDescr(strVal);
 
 				else if(fieldsList.get(position - customFieldsCounter) == nameApiNameMap.get(HIERARCHY) || fieldsList.get(position - customFieldsCounter) == nameApiNameMap.get(NEWHIERARCHY)) strVal = '=""' + strVal + '""';
+                
+                else if(fieldsList.get(position - customFieldsCounter) == nameApiNameMap.get(ACCREDITATIONTYPE) || fieldsList.get(position - customFieldsCounter) == nameApiNameMap.get(NEWACCREDITATIONTYPE)) strVal = AMS_Utils.transformAccreditationType(strVal);
 
 				recordsList.add(strVal);
 			}
@@ -718,7 +725,10 @@ public without sharing class AMS_EBulletinReportHelper {
 
 				else if(fieldsList.get(position - customFieldsCounter) == nameApiNameMap.get(IATACODE) || fieldsList.get(position - customFieldsCounter) == nameApiNameMap.get(HIERARCHY)) strVal = '=""' + strVal + '""';
                 
-                
+                else if(fieldsList.get(position - customFieldsCounter) == nameApiNameMap.get(ACCREDITATIONTYPE) || fieldsList.get(position - customFieldsCounter) == nameApiNameMap.get(NEWACCREDITATIONTYPE)) strVal = AMS_Utils.transformAccreditationType(strVal);
+
+                else if(fieldsList.get(position - customFieldsCounter) == nameApiNameMap.get(CASHCONDITION) || fieldsList.get(position - customFieldsCounter) == nameApiNameMap.get(CASHCONDITION)) strVal = (cc.Account__r.ANG_IsNewGenAgency__c ? strVal : NOTAPPLICABLE);
+
 				recordsList.add(strVal);
                 if (fieldsList.get(position - customFieldsCounter) == 'BULLETIN_INFORMATION__C') {
                     remarkPosition = recordsList.size() - 1;
@@ -798,6 +808,10 @@ public without sharing class AMS_EBulletinReportHelper {
 			else if (headerVal.Name == NEWLEGALSTATUS)
 			{
 				recordValue = AMS_Utils.transformLegalStatus(objVal.newValue);
+			}
+            else if (headerVal.Name == NEWACCREDITATIONTYPE)
+			{
+				recordValue = AMS_Utils.transformAccreditationType(objVal.newValue);
 			}
 			else
 			{

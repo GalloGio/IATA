@@ -537,6 +537,27 @@
         <language>en_US</language>
     </listViews>
     <listViews>
+        <fullName>ZZZ_MITA_File</fullName>
+        <columns>NAME</columns>
+        <columns>Full_SFDC_ID__c</columns>
+        <columns>File_Specification__c</columns>
+        <columns>Status__c</columns>
+        <columns>Size__c</columns>
+        <columns>Duration__c</columns>
+        <columns>Duration_in_minutes__c</columns>
+        <columns>Production_Date__c</columns>
+        <columns>Message__c</columns>
+        <columns>LAST_UPDATE</columns>
+        <filterScope>Everything</filterScope>
+        <filters>
+            <field>File_Specification__c</field>
+            <operation>contains</operation>
+            <value>MITA</value>
+        </filters>
+        <label>ZZZ : MITA File</label>
+        <language>en_US</language>
+    </listViews>
+    <listViews>
         <fullName>ZZ_Ad_Hoc_Production_Search</fullName>
         <columns>NAME</columns>
         <columns>OBJECT_ID</columns>
