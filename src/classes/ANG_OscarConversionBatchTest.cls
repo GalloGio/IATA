@@ -45,8 +45,7 @@ private class ANG_OscarConversionBatchTest {
                 Location_Class__c = acctHO.Location_Class__c,
                 Location_Type__c = acctHO.Location_Type__c,
                 SAAM_Case__c = oscarCase.Id,
-                Is_your_firm_handling_Dangerous_Goods__c = 'Yes',
-                CASS_Number__c = '000');
+                Is_your_firm_handling_Dangerous_Goods__c = 'Yes');
 
         insert stagingArea;
 
@@ -104,8 +103,7 @@ private class ANG_OscarConversionBatchTest {
                 Location_Class__c = acctHO.Location_Class__c,
                 Location_Type__c = acctHO.Location_Type__c,
                 SAAM_Case__c = oscarCase.Id,
-                Is_your_firm_handling_Dangerous_Goods__c = 'Yes',
-                CASS_Number__c = '000');
+                Is_your_firm_handling_Dangerous_Goods__c = 'Yes');
 
         insert stagingArea;
 

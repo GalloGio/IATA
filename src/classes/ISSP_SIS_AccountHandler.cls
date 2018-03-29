@@ -84,6 +84,9 @@ public with sharing class ISSP_SIS_AccountHandler {
                 } else {
                     listUpdateAccountId.add(accountNew.Id);
                 }
+                if (accountnew.Status__c == 'Terminated') {
+                    accountnew.SIS_Status__c = 'TERMINATED';
+                }
             }
         }
         if (!listInsertAccountId.isEmpty()) {

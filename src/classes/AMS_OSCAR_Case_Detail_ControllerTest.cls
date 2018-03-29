@@ -51,6 +51,8 @@ private class AMS_OSCAR_Case_Detail_ControllerTest {
 	}
 
 	@isTest static void test_OSCARCaseDetail2(){
+        Test.startTest();
+        
 		Case c = [SELECT Id FROM Case WHERE Oscar__c IN (SELECT Id FROM AMS_OSCAR__c WHERE AMS_Online_Accreditation__c != '') LIMIT 1];
 
 		Id aRTId = Schema.Account.sObjectType.getDescribe().getRecordTypeInfosByName().get('Standard Account').getRecordTypeId();
@@ -78,12 +80,12 @@ private class AMS_OSCAR_Case_Detail_ControllerTest {
 
 		insert a;
 
-		Test.startTest();
 
 			AMS_Pax_Accreditation_Form__c accredForm = [SELECT Id, Branch_Office_Country__c FROM AMS_Pax_Accreditation_Form__c][0];
 
 			accredForm.Branch_Office_Country__c = country.Id;
 			accredForm.Location_Class__c = 'P';
+			accredForm.CASS_Number__c = '';
 
 			update accredForm;
 
@@ -174,4 +176,88 @@ private class AMS_OSCAR_Case_Detail_ControllerTest {
 		Test.stopTest();
 	}
 	
+    @isTest static void test_OSCARCaseDetail3(){
+        
+        AMS_OSCAR__c oscar = [SELECT Id, AMS_Online_Accreditation__c FROM AMS_OSCAR__c WHERE AMS_Online_Accreditation__c != '' LIMIT 1];
+
+        Id aRTId = Schema.Account.sObjectType.getDescribe().getRecordTypeInfosByName().get('Standard Account').getRecordTypeId();
+
+        IATA_ISO_Country__c country = new IATA_ISO_Country__c(
+            Name= 'Testland',
+            Region__c = 'Americas',
+            Iso_code__c = 'TL',
+            ISO_Code_Numeric__c=99,
+            BSP__c = 'Yes',
+            ANG_Enable_NewGen__c = true,
+            OSCAR_enabled__c = true
+        );
+
+        insert country;
+        Test.startTest();
+        
+        Account a = new Account(
+            Name='TesteAccount',
+            Location_Class__c = 'P',
+            Location_Type__c = 'HE',
+            Reason_for_creation__c = 'Headquarter is missing',
+            RecordTypeId = aRTId,
+            IATA_ISO_Country__c = country.id
+        );
+
+        insert a;   
+
+        AMS_Pax_Accreditation_Form__c accredForm = [SELECT Id, Branch_Office_Country__c FROM AMS_Pax_Accreditation_Form__c WHERE Id = :oscar.AMS_Online_Accreditation__c];
+
+        accredForm.Branch_Office_Country__c = country.Id;
+        accredForm.Location_Class__c = 'P';
+        accredForm.CASS_Number__c = '';
+
+        update accredForm;      
+
+        Id settlementRTId = Schema.AMS_Settlement_System__c.sObjectType.getDescribe().getRecordTypeInfosByName().get('BSP').getRecordTypeId();
+
+        AMS_Settlement_System__c settlement = new AMS_Settlement_System__c(
+            Name = 'test settlement',
+            RecordTypeId = settlementRTId
+        );
+
+        insert settlement;
+
+        AMS_Operation__c opCode = new AMS_Operation__c(
+            Name = 'test operation',
+            Settlement__c = settlement.id,
+            Allow_multiple_remittances__c = true,
+            Country__c = country.id
+        );
+
+        insert opCode;
+
+        ANG_BSP_Attributes__c bSPAttributes = new ANG_BSP_Attributes__c(
+            Class_Type__c  = 'P',
+            Remittance_Frequency__c = 'V',
+            Operation__c = opCode.Id
+        );
+
+        insert bSPAttributes;
+
+        AMS_Agency_Operations__c agencyOp = new AMS_Agency_Operations__c(
+            Account__c = a.id,
+            Operation__c = opCode.Id
+        );
+
+        insert agencyOp;
+
+
+        PageReference pg = Page.AMS_OSCAR_GeneralDetailsPage;
+        pg.getParameters().put('id', oscar.Id);
+        Test.setCurrentPage(pg);
+
+        AMS_OSCAR_Case_Detail_Controller controller = new AMS_OSCAR_Case_Detail_Controller();   
+                
+        controller.getRfPicklistValuesAMS();
+
+
+        Test.stopTest();
+    }
+    
 }

@@ -28,6 +28,7 @@ global class AMP_Batch_EmailChatterDigest implements Database.Batchable<sObject>
 		} else {
 			lsAllFeedItems = AMP_ChatterTopicSubscribeController.getDailyFeedItems(lsHQAccounts);
 		}
+		if(Test.isRunningTest() ) { query += ' LIMIT 100 ';}
 		System.debug(query);
 
 		return Database.getQueryLocator(query);

@@ -834,6 +834,10 @@
                 <default>false</default>
             </values>
             <values>
+                <fullName>Not Delivered</fullName>
+                <default>false</default>
+            </values>
+            <values>
                 <fullName>On Hold</fullName>
                 <default>false</default>
             </values>
