@@ -947,70 +947,12 @@ global class ANG_OscarProcessHelper {
        		accOscarObjsMap.get(insertedCase.Account_Concerned__c).ownerId = insertedCase.ownerId;
        	}
 
-		/*//StagingArea:
-		List<AMS_Pax_Accreditation_Form__c> stagingAreasToInsert = new List<AMS_Pax_Accreditation_Form__c>();
-
-       	for (Account acc : accs){
-
-			fieldsOfObject = new Map<String,Object>();
-	        fieldsOfObject.put('Abbreviated_Address__c',acc.Abbreviated_address__c);
-	        fieldsOfObject.put('Abbreviated_name__c',acc.Abbreviated_name__c);
-	        fieldsOfObject.put('Accept_terms_and_conditions__c',true);
-			fieldsOfObject.put('Account_Name__c',acc.Name);
-	        fieldsOfObject.put('Billing_State__c',acc.BillingState);
-	        fieldsOfObject.put('Branch_Office_City__c',acc.BillingCity);
-	        fieldsOfObject.put('Branch_Office_Country__c',acc.IATA_ISO_Country__c);
-	        fieldsOfObject.put('Branch_Office_Email__c',acc.Email__c);
-	        fieldsOfObject.put('Branch_Office_FAX__c',acc.Fax);
-	        fieldsOfObject.put('Branch_Office_Phone__c',acc.Phone);
-	        fieldsOfObject.put('Branch_Office_Postal_code__c',acc.BillingPostalCode);
-	        fieldsOfObject.put('Branch_Office_Street_name_number__c',acc.BillingStreet);
-	        fieldsOfObject.put('CASS_Number__c',acc.CASS_Number__c);
-	        fieldsOfObject.put('HO_Account__c',acc.Id);
-	        fieldsOfObject.put('IATACode__c',acc.IATACode__c);
-	        fieldsOfObject.put('IATA_ISO_State__c',acc.Iso_State__c);
-	        fieldsOfObject.put('ISSP_AMS_GDS_with_signed_contract__c',acc.GDS__c);
-	        fieldsOfObject.put('ISSP_AMS_Legal_Status__c',AMS_Utils.transformLegalStatus(acc.Company_Type__c));
-	        fieldsOfObject.put('ISSP_AMS_License_No__c',acc.License_Number__c);
-	        fieldsOfObject.put('ISSP_AMS_VAT_number__c',acc.VAT_Number__c);
-	        fieldsOfObject.put('Is_your_firm_handling_Dangerous_Goods__c',acc.Is_your_firm_handling_Dangerous_Goods__c);
-	        fieldsOfObject.put('Link_agent_name__c',acc.Id);
-	        fieldsOfObject.put('Location_Class__c',acc.Location_Class__c);
-	        fieldsOfObject.put('Location_Type__c',acc.Location_Type__c);
-	        fieldsOfObject.put('Mobile__c',acc.Mobile__c);
-	        fieldsOfObject.put('Operation__c',acc.Operation__c);
-	        fieldsOfObject.put('Remittance_frequency__c',acc.Remittance_frequency__c);
-	        fieldsOfObject.put('Shipping_City__c',acc.ShippingCity);
-	        fieldsOfObject.put('Shipping_Country__c',acc.ShippingCountry);
-	        fieldsOfObject.put('Shipping_ISO_Country__c',acc.IATA_ISO_Shipping_Country__c);
-	        fieldsOfObject.put('Shipping_ISO_State__c',acc.IATA_ISO_Shipping_State__c);
-	        fieldsOfObject.put('Shipping_Postal_Code__c',acc.ShippingPostalCode);
-	        fieldsOfObject.put('Shipping_State__c',acc.ShippingState);
-	        fieldsOfObject.put('Shipping_Street__c',acc.ShippingStreet);
-	        fieldsOfObject.put('Short_Name__c',acc.Short_Name__c);
-	        fieldsOfObject.put('Solicitation_Flag__c',acc.Solicitation_Flag__c);
-	        fieldsOfObject.put('Trade_Name__c',acc.TradeName__c);
-	        fieldsOfObject.put('VAT_Number_2__c',acc.VAT_Number_2__c);
-	        fieldsOfObject.put('Website__c',acc.Website);
-        
-        	AMS_Pax_Accreditation_Form__c stagingArea = ANG_EntityCreator.createStagingArea(
-        		Schema.AMS_Pax_Accreditation_Form__c.sObjectType.getDescribe().getRecordTypeInfosByName().get('New Gen Changes').getRecordTypeId(), acc.name, accOscarObjsMap.get(acc.Id).cse.Id, fieldsOfObject);
-       	
-       		accOscarObjsMap.get(acc.id).stagingArea = stagingArea;
-       		stagingAreasToInsert.add(stagingArea);
-       	}
-
-       	if (!stagingAreasToInsert.isEmpty())
-        	insert stagingAreasToInsert;*/
-
-
 		//AMS_OSCAR__c:
 		List<AMS_Oscar__c> oscarsToInsert = new List<AMS_OSCAR__c>(); 
 
         for (Account acc : accs){
         
 			fieldsOfObject = new Map<String,Object>();
-			//fieldsOfObject.put('AMS_Online_Accreditation__c', accOscarObjsMap.get(acc.Id).stagingArea.Id);
 	        fieldsOfObject.put('Process__c',AMS_Utils.NGANNUALREVAL);
 			fieldsOfObject.put('Status__c','Open');
 			fieldsOfObject.put('OwnerId',accOscarObjsMap.get(acc.Id).ownerId);
@@ -1062,8 +1004,8 @@ global class ANG_OscarProcessHelper {
 		for (Contact con :contacts){
 			if (con.Financial_Assessment_Contact__c){
 				return con;	
-				adminCon = con.User_Portal_Status__c == 'Approved Admin' && adminCon == null ? con : adminCon;
 			}
+			adminCon = con.User_Portal_Status__c == 'Approved Admin' && adminCon == null ? con : adminCon;
 		} 
 
 		if (adminCon != null)
