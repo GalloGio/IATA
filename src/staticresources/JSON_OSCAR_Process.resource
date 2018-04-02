@@ -6439,6 +6439,10 @@
                   {
                     "Status": "Passed",
                     "ClassName": "AMS_OSCAR_Automation.AMS_OSCAR_Step6_succeeded"
+                  },
+                  {
+                    "Status": "Failed",
+                    "ClassName": "AMS_OSCAR_Automation.AMS_OSCAR_Step6_failed"
                   }
                 ],
                 "DisplayFields": [
