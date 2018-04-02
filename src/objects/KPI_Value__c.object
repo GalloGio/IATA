@@ -958,7 +958,7 @@
     <validationRules>
         <fullName>KPI_No_entry_after_the_deadline_in_3d</fullName>
         <active>true</active>
-        <errorConditionFormula>TODAY() &gt;   Deadline__c +3 &amp;&amp; $User.ProfileId &lt;&gt; &quot;00ew0000001R6uT&quot; &amp;&amp; $User.ProfileId &lt;&gt; &quot;00e20000000h0gF&quot;</errorConditionFormula>
+        <errorConditionFormula>TODAY() &gt;   Deadline__c +3 &amp;&amp; $User.ProfileId &lt;&gt; &quot;00ew0000001R6uT&quot; &amp;&amp; $User.ProfileId &lt;&gt; &quot;00e20000000h0gF&quot; &amp;&amp; $User.Id &lt;&gt; &quot;0051r000007mhLq&quot;</errorConditionFormula>
         <errorMessage>You can not update this record 3 days after the deadline. Please contact the Workflow &amp; Metrics Team</errorMessage>
     </validationRules>
     <validationRules>
@@ -985,7 +985,7 @@
     <validationRules>
         <fullName>Perce_No_entry_after_the_deadline_in_3d</fullName>
         <active>true</active>
-        <errorConditionFormula>TODAY() &gt;   Deadline__c +3 &amp;&amp; $User.ProfileId &lt;&gt; &quot;00ew0000001R6uT&quot; &amp;&amp; $User.ProfileId &lt;&gt; &quot;00e20000000h0gF&quot;</errorConditionFormula>
+        <errorConditionFormula>TODAY() &gt;   Deadline__c +3 &amp;&amp; $User.ProfileId &lt;&gt; &quot;00ew0000001R6uT&quot; &amp;&amp; $User.ProfileId &lt;&gt; &quot;00e20000000h0gF&quot; &amp;&amp;  $User.Id &lt;&gt; &quot;0051r000007mhLq&quot;</errorConditionFormula>
         <errorDisplayField>Value_Percentage__c</errorDisplayField>
         <errorMessage>You can not update this record 3 days after the deadline. Please contact the Workflow &amp; Metrics Team</errorMessage>
     </validationRules>
