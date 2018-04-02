@@ -86,8 +86,6 @@
     function submitOptInOut() {
       var countries = $('[id$="countries"]').val();
 
-      alert(countries);
-
       var efectiveDate = $('#datepicker').val();
 
       var ok = 1;
@@ -264,7 +262,7 @@
               <button type="button" class="btn btn-danger btn-block" data-dismiss="modal">Cancel</button>
             </div>
             <div class="col-md-6">
-              <button type="button" onclick="submitOptInOut()" class="btn btn-success btn-block">Submit Request to IATA</button>
+              <button type="button" id="submitOptInOutBtn" onclick="submitOptInOut()" class="btn btn-success btn-block" style="display: {!IF(flagShowCountries,'none','')};">Submit Request to IATA</button>
             </div>
           </div>
         </div>
