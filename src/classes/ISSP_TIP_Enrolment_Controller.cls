@@ -1,8 +1,5 @@
 public with sharing class ISSP_TIP_Enrolment_Controller {
 
-	private static String PROCESS_CASE_RECORD_TYPE_ID = RecordTypeSingleton.getInstance().RtIDsPerDeveloperNamePerObj.get('Case').get('CS_Process_IDFS_ISS');    
-    private static String STANDARD_ACCOUNT_RECORD_TYPE_ID = RecordTypeSingleton.getInstance().RtIDsPerDeveloperNamePerObj.get('Account').get('Standard_Account');  
-
     public String applyLanguage {get; set;}
     public String displayLanguage {get; set;}
     public User user {get; set;}
@@ -32,11 +29,11 @@ public with sharing class ISSP_TIP_Enrolment_Controller {
         accountCases = [SELECT ID,Reason,RecordTypeid,RecordType.Name,CaseArea__c,Status,Visible_on_ISS_Portal__c,Subject,Region__c,
     					Origin,BSPCountry__c,Country_concerned_by_the_query__c,Description
     	 				FROM Case 
-	    	 				WHERE RecordTypeid = :PROCESS_CASE_RECORD_TYPE_ID 
+	    	 				WHERE RecordTypeid = :TIP_Utils.CASE_PROCESS_IDFS_RECORD_TYPE_ID 
 	    	 				AND Accountid = :account.id 
 	    	 				AND Visible_on_ISS_Portal__c = true
-							AND Reason = 'Payment Provider Management'
-							AND CaseArea__c = 'Transparency in Payments (TIP)' 
+							AND Reason = :TIP_Utils.CASE_REASON_PAYMENT_PROVIDER_MANAGMENT
+							AND CaseArea__c = :TIP_Utils.CASE_AREA_TRANSPARENCY_IN_PAYMENTS 
 							AND Status = 'Draft'
     	 				LIMIT 1]; 
 
@@ -138,11 +135,11 @@ public with sharing class ISSP_TIP_Enrolment_Controller {
 
     	newCase = new Case();
 		if(accountCases != null && !accountCases.isEmpty()){ newCase = accountCases[0]; }
-    	newcase.RecordTypeid = PROCESS_CASE_RECORD_TYPE_ID;
+    	newcase.RecordTypeid = TIP_Utils.CASE_PROCESS_IDFS_RECORD_TYPE_ID;
 		newcase.Accountid = account.id; 
 		newcase.Visible_on_ISS_Portal__c = true;
-		newcase.Reason1__c = 'Payment Provider Management';
-		newcase.CaseArea__c = 'Transparency in Payments (TIP)'; 
+		newcase.Reason1__c = TIP_Utils.CASE_REASON_PAYMENT_PROVIDER_MANAGMENT;
+		newcase.CaseArea__c = TIP_Utils.CASE_AREA_TRANSPARENCY_IN_PAYMENTS; 
 		newcase.Status = 'Draft';
 		newcase.Subject = 'Request for Enlistment as Payment provider - ' + account.name;
 		newCase.Description = 'Request for Enlistment as Payment provider';
@@ -202,7 +199,7 @@ public with sharing class ISSP_TIP_Enrolment_Controller {
     }
 
     public PageReference securityCheck(){
-    	if(account.recordtypeid != STANDARD_ACCOUNT_RECORD_TYPE_ID || con.User_Portal_Status__c != ANG_Risk_Helper.USER_PORTAL_STATUS_APPROVED_ADIM ) return new Pagereference('/ISSP_TIP_Home');
+    	if(account.recordtypeid != TIP_Utils.STANDARD_ACCOUNT_RECORD_TYPE_ID || con.User_Portal_Status__c != ANG_Risk_Helper.USER_PORTAL_STATUS_APPROVED_ADIM ) return new Pagereference('/ISSP_TIP_Home');
     	return null;
     }
 }
