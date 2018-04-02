@@ -576,7 +576,6 @@ public without sharing class ISSP_Case {
                 List<ISSP_DPC__c> mcs = ISSP_DPC__c.getall().values();
                 ISSP_DPC__c accaRoleIds = ISSP_DPC__c.getValues('ACCA Roles');
                 ISSP_DPC__c accaAccounts = ISSP_DPC__c.getValues('ACCA Accounts');
-                ISSP_DPC__c nonAccaAccounts = ISSP_DPC__c.getValues('Non-ACCA Accounts');
                 ISSP_DPC__c dpcRecordType = ISSP_DPC__c.getValues('DPC Recordtype');
                 ISSP_DPC__c dpcSector = ISSP_DPC__c.getValues('DPC Sector');
                 ISSP_DPC__c dpcCategory = ISSP_DPC__c.getValues('DPC Category');
@@ -590,15 +589,15 @@ public without sharing class ISSP_Case {
                 List<Account> lsAccounts = new List<Account>();
                 if(accaRoleIds.Value__c != null && accaRoleIds.Value__c.contains(UserInfo.getUserRoleId().Substring(0,15))){
                 if(dpcRecordType.Value__c != null && dpcSector.Value__c != null && dpcCategory.Value__c != null) {
+                    list<String> listRecordTypes = dpcRecordType.Value__c.split(',');
                     lsAccounts =
                         [SELECT Id, Name FROM Account
-                        WHERE Recordtype.DeveloperName = :dpcRecordType.Value__c
+                        WHERE Recordtype.DeveloperName IN :listRecordTypes
                         AND Sector__c = :dpcSector.Value__c
                         AND Category__c = :dpcCategory.Value__c];
                 }
                 } else {
                     if(accaAccounts.Value__c != null ) lsAccountIds = accaAccounts.Value__c.split(',');
-                    // if(nonAccaAccounts.Value__c != null ) lsAccountIds = nonAccaAccounts.Value__c.split(',');
                     if(lsAccountIds != null ) {
                     lsAccounts =
                         [SELECT Id, Name FROM Account
