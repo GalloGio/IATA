@@ -49,10 +49,25 @@ public with sharing class ISSP_TIP_Enrolment_Controller {
 		//confirm that required fields are fill
 		    	//ApexPages.addmessage(new ApexPages.message(ApexPages.severity.WARNING,'Please enter value'));
     	
-    	if(account.Name == null || account.Name ==''){
+    	if(String.isEmpty(account.Name)){
     		account.Name.addError('Please fill the Legal name');
    			return null;
 		}
+
+        if(String.isEmpty(account.PhoneNational__c)){
+            account.PhoneNational__c.addError('Please fill the Office Phone');
+            return null;
+        }
+
+        if(String.isEmpty(account.Email__c)){
+            account.Email__c.addError('Please fill the Office Email');
+            return null;
+        }
+/*
+        if(account.BillingAddress == null || account.BillingAddress ==''){
+            account.BillingAddress.addError('Please fill the Billing Address');
+            return null;
+        }*/
 
 		
 		
@@ -99,6 +114,7 @@ public with sharing class ISSP_TIP_Enrolment_Controller {
 		updateCase();
 		update account;
 		upsert newCase;
+        upsert contactList;
 		return new Pagereference('/ISSP_TIP_Home');
 	}
 
