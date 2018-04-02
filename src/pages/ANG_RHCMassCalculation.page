@@ -53,7 +53,7 @@
 					<apex:column value="{!a.rhcInfo.ANG_AccountId__c}"/>
 					<apex:column value="{!a.rhcInfo.ANG_AccountId__r.IATACode__c}"/>
 					<apex:column value="{!a.rhcInfo.ANG_AccountId__r.IATA_ISO_Country__c}"/>
-					<apex:column headerValue="Current Amount">
+					<apex:column headerValue="Current RHC Amount">
 						<apex:outputText value="{!a.rhcInfo.CurrencyIsoCode} {0, number, ###,###,###,##0.00}">
 							<apex:param value="{!a.currentAmount}"/>
 						</apex:outputText>

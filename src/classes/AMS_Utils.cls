@@ -209,6 +209,7 @@ public without sharing class AMS_Utils {
     public static final String RECTYPE_SIDRALITE    = RecordTypeSingleton.getInstance().RtIDsPerDeveloperNamePerObj.get('Case').get('SIDRA_Lite');
     public static final String RECTYPE_SAAM         = RecordTypeSingleton.getInstance().RtIDsPerDeveloperNamePerObj.get('Case').get('ProcessEuropeSCE');
     public static final String RECTYPE_SIDRA        = RecordTypeSingleton.getInstance().RtIDsPerDeveloperNamePerObj.get('Case').get('SIDRA');
+    public static final String RECTYPE_IFAP         = RecordTypeSingleton.getInstance().RtIDsPerDeveloperNamePerObj.get('Case').get('IATA_Financial_Review');
     public static final String RECTYPE_IATAAGENCY   = RecordTypeSingleton.getInstance().RtIDsPerDeveloperNamePerObj.get('Account').get('IATA_Agency');
 
     public static final Id OSCAR_COMUNICATION = Schema.SObjectType.Case.getRecordTypeInfosByName().get('OSCAR Communication').getRecordTypeId();
@@ -2616,5 +2617,4 @@ public static String fetchTypeOfCustomer (String locationType , String category)
         if(date1 == null && date2 != null) return date2;
         return null;        
     }
-    
 }
