@@ -111,7 +111,9 @@ public with sharing class ISSP_TIP_Enrolment_Controller {
 		updateCase();
 		update account;
 		upsert newCase;
-        upsert contactList;
+        try{
+            upsert contactList;
+        }catch(Exception e){}
 		return new Pagereference('/ISSP_TIP_Home');
 	}
 
