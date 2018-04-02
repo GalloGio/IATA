@@ -18,7 +18,7 @@ public without sharing class ANG_AnualRevalCaseCreationController {
 				if(con != null){
 					return (List<Account>)con.getRecords();
 				}else
-					return new List<Account>();
+					return accountsToCreate;
 				}
 			set;
 		}
@@ -199,14 +199,14 @@ public without sharing class ANG_AnualRevalCaseCreationController {
 			
 			if(queryAccount <> null){
 				
-				List<Account> accountsToCreateFull = Database.query(queryAccount);
+				accountsToCreate = Database.query(queryAccount);
 
-				con = new ApexPages.StandardSetController(accountsToCreateFull);
+				con = new ApexPages.StandardSetController(accountsToCreate);
 				con.setPageSize(size);
 
 				Set<Id> oscarsId = new Set<Id>();
 
-				for(Account act:accountsToCreateFull){
+				for(Account act:accountsToCreate){
 					if(!act.Oscars__r.isEmpty()){
 						oscarsId.add(act.Oscars__r.get(0).Id);
 					}
