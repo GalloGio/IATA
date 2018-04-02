@@ -334,4 +334,14 @@ public  class AccountTriggerHelper {
 
   }
 
+  public static void validateUniqueIATACodeForTIP(map<id, Account> triggerNew,map<id, Account> triggerOld) {
+
+    List<Accounts> accsSameID = [SELECT ID FROM Account 
+        WHERE (
+                recordtype.developername = 'TIP_Payment_Provider' 
+                OR (recordtype = STandard account AND Category_c = Payment Provider) 
+              )
+        AND IATA_Codec = this.Iata_code_c AND ID != this.ID limit 1];
+  }  
+
 }
