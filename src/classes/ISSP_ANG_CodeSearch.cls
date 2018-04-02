@@ -55,6 +55,9 @@ public class ISSP_ANG_CodeSearch {
 			//
 			this.iataCodeStr = Apexpages.currentPage().getParameters().get('searchString');
 
+            if(this.iataCodeStr == null) {
+               this.iataCodeStr = '';
+            }
 		} catch(Exception e) {
 			this.iataCodeStr = '';
 		}
