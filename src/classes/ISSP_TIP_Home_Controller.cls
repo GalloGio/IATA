@@ -87,11 +87,20 @@ public with sharing class ISSP_TIP_Home_Controller {
     public List<Case> getCases(){
     	Set<string> closedStatusesList = createListOfClosedStatuses();
 
-    	return [SELECT id,status,CaseNumber, subject, createddate,CaseArea__c  FROM Case 
+    	List<Case> caseList = [SELECT id, status, CaseNumber, subject, createddate, CaseArea__c, Reason1__c  FROM Case 
     	WHERE AccountId = :con.AccountId 
     	and recordtypeid = :PROCESS_CASE_RECORD_TYPE_ID 
     	and CaseArea__c like '%Transparency in Payments%'
     	AND (Status = 'Draft' OR Status Not In :closedStatusesList)];
+
+        for (Case c: caseList) {
+            if (TIP_Utils.CASE_STATUS_NOT_AVAILABLE_FOR_ENLISTMENT.contains(c.Status) && c.Reason1__c == TIP_Utils.CASE_REASON_PAYMENT_PROVIDER_MANAGMENT) {
+                btnEnabled = false;
+                break;
+            }
+        }
+
+        return caseList;
     }
     
     public Set<string> createListOfClosedStatuses() {
