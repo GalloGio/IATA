@@ -1660,6 +1660,18 @@ public without sharing class ISSP_AMS_Accreditation {
                         newForm.Local_Agent_Type__c = 'International';
                     }
             }
+			
+			/*** AMSU-121 ***/
+            if(newForm.Is_change_location__c) {
+                newForm.Shipping_Street__c = null;
+                newForm.Shipping_City__c = null;
+                newForm.Shipping_State__c = null;
+                newForm.Shipping_Country__c = null;
+                newForm.Shipping_Postal_Code__c = null;
+                newForm.Shipping_ISO_State__c = null;
+                newForm.Shipping_ISO_Country__c = null;
+            }
+            /*** AMSU-121 ***/
             
             upsert newForm;
             

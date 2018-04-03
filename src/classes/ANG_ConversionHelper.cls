@@ -203,7 +203,11 @@ global with sharing class ANG_ConversionHelper {
 			if(relationShip.Child_Account__r.Status__c == AMS_Utils.ACC_S0_TERMINATED)
 				if(relationShip.Child_Account__r.Expiry_Date__c < frontierDate)
 					continue;
-
+			
+			if(validateBranchesAbroad(new List<AMS_Agencies_relationhip__c>{relationShip})){// it's a false positive
+				continue;
+			}
+			
 			if(toReturn.get(relationShip.Hierarchy__c) == null){
 				system.debug('Child_Account__r.Top_Parent__r.IATA_ISO_Country__r.Name is ' + relationShip.Child_Account__r.IATA_ISO_Country__r.Name);
 				toReturn.put(relationShip.Hierarchy__c,createNewBrAbroadByCountryHierarchyStructure(relationShip,relationShip.Child_Account__r.IATA_ISO_Country__r.Name));

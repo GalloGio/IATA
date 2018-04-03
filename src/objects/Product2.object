@@ -6174,6 +6174,32 @@ The product will only appear on the Online Store when the date entered in this f
         <language>en_US</language>
     </listViews>
     <listViews>
+        <fullName>ZZ_GDP_Search</fullName>
+        <columns>PRODUCT2.NAME</columns>
+        <columns>Formula_Zuora_Id__c</columns>
+        <columns>IEC_Product_Information__c</columns>
+        <columns>IEC_Parent_Product__c</columns>
+        <columns>IEC_Product_Rate_Plan_Information__c</columns>
+        <columns>SAP_Material_Number__c</columns>
+        <columns>Sell_through_eCommerce__c</columns>
+        <columns>IEC_Cart_Option__c</columns>
+        <columns>Display_to_ECommerce__c</columns>
+        <columns>Effective_To__c</columns>
+        <columns>Product_Manager_lookup__c</columns>
+        <columns>IEC_Override_Profit_Center__c</columns>
+        <filterScope>Everything</filterScope>
+        <filters>
+            <field>SAP_Material_Number__c</field>
+            <operation>contains</operation>
+            <value>752510</value>
+        </filters>
+        <label>ZZ - GDP Search</label>
+        <language>en_US</language>
+        <sharedTo>
+            <allInternalUsers></allInternalUsers>
+        </sharedTo>
+    </listViews>
+    <listViews>
         <fullName>samson</fullName>
         <columns>PRODUCT2.NAME</columns>
         <columns>SAP_Material_Number__c</columns>
