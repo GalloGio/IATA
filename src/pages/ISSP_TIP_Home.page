@@ -1,17 +1,17 @@
-<apex:page controller="ISSP_TIP_Home_Controller" cache="false" sidebar="false" showHeader="false" standardStylesheets="false" applyBodyTag="false" applyHtmlTag="false">
+<apex:page id="topPage" controller="ISSP_TIP_Home_Controller" cache="false" sidebar="false" showHeader="false" standardStylesheets="false" applyBodyTag="false" applyHtmlTag="false">
 
     <head>
         <meta charset="utf-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.css" />
-        <script src="{!URLFOR($Resource.bootbox)}" />
         <c:ISSP_Header ></c:ISSP_Header>
         <c:iss_ap_css />
 
 
         <script type="text/javascript">
             $(document).ready(function() {
-                changeRequestButtonStatus();
+                changeRequestButtonStatus();               
+                if(!{!isAdmin} && !{!isPaymentProvider}) document.getElementById("newProductBtn").disabled = true; 
             })
 
             function changeRequestButtonStatus() {
@@ -28,7 +28,8 @@
 
             function validateIfportalAdminToProducts() {
                 if ({!isAdmin} && {!isPaymentProvider}) {
-                    window.location.href = '/apex/TIP_Product_Enrollment';
+                    
+                    // window.location.href = '/apex/TIP_Product_Enrollment';
                 } else if ({!!isAdmin}){
                     alert("{!$label.ISSP_TIP_Home_Only_Portal_Administrators_Enrol_Products}");
                 }else if({!!isPaymentProvider}){
@@ -39,12 +40,14 @@
             function validateIfportalAdminToProductsToEdit(id) {
 
                 if ({!isAdmin} && {!isPaymentProvider}) {
-                    window.location.href = '/apex/TIP_Product_Enrollment?id=' + id;
+                    //window.location.href = '/apex/TIP_Product_Enrollment?id=' + id;
+                   openProdDetailPage(id);return true;
                 } else if ({!!isAdmin}){
                     alert("{!$label.ISSP_TIP_Home_Only_Portal_Administrators_Enrol_Products}");
                 }else if({!!isPaymentProvider}){
                     alert("{!$label.ISSP_TIP_Home_Account_must_be_Payment_Provider}");
                 }
+                return false;
             }
 
         </script>
@@ -229,7 +232,7 @@
 
                                         <apex:column >
                                             <apex:facet name="header">
-                                                {!$label.ISSP_Home_Table_Date_Time_Opened}
+                                                {!$Label.ISSP_Home_Table_Date_Time_Opened}
                                             </apex:facet>
                                             {!item.createddate}
                                         </apex:column>
@@ -251,23 +254,30 @@
                                 </header>
                             </section>
 
-                             <div style="float: right;padding: 20px;" class="col-col-xs-6 col-md-4 col-md-offset-2">
-                                <button id="requestButton" onclick="validateIfportalAdminToProducts(); return false;" class="btn btn-block btn_iata_primary">{!$label.ISSP_TIP_Home_button_Enrol_new_Product}</button>
+                            <div style="float: right;padding: 20px;" class="col-col-xs-6 col-md-4 col-md-offset-2">
+                                <input type="button " id="newProductBtn" class="btn btn-block btn_iata_primary" onclick="openProdDetailPage(null);" value="Enroll New Product"/>
                             </div>
 
-                            <apex:pageBlock>
-                                <apex:form>
+                            <apex:pageBlock >
+                                <apex:form >
+                                <apex:actionFunction action="{!NewEditProduct}" name="openProdDetailPage">
+                                </apex:actionFunction>
                                    <apex:pageBlockTable value="{!products}" var="item" styleClass="table-hover table table-condensed table-responsive">
                                         
                                         <apex:column >
                                             <apex:outputPanel rendered="{!item.status != 'Draft'}">
-                                                <apex:commandLink style="margin-right:5px" onclick="validateIfportalAdminToProductsToEdit('{!item.id}');return false;"><span class="glyphicon glyphicon-pencil"></span> {!$label.ISSP_TIP_Home_Products_table_View_Update_option}</apex:commandLink>
+                                                <apex:commandLink style="margin-right:5px"  rendered="{!(isAdmin && isPaymentProvider)}" action="{!NewEditProduct}">
+                                                <span class="glyphicon glyphicon-pencil"/>View/Update
+                                                <apex:param name="prodId" value="{!item.id}"/>
+                                                </apex:commandLink>
                                             </apex:outputPanel>
 
                                             <apex:outputPanel rendered="{!item.status == 'Draft'}">
-                                                <apex:commandLink style="margin-right:5px" onclick="validateIfportalAdminToProductsToEdit('{!item.id}');return false;"><span class="glyphicon glyphicon-pencil"></span> {!$label.ISSP_TIP_Home_Products_table_Edit_option}</apex:commandLink>
+                                                <apex:commandLink style="margin-right:5px" rendered="{!(isAdmin && isPaymentProvider)}" action="{!NewEditProduct}">
+                                                    <span class="glyphicon glyphicon-pencil"/> Edit
+                                                    <apex:param name="prodId" value="{!item.id}"/>
+                                                </apex:commandLink>
                                             </apex:outputPanel>
-
                                         </apex:column> 
 
                                         <apex:column >
