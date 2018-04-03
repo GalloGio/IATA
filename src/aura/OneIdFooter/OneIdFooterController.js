@@ -20,12 +20,13 @@
             if(/\S/.test(servName)){
                 component.set("v.serviceName", servName);
                 component.set("v.customCommunity", true);
-                
-                
+                                
                 var labelHelpLink = $A.getReference("$Label.c.OneId_" + servName + "_Troubleshooting_Link");
                 var labelHelp = $A.getReference("$Label.c.OneId_" + servName + "_Troubleshooting");
+                var labelTerms = $A.getReference("$Label.c.OneId_" + servName + "_Terms_Of_Use_Link");
                 component.set("v.labelHelpLink", labelHelpLink);
                 component.set("v.labelHelp", labelHelp);
+                component.set("v.labelTermsOfUseLink", labelTerms);
             }
         }
         
