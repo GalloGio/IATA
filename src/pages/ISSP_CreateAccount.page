@@ -30,6 +30,32 @@
    	}
    	
   	function addListeners() {
+  		//billingstreet listener to show characters limit warning
+  		$j('#billingcity input').on('keyup', function() {
+  			var value = $j('#billingcity input').val();
+			if(value.length >= 25) {
+				var elem = $('#addressStreetMSG').detach();
+				elem.insertBefore($j('#billingcity input'));
+				$('#addressStreetMSG .formErrorContent').text('{!$Label.IEC_CityLimitCharacters}');						
+				$('#addressStreetMSG').show();
+			} else if($('#addressStreetMSG').css('display') != 'none') {
+				$('#addressStreetMSG').hide();
+			}
+  		});
+
+		//shippingstreet listener to show characters limit warning
+  		$j('#shippingcity input').on('keyup', function() {
+  			var value = $j('#shippingcity input').val();
+			if(value.length >= 25) {
+				var elem = $('#addressStreetMSG').detach();
+				elem.insertBefore($j('#shippingcity input'));
+				$('#addressStreetMSG .formErrorContent').text('{!$Label.IEC_CityLimitCharacters}');						
+				$('#addressStreetMSG').show();
+			} else if($('#addressStreetMSG').css('display') != 'none') {
+				$('#addressStreetMSG').hide();
+			}
+  		}); 		
+
 		$j('#billingstreet textarea').on('keyup', function() {
 			var value = $j('#billingstreet textarea').val();
 			if(value.length >= 70) {
@@ -62,6 +88,12 @@
 		$j('#shippingstreet textarea').blur(function() {
 			$('#addressStreetMSG').hide();
 		});
+		$j('#billingcity input').blur(function() {
+			$('#addressStreetMSG').hide();
+		});
+		$j('#shippingcity input').blur(function() {
+			$('#addressStreetMSG').hide();
+		});
 		
 		$j('.billingstate').change(function() {
 			if($j('select[id*="drpdwnBState"]').val() != $j('#billingstate input').val()) {
@@ -84,10 +116,16 @@
 	function copyToAccSState() {
 		$j('#shippingstate input').val($j('select[id*="drpdwnSState"]').val());
 	}
-	
-	function modifyUIForm() {
+
+	function changeFieldsMaxlength(){
 		$j('#billingstreet textarea').prop("maxlength","70");
 		$j('#shippingstreet textarea').prop("maxlength","70");
+		$j('#billingcity input').prop("maxlength","25");
+		$j('#shippingcity input').prop("maxlength","25");
+	}
+	
+	function modifyUIForm() {
+		
 		var elem = $j('#divToMove').detach();
 		elem.insertAfter("#shippingcountry");
 		$j('#shippingcountry').hide();
@@ -260,6 +298,7 @@
 	var defCountry;
 	var mapStates;
     $j(document).ready(function() {
+    	changeFieldsMaxlength();
         console.log('fsd '+'{!preventAddressDoctorService}');
         if('{!preventAddressDoctorService}'=='false') {
             $j("#shippingcountry").find("input").val("{!searchCountryName}");
