@@ -6,8 +6,7 @@ public with sharing class ISSP_TIP_Home_Controller {
     private static String PROCESS_CASE_RECORD_TYPE_ID     = RecordTypeSingleton.getInstance().RtIDsPerDeveloperNamePerObj.get('Case').get('CS_Process_IDFS_ISS');
     private static String TIP_PRODUCT_RECORD_TYPE_ID      = RecordTypeSingleton.getInstance().RtIDsPerDeveloperNamePerObj.get('Partner_products__c').get('TIP_Product');
 
-    private static String TIP_PRODUCT_RECORD_TYPE_ID      = RecordTypeSingleton.getInstance().RtIDsPerDeveloperNamePerObj.get('Partner_products__c').get('TIP_Product');
-
+   
     //##======================VARIABLES=================================##
 
     //home Page
@@ -174,6 +173,7 @@ public with sharing class ISSP_TIP_Home_Controller {
                 this.effectiveFromDate = '';
                         
         }
+    }
 
     //======================Product Enrollment Page Methods =====================================
     public Pagereference NewEditProduct(){
