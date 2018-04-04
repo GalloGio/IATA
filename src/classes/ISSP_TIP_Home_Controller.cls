@@ -2,11 +2,10 @@ public with sharing class ISSP_TIP_Home_Controller {
 
     private static String STANDARD_ACCOUNT_RECORD_TYPE_ID = RecordTypeSingleton.getInstance().RtIDsPerDeveloperNamePerObj.get('Account').get('Standard_Account');      
     private static String PAYMENT_PROVIDER_RECORD_TYPE_ID = RecordTypeSingleton.getInstance().RtIDsPerDeveloperNamePerObj.get('Account').get('TIP_Payment_Provider');
-    
     private static String PROCESS_CASE_RECORD_TYPE_ID     = RecordTypeSingleton.getInstance().RtIDsPerDeveloperNamePerObj.get('Case').get('CS_Process_IDFS_ISS');
     private static String TIP_PRODUCT_RECORD_TYPE_ID      = RecordTypeSingleton.getInstance().RtIDsPerDeveloperNamePerObj.get('Partner_products__c').get('TIP_Product');
 
-   
+
     //##======================VARIABLES=================================##
 
     //home Page
@@ -34,6 +33,14 @@ public with sharing class ISSP_TIP_Home_Controller {
     private Case newCase {get; set;}
     public boolean isNew {get; set;}
     public list<BinRangeRec> binRangeList{get; set;}
+    public String[] paymentGuaranteeVal{get;set;}
+    public String[] acceptedTransactionVal{get;set;}
+    private list<TIP_BIN_Range__c> deletedBinRangeList{
+        get{
+            if(deletedBinRangeList==null) deletedBinRangeList= new list<TIP_BIN_Range__c>();
+            return deletedBinRangeList;
+        } 
+        set;}
     public BinRangeRec selectedBinRange{get;set;}
 
 
@@ -84,13 +91,13 @@ public with sharing class ISSP_TIP_Home_Controller {
     }
 
     public List<Case> getCases(){
-    	Set<string> closedStatusesList = createListOfClosedStatuses();
+        Set<string> closedStatusesList = createListOfClosedStatuses();
 
     	List<Case> caseList = [SELECT id, status, CaseNumber, subject, createddate, CaseArea__c, Reason1__c  FROM Case 
-    	WHERE AccountId = :con.AccountId 
-    	and recordtypeid = :PROCESS_CASE_RECORD_TYPE_ID 
-    	and CaseArea__c like '%Transparency in Payments%'
-    	AND (Status = 'Draft' OR Status Not In :closedStatusesList)];
+        WHERE AccountId = :con.AccountId 
+        and recordtypeid = :PROCESS_CASE_RECORD_TYPE_ID 
+        and CaseArea__c like '%Transparency in Payments%'
+        AND (Status = 'Draft' OR Status Not In :closedStatusesList)];
 
         for (Case c: caseList) {
             if (!c.IsClosed && c.Status != 'Draft' && c.Reason1__c == TIP_Utils.CASE_REASON_PAYMENT_PROVIDER_MANAGMENT) {
@@ -134,19 +141,18 @@ public with sharing class ISSP_TIP_Home_Controller {
 
     //##======================Sidekick classes=================================##
 
-        //product enrollment Page
-        public class BinRangeRec{ 
-            public TIP_BIN_Range__c binRange{get;set;}
-            public integer pos{get;set;}
-
-            public BinRangeRec(TIP_BIN_Range__c tbr,integer p){
-                pos=p;
-                binRange=tbr;
-            }
-
+    //product enrollment Page
+    public class BinRangeRec{ 
+        public TIP_BIN_Range__c binRange{get;set;}
+        public integer pos{get;set;}
+        public string action{get;set;}//N- new M-modified D-deleted
+        public BinRangeRec(TIP_BIN_Range__c tbr,integer p,string a){
+            pos=p;
+            binRange=tbr;
+            action=a;
         }
 
-
+    }
 
     public class productWrapper{
         public ID id {get;set;}
@@ -173,7 +179,7 @@ public with sharing class ISSP_TIP_Home_Controller {
                 this.effectiveFromDate = '';
                         
         }
-    }
+    } 
 
     //======================Product Enrollment Page Methods =====================================
     public Pagereference NewEditProduct(){
@@ -184,7 +190,7 @@ public with sharing class ISSP_TIP_Home_Controller {
 
         newpp= new Partner_products__c(PP_Payment_Product_Network_type__c='Open Loop');
         binRangeList= new list<BinRangeRec>();
-
+        deletedBinRangeList= new list<TIP_BIN_Range__c>();
         String selectedProdId=System.currentPageReference().getParameters().get('prodId');
         if(!String.isBlank(selectedProdId)){
             list<Partner_products__c> prodlist=[Select id,name,PP_Settlement_terms__c,PP_Issuer_name__c,is_PCI_DSS_required__c,PP_Chargeback_airlines__c,PP_Pay_in_model__c,PP_Category__c,PP_Banking_license__c,PP_Payment_network__c,PP_GDS_Integration__c,PP_VAN_type__c,PP_Interchange_fee__c,PP_Payment_guarantee__c,PP_Network_Fee__c,PP_Accepted_transactions__c,PP_Chargeback_airlines_duration__c,Provider__c,PP_status__c,PP_Payment_Product_Network_type__c,  
@@ -195,8 +201,12 @@ public with sharing class ISSP_TIP_Home_Controller {
                 newpp= prodlist.get(0);
                 editMode=newpp.PP_status__c!='Active';
                 integer pos=0;
+
+                acceptedTransactionVal=String.isBlank(newpp.PP_Accepted_transactions__c)?null:newpp.PP_Accepted_transactions__c.split(';');
+                paymentGuaranteeVal=String.isBlank(newpp.PP_Payment_guarantee__c)?null:newpp.PP_Payment_guarantee__c.split(';');
+                
                 for(TIP_BIN_Range__c tbr:newpp.BIN_Ranges__R){
-                    binRangeList.add(new BinRangeRec(tbr,pos++));
+                    binRangeList.add(new BinRangeRec(tbr,pos++,''));
                 }
             }
         }
@@ -212,21 +222,54 @@ public with sharing class ISSP_TIP_Home_Controller {
         return pr;
     }
 
+    public void newEditBinRange(){
+        String binRangeRecPos=System.currentPageReference().getParameters().get('binRangeRecPos');
+        selectedBinRange= new BinRangeRec( 
+                new TIP_BIN_Range__c(),0,'N');
+        if(!String.isBlank(binRangeRecPos)){
+            selectedBinRange= binRangeList.get(Integer.ValueOf(binRangeRecPos));
+            selectedBinRange.action='M';            
+        }      
+    }
+
+    public void addUpdateBinRange(){
+        if(selectedBinRange.action=='N'){   
+            selectedBinRange.pos=binRangeList.size();
+            selectedBinRange.binRange.TIP_Status__c='Inactive';
+            if(!String.isBlank(selectedBinRange.binRange.TIP_Range_Start__c) || !String.isBlank(selectedBinRange.binRange.TIP_Range_End__c)){
+                if(!binRangeList.isEmpty()) binRangeList.add(0,selectedBinRange);
+                else binRangeList.add(selectedBinRange);
+            }
+            integer c=0;
+            for(binRangerec brr:binRangeList)brr.pos=c++;
+        }
+    }
+    public void deleteBinRange(){
+        String binRangeRecPos=System.currentPageReference().getParameters().get('binRangeRecPos');
+        if(!String.isBlank(binRangeRecPos)){
+            selectedBinRange= binRangeList.get(Integer.ValueOf(binRangeRecPos));
+            if(!String.isBlank(selectedBinRange.binRange.id))deletedBinRangeList.add(selectedBinRange.binRange);
+            binRangeList.remove(Integer.valueOf(binRangeRecPos));
+            
+            // refreshing records index
+            integer c=0;
+            for(binRangerec brr:binRangeList)brr.pos=c++;
+        }
+    }
     public Pagereference saveDraft(){
         try{
             if(isNew){
                 user usr=[select id,Contact.accountId,Contact.account.name,Contact.account.IATA_ISO_Country__r.region__c,Contact.account.IATA_ISO_Country__r.Name from user where id =:UserInfo.getUserId()];
 
                 newpp.Provider__c=usr.Contact.accountID;
-                newpp.PP_Accepted_transactions__c=String.isBlank(newpp.PP_Accepted_transactions__c)?'':newpp.PP_Accepted_transactions__c.substring(1,newpp.PP_Accepted_transactions__c.length() -1);
-                newpp.PP_Payment_guarantee__c=String.isBlank(newpp.PP_Payment_guarantee__c)?'':newpp.PP_Payment_guarantee__c.substring(1,newpp.PP_Payment_guarantee__c.length() -1);
+                //newpp.PP_Accepted_transactions__c=String.isBlank(newpp.PP_Accepted_transactions__c)?'':newpp.PP_Accepted_transactions__c.substring(1,newpp.PP_Accepted_transactions__c.length() -1).replace(',',';');
+                //newpp.PP_Payment_guarantee__c=String.isBlank(newpp.PP_Payment_guarantee__c)?'':newpp.PP_Payment_guarantee__c.substring(1,newpp.PP_Payment_guarantee__c.length() -1).replace(',',';');
+                newpp.PP_Accepted_transactions__c=String.join(acceptedTransactionVal,';');
+                newpp.PP_Payment_guarantee__c=String.join(paymentGuaranteeVal,';');
                 newpp.PP_status__c='Draft';
-                try{
-                    insert newpp;
-                }catch(exception e){
-                    //ApexPages.addmessage(new ApexPages.message(ApexPages.severity.WARNING,e.getMessage()));
-                    return null;
-                }
+                
+                insert newpp;
+                
                 //create Case
                 newCase = new Case();
                 newcase.RecordTypeid = TIP_Utils.CASE_PROCESS_IDFS_RECORD_TYPE_ID;
@@ -242,23 +285,31 @@ public with sharing class ISSP_TIP_Home_Controller {
                 newcase.BSPCountry__c = usr.Contact.account.IATA_ISO_Country__r.Name;
                 newcase.Country_concerned_by_the_query__c = usr.Contact.account.IATA_ISO_Country__r.Name;
 
-                try{
-                    insert newCase;
-                }catch(exception e){
-                    //ApexPages.addmessage(new ApexPages.message(ApexPages.severity.WARNING,e.getMessage()));
-                    return null;
-                }
+                insert newCase;
+               
             } else {            
 
-                newpp.PP_Accepted_transactions__c=String.isBlank(newpp.PP_Accepted_transactions__c)?'':newpp.PP_Accepted_transactions__c.substring(1,newpp.PP_Accepted_transactions__c.length() -1);
-                newpp.PP_Payment_guarantee__c=String.isBlank(newpp.PP_Payment_guarantee__c)?'':newpp.PP_Payment_guarantee__c.substring(1,newpp.PP_Payment_guarantee__c.length() -1);
-                update newpp;
+                if(editMode){
+                    newpp.PP_Accepted_transactions__c=String.join(acceptedTransactionVal,';');
+                    newpp.PP_Payment_guarantee__c=String.join(paymentGuaranteeVal,';');
+
+                    update newpp;
+                }
+
+                //Update Bin ranges
+                list<TIP_BIN_Range__c> upsertBinRangeList= new list<TIP_BIN_Range__c>();
+                for(BinRangeRec tbr: binRangeList){
+                    if(tbr.action !=''){
+                        tbr.binRange.TIP_Payment_Provider_Product__c =newpp.id;
+                        upsertBinRangeList.add(tbr.binRange);   
+                    }
+                }
+                if(!upsertBinRangeList.isEmpty())upsert upsertBinRangeList;
+                if(!deletedBinRangeList.isEmpty())delete deletedBinRangeList;
             }
-
-
             fillProducts();
         }catch(exception e){
-            //ApexPages.addmessage(new ApexPages.message(ApexPages.severity.WARNING,e.getMessage()));
+            ApexPages.addmessage(new ApexPages.message(ApexPages.severity.WARNING,e.getMessage()));
             return null;
         }
 
