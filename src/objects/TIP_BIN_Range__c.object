@@ -204,5 +204,12 @@
     </recordTypes>
     <searchLayouts/>
     <sharingModel>ControlledByParent</sharingModel>
+    <validationRules>
+        <fullName>Validate_PP_name_for_IATA_RT</fullName>
+        <active>true</active>
+        <description>Validates Partner Product&apos;s name if the Bin Range record type is Listed by IATA</description>
+        <errorConditionFormula>RecordType.DeveloperName = &apos;Listed_by_IATA&apos; &amp;&amp;  TIP_Payment_Provider_Product__r.Name != $Setup.TIP_Configuration__c.Product_Listed_By_IATA_Name__c</errorConditionFormula>
+        <errorMessage>Listed by IATA Bin Range must be linked to the Generic Product</errorMessage>
+    </validationRules>
     <visibility>Public</visibility>
 </CustomObject>
