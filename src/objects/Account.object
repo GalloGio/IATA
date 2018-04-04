@@ -89071,6 +89071,19 @@ OR(ISPICKVAL(Industry, &apos;Airline&apos;),ISPICKVAL(Industry, &apos;Travel Age
         <errorMessage>Please select the reason for creation.</errorMessage>
     </validationRules>
     <validationRules>
+        <fullName>Validate_Providers_Accreditation_Date</fullName>
+        <active>true</active>
+        <description>Prevents active Payment Providers to have the Accreditation date in the future</description>
+        <errorConditionFormula>(RecordType.DeveloperName = &apos;TIP_Payment_Provider&apos; 
+|| (RecordType.DeveloperName= &apos;Standard_Account&apos; &amp;&amp;
+    ISPICKVAL(Category__c , &apos;Payment Provider&apos;)
+   )
+)
+&amp;&amp;  ISPICKVAL(Status__c, &apos;Approved&apos;)
+&amp;&amp; Accreditation_date__c &gt; today()</errorConditionFormula>
+        <errorMessage>Can&apos;t have active Payment Providers with the accreditation date in the future</errorMessage>
+    </validationRules>
+    <validationRules>
         <fullName>Virtual_Branch_Iso_Country</fullName>
         <active>true</active>
         <description>For a Virtual Branch Iso Country is mandatory</description>
