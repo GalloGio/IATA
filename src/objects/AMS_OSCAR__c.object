@@ -1457,6 +1457,21 @@ IF(Bank_Guarantee_received__c - Bank_Guarantee_requested__c =6, TEXT(4), TEXT((B
         <type>Lookup</type>
     </fields>
     <fields>
+        <fullName>Business_Process__c</fullName>
+        <description>Technical field. Used to match custom settings on Change Code generation.</description>
+        <externalId>false</externalId>
+        <formula>IF(Account__r.CNS_Agency__c,
+				IF(ISPICKVAL(Account__r.Location_Class__c, &apos;C&apos;), &apos;CNS-C&apos;, &apos;CNS-R&apos;),
+				IF(Account__r.ANG_IsNewGenAgency__c, &apos;ANG&apos;, &apos;AMS&apos;)
+)</formula>
+        <label>Business Process</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
         <fullName>CNS_process__c</fullName>
         <externalId>false</externalId>
         <formula>Account__r.CNS_Agency__c</formula>

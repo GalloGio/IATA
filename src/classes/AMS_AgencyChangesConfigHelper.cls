@@ -32,18 +32,19 @@ public class AMS_AgencyChangesConfigHelper{
 		}
 	}
 
-	public static Boolean isSelectedTypeOfChangeValid(String typesOfChange, ChangesConfig config) {
+	public static Boolean isSelectedTypeOfChangeValid(String typesOfChange, String process, ChangesConfig config) {
 		Set<String> tocList = new Set<String>();
 		if(typesOfChange != null) tocList.addAll(typesOfChange.split(';'));
 
-		return tocList.equals(config.changeCombination);
+		if(process != config.config.Process__c) return false;
+		else return tocList.equals(config.changeCombination);
 	}
 
 	public static ChangesConfig getConfig(AMS_OSCAR__c oscar) {
 
 		if(oscar.Process__c == 'BANK.ACCOUNT.CHANGES') return null;
 		else{
-			ChangesConfig c = getConfig(oscar.Type_of_change__c);
+			ChangesConfig c = getConfig(oscar.Type_of_change__c, oscar.Business_Process__c);
 
 			if(c == null) oscar.addError('Type of Change contains an invalid combination of values.');
 
@@ -51,11 +52,11 @@ public class AMS_AgencyChangesConfigHelper{
 		}
 	}
 
-	public static ChangesConfig getConfig(String typesOfChange) {
+	public static ChangesConfig getConfig(String typesOfChange, String process) {
 
 		System.debug(loggingLevel.FINE, '____ [cls AMS_AgencyChangesConfigHelper - getConfig] oscar.Type_of_change__c - ' + typesOfChange);
 		for (ChangesConfig config : agencyChangesConfigData) {
-			if (isSelectedTypeOfChangeValid(typesOfChange, config)) return config;
+			if (isSelectedTypeOfChangeValid(typesOfChange, process, config)) return config;
 		}
 		return null;
 	}
