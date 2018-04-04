@@ -82,14 +82,14 @@
                 
                 <div id="sfdc_forgot" class="sfdc">
                     <span>
-                        <a href="{!if(v.communityForgotPasswordUrl == null, v.forgotPasswordUrl, v.communityForgotPasswordUrl)}">
+                        <a href="{!if(v.serviceName != null, v.communityForgotPasswordUrl+'?serviceName='+v.serviceName, v.communityForgotPasswordUrl)}">
                             {!$Label.c.OneId_ForgotPassword}
                         </a>
                     </span>
                     <aura:renderIf isTrue="{!v.isSelfRegistrationEnabled}">
                         <span class="pipe"> | </span>
                         <span style="float:right" >
-                            <a href="{!if(v.communitySelfRegisterUrl == null, v.selfRegisterUrl, v.communitySelfRegisterUrl)}">
+                            <a href="{!if(v.serviceName != null, v.communitySelfRegisterUrl+'?serviceName='+v.serviceName, v.communitySelfRegisterUrl)}">
                                 {!$Label.c.OneId_SelfRegister}
                             </a>
                         </span>
