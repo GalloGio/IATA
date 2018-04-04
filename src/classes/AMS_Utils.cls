@@ -171,7 +171,7 @@ public without sharing class AMS_Utils {
     public static final String NGVR             = 'VR.1.0';
     public static final String NGOPTINOUT       = 'ANG.FS.OPTINOUT';
 
-	//AMSU-125
+    //AMSU-125
     public static final Set<String> oscarNewProcesses = new Set<String> {new_HO, new_BR, new_BR_ABROAD, new_TIDS, new_MSO, new_GSA, new_GSA_BSP, new_GSSA, new_AHA, new_AHA_BSP, new_SA};
 
     public static final Set<String> oscarNewGenProcesses = new Set <String>{NEWHELITE, NEWHESTANDARD, NEWAE, NGCHANGES, NGCORRECTION, NGOPTINOUT, NGFOP};
@@ -1209,8 +1209,6 @@ public without sharing class AMS_Utils {
                 FROM AMS_Pax_Accreditation_Form__c
                 WHERE Id IN :oscarOnlineAccredIds]);
 
-        List<Map<String, String>> configs = AMS_AgencyChangesConfigHelper.getAgencyChangesConfigData();
-
         List<Ams_ChangeCodesHelper.ObjectChangesStruct> changes = new List<Ams_ChangeCodesHelper.ObjectChangesStruct>();
 
         for (AMS_OSCAR__c oscar : oscars) {
@@ -1400,8 +1398,8 @@ public without sharing class AMS_Utils {
             fieldsMapping.put('ShippingState', 'Shipping_State__c');
         }
         /*** AMSU-121 End ***/
-		
-		if (fieldsToMigrate != null && oscarOnlineAccreditation != null) {
+        
+        if (fieldsToMigrate != null && oscarOnlineAccreditation != null) {
                 Map<String, Object> accountFieldNewValue = new Map<String,Object>();
 
                 for (String key : fieldsMapping.keySet()) {
@@ -1902,18 +1900,6 @@ public class Container {
     }
 }
 
-//Agency Changes Config structure
-public class AgChangesConfig {
-
-    public String typesOfChange;
-    public Map<String, String> config;
-
-    public AgChangesConfig(String typesOfChange, Map<String, String> config) {
-        this.typesOfChange = typesOfChange;
-        this.config = config;
-    }
-}
-
 public static boolean isAMSProfile(Id profileId) {
     return AMSPROFILES.contains(profileId);
 }
@@ -2359,8 +2345,8 @@ public static String fetchTypeOfCustomer (String locationType , String category)
         
         return lRes;
     }
-	
-	//AMSU-112
+    
+    //AMSU-112
     public static String replaceTabCharcter(String str) {
         return String.isBlank(str) ? str : str.replaceAll('\t', ' ');  
     }

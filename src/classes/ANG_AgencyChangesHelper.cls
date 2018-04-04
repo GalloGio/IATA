@@ -94,11 +94,9 @@ public with sharing class ANG_AgencyChangesHelper {
 
 	public static void handleNewGenChangesProcess(List<AMS_Oscar__c> oscars){
 
-		AMS_Utils.AgChangesConfig config = null;
+		ANG_AgencyChangesConfigHelper.ChangesConfig config = null;
 
 		AMS_OSCAR__c oscar = oscars[0];
-
-		List<Map<String, String>> configs = ANG_AgencyChangesConfigHelper.getAgencyChangesConfigData();
 
 		if((oscar.Process__c == AMS_Utils.NGCHANGES || oscar.Process__c == AMS_Utils.NGCORRECTION) && oscar.STEP6__c == AMS_Utils.PASSED && ((Map<Id,AMS_OSCAR__c>)Trigger.oldMap).get(oscar.Id).STEP6__c <> AMS_Utils.PASSED && oscar.ANG_Type_Of_Change__c == null && !isMigrationRunning){
 			oscar.addError('Cannot pass Sanity Check before choosing a type of change.');
@@ -143,7 +141,7 @@ public with sharing class ANG_AgencyChangesHelper {
 
 			if (oldOSCAR.STEP6__c <> AMS_Utils.PASSED && oscar.STEP6__c == AMS_Utils.PASSED) {
 
-                if(!validateTypeOfChange(oscar, configs))
+                if(!validateTypeOfChange(oscar))
                     return;
                     
 				sanityCheckValidations(oscar, changesContainer, oscarOnlineAccreditation);
@@ -186,8 +184,7 @@ public with sharing class ANG_AgencyChangesHelper {
 
 				if(oscar.Process__c == AMS_Utils.NGCHANGES){
 					
-					if(config == null)
-						config = ANG_AgencyChangesConfigHelper.getSelectedTypeOfChangeCombinationConfig(oscar, configs);
+					if(config == null) config = ANG_AgencyChangesConfigHelper.getConfig(oscar);
 
 					if(containsChange(New List<String>{AMS_Utils.ANG_LOCATION_TYPE},oscar.ANG_Type_Of_Change__c))
 						changesContainer = generateNewGenChangeCodes(oscar, config, accountsCurrentChangeCode, AMS_Utils.SANITYCHECK, accountIdsInvolvedSetAux, changesContainer);
@@ -257,7 +254,7 @@ public with sharing class ANG_AgencyChangesHelper {
 				Map<Id,Account> hierarchyAccs;
 
 				if(config == null)
-					config = ANG_AgencyChangesConfigHelper.getSelectedTypeOfChangeCombinationConfig(oscar, configs);
+					config = ANG_AgencyChangesConfigHelper.getConfig(oscar);
 
 				changesContainer = applyChangeOfFields(oscar, accountIdsInvolvedSet, changesContainer, oscarOnlineAccreditation);
 
@@ -301,7 +298,7 @@ public with sharing class ANG_AgencyChangesHelper {
 			} else if (oldOSCAR.STEP4__c <> AMS_Utils.PASSED && oscar.STEP4__c == AMS_Utils.PASSED) {
 
 				if(config == null)
-					config = ANG_AgencyChangesConfigHelper.getSelectedTypeOfChangeCombinationConfig(oscar, configs);
+					config = ANG_AgencyChangesConfigHelper.getConfig(oscar);
 
 				changesContainer = generateNewGenChangeCodes(oscar, config, accountsCurrentChangeCode, AMS_Utils.WITHDRAWAL, accountIdsInvolvedSet, changesContainer);
 
@@ -312,9 +309,9 @@ public with sharing class ANG_AgencyChangesHelper {
 			}else if(oldOSCAR.Status__c != AMS_Utils.OSCAR_CLOSED && oscar.Status__c == AMS_Utils.OSCAR_CLOSED){
 
 				if(config == null)
-					config = ANG_AgencyChangesConfigHelper.getSelectedTypeOfChangeCombinationConfig(oscar, configs);
+					config = ANG_AgencyChangesConfigHelper.getConfig(oscar);
 
-				validationBeforeClosure(oscar, config);
+				validationBeforeClosure(oscar);
 
 			}
 
@@ -1161,7 +1158,7 @@ public with sharing class ANG_AgencyChangesHelper {
 	}
 
 
-	public static boolean validateTypeOfChange(AMS_OSCAR__c oscar, List<Map<String, String>> configs) {
+	public static boolean validateTypeOfChange(AMS_OSCAR__c oscar) {
 
 		System.debug('[ANG_AgencyChangesHelper] Validating type of change for ANG Changes process.');
 
@@ -1176,33 +1173,25 @@ public with sharing class ANG_AgencyChangesHelper {
 		}
 
 		if (oscar.ANG_Type_Of_Change__c <> oldMap.get(oscar.Id).ANG_Type_Of_Change__c || oldMap.get(oscar.Id).STEP6__c <> AMS_Utils.PASSED && oscar.STEP6__c == AMS_Utils.PASSED) {
-			AMS_Utils.AgChangesConfig config = ANG_AgencyChangesConfigHelper.getSelectedTypeOfChangeCombinationConfig(oscar, configs);
-			if (config != null && config.config != null) {
-				List<String> notApplicableSteps = ANG_AgencyChangesConfigHelper.getNotApplicableSteps(config.config);
-				if (notApplicableSteps != null)
-					ANG_AgencyChangesConfigHelper.setNotApplicableSteps(notApplicableSteps, oscarStepsApiName, oscar);
-			}
-			else{
-				return false;
-			}
+			ANG_AgencyChangesConfigHelper.ChangesConfig config = ANG_AgencyChangesConfigHelper.getConfig(oscar);
+			if (config != null){
+					ANG_AgencyChangesConfigHelper.setNotApplicableSteps(config.config, oscar);
+			} else return false;
 		}
 
 		return true;
 
 	}
 
-	public static ANG_AgencyChangesHelper.AChangeStructure generateNewGenChangeCodes(AMS_OSCAR__c oscar, AMS_Utils.AgChangesConfig config, Map<Id, Agency_Applied_Change_code__c> accountsPrevChangeCode, String action, Set<Id> allHierarchyAccountsToApplyCC, ANG_AgencyChangesHelper.AChangeStructure changesContainer) {
+	public static ANG_AgencyChangesHelper.AChangeStructure generateNewGenChangeCodes(AMS_OSCAR__c oscar, ANG_AgencyChangesConfigHelper.ChangesConfig config, Map<Id, Agency_Applied_Change_code__c> accountsPrevChangeCode, String action, Set<Id> allHierarchyAccountsToApplyCC, ANG_AgencyChangesHelper.AChangeStructure changesContainer) {
 
 		AMS_OSCAR_JSON.ChangeCode changeCodeDef;
 		Agency_Applied_Change_code__c changeCode;
 		String changeCodeIdentifier;
 
-		if (action == AMS_Utils.SANITYCHECK)
-			changeCodeIdentifier = ANG_AgencyChangesConfigHelper.getSanityCheckChangeCode(config.config);
-		else if (action == AMS_Utils.APPROVAL)
-			changeCodeIdentifier = ANG_AgencyChangesConfigHelper.getManagerApprovalChangeCode(config.config);
-		else if (action == AMS_Utils.WITHDRAWAL)
-			changeCodeIdentifier = ANG_AgencyChangesConfigHelper.getWithdrawalChangeCode(config.config);
+		if (action == AMS_Utils.SANITYCHECK) changeCodeIdentifier = config.config.TCA_Sanity_check__c;
+		else if (action == AMS_Utils.APPROVAL) changeCodeIdentifier = config.config.TCA_Manager_approval__c;
+		else if (action == AMS_Utils.WITHDRAWAL) changeCodeIdentifier = config.config.TCA_Application_withdrawal__c;
 
 		system.debug('[ANG_AgencyChangesHelper] : Change code to apply: ' + changeCodeIdentifier);
 		system.debug('[ANG_AgencyChangesHelper] : allHierarchyAccountsToApplyCC: ' + allHierarchyAccountsToApplyCC);
@@ -1214,7 +1203,7 @@ public with sharing class ANG_AgencyChangesHelper {
 				Account accToUpdateStatus = changesContainer.accountsMap.get(acc);
 
 				if (accToUpdateStatus != null) {
-					changeCodeDef = AMS_ChangeCodesConfigHelper.createChangeCodeFromConfigSetting(changeCodeIdentifier, config.typesOfChange, accToUpdateStatus.Status__c, accountsPrevChangeCode.get(accToUpdateStatus.Id), action);
+					changeCodeDef = AMS_ChangeCodesConfigHelper.createChangeCodeFromConfigSetting(changeCodeIdentifier, oscar.ANG_Type_of_change__c, accToUpdateStatus.Status__c, accountsPrevChangeCode.get(accToUpdateStatus.Id), action);
 					system.debug('[ANG_AgencyChangesHelper] : Change code def: ' + changeCodeDef);
 					changesContainer.addChangeCodeDef(changeCodeDef, accToUpdateStatus);
 
@@ -1456,7 +1445,7 @@ public with sharing class ANG_AgencyChangesHelper {
 		return changesContainer;
 	}
 
-    public static void validationBeforeClosure(AMS_OSCAR__c oscar, AMS_Utils.AgChangesConfig config){
+    public static void validationBeforeClosure(AMS_OSCAR__c oscar){
 
     	if(ANG_AgencyChangesHelper.containsChange(new List<String>(AMS_Utils.changesRequiringManagerApproval),oscar.ANG_Type_Of_Change__c) && oscar.RPM_Approval__c <> AMS_Utils.AUTH_APPROVAL && oscar.RecordTypeId != AMS_Utils.RECTYPE_NGCORRECTION)
     		oscar.addError('Cannot close the OSCAR until the Manager Approval Step is not completed.');

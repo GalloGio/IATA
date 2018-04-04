@@ -405,9 +405,9 @@ public class AMS_ChangeCodesHelper {
      generateChangeCodes for Agency Changes from a Custom Setting Mapping
     */
 
-    public static AMS_Utils.Container generateChangeCodes(AMS_OSCAR__c oscar, AMS_Utils.AgChangesConfig config, Map<Id, Account> accounts, Map<Id, Agency_Applied_Change_code__c> accountsPrevChangeCode, String action, Set<Id> allHierarchyAccountsToApplyCC) {
+    public static AMS_Utils.Container generateChangeCodes(AMS_OSCAR__c oscar, AMS_AgencyChangesConfig__c config, Map<Id, Account> accounts, Map<Id, Agency_Applied_Change_code__c> accountsPrevChangeCode, String action, Set<Id> allHierarchyAccountsToApplyCC) {
 
-        System.debug('AGENCY CHANGES: Accounts to apply change code: ' + allHierarchyAccountsToApplyCC);
+        System.debug(loggingLevel.FINE, '____ [cls AMS_ChangeCodesHelper - generateChangeCodes] Accounts to apply change code: - ' + allHierarchyAccountsToApplyCC);
 
         List<AMS_OSCAR_JSON.ChangeCode> changeCodes = new List<AMS_OSCAR_JSON.ChangeCode>();
         List<Account> accts = new List<Account>();
@@ -416,14 +416,12 @@ public class AMS_ChangeCodesHelper {
         AMS_OSCAR_JSON.ChangeCode changeCode;
         String changeCodeIdentifier;
 
-        if (action == AMS_Utils.SANITYCHECK)
-            changeCodeIdentifier = AMS_AgencyChangesConfigHelper.getSanityCheckChangeCode(config.config);
-        else if (action == AMS_Utils.APPROVAL)
-            changeCodeIdentifier = AMS_AgencyChangesConfigHelper.getManagerApprovalChangeCode(config.config);
-        else if (action == AMS_Utils.WITHDRAWAL)
-            changeCodeIdentifier = AMS_AgencyChangesConfigHelper.getWithdrawalChangeCode(config.config);
+        if (action == AMS_Utils.SANITYCHECK) changeCodeIdentifier = config.TCA_Sanity_check__c;
+        else if (action == AMS_Utils.APPROVAL) changeCodeIdentifier = config.TCA_Manager_approval__c;
+        else if (action == AMS_Utils.WITHDRAWAL) changeCodeIdentifier = config.TCA_Application_withdrawal__c;
 
-        system.debug('AGENCY CHANGES: Change code to apply: ' + changeCodeIdentifier);
+        System.debug(loggingLevel.FINE, '____ [cls AMS_ChangeCodesHelper - generateChangeCodes] Change code to apply - ' + changeCodeIdentifier);
+
         if (changeCodeIdentifier != null) {
 
             //in this case apply change code only to the account related to the oscar
@@ -434,7 +432,7 @@ public class AMS_ChangeCodesHelper {
                 Account accToUpdateStatus = accounts.get(acc);
                 if (accToUpdateStatus != null) {
 
-                    changeCode = AMS_ChangeCodesConfigHelper.createChangeCodeFromConfigSetting(changeCodeIdentifier, config.typesOfChange, accToUpdateStatus.Status__c, accountsPrevChangeCode.get(accToUpdateStatus.Id), action);
+                    changeCode = AMS_ChangeCodesConfigHelper.createChangeCodeFromConfigSetting(changeCodeIdentifier, oscar.Type_of_Change__c, accToUpdateStatus.Status__c, accountsPrevChangeCode.get(accToUpdateStatus.Id), action);
                     
                     if(changeCode != null) {
 
@@ -455,9 +453,9 @@ public class AMS_ChangeCodesHelper {
 
         }
 
-        system.debug('AGENCY CHANGES: changeCodes: ' + changeCodes);
-        system.debug('AGENCY CHANGES: Accounts: ' + accts);
-        system.debug('AGENCY CHANGES: oscars: ' + oscars);
+        System.debug(loggingLevel.FINE, '____ [cls AMS_ChangeCodesHelper - generateChangeCodes] changeCodes: ' + changeCodes);
+        System.debug(loggingLevel.FINE, '____ [cls AMS_ChangeCodesHelper - generateChangeCodes] Accounts: ' + accts);
+        System.debug(loggingLevel.FINE, '____ [cls AMS_ChangeCodesHelper - generateChangeCodes] oscars: ' + oscars);
 
         return new AMS_Utils.Container(changeCodes, accts, oscars);
     }
@@ -604,7 +602,7 @@ public class AMS_ChangeCodesHelper {
             string sValue = null;
                 sValue = (string)NewAccountValues.get(sFieldToCheck);
 
-            if(sValue==null)	 return false;
+            if(sValue==null)     return false;
             setValues.addAll((condition.right(condition.length()-'VALUES:'.length())).split(';'));
             if(setValues.contains(sValue.toUpperCase()))
                 return true;

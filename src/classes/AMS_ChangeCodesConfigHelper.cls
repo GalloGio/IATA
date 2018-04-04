@@ -1,12 +1,5 @@
 public class AMS_ChangeCodesConfigHelper {
 
-
-	public static AMS_ChangeCodes__c getChangeCodeConfig(String changeCodeIdentifier) {
-		
-		return AMS_ChangeCodes__c.getValues(changeCodeIdentifier);
-
-	}
-
     public static AMS_OSCAR_JSON.ChangeCode createChangeCodeFromConfigSetting(String changeCodeIdentifier, String oscarTypeOfChange, String accountCurrentStatus, Agency_Applied_Change_code__c prevActiveChangeCode, String action) {
 
         Boolean generateChangeCode = false;
@@ -38,7 +31,7 @@ public class AMS_ChangeCodesConfigHelper {
 
         	AMS_OSCAR_JSON.ChangeCode changeCode = new AMS_OSCAR_JSON.ChangeCode();
 
-	        AMS_ChangeCodes__c changeCodeConfig = getChangeCodeConfig(changeCodeIdentifier);
+	        AMS_ChangeCodes__c changeCodeConfig = AMS_ChangeCodes__c.getInstance(changeCodeIdentifier);
 
 	        if(changeCodeConfig != null){
 

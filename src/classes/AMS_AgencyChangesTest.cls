@@ -412,26 +412,4 @@ public class AMS_AgencyChangesTest {
 	static TestMethod void testChangeOfOwnershipIATABuysSomeBranches(){}
 	
 	static TestMethod void testChangeOfOwnershipIATABuysHOandSomeBranches(){}
-
-	static TestMethod void individualCallings() {
-		AMS_OSCAR_TestDataFactory.createOSCARtestData();
-		AMS_OSCAR__c oscar = [SELECT Id, Account__c FROM AMS_OSCAR__c LIMIT 1];
-
-		AMS_AgencyChangesConfigHelper.getTypeOfChangeCombinationConfig('Name', oscar, new List<Map<String, String>>{new Map<String, String>{'B_Name' => 'false'}});
-		AMS_AgencyChangesConfigHelper.getTypeOfChangeCombinationConfig('', oscar, new List<Map<String, String>>{new Map<String, String>{'B_Name' => 'true'}});
-		AMS_AgencyChangesConfigHelper.getTypeOfChangeCombinationConfig('Name', oscar, new List<Map<String, String>>{new Map<String, String>{'B_Name' => 'true'}});
-
-		AMS_AgencyChangesConfigHelper.setNotApplicableSteps(new List<String>{'STEP10'}, new List<String>(), oscar);
-
-
-		Set<String> setFields = AMS_AgencyChangesConfigHelper.getFieldsToMigrate( oscar, new List<Map<String, String>>{new Map<String, String>{'B_Name' => 'false'}});
-
-
-		System.assertEquals('Name', AMS_AgencyChangesConfigHelper.getFieldSetsToMigrate(new Map<String, String>{'Fields to Migrate' => 'Name'})[0]);
-		System.assertEquals(null, AMS_AgencyChangesConfigHelper.getFieldSetsToMigrate(new Map<String, String>{'No Fields' => 'Name'}));
-
-		System.assertEquals('Name', AMS_AgencyChangesConfigHelper.getManagerDisapprovalChangeCode(new Map<String, String>{'Manager disapproval' => 'Name'}));
-		System.assertEquals('Name', AMS_AgencyChangesConfigHelper.getWithdrawalChangeCode(new Map<String, String>{'Application withdrawal' => 'Name'}));
-
-	}
 }
