@@ -1,5 +1,5 @@
 <!-- add implements="forceCommunity:availableForAllPageTypes" to surface the component in community builder -->
-<aura:component controller="OneIdLightningLoginFormController" implements="forceCommunity:availableForAllPageTypes">
+<aura:component extends="c:Base" controller="OneIdLightningLoginFormController" implements="forceCommunity:availableForAllPageTypes">
     
     <ltng:require scripts="{!$Resource.jquery321minStandard}" afterScriptsLoaded="{!c.jsLoaded}"/>
     
@@ -18,13 +18,18 @@
     <aura:attribute name="communityForgotPasswordUrl" type="String" access="private"/>
     <aura:attribute name="communitySelfRegisterUrl" type="String" access="private"/>
     <aura:attribute name="clientIpAddress" type="String" access="private"/>
+    <aura:attribute name="customCommunity" type="Boolean" default="false" />
+    <aura:attribute name="serviceName" type="String" />
+
    
     <input type="hidden" id="clientIpAddressAjax" value="" />
     
     <aura:registerevent name="sitePropagatedStartUrl" type="c:setStartUrl"/>
     <aura:handler name="init" value="{!this}" action="{!c.initialize}"/>
-    <!--<aura:handler name="change" value="{!v.siteCompleteUrl}" action="{!c.getClientIpAddress}"/>-->
-    
+
+    <aura:registerEvent name="fetchParams" type="c:oneIdURLParams"/>
+    <aura:handler event="c:oneIdURLParams" action="{!c.renderPage}"/>
+    <!--<aura:handler name="change" value="{!v.siteCompleteUrl}" action="{!c.getClientIpAddress}"/>-->    
     
     <aura:dependency resource="c:setStartUrl" type="EVENT"/>
     <!-- Please uncomment
@@ -40,12 +45,18 @@
                         <ui:outputRichText value="{!v.errorMessage}"/>
                     </div>
                 </aura:renderIf>
-            </span>
-            <aura:renderIf isTrue="{!v.sanctionCountry}">
-                <div id="sanctionCountry">
-                    <ui:outputRichText value="{!$Label.c.ISSP_Sanctions_Message}"/>
-                </div>
+            </span>            
+            <aura:renderIf isTrue="{!and(v.sanctionCountry,!empty(v.serviceName))}">                
+                    <div id="sanctionCountry">
+                        <ui:outputRichText value="{!$Label.c.ISSP_Sanctions_Message}"/>
+                    </div>
             </aura:renderIf>
+            <aura:renderIf isTrue="{!and(v.sanctionCountry,!!empty(v.serviceName))}">                
+                    <div id="sanctionCountry">
+                        <ui:outputRichText value="{!$Label.c.Generic_Sanctions_Message}"/>
+                    </div>
+            </aura:renderIf>
+            
             <aura:renderIf isTrue="{!!v.sanctionCountry}">
                 <aura:renderIf isTrue="{!v.show90Days}">
                     <div id="userFrozen">

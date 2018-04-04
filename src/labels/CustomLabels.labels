@@ -20498,6 +20498,14 @@ If you want to reset your password, go back to login screen and use &quot;forgot
         <value>Your computer IP has been identified as sourcing from one of the countries listed as embargoed by U.S. authorities.&lt;br/&gt;The platform supporting our Customer Portal complies with this U.S. regulations and thus, we are currently unable to provide access to Customer Portal from your current IP address.&lt;br/&gt;Click &lt;a href=&quot;http://www.iata.org/customer-portal/Pages/contactus-v2.aspx&quot; &gt;here&lt;/a&gt; to contact your regional IATA office.</value>
     </labels>
     <labels>
+        <fullName>Generic_Sanctions_Message</fullName>
+        <categories>ISSP_Login, s9</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Generic_Sanctions_Message</shortDescription>
+        <value>Your computer IP has been identified as sourcing from one of the countries listed as embargoed by U.S. authorities.&lt;br/&gt;The platform supporting our  Portal complies with this U.S. regulations and thus, we are currently unable to provide access to Portal from your current IP address.&lt;br/&gt;Click &lt;a href=&quot;http://www.iata.org/customer-portal/Pages/contactus-v2.aspx&quot; &gt;here&lt;/a&gt; to contact your regional IATA office.</value>
+    </labels>
+    <labels>
         <fullName>ISSP_Satisfactory</fullName>
         <categories>ISSP, Portal, AMS</categories>
         <language>en_US</language>
