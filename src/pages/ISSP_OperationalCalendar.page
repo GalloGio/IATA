@@ -7,44 +7,49 @@
 
 <c:ISSP_Header ></c:ISSP_Header>
 
-<apex:stylesheet value="{!URLFOR($Resource.fullcalendar, '/fullcalendar-3.9.0/fullcalendar.min.css')}"/>
-<apex:stylesheet value="{!URLFOR($Resource.ISSP_OperationalCalendar, '/css/main.min.css')}"/>
 <script src="{!URLFOR($Resource.fullcalendar, '/fullcalendar-3.9.0/lib/moment.min.js')}"></script>
 <script src="{!URLFOR($Resource.fullcalendar, '/fullcalendar-3.9.0/lib/jquery.min.js')}"></script>
 <script src="{!URLFOR($Resource.fullcalendar, '/fullcalendar-3.9.0/lib/jquery-ui.min.js')}"></script>
 <script src="{!URLFOR($Resource.fullcalendar, '/fullcalendar-3.9.0/fullcalendar.min.js')}"></script>
-<link href="//fonts.googleapis.com/css?family=Roboto:100,400,500" rel="stylesheet"/> 
+<script src="{!URLFOR($Resource.ISSP_OperationalCalendar, '/lib/qtip/jquery.qtip.min.js')}"></script>
+
+<apex:stylesheet value="{!URLFOR($Resource.fullcalendar, '/fullcalendar-3.9.0/fullcalendar.min.css')}"/>
+<apex:stylesheet value="{!URLFOR($Resource.ISSP_OperationalCalendar, '/css/main.min.css')}"/>
+<apex:stylesheet value="{!URLFOR($Resource.ISSP_OperationalCalendar, '/lib/qtip/jquery.qtip.min.css')}"/>
+<link href="//fonts.googleapis.com/css?family=Roboto:100,400,500" rel="stylesheet"/>
 
 <script>
+    var LIST_FILTERS = {!listFiltersJson};
     var MAP_FREQUENCIES = {!mapFrequenciesJson};
-    var MAP_OPERATION_TYPES = {!mapOperationTypesJson};
-    var MAP_CURRENCIES = {!mapCurrenciesJson};
-    console.log(MAP_FREQUENCIES);
-    console.log(MAP_OPERATION_TYPES);
-    console.log(MAP_CURRENCIES);
     var isAirline = {!isAirline};
+    //console.log(MAP_FREQUENCIES);
+    //console.log(LIST_FILTERS);
     $(document).ready(function() {
         var defaultCountry = "{!defaultCountry}";
         $(".countryFilter").val(defaultCountry);
-        updateFrequencyPicklist(defaultCountry);
-        updateOperationTypesPicklist(defaultCountry);
-        updateCurrencyPicklist(defaultCountry);
+        updatePicklistsFromCountry();
         initCalendar();
         refreshEvents();
         
         $(".countryFilter").change(function() {
-            updateFrequencyPicklist($(this).val());
-            updateOperationTypesPicklist($(this).val());
-            updateCurrencyPicklist($(this).val());
-            refreshEvents();
-        });
-        $("#frequencyFilter").change(function() {
+            updatePicklistsFromCountry();
             refreshEvents();
         });
         $("#typeFilter").change(function() {
+            updatePicklistsFromType();
+            refreshEvents();
+        });
+        $("#frequencyFilter").change(function() {
+            updatePicklistsFromFrequency();
             refreshEvents();
         });
         $("#currencyFilter").change(function() {
+            refreshEvents();
+        });
+        $("#resetButton").click(function() {
+            $("#typeFilter").val("");
+            updatePicklist($("#frequencyFilter"),[],0,"");
+            updatePicklist($("#currencyFilter"),[],0,"");
             refreshEvents();
         });
         
@@ -109,13 +114,30 @@
                 month: 'Month View',
                 listMonth: 'Task List'
             },
-            events: {!ListEventsJSON}
+            events: {!ListEventsJSON},
+            eventRender: function(event, element) {
+                element.qtip({
+                    content: {
+                        title: '<center>{!$Label.ISSP_OperationalCalendar_Full_Details}</center>',
+                        text: event.description
+                    },
+                    position: {
+                        my: 'center left',
+                        at: 'center right'
+                    },
+                    style: {
+                        classes: 'qtip-blue qtip-rounded qtip-shadow'
+                    }
+                });
+            }
         });
     }
     
     function refreshEvents() {
         if (!isAirline) return;
         hideError();
+        //remove existing events
+        $("#calendar").fullCalendar('removeEvents' , function(e){ return true; });
         var country = $(".countryFilter").val();
         var frequency = $("#frequencyFilter").val();
         var operationType = $("#typeFilter").val();
@@ -131,7 +153,7 @@
             showError("{!$Label.ISSP_OperationalCalendar_BSPCASS_Filter_Required}");
             return;
         }
-        console.log("country: " + country + " frequency: " + frequency + " operationType: " + operationType + " currency: " + currency);
+        //console.log("country: " + country + " frequency: " + frequency + " operationType: " + operationType + " currency: " + currency);
         Visualforce.remoting.Manager.invokeAction(
             '{!$RemoteAction.ISSP_OperationalCalendarController.loadEventsRemote}',
             country, frequency, operationType, currency,
@@ -159,41 +181,85 @@
             // add new events
             calendar.fullCalendar('renderEvents' , listEvents, true);
             calendar.removeClass("disabled");
+            $('.fc-event').tooltip({placement: "right"});
         }
     }
     
-    function updateFrequencyPicklist(countryValue) {
-        var inputSelect = $("#frequencyFilter");
-        var listValues = MAP_FREQUENCIES[countryValue];
-        updatePicklist(inputSelect, listValues);
+    function containsInArray(array, match) {
+        var result = [];
+        for (i = 0; i < array.length; i++) {
+            if (array[i].includes(match)) {
+                result.push(array[i])
+            }
+        }
+        return result;
+    };
+    
+    function updatePicklistsFromCountry() {
+        var country = $(".countryFilter").val();
+        var opertionType = $("#typeFilter").val();
+        var filter = country + ",";
+        var listValues = containsInArray(LIST_FILTERS,filter);
+        updatePicklist($("#typeFilter"), listValues,1,opertionType);
+        updatePicklist($("#frequencyFilter"), listValues,2,'');
+        updatePicklist($("#currencyFilter"), listValues,3,'');
     }
     
-    function updateOperationTypesPicklist(countryValue) {
-        var inputSelect = $("#typeFilter");
-        var listValues = MAP_OPERATION_TYPES[countryValue];
-        updatePicklist(inputSelect, listValues);
+    function updatePicklistsFromType(position) {
+        var country = $(".countryFilter").val();
+        var opertionType = $("#typeFilter").val();
+        var filter = country + ",";
+        if (opertionType!=undefined) {
+            filter+= opertionType + ",";
+        }
+        var listValues = containsInArray(LIST_FILTERS,filter);
+        if (opertionType==undefined) {
+            updatePicklist($("#typeFilter"), listValues,1,'');
+        }
+        updatePicklist($("#frequencyFilter"), listValues,2,'');
+        updatePicklist($("#currencyFilter"), listValues,3,'');
     }
     
-    function updateCurrencyPicklist(countryValue) {
-        var inputSelect = $("#currencyFilter");
-        var listValues = MAP_CURRENCIES[countryValue];
-        updatePicklist(inputSelect, listValues);
+    function updatePicklistsFromFrequency() {
+        var country = $(".countryFilter").val();
+        var opertionType = $("#typeFilter").val();
+        var frequency = $("#frequencyFilter").val();
+        var filter = country + "," + opertionType + ",";
+        if (frequency>"") {
+             filter+= frequency + ",";
+        }
+        var listValues = containsInArray(LIST_FILTERS,filter);
+        updatePicklist($("#currencyFilter"), listValues,3,'');
     }
-    
-    function updatePicklist(inputSelect, listValues) {
+
+    function updatePicklist(inputSelect, listValues, position, defValue) {
         if (!isAirline) return;
         inputSelect.find('option').remove();
-        if (listValues.length>1) {
+        var listUniqueValues = [];
+        // get only the part required
+        $.each(listValues, function (i, item) {
+            listUniqueValues.push(item.split(",")[position]);
+        });
+        // remove duplicates
+        listUniqueValues = listUniqueValues.sort().filter(function(item, pos, self) {
+            return self.indexOf(item) == pos;
+        });
+        // add None option if required
+        if (listUniqueValues.length!=1) {
             inputSelect.append($('<option>', {
                 value: '',
                 text : '{!$Label.ANG_ISSP_Picklist_None}'
             }));
         }
-        $.each(listValues.sort(), function (i, item) {
-            inputSelect.append($('<option>', {
-                value: item,
-                text : item
-            }));
+        // Add options
+        $.each(listUniqueValues, function (i, item) {
+            var label = item;
+            if (position==2) {
+                label = MAP_FREQUENCIES[item];
+            }
+            var option = $('<option>', {value: item,text: label});
+            if (defValue==item) option.attr("selected",true);
+            inputSelect.append(option);
         });
     }
     
@@ -239,6 +305,9 @@
                 <div class="form-group">
                     <label for="currencyFilter">{!$Label.ISSP_OperationalCalendar_CurrencyFilter}</label>
                     <select id="currencyFilter" class="form-control"></select>
+                </div>
+                <div class="form-group">
+                    <button id="resetButton" class="btn btn-primary" type="button">{!$Label.ISSP_OperationalCalendar_Reset}</button>
                 </div>
             </apex:form>
         </apex:outputPanel>

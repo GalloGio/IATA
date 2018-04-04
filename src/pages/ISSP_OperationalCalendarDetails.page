@@ -7,21 +7,25 @@
 
 <c:ISSP_Header ></c:ISSP_Header>
 
-<script src="{!URLFOR($Resource.ISSP_OperationalCalendar, '/lib/datatable/js/dataTables.buttons.min.js')}"></script>
-<script src="{!URLFOR($Resource.ISSP_OperationalCalendar, '/lib/datatable/js/buttons.html5.min.js')}"></script>
-<script src="{!URLFOR($Resource.ISSP_OperationalCalendar, '/lib/jszip/jszip.min.js')}"></script>
-<script src="{!URLFOR($Resource.ISSP_OperationalCalendar, '/lib/pdfmake/pdfmake.min.js')}"></script>
-<script src="{!URLFOR($Resource.ISSP_OperationalCalendar, '/lib/pdfmake/vfs_fonts.js')}"></script>
+<script src="{!URLFOR($Resource.ISSP_OperationalCalendar, '/js/jquery.dataTables.min.js')}"></script>
+<script src="{!URLFOR($Resource.ISSP_OperationalCalendar, '/js/dataTables.bootstrap.min.js')}"></script>
+<script src="{!URLFOR($Resource.ISSP_OperationalCalendar, '/js/dataTables.buttons.min.js')}"></script>
+<script src="{!URLFOR($Resource.ISSP_OperationalCalendar, '/js/buttons.bootstrap.min.js')}"></script>
+<script src="{!URLFOR($Resource.ISSP_OperationalCalendar, '/js/jszip.min.js')}"></script>
+<script src="{!URLFOR($Resource.ISSP_OperationalCalendar, '/js/pdfmake.min.js')}"></script>
+<script src="{!URLFOR($Resource.ISSP_OperationalCalendar, '/js/vfs_fonts.js')}"></script>
+<script src="{!URLFOR($Resource.ISSP_OperationalCalendar, '/js/buttons.html5.min.js')}"></script>
+<script src="{!URLFOR($Resource.ISSP_OperationalCalendar, '/js/buttons.print.min.js')}"></script>
+<script src="{!URLFOR($Resource.ISSP_OperationalCalendar, '/js/buttons.colVis.min.js')}"></script>
 <script src="{!URLFOR($Resource.ISSP_OperationalCalendar, '/js/iata_logo.js')}"></script>
 
-<link href="{!URLFOR($Resource.ISSP_OperationalCalendar, '/lib/datatable/css/buttons.dataTables.min.css')}" rel="stylesheet"/>
+<link href="{!URLFOR($Resource.ISSP_OperationalCalendar, '/css/dataTables.bootstrap.min.css')}" rel="stylesheet"/>
+<link href="{!URLFOR($Resource.ISSP_OperationalCalendar, '/css/buttons.bootstrap.min.css')}" rel="stylesheet"/>
 <link href="{!URLFOR($Resource.ISSP_OperationalCalendar, '/css/details.min.css')}" rel="stylesheet"/>
-<link href="//fonts.googleapis.com/css?family=Roboto:100,400,500" rel="stylesheet"/> 
 
 <script>
+    var LIST_FILTERS = {!listFiltersJson};
     var MAP_FREQUENCIES = {!mapFrequenciesJson};
-    var MAP_OPERATION_TYPES = {!mapOperationTypesJson};
-    var MAP_CURRENCIES = {!mapCurrenciesJson};
     var isAirline = {!isAirline};
     var defaultCountry = "{!defaultCountry}";
     var defaultOperationType = "{!defaultOperationType}";
@@ -31,27 +35,26 @@
         
         if (isAirline) {
             $(".countryFilter").val(defaultCountry);
-            updateFrequencyPicklist(defaultCountry);
-            updateOperationTypesPicklist(defaultCountry);
-            updateCurrencyPicklist(defaultCountry);
+            updatePicklistsFromCountry();
             refreshDetails();
         }
         if (!isAirline) {
             refreshDetails();
         }
         $(".countryFilter").change(function() {
-            updateFrequencyPicklist($(this).val());
-            updateOperationTypesPicklist($(this).val());
-            updateCurrencyPicklist($(this).val());
-            refreshDetails();
-        });
-        $("#frequencyFilter").change(function() {
+            updatePicklistsFromCountry();
             refreshDetails();
         });
         $("#typeFilter").change(function() {
             var isCASS = $(this).val().includes("CASS");
             if (isCASS) $("#frequencyFilter").val("");
             $("#frequencyFilter").prop('disabled', isCASS);
+            updatePicklistsFromType();
+            refreshDetails();
+            addPDFButton(isCASS);
+        });
+        $("#frequencyFilter").change(function() {
+            updatePicklistsFromFrequency();
             refreshDetails();
         });
         $("#currencyFilter").change(function() {
@@ -60,12 +63,21 @@
         $('#billingPeriodFilter').change(function() {
             refreshDetails();
         });
+        $("#resetButton").click(function() {
+            $("#typeFilter").val("");
+            updatePicklist($("#frequencyFilter"),[],0,"");
+            updatePicklist($("#currencyFilter"),[],0,"");
+            refreshDetails();
+        });
+        $(".btn-default").toggleClass('btn-default btn-primary');
+        $(".buttons-csv").prepend( "<span class='glyphicon glyphicon-th' style='padding-right:2px;'></span>").prop("disabled","true");
+        $(".buttons-pdf").prop("disabled","true");
     });
     
     function initTable() {
         var table = $('.table-pagination').dataTable({
-            "dom": 'rtlp',
-            buttons: [
+            "dom": "rtlp",
+            "buttons": [
                 {
                     extend: 'csvHtml5',
                     exportOptions: {
@@ -92,7 +104,8 @@
                   }
               },
             "paging":   true,
-            "ordering": true,
+            "ordering": false,
+            "bAutoWidth": false,
             "info":     true
         });
         
@@ -103,59 +116,136 @@
                 title: function () { return getExportFileName();}
             }]
         }).container().appendTo($('#exportCSV'));
+        addPDFButton(false);
+    }
+    
+    var pdfButtonPortrait = {
+        extend: 'pdfHtml5',
+        exportOptions: {columns: ':visible'},
+        title: function () { return getExportFileName();},
+        orientation: "portrait",
+        customize: function ( doc ) {
+            doc.content.splice( 0, 0, {
+                margin: [ 0, 0, 0, 0 ],
+                alignment: 'left',
+                image: iata_logo
+            });
+        }
+    };
+    var pdfButtonLandscape = {
+        extend: 'pdfHtml5',
+        exportOptions: {columns: ':visible'},
+        title: function () { return getExportFileName();},
+        orientation: "landscape",
+        customize: function ( doc ) {
+            doc.content.splice( 0, 0, {
+                margin: [ 0, 0, 0, 0 ],
+                alignment: 'left',
+                image: iata_logo
+            });
+        }
+    };
+    
+    function addPDFButton(isCASS) {
+        var buttonType;
+        if (isCASS) {
+            buttonType = pdfButtonLandscape;
+        } else {
+            buttonType = pdfButtonPortrait;
+        }
+        var isDisabled = $(".buttons-pdf").prop("disabled");
+        $(".buttons-pdf").remove();
+        var table =  $('.table-pagination').dataTable();
         new $.fn.dataTable.Buttons(table, {
-            buttons: [{
-                extend: 'pdfHtml5',
-                exportOptions: {columns: ':visible'},
-                title: function () { return getExportFileName();},
-                orientation: 'landscape',
-                customize: function ( doc ) {
-                    doc.content.splice( 0, 0, {
-                        margin: [ 0, 0, 0, 0 ],
-                        alignment: 'left',
-                        image: iata_logo
-                    } );
-                }
-            }]
+            buttons: [buttonType]
         }).container().appendTo($('#exportPDF'));
+        $(".buttons-pdf")
+            .prepend( "<span class='glyphicon glyphicon-th' style='padding-right:2px;'></span>")
+            .toggleClass('btn-default btn-primary')
+            .prop("disabled", isDisabled);
     }
     
-    function updateFrequencyPicklist(countryValue) {
-        var inputSelect = $("#frequencyFilter");
-        var listValues = MAP_FREQUENCIES[countryValue];
-        updatePicklist(inputSelect, listValues);
+    function containsInArray(array, match) {
+        var result = [];
+        for (i = 0; i < array.length; i++) {
+            if (array[i].includes(match)) {
+                result.push(array[i])
+            }
+        }
+        return result;
+    };
+    
+    function updatePicklistsFromCountry() {
+        var country = $(".countryFilter").val();
+        var opertionType = $("#typeFilter").val();
+        var filter = country + ",";
+        var listValues = containsInArray(LIST_FILTERS,filter);
+        updatePicklist($("#typeFilter"), listValues,1,opertionType);
+        updatePicklist($("#frequencyFilter"), listValues,2,'');
+        updatePicklist($("#currencyFilter"), listValues,3,'');
     }
     
-    function updateOperationTypesPicklist(countryValue) {
-        var inputSelect = $("#typeFilter");
-        var listValues = MAP_OPERATION_TYPES[countryValue];
-        updatePicklist(inputSelect, listValues);
+    function updatePicklistsFromType(position) {
+        var country = $(".countryFilter").val();
+        var opertionType = $("#typeFilter").val();
+        var filter = country + ",";
+        if (opertionType!=undefined) {
+            filter+= opertionType + ",";
+        }
+        var listValues = containsInArray(LIST_FILTERS,filter);
+        if (opertionType==undefined) {
+            updatePicklist($("#typeFilter"), listValues,1,'');
+        }
+        updatePicklist($("#frequencyFilter"), listValues,2,'');
+        updatePicklist($("#currencyFilter"), listValues,3,'');
     }
     
-    function updateCurrencyPicklist(countryValue) {
-        var inputSelect = $("#currencyFilter");
-        var listValues = MAP_CURRENCIES[countryValue];
-        updatePicklist(inputSelect, listValues);
+    function updatePicklistsFromFrequency() {
+        var country = $(".countryFilter").val();
+        var opertionType = $("#typeFilter").val();
+        var frequency = $("#frequencyFilter").val();
+        var filter = country + "," + opertionType + ",";
+        if (frequency>"") {
+             filter+= frequency + ",";
+        }
+        var listValues = containsInArray(LIST_FILTERS,filter);
+        updatePicklist($("#currencyFilter"), listValues,3,'');
     }
-    
-    function updatePicklist(inputSelect, listValues) {
+
+    function updatePicklist(inputSelect, listValues, position, defValue) {
         if (!isAirline) return;
         inputSelect.find('option').remove();
-        if (listValues.length>1) {
+        var listUniqueValues = [];
+        // get only the part required
+        $.each(listValues, function (i, item) {
+            listUniqueValues.push(item.split(",")[position]);
+        });
+        // remove duplicates
+        listUniqueValues = listUniqueValues.sort().filter(function(item, pos, self) {
+            return self.indexOf(item) == pos;
+        });
+        // add None option if required
+        if (listUniqueValues.length!=1) {
             inputSelect.append($('<option>', {
                 value: '',
                 text : '{!$Label.ANG_ISSP_Picklist_None}'
             }));
         }
-        $.each(listValues.sort(), function (i, item) {
-            inputSelect.append($('<option>', {
-                value: item,
-                text : item
-            }));
+        // Add options
+        $.each(listUniqueValues, function (i, item) {
+            var label = item;
+            if (position==2) {
+                label = MAP_FREQUENCIES[item];
+            }
+            var option = $('<option>', {value: item,text: label});
+            if (defValue==item) option.attr("selected",true);
+            inputSelect.append(option);
         });
     }
     
     function refreshDetails() {
+        //remove existing details
+        $('.table-pagination').DataTable().clear().draw();
         if (isAirline) refreshDetailsForAirlines();
         else refreshDetailsForAgents();
     }
@@ -176,7 +266,6 @@
             showError("{!$Label.ISSP_OperationalCalendar_BSPCASS_Filter_Required}");
             return;
         }
-        console.log("country: " + country + " frequency: " + frequency + " operationType: " + operationType + " currency: " + currency);
         Visualforce.remoting.Manager.invokeAction(
             '{!$RemoteAction.ISSP_OperationalCalendarController.loadDetailsRemoteForAirlines}',
             country, frequency, operationType, currency, billingPeriod,
@@ -196,7 +285,6 @@
     function refreshDetailsForAgents() {
         hideError();
         var billingPeriod = $("#billingPeriodFilter").val();
-        console.log("billingPeriod: " + billingPeriod);
         Visualforce.remoting.Manager.invokeAction(
             '{!$RemoteAction.ISSP_OperationalCalendarController.loadDetailsRemoteForAgents}',
             billingPeriod,
@@ -229,12 +317,16 @@
         }
         // add new lines to table
         table.rows.add(listLines).draw();
+        $(".buttons-csv").prop("disabled",listLines.length==0);
+        $(".buttons-pdf").prop("disabled",listLines.length==0);
     }
     
     function showError(message) {
         $("#errormessage")
             .text(message)
             .show();
+        $(".buttons-csv").prop("disabled",true);
+        $(".buttons-pdf").prop("disabled",true);
     }
     function hideError(message) {
         $("#errormessage").hide();
@@ -255,7 +347,6 @@
             filename += "_" + $("#currencyFilter option:selected").text();
         }
         filename += "_" + $("#billingPeriodFilter option:selected").text();
-        console.log("filename " + filename);
         return filename;
     }
 </script>
@@ -271,8 +362,16 @@
             </div>
             <div class="col-sm-1"></div>
         </div>
-        <div class="center">
-          <button type="button" class="btn btn-default btn-calendar center-block" onclick="showCalendar()">{!$Label.ISSP_OperationalCalendar_Show_Calendar}</button>
+        <div class="row">
+            <div class="col-sm-5"></div>
+            <div class="col-sm-2">
+                <button type="button" class="btn btn-default btn-calendar center-block" onclick="showCalendar()">{!$Label.ISSP_OperationalCalendar_Show_Calendar}</button>
+            </div>
+            <div class="col-sm-3"></div>
+            <div id="exportCSV" class="col-sm-2">
+                <span id="exportCSV"></span>
+                <span id="exportPDF" class="pull-right"></span>
+            </div>
         </div>
     
         <!-- FILTERS -->
@@ -304,7 +403,7 @@
                         <select id="currencyFilter" class="form-control"></select>
                     </apex:outputPanel>
                 </div>
-                <div class="col-sm-2">
+                <div class="col-sm-3">
                     <div class="form-group">
                         <label for="billingPeriodFilter">{!$Label.ISSP_OperationalCalendar_Billing_Peroiod}</label>
                         <select id="billingPeriodFilter" class="form-control">
@@ -324,11 +423,9 @@
                         </select>
                     </div>
                 </div>
-                <div id="exportCSV" class="col-sm-1">
-                    <label class="invisible">CSV</label>
-                </div>
-                <div id="exportPDF" class="col-sm-1">
-                    <label class="invisible">PDF</label>
+                <div id="resetFilters" class="col-sm-1">
+                    <label class="invisible">{!$Label.ISSP_OperationalCalendar_Reset}</label>
+                    <button id="resetButton" class="btn btn-primary" type="button">{!$Label.ISSP_OperationalCalendar_Reset}</button>
                 </div>
             </apex:form>
         </apex:outputPanel>
