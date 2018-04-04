@@ -35,6 +35,16 @@ public with sharing class ISSP_TIP_Home_Controller {
     public list<BinRangeRec> binRangeList{get; set;}
     public String[] paymentGuaranteeVal{get;set;}
     public String[] acceptedTransactionVal{get;set;}
+    public Decimal binRangeLen{get;set;}
+    private map<string,Decimal> paymentNetworkMap{
+            get{
+                if(paymentNetworkMap==null) paymentNetworkMap= new map<string,Decimal>();
+                for(TIP_Payment_Network_Config__c tpnc: TIP_Payment_Network_Config__c.getall().values()){
+                    paymentNetworkMap.put(tpnc.Payment_Network__c,tpnc.Maximum_Length__c);
+                }
+                return paymentNetworkMap;
+            }
+            set;}
     private list<TIP_BIN_Range__c> deletedBinRangeList{
         get{
             if(deletedBinRangeList==null) deletedBinRangeList= new list<TIP_BIN_Range__c>();
@@ -205,9 +215,12 @@ public with sharing class ISSP_TIP_Home_Controller {
                 acceptedTransactionVal=String.isBlank(newpp.PP_Accepted_transactions__c)?null:newpp.PP_Accepted_transactions__c.split(';');
                 paymentGuaranteeVal=String.isBlank(newpp.PP_Payment_guarantee__c)?null:newpp.PP_Payment_guarantee__c.split(';');
                 
+                binRangeLen= String.isBlank(newpp.PP_Payment_network__c)?0:paymentNetworkMap.get(newpp.PP_Payment_network__c);
                 for(TIP_BIN_Range__c tbr:newpp.BIN_Ranges__R){
                     binRangeList.add(new BinRangeRec(tbr,pos++,''));
                 }
+
+                changePaymentNetwork();//refresh payment network len
             }
         }
         PageReference pr= Page.ISSP_TIP_Product_Enrollment;
@@ -235,7 +248,7 @@ public with sharing class ISSP_TIP_Home_Controller {
     public void addUpdateBinRange(){
         if(selectedBinRange.action=='N'){   
             selectedBinRange.pos=binRangeList.size();
-            selectedBinRange.binRange.TIP_Status__c='Inactive';
+            selectedBinRange.binRange.TIP_Status__c='Draft';
             if(!String.isBlank(selectedBinRange.binRange.TIP_Range_Start__c) || !String.isBlank(selectedBinRange.binRange.TIP_Range_End__c)){
                 if(!binRangeList.isEmpty()) binRangeList.add(0,selectedBinRange);
                 else binRangeList.add(selectedBinRange);
@@ -256,6 +269,20 @@ public with sharing class ISSP_TIP_Home_Controller {
             for(binRangerec brr:binRangeList)brr.pos=c++;
         }
     }
+    public void changePaymentNetwork(){
+        binRangeLen= String.isBlank(newpp.PP_Payment_network__c)?0:paymentNetworkMap.get(newpp.PP_Payment_network__c);
+        system.debug('PF binRangeLen'+binRangeLen);
+        system.debug('PF newpp.PP_Payment_network__c'+newpp.PP_Payment_network__c);
+        for(binRangeRec brr:binRangeList){
+            if(brr.binRange.TIP_Status__c=='Draft'){               
+                brr.binRange.TIP_Range_Start__c=brr.binRange.TIP_Range_Start__c.rightPad(Integer.ValueOf(binRangeLen),'0');
+                brr.binRange.TIP_Range_End__c=brr.binRange.TIP_Range_End__c.rightPad(Integer.ValueOf(binRangeLen),'9');
+            }
+        }
+        selectedBinRange=null;
+        system.debug('PF binRangeList'+binRangeList);
+    }
+
     public Pagereference saveDraft(){
         try{
             if(isNew){

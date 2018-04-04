@@ -27,6 +27,10 @@
             width:174px;
 
         }
+
+        .placeholder-active{
+            color: #AAA;
+        }
     </style>
     
    
@@ -45,16 +49,21 @@
         <script type="text/javascript"> 
                $(document).ready(function() {
               // $(window).on("load",function() {
+                
                 //disable bin range
                 var namef = $('[id$="nameField"]');
-                if(namef.val() =='')
+                var paymenNet = $('[id$="paymentNet"]');
+                if(namef.val() =='' || paymenNet.val()=='')
                    $('[id$="newBinRangebtn"]').toggleClass('btnDisabled', true).attr('disabled', 'disabled');
                    
+               
+
                })
 
                 function closeDialog(){
                   //alert(' closeDialog : ');
                   $('#myModal').modal('toggle');
+                  enforceMaxLen();
                 }   
 
                 function confirmDelete(opt1){
@@ -76,9 +85,11 @@
                 }
 
 
-                function onChangeName(){
+                function enableBinRangeBtn(){
                     var namef = $('[id$="nameField"]');
-                    if(namef.val()==''||namef.val()==null || namef.val()==undefined){
+                    var paymenNet = $('[id$="paymentNet"]');
+                    if((namef.val()==''||namef.val()==null || namef.val()==undefined)
+                        ||(paymenNet.val()==''||paymenNet.val()==null || paymenNet.val()==undefined)){
                         $('[id$="newBinRangebtn"]').toggleClass('btnDisabled', true).attr('disabled', 'disabled');
                     } else {
                         $('[id$="newBinRangebtn"]').toggleClass('btnDisabled', false).attr('disabled', null);
@@ -109,7 +120,7 @@
                                         <apex:pageBlockSectionItem labelStyle="width:26%" >
                                             <apex:outputLabel value="{!$ObjectType.Partner_products__c.fields.name.Label}"/>   
                                             <apex:outputPanel >
-                                                <apex:inputField value="{!newpp.name}" required="true" rendered="{!editMode}" id="nameField" onchange="onChangeName();"/>
+                                                <apex:inputField value="{!newpp.name}" required="true" rendered="{!editMode}" id="nameField" onchange="enableBinRangeBtn();"/>
                                                 <apex:outputField value="{!newpp.name}" rendered="{!!editMode}"/>
                                             </apex:outputPanel> 
                                         </apex:pageBlockSectionItem>
@@ -176,7 +187,8 @@
                                         <apex:pageBlockSectionItem labelStyle="width:26%" labelStyleClass="agencyLegalDetailsComponent" dataStyleClass="agencyLegalDetailsComponent" >
                                             <apex:outputLabel value="{!$ObjectType.Partner_products__c.fields.PP_Payment_network__c.Label}"/>
                                             <apex:outputPanel >                                        
-                                                <apex:inputField value="{!newpp.PP_Payment_network__c}" rendered="{!editMode}" styleClass="sectionItem"/>
+                                                <apex:actionFunction name="paymentNetworkChange" oncomplete="enableBinRangeBtn();" action="{!changePaymentNetwork}" reRender="binTable"/>
+                                                <apex:inputField id="paymentNet" value="{!newpp.PP_Payment_network__c}" onchange="paymentNetworkChange();" rendered="{!editMode}" styleClass="sectionItem"/>
                                                 <apex:outputField value="{!newpp.PP_Payment_network__c}" rendered="{!!editMode}"/>
                                             </apex:outputPanel>
                                         </apex:pageBlockSectionItem>
@@ -236,9 +248,76 @@
                                             </apex:commandButton>
                                         </apex:pageBlockSectionItem>
                                     </apex:pageBlockSection>
-                                    <apex:pageBlockSection columns="2">
+                                    <apex:pageBlockSection id="binRangeTableSection" columns="2">                                        
                                         <apex:pageBlockSectionItem >    
-                                            <apex:pageBlockTable id="binTable" value="{!binRangeList}" var="brr" styleClass="table-hover  table table-condensed table-responsive" >
+                                            <apex:outputPanel id="binTable">
+                                                <script>
+                                                    function enforceMaxLen(){
+                                                        $('[id$="rangeStart"]').attr('maxlength', "{!binRangeLen}");
+                                                        $('[id$="rangeEnd"]').attr('maxlength',"{!binRangeLen}");
+
+                                                        var startMask="".padStart("{!binRangeLen}","0");
+                                                        var endMask="".padStart("{!binRangeLen}","9");
+
+                                                        //set mask
+                                                        if($('[id$="rangeStart"]').val()===""){
+                                                            $('[id$="rangeStart"]').val(startMask);
+                                                            $('[id$="rangeStart"]').addClass("placeholder-active");
+                                                        }
+
+                                                        if($('[id$="rangeEnd"]').val()===""){
+                                                            $('[id$="rangeEnd"]').val(endMask);
+                                                            $('[id$="rangeEnd"]').addClass("placeholder-active");
+                                                        }
+
+                                                        //delete placeholder when input gets focus…
+                                                        $('[id$="rangeStart"]').on("focus", function(){
+                                                            if($('[id$="rangeStart"]').val() === startMask){
+                                                                $('[id$="rangeStart"]').removeClass("placeholder-active");
+                                                                $('[id$="rangeStart"]').val("");
+                                                            }
+                                                        });
+                                                        
+                                                        //add placeholder when input loses focus…
+                                                        $('[id$="rangeStart"]').on("blur", function(){
+                                                            if($('[id$="rangeStart"]').val() === ""){
+                                                                $('[id$="rangeStart"]').val(startMask);
+                                                                $('[id$="rangeStart"]').addClass("placeholder-active");
+                                                            }else{
+                                                               $('[id$="rangeStart"]').val($('[id$="rangeStart"]').val().padEnd("{!binRangeLen}","0")); 
+                                                            }
+                                                        });
+
+
+                                                        $('[id$="rangeEnd"]').on("focus", function(){
+                                                            if($('[id$="rangeEnd"]').val() === endMask){
+                                                                $('[id$="rangeEnd"]').removeClass("placeholder-active");
+                                                                $('[id$="rangeEnd"]').val("");
+                                                            }
+                                                        });
+                                                        
+                                                        $('[id$="rangeEnd"]').on("blur", function(){
+                                                            if($('[id$="rangeEnd"]').val() === ""){
+                                                                $('[id$="rangeEnd"]').val(endMask);
+                                                                $('[id$="rangeEnd"]').addClass("placeholder-active");
+                                                            }else{
+                                                               $('[id$="rangeEnd"]').val($('[id$="rangeEnd"]').val().padEnd("{!binRangeLen}","9")); 
+                                                            }
+                                                        });
+
+                                                        $('[id$="rangeStart"]').on("keydown", function(event){
+                                                            if(event.keyCode == 27){
+                                                                $('[id$="rangeStart"]').val("");
+                                                            }
+                                                        });
+                                                        $('[id$="rangeEnd"]').on("keydown", function(event){
+                                                            if(event.keyCode == 27){
+                                                                $('[id$="rangeEnd"]').val("");
+                                                            }
+                                                        });
+                                                    }
+                                                </script> 
+                                                <apex:pageBlockTable value="{!binRangeList}" var="brr" styleClass="table-hover  table table-condensed table-responsive" >
                                                 <apex:column >
                                                     <apex:facet name="header">                                                        
                                                         <apex:outputLabel styleClass="binRangeNumber" value="{!$ObjectType.TIP_BIN_Range__c.fields.TIP_Range_Start__c.label}"/>
@@ -266,10 +345,12 @@
                                                     </apex:outputPanel>
                                                 </apex:column>
                                             </apex:pageBlockTable>
+                                            </apex:outputPanel>
                                             <apex:actionFunction name="deleteBINRangeRow" action="{!deleteBinRange}" reRender="binTable">
                                                 <apex:param name="binRangeRecPos" value=""/>
                                             </apex:actionFunction>          
                                         </apex:pageBlockSectionItem>
+                                       
                                     </apex:pageBlockSection>
                                     <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
                                       <apex:outputPanel layout="block" styleClass="modal-dialog" id="myModalContent"> 
@@ -284,13 +365,13 @@
                                                     <apex:facet name="header">                                                        
                                                         <apex:outputLabel value="{!$ObjectType.TIP_BIN_Range__c.fields.TIP_Range_Start__c.label}"/>
                                                     </apex:facet>
-                                                    <apex:inputField style="width:'100%'" value="{!nb.binRange.TIP_Range_Start__c}" required="false" />
+                                                    <apex:inputField id="rangeStart" style="width:'100%'" value="{!nb.binRange.TIP_Range_Start__c}" required="false" />
                                                 </apex:column>
                                                 <apex:column >
                                                     <apex:facet name="header">
                                                         <apex:outputLabel value="{!$ObjectType.TIP_BIN_Range__c.fields.TIP_Range_End__c.label}"/>
                                                     </apex:facet>
-                                                    <apex:inputField style="width:'100%'" value="{!nb.binRange.TIP_Range_End__c}" required="false" />
+                                                    <apex:inputField id="rangeEnd" style="width:'100%'" value="{!nb.binRange.TIP_Range_End__c}" required="false" />
                                                 </apex:column>
                                             </apex:pageBlockTable>
                                          </div>
