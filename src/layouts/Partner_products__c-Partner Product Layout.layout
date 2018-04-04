@@ -146,7 +146,7 @@
                 <field>PP_Effective_to_Date__c</field>
             </layoutItems>
             <layoutItems>
-                <behavior>Required</behavior>
+                <behavior>Edit</behavior>
                 <field>PP_status__c</field>
             </layoutItems>
         </layoutColumns>

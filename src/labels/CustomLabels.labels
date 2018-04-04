@@ -14969,6 +14969,13 @@ Also note that the data contained in ICE is provided to IATA by third parties at
         <value>Application for Enlistment as a Payment Provider</value>
     </labels>
     <labels>
+        <fullName>ISSP_Application_for_Enlistment_Email_Duplicated</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP Application for Enlistment Email Duplicated</shortDescription>
+        <value>Email duplicated. Please insert other email</value>
+    </labels>
+    <labels>
         <fullName>ISSP_Apply_Filter</fullName>
         <categories>portal, S6</categories>
         <language>en_US</language>
@@ -19473,6 +19480,13 @@ Please note that many IATA invoices for accredited agents are collected through 
         <value>Payment Provider Enrolment/Certification</value>
     </labels>
     <labels>
+        <fullName>ISSP_Payment_Provider_Details_section_2</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP Payment Provider Details section 2</shortDescription>
+        <value>SECTION 2 - Payment Provider Contacts</value>
+    </labels>
+    <labels>
         <fullName>ISSP_Pending</fullName>
         <categories>ISSP</categories>
         <language>en_US</language>
@@ -20976,6 +20990,68 @@ This Dashboard allows each airline Treasury Team to gain full visibility of thei
         <protected>false</protected>
         <shortDescription>ISSP_TIESS_Code__Search_Format</shortDescription>
         <value>(in format TIESS_000XXXX)</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_TIP_ADD_BIN_RANGE</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP TIP ADD BIN RANGE</shortDescription>
+        <value>Add BIN Range</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_TIP_Discard_Unsaved_Changes</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_TIP_Discard_Unsaved_Changes</shortDescription>
+        <value>All unsaved changes will be discarded. Are you sure you want to leave the page?</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_TIP_Home_Account_must_be_Payment_Provider</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP TIP Home Account must be Payment Provider</shortDescription>
+        <value>Account must be of type Payment Provider</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_TIP_Home_Only_Portal_Administrators</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP TIP Home Only Portal Administrators</shortDescription>
+        <value>Only Portal Administrators can apply to Enlistment as a Payment Provider</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_TIP_Home_Only_Portal_Administrators_Enrol_Products</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP TIP Home Only Portal Administrators Enrol Products</shortDescription>
+        <value>Only Portal Administrators can Enrol Products</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_TIP_Home_Products_table_Edit_option</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Products table Edit option</shortDescription>
+        <value>Edit</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_TIP_Home_Products_table_View_Update_option</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Products table View/Update option</shortDescription>
+        <value>View/Update</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_TIP_Home_button_Enrol_new_Product</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Enrol new Product</shortDescription>
+        <value>Enrol new Product</value>
+    </labels>
+        <fullName>ISSP_TIP_MANDATORY_ON_SUBMIT</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP TIP MANDATORY ON SUBMIT</shortDescription>
+        <value>Mandatory fields upon submission to IATA</value>
     </labels>
     <labels>
         <fullName>ISSP_TOULink</fullName>
