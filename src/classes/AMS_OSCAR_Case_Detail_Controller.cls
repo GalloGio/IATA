@@ -103,7 +103,7 @@ public with sharing class AMS_OSCAR_Case_Detail_Controller {
         }
     }
 
-    public static Set<String> hidenFieldsNewgenApplications = new Set<String>{'Abbreviated_name__c','Abbreviated_Address__c'};
+    public static Set<String> hidenFieldsNewgenApplications = new Set<String>{};
 
     public List<String> accreditationFieldNames {
         get{
