@@ -744,6 +744,13 @@
         <value>There are still no Appointments created for this OSCAR Process</value>
     </labels>
     <labels>
+        <fullName>AMS_PCI_Remaider_Addresses</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>AMS_PCI_Remaider_Addresses</shortDescription>
+        <value>cardosot@iata.org</value>
+    </labels>
+    <labels>
         <fullName>AMS_PERFORM_CORRECTION</fullName>
         <language>en_US</language>
         <protected>false</protected>
