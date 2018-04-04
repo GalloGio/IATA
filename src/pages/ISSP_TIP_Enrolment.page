@@ -438,14 +438,13 @@
                                           </apex:pageBlockSectionItem>
                                           <apex:pageBlockSectionItem id="companyItemMobile">
                                              <apex:outputLabel value="{!$ObjectType.Account.fields.Mobile__c.Label}"/>
-                                             <apex:inputField style="width: 200px;" styleclass="form-control recSearch" value="{!account.Mobile__c}" onblur="setInternationalAccountPhoneNo('mobile');" id="companymobileinput"/>
+                                             <apex:inputField style="width: 200px;" styleclass="form-control recSearch" value="{!account.Mobile__c}"  />
                                           </apex:pageBlockSectionItem>
                                           <apex:pageBlockSectionItem id="companyItemFax">
                                              <apex:outputLabel value="{!$Label.ISSP_Fax}"/>
-                                             <apex:inputField style="width: 200px;" styleclass="form-control recSearch"  value="{!account.FAXNational__c}" onblur="setInternationalAccountPhoneNo('fax');" id="companyfaxinput"/>
+                                             <apex:inputField style="width: 200px;" styleclass="form-control recSearch"  value="{!account.FAXNational__c}" onblur="setInternationalAccountPhoneNo('fax');$j('.fax').change();" id="companyfaxinput"/>
                                           </apex:pageBlockSectionItem>
                                           <apex:inputHidden value="{!account.Phone}" id="companyphone"/>
-                                          <apex:inputHidden value="{!account.Mobile__c}" id="companymobile"/>
                                           <apex:inputHidden value="{!account.Fax}" id="companyfax"/>
                                        </apex:pageBlockSection>
                                        <div style="padding-top: 20px; padding-bottom:10px;" >
