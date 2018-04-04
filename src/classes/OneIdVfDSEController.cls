@@ -900,6 +900,8 @@ public without sharing class OneIdVfDSEController {
                 if(serviceName == 'ISSP' && isNewAcc == true){
                     permissionNewAgency(returnedString);                    
                     portalServiceNewAgency(con.Id);
+                    updatePortalUseProfile(returnedString);
+
                 }
 
                 //errorMessage.add(System.Label.ISSP_Registration_Thank_you_GeneralAccount);
@@ -1357,7 +1359,15 @@ public without sharing class OneIdVfDSEController {
         }
     }
 
+    // This method will be used to give a new profile to the first Portal User ( ISS Portal Agency User (Partner) ). 
+    // To overwrite the portal default profile
 
+    @future
+    public static void updatePortalUseProfile(String userId){
+        system.debug('aqui updateUserProfile ... ' + userId);
+        Profile isspAgentUser = [SELECT Id FROM Profile WHERE Name = 'ISS Portal Agency User (Partner)'];                
+        update new User(Id = userId, ProfileId = isspAgentUser.Id);       
+    }
 
     // to be used in visualforce page OneIdVfCreateAccount
     public Static String getHostURL(){

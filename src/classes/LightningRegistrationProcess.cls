@@ -408,8 +408,8 @@ public without sharing class LightningRegistrationProcess{
             //PermissionSetAssignment psa = new PermissionSetAssignment (PermissionSetId = ps.Id, AssigneeId = u.Id);
             //database.upsert(psa);
 
-            if(String.isNotBlank(userId))
-                setFederationId(userId, con.email);
+            /*if(String.isNotBlank(userId))
+                setFederationId(userId, con.email);*/
             System.debug('Done Registration UserId: ' + u);
         	if(!Test.isRunningTest()){
 				sendWelcomeEmail(con, u, password);
@@ -516,8 +516,8 @@ public without sharing class LightningRegistrationProcess{
             String password = Comm_User_Helper.generateRandomString(6) + '1a';
             String userId = Site.createPortalUser(u, con.accountId, password, false);
 
-            if(String.isNotBlank(userId))
-                setFederationId(userId, con.email);
+            /*if(String.isNotBlank(userId))
+                setFederationId(userId, con.email);*/
             System.debug('Done Registration UserId: ' + u);
             
             
@@ -575,12 +575,12 @@ public without sharing class LightningRegistrationProcess{
             System.debug('End Assigning PermissionSet'); 
     }
     
-    @future
+    /*@future
     public static void setFederationId (String userid, String email) {
         User u = new User(id=userid); 
         u.FederationIdentifier = u.id;
         database.update(u);
-    }
+    }*/
 /*    
     @AuraEnabled
     public Static String setHostURL (){
