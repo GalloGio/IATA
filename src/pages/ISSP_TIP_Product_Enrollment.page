@@ -87,7 +87,9 @@
 
                 function enableBinRangeBtn(){
                     var namef = $('[id$="nameField"]');
-                    if(namef.val()==''||namef.val()==null || namef.val()==undefined){
+                    var paymenNet = $('[id$="paymentNet"]');
+                    if((namef.val()==''||namef.val()==null || namef.val()==undefined)
+                        ||(paymenNet.val()==''||paymenNet.val()==null || paymenNet.val()==undefined)){
                         $('[id$="newBinRangebtn"]').toggleClass('btnDisabled', true).attr('disabled', 'disabled');
                     } else {
                         $('[id$="newBinRangebtn"]').toggleClass('btnDisabled', false).attr('disabled', null);
@@ -343,10 +345,12 @@
                                                     </apex:outputPanel>
                                                 </apex:column>
                                             </apex:pageBlockTable>
+                                            </apex:outputPanel>
                                             <apex:actionFunction name="deleteBINRangeRow" action="{!deleteBinRange}" reRender="binTable">
                                                 <apex:param name="binRangeRecPos" value=""/>
                                             </apex:actionFunction>          
                                         </apex:pageBlockSectionItem>
+                                       
                                     </apex:pageBlockSection>
                                     <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
                                       <apex:outputPanel layout="block" styleClass="modal-dialog" id="myModalContent"> 
@@ -361,13 +365,13 @@
                                                     <apex:facet name="header">                                                        
                                                         <apex:outputLabel value="{!$ObjectType.TIP_BIN_Range__c.fields.TIP_Range_Start__c.label}"/>
                                                     </apex:facet>
-                                                    <apex:inputField style="width:'100%'" value="{!nb.binRange.TIP_Range_Start__c}" required="false" />
+                                                    <apex:inputField id="rangeStart" style="width:'100%'" value="{!nb.binRange.TIP_Range_Start__c}" required="false" />
                                                 </apex:column>
                                                 <apex:column >
                                                     <apex:facet name="header">
                                                         <apex:outputLabel value="{!$ObjectType.TIP_BIN_Range__c.fields.TIP_Range_End__c.label}"/>
                                                     </apex:facet>
-                                                    <apex:inputField style="width:'100%'" value="{!nb.binRange.TIP_Range_End__c}" required="false" />
+                                                    <apex:inputField id="rangeEnd" style="width:'100%'" value="{!nb.binRange.TIP_Range_End__c}" required="false" />
                                                 </apex:column>
                                             </apex:pageBlockTable>
                                          </div>
