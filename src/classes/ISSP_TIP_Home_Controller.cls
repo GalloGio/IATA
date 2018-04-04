@@ -141,7 +141,8 @@ public with sharing class ISSP_TIP_Home_Controller {
         for(Partner_products__c p :[SELECT id, name, PP_Payment_network__c, PP_Effective_to_Date__c, PP_Effective_from_Date__c, PP_status__c
           FROM Partner_products__c 
           WHERE Provider__c  = :con.AccountId
-            AND recordtypeid = :TIP_PRODUCT_RECORD_TYPE_ID]){
+            AND recordtypeid = :TIP_PRODUCT_RECORD_TYPE_ID
+            ORDER BY PP_status__c DESC]){
             
             products.add(new productWrapper(p.id,p.name, p.PP_Payment_network__c,p.PP_Effective_to_Date__c,p.PP_Effective_from_Date__c, p.PP_status__c));
         }
