@@ -398,7 +398,9 @@
     <fields>
         <fullName>PP_VAN_type__c</fullName>
         <externalId>false</externalId>
-        <inlineHelpText>If the product is a single use VAN, Multi-use VANs?</inlineHelpText>
+        <inlineHelpText>Enter if product is a Single-use or Multi-use VAN.
+If it is a single-use VAN, then a unique VAN number is created for every transaction.
+If the product is a multi-use VANs, then it is a unique card/account number that can be used multiple times.</inlineHelpText>
         <label>VAN type</label>
         <required>false</required>
         <trackTrending>false</trackTrending>
