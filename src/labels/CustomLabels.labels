@@ -748,7 +748,7 @@
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>AMS_PCI_Remaider_Addresses</shortDescription>
-        <value>cardosot@iata.org</value>
+        <value>larivaa@iata.org</value>
     </labels>
     <labels>
         <fullName>AMS_PERFORM_CORRECTION</fullName>
