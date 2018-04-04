@@ -100,7 +100,7 @@ public with sharing class ISSP_TIP_Home_Controller {
         AND (Status = 'Draft' OR Status Not In :closedStatusesList)];
 
         for (Case c: caseList) {
-            if (TIP_Utils.CASE_STATUS_NOT_AVAILABLE_FOR_ENLISTMENT.contains(c.Status) && c.Reason1__c == TIP_Utils.CASE_REASON_PAYMENT_PROVIDER_MANAGMENT) {
+            if (!c.IsClosed && c.Status != 'Draft' && c.Reason1__c == TIP_Utils.CASE_REASON_PAYMENT_PROVIDER_MANAGMENT) {
                 btnEnabled = false;
                 break;
             }
