@@ -89079,7 +89079,7 @@ OR(ISPICKVAL(Industry, &apos;Airline&apos;),ISPICKVAL(Industry, &apos;Travel Age
     ISPICKVAL(Category__c , &apos;Payment Provider&apos;)
    )
 )
-&amp;&amp;  ISPICKVAL(Status__c, &apos;Approved&apos;)
+&amp;&amp;  ISPICKVAL(Status__c, &apos;Active&apos;)
 &amp;&amp; Accreditation_date__c &gt; today()</errorConditionFormula>
         <errorMessage>Can&apos;t have active Payment Providers with the accreditation date in the future</errorMessage>
     </validationRules>
