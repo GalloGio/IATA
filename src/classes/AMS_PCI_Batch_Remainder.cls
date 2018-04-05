@@ -160,6 +160,7 @@ global  class AMS_PCI_Batch_Remainder implements Database.Batchable<sObject>, Da
 				lstResult.add(new ResultWrapper(cse.CaseNumber, contactName, countryName, regionName, preferredLang, emailTemplateName, 'Template not found ', false));
 				continue;
 			} else {
+				emailTemplateName = 'AMS_PCI_Compliant_reminder_EN';
 				template = mapTemplates.get('AMS_PCI_Compliant_reminder_EN');
 			}
 
@@ -263,13 +264,13 @@ global  class AMS_PCI_Batch_Remainder implements Database.Batchable<sObject>, Da
 
 		public ResultWrapper(String caseNumber, String contactName, String countryName, String regionName, String preferredLang, String templateName, String errorMessage, Boolean sended) {
 			this.caseNumber = String.isBlank(caseNumber) ? '' : caseNumber;
-			this.contactName = String.isBlank(contactName) ? '' : contactName;
-			this.countryName = String.isBlank(countryName) ? '' : countryName;
-			this.regionName = String.isBlank(regionName) ? '' : regionName;
+			this.contactName = String.isBlank(contactName) ? '' : contactName.escapeCSV();
+			this.countryName = String.isBlank(countryName) ? '' : countryName.escapeCSV();
+			this.regionName = String.isBlank(regionName) ? '' : regionName.escapeCSV();
 			this.errorMessage = String.isBlank(errorMessage) ? '' : errorMessage;
 			this.sended = sended;
-			this.preferredLang = preferredLang;
-			this.templateName = templateName;
+			this.preferredLang = preferredLang.escapeCSV();
+			this.templateName = templateName.escapeCSV();
 		}
 
 	}
