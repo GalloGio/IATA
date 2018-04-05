@@ -172,7 +172,7 @@ public without sharing class ISSP_Case {
     **/
     public Boolean getHideForClosedCases() {
         set<String> validRecordtypes = new set<String>{AME_RECORD_TYPE_ID, AMERICAS_RECORD_TYPE_ID, APAC_RECORD_TYPE_ID, CHINA_RECORD_TYPE_ID, EUROPE_RECORD_TYPE_ID, IDFS_RECORD_TYPE_ID};
-        /AMSU-119
+        //AMSU-119
         //return (validRecordtypes.contains(this.newCase.RecordtypeId) && this.newCase.ClosedDate < Date.today().addDays(-14));
         return ((validRecordtypes.contains(this.newCase.RecordtypeId) && this.newCase.ClosedDate < Date.today().addDays(-14)) || isMSOcase );
     }
