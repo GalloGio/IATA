@@ -35,12 +35,9 @@ public class TIP_Utils{
 		String queryString = 'SELECT ID, IATACode__c FROM Account WHERE ( recordtypeid = \''+TIP_Utils.PAYMENT_PROVIDER_RECORD_TYPE_ID + '\' OR (recordtypeid = \''+TIP_Utils.STANDARD_ACCOUNT_RECORD_TYPE_ID+'\' AND Category__c = \''+TIP_Utils.ACCOUNT_CATEGORY_PAYMENT_PROVIDER+'\') )';
 		String queryStringAccountForupdatedAccs = '';
 
-		system.debug('##new: ' + triggerNew);
-		system.debug('##Old: ' + triggerOld);
-
 		if(trigger.isInsert){
 			for(Account acc : triggerNew){ 
-			mapIataCodeAccount.put(acc.IATACode__c,acc);
+				if(!String.isBlank(acc.IATACode__c)) mapIataCodeAccount.put(acc.IATACode__c,acc);
 			//queryStringAccountForupdatedAccs += (String.isEmpty(queryStringAccountForupdatedAccs) ? '' : ' OR ' ) + '(ID <> \''+ acc.id +'\' AND IATACode__c = \''+ acc.IATACode__c +'\')' ;
 			}
 			if(!mapIataCodeAccount.isEmpty()) queryString += 'AND IATACode__c NOT IN ' + mapIataCodeAccount.keySet();
@@ -54,14 +51,13 @@ public class TIP_Utils{
 					queryStringAccountForupdatedAccs += (String.isEmpty(queryStringAccountForupdatedAccs) ? '' : ' OR ') +' (ID <> \''+ accNew.id +'\' AND IATACode__c = \''+ accNew.IATACode__c +'\')' ;
 				}
 			}		
-			//should not be needed this verification (mas como mais vale prevenir que remediar)
+			//should not be needed this verification 
 			if(!String.isEmpty(queryStringAccountForupdatedAccs)) queryString += ' AND ('+ queryStringAccountForupdatedAccs +')';
 		}
 
 
 		/*
 		this query would work if the before trigger wouldn't be deplpoyed more than once
-
 		List<Account> tempAccs = [SELECT ID,IATACode__c FROM Account 
 		                            WHERE IATACode__c IN :mapIataCodeAccount.keyset()  
 		                              AND (
