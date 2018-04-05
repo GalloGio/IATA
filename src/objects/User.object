@@ -2333,7 +2333,7 @@ Currently (26/10/15) used to identify which user haven&apos;t complete the suppo
         <filters>
             <field>FULL_NAME</field>
             <operation>contains</operation>
-            <value>Andrija</value>
+            <value>Weydath</value>
         </filters>
         <label>User with name</label>
         <language>en_US</language>
@@ -2959,6 +2959,23 @@ Currently (26/10/15) used to identify which user haven&apos;t complete the suppo
         </sharedTo>
     </listViews>
     <listViews>
+        <fullName>Identity_Users</fullName>
+        <columns>FULL_NAME</columns>
+        <columns>CORE.USERS.USERNAME</columns>
+        <columns>CORE.USERS.LAST_LOGIN</columns>
+        <columns>CORE.USERS.ACTIVE</columns>
+        <columns>CORE.PROFILE.NAME</columns>
+        <columns>License_Cost_Center__c</columns>
+        <filterScope>Everything</filterScope>
+        <filters>
+            <field>License_name__c</field>
+            <operation>equals</operation>
+            <value>Identity</value>
+        </filters>
+        <label>Identity Users</label>
+        <language>en_US</language>
+    </listViews>
+    <listViews>
         <fullName>Knowledge_Users</fullName>
         <columns>FULL_NAME</columns>
         <columns>CORE.USERS.USERNAME</columns>
@@ -3389,19 +3406,14 @@ Currently (26/10/15) used to identify which user haven&apos;t complete the suppo
         <columns>CORE.USERS.EMAIL</columns>
         <filterScope>Everything</filterScope>
         <filters>
-            <field>CORE.USERS.ACTIVE</field>
+            <field>Portal_User_Frozen_Checkbox__c</field>
             <operation>equals</operation>
             <value>1</value>
         </filters>
         <filters>
-            <field>CORE.PROFILE.NAME</field>
-            <operation>contains</operation>
-            <value>ISS Portal Airline User (Partner)</value>
-        </filters>
-        <filters>
-            <field>LANGUAGE</field>
-            <operation>notEqual</operation>
-            <value>1</value>
+            <field>LAST_UPDATE</field>
+            <operation>equals</operation>
+            <value>YESTERDAY</value>
         </filters>
         <label>TD</label>
         <language>en_US</language>

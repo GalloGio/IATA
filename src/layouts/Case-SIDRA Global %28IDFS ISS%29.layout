@@ -10,6 +10,8 @@
     <customButtons>Reactivate_BSPLink</customButtons>
     <customButtons>Escalate_within_IATA</customButtons>
     <customButtons>Create_SAAM_Case</customButtons>
+    <customButtons>OscarFOP</customButtons>
+    <customButtons>Conga_Merge_JS</customButtons>
     <emailDefault>false</emailDefault>
     <excludeButtons>Clone</excludeButtons>
     <excludeButtons>Delete</excludeButtons>

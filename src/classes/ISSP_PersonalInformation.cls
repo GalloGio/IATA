@@ -133,7 +133,7 @@ public with sharing class ISSP_PersonalInformation {
         noirr = string.valueof(con.Account.Accumulated_Irregularities__c);
         FinSubmission  = string.valueof(con.Account.Fin_statements_submission_deadline__c);
         
-        if ( (con.Account.Sector__c=='Cargo Agent' || con.Account.Sector__c=='Travel Agent') && (con.User_Portal_Status__c=='Approved Admin' || con.BSP_CASS_Payment_contact__c || con.Financial_Assessment_Contact__c) && getPermissionForStandardAccount() == false && (!con.Account.CNS_Account__c)) {
+        if ( (con.Account.Sector__c=='Cargo Agent' || con.Account.Sector__c=='Travel Agent') && (con.User_Portal_Status__c=='Approved Admin' || con.BSP_CASS_Payment_contact__c || con.Financial_Assessment_Contact__c) && getPermissionForStandardAccount() == false && (!con.Account.CNS_Account__c) && !con.Account.IATA_ISO_Country__r.ANG_Enable_NewGen__c) {
                 showIrregularities = True;
         }
         else {

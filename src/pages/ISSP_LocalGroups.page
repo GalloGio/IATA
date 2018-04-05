@@ -1,0 +1,198 @@
+<apex:page controller="ISSP_LocalGroups" action="{!init}" standardStylesheets="false" showHeader="false" sidebar="false"  applyBodyTag="false" applyHtmlTag="false">
+<html>
+    <c:ISSP_Header communityName="{!communityName}"></c:ISSP_Header>
+    <script src="{!URLFOR($Resource.DataTables,'DataTables-1.10.15/js/jquery.dataTables.min.js')}"/>
+    <script src="{!URLFOR($Resource.DataTables,'DataTables-1.10.15/js/dataTables.bootstrap.min.js')}"/>
+    <script src="{!URLFOR($Resource.DataTables,'DataTables-1.10.15/extensions/Responsive/js/dataTables.responsive.min.js')}"/>
+    <script src="{!URLFOR($Resource.DataTables,'DataTables-1.10.15/extensions/Responsive/js/responsive.bootstrap.min.js')}"/>
+    <link rel="stylesheet" href="{!URLFOR($Resource.ISSP_LocalGroups, '/css/main.css')}"/>
+
+<script>
+  $(document).ready( function () {
+    // Enable tooltips
+    $('[data-toggle="tooltip"]').tooltip(); 
+
+    // init datatable
+    var tbl = $('.table-pagination').DataTable({
+      "bSort" : false,
+      "dom": '<"top">rt<"bottom"lp><"clear"i>',
+      "language": {
+              "lengthMenu": "{!$Label.ISSP_Display_Records_per_page}",
+              "zeroRecords": "{!$Label.ISSP_Nothing_found}",
+              "info": "{!$Label.ISSP_Showing_page}",
+              "infoEmpty": "{!$Label.ISSP_No_records_available}",
+              "infoFiltered": "{!$Label.ISSP_filtered_from_total_records}",
+              "search": "{!$Label.ISSP_Search}",
+              "paginate": {
+                "next": "{!$Label.ISSP_Next}",
+                "previous": "{!$Label.ISSP_Previous}"
+              }
+          }
+    });
+    // search box
+    $('#table-pagination-search').keyup(function() {
+        tbl.search( this.value ).draw();
+    } );
+    // reset button
+    $('#table-filters-reset').click(function() {
+        // reset all select filters
+        $('select.select-filter').each( function () {
+            $(this).val('');
+            tbl.column( $(this).attr("data-index")).search( '' ).draw();
+        });
+        // reset search box
+        $('#table-pagination-search').val('');
+        // draw all values in table
+        tbl.search('').draw();
+    } );
+    
+    //initFilters(tbl);
+    $('.table-pagination thead th.headerRowFilter').each( function (i) {
+      if ([0,1,2,3,4].indexOf(i)>-1) {
+          var title = $('th.headerRow')[i].textContent;
+          var select = $('<select class="select-filter" data-index="'+i+'"></select>');
+          select.append( '<option value="" selected>' + title + '</option>' )
+          // get all distinct values and creates an option value
+          values = new Array();
+          tbl.column(i).data().unique().each( function ( d, j ) {
+              var text = d;
+              if ($($.parseHTML(text)).is("span")) {
+                text = $(d).text();
+              }
+              //alert(text + " " +  d + " " + j);
+              values.push(text);
+          } );
+          values.sort().forEach(function(element) {
+              select.append( '<option value="'+addslashes(element)+'">'+element+'</option>' );
+          });
+          $(this).html( select );
+      }
+    } );
+    
+    // add filter event
+    $(".select-filter").on( 'change', function () {
+        if ($(this).val()=='') {
+            tbl
+                .column( $(this).attr("data-index"))
+                .search( '' )
+                .draw();
+        } else {
+            tbl
+                .column( $(this).attr("data-index"))
+                .search( '^'+$(this).val()+'$', true, false )
+                .draw();
+        }
+    } );
+  });
+  
+  function addslashes(str) {
+    str=str.replace(/\'/g,'.');
+    str=str.replace(/\"/g,'\\"');
+    str=str.replace(/\\/g,'\\\\');
+    str=str.replace(/\0/g,'\\0');
+    str=str.replace(/\(/g,'\\\(');
+    str=str.replace(/\)/g,'\\\)');
+    return str;
+  }
+</script>
+
+<body>
+
+    <div class="container">
+        <c:ISSP_CustomNavigation communityName="{!communityName}"/>
+
+        <apex:form id="mainForm">
+            <apex:pageMessages />
+
+            <div class="row">
+                <div class="col-xs-12 service-header">
+                    <div class="row">&nbsp;</div>
+                    <div class="row ">
+                        <div class="col-xs-10 page-title">
+                            {!$Label.ISSP_Local_Groups_Industry_Title}
+                        </div>
+                        <div class="col-xs-2">
+                            <apex:outputLink styleclass="btn btn-primary btn-sm" value="{!URLFOR($Page.ISSP_LocalGroupsCSV)}">
+                                <span class="glyphicon glyphicon-th" aria-hidden="true"></span>
+                                {!$Label.ISSP_Local_Groups_Export_CSV}
+                            </apex:outputlink>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-xs-12 page-subtitle">
+                            {!$Label.ISSP_Local_Groups_Industry_Description}
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- MAIN TABLE  -->
+            <div id="table-container">
+            <table class="table table-condensed table-pagination">
+                <thead>
+                    <tr class="headerRowFilter">
+                        <th class="headerRowFilter"></th>
+                        <th class="headerRowFilter"></th>
+                        <th class="headerRowFilter"></th>
+                        <th class="headerRowFilter"></th>
+                        <th class="headerRowFilter"></th>
+                        <th colspan="4" class="headerRowFilter">
+                            <div class="row">
+                                <div class="hidden-xs hidden-sm col-md-5 col-lg-6 text-left">
+                                    <apex:outputPanel rendered="{!listWrapper.size>0}" >
+                                        <button id="table-filters-reset" class="btn btn-primary btn-sm">{!$Label.ISSP_Local_Groups_Industry_Reset}</button>
+                                    </apex:outputPanel>
+                                </div>
+                                <div class="col-xs-12 col-sm-12 col-md-7 col-lg-6">
+                                    <input id="table-pagination-search" class="form-control input-sm" onkeypress="enterKey(event);" placeholder="{!$Label.ISSP_Search}" type="text"/>
+                                </div>
+                            </div>
+                        </th>
+                    </tr>
+                    <tr class="headerRow">
+                        <th class="headerRow"><apex:outputText value="{!$ObjectType.Participant__c.fields.Region__c.label}"/></th>
+                        <th class="headerRow"><apex:outputText value="{!$Label.ISSP_Local_Groups_Country}"/></th>
+                        <th class="headerRow"><apex:outputText value="{!$ObjectType.Participant__c.fields.Local_Group_Type__c.label}"/></th>
+                        <th class="headerRow"><apex:outputText value="{!$ObjectType.Participant__c.fields.Cargo_Passenger__c.label}"/></th>
+                        <th class="headerRow"><apex:outputText value="{!$ObjectType.Participant__c.fields.Participant_Type__c.label}"/></th>
+                        <th class="headerRow"><apex:outputText value="{!$Label.ISSP_Local_Groups_Contact_Name}"/></th>
+                        <th class="headerRow hidden-md hidden-sm hidden-xs"><apex:outputText value="{!$ObjectType.Participant__c.fields.Title__c.label}"/></th>
+                        <th class="headerRow hidden-md hidden-sm hidden-xs"><apex:outputText value="{!$ObjectType.Participant__c.fields.Representing__c.label}"/></th>
+                        <th class="headerRow hidden-sm hidden-xs"><apex:outputText value="{!$ObjectType.Participant__c.fields.Email__c.label}"/></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <apex:repeat value="{!listWrapper}" var="wrapper">
+                      <tr>
+                        <td>{!wrapper.participant.Local_Governance__r.Region__c}</td>
+                        <td>
+                            <apex:outputText value="{!wrapper.participant.Local_Governance__r.Country__r[IsoCountryFieldName]}" rendered="{!wrapper.participant.Local_Governance__r.Country__r.Name!=null}"/>
+                            <apex:outputText value="{!wrapper.participant.Local_Governance__r.Cluster__r.Name}" rendered="{!wrapper.participant.Local_Governance__r.Cluster__r.Name!=null}"
+                                html-data-toggle="{!IF(wrapper.countryClusterTooltip=='','','tooltip')}" title="{!wrapper.countryClusterTooltip}"/>
+                        </td>
+                        <td>
+                            <apex:outputText value="{!wrapper.participant.Local_Governance__r.Local_Governance_type__c}"
+                                html-data-toggle="{!IF(OR(wrapper.participant.Local_Governance__r.Local_Governance_type__c=='',wrapper.groupTypeTooltip==''),'','tooltip')}" title="{!wrapper.groupTypeTooltip}"/>
+                        </td>
+                        <td>{!wrapper.participant.Local_Governance__r.Cargo_Passenger__c}</td>
+                        <td>{!wrapper.participant.Participant_Type__c}</td>
+                        <td><apex:outputLink value="/ISSP_Contact?id={!wrapper.participant.Contact__c}&mid=M4S1">
+                                {!wrapper.participant.Contact__r.Name}
+                            </apex:outputLink>
+                        </td>
+                        <td class="hidden-md hidden-sm hidden-xs">{!wrapper.participant.Title__c}</td>
+                        <td class="hidden-md hidden-sm hidden-xs">{!wrapper.participant.Representing__r.Name}</td>
+                        <td class="hidden-sm hidden-xs">{!wrapper.participant.Email__c}</td>
+                      </tr>
+                    </apex:repeat>
+                </tbody>
+            </table>
+            </div>
+        </apex:form>
+
+        <c:ISSP_CustomFooter communityName="{!communityName}"/>
+    </div><!-- end container-->
+
+</body>
+</html>
+</apex:page>

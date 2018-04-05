@@ -367,7 +367,12 @@
             <operation>equals</operation>
             <value>Reference - GSS Member</value>
         </filters>
-        <label>Field Details - GSS Member - TXT</label>
+        <filters>
+            <field>Target__c</field>
+            <operation>notEqual</operation>
+            <value>Territory,Airline</value>
+        </filters>
+        <label>01- Field Details - TXT - GSS Member</label>
         <language>en_US</language>
     </listViews>
     <listViews>
@@ -387,7 +392,7 @@
             <operation>equals</operation>
             <value>Reference - GSS Non Member</value>
         </filters>
-        <label>Field Details - GSS Non Member - TXT</label>
+        <label>02- Field Details - TXT - GSS NonMember</label>
         <language>en_US</language>
     </listViews>
     <listViews>
@@ -413,7 +418,7 @@
             <operation>equals</operation>
             <value>0</value>
         </filters>
-        <label>Field Details - MDP NO Address</label>
+        <label>03- Field Details - MDP NO Address</label>
         <language>en_US</language>
     </listViews>
     <listViews>
@@ -439,36 +444,18 @@
             <operation>equals</operation>
             <value>0</value>
         </filters>
-        <label>Field Details - MDP WITH Address</label>
-        <language>en_US</language>
-    </listViews>
-    <listViews>
-        <fullName>Field_Tracking_GSS_Member_Enhanced</fullName>
-        <columns>GDP_File_Description__c</columns>
-        <columns>NAME</columns>
-        <columns>API_Name__c</columns>
-        <columns>API_Object_Name__c</columns>
-        <columns>Filter_Field_API_Name__c</columns>
-        <columns>Visible__c</columns>
-        <columns>TXT_Hidden_Column__c</columns>
-        <columns>Do_not_Track__c</columns>
-        <filterScope>Everything</filterScope>
-        <filters>
-            <field>GDP_File_Description__c</field>
-            <operation>equals</operation>
-            <value>Reference - GSS Member Enhanced</value>
-        </filters>
-        <label>Field Tracking - GSS Member Enhanced</label>
+        <label>04- Field Details - MDP WITH Address</label>
         <language>en_US</language>
     </listViews>
     <listViews>
         <fullName>Field_Tracking_GSS_Member_TXT</fullName>
         <columns>NAME</columns>
+        <columns>Position__c</columns>
         <columns>API_Name__c</columns>
         <columns>API_Object_Name__c</columns>
         <columns>Filter_Field_API_Name__c</columns>
-        <columns>Visible__c</columns>
         <columns>TXT_Hidden_Column__c</columns>
+        <columns>Visible__c</columns>
         <columns>Do_not_Track__c</columns>
         <filterScope>Everything</filterScope>
         <filters>
@@ -476,36 +463,13 @@
             <operation>equals</operation>
             <value>Reference - GSS Member</value>
         </filters>
-        <filters>
-            <field>API_Object_Name__c</field>
-            <operation>equals</operation>
-            <value>GDP_Products_Account_View__c</value>
-        </filters>
-        <label>Field Tracking - GSS Member - TXT</label>
-        <language>en_US</language>
-    </listViews>
-    <listViews>
-        <fullName>Field_Tracking_GSS_Non_Member_Enhanced</fullName>
-        <columns>GDP_File_Description__c</columns>
-        <columns>NAME</columns>
-        <columns>API_Name__c</columns>
-        <columns>API_Object_Name__c</columns>
-        <columns>Filter_Field_API_Name__c</columns>
-        <columns>Visible__c</columns>
-        <columns>TXT_Hidden_Column__c</columns>
-        <columns>Do_not_Track__c</columns>
-        <filterScope>Everything</filterScope>
-        <filters>
-            <field>GDP_File_Description__c</field>
-            <operation>equals</operation>
-            <value>Reference - GSS Non Member Enhanced</value>
-        </filters>
-        <label>Field Tracking - GSS Non Member Enhanced</label>
+        <label>90- Field Tracking - GSS Member</label>
         <language>en_US</language>
     </listViews>
     <listViews>
         <fullName>Field_Tracking_GSS_Non_Member_TXT</fullName>
         <columns>NAME</columns>
+        <columns>Position__c</columns>
         <columns>API_Name__c</columns>
         <columns>API_Object_Name__c</columns>
         <columns>Filter_Field_API_Name__c</columns>
@@ -518,43 +482,79 @@
             <operation>equals</operation>
             <value>Reference - GSS Non Member</value>
         </filters>
-        <label>Field Tracking - GSS Non Member - TXT</label>
+        <label>91- Field Tracking - GSS NonMember</label>
         <language>en_US</language>
     </listViews>
     <listViews>
-        <fullName>Field_Tracking_MDP_NO_Address</fullName>
+        <fullName>X01_Field_Details_TXT_GSS_MemberANG</fullName>
         <columns>NAME</columns>
         <columns>API_Name__c</columns>
         <columns>API_Object_Name__c</columns>
         <columns>Filter_Field_API_Name__c</columns>
+        <columns>Filter_Field_Value__c</columns>
+        <columns>Size__c</columns>
+        <columns>Position__c</columns>
+        <columns>Target__c</columns>
         <columns>Visible__c</columns>
         <columns>TXT_Hidden_Column__c</columns>
+        <filterScope>Everything</filterScope>
+        <filters>
+            <field>GDP_File_Description__c</field>
+            <operation>equals</operation>
+            <value>Reference - GSS Member NewGen</value>
+        </filters>
+        <filters>
+            <field>Target__c</field>
+            <operation>notEqual</operation>
+            <value>Territory,Airline</value>
+        </filters>
+        <label>01- Field Details - TXT - GSS MemberANG</label>
+        <language>en_US</language>
+    </listViews>
+    <listViews>
+        <fullName>X90_Field_Tracking_GSS_MemberANG</fullName>
+        <columns>NAME</columns>
+        <columns>Position__c</columns>
+        <columns>API_Name__c</columns>
+        <columns>API_Object_Name__c</columns>
+        <columns>Filter_Field_API_Name__c</columns>
+        <columns>Filter_Field_Value__c</columns>
+        <columns>TXT_Hidden_Column__c</columns>
+        <columns>Visible__c</columns>
         <columns>Do_not_Track__c</columns>
         <filterScope>Everything</filterScope>
         <filters>
             <field>GDP_File_Description__c</field>
             <operation>equals</operation>
-            <value>Reference - MDP NO Address</value>
+            <value>Reference - GSS Member NewGen</value>
         </filters>
-        <label>Field Tracking - MDP NO Address</label>
+        <label>90- Field Tracking - GSS MemberANG</label>
         <language>en_US</language>
     </listViews>
     <listViews>
-        <fullName>Field_Tracking_MDP_WITH_Address</fullName>
+        <fullName>ZZ_Search_By_API_Field_Name</fullName>
         <columns>NAME</columns>
         <columns>API_Name__c</columns>
         <columns>API_Object_Name__c</columns>
         <columns>Filter_Field_API_Name__c</columns>
+        <columns>Filter_Field_Value__c</columns>
+        <columns>Size__c</columns>
+        <columns>Position__c</columns>
+        <columns>Target__c</columns>
         <columns>Visible__c</columns>
         <columns>TXT_Hidden_Column__c</columns>
-        <columns>Do_not_Track__c</columns>
         <filterScope>Everything</filterScope>
         <filters>
             <field>GDP_File_Description__c</field>
             <operation>equals</operation>
-            <value>Reference - MDP WITH Address</value>
+            <value>Reference - GSS Member</value>
         </filters>
-        <label>Field Tracking - MDP WITH Address</label>
+        <filters>
+            <field>API_Name__c</field>
+            <operation>startsWith</operation>
+            <value>Location_Type</value>
+        </filters>
+        <label>ZZ-Search By API Field Name</label>
         <language>en_US</language>
     </listViews>
     <nameField>

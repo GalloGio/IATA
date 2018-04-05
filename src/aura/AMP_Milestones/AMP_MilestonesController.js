@@ -103,14 +103,29 @@
         $A.enqueueAction(action);
     },
     
+    showDeletePopup : function(component, event, helper) {
+        component.set("v.showDeletionCheck", true);
+        //pass the issue attribute passed from the event to a component attribute
+        var task = event.getParam("task");
+        component.set("v.milestoneToDelete", task);
+    },
+
+    hideDeletePopup : function(component, event, helper) {
+        component.set("v.showDeletionCheck", false);
+    },
+
     handleDeleteMilestone : function(component, event, helper) {
         console.log("handleDeleteMilestone");
-        var milestone = event.getParam("task");
+        var milestone = component.get("v.milestoneToDelete");
+        if(milestone == null){
+            milestone = event.getParam("task");
+            console.log(JSON.stringify(milestone));
+        }
         var milestones = component.get("v.milestones");
         
         if(milestone.Id === undefined) {
             
-            milestones.pop(); // the last item of the list is the unsaved, so we can pop()
+            milestones.shift(); // the last item of the list is the unsaved, so we can pop()
             component.set("v.milestones", milestones);
             
         }
@@ -136,5 +151,7 @@
             });
             $A.enqueueAction(action);
         }
+        //hide the delete popup
+        component.set("v.showDeletionCheck", false);
     }
 })

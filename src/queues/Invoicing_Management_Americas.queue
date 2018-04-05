@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Queue xmlns="http://soap.sforce.com/2006/04/metadata">
     <doesSendEmailToMembers>false</doesSendEmailToMembers>
-    <email>afosalesforce@iata.org</email>
+    <email>boonchimv@iata.org</email>
     <name>Invoicing Management - Americas</name>
     <queueSobject>
         <sobjectType>Case</sobjectType>

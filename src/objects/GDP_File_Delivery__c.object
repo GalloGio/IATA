@@ -324,7 +324,7 @@ Should be one of - Daily, Weekly, Semi-Monthly, Monthly</inlineHelpText>
         <columns>Status__c</columns>
         <columns>Delivery_Date__c</columns>
         <filterScope>Everything</filterScope>
-        <label>All</label>
+        <label>00-All</label>
         <language>en_US</language>
     </listViews>
     <listViews>
@@ -345,7 +345,7 @@ Should be one of - Daily, Weekly, Semi-Monthly, Monthly</inlineHelpText>
             <operation>equals</operation>
             <value>Completed</value>
         </filters>
-        <label>Completed</label>
+        <label>05-All Completed</label>
         <language>en_US</language>
     </listViews>
     <listViews>
@@ -366,7 +366,7 @@ Should be one of - Daily, Weekly, Semi-Monthly, Monthly</inlineHelpText>
             <operation>equals</operation>
             <value>Failed</value>
         </filters>
-        <label>Failed</label>
+        <label>01-Failed</label>
         <language>en_US</language>
     </listViews>
     <listViews>
@@ -388,7 +388,7 @@ Should be one of - Daily, Weekly, Semi-Monthly, Monthly</inlineHelpText>
             <operation>equals</operation>
             <value>In Progress</value>
         </filters>
-        <label>In Progress</label>
+        <label>02-In Progress</label>
         <language>en_US</language>
     </listViews>
     <listViews>
@@ -409,7 +409,28 @@ Should be one of - Daily, Weekly, Semi-Monthly, Monthly</inlineHelpText>
             <operation>equals</operation>
             <value>TODAY</value>
         </filters>
-        <label>Today&apos;s Deliveries</label>
+        <label>03-Today&apos;s Deliveries</label>
+        <language>en_US</language>
+    </listViews>
+    <listViews>
+        <fullName>X04_Yesterday_s_Deliveries</fullName>
+        <columns>NAME</columns>
+        <columns>Subscription__c</columns>
+        <columns>File_Specification__c</columns>
+        <columns>File_Name__c</columns>
+        <columns>File_Size_KB__c</columns>
+        <columns>Delivery_Frequency__c</columns>
+        <columns>Quantity_of_file_in_delivery__c</columns>
+        <columns>Message__c</columns>
+        <columns>Status__c</columns>
+        <columns>Delivery_Date__c</columns>
+        <filterScope>Everything</filterScope>
+        <filters>
+            <field>Delivery_Date__c</field>
+            <operation>equals</operation>
+            <value>YESTERDAY</value>
+        </filters>
+        <label>04-Yesterday&apos;s Deliveries</label>
         <language>en_US</language>
     </listViews>
     <listViews>
@@ -450,7 +471,7 @@ Should be one of - Daily, Weekly, Semi-Monthly, Monthly</inlineHelpText>
         <filters>
             <field>GSS_Subscription_Detail__c</field>
             <operation>equals</operation>
-            <value>A-S00006481</value>
+            <value>A-S00013298</value>
         </filters>
         <label>ZZ: Search by GSS Subscription Detail</label>
         <language>en_US</language>

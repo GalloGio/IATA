@@ -192,14 +192,16 @@ public with sharing class ISSP_CurrencyCenterCountryController {
         taskList = new List<Task>([SELECT Id, IsClosed, Status, Subject, ActivityDate, Description, 
                                     Bridge__c, Identifying_Members__c, Issuer__c, Members__c, Objectives__c, 
                                     Participants__c, Recipient__c, Responses__c, Result_Summary__c, 
-                                    Sender__c, Title__c, RecordType.DeveloperName, RecordType.Name, LastModifiedDate 
+                                    Sender__c, Title__c, RecordType.DeveloperName, RecordType.Name, LastModifiedDate, 
+                                    (SELECT Id, Name, Description FROM Attachments) 
                                     FROM Task WHERE WhatId =: cp.Id
                                     ORDER BY ActivityDate DESC]);
 
         eventList = new List<Event>([SELECT Id, Subject, ActivityDate, Description, StartDateTime, EndDateTime, 
                                     Bridge__c, Identifying_Members__c, Issuer__c, Members__c, Objectives__c, 
                                     Participants__c, Recipient__c, Responses__c, Result_Summary__c, 
-                                    Sender__c, Title__c, RecordType.DeveloperName, RecordType.Name, Type, Location, LastModifiedDate
+                                    Sender__c, Title__c, RecordType.DeveloperName, RecordType.Name, Type, Location, LastModifiedDate, 
+                                    (SELECT Id, Name, Description FROM Attachments) 
                                     FROM Event WHERE WhatId =: cp.Id
                                     ORDER BY ActivityDate DESC]);
 
@@ -395,6 +397,19 @@ public with sharing class ISSP_CurrencyCenterCountryController {
                 this.popoverContent += '<p><b>'+getAFLInstance().tApiToLabelMap.get('activitydate')+'</b></p><p>'+getFormattedDate(task.ActivityDate)+'</p>';
                 this.popoverContent += '<p><b>'+getAFLInstance().tApiToLabelMap.get('description')+'</b></p><p>'+getHtmlString(task.Description)+'</p>';
             }
+
+            if (task.Attachments.size() > 0) {
+                this.popoverContent += '<div class="row horizontal-separator"></div><div class="row"><div class="col-xs-12"><div class="attachments-title">' + Label.CurrencyCenter_Attachments_Section + '</div>';
+
+                for (Attachment att : task.Attachments) {
+                        this.popoverContent += '<div class="row attachments-row">';
+                        this.popoverContent += '<div class="col-xs-12"><a class="attachments-name" href="/servlet/servlet.FileDownload?file=' + att.Id + '" target="_blank">' + att.Name + '</a></div>';
+                        this.popoverContent += att.Description != null ? '<div class="col-xs-12 attachments-description">' + att.Description + '</div>' : '';
+                        this.popoverContent += '</div>';
+                    }
+                                
+                this.popoverContent += '</div></div>';
+            }
         }
 
         // constructor for events
@@ -431,6 +446,19 @@ public with sharing class ISSP_CurrencyCenterCountryController {
                 this.popoverContent += '<p><b>'+getAFLInstance().eApiToLabelMap.get('enddatetime')+'</b></p><p>'+getFormattedDateTime(event.EndDateTime)+'</p>';
                 this.popoverContent += '<p><b>'+getAFLInstance().eApiToLabelMap.get('members__c')+'</b></p><p>'+getHtmlString(event.Members__c)+'</p>';
                 this.popoverContent += '<p><b>'+getAFLInstance().eApiToLabelMap.get('description')+'</b></p><p>'+getHtmlString(event.Description)+'</p>';
+            }
+
+            if (event.Attachments.size() > 0) {
+                this.popoverContent += '<div class="row horizontal-separator"></div><div class="row"><div class="col-xs-12"><div class="attachments-title">' + Label.CurrencyCenter_Attachments_Section + '</div>';
+
+                for (Attachment att : event.Attachments) {
+                        this.popoverContent += '<div class="row attachments-row">';
+                        this.popoverContent += '<div class="col-xs-12"><a class="attachments-name" href="/servlet/servlet.FileDownload?file=' + att.Id + '" target="_blank">' + att.Name + '</a></div>';
+                        this.popoverContent += att.Description != null ? '<div class="col-xs-12 attachments-description">' + att.Description + '</div>' : '';
+                        this.popoverContent += '</div>';
+                    }
+                                
+                this.popoverContent += '</div></div>';
             }
         }
 

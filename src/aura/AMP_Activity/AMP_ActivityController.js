@@ -13,6 +13,7 @@
         statusValues.push('Delayed');
         statusValues.push('Delivered');
         statusValues.push('Cancelled');
+        statusValues.push('Not Delivered');
 
 
 		component.set("v.statusValues", statusValues);
@@ -34,18 +35,15 @@ console.log(JSON.stringify(activity));
     },
     cancelEditMode : function(component, event, helper) {
         var activity = component.get("v.activity");
-        var index = component.get("v.index");
-        
+        //var index = component.get("v.index");
         if(activity.Id === undefined) {
-            console.log('something');
-            var deleteEvent = component.getEvent("deleteActivity");
-            deleteEvent.setParams({ "issue": activity, "index":index }).fire();
+            console.log('cancel add new activity -> delete');
+            var deleteEvent = component.getEvent("cancelAddActivity");
+            deleteEvent.setParams({'issue': activity})
+            deleteEvent.fire();
             
-        } else {
-            
-            component.set("v.isEditMode", false);
-            console.log('canceling edit mode...');
-        }
+        } 
+         component.set("v.isEditMode", false);
     },
     clickSaveActivity : function(component, event, helper) {
         
@@ -97,11 +95,11 @@ console.log(JSON.stringify(activity));
         
         console.log('delete clicked...');
         var activity = component.get("v.activity");
-        console.log(JSON.stringify(activity));
-        var index = component.get("v.index");
-        
+        //pass the activity attribute passed from the event to a component attribute (AMP_UpdateIssueOrPriority, 
+        //in this event there are two params registered, issue and index) 
         var deleteEvent = component.getEvent("deleteActivity");
-        deleteEvent.setParams({ "issue": activity, "index":index }).fire();
+        deleteEvent.setParams({ "issue": activity}).fire();
+        //deleteEvent.setParams({ "activityToDelete": activity, "index":index }).fire();
         
         component.set("v.isEditMode", false);
     },

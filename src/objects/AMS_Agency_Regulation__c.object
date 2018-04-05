@@ -380,6 +380,20 @@
             </valueSetDefinition>
         </valueSet>
     </fields>
+    <fields>
+        <fullName>Validity_count__c</fullName>
+        <description>Returns 1 if the expired field is unchecked. To be used in reports.</description>
+        <externalId>false</externalId>
+        <formula>IF(Expired__c=False,1,0)</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>Validity count</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>2</scale>
+        <trackTrending>false</trackTrending>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
     <label>AMS Agency Regulation</label>
     <nameField>
         <displayFormat>AReg-{000000}</displayFormat>
@@ -394,6 +408,14 @@
         <active>true</active>
         <errorConditionFormula>AND(ISPICKVAL(Type_Of_Certificate__c, &quot;DGR&quot;),  ISBLANK( Expiry_Date__c ))</errorConditionFormula>
         <errorMessage>DGR certificates must have an expiry date.</errorMessage>
+    </validationRules>
+    <validationRules>
+        <fullName>Uncheck_notification_sent</fullName>
+        <active>true</active>
+        <description>If expiry date is modified, &quot;Notification sent&quot; field needs to be unchecked.</description>
+        <errorConditionFormula>AND(ISCHANGED(Expiry_Date__c),Notification_Sent__c=True)</errorConditionFormula>
+        <errorDisplayField>Notification_Sent__c</errorDisplayField>
+        <errorMessage>Please un-check this field before updating the Expiry date.</errorMessage>
     </validationRules>
     <visibility>Public</visibility>
 </CustomObject>

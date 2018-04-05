@@ -8,7 +8,8 @@ public with sharing class AMS_AccountRoleCreatorTest {
 
         Map<string, Id> accountRoleRT = TransformationHelper.RtIDsPerDeveloperNamePerObj(new list<string> {'AMS_Account_Role__c'}).get('AMS_Account_Role__c');
 
-        Account acc1 = new Account(Status__c = 'Approved', Reason_for_creation__c = 'Headquarter is missing', Name='Test1 Account', Location_Type__c = 'HO', Type='CASS Associate', Sector__c = 'Travel Agent', IATA_ISO_Country__c = isoc.id, IATAcode__c = '12345678', AIMS_ID__c = '12345678', Source_System__c = 'AIMS2');
+        Id accountRT = AMS_Utils.getId('Account', 'Standard_Account');
+        Account acc1 = new Account(RecordTypeId = accountRT, Status__c = 'Approved', Reason_for_creation__c = 'Headquarter is missing', Name='Test1 Account', Location_Type__c = 'HO', Type='CASS Associate', Sector__c = 'Travel Agent', IATA_ISO_Country__c = isoc.id, IATAcode__c = '12345678', AIMS_ID__c = '12345678', Source_System__c = 'AIMS2');
         insert acc1;
         
         AMS_OSCAR__c oscar = new AMS_OSCAR__c(Account__c = acc1.Id);
@@ -32,6 +33,10 @@ public with sharing class AMS_AccountRoleCreatorTest {
         
         AMS_Pax_Accreditation_Form__c onlineAccreditation = new AMS_Pax_Accreditation_Form__c(IsGSA__c = 'No', CurrencyIsoCode = isoc.CurrencyIsoCode, SAAM_Case__c = testCase.Id, Account_Name__c = acc1.Name);
         insert onlineAccreditation;
+
+        Apex_Setting__c idAccountOwner = new Apex_Setting__c(Name = 'Stop Owner Alignment');
+        idAccountOwner.Text_1__c = '005w000000688eeAAA';
+        insert idAccountOwner;
         
         List<AMS_Accreditation_Contact__c> acList = new List<AMS_Accreditation_Contact__c>();
         acList.add(new AMS_Accreditation_Contact__c(AMS_Pax_Accreditation_Form__c = onlineAccreditation.Id, Company__c = acc1.id, First_name__c='NameToUse', Last_name__c='Last', Job_title__c='ABC', Mobile__c='+4112345678', Phone__c='3424322343', Email__c='unique@email.com', RecordTypeId=AMS_Utils.getId('AMS_Accreditation_Contact__c', 'Person')));
@@ -74,10 +79,11 @@ public with sharing class AMS_AccountRoleCreatorTest {
         
         List<AMS_Account_Role__c> roleList = [select id from AMS_Account_Role__c];
         delete roleList;
-                
+        
+        Id accountRT = AMS_Utils.getId('Account', 'IATA_Agency');
         Account ownerAccount = new Account(Name='OwnerAccount', Location_Type__c = 'HO', Type='CASS Associate', Sector__c = 'Travel Agent', IATAcode__c = '0004141234', AIMS_ID__c = '98765431', Source_System__c = 'AIMS2');
         
-        Account brAccount  = new Account(Name='OwnerAccount', Location_Type__c = 'BR', Type='CASS Associate', Sector__c = 'Travel Agent', IATAcode__c = '0004141231', AIMS_ID__c = '98765432', Source_System__c = 'AIMS2', Top_Parent__c = ownerAccount.Id);
+        Account brAccount  = new Account(RecordtypeId=accountRT, Name='OwnerAccount', Location_Type__c = 'BR', Type='CASS Associate', Sector__c = 'Travel Agent', IATAcode__c = '0004141231', AIMS_ID__c = '98765432', Source_System__c = 'AIMS2', Top_Parent__c = ownerAccount.Id);
         
         insert new List<Account>{ownerAccount,brAccount};
 

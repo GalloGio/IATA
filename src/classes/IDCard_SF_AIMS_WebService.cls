@@ -20,7 +20,8 @@ global with sharing class IDCard_SF_AIMS_WebService {
     private static final string DECEMBER = 'December';
 
     private static final string CSPRINTEDDELIVERED = 'Printed/Delivered';
-    private static final String CSCANCELED = 'Cancelled';
+    private static final string CSVALID = 'Valid ID Card';
+    private static final String CSCANCELED = 'Cancelled ID Card';
 
     private static final string SFUPDATEFAILED = 'FAILED';
     private static final string SFUPDATEOK = 'OK';
@@ -128,7 +129,7 @@ global with sharing class IDCard_SF_AIMS_WebService {
                     //Date firstDayOfMonth = date.valueOf(pValidToDate).toStartOfMonth();
                     //Date lastDayOfMonth = firstDayOfMonth.addDays(Date.daysInMonth(firstDayOfMonth.year(), firstDayOfMonth.month()) - 1);
                     //aCard.Valid_To_Date__c = lastDayOfMonth;
-                    aCard.Card_Status__c = CSPRINTEDDELIVERED;
+                    aCard.Card_Status__c = CSVALID;
                     aCard.Received_From_AIMS__c = Datetime.now();
 
                     List<Case> c = [Select Id, Status from Case c where c.Related_ID_Card_Application__c = : aCard.ID_Card_Application__c and c.RecordType.Name = 'ID Card Application'];
@@ -189,7 +190,7 @@ global with sharing class IDCard_SF_AIMS_WebService {
 
         aLineInfo.CardType = (aCard.Nature_of_ID_Card__c == null ? '' : aCard.Nature_of_ID_Card__c.toUpperCase());
         //set nature of card to canceled when the status of the IDCard is canceled
-        if (aCard.Card_Status__c == 'Cancelled')
+        if (aCard.Card_Status__c == 'Cancelled ID Card')
             aLineInfo.CardType = 'CANCELLATION';
 
         aLineInfo.IATACode = (aCard.Agency_IATA_Code__c == null ? '' : aCard.Agency_IATA_Code__c);
@@ -899,7 +900,7 @@ global with sharing class IDCard_SF_AIMS_WebService {
                     //Date firstDayOfMonth = date.valueOf(pValidToDate).toStartOfMonth();
                     //Date lastDayOfMonth = firstDayOfMonth.addDays(Date.daysInMonth(firstDayOfMonth.year(), firstDayOfMonth.month()) - 1);
                     //aCard.Valid_To_Date__c = lastDayOfMonth;
-                    aCard.Card_Status__c = CSPRINTEDDELIVERED;
+                    aCard.Card_Status__c = CSVALID;
                     aCard.Received_From_AIMS__c = Datetime.now();
 
                     List<Case> c = [SELECT Id, Status FROM Case c WHERE c.Related_ID_Card_Application__c = : aCard.ID_Card_Application__c AND c.RecordType.Name = 'ID Card Application'];

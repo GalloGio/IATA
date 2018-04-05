@@ -54,6 +54,7 @@ global class IEC_ZuoraPricing2SAP_Batch implements Database.Batchable<sObject>, 
                       from zqu__ProductRatePlanChargeTier__c
                       where zqu__ProductRatePlanCharge__r.zqu__ProductRatePlan__r.zqu__ZProduct__c in :mapZProductId_Product.keySet()
                         and zqu__ProductRatePlanCharge__r.zqu__Type__c in ('One-Time', 'Recurring')
+                        and ZRatePlan_CouponCode__c = null
                         and zqu__ProductRatePlanCharge__r.zqu__Model__c in ('Per Unit', 'Per Unit Pricing', 'Volume', 'Volume Pricing'
                                                                           , 'Discount-Fixed Amount', 'Discount-Percentage')
                       order by zqu__ProductRatePlanCharge__r.zqu__ProductRatePlan__r.zqu__ZProduct__c
