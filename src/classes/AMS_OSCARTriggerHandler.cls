@@ -3124,8 +3124,9 @@ public class AMS_OSCARTriggerHandler {
                         }
                     // If the picklist is set create a CAD change code.
                         else if(updatedOscar.AMS_Correction_change_code__c == 'CAD'){
-                        changeCode.name = 'CAD';
-                        changeCode.memoText = 'Minor Changes';
+                            AMS_ChangeCodes__c cad = AMS_ChangeCodes__c.getInstance('CADM');
+                            changeCode.name = cad.Change_Code__c;
+                            changeCode.memoText = cad.Bulletin_Memo_Text__c;
                         }
                         // If the picklist is set create a LET change code.
                         /*else if(updatedOscar.AMS_Correction_change_code__c == 'LET'){
