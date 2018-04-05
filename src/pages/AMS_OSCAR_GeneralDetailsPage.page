@@ -195,6 +195,12 @@
             summary="Modifying PCI Compliance will not change the forms of payment for Credit Card at Agency Level."
             rendered="{!isOSCARCorrection}"
         />
+		
+		<apex:pageMessage severity="WARNING"
+            strength="1"
+            summary="Enter full shipping address if the agent has provided one"   
+            rendered="{!AND(isChangeOfLocation, oscarObj.STEP6__c <> 'Passed')}"         
+        />
 
         <apex:pageBlockSection columns="2" id="AccountInformation" collapsible="false">
             <apex:pageBlockSectionItem >

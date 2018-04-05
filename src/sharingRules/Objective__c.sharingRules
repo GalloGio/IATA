@@ -348,18 +348,6 @@
         </sharedFrom>
     </sharingOwnerRules>
     <sharingOwnerRules>
-        <fullName>Account_Management_France</fullName>
-        <accessLevel>Edit</accessLevel>
-        <description>Share Account Issues and Priorities and Key Account Plan items between the Country Manager for France and the Staff  - France members</description>
-        <label>Account Management France</label>
-        <sharedTo>
-            <roleAndSubordinatesInternal>CountryManagerFrance</roleAndSubordinatesInternal>
-        </sharedTo>
-        <sharedFrom>
-            <roleAndSubordinatesInternal>CountryManagerFrance</roleAndSubordinatesInternal>
-        </sharedFrom>
-    </sharingOwnerRules>
-    <sharingOwnerRules>
         <fullName>Account_Management_Germany</fullName>
         <accessLevel>Edit</accessLevel>
         <description>Share Account Issues and Priorities and Key Account Plan items between the Country Manager for Germany and the Staff  - Germany members</description>
@@ -963,6 +951,17 @@
         </sharedTo>
         <sharedFrom>
             <roleAndSubordinatesInternal>CountryManagerVietnam</roleAndSubordinatesInternal>
+        </sharedFrom>
+    </sharingOwnerRules>
+    <sharingOwnerRules>
+        <fullName>Country_Manager_France_Belgium_and_The_Netherlands</fullName>
+        <accessLevel>Edit</accessLevel>
+        <label>Country Manager - France, Belgium and The Netherlands</label>
+        <sharedTo>
+            <roleAndSubordinatesInternal>Country_Manager_France_Belgium_and_The_Netherlands</roleAndSubordinatesInternal>
+        </sharedTo>
+        <sharedFrom>
+            <roleAndSubordinatesInternal>Country_Manager_France_Belgium_and_The_Netherlands</roleAndSubordinatesInternal>
         </sharedFrom>
     </sharingOwnerRules>
 </SharingRules>
