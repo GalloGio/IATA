@@ -1143,6 +1143,7 @@ public class AMS_OSCARTriggerHandler {
                 //merge everything
                 for (AMS_Utils.Container c : changesContainer) {
 
+                    if(c ==  null) continue;
                 //All lists must have the same size in order to create correctly the change codes
 
                     changeCodes.addAll(c.changeCodes);
@@ -2180,13 +2181,6 @@ public class AMS_OSCARTriggerHandler {
             }
         }
 
-        //map accountId -> active change code
-        Map<Id, Agency_Applied_Change_code__c> accountsChangeCode = new Map<Id, Agency_Applied_Change_code__c>();
-        for (Agency_Applied_Change_code__c changeCode : [SELECT Id, Account__c, Reason_Code__c, Reason_Description__c, Bulletin_Information__c FROM Agency_Applied_Change_code__c WHERE Account__c IN :accountIds AND Active__c = true]){
-            accountsChangeCode.put(changeCode.Account__c, changeCode);
-        }
-
-
         List<AMS_Utils.Container> changesContainer = new List<AMS_Utils.Container>();
         List<AMS_Oscar__c> oscarsToCheckHierarchy = new List<AMS_Oscar__c>();
 
@@ -2213,7 +2207,7 @@ public class AMS_OSCARTriggerHandler {
                 if(updatedOSCAR.Change_effective_as_of__c > Date.today()) updatedOSCAR.Status__c = 'Accepted_Future Date';
                 else updatedOSCAR.Status__c = 'On Hold_Internal';
 
-                if(updatedOSCAR.Process__c == AMS_Utils.VOLRELINQUISH) changesContainer.add(AMS_ChangeCodesHelper.generateVRChangeCode(AMS_Utils.SANITYCHECK, updatedOSCAR, accountsInvolved.get(updatedOSCAR.Id), accounts, accountsChangeCode));
+                if(updatedOSCAR.Process__c == AMS_Utils.VOLRELINQUISH) changesContainer.add(AMS_ChangeCodesHelper.generateVRChangeCode(AMS_Utils.SANITYCHECK, updatedOSCAR, getAccounts(accountsInvolved.get(updatedOSCAR.Id))));
             }
 
             if (oldOSCAR.STEP30__c != AMS_Utils.PASSED && updatedOSCAR.STEP30__c == AMS_Utils.PASSED) {
@@ -2225,12 +2219,12 @@ public class AMS_OSCARTriggerHandler {
 
                 if(updatedOSCAR.Process__c == AMS_Utils.VOLRELINQUISH){
                     updatedOSCAR.Process_Start_Date__c = updatedOSCAR.Termination_Date__c;
-                    changesContainer.add(AMS_ChangeCodesHelper.generateVRChangeCode(AMS_Utils.SUSPENSION, updatedOSCAR, accountsInvolved.get(updatedOSCAR.Id), accounts, accountsChangeCode));
+                    changesContainer.add(AMS_ChangeCodesHelper.generateVRChangeCode(AMS_Utils.SUSPENSION, updatedOSCAR, getAccounts(accountsInvolved.get(updatedOSCAR.Id))));
                 }
             }
 
             if (oldOSCAR.STEP31__c != AMS_Utils.PASSED && updatedOSCAR.STEP31__c == AMS_Utils.PASSED) {
-                changesContainer.add(AMS_ChangeCodesHelper.generateVRChangeCode(AMS_Utils.TERMINATION, updatedOSCAR, accountsInvolved.get(updatedOSCAR.Id), accounts, accountsChangeCode));
+                changesContainer.add(AMS_ChangeCodesHelper.generateVRChangeCode(AMS_Utils.TERMINATION, updatedOSCAR, getAccounts(accountsInvolved.get(updatedOSCAR.Id))));
             }
 
             if (oldOSCAR.STEP32__c != AMS_Utils.PASSED && updatedOSCAR.STEP32__c == AMS_Utils.PASSED) {
@@ -2239,7 +2233,7 @@ public class AMS_OSCARTriggerHandler {
                     (updatedOSCAR.Process__c == AMS_UTils.VOLRELINQUISH_CA && updatedOSCAR.STEP31__c != AMS_Utils.PASSED)
                 ) updatedOSCAR.addError('Process can only be withdrawn after the process started');
                 
-                changesContainer.add(AMS_ChangeCodesHelper.generateVRChangeCode(AMS_Utils.WITHDRAWAL, updatedOSCAR, accountsInvolved.get(updatedOSCAR.Id), accounts, accountsChangeCode));
+                changesContainer.add(AMS_ChangeCodesHelper.generateVRChangeCode(AMS_Utils.WITHDRAWAL, updatedOSCAR, getAccounts(accountsInvolved.get(updatedOSCAR.Id))));
             }
         }
 
@@ -2258,9 +2252,10 @@ public class AMS_OSCARTriggerHandler {
 
             //merge everything
             for (AMS_Utils.Container c : changesContainer) {
+                if(c == null) continue;
+
                 changeCodes.addAll(c.changeCodes);
                 accts.addAll(c.accts);
-
                 theoscars.addAll(c.oscars);
             }
 
