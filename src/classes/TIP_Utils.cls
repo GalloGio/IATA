@@ -21,7 +21,4 @@ public class TIP_Utils{
 
 	//case Description
 	public static String CASE_DESC_REQUEST_FOR_ENLISTMENT_PAYMENT_PROVIDER = 'Request for Enlistment as Payment provider';
-
-	//case status not available for enlistment
-	public static Set<String> CASE_STATUS_NOT_AVAILABLE_FOR_ENLISTMENT = new Set<String> {'Open'};
 }

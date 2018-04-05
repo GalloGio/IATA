@@ -11,7 +11,7 @@
         <script type="text/javascript">
             $(document).ready(function() {
                 changeRequestButtonStatus();               
-                if(!{!isAdmin} && !{!isPaymentProvider}) document.getElementById("newProductBtn").disabled = true; 
+                if({!!(isAdmin && isPaymentProvider)}) document.getElementById("newProductBtn").disabled = true; 
             })
 
             function changeRequestButtonStatus() {
