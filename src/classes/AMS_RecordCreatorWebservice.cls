@@ -635,8 +635,8 @@ global without sharing class AMS_RecordCreatorWebservice {
         AMS_OSCAR_JSON.ChangeCode toReturn = new AMS_OSCAR_JSON.ChangeCode();
         AMS_ChangeCodes__c cad = AMS_ChangeCodes__c.getInstance('CADM');
 
-        changeCode.name = cad.Change_Code__c;
-        changeCode.memoText = cad.Bulletin_Memo_Text__c;
+        toReturn.name = cad.Change_Code__c;
+        toReturn.memoText = cad.Bulletin_Memo_Text__c;
 
         return toReturn;
     }
