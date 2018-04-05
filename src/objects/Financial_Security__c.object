@@ -2227,9 +2227,7 @@ IMAGE(&quot;/servlet/servlet.FileDownload?file=015200000011tph&quot;,&quot;Reque
         </filters>
         <label>Financial Securities Actives - BSP FR</label>
         <language>en_US</language>
-        <sharedTo>
-            <roleAndSubordinatesInternal>StaffFrance</roleAndSubordinatesInternal>
-        </sharedTo>
+        <sharedTo/>
     </listViews>
     <listViews>
         <fullName>N_ASIA_Active_Securities</fullName>
