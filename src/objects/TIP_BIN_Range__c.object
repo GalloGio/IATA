@@ -127,6 +127,11 @@
                     <default>false</default>
                     <label>In Progress</label>
                 </value>
+                <value>
+                    <fullName>Draft</fullName>
+                    <default>false</default>
+                    <label>Draft</label>
+                </value>
             </valueSetDefinition>
         </valueSet>
     </fields>
@@ -170,6 +175,10 @@
             <picklist>TIP_Status__c</picklist>
             <values>
                 <fullName>Active</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Draft</fullName>
                 <default>false</default>
             </values>
             <values>
