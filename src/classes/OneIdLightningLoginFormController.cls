@@ -31,10 +31,10 @@ public without sharing class OneIdLightningLoginFormController {
     @AuraEnabled
     public static String login(String username, 
                                String password, 
-                               String startUrl) {
+                               String startUrl,
+                               String serviceName) {
         User oneUser;
-        String pageLink='';
-        
+        String pageLink='';        
         //Clear spaces
         username = (null != username) ? username.trim() : username;
                                    
@@ -71,6 +71,10 @@ public without sharing class OneIdLightningLoginFormController {
                 if(String.isNotBlank(startUrl)) 
                     pageLink = startUrl;
                 
+                if( ((String.isNotBlank(startUrl) && startUrl.contains('identity')) || (String.isNotBlank(startUrl))) && (String.isNotBlank(serviceName) && serviceName == 'ISSP'))
+                    pageLink = '/ISSP_Homepage';
+
+                
                 if (oneUser.Portal_User_Frozen_Checkbox__c){
                     show90Days = true;
                     reactivateUser(oneUser);
@@ -92,7 +96,7 @@ public without sharing class OneIdLightningLoginFormController {
             system.debug('pageLink: ' + pageLink);
             system.debug('Used Username: '+username);
             
-            //login in site
+            //login in siteCompleteUrl
             ApexPages.PageReference lgn = Site.login(username, password, pageLink);
             
             system.debug('page reference return from login: '+lgn);
@@ -140,6 +144,7 @@ public without sharing class OneIdLightningLoginFormController {
 
     @AuraEnabled
     public static Boolean getFindLocation(Boolean saveLog, String ipAddress){           
+        system.debug('aqui getFindLocation start....');
         sanctionCountry = false;
         country = '';
 

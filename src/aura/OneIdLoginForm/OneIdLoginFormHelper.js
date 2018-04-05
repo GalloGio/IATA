@@ -13,7 +13,7 @@
         var password = '';
         password = component.find("password").get("v.value");
         var startUrl = component.get("v.startUrl");
-        
+        var serviceName = component.get("v.serviceName");        
         console.log('username ' + username);
         //console.log('password ' + password);
         
@@ -42,10 +42,10 @@
         var action = component.get("c.login");
         
         startUrl = decodeURIComponent(startUrl);
-        
         action.setParams({username:username, 
                           password:password, 
-                          startUrl:startUrl});
+                          startUrl:startUrl,
+                          serviceName:serviceName});
         
         action.setCallback(this, function(a){
             var rtnValue = a.getReturnValue();
