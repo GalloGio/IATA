@@ -539,13 +539,17 @@ public without sharing class LightningRegistrationProcess{
         string prefix = OneIdUtils.getSiteCompleteUrl();
         String link = prefix + '/s/IdentityFirstLogin?' + encodedPart;
         
+        if(serviceName == Comm_User_Helper.ISSP)    // OneIdEnh CSP-ID002: change the login URL for the customer portal
+            link = 'https://' + String.ValueOF(ISSP_CS__c.getValues('Host').value__c) + '/ISSP_First_Login?'+encodedPart;
+
         Map<String,String> emailWrap = new Map<String,String>();
         
-        emailWrap = Identity_PassWordBuilMessageWrapper(con, password, link);
+        //emailWrap = Identity_PassWordBuilMessageWrapper(con, password, link);   // OneIdEnh CSP-ID002: replace with service aware method
+        emailWrap = Comm_User_Helper.ISSP_PassWordBuilMessageWrapper(con, password, link, Comm_User_Helper.ONEIDENTITY, serviceName);
         Comm_User_Helper.sendEmail(template, emailWrap, con, Comm_User_Helper.ONEIDENTITY);
     }
     
-    public static  Map<String, String> Identity_PassWordBuilMessageWrapper(Contact con, String password, String link){
+    /*public static  Map<String, String> Identity_PassWordBuilMessageWrapper(Contact con, String password, String link){
         String portalName = Label.OneId_Community_Name;
 
         Map<String, String> mapBodyParamsIdentity = new map<String,String>{
@@ -563,7 +567,7 @@ public without sharing class LightningRegistrationProcess{
         };
 
         return mapBodyParamsIdentity;
-    }
+    }*/
     
     @future 
     public Static Void assignIdentityPermissionSet (Id userId) {
