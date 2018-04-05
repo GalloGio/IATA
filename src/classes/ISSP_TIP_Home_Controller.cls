@@ -225,7 +225,9 @@ public with sharing class ISSP_TIP_Home_Controller {
     public void newEditBinRange(){
         String binRangeRecPos=System.currentPageReference().getParameters().get('binRangeRecPos');
         selectedBinRange= new BinRangeRec( 
-                new TIP_BIN_Range__c(),0,'N');
+                new TIP_BIN_Range__c(
+                    recordTypeId=TIP_Utils.BIN_RANGE_PROVIDER_RECORD_TYPE_ID
+                    ),0,'N');
         if(!String.isBlank(binRangeRecPos)){
             selectedBinRange= binRangeList.get(Integer.ValueOf(binRangeRecPos));
             selectedBinRange.action='M';            
@@ -235,7 +237,7 @@ public with sharing class ISSP_TIP_Home_Controller {
     public void addUpdateBinRange(){
         if(selectedBinRange.action=='N'){   
             selectedBinRange.pos=binRangeList.size();
-            selectedBinRange.binRange.TIP_Status__c='Inactive';
+            selectedBinRange.binRange.TIP_Status__c='Draft';
             if(!String.isBlank(selectedBinRange.binRange.TIP_Range_Start__c) || !String.isBlank(selectedBinRange.binRange.TIP_Range_End__c)){
                 if(!binRangeList.isEmpty()) binRangeList.add(0,selectedBinRange);
                 else binRangeList.add(selectedBinRange);
