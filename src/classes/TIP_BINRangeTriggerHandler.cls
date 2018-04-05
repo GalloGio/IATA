@@ -39,84 +39,56 @@ public class TIP_BINRangeTriggerHandler {
     	}
 	}
 
-	//Helper to determine if the two bin ranges overlap
-	//0 - No overlap
-	//1 - Overlap on Ranges and Dates
-	//2 - Overlap on Ranges and open-ended Dates 
-
-	private Integer checkOverlap(TIP_BIN_Range__c bin1, TIP_BIN_Range__c bin2) {
-		if (bin1.TIP_Range_Start__c <= bin2.TIP_Range_End__c && bin1.TIP_Range_End__c >= bin2.TIP_Range_Start__c) {
-					
-			if (bin2.TIP_Effective_To_Date__c == null) {
-						
-				if (bin1.TIP_Effective_To_Date__c == null) {
-					return 2;
-
-				} else if (bin1.TIP_Effective_To_Date__c >= bin2.TIP_Effective_From_Date__c) {
-					return 2;
-				}
-			} else if (bin1.TIP_Effective_From_Date__c >= bin2.TIP_Effective_From_Date__c && bin1.TIP_Effective_From_Date__c <= bin2.TIP_Effective_To_Date__c) {
-				return 1;
-			}			
-		}
-		return 0;
-	}
-
 	public void onBeforeInsert() {
 		padBinRanges();
 
-		List<BINRangeWrapper> sortedBinRanges = new List<BINRangeWrapper>();
+		List<TIP_BIN_Range__c> notOverlappingRanges;
 
-		for (TIP_BIN_Range__c b: triggerNew) {
-			sortedBinRanges.add(new BINRangeWrapper(b));
+		if (triggerNew.size() > 1) {
+			notOverlappingRanges = checkOverlapsWithNewUpdated(triggerNew);
+		} else {
+			notOverlappingRanges = triggerNew;
 		}
 
-		sortedBinRanges.sort();
-
-		//List<TIP_BIN_Range__c> overlappingRanges = new List<TIP_BIN_Range__c>();
-		List<TIP_BIN_Range__c> notOverlappingRanges = new List<TIP_BIN_Range__c>();
-
-		for (Integer i = 0; i < sortedBinRanges.size(); i++) {
-			for (Integer j = 0; j < sortedBinRanges.size(); j++) {
-				if (i != j) {
-					Integer overlapCode = checkOverlap(sortedBinRanges[i].biny, sortedBinRanges[j].biny);
-					if (overlapCode == 1) {
-						//overlappingRanges.add(sortedBinRanges[i].biny);
-						sortedBinRanges[i].biny.addError('The following overlapping BIN Range has been detected: <a href=\'https://iata--tiprlavos.cs88.my.salesforce.com/' + sortedBinRanges[j].biny.Id + '\'>'+ sortedBinRanges[j].biny.Name +'</a>', false);
-						break;
-					} else if (overlapCode == 2) {
-						sortedBinRanges[i].biny.addError('The following overlapping, open-ended BIN Range has been detected: <a href=\'https://iata--tiprlavos.cs88.my.salesforce.com/' + sortedBinRanges[j].biny.Id + '\'>'+ sortedBinRanges[j].biny.Name +'</a>', false);
-						break;
-					} else if (j == sortedBinRanges.size()-1 && overlapCode == 0) {
-						notOverlappingRanges.add(sortedBinRanges[i].biny);
-					}
-				}
-			}
-		}
-		
 		List<TIP_BIN_Range__c> existingBinRanges = [SELECT Id, Name, TIP_Range_Start__c, TIP_Range_End__c, TIP_Effective_From_Date__c, TIP_Effective_To_Date__c 
 													FROM TIP_BIN_Range__c 
 													WHERE (TIP_Status__c = 'Active' OR TIP_Status__c = 'In Progress') AND (RecordType.DeveloperName = 'Listed_by_IATA' OR RecordType.DeveloperName = 'Provider')
 													ORDER BY TIP_Range_Start__c, TIP_Effective_From_Date__c];
-
-		for (TIP_BIN_Range__c bin: notOverlappingRanges) {
-			
-			for (TIP_BIN_Range__c existingBin: existingBinRanges) {
-
-				Integer overlapCode = checkOverlap(bin, existingBin);
-				if (overlapCode == 1) {
-					bin.addError('The following overlapping BIN Range has been detected: <a href=\'https://iata--tiprlavos.cs88.my.salesforce.com/' + existingBin.Id + '\'>'+ existingBin.Name +'</a>', false);
-					break;
-				} else if (overlapCode == 2) {
-					bin.addError('The following overlapping, open-ended BIN Range has been detected: <a href=\'https://iata--tiprlavos.cs88.my.salesforce.com/' + existingBin.Id + '\'>'+ existingBin.Name +'</a>', false);
-					break;
-				}
-			}
-		}
+		
+		checkOverlapsWithExisting(notOverlappingRanges, existingBinRanges);
 	}
 
 	public void onBeforeUpdate() {
+		List<TIP_BIN_Range__c> updatedBins = new List<TIP_BIN_Range__c>();
 
+		for (TIP_BIN_Range__c b: triggerNew) {
+			if (b.TIP_Range_Start__c != oldMap.get(b.Id).TIP_Range_Start__c 
+				|| b.TIP_Range_End__c != oldMap.get(b.Id).TIP_Range_End__c 
+				|| b.TIP_Effective_From_Date__c != oldMap.get(b.Id).TIP_Effective_From_Date__c 
+				|| b.TIP_Effective_To_Date__c != oldMap.get(b.Id).TIP_Effective_To_Date__c) {
+				updatedBins.add(b);
+			}
+		}
+
+		if (!updatedBins.isEmpty()) {
+			List<TIP_BIN_Range__c> notOverlappingRanges;
+
+			if (updatedBins.size() > 1) {
+				notOverlappingRanges = checkOverlapsWithNewUpdated(updatedBins);
+			} else {
+				notOverlappingRanges = updatedBins;
+			}
+
+			List<TIP_BIN_Range__c> existingRanges = new List<TIP_BIN_Range__c>();
+
+			for (TIP_BIN_Range__c b: triggerOld) {
+				if (!updatedBins.contains(b)) {
+					existingRanges.add(b);
+				}
+			}
+
+			checkOverlapsWithExisting(notOverlappingRanges, existingRanges);
+		}
 	}
 
 	private void padBinRanges() {
@@ -162,5 +134,73 @@ public class TIP_BINRangeTriggerHandler {
 				}
 			}
 		}
+	}
+
+	private List<TIP_BIN_Range__c> checkOverlapsWithNewUpdated(List<TIP_BIN_Range__c> binsToCheck) {
+		List<BINRangeWrapper> sortedBinRanges = new List<BINRangeWrapper>();
+
+		for (TIP_BIN_Range__c b: binsToCheck) {
+			sortedBinRanges.add(new BINRangeWrapper(b));
+		}
+
+		sortedBinRanges.sort();
+
+		List<TIP_BIN_Range__c> notOverlappingRanges = new List<TIP_BIN_Range__c>();
+
+		for (Integer i = 0; i < sortedBinRanges.size(); i++) {
+			for (Integer j = 0; j < sortedBinRanges.size(); j++) {
+				if (i != j) {
+					Integer overlapCode = getOverlap(sortedBinRanges[i].biny, sortedBinRanges[j].biny);
+					if (overlapCode == 1) {
+						sortedBinRanges[i].biny.addError('The following overlapping BIN Range has been detected: <a href=\'https://iata--tiprlavos.cs88.my.salesforce.com/' + sortedBinRanges[j].biny.Id + '\'>'+ sortedBinRanges[j].biny.Name +'</a>', false);
+						break;
+					} else if (overlapCode == 2) {
+						sortedBinRanges[i].biny.addError('The following overlapping, open-ended BIN Range has been detected: <a href=\'https://iata--tiprlavos.cs88.my.salesforce.com/' + sortedBinRanges[j].biny.Id + '\'>'+ sortedBinRanges[j].biny.Name +'</a>', false);
+						break;
+					} else if (j == sortedBinRanges.size()-1 && overlapCode == 0) {
+						notOverlappingRanges.add(sortedBinRanges[i].biny);
+					}
+				}
+			}
+		}
+
+		return notOverlappingRanges;		
+	}
+
+	private void checkOverlapsWithExisting(List<TIP_BIN_Range__c> newBinsToCheck, List<TIP_BIN_Range__c> existingBinsToCheck) {
+		for (TIP_BIN_Range__c bin: newBinsToCheck) {
+			
+			for (TIP_BIN_Range__c existingBin: existingBinsToCheck) {
+				Integer overlapCode = getOverlap(bin, existingBin);
+				if (overlapCode == 1) {
+					bin.addError('The following overlapping BIN Range has been detected: <a href=\'https://iata--tiprlavos.cs88.my.salesforce.com/' + existingBin.Id + '\'>'+ existingBin.Name +'</a>', false);
+					break;
+				} else if (overlapCode == 2) {
+					bin.addError('The following overlapping, open-ended BIN Range has been detected: <a href=\'https://iata--tiprlavos.cs88.my.salesforce.com/' + existingBin.Id + '\'>'+ existingBin.Name +'</a>', false);
+					break;
+				}
+			}
+		}
+	}
+
+	private Integer getOverlap(TIP_BIN_Range__c bin1, TIP_BIN_Range__c bin2) {
+		//Helper to determine if the two bin ranges overlap
+		//0 - No overlap
+		//1 - Overlap on Ranges and Dates
+		//2 - Overlap on Ranges and open-ended Dates 
+		if (bin1.TIP_Range_Start__c <= bin2.TIP_Range_End__c && bin1.TIP_Range_End__c >= bin2.TIP_Range_Start__c) {
+			if (bin2.TIP_Effective_To_Date__c == null) {
+					
+				if (bin1.TIP_Effective_To_Date__c == null) {
+					return 2;
+
+				} else if (bin1.TIP_Effective_To_Date__c >= bin2.TIP_Effective_From_Date__c) {
+					return 2;
+				}
+			} else if (bin1.TIP_Effective_From_Date__c >= bin2.TIP_Effective_From_Date__c && bin1.TIP_Effective_From_Date__c <= bin2.TIP_Effective_To_Date__c) {
+				return 1;
+			}			
+		}
+		return 0;
 	}
 }
