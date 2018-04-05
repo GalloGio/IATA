@@ -159,7 +159,7 @@ global  class AMS_PCI_Batch_Remainder implements Database.Batchable<sObject>, Da
 				String preferredLang = String.isBlank(cse.Contact.Preferred_Language__c) ? '-' : cse.Contact.Preferred_Language__c;
 				lstResult.add(new ResultWrapper(cse.CaseNumber, contactName, countryName, regionName, preferredLang, emailTemplateName, 'Template not found ', false));
 				continue;
-			} else {
+			} else if(template == null) {
 				emailTemplateName = 'AMS_PCI_Compliant_reminder_EN';
 				template = mapTemplates.get('AMS_PCI_Compliant_reminder_EN');
 			}
