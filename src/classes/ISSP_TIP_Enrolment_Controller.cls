@@ -94,9 +94,9 @@ public with sharing class ISSP_TIP_Enrolment_Controller {
 		//------------------ queue exists??-----------------------
 
 		//assign to TIP HO queue
-		List<Group> groups =  [SELECT Id FROM Group WHERE Type = 'Queue' AND NAME = 'TIP HO' LIMIT 1];
+		List<Group> groups =  [SELECT Id FROM Group WHERE Type = 'Queue' AND NAME = 'Cases_Transparency_in_Payment_Service' LIMIT 1];
 		
-		if(groups == null || groups.isEmpty()) System.debug('ERROR! TIP HO Queue not found proceeding without assign');
+		if(groups == null || groups.isEmpty()) System.debug('ERROR! Cases_Transparency_in_Payment_Service Queue not found proceeding without assign');
 		else{
 			newCase.OwnerId = groups[0].id;
 			upsert newcase;
