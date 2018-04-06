@@ -12834,6 +12834,11 @@ IF ((RecordType.DeveloperName = &quot;IATA_Airline&quot; || RecordType.Developer
                     <default>false</default>
                     <label>TOU E&amp;F</label>
                 </value>
+                <value>
+                    <fullName>TOU GROUND HANDLER</fullName>
+                    <default>false</default>
+                    <label>TOU GROUND HANDLER</label>
+                </value>
             </valueSetDefinition>
         </valueSet>
     </fields>
@@ -30706,6 +30711,10 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
                 <fullName>TOU E%26F</fullName>
                 <default>false</default>
             </values>
+            <values>
+                <fullName>TOU GROUND HANDLER</fullName>
+                <default>false</default>
+            </values>
         </picklistValues>
         <picklistValues>
             <picklist>Sector__c</picklist>
@@ -36433,6 +36442,10 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
             </values>
             <values>
                 <fullName>TOU E%26F</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>TOU GROUND HANDLER</fullName>
                 <default>false</default>
             </values>
         </picklistValues>
@@ -43337,6 +43350,10 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
                 <fullName>TOU E%26F</fullName>
                 <default>false</default>
             </values>
+            <values>
+                <fullName>TOU GROUND HANDLER</fullName>
+                <default>false</default>
+            </values>
         </picklistValues>
         <picklistValues>
             <picklist>Sector__c</picklist>
@@ -47780,6 +47797,10 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
                 <fullName>TOU E%26F</fullName>
                 <default>false</default>
             </values>
+            <values>
+                <fullName>TOU GROUND HANDLER</fullName>
+                <default>false</default>
+            </values>
         </picklistValues>
         <picklistValues>
             <picklist>Sector__c</picklist>
@@ -50461,6 +50482,10 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
             </values>
             <values>
                 <fullName>TOU E%26F</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>TOU GROUND HANDLER</fullName>
                 <default>false</default>
             </values>
         </picklistValues>
@@ -54912,6 +54937,10 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
                 <fullName>TOU E%26F</fullName>
                 <default>false</default>
             </values>
+            <values>
+                <fullName>TOU GROUND HANDLER</fullName>
+                <default>false</default>
+            </values>
         </picklistValues>
         <picklistValues>
             <picklist>Sector__c</picklist>
@@ -59324,6 +59353,10 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
             </values>
             <values>
                 <fullName>TOU E%26F</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>TOU GROUND HANDLER</fullName>
                 <default>false</default>
             </values>
         </picklistValues>
@@ -72710,6 +72743,10 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
                 <fullName>TOU E%26F</fullName>
                 <default>false</default>
             </values>
+            <values>
+                <fullName>TOU GROUND HANDLER</fullName>
+                <default>false</default>
+            </values>
         </picklistValues>
         <picklistValues>
             <picklist>Sector__c</picklist>
@@ -78001,6 +78038,10 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
                 <fullName>TOU E%26F</fullName>
                 <default>false</default>
             </values>
+            <values>
+                <fullName>TOU GROUND HANDLER</fullName>
+                <default>false</default>
+            </values>
         </picklistValues>
         <picklistValues>
             <picklist>Sector__c</picklist>
@@ -82778,6 +82819,10 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
             </values>
             <values>
                 <fullName>TOU E%26F</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>TOU GROUND HANDLER</fullName>
                 <default>false</default>
             </values>
         </picklistValues>
