@@ -731,7 +731,7 @@ public class SurveyBatchTest {
 
             Account a2 = new Account( name ='IFAP ACCT',
                                      industry = 'pluto',
-                                     IATA_ISO_Country__c=isoCountry2.id,
+                                     IATA_ISO_Country__c=isoCountry.id,
                                      recordtypeID = hqrt,
                                      IATACode__c ='1234567',
                                      Type = 'IATA Cargo Agent',
@@ -849,23 +849,40 @@ public class SurveyBatchTest {
                               ));
 
 
-                        // cases.add(new Case(recordtypeID = processRTId,
-                        //       Status = 'Financial Security Requested',
-                        //       FS_Submitted_Date__c = date.today(),
-                        //       FS_Deadline_Date__c = twoweeksAgo,
-                        //       Origin = 'asd',
-                        //       IFAP_Area__c = 'asda',
-                        //       Financial_Review_Type__c ='Annual',
-                        //       IFAP_Financial_Year__c =  String.valueOF(date.today().month()),
-                        //       Deadline_Date__c = dead,
-                        //       contactid = con2.id,
-                        //       AccountId = a2.id,
-                        //       Region__c = 'Europe',
-                        //       Assessment_Performed_Date__c = date.today(),
-                        //       Financial_Review_Result__c = 'Satisfactory - Update Financial Security',
-                        //       Reason1__c = 'CHC – Change of Shareholding'
-                        //       ));
-                        //
+                         cases.add(new Case(recordtypeID = processRTId,
+                               Status = 'Financial Security Requested',
+                               FS_Submitted_Date__c = date.today(),
+                               FS_Deadline_Date__c = twoweeksAgo,
+                               Origin = 'asd',
+                               IFAP_Area__c = 'asda',
+                               Financial_Review_Type__c ='Annual',
+                               IFAP_Financial_Year__c =  String.valueOF(date.today().month()),
+                               Deadline_Date__c = dead,
+                               contactid = con2.id,
+                               AccountId = a2.id,
+                               BSPCountry__c = 'Italy',
+                               Assessment_Performed_Date__c = date.today(),
+                               Financial_Review_Result__c = 'Satisfactory',
+                               Reason1__c = 'CHC – Change of Shareholding'
+                               ));
+
+                         cases.add(new Case(recordtypeID = processRTId,
+                               Status = 'Financial Security Requested',
+                               FS_Submitted_Date__c = date.today(),
+                               FS_Deadline_Date__c = twoweeksAgo,
+                               Origin = 'asd',
+                               IFAP_Area__c = 'asda',
+                               Financial_Review_Type__c ='Annual',
+                               IFAP_Financial_Year__c =  String.valueOF(date.today().month()),
+                               Deadline_Date__c = dead,
+                               contactid = con2.id,
+                               AccountId = a2.id,
+                               BSPCountry__c = 'Japan',
+                               Assessment_Performed_Date__c = date.today(),
+                               Financial_Review_Result__c = 'Satisfactory',
+                               Reason1__c = 'CHC – Change of Shareholding'
+                               ));
+                        
                         //
                         // cases.add(new Case(recordtypeID = processRTId,
                         //       Status = 'Financial Security Requested',
@@ -2118,6 +2135,71 @@ System.runAS(u) {
 
        test.stopTest();
     }
+
+    static testMethod void testForRoles11() {
+
+       TransformationHelper.trgAccountISSP_AfterBeforInsertDeleteUpdateUndelete = true;
+       TransformationHelper.CalculateBusinessHoursAges = true;
+       CaseChildHelper.noValidationsOnTrgCAseIFAP  = true;
+
+
+       User u = [SELECT Id FROM User WHERE UserName= 'test1@iata.org.amsdev1'];
+
+       UserRole uRole = new UserRole(Name = 'Distribution - Airline Coding & MITA');
+
+       insert uRole;
+       u.UserRoleId = uRole.Id;
+       update u;
+
+    System.runAS(u) {
+
+        Account a = [SELECT Id, Name FROM Account WHERE  name ='IFAP ACCT' LIMIT 1];
+        a.billingCountry = 'People\'s Republic of China';
+        update a;
+
+        Contact con = [SELECT Id, Name FROM Contact WHERE email = 'asd.arg@wewt.et' LIMIT 1];
+
+
+        Case c = new Case();
+        c.RecordTypeId = chinaRTID;
+        c.OwnerId = u.Id;
+        c.Reason1__c = 'CHC – Change of Shareholding';
+        c.BSPCountry__c='People\'s Republic of China';
+        c.Status = 'Financial Security Requested';
+        c.FS_Submitted_Date__c = date.today();
+        c.FS_Deadline_Date__c = date.today().addDays(-14);
+        c.Origin = 'asd';
+        c.IFAP_Area__c = 'asda';
+        c.Financial_Review_Type__c ='bla';
+        c.IFAP_Financial_Year__c =  String.valueOF(date.today().month());
+        c.Deadline_Date__c = date.today().addDays(-14);
+        c.contactid = con.id;
+        c.AccountId = a.id;
+        c.Assessment_Performed_Date__c = date.today();
+        c.Financial_Review_Result__c = 'Satisfactory' ;
+        c.Subject = 'wrthsrthjr';
+        // OwnerId = us.Id
+        insert c;
+
+        c.Region__c = 'China & North Asia';
+        c.Status = 'Closed';
+        update c;
+
+       TransformationHelper.trgAccountISSP_AfterBeforInsertDeleteUpdateUndelete = false;
+       TransformationHelper.CalculateBusinessHoursAges = false;
+       CaseChildHelper.noValidationsOnTrgCAseIFAP  = false;
+    }
+       test.startTest();
+       //SurveyCustomWorkflowWrapper wrap = new SurveyCustomWorkflowWrapper();
+       SurveyBatch batch = new SurveyBatch();
+       batch.ClosedDate = date.today();
+       Database.executeBatch(batch, 50);
+
+
+       test.stopTest();
+    }
+
+
 
 
     static testMethod void testProcessCustomerRecovery() {
