@@ -10298,6 +10298,14 @@ IFG Customer Services</value>
         <value>Billing State: You must enter a value</value>
     </labels>
     <labels>
+        <fullName>ISSP_AMS_MSO_Case_Alert</fullName>
+        <categories>ISSP</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Case Closed For More Than 2 Months</shortDescription>
+        <value>For any concerns about this case, please contact support providing the case number.</value>
+    </labels>
+    <labels>
         <fullName>ISSP_AMS_MSO_Country_ErrMsg</fullName>
         <language>en_US</language>
         <protected>false</protected>
@@ -10347,13 +10355,6 @@ IFG Customer Services</value>
         <value>Agent Status</value>
     </labels>
     <labels>
-        <fullName>ISSP_AMS_MSO_GSA_Close_Date</fullName>
-        <language>en_US</language>
-        <protected>false</protected>
-        <shortDescription>ISSP_AMS_MSO_GSA_Close_Date</shortDescription>
-        <value>Terminated Date</value>
-    </labels>
-    <labels>
         <fullName>ISSP_AMS_MSO_GSA_Appointment_Terminated</fullName>
         <language>en_US</language>
         <protected>false</protected>
@@ -10375,6 +10376,13 @@ IFG Customer Services</value>
         <value>City</value>
     </labels>
     <labels>
+        <fullName>ISSP_AMS_MSO_GSA_Close_Date</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_AMS_MSO_GSA_Close_Date</shortDescription>
+        <value>Terminated Date</value>
+    </labels>
+    <labels>
         <fullName>ISSP_AMS_MSO_GSA_Country</fullName>
         <language>en_US</language>
         <protected>false</protected>
@@ -10394,13 +10402,6 @@ IFG Customer Services</value>
         <protected>false</protected>
         <shortDescription>ISSP_AMS_MSO_GSA_Date_of_Appointment</shortDescription>
         <value>Agent Accreditation Date</value>
-    </labels>
-    <labels>
-        <fullName>ISSP_AMS_MSO_GSA_Return_to_List</fullName>
-        <language>en_US</language>
-        <protected>false</protected>
-        <shortDescription>ISSP_AMS_MSO_GSA_Return_to_List</shortDescription>
-        <value>Return to List</value>
     </labels>
     <labels>
         <fullName>ISSP_AMS_MSO_GSA_Download_CSV</fullName>
@@ -10529,6 +10530,13 @@ IFG Customer Services</value>
         <value>Create New MSO</value>
     </labels>
     <labels>
+        <fullName>ISSP_AMS_MSO_GSA_Return_to_List</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_AMS_MSO_GSA_Return_to_List</shortDescription>
+        <value>Return to List</value>
+    </labels>
+    <labels>
         <fullName>ISSP_AMS_MSO_GSA_Search_Placeholder</fullName>
         <language>en_US</language>
         <protected>false</protected>
@@ -10572,18 +10580,18 @@ IFG Customer Services</value>
         <value>Office Email</value>
     </labels>
     <labels>
-        <fullName>ISSP_AMS_MSO_Request_Successfull</fullName>
-        <language>en_US</language>
-        <protected>false</protected>
-        <shortDescription>ISSP_AMS_MSO_Request_Successfull</shortDescription>
-        <value>You have successfully created an new MSO Code:</value>
-    </labels>
-    <labels>
         <fullName>ISSP_AMS_MSO_Request_Issue_Airline_Designator</fullName>
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>ISSP_AMS_MSO_Request_Issue_Airline_Designator</shortDescription>
         <value>Missing IATA Designator on the Account.</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_AMS_MSO_Request_Successfull</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_AMS_MSO_Request_Successfull</shortDescription>
+        <value>You have successfully created an new MSO Code:</value>
     </labels>
     <labels>
         <fullName>ISSP_AMS_MSO_StepFinal_Thanks</fullName>
@@ -16030,6 +16038,14 @@ Can you please confirm which country you&apos;ve previously received support for
         <value>Case Number</value>
     </labels>
     <labels>
+        <fullName>ISSP_Case_Closed_MSO_Code</fullName>
+        <categories>ISSP</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_Case_Closed_MSO_Code</shortDescription>
+        <value>For any further inquiries on this case please go to Contact Support.</value>
+    </labels>
+    <labels>
         <fullName>ISSP_Case_Closed_More_Than_2_Months</fullName>
         <categories>ISSP</categories>
         <language>en_US</language>
@@ -16044,22 +16060,6 @@ Can you please confirm which country you&apos;ve previously received support for
         <protected>false</protected>
         <shortDescription>ISSP Case Payment status</shortDescription>
         <value>Payment status</value>
-	</labels>
-    <labels>
-        <fullName>ISSP_AMS_MSO_Case_Alert</fullName>
-        <categories>ISSP</categories>
-        <language>en_US</language>
-        <protected>false</protected>
-        <shortDescription>Case Closed For More Than 2 Months</shortDescription>
-        <value>For any concerns about this case, please contact support providing the case number.</value>
-    </labels>
-    <labels>
-        <fullName>ISSP_Case_Closed_MSO_Code</fullName>
-        <categories>ISSP</categories>
-        <language>en_US</language>
-        <protected>false</protected>
-        <shortDescription>ISSP_Case_Closed_MSO_Code</shortDescription>
-        <value>For any further inquiries on this case please go to Contact Support.</value>
     </labels>
     <labels>
         <fullName>ISSP_Case_Status_Resolved</fullName>
