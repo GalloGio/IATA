@@ -2120,7 +2120,7 @@ System.runAS(u) {
     }
 
 
-    static testMethod void testForInstantSurveys() {
+    static testMethod void testProcessCustomerRecovery() {
        TransformationHelper.trgAccountISSP_AfterBeforInsertDeleteUpdateUndelete = true;
        TransformationHelper.CalculateBusinessHoursAges = true;
        CaseChildHelper.noValidationsOnTrgCAseIFAP  = true;
@@ -2163,6 +2163,7 @@ System.runAS(u) {
         // OwnerId = us.Id
         insert c;
 
+        c.Instant_Survey_Feedback_requested__c = true;
         c.Region__c = 'Americas';
         c.Status = 'Closed';
         update c;
