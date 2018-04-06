@@ -79,9 +79,20 @@ public class TIP_BINRangeTriggerHandler {
 				notOverlappingRanges = updatedBins;
 			}
 
+			Set<Id> updatedIds = new Set<Id>();
+
+			for (TIP_BIN_Range__c b: updatedBins) {
+				updatedIds.add(b.Id);
+			}
+
+			List<TIP_BIN_Range__c> existingBinRanges = [SELECT Id, Name, TIP_Range_Start__c, TIP_Range_End__c, TIP_Effective_From_Date__c, TIP_Effective_To_Date__c 
+													FROM TIP_BIN_Range__c 
+													WHERE (TIP_Status__c = 'Active' OR TIP_Status__c = 'In Progress') AND (RecordType.DeveloperName = 'Listed_by_IATA' OR RecordType.DeveloperName = 'Provider') AND Id NOT IN :updatedIds
+													ORDER BY TIP_Range_Start__c, TIP_Effective_From_Date__c];
+
 			List<TIP_BIN_Range__c> existingRanges = new List<TIP_BIN_Range__c>();
 
-			for (TIP_BIN_Range__c b: triggerOld) {
+			for (TIP_BIN_Range__c b: existingBinRanges) {
 				if (!updatedBins.contains(b)) {
 					existingRanges.add(b);
 				}
@@ -122,9 +133,7 @@ public class TIP_BINRangeTriggerHandler {
 			TIP_Payment_Network_Config__c auxNetConfig = networkConfigs.get(netKey);
 			if (binRangesByCodeMap.containsKey(auxNetConfig.Payment_Network__c)) {
 				for (TIP_BIN_Range__c bin: binRangesByCodeMap.get(auxNetConfig.Payment_Network__c)) {
-					if (String.isEmpty(bin.TIP_Range_End__c)) {
-						bin.TIP_Range_End__c = bin.TIP_Range_Start__c.rightPad((Integer) auxNetConfig.Maximum_Length__c, '9');
-					} else {
+					if (bin.TIP_Range_End__c.length() < auxNetConfig.Maximum_Length__c) {
 						bin.TIP_Range_End__c = bin.TIP_Range_End__c.rightPad((Integer) auxNetConfig.Maximum_Length__c, '9');
 					}
 
@@ -152,10 +161,10 @@ public class TIP_BINRangeTriggerHandler {
 				if (i != j) {
 					Integer overlapCode = getOverlap(sortedBinRanges[i].biny, sortedBinRanges[j].biny);
 					if (overlapCode == 1) {
-						sortedBinRanges[i].biny.addError('The following overlapping BIN Range has been detected: <a href=\'https://iata--tiprlavos.cs88.my.salesforce.com/' + sortedBinRanges[j].biny.Id + '\'>'+ sortedBinRanges[j].biny.Name +'</a>', false);
+						sortedBinRanges[i].biny.addError('The following overlapping BIN Range has been detected: <a href=\'/' + sortedBinRanges[j].biny.Id + '?pv0={!TIP_BIN_Range__c.Id}\'>'+ sortedBinRanges[j].biny.Name +'</a>', false);
 						break;
 					} else if (overlapCode == 2) {
-						sortedBinRanges[i].biny.addError('The following overlapping, open-ended BIN Range has been detected: <a href=\'https://iata--tiprlavos.cs88.my.salesforce.com/' + sortedBinRanges[j].biny.Id + '\'>'+ sortedBinRanges[j].biny.Name +'</a>', false);
+						sortedBinRanges[i].biny.addError('The following overlapping, open-ended BIN Range has been detected: <a href=\'/' + sortedBinRanges[j].biny.Id + '?pv0={!TIP_BIN_Range__c.Id}\'>'+ sortedBinRanges[j].biny.Name +'</a>', false);
 						break;
 					} else if (j == sortedBinRanges.size()-1 && overlapCode == 0) {
 						notOverlappingRanges.add(sortedBinRanges[i].biny);
@@ -171,14 +180,17 @@ public class TIP_BINRangeTriggerHandler {
 		for (TIP_BIN_Range__c bin: newBinsToCheck) {
 			
 			for (TIP_BIN_Range__c existingBin: existingBinsToCheck) {
-				Integer overlapCode = getOverlap(bin, existingBin);
-				if (overlapCode == 1) {
-					bin.addError('The following overlapping BIN Range has been detected: <a href=\'https://iata--tiprlavos.cs88.my.salesforce.com/' + existingBin.Id + '\'>'+ existingBin.Name +'</a>', false);
-					break;
-				} else if (overlapCode == 2) {
-					bin.addError('The following overlapping, open-ended BIN Range has been detected: <a href=\'https://iata--tiprlavos.cs88.my.salesforce.com/' + existingBin.Id + '\'>'+ existingBin.Name +'</a>', false);
-					break;
+				if (bin.Id != existingBin.Id) {
+					Integer overlapCode = getOverlap(bin, existingBin);
+					if (overlapCode == 1) {
+						bin.addError('The following overlapping BIN Range has been detected: <a href=\'/' + existingBin.Id + '?pv0={!TIP_BIN_Range__c.Id}\'>'+ existingBin.Name +'</a>', false);
+						break;
+					} else if (overlapCode == 2) {
+						bin.addError('The following overlapping, open-ended BIN Range has been detected: <a href=\'/' + existingBin.Id + '?pv0={!TIP_BIN_Range__c.Id}\'>'+ existingBin.Name +'</a>', false);
+						break;
+					}
 				}
+				
 			}
 		}
 	}
@@ -189,15 +201,11 @@ public class TIP_BINRangeTriggerHandler {
 		//1 - Overlap on Ranges and Dates
 		//2 - Overlap on Ranges and open-ended Dates 
 		if (bin1.TIP_Range_Start__c <= bin2.TIP_Range_End__c && bin1.TIP_Range_End__c >= bin2.TIP_Range_Start__c) {
-			if (bin2.TIP_Effective_To_Date__c == null) {
-					
-				if (bin1.TIP_Effective_To_Date__c == null) {
-					return 2;
-
-				} else if (bin1.TIP_Effective_To_Date__c >= bin2.TIP_Effective_From_Date__c) {
-					return 2;
-				}
-			} else if (bin1.TIP_Effective_From_Date__c >= bin2.TIP_Effective_From_Date__c && bin1.TIP_Effective_From_Date__c <= bin2.TIP_Effective_To_Date__c) {
+			if ((bin1.TIP_Effective_To_Date__c == null && bin2.TIP_Effective_To_Date__c == null) 
+				|| (bin1.TIP_Effective_To_Date__c == null && bin2.TIP_Effective_To_Date__c >= bin1.TIP_Effective_From_Date__c)
+				|| (bin2.TIP_Effective_To_Date__c == null && bin1.TIP_Effective_To_Date__c >= bin2.TIP_Effective_From_Date__c)) {
+				return 2;
+			} else if (bin1.TIP_Effective_From_Date__c <= bin2.TIP_Effective_To_Date__c && bin1.TIP_Effective_To_Date__c >= bin2.TIP_Effective_From_Date__c) {
 				return 1;
 			}			
 		}

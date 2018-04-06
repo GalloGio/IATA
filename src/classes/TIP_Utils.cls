@@ -21,4 +21,7 @@ public class TIP_Utils{
 
 	//case Description
 	public static String CASE_DESC_REQUEST_FOR_ENLISTMENT_PAYMENT_PROVIDER = 'Request for Enlistment as Payment provider';
+
+	//BIN Range RT's
+	public static String LISTED_BY_IATA_RECORD_TYPE_ID = RecordTypeSingleton.getInstance().RtIDsPerDeveloperNamePerObj.get('TIP_BIN_Range__c').get('Listed_by_IATA');
 }
