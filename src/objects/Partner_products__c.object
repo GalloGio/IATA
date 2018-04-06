@@ -448,6 +448,11 @@ If the product is a multi-use VANs, then it is a unique card/account number that
                     <default>false</default>
                     <label>In Progress</label>
                 </value>
+                <value>
+                    <fullName>Rejected</fullName>
+                    <default>false</default>
+                    <label>Rejected</label>
+                </value>
             </valueSetDefinition>
         </valueSet>
     </fields>
@@ -652,6 +657,10 @@ If the product is a multi-use VANs, then it is a unique card/account number that
                 <fullName>Inactive</fullName>
                 <default>false</default>
             </values>
+            <values>
+                <fullName>Rejected</fullName>
+                <default>false</default>
+            </values>
         </picklistValues>
         <picklistValues>
             <picklist>is_PCI_DSS_required__c</picklist>
@@ -673,6 +682,15 @@ If the product is a multi-use VANs, then it is a unique card/account number that
         <errorConditionFormula>ISPICKVAL(Provider__r.TIP_Provider_Type__c, &quot;Open Loop&quot;) &amp;&amp; ISPICKVAL(PP_Payment_Product_Network_type__c, &quot;Closed Loop&quot;)</errorConditionFormula>
         <errorDisplayField>PP_Payment_Product_Network_type__c</errorDisplayField>
         <errorMessage>Closed Loop Product cannot be added for an Open Loop Provider</errorMessage>
+    </validationRules>
+    <validationRules>
+        <fullName>IATA_Code_Mandatory_For_Not_Rejected</fullName>
+        <active>true</active>
+        <description>Account&apos;s IATA Code is mandatory for partner products to be approved</description>
+        <errorConditionFormula>RecordType.DeveloperName==&apos;TIP_Product&apos; 
+&amp;&amp; NOT(ISPICKVAL(PP_status__c,&apos;Rejected&apos;))
+&amp;&amp; ISBLANK(Provider__r.IATACode__c)</errorConditionFormula>
+        <errorMessage>IATA Code is missing. Please fill in the field on Account level.</errorMessage>
     </validationRules>
     <validationRules>
         <fullName>Mandatory_Chargeback_on_TIP_Product</fullName>

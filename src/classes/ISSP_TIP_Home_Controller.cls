@@ -103,7 +103,7 @@ public with sharing class ISSP_TIP_Home_Controller {
     public List<Case> getCases(){
         Set<string> closedStatusesList = createListOfClosedStatuses();
 
-    	List<Case> caseList = [SELECT id, status, CaseNumber, subject, createddate, CaseArea__c, Reason1__c  FROM Case 
+    	List<Case> caseList = [SELECT id, status, CaseNumber, subject, createddate, CaseArea__c, Reason1__c, IsClosed  FROM Case 
         WHERE AccountId = :con.AccountId 
         and recordtypeid = :PROCESS_CASE_RECORD_TYPE_ID 
         and CaseArea__c like '%Transparency in Payments%'
@@ -239,7 +239,9 @@ public with sharing class ISSP_TIP_Home_Controller {
     public void newEditBinRange(){
         String binRangeRecPos=System.currentPageReference().getParameters().get('binRangeRecPos');
         selectedBinRange= new BinRangeRec( 
-                new TIP_BIN_Range__c(),0,'N');
+                new TIP_BIN_Range__c(
+                    recordTypeId=TIP_Utils.BIN_RANGE_PROVIDER_RECORD_TYPE_ID
+                    ),0,'N');
         if(!String.isBlank(binRangeRecPos)){
             selectedBinRange= binRangeList.get(Integer.ValueOf(binRangeRecPos));
             selectedBinRange.action='M';            

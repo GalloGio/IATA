@@ -26,13 +26,13 @@ public with sharing class ISSP_TIP_Enrolment_Controller {
 		fetchHQAccountDetails();
 		getISOCountry();
 
-		accountCases = [SELECT ID,Reason,RecordTypeid,RecordType.Name,CaseArea__c,Status,Visible_on_ISS_Portal__c,Subject,Region__c,
+		accountCases = [SELECT ID,Reason1__c,RecordTypeid,RecordType.Name,CaseArea__c,Status,Visible_on_ISS_Portal__c,Subject,Region__c,
 						Origin,BSPCountry__c,Country_concerned_by_the_query__c,Description
 						FROM Case 
 							WHERE RecordTypeid = :TIP_Utils.CASE_PROCESS_IDFS_RECORD_TYPE_ID 
 							AND Accountid = :account.id 
 							AND Visible_on_ISS_Portal__c = true
-							AND Reason = :TIP_Utils.CASE_REASON_PAYMENT_PROVIDER_MANAGMENT
+							AND Reason1__c = :TIP_Utils.CASE_REASON_PAYMENT_PROVIDER_MANAGMENT
 							AND CaseArea__c = :TIP_Utils.CASE_AREA_TRANSPARENCY_IN_PAYMENTS 
 							AND Status = 'Draft'
 						LIMIT 1]; 
@@ -94,9 +94,9 @@ public with sharing class ISSP_TIP_Enrolment_Controller {
 		//------------------ queue exists??-----------------------
 
 		//assign to TIP HO queue
-		List<Group> groups =  [SELECT Id FROM Group WHERE Type = 'Queue' AND NAME = 'TIP HO' LIMIT 1];
+		List<Group> groups =  [SELECT Id FROM Group WHERE Type = 'Queue' AND NAME = 'Cases_Transparency_in_Payment_Service' LIMIT 1];
 		
-		if(groups == null || groups.isEmpty()) System.debug('ERROR! TIP HO Queue not found proceeding without assign');
+		if(groups == null || groups.isEmpty()) System.debug('ERROR! Cases_Transparency_in_Payment_Service Queue not found proceeding without assign');
 		else{
 			newCase.OwnerId = groups[0].id;
 			upsert newcase;
