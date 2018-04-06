@@ -3038,11 +3038,16 @@ public class AMS_OSCARTriggerHandler {
             if (oldOSCAR.STEP2__c != 'Passed' && updatedOscar.STEP2__c == 'Passed') {
                 AMS_OSCAR_JSON.ChangeCode changeCode = new AMS_OSCAR_JSON.ChangeCode();
 
-                changeCode.name = 'FIN';
-                changeCode.reasonCode = '91';
-                changeCode.memoText = AMS_Utils.getChangeCodeMemoText(updatedOscar.Process__c,changeCode.name);
-                changeCode.reasonDesc  = 'ACCREDITED–MEETS–STANDARDS';
-                changeCode.status  = '9';
+                AMS_ChangeCodes__c n = AMS_ChangeCodes__c.getInstance('FIN-' + updatedOscar.Business_Process__c);
+
+                changeCode.name = n.Change_Code__c;
+                changeCode.reasonCode = n.Reason_Code__c;
+                changeCode.memoText = AMS_Utils.getChangeCodeMemoText(updatedOscar.Process__c, changeCode.name);
+                changeCode.reasonDesc  = n.Reason_Code_Description__c;
+                changeCode.status  = n.Account_status_change__c;
+                changeCode.publishedOnEBulletin = n.Published_in_bulletin__c;
+
+                if(updatedOscar.Business_Process__c.contains('CNS')) changeCode.memoText = changeCode.memoText.replace('application', 'Endorsement');
 
                 Account acct = new Account(Id = updatedOscar.Account__c);
                 AMS_ChangeCodesHelper.createAAChangeCodes(new List<AMS_OSCAR_JSON.ChangeCode> {changeCode}, new List<AMS_OSCAR__c> {updatedOscar}, new List<Account> {acct}, true);
@@ -3051,15 +3056,52 @@ public class AMS_OSCARTriggerHandler {
 
                 AMS_OSCAR_JSON.ChangeCode changeCode = new AMS_OSCAR_JSON.ChangeCode();
 
-                changeCode.name = 'DIS';
-                changeCode.reasonCode = '12';
-                changeCode.memoText = AMS_Utils.getChangeCodeMemoText(updatedOscar.Process__c,changeCode.name);
-                changeCode.reasonDesc  = 'APPLICATION DISAPPROVED';
-                changeCode.status  = '1';
+                AMS_ChangeCodes__c n = AMS_ChangeCodes__c.getInstance('DIS-' + updatedOscar.Business_Process__c);
+
+                changeCode.name = n.Change_Code__c;
+                changeCode.reasonCode = n.Reason_Code__c;
+                changeCode.memoText = AMS_Utils.getChangeCodeMemoText(updatedOscar.Process__c, changeCode.name);
+                changeCode.reasonDesc  = n.Reason_Code_Description__c;
+                changeCode.status  = n.Account_status_change__c;
+                changeCode.publishedOnEBulletin = n.Published_in_bulletin__c;
+
+                if(updatedOscar.Business_Process__c.contains('CNS')) changeCode.memoText = changeCode.memoText.replace(AMS_Utils.AACC_DISAPPROVED, 'denied');
 
                 Account acct = new Account(Id = updatedOscar.Account__c);
                 AMS_ChangeCodesHelper.createAAChangeCodes(new List<AMS_OSCAR_JSON.ChangeCode> {changeCode}, new List<AMS_OSCAR__c> {updatedOscar}, new List<Account> {acct}, true);
-            }
+            }else if (oldOSCAR.STEP4__c != 'Passed' && updatedOscar.STEP4__c == 'Passed') {
+                AMS_OSCAR_JSON.ChangeCode changeCode = new AMS_OSCAR_JSON.ChangeCode();
+
+                AMS_ChangeCodes__c n = AMS_ChangeCodes__c.getInstance('NWD-' + updatedOscar.Business_Process__c);
+
+                changeCode.name = n.Change_Code__c;
+                changeCode.reasonCode = n.Reason_Code__c;
+                changeCode.memoText = AMS_Utils.getChangeCodeMemoText(updatedOscar.Process__c, changeCode.name);
+                changeCode.reasonDesc  = n.Reason_Code_Description__c;
+                changeCode.status  = n.Account_status_change__c;
+                changeCode.publishedOnEBulletin = n.Published_in_bulletin__c;
+
+                Account acct = new Account(Id = updatedOscar.Account__c);
+                AMS_ChangeCodesHelper.createAAChangeCodes(new List<AMS_OSCAR_JSON.ChangeCode> {changeCode}, new List<AMS_OSCAR__c> {updatedOscar}, new List<Account> {acct}, true);
+            }else if (oldOSCAR.STEP5__c != 'Passed' && updatedOscar.STEP5__c == 'Passed') {
+                AMS_OSCAR_JSON.ChangeCode changeCode = new AMS_OSCAR_JSON.ChangeCode();
+
+                AMS_ChangeCodes__c n = AMS_ChangeCodes__c.getInstance('REC-' + updatedOscar.Business_Process__c);
+
+                changeCode.name = n.Change_Code__c;
+                changeCode.reasonCode = n.Reason_Code__c;
+                changeCode.memoText = AMS_Utils.getChangeCodeMemoText(updatedOscar.Process__c, changeCode.name);
+                changeCode.reasonDesc  = n.Reason_Code_Description__c;
+                changeCode.status  = n.Account_status_change__c;
+                changeCode.publishedOnEBulletin = n.Published_in_bulletin__c;
+
+                if(updatedOscar.Business_Process__c.contains('CNS')) changeCode.memoText = changeCode.memoText.replace(AMS_Utils.AACC_RECONSIDERED, 'under reconsideration');
+
+                Account acct = new Account(Id = updatedOscar.Account__c);
+                AMS_ChangeCodesHelper.createAAChangeCodes(new List<AMS_OSCAR_JSON.ChangeCode> {changeCode}, new List<AMS_OSCAR__c> {updatedOscar}, new List<Account> {acct}, true);
+
+
+            } 
         // Management of CORRECTION OSCARs
         }else if (updatedOscar.recordTypeID == corrRT){
             if (oldOSCAR.STEP6__c != 'Passed' && updatedOscar.STEP6__c == 'Passed'){

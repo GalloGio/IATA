@@ -230,19 +230,21 @@ global class AMS_OSCAR_Webservice {
     WebService static String createChangeCodeNEW(String oscarId) {
 
         try {
-            List<AMS_OSCAR__c> oscar = [select Account__c, Process__c, AMS_Online_Accreditation__c, recordTypeID, Is_NewGen__c from AMS_OSCAR__c where Id = : oscarId];
+            List<AMS_OSCAR__c> oscar = [select Account__c, Business_Process__c, Process__c, AMS_Online_Accreditation__c, recordTypeID, Is_NewGen__c from AMS_OSCAR__c where Id = : oscarId];
 
             AMS_OSCAR__c theOSCAR = oscar[0];
 
             //AMS_Utils.isNewgenProcess = (AMS_Utils.oscarNewGenProcesses.contains(theOSCAR.Process__c));
 
             AMS_OSCAR_JSON.ChangeCode changeCode = new AMS_OSCAR_JSON.ChangeCode();
+            AMS_ChangeCodes__c n = AMS_ChangeCodes__c.getInstance('NEW-' + theOSCAR.Business_Process__c);
 
-            changeCode.name = 'NEW';
-            changeCode.reasonCode = '21';
+            changeCode.name = n.Change_Code__c;
+            changeCode.reasonCode = n.Reason_Code__c;
             changeCode.memoText = AMS_Utils.getChangeCodeMemoText(theOSCAR.Process__c, changeCode.name);
-            changeCode.reasonDesc  = 'NEW APPLICATION';
-            changeCode.status  = '2';
+            changeCode.reasonDesc  = n.Reason_Code_Description__c;
+            changeCode.status  = n.Account_status_change__c;
+            changeCode.publishedOnEBulletin = n.Published_in_bulletin__c;
 
             Account acct = new Account(Id = theOSCAR.Account__c);
             AMS_ChangeCodesHelper.createAAChangeCodes(new List<AMS_OSCAR_JSON.ChangeCode> {changeCode}, new List<AMS_OSCAR__c> {theOSCAR}, new List<Account> {acct}, true);

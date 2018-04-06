@@ -227,6 +227,7 @@ public without sharing class AMS_Utils {
     public static final String AACC_FINALIZED = 'finalized';
     public static final String AACC_WITHDRAWAL = 'withdrawn';
     public static final String AACC_DISAPPROVED = 'disapproved';
+    public static final String AACC_RECONSIDERED = 'reconsidered';
     public static final Set<String> AACC_FINALS = new Set<String>{AACC_FINALIZED, AACC_DISAPPROVED, AACC_WITHDRAWAL};
      
     public static final String CHLOCTYPEBEHAVIOR_NOSWAP = 'Don’t change the parent';        
@@ -529,6 +530,12 @@ public without sharing class AMS_Utils {
         }
         else if (sChangeCode.equalsIgnoreCase('DIS')) {
             sRes = AACC_DISAPPROVED;
+        }
+        else if (sChangeCode.equalsIgnoreCase('REC')) {
+            sRes = AACC_RECONSIDERED;
+        }
+        else if (sChangeCode.equalsIgnoreCase('NWD')) {
+            sRes = AACC_WITHDRAWAL;
         }
         
         return sRes;
@@ -1909,21 +1916,25 @@ public static String getChangeCodeMemoText(String process,String changeCodeId) {
 
     String memoText = 'New application';
 
-    if (process == AMS_Utils.new_HO || process == AMS_Utils.new_BR_ABROAD)
-
-        memoText = 'New application - Head Office';
-    else if (process == AMS_Utils.new_BR)
+    if (process == new_HO || process == new_BR_ABROAD){
+        if(changeCodeId != 'NWD') memoText = 'New application - Head Office';
+    }else if (process == new_BR){
         memoText = 'New application - Branch';
-    else if (process == AMS_Utils.new_TIDS)
+    }else if (process == NEWHELITE || process == NEWHESTANDARD){
+        if(changeCodeId != 'NEW' && changeCodeId != 'NWD') memoText = 'New application - Head Entity';
+    }else if (process == NEWAE){
+        if(changeCodeId != 'NEW' && changeCodeId != 'NWD') memoText = 'New application - Associate Entity';
+    }else if (process == new_TIDS){
         memoText = 'New application - TIDS';
-    else if (process == AMS_Utils.new_SA)
+    }else if (process == new_SA){
         memoText = 'New application - SA';
-    else if (process == AMS_Utils.new_GSSA)
+    }else if (process == new_GSSA){
         memoText = 'New application - GSSA';
-    else if (process == AMS_Utils.new_GSA_BSP || process == AMS_Utils.new_GSA)
+    }else if (process == new_GSA_BSP || process == new_GSA){
         memoText = 'New application - GSA';
-    else if (process == AMS_Utils.new_AHA_BSP || process == AMS_Utils.new_AHA)
+    }else if (process == new_AHA_BSP || process == new_AHA){
         memoText = 'New application - AHA';
+    }
  
     return memoText + ' ' + getStatusDescFromChangeCode(changeCodeId);
 }
