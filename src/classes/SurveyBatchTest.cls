@@ -712,6 +712,10 @@ public class SurveyBatchTest {
             IATA_ISO_Country__c isoCountry6 = new IATA_ISO_Country__c(name = 'suisse5',ISO_Code__c ='CH',AIMS_Area_Name__c='suisse',AIMS_Area_ID__c= '1', Case_BSP_Country__c  = 'People\'s Republic of China' );
             isoList.add(isoCountry6);
 
+            IATA_ISO_Country__c isoCountrySpain = new IATA_ISO_Country__c(
+                    name = 'Spain',ISO_Code__c = 'ES',AIMS_Area_Name__c='Spain');
+               isoList.add(isoCountrySpain);
+
             insert isoList;
 
             //List Account
@@ -765,6 +769,14 @@ public class SurveyBatchTest {
                                      IATA_ISO_Country__c=isoCountry6.id,
                                      recordtypeID = hqrt,
                                      IATACode__c ='1234566',
+                                     Type = 'IATA Cargo Agent',
+                                     billingCountry = 'ss',Location_Type__c = 'AO');
+
+           Account a7 = new Account( name ='IFAP ACCT',
+                                     industry = 'pluto',
+                                     IATA_ISO_Country__c=isoCountrySpain.id,
+                                     recordtypeID = hqrt,
+                                     IATACode__c ='1234556',
                                      Type = 'IATA Cargo Agent',
                                      billingCountry = 'ss',Location_Type__c = 'AO');
 
@@ -992,6 +1004,200 @@ public class SurveyBatchTest {
         test.stopTest();
     }
    }
+
+       static testMethod void SurveyEmailTest3() {
+
+        TransformationHelper.trgAccountISSP_AfterBeforInsertDeleteUpdateUndelete = true;
+        TransformationHelper.CalculateBusinessHoursAges = true;
+        CaseChildHelper.noValidationsOnTrgCAseIFAP  = true;
+
+        UserRole r1 = new UserRole(Name = 'China & N. Asia Customer Service');
+        insert r1;
+
+
+        User u1 = new User(FirstName='Ángel',
+           Division='UnitTest',
+           License_Cost_Center__c='AAA000AA00',
+           Username='test1@iata.org.amsdev11',
+           LastName='Peña', Email='test1@iata.org',
+           Alias='Test1', CommunityNickname='Test11',
+           TimeZoneSidKey='Europe/Brussels', LocaleSidKey='en_US',
+           EmailEncodingKey='UTF-8', ProfileId='00e20000000h0gFAAQ',
+           LanguageLocaleKey='en_US');
+
+        list<User> listUser = new list<User>();
+        listUser.add(u1);
+        insert listUser;
+
+        System.runAs (u1) {
+            //List ISO Country
+            List<IATA_ISO_Country__c> isoList = new List<IATA_ISO_Country__c>();
+            IATA_ISO_Country__c isoCountry = new IATA_ISO_Country__c(name = 'suisse',ISO_Code__c ='SS',AIMS_Area_Name__c='suisse',AIMS_Area_ID__c= '1');
+            isoList.add(isoCountry);
+
+            IATA_ISO_Country__c isoCountry2 = new IATA_ISO_Country__c(name = 'suisse1',ISO_Code__c ='GE',AIMS_Area_Name__c='suisse',AIMS_Area_ID__c= '1', Case_BSP_Country__c  = 'Germany' );
+            isoList.add(isoCountry2);
+
+            IATA_ISO_Country__c isoCountry3 = new IATA_ISO_Country__c(name = 'suisse2',ISO_Code__c ='IN',AIMS_Area_Name__c='suisse',AIMS_Area_ID__c= '1', Case_BSP_Country__c  = 'India' );
+            isoList.add(isoCountry3);
+
+            IATA_ISO_Country__c isoCountry4 = new IATA_ISO_Country__c(name = 'suisse3',ISO_Code__c ='IR',AIMS_Area_Name__c='suisse',AIMS_Area_ID__c= '1', Case_BSP_Country__c  = 'Iran' );
+            isoList.add(isoCountry4);
+
+            IATA_ISO_Country__c isoCountry5 = new IATA_ISO_Country__c(name = 'suisse4',ISO_Code__c ='JA',AIMS_Area_Name__c='suisse',AIMS_Area_ID__c= '1', Case_BSP_Country__c  = 'Jamaica' );
+            isoList.add(isoCountry5);
+
+            IATA_ISO_Country__c isoCountry6 = new IATA_ISO_Country__c(name = 'suisse5',ISO_Code__c ='CH',AIMS_Area_Name__c='suisse',AIMS_Area_ID__c= '1', Case_BSP_Country__c  = 'People\'s Republic of China' );
+            isoList.add(isoCountry6);
+
+            IATA_ISO_Country__c isoCountrySpain = new IATA_ISO_Country__c(
+                    name = 'Spain',ISO_Code__c = 'ES',AIMS_Area_Name__c='Spain');
+               isoList.add(isoCountrySpain);
+
+            insert isoList;
+
+            //List Account
+            List<Account> acc = new List<Account>();
+            Account a = new Account( name ='IFAP ACCT',
+                                     industry = 'pluto',
+                                     IATA_ISO_Country__c=isoCountry.id,
+                                     recordtypeID = hqrt,
+                                     IATACode__c ='1234567',
+                                     Type = 'IATA Cargo Agent',
+                                     billingCountry = 'China',Location_Type__c = 'AO');
+
+
+            Account a2 = new Account( name ='IFAP ACCT',
+                                     industry = 'pluto',
+                                     IATA_ISO_Country__c=isoCountry2.id,
+                                     recordtypeID = hqrt,
+                                     IATACode__c ='1234567',
+                                     Type = 'IATA Cargo Agent',
+                                     billingCountry = 'ss',Location_Type__c = 'AO');
+
+
+            Account a3 = new Account( name ='IFAP ACCT',
+                                     industry = 'pluto',
+                                     IATA_ISO_Country__c=isoCountry3.id,
+                                     recordtypeID = hqrt,
+                                     IATACode__c ='1234567',
+                                     Type = 'IATA Cargo Agent',
+                                     billingCountry = 'ss',Location_Type__c = 'AO');
+
+
+            Account a4 = new Account( name ='IFAP ACCT',
+                                     industry = 'pluto',
+                                     IATA_ISO_Country__c=isoCountry4.id,
+                                     recordtypeID = hqrt,
+                                     IATACode__c ='1234567',
+                                     Type = 'IATA Cargo Agent',
+                                     billingCountry = 'ss',Location_Type__c = 'AO');
+
+
+            Account a5 = new Account( name ='IFAP ACCT',
+                                     industry = 'pluto',
+                                     IATA_ISO_Country__c=isoCountry5.id,
+                                     recordtypeID = hqrt,
+                                     IATACode__c ='1234567',
+                                     Type = 'IATA Cargo Agent',
+                                     billingCountry = 'ss',Location_Type__c = 'AO');
+
+           Account a6 = new Account( name ='IFAP ACCT',
+                                     industry = 'pluto',
+                                     IATA_ISO_Country__c=isoCountry6.id,
+                                     recordtypeID = hqrt,
+                                     IATACode__c ='1234566',
+                                     Type = 'IATA Cargo Agent',
+                                     billingCountry = 'ss',Location_Type__c = 'AO');
+
+           Account a7 = new Account( name ='IFAP ACCT',
+                                     industry = 'pluto',
+                                     IATA_ISO_Country__c=isoCountrySpain.id,
+                                     recordtypeID = hqrt,
+                                     IATACode__c ='1234556',
+                                     Type = 'IATA Cargo Agent',
+                                     billingCountry = 'ss',Location_Type__c = 'AO');
+
+            acc.add(a);
+            acc.add(a2);
+            acc.add(a3);
+            acc.add(a4);
+            acc.add(a5);
+            acc.add(a6);
+            acc.add(a7);
+            insert acc;
+
+            //List Contact
+            List<Contact> cont = new List<Contact>();
+
+            Contact con =new contact(firstname = 'Name', lastname = 'pluto', phone = '123', accountid = a.id, Financial_Assessment_Contact__c = true, email = 'asd.arg@wewt.et1', HasOptedOutOfEmail = false);
+            Contact con2 =new contact(firstname = 'Name', lastname = 'pluto', phone = '123', accountid = a2.id, Financial_Assessment_Contact__c = true, email = 'asd.arg@wewt.et2', HasOptedOutOfEmail = false);
+            Contact con3 =new contact(firstname = 'Name', lastname = 'pluto', phone = '123', accountid = a3.id, Financial_Assessment_Contact__c = true, email = 'asd.arg@wewt.et3', HasOptedOutOfEmail = false);
+            Contact con4 =new contact(firstname = 'Name', lastname = 'pluto',phone = '123', accountid = a4.id, Financial_Assessment_Contact__c = true, email = 'asd.arg@wewt.et4',HasOptedOutOfEmail = false);
+            Contact con5 =new contact(firstname = 'Name', lastname = 'pluto', phone = '123', accountid = a5.id, Financial_Assessment_Contact__c = true, email = 'asd.arg@wewt.et5', HasOptedOutOfEmail = false);
+            Contact con6 =new contact(firstname = 'Name', lastname = 'pluto', phone = '123', accountid = a6.id, Financial_Assessment_Contact__c = true, email = 'asd.arg@wewt.et6', HasOptedOutOfEmail = false);
+            Contact con7 =new contact(firstname = 'Name', lastname = 'pluto', phone = '123', accountid = a7.id, Financial_Assessment_Contact__c = true, email = 'asd.arg@wewt.et6', HasOptedOutOfEmail = false);
+
+            cont.add(con);
+            cont.add(con2);
+            cont.add(con3);
+            cont.add(con4);
+            cont.add(con5);
+            cont.add(con6);
+            cont.add(con7);
+            insert cont;
+
+            date dead = date.today().addDays(40);
+
+            Date twoweeksAgo = date.today().addDays(- 14);
+
+
+            List<Case> cases = new List<Case>();
+                        cases.add(new Case(recordtypeID = IFAPcaseRecordTypeID,
+                              Status = 'Financial Security Requested',
+                              FS_Submitted_Date__c = date.today(),
+                              FS_Deadline_Date__c = twoweeksAgo,
+                              Origin = 'asd',
+                              IFAP_Area__c = 'asda',
+                              Financial_Review_Type__c ='Annual',
+                              IFAP_Financial_Year__c =  String.valueOF(date.today().month()),
+                              Deadline_Date__c = dead,
+                              contactid = con.id,
+                              AccountId = a.id,
+                              Region__c = 'China & North Asia',
+                              Assessment_Performed_Date__c = date.today(),
+                              Financial_Review_Result__c = 'Satisfactory - Update Financial Security',
+                              Reason1__c = 'CHC – Change of Shareholding',
+                              OwnerId = u1.Id
+                              ));
+
+                   
+
+        for(Case c : cases){
+          c.Status = 'Closed';
+        }
+        insert cases;
+    
+
+        TransformationHelper.trgAccountISSP_AfterBeforInsertDeleteUpdateUndelete = false;
+        TransformationHelper.CalculateBusinessHoursAges = false;
+        CaseChildHelper.noValidationsOnTrgCAseIFAP  = false;
+
+        test.startTest();
+            //SurveyCustomWorkflowWrapper wrap = new SurveyCustomWorkflowWrapper();
+            SurveyBatch batch = new SurveyBatch();
+            batch.ClosedDate = date.today();
+            batch.CreatedDate = date.today();
+            Database.executeBatch(batch, 50);
+
+          string jobId = System.schedule('SurveyCustomWorkflowTest',
+                        '0 0 0 15 3 ? 2022',
+                        new SurveyBatchScheduler());
+
+        test.stopTest();
+    }
+   }
+
     static void prepareTestForCountries(Integer countriesLimit, Integer offsetLimit){
       list<IATA_ISO_Country__c> listCountries = new list<IATA_ISO_Country__c>();
       if(offsetLimit!=null){
@@ -1961,7 +2167,7 @@ System.runAS(u) {
         c.Status = 'Closed';
         update c;
 
-        Instant_Surveys__c is = new Instant_Surveys__c(Name = 'is', X2015_Overall_Satisfaction__c = '9', Relationship_to_Case__c = c.Id);
+        Instant_Surveys__c is = new Instant_Surveys__c(Name = 'is', X2015_Overall_Satisfaction__c = '3', Relationship_to_Case__c = c.Id);
         insert is;
 
        TransformationHelper.trgAccountISSP_AfterBeforInsertDeleteUpdateUndelete = false;
@@ -1969,7 +2175,6 @@ System.runAS(u) {
        CaseChildHelper.noValidationsOnTrgCAseIFAP  = false;
     }
        test.startTest();
-       //SurveyCustomWorkflowWrapper wrap = new SurveyCustomWorkflowWrapper();
        SurveyBatch batch = new SurveyBatch();
        batch.ClosedDate = date.today();
        Database.executeBatch(batch, 50);
