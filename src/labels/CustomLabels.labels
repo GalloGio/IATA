@@ -21047,6 +21047,7 @@ This Dashboard allows each airline Treasury Team to gain full visibility of thei
         <shortDescription>Enrol new Product</shortDescription>
         <value>Enrol new Product</value>
     </labels>
+    <labels>
         <fullName>ISSP_TIP_MANDATORY_ON_SUBMIT</fullName>
         <language>en_US</language>
         <protected>false</protected>
