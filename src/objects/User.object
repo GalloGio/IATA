@@ -920,6 +920,15 @@ If( Contact.Account.ICH_Member__c = true,&quot;ICH&quot;, &quot;&quot;)</formula
         <type>Checkbox</type>
     </fields>
     <fields>
+        <fullName>Is_TIP_User__c</fullName>
+        <externalId>false</externalId>
+        <formula>ISPICKVAL(Contact.Account.Category__c, &apos;Payment Provider&apos;)
+&amp;&amp; ISPICKVAL(Contact.Account.Sector__c , &apos;Financial Institution&apos;)</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>Is TIP User</label>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
         <fullName>LOB_Expertise__c</fullName>
         <externalId>false</externalId>
         <label>LOB Expertise</label>

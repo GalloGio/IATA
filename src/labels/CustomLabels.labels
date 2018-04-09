@@ -14962,6 +14962,20 @@ Also note that the data contained in ICE is provided to IATA by third parties at
         <value>/a2G?fcf=00Bg0000000ZLVX</value>
     </labels>
     <labels>
+        <fullName>ISSP_Application_for_Enlistment_as_a_Payment_Provider</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP Application for Enlistment as a Payment Provider</shortDescription>
+        <value>Application for Enlistment as a Payment Provider</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_Application_for_Enlistment_Email_Duplicated</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP Application for Enlistment Email Duplicated</shortDescription>
+        <value>Email duplicated. Please insert other email</value>
+    </labels>
+    <labels>
         <fullName>ISSP_Apply_Filter</fullName>
         <categories>portal, S6</categories>
         <language>en_US</language>
@@ -15166,6 +15180,13 @@ Also note that the data contained in ICE is provided to IATA by third parties at
         <protected>false</protected>
         <shortDescription>ISSP_Registration</shortDescription>
         <value>Branches</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_Button_Request_Enlistment</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP Button Request Enlistment</shortDescription>
+        <value>Request Enlistment as Payment Provider</value>
     </labels>
     <labels>
         <fullName>ISSP_BuyCertificateText</fullName>
@@ -17147,6 +17168,13 @@ Please add below all your company valid email domains, including different ones 
         <value>dev@balink.net</value>
     </labels>
     <labels>
+        <fullName>ISSP_Encolment_page_Office_address</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP Encolment page Office address</shortDescription>
+        <value>Office address</value>
+    </labels>
+    <labels>
         <fullName>ISSP_EnterValidString</fullName>
         <language>en_US</language>
         <protected>false</protected>
@@ -17695,6 +17723,13 @@ this is the tiess topic help</value>
         <protected>false</protected>
         <shortDescription>ISSP_Home</shortDescription>
         <value>Home</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_Home_Table_Date_Time_Opened</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP Home Table Date-Time Opened</shortDescription>
+        <value>Date-Time Opened</value>
     </labels>
     <labels>
         <fullName>ISSP_Homepage_All_Company_Open_cases</fullName>
@@ -19183,6 +19218,13 @@ If you continue to experience issues registering for the CNS Customer Portal the
         <value>One Way Passenger Participating</value>
     </labels>
     <labels>
+        <fullName>ISSP_Ongoing_TIP_Requests</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP Ongoing TIP Requests</shortDescription>
+        <value>Ongoing TIP Requests</value>
+    </labels>
+    <labels>
         <fullName>ISSP_Opt_In</fullName>
         <categories>ISSP, DDS</categories>
         <language>en_US</language>
@@ -19422,6 +19464,27 @@ Please note that many IATA invoices for accredited agents are collected through 
         <protected>false</protected>
         <shortDescription>ISSP_Payment_Link_Description_CNS</shortDescription>
         <value>Paypal is used to pay CNS Non-CASS invoices by Credit Card.</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_Payment_Provider_Details_section_1</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP Payment Provider Details section 1</shortDescription>
+        <value>SECTION 1 - Payment Provider Details</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_Payment_Provider_Home_title</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP Payment Provider Home title</shortDescription>
+        <value>Payment Provider Enrolment/Certification</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_Payment_Provider_Details_section_2</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP Payment Provider Details section 2</shortDescription>
+        <value>SECTION 2 - Payment Provider Contacts</value>
     </labels>
     <labels>
         <fullName>ISSP_Pending</fullName>
@@ -20927,6 +20990,68 @@ This Dashboard allows each airline Treasury Team to gain full visibility of thei
         <protected>false</protected>
         <shortDescription>ISSP_TIESS_Code__Search_Format</shortDescription>
         <value>(in format TIESS_000XXXX)</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_TIP_ADD_BIN_RANGE</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP TIP ADD BIN RANGE</shortDescription>
+        <value>Add BIN Range</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_TIP_Discard_Unsaved_Changes</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_TIP_Discard_Unsaved_Changes</shortDescription>
+        <value>All unsaved changes will be discarded. Are you sure you want to leave the page?</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_TIP_Home_Account_must_be_Payment_Provider</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP TIP Home Account must be Payment Provider</shortDescription>
+        <value>Account must be of type Payment Provider</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_TIP_Home_Only_Portal_Administrators</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP TIP Home Only Portal Administrators</shortDescription>
+        <value>Only Portal Administrators can apply to Enlistment as a Payment Provider</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_TIP_Home_Only_Portal_Administrators_Enrol_Products</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP TIP Home Only Portal Administrators Enrol Products</shortDescription>
+        <value>Only Portal Administrators can Enrol Products</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_TIP_Home_Products_table_Edit_option</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Products table Edit option</shortDescription>
+        <value>Edit</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_TIP_Home_Products_table_View_Update_option</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Products table View/Update option</shortDescription>
+        <value>View/Update</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_TIP_Home_button_Enrol_new_Product</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Enrol new Product</shortDescription>
+        <value>Enrol new Product</value>
+    </labels>
+        <fullName>ISSP_TIP_MANDATORY_ON_SUBMIT</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP TIP MANDATORY ON SUBMIT</shortDescription>
+        <value>Mandatory fields upon submission to IATA</value>
     </labels>
     <labels>
         <fullName>ISSP_TOULink</fullName>

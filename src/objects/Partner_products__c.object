@@ -67,8 +67,9 @@
     <fields>
         <fullName>PP_Accepted_transactions__c</fullName>
         <externalId>false</externalId>
+        <inlineHelpText>Enter the Llst of accepted transactions: Payment, Refund or Both payment and refund</inlineHelpText>
         <label>Accepted transactions</label>
-        <required>true</required>
+        <required>false</required>
         <trackTrending>false</trackTrending>
         <type>MultiselectPicklist</type>
         <valueSet>
@@ -92,7 +93,7 @@
     <fields>
         <fullName>PP_Banking_license__c</fullName>
         <externalId>false</externalId>
-        <inlineHelpText>Banking license or e-money issuing license granted by a national authority</inlineHelpText>
+        <inlineHelpText>Enter information about licenses (e.g. banking license or e-money issuing license granted by a national authority)</inlineHelpText>
         <label>Banking license</label>
         <length>255</length>
         <required>false</required>
@@ -103,9 +104,9 @@
     <fields>
         <fullName>PP_Category__c</fullName>
         <externalId>false</externalId>
-        <inlineHelpText>Category of product</inlineHelpText>
+        <inlineHelpText>Enter the category of product (Consumer, Corporate)</inlineHelpText>
         <label>Category</label>
-        <required>true</required>
+        <required>false</required>
         <trackTrending>false</trackTrending>
         <type>Picklist</type>
         <valueSet>
@@ -115,12 +116,12 @@
                 <value>
                     <fullName>CONSUMER</fullName>
                     <default>false</default>
-                    <label>CONSUMER</label>
+                    <label>Consumer</label>
                 </value>
                 <value>
                     <fullName>CORPORATE</fullName>
                     <default>false</default>
-                    <label>CORPORATE</label>
+                    <label>Corporate</label>
                 </value>
             </valueSetDefinition>
         </valueSet>
@@ -128,17 +129,31 @@
     <fields>
         <fullName>PP_Chargeback_airlines__c</fullName>
         <externalId>false</externalId>
-        <inlineHelpText>Subject to chargeback</inlineHelpText>
+        <inlineHelpText>Enter if it is subject to chargeback for airlines : Yes or No</inlineHelpText>
         <label>Chargeback airlines</label>
-        <length>1</length>
-        <required>true</required>
+        <required>false</required>
         <trackTrending>false</trackTrending>
-        <type>Text</type>
-        <unique>false</unique>
+        <type>Picklist</type>
+        <valueSet>
+            <valueSetDefinition>
+                <sorted>false</sorted>
+                <value>
+                    <fullName>Y</fullName>
+                    <default>false</default>
+                    <label>Yes</label>
+                </value>
+                <value>
+                    <fullName>N</fullName>
+                    <default>false</default>
+                    <label>No</label>
+                </value>
+            </valueSetDefinition>
+        </valueSet>
     </fields>
     <fields>
         <fullName>PP_Chargeback_airlines_duration__c</fullName>
         <externalId>false</externalId>
+        <inlineHelpText>If subject to chargeback, please indicate the maximum number of days after transaction for which a chargeback can be issued</inlineHelpText>
         <label>Chargeback airlines duration</label>
         <precision>4</precision>
         <required>false</required>
@@ -152,7 +167,7 @@
         <externalId>false</externalId>
         <inlineHelpText>Effective From Date</inlineHelpText>
         <label>Effective from Date</label>
-        <required>true</required>
+        <required>false</required>
         <trackTrending>false</trackTrending>
         <type>Date</type>
     </fields>
@@ -169,7 +184,7 @@
         <fullName>PP_Form_of_payment__c</fullName>
         <externalId>false</externalId>
         <label>Form of payment</label>
-        <required>true</required>
+        <required>false</required>
         <trackTrending>false</trackTrending>
         <type>Picklist</type>
         <valueSet>
@@ -180,7 +195,7 @@
     <fields>
         <fullName>PP_GDS_Integration__c</fullName>
         <externalId>false</externalId>
-        <inlineHelpText>Integration with a given GDS enables agents (Using this GDS) to have an aoutomated access to this alternative transfer method</inlineHelpText>
+        <inlineHelpText>Indicate with which GDS (s) and a description of the integration(s) processes required that enable agents - using this/these GDS(s) - to have an automated access to this Alternative Transfer Method (e.g. VAN)</inlineHelpText>
         <label>GDS Integration</label>
         <length>255</length>
         <required>false</required>
@@ -191,9 +206,10 @@
     <fields>
         <fullName>PP_Interchange_fee__c</fullName>
         <externalId>false</externalId>
+        <inlineHelpText>Enter details about Interchange Fee (s)</inlineHelpText>
         <label>Interchange fee (Default)</label>
         <precision>18</precision>
-        <required>true</required>
+        <required>false</required>
         <scale>0</scale>
         <trackTrending>false</trackTrending>
         <type>Number</type>
@@ -202,7 +218,7 @@
     <fields>
         <fullName>PP_Issuer_name__c</fullName>
         <externalId>false</externalId>
-        <inlineHelpText>If different from provider name: Name of regulated institution that issues this Alternative Transfer Method</inlineHelpText>
+        <inlineHelpText>Enter issuer name if different from provider name: name of regulated institution that issues this Alternative Transfer Method</inlineHelpText>
         <label>Issuer name</label>
         <length>80</length>
         <required>false</required>
@@ -220,11 +236,22 @@
         <type>Date</type>
     </fields>
     <fields>
+        <fullName>PP_Network_Fee__c</fullName>
+        <externalId>false</externalId>
+        <inlineHelpText>Enter details about Acquiring network / scheme fee (s)</inlineHelpText>
+        <label>Network Fee (default)</label>
+        <length>255</length>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
         <fullName>PP_Pay_in_model__c</fullName>
         <externalId>false</externalId>
-        <inlineHelpText>Type of Card</inlineHelpText>
+        <inlineHelpText>Enter the type of card (Prepaid, Pay now or Pay later)</inlineHelpText>
         <label>Pay-in model</label>
-        <required>true</required>
+        <required>false</required>
         <trackTrending>false</trackTrending>
         <type>Picklist</type>
         <valueSet>
@@ -256,7 +283,7 @@
         <inlineHelpText>Code that identifies the provider product</inlineHelpText>
         <label>Payment Product Code</label>
         <length>2</length>
-        <required>true</required>
+        <required>false</required>
         <trackTrending>false</trackTrending>
         <type>Text</type>
         <unique>true</unique>
@@ -264,7 +291,7 @@
     <fields>
         <fullName>PP_Payment_Product_Network_type__c</fullName>
         <externalId>false</externalId>
-        <inlineHelpText>Open Loop or Closed Loop</inlineHelpText>
+        <inlineHelpText>Enter the product type (Open-loop or Closed-loop)</inlineHelpText>
         <label>Payment Product Network  type</label>
         <required>false</required>
         <trackTrending>false</trackTrending>
@@ -289,8 +316,9 @@
         <fullName>PP_Payment_guarantee__c</fullName>
         <description>Payment guarantee for Airlines</description>
         <externalId>false</externalId>
+        <inlineHelpText>Enter payment guarantee for airlines : Fraud dispute, Commercial dispute or Both fraud and commercial dispute</inlineHelpText>
         <label>Payment guarantee</label>
-        <required>true</required>
+        <required>false</required>
         <trackTrending>false</trackTrending>
         <type>MultiselectPicklist</type>
         <valueSet>
@@ -300,12 +328,12 @@
                 <value>
                     <fullName>COMMERCIAL_DISPUTE</fullName>
                     <default>false</default>
-                    <label>COMMERCIAL_DISPUTE</label>
+                    <label>Commercial Dispute</label>
                 </value>
                 <value>
                     <fullName>FRAUD_DISPUTE</fullName>
                     <default>false</default>
-                    <label>FRAUD_DISPUTE</label>
+                    <label>Fraud Dispute</label>
                 </value>
             </valueSetDefinition>
         </valueSet>
@@ -314,7 +342,7 @@
     <fields>
         <fullName>PP_Payment_network__c</fullName>
         <externalId>false</externalId>
-        <inlineHelpText>Credit card codes, as per defined in resolution 728</inlineHelpText>
+        <inlineHelpText>Amex (AX), MasterCard (CA), UATP (TP), Visa (VI), Diners [two letter code]</inlineHelpText>
         <label>Payment network</label>
         <required>false</required>
         <trackTrending>false</trackTrending>
@@ -324,29 +352,34 @@
             <valueSetDefinition>
                 <sorted>false</sorted>
                 <value>
-                    <fullName>Amex (AX)</fullName>
+                    <fullName>AX</fullName>
                     <default>false</default>
                     <label>Amex (AX)</label>
                 </value>
                 <value>
-                    <fullName>MasterCard (CA)</fullName>
+                    <fullName>CA</fullName>
                     <default>false</default>
                     <label>MasterCard (CA)</label>
                 </value>
                 <value>
-                    <fullName>UATP (TP)</fullName>
+                    <fullName>TP</fullName>
                     <default>false</default>
                     <label>UATP (TP)</label>
                 </value>
                 <value>
-                    <fullName>Visa (VI)</fullName>
+                    <fullName>VI</fullName>
                     <default>false</default>
                     <label>Visa (VI)</label>
                 </value>
                 <value>
-                    <fullName>Diners (DC/DS)</fullName>
+                    <fullName>DC/DS</fullName>
                     <default>false</default>
                     <label>Diners (DC/DS)</label>
+                </value>
+                <value>
+                    <fullName>OTH</fullName>
+                    <default>false</default>
+                    <label>Other (OTH)</label>
                 </value>
             </valueSetDefinition>
         </valueSet>
@@ -354,10 +387,10 @@
     <fields>
         <fullName>PP_Settlement_terms__c</fullName>
         <externalId>false</externalId>
-        <inlineHelpText>Settlement terms (days after ticketing issuance) Number of days</inlineHelpText>
+        <inlineHelpText>Enter the settlement terms - Number of days after transaction day when settlement occurs</inlineHelpText>
         <label>Settlement terms (days)</label>
         <length>255</length>
-        <required>true</required>
+        <required>false</required>
         <trackTrending>false</trackTrending>
         <type>Text</type>
         <unique>false</unique>
@@ -365,9 +398,11 @@
     <fields>
         <fullName>PP_VAN_type__c</fullName>
         <externalId>false</externalId>
-        <inlineHelpText>If the product is a single use VAN, Multi-use VANs?</inlineHelpText>
+        <inlineHelpText>Enter if product is a Single-use or Multi-use VAN.
+If it is a single-use VAN, then a unique VAN number is created for every transaction.
+If the product is a multi-use VANs, then it is a unique card/account number that can be used multiple times.</inlineHelpText>
         <label>VAN type</label>
-        <required>true</required>
+        <required>false</required>
         <trackTrending>false</trackTrending>
         <type>Picklist</type>
         <valueSet>
@@ -392,11 +427,34 @@
         <externalId>false</externalId>
         <inlineHelpText>Product status in the product lifecycle. If active, airlines can consent to the product, and it can be used in the TIP solution. If inactive, the product has been terminated by the provider or IATA</inlineHelpText>
         <label>Product status</label>
-        <length>40</length>
-        <required>true</required>
+        <required>false</required>
         <trackTrending>false</trackTrending>
-        <type>Text</type>
-        <unique>false</unique>
+        <type>Picklist</type>
+        <valueSet>
+            <valueSetDefinition>
+                <sorted>false</sorted>
+                <value>
+                    <fullName>Active</fullName>
+                    <default>false</default>
+                    <label>Active</label>
+                </value>
+                <value>
+                    <fullName>Inactive</fullName>
+                    <default>false</default>
+                    <label>Inactive</label>
+                </value>
+                <value>
+                    <fullName>In Progress</fullName>
+                    <default>false</default>
+                    <label>In Progress</label>
+                </value>
+                <value>
+                    <fullName>Rejected</fullName>
+                    <default>false</default>
+                    <label>Rejected</label>
+                </value>
+            </valueSetDefinition>
+        </valueSet>
     </fields>
     <fields>
         <fullName>Product_Country_Configuration__c</fullName>
@@ -426,13 +484,26 @@
     <fields>
         <fullName>is_PCI_DSS_required__c</fullName>
         <externalId>false</externalId>
-        <inlineHelpText>Is the product subject to PCI DSS requirements?</inlineHelpText>
+        <inlineHelpText>Is the product subject to PCI DSS requirements compliance? (this is related to the product) Yes or Not Applicable</inlineHelpText>
         <label>Product subject to PCI DSS requirements?</label>
-        <length>5</length>
-        <required>true</required>
+        <required>false</required>
         <trackTrending>false</trackTrending>
-        <type>Text</type>
-        <unique>false</unique>
+        <type>Picklist</type>
+        <valueSet>
+            <valueSetDefinition>
+                <sorted>false</sorted>
+                <value>
+                    <fullName>Yes</fullName>
+                    <default>false</default>
+                    <label>Yes</label>
+                </value>
+                <value>
+                    <fullName>Not Applicable</fullName>
+                    <default>false</default>
+                    <label>Not Applicable</label>
+                </value>
+            </valueSetDefinition>
+        </valueSet>
     </fields>
     <label>Partner Product</label>
     <listViews>
@@ -445,6 +516,164 @@
         <type>Text</type>
     </nameField>
     <pluralLabel>Partner Products</pluralLabel>
+    <recordTypes>
+        <fullName>TIP_Product</fullName>
+        <active>true</active>
+        <label>TIP Product</label>
+        <picklistValues>
+            <picklist>PP_Accepted_transactions__c</picklist>
+            <values>
+                <fullName>Payment</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Refund</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>PP_Category__c</picklist>
+            <values>
+                <fullName>CONSUMER</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>CORPORATE</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>PP_Chargeback_airlines__c</picklist>
+            <values>
+                <fullName>N</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Y</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>PP_Form_of_payment__c</picklist>
+            <values>
+                <fullName>CC</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>CC VA</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>EP</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>PP_Pay_in_model__c</picklist>
+            <values>
+                <fullName>Pay Later</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Pay Now</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Prepaid</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>PP_Payment_Product_Network_type__c</picklist>
+            <values>
+                <fullName>CLOSED_LOOP</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>OPEN_LOOP</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>PP_Payment_guarantee__c</picklist>
+            <values>
+                <fullName>COMMERCIAL_DISPUTE</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>FRAUD_DISPUTE</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>PP_Payment_network__c</picklist>
+            <values>
+                <fullName>AX</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>CA</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>DC%2FDS</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>OTH</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>TP</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>VI</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>PP_VAN_type__c</picklist>
+            <values>
+                <fullName>Multi Use Van</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Single Use VAN</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>PP_status__c</picklist>
+            <values>
+                <fullName>Active</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>In Progress</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Inactive</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Rejected</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>is_PCI_DSS_required__c</picklist>
+            <values>
+                <fullName>Not Applicable</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Yes</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+    </recordTypes>
     <searchLayouts/>
     <sharingModel>ControlledByParent</sharingModel>
     <validationRules>
@@ -453,6 +682,22 @@
         <errorConditionFormula>ISPICKVAL(Provider__r.TIP_Provider_Type__c, &quot;Open Loop&quot;) &amp;&amp; ISPICKVAL(PP_Payment_Product_Network_type__c, &quot;Closed Loop&quot;)</errorConditionFormula>
         <errorDisplayField>PP_Payment_Product_Network_type__c</errorDisplayField>
         <errorMessage>Closed Loop Product cannot be added for an Open Loop Provider</errorMessage>
+    </validationRules>
+    <validationRules>
+        <fullName>IATA_Code_Mandatory_For_Not_Rejected</fullName>
+        <active>true</active>
+        <description>Account&apos;s IATA Code is mandatory for partner products to be approved</description>
+        <errorConditionFormula>RecordType.DeveloperName==&apos;TIP_Product&apos; 
+&amp;&amp; NOT(ISPICKVAL(PP_status__c,&apos;Rejected&apos;))
+&amp;&amp; ISBLANK(Provider__r.IATACode__c)</errorConditionFormula>
+        <errorMessage>IATA Code is missing. Please fill in the field on Account level.</errorMessage>
+    </validationRules>
+    <validationRules>
+        <fullName>Mandatory_Chargeback_on_TIP_Product</fullName>
+        <active>true</active>
+        <errorConditionFormula>AND(ISPICKVAL(PP_Chargeback_airlines__c, &apos;Y&apos;), RecordType.DeveloperName = &apos;TIP_Product&apos;, ISBLANK(PP_Chargeback_airlines_duration__c))</errorConditionFormula>
+        <errorDisplayField>PP_Chargeback_airlines_duration__c</errorDisplayField>
+        <errorMessage>If subject to chargeback, please indicate the maximun number of days after transaction for which a chargeback can be issued.</errorMessage>
     </validationRules>
     <visibility>Public</visibility>
 </CustomObject>
