@@ -15805,6 +15805,7 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
     <fields>
         <fullName>TIP_Documents__c</fullName>
         <externalId>false</externalId>
+        <inlineHelpText>Enter any additional information related to your company (e.g. to comply with AML requirements)</inlineHelpText>
         <label>Documents</label>
         <length>32768</length>
         <trackFeedHistory>false</trackFeedHistory>
@@ -15816,6 +15817,7 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
         <fullName>TIP_HQ_Location__c</fullName>
         <deleteConstraint>Restrict</deleteConstraint>
         <externalId>false</externalId>
+        <inlineHelpText>Select the country where provider&apos;s headquarter is located</inlineHelpText>
         <label>HQ Location</label>
         <referenceTo>IATA_ISO_Country__c</referenceTo>
         <relationshipLabel>Accounts (HQ Location)</relationshipLabel>

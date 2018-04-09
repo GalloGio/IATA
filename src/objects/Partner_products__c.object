@@ -67,6 +67,7 @@
     <fields>
         <fullName>PP_Accepted_transactions__c</fullName>
         <externalId>false</externalId>
+        <inlineHelpText>Enter the Llst of accepted transactions: Payment, Refund or Both payment and refund</inlineHelpText>
         <label>Accepted transactions</label>
         <required>false</required>
         <trackTrending>false</trackTrending>
@@ -92,7 +93,7 @@
     <fields>
         <fullName>PP_Banking_license__c</fullName>
         <externalId>false</externalId>
-        <inlineHelpText>Banking license or e-money issuing license granted by a national authority</inlineHelpText>
+        <inlineHelpText>Enter information about licenses (e.g. banking license or e-money issuing license granted by a national authority)</inlineHelpText>
         <label>Banking license</label>
         <length>255</length>
         <required>false</required>
@@ -103,7 +104,7 @@
     <fields>
         <fullName>PP_Category__c</fullName>
         <externalId>false</externalId>
-        <inlineHelpText>Category of product</inlineHelpText>
+        <inlineHelpText>Enter the category of product (Consumer, Corporate)</inlineHelpText>
         <label>Category</label>
         <required>false</required>
         <trackTrending>false</trackTrending>
@@ -128,7 +129,7 @@
     <fields>
         <fullName>PP_Chargeback_airlines__c</fullName>
         <externalId>false</externalId>
-        <inlineHelpText>Subject to chargeback</inlineHelpText>
+        <inlineHelpText>Enter if it is subject to chargeback for airlines : Yes or No</inlineHelpText>
         <label>Chargeback airlines</label>
         <required>false</required>
         <trackTrending>false</trackTrending>
@@ -152,6 +153,7 @@
     <fields>
         <fullName>PP_Chargeback_airlines_duration__c</fullName>
         <externalId>false</externalId>
+        <inlineHelpText>If subject to chargeback, please indicate the maximum number of days after transaction for which a chargeback can be issued</inlineHelpText>
         <label>Chargeback airlines duration</label>
         <precision>4</precision>
         <required>false</required>
@@ -193,7 +195,7 @@
     <fields>
         <fullName>PP_GDS_Integration__c</fullName>
         <externalId>false</externalId>
-        <inlineHelpText>Integration with a given GDS enables agents (Using this GDS) to have an aoutomated access to this alternative transfer method</inlineHelpText>
+        <inlineHelpText>Indicate with which GDS (s) and a description of the integration(s) processes required that enable agents - using this/these GDS(s) - to have an automated access to this Alternative Transfer Method (e.g. VAN)</inlineHelpText>
         <label>GDS Integration</label>
         <length>255</length>
         <required>false</required>
@@ -204,6 +206,7 @@
     <fields>
         <fullName>PP_Interchange_fee__c</fullName>
         <externalId>false</externalId>
+        <inlineHelpText>Enter details about Interchange Fee (s)</inlineHelpText>
         <label>Interchange fee (Default)</label>
         <precision>18</precision>
         <required>false</required>
@@ -215,7 +218,7 @@
     <fields>
         <fullName>PP_Issuer_name__c</fullName>
         <externalId>false</externalId>
-        <inlineHelpText>If different from provider name: Name of regulated institution that issues this Alternative Transfer Method</inlineHelpText>
+        <inlineHelpText>Enter issuer name if different from provider name: name of regulated institution that issues this Alternative Transfer Method</inlineHelpText>
         <label>Issuer name</label>
         <length>80</length>
         <required>false</required>
@@ -235,6 +238,7 @@
     <fields>
         <fullName>PP_Network_Fee__c</fullName>
         <externalId>false</externalId>
+        <inlineHelpText>Enter details about Acquiring network / scheme fee (s)</inlineHelpText>
         <label>Network Fee (default)</label>
         <length>255</length>
         <required>false</required>
@@ -245,7 +249,7 @@
     <fields>
         <fullName>PP_Pay_in_model__c</fullName>
         <externalId>false</externalId>
-        <inlineHelpText>Type of Card</inlineHelpText>
+        <inlineHelpText>Enter the type of card (Prepaid, Pay now or Pay later)</inlineHelpText>
         <label>Pay-in model</label>
         <required>false</required>
         <trackTrending>false</trackTrending>
@@ -287,7 +291,7 @@
     <fields>
         <fullName>PP_Payment_Product_Network_type__c</fullName>
         <externalId>false</externalId>
-        <inlineHelpText>Open Loop or Closed Loop</inlineHelpText>
+        <inlineHelpText>Enter the product type (Open-loop or Closed-loop)</inlineHelpText>
         <label>Payment Product Network  type</label>
         <required>false</required>
         <trackTrending>false</trackTrending>
@@ -312,6 +316,7 @@
         <fullName>PP_Payment_guarantee__c</fullName>
         <description>Payment guarantee for Airlines</description>
         <externalId>false</externalId>
+        <inlineHelpText>Enter payment guarantee for airlines : Fraud dispute, Commercial dispute or Both fraud and commercial dispute</inlineHelpText>
         <label>Payment guarantee</label>
         <required>false</required>
         <trackTrending>false</trackTrending>
@@ -337,7 +342,7 @@
     <fields>
         <fullName>PP_Payment_network__c</fullName>
         <externalId>false</externalId>
-        <inlineHelpText>Credit card codes, as per defined in resolution 728</inlineHelpText>
+        <inlineHelpText>Amex (AX), MasterCard (CA), UATP (TP), Visa (VI), Diners [two letter code]</inlineHelpText>
         <label>Payment network</label>
         <required>false</required>
         <trackTrending>false</trackTrending>
@@ -382,7 +387,7 @@
     <fields>
         <fullName>PP_Settlement_terms__c</fullName>
         <externalId>false</externalId>
-        <inlineHelpText>Settlement terms (days after ticketing issuance) Number of days</inlineHelpText>
+        <inlineHelpText>Enter the settlement terms - Number of days after transaction day when settlement occurs</inlineHelpText>
         <label>Settlement terms (days)</label>
         <length>255</length>
         <required>false</required>
@@ -393,7 +398,9 @@
     <fields>
         <fullName>PP_VAN_type__c</fullName>
         <externalId>false</externalId>
-        <inlineHelpText>If the product is a single use VAN, Multi-use VANs?</inlineHelpText>
+        <inlineHelpText>Enter if product is a Single-use or Multi-use VAN.
+If it is a single-use VAN, then a unique VAN number is created for every transaction.
+If the product is a multi-use VANs, then it is a unique card/account number that can be used multiple times.</inlineHelpText>
         <label>VAN type</label>
         <required>false</required>
         <trackTrending>false</trackTrending>
@@ -441,6 +448,11 @@
                     <default>false</default>
                     <label>In Progress</label>
                 </value>
+                <value>
+                    <fullName>Rejected</fullName>
+                    <default>false</default>
+                    <label>Rejected</label>
+                </value>
             </valueSetDefinition>
         </valueSet>
     </fields>
@@ -472,7 +484,7 @@
     <fields>
         <fullName>is_PCI_DSS_required__c</fullName>
         <externalId>false</externalId>
-        <inlineHelpText>Is the product subject to PCI DSS requirements?</inlineHelpText>
+        <inlineHelpText>Is the product subject to PCI DSS requirements compliance? (this is related to the product) Yes or Not Applicable</inlineHelpText>
         <label>Product subject to PCI DSS requirements?</label>
         <required>false</required>
         <trackTrending>false</trackTrending>
@@ -645,6 +657,10 @@
                 <fullName>Inactive</fullName>
                 <default>false</default>
             </values>
+            <values>
+                <fullName>Rejected</fullName>
+                <default>false</default>
+            </values>
         </picklistValues>
         <picklistValues>
             <picklist>is_PCI_DSS_required__c</picklist>
@@ -673,6 +689,15 @@
         <errorConditionFormula>AND(ISPICKVAL(PP_Chargeback_airlines__c, &apos;Y&apos;), RecordType.DeveloperName = &apos;TIP_Product&apos;, ISBLANK(PP_Chargeback_airlines_duration__c))</errorConditionFormula>
         <errorDisplayField>PP_Chargeback_airlines_duration__c</errorDisplayField>
         <errorMessage>If subject to chargeback, please indicate the maximun number of days after transaction for which a chargeback can be issued.</errorMessage>
+    </validationRules>
+    <validationRules>
+        <fullName>Payment_Prod_Code_Mandatory_Not_Rejected</fullName>
+        <active>true</active>
+        <description>Payment Product Code is mandatory for partner products to be approved</description>
+        <errorConditionFormula>RecordType.DeveloperName==&apos;TIP_Product&apos; 
+&amp;&amp; NOT(ISPICKVAL(PP_status__c,&apos;Rejected&apos;))
+&amp;&amp; ISBLANK(PP_Payment_Product_Code__c)</errorConditionFormula>
+        <errorMessage>Please fill in the Payment Product Code.</errorMessage>
     </validationRules>
     <visibility>Public</visibility>
 </CustomObject>
