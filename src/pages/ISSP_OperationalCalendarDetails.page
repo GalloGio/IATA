@@ -405,7 +405,7 @@
                 </div>
                 <div class="col-sm-3">
                     <div class="form-group">
-                        <label for="billingPeriodFilter">{!$Label.ISSP_OperationalCalendar_Billing_Peroiod}</label>
+                        <label for="billingPeriodFilter">{!$Label.ISSP_OperationalCalendar_Billing_Period}</label>
                         <select id="billingPeriodFilter" class="form-control">
                             <option value="{!YEAR(TODAY())}">{!YEAR(TODAY())} {!$Label.ISSP_OperationalCalendar_Billing_Period}</option>
                             <option value="1">{!$Label.ISSP_AMS_Month_January} {!YEAR(TODAY())} {!$Label.ISSP_OperationalCalendar_Billing_Period}</option>
