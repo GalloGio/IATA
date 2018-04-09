@@ -87,54 +87,20 @@ private class TIP_BINRangeTriggerHandlerTest {
 		Id listedByIATARecordTypeId = TIP_Utils.LISTED_BY_IATA_RECORD_TYPE_ID;
 
 		List<TIP_BIN_Range__c> overlapBinRanges = new List<TIP_BIN_Range__c>();
+		Integer sucessCounter = 0;
+		List<Database.SaveResult> results;
+		Database.SaveResult updateResult;
 
-		TIP_BIN_Range__c overlapBinRange1 = new TIP_BIN_Range__c(TIP_Payment_Provider_Product__c = product.Id,
-			TIP_Effective_From_Date__c = Date.today(),
-			TIP_Range_Start__c = '5200',
-			TIP_Range_End__c = '5700',
-			RecordTypeId = listedByIATARecordTypeId);
+		//Insert single BIN to deploy error type A, expected success = 0
 
-		TIP_BIN_Range__c overlapBinRange2 = new TIP_BIN_Range__c(TIP_Payment_Provider_Product__c = product.Id,
-			TIP_Effective_From_Date__c = Date.today() - 1,
-			TIP_Range_Start__c = '4700',
-			TIP_Range_End__c = '5200',
-			RecordTypeId = listedByIATARecordTypeId);
-
-		TIP_BIN_Range__c overlapBinRange3 = new TIP_BIN_Range__c(TIP_Payment_Provider_Product__c = product.Id,
-			TIP_Effective_From_Date__c = Date.today() + 11,
-			TIP_Range_Start__c = '6200',
-			TIP_Range_End__c = '6300',
-			RecordTypeId = listedByIATARecordTypeId);
-
-		TIP_BIN_Range__c overlapBinRange4 = new TIP_BIN_Range__c(TIP_Payment_Provider_Product__c = product.Id,
+		TIP_BIN_Range__c singleInsErrorA = new TIP_BIN_Range__c(TIP_Payment_Provider_Product__c = product.Id,
 			TIP_Effective_From_Date__c = Date.today(),
 			TIP_Range_Start__c = '5800',
-			TIP_Range_End__c = '6700',
+			TIP_Range_End__c = '6200',
 			RecordTypeId = listedByIATARecordTypeId,
-			TIP_Effective_To_Date__c = Date.today() + 10);
+			TIP_Effective_To_Date__c = Date.today() + 5);
 
-		TIP_BIN_Range__c overlapBinRange5 = new TIP_BIN_Range__c(TIP_Payment_Provider_Product__c = product.Id,
-			TIP_Effective_From_Date__c = Date.today() + 9,
-			TIP_Range_Start__c = '6200',
-			TIP_Range_End__c = '6700',
-			RecordTypeId = listedByIATARecordTypeId,
-			TIP_Effective_To_Date__c = Date.today() + 10);
-
-		TIP_BIN_Range__c overlapBinRange6 = new TIP_BIN_Range__c(TIP_Payment_Provider_Product__c = product.Id,
-			TIP_Effective_From_Date__c = Date.today() - 10,
-			TIP_Range_Start__c = '6200',
-			TIP_Range_End__c = '6700',
-			RecordTypeId = listedByIATARecordTypeId,
-			TIP_Effective_To_Date__c = Date.today() - 1);
-
-		overlapBinRanges.add(overlapBinRange1);
-		overlapBinRanges.add(overlapBinRange2);
-		overlapBinRanges.add(overlapBinRange3);
-		overlapBinRanges.add(overlapBinRange4);
-		overlapBinRanges.add(overlapBinRange5);
-		overlapBinRanges.add(overlapBinRange6);
-
-		List<Database.SaveResult> results;
+		overlapBinRanges.add(singleInsErrorA);
 
 		try {
 			results = Database.insert(overlapBinRanges, false);
@@ -142,25 +108,160 @@ private class TIP_BINRangeTriggerHandlerTest {
 			System.debug('exception: ' + e);
 		}
 
-		Integer sucessCounter = 0;
+		for (Database.SaveResult result: results) {
+			if (result.isSuccess()) sucessCounter ++;
+		}
+
+		System.assertEquals(0, sucessCounter);
+
+		//Insert multiple BINs to deploy error type A, expected success = 0
+
+		TIP_BIN_Range__c doubleInsErrorA = new TIP_BIN_Range__c(TIP_Payment_Provider_Product__c = product.Id,
+			TIP_Effective_From_Date__c = Date.today() - 2,
+			TIP_Range_Start__c = '6300',
+			TIP_Range_End__c = '6400',
+			RecordTypeId = listedByIATARecordTypeId,
+			TIP_Effective_To_Date__c = Date.today() + 1);
+
+		overlapBinRanges.add(doubleInsErrorA);
+
+		try {
+			results = Database.insert(overlapBinRanges, false);
+		} catch (Exception e) {
+			System.debug('exception: ' + e);
+		}
 
 		for (Database.SaveResult result: results) {
 			if (result.isSuccess()) sucessCounter ++;
 		}
 
-		System.assertEquals(2, sucessCounter);
-		sucessCounter = 0;
+		System.assertEquals(0, sucessCounter);
 
 		overlapBinRanges.clear();
 
-		overlapBinRange5.TIP_Effective_From_Date__c = Date.today() + 3;
-		overlapBinRange5.TIP_Effective_To_Date__c = null;
-		overlapBinRange6.TIP_Range_Start__c = '6600';
-		overlapBinRange6.TIP_Range_End__c = '7900';
-		overlapBinRange6.TIP_Effective_To_Date__c = null;
+		//Insert single BIN to deploy error type B, expected success = 0
 
-		overlapBinRanges.add(overlapBinRange5);
-		overlapBinRanges.add(overlapBinRange6);
+		TIP_BIN_Range__c singleInsErrorB = new TIP_BIN_Range__c(TIP_Payment_Provider_Product__c = product.Id,
+			TIP_Effective_From_Date__c = Date.today() + 10,
+			TIP_Range_Start__c = '5400',
+			TIP_Range_End__c = '5600',
+			RecordTypeId = listedByIATARecordTypeId);
+
+		overlapBinRanges.add(singleInsErrorB);
+
+		try {
+			results = Database.insert(overlapBinRanges, false);
+		} catch (Exception e) {
+			System.debug('exception: ' + e);
+		}
+
+		for (Database.SaveResult result: results) {
+			if (result.isSuccess()) sucessCounter ++;
+		}
+
+		System.assertEquals(0, sucessCounter);
+
+		//Insert multiple BINs to deploy error type B, expected success = 0
+
+		TIP_BIN_Range__c doubleInsErrorB = new TIP_BIN_Range__c(TIP_Payment_Provider_Product__c = product.Id,
+			TIP_Effective_From_Date__c = Date.today() -2,
+			TIP_Range_Start__c = '4900',
+			TIP_Range_End__c = '5100',
+			RecordTypeId = listedByIATARecordTypeId);
+
+		overlapBinRanges.add(doubleInsErrorB);
+
+		try {
+			results = Database.insert(overlapBinRanges, false);
+		} catch (Exception e) {
+			System.debug('exception: ' + e);
+		}
+
+		for (Database.SaveResult result: results) {
+			if (result.isSuccess()) sucessCounter ++;
+		}
+
+		System.assertEquals(0, sucessCounter);
+
+		overlapBinRanges.clear();
+
+		//Insert multiple BINs, expected success = 3
+
+		TIP_BIN_Range__c mixedInsert1 = new TIP_BIN_Range__c(TIP_Payment_Provider_Product__c = product.Id,
+			TIP_Effective_From_Date__c = Date.today(),
+			TIP_Range_Start__c = '5800',
+			TIP_Range_End__c = '5900',
+			RecordTypeId = listedByIATARecordTypeId,
+			TIP_Effective_To_Date__c = Date.today() + 7);
+
+		TIP_BIN_Range__c mixedInsert2 = new TIP_BIN_Range__c(TIP_Payment_Provider_Product__c = product.Id,
+			TIP_Effective_From_Date__c = Date.today() - 1,
+			TIP_Range_Start__c = '5800',
+			TIP_Range_End__c = '5900',
+			RecordTypeId = listedByIATARecordTypeId);
+
+		TIP_BIN_Range__c mixedInsert3 = new TIP_BIN_Range__c(TIP_Payment_Provider_Product__c = product.Id,
+			TIP_Effective_From_Date__c = Date.today(),
+			TIP_Range_Start__c = '7500',
+			TIP_Range_End__c = '7800',
+			RecordTypeId = listedByIATARecordTypeId,
+			TIP_Effective_To_Date__c = Date.today() + 2);
+
+		TIP_BIN_Range__c mixedInsert4 = new TIP_BIN_Range__c(TIP_Payment_Provider_Product__c = product.Id,
+			TIP_Effective_From_Date__c = Date.today() + 3,
+			TIP_Range_Start__c = '7500',
+			TIP_Range_End__c = '7800',
+			RecordTypeId = listedByIATARecordTypeId,
+			TIP_Effective_To_Date__c = Date.today() + 5);
+
+		TIP_BIN_Range__c mixedInsert5 = new TIP_BIN_Range__c(TIP_Payment_Provider_Product__c = product.Id,
+			TIP_Effective_From_Date__c = Date.today() - 3,
+			TIP_Range_Start__c = '4900',
+			TIP_Range_End__c = '5100',
+			RecordTypeId = listedByIATARecordTypeId,
+			TIP_Effective_To_Date__c = Date.today() - 1);
+
+		overlapBinRanges.add(mixedInsert1);
+		overlapBinRanges.add(mixedInsert2);
+		overlapBinRanges.add(mixedInsert3);
+		overlapBinRanges.add(mixedInsert4);
+		overlapBinRanges.add(mixedInsert5);
+
+		try {
+			results = Database.insert(overlapBinRanges, false);
+		} catch (Exception e) {
+			System.debug('exception: ' + e);
+		}
+
+		for (Database.SaveResult result: results) {
+			if (result.isSuccess()) sucessCounter ++;
+		}
+
+		System.assertEquals(3, sucessCounter);
+
+		sucessCounter = 0;
+		overlapBinRanges.clear();
+
+		//Update single BIN to deploy error type B, expected success = 0
+
+		mixedInsert5.TIP_Effective_To_Date__c = null;
+
+		try {
+			updateResult = Database.update(mixedInsert5, false);
+		} catch (Exception e) {
+			System.debug('exception: ' + e);
+		}
+		
+		if (updateResult.isSuccess()) sucessCounter ++;
+		
+		System.assertEquals(0, sucessCounter);
+
+		//Update multiple BINs to deploy error type B, expected success = 0
+
+		mixedInsert3.TIP_Effective_To_Date__c = null;
+
+		overlapBinRanges.add(mixedInsert3);
+		overlapBinRanges.add(mixedInsert5);
 
 		try {
 			results = Database.update(overlapBinRanges, false);
@@ -172,6 +273,68 @@ private class TIP_BINRangeTriggerHandlerTest {
 			if (result.isSuccess()) sucessCounter ++;
 		}
 
-		System.assertEquals(1, sucessCounter);
+		System.assertEquals(0, sucessCounter);
+
+		overlapBinRanges.clear();
+
+		//Update single BIN to deploy error type A, expected success = 0
+
+		mixedInsert3.TIP_Effective_To_Date__c = Date.today() + 3;
+
+		try {
+			updateResult = Database.update(mixedInsert3, false);
+		} catch (Exception e) {
+			System.debug('exception: ' + e);
+		}
+
+		if (updateResult.isSuccess()) sucessCounter ++;
+
+		System.assertEquals(0, sucessCounter);
+
+		//Update multiple BINs to deploy error type A, expected success = 0
+
+		mixedInsert5.TIP_Range_End__c = '7600';
+		mixedInsert5.TIP_Effective_To_Date__c = Date.today() + 4;
+
+		overlapBinRanges.add(mixedInsert3);
+		overlapBinRanges.add(mixedInsert5);
+
+		try {
+			results = Database.update(overlapBinRanges, false);
+		} catch (Exception e) {
+			System.debug('exception: ' + e);
+		}
+
+		for (Database.SaveResult result: results) {
+			if (result.isSuccess()) sucessCounter ++;
+		}
+
+		System.assertEquals(0, sucessCounter);
+
+		overlapBinRanges.clear();
+
+		//Update multiple BINs, expected success = 3
+
+		mixedInsert3.TIP_Range_End__c = '7900';
+		mixedInsert3.TIP_Effective_To_Date__c = Date.today() + 2;
+
+		mixedInsert4.TIP_Range_Start__c = '7400';
+		mixedInsert4.TIP_Effective_To_Date__c = Date.today() + 5;
+
+		overlapBinRanges.add(mixedInsert3);
+		overlapBinRanges.add(mixedInsert4);
+		overlapBinRanges.add(mixedInsert5);
+
+		try {
+			results = Database.update(overlapBinRanges, false);
+		} catch (Exception e) {
+			System.debug('exception: ' + e);
+		}
+
+		for (Database.SaveResult result: results) {
+			if (result.isSuccess()) sucessCounter ++;
+		}
+
+		System.assertEquals(0, sucessCounter);
 	}
 }
