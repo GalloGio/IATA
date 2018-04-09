@@ -684,20 +684,20 @@ If the product is a multi-use VANs, then it is a unique card/account number that
         <errorMessage>Closed Loop Product cannot be added for an Open Loop Provider</errorMessage>
     </validationRules>
     <validationRules>
-        <fullName>IATA_Code_Mandatory_For_Not_Rejected</fullName>
-        <active>true</active>
-        <description>Account&apos;s IATA Code is mandatory for partner products to be approved</description>
-        <errorConditionFormula>RecordType.DeveloperName==&apos;TIP_Product&apos; 
-&amp;&amp; NOT(ISPICKVAL(PP_status__c,&apos;Rejected&apos;))
-&amp;&amp; ISBLANK(Provider__r.IATACode__c)</errorConditionFormula>
-        <errorMessage>IATA Code is missing. Please fill in the field on Account level.</errorMessage>
-    </validationRules>
-    <validationRules>
         <fullName>Mandatory_Chargeback_on_TIP_Product</fullName>
         <active>true</active>
         <errorConditionFormula>AND(ISPICKVAL(PP_Chargeback_airlines__c, &apos;Y&apos;), RecordType.DeveloperName = &apos;TIP_Product&apos;, ISBLANK(PP_Chargeback_airlines_duration__c))</errorConditionFormula>
         <errorDisplayField>PP_Chargeback_airlines_duration__c</errorDisplayField>
         <errorMessage>If subject to chargeback, please indicate the maximun number of days after transaction for which a chargeback can be issued.</errorMessage>
+    </validationRules>
+    <validationRules>
+        <fullName>Payment_Prod_Code_Mandatory_Not_Rejected</fullName>
+        <active>true</active>
+        <description>Payment Product Code is mandatory for partner products to be approved</description>
+        <errorConditionFormula>RecordType.DeveloperName==&apos;TIP_Product&apos; 
+&amp;&amp; NOT(ISPICKVAL(PP_status__c,&apos;Rejected&apos;))
+&amp;&amp; ISBLANK(PP_Payment_Product_Code__c)</errorConditionFormula>
+        <errorMessage>Please fill in the Payment Product Code.</errorMessage>
     </validationRules>
     <visibility>Public</visibility>
 </CustomObject>
