@@ -34,7 +34,7 @@ public class TIP_Utils{
 
 		if(trigger.isInsert){
 			for(Account acc : triggerNew){ 
-				if(!String.isBlank(acc.IATACode__c)){ 
+				if(!String.isBlank(acc.IATACode__c) && (acc.recordtypeid == TIP_Utils.PAYMENT_PROVIDER_RECORD_TYPE_ID || (acc.recordtypeid == TIP_Utils.STANDARD_ACCOUNT_RECORD_TYPE_ID && acc.Category__c == TIP_Utils.ACCOUNT_CATEGORY_PAYMENT_PROVIDER)) ){ 
 					mapIataCodeAccount.put(acc.IATACode__c,acc);
 					queryStringWhereClause += ', \''+ acc.IATACode__c + '\'';
 				}
@@ -45,7 +45,8 @@ public class TIP_Utils{
 
 			for(Account accNew : triggerNew){
 				//if iata code changed
-				if(!String.isEmpty(accNew.IATACode__c) && triggerOld.get(accNew.id).IATACode__c != accNew.IATACode__c){
+				if(!String.isEmpty(accNew.IATACode__c) && triggerOld.get(accNew.id).IATACode__c != accNew.IATACode__c
+					 && (accNew.recordtypeid == TIP_Utils.PAYMENT_PROVIDER_RECORD_TYPE_ID || (accNew.recordtypeid == TIP_Utils.STANDARD_ACCOUNT_RECORD_TYPE_ID && accNew.Category__c == TIP_Utils.ACCOUNT_CATEGORY_PAYMENT_PROVIDER))){
 					mapIataCodeAccount.put(accNew.IATACode__c,accNew);
 					queryStringWhereClause += (String.isEmpty(queryStringWhereClause) ? '' : ' OR ') +' (ID <> \''+ accNew.id +'\' AND IATACode__c = \''+ accNew.IATACode__c +'\')' ;
 				}
