@@ -2,7 +2,7 @@
            cache="false"
            sidebar="false"
            showHeader="false"
-           standardStylesheets="true"
+           standardStylesheets="false"
            applyBodyTag="false"
            applyHtmlTag="false"
            action="{!securityCheck}"
@@ -11,13 +11,86 @@
     <c:ISSP_Header communityName="{!communityName}" ></c:ISSP_Header>
 
     <style>
+                .service-header {
+            background-image: url("{!URLFOR($Resource.CurrencyCenter_Style, '/RegionalOutlookNews_banner.jpg')}");
+            background-size:720px;
+            background-repeat: no-repeat;
+            background-position-x: 15px;
+            padding-left: 60px;
+            height: 170px;
+        }
+        @media (min-width:320px){
+            .service-header{background-size:720px;}
+        }
+        @media (min-width:768px){
+            .service-header{background-size:720px;}
+        }
+        @media (min-width:992px){
+            .service-header{background-size:940px;}
+        }
+        @media (min-width:1200px){
+            .service-header{background-size:1140px;}
+        }
+
+        .page-title {
+            font-family: Helvetica;
+            font-size: 28px;
+            color: #FFFFFF;
+            padding-top: 60px;
+            margin-left: -15px;
+        }
+        .introduction-text {
+            margin-top: 15px;
+            margin-bottom: 10px;
+        }
+
+        .btn-blue {
+          background-color: #0075BC !important;
+          color: #FFFFFF !important;
+          height: 33px !important;
+          margin-right: 10px !important;
+        }
+
+        .hm-table {
+    margin-top: 12px;
+}
+.hm-table .table>thead>tr>th {
+    background-color: #F5F5F5;
+    /*text-align: center;*/
+    vertical-align: top;
+    text-transform: uppercase;
+    font-family: Helvetica, sans-serif;
+    font-size: 12px;
+    color:#444444;
+}
+.hm-table .table .country-cell {
+    width: 151px;
+    height: 33px;
+    background-color: #F5F5F5;  
+    color: #444444;
+    font-family: Helvetica, sans-serif;
+    font-size: 12px;
+}
+.table-bordered>tbody>tr>td, .table-bordered>thead>tr>th {
+    border: 1px solid #D4D9DB;
+    font-size: 11px;
+}
+.hm-table .table>thead>tr>th a, .hm-table .table>thead>tr>th a:hover {
+    color: #444444;
+    text-decoration: none;
+}
+.hm-table .table>thead>tr>th>td {
+    font-family: Helvetica;
+    font-size: 12px;
+}
+
         .pbTitle {
             width: 40% !important};
         }
        
-		.pbBody {
-			padding-left:10px !important;    
-		}
+        .pbBody {
+            padding-left:10px !important;    
+        }
             
        .pbBody a{color:#337ab7 !important}
                
@@ -61,7 +134,7 @@
         }
 
         td, th {
-        	border: 0px !important;
+            border: 0px !important;
         }
         
         #contentWrapper {  background: #fff !important; margin: 0 auto;max-width: 1170px;}
@@ -150,86 +223,178 @@
             display: block;
             padding-top: 15px;
         }
+
+        .bPageBlock .message {
+                margin: 0 0 4px;
+            }
+            .message {
+                border-radius: 4px;
+            }
+            .errorM6, .errorM4, .errorM3, .errorM2, .errorS1 {
+                border-color: #c00;
+            }
+            .message {
+                background-color: #ffc;
+                border-style: solid;
+                border-width: 1px;
+                color: #000;
+                margin: 4px 20px;
+                padding: 6px 8px 6px 6px;
+            }
+            .errorM3 .msgIcon, .errorMedium {
+                background-image: url("/img/msg_icons/error24.png");
+                background-position: 0 0;
+                height: 24px;
+                width: 24px;
+            }
+            img {
+                border: 0 none;
+            }
+            body, td {
+                color: #222;
+                font-family: Arial,Helvetica,sans-serif;
+            }
+            body, td {
+                color: #333;
+                margin: 0;
+            }
+            .message .messageText {
+                margin-left: 8px;
+            }
+            .message .messageTable .messageCell {
+                vertical-align: middle;
+            }
+            .pbBody, .pbBody a, .pbBody td, .lbBody a, .lbBodyDescription, .list .headerRow .noRowsHeader {
+                color: #000;
+            }
+            .message .messageText h4 {
+                display: block;
+                font-weight: bold;
+            }
+            body .x-btn button, body .btn, body .btnImportant, body .btnDisabled, body .btnCancel, body .menuButton .menuButtonButton, body .menuButton .menuButtonMenu a, body .menuButton .menuButtonMenu input.theOption, h1, h2, h3, h4, h5, h6 {
+                font-family: Arial,Helvetica,sans-serif;
+            }
+            h1, h2, h3, h4, h5, h6 {
+                font-size: 100%;
+                margin: 0;
+            }
+            .bPageBlock .requiredInput {
+                height: 100%;
+                position: relative;
+            }
+            .bPageBlock .requiredInput .requiredBlock {
+                background-color: #c00;
+                bottom: 1px;
+                left: -4px;
+                position: absolute;
+                top: 1px;
+                width: 3px;
+            }
+            .errorStyle, .errorMsg, .importantWarning, .pbBody .errorStyle a, .pbBody .errorMsg a {
+                color: #d74c3b;
+            }
     </style>
 
     <body>
-    	<apex:outputPanel id="amscountrylabel"> 
-			<script>  
-	      	
-		    </script>
-	    </apex:outputPanel>
-		<div class="container">
-			<div id="contentWrapper">
+        <apex:outputPanel id="amscountrylabel"> 
+            <script>  
+            
+            </script>
+        </apex:outputPanel>
+        <div class="container">
+            <div id="contentWrapper">
 
-				<c:ISSP_CustomNavigation communityName="{!communityName}"></c:ISSP_CustomNavigation>
+                <c:ISSP_CustomNavigation communityName="{!communityName}"></c:ISSP_CustomNavigation>
 
-				<div class="panel-primary">
-		            <div class="panel-heading head_panel_green">
-		                <h3 class="panel-title">{!$Label.ISSP_AMS_New_MSO_Application}</h3>
-		            </div>
+                <div class="panel-primary">
                     
-                    <apex:form>            
+                    <apex:form >            
+
+                    <!-- FM AMSU-119 -->
+                        <div class="row">
+                            <div class="col-xs-20 service-header" >
+                            
+                                <div class="row page-title">
+                                    <div class="col-xs-12 col-md-10" style="border:2px">
+                                        <div class="">{!$Label.ISSP_AMS_New_MSO_Application}</div>
+                                    </div>
+                                    <div class="col-xs-2 col-md-2">
+                                        <apex:outputPanel id="downloadButtons">
+                                            <apex:commandButton styleclass="btn btn-blue" style="text-align: right;margin-right:8px" action="{!cancel}" value="{!$Label.ISSP_AMS_MSO_GSA_Return_to_List}" immediate="true" status="buttonLoadingStep1" reRender="newMSOform"/>
+                                        </apex:outputPanel>
+                                    </div>
+                                    
+                                </div>
+                            </div>
+
+                    </div>
+                        <br/>
+                    
                     <apex:outputPanel id="msoForm">
-					<apex:pageBlock id="newMSOform" rendered="{! step == 'form' }">	
+                    <apex:pageBlock id="newMSOform" rendered="{! step == 'form' }"> 
 
                         <apex:pageMessages />       
                         
 
-						<apex:pageBlockButtons location="bottom" >
-							<!--
-							<apex:commandButton styleclass="btn btn-default" style="margin-right:8px" action="{!cancel}" value="{!$Label.ISSP_Cancel}" immediate="true" />
-	                        <apex:commandButton styleclass="btn btn-default" action="{!save}" value="{!$Label.ISSP_AMS_Submit_IATA}" reRender="msoForm"/>
-							-->
-	                        <apex:actionStatus id="buttonLoadingStep1">
-			                    <apex:facet name="stop"><apex:outputPanel >
-			                        <apex:commandButton styleclass="btn btn-default" style="margin-right:8px" action="{!cancel}" value="{!$Label.ISSP_Cancel}" immediate="true" status="buttonLoadingStep1" reRender="newMSOform"/>
-			                        <apex:commandButton styleclass="btn btn-default" action="{!save}" value="{!$Label.ISSP_Next}" status="buttonLoadingStep1" />
-			                    </apex:outputPanel></apex:facet>
-			                    <apex:facet name="start"><apex:outputPanel >
-			                        <apex:commandButton styleclass="btn btn-default" style="margin-right:8px" value="{!$Label.ISSP_Cancel}..." disabled="true" reRender="newMSOform"/>
-			                        <apex:commandButton styleclass="btn btn-default"  value="{!$Label.ISSP_Next}..." disabled="true"  reRender="newMSOform"/>
-			                    </apex:outputPanel></apex:facet>
-			                </apex:actionStatus>
-						</apex:pageBlockButtons>
+                        <apex:pageBlockButtons location="bottom" styleClass="col-xs-12 col-md-10" style="padding-left:200px" >  
+                            <!--
+                            <apex:commandButton styleclass="btn btn-default" style="margin-right:8px" action="{!cancel}" value="{!$Label.ISSP_Cancel}" immediate="true" />
+                            <apex:commandButton styleclass="btn btn-default" action="{!save}" value="{!$Label.ISSP_AMS_Submit_IATA}" reRender="msoForm"/>
+                            -->
+                            <apex:actionStatus id="buttonLoadingStep1">
+                                <apex:facet name="stop"><apex:outputPanel >
+                                    <apex:commandButton styleclass="btn btn-default" style="padding-top:6px;margin-right:8px" action="{!cancel}" value="{!$Label.ISSP_Cancel}" immediate="true" status="buttonLoadingStep1" reRender="newMSOform"/>
+                                    <apex:commandButton styleclass="btn btn-default" action="{!save}" value="{!$Label.ISSP_Next}" status="buttonLoadingStep1" />
+                                </apex:outputPanel></apex:facet>
+                                <apex:facet name="start"><apex:outputPanel >
+                                    <apex:commandButton styleclass="btn btn-default" style="margin-right:8px" value="{!$Label.ISSP_Cancel}..." disabled="true" reRender="newMSOform"/>
+                                    <apex:commandButton styleclass="btn btn-default"  value="{!$Label.ISSP_Next}..." disabled="true"  reRender="newMSOform"/>
+                                </apex:outputPanel></apex:facet>
+                            </apex:actionStatus>
+                        </apex:pageBlockButtons>
 
-		                <apex:pageBlockSection columns="1" id="addressSection" collapsible="false">
-		                    <apex:facet name="header">
-		                        <apex:outputpanel >
-		                            {!$Label.ISSP_AMS_MSO_Application_Section_2}
-		                        </apex:outputpanel>
-	                        </apex:facet>
+                        <apex:pageBlockSection columns="1" id="addressSection" collapsible="false">
+                            <apex:facet name="header">
+                                <apex:outputpanel style="padding-left:8px;padding-top:5px;padding-bottom:5px;">
+                                        
+                                    <label style="padding-top:6px; text-align: right; font-size: 91%; padding-right: 0px;color: #FFFFFF">
+                                    {!$Label.ISSP_AMS_MSO_Application_Section_2}</label>
+                                </apex:outputpanel>
+                            </apex:facet>
 
-							
-							<apex:actionRegion> 
-								<apex:actionFunction name="refreshStates" action="{!refreshStates}" reRender="billingStatePanel"/>
+                            <br/>
+                            
+                            <apex:actionRegion > 
+                                <apex:actionFunction name="refreshStates" action="{!refreshStates}" reRender="billingStatePanel"/>
 
-					            <label for="countryconcerned" class="col-lg-2 control-label" style="padding-top:6px; text-align: right; font-size: 91%; padding-right: 0px;">* {!$Label.ISSP_CountryConcerned}</label>
-					            
-					            <div class="col-lg-10" >
-					            	<div class="requiredInput">
-						            	<div class="requiredBlock"></div>
-						                <apex:selectList id="countrySelected" required="false" styleClass="form-control" style="width:40%" value="{!countrySelected}" size="1" onchange="refreshStates();">
-						                        <apex:selectOptions value="{!countryISOCodeList}"/>
-						                </apex:selectList>
-					                </div>
-					            </div>
-				            </apex:actionRegion>
+                                <label for="countryconcerned" class="col-lg-2 control-label" style="padding-top:6px; text-align: right; font-size: 91%; padding-right: 0px;">* {!$Label.ISSP_CountryConcerned}</label>
+                                
+                                <div class="col-lg-10" >
+                                    <div class="requiredInput">
+                                        <div class="requiredBlock"></div>
+                                            <apex:selectList id="countrySelected2" required="false" styleClass="form-control" style="width:40%" value="{!countrySelected}" size="1" onchange="refreshStates();">
+                                                <apex:selectOptions value="{!countryISOCodeList}"/>
+                                        </apex:selectList>
+                                    </div>
+                                </div>
+                            </apex:actionRegion>
 
-							<apex:outputPanel id="billingStatePanel" style="display:{! IF(billingStatesList.size > 1,'','None')};">
-					            <label for="billingstate" class="col-lg-2" style="padding-top:6px; text-align: right; font-size: 91%; padding-right: 0px;">* {!$ObjectType.AMS_Pax_Accreditation_Form__c.fields.Billing_State__c.Label}</label>
-					            
-					            <div class="col-lg-10" >
-					            	<div class="requiredInput">
-						            	<div class="requiredBlock"></div>                          
-						                <apex:selectList id="billingstate" required="false" styleClass="form-control" style="width:40%" value="{!billingState}" size="1">
-						                        <apex:selectOptions value="{!billingStatesList}"/>
-						                </apex:selectList>
-					                </div>
-					            </div>
-				            </apex:outputPanel>
+                                <apex:outputPanel id="billingStatePanel" styleClass="billingStreetPanel" style="display:{! IF(billingStatesList.size > 1,'','None')};">
+                                <label for="billingstate" class="col-lg-2" style="padding-top:6px; text-align: right; font-size: 91%; padding-right: 0px;">* {!$ObjectType.AMS_Pax_Accreditation_Form__c.fields.Billing_State__c.Label}</label>
+                                
+                                <div class="col-lg-10" >
+                                    <div class="requiredInput">
+                                        <div class="requiredBlock"></div>                          
+                                            <apex:selectList id="billingstate2" required="false" styleClass="form-control" style="width:40%" value="{!billingState}" size="1">
+                                                <apex:selectOptions value="{!billingStatesList}"/>
+                                        </apex:selectList>
+                                    </div>
+                                </div>
+                            </apex:outputPanel>
 
-                            <apex:outputPanel id="billingStreetPanel" styleClass="billingStreetPanel">
-                                <label for="billingstate" class="col-lg-2" style="text-align: right; font-size: 91%; padding-right: 0px;">{!$ObjectType.AMS_Pax_Accreditation_Form__c.fields.Branch_Office_Street_name_number__c.Label}</label>
+                            <apex:outputPanel id="billingStreetPanel2" styleClass="billingStreetPanel">
+                                    <label for="billingstate" class="col-lg-2" style="text-align: right; font-size: 91%; padding-right: 0px;">
+                                    {!$Label.ISSP_AMS_MSO_GSA_Address}</label>
                                 
                                 <div class="col-lg-10">
                                     <div class="requiredInput">
@@ -240,34 +405,52 @@
                                 </div>
                             </apex:outputPanel>
 
-				            <div class="col-lg-9" style="padding-top:7px;">				            	
-				                <apex:inputField id="billingPostalCode" required="false" value="{!accreditationForm.Branch_Office_Postal_code__c}"/>
-				            </div>
+                            <apex:outputPanel styleClass="billingStreetPanel">
+                                <label for="countryconcerned" class="col-lg-2" style="padding-top:6px; text-align: right; font-size: 91%; padding-right: 0px;">{!$ObjectType.AMS_Pax_Accreditation_Form__c.fields.Branch_Office_Postal_code__c.Label}</label>
+                                                                    
+                                <div class="col-lg-10" >
+                                        <apex:inputField id="billingPostalCode" required="false" label="" value="{!accreditationForm.Branch_Office_Postal_code__c}"/>
+                                    
+                            </div>
+                            </apex:outputPanel>
 
-				            <div class="col-lg-9" style="padding-top:7px;">				            	
-				                <apex:inputField id="billingCity" required="true" value="{!accreditationForm.Branch_Office_City__c}"/>
-				            </div>
+                            <apex:outputPanel styleClass="billingStreetPanel">
+                                <label for="countryconcerned" class="col-lg-2" style="padding-top:6px; text-align: right; font-size: 91%; padding-right: 0px;">{!$ObjectType.AMS_Pax_Accreditation_Form__c.fields.Branch_Office_City__c.Label}</label>
 
-				            <div class="col-lg-9" >
-				                <apex:inputField id="phoneNumber" required="false" value="{!accreditationForm.Branch_Office_Phone__c}" label="{!$Label.ISSP_Office_Phone}"/>
-				            </div>
+                                <div class="col-lg-10" >
+                                <apex:inputField id="billingCity" required="true" value="{!accreditationForm.Branch_Office_City__c}"/>
+                            </div>
+                            </apex:outputPanel>
 
-				            <div class="col-lg-9" style="padding-top:7px;">				            	
-				                <apex:inputField id="emailAddress" required="false" value="{!accreditationForm.Branch_Office_Email__c}" label="{!$Label.ISSP_AMS_MSO_Office_Email}"/>
-				            </div>
-					        
-				        </apex:pageBlockSection>
+                            <apex:outputPanel styleClass="billingStreetPanel">
+                                <label for="countryconcerned" class="col-lg-2" style="padding-top:6px; text-align: right; font-size: 91%; padding-right: 0px;">{!$Label.ISSP_Office_Phone}</label>
 
-			        </apex:pageBlock>
+                            <div class="col-lg-9" >
+                                    <apex:inputField id="phoneNumber" required="false" value="{!accreditationForm.Branch_Office_Phone__c}" />
+                            </div>
+                            </apex:outputPanel>
 
-			    	<!--</apex:form>-->
+                            <apex:outputPanel styleClass="billingStreetPanel">
+                                <label for="countryconcerned" class="col-lg-2" style="padding-top:6px; text-align: right; font-size: 91%; padding-right: 0px;">{!$Label.ISSP_AMS_MSO_Office_Email}</label>
+
+                            <div class="col-lg-9" style="padding-top:7px;">                             
+                                    <apex:inputField id="emailAddress" required="false" value="{!accreditationForm.Branch_Office_Email__c}"/>
+                            </div>
+                            </apex:outputPanel>
+                            
+                            <br/>
+                        </apex:pageBlockSection>
+
+                    </apex:pageBlock>
+
+                    <!--</apex:form>-->
 
 
 
                     <apex:pageBlock id="overview" rendered="{! step == 'review' }">
                         <apex:pageMessages />
 
-                        <apex:pageBlockButtons location="bottom" >
+                        <apex:pageBlockButtons location="bottom" styleClass="col-xs-12 col-md-10" style="padding-left:200px" > 
                             <!--
                             <apex:commandButton styleclass="btn btn-default" style="margin-right:8px" action="{!cancel}" value="{!$Label.ISSP_Cancel}" immediate="true" />
                             <apex:commandButton styleclass="btn btn-default" action="{!save}" value="{!$Label.ISSP_AMS_Submit_IATA}" />
@@ -285,63 +468,98 @@
                         </apex:pageBlockButtons>
 
                         <apex:pageBlockSection columns="1" collapsible="false">
-                            <apex:outputText escape="false" value="{!$Label.ISSP_AMS_MSO_Application_Review}"/>
+                                
+                                <apex:outputpanel style="padding-left:8px;padding-top:5px;padding-bottom:5px;">
+                                        <apex:outputText escape="false" value="{!$Label.ISSP_AMS_MSO_Application_Review}" rendered="{!step == 'review' }"/>
+                                        <!--apex:commandButton styleclass="btn btn-blue" action="{!goBackToForm}" value="{!$Label.ISSP_EditSection}" id="Edit-Section1" style="float:right"/-->
+                                    </apex:outputpanel>
                         </apex:pageBlockSection>
+
+                        <br/>
 
                         <apex:pageBlockSection columns="1" id="addressSection" collapsible="false">
                             <apex:facet name="header">
-                                <apex:outputpanel >
-                                    {!$Label.ISSP_AMS_MSO_Application_Section_2}
-                                    <apex:commandButton styleclass="btn btn-default" action="{!goBackToForm}" value="{!$Label.ISSP_EditSection}" id="Edit-Section1" style="float:right"/>
+                                    <apex:outputpanel style="padding-left:8px;padding-top:5px;padding-bottom:5px;">
+                                        
+                                        <label style="padding-top:6px; text-align: right; font-size: 91%; padding-right: 0px;color: #FFFFFF">{!$Label.ISSP_AMS_MSO_Application_Section_2}</label>
+                                        
                                 </apex:outputpanel>
+                                                                        
                             </apex:facet>
                             
+                            <apex:outputPanel id="billingStatePanel3" styleClass="billingStreetPanel">
                             <label for="countryconcerned" class="col-lg-2 control-label" style="text-align: right; font-size: 91%; padding-right: 0px;">* {!$Label.ISSP_CountryConcerned}</label>
                             
                             <div class="col-lg-10" >{!accreditationForm.Branch_Office_Country__r.Name}</div>
+                            </apex:outputPanel>
 
-                            <apex:outputPanel id="billingStatePanel">
+                            <apex:outputPanel id="billingStatePanel6" styleClass="billingStreetPanel" rendered="{!AND(step == 'review',billingStatesList.size > 1) }">
                                 <label for="billingstate" class="col-lg-2" style="text-align: right; font-size: 91%; padding-right: 0px;">* {!$ObjectType.AMS_Pax_Accreditation_Form__c.fields.Billing_State__c.Label}</label>
                                 
                                 <div class="col-lg-10" >{!accreditationForm.IATA_ISO_State__r.Name}</div>
                             </apex:outputPanel>
 
-                            <div class="col-lg-9" style="padding-top:7px;">
+                            <apex:outputPanel id="billingStreetPanel" styleClass="billingStreetPanel">
+                                    <label for="billingstate" class="col-lg-2" style="text-align: right; font-size: 91%; padding-right: 0px;">
+                                    {!$Label.ISSP_AMS_MSO_GSA_Address}</label>
+                                    
+                                    <div class="col-lg-10">
                                 <apex:outputField id="billingStreet" value="{!accreditationForm.Branch_Office_Street_name_number__c}"/>
                             </div>
+                                </apex:outputPanel>
 
-                            <div class="col-lg-9" style="padding-top:7px;">                             
+                                <apex:outputPanel styleClass="billingStreetPanel">
+                                        <label for="countryconcerned" class="col-lg-2" style=" text-align: right; font-size: 91%; padding-right: 0px;">{!$ObjectType.AMS_Pax_Accreditation_Form__c.fields.Branch_Office_Postal_code__c.Label}</label>
+                                                                            
+                                        <div class="col-lg-10" >
                                 <apex:outputField id="billingPostalCode"  value="{!accreditationForm.Branch_Office_Postal_code__c}"/>
+                                            
                             </div>
+                                    </apex:outputPanel>
 
-                            <div class="col-lg-9" style="padding-top:7px;">                             
+                                <apex:outputPanel styleClass="billingStreetPanel">
+                                    <label for="countryconcerned" class="col-lg-2" style="text-align: right; font-size: 91%; padding-right: 0px;">{!$ObjectType.AMS_Pax_Accreditation_Form__c.fields.Branch_Office_City__c.Label}</label>
+
+                                    <div class="col-lg-10" >
                                 <apex:outputField id="billingCity" value="{!accreditationForm.Branch_Office_City__c}"/>
                             </div>
+                                </apex:outputPanel>
+
+                                <apex:outputPanel styleClass="billingStreetPanel">
+                                    <label for="countryconcerned" class="col-lg-2" style="text-align: right; font-size: 91%; padding-right: 0px;">{!$Label.ISSP_Office_Phone}</label>
 
                             <div class="col-lg-9" >
-                                <apex:outputField id="phoneNumber" value="{!accreditationForm.Branch_Office_Phone__c}" label="{!$Label.ISSP_Office_Phone}"/>
+                                        <apex:outputField id="phoneNumber" value="{!accreditationForm.Branch_Office_Phone__c}" />
                             </div>
+                                </apex:outputPanel>
 
-                            <div class="col-lg-9" style="padding-top:7px;">                             
-                                <apex:outputField id="emailAddress" value="{!accreditationForm.Branch_Office_Email__c}" label="{!$Label.ISSP_AMS_MSO_Office_Email}"/>
+                               <apex:outputPanel styleClass="billingStreetPanel">
+                                    <label for="countryconcerned" class="col-lg-2" style="text-align: right; font-size: 91%; padding-right: 0px;">{!$Label.ISSP_AMS_MSO_Office_Email}</label>
+                                    
+                                    <div class="col-lg-9" style="">
+                                        <apex:outputField id="emailAddress" value="{!accreditationForm.Branch_Office_Email__c}"/>
                             </div>
+                                </apex:outputPanel>
+
+                                <br/>
+
+                            
                             
                         </apex:pageBlockSection>
 
                     </apex:pageBlock>
 
                     </apex:outputPanel>
-                    </apex:form>   
+                    
 
-
-			    	<apex:pageBlock rendered="{! step == 'success' }" mode="maindetail">
-				        <div style="color:#000000; font-size:14px; padding-bottom:10px; padding-top:10px;margin-left:200px">
-				           
-				           	<!--<strong>
-				               	<apex:outputPanel>{!$Label.ISSP_AMS_MSO_StepFinal_Thanks}</apex:outputPanel>
-				           	</strong>-->
+                    <apex:pageBlock rendered="{! step == 'success' }" mode="maindetail">
+                        <div style="color:#000000; font-size:14px; padding-bottom:10px; padding-top:10px;margin-left:200px">
                            
-                            <apex:outputPanel rendered="{!oscarCase.IATAcode__c == null}" >
+                            <!--<strong>
+                                <apex:outputPanel>{!$Label.ISSP_AMS_MSO_StepFinal_Thanks}</apex:outputPanel>
+                            </strong>-->
+                           
+                            <apex:outputPanel rendered="{!generatedIATACODE == null}" >
                                 <br/> <br/> 
                                 {!$Label.ISSP_AMS_StepFinal_Your_CaseNumber} <a href="/ISSP_Case?caseId={!oscarCase.Id}{!if(communityName=='CNS','&CommunityName='+communityName,'')}" target="_self">{!oscarCase.CaseNumber}</a>.
                                 <br/><br/>
@@ -350,20 +568,47 @@
                                 {!IF(communityName=='CNS', $Label.ISSP_AMS_StepFinal_In_Addition_CNS, $Label.ISSP_AMS_StepFinal_In_Addition)} <a href="/ISSP_CaseList{!if(communityName=='CNS','?CommunityName='+communityName,'')}" target="_self">{!$Label.ISSP_AMS_StepFinal_In_Addition2}</a>.
                             </apex:outputPanel>
                            
-                            <apex:outputPanel rendered="{!oscarCase.IATAcode__c <> null}" >
-                                <strong>{!$Label.ISSP_AMS_MSO_Request_Successfull} {!oscarCase.IATAcode__c}.</strong>
+                            <apex:outputPanel rendered="{!generatedIATACODE <> null}" >
+                                <strong>{!$Label.ISSP_AMS_MSO_Request_Successfull} {!generatedIATACODE}.</strong>
                                 <br/> <br/> 
                                 {!$Label.ISSP_AMS_StepFinal_Your_CaseNumber} <a href="/ISSP_Case?caseId={!oscarCase.Id}{!if(communityName=='CNS','&CommunityName='+communityName,'')}" target="_self">{!oscarCase.CaseNumber}</a>.
                             </apex:outputPanel>
 
-				        </div>
-				    </apex:pageBlock>
+                        </div>
+                    </apex:pageBlock>
+                    
+                    <apex:pageBlock rendered="{! step == 'issue' }" mode="maindetail">
+                        <apex:pageMessages />
+                        <apex:pageBlockButtons location="bottom" styleClass="col-xs-12 col-md-10" style="padding-left:200px" > 
+                        
+                            <apex:actionStatus id="buttonLoadingStep1_1">
 
-		    	</div>
+                                <apex:facet name="stop"><apex:outputPanel >
+                                    <apex:commandButton styleclass="btn btn-default" style="margin-right:8px" action="{!cancel}" value="{!$Label.ISSP_AMS_MSO_GSA_Return_to_List}" immediate="true" status="buttonLoadingStep1" reRender="overview"/>
+                                </apex:outputPanel></apex:facet>
+                                <apex:facet name="start"><apex:outputPanel >
+                                    <apex:commandButton styleclass="btn btn-default" style="margin-right:8px" value="{!$Label.ISSP_AMS_MSO_GSA_Return_to_List}..." disabled="true" reRender="overview"/>
+                                </apex:outputPanel></apex:facet>
+                            </apex:actionStatus>
+                        </apex:pageBlockButtons>
+                        
+                        <div style="color:#000000; font-size:14px; padding-bottom:10px; padding-top:10px;margin-left:200px">
+                           
+                            <apex:outputPanel rendered="{!reason == 'airline_designator2'}" >
+                                <strong>{!$Label.ISSP_AMS_MSO_Request_Issue_Airline_Designator}</strong>
+                                <br/> 
+                            </apex:outputPanel>
 
-			</div>
-		    <c:ISSP_CustomFooter communityName="{!communityName}"/>
-		</div>
+                        </div>
+                    </apex:pageBlock>
+                    
+                    </apex:form>   
+
+                </div>
+
+            </div>
+            <c:ISSP_CustomFooter communityName="{!communityName}"/>
+        </div>
     </body>  
 </html>
 
