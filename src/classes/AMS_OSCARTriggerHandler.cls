@@ -138,6 +138,10 @@ public class AMS_OSCARTriggerHandler {
         handleNewgenFOPActionsBeforeUpdate(oscars, (Map<Id,AMS_OSCAR__c>)Trigger.oldMap);
 
         updateAccountWithOptINOUT((List<AMS_OSCAR__c>)Trigger.New, (Map<Id,AMS_OSCAR__c>)Trigger.oldMap);
+		
+        /*** AMSU-125 Start ***/
+        validateRemittanceFrequency((List<AMS_OSCAR__c>)Trigger.New, (Map<Id,AMS_OSCAR__c>)Trigger.oldMap, (Map<Id,AMS_OSCAR__c>)Trigger.newMap);
+        /*** AMSU-125 End ***/
 
     }
 
@@ -170,6 +174,64 @@ public class AMS_OSCARTriggerHandler {
         /*** AMSU-121 End ***/
     }
 
+    /*** AMSU-125 Start ***/
+    public static void validateRemittanceFrequency(List<AMS_OSCAR__c> oscars, Map<Id, AMS_OSCAR__c> oldMap, Map<Id, AMS_OSCAR__c> newMap) {
+        List<AMS_Oscar__c> oscarsToValidate = new List<AMS_Oscar__c>();
+        Map<String, Set<String>> mapClassAttributes = new Map<String, Set<String>>();
+        Set<String> processToCheck = new Set<String> {AMS_Utils.new_HO, AMS_Utils.new_BR};
+
+
+        for(AMS_Oscar__c oscar : oscars) {
+            AMS_Oscar__c oldRecord = oldMap.get(oscar.Id);
+            if(processToCheck.contains(oscar.Process__c) && oldRecord.RPM_Approval__c <> oscar.RPM_Approval__c && 
+                oscar.RPM_Approval__c == 'Authorize Approval' && 
+                oscar.AMS_Online_Accreditation__c != null && !String.isBlank(oscar.Country_ISO_Code__c)) {
+                oscarsToValidate.add(oscar);
+                mapClassAttributes.put(oscar.Country_ISO_Code__c, null);
+            }
+        }
+
+        Schema.RecordTypeInfo assessmentRT = Schema.SObjectType.AMS_Settlement_System__c.getRecordTypeInfosByName().get('BSP');
+        Set<String> locationsToCheck = new Set<String> {'P', 'D'};
+        if(!oscarsToValidate.isEmpty() && assessmentRT != null) {
+            List<AMS_Operation__c> operations = [SELECT Id, Name, Country__c, Country__r.ISO_Code__c,
+                                                    (SELECT Class_Type__c FROM BSP_Attributes__r WHERE Class_Type__c IN :locationsToCheck) 
+                                                 FROM AMS_Operation__c
+                                                 WHERE Country__r.ISO_Code__c IN :mapClassAttributes.keySet() AND 
+                                                    Settlement__r.RecordtypeId = :assessmentRT.getRecordTypeId()]; 
+
+            for(AMS_Operation__c operation : operations) {
+                for(ANG_BSP_Attributes__c attribute : operation.BSP_Attributes__r) {
+                    Set<String> locations = mapClassAttributes.get(operation.Country__r.ISO_Code__c);
+
+                    if(locations == null) {
+                        locations = new Set<String>();
+                        mapClassAttributes.put(operation.Country__r.ISO_Code__c, locations);
+                    }
+
+                    locations.add(attribute.Class_Type__c);
+                }
+            }
+
+            List<AMS_Oscar__c> oscarsWithAccr = [SELECT Id, AMS_Online_Accreditation__c, AMS_Online_Accreditation__r.Remittance_frequency__c,
+                                                        AMS_Online_Accreditation__r.Location_Class__c, Country_ISO_Code__c 
+                                                 FROM AMS_Oscar__c
+                                                 WHERE Id IN :oscarsToValidate AND 
+                                                       AMS_Online_Accreditation__r.Remittance_frequency__c = NULL AND
+                                                       AMS_Online_Accreditation__r.Location_Class__c IN :locationsToCheck];
+            
+            for(AMS_Oscar__c oscarsRF : oscarsWithAccr) {
+                Set<String> countryAttributes = mapClassAttributes.get(oscarsRF.Country_ISO_Code__c);
+                if(countryAttributes != null && !countryAttributes.isEmpty()) {
+                    newMap.get(oscarsRF.Id).addError('The OSCAR cannot be approved until the remittance frequency is populated.');
+                }
+            }   
+
+
+        }        
+    }
+    /*** AMSU-125 End ***/
+	
 	/*** AMSU-121 Start ***/
     public static void handleChangeOfLocation(List<AMS_OSCAR__c> oscars, Map<Id,AMS_OSCAR__c> oldMap) {
         List<AMS_Pax_Accreditation_Form__c> accreditationsToUpdate = new List<AMS_Pax_Accreditation_Form__c>();
