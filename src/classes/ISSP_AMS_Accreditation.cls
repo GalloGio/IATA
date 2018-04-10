@@ -718,6 +718,7 @@ public without sharing class ISSP_AMS_Accreditation {
             SYSTEM.DEBUG('Accreditation NewForm Sector: ' + sectorValue);
         } else {
             //fix amsu-113
+            newForm = new AMS_Pax_Accreditation_Form__c();
             noticeOfChangeList = new List<String>();
             sectorValue = con != null && con.Account != null && !String.isBlank(con.Account.Sector__c) ? con.Account.Sector__c.replace(' ', '_') : '';
             List_CountryReqments = new List<AMS_Accreditation_Requirement__c>();

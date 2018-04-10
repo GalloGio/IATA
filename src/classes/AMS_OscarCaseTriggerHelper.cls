@@ -430,8 +430,10 @@ public class AMS_OscarCaseTriggerHelper {
                     newCaseSubject = 'New Associate Entity - ' + AMS_Utils.officialAccreditationTypeMap.get(oscars.get(c.Oscar__c).Account__r.ANG_Accreditation_Model__c) + ' - ' + oscars.get(c.Oscar__c).Account__r.IATA_ISO_Country__r.Name;
                 else if(oscars.get(c.Oscar__c).Account__r.ANG_IsNewGenAgency__c)
                     newCaseSubject = c.reason1__c + ' - ' + AMS_Utils.officialAccreditationTypeMap.get(oscars.get(c.Oscar__c).Account__r.ANG_Accreditation_Model__c) + ' - ' + oscars.get(c.Oscar__c).Account__r.Name;
-                else
-                    newCaseSubject = c.reason1__c + ' - ' +oscars.get(c.Oscar__c).Account__r.Name;
+                else if(oscars.get(c.Oscar__c).Process__c == AMS_Utils.new_MSO || (c.Subject != null && c.Subject.startsWith('MSO code '))) //AMSU-119
+					newCaseSubject = null;
+				else
+                    newCaseSubject = c.reason1__c + ' - ' + oscars.get(c.Oscar__c).Account__r.Name;
 
             if(newCaseSubject != null && c.Subject != newCaseSubject && (c.Subject == null || !c.Subject.startsWith(newCaseSubject)) && AMS_OscarMigrationFromCase.changeSubject)
                 c.Subject = newCaseSubject;
