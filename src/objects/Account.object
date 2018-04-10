@@ -15805,6 +15805,7 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
     <fields>
         <fullName>TIP_Documents__c</fullName>
         <externalId>false</externalId>
+        <inlineHelpText>Enter any additional information related to your company (e.g. to comply with AML requirements)</inlineHelpText>
         <label>Documents</label>
         <length>32768</length>
         <trackFeedHistory>false</trackFeedHistory>
@@ -15816,6 +15817,7 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
         <fullName>TIP_HQ_Location__c</fullName>
         <deleteConstraint>Restrict</deleteConstraint>
         <externalId>false</externalId>
+        <inlineHelpText>Select the country where provider&apos;s headquarter is located</inlineHelpText>
         <label>HQ Location</label>
         <referenceTo>IATA_ISO_Country__c</referenceTo>
         <relationshipLabel>Accounts (HQ Location)</relationshipLabel>
@@ -89069,6 +89071,19 @@ OR(ISPICKVAL(Industry, &apos;Airline&apos;),ISPICKVAL(Industry, &apos;Travel Age
 ,ISPICKVAL(Industry, &apos;Cargo Agent&apos;)), isblank(text(Reason_for_creation__c )))</errorConditionFormula>
         <errorDisplayField>Reason_for_creation__c</errorDisplayField>
         <errorMessage>Please select the reason for creation.</errorMessage>
+    </validationRules>
+    <validationRules>
+        <fullName>Validate_Providers_Accreditation_Date</fullName>
+        <active>true</active>
+        <description>Prevents active Payment Providers to have the Accreditation date in the future</description>
+        <errorConditionFormula>(RecordType.DeveloperName = &apos;TIP_Payment_Provider&apos; 
+|| (RecordType.DeveloperName= &apos;Standard_Account&apos; &amp;&amp;
+    ISPICKVAL(Category__c , &apos;Payment Provider&apos;)
+   )
+)
+&amp;&amp;  ISPICKVAL(Status__c, &apos;Active&apos;)
+&amp;&amp; Accreditation_date__c &gt; today()</errorConditionFormula>
+        <errorMessage>Can&apos;t have active Payment Providers with the accreditation date in the future</errorMessage>
     </validationRules>
     <validationRules>
         <fullName>Virtual_Branch_Iso_Country</fullName>

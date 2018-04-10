@@ -13,6 +13,7 @@ trigger AccountTrigger on Account (before insert, after insert, after update, be
     AccountTriggerHelper.AccountNoDuplicateBranch(trigger.New, trigger.OldMap);
     AccountTriggerHelper.SectorCatToIndType(trigger.New, trigger.OldMap);
    
+    TIP_Utils.validateUniqueIATACodeForTIP(trigger.new, trigger.OldMap);
   }
 
   if(trigger.isAfter && trigger.isUpdate){
