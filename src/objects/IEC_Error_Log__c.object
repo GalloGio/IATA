@@ -165,17 +165,6 @@
     </fields>
     <label>IEC Error Log</label>
     <listViews>
-        <fullName>DataLoader_All_Errors</fullName>
-        <columns>NAME</columns>
-        <columns>Errror_Message__c</columns>
-        <columns>IATACODE__c</columns>
-        <columns>Source__c</columns>
-        <columns>CREATED_DATE</columns>
-        <filterScope>Everything</filterScope>
-        <label>All Error Logs</label>
-        <language>en_US</language>
-    </listViews>
-    <listViews>
         <fullName>DataLoader_GDS_Errors</fullName>
         <columns>NAME</columns>
         <columns>Type__c</columns>
