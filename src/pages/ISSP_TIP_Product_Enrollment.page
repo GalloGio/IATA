@@ -245,8 +245,9 @@
                                         <apex:pageBlockSectionItem >    
                                             <apex:outputPanel id="binTable">
                                                 <script>
-                                                    var startMask="".padStart("{!binRangeLen}","0");
-                                                    var endMask="".padStart("{!binRangeLen}","9");
+                                                    var startMask=new Array(parseInt("{!binRangeLen}") + 1).join("0");
+                                                    
+                                                    var endMask=new Array(parseInt("{!binRangeLen}") + 1).join("9");
                                                     var stayOnModal=false;
                                                     function enforceMaxLen(){
                                                         $('[id$="rangeStart"]').attr('maxlength', "{!binRangeLen}");
@@ -279,8 +280,9 @@
                                                                 $('[id$="rangeStart"]').val(startMask);
                                                                 $('[id$="rangeStart"]').addClass("placeholder-active");
                                                             }else{
-                                                               $('[id$="rangeStart"]').val($('[id$="rangeStart"]').val().padEnd("{!binRangeLen}","0")); 
-                                                               clearErrorElement('[id$="rangeStart"]'); 
+                                                                
+                                                                padEnd('[id$="rangeStart"]' ,"0");
+                                                                clearErrorElement('[id$="rangeStart"]'); 
                                                             }
                                                         });
 
@@ -297,8 +299,8 @@
                                                                 $('[id$="rangeEnd"]').val(endMask);
                                                                 $('[id$="rangeEnd"]').addClass("placeholder-active");
                                                             }else{
-                                                               $('[id$="rangeEnd"]').val($('[id$="rangeEnd"]').val().padEnd("{!binRangeLen}","9")); 
-                                                               clearErrorElement('[id$="rangeEnd"]');  
+                                                                padEnd('[id$="rangeEnd"]' ,"9");
+                                                                clearErrorElement('[id$="rangeEnd"]');  
                                                             }
                                                         });
 
@@ -331,6 +333,14 @@
                                                         }
                                                         stayOnModal=false;
                                                         addEditBinRange();
+                                                    }
+
+                                                    function padEnd(lid, digit){
+                                                        var i = parseInt("{!binRangeLen}") - parseInt(''+$(lid).val().length);
+                                                        while (i > 0) {
+                                                            $(lid).val($(lid).val() + digit);
+                                                            i--;
+                                                        }
                                                     }
 
                                                     function closeDialog(){
