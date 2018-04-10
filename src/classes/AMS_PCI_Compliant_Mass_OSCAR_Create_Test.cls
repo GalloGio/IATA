@@ -18,6 +18,7 @@ private class AMS_PCI_Compliant_Mass_OSCAR_Create_Test {
 		Account a1 = new Account(Name='Test1 Agency',
 			IATA_ISO_Country__c = isoc1.id, Sent_to_external_system__c = true, 
 			IATACode__c = '12345678', 
+			Location_Type__c = 'HO',
 			Location_Class__c= AMS_Utils.LC_PASSENGER,
 			Status__c= AMS_Utils.ACC_S9_APPROVED,
 			RecordTypeId= AMS_PCI_Compliant_Mass_OSCAR_CreationCtr.AGENCY_RECORDTYPE);
@@ -34,6 +35,7 @@ private class AMS_PCI_Compliant_Mass_OSCAR_Create_Test {
 		AMS_PCI_Compliant_Mass_OSCAR_CreationCtr ctrl = new AMS_PCI_Compliant_Mass_OSCAR_CreationCtr();
 		ctrl.searchPreview();
 		ctrl.filter.region = 'Americas';
+		ctrl.selectedLocationTypes.add(new SelectOption('HO', 'HO'));
 		ctrl.CountrySelected = ctrl.countryNameListSelectOption();
 		ctrl.filter.country = new List<String> {isoc1.Id};
 		ctrl.searchPreview();

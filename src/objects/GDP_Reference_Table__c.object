@@ -300,7 +300,7 @@
             <operation>startsWith</operation>
             <value>ORGABB</value>
         </filters>
-        <label>ORGABB</label>
+        <label>11 - ORGABB - Accredit. Org. Abbrev.</label>
         <language>en_US</language>
     </listViews>
     <listViews>

@@ -287,7 +287,7 @@ public class AMS_ChangeCodesHelper {
             , Source__c = source
             , CreatedDate_User__c = convertToHubEffectiveDate(system.today())
             , To_Publish_in_e_Bulletin__c = changeCode.publishedOnEBulletin
-            , Forms_Of_Payment__c = generateFOPString(fOPs, oscar!=null && oscar.Is_NewGen__c)
+            , Forms_Of_Payment__c = generateFOPString(fOPs, oscar!=null && oscar.Is_NewGen__c, changeCode.name)
         );
 
         System.debug(loggingLevel.ERROR, 'Creating a new Agency Applied Change Code ('+aacNEW.Change_Code__c +') for Account ' + oscarAgency.Id + ' with flag active set to ' + aacNEW.Active__c);
@@ -636,22 +636,30 @@ public class AMS_ChangeCodesHelper {
         return false;
     }
 
-    public static String generateFOPString(List<Agency_Authorization__c> fOPs, Boolean isNewGen){
+    public static String generateFOPString(List<Agency_Authorization__c> fOPs, Boolean isNewGen, String changeCodeName){
 
         String fopString = isNewGen ? '' : 'Not Applicable';
 
         String authRelabel;
-        List<String> orderedFOPs = new List<String>();
+        Set<String> setFOPs = new Set<String>();
 
         if(fOPs != null && !fOPs.isEmpty() && isNewGen){
             for(Agency_Authorization__c fop : fOPs) {
                 authRelabel = (fop.Authority__c == 'Card Payment Method' ? 'Credit Card' : (fop.Authority__c == 'IEP Payment Method' ? 'IATA EasyPay' : (fop.Authority__c == 'Cash Payment Method' ? 'Cash' : '')));
-                orderedFOPs.add(authRelabel);
+                // if a payment method is being restricted do not display it on ebulletin
+                if( !(authRelabel == 'Credit Card' && (changeCodeName == 'CCA' || changeCodeName == 'FOP')) && !(authRelabel == 'Cash' && (changeCodeName == 'PCA' || changeCodeName == 'FOP'))) {
+                    setFOPs.add(authRelabel);                    
+                }
             }
+            // include payment method if it's being restored
+            if (changeCodeName == 'PCR' || changeCodeName == 'FPR') setFOPs.add('Cash');
+            if (changeCodeName == 'CCR' || changeCodeName == 'FPR') setFOPs.add('Credit Card'); 
+
+            List<String> orderedFOPs = new List<String>(setFOPs);   
+
+            orderedFOPs.sort(); 
             
-            orderedFOPs.sort();
-            
-            for(String fop: orderedFOPs){
+            for(String fop: orderedFOPs) {
                 fopString += fop + ' - ';
             }
 

@@ -348,11 +348,6 @@ private class AMS_OscarCaseTriggerHelper_Test {
 			}
 		}
 		AMS_OscarCaseTriggerHelper.assignOscarToRegionQueue(oscarList);
-
-
-		for (Account accountEntry : accountList) {
-			AMS_OscarCaseTriggerHelper.fetchRegion(accountEntry);
-		}
      
 		idSet = AMS_OscarCaseTriggerHelper.caseIrregularityCreated;
 
