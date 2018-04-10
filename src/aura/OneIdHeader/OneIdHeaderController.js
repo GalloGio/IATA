@@ -5,4 +5,7 @@
 		helper.getUrl(component, event);
 
 	}*/
+                if(servName != null){
+                  component.set("v.commName", servName);	    
+                }
 })

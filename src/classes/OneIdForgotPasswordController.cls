@@ -29,6 +29,9 @@ public without sharing class OneIdForgotPasswordController {
             //success = Site.forgotPassword(users[0].Username);
             
             
+            users[0].IsActive = true;
+            users[0].Portal_User_Frozen_Checkbox__c = false;     
+            update users;
             
             success = Comm_User_Helper.resetPassword(username, //email in this case
                                                              Comm_User_Helper.ONEIDENTITY, 
