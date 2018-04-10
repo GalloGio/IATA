@@ -25,6 +25,7 @@ global class ANG_Migration_MassRMECallout {
     		lsTypeOfCall.add(new selectOption('Country','Search by country'));
     		lsTypeOfCall.add(new selectOption('AccountID','Search by Account IDs'));
     		lsTypeOfCall.add(new selectOption('IATACode','Search by IATA Codes'));
+    		return lsTypeOfCall;
     	} set;}
     
     public string TypeOfCall	{get; set;}
@@ -66,7 +67,7 @@ global class ANG_Migration_MassRMECallout {
     	integer iCounter = 1;
     	//Enrich wrapper with data just got from RME
     	for(RMEResponseWrapper rw:lsRMEWrapperTmp){
-    		IndexMap = math.mod(iCounter, 1000);
+    		IndexMap = integer.valueOf(iCounter/1000);
     		list<RMEResponseWrapper> tmpLSOk;
     		list<RMEResponseWrapper> tmpLSErr;
     		
@@ -105,7 +106,6 @@ global class ANG_Migration_MassRMECallout {
     		
     		iCounter++;
     	}
-    	
     	lsRMEWrapperTmp = null;
     	setRHCId = null;
     	theSerializedResultFromRME =  null;
@@ -122,9 +122,9 @@ global class ANG_Migration_MassRMECallout {
     	public string RHCId			{get; set;}
     	public string AccntId		{get; set;}
     	public string sCurrency		{get; set;}
-    	public double ProvAmnt		{get; set;}
-    	public double ConsumedRHC	{get; set;}
-    	public double ConsumedRHCPerc	{get; set;}
+    	public decimal ProvAmnt		{get; set;}
+    	public decimal ConsumedRHC	{get; set;}
+    	public decimal ConsumedRHCPerc	{get; set;}
     	public string sLastUpd		{get; set;}
     	public string sType			{get; set;}
     }

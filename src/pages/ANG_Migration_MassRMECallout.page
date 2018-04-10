@@ -33,10 +33,41 @@
             this.sType = sType;
         }
 
-        function UserAction(sType) {
-            var cnt = document.getElementById('{!$Component.theForm.pbt01.pbs02.theCountry}').value;
-            var accnt = sforce.connection.query("select Id, ANG_AccountId__c, ANG_AccountId__r.IATACode__c from ANG_RHC_Information__c where ANG_AccountId__r.IATA_Iso_country__r.ISO_Code__c = '" + cnt + "' and ANG_AccountId__r.IATACode__c != '' and ANG_AccountId__r.Status in ('Approved','Cash basis/no commission','Cash basis/with commission','Changes processed','Under review')");
-
+        function UserAction(sType, sMode) {
+            var lsItem = [];
+            
+            if(sMode=='Country'){
+	            var cnt = document.getElementById('{!$Component.theForm.pbt01.pbs02.theCountry}').value;
+	            var accnt = sforce.connection.query("select Id, ANG_AccountId__c, ANG_AccountId__r.IATACode__c from ANG_RHC_Information__c where ANG_AccountId__r.IATA_Iso_country__r.ISO_Code__c = '" + cnt + "' and ANG_AccountId__r.IATACode__c != '' and ANG_AccountId__r.Status__c in ('Approved','Cash basis/no commission','Cash basis/with commission','Changes processed','Under review')");
+	        }
+	       	if(sMode=='AccountID'){
+	       		var AccntIds = "";
+	       		var theInput = document.getElementById('{!$Component.theForm.pbt01.pbs02.ListOfAttr}').value;
+	       		if(theInput==''){ alert('Please provide a list of Account Id separated by comma'); return false;}
+	       		else{
+	       			var tmp = theInput.split(",");
+	       			for (var i = 0; i < tmp.length; i++) {
+						AccntIds = AccntIds + "'" + tmp[i] + "'";
+						if(i < (tmp.length-1)) AccntIds = AccntIds + ",";
+					}
+	       		}
+	            var accnt = sforce.connection.query("select Id, ANG_AccountId__c, ANG_AccountId__r.IATACode__c from ANG_RHC_Information__c where ANG_AccountId__c in (" + AccntIds + ") and ANG_AccountId__r.IATACode__c != '' and ANG_AccountId__r.Status__c in ('Approved','Cash basis/no commission','Cash basis/with commission','Changes processed','Under review')");
+	        } 
+			
+			if(sMode=='IATACode'){
+				var IATACodes = "";
+				var theInput = document.getElementById('{!$Component.theForm.pbt01.pbs02.ListOfAttr}').value;
+				if(theInput==''){ alert('Please provide a list of IATA Code separated by comma'); return false;}
+				else{
+					var tmp = theInput.split(",");
+					for (var i = 0; i < tmp.length; i++) {
+						IATACodes = IATACodes + "'" + tmp[i] + "'";
+						if(i < (tmp.length-1)) IATACodes = IATACodes + ",";
+					}
+				}
+	            var accnt = sforce.connection.query("select Id, ANG_AccountId__c, ANG_AccountId__r.IATACode__c from ANG_RHC_Information__c where ANG_AccountId__r.IATACode__c in (" + IATACodes + ") and ANG_AccountId__r.Status__c in ('Approved','Cash basis/no commission','Cash basis/with commission','Changes processed','Under review')");
+	        }
+	            
             var records = accnt.getArray("records");
 
             nToProcess = records.length;
@@ -73,6 +104,8 @@
                     lsRMEResponseWrapper.push(tmpWrap);
 
                     if(nProcessed>nToProcess){
+                    	stopLoading();
+                    	startLoading();
                         afterCallout(JSON.stringify(lsRMEResponseWrapper));
 						stopLoading();
 					}
@@ -97,25 +130,30 @@
         </apex:actionFunction>
 
         <apex:actionFunction action="{!SearchPerformed}" name="SearchPerformed" reRender="resultKO,resultOK,theResultPanel,pnlBtn,btnNewSearch,thePBT"/>
+        
+        <apex:actionFunction name="ChangeInput" reRender="pbt01"/>
+        
 
         <apex:pageBlock title="Mass Request to RME" tabStyle="Account" id="pbt01">
             <apex:pageBlockSection title="Mass Request" columns="1" collapsible="false" id="pbs02">
-            	<apex:selectList label="How do you want to search?" id="TypeOfCAll" value="{!TypeOfCall}" size="1">
+            	<apex:selectList label="How do you want to search?" id="TypeOfCAll" value="{!TypeOfCall}" size="1" onchange="ChangeInput();">
                     <apex:selectOptions value="{!lsTypeOfCall}" />
                 </apex:selectList>
                 
                 <apex:outputPanel id="Description" rendered="{!OR(TypeOfCall=='AccountID', TypeOfCall='IATACode')}">
-                	Enter a list of IATA Code or Account IDs separated by comma (,)
+                	Enter a list of IATA Code or Account IDs separated by comma (,)<br/><br/>
+                	<apex:inputTextarea id="ListOfAttr" value="{!lsCodeOrId}" label="List of items" rows="6" cols="100"></apex:inputTextarea>
                 </apex:outputPanel>
-                <apex:selectList label="Select a country" id="theCountry" value="{!selectedCnt}" size="1">
+                
+                <apex:selectList label="Select a country" id="theCountry" value="{!selectedCnt}" size="1" rendered="{!TypeOfCall='Country'}">
                     <apex:selectOptions value="{!lsCountry}" />
                 </apex:selectList>
             </apex:pageBlockSection>
 
             <apex:pageBlockButtons location="bottom" id="pbb">
                 <apex:outputPanel id="pnlBtn">
-                    <apex:commandButton action="{!doNothing}" id="bntConsumedRHC" value="Mass Request Consumed RHC" reRender="resultKO,resultOK,theResultPanel,pnlBtn,theForm,btnNewSearch,thePBT" onclick="UserAction('ConsumedRHC');return false;" rendered="{!!bQueryExecuted}"/>
-                    <apex:commandButton action="{!doNothing}" id="btnProvisionalRHC" value="Mass Request Provisional RHC" reRender="resultKO,resultOK,theResultPanel,pnlBtn,theForm,btnNewSearch,thePBT" onclick="UserAction('ProvisionalRHC');return false;" rendered="{!!bQueryExecuted}"/>
+                    <apex:commandButton action="{!doNothing}" id="bntConsumedRHC" value="Mass Request Consumed RHC" reRender="resultKO,resultOK,theResultPanel,pnlBtn,theForm,btnNewSearch,thePBT" onclick="UserAction('ConsumedRHC', '{!TypeOfCall}');return false;" rendered="{!!bQueryExecuted}"/>
+                    <apex:commandButton action="{!doNothing}" id="btnProvisionalRHC" value="Mass Request Provisional RHC" reRender="resultKO,resultOK,theResultPanel,pnlBtn,theForm,btnNewSearch,thePBT" onclick="UserAction('ProvisionalRHC', '{!TypeOfCall}');return false;" rendered="{!!bQueryExecuted}"/>
                     <apex:commandButton action="{!NewSearch}" id="btnNewCountry" value="Process other country" rendered="{!bQueryExecuted}"/>
                 </apex:outputPanel>
             </apex:pageBlockButtons>
@@ -126,7 +164,64 @@
 
         <apex:outputPanel id="theResultPanel" >
             <apex:pageBlock id="resultOK" title="{!sType}: Successful Results" rendered="{!AND(bQueryExecuted, bHasSuccess)}" tabStyle="Account">
-                <apex:pageBlockTable value="{!lsRMEWrapperWSOK}" var="item" id="thePBTOK">
+            	<apex:outputPanel id="thePBTOK">
+            		<apex:outputPanel id="OKConsumedRHC" rendered="{!sType=='ConsumedRHC'}">
+	            		<table class="list" border="0" cellpadding="0" cellspacing="0">
+						   <colgroup span="5"></colgroup>
+						   <thead class="">
+						      <tr class="headerRow">
+						         <th class="headerRow" scope="col" colspan="1"><div>IATA Code</div></th>
+						         <th class="headerRow" scope="col" colspan="1"><div>Consumed RHC</div></th>
+						         <th class="headerRow" scope="col" colspan="1"><div>Consumed RHC %</div></th>
+						         <th class="headerRow" scope="col" colspan="1"><div>Currency</div></th>
+						         <th class="headerRow" scope="col" colspan="1"><div>Last Update</div></th>
+						      </tr>
+						   </thead>
+						   <tbody>
+						   		<apex:repeat value="{!mapRMEWrapperWSOk}" var="iIndex">
+						   			<apex:repeat value="{!mapRMEWrapperWSOk[iIndex]}" var="myItem">
+				   						<tr class="dataRow even first" onmouseover="if (window.hiOn){hiOn(this);}" onmouseout="if (window.hiOff){hiOff(this);}" onblur="if (window.hiOff){hiOff(this);}" onfocus="if (window.hiOn){hiOn(this);}">
+									         <td class="dataCell" colspan="1" title="IATA Code"><a href="/{!myItem.RHCId}" target="_blank">{!myItem.IataCode}</a></td>
+									         <td class="dataCell" colspan="1" title="Consumed RHC">{!myItem.ConsumedRHC}</td>
+									         <td class="dataCell" colspan="1" title="Consumed RHC %">{!myItem.ConsumedRHCPerc}</td>
+									         <td class="dataCell" colspan="1" title="Currency">{!myItem.sCurrency}</td>
+									         <td class="dataCell" colspan="1" title="Last Update">{!myItem.sLastUpd}</td>
+									      </tr>
+						   			</apex:repeat>
+						      </apex:repeat>   
+						   </tbody>
+						</table>
+					</apex:outputPanel>
+					
+					
+					<apex:outputPanel id="OKProvisionalRHC" rendered="{!sType=='ProvisionalRHC'}">
+	            		<table class="list" border="0" cellpadding="0" cellspacing="0">
+						   <colgroup span="4"></colgroup>
+						   <thead class="">
+						      <tr class="headerRow">
+						         <th class="headerRow" scope="col" colspan="1"><div>IATA Code</div></th>
+						         <th class="headerRow" scope="col" colspan="1"><div>Provisional Amount</div></th>
+						         <th class="headerRow" scope="col" colspan="1"><div>Currency</div></th>
+						         <th class="headerRow" scope="col" colspan="1"><div>Last Update</div></th>
+						      </tr>
+						   </thead>
+						   <tbody>
+						   		<apex:repeat value="{!mapRMEWrapperWSOk}" var="iIndex">
+						   			<apex:repeat value="{!mapRMEWrapperWSOk[iIndex]}" var="myItem">
+				   						<tr class="dataRow even first" onmouseover="if (window.hiOn){hiOn(this);}" onmouseout="if (window.hiOff){hiOff(this);}" onblur="if (window.hiOff){hiOff(this);}" onfocus="if (window.hiOn){hiOn(this);}">
+									         <td class="dataCell" colspan="1" title="IATA Code"><a href="/{!myItem.RHCId}" target="_blank">{!myItem.IataCode}</a></td>
+									         <td class="dataCell" colspan="1" title="Provisional Amount">{!myItem.ProvAmnt}</td>
+									         <td class="dataCell" colspan="1" title="Currency">{!myItem.sCurrency}</td>
+									         <td class="dataCell" colspan="1" title="Last Update">{!myItem.sLastUpd}</td>
+									      </tr>
+						   			</apex:repeat>
+						      </apex:repeat>   
+						   </tbody>
+						</table>
+					</apex:outputPanel>
+            	</apex:outputPanel>
+            	
+                <!-- <apex:pageBlockTable value="{!lsRMEWrapperWSOK}" var="item" id="thePBTOK">
                     <apex:column title="IATA Code" headerValue="IATA Code">
                     	<a href="/{!item.RHCId}" target="_blank">{!item.IataCode}</a>
                     </apex:column>
@@ -135,24 +230,82 @@
                     <apex:column title="Consumed RHC %" value="{!item.ConsumedRHCPerc}" headerValue="Consumed RHC %" rendered="{!sType=='ConsumedRHC'}"/>
                     <apex:column title="Currency" value="{!item.sCurrency}" headerValue="Provisional Currency"/>
                     <apex:column title="Last Update" value="{!item.sLastUpd}" headerValue="Last Update"/>
-                </apex:pageBlockTable>
+                </apex:pageBlockTable>-->
             </apex:pageBlock>
             <br/> <br/>
+            
             <apex:pageBlock id="resultKO" title="{!sType}: Error Results" rendered="{!AND(bQueryExecuted, bHasError)}" tabStyle="Account">
-                <apex:pageBlockTable value="{!lsRMEWrapperWSErr}" var="item" id="thePBTKO">
-                
-                	<apex:repeat value="{!mapRMEWrapperWSErr}" var="temp">
-                		<apex:repeat value="{!}"
-                	</apex:repeat>
-                	
-                    <apex:column title="IATA Code" value="{!item.IataCode}" headerValue="IATA Code"/>
-                    <apex:column title="Provisional Amount" value="{!item.ProvAmnt}" headerValue="Provisional Amount" rendered="{!sType=='ProvisionalRHC'}"/>
-                    <apex:column title="Consumed RHC" value="{!item.ConsumedRHC}" headerValue="Consumed RHC" rendered="{!sType=='ConsumedRHC'}"/>
-                    <apex:column title="Consumed RHC %" value="{!item.ConsumedRHCPerc}" headerValue="Consumed RHC %" rendered="{!sType=='ConsumedRHC'}"/>
-                    <apex:column title="Currency" value="{!item.sCurrency}" headerValue="Provisional Currency"/>
-                    <apex:column title="Last Update" value="{!item.sLastUpd}" headerValue="Last Update"/>
-                    <apex:column title="Error Message" value="{!item.description}" headerValue="Error Message"/>
-                </apex:pageBlockTable>
+            	<apex:outputPanel id="thePBTKO">
+            		<apex:outputPanel id="KOConsumedRHC" rendered="{!sType=='ConsumedRHC'}">
+            			<table class="list" border="0" cellpadding="0" cellspacing="0">
+						   <colgroup span="6"></colgroup>
+						   <thead class="">
+						      <tr class="headerRow">
+						         <th class="headerRow" scope="col" colspan="1"><div>IATA Code</div></th>
+						         <th class="headerRow" scope="col" colspan="1"><div>Consumed RHC</div></th>
+						         <th class="headerRow" scope="col" colspan="1"><div>Consumed RHC %</div></th>
+						         <th class="headerRow" scope="col" colspan="1"><div>Currency</div></th>
+						         <th class="headerRow" scope="col" colspan="1"><div>Last Update</div></th>
+						         <th class="headerRow" scope="col" colspan="1"><div>Error Message</div></th>
+						      </tr>
+						   </thead>
+						   <tbody>
+						   		<apex:repeat value="{!mapRMEWrapperWSErr}" var="iIndex">
+						   			<apex:repeat value="{!mapRMEWrapperWSErr[iIndex]}" var="myItem">
+				   						<tr class="dataRow even first" onmouseover="if (window.hiOn){hiOn(this);}" onmouseout="if (window.hiOff){hiOff(this);}" onblur="if (window.hiOff){hiOff(this);}" onfocus="if (window.hiOn){hiOn(this);}">
+									         <td class="dataCell" colspan="1" title="IATA Code"><a href="/{!myItem.RHCId}" target="_blank">{!myItem.IataCode}</a></td>
+									         <td class="dataCell" colspan="1" title="Consumed RHC">{!myItem.ConsumedRHC}</td>
+									         <td class="dataCell" colspan="1" title="Consumed RHC %">{!myItem.ConsumedRHCPerc}</td>
+									         <td class="dataCell" colspan="1" title="Currency">{!myItem.sCurrency}</td>
+									         <td class="dataCell" colspan="1" title="Last Update">{!myItem.sLastUpd}</td>
+									         <td class="dataCell" colspan="1" title="Error Message">{!myItem.description}</td>
+									      </tr>
+						   			</apex:repeat>
+						      </apex:repeat>   
+						   </tbody>
+						</table>
+            		</apex:outputPanel>
+            		
+            		
+            		<apex:outputPanel id="KOProvisionalRHC" rendered="{!sType=='ProvisionalRHC'}">
+            			<table class="list" border="0" cellpadding="0" cellspacing="0">
+						   <colgroup span="5"></colgroup>
+						   <thead class="">
+						      <tr class="headerRow">
+						         <th class="headerRow" scope="col" colspan="1"><div>IATA Code</div></th>
+						         <th class="headerRow" scope="col" colspan="1"><div>Provisional Amount</div></th>
+						         <th class="headerRow" scope="col" colspan="1"><div>Currency</div></th>
+						         <th class="headerRow" scope="col" colspan="1"><div>Last Update</div></th>
+						         <th class="headerRow" scope="col" colspan="1"><div>Error Message</div></th>
+						      </tr>
+						   </thead>
+						   <tbody>
+						   		<apex:repeat value="{!mapRMEWrapperWSErr}" var="iIndex">
+						   			<apex:repeat value="{!mapRMEWrapperWSErr[iIndex]}" var="myItem">
+				   						<tr class="dataRow even first" onmouseover="if (window.hiOn){hiOn(this);}" onmouseout="if (window.hiOff){hiOff(this);}" onblur="if (window.hiOff){hiOff(this);}" onfocus="if (window.hiOn){hiOn(this);}">
+									         <td class="dataCell" colspan="1" title="IATA Code"><a href="/{!myItem.RHCId}" target="_blank">{!myItem.IataCode}</a></td>
+									         <td class="dataCell" colspan="1" title="Provisional Amount">{!myItem.ProvAmnt}</td>
+									         <td class="dataCell" colspan="1" title="Currency">{!myItem.sCurrency}</td>
+									         <td class="dataCell" colspan="1" title="Last Update">{!myItem.sLastUpd}</td>
+									         <td class="dataCell" colspan="1" title="Error Message">{!myItem.description}</td>
+									      </tr>
+						   			</apex:repeat>
+						      </apex:repeat>   
+						   </tbody>
+						</table>
+            		</apex:outputPanel>
+            	</apex:outputPanel>
+            	<!-- <apex:repeat value="{!mapRMEWrapperWSErr}" var="iIndex">
+               		<apex:pageBlockTable value="{!mapRMEWrapperWSErr[iIndex]}" var="myItem" id="thePBTKO">
+	                	<apex:column title="IATA Code" value="{!myItem.IataCode}" headerValue="IATA Code"/>
+	                    <apex:column title="Provisional Amount" value="{!myItem.ProvAmnt}" headerValue="Provisional Amount" rendered="{!sType=='ProvisionalRHC'}"/>
+	                    <apex:column title="Consumed RHC" value="{!myItem.ConsumedRHC}" headerValue="Consumed RHC" rendered="{!sType=='ConsumedRHC'}"/>
+	                    <apex:column title="Consumed RHC %" value="{!myItem.ConsumedRHCPerc}" headerValue="Consumed RHC %" rendered="{!sType=='ConsumedRHC'}"/>
+	                    <apex:column title="Currency" value="{!myItem.sCurrency}" headerValue="Provisional Currency"/>
+	                    <apex:column title="Last Update" value="{!myItem.sLastUpd}" headerValue="Last Update"/>
+	                    <apex:column title="Error Message" value="{!myItem.description}" headerValue="Error Message"/>
+	                </apex:pageBlockTable>
+               	</apex:repeat> -->
             </apex:pageBlock>
         </apex:outputPanel>
     </apex:form>
