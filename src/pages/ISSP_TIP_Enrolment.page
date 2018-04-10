@@ -234,7 +234,7 @@
                     // rerenderModal();
                     //$j("[id$=inFirstName]").innerHTML = '';
                     
-                    
+                    editContact(null);
                     $j("[id$=email]").val('');
                     $j("[id$=inSalutation]").val("{!$Label.ISSP_Registration_None}");
                     $j("[id$=inFirstName]").val('');
@@ -354,7 +354,7 @@
 
                 function saveContact(isEmailDuplicated){
                   if (jQuery('.errorMsg').length == 0 && isEmailDuplicated == "false"){
-                    cleanModal();
+                    //cleanModal();
                     closeModal();
                   }
                   else if(isEmailDuplicated == "true"){
@@ -566,7 +566,7 @@
                                     <apex:outputpanel >{!$Label.ISSP_Payment_Provider_Details_section_2}</apex:outputpanel>
                                  </apex:facet>
                                  <form >
-                                    <apex:commandLink style="margin-right:5px" onclick="cleanModal();showContactDialog();return false;"><span class="glyphicon glyphicon-plus"></span>Add Contact </apex:commandLink>
+                                    <apex:commandLink style="margin-right:5px" onclick="cleanModal();return false;"><span class="glyphicon glyphicon-plus"></span>Add Contact </apex:commandLink>
                                     <apex:actionFunction name="rerenderTopPanel" rerender="sectionTwo" />
                                     <apex:pageBlockTable value="{!contactList}" var="con" id="contactList" styleClass="table-hover table table-condensed table-responsive">
                                        <apex:column headerValue="{!$ObjectType.Contact.fields.FirstName.Label}" value="{!con.FirstName}"/>
@@ -615,7 +615,7 @@
                      </div>
                      <apex:pageMessages id="theMessages" />
                      <div class="modal-body">
-                        <apex:outputPanel  id="ContactPanel">
+                        <apex:outputPanel id="ContactPanel">
                            <div class="form-group">
                               <label for="email"><span >*</span>{!$ObjectType.Contact.fields.Email.Label}</label>
                               <div class="hiddenerror" style="display: none;">
@@ -689,7 +689,7 @@
                         <apex:commandButton action="{!createContact}" onclick="rerenderModal();" status="WaitingStatus"  styleClass="btn btn-default"  value="{!$Label.ISSP_Submit}" oncomplete="saveContact('{!isEmailDuplicated}');rerenderContactSection();" >
                         </apex:commandButton>
                         &nbsp;
-                        <button type="button" class="btn btn-default" onclick="cleanModal();closeModal();return false;">
+                        <button type="button" class="btn btn-default" onclick="closeModal();return false;">
                         {!$Label.ISSP_Cancel} </button>
                      </div>
                   </div>

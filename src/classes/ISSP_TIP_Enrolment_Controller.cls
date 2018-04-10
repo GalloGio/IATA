@@ -192,9 +192,12 @@ public with sharing class ISSP_TIP_Enrolment_Controller {
 
 	public Pagereference setContactToEdit(){
 		
-		ID contactID = Apexpages.currentPage().getParameters().get('contactIDToEdit');
-		for (Contact c: contactList) {
-			if(c.id == contactID) newContact = c;
+		String contactID = Apexpages.currentPage().getParameters().get('contactIDToEdit');
+		if (String.isBlank(contactID)) newContact = new Contact();
+		else{
+			for (Contact c: contactList) {
+				if(c.id == contactID) newContact = c;
+			}
 		}
 		return null;
 
