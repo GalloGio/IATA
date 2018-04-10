@@ -59,13 +59,6 @@
                
 
                })
-
-                function closeDialog(){
-                  //alert(' closeDialog : ');
-                  $('#myModal').modal('toggle');
-                  enforceMaxLen();
-                }   
-
                 function confirmDelete(opt1){
                     var msg=null;
                     msg= bootbox.confirm(
@@ -244,7 +237,7 @@
                                     </apex:pageBlockSection>
                                     <apex:pageBlockSection id="binbpSection" columns="2" collapsible="false" title="Section 2- Bin Ranges">
                                         <apex:pageBlockSectionItem >
-                                            <apex:commandButton id="newBinRangebtn" style="margin-right:5px" oncomplete="closeDialog();" value="{!$Label.ISSP_TIP_ADD_BIN_RANGE}" action="{!newEditBinRange}" reRender="newBinTab">
+                                            <apex:commandButton id="newBinRangebtn" style="margin-right:5px" oncomplete="toggleDialog();" value="{!$Label.ISSP_TIP_ADD_BIN_RANGE}" action="{!newEditBinRange}" reRender="newBinTab">
                                             </apex:commandButton>
                                         </apex:pageBlockSectionItem>
                                     </apex:pageBlockSection>
@@ -252,12 +245,14 @@
                                         <apex:pageBlockSectionItem >    
                                             <apex:outputPanel id="binTable">
                                                 <script>
+                                                    var startMask="".padStart("{!binRangeLen}","0");
+                                                    var endMask="".padStart("{!binRangeLen}","9");
+                                                    var stayOnModal=false;
                                                     function enforceMaxLen(){
                                                         $('[id$="rangeStart"]').attr('maxlength', "{!binRangeLen}");
                                                         $('[id$="rangeEnd"]').attr('maxlength',"{!binRangeLen}");
 
-                                                        var startMask="".padStart("{!binRangeLen}","0");
-                                                        var endMask="".padStart("{!binRangeLen}","9");
+                                                        
 
                                                         //set mask
                                                         if($('[id$="rangeStart"]').val()===""){
@@ -285,6 +280,7 @@
                                                                 $('[id$="rangeStart"]').addClass("placeholder-active");
                                                             }else{
                                                                $('[id$="rangeStart"]').val($('[id$="rangeStart"]').val().padEnd("{!binRangeLen}","0")); 
+                                                               clearErrorElement('[id$="rangeStart"]'); 
                                                             }
                                                         });
 
@@ -302,6 +298,7 @@
                                                                 $('[id$="rangeEnd"]').addClass("placeholder-active");
                                                             }else{
                                                                $('[id$="rangeEnd"]').val($('[id$="rangeEnd"]').val().padEnd("{!binRangeLen}","9")); 
+                                                               clearErrorElement('[id$="rangeEnd"]');  
                                                             }
                                                         });
 
@@ -316,6 +313,39 @@
                                                             }
                                                         });
                                                     }
+
+                                                    function checkBinRangeMandatory(){
+
+                                                        if($('[id$="rangeStart"]').val() === startMask || $('[id$="rangeStart"]').val() =='' ){
+                                                            if($('[id$="rangeStart"]').next('.errorMsg').val()==undefined)
+                                                            $('[id$="rangeStart"]').after('<div class="errorMsg"><strong>Error:</strong> You must enter a value</div>');
+                                                            stayOnModal=true;
+                                                            return;
+                                                        }
+
+                                                        if($('[id$="rangeEnd"]').val() === endMask || $('[id$="rangeEnd"]').val() =='' ){
+                                                            if($('[id$="rangeEnd"]').next('.errorMsg').val()==undefined)
+                                                            $('[id$="rangeEnd"]').after('<div class="errorMsg"><strong>Error:</strong> You must enter a value</div>');
+                                                            stayOnModal=true;
+                                                            return;
+                                                        }
+                                                        stayOnModal=false;
+                                                        addEditBinRange();
+                                                    }
+
+                                                    function closeDialog(){
+                                                       toggleDialog();
+                                                    }  
+
+                                                    function toggleDialog(){
+                                                        $('#myModal').modal('toggle');
+                                                        enforceMaxLen();
+                                                    }
+
+                                                    function clearErrorElement(elemFld){
+                                                        $(elemFld).next('.errorMsg').remove();
+                                                    }
+
                                                 </script> 
                                                 <apex:pageBlockTable value="{!binRangeList}" var="brr" styleClass="table-hover  table table-condensed table-responsive" >
                                                 <apex:column >
@@ -365,23 +395,24 @@
                                                     <apex:facet name="header">                                                        
                                                         <apex:outputLabel value="{!$ObjectType.TIP_BIN_Range__c.fields.TIP_Range_Start__c.label}"/>
                                                     </apex:facet>
-                                                    <apex:inputField id="rangeStart" style="width:'100%'" value="{!nb.binRange.TIP_Range_Start__c}" required="false" />
+                                                    <apex:inputField id="rangeStart" style="width:'100%'" value="{!nb.binRange.TIP_Range_Start__c}" required="true" />
                                                 </apex:column>
                                                 <apex:column >
                                                     <apex:facet name="header">
                                                         <apex:outputLabel value="{!$ObjectType.TIP_BIN_Range__c.fields.TIP_Range_End__c.label}"/>
                                                     </apex:facet>
-                                                    <apex:inputField id="rangeEnd" style="width:'100%'" value="{!nb.binRange.TIP_Range_End__c}" required="false" />
+                                                    <apex:inputField id="rangeEnd" style="width:'100%'" value="{!nb.binRange.TIP_Range_End__c}" required="true"/>
                                                 </apex:column>
                                             </apex:pageBlockTable>
                                          </div>
                                           <div class="modal-footer">
                                             <div class="row">
                                               <div class="col-md-6">                                                
-                                                <apex:commandButton styleClass="btn_iata_cancel btn-block btn" value="{!$Label.ISSP_Confirm}" action="{!addUpdateBinRange}" oncomplete="closeDialog()" reRender="binTable" />
+                                              <apex:actionFunction name="addEditBinRange" action="{!addUpdateBinRange}"  oncomplete="closeDialog()" reRender="binTable"/>                                        
+                                                <a class="btn_iata_confirm btn-block btn" onclick=" checkBinRangeMandatory()">{!$Label.ISSP_Confirm}</a>
                                               </div>
                                               <div class="col-md-6">
-                                                <a onclick="closeDialog()" class="btn_iata_cancel btn-block btn">
+                                                <a class="btn_iata_cancel btn-block btn" onclick="toggleDialog()">
                                                   {!$Label.ISSP_Cancel}
                                                 </a>
                                               </div>
