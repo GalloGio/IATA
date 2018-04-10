@@ -25,47 +25,35 @@ public class TIP_Utils{
 	//case Description
 	public static String CASE_DESC_REQUEST_FOR_ENLISTMENT_PAYMENT_PROVIDER = 'Request for Enlistment as Payment provider';
 
-	//BIN Range RT's
-	public static String LISTED_BY_IATA_RECORD_TYPE_ID = RecordTypeSingleton.getInstance().RtIDsPerDeveloperNamePerObj.get('TIP_BIN_Range__c').get('Listed_by_IATA');
-	public static String BIN_RANGE_PROVIDER_RECORD_TYPE_ID = RecordTypeSingleton.getInstance().RtIDsPerDeveloperNamePerObj.get('TIP_BIN_Range__c').get('Provider');
-
 	//TIP-49 - validate IATA code is unique for payment providers
   	public static void validateUniqueIATACodeForTIP(List<Account> triggerNew,map<id, Account> triggerOld) {
 		  
 		Map<String,Account> mapIataCodeAccount = new Map<String,Account>(); //map of IATA Codes that should not exist already in the system
 		String queryString = 'SELECT ID, IATACode__c FROM Account WHERE ( recordtypeid = \''+TIP_Utils.PAYMENT_PROVIDER_RECORD_TYPE_ID + '\' OR (recordtypeid = \''+TIP_Utils.STANDARD_ACCOUNT_RECORD_TYPE_ID+'\' AND Category__c = \''+TIP_Utils.ACCOUNT_CATEGORY_PAYMENT_PROVIDER+'\') )';
-		String queryStringAccountForupdatedAccs = '';
+		String queryStringWhereClause = '';
 
 		if(trigger.isInsert){
 			for(Account acc : triggerNew){ 
-				if(!String.isBlank(acc.IATACode__c)) mapIataCodeAccount.put(acc.IATACode__c,acc);
-			//queryStringAccountForupdatedAccs += (String.isEmpty(queryStringAccountForupdatedAccs) ? '' : ' OR ' ) + '(ID <> \''+ acc.id +'\' AND IATACode__c = \''+ acc.IATACode__c +'\')' ;
+				if(!String.isBlank(acc.IATACode__c) && (acc.recordtypeid == TIP_Utils.PAYMENT_PROVIDER_RECORD_TYPE_ID || (acc.recordtypeid == TIP_Utils.STANDARD_ACCOUNT_RECORD_TYPE_ID && acc.Category__c == TIP_Utils.ACCOUNT_CATEGORY_PAYMENT_PROVIDER)) ){ 
+					mapIataCodeAccount.put(acc.IATACode__c,acc);
+					queryStringWhereClause += ', \''+ acc.IATACode__c + '\'';
+				}
 			}
-			if(!mapIataCodeAccount.isEmpty()) queryString += 'AND IATACode__c NOT IN ' + mapIataCodeAccount.keySet();
+			if(!String.isEmpty(queryStringWhereClause)) queryString += 'AND IATACode__c NOT IN (\'\'' + queryStringWhereClause + ')' ;
 
 		}else{
 
 			for(Account accNew : triggerNew){
 				//if iata code changed
-				if(!String.isEmpty(accNew.IATACode__c) && triggerOld.get(accNew.id).IATACode__c != accNew.IATACode__c){
+				if(!String.isEmpty(accNew.IATACode__c) && triggerOld.get(accNew.id).IATACode__c != accNew.IATACode__c
+					 && (accNew.recordtypeid == TIP_Utils.PAYMENT_PROVIDER_RECORD_TYPE_ID || (accNew.recordtypeid == TIP_Utils.STANDARD_ACCOUNT_RECORD_TYPE_ID && accNew.Category__c == TIP_Utils.ACCOUNT_CATEGORY_PAYMENT_PROVIDER))){
 					mapIataCodeAccount.put(accNew.IATACode__c,accNew);
-					queryStringAccountForupdatedAccs += (String.isEmpty(queryStringAccountForupdatedAccs) ? '' : ' OR ') +' (ID <> \''+ accNew.id +'\' AND IATACode__c = \''+ accNew.IATACode__c +'\')' ;
+					queryStringWhereClause += (String.isEmpty(queryStringWhereClause) ? '' : ' OR ') +' (ID <> \''+ accNew.id +'\' AND IATACode__c = \''+ accNew.IATACode__c +'\')' ;
 				}
 			}		
-			//should not be needed this verification 
-			if(!String.isEmpty(queryStringAccountForupdatedAccs)) queryString += ' AND ('+ queryStringAccountForupdatedAccs +')';
+
+			if(!String.isEmpty(queryStringWhereClause)) queryString += ' AND ('+ queryStringWhereClause +')';
 		}
-
-
-		/*
-		this query would work if the before trigger wouldn't be deplpoyed more than once
-		List<Account> tempAccs = [SELECT ID,IATACode__c FROM Account 
-		                            WHERE IATACode__c IN :mapIataCodeAccount.keyset()  
-		                              AND (
-		                                    recordtypeid = :TIP_Utils.PAYMENT_PROVIDER_RECORD_TYPE_ID
-		                                OR (recordtypeid = :TIP_Utils.STANDARD_ACCOUNT_RECORD_TYPE_ID AND Category__c = :TIP_Utils.ACCOUNT_CATEGORY_PAYMENT_PROVIDER)  
-		                              )];
-		*/
 
 		system.debug('##Query:'+ queryString) ;    
 		List<Account> tempAccs;
