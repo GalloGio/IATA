@@ -63,9 +63,7 @@
                 <tbody>
                     <aura:iteration items="{!v.milestones}" var="milestone" indexVar="index">
                         <tr>
-                            <aura:if isTrue="{!v.canEdit}">
-                                <c:AMP_Milestone milestone="{!milestone}" index="{!index}" canEdit="{!v.canEdit}"/>
-                            </aura:if>
+                            <c:AMP_Milestone milestone="{!milestone}" index="{!index}" canEdit="{!v.canEdit}"/>
                         </tr>
                     </aura:iteration>
                 </tbody>
