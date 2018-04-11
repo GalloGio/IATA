@@ -32,6 +32,7 @@ trigger AccountTrigger on Account (before insert, after insert, after update, be
   }
   else if(Trigger.isBefore && Trigger.isUpdate){
     AMS_AccountTriggerHandler.handleBeforeUpdate(Trigger.new, Trigger.oldMap);
+    TIP_Utils.setAssessmentDate(Trigger.new, Trigger.oldMap);
   }
   else if(Trigger.isAfter && Trigger.isUpdate){
     AMS_AccountTriggerHandler.handleAfterUpdate(Trigger.new, Trigger.oldMap);
