@@ -197,7 +197,7 @@
                 }
                 label {
                    float: left;
-                   margin-left: 20px;
+                   margin-left: 10px;
                 }
                 input + label {
                    margin-left:0px;
@@ -208,7 +208,8 @@
             
              <script  type="text/javascript">
                 var $j = jQuery.noConflict();
-            
+                var isEdit = false;
+
                 function refreshTable(contactIDtoPrimary) {updateRadioButton(contactIDtoPrimary);}
             
                 function editContact(contactIDToEdit) {ActionEditContact(contactIDToEdit);}
@@ -233,7 +234,6 @@
                     //clearForm('{!$Component.ContactForm}', '{!$Component.ContactForm.contactBlock.contactcountry}');
                     // rerenderModal();
                     //$j("[id$=inFirstName]").innerHTML = '';
-                    
                     editContact(null);
                     $j("[id$=email]").val('');
                     $j("[id$=inSalutation]").val("{!$Label.ISSP_Registration_None}");
@@ -260,14 +260,21 @@
                     }
                 }
                 
-                function editContact(contactIDToEdit) {ActionEditContact(contactIDToEdit);}
+                function editContact(contactIDToEdit) {
+                  console.log("is Edit");
+                  if(contactIDToEdit== null) 
+                    isEdit = false;
+                  else
+                    isEdit = true;
+                  ActionEditContact(contactIDToEdit);
+                }
                 
                 function showContactDialog() {
             
                    $j( '#ContactModal').modal('show');
-                   
+                   console.log("is edit? " , isEdit);
                    con = $j("[id$=email]").val();
-                    if(con != null && con != ""){
+                    if( isEdit){
                         $j("[id$=email]").attr('readonly', true);
                     }
                     else{
@@ -346,6 +353,9 @@
                 
                 $j(document).ready(function() {
                    removeReq();
+                   $j(".billingcountry").attr('readonly', true);
+                   $j(".billingcountry").attr('disabled','disabled');
+
                 });
                 
                 function removeReq(){
@@ -361,6 +371,17 @@
                     bootbox.alert("{!$label.ISSP_Application_for_Enlistment_Email_Duplicated}");
                   }
 
+                }
+
+                function confirmCancelExitPage(){
+                    var msg=null;
+                    msg= bootbox.confirm(
+                        '{!$Label.ISSP_TIP_Discard_Unsaved_Changes}',
+                        function(result) {
+                            if(result){
+                              window.location = '{!urlfor($Page.ISSP_TIP_Home)}';
+                            }
+                        });
                 }
                 
              
@@ -378,10 +399,21 @@
                            <div class="alert alert-info" role="alert">
                               {!$Label.ISSP_AMS_Step3_Save_Anytime}
                            </div>
-                           <apex:pageBlockButtons >
+                          <!--<apex:pageBlockButtons >
                               <apex:commandButton action="{!submitToIATA}" value="Submit to IATA" />
                               <apex:commandButton action="{!saveAsDraft}" value="{!$Label.ISSP_Save_Draft}" style="float:right" />
                            </apex:pageBlockButtons>
+                         -->
+
+
+                           <apex:pageBlockButtons >
+                                        <apex:commandButton action="{!submitToIATA}" value="Submit to IATA"  />
+                                        <apex:commandButton action="{!saveAsDraft}" value="{!$Label.ISSP_Save_Draft}"/>
+                                        <apex:commandButton onclick="confirmCancelExitPage();return false;"  value="{!$Label.ISSP_Cancel}" />
+                                        <!-- <apex:commandButton action="{!submitForm}" value="Save as Draft" style="margin-left:10px" /> -->
+                                    </apex:pageBlockButtons>   
+
+
                            <apex:PageMessages id="msgs"/>
                            <div class="apcontainer" style="border: 1px solid #ececec;">
                               <span id="nav_one"></span>                
@@ -466,7 +498,7 @@
                                           </apex:pageBlockSectionItem>
                                        </apex:pageBlockSection>
                                        <apex:pageBlockSection >
-                                          <apex:selectList styleclass="form-control recSearch" style="width: 200px;"  value="{!account.TIP_HQ_Location__c}" Label="Location of Headquarter" size="1" >
+                                          <apex:selectList styleclass="form-control recSearch" style="width: 200px;"  value="{!account.TIP_HQ_Location__c}" Label="Location of Headquarter *" size="1" >
                                              <!--  <apex:selectOption itemValue="" itemLabel="Location of Headquarter"/> -->
                                              <apex:selectOptions value="{!ISOCountry}"/>
                                           </apex:selectList>
@@ -605,7 +637,7 @@
          </div>
          <apex:form id="ContactForm" >
             <apex:actionFunction name="rerenderContactSection" rerender="sectionTwo" />
-            <apex:actionFunction name="rerenderModal" rerender="ContactPanel" />
+            <apex:actionFunction name="rerenderModal" rerender="ContactPanel" oncomplete="showContactDialog();"/>
             <div class="modal fade" id="ContactModal" role="dialog" tabindex="-1" aria-labelledby="myModalLabel">
                <div class="modal-dialog modal-lg" role="document">
                   <div class="modal-content">
