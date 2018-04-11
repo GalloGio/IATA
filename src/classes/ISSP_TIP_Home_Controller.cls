@@ -219,7 +219,7 @@ public with sharing class ISSP_TIP_Home_Controller {
                 newcase.Reason = TIP_Utils.CASE_REASON_PAYMENT_PROVIDER_MANAGMENT ;
                 newcase.CaseArea__c = TIP_Utils.CASE_AREA_TRANSPARENCY_IN_PAYMENTS; 
                 newcase.Status = 'Draft';
-                newcase.Subject = TIP_Utils.CASE_DESC_REQUEST_FOR_ENLISTMENT_PAYMENT_PROVIDER+' - '+ usr.Contact.account.name;
+                newcase.Subject = TIP_Utils.CASE_SUBJECT_NEW_PRODUCT_ENROLMENT+' - '+ newpp.name;
                 newCase.Description = TIP_Utils.CASE_DESC_REQUEST_FOR_ENLISTMENT_PAYMENT_PROVIDER;
                 newcase.Region__c = usr.Contact.account.IATA_ISO_Country__r.region__c;
                 newcase.Origin = 'Portal';

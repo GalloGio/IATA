@@ -235,7 +235,7 @@
     <fields>
         <fullName>PP_Network_Fee__c</fullName>
         <externalId>false</externalId>
-        <label>Network Fee (default)</label>
+        <label>Network Fee (Default)</label>
         <length>255</length>
         <required>false</required>
         <trackTrending>false</trackTrending>
