@@ -441,18 +441,18 @@
                                           </apex:pageBlockSectionItem>
                                            
                                           <apex:pageBlockSectionItem >
-                                			<DSE:DS_DataQuality id="HOPhone"
-                                    RecordRef="{!account}"
-                                    FieldGroupName="Phone"
-                                    Edit="true"
-                                    FormGroupStyle="form-group"
-                                    RowStyle="row"
-                                    LabelStyle="label phoneLabelText"
-                                    InputStyle="col-lg-5"
-                                    StatusStyle="col-lg-1 col-md-1 col-sm-1 col-xs-1 hophonestatusBox"
-                                    FormControlStyle="apcontainer">
-                                			</DSE:DS_DataQuality>
-                               			</apex:pageBlockSectionItem>
+                                      			<DSE:DS_DataQuality id="HOPhone"
+                                              RecordRef="{!account}"
+                                              FieldGroupName="Phone"
+                                              Edit="true"
+                                              FormGroupStyle="form-group"
+                                              RowStyle="row"
+                                              LabelStyle="label phoneLabelText"
+                                              InputStyle="col-lg-5"
+                                              StatusStyle="col-lg-1 col-md-1 col-sm-1 col-xs-1 hophonestatusBox"
+                                              FormControlStyle="apcontainer">
+                                    			</DSE:DS_DataQuality>
+                                   			</apex:pageBlockSectionItem>
  
                                           <apex:inputHidden value="{!account.Phone}" id="companyphone"/>
                                           <apex:inputHidden value="{!account.Mobile__c}" id="companymobile"/>
@@ -489,58 +489,58 @@
                                        <!--style="width: 200px;"-->
                                        <script type="text/javascript">
                                         var target = $j('.hophonestatusBox #recordstatuscontainer')[0],
-                                			observer = new MutationObserver(function (mutations) {
-                                			$j('#div-verify-office-phone').html($j('.hophonestatusBox input')[0]);
-                                		}),
-                            		config = { attributes: true, childList: true, characterData: true };
+                                			    observer = new MutationObserver(function (mutations) {
+                                  			  $j('#div-verify-office-phone').html($j('.hophonestatusBox input')[0]);
+                                		    }),
+                            		        config = { attributes: true, childList: true, characterData: true };
                             
-                            if(target !== undefined) {
-                                observer.observe(target, config);
-                            }
-                                        
-                                          var natphoneacct = $j("[id$=companyphoneinput]"),
-                                              phoneacct = $j("[id$=companyphone]"),
-                                              natfaxacct = $j("[id$=companyfaxinput]"),
-                                              faxacct = $j("[id$=companyfax]"),
-                                              natmobileacct = $j("[id$=companymobileinput]"),
-                                              mobileacct = $j("[id$=companymobile]");
-                                          
-                                        
-                                          natphoneacct.intlTelInput("setNumber", phoneacct.val());
-                                          natmobileacct.intlTelInput("setNumber", mobileacct.val());
-                                          natfaxacct.intlTelInput("setNumber", faxacct.val());
-                                        
+                                        if(target !== undefined) {
+                                            observer.observe(target, config);
+                                        }
+                                                    
+                                        var natphoneacct = $j("[id$=companyphoneinput]"),
+                                            phoneacct = $j("[id$=companyphone]"),
+                                            natfaxacct = $j("[id$=companyfaxinput]"),
+                                            faxacct = $j("[id$=companyfax]"),
+                                            natmobileacct = $j("[id$=companymobileinput]"),
+                                            mobileacct = $j("[id$=companymobile]");
+                                                      
+                                                    
+                                        natphoneacct.intlTelInput("setNumber", phoneacct.val());
+                                        natmobileacct.intlTelInput("setNumber", mobileacct.val());
+                                        natfaxacct.intlTelInput("setNumber", faxacct.val());
+                                      
                                         natphoneacct.intlTelInput({
-                                			nationalMode: true,
-                                			defaultCountry: defaultHQCountry,
-                                			numberType: "FIXED_LINE",
-                                			utilsScript: "{!URLFOR($Resource.InternationalPhoneNumberFormat, '/intl-tel-input-master/lib/libphonenumber/build/utils.js')}"
-                           				 });
+                                    			nationalMode: true,
+                                    			defaultCountry: defaultHQCountry,
+                                    			numberType: "FIXED_LINE",
+                                    			utilsScript: "{!URLFOR($Resource.InternationalPhoneNumberFormat, '/intl-tel-input-master/lib/libphonenumber/build/utils.js')}"
+                               				 });
 
-                            natmobileacct.intlTelInput({
-                                nationalMode: true,
-                                defaultCountry: defaultHQCountry,
-                                numberType: "MOBILE",
-                                utilsScript: "{!URLFOR($Resource.InternationalPhoneNumberFormat, '/intl-tel-input-master/lib/libphonenumber/build/utils.js')}"
-                            });
+                                        natmobileacct.intlTelInput({
+                                            nationalMode: true,
+                                            defaultCountry: defaultHQCountry,
+                                            numberType: "MOBILE",
+                                            utilsScript: "{!URLFOR($Resource.InternationalPhoneNumberFormat, '/intl-tel-input-master/lib/libphonenumber/build/utils.js')}"
+                                        });
 
-                            natfaxacct.intlTelInput({
-                                nationalMode: true,
-                                defaultCountry: defaultHQCountry,
-                                numberType: "FIXED_LINE",
-                                utilsScript: "{!URLFOR($Resource.InternationalPhoneNumberFormat, '/intl-tel-input-master/lib/libphonenumber/build/utils.js')}"
-                            });
+                                        natfaxacct.intlTelInput({
+                                            nationalMode: true,
+                                            defaultCountry: defaultHQCountry,
+                                            numberType: "FIXED_LINE",
+                                            utilsScript: "{!URLFOR($Resource.InternationalPhoneNumberFormat, '/intl-tel-input-master/lib/libphonenumber/build/utils.js')}"
+                                        });
                                           
-                                          function setInternationalAccountPhoneNo(p) {
-                                              if (p == 'phone') {
-                                                  phoneacct.val(natphoneacct.intlTelInput("getNumber"));
-                                              } else if (p == 'mobile') {
-                                                  mobileacct.val(natmobileacct.intlTelInput("getNumber"));
-                                              } else {
-                                                  faxacct.val(natfaxacct.intlTelInput("getNumber"));
-                                              }
-                                          }
-                                       </script>
+                                        function setInternationalAccountPhoneNo(p) {
+                                            if (p == 'phone') {
+                                                phoneacct.val(natphoneacct.intlTelInput("getNumber"));
+                                            } else if (p == 'mobile') {
+                                                mobileacct.val(natmobileacct.intlTelInput("getNumber"));
+                                            } else {
+                                                faxacct.val(natfaxacct.intlTelInput("getNumber"));
+                                            }
+                                        }
+                                      </script>
                                     </apex:pageBlock>
                                  </apex:outputpanel>
                                  <script type="text/javascript">
