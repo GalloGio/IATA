@@ -14973,7 +14973,7 @@ Also note that the data contained in ICE is provided to IATA by third parties at
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>ISSP Application for Enlistment Email Duplicated</shortDescription>
-        <value>Email duplicated. Please insert other email</value>
+        <value>Contact already exists with this email address. Please insert other Email address</value>
     </labels>
     <labels>
         <fullName>ISSP_Apply_Filter</fullName>
