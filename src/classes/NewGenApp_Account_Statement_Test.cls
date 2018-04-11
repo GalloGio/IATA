@@ -4,6 +4,10 @@ private class NewGenApp_Account_Statement_Test
 	private static User testUser;
 
     private static void loadData() {
+        NewGenApp_Custom_Settings__c newgenCS = new NewGenApp_Custom_Settings__c();
+        newgenCS.Push_Notifications_State__c = true;
+        insert newgenCS;
+        
         testUser = ISSP_Ctrl_AccountStatements_AcceptTest.createPortalUser();
         Portal_Applications__c app = ISSP_Ctrl_AccountStatements_AcceptTest.createAccountStatementApp(testUser);
         Portal_Application_Right__c appRight = [Select Id from Portal_Application_Right__c where Portal_Application__c = :app.Id];

@@ -2,6 +2,12 @@ public with sharing class NewGen_Account_Statement_Helper {
 
     public static final String SERVICE_ICE = 'ICE';
     public static final String SERVICE_RHC = 'RHC';
+    public static final String NAVIGATE_TO_HOME = 'NAVIGATE_TO_HOME';
+    public static final String NAVIGATE_TO_ICE_HOME = 'NAVIGATE_TO_ICE_HOME';
+    public static final String NAVIGATE_TO_RHC_HOME = 'NAVIGATE_TO_RHC_HOME';
+    public static final String NAVIGATE_TO_RHC_RISK_PROFILE = 'NAVIGATE_TO_RHC_RISK_PROFILE';
+    public static final String NAVIGATE_TO_USER_REQUEST_ADMIN = 'NAVIGATE_TO_USER_REQUEST_ADMIN';
+    public static final String NAVIGATE_TO_SERVICE_REQUEST_ADMIN = 'NAVIGATE_TO_SERVICE_REQUEST_ADMIN';
 
     /*
         Get a map containing all account in the input account hirarchy
@@ -106,7 +112,7 @@ public with sharing class NewGen_Account_Statement_Helper {
         Send a push notification to all usersToGetNotified 
 
     */
-    public static void sendPushNotification(Set <String> usersToGetNotified, String pushNotificationLabel, List <String> pushNotificationLabelValues){   
+    public static void sendPushNotification(Set <String> usersToGetNotified, String pushNotificationLabel, List <String> pushNotificationLabelValues, String navigateTo){   
         String title = '';
         String message = '';
 
@@ -124,11 +130,13 @@ public with sharing class NewGen_Account_Statement_Helper {
         Map<String, Object> iOSPayload = Messaging.PushNotificationPayload.apple(message, '', null, null);
         iOSPayload.put('title', title);
         iOSPayload.put('message', message);
+        iOSPayload.put('navigateTo', navigateTo);
 
         iOSMsg.setPayload(iOSPayload);
     
         Map <String, Object> androidPayload = new Map<String, Object>();
         androidPayload.put('message', message);
+        androidPayload.put('navigateTo', navigateTo);
         androidMsg.setPayload(androidPayload);
 
         System.Debug('PUSH Notificaiton');
@@ -136,7 +144,7 @@ public with sharing class NewGen_Account_Statement_Helper {
         System.Debug(androidMsg);
         System.Debug(usersToGetNotified);
 
-        iOSMsg.send('NewGen_APP_IOS', usersToGetNotified);
+        iOSMsg.send('NewGen_APP_IOS_2', usersToGetNotified);
         androidMsg.send('NewGen_APP_Android', usersToGetNotified);
 
     }
