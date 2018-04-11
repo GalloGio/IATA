@@ -70,4 +70,10 @@ public class TIP_Utils{
 			}
 		}
 	}
+
+	public static void setAssessmentDate(List<Account> triggerNew,map<id, Account> triggerOld) {
+		for(Account newAcc : triggerNew){
+			if(newAcc.recordtypeid == PAYMENT_PROVIDER_RECORD_TYPE_ID && triggerOld.get(newAcc.id).recordtypeid != newAcc.recordtypeid) newAcc.Assessment_Performed_Date__c = Date.today();
+		}	
+	}
 }
