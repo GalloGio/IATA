@@ -264,8 +264,8 @@
                                                     function enforceMaxLen(){
                                                         $('[id$="rangeStart"]').attr('maxlength', "{!binRangeLen}");
                                                         $('[id$="rangeEnd"]').attr('maxlength',"{!binRangeLen}");
-
-                                                        
+                                                        $('[id$="rangeStart"]').attr('type', 'number');   
+                                                        $('[id$="rangeEnd"]').attr('type', 'number');
 
                                                         //set mask
                                                         if($('[id$="rangeStart"]').val()===""){
@@ -361,7 +361,7 @@
 
                                                         if(parseInt($('[id$="rangeStart"]').val()) > parseInt($('[id$="rangeEnd"]').val())){
                                                             if($('[id$="rangeEnd"]').next('.errorMsg').val()==undefined)
-                                                            $('[id$="rangeEnd"]').after('<div class="errorMsg"><strong>Error:</strong> Range To should be greater than Range From</div>');
+                                                            $('[id$="rangeEnd"]').after('<div class="errorMsg"><strong>Error:</strong> Range To must be greater or equal than Range From</div>');
                                                             stayOnModal=true;
                                                             return;
                                                         }
