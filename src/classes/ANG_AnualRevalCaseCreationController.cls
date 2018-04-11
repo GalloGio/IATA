@@ -189,6 +189,7 @@ public without sharing class ANG_AnualRevalCaseCreationController {
         	System.debug('Running for IATA Code with value:'+ account.IATACode__c);
 
         	String queryAccount = null;
+			con = null;
 
         	if(mode == 'Financial year end')
 				queryAccount = 'Select Id , (select id,name from OSCARs__r where Process__c = \'ANG.ANNUAL.REVALIDATION\' AND STATUS__c NOT IN (\'' + String.join(invalidOscarStatus, '\',\' ') + '\') LIMIT 1), IATACode__c, Name, RecordType.Name, Status__c, Location_Class__c, Location_Type__c, IATA_ISO_Country__r.Region__c, IATA_ISO_Country__r.Name, Financial_Year_End__c from Account where Location_Type__c = \'HE\' and Status__c NOT IN (null, \'Terminated\', \'Listed\', \'Not in operation\', \'Not accreditated\') and RecordType.Name = \'Agency\' and IATA_ISO_Country__r.Region__c = \'' + region + '\' and Financial_Year_End__c = \'' + year + '\'';
@@ -199,10 +200,11 @@ public without sharing class ANG_AnualRevalCaseCreationController {
 			
 			if(queryAccount <> null){
 				
+				System.debug('queryAccount is ' + queryAccount);
+
 				accountsToCreate = Database.query(queryAccount);
 
-				con = new ApexPages.StandardSetController(accountsToCreate);
-				con.setPageSize(size);
+				System.debug('Size of account list is:' + accountsToCreate.size());
 
 				Set<Id> oscarsId = new Set<Id>();
 
@@ -215,7 +217,15 @@ public without sharing class ANG_AnualRevalCaseCreationController {
 				for(Case c: [Select Id, OSCAR__c from Case where OSCAR__c in: oscarsId]){
 					caseOscars.put(c.OSCAR__c,c.Id);
 				}
+                
+				con = new ApexPages.StandardSetController(accountsToCreate);
+				con.setPageSize(size);
+			
+            }else{
+				System.debug('queryAccount is null.');
 			}
+            
+
         }
 
 	    public Boolean hasNext  
