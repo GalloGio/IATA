@@ -14973,7 +14973,7 @@ Also note that the data contained in ICE is provided to IATA by third parties at
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>ISSP Application for Enlistment Email Duplicated</shortDescription>
-        <value>Email duplicated. Please insert other email</value>
+        <value>Contact already exists with this email address. Please insert other Email address</value>
     </labels>
     <labels>
         <fullName>ISSP_Apply_Filter</fullName>
@@ -20999,6 +20999,13 @@ This Dashboard allows each airline Treasury Team to gain full visibility of thei
         <value>Add BIN Range</value>
     </labels>
     <labels>
+        <fullName>ISSP_TIP_Discard_Unsaved_Changes</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_TIP_Discard_Unsaved_Changes</shortDescription>
+        <value>All unsaved changes will be discarded. Are you sure you want to leave the page?</value>
+    </labels>
+    <labels>
         <fullName>ISSP_TIP_Home_Account_must_be_Payment_Provider</fullName>
         <language>en_US</language>
         <protected>false</protected>
@@ -21040,6 +21047,7 @@ This Dashboard allows each airline Treasury Team to gain full visibility of thei
         <shortDescription>Enrol new Product</shortDescription>
         <value>Enrol new Product</value>
     </labels>
+    <labels>
         <fullName>ISSP_TIP_MANDATORY_ON_SUBMIT</fullName>
         <language>en_US</language>
         <protected>false</protected>

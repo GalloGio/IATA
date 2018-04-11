@@ -197,7 +197,7 @@
                 }
                 label {
                    float: left;
-                   margin-left: 20px;
+                   margin-left: 10px;
                 }
                 input + label {
                    margin-left:0px;
@@ -208,7 +208,8 @@
             
              <script  type="text/javascript">
                 var $j = jQuery.noConflict();
-            
+                var isEdit = false;
+
                 function refreshTable(contactIDtoPrimary) {updateRadioButton(contactIDtoPrimary);}
             
                 function editContact(contactIDToEdit) {ActionEditContact(contactIDToEdit);}
@@ -233,8 +234,7 @@
                     //clearForm('{!$Component.ContactForm}', '{!$Component.ContactForm.contactBlock.contactcountry}');
                     // rerenderModal();
                     //$j("[id$=inFirstName]").innerHTML = '';
-                    
-                    
+                    editContact(null);
                     $j("[id$=email]").val('');
                     $j("[id$=inSalutation]").val("{!$Label.ISSP_Registration_None}");
                     $j("[id$=inFirstName]").val('');
@@ -260,14 +260,21 @@
                     }
                 }
                 
-                function editContact(contactIDToEdit) {ActionEditContact(contactIDToEdit);}
+                function editContact(contactIDToEdit) {
+                  console.log("is Edit");
+                  if(contactIDToEdit== null) 
+                    isEdit = false;
+                  else
+                    isEdit = true;
+                  ActionEditContact(contactIDToEdit);
+                }
                 
                 function showContactDialog() {
             
                    $j( '#ContactModal').modal('show');
-                   
+                   console.log("is edit? " , isEdit);
                    con = $j("[id$=email]").val();
-                    if(con != null && con != ""){
+                    if( isEdit){
                         $j("[id$=email]").attr('readonly', true);
                     }
                     else{
@@ -346,6 +353,9 @@
                 
                 $j(document).ready(function() {
                    removeReq();
+                   $j(".billingcountry").attr('readonly', true);
+                   $j(".billingcountry").attr('disabled','disabled');
+
                 });
                 
                 function removeReq(){
@@ -354,13 +364,24 @@
 
                 function saveContact(isEmailDuplicated){
                   if (jQuery('.errorMsg').length == 0 && isEmailDuplicated == "false"){
-                    cleanModal();
+                    //cleanModal();
                     closeModal();
                   }
                   else if(isEmailDuplicated == "true"){
                     bootbox.alert("{!$label.ISSP_Application_for_Enlistment_Email_Duplicated}");
                   }
 
+                }
+
+                function confirmCancelExitPage(){
+                    var msg=null;
+                    msg= bootbox.confirm(
+                        '{!$Label.ISSP_TIP_Discard_Unsaved_Changes}',
+                        function(result) {
+                            if(result){
+                              window.location = '{!urlfor($Page.ISSP_TIP_Home)}';
+                            }
+                        });
                 }
                 
              
@@ -378,10 +399,21 @@
                            <div class="alert alert-info" role="alert">
                               {!$Label.ISSP_AMS_Step3_Save_Anytime}
                            </div>
-                           <apex:pageBlockButtons >
+                          <!--<apex:pageBlockButtons >
                               <apex:commandButton action="{!submitToIATA}" value="Submit to IATA" />
                               <apex:commandButton action="{!saveAsDraft}" value="{!$Label.ISSP_Save_Draft}" style="float:right" />
                            </apex:pageBlockButtons>
+                         -->
+
+
+                           <apex:pageBlockButtons >
+                                        <apex:commandButton action="{!submitToIATA}" value="Submit to IATA"  />
+                                        <apex:commandButton action="{!saveAsDraft}" value="{!$Label.ISSP_Save_Draft}"/>
+                                        <apex:commandButton onclick="confirmCancelExitPage();return false;"  value="{!$Label.ISSP_Cancel}" />
+                                        <!-- <apex:commandButton action="{!submitForm}" value="Save as Draft" style="margin-left:10px" /> -->
+                                    </apex:pageBlockButtons>   
+
+
                            <apex:PageMessages id="msgs"/>
                            <div class="apcontainer" style="border: 1px solid #ececec;">
                               <span id="nav_one"></span>                
@@ -438,14 +470,13 @@
                                           </apex:pageBlockSectionItem>
                                           <apex:pageBlockSectionItem id="companyItemMobile">
                                              <apex:outputLabel value="{!$ObjectType.Account.fields.Mobile__c.Label}"/>
-                                             <apex:inputField style="width: 200px;" styleclass="form-control recSearch" value="{!account.Mobile__c}" onblur="setInternationalAccountPhoneNo('mobile');" id="companymobileinput"/>
+                                             <apex:inputField style="width: 200px;" styleclass="form-control recSearch" value="{!account.Mobile__c}"  />
                                           </apex:pageBlockSectionItem>
                                           <apex:pageBlockSectionItem id="companyItemFax">
                                              <apex:outputLabel value="{!$Label.ISSP_Fax}"/>
-                                             <apex:inputField style="width: 200px;" styleclass="form-control recSearch"  value="{!account.FAXNational__c}" onblur="setInternationalAccountPhoneNo('fax');" id="companyfaxinput"/>
+                                             <apex:inputField style="width: 200px;" styleclass="form-control recSearch"  value="{!account.FAXNational__c}" onblur="setInternationalAccountPhoneNo('fax');$j('.fax').change();" id="companyfaxinput"/>
                                           </apex:pageBlockSectionItem>
                                           <apex:inputHidden value="{!account.Phone}" id="companyphone"/>
-                                          <apex:inputHidden value="{!account.Mobile__c}" id="companymobile"/>
                                           <apex:inputHidden value="{!account.Fax}" id="companyfax"/>
                                        </apex:pageBlockSection>
                                        <div style="padding-top: 20px; padding-bottom:10px;" >
@@ -467,7 +498,7 @@
                                           </apex:pageBlockSectionItem>
                                        </apex:pageBlockSection>
                                        <apex:pageBlockSection >
-                                          <apex:selectList styleclass="form-control recSearch" style="width: 200px;"  value="{!account.TIP_HQ_Location__c}" Label="Location of Headquarter" size="1" >
+                                          <apex:selectList styleclass="form-control recSearch" style="width: 200px;"  value="{!account.TIP_HQ_Location__c}" Label="Location of Headquarter *" size="1" >
                                              <!--  <apex:selectOption itemValue="" itemLabel="Location of Headquarter"/> -->
                                              <apex:selectOptions value="{!ISOCountry}"/>
                                           </apex:selectList>
@@ -567,7 +598,7 @@
                                     <apex:outputpanel >{!$Label.ISSP_Payment_Provider_Details_section_2}</apex:outputpanel>
                                  </apex:facet>
                                  <form >
-                                    <apex:commandLink style="margin-right:5px" onclick="cleanModal();showContactDialog();return false;"><span class="glyphicon glyphicon-plus"></span>Add Contact </apex:commandLink>
+                                    <apex:commandLink style="margin-right:5px" onclick="cleanModal();return false;"><span class="glyphicon glyphicon-plus"></span>Add Contact </apex:commandLink>
                                     <apex:actionFunction name="rerenderTopPanel" rerender="sectionTwo" />
                                     <apex:pageBlockTable value="{!contactList}" var="con" id="contactList" styleClass="table-hover table table-condensed table-responsive">
                                        <apex:column headerValue="{!$ObjectType.Contact.fields.FirstName.Label}" value="{!con.FirstName}"/>
@@ -606,7 +637,7 @@
          </div>
          <apex:form id="ContactForm" >
             <apex:actionFunction name="rerenderContactSection" rerender="sectionTwo" />
-            <apex:actionFunction name="rerenderModal" rerender="ContactPanel" />
+            <apex:actionFunction name="rerenderModal" rerender="ContactPanel" oncomplete="showContactDialog();"/>
             <div class="modal fade" id="ContactModal" role="dialog" tabindex="-1" aria-labelledby="myModalLabel">
                <div class="modal-dialog modal-lg" role="document">
                   <div class="modal-content">
@@ -616,7 +647,7 @@
                      </div>
                      <apex:pageMessages id="theMessages" />
                      <div class="modal-body">
-                        <apex:outputPanel  id="ContactPanel">
+                        <apex:outputPanel id="ContactPanel">
                            <div class="form-group">
                               <label for="email"><span >*</span>{!$ObjectType.Contact.fields.Email.Label}</label>
                               <div class="hiddenerror" style="display: none;">
@@ -690,7 +721,7 @@
                         <apex:commandButton action="{!createContact}" onclick="rerenderModal();" status="WaitingStatus"  styleClass="btn btn-default"  value="{!$Label.ISSP_Submit}" oncomplete="saveContact('{!isEmailDuplicated}');rerenderContactSection();" >
                         </apex:commandButton>
                         &nbsp;
-                        <button type="button" class="btn btn-default" onclick="cleanModal();closeModal();return false;">
+                        <button type="button" class="btn btn-default" onclick="closeModal();return false;">
                         {!$Label.ISSP_Cancel} </button>
                      </div>
                   </div>
