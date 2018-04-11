@@ -72,7 +72,6 @@ global class SurveyBatch implements Database.Batchable<sObject>, Database.Statef
     Date startd =  Date.today();
     Date endd =  Date.today().addDays(1);
     */
-    fakeMethod();
 
     if (ClosedDate != null) {
       startd =  ClosedDate;
