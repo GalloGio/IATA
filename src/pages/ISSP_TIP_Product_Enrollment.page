@@ -343,6 +343,30 @@
                                                             stayOnModal=true;
                                                             return;
                                                         }
+
+                                                        var numbers = /^[0-9]+$/;
+                                                        if (!$('[id$="rangeStart"]').val().match(numbers)) {
+                                                            if($('[id$="rangeStart"]').next('.errorMsg').val()==undefined)
+                                                            $('[id$="rangeStart"]').after('<div class="errorMsg"><strong>Error:</strong> Range From should only contain numbers</div>');
+                                                            stayOnModal=true;
+                                                            return;
+                                                        }
+
+                                                        if(!$('[id$="rangeEnd"]').val().match(numbers)){
+                                                            if($('[id$="rangeEnd"]').next('.errorMsg').val()==undefined)
+                                                            $('[id$="rangeEnd"]').after('<div class="errorMsg"><strong>Error:</strong> Range To should only contain numbers</div>');
+                                                            stayOnModal=true;
+                                                            return;
+                                                        }
+
+                                                        if(parseInt($('[id$="rangeStart"]').val()) > parseInt($('[id$="rangeEnd"]').val())){
+                                                            if($('[id$="rangeEnd"]').next('.errorMsg').val()==undefined)
+                                                            $('[id$="rangeEnd"]').after('<div class="errorMsg"><strong>Error:</strong> Range To should be greater than Range From</div>');
+                                                            stayOnModal=true;
+                                                            return;
+                                                        }
+
+
                                                         stayOnModal=false;
                                                         addEditBinRange();
                                                     }
