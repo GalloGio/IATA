@@ -235,11 +235,11 @@
               </section>
             </apex:outputPanel>
 
-            <!--div class="row" style="display: {!IF(isCashless,'none','block')}">
+            div class="row" style="display: {!IF(isCashless,'none','block')}">
               <div class="col-col-xs-12 col-md-8 col-md-offset-2">
                 <button id="requestRME" onclick="requestBalanceUpdate(); return false;" class="btn btn-block btn_iata_primary">{!$Label.ANG_ISSP_RHC_Request_Balance_Update}</button>
               </div>
-            </div-->
+            </div>
 
             <div class="row" style="display: {!IF(isCashless,'none','block')}">
               <div class="col-xs-12 text-center" style="padding-top: 20px; padding-bottom: 20px;">
