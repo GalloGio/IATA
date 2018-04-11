@@ -314,6 +314,8 @@ public class ANG_RHC_Information_test{
         authorizations.add(new Agency_Authorization__c(Account__c = ae.Id, ANG_FormOfPayment_ID__c = 'EP', Status__c = 'Active', RecordTypeId = formOfPaymentRT));
 
         insert authorizations;
+
+        Test.startTest();
          
         ANG_RHC_Information__c rhcInfo = [ Select Id from ANG_RHC_Information__c];
 
@@ -326,8 +328,6 @@ public class ANG_RHC_Information_test{
             );
 
         insert ara;
-
-        Test.startTest();
 
         authorizations = [Select Id , Status__c,Account__c,  ANG_FormOfPayment_ID__c from Agency_Authorization__c];
 

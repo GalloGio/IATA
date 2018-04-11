@@ -281,6 +281,36 @@
         <language>en_US</language>
     </listViews>
     <listViews>
+        <fullName>Debug_View</fullName>
+        <columns>NAME</columns>
+        <columns>CREATED_DATE</columns>
+        <columns>CREATEDBY_USER</columns>
+        <columns>Input_Description__c</columns>
+        <columns>Web_Service__c</columns>
+        <columns>System__c</columns>
+        <columns>Success__c</columns>
+        <columns>Started__c</columns>
+        <columns>Response__c</columns>
+        <columns>Method__c</columns>
+        <columns>Finished__c</columns>
+        <columns>Error_Message__c</columns>
+        <columns>Error_Code__c</columns>
+        <columns>Contact__c</columns>
+        <filterScope>Everything</filterScope>
+        <filters>
+            <field>Method__c</field>
+            <operation>notEqual</operation>
+            <value>checkIpCountry</value>
+        </filters>
+        <filters>
+            <field>CREATED_DATE</field>
+            <operation>equals</operation>
+            <value>3/26/2018 12:00 AM</value>
+        </filters>
+        <label>Debug View</label>
+        <language>en_US</language>
+    </listViews>
+    <listViews>
         <fullName>ISSP_WS_NewUser</fullName>
         <columns>NAME</columns>
         <columns>Web_Service__c</columns>
@@ -346,7 +376,7 @@
         <filters>
             <field>CREATED_DATE</field>
             <operation>equals</operation>
-            <value>TODAY</value>
+            <value>3/29/2018 12:00 AM,TODAY</value>
         </filters>
         <label>. mgo - KAVI</label>
         <language>en_US</language>
@@ -402,7 +432,7 @@
         <filters>
             <field>CREATED_DATE</field>
             <operation>equals</operation>
-            <value>YESTERDAY</value>
+            <value>TODAY</value>
         </filters>
         <filters>
             <field>Method__c</field>

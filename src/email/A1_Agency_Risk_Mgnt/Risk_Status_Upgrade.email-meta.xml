@@ -9,19 +9,20 @@
     <subject>Risk Information Upgrade</subject>
     <textOnly>Dear Agent,
 
-We would like to inform you that according to our records one or more risk events that were previously registered under your risk history have recently expired.
+We would like to inform you that according to our records your Risk Status / Cash conditions have been recently updated.
 
-This brings your risk information to be updated as follow:
+Your risk information result now in:
+Risk Status: {!Account.ANG_HE_RiskStatus__c}
+Cash conditions limited to Financial Security: {!IF(Account.ANG_HE_CashCondition__c, &apos;Yes&apos;,&apos;No&apos;)}
 
-Risk Status: {!Account.ANG_RiskStatus__c}
-Cash conditions limited to Financial Security: {!IF(Account.ANG_CashCondition__c, &apos;Yes&apos;,&apos;No&apos;)}
+Please check more details to the IATA Customer Portal.
+Thank you
+ 
+Best Regards
 
-For more information about risk management, please do not hesitate to contact us via the IATA Customer Portal.
+IATA – Global Delivery Center
 
-Best Regards,
-
-
-IATA – Global Delivery Center</textOnly>
+-----------------------------------------------------------------------------
+In order to obtain information or assistance from IATA, do not hesitate to access at any time our Customer Portal</textOnly>
     <type>html</type>
-    <uiType>Aloha</uiType>
 </EmailTemplate>
