@@ -106,6 +106,11 @@ public without sharing class ISSP_Case {
             return (caseType == 'ACR' && newCase.Escalated_Status_ACCA__c != null && newCase.ACCA_Owner__c != null);
         }
     }
+    //AMSU-119
+    public boolean isMSOcase {get {
+            return (caseType == 'OSCAR' && (newCase.Reason1__c == 'GSA / MSO / Handling Agent' || newCase.Subject.startsWith('MSO code ') ));
+        }
+    }
 
     public String CaseType { get {return ISSP_Constant.caseTypeMap.get(newCase.RecordType.Name);}   }
     public String CaseStatus { get {return ISSP_Constant.caseStatusMap.get(newCase.Status);}    }
@@ -151,10 +156,14 @@ public without sharing class ISSP_Case {
         Shows a disclaimer if current case was closed for more than 2 weeks
     **/
     public void showAlertMessage() {
-        if (getHideForClosedCases()) {
+		//AMSU-119
+        if (getHideForClosedCases() && !isMSOcase) {
             ApexPages.Message myMsg = new ApexPages.Message(ApexPages.Severity.INFO, System.Label.ISSP_Case_Closed_More_Than_2_Months);
             ApexPages.addMessage(myMsg);
-        }
+        }else if(isMSOcase){
+			ApexPages.Message myMsg = new ApexPages.Message(ApexPages.Severity.INFO, System.Label.ISSP_AMS_MSO_Case_Alert);
+			ApexPages.addMessage(myMsg);
+		}		
     }
 
     /**
@@ -163,7 +172,9 @@ public without sharing class ISSP_Case {
     **/
     public Boolean getHideForClosedCases() {
         set<String> validRecordtypes = new set<String>{AME_RECORD_TYPE_ID, AMERICAS_RECORD_TYPE_ID, APAC_RECORD_TYPE_ID, CHINA_RECORD_TYPE_ID, EUROPE_RECORD_TYPE_ID, IDFS_RECORD_TYPE_ID};
-        return (validRecordtypes.contains(this.newCase.RecordtypeId) && this.newCase.ClosedDate < Date.today().addDays(-14));
+        //AMSU-119
+        //return (validRecordtypes.contains(this.newCase.RecordtypeId) && this.newCase.ClosedDate < Date.today().addDays(-14));
+        return ((validRecordtypes.contains(this.newCase.RecordtypeId) && this.newCase.ClosedDate < Date.today().addDays(-14)) || isMSOcase );
     }
 
     public String fullnameNOCFile { get{
@@ -576,7 +587,6 @@ public without sharing class ISSP_Case {
                 List<ISSP_DPC__c> mcs = ISSP_DPC__c.getall().values();
                 ISSP_DPC__c accaRoleIds = ISSP_DPC__c.getValues('ACCA Roles');
                 ISSP_DPC__c accaAccounts = ISSP_DPC__c.getValues('ACCA Accounts');
-                ISSP_DPC__c nonAccaAccounts = ISSP_DPC__c.getValues('Non-ACCA Accounts');
                 ISSP_DPC__c dpcRecordType = ISSP_DPC__c.getValues('DPC Recordtype');
                 ISSP_DPC__c dpcSector = ISSP_DPC__c.getValues('DPC Sector');
                 ISSP_DPC__c dpcCategory = ISSP_DPC__c.getValues('DPC Category');
@@ -590,15 +600,15 @@ public without sharing class ISSP_Case {
                 List<Account> lsAccounts = new List<Account>();
                 if(accaRoleIds.Value__c != null && accaRoleIds.Value__c.contains(UserInfo.getUserRoleId().Substring(0,15))){
                 if(dpcRecordType.Value__c != null && dpcSector.Value__c != null && dpcCategory.Value__c != null) {
+                    list<String> listRecordTypes = dpcRecordType.Value__c.split(',');
                     lsAccounts =
                         [SELECT Id, Name FROM Account
-                        WHERE Recordtype.DeveloperName = :dpcRecordType.Value__c
+                        WHERE Recordtype.DeveloperName IN :listRecordTypes
                         AND Sector__c = :dpcSector.Value__c
                         AND Category__c = :dpcCategory.Value__c];
                 }
                 } else {
                     if(accaAccounts.Value__c != null ) lsAccountIds = accaAccounts.Value__c.split(',');
-                    // if(nonAccaAccounts.Value__c != null ) lsAccountIds = nonAccaAccounts.Value__c.split(',');
                     if(lsAccountIds != null ) {
                     lsAccounts =
                         [SELECT Id, Name FROM Account

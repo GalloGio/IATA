@@ -103,7 +103,7 @@ public with sharing class AMS_OSCAR_Case_Detail_Controller {
         }
     }
 
-    public static Set<String> hidenFieldsNewgenApplications = new Set<String>{'Abbreviated_name__c','Abbreviated_Address__c'};
+    public static Set<String> hidenFieldsNewgenApplications = new Set<String>{};
 
     public List<String> accreditationFieldNames {
         get{
@@ -234,7 +234,9 @@ public with sharing class AMS_OSCAR_Case_Detail_Controller {
 	//AMSU-125
     public Boolean loadAMSRemittance(AMS_OSCAR__c oscar) {
         Set<String> locationsClass = new Set<String> {'P', 'D'};        
-        return !String.isBlank(oscar.Process__c) && locationsClass.contains(oscar.Location_Class__c) && (AMS_Utils.oscarNewProcesses.contains(oscar.Process__c) || oscar.Process__c == AMS_Utils.AGENCYCHANGES);
+        Set<String> processesToCheck = new Set<String> {AMS_Utils.AGENCYCHANGES, AMS_Utils.new_HO, AMS_Utils.new_BR};
+
+        return !String.isBlank(oscar.Process__c) && locationsClass.contains(accreditationObj.Location_Class__c) && processesToCheck.contains(oscar.Process__c);
     }
 
     public List<SelectOption> getRfPicklistValues(){

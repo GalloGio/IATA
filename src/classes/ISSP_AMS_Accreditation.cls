@@ -716,6 +716,12 @@ public without sharing class ISSP_AMS_Accreditation {
             createNoCList();
             
             SYSTEM.DEBUG('Accreditation NewForm Sector: ' + sectorValue);
+        } else {
+            //fix amsu-113
+            newForm = new AMS_Pax_Accreditation_Form__c();
+            noticeOfChangeList = new List<String>();
+            sectorValue = con != null && con.Account != null && !String.isBlank(con.Account.Sector__c) ? con.Account.Sector__c.replace(' ', '_') : '';
+            List_CountryReqments = new List<AMS_Accreditation_Requirement__c>();
         }
 
         if (newCase.Reason1__c == AMS_Utils.CASE_REASON_NEW_HO || newCase.Reason1__c == AMS_Utils.CASE_REASON_BR_ABROAD || newCase.Reason1__c == AMS_Utils.CASE_REASON_HE_STANDARD || newCase.Reason1__c == AMS_Utils.CASE_REASON_HE_LITE) {
@@ -727,7 +733,7 @@ public without sharing class ISSP_AMS_Accreditation {
         applyLanguage = newCase.Case_Language__c;
 
         // NewGen is only valid for Travel Agents
-        newAccreditationModels = (isocountry.ANG_Enable_NewGen__c == true && sectorValue.StartsWith('Travel_Agent')) ;
+        newAccreditationModels = (isocountry.ANG_Enable_NewGen__c == true && !String.isBlank(sectorValue) && sectorValue.StartsWith('Travel_Agent')) ;//fix amsu-113
 
         if (sectorValue != null) {
             if (sectorValue.StartsWith('Cargo_Agent'))
