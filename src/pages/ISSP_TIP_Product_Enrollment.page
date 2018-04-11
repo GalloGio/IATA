@@ -31,6 +31,18 @@
         .placeholder-active{
             color: #AAA;
         }
+
+        .glyphiconTIP{
+            font-family: "Glyphicons Halflings";
+            font-style: normal;
+            font-weight: 400;
+            line-height: 1;  
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+            margin: 0px 5px;    
+            color: #337ab7;
+            text-decoration: none;    
+        }
     </style>
     
    
@@ -378,10 +390,10 @@
                                                 </apex:column>
                                                 <apex:column rendered="{!brr.action !='D'}" >
                                                     <apex:outputPanel rendered="{!brr.binRange.TIP_Status__c!='Active'}">                                                     
-                                                        <apex:commandLink style="margin-right:5px" value="Edit" oncomplete="closeDialog();" action="{!newEditBinRange}" reRender="newBinTab">
+                                                        <apex:commandLink styleclass="glyphiconTIP glyphicon-pencil" title="Edit"  oncomplete="closeDialog();" action="{!newEditBinRange}" reRender="newBinTab">
                                                             <apex:param name="binRangeRecPos" value="{!brr.pos}"/>
                                                         </apex:commandLink>                                                        
-                                                        <apex:commandLink styleClass="binRangebutton" value="Delete" onclick="confirmDelete({!brr.pos});" reRender="binTable"/>
+                                                        <apex:commandLink styleClass="glyphiconTIP glyphicon-trash" title="Delete" onclick="confirmDelete({!brr.pos});" reRender="binTable"/>
                                                     </apex:outputPanel>
                                                 </apex:column>
                                             </apex:pageBlockTable>
