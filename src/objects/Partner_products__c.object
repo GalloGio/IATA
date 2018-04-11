@@ -195,8 +195,8 @@
     <fields>
         <fullName>PP_GDS_Integration__c</fullName>
         <externalId>false</externalId>
-        <inlineHelpText>Indicate with which GDS (s) and a description of the integration(s) processes required that enable agents - using this/these GDS(s) - to have an automated access to this Alternative Transfer Method (e.g. VAN)</inlineHelpText>
-        <label>GDS Integration</label>
+        <inlineHelpText>Indicate which GDS supports an integration process that enable Travel Agents to have an automated access to this Alternative Transfer Method</inlineHelpText>
+        <label>Integration of ATMs with GDSs</label>
         <length>255</length>
         <required>false</required>
         <trackTrending>false</trackTrending>
