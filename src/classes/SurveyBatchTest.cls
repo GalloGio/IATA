@@ -737,11 +737,23 @@ public class SurveyBatchTest {
                                      Type = 'IATA Cargo Agent',
                                      billingCountry = 'ss',Location_Type__c = 'AO');
 
+            Account a3 = new Account( name ='IFAP ACCT',
+                                     industry = 'pluto',
+                                     IATA_ISO_Country__c=isoCountry.id,
+                                     recordtypeID = hqrt,
+                                     IATACode__c ='1234567',
+                                     Type = 'IATA Cargo Agent',
+                                     billingCountry = 'ss',Location_Type__c = 'AO',
+                                     Source_System__c = 'WEBSTAR',
+                                     status__c='Approved',
+                                     CNS_Account__c = false);
+
 
             
 
             acc.add(a);
             acc.add(a2);
+            acc.add(a3);
             
             insert acc;
 
@@ -832,6 +844,95 @@ public class SurveyBatchTest {
                                Financial_Review_Result__c = 'Satisfactory',
                                Reason1__c = 'CHC – Change of Shareholding'
                                ));
+
+                         cases.add(new Case(recordtypeID = processRTId,
+                              Status = 'Financial Security Requested',
+                              FS_Submitted_Date__c = date.today(),
+                              FS_Deadline_Date__c = twoweeksAgo,
+                              Origin = 'asd',
+                              IFAP_Area__c = 'asda',
+                              Financial_Review_Type__c ='Annual',
+                              IFAP_Financial_Year__c =  String.valueOF(date.today().month()),
+                              Deadline_Date__c = dead,
+                              contactid = con.id,
+                              AccountId = a2.id,
+                              BSPCountry__c = 'Bermuda',
+                              Region__c = 'Africa & Middle East',
+                              Assessment_Performed_Date__c = date.today(),
+                              Financial_Review_Result__c = 'Satisfactory',
+                              Reason1__c = 'CHC – Change of Shareholding'
+                              ));
+
+                         cases.add(new Case(recordtypeID = processRTId,
+                              Status = 'Financial Security Requested',
+                              FS_Submitted_Date__c = date.today(),
+                              FS_Deadline_Date__c = twoweeksAgo,
+                              Origin = 'asd',
+                              IFAP_Area__c = 'asda',
+                              Financial_Review_Type__c ='Annual',
+                              IFAP_Financial_Year__c =  String.valueOF(date.today().month()),
+                              Deadline_Date__c = dead,
+                              contactid = con.id,
+                               AccountId = a3.id,
+                               BSPCountry__c = 'United States',
+                              Assessment_Performed_Date__c = date.today(),
+                              Financial_Review_Result__c = 'Satisfactory',
+                              Reason1__c = 'CHC – Change of Shareholding',
+                              CNSCase__c =false
+                              ));
+
+                         cases.add(new Case(recordtypeID = processRTId,
+                              Status = 'Financial Security Requested',
+                              FS_Submitted_Date__c = date.today(),
+                              FS_Deadline_Date__c = twoweeksAgo,
+                              Origin = 'asd',
+                              IFAP_Area__c = 'asda',
+                              Financial_Review_Type__c ='Annual',
+                              IFAP_Financial_Year__c =  String.valueOF(date.today().month()),
+                              Deadline_Date__c = dead,
+                              contactid = con.id,
+                              AccountId = a2.id,
+                              BSPCountry__c = 'Sri Lanka',
+                              Region__c = 'Asia & Pacific',
+                              Assessment_Performed_Date__c = date.today(),
+                              Financial_Review_Result__c = 'Satisfactory',
+                              Reason1__c = 'CHC – Change of Shareholding'
+                              ));
+                        /*  cases.add(new Case(recordtypeID = processRTId,
+                              Status = 'Financial Security Requested',
+                              FS_Submitted_Date__c = date.today(),
+                              FS_Deadline_Date__c = twoweeksAgo,
+                              Origin = 'asd',
+                              IFAP_Area__c = 'asda',
+                              Financial_Review_Type__c ='Annual',
+                              IFAP_Financial_Year__c =  String.valueOF(date.today().month()),
+                              Deadline_Date__c = dead,
+                              contactid = con.id,
+                              AccountId = a2.id,
+                              BSPCountry__c = 'Sri Lanka',
+                              Region__c = 'Europe',
+                              Assessment_Performed_Date__c = date.today(),
+                              Financial_Review_Result__c = 'Satisfactory',
+                              Reason1__c = 'CHC – Change of Shareholding'
+                              ));
+
+                           cases.add(new Case(recordtypeID = processRTId,
+                              Status = 'Financial Security Requested',
+                              FS_Submitted_Date__c = date.today(),
+                              FS_Deadline_Date__c = twoweeksAgo,
+                              Origin = 'asd',
+                              IFAP_Area__c = 'asda',
+                              Financial_Review_Type__c ='Annual',
+                              IFAP_Financial_Year__c =  String.valueOF(date.today().month()),
+                              Deadline_Date__c = dead,
+                              contactid = con.id,
+                              AccountId = a2.id,
+                              BSPCountry__c = 'Turks and Caicos Islands',
+                              Region__c = 'Americas',
+                              Assessment_Performed_Date__c = date.today(),
+                              Financial_Review_Result__c = 'Satisfactory',
+                              Reason1__c = 'CHC – Change of Shareholding'
+                              ));*/
                         
                         
 
