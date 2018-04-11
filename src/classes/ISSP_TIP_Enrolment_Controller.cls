@@ -143,7 +143,7 @@ public with sharing class ISSP_TIP_Enrolment_Controller {
 						ShippingPostalCode, ShippingCountry, VAT_Number__c, Short_Name__c, Location_Class__c, IATA_ISO_Country__c,TIP_Documents__c,
 						Iso_State__c, Abbreviated_name__c, Abbreviated_Address__c, Remittance_frequency__c, Solicitation_Flag__c,
 						VAT_Number_2__c, CASS_Number__c,Company_Type__c,RecordTypeid, RecordType.DeveloperName,Status__c,IATA_ISO_Country__r.ISO_Code__c,ANG_Accreditation_Model__c,
-						IATA_ISO_Country__r.Name, IATA_ISO_Country__r.region__c, TIP_HQ_Location__c
+						IATA_ISO_Country__r.Name, IATA_ISO_Country__r.region__c, TIP_HQ_Location__c,Country_ISO_Code__c
 						FROM Account
 						WHERE Id = :accountID
 								   LIMIT 1
