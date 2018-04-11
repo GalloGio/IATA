@@ -94,7 +94,7 @@
         <fullName>PP_Banking_license__c</fullName>
         <externalId>false</externalId>
         <inlineHelpText>Enter information about licenses (e.g. banking license or e-money issuing license granted by a national authority)</inlineHelpText>
-        <label>Banking license</label>
+        <label>License</label>
         <length>255</length>
         <required>false</required>
         <trackTrending>false</trackTrending>
@@ -130,7 +130,7 @@
         <fullName>PP_Chargeback_airlines__c</fullName>
         <externalId>false</externalId>
         <inlineHelpText>Enter if it is subject to chargeback for airlines : Yes or No</inlineHelpText>
-        <label>Chargeback airlines</label>
+        <label>Chargeback Right</label>
         <required>false</required>
         <trackTrending>false</trackTrending>
         <type>Picklist</type>
@@ -154,7 +154,7 @@
         <fullName>PP_Chargeback_airlines_duration__c</fullName>
         <externalId>false</externalId>
         <inlineHelpText>If subject to chargeback, please indicate the maximum number of days after transaction for which a chargeback can be issued</inlineHelpText>
-        <label>Chargeback airlines duration</label>
+        <label>Maximum Chargeback Timeframe</label>
         <precision>4</precision>
         <required>false</required>
         <scale>0</scale>
@@ -196,7 +196,7 @@
         <fullName>PP_GDS_Integration__c</fullName>
         <externalId>false</externalId>
         <inlineHelpText>Indicate with which GDS (s) and a description of the integration(s) processes required that enable agents - using this/these GDS(s) - to have an automated access to this Alternative Transfer Method (e.g. VAN)</inlineHelpText>
-        <label>GDS Integration</label>
+        <label>Integration of ATMs with GDSs</label>
         <length>255</length>
         <required>false</required>
         <trackTrending>false</trackTrending>
@@ -207,7 +207,7 @@
         <fullName>PP_Interchange_fee__c</fullName>
         <externalId>false</externalId>
         <inlineHelpText>Enter details about Interchange Fee (s)</inlineHelpText>
-        <label>Interchange fee (Default)</label>
+        <label>Interchange Fee</label>
         <precision>18</precision>
         <required>false</required>
         <scale>0</scale>
@@ -292,7 +292,7 @@
         <fullName>PP_Payment_Product_Network_type__c</fullName>
         <externalId>false</externalId>
         <inlineHelpText>Enter the product type (Open-loop or Closed-loop)</inlineHelpText>
-        <label>Payment Product Network  type</label>
+        <label>Product Type</label>
         <required>false</required>
         <trackTrending>false</trackTrending>
         <type>Picklist</type>
@@ -317,7 +317,7 @@
         <description>Payment guarantee for Airlines</description>
         <externalId>false</externalId>
         <inlineHelpText>Enter payment guarantee for airlines : Fraud dispute, Commercial dispute or Both fraud and commercial dispute</inlineHelpText>
-        <label>Payment guarantee</label>
+        <label>Airline Payment Guarantee</label>
         <required>false</required>
         <trackTrending>false</trackTrending>
         <type>MultiselectPicklist</type>
@@ -485,7 +485,7 @@ If the product is a multi-use VANs, then it is a unique card/account number that
         <fullName>is_PCI_DSS_required__c</fullName>
         <externalId>false</externalId>
         <inlineHelpText>Is the product subject to PCI DSS requirements compliance? (this is related to the product) Yes or Not Applicable</inlineHelpText>
-        <label>Product subject to PCI DSS requirements?</label>
+        <label>Is Product Subject to PCI DSS?</label>
         <required>false</required>
         <trackTrending>false</trackTrending>
         <type>Picklist</type>

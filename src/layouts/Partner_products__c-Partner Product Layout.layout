@@ -16,7 +16,7 @@
                 <field>PP_Payment_Product_Code__c</field>
             </layoutItems>
             <layoutItems>
-                <behavior>Edit</behavior>
+                <behavior>Required</behavior>
                 <field>PP_Payment_Product_Network_type__c</field>
             </layoutItems>
             <layoutItems>
@@ -38,7 +38,7 @@
                 <field>PP_Category__c</field>
             </layoutItems>
             <layoutItems>
-                <behavior>Edit</behavior>
+                <behavior>Required</behavior>
                 <field>PP_Payment_network__c</field>
             </layoutItems>
         </layoutColumns>
@@ -73,7 +73,7 @@
                 <field>PP_VAN_type__c</field>
             </layoutItems>
             <layoutItems>
-                <behavior>Required</behavior>
+                <behavior>Edit</behavior>
                 <field>PP_Settlement_terms__c</field>
             </layoutItems>
         </layoutColumns>
