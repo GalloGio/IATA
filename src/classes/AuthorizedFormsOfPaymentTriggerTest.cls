@@ -46,7 +46,7 @@ public class AuthorizedFormsOfPaymentTriggerTest {
 
 		List<GDP_Products_Account_View__c> gdpProdAccViewListAfterInsert = [Select Id, CA_FoP_Status__c, CC_FoP_Status__c, EP_FoP_Status__c from GDP_Products_Account_View__c limit 1];
 		List<Authorized_Forms_Of_Payment__c> fopListAfterInsert = [Select Status_Code__c, Form_of_Payment_Code__c from Authorized_Forms_Of_Payment__c 
-														where Related_GDP_Products_Account_View__c = :gdpProdAccViewList.get(0).Id];
+														where Related_GDP_Products_Account_View__c = :gdpProdAccViewListAfterInsert.get(0).Id];
 
 
 		for(Authorized_Forms_Of_Payment__c fop : fopListAfterInsert){
@@ -83,17 +83,18 @@ public class AuthorizedFormsOfPaymentTriggerTest {
 
 		List<GDP_Products_Account_View__c> gdpProdAccViewList = [Select Id from GDP_Products_Account_View__c limit 1];
 
-		List<Authorized_Forms_Of_Payment__c> fopListBeforeUpdate = [Select Status_Code__c, Form_of_Payment_Code__c from Authorized_Forms_Of_Payment__c 
+		List<Authorized_Forms_Of_Payment__c> fopListBeforeUpdate = [Select Status_Code__c, Status__c, Form_of_Payment_Code__c from Authorized_Forms_Of_Payment__c 
 														where Related_GDP_Products_Account_View__c = :gdpProdAccViewList.get(0).Id 
 														and Form_of_Payment_Code__c = :AMS_Utils.CC];
 
 		fopListBeforeUpdate.get(0).Form_of_Payment_Code__c = AMS_Utils.EP;
+		fopListBeforeUpdate.get(0).Status__c = 'Not Authorized';
 		update fopListBeforeUpdate.get(0);
 
 		List<GDP_Products_Account_View__c> gdpProdAccViewListAfterUpdate = [Select Id, CA_FoP_Status__c, CC_FoP_Status__c, EP_FoP_Status__c from GDP_Products_Account_View__c limit 1];
 		
 		List<Authorized_Forms_Of_Payment__c> fopListAfterUpdate = [Select Status_Code__c, Form_of_Payment_Code__c from Authorized_Forms_Of_Payment__c 
-														where Related_GDP_Products_Account_View__c = :gdpProdAccViewList.get(0).Id];
+														where Related_GDP_Products_Account_View__c = :gdpProdAccViewListAfterUpdate.get(0).Id];
 
 		for(Authorized_Forms_Of_Payment__c fop : fopListAfterUpdate){
 
@@ -111,7 +112,7 @@ public class AuthorizedFormsOfPaymentTriggerTest {
 
 		}
 
-		System.assertEquals('', gdpProdAccViewListAfterUpdate.get(0).CC_FoP_Status__c);
+		System.assertEquals(null, gdpProdAccViewListAfterUpdate.get(0).CC_FoP_Status__c);
 
 	}
 
@@ -124,6 +125,8 @@ public class AuthorizedFormsOfPaymentTriggerTest {
 
 		List<GDP_Products_Account_View__c> gdpProdAccViewList = [Select Id from GDP_Products_Account_View__c limit 1];
 
+		System.debug('angielaz, teste before delete--> gdpProdAccViewList.get(0): ' + gdpProdAccViewList.get(0));
+
 		List<Authorized_Forms_Of_Payment__c> fopListBeforeUpdate = [Select Status_Code__c, Form_of_Payment_Code__c from Authorized_Forms_Of_Payment__c 
 														where Related_GDP_Products_Account_View__c = :gdpProdAccViewList.get(0).Id 
 														and Form_of_Payment_Code__c = :AMS_Utils.CC];
@@ -132,7 +135,9 @@ public class AuthorizedFormsOfPaymentTriggerTest {
 
 		List<GDP_Products_Account_View__c> gdpProdAccViewListAfterDelete = [Select Id, CA_FoP_Status__c, CC_FoP_Status__c, EP_FoP_Status__c from GDP_Products_Account_View__c limit 1];
 		
-		System.assertEquals('', gdpProdAccViewListAfterDelete.get(0).CC_FoP_Status__c);
+		System.debug('angielaz, teste after delete--> gdpProdAccViewListAfterDelete.get(0): ' + gdpProdAccViewListAfterDelete.get(0));
+
+		System.assertEquals(null, gdpProdAccViewListAfterDelete.get(0).CC_FoP_Status__c);
 
 
 	}
