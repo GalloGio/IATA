@@ -3949,6 +3949,13 @@ Ensuring that the industry adapts and adheres to these global standards and reco
         <value>IATA Alpha/Numeric Code</value>
     </labels>
     <labels>
+        <fullName>ICE_Portal_Service</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ICE Portal Service</shortDescription>
+        <value>IATA Customer E-statement (ICE) is designed to provide you with the details of your balances for the most recent IATA Billing cycles. The service will also allow you to view your upcoming remittance dates and incorporate them in your phone’s calendar.</value>
+    </labels>
+    <labels>
         <fullName>ICH</fullName>
         <language>en_US</language>
         <protected>false</protected>
@@ -23807,6 +23814,45 @@ msgErrorRenewalOrderExpired:Your renewal notification order link is either  expi
         <protected>false</protected>
         <shortDescription>New</shortDescription>
         <value>New</value>
+    </labels>
+    <labels>
+        <fullName>NewGenApp_AccountStatementNotification</fullName>
+        <categories>NewGenApp</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>NewGenApp_AccountStatementNotification</shortDescription>
+        <value>Account Statement {0} Balance has changed to: {1}</value>
+    </labels>
+    <labels>
+        <fullName>NewGenApp_CashConditionsNotification</fullName>
+        <categories>NewGenApp</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>NewGenApp_CashConditionsNotification</shortDescription>
+        <value>RHC: There was an update on Cash Conditions</value>
+    </labels>
+    <labels>
+        <fullName>NewGenApp_RHC_RiskAlert_Notification</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>NewGenApp_RHC_RiskAlert_Notification</shortDescription>
+        <value>RHC: Threshold Level {0}% - {1}</value>
+    </labels>
+    <labels>
+        <fullName>NewGenApp_RiskStatusNotification</fullName>
+        <categories>NewGenApp</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>NewGenApp_RiskStatusNotification</shortDescription>
+        <value>RHC: There was an update on Risk Status</value>
+    </labels>
+    <labels>
+        <fullName>NewGenApp_ServiceAccepted</fullName>
+        <categories>NewGenApp</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>NewGenApp_ServiceAccepted</shortDescription>
+        <value>{0} service request approved</value>
     </labels>
     <labels>
         <fullName>New_password</fullName>
