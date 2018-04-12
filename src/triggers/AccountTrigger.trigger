@@ -75,4 +75,8 @@ trigger AccountTrigger on Account (before insert, after insert, after update, be
     if(Trigger.isBefore && Trigger.isUpdate){
         ISSP_SIS_AccountHandler.beforeUpdate(Trigger.newMap, Trigger.oldMap);
     }
+    
+    //Trigger the platform events
+    if(trigger.isAfter)
+    	PlatformEvents_Helper.publishEvents((trigger.isDelete?trigger.OldMap:Trigger.newMap), 'Account__e', 'Account', trigger.isInsert, trigger.isUpdate, trigger.isDelete, trigger.isUndelete);
 }

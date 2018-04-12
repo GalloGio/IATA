@@ -1,6 +1,14 @@
 public class PlatformEvents_Helper {
     
-    public static void publishEvents(Map<Id,sObject> ObjectMap, String sEventType, string PE_Name, string ObjSource){
+    public static void publishEvents(Map<Id,sObject> ObjectMap, string PE_Name, string ObjSource, boolean bIsInsert, boolean bIsUpdate, boolean bIsDelete, boolean bIsUndelete){
+    	string sEventType = '';
+    	if(bIsInsert) sEventType = 'Insert';
+    	if(bIsUpdate) sEventType = 'Update';
+    	if(bIsDelete) sEventType = 'Delete';
+    	if(bIsUndelete) sEventType = 'Undelete';
+    	
+    	if(sEventType=='') return;
+    	
     	list<ISSP_Web_Service_Log__c> lsLogs = new list<ISSP_Web_Service_Log__c>();
     	
 	    try{
