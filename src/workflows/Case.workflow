@@ -4935,7 +4935,7 @@
         <fullName>ComplaintUpdateowner</fullName>
         <description>assigns the case flagged as complaint to the OCIT queue</description>
         <field>OwnerId</field>
-        <lookupValue>CasesOCITComplaints</lookupValue>
+        <lookupValue>Cases_Complaints_GDC_MAD</lookupValue>
         <lookupValueType>Queue</lookupValueType>
         <name>Complaint Update owner</name>
         <notifyAssignee>false</notifyAssignee>
@@ -4946,7 +4946,7 @@
         <fullName>Complaint_Update_owner_AME</fullName>
         <description>Change case ownership to AME Complaints queue</description>
         <field>OwnerId</field>
-        <lookupValue>CasesComplaintsAME</lookupValue>
+        <lookupValue>Cases_Complaints_GDC_MAD</lookupValue>
         <lookupValueType>Queue</lookupValueType>
         <name>Complaint Update owner - AME</name>
         <notifyAssignee>true</notifyAssignee>
@@ -4968,7 +4968,7 @@
         <fullName>Complaint_Update_owner_SCA</fullName>
         <description>Change case ownership to SCA Complaints queue</description>
         <field>OwnerId</field>
-        <lookupValue>Cases_Complaints_Americas</lookupValue>
+        <lookupValue>Cases_Complaints_GDC_MAD</lookupValue>
         <lookupValueType>Queue</lookupValueType>
         <name>Complaint Update owner - SCA</name>
         <notifyAssignee>true</notifyAssignee>
