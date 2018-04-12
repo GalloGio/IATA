@@ -414,6 +414,7 @@ trigger GlobalContactTrigger on Contact (after delete, after insert, after undel
                 }
             }
             /*ISSP_UpdateContacKaviIdOnUser Trigger.AfterInsert*/
+            PlatformEvents_Helper.publishEvents(Trigger.newMap, 'Insert', 'Contact__e', 'Contact');
         }
         /*Trigger.AfterInsert*/
 
@@ -584,7 +585,7 @@ trigger GlobalContactTrigger on Contact (after delete, after insert, after undel
             }
             /*ISSP_UpdateContacKaviIdOnUser AfterUpdate*/
 
-
+			PlatformEvents_Helper.publishEvents(Trigger.newMap, 'Update', 'Contact__e', 'Contact');
         }
         /*Trigger.AfterUpdate*/
 
@@ -597,6 +598,7 @@ trigger GlobalContactTrigger on Contact (after delete, after insert, after undel
                 ContactHandler.afterDelete(Trigger.old);
             }
             /*Contacts Trigger.AfterDelete*/
+            PlatformEvents_Helper.publishEvents(Trigger.oldMap, 'Delete', 'Contact__e', 'Contact');
         }
         /*Trigger.AfterDelete*/
 
@@ -609,6 +611,7 @@ trigger GlobalContactTrigger on Contact (after delete, after insert, after undel
                 ContactHandler.afterUndelete(Trigger.new);
             }
             /*Contacts Trigger.AfterUndelete*/
+            PlatformEvents_Helper.publishEvents(Trigger.newMap, 'Undelete', 'Contact__e', 'Contact');
         }
         /*Trigger.AfterUndelete*/
     }

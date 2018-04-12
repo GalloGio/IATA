@@ -31,27 +31,21 @@ public class PlatformEvents_Helper {
 			for (Database.SaveResult sr : EventBus.publish(lstSObjs)) {
 				if (!sr.isSuccess()){
 					for(Database.Error err : sr.getErrors()) {
-						lsLogs.add(new ISSP_Web_Service_Log__c(
-										System__c = 'Platform Events for ' + ObjSource + '. Event Type: ' + sEventType,
-										Error_Message__c = err.getStatusCode() + ' - ' + err.getMessage(),
-										Web_Service__c = PE_Name,
-										Method__c = 'PlatformEvents_Helper.publishEvents',
-										Input_Description__c = 'One of the following: ' + ObjectMap.keyset()
-										)
-									);
+						lsLogs.add(CreateLog('Platform Events for ' + ObjSource + '. Event Type: ' + sEventType
+								 , err.getStatusCode() + ' - ' + err.getMessage()
+								 , PE_Name
+								 ,'PlatformEvents_Helper.publishEvents'
+								 ,'One of the following: ' + ObjectMap.keyset()));
 					}
 				}
 			}
 			
 		}catch(exception e){
-			lsLogs.add(new ISSP_Web_Service_Log__c(
-						System__c = 'Platform Events for ' + ObjSource + '. Event Type: ' + sEventType,
-						Error_Message__c = e.getMessage(),
-						Web_Service__c = PE_Name,
-						Method__c = 'PlatformEvents_Helper.publishEvents',
-						Input_Description__c = 'One of the following: ' + ObjectMap.keyset()
-						)
-					);
+			lsLogs.add(CreateLog('Platform Events for ' + ObjSource + '. Event Type: ' + sEventType
+								 , e.getMessage()
+								 , PE_Name
+								 ,'PlatformEvents_Helper.publishEvents'
+								 ,'One of the following: ' + ObjectMap.keyset()));
 		}
 		
 		if(!lsLogs.isEmpty()) insert lsLogs;
@@ -71,7 +65,7 @@ public class PlatformEvents_Helper {
 		    };
     	}
     	
-    	if(sObj=='Contact' || sObj=='Product_Bin_Range__e' || sObj=='PartnerProduct__e' || sObj=='Product_Country_Config__e' ){
+    	if(sObj=='Contact__e' || sObj=='Product_Bin_Range__e' || sObj=='PartnerProduct__e' || sObj=='Product_Country_Config__e' ){
     		return new map<String,String>{
 		        'Id' => 'RecordId__c',
 		        'Recordtype' => 'RecordType__c',
@@ -80,5 +74,16 @@ public class PlatformEvents_Helper {
     	}
     	
     	return null;
+    }
+    
+    @TestVisible
+    private static ISSP_Web_Service_Log__c CreateLog(string theSystem, string ErrMess, string PE_Name, string theMethod, string theDesc){
+    	return new ISSP_Web_Service_Log__c(
+						System__c = theSystem,
+						Error_Message__c = ErrMess,
+						Web_Service__c = PE_Name,
+						Method__c = theMethod,
+						Input_Description__c = theDesc
+						);
     }
 }
