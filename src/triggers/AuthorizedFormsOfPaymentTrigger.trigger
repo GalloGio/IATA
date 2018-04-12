@@ -4,11 +4,11 @@ trigger AuthorizedFormsOfPaymentTrigger on Authorized_Forms_Of_Payment__c (after
 
 		if(trigger.isInsert || trigger.isUpdate){
 
-			AuthorizedFormsOfPaymentTriggerHelper.populatesFormOfPaymentsFields(trigger.new, false);
+			AuthorizedFormsOfPaymentTriggerHelper.populatesFormOfPaymentsFields(trigger.new);
 		}
 
 		if(trigger.isDelete){
-			AuthorizedFormsOfPaymentTriggerHelper.populatesFormOfPaymentsFields(trigger.new, true);	
+			AuthorizedFormsOfPaymentTriggerHelper.populatesFormOfPaymentsFields(trigger.new);	
 		}
 	}
 
