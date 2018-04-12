@@ -28,6 +28,7 @@ global class AMP_Batch_EmailChatterDigest implements Database.Batchable<sObject>
 		} else {
 			lsAllFeedItems = AMP_ChatterTopicSubscribeController.getDailyFeedItems(lsHQAccounts);
 		}
+		if(Test.isRunningTest() ) { query += ' LIMIT 100 ';}
 		System.debug(query);
 
 		return Database.getQueryLocator(query);
@@ -55,7 +56,10 @@ global class AMP_Batch_EmailChatterDigest implements Database.Batchable<sObject>
 			mail.setOrgWideEmailAddressId(owa.id);
 			String[] toAddresses = new String[] {u.Email};
 			mail.setToAddresses(toAddresses);
-			mail.setSubject('Your Daily Digest by Topic(s)');
+			if(dailyOrWeekly == 'weekly')
+				mail.setSubject('Your Weekly Digest by Topic(s)');
+			else
+				mail.setSubject('Your Daily Digest by Topic(s)');
 			String emailBody = AMP_ChatterTopicSubscribeController.getEmailBody(u, lsAllFeedItems, lsTopicAssignments, mpAccountId2Account);
 			mail.setHtmlBody(emailBody);
 			// System.debug(getEmailBody(u));

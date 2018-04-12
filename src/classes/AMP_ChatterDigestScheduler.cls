@@ -12,9 +12,9 @@ global class AMP_ChatterDigestScheduler implements Schedulable {
 
 		System.debug(jobName);
 		System.schedule(jobName, cronvalue , new AMP_ChatterDigestScheduler());
-		// get the number for the day of the Week: Sunday 0, Monday 1..
+		// get the number for the day of the Week:  Monday 1..Sunday 7
 		Integer dayOfWeek = Integer.valueOf(System.now().format('u'));
-		if(dayOfWeek == 0) {
+		if(dayOfWeek == 7) {
 			Id weekId = database.executebatch(new AMP_Batch_EmailChatterDigest('weekly'));
 			System.debug(weekId);
 		}

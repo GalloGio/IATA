@@ -182,7 +182,29 @@ var __sfdcSessionId = '{!GETSESSIONID()}';
 
             }   
 
-            setTimeout(function(){       
+            setTimeout(function(){
+                
+                
+                if(action == 'aNG_RestrictFOP' ){
+
+                   var restictCC = document.getElementById("ANG_Restrict_Credit_Card__c").children[0].children[0].checked;
+                   var restictCA = document.getElementById("ANG_Restrict_Cash__c").children[0].children[0].checked;
+                   
+                   args += ', ' + restictCC; 
+                   args += ', ' + restictCA;
+
+                }   
+
+                if(action == 'aNG_RestoreFOP' ){
+
+                   var restictCC = document.getElementById("ANG_Restore_Credit_Card__c").children[0].children[0].checked;
+                   var restictCA = document.getElementById("ANG_Restore_Cash__c").children[0].children[0].checked;
+                   
+                   args += ', ' + restictCC; 
+                   args += ', ' + restictCA;
+
+                } 
+
                  buildFunctionCall(action,args);
             },10);
         }
@@ -466,7 +488,7 @@ function buildFunctionCall(func, argList){
                     <li>Office Phone</li>
                     <!--<li>Remittance Frequency</li>-->
                 </apex:outputText>
-                <apex:outputText rendered="{!AND(NOT(isNotNewGenProcess),NOT(isNewGenHEProcess))}">
+                <apex:outputText rendered="{!OR(AND(NOT(isNotNewGenProcess),NOT(isNewGenHEProcess)), isAMSCheckRemittance)}">
                     <li>Remittance Frequency</li>
                 </apex:outputText>
             </ul>
@@ -564,9 +586,9 @@ function buildFunctionCall(func, argList){
                 </apex:repeat>
                 
                 <apex:repeat value="{!step.displayFields}" var="sf">
-                    <br/><h2>{!stepFieldsData[sf].fieldLabel}</h2>
+                        <br/><h2>{!IF(OR(stepFieldsData[sf].fieldLabel != 'Financial assessment opt-in / opt-out',NOT(hideFAoptOut)),stepFieldsData[sf].fieldLabel,'')}</h2>
                     <div id="{!sf}">                        
-                        <apex:outputPanel rendered="{!AND($ObjectType.AMS_OSCAR__c.fields[stepFieldsData[sf].fieldApiName].Updateable, stepFieldsData[sf].fieldLabel != 'Comments')}">
+                        <apex:outputPanel rendered="{!AND($ObjectType.AMS_OSCAR__c.fields[stepFieldsData[sf].fieldApiName].Updateable, stepFieldsData[sf].fieldLabel != 'Comments', NOT(AND(stepFieldsData[sf].fieldLabel == 'Financial assessment opt-in / opt-out', OR(blockFAoptOut, hideFAoptOut))))}">
                             <apex:inputField value="{!oscar[sf]}" styleClass="inputElem" rendered="{!stepFieldsData[sf].picklistvalues == null}"/>
                             <apex:selectList disabled="{!NOT(isValidationCompleted) && step.name == 'STEP2'}" size="1" rendered="{!IF(stepFieldsData[sf].picklistvalues != null, true, false)}" styleClass="inputElem">
                                 <apex:selectOptions value="{!stepFieldsData[sf].picklistvalues}"/>
@@ -580,13 +602,19 @@ function buildFunctionCall(func, argList){
                             </apex:selectList>
                         </apex:outputPanel>
 
-                        <!--NEWGEN-1989 workaround: Comments should be disabled for analysts-->
+                        <!--NEWGEN-1989 workaround: Comments should be disabled for analysts -->
                         <apex:outputPanel rendered="{!AND($ObjectType.AMS_OSCAR__c.fields[stepFieldsData[sf].fieldApiName].Updateable, stepFieldsData[sf].fieldLabel == 'Comments', NOT(isAnalystProfile))}">
                             <apex:inputField value="{!oscar[sf]}" styleClass="inputElem"/>
                         </apex:outputPanel>
                         <apex:outputPanel rendered="{!AND($ObjectType.AMS_OSCAR__c.fields[stepFieldsData[sf].fieldApiName].Updateable, stepFieldsData[sf].fieldLabel == 'Comments', isAnalystProfile)}">
                             <apex:inputField value="{!oscar[sf]}" styleClass="inputElem" html-disabled=""/>
                         </apex:outputPanel>
+
+                        <!--NEWGEN-1088 -->                       
+                        <apex:outputPanel rendered="{!AND($ObjectType.AMS_OSCAR__c.fields[stepFieldsData[sf].fieldApiName].Updateable, stepFieldsData[sf].fieldLabel == 'Financial assessment opt-in / opt-out', blockFAoptOut, NOT(hideFAoptOut))}">
+                            <apex:inputField value="{!oscar[sf]}" styleClass="inputElem" html-disabled=""/>
+                        </apex:outputPanel>
+
                     </div>
                 </apex:repeat>
                 
@@ -604,15 +632,55 @@ function buildFunctionCall(func, argList){
 
     var clickedId;
 
+    /*** AMSU-113 Start ***/
+    function removePCIelements() {
+        if("{!isToRemoveFieldsUI}" == "true") {
+            var nodes = $("#inlineSTEP6")[0].childNodes;
+            if(nodes) {
+                for(var i = 0; i<nodes.length; i++) {
+                    var node = nodes[i];
+                    if(node.id && node.id.indexOf("PCI") >= 0) {
+                        var node_1 = $(nodes[i-1]);
+                        var node_2 = $(nodes[i-2]);
+                        var node_3 = $(nodes[i-3]);
+                        node_1.remove();
+                        node_2.remove();
+                        node_3.remove();
+                        $(node).remove();
+                    }
+                }
+            }
+        }
+        
+        if("{!isPCICompliant}" == "true") {
+            var picklist = $("select.inputElem option[value='Yes']").parent();
+            
+            $("select.inputElem option[value='Not Applicable']").remove();
+            $("select.inputElem option[value='Yes']").remove();
+            $("select.inputElem option[value='No']").remove();
+            $("select.inputElem option[value='Nil CC']").remove();    
+
+            picklist.append(new Option("-- None --", ""));
+            picklist.append(new Option("Yes", "Yes"));
+            picklist.append(new Option("No", "No"));
+            picklist.append(new Option("Nil CC", "Nil CC"));           
+        }
+    }
+    /*** AMSU-113 End ***/
+
     $(document).ready(function() {
 
         /* This is basic - uses default settings */
         $(".lightbox").lightcase();
         
-    });
+    });    
     
     function clicked(item) {
         clickedId = "inline" + $(item).attr("id");
+
+        /*** AMSU-113 Start ***/
+        removePCIelements();
+        /*** AMSU-113 End ***/
     }
 
     $('.hasTooltip').each(function() {

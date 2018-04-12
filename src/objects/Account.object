@@ -2516,6 +2516,11 @@
             <isFieldManaged>false</isFieldManaged>
             <isRequired>false</isRequired>
         </displayedFields>
+        <displayedFields>
+            <field>ANG_FA_Opt_out__c</field>
+            <isFieldManaged>false</isFieldManaged>
+            <isRequired>false</isRequired>
+        </displayedFields>
         <label>TrackingHistory</label>
     </fieldSets>
     <fields>
@@ -2758,17 +2763,23 @@
     <fields>
         <fullName>ANG_CashCondition__c</fullName>
         <externalId>false</externalId>
-        <formula>IF(
-            ISPICKVAL(ANG_Accreditation_Model__c, &apos;Cashless&apos;) ||ISPICKVAL(Top_Parent__r.ANG_Accreditation_Model__c, &apos;Cashless&apos;),
-                false,
-                    IF(
-              ISPICKVAL(Location_Type__c ,&apos;HE&apos;),
-                ANG_HE_CashCondition__c,  
-                Top_Parent__r.ANG_HE_CashCondition__c
-              )
-            )</formula>
+        <formula>IF(ANG_FA_Opt_out__c,true,
+   IF(ISPICKVAL(ANG_Accreditation_Model__c, &apos;Cashless&apos;) ||ISPICKVAL(Top_Parent__r.ANG_Accreditation_Model__c, &apos;Cashless&apos;),false,
+      IF(ISPICKVAL(Location_Type__c ,&apos;HE&apos;), ANG_HE_CashCondition__c,Top_Parent__r.ANG_HE_CashCondition__c)
+   ))</formula>
         <inlineHelpText>Indicates that the RHC Amount is equal to the Guaranteed Amount. Will be enforced only if the agency has a FS</inlineHelpText>
         <label>Cash Condition equal to FS</label>
+        <trackHistory>false</trackHistory>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
+        <fullName>ANG_FA_Opt_out__c</fullName>
+        <defaultValue>false</defaultValue>
+        <description>Financial Assessment opt-out flag for Newgen - this means if the Agent opted out from Financial Review.</description>
+        <externalId>false</externalId>
+        <inlineHelpText>Financial Assessment opt-out flag for Newgen - this means if the Agent opted out from Financial Review.</inlineHelpText>
+        <label>Financial Assessment opt-out</label>
+        <trackFeedHistory>false</trackFeedHistory>
         <trackHistory>false</trackHistory>
         <type>Checkbox</type>
     </fields>
@@ -2920,6 +2931,16 @@
         <type>Checkbox</type>
     </fields>
     <fields>
+        <fullName>ANG_PCI_compliance_expiry_date__c</fullName>
+        <description>PCI compliance expiry date</description>
+        <externalId>false</externalId>
+        <label>PCI compliance expiry date</label>
+        <required>false</required>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackHistory>false</trackHistory>
+        <type>Date</type>
+    </fields>
+    <fields>
         <fullName>ANG_RiskHistoryAssessment__c</fullName>
         <externalId>false</externalId>
         <formula>IF(
@@ -2941,7 +2962,7 @@
         <fullName>ANG_RiskStatus__c</fullName>
         <externalId>false</externalId>
         <formula>IF(
-            ISPICKVAL(ANG_Accreditation_Model__c, &apos;Cashless&apos;) ||ISPICKVAL(Top_Parent__r.ANG_Accreditation_Model__c, &apos;Cashless&apos;),
+            ISPICKVAL(ANG_Accreditation_Model__c, &apos;Cashless&apos;) ||ISPICKVAL(Top_Parent__r.ANG_Accreditation_Model__c, &apos;Cashless&apos;) || ANG_FA_Opt_out__c,
                 &apos;Not Applicable&apos;,
                     IF(
               ISPICKVAL(Location_Type__c ,&apos;HE&apos;),
@@ -3425,19 +3446,9 @@
             <valueSetDefinition>
                 <sorted>false</sorted>
                 <value>
-                    <fullName>Full Service Network Carrier</fullName>
+                    <fullName>Full Service Carrier</fullName>
                     <default>false</default>
-                    <label>Full Service Network Carrier</label>
-                </value>
-                <value>
-                    <fullName>Full Service Regional Carrier</fullName>
-                    <default>false</default>
-                    <label>Full Service Regional Carrier</label>
-                </value>
-                <value>
-                    <fullName>Full Service Holiday Carrier</fullName>
-                    <default>false</default>
-                    <label>Full Service Holiday Carrier</label>
+                    <label>Full Service Carrier</label>
                 </value>
                 <value>
                     <fullName>Low Cost Carrier</fullName>
@@ -3445,9 +3456,9 @@
                     <label>Low Cost Carrier</label>
                 </value>
                 <value>
-                    <fullName>Ultra Low Cost Carrier</fullName>
+                    <fullName>Leisure Carrier</fullName>
                     <default>false</default>
-                    <label>Ultra Low Cost Carrier</label>
+                    <label>Leisure Carrier</label>
                 </value>
                 <value>
                     <fullName>Hybrid Carrier</fullName>
@@ -3455,14 +3466,9 @@
                     <label>Hybrid Carrier</label>
                 </value>
                 <value>
-                    <fullName>Cargo Only Carrier</fullName>
+                    <fullName>Cargo</fullName>
                     <default>false</default>
-                    <label>Cargo Only Carrier</label>
-                </value>
-                <value>
-                    <fullName>Legacy</fullName>
-                    <default>false</default>
-                    <label>Legacy</label>
+                    <label>Cargo</label>
                 </value>
             </valueSetDefinition>
         </valueSet>
@@ -5576,6 +5582,11 @@ If(LEN(BillingCountry) &gt;0, BillingCountry,&quot;&quot;)</formula>
                     <label>Domestic Agent</label>
                 </value>
                 <value>
+                    <fullName>DPC</fullName>
+                    <default>false</default>
+                    <label>DPC</label>
+                </value>
+                <value>
                     <fullName>Engine Manufacturer</fullName>
                     <default>false</default>
                     <label>Engine Manufacturer</label>
@@ -6132,9 +6143,13 @@ If(LEN(BillingCountry) &gt;0, BillingCountry,&quot;&quot;)</formula>
                 <controllingFieldValue>Financial Institution</controllingFieldValue>
                 <valueName>Lessor</valueName>
             </valueSettings>
-            <valueSettings>
+	    <valueSettings>
                 <controllingFieldValue>Financial Institution</controllingFieldValue>
                 <valueName>Payment Provider</valueName>
+            </valueSettings>
+            <valueSettings>
+                <controllingFieldValue>DPC</controllingFieldValue>
+                <valueName>DPC</valueName>
             </valueSettings>
             <valueSettings>
                 <controllingFieldValue>Governmental Institution</controllingFieldValue>
@@ -10433,7 +10448,7 @@ Approval: Key Contact can see pending request approve it one by one</inlineHelpT
         <externalId>false</externalId>
         <formula>IF(
  AND(RecordType.Name = &quot;Agency&quot; , OR(ispickval(Location_Type__c, &quot;BR&quot;),ispickval(Location_Type__c, &quot;AE&quot;))),
- IF(AND(Parent.IATA_ISO_Country__c &lt;&gt; IATA_ISO_Country__c, NOT(CNS_Agency__c)),
+ IF(AND(Parent.IATA_ISO_Country__r.AMS_Settlement_System__r.Name &lt;&gt; IATA_ISO_Country__r.AMS_Settlement_System__r.Name, NOT(CNS_Agency__c)),
   &quot;Yes&quot;,
   &quot;No&quot;
  ),
@@ -10445,6 +10460,16 @@ Approval: Key Contact can see pending request approve it one by one</inlineHelpT
         <trackHistory>false</trackHistory>
         <type>Text</type>
         <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Is_DGR_Compliant__c</fullName>
+        <defaultValue>false</defaultValue>
+        <description>set to true in a trigger based on the logic: for China &gt;=3 non-expired certificates, for HO &gt;=2, for BR &gt;=1</description>
+        <externalId>false</externalId>
+        <label>Is DGR Compliant</label>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackHistory>false</trackHistory>
+        <type>Checkbox</type>
     </fields>
     <fields>
         <fullName>Is_PCI_compliant__c</fullName>
@@ -10468,6 +10493,11 @@ Approval: Key Contact can see pending request approve it one by one</inlineHelpT
                     <fullName>No</fullName>
                     <default>false</default>
                     <label>No</label>
+                </value>
+                <value>
+                    <fullName>Nil CC</fullName>
+                    <default>false</default>
+                    <label>Nil CC</label>
                 </value>
             </valueSetDefinition>
         </valueSet>
@@ -11067,23 +11097,25 @@ J-Joint Vent</inlineHelpText>
     <fields>
         <fullName>Location_Type_Ordered__c</fullName>
         <externalId>false</externalId>
-        <formula>case (TEXT(Location_Type__c)
-       , &apos;AO&apos;, 1
-       , &apos;EP&apos;, 1
-       , &apos;HO&apos;, 1
+        <formula>case (TEXT(Location_Type__c) 
+, &apos;AO&apos;, 1 
+, &apos;EP&apos;, 1 
+, &apos;HO&apos;, 1 
+, &apos;HE&apos;, 1 
 
-       , &apos;BR&apos;, 2
-       , &apos;CS&apos;, 2
-       , &apos;EB&apos;, 2
-       , &apos;ES&apos;, 2
-       , &apos;SE&apos;, 2
-       , &apos;TD&apos;, 2
-       , &apos;WH&apos;, 2
+, &apos;BR&apos;, 2 
+, &apos;CS&apos;, 2 
+, &apos;EB&apos;, 2 
+, &apos;ES&apos;, 2 
+, &apos;SE&apos;, 2 
+, &apos;TD&apos;, 2 
+, &apos;WH&apos;, 2 
+, &apos;AE&apos;, 2 
 
-       , &apos;ST&apos;, 3
-       , &apos;AW&apos;, 3
-       , &apos;SA&apos;, 3
-       , 99
+, &apos;ST&apos;, 3 
+, &apos;AW&apos;, 3 
+, &apos;SA&apos;, 3 
+, 99 
 )</formula>
         <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
         <label>Location Type Ordered</label>
@@ -12032,8 +12064,9 @@ J-Joint Vent</inlineHelpText>
     </fields>
     <fields>
         <fullName>PCI_DSS_Compliant__c</fullName>
+        <description>Date that the PCI Expiry Notification was sent.</description>
         <externalId>false</externalId>
-        <label>PCI DSS Compliant</label>
+        <label>PCI Expiry Notification Sent</label>
         <required>false</required>
         <trackFeedHistory>false</trackFeedHistory>
         <trackHistory>false</trackHistory>
@@ -12573,42 +12606,42 @@ IF ((RecordType.DeveloperName = &quot;IATA_Airline&quot; || RecordType.Developer
             <valueSetDefinition>
                 <sorted>false</sorted>
                 <value>
-                    <fullName>Monthly</fullName>
+                    <fullName>M</fullName>
                     <default>false</default>
                     <label>Monthly</label>
                 </value>
                 <value>
-                    <fullName>Fortnightly</fullName>
+                    <fullName>F</fullName>
                     <default>false</default>
                     <label>Fortnightly</label>
                 </value>
                 <value>
-                    <fullName>Every 10 days</fullName>
+                    <fullName>R</fullName>
                     <default>false</default>
                     <label>Every 10 days</label>
                 </value>
                 <value>
-                    <fullName>4 times per month</fullName>
+                    <fullName>W</fullName>
                     <default>false</default>
                     <label>4 times per month</label>
                 </value>
                 <value>
-                    <fullName>Weekly</fullName>
+                    <fullName>V</fullName>
                     <default>false</default>
                     <label>Weekly</label>
                 </value>
                 <value>
-                    <fullName>Every 5 days</fullName>
+                    <fullName>S</fullName>
                     <default>false</default>
                     <label>Every 5 days</label>
                 </value>
                 <value>
-                    <fullName>Every 3 days</fullName>
+                    <fullName>B</fullName>
                     <default>false</default>
                     <label>Every 3 days</label>
                 </value>
                 <value>
-                    <fullName>Daily</fullName>
+                    <fullName>D</fullName>
                     <default>false</default>
                     <label>Daily</label>
                 </value>
@@ -12810,6 +12843,11 @@ IF ((RecordType.DeveloperName = &quot;IATA_Airline&quot; || RecordType.Developer
                     <default>false</default>
                     <label>TOU E&amp;F</label>
                 </value>
+                <value>
+                    <fullName>TOU GROUND HANDLER</fullName>
+                    <default>false</default>
+                    <label>TOU GROUND HANDLER</label>
+                </value>
             </valueSetDefinition>
         </valueSet>
     </fields>
@@ -12891,10 +12929,9 @@ IF ((RecordType.DeveloperName = &quot;IATA_Airline&quot; || RecordType.Developer
     </fields>
     <fields>
         <fullName>SanctionNotice__c</fullName>
-        <description>Sanction Notice for AMP Team, Account Managers and direct reports</description>
+        <description>Used by AM Team, Account Managers and their Direct Reports to display important information on the account.</description>
         <externalId>false</externalId>
-        <inlineHelpText>Sanction Notice for AMP Team, Account Managers and direct reports</inlineHelpText>
-        <label>SanctionNotice</label>
+        <label>Account Note</label>
         <required>false</required>
         <trackFeedHistory>false</trackFeedHistory>
         <trackHistory>false</trackHistory>
@@ -12947,6 +12984,11 @@ IF ((RecordType.DeveloperName = &quot;IATA_Airline&quot; || RecordType.Developer
                     <fullName>Cargo Agent</fullName>
                     <default>false</default>
                     <label>Cargo Agent</label>
+                </value>
+                <value>
+                    <fullName>DPC</fullName>
+                    <default>false</default>
+                    <label>DPC</label>
                 </value>
                 <value>
                     <fullName>Education</fullName>
@@ -20257,8 +20299,8 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
         <label>Finland Agents</label>
         <language>en_US</language>
         <sharedTo>
+            <group>IDFSEuropeRegionalOffice</group>
             <group>IDFSFinland</group>
-            <role>IDFSEuropeRegionalOffice</role>
         </sharedTo>
     </listViews>
     <listViews>
@@ -27586,7 +27628,7 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
         <picklistValues>
             <picklist>Remittance_frequency__c</picklist>
             <values>
-                <fullName>Daily</fullName>
+                <fullName>D</fullName>
                 <default>false</default>
             </values>
         </picklistValues>
@@ -30637,7 +30679,7 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
         <picklistValues>
             <picklist>Remittance_frequency__c</picklist>
             <values>
-                <fullName>Daily</fullName>
+                <fullName>D</fullName>
                 <default>false</default>
             </values>
         </picklistValues>
@@ -30712,6 +30754,10 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
             </values>
             <values>
                 <fullName>TOU E%26F</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>TOU GROUND HANDLER</fullName>
                 <default>false</default>
             </values>
         </picklistValues>
@@ -33266,7 +33312,7 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
         <picklistValues>
             <picklist>Remittance_frequency__c</picklist>
             <values>
-                <fullName>Daily</fullName>
+                <fullName>D</fullName>
                 <default>false</default>
             </values>
         </picklistValues>
@@ -34054,10 +34100,6 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
         </picklistValues>
         <picklistValues>
             <picklist>Airline_Model_Type__c</picklist>
-            <values>
-                <fullName>Legacy</fullName>
-                <default>false</default>
-            </values>
             <values>
                 <fullName>Low Cost Carrier</fullName>
                 <default>false</default>
@@ -35840,6 +35882,10 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
         <picklistValues>
             <picklist>Is_PCI_compliant__c</picklist>
             <values>
+                <fullName>Nil CC</fullName>
+                <default>false</default>
+            </values>
+            <values>
                 <fullName>No</fullName>
                 <default>false</default>
             </values>
@@ -36338,35 +36384,35 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
         <picklistValues>
             <picklist>Remittance_frequency__c</picklist>
             <values>
-                <fullName>4 times per month</fullName>
+                <fullName>B</fullName>
                 <default>false</default>
             </values>
             <values>
-                <fullName>Daily</fullName>
+                <fullName>D</fullName>
                 <default>false</default>
             </values>
             <values>
-                <fullName>Every 10 days</fullName>
+                <fullName>F</fullName>
                 <default>false</default>
             </values>
             <values>
-                <fullName>Every 3 days</fullName>
+                <fullName>M</fullName>
                 <default>false</default>
             </values>
             <values>
-                <fullName>Every 5 days</fullName>
+                <fullName>R</fullName>
                 <default>false</default>
             </values>
             <values>
-                <fullName>Fortnightly</fullName>
+                <fullName>S</fullName>
                 <default>false</default>
             </values>
             <values>
-                <fullName>Monthly</fullName>
+                <fullName>V</fullName>
                 <default>false</default>
             </values>
             <values>
-                <fullName>Weekly</fullName>
+                <fullName>W</fullName>
                 <default>false</default>
             </values>
         </picklistValues>
@@ -36441,6 +36487,10 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
             </values>
             <values>
                 <fullName>TOU E%26F</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>TOU GROUND HANDLER</fullName>
                 <default>false</default>
             </values>
         </picklistValues>
@@ -40399,19 +40449,11 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
         <picklistValues>
             <picklist>Airline_Model_Type__c</picklist>
             <values>
-                <fullName>Cargo Only Carrier</fullName>
+                <fullName>Cargo</fullName>
                 <default>false</default>
             </values>
             <values>
-                <fullName>Full Service Holiday Carrier</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Full Service Network Carrier</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Full Service Regional Carrier</fullName>
+                <fullName>Full Service Carrier</fullName>
                 <default>false</default>
             </values>
             <values>
@@ -40419,11 +40461,11 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
                 <default>false</default>
             </values>
             <values>
-                <fullName>Low Cost Carrier</fullName>
+                <fullName>Leisure Carrier</fullName>
                 <default>false</default>
             </values>
             <values>
-                <fullName>Ultra Low Cost Carrier</fullName>
+                <fullName>Low Cost Carrier</fullName>
                 <default>false</default>
             </values>
         </picklistValues>
@@ -43276,7 +43318,7 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
         <picklistValues>
             <picklist>Remittance_frequency__c</picklist>
             <values>
-                <fullName>Daily</fullName>
+                <fullName>D</fullName>
                 <default>false</default>
             </values>
         </picklistValues>
@@ -43351,6 +43393,10 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
             </values>
             <values>
                 <fullName>TOU E%26F</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>TOU GROUND HANDLER</fullName>
                 <default>false</default>
             </values>
         </picklistValues>
@@ -47719,7 +47765,7 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
         <picklistValues>
             <picklist>Remittance_frequency__c</picklist>
             <values>
-                <fullName>Daily</fullName>
+                <fullName>D</fullName>
                 <default>false</default>
             </values>
         </picklistValues>
@@ -47794,6 +47840,10 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
             </values>
             <values>
                 <fullName>TOU E%26F</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>TOU GROUND HANDLER</fullName>
                 <default>false</default>
             </values>
         </picklistValues>
@@ -48535,10 +48585,6 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
         </picklistValues>
         <picklistValues>
             <picklist>Airline_Model_Type__c</picklist>
-            <values>
-                <fullName>Legacy</fullName>
-                <default>false</default>
-            </values>
             <values>
                 <fullName>Low Cost Carrier</fullName>
                 <default>false</default>
@@ -50406,7 +50452,7 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
         <picklistValues>
             <picklist>Remittance_frequency__c</picklist>
             <values>
-                <fullName>Daily</fullName>
+                <fullName>D</fullName>
                 <default>false</default>
             </values>
         </picklistValues>
@@ -50481,6 +50527,10 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
             </values>
             <values>
                 <fullName>TOU E%26F</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>TOU GROUND HANDLER</fullName>
                 <default>false</default>
             </values>
         </picklistValues>
@@ -53010,10 +53060,6 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
         <picklistValues>
             <picklist>Airline_Model_Type__c</picklist>
             <values>
-                <fullName>Legacy</fullName>
-                <default>false</default>
-            </values>
-            <values>
                 <fullName>Low Cost Carrier</fullName>
                 <default>false</default>
             </values>
@@ -54859,7 +54905,7 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
         <picklistValues>
             <picklist>Remittance_frequency__c</picklist>
             <values>
-                <fullName>Daily</fullName>
+                <fullName>D</fullName>
                 <default>false</default>
             </values>
         </picklistValues>
@@ -54934,6 +54980,10 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
             </values>
             <values>
                 <fullName>TOU E%26F</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>TOU GROUND HANDLER</fullName>
                 <default>false</default>
             </values>
         </picklistValues>
@@ -59273,7 +59323,7 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
         <picklistValues>
             <picklist>Remittance_frequency__c</picklist>
             <values>
-                <fullName>Daily</fullName>
+                <fullName>D</fullName>
                 <default>false</default>
             </values>
         </picklistValues>
@@ -59348,6 +59398,10 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
             </values>
             <values>
                 <fullName>TOU E%26F</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>TOU GROUND HANDLER</fullName>
                 <default>false</default>
             </values>
         </picklistValues>
@@ -61792,7 +61846,7 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
         <picklistValues>
             <picklist>Remittance_frequency__c</picklist>
             <values>
-                <fullName>Daily</fullName>
+                <fullName>D</fullName>
                 <default>false</default>
             </values>
         </picklistValues>
@@ -64246,7 +64300,7 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
         <picklistValues>
             <picklist>Remittance_frequency__c</picklist>
             <values>
-                <fullName>Daily</fullName>
+                <fullName>D</fullName>
                 <default>false</default>
             </values>
         </picklistValues>
@@ -67035,7 +67089,7 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
         <picklistValues>
             <picklist>Remittance_frequency__c</picklist>
             <values>
-                <fullName>Daily</fullName>
+                <fullName>D</fullName>
                 <default>false</default>
             </values>
         </picklistValues>
@@ -67110,6 +67164,10 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
             </values>
             <values>
                 <fullName>TOU E%26F</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>TOU GROUND HANDLER</fullName>
                 <default>false</default>
             </values>
         </picklistValues>
@@ -67902,19 +67960,11 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
         <picklistValues>
             <picklist>Airline_Model_Type__c</picklist>
             <values>
-                <fullName>Cargo Only Carrier</fullName>
+                <fullName>Cargo</fullName>
                 <default>false</default>
             </values>
             <values>
-                <fullName>Full Service Holiday Carrier</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Full Service Network Carrier</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Full Service Regional Carrier</fullName>
+                <fullName>Full Service Carrier</fullName>
                 <default>false</default>
             </values>
             <values>
@@ -67922,11 +67972,11 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
                 <default>false</default>
             </values>
             <values>
-                <fullName>Low Cost Carrier</fullName>
+                <fullName>Leisure Carrier</fullName>
                 <default>false</default>
             </values>
             <values>
-                <fullName>Ultra Low Cost Carrier</fullName>
+                <fullName>Low Cost Carrier</fullName>
                 <default>false</default>
             </values>
         </picklistValues>
@@ -72657,15 +72707,15 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
         <picklistValues>
             <picklist>Remittance_frequency__c</picklist>
             <values>
-                <fullName>Daily</fullName>
+                <fullName>D</fullName>
                 <default>false</default>
             </values>
             <values>
-                <fullName>Monthly</fullName>
+                <fullName>M</fullName>
                 <default>false</default>
             </values>
             <values>
-                <fullName>Weekly</fullName>
+                <fullName>V</fullName>
                 <default>false</default>
             </values>
         </picklistValues>
@@ -72740,6 +72790,10 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
             </values>
             <values>
                 <fullName>TOU E%26F</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>TOU GROUND HANDLER</fullName>
                 <default>false</default>
             </values>
         </picklistValues>
@@ -75577,10 +75631,6 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
         <picklistValues>
             <picklist>Airline_Model_Type__c</picklist>
             <values>
-                <fullName>Legacy</fullName>
-                <default>false</default>
-            </values>
-            <values>
                 <fullName>Low Cost Carrier</fullName>
                 <default>false</default>
             </values>
@@ -76851,6 +76901,10 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
                 <default>false</default>
             </values>
             <values>
+                <fullName>DPC</fullName>
+                <default>false</default>
+            </values>
+            <values>
                 <fullName>Domestic Agent</fullName>
                 <default>false</default>
             </values>
@@ -77956,7 +78010,7 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
         <picklistValues>
             <picklist>Remittance_frequency__c</picklist>
             <values>
-                <fullName>Daily</fullName>
+                <fullName>D</fullName>
                 <default>false</default>
             </values>
         </picklistValues>
@@ -78033,6 +78087,10 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
                 <fullName>TOU E%26F</fullName>
                 <default>false</default>
             </values>
+            <values>
+                <fullName>TOU GROUND HANDLER</fullName>
+                <default>false</default>
+            </values>
         </picklistValues>
         <picklistValues>
             <picklist>Sector__c</picklist>
@@ -78054,6 +78112,10 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
             </values>
             <values>
                 <fullName>Cargo Agent</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>DPC</fullName>
                 <default>false</default>
             </values>
             <values>
@@ -79903,10 +79965,6 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
         </picklistValues>
         <picklistValues>
             <picklist>Airline_Model_Type__c</picklist>
-            <values>
-                <fullName>Legacy</fullName>
-                <default>false</default>
-            </values>
             <values>
                 <fullName>Low Cost Carrier</fullName>
                 <default>false</default>
@@ -82711,35 +82769,35 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
         <picklistValues>
             <picklist>Remittance_frequency__c</picklist>
             <values>
-                <fullName>4 times per month</fullName>
+                <fullName>B</fullName>
                 <default>false</default>
             </values>
             <values>
-                <fullName>Daily</fullName>
+                <fullName>D</fullName>
                 <default>false</default>
             </values>
             <values>
-                <fullName>Every 10 days</fullName>
+                <fullName>F</fullName>
                 <default>false</default>
             </values>
             <values>
-                <fullName>Every 3 days</fullName>
+                <fullName>M</fullName>
                 <default>false</default>
             </values>
             <values>
-                <fullName>Every 5 days</fullName>
+                <fullName>R</fullName>
                 <default>false</default>
             </values>
             <values>
-                <fullName>Fortnightly</fullName>
+                <fullName>S</fullName>
                 <default>false</default>
             </values>
             <values>
-                <fullName>Monthly</fullName>
+                <fullName>V</fullName>
                 <default>false</default>
             </values>
             <values>
-                <fullName>Weekly</fullName>
+                <fullName>W</fullName>
                 <default>false</default>
             </values>
         </picklistValues>
@@ -82814,6 +82872,10 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
             </values>
             <values>
                 <fullName>TOU E%26F</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>TOU GROUND HANDLER</fullName>
                 <default>false</default>
             </values>
         </picklistValues>
@@ -88709,7 +88771,7 @@ OR(RecordType.Name=&apos;Operator&apos;, RecordType.Name=&apos;Airline Branch&ap
     </validationRules>
     <validationRules>
         <fullName>EF_BlockRemoveSISVerifiedOnOperator</fullName>
-        <active>true</active>
+        <active>false</active>
         <description>Can&apos;t set to false SIS Verified if Record Type is Operator</description>
         <errorConditionFormula>AND(
   OR($User.Profile_Name__c == &apos;E&amp;F staff&apos;, $User.Profile_Name__c == &apos;E&amp;F Management&apos;),
@@ -88721,7 +88783,7 @@ OR(RecordType.Name=&apos;Operator&apos;, RecordType.Name=&apos;Airline Branch&ap
     </validationRules>
     <validationRules>
         <fullName>EF_CantSetSISVerifiedIfSISCodeEmpty</fullName>
-        <active>true</active>
+        <active>false</active>
         <errorConditionFormula>AND(
    EF_SIS_Code_Verified__c=true,
    OR(ISBLANK(EF_SIS_Code__c), ISBLANK(EF_SIS_Designator__c))
@@ -88922,14 +88984,14 @@ ANG_IsNewGenAgency__c,
 
 NOT(Country_ISO_Code__c  = &apos;BR&apos;),
 
-IF(INCLUDES(Remittance_frequency__c , &quot;Monthly&quot;),1,0) + 
-IF(INCLUDES(Remittance_frequency__c , &quot;Fortnightly&quot;),1,0) + 
-IF(INCLUDES(Remittance_frequency__c , &quot;Every 10 days&quot;),1,0) + 
-IF(INCLUDES(Remittance_frequency__c , &quot;4 times per month&quot;),1,0) + 
-IF(INCLUDES(Remittance_frequency__c , &quot;Weekly&quot;),1,0) +
-IF(INCLUDES(Remittance_frequency__c , &quot;Every 3 days&quot;),1,0) +
-IF(INCLUDES(Remittance_frequency__c , &quot;Every 5 days&quot;),1,0) +
-IF(INCLUDES(Remittance_frequency__c , &quot;Daily&quot;),1,0) &gt; 1 ),
+IF(INCLUDES(Remittance_frequency__c , &quot;M&quot;),1,0) + 
+IF(INCLUDES(Remittance_frequency__c , &quot;F&quot;),1,0) + 
+IF(INCLUDES(Remittance_frequency__c , &quot;R&quot;),1,0) + 
+IF(INCLUDES(Remittance_frequency__c , &quot;W&quot;),1,0) + 
+IF(INCLUDES(Remittance_frequency__c , &quot;V&quot;),1,0) +
+IF(INCLUDES(Remittance_frequency__c , &quot;B&quot;),1,0) +
+IF(INCLUDES(Remittance_frequency__c , &quot;S&quot;),1,0) +
+IF(INCLUDES(Remittance_frequency__c , &quot;D&quot;),1,0) &gt; 1 ),
 
 AND(
 
@@ -88937,14 +88999,14 @@ ANG_IsNewGenAgency__c,
 
 Country_ISO_Code__c  = &apos;BR&apos;,
 
-IF(INCLUDES(Remittance_frequency__c , &quot;Monthly&quot;),1,0) + 
-IF(INCLUDES(Remittance_frequency__c , &quot;Fortnightly&quot;),1,0) + 
-IF(INCLUDES(Remittance_frequency__c , &quot;Every 10 days&quot;),1,0) + 
-IF(INCLUDES(Remittance_frequency__c , &quot;4 times per month&quot;),1,0) + 
-IF(INCLUDES(Remittance_frequency__c , &quot;Weekly&quot;),1,0) +
-IF(INCLUDES(Remittance_frequency__c , &quot;Every 3 days&quot;),1,0) +
-IF(INCLUDES(Remittance_frequency__c , &quot;Every 5 days&quot;),1,0) +
-IF(INCLUDES(Remittance_frequency__c , &quot;Daily&quot;),1,0) &gt; 2 )
+IF(INCLUDES(Remittance_frequency__c , &quot;M&quot;),1,0) + 
+IF(INCLUDES(Remittance_frequency__c , &quot;F&quot;),1,0) + 
+IF(INCLUDES(Remittance_frequency__c , &quot;R&quot;),1,0) + 
+IF(INCLUDES(Remittance_frequency__c , &quot;W&quot;),1,0) + 
+IF(INCLUDES(Remittance_frequency__c , &quot;V&quot;),1,0) +
+IF(INCLUDES(Remittance_frequency__c , &quot;B&quot;),1,0) +
+IF(INCLUDES(Remittance_frequency__c , &quot;S&quot;),1,0) +
+IF(INCLUDES(Remittance_frequency__c , &quot;D&quot;),1,0) &gt; 2 )
 
 )</errorConditionFormula>
         <errorDisplayField>Remittance_frequency__c</errorDisplayField>
@@ -89285,29 +89347,38 @@ var connection = sforce.connection;
 
 var recType = sforce.connection.query(&quot;SELECT Id, Name FROM RecordType WHERE developername = &apos;Standard_Account&apos; LIMIT 1&quot;);
 
-var newmsoagency= new sforce.SObject(&quot;Account&quot;);
+if(&apos;{!Account.Airline_designator__c}&apos; == null || &apos;{!Account.Airline_designator__c}&apos; == &apos;&apos;){
+    alert(&apos;Error: {!$Label.ISSP_AMS_MSO_Request_Issue_Airline_Designator}&apos;);
+    
+}else{
+    var newmsoagency= new sforce.SObject(&quot;Account&quot;);
 
-newmsoagency.RecordTypeId = recType.Id;
-newmsoagency.Name = &apos;{!Account.Name}&apos;;
-newmsoagency.Sector__c = &quot;Travel Agent&quot;;
-newmsoagency.Category__c = &quot;MSO Member Sales Office&quot;;
-newmsoagency.Location_Class__c = &quot;M&quot;;
-newmsoagency.Location_Type__c = &quot;HO&quot;;
-newmsoagency.Reason_for_creation__c = &quot;New Agent&quot;;
+    newmsoagency.RecordTypeId = recType.Id;
+    newmsoagency.Name = &apos;{!Account.Name}&apos;;
+    newmsoagency.Sector__c = &quot;Travel Agent&quot;;
+    newmsoagency.Category__c = &quot;MSO Member Sales Office&quot;;
+    newmsoagency.Location_Class__c = &quot;M&quot;;
+    newmsoagency.Location_Type__c = &quot;HO&quot;;
+    newmsoagency.Reason_for_creation__c = &quot;New Agent&quot;;
 
-if({!Account.IATA_Member__c} == true) { 
-newmsoagency.Location_Category__c = &quot;IC&quot;; 
-} 
-else { 
-newmsoagency.Location_Category__c = &quot;NI&quot;; 
-}
+    if({!Account.IATA_Member__c} == true) { 
+        newmsoagency.Location_Category__c = &quot;IC&quot;; 
+    } else { 
+        newmsoagency.Location_Category__c = &quot;NI&quot;; 
+    }
 
-result = sforce.connection.create([newmsoagency]);
-var accId = result[0].id;
+    result = sforce.connection.create([newmsoagency]);
+    var accId = result[0].id;
 
-var airlineId = &apos;{!Account.Id}&apos;;
+    var airlineId = &apos;{!Account.Id}&apos;;
 
-javascript:srcUp(&apos;/apex/AMS_AccountOSCARWizardPage?accountId=&apos;+accId+&apos;&amp;process=x&amp;Type_of_OSCAR_process_man=NEW.MSO.1.0&amp;airlineId=&apos;+airlineId);</url>
+    if (typeof srcUp == &apos;function&apos;) {	
+		javascript:srcUp(&apos;/apex/AMS_AccountOSCARWizardPage?accountId=&apos;+accId+&apos;&amp;process=x&amp;Type_of_OSCAR_process_man=NEW.MSO.1.0&amp;airlineId=&apos;+airlineId);
+	}else{
+		//window.location.href = &apos;/apex/AMS_AccountOSCARWizardPage?accountId=&apos;+accId+&apos;&amp;process=x&amp;Type_of_OSCAR_process_man=NEW.MSO.1.0&amp;airlineId=&apos;+airlineId;
+        alert(&apos;This option is to use on the console&apos;);
+	}
+}</url>
     </webLinks>
     <webLinks>
         <fullName>DSE__DS_AccountHierarchyButton</fullName>

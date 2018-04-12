@@ -66,6 +66,19 @@
         <unique>false</unique>
     </fields>
     <fields>
+        <fullName>Case_subject__c</fullName>
+        <description>Formula to get the Subject field from the parent Case</description>
+        <externalId>false</externalId>
+        <formula>Local_Charge_Request__r.Subject</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>Case subject</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
         <fullName>Country_ISO_Code__c</fullName>
         <externalId>false</externalId>
         <label>Country ISO Code</label>
@@ -827,6 +840,20 @@
         </valueSet>
     </fields>
     <fields>
+        <fullName>IATA_ISO_Country__c</fullName>
+        <deleteConstraint>SetNull</deleteConstraint>
+        <description>Lookup to IATA ISO Country to replace old picklist Country_ISO_Code__c</description>
+        <externalId>false</externalId>
+        <label>ISO Country</label>
+        <referenceTo>IATA_ISO_Country__c</referenceTo>
+        <relationshipLabel>Charge Requests</relationshipLabel>
+        <relationshipName>Charge_Requests</relationshipName>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Lookup</type>
+    </fields>
+    <fields>
         <fullName>IATA_Membership__c</fullName>
         <externalId>false</externalId>
         <inlineHelpText>The IATA membership list can be found at the following link : http://www.iata.org/about/members/Pages/airline-list.aspx</inlineHelpText>
@@ -877,6 +904,18 @@ Please check for ICH membership under www.iata.org/ich.</inlineHelpText>
                 </value>
             </valueSetDefinition>
         </valueSet>
+    </fields>
+    <fields>
+        <fullName>ISO_Country_Code__c</fullName>
+        <externalId>false</externalId>
+        <formula>IATA_ISO_Country__r.ISO_Code__c</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>ISO Country Code</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
     </fields>
     <fields>
         <fullName>Local_Charge_Request__c</fullName>
@@ -1185,9 +1224,24 @@ Please check for ICH membership under www.iata.org/ich.</inlineHelpText>
                     <label>CASFEE_JOIN</label>
                 </value>
                 <value>
+                    <fullName>CASFEE_JOINS - 801032</fullName>
+                    <default>false</default>
+                    <label>CASFEE_JOINS - 801032</label>
+                </value>
+                <value>
                     <fullName>CASFEE_SEMNR</fullName>
                     <default>false</default>
                     <label>CASFEE_SEMNR</label>
+                </value>
+                <value>
+                    <fullName>CASITC_JOIN</fullName>
+                    <default>false</default>
+                    <label>CASITC_JOIN</label>
+                </value>
+                <value>
+                    <fullName>CASLNK_MSG</fullName>
+                    <default>false</default>
+                    <label>CASLNK_MSG</label>
                 </value>
                 <value>
                     <fullName>Code A4A Assignment Fee - 752539</fullName>
@@ -1607,7 +1661,15 @@ Please check for ICH membership under www.iata.org/ich.</inlineHelpText>
             </valueSettings>
             <valueSettings>
                 <controllingFieldValue>CASS</controllingFieldValue>
+                <valueName>CASFEE_JOINS - 801032</valueName>
+            </valueSettings>
+            <valueSettings>
+                <controllingFieldValue>CASS</controllingFieldValue>
                 <valueName>CASFEE_SEMNR</valueName>
+            </valueSettings>
+            <valueSettings>
+                <controllingFieldValue>CASS</controllingFieldValue>
+                <valueName>CASLNK_MSG</valueName>
             </valueSettings>
             <valueSettings>
                 <controllingFieldValue>Coding/MITA</controllingFieldValue>
@@ -1966,6 +2028,21 @@ Treasury Dashboard Set-up Fee (800964) : 3500</inlineHelpText>
                     <default>false</default>
                     <label>7400.00</label>
                 </value>
+                <value>
+                    <fullName>250.00</fullName>
+                    <default>false</default>
+                    <label>250.00</label>
+                </value>
+                <value>
+                    <fullName>1300.00</fullName>
+                    <default>false</default>
+                    <label>1300.00</label>
+                </value>
+                <value>
+                    <fullName>23000.00</fullName>
+                    <default>false</default>
+                    <label>23000.00</label>
+                </value>
             </valueSetDefinition>
             <valueSettings>
                 <controllingFieldValue>TEST_FILE</controllingFieldValue>
@@ -2008,6 +2085,7 @@ Treasury Dashboard Set-up Fee (800964) : 3500</inlineHelpText>
             </valueSettings>
             <valueSettings>
                 <controllingFieldValue>CASFEE_JOIN</controllingFieldValue>
+                <controllingFieldValue>CASITC_JOIN</controllingFieldValue>
                 <valueName>2500.00</valueName>
             </valueSettings>
             <valueSettings>
@@ -2021,6 +2099,7 @@ Treasury Dashboard Set-up Fee (800964) : 3500</inlineHelpText>
                 <controllingFieldValue>CASFEE_DGRVA</controllingFieldValue>
                 <controllingFieldValue>IBCS_JOINE</controllingFieldValue>
                 <controllingFieldValue>GSSA_APPL</controllingFieldValue>
+                <controllingFieldValue>CASLNK_MSG</controllingFieldValue>
                 <valueName>200.00</valueName>
             </valueSettings>
             <valueSettings>
@@ -2063,6 +2142,11 @@ Treasury Dashboard Set-up Fee (800964) : 3500</inlineHelpText>
             </valueSettings>
             <valueSettings>
                 <controllingFieldValue>FDS_TDPMS</controllingFieldValue>
+                <controllingFieldValue>Code Assignment Fee - 701907</controllingFieldValue>
+                <controllingFieldValue>Code Annual Retention Fee-  701900</controllingFieldValue>
+                <controllingFieldValue>MITA application fee - 701910</controllingFieldValue>
+                <controllingFieldValue>Code A4A Assignment Fee - 752539</controllingFieldValue>
+                <controllingFieldValue>Code Annual A4A Retention Fee - 701903</controllingFieldValue>
                 <valueName>4000.00</valueName>
             </valueSettings>
             <valueSettings>
@@ -2072,15 +2156,6 @@ Treasury Dashboard Set-up Fee (800964) : 3500</inlineHelpText>
             <valueSettings>
                 <controllingFieldValue>BSPFEE_STATM</controllingFieldValue>
                 <valueName>50.00</valueName>
-            </valueSettings>
-            <valueSettings>
-                <controllingFieldValue>Code Assignment Fee - 701907</controllingFieldValue>
-                <controllingFieldValue>Code Annual Retention Fee-  701900</controllingFieldValue>
-                <controllingFieldValue>MITA application fee - 701910</controllingFieldValue>
-                <controllingFieldValue>Code A4A Assignment Fee - 752539</controllingFieldValue>
-                <controllingFieldValue>Location Identifier Assignment Fee - 701920</controllingFieldValue>
-                <controllingFieldValue>Code Annual A4A Retention Fee - 701903</controllingFieldValue>
-                <valueName>3800.00</valueName>
             </valueSettings>
             <valueSettings>
                 <controllingFieldValue>BSPFEE_JOIN</controllingFieldValue>
@@ -2093,15 +2168,23 @@ Treasury Dashboard Set-up Fee (800964) : 3500</inlineHelpText>
             <valueSettings>
                 <controllingFieldValue>Code Annual Administration Fee - 701899</controllingFieldValue>
                 <controllingFieldValue>Code Application Fee - 752537</controllingFieldValue>
-                <valueName>1200.00</valueName>
+                <valueName>1300.00</valueName>
             </valueSettings>
             <valueSettings>
                 <controllingFieldValue>MITA annual fee - 701909</controllingFieldValue>
-                <valueName>22000.00</valueName>
+                <valueName>23000.00</valueName>
+            </valueSettings>
+            <valueSettings>
+                <controllingFieldValue>Location Identifier Assignment Fee - 701920</controllingFieldValue>
+                <valueName>3800.00</valueName>
             </valueSettings>
             <valueSettings>
                 <controllingFieldValue>Code Voluntary Change Request Fee - 701929</controllingFieldValue>
                 <valueName>7400.00</valueName>
+            </valueSettings>
+            <valueSettings>
+                <controllingFieldValue>AISTLM_FILE</controllingFieldValue>
+                <valueName>250.00</valueName>
             </valueSettings>
             <valueSettings>
                 <controllingFieldValue>GSSA_REGI</controllingFieldValue>
