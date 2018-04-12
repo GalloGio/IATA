@@ -1,5 +1,6 @@
 public with sharing class ISSP_TIP_Enrolment_Controller {
 
+
 	public String applyLanguage {get; set;}
 	public String displayLanguage {get; set;}
 	public User user {get; set;}
@@ -66,17 +67,33 @@ public with sharing class ISSP_TIP_Enrolment_Controller {
 			return null;
 		}*/
 
+		if(String.isEmpty(account.BillingStreet)){
+			account.BillingStreet.addError('Please fill the Billing Street');
+			return null;
+		}
+
+		if(String.isEmpty(account.BillingCity)){
+			account.BillingCity.addError('Please fill the Billing City');
+			return null;
+		}
 		
-		
+		if(String.isEmpty(account.TIP_HQ_Location__c)){
+			account.TIP_HQ_Location__c.addError('Please Choose the Location of Headquarter');
+			return null;
+		}
+
 		//confirm that primary contact is choosen
 		Boolean hasPrimaryContact = false;
 		for(Contact c : contactList){
 			if (c.Primary_Contact__c) hasPrimaryContact = true;
 		}
 
-		if(!hasPrimaryContact) contactList[0].Primary_Contact__c = true;
-		upsert contactList;
-
+		if(!hasPrimaryContact){
+			ApexPages.addMessage(new ApexPages.message(ApexPages.severity.ERROR, 'Please select a primary contact'));
+			return null;
+		//contactList[0].Primary_Contact__c = true;
+		//upsert contactList;
+		}
 
 		//Update or create case with status Open
 		updateCase();
@@ -126,7 +143,7 @@ public with sharing class ISSP_TIP_Enrolment_Controller {
 						ShippingPostalCode, ShippingCountry, VAT_Number__c, Short_Name__c, Location_Class__c, IATA_ISO_Country__c,TIP_Documents__c,
 						Iso_State__c, Abbreviated_name__c, Abbreviated_Address__c, Remittance_frequency__c, Solicitation_Flag__c,
 						VAT_Number_2__c, CASS_Number__c,Company_Type__c,RecordTypeid, RecordType.DeveloperName,Status__c,IATA_ISO_Country__r.ISO_Code__c,ANG_Accreditation_Model__c,
-						IATA_ISO_Country__r.Name, IATA_ISO_Country__r.region__c, TIP_HQ_Location__c
+						IATA_ISO_Country__r.Name, IATA_ISO_Country__r.region__c, TIP_HQ_Location__c,Country_ISO_Code__c
 						FROM Account
 						WHERE Id = :accountID
 								   LIMIT 1
@@ -153,6 +170,7 @@ public with sharing class ISSP_TIP_Enrolment_Controller {
 
 	public List<SelectOption> getISOCountry() {
 		List<SelectOption> options = new List<SelectOption>();		
+		options.add(new SelectOption('',Label.ISSP_SELECT_COUNTRY));
 		for(IATA_ISO_Country__c iso:[select Id,Name,ISO_Code__c, IEC_Zip_Postal_Code_required__c from IATA_ISO_Country__c
 									where Name != 'All Countries' and Name != 'NO COUNTRY' order by Name]){
 			options.add(new SelectOption(iso.Id,iso.Name));
@@ -177,6 +195,10 @@ public with sharing class ISSP_TIP_Enrolment_Controller {
 
 	public void createContact(){
 		newContact.AccountId = accountID;
+		/*if(String.isEmpty(newContact.Membership_Function__c)) {
+			Apexpages.addmessage(new ApexPages.message(ApexPages.severity.WARNING,'Please enter value'));
+			return;
+		}*/
 		try{
 			upsert newContact;
 			isEmailDuplicated = false;
@@ -192,9 +214,12 @@ public with sharing class ISSP_TIP_Enrolment_Controller {
 
 	public Pagereference setContactToEdit(){
 		
-		ID contactID = Apexpages.currentPage().getParameters().get('contactIDToEdit');
-		for (Contact c: contactList) {
-			if(c.id == contactID) newContact = c;
+		String contactID = Apexpages.currentPage().getParameters().get('contactIDToEdit');
+		if (String.isBlank(contactID)) newContact = new Contact();
+		else{
+			for (Contact c: contactList) {
+				if(c.id == contactID) newContact = c;
+			}
 		}
 		return null;
 

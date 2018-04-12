@@ -221,11 +221,19 @@ private class TIP_BINRangeTriggerHandlerTest {
 			RecordTypeId = listedByIATARecordTypeId,
 			TIP_Effective_To_Date__c = Date.today() - 1);
 
+		TIP_BIN_Range__c mixedInsert6 = new TIP_BIN_Range__c(TIP_Payment_Provider_Product__c = product.Id,
+			TIP_Effective_From_Date__c = Date.today(),
+			TIP_Range_Start__c = '8000',
+			TIP_Range_End__c = '8100',
+			RecordTypeId = listedByIATARecordTypeId,
+			TIP_Effective_To_Date__c = Date.today() + 1);
+
 		overlapBinRanges.add(mixedInsert1);
 		overlapBinRanges.add(mixedInsert2);
 		overlapBinRanges.add(mixedInsert3);
 		overlapBinRanges.add(mixedInsert4);
 		overlapBinRanges.add(mixedInsert5);
+		overlapBinRanges.add(mixedInsert6);
 
 		try {
 			results = Database.insert(overlapBinRanges, false);
@@ -237,7 +245,7 @@ private class TIP_BINRangeTriggerHandlerTest {
 			if (result.isSuccess()) sucessCounter ++;
 		}
 
-		System.assertEquals(3, sucessCounter);
+		System.assertEquals(4, sucessCounter);
 
 		sucessCounter = 0;
 		overlapBinRanges.clear();
@@ -319,11 +327,13 @@ private class TIP_BINRangeTriggerHandlerTest {
 		mixedInsert3.TIP_Effective_To_Date__c = Date.today() + 2;
 
 		mixedInsert4.TIP_Range_Start__c = '7400';
-		mixedInsert4.TIP_Effective_To_Date__c = Date.today() + 5;
+
+		mixedInsert6.TIP_Range_End__c = '8200';
 
 		overlapBinRanges.add(mixedInsert3);
 		overlapBinRanges.add(mixedInsert4);
 		overlapBinRanges.add(mixedInsert5);
+		overlapBinRanges.add(mixedInsert6);
 
 		try {
 			results = Database.update(overlapBinRanges, false);
@@ -335,6 +345,6 @@ private class TIP_BINRangeTriggerHandlerTest {
 			if (result.isSuccess()) sucessCounter ++;
 		}
 
-		System.assertEquals(0, sucessCounter);
+		System.assertEquals(1, sucessCounter);
 	}
 }

@@ -195,8 +195,8 @@
     <fields>
         <fullName>PP_GDS_Integration__c</fullName>
         <externalId>false</externalId>
-        <inlineHelpText>Indicate with which GDS (s) and a description of the integration(s) processes required that enable agents - using this/these GDS(s) - to have an automated access to this Alternative Transfer Method (e.g. VAN)</inlineHelpText>
-        <label>GDS Integration</label>
+        <inlineHelpText>Indicate which GDS supports an integration process that enable Travel Agents to have an automated access to this Alternative Transfer Method</inlineHelpText>
+        <label>Integration of ATMs with GDSs</label>
         <length>255</length>
         <required>false</required>
         <trackTrending>false</trackTrending>
@@ -239,7 +239,7 @@
         <fullName>PP_Network_Fee__c</fullName>
         <externalId>false</externalId>
         <inlineHelpText>Enter details about Acquiring network / scheme fee (s)</inlineHelpText>
-        <label>Network Fee (default)</label>
+        <label>Network Fee (Default)</label>
         <length>255</length>
         <required>false</required>
         <trackTrending>false</trackTrending>
@@ -695,7 +695,7 @@ If the product is a multi-use VANs, then it is a unique card/account number that
         <active>true</active>
         <description>Payment Product Code is mandatory for partner products to be approved</description>
         <errorConditionFormula>RecordType.DeveloperName==&apos;TIP_Product&apos; 
-&amp;&amp; NOT(ISPICKVAL(PP_status__c,&apos;Rejected&apos;))
+&amp;&amp; NOT(ISPICKVAL(PP_status__c,&apos;Rejected&apos;) || ISPICKVAL(PP_status__c,&apos;Draft&apos;))
 &amp;&amp; ISBLANK(PP_Payment_Product_Code__c)</errorConditionFormula>
         <errorMessage>Please fill in the Payment Product Code.</errorMessage>
     </validationRules>

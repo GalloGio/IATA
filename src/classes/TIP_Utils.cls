@@ -24,6 +24,14 @@ public class TIP_Utils{
 
 	//case Description
 	public static String CASE_DESC_REQUEST_FOR_ENLISTMENT_PAYMENT_PROVIDER = 'Request for Enlistment as Payment provider';
+	
+
+	//Case Subject
+	public static String CASE_SUBJECT_NEW_PRODUCT_ENROLMENT = 'New Product Enrolment';
+
+	//BIN Range RT's
+	public static String LISTED_BY_IATA_RECORD_TYPE_ID = RecordTypeSingleton.getInstance().RtIDsPerDeveloperNamePerObj.get('TIP_BIN_Range__c').get('Listed_by_IATA');
+	public static String BIN_RANGE_PROVIDER_RECORD_TYPE_ID = RecordTypeSingleton.getInstance().RtIDsPerDeveloperNamePerObj.get('TIP_BIN_Range__c').get('Provider');
 
 	//TIP-49 - validate IATA code is unique for payment providers
   	public static void validateUniqueIATACodeForTIP(List<Account> triggerNew,map<id, Account> triggerOld) {
@@ -65,5 +73,11 @@ public class TIP_Utils{
 				mapIataCodeAccount.get(accWithDuplicatedIATACode.IATACode__c).addError('Duplicated IATA Code: ' + accWithDuplicatedIATACode.IATACode__c + '. ID: ' + accWithDuplicatedIATACode.id);
 			}
 		}
+	}
+
+	public static void setAssessmentDate(List<Account> triggerNew,map<id, Account> triggerOld) {
+		for(Account newAcc : triggerNew){
+			if(newAcc.recordtypeid == PAYMENT_PROVIDER_RECORD_TYPE_ID && triggerOld.get(newAcc.id).recordtypeid != newAcc.recordtypeid) newAcc.Assessment_Performed_Date__c = Date.today();
+		}	
 	}
 }

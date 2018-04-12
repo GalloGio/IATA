@@ -93,7 +93,7 @@ public class TIP_BINRangeTriggerHandler {
 			List<TIP_BIN_Range__c> existingRanges = new List<TIP_BIN_Range__c>();
 
 			for (TIP_BIN_Range__c b: existingBinRanges) {
-				if (!updatedBins.contains(b)) {
+				if (!notOverlappingRanges.contains(b)) {
 					existingRanges.add(b);
 				}
 			}
