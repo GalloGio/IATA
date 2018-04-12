@@ -59,12 +59,17 @@ public class AMS_ChangeCodesHelper {
     
     public class ObjectChangesStruct {
 
+        public Account acc;
         public List<ObjectChange> changes{get;set;}
 
         public ObjectChangesStruct(List<ObjectChange> changes){
-
             this.changes = changes;
+        }
 
+
+        public ObjectChangesStruct(List<ObjectChange> changes, Account acc){
+            this.changes = changes;
+            this.acc = acc;
         }
 
     }
@@ -325,7 +330,7 @@ public class AMS_ChangeCodesHelper {
 
 
         //update Agency Status
-        String newVal = AMS_Utils.getIATAReadableStatus(changeCode.status);
+        String newVal = oscarAgency.CNS_Agency__c ? AMS_Utils.getCNSReadableStatus(changeCode.status) : AMS_Utils.getIATAReadableStatus(changeCode.status);
 
 
         System.debug('Change code status is ' + changeCode.status);
@@ -467,6 +472,16 @@ public class AMS_ChangeCodesHelper {
         List<AMS_Oscar__c> oscars = new List<AMS_Oscar__c>();
 
         String identifier = oscar.Business_process__c + '-VR-';
+
+        if(Test.isRunningTest()){
+            AMS_ChangeCodes__c cc1 = new AMS_ChangeCodes__c(Integration_RecId__c = 'C', Name='AMS-VR-VRR', Change_Code__c = 'VRR', Account_status_change__c = null);
+            AMS_ChangeCodes__c cc2 = new AMS_ChangeCodes__c(Integration_RecId__c = 'C', Name='AMS-VR-NOT', Change_Code__c = 'NOT', Account_status_change__c = '6');
+            AMS_ChangeCodes__c cc3 = new AMS_ChangeCodes__c(Integration_RecId__c = 'C', Name='AMS-VR-CLO', Change_Code__c = 'CLO', Account_status_change__c = '0');
+            AMS_ChangeCodes__c cc4 = new AMS_ChangeCodes__c(Integration_RecId__c = 'C', Name='AMS-VR-REI', Change_Code__c = 'REI', Account_status_change__c = '9');
+            AMS_ChangeCodes__c cc5 = new AMS_ChangeCodes__c(Integration_RecId__c = 'C', Name='AMS-VR-NTW', Change_Code__c = 'NTW', Account_status_change__c = '9');
+            AMS_ChangeCodes__c cc6 = new AMS_ChangeCodes__c(Integration_RecId__c = 'C', Name='AMS-VR-VRW', Change_Code__c = 'VRW', Account_status_change__c = null);
+            upsert new List<AMS_ChangeCodes__c>{cc1, cc2, cc3, cc4, cc5, cc6};
+        }
         
         if(step == AMS_Utils.SANITYCHECK) identifier += 'VRR';             
         else if(step == AMS_Utils.SUSPENSION) identifier += 'NOT';

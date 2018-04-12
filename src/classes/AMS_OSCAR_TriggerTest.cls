@@ -25,7 +25,9 @@
     }
 
     @testSetup static void setup(){
-        
+        AMS_ChangeCodes__c cc1 = new AMS_ChangeCodes__c(Integration_RecId__c = 'C', Name = 'DIS-AMS', Change_Code__c = 'DIS');
+        AMS_ChangeCodes__c cc2 = new AMS_ChangeCodes__c(Integration_RecId__c = 'C', Name = 'FIN-AMS', Change_Code__c = 'FIN');
+        upsert new List<AMS_ChangeCodes__c>{cc1, cc2};
     }
 
     @isTest static void insertOSCARTest() {
@@ -604,7 +606,7 @@
         
         AMS_OSCAR_TestDataFactory.createOSCARwithInspectionsTestData();
         
-        Account a = [SELECT id,Status__c from Account where Name = 'Test1 Agency' LIMIT 1];
+        Account a = [SELECT id,Status__c, CNS_Agency__c from Account where Name = 'Test1 Agency' LIMIT 1];
 
         ID newRT = Schema.SObjectType.AMS_OSCAR__c.getRecordTypeInfosByName().get('NEW').getRecordTypeId();
 

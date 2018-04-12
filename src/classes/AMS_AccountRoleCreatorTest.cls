@@ -58,6 +58,8 @@ public with sharing class AMS_AccountRoleCreatorTest {
         AMS_Person__c p2 = new AMS_Person__c(Name='do', LastName__c='notDelete', First_Name__c='DontDelete', Email__c='unique123@email.com');
         insert p2;
 
+        upsert new AMS_ChangeCodes__c(Integration_RecId__c = 'C', Name = 'CADM', Change_Code__c = 'CAD');
+
     }
     
     @isTest static void test_RunAccountOwnershipInsertthenUpdate_ExpectUpdatedAccountRole()

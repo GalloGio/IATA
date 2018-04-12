@@ -121,11 +121,13 @@ private class ANG_OscarProcessHelperTest {
             ),
             new AMS_ChangeCodes__c(
                 Name = 'FPR', Change_Code__c = 'FPR', Integration_RecId__c = 'C',Bulletin_Memo_Text__c = 'Agent is restricted from using Cash form of payment method due to <SIDRA Lite Reason>.'
+            ),
+            new AMS_ChangeCodes__c(
+                Name = 'NEW-AMS', Change_Code__c = 'NEW', Integration_RecId__c = 'A'
             )
         };
 
-        insert changeCodeList;
-		
+        insert changeCodeList;		
 	}
 
 	@isTest static void testIATACodeGenerationOKNoDueDiligenceCase() {
@@ -143,7 +145,7 @@ private class ANG_OscarProcessHelperTest {
 
 		ANG_OscarProcessHelper.checkSFDCLimits();
 
-		System.assertEquals('0',result[0]);
+		System.assertEquals('0',result[0], result[1]);
 
 		oscar = [Select Id, Flag_IATACode__c, STEP10__c, Flag_Data_to_Account__c, Flag_Data_to_SAPECC__c FROM AMS_OSCAR__c LIMIT 1];
 
@@ -174,7 +176,7 @@ private class ANG_OscarProcessHelperTest {
 
 		ANG_OscarProcessHelper.checkSFDCLimits();
 
-		System.assertEquals('0',result[0]);
+		System.assertEquals('0',result[0], result[1]);
 		System.assertEquals('0',result[2]); // due diligence was created
 
 		oscar = [Select Id, Flag_IATACode__c, STEP10__c, Flag_Data_to_Account__c, Flag_Data_to_SAPECC__c FROM AMS_OSCAR__c LIMIT 1];
@@ -206,7 +208,7 @@ private class ANG_OscarProcessHelperTest {
 		system.debug('testIATACodeGenerationOKTwice Result code is:'+result[0]);
 		system.debug('testIATACodeGenerationOKTwice Result message is:'+result[1]);
 
-		System.assertEquals('0',result[0]);
+		System.assertEquals('0',result[0], result[1]);
 
 		ANG_OscarProcessHelper.checkSFDCLimits();
 
@@ -217,7 +219,7 @@ private class ANG_OscarProcessHelperTest {
 
 		ANG_OscarProcessHelper.checkSFDCLimits();
 
-		System.assertEquals('0',result[0]);
+		System.assertEquals('0',result[0], result[1]);
 
 		oscar = [Select Id, Flag_IATACode__c, STEP10__c, Flag_Data_to_Account__c, Flag_Data_to_SAPECC__c FROM AMS_OSCAR__c LIMIT 1];
 
@@ -251,7 +253,7 @@ private class ANG_OscarProcessHelperTest {
 
 		ANG_OscarProcessHelper.checkSFDCLimits();
 
-		System.assertEquals('0',result[0]);
+		System.assertEquals('0',result[0], result[1]);
 
 		oscar = [Select Id, Flag_IATACode__c, STEP10__c, Flag_Data_to_Account__c, Flag_Data_to_SAPECC__c FROM AMS_OSCAR__c LIMIT 1];
 
@@ -281,7 +283,7 @@ private class ANG_OscarProcessHelperTest {
 
 		ANG_OscarProcessHelper.checkSFDCLimits();
 
-		System.assertEquals('0',result[0]);
+		System.assertEquals('0',result[0], result[1]);
 
 		oscar = [Select Id, Flag_IATACode__c, STEP10__c, Flag_Data_to_Account__c, Flag_Data_to_SAPECC__c FROM AMS_OSCAR__c LIMIT 1];
 
@@ -319,7 +321,7 @@ private class ANG_OscarProcessHelperTest {
 
 		ANG_OscarProcessHelper.checkSFDCLimits();
 
-		System.assertEquals('0',result[0]);
+		System.assertEquals('0',result[0], result[1]);
 
 		oscar = [Select Id, Flag_IATACode__c, STEP10__c, Flag_Data_to_Account__c, Flag_Data_to_SAPECC__c FROM AMS_OSCAR__c LIMIT 1];
 
@@ -354,7 +356,7 @@ private class ANG_OscarProcessHelperTest {
 
 		ANG_OscarProcessHelper.checkSFDCLimits();
 
-		System.assertEquals('0',result[0]);
+		System.assertEquals('0',result[0], result[1]);
 
 		oscar = [Select Id, Flag_IATACode__c, STEP10__c, Flag_Data_to_Account__c, Flag_Data_to_SAPECC__c FROM AMS_OSCAR__c LIMIT 1];
 

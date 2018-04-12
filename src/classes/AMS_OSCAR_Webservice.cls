@@ -236,12 +236,13 @@ global class AMS_OSCAR_Webservice {
 
             //AMS_Utils.isNewgenProcess = (AMS_Utils.oscarNewGenProcesses.contains(theOSCAR.Process__c));
 
+            String changeCodeId = 'NEW-' + theOSCAR.Business_Process__c;
             AMS_OSCAR_JSON.ChangeCode changeCode = new AMS_OSCAR_JSON.ChangeCode();
-            AMS_ChangeCodes__c n = AMS_ChangeCodes__c.getInstance('NEW-' + theOSCAR.Business_Process__c);
+            AMS_ChangeCodes__c n = AMS_ChangeCodes__c.getInstance(changeCodeId);
 
             changeCode.name = n.Change_Code__c;
             changeCode.reasonCode = n.Reason_Code__c;
-            changeCode.memoText = AMS_Utils.getChangeCodeMemoText(theOSCAR.Process__c, changeCode.name);
+            changeCode.memoText = AMS_Utils.getChangeCodeMemoText(theOSCAR.Process__c, changeCodeId);
             changeCode.reasonDesc  = n.Reason_Code_Description__c;
             changeCode.status  = n.Account_status_change__c;
             changeCode.publishedOnEBulletin = n.Published_in_bulletin__c;

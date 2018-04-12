@@ -23,17 +23,17 @@ public class AMS_AgencyChangesTest {
 	
 	public static void init2Hierarchies(boolean isPax){
 		List<AMS_AgencyChangesConfig__c> customsettings = new List<AMS_AgencyChangesConfig__c>();
-		customsettings.add(new AMS_AgencyChangesConfig__c(Name = 'Combination08', TC_Location_type__c = true, TCA_Fields_to_Migrate__c = 'ChangeOfLocation',
+		customsettings.add(new AMS_AgencyChangesConfig__c(Process__c = 'AMS', Name = 'Combination08', TC_Location_type__c = true, TCA_Fields_to_Migrate__c = 'ChangeOfLocation',
 														  TC_Legal_status__c = false, TC_Location__c = false, TC_Location_with_inspection__c = false, 
 														  TC_Minor_Shareholding__c = false, TC_Name__c = false, TC_Ownership_to_IATA_Agent__c = false, 
 														  TC_Major_Shareholding__c = false, TC_Ownership_to_non_IATA_Agent__c = false, TC_VMFR__c = false, 
 														  TCA_Sanity_check__c = 'CAD', TCA_Application_withdrawal__c = 'CWD'));
-		customsettings.add(new AMS_AgencyChangesConfig__c(Name = 'Combination09', TC_Ownership_to_IATA_Agent__c = true, TCA_Fields_to_Migrate__c = 'ChangeOfOwnership; ',
+		customsettings.add(new AMS_AgencyChangesConfig__c(Process__c = 'AMS', Name = 'Combination09', TC_Ownership_to_IATA_Agent__c = true, TCA_Fields_to_Migrate__c = 'ChangeOfOwnership; ',
 														  TC_Legal_status__c = false, TC_Location__c = false, TC_Location_with_inspection__c = false, 
 														  TC_Minor_Shareholding__c = false, TC_Name__c = false, TC_Location_type__c = false, 
 														  TC_Major_Shareholding__c = false, TC_Ownership_to_non_IATA_Agent__c = false, TC_VMFR__c = false,  
 														  TCA_Sanity_check__c = 'CHI', TCA_Manager_approval__c = 'CHF', TCA_Application_withdrawal__c = 'CWD'));
-		customsettings.add(new AMS_AgencyChangesConfig__c(Name = 'Combination10', TC_Ownership_to_non_IATA_Agent__c = true, TCA_Sanity_check__c = 'CHO', TCA_Manager_approval__c = 'CHF', TCA_Application_withdrawal__c = 'CWD'));
+		customsettings.add(new AMS_AgencyChangesConfig__c(Process__c = 'AMS', Name = 'Combination10', TC_Ownership_to_non_IATA_Agent__c = true, TCA_Sanity_check__c = 'CHO', TCA_Manager_approval__c = 'CHF', TCA_Application_withdrawal__c = 'CWD'));
 		insert customsettings;
 
 		List<AMS_ChangeCodes__c> changeCodeCustomsettings = new List<AMS_ChangeCodes__c>();
