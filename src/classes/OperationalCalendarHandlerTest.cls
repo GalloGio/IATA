@@ -23,7 +23,7 @@ private class OperationalCalendarHandlerTest {
         System.assertEquals('M',operation.Frequency_code__c);
         System.assertEquals('BSP Domestic',operation.Operation_Type__c);
         System.assertEquals(issOperation.Id,operation.ISS_operation__c);
-        System.assertEquals(operation.Operation_Code__c + '_RM_' + operation.Period_Code__c ,operation.Operation_Period_code__c);
+        System.assertEquals(operation.Operation_Code__c + '__RM_' + operation.Period_Code__c ,operation.Operation_Period_code__c);
         System.assertEquals('ISS_Calendar',operation.Recordtype.DeveloperName);
     }
     
@@ -49,7 +49,7 @@ private class OperationalCalendarHandlerTest {
         System.assertEquals('M',operation.Frequency_code__c);
         System.assertEquals('CASS Export',operation.Operation_Type__c);
         System.assertEquals(issOperation.Id,operation.ISS_operation__c);
-        System.assertEquals(operation.Operation_Code__c + '_RM_' + operation.Period_Code__c ,operation.Operation_Period_code__c);
+        System.assertEquals(operation.Operation_Code__c + '__RM_' + operation.Period_Code__c ,operation.Operation_Period_code__c);
         System.assertEquals('ISS_Calendar',operation.Recordtype.DeveloperName);
     }
 }
