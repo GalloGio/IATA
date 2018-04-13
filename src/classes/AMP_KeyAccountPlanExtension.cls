@@ -60,7 +60,8 @@ public with sharing class AMP_KeyAccountPlanExtension {
 			'Details__c',
 			'AM_Level_of_importance__c',
 			'Status__c',
-			'Deadline__c'
+			'Deadline__c',
+			'Division__c'
         };
         return kapAccessFields;
 
@@ -300,7 +301,7 @@ public with sharing class AMP_KeyAccountPlanExtension {
 		lsObjectives =
 			[SELECT Id, Name, Account_Issue_or_Priority__c, Account_Issue_or_Priority__r.Name, Benefits_to_Account__c,
 							Details__c, AM_Level_of_importance__c,
-							Status__c, Deadline__c, Account__c,
+							Status__c, Deadline__c, Account__c, Division__c,
 							(SELECT Id, Subject, Description,  ActivityDate, Status, Owner.Name, OwnerId,Subject__c,
 											AM_Involved__c, AM_Responsible__c, AM_Support_Required_from_Account__c
 							FROM Tasks

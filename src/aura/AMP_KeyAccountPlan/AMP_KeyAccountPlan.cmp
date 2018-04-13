@@ -25,6 +25,7 @@
                     default="{     'sobjectType' : 'Objective__c',
                              'Name': '',
                              'Details__c': '',
+                             'Division__c': '',
                              'Status__c': '',
                              'Account_Issue_or_Priority__c': '',
                              'Benefits_to_Account__c': '',
@@ -72,6 +73,7 @@
                             <th scope="col" class="narrowColumn"><span class="slds-truncate"></span></th><!--Actions-->
                             <th scope="col" class="mediumColumn"><span class="slds-truncate">Activity</span></th>
                             <th scope="col" class="wideColumn"><span class="slds-truncate">Description</span></th>
+                            <th scope="col" class="wideColumn"><span class="slds-truncate">Division</span></th>
                             <th scope="col" class="narrowColumn"><span class="slds-truncate">Overall Status</span></th>
                             <th scope="col" class="narrowColumn"><span class="slds-truncate">End Date</span></th>
                             <th scope="col" class="mediumColumn"><span class="slds-truncate">Account Issue or Priority</span></th>

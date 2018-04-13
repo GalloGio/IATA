@@ -75,6 +75,11 @@
                     </apex:outputPanel>
                 </apex:column>
 
+                <apex:column headerValue="Division">
+                    <apex:outputField value="{!objective.Division__c}"  rendered="{!!AND(isEditMode, IdConcerned==objective.Id)}"/>
+                    <apex:inputField value="{!objective.Division__c}" rendered="{!AND(isEditMode, IdConcerned==objective.Id)}" style="width: 80%;" />
+                </apex:column>
+
       					<apex:column headerValue="Overall Status" styleClass="table-column-10pc">
                     <apex:outputField value="{!objective.Status__c}"  rendered="{!!AND(isEditMode, IdConcerned==objective.Id)}"/>
                     <apex:inputField value="{!objective.Status__c}" rendered="{!AND(isEditMode, IdConcerned==objective.Id)}" required="true" style="width: 80%;" />
