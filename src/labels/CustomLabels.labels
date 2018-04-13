@@ -3949,6 +3949,13 @@ Ensuring that the industry adapts and adheres to these global standards and reco
         <value>IATA Alpha/Numeric Code</value>
     </labels>
     <labels>
+        <fullName>ICE_Portal_Service</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ICE Portal Service</shortDescription>
+        <value>IATA Customer E-statement (ICE) is designed to provide you with the details of your balances for the most recent IATA Billing cycles. The service will also allow you to view your upcoming remittance dates and incorporate them in your phone’s calendar.</value>
+    </labels>
+    <labels>
         <fullName>ICH</fullName>
         <language>en_US</language>
         <protected>false</protected>
@@ -23389,7 +23396,7 @@ errMissAttn:Attention cannot be empty
 errMissPhone:Phone cannot be empty
 errMissState:State/Province cannot be empty
 msgAddrExist:Shipping address is already in system.
-msgErrorCartNotCompliant:Your country is non-compliant with one or more products in this cart. Please remove these products and try again or contact Customer Services to order this product</value>
+msgErrorCartNotCompliant:Please contact Customer Services by email custserv@iata.org&lt;mailto:custserv@iata.org&gt; or telephone in Canada +1 (514) 390 6726, to order this product.</value>
     </labels>
     <labels>
         <fullName>Labels_IECConfirmOrder</fullName>
@@ -23397,7 +23404,7 @@ msgErrorCartNotCompliant:Your country is non-compliant with one or more products
         <protected>false</protected>
         <shortDescription>Labels for VF page IECConfirmOrder</shortDescription>
         <value>msgErrorProductNotCompliant:- Your country is non-compliant with the product &quot;{0}&quot; ({1}). Please remove from cart to be able to proceed or contact Customer Services to order this product.
-msgErrorCartNotCompliant:Your country is non-compliant with one or more products in this cart. Please remove these products and try again or contact Customer Services to order this product.
+msgErrorCartNotCompliant:Please contact Customer Services by email custserv@iata.org&lt;mailto:custserv@iata.org&gt; or telephone in Canada +1 (514) 390 6726, to order this product.
 errT_C:You must accept all the terms &amp; conditions before
 errAddrExist:Address is already in system
 errTax:SAP Taxes and Shipping interface: 
@@ -23464,7 +23471,7 @@ lblStockDate:Expected Availability Date:
 lblQtyInvalid:Invalid quantity to add
 lblDiscount:Discount
 lblFreeShipping:FREE SHIPPING
-msgErrorProductNotCompliant:Your country is non-compliant with this product. Please contact Customer Services to order this product.</value>
+msgErrorProductNotCompliant:Please contact Customer Services by email custserv@iata.org&lt;mailto:custserv@iata.org&gt; or telephone in Canada +1 (514) 390 6726, to order this product.</value>
     </labels>
     <labels>
         <fullName>Labels_IECProductRelated</fullName>
@@ -23809,6 +23816,45 @@ msgErrorRenewalOrderExpired:Your renewal notification order link is either  expi
         <value>New</value>
     </labels>
     <labels>
+        <fullName>NewGenApp_AccountStatementNotification</fullName>
+        <categories>NewGenApp</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>NewGenApp_AccountStatementNotification</shortDescription>
+        <value>Account Statement {0} Balance has changed to: {1}</value>
+    </labels>
+    <labels>
+        <fullName>NewGenApp_CashConditionsNotification</fullName>
+        <categories>NewGenApp</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>NewGenApp_CashConditionsNotification</shortDescription>
+        <value>RHC: There was an update on Cash Conditions</value>
+    </labels>
+    <labels>
+        <fullName>NewGenApp_RHC_RiskAlert_Notification</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>NewGenApp_RHC_RiskAlert_Notification</shortDescription>
+        <value>RHC: Threshold Level {0}% - {1}</value>
+    </labels>
+    <labels>
+        <fullName>NewGenApp_RiskStatusNotification</fullName>
+        <categories>NewGenApp</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>NewGenApp_RiskStatusNotification</shortDescription>
+        <value>RHC: There was an update on Risk Status</value>
+    </labels>
+    <labels>
+        <fullName>NewGenApp_ServiceAccepted</fullName>
+        <categories>NewGenApp</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>NewGenApp_ServiceAccepted</shortDescription>
+        <value>{0} service request approved</value>
+    </labels>
+    <labels>
         <fullName>New_password</fullName>
         <language>en_US</language>
         <protected>false</protected>
@@ -23950,7 +23996,7 @@ msgErrorRenewalOrderExpired:Your renewal notification order link is either  expi
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>OneId Community Name</shortDescription>
-        <value>identity</value>
+        <value>s/identity</value>
     </labels>
     <labels>
         <fullName>OneId_Contact_Association_Validation</fullName>
