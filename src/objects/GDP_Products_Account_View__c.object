@@ -280,6 +280,32 @@ IF(RIGHT(AIMS_ID__c,3)=&quot;GDP&quot;,Left(AIMS_ID__c,LEN(AIMS_ID__c)-3),AIMS_I
         <unique>false</unique>
     </fields>
     <fields>
+        <fullName>CA_FoP_Status__c</fullName>
+        <description>Status of CASH Form of Payment</description>
+        <externalId>false</externalId>
+        <inlineHelpText>Status of CASH Form of Payment</inlineHelpText>
+        <label>CA FoP Status</label>
+        <length>10</length>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>CC_FoP_Status__c</fullName>
+        <description>Status of CREDIT CARD Form of Payment</description>
+        <externalId>false</externalId>
+        <inlineHelpText>Status of CREDIT CARD Form of Payment</inlineHelpText>
+        <label>CC FoP Status</label>
+        <length>10</length>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
         <fullName>Cash_Conditions_Override__c</fullName>
         <description>Formula on Related Accreditation (Cash_Conditions_Override__c)</description>
         <externalId>false</externalId>
@@ -415,6 +441,19 @@ IF Trading Name is NULL, use Legal Name for Agency Merge Field</description>
         <inlineHelpText>IF Trading Name is NOT NULL, use Trading Name for Agency Merge Field
 IF Trading Name is NULL, use Legal Name for Agency Merge Field</inlineHelpText>
         <label>EBC_Agency_Name</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>EP_FoP_Status__c</fullName>
+        <description>Status of EASYPAY Form of Payment</description>
+        <externalId>false</externalId>
+        <inlineHelpText>Status of EASYPAY Form of Payment</inlineHelpText>
+        <label>EP FoP Status</label>
+        <length>10</length>
         <required>false</required>
         <trackHistory>false</trackHistory>
         <trackTrending>false</trackTrending>
