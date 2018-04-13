@@ -12634,6 +12634,7 @@ IF ((RecordType.DeveloperName = &quot;IATA_Airline&quot; || RecordType.Developer
                     <fullName>S</fullName>
                     <default>false</default>
                     <label>Every 5 days</label>
+                    <isActive>false</isActive>
                 </value>
                 <value>
                     <fullName>B</fullName>
@@ -15295,6 +15296,11 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
             <valueSetDefinition>
                 <sorted>true</sorted>
                 <value>
+                    <fullName>Active</fullName>
+                    <default>false</default>
+                    <label>Active</label>
+                </value>
+                <value>
                     <fullName>Applicant</fullName>
                     <default>false</default>
                     <label>Applicant</label>
@@ -15328,6 +15334,16 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
                     <fullName>Endorsed</fullName>
                     <default>false</default>
                     <label>Endorsed</label>
+                </value>
+                <value>
+                    <fullName>Inactive</fullName>
+                    <default>false</default>
+                    <label>Inactive</label>
+                </value>
+                <value>
+                    <fullName>In Progress</fullName>
+                    <default>false</default>
+                    <label>In Progress</label>
                 </value>
                 <value>
                     <fullName>Listed</fullName>
@@ -15784,6 +15800,7 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
     <fields>
         <fullName>TIP_Documents__c</fullName>
         <externalId>false</externalId>
+        <inlineHelpText>Enter any additional information related to your company (e.g. to comply with AML requirements)</inlineHelpText>
         <label>Documents</label>
         <length>32768</length>
         <trackFeedHistory>false</trackFeedHistory>
@@ -15795,6 +15812,7 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
         <fullName>TIP_HQ_Location__c</fullName>
         <deleteConstraint>Restrict</deleteConstraint>
         <externalId>false</externalId>
+        <inlineHelpText>Select the country where provider&apos;s headquarter is located</inlineHelpText>
         <label>HQ Location</label>
         <referenceTo>IATA_ISO_Country__c</referenceTo>
         <relationshipLabel>Accounts (HQ Location)</relationshipLabel>
@@ -86996,35 +87014,35 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
         <picklistValues>
             <picklist>Remittance_frequency__c</picklist>
             <values>
-                <fullName>4 times per month</fullName>
+                <fullName>W</fullName>
                 <default>false</default>
             </values>
             <values>
-                <fullName>Daily</fullName>
+                <fullName>D</fullName>
                 <default>false</default>
             </values>
             <values>
-                <fullName>Every 10 days</fullName>
+                <fullName>R</fullName>
                 <default>false</default>
             </values>
             <values>
-                <fullName>Every 3 days</fullName>
+                <fullName>B</fullName>
                 <default>false</default>
             </values>
             <values>
-                <fullName>Every 5 days</fullName>
+                <fullName>S</fullName>
                 <default>false</default>
             </values>
             <values>
-                <fullName>Fortnightly</fullName>
+                <fullName>F</fullName>
                 <default>false</default>
             </values>
             <values>
-                <fullName>Monthly</fullName>
+                <fullName>M</fullName>
                 <default>false</default>
             </values>
             <values>
-                <fullName>Weekly</fullName>
+                <fullName>V</fullName>
                 <default>false</default>
             </values>
         </picklistValues>
@@ -87965,31 +87983,15 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
         <picklistValues>
             <picklist>Status__c</picklist>
             <values>
-                <fullName>Approved</fullName>
+                <fullName>Active</fullName>
                 <default>false</default>
             </values>
             <values>
-                <fullName>Cash basis%2Fno commission</fullName>
+                <fullName>In Progress</fullName>
                 <default>false</default>
             </values>
             <values>
-                <fullName>Changes processed</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>New application pending</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>No longer a customer</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Terminated</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Under review</fullName>
+                <fullName>Inactive</fullName>
                 <default>false</default>
             </values>
         </picklistValues>
@@ -89084,6 +89086,19 @@ OR(ISPICKVAL(Industry, &apos;Airline&apos;),ISPICKVAL(Industry, &apos;Travel Age
 ,ISPICKVAL(Industry, &apos;Cargo Agent&apos;)), isblank(text(Reason_for_creation__c )))</errorConditionFormula>
         <errorDisplayField>Reason_for_creation__c</errorDisplayField>
         <errorMessage>Please select the reason for creation.</errorMessage>
+    </validationRules>
+    <validationRules>
+        <fullName>Validate_Providers_Accreditation_Date</fullName>
+        <active>true</active>
+        <description>Prevents active Payment Providers to have the Accreditation date in the future</description>
+        <errorConditionFormula>(RecordType.DeveloperName = &apos;TIP_Payment_Provider&apos; 
+|| (RecordType.DeveloperName= &apos;Standard_Account&apos; &amp;&amp;
+    ISPICKVAL(Category__c , &apos;Payment Provider&apos;)
+   )
+)
+&amp;&amp;  ISPICKVAL(Status__c, &apos;Active&apos;)
+&amp;&amp; Accreditation_date__c &gt; today()</errorConditionFormula>
+        <errorMessage>Can&apos;t have active Payment Providers with the accreditation date in the future</errorMessage>
     </validationRules>
     <validationRules>
         <fullName>Virtual_Branch_Iso_Country</fullName>

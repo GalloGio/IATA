@@ -42,7 +42,7 @@
     </actionOverrides>
     <allowInChatterGroups>false</allowInChatterGroups>
     <compactLayoutAssignment>SYSTEM</compactLayoutAssignment>
-    <deploymentStatus>InDevelopment</deploymentStatus>
+    <deploymentStatus>Deployed</deploymentStatus>
     <enableActivities>false</enableActivities>
     <enableBulkApi>true</enableBulkApi>
     <enableChangeDataCapture>false</enableChangeDataCapture>
@@ -56,7 +56,7 @@
         <fullName>TIP_Effective_From_Date__c</fullName>
         <externalId>false</externalId>
         <label>Effective From Date</label>
-        <required>true</required>
+        <required>false</required>
         <trackTrending>false</trackTrending>
         <type>Date</type>
     </fields>
@@ -64,7 +64,7 @@
         <fullName>TIP_Effective_To_Date__c</fullName>
         <externalId>false</externalId>
         <label>Effective To Date</label>
-        <required>true</required>
+        <required>false</required>
         <trackTrending>false</trackTrending>
         <type>Date</type>
     </fields>
@@ -105,7 +105,7 @@
         <fullName>TIP_Status__c</fullName>
         <externalId>false</externalId>
         <label>Status</label>
-        <required>true</required>
+        <required>false</required>
         <trackTrending>false</trackTrending>
         <type>Picklist</type>
         <valueSet>
@@ -127,13 +127,24 @@
                     <default>false</default>
                     <label>In Progress</label>
                 </value>
+                <value>
+                    <fullName>Draft</fullName>
+                    <default>false</default>
+                    <label>Draft</label>
+                </value>
             </valueSetDefinition>
         </valueSet>
     </fields>
     <label>BIN Range</label>
+    <listViews>
+        <fullName>All</fullName>
+        <filterScope>Everything</filterScope>
+        <label>All</label>
+    </listViews>
     <nameField>
-        <label>BIN Range Name</label>
-        <type>Text</type>
+        <displayFormat>BIN-{0000000}</displayFormat>
+        <label>BIN Range Number</label>
+        <type>AutoNumber</type>
     </nameField>
     <pluralLabel>BIN Ranges</pluralLabel>
     <recordTypes>
@@ -164,6 +175,10 @@
             <picklist>TIP_Status__c</picklist>
             <values>
                 <fullName>Active</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Draft</fullName>
                 <default>false</default>
             </values>
             <values>
@@ -198,5 +213,35 @@
     </recordTypes>
     <searchLayouts/>
     <sharingModel>ControlledByParent</sharingModel>
+    <validationRules>
+        <fullName>Validate_PP_name_for_IATA_RT</fullName>
+        <active>true</active>
+        <description>Validates Partner Product&apos;s name if the Bin Range record type is Listed by IATA</description>
+        <errorConditionFormula>RecordType.DeveloperName = &apos;Listed_by_IATA&apos; &amp;&amp;  TIP_Payment_Provider_Product__r.Name != $Setup.TIP_Configuration__c.Product_Listed_By_IATA_Name__c</errorConditionFormula>
+        <errorMessage>Listed by IATA Bin Range must be linked to the Generic Product</errorMessage>
+    </validationRules>
+    <validationRules>
+        <fullName>Validate_Range_End_Is_Number</fullName>
+        <active>true</active>
+        <description>Range End needs to be a number</description>
+        <errorConditionFormula>NOT(ISNUMBER(TIP_Range_End__c))</errorConditionFormula>
+        <errorDisplayField>TIP_Range_End__c</errorDisplayField>
+        <errorMessage>Range To needs to be a number</errorMessage>
+    </validationRules>
+    <validationRules>
+        <fullName>Validate_Range_End_Lower_Than_Start</fullName>
+        <active>true</active>
+        <description>Range To Should always be higher than Range From</description>
+        <errorConditionFormula>AND(ISNUMBER(TIP_Range_Start__c), ISNUMBER(TIP_Range_End__c), VALUE(TIP_Range_Start__c) &gt; VALUE(TIP_Range_End__c))</errorConditionFormula>
+        <errorMessage>Range To has to be greater than Range From</errorMessage>
+    </validationRules>
+    <validationRules>
+        <fullName>Validate_Range_Start_Is_Number</fullName>
+        <active>true</active>
+        <description>Range Start needs to be a number</description>
+        <errorConditionFormula>NOT(ISNUMBER(TIP_Range_Start__c))</errorConditionFormula>
+        <errorDisplayField>TIP_Range_Start__c</errorDisplayField>
+        <errorMessage>Range From needs to be a number</errorMessage>
+    </validationRules>
     <visibility>Public</visibility>
 </CustomObject>
