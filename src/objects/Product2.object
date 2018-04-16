@@ -13377,6 +13377,10 @@ The product will only appear on the Online Store when the date entered in this f
                 <default>false</default>
             </values>
             <values>
+                <fullName>MER %28MER Division%29</fullName>
+                <default>false</default>
+            </values>
+            <values>
                 <fullName>Market IS</fullName>
                 <default>false</default>
             </values>
@@ -16424,6 +16428,10 @@ The product will only appear on the Online Store when the date entered in this f
             </values>
             <values>
                 <fullName>Lighting</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>MER %28MER Division%29</fullName>
                 <default>false</default>
             </values>
             <values>

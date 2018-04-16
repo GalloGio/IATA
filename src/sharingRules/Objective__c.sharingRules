@@ -15,6 +15,19 @@
         </criteriaItems>
     </sharingCriteriaRules>
     <sharingCriteriaRules>
+        <fullName>Account_plan_visible_to_all</fullName>
+        <accessLevel>Read</accessLevel>
+        <label>Account plan visible to all</label>
+        <sharedTo>
+            <allInternalUsers></allInternalUsers>
+        </sharedTo>
+        <criteriaItems>
+            <field>RecordTypeId</field>
+            <operation>equals</operation>
+            <value>Key Account Plan</value>
+        </criteriaItems>
+    </sharingCriteriaRules>
+    <sharingCriteriaRules>
         <fullName>Public_Account_Issues_and_Priorities</fullName>
         <accessLevel>Read</accessLevel>
         <description>Shares to all users the records with the Account Issues and Priorities record type that have been marked as public.</description>
