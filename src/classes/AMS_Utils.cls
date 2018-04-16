@@ -1033,7 +1033,7 @@ public without sharing class AMS_Utils {
             return '7';
         else if (statusDesc == ACC_S8_CHANGESPROCESSED)
             return '8';
-        else if (statusDesc == ACC_S9_APPROVED)
+        else if (statusDesc == ACC_S9_APPROVED || statusDesc == 'Active')
             return '9';
 
         return null;

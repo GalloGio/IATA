@@ -56,6 +56,7 @@ public class AMS_ChangeCodesConfigHelper {
 			}
 
 	        changeCode.name = changeCodeConfig.Change_Code__c;
+	        changeCode.publishedOnEBulletin = changeCodeConfig.Published_in_bulletin__c;
 			
 
 			if(changeCodeConfig.Bulletin_Memo_Text__c != null && changeCodeConfig.Bulletin_Memo_Text__c!= ''){

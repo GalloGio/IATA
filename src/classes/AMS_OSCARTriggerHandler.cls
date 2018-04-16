@@ -1198,7 +1198,7 @@ public class AMS_OSCARTriggerHandler {
 
             List<Account> accsToUpdateFromStagingArea = new List<Account>();
             for(Id a : accountsToUpdate.keySet()) accsToUpdateFromStagingArea.add(accountsToUpdate.get(a).acc);
-            
+
             List<Account> mergedAccountUpdate = mergeAccountsToUpdate(accsToUpdateFromCC, accsToUpdateFromStagingArea);
 
             if (!mergedAccountUpdate.isEmpty()) {
@@ -1808,7 +1808,7 @@ public class AMS_OSCARTriggerHandler {
                 if(a == null)
                     a = mapB.get(accId);
                 else
-                    a.Status__c = mapA.get(accId).Status__c;
+                    a.Status__c = mapB.get(accId).Status__c;
 
             System.debug(loggingLevel.ERROR, '____ [cls AMS_OSCARTriggerHandler - mergeAccountsToUpdate] a - ' + a);
             if(a!=null)
