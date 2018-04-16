@@ -19923,6 +19923,22 @@ If you continue to experience issues registering for the CNS Customer Portal the
         <value>Operational Calendar</value>
     </labels>
     <labels>
+        <fullName>ISSP_OperationalCalendar_BillingFirstDay</fullName>
+        <categories>ISSP, OperationalCalendar</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_OperationalCalendar_BillingFirstDay</shortDescription>
+        <value>Billing From</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_OperationalCalendar_BillingLastDay</fullName>
+        <categories>ISSP, OperationalCalendar</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_OperationalCalendar_BillingLastDay</shortDescription>
+        <value>Billing To</value>
+    </labels>
+    <labels>
         <fullName>ISSP_OperationalCalendar_Billing_Period</fullName>
         <categories>ISSP, OperationalCalendar</categories>
         <language>en_US</language>
@@ -20009,6 +20025,14 @@ If you continue to experience issues registering for the CNS Customer Portal the
         <protected>false</protected>
         <shortDescription>ISSP_OperationalCalendar_Show_Calendar</shortDescription>
         <value>Show Calendar</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_OperationalCalendar_Sync_Calendar</fullName>
+        <categories>ISSP, OperationalCalendar</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_OperationalCalendar_Sync_Calendar</shortDescription>
+        <value>Sync Calendar</value>
     </labels>
     <labels>
         <fullName>ISSP_OperationalCalendar_Reset</fullName>
@@ -21613,6 +21637,14 @@ If you want to reset your password, go back to login screen and use &quot;forgot
         <protected>false</protected>
         <shortDescription>ISSP Showing page</shortDescription>
         <value>Showing page _PAGE_ of _PAGES_</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_Showing_total_records</fullName>
+        <categories>ISSP</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP Showing total records</shortDescription>
+        <value>Showing _MAX_ records</value>
     </labels>
     <labels>
         <fullName>ISSP_Simplified_Interline_Settlement</fullName>

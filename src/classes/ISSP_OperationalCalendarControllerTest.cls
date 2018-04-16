@@ -1,6 +1,24 @@
 @isTest
 public class ISSP_OperationalCalendarControllerTest {
 
+    @TestSetup
+    public static void setup() {
+        list<String> listAirlineId = new list<String>();
+        for (Profile profile: [SELECT Id FROM Profile WHERE Name LIKE 'ISS Portal Airline%']) {
+            listAirlineId.add(profile.Id);
+        }
+        System.assert(!listAirlineId.isEmpty(), 'No airline profiles found');
+        list<String> listAgencyId = new list<String>();
+        for (Profile profile: [SELECT Id FROM Profile WHERE Name LIKE 'ISS Portal Agency%']) {
+            listAgencyId.add(profile.Id);
+        }
+        System.assert(!listAgencyId.isEmpty(), 'No agency profiles found');
+        list<ISSP_CS__c> listCs = new list<ISSP_CS__c>();
+        listCs.add(new ISSP_CS__c(Name='ISS Portal Airline Profiles',Value__c=String.join(listAirlineId,',')));
+        listCs.add(new ISSP_CS__c(Name='ISS Portal Agency Profiles',Value__c=String.join(listAgencyId,',')));
+        insert listCs;
+    }
+
     public static User createUser(Profile profile, String operationType) {
         Boolean isCASS = ISSP_OperationalCalendarController.MAP_OPERATION_TYPES.get(operationType).contains('CASS');
         Boolean isBSP = ISSP_OperationalCalendarController.MAP_OPERATION_TYPES.get(operationType).contains('BSP');
@@ -54,30 +72,39 @@ public class ISSP_OperationalCalendarControllerTest {
     
     public static User createAirlineUserBSP() {
         Profile airlineProfile = [SELECT Id FROM Profile 
-            WHERE Name IN :ISSP_OperationalCalendarController.AIRLINE_PROFILES
+            WHERE Id IN :ISSP_OperationalCalendarController.AIRLINE_PROFILES
             LIMIT 1];
         return createUser(airlineProfile,'P');
     }
     
     public static User createAirlineUserCASS() {
         Profile airlineProfile = [SELECT Id FROM Profile 
-            WHERE Name IN :ISSP_OperationalCalendarController.AIRLINE_PROFILES
+            WHERE Id IN :ISSP_OperationalCalendarController.AIRLINE_PROFILES
             LIMIT 1];
         return createUser(airlineProfile, 'C');
     }
     
     public static User createAgentUserBSP() {
         Profile agentProfile = [SELECT Id FROM Profile 
-            WHERE Name IN :ISSP_OperationalCalendarController.AGENT_PROFILES
+            WHERE Id IN :ISSP_OperationalCalendarController.AGENT_PROFILES
             LIMIT 1];
         return createUser(agentProfile,'P');
     }
     
     public static User createAgentUserCASS() {
         Profile agentProfile = [SELECT Id FROM Profile 
-            WHERE Name IN :ISSP_OperationalCalendarController.AGENT_PROFILES
+            WHERE Id IN :ISSP_OperationalCalendarController.AGENT_PROFILES
             LIMIT 1];
         return createUser(agentProfile,'C');
+    }
+    
+    @isTest
+    public static void testStaticMethods() {
+        Test.StartTest();
+        System.assertEquals('present-row',ISSP_OperationalCalendarController.getDateComparedToToday(Date.today()));
+        System.assertEquals('past-row',ISSP_OperationalCalendarController.getDateComparedToToday(Date.today().addDays(-1)));
+        System.assertEquals('future-row',ISSP_OperationalCalendarController.getDateComparedToToday(Date.today().addDays(1)));
+        Test.StopTest();
     }
     
     @isTest
@@ -94,6 +121,7 @@ public class ISSP_OperationalCalendarControllerTest {
             controller.getListOperations();
             controller.getIsAirline();
             controller.getListEventsJSON();
+            controller.getMapFrequenciesJSON();
             ISSP_OperationalCalendarController.loadEventsRemote('','','','');
             ISSP_OperationalCalendarController.loadDetailsRemoteForAirlines('','','','','');
             ISSP_OperationalCalendarController.loadDetailsRemoteForAgents('');

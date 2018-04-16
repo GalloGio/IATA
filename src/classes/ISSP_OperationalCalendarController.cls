@@ -2,14 +2,8 @@ global without sharing class ISSP_OperationalCalendarController {
     
     public class OperationalCalendarException extends Exception {}
     
-    public static final set<String> AIRLINE_PROFILES = new set<String>{
-        'ISS Portal Airline Delegated Admin User',
-        'ISS Portal Airline User',
-        'ISS Portal Airline User (Partner)'};
-    public static final set<String> AGENT_PROFILES = new set<String>{
-        'ISS Portal Agency Delegated Admin User',
-        'ISS Portal Agency User',
-        'ISS Portal Agency User (Partner)'};
+    public static final list<String> AIRLINE_PROFILES = ISSP_CS__c.getValues('ISS Portal Airline Profiles').Value__c.split(',');
+    public static final list<String> AGENT_PROFILES = ISSP_CS__c.getValues('ISS Portal Agency Profiles').Value__c.split(',');
     public static final map<String,String> MAP_OPERATION_TYPES = new map<String,String>{
         'P' => 'BSP International',
         'D' => 'BSP Domestic',
@@ -20,8 +14,6 @@ global without sharing class ISSP_OperationalCalendarController {
     
     public static final Map<String, Schema.SObjectField> MAP_CALENDAR_FIELDS =
         Schema.getGlobalDescribe().get('operational_Calendar__c').getDescribe().fields.getMap();
-    public static final String FIELD_First_Day = MAP_CALENDAR_FIELDS.get('First_Day__c').getDescribe().getLabel();
-    public static final String FIELD_Last_Day = MAP_CALENDAR_FIELDS.get('Last_Day__c').getDescribe().getLabel();
     public static final String FIELD_Settlement_Day = MAP_CALENDAR_FIELDS.get('Settlement_Day__c').getDescribe().getLabel();
     public static final String FIELD_Airline_Input_Upload_Cut_Off = MAP_CALENDAR_FIELDS.get('Airline_Input_Upload_Cut_Off__c').getDescribe().getLabel();
     public static final String FIELD_Airline_Correction_Response_Cut_Off = MAP_CALENDAR_FIELDS.get('Airline_Correction_Response_Cut_Off__c').getDescribe().getLabel();
@@ -39,9 +31,17 @@ global without sharing class ISSP_OperationalCalendarController {
         'pt' => 'IATA_Country_PT__c',
         'es' => 'IATA_Country_SP__c',
         'zh' => 'IATA_Country_ZH__c'};
-    public static Profile THIS_PROFILE = [SELECT Id, Name FROM Profile WHERE Id = :UserInfo.getProfileId()];
-    public static Boolean IS_AIRLINE = AIRLINE_PROFILES.contains(THIS_PROFILE.Name);
-    public static Boolean IS_AGENT = AGENT_PROFILES.contains(THIS_PROFILE.Name);
+    public static final String THIS_PROFILE = String.ValueOf(UserInfo.getProfileId()).left(15);
+    public static Boolean IS_AIRLINE = AIRLINE_PROFILES.contains(THIS_PROFILE);
+    public static Boolean IS_AGENT = AGENT_PROFILES.contains(THIS_PROFILE);
+    public static map<String,String> MAP_FREQUENCIES;
+    static {
+        MAP_FREQUENCIES = new map<String,String>();
+        Schema.DescribeFieldResult fieldResult = Schema.getGlobalDescribe().get('Account').getDescribe().fields.getMap().get('Remittance_frequency__c').getDescribe();
+        for (Schema.PicklistEntry entry: fieldResult.getPicklistValues()) {
+            MAP_FREQUENCIES.put(entry.getValue(),entry.getLabel());
+        }
+    }
 
     private transient list<EventWrapper> listEvents;
     private transient list<Operational_Calendar__c> listOperations;
@@ -50,11 +50,11 @@ global without sharing class ISSP_OperationalCalendarController {
     public Account account {get;set;}
     public String defaultCountry {get; set;}
     public String defaultOperationType {get; set;}
+    public String defaultFrequency {get; set;}
     public Date maxDate {get; set;}
     public Date minDate {get; set;}
     
     //Filters
-    public Boolean showFilters {get;set;}
     public list<SelectOption> countryOptions {get;set;}
     public set<String> setFilter{get;set;}
     
@@ -72,12 +72,7 @@ global without sharing class ISSP_OperationalCalendarController {
         return JSON.serialize(this.listEvents,true);
     }
     public String getMapFrequenciesJSON() {
-        map<String,String> mapFrequencies = new map<String,String>();
-        Schema.DescribeFieldResult fieldResult = Schema.getGlobalDescribe().get('Account').getDescribe().fields.getMap().get('Remittance_frequency__c').getDescribe();
-        for (Schema.PicklistEntry entry: fieldResult.getPicklistValues()) {
-            mapFrequencies.put(entry.getValue(),entry.getLabel());
-        }
-        return JSON.serialize(mapFrequencies,true);
+        return JSON.serialize(MAP_FREQUENCIES,true);
     }
     /**** END GETTERS ****/
     
@@ -100,16 +95,43 @@ global without sharing class ISSP_OperationalCalendarController {
             WHERE Id = :UserInfo.getUserId()];
         this.contact = this.user.contact;
         this.account = this.user.contact.account;
-        this.showFilters = IS_AIRLINE;
         this.setFilter = new set<String>();
-        this.defaultCountry = this.account.IATA_ISO_Country__c;
-        this.defaultOperationType = MAP_OPERATION_TYPES.get(this.account.Location_Class__c);
+        this.defaultCountry = IS_AIRLINE? '': this.account.IATA_ISO_Country__c;
+        this.defaultOperationType = nvl(MAP_OPERATION_TYPES.get(this.account.Location_Class__c));
+        this.defaultFrequency = this.account.Remittance_frequency__c;
         this.maxDate = Date.newInstance(Date.Today().year()+1, 1, 1);
         this.minDate = Date.newInstance(Date.Today().year()-1, 1, 1);
         if (IS_AIRLINE) {
             initPicklistValues();
         } else {
+            setPicklistValuesForAgents();
             loadEventsForAgent();
+        }
+    }
+
+    /**
+        Initial values for picklists when user is an agency used in a dummy filter section
+        This section is not an actual filter selection, it only show the mandatory filters applied
+        to current user, but they cannot change
+    **/
+    public void setPicklistValuesForAgents() {
+        String str = this.defaultcountry + ',' + this.defaultOperationType + ',' + this.defaultFrequency + ',' + '';
+        this.setFilter.add(str);
+        // set country name
+        try {
+            this.countryOptions = new list<SelectOption>();
+            IATA_ISO_Country__c country = [
+                SELECT Id, Name,
+                    IATA_COUNTRY_EN__c, IATA_Country_ZH__c, IATA_Country_SP__c,
+                    IATA_Country_PT__c, IATA_Country_JP__c, IATA_Country_IT__c,
+                    IATA_Country_FR__c, IATA_Contry_KR__c
+                FROM IATA_ISO_Country__c 
+                WHERE Id = :this.defaultcountry];
+            String countryName = (String)country.get(getIsoCountryFieldName());
+            this.countryOptions.add(new SelectOption(country.Id, countryName));
+            
+        } catch (Exception e) {
+            System.debug('No country found for current agency user');
         }
     }
     
@@ -150,7 +172,7 @@ global without sharing class ISSP_OperationalCalendarController {
         }
         // countries
         String fieldName = getIsoCountryFieldName();
-        this.countryOptions = new list<SelectOption>();
+        map<String,IATA_ISO_Country__c> mapNameCountry = new map<String,IATA_ISO_Country__c>();
         for (IATA_ISO_Country__c country: [SELECT Id, Name,
                     IATA_COUNTRY_EN__c, IATA_Country_ZH__c, IATA_Country_SP__c,
                     IATA_Country_PT__c, IATA_Country_JP__c, IATA_Country_IT__c,
@@ -160,6 +182,15 @@ global without sharing class ISSP_OperationalCalendarController {
             ]) {
             String countryName = (String)country.get(fieldName);
             if (countryName==null) countryName = country.Name;
+            mapNameCountry.put(countryName, country);
+        }
+        // create the country list ordered
+        this.countryOptions = new list<SelectOption>();
+        this.countryOptions.add(new SelectOption('', Label.ANG_ISSP_Picklist_None));
+        list<String> listNameCountries = new list<String>(mapNameCountry.keyset());
+        listNameCountries.sort();
+        for (String countryName: listNameCountries ) {
+            IATA_ISO_Country__c country = mapNameCountry.get(countryName);
             this.countryOptions.add(new SelectOption(country.Id, countryName));
         }
     }
@@ -186,6 +217,8 @@ global without sharing class ISSP_OperationalCalendarController {
         String description = '';
         for (String fieldName: listFiledNames) {
             String label = MAP_CALENDAR_FIELDS.get(fieldName).getDescribe().getLabel();
+            if (fieldName=='First_Day__c') label = System.Label.ISSP_OperationalCalendar_BillingFirstDay;
+            if (fieldName=='Last_Day__c') label = System.Label.ISSP_OperationalCalendar_BillingLastDay;
             String value = dateToString((DateTime)operation.get(fieldName));
             description+= '<strong>' + label + '</strong> ' + value + '</br>';
         }
@@ -298,6 +331,7 @@ global without sharing class ISSP_OperationalCalendarController {
             } else {
                 query += ' AND First_Day__c >= LAST_YEAR';
             }
+            query += ' ORDER BY Period_Code__c ASC';
             
             System.debug('QUERY: ' + query);
             return Database.query(query);
@@ -307,16 +341,13 @@ global without sharing class ISSP_OperationalCalendarController {
         This method only gets the events to show an agent user, it will be executed only once at the beggining
     **/
     public void loadEventsForAgent() {
-        String country = this.defaultcountry;
-        String frequency = this.account.Remittance_frequency__c;
-        String operationType = MAP_OPERATION_TYPES.get(this.account.Location_Class__c);
         String currencyCode = '';
         try {
-            this.listOperations = queryListOperations(country, frequency, operationType, currencyCode, Date.today().year());
+            this.listOperations = queryListOperations(this.defaultcountry, this.defaultFrequency, this.defaultOperationType, currencyCode, Date.today().year());
         } catch (Exception e) {
             this.listOperations = new list<Operational_Calendar__c>();
         }
-        this.listEvents = getOperationalCalendarEvents(this.listOperations, operationType);
+        this.listEvents = getOperationalCalendarEvents(this.listOperations, this.defaultOperationType);
         for (EventWrapper event: this.listEvents) {
             if (event.start!=null && event.start.date() > this.maxDate){
                 // first day of next event's month
@@ -355,17 +386,22 @@ global without sharing class ISSP_OperationalCalendarController {
     global static String loadDetailsRemoteForAirlines(String country, String frequency, String operationType, String currencyCode, String billingPeriod) {
         if (!IS_AIRLINE) return '';
         list<list<String>> listResults = new list<list<String>>();
+        Integer numOfNonPastRow = 0;
         for (Operational_Calendar__c operation: queryListOperations(country, frequency, operationType, currencyCode, Integer.ValueOf(billingPeriod))) {
             list<String> listLine = new list<String>();
             listLine.add(nvl(operation.Period_Code__c));
             listLine.add(dateToString(operation.First_Day__c));
             listLine.add(dateToString(operation.Last_Day__c));
             if (operationType.contains('CASS')) {
+                listLine.add('-');
+                listLine.add(operation.Operation_Currency__c);
                 listLine.add(dateToString(operation.Airline_Input_Upload_Cut_Off__c));
                 listLine.add(dateToString(operation.CASS_reports_Availability__c));
                 listLine.add(dateToString(operation.Agent_Correction_Cut_Off__c));
                 listLine.add(dateToString(operation.Airline_Correction_Response_Cut_Off__c));
             } else {
+                listLine.add(MAP_FREQUENCIES.get(operation.frequency_code__c));
+                listLine.add(operation.Operation_Currency__c);
                 listLine.add('-');
                 listLine.add('-');
                 listLine.add('-');
@@ -374,6 +410,11 @@ global without sharing class ISSP_OperationalCalendarController {
             listLine.add(dateToString(operation.Billing_Availability__c));
             listLine.add(dateToString(operation.Remittance_Day__c));
             listLine.add(dateToString(operation.Settlement_Day__c));
+            //column to define special classes for this line
+            String rowclass = getDateComparedToToday(operation.Settlement_Day__c);
+            numOfNonPastRow+= rowclass=='past-row'? 0: 1;
+            if (numOfNonPastRow == 1)  rowclass += ' first-nonpast-row';
+            listLine.add(rowclass);
             listResults.add(listLine);
         }
         return JSON.serialize(listResults,true);
@@ -405,14 +446,20 @@ global without sharing class ISSP_OperationalCalendarController {
             listLine.add(dateToString(operation.First_Day__c));
             listLine.add(dateToString(operation.Last_Day__c));
             if (operationType.contains('CASS')) {
+                listLine.add('-');
+                listLine.add(operation.Operation_Currency__c);
                 listLine.add(dateToString(operation.CASS_reports_Availability__c));
                 listLine.add(dateToString(operation.Agent_Correction_Cut_Off__c));
             } else {
+                listLine.add(MAP_FREQUENCIES.get(operation.frequency_code__c));
+                listLine.add(operation.Operation_Currency__c);
                 listLine.add('-');
                 listLine.add('-');
             }
             listLine.add(dateToString(operation.Billing_Availability__c));
             listLine.add(dateToString(operation.Remittance_Day__c));
+            //column to define if it's a past record
+            listLine.add(getDateComparedToToday(operation.Remittance_Day__c));
             listResults.add(listLine);
         }
         return JSON.serialize(listResults,true);
@@ -431,6 +478,19 @@ global without sharing class ISSP_OperationalCalendarController {
         public String borderColor;
         public String textColor;
         public String description;
+    }
+    
+    /**
+        Returns "past", "present" or "future" strings for incoming date
+    **/
+    public static String getDateComparedToToday(Date dt) {
+        if (dt < Date.today()) {
+            return 'past-row';
+        }
+        if (dt == Date.today()) {
+            return 'present-row';
+        }
+        return 'future-row';
     }
     
     public static String nvl(String input) {
