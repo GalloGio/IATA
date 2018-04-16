@@ -24,15 +24,30 @@ private class AmazonFileTrgHelperTest {
 
 
     static Case initializeCase() {
+
+        String sSapNumberRequiredJSON = AmazonFileTrgHelper.sapNumberRequiredJSON;
+        String sExpiryDateRequiredJSON = AmazonFileTrgHelper.expiryDateRequiredJSON;
+        String sExpiredRequiredJSON = AmazonFileTrgHelper.expiredRequiredJSON;
+
         Account account = new Account();
         account.Name = 'TestAccount';
         account.Type = 'Airport';
         account.IATACode__c = '12345678';
         insert account;
 
+        AMS_OSCAR__c oscar1 = new AMS_OSCAR__c();
+        AMS_OSCAR_TestDataFactory.createOSCARtestData();
+
+        oscar1 = [Select Id from AMS_OSCAR__c Limit 1];
+
+        oscar1.Process__c = AMS_Utils.CERTIFICATION; 
+        oscar1.Status__c = 'Accepted_Future Date';
+        Update oscar1;
+
         Case caseObj = new Case();
         caseObj.ArchivedDate__c = null;
         caseObj.AccountId = account.Id;
+        caseObj.OSCAR__c = oscar1.Id;
         insert caseObj;
         return caseObj;
     }
@@ -48,13 +63,15 @@ private class AmazonFileTrgHelperTest {
 
         Case case1 =  initializeCase();
   
-        AmazonFile__C AmzFile = new AmazonFile__C(name ='file',Full_Name_Unique__c = 'test name', case__c = case1.id);
+        AmazonFile__C AmzFile = new AmazonFile__C(name ='file',Full_Name_Unique__c = 'test name', case__c = case1.id, Category__c = 'Contractual', Subcategory__c = 'Signatory Authority');
         insert AmzFile;
+
+        AmazonFile__C AmzFile2 = new AmazonFile__C(name ='file2',Full_Name_Unique__c = 'test name2', case__c = case1.id, Category__c = 'Contractual', Subcategory__c = 'Signatory Authority');
+        insert AmzFile2;
         
         delete AmzFile;
-		
+        delete AmzFile2;
 		Test.stopTest();
-
 
         list<AmazonFile__C> amzFiledelete = [SELECT Id FROM AmazonFile__C WHERE isDeleted =: true and id =: AmzFile.id All ROWS];
 
