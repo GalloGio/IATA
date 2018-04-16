@@ -3,6 +3,7 @@
     <customButtons>Reply</customButtons>
     <customButtons>Reply_To_All</customButtons>
     <customButtons>Forward</customButtons>
+    <customButtons>Refresh_Events</customButtons>
     <excludeButtons>ChangeOwnerOne</excludeButtons>
     <excludeButtons>ChangeRecordType</excludeButtons>
     <excludeButtons>Clone</excludeButtons>

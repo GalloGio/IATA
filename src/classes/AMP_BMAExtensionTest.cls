@@ -42,7 +42,7 @@ private class AMP_BMAExtensionTest
 			bmaExtension.EditLine();
 			bmaExtension.CancelEdit();
 			bmaExtension.SaveLine();
-			
+
 			bmaExtension.IdConcerned = o.Id;
 			bmaExtension.EditCommentLine();
 			bmaExtension.selectedComment.Status__c = 'On track';

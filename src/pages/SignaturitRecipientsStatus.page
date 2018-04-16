@@ -75,7 +75,7 @@
         
             <apex:column >
                 <apex:facet name="header">Timestamp</apex:facet>
-                {!comparableEvent.event.Timestamp__c}
+                <apex:outputField value="{! comparableEvent.event.Timestamp__c}"/>
             </apex:column>
         
         </apex:pageblockTable>

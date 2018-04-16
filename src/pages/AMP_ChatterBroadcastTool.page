@@ -1,5 +1,5 @@
 <apex:page controller="AMP_ChatterBroadcastToolController" tabStyle="Account">
-    
+
     <script>
         function cvCheckAllOrNone(allOrNoneCheckbox) {
 
@@ -12,7 +12,7 @@
             // Switch all checkboxes
             var inputs = container.getElementsByTagName("input");
             var checked = allOrNoneCheckbox.checked;
-            for (var i = 0; i < inputs.length; i++) { 
+            for (var i = 0; i < inputs.length; i++) {
                 var input = inputs.item(i);
                 if (input.type == "checkbox") {
                     if (input != allOrNoneCheckbox) {
@@ -22,17 +22,17 @@
             }
         }
     </script>
-    
+
     <apex:form >
 
         <a href="/{!accountId}">&lt; Back to Account</a>
-        
+
         <apex:pageBlock id="mainBlock" title="Chatter Broadcast Tool" >
 
             <apex:pageMessages escape="false" />
-                        
+
             <apex:pageBlockSection title="Step 1 - Select Accounts" columns="1" collapsible="false" rendered="{! step == 1}">
-                
+
                 <apex:selectList value="{!strRegion}" multiselect="false" size="1" onchange="reloadAccounts();" label="Show only Accounts from the following region(s):">
                     <apex:selectOptions value="{!lstRegions}"/>
                 </apex:selectList>
@@ -44,13 +44,13 @@
                 <apex:pageBlockTable value="{!lstAccounts}" var="accWrapper" id="AccountTable" >
                     <apex:column style="width:100px;">
                         <apex:facet name="header">
-                            <apex:inputCheckbox onclick="cvCheckAllOrNone(this);"/> 
-                            
+                            <apex:inputCheckbox value="{!selectWholeRegion}" onclick="cvCheckAllOrNone(this);"/> 
+
                         </apex:facet>
-                        
+
                         <apex:inputCheckbox value="{!accWrapper.isSelected}" />
                     </apex:column>
-                    
+
                     <apex:column >
                         <apex:facet name="header">Account Name</apex:facet>
                         <apex:outputText value="{!accWrapper.acct.Name}" />
@@ -60,11 +60,11 @@
                 <apex:outputPanel >
                     <apex:commandButton action="{!GoToStep2}" value="Next >" reRender="mainBlock" style="float: right;" />
                 </apex:outputPanel>
-                
+
                 <apex:actionFunction name="reloadAccounts" action="{! RefreshAccountsList }" reRender="AccountTable" />
-                
+
             </apex:pageBlockSection>
-            
+
 
             <apex:pageBlockSection title="Step 2 - Compose Message and Broadcast" columns="1" collapsible="false" rendered="{! step == 2}">
 
@@ -83,12 +83,12 @@
                     </apex:actionStatus>
                 </apex:outputPanel>
             </apex:pageBlockSection>
-            
+
 
             <apex:pageBlockSection columns="1" collapsible="false" rendered="{! step == 3}">
-                
+
                 <apex:commandButton action="{! RestartFromStep1 }" value="Broadcast a New Message" reRender="mainBlock" />
-                
+
             </apex:pageBlockSection>
 
         </apex:pageBlock>

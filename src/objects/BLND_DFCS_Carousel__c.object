@@ -21,10 +21,6 @@
         <type>Default</type>
     </actionOverrides>
     <actionOverrides>
-        <actionName>Follow</actionName>
-        <type>Default</type>
-    </actionOverrides>
-    <actionOverrides>
         <actionName>List</actionName>
         <type>Default</type>
     </actionOverrides>
@@ -49,6 +45,7 @@
     <deploymentStatus>Deployed</deploymentStatus>
     <enableActivities>false</enableActivities>
     <enableBulkApi>true</enableBulkApi>
+    <enableChangeDataCapture>false</enableChangeDataCapture>
     <enableFeeds>false</enableFeeds>
     <enableHistory>false</enableHistory>
     <enableReports>false</enableReports>
@@ -203,36 +200,44 @@
         <fullName>BLND_Type__c</fullName>
         <externalId>false</externalId>
         <label>Type</label>
-        <picklist>
-            <picklistValues>
-                <fullName>Presentation</fullName>
-                <default>true</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Notebook</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Address Book</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Dashboard</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>To Do List</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Report</fullName>
-                <default>false</default>
-            </picklistValues>
-            <sorted>false</sorted>
-        </picklist>
         <required>false</required>
         <trackTrending>false</trackTrending>
         <type>Picklist</type>
+        <valueSet>
+            <valueSetDefinition>
+                <sorted>false</sorted>
+                <value>
+                    <fullName>Presentation</fullName>
+                    <default>true</default>
+                    <label>Presentation</label>
+                </value>
+                <value>
+                    <fullName>Notebook</fullName>
+                    <default>false</default>
+                    <label>Notebook</label>
+                </value>
+                <value>
+                    <fullName>Address Book</fullName>
+                    <default>false</default>
+                    <label>Address Book</label>
+                </value>
+                <value>
+                    <fullName>Dashboard</fullName>
+                    <default>false</default>
+                    <label>Dashboard</label>
+                </value>
+                <value>
+                    <fullName>To Do List</fullName>
+                    <default>false</default>
+                    <label>To Do List</label>
+                </value>
+                <value>
+                    <fullName>Report</fullName>
+                    <default>false</default>
+                    <label>Report</label>
+                </value>
+            </valueSetDefinition>
+        </valueSet>
     </fields>
     <fields>
         <fullName>BLND_Version__c</fullName>
@@ -264,4 +269,5 @@
     <pluralLabel>Carousels</pluralLabel>
     <searchLayouts/>
     <sharingModel>ReadWrite</sharingModel>
+    <visibility>Public</visibility>
 </CustomObject>

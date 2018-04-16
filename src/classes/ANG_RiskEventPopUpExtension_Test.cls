@@ -38,7 +38,7 @@ public class ANG_RiskEventPopUpExtension_Test{
 		generateRiskEvent(acc.id,[SELECT id FROM ANG_Risk_Event_Type__c WHERE Name = 'Risk Type 1'].id, system.today(),null);
 		
 		Test.startTest();
-			ANG_RiskEventPopUpExtension con = new ANG_RiskEventPopUpExtension(new ApexPages.standardController([SELECT id,ANG_Source_Id__c,ANG_Risk_Type__c FROM ANG_Agency_Risk_Event__c ]));
+			ANG_RiskEventPopUpExtension con = new ANG_RiskEventPopUpExtension(new ApexPages.standardController([SELECT id, ANG_Source_Id__c, ANG_Risk_Type__c, ANG_Issued_Date__c, ANG_Event_Status__c, ANG_Risk_Id__c FROM ANG_Agency_Risk_Event__c]));
 			System.assertEquals(1, con.getRiskEvents().size());
 		Test.stopTest();
 	}

@@ -13,6 +13,7 @@ public with sharing class IDCard_ApplicationFormNRController  extends IDCardAbst
   public Boolean DocUploaded {get; set;}
   public decimal expediteFees {get; private set;}
 
+  public Boolean IsExpediteDelivery;
   private String accountType;
   private Boolean newContactRequired;
   private String part;
@@ -71,6 +72,7 @@ public with sharing class IDCard_ApplicationFormNRController  extends IDCardAbst
     IsCroppingToolDisplayed = false;
     IsViewerDisplayed = false;
     lastNameHasChanged = false;
+    IsExpediteDelivery = false;
     isContractor = false;
     isEmployee = false;
     detailledFees = new Map<String, decimal>();
@@ -251,7 +253,7 @@ public with sharing class IDCard_ApplicationFormNRController  extends IDCardAbst
         throw new IDCardApplicationException(String.Format(Label.IDCard_No_Price_Table_Found, new String[] {'<i>' + contactCountry.ISO_Code__c + '</i>', '<i>' + accountType + '</i>'}));
       } else
       {
-        if (listPriceTables[0].Expedite__c != null )
+        if (listPriceTables[0].Expedite__c != null )         
           return true;
         return false;
       }
@@ -266,9 +268,10 @@ public with sharing class IDCard_ApplicationFormNRController  extends IDCardAbst
       where p.Type_Class_of_Agent__c = :accountType and p.ISO_Country__r.Id = :contactCountry.Id];
       if (listPriceTables == null || listPriceTables.size() == 0) {
         throw new IDCardApplicationException(String.Format(Label.IDCard_No_Price_Table_Found, new String[] {'<i>' + contactCountry.ISO_Code__c + '</i>', '<i>' + accountType + '</i>'}));
-      } else
+      }else  if(listPriceTables[0].Expedite_Delivery_added_to_IDCard_Price__c == true){
+          IsExpediteDelivery = true;
+      }
         return listPriceTables[0].Expedite_Delivery_added_to_IDCard_Price__c;
-
     }
   }
 
@@ -706,6 +709,9 @@ public with sharing class IDCard_ApplicationFormNRController  extends IDCardAbst
 
         if (isValid) {
           IDCardApplicationNR.IDCard_Prefered_Language__c = Language;
+          if(IsExpediteDelivery){
+            IDCardApplicationNR.IDCard_Expedite_Delivery__c = true;
+          }
           update IDCardApplicationNR;
 
           //upgrade for payment: according to record type will redirect to payment or not.
@@ -1339,9 +1345,9 @@ public with sharing class IDCard_ApplicationFormNRController  extends IDCardAbst
     docDesc1 = 'desc';
     docDesc2 = 'desc';
     docDesc3 = 'desc';
-    this.document1 = new Attachment(Name = 'abc', Body = Blob.valueOf('abc'));
-    this.document2 = new Attachment(Name = 'abc', Body = Blob.valueOf('abc'));
-    this.document3 = new Attachment(Name = 'abc', Body = Blob.valueOf('abc'));
+    this.document1 = new Attachment(Name = 'abc.pdf', Body = Blob.valueOf('abc'));
+    this.document2 = new Attachment(Name = 'abc.pdf', Body = Blob.valueOf('abc'));
+    this.document3 = new Attachment(Name = 'abc.pdf', Body = Blob.valueOf('abc'));
     this.upload();
     this.back();
     this.GetAssociatedContact('aaa');

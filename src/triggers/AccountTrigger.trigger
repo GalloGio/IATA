@@ -1,9 +1,12 @@
 trigger AccountTrigger on Account (before insert, after insert, after update, before update, before delete, after delete){
   
+  NewGen_AccountRiskStatusTriggerHandler newgenHandler = new NewGen_AccountRiskStatusTriggerHandler();
+  NewGenApp_Custom_Settings__c newgenCS = NewGenApp_Custom_Settings__c.getOrgDefaults();
+
   if(!AMS_TriggerExecutionManager.checkExecution(Account.getSObjectType(), 'AccountTrigger')) { return; }
   
-  //DTULLO: added to skip trigger execution if aggreagating data for PwC
-  if(AMS_Batch_AggregatePwcData.bIsAMS_Batch_AggregatePwcDataRunning){return;}
+  //NOT NEEDED ANYMORE AS PER NEWGEN-796 - DTULLO: added to skip trigger execution if aggreagating data for PwC
+  //if(AMS_Batch_AggregatePwcData.bIsAMS_Batch_AggregatePwcDataRunning){return;}
   
   
   if(trigger.isBefore && (trigger.isInsert || trigger.isupdate )){
@@ -18,7 +21,10 @@ trigger AccountTrigger on Account (before insert, after insert, after update, be
   if(trigger.isAfter && trigger.isUpdate){
     //trgCopyInfoFromHQToBROnHQUpdate trgCopyInfoFromHQToBROnHQUpdatetest
     if(trigger.newmap <> null)
-    AccountTriggerHelper.CopyFromHqToBRAfterUpdate(trigger.newMap);  
+    AccountTriggerHelper.CopyFromHqToBRAfterUpdate(trigger.newMap);
+    if(newgenCS.Push_Notifications_State__c){
+      newgenHandler.onAfterUpdate(Trigger.old, Trigger.new, Trigger.oldMap);  
+    }
   }
 
 
@@ -63,4 +69,15 @@ trigger AccountTrigger on Account (before insert, after insert, after update, be
    {
     system.debug('old..'+Trigger.old);
     ams2gdp_TriggerHelper.crossDeleteAccountItemsBefore(Trigger.old);}
+    //SIS Integration trigger
+    if(Trigger.isBefore && Trigger.isInsert){
+        ISSP_SIS_AccountHandler.beforeInsert(Trigger.new);
+    } 
+    if(Trigger.isAfter && Trigger.isInsert){
+        ISSP_SIS_AccountHandler.afterInsert(Trigger.new);
+    }
+    
+    if(Trigger.isBefore && Trigger.isUpdate){
+        ISSP_SIS_AccountHandler.beforeUpdate(Trigger.newMap, Trigger.oldMap);
+    }
 }

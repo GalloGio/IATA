@@ -1,0 +1,374 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<StandardValueSet xmlns="http://soap.sforce.com/2006/04/metadata">
+    <sorted>true</sorted>
+    <standardValue>
+        <fullName>Aircraft Manufacturers</fullName>
+        <default>false</default>
+        <label>Aircraft Manufacturers</label>
+    </standardValue>
+    <standardValue>
+        <fullName>Airline Global Card Acquirers</fullName>
+        <default>false</default>
+        <label>Airline Global Card Acquirers</label>
+    </standardValue>
+    <standardValue>
+        <fullName>Airline Point of Sale</fullName>
+        <default>false</default>
+        <label>Airline Point of Sale</label>
+    </standardValue>
+    <standardValue>
+        <fullName>Airport</fullName>
+        <default>false</default>
+        <label>Airport</label>
+    </standardValue>
+    <standardValue>
+        <fullName>Apartment &amp; Villa Rental</fullName>
+        <default>false</default>
+        <label>Apartment &amp; Villa Rental</label>
+    </standardValue>
+    <standardValue>
+        <fullName>Associations</fullName>
+        <default>false</default>
+        <label>Associations</label>
+    </standardValue>
+    <standardValue>
+        <fullName>ATC</fullName>
+        <default>false</default>
+        <label>ATC</label>
+    </standardValue>
+    <standardValue>
+        <fullName>Banking Services</fullName>
+        <default>false</default>
+        <label>Banking Services</label>
+    </standardValue>
+    <standardValue>
+        <fullName>Bus</fullName>
+        <default>false</default>
+        <label>Bus</label>
+    </standardValue>
+    <standardValue>
+        <fullName>CANSO</fullName>
+        <default>false</default>
+        <label>CANSO</label>
+    </standardValue>
+    <standardValue>
+        <fullName>Cargo Only</fullName>
+        <default>false</default>
+        <label>Cargo Only</label>
+    </standardValue>
+    <standardValue>
+        <fullName>Car Rental</fullName>
+        <default>false</default>
+        <label>Car Rental</label>
+    </standardValue>
+    <standardValue>
+        <fullName>Casino</fullName>
+        <default>false</default>
+        <label>Casino</label>
+    </standardValue>
+    <standardValue>
+        <fullName>CASS Associate</fullName>
+        <default>false</default>
+        <label>CASS Associate</label>
+    </standardValue>
+    <standardValue>
+        <fullName>Civil Aviation Authorities</fullName>
+        <default>false</default>
+        <label>Civil Aviation Authorities</label>
+    </standardValue>
+    <standardValue>
+        <fullName>Clearing Bank</fullName>
+        <default>false</default>
+        <label>Clearing Bank</label>
+    </standardValue>
+    <standardValue>
+        <fullName>Couriers</fullName>
+        <default>false</default>
+        <label>Couriers</label>
+    </standardValue>
+    <standardValue>
+        <fullName>Cruise Line</fullName>
+        <default>false</default>
+        <label>Cruise Line</label>
+    </standardValue>
+    <standardValue>
+        <fullName>Customs</fullName>
+        <default>false</default>
+        <label>Customs</label>
+    </standardValue>
+    <standardValue>
+        <fullName>Domestic Agent</fullName>
+        <default>false</default>
+        <label>Domestic Agent</label>
+    </standardValue>
+    <standardValue>
+        <fullName>Engine Manufacturers</fullName>
+        <default>false</default>
+        <label>Engine Manufacturers</label>
+    </standardValue>
+    <standardValue>
+        <fullName>Entertainment Industry</fullName>
+        <default>false</default>
+        <label>Entertainment Industry</label>
+    </standardValue>
+    <standardValue>
+        <fullName>ERSP Agent</fullName>
+        <default>false</default>
+        <label>ERSP Agent</label>
+    </standardValue>
+    <standardValue>
+        <fullName>Fuel Suppliers</fullName>
+        <default>false</default>
+        <label>Fuel Suppliers</label>
+    </standardValue>
+    <standardValue>
+        <fullName>GDS Global Distribution System</fullName>
+        <default>false</default>
+        <label>GDS Global Distribution System</label>
+    </standardValue>
+    <standardValue>
+        <fullName>General Public</fullName>
+        <default>false</default>
+        <label>General Public</label>
+    </standardValue>
+    <standardValue>
+        <fullName>Ground Handlers</fullName>
+        <default>false</default>
+        <label>Ground Handlers</label>
+    </standardValue>
+    <standardValue>
+        <fullName>GSA</fullName>
+        <default>false</default>
+        <label>GSA</label>
+    </standardValue>
+    <standardValue>
+        <fullName>GSA General Sales Agent</fullName>
+        <default>false</default>
+        <label>GSA General Sales Agent</label>
+    </standardValue>
+    <standardValue>
+        <fullName>GSSA Cargo</fullName>
+        <default>false</default>
+        <label>GSSA Cargo</label>
+    </standardValue>
+    <standardValue>
+        <fullName>Handling Agent</fullName>
+        <default>false</default>
+        <label>Handling Agent</label>
+    </standardValue>
+    <standardValue>
+        <fullName>Hotel</fullName>
+        <default>false</default>
+        <label>Hotel</label>
+    </standardValue>
+    <standardValue>
+        <fullName>IATA Cargo Agent</fullName>
+        <default>false</default>
+        <label>IATA Cargo Agent</label>
+    </standardValue>
+    <standardValue>
+        <fullName>IATA Head Office</fullName>
+        <default>false</default>
+        <label>IATA Head Office</label>
+    </standardValue>
+    <standardValue>
+        <fullName>IATA Local Office</fullName>
+        <default>false</default>
+        <label>IATA Local Office</label>
+    </standardValue>
+    <standardValue>
+        <fullName>IATAN Passenger Agent</fullName>
+        <default>false</default>
+        <label>IATAN Passenger Agent</label>
+    </standardValue>
+    <standardValue>
+        <fullName>IATA Passenger Sales Agent</fullName>
+        <default>false</default>
+        <label>IATA Passenger Sales Agent</label>
+    </standardValue>
+    <standardValue>
+        <fullName>IATA Regional Office</fullName>
+        <default>false</default>
+        <label>IATA Regional Office</label>
+    </standardValue>
+    <standardValue>
+        <fullName>IBCS consolidator</fullName>
+        <default>false</default>
+        <label>IBCS consolidator</label>
+    </standardValue>
+    <standardValue>
+        <fullName>IGHC</fullName>
+        <default>false</default>
+        <label>IGHC</label>
+    </standardValue>
+    <standardValue>
+        <fullName>Immigration</fullName>
+        <default>false</default>
+        <label>Immigration</label>
+    </standardValue>
+    <standardValue>
+        <fullName>Import Agent</fullName>
+        <default>false</default>
+        <label>Import Agent</label>
+    </standardValue>
+    <standardValue>
+        <fullName>Individual Governments</fullName>
+        <default>false</default>
+        <label>Individual Governments</label>
+    </standardValue>
+    <standardValue>
+        <fullName>Inspector</fullName>
+        <default>false</default>
+        <label>Inspector</label>
+    </standardValue>
+    <standardValue>
+        <fullName>Inter- Governmental Bodies</fullName>
+        <default>false</default>
+        <label>Inter- Governmental Bodies</label>
+    </standardValue>
+    <standardValue>
+        <fullName>IT sector</fullName>
+        <default>false</default>
+        <label>IT sector</label>
+    </standardValue>
+    <standardValue>
+        <fullName>Large Component OEMs</fullName>
+        <default>false</default>
+        <label>Large Component OEMs</label>
+    </standardValue>
+    <standardValue>
+        <fullName>Low-cost carrier</fullName>
+        <default>false</default>
+        <label>Low-cost carrier</label>
+    </standardValue>
+    <standardValue>
+        <fullName>Maintenance, Repair, Providers</fullName>
+        <default>false</default>
+        <label>Maintenance, Repair, Providers</label>
+    </standardValue>
+    <standardValue>
+        <fullName>Member airline supplier</fullName>
+        <default>false</default>
+        <label>Member airline supplier</label>
+    </standardValue>
+    <standardValue>
+        <fullName>MSO Member Sales Office</fullName>
+        <default>false</default>
+        <label>MSO Member Sales Office</label>
+    </standardValue>
+    <standardValue>
+        <fullName>NISI</fullName>
+        <default>false</default>
+        <label>NISI</label>
+    </standardValue>
+    <standardValue>
+        <fullName>NOGs</fullName>
+        <default>false</default>
+        <label>NOGs</label>
+    </standardValue>
+    <standardValue>
+        <fullName>Non-IATA Cargo Agent</fullName>
+        <default>false</default>
+        <label>Non-IATA Cargo Agent</label>
+    </standardValue>
+    <standardValue>
+        <fullName>Non-IATA Passenger Agent</fullName>
+        <default>false</default>
+        <label>Non-IATA Passenger Agent</label>
+    </standardValue>
+    <standardValue>
+        <fullName>Non-IATA Travel Agent</fullName>
+        <default>false</default>
+        <label>Non-IATA Travel Agent</label>
+    </standardValue>
+    <standardValue>
+        <fullName>Other</fullName>
+        <default>false</default>
+        <label>Other</label>
+    </standardValue>
+    <standardValue>
+        <fullName>Passenger and cargo</fullName>
+        <default>false</default>
+        <label>Passenger and cargo</label>
+    </standardValue>
+    <standardValue>
+        <fullName>Passenger Only</fullName>
+        <default>false</default>
+        <label>Passenger Only</label>
+    </standardValue>
+    <standardValue>
+        <fullName>Private Sector Associations</fullName>
+        <default>false</default>
+        <label>Private Sector Associations</label>
+    </standardValue>
+    <standardValue>
+        <fullName>Processor</fullName>
+        <default>false</default>
+        <label>Processor</label>
+    </standardValue>
+    <standardValue>
+        <fullName>Publishing</fullName>
+        <default>false</default>
+        <label>Publishing</label>
+    </standardValue>
+    <standardValue>
+        <fullName>Railway</fullName>
+        <default>false</default>
+        <label>Railway</label>
+    </standardValue>
+    <standardValue>
+        <fullName>Railways, Cruise Ships</fullName>
+        <default>false</default>
+        <label>Railways, Cruise Ships</label>
+    </standardValue>
+    <standardValue>
+        <fullName>Regulators</fullName>
+        <default>false</default>
+        <label>Regulators</label>
+    </standardValue>
+    <standardValue>
+        <fullName>Resort</fullName>
+        <default>false</default>
+        <label>Resort</label>
+    </standardValue>
+    <standardValue>
+        <fullName>SSI</fullName>
+        <default>false</default>
+        <label>SSI</label>
+    </standardValue>
+    <standardValue>
+        <fullName>System Solutions Providers</fullName>
+        <default>false</default>
+        <label>System Solutions Providers</label>
+    </standardValue>
+    <standardValue>
+        <fullName>TIDS Agent</fullName>
+        <default>false</default>
+        <label>TIDS Agent</label>
+    </standardValue>
+    <standardValue>
+        <fullName>Tourism Board</fullName>
+        <default>false</default>
+        <label>Tourism Board</label>
+    </standardValue>
+    <standardValue>
+        <fullName>Tour Operators</fullName>
+        <default>false</default>
+        <label>Tour Operators</label>
+    </standardValue>
+    <standardValue>
+        <fullName>Training Centre</fullName>
+        <default>false</default>
+        <label>Training Centre</label>
+    </standardValue>
+    <standardValue>
+        <fullName>Travel Agency Association</fullName>
+        <default>false</default>
+        <label>Travel Agency Association</label>
+    </standardValue>
+    <standardValue>
+        <fullName>Travel Promotion Agencies</fullName>
+        <default>false</default>
+        <label>Travel Promotion Agencies</label>
+    </standardValue>
+</StandardValueSet>

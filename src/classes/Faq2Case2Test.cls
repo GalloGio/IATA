@@ -52,7 +52,7 @@ public with sharing class Faq2Case2Test {
 		  controller.CheckNewCaseRecordType();
 		  controller.GenerateTopicHelpText();
 		  controller.GeneratesubTopicHelpText();
-		  Set<String> stString = controller.topicsToShowButton;
+		  //Set<String> stString = controller.topicsToShowButton;
 		  Boolean b = controller.showButton;
 		  Boolean b2 = controller.isAllowedCode('test');
 		//   Boolean b3 = controller.isAllowedSector('test');

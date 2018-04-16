@@ -335,20 +335,47 @@
             jQuery('[id$=period1]').hide();
         }
     }
+
+    function getWeeklyMaxDay(){
+        dayOfWeek = new Date().getDay();
+        dayOfMonth = new Date().getDate();
+        maxDay = dayOfMonth;
+        testDay = 0;
+
+        if(dayOfWeek == 6){
+            maxDay = maxDay-1;
+        }else if(dayOfWeek > 6){
+            maxDay = maxDay-1;
+        }else if(dayOfWeek < 6){
+            while(testDay != 5){
+                dayOfMonth = dayOfMonth -1;
+                testDate = new Date(new Date().getFullYear(), new Date().getMonth(), dayOfMonth );
+                testDay = testDate.getDay();
+            }
+            maxDay = dayOfMonth;
+        } 
+        
+        //Initial values for the selected week
+        weekInitialStartDate=maxDay-5;
+        weekInitialEndDate=maxDay;
+  
+        return maxDay;
+    }
     
     var reqOpt = {
         onSelect:onSelect,
         showOtherMonths: true,
         selectOtherMonths: true,
-        firstDay: 5,
-        minDate: new Date({!eBulletin_StartDate_year}, {!eBulletin_StartDate_month}-1, {!eBulletin_StartDate_day}),
-        maxDate: new Date(new Date().getFullYear(), new Date().getMonth(), new Date().getDate() - new Date().getDay() - 3)
+        firstDay: 6,
+        minDate: new Date({!eBulletin_StartDate_year}, {!eBulletin_StartDate_month}, {!eBulletin_StartDate_day}),
+            maxDate: new Date(new Date().getFullYear(), new Date().getMonth(), getWeeklyMaxDay() )
     };
 
     var reqOptDaily = {
         onSelect:onSelectDaily,
         showOtherMonths: true,
         selectOtherMonths: true,
+        firstDay: 6,
         minDate: new Date(new Date().getFullYear(), new Date().getMonth(), new Date().getDate()  - 6),
         maxDate: new Date(new Date().getFullYear(), new Date().getMonth(), new Date().getDate()  )
     };
@@ -1322,25 +1349,29 @@
                                                 <td>
                                                     <br/>
                                         
-                                                    <apex:actionStatus id="statusDaily">
-                                                        <apex:facet name="start">
+                                                     <apex:actionFunction name="planeStartDaily" action="{!isGettingReportStartDaily}" reRender="waitingPlaneDaily,btnDailyDownload"/>
+                                                    <apex:outputPanel id='waitingPlaneDaily'>
+                                                        <apex:pageBlockSectionItem rendered="{!isGettingReportDaily}">
                                                             <div class="title">
                                                                 <img src="{!URLFOR($Resource.IataLoadingImage)}"/><br/>
                                                                 <b>{!$Label.ISSP_AMS_eBulletin_Processing_eBulletin}</b>
-                                                            </div>    
-                                                        </apex:facet>
-                                                        <apex:facet name="stop">
-                                                            <apex:commandButton action="{!dailyReportDownload}" reRender="newWindow" oncomplete="openWindow();" value="{!$Label.ISSP_AMS_eBulletin_btn_DownloadDailyReport}" status="statusDaily" disabled="{!IF(newFormDaily.Opt_in__c ,'false','true')}"/>
-                                                        </apex:facet>
-                                                    </apex:actionStatus>
-                                                
+                                                            </div>
+                                                        </apex:pageBlockSectionItem>
+                                                    </apex:outputPanel>
+                                                    <apex:commandButton id="btnDailyDownload" action="{!dailyReportDownload}" onclick="planeStartDaily();" reRender="batchStatusPollerDaily" value="{!$Label.ISSP_AMS_eBulletin_btn_DownloadDailyReport}" disabled="{!IF(AND(newFormDaily.Opt_in__c, NOT(isGettingReportDaily)) ,'false','true')}"/>
+                                                    <apex:outputPanel id="batchStatusPollerDaily">
+                                                        <apex:actionPoller oncomplete="openWindow();" reRender="newWindow,theMessages,waitingPlaneDaily,btnDailyDownload" interval="5" action="{!checkBatchStatus}" enabled="{!isBatchProcessing}"/>
+                                                    </apex:outputPanel>
+                                                            
                                                     <apex:outputPanel id="newWindow">
-                                                    <script>      
-                                                        function openWindow(){        
-                                                            //alert('{!dailyFileDownload}');
-                                                            window.open("{!dailyFileDownload}");
-                                                        }
-                                                    </script>
+                                                        <script>      
+                                                            function openWindow(){        
+                                                                var sWindow = '{!dailyFileDownload}';
+                                                                if(sWindow != ''){
+                                                                    window.open(sWindow);
+                                                                }
+                                                            }
+                                                        </script>
                                                     </apex:outputPanel>
 
                                                     
@@ -1549,23 +1580,29 @@
                                                         <td>
                                                             <br/>
                                                                 
-                                                                <apex:actionStatus id="statusWeekly">
-                                                                    <apex:facet name="start">
+                                                                <apex:actionFunction name="planeStartWeekly" action="{!isGettingReportStartWeekly}" reRender="waitingPlaneWeekly,btnWeeklyDownload"/>
+                                                                <apex:outputPanel id='waitingPlaneWeekly'>
+                                                                    <apex:pageBlockSectionItem rendered="{!isGettingReportWeekly}">
                                                                         <div class="title">
                                                                             <img src="{!URLFOR($Resource.IataLoadingImage)}"/><br/>
                                                                             <b>{!$Label.ISSP_AMS_eBulletin_Processing_eBulletin}</b>
                                                                         </div>
-                                                                    </apex:facet>
-                                                                    <apex:facet name="stop">
-                                                                        <apex:commandButton action="{!weeklyReportDownload}" reRender="newWindow" oncomplete="openWindow();" value="{!$Label.ISSP_AMS_eBulletin_btn_DownloadWeeklyReport}" status="statusWeekly" disabled="{!IF(newFormWeekly.Opt_in__c ,'false','true')}"/>
-                                                                    </apex:facet>
-                                                                </apex:actionStatus>
+                                                                    </apex:pageBlockSectionItem>
+                                                                </apex:outputPanel>
+                                                                <apex:commandButton id="btnWeeklyDownload" action="{!weeklyReportDownload}" onclick="planeStartWeekly();" reRender="batchStatusPollerWeekly" value="{!$Label.ISSP_AMS_eBulletin_btn_DownloadWeeklyReport}" disabled="{!IF(AND(newFormWeekly.Opt_in__c, NOT(isGettingReportWeekly)) ,'false','true')}"/>
+                                                                <apex:outputPanel id="batchStatusPollerWeekly">
+                                                                    <apex:actionPoller oncomplete="openWindow();" reRender="newWindow,theMessages,waitingPlaneWeekly,btnWeeklyDownload" interval="5" action="{!checkBatchStatus}" enabled="{!isBatchProcessing}"/>
+                                                                </apex:outputPanel>
+                                                            
+                                                                
                                                             
                                                                 <apex:outputPanel id="newWindow">
                                                                 <script>      
                                                                     function openWindow(){        
-                                                                        //alert('{!dailyFileDownload}');
-                                                                        window.open("{!weeklyFileDownload}");
+                                                                        var sWindow = '{!weeklyFileDownload}';
+                                                                        if(sWindow != ''){
+                                                                            window.open(sWindow);
+                                                                        }
                                                                     }
                                                                 </script>
                                                                 </apex:outputPanel>

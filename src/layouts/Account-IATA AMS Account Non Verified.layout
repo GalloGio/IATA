@@ -532,8 +532,8 @@
         <fields>Percentage__c</fields>
         <fields>Termination_Date__c</fields>
         <relatedList>AMS_Account_Role__c.Account__c</relatedList>
-        <sortField>Termination_Date__c</sortField>
-        <sortOrder>Asc</sortOrder>
+        <sortField>Active__c</sortField>
+        <sortOrder>Desc</sortOrder>
     </relatedLists>
     <relatedLists>
         <fields>CASES.CASE_NUMBER</fields>
@@ -661,6 +661,7 @@
     </relatedLists>
     <relatedLists>
         <fields>NAME</fields>
+        <fields>Airline_Code__c</fields>
         <fields>Accreditation_Endorsement_organisation__c</fields>
         <fields>Accreditation_Endorsement_Status_code__c</fields>
         <fields>OSCAR__c</fields>
@@ -684,10 +685,12 @@
     </relatedLists>
     <relatedLists>
         <fields>NAME</fields>
+        <fields>Hierarchy__c</fields>
         <relatedList>AMS_Agencies_relationhip__c.Child_Account__c</relatedList>
     </relatedLists>
     <relatedLists>
         <fields>NAME</fields>
+        <fields>Hierarchy__c</fields>
         <relatedList>AMS_Agencies_relationhip__c.Parent_Account__c</relatedList>
     </relatedLists>
     <relatedLists>
@@ -696,7 +699,15 @@
     </relatedLists>
     <relatedLists>
         <fields>NAME</fields>
+        <fields>Active__c</fields>
+        <fields>Contact__c</fields>
+        <fields>Owner_Name__c</fields>
+        <fields>Percentage__c</fields>
+        <fields>Termination_Date__c</fields>
+        <fields>CREATED_DATE</fields>
         <relatedList>AMS_Account_Role__c.Owner_Account__c</relatedList>
+        <sortField>Active__c</sortField>
+        <sortOrder>Desc</sortOrder>
     </relatedLists>
     <relatedLists>
         <fields>ORDERS.ORDER_NUMBER</fields>

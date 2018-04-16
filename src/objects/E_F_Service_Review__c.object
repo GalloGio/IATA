@@ -21,10 +21,6 @@
         <type>Default</type>
     </actionOverrides>
     <actionOverrides>
-        <actionName>Follow</actionName>
-        <type>Default</type>
-    </actionOverrides>
-    <actionOverrides>
         <actionName>List</actionName>
         <type>Default</type>
     </actionOverrides>
@@ -50,6 +46,7 @@
     <description>Used to record E&amp;F-client service review meetings</description>
     <enableActivities>false</enableActivities>
     <enableBulkApi>true</enableBulkApi>
+    <enableChangeDataCapture>false</enableChangeDataCapture>
     <enableFeeds>false</enableFeeds>
     <enableHistory>true</enableHistory>
     <enableReports>false</enableReports>
@@ -86,53 +83,64 @@
         <externalId>false</externalId>
         <inlineHelpText>Select the place for the Service Review</inlineHelpText>
         <label>Location</label>
-        <picklist>
-            <picklistValues>
-                <fullName>GVA</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>YMQ</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Client</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>TBD</fullName>
-                <default>false</default>
-            </picklistValues>
-            <sorted>false</sorted>
-        </picklist>
         <required>false</required>
         <trackHistory>false</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Picklist</type>
+        <valueSet>
+            <valueSetDefinition>
+                <sorted>false</sorted>
+                <value>
+                    <fullName>GVA</fullName>
+                    <default>false</default>
+                    <label>GVA</label>
+                </value>
+                <value>
+                    <fullName>YMQ</fullName>
+                    <default>false</default>
+                    <label>YMQ</label>
+                </value>
+                <value>
+                    <fullName>Client</fullName>
+                    <default>false</default>
+                    <label>Client</label>
+                </value>
+                <value>
+                    <fullName>TBD</fullName>
+                    <default>false</default>
+                    <label>TBD</label>
+                </value>
+            </valueSetDefinition>
+        </valueSet>
     </fields>
     <fields>
         <fullName>Review_Owner__c</fullName>
         <externalId>false</externalId>
         <label>Review Owner</label>
-        <picklist>
-            <picklistValues>
-                <fullName>Arnaud Francq</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Koen Karsbergen</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Claudia falconi</fullName>
-                <default>false</default>
-            </picklistValues>
-            <sorted>false</sorted>
-        </picklist>
         <required>false</required>
         <trackHistory>false</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Picklist</type>
+        <valueSet>
+            <valueSetDefinition>
+                <sorted>false</sorted>
+                <value>
+                    <fullName>Arnaud Francq</fullName>
+                    <default>false</default>
+                    <label>Arnaud Francq</label>
+                </value>
+                <value>
+                    <fullName>Koen Karsbergen</fullName>
+                    <default>false</default>
+                    <label>Koen Karsbergen</label>
+                </value>
+                <value>
+                    <fullName>Claudia falconi</fullName>
+                    <default>false</default>
+                    <label>Claudia falconi</label>
+                </value>
+            </valueSetDefinition>
+        </valueSet>
     </fields>
     <label>E&amp;F Service Review</label>
     <nameField>
@@ -145,4 +153,5 @@
     <searchLayouts/>
     <sharingModel>ReadWrite</sharingModel>
     <startsWith>Vowel</startsWith>
+    <visibility>Public</visibility>
 </CustomObject>

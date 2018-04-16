@@ -21,10 +21,6 @@
         <type>Default</type>
     </actionOverrides>
     <actionOverrides>
-        <actionName>Follow</actionName>
-        <type>Default</type>
-    </actionOverrides>
-    <actionOverrides>
         <actionName>List</actionName>
         <type>Default</type>
     </actionOverrides>
@@ -50,6 +46,7 @@
     <description>Object used to temporarily store values of records being modified on Contract or E&amp;F Airline Billing Agreement, and that need an approval.</description>
     <enableActivities>false</enableActivities>
     <enableBulkApi>true</enableBulkApi>
+    <enableChangeDataCapture>false</enableChangeDataCapture>
     <enableFeeds>false</enableFeeds>
     <enableHistory>true</enableHistory>
     <enableReports>false</enableReports>
@@ -71,12 +68,15 @@
     <fields>
         <fullName>Billing_Currency__c</fullName>
         <externalId>false</externalId>
-        <globalPicklist>EF_Currency</globalPicklist>
         <label>Billing Currency</label>
         <required>false</required>
         <trackHistory>false</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Picklist</type>
+        <valueSet>
+            <restricted>true</restricted>
+            <valueSetName>EF_Currency</valueSetName>
+        </valueSet>
     </fields>
     <fields>
         <fullName>CCF_Number__c</fullName>
@@ -104,12 +104,15 @@
     <fields>
         <fullName>Data_Currency__c</fullName>
         <externalId>false</externalId>
-        <globalPicklist>EF_Currency</globalPicklist>
         <label>Data Currency</label>
         <required>false</required>
         <trackHistory>false</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Picklist</type>
+        <valueSet>
+            <restricted>true</restricted>
+            <valueSetName>EF_Currency</valueSetName>
+        </valueSet>
     </fields>
     <fields>
         <fullName>EF_Admin_Fee__c</fullName>
@@ -137,22 +140,28 @@
     <fields>
         <fullName>EF_Billing_Currency__c</fullName>
         <externalId>false</externalId>
-        <globalPicklist>EF_Currency</globalPicklist>
         <label>Billing Currency</label>
         <required>false</required>
         <trackHistory>false</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Picklist</type>
+        <valueSet>
+            <restricted>true</restricted>
+            <valueSetName>EF_Currency</valueSetName>
+        </valueSet>
     </fields>
     <fields>
         <fullName>EF_Billing_Frequency__c</fullName>
         <externalId>false</externalId>
-        <globalPicklist>EF_Frequency</globalPicklist>
         <label>Billing Frequency</label>
         <required>false</required>
         <trackHistory>false</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Picklist</type>
+        <valueSet>
+            <restricted>true</restricted>
+            <valueSetName>EF_Frequency</valueSetName>
+        </valueSet>
     </fields>
     <fields>
         <fullName>EF_Group_Code__c</fullName>
@@ -231,22 +240,28 @@
     <fields>
         <fullName>EF_Payment_Terms__c</fullName>
         <externalId>false</externalId>
-        <globalPicklist>EF_Payment_Terms</globalPicklist>
         <label>Payment Terms</label>
         <required>false</required>
         <trackHistory>false</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Picklist</type>
+        <valueSet>
+            <restricted>true</restricted>
+            <valueSetName>EF_Payment_Terms</valueSetName>
+        </valueSet>
     </fields>
     <fields>
         <fullName>EF_Status__c</fullName>
         <externalId>false</externalId>
-        <globalPicklist>EF_Status</globalPicklist>
         <label>Status</label>
         <required>false</required>
         <trackHistory>false</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Picklist</type>
+        <valueSet>
+            <restricted>true</restricted>
+            <valueSetName>EF_Status</valueSetName>
+        </valueSet>
     </fields>
     <fields>
         <fullName>Location_Code__c</fullName>
@@ -287,22 +302,28 @@
     <fields>
         <fullName>Payment_Currency__c</fullName>
         <externalId>false</externalId>
-        <globalPicklist>EF_Currency</globalPicklist>
         <label>Payment Currency</label>
         <required>false</required>
         <trackHistory>false</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Picklist</type>
+        <valueSet>
+            <restricted>true</restricted>
+            <valueSetName>EF_Currency</valueSetName>
+        </valueSet>
     </fields>
     <fields>
         <fullName>Payment_Method__c</fullName>
         <externalId>false</externalId>
-        <globalPicklist>EF_Payment_Method</globalPicklist>
         <label>Payment Method</label>
         <required>false</required>
         <trackHistory>false</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Picklist</type>
+        <valueSet>
+            <restricted>true</restricted>
+            <valueSetName>EF_Payment_Method</valueSetName>
+        </valueSet>
     </fields>
     <fields>
         <fullName>SAP_Contract_Number__c</fullName>
@@ -318,12 +339,15 @@
     <fields>
         <fullName>Status__c</fullName>
         <externalId>false</externalId>
-        <globalPicklist>EF_Status</globalPicklist>
         <label>Status</label>
         <required>false</required>
         <trackHistory>false</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Picklist</type>
+        <valueSet>
+            <restricted>true</restricted>
+            <valueSetName>EF_Status</valueSetName>
+        </valueSet>
     </fields>
     <label>E&amp;F Approval Storage</label>
     <listViews>
@@ -341,4 +365,5 @@
     <searchLayouts/>
     <sharingModel>ReadWrite</sharingModel>
     <startsWith>Vowel</startsWith>
+    <visibility>Public</visibility>
 </CustomObject>

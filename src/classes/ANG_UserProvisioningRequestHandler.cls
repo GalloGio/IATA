@@ -70,7 +70,8 @@ public class ANG_UserProvisioningRequestHandler {
 
 					logs.add(getErrorLogEntry(userContact.get(newUp.SalesforceUserId),
 											  newUp.ConnectedAppId,
-											  newUp.State));
+											  newUp.State,
+											  newUp.Id));
 
 					parToDelete.add(parMap.get(userContact.get(newUp.SalesforceUserId)+newUp.AppName));
 				}
@@ -81,13 +82,15 @@ public class ANG_UserProvisioningRequestHandler {
 		}
 	}
 
-	private static ISSP_Web_Service_Log__c getErrorLogEntry(Id contactId, Id connectedAppId, String state) {
+	private static ISSP_Web_Service_Log__c getErrorLogEntry(Id contactId, Id connectedAppId, String state, Id uprId) {
+		String soqlQuery = 'SELECT CreatedDate, Details, Status, SystemModstamp, UserId, UserProvisioningRequestId FROM UserProvisioningLog where UserProvisioningRequestId = \'' + uprId + '\'';
+
 		ISSP_Web_Service_Log__c log = new ISSP_Web_Service_Log__c(
 			Contact__c = contactId,
 			Web_Service__c = connectedAppId,
 			Method__c = 'User Provisioning',
 			Error_Code__c = state,
-			Error_Message__c = 'Error provisioning user',
+			Error_Message__c = 'Error provisioning user \n(Use following SOQL query to further details on the provisioning error : ' + soqlQuery + ')',
 			Success__c = false
 		);
 		return log;

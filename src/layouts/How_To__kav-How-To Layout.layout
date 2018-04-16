@@ -12,6 +12,9 @@
             <layoutItems>
                 <field>To_display_on_Homepage__c</field>
             </layoutItems>
+            <layoutItems>
+                <field>Chat_Answer__c</field>
+            </layoutItems>
         </layoutColumns>
         <style>OneColumn</style>
     </layoutSections>

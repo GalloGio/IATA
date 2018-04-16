@@ -107,14 +107,8 @@ public class clsMassEmailReminderController {
     }
 
     public PageReference MassSendTrackedEmail() {
-    	// Callout governor limit = 100
-    	if (casesCheckedList.KeySet().size() <= 100) {
-			MassEmail(true);
-		}
-		else{
-			ApexPages.addMessage(new ApexPages.message(ApexPages.severity.ERROR, 'Tracked Email batches are limited to 100 agents (' + nbrSelectedRecords + ' selected)'));
-		}
-		return null;
+		MassEmail(true);
+        return null;
     }
 
 //Send EMails to selected Cases.

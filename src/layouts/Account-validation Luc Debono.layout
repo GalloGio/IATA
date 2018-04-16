@@ -491,8 +491,8 @@
         <fields>Percentage__c</fields>
         <fields>Termination_Date__c</fields>
         <relatedList>AMS_Account_Role__c.Account__c</relatedList>
-        <sortField>Termination_Date__c</sortField>
-        <sortOrder>Asc</sortOrder>
+        <sortField>Active__c</sortField>
+        <sortOrder>Desc</sortOrder>
     </relatedLists>
     <relatedLists>
         <fields>Contact_Name__c</fields>
@@ -731,6 +731,7 @@
     </relatedLists>
     <relatedLists>
         <fields>NAME</fields>
+        <fields>Hierarchy__c</fields>
         <relatedList>AMS_Agencies_relationhip__c.Child_Account__c</relatedList>
     </relatedLists>
     <relatedLists>
@@ -746,6 +747,7 @@
     </relatedLists>
     <relatedLists>
         <fields>NAME</fields>
+        <fields>Hierarchy__c</fields>
         <relatedList>AMS_Agencies_relationhip__c.Parent_Account__c</relatedList>
     </relatedLists>
     <relatedLists>

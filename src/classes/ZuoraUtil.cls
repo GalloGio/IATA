@@ -66,11 +66,23 @@ public class ZuoraUtil
     }
 
     public static List<Zuora.zObject> getPaymentMethodsFromZuora(String zuoraAccountId) {
-        String zoql = 'select Id,NumConsecutiveFailures,Active,PaymentMethodStatus,Name,CreditCardAddress1,CreditCardAddress2,CreditCardCity,CreditCardCountry,CreditCardExpirationMonth,CreditCardExpirationYear,CreditCardHolderName,CreditCardMaskNumber,CreditCardType,LastTransactionStatus,Type from PaymentMethod where PaymentMethodStatus=\'Active\' and AccountId = \'' + zuoraAccountId + '\'';
+        String zoql = 'select Id,NumConsecutiveFailures,Active,PaymentMethodStatus,Name,CreditCardAddress1,CreditCardAddress2,CreditCardCity,CreditCardCountry,CreditCardExpirationMonth,CreditCardExpirationYear,CreditCardHolderName,CreditCardMaskNumber,CreditCardType,LastTransactionStatus,LastTransactionDateTime,Type from PaymentMethod where PaymentMethodStatus=\'Active\' and AccountId = \'' + zuoraAccountId + '\'';
         if (String.isNotBlank(zuoraAccountId)) 
         {
             try{return (Test.isRunningTest())? TestDataGenerator.generatePaymentMethods(zuoraAccountId,1) : zconnection.zquery(zoql);}
             catch(Exception ex){throw new IECApplicationException('Could not retreive Payment Methods for accountId ' + zuoraAccountId + '. Error: ' + ex.getMessage());}
+        }
+        else return null;
+    }
+
+    public static List<Zuora.zObject> getPaymentMethodDetails(String paymentId) {
+        String zoql = 'select Id,NumConsecutiveFailures,Active,PaymentMethodStatus,Name,CreditCardAddress1,CreditCardAddress2,CreditCardCity,CreditCardCountry,CreditCardExpirationMonth,CreditCardExpirationYear,CreditCardHolderName,CreditCardMaskNumber,CreditCardType,LastTransactionStatus,LastTransactionDateTime,Type from PaymentMethod where PaymentMethodStatus=\'Active\' and Id = \'' + paymentId + '\'';
+        if (String.isNotBlank(paymentId)) 
+        {
+            try{
+                return Test.isRunningTest() ? TestDataGenerator.generatePaymentMethodDetails(paymentId) : zconnection.zquery(zoql);
+            }catch(Exception ex){
+                throw new IECApplicationException('Could not retreive Payment Method details for id ' + paymentId + '. Error: ' + ex.getMessage());}
         }
         else return null;
     }

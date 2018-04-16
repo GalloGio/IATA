@@ -191,11 +191,12 @@ public with sharing class AMP_KeyAccountPlanExtension {
 		try {
 			for(Task t : lsMilestones) {
 				if(t.Id == idTaskConcerned) {
-					tmpTask = t;
+					tmpTask = t;					
 					break;
 				}
 			}
 
+			tmpTask.Subject = tmpTask.Subject__c;
 			upsert tmpTask;
 			isTaskEditMode = false;
 			lsMilestones = getTasks(objectiveId);

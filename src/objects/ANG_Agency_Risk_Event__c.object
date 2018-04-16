@@ -21,10 +21,6 @@
         <type>Default</type>
     </actionOverrides>
     <actionOverrides>
-        <actionName>Follow</actionName>
-        <type>Default</type>
-    </actionOverrides>
-    <actionOverrides>
         <actionName>List</actionName>
         <type>Default</type>
     </actionOverrides>
@@ -49,6 +45,7 @@
     <deploymentStatus>Deployed</deploymentStatus>
     <enableActivities>true</enableActivities>
     <enableBulkApi>true</enableBulkApi>
+    <enableChangeDataCapture>false</enableChangeDataCapture>
     <enableFeeds>false</enableFeeds>
     <enableHistory>true</enableHistory>
     <enableReports>true</enableReports>
@@ -134,6 +131,32 @@
         <type>Lookup</type>
     </fields>
     <fields>
+        <fullName>ANG_Cash_Conditions_Activation_FF__c</fullName>
+        <externalId>false</externalId>
+        <formula>IF(ANG_Risk_ID__c == &apos;5&apos;,
+				IF(NOT(ISBLANK(TEXT(ANG_CaseId__r.Parent.Financial_Review_Result__c))),
+							null,
+							ANG_Cash_Conditions_Activation__c
+				),
+				ANG_Cash_Conditions_Activation__c
+)</formula>
+        <label>Cash Conditions Real Activation Date</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Date</type>
+    </fields>
+    <fields>
+        <fullName>ANG_Cash_Conditions_Activation__c</fullName>
+        <description>Day in which Limit Cash Conditions will be copied from Risk Event Type (only works from false to true). Activation will be controlled by a daily batch</description>
+        <externalId>false</externalId>
+        <label>Cash Conditions Activation Date</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Date</type>
+    </fields>
+    <fields>
         <fullName>ANG_ChangeCode__c</fullName>
         <deleteConstraint>SetNull</deleteConstraint>
         <externalId>false</externalId>
@@ -160,12 +183,15 @@
     <fields>
         <fullName>ANG_Event_Status__c</fullName>
         <externalId>false</externalId>
-        <globalPicklist>ANG_Event_Status</globalPicklist>
         <label>Event Status</label>
         <required>false</required>
         <trackHistory>true</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Picklist</type>
+        <valueSet>
+            <restricted>true</restricted>
+            <valueSetName>ANG_Event_Status</valueSetName>
+        </valueSet>
     </fields>
     <fields>
         <fullName>ANG_Expiration_Date__c</fullName>
@@ -207,6 +233,16 @@
         <trackHistory>true</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Date</type>
+    </fields>
+    <fields>
+        <fullName>ANG_Limit_Cash_Conditions__c</fullName>
+        <defaultValue>false</defaultValue>
+        <description>Enforces Cash Conditions on account (previously set on Risk Event Type). Meaning if an account has one active risk event with Limit Cash Conditions, Cash Conditions will be true.</description>
+        <externalId>false</externalId>
+        <label>Limit Cash Conditions</label>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Checkbox</type>
     </fields>
     <fields>
         <fullName>ANG_Manual__c</fullName>
@@ -356,6 +392,15 @@ Id
         <trackTrending>false</trackTrending>
         <type>Date</type>
     </fields>
+    <fields>
+        <fullName>ANG_isCashlessAgency__c</fullName>
+        <externalId>false</externalId>
+        <formula>ISPICKVAL(ANG_AccountId__r.ANG_Accreditation_Model__c,&apos;Cashless&apos;)</formula>
+        <label>Is Cashless Agency</label>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Checkbox</type>
+    </fields>
     <label>Agency Risk Event</label>
     <listViews>
         <fullName>All</fullName>
@@ -375,7 +420,7 @@ Id
         <active>true</active>
         <label>Risk Event</label>
         <picklistValues>
-            <picklist>ANG_Event_Status</picklist>
+            <picklist>ANG_Event_Status__c</picklist>
             <values>
                 <fullName>Active</fullName>
                 <default>false</default>
@@ -386,6 +431,10 @@ Id
             </values>
             <values>
                 <fullName>Inactive_CHO</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Inactive_Cashless</fullName>
                 <default>false</default>
             </values>
             <values>
@@ -465,4 +514,5 @@ PRIORVALUE(ANG_Expired__c)))</errorConditionFormula>
 ) &gt; 1</errorConditionFormula>
         <errorMessage>Please, fill only one of the source fields</errorMessage>
     </validationRules>
+    <visibility>Public</visibility>
 </CustomObject>

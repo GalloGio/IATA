@@ -91,6 +91,9 @@ public without sharing class IECApplicationsManager {
         
 
         List<GDP_Products_Account_View__c> lstAgency;
+
+        String CACCodesStr = CAC_and_GAD_Settings__c.getInstance('Excluded Values').Excluded_CAC_Location_Classes__c;
+        List<String> CACCodesList = CACCodesStr.split(';');
         
         if (CASSCode == null || CASSCode == '') {
             lstAgency = 
@@ -102,7 +105,7 @@ public without sharing class IECApplicationsManager {
                     g.Related_GDP_Address__r.Address_City__c, g.Related_GDP_Address__r.Address_Country_Name__c, g.Related_Accreditation_Class__r.Status__c
                 FROM GDP_Products_Account_View__c g
                 WHERE g.IATA_Code__c = :IATACode
-                    AND Related_Accreditation_Class__r.Class__r.Code__c NOT IN ('A', 'I', 'L', 'Q', 'R', 'U', 'Y', 'Z') limit 2];
+                    AND Related_Accreditation_Class__r.Class__r.Code__c NOT IN :CACCodesList limit 2];
         }
         else {
             CASSCode = CASSCode.trim();
@@ -116,7 +119,7 @@ public without sharing class IECApplicationsManager {
                     g.Related_GDP_Address__r.Address_City__c, g.Related_GDP_Address__r.Address_Country_Name__c
                 FROM GDP_Products_Account_View__c g
                 WHERE g.IATA_Code__c = :IATACode AND g.CASS_Number__c = : CASSCode
-                    AND Related_Accreditation_Class__r.Class__r.Code__c NOT IN ('A', 'I', 'L', 'Q', 'R', 'U', 'Y', 'Z') limit 2];
+                    AND Related_Accreditation_Class__r.Class__r.Code__c NOT IN :CACCodesList limit 2];
         }
 
         return (!lstAgency.isEmpty()) ? lstAgency : null;
@@ -148,6 +151,9 @@ public without sharing class IECApplicationsManager {
          agencyCode = agencyCode.trim();
         
         List<GDP_Products_Account_View__c> lstAgency;
+
+        String CACCodesStr = CAC_and_GAD_Settings__c.getInstance('Excluded Values').Excluded_CAC_Location_Classes__c;
+        List<String> CACCodesList = CACCodesStr.split(';');
         
         system.debug('** - getAgencyByAgencyCode: agencyCode = ' + agencyCode + ', checkCode = ' + checkCode + ', CASSCode = ' + CASSCode);
         
@@ -165,7 +171,7 @@ public without sharing class IECApplicationsManager {
                         g.Related_GDP_Address__r.Address_City__c, g.Related_GDP_Address__r.Address_Country_Name__c
                     FROM GDP_Products_Account_View__c g
                     WHERE g.IATA_Code__c = :agencyCode and g.Check_Digit__c = :checkCode
-                        AND Related_Accreditation_Class__r.Class__r.Code__c NOT IN ('A', 'I', 'L', 'Q', 'R', 'U', 'Y', 'Z') limit 2];
+                        AND Related_Accreditation_Class__r.Class__r.Code__c NOT IN :CACCodesList limit 2];
 
             }
             else {
@@ -185,7 +191,7 @@ public without sharing class IECApplicationsManager {
                         g.Related_GDP_Address__r.Address_City__c, g.Related_GDP_Address__r.Address_Country_Name__c
                     FROM GDP_Products_Account_View__c g
                     WHERE g.Agency_Code__c = : searchCode
-                        AND Related_Accreditation_Class__r.Class__r.Code__c NOT IN ('A', 'I', 'L', 'Q', 'R', 'U', 'Y', 'Z') limit 2];
+                        AND Related_Accreditation_Class__r.Class__r.Code__c NOT IN :CACCodesList limit 2];
 
 
             }
@@ -202,7 +208,7 @@ public without sharing class IECApplicationsManager {
                     g.Related_GDP_Address__r.Address_City__c, g.Related_GDP_Address__r.Address_Country_Name__c
                 FROM GDP_Products_Account_View__c g
                 WHERE g.Agency_Code__c = :agencyCode
-                    AND Related_Accreditation_Class__r.Class__r.Code__c NOT IN ('A', 'I', 'L', 'Q', 'R', 'U', 'Y', 'Z') limit 2];
+                    AND Related_Accreditation_Class__r.Class__r.Code__c NOT IN :CACCodesList limit 2];
 
         }
                 
@@ -239,10 +245,21 @@ public without sharing class IECApplicationsManager {
             // if GAD, filter out the Cargo agencies
             if (sProductCategoryCode == IECConstants.ProductCategory_SF_CACFREE
                 || sProductCategoryCode == IECConstants.ProductCategory_SF_CACPRO
-                || sProductCategoryCode == IECConstants.ProductCategory_SF_CACWEB)
-                sQueryWhereClauses.add('Related_Accreditation_Class_Code__c NOT IN (\'A\', \'I\', \'L\', \'Q\', \'R\', \'U\', \'Y\', \'Z\')');
-            else if (sProductCategoryCode == IECConstants.ProductCategory_SF_GAD)
-                sQueryWhereClauses.add('Related_Accreditation_Class_Code__c NOT IN (\'A\', \'I\', \'L\', \'Q\', \'R\', \'U\', \'Y\', \'Z\', \'C\', \'X\')');
+                || sProductCategoryCode == IECConstants.ProductCategory_SF_CACWEB){
+                
+                String CACCodesStr = CAC_and_GAD_Settings__c.getInstance('Excluded Values').Excluded_CAC_Location_Classes__c;
+                List<String> CACCodesList = CACCodesStr.split(';');
+
+                sQueryWhereClauses.add('Related_Accreditation_Class_Code__c NOT IN :CACCodesList');
+            
+            }else if (sProductCategoryCode == IECConstants.ProductCategory_SF_GAD){
+                
+                String GADCodesStr = CAC_and_GAD_Settings__c.getInstance('Excluded Values').Excluded_GAD_Location_Classes__c;
+                List<String> GADCodesList = GADCodesStr.split(';');
+
+                sQueryWhereClauses.add('Related_Accreditation_Class_Code__c NOT IN :GADCodesList');
+           
+            }
             else if (sProductCategoryCode == IECConstants.ProductCategory_SF_PAL)
                 sQueryWhereClauses.add('Related_Accreditation_Class_Code__c IN (\'P\', \'D\', \'V\')');
             else if (sProductCategoryCode == IECConstants.ProductCategory_SF_CAL)
@@ -452,6 +469,7 @@ public without sharing class IECApplicationsManager {
      * @param sStatusOfSearch Success or Fail (use IECConstants.IECUsageTrackerSearchStatus_Fail or IECConstants.IECUsageTrackerSearchStatus_Success)
      */          
     private static void trackAndConsumeUsage(IECCustomer oCustomer, String sProductCategoryCode, String sSearchTarget, String sStatusOfSearch) {
+        system.debug('angielaz: ' + oCustomer);
         trackAndConsumeUsage(oCustomer.RelatedContact.Id,  sProductCategoryCode,  sSearchTarget,  sStatusOfSearch);
     }
     
@@ -766,7 +784,7 @@ public without sharing class IECApplicationsManager {
      * @param lstSubs The list of subscription to look in
      * @return A Zuora.zObject representing the latest subscription
      */
-    private static Zuora.zObject getLastVersionFromZuoraSubscriptionList(List<Zuora.zObject> lstSubs) {
+    /*private static Zuora.zObject getLastVersionFromZuoraSubscriptionList(List<Zuora.zObject> lstSubs) {
         
         if (lstSubs == null || lstSubs.isEmpty())
             return null;
@@ -779,7 +797,7 @@ public without sharing class IECApplicationsManager {
         }
         
         return oLatestSub;
-    }
+    }*/
     
     /**
      * Returns the list of Product Access that are currently effective for a Product Category, for a given Contact
@@ -1420,6 +1438,6 @@ public without sharing class IECApplicationsManager {
 		return result;
 	} // isBillingAccountEbcChecked
 	
-
+	
 
 }

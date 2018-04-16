@@ -715,7 +715,7 @@ private class AMS_UtilsTest {
         System.assertEquals ([SELECT COUNT() FROM Agency_Applied_Change_code__c WHERE Change_Code__C = 'IEP' AND Account__r.Id = :acct.Id], 1, '1 IEP change code should have been generated');
 
         //assert no update was generated
-        System.assertEquals([SELECT COUNT() FROM AMS_Agency_Updates__c WHERE Account__r.name = :acct.Id], 0, 'No updates should be generated for IEP change code');
+        System.assertEquals([SELECT COUNT() FROM AMS_Agency_Updates__c WHERE Account__r.name = :acct.Id  AND Integration_System__c = 'SAP PI' ], 0, 'No updates should be generated for IEP change code');
 
         Test.stopTest();
 
@@ -811,4 +811,5 @@ private class AMS_UtilsTest {
         orderedSlotsOccupied.add(1);orderedSlotsOccupied.add(6);
         AMS_Utils.findGapInRange(1,10,orderedSlotsOccupied);
      }
+
 }

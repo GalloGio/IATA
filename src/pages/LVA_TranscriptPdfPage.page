@@ -1,0 +1,50 @@
+<apex:page controller="LVA_TranscriptController" sidebar="false" standardStylesheets="false" applyHtmlTag="false" showHeader="false" applyBodyTag="false" >
+
+   <apex:stylesheet value="{!URLFOR($Resource.LVA_TRANSCRIPT_CSS)}"/>
+    <head>
+        <style type="text/css">
+            @page {
+                @bottom-left{
+                content: "{!CASE(MONTH(TODAY()),
+                    1, "January",
+                    2, "February",
+                    3, "March",
+                    4, "April",
+                    5, "May",
+                    6, "June",
+                    7, "July",
+                    8, "August",
+                    9, "September",
+                    10, "October",
+                    11, "November",
+                    12, "December",
+                    "None")}&nbsp;{!YEAR(TODAY())}"
+                }
+                @bottom-center{
+                	content: "www.iata.org"
+                }
+                @bottom-right {
+                	content: "Page " counter(page) " of " counter(pages);
+                }
+            }
+        </style>
+    </head>
+    
+    <body>
+        <div class="header">
+            <apex:image styleClass="iataLogo" value="{!URLFOR($Resource.IATAlogo)}" />
+        </div>
+        
+        <div>
+            <table id="content">
+                <tr>
+                    <td class="label" style="font-family: Arial Unicode MS">
+                        <apex:outputField value="{!lva.body}"/>
+                        
+                    </td>
+                </tr>
+            </table>
+        </div>
+        
+    </body>
+</apex:page>

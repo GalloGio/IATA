@@ -289,6 +289,29 @@ private class AMS_OSCAR_AutomationTest {
         	System.assertEquals(true, factory.processWork(event, oscar));
 			System.assertEquals('Failed', oscar.Finalization_result__c);
 
+			/*
+				Step 41
+			*/
+			factory = manager.newClassInstance('AMS_OSCAR_Automation.AMS_OSCAR_Step41_failed');
+			System.assertEquals(true, factory.processWork(event, oscar));
+			System.assertEquals('Failed', oscar.IRIS_update_result__c);
+
+			factory = manager.newClassInstance('AMS_OSCAR_Automation.AMS_OSCAR_Step41_succeeded');
+			System.assertEquals(true, factory.processWork(event, oscar));
+			System.assertEquals('Passed', oscar.IRIS_update_result__c);
+
+			/*
+				Step 42
+			*/
+			factory = manager.newClassInstance('AMS_OSCAR_Automation.AMS_OSCAR_Step42_failed');
+			System.assertEquals(true, factory.processWork(event, oscar));
+			System.assertEquals('Failed', oscar.Finalization_result__c);
+
+			factory = manager.newClassInstance('AMS_OSCAR_Automation.AMS_OSCAR_Step42_succeeded');
+			System.assertEquals(true, factory.processWork(event, oscar));
+			System.assertEquals('Passed', oscar.Finalization_result__c);
+
+
 
 			/*
         		Step 07

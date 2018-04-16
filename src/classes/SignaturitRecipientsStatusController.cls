@@ -9,14 +9,14 @@ public class SignaturitRecipientsStatusController{
     
     public Set<String> recipientNames;
     public Map<String,String> typePerRecipient;
-    public Map<String,ComparableEvent> latestEventPerRecipient;
+    public Map<String,ComparableEvent> statusPerRecipient;
     
     public String createdByName {get;set;}
     public String lastModifiedByName {get;set;}
     
     public List<ComparableEvent> events {
         get{
-            List<ComparableEvent> l = latestEventPerRecipient.values();
+            List<ComparableEvent> l = statusPerRecipient.values();
             l.sort();
             return l;
         }
@@ -41,18 +41,17 @@ public class SignaturitRecipientsStatusController{
         fillTypes(trackedEmail.BccAddress__c, 'bcc');
 
         // retrieve latest status for each recipient
-        latestEventPerRecipient = new Map<String,ComparableEvent>();
+        statusPerRecipient = new Map<String,ComparableEvent>();
 
         for(Tracked_Email_Event__c event : allEvents){
-            String rec = event.Recipient_Address__c.toLowerCase();
-            if(!latestEventPerRecipient.containsKey(rec)){
-                latestEventPerRecipient.put(rec, new ComparableEvent(typePerRecipient.get(rec), event));
+            String recipient = event.Recipient_Address__c.toLowerCase();
+            if(!statusPerRecipient.containsKey(recipient)){
+                statusPerRecipient.put(recipient, new ComparableEvent(typePerRecipient.get(recipient), event));
             }
             else{
-                String currentStatus = latestEventPerRecipient.get(rec).event.Status__c;
-                
-                if(SignaturitRestEvents.STATUSES.get(currentStatus) < SignaturitRestEvents.STATUSES.get(event.Status__c)){
-                    latestEventPerRecipient.get(rec).event = event;
+                String currentStatus = statusPerRecipient.get(recipient).event.Status__c;
+                if(SignaturitRestEvents.RECIPIENT_STATUSES.get(currentStatus) < SignaturitRestEvents.RECIPIENT_STATUSES.get(event.Status__c)){
+                    statusPerRecipient.get(recipient).event = event;
                 }
             }
         }
@@ -91,40 +90,21 @@ public class SignaturitRecipientsStatusController{
         public Integer compareTo(Object compareTo){
             ComparableEvent ce = (ComparableEvent) compareTo;
             
-            // 1. check recipient type
+            // 1. Compare recipient type
             if(ce.recipientType != this.recipientType){
-                if(this.recipientType == 'to'){
+                if(this.recipientType == 'to' || (this.recipientType == 'cc' && ce.recipientType == 'bcc')){
                     return -1;
-                }
-                else if(this.recipientType == 'cc'){
-                    if(ce.recipientType == 'bcc'){
-                        return -1;
-                    }
                 }
                 // All other cases
                 return 1;
             }
             
-            // 2. Check Status
+            // 2. Compare Status
             if(ce.event.Status__c != this.event.Status__c){
-            	if(ce.event.Status__c == 'email_bounced'){
-            		return -1;
-            	}
-            	
-            	if(this.event.Status__c == 'email_bounced'){
-            		return 1;
-            	}
-            	
-	            if(SignaturitRestEvents.STATUSES.get(ce.event.Status__c) > SignaturitRestEvents.STATUSES.get(this.event.Status__c)){
-	                return 1;
-	            }
-	            
-				if(SignaturitRestEvents.STATUSES.get(ce.event.Status__c) < SignaturitRestEvents.STATUSES.get(this.event.Status__c)){
-	                return -1;
-	            }
+            	return SignaturitRestEvents.EMAIL_STATUSES.get(ce.event.Status__c) - SignaturitRestEvents.EMAIL_STATUSES.get(this.event.Status__c);
             }
             
-            // 3. Check Name
+            // 3. Compare Name
             if(ce.event.Recipient_Name__c < this.event.Recipient_Name__c){
                 return 1;
             }

@@ -33,6 +33,7 @@
  <script>
     var portalRoleEmpty = false;
     var isEasyPayService = false;
+    var isSelectedUsers = false;
 
     function askReason(myReasonId) {
         var thisReason = prompt("Do you want to provide a reason?");
@@ -47,16 +48,32 @@
 
     function iepContinue() {
       isEasyPayService = true;
-      var appPortalRole = $('[id$="portalRoles"]').val();
+      
+      var appPortalRole = '';
+
+      if($("input[type='radio'].radioBtnClass").is(':checked')) {
+        appPortalRole = $("input[type='radio'].radioBtnClass:checked").val();
+      }
+    
       if (appPortalRole == "") {
         portalRoleEmpty = true;
         document.querySelector("[Id$='portalRoleErrorMessage']").style.display = '';
       } else {
         portalRoleEmpty = false;
         document.querySelector("[Id$='portalRoleErrorMessage']").style.display = 'none';      
-        //confirmContacts();
-        //alert("1");
-        //showUserListModal();
+        otherContinue();
+        $('[id$="portalServiceRole"]').val(appPortalRole);
+      }
+    }
+
+    function otherContinue() {
+      var users = $('[id$="ContactList"]').val();
+      if (users == null || users == '') {
+        isSelectedUsers = false;
+        document.querySelector("[Id$='portalNoUsersErrorMessage']").style.display = '';
+      } else {
+        isSelectedUsers = true;
+        document.querySelector("[Id$='portalNoUsersErrorMessage']").style.display = 'none';        
       }
     }
     
@@ -89,14 +106,13 @@
         $('#theReasonDeny').modal('hide');
     }
     
-    function showUserListModal(){
-      if(!portalRoleEmpty) {
+    function showUserListModal(){      
+      if(!portalRoleEmpty && isSelectedUsers) {
         if(isEasyPayService) {
-          $('#iataIepRequestAccessModal').modal('show');  
+          $('#iataIepRequestAccessModal').modal('show');
         } else {
-          $('#userListModal').modal('show');  
+          $('#userListModal').modal('show');
         }
-        
       }
     }
     
@@ -106,6 +122,11 @@
 
     function closeIataIepRequestAccessModal(){
         $('#iataIepRequestAccessModal').modal('hide');
+    }
+
+    function onComplete() {  
+        startLoading();
+        CreateNewPortalAccess();
     }
     
 </script>
@@ -122,10 +143,18 @@
                 <strong>{!$Label.ANG_ISSP_PortalRoleErrorMessage}</strong>
               </div>
 
+              <div class="alert alert-danger" id="portalNoUsersErrorMessage" style ="display: none">
+                <strong>{!$Label.ISSP_ANG_MustAddContactsToService}</strong>
+              </div>
+
+
+
               <apex:define name="body"> 
                   {!$Label.ISSP_Help_Edit_services_page}
                 <div class="panel-body" id="body-enquiries">
                     <apex:form id="myForm" rendered="{!isAddUser == false}">
+
+                    <apex:inputHidden value="{!portalServiceRole}" id="portalServiceRole"/>
         
                     <apex:pageBlock id="pgBlock" mode="edit" title="">
                         <div class="alert alert-danger" style="display:{!if(errorMessage.size==0,'none','')}">
@@ -253,7 +282,11 @@
                   </apex:form>
                   
                   <apex:form rendered="{!isAddUser == true}">
+
+                      <apex:inputHidden value="{!portalServiceRole}" id="portalServiceRole"/>
+
                       <apex:actionFunction name="confirmContacts" action="{!confirmContacts}" reRender=""/>
+                      <apex:actionFunction name="CreateNewPortalAccess" action="{!CreateNewPortalAccess}" reRender=""/>
 
                       <apex:pageBlock id="addUserBlock" >
                            <table class="table table-condensed" style="margin-top:20px;">
@@ -295,7 +328,8 @@
                                     "IATA EasyPay (WEX)", $Label.ANG_ISSP_IATA_EasyPay,
                                     "IATA Accreditation ", $Label.ISSP_Become_Accredited_Agent,
                                     "BSP / CASS Change of Bank details", $Label.ISSP_Change_Bank,
-                                    "click here"
+                                    "RHC Information", $Label.ANG_ISSP_RHC_Information,
+                                    servname
                                     )}"/>
                                 </td>
                             </tr>
@@ -304,9 +338,13 @@
                               <tr>
                                 <th>{!$Label.ANG_ISSP_PORTAL_SERVICE_ROLE}</th>
                                 <td>
-                                  <apex:selectList id="portalRoles" value="{!portalServiceRole}" size="1" required="true">
-                                    <apex:selectOptions value="{!availablePortalServiceRoles}"/>
-                                  </apex:selectList>                  
+                                  <apex:repeat value="{!availablePortalServiceRoles}" var="role" id="portalRoles">
+
+                                    <div class="radio" style="border-bottom: 1px solid rgb(229, 229, 229); padding-top: 5px;">
+                                      <label style="min-width: 35%; font-weight: bold;"><input type="radio" class="radioBtnClass" name="role" value="{!role.value}">{!role.value}</input></label>
+                                      <apex:outputText value="{!role.helpText}" escape="false"></apex:outputText>
+                                    </div>                          
+                                  </apex:repeat>
                                 </td>
                               </tr>
                             </apex:outputPanel>
@@ -327,6 +365,7 @@
                             rerender="userListPanel" />&nbsp;
 
                           <apex:commandButton action="{!confirmContacts}"
+                            onclick="otherContinue();"
                             rendered="{! NOT isEasyPayService}"
                             styleclass="btn btn_iata_success"
                             value="{!$Label.ISSP_Grant_Access}"
@@ -392,8 +431,10 @@
                                 <br/>
                               </div>
                               <div class="modal-footer">
-                                <apex:commandButton action="{!CreateNewPortalAccess}" 
+                                <apex:commandButton 
+                                  action="{!activateUsers}"
                                   onclick="closeIataIepRequestAccessModal();" value="{!$Label.LAQ_Close}" 
+                                  oncomplete="onComplete();"
                                   status="loadStatusSpinner"
                                   rerender="pgBlock, loadStatusSpinner" StyleClass="btn btn-primary"/>
                               </div>

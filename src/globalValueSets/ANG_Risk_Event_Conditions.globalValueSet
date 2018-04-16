@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<GlobalValueSet xmlns="http://soap.sforce.com/2006/04/metadata">
+    <customValue>
+        <fullName>Equal to</fullName>
+        <default>false</default>
+        <label>Equal to</label>
+    </customValue>
+    <customValue>
+        <fullName>Not equal to</fullName>
+        <default>false</default>
+        <label>Not equal to</label>
+    </customValue>
+    <customValue>
+        <fullName>Includes</fullName>
+        <default>false</default>
+        <label>Includes</label>
+    </customValue>
+    <customValue>
+        <fullName>Does not Include</fullName>
+        <default>false</default>
+        <label>Does not Include</label>
+    </customValue>
+    <customValue>
+        <fullName>Blank</fullName>
+        <default>false</default>
+        <label>Blank</label>
+    </customValue>
+    <customValue>
+        <fullName>Not blank</fullName>
+        <default>false</default>
+        <label>Not blank</label>
+    </customValue>
+    <customValue>
+        <fullName>Equal to today</fullName>
+        <default>false</default>
+        <label>Equal to today</label>
+    </customValue>
+    <customValue>
+        <fullName>Greater than today</fullName>
+        <default>false</default>
+        <label>Greater than today</label>
+    </customValue>
+    <customValue>
+        <fullName>Less than today</fullName>
+        <default>false</default>
+        <label>Less than today</label>
+    </customValue>
+    <customValue>
+        <fullName>&gt;</fullName>
+        <default>false</default>
+        <label>&gt;</label>
+    </customValue>
+    <customValue>
+        <fullName>&lt;</fullName>
+        <default>false</default>
+        <label>&lt;</label>
+    </customValue>
+    <customValue>
+        <fullName>&gt;=</fullName>
+        <default>false</default>
+        <label>&gt;=</label>
+    </customValue>
+    <customValue>
+        <fullName>&lt;=</fullName>
+        <default>false</default>
+        <label>&lt;=</label>
+    </customValue>
+    <masterLabel>Risk Event Conditions</masterLabel>
+    <sorted>false</sorted>
+</GlobalValueSet>

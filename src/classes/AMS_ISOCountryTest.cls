@@ -284,4 +284,238 @@ public class AMS_ISOCountryTest {
         System.assertEquals(ANG_Country_Coverage2, isoc3.ISO_Code__c);
 
     }
+
+
+    public static testmethod void testPortalApplicationCountryCoverageUpdateBulk() {
+            
+        Test.startTest();
+
+        Portal_Applications__c easyPay1 = new Portal_Applications__c (
+                Name = ANG_ISSP_PortalServiceHelper.IATA_EASYPAY_EDENRED,
+                ANG_Restrict_by_Agency_Sector__c = ANG_ISSP_PortalServiceHelper.TRAVEL_AGENT,
+                ANG_Accredited_Agents_Only__c = false,
+                Agency__c = true
+            );
+
+        insert easyPay1;
+
+        Portal_Applications__c easyPay2 = new Portal_Applications__c (
+                Name = ANG_ISSP_PortalServiceHelper.IATA_EASYPAY_MSTS,
+                ANG_Restrict_by_Agency_Sector__c = ANG_ISSP_PortalServiceHelper.TRAVEL_AGENT,
+                ANG_Accredited_Agents_Only__c = false,
+                Agency__c = true
+            );
+
+        insert easyPay2;        
+    
+        IATA_ISO_Country__c isoc = new IATA_ISO_Country__c(Name = 'Test', 
+            ISO_Code__c = 'TS',
+            ANG_Portal_Service__c = easyPay1.id);       
+
+
+        IATA_ISO_Country__c isoc2 = new IATA_ISO_Country__c(Name = 'Test2', 
+            ISO_Code__c = 'ST');       
+
+
+        IATA_ISO_Country__c isoc3 = new IATA_ISO_Country__c(Name = 'Test2', 
+            ISO_Code__c = 'BB');       
+
+
+        insert new List<IATA_ISO_Country__c>{isoc, isoc2, isoc3};
+
+        String ANG_Country_Coverage = [SELECT ANG_Country_Coverage__c FROM Portal_Applications__c WHERE id =: easyPay1.id].ANG_Country_Coverage__c;
+
+        System.debug('ANG_Country_Coverage-->' + ANG_Country_Coverage);
+
+        System.assertEquals(ANG_Country_Coverage, isoc.ISO_Code__c);
+
+        Test.stopTest();
+
+    }    
+
+    public static testmethod void testPortalApplicationCountryCoverageUpdateBulk2() {
+            
+        Test.startTest();
+
+        Portal_Applications__c easyPay1 = new Portal_Applications__c (
+                Name = ANG_ISSP_PortalServiceHelper.IATA_EASYPAY_EDENRED,
+                ANG_Restrict_by_Agency_Sector__c = ANG_ISSP_PortalServiceHelper.TRAVEL_AGENT,
+                ANG_Accredited_Agents_Only__c = false,
+                Agency__c = true
+            );
+
+        insert easyPay1;
+
+        Portal_Applications__c easyPay2 = new Portal_Applications__c (
+                Name = ANG_ISSP_PortalServiceHelper.IATA_EASYPAY_MSTS,
+                ANG_Restrict_by_Agency_Sector__c = ANG_ISSP_PortalServiceHelper.TRAVEL_AGENT,
+                ANG_Accredited_Agents_Only__c = false,
+                Agency__c = true
+            );
+
+        insert easyPay2;        
+    
+        IATA_ISO_Country__c isoc = new IATA_ISO_Country__c(Name = 'Test', 
+            ISO_Code__c = 'TS');       
+
+        IATA_ISO_Country__c isoc2 = new IATA_ISO_Country__c(Name = 'Test2', 
+            ISO_Code__c = 'ST');       
+
+
+        IATA_ISO_Country__c isoc3 = new IATA_ISO_Country__c(Name = 'Test2', 
+            ISO_Code__c = 'BB');       
+
+
+        insert new List<IATA_ISO_Country__c>{isoc, isoc2, isoc3};
+
+        String ANG_Country_Coverage = [SELECT ANG_Country_Coverage__c FROM Portal_Applications__c WHERE id =: easyPay1.id].ANG_Country_Coverage__c;
+
+        System.debug('ANG_Country_Coverage-->' + ANG_Country_Coverage);
+
+        System.assertEquals(ANG_Country_Coverage, null);
+
+        Test.stopTest();
+
+    }        
+
+    public static testmethod void testPortalApplicationCountryCoverageUpdateBulk3() {
+            
+        Test.startTest();
+
+        Portal_Applications__c easyPay1 = new Portal_Applications__c (
+                Name = ANG_ISSP_PortalServiceHelper.IATA_EASYPAY_EDENRED,
+                ANG_Restrict_by_Agency_Sector__c = ANG_ISSP_PortalServiceHelper.TRAVEL_AGENT,
+                ANG_Accredited_Agents_Only__c = false,
+                Agency__c = true
+            );
+
+        insert easyPay1;
+
+        Portal_Applications__c easyPay2 = new Portal_Applications__c (
+                Name = ANG_ISSP_PortalServiceHelper.IATA_EASYPAY_MSTS,
+                ANG_Restrict_by_Agency_Sector__c = ANG_ISSP_PortalServiceHelper.TRAVEL_AGENT,
+                ANG_Accredited_Agents_Only__c = false,
+                Agency__c = true
+            );
+
+        insert easyPay2;        
+    
+        IATA_ISO_Country__c isoc = new IATA_ISO_Country__c(Name = 'Test', 
+            ISO_Code__c = 'TS');       
+
+        IATA_ISO_Country__c isoc2 = new IATA_ISO_Country__c(Name = 'Test2', 
+            ISO_Code__c = 'ST');       
+
+
+        IATA_ISO_Country__c isoc3 = new IATA_ISO_Country__c(Name = 'Test2', 
+            ISO_Code__c = 'BB');       
+
+
+        insert new List<IATA_ISO_Country__c>{isoc, isoc2, isoc3};
+
+        String ANG_Country_Coverage = [SELECT ANG_Country_Coverage__c FROM Portal_Applications__c WHERE id =: easyPay1.id].ANG_Country_Coverage__c;
+
+        System.debug('ANG_Country_Coverage-->' + ANG_Country_Coverage);
+
+        System.assertEquals(ANG_Country_Coverage, null);
+
+        //-------
+
+        isoc.ANG_Portal_Service__c = easyPay1.id;
+
+        update new List<IATA_ISO_Country__c>{isoc, isoc2, isoc3};
+
+        ANG_Country_Coverage = [SELECT ANG_Country_Coverage__c FROM Portal_Applications__c WHERE id =: easyPay1.id].ANG_Country_Coverage__c;
+
+        System.debug('ANG_Country_Coverage-->' + ANG_Country_Coverage);
+
+        System.assertEquals(ANG_Country_Coverage, isoc.ISO_Code__c);
+
+        Test.stopTest();
+    }            
+
+    public static testmethod void testPortalApplicationCountryCoverageUpdateBulk4() {
+            
+        Test.startTest();
+
+        Portal_Applications__c easyPay1 = new Portal_Applications__c (
+                Name = ANG_ISSP_PortalServiceHelper.IATA_EASYPAY_EDENRED,
+                ANG_Restrict_by_Agency_Sector__c = ANG_ISSP_PortalServiceHelper.TRAVEL_AGENT,
+                ANG_Accredited_Agents_Only__c = false,
+                Agency__c = true
+            );
+
+        insert easyPay1;
+
+        Portal_Applications__c easyPay2 = new Portal_Applications__c (
+                Name = ANG_ISSP_PortalServiceHelper.IATA_EASYPAY_MSTS,
+                ANG_Restrict_by_Agency_Sector__c = ANG_ISSP_PortalServiceHelper.TRAVEL_AGENT,
+                ANG_Accredited_Agents_Only__c = false,
+                Agency__c = true
+            );
+
+        insert easyPay2;        
+    
+        IATA_ISO_Country__c isoc = new IATA_ISO_Country__c(Name = 'Test', 
+            ISO_Code__c = 'TS',
+            ANG_Portal_Service__c = easyPay1.id);       
+
+        IATA_ISO_Country__c isoc2 = new IATA_ISO_Country__c(Name = 'Test2', 
+            ISO_Code__c = 'ST',
+            ANG_Portal_Service__c = easyPay1.id);       
+
+        IATA_ISO_Country__c isoc3 = new IATA_ISO_Country__c(Name = 'Test2', 
+            ISO_Code__c = 'BB',
+            ANG_Portal_Service__c = easyPay2.id);       
+
+
+        insert new List<IATA_ISO_Country__c>{isoc, isoc2, isoc3};
+
+        String ANG_Country_Coverage = [SELECT ANG_Country_Coverage__c FROM Portal_Applications__c WHERE id =: easyPay1.id].ANG_Country_Coverage__c;
+
+        System.debug('ANG_Country_Coverage-->' + ANG_Country_Coverage);
+
+        System.assertEquals(ANG_Country_Coverage, isoc.ISO_Code__c + ',' + isoc2.ISO_Code__c);
+
+
+        ANG_Country_Coverage = [SELECT ANG_Country_Coverage__c FROM Portal_Applications__c WHERE id =: easyPay2.id].ANG_Country_Coverage__c;
+
+        System.debug('ANG_Country_Coverage-->' + ANG_Country_Coverage);
+
+        System.assertEquals(ANG_Country_Coverage, isoc3.ISO_Code__c);
+
+        //-------
+
+        IATA_ISO_Country__c isoc4 = new IATA_ISO_Country__c(Name = 'Test4', 
+            ISO_Code__c = 'CC',
+            ANG_Portal_Service__c = easyPay1.id);
+
+
+        upsert new List<IATA_ISO_Country__c>{isoc, isoc2, isoc3, isoc4};
+
+        ANG_Country_Coverage = [SELECT ANG_Country_Coverage__c FROM Portal_Applications__c WHERE id =: easyPay1.id].ANG_Country_Coverage__c;
+
+        System.debug('ANG_Country_Coverage-->' + ANG_Country_Coverage);
+
+        System.assertEquals(ANG_Country_Coverage, isoc.ISO_Code__c + ',' + isoc2.ISO_Code__c + ',' + isoc4.ISO_Code__c);
+
+        isoc.ANG_Portal_Service__c = null;
+        isoc3.ANG_Portal_Service__c = null;
+
+        upsert new List<IATA_ISO_Country__c>{isoc, isoc2, isoc3, isoc4};
+
+        ANG_Country_Coverage = [SELECT ANG_Country_Coverage__c FROM Portal_Applications__c WHERE id =: easyPay1.id].ANG_Country_Coverage__c;
+
+        System.debug('ANG_Country_Coverage-->' + ANG_Country_Coverage);
+
+        System.assertEquals(ANG_Country_Coverage, isoc2.ISO_Code__c + ',' + isoc4.ISO_Code__c);
+
+        ANG_Country_Coverage = [SELECT ANG_Country_Coverage__c FROM Portal_Applications__c WHERE id =: easyPay2.id].ANG_Country_Coverage__c;
+
+        System.debug('ANG_Country_Coverage-->' + ANG_Country_Coverage);
+
+        System.assertEquals(ANG_Country_Coverage, null);
+
+        Test.stopTest();
+    }    
 }

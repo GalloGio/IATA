@@ -367,6 +367,8 @@ trigger CaseAfterTrigger on Case (after delete, after insert, after undelete, af
 	map<Id,IFAP_Quality_Issue__c> RelatedQualityIssues = new Map<Id,IFAP_Quality_Issue__c>();
 	private Map<Id,Account> sidraCasesAccounts;
     private Map<Id,Account> accountsToUpdate = new Map<Id,Account>();
+
+    Set<Id> caseAccsSet = new Set<Id>();
     /*Maps, Sets, Lists*/
     
     /***********************************************************************************************************************************************************/
@@ -383,24 +385,48 @@ trigger CaseAfterTrigger on Case (after delete, after insert, after undelete, af
 		    	caseRecType = true;
 		    	casesToConsider.add(cse);
 		    	sCaseIds.add(cse.Id);
+		    	caseAccsSet.add(cse.accountId);
 		    } 
 		}
+		//set containing Newgen Account Ids
+
+		Map<Id, Account> ngAccounts = new Map<Id, Account>([select id, Assessment_Performed_Date__c, Financial_Review_Result__c from account where id in :caseAccsSet and ANG_IsNewGenAgency__c=true]);
 		//IFAP P5 start   
 		map<Id,Account> AcctToBeUpdatedPerId = new map<Id,Account>(); 
 		if(!casesToConsider.isEmpty() && (trigger.isUpdate || trigger.isInsert)){
 			list<Case> casesToUdpateTheAccts = new list<Case>();
+			map<id,case> casesToUpdateNGaccsMap = new map<id,case>();
 			for(Case c: CasesToConsider){
-				if(c.status == 'Assessment Performed' && c.Financial_Review_Result__c <> null && c.Assessment_Performed_Date__c <> null &&
+				if(!ngAccounts.containsKey(c.accountId) &&
+					c.status == 'Assessment Performed' && c.Financial_Review_Result__c <> null && c.Assessment_Performed_Date__c <> null &&
 					(trigger.isInsert || (trigger.newMap.get(c.id).Assessment_Performed_Date__c <> trigger.oldMap.get(c.id).Assessment_Performed_Date__c 
 					|| trigger.newMap.get(c.id).Financial_Review_Result__c <> trigger.oldMap.get(c.id).Financial_Review_Result__c
-					|| trigger.newMap.get(c.id).status  <> trigger.oldMap.get(c.id).status))){ 
-				casesToUdpateTheAccts.add(c);
+					|| trigger.newMap.get(c.id).status  <> trigger.oldMap.get(c.id).status))
+				){ 
+					casesToUdpateTheAccts.add(c);
+				}
+				else
+				 if((Trigger.isInsert || (Trigger.isUpdate && c.status != trigger.oldMap.get(c.id).status)) 
+					&& ngAccounts.containsKey(c.accountId) 
+					&& AMS_Utils.CASE_STATUS_UPDATE_FINANCIAL_REVIEW_SET.contains(c.status)
+					&& ngAccounts.get(c.accountId).Financial_Review_Result__c != c.Financial_Review_Result__c){
+             		
+             		Account account = ngAccounts.get(c.accountId);
+             		//NEWGEN - adds NG account to be updated
+             		AcctToBeUpdatedPerId.put(c.accountId, new account(
+								id =c.accountId,
+								Financial_Review_Result__c=c.Financial_Review_Result__c,
+								Assessment_Performed_Date__c = AMS_Utils.getBiggestDate(c.Assessment_Performed_Date__c, account.Assessment_Performed_Date__c)
+								)
+					);
+					ANG_AccountTriggerHandler.isLastFinancialReviewUpgrade = true;
 				}
 			}
 			if(!casesToUdpateTheAccts.isEmpty())  {              
 				// throw new transformationException();
-				AcctToBeUpdatedPerId =IFAP_AfterTrigger.updateTheAcctsTrigger(casesToUdpateTheAccts);
-			}         
+				 map<Id,Account> temMap =IFAP_AfterTrigger.updateTheAcctsTrigger(casesToUdpateTheAccts);
+				 AcctToBeUpdatedPerId.putAll(temMap);
+			}   
 		} 
 		System.debug('***After checking record type ' + caseRecType);
 		if(!casesToConsider.isEmpty()){
@@ -411,16 +437,32 @@ trigger CaseAfterTrigger on Case (after delete, after insert, after undelete, af
 			//for (Case cse : cases) 
 				acctIds.add(cse.AccountId);
 			}
-			//Re-open/ed is not considered as Closed Status anymore.
-			Map<ID, Case> casesForAccounts = new Map<ID, Case>([select Id, AccountId from Case where RecordTypeID =: IFAPcaseRecordTypeID AND (status != 'Closed' and status != 'Assessment Cancelled') AND  AccountId in :acctIds]);
-			Map<ID, Account> acctsToUpdate = new Map<ID, Account>([select Id,Number_of_open_Financial_Review_Cases__c from Account where Id in :acctIds]);
-			List<Account> accountUpdated = new List<Account>();
+
+			//START - Too many SOQL fix
+			Map<Id,Account> acctsToUpdate = new Map<Id,Account>([select Id,Number_of_open_Financial_Review_Cases__c, (select Id, AccountId from Cases where RecordTypeID =: IFAPcaseRecordTypeID AND (status != 'Closed' and status != 'Assessment Cancelled' and status != 'Closed Opt-out')) from Account where Id in :acctIds]);
+			Set<Id> caseIds;
+
 			for (Account acct : acctsToUpdate.values()) {
-				Set<ID> caseIds = new Set<ID>();
-				for (Case cse : casesForAccounts.values()) {
-					if (cse.AccountId == acct.Id)
+				caseIds = new Set<Id>();
+
+				for (Case cse :acct.cases){
 						caseIds.add(cse.Id);
 				}
+			//END - Too many SOQL fix
+
+			//START commented - Too many SOQL fix: 
+			//Re-open/ed is not considered as Closed Status anymore.
+			//Map<ID, Case> casesForAccounts = new Map<ID, Case>([select Id, AccountId from Case where RecordTypeID =: IFAPcaseRecordTypeID AND (status != 'Closed' and status != 'Assessment Cancelled') AND  AccountId in :acctIds]);
+			//Map<ID, Account> acctsToUpdate = new Map<ID, Account>([select Id,Number_of_open_Financial_Review_Cases__c from Account where Id in :acctIds]);
+			//List<Account> accountUpdated = new List<Account>();
+			//for (Account acct : acctsToUpdate.values()) {
+			//	Set<ID> caseIds = new Set<ID>();
+			//	for (Case cse : casesForAccounts.values()) {
+			//		if (cse.AccountId == acct.Id)
+			//			caseIds.add(cse.Id);
+			//	}
+			//END commented - Too many SOQL fix
+			
 				if (acct.Number_of_open_Financial_Review_Cases__c != caseIds.size()){
 					acct.Number_of_open_Financial_Review_Cases__c = caseIds.size();
 					if (caseIds.size() > 0){
@@ -669,7 +711,7 @@ trigger CaseAfterTrigger on Case (after delete, after insert, after undelete, af
 			            lstAccountsToUpdate.add( a );
 			        }
 			        // Set / unset the Collection Case Indicator
-			        if (c.RecordTypeId == RT_ICC_Id && c.CaseArea__c == 'Collection' && c.Reason1__c == 'Debt Recovery') {
+			        if (c.RecordTypeId == RT_ICC_Id && c.CaseArea__c == 'Collection' && (c.Reason1__c == 'Debt Recovery' || c.Reason1__c == 'Annual Fees')) {
 			        	// TF - Open debts notification to Admins
 			        	if (Trigger.isInsert){
 			        		if (!ISSP_UserTriggerHandler.preventOtherTrigger){
@@ -840,6 +882,24 @@ trigger CaseAfterTrigger on Case (after delete, after insert, after undelete, af
   		if(Trigger.isInsert || Trigger.isUpdate){
     		new ANG_RiskEventGenerator(Trigger.New, Trigger.oldMap).generate();
   		}
+
+  		if(Trigger.isUpdate){
+  			List<Id> updatedIFAPS = new List<Id>();
+  			for(Case c : Trigger.New){
+  				if(c.RecordTypeId == IFAPcaseRecordTypeID && String.isNotBlank(c.Financial_Review_Result__c) && String.isBlank(Trigger.oldMap.get(c.Id).Financial_Review_Result__c)){
+  					updatedIFAPS.add(c.Id);
+  				}
+  			}
+
+  			if(!updatedIFAPS.isEmpty()){
+  				List<ANG_Agency_Risk_Event__c> res = [SELECT Id, ANG_Limit_Cash_Conditions__c FROM ANG_Agency_Risk_Event__c WHERE ANG_CaseId__r.ParentId IN :updatedIFAPS AND ANG_Limit_Cash_Conditions__c = true];
+
+  				if(!res.isEmpty()){
+  					for(ANG_Agency_Risk_Event__c r : res) r.ANG_Limit_Cash_Conditions__c = false;
+  					update res; 
+  				}
+  			}
+  		}
   		/*Risk Event Management*/
 	}
 	/*Share trigger code*/
@@ -925,16 +985,28 @@ trigger CaseAfterTrigger on Case (after delete, after insert, after undelete, af
 		if(CaseBeforInsert){
 			system.debug('CaseBeforInsert Trigger.isInsert');
 	        ISSP_Case.preventTrigger = true;
-	        User[] users = [Select u.UserType From User u where u.Id =: UserInfo.getUserId()];
-	        system.debug('#ROW# '+users);
+
+	    //Start -commented - too many soql queries
+	        //User[] users = [Select u.UserType From User u where u.Id =: UserInfo.getUserId()];
+	        //system.debug('#ROW# '+users);
+	        //for(Case c : trigger.new){ //GM - IMPRO - START
+	        //    if(c.Origin == 'Portal'){
+	        //        if (users != null && users.size() > 0){
+		       //             if (users[0].UserType == 'PowerPartner' || users[0].UserType == 'Guest'){
+		       //                 casesIds.add(c.Id);
+		       //             }
+		       //      }
+		       // }
+		//Stop - commented - too many soql queries
+		       
+		//Start - Fix too many soql queries
 	        for(Case c : trigger.new){ //GM - IMPRO - START
-	            if(c.Origin == 'Portal'){
-	                if (users != null && users.size() > 0){
-	                    if (users[0].UserType == 'PowerPartner' || users[0].UserType == 'Guest'){
-	                        casesIds.add(c.Id);
-	                    }
-	                }
+	            if(c.Origin == 'Portal' && (UserInfo.getUserType() == 'PowerPartner' || UserInfo.getUserType() == 'Guest')) {
+	        		system.debug('#ROW# '+UserInfo.getUserType());
+	                casesIds.add(c.Id);	                    
 	            }
+	    //Stop - Fix too many soql queries
+
 	            if (c.RecordTypeId == RT_AirlineSuspension_Id || c.RecordTypeId == RT_AirlineDeactivation_Id || c.RecordTypeId == RT_FundsManagement_Id) {
 	                setASCaseIds.add(c.Id);
 	            }else if (c.RecordTypeId == RT_DIP_Review_Id) {

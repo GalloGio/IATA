@@ -10,6 +10,8 @@
     <customButtons>Reactivate_BSPLink</customButtons>
     <customButtons>Escalate_within_IATA</customButtons>
     <customButtons>Create_SAAM_Case</customButtons>
+    <customButtons>OscarFOP</customButtons>
+    <customButtons>Conga_Merge_JS</customButtons>
     <emailDefault>false</emailDefault>
     <excludeButtons>Clone</excludeButtons>
     <excludeButtons>Delete</excludeButtons>
@@ -265,6 +267,14 @@
             <layoutItems>
                 <behavior>Edit</behavior>
                 <field>IATA_Charges__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>GDI_Premium__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>Agency_Fees__c</field>
             </layoutItems>
             <layoutItems>
                 <behavior>Edit</behavior>
@@ -970,6 +980,22 @@
             </layoutItems>
         </layoutColumns>
         <style>TwoColumnsLeftToRight</style>
+    </layoutSections>
+    <layoutSections>
+        <customLabel>true</customLabel>
+        <detailHeading>true</detailHeading>
+        <editHeading>true</editHeading>
+        <label>Risk Forecast Properties</label>
+        <layoutColumns>
+            <layoutItems>
+                <height>200</height>
+                <page>ANG_RiskForecastPropertiesPage</page>
+                <showLabel>false</showLabel>
+                <showScrollbars>false</showScrollbars>
+                <width>100%</width>
+            </layoutItems>
+        </layoutColumns>
+        <style>OneColumn</style>
     </layoutSections>
     <layoutSections>
         <customLabel>true</customLabel>

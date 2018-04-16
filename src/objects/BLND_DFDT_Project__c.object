@@ -21,10 +21,6 @@
         <type>Default</type>
     </actionOverrides>
     <actionOverrides>
-        <actionName>Follow</actionName>
-        <type>Default</type>
-    </actionOverrides>
-    <actionOverrides>
         <actionName>List</actionName>
         <type>Default</type>
     </actionOverrides>
@@ -49,6 +45,7 @@
     <deploymentStatus>Deployed</deploymentStatus>
     <enableActivities>false</enableActivities>
     <enableBulkApi>true</enableBulkApi>
+    <enableChangeDataCapture>false</enableChangeDataCapture>
     <enableFeeds>false</enableFeeds>
     <enableHistory>false</enableHistory>
     <enableReports>false</enableReports>
@@ -266,60 +263,74 @@
         <fullName>BLND_Type__c</fullName>
         <externalId>false</externalId>
         <label>Type</label>
-        <picklist>
-            <picklistValues>
-                <fullName>Professional Services</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Product Development</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Event Planning</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Marketing Campaign</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Sales Campaign</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Technical Support</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Customer Engagement</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Sales Operations</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Sales Infrastructure</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Shared Infrastructure</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Web Development</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Customer Success Campaign</fullName>
-                <default>false</default>
-            </picklistValues>
-            <sorted>false</sorted>
-        </picklist>
         <required>false</required>
         <trackTrending>false</trackTrending>
         <type>Picklist</type>
+        <valueSet>
+            <valueSetDefinition>
+                <sorted>false</sorted>
+                <value>
+                    <fullName>Professional Services</fullName>
+                    <default>false</default>
+                    <label>Professional Services</label>
+                </value>
+                <value>
+                    <fullName>Product Development</fullName>
+                    <default>false</default>
+                    <label>Product Development</label>
+                </value>
+                <value>
+                    <fullName>Event Planning</fullName>
+                    <default>false</default>
+                    <label>Event Planning</label>
+                </value>
+                <value>
+                    <fullName>Marketing Campaign</fullName>
+                    <default>false</default>
+                    <label>Marketing Campaign</label>
+                </value>
+                <value>
+                    <fullName>Sales Campaign</fullName>
+                    <default>false</default>
+                    <label>Sales Campaign</label>
+                </value>
+                <value>
+                    <fullName>Technical Support</fullName>
+                    <default>false</default>
+                    <label>Technical Support</label>
+                </value>
+                <value>
+                    <fullName>Customer Engagement</fullName>
+                    <default>false</default>
+                    <label>Customer Engagement</label>
+                </value>
+                <value>
+                    <fullName>Sales Operations</fullName>
+                    <default>false</default>
+                    <label>Sales Operations</label>
+                </value>
+                <value>
+                    <fullName>Sales Infrastructure</fullName>
+                    <default>false</default>
+                    <label>Sales Infrastructure</label>
+                </value>
+                <value>
+                    <fullName>Shared Infrastructure</fullName>
+                    <default>false</default>
+                    <label>Shared Infrastructure</label>
+                </value>
+                <value>
+                    <fullName>Web Development</fullName>
+                    <default>false</default>
+                    <label>Web Development</label>
+                </value>
+                <value>
+                    <fullName>Customer Success Campaign</fullName>
+                    <default>false</default>
+                    <label>Customer Success Campaign</label>
+                </value>
+            </valueSetDefinition>
+        </valueSet>
     </fields>
     <fields>
         <fullName>BLND_Vacation_List__c</fullName>
@@ -407,4 +418,5 @@
         <searchResultsAdditionalFields>BLND_Work_In_Planned_Hours__c</searchResultsAdditionalFields>
     </searchLayouts>
     <sharingModel>ReadWrite</sharingModel>
+    <visibility>Public</visibility>
 </CustomObject>

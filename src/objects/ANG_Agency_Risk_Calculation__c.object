@@ -21,10 +21,6 @@
         <type>Default</type>
     </actionOverrides>
     <actionOverrides>
-        <actionName>Follow</actionName>
-        <type>Default</type>
-    </actionOverrides>
-    <actionOverrides>
         <actionName>List</actionName>
         <type>Default</type>
     </actionOverrides>
@@ -49,6 +45,7 @@
     <deploymentStatus>Deployed</deploymentStatus>
     <enableActivities>false</enableActivities>
     <enableBulkApi>true</enableBulkApi>
+    <enableChangeDataCapture>false</enableChangeDataCapture>
     <enableFeeds>false</enableFeeds>
     <enableHistory>true</enableHistory>
     <enableReports>true</enableReports>
@@ -58,37 +55,45 @@
     <fields>
         <fullName>ANG_Accreditation_Model__c</fullName>
         <externalId>false</externalId>
-        <globalPicklist>ANG_Accreditation_Models</globalPicklist>
         <label>Accreditation Model</label>
         <required>false</required>
         <trackHistory>true</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Picklist</type>
+        <valueSet>
+            <restricted>true</restricted>
+            <valueSetName>ANG_Accreditation_Models</valueSetName>
+        </valueSet>
     </fields>
     <fields>
         <fullName>ANG_Adjusted__c</fullName>
         <externalId>false</externalId>
         <label>Adjusted</label>
-        <picklist>
-            <picklistValues>
-                <fullName>No</fullName>
-                <default>true</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Yes</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Mixed</fullName>
-                <default>false</default>
-            </picklistValues>
-            <restrictedPicklist>true</restrictedPicklist>
-            <sorted>false</sorted>
-        </picklist>
         <required>false</required>
         <trackHistory>true</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Picklist</type>
+        <valueSet>
+            <restricted>true</restricted>
+            <valueSetDefinition>
+                <sorted>false</sorted>
+                <value>
+                    <fullName>No</fullName>
+                    <default>true</default>
+                    <label>No</label>
+                </value>
+                <value>
+                    <fullName>Yes</fullName>
+                    <default>false</default>
+                    <label>Yes</label>
+                </value>
+                <value>
+                    <fullName>Mixed</fullName>
+                    <default>false</default>
+                    <label>Mixed</label>
+                </value>
+            </valueSetDefinition>
+        </valueSet>
     </fields>
     <fields>
         <fullName>ANG_Calculation_Rule__c</fullName>
@@ -116,12 +121,15 @@
     <fields>
         <fullName>ANG_Financial_Review_Result__c</fullName>
         <externalId>false</externalId>
-        <globalPicklist>ANG_Financial_Review_Result</globalPicklist>
         <label>Financial Review Result</label>
         <required>false</required>
         <trackHistory>true</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Picklist</type>
+        <valueSet>
+            <restricted>true</restricted>
+            <valueSetName>ANG_Financial_Review_Result</valueSetName>
+        </valueSet>
     </fields>
     <fields>
         <fullName>ANG_Limit_Cash_Condition__c</fullName>
@@ -185,32 +193,41 @@
     <fields>
         <fullName>ANG_Remittance_Frequency__c</fullName>
         <externalId>false</externalId>
-        <globalPicklist>ANG_Remittance_Frequency</globalPicklist>
         <label>Remittance Frequency</label>
         <required>false</required>
         <trackHistory>true</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Picklist</type>
+        <valueSet>
+            <restricted>true</restricted>
+            <valueSetName>ANG_Remittance_Frequency</valueSetName>
+        </valueSet>
     </fields>
     <fields>
         <fullName>ANG_Risk_History_Assessment__c</fullName>
         <externalId>false</externalId>
-        <globalPicklist>ANG_HE_RiskHistoryAssessment</globalPicklist>
         <label>Risk History Assessment</label>
         <required>false</required>
         <trackHistory>true</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Picklist</type>
+        <valueSet>
+            <restricted>true</restricted>
+            <valueSetName>ANG_HE_RiskHistoryAssessment</valueSetName>
+        </valueSet>
     </fields>
     <fields>
         <fullName>ANG_Risk_History__c</fullName>
         <externalId>false</externalId>
-        <globalPicklist>ANG_Risk_Status</globalPicklist>
         <label>Risk History</label>
         <required>false</required>
         <trackHistory>true</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Picklist</type>
+        <valueSet>
+            <restricted>true</restricted>
+            <valueSetName>ANG_Risk_Status</valueSetName>
+        </valueSet>
     </fields>
     <fields>
         <fullName>ANG_UniqueKey__c</fullName>
@@ -225,6 +242,11 @@
         <unique>true</unique>
     </fields>
     <label>Agency Risk Calculation</label>
+    <listViews>
+        <fullName>All</fullName>
+        <filterScope>Everything</filterScope>
+        <label>All</label>
+    </listViews>
     <listViews>
         <fullName>Risk_Assessment</fullName>
         <columns>NAME</columns>
@@ -269,7 +291,7 @@
         <active>true</active>
         <label>Adjustment</label>
         <picklistValues>
-            <picklist>ANG_Accreditation_Models</picklist>
+            <picklist>ANG_Accreditation_Model__c</picklist>
             <values>
                 <fullName>Cash</fullName>
                 <default>false</default>
@@ -303,7 +325,7 @@
             </values>
         </picklistValues>
         <picklistValues>
-            <picklist>ANG_Financial_Review_Result</picklist>
+            <picklist>ANG_Financial_Review_Result__c</picklist>
             <values>
                 <fullName>Satisfactory</fullName>
                 <default>false</default>
@@ -342,7 +364,42 @@
             </values>
         </picklistValues>
         <picklistValues>
-            <picklist>ANG_HE_RiskHistoryAssessment</picklist>
+            <picklist>ANG_Remittance_Frequency__c</picklist>
+            <values>
+                <fullName>B</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>D</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>F</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>M</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>R</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>S</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>V</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>W</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>ANG_Risk_History_Assessment__c</picklist>
             <values>
                 <fullName>Failed</fullName>
                 <default>false</default>
@@ -357,42 +414,7 @@
             </values>
         </picklistValues>
         <picklistValues>
-            <picklist>ANG_Remittance_Frequency</picklist>
-            <values>
-                <fullName>4 times per month</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Daily</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Every 10 days</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Every 3 days</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Every 5 days</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Fortnightly</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Monthly</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Weekly</fullName>
-                <default>false</default>
-            </values>
-        </picklistValues>
-        <picklistValues>
-            <picklist>ANG_Risk_Status</picklist>
+            <picklist>ANG_Risk_History__c</picklist>
             <values>
                 <fullName>A</fullName>
                 <default>false</default>
@@ -416,7 +438,7 @@
         <active>true</active>
         <label>Risk Status Assessment</label>
         <picklistValues>
-            <picklist>ANG_Accreditation_Models</picklist>
+            <picklist>ANG_Accreditation_Model__c</picklist>
             <values>
                 <fullName>Cash</fullName>
                 <default>false</default>
@@ -450,7 +472,7 @@
             </values>
         </picklistValues>
         <picklistValues>
-            <picklist>ANG_Financial_Review_Result</picklist>
+            <picklist>ANG_Financial_Review_Result__c</picklist>
             <values>
                 <fullName>Satisfactory</fullName>
                 <default>false</default>
@@ -489,7 +511,42 @@
             </values>
         </picklistValues>
         <picklistValues>
-            <picklist>ANG_HE_RiskHistoryAssessment</picklist>
+            <picklist>ANG_Remittance_Frequency__c</picklist>
+            <values>
+                <fullName>B</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>D</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>F</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>M</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>R</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>S</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>V</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>W</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>ANG_Risk_History_Assessment__c</picklist>
             <values>
                 <fullName>Failed</fullName>
                 <default>false</default>
@@ -504,42 +561,7 @@
             </values>
         </picklistValues>
         <picklistValues>
-            <picklist>ANG_Remittance_Frequency</picklist>
-            <values>
-                <fullName>4 times per month</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Daily</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Every 10 days</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Every 3 days</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Every 5 days</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Fortnightly</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Monthly</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Weekly</fullName>
-                <default>false</default>
-            </values>
-        </picklistValues>
-        <picklistValues>
-            <picklist>ANG_Risk_Status</picklist>
+            <picklist>ANG_Risk_History__c</picklist>
             <values>
                 <fullName>A</fullName>
                 <default>false</default>
@@ -563,7 +585,7 @@
         <active>true</active>
         <label>Rules</label>
         <picklistValues>
-            <picklist>ANG_Accreditation_Models</picklist>
+            <picklist>ANG_Accreditation_Model__c</picklist>
             <values>
                 <fullName>Cash</fullName>
                 <default>false</default>
@@ -597,7 +619,7 @@
             </values>
         </picklistValues>
         <picklistValues>
-            <picklist>ANG_Financial_Review_Result</picklist>
+            <picklist>ANG_Financial_Review_Result__c</picklist>
             <values>
                 <fullName>Satisfactory</fullName>
                 <default>false</default>
@@ -636,7 +658,42 @@
             </values>
         </picklistValues>
         <picklistValues>
-            <picklist>ANG_HE_RiskHistoryAssessment</picklist>
+            <picklist>ANG_Remittance_Frequency__c</picklist>
+            <values>
+                <fullName>B</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>D</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>F</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>M</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>R</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>S</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>V</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>W</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>ANG_Risk_History_Assessment__c</picklist>
             <values>
                 <fullName>Failed</fullName>
                 <default>false</default>
@@ -651,42 +708,7 @@
             </values>
         </picklistValues>
         <picklistValues>
-            <picklist>ANG_Remittance_Frequency</picklist>
-            <values>
-                <fullName>4 times per month</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Daily</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Every 10 days</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Every 3 days</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Every 5 days</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Fortnightly</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Monthly</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Weekly</fullName>
-                <default>false</default>
-            </values>
-        </picklistValues>
-        <picklistValues>
-            <picklist>ANG_Risk_Status</picklist>
+            <picklist>ANG_Risk_History__c</picklist>
             <values>
                 <fullName>A</fullName>
                 <default>false</default>
@@ -719,4 +741,5 @@
         <errorDisplayField>ANG_Occurrence_Num__c</errorDisplayField>
         <errorMessage>Number of occurrence has to be a positive number</errorMessage>
     </validationRules>
+    <visibility>Public</visibility>
 </CustomObject>

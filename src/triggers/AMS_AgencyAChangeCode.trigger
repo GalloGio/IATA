@@ -10,6 +10,7 @@ trigger AMS_AgencyAChangeCode on Agency_Applied_Change_code__c (before insert, a
                 System.debug('Entering handleBeforeInsert');
                 AMS_AgencyAChangeCodeHandler.handleBeforeInsert(Trigger.new);
                 System.debug('Finished handleBeforeInsert');
+
             }
             
             if(Trigger.isUpdate){
@@ -20,8 +21,11 @@ trigger AMS_AgencyAChangeCode on Agency_Applied_Change_code__c (before insert, a
         if(Trigger.isAfter) {
             if(Trigger.isUpdate)
                 AMS_AgencyAChangeCodeHandler.handleAfterUpdate(Trigger.new, trigger.OldMap);
-            if(Trigger.isInsert)
+            if(Trigger.isInsert){
                 AMS_AgencyAChangeCodeHandler.handleAfterInsert(Trigger.new);
+                new ANG_AgencyAChangeCodeTriggerHandler().onAfterInsert();
+            }
+
         }
         AMS_AgencyAChangeCodeHandler.firstRun = true;
     }

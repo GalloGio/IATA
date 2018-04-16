@@ -31,7 +31,6 @@
     </customConsoleComponents>
     <emailDefault>false</emailDefault>
     <excludeButtons>Delete</excludeButtons>
-    <excludeButtons>Share</excludeButtons>
     <excludeButtons>Submit</excludeButtons>
     <layoutSections>
         <customLabel>true</customLabel>
@@ -204,6 +203,10 @@
             <layoutItems>
                 <behavior>Readonly</behavior>
                 <field>Case_Type__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Required</behavior>
+                <field>Type</field>
             </layoutItems>
             <layoutItems>
                 <behavior>Edit</behavior>
