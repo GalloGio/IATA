@@ -1,4 +1,4 @@
-<aura:component >
+<aura:component controller="AMP_KeyAccountPlanExtension">
     <aura:attribute name="activity" type="Objective__c"  />
     <aura:attribute name="accountId" type="String" />
     <aura:attribute name="index" type="Integer"  />
@@ -7,7 +7,6 @@
     <aura:attribute name="isError" type="Boolean" default="false"/>
     <aura:attribute name="errorMessage" type="String"/>
 
-    <aura:attribute type="String[]" name="divisionValues"/>
     <aura:attribute type="String[]" name="statusValues"/>
     <aura:attribute type="String" name="status"/>
 
@@ -58,16 +57,8 @@
         <td class="allignTop"><ui:inputText value="{!v.activity.Name}" class="slds-input required" required="true" maxlength = "80"/></td>
         <td class="allignTop"><ui:inputTextArea value="{!v.activity.Details__c}" class="slds-textarea required" rows="5" maxlength="32768"/></td>
         <td class="allignTop">
-            <ui:inputSelect aura:id="divisionList" class="slds-select required" >
-
-                <aura:iteration items="{!v.divisionValues}" var="dv">
-                  <aura:if isTrue="{!v.division == dv}">
-                      <ui:inputSelectOption text="{!dv}" value="true" label="{!dv}"/>
-                      <aura:set attribute="else">
-                          <ui:inputSelectOption text="{!dv}" label="{!dv}"/>
-                      </aura:set>
-                  </aura:if>
-                </aura:iteration>
+            <ui:inputSelect aura:id="divisionList" class="slds-select" >
+                
             </ui:inputSelect>
         </td>
         <td class="allignTop">

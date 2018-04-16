@@ -16,21 +16,27 @@
 
 
 		component.set("v.statusValues", statusValues);
+
     },
+
     switchToEditMode : function(component, event, helper) {
         component.set("v.isEditMode", true);
         console.log('going into edit mode...');
 
         var activity = component.get("v.activity");
         var status = activity.Status__c;
+        var division = activity.Division__c;
 
-console.log(JSON.stringify(activity));
+        console.log(JSON.stringify(activity));
 
         var statusValues = component.get("v.statusValues");
         if(status === undefined) status = statusValues[0];
 
         component.set("v.status", status);
 		console.log(status);
+
+        helper.fetchDivisionValues(component, division);
+
     },
     cancelEditMode : function(component, event, helper) {
         var activity = component.get("v.activity");
@@ -51,6 +57,10 @@ console.log(JSON.stringify(activity));
         var statusValues = component.get("v.statusValues");
         if(status === undefined) status = statusValues[0];
         activity.Status__c = status;
+
+        //division
+        var division = component.find("divisionList").get("v.value");
+        activity.Division__c = division;
         
         var deadlineField = component.find("deadline");
         var benefitsField = component.find("benefits");
