@@ -8737,7 +8737,7 @@ IFG Customer Services</value>
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>ISSP_AMS_Cargo_Branch_Form_SECTION5_TXT3</shortDescription>
-        <value>IATA/FIATA (or equivalent industry) introductory training courses completed</value>
+        <value>IATA/FIATA (or equivalent industry) training courses completed</value>
     </labels>
     <labels>
         <fullName>ISSP_AMS_Cargo_Branch_Form_SECTION5_TXT4</fullName>
