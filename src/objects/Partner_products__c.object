@@ -699,5 +699,14 @@ If the product is a multi-use VANs, then it is a unique card/account number that
 &amp;&amp; ISBLANK(PP_Payment_Product_Code__c)</errorConditionFormula>
         <errorMessage>Please fill in the Payment Product Code.</errorMessage>
     </validationRules>
+    <validationRules>
+        <fullName>Provider_should_be_active</fullName>
+        <active>true</active>
+        <errorConditionFormula>AND(
+   NOT(ISPICKVAL(Provider__r.Status__c , &quot;active&quot;)),
+   ISPICKVAL(PP_status__c  , &quot;Active&quot;)
+)</errorConditionFormula>
+        <errorMessage>Partner Product cannot be activated if Provider Account is not active</errorMessage>
+    </validationRules>
     <visibility>Public</visibility>
 </CustomObject>
