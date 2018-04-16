@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomObject xmlns="http://soap.sforce.com/2006/04/metadata">
+    <customSettingsType>Hierarchy</customSettingsType>
+    <description>Custom settings for the Customer Portal Mobile App</description>
+    <enableFeeds>false</enableFeeds>
+    <fields>
+        <fullName>Push_Notifications_State__c</fullName>
+        <defaultValue>true</defaultValue>
+        <description>Turn on/off push notifications for NewGen</description>
+        <externalId>false</externalId>
+        <inlineHelpText>Checked: push notifications are active
+Unchecked: push notifications are off</inlineHelpText>
+        <label>Push Notifications State</label>
+        <trackTrending>false</trackTrending>
+        <type>Checkbox</type>
+    </fields>
+    <label>NewGenApp Custom Settings</label>
+    <visibility>Public</visibility>
+</CustomObject>

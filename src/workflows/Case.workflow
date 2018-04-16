@@ -4935,7 +4935,7 @@
         <fullName>ComplaintUpdateowner</fullName>
         <description>assigns the case flagged as complaint to the OCIT queue</description>
         <field>OwnerId</field>
-        <lookupValue>CasesOCITComplaints</lookupValue>
+        <lookupValue>Cases_Complaints_GDC_MAD</lookupValue>
         <lookupValueType>Queue</lookupValueType>
         <name>Complaint Update owner</name>
         <notifyAssignee>false</notifyAssignee>
@@ -4946,7 +4946,7 @@
         <fullName>Complaint_Update_owner_AME</fullName>
         <description>Change case ownership to AME Complaints queue</description>
         <field>OwnerId</field>
-        <lookupValue>CasesComplaintsAME</lookupValue>
+        <lookupValue>Cases_Complaints_GDC_MAD</lookupValue>
         <lookupValueType>Queue</lookupValueType>
         <name>Complaint Update owner - AME</name>
         <notifyAssignee>true</notifyAssignee>
@@ -4968,7 +4968,7 @@
         <fullName>Complaint_Update_owner_SCA</fullName>
         <description>Change case ownership to SCA Complaints queue</description>
         <field>OwnerId</field>
-        <lookupValue>Cases_Complaints_Americas</lookupValue>
+        <lookupValue>Cases_Complaints_GDC_MAD</lookupValue>
         <lookupValueType>Queue</lookupValueType>
         <name>Complaint Update owner - SCA</name>
         <notifyAssignee>true</notifyAssignee>
@@ -16433,7 +16433,7 @@ Inactive (Miguel Guerreiro, 3/17/2016 12:59 PM) - self service is no longer used
         <criteriaItems>
             <field>Case.RecordTypeId</field>
             <operation>equals</operation>
-            <value>Cases - Europe,ACCA Customer Service Request (External),Order of AWB / allocation (CASS),Cases - Americas,Cases - Africa &amp; Middle East,Cases - Asia &amp; Pacific,Cases - China &amp; North Asia</value>
+            <value>Cases - Europe,ACCA Customer Service Request (External),Order of AWB / allocation (CASS),Cases - Americas,Cases - Africa &amp; Middle East,Cases - Asia &amp; Pacific,Cases - China &amp; North Asia,Complaint (IDFS ISS)</value>
         </criteriaItems>
         <criteriaItems>
             <field>Case.Region__c</field>
