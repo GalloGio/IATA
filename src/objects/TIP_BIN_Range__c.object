@@ -214,6 +214,12 @@
     <searchLayouts/>
     <sharingModel>ControlledByParent</sharingModel>
     <validationRules>
+        <fullName>Effective_from_before_effective_To</fullName>
+        <active>true</active>
+        <errorConditionFormula>AND( TIP_Payment_Provider_Product__r.Provider__r.RecordType.DeveloperName = &quot;TIP_Payment_Provider&quot;, TIP_Effective_From_Date__c &gt; TIP_Effective_To_Date__c )</errorConditionFormula>
+        <errorMessage>Effective To Date needs to be after Effective From Date</errorMessage>
+    </validationRules>
+    <validationRules>
         <fullName>Validate_PP_name_for_IATA_RT</fullName>
         <active>true</active>
         <description>Validates Partner Product&apos;s name if the Bin Range record type is Listed by IATA</description>
