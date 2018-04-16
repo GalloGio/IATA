@@ -716,6 +716,12 @@ public without sharing class ISSP_AMS_Accreditation {
             createNoCList();
             
             SYSTEM.DEBUG('Accreditation NewForm Sector: ' + sectorValue);
+        } else {
+            //fix amsu-113
+            newForm = new AMS_Pax_Accreditation_Form__c();
+            noticeOfChangeList = new List<String>();
+            sectorValue = con != null && con.Account != null && !String.isBlank(con.Account.Sector__c) ? con.Account.Sector__c.replace(' ', '_') : '';
+            List_CountryReqments = new List<AMS_Accreditation_Requirement__c>();
         }
 
         if (newCase.Reason1__c == AMS_Utils.CASE_REASON_NEW_HO || newCase.Reason1__c == AMS_Utils.CASE_REASON_BR_ABROAD || newCase.Reason1__c == AMS_Utils.CASE_REASON_HE_STANDARD || newCase.Reason1__c == AMS_Utils.CASE_REASON_HE_LITE) {
@@ -727,7 +733,7 @@ public without sharing class ISSP_AMS_Accreditation {
         applyLanguage = newCase.Case_Language__c;
 
         // NewGen is only valid for Travel Agents
-        newAccreditationModels = (isocountry.ANG_Enable_NewGen__c == true && sectorValue.StartsWith('Travel_Agent')) ;
+        newAccreditationModels = (isocountry.ANG_Enable_NewGen__c == true && !String.isBlank(sectorValue) && sectorValue.StartsWith('Travel_Agent')) ;//fix amsu-113
 
         if (sectorValue != null) {
             if (sectorValue.StartsWith('Cargo_Agent'))
@@ -1660,6 +1666,18 @@ public without sharing class ISSP_AMS_Accreditation {
                         newForm.Local_Agent_Type__c = 'International';
                     }
             }
+			
+			/*** AMSU-121 ***/
+            if(newForm.Is_change_location__c) {
+                newForm.Shipping_Street__c = null;
+                newForm.Shipping_City__c = null;
+                newForm.Shipping_State__c = null;
+                newForm.Shipping_Country__c = null;
+                newForm.Shipping_Postal_Code__c = null;
+                newForm.Shipping_ISO_State__c = null;
+                newForm.Shipping_ISO_Country__c = null;
+            }
+            /*** AMSU-121 ***/
             
             upsert newForm;
             
@@ -2981,6 +2999,18 @@ public without sharing class ISSP_AMS_Accreditation {
             }
            
             newForm.Submitted_to_IATA__c = TRUE;
+
+            //RB-INC381175: Oscar fields Shipping ISO Country & Shipping ISO State not populated by the account's equivalent fields
+            if (newCase.RecordTypeId == OSCAR_RECORD_TYPE_ID && (newCase.Reason1__c == AMS_Utils.CASE_REASON_NEW_HO || newCase.Reason1__c == AMS_Utils.CASE_REASON_BR_IP)) {
+                if (hqAccount.IATA_ISO_Shipping_Country__c != null) {
+                    newForm.Shipping_ISO_Country__c = hqAccount.IATA_ISO_Shipping_Country__c;
+                }
+
+                if (hqAccount.IATA_ISO_Shipping_State__c != null) {
+                    newForm.Shipping_ISO_State__c = hqAccount.IATA_ISO_Shipping_State__c;
+                }
+            }
+
             upsert newForm;
 
             // AMSU-110 assign Case via assignment rules
@@ -3819,7 +3849,8 @@ System.DEBUG('validateCharactersInForm  - 4 - errorFound: '+errorFound);
                         Mobile__c, MobileNational__c , Location_Type__c, ParentId, ShippingStreet, ShippingCity, ShippingState,
                         ShippingPostalCode, ShippingCountry, VAT_Number__c, Short_Name__c, Location_Class__c, IATA_ISO_Country__c,
                         Iso_State__c, Abbreviated_name__c, Abbreviated_Address__c, Remittance_frequency__c, Solicitation_Flag__c,
-                        VAT_Number_2__c, CASS_Number__c,Company_Type__c,RecordType.DeveloperName,Status__c,IATA_ISO_Country__r.ISO_Code__c,ANG_Accreditation_Model__c
+                        VAT_Number_2__c, CASS_Number__c,Company_Type__c,RecordType.DeveloperName,Status__c,IATA_ISO_Country__r.ISO_Code__c,ANG_Accreditation_Model__c, 
+                        IATA_ISO_Shipping_Country__c, IATA_ISO_Shipping_State__c
                         FROM Account
                         WHERE Id = :vHQAccountId
                                    LIMIT 1
@@ -3834,7 +3865,7 @@ System.DEBUG('validateCharactersInForm  - 4 - errorFound: '+errorFound);
                             Mobile__c, MobileNational__c , Location_Type__c, ParentId, ShippingStreet, ShippingCity, ShippingState,
                             ShippingPostalCode, ShippingCountry, VAT_Number__c, Short_Name__c, Location_Class__c, IATA_ISO_Country__c,
                             Iso_State__c, Abbreviated_name__c, Abbreviated_Address__c, Remittance_frequency__c, Solicitation_Flag__c,
-                            VAT_Number_2__c, CASS_Number__c,Company_Type__c
+                            VAT_Number_2__c, CASS_Number__c,Company_Type__c, IATA_ISO_Shipping_Country__c, IATA_ISO_Shipping_State__c
                                FROM Account
                                WHERE Id = :vAccountConcernedId
                                           LIMIT 1
