@@ -87,7 +87,7 @@ private class LiveAgentCustomWindowControllerTest {
         Map <String,String> languages = LiveAgentCustomWindowController.getLanguages(record.ownerId);
         Map <String, String> expectedLanguages = new Map<String, String>();
         expectedLanguages.put('en_US', 'English');
-        expectedLanguages.put('it', 'Italiano');
+        expectedLanguages.put('it', 'Italian');
 
         Map <String, String> expectedLanguagesBeforeMS = new Map<String, String>();
         expectedLanguagesBeforeMS.put('en_US', 'en_US');

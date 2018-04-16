@@ -2582,6 +2582,8 @@ Received from AIMS and needed in synchronization file but never displayed and up
   TEXT(CEO_CFO__c) = &quot;CEO&quot;,
   TEXT(CEO_CFO__c) = &quot;CFO&quot;,
   TEXT(CEO_CFO__c) = &quot;COO&quot;,
+  TEXT(CEO_CFO__c) = &quot;CCO&quot;,
+  TEXT(CEO_CFO__c) = &quot;CIO&quot;,
   Membership_Main_Contact__c,
   NOT(ISBLANK(Function__c))
 )</formula>
@@ -2875,6 +2877,10 @@ Received from AIMS and needed in synchronization file but never displayed and up
 IF(TEXT(CEO_CFO__c)=&quot;CFO&quot;,IMAGE(&quot;/resource/CFO_Contact_image&quot; ,&quot;&quot;,40,40),&quot;&quot;)
 &amp;&quot; &quot;&amp;
 IF(TEXT(CEO_CFO__c)=&quot;COO&quot;,IMAGE(&quot;/resource/COO_Contact_image&quot; ,&quot;&quot;,40,40),&quot;&quot;)
+&amp;&quot; &quot;&amp;
+IF(TEXT(CEO_CFO__c)=&quot;CCO&quot;,IMAGE(&quot;/resource/CCO_Contact_image&quot; ,&quot;&quot;,40,40),&quot;&quot;)
+&amp;&quot; &quot;&amp;
+IF(TEXT(CEO_CFO__c)=&quot;CIO&quot;,IMAGE(&quot;/resource/CIO_Contact_image&quot; ,&quot;&quot;,40,40),&quot;&quot;)
 &amp;&quot; &quot;&amp;
 IF(Airline_Credit_Risk_Manager__c,IMAGE(&quot;/servlet/servlet.FileDownload?file=015w0000002rRZF&quot; ,&quot;&quot;,40,40),&quot;&quot;)
 &amp;&quot; &quot;&amp;
@@ -3175,7 +3181,7 @@ IF(Authorized_Signatory__c,IMAGE(&quot;/resource/authsign&quot; ,&quot;&quot;,40
     <fields>
         <fullName>CEO_CFO__c</fullName>
         <externalId>false</externalId>
-        <label>CEO/CFO/COO</label>
+        <label>CEO/CFO/COO/CCO/CIO</label>
         <required>false</required>
         <trackHistory>true</trackHistory>
         <type>Picklist</type>
@@ -3196,6 +3202,16 @@ IF(Authorized_Signatory__c,IMAGE(&quot;/resource/authsign&quot; ,&quot;&quot;,40
                     <fullName>COO</fullName>
                     <default>false</default>
                     <label>COO</label>
+                </value>
+                <value>
+                    <fullName>CCO</fullName>
+                    <default>false</default>
+                    <label>CCO</label>
+                </value>
+                <value>
+                    <fullName>CIO</fullName>
+                    <default>false</default>
+                    <label>CIO</label>
                 </value>
             </valueSetDefinition>
         </valueSet>
@@ -8706,7 +8722,7 @@ IF(IFG_PreProduction__c == 1, &apos;IFG PreProduction Access&apos;,
     </fields>
     <fields>
         <fullName>Record_Sharing_Criteria_AUX__c</fullName>
-        <description>Auxiliary field of field &quot;Record Sharing Criteria&quot; which can&apos;t be used on the sharing rules (multiselect, which was a requirement so the field could be reused).</description>
+        <description>Auxiliary field of field &quot;Record Sharing Criteria&quot; which can&apos;t be used on the sharing rules (multiselect, which was a requirement so the field could be reused). Needed because the root field is needed to be a multi pick-list, and can’t be used in the filtering criteria.</description>
         <externalId>false</externalId>
         <label>Record Sharing Criteria AUX</label>
         <length>255</length>
@@ -9874,6 +9890,26 @@ IF(IFG_PreProduction__c == 1, &apos;IFG PreProduction Access&apos;,
         <type>Summary</type>
     </fields>
     <fields>
+        <fullName>S_Accreditation_Changes__c</fullName>
+        <description>counts the number of Service IATA Accreditation &amp; Changes for the contact</description>
+        <externalId>false</externalId>
+        <label>Service IATA Accreditation &amp; Changes</label>
+        <summaryFilterItems>
+            <field>Portal_Application_Right__c.Right__c</field>
+            <operation>equals</operation>
+            <value>Access Granted</value>
+        </summaryFilterItems>
+        <summaryFilterItems>
+            <field>Portal_Application_Right__c.Portal_Application__c</field>
+            <operation>equals</operation>
+            <value>a2ww0000001D7GO</value>
+        </summaryFilterItems>
+        <summaryForeignKey>Portal_Application_Right__c.Contact__c</summaryForeignKey>
+        <summaryOperation>count</summaryOperation>
+        <trackHistory>false</trackHistory>
+        <type>Summary</type>
+    </fields>
+    <fields>
         <fullName>S_BSPlink__c</fullName>
         <description>counts the number of BSPlink portal services of Management information report that the contact has access to</description>
         <externalId>false</externalId>
@@ -9907,6 +9943,26 @@ IF(IFG_PreProduction__c == 1, &apos;IFG PreProduction Access&apos;,
             <field>Portal_Application_Right__c.Portal_Application__c</field>
             <operation>equals</operation>
             <value>a2ww0000000d5oU,a2ww0000001D7aT,a2ww0000001D7dX,a2ww0000001D7dc</value>
+        </summaryFilterItems>
+        <summaryForeignKey>Portal_Application_Right__c.Contact__c</summaryForeignKey>
+        <summaryOperation>count</summaryOperation>
+        <trackHistory>false</trackHistory>
+        <type>Summary</type>
+    </fields>
+    <fields>
+        <fullName>S_EBulletin__c</fullName>
+        <description>counts the number of active E-Bulletin services for the contact</description>
+        <externalId>false</externalId>
+        <label>Service E-Bulletin</label>
+        <summaryFilterItems>
+            <field>Portal_Application_Right__c.Right__c</field>
+            <operation>equals</operation>
+            <value>Access Granted</value>
+        </summaryFilterItems>
+        <summaryFilterItems>
+            <field>Portal_Application_Right__c.Portal_Application__c</field>
+            <operation>equals</operation>
+            <value>a2ww0000000SbSH</value>
         </summaryFilterItems>
         <summaryForeignKey>Portal_Application_Right__c.Contact__c</summaryForeignKey>
         <summaryOperation>count</summaryOperation>
@@ -10213,7 +10269,11 @@ IF(ID_Card_Holder__c,IMAGE(&quot;/servlet/servlet.FileDownload?file=015w00000037
 &amp;&quot; &quot;&amp; 
 IF(Service_TD_Basic__c + Service_TD_Premium__c&gt;0,IMAGE(&quot;/servlet/servlet.FileDownload?file=015w00000037Som&quot; ,&quot;&quot;,40,40),&quot;&quot;)
 &amp;&quot; &quot;&amp; 
-IF(MITA_Contact__c=TRUE,IMAGE(&quot;/servlet/servlet.FileDownload?file=015w00000052zdM&quot; ,&quot;&quot;,40,40),&quot;&quot;)</formula>
+IF(MITA_Contact__c=TRUE,IMAGE(&quot;/servlet/servlet.FileDownload?file=015w00000052zdM&quot; ,&quot;&quot;,40,40),&quot;&quot;)
+&amp;&quot; &quot;&amp; 
+IF(S_EBulletin__c&gt;0,IMAGE(&quot;/servlet/servlet.FileDownload?file=0151r000006DHlF&quot; ,&quot;&quot;,40,40),&quot;&quot;)
+&amp;&quot; &quot;&amp; 
+IF(S_Accreditation_Changes__c&gt;0,IMAGE(&quot;/servlet/servlet.FileDownload?file=0151r000006DHlA&quot; ,&quot;&quot;,40,40),&quot;&quot;)</formula>
         <label>Services</label>
         <required>false</required>
         <trackHistory>false</trackHistory>
@@ -26531,11 +26591,19 @@ IF( ISPICKVAL(ValidContactDomainName__c, &quot;invalid&quot;),
         <picklistValues>
             <picklist>CEO_CFO__c</picklist>
             <values>
+                <fullName>CCO</fullName>
+                <default>false</default>
+            </values>
+            <values>
                 <fullName>CEO</fullName>
                 <default>false</default>
             </values>
             <values>
                 <fullName>CFO</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>CIO</fullName>
                 <default>false</default>
             </values>
             <values>
@@ -29075,10 +29143,10 @@ IF( ISPICKVAL(ValidContactDomainName__c, &quot;invalid&quot;),
         <lookupDialogsAdditionalFields>Use_Contact__c</lookupDialogsAdditionalFields>
         <lookupFilterFields>FULL_NAME</lookupFilterFields>
         <lookupFilterFields>CONTACT.EMAIL</lookupFilterFields>
-        <lookupFilterFields>00Nw0000008UgKG</lookupFilterFields>
+        <lookupFilterFields>Services__c</lookupFilterFields>
         <lookupFilterFields>ACCOUNT.NAME</lookupFilterFields>
-        <lookupFilterFields>00N20000000jRaV</lookupFilterFields>
-        <lookupFilterFields>00N20000000pQXa</lookupFilterFields>
+        <lookupFilterFields>Status__c</lookupFilterFields>
+        <lookupFilterFields>Use_Contact__c</lookupFilterFields>
         <lookupPhoneDialogsAdditionalFields>FULL_NAME</lookupPhoneDialogsAdditionalFields>
         <lookupPhoneDialogsAdditionalFields>ACCOUNT.NAME</lookupPhoneDialogsAdditionalFields>
         <lookupPhoneDialogsAdditionalFields>ACCOUNT.SITE</lookupPhoneDialogsAdditionalFields>

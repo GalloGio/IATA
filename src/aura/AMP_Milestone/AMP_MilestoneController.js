@@ -14,7 +14,7 @@
         statusValues.push('Delayed');
         statusValues.push('Delivered');
         statusValues.push('Cancelled');
-
+        statusValues.push('Not Delivered');
 
 		component.set("v.statusValues", statusValues);
     },
@@ -34,17 +34,11 @@
     },
     cancelEditMode : function(component, event, helper) {
         var milestone = component.get("v.milestone");
-        var index = component.get("v.index");
-
         if(milestone.Id === undefined) {
-            var deleteEvent = component.getEvent("deleteMilestone");
-            deleteEvent.setParams({ "task": milestone, "index":index }).fire();
-
-        } else {
-
-            component.set("v.isEditMode", false);
-            console.log('canceling edit mode...');
-        }
+            var deleteEvent = component.getEvent("cancelAddMilestone");
+            deleteEvent.setParams({'task': milestone});
+            deleteEvent.fire();
+        } 
         component.set("v.isEditMode", false);
         component.set("v.isError", false);
         console.log('canceling edit mode...');

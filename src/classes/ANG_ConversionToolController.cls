@@ -134,6 +134,18 @@ public with sharing class ANG_ConversionToolController {
 		
 	}
 
+	public pageReference runFullAnalysesWithReport(){
+		
+		migrationBacthId = ANG_ConversionHelper.runFullAnalysesWithReport(selectedCountryName);
+
+		batchStatusBool = true;
+		pollerBool = true;
+		//pollerBool = false;
+
+		return null;
+		
+	}
+
 
 	public PageReference migrateSelectedHierarchies() {
 		/**

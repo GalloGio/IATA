@@ -938,9 +938,54 @@
     </fields>
     <label>AmazonFile</label>
     <listViews>
+        <fullName>AgencyManagementAP_AmazonFile</fullName>
+        <filterScope>Queue</filterScope>
+        <label>Agency Management - A&amp;P</label>
+        <queue>AgencyManagementAP</queue>
+        <sharedTo>
+            <allInternalUsers></allInternalUsers>
+        </sharedTo>
+    </listViews>
+    <listViews>
+        <fullName>AgencyManagementAfricaME_AmazonFile</fullName>
+        <filterScope>Queue</filterScope>
+        <label>Agency Management - Africa &amp; ME</label>
+        <queue>AgencyManagementAfricaME</queue>
+        <sharedTo>
+            <allInternalUsers></allInternalUsers>
+        </sharedTo>
+    </listViews>
+    <listViews>
+        <fullName>AgencyManagementAmericas_AmazonFile</fullName>
+        <filterScope>Queue</filterScope>
+        <label>Agency Management - Americas</label>
+        <queue>AgencyManagementAmericas</queue>
+        <sharedTo>
+            <allInternalUsers></allInternalUsers>
+        </sharedTo>
+    </listViews>
+    <listViews>
+        <fullName>AgencyManagementChinaNAsia_AmazonFile</fullName>
+        <filterScope>Queue</filterScope>
+        <label>Agency Management - China &amp; N. Asia</label>
+        <queue>AgencyManagementChinaNAsia</queue>
+        <sharedTo>
+            <allInternalUsers></allInternalUsers>
+        </sharedTo>
+    </listViews>
+    <listViews>
         <fullName>All</fullName>
         <filterScope>Everything</filterScope>
         <label>All</label>
+    </listViews>
+    <listViews>
+        <fullName>CasesACCEuropeOffOnshore_AmazonFile</fullName>
+        <filterScope>Queue</filterScope>
+        <label>Agency Management - Europe</label>
+        <queue>CasesACCEuropeOffOnshore</queue>
+        <sharedTo>
+            <allInternalUsers></allInternalUsers>
+        </sharedTo>
     </listViews>
     <nameField>
         <label>AmazonFile Name</label>
@@ -1551,6 +1596,10 @@
                 <default>false</default>
             </values>
             <values>
+                <fullName>PCI_COMPLIANCE</fullName>
+                <default>false</default>
+            </values>
+            <values>
                 <fullName>PHOTOS_INT_EXT</fullName>
                 <default>false</default>
             </values>
@@ -1952,6 +2001,10 @@
             </values>
             <values>
                 <fullName>OFFICE_LEASE</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>PCI_COMPLIANCE</fullName>
                 <default>false</default>
             </values>
             <values>

@@ -10,6 +10,7 @@
     <customButtons>Deactivate_BSPLink</customButtons>
     <customButtons>Undo_Deactivation_BSPLink</customButtons>
     <customButtons>Reactivate_BSPLink</customButtons>
+    <customButtons>OscarFOP</customButtons>
     <emailDefault>false</emailDefault>
     <excludeButtons>Clone</excludeButtons>
     <excludeButtons>Delete</excludeButtons>
@@ -896,6 +897,9 @@
         <fields>ANG_expiration_date_ff__c</fields>
         <fields>ANG_Event_Status__c</fields>
         <relatedList>ANG_Agency_Risk_Event__c.ANG_CaseId__c</relatedList>
+    </relatedLists>
+    <relatedLists>
+        <relatedList>RelatedAttachmentList</relatedList>
     </relatedLists>
     <relatedObjects>ContactId</relatedObjects>
     <relatedObjects>AccountId</relatedObjects>

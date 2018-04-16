@@ -163,7 +163,8 @@ global class ANG_OscarConversionBatch implements Database.Batchable<sObject>, Da
 			if(oscarToProcess.Process__c == AMS_Utils.NEWHESTANDARD || oscarToProcess.Process__c == AMS_Utils.NEWAE || oscarToProcess.Process__c == AMS_Utils.NEWHELITE)
 				if(oscarToProcess.Is_PCI_compliant__c == null && oscarToProcess.Account__r.Is_PCI_compliant__c != null)
 					oscarToProcess.Is_PCI_compliant__c = oscarToProcess.Account__r.Is_PCI_compliant__c;
-		
+				else
+					oscarToProcess.Is_PCI_compliant__c = 'Yes';		
         
         return oscarToProcess;
 	}
