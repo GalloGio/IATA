@@ -71,7 +71,7 @@ private class AmazonFileTrgHelperTest {
         
         delete AmzFile;
         delete AmzFile2;
-		Test.stopTest();
+        Test.stopTest();
 
         list<AmazonFile__C> amzFiledelete = [SELECT Id FROM AmazonFile__C WHERE isDeleted =: true and id =: AmzFile.id All ROWS];
 
