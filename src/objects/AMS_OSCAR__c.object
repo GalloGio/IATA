@@ -1604,9 +1604,9 @@ IF(Bank_Guarantee_received__c - Bank_Guarantee_requested__c =6, TEXT(4), TEXT((B
                     <label>Swap with the parent</label>
                 </value>
                 <value>
-                    <fullName>Don’t change the parent</fullName>
+                    <fullName>Donâ€™t change the parent</fullName>
                     <default>false</default>
-                    <label>Don’t change the parent</label>
+                    <label>Donâ€™t change the parent</label>
                 </value>
             </valueSetDefinition>
         </valueSet>
@@ -3566,13 +3566,13 @@ if(Change_effective_as_of__c - today() &gt; 0,&quot;30&quot;,&quot;0&quot;)))</f
 
       )
     ,IF(RecordType.DeveloperName=&quot;CHANGE&quot;, 
-        IF(INCLUDES(Type_of_change__c, &quot;Location type&quot;), &quot;CHG – Data Maintenance&quot;
-        ,IF(OR(INCLUDES(Type_of_change__c, &quot;Ownership to non-IATA Agent&quot;), INCLUDES(Type_of_change__c, &quot;Ownership to IATA Agent&quot;), INCLUDES(Type_of_change__c, &quot;Legal status&quot;)), &quot;CHO / CHS – Change of Ownership / Legal Status&quot;
-        ,IF(INCLUDES(Type_of_change__c, &quot;Major Shareholding&quot;),&quot;CHC – Change of Shareholding&quot;
+        IF(INCLUDES(Type_of_change__c, &quot;Location type&quot;), &quot;CHG â€“ Data Maintenance&quot;
+        ,IF(OR(INCLUDES(Type_of_change__c, &quot;Ownership to non-IATA Agent&quot;), INCLUDES(Type_of_change__c, &quot;Ownership to IATA Agent&quot;), INCLUDES(Type_of_change__c, &quot;Legal status&quot;)), &quot;CHO / CHS â€“ Change of Ownership / Legal Status&quot;
+        ,IF(INCLUDES(Type_of_change__c, &quot;Major Shareholding&quot;),&quot;CHC â€“ Change of Shareholding&quot;
         ,IF(INCLUDES(Type_of_change__c, &quot;Name&quot;),&quot;CHN - Change of Name&quot;
         ,IF(OR(INCLUDES(Type_of_change__c, &quot;Location&quot;), INCLUDES(Type_of_change__c, &quot;Location with inspection&quot;)),&quot;CHL - Change of Location&quot;
         ,IF(INCLUDES(Type_of_change__c, &quot;VMFR&quot;),&quot;VMFR Setup/Update&quot;
-        ,IF(INCLUDES(Type_of_change__c, &quot;Minor Shareholding&quot;),&quot;CHG – Data Maintenance&quot;
+        ,IF(INCLUDES(Type_of_change__c, &quot;Minor Shareholding&quot;),&quot;CHG â€“ Data Maintenance&quot;
         ,&quot;&quot;  )))))))
     , &quot;&quot;)
    )</formula>
@@ -5369,53 +5369,6 @@ if(Change_effective_as_of__c - today() &gt; 0,&quot;30&quot;,&quot;0&quot;)))</f
     <fields>
         <fullName>SIDRA_lite_reason__c</fullName>
         <description>SIDRA lite reason for Oscar Creation</description>
-        <externalId>false</externalId>
-        <label>SIDRA lite reason</label>
-        <length>255</length>
-        <required>false</required>
-        <trackFeedHistory>false</trackFeedHistory>
-        <trackHistory>false</trackHistory>
-        <trackTrending>false</trackTrending>
-        <type>Text</type>
-        <unique>false</unique>
-    </fields>
-    <fields>
-        <fullName>STEP10__c</fullName>
-        <externalId>false</externalId>
-        <label>STEP10</label>
-        <required>false</required>
-        <trackFeedHistory>false</trackFeedHistory>
-        <trackHistory>false</trackHistory>
-        <trackTrending>false</trackTrending>
-        <type>Picklist</type>
-        <valueSet>
-            <valueSetDefinition>
-                <sorted>false</sorted>
-                <value>
-                    <fullName>Passed</fullName>
-                    <default>false</default>
-                    <label>Passed</label>
-                </value>
-                <value>
-                    <fullName>Failed</fullName>
-                    <default>false</default>
-                    <label>Failed</label>
-                </value>
-                <value>
-                    <fullName>Not Applicable</fullName>
-                    <default>false</default>
-                    <label>Not Applicable</label>
-                </value>
-                <value>
-                    <fullName>In Progress</fullName>
-                    <default>false</default>
-                    <label>In Progress</label>
-                </value>
-            </valueSetDefinition>
-        </valueSet>
-    </fields>
-    <fields>
-        <fullName>STEP11__c</fullName>
         <externalId>false</externalId>
         <label>SIDRA lite reason</label>
         <length>255</length>
