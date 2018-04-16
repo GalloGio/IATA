@@ -984,12 +984,18 @@ global class ANG_OscarProcessHelper {
 			if(accsToSendEmail.contains(acc.Id))
 	            AMS_AgencyRegulationAutoRenewal.sendEmailAlert(new List<Contact>{accOscarObjsMap.get(acc.Id).con}, accOscarObjsMap.get(acc.Id).oscar.Id, AMS_OSCARTriggerHandler.ANGemailTemplates(AMS_Utils.NGANNUALREVAL, null, true), accOscarObjsMap.get(acc.Id).oscar.Oscar_Communication_Case_Id__c, owea[0], false);			
 
-			//System.debug('[ANG_OscarProcessHelper.createRevalidationOscar] - FINISHED INSERTING - OSCAR: '+ accOscarObjsMap.get(acc.id).oscar.Id + ' | Case: '+accOscarObjsMap.get(acc.id).cse.Id+ ' | StagingArea: '+accOscarObjsMap.get(acc.id).stagingArea.Id);
 			System.debug('[ANG_OscarProcessHelper.createRevalidationOscar] - FINISHING... INSERTING OSCARS: '+ accOscarObjsMap.get(acc.id).oscar.Id + ' | Case: '+accOscarObjsMap.get(acc.id).cse.Id);
 		}
 
 		if(!casesToUpdate.isEmpty())
 			update casesToUpdate;
+
+		for (Account acc: accs){
+
+			if(accsToSendEmail.contains(acc.Id))
+	            AMS_AgencyRegulationAutoRenewal.sendEmailAlert(new List<Contact>{accOscarObjsMap.get(acc.Id).con}, accOscarObjsMap.get(acc.Id).oscar.Id, AMS_OSCARTriggerHandler.ANGemailTemplates(AMS_Utils.NGANNUALREVAL, null, true), accOscarObjsMap.get(acc.Id).oscar.Oscar_Communication_Case_Id__c, owea[0], false);			
+
+		}
 
         return casesToUpdate;
     }

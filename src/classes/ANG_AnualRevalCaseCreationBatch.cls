@@ -82,7 +82,7 @@ global class ANG_AnualRevalCaseCreationBatch implements Database.Batchable<sObje
 
 		for(String value: resultItems){
 			
-			toReturnBody+= value;
+			toReturnBody+= value + '\n';
 
 		}
 
