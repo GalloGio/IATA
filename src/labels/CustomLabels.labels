@@ -21810,6 +21810,13 @@ This Dashboard allows each airline Treasury Team to gain full visibility of thei
         <value>Account must be of type Payment Provider</value>
     </labels>
     <labels>
+        <fullName>ISSP_TIP_Home_Manage_Products</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Manage Products</shortDescription>
+        <value>Manage Products</value>
+    </labels>
+    <labels>
         <fullName>ISSP_TIP_Home_Only_Portal_Administrators</fullName>
         <language>en_US</language>
         <protected>false</protected>

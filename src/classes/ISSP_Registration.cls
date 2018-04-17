@@ -892,7 +892,7 @@ public without sharing class ISSP_Registration {
         //EM: Management of email according to the portal
         //userId = Comm_User_Helper.createNewUser(con,selectedCustomerType, 'ISSP', lang, isNotIATA, newAirline);
         
-        Boolean newProvider = ((acc.Sector__c == 'Financial Institution' && acc.Category__c == 'Payment Provider' ) ? True : False);
+        Boolean newProvider = ((acc.Sector__c == TIP_Utils.ACCOUNT_SECTOR_FINANCIAL_INSTITUTION && acc.Category__c == TIP_Utils.ACCOUNT_CATEGORY_PAYMENT_PROVIDER) ? True : False);
         if(sRefererCommunity == constIEC){
             userId = Comm_User_Helper.createNewUser(con,selectedCustomerType, 'IEC', lang, isNotIATA, newAirline, newProvider);
         }
@@ -953,7 +953,7 @@ public without sharing class ISSP_Registration {
                 }
                 con.Preferred_Language__c = languageString;
                 
-                if(acc.Sector__c == 'Financial Institution' && acc.Category__c == 'Payment Provider'){
+                if(acc.Sector__c == TIP_Utils.ACCOUNT_SECTOR_FINANCIAL_INSTITUTION && acc.Category__c == TIP_Utils.ACCOUNT_CATEGORY_PAYMENT_PROVIDER){
             		con.Primary_Contact__c = true;
                 	con.User_Portal_Status__c = 'Approved Admin';
 

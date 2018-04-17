@@ -9,6 +9,8 @@ public class TIP_Utils{
 	//Account Category
 	public static String ACCOUNT_CATEGORY_PAYMENT_PROVIDER = 'Payment Provider';
 
+	//Account Sector
+	public static String ACCOUNT_SECTOR_FINANCIAL_INSTITUTION = 'Financial Institution';
 
 	//Case RT's
 	public static String CASE_PROCESS_IDFS_RECORD_TYPE_ID = RecordTypeSingleton.getInstance().RtIDsPerDeveloperNamePerObj.get('Case').get('CS_Process_IDFS_ISS');
