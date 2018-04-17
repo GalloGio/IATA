@@ -69,6 +69,8 @@ global with sharing class IDCardUtil {
     public static final String CARDSTATUS_PRINTED_DELIVERED = 'Printed/Delivered';
     @RemoteAction
     public static final String CARDSTATUS_CANCELED = 'Cancelled ID Card';
+    @RemoteAction
+    public static final String CARDSTATUS_Expired = 'Expired ID Card';
 
     @RemoteAction
     public static final String AGENTTYPE_PASSENGER = 'Passenger';
