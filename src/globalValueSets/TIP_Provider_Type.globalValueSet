@@ -6,7 +6,7 @@
         <label>Open Loop</label>
     </customValue>
     <customValue>
-        <fullName>Closed Loop</fullName>
+        <fullName>Closed Loop</fullName> 
         <default>false</default>
         <label>Closed Loop</label>
     </customValue>
