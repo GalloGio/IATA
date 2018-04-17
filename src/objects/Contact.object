@@ -9910,26 +9910,6 @@ IF(IFG_PreProduction__c == 1, &apos;IFG PreProduction Access&apos;,
         <type>Summary</type>
     </fields>
     <fields>
-        <fullName>S_BSP_CASS__c</fullName>
-        <description>counts the number of ISS portal services for BSP/CASS that the contact has access to</description>
-        <externalId>false</externalId>
-        <label>Service BSP/CASS</label>
-        <summaryFilterItems>
-            <field>Portal_Application_Right__c.Right__c</field>
-            <operation>equals</operation>
-            <value>Access Granted</value>
-        </summaryFilterItems>
-        <summaryFilterItems>
-            <field>Portal_Application_Right__c.Portal_Application__c</field>
-            <operation>equals</operation>
-            <value>a2ww0000000bA6Y,a2ww0000001D7YS,a2ww0000000dbeP</value>
-        </summaryFilterItems>
-        <summaryForeignKey>Portal_Application_Right__c.Contact__c</summaryForeignKey>
-        <summaryOperation>count</summaryOperation>
-        <trackHistory>false</trackHistory>
-        <type>Summary</type>
-    </fields>
-    <fields>
         <fullName>S_BSPlink__c</fullName>
         <description>counts the number of BSPlink portal services of Management information report that the contact has access to</description>
         <externalId>false</externalId>
@@ -10394,9 +10374,7 @@ IF(MITA_Contact__c=TRUE,IMAGE(&quot;/servlet/servlet.FileDownload?file=015w00000
 IF(S_EBulletin__c&gt;0,IMAGE(&quot;/servlet/servlet.FileDownload?file=0151r000006DHlF&quot; ,&quot;&quot;,40,40),&quot;&quot;)
 &amp;&quot; &quot;&amp; 
 IF(S_Accreditation_Changes__c&gt;0,IMAGE(&quot;/servlet/servlet.FileDownload?file=0151r000006DHlA&quot; ,&quot;&quot;,40,40),&quot;&quot;)
-&amp;&quot; &quot;&amp; 
-IF(S_BSP_CASS__c&gt;0,IMAGE(&quot;&quot; ,&quot;&quot;,40,40),&quot;&quot;)
-&amp;&quot; &quot;&amp; 
+&amp;&quot; &quot;&amp;  
 IF(S_Currency_Center__c&gt;0,IMAGE(&quot;/servlet/servlet.FileDownload?file=015w0000004yCw2&quot; ,&quot;&quot;,40,40),&quot;&quot;)
 &amp;&quot; &quot;&amp; 
 IF(S_EasyPay__c&gt;0,IMAGE(&quot;/servlet/servlet.FileDownload?file=015w00000056QFS&quot; ,&quot;&quot;,40,40),&quot;&quot;)
