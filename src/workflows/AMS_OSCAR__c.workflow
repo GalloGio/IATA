@@ -149,7 +149,7 @@
         <criteriaItems>
             <field>AMS_OSCAR__c.Status__c</field>
             <operation>equals</operation>
-            <value>Accepted_Future Date</value>
+            <value>Accepted_Future Date,Open,Accepted_Pending Docs</value>
         </criteriaItems>
         <triggerType>onCreateOrTriggeringUpdate</triggerType>
         <workflowTimeTriggers>
@@ -158,7 +158,7 @@
                 <type>FieldUpdate</type>
             </actions>
             <offsetFromField>AMS_OSCAR__c.DGR_Expiry_Date__c</offsetFromField>
-            <timeLength>15</timeLength>
+            <timeLength>1</timeLength>
             <workflowTimeTriggerUnit>Days</workflowTimeTriggerUnit>
         </workflowTimeTriggers>
     </rules>
