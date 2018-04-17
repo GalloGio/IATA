@@ -880,7 +880,7 @@ public class SurveyBatchTest {
                               Reason1__c = 'CHC – Change of Shareholding',
                               CNSCase__c =false
                               ));
-
+/*
                          cases.add(new Case(recordtypeID = processRTId,
                               Status = 'Financial Security Requested',
                               FS_Submitted_Date__c = date.today(),
@@ -898,7 +898,7 @@ public class SurveyBatchTest {
                               Financial_Review_Result__c = 'Satisfactory',
                               Reason1__c = 'CHC – Change of Shareholding'
                               ));
-                        /*  cases.add(new Case(recordtypeID = processRTId,
+                          cases.add(new Case(recordtypeID = processRTId,
                               Status = 'Financial Security Requested',
                               FS_Submitted_Date__c = date.today(),
                               FS_Deadline_Date__c = twoweeksAgo,
