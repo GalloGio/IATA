@@ -983,7 +983,7 @@
         <value>Congratulations on the opening of your new IATA EasyPay account.
         Please follow this article that describes how to manage your EasyPay account and the initial steps in order to transfer funds so that you can start issuing EasyPay tickets.
         Your colleagues can now apply to access your newly opened account from the IATA Customer Service Portal. The article above describes how you can manage user access.
-        Thank you, 
+        Thank you,
         IATA Customer Service</value>
     </labels>
     <labels>
@@ -1193,7 +1193,7 @@
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>ANG_ISSP_IEP_AuthorisedSignatory_AO_auth_msg</shortDescription>
-        <value>Your Agency currently does not have an open IATA EasyPay Account.&lt;br/&gt;&lt;br/&gt;Please contact your Head Office&apos;s Authorized Signatory to request them to open an IATA EasyPay Account. In order to open an IATA EasyPay Account you need to be both a Portal Administrator and Authorized Signatory for your Agency. 
+        <value>Your Agency currently does not have an open IATA EasyPay Account.&lt;br/&gt;&lt;br/&gt;Please contact your Head Office&apos;s Authorized Signatory to request them to open an IATA EasyPay Account. In order to open an IATA EasyPay Account you need to be both a Portal Administrator and Authorized Signatory for your Agency.
 &lt;br/&gt;
 &lt;br/&gt;
 Please &lt;a href=&quot;/ISSP_FAQ2Case?MainNav=Queries&amp;subNav=MyQueries&amp;mid=M1S1&quot;&gt;contact support&lt;/a&gt; if you need help.</value>
@@ -1213,7 +1213,7 @@ Please &lt;a href=&quot;/ISSP_FAQ2Case?MainNav=Queries&amp;subNav=MyQueries&amp;
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>ANG_ISSP_IEP_AuthorisedSignatory_HO_auth_msg</shortDescription>
-        <value>Your Agency currently does not have an open IATA EasyPay Account.&lt;br/&gt;&lt;br/&gt;Please contact your Head Office&apos;s Authorized Signatory to request them to open an IATA EasyPay Account. {0} 
+        <value>Your Agency currently does not have an open IATA EasyPay Account.&lt;br/&gt;&lt;br/&gt;Please contact your Head Office&apos;s Authorized Signatory to request them to open an IATA EasyPay Account. {0}
 &lt;br/&gt;
 &lt;br/&gt;
 Please &lt;a href=&quot;/ISSP_FAQ2Case?MainNav=Queries&amp;subNav=MyQueries&amp;mid=M1S1&quot;&gt;contact support&lt;/a&gt; if you need help.</value>
@@ -2013,7 +2013,7 @@ Please &lt;a href=&quot;/ISSP_FAQ2Case?MainNav=Queries&amp;subNav=MyQueries&amp;
         <protected>false</protected>
         <shortDescription>AddressDoctorNoState</shortDescription>
         <value>Error: Billing State/Province is empty, please follow this steps to fill it in:
- 
+
  1- Edit the “Billing city” line
  2- Select one of the addresses proposed by the system</value>
     </labels>
@@ -3359,11 +3359,11 @@ If a government is selling down its reserves at a rapid rate, the sooner it will
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>CurrencyCenter_def_GDP_Growth</shortDescription>
-        <value>&lt;p&gt;Gross Domestic Product (GDP) measures the change in a nation’s output (capturing both goods and services). The indicator chosen is the difference between the current rate of real GDP growth and a three-year historical average rate. The use of an average helps to limit the impact of any one-off events or developments on GDP. &lt;/p&gt; 
-&lt;p&gt;&lt;b&gt;Why is it a relevant EWI?&lt;/b&gt;&lt;br/&gt; 
-A widening gap between the current rate of growth and that of the recent past – in either a positive or negative direction – gives an indication of investor attractiveness and expected returns. Such changes in expectations are often associated with capital flows into or out of the country which, in turn, has implications for shifts in the currency. 
+        <value>&lt;p&gt;Gross Domestic Product (GDP) measures the change in a nation’s output (capturing both goods and services). The indicator chosen is the difference between the current rate of real GDP growth and a three-year historical average rate. The use of an average helps to limit the impact of any one-off events or developments on GDP. &lt;/p&gt;
+&lt;p&gt;&lt;b&gt;Why is it a relevant EWI?&lt;/b&gt;&lt;br/&gt;
+A widening gap between the current rate of growth and that of the recent past – in either a positive or negative direction – gives an indication of investor attractiveness and expected returns. Such changes in expectations are often associated with capital flows into or out of the country which, in turn, has implications for shifts in the currency.
 &lt;/p&gt;
-&lt;b&gt;Frequency?&lt;/b&gt; Quarterly (typically) or Annual&lt;br/&gt; 
+&lt;b&gt;Frequency?&lt;/b&gt; Quarterly (typically) or Annual&lt;br/&gt;
 &lt;b&gt;Source?&lt;/b&gt; IMF</value>
     </labels>
     <labels>
@@ -3374,7 +3374,7 @@ A widening gap between the current rate of growth and that of the recent past �
         <value>The general approach taken by IATA in converting ICCS Member Airlines’ funds is one of using pre-determined foreign exchange (FX) policies negotiated in advance with its banking partners and based on neutral market sources (i.e. benchmark rates, Reuters, Central Bank official rates etc.). Contracts are, in general, 2-day spot contracts, but can be different based on market standards.&lt;br/&gt;
 In this regard, ICCS has two main FX Conversion Policies: (1) Central Policy and (2) Local policies. The Central FX Conversion Policy is the main policy as it covers the majority of the volume ICCS handles and covers all currencies that are freely tradable.&lt;br/&gt;&lt;br/&gt;
 &lt;b&gt;1. Central Policy for Currency Conversion Rates&lt;/b&gt;&lt;br/&gt;
-Currently agreed by IATA with the present ICCS Service Bank (Citibank N.A. London). 
+Currently agreed by IATA with the present ICCS Service Bank (Citibank N.A. London).
 IATA is currently using the CitiFX Benchmark product for conversion of all currencies that are freely convertible with Citibank London Treasury. CitiFX Benchmark automatically extracts</value>
     </labels>
     <labels>
@@ -3448,10 +3448,10 @@ One Multilateral Agreement concluded with another airline through IATA results i
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>CurrencyCenter_def_Non_Performing_Loans</shortDescription>
-        <value>&lt;p&gt;A non-performing loan (NPL) is one where the debtor has fallen behind with their payments of interest and/or principal. Although definitions vary, one often accepted benchmark is when the loan repayments are in arrears by more than 90 days. The chosen indicator is the share of NPL to total loans.&lt;/p&gt; 
-&lt;p&gt;&lt;b&gt;Why is it a relevant EWI?&lt;/b&gt;&lt;br/&gt; 
-Other things equal, the higher the share of NPL, the more widespread the degree of financial stress in the country and, consequently, the greater the risk of adverse currency developments – for example as investors seek to repatriate capital.&lt;/p&gt; 
-&lt;b&gt;Frequency?&lt;/b&gt; Annual&lt;br/&gt; 
+        <value>&lt;p&gt;A non-performing loan (NPL) is one where the debtor has fallen behind with their payments of interest and/or principal. Although definitions vary, one often accepted benchmark is when the loan repayments are in arrears by more than 90 days. The chosen indicator is the share of NPL to total loans.&lt;/p&gt;
+&lt;p&gt;&lt;b&gt;Why is it a relevant EWI?&lt;/b&gt;&lt;br/&gt;
+Other things equal, the higher the share of NPL, the more widespread the degree of financial stress in the country and, consequently, the greater the risk of adverse currency developments – for example as investors seek to repatriate capital.&lt;/p&gt;
+&lt;b&gt;Frequency?&lt;/b&gt; Annual&lt;br/&gt;
 &lt;b&gt;Source?&lt;/b&gt; IMF</value>
     </labels>
     <labels>
@@ -3518,14 +3518,14 @@ The databases, posted on a secure web-based platform, offer user-friendly interf
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>Custom Queue Notifications Email Template</shortDescription>
-        <value>A new case has been assigned to the {!QueueName} queue. 
+        <value>A new case has been assigned to the {!QueueName} queue.
 
-{!Case.Link} 
-Case number: {!Case.CaseNumber} 
-Case Reason: {!Case.Reason1__c} 
-Case subject: {!Case.Subject} 
+{!Case.Link}
+Case number: {!Case.CaseNumber}
+Case Reason: {!Case.Reason1__c}
+Case subject: {!Case.Subject}
 
-Case description: {!Case.Description} 
+Case description: {!Case.Description}
 
 {!Case.Link}</value>
     </labels>
@@ -4017,7 +4017,7 @@ Message: {2}</value>
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>GetQuoteConfirmationMsg</shortDescription>
-        <value>Please click on the &lt;i&gt;Generate a quote&lt;/i&gt; button to proceed. 
+        <value>Please click on the &lt;i&gt;Generate a quote&lt;/i&gt; button to proceed.
 You will receive an email with a copy of your quote or you can retrieve the quote details from the “Account Information” section.</value>
     </labels>
     <labels>
@@ -4077,7 +4077,7 @@ You will receive an email with a copy of your quote or you can retrieve the quot
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>Home Page New Release Msg.</shortDescription>
-        <value>IATA offers over 400 titles consisting of standards, manuals and guidelines that cover a variety of aviation topics, from Safety, Passenger, Cargo, to Security and more. 
+        <value>IATA offers over 400 titles consisting of standards, manuals and guidelines that cover a variety of aviation topics, from Safety, Passenger, Cargo, to Security and more.
 Ensuring that the industry adapts and adheres to these global standards and recommended practices underpins a safe, secure, and integrated global air transport system.</value>
     </labels>
     <labels>
@@ -4405,9 +4405,9 @@ Credit cards accepted are:&lt;br&gt;
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>IDCard_CheckList_PaymentInformation</shortDescription>
-        <value>Credit cards accepted are:&lt;br&gt; 
-- Visa&lt;br&gt; 
-- Mastercard&lt;br&gt; 
+        <value>Credit cards accepted are:&lt;br&gt;
+- Visa&lt;br&gt;
+- Mastercard&lt;br&gt;
 - American Express.&lt;br&gt;</value>
     </labels>
     <labels>
@@ -4433,9 +4433,9 @@ IATA will take no responsibility should a supplier fail to recognize the ID Card
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>IDCard_CheckList_Photo_NewApplication</shortDescription>
-        <value>- Must be a passport-standard size photo&lt;br/&gt; 
-- Must be in JPEG format&lt;br/&gt; 
-- Must reflect your current appearance or taken in the last 12 months&lt;br/&gt; 
+        <value>- Must be a passport-standard size photo&lt;br/&gt;
+- Must be in JPEG format&lt;br/&gt;
+- Must reflect your current appearance or taken in the last 12 months&lt;br/&gt;
 - Must be full face, front-view, open-eyes, without hats or sunglasses&lt;br/&gt;</value>
     </labels>
     <labels>
@@ -4465,15 +4465,15 @@ IATA will take no responsibility should a supplier fail to recognize the ID Card
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>IDCard_CheckList_ProofEmployment</shortDescription>
-        <value>** SCANNED IN PDF FORMAT **&lt;br/&gt; 
-Accepted documents for agency employees include:&lt;br/&gt; 
-- Official letter of attestation produced by your Agency stating your current employment status and signed by Agency’s owner/reporting manager, &lt;b&gt;AND/OR&lt;/b&gt;&lt;br/&gt; 
-- Pay stub/Pay slip to prove direct deposit of salary from your Agency, &lt;b&gt;AND/OR&lt;/b&gt;&lt;br/&gt; 
-- Agency disbursement records&lt;br/&gt;&lt;br/&gt; 
+        <value>** SCANNED IN PDF FORMAT **&lt;br/&gt;
+Accepted documents for agency employees include:&lt;br/&gt;
+- Official letter of attestation produced by your Agency stating your current employment status and signed by Agency’s owner/reporting manager, &lt;b&gt;AND/OR&lt;/b&gt;&lt;br/&gt;
+- Pay stub/Pay slip to prove direct deposit of salary from your Agency, &lt;b&gt;AND/OR&lt;/b&gt;&lt;br/&gt;
+- Agency disbursement records&lt;br/&gt;&lt;br/&gt;
 
-Accepted documents for independent travel consultant/contractor/broker are:&lt;br/&gt; 
-- Pay stub/Pay slip to prove direct deposit of commission from your Agency&lt;br/&gt; 
-&lt;b&gt;AND&lt;/b&gt;&lt;br/&gt; 
+Accepted documents for independent travel consultant/contractor/broker are:&lt;br/&gt;
+- Pay stub/Pay slip to prove direct deposit of commission from your Agency&lt;br/&gt;
+&lt;b&gt;AND&lt;/b&gt;&lt;br/&gt;
 - A written contract or agreement in compliance with applicable laws and regulations or Official letter of attestation produced by your Agency stating your current employment status and signed by Agency’s owner/reporting manager.</value>
     </labels>
     <labels>
@@ -4488,10 +4488,10 @@ Accepted documents for independent travel consultant/contractor/broker are:&lt;b
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>IDCard_CheckList_ProofNameChange</shortDescription>
-        <value>Accept proof of name change include:&lt;br/&gt; 
-- Marriage certificate&lt;br/&gt; 
-- Passport&lt;br/&gt; 
-- Driver License&lt;br/&gt; 
+        <value>Accept proof of name change include:&lt;br/&gt;
+- Marriage certificate&lt;br/&gt;
+- Passport&lt;br/&gt;
+- Driver License&lt;br/&gt;
 - National Identity Card&lt;br/&gt;</value>
     </labels>
     <labels>
@@ -5254,7 +5254,7 @@ IATA/IATAN ID Card Team</value>
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>IDCard_LastNameVerification</shortDescription>
-        <value>We have noted that your last name has been changed from the last application. 
+        <value>We have noted that your last name has been changed from the last application.
 In order to verify that you need to upload a proof of last name change.</value>
     </labels>
     <labels>
@@ -5284,7 +5284,7 @@ In order to verify that you need to upload a proof of last name change.</value>
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>IDCard_LoginWithCodes</shortDescription>
-        <value>&lt;h1&gt;&lt;b&gt;Login with Codes&lt;/b&gt;&lt;/h1&gt;&lt;br/&gt; 
+        <value>&lt;h1&gt;&lt;b&gt;Login with Codes&lt;/b&gt;&lt;/h1&gt;&lt;br/&gt;
 For returning agents who are looking to renew or re-issue their card due to loss, damage, name change or relocation to a different agency, please log in with your VER# and IATA Agency Code found on your existing card.</value>
     </labels>
     <labels>
@@ -5292,7 +5292,7 @@ For returning agents who are looking to renew or re-issue their card due to loss
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>IDCard_LoginWithPInfo</shortDescription>
-        <value>&lt;h1&gt;&lt;b&gt;Login with Personal   Information &lt;/b&gt;&lt;/h1&gt;&lt;br/&gt; 
+        <value>&lt;h1&gt;&lt;b&gt;Login with Personal   Information &lt;/b&gt;&lt;/h1&gt;&lt;br/&gt;
 For new applicants and returning agents who do not have their existing ID Card codes.</value>
     </labels>
     <labels>
@@ -5497,7 +5497,7 @@ For new applicants and returning agents who do not have their existing ID Card c
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>IDCard_PaymentByChequeP2</shortDescription>
-        <value>We will verify the proof of payment in your application and proceed with issuance of the ID Card upon the approval of application and payment. 
+        <value>We will verify the proof of payment in your application and proceed with issuance of the ID Card upon the approval of application and payment.
 Should you have any question about payment by bank transfer, please visit &lt;a href=&quot;http://www.iata.org/services/accreditation-travel/idcard/Pages/apply.aspx&quot; target=&quot;_blank&quot;&gt;How to Apply&lt;/a&gt; or contact our &lt;a href=&quot;http://www.iata.org/customer-portal/Pages/index.aspx?&quot; target=&quot;_blank&quot;&gt;customer service&lt;/a&gt; team.</value>
     </labels>
     <labels>
@@ -5813,7 +5813,7 @@ Should you have any question about payment by bank transfer, please visit &lt;a 
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>IDCard ReportAgencyIncorrectInfo2</shortDescription>
-        <value>If the above address is incorrect, please report agency incorrect information (&lt;a href=&quot;http://www.iata.org/customer-portal/Pages/index.aspx&quot; style=&quot;color: blue;&quot;&gt;Report Agency incorrect information&lt;/a&gt;) and should not continue until the agency address has been correctly modified. &lt;br/&gt; 
+        <value>If the above address is incorrect, please report agency incorrect information (&lt;a href=&quot;http://www.iata.org/customer-portal/Pages/index.aspx&quot; style=&quot;color: blue;&quot;&gt;Report Agency incorrect information&lt;/a&gt;) and should not continue until the agency address has been correctly modified. &lt;br/&gt;
 Kindly note that home-based agents are required to coordinate with their colleagues at the address above to receive the ID Card. Applicants will be held responsible at all costs for incorrect agency address. To continue, please click the button below.</value>
     </labels>
     <labels>
@@ -6162,7 +6162,7 @@ Kindly note that home-based agents are required to coordinate with their colleag
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>IDCard_ka_single_purchase_message</shortDescription>
-        <value>Thanks for your purchase. 
+        <value>Thanks for your purchase.
 
 Your ID Card application manager has been informed of your request.</value>
     </labels>
@@ -6689,9 +6689,9 @@ Your ID Card application manager has been informed of your request.</value>
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>ID Card Terms Condition</shortDescription>
-        <value>I have read and accept the 
-&lt;a href=&quot;JavaScript:newPopup(&apos;http://www.iata.org/Pages/privacy.aspx&apos;); &quot;&gt;Privacy Policy, Conditions of Use &lt;/a&gt; 
-and 
+        <value>I have read and accept the
+&lt;a href=&quot;JavaScript:newPopup(&apos;http://www.iata.org/Pages/privacy.aspx&apos;); &quot;&gt;Privacy Policy, Conditions of Use &lt;/a&gt;
+and
 &lt;a href=&quot;JavaScript:newPopup(&apos; http://www.iata.org/services/accreditation/idcard/Documents/2016-05-IATA-IATAN-IDC-Cardholder-Agreement-EN.pdf&apos;);&quot;&gt;Terms &amp; Conditions. &lt;/a&gt;</value>
     </labels>
     <labels>
@@ -6699,9 +6699,9 @@ and
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>ID Card Terms ConditionCA</shortDescription>
-        <value>I have read and accept the 
-&lt;a href=&quot;JavaScript:newPopup(&apos;http://www.iata.org/Pages/privacy.aspx&apos;); &quot;&gt;Privacy Policy, Conditions of Use &lt;/a&gt; 
-and 
+        <value>I have read and accept the
+&lt;a href=&quot;JavaScript:newPopup(&apos;http://www.iata.org/Pages/privacy.aspx&apos;); &quot;&gt;Privacy Policy, Conditions of Use &lt;/a&gt;
+and
 &lt;a href=&quot;JavaScript:newPopup(&apos;http://www.iata.org/services/accreditation/idcard/Documents/2016-05-IATA-IATAN-IDC-Cardholder-Agreement-EN.pdf&apos;);&quot;&gt;Terms &amp; Conditions. &lt;/a&gt;</value>
     </labels>
     <labels>
@@ -7274,7 +7274,7 @@ and
         <protected>false</protected>
         <shortDescription>IEC_NoRecordsFoundCreateAccount</shortDescription>
         <value>No Organization was found for these search criteria. Please modify your search and try again or click Create New Account to create a new company record.
-&lt;br/&gt;&lt;br/&gt; 
+&lt;br/&gt;&lt;br/&gt;
 If you continue to experience issues registering for the IATA Customer Portal, then please consult our &lt;a href=http://theiatahub.force.com/iatapkb/articles/en_US/How_To/Customer-Portal-Troubleshooting/?l=en_US target=_blank&gt;troubleshooting guide&lt;/a&gt;.</value>
     </labels>
     <labels>
@@ -7661,15 +7661,15 @@ msgDeleted: is deleted.</value>
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>IFAP Login Error</shortDescription>
-        <value>We are sorry, but you login attempt failed. Please make sure that your user (email) and password are correct.&lt;br/&gt; 
-If you are coming from one of the following countries:&lt;br/&gt; 
-&lt;ol&gt; 
-&lt;li type=&quot;square&quot;&gt;Africa &amp; Middle East – AE, ET, IR, JO, KE, KW, LB, MD, MZ, NA, ZA, TZ&lt;/li&gt; 
-&lt;li type=&quot;square&quot;&gt;Americas – AG, AR, AW, BS, BB, BQ, CL, CR, CW, DM, DO, GD, GY, HT, JM, KN, KY, LC, MS, PY, SR, SX, TC, TT, UY, VC, VG&lt;/li&gt; 
-&lt;li type=&quot;square&quot;&gt;Asia &amp; Pacific – BD, BT, IN, NP, PH, PK&lt;/li&gt; 
-&lt;li type=&quot;square&quot;&gt;China &amp; North Asia – HK, MN, TW&lt;/li&gt; 
-&lt;li type=&quot;square&quot;&gt;Europe – CZ, DK, EE, GB, HR, HU, GR, IS, LU, LV, LT, MT, NL, NO, PT, RO, SE, SK, UA&lt;/li&gt; 
-&lt;/ol&gt; 
+        <value>We are sorry, but you login attempt failed. Please make sure that your user (email) and password are correct.&lt;br/&gt;
+If you are coming from one of the following countries:&lt;br/&gt;
+&lt;ol&gt;
+&lt;li type=&quot;square&quot;&gt;Africa &amp; Middle East – AE, ET, IR, JO, KE, KW, LB, MD, MZ, NA, ZA, TZ&lt;/li&gt;
+&lt;li type=&quot;square&quot;&gt;Americas – AG, AR, AW, BS, BB, BQ, CL, CR, CW, DM, DO, GD, GY, HT, JM, KN, KY, LC, MS, PY, SR, SX, TC, TT, UY, VC, VG&lt;/li&gt;
+&lt;li type=&quot;square&quot;&gt;Asia &amp; Pacific – BD, BT, IN, NP, PH, PK&lt;/li&gt;
+&lt;li type=&quot;square&quot;&gt;China &amp; North Asia – HK, MN, TW&lt;/li&gt;
+&lt;li type=&quot;square&quot;&gt;Europe – CZ, DK, EE, GB, HR, HU, GR, IS, LU, LV, LT, MT, NL, NO, PT, RO, SE, SK, UA&lt;/li&gt;
+&lt;/ol&gt;
 In order to upload your financial documents, please, login to Customer Portal on &lt;b&gt;&lt;a href=&apos;http://portal.iata.org&apos;&gt;http://portal.iata.org&lt;/a&gt;&lt;/b&gt;</value>
     </labels>
     <labels>
@@ -7862,7 +7862,7 @@ In order to upload your financial documents, please, login to Customer Portal on
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>IFG_Thanks_for_request</shortDescription>
-        <value>Thanks for you request. 
+        <value>Thanks for you request.
 You have just received an email confirming your request.
 Regards,
 IFG Customer Services</value>
@@ -13133,7 +13133,7 @@ You can update you Ownership details at any time by following the &lt;i&gt;IATA 
         <protected>false</protected>
         <shortDescription>ISSP AMS Step3 4 People Intermediary</shortDescription>
         <value>If your intermediary is fully- or partially-owned by one or more people, please enter their details here as owners, partners or shareholders (except where your organization is a legal entity whose shares are listed on a security exchange or are regularly traded in an ‘over-the-counter’ market).&lt;br/&gt;
-Enter the names and titles for the directors or officers of a corporation, and the details of the managers of the Intermediary. 
+Enter the names and titles for the directors or officers of a corporation, and the details of the managers of the Intermediary.
 Select at least one Authorized Signatory, and choose the Financial Assessment Contact and Portal Administrator.</value>
     </labels>
     <labels>
@@ -17276,8 +17276,8 @@ Can you please confirm which country you&apos;ve previously received support for
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>ISSP EMADOMVAL ImportantInformation</shortDescription>
-        <value>By keeping an updated list of valid company email domains, the system will be able to flag any contact under your account with a different domain. 
-With this feature, Portal Administrators will be able to easily identify the non-compliant contacts and take corrective actions if needed such as deactivating them. 
+        <value>By keeping an updated list of valid company email domains, the system will be able to flag any contact under your account with a different domain.
+With this feature, Portal Administrators will be able to easily identify the non-compliant contacts and take corrective actions if needed such as deactivating them.
 Please add below all your company valid email domains, including different ones used in different locations.</value>
     </labels>
     <labels>
@@ -18616,7 +18616,7 @@ this is the general info that is shown for ATA only</value>
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>ISSP_Help_Financial_Reviews</shortDescription>
-        <value>any topic 
+        <value>any topic
 
 but subtopic = financial reviews</value>
     </labels>
@@ -19972,7 +19972,7 @@ If you want to create a new branch for this company in your country, click Creat
         <protected>false</protected>
         <shortDescription>ISSP_NoRecordsFoundCreateAgency</shortDescription>
         <value>No Organization was found for these search criteria. Please modify your search and try again or click Create New to create a new company record.
-&lt;br/&gt;&lt;br/&gt; 
+&lt;br/&gt;&lt;br/&gt;
 If you continue to experience issues registering for the IATA Customer Portal then please consult our &lt;a href=http://theiatahub.force.com/iatapkb/articles/en_US/How_To/Customer-Portal-Troubleshooting/?l=en_US target=_blank&gt;troubleshooting guide&lt;/a&gt;</value>
     </labels>
     <labels>
@@ -19981,7 +19981,7 @@ If you continue to experience issues registering for the IATA Customer Portal th
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>ISSP_NoRecordsFoundCreateAgency2</shortDescription>
-        <value>No Organization was found for these search criteria. Please modify your search and try again or click Create New Agency to create a new company record. 
+        <value>No Organization was found for these search criteria. Please modify your search and try again or click Create New Agency to create a new company record.
 &lt;br/&gt;&lt;br/&gt;</value>
     </labels>
     <labels>
@@ -19990,8 +19990,8 @@ If you continue to experience issues registering for the IATA Customer Portal th
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>ISSP_NoRecordsFoundCreateAgency_CNS</shortDescription>
-        <value>No Company was found for these search criteria. Please modify your search and try again or click Create New to create a new company record. 
-&lt;br/&gt;&lt;br/&gt; 
+        <value>No Company was found for these search criteria. Please modify your search and try again or click Create New to create a new company record.
+&lt;br/&gt;&lt;br/&gt;
 If you continue to experience issues registering for the CNS Customer Portal then please contact us at 786-413-1000</value>
     </labels>
     <labels>
@@ -20000,8 +20000,8 @@ If you continue to experience issues registering for the CNS Customer Portal the
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>ISSP_NoRecordsFoundCreateStandardAirline</shortDescription>
-        <value>No Organization was found for these search criteria. Please modify your search and try again or click Create New to create a new company record. 
-&lt;br/&gt;&lt;br/&gt; 
+        <value>No Organization was found for these search criteria. Please modify your search and try again or click Create New to create a new company record.
+&lt;br/&gt;&lt;br/&gt;
 If you continue to experience issues registering for the IATA Customer Portal then please consult our &lt;a href=http://theiatahub.force.com/iatapkb/articles/en_US/How_To/Customer-Portal-Troubleshooting/?l=en_US target=_blank&gt;troubleshooting guide&lt;/a&gt;</value>
     </labels>
     <labels>
@@ -20010,7 +20010,7 @@ If you continue to experience issues registering for the IATA Customer Portal th
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>ISSP_NoRecordsFoundCreateStandardAirline_CNS</shortDescription>
-        <value>No Company was found for these search criteria. Please modify your search and try again or click Create New to create a new company record. 
+        <value>No Company was found for these search criteria. Please modify your search and try again or click Create New to create a new company record.
 &lt;br/&gt;&lt;br/&gt;
 If you continue to experience issues registering for the CNS Customer Portal then please contact us at 786-413-1000</value>
     </labels>
@@ -20041,7 +20041,7 @@ If you continue to experience issues registering for the CNS Customer Portal the
         <protected>false</protected>
         <shortDescription>ISSP_NoRecordsFoundGSA</shortDescription>
         <value>No Company found for your combination of GSA code and country. Please ensure you have entered the correct information.
-&lt;br/&gt;&lt;br/&gt; 
+&lt;br/&gt;&lt;br/&gt;
 If you continue to experience issues registering for the IATA Customer Portal then please consult our &lt;a href=http://theiatahub.force.com/iatapkb/articles/en_US/How_To/Customer-Portal-Troubleshooting/?l=en_US target=_blank&gt;troubleshooting guide&lt;/a&gt;</value>
     </labels>
     <labels>
@@ -20051,7 +20051,7 @@ If you continue to experience issues registering for the IATA Customer Portal th
         <protected>false</protected>
         <shortDescription>ISSP_NoRecordsFoundGSA_CNS</shortDescription>
         <value>No Company found for your combination of GSA code and country. Please ensure you have entered the correct information.
-&lt;br/&gt;&lt;br/&gt; 
+&lt;br/&gt;&lt;br/&gt;
 If you continue to experience issues registering for the CNS Customer Portal then please consult us at Tel: 786-413-1000</value>
     </labels>
     <labels>
@@ -20061,7 +20061,7 @@ If you continue to experience issues registering for the CNS Customer Portal the
         <protected>false</protected>
         <shortDescription>ISSP_NoRecordsFoundNext</shortDescription>
         <value>No Organization was found for these search criteria. Please modify your search and try again.
-&lt;br/&gt;&lt;br/&gt; 
+&lt;br/&gt;&lt;br/&gt;
 If you continue to experience issues registering for the IATA Customer Portal then please consult our &lt;a href=http://theiatahub.force.com/iatapkb/articles/en_US/How_To/Customer-Portal-Troubleshooting/?l=en_US target=_blank&gt;troubleshooting guide&lt;/a&gt;</value>
     </labels>
     <labels>
@@ -20071,7 +20071,7 @@ If you continue to experience issues registering for the IATA Customer Portal th
         <protected>false</protected>
         <shortDescription>ISSP_NoRecordsFoundNext_CNS</shortDescription>
         <value>No Company was found for these search criteria. Please modify your search and try again.
-&lt;br/&gt;&lt;br/&gt; 
+&lt;br/&gt;&lt;br/&gt;
 If you continue to experience issues registering for the CNS Customer Portal then please contact us at 786-413-1000</value>
     </labels>
     <labels>
@@ -21235,8 +21235,8 @@ If you do not have an IATA Code please go back and select ‘Other Company’ as
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>ISSP_Registration_UserExist</shortDescription>
-        <value>This Email is already registered in customer portal. 
-If you are an E-Commerce user, please use your E-Commerce credentials. 
+        <value>This Email is already registered in customer portal.
+If you are an E-Commerce user, please use your E-Commerce credentials.
 If you are an Identity Portal user, please use your Identity Portal credentials.
 If you want to reset your password, go back to login screen and use &quot;forgot your password function&quot;.</value>
     </labels>
@@ -22113,7 +22113,7 @@ This Dashboard allows each airline Treasury Team to gain full visibility of thei
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>ISSP_HomePage</shortDescription>
-        <value>Thanks for you request. 
+        <value>Thanks for you request.
               You have just received an email confirming your request.
               Regards,
               IATA Customer Services</value>
@@ -22124,7 +22124,7 @@ This Dashboard allows each airline Treasury Team to gain full visibility of thei
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>ISSP_Thanks_for_request_cns</shortDescription>
-        <value>Thanks for you request. 
+        <value>Thanks for you request.
 You have just received an email confirming your request.
 Regards,
 CNS Customer Services</value>
@@ -22631,7 +22631,7 @@ CNS Customer Services</value>
         <protected>false</protected>
         <shortDescription>ISSP_Registration</shortDescription>
         <value>It is not possible to finalize your registration process.
-&lt;br/&gt;&lt;br/&gt; 
+&lt;br/&gt;&lt;br/&gt;
 If you continue to experience issues registering for the IATA Customer Portal then please consult our &lt;a href=http://theiatahub.force.com/iatapkb/articles/en_US/How_To/Customer-Portal-Troubleshooting/?l=en_US target=_blank&gt;troubleshooting guide&lt;/a&gt;</value>
     </labels>
     <labels>
@@ -22640,8 +22640,8 @@ If you continue to experience issues registering for the IATA Customer Portal th
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>ISSP_generalError_CNS</shortDescription>
-        <value>It is not possible to finalize your registration process. 
-&lt;br/&gt;&lt;br/&gt; 
+        <value>It is not possible to finalize your registration process.
+&lt;br/&gt;&lt;br/&gt;
 If you continue to experience issues registering for the CNS Customer Portal please contact us at Tel: 786-413-1000</value>
     </labels>
     <labels>
@@ -23127,7 +23127,7 @@ If you continue to experience issues registering for the CNS Customer Portal ple
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>LAQ_IATACodeLimitation2</shortDescription>
-        <value>Please enter 8 or 11 numeric digits for the IATA Code. If you do not belong to 
+        <value>Please enter 8 or 11 numeric digits for the IATA Code. If you do not belong to
 an IATA accredited agency, please press &quot;Back&quot; button and select another &quot;Type of Customer&quot;</value>
     </labels>
     <labels>
@@ -23612,7 +23612,7 @@ lblShipping:Freight
 lblTax:Taxes
 lblTotal:Total
 btnConvert:Convert to order
-emailSubjectPrefix:Quote  
+emailSubjectPrefix:Quote
 emailBody:Your Quote is attached to the message.</value>
     </labels>
     <labels>
@@ -23688,7 +23688,7 @@ errMissBillTo:&lt;br/&gt;Missing &quot;Bill To&quot; information
 errMissShipTo:&lt;br/&gt;Missing &quot;Ship To&quot; information
 errInvalidCoupon:Coupon &quot;{0}&quot; is already used
 errQuantity:Quantity &quot;{0}&quot; is invalid
-errTax:Error found in Freight &amp; Taxes calculation: 
+errTax:Error found in Freight &amp; Taxes calculation:
 msgWarnProductNotCompliant:- Billing/Shipping country is non-compliant with the product &quot;{0}&quot; ({1}).
 msgPayTypeThreshold: (threshold exceeded)
 msgPayTypeNotAllowed: (not allowed)
@@ -23717,7 +23717,7 @@ msgErrorCartNotCompliant:Your country is non-compliant with one or more products
 msgErrorCartNotCompliant:Your country is non-compliant with one or more products in this cart. Please remove these products and try again or contact Customer Services to order this product.
 errT_C:You must accept all the terms &amp; conditions before
 errAddrExist:Address is already in system
-errTax:SAP Taxes and Shipping interface: 
+errTax:SAP Taxes and Shipping interface:
 errMissing:Missing required information</value>
     </labels>
     <labels>
@@ -23726,7 +23726,7 @@ errMissing:Missing required information</value>
         <protected>false</protected>
         <shortDescription>Labels for VF page IECConfirmOrder</shortDescription>
         <value>lblShipSection:Shipping Information
-lblShipOption1:Same as billing address   
+lblShipOption1:Same as billing address
 lblShipOption2:Ship to a different address
 lblStreet:Street
 lblCity:City
@@ -23768,9 +23768,9 @@ lblMedia:Media:
 lblLanguage:Language:
 lblEdition:Edition:
 lblDate:Effective Date:
-lblDateEnd: until 
+lblDateEnd: until
 lblDesc:Description
-lblQty:Qty to add 
+lblQty:Qty to add
 lblAdd:Add to Cart
 lblNoPrice:Contact Direct Sales for price
 lblDiscount:Member Discount:
@@ -24908,7 +24908,7 @@ Please check your mailbox to finalize the registration process.</value>
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>Order wire transfer confirmation message</shortDescription>
-        <value>Your Order {0} was successfully completed and the next steps will be the verification of wire transfer &lt;br /&gt; 
+        <value>Your Order {0} was successfully completed and the next steps will be the verification of wire transfer &lt;br /&gt;
  {1}</value>
     </labels>
     <labels>
@@ -27380,7 +27380,7 @@ title,Title,Name</value>
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>ANG_ISSP_IEP_AuthorisedSignatory_AO_auth_msg</shortDescription>
-        <value>Your Agency currently does not have an open IATA EasyPay Account.&lt;br/&gt;&lt;br/&gt;Please contact your Head Office&apos;s Authorized Signatory to request them to open an IATA EasyPay Account. {0} 
+        <value>Your Agency currently does not have an open IATA EasyPay Account.&lt;br/&gt;&lt;br/&gt;Please contact your Head Office&apos;s Authorized Signatory to request them to open an IATA EasyPay Account. {0}
 &lt;br/&gt;
 &lt;br/&gt;
 Please &lt;a href=&quot;/ISSP_FAQ2Case?MainNav=Queries&amp;subNav=MyQueries&amp;mid=M1S1&quot;&gt;contact support&lt;/a&gt; if you need help.</value>
@@ -27715,5 +27715,37 @@ Please &lt;a href=&quot;/ISSP_FAQ2Case?MainNav=Queries&amp;subNav=MyQueries&amp;
         <protected>false</protected>
         <shortDescription>wire transfer payment msg</shortDescription>
         <value>Your wire transfer payment has been received.</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_ANG_ANNUAL_REVALIDATION</fullName>
+        <categories>ISSP,ANG</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>IATA Accreditation - Annual Revalidation</shortDescription>
+        <value>IATA Accreditation - Annual Revalidation</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_ANG_Step1_ANNUAL_REV</fullName>
+        <categories>ISSP,ANG</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>STEP 1 - Annual Revalidation</shortDescription>
+        <value>STEP A - Confirm Agency Details</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_ANG_Step2_ANNUAL_REV</fullName>
+        <categories>ISSP,ANG</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>STEP 2 - Annual Revalidation</shortDescription>
+        <value>STEP B - Submit to IATA</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_ANG_ANNUAL_REV_WORK_AREA_TITLE</fullName>
+        <categories>ISSP,ANG</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Annual Revalidation work area title</shortDescription>
+        <value>Please either confirm or update the details for each IATA Code in your hierarchy</value>
     </labels>
 </CustomLabels>
