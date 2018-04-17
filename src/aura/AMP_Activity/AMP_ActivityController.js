@@ -1,9 +1,12 @@
 ({
     doInit : function(component, event, helper) {
         var activity = component.get("v.activity");
+        var divisionValues = component.get("v.divisionValues");
         
         if(activity.Id === undefined) {
             component.set("v.isEditMode", true);
+            helper.fillDivisionOptions(component, divisionValues, activity.Division__c);
+
         } else {
             component.set("v.isEditMode", false);
         }
@@ -14,9 +17,7 @@
         statusValues.push('Delivered');
         statusValues.push('Cancelled');
 
-
 		component.set("v.statusValues", statusValues);
-
     },
 
     switchToEditMode : function(component, event, helper) {
@@ -25,7 +26,6 @@
 
         var activity = component.get("v.activity");
         var status = activity.Status__c;
-        var division = activity.Division__c;
 
         console.log(JSON.stringify(activity));
 
@@ -33,9 +33,11 @@
         if(status === undefined) status = statusValues[0];
 
         component.set("v.status", status);
-		console.log(status);
+        console.log(status);
 
-        helper.fetchDivisionValues(component, division);
+        var divisionValues = component.get("v.divisionValues");
+        var division = activity.Division__c;
+        helper.fillDivisionOptions(component, divisionValues, division);
 
     },
     cancelEditMode : function(component, event, helper) {
@@ -80,7 +82,7 @@
             var index = component.get("v.index");
             
             var updateEvent = component.getEvent("updateActivity");
-            updateEvent.setParams({ "issue": activity, "index":index }).fire();
+            updateEvent.setParams({ "issue": activity, "index":index}).fire();
             
             component.set("v.isEditMode", false);
         }

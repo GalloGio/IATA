@@ -1,43 +1,32 @@
 ({
 	
-	fetchDivisionValues: function(component, currentDivision){
-		var action = component.get("c.getDivisionValues");
+	fillDivisionOptions: function(component, allValues, currentDivision){
 		var divOpts = [];
-		
-		action.setCallback(this, function(response){
-			if(response.getState() == "SUCCESS"){
-				var allValues = response.getReturnValue();
 
-				if(allValues != undefined && allValues.length > 0){
-					divOpts.push({
-						label: "--None--",
-						value: ""
-					});
-									
-				}
+		if(allValues != undefined && allValues.length > 0){
+			divOpts.push({
+				label: "--None--",
+				value: ""
+			});
+		}
 
-				for(var i = 0; i < allValues.length; ++i){
+		for(var i = 0; i < allValues.length; ++i){
 
-					console.log(allValues[i]);
+			if(allValues[i] == currentDivision){
+				divOpts.push({
+				label: allValues[i],
+				value: allValues[i],
+				selected: "true"
+			});
 
-					if(allValues[i] == currentDivision){
-						divOpts.push({
-						label: allValues[i],
-						value: allValues[i],
-						selected: "true"
-					});
-
-					}
-
-					divOpts.push({
-						label: allValues[i],
-						value: allValues[i]
-					});
-				}
-
-				component.find("divisionList").set("v.options", divOpts);
 			}
-		});
-		$A.enqueueAction(action);
-	},
+
+			divOpts.push({
+				label: allValues[i],
+				value: allValues[i]
+			});
+		}
+
+		component.find("divisionList").set("v.options", divOpts);
+	}
 })

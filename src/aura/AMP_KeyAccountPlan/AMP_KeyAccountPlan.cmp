@@ -12,6 +12,7 @@
     <aura:attribute name="showDeletionCheck" type="Boolean" default="false" />
     <aura:attribute name="activityToDelete" type="Objective__c" />
     <aura:attribute name="milestoneToDelete" type="Task" />
+    <aura:attribute name="divisionValues" type="String[]"/>
     <aura:handler name="init" value="{!this}" action="{!c.doInit}" />
 
     <aura:handler name="deleteActivity" event="c:AMP_UpdateIssueOrPriority" action="c.showDeletePopup" />
@@ -84,7 +85,7 @@
                     <tbody>
                         <aura:iteration items="{!v.activities}" var="activity" indexVar="index">
                             <tr>
-                                <c:AMP_Activity activity="{!activity}" accountId="{!v.accountId}" index="{!index}" canEdit="{!v.canEdit}"/>
+                                <c:AMP_Activity activity="{!activity}" accountId="{!v.accountId}" index="{!index}" canEdit="{!v.canEdit}" divisionValues="{!v.divisionValues}"/>
                             </tr>
                         </aura:iteration>
                     </tbody>

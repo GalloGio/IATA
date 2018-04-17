@@ -87,5 +87,18 @@
             component.set("v.canEdit", actionResult.getReturnValue());
         });
         $A.enqueueAction(action);
+	},
+
+	fetchDivisionValues: function(component){
+		var action = component.get("c.getDivisionValues");
+		
+		action.setCallback(this, function(response){
+			if(response.getState() == "SUCCESS"){
+				var allValues = response.getReturnValue();
+				component.set("v.divisionValues", allValues);
+			}
+		});
+		$A.enqueueAction(action);
 	}
+	
 })

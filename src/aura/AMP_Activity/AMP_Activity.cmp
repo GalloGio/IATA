@@ -3,17 +3,16 @@
     <aura:attribute name="accountId" type="String" />
     <aura:attribute name="index" type="Integer"  />
     <aura:attribute name="canEdit" type="Boolean" default="false" />
+    <aura:attribute name="divisionValues" type="String[]" />
     <aura:attribute name="isEditMode" type="Boolean" default="false"/>
     <aura:attribute name="isError" type="Boolean" default="false"/>
     <aura:attribute name="errorMessage" type="String"/>
-
     <aura:attribute type="String[]" name="statusValues"/>
     <aura:attribute type="String" name="status"/>
-
+    
     <aura:handler name="init" value="{!this}" action="{!c.doInit}" />
     <aura:handler name="editMenuClick" event="c:AMP_EditMenuItemClick" action="{!c.switchToEditMode}"/>
     <aura:handler name="deleteMenuClick" event="c:AMP_DeleteMenuItemClick" action="{!c.deleteItem}"/>
-
     <aura:handler name="updateLookupIdEvent" event="c:UpdateLookupId" action="{!c.handleAccountIssueIdUpdate}"/>
     <aura:handler name="clearLookupIdEvent" event="c:ClearLookupId" action="{!c.handleAccountIssueIdClear}"/>
 
