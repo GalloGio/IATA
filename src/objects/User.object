@@ -3406,19 +3406,14 @@ Currently (26/10/15) used to identify which user haven&apos;t complete the suppo
         <columns>CORE.USERS.EMAIL</columns>
         <filterScope>Everything</filterScope>
         <filters>
-            <field>CORE.USERS.ACTIVE</field>
+            <field>Portal_User_Frozen_Checkbox__c</field>
             <operation>equals</operation>
             <value>1</value>
         </filters>
         <filters>
-            <field>CORE.PROFILE.NAME</field>
-            <operation>contains</operation>
-            <value>ISS Portal Airline User (Partner)</value>
-        </filters>
-        <filters>
-            <field>LANGUAGE</field>
-            <operation>notEqual</operation>
-            <value>1</value>
+            <field>LAST_UPDATE</field>
+            <operation>equals</operation>
+            <value>YESTERDAY</value>
         </filters>
         <label>TD</label>
         <language>en_US</language>

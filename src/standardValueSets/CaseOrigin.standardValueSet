@@ -217,11 +217,6 @@
         <label>E-mail to Case - Americas R&amp;S Bulletins</label>
     </standardValue>
     <standardValue>
-        <fullName>E-mail to Case - Americas TAC</fullName>
-        <default>false</default>
-        <label>E-mail to Case - Americas TAC</label>
-    </standardValue>
-    <standardValue>
         <fullName>E-mail to Case - AP central team email</fullName>
         <default>false</default>
         <label>E-mail to Case - AP central team email</label>
@@ -355,6 +350,11 @@
         <fullName>E-mail to Case - CNS Endorsement</fullName>
         <default>false</default>
         <label>E-mail to Case - CNS Endorsement</label>
+    </standardValue>
+    <standardValue>
+        <fullName>E-mail to Case - Commissioner</fullName>
+        <default>false</default>
+        <label>E-mail to Case - Commissioner</label>
     </standardValue>
     <standardValue>
         <fullName>E-mail to Case - Costa Rica</fullName>

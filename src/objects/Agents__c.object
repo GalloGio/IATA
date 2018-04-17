@@ -199,12 +199,13 @@
     <label>Agent</label>
     <listViews>
         <fullName>AME_Agents</fullName>
-        <columns>NAME</columns>
-        <columns>Last_Case_Assigned_Date_Time__c</columns>
-        <columns>Logged_on__c</columns>
-        <columns>Maximum_case_workload__c</columns>
         <columns>Region__c</columns>
         <columns>User__c</columns>
+        <columns>Logged_on__c</columns>
+        <columns>Maximum_case_workload__c</columns>
+        <columns>Last_Case_Assigned_Date_Time__c</columns>
+        <columns>NAME</columns>
+        <columns>UPDATEDBY_USER</columns>
         <filterScope>Everything</filterScope>
         <filters>
             <field>Region__c</field>

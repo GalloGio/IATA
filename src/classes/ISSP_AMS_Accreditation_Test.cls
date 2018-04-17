@@ -4549,7 +4549,18 @@ private class ISSP_AMS_Accreditation_Test
             accr.newForm.Trade_Name__c = invalidISOsample;
             accr.newForm.ISSP_AMS_Online_Agency_URL__c = 'xpto';
             accr.newForm.ISSP_AMS_Legal_Reg_Name_Address__c = invalidISOsample;
-
+            /*** AMSU-112 - Start ***/
+            accr.newForm.ISSP_AMS_License_No__c = invalidISOsample;
+            accr.newForm.ISSP_AMS_Trade_Reg_No__c = invalidISOsample;
+            accr.newForm.ISSP_AMS_VAT_Number_Input__c = invalidISOsample;
+            accr.newForm.ISSP_AMS_VAT_number__c = invalidISOsample;
+            accr.newForm.Shipping_Street__c = invalidISOsample;
+            accr.newForm.Shipping_City__c = invalidISOsample;
+            accr.newForm.Shipping_Postal_Code__c = invalidISOsample;
+            accr.newForm.Shipping_State__c = invalidISOsample;
+            accr.newForm.Shipping_Country__c = invalidISOsample;
+            /*** AMSU-112 - End ***/
+            
             accr.validateCharactersInForm();
 
             accr.facilityRecordTypeName = 'Office';

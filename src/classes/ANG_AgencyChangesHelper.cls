@@ -59,11 +59,11 @@ public with sharing class ANG_AgencyChangesHelper {
 
 			if(accountsMap != null && !accountsMap.isEmpty() && !accountsChanged.isEmpty()){
 
-				List<Account> toUpsert = new List<Account>();
+				List<Account> toUpsert = new List<Account>();					
 
 				for(Id accountId: accountsChanged){
 					if(accountsMap.get(accountID) != null)
-						toUpsert.add(accountsMap.get(accountID));
+						toUpsert.add(accountsMap.get(accountID));		
 				}
 
 				if(!toUpsert.isEmpty()){
@@ -111,6 +111,7 @@ public with sharing class ANG_AgencyChangesHelper {
 
 
 			Boolean isAllHierarchySelected = false;
+			Boolean oscarHierFAOptOut;
 			Set<Id> accountHierarchyRelationships = new Set<Id>();
 
 			AChangeStructure changesContainer = new AChangeStructure();
@@ -152,9 +153,12 @@ public with sharing class ANG_AgencyChangesHelper {
 				System.debug('[ANG_AgencyChangesHelper] changesContainer are:'+changesContainer);
 				System.debug('[ANG_AgencyChangesHelper] Checkpoint1 changesCodes are:'+ changesContainer.changeCodesToCreate.size() + ' ' + changesContainer.changeCodesToCreate);
 
-				//if(Pattern.matches(AMS_Utils.ANG_ACCREDITATION_TYPE, oscar.ANG_Type_Of_Change__c))
+				//if(Pattern.matches(AMS_Utils.ANG_ACCREDITATION_TYPE, oscar.ANG_Type_Of_Change__c))				
 				if(containsChange(New List<String>{AMS_Utils.ANG_ACCREDITATION_TYPE},oscar.ANG_Type_Of_Change__c))
 					changesContainer = applyChangeOfAccreditationType(oscar, accountIdsInvolvedSet, changesContainer);
+					
+				//Set default value as "Not Applicable" 	
+				oscar.ANG_FA_Opt_out__c = 'Not Applicable';				
 
 				//if(Pattern.matches(AMS_Utils.ANG_LOCATION_TYPE + '|' + AMS_Utils.ANG_HIERARCHY, oscar.ANG_Type_Of_Change__c))
 				if(containsChange(New List<String>{AMS_Utils.ANG_LOCATION_TYPE,AMS_Utils.ANG_LOCATION_TYPE_DIFFLEGALENTITY, AMS_Utils.ANG_HIERARCHY},oscar.ANG_Type_Of_Change__c)){
@@ -250,12 +254,49 @@ public with sharing class ANG_AgencyChangesHelper {
 
 			}else if (oldOSCAR.RPM_Approval__c <> AMS_Utils.AUTH_APPROVAL && oscar.RPM_Approval__c == AMS_Utils.AUTH_APPROVAL) {
 
+				Map<Id,Account> hierarchyAccs;
+
 				if(config == null)
 					config = ANG_AgencyChangesConfigHelper.getSelectedTypeOfChangeCombinationConfig(oscar, configs);
 
 				changesContainer = applyChangeOfFields(oscar, accountIdsInvolvedSet, changesContainer, oscarOnlineAccreditation);
 
 				changesContainer = generateNewGenChangeCodes(oscar, config, accountsCurrentChangeCode, AMS_Utils.APPROVAL, accountIdsInvolvedSet, changesContainer);
+
+				if (containsChange(New List<String>{AMS_Utils.ANG_HIERARCHY},oscar.ANG_Type_Of_Change__c)) {
+
+					hierarchyAccs = new Map<Id,Account>([SELECT Id, ANG_FA_Opt_out__c FROM Account WHERE Id = :oscar.New_parent__c OR Top_Parent__c = :oscar.New_parent__c]);
+					
+					// If opt-out is not applicable we'll put the value of the new parent
+					if(oscar.ANG_FA_Opt_out__c == 'Not Applicable'){ 
+
+						Account newParent;
+						if (changesContainer.accountsMap.keySet().contains(oscar.New_Parent__c))
+							newParent = changesContainer.accountsMap.get(oscar.New_Parent__c);
+							
+						else
+							newParent = hierarchyAccs.get(oscar.New_parent__c);
+
+						changesContainer = applyFAOptOut(oscar, changesContainer, hierarchyAccs.values(), newParent.ANG_FA_Opt_out__c == null ? false : newParent.ANG_FA_Opt_out__c);
+					
+					//else we'll get the value input on the oscar AND apply it to all the accounts involved + the new parent's entire hierarchy
+					}else { 
+						changesContainer = applyFAOptOut(oscar, changesContainer, hierarchyAccs.values(), null);					
+					}
+
+				//NEWGEN-1088 apply FA opt-out = false when changing to cash or to cashless
+				} else if (containsChange(New List<String>{AMS_Utils.ANG_ACCREDITATION_TYPE},oscar.ANG_Type_Of_Change__c)) {
+
+	    			changesContainer= applyFAOptOut(oscar, changesContainer, changesContainer.accountsMap.values(), FALSE);
+	    		
+	    		//all other major changes
+				}else if (oscar.ANG_FA_Opt_out__c == 'Opt-Out' || oscar.ANG_FA_Opt_out__c == 'Opt-In' && containsChange(new List<String>(AMS_Utils.ANG_OSCAR_MAJOR_CHANGES_PROCESSES), oscar.ANG_Type_Of_Change__c)){
+
+					String hierTopParent = changesContainer.accountsMap.get(oscar.Account__c).Top_Parent__c == null ? changesContainer.accountsMap.get(oscar.Account__c).Id : changesContainer.accountsMap.get(oscar.Account__c).Top_Parent__c;
+					hierarchyAccs = new Map<Id,Account>([SELECT Id, ANG_FA_Opt_out__c FROM Account WHERE Id = :hierTopParent OR Top_Parent__c = :hierTopParent]);
+
+					changesContainer = applyFAOptOut(oscar, changesContainer, hierarchyAccs.values(), null);
+				}				
 
 			} else if (oldOSCAR.STEP4__c <> AMS_Utils.PASSED && oscar.STEP4__c == AMS_Utils.PASSED) {
 
@@ -281,6 +322,7 @@ public with sharing class ANG_AgencyChangesHelper {
 			System.debug('[ANG_AgencyChangesHelper] Checkpoint6 changesCodes are:'+ changesContainer.changeCodesToCreate.size() + ' ' + changesContainer.changeCodesToCreate);
 			if(changesContainer.changesStruct != null)
 				changesContainer = ANGcreateAAChangeCodes(changesContainer.changesStruct.values(), changesContainer.changeCodesToCreateDef, new List<AMS_OSCAR__c> {oscar}, changesContainer.accountsToApplyChangeCodes, false, changesContainer);
+
 			System.debug('[ANG_AgencyChangesHelper] Checkpoint4 changesCodes are:'+ changesContainer.changeCodesToCreate.size() + ' ' + changesContainer.changeCodesToCreate);
 
 			if(changesContainer != null){
@@ -413,7 +455,7 @@ public with sharing class ANG_AgencyChangesHelper {
 
 			if(rel.Child_Account__c == oscarToProcess.Account__c){
 				
-				Account parentAccount = [Select Id, Location_Type__c, ParentId, ANG_IEP_HE_AccntNum__c, ANG_IEP_Status__c, ANG_HE_CashCondition__c, ANG_HE_RiskHistoryAssessment__c, ANG_HE_RiskStatus__c, (SELECT Id, ANG_AccountId__c FROM RHC_Informations__r) From Account where Id =:rel.Parent_Account__c];
+				Account parentAccount = [Select Id, Location_Type__c, ParentId, ANG_IEP_HE_AccntNum__c, ANG_IEP_Status__c, ANG_HE_CashCondition__c, ANG_HE_RiskHistoryAssessment__c, ANG_HE_RiskStatus__c, Financial_Review_Result__c, (SELECT Id, ANG_AccountId__c FROM RHC_Informations__r) From Account where Id =:rel.Parent_Account__c];
 
 				parentAccount.Location_Type__c = AMS_Utils.AE;
 				parentAccount.ParentId = oscarToProcess.Account__c;
@@ -428,6 +470,7 @@ public with sharing class ANG_AgencyChangesHelper {
 				childAccount.ANG_HE_CashCondition__c = parentAccount.ANG_HE_CashCondition__c;
 				childAccount.ANG_HE_RiskHistoryAssessment__c = parentAccount.ANG_HE_RiskHistoryAssessment__c;
 				childAccount.ANG_HE_RiskStatus__c = parentAccount.ANG_HE_RiskStatus__c;
+				childAccount.Financial_Review_Result__c = parentAccount.Financial_Review_Result__c;
 				childAccount.Top_Parent__c = null;
 
 				parentAccount.ANG_IEP_HE_AccntNum__c = null;
@@ -716,7 +759,7 @@ public with sharing class ANG_AgencyChangesHelper {
 		}else{ //moving part of the hierarchy to a new AE (no need to sum fs because no FS existis)
 			ANG_RHCHelper.createRHCInfo(new List<Account>{toReturn.accountsMap.get(oscarToProcess.New_Parent__c)}, false);
 		}
-
+ 
 		return toReturn;
 	}
 
@@ -975,7 +1018,7 @@ public with sharing class ANG_AgencyChangesHelper {
         if(oscarOnlineAccreditation.ANG_Accreditation_Type__c ==  'Cash'){
         	toUpsert = performCashTransformation(accountsAffected);
 			if(toReturn.accountsMap.get(oscarToProcess.Account__c)!=null)
-        		ANG_RHCHelper.createRHCInfo(new List<Account>{toReturn.accountsMap.get(oscarToProcess.Account__c)}, true);
+        		ANG_RHCHelper.createRHCInfo(new List<Account>{toReturn.accountsMap.get(oscarToProcess.Account__c)}, false);
         }
 
 		if(!toUpsert.isEmpty())
@@ -1259,7 +1302,8 @@ public with sharing class ANG_AgencyChangesHelper {
 		        ShippingStreet, ShippingPostalCode, ShippingState, ShippingCity, Email__c, Website, Phone, Fax, In_a_Airport__c, Abbreviated_name__c, Abbreviated_address__c,
 		        Remittance_frequency__c, Solicitation_Flag__c, VAT_Number_2__c, CASS_Number__c, Location_Class__c, Location_Type__c, Mobile__c, Is_your_firm_handling_Dangerous_Goods__c,
 		        Due_Diligence_Status__c, IATA_ISO_Shipping_State__r.Name, ISO_State__r.Name,IATA_ISO_Country__r.Name,IATA_ISO_Shipping_Country__c,IATA_ISO_Shipping_Country__r.Name,
-		        IATA_ISO_Billing_State__c,IATA_ISO_Billing_State__r.Name, ANG_Accreditation_Model__c, IATA_ISO_Country__r.CurrencyIsoCode, Is_PCI_compliant__c,IATA_ISO_Country__r.AMS_Settlement_System__r.CurrencyIsoCode, ANG_IsNewGenAgency__c
+		        IATA_ISO_Billing_State__c,IATA_ISO_Billing_State__r.Name, ANG_Accreditation_Model__c, IATA_ISO_Country__r.CurrencyIsoCode, Is_PCI_compliant__c,IATA_ISO_Country__r.AMS_Settlement_System__r.CurrencyIsoCode, 
+		        ANG_IsNewGenAgency__c, ANG_FA_Opt_out__c
 		         FROM Account WHERE Id IN :accountIds]);
 	}
 
@@ -1436,5 +1480,30 @@ public with sharing class ANG_AgencyChangesHelper {
     	}
 
     	return toReturn;
+    }
+
+    private static AChangeStructure applyFAOptOut(AMS_Oscar__c oscar, AChangeStructure changesContainer, List<Account> accountsInvolved, Boolean bOptOut){
+
+			Boolean valueToAgency;
+
+			// check if we are forcing a value - depending on type of changes
+			if(bOptOut != null){
+				valueToAgency = bOptOut;
+
+			} else {
+				valueToAgency = oscar.ANG_FA_Opt_out__c == 'Opt-Out' ? true : false;
+			}
+
+			for (Account acc: accountsInvolved){
+                if (changesContainer.accountsMap.keySet().contains(acc.Id)){
+               		changesContainer.accountsMap.get(acc.Id).ANG_FA_Opt_out__c = valueToAgency;
+                } else {
+                	acc.ANG_FA_Opt_out__c = valueToAgency;
+                	changesContainer.accountsMap.put(acc.Id,acc);
+                }
+                changesContainer.accountsChanged.add(acc.id);
+			}
+
+		return changesContainer;
     }
 }

@@ -8,6 +8,18 @@ public with sharing class ANG_RiskForecastPropertiesController {
 
     public Boolean newCashCondition{get;set;}
 
+    public map<string,ang_risk_event_type__c> riskEventTypeMap{
+        get{
+            if(riskEventTypeMap == null){
+                riskEventTypeMap= new map<string,ang_risk_event_type__c>();
+                for(ang_risk_event_type__c ret :[select id,ANG_Risk_ID__c,Limit_Cash_conditions__c from ang_risk_event_type__c])
+                    riskEventTypeMap.put(ret.ANG_Risk_ID__c,ret);
+            }
+            return riskEventTypeMap;
+        }
+        set;
+    }
+
     //Case Record Types
     public static final String SIDRA      = Schema.Case.sObjectType.getDescribe().getRecordTypeInfosByName().get('SIDRA').getRecordTypeId();
     public static final String SIDRALITE   = Schema.Case.sObjectType.getDescribe().getRecordTypeInfosByName().get('SIDRA Lite').getRecordTypeId();
@@ -103,7 +115,7 @@ public with sharing class ANG_RiskForecastPropertiesController {
             
             System.debug('Starting forecasting for account ' + myCase.AccountId);
 
-            List<ANG_Agency_Risk_Event__c> riskEvents = [SELECT Id, ANG_Created_from__c, ANG_Event_Status__c, ANG_Expiration_Date__c, ANG_expiration_date_ff__c, ANG_Expired__c, ANG_HE_AccountId__c, ANG_Account_IATA_Code__c, ANG_Issued_Date__c, ANG_Manual__c, ANG_Name_Link_FF__c, ANG_Source__c, ANG_CaseId__c, ANG_ChangeCode__c, ANG_Source_Id__c, ANG_OscarId__c, ANG_Risk_Type__c, ANG_Risk_ID__c, ANG_UniqueKey__c from ANG_Agency_Risk_Event__c where ANG_AccountId__c = :myCase.AccountId and ANG_Event_Status__c = 'Active' ];
+            List<ANG_Agency_Risk_Event__c> riskEvents = [SELECT Id, ANG_Created_from__c, ANG_Event_Status__c, ANG_Expiration_Date__c, ANG_expiration_date_ff__c, ANG_Expired__c, ANG_HE_AccountId__c, ANG_Account_IATA_Code__c, ANG_Issued_Date__c, ANG_Manual__c, ANG_Name_Link_FF__c, ANG_Source__c, ANG_CaseId__c, ANG_ChangeCode__c, ANG_Source_Id__c, ANG_OscarId__c, ANG_Risk_Type__c, ANG_Risk_ID__c, ANG_UniqueKey__c, ANG_Risk_Type__r.ANG_Risk_ID__c,ANG_Limit_Cash_Conditions__c from ANG_Agency_Risk_Event__c where ANG_AccountId__c = :myCase.AccountId and ANG_Event_Status__c = 'Active' ];
 
             Account a = new Account(id = myCase.AccountId);
             a.Location_Type__c = myCase.Account.Location_Type__c;
@@ -112,18 +124,15 @@ public with sharing class ANG_RiskForecastPropertiesController {
             a.Status__c = myCase.Account.Status__c;
             a.Financial_Review_Result__c = myCase.Account.Financial_Review_Result__c;
 
-            Map<Account,List<String>> mapAccountListStuff = new Map<Account,List<String>>();
+            Map<Account,List<ang_agency_risk_event__c>> mapAccountListStuff = new Map<Account,List<ang_agency_risk_event__c>>();
 
-            List<String> rskEventLst = new List<String>();
-
-            for(ANG_Agency_Risk_Event__c event: riskEvents){
-
-                rskEventLst.add(event.ANG_Risk_Type__c);
-            }
-
-            rskEventLst.add(riskOpt);
-
-            mapAccountListStuff.put(a,rskEventLst);
+            riskEvents.add(
+                new ANG_Agency_Risk_Event__c(
+                    ANG_Risk_Type__c=riskEventTypeMap.get(riskOpt).id,
+                    ANG_Limit_Cash_Conditions__c =riskEventTypeMap.get(riskOpt).Limit_Cash_conditions__c
+                )
+            );
+            mapAccountListStuff.put(a,riskEvents);
 
             list<account> acclist = new ANG_RiskAssessmentEngine(mapAccountListStuff).forecastAssessment();
 
