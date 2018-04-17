@@ -89069,6 +89069,12 @@ OR(ISPICKVAL(Industry, &apos;Airline&apos;),ISPICKVAL(Industry, &apos;Travel Age
         <errorMessage>Please select the reason for creation.</errorMessage>
     </validationRules>
     <validationRules>
+        <fullName>TIP_Payment_Provider_expiration_dates</fullName>
+        <active>true</active>
+        <errorConditionFormula>AND(RecordType.DeveloperName=&quot;TIP_Payment_Provider&quot;,  Accreditation_date__c &gt;  Expiry_Date__c )</errorConditionFormula>
+        <errorMessage>Expiry Date needs to be after Accreditation Date</errorMessage>
+    </validationRules>
+    <validationRules>
         <fullName>Validate_Providers_Accreditation_Date</fullName>
         <active>true</active>
         <description>Prevents active Payment Providers to have the Accreditation date in the future</description>

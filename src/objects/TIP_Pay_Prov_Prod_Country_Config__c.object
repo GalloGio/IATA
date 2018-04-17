@@ -187,6 +187,12 @@
    ISPICKVAL(TIP_Status__c, &quot;Active&quot;)
 )</errorConditionFormula>
         <errorMessage>Payment Product Country Config cannot be activated if Partner Product is not active</errorMessage>
+</validationRules>
+    <validationRules>
+        <fullName>Effective_from_before_effective_To</fullName>
+        <active>true</active>
+        <errorConditionFormula>AND( TIP_Product__r.Provider__r.RecordType.DeveloperName = &quot;TIP_Payment_Provider&quot;, TIP_Effective_From_Date__c &gt; TIP_Effective_To_Date__c )</errorConditionFormula>
+        <errorMessage>Effective To Date needs to be after Effective From Date</errorMessage>
     </validationRules>
     <visibility>Public</visibility>
 </CustomObject>
