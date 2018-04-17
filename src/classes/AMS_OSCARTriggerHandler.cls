@@ -3689,9 +3689,9 @@ public class AMS_OSCARTriggerHandler {
         List<Agency_Applied_Change_code__c> listNewCCs = new List<Agency_Applied_Change_code__c>();
         List<String> splittedReason = new List<String>();
 
-        List<AMS_Oscar__c> oscarsToProcess = [SELECT Id, Account__r.Reason__c, Account__r.Status__c, Oscar_Communication_Case_Id__c, Process__c
+        List<AMS_Oscar__c> oscarsToProcess = [SELECT Id, Account__c, Account__r.Reason__c, Account__r.Status__c, Oscar_Communication_Case_Id__c, Process__c
                                             FROM AMS_Oscar__c 
-                                            WHERE Id IN : oscarsIdsToProcess ];
+                                            WHERE Id IN :oscarsIdsToProcess ];
 
 
         for (AMS_Oscar__c oscar: oscarsToProcess){
@@ -3702,7 +3702,8 @@ public class AMS_OSCARTriggerHandler {
             splittedReason = oscar.Account__r.Reason__c.split('-',2);
             listNewCCs.add(new Agency_Applied_Change_Code__c(Change_Code__c = config.Change_Code__c, OSCAR__c = oscar.Id,  Account__c = oscar.Account__c,
                             Bulletin_Information__c = config.Bulletin_Memo_Text__c, To_Publish_in_e_Bulletin__c = config.Published_in_bulletin__c,
-                            Reason_Code__c = splittedReason[0], Reason_Description__c = splittedReason[1], AccountNewStatus__c = oscar.Account__r.Status__c )); 
+                            Reason_Code__c = (splittedReason.size() == 2 ? splittedReason[0].trim() : ''), Reason_Description__c = (splittedReason.size() == 2 ? splittedReason[1].trim() : ''), 
+                            AccountNewStatus__c = oscar.Account__r.Status__c )); 
         }
 
         if(!listNewCCs.isEmpty())
