@@ -376,6 +376,11 @@ global class AMS_AgencyRegulationAutoRenewal implements Database.Batchable<sObje
     }
 
     public static void sendEmailAlert(List<Contact> recipents, Id oscarId, Map<String, Id> countryTemplates, String oscarCommCaseId, OrgWideEmailAddress owea, boolean isDGR) {
+
+		sendEmailAlert(recipents, oscarId, countryTemplates, oscarCommCaseId, owea, isDGR, null);
+    }
+
+    public static void sendEmailAlert(List<Contact> recipents, Id oscarId, Map<String, Id> countryTemplates, String oscarCommCaseId, OrgWideEmailAddress owea, boolean isDGR, Messaging.EmailFileAttachment[] attachments) {
         
         Id templateId;
         Boolean templateToIATA = false;
@@ -429,6 +434,9 @@ global class AMS_AgencyRegulationAutoRenewal implements Database.Batchable<sObje
                     }
                     mail.setTargetObjectId(recipient.Id);
                     
+                    if(attachments != null){
+                    	mail.setFileAttachments(attachments);
+					}
                     mail.setWhatId(oscarId);
                    
                     mail.setOrgWideEmailAddressId(owea.Id);

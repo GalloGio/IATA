@@ -874,6 +874,162 @@ global class ANG_OscarProcessHelper {
 		return true;
 	}
 
+	public static List<Case> createPCIComplianceOscars(List<Account> accs, Map<Id,List<Contact>> contactsAcc, Set<Id> accsToSendEmail){
+
+		Map<id,OscarObjectsWrapper> accOscarObjsMap = new Map<id,OscarObjectsWrapper>();
+		OscarObjectsWrapper oscarObjs;
+		
+		Map<String,Object> fieldsOfObject;
+
+		List<Case> casesToInsert = new List<Case>();
+
+		Contact keyContact;
+
+		//Case:
+		for(Account acc : accs){
+
+			System.debug('[ANG_OscarProcessHelper.createPCIComplianceOscars] - Inserting PCI Oscar for Account: '+acc.Id+' - '+acc.Name+' - '+acc.IataCode__c);
+
+			keyContact = fetchKeyContactForPCI(acc, contactsAcc.get(acc.Id));
+			
+			fieldsOfObject = new Map<String,Object>();
+	        fieldsOfObject.put('Account_Concerned__c',acc.Id);
+	      	fieldsOfObject.put('ContactId',keyContact.Id);
+	        fieldsOfObject.put('BSPCountry__c',acc.BillingCountry);
+	        fieldsOfObject.put('Region__c',acc.Region_formula__c);
+	        fieldsOfObject.put('CaseArea__c','Accreditation Process');
+	        fieldsOfObject.put('Origin','Massive FOP Creation');
+	        fieldsOfObject.put('Reason1__c','FoP Management');
+	        fieldsOfObject.put('Subject','FoP Management - ' + acc.ANG_Accreditation_Model__c + ' - ' + acc.Name);
+	        fieldsOfObject.put('Type_of_customer__c','IATA Travel Agent');
+	        
+	       	Case cse = ANG_EntityCreator.createCase(AMS_Utils.RECTYPE_OSCARCOMM, acc.Id, fieldsOfObject);
+
+	        //assign to queue
+	       	Database.DMLOptions dmo = new Database.DMLOptions();
+	        dmo.assignmentRuleHeader.useDefaultRule = true;
+	        cse.setOptions(dmo);
+
+	        oscarObjs = new OscarObjectsWrapper();
+	        oscarObjs.cse = cse;
+	        oscarObjs.con = keyContact;
+
+	        accOscarObjsMap.put(acc.id,oscarObjs);
+	        casesToInsert.add(cse);
+		}
+
+		if (!casesToInsert.isEmpty())
+       		insert casesToInsert;
+
+       	Set<Id> casesIds = new Set<Id>();
+	    for (Case cse : casesToInsert){
+	    	casesIds.add(cse.Id);
+	    }
+
+       	for(Case insertedCase : [Select ownerId, Account_Concerned__c from Case where Id in :casesIds]){
+       		accOscarObjsMap.get(insertedCase.Account_Concerned__c).ownerId = insertedCase.ownerId;
+       	}
+
+		//AMS_OSCAR__c:
+		List<AMS_Oscar__c> oscarsToInsert = new List<AMS_OSCAR__c>(); 
+
+        for (Account acc : accs){
+        
+			fieldsOfObject = new Map<String,Object>();
+	        fieldsOfObject.put('Process__c',AMS_Utils.NGFOP);
+			fieldsOfObject.put('Status__c','Open');
+			fieldsOfObject.put('OwnerId',accOscarObjsMap.get(acc.Id).ownerId);
+			fieldsOfObject.put('Oscar_Communication_Case_Id__c',accOscarObjsMap.get(acc.Id).cse.Id);
+
+			AMS_Oscar__c oscar = ANG_EntityCreator.createOscar(AMS_Utils.RECTYPE_NEWGENFOP, acc.Id, fieldsOfObject);		
+	        oscarsToInsert.add(oscar);
+	        accOscarObjsMap.get(acc.Id).oscar = oscar;
+    	}
+
+    	if(!oscarsToInsert.isEmpty())
+    		insert oscarsToInsert;
+
+
+    	OrgWideEmailAddress[] owea;
+
+		if(!accsToSendEmail.isEmpty()){
+			owea = [select Id from OrgWideEmailAddress where Address = 'agencymanagement@iata.org'];
+		}
+
+		List<Case> casesToUpdate = new List<Case>();
+
+		for (Account acc: accs){
+			accOscarObjsMap.get(acc.Id).cse.Oscar__c = accOscarObjsMap.get(acc.Id).oscar.Id;
+			casesToUpdate.add(accOscarObjsMap.get(acc.Id).cse);
+		}
+
+		if(!casesToUpdate.isEmpty())
+			update casesToUpdate;
+
+		for (Account acc: accs){
+		// fields needed on contact: Id, Name, Email, Preferred_Language__c, BSP_CASS_Payment_contact__c, Financial_Assessment_Contact__c
+
+			if(accsToSendEmail.contains(acc.Id)){
+
+				StaticResource  sr = [Select body, name from StaticResource where Name = 'ANG_NilCreditCardSelfDeclaration'].get(0);
+
+				Messaging.EmailFileAttachment[] attachments = null;
+
+				if(sr <> null){
+
+					Blob tempBlob = sr.Body;
+					
+					String bodyAttached = tempBlob.toString();
+					
+					bodyAttached = bodyAttached.replace('#IATACODE',acc.IATACode__c);
+					bodyAttached = bodyAttached.replace('#TODAYDATE',String.valueOf(Datetime.now().format('dd MMMM yyyy')));
+					String accountName = acc.Legal_name__c == null ? acc.Name : acc.Legal_name__c;
+					bodyAttached = bodyAttached.replace('#LEGALNAME',accountName);
+
+					Messaging.EmailFileAttachment attach = new Messaging.EmailFileAttachment();
+					attach.setBody(Blob.valueOf(bodyAttached));
+					attach.setFileName('Nil Credit Card self-declaration.doc');
+
+					attachments = new Messaging.EmailFileAttachment[]{attach};
+				}
+	            AMS_AgencyRegulationAutoRenewal.sendEmailAlert(new List<Contact>{accOscarObjsMap.get(acc.Id).con}, accOscarObjsMap.get(acc.Id).oscar.Id, AMS_OSCARTriggerHandler.ANGemailTemplates(AMS_Utils.NGFOP, null, true), accOscarObjsMap.get(acc.Id).oscar.Oscar_Communication_Case_Id__c, owea[0], false, attachments);			
+			}
+
+			System.debug('[ANG_OscarProcessHelper.createPCIComplianceOscars] - Finished Inserting oscars: '+ accOscarObjsMap.get(acc.id).oscar.Id + ' | Case: '+accOscarObjsMap.get(acc.id).cse.Id);
+		}
+
+        return casesToUpdate;
+    }
+
+	private static Contact fetchKeyContactForPCI(Account acc, List<Contact> contacts){
+
+		if(contacts == null || contacts.isEmpty())
+			return null;
+
+		Contact adminCon;
+		Contact finAccessContact;
+		Contact bspContact;
+		Contact regularContact;
+		for (Contact con :contacts){
+
+			if(con.User_Portal_Status__c == 'Approved Admin')
+				adminCon = con;
+			if (con.Financial_Assessment_Contact__c)
+				finAccessContact = con;	
+			if(con.New_BSPLink_Contact__c)
+				bspContact = con;
+			if(con.User_Portal_Status__c <> 'Approved Admin' && !con.Financial_Assessment_Contact__c &&  !con.New_BSPLink_Contact__c)
+				regularContact = con;
+
+		} 
+
+		
+		Contact toReturn = adminCon <> null ? adminCon : finAccessContact <> null ? finAccessContact : bspContact <> null ? bspContact : regularContact;			
+ 		
+ 		return toReturn;
+	}
+
+
     public Class EntityUpdater{
 
     	public Map<Id,Account> acctMap;
@@ -896,6 +1052,26 @@ global class ANG_OscarProcessHelper {
 			toUpdate = false;
 
 		}
+
+    }
+
+    public Class OscarObjectsWrapper{
+
+    	public Account acc;
+    	public Case cse;
+    	//public AMS_Pax_Accreditation_Form__c stagingArea;
+    	public AMS_Oscar__c oscar;
+    	public Id ownerId;
+    	public Contact con;
+
+    	public OscarObjectsWrapper(){
+
+        	acc = new Account();
+    		cse = new Case();
+    		//stagingArea = new AMS_Pax_Accreditation_Form__c();
+    		oscar = new AMS_Oscar__c();
+    		con = new Contact();
+    	}
 
     }
 
