@@ -387,21 +387,5 @@ public with sharing class AMP_KeyAccountPlanExtension {
 		return milestone;
 	}
 
-	@AuraEnabled
-	public static List<String> getDivisionValues(){
-
-		List<String> divisionOptions = new List<String>();
-
-		Schema.DescribeFieldResult fieldResult = Objective__c.Division__c.getDescribe();
-		List<Schema.PicklistEntry> picklistValues = fieldResult.getPicklistValues();
-
-		for(Schema.PicklistEntry entry : picklistValues){
-			divisionOptions.add(entry.getValue());
-		}
-
-		divisionOptions.sort();
-		return divisionOptions;
-
-	} 
 
 }

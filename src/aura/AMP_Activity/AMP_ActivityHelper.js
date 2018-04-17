@@ -1,29 +1,29 @@
 ({
 	
-	fillDivisionOptions: function(component, allValues, currentDivision){
+	fillDivisionOptions: function(component, decisionValues, currentDivision){
 		var divOpts = [];
 
-		if(allValues != undefined && allValues.length > 0){
+		if(decisionValues != undefined && decisionValues.length > 0){
 			divOpts.push({
 				label: "--None--",
 				value: ""
 			});
 		}
 
-		for(var i = 0; i < allValues.length; ++i){
+		for(var i = 0; i < decisionValues.length; ++i){
 
-			if(allValues[i] == currentDivision){
+			if(decisionValues[i] == currentDivision){
 				divOpts.push({
-				label: allValues[i],
-				value: allValues[i],
+				label: decisionValues[i],
+				value: decisionValues[i],
 				selected: "true"
 			});
 
 			}
 
 			divOpts.push({
-				label: allValues[i],
-				value: allValues[i]
+				label: decisionValues[i],
+				value: decisionValues[i]
 			});
 		}
 
