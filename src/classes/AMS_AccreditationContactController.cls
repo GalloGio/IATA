@@ -156,7 +156,7 @@ public with sharing class AMS_AccreditationContactController {
         if(aoa.ANG_IsNewGenAgency__c && (aoa.SAAM_Case__r.OSCAR__r.Process__c == AMS_Utils.NEWAE || (aoa.SAAM_Case__r.OSCAR__r.ANG_Type_Of_Change__c != null && ANG_AgencyChangesHelper.containsChange(NGOWNEREDITABLECHANGES,aoa.SAAM_Case__r.OSCAR__r.ANG_Type_Of_Change__c.toLowerCase()))))
             blockOwnershipEdit = false;
 
-        if(aoa.ANG_IsNewGenAgency__c && aoa.SAAM_Case__r.OSCAR__r.Process__c == AMS_Utils.NGCHANGES && !ANG_AgencyChangesHelper.containsChange(NGOWNEREDITABLECHANGES,aoa.SAAM_Case__r.OSCAR__r.ANG_Type_Of_Change__c.toLowerCase()))
+        if(aoa.ANG_IsNewGenAgency__c && aoa.SAAM_Case__r.OSCAR__r.Process__c == AMS_Utils.NGCHANGES && (aoa.SAAM_Case__r.OSCAR__r.ANG_Type_Of_Change__c == null || !(ANG_AgencyChangesHelper.containsChange(NGOWNEREDITABLECHANGES,aoa.SAAM_Case__r.OSCAR__r.ANG_Type_Of_Change__c.toLowerCase()))))
             blockOwnershipEdit = true;
 
         isCorrection = aoa.SAAM_Case__r.OSCAR__r.Process__c == AMS_Utils.COR;
@@ -618,35 +618,35 @@ public with sharing class AMS_AccreditationContactController {
                 if(i == 0){
                     if(wrapped.ac.Date_joined_agency__c != null){
                         DateTime dt = DateTime.newInstance(wrapped.ac.Date_joined_agency__c.year(), wrapped.ac.Date_joined_agency__c.month(),wrapped.ac.Date_joined_agency__c.day());
-                        wrapped.dateJoined = dt.format('YYYY-MM-dd');
+                        wrapped.dateJoined = dt.format('yyyy-MM-dd');
                     }
                     fieldToCheck = wrapped.dateJoined;
                 }
                 if(i == 1){
                     if(wrapped.ac.Prev_Job1_From__c != null){
                         DateTime dt = DateTime.newInstance(wrapped.ac.Prev_Job1_From__c.year(), wrapped.ac.Prev_Job1_From__c.month(),wrapped.ac.Prev_Job1_From__c.day());
-                        wrapped.prev1From = dt.format('YYYY-MM-dd');
+                        wrapped.prev1From = dt.format('yyyy-MM-dd');
                     }
                     fieldtoCheck = wrapped.prev1From;
                 }
                 if(i == 2){
                     if(wrapped.ac.Prev_Job1_To__c != null){
                         DateTime dt = DateTime.newInstance(wrapped.ac.Prev_Job1_To__c.year(), wrapped.ac.Prev_Job1_To__c.month(),wrapped.ac.Prev_Job1_To__c.day());
-                        wrapped.prev1To = dt.format('YYYY-MM-dd');
+                        wrapped.prev1To = dt.format('yyyy-MM-dd');
                     }
                     fieldtoCheck = wrapped.prev1To;
                 }
                 if(i == 3){
                     if(wrapped.ac.Prev_Job2_From__c != null){
                         DateTime dt = DateTime.newInstance(wrapped.ac.Prev_Job2_From__c.year(), wrapped.ac.Prev_Job2_From__c.month(),wrapped.ac.Prev_Job2_From__c.day());
-                        wrapped.prev2From = dt.format('YYYY-MM-dd');
+                        wrapped.prev2From = dt.format('yyyy-MM-dd');
                     }
                     fieldtoCheck = wrapped.prev2From;
                 }
                 if(i == 4){
                     if(wrapped.ac.Prev_Job2_To__c != null){
                         DateTime dt = DateTime.newInstance(wrapped.ac.Prev_Job2_To__c.year(), wrapped.ac.Prev_Job2_To__c.month(),wrapped.ac.Prev_Job2_To__c.day());
-                        wrapped.prev2To = dt.format('YYYY-MM-dd');
+                        wrapped.prev2To = dt.format('yyyy-MM-dd');
                     }
                     fieldtoCheck = wrapped.prev2To;
                 }
@@ -667,15 +667,15 @@ public with sharing class AMS_AccreditationContactController {
                 if(i == 0){
                     if(tsw.ac.Certificate_Issued_on__c != null){
                         DateTime dt = DateTime.newInstance(tsw.ac.Certificate_Issued_on__c.year(), tsw.ac.Certificate_Issued_on__c.month(),tsw.ac.Certificate_Issued_on__c.day());
-                        tsw.certificateIssueDate = dt.format('YYYY-MM-dd');
+                        tsw.certificateIssueDate = dt.format('yyyy-MM-dd');
                     }
                     fieldToCheck = tsw.certificateIssueDate;
                 }    
                 if(i == 1){
-                    if(tsw.ac.Certificate_Issued_on__c != null && tsw.ac.Type_of_certificate__c != 'BCH'){
+                    if(tsw.ac.Certificate_Issued_on__c != null && (tsw.ac.Type_of_certificate__c == 'DGR' || tsw.ac.Type_of_certificate__c == 'CATA')){
                         system.debug('RB Valid until: ' + tsw.ac.Valid_until__c);
                         DateTime dt = DateTime.newInstance(tsw.ac.Valid_until__c.year(), tsw.ac.Valid_until__c.month(),tsw.ac.Valid_until__c.day());
-                        tsw.validUntil = dt.format('YYYY-MM-dd');
+                        tsw.validUntil = dt.format('yyyy-MM-dd');
                     }
                     fieldtoCheck = tsw.validUntil;
                 }    

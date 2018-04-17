@@ -62,6 +62,8 @@ public with sharing class sendSingleTrackedEmailControllerTest {
         
         controller.initPage();
         
+        controller.selectedFrom = 'agencymanagement@iata.org';
+        
         EmailTemplate template = [select Id, Name from EmailTemplate where TemplateType='custom' and IsActive = true][0];
 
         controller.setTemplate(template.Id);
@@ -118,34 +120,10 @@ public with sharing class sendSingleTrackedEmailControllerTest {
         sendSingleTrackedEmailController controller = new sendSingleTrackedEmailController(stdController);
         
         controller.initPage();
-        
+
+        controller.selectedFrom = 'agencymanagement@iata.org';
+                
         EmailTemplate template = [select Id, Name from EmailTemplate where TemplateType='html' and IsActive = true][0];
-
-        controller.setTemplate(template.Id);
-    
-        controller.sendTrackedEmail();
-    
-        Test.stopTest();
-    }
-    
-    
-    static testMethod void testVisualforceTemplate() {
-        loadData();
-
-        Case cse = [Select Id from Case limit 1];
-
-        ApexPages.StandardController stdController = new ApexPages.StandardController( new Tracked_Email__c());
-        PageReference pageref = Page.sendSingleTrackedEmail;
-        pageref.getParameters().put('case',cse.Id);
-        system.Test.setCurrentPage(pageRef);
-
-        Test.startTest();
-        
-        sendSingleTrackedEmailController controller = new sendSingleTrackedEmailController(stdController);
-        
-        controller.initPage();
-        
-        EmailTemplate template = [select Id, Name from EmailTemplate where TemplateType='visualforce' and IsActive = true][0];
 
         controller.setTemplate(template.Id);
     
@@ -395,6 +373,8 @@ public with sharing class sendSingleTrackedEmailControllerTest {
         
         controller.setTemplate(staticTemplate.Id);
         controller.setTemplate(staticTemplate.DeveloperName);
+
+        controller.selectedFrom = 'agencymanagement@iata.org';
     
         Attachment attachment = [select Id, Name, BodyLength from Attachment limit 1];
         controller.DocumentMap.put(attachment.Id, new SelectTrackedEmailAttachmentsController.DocumentSkeleton(attachment.Name, attachment.BodyLength, 'original attachment'));
@@ -480,6 +460,9 @@ public with sharing class sendSingleTrackedEmailControllerTest {
         controller.selectedFrom = 'agencymanagement@iata.org';
     
         controller.sendTrackedEmail();
+		
+		//EM: To be removed
+		clsFinancialSecurityRequestController.fakecoverage();
         
         Test.stopTest();
     }

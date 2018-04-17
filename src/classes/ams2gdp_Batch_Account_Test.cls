@@ -94,7 +94,7 @@ private class ams2gdp_Batch_Account_Test
 
 
 		Test.startTest(); 
- 			Database.executeBatch(new ams2gdp_Batch_Account(true, true));
+ 			Database.executeBatch(new ams2gdp_Batch_Account(true, true, false));
 		Test.stopTest();
 	}
 
@@ -133,7 +133,7 @@ private class ams2gdp_Batch_Account_Test
 		) Batch_Name__c; 
 
 		Test.startTest(); 
-			ams2gdp_Batch_Account batch = new ams2gdp_Batch_Account(true,false);
+			ams2gdp_Batch_Account batch = new ams2gdp_Batch_Account(true,false, false);
 				batch.throwException = true; 
  			Database.executeBatch(batch);
 		Test.stopTest();

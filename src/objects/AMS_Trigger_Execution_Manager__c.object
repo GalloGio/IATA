@@ -30,6 +30,14 @@
         <trackTrending>false</trackTrending>
         <type>Checkbox</type>
     </fields>
+    <fields>
+        <fullName>Case_Triggers__c</fullName>
+        <externalId>false</externalId>
+        <label>Case Triggers</label>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>TextArea</type>
+    </fields>
     <label>AMS Trigger Execution Manager</label>
     <visibility>Public</visibility>
 </CustomObject>

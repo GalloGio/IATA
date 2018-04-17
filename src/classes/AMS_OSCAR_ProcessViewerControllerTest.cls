@@ -54,7 +54,26 @@ private class AMS_OSCAR_ProcessViewerControllerTest {
         result = controller.showRequiredOverlay;
         stringResult = controller.getEffectiveDate();
         result = controller.getIsAgencyChange();
+        result = controller.isNewGenHEProcess;
+        result = controller.isAnalystProfile;
 
+        Test.stopTest();
+    }
+	
+	@isTest static void test_ProcessViewer_2() {
+        Test.startTest();
+        AMS_OSCAR_ProcessViewerController ctr = new AMS_OSCAR_ProcessViewerController();
+        ctr.checkAMSRemittance(new AMS_OSCAR__c());
+        Test.stopTest();
+    }
+
+    @isTest static void test_ProcessViewer2() {
+
+        Test.startTest();
+        AMS_OSCAR_ProcessViewerController controller = new AMS_OSCAR_ProcessViewerController();
+        Boolean a1 = controller.isToRemoveFieldsUI;
+        Boolean a2 = controller.isPCICompliant;
+        Set<String> a3 = controller.processToRemoveFields;
         Test.stopTest();
     }
 

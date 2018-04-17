@@ -97,17 +97,19 @@ public class IEC_ProductDetailController  extends IEC_PageController
 			iColWidth = 100;
 
 			String searchCond = 'SAP_Material_Number__c=\''+productNumber+'\'';
+			system.debug('susana searchCond : '+searchCond);
 			List<EComProduct_DTO> ecomProducts = Product_Sel.getEComProduct(null, false, searchCond, null, true, null);
-
+			system.debug('susana ecomProducts : '+ecomProducts);
 			if(ecomProducts.size() > 0)
 			{
 				//Parent found 
 				ecomProduct = ecomProducts[0];
-
+				system.debug('susana ecomProduct : '+ecomProduct);
 				//Query sub-products 
 				String subCond = 'IEC_Parent_Product__c=\''+ecomProduct.ProductId+'\'';
+				system.debug('susana subCond : '+subCond);
 				List<EComProduct_DTO> ecomSubProducts = Product_Sel.getEComProduct(null, false, subCond, null, false, null);
-
+				system.debug('susana ecomSubProducts : '+ecomSubProducts);
 				//Query sub-product's RatePlanInfo
 				Set<Id> productRatePlanInfoIds = new Set<Id>(); 
 				for(EComProduct_DTO prod :ecomSubProducts)
@@ -133,7 +135,6 @@ public class IEC_ProductDetailController  extends IEC_PageController
 
 				charges = IECProductManager.getZuoraRatePlanChargesByRatePlanIDs(planIds);
 				iColWidth = (subProducts.size() > 0) ? 100/subProducts.size() : 100;
-
 				//*** get category
 				selectedCategory = new SelectOption('', '');
 				for(SelectOption so : categories)
@@ -166,7 +167,7 @@ public class IEC_ProductDetailController  extends IEC_PageController
 
 			//Features
 			pc = IECProductManager.getProductCategoryBySFDCProduct(ecomProduct.ProductId);
-			
+			system.debug('susana pc : '+pc);
 			sButtonType = pc.Button_Type__c;
 			bTryButtonShow = pc.Trial_available_for_this_Product__c;
 			sBannerImage = pc.Banner_Image__c;
@@ -177,6 +178,7 @@ public class IEC_ProductDetailController  extends IEC_PageController
 				sProductIcon = mapCategory_ImageName.get(pc.Name);
 			
 			bShowPrice = (pc.Show_price_on_eCommerce__c == null || pc.Show_price_on_eCommerce__c == 'Yes');
+			system.debug('susana pc : '+pc);
 			sDisplayName = pc.Display_Name__c;
 			sShortDescription = pc.Short_Description__c;
 			sLongDescription = pc.Long_Description__c;

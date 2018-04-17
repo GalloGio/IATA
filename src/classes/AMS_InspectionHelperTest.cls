@@ -335,4 +335,58 @@ private class AMS_InspectionHelperTest {
 
 
     }
+
+
+    @isTest static void test_checkActiveAppointments(){
+        Id StandardAccountRt = AMS_Utils.getId('Account', 'Standard_Account');
+        TransformationHelper.trgAccountISSP_AfterBeforInsertDeleteUpdateUndelete = true;
+        IATA_ISO_Country__c ctry = new IATA_ISO_Country__c (Name='US',ISO_Code__c='US')  ;
+        insert ctry ;
+
+        List<Account> agencylist = new List<Account>();
+        Account a1 = new Account(IATA_ISO_Country__c = ctry.id, RecordTypeId = StandardAccountRt,IATACode__c = '1234567',Name = 'Test1 Agency',Short_Name__c = 'Test1 Agency', Location_Class__c = 'G');
+        agencylist.add(a1);
+        insert agencylist;
+
+        AMS_Accreditation_Organization__c ao = new AMS_Accreditation_Organization__c(Air_Code__c = 'DOM');
+        insert ao;
+
+        Test.startTest();
+        List<AMS_Inspection__c> agencyInspectionList = new List<AMS_Inspection__c>();
+        AMS_Inspection__c ins1 = new AMS_Inspection__c(Account__c=a1.id,Accreditation_Endorsement_organisation__c=ao.id,Accreditation_Endorsement_Status_code__c = '2', Date_Organisation_Status_attained__c=System.today());
+        agencyInspectionList.add(ins1);
+        AMS_Inspection__c ins2 = new AMS_Inspection__c(Account__c=a1.id,Accreditation_Endorsement_organisation__c=ao.id,Accreditation_Endorsement_Status_code__c = '2', Date_Organisation_Status_attained__c=System.today());
+        agencyInspectionList.add(ins2);
+        insert agencyInspectionList;
+
+        /*
+        list<Task> acctTasks = [SELECT Id FROM Task WHERE WhatId = :a1.Id];
+        System.assertEquals(0, acctTasks.size());
+        */
+
+        ins1.Accreditation_Endorsement_Status_code__c='0';
+        update ins1;
+        /*
+        acctTasks = [SELECT Id FROM Task WHERE WhatId = :a1.Id];
+        System.assertEquals(0, acctTasks.size());
+        */
+
+        ApexPages.StandardController stdController = new ApexPages.StandardController(ins2);
+        AMS_InspectionNotificationController ctrl = new AMS_InspectionNotificationController(stdController);
+        ctrl.setNotificationMessage();
+        system.assertEquals(false, ctrl.hasNoActiveInspections);
+
+        ins2.Accreditation_Endorsement_Status_code__c='0';
+        update ins2;
+
+        /*
+        acctTasks = [SELECT Id FROM Task WHERE WhatId = :a1.Id];
+        System.assertEquals(1, acctTasks.size());
+        */
+
+        stdController = new ApexPages.StandardController(ins2);
+        ctrl = new AMS_InspectionNotificationController(stdController);
+        ctrl.setNotificationMessage();
+        system.assertEquals(true, ctrl.hasNoActiveInspections);
+    }
 }

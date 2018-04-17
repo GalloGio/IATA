@@ -75,7 +75,7 @@
     <body>
     
         <div class="header">
-            <div><apex:image width="100%" value="{!if(communityName=='CNS', URLFOR($Resource.AP_PDF_Header_CNS), URLFOR($Resource.AP_PDF_Header))}"/></div> <!-- CNS UPDATE -->
+            <div><apex:image width="100%" value="{!IF(newlabels,URLFOR($Resource.AP_PDF_Header_FIATA),if(communityName=='CNS', URLFOR($Resource.AP_PDF_Header_CNS), URLFOR($Resource.AP_PDF_Header)))}"/></div> <!-- CNS UPDATE -->
         </div>
           
          <center>

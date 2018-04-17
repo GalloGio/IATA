@@ -121,13 +121,18 @@ public class ISSP_ANG_ProductComparisonTest {
         );     
 
         insert new List<PricebookEntry>{prce1, prce2, prce3};       
-test.startTest();
+
+        test.startTest();
+        
         ISSP_ANG_ProductComparison ctrl = new ISSP_ANG_ProductComparison();
+
+        String aux = ctrl.communityName;
 
         //System.debug(LoggingLevel.ERROR, '---->' + ctrl);
 
-        System.assertEquals(ctrl.headers.size(), 4);
-        System.assertEquals(ctrl.lines.size(), 6);
-test.stopTest();
+        System.assertEquals(ctrl.helper.headers.size(), 4);
+        System.assertEquals(ctrl.helper.lines.size(), 6);
+
+        test.stopTest();
     }
 }

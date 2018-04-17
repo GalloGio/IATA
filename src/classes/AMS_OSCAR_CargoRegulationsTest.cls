@@ -281,6 +281,34 @@
         //system.assertEquals(1, certOscars.size());
     }
 
+    @isTest
+    public static void testRefreshCertificates() {
+        Account testAccount = new Account(name='testAccount');
+        insert testAccount;
+        AMS_Agency_Regulation__c ar = new AMS_Agency_Regulation__c(Expiry_Date__c=System.today(), Type_Of_Certificate__c = 'DGR', Account__c = testAccount.Id, Last_name__c='test');
+        insert ar;
+        //        Id batchId = Database.executeBatch(new AMS_Refresh_AMS_AgencyRegulations(500));
+        Test.startTest();
+        AMS_Refresh_AMS_AgencyRegulations.stop();
+        AMS_Refresh_AMS_AgencyRegulations.start('0 1 * * * ?',500);
 
+        Test.stopTest();
+        
+    }
+    
+    @isTest
+    public static void testRefreshCertificates2() {
+        Account testAccount = new Account(name='testAccount');
+        insert testAccount;
+        AMS_Agency_Regulation__c ar = new AMS_Agency_Regulation__c(Expiry_Date__c=System.today(), Type_Of_Certificate__c = 'DGR', Account__c = testAccount.Id, Last_name__c='test');
+        insert ar;
+        //        Id batchId = Database.executeBatch(new AMS_Refresh_AMS_AgencyRegulations(500));
+        Test.startTest();
+        AMS_Refresh_AMS_AgencyRegulations.start('0 1 * * * ?',500);
+        AMS_Refresh_AMS_AgencyRegulations.stop();
+        
+        Test.stopTest();
+        
+    }
 
 }

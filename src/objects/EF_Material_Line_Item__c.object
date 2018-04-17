@@ -21,10 +21,6 @@
         <type>Default</type>
     </actionOverrides>
     <actionOverrides>
-        <actionName>Follow</actionName>
-        <type>Default</type>
-    </actionOverrides>
-    <actionOverrides>
         <actionName>List</actionName>
         <type>Default</type>
     </actionOverrides>
@@ -50,6 +46,7 @@
     <description>Line items of E&amp;F Products used on either Contracts or E&amp;F Airline Billing Agreements.</description>
     <enableActivities>true</enableActivities>
     <enableBulkApi>false</enableBulkApi>
+    <enableChangeDataCapture>false</enableChangeDataCapture>
     <enableFeeds>false</enableFeeds>
     <enableHistory>true</enableHistory>
     <enableReports>true</enableReports>
@@ -144,12 +141,15 @@
     <fields>
         <fullName>EF_Status__c</fullName>
         <externalId>false</externalId>
-        <globalPicklist>EF_Status</globalPicklist>
         <label>E&amp;F Status</label>
         <required>false</required>
         <trackHistory>false</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Picklist</type>
+        <valueSet>
+            <restricted>true</restricted>
+            <valueSetName>EF_Status</valueSetName>
+        </valueSet>
     </fields>
     <fields>
         <fullName>EF_Submitter_Email__c</fullName>
@@ -165,12 +165,15 @@
         <fullName>Manager_Approval__c</fullName>
         <description>Helper field for E&amp;F approval processing functionality.</description>
         <externalId>false</externalId>
-        <globalPicklist>EF_Manager_Approval</globalPicklist>
         <label>Manager Approval</label>
         <required>false</required>
         <trackHistory>false</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Picklist</type>
+        <valueSet>
+            <restricted>true</restricted>
+            <valueSetName>EF_Manager_Approval</valueSetName>
+        </valueSet>
     </fields>
     <fields>
         <fullName>Requested_Changes__c</fullName>
@@ -207,7 +210,18 @@
         <active>true</active>
         <label>Contract Line Item</label>
         <picklistValues>
-            <picklist>EF_Manager_Approval</picklist>
+            <picklist>EF_Status__c</picklist>
+            <values>
+                <fullName>Active</fullName>
+                <default>true</default>
+            </values>
+            <values>
+                <fullName>Inactive</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Manager_Approval__c</picklist>
             <values>
                 <fullName>Approved</fullName>
                 <default>false</default>
@@ -226,17 +240,6 @@
             </values>
             <values>
                 <fullName>Rejected</fullName>
-                <default>false</default>
-            </values>
-        </picklistValues>
-        <picklistValues>
-            <picklist>EF_Status</picklist>
-            <values>
-                <fullName>Active</fullName>
-                <default>true</default>
-            </values>
-            <values>
-                <fullName>Inactive</fullName>
                 <default>false</default>
             </values>
         </picklistValues>
@@ -246,7 +249,18 @@
         <active>true</active>
         <label>Billing Agreement Line Item</label>
         <picklistValues>
-            <picklist>EF_Manager_Approval</picklist>
+            <picklist>EF_Status__c</picklist>
+            <values>
+                <fullName>Active</fullName>
+                <default>true</default>
+            </values>
+            <values>
+                <fullName>Inactive</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Manager_Approval__c</picklist>
             <values>
                 <fullName>Approved</fullName>
                 <default>false</default>
@@ -268,21 +282,11 @@
                 <default>false</default>
             </values>
         </picklistValues>
-        <picklistValues>
-            <picklist>EF_Status</picklist>
-            <values>
-                <fullName>Active</fullName>
-                <default>true</default>
-            </values>
-            <values>
-                <fullName>Inactive</fullName>
-                <default>false</default>
-            </values>
-        </picklistValues>
     </recordTypes>
     <searchLayouts/>
     <sharingModel>ReadWrite</sharingModel>
     <startsWith>Vowel</startsWith>
+    <visibility>Public</visibility>
     <webLinks>
         <fullName>Edit_All</fullName>
         <availability>online</availability>

@@ -6,6 +6,7 @@ public class ISSP_CertificationCasesTest {
     }
 
     public static testMethod void testISSP_CertificationCases() {
+        Test.startTest();
         ISSP_CertificationCases cttr = new ISSP_CertificationCases();
         ISSPCaseListView__c cs = new ISSPCaseListView__c();
         cs.Name = 'ISSP_Certifications';
@@ -21,6 +22,7 @@ public class ISSP_CertificationCasesTest {
         acc1.Is_your_firm_handling_Dangerous_Goods__c = 'No';
         acc1.RecordTypeId = Schema.SObjectType.Account.RecordTypeInfosByName.get('Standard Account').RecordTypeId;
         insert acc1;
+        Test.stopTest();
 /*
         Account acc2 = new Account();
         acc2.Name = 'BR Account 1';

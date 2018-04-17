@@ -9,74 +9,46 @@ private class ANG_ConversionHelperTest {
         Id accountAgencyRT = AMS_Utils.getId('Account', 'IATA_Agency');
 
         Account a1 = new Account(IATA_ISO_Country__c = ctry.id, RecordTypeId = accountAgencyRT, IATACode__c='1234561',Location_Type__c='HO',Name='Test1 Agency OK',Short_Name__c='Test1 Agency', Sector__c = 'Travel Agent', Location_Class__c = 'P');
+        Account aw1 = new Account(IATA_ISO_Country__c = ctry.id, RecordTypeId = accountAgencyRT, IATACode__c='1234561',Location_Type__c='HO',Name='Test1 Agency NOK',Short_Name__c='Test1 Agency NOK', Sector__c = 'Travel Agent', Location_Class__c = 'P');
         
-        insert a1;
+        insert new List<Account>{a1, aw1};
 
         Account a2 = new Account(IATA_ISO_Country__c = ctry.id, ParentId = a1.Id, RecordTypeId = accountAgencyRT, IATACode__c='1234562',Location_Type__c='BR',Name='Test2 Agency OK',Short_Name__c='Test1 Agency', Sector__c = 'Travel Agent', Location_Class__c = 'P');
         Account a3 = new Account(IATA_ISO_Country__c = ctry.id, ParentId = a1.Id, RecordTypeId = accountAgencyRT, IATACode__c='1234563',Location_Type__c='BR',Name='Test3 Agency OK',Short_Name__c='Test1 Agency', Sector__c = 'Travel Agent', Location_Class__c = 'P');
-        
-		insert new List<Account>{a2, a3};
+        Account aw2 = new Account(IATA_ISO_Country__c = ctry.id, ParentId = aw1.Id, RecordTypeId = accountAgencyRT, IATACode__c='1234562',Location_Type__c='BR',Name='Test2 Agency NOK',Short_Name__c='Test1 Agency', Sector__c = 'Travel Agent', Location_Class__c = 'P');
+        Account aw3 = new Account(IATA_ISO_Country__c = ctry.id, ParentId = aw1.Id, RecordTypeId = accountAgencyRT, IATACode__c='1234563',Location_Type__c='BR',Name='Test3 Agency NOK',Short_Name__c='Test1 Agency', Sector__c = 'Cargo Agent',  Location_Class__c = 'P');
+         
+		insert new List<Account>{a2, a3,aw2,aw3};
  
         Account a4 = new Account(IATA_ISO_Country__c = ctry.id, ParentId = a3.Id, RecordTypeId = accountAgencyRT, IATACode__c='1234564',Location_Type__c='SA',Name='Test4 Agency OK',Short_Name__c='Test1 Agency', Sector__c = 'Travel Agent', Location_Class__c = 'P');
+        Account aw4 = new Account(IATA_ISO_Country__c = ctry.id, ParentId = aw3.Id, RecordTypeId = accountAgencyRT, IATACode__c='1234564',Location_Type__c='SA',Name='Test4 Agency NOK',Short_Name__c='Test1 Agency', Sector__c = 'Travel Agent', Location_Class__c = 'C');
         
         Account a5 = new Account(IATA_ISO_Country__c = ctry.id, RecordTypeId = accountAgencyRT, IATACode__c='1234565',Location_Type__c='HO',Name='Test5 Agency OK',Short_Name__c='Test5 Agency OK', Sector__c = 'Travel Agent', Location_Class__c = 'P');
-        
+        Account aw5 = new Account(IATA_ISO_Country__c = ctry.id, RecordTypeId = accountAgencyRT, IATACode__c='1234564',Location_Type__c='SA',Name='Test5 Agency NOK',Short_Name__c='Test5 Agency NOK', Sector__c = 'Travel Agent', Location_Class__c = 'P');
+		
         Account a6 = new Account(IATA_ISO_Country__c = ctry.id, RecordTypeId = accountAgencyRT, IATACode__c='1234565',Location_Type__c='BR',Name='Test6 Agency OK',Short_Name__c='Test6 Agency NOK', Sector__c = 'Travel Agent', Location_Class__c = 'P');
-
-        insert new List<Account>{a4, a5, a6};
+		Account aw6 = new Account(IATA_ISO_Country__c = ctry.id, ParentId = aw5.Id, RecordTypeId = accountAgencyRT, IATACode__c='1234564',Location_Type__c='SA',Name='Test6 Agency NOK',Short_Name__c='Test1 Agency', Sector__c = 'Cargo Agent', Location_Class__c = 'P');
+	
+        insert new List<Account>{a4,aw4, a5,aw5, a6,aw6};
 
         //Create the hierarchy
 		AMS_Agencies_Hierarchy__c hierarchy = new AMS_Agencies_Hierarchy__c(Hierarchy_Name__c = 'Hierarchy 1 OK');
-		insert hierarchy;
+		AMS_Agencies_Hierarchy__c hierarchy2 = new AMS_Agencies_Hierarchy__c(Hierarchy_Name__c = 'Hierarchy 2 NOK');
+		AMS_Agencies_Hierarchy__c hierarchy3 = new AMS_Agencies_Hierarchy__c(Hierarchy_Name__c = 'Hierarchy 3 NOK');
+		insert new list<AMS_Agencies_Hierarchy__c>{hierarchy,hierarchy2,hierarchy3};
 
 		AMS_Agencies_relationhip__c rel1 = new AMS_Agencies_relationhip__c(Hierarchy__c = hierarchy.Id, Parent_Account__c = a1.Id, Child_Account__c = a2.Id);
 		AMS_Agencies_relationhip__c rel2 = new AMS_Agencies_relationhip__c(Hierarchy__c = hierarchy.Id, Parent_Account__c = a1.Id, Child_Account__c = a3.Id);
 		AMS_Agencies_relationhip__c rel3 = new AMS_Agencies_relationhip__c(Hierarchy__c = hierarchy.Id, Parent_Account__c = a3.Id, Child_Account__c = a4.Id);
-
-        insert new List<AMS_Agencies_relationhip__c>{rel1, rel2, rel3};
-
-       	// wrong accounts !
-
-        Account aw1 = new Account(IATA_ISO_Country__c = ctry.id, RecordTypeId = accountAgencyRT, IATACode__c='1234561',Location_Type__c='HO',Name='Test1 Agency NOK',Short_Name__c='Test1 Agency NOK', Sector__c = 'Travel Agent', Location_Class__c = 'P');
-        
-        insert aw1;
-
-        Account aw2 = new Account(IATA_ISO_Country__c = ctry.id, ParentId = aw1.Id, RecordTypeId = accountAgencyRT, IATACode__c='1234562',Location_Type__c='BR',Name='Test2 Agency NOK',Short_Name__c='Test1 Agency', Sector__c = 'Travel Agent', Location_Class__c = 'P');
-        Account aw3 = new Account(IATA_ISO_Country__c = ctry.id, ParentId = aw1.Id, RecordTypeId = accountAgencyRT, IATACode__c='1234563',Location_Type__c='BR',Name='Test3 Agency NOK',Short_Name__c='Test1 Agency', Sector__c = 'Cargo Agent',  Location_Class__c = 'P');
-        
-		insert new List<Account>{aw2, aw3};
- 
-        Account aw4 = new Account(IATA_ISO_Country__c = ctry.id, ParentId = aw3.Id, RecordTypeId = accountAgencyRT, IATACode__c='1234564',Location_Type__c='SA',Name='Test4 Agency NOK',Short_Name__c='Test1 Agency', Sector__c = 'Travel Agent', Location_Class__c = 'C');
-        
-        
-
-        insert new List<Account>{aw4};
-
-		//Create the hierarchy
-		AMS_Agencies_Hierarchy__c hierarchy2 = new AMS_Agencies_Hierarchy__c(Hierarchy_Name__c = 'Hierarchy 2 NOK');
-		insert hierarchy2;
-
 		AMS_Agencies_relationhip__c relw1 = new AMS_Agencies_relationhip__c(Hierarchy__c = hierarchy2.Id, Parent_Account__c = aw1.Id, Child_Account__c = aw2.Id);
 		AMS_Agencies_relationhip__c relw2 = new AMS_Agencies_relationhip__c(Hierarchy__c = hierarchy2.Id, Parent_Account__c = aw1.Id, Child_Account__c = aw3.Id);
 		AMS_Agencies_relationhip__c relw3 = new AMS_Agencies_relationhip__c(Hierarchy__c = hierarchy2.Id, Parent_Account__c = aw3.Id, Child_Account__c = aw4.Id);
 
-        insert new List<AMS_Agencies_relationhip__c>{relw1, relw2, relw3};
-
-		Account aw5 = new Account(IATA_ISO_Country__c = ctry.id, RecordTypeId = accountAgencyRT, IATACode__c='1234564',Location_Type__c='SA',Name='Test5 Agency NOK',Short_Name__c='Test5 Agency NOK', Sector__c = 'Travel Agent', Location_Class__c = 'P');
-		
-		insert aw5;
-
-		Account aw6 = new Account(IATA_ISO_Country__c = ctry.id, ParentId = aw5.Id, RecordTypeId = accountAgencyRT, IATACode__c='1234564',Location_Type__c='SA',Name='Test6 Agency NOK',Short_Name__c='Test1 Agency', Sector__c = 'Cargo Agent', Location_Class__c = 'P');
-
-		insert aw6;
-
-		//Create the hierarchy
-		AMS_Agencies_Hierarchy__c hierarchy3 = new AMS_Agencies_Hierarchy__c(Hierarchy_Name__c = 'Hierarchy 3 NOK');
-		insert hierarchy3;
-
 		AMS_Agencies_relationhip__c relw4 = new AMS_Agencies_relationhip__c(Hierarchy__c = hierarchy3.Id, Parent_Account__c = aw5.Id, Child_Account__c = aw6.Id);
-		insert relw4;
 
+        insert new List<AMS_Agencies_relationhip__c>{rel1, rel2, rel3,relw1, relw2, relw3,relw4};
+
+		
     }
 
 	@isTest static void executeAnalyses() {
@@ -136,7 +108,7 @@ private class ANG_ConversionHelperTest {
 
 		// now the update part.
 
-		List<ANG_ConversionHelper.HierarchyStructure> migratedStructures = ANG_ConversionHelper.migrateStructures(validStruct.values());
+		ANG_ConversionHelper.migrateStructures(validStruct.values());
 
 		Map<Id,ANG_ConversionHelper.HierarchyStructure> newStructure = ANG_ConversionHelper.buildHierarchyStructure('US');
 

@@ -106,7 +106,7 @@ public with sharing class IDCard_PendingOpsAndProcessedAppTest {
                 idcs.add(new ID_Card__c(Related_Contact__c = cs[i].id,
                                     Valid_To_Date__c = date.today().addMonths(5),
                                     Name_on_ID_Card__c = cs[i].FirstName + ' '+cs[i].LastName,
-                                    Card_status__c = 'Approved',
+                                    Card_status__c = 'Sent ID Card',
                                     VER_Number__c = cs[i].VER_Number_2__c,
                                     Agency_IATA_Code__c = a.IATAcode__c,
                                     Photo__c = 'useless string'
@@ -120,7 +120,7 @@ public with sharing class IDCard_PendingOpsAndProcessedAppTest {
             idcs.add(new ID_Card__c(Related_Contact__c = cs[0].id,
                                     Valid_To_Date__c = date.today().addMonths(-8),
                                     Name_on_ID_Card__c = cs[0].FirstName + ' '+cs[0].LastName,
-                                    Card_status__c = 'Cancelled',
+                                    Card_status__c = 'Cancelled ID Card',
                                     VER_Number__c = cs[0].VER_Number_2__c,
                                     Agency_IATA_Code__c = a.IATAcode__c,
                                     Photo__c = 'useless string'
@@ -130,18 +130,18 @@ public with sharing class IDCard_PendingOpsAndProcessedAppTest {
             idcs.add(new ID_Card__c(Related_Contact__c = cs[1].id,
                                     Valid_To_Date__c = date.today().addMonths(-8),
                                     Name_on_ID_Card__c = cs[1].FirstName + ' '+cs[1].LastName,
-                                    Card_status__c = 'Cancelled',
+                                    Card_status__c = 'Cancelled ID Card',
                                     VER_Number__c = cs[1].VER_Number_2__c,
                                     Agency_IATA_Code__c = a.IATAcode__c,
                                     Photo__c = 'useless string'
             ));
             
             // Contact 3 has also an older id card with status approved
-            idcs[2].Card_status__c = 'Cancelled';
+            idcs[2].Card_status__c = 'Cancelled ID Card';
             idcs.add(new ID_Card__c(Related_Contact__c = cs[2].id,
                                     Valid_To_Date__c = date.today().addMonths(-8),
                                     Name_on_ID_Card__c = cs[2].FirstName + ' '+cs[2].LastName,
-                                    Card_status__c = 'Cancelled',
+                                    Card_status__c = 'Cancelled ID Card',
                                     VER_Number__c = cs[2].VER_Number_2__c,
                                     Agency_IATA_Code__c = a.IATAcode__c,
                                     Photo__c = 'useless string'
@@ -150,14 +150,14 @@ public with sharing class IDCard_PendingOpsAndProcessedAppTest {
             
             
             // Contact 4 has also an older id card with status approved
-            idcs[3].Card_status__c = 'Cancelled';
+            idcs[3].Card_status__c = 'Cancelled ID Card';
             idcs[3].Blacklisted__c = true;
             
             // Contact 5 has also an older id card with status approved
             idcs.add(new ID_Card__c(Related_Contact__c = cs[4].id,
                                     Valid_To_Date__c = date.today().addMonths(-8),
                                     Name_on_ID_Card__c = cs[4].FirstName + ' '+cs[4].LastName,
-                                    Card_status__c = 'Cancelled',
+                                    Card_status__c = 'Cancelled ID Card',
                                     VER_Number__c = cs[4].VER_Number_2__c,
                                     Agency_IATA_Code__c = a.IATAcode__c,
                                     Photo__c = 'useless string',
@@ -165,7 +165,7 @@ public with sharing class IDCard_PendingOpsAndProcessedAppTest {
             ));
             
             // Contact 7 has also an older id card with status approved
-            idcs[6].Card_status__c = 'Cancelled';
+            idcs[6].Card_status__c = 'Cancelled ID Card';
             idcs[6].Cancellation_Date__c = date.today();
             
             insert idcs;

@@ -235,7 +235,11 @@
     <tab>standard-LiveChatTranscript</tab>
     <tab>standard-LiveChatVisitor</tab>
     <tab>standard-LiveAgentSession</tab>
+    <tab>AMS_Account_Role__c</tab>
     <workspaceMappings>
+        <mapping>
+            <tab>AMS_Account_Role__c</tab>
+        </mapping>
         <mapping>
             <tab>Agents__c</tab>
         </mapping>

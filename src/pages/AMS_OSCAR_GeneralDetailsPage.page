@@ -189,7 +189,19 @@
             summary="Field editing will be available based on the selected {!$ObjectType.AMS_OSCAR__c.fields.Type_of_change__c.label}"
             rendered="{!not(hasEditableFields)}"
         />
-    
+        
+        <apex:pageMessage severity="WARNING"
+            strength="1"
+            summary="Modifying PCI Compliance will not change the forms of payment for Credit Card at Agency Level."
+            rendered="{!isOSCARCorrection}"
+        />
+		
+		<apex:pageMessage severity="WARNING"
+            strength="1"
+            summary="Enter full shipping address if the agent has provided one"   
+            rendered="{!AND(isChangeOfLocation, oscarObj.STEP6__c <> 'Passed')}"         
+        />
+
         <apex:pageBlockSection columns="2" id="AccountInformation" collapsible="false">
             <apex:pageBlockSectionItem >
                 <apex:outputLabel value="Account"></apex:outputLabel>
@@ -210,7 +222,7 @@
                 <apex:pageBlockSectionItem labelStyleClass="{!IF(isAgencyChanges, field.styleClass, '')}" dataStyleClass="{!IF(isAgencyChanges, field.styleClass, '')}" rendered="{!AND(field.name == 'Remittance_frequency__c', allowMultipleRemittances == false)}">      
                     <apex:outputLabel id="rfLabel" value="{!$ObjectType.AMS_Pax_Accreditation_Form__c.fields[field.name].Label}" />
                     <apex:outputPanel >  
-                        <apex:outputLabel id="outputRF" value="{!accreditationObj[field.name]}"/> 
+                        <apex:outputLabel id="outputRF" value="{!remittanceFrequencyToShow}"/> 
                         <apex:selectList id="cPicklist" value="{!accreditationObj[field.name]}" multiselect="false" size="1" disabled="{!OR(NOT(field.inlineEdit),isCertificationOSCAR)}" onchange="remittanceFrequencyChange()" style="display: none;"> 
                             <apex:selectOptions value="{!rfPickListValues}"/>
                         </apex:selectList>
@@ -220,7 +232,7 @@
                  <apex:pageBlockSectionItem labelStyleClass="{!IF(isAgencyChanges, field.styleClass, '')}" dataStyleClass="{!IF(isAgencyChanges, field.styleClass, '')}"  rendered="{!AND(field.name == 'Remittance_frequency__c', allowMultipleRemittances == true)}">
                     <apex:outputLabel value="{!$ObjectType.AMS_Pax_Accreditation_Form__c.fields[field.name].Label}"/>
                     <apex:outputPanel >
-                            <apex:outputLabel id="mRFLabel" value="{!accreditationObj[field.name]}"/>
+                            <apex:outputLabel id="mRFLabel" value="{!remittanceFrequencyToShow}"/>
                             <apex:outputPanel id="multipick" style="display: none;">
                                 <c:MultiselectPicklist leftLabel="Available"
                                 leftOptions="{!rfPickListValues}"

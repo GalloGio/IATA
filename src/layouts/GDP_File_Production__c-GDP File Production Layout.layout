@@ -11,7 +11,8 @@
                 <field>File_Specification__c</field>
             </layoutItems>
             <layoutItems>
-                <emptySpace>true</emptySpace>
+                <behavior>Readonly</behavior>
+                <field>Full_SFDC_ID__c</field>
             </layoutItems>
         </layoutColumns>
         <layoutColumns>

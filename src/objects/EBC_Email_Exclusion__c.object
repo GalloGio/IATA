@@ -21,10 +21,6 @@
         <type>Default</type>
     </actionOverrides>
     <actionOverrides>
-        <actionName>Follow</actionName>
-        <type>Default</type>
-    </actionOverrides>
-    <actionOverrides>
         <actionName>List</actionName>
         <type>Default</type>
     </actionOverrides>
@@ -50,6 +46,7 @@
     <description>This table store the raw events related to email exclusions, such as hardbounce, optout, etc.</description>
     <enableActivities>false</enableActivities>
     <enableBulkApi>true</enableBulkApi>
+    <enableChangeDataCapture>false</enableChangeDataCapture>
     <enableFeeds>false</enableFeeds>
     <enableHistory>true</enableHistory>
     <enableReports>true</enableReports>
@@ -160,30 +157,36 @@
         <externalId>false</externalId>
         <inlineHelpText>Type of exclusion</inlineHelpText>
         <label>Type</label>
-        <picklist>
-            <picklistValues>
-                <fullName>OPTOUT</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>HARDBOUNCE</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>LISTDETECTIVE</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>OTHER</fullName>
-                <default>false</default>
-            </picklistValues>
-            <restrictedPicklist>true</restrictedPicklist>
-            <sorted>false</sorted>
-        </picklist>
         <required>false</required>
         <trackHistory>true</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Picklist</type>
+        <valueSet>
+            <restricted>true</restricted>
+            <valueSetDefinition>
+                <sorted>false</sorted>
+                <value>
+                    <fullName>OPTOUT</fullName>
+                    <default>false</default>
+                    <label>OPTOUT</label>
+                </value>
+                <value>
+                    <fullName>HARDBOUNCE</fullName>
+                    <default>false</default>
+                    <label>HARDBOUNCE</label>
+                </value>
+                <value>
+                    <fullName>LISTDETECTIVE</fullName>
+                    <default>false</default>
+                    <label>LISTDETECTIVE</label>
+                </value>
+                <value>
+                    <fullName>OTHER</fullName>
+                    <default>false</default>
+                    <label>OTHER</label>
+                </value>
+            </valueSetDefinition>
+        </valueSet>
     </fields>
     <fields>
         <fullName>Unsubscribe_From__c</fullName>
@@ -209,6 +212,29 @@
         <columns>CREATED_DATE</columns>
         <filterScope>Everything</filterScope>
         <label>All</label>
+        <language>en_US</language>
+    </listViews>
+    <listViews>
+        <fullName>Exclusion_Search_By_Billing_Account</fullName>
+        <columns>NAME</columns>
+        <columns>Email__c</columns>
+        <columns>Source_Campaign__c</columns>
+        <columns>Type__c</columns>
+        <columns>Is_Relation_Created__c</columns>
+        <columns>Event_Date__c</columns>
+        <columns>CREATEDBY_USER</columns>
+        <columns>LAST_UPDATE</columns>
+        <columns>UPDATEDBY_USER</columns>
+        <columns>BillingAccName__c</columns>
+        <columns>Unsubscribe_From__c</columns>
+        <columns>Is_Active__c</columns>
+        <filterScope>Everything</filterScope>
+        <filters>
+            <field>BillingAccName__c</field>
+            <operation>contains</operation>
+            <value>Silver</value>
+        </filters>
+        <label>Exclusion Search By Billing Account</label>
         <language>en_US</language>
     </listViews>
     <listViews>
@@ -381,14 +407,18 @@
         <columns>NAME</columns>
         <columns>Email__c</columns>
         <columns>Type__c</columns>
-        <columns>Event_Date_Timestamp__c</columns>
-        <columns>Source_Campaign__c</columns>
+        <columns>Is_Active__c</columns>
         <columns>Is_Relation_Created__c</columns>
+        <columns>Source_Campaign__c</columns>
+        <columns>Unsubscribe_From__c</columns>
+        <columns>CREATED_DATE</columns>
+        <columns>Event_Date__c</columns>
+        <columns>LAST_UPDATE</columns>
         <filterScope>Everything</filterScope>
         <filters>
             <field>Email__c</field>
             <operation>contains</operation>
-            <value>@iata.org</value>
+            <value>medhat@right-travel.com</value>
         </filters>
         <label>Use for Search by Specific Email Address</label>
         <language>en_US</language>
@@ -408,4 +438,5 @@
         <customTabListAdditionalFields>Unsubscribe_From__c</customTabListAdditionalFields>
     </searchLayouts>
     <sharingModel>ReadWrite</sharingModel>
+    <visibility>Public</visibility>
 </CustomObject>

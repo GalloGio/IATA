@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomObject xmlns="http://soap.sforce.com/2006/04/metadata">
+    <customSettingsType>List</customSettingsType>
+    <description>Progress Bar Settings</description>
+    <enableFeeds>false</enableFeeds>
+    <fields>
+        <fullName>Label_Translatable__c</fullName>
+        <externalId>false</externalId>
+        <label>Label Translatable</label>
+        <length>50</length>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Label__c</fullName>
+        <description>API Name of the label to display</description>
+        <externalId>false</externalId>
+        <label>Label</label>
+        <length>100</length>
+        <required>true</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Order__c</fullName>
+        <externalId>false</externalId>
+        <label>Order</label>
+        <precision>2</precision>
+        <required>true</required>
+        <scale>0</scale>
+        <trackTrending>false</trackTrending>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>RecordType__c</fullName>
+        <description>Record-type of the process (Defines a type of progress bar)</description>
+        <externalId>false</externalId>
+        <label>Process Type</label>
+        <length>50</length>
+        <required>true</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>ValueError__c</fullName>
+        <description>Value of the field to display the node as with error.</description>
+        <externalId>false</externalId>
+        <label>ValueError</label>
+        <length>255</length>
+        <required>true</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>ValueOk__c</fullName>
+        <description>Value of the field to display the node as OK</description>
+        <externalId>false</externalId>
+        <label>ValueOk</label>
+        <length>255</length>
+        <required>true</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>ValueProgress__c</fullName>
+        <description>Value of the field to display the node as In Progress</description>
+        <externalId>false</externalId>
+        <label>Value Progress</label>
+        <length>255</length>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <label>Progress Bar Settings</label>
+    <visibility>Public</visibility>
+</CustomObject>

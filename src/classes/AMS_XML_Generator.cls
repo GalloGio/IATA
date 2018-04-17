@@ -30,7 +30,11 @@ public with sharing class AMS_XML_Generator {
     public Map<Id, List<AMS_Account_Role__c>> mAg_VS_Employees;
     public Map<Id, String> mAg_VS_DPCSystem;
     public Map<Id, Id> mAg_VS_HO;
-
+    
+/*  NEWGEN-801 */
+    public Map<Id, List<Agency_Authorization__c>> mAgencyAuthorizations;
+    public Map<Id, List<ANG_RHC_Information__c>> mAgencyRHCInfos;
+/* EOF NEWGEN-801 */
     public List<AMS_Agency_Updates__c> lAgencyUpdates;  
     public List<Agency_Applied_Change_code__c> lAgencyChangeCode; 
 
@@ -67,9 +71,17 @@ public with sharing class AMS_XML_Generator {
     public List<AMS_Affiliation__c> lAffiliation;
     public List<AMS_Fields_Translation__c> lFieldsTranslation;
     public List<AMS_Agency_Segment__c> lAgSegment;
+  
+
     public List<Agency_Applied_Change_code__c> lAgAppChangeCode;
     public List<Agency_Applied_Change_code__c> lAgAppChangeCodeDEF;
-    
+
+/*  NEWGEN-801 */
+
+    public List<Agency_Authorization__c> lAgencyAuthorizations;
+    public List<ANG_RHC_Information__c> lAgencyRHCInfos;
+
+/* EOF NEWGEN-801 */
 
     public List<String> orderedAgencyIds;
     
@@ -344,7 +356,8 @@ public with sharing class AMS_XML_Generator {
         //MAIN
         lAgencyUpdates = [SELECT Account__c,CreatedDate,LastModifiedDate,Id,Update_Type__c, Change_Code__c 
                             FROM AMS_Agency_Updates__c 
-                            WHERE Account__c IN :setAgencyKeys 
+                            WHERE Account__c IN :setAgencyKeys
+                            AND Integration_System__c = 'SAP PI'   
                             ORDER BY Account__c,LastModifiedDate desc];                       
         
         AMS_Agency_Updates__c auxAU = new AMS_Agency_Updates__c();
@@ -359,12 +372,24 @@ public with sharing class AMS_XML_Generator {
         }
         
 
+/*  NEWGEN-801 */
+
+        lAgencyChangeCode = [SELECT Account__c,Active__c,Change_Code__c, CreatedDate, Created_Date_To_Show__c,Reason_Code__c,Reason_Description__c 
+                                FROM Agency_Applied_Change_code__c 
+                                WHERE Change_Code__c != null 
+                                AND Active__c = true 
+                                AND Account__c in :setAgencyKeys];
+
+/*  EOF NEWGEN-801 */
+
+/*
         lAgencyChangeCode = [SELECT Account__c,Active__c,Change_Code__c, CreatedDate, Created_Date_To_Show__c 
                                 FROM Agency_Applied_Change_code__c 
                                 WHERE Change_Code__c != null 
                                 AND Active__c = true 
                                 AND Account__c in :setAgencyKeys];
-        
+  */
+
         for (Agency_Applied_Change_code__c agChgCode : lAgencyChangeCode) {
             mAg_VS_AgChangeCode.put(agChgCode.Account__c,agChgCode);
         }                            
@@ -683,6 +708,36 @@ public with sharing class AMS_XML_Generator {
                 mAg_VS_AgChangeCodeDEF.put(agAppChangeCode.Account__c,agAppChangeCode);
             }
         }
+
+        Id formOfPaymentRTId   = Schema.Agency_Authorization__c.sObjectType.getDescribe().getRecordTypeInfosByName().get('Form Of Payment').getRecordTypeId();
+
+/*  NEWGEN-801 */
+
+        lAgencyAuthorizations = [SELECT Id, ANG_FormOfPayment_ID__c,Account__c from Agency_Authorization__c where Account__c in :setAgencyKeys and RecordTypeId =:formOfPaymentRTId and Status__c = 'Active' ];
+
+        if(mAgencyAuthorizations == null)
+            mAgencyAuthorizations =  new Map<Id, List<Agency_Authorization__c>>();
+
+        for(Agency_Authorization__c aa: lAgencyAuthorizations){
+            if(mAgencyAuthorizations.get(aa.Account__c) == null)
+                mAgencyAuthorizations.put(aa.Account__c, new List<Agency_Authorization__c>{aa});
+            else
+                mAgencyAuthorizations.get(aa.Account__c).add(aa);
+        }
+
+
+        lAgencyRHCInfos = [SELECT Id,ANG_RHC_Amount__c, CurrencyIsoCode,ANG_AccountId__c from ANG_RHC_Information__c where ANG_AccountId__c in :setAgencyKeys];
+
+        if(mAgencyRHCInfos == null)
+            mAgencyRHCInfos =  new Map<Id, List<ANG_RHC_Information__c>>();
+
+        for(ANG_RHC_Information__c rhcInfo: lAgencyRHCInfos){
+            if(mAgencyRHCInfos.get(rhcInfo.ANG_AccountId__c) == null)
+                mAgencyRHCInfos.put(rhcInfo.ANG_AccountId__c, new List<ANG_RHC_Information__c>{rhcInfo});
+            else
+                mAgencyRHCInfos.get(rhcInfo.ANG_AccountId__c).add(rhcInfo);
+        }
+/* EOF NEWGEN-801 */
 
         //MAIN
         lFieldsTranslation = [SELECT Address__c,Agency_Hierarchy__c,Account__c,AMSAirport__c,AMSEmployee__c,AMSOwner__c,
@@ -1675,6 +1730,103 @@ public with sharing class AMS_XML_Generator {
             getElementNode(agencyNode, 'eth_2', Null); //Empty, reserved field
             getElementNode(agencyNode, 'eth_3', Null); //Empty, reserved field
 
+/*  NEWGEN-801 */
+
+
+            //Dom.Xmlnode nodeAT = agencyNode.addChildElement('accreditation_types', null, null);
+            List<String> lAT = agency.ANG_Accreditation_Model__c == null ? new List<String>() : agency.ANG_Accreditation_Model__c.split(';');
+
+            if(!lAT.isEmpty()){
+                for (String at : lAT) {
+                    //getElementNode(nodeAT, 'accreditation_type', at);
+                    getElementNode(agencyNode, 'accreditation_type', at);
+                }
+            }
+
+            Dom.Xmlnode nodeRF = agencyNode.addChildElement('remittance_frequencies', null, null);
+            List<String> lRF = agency.Remittance_frequency__c == null ? new List<String>() : agency.Remittance_frequency__c.split(';');
+
+            if(!lRF.isEmpty()){
+                for (String rf : lRF) {
+                    getElementNode(nodeRF, 'remittance_frequency', rf);
+                }
+            }
+
+            getElementNode(agencyNode, 'risk_status',agency.ANG_RiskStatus__c);
+            getElementNode(agencyNode, 'iep_status',agency.ANG_IEP_Status_FF__c);
+            getElementNode(agencyNode, 'segmentation',agency.Segmentation__c);
+            getElementNode(agencyNode, 'purge_code',agency.Purge_Flag__c ? 'true' : 'false');
+            getElementNode(agencyNode, 'is_branch_abroad',agency.Is_Branch_Abroad__c);
+
+
+            //Authorizations Codes
+            
+            Dom.Xmlnode nodeAauthorizationsNode = agencyNode.addChildElement('authorizations', null, null);
+
+            List<Agency_Authorization__c> agencyAuthl = mAgencyAuthorizations.get(agency.Id);
+
+            if(agencyAuthl == null){
+
+                getElementNode(nodeAauthorizationsNode, 'form_of_payment_id',null);
+            
+            }else{
+                
+                for(Agency_Authorization__c aaElem: agencyAuthl){
+
+                    getElementNode(nodeAauthorizationsNode, 'form_of_payment_id',aaElem.ANG_FormOfPayment_ID__c);
+                
+                }
+            }
+
+            //Relinquishment Code
+            
+            Dom.Xmlnode nodeRelish = agencyNode.addChildElement('relinquishment', null, null);
+
+            if(agency.Status__c == AMS_Utils.ACC_S0_TERMINATED){
+                
+                Agency_Applied_Change_code__c aacc = mAg_VS_AgChangeCode.get(agency.Id);
+
+                if(aacc != null){
+                    getElementNode(nodeRelish, 'relinquishment_codes',aacc.Reason_Code__c);
+                    getElementNode(nodeRelish, 'relinquishment_description',aacc.Reason_Description__c);
+                }
+                else{
+                    getElementNode(nodeRelish, 'relinquishment_codes',null);
+                    getElementNode(nodeRelish, 'relinquishment_description',null);
+                }
+
+            }else{
+                    getElementNode(nodeRelish, 'relinquishment_codes',null);
+                    getElementNode(nodeRelish, 'relinquishment_description',null);
+            }
+
+            if(agency.IATA_ISO_Country__r.BSP__c == 'Yes')
+                getElementNode(agencyNode, 'bsp_iso_country',agency.IATA_ISO_Country__r.BSP_Country_free_text__c);
+            else
+                getElementNode(agencyNode, 'bsp_iso_country',null);
+
+            //RHC Amount
+            
+            Dom.Xmlnode nodeRHCAmt = agencyNode.addChildElement('rhc_information', null, null);
+
+            List<ANG_RHC_Information__c> rhcLst = mAgencyRHCInfos.get(agency.Id);
+
+            if(rhcLst == null){
+
+                    getElementNode(nodeRHCAmt, 'rhc_amount',null);
+                    getElementNode(nodeRHCAmt, 'currency',null);
+            
+            }else{
+                
+                for(ANG_RHC_Information__c rhcLstElem: rhcLst){
+
+                    getElementNode(nodeRHCAmt, 'rhc_amount',String.valueOf(rhcLstElem.ANG_RHC_Amount__c));
+                    getElementNode(nodeRHCAmt, 'currency',rhcLstElem.CurrencyIsoCode);
+                
+                }
+            }
+
+/* EOF NEWGEN-801 */
         }
 
     }

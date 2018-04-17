@@ -138,6 +138,10 @@
                 <field>Type_of_Service__c</field>
             </layoutItems>
             <layoutItems>
+                <behavior>Edit</behavior>
+                <field>Airline_Model_Type__c</field>
+            </layoutItems>
+            <layoutItems>
                 <behavior>Readonly</behavior>
                 <field>TIESS_Code__c</field>
             </layoutItems>
@@ -172,7 +176,7 @@
                 <field>BIETA_Member__c</field>
             </layoutItems>
             <layoutItems>
-                <behavior>Readonly</behavior>
+                <behavior>Edit</behavior>
                 <field>ICH_Member__c</field>
             </layoutItems>
             <layoutItems>
@@ -285,10 +289,6 @@
             <layoutItems>
                 <behavior>Edit</behavior>
                 <field>Membership_status__c</field>
-            </layoutItems>
-            <layoutItems>
-                <behavior>Edit</behavior>
-                <field>Airline_Model_Type__c</field>
             </layoutItems>
             <layoutItems>
                 <behavior>Edit</behavior>

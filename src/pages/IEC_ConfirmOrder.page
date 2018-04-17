@@ -17,15 +17,18 @@
     <script type="text/javascript">
         j$ = jQuery.noConflict(); 
        function blockme() {
-           j$.blockUI({ css: {
-               border: 'none',
-               padding: '15px',
-               backgroundColor: '#000',
-               '-webkit-border-radius': '10px',
-               '-moz-border-radius': '10px',
-               opacity: .5,
-               color: '#fff'
-               } }); 
+           j$.blockUI({
+           	   message: '<h1>Please wait and do not refresh this page...</h1>', 
+           	   css: {
+	               border: 'none',
+	               padding: '15px',
+	               backgroundColor: '#000',
+	               '-webkit-border-radius': '10px',
+	               '-moz-border-radius': '10px',
+	               opacity: .5,
+	               color: '#fff'
+               } 
+           	}); 
          }
 
        </script>

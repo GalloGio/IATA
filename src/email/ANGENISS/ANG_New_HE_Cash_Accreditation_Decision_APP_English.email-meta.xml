@@ -5,11 +5,11 @@
     <letterhead>IATADynamicSkyLetterhead</letterhead>
     <name>ANG New HE Cash Accreditation Decision Approval EN</name>
     <style>freeForm</style>
-    <subject>Ref nr {!AMS_OSCAR__c.Name} – Accreditation Standard with Cash Approved</subject>
+    <subject>Ref nr {!AMS_OSCAR__c.Name} – Accreditation GoStandard Approved</subject>
     <textOnly>Dear Sir/Madam,
 
 
-Your accreditation process (Standard with Cash) has been approved.
+Your accreditation process (GoStandard) has been approved.
 
 
 Yours faithfully,

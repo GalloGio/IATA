@@ -45,7 +45,7 @@ IATA Currency Clearance Service (ICCS) Team
 <apex:outputPanel rendered="{!relatedTo.Groups__c = 'AP Team'}">
 <p style="BACKGROUND-COLOR: white; MARGIN-BOTTOM: 0pt">
 <b><span style="FONT-FAMILY: 'Arial','sans-serif'; COLOR: #333399; FONT-SIZE: 12pt">
-Global Airline Participation Team - IATA Geneva
+Global Airline Participation Team - IATA
 <br/>
 </span></b>
 <span style="FONT-FAMILY: 'Arial','sans-serif'; COLOR: #333399; FONT-SIZE: 12pt">

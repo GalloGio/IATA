@@ -32,6 +32,11 @@ public class ANG_RiskEventHistoryPagination {
 			List<RiskEvent> page = pages[totalPages-1];
 
 			String identifier = risk.ANG_Source_Id__c+risk.ANG_Risk_Type__c;
+			if(risk.ANG_Event_Status__c == ANG_Risk_Helper.STATUS_MIGRATED && risk.ANG_Risk_ID__c == '6') identifier = ''+risk.ANG_Issued_Date__c+risk.ANG_Risk_Type__c; //for migrated Risk Events of Major changes, all the hierarchy must be shown on the same level
+
+			System.debug(loggingLevel.FINE, '____ [cls ANG_RiskEventHistoryPagination - createPages] risk.ANG_Event_Status__c ' + risk.ANG_Event_Status__c);
+			System.debug(loggingLevel.FINE, '____ [cls ANG_RiskEventHistoryPagination - createPages] risk.ANG_Risk_ID__c - ' + risk.ANG_Risk_ID__c);
+			System.debug(loggingLevel.FINE, '____ [cls ANG_RiskEventHistoryPagination - createPages] identifier - ' + identifier);
 
 			if(riskEvents.containsKey(identifier)) riskEvents.get(identifier).addAccount(risk.ANG_AccountId__c);
 			else{

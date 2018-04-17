@@ -153,6 +153,10 @@
             <type>user</type>
         </recipients>
         <recipients>
+            <recipient>greenwayt@iata.org</recipient>
+            <type>user</type>
+        </recipients>
+        <recipients>
             <recipient>heinickem@iata.org</recipient>
             <type>user</type>
         </recipients>

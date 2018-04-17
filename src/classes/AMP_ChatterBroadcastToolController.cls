@@ -1,6 +1,6 @@
 public with sharing class AMP_ChatterBroadcastToolController {
 	public Integer step {get; set;}
-	
+
 	public String message {get; set;}
 
 	public String accountId {get; set;}
@@ -23,6 +23,9 @@ public with sharing class AMP_ChatterBroadcastToolController {
 
 	public String strRegion {get; set;}
 
+	public String broadCastRegion {get;set;}
+	public Boolean selectWholeRegion {get;set;}
+
 	public List<SelectOption> getlstRegions() {
         List<SelectOption> options = new List<SelectOption>();
         options.add(new SelectOption('','All Regions'));
@@ -41,7 +44,7 @@ public with sharing class AMP_ChatterBroadcastToolController {
 
 		} else {
 			step = 2;
-		}    	
+		}
     }
 
     public void GoBackToStep1 () {
@@ -59,41 +62,67 @@ public with sharing class AMP_ChatterBroadcastToolController {
     	if (message == null || message == '') {
     		ApexPages.addMessage(new ApexPages.message(ApexPages.severity.ERROR, 'Please type in the message to broadcast.'));
 		} else {
+			list<FeedItem> lstItemsToPost = new list<FeedItem>();
+
+			for (AccountWrapper aw : lstAccounts) {
+				if (aw.isSelected) {
+					FeedItem newPost = new FeedItem();
+					newPost.ParentId = aw.acct.Id;
+					newPost.Body = message;
+					newPost.Type = 'TextPost';
+
+					lstItemsToPost.add(newPost);
+				}
+			}
+
+			// make a list of regions, fetch existing and create missing topics
+			List<String> lsBroadcastTopicNames =
+			new List<String>{'Broadcast All Regions',
+			'Broadcast Africa & Middle East',
+			'Broadcast Americas',
+			'Broadcast Asia & Pacific',
+			'Broadcast China & North Asia',
+			'Broadcast Europe'};
+			List<Topic> lsBroadcastTopics = [SELECT Id,Name FROM Topic WHERE Name IN :lsBroadcastTopicNames];
 
 			try {
+				Database.SaveResult[] srList = Database.insert(lstItemsToPost, false);
 
-				list<FeedItem> lstItemsToPost = new list<FeedItem>();
-
-				for (AccountWrapper aw : lstAccounts) {
-					if (aw.isSelected) {
-						FeedItem newPost = new FeedItem();
-						newPost.ParentId = aw.acct.Id;
-						newPost.Body = message;
-						newPost.Type = 'TextPost';
-
-						lstItemsToPost.add(newPost);
+				// after inserting the actual feeditems create and insert the broadcast topic assignments
+				List<TopicAssignment> lsTopicAssignments = new List<TopicAssignment>();
+				for(FeedItem fi : lstItemsToPost) {
+					if(selectWholeRegion) {
+						if(strRegion == null || strRegion == '') {
+							strRegion = 'All Regions';
+						}
+						for(Topic t :lsBroadcastTopics) {
+							if(t.Name.contains(strRegion)) {
+								TopicAssignment ta = new TopicAssignment();
+								ta.TopicId = t.Id;
+								ta.EntityId = fi.Id;
+								lsTopicAssignments.add(ta);
+							}
+						}
 					}
 				}
 
-				Database.SaveResult[] srList = Database.insert(lstItemsToPost, false);
+				if(!lsTopicAssignments.isEmpty()) { insert lsTopicAssignments; }
+				Integer success = 0;
+				Integer errors = 0;
+				for (Database.SaveResult sr : srList) {
+					if (sr.isSuccess()) {
+						success ++;
+					} else {
+						errors ++;
+					}
+				}
 
-	    		Integer success = 0;
-	    		Integer errors = 0;
-	    		for (Database.SaveResult sr : srList) {
-	    			if (sr.isSuccess()) {
-	    				success ++;
-	    			} else {
-	    				errors ++;
-	    			}
-	    		}
-
-	    		if (success > 0) {
+				if (success > 0) {
 					ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.INFO,'The message was successfully broadcasted.')); // to ' + success + ' account(s) out of ' + lstItemsToPost.size() + '. ' + errors + ' error(s) encountered.'));
 					step = 3;
 				} else {
 					ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.ERROR,'The message failed to be broadcasted.'));// with ' + errors + ' error(s) when trying to post.'));
 				}
-
 
 			} catch (Exception e) {
 				ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.ERROR,e.getMessage()));
@@ -103,7 +132,7 @@ public with sharing class AMP_ChatterBroadcastToolController {
 
     public void RefreshAccountsList () {
     	list<Account> tmpList = new list<Account>();
-		
+
 		if (strRegion != null && strRegion != '') {
 			tmpList = [SELECT Id, Name FROM Account WHERE RecordType.DeveloperName = 'IATA_Airline' AND Membership_status__c = 'IATA Member' AND Region_formula__c = :strRegion ORDER BY Name];
 		} else {
@@ -118,10 +147,10 @@ public with sharing class AMP_ChatterBroadcastToolController {
 
 			lstFilteredAccounts.add(aw);
 		}
-
+		numberOfAccounts = 0;
 		lstAccounts = lstFilteredAccounts;
     }
-    
+
 	public AMP_ChatterBroadcastToolController() {
 		step = 1;
 		numberOfAccounts = 0;

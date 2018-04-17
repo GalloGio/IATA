@@ -21,10 +21,6 @@
         <type>Default</type>
     </actionOverrides>
     <actionOverrides>
-        <actionName>Follow</actionName>
-        <type>Default</type>
-    </actionOverrides>
-    <actionOverrides>
         <actionName>List</actionName>
         <type>Default</type>
     </actionOverrides>
@@ -50,6 +46,7 @@
     <description>Stores data about feedback provided to an article and any customer deflection the article may have contributed to.</description>
     <enableActivities>false</enableActivities>
     <enableBulkApi>true</enableBulkApi>
+    <enableChangeDataCapture>false</enableChangeDataCapture>
     <enableEnhancedLookup>false</enableEnhancedLookup>
     <enableFeeds>false</enableFeeds>
     <enableHistory>true</enableHistory>
@@ -96,21 +93,25 @@
         <externalId>false</externalId>
         <inlineHelpText>Channel on which the record has been created.</inlineHelpText>
         <label>Channel</label>
-        <picklist>
-            <picklistValues>
-                <fullName>web</fullName>
-                <default>true</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>mobile</fullName>
-                <default>false</default>
-            </picklistValues>
-            <sorted>false</sorted>
-        </picklist>
         <required>false</required>
         <trackHistory>false</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Picklist</type>
+        <valueSet>
+            <valueSetDefinition>
+                <sorted>false</sorted>
+                <value>
+                    <fullName>web</fullName>
+                    <default>true</default>
+                    <label>web</label>
+                </value>
+                <value>
+                    <fullName>mobile</fullName>
+                    <default>false</default>
+                    <label>mobile</label>
+                </value>
+            </valueSetDefinition>
+        </valueSet>
     </fields>
     <fields>
         <fullName>Comments__c</fullName>
@@ -148,25 +149,30 @@
         <fullName>Feedback_Source__c</fullName>
         <externalId>false</externalId>
         <label>Feedback Source</label>
-        <picklist>
-            <picklistValues>
-                <fullName>ContactUs</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Search</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>RelatedArticle</fullName>
-                <default>false</default>
-            </picklistValues>
-            <sorted>false</sorted>
-        </picklist>
         <required>false</required>
         <trackHistory>false</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Picklist</type>
+        <valueSet>
+            <valueSetDefinition>
+                <sorted>false</sorted>
+                <value>
+                    <fullName>ContactUs</fullName>
+                    <default>false</default>
+                    <label>ContactUs</label>
+                </value>
+                <value>
+                    <fullName>Search</fullName>
+                    <default>false</default>
+                    <label>Search</label>
+                </value>
+                <value>
+                    <fullName>RelatedArticle</fullName>
+                    <default>false</default>
+                    <label>RelatedArticle</label>
+                </value>
+            </valueSetDefinition>
+        </valueSet>
     </fields>
     <fields>
         <fullName>Keyword_Searched__c</fullName>
@@ -222,4 +228,5 @@
         <customTabListAdditionalFields>CREATED_DATE</customTabListAdditionalFields>
     </searchLayouts>
     <sharingModel>ReadWrite</sharingModel>
+    <visibility>Public</visibility>
 </CustomObject>

@@ -1,14 +1,16 @@
 <aura:component controller="AMP_Groups_ParticipationController">
     <aura:attribute name="accountId" type="String" />
+    <aura:attribute name="reportId" type="String" />
     <aura:handler name="init" value="{!this}" action="{!c.doInit}" />
     <aura:attribute name="ParticipantWrappers" type="Object" access="private"/>
-    
+
+    <aura:attribute name="representativesFound" type="Boolean" default="false" />
     <ltng:require styles="/resource/SLDS102/assets/styles/salesforce-lightning-design-system-ltng.css" />
     <!--<ltng:require scripts="{!join(',', $Resource.jQuery172)}" afterScriptsLoaded="{!c.jsLoaded}" />-->
 
-    
+
     <div class="slds-card">
-        
+
         <div class="slds-card__header slds-grid">
             <div class="slds-media slds-media--center slds-has-flexi-truncate">
                 <div class="slds-media__figure">
@@ -18,16 +20,30 @@
                     <span class="slds-text-heading--small">Industry Groups Participation</span>
                 </div>
             </div>
+            &nbsp;&nbsp;
+            <button class="slds-button slds-button--neutral slds-col--bump-left" >
+                <a href="{!'/apex/AMP_Groups_Participation_Printable?accountId='+ v.accountId }" target="_blank">
+                    Print
+                </a>
+            </button>
+            &nbsp;&nbsp;
+            &nbsp;&nbsp;
+            <button class="slds-button slds-button--neutral slds-col--bump-left" >
+                <a href="{!'/'+ v.reportId +'?pv0=' + v.accountId + '&amp;pv1=' + v.accountId +'&amp;pv2=' + v.accountId +'&amp;export=1&amp;enc=UTF-8&amp;xf=xls'}" target="_blank">
+                    Export Details
+                </a>
+            </button>
+            &nbsp;&nbsp;
         </div>
-        
+
         <div class="slds-card__body">
-            
+
             <table class="slds-table slds-table--bordered slds-table--cell-buffer slds-table--fixed-layout slds-no-row-hover">
                 <thead>
                     <tr class="headerRow" >
                         <th style="width: 17%;"><span>IATA Group Name</span></th>
                         <th style="width: 12%;"><span>IATA Group Owner</span></th>
-                        <th style="width: 30%;"><span>Mission of IATA Group (Reg/Div Groups Only)</span></th>
+                        <th style="width: 30%;"><span>Mission of IATA Group</span></th>
                         <th style="width: 11%;"><span>Role Within Group</span></th>
                         <th style="width: 5%;"><span>Salut.</span></th>
                         <th style="width: 8%;"><span>First Name</span></th>
@@ -35,7 +51,7 @@
                         <th style="width: 9%;"><span>Title</span></th>
                     </tr>
                 </thead>
-                
+
                 <tbody>
                     <aura:iteration items="{!v.ParticipantWrappers}" var="participant" indexVar="index">
                         <aura:if isTrue="{! participant.Under != ''}">
@@ -43,25 +59,40 @@
                                 <td colspan="8">Under <ui:outputText value="{!participant.Under}" /></td>
                             </tr>
                         </aura:if>
-                        
-                        <tr>                            
+
+                        <tr>
                             <aura:if isTrue="{!participant.Rowspan>0}">
                                 <td rowspan="{!participant.Rowspan}"><a href="{!'/'+participant.GroupId}" target="_blank">{!participant.GroupName}</a></td>
                                 <td rowspan="{!participant.Rowspan}"><ui:outputText value="{!participant.GroupOwner}" /></td>
-                                <td rowspan="{!participant.Rowspan}" class="longText"><ui:outputText value="{!participant.Mission}" /></td>
+                                <td rowspan="{!participant.Rowspan}" class="longText"><c:AMP_LongText text="{!participant.Mission}" /></td>
                             </aura:if>
                             <td class="{!participant.Rowspan==0 ? 'dontIndent':''}"><ui:outputText value="{!participant.Role}" /></td>
                             <td><ui:outputText value="{!participant.Salutation}" /></td>
                             <td><ui:outputText value="{!participant.FirstName}" /></td>
                             <td><ui:outputText value="{!participant.LastName}" /></td>
-                            <td><ui:outputText value="{!participant.Title}" /></td>                            
+                            <td>
+                                <ui:outputText value="{!participant.Title}" />
+                                <aura:if isTrue="{!participant.Representing != null}">
+                                    <div class="slds-media__figure blue-icon">
+                                        <c:svg xlinkHref="{!$Resource.SLDS102 + '/assets/icons/utility-sprite/svg/symbols.svg#info'}" class="slds-icon slds-icon--small" />
+                                    </div>
+                                </aura:if>
+
+                            </td>
                         </tr>
-                        
+
                     </aura:iteration>
                 </tbody>
             </table>
+            <aura:if isTrue="{!v.representativesFound}">
+
+                <div class="slds-media__figure blue-icon">
+                    <c:svg xlinkHref="{!$Resource.SLDS102 + '/assets/icons/utility-sprite/svg/symbols.svg#info'}" class="slds-icon slds-icon--small" />
+                </div>
+                This participant represents the account on that specific group.
+            </aura:if>
         </div>
-        
+
     </div>
 
 </aura:component>

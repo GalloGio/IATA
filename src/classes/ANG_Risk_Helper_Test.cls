@@ -29,25 +29,10 @@ private class ANG_Risk_Helper_Test{
         
         Test.startTest();
 
-            System.enqueueJob(new ANG_Risk_Helper.changeAgencyRiskEvent(riskList));
-            System.enqueueJob(new ANG_Risk_Helper.changeAgencyRiskEvent(riskMap));
+            System.enqueueJob(new ANG_Risk_Helper.FutureHandler(riskList));
+            System.enqueueJob(new ANG_Risk_Helper.FutureHandler(riskMap));
 
         Test.stopTest();
 
 	}
-
-	/*static testMethod void rhcInfoInitialization() {
-		Account a = [SELECT Id FROM Account LIMIT 1];
-
-		System.assertEquals(0, [SELECT Id FROM ANG_RHC_Information__c WHERE ANG_AccountId__c = :a.Id].size());
-
-		Test.startTest();
-
-		ANG_Risk_Helper.createRHCInfo(new Set<Id>{a.Id}, false);
-
-		Test.stopTest();
-
-		System.assertEquals(1, [SELECT Id FROM ANG_RHC_Information__c WHERE ANG_AccountId__c = :a.Id].size());
-	}*/
 }
-

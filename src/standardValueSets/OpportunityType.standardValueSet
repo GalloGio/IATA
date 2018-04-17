@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<StandardValueSet xmlns="http://soap.sforce.com/2006/04/metadata">
+    <sorted>false</sorted>
+    <standardValue>
+        <fullName>New Customer Sale</fullName>
+        <default>false</default>
+        <label>New Customer Sale</label>
+    </standardValue>
+    <standardValue>
+        <fullName>Existing Customer New Sale (Upgrade)</fullName>
+        <default>false</default>
+        <label>Existing Customer New Sale (Upgrade)</label>
+    </standardValue>
+    <standardValue>
+        <fullName>Renewal (Due to expire this year)</fullName>
+        <default>false</default>
+        <label>Renewal (Due to expire this year)</label>
+    </standardValue>
+    <standardValue>
+        <fullName>Renewal (Not due to expire this year)</fullName>
+        <default>false</default>
+        <label>Renewal (Not due to expire this year)</label>
+    </standardValue>
+    <standardValue>
+        <fullName>Renewal</fullName>
+        <default>false</default>
+        <label>Renewal</label>
+    </standardValue>
+</StandardValueSet>

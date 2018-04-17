@@ -7,30 +7,50 @@
         } else {
             component.set("v.isEditMode", false);
         }
+        var statusValues = [];
+		statusValues.push('On Track');
+        statusValues.push('On Hold');
+        statusValues.push('Delayed');
+        statusValues.push('Delivered');
+        statusValues.push('Cancelled');
+        statusValues.push('Not Delivered');
+
+
+		component.set("v.statusValues", statusValues);
     },
     switchToEditMode : function(component, event, helper) {
         component.set("v.isEditMode", true);
         console.log('going into edit mode...');
+
+        var activity = component.get("v.activity");
+        var status = activity.Status__c;
+
+console.log(JSON.stringify(activity));
+
+        var statusValues = component.get("v.statusValues");
+        if(status === undefined) status = statusValues[0];
+
+        component.set("v.status", status);
+		console.log(status);
     },
     cancelEditMode : function(component, event, helper) {
         var activity = component.get("v.activity");
-        var index = component.get("v.index");
-        
+        //var index = component.get("v.index");
         if(activity.Id === undefined) {
-            console.log('something');
-            var deleteEvent = component.getEvent("deleteActivity");
-            deleteEvent.setParams({ "issue": activity, "index":index }).fire();
+            console.log('cancel add new activity -> delete');
+            var deleteEvent = component.getEvent("cancelAddActivity");
+            deleteEvent.setParams({'issue': activity})
+            deleteEvent.fire();
             
-        } else {
-            
-            component.set("v.isEditMode", false);
-            console.log('canceling edit mode...');
-        }
+        } 
+         component.set("v.isEditMode", false);
     },
     clickSaveActivity : function(component, event, helper) {
         
         var activity = component.get("v.activity");
-        var status = component.find("status").get("v.value");
+        var status = component.find("statusList").get("v.value");
+        var statusValues = component.get("v.statusValues");
+        if(status === undefined) status = statusValues[0];
         activity.Status__c = status;
         
         var deadlineField = component.find("deadline");
@@ -75,11 +95,11 @@
         
         console.log('delete clicked...');
         var activity = component.get("v.activity");
-        console.log(JSON.stringify(activity));
-        var index = component.get("v.index");
-        
+        //pass the activity attribute passed from the event to a component attribute (AMP_UpdateIssueOrPriority, 
+        //in this event there are two params registered, issue and index) 
         var deleteEvent = component.getEvent("deleteActivity");
-        deleteEvent.setParams({ "issue": activity, "index":index }).fire();
+        deleteEvent.setParams({ "issue": activity}).fire();
+        //deleteEvent.setParams({ "activityToDelete": activity, "index":index }).fire();
         
         component.set("v.isEditMode", false);
     },

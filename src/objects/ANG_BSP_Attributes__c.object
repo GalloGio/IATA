@@ -21,10 +21,6 @@
         <type>Default</type>
     </actionOverrides>
     <actionOverrides>
-        <actionName>Follow</actionName>
-        <type>Default</type>
-    </actionOverrides>
-    <actionOverrides>
         <actionName>List</actionName>
         <type>Default</type>
     </actionOverrides>
@@ -49,6 +45,7 @@
     <deploymentStatus>Deployed</deploymentStatus>
     <enableActivities>false</enableActivities>
     <enableBulkApi>true</enableBulkApi>
+    <enableChangeDataCapture>false</enableChangeDataCapture>
     <enableFeeds>false</enableFeeds>
     <enableHistory>false</enableHistory>
     <enableReports>false</enableReports>
@@ -74,89 +71,110 @@ V-Travel Service Intermediaries-TSI (USA Only)
 X-Handling Agents and Shipping Lines
 J-Joint Vent</inlineHelpText>
         <label>Class Type</label>
-        <picklist>
-            <picklistValues>
-                <fullName>A</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>C</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>D</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>E</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>G</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>I</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>K</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>M</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>N</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>O</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>P</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Q</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>R</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>S</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>T</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>V</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>X</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>J</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>W</fullName>
-                <default>false</default>
-            </picklistValues>
-            <restrictedPicklist>true</restrictedPicklist>
-            <sorted>false</sorted>
-        </picklist>
         <required>true</required>
         <trackTrending>false</trackTrending>
         <type>Picklist</type>
+        <valueSet>
+            <restricted>true</restricted>
+            <valueSetDefinition>
+                <sorted>false</sorted>
+                <value>
+                    <fullName>A</fullName>
+                    <default>false</default>
+                    <label>A</label>
+                </value>
+                <value>
+                    <fullName>C</fullName>
+                    <default>false</default>
+                    <label>C</label>
+                </value>
+                <value>
+                    <fullName>D</fullName>
+                    <default>false</default>
+                    <label>D</label>
+                </value>
+                <value>
+                    <fullName>E</fullName>
+                    <default>false</default>
+                    <label>E</label>
+                </value>
+                <value>
+                    <fullName>G</fullName>
+                    <default>false</default>
+                    <label>G</label>
+                </value>
+                <value>
+                    <fullName>I</fullName>
+                    <default>false</default>
+                    <label>I</label>
+                </value>
+                <value>
+                    <fullName>K</fullName>
+                    <default>false</default>
+                    <label>K</label>
+                </value>
+                <value>
+                    <fullName>M</fullName>
+                    <default>false</default>
+                    <label>M</label>
+                </value>
+                <value>
+                    <fullName>N</fullName>
+                    <default>false</default>
+                    <label>N</label>
+                </value>
+                <value>
+                    <fullName>O</fullName>
+                    <default>false</default>
+                    <label>O</label>
+                </value>
+                <value>
+                    <fullName>P</fullName>
+                    <default>false</default>
+                    <label>P</label>
+                </value>
+                <value>
+                    <fullName>Q</fullName>
+                    <default>false</default>
+                    <label>Q</label>
+                </value>
+                <value>
+                    <fullName>R</fullName>
+                    <default>false</default>
+                    <label>R</label>
+                </value>
+                <value>
+                    <fullName>S</fullName>
+                    <default>false</default>
+                    <label>S</label>
+                </value>
+                <value>
+                    <fullName>T</fullName>
+                    <default>false</default>
+                    <label>T</label>
+                </value>
+                <value>
+                    <fullName>V</fullName>
+                    <default>false</default>
+                    <label>V</label>
+                </value>
+                <value>
+                    <fullName>X</fullName>
+                    <default>false</default>
+                    <label>X</label>
+                </value>
+                <value>
+                    <fullName>J</fullName>
+                    <default>false</default>
+                    <label>J</label>
+                </value>
+                <value>
+                    <fullName>W</fullName>
+                    <default>false</default>
+                    <label>W</label>
+                </value>
+            </valueSetDefinition>
+        </valueSet>
     </fields>
     <fields>
         <fullName>Operation__c</fullName>
@@ -175,27 +193,44 @@ J-Joint Vent</inlineHelpText>
         <fullName>Remittance_Frequency__c</fullName>
         <description>Account&apos;s Remittance Frequency</description>
         <externalId>false</externalId>
-        <globalPicklist>ANG_Remittance_Frequency</globalPicklist>
         <label>Remittance Frequency</label>
         <required>true</required>
         <trackTrending>false</trackTrending>
         <type>Picklist</type>
+        <valueSet>
+            <restricted>true</restricted>
+            <valueSetName>ANG_Remittance_Frequency</valueSetName>
+        </valueSet>
     </fields>
     <fields>
         <fullName>Remittances_Per_Year__c</fullName>
         <description>Number of remittances per year to compute the most frequence value.</description>
         <externalId>false</externalId>
-        <formula>CASE( UPPER(TEXT(Remittance_Frequency__c)) , 
+        <formula>IF(Operation__r.Country__r.ISO_Code__c  &lt;&gt; &apos;CN&apos;,
+				
+    CASE( UPPER(TEXT(Remittance_Frequency__c)) , 
       
-      UPPER(&apos;Monthly&apos;) , 12,
-      UPPER(&apos;Fortnightly&apos;) , 24,
-      UPPER(&apos;Every 10 days&apos;) , 48,
-      UPPER(&apos;Weekly&apos;) , 52,
-      UPPER(&apos;Every 5 days&apos;) , 73,
-      UPPER(&apos;Every 3 days&apos;) , 122,
-      UPPER(&apos;Daily&apos;) , 300,
-      UPPER(&apos;4 times per month&apos;) , 48,
-0)</formula>
+          UPPER(&apos;M&apos;) , 12,
+          UPPER(&apos;F&apos;) , 24,
+          UPPER(&apos;R&apos;) , 48,
+          UPPER(&apos;V&apos;) , 52,
+          UPPER(&apos;S&apos;) , 73,
+          UPPER(&apos;B&apos;) , 122,
+				    	 UPPER(&apos;W&apos;) , 48,
+          UPPER(&apos;D&apos;) , 0,
+    0)
+				
+    , CASE( UPPER(TEXT(Remittance_Frequency__c)),
+						    UPPER(&apos;M&apos;) , 12,
+          UPPER(&apos;F&apos;) , 24,
+          UPPER(&apos;R&apos;) , 48,
+          UPPER(&apos;V&apos;) , 52,
+          UPPER(&apos;S&apos;) , 73,
+          UPPER(&apos;B&apos;) , 122,
+					     UPPER(&apos;W&apos;) , 48,
+          UPPER(&apos;D&apos;), 300,
+    0)
+)</formula>
         <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
         <label>Remittances Per Year</label>
         <precision>18</precision>
@@ -228,41 +263,6 @@ J-Joint Vent</inlineHelpText>
         <fullName>Remittance_Frequency</fullName>
         <active>true</active>
         <label>Remittance Frequency</label>
-        <picklistValues>
-            <picklist>ANG_Remittance_Frequency</picklist>
-            <values>
-                <fullName>4 times per month</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Daily</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Every 10 days</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Every 3 days</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Every 5 days</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Fortnightly</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Monthly</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Weekly</fullName>
-                <default>false</default>
-            </values>
-        </picklistValues>
         <picklistValues>
             <picklist>Class_Type__c</picklist>
             <values>
@@ -342,7 +342,43 @@ J-Joint Vent</inlineHelpText>
                 <default>false</default>
             </values>
         </picklistValues>
+        <picklistValues>
+            <picklist>Remittance_Frequency__c</picklist>
+            <values>
+                <fullName>B</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>D</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>F</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>M</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>R</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>S</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>V</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>W</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
     </recordTypes>
     <searchLayouts/>
     <sharingModel>ReadWrite</sharingModel>
+    <visibility>Public</visibility>
 </CustomObject>

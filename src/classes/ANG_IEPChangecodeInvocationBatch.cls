@@ -1,24 +1,20 @@
-global class ANG_IEPChangecodeInvocationBatch implements Database.Batchable<sObject>, Database.Stateful {
+public class ANG_IEPChangecodeInvocationBatch implements Database.Batchable<sObject>, Database.Stateful, Database.AllowsCallouts {
 
 	String query;
 
-	global Integer run;
+	public Integer run;
 
-	global List<String> changeCodesIATACodes;
-
-	global Map<String,ANG_CalloutMapping__c> changeCodeList;
-
-	global Map<String,Id> changeCodeIdMap;
+	public list<ANG_IEP_CalloutHelper.ANG_calloutHelperWrapper> recList;
 	
-	global ANG_IEPChangecodeInvocationBatch(Map<String,ANG_CalloutMapping__c> changeCodeListInput, Map<String,Id> changeCodeIdMapInput) {
+	
+	public ANG_IEPChangecodeInvocationBatch() {
+	}
+
+	public ANG_IEPChangecodeInvocationBatch(list<ANG_IEP_CalloutHelper.ANG_calloutHelperWrapper> recList) {
 		
-		this.changeCodeList = changeCodeListInput;
+		this.recList = new List<ANG_IEP_CalloutHelper.ANG_calloutHelperWrapper>(recList);
 
-		this.changeCodeIdMap = changeCodeIdMapInput;
-
-		changeCodesIATACodes = new List<String>(changeCodeList.keySet());
-
-		Integer queryResults = changeCodesIATACodes.size();
+		Integer queryResults = recList.size();
 
 		this.query = 'SELECT Id from Account LIMIT ' + queryResults;
 		
@@ -26,36 +22,32 @@ global class ANG_IEPChangecodeInvocationBatch implements Database.Batchable<sObj
 		
 	}
 	
-	global Database.QueryLocator start(Database.BatchableContext BC) {
+	public Database.QueryLocator start(Database.BatchableContext BC) {
 
 		return Database.getQueryLocator(query);
 	}
 
-   	global void execute(Database.BatchableContext BC, List<sObject> scope) {
-
-   		System.SavePoint sp;
+   	public void execute(Database.BatchableContext BC, List<sObject> scope) {
+   		system.debug('EXECUTING BATCH');
 
    		try{
 
    			this.run++;
-   			
-   			sp = Database.setSavePoint();
 
-   			String item = changeCodesIATACodes.get(run);
+   			ANG_IEP_CalloutHelper.ANG_calloutHelperWrapper item = recList.get(run);
 
-			ANG_IEP_CalloutHelper.invokeChangeCodeImpl(changeCodeList.get(item),item,changeCodeIdMap.get(item), true);
+			ANG_IEP_CalloutHelper.invokeChangeCodeImpl(item.calloutMapping,item.rec2Send,item.changeCodeId,item.agencyUpdateId,item.rec2Send.IATACode, true);
 
 		}catch(Exception e){
 			
-			Database.rollback(sp);throw e;
+			throw e;
 
 		}
-
 
 	}
 
 		//Finish Method
-	global void finish(Database.BatchableContext BC){}
+	public void finish(Database.BatchableContext BC){}
 	
 	
 }

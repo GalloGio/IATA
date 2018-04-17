@@ -41,7 +41,7 @@ private class AmazonFileTrgHelperTest {
     @isTest static void test_method_one() {
         // Implement test code
 
-        
+        Test.startTest();
         loadCredentials();
 
         RecordType IFAPcaseRecordType = [Select r.Id, r.Name from RecordType r where r.Name = 'IATA Financial Review' limit 1];
@@ -52,6 +52,8 @@ private class AmazonFileTrgHelperTest {
         insert AmzFile;
         
         delete AmzFile;
+		
+		Test.stopTest();
 
 
         list<AmazonFile__C> amzFiledelete = [SELECT Id FROM AmazonFile__C WHERE isDeleted =: true and id =: AmzFile.id All ROWS];

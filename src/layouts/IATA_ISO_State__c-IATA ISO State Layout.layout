@@ -26,6 +26,10 @@
                 <behavior>Edit</behavior>
                 <field>Valid_for_GDP__c</field>
             </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>ISO_CODE_STANDARD__c</field>
+            </layoutItems>
         </layoutColumns>
         <layoutColumns>
             <layoutItems>
