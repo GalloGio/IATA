@@ -138,16 +138,14 @@ public with sharing class ISSP_TIP_Home_Controller {
 
     private void fillProducts(){
         products = new List<productWrapper> ();
-        for(Partner_products__c p :[SELECT id, name, PP_Payment_network__c, PP_Effective_to_Date__c, PP_Effective_from_Date__c, PP_status__c
+        for(Partner_products__c p :[SELECT id, name, PP_Payment_Network__c, PP_Effective_to_Date__c, PP_Effective_from_Date__c, toLabel(PP_status__c)
           FROM Partner_products__c 
           WHERE Provider__c  = :con.AccountId
             AND recordtypeid = :TIP_PRODUCT_RECORD_TYPE_ID
             ORDER BY PP_status__c DESC]){
             
-            products.add(new productWrapper(p.id,p.name, p.PP_Payment_network__c,p.PP_Effective_to_Date__c,p.PP_Effective_from_Date__c, p.PP_status__c));
+            products.add(new productWrapper(p.id,p.name, p.PP_Payment_Network__c,p.PP_Effective_to_Date__c,p.PP_Effective_from_Date__c, p.PP_status__c));
         }
-
-
     }
 
     //##======================Sidekick classes=================================##
@@ -204,19 +202,19 @@ public with sharing class ISSP_TIP_Home_Controller {
         deletedBinRangeList= new list<TIP_BIN_Range__c>();
         String selectedProdId=System.currentPageReference().getParameters().get('prodId');
         if(!String.isBlank(selectedProdId)){
-            list<Partner_products__c> prodlist=[Select id,name,PP_Settlement_terms__c,PP_Issuer_name__c,is_PCI_DSS_required__c,PP_Chargeback_airlines__c,PP_Pay_in_model__c,PP_Category__c,PP_Banking_license__c,PP_Payment_network__c,PP_GDS_Integration__c,PP_VAN_type__c,PP_Interchange_fee__c,PP_Payment_guarantee__c,PP_Network_Fee__c,PP_Accepted_transactions__c,PP_Chargeback_airlines_duration__c,Provider__c,PP_status__c,PP_Payment_Product_Network_type__c,  
-                                                    (select id,TIP_Range_Start__c,TIP_Range_End__c,TIP_Status__c from BIN_Ranges__r) 
+            list<Partner_products__c> prodlist=[Select id,name,PP_Settlement_terms__c,PP_Issuer_name__c,is_PCI_DSS_required__c,PP_Chargeback_airlines__c,PP_Pay_in_model__c,PP_Category__c,PP_Banking_license__c,PP_Payment_Network__c,PP_GDS_Integration__c,PP_VAN_Type__c,PP_Interchange_fee__c,PP_Payment_guarantee__c,PP_Network_Fee__c,PP_Accepted_transactions__c,PP_Chargeback_airlines_duration__c,Provider__c,PP_status__c,PP_Payment_Product_Network_type__c,  
+                                                    (select id,TIP_Range_Start__c,TIP_Range_End__c,ToLabel(TIP_Status__c) from BIN_Ranges__r) 
                                                 from Partner_products__c where id=:selectedProdId];
             if(prodList.size()>0){
                 isNew=false;
                 newpp= prodlist.get(0);
-                editMode=newpp.PP_status__c!='Active';
+                editMode=newpp.PP_status__c!=TIP_Utils.PARTNER_PRODUCT_STATUS_ACTIVE;
                 integer pos=0;
 
                 acceptedTransactionVal=String.isBlank(newpp.PP_Accepted_transactions__c)?null:newpp.PP_Accepted_transactions__c.split(';');
                 paymentGuaranteeVal=String.isBlank(newpp.PP_Payment_guarantee__c)?null:newpp.PP_Payment_guarantee__c.split(';');
                 
-                binRangeLen= String.isBlank(newpp.PP_Payment_network__c)?0:paymentNetworkMap.get(newpp.PP_Payment_network__c);
+                binRangeLen= String.isBlank(newpp.PP_Payment_Network__c)?0:paymentNetworkMap.get(newpp.PP_Payment_Network__c);
                 for(TIP_BIN_Range__c tbr:newpp.BIN_Ranges__R){
                     binRangeList.add(new BinRangeRec(tbr,pos++,''));
                 }
@@ -232,7 +230,7 @@ public with sharing class ISSP_TIP_Home_Controller {
 
     public Pagereference cancelNewEditProd(){
         PageReference pr= Page.ISSP_TIP_Home;
-        pr.setRedirect(false);
+        pr.setRedirect(true);
         return pr;
     }
 
@@ -273,9 +271,9 @@ public with sharing class ISSP_TIP_Home_Controller {
         }
     }
     public void changePaymentNetwork(){
-        binRangeLen= String.isBlank(newpp.PP_Payment_network__c)?0:paymentNetworkMap.get(newpp.PP_Payment_network__c);
+        binRangeLen= String.isBlank(newpp.PP_Payment_Network__c)?0:paymentNetworkMap.get(newpp.PP_Payment_Network__c);
         system.debug('PF binRangeLen'+binRangeLen);
-        system.debug('PF newpp.PP_Payment_network__c'+newpp.PP_Payment_network__c);
+        system.debug('PF newpp.PP_Payment_Network__c'+newpp.PP_Payment_Network__c);
         for(binRangeRec brr:binRangeList){
             if(brr.binRange.TIP_Status__c=='Draft'){               
                 brr.binRange.TIP_Range_Start__c=brr.binRange.TIP_Range_Start__c.rightPad(Integer.ValueOf(binRangeLen),'0');
@@ -330,7 +328,7 @@ public with sharing class ISSP_TIP_Home_Controller {
                 list<TIP_BIN_Range__c> upsertBinRangeList= new list<TIP_BIN_Range__c>();
                 for(BinRangeRec tbr: binRangeList){
                     if(tbr.action !=''){
-                        tbr.binRange.TIP_Payment_Provider_Product__c =newpp.id;
+                        if(String.isBlank(tbr.binRange.id))tbr.binRange.TIP_Payment_Provider_Product__c =newpp.id;
                         upsertBinRangeList.add(tbr.binRange);   
                     }
                 }
@@ -344,7 +342,7 @@ public with sharing class ISSP_TIP_Home_Controller {
         }
 
         PageReference pr= Page.ISSP_TIP_Home;
-        pr.setRedirect(false);
+        pr.setRedirect(true);
         return pr;
 
     }

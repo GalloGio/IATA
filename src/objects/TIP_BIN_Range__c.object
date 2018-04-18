@@ -113,22 +113,22 @@
             <valueSetDefinition>
                 <sorted>false</sorted>
                 <value>
-                    <fullName>Active</fullName>
+                    <fullName>ACTIVE</fullName>
                     <default>false</default>
                     <label>Active</label>
                 </value>
                 <value>
-                    <fullName>Inactive</fullName>
+                    <fullName>INACTIVE</fullName>
                     <default>false</default>
                     <label>Inactive</label>
                 </value>
                 <value>
-                    <fullName>In Progress</fullName>
+                    <fullName>IN_PROGRESS</fullName>
                     <default>false</default>
                     <label>In Progress</label>
                 </value>
                 <value>
-                    <fullName>Draft</fullName>
+                    <fullName>DRAFT</fullName>
                     <default>false</default>
                     <label>Draft</label>
                 </value>
@@ -148,45 +148,25 @@
     </nameField>
     <pluralLabel>BIN Ranges</pluralLabel>
     <recordTypes>
-        <fullName>Listed_by_IATA</fullName>
+        <fullName>Enrolled</fullName>
         <active>true</active>
-        <label>Listed by IATA</label>
+        <label>Enrolled</label>
         <picklistValues>
             <picklist>TIP_Status__c</picklist>
             <values>
-                <fullName>Active</fullName>
+                <fullName>ACTIVE</fullName>
                 <default>false</default>
             </values>
             <values>
-                <fullName>In Progress</fullName>
+                <fullName>DRAFT</fullName>
                 <default>false</default>
             </values>
             <values>
-                <fullName>Inactive</fullName>
-                <default>false</default>
-            </values>
-        </picklistValues>
-    </recordTypes>
-    <recordTypes>
-        <fullName>Provider</fullName>
-        <active>true</active>
-        <label>Provider</label>
-        <picklistValues>
-            <picklist>TIP_Status__c</picklist>
-            <values>
-                <fullName>Active</fullName>
+                <fullName>INACTIVE</fullName>
                 <default>false</default>
             </values>
             <values>
-                <fullName>Draft</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>In Progress</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Inactive</fullName>
+                <fullName>IN_PROGRESS</fullName>
                 <default>false</default>
             </values>
         </picklistValues>
@@ -198,15 +178,35 @@
         <picklistValues>
             <picklist>TIP_Status__c</picklist>
             <values>
-                <fullName>Active</fullName>
+                <fullName>ACTIVE</fullName>
                 <default>false</default>
             </values>
             <values>
-                <fullName>In Progress</fullName>
+                <fullName>INACTIVE</fullName>
                 <default>false</default>
             </values>
             <values>
-                <fullName>Inactive</fullName>
+                <fullName>IN_PROGRESS</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+    </recordTypes>
+    <recordTypes>
+        <fullName>Unenrolled_Known</fullName>
+        <active>true</active>
+        <label>Unenrolled Known</label>
+        <picklistValues>
+            <picklist>TIP_Status__c</picklist>
+            <values>
+                <fullName>ACTIVE</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>INACTIVE</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>IN_PROGRESS</fullName>
                 <default>false</default>
             </values>
         </picklistValues>
