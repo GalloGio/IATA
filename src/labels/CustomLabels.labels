@@ -1025,6 +1025,22 @@
         <value>Country Concerned</value>
     </labels>
     <labels>
+        <fullName>OneId_ISSP_Troubleshooting</fullName>
+        <categories>OneId</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>OneId_ISSP_Troubleshooting</shortDescription>
+        <value>Troubleshooting</value>
+    </labels>
+    <labels>
+        <fullName>OneId_ISSP_Troubleshooting_Link</fullName>
+        <categories>OneId</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>OneId_ISSP_Troubleshooting_Link</shortDescription>
+        <value>https://portal.iata.org/faq/articles/en_US/How_To/Customer-Portal-Troubleshooting</value>
+    </labels>
+    <labels>
         <fullName>ANG_ISSP_CountryRequirementsGoBack</fullName>
         <categories>ISSP</categories>
         <language>en_US</language>

@@ -256,9 +256,30 @@ global without sharing class Comm_User_Helper {
     }
 
 
-    public static  Map<String, String> ISSP_PassWordBuilMessageWrapper(contact con , string password , string link, String commName){
+    // OneIdEnh CSP-ID002: entry point for older methods without service name
+    public static  Map<String, String> ISSP_PassWordBuilMessageWrapper(contact con , string password , string link, String commName) {
+        return ISSP_PassWordBuilMessageWrapper(con, password, link, commName, '');
+    }
+    
+    public static  Map<String, String> ISSP_PassWordBuilMessageWrapper(contact con , string password , string link, String commName, string serviceName){
       String portalName = 'IATA';
       if(commName =='CNS'){portalName='CNS';}
+
+        // OneIdEnh CSP-ID002: set OneId/ISSP specific values
+        String imageURL = Label.OneId_Email_Header_Identity;   // OneId default header image URL
+        String communityName = commName;
+        if(commName == ONEIDENTITY) {
+            // Get header image based on the service name
+            String headerImgName = 'OneIdentity_Email_Header' + ((serviceName == '')? '': ('_' + serviceName));
+            list<Document> doc = [Select id, Name, SystemModStamp From Document Where DeveloperName = :headerImgName];
+            if(doc.size() > 0)
+                // Build the header image URL from the document information
+              imageURL = URL.getSalesforceBaseUrl().getProtocol()+'://'+System.URL.getSalesforceBaseUrl().getHost().remove('-api' )+'/servlet/servlet.ImageServer?id='+doc[0].id+'&oid='+userinfo.getorganizationid();            
+            // If there is a service name, that should determine the community name
+            if(serviceName != '') commName = serviceName;
+            else communityName = 'Identity';
+        }
+        if(commName != ONEIDENTITY) communityName = portalName + ' Customer Portal';
 
         Map<String, String> mapBodyParamsIssp = new map<String,String>{
 
@@ -267,17 +288,15 @@ global without sharing class Comm_User_Helper {
             '{!Receiving_User.FirstName}' =>con.Firstname,
             '{!Receiving_User.LastName}' => con.LastName,
             '{!Receiving_User.Email}' => con.Email,
-            '{!Community_Name}' => portalName + ' Customer Portal',
+            '{!Community_Name}' => communityName,
             '{!Community_Url}' => link, 
+            '{!Community_Header}' => imageURL,
             '{!$Label.ISSP_Email_Here}' => 'here',
             '{!$Label.ISSP_Email_do_not_reply}' => Label.ISSP_Email_do_not_reply,
             '{!$Label.OneId_IATA_represent_lead_and_serve_the_airline_industry}' => Label.OneId_IATA_represent_lead_and_serve_the_airline_industry
         };
-
+            
         return mapBodyParamsIssp;
-  
-                
-
     }
     
     public static void sendEmail( string emailTemplateDeveloperName , Map<String, String> mapBodyParamsIssp, Contact con, String commName){
@@ -375,7 +394,7 @@ global without sharing class Comm_User_Helper {
          } catch (exception ex) {
              system.debug('kerensen - Site.createPortalUser(u, accountId,null, true):');
        
-           //TransformationHelper.sendSFDevsAlertMessage('USersID   ' +USersID  + '     ' + ex.getMessage(),'' +' ' + ex.getMessage() + '   ' + ex.getStackTraceString() , new list<string>{'sfdcadmin@iata.org'});
+           //TransformationHelper.sendSFDevsAlertMessage('USersID   ' +USersID  + '     ' + ex.getMessage(),'' +' ' + ex.getMessage() + '   ' + ex.getStackTraceString() , new list<string>{'salvatore.viticchie@b-i.com'});
         }
     
     }
@@ -468,8 +487,15 @@ global without sharing class Comm_User_Helper {
             
         }
     }
-     
+    
+    
+    // OneIdEnh CSP-ID002: entry point for older methods without service name
     public static boolean resetPassword(String email, string Community, Boolean bccCS) {
+        return resetPassword(email, Community, bccCs, '');
+    }
+     
+    // OneIdEnh CSP-ID002: new entry point with service name
+    public static boolean resetPassword(String email, string Community, Boolean bccCS, string serviceName) {
         //site.
         try {   
             String template;
@@ -527,11 +553,15 @@ global without sharing class Comm_User_Helper {
               else if(Community == ONEIDENTITY) {
                   system.debug('prepare email body for: ' + ONEIDENTITY);
                   string prefix = OneIdUtils.getSiteCompleteUrl();
-                  link = prefix + '/s/login?'+encodedPart;
+                  link = prefix + '/s/IdentityFirstLogin?'+encodedPart;
                   //template = 'Communities_Forgot_Password_Email3';
                   template = 'Identity_Changed_Password_Email_Custom';
                   //system.debug('basto1p: password='+password);
-                  emailWrap = Comm_User_Helper.ISSP_PassWordBuilMessageWrapper( con ,  password ,  link, ONEIDENTITY);
+                  // OneIdEnh CSP-ID002: Change parameters according to service name
+                  if(serviceName == ISSP)
+                      link = 'https://' + String.ValueOF(ISSP_CS__c.getValues('Host').value__c) + '/ISSP_First_Login?'+encodedPart;
+                  // OneIdEnh CSP-ID002: Added service name to method call
+                  emailWrap = Comm_User_Helper.ISSP_PassWordBuilMessageWrapper( con ,  password ,  link, ONEIDENTITY, ServiceName);
               }
 
               system.debug('template used in email: '+template);
