@@ -194,11 +194,11 @@
         <fields>NAME</fields>
         <fields>PP_Payment_Product_Code__c</fields>
         <fields>BIN_Range__c</fields>
-        <fields>PP_status__c</fields>
+        <fields>PP_Status__c</fields>
         <fields>PP_Effective_from_Date__c</fields>
         <fields>PP_Effective_to_Date__c</fields>
-        <fields>PP_Form_of_payment__c</fields>
-        <fields>PP_Payment_network__c</fields>
+        <fields>PP_Form_of_Payment__c</fields>
+        <fields>PP_Payment_Network__c</fields>
         <relatedList>Partner_products__c.Provider__c</relatedList>
     </relatedLists>
     <relatedLists>

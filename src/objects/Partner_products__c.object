@@ -264,12 +264,12 @@
                     <label>Prepaid</label>
                 </value>
                 <value>
-                    <fullName>PAY NOW</fullName>
+                    <fullName>PAY_NOW</fullName>
                     <default>false</default>
                     <label>Pay Now</label>
                 </value>
                 <value>
-                    <fullName>PAY LATER</fullName>
+                    <fullName>PAY_LATER</fullName>
                     <default>false</default>
                     <label>Pay Later</label>
                 </value>
@@ -449,12 +449,12 @@ If the product is a multi-use VANs, then it is a unique card/account number that
             <valueSetDefinition>
                 <sorted>false</sorted>
                 <value>
-                    <fullName>Single Use VAN</fullName>
+                    <fullName>SINGLE_USE_VAN</fullName>
                     <default>false</default>
                     <label>Single Use VAN</label>
                 </value>
                 <value>
-                    <fullName>Multi Use VAN</fullName>
+                    <fullName>MULTI_USE_VAN</fullName>
                     <default>false</default>
                     <label>Multi Use VAN</label>
                 </value>
@@ -576,11 +576,11 @@ If the product is a multi-use VANs, then it is a unique card/account number that
         <picklistValues>
             <picklist>PP_Pay_in_Model__c</picklist>
             <values>
-                <fullName>PAY LATER</fullName>
+                <fullName>PAY_LATER</fullName>
                 <default>false</default>
             </values>
             <values>
-                <fullName>PAY NOW</fullName>
+                <fullName>PAY_NOW</fullName>
                 <default>false</default>
             </values>
             <values>
@@ -659,11 +659,11 @@ If the product is a multi-use VANs, then it is a unique card/account number that
         <picklistValues>
             <picklist>PP_VAN_Type__c</picklist>
             <values>
-                <fullName>Multi Use VAN</fullName>
+                <fullName>MULTI_USE_VAN</fullName>
                 <default>false</default>
             </values>
             <values>
-                <fullName>Single Use VAN</fullName>
+                <fullName>SINGLE_USE_VAN</fullName>
                 <default>false</default>
             </values>
         </picklistValues>
