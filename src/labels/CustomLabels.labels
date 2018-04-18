@@ -21059,7 +21059,7 @@ This Dashboard allows each airline Treasury Team to gain full visibility of thei
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>ISSP TIP Submit case to IATA to update bin range</shortDescription>
-        <value>Please &lt;a style=&quot;color:blue &quot; href=&quot;?openBinRangeCase=????&quot;&gt;Submit a case to IATA&lt;/a&gt; to request to update the BIN Ranges for this product</value>
+        <value>Please &lt;a style=&quot;color:blue &quot; href=&quot;/ISSP_FAQ2Case?topic=TIP%20HelpDesk&quot;&gt;Submit a case to IATA&lt;/a&gt; to request to update the BIN Ranges for this product</value>
     </labels>
     <labels>
         <fullName>ISSP_TOULink</fullName>

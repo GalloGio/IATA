@@ -266,15 +266,15 @@
                                         
                                         <apex:column >
                                             <apex:outputPanel rendered="{!item.status != 'Draft'}">
-                                                <apex:commandLink style="margin-right:5px"  rendered="{!(isAdmin && isPaymentProvider)}" action="{!NewEditProduct}">
-                                                <span class="glyphicon glyphicon-pencil"/>View/Update
+                                                <apex:commandLink style="margin-right:5px" title="View/Update" rendered="{!(isAdmin && isPaymentProvider)}" action="{!NewEditProduct}">
+                                                <span class="glyphicon glyphicon-eye-open "/> 
                                                 <apex:param name="prodId" value="{!item.id}"/>
                                                 </apex:commandLink>
                                             </apex:outputPanel>
 
                                             <apex:outputPanel rendered="{!item.status == 'Draft'}">
-                                                <apex:commandLink style="margin-right:5px" rendered="{!(isAdmin && isPaymentProvider)}" action="{!NewEditProduct}">
-                                                    <span class="glyphicon glyphicon-pencil"/> Edit
+                                                <apex:commandLink style="margin-right:5px" title="Edit" rendered="{!(isAdmin && isPaymentProvider)}" action="{!NewEditProduct}">
+                                                    <span class="glyphicon glyphicon-pencil"/> 
                                                     <apex:param name="prodId" value="{!item.id}"/>
                                                 </apex:commandLink>
                                             </apex:outputPanel>
