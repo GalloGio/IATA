@@ -2299,7 +2299,7 @@ public class AMS_OSCARTriggerHandler {
 
     }
     
-    @TestVisible private static Map<String, Id> ANGemailTemplates(String agencyType, String step, boolean wasApproved){
+    public static Map<String, Id> ANGemailTemplates(String agencyType, String step, boolean wasApproved){
 
         Map<String, Id> multilangTemplates = new Map<String, Id>();
 
@@ -2324,6 +2324,7 @@ public class AMS_OSCARTriggerHandler {
         else if(agencyType == AMS_Utils.NGOPTINOUT && step == AMS_Utils.PASSED && !wasApproved) templateId  = 'ANG_Financial_Assesment_Opt_out_App';
         else if(agencyType == AMS_Utils.NGOPTINOUT && step == AMS_Utils.FAILED && wasApproved) templateId  = 'ANG_Financial_Assesment_Opt_in_DIS';
         else if(agencyType == AMS_Utils.NGOPTINOUT && step == AMS_Utils.FAILED && !wasApproved) templateId  = 'ANG_Financial_Assesment_Opt_out_DIS';
+        else if(agencyType == AMS_Utils.NGFOP && step == null ) templateId  = 'ANG_FOP_OSCARCREATION';
 
         //Get the templates for NG accreditation outcoume
         List<EmailTemplate> etNG = Database.query('SELECT Id, DeveloperName, HtmlValue, Subject FROM EmailTemplate WHERE DeveloperName LIKE \'' + templateId + '%\'' );
