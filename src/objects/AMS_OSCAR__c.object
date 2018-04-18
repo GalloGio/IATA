@@ -2627,6 +2627,11 @@ Format: YYYY</inlineHelpText>
                     <default>false</default>
                     <label>Nil CC</label>
                 </value>
+                <value>
+                    <fullName>Corporate Card</fullName>
+                    <default>false</default>
+                    <label>Corporate Card</label>
+                </value>
             </valueSetDefinition>
         </valueSet>
     </fields>
@@ -7407,7 +7412,7 @@ if(Change_effective_as_of__c - today() &gt; 0,&quot;30&quot;,&quot;0&quot;)))</f
             </valueSetDefinition>
         </valueSet>
     </fields>
-	<fields>
+    <fields>
         <fullName>ANG_FA_Opt_out__c</fullName>
         <description>Financial Assessment opt-out flag for Newgen - this means if the Agent opted out from Financial Review.</description>
         <externalId>false</externalId>
@@ -7810,7 +7815,7 @@ if(Change_effective_as_of__c - today() &gt; 0,&quot;30&quot;,&quot;0&quot;)))</f
     <pluralLabel>OSCARs</pluralLabel>
     <recordTypeTrackFeedHistory>false</recordTypeTrackFeedHistory>
     <recordTypeTrackHistory>false</recordTypeTrackHistory>
-	<recordTypes>
+    <recordTypes>
         <fullName>ANG_FS_OPTINOUT</fullName>
         <active>true</active>
         <description>Financial assessment opt-out and opt-in record type</description>
@@ -10993,7 +10998,7 @@ if(Change_effective_as_of__c - today() &gt; 0,&quot;30&quot;,&quot;0&quot;)))</f
                 <default>false</default>
             </values>
         </picklistValues>
-    </recordTypes>	
+    </recordTypes>  
     <recordTypes>
         <fullName>ANG_Agency_Changes</fullName>
         <active>true</active>
@@ -34258,7 +34263,11 @@ if(Change_effective_as_of__c - today() &gt; 0,&quot;30&quot;,&quot;0&quot;)))</f
                 <fullName>Yes</fullName>
                 <default>false</default>
             </values>
-        </picklistValues>
+            <values>
+                <fullName>Corporate Card</fullName>
+                <default>false</default>
+            </values>
+            </picklistValues>
         <picklistValues>
             <picklist>Local_Inspection_compliant__c</picklist>
             <values>
@@ -37417,6 +37426,10 @@ if(Change_effective_as_of__c - today() &gt; 0,&quot;30&quot;,&quot;0&quot;)))</f
             </values>
             <values>
                 <fullName>Yes</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Corporate Card</fullName>
                 <default>false</default>
             </values>
         </picklistValues>
@@ -41498,25 +41511,25 @@ if(Change_effective_as_of__c - today() &gt; 0,&quot;30&quot;,&quot;0&quot;)))</f
         <fullName>AMS_PCI_Expiry_Date_Required</fullName>
         <active>true</active>
         <errorConditionFormula>AND(
-	OR(
-		TEXT(Is_PCI_compliant__c) = &apos;Yes&apos;,
-		TEXT(Is_PCI_compliant__c) = &apos;Nil CC&apos;
-	),
-	OR(
-		AND(
-			TEXT(Process__c) == &apos;PCI.COMPLIANT.1.0&apos;,
-			RecordType.DeveloperName = &apos;CERTIFICATION&apos;,
-			ISBLANK(ANG_PCI_compliance_expiry_date__c)
-		),
-		AND(
-			RecordType.DeveloperName = &apos;NEW&apos;,
-			ISBLANK(ANG_PCI_compliance_expiry_date__c),
-			OR(
-				TEXT(Process__c) == &apos;NEW.HO.1.0&apos;,
-				TEXT(Process__c) == &apos;NEW.BR&apos;
-			)
-		)	
-	)
+    OR(
+        TEXT(Is_PCI_compliant__c) = &apos;Yes&apos;,
+        TEXT(Is_PCI_compliant__c) = &apos;Nil CC&apos;
+    ),
+    OR(
+        AND(
+            TEXT(Process__c) == &apos;PCI.COMPLIANT.1.0&apos;,
+            RecordType.DeveloperName = &apos;CERTIFICATION&apos;,
+            ISBLANK(ANG_PCI_compliance_expiry_date__c)
+        ),
+        AND(
+            RecordType.DeveloperName = &apos;NEW&apos;,
+            ISBLANK(ANG_PCI_compliance_expiry_date__c),
+            OR(
+                TEXT(Process__c) == &apos;NEW.HO.1.0&apos;,
+                TEXT(Process__c) == &apos;NEW.BR&apos;
+            )
+        )   
+    )
 )</errorConditionFormula>
         <errorMessage>You must determine a PCI compliance expiry date</errorMessage>
     </validationRules>
