@@ -66,7 +66,7 @@ public with sharing class ISSP_TIP_Home_Controller {
     public List<selectOption> acceptedTransactionsOptList{
         get{        
             List<SelectOption> acceptedTransactionsOptList = new List<SelectOption>();      
-            for( Schema.PicklistEntry f : Partner_products__c.PP_Accepted_transactions__c.getDescribe().getPicklistValues()) acceptedTransactionsOptList.add(new SelectOption(f.getLabel(), f.getValue()));
+            for( Schema.PicklistEntry f : Partner_products__c.PP_Accepted_transactions__c.getDescribe().getPicklistValues()) acceptedTransactionsOptList.add(new SelectOption(f.getValue(), f.getLabel()));
             return acceptedTransactionsOptList;
         }
         set;}
