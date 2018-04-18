@@ -922,6 +922,7 @@
         <fullName>GSS_File_Naming_Convention1</fullName>
         <columns>NAME</columns>
         <columns>File_Naming_Convention__c</columns>
+        <columns>Frequency__c</columns>
         <filterScope>Everything</filterScope>
         <filters>
             <field>Is_Reference__c</field>
@@ -934,11 +935,16 @@
             <value>GSS</value>
         </filters>
         <filters>
-            <field>File_Naming_Convention__c</field>
-            <operation>contains</operation>
-            <value>Suffix]&amp;</value>
+            <field>Frequency__c</field>
+            <operation>equals</operation>
+            <value>Daily</value>
         </filters>
-        <label>GSS_File_Naming_Convention_&amp;</label>
+        <filters>
+            <field>NAME</field>
+            <operation>notContain</operation>
+            <value>CAC</value>
+        </filters>
+        <label>GSS_File_Naming_Convention_Daily</label>
         <language>en_US</language>
     </listViews>
     <listViews>
