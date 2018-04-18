@@ -146,8 +146,8 @@
                                         <apex:pageBlockSectionItem labelStyle="width:26%" labelStyleClass="agencyLegalDetailsComponent" dataStyleClass="agencyLegalDetailsComponent" >
                                             <apex:outputLabel value="{!$ObjectType.Partner_products__c.fields.is_PCI_DSS_required__c.Label}*"/>
                                             <apex:selectRadio style="width:100px;margin-left:20px;" value="{!newpp.is_PCI_DSS_required__c}" readonly="{!!editMode}">
-                                                <apex:selectOption itemValue="Yes" itemLabel="{!$Label.ISSP_Yes}" itemDisabled="{!!editMode}"/>
-                                                <apex:selectOption itemValue="Not Applicable" itemLabel="{!$Label.ISSP_No}"  itemDisabled="{!!editMode}"/>
+                                                <apex:selectOption itemValue="{!UPPER($Label.ISSP_Yes)}" itemLabel="{!$Label.ISSP_Yes}" itemDisabled="{!!editMode}"/>
+                                                <apex:selectOption itemValue="{!UPPER($Label.ISSP_No)}" itemLabel="{!$Label.ISSP_No}"  itemDisabled="{!!editMode}"/>
                                             </apex:selectRadio>
                                         </apex:pageBlockSectionItem>
                                         <apex:pageBlockSectionItem labelStyle="width:26%" labelStyleClass="agencyLegalDetailsComponent" dataStyleClass="agencyLegalDetailsComponent" >
@@ -190,11 +190,11 @@
                                             </apex:outputPanel>
                                         </apex:pageBlockSectionItem>
                                         <apex:pageBlockSectionItem labelStyle="width:26%" labelStyleClass="agencyLegalDetailsComponent" dataStyleClass="agencyLegalDetailsComponent" >
-                                            <apex:outputLabel value="{!$ObjectType.Partner_products__c.fields.PP_Payment_network__c.Label}"/>
+                                            <apex:outputLabel value="{!$ObjectType.Partner_products__c.fields.PP_Payment_Network__c.Label}"/>
                                             <apex:outputPanel >                                        
                                                 <apex:actionFunction name="paymentNetworkChange" oncomplete="enableBinRangeBtn();" action="{!changePaymentNetwork}" reRender="binTable"/>
-                                                <apex:inputField id="paymentNet" value="{!newpp.PP_Payment_network__c}" onchange="paymentNetworkChange();" rendered="{!editMode}" styleClass="sectionItem"/>
-                                                <apex:outputField value="{!newpp.PP_Payment_network__c}" rendered="{!!editMode}"/>
+                                                <apex:inputField id="paymentNet" value="{!newpp.PP_Payment_Network__c}" onchange="paymentNetworkChange();" rendered="{!editMode}" styleClass="sectionItem"/>
+                                                <apex:outputField value="{!newpp.PP_Payment_Network__c}" rendered="{!!editMode}"/>
                                             </apex:outputPanel>
                                         </apex:pageBlockSectionItem>
                                         <apex:pageBlockSectionItem labelStyle="width:26%" labelStyleClass="agencyLegalDetailsComponent" dataStyleClass="agencyLegalDetailsComponent" >
@@ -205,10 +205,10 @@
                                             </apex:outputPanel>
                                         </apex:pageBlockSectionItem>
                                         <apex:pageBlockSectionItem labelStyle="width:26%" labelStyleClass="agencyLegalDetailsComponent" dataStyleClass="agencyLegalDetailsComponent" >
-                                            <apex:outputLabel value="{!$ObjectType.Partner_products__c.fields.PP_VAN_type__c.Label}*"/>
+                                            <apex:outputLabel value="{!$ObjectType.Partner_products__c.fields.PP_VAN_Type__c.Label}*"/>
                                             <apex:outputPanel >                                        
-                                                <apex:inputField value="{!newpp.PP_VAN_type__c}" rendered="{!editMode}" styleClass="sectionItem"/>
-                                                <apex:outputField value="{!newpp.PP_VAN_type__c}" rendered="{!!editMode}"/>
+                                                <apex:inputField value="{!newpp.PP_VAN_Type__c}" rendered="{!editMode}" styleClass="sectionItem"/>
+                                                <apex:outputField value="{!newpp.PP_VAN_Type__c}" rendered="{!!editMode}"/>
                                             </apex:outputPanel>
                                         </apex:pageBlockSectionItem>
                                         <apex:pageBlockSectionItem labelStyle="width:26%" labelStyleClass="agencyLegalDetailsComponent" dataStyleClass="agencyLegalDetailsComponent" >
