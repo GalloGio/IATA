@@ -113,17 +113,6 @@
         <unique>false</unique>
     </fields>
     <fields>
-        <fullName>TIP_Issuing_Currency__c</fullName>
-        <externalId>false</externalId>
-        <inlineHelpText>Primary Currency and Secondary Currency fields per country . This should also be a criteria. The provider should accept at least one of the currencies valid in the BSPs where the product is available. This should be checked by IATA manually.</inlineHelpText>
-        <label>Issuing Currency</label>
-        <length>4</length>
-        <required>false</required>
-        <trackTrending>false</trackTrending>
-        <type>Text</type>
-        <unique>false</unique>
-    </fields>
-    <fields>
         <fullName>TIP_Product__c</fullName>
         <externalId>false</externalId>
         <label>TIP Product</label>
@@ -148,19 +137,24 @@
             <valueSetDefinition>
                 <sorted>false</sorted>
                 <value>
-                    <fullName>Active</fullName>
+                    <fullName>ACTIVE</fullName>
                     <default>false</default>
                     <label>Active</label>
                 </value>
                 <value>
-                    <fullName>Inactive</fullName>
+                    <fullName>INACTIVE</fullName>
                     <default>false</default>
                     <label>Inactive</label>
                 </value>
                 <value>
-                    <fullName>In Progress</fullName>
+                    <fullName>IN_PROGRESS</fullName>
                     <default>false</default>
                     <label>In Progress</label>
+                </value>
+                <value>
+                    <fullName>DRAFT</fullName>
+                    <default>false</default>
+                    <label>Draft</label>
                 </value>
             </valueSetDefinition>
         </valueSet>
