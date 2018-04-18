@@ -10506,6 +10506,11 @@ Approval: Key Contact can see pending request approve it one by one</inlineHelpT
                     <default>false</default>
                     <label>Nil CC</label>
                 </value>
+                <value>
+                    <fullName>Corporate Card</fullName>
+                    <default>false</default>
+                    <label>Corporate Card</label>
+                </value>
             </valueSetDefinition>
         </valueSet>
     </fields>
@@ -35847,6 +35852,10 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
         </picklistValues>
         <picklistValues>
             <picklist>Is_PCI_compliant__c</picklist>
+            <values>
+                <fullName>Corporate Card</fullName>
+                <default>false</default>
+            </values>
             <values>
                 <fullName>Nil CC</fullName>
                 <default>false</default>
