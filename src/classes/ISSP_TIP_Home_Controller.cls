@@ -208,7 +208,7 @@ public with sharing class ISSP_TIP_Home_Controller {
             if(prodList.size()>0){
                 isNew=false;
                 newpp= prodlist.get(0);
-                editMode=newpp.PP_status__c!='Active';
+                editMode=newpp.PP_status__c!=TIP_Utils.PARTNER_PRODUCT_STATUS_ACTIVE;
                 integer pos=0;
 
                 acceptedTransactionVal=String.isBlank(newpp.PP_Accepted_transactions__c)?null:newpp.PP_Accepted_transactions__c.split(';');
