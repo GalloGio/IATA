@@ -578,7 +578,7 @@
                     Note! if NO, it will be the airline's sole responsibility to process any eventual credit card payment based on the DPC report (= HOT file if subscribed as indicated above).<br/>
                 </div>
                 <div id="noECCBNewProcess" class="bg-warning" style="{!IF (AND(IsNewCountryProcess,newForm.Join_BSP_ECCB__c == 'No'), 'border: 0px !important;', 'display:none')}">
-                    Please remember that ECCB is now self-service in BSPLink. If the airline does not want to use ECCB; it will be the airline’s sole responsibility to process any eventual credit card payment based on the DPC reportsy<br/>
+                    Please remember that ECCB is now self-service in BSPLink. If the airline does not want to use ECCB; it will be the airline’s sole responsibility to process any eventual credit card payment based on the DPC reports<br/>
                 </div>
                 <div class="aplabel" id="merchantnumbers" style="{!IF (AND(NOT(IsNewCountryProcess),newForm.Join_BSP_ECCB__c == 'Yes'), 'border: 0px !important;', 'display:none')}">        
                     
