@@ -227,9 +227,10 @@ public with sharing class AMS_OSCAR_TestDataFactory
 
 		AMS_Accreditation_Contact__c acontact3 = new AMS_Accreditation_Contact__c(AMS_Pax_Accreditation_Form__c = stagingArea.Id, First_name__c='Daff', Last_name__c='Duck', Valid_until__c = Date.today().addYears(2), Type_Of_Certificate__c = AMS_Utils.CERT_CATA, RecordTypeId=trainedStaff);
 
-		AMS_Accreditation_Contact__c acontact4 = new AMS_Accreditation_Contact__c(AMS_Pax_Accreditation_Form__c = stagingArea.Id, First_name__c='Beaky', Last_name__c='Buzzard', Valid_until__c = Date.today().addYears(2), Type_Of_Certificate__c = AMS_Utils.CERT_TSA, RecordTypeId=trainedStaff);
+		//AMS_Accreditation_Contact__c acontact4 = new AMS_Accreditation_Contact__c(AMS_Pax_Accreditation_Form__c = stagingArea.Id, First_name__c='Beaky', Last_name__c='Buzzard', Valid_until__c = Date.today().addYears(2), Type_Of_Certificate__c = AMS_Utils.CERT_TSA, RecordTypeId=trainedStaff);
 
-		insert new List<AMS_Accreditation_Contact__c>{acontact1,acontact2,acontact3,acontact4};
+		//insert new List<AMS_Accreditation_Contact__c>{acontact1,acontact2,acontact3,acontact4};
+		insert new List<AMS_Accreditation_Contact__c>{acontact1,acontact2,acontact3};
 
 	}
 

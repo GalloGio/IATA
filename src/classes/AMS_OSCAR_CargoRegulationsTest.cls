@@ -29,7 +29,7 @@
         	update oscar;
         	
         	aregs = [SELECT Id, Notification_sent__c, Account__c, Type_Of_Certificate__c FROM AMS_Agency_Regulation__c WHERE Account__c = :oscar.Account__c];
-        	system.assertEquals(4, aregs.size());
+            system.assertEquals(3, aregs.size());
 
         	//force DGR renewal oscar creation
         	for(AMS_Agency_Regulation__c areg : aregs){
@@ -107,7 +107,7 @@
         }
         
         List<AMS_Agency_Regulation__c> aregs = [SELECT Id, Account__c, Type_Of_Certificate__c FROM AMS_Agency_Regulation__c WHERE Account__c = :oscar.Account__c];
-        system.assertEquals(4, aregs.size());
+        system.assertEquals(3, aregs.size());
 
         //force DGR renewal oscar creation
         aregs[0].Notification_sent__c = true;
@@ -152,7 +152,7 @@
         	update oscar;
 
         	List<AMS_Agency_Regulation__c> aregs = [SELECT Id, Type_Of_Certificate__c FROM AMS_Agency_Regulation__c WHERE Account__c = :oscar.Account__c];
-        	system.assertEquals(4, aregs.size());
+            system.assertEquals(3, aregs.size());
 
 
             //force DGR renewal oscar creation
