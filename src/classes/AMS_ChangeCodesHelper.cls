@@ -499,7 +499,7 @@ public class AMS_ChangeCodesHelper {
             AMS_OSCAR_JSON.ChangeCode changeCode = new AMS_OSCAR_JSON.ChangeCode();
 
             changeCode.name = config.Change_Code__c;
-            changeCode.memoText = (config.Bulletin_Memo_Text__c + ' ' + config.Bulletin_Memo_Text2__c + ' ' + config.Bulletin_Memo_Text3__c).replaceAll(' null', '').replaceAll('#DATE#', oscar.Change_Effective_as_of__c.format()).replaceAll('#CLASS#', acc.Location_Class__c == 'R' ? 'Cass Associate' : 'Agent');
+            changeCode.memoText = (config.Bulletin_Memo_Text__c + ' ' + config.Bulletin_Memo_Text2__c + ' ' + config.Bulletin_Memo_Text3__c).replaceAll('null', '').replaceAll('#DATE#', oscar.Change_Effective_as_of__c.format()).replaceAll('#CLASS#', acc.Location_Class__c == 'R' ? 'Cass Associate' : 'Agent').trim();
             changeCode.publishedOnEBulletin = config.Published_in_bulletin__c;
 
             if(String.isEmpty(config.Account_status_change__c)){
