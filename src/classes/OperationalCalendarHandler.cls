@@ -267,7 +267,7 @@ public with sharing class OperationalCalendarHandler {
             }
             this.ISSOperationName = this.bspCass + '-' + this.country;
             this.currencyCode = listParts[3];
-            this.frequency = operation.Period_Code__c.right(1);
+            this.frequency = operation.Period_Code__c==null? '': operation.Period_Code__c.right(1);
         }
         
         public void setISSOperation(Id ISSOperationId) {
