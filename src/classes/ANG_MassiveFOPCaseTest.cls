@@ -15,6 +15,16 @@ private class ANG_MassiveFOPCaseTest {
         Contact co1 = new Contact(AccountId = acct.id, Firstname = 'John', Lastname='Rambo', Phone = '666123456', MobilePhone = '911111111', Email = 'rambo.johnj@test.com', Financial_Assessment_Contact__c = true);
 		insert co1;
 
+		insert new Notification_template__c (
+			Subject__c = 'Some subject',
+			Message__c = 'Some message #CONTACTNAME #IATACODE #TODAY30 #CASENUMBER',
+			Type__c = 'Information',
+			Notification_color__c = '#FF5E4D',
+			Admins_Users__c = 'User',
+			Expire_in_days__c = 0,
+			Identifier__c = 'NG_FOP_PortalNotification'
+		);
+
 	}
 	
 	@isTest static void test_method_two() {

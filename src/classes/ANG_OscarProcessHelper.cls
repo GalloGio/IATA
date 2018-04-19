@@ -885,8 +885,18 @@ global class ANG_OscarProcessHelper {
 
 		Contact keyContact;
 
+		Map<Id,Account> accountMap = new Map<Id,Account>();
+
+		Notification_Template__c notificationTemplate = null;
+
+		List<Notification_Template__c> notificationTemplates = [SELECT Id,Name, Identifier__c FROM Notification_Template__c WHERE Identifier__c ='NG_FOP_PortalNotification' LIMIT 1];
+
+		if(!notificationTemplates.isEmpty())
+			notificationTemplate = notificationTemplates.get(0);
 		//Case:
 		for(Account acc : accs){
+
+			accountMap.put(acc.Id,acc);
 
 			System.debug('[ANG_OscarProcessHelper.createPCIComplianceOscars] - Inserting PCI Oscar for Account: '+acc.Id+' - '+acc.Name+' - '+acc.IataCode__c);
 
@@ -966,10 +976,20 @@ global class ANG_OscarProcessHelper {
 		if(!casesToUpdate.isEmpty())
 			update casesToUpdate;
 
+	    Map<Id,Case> casesMaps = new Map<Id,Case>();
+
+
+	    for(Case c: [Select Id, AccountId, Casenumber from Case where Id in :casesToUpdate])
+	    	casesMaps.put(c.AccountId, c);
+
+	    Set<Account> acctSet = new Set<Account>();
+
 		for (Account acc: accs){
 		// fields needed on contact: Id, Name, Email, Preferred_Language__c, BSP_CASS_Payment_contact__c, Financial_Assessment_Contact__c
 
 			if(accsToSendEmail.contains(acc.Id)){
+
+				acctSet.add(acc);
 
 				StaticResource  sr = [Select body, name from StaticResource where Name = 'ANG_NilCreditCardSelfDeclaration'].get(0);
 
@@ -992,14 +1012,60 @@ global class ANG_OscarProcessHelper {
 
 					attachments = new Messaging.EmailFileAttachment[]{attach};
 				}
+
 	            AMS_AgencyRegulationAutoRenewal.sendEmailAlert(new List<Contact>{accOscarObjsMap.get(acc.Id).con}, accOscarObjsMap.get(acc.Id).oscar.Id, AMS_OSCARTriggerHandler.ANGemailTemplates(AMS_Utils.NGFOP, null, true), accOscarObjsMap.get(acc.Id).oscar.Oscar_Communication_Case_Id__c, owea[0], false, attachments);			
+				
 			}
 
 			System.debug('[ANG_OscarProcessHelper.createPCIComplianceOscars] - Finished Inserting oscars: '+ accOscarObjsMap.get(acc.id).oscar.Id + ' | Case: '+accOscarObjsMap.get(acc.id).cse.Id);
 		}
 
+		if(notificationTemplate <> null)
+			createPortalNotifications(acctSet,casesMaps,notificationTemplate);
+
         return casesToUpdate;
     }
+
+    private static void createPortalNotifications(Set<Account> acctSet,  Map<Id,Case> acctIdCasesMap, Notification_Template__c notificationTemplate){
+		
+		List<Contact> contactsToSend = new List<Contact>();
+		Map<Id,Id> contactAccts = new Map<Id,Id>();
+		Map<Id,Contact> contactsMap = new Map<Id,Contact>();
+		List<String> contactNot = new List<String>();
+		Map<Id,Account> accounts = new Map<Id,Account>();
+
+		for(Account acc: acctSet){
+			contactsToSend.add(acc.Contacts);
+			accounts.put(acc.Id,acc);
+		}
+
+    	for(Contact c: contactsToSend){
+    		contactNot.add(c.Id+':'+notificationTemplate.Name);
+			contactAccts.put(c.Id,c.AccountId);
+    		contactsMap.put(c.Id,c);
+
+    	}
+
+    	List<Notification__c> notifications = new List<Notification__c>();
+
+		for(Notification__c nt : ISSP_CreateNotification.createnotification(contactNot, false)){
+				
+			Account acct = accounts.get(contactAccts.get(nt.Contact__c));
+
+			String casenumbmer = acctIdCasesMap.get(contactAccts.get(nt.Contact__c)).CaseNumber;
+
+			nt.Message__c = nt.Message__c
+				.replace('#CONTACTNAME', contactsMap.get(nt.Contact__c).Name)
+				.replace('#IATACODE', acct.IataCode__c)
+				.replace('#TODAY30',String.valueOf(Datetime.now().format('dd/MM/yyyy')))
+				.replace('#CASENUMBER',acctIdCasesMap.get(contactAccts.get(nt.Contact__c)).CaseNumber);
+				
+				notifications.add(nt);
+    	}		
+
+		if(!notifications.isEmpty()) insert notifications;
+
+	}
 
 	private static Contact fetchKeyContactForPCI(Account acc, List<Contact> contacts){
 
