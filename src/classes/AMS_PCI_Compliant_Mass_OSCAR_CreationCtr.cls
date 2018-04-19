@@ -199,7 +199,7 @@ public with sharing class AMS_PCI_Compliant_Mass_OSCAR_CreationCtr{
     public void createOSCARs() {
 
         if(operation == 'PCI') batchId = Database.executeBatch(new AMS_PCI_Complaint_Batch(1, null, accountIds), 1);
-        //if(operation == 'FOP') batchId = Database.executeBatch(new ANG_MassiveFOPCaseCreationBatch(accountIds), 1);
+        if(operation == 'FOP') batchId = Database.executeBatch(new ANG_MassiveFOPCaseCreationBatch(accountIds), 1);
 
         startTime = System.now();
         isBatchRunning = true;
