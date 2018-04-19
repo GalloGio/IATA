@@ -8,6 +8,9 @@ global class ANG_Migration_MassRMECallout {
     public boolean bHasSuccess							{get; set;}
     public string sType 								{get; set;}
     
+    public map<integer, list<RMEResponseWrapper>> mapRMEWrapperWSOk	{get; set;}
+    public map<integer, list<RMEResponseWrapper>> mapRMEWrapperWSErr	{get; set;}
+    
     public list<selectOption> lsCountry	{get{
     		lsCountry = new list<SelectOption>();
     		lsCountry.add(new selectOption('-','None'));
@@ -16,12 +19,27 @@ global class ANG_Migration_MassRMECallout {
     		
     		return lsCountry;
     	} set;}
+    	
+    public list<selectOption> lsTypeOfCall	{get{
+    		lsTypeOfCall = new list<SelectOption>();
+    		lsTypeOfCall.add(new selectOption('Country','Search by country'));
+    		lsTypeOfCall.add(new selectOption('AccountID','Search by Account IDs'));
+    		lsTypeOfCall.add(new selectOption('IATACode','Search by IATA Codes'));
+    		return lsTypeOfCall;
+    	} set;}
+    
+    public string TypeOfCall	{get; set;}
+    public string lsCodeOrId	{get; set;}
     
     public ANG_Migration_MassRMECallout(){
         selectedCnt = '-';
+        TypeOfCall = 'Country';
+        lsCodeOrId = '';
         if(bHasError==null) bHasError = false;
         if(lsRMEWrapperWSOK==null) lsRMEWrapperWSOK = new  list<RMEResponseWrapper>();
         if(lsRMEWrapperWSErr==null) lsRMEWrapperWSErr = new  list<RMEResponseWrapper>();
+        if(mapRMEWrapperWSOk==null) mapRMEWrapperWSOk = new  map<integer, list<RMEResponseWrapper>>();
+        if(mapRMEWrapperWSErr==null) mapRMEWrapperWSErr = new  map<integer, list<RMEResponseWrapper>>();
         if(bHasSuccess==null) bHasSuccess = false;
         sType = '';
     }
@@ -45,9 +63,20 @@ global class ANG_Migration_MassRMECallout {
     	map<id, ANG_RHC_Information__c> mapRHC = new map<id, ANG_RHC_Information__c>();
     	for(ANG_RHC_Information__c rhc:[select id, ANG_ConsumedRHC__c, ANG_ConsumedRHC_Last_Update__c, ANG_Provisional_RHC_Last_Update__c, ANG_ConsumedRHC_Percent__c, ANG_RHC_Amount_Provisional__c, CurrencyIsoCode from ANG_RHC_Information__c where id in:setRHCId])
     		 mapRHC.put(rhc.Id,  rhc);
-    	
+    	integer IndexMap = 1;
+    	integer iCounter = 1;
     	//Enrich wrapper with data just got from RME
     	for(RMEResponseWrapper rw:lsRMEWrapperTmp){
+    		IndexMap = integer.valueOf(iCounter/1000);
+    		list<RMEResponseWrapper> tmpLSOk;
+    		list<RMEResponseWrapper> tmpLSErr;
+    		
+    		if(mapRMEWrapperWSErr.containsKey(IndexMap)) tmpLSErr = mapRMEWrapperWSErr.get(IndexMap);
+    		else tmpLSErr = new list<RMEResponseWrapper>();
+    		
+    		if(mapRMEWrapperWSOk.containsKey(IndexMap)) tmpLSOk = mapRMEWrapperWSOk.get(IndexMap);
+    		else tmpLSOk = new list<RMEResponseWrapper>();
+    		
     		if(rw.RHCId != null){
     			if(mapRHC.containsKey(rw.RHCId)){
 	    			rw.ProvAmnt = mapRHC.get(rw.RHCId).ANG_RHC_Amount_Provisional__c;
@@ -64,13 +93,19 @@ global class ANG_Migration_MassRMECallout {
     		
     		if(rw.isSuccess){
     			bHasSuccess = true;
+    			tmpLSOk.add(rw);
+    			mapRMEWrapperWSOk.put(IndexMap, tmpLSOk);
     			lsRMEWrapperWSOK.add(rw);
     		}else{
     			bHasError = true;
+    			tmpLSErr.add(rw);
+    			mapRMEWrapperWSErr.put(IndexMap, tmpLSErr);
+    			
     			lsRMEWrapperWSErr.add(rw);
     		}
+    		
+    		iCounter++;
     	}
-    	
     	lsRMEWrapperTmp = null;
     	setRHCId = null;
     	theSerializedResultFromRME =  null;
@@ -87,9 +122,9 @@ global class ANG_Migration_MassRMECallout {
     	public string RHCId			{get; set;}
     	public string AccntId		{get; set;}
     	public string sCurrency		{get; set;}
-    	public double ProvAmnt		{get; set;}
-    	public double ConsumedRHC	{get; set;}
-    	public double ConsumedRHCPerc	{get; set;}
+    	public decimal ProvAmnt		{get; set;}
+    	public decimal ConsumedRHC	{get; set;}
+    	public decimal ConsumedRHCPerc	{get; set;}
     	public string sLastUpd		{get; set;}
     	public string sType			{get; set;}
     }
@@ -122,18 +157,32 @@ global class ANG_Migration_MassRMECallout {
 	
 	
 	webservice static WebserviceResult requestBalanceUpdate(String accountId){
-		Account acc = [SELECT Id, IATACode__c, (SELECT Id, CurrencyIsoCode, ANG_ConsumedRHC__c, ANG_ConsumedRHC_Percent__c, ANG_ConsumedRHC_Last_Update__c, ANG_AccountId__c FROM RHC_Informations__r) FROM Account where Id = :accountId];
+		Account acc = [SELECT Id, IATACode__c, (SELECT Id, CurrencyIsoCode, ANG_ConsumedRHC__c, ANG_RHC_Amount__c, ANG_ConsumedRHC_Percent__c, ANG_ConsumedRHC_Last_Update__c, ANG_AccountId__c FROM RHC_Informations__r) FROM Account where Id = :accountId];
 		WebserviceResult result = doRequest(acc.IATACode__c, 'BTN_Bal'); //results are saved on the private varible "result"
 		if(result.isSuccess){
-			try{
-				ANG_RHC_Information__c rhcInfo = acc.RHC_Informations__r[0];
-				rhcInfo.ANG_ConsumedRHC__c = result.res.consumedRHCAmount;
-				rhcInfo.ANG_ConsumedRHC_Percent__c = result.res.consumedRHCPercentage*100;
-				rhcInfo.ANG_ConsumedRHC_Last_Update__c = result.res.eventTime.date();
-				update rhcInfo;
-			}catch(Exception e) {
+			if(result.res.iataCode != acc.IATACode__c){
 				result.isSuccess = false;
-				result.description = 'Error while updating RHC Information: ' + e.getMessage();
+				result.description = 'Iata Code Mismatch. Sent: ' + acc.IATACode__c + '; Received ' + result.res.iataCode;
+			}
+			else if (result.res.storedBaseCurrency != acc.RHC_Informations__r[0].CurrencyIsoCode){
+				result.isSuccess = false;
+				result.description = 'RHC Currency mismatch. RHC Currency set: ' + acc.RHC_Informations__r[0].CurrencyIsoCode + '; Received ' + result.res.storedBaseCurrency;
+			}
+			else if(result.res.storedRHCValue != acc.RHC_Informations__r[0].ANG_RHC_Amount__c){
+				result.isSuccess = false;
+				result.description = 'RHC Amount Mismatch. RHC Amount set: ' + acc.RHC_Informations__r[0].ANG_RHC_Amount__c + '; Received ' + result.res.storedRHCValue;
+			}
+			else{
+				try{
+					ANG_RHC_Information__c rhcInfo = acc.RHC_Informations__r[0];
+					rhcInfo.ANG_ConsumedRHC__c = result.res.consumedRHCAmount;
+					rhcInfo.ANG_ConsumedRHC_Percent__c = result.res.consumedRHCPercentage*100;
+					rhcInfo.ANG_ConsumedRHC_Last_Update__c = result.res.eventTime.date();
+					update rhcInfo;
+				}catch(Exception e) {
+					result.isSuccess = false;
+					result.description = 'Error while updating RHC Information: ' + e.getMessage();
+				}
 			}
 		}
 
@@ -151,7 +200,11 @@ global class ANG_Migration_MassRMECallout {
 			}
 			else if (result.res.storedBaseCurrency != acc.RHC_Informations__r[0].CurrencyIsoCode){
 				result.isSuccess = false;
-				result.description = 'Iata Code Mismatch. RHC Currency set: ' + acc.RHC_Informations__r[0].CurrencyIsoCode + '; Received ' + result.res.storedBaseCurrency;
+				result.description = 'RHC Currency Mismatch. RHC Currency set: ' + acc.RHC_Informations__r[0].CurrencyIsoCode + '; Received ' + result.res.storedBaseCurrency;
+			}
+			else if(result.res.storedRHCValue != acc.RHC_Informations__r[0].ANG_RHC_Amount__c){
+				result.isSuccess = false;
+				result.description = 'RHC Amount Mismatch. RHC Amount set: ' + acc.RHC_Informations__r[0].ANG_RHC_Amount__c + '; Received ' + result.res.storedRHCValue;
 			}
 			else{
 				try{

@@ -275,7 +275,7 @@ public with sharing class ISSP_Ctrl_Country_Requirements {
 
 
     public boolean getNewLayout() {
-        return (sector == 'Travel Agent' || sector == 'Cargo Agent');
+        return ((sector == 'Travel Agent' && category != 'GSA General Sales Agent') || sector == 'Cargo Agent');
     }
 
     public List<AMS_Accreditation_Requirement__c> getCountryRequirementsList() {

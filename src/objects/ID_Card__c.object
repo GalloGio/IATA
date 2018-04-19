@@ -173,11 +173,6 @@ two record types:
                     <label>Preapproved</label>
                 </value>
                 <value>
-                    <fullName>Printed/Delivered</fullName>
-                    <default>false</default>
-                    <label>Printed/Delivered</label>
-                </value>
-                <value>
                     <fullName>Cancelled ID Card</fullName>
                     <default>false</default>
                     <label>Cancelled ID Card</label>
@@ -1112,15 +1107,15 @@ IF(TODAY()&lt;= Valid_To_Date__c, TRUE,FALSE)
                 <default>false</default>
             </values>
             <values>
-                <fullName>Preapproved</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Printed%2FDelivered</fullName>
+                <fullName>Expired ID Card</fullName>
                 <default>false</default>
             </values>
             <values>
                 <fullName>Sent ID Card</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Valid ID Card</fullName>
                 <default>false</default>
             </values>
         </picklistValues>

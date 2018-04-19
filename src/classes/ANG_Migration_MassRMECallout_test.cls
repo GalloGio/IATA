@@ -27,6 +27,7 @@ private class ANG_Migration_MassRMECallout_test {
 		ANG_Migration_MassRMECallout ctrl = new ANG_Migration_MassRMECallout();
 		
 		list<selectOption> lsCntr = ctrl.lsCountry;
+		list<selectOption> lsTypeOfCall = ctrl.lsTypeOfCall;
 		ANG_Migration_MassRMECallout.WebserviceResult result = ANG_Migration_MassRMECallout.SendRequestToRME(null, null);
 		
 		PageReference p = ctrl.NewSearch();
@@ -35,7 +36,7 @@ private class ANG_Migration_MassRMECallout_test {
 	}
 	
 	
-	static testMethod void test_ConsumedRHC_KO(){
+	static testMethod void test_ConsumedRHC_OK(){
 		Account acc = [SELECT Id, IATACode__c, (SELECT Id, CurrencyIsoCode, ANG_RHC_Amount__c, ANG_RME_Amount__c, ANG_RHC_Amount_Provisional__c, ANG_Provisional_RHC_Last_Update__c, ANG_AccountId__c FROM RHC_Informations__r) FROM Account limit 1];
 		PageReference pageRef = Page.ANG_Migration_MassRMECallout;
 		Test.setCurrentPage(pageRef);
@@ -47,6 +48,83 @@ private class ANG_Migration_MassRMECallout_test {
 		message.eventTime = System.now();
 		message.consumedRHCAmount = 200;
 		message.consumedRHCPercentage = 0.12345;
+		message.storedBaseCurrency = acc.RHC_Informations__r[0].CurrencyIsoCode;
+		message.storedRHCValue = acc.RHC_Informations__r[0].ANG_RHC_Amount__c;
+		
+		Test.setMock(HttpCalloutMock.class, new HttpResponseGenerator(200, JSON.serialize(message)));
+
+		Test.startTest();	
+			ANG_Migration_MassRMECallout.RMEResponseWrapper RMEWR = mapMessage('ConsumedRHC', ANG_Migration_MassRMECallout.SendRequestToRME(acc.Id, 'ConsumedRHC'), message, acc);
+			ctrl.theSerializedResultFromRME = json.Serialize(new list<ANG_Migration_MassRMECallout.RMEResponseWrapper>{RMEWR});
+			PageReference p = ctrl.AfterCallout();
+		Test.stopTest();
+
+	}
+	
+	static testMethod void test_ConsumedRHC_KO_IATACode(){
+		Account acc = [SELECT Id, IATACode__c, (SELECT Id, CurrencyIsoCode, ANG_RHC_Amount__c, ANG_RME_Amount__c, ANG_RHC_Amount_Provisional__c, ANG_Provisional_RHC_Last_Update__c, ANG_AccountId__c FROM RHC_Informations__r) FROM Account limit 1];
+		PageReference pageRef = Page.ANG_Migration_MassRMECallout;
+		Test.setCurrentPage(pageRef);
+		
+		ANG_Migration_MassRMECallout ctrl = new ANG_Migration_MassRMECallout();
+		
+		ANG_Migration_MassRMECallout.RHCMessage message = new ANG_Migration_MassRMECallout.RHCMessage();
+		message.iataCode = '11111111';
+		message.eventTime = System.now();
+		message.consumedRHCAmount = 200;
+		message.consumedRHCPercentage = 0.12345;
+		message.storedBaseCurrency = acc.RHC_Informations__r[0].CurrencyIsoCode;
+		message.storedRHCValue = acc.RHC_Informations__r[0].ANG_RHC_Amount__c;
+		
+		Test.setMock(HttpCalloutMock.class, new HttpResponseGenerator(200, JSON.serialize(message)));
+
+		Test.startTest();	
+			ANG_Migration_MassRMECallout.RMEResponseWrapper RMEWR = mapMessage('ConsumedRHC', ANG_Migration_MassRMECallout.SendRequestToRME(acc.Id, 'ConsumedRHC'), message, acc);
+			ctrl.theSerializedResultFromRME = json.Serialize(new list<ANG_Migration_MassRMECallout.RMEResponseWrapper>{RMEWR});
+			PageReference p = ctrl.AfterCallout();
+		Test.stopTest();
+
+	}
+	
+	static testMethod void test_ConsumedRHC_KO_DiffCurrency(){
+		Account acc = [SELECT Id, IATACode__c, (SELECT Id, CurrencyIsoCode, ANG_RHC_Amount__c, ANG_RME_Amount__c, ANG_RHC_Amount_Provisional__c, ANG_Provisional_RHC_Last_Update__c, ANG_AccountId__c FROM RHC_Informations__r) FROM Account limit 1];
+		PageReference pageRef = Page.ANG_Migration_MassRMECallout;
+		Test.setCurrentPage(pageRef);
+		
+		ANG_Migration_MassRMECallout ctrl = new ANG_Migration_MassRMECallout();
+		
+		ANG_Migration_MassRMECallout.RHCMessage message = new ANG_Migration_MassRMECallout.RHCMessage();
+		message.iataCode = '1234562';
+		message.eventTime = System.now();
+		message.consumedRHCAmount = 200;
+		message.consumedRHCPercentage = 0.12345;
+		message.storedBaseCurrency = 'NOK';
+		message.storedRHCValue = acc.RHC_Informations__r[0].ANG_RHC_Amount__c;
+		
+		Test.setMock(HttpCalloutMock.class, new HttpResponseGenerator(200, JSON.serialize(message)));
+
+		Test.startTest();	
+			ANG_Migration_MassRMECallout.RMEResponseWrapper RMEWR = mapMessage('ConsumedRHC', ANG_Migration_MassRMECallout.SendRequestToRME(acc.Id, 'ConsumedRHC'), message, acc);
+			ctrl.theSerializedResultFromRME = json.Serialize(new list<ANG_Migration_MassRMECallout.RMEResponseWrapper>{RMEWR});
+			PageReference p = ctrl.AfterCallout();
+		Test.stopTest();
+
+	}
+	
+	static testMethod void test_ConsumedRHC_KO_DiffRHCAmount(){
+		Account acc = [SELECT Id, IATACode__c, (SELECT Id, CurrencyIsoCode, ANG_RHC_Amount__c, ANG_RME_Amount__c, ANG_RHC_Amount_Provisional__c, ANG_Provisional_RHC_Last_Update__c, ANG_AccountId__c FROM RHC_Informations__r) FROM Account limit 1];
+		PageReference pageRef = Page.ANG_Migration_MassRMECallout;
+		Test.setCurrentPage(pageRef);
+		
+		ANG_Migration_MassRMECallout ctrl = new ANG_Migration_MassRMECallout();
+		
+		ANG_Migration_MassRMECallout.RHCMessage message = new ANG_Migration_MassRMECallout.RHCMessage();
+		message.iataCode = '1234562';
+		message.eventTime = System.now();
+		message.consumedRHCAmount = 200;
+		message.consumedRHCPercentage = 0.12345;
+		message.storedBaseCurrency = acc.RHC_Informations__r[0].CurrencyIsoCode;
+		message.storedRHCValue = -1000;
 		
 		Test.setMock(HttpCalloutMock.class, new HttpResponseGenerator(200, JSON.serialize(message)));
 
@@ -70,6 +148,7 @@ private class ANG_Migration_MassRMECallout_test {
 		message.eventTime = System.now();
 		message.provisionalRHC = 200;
 		message.storedBaseCurrency = acc.RHC_Informations__r[0].CurrencyIsoCode;
+		message.storedRHCValue = acc.RHC_Informations__r[0].ANG_RHC_Amount__c;
 		
 		Test.setMock(HttpCalloutMock.class, new HttpResponseGenerator(200, JSON.serialize(message)));
 
@@ -92,6 +171,7 @@ private class ANG_Migration_MassRMECallout_test {
 		message.eventTime = System.now();
 		message.provisionalRHC = 200;
 		message.storedBaseCurrency = 'NOK';
+		message.storedRHCValue = acc.RHC_Informations__r[0].ANG_RHC_Amount__c;
 		
 		Test.setMock(HttpCalloutMock.class, new HttpResponseGenerator(200, JSON.serialize(message)));
 
@@ -114,6 +194,30 @@ private class ANG_Migration_MassRMECallout_test {
 		message.eventTime = System.now();
 		message.provisionalRHC = 200;
 		message.storedBaseCurrency = acc.RHC_Informations__r[0].CurrencyIsoCode;
+		message.storedRHCValue = acc.RHC_Informations__r[0].ANG_RHC_Amount__c;
+		
+		Test.setMock(HttpCalloutMock.class, new HttpResponseGenerator(200, JSON.serialize(message)));
+
+		Test.startTest();
+			ANG_Migration_MassRMECallout.RMEResponseWrapper RMEWR = mapMessage('ProvisionalRHC', ANG_Migration_MassRMECallout.SendRequestToRME(acc.Id, 'ProvisionalRHC'), message, acc);
+			ctrl.theSerializedResultFromRME = json.Serialize(new list<ANG_Migration_MassRMECallout.RMEResponseWrapper>{RMEWR});
+			PageReference p = ctrl.AfterCallout();
+		Test.stopTest();
+	}
+	
+	static testMethod void test_ProvisionalRHC_KO_DiffAmount(){
+		Account acc = [SELECT Id, IATACode__c, (SELECT Id, CurrencyIsoCode, ANG_RHC_Amount__c, ANG_RME_Amount__c, ANG_RHC_Amount_Provisional__c, ANG_Provisional_RHC_Last_Update__c, ANG_AccountId__c FROM RHC_Informations__r) FROM Account limit 1];
+		PageReference pageRef = Page.ANG_Migration_MassRMECallout;
+		Test.setCurrentPage(pageRef);
+		
+		ANG_Migration_MassRMECallout ctrl = new ANG_Migration_MassRMECallout();
+		
+		ANG_Migration_MassRMECallout.RHCMessage message = new ANG_Migration_MassRMECallout.RHCMessage();
+		message.iataCode = '1234562';
+		message.eventTime = System.now();
+		message.provisionalRHC = 200;
+		message.storedBaseCurrency = acc.RHC_Informations__r[0].CurrencyIsoCode;
+		message.storedRHCValue = -1000;
 		
 		Test.setMock(HttpCalloutMock.class, new HttpResponseGenerator(200, JSON.serialize(message)));
 
@@ -139,6 +243,7 @@ private class ANG_Migration_MassRMECallout_test {
 		message.eventTime = System.now();
 		message.provisionalRHC = 200;
 		message.storedBaseCurrency = acc.RHC_Informations__r[0].CurrencyIsoCode;
+		message.storedRHCValue = acc.RHC_Informations__r[0].ANG_RHC_Amount__c;
 		
 		Test.setMock(HttpCalloutMock.class, new HttpResponseGenerator(200, JSON.serialize(message)));
 
@@ -161,6 +266,7 @@ private class ANG_Migration_MassRMECallout_test {
 		message.eventTime = System.now();
 		message.provisionalRHC = 20000;
 		message.storedBaseCurrency = acc.RHC_Informations__r[0].CurrencyIsoCode;
+		message.storedRHCValue = acc.RHC_Informations__r[0].ANG_RHC_Amount__c;
 		
 		Test.setMock(HttpCalloutMock.class, new HttpResponseGenerator(200, JSON.serialize(message)));
 
@@ -183,6 +289,7 @@ private class ANG_Migration_MassRMECallout_test {
 		message.eventTime = System.now();
 		message.provisionalRHC = 200;
 		message.storedBaseCurrency = acc.RHC_Informations__r[0].CurrencyIsoCode;
+		message.storedRHCValue = acc.RHC_Informations__r[0].ANG_RHC_Amount__c;
 		
 		Test.setMock(HttpCalloutMock.class, new HttpResponseGenerator(404, JSON.serialize(message)));
 

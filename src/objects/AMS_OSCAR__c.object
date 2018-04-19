@@ -198,6 +198,39 @@
         <type>Lookup</type>
     </fields>
     <fields>
+        <fullName>ANG_FA_Opt_out__c</fullName>
+        <description>Financial Assessment opt-out flag for Newgen - this means if the Agent opted out from Financial Review.</description>
+        <externalId>false</externalId>
+        <inlineHelpText>Financial Assessment opt-out flag for Newgen - this means if the Agent opted out from Financial Review.</inlineHelpText>
+        <label>Financial assessment opt-in / opt-out</label>
+        <required>false</required>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Picklist</type>
+        <valueSet>
+            <restricted>true</restricted>
+            <valueSetDefinition>
+                <sorted>false</sorted>
+                <value>
+                    <fullName>Opt-In</fullName>
+                    <default>false</default>
+                    <label>Opt-In</label>
+                </value>
+                <value>
+                    <fullName>Opt-Out</fullName>
+                    <default>false</default>
+                    <label>Opt-Out</label>
+                </value>
+                <value>
+                    <fullName>Not Applicable</fullName>
+                    <default>true</default>
+                    <label>Not Applicable</label>
+                </value>
+            </valueSetDefinition>
+        </valueSet>
+    </fields>
+    <fields>
         <fullName>ANG_PCI_compliance_expiry_date__c</fullName>
         <description>PCI compliance expiry date</description>
         <externalId>false</externalId>
@@ -7412,39 +7445,6 @@ if(Change_effective_as_of__c - today() &gt; 0,&quot;30&quot;,&quot;0&quot;)))</f
             </valueSetDefinition>
         </valueSet>
     </fields>
-    <fields>
-        <fullName>ANG_FA_Opt_out__c</fullName>
-        <description>Financial Assessment opt-out flag for Newgen - this means if the Agent opted out from Financial Review.</description>
-        <externalId>false</externalId>
-        <inlineHelpText>Financial Assessment opt-out flag for Newgen - this means if the Agent opted out from Financial Review.</inlineHelpText>
-        <label>Financial assessment opt-in / opt-out</label>
-        <required>false</required>
-        <trackFeedHistory>false</trackFeedHistory>
-        <trackHistory>false</trackHistory>
-        <trackTrending>false</trackTrending>
-        <type>Picklist</type>
-        <valueSet>
-            <restricted>true</restricted>
-            <valueSetDefinition>
-                <sorted>false</sorted>
-                <value>
-                    <fullName>Opt-In</fullName>
-                    <default>false</default>
-                    <label>Opt-In</label>
-                </value>
-                <value>
-                    <fullName>Opt-Out</fullName>
-                    <default>false</default>
-                    <label>Opt-Out</label>
-                </value>
-                <value>
-                    <fullName>Not Applicable</fullName>
-                    <default>true</default>
-                    <label>Not Applicable</label>
-                </value>
-            </valueSetDefinition>
-        </valueSet>
-    </fields>
     <label>OSCAR</label>
     <listViews>
         <fullName>AGM_GDC_MAD_MIA_migrated_AMS_OSCAR</fullName>
@@ -7816,10 +7816,10 @@ if(Change_effective_as_of__c - today() &gt; 0,&quot;30&quot;,&quot;0&quot;)))</f
     <recordTypeTrackFeedHistory>false</recordTypeTrackFeedHistory>
     <recordTypeTrackHistory>false</recordTypeTrackHistory>
     <recordTypes>
-        <fullName>ANG_FS_OPTINOUT</fullName>
+        <fullName>ANG_Agency_Changes</fullName>
         <active>true</active>
-        <description>Financial assessment opt-out and opt-in record type</description>
-        <label>ANG.FS.OPTINOUT</label>
+        <description>New Gen Agency Changes Record Type</description>
+        <label>NG Agency Changes</label>
         <picklistValues>
             <picklist>AML_result__c</picklist>
             <values>
@@ -7855,6 +7855,21 @@ if(Change_effective_as_of__c - today() &gt; 0,&quot;30&quot;,&quot;0&quot;)))</f
             </values>
         </picklistValues>
         <picklistValues>
+            <picklist>ANG_FA_Opt_out__c</picklist>
+            <values>
+                <fullName>Not Applicable</fullName>
+                <default>true</default>
+            </values>
+            <values>
+                <fullName>Opt-In</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Opt-Out</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
             <picklist>ANG_Sanity_checks__c</picklist>
             <values>
                 <fullName>Failed</fullName>
@@ -7880,7 +7895,7 @@ if(Change_effective_as_of__c - today() &gt; 0,&quot;30&quot;,&quot;0&quot;)))</f
                 <default>false</default>
             </values>
             <values>
-                <fullName>Legal Name</fullName>
+                <fullName>Legal name</fullName>
                 <default>false</default>
             </values>
             <values>
@@ -8754,6 +8769,10 @@ if(Change_effective_as_of__c - today() &gt; 0,&quot;30&quot;,&quot;0&quot;)))</f
         <picklistValues>
             <picklist>Is_PCI_compliant__c</picklist>
             <values>
+                <fullName>Nil CC</fullName>
+                <default>false</default>
+            </values>
+            <values>
                 <fullName>No</fullName>
                 <default>false</default>
             </values>
@@ -8776,7 +8795,7 @@ if(Change_effective_as_of__c - today() &gt; 0,&quot;30&quot;,&quot;0&quot;)))</f
         <picklistValues>
             <picklist>Process__c</picklist>
             <values>
-                <fullName>ANG.FS.OPTINOUT</fullName>
+                <fullName>ANG%2EMAJOR%2ECHANGES%2E1%2E0</fullName>
                 <default>false</default>
             </values>
         </picklistValues>
@@ -8788,18 +8807,6 @@ if(Change_effective_as_of__c - today() &gt; 0,&quot;30&quot;,&quot;0&quot;)))</f
             </values>
             <values>
                 <fullName>Authorize Disapproval</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Not Started</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Reject Disapproval</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Reject approval</fullName>
                 <default>false</default>
             </values>
             <values>
@@ -10722,6 +10729,44 @@ if(Change_effective_as_of__c - today() &gt; 0,&quot;30&quot;,&quot;0&quot;)))</f
             </values>
         </picklistValues>
         <picklistValues>
+            <picklist>STEP41__c</picklist>
+            <values>
+                <fullName>Failed</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>In Progress</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Not Applicable</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Passed</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>STEP42__c</picklist>
+            <values>
+                <fullName>Failed</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>In Progress</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Not Applicable</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Passed</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
             <picklist>STEP4__c</picklist>
             <values>
                 <fullName>Failed</fullName>
@@ -10983,27 +11028,12 @@ if(Change_effective_as_of__c - today() &gt; 0,&quot;30&quot;,&quot;0&quot;)))</f
                 <default>false</default>
             </values>
         </picklistValues>
-        <picklistValues>
-            <picklist>ANG_FA_Opt_out__c</picklist>
-            <values>
-                <fullName>Not Applicable</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Opt-In</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Opt-Out</fullName>
-                <default>false</default>
-            </values>
-        </picklistValues>
-    </recordTypes>  
+    </recordTypes>
     <recordTypes>
-        <fullName>ANG_Agency_Changes</fullName>
+        <fullName>ANG_FS_OPTINOUT</fullName>
         <active>true</active>
-        <description>New Gen Agency Changes Record Type</description>
-        <label>NG Agency Changes</label>
+        <description>Financial assessment opt-out and opt-in record type</description>
+        <label>ANG.FS.OPTINOUT</label>
         <picklistValues>
             <picklist>AML_result__c</picklist>
             <values>
@@ -11035,6 +11065,21 @@ if(Change_effective_as_of__c - today() &gt; 0,&quot;30&quot;,&quot;0&quot;)))</f
             </values>
             <values>
                 <fullName>LET</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>ANG_FA_Opt_out__c</picklist>
+            <values>
+                <fullName>Not Applicable</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Opt-In</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Opt-Out</fullName>
                 <default>false</default>
             </values>
         </picklistValues>
@@ -11938,6 +11983,10 @@ if(Change_effective_as_of__c - today() &gt; 0,&quot;30&quot;,&quot;0&quot;)))</f
         <picklistValues>
             <picklist>Is_PCI_compliant__c</picklist>
             <values>
+                <fullName>Nil CC</fullName>
+                <default>false</default>
+            </values>
+            <values>
                 <fullName>No</fullName>
                 <default>false</default>
             </values>
@@ -11960,7 +12009,7 @@ if(Change_effective_as_of__c - today() &gt; 0,&quot;30&quot;,&quot;0&quot;)))</f
         <picklistValues>
             <picklist>Process__c</picklist>
             <values>
-                <fullName>ANG%2EMAJOR%2ECHANGES%2E1%2E0</fullName>
+                <fullName>ANG%2EFS%2EOPTINOUT</fullName>
                 <default>false</default>
             </values>
         </picklistValues>
@@ -11972,6 +12021,18 @@ if(Change_effective_as_of__c - today() &gt; 0,&quot;30&quot;,&quot;0&quot;)))</f
             </values>
             <values>
                 <fullName>Authorize Disapproval</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Not Started</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Reject Disapproval</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Reject approval</fullName>
                 <default>false</default>
             </values>
             <values>
@@ -14234,6 +14295,21 @@ if(Change_effective_as_of__c - today() &gt; 0,&quot;30&quot;,&quot;0&quot;)))</f
             </values>
         </picklistValues>
         <picklistValues>
+            <picklist>ANG_FA_Opt_out__c</picklist>
+            <values>
+                <fullName>Not Applicable</fullName>
+                <default>true</default>
+            </values>
+            <values>
+                <fullName>Opt-In</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Opt-Out</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
             <picklist>ANG_Sanity_checks__c</picklist>
             <values>
                 <fullName>Failed</fullName>
@@ -15132,6 +15208,10 @@ if(Change_effective_as_of__c - today() &gt; 0,&quot;30&quot;,&quot;0&quot;)))</f
         </picklistValues>
         <picklistValues>
             <picklist>Is_PCI_compliant__c</picklist>
+            <values>
+                <fullName>Nil CC</fullName>
+                <default>false</default>
+            </values>
             <values>
                 <fullName>No</fullName>
                 <default>false</default>
@@ -17429,6 +17509,21 @@ if(Change_effective_as_of__c - today() &gt; 0,&quot;30&quot;,&quot;0&quot;)))</f
             </values>
         </picklistValues>
         <picklistValues>
+            <picklist>ANG_FA_Opt_out__c</picklist>
+            <values>
+                <fullName>Not Applicable</fullName>
+                <default>true</default>
+            </values>
+            <values>
+                <fullName>Opt-In</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Opt-Out</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
             <picklist>ANG_Sanity_checks__c</picklist>
             <values>
                 <fullName>Failed</fullName>
@@ -18280,6 +18375,10 @@ if(Change_effective_as_of__c - today() &gt; 0,&quot;30&quot;,&quot;0&quot;)))</f
         </picklistValues>
         <picklistValues>
             <picklist>Is_PCI_compliant__c</picklist>
+            <values>
+                <fullName>Nil CC</fullName>
+                <default>false</default>
+            </values>
             <values>
                 <fullName>No</fullName>
                 <default>false</default>
@@ -20577,6 +20676,21 @@ if(Change_effective_as_of__c - today() &gt; 0,&quot;30&quot;,&quot;0&quot;)))</f
             </values>
         </picklistValues>
         <picklistValues>
+            <picklist>ANG_FA_Opt_out__c</picklist>
+            <values>
+                <fullName>Not Applicable</fullName>
+                <default>true</default>
+            </values>
+            <values>
+                <fullName>Opt-In</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Opt-Out</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
             <picklist>ANG_Sanity_checks__c</picklist>
             <values>
                 <fullName>Failed</fullName>
@@ -21475,6 +21589,10 @@ if(Change_effective_as_of__c - today() &gt; 0,&quot;30&quot;,&quot;0&quot;)))</f
         </picklistValues>
         <picklistValues>
             <picklist>Is_PCI_compliant__c</picklist>
+            <values>
+                <fullName>Nil CC</fullName>
+                <default>false</default>
+            </values>
             <values>
                 <fullName>No</fullName>
                 <default>false</default>
@@ -23908,6 +24026,21 @@ if(Change_effective_as_of__c - today() &gt; 0,&quot;30&quot;,&quot;0&quot;)))</f
             </values>
         </picklistValues>
         <picklistValues>
+            <picklist>ANG_FA_Opt_out__c</picklist>
+            <values>
+                <fullName>Not Applicable</fullName>
+                <default>true</default>
+            </values>
+            <values>
+                <fullName>Opt-In</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Opt-Out</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
             <picklist>ANG_Sanity_checks__c</picklist>
             <values>
                 <fullName>Failed</fullName>
@@ -24754,6 +24887,21 @@ if(Change_effective_as_of__c - today() &gt; 0,&quot;30&quot;,&quot;0&quot;)))</f
             </values>
             <values>
                 <fullName>Paid</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Is_PCI_compliant__c</picklist>
+            <values>
+                <fullName>Nil CC</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>No</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Yes</fullName>
                 <default>false</default>
             </values>
         </picklistValues>
@@ -25858,6 +26006,21 @@ if(Change_effective_as_of__c - today() &gt; 0,&quot;30&quot;,&quot;0&quot;)))</f
             </values>
             <values>
                 <fullName>COR</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>ANG_FA_Opt_out__c</picklist>
+            <values>
+                <fullName>Not Applicable</fullName>
+                <default>true</default>
+            </values>
+            <values>
+                <fullName>Opt-In</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Opt-Out</fullName>
                 <default>false</default>
             </values>
         </picklistValues>
@@ -27816,6 +27979,21 @@ if(Change_effective_as_of__c - today() &gt; 0,&quot;30&quot;,&quot;0&quot;)))</f
             </values>
         </picklistValues>
         <picklistValues>
+            <picklist>ANG_FA_Opt_out__c</picklist>
+            <values>
+                <fullName>Not Applicable</fullName>
+                <default>true</default>
+            </values>
+            <values>
+                <fullName>Opt-In</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Opt-Out</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
             <picklist>ANG_Sanity_checks__c</picklist>
             <values>
                 <fullName>Failed</fullName>
@@ -28662,6 +28840,21 @@ if(Change_effective_as_of__c - today() &gt; 0,&quot;30&quot;,&quot;0&quot;)))</f
             </values>
             <values>
                 <fullName>Paid</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Is_PCI_compliant__c</picklist>
+            <values>
+                <fullName>Nil CC</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>No</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Yes</fullName>
                 <default>false</default>
             </values>
         </picklistValues>
@@ -29684,6 +29877,21 @@ if(Change_effective_as_of__c - today() &gt; 0,&quot;30&quot;,&quot;0&quot;)))</f
             </values>
         </picklistValues>
         <picklistValues>
+            <picklist>ANG_FA_Opt_out__c</picklist>
+            <values>
+                <fullName>Not Applicable</fullName>
+                <default>true</default>
+            </values>
+            <values>
+                <fullName>Opt-In</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Opt-Out</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
             <picklist>ANG_Sanity_checks__c</picklist>
             <values>
                 <fullName>Failed</fullName>
@@ -30530,6 +30738,21 @@ if(Change_effective_as_of__c - today() &gt; 0,&quot;30&quot;,&quot;0&quot;)))</f
             </values>
             <values>
                 <fullName>Paid</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Is_PCI_compliant__c</picklist>
+            <values>
+                <fullName>Nil CC</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>No</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Yes</fullName>
                 <default>false</default>
             </values>
         </picklistValues>
@@ -31523,6 +31746,21 @@ if(Change_effective_as_of__c - today() &gt; 0,&quot;30&quot;,&quot;0&quot;)))</f
             </values>
             <values>
                 <fullName>Passed</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>ANG_FA_Opt_out__c</picklist>
+            <values>
+                <fullName>Not Applicable</fullName>
+                <default>true</default>
+            </values>
+            <values>
+                <fullName>Opt-In</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Opt-Out</fullName>
                 <default>false</default>
             </values>
         </picklistValues>
@@ -33373,6 +33611,21 @@ if(Change_effective_as_of__c - today() &gt; 0,&quot;30&quot;,&quot;0&quot;)))</f
             </values>
         </picklistValues>
         <picklistValues>
+            <picklist>ANG_FA_Opt_out__c</picklist>
+            <values>
+                <fullName>Not Applicable</fullName>
+                <default>true</default>
+            </values>
+            <values>
+                <fullName>Opt-In</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Opt-Out</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
             <picklist>ANG_Sanity_checks__c</picklist>
             <values>
                 <fullName>Failed</fullName>
@@ -34255,6 +34508,10 @@ if(Change_effective_as_of__c - today() &gt; 0,&quot;30&quot;,&quot;0&quot;)))</f
         </picklistValues>
         <picklistValues>
             <picklist>Is_PCI_compliant__c</picklist>
+            <values>
+                <fullName>Nil CC</fullName>
+                <default>false</default>
+            </values>
             <values>
                 <fullName>No</fullName>
                 <default>false</default>
@@ -36522,6 +36779,21 @@ if(Change_effective_as_of__c - today() &gt; 0,&quot;30&quot;,&quot;0&quot;)))</f
             </values>
         </picklistValues>
         <picklistValues>
+            <picklist>ANG_FA_Opt_out__c</picklist>
+            <values>
+                <fullName>Not Applicable</fullName>
+                <default>true</default>
+            </values>
+            <values>
+                <fullName>Opt-In</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Opt-Out</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
             <picklist>ANG_Sanity_checks__c</picklist>
             <values>
                 <fullName>Failed</fullName>
@@ -37420,6 +37692,10 @@ if(Change_effective_as_of__c - today() &gt; 0,&quot;30&quot;,&quot;0&quot;)))</f
         </picklistValues>
         <picklistValues>
             <picklist>Is_PCI_compliant__c</picklist>
+            <values>
+                <fullName>Nil CC</fullName>
+                <default>false</default>
+            </values>
             <values>
                 <fullName>No</fullName>
                 <default>false</default>
@@ -39728,6 +40004,21 @@ if(Change_effective_as_of__c - today() &gt; 0,&quot;30&quot;,&quot;0&quot;)))</f
             </values>
         </picklistValues>
         <picklistValues>
+            <picklist>ANG_FA_Opt_out__c</picklist>
+            <values>
+                <fullName>Not Applicable</fullName>
+                <default>true</default>
+            </values>
+            <values>
+                <fullName>Opt-In</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Opt-Out</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
             <picklist>ANG_Sanity_checks__c</picklist>
             <values>
                 <fullName>Failed</fullName>
@@ -40574,6 +40865,21 @@ if(Change_effective_as_of__c - today() &gt; 0,&quot;30&quot;,&quot;0&quot;)))</f
             </values>
             <values>
                 <fullName>Paid</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Is_PCI_compliant__c</picklist>
+            <values>
+                <fullName>Nil CC</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>No</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Yes</fullName>
                 <default>false</default>
             </values>
         </picklistValues>
@@ -41511,25 +41817,27 @@ if(Change_effective_as_of__c - today() &gt; 0,&quot;30&quot;,&quot;0&quot;)))</f
         <fullName>AMS_PCI_Expiry_Date_Required</fullName>
         <active>true</active>
         <errorConditionFormula>AND(
-    OR(
-        TEXT(Is_PCI_compliant__c) = &apos;Yes&apos;,
-        TEXT(Is_PCI_compliant__c) = &apos;Nil CC&apos;
-    ),
-    OR(
-        AND(
-            TEXT(Process__c) == &apos;PCI.COMPLIANT.1.0&apos;,
-            RecordType.DeveloperName = &apos;CERTIFICATION&apos;,
-            ISBLANK(ANG_PCI_compliance_expiry_date__c)
-        ),
-        AND(
-            RecordType.DeveloperName = &apos;NEW&apos;,
-            ISBLANK(ANG_PCI_compliance_expiry_date__c),
-            OR(
-                TEXT(Process__c) == &apos;NEW.HO.1.0&apos;,
-                TEXT(Process__c) == &apos;NEW.BR&apos;
-            )
-        )   
-    )
+	OR(
+		TEXT(Is_PCI_compliant__c) = &apos;Yes&apos;,
+		TEXT(Is_PCI_compliant__c) = &apos;Nil CC&apos;
+	),
+	OR(
+		AND(
+			OR(Location_Class__c == &apos;P&apos;, Location_Class__c ==&apos;D&apos;), 
+			TEXT(Process__c) == &apos;PCI.COMPLIANT.1.0&apos;,
+			RecordType.DeveloperName = &apos;CERTIFICATION&apos;,
+			ISBLANK(ANG_PCI_compliance_expiry_date__c)
+		),
+		AND(
+			OR(Location_Class__c == &apos;P&apos;, Location_Class__c ==&apos;D&apos;), 
+			RecordType.DeveloperName = &apos;NEW&apos;,
+			ISBLANK(ANG_PCI_compliance_expiry_date__c),
+			OR(
+				TEXT(Process__c) == &apos;NEW.HO.1.0&apos;,
+				TEXT(Process__c) == &apos;NEW.BR&apos;
+			)
+		)	
+	)
 )</errorConditionFormula>
         <errorMessage>You must determine a PCI compliance expiry date</errorMessage>
     </validationRules>
