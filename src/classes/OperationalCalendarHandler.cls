@@ -1,9 +1,206 @@
 public with sharing class OperationalCalendarHandler {
     
+    public static final list<String> AIRLINE_PROFILES = ISSP_CS__c.getValues('ISS Portal Airline Profiles').Value__c.split(',');
+    public static final list<String> AGENT_PROFILES = ISSP_CS__c.getValues('ISS Portal Agency Profiles').Value__c.split(',');
+    
+    public static list<User> TEST_LIST_AIRLINE_USER = new list<User>();
+    public static list<User> TEST_LIST_AGENCY_USER = new list<User>();
+    
     public static void beforeInsert(list<Operational_Calendar__c> listNew) {
         populateMissingFields(listNew);
     }
     
+    public static void afterUpdate(map<Id,Operational_Calendar__c> mapNew, map<Id,Operational_Calendar__c> mapOld) {
+        createNotifications(mapNew,mapOld);
+    }
+    
+    /**
+        Check updated Opertaional Calendar reords and select only those changing 
+        the Settlement_Day__c or the Remittance_Day__c
+    **/
+    private static void createNotifications(map<Id,Operational_Calendar__c> mapNew, map<Id,Operational_Calendar__c> mapOld) {
+        map<Id,Operational_Calendar__c> mapSettlementChanges = new map<Id,Operational_Calendar__c>();
+        map<Id,Operational_Calendar__c> mapRemittanceChanges = new map<Id,Operational_Calendar__c>();
+        
+        for (Operational_Calendar__c operationNew: mapNew.values()) {
+            Operational_Calendar__c operationOld = mapOld.get(operationNew.Id);
+            if (operationNew.Settlement_Day__c!=operationOld.Settlement_Day__c) {
+                mapSettlementChanges.put(operationNew.Id,operationNew);
+            }
+            if (operationNew.Remittance_Day__c!=operationOld.Remittance_Day__c) {
+                mapRemittanceChanges.put(operationNew.Id,operationNew);
+            }
+        }
+        sendAgencyNotifications(mapRemittanceChanges);
+        sendAirlineNotifications(mapSettlementChanges, mapRemittanceChanges);
+    }
+    
+    /**
+        Get the list of Airline Contacts to send notifications 
+    **/
+    private static void sendAirlineNotifications(map<Id,Operational_Calendar__c> mapSettlementChanges, map<Id,Operational_Calendar__c> mapRemittanceChanges) {
+        list<Operational_Calendar__c> listOperations = new list<Operational_Calendar__c>();
+        listOperations.addAll(mapSettlementChanges.values());
+        listOperations.addAll(mapRemittanceChanges.values());
+        if (listOperations.isEmpty()) return;
+        
+        // create a map to group all operational calendars by their ISS Operation
+        map<Id,list<Operational_Calendar__c>> mapISSOperationListCalendar = new map<Id,list<Operational_Calendar__c>>();
+        for (Operational_Calendar__c operation: listOperations) {
+            Id key = operation.ISS_operation__c;
+            list<Operational_Calendar__c> value = mapISSOperationListCalendar.get(key);
+            if (value==null){
+                value = new list<Operational_Calendar__c>();
+            }
+            value.add(operation);
+            mapISSOperationListCalendar.put(key,value);
+        }
+        
+        //query users with a valid profile (airline or agent) getting all relevant
+        //info, like country and settlements
+        list<User> listUser = [
+            SELECT Id, Contact.Name, Contact.Email,
+                Contact.Account.IATA_ISO_Country__c,
+                Contact.Account.Remittance_frequency__c,
+                Contact.Account.Location_Class__c,
+                Contact.Account.IATA_ISO_Country__r.AMS_Settlement_System__c,
+                Contact.Account.IATA_ISO_Country__r.AMS_Settlement_System_CASS__c
+            FROM User
+            WHERE ProfileId IN :AIRLINE_PROFILES
+            AND Contact.Status__c = 'Active'
+            AND (
+                Contact.Account.IATA_ISO_Country__r.AMS_Settlement_System__c IN :mapISSOperationListCalendar.keyset()
+                OR Contact.Account.IATA_ISO_Country__r.AMS_Settlement_System_CASS__c IN :mapISSOperationListCalendar.keyset()
+            )
+        ];
+        if (Test.isRunningTest()) listUser = TEST_LIST_AIRLINE_USER;
+        // use the queries records to check those users with a calendar operation having an update
+        list<Id> listContactIdForRemittance = new list<Id>();
+        list<Id> listContactIdForSettlement = new list<Id>();
+        for (User user: listUser) {
+            Id BSPOperationId = user.Contact.Account.IATA_ISO_Country__r.AMS_Settlement_System__c;
+            Id CASSOperationId = user.Contact.Account.IATA_ISO_Country__r.AMS_Settlement_System_CASS__c;
+            list<Operational_Calendar__c> listBSPOperations = mapISSOperationListCalendar.get(BSPOperationId);
+            list<Operational_Calendar__c> listCASSOperations = mapISSOperationListCalendar.get(CASSOperationId);
+
+            if (listBSPOperations!=null && !listBSPOperations.isEmpty()) {
+                System.debug('Contact ' + user.Contact + ' has BSP  changes: ' + listBSPOperations);
+                for (Operational_Calendar__c operation: listBSPOperations) {
+                    if (mapRemittanceChanges.keyset().contains(operation.Id)) {
+                        listContactIdForRemittance.add(user.ContactId);
+                    }
+                    if (mapSettlementChanges.keyset().contains(operation.Id)) {
+                        listContactIdForSettlement.add(user.ContactId);
+                    }
+                }
+            }
+            if (listCASSOperations!=null && !listCASSOperations.isEmpty()) {
+                System.debug('Contact ' + user.Contact + ' has CASS changes: ' + listCASSOperations);
+                for (Operational_Calendar__c operation: listCASSOperations) {
+                    if (mapRemittanceChanges.keyset().contains(operation.Id)) {
+                        listContactIdForRemittance.add(user.ContactId);
+                    }
+                    if (mapSettlementChanges.keyset().contains(operation.Id)) {
+                        listContactIdForSettlement.add(user.ContactId);
+                    }
+                }
+            }
+        }
+        // send notifications
+        createAndSendNotificationBatch('Remittance change in Operational Calendar',listContactIdForRemittance);
+        createAndSendNotificationBatch('Settlement change in Operational Calendar',listContactIdForSettlement);
+    }
+    
+    /**
+        Get the list of Agency Contacts to send notifications 
+    **/
+    private static void sendAgencyNotifications(map<Id,Operational_Calendar__c> mapRemittanceChanges) {
+        list<Operational_Calendar__c> listOperations = new list<Operational_Calendar__c>();
+        listOperations.addAll(mapRemittanceChanges.values());
+        if (listOperations.isEmpty()) return;
+        // create a map to group all operational calendars by their ISS Operation
+        map<Id,list<Operational_Calendar__c>> mapISSOperationListCalendar = new map<Id,list<Operational_Calendar__c>>();
+        for (Operational_Calendar__c operation: listOperations) {
+            Id key = operation.ISS_operation__c;
+            list<Operational_Calendar__c> value = mapISSOperationListCalendar.get(key);
+            if (value==null){
+                value = new list<Operational_Calendar__c>();
+            }
+            value.add(operation);
+            mapISSOperationListCalendar.put(key,value);
+        }
+        //query users with a valid profile (airline or agent) getting all relevant
+        //info, like country and settlements
+        list<User> listUser = [
+            SELECT Id, Contact.Name, Contact.Email,
+                Contact.Account.IATA_ISO_Country__c,
+                Contact.Account.Remittance_frequency__c,
+                Contact.Account.Location_Class__c,
+                Contact.Account.IATA_ISO_Country__r.AMS_Settlement_System__c,
+                Contact.Account.IATA_ISO_Country__r.AMS_Settlement_System_CASS__c
+            FROM User
+            WHERE ProfileId IN :AGENT_PROFILES
+            AND Contact.Status__c = 'Active'
+            AND (
+                Contact.Account.IATA_ISO_Country__r.AMS_Settlement_System__c IN :mapISSOperationListCalendar.keyset()
+                OR Contact.Account.IATA_ISO_Country__r.AMS_Settlement_System_CASS__c IN :mapISSOperationListCalendar.keyset()
+            )
+        ];
+        if (Test.isRunningTest()) listUser = TEST_LIST_AGENCY_USER;
+        // use the queries records to check those users with a calendar operation having an update
+        list<Id> listContactIdForRemittance = new list<Id>();
+        list<Id> listContactIdForSettlement = new list<Id>();
+        for (User user: listUser) {
+            String country = user.Contact.Account.IATA_ISO_Country__c;
+            String frequency = user.Contact.Account.Remittance_frequency__c;
+            String operationType = ISSP_OperationalCalendarController.MAP_OPERATION_TYPES.get(user.Contact.Account.Location_Class__c);
+            Id ISSOperationId;
+            if (operationType!=null && operationType.contains('BSP')) {
+                 ISSOperationId = user.Contact.Account.IATA_ISO_Country__r.AMS_Settlement_System__c;
+            }
+            if (operationType!=null && operationType.contains('CASS')) {
+                 ISSOperationId = user.Contact.Account.IATA_ISO_Country__r.AMS_Settlement_System_CASS__c;
+            }
+            // Select the operation calendar list (BSP or CASS) depending on the account operation type value
+            list<Operational_Calendar__c> listOperationsForThisUser = mapISSOperationListCalendar.get(ISSOperationId);
+            if (listOperationsForThisUser!=null && !listOperationsForThisUser.isEmpty() && ISSOperationId!=null) {
+                System.debug('Contact ' + user.Contact + ' has BSP/CASS  changes: ' + listOperationsForThisUser);
+                for (Operational_Calendar__c operation: listOperationsForThisUser) {
+                    if (mapRemittanceChanges.keyset().contains(operation.Id)
+                        && operation.frequency_code__c == frequency
+                        && operation.Operation_Type__c == operationType) {
+                            listContactIdForRemittance.add(user.ContactId);
+                    }
+                }
+            }
+        }
+        // send notifications
+        createAndSendNotificationBatch('Remittance change in Operational Calendar',listContactIdForRemittance);
+    }
+    
+    /**
+        Call the ISSP Notification batch to send emails using the incoming template
+    **/
+    private static void createAndSendNotificationBatch(String templateName, list<Id> listContactId) {
+        if (listContactId.isEmpty()) return;
+        Notification_template__c template = [
+            SELECT Type__c, Subject__c, Notification_color__c, Name, Message__c, Master_Notification_template__c, Language__c, Id, Expire_in_days__c, Due_date__c, DDS_Update_Request__c, Alert_Contact_By_Email__c, Admins_Users__c, CriticalNotification__c,
+                (Select Type__c, Subject__c, Notification_color__c, Name, Message__c, Master_Notification_template__c, Language__c, Id, Expire_in_days__c, Due_date__c, DDS_Update_Request__c, Alert_Contact_By_Email__c, Admins_Users__c, CriticalNotification__c
+                FROM Notification_templates__r)
+            FROM Notification_template__c
+            WHERE Subject__c = :templateName
+            LIMIT 1
+        ];
+        ISSP_NotificationBatch bc = new ISSP_NotificationBatch();
+        bc.Query = 'SELECT ' + String.join(ISSP_NotificationUtilities.getAllContactFields(), ',')
+            + ' FROM Contact '
+            + ' WHERE Id IN (\'' + String.join(listContactId, '\',\'') + '\')';
+
+        bc.NotificationTemplate = template;
+        bc.MessagesByGroupMap = null;
+        bc.ContactGroupField = null;
+        Database.executeBatch(bc, 1);
+    }
     
     /**
         Populates some calendar fields when they are empty

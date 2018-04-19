@@ -6,4 +6,9 @@ trigger OperationalCalendar on Operational_Calendar__c (
             OperationalCalendarHandler.beforeInsert(Trigger.new);
         }
     }
+    if (Trigger.isAfter) {
+        if (Trigger.isUpdate) {
+            OperationalCalendarHandler.afterUpdate(Trigger.newMap, Trigger.oldMap);
+        }
+    }
 }
