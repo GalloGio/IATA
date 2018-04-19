@@ -687,7 +687,7 @@ If the product is a multi-use VANs, then it is a unique card/account number that
         <fullName>Effective_from_before_effective_To</fullName>
         <active>true</active>
         <errorConditionFormula>AND( Provider__r.RecordType.DeveloperName = &quot;TIP_Payment_Provider&quot;, PP_Effective_from_Date__c&gt; PP_Effective_to_Date__c)</errorConditionFormula>
-        <errorMessage>Effective To Date needs to be after Effective From Date</errorMessage>
+        <errorMessage>Effective To Date needs to be greather than Effective From Date</errorMessage>
     </validationRules>
     <validationRules>
         <fullName>Mandatory_Chargeback_on_TIP_Product</fullName>
