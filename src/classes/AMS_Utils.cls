@@ -337,6 +337,7 @@ public without sharing class AMS_Utils {
 
     public static final String CC = 'CC';
     public static final String CA = 'CA';
+    public static final string EP = 'EP';
     public static final String IATA_ACCREDITATION_AND_CHANGES = 'IATA Accreditation & Changes';
     public static final String CGO_SIGNED_CONTRACT = 'CGO_SIGNED_CONTRACT';
     public static final String NOC_SIGNED_CONTRACT = 'NOC_SIGNED_CONTRACT';

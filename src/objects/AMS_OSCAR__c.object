@@ -2694,6 +2694,11 @@ Format: YYYY</inlineHelpText>
                     <default>false</default>
                     <label>Nil CC</label>
                 </value>
+                <value>
+                    <fullName>Corporate Card</fullName>
+                    <default>false</default>
+                    <label>Corporate Card</label>
+                </value>
             </valueSetDefinition>
         </valueSet>
     </fields>
@@ -37884,7 +37889,11 @@ if(Change_effective_as_of__c - today() &gt; 0,&quot;30&quot;,&quot;0&quot;)))</f
                 <fullName>Yes</fullName>
                 <default>false</default>
             </values>
-        </picklistValues>
+            <values>
+                <fullName>Corporate Card</fullName>
+                <default>false</default>
+            </values>
+            </picklistValues>
         <picklistValues>
             <picklist>Local_Inspection_compliant__c</picklist>
             <values>
@@ -41062,6 +41071,10 @@ if(Change_effective_as_of__c - today() &gt; 0,&quot;30&quot;,&quot;0&quot;)))</f
             </values>
             <values>
                 <fullName>Yes</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Corporate Card</fullName>
                 <default>false</default>
             </values>
         </picklistValues>

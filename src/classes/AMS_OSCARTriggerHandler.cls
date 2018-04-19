@@ -2438,7 +2438,7 @@ public class AMS_OSCARTriggerHandler {
 
     }
     
-    @TestVisible public static Map<String, Id> ANGemailTemplates(String agencyType, String step, boolean wasApproved){
+    public static Map<String, Id> ANGemailTemplates(String agencyType, String step, boolean wasApproved){
 
         Map<String, Id> multilangTemplates = new Map<String, Id>();
 
@@ -2465,6 +2465,7 @@ public class AMS_OSCARTriggerHandler {
         else if(agencyType == AMS_Utils.NGOPTINOUT && step == AMS_Utils.FAILED && !wasApproved) templateId  = 'ANG_Financial_Assesment_Opt_out_DIS';
         else if(agencyType == AMS_Utils.NGANNUALREVAL && step == AMS_Utils.FAILED && !wasApproved) templateId  = 'ANG_Annual_Revalidation_Failed';
         else if(agencyType == AMS_Utils.NGANNUALREVAL && step == null) templateId  = 'ANG_Anual_Renewal_Case';
+        else if(agencyType == AMS_Utils.NGFOP && step == null ) templateId  = 'ANG_FOP_OSCARCREATION';
 
         System.debug('[ANGemailTemplates] Template to use is:'+templateId);
 
@@ -3487,10 +3488,14 @@ public class AMS_OSCARTriggerHandler {
 
             }
 
+            if(oscar.Is_PCI_compliant__c <> 'Corporate Card'){ //NEWGEN-3214
+                
             String changeCodeName = oscar.Is_PCI_compliant__c == 'No' ? 'CCA' : 'CCR';
 
             ANG_OscarProcessHelper.EntityUpdater updater = ANG_OscarProcessHelper.createChangeCodeForFOP(null, oscar, [Select Id, Status__c from Account where id in:oscarAccountsMap.get(oscar.Id)], changeCodeName);
             ANG_OscarProcessHelper.updateUpdater(updater);
+
+        }
 
         }
 
