@@ -171,7 +171,7 @@ public without sharing class AMS_Utils {
     public static final String NGVR             = 'VR.1.0';
     public static final String NGOPTINOUT       = 'ANG.FS.OPTINOUT';
 
-	//AMSU-125
+    //AMSU-125
     public static final Set<String> oscarNewProcesses = new Set<String> {new_HO, new_BR, new_BR_ABROAD, new_TIDS, new_MSO, new_GSA, new_GSA_BSP, new_GSSA, new_AHA, new_AHA_BSP, new_SA};
 
     public static final Set<String> oscarNewGenProcesses = new Set <String>{NEWHELITE, NEWHESTANDARD, NEWAE, NGCHANGES, NGCORRECTION, NGOPTINOUT, NGFOP};
@@ -1077,51 +1077,88 @@ public without sharing class AMS_Utils {
 
     public static void syncOSCARwithIFAP(Case previousIFAPCase, Case updatedIFAPCase) {
 
+        syncOSCARwithIFAP(previousIFAPCase, updatedIFAPCase, null, true);
+    }
+
+    public static AMS_OSCAR__c syncOSCARwithIFAP(Case previousIFAPCase, Case updatedIFAPCase, AMS_OSCAR__c oscar, Boolean updateOscar) {
+
         Boolean mustUpdateOSCAR = false;
-        List<AMS_OSCAR__c> oscar = [select Financial_Assessment_requested__c, Financial_Assessment_deadline__c, Assessment_Performed_Date__c, Financial_Review_Result__c from AMS_OSCAR__c where Id = : updatedIFAPCase.OSCAR__c];
-        if (oscar != null || oscar.size() > 0) {
 
-            if (previousIFAPCase.Financial_Assessment_requested__c <> updatedIFAPCase.Financial_Assessment_requested__c) {
-                oscar[0].Financial_Assessment_requested__c = updatedIFAPCase.Financial_Assessment_requested__c;
-                mustUpdateOSCAR = true;
-            }
-
-            if (previousIFAPCase.Deadline_Date__c <> updatedIFAPCase.Deadline_Date__c) {
-                oscar[0].Financial_Assessment_deadline__c = updatedIFAPCase.Deadline_Date__c;
-                mustUpdateOSCAR = true;
-            }
-
-            if (previousIFAPCase.Assessment_Performed_Date__c <> updatedIFAPCase.Assessment_Performed_Date__c) {
-                oscar[0].Assessment_Performed_Date__c = updatedIFAPCase.Assessment_Performed_Date__c;
-                mustUpdateOSCAR = true;
-            }
-
-            if (previousIFAPCase.Financial_Review_Result__c <> updatedIFAPCase.Financial_Review_Result__c) {
-                oscar[0].Financial_Review_Result__c = updatedIFAPCase.Financial_Review_Result__c;
-                oscar[0].Reason_for_change_of_Financial_result__c = updatedIFAPCase.Reason_for_change_of_Financial_result__c;
-                mustUpdateOSCAR = true;
-            }
-
-            if (previousIFAPCase.Financial_Security_Amount__c <> updatedIFAPCase.Financial_Security_Amount__c) {
-                oscar[0].Bank_Guarantee_amount__c = updatedIFAPCase.Financial_Security_Amount__c;
-                oscar[0].Requested_Bank_Guarantee_amount__c = updatedIFAPCase.Financial_Security_Amount__c;
-                mustUpdateOSCAR = true;
-            }
-
-            if (previousIFAPCase.Financial_Security_Currency__c <> updatedIFAPCase.Financial_Security_Currency__c) {
-                oscar[0].Bank_Guarantee_Currency__c = updatedIFAPCase.Financial_Security_Currency__c;
-                oscar[0].Requested_Bank_Guarantee_Currency__c = updatedIFAPCase.Financial_Security_Currency__c;
-                mustUpdateOSCAR = true;
-            }
-
-            if (previousIFAPCase.FS_Deadline_Date__c <> updatedIFAPCase.FS_Deadline_Date__c) {
-                oscar[0].Bank_Guarantee_deadline__c = updatedIFAPCase.FS_Deadline_Date__c;
-                mustUpdateOSCAR = true;
-            }
-
-            if (mustUpdateOSCAR)
-                update oscar[0];
+        if(oscar == null){
+            List<AMS_OSCAR__c> oscarlst = [select Financial_Assessment_requested__c, Financial_Assessment_deadline__c, Assessment_Performed_Date__c, Financial_Review_Result__c from AMS_OSCAR__c where Id = : updatedIFAPCase.OSCAR__c];
+            if(!oscarlst.isEmpty())
+                oscar = oscarlst.get(0);
         }
+    
+        if (oscar != null ) {
+
+            if (previousIFAPCase.Financial_Assessment_requested__c <> updatedIFAPCase.Financial_Assessment_requested__c && 
+                oscar.Financial_Assessment_requested__c <> updatedIFAPCase.Financial_Assessment_requested__c) {
+                oscar.Financial_Assessment_requested__c = updatedIFAPCase.Financial_Assessment_requested__c;
+                mustUpdateOSCAR = true;
+            }
+
+            if (previousIFAPCase.Deadline_Date__c <> updatedIFAPCase.Deadline_Date__c &&
+                oscar.Financial_Assessment_deadline__c <> updatedIFAPCase.Deadline_Date__c
+                ) {
+                oscar.Financial_Assessment_deadline__c = updatedIFAPCase.Deadline_Date__c;
+                mustUpdateOSCAR = true;
+            }
+
+            if (previousIFAPCase.Assessment_Performed_Date__c <> updatedIFAPCase.Assessment_Performed_Date__c &&
+                oscar.Assessment_Performed_Date__c <> updatedIFAPCase.Assessment_Performed_Date__c
+                ) {
+
+                oscar.Assessment_Performed_Date__c = updatedIFAPCase.Assessment_Performed_Date__c;
+                mustUpdateOSCAR = true;
+            }
+
+            if (previousIFAPCase.Financial_Review_Result__c <> updatedIFAPCase.Financial_Review_Result__c &&
+                (oscar.Financial_Review_Result__c <> updatedIFAPCase.Financial_Review_Result__c || 
+                 oscar.Reason_for_change_of_Financial_result__c <> updatedIFAPCase.Reason_for_change_of_Financial_result__c
+                )
+                ) {
+                oscar.Financial_Review_Result__c = updatedIFAPCase.Financial_Review_Result__c;
+                oscar.Reason_for_change_of_Financial_result__c = updatedIFAPCase.Reason_for_change_of_Financial_result__c;
+                mustUpdateOSCAR = true;
+            }
+
+            if (previousIFAPCase.Financial_Security_Amount__c <> updatedIFAPCase.Financial_Security_Amount__c &&
+                (oscar.Bank_Guarantee_amount__c <> updatedIFAPCase.Financial_Security_Amount__c ||
+                 oscar.Requested_Bank_Guarantee_amount__c <> updatedIFAPCase.Financial_Security_Amount__c
+                )
+                ) {
+                oscar.Bank_Guarantee_amount__c = updatedIFAPCase.Financial_Security_Amount__c;
+                oscar.Requested_Bank_Guarantee_amount__c = updatedIFAPCase.Financial_Security_Amount__c;
+                mustUpdateOSCAR = true;
+            }
+
+            if (previousIFAPCase.Financial_Security_Currency__c <> updatedIFAPCase.Financial_Security_Currency__c && 
+                (oscar.Bank_Guarantee_Currency__c <> updatedIFAPCase.Financial_Security_Currency__c ||
+                 oscar.Requested_Bank_Guarantee_Currency__c <> updatedIFAPCase.Financial_Security_Currency__c
+                )
+                ) {
+                oscar.Bank_Guarantee_Currency__c = updatedIFAPCase.Financial_Security_Currency__c;
+                oscar.Requested_Bank_Guarantee_Currency__c = updatedIFAPCase.Financial_Security_Currency__c;
+                mustUpdateOSCAR = true;
+            }
+
+            if (previousIFAPCase.FS_Deadline_Date__c <> updatedIFAPCase.FS_Deadline_Date__c &&
+                oscar.Bank_Guarantee_deadline__c <> updatedIFAPCase.FS_Deadline_Date__c) {
+                oscar.Bank_Guarantee_deadline__c = updatedIFAPCase.FS_Deadline_Date__c;
+                mustUpdateOSCAR = true;
+            }
+
+            if (mustUpdateOSCAR && updateOscar){
+                update oscar;
+                return null;
+            }
+        }
+
+        if(!mustUpdateOSCAR && !updateOscar)
+            return null;
+
+        return oscar;
 
     }
 
@@ -2306,7 +2343,7 @@ public static String fetchTypeOfCustomer (String locationType , String category)
          );
     }
 
-
+    
     public static boolean isProcessUsingAppointments(AMS_OSCAR__c oscar){
         Set<String> oscarProcessesWithAppointments = new Set <String>{new_GSA,new_GSA_BSP,new_AHA,new_AHA_BSP,new_GSSA,new_MSO};
         Set<String> oscarCNSProcessesWithAppointments = new Set <String>{new_HO,new_BR,new_BR_ABROAD};
