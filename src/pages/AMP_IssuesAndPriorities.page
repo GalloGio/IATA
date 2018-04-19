@@ -60,6 +60,26 @@
                 </apex:column>
 
                 <apex:column >
+                            <apex:facet name="header">
+                    <apex:commandLink action="{! sortByDivision }"
+                        reRender="issueTable">Division
+                                    <apex:outputPanel layout="none" rendered="{!sortOrder == ' Division__c ASC'}">&nbsp;&#8593;</apex:outputPanel>
+                                    <apex:outputPanel layout="none" rendered="{!sortOrder == ' Division__c DESC'}">&nbsp;&#8595;</apex:outputPanel>
+                    </apex:commandLink>
+                </apex:facet>
+                    <apex:outputPanel styleClass="long-text-area hidden" rendered="{!NOT(AND(isEditMode, IdConcerned==i.Id))}" >
+                        <apex:outputText value="{!i.Division__c}" style="display: block;width: 200px;word-wrap: break-word;"/>
+                        <a href="#" class="show-less">[show less]</a>
+                    </apex:outputPanel>
+                    <apex:outputPanel styleClass="short-text-area" rendered="{!NOT(AND(isEditMode, IdConcerned==i.Id))}">
+                        <apex:outputText value="{!LEFT(i.Division__c,30)}" style="display: block;width: 200px;word-wrap: break-word;"/>
+                        <apex:outputPanel rendered="{!LEN(i.Division__c)>30}"> <a href="#" class="show-more">[show more]</a></apex:outputPanel>
+                    </apex:outputPanel>
+
+                    <apex:inputField value="{!i.Division__c}" rendered="{!AND(isEditMode, IdConcerned==i.Id)}" required="true"/>
+                </apex:column>
+
+                <apex:column >
                   <apex:facet name="header">
                       <apex:commandLink action="{! sortBySource }"
                           reRender="issueTable">Source
