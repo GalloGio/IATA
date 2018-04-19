@@ -33,6 +33,10 @@ public class TIP_Utils{
 
 	public static String PARTNER_PRODUCT_STATUS_ACTIVE='ACTIVE';
 
+
+	//Partner product RT
+	public static String PARTNER_PRODUCT_TIP_PRODUCT_RECORD_TYPE_ID= RecordTypeSingleton.getInstance().RtIDsPerDeveloperNamePerObj.get('Partner_products__c').get('TIP_Product');
+
 	//BIN Range RT's
 	public static String LISTED_BY_IATA_RECORD_TYPE_ID = RecordTypeSingleton.getInstance().RtIDsPerDeveloperNamePerObj.get('TIP_BIN_Range__c').get('Unenrolled_Known');
 	public static String BIN_RANGE_PROVIDER_RECORD_TYPE_ID = RecordTypeSingleton.getInstance().RtIDsPerDeveloperNamePerObj.get('TIP_BIN_Range__c').get('Enrolled');
