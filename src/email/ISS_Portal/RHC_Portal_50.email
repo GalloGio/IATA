@@ -8,9 +8,9 @@
 <BR/>
 {!$Label.ISSP_Email_Dear_Pre} {!recipient.Name}{!$Label.ISSP_Email_Dear_Post}<BR/>
 <BR/>
-We would like to inform you that according to our records you have reached <b>{!relatedTo.ANG_ConsumedRHC_Percent__c}%</b> of your Remittance Holding Capacity (RHC).
+We would like to inform you that according to our records you have reached <b><apex:outputText value="{0,number,###,###,###.00}"><apex:param value="{!relatedTo.ANG_ConsumedRHC_Percent__c}"/></apex:outputText>%</b> of your Remittance Holding Capacity (RHC).
 <BR/><BR/>
-It should be noted that your RHC amount is set at <b>{!relatedTo.CurrencyIsoCode} {!relatedTo.ANG_RHC_Amount__c}</b> and the currently used amount is <b>{!relatedTo.CurrencyIsoCode} {!relatedTo.ANG_ConsumedRHC__c}</b>.
+It should be noted that your RHC amount is set at <b>{!relatedTo.CurrencyIsoCode} <apex:outputText value="{0,number,###,###,###.0000}"><apex:param value="{!relatedTo.ANG_RHC_Amount__c}"/></apex:outputText></b> and the currently used amount is <b>{!relatedTo.CurrencyIsoCode} <apex:outputText value="{0,number,###,###,###.0000}"><apex:param value="{!relatedTo.ANG_ConsumedRHC__c}"/></apex:outputText></b>.
 <BR/><BR/>
 Please note that if your Agency’s total Cash amounts outstanding to the BSP reach 100% of your RHC,  Cash as a form of payment will be temporarily restricted until a remittance is received, although you will be able to continue issuing tickets through other forms of payment such as Credit Card (if applicable), IATA EasyPay and/or other alternative transfer methods.
 <BR/><BR/>
