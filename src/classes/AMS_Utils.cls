@@ -326,6 +326,7 @@ public without sharing class AMS_Utils {
 
     public static final String CC = 'CC';
     public static final String CA = 'CA';
+    public static final string EP = 'EP';
     public static final String IATA_ACCREDITATION_AND_CHANGES = 'IATA Accreditation & Changes';
     public static final String CGO_SIGNED_CONTRACT = 'CGO_SIGNED_CONTRACT';
     public static final String NOC_SIGNED_CONTRACT = 'NOC_SIGNED_CONTRACT';
@@ -1398,7 +1399,13 @@ public without sharing class AMS_Utils {
                                                                     ,'IATA_ISO_Shipping_State__c' => 'Shipping_ISO_State__c'
                                                                     ,'Link_agent_name__c' => 'Link_agent_name__c'};
 
-        if (fieldsToMigrate != null && oscarOnlineAccreditation != null) {
+        /*** AMSU-121 Start ***/
+        if(!oscarNewGenProcesses.contains(oscar.Process__c)) {
+            fieldsMapping.put('ShippingState', 'Shipping_State__c');
+        }
+        /*** AMSU-121 End ***/
+		
+		if (fieldsToMigrate != null && oscarOnlineAccreditation != null) {
                 Map<String, Object> accountFieldNewValue = new Map<String,Object>();
 
                 for (String key : fieldsMapping.keySet()) {
@@ -1421,8 +1428,8 @@ public without sharing class AMS_Utils {
                     accountFieldNewValue.put('BillingCountry', oscarOnlineAccreditation.Branch_Office_Country__r.Name);
                 if (fieldsToMigrate.contains('Shipping_ISO_Country__c'))
                     accountFieldNewValue.put('ShippingCountry', oscarOnlineAccreditation.Shipping_ISO_Country__r.Name);
-                if (fieldsToMigrate.contains('Shipping_ISO_State__c'))
-                    accountFieldNewValue.put('ShippingState', oscarOnlineAccreditation.IATA_ISO_State__r.Valid_for_Address__c == true ? oscarOnlineAccreditation.Shipping_ISO_State__r.Name : null);
+                //if (fieldsToMigrate.contains('Shipping_ISO_State__c'))/*** AMSU-121 ***/
+                //    accountFieldNewValue.put('ShippingState', oscarOnlineAccreditation.IATA_ISO_State__r.Valid_for_Address__c == true ? oscarOnlineAccreditation.Shipping_ISO_State__r.Name : null);
                 if (fieldsToMigrate.contains('IATA_ISO_State__c'))
                     accountFieldNewValue.put('BillingState', oscarOnlineAccreditation.IATA_ISO_State__r.Valid_for_Address__c == true ? oscarOnlineAccreditation.IATA_ISO_State__r.Name : null);
                 //if (fieldsToMigrate.contains('ISSP_AMS_Total_Ownership__c'))
@@ -2355,6 +2362,11 @@ public static String fetchTypeOfCustomer (String locationType , String category)
         }
         
         return lRes;
+    }
+	
+	//AMSU-112
+    public static String replaceTabCharcter(String str) {
+        return String.isBlank(str) ? str : str.replaceAll('\t', ' ');  
     }
 
     //20-06-2017 - Change AMSU-93 - special chars replacement

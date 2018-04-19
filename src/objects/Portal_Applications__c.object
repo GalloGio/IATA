@@ -516,6 +516,20 @@ NOT(CONTAINS($User.Customer_type__c,&quot;Agency&quot;))
         <type>Checkbox</type>
     </fields>
     <fields>
+        <fullName>NewGenAPP_ShortName__c</fullName>
+        <caseSensitive>false</caseSensitive>
+        <description>When this filed is filled, it will show the service in NewGenAPP mobile.</description>
+        <externalId>false</externalId>
+        <inlineHelpText>When this filed is filled, it will show the service in NewGenAPP mobile.</inlineHelpText>
+        <label>NewGenAPP-ShortName</label>
+        <length>10</length>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>true</unique>
+    </fields>
+    <fields>
         <fullName>New_Window__c</fullName>
         <defaultValue>false</defaultValue>
         <externalId>false</externalId>
@@ -907,6 +921,31 @@ OR(
         <sharedTo>
             <allInternalUsers></allInternalUsers>
         </sharedTo>
+    </listViews>
+    <listViews>
+        <fullName>All_NewGenAPP</fullName>
+        <booleanFilter>1 or 2</booleanFilter>
+        <columns>NAME</columns>
+        <columns>Application_icon__c</columns>
+        <columns>Description__c</columns>
+        <columns>Hide_on_Homepage__c</columns>
+        <columns>Requestable__c</columns>
+        <columns>Visible__c</columns>
+        <columns>Application_URL__c</columns>
+        <columns>Critical_Service__c</columns>
+        <columns>NewGenAPP_ShortName__c</columns>
+        <filterScope>Everything</filterScope>
+        <filters>
+            <field>NewGenAPP_ShortName__c</field>
+            <operation>notEqual</operation>
+        </filters>
+        <filters>
+            <field>NAME</field>
+            <operation>equals</operation>
+            <value>NewGenAPP_Mobile</value>
+        </filters>
+        <label>All - NewGenAPP</label>
+        <language>en_US</language>
     </listViews>
     <listViews>
         <fullName>EasyPay</fullName>

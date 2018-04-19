@@ -80,7 +80,7 @@ private class IDCard_SF_AIMS_WebService_Test {
         update aContact;
         update aCard;
         
-        IDCard_SF_AIMS_WebService.UpdateSFIdCards('34342', 'Toto the clown','1234567', '2013-06-06', '2014-06-06', aCard.Id, 'Printed/Delivered');
+        IDCard_SF_AIMS_WebService.UpdateSFIdCards('34342', 'Toto the clown','1234567', '2013-06-06', '2014-06-06', aCard.Id, 'Valid ID Card');
     }
     
     private static Account CreateAccountTest()
@@ -521,7 +521,7 @@ private class IDCard_SF_AIMS_WebService_Test {
         
         string STATUSNOPHOTO = 'ERROR Picture Missing';
         string STATUSREJECTED = 'ERROR Rejected by G&D';
-        string CSPRINTEDDELIVERED = 'Printed/Delivered';
+        string CSVALID = 'Valid ID Card';
 
         test.startTest();
         // Create IDCardApplication, Account, Contact & ID Card Object
@@ -558,7 +558,7 @@ private class IDCard_SF_AIMS_WebService_Test {
         // UpdatePrintedIdCard
         IDCard_SF_AIMS_WebService.UpdatePrintedIdCard('02-3 3362 3FLIGHT CENTRE TRAVEL                                            BRISBA                          LEVEL 3, 545 QUEEN STREET                                                                       BRISBANE                      4000      GRAHAM TURNER       0381/730381/7311/17  TUR49G062651MI1AU 5036000661     AU000661            AUSTRALIA                 AUWW11281N                                                                                                   ');
         aCard = [SELECT Id, Card_Status__c FROM ID_Card__c WHERE Id = :aCard.Id];
-        system.assertEquals(CSPRINTEDDELIVERED, aCard.Card_Status__c);
+        system.assertEquals(CSVALID, aCard.Card_Status__c);
 
         aCard.Received_From_AIMS__c = null;
         update aCard;
