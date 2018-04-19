@@ -52,7 +52,7 @@ public class TIP_BINRangeTriggerHandler {
 
 		List<TIP_BIN_Range__c> existingBinRanges = [SELECT Id, Name, TIP_Range_Start__c, TIP_Range_End__c, TIP_Effective_From_Date__c, TIP_Effective_To_Date__c 
 													FROM TIP_BIN_Range__c 
-													WHERE (TIP_Status__c = 'Active' OR TIP_Status__c = 'In Progress') AND (RecordType.DeveloperName = 'Listed_by_IATA' OR RecordType.DeveloperName = 'Provider')
+													WHERE (TIP_Status__c = 'ACTIVE' OR TIP_Status__c = 'IN_PROGRESS') AND (RecordTypeid =:TIP_Utils.LISTED_BY_IATA_RECORD_TYPE_ID OR RecordTypeid =:TIP_Utils.BIN_RANGE_PROVIDER_RECORD_TYPE_ID)
 													ORDER BY TIP_Range_Start__c, TIP_Effective_From_Date__c];
 		
 		checkOverlapsWithExisting(notOverlappingRanges, existingBinRanges);
@@ -87,7 +87,7 @@ public class TIP_BINRangeTriggerHandler {
 
 			List<TIP_BIN_Range__c> existingBinRanges = [SELECT Id, Name, TIP_Range_Start__c, TIP_Range_End__c, TIP_Effective_From_Date__c, TIP_Effective_To_Date__c 
 													FROM TIP_BIN_Range__c 
-													WHERE (TIP_Status__c = 'Active' OR TIP_Status__c = 'In Progress') AND (RecordType.DeveloperName = 'Listed_by_IATA' OR RecordType.DeveloperName = 'Provider') AND Id NOT IN :updatedIds
+													WHERE (TIP_Status__c = 'ACTIVE' OR TIP_Status__c = 'IN_PROGRESS') AND (RecordTypeId =:TIP_Utils.LISTED_BY_IATA_RECORD_TYPE_ID OR RecordTypeId =:TIP_Utils.BIN_RANGE_PROVIDER_RECORD_TYPE_ID) AND Id NOT IN :updatedIds
 													ORDER BY TIP_Range_Start__c, TIP_Effective_From_Date__c];
 
 			List<TIP_BIN_Range__c> existingRanges = new List<TIP_BIN_Range__c>();
