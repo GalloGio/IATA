@@ -173,7 +173,8 @@ public with sharing class AMS_PCI_Compliant_Mass_OSCAR_CreationCtr{
 
         String reason = caseReason.get(operation);
 
-        String agency = RecordTypeSingleton.getInstance().RtIDsPerDeveloperNamePerObj.get('Account').get('IATA_Agency');
+        String agency = AMS_Utils.RECTYPE_IATAAGENCY;
+
 
         //Assemble query
         String query = 'SELECT Id, Name, Is_PCI_compliant__c, IATA_ISO_Country__c, IATA_ISO_Country__r.Name, Top_Parent__c, Location_Type__c, IATACode__c ';
