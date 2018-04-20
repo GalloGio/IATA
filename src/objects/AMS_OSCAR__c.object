@@ -2660,6 +2660,11 @@ Format: YYYY</inlineHelpText>
                     <default>false</default>
                     <label>Nil CC</label>
                 </value>
+                <value>
+                    <fullName>Corporate Card</fullName>
+                    <default>false</default>
+                    <label>Corporate Card</label>
+                </value>
             </valueSetDefinition>
         </valueSet>
     </fields>
@@ -18371,7 +18376,7 @@ if(Change_effective_as_of__c - today() &gt; 0,&quot;30&quot;,&quot;0&quot;)))</f
         <picklistValues>
             <picklist>Is_PCI_compliant__c</picklist>
             <values>
-                <fullName>Nil CC</fullName>
+                <fullName>Corporate Card</fullName>
                 <default>false</default>
             </values>
             <values>
@@ -18380,6 +18385,10 @@ if(Change_effective_as_of__c - today() &gt; 0,&quot;30&quot;,&quot;0&quot;)))</f
             </values>
             <values>
                 <fullName>Yes</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Nil CC</fullName>
                 <default>false</default>
             </values>
         </picklistValues>
@@ -24888,7 +24897,7 @@ if(Change_effective_as_of__c - today() &gt; 0,&quot;30&quot;,&quot;0&quot;)))</f
         <picklistValues>
             <picklist>Is_PCI_compliant__c</picklist>
             <values>
-                <fullName>Nil CC</fullName>
+                <fullName>Corporate Card</fullName>
                 <default>false</default>
             </values>
             <values>
@@ -24897,6 +24906,10 @@ if(Change_effective_as_of__c - today() &gt; 0,&quot;30&quot;,&quot;0&quot;)))</f
             </values>
             <values>
                 <fullName>Yes</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Nil CC</fullName>
                 <default>false</default>
             </values>
         </picklistValues>
@@ -26876,6 +26889,10 @@ if(Change_effective_as_of__c - today() &gt; 0,&quot;30&quot;,&quot;0&quot;)))</f
         <picklistValues>
             <picklist>Is_PCI_compliant__c</picklist>
             <values>
+                <fullName>Corporate Card</fullName>
+                <default>false</default>
+            </values>
+            <values>
                 <fullName>Nil CC</fullName>
                 <default>false</default>
             </values>
@@ -28841,7 +28858,7 @@ if(Change_effective_as_of__c - today() &gt; 0,&quot;30&quot;,&quot;0&quot;)))</f
         <picklistValues>
             <picklist>Is_PCI_compliant__c</picklist>
             <values>
-                <fullName>Nil CC</fullName>
+                <fullName>Corporate Card</fullName>
                 <default>false</default>
             </values>
             <values>
@@ -28850,6 +28867,10 @@ if(Change_effective_as_of__c - today() &gt; 0,&quot;30&quot;,&quot;0&quot;)))</f
             </values>
             <values>
                 <fullName>Yes</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Nil CC</fullName>
                 <default>false</default>
             </values>
         </picklistValues>
@@ -30739,7 +30760,7 @@ if(Change_effective_as_of__c - today() &gt; 0,&quot;30&quot;,&quot;0&quot;)))</f
         <picklistValues>
             <picklist>Is_PCI_compliant__c</picklist>
             <values>
-                <fullName>Nil CC</fullName>
+                <fullName>Corporate Card</fullName>
                 <default>false</default>
             </values>
             <values>
@@ -30748,6 +30769,10 @@ if(Change_effective_as_of__c - today() &gt; 0,&quot;30&quot;,&quot;0&quot;)))</f
             </values>
             <values>
                 <fullName>Yes</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Nil CC</fullName>
                 <default>false</default>
             </values>
         </picklistValues>
@@ -32611,6 +32636,10 @@ if(Change_effective_as_of__c - today() &gt; 0,&quot;30&quot;,&quot;0&quot;)))</f
         </picklistValues>
         <picklistValues>
             <picklist>Is_PCI_compliant__c</picklist>
+            <values>
+                <fullName>Corporate Card</fullName>
+                <default>false</default>
+            </values>
             <values>
                 <fullName>Nil CC</fullName>
                 <default>false</default>
@@ -40858,7 +40887,7 @@ if(Change_effective_as_of__c - today() &gt; 0,&quot;30&quot;,&quot;0&quot;)))</f
         <picklistValues>
             <picklist>Is_PCI_compliant__c</picklist>
             <values>
-                <fullName>Nil CC</fullName>
+                <fullName>Corporate Card</fullName>
                 <default>false</default>
             </values>
             <values>
@@ -40867,6 +40896,10 @@ if(Change_effective_as_of__c - today() &gt; 0,&quot;30&quot;,&quot;0&quot;)))</f
             </values>
             <values>
                 <fullName>Yes</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Nil CC</fullName>
                 <default>false</default>
             </values>
         </picklistValues>
