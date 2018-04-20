@@ -248,9 +248,12 @@
                                         </apex:pageBlockSectionItem>
                                     </apex:pageBlockSection>
                                     <apex:pageBlockSection id="binbpSection" columns="2" collapsible="false" title="Section 2- Bin Ranges">
-                                        <apex:pageBlockSectionItem >
+                                        <apex:pageBlockSectionItem rendered="{!editMode}">
                                             <apex:commandButton id="newBinRangebtn" style="margin-right:5px" oncomplete="toggleDialog();" value="{!$Label.ISSP_TIP_ADD_BIN_RANGE}" action="{!newEditBinRange}" reRender="newBinTab">
                                             </apex:commandButton>
+                                        </apex:pageBlockSectionItem>
+                                        <apex:pageBlockSectionItem rendered="{!!editMode}">
+                                            <apex:outputLabel escape="false" value="{!binRangeChangeRequestText}"/>
                                         </apex:pageBlockSectionItem>
                                     </apex:pageBlockSection>
                                     <apex:pageBlockSection id="binRangeTableSection" columns="2">                                        
