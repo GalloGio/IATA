@@ -1789,6 +1789,11 @@ Please check for ICH membership under www.iata.org/ich.</inlineHelpText>
                     <default>false</default>
                     <label>Discover the World</label>
                 </value>
+                <value>
+                    <fullName>Aviareps</fullName>
+                    <default>false</default>
+                    <label>Aviareps</label>
+                </value>
             </valueSetDefinition>
         </valueSet>
     </fields>
