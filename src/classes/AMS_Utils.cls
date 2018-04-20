@@ -171,7 +171,7 @@ public without sharing class AMS_Utils {
     public static final String NGVR             = 'VR.1.0';
     public static final String NGOPTINOUT       = 'ANG.FS.OPTINOUT';
 
-	//AMSU-125
+    //AMSU-125
     public static final Set<String> oscarNewProcesses = new Set<String> {new_HO, new_BR, new_BR_ABROAD, new_TIDS, new_MSO, new_GSA, new_GSA_BSP, new_GSSA, new_AHA, new_AHA_BSP, new_SA};
 
     public static final Set<String> oscarNewGenProcesses = new Set <String>{NEWHELITE, NEWHESTANDARD, NEWAE, NGCHANGES, NGCORRECTION, NGOPTINOUT, NGFOP};
@@ -333,6 +333,9 @@ public without sharing class AMS_Utils {
     public static final String PCI_COMPLIANCE = 'PCI_COMPLIANCE';
 
     public static final String RECTYPE_CASEIFAP   = RecordTypeSingleton.getInstance().RtIDsPerDeveloperNamePerObj.get('Case').get('IATA_Financial_Review');
+
+    //Mass created FOP case/OSCAR is assigned to one of theses queues when created:
+    public static final Set<String> MASS_FOP_QUEUES = new Set<String>{'NewGen_PCI_China_North_Asia','NewGen_PCI_Asia_Pacific','NewGen_PCI_Americas','NewGen_PCI_Africa_Middle_East'};
 
     static {
         refreshCache();
