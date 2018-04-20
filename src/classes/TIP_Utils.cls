@@ -32,6 +32,7 @@ public class TIP_Utils{
 	public static String CASE_SUBJECT_NEW_PRODUCT_ENROLMENT = 'New Product Enrolment';
 
 	public static String PARTNER_PRODUCT_STATUS_ACTIVE='ACTIVE';
+	public static String PARTNER_PRODUCT_STATUS_DRAFT='DRAFT';
 
 	//BIN Range RT's
 	public static String LISTED_BY_IATA_RECORD_TYPE_ID = RecordTypeSingleton.getInstance().RtIDsPerDeveloperNamePerObj.get('TIP_BIN_Range__c').get('Unenrolled_Known');
