@@ -7,7 +7,10 @@ public with sharing class ISSP_ANG_ANNUAL_REVALIDATION {
 	public Boolean isStep1 {get; set;}
 	public Boolean isStep2 {get; set;}
 	public Case newCase {get; set;}
-	public List<AnnualRevalidation> annualRevalidationsList {get; set;}
+	public AMS_OSCAR__c oscar {get; set;}
+	public Set<String> iataCodesOk {get; set;}
+	public Set<String> iataCodesNotOk {get; set;}
+	public Map<String, AnnualRevalidation> annualRevalidationsMap {get; set;}
 
 	public String tree {get {
 		return generateMenu();
@@ -31,15 +34,24 @@ public with sharing class ISSP_ANG_ANNUAL_REVALIDATION {
 		Ams_Utils.ACC_S6_CASHWITHCOMMISSION
     };
 
+	public String caseId {get; set;}
+
 	public ISSP_ANG_ANNUAL_REVALIDATION() {
+
+		Id caseId  = ApexPages.currentPage().getParameters().get('caseId');
+
+		if (caseId != null && caseId != '') {
+			newCase = fetchCase(caseid);
+		}
+
+		if (newCase != null) {
+			oscar = fetchOscar(newCase.Oscar__c);
+			setIataCodesOkNotOk(oscar);
+		}
 
 		getContact();
 
-		annualRevalidationsList = new List<AnnualRevalidation>();
-
-		System.debug('alex constructor');
-
-		newCase = [select id, IFAP_Country_ISO__c from case limit 1];
+		annualRevalidationsMap = new Map<String, AnnualRevalidation>();
 
         isStep1 = false;
         isStep2 = false;
@@ -57,9 +69,6 @@ public with sharing class ISSP_ANG_ANNUAL_REVALIDATION {
         system.debug('stepNumber ' + stepNumber);
 
         if(stepNumber == '2'){
-        	//Id caseid  = ApexPages.currentPage().getParameters().get('caseId');
-        	//newForm = ISSP_SELECTOR.fetchAMSProcessForm(caseid);
-        	//fetchCase(caseid);
         	isStep2 = true;
         }
 
@@ -288,5 +297,43 @@ public with sharing class ISSP_ANG_ANNUAL_REVALIDATION {
 			this.status = status;
 			this.newForm = newForm;
 		}
+	}
+
+	public void setIataCodesOkNotOk(AMS_OSCAR__c oscar) {
+
+		iataCodesOk = new Set<String>();
+		iataCodesNotOk = new Set<String>();
+
+		String[] aux = oscar.IATA_Codes_OK__c.split(',');
+
+		for (String iataCode : aux) {
+			iataCodesOk.add(iataCode);
+		}
+
+		aux = oscar.IATA_Codes_NOK__c.split(',');
+
+		for (String iataCode : aux) {
+			iataCodesNotOk.add(iataCode);
+		}
+	}
+
+    public static Case fetchCase(String caseId) {
+        List <Case> newCases = [Select Id, CaseNumber, Reason1__c, CaseArea__c, Status, BSPCountry__c, Country_concerned_by_the_query__c, Oscar__c,
+								   	   Contact.Name, Account.Id, Description, Subject, Account_Concerned__c, Account_Concerned__r.Top_Parent__c, Account.Name,
+                                   	   Account.Billing_Address_formated__c, Verification__c, IFAP_Country_ISO__c, Case_Language__c, Region__c, Applicable_to_Which_Version_s__c
+                                  From Case
+                                 Where Id = :caseId];
+
+        if (newCases.size() > 0) return newCases[0];
+
+		return null;
+    }
+
+	public static AMS_OSCAR__c fetchOscar(Id oscarId) {
+		List<AMS_OSCAR__c> auxOscars = [Select Id, IATA_Codes_NOK__c, IATA_Codes_OK__c From AMS_OSCAR__c Where Id = :oscarId];
+
+		if (auxOscars.size() > 0) return auxOscars[0];
+
+		return null;
 	}
 }
