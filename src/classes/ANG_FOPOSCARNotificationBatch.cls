@@ -19,8 +19,8 @@ global class ANG_FOPOSCARNotificationBatch implements Database.Batchable<Case>, 
 
 	List<String> errors = new List<String>();
 
-	String query = 'SELECT Id, ContactId, ContactEmail, Contact.Name, OSCAR__c, OSCAR__r.createdDate, Contact.Account.IataCode__c, OSCAR__r.Sanity_check_deadline__c'+ 
-					'Contact.Preferred_Language__c, Contact.BSP_CASS_Payment_contact__c, Contact.Financial_Assessment_Contact__c '+
+	String query = 'SELECT Id, ContactId, ContactEmail, Contact.Name, OSCAR__c, OSCAR__r.createdDate, Contact.Account.IataCode__c, '+ 
+					'Contact.Preferred_Language__c, Contact.BSP_CASS_Payment_contact__c, Contact.Financial_Assessment_Contact__c, OSCAR__r.Sanity_check_deadline__c '+
 					'FROM Case '+
 					'WHERE RecordtypeID = :AMS_Utils.RECTYPE_OSCARCOMM '+ 
 					'AND OSCAR__r.RecordTypeId = :AMS_Utils.RECTYPE_NEWGENFOP '+ 
