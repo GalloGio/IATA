@@ -1,24 +1,23 @@
 global class ANG_FOPOSCARNotificationBatch implements Database.Batchable<Case>, Database.Stateful  {
-
-	// Will Run Every day and send email and Portal notification if:
-		//a) The FOP OSCAR is not submitted by the agent within 15 days (creation date + 15 days) => Reminder
-		//b) The FOP OSCAR is not submitted by the agent within 30 days (creation date + 30 days) => Non Compliance
+	/*
+	 Will run every day and send email and Portal notification if:
+		a) The FOP OSCAR is not submitted by the agent within 15 days (creation date + 15 days) => Reminder
+		b) The FOP OSCAR is not submitted by the agent within 30 days (creation date + 30 days) => Non Compliance
+	*/
 
 	// FOP OSCAR was mass created if Origin is the following: 
 	private static final String MASSIVE_FOP_ORIGIN = 'Massive FOP Creation';
-	// Notification template identifiers
+	// Portal Notification and Email templates identifiers
 	public static final String FOP_REMINDER_TEMPLATE_ID = 'ANG_Mass_FOP_OSCAR_Reminder'; 
 	public static final String FOP_NONCOMPLIANCE_TEMPLATE_ID = 'ANG_Mass_FOP_OSCAR_NonCompliance'; 
 
 	//Templates Names to use
-	Map<String,String> notificationTemplates;
+	private static Map<String,String> notificationTemplates;
 	// static dates:
-	private static Date dateReminder; //15 days
-	private static Date dateNonCompliance; //30 days
+	private static Date dateReminder; //15 days ago
+	private static Date dateNonCompliance; //30 days ago
 
 	List<String> errors = new List<String>();
-
-	//List<Case> cases = [SELECT Id, ContactEmail, OSCAR__r.createdDate FROM Case WHERE RecordtypeID = :AMS_Utils.RECTYPE_OSCARCOMM AND OSCAR__r.RecordTypeId = :AMS_Utils.RECTYPE_NEWGENFOP AND Origin = :MASSIVE_FOP_ORIGIN AND Owner.Name IN :AMS_Utils.MASS_FOP_QUEUES AND (DAY_ONLY(OSCAR__r.CreatedDate) = :dateReminder OR DAY_ONLY(OSCAR__r.CreatedDate) = :dateNonCompliance)];
 
 	String query = 'SELECT Id, ContactId, ContactEmail, Contact.Name, OSCAR__c, OSCAR__r.createdDate, Contact.Account.IataCode__c, '+ 
 					'Contact.Preferred_Language__c, Contact.BSP_CASS_Payment_contact__c, Contact.Financial_Assessment_Contact__c '+
@@ -32,13 +31,12 @@ global class ANG_FOPOSCARNotificationBatch implements Database.Batchable<Case>, 
 	
 	global ANG_FOPOSCARNotificationBatch() {
 		
-		dateReminder = Date.today().addDays(15);
-		dateNonCompliance = Date.today().addDays(30);
+		dateReminder = Date.today().addDays(-15);
+		dateNonCompliance = Date.today().addDays(-30);
 
-		for (Notification_template__c nt :[SELECT Id,Name, Identifier__c 
-													FROM Notification_Template__c 
-													WHERE Identifier__c = :FOP_REMINDER_TEMPLATE_ID 
-															OR Identifier__c = :FOP_NONCOMPLIANCE_TEMPLATE_ID]){
+		notificationTemplates = new Map<String,String>();
+
+		for (Notification_template__c nt :[SELECT Id,Name, Identifier__c FROM Notification_Template__c WHERE Identifier__c = :FOP_REMINDER_TEMPLATE_ID OR Identifier__c = :FOP_NONCOMPLIANCE_TEMPLATE_ID]){
 			notificationTemplates.put(nt.Identifier__c,nt.Name);
 		}
 	}
@@ -96,8 +94,8 @@ global class ANG_FOPOSCARNotificationBatch implements Database.Batchable<Case>, 
 	global void finish(Database.BatchableContext BC) {
 		if(!errors.isEmpty()){
 			String errorMsg = 'Error(s) running ANG_FOPOSCARNotificationBatch on '+DateTime.now()+':/n'+String.join(errors,',');
-			//send email w/ errors
-			System.debug('## '+errorMsg);
+			//send email w/ errors ??
+			System.debug('## Error Message: '+errorMsg);
 		}
 	
 	}
