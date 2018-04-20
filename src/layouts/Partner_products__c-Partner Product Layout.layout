@@ -201,7 +201,6 @@
         <fields>TIP_Effective_From_Date__c</fields>
         <fields>TIP_Effective_To_Date__c</fields>
         <fields>TIP_Interchange_Fee__c</fields>
-        <fields>TIP_Issuing_Currency__c</fields>
         <fields>Network_Fee__c</fields>
         <fields>TIP_Status__c</fields>
         <relatedList>TIP_Pay_Prov_Prod_Country_Config__c.TIP_Product__c</relatedList>
