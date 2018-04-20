@@ -1127,7 +1127,7 @@ global class ANG_OscarProcessHelper {
 			nt.Message__c = nt.Message__c
 				.replace('#CONTACTNAME#',contacts.get(nt.Contact__c).Name)
 				.replace('#IATACODE#',contacts.get(nt.Contact__c).Account.IataCode__c)
-				.replace('#DEADLINEDATE#', dt.addDays(15).format());
+				.replace('#DEADLINEDATE#', contactCaseMap.get(nt.Contact__c).OSCAR__r.Sanity_check_deadline__c.format());
 		}
 
 		if (!notifications.isEmpty())
