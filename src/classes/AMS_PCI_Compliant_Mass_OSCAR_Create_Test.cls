@@ -21,7 +21,8 @@ private class AMS_PCI_Compliant_Mass_OSCAR_Create_Test {
 			Location_Class__c= AMS_Utils.LC_PASSENGER,
 			Status__c= AMS_Utils.ACC_S9_APPROVED,
 			RecordTypeId= AMS_Utils.RECTYPE_IATAAGENCY,
-			Is_PCI_compliant__c = null
+			Is_PCI_compliant__c = null,
+			Location_Type__c = AMS_Utils.HO
 			);
 		agencylist.add(a1);
 		insert agencylist;

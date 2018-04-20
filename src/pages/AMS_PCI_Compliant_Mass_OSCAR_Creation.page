@@ -99,7 +99,7 @@
 						<apex:commandButton value="Create OSCARs" disabled="{!OR(isBatchRunning, isBatchFinished, totalAccounts == 0, tooMuchResults)}" action="{!createOSCARs}" reRender="batchInfo"/>                 
 					</apex:pageBlockSectionItem>
 					
-					<apex:outputPanel layout="none"  id="batchInfo">
+					<apex:outputPanel id="batchInfo">
 						<apex:pageMessage severity="info" strength="1" summary="The batch is running" rendered="{!isBatchRunning}"/>
 						<apex:pageMessage severity="confirm" strength="1" summary="The batch is completed" rendered="{!isBatchFinished}"/>
 						<apex:actionRegion>
