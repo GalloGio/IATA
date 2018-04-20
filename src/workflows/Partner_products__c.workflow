@@ -14,7 +14,7 @@
         <fullName>Update_Status_to_In_Progressactive</fullName>
         <description>Update the Status of TIP_Product every time Effective From Date changes to a future date.</description>
         <field>PP_status__c</field>
-        <literalValue>In Progress</literalValue>
+        <literalValue>IN_PROGRESS</literalValue>
         <name>Update Status to In Progressactive</name>
         <notifyAssignee>false</notifyAssignee>
         <operation>Literal</operation>
