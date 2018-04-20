@@ -68,10 +68,10 @@ public with sharing class AMS_PCI_Compliant_Mass_OSCAR_CreationCtr{
         get{
             if(availableLocations == null){
                 availableLocations = new List<SelectOption>();
-                if(operation == 'PCI') availableLocations.add(new SelectOption('HO','HO'));
-                availableLocations.add(new SelectOption('HE','HE'));
-                if(operation == 'PCI')  availableLocations.add(new SelectOption('BR','BR'));
-                availableLocations.add(new SelectOption('AE','AE'));
+                if(operation == 'PCI') availableLocations.add(new SelectOption(AMS_Utils.HO,AMS_Utils.HO));
+                availableLocations.add(new SelectOption(AMS_Utils.HE,AMS_Utils.HE));
+                if(operation == 'PCI')  availableLocations.add(new SelectOption(AMS_Utils.BR,AMS_Utils.BR));
+                availableLocations.add(new SelectOption(AMS_Utils.AE,AMS_Utils.AE));
             }
             return availableLocations;
         }
@@ -209,9 +209,14 @@ public with sharing class AMS_PCI_Compliant_Mass_OSCAR_CreationCtr{
     public void checkBatchStatus(){
 
         AsyncApexJob batchRecord = [SELECT Id, Status FROM AsyncApexJob WHERE Id = :this.batchId];
+
+        System.debug(loggingLevel.FINE, '____ [cls AMS_PCI_Compliant_Mass_OSCAR_CreationCtr - checkBatchStatus] batchRecord - ' + batchRecord);
         
         isBatchRunning = batchRecord.Status != 'Aborted' && batchRecord.Status != 'Completed' &&  batchRecord.Status != 'Failed';
         isBatchFinished = !isBatchRunning;
+        
+        System.debug(loggingLevel.FINE, '____ [cls AMS_PCI_Compliant_Mass_OSCAR_CreationCtr - checkBatchStatus] isBatchRunning - ' + isBatchRunning);
+        System.debug(loggingLevel.FINE, '____ [cls AMS_PCI_Compliant_Mass_OSCAR_CreationCtr - checkBatchStatus] isBatchFinished - ' + isBatchFinished);
         
         if(isBatchFinished) {
             if(operation == 'PCI'){
