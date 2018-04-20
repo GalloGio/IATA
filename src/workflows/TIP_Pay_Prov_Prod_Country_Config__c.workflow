@@ -14,7 +14,7 @@
         <fullName>Update_Status_to_In_Porgress</fullName>
         <description>Update the Status of PPCC every time Effective From Date changes to a future date</description>
         <field>TIP_Status__c</field>
-        <literalValue>In Progress</literalValue>
+        <literalValue>IN_PROGRESS</literalValue>
         <name>Update Status to In Porgress</name>
         <notifyAssignee>false</notifyAssignee>
         <operation>Literal</operation>

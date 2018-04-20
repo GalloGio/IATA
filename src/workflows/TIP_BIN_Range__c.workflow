@@ -14,7 +14,7 @@
         <fullName>Update_Status_to_In_Progress</fullName>
         <description>Update the Status of BIN Range every time Effective From Date changes to a future date.</description>
         <field>TIP_Status__c</field>
-        <literalValue>In Progress</literalValue>
+        <literalValue>IN_PROGRESS</literalValue>
         <name>Update Status to In Progress</name>
         <notifyAssignee>false</notifyAssignee>
         <operation>Literal</operation>
