@@ -1122,7 +1122,6 @@ global class ANG_OscarProcessHelper {
 
 		List<Notification__c> notifications = ISSP_CreateNotification.createnotification(notificationTargets, false);
 
-		Date dt = Date.today();
 		for (Notification__c nt :notifications){
 			nt.Message__c = nt.Message__c
 				.replace('#CONTACTNAME#',contacts.get(nt.Contact__c).Name)
