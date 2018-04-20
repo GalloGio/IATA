@@ -1678,7 +1678,7 @@ public without sharing class ISSP_AMS_Accreditation {
                         newForm.Local_Agent_Type__c = 'International';
                     }
             }
-			
+
 			/*** AMSU-121 ***/
             if(newForm.Is_change_location__c) {
                 newForm.Shipping_Street__c = null;
@@ -1690,7 +1690,7 @@ public without sharing class ISSP_AMS_Accreditation {
                 newForm.Shipping_ISO_Country__c = null;
             }
             /*** AMSU-121 ***/
-            
+
             upsert newForm;
 
             //Ownership area
@@ -3545,7 +3545,10 @@ System.DEBUG('validateCharactersInForm  - 4 - errorFound: '+errorFound);
         String emailTemplateName;
         String fromaddress;
 
-        if (isNoticeOfChange && (newCase.ContactId == con.id)) { //Can't user VF template if Contact submitting case does not have case visibility i.e. is not the case contact
+        if(newCase.Reason1__c == 'FoP Management') {
+            emailTemplateName = 'ISSP ANG PCI Process Notification';
+            fromaddress = 'IATA Service Centre (noreply@iata.org)';
+        } else if (isNoticeOfChange && (newCase.ContactId == con.id)) { //Can't user VF template if Contact submitting case does not have case visibility i.e. is not the case contact
             SYSTEM.DEBUG('Sending NoC Confirmation 1');
             emailTemplateName = 'ISSP AMS Process Notification';
             fromaddress = 'IATA Service Centre (noreply@iata.org)';
@@ -3865,7 +3868,7 @@ System.DEBUG('validateCharactersInForm  - 4 - errorFound: '+errorFound);
                         Mobile__c, MobileNational__c , Location_Type__c, ParentId, ShippingStreet, ShippingCity, ShippingState,
                         ShippingPostalCode, ShippingCountry, VAT_Number__c, Short_Name__c, Location_Class__c, IATA_ISO_Country__c,
                         Iso_State__c, Abbreviated_name__c, Abbreviated_Address__c, Remittance_frequency__c, Solicitation_Flag__c,
-                        VAT_Number_2__c, CASS_Number__c,Company_Type__c,RecordType.DeveloperName,Status__c,IATA_ISO_Country__r.ISO_Code__c,ANG_Accreditation_Model__c, 
+                        VAT_Number_2__c, CASS_Number__c,Company_Type__c,RecordType.DeveloperName,Status__c,IATA_ISO_Country__r.ISO_Code__c,ANG_Accreditation_Model__c,
                         IATA_ISO_Shipping_Country__c, IATA_ISO_Shipping_State__c
                         FROM Account
                         WHERE Id = :vHQAccountId

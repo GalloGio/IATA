@@ -5,7 +5,7 @@
     <letterhead>IATADynamicSkyLetterhead</letterhead>
     <name>ANG FOP MASS CREATION EN</name>
     <style>freeForm</style>
-    <subject>Ref nr {!AMS_OSCAR__c.Name} –  Forms of Payment</subject>
+    <subject>Request for PCI DSS Attestation of Compliance / Nil Credit Card Self-Declaration - {!Account.IATACode__c} - {!Account.Name}</subject>
     <textOnly>Dear {!Contact.Name},
 
 

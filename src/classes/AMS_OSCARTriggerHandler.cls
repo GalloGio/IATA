@@ -2466,6 +2466,8 @@ public class AMS_OSCARTriggerHandler {
         else if(agencyType == AMS_Utils.NGANNUALREVAL && step == AMS_Utils.FAILED && !wasApproved) templateId  = 'ANG_Annual_Revalidation_Failed';
         else if(agencyType == AMS_Utils.NGANNUALREVAL && step == null) templateId  = 'ANG_Anual_Renewal_Case';
         else if(agencyType == AMS_Utils.NGFOP && step == null ) templateId  = 'ANG_FOP_OSCARCREATION';
+        else if(agencyType == ANG_FOPOSCARNotificationBatch.FOP_REMINDER_TEMPLATE_ID && step == null) templateId  = 'ANG_Mass_FOP_OSCAR_Reminder';
+        else if(agencyType == ANG_FOPOSCARNotificationBatch.FOP_NONCOMPLIANCE_TEMPLATE_ID && step == null) templateId  = 'ANG_Mass_FOP_OSCAR_NonCompliance';
 
         System.debug('[ANGemailTemplates] Template to use is:'+templateId);
 
