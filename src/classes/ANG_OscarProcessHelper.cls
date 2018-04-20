@@ -1040,7 +1040,7 @@ global class ANG_OscarProcessHelper {
 		Map<Id,Account> accounts = new Map<Id,Account>();
 
 		for(Account acc: acctSet){
-			contactsToSend.add(acc.Contacts);
+			contactsToSend.addall(acc.Contacts);
 			accounts.put(acc.Id,acc);
 		}
 
