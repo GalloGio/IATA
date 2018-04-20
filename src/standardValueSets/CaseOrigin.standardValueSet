@@ -1226,4 +1226,9 @@
         <default>false</default>
         <label>Web SAF</label>
     </standardValue>
+    <standardValue>
+        <fullName>Massive FOP Creation</fullName>
+        <default>false</default>
+        <label>Massive FOP Creation</label>
+    </standardValue>
 </StandardValueSet>
