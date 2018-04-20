@@ -3405,7 +3405,7 @@ System.DEBUG('validateCharactersInForm  - 4 - errorFound: '+errorFound);
         String emailTemplateName;
         String fromaddress;
 
-        if(newCase.Reason1__c == 'FoP Management') {
+        if(newCase.Reason1__c == 'FoP Management' && newCase.origin == 'Massive FOP Creation') {
             emailTemplateName = 'ISSP ANG PCI Process Notification';
             fromaddress = 'IATA Service Centre (noreply@iata.org)';
         } else if (isNoticeOfChange && (newCase.ContactId == con.id)) { //Can't user VF template if Contact submitting case does not have case visibility i.e. is not the case contact
