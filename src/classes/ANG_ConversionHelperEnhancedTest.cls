@@ -1805,4 +1805,72 @@ private class ANG_ConversionHelperEnhancedTest {
 		System.debug('hiers are:'+hiers);
 
 	}
+
+	@isTest static void ANG_ConversionHelperEnhancedTestTest26() {
+		
+		IATA_ISO_Country__c ctry = new IATA_ISO_Country__c (Name='US',BSP_Country_free_text__c='US' , ISO_Code__c = 'US')  ;
+        insert ctry ;
+
+        Id accountAgencyRT = AMS_Utils.getId('Account', 'IATA_Agency');
+
+        Account a1 = new Account(IATA_ISO_Country__c = ctry.id, RecordTypeId = accountAgencyRT, IATACode__c='1234561',Location_Type__c='HO',Name='Agency HO',Short_Name__c='Agency HO', Sector__c = 'Travel Agent', Location_Class__c = 'P', Status__c = AMS_Utils.ACC_S9_APPROVED);
+
+        insert a1;
+
+        Account a2 = new Account(IATA_ISO_Country__c = ctry.id, ParentId = a1.Id, RecordTypeId = accountAgencyRT, IATACode__c='1234562',Location_Type__c='BR',Name='Agency BR (P) 1',Short_Name__c='Agency BR (P) 1', Sector__c = 'Travel Agent', Location_Class__c = 'P', Status__c = AMS_Utils.ACC_S1_NOTACCREDITED);
+        Account a3 = new Account(IATA_ISO_Country__c = ctry.id, ParentId = a1.Id, RecordTypeId = accountAgencyRT, IATACode__c='1234563',Location_Type__c='BR',Name='Agency BR (P) 2',Short_Name__c='Agency BR (P) 2', Sector__c = 'Travel Agent', Location_Class__c = 'P', Status__c = AMS_Utils.ACC_S0_TERMINATED, Expiry_Date__c = Date.today().addMonths(-3));
+      
+        insert new List<Account>{a2,a3};
+
+        //Create the hierarchy
+		AMS_Agencies_Hierarchy__c hierarchy = new AMS_Agencies_Hierarchy__c(Hierarchy_Name__c = 'Hierarchy 1');
+
+		insert hierarchy;
+
+		AMS_Agencies_relationhip__c rel1 = new AMS_Agencies_relationhip__c(Hierarchy__c = hierarchy.Id, Parent_Account__c = a1.Id, Child_Account__c = a2.Id);
+		AMS_Agencies_relationhip__c rel2 = new AMS_Agencies_relationhip__c(Hierarchy__c = hierarchy.Id, Parent_Account__c = a1.Id, Child_Account__c = a3.Id);
+
+
+		insert new List<AMS_Agencies_relationhip__c>{rel1,rel2};
+
+        Test.startTest();
+
+		Map<Id,ANG_ConversionHelper.HierarchyStructure> structure = ANG_ConversionHelper.buildHierarchyStructure('US');
+
+		structure = ANG_ConversionHelper.performValidationOnHierarchyStructure(structure);
+
+		ANG_ConversionHelper.StatisticGeneratorStructure finalStruct = ANG_ConversionHelper.fetchStatistics(structure,'US');
+
+		ANG_ConversionHelper.printStatistics(finalStruct);
+	
+		System.debug('Running specific migration on:'+structure.values());
+		
+		Id migrationBacthId = ANG_ConversionHelper.runSpecificMigration(structure.values());
+
+		Test.stopTest();
+
+		Map<String,List<Agency_Authorization__c>> agencyAuthorizations = new Map<String,List<Agency_Authorization__c>>();
+
+		For(Agency_Authorization__c aa : [Select Id, Status__c, Account__c, Account__r.IATACode__c from Agency_Authorization__c]){
+
+			if(agencyAuthorizations.get(aa.Account__r.IATACode__c) != null)
+				agencyAuthorizations.get(aa.Account__r.IATACode__c).add(aa);
+			else
+				agencyAuthorizations.put(aa.Account__r.IATACode__c, new List<Agency_Authorization__c>{aa});
+
+		}
+
+		System.assertEquals(agencyAuthorizations.get('1234561').size(),3);
+		System.assertEquals(agencyAuthorizations.get('1234562'),null);
+		System.assertEquals(agencyAuthorizations.get('1234563').size(),3);
+
+		For(Agency_Authorization__c aa : agencyAuthorizations.get('1234561')){
+			System.assertEquals(aa.Status__c, 'Active');
+		}
+
+		For(Agency_Authorization__c aa : agencyAuthorizations.get('1234563')){
+			System.assertEquals(aa.Status__c, 'Non-Active');
+		}
+
+	}
 }
