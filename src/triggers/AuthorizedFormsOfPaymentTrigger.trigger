@@ -1,5 +1,5 @@
 trigger AuthorizedFormsOfPaymentTrigger on Authorized_Forms_Of_Payment__c (after insert, after update, before delete) {
-
+/*
 	if(trigger.isAfter){
 
 		if(trigger.isInsert){
@@ -23,6 +23,6 @@ trigger AuthorizedFormsOfPaymentTrigger on Authorized_Forms_Of_Payment__c (after
 		}
 
 	}
-
+*/
 
 }
