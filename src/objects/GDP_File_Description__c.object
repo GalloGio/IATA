@@ -1089,9 +1089,9 @@
         <columns>Magnitude__c</columns>
         <filterScope>Everything</filterScope>
         <filters>
-            <field>Atom__c</field>
+            <field>Reference__c</field>
             <operation>contains</operation>
-            <value>0</value>
+            <value>NewGen</value>
         </filters>
         <label>ZZ-MISC SEARCHES</label>
         <language>en_US</language>
