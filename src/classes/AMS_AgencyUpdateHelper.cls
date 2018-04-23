@@ -148,9 +148,10 @@ System.debug('sRecIdB: ' + sRecIdB);
                                 String sRecIdRes = AMS_Utils.getRecIdFromIntegrationMatriz( sRecIdA, sRecIdB );
 System.debug('sRecIdRes: ' + sRecIdRes);
                                 //RB 10-11-2017 - If the determined recId is 'D' check the account status, and if not Terminated, force recId = 'C'
-                                if(sRecIdRes == 'D' && au.Status__c != 'Terminated'){
+                                //RB 16-04-2018 this validation should only be applied when checking against an already existing agency update record.
+                                /*if(sRecIdRes == 'D' && au.Status__c != 'Terminated'){
                                     sRecIdRes = 'C';
-                                }  
+                                }*/
 System.debug('sRecIdRes after D: ' + sRecIdRes);                              
                                 //Check if the agency update record is to delete or not save at all!!
                                 if(sRecIdRes == 'F'){
