@@ -350,9 +350,21 @@ SYSTEM.DEBUG('getRelatedAccount starting... ');
 
         upsert newForm;
 
-        if(newCase.Status == 'Draft'){
+        AMS_OSCAR__c oscar;
+
+        if(newCase.Origin == 'Massive FOP Creation') {
+            oscar = [Select Id, Account__c, Account__r.Id, OwnerId From AMS_OSCAR__c Where id = :newCase.OSCAR__c];
+        }
+
+        if(newCase.Status == 'Draft' || newCase.Origin == 'Massive FOP Creation'){
             if(!Test.isRunningTest()){
-                newCase.ownerid = amsAccreditation.getRegionalQueue();
+                if(newCase.Origin != 'Massive FOP Creation') {
+                    newCase.ownerid = amsAccreditation.getRegionalQueue();
+                } else {
+                    oscar.OwnerId = amsAccreditation.getRegionalQueue();
+
+                    update oscar;
+                }
             }else{
                 newCase.ownerid = UserInfo.getUserId();
             }
@@ -370,7 +382,7 @@ SYSTEM.DEBUG('getRelatedAccount starting... ');
             ISSP_AMS_Accreditation.OSCARIntegration(newCase.Account_Concerned__c, newForm.Id, typeOfProcess, newCase.Id);
 
         if(newCase.origin == 'Massive FOP Creation') {
-            AMS_OSCAR__c oscar = [Select Id, Account__c, Account__r.Id From AMS_OSCAR__c Where id = :newCase.OSCAR__c];
+
 
             String accountIdStr = newCase.AccountId;
 
@@ -484,7 +496,8 @@ SYSTEM.DEBUG('getRelatedAccount starting... ');
     public void fetchCase(String vCaseId) {
         List <Case> newCases = [
                                    SELECT Id, CaseNumber, Reason1__c, CaseArea__c, Status, BSPCountry__c, Country_concerned_by_the_query__c, Contact.Name, Account.Id, Description, Subject, Account_Concerned__c, Account_Concerned__r.Top_Parent__c, Account.Name,
-                                   Account.Billing_Address_formated__c, Verification__c, IFAP_Country_ISO__c, Case_Language__c, Region__c, Applicable_to_Which_Version_s__c, Origin, OSCAR__c
+                                   Account.Billing_Address_formated__c, Verification__c, IFAP_Country_ISO__c, Case_Language__c, Region__c, Applicable_to_Which_Version_s__c, Origin, OSCAR__c,
+                                   OwnerId
                                    FROM Case
                                    WHERE Id = :vCaseId
                                ];
@@ -540,7 +553,16 @@ SYSTEM.DEBUG('getRelatedAccount starting... ');
 
     public Pagereference securityCheck() {
 
-        if (newCase.Id != null && newCase.Status != 'Draft' && newCase.Origin != 'Massive FOP Creation') {
+        Boolean alreadySubmitted = false;
+
+        if(newCase.Id != null) {
+            if(newCase.OSCAR__c != null) {
+                List<AMS_Process_Detail__c>  aux = [Select id From AMS_Process_Detail__c Where OSCAR__c = :newCase.OSCAR__c limit 1];
+                alreadySubmitted = (aux.size() != 0);
+            }
+        }
+
+        if ((newCase.Id != null && newCase.Status != 'Draft' && newCase.Origin != 'Massive FOP Creation') || (newCase.Origin == 'Massive FOP Creation' && alreadySubmitted)) {
             return new Pagereference('/ISSP_Case?caseId=' + newCase.Id + '&mid=M1S2' + commParam);
         }
 
