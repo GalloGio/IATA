@@ -140,7 +140,7 @@
     </rules>
     <rules>
         <fullName>OSCAR DGR Certificate Dead Line</fullName>
-        <active>false</active>
+        <active>true</active>
         <criteriaItems>
             <field>AMS_OSCAR__c.Process__c</field>
             <operation>equals</operation>
