@@ -95,11 +95,9 @@ private class ANG_RiskForecastPropertiesControllerTest {
 
             pgController.closePopup();
 
-            pgController.redirectPopup();
-
             pgController.getcanExecuteForecast();
 
-            pgController.showPopup();
+            pgController.forecast();
 
             System.assertEquals('C',pgController.newRiskStatus);
             System.assertEquals(true,pgController.newCashCondition);
