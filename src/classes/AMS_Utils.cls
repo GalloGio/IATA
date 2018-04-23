@@ -335,7 +335,7 @@ public without sharing class AMS_Utils {
     public static final String RECTYPE_CASEIFAP   = RecordTypeSingleton.getInstance().RtIDsPerDeveloperNamePerObj.get('Case').get('IATA_Financial_Review');
 
     //Mass created FOP case/OSCAR is assigned to one of theses queues when created:
-    public static final Set<String> MASS_FOP_QUEUES = new Set<String>{'NewGen_PCI_China_North_Asia','NewGen_PCI_Asia_Pacific','NewGen_PCI_Americas','NewGen_PCI_Africa_Middle_East'};
+    public static final Set<String> MASS_FOP_QUEUES = new Set<String>{'NewGen PCI - Africa & Middle East','NewGen PCI - Americas','NewGen PCI - Asia & Pacific','NewGen PCI - China & North Asia','NewGen PCI - Europe'};
 
     static {
         refreshCache();
