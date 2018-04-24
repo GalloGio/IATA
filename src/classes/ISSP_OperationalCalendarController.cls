@@ -71,6 +71,9 @@ global without sharing class ISSP_OperationalCalendarController {
     public String getListEventsJSON() {
         return JSON.serialize(this.listEvents,true);
     }
+    public String getListEventsJSONGrouped() {
+        return JSON.serialize(groupEvents(this.listEvents),true);
+    }
     public String getMapFrequenciesJSON() {
         return JSON.serialize(MAP_FREQUENCIES,true);
     }
@@ -378,6 +381,14 @@ global without sharing class ISSP_OperationalCalendarController {
         return JSON.serialize(listEvents,true);
     }
     
+    @RemoteAction
+    global static String loadEventsGroupedRemote(String country, String frequency, String operationType, String currencyCode) {
+        if (!IS_AIRLINE) return '';
+        list<Operational_Calendar__c> listOperations = queryListOperations(country, frequency, operationType, currencyCode,null);
+        list<EventWrapper> listEvents = getOperationalCalendarEvents(listOperations, operationType);
+        return JSON.serialize(groupEvents(listEvents),true);
+    }
+    
     /**
         Find the operational calendar list and converts it to JSON, a format valid for javascript
         This is called from the page, usually when a filter changes, for airlines only
@@ -499,5 +510,26 @@ global without sharing class ISSP_OperationalCalendarController {
     
     public static String dateToString(DateTime input) {
         return input==null? '': input.format('dd MMM YYYY');
+    }
+    
+    public static list<EventWrapper> groupEvents(list<EventWrapper> listEvents) {
+        map<Date,EventWrapper> mapEvents = new map<Date,EventWrapper>();
+        if (listEvents!=null) {
+            for (EventWrapper event: listEvents) {
+                Date dateKey = Date.ValueOf(event.start);
+                EventWrapper newEvent = mapEvents.get(dateKey);
+                if (newEvent==null) {
+                    newEvent = new EventWrapper();
+                    newEvent.title = '';
+                    newEvent.start = event.start;
+                    newEvent.allDay = event.allDay;
+                    newEvent.className = event.className;
+                    newEvent.description = '';
+                }
+                newEvent.description+= event.title + '</br>';
+                mapEvents.put(dateKey, newEvent);
+            }
+        } 
+        return mapEvents.values();
     }
 }
