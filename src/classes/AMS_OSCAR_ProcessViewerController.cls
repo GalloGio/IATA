@@ -340,7 +340,7 @@ public class AMS_OSCAR_ProcessViewerController {
         String currentPickValue = String.valueOf(oscar.get(fieldName));
         System.debug('FOR FIELD: '+ fieldName + ' value is: '+ currentPickValue);
 
-        if(currentPickValue == null && AMS_Utils.oscarNewGenProcesses.contains(oscar.Process__c))
+        if(currentPickValue == null && (AMS_Utils.oscarNewGenProcesses.contains(oscar.Process__c) || oscar.Process__c == AMS_Utils.PCI_COMPLIANT))
             picklistValues.add(new SelectOption('', '--None--'));
 
         if(currentPickValue != null)
