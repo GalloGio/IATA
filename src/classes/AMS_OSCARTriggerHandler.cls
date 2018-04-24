@@ -3309,10 +3309,12 @@ public class AMS_OSCARTriggerHandler {
                     if(aa.Status__c == 'Active' && oscar.Is_PCI_compliant__c == 'No'){
                         aa.Status__c = 'Non-Active';
                         formsOfPaymentToUpdate.add(aa);
-
                     }
                     else  if(aa.Status__c == 'Non-Active' && oscar.Is_PCI_compliant__c == 'Yes'){
                         aa.Status__c = 'Active';
+                        formsOfPaymentToUpdate.add(aa);
+                    }else if(aa.Status__c == 'Active' && oscar.Is_PCI_compliant__c == 'Nil CC'){
+                        aa.Status__c = 'Non-Active';
                         formsOfPaymentToUpdate.add(aa);
                     }
                 }
