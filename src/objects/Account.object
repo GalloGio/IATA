@@ -2869,7 +2869,7 @@
                 <sorted>false</sorted>
                 <value>
                     <fullName>No IEP Account</fullName>
-                    <default>true</default>
+                    <default>false</default>
                     <label>No IEP Account</label>
                 </value>
                 <value>
@@ -10489,6 +10489,11 @@ Approval: Key Contact can see pending request approve it one by one</inlineHelpT
                     <fullName>Nil CC</fullName>
                     <default>false</default>
                     <label>Nil CC</label>
+                </value>
+                <value>
+                    <fullName>Corporate Card</fullName>
+                    <default>false</default>
+                    <label>Corporate Card</label>
                 </value>
             </valueSetDefinition>
         </valueSet>
@@ -25527,7 +25532,7 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
             </values>
             <values>
                 <fullName>No IEP Account</fullName>
-                <default>true</default>
+                <default>false</default>
             </values>
             <values>
                 <fullName>Open</fullName>
@@ -28056,7 +28061,7 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
             </values>
             <values>
                 <fullName>No IEP Account</fullName>
-                <default>true</default>
+                <default>false</default>
             </values>
             <values>
                 <fullName>Open</fullName>
@@ -31223,7 +31228,7 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
             </values>
             <values>
                 <fullName>No IEP Account</fullName>
-                <default>true</default>
+                <default>false</default>
             </values>
             <values>
                 <fullName>Open</fullName>
@@ -33752,7 +33757,7 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
             </values>
             <values>
                 <fullName>No IEP Account</fullName>
-                <default>true</default>
+                <default>false</default>
             </values>
             <values>
                 <fullName>Open</fullName>
@@ -35837,6 +35842,10 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
         <picklistValues>
             <picklist>Is_PCI_compliant__c</picklist>
             <values>
+                <fullName>Corporate Card</fullName>
+                <default>false</default>
+            </values>
+            <values>
                 <fullName>Nil CC</fullName>
                 <default>false</default>
             </values>
@@ -37843,7 +37852,7 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
             </values>
             <values>
                 <fullName>No IEP Account</fullName>
-                <default>true</default>
+                <default>false</default>
             </values>
             <values>
                 <fullName>Open</fullName>
@@ -40100,7 +40109,7 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
             </values>
             <values>
                 <fullName>No IEP Account</fullName>
-                <default>true</default>
+                <default>false</default>
             </values>
             <values>
                 <fullName>Open</fullName>
@@ -45577,7 +45586,7 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
             </values>
             <values>
                 <fullName>No IEP Account</fullName>
-                <default>true</default>
+                <default>false</default>
             </values>
             <values>
                 <fullName>Open</fullName>
@@ -48237,7 +48246,7 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
             </values>
             <values>
                 <fullName>No IEP Account</fullName>
-                <default>true</default>
+                <default>false</default>
             </values>
             <values>
                 <fullName>Open</fullName>
@@ -52711,7 +52720,7 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
             </values>
             <values>
                 <fullName>No IEP Account</fullName>
-                <default>true</default>
+                <default>false</default>
             </values>
             <values>
                 <fullName>Open</fullName>
@@ -57100,7 +57109,7 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
             </values>
             <values>
                 <fullName>No IEP Account</fullName>
-                <default>true</default>
+                <default>false</default>
             </values>
             <values>
                 <fullName>Open</fullName>
@@ -59875,7 +59884,7 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
             </values>
             <values>
                 <fullName>No IEP Account</fullName>
-                <default>true</default>
+                <default>false</default>
             </values>
             <values>
                 <fullName>Open</fullName>
@@ -62329,7 +62338,7 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
             </values>
             <values>
                 <fullName>No IEP Account</fullName>
-                <default>true</default>
+                <default>false</default>
             </values>
             <values>
                 <fullName>Open</fullName>
@@ -64783,7 +64792,7 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
             </values>
             <values>
                 <fullName>No IEP Account</fullName>
-                <default>true</default>
+                <default>false</default>
             </values>
             <values>
                 <fullName>Open</fullName>
@@ -67611,7 +67620,7 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
             </values>
             <values>
                 <fullName>No IEP Account</fullName>
-                <default>true</default>
+                <default>false</default>
             </values>
             <values>
                 <fullName>Open</fullName>
@@ -75282,7 +75291,7 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
             </values>
             <values>
                 <fullName>No IEP Account</fullName>
-                <default>true</default>
+                <default>false</default>
             </values>
             <values>
                 <fullName>Open</fullName>
@@ -79617,7 +79626,7 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
             </values>
             <values>
                 <fullName>No IEP Account</fullName>
-                <default>true</default>
+                <default>false</default>
             </values>
             <values>
                 <fullName>Open</fullName>
