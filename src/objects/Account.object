@@ -84825,6 +84825,14 @@ IF(INCLUDES(Remittance_frequency__c , &quot;D&quot;),1,0) &gt; 2 )
         <errorMessage>You cannot modify non IATA members name</errorMessage>
     </validationRules>
     <validationRules>
+        <fullName>No_tabs_in_VAT_Number</fullName>
+        <active>true</active>
+        <description>Tab character is forbidden in VAT_Number__c field</description>
+        <errorConditionFormula>CONTAINS(VAT_Number__c ,&quot;	&quot;)</errorConditionFormula>
+        <errorDisplayField>VAT_Number__c</errorDisplayField>
+        <errorMessage>Please remove tabs from VAT number.</errorMessage>
+    </validationRules>
+    <validationRules>
         <fullName>Parent_Acc_Airline_Designator_Required</fullName>
         <active>false</active>
         <description>If Industry = Airline, then Field/Head Office must be filled</description>
