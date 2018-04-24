@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<GlobalValueSet xmlns="http://soap.sforce.com/2006/04/metadata">
+    <customValue>
+        <fullName>Credit Card</fullName>
+        <default>false</default>
+        <label>Credit Card</label>
+    </customValue>
+    <customValue>
+        <fullName>SPCR / SPDR</fullName>
+        <default>false</default>
+        <label>SPCR / SPDR</label>
+    </customValue>
+    <customValue>
+        <fullName>ICH</fullName>
+        <default>false</default>
+        <label>ICH</label>
+    </customValue>
+    <customValue>
+        <fullName>Bank transfer</fullName>
+        <default>false</default>
+        <label>Bank transfer</label>
+    </customValue>
+    <customValue>
+        <fullName>Virtual Account Payment</fullName>
+        <default>false</default>
+        <label>Virtual Account Payment</label>
+    </customValue>
+    <customValue>
+        <fullName>ICCS payments</fullName>
+        <default>false</default>
+        <label>ICCS payments</label>
+    </customValue>
+    <customValue>
+        <fullName>IRIS</fullName>
+        <default>false</default>
+        <label>IRIS</label>
+    </customValue>
+    <masterLabel>E&amp;F Payment Method</masterLabel>
+    <sorted>false</sorted>
+</GlobalValueSet>

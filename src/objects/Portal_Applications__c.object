@@ -21,10 +21,6 @@
         <type>Default</type>
     </actionOverrides>
     <actionOverrides>
-        <actionName>Follow</actionName>
-        <type>Default</type>
-    </actionOverrides>
-    <actionOverrides>
         <actionName>List</actionName>
         <type>Default</type>
     </actionOverrides>
@@ -50,6 +46,7 @@
     <description>Will contain the list of applications accessible trough the portal</description>
     <enableActivities>false</enableActivities>
     <enableBulkApi>true</enableBulkApi>
+    <enableChangeDataCapture>false</enableChangeDataCapture>
     <enableFeeds>false</enableFeeds>
     <enableHistory>true</enableHistory>
     <enableReports>true</enableReports>
@@ -236,22 +233,26 @@ NOT(CONTAINS($User.Customer_type__c,&quot;Agency&quot;))
         <externalId>false</externalId>
         <inlineHelpText>Restrict visibility by Accreditation Type (PAX Agents only). Service will be visible to all PAX Agents, including Legacy Agents, if left empty.</inlineHelpText>
         <label>Restrict by Accreditation Type</label>
-        <picklist>
-            <picklistValues>
-                <fullName>Cash</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Cashless</fullName>
-                <default>false</default>
-            </picklistValues>
-            <restrictedPicklist>true</restrictedPicklist>
-            <sorted>false</sorted>
-        </picklist>
         <required>false</required>
         <trackHistory>false</trackHistory>
         <trackTrending>false</trackTrending>
         <type>MultiselectPicklist</type>
+        <valueSet>
+            <restricted>true</restricted>
+            <valueSetDefinition>
+                <sorted>false</sorted>
+                <value>
+                    <fullName>Cash</fullName>
+                    <default>false</default>
+                    <label>Cash</label>
+                </value>
+                <value>
+                    <fullName>Cashless</fullName>
+                    <default>false</default>
+                    <label>Cashless</label>
+                </value>
+            </valueSetDefinition>
+        </valueSet>
         <visibleLines>4</visibleLines>
     </fields>
     <fields>
@@ -260,54 +261,66 @@ NOT(CONTAINS($User.Customer_type__c,&quot;Agency&quot;))
         <externalId>false</externalId>
         <inlineHelpText>Restrict portal visibility by Agency Category. Will be visible for all categories of Agents if left empty.</inlineHelpText>
         <label>Restrict by Agency Category</label>
-        <picklist>
-            <picklistValues>
-                <fullName>Airline Point of Sale</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Domestic Agent</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>GSA General Sales Agent</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Handling Agent</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>IATA Passenger Sales Agent</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>MSO Member Sales Office</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>TIDS Agent</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>IATA Cargo Agent</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>CASS Associate</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Import Agent</fullName>
-                <default>false</default>
-            </picklistValues>
-            <restrictedPicklist>true</restrictedPicklist>
-            <sorted>false</sorted>
-        </picklist>
         <required>false</required>
         <trackHistory>true</trackHistory>
         <trackTrending>false</trackTrending>
         <type>MultiselectPicklist</type>
+        <valueSet>
+            <restricted>true</restricted>
+            <valueSetDefinition>
+                <sorted>false</sorted>
+                <value>
+                    <fullName>Airline Point of Sale</fullName>
+                    <default>false</default>
+                    <label>Airline Point of Sale</label>
+                </value>
+                <value>
+                    <fullName>Domestic Agent</fullName>
+                    <default>false</default>
+                    <label>Domestic Agent</label>
+                </value>
+                <value>
+                    <fullName>GSA General Sales Agent</fullName>
+                    <default>false</default>
+                    <label>GSA General Sales Agent</label>
+                </value>
+                <value>
+                    <fullName>Handling Agent</fullName>
+                    <default>false</default>
+                    <label>Handling Agent</label>
+                </value>
+                <value>
+                    <fullName>IATA Passenger Sales Agent</fullName>
+                    <default>false</default>
+                    <label>IATA Passenger Sales Agent</label>
+                </value>
+                <value>
+                    <fullName>MSO Member Sales Office</fullName>
+                    <default>false</default>
+                    <label>MSO Member Sales Office</label>
+                </value>
+                <value>
+                    <fullName>TIDS Agent</fullName>
+                    <default>false</default>
+                    <label>TIDS Agent</label>
+                </value>
+                <value>
+                    <fullName>IATA Cargo Agent</fullName>
+                    <default>false</default>
+                    <label>IATA Cargo Agent</label>
+                </value>
+                <value>
+                    <fullName>CASS Associate</fullName>
+                    <default>false</default>
+                    <label>CASS Associate</label>
+                </value>
+                <value>
+                    <fullName>Import Agent</fullName>
+                    <default>false</default>
+                    <label>Import Agent</label>
+                </value>
+            </valueSetDefinition>
+        </valueSet>
         <visibleLines>10</visibleLines>
     </fields>
     <fields>
@@ -316,22 +329,26 @@ NOT(CONTAINS($User.Customer_type__c,&quot;Agency&quot;))
         <externalId>false</externalId>
         <inlineHelpText>Restrict portal visibility to either Travel or Cargo Agents. Will be visible to Agents in both sectors if left empty.</inlineHelpText>
         <label>Restrict by Agency Sector</label>
-        <picklist>
-            <picklistValues>
-                <fullName>Travel Agent</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Cargo Agent</fullName>
-                <default>false</default>
-            </picklistValues>
-            <restrictedPicklist>true</restrictedPicklist>
-            <sorted>false</sorted>
-        </picklist>
         <required>false</required>
         <trackHistory>true</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Picklist</type>
+        <valueSet>
+            <restricted>true</restricted>
+            <valueSetDefinition>
+                <sorted>false</sorted>
+                <value>
+                    <fullName>Travel Agent</fullName>
+                    <default>false</default>
+                    <label>Travel Agent</label>
+                </value>
+                <value>
+                    <fullName>Cargo Agent</fullName>
+                    <default>false</default>
+                    <label>Cargo Agent</label>
+                </value>
+            </valueSetDefinition>
+        </valueSet>
     </fields>
     <fields>
         <fullName>ANG_Restrict_internal_selection__c</fullName>
@@ -499,6 +516,20 @@ NOT(CONTAINS($User.Customer_type__c,&quot;Agency&quot;))
         <type>Checkbox</type>
     </fields>
     <fields>
+        <fullName>NewGenAPP_ShortName__c</fullName>
+        <caseSensitive>false</caseSensitive>
+        <description>When this filed is filled, it will show the service in NewGenAPP mobile.</description>
+        <externalId>false</externalId>
+        <inlineHelpText>When this filed is filled, it will show the service in NewGenAPP mobile.</inlineHelpText>
+        <label>NewGenAPP-ShortName</label>
+        <length>10</length>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>true</unique>
+    </fields>
+    <fields>
         <fullName>New_Window__c</fullName>
         <defaultValue>false</defaultValue>
         <externalId>false</externalId>
@@ -531,22 +562,26 @@ NOT(CONTAINS($User.Customer_type__c,&quot;Agency&quot;))
         <fullName>Provisioning_Type__c</fullName>
         <externalId>false</externalId>
         <label>Provisioning Type</label>
-        <picklist>
-            <picklistValues>
-                <fullName>WebService</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>SCIM</fullName>
-                <default>false</default>
-            </picklistValues>
-            <restrictedPicklist>true</restrictedPicklist>
-            <sorted>false</sorted>
-        </picklist>
         <required>false</required>
         <trackHistory>true</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Picklist</type>
+        <valueSet>
+            <restricted>true</restricted>
+            <valueSetDefinition>
+                <sorted>false</sorted>
+                <value>
+                    <fullName>WebService</fullName>
+                    <default>false</default>
+                    <label>WebService</label>
+                </value>
+                <value>
+                    <fullName>SCIM</fullName>
+                    <default>false</default>
+                    <label>SCIM</label>
+                </value>
+            </valueSetDefinition>
+        </valueSet>
     </fields>
     <fields>
         <fullName>Record_type_for_App_Rigth__c</fullName>
@@ -679,6 +714,7 @@ Name
 &quot;IATA EasyPay (EDENRED)&quot;, $Label.ANG_ISSP_IATA_EasyPay, 
 &quot;IATA EasyPay (MSTS)&quot;, $Label.ANG_ISSP_IATA_EasyPay, 
 &quot;Currency Center&quot;, $Label.ISSP_CurrencyCenter_Description,
+&quot;ICE – IATA Customer E-Statement&quot;, $Label.ISSP_ICE_Description,
 &quot;&quot;
       )</formula>
         <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
@@ -693,98 +729,119 @@ Name
         <fullName>TD_Access_Level__c</fullName>
         <externalId>false</externalId>
         <label>TD Access Level</label>
-        <picklist>
-            <picklistValues>
-                <fullName>Basic</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Premium</fullName>
-                <default>false</default>
-            </picklistValues>
-            <sorted>false</sorted>
-        </picklist>
         <required>false</required>
         <trackHistory>false</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Picklist</type>
+        <valueSet>
+            <valueSetDefinition>
+                <sorted>false</sorted>
+                <value>
+                    <fullName>Basic</fullName>
+                    <default>false</default>
+                    <label>Basic</label>
+                </value>
+                <value>
+                    <fullName>Premium</fullName>
+                    <default>false</default>
+                    <label>Premium</label>
+                </value>
+            </valueSetDefinition>
+        </valueSet>
     </fields>
     <fields>
         <fullName>TD_Included_Dashboards__c</fullName>
         <externalId>false</externalId>
         <label>TD Included Dashboards</label>
-        <picklist>
-            <picklistValues>
-                <fullName>ISSP_TD_1</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>ISSP_TD_2</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>ISSP_TD_3</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>ISSP_TD_4</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>ISSP_TD_5</fullName>
-                <default>false</default>
-            </picklistValues>
-            <sorted>false</sorted>
-        </picklist>
         <required>false</required>
         <trackHistory>false</trackHistory>
         <trackTrending>false</trackTrending>
         <type>MultiselectPicklist</type>
+        <valueSet>
+            <valueSetDefinition>
+                <sorted>false</sorted>
+                <value>
+                    <fullName>ISSP_TD_1</fullName>
+                    <default>false</default>
+                    <label>ISSP_TD_1</label>
+                </value>
+                <value>
+                    <fullName>ISSP_TD_2</fullName>
+                    <default>false</default>
+                    <label>ISSP_TD_2</label>
+                </value>
+                <value>
+                    <fullName>ISSP_TD_3</fullName>
+                    <default>false</default>
+                    <label>ISSP_TD_3</label>
+                </value>
+                <value>
+                    <fullName>ISSP_TD_4</fullName>
+                    <default>false</default>
+                    <label>ISSP_TD_4</label>
+                </value>
+                <value>
+                    <fullName>ISSP_TD_5</fullName>
+                    <default>false</default>
+                    <label>ISSP_TD_5</label>
+                </value>
+            </valueSetDefinition>
+        </valueSet>
         <visibleLines>5</visibleLines>
     </fields>
     <fields>
         <fullName>TD_Included_Reports__c</fullName>
         <externalId>false</externalId>
         <label>TD Included Reports</label>
-        <picklist>
-            <picklistValues>
-                <fullName>Past Settlements</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Settlement Calendars</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Forecast Data</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Historical Data</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Incoming Funds</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Credit Card</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Non TD Reports</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>ICCS Settlement</fullName>
-                <default>false</default>
-            </picklistValues>
-            <sorted>false</sorted>
-        </picklist>
         <required>false</required>
         <trackHistory>false</trackHistory>
         <trackTrending>false</trackTrending>
         <type>MultiselectPicklist</type>
+        <valueSet>
+            <valueSetDefinition>
+                <sorted>false</sorted>
+                <value>
+                    <fullName>Past Settlements</fullName>
+                    <default>false</default>
+                    <label>Past Settlements</label>
+                </value>
+                <value>
+                    <fullName>Settlement Calendars</fullName>
+                    <default>false</default>
+                    <label>Settlement Calendars</label>
+                </value>
+                <value>
+                    <fullName>Forecast Data</fullName>
+                    <default>false</default>
+                    <label>Forecast Data</label>
+                </value>
+                <value>
+                    <fullName>Historical Data</fullName>
+                    <default>false</default>
+                    <label>Historical Data</label>
+                </value>
+                <value>
+                    <fullName>Incoming Funds</fullName>
+                    <default>false</default>
+                    <label>Incoming Funds</label>
+                </value>
+                <value>
+                    <fullName>Credit Card</fullName>
+                    <default>false</default>
+                    <label>Credit Card</label>
+                </value>
+                <value>
+                    <fullName>Non TD Reports</fullName>
+                    <default>false</default>
+                    <label>Non TD Reports</label>
+                </value>
+                <value>
+                    <fullName>ICCS Settlement</fullName>
+                    <default>false</default>
+                    <label>ICCS Settlement</label>
+                </value>
+            </valueSetDefinition>
+        </valueSet>
         <visibleLines>5</visibleLines>
     </fields>
     <fields>
@@ -864,6 +921,31 @@ OR(
         <sharedTo>
             <allInternalUsers></allInternalUsers>
         </sharedTo>
+    </listViews>
+    <listViews>
+        <fullName>All_NewGenAPP</fullName>
+        <booleanFilter>1 or 2</booleanFilter>
+        <columns>NAME</columns>
+        <columns>Application_icon__c</columns>
+        <columns>Description__c</columns>
+        <columns>Hide_on_Homepage__c</columns>
+        <columns>Requestable__c</columns>
+        <columns>Visible__c</columns>
+        <columns>Application_URL__c</columns>
+        <columns>Critical_Service__c</columns>
+        <columns>NewGenAPP_ShortName__c</columns>
+        <filterScope>Everything</filterScope>
+        <filters>
+            <field>NewGenAPP_ShortName__c</field>
+            <operation>notEqual</operation>
+        </filters>
+        <filters>
+            <field>NAME</field>
+            <operation>equals</operation>
+            <value>NewGenAPP_Mobile</value>
+        </filters>
+        <label>All - NewGenAPP</label>
+        <language>en_US</language>
     </listViews>
     <listViews>
         <fullName>EasyPay</fullName>
@@ -1107,4 +1189,5 @@ TEXT(ANG_Restrict_by_Agency_Sector__c) != &quot;&quot;
         <errorDisplayField>SCIM_App_Name__c</errorDisplayField>
         <errorMessage>SCIM APP Name field must be provided when Provisioning Type is SCIM</errorMessage>
     </validationRules>
+    <visibility>Public</visibility>
 </CustomObject>

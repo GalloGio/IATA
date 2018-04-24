@@ -195,19 +195,11 @@
             summary="Modifying PCI Compliance will not change the forms of payment for Credit Card at Agency Level."
             rendered="{!isOSCARCorrection}"
         />
-
-		<!-- FM AMSU-1 -->	
-        <apex:pageMessage severity="WARNING"
+		
+		<apex:pageMessage severity="WARNING"
             strength="1"
-            summary="{!IF(isAllHierarchySelected,'Complete Hierarchy selected, ALL fields available to Edit','Per Location Hierarchy selected, ONLY Partial fields available to edit!')}"
-            rendered="{!isAgencyCorrection}"
-        />
-    
-		<!-- FM AMSU-1 -->
-        <apex:pageMessage severity="WARNING"
-            strength="1"
-            summary="{!IF(isVATnumberSpecialCase,'The VAT Number fields will only be updated on the current agency, it will not be updated on the other agencies of the hierarchy','The VAT Number fields will only be updated on all agency, except for the agencies that are Branch Abroad')}"
-            rendered="{!isAgencyCorrection && (isVATnumberSpecialCase || isBranchAbroadSelected)}"
+            summary="Enter full shipping address if the agent has provided one"   
+            rendered="{!AND(isChangeOfLocation, oscarObj.STEP6__c <> 'Passed')}"         
         />
 
         <apex:pageBlockSection columns="2" id="AccountInformation" collapsible="false">
@@ -230,7 +222,7 @@
                 <apex:pageBlockSectionItem labelStyleClass="{!IF(isAgencyChanges, field.styleClass, '')}" dataStyleClass="{!IF(isAgencyChanges, field.styleClass, '')}" rendered="{!AND(field.name == 'Remittance_frequency__c', allowMultipleRemittances == false)}">      
                     <apex:outputLabel id="rfLabel" value="{!$ObjectType.AMS_Pax_Accreditation_Form__c.fields[field.name].Label}" />
                     <apex:outputPanel >  
-                        <apex:outputLabel id="outputRF" value="{!accreditationObj[field.name]}"/> 
+                        <apex:outputLabel id="outputRF" value="{!remittanceFrequencyToShow}"/> 
                         <apex:selectList id="cPicklist" value="{!accreditationObj[field.name]}" multiselect="false" size="1" disabled="{!OR(NOT(field.inlineEdit),isCertificationOSCAR)}" onchange="remittanceFrequencyChange()" style="display: none;"> 
                             <apex:selectOptions value="{!rfPickListValues}"/>
                         </apex:selectList>
@@ -240,7 +232,7 @@
                  <apex:pageBlockSectionItem labelStyleClass="{!IF(isAgencyChanges, field.styleClass, '')}" dataStyleClass="{!IF(isAgencyChanges, field.styleClass, '')}"  rendered="{!AND(field.name == 'Remittance_frequency__c', allowMultipleRemittances == true)}">
                     <apex:outputLabel value="{!$ObjectType.AMS_Pax_Accreditation_Form__c.fields[field.name].Label}"/>
                     <apex:outputPanel >
-                            <apex:outputLabel id="mRFLabel" value="{!accreditationObj[field.name]}"/>
+                            <apex:outputLabel id="mRFLabel" value="{!remittanceFrequencyToShow}"/>
                             <apex:outputPanel id="multipick" style="display: none;">
                                 <c:MultiselectPicklist leftLabel="Available"
                                 leftOptions="{!rfPickListValues}"
@@ -303,25 +295,6 @@
         $(".isoState").dblclick(function() {
           openSubTab('/{!accreditationObj.IATA_ISO_State__c}','','',true);return false;
         });
-		
-		//FM AMSU-1
-        $(".vatNumber").change(function() {
-            if({!isVATnumberSpecialCase}){
-                alert('The VAT Number will only be updated on the current agency, it will not be updated on the other agencies of the hierarchy');return true;
-            }
-            if({!isBranchAbroadSelected}){
-                alert('The VAT Number will only be updated on all agency, except for the agencies that are Branch Abroad');return true;
-            }
-        });
-        $(".vatNumber2").change(function() {
-            if({!isVATnumberSpecialCase}){
-                alert('The VAT Number 2 will only be updated on the current agency, it will not be updated on the other agencies of the hierarchy');return true;
-            }
-            if({!isBranchAbroadSelected}){
-                alert('The VAT Number 2 will only be updated on all agency, except for the agencies that are Branch Abroad');return true;
-            }
-        });
-
 
         if({!saveAction}){
             refreshTab();

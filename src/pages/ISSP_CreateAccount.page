@@ -30,6 +30,33 @@
    	}
    	
   	function addListeners() {
+
+  		//billingcity listener to show characters limit warning
+  		$j('#billingcity input').on('keyup', function() {
+  			var value = $j('#billingcity input').val();
+			if(value.length >= 20) {
+				var elem = $('#addressStreetMSG').detach();
+				elem.insertBefore($j('#billingcity input'));
+				$('#addressStreetMSG .formErrorContent').text('{!$Label.IEC_CityLimitCharacters}');						
+				$('#addressStreetMSG').show();
+			} else if($('#addressStreetMSG').css('display') != 'none') {
+				$('#addressStreetMSG').hide();
+			}
+  		});
+
+		//shippingcity listener to show characters limit warning
+  		$j('#shippingcity input').on('keyup', function() {
+  			var value = $j('#shippingcity input').val();
+			if(value.length >= 20) {
+				var elem = $('#addressStreetMSG').detach();
+				elem.insertBefore($j('#shippingcity input'));
+				$('#addressStreetMSG .formErrorContent').text('{!$Label.IEC_CityLimitCharacters}');						
+				$('#addressStreetMSG').show();
+			} else if($('#addressStreetMSG').css('display') != 'none') {
+				$('#addressStreetMSG').hide();
+			}
+  		});
+
 		$j('#billingstreet textarea').on('keyup', function() {
 			var value = $j('#billingstreet textarea').val();
 			if(value.length >= 70) {
@@ -62,6 +89,12 @@
 		$j('#shippingstreet textarea').blur(function() {
 			$('#addressStreetMSG').hide();
 		});
+		$j('#billingcity input').blur(function() {
+			$('#addressStreetMSG').hide();
+		});
+		$j('#shippingcity input').blur(function() {
+			$('#addressStreetMSG').hide();
+		});
 		
 		$j('.billingstate').change(function() {
 			if($j('select[id*="drpdwnBState"]').val() != $j('#billingstate input').val()) {
@@ -84,10 +117,18 @@
 	function copyToAccSState() {
 		$j('#shippingstate input').val($j('select[id*="drpdwnSState"]').val());
 	}
-	
-	function modifyUIForm() {
+
+	function changeFieldsMaxlength(){
 		$j('#billingstreet textarea').prop("maxlength","70");
 		$j('#shippingstreet textarea').prop("maxlength","70");
+		if("{!sRefererCommunity}"=="iec"){
+			$j('#billingcity input').prop("maxlength","20");
+			$j('#shippingcity input').prop("maxlength","20");
+		}
+	}
+	
+	function modifyUIForm() {
+		
 		var elem = $j('#divToMove').detach();
 		elem.insertAfter("#shippingcountry");
 		$j('#shippingcountry').hide();
@@ -112,6 +153,7 @@
 	function shippingListStates() {
 		var country = $j('#shippingcountry input').val();
 		if(country == 'Brazil' || country == 'United States' || country == 'Canada' || country == 'Australia' || country == 'Venezuela') {
+			console.log('show states');
 			$j("#drpdwnSState").empty();
 			$j("#drpdwnSState").addClass('rec');
 			$j("#drpdwnSState").append("<option value=''>--Select One--</option>");
@@ -126,19 +168,29 @@
 			} else if(country == 'Venezuela' && mapStates.VE) {
 				$j.each(mapStates.VE, function(k, v) {$j('select[id*="drpdwnSState"]').append($j("<option></option>").attr("value", v).text(v));});
 			}
+
 			$j('#shippingstate input').hide();
+			// SA - start
+			if("{!sRefererCommunity}"=="iec"){
+				$j('#divToMove3').insertAfter("#shippingstate");
+			} // SA - end
 			$j('#divToMove3').show();	
 			$j('.shippingstate').change(function() {
 				if($j('select[id*="drpdwnSState"]').val() != $j('#shippingstate input').val()) {
 					$j('select[id*="drpdwnSState"]').val($j('#shippingstate input').val());
 				}
 			});	
+
+		
 		} else {
+			console.log('hide states');
 			$j("#drpdwnSState").empty();
 			$j("#drpdwnSState").removeClass('rec');
 			$j('#shippingstate input').val('');
 			$j('#shippingstate input').show();
-			$j('#divToMove3').hide();			
+			$j('#divToMove3').hide();
+			$j('#shippingstate input').prop('placeholder', 'N/A');
+	        $j('#shippingstate input').prop('disabled', true);			
 		}
 	}
 	
@@ -249,6 +301,7 @@
 	var defCountry;
 	var mapStates;
     $j(document).ready(function() {
+    	changeFieldsMaxlength();
         console.log('fsd '+'{!preventAddressDoctorService}');
         if('{!preventAddressDoctorService}'=='false') {
             $j("#shippingcountry").find("input").val("{!searchCountryName}");
@@ -285,6 +338,8 @@
 	            
 	            modifyUIForm();
 	            replaceAutoCompleteAddressDoctor();
+
+	            
 	            
 	            //TC: set mandatory fields by country 
 	            var country = "{!searchCountryName}";     
@@ -300,8 +355,15 @@
 	            }
 	            
 	            if(country == 'Canada' || country == 'United States' || country == 'Venezuela' || country == 'Australia' || country == 'Brazil') {
+	            	console.log('country and state');
 	            	$j("#billingstate").parent().siblings('.col-lg-5').find("label").append( "<span class='required'>*</span>" );
-	         	    $j(".billingstate").addClass('rec');            	
+	         	    $j(".billingstate").addClass('rec'); 
+	            } else {// SA - start
+	            	$j('#billingstate input').prop('placeholder', 'N/A');
+	            	$j('#billingstate input').prop('disabled', true);
+	            	$j('#shippingstate input').prop('placeholder', 'N/A');
+	            	$j('#shippingstate input').prop('disabled', true);
+	            	// SA - end
 	            }
             }
         }

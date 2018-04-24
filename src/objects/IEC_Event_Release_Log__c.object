@@ -21,10 +21,6 @@
         <type>Default</type>
     </actionOverrides>
     <actionOverrides>
-        <actionName>Follow</actionName>
-        <type>Default</type>
-    </actionOverrides>
-    <actionOverrides>
         <actionName>List</actionName>
         <type>Default</type>
     </actionOverrides>
@@ -50,6 +46,7 @@
     <description>IEC - Contains errors/warnings of various processes for the release</description>
     <enableActivities>false</enableActivities>
     <enableBulkApi>false</enableBulkApi>
+    <enableChangeDataCapture>false</enableChangeDataCapture>
     <enableFeeds>false</enableFeeds>
     <enableHistory>false</enableHistory>
     <enableReports>false</enableReports>
@@ -109,28 +106,34 @@
         <description>IEC - Indicate which process the log is belong to</description>
         <externalId>false</externalId>
         <label>Stage</label>
-        <picklist>
-            <picklistValues>
-                <fullName>Create order</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Calculate S&amp;T</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Payment</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Send to SAP</fullName>
-                <default>false</default>
-            </picklistValues>
-            <sorted>false</sorted>
-        </picklist>
         <required>false</required>
         <trackTrending>false</trackTrending>
         <type>Picklist</type>
+        <valueSet>
+            <valueSetDefinition>
+                <sorted>false</sorted>
+                <value>
+                    <fullName>Create order</fullName>
+                    <default>false</default>
+                    <label>Create order</label>
+                </value>
+                <value>
+                    <fullName>Calculate S&amp;T</fullName>
+                    <default>false</default>
+                    <label>Calculate S&amp;T</label>
+                </value>
+                <value>
+                    <fullName>Payment</fullName>
+                    <default>false</default>
+                    <label>Payment</label>
+                </value>
+                <value>
+                    <fullName>Send to SAP</fullName>
+                    <default>false</default>
+                    <label>Send to SAP</label>
+                </value>
+            </valueSetDefinition>
+        </valueSet>
     </fields>
     <fields>
         <fullName>Subscriber__c</fullName>
@@ -181,4 +184,5 @@
     </searchLayouts>
     <sharingModel>ControlledByParent</sharingModel>
     <startsWith>Vowel</startsWith>
+    <visibility>Public</visibility>
 </CustomObject>

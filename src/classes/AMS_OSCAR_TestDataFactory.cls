@@ -317,24 +317,24 @@ public with sharing class AMS_OSCAR_TestDataFactory
 
         IATA_ISO_State__c stt = new IATA_ISO_State__c(Name= 'Test', ISO_Code__c = 'FR20', IATA_ISO_Country__c = ctry1.Id);
         insert stt;
-		
-		Id accountRT = AMS_Utils.getId('Account', 'Standard_Account');
-		
+
+		Id accountRT = AMS_Utils.getId('Account', 'IATA_Agency');
+
 		Account cargoHO = new Account(IATA_ISO_Country__c = ctry1.id, RecordTypeId = accountRT, IATACode__c='12345670001',
-									Name='Test Cargo HO',Short_Name__c='Test Cargo', Sector__c = 'Cargo Agent', 
+									Name='Test Cargo HO',Short_Name__c='Test Cargo', Sector__c = 'Cargo Agent',
 									Location_Class__c = 'C', Location_type__c = 'HO', Reason_for_creation__c = 'none',
 									Is_your_firm_handling_Dangerous_Goods__c='Yes');
 
 		insert cargoHO;
 
 		Account cargoBR = new Account(IATA_ISO_Country__c = ctry1.id, RecordTypeId = accountRT, IATACode__c='12345670001',
-									Name='Test Cargo BR',Short_Name__c='Test Cargo', Sector__c = 'Cargo Agent', 
+									Name='Test Cargo BR',Short_Name__c='Test Cargo', Sector__c = 'Cargo Agent',
 									Location_Class__c = 'C', Location_type__c = 'BR', Reason_for_creation__c = 'none', ParentId = cargoHO.Id);
         insert cargoBR;
 
 		AMS_OSCAR__c OSCAR = new AMS_OSCAR__c(Account__c = cargoHO.id, RecordTypeId = AMS_Utils.RECTYPE_NEW, Process__c =AMS_Utils.new_HO);
 		insert OSCAR;
-		
+
 		Contact co1 = new Contact(AccountId = cargoHO.id, Firstname = 'teste1', Lastname='test1', Phone = '911111111', MobilePhone = '911111111', Email = 'test@test.com', BSP_CASS_Payment_contact__c = true, User_Portal_Status__c = 'Approved Admin');
 		insert co1;
 		Case oscarCase = new Case(Oscar__c = oscar.Id, RecordTypeId = AMS_Utils.getId('Case', 'OSCAR_Communication'));
@@ -403,7 +403,7 @@ public with sharing class AMS_OSCAR_TestDataFactory
                 IATAcode__c = a1.IATAcode__c,
                 Branch_Office_Country__c = a1.IATA_ISO_Country__c,
                 SAAM_Case__c = oscarCase.Id,
-                Remittance_frequency__c = 'Monthly'
+                Remittance_frequency__c = 'M'
 				);
 
         insert stagingArea;

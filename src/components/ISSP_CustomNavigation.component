@@ -127,7 +127,7 @@ window.onload = function HighlightBar() {
         var subvar = getUrlParameter('subNav');
         var menuid = mid && mid.substr(0,2);
 
-     $("#searchbox").css("display", (menuid=="M2") ? "none" : "");    /* hides the search box if for resources & docs*/
+     $("#searchbox").css("display", (menuid=="M2" || mid=="M4S1") ? "none" : "");    /* hides the search box if for resources & docs*/
 
 
      $("#"+mid).parentsUntil("nav").addClass("in active-issp");
@@ -191,10 +191,12 @@ $(".topmenu").hover(function(){
       }
 
    body{
-      font-family:Arial, Helvetica, sans-serif;
-      background-image: url("https://iata--c.eu3.content.force.com/servlet/servlet.ImageServer?id=015w0000002oQOE&amp;oid=00D2000000008TF&amp;lastMod=1432543398000");
+      font-family:Arial, Helvetica, sans-serif; 
+      /*background-image: url("https://iata--c.eu3.content.force.com/servlet/servlet.ImageServer?id=015w0000002oQOE&amp;oid=00D2000000008TF&amp;lastMod=1432543398000");*/
+      background-image: url("{!$Label.ISSP_Portal_BackgroundImage}");
       background-repeat: no-repeat;
-      background-size:200%;
+      /*background-size:200%;*/
+      background-size: {!$Label.ISSP_Portal_BackgroundImage_size};
       }
       div.container{
       background-color:white;
@@ -723,6 +725,11 @@ background-color:#428bca;
          <li>
     <a href="/ISSP_AvailableServices?MainNav=Services&subNav=Available&mid=M4S5{!if(communityName=='CNS','&CommunityName='+communityName,'')}" id="M4S5" >
                {!$Label.ISSP_Manage_Services}
+                </a>
+        </li>
+         <li>
+    <a href="/ISSP_LocalGroups?MainNav=Admin&subNav=LocalGroups&mid=M4S6{!if(communityName=='CNS','&CommunityName='+communityName,'')}" id="M4S6" style="display:{!IF($Profile.Name == 'ISS Portal Airline Delegated Admin User','','none')}">
+               {!$Label.ISSP_Local_Groups_Industry}
                 </a>
         </li>
         <!-- * FM 31-07-2017 - AMSU-26 -->

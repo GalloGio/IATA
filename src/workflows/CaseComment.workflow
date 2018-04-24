@@ -602,7 +602,9 @@ Parent.RecordType.DeveloperName = &apos;CasesMENA&apos;,
 Parent.RecordType.DeveloperName = &apos;ExternalCasesIDFSglobal&apos;, 
 Parent.RecordType.DeveloperName = &apos;Cases_China_North_Asia&apos;, 
 Parent.RecordType.DeveloperName = &apos;ComplaintIDFS&apos;, 
-Parent.RecordType.DeveloperName = &apos;Invoicing_Collection_Cases&apos; ),
+Parent.RecordType.DeveloperName = &apos;Inter_DPCs&apos;,
+Parent.RecordType.DeveloperName = &apos;Invoicing_Collection_Cases&apos;,
+Parent.RecordType.DeveloperName = &apos;Cases_SIS_Help_Desk&apos; ),
 DATEVALUE(Parent.ClosedDate) &gt; TODAY()-14)</formula>
         <triggerType>onCreateOnly</triggerType>
     </rules>

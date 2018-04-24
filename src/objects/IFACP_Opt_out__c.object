@@ -21,10 +21,6 @@
         <type>Default</type>
     </actionOverrides>
     <actionOverrides>
-        <actionName>Follow</actionName>
-        <type>Default</type>
-    </actionOverrides>
-    <actionOverrides>
         <actionName>List</actionName>
         <type>Default</type>
     </actionOverrides>
@@ -50,6 +46,7 @@
     <description>FDS OPS / used to track opt out request from Airlines for the agents or markets in the context of new Cargo program.</description>
     <enableActivities>false</enableActivities>
     <enableBulkApi>true</enableBulkApi>
+    <enableChangeDataCapture>false</enableChangeDataCapture>
     <enableFeeds>false</enableFeeds>
     <enableHistory>true</enableHistory>
     <enableReports>true</enableReports>
@@ -232,4 +229,5 @@
         <errorConditionFormula>AND(RecordType.Name = &quot;Airline Operation Opt Out&quot; , or(NOT(ISBLANK(Agent_Account__c)),ISBLANK(Airline_Country_account__c)))</errorConditionFormula>
         <errorMessage>when the record type is airline operation opt out, the airline country account has to be filled in, and the agent accounts needs to be empty.</errorMessage>
     </validationRules>
+    <visibility>Public</visibility>
 </CustomObject>

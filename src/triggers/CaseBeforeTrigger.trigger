@@ -1369,7 +1369,7 @@ trigger CaseBeforeTrigger on Case (before delete, before insert, before update) 
             }
             //Gavinho - 27-03-2017 
             for(IATA_ISO_Country__c iso : [select Id,ISO_Code__c,Name,Region__c,Case_BSP_Country__c from IATA_ISO_Country__c where Name in:CountryNameSet OR Case_BSP_Country__c IN :CountryNameSet]){
-                IATAISOCountryMap.put(iso.Name,iso);
+                IATAISOCountryMap.put((iso.Name).touppercase(),iso);
                 if(iso.Case_BSP_Country__c != null && !IATAISOCountryMap.containsKey(iso.Case_BSP_Country__c)) //same cases the country has different name that the bsp iso country) 
                     IATAISOCountryMap.put(iso.Case_BSP_Country__c ,iso);
             }
@@ -2010,7 +2010,7 @@ trigger CaseBeforeTrigger on Case (before delete, before insert, before update) 
                             // Change the status of the old card to "Cancelled" (only on reissue => Lost/stolen) 
                             if (application.Type_of_application__c == IDCardUtil.APPLICATIONTYPE_REISSUE){
                                 //find old card to cancel it
-                                ID_Card__c[] idCards = [Select Card_Status__c, Valid_To_Date__c From ID_Card__c where Related_Contact__c = :theContact.Id AND Card_Status__c =: IDCardUtil.CARDSTATUS_PRINTED_DELIVERED order by CreatedDate desc];
+                                ID_Card__c[] idCards = [Select Card_Status__c, Valid_To_Date__c From ID_Card__c where Related_Contact__c = :theContact.Id AND Card_Status__c =: IDCardUtil.CARDSTATUS_VALID order by CreatedDate desc];
                                 if (idCards != null && idCards.size() > 0) {
                                     idCards[0].Card_Status__c = IDCardUtil.CARDSTATUS_CANCELED;
                                     update idcards[0];

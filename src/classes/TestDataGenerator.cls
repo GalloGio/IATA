@@ -101,6 +101,18 @@ public with sharing class TestDataGenerator
         return results;
     }
 
+    public static List<Zuora.zObject> generatePaymentMethodDetails(String paymentId){
+        List<Zuora.zObject> results = new List<Zuora.zObject>(); 
+
+        Zuora.zObject obj = new Zuora.zObject('PaymentMethod');
+        obj.setValue('Id',paymentId);
+        obj.setValue('LastTransactionStatus', 'Approved');
+        obj.setValue('LastTransactionDateTime', System.today());
+
+        results.add(obj);     
+        return results;
+    }
+
     public static List<Zuora.zObject> generatePaymentMethods(String accountId, Integer nb)
     {
         List<Zuora.zObject> results = new List<Zuora.zObject>(); 
@@ -349,8 +361,10 @@ public with sharing class TestDataGenerator
         String name = (String) zObject.getValue('Name');
         String startDate = (String) zObject.getValue('EffectiveStartDate');
         String endDate = (String) zObject.getValue('EffectiveEndDate');
+        String idValue = (String) zObject.getValue('Id');
 
-        if(String.isBlank(name) || String.isBlank(startDate) || String.isBlank(endDate))
+        if(String.isBlank(name) || String.isBlank(startDate) || String.isBlank(endDate)
+            || String.isBlank(idValue))
             return false;
         else
             return true;

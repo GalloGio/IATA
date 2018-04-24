@@ -21,10 +21,6 @@
         <type>Default</type>
     </actionOverrides>
     <actionOverrides>
-        <actionName>Follow</actionName>
-        <type>Default</type>
-    </actionOverrides>
-    <actionOverrides>
         <actionName>List</actionName>
         <type>Default</type>
     </actionOverrides>
@@ -50,6 +46,7 @@
     <description>Object used by the compiling process of &quot;live&quot; usage tracking.</description>
     <enableActivities>false</enableActivities>
     <enableBulkApi>true</enableBulkApi>
+    <enableChangeDataCapture>false</enableChangeDataCapture>
     <enableFeeds>false</enableFeeds>
     <enableHistory>true</enableHistory>
     <enableReports>true</enableReports>
@@ -145,45 +142,55 @@
         <externalId>false</externalId>
         <inlineHelpText>The application for which the usage is compiled</inlineHelpText>
         <label>Related Application</label>
-        <picklist>
-            <picklistValues>
-                <fullName>CACFREE</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>CACPRO</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>GAD</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>CACSWS</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>CACEWS</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>CAL</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>PAL</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>ASL</fullName>
-                <default>false</default>
-            </picklistValues>
-            <sorted>false</sorted>
-        </picklist>
         <required>false</required>
         <trackHistory>true</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Picklist</type>
+        <valueSet>
+            <valueSetDefinition>
+                <sorted>false</sorted>
+                <value>
+                    <fullName>CACFREE</fullName>
+                    <default>false</default>
+                    <label>CACFREE</label>
+                </value>
+                <value>
+                    <fullName>CACPRO</fullName>
+                    <default>false</default>
+                    <label>CACPRO</label>
+                </value>
+                <value>
+                    <fullName>GAD</fullName>
+                    <default>false</default>
+                    <label>GAD</label>
+                </value>
+                <value>
+                    <fullName>CACSWS</fullName>
+                    <default>false</default>
+                    <label>CACSWS</label>
+                </value>
+                <value>
+                    <fullName>CACEWS</fullName>
+                    <default>false</default>
+                    <label>CACEWS</label>
+                </value>
+                <value>
+                    <fullName>CAL</fullName>
+                    <default>false</default>
+                    <label>CAL</label>
+                </value>
+                <value>
+                    <fullName>PAL</fullName>
+                    <default>false</default>
+                    <label>PAL</label>
+                </value>
+                <value>
+                    <fullName>ASL</fullName>
+                    <default>false</default>
+                    <label>ASL</label>
+                </value>
+            </valueSetDefinition>
+        </valueSet>
     </fields>
     <fields>
         <fullName>Related_Client__c</fullName>
@@ -204,41 +211,49 @@
         <fullName>Validation_Result__c</fullName>
         <externalId>false</externalId>
         <label>Validation Result</label>
-        <picklist>
-            <picklistValues>
-                <fullName>Fail</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Success</fullName>
-                <default>false</default>
-            </picklistValues>
-            <sorted>false</sorted>
-        </picklist>
         <required>false</required>
         <trackHistory>true</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Picklist</type>
+        <valueSet>
+            <valueSetDefinition>
+                <sorted>false</sorted>
+                <value>
+                    <fullName>Fail</fullName>
+                    <default>false</default>
+                    <label>Fail</label>
+                </value>
+                <value>
+                    <fullName>Success</fullName>
+                    <default>false</default>
+                    <label>Success</label>
+                </value>
+            </valueSetDefinition>
+        </valueSet>
     </fields>
     <fields>
         <fullName>Validation_Type__c</fullName>
         <externalId>false</externalId>
         <label>Validation Type</label>
-        <picklist>
-            <picklistValues>
-                <fullName>Agent</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Agency</fullName>
-                <default>false</default>
-            </picklistValues>
-            <sorted>false</sorted>
-        </picklist>
         <required>false</required>
         <trackHistory>true</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Picklist</type>
+        <valueSet>
+            <valueSetDefinition>
+                <sorted>false</sorted>
+                <value>
+                    <fullName>Agent</fullName>
+                    <default>false</default>
+                    <label>Agent</label>
+                </value>
+                <value>
+                    <fullName>Agency</fullName>
+                    <default>false</default>
+                    <label>Agency</label>
+                </value>
+            </valueSetDefinition>
+        </valueSet>
     </fields>
     <label>IEC Compiled Usage Tracker</label>
     <listViews>
@@ -254,6 +269,25 @@
         <label>All</label>
         <language>en_US</language>
     </listViews>
+    <listViews>
+        <fullName>ZZ_By_Related_Client</fullName>
+        <columns>NAME</columns>
+        <columns>CAC_Subscription_Detail__c</columns>
+        <columns>Related_Application__c</columns>
+        <columns>Related_Client__c</columns>
+        <columns>Counter__c</columns>
+        <columns>Date__c</columns>
+        <columns>Validation_Result__c</columns>
+        <columns>Validation_Type__c</columns>
+        <filterScope>Everything</filterScope>
+        <filters>
+            <field>Related_Client__c</field>
+            <operation>equals</operation>
+            <value>Simon Johnson</value>
+        </filters>
+        <label>ZZ-By Related Client</label>
+        <language>en_US</language>
+    </listViews>
     <nameField>
         <displayFormat>IEC-CUT-{0000000}</displayFormat>
         <label>IEC Compiled Usage Tracler Name</label>
@@ -263,4 +297,5 @@
     <pluralLabel>IEC Compiled Usage Tracker</pluralLabel>
     <searchLayouts/>
     <sharingModel>ReadWrite</sharingModel>
+    <visibility>Public</visibility>
 </CustomObject>

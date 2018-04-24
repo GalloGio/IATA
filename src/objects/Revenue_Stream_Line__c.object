@@ -21,10 +21,6 @@
         <type>Default</type>
     </actionOverrides>
     <actionOverrides>
-        <actionName>Follow</actionName>
-        <type>Default</type>
-    </actionOverrides>
-    <actionOverrides>
         <actionName>List</actionName>
         <type>Default</type>
     </actionOverrides>
@@ -50,6 +46,7 @@
     <description>Object used to store annualized revenue from RCRM opportunities and report on it. Used for the RCRM project.</description>
     <enableActivities>false</enableActivities>
     <enableBulkApi>true</enableBulkApi>
+    <enableChangeDataCapture>false</enableChangeDataCapture>
     <enableFeeds>false</enableFeeds>
     <enableHistory>false</enableHistory>
     <enableReports>true</enableReports>
@@ -184,4 +181,5 @@
 )</errorConditionFormula>
         <errorMessage>You do not have the necessary access rights to perform this change to a closed Oppportunity. Please contact Support for help.</errorMessage>
     </validationRules>
+    <visibility>Public</visibility>
 </CustomObject>

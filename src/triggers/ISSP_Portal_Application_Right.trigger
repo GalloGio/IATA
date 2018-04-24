@@ -1554,7 +1554,15 @@ trigger ISSP_Portal_Application_Right on Portal_Application_Right__c (after inse
 	
 	
     if(PortalServiceAccessTriggerHandler.avoidAppTrigger) return;
-    
+
+	//we skip this trigger if IFAP portal service so we avoid too many SOQL queries
+	if (!trigger.isDelete) {
+		for (Portal_Application_Right__c access : trigger.new) {
+			if (access.Application_Name__c == 'IFAP' )
+				return;
+		}
+	}
+
     //TF - give permission set automatically for SIS
     system.debug('STARTING TRIGGER');
     Set <Id> contactIdSet = new Set <Id>();
@@ -1576,6 +1584,8 @@ trigger ISSP_Portal_Application_Right on Portal_Application_Right__c (after inse
 	Set <Id> ContactDelRightSet = new Set <Id>();
     Set <Id> contactIdIATAAccreditationSet = new Set <Id>();
     Set <Id> contactIdRemoveIATAAccreditationSet = new Set <Id>();
+
+    List<Portal_Application_Right__c> ebulletinServices = new List<Portal_Application_Right__c>();
     
     //Mconde start
     if ( (trigger.isInsert) || (trigger.isUpdate) ){
@@ -1744,6 +1754,19 @@ trigger ISSP_Portal_Application_Right on Portal_Application_Right__c (after inse
 				}
 			}
 		}
+		else if (access.Application_Name__c.contains('Bulletin')){
+			
+			if (trigger.isUpdate){
+				Portal_Application_Right__c oldAccess = trigger.oldMap.get(access.Id);
+				if (access.Right__c != oldAccess.Right__c){
+					if (access.Right__c == 'Access Denied'){
+						system.debug('IS UPDATE AND DENIED');
+						//disable the ebulletin profiles for the user
+						ebulletinServices.add(access);
+					}
+				}
+			}
+		}
 		/*
 		else if (access.Application_Name__c == 'ASD'){
 			system.debug('IS ASD');
@@ -1766,11 +1789,59 @@ trigger ISSP_Portal_Application_Right on Portal_Application_Right__c (after inse
 		}
 		*/
 	}
+
+
+	//disable the ebulletin profiles for the user
+	if(!ebulletinServices.isEmpty()){
+
+		Set<Id> contactsId = new Set<Id>();
+		List<User> usersWithAccess = new List<User>();
+		List<AMS_eBulletin_Profile__c> bProfiles = new List<AMS_eBulletin_Profile__c>();
+		List<AMS_eBulletin_Profile__c> bProfilesToUpdate = new List<AMS_eBulletin_Profile__c>();
+
+		for(Portal_Application_Right__c service : ebulletinServices){
+			contactsId.add(service.Contact__c);
+		}
+
+		if(!contactsId.isEmpty()) {
+
+			usersWithAccess = [SELECT id FROM User WHERE contactid IN :contactsId];
+
+			if(!usersWithAccess.isEmpty()) {
+
+				bProfiles = [SELECT id, Opt_in__c, Opt_out_Bulletin__c FROM AMS_eBulletin_Profile__c WHERE User__c IN :usersWithAccess AND Opt_in__c = true AND Opt_out_Bulletin__c = false];
+
+				if(!bProfiles.isEmpty()){
+
+					for(AMS_eBulletin_Profile__c ebProf : bProfiles) {
+						ebProf.Opt_in__c = false;
+						ebProf.Opt_out_Bulletin__c = true;
+						bProfilesToUpdate.add(ebProf);
+					}
+
+					if(!bProfilesToUpdate.isEmpty()) {
+						System.debug('ISSP_Portal_Application_Right - trigger - eBulletin Profiles to Update: ' + bProfilesToUpdate);
+						update bProfilesToUpdate;
+					}
+
+				}
+
+			}
+			
+		}
+	}
+
 	if (!contactIdSet.isEmpty() || !contactRemoveIdSet.isEmpty()){
 		system.debug('WILL START FUTURE METHOD');
-		if (!ISSP_UserTriggerHandler.preventTrigger)
-			ISSP_UserTriggerHandler.updateSIS_permissionSet(contactIdSet, contactRemoveIdSet);
-		ISSP_UserTriggerHandler.preventTrigger = true;
+        if (!ISSP_UserTriggerHandler.preventSISIntegration) {
+            //call external WS to update SIS user
+            ISSP_UserTriggerHandler.calloutSIS_ActivateDeactivateUsers(contactIdSet, contactRemoveIdSet);
+        }
+        ISSP_UserTriggerHandler.preventSISIntegration = true;
+        if (!ISSP_UserTriggerHandler.preventTrigger) {
+            ISSP_UserTriggerHandler.updateSIS_permissionSet(contactIdSet, contactRemoveIdSet);
+        }
+        ISSP_UserTriggerHandler.preventTrigger = true;
 	}
 
 	//deleteTwoFactor

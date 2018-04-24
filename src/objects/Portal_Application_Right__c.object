@@ -23,10 +23,6 @@
         <type>Visualforce</type>
     </actionOverrides>
     <actionOverrides>
-        <actionName>Follow</actionName>
-        <type>Default</type>
-    </actionOverrides>
-    <actionOverrides>
         <actionName>List</actionName>
         <type>Default</type>
     </actionOverrides>
@@ -56,6 +52,7 @@
     <description>Link object between contact and Portal Application</description>
     <enableActivities>false</enableActivities>
     <enableBulkApi>true</enableBulkApi>
+    <enableChangeDataCapture>false</enableChangeDataCapture>
     <enableFeeds>false</enableFeeds>
     <enableHistory>true</enableHistory>
     <enableReports>false</enableReports>
@@ -349,6 +346,16 @@
         <type>Checkbox</type>
     </fields>
     <fields>
+        <fullName>Favourite_Service__c</fullName>
+        <defaultValue>false</defaultValue>
+        <description>Checkbox used to know which services are the users favourites</description>
+        <externalId>false</externalId>
+        <label>Favourite Service</label>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
         <fullName>IATA_Code__c</fullName>
         <externalId>false</externalId>
         <formula>Contact__r.IATA_Code__c</formula>
@@ -385,25 +392,30 @@
         <externalId>false</externalId>
         <inlineHelpText>Please choose at least one invoice type to give rights</inlineHelpText>
         <label>Invoice Type</label>
-        <picklist>
-            <picklistValues>
-                <fullName>Cass Invoices</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Passenger Invoices</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Invoices</fullName>
-                <default>false</default>
-            </picklistValues>
-            <sorted>false</sorted>
-        </picklist>
         <required>false</required>
         <trackHistory>false</trackHistory>
         <trackTrending>false</trackTrending>
         <type>MultiselectPicklist</type>
+        <valueSet>
+            <valueSetDefinition>
+                <sorted>false</sorted>
+                <value>
+                    <fullName>Cass Invoices</fullName>
+                    <default>false</default>
+                    <label>Cass Invoices</label>
+                </value>
+                <value>
+                    <fullName>Passenger Invoices</fullName>
+                    <default>false</default>
+                    <label>Passenger Invoices</label>
+                </value>
+                <value>
+                    <fullName>Invoices</fullName>
+                    <default>false</default>
+                    <label>Invoices</label>
+                </value>
+            </valueSetDefinition>
+        </valueSet>
         <visibleLines>5</visibleLines>
     </fields>
     <fields>
@@ -512,7 +524,7 @@ In the Portal Service object, the ServiceName__c field has the same functionalit
 &quot;IFACP Endorsement &amp; Changes&quot;, $Label.ISSP_IFACP_Endorsement_Changes,
 &quot;Currency Center&quot;, $Label.ISSP_CurrencyCenter,
 &quot;GSA Appointments&quot;, $Label.ISSP_AMS_MSO_GSA_GSA_Service_Name,
-&quot;MSO Appointments&quot;, $Label.ISSP_AMS_MSO_GSA_MSO_Service_Name,
+&quot;MSO Management&quot;, $Label.ISSP_AMS_MSO_GSA_MSO_Service_Name,
 &quot;RHC Information&quot;, $Label.ANG_ISSP_RHC_Information,
 Application_Name__c
 )</formula>
@@ -552,25 +564,30 @@ Application_Name__c
         <fullName>Right__c</fullName>
         <externalId>false</externalId>
         <label>Right</label>
-        <picklist>
-            <picklistValues>
-                <fullName>Access Requested</fullName>
-                <default>true</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Access Granted</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Access Denied</fullName>
-                <default>false</default>
-            </picklistValues>
-            <sorted>false</sorted>
-        </picklist>
         <required>false</required>
         <trackHistory>true</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Picklist</type>
+        <valueSet>
+            <valueSetDefinition>
+                <sorted>false</sorted>
+                <value>
+                    <fullName>Access Requested</fullName>
+                    <default>true</default>
+                    <label>Access Requested</label>
+                </value>
+                <value>
+                    <fullName>Access Granted</fullName>
+                    <default>false</default>
+                    <label>Access Granted</label>
+                </value>
+                <value>
+                    <fullName>Access Denied</fullName>
+                    <default>false</default>
+                    <label>Access Denied</label>
+                </value>
+            </valueSetDefinition>
+        </valueSet>
     </fields>
     <fields>
         <fullName>TD_Record__c</fullName>
@@ -588,38 +605,46 @@ ISPICKVAL( Right__c , &apos;Access Granted&apos;))</formula>
         <fullName>Technical_Provisioning_Status__c</fullName>
         <externalId>false</externalId>
         <label>Technical Provisioning Status</label>
-        <picklist>
-            <picklistValues>
-                <fullName>Access Requested</fullName>
-                <default>true</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>IATA Access Granted</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Fail</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>External Access Granted</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>External Access Denied</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>IATA Access Denied</fullName>
-                <default>false</default>
-            </picklistValues>
-            <restrictedPicklist>true</restrictedPicklist>
-            <sorted>false</sorted>
-        </picklist>
         <required>false</required>
         <trackHistory>false</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Picklist</type>
+        <valueSet>
+            <restricted>true</restricted>
+            <valueSetDefinition>
+                <sorted>false</sorted>
+                <value>
+                    <fullName>Access Requested</fullName>
+                    <default>true</default>
+                    <label>Access Requested</label>
+                </value>
+                <value>
+                    <fullName>IATA Access Granted</fullName>
+                    <default>false</default>
+                    <label>IATA Access Granted</label>
+                </value>
+                <value>
+                    <fullName>Fail</fullName>
+                    <default>false</default>
+                    <label>Fail</label>
+                </value>
+                <value>
+                    <fullName>External Access Granted</fullName>
+                    <default>false</default>
+                    <label>External Access Granted</label>
+                </value>
+                <value>
+                    <fullName>External Access Denied</fullName>
+                    <default>false</default>
+                    <label>External Access Denied</label>
+                </value>
+                <value>
+                    <fullName>IATA Access Denied</fullName>
+                    <default>false</default>
+                    <label>IATA Access Denied</label>
+                </value>
+            </valueSetDefinition>
+        </valueSet>
     </fields>
     <fields>
         <fullName>Terms_Acceptance_Date__c</fullName>
@@ -630,6 +655,19 @@ ISPICKVAL( Right__c , &apos;Access Granted&apos;))</formula>
         <trackHistory>false</trackHistory>
         <trackTrending>false</trackTrending>
         <type>DateTime</type>
+    </fields>
+    <fields>
+        <fullName>Terms_Acceptance_Version__c</fullName>
+        <description>Service Terms and Condition version that the user accepted</description>
+        <externalId>false</externalId>
+        <label>Terms Acceptance Version</label>
+        <precision>12</precision>
+        <required>false</required>
+        <scale>2</scale>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Number</type>
+        <unique>false</unique>
     </fields>
     <fields>
         <fullName>Terms_Acceptance__c</fullName>
@@ -658,6 +696,7 @@ ISPICKVAL( Right__c , &apos;Access Granted&apos;))</formula>
         <columns>Contact__c</columns>
         <columns>Portal_Application__c</columns>
         <columns>Right__c</columns>
+        <columns>LAST_UPDATE</columns>
         <filterScope>Everything</filterScope>
         <filters>
             <field>Restricted_App__c</field>
@@ -998,6 +1037,19 @@ OR(ISPICKVAL(Right__c, &apos;Access Granted&apos;), ISPICKVAL(Right__c, &apos;Ac
         <errorMessage>Please click on &apos;Cancel&apos; and use the &apos;Assign Financial Assessment Contact&apos; button on the Contact in order to Grant or Deny IFAP access.</errorMessage>
     </validationRules>
     <validationRules>
+        <fullName>Restrict_IEP_request</fullName>
+        <active>true</active>
+        <description>Internal users must not be able to assign an IATA EasyPay portal service with Access Status = Access Requested to a contact.</description>
+        <errorConditionFormula>and(
+Text(Right__c) = &apos;Access Requested&apos;,
+CONTAINS(Application_Name__c, &apos;IATA EasyPay&apos;),
+NOT(BEGINS($Profile.Name, &apos;System Administrator&apos;)),
+$Profile.Name != &apos;ISS Portal Agency Delegated Admin User&apos;,
+$Profile.Name != &apos;ISS Portal Agency User (Partner)&apos;
+)</errorConditionFormula>
+        <errorMessage>Access to an IATA EasyPay portal service cannot be requested internally. Please ask the user to request access from the CS Portal, or the portal admin to add this user to the service.</errorMessage>
+    </validationRules>
+    <validationRules>
         <fullName>Restrict_internal_selection</fullName>
         <active>true</active>
         <description>Services with the field ANG_Restrict_internal_selection__c = true can&apos;t be added or modified.</description>
@@ -1052,6 +1104,7 @@ NOT(CONTAINS($Profile.Name,&quot;System administrator&quot;))
 )</errorConditionFormula>
         <errorMessage>The Access Status of this service can only be changed by IATA ‘Treasury Dashboard’ team.</errorMessage>
     </validationRules>
+    <visibility>Public</visibility>
     <webLinks>
         <fullName>Add_User_to_this_service</fullName>
         <availability>online</availability>

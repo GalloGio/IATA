@@ -86,8 +86,8 @@
         });
       });
     </script>
-
-    <body onload=" resizeTo(400,680);">
+<!--onload=" resizeTo(400,680);"-->
+    <body >
         <apex:form >
             <apex:image url="{!$Resource.IATAlogo}" width="65" height="40" styleClass="iataLogo"/>
             <apex:outputPanel id="surveyPanel" layout="none">

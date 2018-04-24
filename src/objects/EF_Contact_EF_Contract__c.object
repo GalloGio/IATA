@@ -21,10 +21,6 @@
         <type>Default</type>
     </actionOverrides>
     <actionOverrides>
-        <actionName>Follow</actionName>
-        <type>Default</type>
-    </actionOverrides>
-    <actionOverrides>
         <actionName>List</actionName>
         <type>Default</type>
     </actionOverrides>
@@ -50,6 +46,7 @@
     <description>E&amp;F CRM. Join object between Contact and Contracts.</description>
     <enableActivities>true</enableActivities>
     <enableBulkApi>true</enableBulkApi>
+    <enableChangeDataCapture>false</enableChangeDataCapture>
     <enableFeeds>false</enableFeeds>
     <enableHistory>false</enableHistory>
     <enableReports>true</enableReports>
@@ -105,20 +102,26 @@
     <fields>
         <fullName>EF_Status__c</fullName>
         <externalId>false</externalId>
-        <globalPicklist>EF_Status</globalPicklist>
         <label>Status</label>
         <required>false</required>
         <trackTrending>false</trackTrending>
         <type>Picklist</type>
+        <valueSet>
+            <restricted>true</restricted>
+            <valueSetName>EF_Status</valueSetName>
+        </valueSet>
     </fields>
     <fields>
         <fullName>Role__c</fullName>
         <externalId>false</externalId>
-        <globalPicklist>EF_Role</globalPicklist>
         <label>Role</label>
         <required>false</required>
         <trackTrending>false</trackTrending>
         <type>MultiselectPicklist</type>
+        <valueSet>
+            <restricted>true</restricted>
+            <valueSetName>EF_Role</valueSetName>
+        </valueSet>
         <visibleLines>4</visibleLines>
     </fields>
     <label>E&amp;F Contact in E&amp;F Contract</label>
@@ -162,4 +165,5 @@ ISPICKVAL(EF_Contact__r.EF_Status__c, &apos;Inactive&apos;)
         <errorDisplayField>EF_Status__c</errorDisplayField>
         <errorMessage>Status can&apos;t be active if Contact E&amp;F Status is Inactive</errorMessage>
     </validationRules>
+    <visibility>Public</visibility>
 </CustomObject>

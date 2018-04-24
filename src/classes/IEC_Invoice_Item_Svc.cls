@@ -317,7 +317,7 @@ global without sharing class IEC_Invoice_Item_Svc {
 				//*** create order
 				Account oAccount = mapAccount.get(invItem.Invoice__r.Zuora__Account__c);
 				Contact oContact = mapContact.get(invItem.Invoice__r.Zuora__BillingAccount__r.Contact__c);
-				Order oOrder = new Order_Sel().initializeOrder(oAccount, oContact, false);
+				Order oOrder = new Order_Sel().initializeOrder(oAccount, oContact, UserInfo.getUserId(), false);
 				lstOrder.add(oOrder);
 				lstOrderStatus.add(new Order(Status=Order_Svc.getOrderStatusByPaymentType(sPaymentMethod), Is_Paid__c=Order_Svc.isOrderPaidByPaymentType(sPaymentMethod)));
 				oOrder.Type = 'Order';

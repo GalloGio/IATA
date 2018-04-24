@@ -15,6 +15,10 @@
                 <behavior>Edit</behavior>
                 <field>Description__c</field>
             </layoutItems>
+            <layoutItems>
+                <behavior>Readonly</behavior>
+                <field>Full_SFDC_ID__c</field>
+            </layoutItems>
         </layoutColumns>
         <layoutColumns>
             <layoutItems>
@@ -207,6 +211,7 @@
     </relatedLists>
     <relatedLists>
         <fields>NAME</fields>
+        <fields>Full_SFDC_ID__c</fields>
         <fields>Production_Date__c</fields>
         <fields>Status__c</fields>
         <fields>Size__c</fields>

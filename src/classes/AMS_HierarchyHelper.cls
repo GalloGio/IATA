@@ -301,7 +301,8 @@ global class AMS_HierarchyHelper {
 					hierarchyToDelete = rel.Hierarchy__c;
 
 				//BRs under the oldHO will move under the targetHO
-				if (rel.Parent_Account__c == oldHO && rel.Child_Account__r.Location_Type__c == AMS_Utils.BR && rel.Child_Account__r.Status__c != AMS_Utils.ACC_S0_TERMINATED){
+				if ((rel.Parent_Account__c == oldHO && rel.Child_Account__r.Location_Type__c == AMS_Utils.BR && rel.Child_Account__r.Status__c != AMS_Utils.ACC_S0_TERMINATED) 
+					|| (rel.Parent_Account__c == oldHO && rel.Child_Account__r.Location_Type__c == AMS_Utils.SA && rel.Child_Account__r.Status__c == AMS_Utils.ACC_S1_NOTACCREDITED)){
 					rel.Parent_Account__c = targetHO;
 					rel.Hierarchy__c = newHierarchyName;
 				}
@@ -599,7 +600,7 @@ global class AMS_HierarchyHelper {
 				if(!childAccounts.get(oscar.Id).containsKey(r.Parent_Account__c)) childAccounts.get(oscar.Id).put(r.Parent_Account__c, new Set<Id>());
 				if(!childAccounts.get(oscar.Id).containsKey(r.Child_Account__c)) childAccounts.get(oscar.Id).put(r.Child_Account__c, new Set<Id>());
 
-				if(r.Child_Account__r.Status__c != AMS_Utils.ACC_S0_TERMINATED && r.Child_Account__r.Status__c != AMS_Utils.ACC_S1_NOTACCREDITED && r.Child_Account__r.Status__c != '') childAccounts.get(oscar.Id).get(r.Parent_Account__c).add(r.Child_Account__c);
+				if(r.Child_Account__r.Status__c != null && r.Child_Account__r.Status__c != AMS_Utils.ACC_S0_TERMINATED && r.Child_Account__r.Status__c != AMS_Utils.ACC_S1_NOTACCREDITED && r.Child_Account__r.Status__c != '') childAccounts.get(oscar.Id).get(r.Parent_Account__c).add(r.Child_Account__c);
 			}
 		}
 

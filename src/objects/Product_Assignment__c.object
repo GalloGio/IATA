@@ -21,10 +21,6 @@
         <type>Default</type>
     </actionOverrides>
     <actionOverrides>
-        <actionName>Follow</actionName>
-        <type>Default</type>
-    </actionOverrides>
-    <actionOverrides>
         <actionName>List</actionName>
         <type>Default</type>
     </actionOverrides>
@@ -50,6 +46,7 @@
     <description>Join object between Accounts and ICCS Product Currency. Used by ICCS in their participation process.</description>
     <enableActivities>false</enableActivities>
     <enableBulkApi>true</enableBulkApi>
+    <enableChangeDataCapture>false</enableChangeDataCapture>
     <enableFeeds>false</enableFeeds>
     <enableHistory>true</enableHistory>
     <enableReports>true</enableReports>
@@ -235,49 +232,59 @@
         <fullName>Split_Type__c</fullName>
         <externalId>false</externalId>
         <label>Split Type</label>
-        <picklist>
-            <picklistValues>
-                <fullName>Percentage</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Amount</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Balance</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Total</fullName>
-                <default>false</default>
-            </picklistValues>
-            <sorted>false</sorted>
-        </picklist>
         <required>false</required>
         <trackHistory>false</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Picklist</type>
+        <valueSet>
+            <valueSetDefinition>
+                <sorted>false</sorted>
+                <value>
+                    <fullName>Percentage</fullName>
+                    <default>false</default>
+                    <label>Percentage</label>
+                </value>
+                <value>
+                    <fullName>Amount</fullName>
+                    <default>false</default>
+                    <label>Amount</label>
+                </value>
+                <value>
+                    <fullName>Balance</fullName>
+                    <default>false</default>
+                    <label>Balance</label>
+                </value>
+                <value>
+                    <fullName>Total</fullName>
+                    <default>false</default>
+                    <label>Total</label>
+                </value>
+            </valueSetDefinition>
+        </valueSet>
     </fields>
     <fields>
         <fullName>Status__c</fullName>
         <externalId>false</externalId>
         <label>Status</label>
-        <picklist>
-            <picklistValues>
-                <fullName>Active</fullName>
-                <default>true</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Inactive</fullName>
-                <default>false</default>
-            </picklistValues>
-            <sorted>false</sorted>
-        </picklist>
         <required>false</required>
         <trackHistory>true</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Picklist</type>
+        <valueSet>
+            <valueSetDefinition>
+                <sorted>false</sorted>
+                <value>
+                    <fullName>Active</fullName>
+                    <default>true</default>
+                    <label>Active</label>
+                </value>
+                <value>
+                    <fullName>Inactive</fullName>
+                    <default>false</default>
+                    <label>Inactive</label>
+                </value>
+            </valueSetDefinition>
+        </valueSet>
     </fields>
     <fields>
         <fullName>Third_Party_Payment__c</fullName>
@@ -330,4 +337,5 @@
         <errorDisplayField>Accelerated_Settlement__c</errorDisplayField>
         <errorMessage>Accelerated settlement is not allowed for this country</errorMessage>
     </validationRules>
+    <visibility>Public</visibility>
 </CustomObject>

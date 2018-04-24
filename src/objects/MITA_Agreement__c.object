@@ -21,10 +21,6 @@
         <type>Default</type>
     </actionOverrides>
     <actionOverrides>
-        <actionName>Follow</actionName>
-        <type>Default</type>
-    </actionOverrides>
-    <actionOverrides>
         <actionName>List</actionName>
         <type>Default</type>
     </actionOverrides>
@@ -49,6 +45,7 @@
     <deploymentStatus>Deployed</deploymentStatus>
     <enableActivities>false</enableActivities>
     <enableBulkApi>true</enableBulkApi>
+    <enableChangeDataCapture>false</enableChangeDataCapture>
     <enableFeeds>false</enableFeeds>
     <enableHistory>true</enableHistory>
     <enableReports>true</enableReports>
@@ -78,64 +75,106 @@
         <fullName>Agreement_type__c</fullName>
         <externalId>false</externalId>
         <label>Agreement type</label>
-        <picklist>
-            <controllingField>MITAorBIETA__c</controllingField>
-            <picklistValues>
-                <fullName>The Passenger and Cargo Interline Traffic Agreement</fullName>
-                <default>false</default>
-                <controllingFieldValues>MITA</controllingFieldValues>
-            </picklistValues>
-            <picklistValues>
-                <fullName>The Passenger Interline Agreement</fullName>
-                <default>false</default>
-                <controllingFieldValues>MITA</controllingFieldValues>
-            </picklistValues>
-            <picklistValues>
-                <fullName>The Cargo Interline Agreement</fullName>
-                <default>false</default>
-                <controllingFieldValues>MITA</controllingFieldValues>
-            </picklistValues>
-            <picklistValues>
-                <fullName>The One Way Issuing Airline</fullName>
-                <default>false</default>
-                <controllingFieldValues>MITA</controllingFieldValues>
-            </picklistValues>
-            <picklistValues>
-                <fullName>The One Way Participating Airline</fullName>
-                <default>false</default>
-                <controllingFieldValues>MITA</controllingFieldValues>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Bilateral, both carriers can issue electronic tickets</fullName>
-                <default>false</default>
-                <controllingFieldValues>BIETA</controllingFieldValues>
-            </picklistValues>
-            <picklistValues>
-                <fullName>One Way Passenger Issuing Airline</fullName>
-                <default>false</default>
-                <controllingFieldValues>BIETA</controllingFieldValues>
-            </picklistValues>
-            <picklistValues>
-                <fullName>One Way Passenger Participating</fullName>
-                <default>false</default>
-                <controllingFieldValues>BIETA</controllingFieldValues>
-            </picklistValues>
-            <picklistValues>
-                <fullName>One Way Intermodal Issuing Date</fullName>
-                <default>false</default>
-                <controllingFieldValues>BIETA</controllingFieldValues>
-            </picklistValues>
-            <picklistValues>
-                <fullName>One Way Intermodal Participating Date</fullName>
-                <default>false</default>
-                <controllingFieldValues>BIETA</controllingFieldValues>
-            </picklistValues>
-            <sorted>false</sorted>
-        </picklist>
         <required>false</required>
         <trackHistory>false</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Picklist</type>
+        <valueSet>
+            <controllingField>MITAorBIETA__c</controllingField>
+            <valueSetDefinition>
+                <sorted>false</sorted>
+                <value>
+                    <fullName>The Passenger and Cargo Interline Traffic Agreement</fullName>
+                    <default>false</default>
+                    <label>The Passenger and Cargo Interline Traffic Agreement</label>
+                </value>
+                <value>
+                    <fullName>The Passenger Interline Agreement</fullName>
+                    <default>false</default>
+                    <label>The Passenger Interline Agreement</label>
+                </value>
+                <value>
+                    <fullName>The Cargo Interline Agreement</fullName>
+                    <default>false</default>
+                    <label>The Cargo Interline Agreement</label>
+                </value>
+                <value>
+                    <fullName>The One Way Issuing Airline</fullName>
+                    <default>false</default>
+                    <label>The One Way Issuing Airline</label>
+                </value>
+                <value>
+                    <fullName>The One Way Participating Airline</fullName>
+                    <default>false</default>
+                    <label>The One Way Participating Airline</label>
+                </value>
+                <value>
+                    <fullName>Bilateral, both carriers can issue electronic tickets</fullName>
+                    <default>false</default>
+                    <label>Bilateral, both carriers can issue electronic tickets</label>
+                </value>
+                <value>
+                    <fullName>One Way Passenger Issuing Airline</fullName>
+                    <default>false</default>
+                    <label>One Way Passenger Issuing Airline</label>
+                </value>
+                <value>
+                    <fullName>One Way Passenger Participating</fullName>
+                    <default>false</default>
+                    <label>One Way Passenger Participating</label>
+                </value>
+                <value>
+                    <fullName>One Way Intermodal Issuing Date</fullName>
+                    <default>false</default>
+                    <label>One Way Intermodal Issuing Date</label>
+                </value>
+                <value>
+                    <fullName>One Way Intermodal Participating Date</fullName>
+                    <default>false</default>
+                    <label>One Way Intermodal Participating Date</label>
+                </value>
+            </valueSetDefinition>
+            <valueSettings>
+                <controllingFieldValue>MITA</controllingFieldValue>
+                <valueName>The Passenger and Cargo Interline Traffic Agreement</valueName>
+            </valueSettings>
+            <valueSettings>
+                <controllingFieldValue>MITA</controllingFieldValue>
+                <valueName>The Passenger Interline Agreement</valueName>
+            </valueSettings>
+            <valueSettings>
+                <controllingFieldValue>MITA</controllingFieldValue>
+                <valueName>The Cargo Interline Agreement</valueName>
+            </valueSettings>
+            <valueSettings>
+                <controllingFieldValue>MITA</controllingFieldValue>
+                <valueName>The One Way Issuing Airline</valueName>
+            </valueSettings>
+            <valueSettings>
+                <controllingFieldValue>MITA</controllingFieldValue>
+                <valueName>The One Way Participating Airline</valueName>
+            </valueSettings>
+            <valueSettings>
+                <controllingFieldValue>BIETA</controllingFieldValue>
+                <valueName>Bilateral, both carriers can issue electronic tickets</valueName>
+            </valueSettings>
+            <valueSettings>
+                <controllingFieldValue>BIETA</controllingFieldValue>
+                <valueName>One Way Passenger Issuing Airline</valueName>
+            </valueSettings>
+            <valueSettings>
+                <controllingFieldValue>BIETA</controllingFieldValue>
+                <valueName>One Way Passenger Participating</valueName>
+            </valueSettings>
+            <valueSettings>
+                <controllingFieldValue>BIETA</controllingFieldValue>
+                <valueName>One Way Intermodal Issuing Date</valueName>
+            </valueSettings>
+            <valueSettings>
+                <controllingFieldValue>BIETA</controllingFieldValue>
+                <valueName>One Way Intermodal Participating Date</valueName>
+            </valueSettings>
+        </valueSet>
     </fields>
     <fields>
         <fullName>Airline1_designator_code__c</fullName>
@@ -288,29 +327,35 @@
         <description>The reason why this agreement was cancelled</description>
         <externalId>false</externalId>
         <label>Cancellation Reason</label>
-        <picklist>
-            <picklistValues>
-                <fullName>Requested by Airline 1</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Requested by Airline 2</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Airline 1 leaves agreement</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Airline 2 leaves agreement</fullName>
-                <default>false</default>
-            </picklistValues>
-            <sorted>false</sorted>
-        </picklist>
         <required>false</required>
         <trackHistory>false</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Picklist</type>
+        <valueSet>
+            <valueSetDefinition>
+                <sorted>false</sorted>
+                <value>
+                    <fullName>Requested by Airline 1</fullName>
+                    <default>false</default>
+                    <label>Requested by Airline 1</label>
+                </value>
+                <value>
+                    <fullName>Requested by Airline 2</fullName>
+                    <default>false</default>
+                    <label>Requested by Airline 2</label>
+                </value>
+                <value>
+                    <fullName>Airline 1 leaves agreement</fullName>
+                    <default>false</default>
+                    <label>Airline 1 leaves agreement</label>
+                </value>
+                <value>
+                    <fullName>Airline 2 leaves agreement</fullName>
+                    <default>false</default>
+                    <label>Airline 2 leaves agreement</label>
+                </value>
+            </valueSetDefinition>
+        </valueSet>
     </fields>
     <fields>
         <fullName>Cancellation_date__c</fullName>
@@ -361,21 +406,25 @@
         <fullName>MITAorBIETA__c</fullName>
         <externalId>false</externalId>
         <label>MITA/BIETA</label>
-        <picklist>
-            <picklistValues>
-                <fullName>MITA</fullName>
-                <default>true</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>BIETA</fullName>
-                <default>false</default>
-            </picklistValues>
-            <sorted>false</sorted>
-        </picklist>
         <required>false</required>
         <trackHistory>false</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Picklist</type>
+        <valueSet>
+            <valueSetDefinition>
+                <sorted>false</sorted>
+                <value>
+                    <fullName>MITA</fullName>
+                    <default>true</default>
+                    <label>MITA</label>
+                </value>
+                <value>
+                    <fullName>BIETA</fullName>
+                    <default>false</default>
+                    <label>BIETA</label>
+                </value>
+            </valueSetDefinition>
+        </valueSet>
     </fields>
     <fields>
         <fullName>Status__c</fullName>
@@ -711,7 +760,8 @@ IF(Airline_1__r.BIETA_One_way_Intermodal_Participating__c&gt; Airline_2__r.BIETA
         <description>Prevents &quot;junior&quot; MITA members from requesting agreements to senior airlines.
 The seniorship is calculate on a different date for each agreement type.</description>
         <errorConditionFormula>AND(
- Active__c,ISPICKVAL(Cancellation_Reason__c, &quot;&quot;),
+AND(OR(NOT(ISBLANK(Withdrawal_Request_Reception_Date__c)),NOT(ISBLANK(Cancellation_date__c)),NOT(ISBLANK(Cancellation_processed_date__c))),
+Active__c,ISPICKVAL(Cancellation_Reason__c, &quot;&quot;)),
 IF(CASE(TEXT(Agreement_type__c), 
 &apos;The Passenger and Cargo Interline Traffic Agreement&apos;, 
 IF(AND(Airline_1__r.MITA_IATA_Interline_Passenger__c &gt; Airline_2__r.MITA_IATA_Interline_Passenger__c, Airline_1__r.MITA_IATA_Interline_Cargo__c &lt; Airline_2__r.MITA_IATA_Interline_Cargo__c),&apos;t&apos;,&apos;f&apos;), 
@@ -730,4 +780,5 @@ IF(AND(Airline_1__r.MITA_IATA_Interline_Passenger__c &gt; Airline_2__r.MITA_IATA
 )</errorConditionFormula>
         <errorMessage>Airline 2 has more seniority than airline 1 for this agreement type.</errorMessage>
     </validationRules>
+    <visibility>Public</visibility>
 </CustomObject>

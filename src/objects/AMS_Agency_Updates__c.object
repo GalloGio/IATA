@@ -21,10 +21,6 @@
         <type>Default</type>
     </actionOverrides>
     <actionOverrides>
-        <actionName>Follow</actionName>
-        <type>Default</type>
-    </actionOverrides>
-    <actionOverrides>
         <actionName>List</actionName>
         <type>Default</type>
     </actionOverrides>
@@ -49,6 +45,7 @@
     <deploymentStatus>Deployed</deploymentStatus>
     <enableActivities>false</enableActivities>
     <enableBulkApi>true</enableBulkApi>
+    <enableChangeDataCapture>false</enableChangeDataCapture>
     <enableFeeds>false</enableFeeds>
     <enableHistory>true</enableHistory>
     <enableReports>true</enableReports>
@@ -86,6 +83,17 @@ null)</formula>
         <trackHistory>true</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Lookup</type>
+    </fields>
+    <fields>
+        <fullName>Action_Type__c</fullName>
+        <externalId>false</externalId>
+        <label>Action_Type</label>
+        <length>5</length>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
     </fields>
     <fields>
         <fullName>Agency_Applied_Change_code__c</fullName>
@@ -149,7 +157,7 @@ null)</formula>
     <fields>
         <fullName>IATACode__c</fullName>
         <externalId>false</externalId>
-        <formula>Account__r.IATACode__c</formula>
+        <formula>IF(Action_Type__c==&apos;POST&apos; &amp;&amp; !ISBLANK(Account__r.ParentId),Account__r.Parent.IATACode__c,Account__r.IATACode__c)</formula>
         <label>IATA Code</label>
         <required>false</required>
         <trackHistory>false</trackHistory>
@@ -172,22 +180,26 @@ null)</formula>
         <fullName>Integration_System__c</fullName>
         <externalId>false</externalId>
         <label>Integration System</label>
-        <picklist>
-            <picklistValues>
-                <fullName>SAP PI</fullName>
-                <default>true</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Mulesoft</fullName>
-                <default>false</default>
-            </picklistValues>
-            <restrictedPicklist>true</restrictedPicklist>
-            <sorted>false</sorted>
-        </picklist>
         <required>false</required>
         <trackHistory>true</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Picklist</type>
+        <valueSet>
+            <restricted>true</restricted>
+            <valueSetDefinition>
+                <sorted>false</sorted>
+                <value>
+                    <fullName>SAP PI</fullName>
+                    <default>true</default>
+                    <label>SAP PI</label>
+                </value>
+                <value>
+                    <fullName>Mulesoft</fullName>
+                    <default>false</default>
+                    <label>Mulesoft</label>
+                </value>
+            </valueSetDefinition>
+        </valueSet>
     </fields>
     <fields>
         <fullName>Location_Type_Ordered__c</fullName>
@@ -242,41 +254,50 @@ null)</formula>
         <fullName>Update_Type__c</fullName>
         <externalId>false</externalId>
         <label>Update Type</label>
-        <picklist>
-            <picklistValues>
-                <fullName>Create</fullName>
-                <default>true</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Update</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Delete</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Update_Sent</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Create_Sent</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Delete_Sent</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Error</fullName>
-                <default>false</default>
-            </picklistValues>
-            <sorted>false</sorted>
-        </picklist>
         <required>false</required>
         <trackHistory>true</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Picklist</type>
+        <valueSet>
+            <valueSetDefinition>
+                <sorted>false</sorted>
+                <value>
+                    <fullName>Create</fullName>
+                    <default>true</default>
+                    <label>Create</label>
+                </value>
+                <value>
+                    <fullName>Update</fullName>
+                    <default>false</default>
+                    <label>Update</label>
+                </value>
+                <value>
+                    <fullName>Delete</fullName>
+                    <default>false</default>
+                    <label>Delete</label>
+                </value>
+                <value>
+                    <fullName>Update_Sent</fullName>
+                    <default>false</default>
+                    <label>Update_Sent</label>
+                </value>
+                <value>
+                    <fullName>Create_Sent</fullName>
+                    <default>false</default>
+                    <label>Create_Sent</label>
+                </value>
+                <value>
+                    <fullName>Delete_Sent</fullName>
+                    <default>false</default>
+                    <label>Delete_Sent</label>
+                </value>
+                <value>
+                    <fullName>Error</fullName>
+                    <default>false</default>
+                    <label>Error</label>
+                </value>
+            </valueSetDefinition>
+        </valueSet>
     </fields>
     <label>AMS Agency Events</label>
     <listViews>
@@ -368,4 +389,5 @@ null)</formula>
     <searchLayouts/>
     <sharingModel>ReadWrite</sharingModel>
     <startsWith>Vowel</startsWith>
+    <visibility>Public</visibility>
 </CustomObject>

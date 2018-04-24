@@ -21,10 +21,6 @@
         <type>Default</type>
     </actionOverrides>
     <actionOverrides>
-        <actionName>Follow</actionName>
-        <type>Default</type>
-    </actionOverrides>
-    <actionOverrides>
         <actionName>List</actionName>
         <type>Default</type>
     </actionOverrides>
@@ -50,6 +46,7 @@
     <description>used to host information on the ISS / ICH / ICCS calendars</description>
     <enableActivities>true</enableActivities>
     <enableBulkApi>true</enableBulkApi>
+    <enableChangeDataCapture>false</enableChangeDataCapture>
     <enableFeeds>false</enableFeeds>
     <enableHistory>true</enableHistory>
     <enableReports>true</enableReports>
@@ -137,30 +134,36 @@
         <fullName>Operation_Type__c</fullName>
         <externalId>false</externalId>
         <label>Operation Type</label>
-        <picklist>
-            <picklistValues>
-                <fullName>BSP International</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>BSP Domestic</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>CASS Export</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>CASS Import</fullName>
-                <default>false</default>
-            </picklistValues>
-            <restrictedPicklist>true</restrictedPicklist>
-            <sorted>false</sorted>
-        </picklist>
         <required>false</required>
         <trackHistory>false</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Picklist</type>
+        <valueSet>
+            <restricted>true</restricted>
+            <valueSetDefinition>
+                <sorted>false</sorted>
+                <value>
+                    <fullName>BSP International</fullName>
+                    <default>false</default>
+                    <label>BSP International</label>
+                </value>
+                <value>
+                    <fullName>BSP Domestic</fullName>
+                    <default>false</default>
+                    <label>BSP Domestic</label>
+                </value>
+                <value>
+                    <fullName>CASS Export</fullName>
+                    <default>false</default>
+                    <label>CASS Export</label>
+                </value>
+                <value>
+                    <fullName>CASS Import</fullName>
+                    <default>false</default>
+                    <label>CASS Import</label>
+                </value>
+            </valueSetDefinition>
+        </valueSet>
     </fields>
     <fields>
         <fullName>Period_Code__c</fullName>
@@ -217,6 +220,7 @@
         <columns>Remittance_Day__c</columns>
         <columns>Settlement_Day__c</columns>
         <columns>Operation_Currency__c</columns>
+        <columns>frequency_code__c</columns>
         <filterScope>Everything</filterScope>
         <label>All</label>
         <language>en_US</language>
@@ -277,4 +281,5 @@
     </recordTypes>
     <searchLayouts/>
     <sharingModel>ReadWrite</sharingModel>
+    <visibility>Public</visibility>
 </CustomObject>

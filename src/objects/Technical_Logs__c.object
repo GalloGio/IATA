@@ -21,10 +21,6 @@
         <type>Default</type>
     </actionOverrides>
     <actionOverrides>
-        <actionName>Follow</actionName>
-        <type>Default</type>
-    </actionOverrides>
-    <actionOverrides>
         <actionName>List</actionName>
         <type>Default</type>
     </actionOverrides>
@@ -50,6 +46,7 @@
     <description>Technical Logs</description>
     <enableActivities>false</enableActivities>
     <enableBulkApi>true</enableBulkApi>
+    <enableChangeDataCapture>false</enableChangeDataCapture>
     <enableFeeds>false</enableFeeds>
     <enableHistory>false</enableHistory>
     <enableReports>true</enableReports>
@@ -151,7 +148,7 @@
         <filters>
             <field>Record__c</field>
             <operation>contains</operation>
-            <value>60698691</value>
+            <value>8088080</value>
         </filters>
         <label>AMS - 1 record</label>
         <language>en_US</language>
@@ -256,7 +253,7 @@
         <filters>
             <field>start_date__c</field>
             <operation>equals</operation>
-            <value>12/9/2017 12:00 AM</value>
+            <value>3/27/2018 12:00 AM</value>
         </filters>
         <label>AMS - Sales Order</label>
         <language>en_US</language>
@@ -287,4 +284,5 @@
     <pluralLabel>Technical Logs</pluralLabel>
     <searchLayouts/>
     <sharingModel>ReadWrite</sharingModel>
+    <visibility>Public</visibility>
 </CustomObject>

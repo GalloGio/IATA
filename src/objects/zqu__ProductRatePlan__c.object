@@ -21,10 +21,6 @@
         <type>Default</type>
     </actionOverrides>
     <actionOverrides>
-        <actionName>Follow</actionName>
-        <type>Default</type>
-    </actionOverrides>
-    <actionOverrides>
         <actionName>List</actionName>
         <type>Default</type>
     </actionOverrides>
@@ -51,6 +47,7 @@
     <description>The Rate Plan associated with a ZProduct.</description>
     <enableActivities>false</enableActivities>
     <enableBulkApi>true</enableBulkApi>
+    <enableChangeDataCapture>false</enableChangeDataCapture>
     <enableFeeds>false</enableFeeds>
     <enableHistory>false</enableHistory>
     <enableReports>true</enableReports>
@@ -76,15 +73,19 @@
         <fullName>Country__c</fullName>
         <externalId>false</externalId>
         <label>Country</label>
-        <picklist>
-            <picklistValues>
-                <fullName>Canada</fullName>
-                <default>false</default>
-            </picklistValues>
-            <sorted>false</sorted>
-        </picklist>
+        <required>false</required>
         <trackTrending>false</trackTrending>
         <type>Picklist</type>
+        <valueSet>
+            <valueSetDefinition>
+                <sorted>false</sorted>
+                <value>
+                    <fullName>Canada</fullName>
+                    <default>false</default>
+                    <label>Canada</label>
+                </value>
+            </valueSetDefinition>
+        </valueSet>
     </fields>
     <fields>
         <fullName>Couponcode__c</fullName>
@@ -100,55 +101,69 @@
         <fullName>CustomerType__c</fullName>
         <externalId>false</externalId>
         <label>CustomerType</label>
-        <picklist>
-            <picklistValues>
-                <fullName>Member Airline</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Non-member</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Accredited Training Schools (ATS)</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Accredited Training Center (ATC)</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Sales Agents (Platinum)</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Sales Agents (Gold)</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Sales Agents (Genric)</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Strategic Partners</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>IATA Employees (work related reason)</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>IATA Employee (commercial purposes)</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>IATA Training &amp; Development Institute</fullName>
-                <default>false</default>
-            </picklistValues>
-            <sorted>false</sorted>
-        </picklist>
+        <required>false</required>
         <trackTrending>false</trackTrending>
         <type>Picklist</type>
+        <valueSet>
+            <valueSetDefinition>
+                <sorted>false</sorted>
+                <value>
+                    <fullName>Member Airline</fullName>
+                    <default>false</default>
+                    <label>Member Airline</label>
+                </value>
+                <value>
+                    <fullName>Non-member</fullName>
+                    <default>false</default>
+                    <label>Non-member</label>
+                </value>
+                <value>
+                    <fullName>Accredited Training Schools (ATS)</fullName>
+                    <default>false</default>
+                    <label>Accredited Training Schools (ATS)</label>
+                </value>
+                <value>
+                    <fullName>Accredited Training Center (ATC)</fullName>
+                    <default>false</default>
+                    <label>Accredited Training Center (ATC)</label>
+                </value>
+                <value>
+                    <fullName>Sales Agents (Platinum)</fullName>
+                    <default>false</default>
+                    <label>Sales Agents (Platinum)</label>
+                </value>
+                <value>
+                    <fullName>Sales Agents (Gold)</fullName>
+                    <default>false</default>
+                    <label>Sales Agents (Gold)</label>
+                </value>
+                <value>
+                    <fullName>Sales Agents (Genric)</fullName>
+                    <default>false</default>
+                    <label>Sales Agents (Genric)</label>
+                </value>
+                <value>
+                    <fullName>Strategic Partners</fullName>
+                    <default>false</default>
+                    <label>Strategic Partners</label>
+                </value>
+                <value>
+                    <fullName>IATA Employees (work related reason)</fullName>
+                    <default>false</default>
+                    <label>IATA Employees (work related reason)</label>
+                </value>
+                <value>
+                    <fullName>IATA Employee (commercial purposes)</fullName>
+                    <default>false</default>
+                    <label>IATA Employee (commercial purposes)</label>
+                </value>
+                <value>
+                    <fullName>IATA Training &amp; Development Institute</fullName>
+                    <default>false</default>
+                    <label>IATA Training &amp; Development Institute</label>
+                </value>
+            </valueSetDefinition>
+        </valueSet>
     </fields>
     <fields>
         <fullName>EBC_Cost_Per_Email__c</fullName>
@@ -228,125 +243,159 @@
         <fullName>FileFrequency__c</fullName>
         <externalId>false</externalId>
         <label>File Frequency</label>
-        <picklist>
-            <picklistValues>
-                <fullName>Monthly</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Semi Monthly</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Weekly</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Daily</fullName>
-                <default>false</default>
-            </picklistValues>
-            <sorted>false</sorted>
-        </picklist>
+        <required>false</required>
         <trackTrending>false</trackTrending>
         <type>Picklist</type>
+        <valueSet>
+            <valueSetDefinition>
+                <sorted>false</sorted>
+                <value>
+                    <fullName>Monthly</fullName>
+                    <default>false</default>
+                    <label>Monthly</label>
+                </value>
+                <value>
+                    <fullName>Semi Monthly</fullName>
+                    <default>false</default>
+                    <label>Semi Monthly</label>
+                </value>
+                <value>
+                    <fullName>Weekly</fullName>
+                    <default>false</default>
+                    <label>Weekly</label>
+                </value>
+                <value>
+                    <fullName>Daily</fullName>
+                    <default>false</default>
+                    <label>Daily</label>
+                </value>
+            </valueSetDefinition>
+        </valueSet>
     </fields>
     <fields>
         <fullName>GSSFileType__c</fullName>
         <externalId>false</externalId>
         <label>GSS File Type</label>
-        <picklist>
-            <picklistValues>
-                <fullName>Masters + Changes</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Masters Only</fullName>
-                <default>false</default>
-            </picklistValues>
-            <sorted>false</sorted>
-        </picklist>
+        <required>false</required>
         <trackTrending>false</trackTrending>
         <type>Picklist</type>
+        <valueSet>
+            <valueSetDefinition>
+                <sorted>false</sorted>
+                <value>
+                    <fullName>Masters + Changes</fullName>
+                    <default>false</default>
+                    <label>Masters + Changes</label>
+                </value>
+                <value>
+                    <fullName>Masters Only</fullName>
+                    <default>false</default>
+                    <label>Masters Only</label>
+                </value>
+            </valueSetDefinition>
+        </valueSet>
     </fields>
     <fields>
         <fullName>GSSLocation__c</fullName>
         <externalId>false</externalId>
         <label>GSS Location</label>
-        <picklist>
-            <picklistValues>
-                <fullName>Area 1</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Area 2</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Area 3</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Worldwide</fullName>
-                <default>false</default>
-            </picklistValues>
-            <sorted>false</sorted>
-        </picklist>
+        <required>false</required>
         <trackTrending>false</trackTrending>
         <type>Picklist</type>
+        <valueSet>
+            <valueSetDefinition>
+                <sorted>false</sorted>
+                <value>
+                    <fullName>Area 1</fullName>
+                    <default>false</default>
+                    <label>Area 1</label>
+                </value>
+                <value>
+                    <fullName>Area 2</fullName>
+                    <default>false</default>
+                    <label>Area 2</label>
+                </value>
+                <value>
+                    <fullName>Area 3</fullName>
+                    <default>false</default>
+                    <label>Area 3</label>
+                </value>
+                <value>
+                    <fullName>Worldwide</fullName>
+                    <default>false</default>
+                    <label>Worldwide</label>
+                </value>
+            </valueSetDefinition>
+        </valueSet>
     </fields>
     <fields>
         <fullName>IsFreeShipping__c</fullName>
         <externalId>false</externalId>
         <label>IsFreeShipping</label>
-        <picklist>
-            <picklistValues>
-                <fullName>Yes</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>No</fullName>
-                <default>false</default>
-            </picklistValues>
-            <sorted>false</sorted>
-        </picklist>
+        <required>false</required>
         <trackTrending>false</trackTrending>
         <type>Picklist</type>
+        <valueSet>
+            <valueSetDefinition>
+                <sorted>false</sorted>
+                <value>
+                    <fullName>Yes</fullName>
+                    <default>false</default>
+                    <label>Yes</label>
+                </value>
+                <value>
+                    <fullName>No</fullName>
+                    <default>false</default>
+                    <label>No</label>
+                </value>
+            </valueSetDefinition>
+        </valueSet>
     </fields>
     <fields>
         <fullName>IsPreSale__c</fullName>
         <externalId>false</externalId>
         <label>IsPreSale</label>
-        <picklist>
-            <picklistValues>
-                <fullName>Yes</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>No</fullName>
-                <default>false</default>
-            </picklistValues>
-            <sorted>false</sorted>
-        </picklist>
+        <required>false</required>
         <trackTrending>false</trackTrending>
         <type>Picklist</type>
+        <valueSet>
+            <valueSetDefinition>
+                <sorted>false</sorted>
+                <value>
+                    <fullName>Yes</fullName>
+                    <default>false</default>
+                    <label>Yes</label>
+                </value>
+                <value>
+                    <fullName>No</fullName>
+                    <default>false</default>
+                    <label>No</label>
+                </value>
+            </valueSetDefinition>
+        </valueSet>
     </fields>
     <fields>
         <fullName>IsTriable__c</fullName>
         <externalId>false</externalId>
         <label>Is Triable</label>
-        <picklist>
-            <picklistValues>
-                <fullName>No</fullName>
-                <default>true</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Yes</fullName>
-                <default>false</default>
-            </picklistValues>
-            <sorted>false</sorted>
-        </picklist>
+        <required>false</required>
         <trackTrending>false</trackTrending>
         <type>Picklist</type>
+        <valueSet>
+            <valueSetDefinition>
+                <sorted>false</sorted>
+                <value>
+                    <fullName>No</fullName>
+                    <default>true</default>
+                    <label>No</label>
+                </value>
+                <value>
+                    <fullName>Yes</fullName>
+                    <default>false</default>
+                    <label>Yes</label>
+                </value>
+            </valueSetDefinition>
+        </valueSet>
     </fields>
     <fields>
         <fullName>Product_Number__c</fullName>
@@ -363,50 +412,63 @@
         <fullName>Region__c</fullName>
         <externalId>false</externalId>
         <label>Region</label>
-        <picklist>
-            <picklistValues>
-                <fullName>Africa &amp; Middle East</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Americas</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Asia &amp; Pacific</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>China &amp; North Asia</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Europe</fullName>
-                <default>false</default>
-            </picklistValues>
-            <sorted>false</sorted>
-        </picklist>
+        <required>false</required>
         <trackTrending>false</trackTrending>
         <type>Picklist</type>
+        <valueSet>
+            <valueSetDefinition>
+                <sorted>false</sorted>
+                <value>
+                    <fullName>Africa &amp; Middle East</fullName>
+                    <default>false</default>
+                    <label>Africa &amp; Middle East</label>
+                </value>
+                <value>
+                    <fullName>Americas</fullName>
+                    <default>false</default>
+                    <label>Americas</label>
+                </value>
+                <value>
+                    <fullName>Asia &amp; Pacific</fullName>
+                    <default>false</default>
+                    <label>Asia &amp; Pacific</label>
+                </value>
+                <value>
+                    <fullName>China &amp; North Asia</fullName>
+                    <default>false</default>
+                    <label>China &amp; North Asia</label>
+                </value>
+                <value>
+                    <fullName>Europe</fullName>
+                    <default>false</default>
+                    <label>Europe</label>
+                </value>
+            </valueSetDefinition>
+        </valueSet>
     </fields>
     <fields>
         <fullName>UIDisplay__c</fullName>
         <description>YES if the Rate Plan is displayed in the GDP portal</description>
         <externalId>false</externalId>
         <label>UI Display</label>
-        <picklist>
-            <picklistValues>
-                <fullName>YES</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>NO</fullName>
-                <default>false</default>
-            </picklistValues>
-            <sorted>false</sorted>
-        </picklist>
+        <required>false</required>
         <trackTrending>false</trackTrending>
         <type>Picklist</type>
+        <valueSet>
+            <valueSetDefinition>
+                <sorted>false</sorted>
+                <value>
+                    <fullName>YES</fullName>
+                    <default>false</default>
+                    <label>YES</label>
+                </value>
+                <value>
+                    <fullName>NO</fullName>
+                    <default>false</default>
+                    <label>NO</label>
+                </value>
+            </valueSetDefinition>
+        </valueSet>
     </fields>
     <fields>
         <fullName>ZProduct_Deleted__c</fullName>
@@ -569,6 +631,23 @@
         <language>en_US</language>
     </listViews>
     <listViews>
+        <fullName>EBC</fullName>
+        <columns>NAME</columns>
+        <columns>zqu__ZProduct__c</columns>
+        <columns>UIDisplay__c</columns>
+        <columns>ZProduct_EffectiveEndDate__c</columns>
+        <columns>EBC_Cost_Per_Email__c</columns>
+        <columns>EBC_Email_Credit_Current_Offering__c</columns>
+        <filterScope>Everything</filterScope>
+        <filters>
+            <field>zqu__ZProduct__c</field>
+            <operation>contains</operation>
+            <value>eBroadcast for</value>
+        </filters>
+        <label>EBC</label>
+        <language>en_US</language>
+    </listViews>
+    <listViews>
         <fullName>GSS</fullName>
         <columns>NAME</columns>
         <columns>zqu__ZProduct__c</columns>
@@ -699,6 +778,7 @@
         <lookupDialogsAdditionalFields>zqu__ZProduct__c</lookupDialogsAdditionalFields>
     </searchLayouts>
     <sharingModel>ControlledByParent</sharingModel>
+    <visibility>Public</visibility>
     <webLinks>
         <fullName>Manage_File_Description</fullName>
         <availability>online</availability>

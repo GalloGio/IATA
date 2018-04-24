@@ -21,10 +21,6 @@
         <type>Default</type>
     </actionOverrides>
     <actionOverrides>
-        <actionName>Follow</actionName>
-        <type>Default</type>
-    </actionOverrides>
-    <actionOverrides>
         <actionName>List</actionName>
         <type>Default</type>
     </actionOverrides>
@@ -50,6 +46,7 @@
     <description>Object is used to store agency Authorization such as BSPLink authorization</description>
     <enableActivities>false</enableActivities>
     <enableBulkApi>true</enableBulkApi>
+    <enableChangeDataCapture>false</enableChangeDataCapture>
     <enableFeeds>false</enableFeeds>
     <enableHistory>true</enableHistory>
     <enableReports>true</enableReports>
@@ -60,26 +57,31 @@
         <fullName>ANG_FormOfPayment_ID__c</fullName>
         <externalId>false</externalId>
         <label>Form of Payment ID</label>
-        <picklist>
-            <picklistValues>
-                <fullName>CC</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>CA</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>EP</fullName>
-                <default>false</default>
-            </picklistValues>
-            <restrictedPicklist>true</restrictedPicklist>
-            <sorted>false</sorted>
-        </picklist>
         <required>false</required>
         <trackHistory>false</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Picklist</type>
+        <valueSet>
+            <restricted>true</restricted>
+            <valueSetDefinition>
+                <sorted>false</sorted>
+                <value>
+                    <fullName>CC</fullName>
+                    <default>false</default>
+                    <label>CC</label>
+                </value>
+                <value>
+                    <fullName>CA</fullName>
+                    <default>false</default>
+                    <label>CA</label>
+                </value>
+                <value>
+                    <fullName>EP</fullName>
+                    <default>false</default>
+                    <label>EP</label>
+                </value>
+            </valueSetDefinition>
+        </valueSet>
     </fields>
     <fields>
         <fullName>Account__c</fullName>
@@ -199,34 +201,41 @@ IF(ISBLANK(Email_Used_for_BSP_Creation__c),0,100),2)</formula>
         <fullName>Status__c</fullName>
         <externalId>false</externalId>
         <label>Status</label>
-        <picklist>
-            <picklistValues>
-                <fullName>Not set</fullName>
-                <default>true</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Active</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Non-Active</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Deactivation in process</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Not Authorized</fullName>
-                <default>false</default>
-            </picklistValues>
-            <restrictedPicklist>true</restrictedPicklist>
-            <sorted>false</sorted>
-        </picklist>
         <required>false</required>
         <trackHistory>true</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Picklist</type>
+        <valueSet>
+            <restricted>true</restricted>
+            <valueSetDefinition>
+                <sorted>false</sorted>
+                <value>
+                    <fullName>Not set</fullName>
+                    <default>true</default>
+                    <label>Not set</label>
+                </value>
+                <value>
+                    <fullName>Active</fullName>
+                    <default>false</default>
+                    <label>Active</label>
+                </value>
+                <value>
+                    <fullName>Non-Active</fullName>
+                    <default>false</default>
+                    <label>Non-Active</label>
+                </value>
+                <value>
+                    <fullName>Deactivation in process</fullName>
+                    <default>false</default>
+                    <label>Deactivation in process</label>
+                </value>
+                <value>
+                    <fullName>Not Authorized</fullName>
+                    <default>false</default>
+                    <label>Not Authorized</label>
+                </value>
+            </valueSetDefinition>
+        </valueSet>
     </fields>
     <fields>
         <fullName>Unique_Identifier__c</fullName>
@@ -337,6 +346,7 @@ ISPICKVAL(Account__r.Is_PCI_compliant__c ,&apos;No&apos;)
 )</errorConditionFormula>
         <errorMessage>The Form of payment CC cannot be active if the Account &apos;Is PCI Compliant&apos; is set to false</errorMessage>
     </validationRules>
+    <visibility>Public</visibility>
     <webLinks>
         <fullName>New_Agency_Authorization</fullName>
         <availability>online</availability>

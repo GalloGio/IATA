@@ -43,6 +43,10 @@
                 <behavior>Edit</behavior>
                 <field>Mass_Purchase_exp__c</field>
             </layoutItems>
+            <layoutItems>
+                <behavior>Readonly</behavior>
+                <field>ISO_Region__c</field>
+            </layoutItems>
         </layoutColumns>
         <layoutColumns>
             <layoutItems>

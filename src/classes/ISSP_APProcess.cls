@@ -81,6 +81,17 @@ public without sharing class ISSP_APProcess {
     public GST_Information__c newGSTInfo{get;set;}
     public Boolean allGSTFieldsFilled{get;set;}
 
+    public Boolean getIsNewCountryProcess() {
+        try {
+            String value = ISSP_CS__c.getValues('ISSP_APProcess_New_Countries').Value__c;
+            if (value=='Default') return true;
+            return value.contains(apcountryisocode);
+        } catch (Exception e) {
+            System.debug(e.getMessage());
+            return false;
+        }
+    }
+    
     public ISSP_APProcess(){        
         //Set the Variables default values
         isNewCase = true;
@@ -588,6 +599,11 @@ public without sharing class ISSP_APProcess {
         } else {
             newCase.Reason1__c = strChangeType;
             newCase.Subject='Airline Participation - ' + strOperationType + ' - '+ strChangeType + ' - ' + newCase.Country_concerned_by_the_query__c;
+        }
+        if (strOperationType=='BSP') {
+            newCase.Subject += ' - ' + hqAccount.IATACode__c + '/' + hqAccount.Airline_designator__c;
+        } else if (strOperationType.startsWith('CASS')) {
+            newCase.Subject += ' - ' + hqAccount.Airline_Prefix__c + '/' + hqAccount.Airline_designator__c;
         }
        
         newCase.Verification__c = strOperationType;  //Store the type of Joining application, for later use in indentifying Duplicate application for same AL + Country 

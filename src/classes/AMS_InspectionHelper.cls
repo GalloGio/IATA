@@ -148,8 +148,8 @@ public class AMS_InspectionHelper {
     public static void setRecertExpiryDateOnAccount(Map<Id, AMS_Inspection__c> oldValues, Map<Id, AMS_Inspection__c> newValues)
     {
         Map<Id, AMS_Inspection__c> statusCodeChanged = AMS_InspectionHelper.findAMSInspectionsWhereStatusCodeChangedToZero(oldValues, newValues);
-
-        List<Account> accountsToProcess = [select id, Expiry_Date__c, Location_Class__c from Account where id in :statusCodeChanged.keySet()];
+		Id agencyRT = Schema.SObjectType.Account.getRecordTypeInfosByName().get('Agency').getRecordTypeId();
+        List<Account> accountsToProcess = [select id, Expiry_Date__c, Location_Class__c, Status__c, Reason__c, RecordTypeId from Account where id in :statusCodeChanged.keySet()];
 
         if(accountsToProcess.isEmpty())
             return;
@@ -160,6 +160,13 @@ public class AMS_InspectionHelper {
 
             if (acc.Location_Class__c == 'G' || acc.Location_Class__c == 'X') 
                 accountIdsToCheckAssignments.add(acc.Id);
+				
+			/*** AMSU-128 ***/
+            if(acc.Location_Class__c == 'M' && acc.RecordTypeId == agencyRT) {
+                acc.Status__c = 'Terminated';
+                acc.Reason__c = '0-Terminated';
+                acc.Expiry_Date__c = Date.today();
+            }
         }
 
         update accountsToProcess;

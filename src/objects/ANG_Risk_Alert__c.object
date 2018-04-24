@@ -21,10 +21,6 @@
         <type>Default</type>
     </actionOverrides>
     <actionOverrides>
-        <actionName>Follow</actionName>
-        <type>Default</type>
-    </actionOverrides>
-    <actionOverrides>
         <actionName>List</actionName>
         <type>Default</type>
     </actionOverrides>
@@ -49,6 +45,7 @@
     <deploymentStatus>Deployed</deploymentStatus>
     <enableActivities>false</enableActivities>
     <enableBulkApi>true</enableBulkApi>
+    <enableChangeDataCapture>false</enableChangeDataCapture>
     <enableFeeds>false</enableFeeds>
     <enableHistory>false</enableHistory>
     <enableReports>true</enableReports>
@@ -74,25 +71,30 @@
         <description>Information if the agency was below the threshold and it&apos;s now over it, if it&apos;s in the same leve or if is downgrading.</description>
         <externalId>false</externalId>
         <label>Direction</label>
-        <picklist>
-            <picklistValues>
-                <fullName>UP</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>DOWN</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>SAME</fullName>
-                <default>false</default>
-            </picklistValues>
-            <restrictedPicklist>true</restrictedPicklist>
-            <sorted>false</sorted>
-        </picklist>
         <required>false</required>
         <trackTrending>false</trackTrending>
         <type>Picklist</type>
+        <valueSet>
+            <restricted>true</restricted>
+            <valueSetDefinition>
+                <sorted>false</sorted>
+                <value>
+                    <fullName>UP</fullName>
+                    <default>false</default>
+                    <label>UP</label>
+                </value>
+                <value>
+                    <fullName>DOWN</fullName>
+                    <default>false</default>
+                    <label>DOWN</label>
+                </value>
+                <value>
+                    <fullName>SAME</fullName>
+                    <default>false</default>
+                    <label>SAME</label>
+                </value>
+            </valueSetDefinition>
+        </valueSet>
     </fields>
     <fields>
         <fullName>ANG_EventId__c</fullName>
@@ -148,6 +150,16 @@
         <type>Checkbox</type>
     </fields>
     <label>Risk Alert</label>
+    <listViews>
+        <fullName>All</fullName>
+        <columns>NAME</columns>
+        <columns>ANG_Account__c</columns>
+        <columns>ANG_Direction__c</columns>
+        <columns>ANG_Threshold_Level__c</columns>
+        <filterScope>Everything</filterScope>
+        <label>All</label>
+        <language>en_US</language>
+    </listViews>
     <nameField>
         <displayFormat>RA-{00000000}</displayFormat>
         <label>Risk Alert</label>
@@ -158,7 +170,7 @@
         <fullName>Risk_Alert</fullName>
         <active>true</active>
         <description>Used to receive RHC information alerts from the external system</description>
-        <label>Risk Alert</label>
+        <label>Risk Alert RHC</label>
         <picklistValues>
             <picklist>ANG_Direction__c</picklist>
             <values>
@@ -177,4 +189,5 @@
     </recordTypes>
     <searchLayouts/>
     <sharingModel>ControlledByParent</sharingModel>
+    <visibility>Public</visibility>
 </CustomObject>
