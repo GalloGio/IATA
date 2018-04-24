@@ -31,35 +31,31 @@
    	
   	function addListeners() {
 
-  		if("{!sRefererCommunity}"=="iec"){
-	  		//billingstreet listener to show characters limit warning
-	  		$j('#billingcity input').on('keyup', function() {
-	  			var value = $j('#billingcity input').val();
-				if(value.length > 20) {
-					var elem = $('#addressStreetMSG').detach();
-					elem.insertBefore($j('#billingcity input'));
-					$('#addressStreetMSG .formErrorContent').text('{!$Label.IEC_CityLimitCharacters}');						
-					$('#addressStreetMSG').show();
-				} else if($('#addressStreetMSG').css('display') != 'none') {
-					$('#addressStreetMSG').hide();
-				}
-	  		});
+  		//billingcity listener to show characters limit warning
+  		$j('#billingcity input').on('keyup', function() {
+  			var value = $j('#billingcity input').val();
+			if(value.length >= 20) {
+				var elem = $('#addressStreetMSG').detach();
+				elem.insertBefore($j('#billingcity input'));
+				$('#addressStreetMSG .formErrorContent').text('{!$Label.IEC_CityLimitCharacters}');						
+				$('#addressStreetMSG').show();
+			} else if($('#addressStreetMSG').css('display') != 'none') {
+				$('#addressStreetMSG').hide();
+			}
+  		});
 
-			//shippingstreet listener to show characters limit warning
-	  		$j('#shippingcity input').on('keyup', function() {
-	  			var value = $j('#shippingcity input').val();
-				if(value.length > 20) {
-					var elem = $('#addressStreetMSG').detach();
-					elem.insertBefore($j('#shippingcity input'));
-					$('#addressStreetMSG .formErrorContent').text('{!$Label.IEC_CityLimitCharacters}');						
-					$('#addressStreetMSG').show();
-				} else if($('#addressStreetMSG').css('display') != 'none') {
-					$('#addressStreetMSG').hide();
-				}
-	  		});
-
-  		}
-
+		//shippingcity listener to show characters limit warning
+  		$j('#shippingcity input').on('keyup', function() {
+  			var value = $j('#shippingcity input').val();
+			if(value.length >= 20) {
+				var elem = $('#addressStreetMSG').detach();
+				elem.insertBefore($j('#shippingcity input'));
+				$('#addressStreetMSG .formErrorContent').text('{!$Label.IEC_CityLimitCharacters}');						
+				$('#addressStreetMSG').show();
+			} else if($('#addressStreetMSG').css('display') != 'none') {
+				$('#addressStreetMSG').hide();
+			}
+  		});
 
 		$j('#billingstreet textarea').on('keyup', function() {
 			var value = $j('#billingstreet textarea').val();
@@ -125,8 +121,10 @@
 	function changeFieldsMaxlength(){
 		$j('#billingstreet textarea').prop("maxlength","70");
 		$j('#shippingstreet textarea').prop("maxlength","70");
-		$j('#billingcity input').prop("maxlength","20");
-		$j('#shippingcity input').prop("maxlength","20");
+		if("{!sRefererCommunity}"=="iec"){
+			$j('#billingcity input').prop("maxlength","20");
+			$j('#shippingcity input').prop("maxlength","20");
+		}
 	}
 	
 	function modifyUIForm() {
