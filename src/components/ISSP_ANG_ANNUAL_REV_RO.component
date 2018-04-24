@@ -1,0 +1,43 @@
+<apex:component controller="ANG_AnnualRevRo">
+    <apex:attribute name="helperParam" type="ANG_AnnualRevRoHelper" description="Helper" assignTo="{! helper}" />
+
+    <style>
+        .workArea {
+            padding-right: 20px;
+        }
+    </style>
+
+    <div styleClass="workArea">
+
+        <apex:pageBlockSection columns="1" collapsible="false" id="accreditationModelSection">
+            <apex:facet name="header">
+                <apex:outputpanel>Agency Legal Details</apex:outputpanel>
+            </apex:facet>
+
+            <apex:pageBlockSectionItem>
+                <apex:outputLabel value="{!$ObjectType.AMS_Pax_Accreditation_Form__c.fields.Local_Legally_Registered_Name__c.Label}" />
+                <apex:outputField value="{!helper.account.Name}" />
+            </apex:pageBlockSectionItem>
+
+            <apex:pageBlockSectionItem>
+                <apex:outputLabel value="{!$ObjectType.AMS_Pax_Accreditation_Form__c.fields.Trade_Name__c.Label}" />
+                <apex:outputField value="{!helper.account.TradeName__c}" />
+            </apex:pageBlockSectionItem>
+
+
+            <apex:facet name="header">
+                <apex:outputpanel>
+                    <apex:outputpanel>Agency Location</apex:outputpanel>
+                </apex:outputpanel>
+            </apex:facet>
+
+            <apex:facet name="header">
+                <apex:outputpanel>
+                    <apex:outputpanel>Agency Ownership / Shareholding and Legal Status</apex:outputpanel>
+                </apex:outputpanel>
+            </apex:facet>
+
+
+        </apex:pageBlockSection>
+    </div>
+</apex:component>

@@ -269,6 +269,10 @@
                         </div>
                         <div class="panel-body" id="body-enquiries">
                             <apex:form id="step1Form" styleClass="form-horizontal">
+
+                                <apex:actionFunction name="loadIataCode" action="{!loadIataCode}" rerender="workArea" />
+                                <apex:inputHidden id="currentIataCode" value="{!currentIataCode}"/>
+
                                 <apex:pageBlock id="step1Block" mode="edit">
                                     <!--Step Progress bar start -->
 
@@ -293,18 +297,41 @@
                                             <!-- IATA CODES TREE -->
                                             <!-- --------------- -->
                                             <div>
-                                                <div id="frmt">
-                                                </div>
+                                                <apex:outputPanel id="treeArea">
+                                                    <div id="frmt">
+                                                    </div>
+
+                                                    <script>
+                                                        $('#frmt').jstree(JSON.parse('{!tree}'));
+                                                    </script>
+
+                                                </apex:outputPanel>
                                             </div>
+
 
                                             <!-- --------- -->
                                             <!-- WORK AREA -->
                                             <!-- --------- -->
                                             <div>
                                                 <div>
-                                                    <apex:outputText value="{!$Label.ISSP_ANG_ANNUAL_REV_WORK_AREA_TITLE}"></apex:outputText>
-                                                    <div class="panel panel-default">
-                                                    </div>
+                                                    <apex:outputPanel id="workArea">
+                                                        <apex:outputText value="{!$Label.ISSP_ANG_ANNUAL_REV_WORK_AREA_TITLE}"></apex:outputText>
+                                                        <div class="panel panel-default">
+                                                            <c:ISSP_ANG_ANNUAL_REV_RO helperParam="{! helper}"/>
+
+                                                            <apex:outputPanel>
+                                                                <apex:commandButton styleclass="btn btn-default"
+                                                                    action="{!confirmDetails}" onclick=""
+                                                                    value="Confirm details are correct" reRender="treeArea"/>
+                                                                <apex:commandButton styleclass="btn btn-default"
+                                                                    action="{!updateDetails}" onclick=""
+                                                                    value="Update details"/>
+                                                            </apex:outputPanel>
+
+                                                        </div>
+                                                    </apex:outputPanel>
+
+
                                                 </div>
                                             </div>
                                         </div>
@@ -405,12 +432,16 @@
     </body>
 
     <script>
-        $('#frmt').jstree(JSON.parse('{!tree}'));
+//        $('#frmt').jstree(JSON.parse('{!tree}'));
 
         $('#frmt').on("changed.jstree", function (e, data) {
 
             if(data.selected.length == 1) {
-                console.log(data.instance.get_node(data.selected[0]).text);
+                var iataCode = data.instance.get_node(data.selected[0]).text;
+
+                $('[id$=currentIataCode]').val(iataCode);
+
+                loadIataCode();
             }
 
         });

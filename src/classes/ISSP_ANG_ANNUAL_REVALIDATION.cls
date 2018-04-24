@@ -11,9 +11,15 @@ public with sharing class ISSP_ANG_ANNUAL_REVALIDATION {
 	public Set<String> iataCodesOk {get; set;}
 	public Set<String> iataCodesNotOk {get; set;}
 	public Map<String, AMS_Pax_Accreditation_Form__c> annualRevalidationsMap {get; set;}
+	public Map<String, Account> accountsMap {get; set;}
+	public String jsonTree {get; set;}
+	public Set<Id> parents {get; set;}
+	public Set<Id> childs {get; set;}
+	public Account headEntity {get; set;}
+	List<Account> childsAccounts {get; set;}
 
 	public String tree {get {
-		return generateMenu();
+		return jsonTree;
 	} set;}
 
 	public static String DEFAULT_ICON = 'glyphicon glyphicon-refresh text-primary';
@@ -25,6 +31,10 @@ public with sharing class ISSP_ANG_ANNUAL_REVALIDATION {
 	public static JsonValue SELECTED_TRUE = new Selected(true);
 	public static JsonValue OPENED_TRUE = new Opened(true);
 	public static JsonValue MULTIPLE_FALSE = new Multiple(false);
+	public static JsonValue SELECTED_OPENED = new SelectedOpened(true, true);
+	public Account currentAccount {get; set;}
+
+	public ANG_AnnualRevRoHelper helper {get {return new ANG_AnnualRevRoHelper(currentAccount);} set;}
 
 	public static Set<String> statusSet = new Set<String> {
 		Ams_Utils.ACC_S9_APPROVED,
@@ -35,7 +45,7 @@ public with sharing class ISSP_ANG_ANNUAL_REVALIDATION {
     };
 
 	public String caseId {get; set;}
-
+	public String currentIataCode {get; set;}
 
 	//
 	// INNER CLASSES
@@ -96,6 +106,16 @@ public with sharing class ISSP_ANG_ANNUAL_REVALIDATION {
 		}
 	}
 
+	public class SelectedOpened implements JsonValue {
+		Boolean selected {get; set;}
+		Boolean opened {get; set;}
+
+		public SelectedOpened (Boolean selected, Boolean opened) {
+			this.selected = selected;
+			this.opened = opened;
+		}
+	}
+
 	public class Multiple implements JsonValue {
 		Boolean multiple {get; set;}
 
@@ -109,7 +129,9 @@ public with sharing class ISSP_ANG_ANNUAL_REVALIDATION {
 
 	public ISSP_ANG_ANNUAL_REVALIDATION() {
 
-		Id caseId  = ApexPages.currentPage().getParameters().get('caseId');
+		accountsMap = new Map<String, Account>();
+
+		String caseId  = ApexPages.currentPage().getParameters().get('caseId');
 
 		if (caseId != null && caseId != '') {
 			newCase = fetchCase(caseid);
@@ -121,6 +143,10 @@ public with sharing class ISSP_ANG_ANNUAL_REVALIDATION {
 		}
 
 		getContact();
+
+		setParentsAndChilds();
+
+		setAccounts();
 
 		setAnnualRevalidationsMap();
 
@@ -143,10 +169,47 @@ public with sharing class ISSP_ANG_ANNUAL_REVALIDATION {
         	isStep2 = true;
         }
 
+		jsonTree = generateMenu();
+
 	}
 
 	private String generateMenu() {
 
+		currentAccount = new Account();
+
+		System.debug('alex parents : ' + parents);
+		System.debug('alex childs : ' + childs);
+
+		List<AssociateEntity> children = new List<AssociateEntity>();
+
+		for(Account c : childsAccounts) {
+			children.add(new AssociateEntity(c.IATACode__c, getIcon(c.IATACode__c), SELECTED_FALSE));
+		}
+
+		JSONGenerator gen = JSON.createGenerator(true);
+
+		List<HeadEntity> hier = new List<HeadEntity>();
+
+		HeadEntity he = new HeadEntity(headEntity.IATACode__c, getIcon(headEntity.IATACode__c), children, SELECTED_OPENED);
+
+		hier.add(he);
+
+		Data data = new data(hier, MULTIPLE_FALSE);
+
+		gen.writeStartObject();
+		gen.writeObjectField('core', data);
+		gen.writeEndObject();
+
+		String json = gen.getAsString();
+
+		json = json.replaceAll('\n', '');
+
+		System.debug('alex : ' + json);
+
+		return json;
+	}
+
+	private void setParentsAndChilds() {
 		Set<Id> aux = new Set<Id>();
 
 		aux.add(con.accountId);
@@ -159,8 +222,8 @@ public with sharing class ISSP_ANG_ANNUAL_REVALIDATION {
 			accountsList.addAll(h.get(key));
         }
 
-		Set<Id> parents = new Set<Id>();
-		Set<Id> childs = new Set<Id>();
+		parents = new Set<Id>();
+		childs = new Set<Id>();
 
 		for(AMS_Agencies_relationhip__c r : accountsList) {
 			childs.add(r.Child_Account__c);
@@ -170,67 +233,32 @@ public with sharing class ISSP_ANG_ANNUAL_REVALIDATION {
 				parents.add(r.Parent_Account__c);
 			}
 		}
+	}
 
-		System.debug('alex parents : ' + parents);
-		System.debug('alex childs : ' + childs);
+	private void setAccounts() {
 
-		List<Account> al = [Select Id,
-								   IATACode__c
-							  From Account
-							 Where Id in :parents
-							   And RecordTypeId = :AMS_Utils.RECTYPE_IATAAGENCY
-							   And Status__c in :statusSet
-							   And Location_Type__c = :AMS_Utils.HE
-							   And Sector__c = :Ams_Utils.SECTOR_PASSENGER];
+		this.headEntity = new Account();
+
+		List<Account> al = getAccounts(parents, AMS_Utils.RECTYPE_IATAAGENCY, statusSet, AMS_Utils.HE, Ams_Utils.SECTOR_PASSENGER);
 
 		if(al.size() != 0) {
-			Account headEntity = al[0];
+			this.headEntity = al[0];
 
-			List<Account> childsAccounts = [Select Id,
-								   				   IATACode__c
-							  				  From Account
-							 				 Where Id in :childs
-							   				   And RecordTypeId = :AMS_Utils.RECTYPE_IATAAGENCY
-							   				   And Status__c in :statusSet
-							   				   And Location_Type__c = :AMS_Utils.AE
-							   				   And Sector__c = :Ams_Utils.SECTOR_PASSENGER];
+			this.currentAccount = this.headEntity;
 
+			this.accountsMap.put(headEntity.IATACode__c, headEntity);
 
-			List<AssociateEntity> children = new List<AssociateEntity>();
+			this.childsAccounts = getAccounts(childs, AMS_Utils.RECTYPE_IATAAGENCY, statusSet, AMS_Utils.AE, Ams_Utils.SECTOR_PASSENGER);
 
 			for(Account c : childsAccounts) {
-				children.add(new AssociateEntity(c.IATACode__c, getIcon(c.IATACode__c), SELECTED_FALSE));
+				this.accountsMap.put(c.IATACode__c, c);
 			}
-
-			JSONGenerator gen = JSON.createGenerator(true);
-
-			List<HeadEntity> hier = new List<HeadEntity>();
-
-			HeadEntity he = new HeadEntity(headEntity.IATACode__c, getIcon(headEntity.IATACode__c), children, OPENED_TRUE);
-
-			hier.add(he);
-
-			Data data = new data(hier, MULTIPLE_FALSE);
-
-			gen.writeStartObject();
-			gen.writeObjectField('core', data);
-			gen.writeEndObject();
-
-			String json = gen.getAsString();
-
-			json = json.replaceAll('\n', '');
-
-			System.debug('alex : ' + json);
-
-			return json;
-
 		} else {
 			//
 			// Check with Adrian what to do in this case.
 			//
 		}
 
-		return '{}';
 	}
 
 	public void setAnnualRevalidationsMap() {
@@ -250,7 +278,7 @@ public with sharing class ISSP_ANG_ANNUAL_REVALIDATION {
                     Operation_Type__c, Has_your_firm_ever_held_a_Cargo_Agency__c, Date_issued__c, Name_under_which_it_was_issued__c, Reason_for_cancellation__c, Is_your_firm_an_approved_IATA_Passenger__c, IATA_Agents_Numeric_Code__c,
                     Does_the_air_transportation_which_your__c, State_the_percentage_of_your_gross__c, Does_your_firm_sell_air_cargo__c, What_percentage_of_your_sales__c, Is_your_firm_a_General_Sales_Agent_GSA__c, List_carriers__c,
                     Been_found_guilty_of_infringements__c, Been_a_sole_proprietor__c, Been_director_or_had_a_financial__c, Agents_Numeric_Code_of_your_Head_Office__c, Been_involved_in_a_bankruptcy__c, Does_your_firm_now_share_or_intend__c,
-                    If_yes_are_you_fully_and_legally__c, Is_there_any_relationship__c, Is_your_firm_acting_as_agent_for_surface__c, Is_your_firm_affiliated_directly__c, provide_details__c, Rail__c, Steamship__c, Trucking__c,
+                    If_yes_are_you_fully_and_legally__c, Is_there_any_relationship__c, Is_your_firm_acting_as_agent_for_surface__c, Is_your_firm_affiliated_directly__c, Provide_details__c, Rail__c, Steamship__c, Trucking__c,
                     Were_all_IATA_Members_fully_repaid__c, Has_your_form_ever_held_CASS_Assoc_etc__c, CASS_Assoc_Code__c, CASS_Date_issued__c, CASS_Name_under_which_it_was_issued__c, State_full_name_of_such_Agent__c, Is_your_firm_insured_to_cover__c,
                     Explain_fully_stating_name__c, Does_your_firm_operate_a_cargo_cartage__c, CASS_Reason_for_cancellation__c, Does_your_firm_use_its_own_vehicles__c, Is_your_firm_a_member_of_a_national__c, Give_the_name_of_the_association_s__c, IATA_Cargo_Code__c, Type_of_Operation__c,
                     ISSP_AMS_Amount_of_credit_requested__c, ISSP_AMS_Bank_Address_1__c, ISSP_AMS_Bank_Account_Number_1__c, ISSP_AMS_Bank_Address_2__c, ISSP_AMS_Bank_Account_Number_2__c, ISSP_AMS_Bank_Address_3__c, ISSP_AMS_Bank_Account_Number_3__c, Total_Charges_Specialized_Traffic__c, Total_Number_of_Consignments__c,
@@ -274,6 +302,44 @@ public with sharing class ISSP_ANG_ANNUAL_REVALIDATION {
 				annualRevalidationsMap.put(form.HO_Account__r.IATACode__c, form);
 			}
         }
+	}
+
+
+	public PageReference loadIataCode() {
+		System.debug('alex loadIataCode : ' + currentIataCode);
+
+		this.currentAccount = accountsMap.get(currentIataCode);
+
+		return null;
+	}
+
+	public PageReference confirmDetails() {
+		System.debug('alex confirmDetails : ' + currentIataCode);
+
+		System.debug('alex before this.oscar.IATA_Codes_OK__c : ' + this.oscar.IATA_Codes_OK__c);
+
+		if(this.oscar.IATA_Codes_OK__c == null || this.oscar.IATA_Codes_OK__c == '') {
+			this.oscar.IATA_Codes_OK__c = currentIataCode;
+		} else {
+			this.oscar.IATA_Codes_OK__c += ',' + currentIataCode;
+		}
+
+		System.debug('alex this.oscar.IATA_Codes_OK__c : ' + this.oscar.IATA_Codes_OK__c);
+
+		update oscar;
+
+		setIataCodesOkNotOk(oscar);
+
+		jsonTree = generateMenu();
+
+		return null;
+	}
+
+	public PageReference updateDetails() {
+		System.debug('alex updateDetails : ' + currentIataCode);
+
+
+		return null;
 	}
 
     public PageReference goToStep1() {
@@ -328,10 +394,12 @@ public with sharing class ISSP_ANG_ANNUAL_REVALIDATION {
         con = DAL_ISSP.getContact(user.ContactId);
     }
 
-	public void setIataCodesOkNotOk(AMS_OSCAR__c oscar) {
+	private void setIataCodesOkNotOk(AMS_OSCAR__c oscar) {
 
 		iataCodesOk = new Set<String>();
 		iataCodesNotOk = new Set<String>();
+
+		if(oscar.IATA_Codes_OK__c == null) oscar.IATA_Codes_OK__c = '';
 
 		String[] aux = oscar.IATA_Codes_OK__c.split(',');
 
@@ -339,11 +407,27 @@ public with sharing class ISSP_ANG_ANNUAL_REVALIDATION {
 			iataCodesOk.add(iataCode);
 		}
 
+		if(oscar.IATA_Codes_NOK__c == null) oscar.IATA_Codes_NOK__c = '';
+
 		aux = oscar.IATA_Codes_NOK__c.split(',');
 
 		for (String iataCode : aux) {
 			iataCodesNotOk.add(iataCode);
 		}
+	}
+
+	private static List<Account> getAccounts(Set<Id> accountIds, String recordType, Set<String> statusSet, String locationType, String sector) {
+		return [Select Id,
+					   Name,
+					   TradeName__c,
+					   IATACode__c,
+					   ANG_Accreditation_Model__c
+				  From Account
+				 Where Id in :accountIds
+				   And RecordTypeId = :recordType
+				   And Status__c in :statusSet
+				   And Location_Type__c = :locationType
+				   And Sector__c = :sector];
 	}
 
 	private String getIcon(String iataCode) {

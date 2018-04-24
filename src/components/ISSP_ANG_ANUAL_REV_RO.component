@@ -1,4 +1,4 @@
-<apex:component>
+<apex:component controller="ANG_AnnualRevRo">
 	<apex:attribute name="helperParam" type="ANG_AnnualRevRoHelper" description="Helper" assignTo="{! helper}" />
 
 	<apex:pageBlockSection columns="2" collapsible="false" id="accreditationModelSection">
@@ -7,6 +7,8 @@
 				{!$Label.ISSP_AMS_NoC_Acreditation_Type_Section_Header}
 			</apex:outputpanel>
 		</apex:facet>
+
+		<!--
 		<apex:outputPanel layout="block" style="font-weight:bold; padding:5px 10px; font-size:110%;width:100%;background-color:rgb(195,225,240)">{!$Label.ISSP_AMS_NoC_Current_Accreditation_Type}</apex:outputPanel>
 		<apex:outputPanel layout="block" style="font-weight:bold; padding:5px 10px; font-size:110%;width:100%;background-color:rgb(195,225,240)">
 			{!$Label.ISSP_AMS_NoC_Updated_Accreditation_Type}
@@ -27,6 +29,7 @@
 			<apex:inputCheckbox id="iataChangeAccType" value="{!newForm.Notify_Change_Accreditation_Type__c}" onchange="accreditationModelChanged(this)"
 			 disabled="{!!CanChangeAccreditationType}" />
 		</apex:pageBlockSectionItem>
+		-->
 	</apex:pageBlockSection>
 
 </apex:component>
