@@ -737,7 +737,7 @@ public class ams2gdp_BusinessLogic
 				, RecordTypeId = recordTypes.get('Live')
 			));*/
 			String name = arole.Unified_Owner_Name__c;
-			if(arole.Contact__r.name != null) name = arole.Contact__r.name;
+			//if(arole.Contact__r.name != null) name = arole.Contact__r.name;
 			result.add(new Agency_Owner__c(AMS_GDP_Key__c=key+'GDP'
  				, Name =  name
  				, Percent__c=arole.Percentage__c

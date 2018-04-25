@@ -71,8 +71,8 @@ public with sharing class ISSP_WS_SIS_Callout_CreateUser {
             request.IcpPassword = ISSP_WS_SIS_Callout_Common.getPass();
             request.SISMemberID = nvl(contact.Account.SIS_ID__c);
             request.FederationID = nvl(user.FederationIdentifier);
-            request.FirstName = nvl(contact.FirstName);
-            request.LastName = nvl(contact.LastName);
+            request.FirstName = ISSP_WS_SIS_Callout_Common.cleanSpecialChars(contact.FirstName);
+            request.LastName = ISSP_WS_SIS_Callout_Common.cleanSpecialChars(contact.LastName);
             request.EmailAddress = nvl(contact.Email);
             request.UserType = nvl(ISSP_WS_SIS_Callout_Common.MAP_USER_TYPES.get(contact.SIS_Contact_Type__c));
             requestString = request.toXML();

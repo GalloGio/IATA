@@ -7130,6 +7130,13 @@ and
         <value>You have reached the 70 character limit for the field.</value>
     </labels>
     <labels>
+        <fullName>IEC_CityLimitCharacters</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>IEC_CityLimitCharacters</shortDescription>
+        <value>You have reached the 20 character limit for the field.</value>
+    </labels>
+    <labels>
         <fullName>IEC_NOGPAccount</fullName>
         <language>en_US</language>
         <protected>false</protected>

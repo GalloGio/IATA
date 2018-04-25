@@ -8432,7 +8432,7 @@ IF(IFG_PreProduction__c == 1, &apos;IFG PreProduction Access&apos;,
         <defaultValue>false</defaultValue>
         <externalId>false</externalId>
         <inlineHelpText>Maintained by Governance</inlineHelpText>
-        <label>PAPGCJ Participant</label>
+        <label>PAPGJC participant</label>
         <trackHistory>false</trackHistory>
         <type>Checkbox</type>
     </fields>
