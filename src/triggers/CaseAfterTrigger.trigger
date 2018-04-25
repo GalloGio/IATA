@@ -901,6 +901,12 @@ trigger CaseAfterTrigger on Case (after delete, after insert, after undelete, af
   			}
   		}
   		/*Risk Event Management*/
+  		
+  		/* Formula FIeld Helper */
+  		if(!FormulaField_Helper.isRunningFromHelper){
+         	FormulaField_Helper.isRunningFromCAse = true;
+        	FormulaField_Helper.FillHelperFieldsFromCase(trigger.new);
+         }
 	}
 	/*Share trigger code*/
 	
