@@ -139,9 +139,7 @@ global class BatchActivateRecordsByDate implements  Database.Batchable<sObject>,
 	public static Integer dateCompare(Date startDate, Date endDate){
 		if(endDate < System.Today()) return DATE_STATUS_INACTIVE;
 		else if(startDate > System.Today()) return DATE_STATUS_IN_PROGRESS;
-		else if(startDate <= System.Today() && endDate >= System.Today()) return DATE_STATUS_ACTIVE; //conditions shouldn't be needed
-
-		return null;
+		return DATE_STATUS_ACTIVE; 
 	}
 		
 	global void finish(Database.BatchableContext BC) {
