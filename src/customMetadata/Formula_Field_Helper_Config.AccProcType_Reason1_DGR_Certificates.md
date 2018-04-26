@@ -16,7 +16,7 @@
     </values>
     <values>
         <field>Values_to_check__c</field>
-        <value xsi:type="xsd:string">Certificate DGR,DGR Certificates</value>
+        <value xsi:type="xsd:string">Certificate DGR;DGR Certificates</value>
     </values>
     <values>
         <field>result__c</field>

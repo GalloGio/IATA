@@ -16,7 +16,7 @@
     </values>
     <values>
         <field>Values_to_check__c</field>
-        <value xsi:type="xsd:string">Airline joining,Airline leaving,Airline suspension</value>
+        <value xsi:type="xsd:string">Airline joining;Airline leaving;Airline suspension</value>
     </values>
     <values>
         <field>result__c</field>

@@ -16,7 +16,7 @@
     </values>
     <values>
         <field>Values_to_check__c</field>
-        <value xsi:type="xsd:string">Cases - Africa &amp; Middle East,Cases - Americas,Cases - Asia &amp; Pacific,Cases - China &amp; North Asia,Cases - Europe,Complaint (IDFS ISS),Internal Cases (IDFS ISS)</value>
+        <value xsi:type="xsd:string">Cases - Africa &amp; Middle East;Cases - Americas;Cases - Asia &amp; Pacific;Cases - China &amp; North Asia;Cases - Europe;Complaint (IDFS ISS);Internal Cases (IDFS ISS)</value>
     </values>
     <values>
         <field>result__c</field>
