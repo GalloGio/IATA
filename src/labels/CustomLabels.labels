@@ -6835,6 +6835,13 @@ and
         <value>Your Transaction number is:</value>
     </labels>
     <labels>
+        <fullName>IEC_CityLimitCharacters</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>IEC_CityLimitCharacters</shortDescription>
+        <value>You have reached the 20 character limit for the field.</value>
+    </labels>
+    <labels>
         <fullName>IEC_CompanyName</fullName>
         <language>en_US</language>
         <protected>false</protected>

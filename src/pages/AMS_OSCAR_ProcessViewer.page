@@ -690,18 +690,12 @@ function buildFunctionCall(func, argList){
         }
         
         if("{!isPCICompliant}" == "true") {
-            var picklist = j$("select.inputElem option[value='Yes']").parent();
+            var picklist = $("select.inputElem option[value='Yes']").parent();
             
-            j$("select.inputElem option[value='Not Applicable']").remove();
-            j$("select.inputElem option[value='Yes']").remove();
-            j$("select.inputElem option[value='No']").remove();
-            j$("select.inputElem option[value='Nil CC']").remove();    
-
-            picklist.append(new Option("-- None --", ""));
-            picklist.append(new Option("Yes", "Yes"));
-            picklist.append(new Option("No", "No"));
-            picklist.append(new Option("Nil CC", "Nil CC"));           
+            $("#Is_PCI_compliant__c select.inputElem option[value='Not Applicable']").remove();
+                    
         }
+        
     }
     /*** AMSU-113 End ***/
 

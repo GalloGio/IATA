@@ -822,12 +822,19 @@
             } else if (event.data.action == 'callIframeResizeCallback') {
                 jQuery('.captchaIframe').removeAttr('height');
                 var captchaIframeHeight;
-                if (event.data.height == '' || event.data.height == null) {
+                var numb = 0;
+                if(component.get("v.captchaIframeHeight") !== undefined){
+                    var asd = component.get("v.captchaIframeHeight");
+                    numb = asd.match(/\d/g);
+                    numb = numb.join("");
+                }
+                if ((event.data.height == '' || event.data.height == null) && numb < 10)  {
                     captchaIframeHeight = "height: 0px;";
-                } else {
+                }
+                if(event.data.height.length>0){ 
                     captchaIframeHeight = "height:" + event.data.height + "px;";
                 }
-                component.set("v.captchaIframeHeight", captchaIframeHeight);
+                component.set("v.captchaIframeHeight", captchaIframeHeight); 
             }
         }, false);
     },
