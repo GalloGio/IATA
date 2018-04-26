@@ -352,10 +352,11 @@ public class AMS_OSCAR_ProcessViewerController {
             //this is a workaround to make the current value of the field the default value of the picklist
             if(currentPickValue != f.getValue() 
                 && (dependentPicklistValues.isEmpty() ||  dependentPicklistValues.contains(f.getValue()))
-                )
+                ){
 
             if(canBeDisplayed(fieldName,oscar.Process__c,f.getValue()))
                 picklistValues.add(new SelectOption(f.getValue(), f.getLabel()));
+            }
         }
         
         return picklistValues;
