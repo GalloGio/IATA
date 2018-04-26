@@ -126,10 +126,54 @@
 		0% { transform: rotate(0deg); }
 		100% { transform: rotate(360deg); }
 		}
+		
+		.warningMessage1{
+                color:red;
+                text-align: center;
+            }
+		
+		.editable{
+                background-color: lightyellow;
+                color:red;
+            }
+		
+		th.editable:before{
+                color: red;
+                font-weight: bold;
+            }
+         .editable *{
+         	color:red;
+         }
+		.tooltip {
+        position: relative;
+        display: inline-block;
+        color:#818181;
+        font-size: 11px;
+        }
 
+        .tooltip .tooltiptext {
+            visibility: hidden;
+            width: 200px;
+            background-color: #818181;
+            color: #fff;
+            text-align: center;
+            border-radius: 6px;
+            padding-top: 5px;
+            padding-right: 0px;
+            padding-bottom: 5px;
+            padding-left: 10px;
+
+            /* Position the tooltip */
+            position: absolute;
+            z-index: 1;
+        }
+
+        .tooltip:hover .tooltiptext {
+            visibility: visible;
+        }
 </style>
 
-	<apex:sectionHeader title="Staging Area" subtitle="Staging Area for Account {!accreditationObj.IATACode__c}"/>
+	<apex:sectionHeader title="Staging Area" subtitle="Staging Area for Account {!accreditationObj.HO_Account__r.IATACode__c}"/>
 	<apex:form>
 		<div Id="loaderPageBlock" style="display:none;">
 			<div class="overlay">
@@ -143,9 +187,22 @@
 		<apex:pageBlock mode="maindetail" tabStyle="AMS_Pax_Accreditation_Form__c" id="mainPageBlock">
 			<apex:pageBlockSection columns="2">
 				<apex:repeat value="{!accreditationFields}" var="field">
-					<apex:pageBlockSectionItem>
+					<apex:pageBlockSectionItem labelStyleClass="{!IF(changedFieldsSet[field] == 'BLANK','','editable')}" dataStyleClass="{!IF(changedFieldsSet[field] == 'BLANK','','editable')}">
 						<apex:outputLabel value="{!$ObjectType.AMS_Pax_Accreditation_Form__c.fields[field].Label}" />
-						<apex:outputField value="{!accreditationObj[field]}" />
+						<!--<apex:outputField styleClass="tooltip" value="{!accreditationObj[field]}">-->
+						<apex:outputPanel layout="block" styleClass="tooltip">
+							<apex:outputField styleClass="tooltip" value="{!accreditationObj[field]}" rendered="{!accountFieldsMapping[field] && changedFieldsSet[field] != 'BLANK'}"/>
+								<span class="{!IF(accountFieldsMapping[field] && changedFieldsSet[field] != "BLANK","tooltiptext","")}">
+
+								{!IF(accountFieldsMapping[field] && changedFieldsSet[field] != 'BLANK', 'Account value - ','')} 
+								{!IF(accountFieldsMapping[field] && changedFieldsSet[field] != 'BLANK', accreditationAccount[fieldsMapping[field]],'')}
+
+								</span>
+							
+							<apex:outputField value="{!accreditationObj[field]}" rendered="{!changedFieldsSet[field] == 'BLANK'}"/>
+						</apex:outputPanel>
+
+						<!--</apex:outputField>-->
 					</apex:pageBlockSectionItem>
 				</apex:repeat>
 			</apex:pageBlockSection>
@@ -157,11 +214,17 @@
 			<apex:pageBlockButtons location="bottom" rendered="{!doNotHaveOscarYet}">
 				<apex:commandButton value="Create Change Process" style=" display:inline;" onclick="createChangesOscar('{!accreditationObj.Id}')" oncomplete="undoStuff();" reRender="mainPageBlock"/>
 			</apex:pageBlockButtons>
-			<br/><br/><br/><br/>
-				<apex:outputText  style="color: red;font-size: 14px;" value="This Staging Area already has a case, click below to open the case" rendered="{!!doNotHaveOscarYet}"/>
-				<apex:pageBlockButtons location="bottom" rendered="{!!doNotHaveOscarYet}">
-					<apex:commandButton value="Go to Oscar Case" style=" display:inline;" onclick="openCase('{!existingOscarCaseId}','{!existingOscarCaseNumber}')"/>
-				</apex:pageBlockButtons>
+			<br/><br/><br/>
+			<apex:outputText  style="color: red;font-size: 14px;" rendered="{!!doNotHaveOscarYet}">
+                <div class="warningMessage1">
+                    <div>This Staging Area already has a case, click below to open the case</div>
+                    <br />
+                    <div>
+
+                            <apex:commandButton rendered="{!!doNotHaveOscarYet}" value="Go to Oscar Case" style=" display:inline;" onclick="openCase('{!existingOscarCaseId}','{!existingOscarCaseNumber}')"/>
+                    </div>
+                </div>
+            </apex:outputText>
 		</apex:pageBlock>
 	</apex:form>
 </apex:page>

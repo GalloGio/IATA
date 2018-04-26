@@ -14,19 +14,19 @@
                 bottom: 160px;
             }
             .movetableup {
-                position: relative; 
+                position: relative;
                 bottom: 246px;
             }
             .text-normal * {
                 font-weight: normal;
             }
         </style>
-        <c:ISSP_Header communityName="{!communityName}"></c:ISSP_Header>    
+        <c:ISSP_Header communityName="{!communityName}"></c:ISSP_Header>
         <body>
 
         <script src="{!URLFOR($Resource.bootbox)}"/>
 
-    
+
   <!--link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css"/>
   <link rel="stylesheet" href="/resources/demos/style.css"/-->
   <!--script src="https://code.jquery.com/jquery-1.12.4.js"></script>
@@ -37,13 +37,13 @@
   <script src="i18n/datepicker-he.js"></script>
   <script src="i18n/datepicker-zh-TW.js"></script-->
   <!--script src="{!URLFOR($Resource.jquery_ui_i18n, '/i18n/datepicker-pt.js')}" /-->
-        
+
 
         <script type="text/javascript">
                 //var $j = jQuery.noConflict();
-            
+
                 var typeAccredSelected = '';
-   
+
                 $(function () {
                     $('[data-toggle="tooltip"]').tooltip();
                 })
@@ -55,13 +55,13 @@
                         bootbox.alert('{!$Label.ISSP_AMS_Cases_Notify_IATA_Changes_Error}');
                     } else {
                         navigateToUrl('/ISSP_AMS_Accreditation?isNoticeOfChange=true&isBankAccountChange='+isBankAccountChange + '{!commParam}' +'&retUrl=/ISSP_HomePage','LIST_VIEW','newCase');
-                    }                  
+                    }
                 }
 
                 function proofOfPCI(){
                     navigateToUrl('/ISSP_ANG_PCI?&retUrl=/ISSP_HomePage','LIST_VIEW','newCase');
                 }
-            
+
                 function proceedToVMFR() {
                     bootbox.confirm("{!JSENCODE($Label.ISSP_AMS_Step0_Proceed_VMFR)}", function(result) {
                         if(result) {
@@ -69,7 +69,7 @@
                         }
                     });
                 }
- 
+
                 function proceedToVR() {
                     if ('{!con.Authorized_Signatory__c}' == 'false' && '{!con.User_Portal_Status__c}' == 'Approved Admin'){
                         bootbox.alert('{!$Label.ISSP_ANG_Portal_Admin_Authorized_Signature}');
@@ -78,7 +78,7 @@
                     }
                     else{
                         navigateToUrl('/ISSP_ANG_VoluntaryRelinquishment','_self');
-                    }               
+                    }
                 }
 
                 function newnAccreditationApplicationNavigateTo() {
@@ -87,7 +87,7 @@
                     } else {
                         navigateToUrl('/ISSP_AMS_Accreditation?{!if(communityName=='CNS', 'CommunityName=CNS&', '')}retUrl=/ISSP_HomePage','LIST_VIEW','newCase');
                     }
-                    return false;                
+                    return false;
                 }
 
                 function modalChooseAccreditationTypeClose() {
@@ -101,7 +101,7 @@
                     if(typeAccredSelected == '') {
                         document.querySelector("[Id$='accreditationTypeRequired']").style.display = '';
                     } else {
-                        if(typeAccredSelected == 'Travel_Agent') {                        
+                        if(typeAccredSelected == 'Travel_Agent') {
                            navigateToUrl('/ISSP_ANG_ProductComparison','LIST_VIEW','newCase');
                         } else {
                            navigateToUrl('/ISSP_AMS_Accreditation?{!if(communityName=='CNS', 'CommunityName=CNS&', '')}retUrl=/ISSP_HomePage&sectorValue=Cargo_Agent','LIST_VIEW','newCase');
@@ -109,7 +109,7 @@
                     }
                 }
 
-                function optInOut() {                    
+                function optInOut() {
                     if('{!isIFAPContact}' == 'true') {
                         $('#ModalOptInOut').modal('toggle');
                     } else {
@@ -134,7 +134,7 @@
 
                 function onCompleteOptInOut() {
                     endLoading();
-                    bootbox.alert('{!optInOutSuccessMessage}');  
+                    //bootbox.alert('{!optInOutSuccessMessage}');
                     window.location.reload();
                 }
 
@@ -146,10 +146,10 @@
                     lan = "en";
                   if('{!displayLanguage}' == 'pt_BR')
                     lan = "pt-BR";
-                  if('{!displayLanguage}' == 'zh_CN')                    
+                  if('{!displayLanguage}' == 'zh_CN')
                     lan = "zh-CN";
 
-                  if(lan == "") 
+                  if(lan == "")
                     lan = '{!displayLanguage}';
 
                   $( "#datepicker" ).datepicker({minDate: 0});
@@ -166,11 +166,11 @@
                 }
                 function endLoading() {
                   $('.loadingBox').hide();
-                }                
+                }
 
         </script>
-    
-    <div class="container">   
+
+    <div class="container">
         <c:ISSP_CustomNavigation communityName="{!communityName}"/>
     <div>
         <apex:image value="{!URLFOR($Resource.IATA_Logo_Large)}" width="138" height="102" style="float:left" rendered="{!communityName!='CNS'}"/>
@@ -184,9 +184,9 @@
     <div class="loadingBox overlay"> </div>
 
     <div style="padding-left:138px">
-          <apex:form > 
+          <apex:form >
 
-          <apex:inputHidden value="{!pEfectiveDateStr}" id="effectiveDateOfChange"/> 
+          <apex:inputHidden value="{!pEfectiveDateStr}" id="effectiveDateOfChange"/>
 
           <apex:actionStatus onstart="startLoading();" onstop="endLoading();" id="loadStatusSpinner"/>
 
@@ -241,16 +241,16 @@
 
             <tr>
                 <td></td>
-                <td style="display:{! IF(AND(con.Account.Category__c == 'IATA Passenger Sales Agent', isHOAccredited), '','none')};vertical-align:top;padding-right:20px;padding-bottom:20px;">
+                <td style="display:{! IF(AND(con.Account.Category__c == 'IATA Passenger Sales Agent', isHOAccredited, namEnabled), '','none')};vertical-align:top;padding-right:20px;padding-bottom:20px;">
                     <table>
-                        <tr>                            
+                        <tr>
                             <td><input type="button" class="btn btn_iata_primary" onClick="proofOfPCI();return false;" value="{!$Label.ISSP_ANG_proof_PCI}"/></td>
                             <td style="padding-left:8px"><apex:outputText escape="false" value="{!$Label.ISSP_ANG_proof_PCI_Info}"/></td>
                         </tr>
                     </table>
                 </td>
             </tr>
-            
+
 
             <tr style="display:{!IF(flagShowOptInOutButton,'','none')};">
                 <td>
@@ -294,7 +294,7 @@
                 </td>
                 <td style="vertical-align:top" class="{!IF(AND(isEligableForChange,isoCountry.Enable_Notice_of_Change__c),'',(IF(!isoCountry.Enable_Notice_of_Change__c,'movetableup','moveup')))}">
             <apex:pageBlock >
-                
+
             <apex:pageBlockTable id="DraftCases" value="{!AMSDraftCases}" var="MyAMSCases" styleClass="table" rendered="{!NOT(IsEmpty)}">
             <apex:column headerValue="{!$ObjectType.Case.fields.CaseNumber.label}" rendered="{!NOT(AND(isoCountry.Enable_Notice_of_Change__c==false,NOT(BEGINS(MyAMSCases.Reason1__c, 'New'))))}">
                 <apex:outputLink value="/ISSP_AMS_Accreditation?caseId={!MyAMSCases.Id}&step=2{!if(communityName=='CNS', '&CommunityName=CNS', '')}" rendered="{!BEGINS(MyAMSCases.Reason1__c, 'New')}">{!MyAMSCases.CaseNumber}</apex:outputLink>
@@ -308,20 +308,20 @@
             <apex:column value="{!MyAMSCases.Portal_Case_Status__c}" rendered="{!NOT(AND(isoCountry.Enable_Notice_of_Change__c==false,NOT(BEGINS(MyAMSCases.Reason1__c, 'New'))))}"/>
             <apex:column value="{!MyAMSCases.CreatedDate}" rendered="{!NOT(AND(isoCountry.Enable_Notice_of_Change__c==false,NOT(BEGINS(MyAMSCases.Reason1__c, 'New'))))}"/>
             </apex:pageBlockTable>
-            
+
             <apex:outputText styleClass="bg-info" value="{!if(communityName=='CNS', $Label.ISSP_AMS_No_Pending_CNS, $Label.ISSP_AMS_No_Pending)}" rendered="{!IsEmpty}"/>
-                
-            </apex:pageBlock>    
-                
+
+            </apex:pageBlock>
+
                 </td>
             </tr>
-            
+
         </table>
 
         <div class="modal" id="modalChooseAccreditationType" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-          <apex:outputPanel layout="block" styleClass="modal-dialog" id="modalChooseAccreditationTypeContent"> 
-            <div class="modal-content" id="modalChooseAccreditationContent"> 
-              <div class="modal-header"> 
+          <apex:outputPanel layout="block" styleClass="modal-dialog" id="modalChooseAccreditationTypeContent">
+            <div class="modal-content" id="modalChooseAccreditationContent">
+              <div class="modal-header">
                 <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
                 <!--h4 class="modal-title">{!$Label.ISSP_Add_User_to_this_service}</h4-->
                 <h4 class="modal-title">{!$Label.ANG_ISSP_AccreditationTypeTitle}</h4>
@@ -349,20 +349,20 @@
                       </apex:selectRadio>
                   </apex:outputPanel>
                 </div>
-              </div>  
+              </div>
 
               <div class="modal-footer">
                 <div class="col-md-12">
                   <div class="row">
-                    <div class="col-md-6">                    
+                    <div class="col-md-6">
                       <button type="button" onclick="modalChooseAccreditationTypeClose()" class="btn btn-danger btn-block">{!$label.LAQ_Close}</button>
                     </div>
                     <div class="col-md-6">
-                      <button type="button" onclick="redirectAccreditationType()" class="btn btn-success btn-block">{!$label.IDCard_Continue_Button}</button>                
+                      <button type="button" onclick="redirectAccreditationType()" class="btn btn-success btn-block">{!$label.IDCard_Continue_Button}</button>
                     </div>
                   </div>
-                </div>            
-              </div>          
+                </div>
+              </div>
             </div>
           </apex:outputPanel>
         </div>
@@ -393,21 +393,21 @@
               <div class="modal-footer">
                 <div class="col-md-12">
                   <div class="row">
-                    <div class="col-md-6">                    
+                    <div class="col-md-6">
                       <button type="button" onclick="modalModalOptInOutClose()" class="btn btn-danger btn-block">{!$label.LAQ_Close}</button>
                     </div>
                     <div class="col-md-6">
-                      <button type="button" onclick="doOptInOut()" class="btn btn-success btn-block">{!$label.IDCard_Continue_Button}</button>                
+                      <button type="button" onclick="doOptInOut()" class="btn btn-success btn-block">{!$label.IDCard_Continue_Button}</button>
                     </div>
                   </div>
-                </div>                
-              </div>          
+                </div>
+              </div>
             </div>
           </div>
-        </div>        
+        </div>
    </apex:form>
    </div>
-    
+
     <c:ISSP_CustomFooter communityName="{!communityName}"/>
 </div><!-- end container-->
 
@@ -435,6 +435,6 @@
             left: 50%;
         }
     </style>
-  </body>  
+  </body>
 </html>
 </apex:page>

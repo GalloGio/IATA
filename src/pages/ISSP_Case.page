@@ -757,7 +757,9 @@
                                             <apex:outputLink value="/ISSP_AMS_Accreditation?caseId={!newCase.Id}&isNoticeOfChange=true&isBankAccountChange=false&step=2" rendered="{!NOT(OR(BEGINS(newCase.Reason1__c, 'New'),newCase.Reason1__c=='Bank Detail Update',newCase.Reason1__c=='FoP Management',newCase.Reason1__c=='CLO - Closure'))}">{!$Label.ISSP_AMS_Click_Here_NoC}</apex:outputLink>
                                             </apex:outputText>
                                         </apex:pageblocksectionitem>
-                                        <apex:pageblocksectionitem rendered="{!AND(isOnlineOSCARCase, NOT(showAccreditation), newCase.Reason1__c!='FoP Management', newCase.Reason1__c!='CLO - Closure', newCase.Reason1__c <> 'New MSO', newCase.Reason1__c != 'Financial review opt-in / opt-out')}">
+                                        <!-- AMSU-119 - added isMSO Condition -->
+                                        <!--apex:pageblocksectionitem rendered="{!AND(isOnlineOSCARCase, NOT(showAccreditation), newCase.Reason1__c!='FoP Management', newCase.Reason1__c!='CLO - Closure', newCase.Reason1__c <> 'New MSO')}"-->
+                                        <apex:pageblocksectionitem rendered="{!AND(isOnlineOSCARCase, NOT(showAccreditation), newCase.Reason1__c!='FoP Management', newCase.Reason1__c!='CLO - Closure', newCase.Reason1__c <> 'New MSO', NOT(isMSOcase))}">
                                             <apex:image value="{!URLFOR($Resource.PDF_icon_large)}" />
                                             <apex:outputText >
                                                 <apex:outputlink value="{!IF(isTravelAccreditation,'/ISSP_AMS_PDF_ApplicationForm?caseId=', '/ISSP_AMS_PDF_CGO?caseId=') + newCase.Id}" id="amsFormLink" target="_new" rendered="{!AND(BEGINS(newCase.Reason1__c, 'New'), newCase.Reason1__c != 'New HE standard', newCase.Reason1__c != 'New HE lite', newCase.Reason1__c != 'New AE')}">
@@ -781,11 +783,12 @@
                                             <!--         <apex:commandLink action="{!redirectToPDF}" value="{!$Label.ISSP_AMS_Download_PDF_Copy}" id="theCommandLink"/>  -->
                                         </apex:pageblocksectionitem>
                                         <!-- CC Others info -->
-                                        <apex:pageblocksectionitem >
+                                        <!-- AMSU-119 - added rendered attribute -->
+                                        <apex:pageblocksectionitem rendered="{!NOT(isMSOcase)}">
                                             <apex:outputlabel value="{!$Label.ISSP_CCOthers}" for="ccothers" />
                                             <apex:outputText value="{!AdditionalCC}" id="ccothers"/>
                                         </apex:pageblocksectionitem>
-                                        <apex:pageBlockSectionItem rendered="{!NOT(HideForClosedCases)}">
+                                        <apex:pageBlockSectionItem rendered="{!OR(NOT(HideForClosedCases),NOT(isMSOCase))}">
                                             <apex:outputPanel layout="none"/>
                                             <apex:outputPanel layout="none">
                                                 <input id="btnaddccother" value="{!$Label.ISSP_CCOther_Add}" class="btn" onclick="openAddDialog();"/>
@@ -1080,9 +1083,11 @@
                                 </apex:actionstatus>
                             </apex:outputpanel>
 
-                            <c:GenericAttachmentList rendered="{!AND(NOT(isNewCase),NOT(isPWCProfile),NOT(isDPCUser),NOT(isIFAPCase))}" sobjectId="{!newCase.Id}" isPortal="true" showAttachFileButton="{!NOT(HideForClosedCases)}"/>
+                            <!--AMSU-119 : added MSO condition-->
+                            <c:GenericAttachmentList rendered="{!AND(NOT(isNewCase),NOT(isMSOCase),NOT(isPWCProfile),NOT(isDPCUser),NOT(isIFAPCase))}" sobjectId="{!newCase.Id}" isPortal="true" showAttachFileButton="{!NOT(HideForClosedCases)}"/>
 
-                            <c:Archive_Attachment_List_Component rendered="{!AND(NOT(isNewCase),OR(isPWCProfile,isDPCUser))}" caseid="{!newCase.Id}"></c:Archive_Attachment_List_Component>
+                            <!--AMSU-119 : added MSO condition-->
+                            <c:Archive_Attachment_List_Component rendered="{!AND(NOT(isNewCase),NOT(isMSOCase),OR(isPWCProfile,isDPCUser))}" caseid="{!newCase.Id}"></c:Archive_Attachment_List_Component>
 
        <!-- Display of Financial Documents for IFAP Cases -->
        <apex:outputPanel id="theConPan" rendered="{!isIFAPCase}">
@@ -1181,7 +1186,8 @@
                                 </apex:pageblock>
 
                                 <!-- Case Comments -->
-                                <apex:pageblock rendered="{!AND(NOT(isNewCase),newCase.Status != 'Draft')}" id="CustomList" >
+                                <!--AMSU-119 : added MSO condition-->
+                                <apex:pageblock rendered="{!AND(NOT(isNewCase),NOT(isMSOCase),newCase.Status != 'Draft')}" id="CustomList" >   
                                     <apex:pageBlockSection title="{!$Label.ISSP_Registration_Comments}" columns="1">
                                     <apex:commandbutton rendered="{!AND(NOT(disableCaseComments),NOT(HideForClosedCases))}" action="{!AddComment}" value="{!$Label.ISSP_btn_AddComment}" style="padding:5px" />
                                     <apex:pageblocktable value="{!List_CaseComment}" var="o" width="100%" rendered="{!IF(List_CaseComment.size > 0 , true , false)}">
@@ -1192,7 +1198,8 @@
                                    </apex:pageBlockSection>
                                 </apex:pageblock>
 
-                                <apex:pageblock rendered="{!AND(NOT(isNewCase), caseType=='ACR')}" id="casemilestones" title="Case Milestones">
+                                <!--AMSU-119 : added MSO condition-->
+                                <apex:pageblock rendered="{!AND(NOT(isNewCase),NOT(isMSOCase), caseType=='ACR')}" id="casemilestones" title="Case Milestones">
                                     <apex:pageblocktable value="{!List_CaseMilestones}" var="ms" styleclass="table-hover table table-condensed table-responsive" rendered="{!(List_CaseMilestones.size > 0)}">
                                         <apex:column headervalue="Status Name" value="{!ms.StatusName__c}" />
                                         <apex:column headervalue="Classification Phase" value="{!ms.Classification_Phase__c}" />

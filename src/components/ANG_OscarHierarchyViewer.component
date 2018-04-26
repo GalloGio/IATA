@@ -94,6 +94,40 @@
             border: 1px solid #94a0b4;
             color: #000;
         }
+
+        .verificationIcon{
+            padding-left: 6px;
+        }
+
+
+        .tooltip {
+        position: relative;
+        display: inline-block;
+        color:green;
+        font-size: 11px;
+        }
+
+        .tooltip .tooltiptext {
+            visibility: hidden;
+            width: 200px;
+            background-color: black;
+            color: #fff;
+            text-align: center;
+            border-radius: 6px;
+            padding-top: 5px;
+            padding-right: 0px;
+            padding-bottom: 5px;
+            padding-left: 10px;
+
+            /* Position the tooltip */
+            position: absolute;
+            z-index: 1;
+        }
+
+        .tooltip:hover .tooltiptext {
+            visibility: visible;
+        }
+
     </style>
     <script type="text/javascript">
         function testOpenPrimaryTab(tabId,tabName) {
@@ -125,55 +159,54 @@
 	<apex:form >
 	    <div class="tree well">
 	        <ul>
-				<li style="padding: 10px 5px 0 10px;">
+				<li>
 					<apex:outputPanel>{!parentAccount.Location_Type__c} ({!parentAccount.Location_Class__c})</apex:outputPanel>
 
-					<apex:outputPanel  layout="block" style="display:inline;padding-left:4px;" rendered="{!accreditationAreasOKNOK[parentAccount.IATACode__c] == 'OK'}">
-						<apex:image value="{!URLFOR($Resource.AMS_Icons, 'passed.png')}" width="17" height="17"/>
-					</apex:outputPanel>
-					<apex:outputPanel  layout="block" style="display:inline;padding-left:4px;" rendered="{!accreditationAreasOKNOK[parentAccount.IATACode__c] == 'NOK'}">
-						<apex:image value="{!URLFOR($Resource.AMS_Icons, 'failed.png')}" width="17" height="17"/>
-					</apex:outputPanel>
-					<apex:outputPanel  layout="block" style="display:inline;padding-left:4px;" rendered="{!accreditationAreasOKNOK[parentAccount.IATACode__c] == 'UNK'}">
-						<apex:image value="{!URLFOR($Resource.AMS_Icons, 'in_progress.png')}" width="17" height="17"/>
-					</apex:outputPanel>
-					<br></br>
-					
-					<apex:outputText style="font-weight:bold;margin: 0;border: 0" rendered="{!not(currentAccount.id != parentAccount.id)}" value="{!parentAccount.Name}"/>
-					
-					<br></br>{!parentAccount.IATACode__c}<br></br>{!parentAccount.BillingCountry} - {!parentAccount.BillingCity}<br></br>{!parentAccount.Status__c}
-					<ul>
-						<apex:repeat value="{!HierchyChilds}" var="c">
-							<li style="padding: 10px 5px 0 5px;">
-								<apex:outputPanel styleClass="{!IF(currentAccount.id != c.id,'','highlighted')}"><i class="icon-folder-open icon-minus-sign"></i>{!c.Location_Type__c} ({!c.Location_Class__c})</apex:outputPanel>
+                    <apex:image styleClass="verificationIcon" value="{!IF(accreditationAreasOKNOK[parentAccount.IATACode__c] == 'OK', URLFOR($Resource.AMS_Icons, 'passed.png') , IF(accreditationAreasOKNOK[parentAccount.IATACode__c] == 'NOK',URLFOR($Resource.AMS_Icons, 'failed.png') , URLFOR($Resource.AMS_Icons, 'in_progress.png') )) }" width="17" height="17"/>
 
-					<apex:outputPanel  layout="block" style="display:inline;padding-left:4px;" rendered="{!accreditationAreasOKNOK[c.IATACODE__c] == 'OK'}">
-						<apex:image  value="{!URLFOR($Resource.AMS_Icons, 'passed.png')}"  width="17" height="17"/>
-					</apex:outputPanel>
-					<apex:outputPanel  layout="block" style="display:inline;padding-left:4px;" rendered="{!accreditationAreasOKNOK[c.IATACODE__c] == 'NOK'}">
-						<apex:image value="{!URLFOR($Resource.AMS_Icons, 'failed.png')}"  width="17" height="17"/>
-					</apex:outputPanel>
-					<apex:outputPanel  layout="block" style="display:inline;padding-left:4px;" rendered="{!accreditationAreasOKNOK[c.IATACODE__c] == 'UNK'}">
-						<apex:image value="{!URLFOR($Resource.AMS_Icons, 'in_progress.png')}"  width="17" height="17"/>
-					</apex:outputPanel>
+<!--
+                    <div>{!parentAccount.Name}</div>
+-->
+                    <br></br>
+                    <apex:commandLink  onclick="openSubtab('/apex/ANG_AccreditationAreaViewer?Id={!accreditationAreas[parentAccount.Id]}','SA-{!parentAccount.IATACode__c}');return false;" rendered="{!currentAccount.id == parentAccount.id && accreditationAreas[parentAccount.Id] != 'XXX'}">
+                        <div class="tooltip" >{!parentAccount.Name}
+                            <span class="tooltiptext">Open this account's staging area</span>
+                        </div>
+                    </apex:commandLink>
+                    
+                    <apex:outputText rendered="{!currentAccount.id == parentAccount.id && accreditationAreas[parentAccount.Id] == 'XXX'}">
+                        <div> {!parentAccount.Name} </div>
+                    </apex:outputText>
+
+                    <div>{!parentAccount.IATACode__c}</div>
+                    <div>{!parentAccount.BillingCountry} - {!parentAccount.BillingCity}</div>
+                    <div>{!parentAccount.Status__c}</div>
+
+                    <ul>
+						<apex:repeat value="{!HierchyChilds}" var="c">
+							<li>
+								<apex:outputPanel>
+                                    <i class="icon-folder-open icon-minus-sign"></i>
+                                    {!c.Location_Type__c} ({!c.Location_Class__c})
+                                </apex:outputPanel>
+
+                                <apex:image styleClass="verificationIcon" value="{!IF(accreditationAreasOKNOK[c.IATACode__c] == 'OK', URLFOR($Resource.AMS_Icons, 'passed.png') , IF(accreditationAreasOKNOK[c.IATACode__c] == 'NOK',URLFOR($Resource.AMS_Icons, 'failed.png') , URLFOR($Resource.AMS_Icons, 'in_progress.png') )) }" width="17" height="17"/>
 
                                 <br></br>
+                                
+                                <apex:commandLink onclick="openSubtab('/apex/ANG_AccreditationAreaViewer?Id={!accreditationAreas[c.Id]}','SA-{!c.IATACode__c}');return false;" rendered="{!currentAccount.id != c.id && accreditationAreas[c.Id] != 'XXX'}">
+                                    <div class="tooltip" >{!c.Name}
+                                        <span class="tooltiptext">Open this account's staging area</span>
+                                    </div>
+                                </apex:commandLink>
+                                
+                                <apex:outputText rendered="{!currentAccount.id != c.id && accreditationAreas[c.Id] == 'XXX'}">
+                                    <div> {!c.Name} </div>
+                                </apex:outputText>
 
-								    <apex:commandLink style="color: black;font-size:11px;" onclick="openSubtab('/apex/ANG_AccreditationAreaViewer?Id={!accreditationAreas[c.Id]}','SA-{!c.IATACode__c}');return false;" rendered="{!currentAccount.id != c.id && accreditationAreas[c.Id] != 'XXX'}">{!c.Name}</apex:commandLink>
-								    <apex:outputText rendered="{!currentAccount.id != c.id && accreditationAreas[c.Id] == 'XXX'}">{!c.Name}</apex:outputText>
-
-								<apex:outputText style="font-weight:bold;margin: 0;border: 0" rendered="{!not(currentAccount.id != c.id)}" value="{!c.Name}"/>
-								<br></br>{!c.IATACode__c}<br></br>{!c.BillingCountry} - {!c.BillingCity}<br></br>{!c.Status__c}
-								<ul>
-									<apex:repeat value="{!HierchyChilds[c]}" var="ca">
-										<li style="padding: 10px 5px 0 5px;">
-											<apex:outputPanel styleClass="{!IF(currentAccount.id != ca.id,'','highlighted')}"><i class="icon-folder-open icon-minus-sign"></i>{!ca.Location_Type__c} ({!ca.Location_Class__c})</apex:outputPanel><br></br>
-											<apex:commandLink style="color: black;font-size:11px;" onclick="openSubtab('/{!accreditationAreas[ca.Id]}','');return false;" rendered="{!currentAccount.id != ca.id}">{!ca.Name}</apex:commandLink>
-											<apex:outputText style="font-weight:bold;margin: 0;border: 0" rendered="{!not(currentAccount.id != ca.id)}" value="{!ca.Name}"/>
-											<br></br>{!ca.IATACode__c}<br></br>{!ca.BillingCountry} - {!ca.BillingCity}<br></br>{!ca.Status__c}
-										</li>
-									</apex:repeat>
-								</ul>
+                                <div>{!c.IATACode__c}</div>
+                                <div>{!c.BillingCountry} - {!c.BillingCity}</div>
+                                <div>{!c.Status__c}</div>
 							</li>
 						</apex:repeat>
 					</ul>
@@ -183,46 +216,5 @@
 	</apex:form>
 </apex:outputPanel>
 
-    <script>
-    $(function() {
-        $('.tree li:has(ul)').addClass('parent_li').find(' > span').attr('title', 'Collapse this branch');
-        //$('.tree li:has(ul)').addClass('parent_li').find(' > ul > li').hide('slow');
-        $('.tree li.parent_li > span').on('click', function(e) {
-            //alert('clicked');
-            var children = $(this).parent('li.parent_li').find(' > ul > li');
-            if (children.is(":visible")) {
-                children.hide('fast');
-                $(this).attr('title', 'Expand this branch').find(' > i').addClass('icon-plus-sign').removeClass('icon-minus-sign');
-            } else {
-                children.show('fast');
-                $(this).attr('title', 'Collapse this branch').find(' > i').addClass('icon-minus-sign').removeClass('icon-plus-sign');
-            }
-            e.stopPropagation();
-        });
-    });
-    </script>
-
-
-<script>
-
-    $('.hasTooltip').each(function() {
-        $(this).qtip({
-            content: {
-                text: $(this).next('div') // Use the "div" element next to this for the content
-            },
-            position: {
-                viewport: $(window),
-                my: 'top left',
-                at: 'bottom left',
-            },
-            style: {
-                classes: 'qtip-light'
-            }
-        });
-    });
-
-
-
-</script>
 
 </apex:component>

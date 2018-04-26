@@ -4935,7 +4935,7 @@
         <fullName>ComplaintUpdateowner</fullName>
         <description>assigns the case flagged as complaint to the OCIT queue</description>
         <field>OwnerId</field>
-        <lookupValue>CasesOCITComplaints</lookupValue>
+        <lookupValue>Cases_Complaints_GDC_MAD</lookupValue>
         <lookupValueType>Queue</lookupValueType>
         <name>Complaint Update owner</name>
         <notifyAssignee>false</notifyAssignee>
@@ -4946,7 +4946,7 @@
         <fullName>Complaint_Update_owner_AME</fullName>
         <description>Change case ownership to AME Complaints queue</description>
         <field>OwnerId</field>
-        <lookupValue>CasesComplaintsAME</lookupValue>
+        <lookupValue>Cases_Complaints_GDC_MAD</lookupValue>
         <lookupValueType>Queue</lookupValueType>
         <name>Complaint Update owner - AME</name>
         <notifyAssignee>true</notifyAssignee>
@@ -4968,7 +4968,7 @@
         <fullName>Complaint_Update_owner_SCA</fullName>
         <description>Change case ownership to SCA Complaints queue</description>
         <field>OwnerId</field>
-        <lookupValue>Cases_Complaints_Americas</lookupValue>
+        <lookupValue>Cases_Complaints_GDC_MAD</lookupValue>
         <lookupValueType>Queue</lookupValueType>
         <name>Complaint Update owner - SCA</name>
         <notifyAssignee>true</notifyAssignee>
@@ -15032,7 +15032,7 @@ Change the case status to “Agent Notified (mail)” if case status was “Agen
             <type>FieldUpdate</type>
         </actions>
         <active>true</active>
-        <booleanFilter>(1 AND 2 AND 3 AND 4 AND (5 OR (6 AND 7)) AND (10 OR (11 AND 12 AND 13 AND 17 AND 20)) AND 16 AND 18 AND 19 AND 21) OR 8 OR 9 OR (14 AND 15)</booleanFilter>
+        <booleanFilter>(1 AND 2 AND 3 AND 4 AND (5 OR (6 AND 7)) AND (10 OR (11 AND 12 AND 13 AND 17 AND 20)) AND 16 AND 18 AND 19 AND 21 AND 22) OR 8 OR 9 OR (14 AND 15)</booleanFilter>
         <criteriaItems>
             <field>Case.RecordTypeId</field>
             <operation>notEqual</operation>
@@ -15138,6 +15138,11 @@ Change the case status to “Agent Notified (mail)” if case status was “Agen
             <operation>notEqual</operation>
             <value>Financial review opt-in / opt-out</value>
         </criteriaItems>
+        <criteriaItems>
+            <field>Case.Reason1__c</field>
+            <operation>notEqual</operation>
+            <value>Annual revalidation</value>
+        </criteriaItems>
         <description>If the case should be invisible on the portal uncheck the field &quot;Visible on ISS Portal&quot;</description>
         <triggerType>onAllChanges</triggerType>
     </rules>
@@ -15148,7 +15153,7 @@ Change the case status to “Agent Notified (mail)” if case status was “Agen
             <type>FieldUpdate</type>
         </actions>
         <active>true</active>
-        <booleanFilter>((1 OR 2 OR (3 AND (20 AND 21)) OR 4 OR (10 AND (11 OR 12 OR 16 OR 17 OR 19))) AND ((5 AND 6) OR (17 AND 18))) OR ((7 AND 8 AND 9) AND 6) OR (13 AND 14) OR 15</booleanFilter>
+        <booleanFilter>((1 OR 2 OR (3 AND (21 AND 22)) OR 4 OR (10 AND (11 OR 12 OR 16 OR 17 OR 19 OR 20))) AND ((5 AND 6) OR (17 AND 18))) OR ((7 AND 8 AND 9) AND 6) OR (13 AND 14) OR 15</booleanFilter>
         <criteriaItems>
             <field>Case.RecordTypeId</field>
             <operation>equals</operation>
@@ -15245,7 +15250,12 @@ Change the case status to “Agent Notified (mail)” if case status was “Agen
             <value>Financial review opt-in / opt-out</value>
         </criteriaItems>
         <criteriaItems>
-            <field>Case.RecordTypeId</field>
+            <field>Case.Reason1__c</field>
+            <operation>equals</operation>
+            <value>Annual revalidation</value>
+        </criteriaItems>
+        <criteriaItems>
+        <field>Case.RecordTypeId</field>
             <operation>notEqual</operation>
             <value>IDFS Airline Participation Process</value>
         </criteriaItems>
@@ -16433,7 +16443,7 @@ Inactive (Miguel Guerreiro, 3/17/2016 12:59 PM) - self service is no longer used
         <criteriaItems>
             <field>Case.RecordTypeId</field>
             <operation>equals</operation>
-            <value>Cases - Europe,ACCA Customer Service Request (External),Order of AWB / allocation (CASS),Cases - Americas,Cases - Africa &amp; Middle East,Cases - Asia &amp; Pacific,Cases - China &amp; North Asia</value>
+            <value>Cases - Europe,ACCA Customer Service Request (External),Order of AWB / allocation (CASS),Cases - Americas,Cases - Africa &amp; Middle East,Cases - Asia &amp; Pacific,Cases - China &amp; North Asia,Complaint (IDFS ISS)</value>
         </criteriaItems>
         <criteriaItems>
             <field>Case.Region__c</field>

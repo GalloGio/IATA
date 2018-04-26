@@ -14,6 +14,7 @@
 		statusValues.push('Delayed');
 		statusValues.push('Delivered');
 		statusValues.push('Canceled');
+		statusValues.push('Not Delivered');
 
 		component.set("v.statusValues", statusValues);
 

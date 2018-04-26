@@ -1,4 +1,8 @@
 public with sharing class ANG_AccreditationAreaViewer {
+    
+    public Set<String> ahdocComparisonFields = new Set<String>{'ISSP_AMS_Legal_Status__c','ISSP_AMS_GDS_with_signed_contract__c','ISSP_AMS_Premises_located_at_airport__c'};
+
+    public Map<String,String> changedFieldsSet{get;set;}
 
     public Id existingOscarCaseId{get;set;}
 
@@ -8,7 +12,7 @@ public with sharing class ANG_AccreditationAreaViewer {
             get{
                             
                             notes = new Set<String>();
-                            notes.add('This is the Staging Area for the Account ' + accreditationObj.IATACode__c);
+                            notes.add('This is the Staging Area for the Account ' + accreditationObj.HO_Account__r.IATACODE__c);
                             notes.add('You can create an Oscar Changes process by clicking the button below.');
                             notes.add('The Oscar Process will clone this accreditation area and will create a new Oscar/Case to be processed, attached to this account.');
 
@@ -18,7 +22,7 @@ public with sharing class ANG_AccreditationAreaViewer {
     }
     public boolean doNotHaveOscarYet{
         get{
-                List<AMS_Pax_Accreditation_Form__c> paxLst = [Select Id, HO_Account__c, SAAM_Case__c, SAAM_Case__r.Casenumber from AMS_Pax_Accreditation_Form__c where HO_Account__c = :this.accreditationObj.HO_Account__c and Id != :this.accreditationObj.Id and SAAM_Case__r.ParentId = :this.accreditationObj.SAAM_Case__c ];
+                List<AMS_Pax_Accreditation_Form__c> paxLst = [Select Id, HO_Account__r.IATACODE__c, HO_Account__c, SAAM_Case__c, SAAM_Case__r.Casenumber from AMS_Pax_Accreditation_Form__c where HO_Account__c = :this.accreditationObj.HO_Account__c and Id != :this.accreditationObj.Id and SAAM_Case__r.ParentId = :this.accreditationObj.SAAM_Case__c ];
 
                 if(!paxLst.isEmpty()){
                     existingOscarCaseId = paxLst.get(0).SAAM_Case__c;
@@ -37,7 +41,89 @@ public with sharing class ANG_AccreditationAreaViewer {
         set;
     }
 
+    public Account accreditationAccount{
+        get{
+
+            if(this.accreditationAccount == null){
+                this.accreditationAccount = fetchAccountFields(this.accreditationObj.HO_Account__c);
+            }
+                return this.accreditationAccount;
+        }
+        set;
+    }
+
 	public AMS_Pax_Accreditation_Form__c accreditationObj { get; set; }
+
+    public Map<String, String> fieldsMapping{
+        get{
+            if(this.fieldsMapping == null){
+                this.fieldsMapping  = new Map<String, String> { 'Account_Name__c'=>    'Name' 
+                                                                ,'IATACode__c' => 'IATACode__c' 
+                                                                ,'Short_Name__c' => 'Short_Name__c' 
+                                                                ,'Trade_Name__c' => 'TradeName__c' 
+                                                                ,'ISSP_AMS_License_No__c' => 'License_Number__c' 
+                                                                ,'ISSP_AMS_VAT_number__c' => 'VAT_Number__c' 
+                                                                ,'Branch_Office_Street_name_number__c' => 'BillingStreet' 
+                                                                ,'Website__c' => 'Website' 
+                                                                ,'Branch_Office_Postal_code__c' => 'BillingPostalCode' 
+                                                                ,'Branch_Office_City__c' => 'BillingCity' 
+                                                                ,'Branch_Office_Country__c' => 'IATA_ISO_Country__c' 
+                                                                ,'IATA_ISO_State__c' => 'Iso_State__c' 
+                                                                ,'Shipping_Street__c' => 'ShippingStreet' 
+                                                                ,'Shipping_Postal_Code__c' => 'ShippingPostalCode' 
+                                                                ,'Branch_Office_Email__c' => 'Email__c' 
+                                                                ,'Branch_Office_Phone__c' => 'Phone' 
+                                                                ,'Branch_Office_FAX__c' => 'Fax' 
+                                                                ,'Shipping_City__c' => 'ShippingCity' 
+                                                                ,'Operation__c' => 'Operation__c' 
+                                                                ,'Abbreviated_name__c' => 'Abbreviated_name__c' 
+                                                                ,'Abbreviated_Address__c' => 'Abbreviated_address__c' 
+                                                                ,'Remittance_frequency__c' => 'Remittance_frequency__c' 
+                                                                ,'Solicitation_Flag__c' => 'Solicitation_Flag__c' 
+                                                                ,'VAT_Number_2__c' => 'VAT_Number_2__c' 
+                                                                ,'CASS_Number__c' => 'CASS_Number__c' 
+                                                                ,'Location_Class__c' => 'Location_Class__c' 
+                                                                ,'Location_Type__c' => 'Location_Type__c' 
+                                                                ,'Mobile__c' => 'Mobile__c' 
+                                                                ,'Is_your_firm_handling_Dangerous_Goods__c' => 'Is_your_firm_handling_Dangerous_Goods__c' 
+                                                                ,'Shipping_ISO_Country__c' => 'IATA_ISO_Shipping_Country__c' 
+                                                                ,'Shipping_ISO_State__c' => 'IATA_ISO_Shipping_State__c' 
+                                                                ,'Link_agent_name__c' => 'Link_agent_name__c'
+                                                                ,'VAT_Number_2__c' => 'VAT_Number_2__c'
+                                                                ,'ANG_Accreditation_type__c' => 'ANG_Accreditation_Model__c'
+
+        };
+            }
+            return this.fieldsMapping;
+
+        }
+            set;
+        }
+
+
+   public Map<String,boolean> accountFieldsMapping{
+        get{
+            if(accountFieldsMapping == null){
+
+                accountFieldsMapping = new Map<String,boolean>();
+
+                for(Schema.SObjectField field : accreditationFieldList) {
+            
+                    if(fieldsMapping.get(field.getDescribe().getName()) <> null){
+
+                        accountFieldsMapping.put(field.getDescribe().getName(),true);
+                  
+                    }else{
+                        accountFieldsMapping.put(field.getDescribe().getName(),false);
+                    }
+        }
+
+            }
+            return accountFieldsMapping;
+
+        }
+        set;
+    }
 
 	public ANG_AccreditationAreaViewer(ApexPages.StandardController stdController) {
 		
@@ -46,6 +132,8 @@ public with sharing class ANG_AccreditationAreaViewer {
 		this.accreditationObj = (AMS_Pax_Accreditation_Form__c)stdController.getRecord();
 
 		this.accreditationObj = fetchAccreditationFields(this.accreditationObj.Id);
+
+        compareAccreditationWithAccount();
 
 	}
 
@@ -76,7 +164,8 @@ public with sharing class ANG_AccreditationAreaViewer {
 	private AMS_Pax_Accreditation_Form__c fetchAccreditationFields(Id accreditationId){
 
         //query is done using the same fields that will appear on the page
-        List<AMS_Pax_Accreditation_Form__c> accreditationLst = Database.query('SELECT Id, '+String.join(accreditationFieldNames, ', ')+' FROM AMS_Pax_Accreditation_Form__c WHERE Id = :accreditationId');
+
+        List<AMS_Pax_Accreditation_Form__c> accreditationLst = Database.query('SELECT Id, HO_Account__r.IATACODE__c, '+String.join(accreditationFieldNames, ', ')+' FROM AMS_Pax_Accreditation_Form__c WHERE Id = :accreditationId');
 
         if(accreditationLst.isEmpty()) return null;
 
@@ -88,7 +177,7 @@ public with sharing class ANG_AccreditationAreaViewer {
     private List<Schema.SObjectField> accreditationFieldList{
         get{
             return new List<Schema.SObjectField>{
-                AMS_Pax_Accreditation_Form__c.Name
+                  AMS_Pax_Accreditation_Form__c.Name
                 , AMS_Pax_Accreditation_Form__c.Account_Name__c
                 , AMS_Pax_Accreditation_Form__c.IATACode__c
                 , AMS_Pax_Accreditation_Form__c.ISSP_AMS_Legal_Status__c
@@ -121,12 +210,77 @@ public with sharing class ANG_AccreditationAreaViewer {
                 , AMS_Pax_Accreditation_Form__c.Abbreviated_Address__c
                 , AMS_Pax_Accreditation_Form__c.Remittance_frequency__c
                 , AMS_Pax_Accreditation_Form__c.VAT_Number_2__c 
-                , AMS_Pax_Accreditation_Form__c.Link_agent_name__c
                 , AMS_Pax_Accreditation_Form__c.Is_your_firm_handling_Dangerous_Goods__c
                 , AMS_Pax_Accreditation_Form__c.ANG_IsNewGenAgency__c
                 , AMS_Pax_Accreditation_Form__c.ANG_Accreditation_type__c
                 , AMS_Pax_Accreditation_Form__c.HO_Account__c 
             };
         }
+    }
+
+    private Account fetchAccountFields(String accountId){
+
+        if(accountId == null)
+            return null;
+
+        List<String> fieldList = new List<String>();
+
+        Map<String, Schema.SObjectField> schemaFieldMap = Account.sObjectType.getDescribe().fields.getMap();
+
+        for (String field : schemaFieldMap.keySet()){
+                fieldList.add(field);
+        }
+
+        return Database.query('SELECT '+String.join(fieldList, ', ')+' FROM Account WHERE Id = :accountId LIMIT 1');
+
+    }
+
+    private void compareAccreditationWithAccount(){
+
+        if(changedFieldsSet == null){
+
+            changedFieldsSet = new Map<String,String>();
+        }
+
+        for(Schema.SObjectField field : accreditationFieldList) {
+            
+            if(ahdocComparisonFields.contains(field.getDescribe().getName())){
+
+                if(field.getDescribe().getName() == 'ISSP_AMS_Legal_Status__c'){
+                    if(accreditationAccount.Company_Type__c == AMS_Utils.transformCompanyType(accreditationObj.ISSP_AMS_Legal_Status__c))
+                        changedFieldsSet.put(field.getDescribe().getName(),'BLANK');
+                    else
+                        changedFieldsSet.put(field.getDescribe().getName(),'CHANGED');
+
+                }
+                else if(field.getDescribe().getName() == 'ISSP_AMS_GDS_with_signed_contract__c'){
+                    if(accreditationAccount.GDS__c == AMS_Utils.transformGDS(accreditationObj.ISSP_AMS_GDS_with_signed_contract__c))
+                        changedFieldsSet.put(field.getDescribe().getName(),'BLANK');
+                    else
+                        changedFieldsSet.put(field.getDescribe().getName(),'CHANGED');
+                }
+                else if(field.getDescribe().getName() == 'ISSP_AMS_Premises_located_at_airport__c'){
+                    Boolean boolValue = accreditationObj.ISSP_AMS_Premises_located_at_airport__c == 'Yes' ? true : false;
+                    if(accreditationAccount.In_a_Airport__c == boolValue)
+                        changedFieldsSet.put(field.getDescribe().getName(),'BLANK');
+                    else
+                        changedFieldsSet.put(field.getDescribe().getName(),'CHANGED');
+                }
+
+            }else if(fieldsMapping.get(field.getDescribe().getName()) <> null){
+
+                if(this.accreditationObj.get(field) <> this.accreditationAccount.get(fieldsMapping.get(field.getDescribe().getName()))){
+                    changedFieldsSet.put(field.getDescribe().getName(),'CHANGED');
+                }
+                else{
+                    changedFieldsSet.put(field.getDescribe().getName(),'BLANK');
+                }
+            }else{
+                    changedFieldsSet.put(field.getDescribe().getName(),'BLANK');
+            }
+        }
+
+
+        System.debug('changedFieldsSet is ' +  changedFieldsSet);
     }
 }

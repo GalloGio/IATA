@@ -81,7 +81,7 @@
         <layoutColumns>
             <layoutItems>
                 <behavior>Edit</behavior>
-                <field>SAAM_Deadline_Date__c</field>
+                <field>OSCAR_Deadline__c</field>
             </layoutItems>
         </layoutColumns>
         <style>TwoColumnsLeftToRight</style>

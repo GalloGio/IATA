@@ -515,7 +515,7 @@ public without sharing class ISSP_Registration {
             }
         }
         */
-        else if (isAgency){
+        else if (isAgency && !isNotIATA){
             try {
                 iataCodeInput =  Decimal.valueOf(searchIATACode);
             }
@@ -591,7 +591,7 @@ public without sharing class ISSP_Registration {
         else if (isGSA) {
             whereStr = 'Name like \'%' + searchCompanyName + '%\' and IATA_ISO_Country__c=\'' + searchCountry + '\'';
         }
-        else if (isAgency) {
+        else if (isAgency && !isNotIATA) {
             whereStr = '(IATACode__c=\'' + searchIATACode + '\' OR Airline_Prefix__c=\'' + searchIATACode + '\')';// and RecordType.DeveloperName = \'IATA_Agency\'';
         }
         else if (isNotIATA || isOther) {
@@ -1485,7 +1485,7 @@ public without sharing class ISSP_Registration {
         if (toSearchIataCodeString == 'Yes'){
             toSearchIataCode = true;
             isNotIATA = false;
-            isAgency = true;
+            //isAgency = true;
             showSearchIataCode = true;
             showSearchCountry = false;
             showSearchcompName = false;
@@ -1496,7 +1496,7 @@ public without sharing class ISSP_Registration {
             searchIATACode = '';
             toSearchIataCode = false;
             isNotIATA = true;
-            isAgency = false;
+            //isAgency = false;
             showSearchIataCode = false;
             showSearchCountry = true;
             showSearchcompName = true;

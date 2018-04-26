@@ -309,7 +309,7 @@ global without sharing class AMS_RecordCreatorWebservice {
         //Need to check if is a newgen process, cant use the process because voluntary relinquishment shares the same process and record type as AMS
         Account acc = [SELECT ANG_IsNewGenAgency__c, ANG_FA_Opt_out__c FROM Account WHERE Id =:accountId];
 
-        if(processType.equalsIgnoreCase(NEWVR_PV) && acc.ANG_IsNewGenAgency__c){
+        if(processType.equalsIgnoreCase(NEWVR_PV)){
             accreditationObj = fetchAccreditationObject(accreditationId);
             oscar.Form_Effective_Date__c = accreditationObj.Effective_Date_Of_Change__c;
             oscar.Change_effective_as_of__c = accreditationObj.Effective_Date_Of_Change__c;
@@ -332,7 +332,7 @@ global without sharing class AMS_RecordCreatorWebservice {
             }
         }
 
-        Set<String> processesToUpdateCaseOnOscar = new Set<String>{AMS_Utils.NEWHESTANDARD,AMS_Utils.NEWHELITE, AMS_Utils.NEWAE, AMS_Utils.NGCORRECTION, AMS_Utils.NGCHANGES};
+        Set<String> processesToUpdateCaseOnOscar = new Set<String>{AMS_Utils.NEWHESTANDARD,AMS_Utils.NEWHELITE, AMS_Utils.NEWAE, AMS_Utils.NGCORRECTION, AMS_Utils.NGCHANGES, AMS_Utils.NGOPTINOUT};
         if(processesToUpdateCaseOnOscar.contains(processType)){
             oscar.Oscar_Communication_Case_Id__c = caseId;
         }

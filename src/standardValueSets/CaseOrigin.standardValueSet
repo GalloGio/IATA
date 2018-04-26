@@ -217,11 +217,6 @@
         <label>E-mail to Case - Americas R&amp;S Bulletins</label>
     </standardValue>
     <standardValue>
-        <fullName>E-mail to Case - Americas TAC</fullName>
-        <default>false</default>
-        <label>E-mail to Case - Americas TAC</label>
-    </standardValue>
-    <standardValue>
         <fullName>E-mail to Case - AP central team email</fullName>
         <default>false</default>
         <label>E-mail to Case - AP central team email</label>
@@ -357,6 +352,11 @@
         <label>E-mail to Case - CNS Endorsement</label>
     </standardValue>
     <standardValue>
+        <fullName>E-mail to Case - Commissioner</fullName>
+        <default>false</default>
+        <label>E-mail to Case - Commissioner</label>
+    </standardValue>
+    <standardValue>
         <fullName>E-mail to Case - Costa Rica</fullName>
         <default>false</default>
         <label>E-mail to Case - Costa Rica</label>
@@ -450,6 +450,11 @@
         <fullName>Email to case – GDI risk</fullName>
         <default>false</default>
         <label>Email to case – GDI risk</label>
+    </standardValue>
+    <standardValue>
+        <fullName>E-mail to Case - GDS FOP Support</fullName>
+        <default>false</default>
+        <label>E-mail to Case - GDS FOP Support</label>
     </standardValue>
     <standardValue>
         <fullName>E-mail to Case - Georgia</fullName>
@@ -1220,5 +1225,10 @@
         <fullName>Web SAF</fullName>
         <default>false</default>
         <label>Web SAF</label>
+    </standardValue>
+    <standardValue>
+        <fullName>Massive FOP Creation</fullName>
+        <default>false</default>
+        <label>Massive FOP Creation</label>
     </standardValue>
 </StandardValueSet>

@@ -103,7 +103,7 @@ public with sharing class AMS_OSCAR_Case_Detail_Controller {
         }
     }
 
-    public static Set<String> hidenFieldsNewgenApplications = new Set<String>{'Abbreviated_name__c','Abbreviated_Address__c'};
+    public static Set<String> hidenFieldsNewgenApplications = new Set<String>{};
 
     public List<String> accreditationFieldNames {
         get{
@@ -230,19 +230,21 @@ public with sharing class AMS_OSCAR_Case_Detail_Controller {
         }
         set;
     }
-	
-	//AMSU-125
+    
+    //AMSU-125
     public Boolean loadAMSRemittance(AMS_OSCAR__c oscar) {
         Set<String> locationsClass = new Set<String> {'P', 'D'};        
-        return !String.isBlank(oscar.Process__c) && locationsClass.contains(oscar.Location_Class__c) && (AMS_Utils.oscarNewProcesses.contains(oscar.Process__c) || oscar.Process__c == AMS_Utils.AGENCYCHANGES);
+        Set<String> processesToCheck = new Set<String> {AMS_Utils.AGENCYCHANGES, AMS_Utils.new_HO, AMS_Utils.new_BR};
+
+        return !String.isBlank(oscar.Process__c) && locationsClass.contains(accreditationObj.Location_Class__c) && processesToCheck.contains(oscar.Process__c);
     }
 
     public List<SelectOption> getRfPicklistValues(){
-		//AMSU-125
+        //AMSU-125
         if(loadAMSRemittance(oscarObj)) {
             return getRfPicklistValuesAMS();    
         }
-		
+        
         List<SelectOption> rfPicklistValues = new List<SelectOption>();
         Set<String> rightOptions;
         Set<String> auxOptions = new Set<String>();
@@ -304,8 +306,8 @@ public with sharing class AMS_OSCAR_Case_Detail_Controller {
             return rfPicklistValues;
         
     }
-	
-	//AMSU-125
+    
+    //AMSU-125
     public List<SelectOption> getRfPicklistValuesAMS() {
         List<SelectOption> rfPicklistValues = new List<SelectOption>();
         system.debug('operationCodes: ' +operationCodes);
@@ -356,32 +358,17 @@ public with sharing class AMS_OSCAR_Case_Detail_Controller {
         }
     }
 
+    /*** AMSU-121 Start ***/
+    public Boolean isChangeOfLocation {
+        get {
+            return oscarObj != null && !String.isBlank(oscarObj.Type_of_change__c) && oscarObj.Type_of_change__c.indexOf(AMS_Utils.Location) >= 0;
+        }
+        set;
+    }
+    /*** AMSU-121 End ***/
+
     public static final Set<String> notEditableForNEWGEN = new Set<String>{'Location_Class__c','Location_Type__c','CASS_Number__c','Abbreviated_Address__c','Abbreviated_name__c'};
 
-    public boolean isRevalidationOscar{
-        get{
-            return oscarObj != null && oscarObj.Process__c == AMS_Utils.NGANNUALREVAL;
-        }
-        set;
-    }
-
-    public boolean doNotHaveOscarYet{
-        get{
-                List<AMS_Pax_Accreditation_Form__c> paxLst = [Select Id, HO_Account__c, SAAM_Case__c, SAAM_Case__r.Casenumber from AMS_Pax_Accreditation_Form__c where HO_Account__c = :this.accreditationObj.HO_Account__c and Id != :this.accreditationObj.Id and SAAM_Case__r.ParentId = :this.accreditationObj.SAAM_Case__c ];
-
-                if(!paxLst.isEmpty()){
-                    existingOscarCaseId = paxLst.get(0).SAAM_Case__c;
-                    existingOscarCaseNumber = paxLst.get(0).SAAM_Case__r.Casenumber;
-                }
-
-                return paxLst.isEmpty();
-        }
-        set;
-    }
-
-    public Id existingOscarCaseId{get;set;}
-
-    public String existingOscarCaseNumber{get;set;}
 
     // The extension constructor initializes the private member
     // variable oscarObj by using the getRecord method from the standard
@@ -419,7 +406,7 @@ public with sharing class AMS_OSCAR_Case_Detail_Controller {
                 from AMS_Pax_Accreditation_Form__c where Id = :accreditationId];*/
 
         //query is done using the same fields that will appear on the page
-        List<AMS_Pax_Accreditation_Form__c> accreditationLst = Database.query('SELECT Id, HO_Account__c , '+String.join(accreditationFieldNames, ', ')+' FROM AMS_Pax_Accreditation_Form__c WHERE Id = :accreditationId');
+        List<AMS_Pax_Accreditation_Form__c> accreditationLst = Database.query('SELECT Id, '+String.join(accreditationFieldNames, ', ')+' FROM AMS_Pax_Accreditation_Form__c WHERE Id = :accreditationId');
 
         if(accreditationLst.isEmpty()) return null;
 
@@ -498,7 +485,9 @@ public with sharing class AMS_OSCAR_Case_Detail_Controller {
             }
 
         }catch(Exception e){
-                accreditationObj.addError('An error occured trying to save Accreditation Object, reason:' + e);
+                if(!e.getMessage().contains('FIELD_CUSTOM_VALIDATION_EXCEPTION, CASS Number')){
+                    accreditationObj.addError('An error occured trying to save Accreditation Object, reason:' + e);
+                }
         }
     } 
 

@@ -1639,9 +1639,6 @@ trigger CaseBeforeTrigger on Case (before delete, before insert, before update) 
                         if (IFAPupdatedCase.Financial_Review_Result__c <> IFAPoldCase.Financial_Review_Result__c && !isIfapAuthorizedUser && !IFAPcurrentUserProfile.Name.toLowerCase().contains('system administrator')) {
                             IFAPupdatedCase.addError('Your user does not have the permission to change the Financial Review Result field.');
                         }
-                        //when case has an OSCAR attached must synchronize fields
-                        if(IFAPupdatedCase.Oscar__c != null)
-                            AMS_Utils.syncOSCARwithIFAP(IFAPoldCase, IFAPupdatedCase);
                     }
                 }
             }
@@ -2010,7 +2007,7 @@ trigger CaseBeforeTrigger on Case (before delete, before insert, before update) 
                             // Change the status of the old card to "Cancelled" (only on reissue => Lost/stolen) 
                             if (application.Type_of_application__c == IDCardUtil.APPLICATIONTYPE_REISSUE){
                                 //find old card to cancel it
-                                ID_Card__c[] idCards = [Select Card_Status__c, Valid_To_Date__c From ID_Card__c where Related_Contact__c = :theContact.Id AND Card_Status__c =: IDCardUtil.CARDSTATUS_PRINTED_DELIVERED order by CreatedDate desc];
+                                ID_Card__c[] idCards = [Select Card_Status__c, Valid_To_Date__c From ID_Card__c where Related_Contact__c = :theContact.Id AND Card_Status__c =: IDCardUtil.CARDSTATUS_VALID order by CreatedDate desc];
                                 if (idCards != null && idCards.size() > 0) {
                                     idCards[0].Card_Status__c = IDCardUtil.CARDSTATUS_CANCELED;
                                     update idcards[0];
@@ -2052,6 +2049,29 @@ trigger CaseBeforeTrigger on Case (before delete, before insert, before update) 
             if(AMS_TriggerExecutionManager.checkExecution(Case.getSObjectType(), 'CaseBeforeTrigger')){ 
                 AMS_OscarCaseTriggerHelper.blockForbbidenActions(trigger.New, trigger.oldMap);
                 AMS_OscarCaseTriggerHelper.copyDataFromOscar();
+
+                List<AMS_OSCAR__c> oscarsToUpdate = new List<AMS_OSCAR__c>();
+                Map<Id,Case> oscarIdcases = new Map<Id,Case>();
+
+                for(Case c: (List<Case>)Trigger.new){
+                    if(c.RecordTypeId == IFAPcaseRecordTypeID && c.Oscar__c != null){
+                        oscarIdcases.put(c.Oscar__c,c);
+                    }
+                }
+
+                for(AMS_OSCAR__C oscar : [select Id, Financial_Assessment_requested__c, Financial_Assessment_deadline__c, Assessment_Performed_Date__c, Financial_Review_Result__c from AMS_OSCAR__c where Id in :oscarIdcases.keySet()]){
+
+                    oscar = AMS_Utils.syncOSCARwithIFAP(trigger.oldMap.get(oscarIdcases.get(oscar.Id).Id),oscarIdcases.get(oscar.Id),oscar,false);
+
+                    if(oscar != null) {
+                        oscarsToUpdate.add(oscar);
+                    }
+                }
+                    
+                if(!oscarsToUpdate.isEmpty()){
+                    update oscarsToUpdate;
+                }
+                    
             }
         }
         /*AMS_OSCARCaseTrigger Trigger.isUpdate*/

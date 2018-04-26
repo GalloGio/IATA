@@ -87,6 +87,8 @@ public with sharing class ANG_Risk_Helper{
 	//Case - Reason1__c
 	public static final String CASE_REASON_FINANCIAL_SECURITY_UPDATE = 'Financial Security Update';
 	public static final String CASE_REASON_RHC_75 = 'RHC 75 Follow up';
+	public static final String CASE_REASON_ADOC_REVIEW = 'Adhoc review';
+	public static final String CASE_REASON_YEARLY_REVIEW = 'Yearly review';
 
 	//Case - BSP_CASS__c
 	public static final String CASE_BSP = 'BSP';    
@@ -264,7 +266,9 @@ public with sharing class ANG_Risk_Helper{
 	}
 	
 
-	public static Decimal currencyConverter(String currentCurIso,Decimal ammount,String targetCurIso){
+	public static Decimal currencyConverter(String currentCurIso,Decimal amount,String targetCurIso){
+
+		if(currentCurIso == targetCurIso) return amount;
 
 		if(!convertionsRateMap.containsKey(currentCurIso.toUpperCase())) throw new invalidCurrencyException(INVALID_CUR_EXCEPTION_MESSAGE+currentCurIso);
 		if(!convertionsRateMap.containsKey(targetCurIso.toUpperCase()))  throw new invalidCurrencyException(INVALID_CUR_EXCEPTION_MESSAGE+targetCurIso);
@@ -273,7 +277,7 @@ public with sharing class ANG_Risk_Helper{
 		CurrencyType targetCur = convertionsRateMap.get(targetCurIso.toUpperCase());
 		Decimal toRate = targetCur==null?fromRate:targetCur.ConversionRate;
 
-		Decimal result = ammount==null?0:ammount * toRate/fromRate;
+		Decimal result = amount==null?0:amount * toRate/fromRate;
 		return result.setScale(targetCur.DecimalPlaces, System.RoundingMode.HALF_UP);
 	}
 

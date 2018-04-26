@@ -6,6 +6,8 @@ global with sharing class ANG_ConversionHelper {
 
     public static final Set<String> ALLOWEDRECORDTYPES = new Set<String>{ACCOUNT_AGENCY_RT,ACCOUNT_STANDARD_RT};
 
+    public static final Set<String> INVALIDAGENCYSTATUS = new Set<String>{AMS_utils.ACC_S2_NEWAPPLICATIONPENDING,AMS_utils.ACC_S1_NOTACCREDITED,'',null,AMS_utils.ACC_S3_NOTINOPERATION};
+
     public static final Integer WRONGRECORDTYPE= -2;
     public static final Integer BRANCHABROAD= -3;
     public static final Integer WRONGLOCATIONCLASS= -4;
@@ -203,7 +205,11 @@ global with sharing class ANG_ConversionHelper {
 			if(relationShip.Child_Account__r.Status__c == AMS_Utils.ACC_S0_TERMINATED)
 				if(relationShip.Child_Account__r.Expiry_Date__c < frontierDate)
 					continue;
-
+			
+			if(validateBranchesAbroad(new List<AMS_Agencies_relationhip__c>{relationShip})){// it's a false positive
+				continue;
+			}
+			
 			if(toReturn.get(relationShip.Hierarchy__c) == null){
 				system.debug('Child_Account__r.Top_Parent__r.IATA_ISO_Country__r.Name is ' + relationShip.Child_Account__r.IATA_ISO_Country__r.Name);
 				toReturn.put(relationShip.Hierarchy__c,createNewBrAbroadByCountryHierarchyStructure(relationShip,relationShip.Child_Account__r.IATA_ISO_Country__r.Name));
@@ -730,7 +736,7 @@ global with sharing class ANG_ConversionHelper {
 		Set<Account> accountsToReturn = new Set<Account>();
 
 		For(Account acct: accounts){
-			if(acct.Status__c == AMS_Utils.ACC_S0_TERMINATED || acct.Status__c == AMS_Utils.ACC_S1_NOTACCREDITED || acct.Status__c == '' || acct.Status__c == null)
+			if(INVALIDAGENCYSTATUS.contains(acct.Status__c) || acct.Status__c == AMS_utils.ACC_S0_TERMINATED)
 				continue;
 
 			accountsToReturn.add(acct);
@@ -1251,12 +1257,17 @@ global with sharing class ANG_ConversionHelper {
         
         List<Account> acctToInsert = [SELECT Id, IATACode__c, Status__c, Purge_Flag__c from Account where Id in:accts];
         
+        String statusAA = null;
+
         for(Account acct:acctToInsert){
 
         	if(isAcctElegibleToCreateAuthorization(acct)){
-        		authorizations.add(new Agency_Authorization__c(Account__c = acct.Id, ANG_FormOfPayment_ID__c = 'CC', Status__c = 'Active', RecordTypeId = FormOfPaymentRT));
-        		authorizations.add(new Agency_Authorization__c(Account__c = acct.Id, ANG_FormOfPayment_ID__c = 'CA', Status__c = 'Active', RecordTypeId = FormOfPaymentRT));
-        		authorizations.add(new Agency_Authorization__c(Account__c = acct.Id, ANG_FormOfPayment_ID__c = 'EP', Status__c = 'Active', RecordTypeId = FormOfPaymentRT));
+
+        		statusAA = acct.Status__c == AMS_utils.ACC_S0_TERMINATED ? 'Non-Active' :  'Active';
+
+        		authorizations.add(new Agency_Authorization__c(Account__c = acct.Id, ANG_FormOfPayment_ID__c = 'CC', Status__c = statusAA, RecordTypeId = FormOfPaymentRT));
+        		authorizations.add(new Agency_Authorization__c(Account__c = acct.Id, ANG_FormOfPayment_ID__c = 'CA', Status__c = statusAA, RecordTypeId = FormOfPaymentRT));
+        		authorizations.add(new Agency_Authorization__c(Account__c = acct.Id, ANG_FormOfPayment_ID__c = 'EP', Status__c = statusAA, RecordTypeId = FormOfPaymentRT));
 			}
 		}
 
@@ -1265,7 +1276,7 @@ global with sharing class ANG_ConversionHelper {
 
     public static boolean isAcctElegibleToCreateAuthorization(Account acct){
 
-    	return !(acct.IATACode__c == null ||  acct.Status__c == 'New application pending' || acct.Status__c == 'Not accreditated' || acct.Purge_Flag__c == true);
+    	return !(acct.IATACode__c == null ||  INVALIDAGENCYSTATUS.contains(acct.Status__c) || acct.Purge_Flag__c == true);
 
     }
 

@@ -24,8 +24,8 @@ public class ISSP_ANG_CodeSearch {
 		Ams_Utils.ACC_S0_TERMINATED,
 		Ams_Utils.ACC_S5_CASHNOCOMMISSION,
 		Ams_Utils.ACC_S6_CASHWITHCOMMISSION
-    };    
-	
+    };
+
 	public ISSP_ANG_CodeSearch() {
 		this.riskStatusFilter = 'Active';
 		this.activeSearch = false;
@@ -45,10 +45,22 @@ public class ISSP_ANG_CodeSearch {
 		this.ho_he = '';
 
 		try{
-			this.iataCodeStr = String.valueOf(iataCode);	
+			//
+			// First check is the iata code is a valid integer
+			//
+			this.iataCodeStr = String.valueOf(iataCode);
+
+			//
+			// Get the seach string because it can have zeros on the left.
+			//
+			this.iataCodeStr = Apexpages.currentPage().getParameters().get('searchString');
+
+            if(this.iataCodeStr == null) {
+               this.iataCodeStr = '';
+            }
 		} catch(Exception e) {
 			this.iataCodeStr = '';
-		}		
+		}
 
 		Integer len = iataCodeStr.length();
 
@@ -91,15 +103,15 @@ public class ISSP_ANG_CodeSearch {
 											Location_Type__c,
 											Top_Parent__c,
 											IATA_ISO_Country__r.ANG_Enable_NewGen__c
-									   From Account 
+									   From Account
 									  Where Sector__c = :sector
 									    And Status__c in :statusSet
 									    And RecordTypeId = :AMS_Utils.RECTYPE_IATAAGENCY
-									    And IATACode__c like :iataCodeStr];									    
+									    And IATACode__c like :iataCodeStr];
 
 			if(auxList.size() != 0) {
 				Account auxAgency = auxList[0];
-				
+
 				if(auxAgency.Location_Type__c == Ams_Utils.AE || auxAgency.Location_Type__c == Ams_Utils.BR || auxAgency.Location_Type__c == Ams_Utils.SA) {
 
 					if(auxAgency.Location_Type__c == Ams_Utils.AE) {
@@ -131,7 +143,7 @@ public class ISSP_ANG_CodeSearch {
 												   Location_Type__c,
 												   IATA_ISO_Country__r.ANG_Enable_NewGen__c
 											  From Account
-											 Where id =: auxAgency.Top_Parent__c];					
+											 Where id =: auxAgency.Top_Parent__c];
 
 					String auxHoHe = Label.ISSP_ANG_IATA_CODE_SEARCH_IATA_CODE_HO_HE;
 					if(parentAgency.Location_Type__c == Ams_Utils.HE) {
@@ -142,20 +154,20 @@ public class ISSP_ANG_CodeSearch {
 						this.ho_he = auxHoHe.replace('HO / HE', Label.ISSP_AMS_NoC_Head_Office);
 					}
 
-					heMessage = aux3.replace('%PARENT_LOCATION%', auxReplacement);		 
+					heMessage = aux3.replace('%PARENT_LOCATION%', auxReplacement);
 
 					this.agency = parentAgency;
 
 				} else {
 					this.agency = auxAgency;
 				}
-				
+
 				if(this.agency.Active_Guarantees__c != 0) {
 					this.financialSecurityExists = true;
 				}
 
 				riskStatus = this.agency.ANG_HE_RiskStatus__c;
-	
+
 				this.accreditationModel = AMS_Utils.officialAccreditationTypeMap.get(this.agency.ANG_Accreditation_Model__c);
 
 				this.showIrregularities = (!agency.IATA_ISO_Country__r.ANG_Enable_NewGen__c || !isTravel);
@@ -168,7 +180,7 @@ public class ISSP_ANG_CodeSearch {
 				String aux = Label.ISSP_ANG_IATA_CODE_SEARCH_NOTHING_FOUND;
 
 				this.errorMessage = aux.replace('%TYPE%', auxReplacement);
-			}									    		
+			}
 		}
 		return null;
     }
@@ -176,7 +188,7 @@ public class ISSP_ANG_CodeSearch {
     public PageReference refreshRiskEventsTable() {
 
         riskEventsList = null;
-        
+
         return null;
     }
 
@@ -214,7 +226,7 @@ public class ISSP_ANG_CodeSearch {
 		List<ANG_Agency_Risk_Event__c> events = Database.query(soqlStr);
 
 		for(ANG_Agency_Risk_Event__c event : events) {
-			riskEventsList.add(new RiskEvent(event));						
+			riskEventsList.add(new RiskEvent(event));
 		}
 		return riskEventsList;
     }
@@ -231,7 +243,7 @@ public class ISSP_ANG_CodeSearch {
 			this.description = event.ANG_Risk_Type__r.ANG_Description__c;
 			this.dateAssigned = event.ANG_Issued_Date__c;
 			this.dateExpired = event.ANG_expiration_date_ff__c;
-			this.iataCode = event.ANG_AccountId__r.IATACode__c;		
+			this.iataCode = event.ANG_AccountId__r.IATACode__c;
 			this.status = translateStatus(event.ANG_Event_Status__c, event.ANG_Expired__c);
 		}
 

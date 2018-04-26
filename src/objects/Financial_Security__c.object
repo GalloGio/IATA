@@ -81,7 +81,6 @@
         <fullName>ANG_Minimum_Financial_Security__c</fullName>
         <externalId>false</externalId>
         <formula>Reception_Case__r.Financial_Security_Amount__c</formula>
-        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
         <label>Financial Security Amount (Minimum)</label>
         <precision>18</precision>
         <required>false</required>
@@ -2227,9 +2226,7 @@ IMAGE(&quot;/servlet/servlet.FileDownload?file=015200000011tph&quot;,&quot;Reque
         </filters>
         <label>Financial Securities Actives - BSP FR</label>
         <language>en_US</language>
-        <sharedTo>
-            <roleAndSubordinatesInternal>StaffFrance</roleAndSubordinatesInternal>
-        </sharedTo>
+        <sharedTo/>
     </listViews>
     <listViews>
         <fullName>N_ASIA_Active_Securities</fullName>

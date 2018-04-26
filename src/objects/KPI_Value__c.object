@@ -293,6 +293,11 @@
                     <default>false</default>
                     <label>Central</label>
                 </value>
+                <value>
+                    <fullName>GDC Madrid</fullName>
+                    <default>false</default>
+                    <label>GDC Madrid</label>
+                </value>
             </valueSetDefinition>
         </valueSet>
     </fields>

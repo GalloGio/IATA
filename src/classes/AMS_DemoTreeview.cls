@@ -186,8 +186,22 @@ public class AMS_DemoTreeview {
 
         AMS_OSCAR__C oscar =  [Select Id ,IATA_Codes_OK__c, IATA_Codes_NOK__c from AMS_OSCAR__c where Id= :oscarId.Id LIMIT 1];
 
-        List<String> iATA_Codes_OK =  oscar.IATA_Codes_OK__c == null ? new List<String>() : oscar.IATA_Codes_OK__c.split(',');
-        List<String> iATA_Codes_NOK = oscar.IATA_Codes_NOK__c == null ? new List<String>() : oscar.IATA_Codes_NOK__c.split(',');
+        String iatacodesOK = oscar.IATA_Codes_OK__c;
+        String iatacodesNOK = oscar.IATA_Codes_NOK__c;
+
+        if(oscar.IATA_Codes_OK__c <> null){
+            iatacodesOK = iatacodesOK.replace('\r\n', '');
+            iatacodesOK = iatacodesOK.replace('\n', '');
+            iatacodesOK = iatacodesOK.replace('\r', '');
+        }
+        if(oscar.IATA_Codes_NOK__c <> null){
+            iatacodesNOK = iatacodesNOK.replace('\r\n', '');
+            iatacodesNOK = iatacodesNOK.replace('\n', '');
+            iatacodesNOK = iatacodesNOK.replace('\r', '');
+        }
+        
+        List<String> iATA_Codes_OK =  oscar.IATA_Codes_OK__c == null ? new List<String>() : iatacodesOK.split(',');
+        List<String> iATA_Codes_NOK = oscar.IATA_Codes_NOK__c == null ? new List<String>() : iatacodesNOK.split(',');
 
         Set<String> iATA_Codes_OK_set = new Set<String>();
         Set<String> iATA_Codes_NOK_set = new Set<String>();

@@ -43,7 +43,7 @@ private class ISSP_ANG_CodeSearchTest {
                 OwnerId = UserInfo.getUserId(),
                 IATACode__c = '12345678901'
             );
-    
+
         insert new List<Account>{a1,a2};
 
         Account a3 = new Account (
@@ -56,7 +56,7 @@ private class ISSP_ANG_CodeSearchTest {
                 Location_type__c = AMS_Utils.AE,
                 ANG_Accreditation_Model__c = AMS_Utils.ACCREDITATIONMODEL_CASH,
                 OwnerId = UserInfo.getUserId(),
-                IATACode__c = '87654321'                
+                IATACode__c = '87654321'
             );
 
         insert a3;
@@ -69,7 +69,7 @@ private class ISSP_ANG_CodeSearchTest {
 
 		ANG_Risk_Event_Type__c t = new ANG_Risk_Event_Type__c(
 			ANG_Description__c = 'Active event 2',
-			ANG_Expiration__c = 1233,    
+			ANG_Expiration__c = 1233,
 			ANG_Risk_ID__c = '4234381'
 			);
 
@@ -81,8 +81,8 @@ private class ISSP_ANG_CodeSearchTest {
 		insert ca;
 
 		ANG_Agency_Risk_Event__c e = new ANG_Agency_Risk_Event__c(
-			ANG_Risk_Type__c = t.id,    
-			ANG_HE_AccountId__c = a1.id,  
+			ANG_Risk_Type__c = t.id,
+			ANG_HE_AccountId__c = a1.id,
 			ANG_Issued_Date__c = Date.today(),
 			ANG_Event_Status__c = 'Active',
 			ANG_AccountId__c = a1.id,
@@ -99,7 +99,10 @@ private class ISSP_ANG_CodeSearchTest {
 
 	@isTest static void test1() {
         ISSP_ANG_CodeSearch controller = new ISSP_ANG_CodeSearch();
-		
+
+		Test.setCurrentPageReference(new PageReference('Page.ISSP_ANG_CodeSearch'));
+		System.currentPageReference().getParameters().put('searchString', '12345678');
+
         controller.iataCode = 12345678;
 
         controller.doSearch();
@@ -120,27 +123,37 @@ private class ISSP_ANG_CodeSearchTest {
 
         rel = controller.getRiskEventsList();
 
-        //-----------------------------------------------//        
+        //-----------------------------------------------//
 
         controller.iataCode = 1234567;
+		Test.setCurrentPageReference(new PageReference('Page.ISSP_ANG_CodeSearch'));
+		System.currentPageReference().getParameters().put('searchString', '1234567');
 
         controller.doSearch();
 
         System.assertEquals('12345678', controller.agency.IATACode__c);
 
         controller.iataCode = long.valueOf('12345678901');
+		Test.setCurrentPageReference(new PageReference('Page.ISSP_ANG_CodeSearch'));
+		System.currentPageReference().getParameters().put('searchString', '12345678901');
+
 
         controller.doSearch();
 
         System.assertEquals('12345678901', controller.agency.IATACode__c);
 
         controller.iataCode = 1234567890;
+   		Test.setCurrentPageReference(new PageReference('Page.ISSP_ANG_CodeSearch'));
+		System.currentPageReference().getParameters().put('searchString', '1234567890');
+
 
         controller.doSearch();
 
         System.assertEquals('12345678901', controller.agency.IATACode__c);
 
         controller.iataCode = 87654321;
+   		Test.setCurrentPageReference(new PageReference('Page.ISSP_ANG_CodeSearch'));
+		System.currentPageReference().getParameters().put('searchString', '87654321');
 
         controller.doSearch();
 
@@ -150,10 +163,14 @@ private class ISSP_ANG_CodeSearchTest {
         // Error case
         //
         controller.iataCode = 111;
+   		Test.setCurrentPageReference(new PageReference('Page.ISSP_ANG_CodeSearch'));
+		System.currentPageReference().getParameters().put('searchString', '111');
 
         controller.doSearch();
 
         controller.iataCode = 11111111;
+   		Test.setCurrentPageReference(new PageReference('Page.ISSP_ANG_CodeSearch'));
+		System.currentPageReference().getParameters().put('searchString', '11111111');
 
         controller.doSearch();
 
