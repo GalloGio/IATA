@@ -73,36 +73,14 @@ private class ISSP_TIP_Home_Controller_Test{
         con.Email = 'Test@test11.com';
         insert con;
 
-        //insert user
-        UserRole usrrole = [SELECT id from UserRole limit 1][0];
-
-        user.ProfileID = [Select Id From Profile Where Name='ISS Portal Delegated Admin User'].id;
-        user.EmailEncodingKey = 'ISO-8859-1';
-        user.LanguageLocaleKey = 'en_US';
-        user.TimeZoneSidKey = 'America/New_York';
-        user.LocaleSidKey = 'en_US';
-        user.FirstName = 'first';
-        user.LastName = 'last';
-        user.userRoleID = usrrole.id;
-        user.Username = 'test@appirio.com';   
-        user.CommunityNickname = 'testUser123';
-        user.Alias = 't1';
-        user.Email = 'no@email.com';
-        user.IsActive = true;
-        user.ContactId = con.Id;
-            
-        System.runAs(new User(id = UserInfo.getUserId())){
-            insert user;
-        }    
-        
-        System.debug('##newUser Id: ' + user.Id);
-        con.OwnerId = user.Id;
-        update con;
-
-        parent.OwnerId = user.Id;
-        update parent;
-
-
+       user = ISSP_ObjectFactory.createPortalUser(con);
+       con.OwnerId = user.Id;
+       update con;
+       
+       System.debug('##newUser Id: ' + user.Id);
+       con.OwnerId = user.Id;
+       update con;
+       
         system.debug('##HERE: ' + [select id, CaseArea__c, reason1__c, AccountId,RecordTypeid,Status from case]);
         System.runAs(user){
             insert newCase;

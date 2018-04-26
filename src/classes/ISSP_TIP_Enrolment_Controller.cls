@@ -1,4 +1,4 @@
-public with sharing class ISSP_TIP_Enrolment_Controller {
+public without sharing class ISSP_TIP_Enrolment_Controller {
 
 
 	public String applyLanguage {get; set;}
