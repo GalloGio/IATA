@@ -922,6 +922,7 @@
         <fullName>GSS_File_Naming_Convention1</fullName>
         <columns>NAME</columns>
         <columns>File_Naming_Convention__c</columns>
+        <columns>Frequency__c</columns>
         <filterScope>Everything</filterScope>
         <filters>
             <field>Is_Reference__c</field>
@@ -934,11 +935,16 @@
             <value>GSS</value>
         </filters>
         <filters>
-            <field>File_Naming_Convention__c</field>
-            <operation>contains</operation>
-            <value>Suffix]&amp;</value>
+            <field>Frequency__c</field>
+            <operation>equals</operation>
+            <value>Daily</value>
         </filters>
-        <label>GSS_File_Naming_Convention_&amp;</label>
+        <filters>
+            <field>NAME</field>
+            <operation>notContain</operation>
+            <value>CAC</value>
+        </filters>
+        <label>GSS_File_Naming_Convention_Daily</label>
         <language>en_US</language>
     </listViews>
     <listViews>
@@ -1076,16 +1082,21 @@
         <fullName>Test_Layouts</fullName>
         <columns>NAME</columns>
         <columns>Reference__c</columns>
-        <columns>Atom__c</columns>
         <columns>Class__c</columns>
         <columns>File_Format__c</columns>
         <columns>Frequency__c</columns>
         <columns>Magnitude__c</columns>
+        <columns>Atom__c</columns>
         <filterScope>Everything</filterScope>
         <filters>
-            <field>Atom__c</field>
-            <operation>contains</operation>
-            <value>0</value>
+            <field>File_Format__c</field>
+            <operation>equals</operation>
+            <value>XML</value>
+        </filters>
+        <filters>
+            <field>Product_Type__c</field>
+            <operation>equals</operation>
+            <value>GSS</value>
         </filters>
         <label>ZZ-MISC SEARCHES</label>
         <language>en_US</language>
@@ -1124,6 +1135,11 @@
             <operation>equals</operation>
             <value>GSS</value>
         </filters>
+        <filters>
+            <field>Magnitude__c</field>
+            <operation>equals</operation>
+            <value>Master</value>
+        </filters>
         <label>01_GSS_Member_TXT_Masters</label>
         <language>en_US</language>
     </listViews>
@@ -1137,19 +1153,12 @@
         <columns>Magnitude__c</columns>
         <columns>Product_Type__c</columns>
         <columns>Geo_Coverage_Definition__c</columns>
-        <columns>Master_File_Description__c</columns>
-        <columns>Is_Reference__c</columns>
         <columns>Order_By__c</columns>
         <filterScope>Everything</filterScope>
         <filters>
             <field>Is_Reference__c</field>
             <operation>equals</operation>
             <value>0</value>
-        </filters>
-        <filters>
-            <field>File_Format__c</field>
-            <operation>equals</operation>
-            <value>TXT</value>
         </filters>
         <filters>
             <field>Reference__c</field>
@@ -1161,7 +1170,7 @@
             <operation>equals</operation>
             <value>GSS</value>
         </filters>
-        <label>01_GSS_Member_NEWGEN_TXT_Masters</label>
+        <label>01_GSS_Member_NEWGEN_Masters</label>
         <language>en_US</language>
     </listViews>
     <listViews>
@@ -1200,6 +1209,7 @@
         <filters>
             <field>Reference__c</field>
             <operation>equals</operation>
+            <value>Reference - GSS Non Member</value>
         </filters>
         <label>02_GSS_3rd_Party_TXT_Masters</label>
         <language>en_US</language>
