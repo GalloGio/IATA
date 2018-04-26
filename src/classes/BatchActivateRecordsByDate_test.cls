@@ -158,4 +158,15 @@ public class BatchActivateRecordsByDate_test {
 		*/
 
 	}
+
+	@isTest
+	public static void testScheduledJobs (){
+		Test.startTest();
+		Time timeToExecute = Time.newInstance(10, 10, 0, 0);
+		Id jobID = BatchActivateRecordsByDate.scheduleJob(timeToExecute);
+		Test.stopTest();
+		system.debug('##test: ' +[SELECT name FROM CronJobDetail where id = :jobID]);
+		System.assertEquals(1,[SELECT count() FROM CronJobDetail where name like '%BatchActivateRecordsByDate%']);
+	}
+
 }

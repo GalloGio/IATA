@@ -1,4 +1,4 @@
-global class BatchActivateRecordsByDate implements  Database.Batchable<sObject>, Database.Stateful {
+global class BatchActivateRecordsByDate implements  Database.Batchable<sObject>, Database.Stateful, Schedulable {
 	
 	public static final Integer BATCH_SIZE = 200; 
 
@@ -102,20 +102,18 @@ global class BatchActivateRecordsByDate implements  Database.Batchable<sObject>,
 		regsToUpdate = new List<sObject>();
 	}
 
- /*   global void execute (SchedulableContext c) {
+    public static id scheduleJob(Time runningTime){
+        BatchActivateRecordsByDate bat= new BatchActivateRecordsByDate(PROVIDER_TYPE);
+        string format='ss mm HH * * ? *';
+        string sch=Datetime.newInstance(system.Today(),runningTime).format(format);
+        return system.schedule('BatchActivateRecordsByDate for TIP Job '+sch, sch, bat);
+    }
 
-        try{
-            String q = 'SELECT id FROM Account WHERE recordtypeid = ' +TIP_Utils.PAYMENT_PROVIDER_RECORD_TYPE_ID +' AND (Accreditation_date__c = '+System.Today() + ' OR Accreditation_date__c = :System.Today()-1) ';
-            BatchActivateRecordsByDate btc = new BatchActivateRecordsByDate(q);
-            Id batchInstanceId = Database.executeBatch(btc,1000);     
-        }
+    public void execute(SchedulableContext context){
+        Database.executeBatch(this); 
+    }
 
-        catch(Exception ex){
-            system.debug(ex);
-        } 
 
-    }      */
-    
 	
 	global Database.QueryLocator start(Database.BatchableContext BC) {
 		system.debug('##Query: ' + query);
