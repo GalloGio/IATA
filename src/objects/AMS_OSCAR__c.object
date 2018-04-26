@@ -18380,15 +18380,15 @@ if(Change_effective_as_of__c - today() &gt; 0,&quot;30&quot;,&quot;0&quot;)))</f
                 <default>false</default>
             </values>
             <values>
+                <fullName>Nil CC</fullName>
+                <default>false</default>
+            </values>
+            <values>
                 <fullName>No</fullName>
                 <default>false</default>
             </values>
             <values>
                 <fullName>Yes</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Nil CC</fullName>
                 <default>false</default>
             </values>
         </picklistValues>
@@ -24901,15 +24901,15 @@ if(Change_effective_as_of__c - today() &gt; 0,&quot;30&quot;,&quot;0&quot;)))</f
                 <default>false</default>
             </values>
             <values>
+                <fullName>Nil CC</fullName>
+                <default>false</default>
+            </values>
+            <values>
                 <fullName>No</fullName>
                 <default>false</default>
             </values>
             <values>
                 <fullName>Yes</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Nil CC</fullName>
                 <default>false</default>
             </values>
         </picklistValues>
@@ -28862,15 +28862,15 @@ if(Change_effective_as_of__c - today() &gt; 0,&quot;30&quot;,&quot;0&quot;)))</f
                 <default>false</default>
             </values>
             <values>
+                <fullName>Nil CC</fullName>
+                <default>false</default>
+            </values>
+            <values>
                 <fullName>No</fullName>
                 <default>false</default>
             </values>
             <values>
                 <fullName>Yes</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Nil CC</fullName>
                 <default>false</default>
             </values>
         </picklistValues>
@@ -30764,15 +30764,15 @@ if(Change_effective_as_of__c - today() &gt; 0,&quot;30&quot;,&quot;0&quot;)))</f
                 <default>false</default>
             </values>
             <values>
+                <fullName>Nil CC</fullName>
+                <default>false</default>
+            </values>
+            <values>
                 <fullName>No</fullName>
                 <default>false</default>
             </values>
             <values>
                 <fullName>Yes</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Nil CC</fullName>
                 <default>false</default>
             </values>
         </picklistValues>
@@ -40891,15 +40891,15 @@ if(Change_effective_as_of__c - today() &gt; 0,&quot;30&quot;,&quot;0&quot;)))</f
                 <default>false</default>
             </values>
             <values>
+                <fullName>Nil CC</fullName>
+                <default>false</default>
+            </values>
+            <values>
                 <fullName>No</fullName>
                 <default>false</default>
             </values>
             <values>
                 <fullName>Yes</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Nil CC</fullName>
                 <default>false</default>
             </values>
         </picklistValues>
