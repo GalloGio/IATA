@@ -328,7 +328,6 @@ public class AMS_OSCAR_ProcessViewerController {
             Map<String,List<String>> dependentPicklistMap = AMS_Utils.GetDependentOptions('AMS_OSCAR__c',fr.getController().getDescribe().getName(),fr.getName());
             if(!dependentPicklistMap.isEmpty())
                 dependentPicklistValues.addAll(dependentPicklistMap.get(String.valueOf(oscar.Process__c)));
-            System.debug('Lista Dependente: ' + dependentPicklistValues);
         }
         
         List<SelectOption> picklistValues = new List<SelectOption>();
@@ -338,13 +337,13 @@ public class AMS_OSCAR_ProcessViewerController {
         String fieldName = fr.getName();
         
         String currentPickValue = String.valueOf(oscar.get(fieldName));
-        System.debug('FOR FIELD: '+ fieldName + ' value is: '+ currentPickValue);
 
         if(currentPickValue == null && (AMS_Utils.oscarNewGenProcesses.contains(oscar.Process__c) || oscar.Process__c == AMS_Utils.PCI_COMPLIANT))
             picklistValues.add(new SelectOption('', '--None--'));
 
-        if(currentPickValue != null)
+        if(currentPickValue != null){
             picklistValues.add(new SelectOption(currentPickValue, currentPickValue));
+        }
         
 
 
@@ -354,13 +353,29 @@ public class AMS_OSCAR_ProcessViewerController {
             if(currentPickValue != f.getValue() 
                 && (dependentPicklistValues.isEmpty() ||  dependentPicklistValues.contains(f.getValue()))
                 )
+
+            if(canBeDisplayed(fieldName,oscar.Process__c,f.getValue()))
                 picklistValues.add(new SelectOption(f.getValue(), f.getLabel()));
-                 System.debug('FOR FIELD: '+ fieldName + ' select value is: '+ f.getValue() + ' isActive: ' + f.isActive());
         }
         
         return picklistValues;
     }
 
+
+    @TestVisible private boolean canBeDisplayed(String fieldName, String oscarProcess, String fieldValue){
+
+        if(!(fieldName == 'Is_PCI_compliant__c' && fieldValue == 'Corporate Card'))
+            return true;
+
+        if(!AMS_Utils.oscarNewGenProcesses.contains(oscarProcess))
+            return true;
+
+        if(oscarProcess == AMS_Utils.NGCORRECTION || oscarProcess == AMS_Utils.NGFOP)
+            return true;
+
+        return false;
+
+    }
 
     public class StepFieldsDataWrapper{
         public String fieldApiName{get;set;}
