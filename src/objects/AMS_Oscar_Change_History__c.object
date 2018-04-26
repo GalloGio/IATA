@@ -53,6 +53,7 @@
     <enableStreamingApi>true</enableStreamingApi>
     <fields>
         <fullName>Data__c</fullName>
+        <description>A json with serialized data related to the oscar</description>
         <externalId>false</externalId>
         <label>Data</label>
         <length>131072</length>
@@ -62,6 +63,7 @@
     </fields>
     <fields>
         <fullName>OSCAR__c</fullName>
+        <description>Oscar which data is related</description>
         <externalId>false</externalId>
         <label>OSCAR</label>
         <referenceTo>AMS_OSCAR__c</referenceTo>
@@ -75,6 +77,7 @@
     </fields>
     <fields>
         <fullName>Type__c</fullName>
+        <description>Type of data serialized on the record</description>
         <externalId>false</externalId>
         <label>Type</label>
         <required>false</required>
