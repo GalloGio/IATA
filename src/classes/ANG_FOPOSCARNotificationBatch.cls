@@ -18,9 +18,9 @@ global class ANG_FOPOSCARNotificationBatch implements Database.Batchable<Case>, 
 
 	//Templates Names to use
 	private Map<String,String> notificationTemplates;
-	// static dates:
-	private static Date dateReminder; //15 days ago
-	private static Date dateNonCompliance; //30 days ago
+	//dates:
+	Date dateReminder; //15 days ago
+	Date dateNonCompliance; //30 days ago
 
 	List<String> errors = new List<String>();
 
