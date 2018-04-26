@@ -1,136 +1,119 @@
 <apex:page controller="AMS_PCI_Compliant_Mass_OSCAR_CreationCtr" sidebar="false">
-  <script src="//code.jquery.com/jquery-1.12.3.min.js"/>
-  <script src="//cdn.datatables.net/1.10.4/js/jquery.dataTables.min.js" />
-  <link rel="stylesheet" href="//cdn.datatables.net/1.10.4/css/jquery.dataTables.css" />
 
-  <style type="text/css">
-    .filterBox {width: 250px;}
-    .black_overlay{
-        position: absolute;
-        top: 0%;
-        left: 0%;
-        width: 100%;
-        height: 100%;
-        background-color: black;
-        z-index:1001;
-        -moz-opacity: 0.8;
-        opacity:.80;
-        filter: alpha(opacity=80);
-    }
-    .white_content {
-        position: absolute;
-        top: 25%;
-        left: 25%;
-        width: 50%;
-        padding: 16px;
-        z-index:1002;
-        overflow: auto;
-    }
-    .errorMessage {color: #D8000C;}
-    .successMessage {color: #4F8A10;}
-  </style>
-  <script>
-    $( document ).ready(function() {
-      $(".regionPicklist option[value='GVA HO']").remove();
-      $(".regionPicklist option[value='Europe (Americas Countries)']").remove();
-      $( ".requiredBox" ).each(function() {
-        $(this).wrap( '<div class="requiredInput"></div>');
-        $(this).before('<div class="requiredBlock"></div>');
-      });
-    });
-  </script>
+	<style type="text/css">
+	.filterBox { width: 100%; }
+	.alignTop td { vertical-align: baseline; }
+	.resultsTable td { width: 150px }
+	.resultsTable tfoot td:first-child { font-weight: bold; }
+	</style>
 
-  <apex:form id="mainForm">
-    <apex:actionFunction action="{!null}" name="refreshForm" reRender="searchResult"/>
-    <c:Loading />
-    <apex:pageBlock title="PCI Oscar mass creation" mode="edit">
-      <table width="100%" border="0">
-        <tr>
-          <td width="200" valign="top">
-            <apex:pageBlock id="filters" title="Filters" mode="edit">
-              <apex:pageBlockButtons location="bottom">
-                <apex:commandButton value="Search" action="{!searchPreview}" rerender="mainForm" status="Loading"/>
-                <apex:commandButton value="Reset" action="{!reset}" rerender="mainForm" status="Loading"/>
-              </apex:pageBlockButtons>
-              <apex:pageBlockSection id="filterSection" columns="1">
-                <apex:selectList value="{!filter.operation}" label="Operation Type" multiselect="false" size="1" required="true" styleclass="filterBox requiredBox" disabled="true">
-                  <apex:selectOption itemValue="PCI" itemLabel="PCI"/>
-                </apex:selectList>
-                <apex:selectList value="{!filter.region}" label="Regions" multiselect="false" size="1" required="true" styleclass="filterBox requiredBox">
-                  <apex:selectOption itemValue="" itemLabel="-- None --" />
-                  <apex:selectOption itemValue="Americas" itemLabel="Americas" />
-                  <apex:selectOption itemValue="Europe" itemLabel="Europe" />
-                  <apex:selectOption itemValue="Africa & Middle East" itemLabel="Africa & Middle East" />
-                  <apex:selectOption itemValue="China & North Asia" itemLabel="China & North Asia" />
-                  <apex:selectOption itemValue="Asia & Pacific" itemLabel="Asia & Pacific" />
-                  <apex:actionSupport event="onchange" reRender="countryList" id="Us3"/>
-                </apex:selectList>
-                <c:MultiselectPicklist id="countryList" 
-                           leftLabel="{!$Label.ISSP_AMS_eBulletin_AvailableCountries}" 
-                           leftOptions="{!countryNameListSelectOption}"
-                           rightLabel="{!$Label.ISSP_AMS_eBulletin_SelectedCountries}"
-                           rightOptions="{!CountrySelected}"
-                           size="8"
-                           width="100px"
-                           btn_up_down="false"
-                           readonly="false"/>
-              </apex:pageBlockSection>
-            </apex:pageBlock>
-          </td>
-          <td valign="top">
-            <apex:pageBlock id="searchResult" title="Result">
-              <apex:pageMessage severity="error" 
-                                strength="1" 
-                                summary="Too many accounts founded, please remove some countries from the filter" 
-                                rendered="{!tooMuchResults}"/>    
+	<apex:form id="mainForm">
+		<c:Loading />
+		<apex:pageBlock title="PCI Oscar mass creation" mode="edit">
+			<apex:pageMessages/>
+			<apex:panelGrid columns="2" rowClasses="alignTop">
+				<apex:pageBlockSection id="filters" title="Filters" columns="1">
+					
+					<apex:pageBlockSectionItem labelTitle="Operation Type">
+						<apex:outputLabel value="Operation Type"/>
+						<apex:outputPanel styleClass="requiredInput" layout="block">
+							<apex:outputPanel styleClass="requiredBlock" layout="block"/>
+							<apex:selectList value="{!operation}" multiselect="false" size="1" required="true" styleclass="filterBox">
+								<apex:selectOption itemValue="PCI" itemLabel="PCI"/>
+								<apex:selectOption itemValue="FOP" itemLabel="FOP Oscars"/>
 
-              
-              
-              <apex:pageBlockButtons location="bottom">
-                <apex:commandButton value="{!approvalButtonLabel}" disabled="{!OR(isBatchRunning, isBatchFinished, srw.totalAccounts == 0, tooMuchResults)}" action="{!createPCIOscar}"/>                 
-              </apex:pageBlockButtons>
-              <table border="0" style="display: {!IF(tooMuchResults, 'none', '')}">
-                <tr>
-                  <th width="150px">Country</th>
-                  <th width="150px" align="center"># Cases to create</th>
-                  <th width="150px" align="center"># Errors</th>
-                  <th width="150px" align="center"># Created Cases</th>
-                </tr>
-                <apex:repeat value="{!srw.mapNrAccounts}" var="country">
-                  <tr>
-                      <td>{!country}</td>
-                      <td><apex:outputText value="{!srw.mapNrAccounts[country]}"/></td>
-                      <td><apex:outputText value="{!srw.mapCountriesErrors[country]}"/></td>
-                      <td><apex:outputText value="{!IF(!isBatchFinished,0,srw.mapNrAccounts[country] - srw.mapCountriesErrors[country])}"/></td>
-                  </tr>
-                </apex:repeat>
-                  <tr>
-                      <td style="font-weight: bold;">Total</td>
-                      <td>{!srw.totalAccounts}</td>
-                      <td>{!srw.totalErrors}</td>
-                      <td>{!IF(!isBatchFinished,0,srw.totalAccounts - srw.totalErrors)}</td>
-                  </tr>
-              </table>
-              <br/>
-              <br/>
-              <apex:actionRegion >
-                <apex:outputPanel id="batchInfo">
-                  <apex:pageMessage severity="info" strength="1" summary="The batch is running" rendered="{!isBatchRunning}"/>
-                  <apex:pageMessage severity="confirm" strength="1" summary="The batch is completed" rendered="{!isBatchFinished}"/>
-                </apex:outputPanel>
-                <apex:actionPoller action="{!checkBatchStatus}" reRender="batchInfo, lstAccounts" interval="5" enabled="{!isPollerActive}" 
-                                   oncomplete="if('{!isBatchFinished}' == 'true') {refreshForm();}"/>
-              </apex:actionRegion> 
-              <c:AMS_Batch_Progress_Bar id="progressBar"
-                             cNumberOfJobs="1" 
-                             cBatchId="{!batchId}"
-                             cIsCompleted="{!NOT(isBatchFinished)}"
-                             rendered="{!isBatchRunning || isBatchFinished}"
-              />
-            </apex:pageBlock>
-          </td>
-        </tr>
-      </table>
-    </apex:pageBlock>
-  </apex:form>
+								<apex:actionSupport event="onchange" reRender="filters" id="Us2"/>
+							</apex:selectList>
+						</apex:outputPanel>
+					</apex:pageBlockSectionItem>
+
+					<apex:pageBlockSectionItem labelTitle="Regions">
+						<apex:outputLabel value="Regions"/>
+						<apex:outputPanel styleClass="requiredInput" layout="block">
+							<apex:outputPanel styleClass="requiredBlock" layout="block"/>
+							<apex:selectList value="{!region}" multiselect="false" size="1" required="true" styleclass="filterBox">
+								<apex:selectOption itemValue="" itemLabel="-- None --" />
+								<apex:selectOption itemValue="Americas" itemLabel="Americas" />
+								<apex:selectOption itemValue="Europe" itemLabel="Europe" />
+								<apex:selectOption itemValue="Africa & Middle East" itemLabel="Africa & Middle East" />
+								<apex:selectOption itemValue="China & North Asia" itemLabel="China & North Asia" />
+								<apex:selectOption itemValue="Asia & Pacific" itemLabel="Asia & Pacific" />
+
+								<apex:actionSupport event="onchange" reRender="filters" id="Us3"/>
+							</apex:selectList>
+						</apex:outputPanel>
+					</apex:pageBlockSectionItem>
+
+					<apex:pageBlockSectionItem helpText="If operation is FOP Oscars, only New Gen countries will be selected">
+						<c:MultiselectPicklist id="countryList" 
+							leftLabel="{!$Label.ISSP_AMS_eBulletin_AvailableCountries}" 
+							leftOptions="{!availableCountries}"
+							rightLabel="{!$Label.ISSP_AMS_eBulletin_SelectedCountries}"
+							rightOptions="{!selectedCountries}"
+							size="8"
+							width="100px"
+							btn_up_down="false"
+							readonly="false"
+							rendered="{!NOT(ISBLANK(operation))}"/>
+					</apex:pageBlockSectionItem>
+
+					<apex:pageBlockSectionItem id="locationTypes">
+						<c:MultiselectPicklist 
+							leftLabel="Available Locations" 
+							leftOptions="{!availableLocations}"
+							rightLabel="Selected Locations"
+							rightOptions="{!selectedLocations}"
+							size="8"
+							width="100px"
+							btn_up_down="false"
+							readonly="false"
+							rendered="{!NOT(ISBLANK(operation))}"/>
+					</apex:pageBlockSectionItem>
+
+					<apex:pageBlockSectionItem>
+						<apex:outputPanel layout="block" style="text-align: center;">
+							<apex:commandButton value="Search" action="{!search}" rerender="mainForm" status="Loading"/>
+							<apex:commandButton value="Reset" action="{!reset}" rerender="mainForm" status="Loading"/>
+						</apex:outputPanel>
+					</apex:pageBlockSectionItem>
+				</apex:pageBlockSection>
+
+				<apex:pageBlockSection id="searchResult" title="Result" columns="1">
+					<apex:pageMessage severity="error" 
+					strength="1" 
+					summary="Too many accounts founded, please remove some countries from the filter" 
+					rendered="{!tooMuchResults}"/>
+
+					<apex:dataTable value="{!summary}" var="country" rendered="{!NOT(tooMuchResults)}" styleClass="resultsTable">
+						<apex:column headerValue="Country" value="{!country.name}" footerValue="Total" />
+						<apex:column headerValue="# Cases to create" value="{!country.toCreate}" footerValue="{!totalAccounts}"/>
+						<apex:column headerValue="# Errors" value="{!country.errors}">
+							<apex:facet name="footer">{!IF(!isBatchFinished,0,totalErrors)}</apex:facet>
+						</apex:column>
+						<apex:column headerValue="# Created Cases" value="{!country.created}">
+							<apex:facet name="footer">{!IF(!isBatchFinished,0,totalCreated)}</apex:facet>
+						</apex:column>
+					</apex:dataTable>
+
+					<apex:pageBlockSectionItem  >
+						<apex:commandButton value="Create OSCARs" disabled="{!OR(isBatchRunning, isBatchFinished, totalAccounts == 0, tooMuchResults)}" action="{!createOSCARs}" reRender="batchInfo"/>                 
+					</apex:pageBlockSectionItem>
+					
+					<apex:outputPanel id="batchInfo">
+						<apex:pageMessage severity="info" strength="1" summary="The batch is running" rendered="{!isBatchRunning}"/>
+						<apex:pageMessage severity="confirm" strength="1" summary="The batch is completed" rendered="{!isBatchFinished}"/>
+						<apex:actionRegion>
+							<apex:actionPoller action="{!checkBatchStatus}" reRender="batchInfo, searchResult" interval="5" enabled="{!isBatchRunning}" />
+						</apex:actionRegion> 
+						<c:AMS_Batch_Progress_Bar id="progressBar"
+							cNumberOfJobs="1" 
+							cBatchId="{!batchId}"
+							cIsCompleted="{!NOT(isBatchFinished)}"
+							rendered="{!isBatchRunning || isBatchFinished}"
+						/>
+					</apex:outputPanel>
+				</apex:pageBlockSection>
+			</apex:panelGrid>
+		</apex:pageBlock>
+	</apex:form>
 </apex:page>

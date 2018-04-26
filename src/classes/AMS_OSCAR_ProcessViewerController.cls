@@ -74,7 +74,8 @@ public class AMS_OSCAR_ProcessViewerController {
     public Boolean checkAMSRemittance(AMS_OSCAR__c oscar) { 
         List<AMS_Operation__c> operationCodes =  ANG_AgencyChangesHelper.fetchOperationCodeConfiguration(AMS_Utils.getRecordType('AMS_Settlement_System__c','BSP').Id, oscar.AMS_Online_Accreditation__r.Branch_Office_Country__c, oscar.AMS_Online_Accreditation__r.Location_Class__c);       
         Set<String> locationsClass = new Set<String> {'P', 'D'};
-        if(!String.isBlank(oscar.Process__c) && locationsClass.contains(oscar.Location_Class__c) && (AMS_Utils.oscarNewProcesses.contains(oscar.Process__c) || (oscar.Process__c == AMS_Utils.AGENCYCHANGES  && oscar.Type_of_change__c == AMS_Utils.VFMR)) && !operationCodes.isEmpty()) {
+
+        if(!String.isBlank(oscar.Process__c) && locationsClass.contains(oscar.AMS_Online_Accreditation__r.Location_Class__c) && (oscar.Process__c == AMS_Utils.AGENCYCHANGES  && oscar.Type_of_change__c == AMS_Utils.VFMR) && !operationCodes.isEmpty()) {
             return String.isBlank(oscar.AMS_Online_Accreditation__r.Remittance_frequency__c);
         }
         return false;

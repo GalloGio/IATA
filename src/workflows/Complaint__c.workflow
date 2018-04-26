@@ -5,7 +5,7 @@
         <description>AME: Complaint out of Complaint team notification</description>
         <protected>false</protected>
         <recipients>
-            <recipient>shalbakf@iata.org</recipient>
+            <recipient>suwal@iata.org</recipient>
             <type>user</type>
         </recipients>
         <senderType>CurrentUser</senderType>
