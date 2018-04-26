@@ -4,6 +4,7 @@ public class AMS_OscarChangesHelper {
 	public static void createSavepoint(Set<Id> oscarIds) {
 		List<AMS_OSCAR__c> oscars = [SELECT Id, Account__c FROM AMS_OSCAR__c WHERE Id IN :oscarIds AND Account__c <> null];
 		Map<Id,Id> mapAccountToOscar = new Map<Id,Id>();
+		Map<Id,Id> mapAllAccountsHierToOscar = new Map<Id,Id>();
 		
 		for(AMS_OSCAR__c oscar : oscars) {
 			mapAccountToOscar.put(oscar.Account__c, oscar.Id);
@@ -16,8 +17,16 @@ public class AMS_OscarChangesHelper {
 		Map<Id, List<AMS_Agencies_relationhip__c>> mapHierarchies = AMS_HierarchyHelper.getAccountsHierarchies(mapAccountToOscar.keySet());
 		Map<Id, List<AMS_Agencies_relationhip__c>> mapFiltredHierarchies = new Map<Id, List<AMS_Agencies_relationhip__c>>();
 		for(Id accountId : mapHierarchies.keySet()) {
-			List<AMS_Agencies_relationhip__c> relations = extractRelations(accountId, mapHierarchies.get(accountId));
+			List<AMS_Agencies_relationhip__c> fullHierarchy = mapHierarchies.get(accountId);
+			Id oscarId = mapAccountToOscar.get(accountId);
+
+			List<AMS_Agencies_relationhip__c> relations = extractRelations(accountId, fullHierarchy);
 			mapFiltredHierarchies.put(accountId, relations);
+
+			for(AMS_Agencies_relationhip__c relation : fullHierarchy) {
+				mapAllAccountsHierToOscar.put(relation.Child_Account__c, oscarId);
+				mapAllAccountsHierToOscar.put(relation.Parent_Account__c, oscarId);
+			}	
 		}
 
 		for(Id accountId : mapFiltredHierarchies.keySet()) {
@@ -36,7 +45,7 @@ public class AMS_OscarChangesHelper {
 
 		createAccountsSavepoint(mapAccountToOscar);
 		createHierarchiesSavepoint(mapFiltredHierarchies, mapAccountToOscar);
-		createOwnersSavepoint(mapAccountToOscar);
+		createOwnersSavepoint(mapAllAccountsHierToOscar);
 	}
 
 	private static List<AMS_Agencies_relationhip__c> extractRelations(Id accountId, List<AMS_Agencies_relationhip__c> relations) {
