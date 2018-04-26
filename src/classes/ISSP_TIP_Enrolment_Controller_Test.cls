@@ -51,36 +51,13 @@ private class ISSP_TIP_Enrolment_Controller_Test{
         con.Email = 'Test@test11.com';
         insert con;
 
-        //insert user
-        UserRole usrrole = [SELECT id from UserRole limit 1][0];
-
-        user.ProfileID = [Select Id From Profile Where Name='ISS Portal Delegated Admin User'].id;
-        user.EmailEncodingKey = 'ISO-8859-1';
-        user.LanguageLocaleKey = 'en_US';
-        user.TimeZoneSidKey = 'America/New_York';
-        user.LocaleSidKey = 'en_US';
-        user.FirstName = 'first';
-        user.LastName = 'last';
-        user.userRoleID = usrrole.id;
-        user.Username = 'test@appirio.com';   
-        user.CommunityNickname = 'testUser123';
-        user.Alias = 't1';
-        user.Email = 'no@email.com';
-        user.IsActive = true;
-        user.ContactId = con.Id;
-            
-        System.runAs(new User(id = UserInfo.getUserId())){
-            insert user;
-        }    
+        user = ISSP_ObjectFactory.createPortalUser(con);
+        con.OwnerId = user.Id;
+        update con;
         
         System.debug('##newUser Id: ' + user.Id);
         con.OwnerId = user.Id;
         update con;
-
-
-        parent.ownerId=user.id;
-        update parent;
-
 
         System.runAs(user){
             insert newCase;
@@ -102,7 +79,7 @@ private class ISSP_TIP_Enrolment_Controller_Test{
 
             system.assertEquals(1,[select id from contact].size());//fail to create due duplicate email
 
-            controller.newContact.Email = 'test@test333.com';            
+            controller.newContact.Email = 'test@test1233.com';            
             controller.createContact();//create email
             system.assertEquals(2,[select id from contact].size());
 
