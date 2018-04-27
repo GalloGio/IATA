@@ -839,6 +839,16 @@
         <label>NG Ownership</label>
     </fieldSets>
     <fieldSets>
+        <fullName>ANG_tradename</fullName>
+        <description>fields to be migrated when we have a change of trade name</description>
+        <displayedFields>
+            <field>Trade_Name__c</field>
+            <isFieldManaged>false</isFieldManaged>
+            <isRequired>false</isRequired>
+        </displayedFields>
+        <label>NG Trade Name</label>
+    </fieldSets>
+    <fieldSets>
         <fullName>ANG_vmfr</fullName>
         <description>fields to be migrated when we have a vmfr process</description>
         <displayedFields>

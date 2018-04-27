@@ -14510,6 +14510,10 @@ if(Change_effective_as_of__c - today() &gt; 0,&quot;30&quot;,&quot;0&quot;)))</f
                 <default>false</default>
             </values>
             <values>
+                <fullName>Trade name</fullName>
+                <default>false</default>
+            </values>
+            <values>
                 <fullName>VMFR</fullName>
                 <default>false</default>
             </values>
