@@ -39,6 +39,13 @@ public class TIP_BINRangeTriggerHandler {
     	}
 	}
 
+	public void onAfterInsert(){
+		generateBinConflits();
+	}
+	public void onAfterUpdate(){
+		generateBinConflits();
+	}
+
 	public void onBeforeInsert() {
 		padBinRanges();
 
@@ -50,7 +57,7 @@ public class TIP_BINRangeTriggerHandler {
 			notOverlappingRanges = triggerNew;
 		}
 
-		List<TIP_BIN_Range__c> existingBinRanges = [SELECT Id, Name, TIP_Range_Start__c, TIP_Range_End__c, TIP_Effective_From_Date__c, TIP_Effective_To_Date__c 
+		List<TIP_BIN_Range__c> existingBinRanges = [SELECT Id, Name, TIP_Range_Start__c, TIP_Payment_Provider_Product__c,TIP_Range_End__c, TIP_Effective_From_Date__c, TIP_Effective_To_Date__c 
 													FROM TIP_BIN_Range__c 
 													WHERE (TIP_Status__c = 'ACTIVE' OR TIP_Status__c = 'IN_PROGRESS') AND (RecordTypeid =:TIP_Utils.LISTED_BY_IATA_RECORD_TYPE_ID OR RecordTypeid =:TIP_Utils.BIN_RANGE_PROVIDER_RECORD_TYPE_ID)
 													ORDER BY TIP_Range_Start__c, TIP_Effective_From_Date__c];
@@ -85,7 +92,7 @@ public class TIP_BINRangeTriggerHandler {
 				updatedIds.add(b.Id);
 			}
 
-			List<TIP_BIN_Range__c> existingBinRanges = [SELECT Id, Name, TIP_Range_Start__c, TIP_Range_End__c, TIP_Effective_From_Date__c, TIP_Effective_To_Date__c 
+			List<TIP_BIN_Range__c> existingBinRanges = [SELECT Id, Name,TIP_Payment_Provider_Product__c, TIP_Range_Start__c, TIP_Range_End__c, TIP_Effective_From_Date__c, TIP_Effective_To_Date__c 
 													FROM TIP_BIN_Range__c 
 													WHERE (TIP_Status__c = 'ACTIVE' OR TIP_Status__c = 'IN_PROGRESS') AND (RecordTypeId =:TIP_Utils.LISTED_BY_IATA_RECORD_TYPE_ID OR RecordTypeId =:TIP_Utils.BIN_RANGE_PROVIDER_RECORD_TYPE_ID) AND Id NOT IN :updatedIds
 													ORDER BY TIP_Range_Start__c, TIP_Effective_From_Date__c];
@@ -161,10 +168,12 @@ public class TIP_BINRangeTriggerHandler {
 				if (i != j) {
 					Integer overlapCode = getOverlap(sortedBinRanges[i].biny, sortedBinRanges[j].biny);
 					if (overlapCode == 1) {
-						sortedBinRanges[i].biny.addError('The following overlapping BIN Range has been detected: <a href=\'/' + sortedBinRanges[j].biny.Id + '?pv0={!TIP_BIN_Range__c.Id}\'>'+ sortedBinRanges[j].biny.Name +'</a>', false);
+						if (sortedBinRanges[i].biny.recordtypeid != TIP_Utils.BIN_RANGE_PROVIDER_RECORD_TYPE_ID && sortedBinRanges[i].biny.TIP_Payment_Provider_Product__c == sortedBinRanges[j].biny.TIP_Payment_Provider_Product__c) 
+							sortedBinRanges[i].biny.addError('The following overlapping BIN Range has been detected: <a href=\'/' + sortedBinRanges[j].biny.Id + '?pv0={!TIP_BIN_Range__c.Id}\'>'+ sortedBinRanges[j].biny.Name +'</a>', false);
 						break;
 					} else if (overlapCode == 2) {
-						sortedBinRanges[i].biny.addError('The following overlapping, open-ended BIN Range has been detected: <a href=\'/' + sortedBinRanges[j].biny.Id + '?pv0={!TIP_BIN_Range__c.Id}\'>'+ sortedBinRanges[j].biny.Name +'</a>', false);
+						if (sortedBinRanges[i].biny.recordtypeid != TIP_Utils.BIN_RANGE_PROVIDER_RECORD_TYPE_ID && sortedBinRanges[i].biny.TIP_Payment_Provider_Product__c == sortedBinRanges[j].biny.TIP_Payment_Provider_Product__c) 
+							sortedBinRanges[i].biny.addError('The following overlapping, open-ended BIN Range has been detected: <a href=\'/' + sortedBinRanges[j].biny.Id + '?pv0={!TIP_BIN_Range__c.Id}\'>'+ sortedBinRanges[j].biny.Name +'</a>', false);
 						break;
 					} else if (j == sortedBinRanges.size()-1 && overlapCode == 0) {
 						notOverlappingRanges.add(sortedBinRanges[i].biny);
@@ -183,10 +192,13 @@ public class TIP_BINRangeTriggerHandler {
 				if (bin.Id != existingBin.Id) {
 					Integer overlapCode = getOverlap(bin, existingBin);
 					if (overlapCode == 1) {
-						bin.addError('The following overlapping BIN Range has been detected: <a href=\'/' + existingBin.Id + '?pv0={!TIP_BIN_Range__c.Id}\'>'+ existingBin.Name +'</a>', false);
+						
+						if(bin.recordtypeid != TIP_Utils.BIN_RANGE_PROVIDER_RECORD_TYPE_ID && bin.TIP_Payment_Provider_Product__c == existingBin.TIP_Payment_Provider_Product__c) bin.addError('The following overlapping BIN Range has been detected: <a href=\'/' + existingBin.Id + '?pv0={!TIP_BIN_Range__c.Id}\'>'+ existingBin.Name +'</a>', false);
+						
 						break;
 					} else if (overlapCode == 2) {
-						bin.addError('The following overlapping, open-ended BIN Range has been detected: <a href=\'/' + existingBin.Id + '?pv0={!TIP_BIN_Range__c.Id}\'>'+ existingBin.Name +'</a>', false);
+						if(bin.recordtypeid != TIP_Utils.BIN_RANGE_PROVIDER_RECORD_TYPE_ID && bin.TIP_Payment_Provider_Product__c == existingBin.TIP_Payment_Provider_Product__c) bin.addError('The following overlapping, open-ended BIN Range has been detected: <a href=\'/' + existingBin.Id + '?pv0={!TIP_BIN_Range__c.Id}\'>'+ existingBin.Name +'</a>', false);
+						
 						break;
 					}
 				}
@@ -210,5 +222,31 @@ public class TIP_BINRangeTriggerHandler {
 			}			
 		}
 		return 0;
+	}
+
+	private void generateBinConflits(){
+		List<TIP_BIN_Range__c> binRanges = [SELECT Id, Name,TIP_Payment_Provider_Product__c, TIP_Range_Start__c, TIP_Range_End__c, TIP_Effective_From_Date__c, TIP_Effective_To_Date__c 
+											FROM TIP_BIN_RANGE__C 
+											WHERE TIP_Status__c <> :TIP_Utils.BIN_RANGE_STATUS_DRAFT
+												AND ID NOT IN :newMap.keySet()];
+
+		for (Integer i = 0; i < triggerNew.size(); i++) {
+			for (Integer j = 0; j < binRanges.size(); j++) {
+				if( getOverlap(triggerNew[i], binRanges[j]) != 0 && triggerNew[i].TIP_Status__c != TIP_Utils.BIN_RANGE_STATUS_DRAFT
+					&& triggerNew[i].recordtypeid == TIP_Utils.BIN_RANGE_PROVIDER_RECORD_TYPE_ID) createBinRangeConflit(triggerNew[i], binRanges[j]);
+			}
+		}
+	}
+
+	private void createBinRangeConflit(TIP_BIN_Range__c bin1, TIP_BIN_Range__c bin2){
+		BIN_Range_Conflict__c bc1 = new BIN_Range_Conflict__c(BIN_Range__c = bin1.id,BIN_Range_Conflict__c = bin2.id, Partner_Product__c = bin1.TIP_Payment_Provider_Product__c);
+		BIN_Range_Conflict__c bc2 = new BIN_Range_Conflict__c(BIN_Range__c = bin2.id,BIN_Range_Conflict__c = bin1.id, Partner_Product__c = bin2.TIP_Payment_Provider_Product__c);
+		insert bc1;
+		insert bc2;
+
+		bc1.Twin_Conflict__c = bc2.id;
+		bc2.Twin_Conflict__c = bc1.id;
+		update bc1;
+		update bc2;
 	}
 }

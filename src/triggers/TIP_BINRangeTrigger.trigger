@@ -5,6 +5,8 @@ trigger TIP_BINRangeTrigger on TIP_BIN_Range__c (after delete, after insert, aft
 
 	if(Trigger.isBefore && Trigger.isInsert) handler.onBeforeInsert();
 	if(Trigger.isBefore && Trigger.isUpdate) handler.onBeforeUpdate();
+	if(Trigger.isAfter  && Trigger.isInsert)  handler.onAfterInsert();
+	if(Trigger.isAfter  && Trigger.isUpdate)  handler.onAfterUpdate();
 	
 	if (Trigger.isAfter) {
         //Publish the platform events
