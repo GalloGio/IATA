@@ -1,10 +1,11 @@
 public with sharing class ISSP_Selector {
 	public ISSP_Selector() {
-		
+
 	}
 
 	public static AMS_Pax_Accreditation_Form__c fetchAMSProcessForm(Id caseId){
-		AMS_Pax_Accreditation_Form__c newForms = [
+
+        List<AMS_Pax_Accreditation_Form__c> newForms = [
                     SELECT Id, Name, SAAM_Case__c, Submitted_to_IATA__c, CurrencyIsoCode, IATACode__c, ISSP_AMS_Bank_account__c, ISSP_AMS_Date_license_granted__c, ISSP_AMS_Date_Registration_granted__c, ISSP_AMS_GDS_with_signed_contract__c,
                     ISSP_AMS_Gross_Amnt_First_year__c, ISSP_AMS_Gross_Amnt_Second_year__c, ISSP_AMS_IATA_Registered_Cargo_Agent__c, ISSP_AMS_Legal_Reg_Name_Address__c, ISSP_AMS_Legal_Status__c,
                     ISSP_AMS_License_No__c, ISSP_AMS_Min_Paidup_capital__c, ISSP_AMS_Online_Agency_Application__c, ISSP_AMS_Online_Agency_URL__c, ISSP_AMS_Paidup_capital__c, Total_International_Sales__c,
@@ -35,8 +36,8 @@ public with sharing class ISSP_Selector {
                     FROM AMS_Pax_Accreditation_Form__c
                     WHERE SAAM_Case__c = :caseId
                                          LIMIT 1
-                ];                
-         return newForms;
+                ];
+        if(newForms.size() != 0) return newForms[0]; else return null;
 	}
 
 	public static Map<String, String> getMapAmazonFileIdentifiers(Id caseId) {
@@ -60,7 +61,7 @@ public with sharing class ISSP_Selector {
     }
 
     public static Map<String, String> getLanguagesMap() {
-        
+
         Map<String, String> languagesMap = new Map<String, String>();
 
         languagesMap.put('en_US','English');
@@ -82,8 +83,8 @@ public with sharing class ISSP_Selector {
         languagesMap.put('pt_BR', 'Portuguese');
         languagesMap.put('pt_PT', 'Portuguese');
         languagesMap.put('vi', 'Vietnamese');
-        languagesMap.put('th', 'Thai'); 
-    
+        languagesMap.put('th', 'Thai');
+
     return languagesMap;
     }
 

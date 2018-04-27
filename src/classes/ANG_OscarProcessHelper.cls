@@ -986,8 +986,8 @@ global class ANG_OscarProcessHelper {
 			accOscarObjsMap.get(acc.Id).cse.Oscar__c = accOscarObjsMap.get(acc.Id).oscar.Id;
 			casesToUpdate.add(accOscarObjsMap.get(acc.Id).cse);
 
-			if(accsToSendEmail.contains(acc.Id))
-	            AMS_AgencyRegulationAutoRenewal.sendEmailAlert(new List<Contact>{accOscarObjsMap.get(acc.Id).con}, accOscarObjsMap.get(acc.Id).oscar.Id, AMS_OSCARTriggerHandler.ANGemailTemplates(AMS_Utils.NGANNUALREVAL, null, true), accOscarObjsMap.get(acc.Id).oscar.Oscar_Communication_Case_Id__c, owea[0], false);			
+			//if(accsToSendEmail.contains(acc.Id))
+	            //AMS_AgencyRegulationAutoRenewal.sendEmailAlert(new List<Contact>{accOscarObjsMap.get(acc.Id).con}, accOscarObjsMap.get(acc.Id).oscar.Id, AMS_OSCARTriggerHandler.ANGemailTemplates(AMS_Utils.NGANNUALREVAL, null, true), accOscarObjsMap.get(acc.Id).oscar.Oscar_Communication_Case_Id__c, owea[0], false);			
 
 			System.debug('[ANG_OscarProcessHelper.createRevalidationOscar] - FINISHING... INSERTING OSCARS: '+ accOscarObjsMap.get(acc.id).oscar.Id + ' | Case: '+accOscarObjsMap.get(acc.id).cse.Id);
 		}
@@ -1358,7 +1358,7 @@ global class ANG_OscarProcessHelper {
 			nt.Message__c = nt.Message__c
 				.replace('#CONTACTNAME#',contacts.get(nt.Contact__c).Name)
 				.replace('#IATACODE#',contacts.get(nt.Contact__c).Account.IataCode__c)
-				.replace('#DEADLINEDATE#', contactCaseMap.get(nt.Contact__c).OSCAR__r.Sanity_check_deadline__c.format());
+				.replace('#DEADLINEDATE#',String.valueOf(Datetime.now().addDays(15).format('dd/MM/yyyy')));
 		}
 
 		if (!notifications.isEmpty())

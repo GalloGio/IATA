@@ -915,7 +915,6 @@ private class ISSP_AMS_Accreditation_Test
         ISSP_AMS_Accreditation_Acc_Req2.Name = 'TestReq2';
         insert ISSP_AMS_Accreditation_Acc_Req2;
 
-        Test.startTest();
         System.runAs(newUser)
         {
             //Case testCase = (Case)ISSP_ObjectFactory.createSObject('Case',false,1);
@@ -956,6 +955,8 @@ private class ISSP_AMS_Accreditation_Test
 
             Portal_Applications__c app = new Portal_Applications__c(Name = 'IFAP'); 
             insert app;
+        
+        Test.startTest();
 
             ISSP_AMS_Statement_International_Sales__c AMS_SIS = new ISSP_AMS_Statement_International_Sales__c();
             AMS_SIS.AMS_Online_Accreditation__c = newForm.Id; 

@@ -96,6 +96,17 @@ public without sharing class ISSP_APProcess {
     public String optInOutParam2 {get;set;}
     public String countriesParam2 {get;set;}
     public Datetime effectiveDateParam2 {get;set;}
+
+    public Boolean getIsNewCountryProcess() {
+        try {
+            String value = ISSP_CS__c.getValues('ISSP_APProcess_New_Countries').Value__c;
+            if (value=='Default') return true;
+            return value.contains(apcountryisocode);
+        } catch (Exception e) {
+            System.debug(e.getMessage());
+            return false;
+        }
+    }
    
     public ISSP_APProcess(){
         //Set the Variables default values

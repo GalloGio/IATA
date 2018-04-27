@@ -187,12 +187,7 @@
         <columns>Displayed_Message__c</columns>
         <columns>CREATEDBY_USER</columns>
         <filterScope>Everything</filterScope>
-        <filters>
-            <field>Source__c</field>
-            <operation>equals</operation>
-            <value>GSS</value>
-        </filters>
-        <label>DataLoader - GSS Errors</label>
+        <label>00 - ALL</label>
         <language>en_US</language>
     </listViews>
     <listViews>
