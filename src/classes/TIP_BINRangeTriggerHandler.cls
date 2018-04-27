@@ -225,6 +225,9 @@ public class TIP_BINRangeTriggerHandler {
 	}
 
 	private void generateBinConflits(){
+
+		delete [SELECT ID FROM BIN_Range_Conflict__c where BIN_Range__c IN :newMap.keySet() OR BIN_Range_Conflict__c IN :newMap.keySet()];
+
 		List<TIP_BIN_Range__c> binRanges = [SELECT Id, Name,TIP_Payment_Provider_Product__c, TIP_Range_Start__c, TIP_Range_End__c, TIP_Effective_From_Date__c, TIP_Effective_To_Date__c 
 											FROM TIP_BIN_RANGE__C 
 											WHERE TIP_Status__c <> :TIP_Utils.BIN_RANGE_STATUS_DRAFT
