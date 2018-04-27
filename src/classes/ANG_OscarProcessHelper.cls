@@ -1249,9 +1249,8 @@ global class ANG_OscarProcessHelper {
 
 					attachments = new Messaging.EmailFileAttachment[]{attach};
 				}
-
-	            AMS_AgencyRegulationAutoRenewal.sendEmailAlert(new List<Contact>{accOscarObjsMap.get(acc.Id).con}, accOscarObjsMap.get(acc.Id).oscar.Id, AMS_OSCARTriggerHandler.ANGemailTemplates(AMS_Utils.NGFOP, null, true), accOscarObjsMap.get(acc.Id).oscar.Oscar_Communication_Case_Id__c, owea[0], false, attachments);			
-				
+                
+	            AMS_AgencyRegulationAutoRenewal.sendEmailAlert(fetchKeyContactsForPCI(contactsAcc.get(acc.Id)), accOscarObjsMap.get(acc.Id).oscar.Id, AMS_OSCARTriggerHandler.ANGemailTemplates(AMS_Utils.NGFOP, null, true), accOscarObjsMap.get(acc.Id).oscar.Oscar_Communication_Case_Id__c, owea[0], false, attachments);				
 			}
 
 			System.debug('[ANG_OscarProcessHelper.createPCIComplianceOscars] - Finished Inserting oscars: '+ accOscarObjsMap.get(acc.id).oscar.Id + ' | Case: '+accOscarObjsMap.get(acc.id).cse.Id);
@@ -1272,7 +1271,7 @@ global class ANG_OscarProcessHelper {
 		Map<Id,Account> accounts = new Map<Id,Account>();
 
 		for(Account acc: acctSet){
-			contactsToSend.addall(acc.Contacts);
+			contactsToSend.addall(fetchKeyContactsForPCI(acc.Contacts));
 			accounts.put(acc.Id,acc);
 		}
 
@@ -1325,13 +1324,36 @@ global class ANG_OscarProcessHelper {
 				regularContact = con;
 
 		} 
-
 		
 		Contact toReturn = adminCon <> null ? adminCon : finAccessContact <> null ? finAccessContact : bspContact <> null ? bspContact : regularContact;			
  		
  		return toReturn;
 	}
 
+	private static List<Contact> fetchKeyContactsForPCI(List<Contact> contacts){
+
+		if(contacts == null || contacts.isEmpty())
+			return null;
+
+		Set<Contact> contactsMap = new set<Contact>();
+
+		for (Contact con :contacts){
+
+			if(con.User_Portal_Status__c == 'Approved Admin')
+				contactsMap.add(con);
+			if (con.Financial_Assessment_Contact__c)
+				contactsMap.add(con);
+			if(con.New_BSPLink_Contact__c)
+				contactsMap.add(con);
+		} 
+
+ 		
+ 		List<Contact> toReturn = new List<Contact>();
+ 		toReturn.addAll(contactsMap);
+
+ 		return toReturn;
+	}
+    
 	public static void sendFOPPortalNotificationAndEmail(Map<String,Map<Id,Case>> notifTempNameCaseMap, Map<String,Set<Id>> templateContIdMap){
 
 		List<String> notificationTargets = new List<String>();
