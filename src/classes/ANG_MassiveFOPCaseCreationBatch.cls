@@ -27,7 +27,7 @@ global class ANG_MassiveFOPCaseCreationBatch implements Database.Batchable<sObje
 			fieldListContact.add(field);
 		}
 
-		this.query = 'SELECT '+ String.join(fieldListAcct, ', ') + ' , ( SELECT ' +String.join(fieldListContact, ', ') + ' FROM Contacts) FROM Account WHERE Id in:accountIds';
+		this.query = 'SELECT '+ String.join(fieldListAcct, ', ') + ' , ( SELECT ' +String.join(fieldListContact, ', ') + ' FROM Contacts where Status__c  =\'Active\' ) FROM Account WHERE Id in:accountIds';
 
 		this.accountIds = accountIdsIn;
 	}
