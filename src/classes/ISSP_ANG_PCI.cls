@@ -79,7 +79,10 @@ public with sharing class ISSP_ANG_PCI {
 
         }else if(stepNumber == '2'){
         	Id caseid  = ApexPages.currentPage().getParameters().get('caseId');
-        	newForm = ISSP_SELECTOR.fetchAMSProcessForm(caseid);
+        	AMS_Pax_Accreditation_Form__c auxForm = ISSP_SELECTOR.fetchAMSProcessForm(caseid);
+
+            if(auxForm != null) newForm = auxForm;
+
         	fetchCase(caseid);
         	 if (newForm.Validation_ERRORS__c )
         		validateAttachedFiles();
@@ -88,7 +91,10 @@ public with sharing class ISSP_ANG_PCI {
         }else if(stepNumber == '3'){
 
         	Id caseid  = ApexPages.currentPage().getParameters().get('caseId');
-        	newForm = ISSP_SELECTOR.fetchAMSProcessForm(caseid);
+        	AMS_Pax_Accreditation_Form__c auxForm = ISSP_SELECTOR.fetchAMSProcessForm(caseid);
+
+            if(auxForm != null) newForm = auxForm;
+
         	isStep3 = true;
         }
 
@@ -118,7 +124,10 @@ public with sharing class ISSP_ANG_PCI {
 	    	applyLanguage = newCase.Case_Language__c;
         	displayLanguage = newCase.Case_Language__c;
 
-        	newForm = ISSP_Selector.fetchAMSProcessForm(vSAAMCaseId);
+        	AMS_Pax_Accreditation_Form__c auxForm = ISSP_Selector.fetchAMSProcessForm(vSAAMCaseId);
+
+            if(auxForm != null) newForm = auxForm;
+
         	system.debug('pci - newForm' + newForm);
         	if (vAccountConcernedId != null)
                 accountConcerned = ISSP_Selector.fetchAccountConcernedDetails(vAccountConcernedId);
@@ -240,7 +249,9 @@ SYSTEM.DEBUG('getRelatedAccount starting... ');
         changeOfAccountConcerned = true;
 
         //Creating Case
-        newCase.Origin = 'Portal';
+        if(newCase.Origin == null || newCase.Origin == '')
+            newCase.Origin = 'Portal';
+
         newCase.CaseArea__c = AMS_UTILS.CASE_AREA_ACCREDITATION_PROCESS;
         newcase.Case_Language__c = UserInfo.getLanguage();
 
@@ -248,7 +259,10 @@ SYSTEM.DEBUG('getRelatedAccount starting... ');
         newCase.BSPCountry__c =  isocountry.Case_BSP_Country__c ;
         newCase.Country_concerned_by_the_query__c = isocountry.Name;
         newCase.Reason1__c = AMS_UTILS.CASE_REASON_FOR_MANAGEMENT;
-        newCase.Status = 'Draft';
+
+        if(newCase.Status == null || newCase.Status == '')
+            newCase.Status = 'Draft';
+
         newCase.Visible_on_ISS_Portal__c = true;
 
         if(agencyCodesConcerned.size() > 0){
@@ -262,7 +276,9 @@ SYSTEM.DEBUG('getRelatedAccount starting... ');
         vAccountConcernedId = newCase.Account_Concerned__c;
 
 		accountConcerned = ISSP_Selector.fetchAccountConcernedDetails(vAccountConcernedId);
-		newCase.Subject = Label.ISSP_ANG_PCI_Compliance + ' - ' + accountConcerned.IATACode__c + ' – ' + accountConcerned.Name;
+
+        if(newCase.Origin == 'Portal')
+		    newCase.Subject = Label.ISSP_ANG_PCI_Compliance + ' - ' + accountConcerned.IATACode__c + ' – ' + accountConcerned.Name;
 
 		fetchPCI_CountryRequirements();
 
@@ -279,22 +295,11 @@ SYSTEM.DEBUG('getRelatedAccount starting... ');
 	        first = false;
 	    }
         newForm.Agency_Codes_Concerned__c = agencyCodes;
-        newCase.Description = Label.ISSP_ANG_PROOF_OF_PCI + newForm.Agency_Codes_Concerned__c;
 
-        Id auxId = null;
-
-        if(newCase.id == null || newCase.id == '') {
-            auxId = con.Id;
-            newCase.ContactId = ISSP_CS__c.getValues('No Notification Email Contact Id').Value__c == null? null : ISSP_CS__c.getValues('No Notification Email Contact Id').Value__c;
-        }
+        if(newCase.Origin == 'Portal')
+            newCase.Description = Label.ISSP_ANG_PROOF_OF_PCI + newForm.Agency_Codes_Concerned__c;
 
         upsert newCase;
-
-        if(auxId != null) {
-            System.debug('alex Marosca off');
-            newCase.ContactId = auxId;
-            update newCase;
-        }
 
         newForm.RecordTypeId = Schema.SObjectType.AMS_Pax_Accreditation_Form__c.RecordTypeInfosByName.get('PCI Compliance').RecordTypeId;
         if (String.isBlank(String.ValueOf(newForm.SAAM_Case__c))) {
@@ -339,12 +344,27 @@ SYSTEM.DEBUG('getRelatedAccount starting... ');
         }
 
         newForm.Submitted_to_IATA__c = TRUE;
-        newForm = ISSP_SELECTOR.fetchAMSProcessForm(newcase.Id);
+        AMS_Pax_Accreditation_Form__c auxForm = ISSP_SELECTOR.fetchAMSProcessForm(newcase.Id);
+
+        if(auxForm != null) newForm = auxForm;
+
         upsert newForm;
 
-        if(newCase.Status == 'Draft'){
+        AMS_OSCAR__c oscar;
+
+        if(newCase.Origin == 'Massive FOP Creation') {
+            oscar = [Select Id, Account__c, Account__r.Id, OwnerId From AMS_OSCAR__c Where id = :newCase.OSCAR__c];
+        }
+
+        if(newCase.Status == 'Draft' || newCase.Origin == 'Massive FOP Creation'){
             if(!Test.isRunningTest()){
-                newCase.ownerid = amsAccreditation.getRegionalQueue();
+                if(newCase.Origin != 'Massive FOP Creation') {
+                    newCase.ownerid = amsAccreditation.getRegionalQueue();
+                } else {
+                    oscar.OwnerId = amsAccreditation.getRegionalQueue();
+
+                    update oscar;
+                }
             }else{
                 newCase.ownerid = UserInfo.getUserId();
             }
@@ -357,7 +377,18 @@ SYSTEM.DEBUG('getRelatedAccount starting... ');
 
         String typeOfProcess = AMS_Utils.NGFOP;
         system.debug('case ' + newCase + ' newCase.Account_Concerned__c ' + newCase.Account_Concerned__c + ' newForm.Id ' + newForm.Id + 'typeOfProcess ' + typeOfProcess);
-        ISSP_AMS_Accreditation.OSCARIntegration(newCase.Account_Concerned__c, newForm.Id, typeOfProcess, newCase.Id);
+
+        if(newCase.origin == 'Portal')
+            ISSP_AMS_Accreditation.OSCARIntegration(newCase.Account_Concerned__c, newForm.Id, typeOfProcess, newCase.Id);
+
+        if(newCase.origin == 'Massive FOP Creation') {
+
+
+            String accountIdStr = newCase.AccountId;
+
+            AMS_RecordCreatorWebservice.processOscarProcessDetail(oscar, newForm, accountIdStr);
+        }
+
 
         amsAccreditation.sendConfirmationEmail(newCase);
 
@@ -465,7 +496,8 @@ SYSTEM.DEBUG('getRelatedAccount starting... ');
     public void fetchCase(String vCaseId) {
         List <Case> newCases = [
                                    SELECT Id, CaseNumber, Reason1__c, CaseArea__c, Status, BSPCountry__c, Country_concerned_by_the_query__c, Contact.Name, Account.Id, Description, Subject, Account_Concerned__c, Account_Concerned__r.Top_Parent__c, Account.Name,
-                                   Account.Billing_Address_formated__c, Verification__c, IFAP_Country_ISO__c, Case_Language__c, Region__c, Applicable_to_Which_Version_s__c
+                                   Account.Billing_Address_formated__c, Verification__c, IFAP_Country_ISO__c, Case_Language__c, Region__c, Applicable_to_Which_Version_s__c, Origin, OSCAR__c,
+                                   OwnerId
                                    FROM Case
                                    WHERE Id = :vCaseId
                                ];
@@ -521,7 +553,16 @@ SYSTEM.DEBUG('getRelatedAccount starting... ');
 
     public Pagereference securityCheck() {
 
-        if (newCase.Id != null && newCase.Status != 'Draft') {
+        Boolean alreadySubmitted = false;
+
+        if(newCase.Id != null) {
+            if(newCase.OSCAR__c != null) {
+                List<AMS_Process_Detail__c>  aux = [Select id From AMS_Process_Detail__c Where OSCAR__c = :newCase.OSCAR__c limit 1];
+                alreadySubmitted = (aux.size() != 0);
+            }
+        }
+
+        if ((newCase.Id != null && newCase.Status != 'Draft' && newCase.Origin != 'Massive FOP Creation') || (newCase.Origin == 'Massive FOP Creation' && alreadySubmitted)) {
             return new Pagereference('/ISSP_Case?caseId=' + newCase.Id + '&mid=M1S2' + commParam);
         }
 
