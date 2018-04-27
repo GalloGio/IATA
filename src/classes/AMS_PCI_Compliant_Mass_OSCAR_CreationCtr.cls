@@ -169,8 +169,6 @@ public with sharing class AMS_PCI_Compliant_Mass_OSCAR_CreationCtr{
 
         Set<String> statuses = new Set<String> {AMS_Utils.ACC_S9_APPROVED, AMS_Utils.ACC_S5_CASHNOCOMMISSION, AMS_Utils.ACC_S6_CASHWITHCOMMISSION, AMS_Utils.ACC_S8_CHANGESPROCESSED, AMS_Utils.ACC_S4_LISTED, AMS_Utils.ACC_S7_UNDERREVIEW, 'Review'};
 
-        Set<String> isPCICompliant = new Set<String> {'Yes', 'Nil CC', 'No'};
-
         String reason = caseReason.get(operation);
 
         String agency = AMS_Utils.RECTYPE_IATAAGENCY;
@@ -181,7 +179,7 @@ public with sharing class AMS_PCI_Compliant_Mass_OSCAR_CreationCtr{
 
         query += 'FROM Account ';
         
-        query += 'WHERE Location_Class__c IN :locationClass AND Status__c IN :statuses AND Is_PCI_compliant__c NOT IN :isPCICompliant AND Location_Type__c IN :locations';
+        query += 'WHERE Location_Class__c IN :locationClass AND Status__c IN :statuses AND Is_PCI_compliant__c = null AND Location_Type__c IN :locations';
         query += ' AND RecordtypeId = :agency AND IATA_ISO_Country__c IN :countries';
 
         query += ' AND Id NOT IN (SELECT AccountId FROM Case WHERE Reason1__c = :reason AND IsClosed = false) ';
