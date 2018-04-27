@@ -53,6 +53,15 @@
     <enableSharing>true</enableSharing>
     <enableStreamingApi>true</enableStreamingApi>
     <fields>
+        <fullName>BIN_Conflict_Count__c</fullName>
+        <externalId>false</externalId>
+        <label>BIN Conflict #</label>
+        <summaryForeignKey>BIN_Range_Conflict__c.Partner_Product__c</summaryForeignKey>
+        <summaryOperation>count</summaryOperation>
+        <trackTrending>false</trackTrending>
+        <type>Summary</type>
+    </fields>
+    <fields>
         <fullName>BIN_Range__c</fullName>
         <deleteConstraint>SetNull</deleteConstraint>
         <externalId>false</externalId>
