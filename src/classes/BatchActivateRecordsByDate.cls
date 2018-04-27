@@ -70,7 +70,7 @@ global class BatchActivateRecordsByDate implements  Database.Batchable<sObject>,
 			+ 'OR (Expiry_Date__c < '  + system.now().format('yyyy-MM-dd') +' AND Status__c <> \''+ TIP_Utils.PARTNER_STATUS_INACTIVE +'\' ) '
 			+ 'OR (Accreditation_date__c <= '  + system.now().format('yyyy-MM-dd') +' AND Expiry_Date__c >= '  + system.now().format('yyyy-MM-dd') +' AND Status__c <> \''+TIP_Utils.PARTNER_STATUS_ACTIVE+'\' ))';
 	
-	public final static String QUERY_PRODUCTS = 'SELECT ID, PP_status__c, PP_Effective_from_Date__c, PP_Effective_to_Date__c FROM Partner_products__c WHERE recordtypeid = \'' + TIP_Utils.PARTNER_PRODUCT_TIP_PRODUCT_RECORD_TYPE_ID +'\' AND '
+	public final static String QUERY_PRODUCTS = 'SELECT ID, PP_status__c, PP_Effective_from_Date__c, PP_Effective_to_Date__c FROM Partner_products__c WHERE BIN_Conflict_Count__c = 0 AND recordtypeid = \'' + TIP_Utils.PARTNER_PRODUCT_TIP_PRODUCT_RECORD_TYPE_ID +'\' AND '
 		+'Provider__r.Status__c = \''+TIP_Utils.PARTNER_STATUS_ACTIVE+ '\' AND PP_Status__c <> \''+TIP_Utils.PARTNER_PRODUCT_STATUS_REJECTED+ '\' AND ( '
 			+    '(PP_Effective_from_Date__c > '  + system.now().format('yyyy-MM-dd') +' AND PP_status__c <> \''+ TIP_Utils.PARTNER_PRODUCT_STATUS_IN_PROGRESS +'\' ) '
 			+ 'OR (PP_Effective_to_Date__c < '  + system.now().format('yyyy-MM-dd') +' AND PP_status__c <> \''+ TIP_Utils.PARTNER_PRODUCT_STATUS_INACTIVE +'\' ) '
