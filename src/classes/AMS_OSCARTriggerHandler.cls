@@ -190,7 +190,9 @@ public class AMS_OSCARTriggerHandler {
             }
         }
 
-        AMS_OscarChangesHelper.createSavepoint(oscarIds);
+        if(!system.isBatch()) {
+            AMS_OscarChangesHelper.createSavepoint(oscarIds);
+        }
     }
 
     public static void rollbackChanges(List<AMS_OSCAR__c> oscars, Map<Id,AMS_OSCAR__c> oldMap, Map<Id,AMS_OSCAR__c> newMap) {
@@ -215,7 +217,7 @@ public class AMS_OSCARTriggerHandler {
             }
         }
         
-        if(!oscarIds.isEmpty()) {
+        if(!oscarIds.isEmpty() && !system.isBatch()) {
             AMS_OscarChangesHelper.rollbackOscarChanges(oscarIds);
         }
     }
