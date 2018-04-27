@@ -190,7 +190,7 @@ public class AMS_OSCARTriggerHandler {
             }
         }
 
-        if(!system.isBatch()) {
+        if(!system.isBatch() && !system.isFuture()) {
             AMS_OscarChangesHelper.createSavepoint(oscarIds);
         }
     }
@@ -217,7 +217,7 @@ public class AMS_OSCARTriggerHandler {
             }
         }
         
-        if(!oscarIds.isEmpty() && !system.isBatch()) {
+        if(!oscarIds.isEmpty() && !system.isBatch() && !system.isFuture()) {
             AMS_OscarChangesHelper.rollbackOscarChanges(oscarIds);
         }
     }
