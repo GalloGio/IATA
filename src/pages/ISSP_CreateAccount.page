@@ -304,7 +304,7 @@
     	changeFieldsMaxlength();
         console.log('fsd '+'{!preventAddressDoctorService}');
         if('{!preventAddressDoctorService}'=='false') {
-            $j("#shippingcountry").find("input").val("{!searchCountryISOCode}");
+        	$j("#shippingcountry").find("input").val("{!searchCountryName}");
             $j("#shippingcountry").find("input").attr('readonly', true);
             $j("#billingcountry").find("input").val("{!searchCountryName}");
             $j("#billingcountry").find("input").attr('readonly', true);
@@ -323,6 +323,7 @@
             
             //TC: remove address validation boxes
             if("{!sRefererCommunity}"=="iec") {
+            	$j("#shippingcountry").find("input").val("{!searchCountryISOCode}");
             	$j('input[id*="accountName"]').removeAttr('required');
             	replaceShippingTXT(document.body);
 	            $j(".elementBAddressToHide").hide();  
@@ -339,8 +340,6 @@
 	            modifyUIForm();
 	            replaceAutoCompleteAddressDoctor();
 
-	            
-	            
 	            //TC: set mandatory fields by country 
 	            var country = "{!searchCountryName}";     
 
@@ -365,6 +364,8 @@
 	            	$j('#shippingstate input').prop('disabled', true);
 	            	// SA - end
 	            }
+            }else{
+
             }
         }
 
