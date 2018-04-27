@@ -94,7 +94,7 @@
                     <apex:inputField value="{!objective.Account_Issue_or_Priority__c}" rendered="{!AND(isEditMode, IdConcerned==objective.Id)}" style="width: 80%;" />
                 </apex:column>
 
-      					<apex:column headerValue="Benefits to the Account">
+      					<apex:column headerValue="Comment">
                     <!-- <apex:outputField value="{!objective.Benefits_to_Account__c}"  rendered="{!!AND(isEditMode, IdConcerned==objective.Id)}"/> -->
                     <apex:inputField value="{!objective.Benefits_to_Account__c}" rendered="{!AND(isEditMode, IdConcerned==objective.Id)}" style="width: 80%;" />
                     <apex:outputPanel styleClass="long-text-area hidden" rendered="{!NOT(AND(isEditMode, IdConcerned==objective.Id))}" >

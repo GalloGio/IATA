@@ -241,16 +241,13 @@ public with sharing class AMP_KeyAccountPlanExtension {
 			}
 		}
 		try {
-			if(newObjective.Account_Issue_or_Priority__c == null && newObjective.Benefits_to_Account__c == null) {
-				ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.ERROR,'Please enter either Account Issue or Benefits'));
-			} else {
 
-				upsert newObjective;
-				lsObjectives =  getObjectives(accountId);
-				updateLists();
-				isEditMode = false;
-				isNewLine = false;
-			}
+			upsert newObjective;
+			lsObjectives =  getObjectives(accountId);
+			updateLists();
+			isEditMode = false;
+			isNewLine = false;
+			
 			System.debug(newObjective);
 		} catch (DMLException e) {
 			ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.ERROR,e.getMessage()));

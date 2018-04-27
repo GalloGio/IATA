@@ -78,7 +78,7 @@
                             <th scope="col" class="narrowColumn"><span class="slds-truncate">Overall Status</span></th>
                             <th scope="col" class="narrowColumn"><span class="slds-truncate">End Date</span></th>
                             <th scope="col" class="mediumColumn"><span class="slds-truncate">Account Issue or Priority</span></th>
-                            <th scope="col" class="wideColumn"><span class="slds-truncate">Benefits to the Account</span></th>
+                            <th scope="col" class="wideColumn"><span class="slds-truncate">Comment</span></th>
                         </tr>
                     </thead>
 

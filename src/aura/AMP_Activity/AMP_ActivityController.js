@@ -74,10 +74,7 @@
         } else if(deadlineField.get("v.value") === '') {
             deadlineField.set("v.errors", [{message:"Please enter a date" }]);
         
-        }else if (activity.Benefits_to_Account__c == "" && activity.Account_Issue_or_Priority__c == ""){ //Benefits_to_Account__c  
-            benefitsField.set("v.errors",  [{message:"Please enter either Account Issue or Benefits. "}]);
-  
-        } else {
+        }else {
             console.log(JSON.stringify(activity));
             var index = component.get("v.index");
             
