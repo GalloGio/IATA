@@ -19,12 +19,13 @@
 				selected: "true"
 			});
 
-			}
+			}else{
 
-			divOpts.push({
-				label: decisionValues[i],
-				value: decisionValues[i]
-			});
+				divOpts.push({
+					label: decisionValues[i],
+					value: decisionValues[i]
+				});
+			}
 		}
 
 		component.find("divisionList").set("v.options", divOpts);

@@ -76,7 +76,7 @@
                         <apex:outputPanel rendered="{!LEN(i.Division__c)>30}"> <a href="#" class="show-more">[show more]</a></apex:outputPanel>
                     </apex:outputPanel>
 
-                    <apex:inputField value="{!i.Division__c}" rendered="{!AND(isEditMode, IdConcerned==i.Id)}" required="true"/>
+                    <apex:inputField value="{!i.Division__c}" rendered="{!AND(isEditMode, IdConcerned==i.Id)}"/>
                 </apex:column>
 
                 <apex:column >
