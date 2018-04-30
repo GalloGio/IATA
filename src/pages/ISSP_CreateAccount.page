@@ -364,8 +364,6 @@
 	            	$j('#shippingstate input').prop('disabled', true);
 	            	// SA - end
 	            }
-            }else{
-
             }
         }
 
@@ -1488,8 +1486,6 @@
             $j("#shippingpostalcode").find("input").val($j("#billingpostalcode").find("input").val());
             if(isIEC) {          	
             	$j('[id*="drpdwnCountry"]').attr('disabled', 'disabled');
-            	$j("#shippingcountry").find("input").val(defCountry);
-            	$j('[id*="drpdwnCountry"]').val(defCountry);            	
             	shippingListStates();
             	if($j('#divToMove3').css('display') != 'none') {
             		$j('#drpdwnSState').val($j('#drpdwnBState').val());
