@@ -167,6 +167,7 @@ public class AMS_OscarChangesHelper {
 		}
 
 		try {
+			ISSP_SIS_AccountHandler.BLOCK_EXECUTION = true;
 			rollbackOwners(roles);
 			rollbackHierarchies(relationsToRollback);
 			rollbackAccounts(accountsToRollback);
