@@ -234,7 +234,7 @@ public with sharing class AMS_OSCAR_Case_Detail_Controller {
     //AMSU-125
     public Boolean loadAMSRemittance(AMS_OSCAR__c oscar) {
         Set<String> locationsClass = new Set<String> {'P', 'D'};        
-        Set<String> processesToCheck = new Set<String> {AMS_Utils.AGENCYCHANGES, AMS_Utils.new_HO, AMS_Utils.new_BR};
+        Set<String> processesToCheck = new Set<String> {AMS_Utils.AGENCYCHANGES, AMS_Utils.new_HO, AMS_Utils.new_BR, AMS_Utils.new_SA};
 
         return !String.isBlank(oscar.Process__c) && locationsClass.contains(accreditationObj.Location_Class__c) && processesToCheck.contains(oscar.Process__c);
     }
