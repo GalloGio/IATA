@@ -64,8 +64,8 @@ public with sharing class ISSP_WS_SIS_Callout_UpdateUser {
             request.IcpUserName = ISSP_WS_SIS_Callout_Common.getUser();
             request.IcpPassword = ISSP_WS_SIS_Callout_Common.getPass();
             request.FederationID = nvl(user.FederationIdentifier);
-            request.FirstName = nvl(contact.FirstName);
-            request.LastName = nvl(contact.LastName);
+            request.FirstName = ISSP_WS_SIS_Callout_Common.cleanSpecialChars(contact.FirstName);
+            request.LastName = ISSP_WS_SIS_Callout_Common.cleanSpecialChars(contact.LastName);
             request.EmailAddress = nvl(contact.Email);
             requestString = request.toXML();
             System.debug(requestString);

@@ -451,6 +451,10 @@ Should be one of - Daily, Weekly, Semi-Monthly, Monthly</inlineHelpText>
             <field>Subscription__c</field>
             <operation>equals</operation>
         </filters>
+        <filters>
+            <field>GSS_Subscription_Detail__c</field>
+            <operation>equals</operation>
+        </filters>
         <label>ZZZ: Deliveries With No Link to Z-Sub</label>
         <language>en_US</language>
     </listViews>
@@ -471,7 +475,7 @@ Should be one of - Daily, Weekly, Semi-Monthly, Monthly</inlineHelpText>
         <filters>
             <field>GSS_Subscription_Detail__c</field>
             <operation>equals</operation>
-            <value>A-S00000428</value>
+            <value>A-S00012815</value>
         </filters>
         <label>ZZ: Search by GSS Subscription Detail</label>
         <language>en_US</language>

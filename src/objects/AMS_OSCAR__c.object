@@ -1951,11 +1951,35 @@ IF(Bank_Guarantee_received__c - Bank_Guarantee_requested__c =6, TEXT(4), TEXT((B
         <type>Date</type>
     </fields>
     <fields>
+        <fullName>DGR_Expired__c</fullName>
+        <description>Formula field to display requiered information at the OSCAR level - to be used on the email templates</description>
+        <externalId>false</externalId>
+        <formula>AMS_Online_Accreditation__r.DGR_Agency_Regulation__r.Expired__c</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>Expired</label>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
+        <fullName>DGR_Expiry_Date__c</fullName>
+        <description>Formula field to display requiered information at the OSCAR level - to be used on the email templates</description>
+        <externalId>false</externalId>
+        <formula>AMS_Online_Accreditation__r.DGR_Agency_Regulation__r.Expiry_Date__c</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>Expiry Date</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Date</type>
+    </fields>
+    <fields>
         <fullName>DGR_First_Name__c</fullName>
+        <description>Formula field to display requiered information at the OSCAR level - to be used on the email templates</description>
         <externalId>false</externalId>
         <formula>AMS_Online_Accreditation__r.DGR_Agency_Regulation__r.First_Name__c</formula>
         <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
-        <label>DGR First Name</label>
+        <label>First Name</label>
         <required>false</required>
         <trackHistory>false</trackHistory>
         <trackTrending>false</trackTrending>
@@ -1964,10 +1988,24 @@ IF(Bank_Guarantee_received__c - Bank_Guarantee_requested__c =6, TEXT(4), TEXT((B
     </fields>
     <fields>
         <fullName>DGR_Last_Name__c</fullName>
+        <description>Formula field to display requiered information at the OSCAR level - to be used on the email templates</description>
         <externalId>false</externalId>
         <formula>AMS_Online_Accreditation__r.DGR_Agency_Regulation__r.Last_Name__c</formula>
         <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
-        <label>DGR Last Name</label>
+        <label>Last Name</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>DGR_Organization__c</fullName>
+        <description>Formula field to display requiered information at the OSCAR level - to be used on the email templates</description>
+        <externalId>false</externalId>
+        <formula>AMS_Online_Accreditation__r.DGR_Agency_Regulation__r.Issuer__c</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>Organization</label>
         <required>false</required>
         <trackHistory>false</trackHistory>
         <trackTrending>false</trackTrending>
@@ -1976,10 +2014,50 @@ IF(Bank_Guarantee_received__c - Bank_Guarantee_requested__c =6, TEXT(4), TEXT((B
     </fields>
     <fields>
         <fullName>DGR_Position__c</fullName>
+        <description>Formula field to display requiered information at the OSCAR level - to be used on the email templates</description>
         <externalId>false</externalId>
         <formula>AMS_Online_Accreditation__r.DGR_Agency_Regulation__r.Position__c</formula>
         <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
-        <label>DGR Position</label>
+        <label>Position</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>DGR_Record__c</fullName>
+        <description>Formula field to display requiered information at the OSCAR level - to be used on the email templates</description>
+        <externalId>false</externalId>
+        <formula>HYPERLINK(&quot;/&quot;&amp;AMS_Online_Accreditation__r.DGR_Agency_Regulation__r.Id, AMS_Online_Accreditation__r.DGR_Agency_Regulation__r.Name,  &quot;Self&quot;)</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>Agency Regulation Record</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>DGR_Reference__c</fullName>
+        <description>Formula field to display requiered information at the OSCAR level - to be used on the email templates</description>
+        <externalId>false</externalId>
+        <formula>AMS_Online_Accreditation__r.DGR_Agency_Regulation__r.Registration_Number__c</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>Reference</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>DGR_Validaty__c</fullName>
+        <description>Formula field to display requiered information at the OSCAR level - to be used on the email templates</description>
+        <externalId>false</externalId>
+        <formula>text(AMS_Online_Accreditation__r.DGR_Agency_Regulation__r.Validity__c)</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>Validaty</label>
         <required>false</required>
         <trackHistory>false</trackHistory>
         <trackTrending>false</trackTrending>
@@ -6996,6 +7074,11 @@ if(Change_effective_as_of__c - today() &gt; 0,&quot;30&quot;,&quot;0&quot;)))</f
                     <fullName>Open - EDMC</fullName>
                     <default>false</default>
                     <label>Open - EDMC</label>
+                </value>
+                <value>
+                    <fullName>Renewal not completed</fullName>
+                    <default>false</default>
+                    <label>Renewal not completed</label>
                 </value>
             </valueSetDefinition>
         </valueSet>
@@ -18376,6 +18459,10 @@ if(Change_effective_as_of__c - today() &gt; 0,&quot;30&quot;,&quot;0&quot;)))</f
         <picklistValues>
             <picklist>Is_PCI_compliant__c</picklist>
             <values>
+                <fullName>Corporate Card</fullName>
+                <default>false</default>
+            </values>
+            <values>
                 <fullName>Nil CC</fullName>
                 <default>false</default>
             </values>
@@ -24893,6 +24980,10 @@ if(Change_effective_as_of__c - today() &gt; 0,&quot;30&quot;,&quot;0&quot;)))</f
         <picklistValues>
             <picklist>Is_PCI_compliant__c</picklist>
             <values>
+                <fullName>Corporate Card</fullName>
+                <default>false</default>
+            </values>
+            <values>
                 <fullName>Nil CC</fullName>
                 <default>false</default>
             </values>
@@ -26881,6 +26972,10 @@ if(Change_effective_as_of__c - today() &gt; 0,&quot;30&quot;,&quot;0&quot;)))</f
         <picklistValues>
             <picklist>Is_PCI_compliant__c</picklist>
             <values>
+                <fullName>Corporate Card</fullName>
+                <default>false</default>
+            </values>
+            <values>
                 <fullName>Nil CC</fullName>
                 <default>false</default>
             </values>
@@ -28846,6 +28941,10 @@ if(Change_effective_as_of__c - today() &gt; 0,&quot;30&quot;,&quot;0&quot;)))</f
         <picklistValues>
             <picklist>Is_PCI_compliant__c</picklist>
             <values>
+                <fullName>Corporate Card</fullName>
+                <default>false</default>
+            </values>
+            <values>
                 <fullName>Nil CC</fullName>
                 <default>false</default>
             </values>
@@ -30744,6 +30843,10 @@ if(Change_effective_as_of__c - today() &gt; 0,&quot;30&quot;,&quot;0&quot;)))</f
         <picklistValues>
             <picklist>Is_PCI_compliant__c</picklist>
             <values>
+                <fullName>Corporate Card</fullName>
+                <default>false</default>
+            </values>
+            <values>
                 <fullName>Nil CC</fullName>
                 <default>false</default>
             </values>
@@ -32616,6 +32719,10 @@ if(Change_effective_as_of__c - today() &gt; 0,&quot;30&quot;,&quot;0&quot;)))</f
         </picklistValues>
         <picklistValues>
             <picklist>Is_PCI_compliant__c</picklist>
+            <values>
+                <fullName>Corporate Card</fullName>
+                <default>false</default>
+            </values>
             <values>
                 <fullName>Nil CC</fullName>
                 <default>false</default>
@@ -40871,6 +40978,10 @@ if(Change_effective_as_of__c - today() &gt; 0,&quot;30&quot;,&quot;0&quot;)))</f
         <picklistValues>
             <picklist>Is_PCI_compliant__c</picklist>
             <values>
+                <fullName>Corporate Card</fullName>
+                <default>false</default>
+            </values>
+            <values>
                 <fullName>Nil CC</fullName>
                 <default>false</default>
             </values>
@@ -41831,6 +41942,7 @@ if(Change_effective_as_of__c - today() &gt; 0,&quot;30&quot;,&quot;0&quot;)))</f
 		AND(
 			OR(Location_Class__c == &apos;P&apos;, Location_Class__c ==&apos;D&apos;), 
 			RecordType.DeveloperName = &apos;NEW&apos;,
+            ISPICKVAL(STEP6__c, &apos;Passed&apos;),
 			ISBLANK(ANG_PCI_compliance_expiry_date__c),
 			OR(
 				TEXT(Process__c) == &apos;NEW.HO.1.0&apos;,

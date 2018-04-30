@@ -178,7 +178,7 @@ public class AMS_OSCARTriggerHandler {
     public static void validateRemittanceFrequency(List<AMS_OSCAR__c> oscars, Map<Id, AMS_OSCAR__c> oldMap, Map<Id, AMS_OSCAR__c> newMap) {
         List<AMS_Oscar__c> oscarsToValidate = new List<AMS_Oscar__c>();
         Map<String, Set<String>> mapClassAttributes = new Map<String, Set<String>>();
-        Set<String> processToCheck = new Set<String> {AMS_Utils.new_HO, AMS_Utils.new_BR};
+        Set<String> processToCheck = new Set<String> {AMS_Utils.new_HO, AMS_Utils.new_BR, AMS_Utils.new_SA};
 
 
         for(AMS_Oscar__c oscar : oscars) {
@@ -283,9 +283,12 @@ public class AMS_OSCARTriggerHandler {
         for(AMS_Oscar__c oscar : oscars) {
             AMS_OSCAR__c oldOscar = oldMap.get(oscar.id);
             if(!String.isBlank(oscar.Account__c) && pciCompliantProcesses.contains(oscar.Process__c) && oscar.Location_Class__c == AMS_Utils.LC_PASSENGER && oldOscar.STEP6__c != oscar.STEP6__c && oscar.STEP6__c == AMS_Utils.PASSED) {
-                if(oscar.Is_PCI_compliant__c == 'Yes' || oscar.Is_PCI_compliant__c == 'Nil CC') {
+                //if(oscar.Is_PCI_compliant__c == 'Yes' || oscar.Is_PCI_compliant__c == 'Nil CC') {
+                if(AMS_Utils.oscarPCICompliantValidationExpiryDate.contains(oscar.Is_PCI_compliant__c) ) {
                     mapExpiryDates.put(oscar.Account__c, oscar.ANG_PCI_compliance_expiry_date__c + ',' + oscar.Is_PCI_compliant__c);
-                }else if(oscar.Is_PCI_compliant__c == 'No') {
+                }else 
+                //if(oscar.Is_PCI_compliant__c == 'No' || oscar.Is_PCI_compliant__c == 'Corporate Card') {
+                if(oscar.Is_PCI_compliant__c != null && oscar.Is_PCI_compliant__c != '' && !AMS_Utils.oscarPCICompliantValidationExpiryDate.contains(oscar.Is_PCI_compliant__c) ) {    
                     mapExpiryDates.put(oscar.Account__c,  'empty,' + oscar.Is_PCI_compliant__c);
                 }
             }
@@ -2602,7 +2605,8 @@ public class AMS_OSCARTriggerHandler {
                             isToValidate = false; // we can skipp this validation
                     }
                     //AMSU-113
-                    if(oscar.Process__c == AMS_Utils.PCI_COMPLIANT && oscar.Is_PCI_compliant__c != 'Yes' && oscar.Is_PCI_compliant__c != 'Nil CC'){
+                    //if(oscar.Process__c == AMS_Utils.PCI_COMPLIANT && oscar.Is_PCI_compliant__c != 'Yes' && oscar.Is_PCI_compliant__c != 'Nil CC' && oscar.Is_PCI_compliant__c != 'Corporate Card'){
+                    if(oscar.Process__c == AMS_Utils.PCI_COMPLIANT && !AMS_Utils.oscarPCICompliantValidationAttachement.contains(oscar.Is_PCI_compliant__c) ){
                         isToValidate = false; // we can skipp this validation
                     }
 
