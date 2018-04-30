@@ -8744,14 +8744,14 @@ IFG Customer Services</value>
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>ISSP_AMS_Cargo_Branch_Form_SECTION5_TXT3</shortDescription>
-        <value>(a) IATA/FIATA (or equivalent industry) introductory  training courses completed</value>
+        <value>IATA/FIATA (or equivalent industry) training courses completed</value>
     </labels>
     <labels>
         <fullName>ISSP_AMS_Cargo_Branch_Form_SECTION5_TXT4</fullName>
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>ISSP_AMS_Cargo_Branch_Form_SECTION5_TXT4</shortDescription>
-        <value>(b) Training course on IATA Dangerous Goods Regulations successfully completed</value>
+        <value>Training course on IATA Dangerous Goods Regulations successfully completed</value>
     </labels>
     <labels>
         <fullName>ISSP_AMS_Cargo_Branch_Form_SECTION5_TXT5</fullName>
@@ -8765,7 +8765,7 @@ IFG Customer Services</value>
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>ISSP_AMS_Cargo_Branch_Form_SECTION5_TXT6</shortDescription>
-        <value>(b) List dangerous goods awareness certificate completed</value>
+        <value>List dangerous goods awareness certificate completed</value>
     </labels>
     <labels>
         <fullName>ISSP_AMS_Cargo_Branch_Form_SECTION5_TXT7</fullName>
