@@ -6,6 +6,9 @@ public class TIP_Utils{
     public static String STANDARD_ACCOUNT_RECORD_TYPE_ID = RecordTypeSingleton.getInstance().RtIDsPerDeveloperNamePerObj.get('Account').get('Standard_Account');  
     public static String PAYMENT_PROVIDER_RECORD_TYPE_ID = RecordTypeSingleton.getInstance().RtIDsPerDeveloperNamePerObj.get('Account').get('TIP_Payment_Provider');
 
+    //Partner product RT
+	public static String PARTNER_PRODUCT_TIP_PRODUCT_RECORD_TYPE_ID= RecordTypeSingleton.getInstance().RtIDsPerDeveloperNamePerObj.get('Partner_products__c').get('TIP_Product');
+
 	//Account Category
 	public static String ACCOUNT_CATEGORY_PAYMENT_PROVIDER = 'Payment Provider';
 
@@ -31,12 +34,29 @@ public class TIP_Utils{
 	//Case Subject
 	public static String CASE_SUBJECT_NEW_PRODUCT_ENROLMENT = 'New Product Enrolment';
 
+	//Partner status
+	public static String PARTNER_STATUS_ACTIVE='Active';
+	public static String PARTNER_STATUS_INACTIVE='Inactive';
+	public static String PARTNER_STATUS_IN_PROGRESS='In Progress';
+
+	//Partner Product status
 	public static String PARTNER_PRODUCT_STATUS_ACTIVE='ACTIVE';
+	public static String PARTNER_PRODUCT_STATUS_INACTIVE='INACTIVE';
+	public static String PARTNER_PRODUCT_STATUS_IN_PROGRESS='IN_PROGRESS';
+	public static String PARTNER_PRODUCT_STATUS_REJECTED='REJECTED';
 	public static String PARTNER_PRODUCT_STATUS_DRAFT='DRAFT';
 
+	//BIN Range status
+	public static String BIN_RANGE_STATUS_ACTIVE='ACTIVE';
+	public static String BIN_RANGE_STATUS_INACTIVE='INACTIVE';
+	public static String BIN_RANGE_STATUS_IN_PROGRESS='IN_PROGRESS';
+	public static String BIN_RANGE_STATUS_DRAFT='DRAFT';
 
-	//Partner product RT
-	public static String PARTNER_PRODUCT_TIP_PRODUCT_RECORD_TYPE_ID= RecordTypeSingleton.getInstance().RtIDsPerDeveloperNamePerObj.get('Partner_products__c').get('TIP_Product');
+	//Partner Product Configuration status
+	public static String PARTNER_PRODUCT_CONFIG_STATUS_ACTIVE='ACTIVE';
+	public static String PARTNER_PRODUCT_CONFIG_STATUS_INACTIVE='INACTIVE';
+	public static String PARTNER_PRODUCT_CONFIG_STATUS_IN_PROGRESS='IN_PROGRESS';
+	public static String PARTNER_PRODUCT_CONFIG_STATUS_DRAFT='DRAFT';
 
 	//BIN Range RT's
 	public static String LISTED_BY_IATA_RECORD_TYPE_ID = RecordTypeSingleton.getInstance().RtIDsPerDeveloperNamePerObj.get('TIP_BIN_Range__c').get('Unenrolled_Known');
