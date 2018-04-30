@@ -233,7 +233,7 @@
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>AMS_OSCAR_Action6</shortDescription>
-        <value>Edit the accounts involved</value>
+        <value>Select/Deselect Complete Hierarchy</value>
     </labels>
     <labels>
         <fullName>AMS_OSCAR_Action7</fullName>
@@ -8744,14 +8744,14 @@ IFG Customer Services</value>
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>ISSP_AMS_Cargo_Branch_Form_SECTION5_TXT3</shortDescription>
-        <value>(a) IATA/FIATA (or equivalent industry) introductory  training courses completed</value>
+        <value>IATA/FIATA (or equivalent industry) training courses completed</value>
     </labels>
     <labels>
         <fullName>ISSP_AMS_Cargo_Branch_Form_SECTION5_TXT4</fullName>
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>ISSP_AMS_Cargo_Branch_Form_SECTION5_TXT4</shortDescription>
-        <value>(b) Training course on IATA Dangerous Goods Regulations successfully completed</value>
+        <value>Training course on IATA Dangerous Goods Regulations successfully completed</value>
     </labels>
     <labels>
         <fullName>ISSP_AMS_Cargo_Branch_Form_SECTION5_TXT5</fullName>
@@ -8765,7 +8765,7 @@ IFG Customer Services</value>
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>ISSP_AMS_Cargo_Branch_Form_SECTION5_TXT6</shortDescription>
-        <value>(b) List dangerous goods awareness certificate completed</value>
+        <value>List dangerous goods awareness certificate completed</value>
     </labels>
     <labels>
         <fullName>ISSP_AMS_Cargo_Branch_Form_SECTION5_TXT7</fullName>
@@ -21572,6 +21572,14 @@ If you want to reset your password, go back to login screen and use &quot;forgot
         <protected>false</protected>
         <shortDescription>ISSP_SubmitAttach</shortDescription>
         <value>Submit &amp; Add Attachment</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_Submitted</fullName>
+        <categories>ISSP, Portal, AMS</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP Submitted</shortDescription>
+        <value>Submitted</value>
     </labels>
     <labels>
         <fullName>ISSP_SureToContinue</fullName>
