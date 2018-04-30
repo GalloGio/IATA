@@ -878,6 +878,11 @@ Mapped to &quot; Is_PCI_compliant__c&quot; on AMS Account for Replication.</desc
                     <default>false</default>
                     <label>X</label>
                 </value>
+                <value>
+                    <fullName>C</fullName>
+                    <default>false</default>
+                    <label>C</label>
+                </value>
             </valueSetDefinition>
         </valueSet>
     </fields>
@@ -1418,6 +1423,10 @@ X = Not NewGen OR NewGen GoLite OR NewGen Financial Review Opt-Out</inlineHelpTe
         </picklistValues>
         <picklistValues>
             <picklist>PCI_Compliance__c</picklist>
+            <values>
+                <fullName>C</fullName>
+                <default>false</default>
+            </values>
             <values>
                 <fullName>N</fullName>
                 <default>false</default>
