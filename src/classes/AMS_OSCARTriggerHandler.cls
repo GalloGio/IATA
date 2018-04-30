@@ -178,7 +178,7 @@ public class AMS_OSCARTriggerHandler {
     public static void validateRemittanceFrequency(List<AMS_OSCAR__c> oscars, Map<Id, AMS_OSCAR__c> oldMap, Map<Id, AMS_OSCAR__c> newMap) {
         List<AMS_Oscar__c> oscarsToValidate = new List<AMS_Oscar__c>();
         Map<String, Set<String>> mapClassAttributes = new Map<String, Set<String>>();
-        Set<String> processToCheck = new Set<String> {AMS_Utils.new_HO, AMS_Utils.new_BR};
+        Set<String> processToCheck = new Set<String> {AMS_Utils.new_HO, AMS_Utils.new_BR, AMS_Utils.new_SA};
 
 
         for(AMS_Oscar__c oscar : oscars) {
