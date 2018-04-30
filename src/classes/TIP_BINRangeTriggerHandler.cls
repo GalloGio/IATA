@@ -225,7 +225,8 @@ public class TIP_BINRangeTriggerHandler {
 	}
 
 	private void generateBinConflits(){
-
+		List<BIN_Range_Conflict__c> binRangeConflits = new List<BIN_Range_Conflict__c>(); 
+		
 		delete [SELECT ID FROM BIN_Range_Conflict__c where BIN_Range__c IN :newMap.keySet() OR BIN_Range_Conflict__c IN :newMap.keySet()];
 
 		List<TIP_BIN_Range__c> binRanges = [SELECT Id, Name,TIP_Payment_Provider_Product__c, TIP_Range_Start__c, TIP_Range_End__c, TIP_Effective_From_Date__c, TIP_Effective_To_Date__c 
@@ -234,22 +235,39 @@ public class TIP_BINRangeTriggerHandler {
 												AND ID NOT IN :newMap.keySet()];
 
 		for (Integer i = 0; i < triggerNew.size(); i++) {
-			for (Integer j = 0; j < binRanges.size(); j++) {
-				if( getOverlap(triggerNew[i], binRanges[j]) != 0 && triggerNew[i].TIP_Status__c != TIP_Utils.BIN_RANGE_STATUS_DRAFT
-					&& triggerNew[i].recordtypeid == TIP_Utils.BIN_RANGE_PROVIDER_RECORD_TYPE_ID) createBinRangeConflit(triggerNew[i], binRanges[j]);
+			//compare between the bin ranges that were inserted
+			for (Integer j = i+1; j < triggerNew.size(); j++) {
+				if( getOverlap(triggerNew[i], triggerNew[j]) != 0 && triggerNew[i].TIP_Status__c != TIP_Utils.BIN_RANGE_STATUS_DRAFT
+					&& triggerNew[i].recordtypeid == TIP_Utils.BIN_RANGE_PROVIDER_RECORD_TYPE_ID) binRangeConflits.addAll(createBinRangeConflict(triggerNew[i], triggerNew[j]));
+			}
+
+			//compare with the alredy existing bin ranges
+			for (Integer k = 0; k < binRanges.size(); k++) {
+				if( getOverlap(triggerNew[i], binRanges[k]) != 0 && triggerNew[i].TIP_Status__c != TIP_Utils.BIN_RANGE_STATUS_DRAFT
+					&& triggerNew[i].recordtypeid == TIP_Utils.BIN_RANGE_PROVIDER_RECORD_TYPE_ID) binRangeConflits.addAll(createBinRangeConflict(triggerNew[i], binRanges[k]));
 			}
 		}
+		insert binRangeConflits;
+		update matchBinRangeConflictWithTwin(binRangeConflits);
 	}
 
-	private void createBinRangeConflit(TIP_BIN_Range__c bin1, TIP_BIN_Range__c bin2){
+	private List<BIN_Range_Conflict__c> createBinRangeConflict(TIP_BIN_Range__c bin1, TIP_BIN_Range__c bin2){
 		BIN_Range_Conflict__c bc1 = new BIN_Range_Conflict__c(BIN_Range__c = bin1.id,BIN_Range_Conflict__c = bin2.id, Partner_Product__c = bin1.TIP_Payment_Provider_Product__c);
 		BIN_Range_Conflict__c bc2 = new BIN_Range_Conflict__c(BIN_Range__c = bin2.id,BIN_Range_Conflict__c = bin1.id, Partner_Product__c = bin2.TIP_Payment_Provider_Product__c);
-		insert bc1;
-		insert bc2;
+		return new List<BIN_Range_Conflict__c>{bc1,bc2};
 
-		bc1.Twin_Conflict__c = bc2.id;
-		bc2.Twin_Conflict__c = bc1.id;
-		update bc1;
-		update bc2;
+	}
+	private List<BIN_Range_Conflict__c> matchBinRangeConflictWithTwin(List<BIN_Range_Conflict__c> binRangeConflits){
+		for(Integer i = 0; i <binRangeConflits.size(); i++){
+			for(Integer j = i+1; j <binRangeConflits.size(); j++){
+				if(binRangeConflits[i].BIN_Range__c == binRangeConflits[j].BIN_Range_Conflict__c && 
+					binRangeConflits[i].BIN_Range_Conflict__c == binRangeConflits[j].BIN_Range__c){
+
+					binRangeConflits[i].Twin_Conflict__c = binRangeConflits[j].id;
+					binRangeConflits[j].Twin_Conflict__c = binRangeConflits[i].id;
+				}
+			}
+		}
+		return binRangeConflits;
 	}
 }

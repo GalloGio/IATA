@@ -80,6 +80,18 @@
         <layoutColumns/>
         <style>CustomLinks</style>
     </layoutSections>
+    <relatedLists>
+        <fields>NAME</fields>
+        <fields>Provider_Conflict_Name__c</fields>
+        <fields>Product_Conflict_Name__c</fields>
+        <fields>BIN_Range__c</fields>
+        <fields>Bin_Range_Status__c</fields>
+        <fields>Bin_Range_Effective_From_Date__c</fields>
+        <fields>Bin_Range_Effective_To_Date__c</fields>
+        <fields>Bin_Range_Range_from__c</fields>
+        <fields>Bin_Range_Range_To__c</fields>
+        <relatedList>BIN_Range_Conflict__c.BIN_Range_Conflict__c</relatedList>
+    </relatedLists>
     <showEmailCheckbox>false</showEmailCheckbox>
     <showHighlightsPanel>false</showHighlightsPanel>
     <showInteractionLogPanel>false</showInteractionLogPanel>
