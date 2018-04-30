@@ -144,6 +144,9 @@ public without sharing class ISSP_Case {
                         PageReference pr = new PageReference('/ISSP_IFAPCases?id=' + caseId + commParam);
                         return pr;
                     }
+            }else if(newCase.RecordType.name == 'OSCAR Communication' && newCase.Origin == 'Massive FOP Creation' && newCase.Owner.Name.startsWith('NewGen PCI')){
+                        PageReference pr = new PageReference('/ISSP_ANG_PCI?id=' + caseId + commParam);
+                        return pr;     
             }
 
             showAlertMessage();
@@ -156,14 +159,14 @@ public without sharing class ISSP_Case {
         Shows a disclaimer if current case was closed for more than 2 weeks
     **/
     public void showAlertMessage() {
-		//AMSU-119
+        //AMSU-119
         if (getHideForClosedCases() && !isMSOcase) {
             ApexPages.Message myMsg = new ApexPages.Message(ApexPages.Severity.INFO, System.Label.ISSP_Case_Closed_More_Than_2_Months);
             ApexPages.addMessage(myMsg);
         }else if(isMSOcase){
-			ApexPages.Message myMsg = new ApexPages.Message(ApexPages.Severity.INFO, System.Label.ISSP_AMS_MSO_Case_Alert);
-			ApexPages.addMessage(myMsg);
-		}		
+            ApexPages.Message myMsg = new ApexPages.Message(ApexPages.Severity.INFO, System.Label.ISSP_AMS_MSO_Case_Alert);
+            ApexPages.addMessage(myMsg);
+        }       
     }
 
     /**
@@ -873,7 +876,7 @@ public without sharing class ISSP_Case {
             }
             Database.DMLOptions dmo = new Database.DMLOptions();
             dmo.assignmentRuleHeader.useDefaultRule = true;
-	        newCase.setOptions(dmo);
+            newCase.setOptions(dmo);
         }
 
         if (!isGSAOnly && (newCase.IATAcode__c == '' || newCase.IATAcode__c == null) && isGSAUser && !isFDSRecordType) {
@@ -955,7 +958,7 @@ public without sharing class ISSP_Case {
             }
             Database.DMLOptions dmo = new Database.DMLOptions();
             dmo.assignmentRuleHeader.useDefaultRule = true;
-	        newCase.setOptions(dmo);
+            newCase.setOptions(dmo);
         }
         
         // CNS
