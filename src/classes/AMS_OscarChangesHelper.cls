@@ -174,7 +174,8 @@ public class AMS_OscarChangesHelper {
 			createInternalCase(oscarIds);	
 		} catch(Exception e) {
 			String oscarIdsStr = '' + oscarIds;
-			insert new Technical_Logs__c(Operation__c= 'Oscar rollback', Log__c= e.getStackTraceString(), Record__c= oscarIdsStr.substring(0, 254));
+			Integer maxSize = oscarIdsStr.length() > 255 ? 254 : oscarIdsStr.length() - 1;
+			insert new Technical_Logs__c(Operation__c= 'Oscar rollback', Log__c= e.getStackTraceString(), Record__c= oscarIdsStr.substring(0, maxSize));
 		}	
 	}
 
