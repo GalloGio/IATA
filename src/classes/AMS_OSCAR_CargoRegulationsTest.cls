@@ -2,6 +2,7 @@
     
     @testSetup static void setup(){
 		AMS_OSCAR_TestDataFactory.createCargoAgencyOSCARtestData();
+		AMS_OSCAR_TestDataFactory.increasecoverage();
     }
 
     private static void loadCredentials() {
