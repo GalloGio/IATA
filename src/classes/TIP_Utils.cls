@@ -30,6 +30,11 @@ public class TIP_Utils{
 	//case Description
 	public static String CASE_DESC_REQUEST_FOR_ENLISTMENT_PAYMENT_PROVIDER = 'Request for Enlistment as Payment provider';
 	
+	//BIN Range status
+	public static String BIN_RANGE_STATUS_ACTIVE='ACTIVE';
+	public static String BIN_RANGE_STATUS_INACTIVE='INACTIVE';
+	public static String BIN_RANGE_STATUS_IN_PROGRESS='IN_PROGRESS';
+	public static String BIN_RANGE_STATUS_DRAFT='DRAFT';
 
 	//Case Subject
 	public static String CASE_SUBJECT_NEW_PRODUCT_ENROLMENT = 'New Product Enrolment';

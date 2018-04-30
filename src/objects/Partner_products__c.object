@@ -53,6 +53,15 @@
     <enableSharing>true</enableSharing>
     <enableStreamingApi>true</enableStreamingApi>
     <fields>
+        <fullName>BIN_Conflict_Count__c</fullName>
+        <externalId>false</externalId>
+        <label>BIN Conflict #</label>
+        <summaryForeignKey>BIN_Range_Conflict__c.Partner_Product__c</summaryForeignKey>
+        <summaryOperation>count</summaryOperation>
+        <trackTrending>false</trackTrending>
+        <type>Summary</type>
+    </fields>
+    <fields>
         <fullName>BIN_Range__c</fullName>
         <deleteConstraint>SetNull</deleteConstraint>
         <externalId>false</externalId>
@@ -720,4 +729,23 @@ If the product is a multi-use VANs, then it is a unique card/account number that
         <errorMessage>Partner Product cannot be activated if Provider Account is not active</errorMessage>
     </validationRules>
     <visibility>Public</visibility>
+    <webLinks>
+        <fullName>BIN_Conflicts</fullName>
+        <availability>online</availability>
+        <displayType>link</displayType>
+        <encodingKey>UTF-8</encodingKey>
+        <hasMenubar>false</hasMenubar>
+        <hasScrollbars>true</hasScrollbars>
+        <hasToolbar>false</hasToolbar>
+        <height>600</height>
+        <isResizable>true</isResizable>
+        <linkType>url</linkType>
+        <masterLabel>BIN Conflicts</masterLabel>
+        <openType>newWindow</openType>
+        <position>none</position>
+        <protected>false</protected>
+        <showsLocation>false</showsLocation>
+        <showsStatus>false</showsStatus>
+        <url>/00O9E000000McWa?pv0={!Partner_products__c.Id}</url>
+    </webLinks>
 </CustomObject>
