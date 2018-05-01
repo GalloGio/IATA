@@ -80,6 +80,7 @@ public class ams2gdp_BusinessLogic
 			if(account.Is_PCI_compliant__c == 'Yes') {PCICompliance = 'Y';}
 			else if(account.Is_PCI_compliant__c == 'No') {PCICompliance = 'N';}
 			else if(account.Is_PCI_compliant__c == 'Nil CC') {PCICompliance = 'X';}
+			else if(account.Is_PCI_compliant__c == 'Corporate Card') {PCICompliance = 'C';}
 
 			result.add(new GDP_Products_Account_View__c(AMS_GDP_Key__c  = mapping_key
 				, Parent_GDP_Account_View__c = (account.ParentId !=null)? parentMap.get(account.ParentId): null
