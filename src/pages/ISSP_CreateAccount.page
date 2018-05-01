@@ -152,20 +152,20 @@
 	
 	function shippingListStates() {
 		var country = $j('#shippingcountry input').val();
-		if(country == 'BR' || country == 'US' || country == 'CA' || country == 'AU' || country == 'VE') {
+		if(country == 'Brazil' || country == 'United States' || country == 'Canada' || country == 'Australia' || country == 'Venezuela') {
 			console.log('show states');
 			$j("#drpdwnSState").empty();
 			$j("#drpdwnSState").addClass('rec');
 			$j("#drpdwnSState").append("<option value=''>--Select One--</option>");
-			if(country == 'BR' && mapStates.BR)	{
+			if(country == 'Brazil' && mapStates.BR)	{
 				$j.each(mapStates.BR, function(k, v) {$j('select[id*="drpdwnSState"]').append($j("<option></option>").attr("value", v).text(v));});
-			} else if(country == 'US' && mapStates.US) {
+			} else if(country == 'United States' && mapStates.US) {
 				$j.each(mapStates.US, function(k, v) {$j('select[id*="drpdwnSState"]').append($j("<option></option>").attr("value", v).text(v));});
-			} else if(country == 'CA' && mapStates.CA) {
+			} else if(country == 'Canada' && mapStates.CA) {
 				$j.each(mapStates.CA, function(k, v) {$j('select[id*="drpdwnSState"]').append($j("<option></option>").attr("value", v).text(v));});
-			} else if(country == 'AU' && mapStates.AU) {
+			} else if(country == 'Australia' && mapStates.AU) {
 				$j.each(mapStates.AU, function(k, v) {$j('select[id*="drpdwnSState"]').append($j("<option></option>").attr("value", v).text(v));});
-			} else if(country == 'VE' && mapStates.VE) {
+			} else if(country == 'Venezuela' && mapStates.VE) {
 				$j.each(mapStates.VE, function(k, v) {$j('select[id*="drpdwnSState"]').append($j("<option></option>").attr("value", v).text(v));});
 			}
 
@@ -243,22 +243,22 @@
 	
 	function setShippingStatesDrpDown() {
 		var country = $j('#shippingcountry input').val();
-		if(country == 'BR' || country == 'US' || country == 'CA' || country == 'AU' || country == 'VE') {
+		if(country == 'Brazil' || country == 'United States' || country == 'Canada' || country == 'Australia' || country == 'Venezuela') {
 			$j('#shippingstate input').hide();
 			var elem = $j('#divToMove3').detach();
 			elem.insertAfter("#shippingstate");
 			$j('#shippingstate input').hide();
 			$j('#divToMove3').show();
 		
-			if(country == 'BR' && mapStates.BR)	{
+			if(country == 'Brazil' && mapStates.BR)	{
 				$j.each(mapStates.BR, function(k, v) {$j('select[id*="drpdwnSState"]').append($j("<option></option>").attr("value", v).text(v));});
-			} else if(country == 'US' && mapStates.US) {
+			} else if(country == 'United States' && mapStates.US) {
 				$j.each(mapStates.US, function(k, v) {$j('select[id*="drpdwnSState"]').append($j("<option></option>").attr("value", v).text(v));});
-			} else if(country == 'CA' && mapStates.CA) {
+			} else if(country == 'Canada' && mapStates.CA) {
 				$j.each(mapStates.CA, function(k, v) {$j('select[id*="drpdwnSState"]').append($j("<option></option>").attr("value", v).text(v));});
-			} else if(country == 'AU' && mapStates.AU) {
+			} else if(country == 'Australia' && mapStates.AU) {
 				$j.each(mapStates.AU, function(k, v) {$j('select[id*="drpdwnSState"]').append($j("<option></option>").attr("value", v).text(v));});
-			} else if(country == 'VE' && mapStates.VE) {
+			} else if(country == 'Venezuela' && mapStates.VE) {
 				$j.each(mapStates.VE, function(k, v) {$j('select[id*="drpdwnSState"]').append($j("<option></option>").attr("value", v).text(v));});
 			}
 			
@@ -304,7 +304,7 @@
     	changeFieldsMaxlength();
         console.log('fsd '+'{!preventAddressDoctorService}');
         if('{!preventAddressDoctorService}'=='false') {
-        	$j("#shippingcountry").find("input").val("{!searchCountryName}");
+            $j("#shippingcountry").find("input").val("{!searchCountryName}");
             $j("#shippingcountry").find("input").attr('readonly', true);
             $j("#billingcountry").find("input").val("{!searchCountryName}");
             $j("#billingcountry").find("input").attr('readonly', true);
@@ -323,7 +323,6 @@
             
             //TC: remove address validation boxes
             if("{!sRefererCommunity}"=="iec") {
-            	$j("#shippingcountry").find("input").val("{!searchCountryISOCode}");
             	$j('input[id*="accountName"]').removeAttr('required');
             	replaceShippingTXT(document.body);
 	            $j(".elementBAddressToHide").hide();  
@@ -340,6 +339,8 @@
 	            modifyUIForm();
 	            replaceAutoCompleteAddressDoctor();
 
+	            
+	            
 	            //TC: set mandatory fields by country 
 	            var country = "{!searchCountryName}";     
 
@@ -1113,7 +1114,7 @@
         
     function checkShippingAddress() {
     	var country = $j('#shippingcountry input').val() ? $j('#shippingcountry input').val().toUpperCase() : "";
-    	var stateReq = country == 'CA' || country == 'US' || country == 'VE' || country == 'AU' || country == 'BR';
+    	var stateReq = country == 'CANADA' || country == 'UNITED STATES' || country == 'VENEZUELA' || country == 'AUSTRALIA' || country == 'BRAZIL';
     	var postalCodeReq = isZipCodeApplicable(country);
     	var sstreet = $j("#shippingstreet").find("textarea");
     	var scity = $j("#shippingcity").find("input");
@@ -1486,6 +1487,8 @@
             $j("#shippingpostalcode").find("input").val($j("#billingpostalcode").find("input").val());
             if(isIEC) {          	
             	$j('[id*="drpdwnCountry"]').attr('disabled', 'disabled');
+            	$j("#shippingcountry").find("input").val(defCountry);
+            	$j('[id*="drpdwnCountry"]').val(defCountry);            	
             	shippingListStates();
             	if($j('#divToMove3').css('display') != 'none') {
             		$j('#drpdwnSState').val($j('#drpdwnBState').val());
