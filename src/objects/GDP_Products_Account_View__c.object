@@ -853,7 +853,11 @@ The length is the total of the original fields (Area, Country_Code, Legal_Name, 
         <description>Indicator on the Agency Compliance to PCI DSS Rules. 
 Mapped to &quot; Is_PCI_compliant__c&quot; on AMS Account for Replication.</description>
         <externalId>false</externalId>
-        <inlineHelpText>Mapped to &quot; Is_PCI_compliant__c&quot; on AMS Account for Replication.</inlineHelpText>
+        <inlineHelpText>Mapped to &quot;Is_PCI_compliant__c&quot; on AMS Account for Replication.
+Y = Yes
+N = No
+C = Corporate Cards Only
+X = No Usage of Cards</inlineHelpText>
         <label>PCI Compliance</label>
         <required>false</required>
         <trackHistory>true</trackHistory>
