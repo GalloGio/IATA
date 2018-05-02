@@ -354,6 +354,10 @@ public without sharing class ISSP_AMS_Accreditation {
             }
         }
 
+        // NewGen is only valid for Travel Agents
+        newAccreditationModels = (isocountry.ANG_Enable_NewGen__c == true && sectorValue.StartsWith('Travel_Agent')) ;
+        namEnabled = isocountry.ANG_Enable_NewGen__c;
+
         checkEligibilityForAChange();
         //sectorValue = sector.replace(' ', '_'); //Used to set Step 1 radio button default selection value
         System.DeBUG('SFSF con.Account.IATA_ISO_Country__c: ' + con.Account.IATA_ISO_Country__c);
@@ -448,6 +452,10 @@ public without sharing class ISSP_AMS_Accreditation {
                 }
 
                 isocountry = fetchISOCountry(newCase.IFAP_Country_ISO__c);
+
+                // NewGen is only valid for Travel Agents
+                newAccreditationModels = (isocountry.ANG_Enable_NewGen__c == true && sectorValue.StartsWith('Travel_Agent')) ;
+                namEnabled = isocountry.ANG_Enable_NewGen__c;
 
                 amsAllLangCountryLabel = getAmsAllLangCountryLabel(isocountry, UserInfo.getLanguage());
 
@@ -592,6 +600,10 @@ public without sharing class ISSP_AMS_Accreditation {
                         isEUcountry = isocountry.EU_Country__c;
                     }
 
+                    // NewGen is only valid for Travel Agents
+                    newAccreditationModels = (isocountry.ANG_Enable_NewGen__c == true && sectorValue.StartsWith('Travel_Agent')) ;
+                    namEnabled = isocountry.ANG_Enable_NewGen__c;
+
                     setContextualHelp(userInfo.getLanguage());
 
                     //Validation error flag is set in STEP 5 (when submitting to IATA); redirects back to STEP 3
@@ -662,10 +674,6 @@ public without sharing class ISSP_AMS_Accreditation {
             amsLocationTypeLabel = translateAccreditationModel(newForm.ANG_Accreditation_type__c);
             amsLocationTypeLabelHq = amsLocationTypeLabel;
         }
-
-        // NewGen is only valid for Travel Agents
-        newAccreditationModels = (isocountry.ANG_Enable_NewGen__c == true && sectorValue.StartsWith('Travel_Agent')) ;
-        namEnabled = isocountry.ANG_Enable_NewGen__c;
 
         namPaxAgent = (sector == 'Travel Agent' && namEnabled);
 
@@ -2144,7 +2152,7 @@ public without sharing class ISSP_AMS_Accreditation {
         if (contactType == 'Trained Staff') {
             contactToUpsert = trainedStaffContact;
             if (!( isocountry.EACP_Country__c && newForm.Is_your_firm_handling_Dangerous_Goods__c == 'No')
-                 && contactToUpsert.Type_Of_Certificate__c != 'BCH' && contactToUpsert.Type_Of_Certificate__c != 'DGA' && contactToUpsert.Type_Of_Certificate__c != 'TSA' 
+                 && contactToUpsert.Type_Of_Certificate__c != 'BCH' && contactToUpsert.Type_Of_Certificate__c != 'DGA' && contactToUpsert.Type_Of_Certificate__c != 'TSA'
                  && contactToUpsert.Training_dangerous_goods_completed__c == null) {
                 contactToUpsert.Training_dangerous_goods_completed__c.addError(Label.ISSP_YouMustEnter);
                 contactSaved = false;
@@ -7122,7 +7130,7 @@ System.DEBUG('validateCharactersInForm  - 4 - errorFound: '+errorFound);
             }
         }
 
-        
+
         //FM 03/11/2017 - AMSU-20
         hlp = ISSP_AMS_Contextual_Help__c.getValues('TRAINED_STAFF_ORGANIZATION');
         if (hlp != null) {
@@ -7365,7 +7373,7 @@ System.DEBUG('validateCharactersInForm  - 4 - errorFound: '+errorFound);
     }
 
     private void setTrainedStaffList() {
-        //FM 19-07-2017 - AMSU-20 - added: Type_Of_Certificate__c, Registration_number__c, Certificate_Issuer__c 
+        //FM 19-07-2017 - AMSU-20 - added: Type_Of_Certificate__c, Registration_number__c, Certificate_Issuer__c
         this.trainedStaffList = [SELECT Id, Name, First_name__c, Last_name__c, List_Dangerous_Goods_Awareness__c, Position_trained_staff__c, IATA_FIATA_training_history__c, Air_cargo_transport_business_exp__c, Training_dangerous_goods_completed__c, Valid_until__c, Type_Of_Certificate__c, Registration_number__c, Certificate_Issuer__c FROM AMS_Accreditation_Contact__c WHERE AMS_Pax_Accreditation_Form__c = :this.newForm.Id AND recordTypeId = :retRecordTypeByObjectTypeAndName(AMS_Accreditation_Contact__c.SobjectType, 'Trained Staff')];
     }
 
