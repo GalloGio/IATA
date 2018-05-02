@@ -137,7 +137,7 @@
             <type>user</type>
         </recipients>
         <recipients>
-            <recipient>petterssonl@iata.org</recipient>
+            <recipient>wana@iata.org</recipient>
             <type>user</type>
         </recipients>
         <recipients>
@@ -156,7 +156,7 @@
             <type>user</type>
         </recipients>
         <recipients>
-            <recipient>petterssonl@iata.org</recipient>
+            <recipient>wana@iata.org</recipient>
             <type>user</type>
         </recipients>
         <recipients>
@@ -201,11 +201,11 @@
             <type>user</type>
         </recipients>
         <recipients>
-            <recipient>petterssonl@iata.org</recipient>
+            <recipient>tan-torrj@iata.org</recipient>
             <type>user</type>
         </recipients>
         <recipients>
-            <recipient>tan-torrj@iata.org</recipient>
+            <recipient>wana@iata.org</recipient>
             <type>user</type>
         </recipients>
         <recipients>
@@ -228,11 +228,11 @@
             <type>user</type>
         </recipients>
         <recipients>
-            <recipient>petterssonl@iata.org</recipient>
+            <recipient>tan-torrj@iata.org</recipient>
             <type>user</type>
         </recipients>
         <recipients>
-            <recipient>tan-torrj@iata.org</recipient>
+            <recipient>wana@iata.org</recipient>
             <type>user</type>
         </recipients>
         <recipients>

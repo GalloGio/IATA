@@ -1,6 +1,7 @@
 <aura:component controller="AMP_IssuesAndPrioritiesExtension">
 
     <aura:attribute name="issue" type="Objective__c" />
+    <aura:attribute name="divisionValues" type="String[]" />
     <aura:attribute name="canEdit" type="Boolean" default="false" />
     <aura:attribute name="relatedContact" type="Contact" default="{ 'sobjectType': 'Contact'}" />
     <aura:attribute name="index" type="Integer" />
@@ -69,6 +70,11 @@
     </td>
     <aura:renderIf isTrue="{!v.isEditMode }">
         <td><ui:inputText value="{!v.issue.Name}" class="slds-input required" maxlength="80"/></td>
+        <td class="allignTop">
+            <ui:inputSelect aura:id="divisionList" class="slds-select" >
+                
+            </ui:inputSelect>
+        </td>
         <td>
             <!--<c:LookupSObject preselectedSearchString="Source"
             label="Contact" pluralLabel="Contacts" sObjectAPIName="contact"
@@ -175,6 +181,7 @@
 
     <aura:renderIf isTrue="{!!v.isEditMode}">
         <td><c:AMP_LongText text="{!v.issue.Name}"/></td>
+        <td><ui:outputText value="{!v.issue.Division__c}"/></td>
         <td><c:AMP_LongText text="{!v.issue.AM_Source_Text__c}"/></td>
         <td><c:AMP_LongText text="{!v.issue.Details__c}" /></td>
         <td><ui:outputText value="{!v.issue.AM_Level_of_importance__c}"/></td>

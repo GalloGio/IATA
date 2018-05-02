@@ -1359,6 +1359,16 @@ Please check for ICH membership under www.iata.org/ich.</inlineHelpText>
                     <label>MITA application fee - 701910</label>
                 </value>
                 <value>
+                    <fullName>MITA Information Message Service Fee - 701921</fullName>
+                    <default>false</default>
+                    <label>MITA Information Message Service Fee - 701921</label>
+                </value>
+                <value>
+                    <fullName>MITA Reinstatement Fee - 701912</fullName>
+                    <default>false</default>
+                    <label>MITA Reinstatement Fee - 701912</label>
+                </value>
+                <value>
                     <fullName>NDCFEE_NSUCR</fullName>
                     <default>false</default>
                     <label>NDCFEE_NSUCR</label>
@@ -1669,6 +1679,10 @@ Please check for ICH membership under www.iata.org/ich.</inlineHelpText>
             </valueSettings>
             <valueSettings>
                 <controllingFieldValue>CASS</controllingFieldValue>
+                <valueName>CASITC_JOIN</valueName>
+            </valueSettings>
+            <valueSettings>
+                <controllingFieldValue>CASS</controllingFieldValue>
                 <valueName>CASLNK_MSG</valueName>
             </valueSettings>
             <valueSettings>
@@ -1714,6 +1728,14 @@ Please check for ICH membership under www.iata.org/ich.</inlineHelpText>
             <valueSettings>
                 <controllingFieldValue>Coding/MITA</controllingFieldValue>
                 <valueName>MITA application fee - 701910</valueName>
+            </valueSettings>
+            <valueSettings>
+                <controllingFieldValue>Coding/MITA</controllingFieldValue>
+                <valueName>MITA Information Message Service Fee - 701921</valueName>
+            </valueSettings>
+            <valueSettings>
+                <controllingFieldValue>Coding/MITA</controllingFieldValue>
+                <valueName>MITA Reinstatement Fee - 701912</valueName>
             </valueSettings>
             <valueSettings>
                 <controllingFieldValue>Coding/MITA</controllingFieldValue>
@@ -1766,6 +1788,11 @@ Please check for ICH membership under www.iata.org/ich.</inlineHelpText>
                     <fullName>Discover the World</fullName>
                     <default>false</default>
                     <label>Discover the World</label>
+                </value>
+                <value>
+                    <fullName>Aviareps</fullName>
+                    <default>false</default>
+                    <label>Aviareps</label>
                 </value>
             </valueSetDefinition>
         </valueSet>
@@ -2081,6 +2108,7 @@ Treasury Dashboard Set-up Fee (800964) : 3500</inlineHelpText>
             <valueSettings>
                 <controllingFieldValue>BSPFEE_JOINS</controllingFieldValue>
                 <controllingFieldValue>Code Reinstatement Fee - 701927</controllingFieldValue>
+                <controllingFieldValue>MITA Reinstatement Fee - 701912</controllingFieldValue>
                 <valueName>4500.00</valueName>
             </valueSettings>
             <valueSettings>
@@ -2129,6 +2157,7 @@ Treasury Dashboard Set-up Fee (800964) : 3500</inlineHelpText>
             <valueSettings>
                 <controllingFieldValue>CASFEE_DGRR2</controllingFieldValue>
                 <controllingFieldValue>PDP / PTA Assignment Fee - 701924</controllingFieldValue>
+                <controllingFieldValue>CASFEE_JOINS - 801032</controllingFieldValue>
                 <valueName>1500.00</valueName>
             </valueSettings>
             <valueSettings>
@@ -2190,6 +2219,10 @@ Treasury Dashboard Set-up Fee (800964) : 3500</inlineHelpText>
                 <controllingFieldValue>GSSA_REGI</controllingFieldValue>
                 <controllingFieldValue>GSSA_FEEN</controllingFieldValue>
                 <valueName>400.00</valueName>
+            </valueSettings>
+            <valueSettings>
+                <controllingFieldValue>MITA Information Message Service Fee - 701921</controllingFieldValue>
+                <valueName>1200.00</valueName>
             </valueSettings>
             <valueSettings>
                 <controllingFieldValue>TSF_ADPX</controllingFieldValue>

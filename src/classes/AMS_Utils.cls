@@ -179,6 +179,8 @@ public without sharing class AMS_Utils {
                                                                                     ANG_LOCATION_TYPE_DIFFLEGALENTITY,ANG_OWNERSHIP,ANG_HIERARCHY,ANG_ACCREDITATION_TYPE};
 
     public static final Set<String> oscarPCICompliantMigrationProcesses = new Set <String>{NEWHESTANDARD,NEWHELITE, NEWAE, NGCORRECTION}; 
+    public static final Set<String> oscarPCICompliantValidationAttachement = new Set <String>{'Yes','Nil CC','Corporate Card'};
+    public static final Set<String> oscarPCICompliantValidationExpiryDate = new Set <String>{'Yes','Nil CC'};
 
     //other types of process
     public static final String CERTIFICATE      = 'CER.1.0'         ;
@@ -326,6 +328,7 @@ public without sharing class AMS_Utils {
 
     public static final String CC = 'CC';
     public static final String CA = 'CA';
+    public static final string EP = 'EP';
     public static final String IATA_ACCREDITATION_AND_CHANGES = 'IATA Accreditation & Changes';
     public static final String CGO_SIGNED_CONTRACT = 'CGO_SIGNED_CONTRACT';
     public static final String NOC_SIGNED_CONTRACT = 'NOC_SIGNED_CONTRACT';
