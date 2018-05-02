@@ -1,11 +1,5 @@
 public without sharing class ISSP_TIP_Home_Controller {
 
-    private static String STANDARD_ACCOUNT_RECORD_TYPE_ID = RecordTypeSingleton.getInstance().RtIDsPerDeveloperNamePerObj.get('Account').get('Standard_Account');      
-    private static String PAYMENT_PROVIDER_RECORD_TYPE_ID = RecordTypeSingleton.getInstance().RtIDsPerDeveloperNamePerObj.get('Account').get('TIP_Payment_Provider');
-    private static String PROCESS_CASE_RECORD_TYPE_ID     = RecordTypeSingleton.getInstance().RtIDsPerDeveloperNamePerObj.get('Case').get('CS_Process_IDFS_ISS');
-    private static String TIP_PRODUCT_RECORD_TYPE_ID      = RecordTypeSingleton.getInstance().RtIDsPerDeveloperNamePerObj.get('Partner_products__c').get('TIP_Product');
-
-
     //##======================VARIABLES=================================##
 
     //home Page
@@ -101,11 +95,11 @@ public without sharing class ISSP_TIP_Home_Controller {
 
         acc = [SELECT id, recordtypeid, category__c FROM ACCOUNT WHERE ID = :con.AccountId];
 
-        /*btnEnabled = (acc.recordtypeid == STANDARD_ACCOUNT_RECORD_TYPE_ID && acc.category__c=='Payment Provider');
+        /*btnEnabled = (acc.recordtypeid == TIP_Utils.STANDARD_ACCOUNT_RECORD_TYPE_ID && acc.category__c=='Payment Provider');
         isPaymentProvider = (acc.category__c=='Payment Provider');*/
 
-        btnEnabled = (acc.recordtypeid == STANDARD_ACCOUNT_RECORD_TYPE_ID && acc.category__c=='Payment Provider');
-        isPaymentProvider = (acc.recordtypeid == PAYMENT_PROVIDER_RECORD_TYPE_ID);
+        btnEnabled = (acc.recordtypeid == TIP_Utils.STANDARD_ACCOUNT_RECORD_TYPE_ID && acc.category__c=='Payment Provider');
+        isPaymentProvider = (acc.recordtypeid == TIP_Utils.PAYMENT_PROVIDER_RECORD_TYPE_ID);
 
     }
 
@@ -114,7 +108,7 @@ public without sharing class ISSP_TIP_Home_Controller {
 
     	List<Case> caseList = [SELECT id, status, CaseNumber, subject, createddate, CaseArea__c, Reason1__c, IsClosed  FROM Case 
         WHERE AccountId = :con.AccountId 
-        and recordtypeid = :PROCESS_CASE_RECORD_TYPE_ID 
+        and recordtypeid = :TIP_Utils.CASE_PROCESS_IDFS_RECORD_TYPE_ID 
         and CaseArea__c like '%Transparency in Payments%'
         AND (Status = 'Draft' OR Status Not In :closedStatusesList)];
 
@@ -150,7 +144,7 @@ public without sharing class ISSP_TIP_Home_Controller {
         for(Partner_products__c p :[SELECT id, name, PP_Payment_Network__c, PP_Effective_to_Date__c, PP_Effective_from_Date__c, toLabel(PP_status__c)
           FROM Partner_products__c 
           WHERE Provider__c  = :con.AccountId
-            AND recordtypeid = :TIP_PRODUCT_RECORD_TYPE_ID
+            AND recordtypeid = :TIP_Utils.PARTNER_PRODUCT_TIP_PRODUCT_RECORD_TYPE_ID
             ORDER BY PP_status__c DESC]){
             
             products.add(new productWrapper(p.id,p.name, p.PP_Payment_Network__c,p.PP_Effective_to_Date__c,p.PP_Effective_from_Date__c, p.PP_status__c));
@@ -304,8 +298,9 @@ public without sharing class ISSP_TIP_Home_Controller {
             upsert newcase;
         }
 
-        //take to acknowledgement page (which page is this?)
-        return new Pagereference('/ISSP_TIP_Home'); //wrong page
+        PageReference pr= Page.ISSP_TIP_Home;
+        pr.setRedirect(false);
+        return pr; 
     }
 
     public Pagereference saveAccountEnrolmentAsDraft() {
@@ -316,7 +311,9 @@ public without sharing class ISSP_TIP_Home_Controller {
         try{
             upsert contactList;
         }catch(Exception e){}
-        return new Pagereference('/ISSP_TIP_Home');
+        PageReference pr= Page.ISSP_TIP_Home;
+        pr.setRedirect(false);
+        return pr; 
     }
 
     public void fetchHQAccountDetails () {
@@ -411,7 +408,10 @@ public without sharing class ISSP_TIP_Home_Controller {
     }
 
     public PageReference securityCheck(){
-        if(account.recordtypeid != TIP_Utils.STANDARD_ACCOUNT_RECORD_TYPE_ID || con.User_Portal_Status__c != ANG_Risk_Helper.USER_PORTAL_STATUS_APPROVED_ADIM ) return new Pagereference('/ISSP_TIP_Home');
+
+        PageReference pr= Page.ISSP_TIP_Home;
+        pr.setRedirect(false);
+        if(account.recordtypeid != TIP_Utils.STANDARD_ACCOUNT_RECORD_TYPE_ID || con.User_Portal_Status__c != ANG_Risk_Helper.USER_PORTAL_STATUS_APPROVED_ADIM ) return pr;
         return null;
     }
 
