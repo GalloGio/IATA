@@ -16,11 +16,13 @@
         }
 
         .binRangeText{
-            margin : 0px 35px;  
+            margin : 0px 35px; 
+            white-space: nowrap; 
         }
 
         .binRangebutton{
-            margin : 0px 5px;  
+            margin : 0px 5px;
+            white-space: nowrap;  
         }
 
         .sectionItem{
@@ -42,6 +44,18 @@
             margin: 0px 5px;    
             color: #337ab7;
             text-decoration: none;    
+        }
+
+        .pconfNumber{
+            text-align : right;
+            margin     : 0px 10px;
+            white-space: nowrap; 
+
+        }
+
+        .pconfText{
+            margin : 0px 35px;
+            white-space: nowrap;  
         }
     </style>
     
@@ -68,26 +82,66 @@
                 if(namef.val() =='' || paymenNet.val()=='')
                    $('[id$="newBinRangebtn"]').toggleClass('btnDisabled', true).attr('disabled', 'disabled');
                    
-               
+                   
 
                })
                 function confirmDelete(opt1){
                     var msg=null;
-                    msg= bootbox.confirm(
-                        '{!$Label.ISSP_AMS_CONFIRM_DELETE}',
-                        function(result) {
-                            if(result)deleteBINRangeRow(opt1); 
+                   
+                    msg= bootbox.confirm({
+
+                            message:'{!$Label.ISSP_AMS_CONFIRM_DELETE}',
+                            buttons: {
+                                   confirm: {
+                                       label: '{!$Label.ISSP_Yes}',
+                                       className: 'btn-success'
+                                   },
+                                   cancel: {
+                                       label: '{!$Label.ISSP_NO}',
+                                       className: 'btn-danger'
+                                   }
+                               },
+                            callback:function(result) {
+                                if(result)deleteBINRangeRow(opt1); 
+                            }
+                        });
+                }
+
+                function confirmSubmit(){
+                    var msg=null;
+                    msg= bootbox.confirm({
+
+                            message:'Are you sure you want to submit?',
+                            buttons: {
+                                   confirm: {
+                                       label: '{!$Label.ISSP_Yes}',
+                                       className: 'btn-success'
+                                   },
+                                   cancel: {
+                                       label: '{!$Label.ISSP_NO}',
+                                       className: 'btn-danger'
+                                   }
+                               },
+                            callback:function(result) {
+                                if(result)validateToSubmit();
+                            }
                         });
                 }
 
                 function confirmCancelExitPage(){
                     var msg=null;
-                    msg= bootbox.confirm(
+                    if({!editMode}){
+                         msg= bootbox.confirm(
                         '{!$Label.ISSP_TIP_Discard_Unsaved_Changes}',
                         function(result) {
                             if(result)cancelLeavePage();
                         });
+                    
+                    }else{
+                       cancelLeavePage(); 
+                    }
                 }
+
 
 
                 function enableBinRangeBtn(){
@@ -101,6 +155,48 @@
                     }
                 }
 
+
+                function confirmDeleteConfig(opt1){
+                    var msg=null;
+                    msg= bootbox.confirm(
+                        '{!$Label.ISSP_AMS_CONFIRM_DELETE}',
+                        function(result) {
+                            if(result)deleteCconfigRow(opt1); 
+                        });
+                }
+
+                function validateToSubmit() {
+                    var elements = document.getElementsByClassName("mandFld");
+                    var hasErrors=false;
+                
+
+                    $(".mandFld").each(function(index){
+                        if($(this).val() =='' ){
+                            if($(this).next('.errorMsg').val()==undefined)
+                                $(this).after('<div class="errorMsg"><strong>Error:</strong> You must enter a value</div>');
+                            hasErrors=true;
+                            $('[id$="rangeStart"]').addClass("placeholder-active");
+                        }else{
+                            clearErrorElement(this);
+                        } 
+                    });
+
+                    $(".mandFldcb").each(function(index){
+                        if($(this).find($("input[type='radio']:checked")).length ==0 ){
+                            if($(this).next('.errorMsg').val()==undefined)
+                                $(this).after('<div class="errorMsg"><strong>Error:</strong> You must select a value</div>');
+                            hasErrors=true;
+                        }else{
+                            clearErrorElement(this);
+                        } 
+                    });
+
+                   
+
+
+                    if(!hasErrors) submitProduct();
+                    return false;
+                }
             </script>
         </head>
             <div class="container">
@@ -113,14 +209,17 @@
                         <div class="panel-body" id="body-enquiries">
                             <apex:form id="AMSForm">
                                 <apex:pageblock id="pageblock">        
-                                    <apex:PageMessages id="msgs"/>                           
-                                    <apex:pageBlockButtons >
-                                        <apex:commandButton action="{!saveDraft}" value="Submit to IATA" disabled="true" />
-                                        <apex:commandButton action="{!saveDraft}" value="Save as Draft"/>
-                                        <apex:commandButton onclick="confirmCancelExitPage();return false;"  value="{!$Label.ISSP_Cancel}" />
+                                    <apex:PageMessages id="msgs"/>       
+                                    <apex:inputHidden id="inHid" />                   
+                                    <apex:pageBlockButtons>
+                                        <apex:actionFunction name="submitProduct" action="{!submitProduct}"/>
+                                        <apex:commandButton  onclick="if(confirmSubmit())return true;" value="Submit to IATA" rendered="{!editMode}" reRender="inHid"   />
+                                        <apex:commandButton action="{!saveDraft}" value="Save as Draft" rendered="{!editMode}"/>
+                                        <apex:commandButton onclick="confirmCancelExitPage();return false;"  value="{!$Label.ISSP_Cancel}" rendered="{!editMode}"/> 
                                         <apex:actionFunction name="cancelLeavePage" action="{!cancelNewEditProd}" immediate="true"/>
                                         <!-- <apex:commandButton action="{!submitForm}" value="Save as Draft" style="margin-left:10px" /> -->
-                                    </apex:pageBlockButtons>                                                                
+                                        <apex:commandButton action="{!cancelNewEditProd}" immediate="true" value="Return to home page" rendered="{!!editMode}"/>                                                            
+                                    </apex:pageBlockButtons>    
                                     <apex:pageBlockSection columns="2" collapsible="false" title="Section 1- Product Details">
                                         <apex:pageBlockSectionItem labelStyle="width:26%" >
                                             <apex:outputLabel value="{!$ObjectType.Partner_products__c.fields.name.Label}"/>   
@@ -132,7 +231,7 @@
                                         <apex:pageBlockSectionItem labelStyle="width:26%" labelStyleClass="agencyLegalDetailsComponent" dataStyleClass="agencyLegalDetailsComponent">
                                             <apex:outputLabel value="{!$ObjectType.Partner_products__c.fields.PP_Settlement_terms__c.Label}*"/>
                                             <apex:outputPanel >                                        
-                                                <apex:inputField value="{!newpp.PP_Settlement_terms__c}" rendered="{!editMode}"/>
+                                                <apex:inputField html-class="mandFld" value="{!newpp.PP_Settlement_terms__c}" rendered="{!editMode}"/>
                                                 <apex:outputField value="{!newpp.PP_Settlement_terms__c}" rendered="{!!editMode}"/>
                                             </apex:outputPanel>
                                         </apex:pageBlockSectionItem>
@@ -145,7 +244,7 @@
                                         </apex:pageBlockSectionItem>
                                         <apex:pageBlockSectionItem labelStyle="width:26%" labelStyleClass="agencyLegalDetailsComponent" dataStyleClass="agencyLegalDetailsComponent" >
                                             <apex:outputLabel value="{!$ObjectType.Partner_products__c.fields.is_PCI_DSS_required__c.Label}*"/>
-                                            <apex:selectRadio style="width:100px;margin-left:20px;" value="{!newpp.is_PCI_DSS_required__c}" readonly="{!!editMode}">
+                                            <apex:selectRadio html-class="mandFldcb" style="width:100px;margin-left:20px;" value="{!newpp.is_PCI_DSS_required__c}" readonly="{!!editMode}">
                                                 <apex:selectOption itemValue="{!UPPER($Label.ISSP_Yes)}" itemLabel="{!$Label.ISSP_Yes}" itemDisabled="{!!editMode}"/>
                                                 <apex:selectOption itemValue="{!UPPER($Label.ISSP_No)}" itemLabel="{!$Label.ISSP_No}"  itemDisabled="{!!editMode}"/>
                                             </apex:selectRadio>
@@ -156,7 +255,7 @@
                                         </apex:pageBlockSectionItem>
                                         <apex:pageBlockSectionItem labelStyle="width:26%" labelStyleClass="agencyLegalDetailsComponent" dataStyleClass="agencyLegalDetailsComponent" >
                                             <apex:outputLabel value="{!$ObjectType.Partner_products__c.fields.PP_Chargeback_airlines__c.Label}*"/>
-                                            <apex:selectRadio style="width:100px;margin-left:20px;" value="{!newpp.PP_Chargeback_airlines__c}" readonly="{!!editMode}">
+                                            <apex:selectRadio html-class="mandFldcb" style="width:100px;margin-left:20px;" value="{!newpp.PP_Chargeback_airlines__c}"  readonly="{!!editMode}">
                                                 <apex:selectOption itemValue="Yes" itemLabel="{!$Label.ISSP_Yes}" itemDisabled="{!!editMode}" />
                                                 <apex:selectOption itemValue="No" itemLabel="{!$Label.ISSP_No}"  itemDisabled="{!!editMode}"/>
                                             </apex:selectRadio>                                          
@@ -164,21 +263,21 @@
                                         <apex:pageBlockSectionItem labelStyle="width:26%" labelStyleClass="agencyLegalDetailsComponent" dataStyleClass="agencyLegalDetailsComponent" >
                                             <apex:outputLabel value="{!$ObjectType.Partner_products__c.fields.PP_Pay_in_model__c.Label}*"/>
                                             <apex:outputPanel >                                        
-                                                <apex:inputField value="{!newpp.PP_Pay_in_model__c}" rendered="{!editMode}" styleClass="sectionItem" />
+                                                <apex:inputField  value="{!newpp.PP_Pay_in_model__c}" rendered="{!editMode}" html-class="mandFld" styleClass="sectionItem" />
                                                 <apex:outputField value="{!newpp.PP_Pay_in_model__c}" rendered="{!!editMode}" />
                                             </apex:outputPanel>
                                         </apex:pageBlockSectionItem>
                                         <apex:pageBlockSectionItem labelStyle="width:26%" labelStyleClass="agencyLegalDetailsComponent" dataStyleClass="agencyLegalDetailsComponent" >
                                             <apex:outputLabel value="{!$ObjectType.Partner_products__c.fields.PP_Chargeback_airlines_duration__c.Label}*"/>
                                             <apex:outputPanel >                                        
-                                                <apex:inputField value="{!newpp.PP_Chargeback_airlines_duration__c}" rendered="{!editMode}"/>
+                                                <apex:inputField html-class="mandFld" value="{!newpp.PP_Chargeback_airlines_duration__c}" rendered="{!editMode}"/>
                                                 <apex:outputField value="{!newpp.PP_Chargeback_airlines_duration__c}" rendered="{!!editMode}"/>
                                             </apex:outputPanel>                                        
                                         </apex:pageBlockSectionItem>
                                         <apex:pageBlockSectionItem labelStyle="width:26%" labelStyleClass="agencyLegalDetailsComponent" dataStyleClass="agencyLegalDetailsComponent" >
                                             <apex:outputLabel value="{!$ObjectType.Partner_products__c.fields.PP_Category__c.Label}*"/>
                                             <apex:outputPanel >                                        
-                                                <apex:inputField value="{!newpp.PP_Category__c}" rendered="{!editMode}" styleClass="sectionItem"/>
+                                                <apex:inputField value="{!newpp.PP_Category__c}" html-class="mandFld" rendered="{!editMode}" styleClass="sectionItem"/>
                                                 <apex:outputField value="{!newpp.PP_Category__c}" rendered="{!!editMode}"/>
                                             </apex:outputPanel>
                                         </apex:pageBlockSectionItem>
@@ -207,7 +306,7 @@
                                         <apex:pageBlockSectionItem labelStyle="width:26%" labelStyleClass="agencyLegalDetailsComponent" dataStyleClass="agencyLegalDetailsComponent" >
                                             <apex:outputLabel value="{!$ObjectType.Partner_products__c.fields.PP_VAN_Type__c.Label}*"/>
                                             <apex:outputPanel >                                        
-                                                <apex:inputField value="{!newpp.PP_VAN_Type__c}" rendered="{!editMode}" styleClass="sectionItem"/>
+                                                <apex:inputField value="{!newpp.PP_VAN_Type__c}" html-class="mandFld" rendered="{!editMode}" styleClass="sectionItem"/>
                                                 <apex:outputField value="{!newpp.PP_VAN_Type__c}" rendered="{!!editMode}"/>
                                             </apex:outputPanel>
                                         </apex:pageBlockSectionItem>
@@ -221,7 +320,7 @@
                                         <apex:pageBlockSectionItem labelStyle="width:26%" labelStyleClass="agencyLegalDetailsComponent" dataStyleClass="agencyLegalDetailsComponent" >
                                             <apex:outputLabel value="{!$ObjectType.Partner_products__c.fields.PP_Payment_guarantee__c.Label}*"/>
                                             <apex:outputPanel >                                        
-                                                <apex:selectList value="{!paymentGuaranteeVal}" size="{!paymentGuaranteeOptList.size+1}" multiselect="true" rendered="{!editMode}" styleClass="sectionItem">
+                                                <apex:selectList value="{!paymentGuaranteeVal}" size="{!paymentGuaranteeOptList.size+1}" multiselect="true" rendered="{!editMode}" html-class="mandFld" styleClass="sectionItem">
                                                     <apex:selectOptions value="{!paymentGuaranteeOptList}"/>
                                                 </apex:selectList>
                                                 <apex:outputField value="{!newpp.PP_Payment_guarantee__c}" rendered="{!!editMode}"/>
@@ -236,7 +335,7 @@
                                         </apex:pageBlockSectionItem>
                                         <apex:pageBlockSectionItem labelStyle="width:26%" labelStyleClass="agencyLegalDetailsComponent" dataStyleClass="agencyLegalDetailsComponent" >
                                             <apex:outputLabel value="{!$ObjectType.Partner_products__c.fields.PP_Accepted_transactions__c.Label}*"/><apex:outputPanel >
-                                                <apex:selectList value="{!acceptedTransactionVal}" size="{!acceptedTransactionsOptList.size+1}" multiselect="true" rendered="{!editMode}" styleClass="sectionItem">
+                                                <apex:selectList value="{!acceptedTransactionVal}" size="{!acceptedTransactionsOptList.size+1}" multiselect="true" rendered="{!editMode}" html-class="mandFld" styleClass="sectionItem">
                                                     <apex:selectOptions value="{!acceptedTransactionsOptList}"/>
                                                 </apex:selectList>
                                                 <apex:outputField value="{!newpp.PP_Accepted_transactions__c}" rendered="{!!editMode}"/>
@@ -249,7 +348,7 @@
                                     </apex:pageBlockSection>
                                     <apex:pageBlockSection id="binbpSection" columns="2" collapsible="false" title="Section 2- Bin Ranges">
                                         <apex:pageBlockSectionItem rendered="{!editMode}">
-                                            <apex:commandButton id="newBinRangebtn" style="margin-right:5px" oncomplete="toggleDialog();" value="{!$Label.ISSP_TIP_ADD_BIN_RANGE}" action="{!newEditBinRange}" reRender="newBinTab">
+                                            <apex:commandButton id="newBinRangebtn" style="margin-right:5px" oncomplete="toggleDialog();" value="{!$Label.ISSP_TIP_ADD_BIN_RANGE}" action="{!newEditBinRange}" reRender="newBinTab,modalContentoutpanel">
                                             </apex:commandButton>
                                         </apex:pageBlockSectionItem>
                                         <apex:pageBlockSectionItem rendered="{!!editMode}">
@@ -265,10 +364,37 @@
                                                     var endMask=new Array(parseInt("{!binRangeLen}") + 1).join("9");
                                                     var stayOnModal=false;
                                                     function enforceMaxLen(){
+                                             
                                                         $('[id$="rangeStart"]').attr('maxlength', "{!binRangeLen}");
                                                         $('[id$="rangeEnd"]').attr('maxlength',"{!binRangeLen}");
-                                                        $('[id$="rangeStart"]').attr('type', 'number');   
-                                                        $('[id$="rangeEnd"]').attr('type', 'number');
+
+
+                                                        $('[id$="rangeStart"]').keyup(function() {
+                                                            $('[id$="rangeStart"]').val(this.value.match(/[0-9]*/));
+                                                        });
+                                                        $('[id$="rangeEnd"]').keyup(function() {
+                                                            $('[id$="rangeEnd"]').val(this.value.match(/[0-9]*/));
+                                                        });
+
+                                                        $('[id$="bspctrfld"]').on("blur", function(){
+                                                            if($('[id$="bspctrfld"]').val() !== ""){
+                                                                clearErrorElement('[id$="bspctrfld"]'); 
+                                                            }
+                                                        });
+                                                        
+                                                        $('[id$="iCfld"]').on("blur", function(){
+                                                            if($('[id$="iCfld"]').val() !== ""){
+                                                                clearErrorElement('[id$="iCfld"]'); 
+                                                            }
+                                                        }); 
+
+                                                        $('[id$="nFfld"]').on("blur", function(){
+                                                            if($('[id$="nFfld"]').val() !== ""){
+                                                                clearErrorElement('[id$="nFfld"]'); 
+                                                            }
+                                                        });
+                                                        
+                                                        
 
                                                         //set mask
                                                         if($('[id$="rangeStart"]').val()===""){
@@ -335,36 +461,34 @@
 
                                                         if($('[id$="rangeStart"]').val() === startMask || $('[id$="rangeStart"]').val() =='' ){
                                                             if($('[id$="rangeStart"]').next('.errorMsg').val()==undefined)
-                                                            $('[id$="rangeStart"]').after('<div class="errorMsg"><strong>Error:</strong> You must enter a value</div>');
+                                                            $('[id$="rangeStart"]').after('<div class="errorMsg">{!$Label.IEC_Required_Field_Error_Msg}</div>');
+                                                            stayOnModal=true;
+                                                            return;
+                                                        }else if($('[id$="rangeStart"]').val().length > parseInt("{!binRangeLen}")){
+                                                            if($('[id$="rangeStart"]').next('.errorMsg').val()==undefined)
+                                                            $('[id$="rangeStart"]').after('<div class="errorMsg">{!$Label.ISSP_TIP_VALUE_TOO_BIG_TO_PROVIDER}</div>');
                                                             stayOnModal=true;
                                                             return;
                                                         }
 
                                                         if($('[id$="rangeEnd"]').val() === endMask || $('[id$="rangeEnd"]').val() =='' ){
                                                             if($('[id$="rangeEnd"]').next('.errorMsg').val()==undefined)
-                                                            $('[id$="rangeEnd"]').after('<div class="errorMsg"><strong>Error:</strong> You must enter a value</div>');
+                                                            $('[id$="rangeEnd"]').after('<div class="errorMsg">{!$Label.IEC_Required_Field_Error_Msg}</div>');
                                                             stayOnModal=true;
                                                             return;
-                                                        }
-
-                                                        var numbers = /^[0-9]+$/;
-                                                        if (!$('[id$="rangeStart"]').val().match(numbers)) {
-                                                            if($('[id$="rangeStart"]').next('.errorMsg').val()==undefined)
-                                                            $('[id$="rangeStart"]').after('<div class="errorMsg"><strong>Error:</strong> Range From should only contain numbers</div>');
-                                                            stayOnModal=true;
-                                                            return;
-                                                        }
-
-                                                        if(!$('[id$="rangeEnd"]').val().match(numbers)){
+                                                        }else if($('[id$="rangeEnd"]').val().length > parseInt("{!binRangeLen}")){
                                                             if($('[id$="rangeEnd"]').next('.errorMsg').val()==undefined)
-                                                            $('[id$="rangeEnd"]').after('<div class="errorMsg"><strong>Error:</strong> Range To should only contain numbers</div>');
+                                                            $('[id$="rangeEnd"]').after('<div class="errorMsg">{!$Label.ISSP_TIP_VALUE_TOO_BIG_TO_PROVIDER}</div>');
                                                             stayOnModal=true;
                                                             return;
                                                         }
+
+
+                                                        
 
                                                         if(parseInt($('[id$="rangeStart"]').val()) > parseInt($('[id$="rangeEnd"]').val())){
                                                             if($('[id$="rangeEnd"]').next('.errorMsg').val()==undefined)
-                                                            $('[id$="rangeEnd"]').after('<div class="errorMsg"><strong>Error:</strong> Range To must be greater or equal than Range From</div>');
+                                                            $('[id$="rangeEnd"]').after('<div class="errorMsg">{!$Label.ISSP_TIP_RANGE_TO_GREATER_RANGE_FROM}</div>');
                                                             stayOnModal=true;
                                                             return;
                                                         }
@@ -415,9 +539,9 @@
                                                     </apex:facet>
                                                     <apex:outputLabel styleClass="binRangeText" value="{!brr.binRange.TIP_Status__c}"/>
                                                 </apex:column>
-                                                <apex:column rendered="{!brr.action !='D'}" >
-                                                    <apex:outputPanel rendered="{!brr.binRange.TIP_Status__c!='Active'}">                                                     
-                                                        <apex:commandLink styleclass="glyphiconTIP glyphicon-pencil" title="Edit"  oncomplete="closeDialog();" action="{!newEditBinRange}" reRender="newBinTab">
+                                                <apex:column rendered="{!editMode}" >
+                                                    <apex:outputPanel rendered="{!brr.renderBtn}">                                                     
+                                                        <apex:commandLink styleclass="glyphiconTIP glyphicon-pencil" title="Edit"  oncomplete="closeDialog();" action="{!newEditBinRange}" reRender="newBinTab,modalContentoutpanel">
                                                             <apex:param name="binRangeRecPos" value="{!brr.pos}"/>
                                                         </apex:commandLink>                                                        
                                                         <apex:commandLink styleClass="glyphiconTIP glyphicon-trash" title="Delete" onclick="confirmDelete({!brr.pos});" reRender="binTable"/>
@@ -431,44 +555,187 @@
                                         </apex:pageBlockSectionItem>
                                        
                                     </apex:pageBlockSection>
+
+
+                                    <!-- PROVIDER PRODUCT CONFIGURATION-->
+                                    <apex:pageBlockSection columns="2" collapsible="false" title="Section 3- Product Country Configuration Details">
+                                        <apex:pageBlockSectionItem rendered="{!editMode}">
+                                            <apex:commandButton id="newCountrConfigbtn" style="margin-right:5px" oncomplete="toggleDialog();" value="Add Country Config" action="{!newEditCountryConfig}" reRender="modalContentoutpanel">
+                                            </apex:commandButton>
+                                        </apex:pageBlockSectionItem>
+                                        <apex:pageBlockSectionItem rendered="{!!editMode}">
+                                            <apex:outputLabel escape="false" value="{!binRangeChangeRequestText}"/>
+                                        </apex:pageBlockSectionItem>
+                                    </apex:pageBlockSection>
+                                    <apex:pageBlockSection>
+                                        <apex:pageBlockSectionItem>
+                                            <apex:outputPanel id="countryConfigPanel">
+                                                <div style="max-height: 400px; overflow-y: auto; ">
+                                                    <script>
+                                                        function validateCountryConfiguration(){
+
+                                                            if($('[id$="bspctrfld"]').val() === null || $('[id$="bspctrfld"]').val() =='' ){
+                                                                if($('[id$="bspctrfld"]').next('.errorMsg').val()==undefined)
+                                                                $('[id$="bspctrfld"]').after('<div class="errorMsg">{!$Label.ISSP_TIP_SELECT_AT_LEAST_ONE_VALUE}</div>');
+                                                                stayOnModal=true;
+                                                                return;
+                                                            }
+
+                                                            if($('[id$="iCfld"]').val() === null || $('[id$="iCfld"]').val() =='' ){
+                                                                if($('[id$="iCfld"]').next('.errorMsg').val()==undefined)
+                                                                $('[id$="iCfld"]').after('<div class="errorMsg">{!$Label.IEC_Required_Field_Error_Msg}</div>');
+                                                                stayOnModal=true;
+                                                                return;
+                                                            }
+
+                                                            if($('[id$="nFfld"]').val() === endMask || $('[id$="nFfld"]').val() =='' ){
+                                                                if($('[id$="nFfld"]').next('.errorMsg').val()==undefined)
+                                                                $('[id$="nFfld"]').after('<div class="errorMsg">{!$Label.IEC_Required_Field_Error_Msg}</div>');
+                                                                stayOnModal=true;
+                                                                return;
+                                                            }
+                                                            saveCountryConfigs();
+                                                        }
+
+                                                        function saveCountryConfigs(){
+                                                            addEditCountryConfig();
+                                                        }
+                                                    </script>
+                                                    <apex:pageBlockTable value="{!provProdConfList}" var="ppc" styleClass="table-hover table table-condensed table-responsive" >
+                                                        <apex:column >
+                                                            <apex:facet name="header">                                                        
+                                                                <apex:outputLabel value="{!$ObjectType.TIP_Pay_Prov_Prod_Country_Config__c.fields.TIP_BSP_Country__c.label}" style="width:150px;"/>
+                                                            </apex:facet>
+                                                            <apex:outputLabel value="{!ppc.countryName}"/>
+                                                        </apex:column>
+
+                                                        <apex:column >
+                                                            <apex:facet name="header">
+                                                                <apex:outputLabel styleClass="pconfNumber" value="{!$ObjectType.TIP_Pay_Prov_Prod_Country_Config__c.fields.TIP_Interchange_Fee__c.label}"/>
+                                                            </apex:facet>
+                                                            <apex:outputLabel styleClass="pconfNumber" value="{!ppc.prodConfig.TIP_Interchange_Fee__c}" />
+                                                        </apex:column>
+                                                        <apex:column >
+                                                            <apex:facet name="header">
+                                                                <apex:outputLabel styleClass="pconfNumber" value="{!$ObjectType.TIP_Pay_Prov_Prod_Country_Config__c.fields.Network_Fee__c.label}"/>
+                                                            </apex:facet>
+                                                            <apex:outputLabel styleClass="pconfNumber" value="{!ppc.prodConfig.Network_Fee__c}" />
+                                                        </apex:column>
+                                                        <apex:column >
+                                                            <apex:facet name="header">
+                                                                <apex:outputLabel value="{!$ObjectType.TIP_Pay_Prov_Prod_Country_Config__c.fields.TIP_Status__c.label}"/>
+                                                            </apex:facet>
+                                                            <apex:outputLabel styleClass="pconfNumber" value="{!ppc.prodConfig.TIP_Status__c}" />
+                                                        </apex:column>
+                                                        <apex:column rendered="{!editMode}" >
+                                                            <apex:outputPanel rendered="{!editMode && ppc.renderBtn}">                                                     
+                                                                <apex:commandLink styleclass="glyphiconTIP glyphicon-pencil" title="Edit"  oncomplete="closeDialog();" action="{!newEditCountryConfig}" reRender="pbCountrConfig,modalContentoutpanel">
+                                                                    <apex:param name="countryConfigPos" value="{!ppc.pos}"/>
+                                                                </apex:commandLink>                                                        
+                                                                <apex:commandLink styleClass="glyphiconTIP glyphicon-trash" title="Delete" onclick="confirmDeleteConfig({!ppc.pos});" reRender="countryConfigPanel"/>
+                                                            </apex:outputPanel>
+                                                        </apex:column>
+                                                    </apex:pageBlockTable>
+                                                    <apex:actionFunction name="deleteCconfigRow" action="{!deleteCountryConfig}" reRender="countryConfigPanel">
+                                                        <apex:param name="countryConfigPos" value=""/>
+                                                    </apex:actionFunction> 
+                                                </div>
+                                            </apex:outputPanel>
+                                        </apex:pageBlockSectionItem>
+                                    </apex:pageBlockSection>
+
+                                    <!-- ------------MODAL WIDOWN -------------------  -->
                                     <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-                                      <apex:outputPanel layout="block" styleClass="modal-dialog" id="myModalContent"> 
-                                        <div class="modal-content"> 
-                                          <div class="modal-header"> 
-                                            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-                                            <h4 class="modal-title">New Bin Range</h4>
-                                          </div>
-                                          <div class="modal-body" style="display:{!if(true,'','none')}">
-                                            <apex:pageBlockTable id="newBinTab" value="{!selectedBinRange}" var="nb" styleClass="table-hover  table table-condensed table-responsive">
-                                                <apex:column >
-                                                    <apex:facet name="header">                                                        
-                                                        <apex:outputLabel value="{!$ObjectType.TIP_BIN_Range__c.fields.TIP_Range_Start__c.label}"/>
-                                                    </apex:facet>
-                                                    <apex:inputField id="rangeStart" style="width:'100%'" value="{!nb.binRange.TIP_Range_Start__c}" required="true" />
-                                                </apex:column>
-                                                <apex:column >
-                                                    <apex:facet name="header">
-                                                        <apex:outputLabel value="{!$ObjectType.TIP_BIN_Range__c.fields.TIP_Range_End__c.label}"/>
-                                                    </apex:facet>
-                                                    <apex:inputField id="rangeEnd" style="width:'100%'" value="{!nb.binRange.TIP_Range_End__c}" required="true"/>
-                                                </apex:column>
-                                            </apex:pageBlockTable>
-                                         </div>
-                                          <div class="modal-footer">
-                                            <div class="row">
-                                              <div class="col-md-6">                                                
-                                              <apex:actionFunction name="addEditBinRange" action="{!addUpdateBinRange}"  oncomplete="closeDialog()" reRender="binTable"/>                                        
-                                                <a class="btn_iata_confirm btn-block btn" onclick=" checkBinRangeMandatory()">{!$Label.ISSP_Confirm}</a>
+                                      <apex:outputPanel id="modalContentoutpanel">
+                                          <apex:outputPanel layout="block" styleClass="modal-dialog" id="myModalContent" rendered="{!!renderCountryCondifPopup}"> 
+                                            <div class="modal-content"> 
+                                              <div class="modal-header"> 
+                                                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                                                <h4 class="modal-title">New Bin Range</h4>
                                               </div>
-                                              <div class="col-md-6">
-                                                <a class="btn_iata_cancel btn-block btn" onclick="toggleDialog()">
-                                                  {!$Label.ISSP_Cancel}
-                                                </a>
+                                              <div class="modal-body" style="display:{!if(true,'','none')}">
+                                                <apex:pageBlockTable id="newBinTab" value="{!selectedBinRange}" var="nb" styleClass="table-hover  table table-condensed table-responsive">
+                                                    <apex:column >
+                                                        <apex:facet name="header">                                                        
+                                                            <apex:outputLabel value="{!$ObjectType.TIP_BIN_Range__c.fields.TIP_Range_Start__c.label}"/>
+                                                        </apex:facet>
+                                                        <apex:inputField id="rangeStart" style="width:'100%'" value="{!nb.binRange.TIP_Range_Start__c}" required="true" />
+                                                    </apex:column>
+                                                    <apex:column >
+                                                        <apex:facet name="header">
+                                                            <apex:outputLabel value="{!$ObjectType.TIP_BIN_Range__c.fields.TIP_Range_End__c.label}"/>
+                                                        </apex:facet>
+                                                        <apex:inputField id="rangeEnd" style="width:'100%'" value="{!nb.binRange.TIP_Range_End__c}" required="true"/>
+                                                    </apex:column>
+                                                </apex:pageBlockTable>
+                                             </div>
+                                              <div class="modal-footer">
+                                                <div class="row">
+                                                  <div class="col-md-6">                                                
+                                                  <apex:actionFunction name="addEditBinRange" action="{!addUpdateBinRange}"  oncomplete="closeDialog()" reRender="binTable"/>                                        
+                                                    <a class="btn_iata_confirm btn-block btn" onclick=" checkBinRangeMandatory()">{!$Label.ISSP_Confirm}</a>
+                                                  </div>
+                                                  <div class="col-md-6">
+                                                    <a class="btn_iata_cancel btn-block btn" onclick="toggleDialog()">
+                                                      {!$Label.ISSP_Cancel}
+                                                    </a>
+                                                  </div>
+                                                </div>
                                               </div>
                                             </div>
-                                          </div>
-                                        </div>
-                                        <!-- /.modal-content -->
+                                            <!-- /.modal-content -->
+                                          </apex:outputPanel>
+
+                                          <apex:outputPanel layout="block" styleClass="modal-dialog" id="myModalContent2" rendered="{!renderCountryCondifPopup}"> 
+                                            <div class="modal-content"> 
+                                              <div class="modal-header"> 
+                                                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                                                <h4 class="modal-title">New Product Country Configuration</h4>
+                                              </div>
+                                              <div class="modal-body" style="display:{!if(true,'','none')}">                                                  
+                                                  <apex:pageblock id="pbCountrConfig"> 
+                                                      <apex:PageMessages id="msgs"/>                           
+                                                      <apex:pageBlockSection columns="1" collapsible="false" title="Section 1- Product Details">
+                                                          <apex:pageBlockSectionItem labelStyle="width:26%" >
+                                                            <apex:outputLabel value="{!$ObjectType.TIP_Pay_Prov_Prod_Country_Config__c.fields.TIP_BSP_Country__c.Label}"/> 
+                                                            <apex:outputPanel>
+                                                                <apex:selectList id="bspctrfld" value="{!selectProvConfigCountriesList}" size="10" multiselect="true" styleClass="sectionItem" rendered="{!selectedProvProdConf.action!='M'}">
+                                                                    <apex:selectOptions value="{!bspCountrList}" />
+                                                                </apex:selectList>
+                                                                <apex:outputLabel value="{!selectedProvProdConf.countryName}" rendered="{!selectedProvProdConf.action=='M'}"/>
+                                                            </apex:outputPanel>
+
+                                                          </apex:pageBlockSectionItem>
+
+                                                          <apex:pageBlockSectionItem labelStyle="width:26%" >
+                                                            <apex:outputLabel value="{!$ObjectType.TIP_Pay_Prov_Prod_Country_Config__c.fields.TIP_Interchange_Fee__c.Label}"/> 
+                                                            <apex:inputField id="iCfld" value="{!selectedProvProdConf.prodConfig.TIP_Interchange_Fee__c}"/>
+                                                          </apex:pageBlockSectionItem>
+
+                                                          <apex:pageBlockSectionItem labelStyle="width:26%" >
+                                                            <apex:outputLabel value="{!$ObjectType.TIP_Pay_Prov_Prod_Country_Config__c.fields.Network_Fee__c.Label}"/> 
+                                                            <apex:inputField id="nFfld" value="{!selectedProvProdConf.prodConfig.Network_Fee__c}"/>
+                                                          </apex:pageBlockSectionItem>
+                                                      </apex:pageBlockSection>
+
+                                                  </apex:pageblock>
+                                              </div>
+                                              <div class="modal-footer">
+                                                <div class="row">
+                                                  <div class="col-md-6">                                                
+                                                  <apex:actionFunction name="addEditCountryConfig" action="{!addUpdateCountryConfig}"  oncomplete="closeDialog()" reRender="countryConfigPanel"/>
+                                                    <a class="btn_iata_confirm btn-block btn" onclick=" validateCountryConfiguration();">{!$Label.ISSP_Confirm}</a>
+                                                  </div>
+                                                  <div class="col-md-6">
+                                                    <a class="btn_iata_cancel btn-block btn" onclick="toggleDialog()">
+                                                      {!$Label.ISSP_Cancel}
+                                                    </a>
+                                                  </div>
+                                                </div>
+                                              </div>
+                                            </div>
+                                            <!-- /.modal-content -->
+                                          </apex:outputPanel>
                                       </apex:outputPanel>
                                       <!-- /.modal-dialog -->
                                     </div>
