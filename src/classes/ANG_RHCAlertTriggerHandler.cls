@@ -107,8 +107,8 @@ public class ANG_RHCAlertTriggerHandler{
         
         Map<String, Id> emailTemplates = new Map<String, Id>();
         if(!emailTemplateNames.isEmpty()){
-			for(EmailTemplate e : [SELECT Id, DeveloperName FROM EmailTemplate WHERE DeveloperName IN :emailTemplateNames AND isActive = true]){
-				emailTemplates.put(e.DeveloperName, e.Id);
+            for(EmailTemplate e : [SELECT Id, DeveloperName FROM EmailTemplate WHERE DeveloperName IN :emailTemplateNames AND isActive = true]){
+                emailTemplates.put(e.DeveloperName, e.Id);
             }
         }
 
@@ -222,7 +222,7 @@ public class ANG_RHCAlertTriggerHandler{
 
         for(ANG_Risk_Alert__c ralert:triggerNew){
 
-            if(!(ralert.recordTypeId == ANG_RHCHelper.RECTYPE_RISKALERT_RHC && ralert.ANG_Threshold_Level__c == '100%' &&  (ralert.ANG_Direction__c == ANG_RHCHelper.RISK_ALERT_DIRECTION_UP || ralert.ANG_Direction__c == ANG_RHCHelper.RISK_ALERT_DIRECTION_DOWN )))
+            if(!(ralert.recordTypeId == ANG_RHCHelper.RECTYPE_RISKALERT_RHC && (ralert.ANG_Threshold_Level__c == '100%' && ralert.ANG_Direction__c == ANG_RHCHelper.RISK_ALERT_DIRECTION_UP) || (( ralert.ANG_Threshold_Level__c == '100%' || ralert.ANG_Threshold_Level__c == '75%' || ralert.ANG_Threshold_Level__c == '50%') && ralert.ANG_Direction__c == ANG_RHCHelper.RISK_ALERT_DIRECTION_DOWN )))
                 continue;
 
 
@@ -295,6 +295,7 @@ public class ANG_RHCAlertTriggerHandler{
             
             if(aa.Status__c != statusFOP){
                 aa.Status__c = statusFOP;
+                aa.Source__c = 'RTS Alert';
                 toReturn.add(aa);
             }
 
