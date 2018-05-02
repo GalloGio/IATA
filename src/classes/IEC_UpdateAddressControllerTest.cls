@@ -27,7 +27,7 @@ private class IEC_UpdateAddressControllerTest {
 	                              , BillingCountry='Canada', IATA_ISO_Country__r = new IATA_ISO_Country__c(ISO_Code__c = 'CA')
 	                              , BillingState='Quebec', IATA_ISO_Billing_State__r = new IATA_ISO_State__c(ISO_Code__c = 'CA-QC')
 	                              , ShippingStreet='Shipping Street 1', ShippingCity='City', ShippingPostalCode='H0H0H0'
-	                              , ShippingCountry='Canada', ShippingState='Quebec', IATA_ISO_Shipping_State__r = new IATA_ISO_State__c(ISO_Code__c = 'CA-QC'));
+	                              , ShippingCountry='Canada', ShippingState='Quebec', IATA_ISO_Shipping_Country__r = new IATA_ISO_Country__c(ISO_Code__c = 'CA'), IATA_ISO_Shipping_State__r = new IATA_ISO_State__c(ISO_Code__c = 'CA-QC'));
 	update accPortal;
 
 	//*** logged
