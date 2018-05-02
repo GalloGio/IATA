@@ -66,6 +66,22 @@ private class TIP_BINRangeTriggerHandlerTest {
 			TIP_Effective_To_Date__c = Date.today() + 10);
 
 		insert singleBinRange;
+
+		TIP_BIN_Range__c binRange1 = new TIP_BIN_Range__c(TIP_Payment_Provider_Product__c = product.Id,
+			TIP_Effective_From_Date__c = Date.today(),
+			TIP_Range_Start__c = '2000',
+			TIP_Range_End__c = '2100',
+			RecordTypeId = TIP_Utils.BIN_RANGE_PROVIDER_RECORD_TYPE_ID,
+			TIP_Effective_To_Date__c = Date.today() + 10);
+
+		TIP_BIN_Range__c binRange2 = new TIP_BIN_Range__c(TIP_Payment_Provider_Product__c = product.Id,
+			TIP_Effective_From_Date__c = Date.today(),
+			TIP_Range_Start__c = '2000',
+			TIP_Range_End__c = '2100',
+			RecordTypeId = TIP_Utils.BIN_RANGE_PROVIDER_RECORD_TYPE_ID,
+			TIP_Effective_To_Date__c = Date.today() + 10);
+
+		insert new List<TIP_BIN_Range__c>{binRange1,binRange2};
 	}
 
 	@isTest static void testRangeLength() {
@@ -344,5 +360,9 @@ private class TIP_BINRangeTriggerHandlerTest {
 		}
 
 		System.assertEquals(1, sucessCounter);
+	}
+
+	@isTest public static void testCreateConflict(){
+		System.assertEquals(6, [SELECT ID FROM BIN_Range_Conflict__c].size());	
 	}
 }

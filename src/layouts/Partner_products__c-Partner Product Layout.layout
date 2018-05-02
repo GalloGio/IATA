@@ -153,6 +153,20 @@
         <style>TwoColumnsLeftToRight</style>
     </layoutSections>
     <layoutSections>
+        <customLabel>true</customLabel>
+        <detailHeading>true</detailHeading>
+        <editHeading>true</editHeading>
+        <label>BIN Conflicts</label>
+        <layoutColumns>
+            <layoutItems>
+                <behavior>Readonly</behavior>
+                <field>BIN_Conflict_Count__c</field>
+            </layoutItems>
+        </layoutColumns>
+        <layoutColumns/>
+        <style>TwoColumnsLeftToRight</style>
+    </layoutSections>
+    <layoutSections>
         <customLabel>false</customLabel>
         <detailHeading>false</detailHeading>
         <editHeading>true</editHeading>
@@ -180,7 +194,11 @@
         <detailHeading>false</detailHeading>
         <editHeading>true</editHeading>
         <label>Custom Links</label>
-        <layoutColumns/>
+        <layoutColumns>
+            <layoutItems>
+                <customLink>BIN_Conflicts</customLink>
+            </layoutItems>
+        </layoutColumns>
         <layoutColumns/>
         <layoutColumns/>
         <style>CustomLinks</style>
@@ -204,6 +222,10 @@
         <fields>Network_Fee__c</fields>
         <fields>TIP_Status__c</fields>
         <relatedList>TIP_Pay_Prov_Prod_Country_Config__c.TIP_Product__c</relatedList>
+    </relatedLists>
+    <relatedLists>
+        <fields>NAME</fields>
+        <relatedList>BIN_Range_Conflict__c.Partner_Product__c</relatedList>
     </relatedLists>
     <showEmailCheckbox>false</showEmailCheckbox>
     <showHighlightsPanel>false</showHighlightsPanel>
