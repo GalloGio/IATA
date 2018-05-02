@@ -7,12 +7,10 @@ private class TIP_BINRangeTriggerHandlerTest {
 		IATA_ISO_Country__c country = new IATA_ISO_Country__c (Name = 'US', ISO_Code__c = 'US');
         insert country;
 
-		Id paymentProviderRecordTypeId = RecordTypeSingleton.getInstance().RtIDsPerDeveloperNamePerObj.get('Account').get('TIP_Payment_Provider');
-
 		Account provider = new Account(Name = 'ProviderTest1',
 			TIP_Provider_Type__c = 'Open Loop',
 			TIP_HQ_Location__c = country.Id,
-			RecordTypeId = paymentProviderRecordTypeId,
+			RecordTypeId =TIP_Utils.PAYMENT_PROVIDER_RECORD_TYPE_ID,
 			Accreditation_date__c = Date.today());
 		insert provider;
 
@@ -21,15 +19,15 @@ private class TIP_BINRangeTriggerHandlerTest {
 			PP_Form_of_payment__c = 'CC',
 			Provider__c = provider.Id,
 			PP_Payment_guarantee__c = 'COMMERCIAL_DISPUTE',
-			PP_Accepted_transactions__c = 'Payment',
-			PP_Pay_in_model__c = 'Prepaid',
-			PP_VAN_type__c = 'Single Use VAN',
+			PP_Accepted_transactions__c = 'PAYMENT',
+			PP_Pay_in_model__c = 'PREPAID',
+			PP_VAN_type__c = 'SINGLE_USE_VAN',
 			PP_Settlement_terms__c = '12',
-			Is_PCI_DSS_required__c = 'Yes',
-			PP_Chargeback_airlines__c = 'No',
+			Is_PCI_DSS_required__c = 'YES',
+			PP_Chargeback_airlines__c = 'NO',
 			PP_Interchange_fee__c = 12,
 			PP_Effective_from_Date__c = Date.today(),
-			PP_status__c = 'Active',
+			PP_status__c = 'ACTIVE',
 			PP_Payment_Network__c = 'AX',
 			PP_Category__c = 'CONSUMER');
 		insert product;

@@ -1,60 +1,208 @@
-/**
- * This class contains unit tests for validating the behavior of Apex classes
- * and triggers.
- *
- * Unit tests are class methods that verify whether a particular piece
- * of code is working properly. Unit test methods take no arguments,
- * commit no data to the database, and are flagged with the testMethod
- * keyword in the method definition.
- *
- * All test methods in an organization are executed whenever Apex code is deployed
- * to a production organization to confirm correctness, ensure code
- * coverage, and prevent regressions. All Apex classes are
- * required to have at least 75% code coverage in order to be deployed
- * to a production organization. In addition, all triggers must have some code coverage.
- * 
- * The @isTest class annotation indicates this class only contains test
- * methods. Classes defined with the @isTest annotation do not count against
- * the organization size limit for all Apex scripts.
- *
- * See the Apex Language Reference for more information about Testing and Code Coverage.
- */
 @isTest
 private class PlatformEvents_Helper_Test {
 
     static testMethod void Test_Platform_Event_On_Account() {
-        Account a = new Account(Name='My Account');
+        IATA_ISO_Country__c country = new IATA_ISO_Country__c (Name = 'US', ISO_Code__c = 'US');
+        insert country;
+
+		Id paymentProviderRecordTypeId = RecordTypeSingleton.getInstance().RtIDsPerDeveloperNamePerObj.get('Account').get('TIP_Payment_Provider');
+
+		Account provider = new Account(Name = 'ProviderTest1',
+			TIP_Provider_Type__c = 'Open Loop',
+			TIP_HQ_Location__c = country.Id,
+			RecordTypeId = paymentProviderRecordTypeId,
+			Accreditation_date__c = Date.today());
         
         test.startTest();
-        	insert a;
+        	insert provider;
         
-	        a.IataCode__c = '123';
+	        provider.IataCode__c = '123';
         
-        	update a;
+        	update provider;
         
-        	delete a;
+        	delete provider;
 
-        	undelete a;
+        	undelete provider;
 
         test.stopTest();
     }
     
     
     static testMethod void Test_Platform_Event_On_Contact() {
-    	Account acc1 = new Account(Name='testAccount1', Type='IATA Passenger Sales Agent', Location_Type__c = 'AO');
-        Contact a = new Contact(FirstName='test', LastName='test', AccountId=acc1.Id,
-			Financial_Assessment_Contact__c = true, User_Portal_Status__c = 'Approved Admin');
+    	IATA_ISO_Country__c country = new IATA_ISO_Country__c (Name = 'US', ISO_Code__c = 'US');
+        insert country;
+
+		Id paymentProviderRecordTypeId = RecordTypeSingleton.getInstance().RtIDsPerDeveloperNamePerObj.get('Account').get('TIP_Payment_Provider');
+
+		Account provider = new Account(Name = 'ProviderTest1',
+			TIP_Provider_Type__c = 'Open Loop',
+			TIP_HQ_Location__c = country.Id,
+			RecordTypeId = paymentProviderRecordTypeId,
+			Accreditation_date__c = Date.today());
+		insert provider;
+		
+        Contact con = new Contact(FirstName='test', LastName='test', AccountId=provider.Id, User_Portal_Status__c = 'Approved Admin');
         
         test.startTest();
-        	insert a;
+        	insert con;
         
-	        a.phone = '123123132';
+	        con.phone = '123123132';
         
-        	update a;
+        	update con;
         
-        	delete a;
+        	delete con;
 
-        	undelete a;
+        	undelete con;
+
+        test.stopTest();
+    }
+    
+    
+    static testMethod void Test_Platform_Event_On_PArtner_Product() {
+    	IATA_ISO_Country__c country = new IATA_ISO_Country__c (Name = 'US', ISO_Code__c = 'US');
+        insert country;
+
+		Id paymentProviderRecordTypeId = RecordTypeSingleton.getInstance().RtIDsPerDeveloperNamePerObj.get('Account').get('TIP_Payment_Provider');
+
+		Account provider = new Account(Name = 'ProviderTest1',
+			TIP_Provider_Type__c = 'Open Loop',
+			TIP_HQ_Location__c = country.Id,
+			RecordTypeId = paymentProviderRecordTypeId,
+			Accreditation_date__c = Date.today());
+		insert provider;
+		
+		Partner_products__c product = new Partner_products__c(Name = 'ProductTest1', 
+			PP_Payment_Product_Code__c = 'co',
+			PP_Form_of_payment__c = 'CC',
+			Provider__c = provider.Id,
+			PP_Payment_guarantee__c = 'COMMERCIAL_DISPUTE',
+			PP_Accepted_transactions__c = 'PAYMENT',
+			PP_Pay_in_model__c = 'PREPAID',
+			PP_VAN_type__c = 'SINGLE_USE_VAN',
+			PP_Settlement_terms__c = '12',
+			Is_PCI_DSS_required__c = 'YES',
+			PP_Chargeback_airlines__c = 'No',
+			PP_Interchange_fee__c = 12,
+			PP_Effective_from_Date__c = Date.today(),
+			PP_status__c = 'ACTIVE',
+			PP_Payment_Network__c = 'AX',
+			PP_Category__c = 'CONSUMER');
+			
+		test.startTest();
+		insert product;
+		
+		product.PP_Payment_Product_Code__c = 'CD';       
+        update product;
+        
+        delete product;
+
+       	undelete product;
+
+        test.stopTest();
+    }
+    
+    static testMethod void Test_Platform_Event_On_PArtner_Product_BIN_Range() {
+    	IATA_ISO_Country__c country = new IATA_ISO_Country__c (Name = 'US', ISO_Code__c = 'US');
+        insert country;
+
+		Id paymentProviderRecordTypeId = RecordTypeSingleton.getInstance().RtIDsPerDeveloperNamePerObj.get('Account').get('TIP_Payment_Provider');
+
+		Account provider = new Account(Name = 'ProviderTest1',
+			TIP_Provider_Type__c = 'Open Loop',
+			TIP_HQ_Location__c = country.Id,
+			RecordTypeId = paymentProviderRecordTypeId,
+			Accreditation_date__c = Date.today());
+		insert provider;
+		
+		Partner_products__c product = new Partner_products__c(Name = 'ProductTest1', 
+			PP_Payment_Product_Code__c = 'co',
+			PP_Form_of_payment__c = 'CC',
+			Provider__c = provider.Id,
+			PP_Payment_guarantee__c = 'COMMERCIAL_DISPUTE',
+			PP_Accepted_transactions__c = 'PAYMENT',
+			PP_Pay_in_model__c = 'PREPAID',
+			PP_VAN_type__c = 'SINGLE_USE_VAN',
+			PP_Settlement_terms__c = '12',
+			Is_PCI_DSS_required__c = 'YES',
+			PP_Chargeback_airlines__c = 'No',
+			PP_Interchange_fee__c = 12,
+			PP_Effective_from_Date__c = Date.today(),
+			PP_status__c = 'ACTIVE',
+			PP_Payment_Network__c = 'AX',
+			PP_Category__c = 'CONSUMER');
+		insert product;
+		
+		Id listedByIATARecordTypeId = TIP_Utils.BIN_RANGE_PROVIDER_RECORD_TYPE_ID;
+
+		TIP_BIN_Range__c BinRange = new TIP_BIN_Range__c(TIP_Payment_Provider_Product__c = product.Id,
+			TIP_Effective_From_Date__c = Date.today(),
+			TIP_Range_Start__c = '5000',
+			TIP_Range_End__c = '5500',
+			RecordTypeId = listedByIATARecordTypeId);
+		
+		test.startTest();
+        	insert BinRange;
+        
+	        BinRange.TIP_Range_End__c = '6000';
+        
+        	update BinRange;
+        
+        	delete BinRange;
+
+        	undelete BinRange;
+
+        test.stopTest();
+    }
+    
+    static testMethod void Test_Platform_Event_On_PArtner_Product_Config() {
+    	IATA_ISO_Country__c country = new IATA_ISO_Country__c (Name = 'US', ISO_Code__c = 'US');
+        insert country;
+
+		Id paymentProviderRecordTypeId = RecordTypeSingleton.getInstance().RtIDsPerDeveloperNamePerObj.get('Account').get('TIP_Payment_Provider');
+
+		Account provider = new Account(Name = 'ProviderTest1',
+			TIP_Provider_Type__c = 'Open Loop',
+			TIP_HQ_Location__c = country.Id,
+			RecordTypeId = paymentProviderRecordTypeId,
+			Accreditation_date__c = Date.today());
+		insert provider;
+		
+		Partner_products__c product = new Partner_products__c(Name = 'ProductTest1', 
+			PP_Payment_Product_Code__c = 'co',
+			PP_Form_of_payment__c = 'CC',
+			Provider__c = provider.Id,
+			PP_Payment_guarantee__c = 'COMMERCIAL_DISPUTE',
+			PP_Accepted_transactions__c = 'PAYMENT',
+			PP_Pay_in_model__c = 'PREPAID',
+			PP_VAN_type__c = 'SINGLE_USE_VAN',
+			PP_Settlement_terms__c = '12',
+			Is_PCI_DSS_required__c = 'YES',
+			PP_Chargeback_airlines__c = 'No',
+			PP_Interchange_fee__c = 12,
+			PP_Effective_from_Date__c = Date.today(),
+			PP_status__c = 'ACTIVE',
+			PP_Payment_Network__c = 'AX',
+			PP_Category__c = 'CONSUMER');
+		insert product;
+		
+		TIP_Pay_Prov_Prod_Country_Config__c conf = new TIP_Pay_Prov_Prod_Country_Config__c(TIP_Product__c = product.Id,
+			TIP_BSP_Country__c = country.Id,
+			TIP_Effective_From_Date__c = system.today(),
+			TIP_Effective_To_Date__c = system.today().addDays(30),
+			TIP_Interchange_Fee__c = 'aa',
+			Network_Fee__c = 'BB',
+			TIP_Status__c = 'IN_PROGRESS');
+		
+		test.startTest();
+        	insert conf;
+        
+	        conf.TIP_Status__c = 'ACTIVE';
+        
+        	update conf;
+        
+        	delete conf;
+
+        	undelete conf;
 
         test.stopTest();
     }

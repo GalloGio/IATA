@@ -12,11 +12,11 @@
                 <field>Name</field>
             </layoutItems>
             <layoutItems>
-                <behavior>Required</behavior>
+                <behavior>Edit</behavior>
                 <field>PP_Payment_Product_Code__c</field>
             </layoutItems>
             <layoutItems>
-                <behavior>Edit</behavior>
+                <behavior>Required</behavior>
                 <field>PP_Payment_Product_Network_type__c</field>
             </layoutItems>
             <layoutItems>
@@ -38,7 +38,7 @@
                 <field>PP_Category__c</field>
             </layoutItems>
             <layoutItems>
-                <behavior>Edit</behavior>
+                <behavior>Required</behavior>
                 <field>PP_Payment_network__c</field>
             </layoutItems>
         </layoutColumns>
@@ -73,7 +73,7 @@
                 <field>PP_VAN_type__c</field>
             </layoutItems>
             <layoutItems>
-                <behavior>Required</behavior>
+                <behavior>Edit</behavior>
                 <field>PP_Settlement_terms__c</field>
             </layoutItems>
         </layoutColumns>
@@ -201,7 +201,6 @@
         <fields>TIP_Effective_From_Date__c</fields>
         <fields>TIP_Effective_To_Date__c</fields>
         <fields>TIP_Interchange_Fee__c</fields>
-        <fields>TIP_Issuing_Currency__c</fields>
         <fields>Network_Fee__c</fields>
         <fields>TIP_Status__c</fields>
         <relatedList>TIP_Pay_Prov_Prod_Country_Config__c.TIP_Product__c</relatedList>
