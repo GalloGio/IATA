@@ -1,19 +1,6 @@
 @isTest
 private class ANG_FOPOSCARNotificationBatchTest {
 
-	@testSetup static void setup(){
-		Group grp = new Group(Name='NewGen PCI - Americas',Type='Queue');
-		insert grp;
-
-		QueueSobject mappingObject = new QueueSobject(QueueId = grp.Id, SobjectType = 'Case');
-		QueueSobject mappingObject2 = new QueueSobject(QueueId = grp.Id, SobjectType = 'AMS_Oscar__c');
-		List<QueueSobject> queuesobjectList = new List<QueueSobject>{mappingObject,mappingObject2};
-
-		System.runAs(new User(Id = UserInfo.getUserId())){
-			insert mappingObject;
-		}
-	}
-
 		@isTest static void testReminderFOPMassNotificationError() {
 
 		List<IATA_ISO_Country__c> countrylist = new List<IATA_ISO_Country__c>();
@@ -42,14 +29,11 @@ private class ANG_FOPOSCARNotificationBatchTest {
 									Preferred_Language__c = 'English', Financial_Assessment_Contact__c = false);	
 		insert co1;
 
-		Group grp = [SELECT Id, Name FROM Group WHERE Name = 'NewGen PCI - Americas'][0];
-
 		Map<String,Object> fieldsOfObject = new Map<String,Object>();
         fieldsOfObject.clear();
 		fieldsOfObject.put('Process__c',AMS_Utils.NGFOP);
 		fieldsOfObject.put('RecordTypeId',AMS_Utils.RECTYPE_NEWGENFOP);
 		fieldsOfObject.put('ANG_FA_Opt_out__c','Not Applicable');
-		fieldsOfObject.put('OwnerId',grp.Id);
 
 		AMS_Oscar__c oscar = ANG_EntityCreator.createOscar(AMS_Utils.RECTYPE_NEWGENFOP, agencylist[0].Id, fieldsOfObject);
 		insert oscar;
@@ -65,7 +49,6 @@ private class ANG_FOPOSCARNotificationBatchTest {
         fieldsOfObject.put('Subject','FoP Management - ');
         fieldsOfObject.put('Type_of_customer__c','IATA Travel Agent');
         //fieldsOfObject.put('ContactId',co1.Id); - force error
-        fieldsOfObject.put('OwnerId',grp.Id);
 
         Case newCaseFop =ANG_EntityCreator.createCase(caseRT, agencylist[0].Id, fieldsOfObject);
 
@@ -113,14 +96,11 @@ private class ANG_FOPOSCARNotificationBatchTest {
 									Preferred_Language__c = 'English', Financial_Assessment_Contact__c = false);	
 		insert co1;
 
-		Group grp = [SELECT Id, Name FROM Group WHERE Name = 'NewGen PCI - Americas'][0];
-
 		Map<String,Object> fieldsOfObject = new Map<String,Object>();
         fieldsOfObject.clear();
 		fieldsOfObject.put('Process__c',AMS_Utils.NGFOP);
 		fieldsOfObject.put('RecordTypeId',AMS_Utils.RECTYPE_NEWGENFOP);
 		fieldsOfObject.put('ANG_FA_Opt_out__c','Not Applicable');
-		fieldsOfObject.put('OwnerId',grp.Id);
 
 		AMS_Oscar__c oscar = ANG_EntityCreator.createOscar(AMS_Utils.RECTYPE_NEWGENFOP, agencylist[0].Id, fieldsOfObject);
 		insert oscar;
@@ -136,7 +116,6 @@ private class ANG_FOPOSCARNotificationBatchTest {
         fieldsOfObject.put('Subject','FoP Management - ');
         fieldsOfObject.put('Type_of_customer__c','IATA Travel Agent');
         fieldsOfObject.put('ContactId',co1.Id);
-        fieldsOfObject.put('OwnerId',grp.Id);
 
         Case newCaseFop =ANG_EntityCreator.createCase(caseRT, agencylist[0].Id, fieldsOfObject);
 
@@ -189,14 +168,11 @@ private class ANG_FOPOSCARNotificationBatchTest {
 									Preferred_Language__c = 'English', Financial_Assessment_Contact__c = false);	
 		insert co1;
 
-		Group grp = [SELECT Id, Name FROM Group WHERE Name = 'NewGen PCI - Americas'][0];
-
 		Map<String,Object> fieldsOfObject = new Map<String,Object>();
         fieldsOfObject.clear();
 		fieldsOfObject.put('Process__c',AMS_Utils.NGFOP);
 		fieldsOfObject.put('RecordTypeId',AMS_Utils.RECTYPE_NEWGENFOP);
 		fieldsOfObject.put('ANG_FA_Opt_out__c','Not Applicable');
-		fieldsOfObject.put('OwnerId',grp.Id);
 
 		AMS_Oscar__c oscar = ANG_EntityCreator.createOscar(AMS_Utils.RECTYPE_NEWGENFOP, agencylist[0].Id, fieldsOfObject);
 		insert oscar;
@@ -212,7 +188,6 @@ private class ANG_FOPOSCARNotificationBatchTest {
         fieldsOfObject.put('Subject','FoP Management - ');
         fieldsOfObject.put('Type_of_customer__c','IATA Travel Agent');
         fieldsOfObject.put('ContactId',co1.Id);
-        fieldsOfObject.put('OwnerId',grp.Id);
 
         Case newCaseFop =ANG_EntityCreator.createCase(caseRT, agencylist[0].Id, fieldsOfObject);
 
