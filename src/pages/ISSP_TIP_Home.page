@@ -20,7 +20,8 @@
 
             function validateIfportalAdmin() {
                 if ({!isAdmin}) {
-                    window.location.href = '/apex/ISSP_TIP_Enrolment';
+                    //window.location.href = '/apex/ISSP_TIP_Enrolment';
+                    navigateToEnrolmentPage();
                 } else {
                     alert("{!$label.ISSP_TIP_Home_Only_Portal_Administrators}");
                 }
@@ -207,6 +208,7 @@
 
                             <apex:pageBlock >
                                 <apex:form >
+                                    <apex:actionFunction action="{!startEnrolmentAccount}" name="navigateToEnrolmentPage"></apex:actionFunction>
                                     <hr />
                                     <apex:pageBlockTable value="{!cases}" var="item" styleClass="table-hover table table-condensed table-responsive">
                                         <apex:column >

@@ -1,4 +1,4 @@
-<apex:page controller="ISSP_TIP_Enrolment_Controller"
+<apex:page controller="ISSP_TIP_Home_controller"
    cache="false"
    sidebar="false"
    showHeader="false"
