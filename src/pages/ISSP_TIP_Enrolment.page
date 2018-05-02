@@ -360,15 +360,15 @@
                               {!$Label.ISSP_AMS_Step3_Save_Anytime}
                            </div>
                           <!--<apex:pageBlockButtons >
-                              <apex:commandButton action="{!submitToIATA}" value="Submit to IATA" />
-                              <apex:commandButton action="{!saveAsDraft}" value="{!$Label.ISSP_Save_Draft}" style="float:right" />
+                              <apex:commandButton action="{!submitAccountEnrolmentToIATA}" value="Submit to IATA" />
+                              <apex:commandButton action="{!saveAccountEnrolmentAsDraft}" value="{!$Label.ISSP_Save_Draft}" style="float:right" />
                            </apex:pageBlockButtons>
                          -->
 
 
                            <apex:pageBlockButtons >
-                                        <apex:commandButton action="{!submitToIATA}" value="Submit to IATA"  />
-                                        <apex:commandButton action="{!saveAsDraft}" value="{!$Label.ISSP_Save_Draft}"/>
+                                        <apex:commandButton action="{!submitAccountEnrolmentToIATA}" value="Submit to IATA"  />
+                                        <apex:commandButton action="{!saveAccountEnrolmentAsDraft}" value="{!$Label.ISSP_Save_Draft}"/>
                                         <apex:commandButton onclick="confirmCancelExitPage();return false;"  value="{!$Label.ISSP_Cancel}" />
                                         <!-- <apex:commandButton action="{!submitForm}" value="Save as Draft" style="margin-left:10px" /> -->
                                     </apex:pageBlockButtons>   

@@ -16,7 +16,7 @@ public without sharing class ISSP_TIP_Home_Controller {
     public boolean btnEnabled {get;set;}
     public boolean isAdmin {get; set;}     //identify if a user is an administrator or not
     public String communityName{ get{ return ApexPages.currentPage().getParameters().get('CommunityName'); }set;}
-    public IATA_ISO_Country__c isocountry {get; set;}
+    //public IATA_ISO_Country__c isocountry {get; set;}
     public List<productWrapper> products {get ;set;}
     public boolean editMode{get;set;}
     public String binRangeChangeRequestText{get;Set;}
@@ -230,7 +230,7 @@ public without sharing class ISSP_TIP_Home_Controller {
         return pr; 
     }
 
-    public Pagereference submitToIATA() {
+    public Pagereference submitAccountEnrolmentToIATA() {
 
         //confirm that required fields are fill
                 //ApexPages.addmessage(new ApexPages.message(ApexPages.severity.WARNING,'Please enter value'));
@@ -308,7 +308,7 @@ public without sharing class ISSP_TIP_Home_Controller {
         return new Pagereference('/ISSP_TIP_Home'); //wrong page
     }
 
-    public Pagereference saveAsDraft() {
+    public Pagereference saveAccountEnrolmentAsDraft() {
 
         updateCase();
         update account;
