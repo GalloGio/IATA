@@ -303,6 +303,19 @@
 
                                                     <script>
                                                         $('#frmt').jstree(JSON.parse('{!tree}'));
+                                                        $('#frmt').on("changed.jstree", function (e, data) {
+
+                                                            if(data.selected.length == 1) {
+                                                                var iataCode = data.instance.get_node(data.selected[0]).text;
+
+                                                                console.log(iataCode);
+
+                                                                $('[id$=currentIataCode]').val(iataCode);
+
+                                                                loadIataCode();
+                                                            }
+
+                                                        });
                                                     </script>
 
                                                 </apex:outputPanel>
@@ -430,22 +443,6 @@
             <c:ISSP_CustomFooter />
         </div>
     </body>
-
-    <script>
-//        $('#frmt').jstree(JSON.parse('{!tree}'));
-
-        $('#frmt').on("changed.jstree", function (e, data) {
-
-            if(data.selected.length == 1) {
-                var iataCode = data.instance.get_node(data.selected[0]).text;
-
-                $('[id$=currentIataCode]').val(iataCode);
-
-                loadIataCode();
-            }
-
-        });
-    </script>
 
     </html>
 </apex:page>

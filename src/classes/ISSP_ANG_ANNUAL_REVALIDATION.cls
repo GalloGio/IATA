@@ -9,7 +9,8 @@ public with sharing class ISSP_ANG_ANNUAL_REVALIDATION {
 	public Case newCase {get; set;}
 	public AMS_OSCAR__c oscar {get; set;}
 	public Set<String> iataCodesOk {get; set;}
-	public Set<String> iataCodesNotOk {get; set;}
+	public Set<String> iataCodesConfirmed {get; set;}
+	public Set<String> iataCodesInProgress {get; set;}
 	public Map<String, AMS_Pax_Accreditation_Form__c> annualRevalidationsMap {get; set;}
 	public Map<String, Account> accountsMap {get; set;}
 	public String jsonTree {get; set;}
@@ -139,7 +140,13 @@ public with sharing class ISSP_ANG_ANNUAL_REVALIDATION {
 
 		if (newCase != null) {
 			oscar = fetchOscar(newCase.Oscar__c);
+
+			System.debug('Alex : ' + oscar);
+
+			setAnnualRevalidationsMap();
+
 			setIataCodesOkNotOk(oscar);
+
 		}
 
 		getContact();
@@ -147,8 +154,6 @@ public with sharing class ISSP_ANG_ANNUAL_REVALIDATION {
 		setParentsAndChilds();
 
 		setAccounts();
-
-		setAnnualRevalidationsMap();
 
         isStep1 = false;
         isStep2 = false;
@@ -292,14 +297,14 @@ public with sharing class ISSP_ANG_ANNUAL_REVALIDATION {
                     Specify_Legal_Status_After_Change__c, Issued_share_capital_After_Change__c, Trade_Name__c, ISSP_AMS_Curr_Entity_with_listed_shares__c, ISSP_AMS_Total_Current_Ownership__c, ISSP_AMS_Total_Previous_Ownership__c, Is_your_firm_handling_Dangerous_Goods__c, Country__c, Account_Name__c,Scope_of_Change__c,Agency_Codes_Concerned__c,Billing_State__c,Website__c,
                     Confirm_Legal_Details_are_correct__c,Notify_Change_Legal_Details__c,Confirm_Location_Details_are_correct__c,Notify_Change_Location__c,Confirm_Ownership_details_are_correct__c,Notify_Change_Ownership__c,Map_Company_Type_to_Legal_Status__c,New_Head_Office_IATA_Code__c,Shipping_Street__c,Shipping_City__c,Shipping_Postal_Code__c,Shipping_State__c,HO_Account__c,RecordTypeId,
                     IATAN_Code__c,IATA_Registered_IATAN_Agent__c,Enable_Credit_Card_FOP__c,IATAN_Agent_Account__c,AE_separate_Legal_Entity__c,ANG_AE_SameLegal__c,ANG_Accreditation_Model_to_Change__c, Notify_Change_Accreditation_Type__c, Confirm_accreditation_type_are_correct__c, Last_Scope_Of_Change__c, ANG_Accreditation_type__c,
-                    SAAM_Case__r.Reason1__c
+                    SAAM_Case__r.Reason1__c, Status__c
                     FROM AMS_Pax_Accreditation_Form__c
                     WHERE SAAM_Case__c = :newCase.Id
                 ];
 
         if (newForms.size() > 0) {
 			for (AMS_Pax_Accreditation_Form__c form : newForms) {
-				annualRevalidationsMap.put(form.HO_Account__r.IATACode__c, form);
+				annualRevalidationsMap.put(form.IATACode__c, form);
 			}
         }
 	}
@@ -328,7 +333,7 @@ public with sharing class ISSP_ANG_ANNUAL_REVALIDATION {
 
 		update oscar;
 
-		setIataCodesOkNotOk(oscar);
+		iataCodesOk.add(currentIataCode);
 
 		jsonTree = generateMenu();
 
@@ -337,7 +342,6 @@ public with sharing class ISSP_ANG_ANNUAL_REVALIDATION {
 
 	public PageReference updateDetails() {
 		System.debug('alex updateDetails : ' + currentIataCode);
-
 
 		return null;
 	}
@@ -397,7 +401,8 @@ public with sharing class ISSP_ANG_ANNUAL_REVALIDATION {
 	private void setIataCodesOkNotOk(AMS_OSCAR__c oscar) {
 
 		iataCodesOk = new Set<String>();
-		iataCodesNotOk = new Set<String>();
+		iataCodesConfirmed = new Set<String>();
+		iataCodesInProgress = new Set<String>();
 
 		if(oscar.IATA_Codes_OK__c == null) oscar.IATA_Codes_OK__c = '';
 
@@ -407,12 +412,15 @@ public with sharing class ISSP_ANG_ANNUAL_REVALIDATION {
 			iataCodesOk.add(iataCode);
 		}
 
-		if(oscar.IATA_Codes_NOK__c == null) oscar.IATA_Codes_NOK__c = '';
+		for(String iataCode : annualRevalidationsMap.keySet()) {
+			AMS_Pax_Accreditation_Form__c form = annualRevalidationsMap.get(iataCode);
 
-		aux = oscar.IATA_Codes_NOK__c.split(',');
-
-		for (String iataCode : aux) {
-			iataCodesNotOk.add(iataCode);
+			if(form.status__c == 'InProgress') {
+				iataCodesInProgress.add(iataCode);
+			}
+			if(form.status__c == 'Confirmed') {
+				iataCodesConfirmed.add(iataCode);
+			}
 		}
 	}
 
@@ -433,8 +441,10 @@ public with sharing class ISSP_ANG_ANNUAL_REVALIDATION {
 	private String getIcon(String iataCode) {
 		if (iataCodesOk.contains(iataCode)) {
 			return OK_ICON;
-		} else if (iataCodesNotOk.contains(iataCode)) {
+		} else if (iataCodesConfirmed.contains(iataCode)) {
 			return CONFIRMED_ICON;
+		} else if (iataCodesInProgress.contains(iataCode)) {
+			return PROGRESS_ICON;
 		} else {
 			return DEFAULT_ICON;
 		}
