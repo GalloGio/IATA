@@ -31,9 +31,29 @@ public class TIP_Utils{
 	//Case Subject
 	public static String CASE_SUBJECT_NEW_PRODUCT_ENROLMENT = 'New Product Enrolment';
 
+	
+
+	//Partner Product status
 	public static String PARTNER_PRODUCT_STATUS_ACTIVE='ACTIVE';
+	public static String PARTNER_PRODUCT_STATUS_INACTIVE='INACTIVE';
+	public static String PARTNER_PRODUCT_STATUS_IN_PROGRESS='IN_PROGRESS';
+	public static String PARTNER_PRODUCT_STATUS_REJECTED='REJECTED';
 	public static String PARTNER_PRODUCT_STATUS_DRAFT='DRAFT';
 
+	//Partner Product status
+	public static String PARTNER_PRODUCT_NETWORK_TYPE_OPEN_LOOP='OPEN_LOOP';
+
+	//BIN Range status
+	public static String BIN_RANGE_STATUS_ACTIVE='ACTIVE';
+	public static String BIN_RANGE_STATUS_INACTIVE='INACTIVE';
+	public static String BIN_RANGE_STATUS_IN_PROGRESS='IN_PROGRESS';
+	public static String BIN_RANGE_STATUS_DRAFT='DRAFT';
+
+	//Partner Product Configuration status
+	public static String PARTNER_PRODUCT_CONFIG_STATUS_ACTIVE='ACTIVE';
+	public static String PARTNER_PRODUCT_CONFIG_STATUS_INACTIVE='INACTIVE';
+	public static String PARTNER_PRODUCT_CONFIG_STATUS_IN_PROGRESS='IN_PROGRESS';
+	public static String PARTNER_PRODUCT_CONFIG_STATUS_DRAFT='DRAFT';
 
 	//Partner product RT
 	public static String PARTNER_PRODUCT_TIP_PRODUCT_RECORD_TYPE_ID= RecordTypeSingleton.getInstance().RtIDsPerDeveloperNamePerObj.get('Partner_products__c').get('TIP_Product');

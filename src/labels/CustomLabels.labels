@@ -20999,6 +20999,13 @@ This Dashboard allows each airline Treasury Team to gain full visibility of thei
         <value>Add BIN Range</value>
     </labels>
     <labels>
+        <fullName>ISSP_TIP_CHECK_BIN_RANGE_LENGHT</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_TIP_CHECK_BIN_RANGE_LENGHT</shortDescription>
+        <value>Please check the BIN Ranges marked with \&apos;*\&apos; to ensure the lenght with the maximium allowed.</value>
+    </labels>
+    <labels>
         <fullName>ISSP_TIP_Discard_Unsaved_Changes</fullName>
         <language>en_US</language>
         <protected>false</protected>
@@ -21055,6 +21062,20 @@ This Dashboard allows each airline Treasury Team to gain full visibility of thei
         <value>Enrol new Product</value>
     </labels>
     <labels>
+        <fullName>ISSP_TIP_INSERT_BIN_RANGE</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_TIP_INSERT_BIN_RANGE</shortDescription>
+        <value>Please insert at least one BIN Range</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_TIP_INSERT_ONE_COUNTRY_CONFIG</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_TIP_INSERT_ONE_COUNTRY_CONFIG</shortDescription>
+        <value>Please insert at least one Country Configuration</value>
+    </labels>
+    <labels>
         <fullName>ISSP_TIP_MANDATORY_ON_SUBMIT</fullName>
         <language>en_US</language>
         <protected>false</protected>
@@ -21062,11 +21083,39 @@ This Dashboard allows each airline Treasury Team to gain full visibility of thei
         <value>Mandatory fields upon submission to IATA</value>
     </labels>
     <labels>
+        <fullName>ISSP_TIP_MISSING_FIELDS</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_TIP_MISSING_FIELDS</shortDescription>
+        <value>Please fill in the missing fields.</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_TIP_RANGE_TO_GREATER_RANGE_FROM</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_TIP_RANGE_TO_GREATER_RANGE_FROM</shortDescription>
+        <value>&amp;lt;strong&amp;gt;Error:&amp;lt;/strong&amp;gt;Range To must be greater or equal than Range From</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_TIP_SELECT_AT_LEAST_ONE_VALUE</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_TIP_SELECT_AT_LEAST_ONE_VALUE</shortDescription>
+        <value>&amp;lt;strong&amp;gt;Error:&amp;lt;/strong&amp;gt;You must select at least one value.</value>
+    </labels>
+    <labels>
         <fullName>ISSP_TIP_Submit_case_to_IATA_to_update_bin_range</fullName>
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>ISSP TIP Submit case to IATA to update bin range</shortDescription>
         <value>Please &lt;a style=&quot;color:blue &quot; href=&quot;/ISSP_FAQ2Case?topic=TIP%20HelpDesk&quot;&gt;Submit a case to IATA&lt;/a&gt; to request to update the BIN Ranges for this product</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_TIP_VALUE_TOO_BIG_TO_PROVIDER</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_TIP_VALUE_TOO_BIG_TO_PROVIDER</shortDescription>
+        <value>&amp;lt;strong&amp;gt;Error:&amp;lt;/strong&amp;gt;This value is too big for this provider.</value>
     </labels>
     <labels>
         <fullName>ISSP_TOULink</fullName>
