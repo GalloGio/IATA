@@ -135,7 +135,6 @@ public class AMS_OscarChangesHelper {
 		}
 	}
 
-	@future
 	public static void rollbackOscarChanges(Set<Id> oscarIds) {
 		List<AMS_Oscar_Change_History__c> records = [SELECT Id, Data__c, Type__c, Oscar__c
 													 FROM AMS_Oscar_Change_History__c 
@@ -167,7 +166,6 @@ public class AMS_OscarChangesHelper {
 		}
 
 		try {
-			ISSP_SIS_AccountHandler.BLOCK_EXECUTION = true;
 			rollbackOwners(roles);
 			rollbackHierarchies(relationsToRollback);
 			rollbackAccounts(accountsToRollback);
