@@ -528,6 +528,7 @@ public without sharing class ISSP_TIP_Home_Controller {
 
     public Pagereference doDMLRecords(String status){
         try{
+            list<case> caseList= newpp.cases__R.isEmpty()?new list<case>():newpp.cases__R;
             if(isNew){
                 user usr=[select id,Contact.accountId,Contact.account.name,Contact.account.IATA_ISO_Country__r.region__c,Contact.account.IATA_ISO_Country__r.Name from user where id =:UserInfo.getUserId()];
 
@@ -554,7 +555,7 @@ public without sharing class ISSP_TIP_Home_Controller {
                 newcase.TIP_Partner_Product__C=newpp.id;
                 newcase.Country_concerned_by_the_query__c = usr.Contact.account.IATA_ISO_Country__r.Name;
 
-                newpp.cases__R.add(newCase);
+                caseList.add(newCase);
                
             } else {
                 newpp.PP_Accepted_transactions__c=String.join(acceptedTransactionVal,';');
@@ -564,8 +565,8 @@ public without sharing class ISSP_TIP_Home_Controller {
                 update newpp;
             }
 
-            if(!newpp.cases__R.isEmpty()){
-                newpp.cases__R.get(0).Status = status;
+            if(!caseList.isEmpty()){
+                caseList.get(0).Status = status;
 
                 if(status==TIP_Utils.PARTNER_PRODUCT_STATUS_IN_PROGRESS){
                     newpp.cases__R.get(0).Status = AMS_Utils.OPEN;
@@ -578,7 +579,7 @@ public without sharing class ISSP_TIP_Home_Controller {
                     }
                 }
 
-                upsert newpp.cases__R;
+                upsert caseList;
             }
 
             //Update Bin ranges
