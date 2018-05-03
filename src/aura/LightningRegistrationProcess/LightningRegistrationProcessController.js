@@ -870,6 +870,15 @@
         });
         toastEvent.fire();
     },
+    validateNumber : function(c, e, h){
+        var input = c.find(e.getSource().getLocalId());
+        console.error('keyup');
+        console.error(e.getSource().getLocalId());
+        console.error(input);
+        console.error(input.get("v.value"));
+        input.set("v.value", input.get("v.value").replace(/[^0-9+]|(?!^)\+/g, ''));
+        console.error(input.get("v.value"));
+    }
     /*,
     resizeIframe: function(component, event, helper) {
         console.log('----------> resizing');

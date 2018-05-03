@@ -205,23 +205,24 @@
 							<div class="slds-col--padded slds-p-bottom--large slds-size--1-of-1 slds-medium-size--1-of-2 slds-large-size--1-of-2">
 									<label class="slds-form-element__label" ><abbr class="slds-required" title="required">*</abbr>{!v.contactLabels.Phone}</label>
 									<!--<ui:inputPhone aura:id="contactPhone" value="{!v.contact.Phone}" class="slds-input required-input contactPhone" required="true" keyup="{!c.validateContact}" />-->
-									<ui:inputPhone aura:id="contactPhone" value="{!v.contact.Phone}" class="slds-input required-input contactPhone" required="true" />
+									<ui:inputPhone aura:id="contactPhone" value="{!v.contact.Phone}" class="slds-input required-input contactPhone" required="true"   updateOn="keyup" keyup="{!c.validateNumber}"  />
 							</div>
 
 							<div class="slds-col--padded slds-p-bottom--large slds-size--1-of-1 slds-medium-size--1-of-2 slds-large-size--1-of-2">
 									<label class="slds-form-element__label" >{!v.contactLabels.MobilePhone}</label>
-									<ui:inputPhone aura:id="contactMobilePhone" value="{!v.contact.MobilePhone}" class="contactPhone slds-input" />
+									<ui:inputPhone aura:id="contactMobilePhone" value="{!v.contact.MobilePhone}" class="contactPhone slds-input"  updateOn="keyup" keyup="{!c.validateNumber}" />
 							</div>
 
 							<div class="slds-col--padded slds-p-bottom--large slds-size--1-of-1 slds-medium-size--1-of-2 slds-large-size--1-of-2">
 									<label class="slds-form-element__label" >{!v.contactLabels.Fax}</label>
-									<ui:inputPhone aura:id="contactFaxPhone" value="{!v.contact.Fax}" class="contactPhone slds-input" />
+									<ui:inputPhone aura:id="contactFaxPhone" value="{!v.contact.Fax}" class="contactPhone slds-input" updateOn="keyup" keyup="{!c.validateNumber}"  />
 							</div>
 
 						</div>
 
 					</div>
 				</div>
+
 	            <!--/aura:if-->
 			</div>
 
