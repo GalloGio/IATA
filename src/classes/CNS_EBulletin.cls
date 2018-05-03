@@ -1167,7 +1167,7 @@ public with sharing class CNS_EBulletin {
         ApexPages.Message myMsg;
 
         if(error.equals('01')){
-            myMsg = new ApexPages.Message(ApexPages.Severity.ERROR, Label.ISSP_AMS_eBulletin_ErrorMsg_01);
+            myMsg = new ApexPages.Message(ApexPages.Severity.INFO, Label.ISSP_AMS_eBulletin_ErrorMsg_01);
         } else {
             myMsg = new ApexPages.Message(ApexPages.Severity.ERROR, Label.ISSP_AMS_eBulletin_ErrorMsg_00);
         }
