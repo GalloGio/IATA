@@ -8,9 +8,9 @@
     <subject>Ref nr {!AMS_OSCAR__c.Name} – Annual Revalidation</subject>
     <textOnly>Dear Sir/Madam,
 
-
 We inform that the Annual Revalidation process failed. An Administrative non-compliance has been processed.
 
+Please be informed that the new deadline is {!AMS_OSCAR__c.Sanity_check_deadline__c}
 
 Yours faithfully,
 
