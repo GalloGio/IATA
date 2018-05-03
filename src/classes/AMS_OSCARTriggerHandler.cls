@@ -3467,6 +3467,11 @@ public class AMS_OSCARTriggerHandler {
                         accountToAdd = true;
                     }
 
+                    if(oscar.Is_PCI_compliant__c == 'Corporate Card'){
+                        acct.ANG_PCI_compliance_expiry_date__c = Date.newInstance(2099, 12, 31);
+                        accountToAdd = true;
+                    }
+
                     if(accountToAdd)
                         accountsToUpdate.add(acct);
                 }
