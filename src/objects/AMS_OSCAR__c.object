@@ -359,6 +359,7 @@ IF( ISBLANK(ANG_Type_Of_Change__c) , &quot;No types of change selected.&quot;, &
 IF(INCLUDES( ANG_Type_Of_Change__c , &quot;Location&quot;), &quot;Location&quot;+BR(), NULL)+ 
 IF(INCLUDES( ANG_Type_Of_Change__c , &quot;Location type&quot;), &quot;Location type&quot;+BR(), NULL)+ 
 IF(INCLUDES( ANG_Type_Of_Change__c, &quot;Legal name&quot;), &quot;Legal name&quot;+BR(), NULL)+ 
+IF(INCLUDES( ANG_Type_Of_Change__c, &quot;Trade name&quot;), &quot;Trade name&quot;+BR(), NULL)+ 
 IF(INCLUDES( ANG_Type_Of_Change__c, &quot;Legal status&quot;), &quot;Legal status&quot;+BR(), NULL)+ 
 IF(INCLUDES( ANG_Type_Of_Change__c, &quot;Ownership&quot;), &quot;Ownership&quot;+BR(), NULL)+ 
 IF(INCLUDES( ANG_Type_Of_Change__c, &quot;Hierarchy&quot;), &quot;Hierarchy&quot;+BR(), NULL)+ 
@@ -8033,6 +8034,10 @@ if(Change_effective_as_of__c - today() &gt; 0,&quot;30&quot;,&quot;0&quot;)))</f
             </values>
             <values>
                 <fullName>Ownership</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Trade name</fullName>
                 <default>false</default>
             </values>
             <values>
