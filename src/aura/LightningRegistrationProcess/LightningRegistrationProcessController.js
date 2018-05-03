@@ -822,16 +822,10 @@
             } else if (event.data.action == 'callIframeResizeCallback') {
                 jQuery('.captchaIframe').removeAttr('height');
                 var captchaIframeHeight;
-                var numb = 0;
-                if(component.get("v.captchaIframeHeight") !== undefined){
-                    var asd = component.get("v.captchaIframeHeight");
-                    numb = asd.match(/\d/g);
-                    numb = numb.join("");
-                }
-                if ((event.data.height == '' || event.data.height == null) && numb < 10)  {
+                if (event.data.height == null)  {
                     captchaIframeHeight = "height: 0px;";
                 }
-                if(event.data.height.length>0){ 
+                if(event.data.height && event.data.height.length>0){ 
                     captchaIframeHeight = "height:" + event.data.height + "px;";
                 }
                 component.set("v.captchaIframeHeight", captchaIframeHeight); 
@@ -842,11 +836,12 @@
         console.log('ct');
         if (!helper.validateEmail(component)) {
             var terms = component.get("v.Terms");
+            var country = component.get("v.whichcountry");            
 
             if (terms) {
                 var vfOrigin = component.get('v.vfHost');
                 var vfWindow = component.find("vfFrame").getElement().contentWindow;
-                vfWindow.postMessage({ action: "alohaCallingCAPTCHA" }, vfOrigin);
+                vfWindow.postMessage({ action: "alohaCallingCAPTCHA",country : country }, vfOrigin);
                 helper.placeFlags(component);
             }
         }
