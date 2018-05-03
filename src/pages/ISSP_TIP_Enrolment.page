@@ -7,7 +7,7 @@
    applyBodyTag="false"
    applyHtmlTag="false"
    docType="html-5.0"
-   action="{!securityCheck}"
+   action="{!securityCheckForEnrolmentPage}"
    >
    <html>
       <c:ISSP_Header ></c:ISSP_Header>

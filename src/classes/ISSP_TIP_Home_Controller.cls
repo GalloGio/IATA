@@ -2,43 +2,37 @@ public without sharing class ISSP_TIP_Home_Controller {
 
     //##======================VARIABLES=================================##
 
+    public String applyLanguage {get; set;}
+    public String displayLanguage {get; set;}   
+    
     //home Page
     public string currNavState {get;set;}    
     public Contact con {get; set;}
-    public Account acc {get;set;}
     public boolean isPaymentProvider {get;set;} 
     public boolean btnEnabled {get;set;}
     public boolean isAdmin {get; set;}     //identify if a user is an administrator or not
     public String communityName{ get{ return ApexPages.currentPage().getParameters().get('CommunityName'); }set;}
-    //public IATA_ISO_Country__c isocountry {get; set;}
     public List<productWrapper> products {get ;set;}
     public boolean editMode{get;set;}
     public String binRangeChangeRequestText{get;Set;}
 
     //enrolment page
-    //private List <Case> private List <Case> accountCases {get; set;}
-
     public String conID {get; set;}
     public Contact newContact {get;set;} 
     public List <Contact> contactList {get; set;}
     public Boolean isEmailDuplicated {get; set;}
 
-
-    //
-    public String applyLanguage {get; set;}
-    public String displayLanguage {get; set;}   
-
     public User user {get; set;}
-    //public Contact con {get; set;}
     public Account account {get; set;}
     public Partner_products__c newpp {get; set;}
-    private Id accountID {get; set;}
     private Case newCase {get; set;}
     public boolean isNew {get; set;}
     public list<BinRangeRec> binRangeList{get; set;}
     public String[] paymentGuaranteeVal{get;set;}
     public String[] acceptedTransactionVal{get;set;}
     public Decimal binRangeLen{get;set;}
+    public BinRangeRec selectedBinRange{get;set;}
+    
     private map<string,Decimal> paymentNetworkMap{
             get{
                 if(paymentNetworkMap==null) paymentNetworkMap= new map<string,Decimal>();
@@ -48,16 +42,14 @@ public without sharing class ISSP_TIP_Home_Controller {
                 return paymentNetworkMap;
             }
             set;}
+    
     private list<TIP_BIN_Range__c> deletedBinRangeList{
         get{
             if(deletedBinRangeList==null) deletedBinRangeList= new list<TIP_BIN_Range__c>();
             return deletedBinRangeList;
         } 
         set;}
-    public BinRangeRec selectedBinRange{get;set;}
 
-
-    
     public List<selectOption> paymentGuaranteeOptList{
         get{        
             List<SelectOption> paymentGuaranteeOptList = new List<SelectOption>();      
@@ -87,19 +79,12 @@ public without sharing class ISSP_TIP_Home_Controller {
         User user = DAL_ISSP.getUser(Userinfo.getUserId());
         system.debug('user.ContactId ' + user.ContactId);
         con = DAL_ISSP.getContact(user.ContactId);
-
-
-        //if (con.User_Portal_Status__c == 'Administrator' || con.User_Portal_Status__c == 'Approved Admin' || con.User_Portal_Status__c == 'Regional Administrator' || con.User_Portal_Status__c == 'R. Administrator' )
         isAdmin = (con.User_Portal_Status__c == ANG_Risk_Helper.USER_PORTAL_STATUS_APPROVED_ADIM);
         
+        fetchHQAccountDetails();
 
-        acc = [SELECT id, recordtypeid, category__c FROM ACCOUNT WHERE ID = :con.AccountId];
-
-        /*btnEnabled = (acc.recordtypeid == TIP_Utils.STANDARD_ACCOUNT_RECORD_TYPE_ID && acc.category__c=='Payment Provider');
-        isPaymentProvider = (acc.category__c=='Payment Provider');*/
-
-        btnEnabled = (acc.recordtypeid == TIP_Utils.STANDARD_ACCOUNT_RECORD_TYPE_ID && acc.category__c=='Payment Provider');
-        isPaymentProvider = (acc.recordtypeid == TIP_Utils.PAYMENT_PROVIDER_RECORD_TYPE_ID);
+        btnEnabled = (account.recordtypeid == TIP_Utils.STANDARD_ACCOUNT_RECORD_TYPE_ID && account.category__c=='Payment Provider');
+        isPaymentProvider = (account.recordtypeid == TIP_Utils.PAYMENT_PROVIDER_RECORD_TYPE_ID);
 
     }
 
@@ -202,7 +187,6 @@ public without sharing class ISSP_TIP_Home_Controller {
 
         user = DAL_ISSP.getUser(Userinfo.getUserId());
         con = DAL_ISSP.getContact(user.ContactId);
-        accountID = con.AccountId;
         fetchHQAccountDetails();
         getISOCountry();
         List <Case> accountCases;
@@ -218,7 +202,7 @@ public without sharing class ISSP_TIP_Home_Controller {
                             Origin,BSPCountry__c,Country_concerned_by_the_query__c,Description
                             FROM Case 
                                 WHERE RecordTypeid = :TIP_Utils.CASE_PROCESS_IDFS_RECORD_TYPE_ID 
-                                AND Accountid = :account.id 
+                                AND Accountid = :con.AccountId 
                                 AND Visible_on_ISS_Portal__c = true
                                 AND Reason1__c = :TIP_Utils.CASE_REASON_PAYMENT_PROVIDER_MANAGMENT
                                 AND CaseArea__c = :TIP_Utils.CASE_AREA_TRANSPARENCY_IN_PAYMENTS 
@@ -236,8 +220,7 @@ public without sharing class ISSP_TIP_Home_Controller {
     public Pagereference submitAccountEnrolmentToIATA() {
 
         //confirm that required fields are fill
-                //ApexPages.addmessage(new ApexPages.message(ApexPages.severity.WARNING,'Please enter value'));
-        
+
         if(String.isEmpty(account.Name)){
             account.Name.addError('Please fill the Legal name');
             return null;
@@ -252,11 +235,6 @@ public without sharing class ISSP_TIP_Home_Controller {
             account.Email__c.addError('Please fill the Office Email');
             return null;
         }
-/*
-        if(account.BillingAddress == null || account.BillingAddress ==''){
-            account.BillingAddress.addError('Please fill the Billing Address');
-            return null;
-        }*/
 
         if(String.isEmpty(account.BillingStreet)){
             account.BillingStreet.addError('Please fill the Billing Street');
@@ -282,8 +260,6 @@ public without sharing class ISSP_TIP_Home_Controller {
         if(!hasPrimaryContact){
             ApexPages.addMessage(new ApexPages.message(ApexPages.severity.ERROR, 'Please select a primary contact'));
             return null;
-        //contactList[0].Primary_Contact__c = true;
-        //upsert contactList;
         }
 
         //Update or create case with status Open
@@ -336,7 +312,7 @@ public without sharing class ISSP_TIP_Home_Controller {
                         VAT_Number_2__c, CASS_Number__c,Company_Type__c,RecordTypeid, RecordType.DeveloperName,Status__c,IATA_ISO_Country__r.ISO_Code__c,ANG_Accreditation_Model__c,
                         IATA_ISO_Country__r.Name, IATA_ISO_Country__r.region__c, TIP_HQ_Location__c,Country_ISO_Code__c
                         FROM Account
-                        WHERE Id = :accountID
+                        WHERE Id = :con.AccountId
                                    LIMIT 1
                     ];
     }
@@ -344,7 +320,6 @@ public without sharing class ISSP_TIP_Home_Controller {
     private void updateCase(){
 
         if (newCase == null) newCase = new Case();
-        //if(accountCases != null && !accountCases.isEmpty()){ newCase = accountCases[0]; }
         newcase.RecordTypeid = TIP_Utils.CASE_PROCESS_IDFS_RECORD_TYPE_ID;
         newcase.Accountid = account.id; 
         newcase.Visible_on_ISS_Portal__c = true;
@@ -373,7 +348,7 @@ public without sharing class ISSP_TIP_Home_Controller {
         contactList = [SELECT id,Name, Email,Salutation, FirstName, LastName, Phone, Primary_Contact__c,MobileNational__c,Membership_Function__c,Title,MobilePhone
 
                 FROM Contact
-                WHERE Status__c = 'Active' and Accountid = :accountID];
+                WHERE Status__c = 'Active' and Accountid = :con.AccountId];
     }
 
     public void updateRadioButtonStatus() {
@@ -385,11 +360,9 @@ public without sharing class ISSP_TIP_Home_Controller {
     }
 
     public void createContact(){
-        newContact.AccountId = accountID;
-        /*if(String.isEmpty(newContact.Membership_Function__c)) {
-            Apexpages.addmessage(new ApexPages.message(ApexPages.severity.WARNING,'Please enter value'));
-            return;
-        }*/
+
+        newContact.AccountId = con.AccountId;
+
         try{
             upsert newContact;
             isEmailDuplicated = false;
@@ -416,7 +389,7 @@ public without sharing class ISSP_TIP_Home_Controller {
 
     }
 
-    public PageReference securityCheck(){
+    public PageReference securityCheckForEnrolmentPage(){
         if(account.recordtypeid != TIP_Utils.STANDARD_ACCOUNT_RECORD_TYPE_ID 
             || con.User_Portal_Status__c != ANG_Risk_Helper.USER_PORTAL_STATUS_APPROVED_ADIM // return new PageReference('/ISSP_TIP_Home');// {pr = Page.ISSP_TIP_Home;pr.setRedirect(false);}
             ||(newCase != null && newCase.status != 'Draft') )
@@ -526,8 +499,6 @@ public without sharing class ISSP_TIP_Home_Controller {
                 user usr=[select id,Contact.accountId,Contact.account.name,Contact.account.IATA_ISO_Country__r.region__c,Contact.account.IATA_ISO_Country__r.Name from user where id =:UserInfo.getUserId()];
 
                 newpp.Provider__c=usr.Contact.accountID;
-                //newpp.PP_Accepted_transactions__c=String.isBlank(newpp.PP_Accepted_transactions__c)?'':newpp.PP_Accepted_transactions__c.substring(1,newpp.PP_Accepted_transactions__c.length() -1).replace(',',';');
-                //newpp.PP_Payment_guarantee__c=String.isBlank(newpp.PP_Payment_guarantee__c)?'':newpp.PP_Payment_guarantee__c.substring(1,newpp.PP_Payment_guarantee__c.length() -1).replace(',',';');
                 newpp.PP_Accepted_transactions__c=String.join(acceptedTransactionVal,';');
                 newpp.PP_Payment_guarantee__c=String.join(paymentGuaranteeVal,';');
                 newpp.PP_status__c='Draft';
