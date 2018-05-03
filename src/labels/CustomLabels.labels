@@ -20999,11 +20999,25 @@ This Dashboard allows each airline Treasury Team to gain full visibility of thei
         <value>Add BIN Range</value>
     </labels>
     <labels>
+        <fullName>ISSP_TIP_BIN_RANGE_SECTION</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_TIP_BIN_RANGE_SECTION</shortDescription>
+        <value>Section 2- Bin Ranges</value>
+    </labels>
+    <labels>
         <fullName>ISSP_TIP_CHECK_BIN_RANGE_LENGHT</fullName>
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>ISSP_TIP_CHECK_BIN_RANGE_LENGHT</shortDescription>
         <value>Please check the BIN Ranges marked with \&apos;*\&apos; to ensure the lenght with the maximium allowed.</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_TIP_COUNTRY_CONFIG_SECTION</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_TIP_COUNTRY_CONFIG_SECTION</shortDescription>
+        <value>Section 3- Product Country Configuration Details</value>
     </labels>
     <labels>
         <fullName>ISSP_TIP_Discard_Unsaved_Changes</fullName>
@@ -21090,6 +21104,27 @@ This Dashboard allows each airline Treasury Team to gain full visibility of thei
         <value>Please fill in the missing fields.</value>
     </labels>
     <labels>
+        <fullName>ISSP_TIP_NEW_BIN_RANGE</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_TIP_NEW_BIN_RANGE</shortDescription>
+        <value>New Bin Range</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_TIP_NEW_PROD_COUNTRY_CONFIG</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_TIP_NEW_PROD_COUNTRY_CONFIG</shortDescription>
+        <value>New Product Country Configuration</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_TIP_PRODUCT_DETAILS_SECTION</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_TIP_PRODUCT_DETAILS_SECTION</shortDescription>
+        <value>Section 1- Product Details</value>
+    </labels>
+    <labels>
         <fullName>ISSP_TIP_RANGE_TO_GREATER_RANGE_FROM</fullName>
         <language>en_US</language>
         <protected>false</protected>
@@ -21097,11 +21132,32 @@ This Dashboard allows each airline Treasury Team to gain full visibility of thei
         <value>&amp;lt;strong&amp;gt;Error:&amp;lt;/strong&amp;gt;Range To must be greater or equal than Range From</value>
     </labels>
     <labels>
+        <fullName>ISSP_TIP_RETURN_HOMEPAGE</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_TIP_RETURN_HOMEPAGE</shortDescription>
+        <value>Return to Homepage</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_TIP_SAVE_DRAFT</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_TIP_SAVE_DRAFT</shortDescription>
+        <value>Save As Draft</value>
+    </labels>
+    <labels>
         <fullName>ISSP_TIP_SELECT_AT_LEAST_ONE_VALUE</fullName>
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>ISSP_TIP_SELECT_AT_LEAST_ONE_VALUE</shortDescription>
         <value>&amp;lt;strong&amp;gt;Error:&amp;lt;/strong&amp;gt;You must select at least one value.</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_TIP_SUBMIT_TO_IATA</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_TIP_SUBMIT_TO_IATA</shortDescription>
+        <value>Submit To IATA</value>
     </labels>
     <labels>
         <fullName>ISSP_TIP_Submit_case_to_IATA_to_update_bin_range</fullName>
