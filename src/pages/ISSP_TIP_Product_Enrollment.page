@@ -173,7 +173,7 @@
                     $(".mandFld").each(function(index){
                         if($(this).val() =='' ){
                             if($(this).next('.errorMsg').val()==undefined)
-                                $(this).after('<div class="errorMsg"><strong>Error:</strong> You must enter a value</div>');
+                                $(this).after('<div class="errorMsg">{!$Label.IEC_Required_Field_Error_Msg}</div>');
                             hasErrors=true;
                             $('[id$="rangeStart"]').addClass("placeholder-active");
                         }else{
@@ -184,7 +184,7 @@
                     $(".mandFldcb").each(function(index){
                         if($(this).find($("input[type='radio']:checked")).length ==0 ){
                             if($(this).next('.errorMsg').val()==undefined)
-                                $(this).after('<div class="errorMsg"><strong>Error:</strong> You must select a value</div>');
+                                $(this).after('<div class="errorMsg">{!$Label.IEC_Required_Field_Error_Msg}</div>');
                             hasErrors=true;
                         }else{
                             clearErrorElement(this);
@@ -210,17 +210,16 @@
                             <apex:form id="AMSForm">
                                 <apex:pageblock id="pageblock">        
                                     <apex:PageMessages id="msgs"/>       
-                                    <apex:inputHidden id="inHid" />                   
+                                    <apex:inputHidden id="inHid" />
                                     <apex:pageBlockButtons>
                                         <apex:actionFunction name="submitProduct" action="{!submitProduct}"/>
-                                        <apex:commandButton  onclick="if(confirmSubmit())return true;" value="Submit to IATA" rendered="{!editMode}" reRender="inHid"   />
-                                        <apex:commandButton action="{!saveDraft}" value="Save as Draft" rendered="{!editMode}"/>
+                                        <apex:commandButton  onclick="if(confirmSubmit())return true;" value="{!$Label.ISSP_TIP_SUBMIT_TO_IATA}" rendered="{!editMode}" reRender="inHid"   />
+                                        <apex:commandButton action="{!saveDraft}" value="{!$Label.ISSP_TIP_SAVE_DRAFT}" rendered="{!editMode}"/>
                                         <apex:commandButton onclick="confirmCancelExitPage();return false;"  value="{!$Label.ISSP_Cancel}" rendered="{!editMode}"/> 
                                         <apex:actionFunction name="cancelLeavePage" action="{!cancelNewEditProd}" immediate="true"/>
-                                        <!-- <apex:commandButton action="{!submitForm}" value="Save as Draft" style="margin-left:10px" /> -->
-                                        <apex:commandButton action="{!cancelNewEditProd}" immediate="true" value="Return to home page" rendered="{!!editMode}"/>                                                            
+                                        <apex:commandButton action="{!cancelNewEditProd}" immediate="true" value="{!$Label.ISSP_TIP_RETURN_HOMEPAGE}" rendered="{!!editMode}"/>                                                            
                                     </apex:pageBlockButtons>    
-                                    <apex:pageBlockSection columns="2" collapsible="false" title="Section 1- Product Details">
+                                    <apex:pageBlockSection columns="2" collapsible="false" title="{!$Label.ISSP_TIP_PRODUCT_DETAILS_SECTION}">
                                         <apex:pageBlockSectionItem labelStyle="width:26%" >
                                             <apex:outputLabel value="{!$ObjectType.Partner_products__c.fields.name.Label}"/>   
                                             <apex:outputPanel >
@@ -346,7 +345,7 @@
                                             <apex:outputLabel value="*{!$Label.ISSP_TIP_MANDATORY_ON_SUBMIT}"/>
                                         </apex:pageBlockSectionItem>
                                     </apex:pageBlockSection>
-                                    <apex:pageBlockSection id="binbpSection" columns="2" collapsible="false" title="Section 2- Bin Ranges">
+                                    <apex:pageBlockSection id="binbpSection" columns="2" collapsible="false" title="{!$Label.ISSP_TIP_BIN_RANGE_SECTION}">
                                         <apex:pageBlockSectionItem rendered="{!editMode}">
                                             <apex:commandButton id="newBinRangebtn" style="margin-right:5px" oncomplete="toggleDialog();" value="{!$Label.ISSP_TIP_ADD_BIN_RANGE}" action="{!newEditBinRange}" reRender="newBinTab,modalContentoutpanel">
                                             </apex:commandButton>
@@ -553,12 +552,9 @@
                                                 <apex:param name="binRangeRecPos" value=""/>
                                             </apex:actionFunction>          
                                         </apex:pageBlockSectionItem>
-                                       
                                     </apex:pageBlockSection>
-
-
                                     <!-- PROVIDER PRODUCT CONFIGURATION-->
-                                    <apex:pageBlockSection columns="2" collapsible="false" title="Section 3- Product Country Configuration Details">
+                                    <apex:pageBlockSection columns="2" collapsible="false" title="{!$Label.ISSP_TIP_COUNTRY_CONFIG_SECTION}" >
                                         <apex:pageBlockSectionItem rendered="{!editMode}">
                                             <apex:commandButton id="newCountrConfigbtn" style="margin-right:5px" oncomplete="toggleDialog();" value="Add Country Config" action="{!newEditCountryConfig}" reRender="modalContentoutpanel">
                                             </apex:commandButton>
@@ -567,7 +563,7 @@
                                             <apex:outputLabel escape="false" value="{!binRangeChangeRequestText}"/>
                                         </apex:pageBlockSectionItem>
                                     </apex:pageBlockSection>
-                                    <apex:pageBlockSection>
+                                    <apex:pageBlockSection columns="2">
                                         <apex:pageBlockSectionItem>
                                             <apex:outputPanel id="countryConfigPanel">
                                                 <div style="max-height: 400px; overflow-y: auto; ">
@@ -651,7 +647,7 @@
                                             <div class="modal-content"> 
                                               <div class="modal-header"> 
                                                 <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-                                                <h4 class="modal-title">New Bin Range</h4>
+                                                <h4 class="modal-title">{!$Label.ISSP_TIP_NEW_BIN_RANGE}</h4>
                                               </div>
                                               <div class="modal-body" style="display:{!if(true,'','none')}">
                                                 <apex:pageBlockTable id="newBinTab" value="{!selectedBinRange}" var="nb" styleClass="table-hover  table table-condensed table-responsive">
@@ -690,12 +686,12 @@
                                             <div class="modal-content"> 
                                               <div class="modal-header"> 
                                                 <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-                                                <h4 class="modal-title">New Product Country Configuration</h4>
+                                                <h4 class="modal-title">{!$Label.ISSP_TIP_NEW_PROD_COUNTRY_CONFIG}</h4>
                                               </div>
                                               <div class="modal-body" style="display:{!if(true,'','none')}">                                                  
                                                   <apex:pageblock id="pbCountrConfig"> 
                                                       <apex:PageMessages id="msgs"/>                           
-                                                      <apex:pageBlockSection columns="1" collapsible="false" title="Section 1- Product Details">
+                                                      <apex:pageBlockSection columns="1" collapsible="false">
                                                           <apex:pageBlockSectionItem labelStyle="width:26%" >
                                                             <apex:outputLabel value="{!$ObjectType.TIP_Pay_Prov_Prod_Country_Config__c.fields.TIP_BSP_Country__c.Label}"/> 
                                                             <apex:outputPanel>

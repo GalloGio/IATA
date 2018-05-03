@@ -569,13 +569,13 @@ public without sharing class ISSP_TIP_Home_Controller {
                 caseList.get(0).Status = status;
 
                 if(status==TIP_Utils.PARTNER_PRODUCT_STATUS_IN_PROGRESS){
-                    newpp.cases__R.get(0).Status = AMS_Utils.OPEN;
+                    caseList.get(0).Status = AMS_Utils.OPEN;
 
-                    List<Group> groups =  [SELECT Id FROM Group WHERE Type = 'Queue' AND NAME = 'Cases_Transparency_in_Payment_Service' LIMIT 1];
+                    List<Group> groups =  [SELECT Id FROM Group WHERE Type = 'Queue' AND NAME = 'Cases - Transparency in Payment Service' LIMIT 1];
                     
                     if(groups == null || groups.isEmpty()) System.debug('ERROR! Cases_Transparency_in_Payment_Service Queue not found proceeding without assign');
                     else{
-                        newpp.cases__R.get(0).OwnerId = groups[0].id;
+                        caseList.get(0).OwnerId = groups[0].id;
                     }
                 }
 
