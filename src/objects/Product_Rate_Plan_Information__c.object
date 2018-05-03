@@ -294,11 +294,17 @@
     <listViews>
         <fullName>CheckACode_Rate_Plans</fullName>
         <columns>NAME</columns>
-        <columns>Short_Description__c</columns>
         <columns>Product_Rate_Plan__c</columns>
         <columns>Active__c</columns>
         <columns>User_Interface_Display__c</columns>
+        <columns>Subscription_Usage_Qty__c</columns>
+        <columns>Single_Trial_Key__c</columns>
         <filterScope>Everything</filterScope>
+        <filters>
+            <field>Related_Product_Information__c</field>
+            <operation>startsWith</operation>
+            <value>CheckACode Web</value>
+        </filters>
         <label>CheckACode Rate Plans</label>
         <language>en_US</language>
     </listViews>

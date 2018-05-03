@@ -16,6 +16,10 @@ public class ams2gdp_BusinessLogic
 		Set<String> parentIds = new Set<String>();
 		Set<String> accountIds = new Set<String>();
 
+		Set<String> accreditation_models = new Set<String>();
+		Set<String> risk_status = new Set<String>();
+		Set<String> remittance_frequencies = new Set<String>();
+		Set<String> easy_pay_statuses = new Set<String>();
 
 		for(Account account : accounts)
 		{
@@ -23,6 +27,15 @@ public class ams2gdp_BusinessLogic
 			if(String.isNotBlank(account.Location_Type__c)) location_types.add(account.Location_Type__c);
 			if(String.isNotBlank(account.Company_Type__c)) company_types.add(account.Company_Type__c);
 			if(account.ParentId != null) parentIds.add(account.ParentId);
+
+			accreditation_models.add(account.ANG_Accreditation_Model__c);
+			// risk_status.add(account.ANG_RiskStatus__c);
+			// split the multi select to two target fields
+			if(account.Remittance_frequency__c != null) {
+				remittance_frequencies.add(account.Remittance_frequency__c.split(';')[0]);
+				if(account.Remittance_frequency__c.indexOf(';') != -1) remittance_frequencies.add(account.Remittance_frequency__c.split(';')[1]);
+			}
+			easy_pay_statuses.add(account.ANG_IEP_Status_FF__c);
 		}
 
 		Map<String, GDP_Reference_Table__c> tbl_location_types 	= ams2gdp_Selector.getGDPReferenceTableByCodeAndTable(location_types, 'LOCTYP');
@@ -33,6 +46,13 @@ public class ams2gdp_BusinessLogic
 		Map<String, String> phoneMap   = ams2gdp_Selector.getGDP_PhoneByAccount(accountIds);
 		Map<String, String> accredMap  = ams2gdp_Selector.getAccreditationByAccount(accountIds);
 		Map<String, String> appointmentMap  = ams2gdp_Selector.getAppointmentByAccount(accountIds);
+
+
+	// NewGen
+		Map<String, GDP_Reference_Table__c> accreditation_model_references 	= ams2gdp_Selector.getGDPReferenceTablebyDescriptionAndTable(accreditation_models, 'ACCTYP');
+		// Map<String, GDP_Reference_Table__c> risk_status_references 		= ams2gdp_Selector.getGDPReferenceTablebyDescriptionAndTable(risk_status, 'RISKSTAT');
+		Map<String, GDP_Reference_Table__c> remittance_frequency_references = ams2gdp_Selector.getGDPReferenceTablebyDescriptionAndTable(remittance_frequencies, 'REMITFREQ');
+		Map<String, GDP_Reference_Table__c> easy_pay_status_references 		= ams2gdp_Selector.getGDPReferenceTablebyDescriptionAndTable(easy_pay_statuses, 'EPSTAT');
 
 		for(Account account : accounts)
 		{
@@ -45,6 +65,21 @@ public class ams2gdp_BusinessLogic
 
 			String airlineCode = account.Airline_Code__c;
 			if(account.Location_Class__c == 'M' && appointmentMap.containsKey(account.Id)) airlineCode = appointmentMap.get(account.Id);
+
+
+
+			// split the multi select to two target fields
+			String remittance1 = '';
+			String remittance2 = '';
+			if(account.Remittance_frequency__c != null) {
+				remittance1 = account.Remittance_frequency__c.split(';')[0];
+				if(account.Remittance_frequency__c.indexOf(';') != -1) remittance2 = account.Remittance_frequency__c.split(';')[1];
+			}
+			// code PCI Complicance to single char - or empty
+			String PCICompliance = '';
+			if(account.Is_PCI_compliant__c == 'Yes') {PCICompliance = 'Y';}
+			else if(account.Is_PCI_compliant__c == 'No') {PCICompliance = 'N';}
+			else if(account.Is_PCI_compliant__c == 'Nil CC') {PCICompliance = 'X';}
 
 			result.add(new GDP_Products_Account_View__c(AMS_GDP_Key__c  = mapping_key
 				, Parent_GDP_Account_View__c = (account.ParentId !=null)? parentMap.get(account.ParentId): null
@@ -82,6 +117,14 @@ public class ams2gdp_BusinessLogic
 				, AIMS_ID__c = (String.isNotBlank(account.AIMS_ID__c))? account.AIMS_ID__c+'GDP':null
 				, Parent_Account_WebStar_ID__c = (account.ParentId != null && String.isNotBlank(account.Parent.WebStar_ID__c)) ? account.Parent.WebStar_ID__c : null
 				, Parent_Account_AIMS_ID__c = (account.ParentId != null && String.isNotBlank(account.Parent.AIMS_ID__c)) ? account.Parent.AIMS_ID__c : null
+				// , account.ANG_IsNewGenAgency__c
+				, Due_Diligence_Status__c = account.Due_Diligence_Status__c
+				, PCI_Compliance__c = PCICompliance
+				, PCI_compliance_expiry_date__c = account.ANG_PCI_compliance_expiry_date__c
+
+				, Remittance_Frequency_1__c =  (remittance_frequency_references.containsKey(remittance1)) ? remittance_frequency_references.get(remittance1).Id : null
+				, Remittance_Frequency_2__c =  (remittance_frequency_references.containsKey(remittance2)) ? remittance_frequency_references.get(remittance2).Id : null
+				, EasyPay_Account_Status__c =  (easy_pay_status_references.containsKey(account.ANG_IEP_Status_FF__c)) ? easy_pay_status_references.get(account.ANG_IEP_Status_FF__c).Id : null
 			));
 		}
 
@@ -213,7 +256,7 @@ public class ams2gdp_BusinessLogic
 			if(definitionByCode.containsKey(c)) gds_definitions.add(definitionByCode.get(c));
 		}
 
-		Map<String, GDP_Reference_Table__c> tbl_gds_codes 	= ams2gdp_Selector.getGDPReferenceTablebyDefinitionAndTable(gds_definitions, 'AIRSYS');
+		Map<String, GDP_Reference_Table__c> tbl_gds_codes 	= ams2gdp_Selector.getGDPReferenceTablebyDescriptionAndTable(gds_definitions, 'AIRSYS');
 		Map<String, String> recordTypes = ams2gdp_Utils.getRecordTypeIdByName('GDS__c');
 
 		for(Account account : accounts)
@@ -694,7 +737,7 @@ public class ams2gdp_BusinessLogic
 				, RecordTypeId = recordTypes.get('Live')
 			));*/
 			String name = arole.Unified_Owner_Name__c;
-			if(arole.Contact__r.name != null) name = arole.Contact__r.name;
+			//if(arole.Contact__r.name != null) name = arole.Contact__r.name;
 			result.add(new Agency_Owner__c(AMS_GDP_Key__c=key+'GDP'
  				, Name =  name
  				, Percent__c=arole.Percentage__c
@@ -894,6 +937,13 @@ public class ams2gdp_BusinessLogic
  		Set<String> iatan_status = new Set<String>();//Code 0-7
  		Set<String> iata_status = new Set<String>();//Code 0-9
 
+ 		Set<String> accreditation_models = new Set<String>();
+ 		Set<String> risk_status = new Set<String>();
+ 		Set<String> remittance_frequencies = new Set<String>();
+ 		Set<String> easy_pay_statuses = new Set<String>();
+
+
+
  		Set<String> accountIds = new Set<String>();
 
 		for(Account acc : accounts)
@@ -908,6 +958,9 @@ public class ams2gdp_BusinessLogic
 			else if(air_code.equalsIgnoreCase('IATA') || air_code.equalsIgnoreCase('DOM')) iata_status.add(acc.Status__c);
 			//status_codes.add(inspection.Accreditation_Endorsement_Status_code__c);
 
+			accreditation_models.add(acc.ANG_Accreditation_Model__c);
+			risk_status.add(acc.ANG_RiskStatus__c);
+
 			if(acc.Id != null)
 				accountIds.add(acc.Id);
 		}
@@ -915,9 +968,11 @@ public class ams2gdp_BusinessLogic
 		Map<String, GDP_Reference_Table__c> location_class_references 	= ams2gdp_Selector.getGDPReferenceTableByCodeAndTable(location_class_codes, 'ORGCLASS');
 		Map<String, GDP_Reference_Table__c> air_code_references 		= ams2gdp_Selector.getGDPReferenceTableByCodeAndTable(air_codes, 'ORGABB');
 		//Map<String, GDP_Reference_Table__c> status_references 			= ams2gdp_Selector.getGDPReferenceTableByCodeAndTable(status_codes, 'STATUS');
-		Map<String, GDP_Reference_Table__c> iatan_status_references 	= ams2gdp_Selector.getGDPReferenceTablebyDefinitionAndTable(iatan_status, 'STATUS','Webstar');
-		Map<String, GDP_Reference_Table__c> iata_status_references 		= ams2gdp_Selector.getGDPReferenceTablebyDefinitionAndTable(iata_status, 'STATUS','AIMS');
+		Map<String, GDP_Reference_Table__c> iatan_status_references 	= ams2gdp_Selector.getGDPReferenceTablebyDescriptionAndTable(iatan_status, 'STATUS','Webstar');
+		Map<String, GDP_Reference_Table__c> iata_status_references 		= ams2gdp_Selector.getGDPReferenceTablebyDescriptionAndTable(iata_status, 'STATUS','AIMS');
 
+		// NewGen
+		Map<String, GDP_Reference_Table__c> accreditation_model_references 		= ams2gdp_Selector.getGDPReferenceTablebyDescriptionAndTable(accreditation_models, 'ACCTYP');
 
 		Map<String, String> gdpProductIdByAccountId = ams2gdp_Selector.getGDP_Products_Account_View_By_Account(accountIds);
 		Map<String, Integer> rankByAccount = new Map<String, Integer>();
@@ -974,6 +1029,14 @@ public class ams2gdp_BusinessLogic
 			gdpAccreditation.RecordTypeId= recordTypes.get('GDP');
 			//gdpAccreditation.Related_Account__c=null;
 			gdpAccreditation.Related_GDP_Products_Account_View__c=gdpProductIdByAccountId.get(acc.Id);
+
+			//newgen
+			if(acc.ANG_IsNewGenAgency__c) {
+			}
+				gdpAccreditation.Is_NewGen_Agency__c = acc.ANG_IsNewGenAgency__c;
+				gdpAccreditation.Accreditation_Model__c = accreditation_model_references.containsKey(acc.ANG_Accreditation_Model__c) ? accreditation_model_references.get(acc.ANG_Accreditation_Model__c).Id : null;
+				gdpAccreditation.Cash_Conditions_Override__c = acc.ANG_CashCondition__c;
+				gdpAccreditation.Risk_Status__c = acc.ANG_RiskStatus__c;
 
 			result.add(gdpAccreditation);
 		}
@@ -1137,4 +1200,33 @@ public class ams2gdp_BusinessLogic
 
 		return result;
  	}
+
+	/**
+ 	 * This function format a List of Agency Authorization (AMS) records to Agency Profile & Specialization (GDP) records
+ 	 * @param  List<AMS_Agency_Authorization__c>
+ 	 * @return List<Remittance__c>
+ 	 * @author Aku Luukka <luukkaa@iata.org>
+ 	 */
+ 	public static List<Authorized_Forms_Of_Payment__c> formatAgencyAuthorization2AuthorizedFormOfPayment(List<Agency_Authorization__c> authorizations){
+
+		// List<Id> productIds = new List<Id>();
+		Set<String> accountIds = new Set<String>();
+		for(Agency_Authorization__c aa : authorizations) {
+			accountIds.add(aa.Account__c);
+		}
+		Map<String, String> gdpProductIdByAccountId = ams2gdp_Selector.getGDP_Products_Account_View_By_Account(accountIds);
+
+		// because the AMS_GDP_Key__c == accountId we can query based on them
+		List<Authorized_Forms_Of_Payment__c> result = new List<Authorized_Forms_Of_Payment__c>();
+		for(Agency_Authorization__c aa : authorizations) {
+			result.add(new Authorized_Forms_Of_Payment__c(AMS_GDP_Key__c = aa.Account__c+aa.ANG_FormOfPayment_ID__c
+				, Form_of_Payment_Code__c = aa.ANG_FormOfPayment_ID__c
+				, Status__c = aa.Status__c
+				, Related_GDP_Products_Account_View__c = gdpProductIdByAccountId.get(aa.Account__c)
+			));
+		}
+
+		return result;
+ 	}
+
 }

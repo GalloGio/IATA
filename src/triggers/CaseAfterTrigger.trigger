@@ -411,7 +411,7 @@ trigger CaseAfterTrigger on Case (after delete, after insert, after undelete, af
 
 				//NewGen agents will handled by the ANG_CaseTriggerHandler, so we filter them out
 				for(Account a : [SELECT Id, Assessment_Performed_Date__c, Financial_Review_Result__c FROM account WHERE Id IN :casesPerAccount.keySet() and ANG_IsNewGenAgency__c = true]){
-					if(a.ANG_IsNewGenAgency__c) casesPerAccount.remove(a.Id);
+					casesPerAccount.remove(a.Id);
 				}
 
 				//copy relevant fields to the account and store them to update later

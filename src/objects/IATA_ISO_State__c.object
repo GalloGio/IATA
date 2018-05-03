@@ -189,7 +189,6 @@
         <columns>ISO_Code__c</columns>
         <columns>ISO_CODE_STANDARD__c</columns>
         <columns>Local_Language__c</columns>
-        <columns>IEC_Valid_SAP__c</columns>
         <columns>Valid_for_GDP__c</columns>
         <columns>numeric_code__c</columns>
         <filterScope>Everything</filterScope>
@@ -198,7 +197,7 @@
             <operation>equals</operation>
             <value>1</value>
         </filters>
-        <label>Valid for EBC</label>
+        <label>Valid for EBC/GDP</label>
         <language>en_US</language>
     </listViews>
     <listViews>

@@ -4935,7 +4935,7 @@
         <fullName>ComplaintUpdateowner</fullName>
         <description>assigns the case flagged as complaint to the OCIT queue</description>
         <field>OwnerId</field>
-        <lookupValue>CasesOCITComplaints</lookupValue>
+        <lookupValue>Cases_Complaints_GDC_MAD</lookupValue>
         <lookupValueType>Queue</lookupValueType>
         <name>Complaint Update owner</name>
         <notifyAssignee>false</notifyAssignee>
@@ -4946,7 +4946,7 @@
         <fullName>Complaint_Update_owner_AME</fullName>
         <description>Change case ownership to AME Complaints queue</description>
         <field>OwnerId</field>
-        <lookupValue>CasesComplaintsAME</lookupValue>
+        <lookupValue>Cases_Complaints_GDC_MAD</lookupValue>
         <lookupValueType>Queue</lookupValueType>
         <name>Complaint Update owner - AME</name>
         <notifyAssignee>true</notifyAssignee>
@@ -4968,7 +4968,7 @@
         <fullName>Complaint_Update_owner_SCA</fullName>
         <description>Change case ownership to SCA Complaints queue</description>
         <field>OwnerId</field>
-        <lookupValue>Cases_Complaints_Americas</lookupValue>
+        <lookupValue>Cases_Complaints_GDC_MAD</lookupValue>
         <lookupValueType>Queue</lookupValueType>
         <name>Complaint Update owner - SCA</name>
         <notifyAssignee>true</notifyAssignee>
@@ -11922,7 +11922,7 @@ Case(month(datevalue(now()))+1,1,31,2,28,3,31,4,30,5,31,6,30,7,31,8,31,9,30,10,3
             <name>IAPP_change_IAPP_case_owner_to_AP_HO_Q</name>
             <type>FieldUpdate</type>
         </actions>
-        <active>true</active>
+        <active>false</active>
         <criteriaItems>
             <field>Case.Eligibility_Documents_Checklist_approved__c</field>
             <operation>equals</operation>
@@ -15153,7 +15153,7 @@ Change the case status to “Agent Notified (mail)” if case status was “Agen
             <type>FieldUpdate</type>
         </actions>
         <active>true</active>
-        <booleanFilter>((1 OR 2 OR 3 OR 4 OR (10 AND (11 OR 12 OR 16 OR 17 OR 19 OR 20))) AND ((5 AND 6) OR (17 AND 18))) OR ((7 AND 8 AND 9) AND 6) OR (13 AND 14) OR 15</booleanFilter>
+        <booleanFilter>((1 OR 2 OR (3 AND (21 AND 22)) OR 4 OR (10 AND (11 OR 12 OR 16 OR 17 OR 19 OR 20))) AND ((5 AND 6) OR (17 AND 18))) OR ((7 AND 8 AND 9) AND 6) OR (13 AND 14) OR 15</booleanFilter>
         <criteriaItems>
             <field>Case.RecordTypeId</field>
             <operation>equals</operation>
@@ -15253,6 +15253,16 @@ Change the case status to “Agent Notified (mail)” if case status was “Agen
             <field>Case.Reason1__c</field>
             <operation>equals</operation>
             <value>Annual revalidation</value>
+        </criteriaItems>
+        <criteriaItems>
+        <field>Case.RecordTypeId</field>
+            <operation>notEqual</operation>
+            <value>IDFS Airline Participation Process</value>
+        </criteriaItems>
+        <criteriaItems>
+            <field>Case.Reason1__c</field>
+            <operation>notEqual</operation>
+            <value>IATA Easy Pay</value>
         </criteriaItems>
         <description>Enables the &quot;Visible on ISS Portal&quot;  checkbox for case record types that should by default be visible on the portal. Users can then change this option to hide the record on the portal.</description>
         <triggerType>onCreateOrTriggeringUpdate</triggerType>
@@ -16433,7 +16443,7 @@ Inactive (Miguel Guerreiro, 3/17/2016 12:59 PM) - self service is no longer used
         <criteriaItems>
             <field>Case.RecordTypeId</field>
             <operation>equals</operation>
-            <value>Cases - Europe,ACCA Customer Service Request (External),Order of AWB / allocation (CASS),Cases - Americas,Cases - Africa &amp; Middle East,Cases - Asia &amp; Pacific,Cases - China &amp; North Asia</value>
+            <value>Cases - Europe,ACCA Customer Service Request (External),Order of AWB / allocation (CASS),Cases - Americas,Cases - Africa &amp; Middle East,Cases - Asia &amp; Pacific,Cases - China &amp; North Asia,Complaint (IDFS ISS)</value>
         </criteriaItems>
         <criteriaItems>
             <field>Case.Region__c</field>

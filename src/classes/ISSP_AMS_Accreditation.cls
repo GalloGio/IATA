@@ -75,6 +75,8 @@ public without sharing class ISSP_AMS_Accreditation {
     public string txtHelpFinContact {get; set;}
     public string txtHelpPortalAdmin {get; set;}
     public string txtHelpGrossSales {get; set;}
+    public string txtHelpTrainedStaffOrganization {get; set;} //FM - AMSU-20
+    public string txtHelpTrainedStaffReference {get; set;} //FM - AMSU-20
 
     //Labels to come up in user's portal language (and not lang set on VF page)
     public string txtLocalAgencyDetailsTitle {get; set;}
@@ -364,6 +366,10 @@ public without sharing class ISSP_AMS_Accreditation {
             }
         }
 
+        // NewGen is only valid for Travel Agents
+        newAccreditationModels = (isocountry.ANG_Enable_NewGen__c == true && sectorValue.StartsWith('Travel_Agent')) ;
+        namEnabled = isocountry.ANG_Enable_NewGen__c;
+
         checkEligibilityForAChange();
         //sectorValue = sector.replace(' ', '_'); //Used to set Step 1 radio button default selection value
         System.DeBUG('SFSF con.Account.IATA_ISO_Country__c: ' + con.Account.IATA_ISO_Country__c);
@@ -458,6 +464,10 @@ public without sharing class ISSP_AMS_Accreditation {
                 }
 
                 isocountry = fetchISOCountry(newCase.IFAP_Country_ISO__c);
+
+                // NewGen is only valid for Travel Agents
+                newAccreditationModels = (isocountry.ANG_Enable_NewGen__c == true && sectorValue.StartsWith('Travel_Agent')) ;
+                namEnabled = isocountry.ANG_Enable_NewGen__c;
 
                 amsAllLangCountryLabel = getAmsAllLangCountryLabel(isocountry, UserInfo.getLanguage());
 
@@ -602,6 +612,10 @@ public without sharing class ISSP_AMS_Accreditation {
                         isEUcountry = isocountry.EU_Country__c;
                     }
 
+                    // NewGen is only valid for Travel Agents
+                    newAccreditationModels = (isocountry.ANG_Enable_NewGen__c == true && sectorValue.StartsWith('Travel_Agent')) ;
+                    namEnabled = isocountry.ANG_Enable_NewGen__c;
+
                     setContextualHelp(userInfo.getLanguage());
 
                     //Validation error flag is set in STEP 5 (when submitting to IATA); redirects back to STEP 3
@@ -673,10 +687,6 @@ public without sharing class ISSP_AMS_Accreditation {
             amsLocationTypeLabelHq = amsLocationTypeLabel;
         }
 
-        // NewGen is only valid for Travel Agents
-        newAccreditationModels = (isocountry.ANG_Enable_NewGen__c == true && sectorValue.StartsWith('Travel_Agent')) ;
-        namEnabled = isocountry.ANG_Enable_NewGen__c;
-
         namPaxAgent = (sector == 'Travel Agent' && namEnabled);
 
         system.debug('sector value ' + sectorValue + ' defaultSectorValue ' + defaultSectorValue);
@@ -728,6 +738,12 @@ public without sharing class ISSP_AMS_Accreditation {
             createNoCList();
 
             SYSTEM.DEBUG('Accreditation NewForm Sector: ' + sectorValue);
+        } else {
+            //fix amsu-113
+            newForm = new AMS_Pax_Accreditation_Form__c();
+            noticeOfChangeList = new List<String>();
+            sectorValue = con != null && con.Account != null && !String.isBlank(con.Account.Sector__c) ? con.Account.Sector__c.replace(' ', '_') : '';
+            List_CountryReqments = new List<AMS_Accreditation_Requirement__c>();
         }
 
         if (newCase.Reason1__c == AMS_Utils.CASE_REASON_NEW_HO || newCase.Reason1__c == AMS_Utils.CASE_REASON_BR_ABROAD || newCase.Reason1__c == AMS_Utils.CASE_REASON_HE_STANDARD || newCase.Reason1__c == AMS_Utils.CASE_REASON_HE_LITE) {
@@ -739,7 +755,7 @@ public without sharing class ISSP_AMS_Accreditation {
         applyLanguage = newCase.Case_Language__c;
 
         // NewGen is only valid for Travel Agents
-        newAccreditationModels = (isocountry.ANG_Enable_NewGen__c == true && sectorValue.StartsWith('Travel_Agent')) ;
+        newAccreditationModels = (isocountry.ANG_Enable_NewGen__c == true && !String.isBlank(sectorValue) && sectorValue.StartsWith('Travel_Agent')) ;//fix amsu-113
 
         if (sectorValue != null) {
             if (sectorValue.StartsWith('Cargo_Agent'))
@@ -1673,6 +1689,18 @@ public without sharing class ISSP_AMS_Accreditation {
                     }
             }
 
+			/*** AMSU-121 ***/
+            if(newForm.Is_change_location__c) {
+                newForm.Shipping_Street__c = null;
+                newForm.Shipping_City__c = null;
+                newForm.Shipping_State__c = null;
+                newForm.Shipping_Country__c = null;
+                newForm.Shipping_Postal_Code__c = null;
+                newForm.Shipping_ISO_State__c = null;
+                newForm.Shipping_ISO_Country__c = null;
+            }
+            /*** AMSU-121 ***/
+
             upsert newForm;
 
             //Ownership area
@@ -2135,7 +2163,9 @@ public without sharing class ISSP_AMS_Accreditation {
         AMS_Accreditation_Contact__c contactToUpsert = newContact;
         if (contactType == 'Trained Staff') {
             contactToUpsert = trainedStaffContact;
-            if (!(isocountry.EACP_Country__c && newForm.Is_your_firm_handling_Dangerous_Goods__c == 'No') && contactToUpsert.Training_dangerous_goods_completed__c == null) {
+            if (!( isocountry.EACP_Country__c && newForm.Is_your_firm_handling_Dangerous_Goods__c == 'No')
+                 && contactToUpsert.Type_Of_Certificate__c != 'BCH' && contactToUpsert.Type_Of_Certificate__c != 'DGA' && contactToUpsert.Type_Of_Certificate__c != 'TSA'
+                 && contactToUpsert.Training_dangerous_goods_completed__c == null) {
                 contactToUpsert.Training_dangerous_goods_completed__c.addError(Label.ISSP_YouMustEnter);
                 contactSaved = false;
                 return;
@@ -2993,6 +3023,20 @@ public without sharing class ISSP_AMS_Accreditation {
             }
 
             newForm.Submitted_to_IATA__c = TRUE;
+
+            //RB-INC381175: Oscar fields Shipping ISO Country & Shipping ISO State not populated by the account's equivalent fields
+            if (newCase.RecordTypeId == OSCAR_RECORD_TYPE_ID && (newCase.Reason1__c == AMS_Utils.CASE_REASON_NEW_HO || newCase.Reason1__c == AMS_Utils.CASE_REASON_BR_IP)) {
+                if (newForm.Shipping_ISO_Country__c == null) {
+                    system.DEBUG('Branch_Office_Country__c + Shipping_ISO_Country__c: ' + newForm.Branch_Office_Country__c + newForm.Shipping_ISO_Country__c);
+                    newForm.Shipping_ISO_Country__c = newForm.Branch_Office_Country__c;
+                }
+
+                if (newForm.Shipping_ISO_State__c == null) {
+                    system.DEBUG('IATA_ISO_State__c + Shipping_ISO_State__c: ' + newForm.IATA_ISO_State__c + newForm.Shipping_ISO_State__c);
+                    newForm.Shipping_ISO_State__c = newForm.IATA_ISO_State__c;
+                }
+            }
+
             upsert newForm;
 
             // AMSU-110 assign Case via assignment rules
@@ -3513,7 +3557,10 @@ System.DEBUG('validateCharactersInForm  - 4 - errorFound: '+errorFound);
         String emailTemplateName;
         String fromaddress;
 
-        if (isNoticeOfChange && (newCase.ContactId == con.id)) { //Can't user VF template if Contact submitting case does not have case visibility i.e. is not the case contact
+        if(newCase.Reason1__c == 'FoP Management' && newCase.origin == 'Massive FOP Creation') {
+            emailTemplateName = 'ISSP ANG PCI Process Notification';
+            fromaddress = 'IATA Service Centre (noreply@iata.org)';
+        } else if (isNoticeOfChange && (newCase.ContactId == con.id)) { //Can't user VF template if Contact submitting case does not have case visibility i.e. is not the case contact
             SYSTEM.DEBUG('Sending NoC Confirmation 1');
             emailTemplateName = 'ISSP AMS Process Notification';
             fromaddress = 'IATA Service Centre (noreply@iata.org)';
@@ -3833,7 +3880,8 @@ System.DEBUG('validateCharactersInForm  - 4 - errorFound: '+errorFound);
                         Mobile__c, MobileNational__c , Location_Type__c, ParentId, ShippingStreet, ShippingCity, ShippingState,
                         ShippingPostalCode, ShippingCountry, VAT_Number__c, Short_Name__c, Location_Class__c, IATA_ISO_Country__c,
                         Iso_State__c, Abbreviated_name__c, Abbreviated_Address__c, Remittance_frequency__c, Solicitation_Flag__c,
-                        VAT_Number_2__c, CASS_Number__c,Company_Type__c,RecordType.DeveloperName,Status__c,IATA_ISO_Country__r.ISO_Code__c,ANG_Accreditation_Model__c
+                        VAT_Number_2__c, CASS_Number__c,Company_Type__c,RecordType.DeveloperName,Status__c,IATA_ISO_Country__r.ISO_Code__c,ANG_Accreditation_Model__c,
+                        IATA_ISO_Shipping_Country__c, IATA_ISO_Shipping_State__c
                         FROM Account
                         WHERE Id = :vHQAccountId
                                    LIMIT 1
@@ -3848,7 +3896,7 @@ System.DEBUG('validateCharactersInForm  - 4 - errorFound: '+errorFound);
                             Mobile__c, MobileNational__c , Location_Type__c, ParentId, ShippingStreet, ShippingCity, ShippingState,
                             ShippingPostalCode, ShippingCountry, VAT_Number__c, Short_Name__c, Location_Class__c, IATA_ISO_Country__c,
                             Iso_State__c, Abbreviated_name__c, Abbreviated_Address__c, Remittance_frequency__c, Solicitation_Flag__c,
-                            VAT_Number_2__c, CASS_Number__c,Company_Type__c
+                            VAT_Number_2__c, CASS_Number__c,Company_Type__c, IATA_ISO_Shipping_Country__c, IATA_ISO_Shipping_State__c
                                FROM Account
                                WHERE Id = :vAccountConcernedId
                                           LIMIT 1
@@ -7194,6 +7242,27 @@ System.DEBUG('validateCharactersInForm  - 4 - errorFound: '+errorFound);
             }
         }
 
+
+        //FM 03/11/2017 - AMSU-20
+        hlp = ISSP_AMS_Contextual_Help__c.getValues('TRAINED_STAFF_ORGANIZATION');
+        if (hlp != null) {
+            if ((String)hlp.get(fldName) != null) {
+                txtHelpTrainedStaffOrganization = (String)hlp.get(fldName);
+            } else {
+                txtHelpTrainedStaffOrganization = (String)hlp.get(fldName);
+            }
+        }
+
+        //FM 03/11/2017 - AMSU-20
+        hlp = ISSP_AMS_Contextual_Help__c.getValues('TRAINED_STAFF_REFERENCE');
+        if (hlp != null) {
+            if ((String)hlp.get(fldName) != null) {
+                txtHelpTrainedStaffReference = (String)hlp.get(fldName);
+            } else {
+                txtHelpTrainedStaffReference = (String)hlp.get(fldName);
+            }
+        }
+
         txtLocalAgencyDetailsTitle = Label.ISSP_AMS_Local_Details_Title;
         txtLocalAgencyDetailsPleaseEnter = Label.ISSP_AMS_Local_Details_Please_Enter;
         txtLocalAgencyDetailsChangePleaseEnter = Label.ISSP_AMS_Local_Details_Change_Please_Enter;
@@ -7416,13 +7485,14 @@ System.DEBUG('validateCharactersInForm  - 4 - errorFound: '+errorFound);
     }
 
     private void setTrainedStaffList() {
-        this.trainedStaffList = [SELECT Id, Name, First_name__c, Last_name__c, List_Dangerous_Goods_Awareness__c, Position_trained_staff__c, IATA_FIATA_training_history__c, Air_cargo_transport_business_exp__c, Training_dangerous_goods_completed__c, Valid_until__c FROM AMS_Accreditation_Contact__c WHERE AMS_Pax_Accreditation_Form__c = :this.newForm.Id AND recordTypeId = :retRecordTypeByObjectTypeAndName(AMS_Accreditation_Contact__c.SobjectType, 'Trained Staff')];
+        //FM 19-07-2017 - AMSU-20 - added: Type_Of_Certificate__c, Registration_number__c, Certificate_Issuer__c
+        this.trainedStaffList = [SELECT Id, Name, First_name__c, Last_name__c, List_Dangerous_Goods_Awareness__c, Position_trained_staff__c, IATA_FIATA_training_history__c, Air_cargo_transport_business_exp__c, Training_dangerous_goods_completed__c, Valid_until__c, Type_Of_Certificate__c, Registration_number__c, Certificate_Issuer__c FROM AMS_Accreditation_Contact__c WHERE AMS_Pax_Accreditation_Form__c = :this.newForm.Id AND recordTypeId = :retRecordTypeByObjectTypeAndName(AMS_Accreditation_Contact__c.SobjectType, 'Trained Staff')];
     }
 
     public void editTrainedStaff() {
         trainedStaffContact = new AMS_Accreditation_Contact__c();
-
-        trainedStaffContact = [SELECT Id, Name, First_name__c, Last_name__c, List_Dangerous_Goods_Awareness__c, Position_trained_staff__c, IATA_FIATA_training_history__c, Air_cargo_transport_business_exp__c, Training_dangerous_goods_completed__c, Valid_until__c, AMS_Pax_Accreditation_Form__c FROM AMS_Accreditation_Contact__c WHERE Id = : trainedStaffId limit 1];
+        //FM 19-07-2017 - AMSU-20 - added: Type_Of_Certificate__c, Registration_number__c, Certificate_Issuer__c
+        trainedStaffContact = [SELECT Id, Name, First_name__c, Last_name__c, List_Dangerous_Goods_Awareness__c, Position_trained_staff__c, IATA_FIATA_training_history__c, Air_cargo_transport_business_exp__c, Training_dangerous_goods_completed__c, Valid_until__c, AMS_Pax_Accreditation_Form__c, Type_Of_Certificate__c, Registration_number__c, Certificate_Issuer__c FROM AMS_Accreditation_Contact__c WHERE Id = : trainedStaffId limit 1];
 
     }
 

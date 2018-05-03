@@ -2869,7 +2869,7 @@
                 <sorted>false</sorted>
                 <value>
                     <fullName>No IEP Account</fullName>
-                    <default>true</default>
+                    <default>false</default>
                     <label>No IEP Account</label>
                 </value>
                 <value>
@@ -10490,6 +10490,11 @@ Approval: Key Contact can see pending request approve it one by one</inlineHelpT
                     <default>false</default>
                     <label>Nil CC</label>
                 </value>
+                <value>
+                    <fullName>Corporate Card</fullName>
+                    <default>false</default>
+                    <label>Corporate Card</label>
+                </value>
             </valueSetDefinition>
         </valueSet>
     </fields>
@@ -12833,6 +12838,11 @@ IF ((RecordType.DeveloperName = &quot;IATA_Airline&quot; || RecordType.Developer
                     <fullName>TOU E&amp;F</fullName>
                     <default>false</default>
                     <label>TOU E&amp;F</label>
+                </value>
+                <value>
+                    <fullName>TOU GROUND HANDLER</fullName>
+                    <default>false</default>
+                    <label>TOU GROUND HANDLER</label>
                 </value>
             </valueSetDefinition>
         </valueSet>
@@ -25522,7 +25532,7 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
             </values>
             <values>
                 <fullName>No IEP Account</fullName>
-                <default>true</default>
+                <default>false</default>
             </values>
             <values>
                 <fullName>Open</fullName>
@@ -28051,7 +28061,7 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
             </values>
             <values>
                 <fullName>No IEP Account</fullName>
-                <default>true</default>
+                <default>false</default>
             </values>
             <values>
                 <fullName>Open</fullName>
@@ -30706,6 +30716,10 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
                 <fullName>TOU E%26F</fullName>
                 <default>false</default>
             </values>
+            <values>
+                <fullName>TOU GROUND HANDLER</fullName>
+                <default>false</default>
+            </values>
         </picklistValues>
         <picklistValues>
             <picklist>Sector__c</picklist>
@@ -31214,7 +31228,7 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
             </values>
             <values>
                 <fullName>No IEP Account</fullName>
-                <default>true</default>
+                <default>false</default>
             </values>
             <values>
                 <fullName>Open</fullName>
@@ -33743,7 +33757,7 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
             </values>
             <values>
                 <fullName>No IEP Account</fullName>
-                <default>true</default>
+                <default>false</default>
             </values>
             <values>
                 <fullName>Open</fullName>
@@ -35828,6 +35842,10 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
         <picklistValues>
             <picklist>Is_PCI_compliant__c</picklist>
             <values>
+                <fullName>Corporate Card</fullName>
+                <default>false</default>
+            </values>
+            <values>
                 <fullName>Nil CC</fullName>
                 <default>false</default>
             </values>
@@ -36433,6 +36451,10 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
             </values>
             <values>
                 <fullName>TOU E%26F</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>TOU GROUND HANDLER</fullName>
                 <default>false</default>
             </values>
         </picklistValues>
@@ -37830,7 +37852,7 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
             </values>
             <values>
                 <fullName>No IEP Account</fullName>
-                <default>true</default>
+                <default>false</default>
             </values>
             <values>
                 <fullName>Open</fullName>
@@ -40087,7 +40109,7 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
             </values>
             <values>
                 <fullName>No IEP Account</fullName>
-                <default>true</default>
+                <default>false</default>
             </values>
             <values>
                 <fullName>Open</fullName>
@@ -43337,6 +43359,10 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
                 <fullName>TOU E%26F</fullName>
                 <default>false</default>
             </values>
+            <values>
+                <fullName>TOU GROUND HANDLER</fullName>
+                <default>false</default>
+            </values>
         </picklistValues>
         <picklistValues>
             <picklist>Sector__c</picklist>
@@ -45560,7 +45586,7 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
             </values>
             <values>
                 <fullName>No IEP Account</fullName>
-                <default>true</default>
+                <default>false</default>
             </values>
             <values>
                 <fullName>Open</fullName>
@@ -47780,6 +47806,10 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
                 <fullName>TOU E%26F</fullName>
                 <default>false</default>
             </values>
+            <values>
+                <fullName>TOU GROUND HANDLER</fullName>
+                <default>false</default>
+            </values>
         </picklistValues>
         <picklistValues>
             <picklist>Sector__c</picklist>
@@ -48216,7 +48246,7 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
             </values>
             <values>
                 <fullName>No IEP Account</fullName>
-                <default>true</default>
+                <default>false</default>
             </values>
             <values>
                 <fullName>Open</fullName>
@@ -50463,6 +50493,10 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
                 <fullName>TOU E%26F</fullName>
                 <default>false</default>
             </values>
+            <values>
+                <fullName>TOU GROUND HANDLER</fullName>
+                <default>false</default>
+            </values>
         </picklistValues>
         <picklistValues>
             <picklist>Sector__c</picklist>
@@ -52686,7 +52720,7 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
             </values>
             <values>
                 <fullName>No IEP Account</fullName>
-                <default>true</default>
+                <default>false</default>
             </values>
             <values>
                 <fullName>Open</fullName>
@@ -54912,6 +54946,10 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
                 <fullName>TOU E%26F</fullName>
                 <default>false</default>
             </values>
+            <values>
+                <fullName>TOU GROUND HANDLER</fullName>
+                <default>false</default>
+            </values>
         </picklistValues>
         <picklistValues>
             <picklist>Sector__c</picklist>
@@ -57071,7 +57109,7 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
             </values>
             <values>
                 <fullName>No IEP Account</fullName>
-                <default>true</default>
+                <default>false</default>
             </values>
             <values>
                 <fullName>Open</fullName>
@@ -59326,6 +59364,10 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
                 <fullName>TOU E%26F</fullName>
                 <default>false</default>
             </values>
+            <values>
+                <fullName>TOU GROUND HANDLER</fullName>
+                <default>false</default>
+            </values>
         </picklistValues>
         <picklistValues>
             <picklist>Sector__c</picklist>
@@ -59842,7 +59884,7 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
             </values>
             <values>
                 <fullName>No IEP Account</fullName>
-                <default>true</default>
+                <default>false</default>
             </values>
             <values>
                 <fullName>Open</fullName>
@@ -62296,7 +62338,7 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
             </values>
             <values>
                 <fullName>No IEP Account</fullName>
-                <default>true</default>
+                <default>false</default>
             </values>
             <values>
                 <fullName>Open</fullName>
@@ -64750,7 +64792,7 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
             </values>
             <values>
                 <fullName>No IEP Account</fullName>
-                <default>true</default>
+                <default>false</default>
             </values>
             <values>
                 <fullName>Open</fullName>
@@ -67088,6 +67130,10 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
                 <fullName>TOU E%26F</fullName>
                 <default>false</default>
             </values>
+            <values>
+                <fullName>TOU GROUND HANDLER</fullName>
+                <default>false</default>
+            </values>
         </picklistValues>
         <picklistValues>
             <picklist>Sector__c</picklist>
@@ -67574,7 +67620,7 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
             </values>
             <values>
                 <fullName>No IEP Account</fullName>
-                <default>true</default>
+                <default>false</default>
             </values>
             <values>
                 <fullName>Open</fullName>
@@ -72710,6 +72756,10 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
                 <fullName>TOU E%26F</fullName>
                 <default>false</default>
             </values>
+            <values>
+                <fullName>TOU GROUND HANDLER</fullName>
+                <default>false</default>
+            </values>
         </picklistValues>
         <picklistValues>
             <picklist>Sector__c</picklist>
@@ -75241,7 +75291,7 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
             </values>
             <values>
                 <fullName>No IEP Account</fullName>
-                <default>true</default>
+                <default>false</default>
             </values>
             <values>
                 <fullName>Open</fullName>
@@ -78001,6 +78051,10 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
                 <fullName>TOU E%26F</fullName>
                 <default>false</default>
             </values>
+            <values>
+                <fullName>TOU GROUND HANDLER</fullName>
+                <default>false</default>
+            </values>
         </picklistValues>
         <picklistValues>
             <picklist>Sector__c</picklist>
@@ -79572,7 +79626,7 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
             </values>
             <values>
                 <fullName>No IEP Account</fullName>
-                <default>true</default>
+                <default>false</default>
             </values>
             <values>
                 <fullName>Open</fullName>
@@ -82780,6 +82834,10 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
                 <fullName>TOU E%26F</fullName>
                 <default>false</default>
             </values>
+            <values>
+                <fullName>TOU GROUND HANDLER</fullName>
+                <default>false</default>
+            </values>
         </picklistValues>
         <picklistValues>
             <picklist>Sector__c</picklist>
@@ -85087,29 +85145,38 @@ var connection = sforce.connection;
 
 var recType = sforce.connection.query(&quot;SELECT Id, Name FROM RecordType WHERE developername = &apos;Standard_Account&apos; LIMIT 1&quot;);
 
-var newmsoagency= new sforce.SObject(&quot;Account&quot;);
+if(&apos;{!Account.Airline_designator__c}&apos; == null || &apos;{!Account.Airline_designator__c}&apos; == &apos;&apos;){
+    alert(&apos;Error: {!$Label.ISSP_AMS_MSO_Request_Issue_Airline_Designator}&apos;);
+    
+}else{
+    var newmsoagency= new sforce.SObject(&quot;Account&quot;);
 
-newmsoagency.RecordTypeId = recType.Id;
-newmsoagency.Name = &apos;{!Account.Name}&apos;;
-newmsoagency.Sector__c = &quot;Travel Agent&quot;;
-newmsoagency.Category__c = &quot;MSO Member Sales Office&quot;;
-newmsoagency.Location_Class__c = &quot;M&quot;;
-newmsoagency.Location_Type__c = &quot;HO&quot;;
-newmsoagency.Reason_for_creation__c = &quot;New Agent&quot;;
+    newmsoagency.RecordTypeId = recType.Id;
+    newmsoagency.Name = &apos;{!Account.Name}&apos;;
+    newmsoagency.Sector__c = &quot;Travel Agent&quot;;
+    newmsoagency.Category__c = &quot;MSO Member Sales Office&quot;;
+    newmsoagency.Location_Class__c = &quot;M&quot;;
+    newmsoagency.Location_Type__c = &quot;HO&quot;;
+    newmsoagency.Reason_for_creation__c = &quot;New Agent&quot;;
 
-if({!Account.IATA_Member__c} == true) { 
-newmsoagency.Location_Category__c = &quot;IC&quot;; 
-} 
-else { 
-newmsoagency.Location_Category__c = &quot;NI&quot;; 
-}
+    if({!Account.IATA_Member__c} == true) { 
+        newmsoagency.Location_Category__c = &quot;IC&quot;; 
+    } else { 
+        newmsoagency.Location_Category__c = &quot;NI&quot;; 
+    }
 
-result = sforce.connection.create([newmsoagency]);
-var accId = result[0].id;
+    result = sforce.connection.create([newmsoagency]);
+    var accId = result[0].id;
 
-var airlineId = &apos;{!Account.Id}&apos;;
+    var airlineId = &apos;{!Account.Id}&apos;;
 
-javascript:srcUp(&apos;/apex/AMS_AccountOSCARWizardPage?accountId=&apos;+accId+&apos;&amp;process=x&amp;Type_of_OSCAR_process_man=NEW.MSO.1.0&amp;airlineId=&apos;+airlineId);</url>
+    if (typeof srcUp == &apos;function&apos;) {	
+		javascript:srcUp(&apos;/apex/AMS_AccountOSCARWizardPage?accountId=&apos;+accId+&apos;&amp;process=x&amp;Type_of_OSCAR_process_man=NEW.MSO.1.0&amp;airlineId=&apos;+airlineId);
+	}else{
+		//window.location.href = &apos;/apex/AMS_AccountOSCARWizardPage?accountId=&apos;+accId+&apos;&amp;process=x&amp;Type_of_OSCAR_process_man=NEW.MSO.1.0&amp;airlineId=&apos;+airlineId;
+        alert(&apos;This option is to use on the console&apos;);
+	}
+}</url>
     </webLinks>
     <webLinks>
         <fullName>DSE__DS_AccountHierarchyButton</fullName>

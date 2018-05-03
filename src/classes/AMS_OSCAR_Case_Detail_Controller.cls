@@ -103,7 +103,7 @@ public with sharing class AMS_OSCAR_Case_Detail_Controller {
         }
     }
 
-    public static Set<String> hidenFieldsNewgenApplications = new Set<String>{'Abbreviated_name__c','Abbreviated_Address__c'};
+    public static Set<String> hidenFieldsNewgenApplications = new Set<String>{};
 
     public List<String> accreditationFieldNames {
         get{
@@ -234,7 +234,9 @@ public with sharing class AMS_OSCAR_Case_Detail_Controller {
     //AMSU-125
     public Boolean loadAMSRemittance(AMS_OSCAR__c oscar) {
         Set<String> locationsClass = new Set<String> {'P', 'D'};        
-        return !String.isBlank(oscar.Process__c) && locationsClass.contains(oscar.Location_Class__c) && (AMS_Utils.oscarNewProcesses.contains(oscar.Process__c) || oscar.Process__c == AMS_Utils.AGENCYCHANGES);
+        Set<String> processesToCheck = new Set<String> {AMS_Utils.AGENCYCHANGES, AMS_Utils.new_HO, AMS_Utils.new_BR, AMS_Utils.new_SA};
+
+        return !String.isBlank(oscar.Process__c) && locationsClass.contains(accreditationObj.Location_Class__c) && processesToCheck.contains(oscar.Process__c);
     }
 
     public List<SelectOption> getRfPicklistValues(){
@@ -356,6 +358,15 @@ public with sharing class AMS_OSCAR_Case_Detail_Controller {
         }
     }
 
+    /*** AMSU-121 Start ***/
+    public Boolean isChangeOfLocation {
+        get {
+            return oscarObj != null && !String.isBlank(oscarObj.Type_of_change__c) && oscarObj.Type_of_change__c.indexOf(AMS_Utils.Location) >= 0;
+        }
+        set;
+    }
+    /*** AMSU-121 End ***/
+
     public static final Set<String> notEditableForNEWGEN = new Set<String>{'Location_Class__c','Location_Type__c','CASS_Number__c','Abbreviated_Address__c','Abbreviated_name__c'};
 
 
@@ -474,7 +485,9 @@ public with sharing class AMS_OSCAR_Case_Detail_Controller {
             }
 
         }catch(Exception e){
-                accreditationObj.addError('An error occured trying to save Accreditation Object, reason:' + e);
+                if(!e.getMessage().contains('FIELD_CUSTOM_VALIDATION_EXCEPTION, CASS Number')){
+                    accreditationObj.addError('An error occured trying to save Accreditation Object, reason:' + e);
+                }
         }
     } 
 

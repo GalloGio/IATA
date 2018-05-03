@@ -1469,7 +1469,7 @@
                                                 <td>
                                                     <br/>
 
-                                                    <apex:actionFunction name="planeStartDaily" action="{!isGettingReportStartDaily}" reRender="waitingPlaneDaily"/>
+                                                    <apex:actionFunction name="planeStartDaily" action="{!isGettingReportStartDaily}" reRender="waitingPlaneDaily,btnDailyDownload"/>
                                                     <apex:outputPanel id='waitingPlaneDaily'>
                                                         <apex:pageBlockSectionItem rendered="{!isGettingReportDaily}">
                                                             <div class="title">
@@ -1478,9 +1478,9 @@
                                                             </div>
                                                         </apex:pageBlockSectionItem>
                                                     </apex:outputPanel>
-                                                    <apex:commandButton action="{!dailyReportDownload}" onclick="planeStartDaily();" reRender="batchStatusPollerDaily" value="{!$Label.ISSP_AMS_eBulletin_btn_DownloadDailyReport}" disabled="{!IF(newFormDaily.Opt_in__c ,'false','true')}"/>
+                                                    <apex:commandButton id="btnDailyDownload" action="{!dailyReportDownload}" onclick="planeStartDaily();" reRender="batchStatusPollerDaily" value="{!$Label.ISSP_AMS_eBulletin_btn_DownloadDailyReport}" disabled="{!IF(AND(newFormDaily.Opt_in__c, NOT(isGettingReportDaily)) ,'false','true')}"/>
                                                     <apex:outputPanel id="batchStatusPollerDaily">
-                                                        <apex:actionPoller oncomplete="openWindow();" reRender="newWindow,theMessages,waitingPlaneDaily" interval="5" action="{!checkBatchStatus}" enabled="{!isBatchProcessing}"/>
+                                                        <apex:actionPoller oncomplete="openWindow();" reRender="newWindow,theMessages,waitingPlaneDaily,btnDailyDownload" interval="5" action="{!checkBatchStatus}" enabled="{!isBatchProcessing}"/>
                                                     </apex:outputPanel>
                                                             
                                                     <apex:outputPanel id="newWindow">
@@ -1750,7 +1750,7 @@
                                                         <td>
                                                             <br/>                                                           
 
-                                                                <apex:actionFunction name="planeStartWeekly" action="{!isGettingReportStartWeekly}" reRender="waitingPlaneWeekly"/>
+                                                                <apex:actionFunction name="planeStartWeekly" action="{!isGettingReportStartWeekly}" reRender="waitingPlaneWeekly,btnWeeklyDownload"/>
                                                                 <apex:outputPanel id='waitingPlaneWeekly'>
                                                                     <apex:pageBlockSectionItem rendered="{!isGettingReportWeekly}">
                                                                         <div class="title">
@@ -1759,9 +1759,9 @@
                                                                         </div>
                                                                     </apex:pageBlockSectionItem>
                                                                 </apex:outputPanel>
-                                                                <apex:commandButton action="{!weeklyReportDownload}" onclick="planeStartWeekly();" reRender="batchStatusPollerWeekly" value="{!$Label.ISSP_AMS_eBulletin_btn_DownloadWeeklyReport}" disabled="{!IF(newFormWeekly.Opt_in__c ,'false','true')}"/>
+                                                                <apex:commandButton id="btnWeeklyDownload" action="{!weeklyReportDownload}" onclick="planeStartWeekly();" reRender="batchStatusPollerWeekly" value="{!$Label.ISSP_AMS_eBulletin_btn_DownloadWeeklyReport}" disabled="{!IF(AND(newFormWeekly.Opt_in__c, NOT(isGettingReportWeekly)) ,'false','true')}"/>
                                                                 <apex:outputPanel id="batchStatusPollerWeekly">
-                                                                    <apex:actionPoller oncomplete="openWindow();" reRender="newWindow,theMessages,waitingPlaneWeekly" interval="5" action="{!checkBatchStatus}" enabled="{!isBatchProcessing}"/>
+                                                                    <apex:actionPoller oncomplete="openWindow();" reRender="newWindow,theMessages,waitingPlaneWeekly,btnWeeklyDownload" interval="5" action="{!checkBatchStatus}" enabled="{!isBatchProcessing}"/>
                                                                 </apex:outputPanel>
                                                             
                                                                 
