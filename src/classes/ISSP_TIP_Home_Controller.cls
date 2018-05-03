@@ -16,7 +16,7 @@ public without sharing class ISSP_TIP_Home_Controller {
     public String binRangeChangeRequestText{get;Set;}
 
     //enrolment page
-    private List <Case> accountCases {get; set;}
+    //private List <Case> private List <Case> accountCases {get; set;}
 
     public String conID {get; set;}
     public Contact newContact {get;set;} 
@@ -205,18 +205,27 @@ public without sharing class ISSP_TIP_Home_Controller {
         accountID = con.AccountId;
         fetchHQAccountDetails();
         getISOCountry();
-
-        accountCases = [SELECT ID,Reason1__c,RecordTypeid,RecordType.Name,CaseArea__c,Status,Visible_on_ISS_Portal__c,Subject,Region__c,
-                        Origin,BSPCountry__c,Country_concerned_by_the_query__c,Description
-                        FROM Case 
-                            WHERE RecordTypeid = :TIP_Utils.CASE_PROCESS_IDFS_RECORD_TYPE_ID 
-                            AND Accountid = :account.id 
-                            AND Visible_on_ISS_Portal__c = true
-                            AND Reason1__c = :TIP_Utils.CASE_REASON_PAYMENT_PROVIDER_MANAGMENT
-                            AND CaseArea__c = :TIP_Utils.CASE_AREA_TRANSPARENCY_IN_PAYMENTS 
-                            AND Status = 'Draft'
-                        LIMIT 1]; 
-
+        List <Case> accountCases;
+        String caseID = Apexpages.currentPage().getParameters().get('caseID');
+        if (!String.isBlank(caseID)){
+            accountCases = [SELECT ID,Reason1__c,RecordTypeid,RecordType.Name,CaseArea__c,Status,Visible_on_ISS_Portal__c,Subject,Region__c,
+                            Origin,BSPCountry__c,Country_concerned_by_the_query__c,Description
+                            FROM Case 
+                                WHERE ID = :caseID]; 
+        }
+        else{
+            accountCases = [SELECT ID,Reason1__c,RecordTypeid,RecordType.Name,CaseArea__c,Status,Visible_on_ISS_Portal__c,Subject,Region__c,
+                            Origin,BSPCountry__c,Country_concerned_by_the_query__c,Description
+                            FROM Case 
+                                WHERE RecordTypeid = :TIP_Utils.CASE_PROCESS_IDFS_RECORD_TYPE_ID 
+                                AND Accountid = :account.id 
+                                AND Visible_on_ISS_Portal__c = true
+                                AND Reason1__c = :TIP_Utils.CASE_REASON_PAYMENT_PROVIDER_MANAGMENT
+                                AND CaseArea__c = :TIP_Utils.CASE_AREA_TRANSPARENCY_IN_PAYMENTS 
+                                AND Status = 'Draft'
+                            LIMIT 1]; 
+        }
+        if(accountCases != null && !accountCases.isEmpty()){ newCase = accountCases[0]; }
         fillContactList();
         newContact = new Contact();
         PageReference pr= Page.ISSP_TIP_Enrolment;
@@ -334,8 +343,8 @@ public without sharing class ISSP_TIP_Home_Controller {
 
     private void updateCase(){
 
-        newCase = new Case();
-        if(accountCases != null && !accountCases.isEmpty()){ newCase = accountCases[0]; }
+        if (newCase == null) newCase = new Case();
+        //if(accountCases != null && !accountCases.isEmpty()){ newCase = accountCases[0]; }
         newcase.RecordTypeid = TIP_Utils.CASE_PROCESS_IDFS_RECORD_TYPE_ID;
         newcase.Accountid = account.id; 
         newcase.Visible_on_ISS_Portal__c = true;
@@ -408,10 +417,10 @@ public without sharing class ISSP_TIP_Home_Controller {
     }
 
     public PageReference securityCheck(){
-
-        PageReference pr= Page.ISSP_TIP_Home;
-        pr.setRedirect(false);
-        if(account.recordtypeid != TIP_Utils.STANDARD_ACCOUNT_RECORD_TYPE_ID || con.User_Portal_Status__c != ANG_Risk_Helper.USER_PORTAL_STATUS_APPROVED_ADIM ) return pr;
+        if(account.recordtypeid != TIP_Utils.STANDARD_ACCOUNT_RECORD_TYPE_ID 
+            || con.User_Portal_Status__c != ANG_Risk_Helper.USER_PORTAL_STATUS_APPROVED_ADIM // return new PageReference('/ISSP_TIP_Home');// {pr = Page.ISSP_TIP_Home;pr.setRedirect(false);}
+            ||(newCase != null && newCase.status != 'Draft') )
+                return new PageReference('/ISSP_Case?caseId='+newCase.id);
         return null;
     }
 

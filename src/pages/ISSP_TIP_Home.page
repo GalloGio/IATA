@@ -215,9 +215,10 @@
                                             <apex:facet name="header">
                                                 {!$ObjectType.Case.fields.CaseNumber.label}
                                             </apex:facet>
-                                            <apex:outputLink value="/apex/ISSP_Case?caseId={!item.Id}&mid={!currNavState}{!if(communityName=='CNS','&CommunityName='+communityName,'')}" target="_self">{!item.CaseNumber}</apex:outputLink>
+                                            <apex:commandLink value="{!item.CaseNumber}" action="{!startEnrolmentAccount}">
+                                                <apex:param name="caseID" value="{!item.id}"/>
+                                            </apex:commandLink>
                                         </apex:column>
-
                                         <apex:column >
                                             <apex:facet name="header">
                                                 {!$ObjectType.Case.fields.Subject.label}
