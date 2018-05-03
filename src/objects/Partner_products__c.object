@@ -706,7 +706,7 @@ If the product is a multi-use VANs, then it is a unique card/account number that
         <active>true</active>
         <description>Payment Product Code is mandatory for partner products to be approved</description>
         <errorConditionFormula>RecordType.DeveloperName==&apos;TIP_Product&apos; 
-&amp;&amp; NOT(ISPICKVAL(PP_Status__c,&apos;Rejected&apos;) || ISPICKVAL(PP_Status__c,&apos;Draft&apos;))
+&amp;&amp; NOT(ISPICKVAL(PP_Status__c,&apos;REJECTED&apos;) || ISPICKVAL(PP_Status__c,&apos;DRAFT&apos;) || ISPICKVAL(PP_Status__c,&apos;IN_PROGRESS&apos;))
 &amp;&amp; ISBLANK(PP_Payment_Product_Code__c)</errorConditionFormula>
         <errorMessage>Please fill in the Payment Product Code.</errorMessage>
     </validationRules>
