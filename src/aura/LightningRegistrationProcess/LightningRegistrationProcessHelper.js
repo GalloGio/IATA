@@ -385,7 +385,7 @@
         } else { contact.Membership_Function__c = membershipFunction; }
         if (businessphone === undefined) {
             console.log('bp');
-            businessphoneField.set("v.errors", [{ message: $A.get("$Label.c.OneId_Registration_Error_BusinessPhone") }]);
+            businessphoneField.set("v.errors", [{ message: $A.get("$Label.c.ISSP_Registration_MobilePhone_Msg") }]);
             errors = true;
             setTimeout(function(){
                 $(".contactPhone").intlTelInput("setCountry", "");
