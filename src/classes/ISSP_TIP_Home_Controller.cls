@@ -760,7 +760,7 @@ public without sharing class ISSP_TIP_Home_Controller {
                 newcase.RecordTypeid = TIP_Utils.CASE_PROCESS_IDFS_RECORD_TYPE_ID;
                 newcase.AccountId = usr.contact.accountId; 
                 newcase.Visible_on_ISS_Portal__c = true;
-                newcase.Reason1__c = TIP_Utils.CASE_REASON_PAYMENT_PROVIDER_MANAGMENT ;
+                newcase.Reason = TIP_Utils.CASE_REASON_PRODUCT_MANAGEMENT ;
                 newcase.CaseArea__c = TIP_Utils.CASE_AREA_TRANSPARENCY_IN_PAYMENTS; 
                 newcase.Status = status;
                 newcase.Subject = TIP_Utils.CASE_SUBJECT_NEW_PRODUCT_ENROLMENT+' - '+ newpp.name;
