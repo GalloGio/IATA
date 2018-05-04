@@ -1,4 +1,12 @@
-<apex:page id="topPage" controller="ISSP_TIP_Home_Controller" cache="false" sidebar="false" showHeader="false" standardStylesheets="false" applyBodyTag="false" applyHtmlTag="false">
+<apex:page id="topPage" 
+    controller="ISSP_TIP_Home_Controller" 
+    cache="false" 
+    sidebar="false" 
+    showHeader="false" 
+    standardStylesheets="false" 
+    applyBodyTag="false" 
+    applyHtmlTag="false"
+    action="{!checkForCase}">
 
     <head>
         <meta charset="utf-8" />
@@ -20,7 +28,8 @@
 
             function validateIfportalAdmin() {
                 if ({!isAdmin}) {
-                    window.location.href = '/apex/ISSP_TIP_Enrolment';
+                    //window.location.href = '/apex/ISSP_TIP_Enrolment';
+                    navigateToEnrolmentPage();
                 } else {
                     alert("{!$label.ISSP_TIP_Home_Only_Portal_Administrators}");
                 }
@@ -207,15 +216,17 @@
 
                             <apex:pageBlock >
                                 <apex:form >
+                                    <apex:actionFunction action="{!startEnrolmentAccount}" name="navigateToEnrolmentPage"></apex:actionFunction>
                                     <hr />
                                     <apex:pageBlockTable value="{!cases}" var="item" styleClass="table-hover table table-condensed table-responsive">
                                         <apex:column >
                                             <apex:facet name="header">
                                                 {!$ObjectType.Case.fields.CaseNumber.label}
                                             </apex:facet>
-                                            <apex:outputLink value="/apex/ISSP_Case?caseId={!item.Id}&mid={!currNavState}{!if(communityName=='CNS','&CommunityName='+communityName,'')}" target="_self">{!item.CaseNumber}</apex:outputLink>
+                                            <apex:commandLink value="{!item.CaseNumber}" action="{!startEnrolmentAccount}">
+                                                <apex:param name="caseID" value="{!item.id}"/>
+                                            </apex:commandLink>
                                         </apex:column>
-
                                         <apex:column >
                                             <apex:facet name="header">
                                                 {!$ObjectType.Case.fields.Subject.label}

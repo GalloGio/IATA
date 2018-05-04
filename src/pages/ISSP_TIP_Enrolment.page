@@ -1,4 +1,4 @@
-<apex:page controller="ISSP_TIP_Enrolment_Controller"
+<apex:page controller="ISSP_TIP_Home_controller"
    cache="false"
    sidebar="false"
    showHeader="false"
@@ -7,7 +7,7 @@
    applyBodyTag="false"
    applyHtmlTag="false"
    docType="html-5.0"
-   action="{!securityCheck}"
+   action="{!securityCheckForEnrolmentPage}"
    >
    <html>
       <c:ISSP_Header ></c:ISSP_Header>
@@ -360,15 +360,15 @@
                               {!$Label.ISSP_AMS_Step3_Save_Anytime}
                            </div>
                           <!--<apex:pageBlockButtons >
-                              <apex:commandButton action="{!submitToIATA}" value="Submit to IATA" />
-                              <apex:commandButton action="{!saveAsDraft}" value="{!$Label.ISSP_Save_Draft}" style="float:right" />
+                              <apex:commandButton action="{!submitAccountEnrolmentToIATA}" value="Submit to IATA" />
+                              <apex:commandButton action="{!saveAccountEnrolmentAsDraft}" value="{!$Label.ISSP_Save_Draft}" style="float:right" />
                            </apex:pageBlockButtons>
                          -->
 
 
                            <apex:pageBlockButtons >
-                                        <apex:commandButton action="{!submitToIATA}" value="Submit to IATA"  />
-                                        <apex:commandButton action="{!saveAsDraft}" value="{!$Label.ISSP_Save_Draft}"/>
+                                        <apex:commandButton action="{!submitAccountEnrolmentToIATA}" value="Submit to IATA"  />
+                                        <apex:commandButton action="{!saveAccountEnrolmentAsDraft}" value="{!$Label.ISSP_Save_Draft}"/>
                                         <apex:commandButton onclick="confirmCancelExitPage();return false;"  value="{!$Label.ISSP_Cancel}" />
                                         <!-- <apex:commandButton action="{!submitForm}" value="Save as Draft" style="margin-left:10px" /> -->
                                     </apex:pageBlockButtons>   
