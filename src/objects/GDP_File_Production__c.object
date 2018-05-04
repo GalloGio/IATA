@@ -571,19 +571,9 @@
         <columns>LAST_UPDATE</columns>
         <filterScope>Everything</filterScope>
         <filters>
-            <field>Status__c</field>
-            <operation>equals</operation>
-            <value>Completed</value>
-        </filters>
-        <filters>
-            <field>File_Specification__c</field>
-            <operation>notContain</operation>
-            <value>Daily,Weekly</value>
-        </filters>
-        <filters>
             <field>Production_Date__c</field>
             <operation>equals</operation>
-            <value>TODAY</value>
+            <value>4/1/2018</value>
         </filters>
         <label>ZZ: Ad Hoc Production Search</label>
         <language>en_US</language>
