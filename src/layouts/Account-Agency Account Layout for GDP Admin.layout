@@ -634,8 +634,9 @@
         <fields>Contact__c</fields>
         <fields>Percentage__c</fields>
         <fields>Termination_Date__c</fields>
+        <fields>Sort_Order__c</fields>
         <relatedList>AMS_Account_Role__c.Account__c</relatedList>
-        <sortField>Active__c</sortField>
+        <sortField>Sort_Order__c</sortField>
         <sortOrder>Desc</sortOrder>
     </relatedLists>
     <relatedLists>

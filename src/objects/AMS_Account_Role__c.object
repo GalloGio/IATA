@@ -576,6 +576,26 @@ TEXT(Owner_Account__r.Membership_status__c)
         <unique>false</unique>
     </fields>
     <fields>
+        <fullName>Sort_Order__c</fullName>
+        <description>Field to determine the sort order on the related list of owners</description>
+        <externalId>false</externalId>
+        <formula>IF( Active__c , 1000000, 
+VALUE(
+RIGHT(LEFT(TEXT( Termination_Date__c ), 4),2)
+&amp;RIGHT(LEFT(TEXT( Termination_Date__c ), 7),2)
+&amp;RIGHT(LEFT(TEXT( Termination_Date__c ), 10),2))
+)</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>Sort Order</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>0</scale>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
         <fullName>Stage__c</fullName>
         <externalId>false</externalId>
         <label>Stage</label>
