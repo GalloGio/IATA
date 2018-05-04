@@ -75,6 +75,13 @@ public without sharing class ISSP_TIP_Home_Controller {
 
     //##======================Methods================================##  
 
+    public Pagereference checkForCase(){
+        if (!String.isBlank(Apexpages.currentPage().getParameters().get('caseId'))) return startEnrolmentAccount();
+        else if (!String.isBlank(Apexpages.currentPage().getParameters().get('prodId'))) return NewEditProduct();
+    
+        return null;
+    }
+
     private void popContact() {
         User user = DAL_ISSP.getUser(Userinfo.getUserId());
         system.debug('user.ContactId ' + user.ContactId);
@@ -190,12 +197,12 @@ public without sharing class ISSP_TIP_Home_Controller {
         fetchHQAccountDetails();
         getISOCountry();
         List <Case> accountCases;
-        String caseID = Apexpages.currentPage().getParameters().get('caseID');
-        if (!String.isBlank(caseID)){
+        String caseId = Apexpages.currentPage().getParameters().get('caseId');
+        if (!String.isBlank(caseId)){
             accountCases = [SELECT ID,Reason1__c,RecordTypeid,RecordType.Name,CaseArea__c,Status,Visible_on_ISS_Portal__c,Subject,Region__c,
                             Origin,BSPCountry__c,Country_concerned_by_the_query__c,Description
                             FROM Case 
-                                WHERE ID = :caseID]; 
+                                WHERE ID = :caseId]; 
         }
         else{
             accountCases = [SELECT ID,Reason1__c,RecordTypeid,RecordType.Name,CaseArea__c,Status,Visible_on_ISS_Portal__c,Subject,Region__c,

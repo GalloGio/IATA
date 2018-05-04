@@ -114,6 +114,29 @@ public without sharing class ISSP_Case {
         if (ApexPages.currentPage().getParameters().containsKey('caseId')) {
             string caseId = ApexPages.currentPage().getParameters().get('caseId');
             newCase = DAL_ISSP.getCase(caseId);
+
+            User user = DAL_ISSP.getUser(Userinfo.getUserId());
+            Id appListId;
+            ISSP_Portal_Service_Ids__c serviceIdInstance = ISSP_Portal_Service_Ids__c.getInstance();
+            if (serviceIdInstance != null && serviceIdInstance.TIP_Portal_Service_Id__c != null){
+                appListId = serviceIdInstance.TIP_Portal_Service_Id__c;
+            }else{
+                appListId = [SELECT Id FROM Portal_Applications__c WHERE Name = 'Agency Accreditation' LIMIT 1].id;
+            }
+
+
+            List <Portal_Application_Right__c> appRightList = [Select Id From Portal_Application_Right__c
+                                    where Contact__c = :user.ContactId and
+                                                       Right__c = 'Access Granted'  and
+                                                                  Portal_Application__c = :appListId  limit 1];
+
+
+            if(appRightList != null && appRightList.size() == 1 && newCase.status == 'Draft' && newCase.CaseArea__c == TIP_Utils.CASE_AREA_TRANSPARENCY_IN_PAYMENTS){
+                if(newCase.Reason1__c == 'Payment Provider Management') return new PageReference('/ISSP_TIP_Home?caseId='+caseid);
+                
+                Id prodId = [select TIP_Partner_Product__c from Case where id = :caseid limit 1].TIP_Partner_Product__c;
+                if(newCase.Reason1__c == 'Product management') return new PageReference('/ISSP_TIP_Home?prodId='+prodId);
+            }
             if (!newCase.Visible_on_ISS_Portal__c) {
                 PageReference pr = new PageReference('/ISSP_Homepage' + firstCommParam);
                 return pr;
