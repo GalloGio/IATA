@@ -1,4 +1,14 @@
-<apex:page id="topPage" controller="ISSP_TIP_Home_Controller" cache="false" sidebar="false" showHeader="false" standardStylesheets="false" applyBodyTag="false" applyHtmlTag="false">
+<apex:page id="topPage" 
+controller="ISSP_TIP_Home_Controller" 
+cache="false" 
+sidebar="false" 
+showHeader="false" 
+standardStylesheets="false" 
+applyBodyTag="false" 
+applyHtmlTag="false"
+action="{!initActions}"
+>
+
 
     <head>
         <meta charset="utf-8" />

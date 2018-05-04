@@ -39,6 +39,7 @@ public without sharing class ISSP_TIP_Home_Controller {
     public String[] acceptedTransactionVal{get;set;}
     public Decimal binRangeLen{get;set;}
 
+    public boolean acceptedTaC{get;set;}
 
 
 
@@ -129,8 +130,44 @@ public without sharing class ISSP_TIP_Home_Controller {
 
     //##======================Methods================================##  
 
-    private void popContact() {
+
+    public PageReference initActions() {
         User user = DAL_ISSP.getUser(Userinfo.getUserId());
+        system.debug('PF InitAction TIP Home');
+        system.debug('PF user'+user);
+        try {
+            Portal_Application_Right__c appRight = [
+                Select Id, Terms_Acceptance__c, Terms_Acceptance_Date__c,Right__c
+                From Portal_Application_Right__c
+                Where ContactId__c = :String.valueOf(user.ContactId).left(15)
+                And Portal_Application__r.Name = :TIP_Utils.PORTAL_SERVICE_NAME_TIP
+            ];
+
+            // If user has no rights to access to Account statements app then is redirected to Home
+            if (appRight.Right__c!='Access Granted') {
+                Pagereference pageref = new PageReference('/ISSP_Homepage');
+                pageref.setRedirect(true);
+                return pageref;
+            }
+            // if terms and conditions are not accepted is redirected to Terms page
+            if (!appRight.Terms_Acceptance__c) {
+                Pagereference pageref = Page.ISSP_TIP_TermsAndConditions;
+                pageref.setRedirect(true);
+                return pageref;
+            } else {
+                return null;
+            }
+        } catch(Exception e) {
+            //if error happens return to home page
+        }
+        Pagereference pageref = new PageReference('/ISSP_Homepage');
+        pageref.setRedirect(true);
+        return pageref;
+    }
+
+
+    private void popContact() {
+        user = DAL_ISSP.getUser(Userinfo.getUserId());
         system.debug('user.ContactId ' + user.ContactId);
         con = DAL_ISSP.getContact(user.ContactId);
 
@@ -618,6 +655,38 @@ public without sharing class ISSP_TIP_Home_Controller {
         pr.setRedirect(true);
         return pr;
 
+    }
+
+
+
+    //============================== TERMS AND CONDITIONS METHODS =============================
+    public PageReference acceptTerms() {
+
+        Portal_Application_Right__c appRight = [
+            Select Id, Terms_Acceptance__c, Terms_Acceptance_Date__c,Right__c
+            From Portal_Application_Right__c
+            Where ContactId__c = :String.valueOf(user.ContactId).left(15)
+            And Portal_Application__r.Name = :TIP_Utils.PORTAL_SERVICE_NAME_TIP
+        ];
+        system.debug('PF'+acceptedTaC);
+        if (acceptedTaC == false || acceptedTaC==null) {
+            ApexPages.addmessage(new ApexPages.message(ApexPages.severity.WARNING,Label.ISSP_Accept_Terms_Warning));
+            return null;
+        }
+        
+        appRight.Terms_Acceptance__c = acceptedTaC;
+        appRight.Terms_Acceptance_Date__c = DateTime.now();
+        update appRight;
+
+        PageReference pageref = Page.ISSP_TIP_Home;
+        pageref.setRedirect(true);
+        return pageref;
+    }
+
+    public PageReference rejectTerms() {
+        PageReference pageref = new PageReference('/ISSP_Homepage');
+        pageref.setRedirect(true);
+        return pageref;
     }
 
 }
