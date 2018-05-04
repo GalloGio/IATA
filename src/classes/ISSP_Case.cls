@@ -679,7 +679,7 @@ public without sharing class ISSP_Case {
         }
     }
 
-    private String getCustomLabel(String labelName) {
+    @TestVisible private String getCustomLabel(String labelName) {
         Component.Apex.OutputText output = new Component.Apex.OutputText();
         output.expressions.value = '{!$Label.' + labelName + '}';
         return string.valueOf(output.value);
@@ -959,7 +959,7 @@ public without sharing class ISSP_Case {
         }
         
         // CNS
-        if(con.Account.RecordType.DeveloperName == 'IATA_Agency' && con.Account.CNS_Account__c == true && newCase.CaseArea__c == 'Accreditation Process') {
+        if(con!=null && con.Account.RecordType.DeveloperName == 'IATA_Agency' && con.Account.CNS_Account__c == true && newCase.CaseArea__c == 'Accreditation Process') {
             newCase.CNSCase__c = true;
             newCase.Groups__c = 'CNS Team';
         }
@@ -1567,8 +1567,39 @@ public without sharing class ISSP_Case {
             // modify the ccother field in the case before inserting the new team members
             insertListAddressInE2CP_CCOthers(lsNewEmails);
             insert lsCaseTeamMembers;
+            //finally sends an email to the full recipients list
+            EmailTemplate template = [SELECT Id FROM EmailTemplate WHERE DeveloperName = 'New_DPC_Case'];
+            sendMassEmail(newCase.Id,template.Id);
+            
         } catch (DMLException e) {
             Database.rollback(sp);
+        }
+    }
+    
+    public static void sendMassEmail(Id caseId, Id templateId) {
+        try {
+            Messaging.SingleEmailMessage mail = new Messaging.SingleEmailMessage();
+            List<CaseTeamMember> listMembers = new List<CaseTeamMember>(
+                [SELECT MemberId
+                 FROM CaseTeamMember
+                 WHERE ParentId = :caseId]);
+
+            List<Messaging.SingleEmailMessage> listEmail = new List<Messaging.SingleEmailMessage>();
+            for(caseTeamMember teamMember : listMembers){
+                mail.setTargetObjectId(teamMember.MemberId);
+                mail.setUseSignature(false);
+                mail.setBccSender(false);
+                mail.setSaveAsActivity(false);
+                mail.setTemplateId(templateId);
+                listEmail.add(mail);
+            }
+
+            if (!listEmail.isEmpty()) {
+                Messaging.sendEmail(listEmail);
+            }
+
+        } catch (Exception e) {
+            System.debug('Error sending an email sendMassEmail(' + caseId + ',' + templateId + ')');
         }
     }
 
