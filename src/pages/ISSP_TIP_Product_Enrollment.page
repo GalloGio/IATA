@@ -209,6 +209,12 @@
                 <div id="contentWrapper">
                     <c:ISSP_CustomNavigation />    
                     <div class="panel-primary">
+                        <apex:pageBlock rendered="{!editMode}">
+                            <div class="alert alert-warning"  role="alert">
+                                  {!$Label.ISSP_AMS_Step1_Two_Weeks_Expiry}
+                            </div> 
+                        </apex:pageBlock>
+                    
                         <div class="panel-heading head_panel_green">
                            <h3 class="panel-title">Partner Product Details</h3>
                         </div>
@@ -220,7 +226,7 @@
                                     <apex:pageBlockButtons>
                                         <apex:actionFunction name="submitProduct" action="{!submitProduct}"/>
                                         <apex:commandButton  onclick="if(confirmSubmit())return true;" value="{!$Label.ISSP_TIP_SUBMIT_TO_IATA}" rendered="{!editMode}" reRender="inHid"   />
-                                        <apex:commandButton action="{!saveDraft}" value="{!$Label.ISSP_TIP_SAVE_DRAFT}" rendered="{!editMode}"/>
+                                        <apex:commandButton action="{!saveDraft}" value="{!$Label.ISSP_Save_Draft}" rendered="{!editMode}"/>
                                         <apex:commandButton onclick="confirmCancelExitPage();return false;"  value="{!$Label.ISSP_Cancel}" rendered="{!editMode}"/> 
                                         <apex:actionFunction name="cancelLeavePage" action="{!cancelNewEditProd}" immediate="true"/>
                                         <apex:commandButton action="{!cancelNewEditProd}" immediate="true" value="{!$Label.ISSP_TIP_RETURN_HOMEPAGE}" rendered="{!!editMode}"/>                                                            
