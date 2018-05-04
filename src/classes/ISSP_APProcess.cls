@@ -213,9 +213,13 @@ public without sharing class ISSP_APProcess {
             if(newCase==null)
               	redirectToCasesList();
 
-            isocountry = fetchISOCountry(newCase.IFAP_Country_ISO__c);
+            if(newCase.IFAP_Country_ISO__c != null) {
+                isocountry = fetchISOCountry(newCase.IFAP_Country_ISO__c);
 
-            newForm.ANG_Enable_NewGen__c = (isocountry.ANG_Portal_Service__c != null);
+                newForm.ANG_Enable_NewGen__c = (isocountry.ANG_Portal_Service__c != null);
+            } else {
+                newForm.ANG_Enable_NewGen__c = false;
+            }
 
             //if(newCase.Status != 'Draft'){
             //    redirectToCasesList();
@@ -1129,60 +1133,6 @@ public without sharing class ISSP_APProcess {
     	}    	
     }
 
-    /*public PageReference getListOfCountries() {
-        // alex
-        String optInOutParam = Apexpages.currentPage().getParameters().get('optInOutParam');
-
-        System.debug('alex vHQAccountId : ' + vHQAccountId);
-        System.debug('alex fonix : ' + Apexpages.currentPage().getParameters());
-        System.debug('alex optInOut : ' + optInOutParam);
-
-        String soqlStr = 'Select Id,' +
-                         'ISO_Country_formula__c,' +
-                         'ANG_IATA_EasyPay_Opt_out__c' +
-                         ' From Services_Rendered__c' +
-                         ' Where Services_Rendered_to_Airline__r.IATA_ISO_Country__r.ANG_Portal_Service__c != null' +
-                         ' And Services_Rendered_Type__c = \'BSP Participation\'' +
-                         ' And Services_Rendered_to_Airline__c = \'' + vHQAccountId + '\'';
-
-        String andClause = '';
-
-        countriesLabel = 'Countries to ';
-
-        if(optInOutParam == 'IN') {
-            andClause = ' And ANG_IATA_EasyPay_Opt_out__c = true';
-            countriesLabel += ' Opt-In : ';
-        } else if(optInOutParam == 'OUT') {
-            andClause = ' And ANG_IATA_EasyPay_Opt_out__c = false';
-            countriesLabel += ' Opt-out : ';
-        }
-
-        countriesTitle = countriesLabel;
-
-        flagShowCountries = false;
-
-        if(andClause != '') {
-            servicesRendered = Database.query(soqlStr + andClause);
-
-            System.debug('alex soqlStr + andClause : ' + soqlStr + andClause);
-
-            countries = new List<SelectOption>();
-
-            if(servicesRendered.size() != 0) {
-                flagShowCountries = true;
-                for(Services_Rendered__c service : servicesRendered) {
-                  countries.add(new SelectOption(service.Id, service.ISO_Country_formula__c));
-                }
-
-                System.debug('alex countries : ' + countries);
-            }
-        }
-
-        System.debug('alex flagShowCountries : ' + flagShowCountries);
-
-        return null;
-    }*/
-
     public PageReference submitOptInOutServer() {
         String optInOutParam = Apexpages.currentPage().getParameters().get('optInOutParam');
         List<String> countriesParam = (List<String>) System.JSON.deserialize(Apexpages.currentPage().getParameters().get('countriesParam'), List<String>.class);
@@ -1193,10 +1143,12 @@ public without sharing class ISSP_APProcess {
         retrieveHQAccountDetails(vHQAccountId);
 
         Map<Id, IATA_ISO_Country__c> isoCountriesMap = new Map<Id, IATA_ISO_Country__c>([SELECT Id, ISO_Code__c, Region__c, Name FROM IATA_ISO_Country__c WHERE Id IN :countriesParam]);
-        String description = String.join(isoCountriesMap.values(), ',');
+        
+        List<String> countryNames = new List<String>();
+        for (IATA_ISO_Country__c country: isoCountriesMap.values()) countryNames.add(country.Name);
 
         Case optInOutParentCase = new Case(RecordTypeId = RECORD_TYPE_ID,
-        								   Description = description,
+        								   Description = String.join(countryNames, ', '),
         								   Status = 'For Review and Acceptance',
         								   CaseArea__c = 'Airline Change',
         								   Reason1__c = 'IATA Easy Pay',
@@ -1210,7 +1162,8 @@ public without sharing class ISSP_APProcess {
                                                                     isoCountriesMap.get(countriesParam[0]).ISO_Code__c, con.Account.Name, vHqAccountId),
         							 	   Origin = 'Portal',
         							 	   Subject = 'Airline Participation - IATA EasyPay ' + optInOutSubject + ' - ' + isoCountriesMap.get(countriesParam[0]).Name,
-        							 	   Provider__c = con.AccountId);
+        							 	   Provider__c = con.AccountId,
+                                           Type_of_customer__c = 'Airline Passenger');
 
         insert optInOutParentCase;
 
@@ -1230,7 +1183,7 @@ public without sharing class ISSP_APProcess {
         	List<Case> childCases = new List<Case>();
         	for (Integer i = 1; i < countriesParam.size(); i++) {
         		childCase = new Case(RecordTypeId = RECORD_TYPE_ID,
-        							 Description = countriesParam[0],
+        							 Description = isoCountriesMap.get(countriesParam[0]).Name,
         					    	 Status = 'For Review and Acceptance',
         							 CaseArea__c = 'Airline Change',
         							 Reason1__c = 'IATA Easy Pay',
@@ -1245,13 +1198,16 @@ public without sharing class ISSP_APProcess {
                                                                     isoCountriesMap.get(countriesParam[i]).ISO_Code__c, con.Account.Name, vHqAccountId),
         							 Origin = 'Portal',
         							 Subject = 'Airline Participation - IATA EasyPay ' + optInOutSubject + ' - ' + isoCountriesMap.get(countriesParam[i]).Name,
-        							 Provider__c = con.AccountId);
+        							 Provider__c = con.AccountId,
+                                     Type_of_customer__c = 'Airline Passenger');
         		
         		childCases.add(childCase);
         	}
 
         	insert childCases;
         }
+
+        //populateCountriesMap();
 
         return null;
     }

@@ -41,6 +41,17 @@
       width: 60%;
       float: left;
     }
+
+    .column {
+      margin: 0 auto;
+      width: 35%;
+    }
+
+    .row:after {
+      content: "";
+      display: table;
+      clear: both;
+    }
   </style>
 
   <script>
@@ -132,12 +143,14 @@
       	if(ok == 1) {
         		submitOptInOutServerName(optinOut, JSON.stringify(countries), effectiveDate);
         		//falta dar clean ao modal
-        		optInOut();
+        		document.querySelector("[Id$='requestSentMsg']").style.display = '';
+            setTimeout(closeAll, 5000);
       	}
     }
 
-    function submitOptInOutServerSuccess() {
-
+    function closeAll() {
+        document.querySelector("[Id$='requestSentMsg']").style.display = 'none';
+        optInOut();
     }
 
   </script>
@@ -146,7 +159,7 @@
     <c:ISSP_CustomNavigation />
     <h3>Airline Participation</h3>
     <p/>
-      <apex:outputText rendered="{!dupeDraftExists}" style="color: red; font-weight:bold" value="A {!$CurrentPage.parameters.cdupetype} {!IF($CurrentPage.parameters.proc=='chg','change request','joining application')} for {!apCountry} has already been submitted for {!hqAccount.Name}. (Case no. {!newCase.CaseNumber}, status '{!newCase.Status}')"></apex:outputText>
+      <apex:outputText rendered="{!dupeDraftExists}" style="color: red; font-weight:bold" value="A {!$CurrentPage.parameters.cdupetype} {!IF($CurrentPage.parameters.proc=='chg','change request','joining application')} for {!apCountry} has already been submitted for {!hqAccount.Name}. (Case no. {!newCase.CaseNumber}, status '{!newCase.Status}')"/>
     <p/>
     <apex:image value="/img/msg_icons/info24.png" style="vertical-align:middle;margin-right:5px;float:left" />
     <div style="margin-bottom:6px;padding-left:24px">
@@ -181,12 +194,19 @@
 
     <apex:pageBlock rendered="{!IsEmpty}" mode="maindetail">
       <div align="center" style="display: {!IF(APprocess=='chg','','none')}; color:#00AEEF; padding-bottom:10px;padding-top:10px;">
-        <h3 style="color:#FFAE00"><a onclick="optInOut();">IATA Easy Pay Opt-in / Out</a></h3>
       </div>
       <div align="center" style="color:#00AEEF; padding-bottom:5cm;padding-top:1cm;">
         <img src="https://iata--c.eu3.content.force.com/servlet/servlet.ImageServer?id=01520000000zGve&oid=00D2000000008TF&lastMod=1401896785000"/><br/>
         <h3>You don't have any pending Airline Participation {!IF(APprocess=='chg', 'Change Requests', IF(APprocess=='bnk', 'change of bank account details', 'Joining Processes'))}</h3><br/>
         <h3 style="color:#FFAE00"><a href="/ISSP_APProcess?proc={!APprocess}&retURL=/ISSP_APCases">Create a new one</a></h3>
+        <div class="row">
+          <div class="column">
+            <a class="btn btn-primary btn-block" href="/ISSP_APProcess?proc={!APprocess}&retURL=/ISSP_APCases">Create a new Airline Partcipation Change Request</a>
+          </div>
+          <div class="column">
+            <button type="button" id="modalButton" onclick="optInOut();" class="btn btn-primary btn-block">IATA EasyPay Opt-In / Out</button>
+          </div>
+        </div>
       </div>
     </apex:pageBlock>
 
@@ -196,12 +216,11 @@
   <!-- Modal -->
   <div id="optInOut" class="modal fade" role="dialog" data-keyboard="false" data-backdrop="static">
     <div class="modal-dialog">
-
       <!-- Modal content-->
       <div class="modal-content">
         <div class="modal-header">
           <button type="button" class="close" data-dismiss="modal">&times;</button>
-          <h4 class="modal-title">IATA EasyPay Opt-in / Out</h4>
+          <h4 class="modal-title">IATA EasyPay Opt-In / Out</h4>
         </div>
         <div class="modal-body">
           <p/>
@@ -216,6 +235,9 @@
           </div>
           <div class="alert alert-warning" id="noCountriesOutMsg" style="display: none">
             <strong>There are no countries to Opt-Out.</strong>
+          </div>
+          <div class="alert alert-success" id="requestSentMsg" style="display: none">
+            <strong>Your request has been sent.</strong>
           </div>
 
           <apex:form >
