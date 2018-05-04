@@ -1,4 +1,4 @@
-public class AMS_OscarChangesHelper {
+public without sharing class AMS_OscarChangesHelper {
 
 	@future
 	public static void createSavepoint(Set<Id> oscarIds) {
@@ -45,7 +45,11 @@ public class AMS_OscarChangesHelper {
 
 		createAccountsSavepoint(mapAccountToOscar);
 		createHierarchiesSavepoint(mapFiltredHierarchies, mapAccountToOscar);
-		createOwnersSavepoint(mapAllAccountsHierToOscar);
+		if(mapAllAccountsHierToOscar.isEmpty()) {
+			createOwnersSavepoint(mapAccountToOscar);
+		} else {
+			createOwnersSavepoint(mapAllAccountsHierToOscar);
+		}
 	}
 
 	private static List<AMS_Agencies_relationhip__c> extractRelations(Id accountId, List<AMS_Agencies_relationhip__c> relations) {
@@ -107,25 +111,26 @@ public class AMS_OscarChangesHelper {
 	}
 
 	public static void createOwnersSavepoint(Map<Id,Id> mapAccountToOscar) {
-		List<String> editableFields = new List<String>();
-		Map<String, Schema.SObjectField> fields = Schema.getGlobalDescribe().get('AMS_Account_Role__c').getDescribe().fields.getMap();
-		for(Schema.SObjectField fieldRef : fields.values()) {
-		    Schema.DescribeFieldResult fieldResult = fieldRef.getDescribe();
-		    if(fieldResult.isUpdateable()) {
-		        editableFields.add(fieldResult.getname());
-		    }
+		List<String> fieldsStr = new List<String>();
+
+		List<Schema.FieldSetMember> fields = SObjectType.AMS_Account_Role__c.FieldSets.AMS_Oscar_Savepoint_fields.getFields();
+		for(Schema.FieldSetMember f : fields) {
+			fieldsStr.add(f.getFieldPath());
 		}
 
 		Set<Id> accountIds = mapAccountToOscar.keySet();
-		String queryStr = 'SELECT Id, ' + String.join(editableFields, ', ') + ' FROM AMS_Account_Role__c WHERE Account__c IN :accountIds';
+		system.debug('accountIds: '+ accountIds);
+		String queryStr = 'SELECT Id, ' + String.join(fieldsStr, ', ') + ' FROM AMS_Account_Role__c WHERE Account__c IN :accountIds';
+
+		system.debug('queryStr: ' + queryStr);
 
 		List<AMS_Account_Role__c> roles = Database.query(queryStr);
 		List<AMS_Oscar_Change_History__c> recordsToInsert = new List<AMS_Oscar_Change_History__c>();
 		for(AMS_Account_Role__c role : roles) {
 			Id oscarId = mapAccountToOscar.get(role.Account__c);
 			AMS_Account_Role__c role2 = new AMS_Account_Role__c(Id= role.Id);
-			for(String editableField : editableFields) {
-				role2.put(editableField, role.get(editableField));
+			for(String fieldStr : fieldsStr) {
+				role2.put(fieldStr, role.get(fieldStr));
 			}
 			recordsToInsert.add(new AMS_Oscar_Change_History__c(Oscar__c= oscarId, Data__c= JSON.serialize(role2), Type__c= 'Owner')); 
 		}
