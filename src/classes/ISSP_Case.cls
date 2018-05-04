@@ -121,7 +121,7 @@ public without sharing class ISSP_Case {
             if (serviceIdInstance != null && serviceIdInstance.TIP_Portal_Service_Id__c != null){
                 appListId = serviceIdInstance.TIP_Portal_Service_Id__c;
             }else{
-                appListId = [SELECT Id FROM Portal_Applications__c WHERE Name = 'Agency Accreditation' LIMIT 1].id;
+                appListId = [SELECT Id FROM Portal_Applications__c WHERE Name = :TIP_Utils.CASE_AREA_TRANSPARENCY_IN_PAYMENTS LIMIT 1].id;
             }
 
 
@@ -132,10 +132,10 @@ public without sharing class ISSP_Case {
 
 
             if(appRightList != null && appRightList.size() == 1 && newCase.status == 'Draft' && newCase.CaseArea__c == TIP_Utils.CASE_AREA_TRANSPARENCY_IN_PAYMENTS){
-                if(newCase.Reason1__c == 'Payment Provider Management') return new PageReference('/ISSP_TIP_Home?caseId='+caseid);
+                if(newCase.Reason1__c == TIP_Utils.CASE_REASON_PAYMENT_PROVIDER_MANAGMENT) return new PageReference('/ISSP_TIP_Home?caseId='+caseid);
                 
                 Id prodId = [select TIP_Partner_Product__c from Case where id = :caseid limit 1].TIP_Partner_Product__c;
-                if(newCase.Reason1__c == 'Product management') return new PageReference('/ISSP_TIP_Home?prodId='+prodId);
+                if(newCase.Reason1__c == TIP_Utils.CASE_REASON_PRODUCT_MANAGEMENT) return new PageReference('/ISSP_TIP_Home?prodId='+prodId);
             }
             if (!newCase.Visible_on_ISS_Portal__c) {
                 PageReference pr = new PageReference('/ISSP_Homepage' + firstCommParam);
