@@ -1322,6 +1322,8 @@ public without sharing class AMS_Utils {
 
                 if(oscarPCICompliantMigrationProcesses.contains(oscar.Process__c)){
                     acc.Is_PCI_compliant__c = oscar.Is_PCI_compliant__c;
+                    if(acc.Is_PCI_compliant__c == 'Corporate Card')
+                        acc.ANG_PCI_compliance_expiry_date__c = Date.newInstance(2099, 12, 31);
                 }
 
                 accountsToUpdate.add(acc);

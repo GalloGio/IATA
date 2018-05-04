@@ -131,6 +131,7 @@
         <fields>ANG_Threshold_Level__c</fields>
         <fields>ANG_Direction__c</fields>
         <fields>ANG_RME_Last_Update__c</fields>
+        <fields>CREATED_DATE</fields>
         <relatedList>ANG_Risk_Alert__c.ANG_RHC_Information__c</relatedList>
         <sortField>ANG_RME_Last_Update__c</sortField>
         <sortOrder>Desc</sortOrder>

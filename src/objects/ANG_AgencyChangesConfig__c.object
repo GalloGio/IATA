@@ -130,6 +130,14 @@
         <type>Checkbox</type>
     </fields>
     <fields>
+        <fullName>TC_Trade_name__c</fullName>
+        <defaultValue>false</defaultValue>
+        <externalId>false</externalId>
+        <label>Trade name</label>
+        <trackTrending>false</trackTrending>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
         <fullName>TC_VMFR__c</fullName>
         <defaultValue>false</defaultValue>
         <externalId>false</externalId>
