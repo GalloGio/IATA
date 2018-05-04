@@ -2484,9 +2484,9 @@ SIS Charge Code Type.</description>
                     <label>Publications Online</label>
                 </value>
                 <value>
-                    <fullName>Reservations Services Manual</fullName>
+                    <fullName>Reservations Handbook</fullName>
                     <default>false</default>
-                    <label>Reservations Services Manual</label>
+                    <label>Reservations Handbook</label>
                 </value>
                 <value>
                     <fullName>Revenue Accounting Manual</fullName>
@@ -7740,7 +7740,7 @@ The product will only appear on the Online Store when the date entered in this f
                 <default>false</default>
             </values>
             <values>
-                <fullName>Reservations Services Manual</fullName>
+                <fullName>Reservations Handbook</fullName>
                 <default>false</default>
             </values>
             <values>
@@ -10714,7 +10714,7 @@ The product will only appear on the Online Store when the date entered in this f
                 <default>false</default>
             </values>
             <values>
-                <fullName>Reservations Services Manual</fullName>
+                <fullName>Reservations Handbook</fullName>
                 <default>false</default>
             </values>
             <values>
@@ -13783,7 +13783,7 @@ The product will only appear on the Online Store when the date entered in this f
                 <default>false</default>
             </values>
             <values>
-                <fullName>Reservations Services Manual</fullName>
+                <fullName>Reservations Handbook</fullName>
                 <default>false</default>
             </values>
             <values>
@@ -16813,7 +16813,7 @@ The product will only appear on the Online Store when the date entered in this f
                 <default>false</default>
             </values>
             <values>
-                <fullName>Reservations Services Manual</fullName>
+                <fullName>Reservations Handbook</fullName>
                 <default>false</default>
             </values>
             <values>

@@ -341,6 +341,7 @@ alert(result[0].errors.message);
     <webLinks>
         <fullName>Request_Balance_Update</fullName>
         <availability>online</availability>
+        <description>NOT Exposed, nor  internally, neither externally. However, button on portal page ISSP_ANG_RHC has the same label as this button</description>
         <displayType>button</displayType>
         <linkType>javascript</linkType>
         <masterLabel>Request Balance Update</masterLabel>
