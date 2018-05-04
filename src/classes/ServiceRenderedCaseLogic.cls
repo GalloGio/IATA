@@ -2,6 +2,7 @@ public class ServiceRenderedCaseLogic {
     
      public static final string airlineLeaving = 'Airline Leaving';
      public static final string airlineJoining = 'Airline Joining';
+     public static final string airlineChange = 'Airline Change';
      public static final string airlineSuspension = 'Airline Suspension Process';
      public static final String separator = '%%%__%%%';
    
@@ -77,36 +78,37 @@ public class ServiceRenderedCaseLogic {
     
    
    public static void saveTheServices(list<Case> caseWithServicesOK, map<String,Case_Reason_Service__c> ServicesPerReason){
-                             list<Case> joiningCases = new list<Case>();
-                             list<Case> leavingCases = new list<Case>();
-                             list<Id> ConsumerIdsFromNewCases = new list<Id>();
-                             list<Services_Rendered__c> newSRList = new list<Services_Rendered__c>();
+        list<Case> joiningCases = new list<Case>();
+        list<Case> leavingCases = new list<Case>();
+        List<Case> changingCases = new List<Case>();
+        list<Id> ConsumerIdsFromNewCases = new list<Id>();
+        list<Services_Rendered__c> newSRList = new list<Services_Rendered__c>();
                              
-                             for (Case c : caseWithServicesOK) {
-                                
-                                          if (c.CaseArea__c == airlineJoining  ) { 
-                                                    joiningCases.add(c);
-                                          } else if (c.CaseArea__c  == airlineLeaving || c.CaseArea__c == airlineSuspension ) {
-                                                    
-                                                    ConsumerIdsFromNewCases.add(c.AccountId);
-                                                    leavingCases.add(c);
-                                          }
+        for (Case c : caseWithServicesOK) {
+            if (c.CaseArea__c == airlineJoining  ) {
+                joiningCases.add(c);
+            } else if (c.CaseArea__c  == airlineLeaving || c.CaseArea__c == airlineSuspension ) {
+                ConsumerIdsFromNewCases.add(c.AccountId);
+                leavingCases.add(c);
+            } else if (c.CaseArea__c == airlineChange) {
+                changingCases.add(c);
+            }
 
-                                          if(!joiningCases.isEmpty())
-                                                newSRList.addAll(ServiceRenderedCaseLogic.joiningCase(joiningCases,ServicesPerReason));   
-                                           if(!leavingCases.isEmpty())
-                                                    newSRList.addAll(ServiceRenderedCaseLogic.leavingCases(leavingCases,
-                                                                                                            ConsumerIdsFromNewCases,
-                                                                                                            ServicesPerReason));                   
-                                   } 
+            if(!joiningCases.isEmpty()) 
+                newSRList.addAll(ServiceRenderedCaseLogic.joiningCase(joiningCases,ServicesPerReason));  
+
+            if(!leavingCases.isEmpty()) 
+                newSRList.addAll(ServiceRenderedCaseLogic.leavingCases(leavingCases, ConsumerIdsFromNewCases, ServicesPerReason));   
+        } 
+
+        if (!changingCases.isEmpty()) {
+            newSRList.addAll(servicesRenderendFromChangingCases(changingCases));
+        }
                                                
-                                if (newSRList.size() > 0) {
-                                     TransformationHelper.setComingFromCase();
-                                     upsert(newSRList);
-                                                                                                          
-                                 }
-                            
-   
+        if (newSRList.size() > 0) {
+            TransformationHelper.setComingFromCase();
+            upsert(newSRList);
+        }
    }
    
    public static void massInsertDuplicateCheck(list<Case> Cases, map<String,Case_Reason_Service__c> ServicesPerReason){
@@ -239,23 +241,20 @@ public class ServiceRenderedCaseLogic {
      
 
     private static list<Services_Rendered__c> joiningCase(list<Case> cases, map<String,Case_Reason_Service__c> ServicesPerReason ){
+
+        list<Services_Rendered__c> services = new list<Services_Rendered__c>();
+        for (Case c :cases) {
+
+            services.add(new Services_Rendered__c(Name = 'name shall be copied',
+                                                  Services_Rendered_to_Airline__c = c.AccountId,
+                                                  Services_Rendered_By__c = c.Provider__c,
+                                                  Services_Rendered_Type__c = ServicesPerReason.get(c.reason1__c).service__c,//c.Service__c,
+                                                  Services_Rendered_Status__c ='Active',
+                                                  Source_Case__c = c.Id,
+                                                  Joining_Date__c = Date.ValueOf(c.ClosedDate)));
+        }
             
-            
-            list<Services_Rendered__c> services = new list<Services_Rendered__c>();
-            for (Case c :cases) {
-                
-                services.add(new Services_Rendered__c(  Name = 'name shall be copied',
-                                                        Services_Rendered_to_Airline__c = c.AccountId,
-                                                        Services_Rendered_By__c = c.Provider__c,
-                                                        Services_Rendered_Type__c = ServicesPerReason.get(c.reason1__c).service__c,//c.Service__c,
-                                                        Services_Rendered_Status__c ='Active',
-                                                        Source_Case__c = c.Id,
-                                                        Joining_Date__c = Date.ValueOf(c.ClosedDate) 
-                                                        ));
-                
-            }
-            
-            return services;
+        return services;
         
     }
     
@@ -263,39 +262,74 @@ public class ServiceRenderedCaseLogic {
                                                             list<Id> ConsumerIdsFromNewCases,
                                                              map<String,Case_Reason_Service__c> ServicesPerReason ){
 
-             Map<string,map<Id,Services_Rendered__c>> activeServices = new Map<string,map<Id,Services_Rendered__c>>();                                               
-             for (Services_Rendered__c sr : [SELECT Id, Services_Rendered_to_Airline__c, Services_Rendered_Type__c
-                                                 FROM Services_Rendered__c 
-                                                 WHERE Services_Rendered_to_Airline__c IN :ConsumerIdsFromNewCases 
-                                                 AND Services_Rendered_Status__c = 'Active' ]) {
-                     if( activeServices.get(sr.Services_Rendered_Type__c) == null)
-                        activeServices.put(sr.Services_Rendered_Type__c,new map<Id,Services_Rendered__c>()); 
-                      activeServices.get(sr.Services_Rendered_Type__c).put(sr.Services_Rendered_to_Airline__c,sr);
-         
-             }
-
+        Map<string,map<Id,Services_Rendered__c>> activeServices = new Map<string,map<Id,Services_Rendered__c>>();                                               
+        for (Services_Rendered__c sr : [SELECT Id, Services_Rendered_to_Airline__c, Services_Rendered_Type__c
+                                        FROM Services_Rendered__c 
+                                        WHERE Services_Rendered_to_Airline__c IN :ConsumerIdsFromNewCases 
+                                        AND Services_Rendered_Status__c = 'Active' ]) {
+            if(activeServices.get(sr.Services_Rendered_Type__c) == null)
+                activeServices.put(sr.Services_Rendered_Type__c,new map<Id,Services_Rendered__c>()); 
+                activeServices.get(sr.Services_Rendered_Type__c).put(sr.Services_Rendered_to_Airline__c,sr);
+            }
             
             list<Services_Rendered__c> services = new list<Services_Rendered__c>();
             for (Case c :cases) {
-                    if(  c.AccountId <> null &&
-                         activeServices.get(ServicesPerReason.get(c.reason1__c).service__c) <> null &&
-                         activeServices.get(ServicesPerReason.get(c.reason1__c).service__c).get(c.AccountId ) <> null  ){
 
-                    services.add(new Services_Rendered__c(                  Name = 'name shall be copied', 
-                                                                            Services_Rendered_to_Airline__c = c.AccountId,
-                                                                            Services_Rendered_By__c = c.Provider__c,
-                                                                            Services_Rendered_Type__c = ServicesPerReason.get(c.reason1__c).service__c,//c.Service__c,
-                                                                            Services_Rendered_Status__c ='Inactive',
-                                                                            Inactivation_Airline_Participation_Case__c = c.Id,
-                                                                            Id = activeServices.get(ServicesPerReason.get(c.reason1__c).service__c).get(c.AccountId).Id,               
-                                                                            Leaving_Date__c  = Date.ValueOf(c.ClosedDate )
-                                                         ));
+                if(c.AccountId <> null && activeServices.get(ServicesPerReason.get(c.reason1__c).service__c) <> null &&
+                        activeServices.get(ServicesPerReason.get(c.reason1__c).service__c).get(c.AccountId ) <> null  ){
+
+                    services.add(new Services_Rendered__c(Name = 'name shall be copied', 
+                                                          Services_Rendered_to_Airline__c = c.AccountId,
+                                                          Services_Rendered_By__c = c.Provider__c,
+                                                          Services_Rendered_Type__c = ServicesPerReason.get(c.reason1__c).service__c,//c.Service__c,
+                                                          Services_Rendered_Status__c ='Inactive',
+                                                          Inactivation_Airline_Participation_Case__c = c.Id,
+                                                          Id = activeServices.get(ServicesPerReason.get(c.reason1__c).service__c).get(c.AccountId).Id, 
+                                                          Leaving_Date__c = Date.ValueOf(c.ClosedDate)));
                   //   throw new transformationException( 'asdasd   ' + activeServices.get(ServicesPerReason.get(c.reason1__c).service__c).get(c.AccountId).Id);
-                    }
+                }
             }
 
             return services;
-    
+    }
+
+    private static List<Services_Rendered__c> servicesRenderendFromChangingCases(List<Case> changingCases) {
+
+        List<String> airlines = new List<String>();
+        List<String> caseIds = new List<String>();
+        Map<String, String> casesMap = new Map<String, String>();
+
+        for (Case c: changingCases) {
+            if (c.Reason1__c == 'IATA Easy Pay') {
+                airlines.add(c.Account_Concerned__c);
+                caseIds.add(c.Id);
+                casesMap.put(c.Id, c.Account_Concerned__c);
+            }
+        }
+
+        List<AP_Process_Form__c> appForms = [SELECT Id, IATA_EasyPay_Opt_In_Opt_Out__c, Case__c
+                                             FROM AP_Process_Form__c
+                                             WHERE Case__c IN :caseIds];
+
+        List<Services_Rendered__c> services = [SELECT Id, ANG_IATA_EasyPay_Opt_out__c, Services_Rendered_to_Airline__c
+                                 FROM Services_Rendered__c
+                                 WHERE Services_Rendered_to_Airline__r.IATA_ISO_Country__r.ANG_Portal_Service__c != null
+                                    AND Services_Rendered_Type__c = 'BSP Participation'
+                                    AND Services_Rendered_to_Airline__c IN :airlines];
+
+        for (Services_Rendered__c s: services) {
+            for (AP_Process_Form__c a: appForms) {
+                if (casesMap.get(a.Case__c) == s.Services_Rendered_to_Airline__c) {
+                    if (a.IATA_EasyPay_Opt_In_Opt_Out__c == 'OUT' && !s.ANG_IATA_EasyPay_Opt_out__c) {
+                        s.ANG_IATA_EasyPay_Opt_out__c = true;
+                    } else if (a.IATA_EasyPay_Opt_In_Opt_Out__c == 'IN' && s.ANG_IATA_EasyPay_Opt_out__c) {
+                        s.ANG_IATA_EasyPay_Opt_out__c = false;
+                    }
+                }
+            }
+        }
+
+        return services;
     }
 
 
