@@ -1183,7 +1183,7 @@ public without sharing class ISSP_APProcess {
         	List<Case> childCases = new List<Case>();
         	for (Integer i = 1; i < countriesParam.size(); i++) {
         		childCase = new Case(RecordTypeId = RECORD_TYPE_ID,
-        							 Description = isoCountriesMap.get(countriesParam[0]).Name,
+        							 Description = isoCountriesMap.get(countriesParam[i]).Name,
         					    	 Status = 'For Review and Acceptance',
         							 CaseArea__c = 'Airline Change',
         							 Reason1__c = 'IATA Easy Pay',
@@ -1191,8 +1191,8 @@ public without sharing class ISSP_APProcess {
         							 IFAP_Country_ISO__c = isoCountriesMap.get(countriesParam[i]).ISO_Code__c,
         							 IATAcode__c = con.Account.IATACode__c,
         							 Visible_on_ISS_Portal__c = false,
-        							 BSPCountry__c = isoCountriesMap.get(countriesParam[0]).Name,
-        							 Region__c = isoCountriesMap.get(countriesParam[0]).Region__c,
+        							 BSPCountry__c = isoCountriesMap.get(countriesParam[i]).Name,
+        							 Region__c = isoCountriesMap.get(countriesParam[i]).Region__c,
         							 Account_Concerned__c = retrieveAirlineConcerned(hqAccount, con.Account.Airline_designator__c,
                                                                     con.Account.IATACode__c,
                                                                     isoCountriesMap.get(countriesParam[i]).ISO_Code__c, con.Account.Name, vHqAccountId),
