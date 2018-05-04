@@ -240,6 +240,11 @@
                 width: 80%;
                 float: left;
             }
+            .center {
+                margin: auto;
+                width: 100%;
+                padding: 10px;
+            }
         </style>
 
         <script>
@@ -256,7 +261,10 @@
                 console.log('no empty voffice ' + vOfficeType);
                 isAllowedCountry = 't';
             }
+
         </script>
+
+        <c:ISSP_WaitingStatus />
 
         <div class="container">
             <div id="contentWrapper">
@@ -274,7 +282,6 @@
                                 <apex:inputHidden id="currentIataCode" value="{!currentIataCode}"/>
 
                                 <apex:pageBlock id="step1Block" mode="edit">
-                                    <!--Step Progress bar start -->
 
                                     <div class="progress">
                                         <div class="progress-bar progress-bar" role="progressbar" aria-valuenow="20" aria-valuemin="0" aria-valuemax="100" style="width: 22%">
@@ -299,6 +306,13 @@
                                             <div>
                                                 <apex:outputPanel id="treeArea">
                                                     <div id="frmt">
+                                                    </div>
+
+                                                    <div id="help" style="margin-top : 20px;">
+                                                        <p><span class="{!DEFAULT_ICON}"></span> = {! $Label.ISSP_ANG_ANNUAL_STATUS_OPEN}</p>
+                                                        <p><span class="{!OK_ICON}"></span> = {! $Label.ISSP_ANG_ANNUAL_STATUS_CONFIRMED}</p>
+                                                        <p><span class="{!CONFIRMED_ICON}"></span> = {! $Label.ISSP_ANG_ANNUAL_STATUS_UPDATE_COMPLETED}</p>
+                                                        <p><span class="{!PROGRESS_ICON}"></span> = {! $Label.ISSP_ANG_ANNUAL_STATUS_UPDATE_PROGRESS}</p>
                                                     </div>
 
                                                     <script>
@@ -330,17 +344,28 @@
                                                     <apex:outputPanel id="workArea">
                                                         <apex:outputText value="{!$Label.ISSP_ANG_ANNUAL_REV_WORK_AREA_TITLE}"></apex:outputText>
                                                         <div class="panel panel-default">
-                                                            <c:ISSP_ANG_ANNUAL_REV_RO helperParam="{! helper}"/>
 
-                                                            <apex:outputPanel>
-                                                                <apex:commandButton styleclass="btn btn-default"
-                                                                    action="{!confirmDetails}" onclick=""
-                                                                    value="Confirm details are correct" reRender="treeArea"/>
-                                                                <apex:commandButton styleclass="btn btn-default"
-                                                                    action="{!updateDetails}" onclick=""
-                                                                    value="Update details"/>
+                                                            <apex:outputPanel id="roPlane">
+                                                                <c:ISSP_ANG_ANNUAL_REV_RO helperParam="{! helper}"/>
                                                             </apex:outputPanel>
 
+                                                            <div class="center" style="display:{!IF(currentAccount.status == 'O','inline-block','none')}">
+                                                                <apex:commandButton styleclass="btn btn-default"
+                                                                    action="{!confirmDetails}" onclick=""
+                                                                    status="WaitingStatus"
+                                                                    value="{! $Label.ISSP_ANG_ANNUAL_REV_CONFIRM_BTN}" reRender="treeArea, roPlane"/>
+
+                                                                <apex:commandButton styleclass="btn btn-default"
+                                                                    action="{!updateDetails}" onclick=""
+                                                                    value="{! $Label.ISSP_ANG_ANNUAL_REV_UPDATE_BTN}"/>
+                                                            </div>
+
+                                                            <div class="center" style="display:{!IF(OR(currentAccount.status == 'C', currentAccount.status == 'UC'),'inline-block','none')}">
+                                                                <apex:commandButton styleclass="btn btn-default"
+                                                                    action="{!discardDetails}" onclick=""
+                                                                    status="WaitingStatus"
+                                                                    value="{! $Label.ISSP_ANG_ANNUAL_REV_DISCARD_BTN}" reRender="treeArea, roPlane"/>
+                                                            </div>
                                                         </div>
                                                     </apex:outputPanel>
 

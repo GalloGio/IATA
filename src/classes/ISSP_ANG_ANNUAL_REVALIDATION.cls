@@ -28,12 +28,17 @@ public with sharing class ISSP_ANG_ANNUAL_REVALIDATION {
 	public static String CONFIRMED_ICON = 'glyphicon glyphicon-flag text-danger';
 	public static String PROGRESS_ICON = 'glyphicon glyphicon-edit text-danger';
 
+	public static String OPEN_STATUS = 'O';
+	public static String COMPLETED_STATUS = 'C';
+	public static String UPDATE_PROGRESS_STATUS = 'UP';
+	public static String UPDATE_COMPLETED_STATUS = 'UC';
+
 	public static JsonValue SELECTED_FALSE = new Selected(false);
 	public static JsonValue SELECTED_TRUE = new Selected(true);
 	public static JsonValue OPENED_TRUE = new Opened(true);
 	public static JsonValue MULTIPLE_FALSE = new Multiple(false);
 	public static JsonValue SELECTED_OPENED = new SelectedOpened(true, true);
-	public Account currentAccount {get; set;}
+	public ANG_AnnualRevRoCurrentAccount currentAccount {get; set;}
 
 	public ANG_AnnualRevRoHelper helper {get {return new ANG_AnnualRevRoHelper(currentAccount);} set;}
 
@@ -47,6 +52,7 @@ public with sharing class ISSP_ANG_ANNUAL_REVALIDATION {
 
 	public String caseId {get; set;}
 	public String currentIataCode {get; set;}
+	public boolean setHe {get; set;}
 
 	//
 	// INNER CLASSES
@@ -124,11 +130,14 @@ public with sharing class ISSP_ANG_ANNUAL_REVALIDATION {
 			this.multiple = multiple;
 		}
 	}
+
 	//
 	// ---------------------------------------
 	//
 
 	public ISSP_ANG_ANNUAL_REVALIDATION() {
+
+		this.setHe = true;
 
 		accountsMap = new Map<String, Account>();
 
@@ -140,8 +149,6 @@ public with sharing class ISSP_ANG_ANNUAL_REVALIDATION {
 
 		if (newCase != null) {
 			oscar = fetchOscar(newCase.Oscar__c);
-
-			System.debug('Alex : ' + oscar);
 
 			setAnnualRevalidationsMap();
 
@@ -180,7 +187,15 @@ public with sharing class ISSP_ANG_ANNUAL_REVALIDATION {
 
 	private String generateMenu() {
 
-		currentAccount = new Account();
+		//currentAccount = new ANG_AnnualRevRoCurrentAccount();
+
+		String currentIataCode = '';
+		JsonValue jsonValue;
+
+		if(currentAccount != null) {
+			currentIataCode = currentAccount.account.IataCode__c;
+		}
+
 
 		System.debug('alex parents : ' + parents);
 		System.debug('alex childs : ' + childs);
@@ -188,14 +203,30 @@ public with sharing class ISSP_ANG_ANNUAL_REVALIDATION {
 		List<AssociateEntity> children = new List<AssociateEntity>();
 
 		for(Account c : childsAccounts) {
-			children.add(new AssociateEntity(c.IATACode__c, getIcon(c.IATACode__c), SELECTED_FALSE));
+			if(currentIataCode == c.IATACode__c) {
+				jsonValue = SELECTED_TRUE;
+			} else {
+				jsonValue = SELECTED_FALSE;
+			}
+
+			children.add(new AssociateEntity(c.IATACode__c, getIcon(c.IATACode__c), jsonValue));
 		}
 
 		JSONGenerator gen = JSON.createGenerator(true);
 
 		List<HeadEntity> hier = new List<HeadEntity>();
 
-		HeadEntity he = new HeadEntity(headEntity.IATACode__c, getIcon(headEntity.IATACode__c), children, SELECTED_OPENED);
+		if(currentIataCode == '' || (currentIataCode == headEntity.IATACode__c)) {
+			jsonValue = SELECTED_OPENED;
+		} else {
+			jsonValue = OPENED_TRUE;
+		}
+
+		HeadEntity he = new HeadEntity(headEntity.IATACode__c, getIcon(headEntity.IATACode__c), children, jsonValue);
+
+		if(this.setHe) {
+			this.currentAccount = new ANG_AnnualRevRoCurrentAccount(accountsMap.get(headEntity.IATACode__c), getStatus(headEntity.IATACode__c));
+		}
 
 		hier.add(he);
 
@@ -210,6 +241,8 @@ public with sharing class ISSP_ANG_ANNUAL_REVALIDATION {
 		json = json.replaceAll('\n', '');
 
 		System.debug('alex : ' + json);
+
+		this.setHe = false;
 
 		return json;
 	}
@@ -248,8 +281,6 @@ public with sharing class ISSP_ANG_ANNUAL_REVALIDATION {
 
 		if(al.size() != 0) {
 			this.headEntity = al[0];
-
-			this.currentAccount = this.headEntity;
 
 			this.accountsMap.put(headEntity.IATACode__c, headEntity);
 
@@ -313,7 +344,7 @@ public with sharing class ISSP_ANG_ANNUAL_REVALIDATION {
 	public PageReference loadIataCode() {
 		System.debug('alex loadIataCode : ' + currentIataCode);
 
-		this.currentAccount = accountsMap.get(currentIataCode);
+		this.currentAccount = new ANG_AnnualRevRoCurrentAccount(accountsMap.get(currentIataCode), getStatus(currentIataCode));
 
 		return null;
 	}
@@ -331,11 +362,42 @@ public with sharing class ISSP_ANG_ANNUAL_REVALIDATION {
 
 		System.debug('alex this.oscar.IATA_Codes_OK__c : ' + this.oscar.IATA_Codes_OK__c);
 
-		update oscar;
+		try{
+			update oscar;
 
-		iataCodesOk.add(currentIataCode);
+			iataCodesOk.add(currentIataCode);
 
-		jsonTree = generateMenu();
+			jsonTree = generateMenu();
+
+		} catch(DmlException de) {
+			// All stays the same.
+		}
+
+		return null;
+	}
+
+	public PageReference discardDetails() {
+		System.debug('alex confirmDetails : ' + currentIataCode);
+
+		System.debug('alex before this.oscar.IATA_Codes_OK__c : ' + this.oscar.IATA_Codes_OK__c);
+
+		this.oscar.IATA_Codes_OK__c = this.oscar.IATA_Codes_OK__c.replaceAll(',' + currentIataCode + ',', '');
+		this.oscar.IATA_Codes_OK__c = this.oscar.IATA_Codes_OK__c.replaceAll(currentIataCode + ',', '');
+		this.oscar.IATA_Codes_OK__c = this.oscar.IATA_Codes_OK__c.replaceAll(',' + currentIataCode, '');
+		this.oscar.IATA_Codes_OK__c = this.oscar.IATA_Codes_OK__c.replaceAll(currentIataCode, '');
+
+		System.debug('alex this.oscar.IATA_Codes_OK__c : ' + this.oscar.IATA_Codes_OK__c);
+
+		try{
+			update oscar;
+
+			iataCodesOk.remove(currentIataCode);
+
+			jsonTree = generateMenu();
+
+		} catch(DmlException de) {
+			// All stays the same.
+		}
 
 		return null;
 	}
@@ -450,6 +512,18 @@ public with sharing class ISSP_ANG_ANNUAL_REVALIDATION {
 		}
 	}
 
+	private String getStatus(String iataCode) {
+		if (iataCodesOk.contains(iataCode)) {
+			return COMPLETED_STATUS;
+		} else if (iataCodesConfirmed.contains(iataCode)) {
+			return UPDATE_COMPLETED_STATUS;
+		} else if (iataCodesInProgress.contains(iataCode)) {
+			return UPDATE_PROGRESS_STATUS;
+		} else {
+			return OPEN_STATUS;
+		}
+	}
+
     private static Case fetchCase(String caseId) {
         List <Case> newCases = [Select Id, CaseNumber, Reason1__c, CaseArea__c, Status, BSPCountry__c, Country_concerned_by_the_query__c, Oscar__c,
 								   	   Contact.Name, Account.Id, Description, Subject, Account_Concerned__c, Account_Concerned__r.Top_Parent__c, Account.Name,
@@ -468,5 +542,18 @@ public with sharing class ISSP_ANG_ANNUAL_REVALIDATION {
 		if (auxOscars.size() > 0) return auxOscars[0];
 
 		return null;
+	}
+
+	public String getDEFAULT_ICON() {
+		return DEFAULT_ICON;
+	}
+	public String getOK_ICON() {
+		return OK_ICON;
+	}
+	public String getCONFIRMED_ICON() {
+		return CONFIRMED_ICON;
+	}
+	public String getPROGRESS_ICON() {
+		return PROGRESS_ICON;
 	}
 }
