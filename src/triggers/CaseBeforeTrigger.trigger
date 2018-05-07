@@ -1639,9 +1639,6 @@ trigger CaseBeforeTrigger on Case (before delete, before insert, before update) 
                         if (IFAPupdatedCase.Financial_Review_Result__c <> IFAPoldCase.Financial_Review_Result__c && !isIfapAuthorizedUser && !IFAPcurrentUserProfile.Name.toLowerCase().contains('system administrator')) {
                             IFAPupdatedCase.addError('Your user does not have the permission to change the Financial Review Result field.');
                         }
-                        //when case has an OSCAR attached must synchronize fields
-                        if(IFAPupdatedCase.Oscar__c != null)
-                            AMS_Utils.syncOSCARwithIFAP(IFAPoldCase, IFAPupdatedCase);
                     }
                 }
             }
@@ -2052,6 +2049,29 @@ trigger CaseBeforeTrigger on Case (before delete, before insert, before update) 
             if(AMS_TriggerExecutionManager.checkExecution(Case.getSObjectType(), 'CaseBeforeTrigger')){ 
                 AMS_OscarCaseTriggerHelper.blockForbbidenActions(trigger.New, trigger.oldMap);
                 AMS_OscarCaseTriggerHelper.copyDataFromOscar();
+
+                List<AMS_OSCAR__c> oscarsToUpdate = new List<AMS_OSCAR__c>();
+                Map<Id,Case> oscarIdcases = new Map<Id,Case>();
+
+                for(Case c: (List<Case>)Trigger.new){
+                    if(c.RecordTypeId == IFAPcaseRecordTypeID && c.Oscar__c != null){
+                        oscarIdcases.put(c.Oscar__c,c);
+                    }
+                }
+
+                for(AMS_OSCAR__C oscar : [select Id, Financial_Assessment_requested__c, Financial_Assessment_deadline__c, Assessment_Performed_Date__c, Financial_Review_Result__c from AMS_OSCAR__c where Id in :oscarIdcases.keySet()]){
+
+                    oscar = AMS_Utils.syncOSCARwithIFAP(trigger.oldMap.get(oscarIdcases.get(oscar.Id).Id),oscarIdcases.get(oscar.Id),oscar,false);
+
+                    if(oscar != null) {
+                        oscarsToUpdate.add(oscar);
+                    }
+                }
+                    
+                if(!oscarsToUpdate.isEmpty()){
+                    update oscarsToUpdate;
+                }
+                    
             }
         }
         /*AMS_OSCARCaseTrigger Trigger.isUpdate*/
