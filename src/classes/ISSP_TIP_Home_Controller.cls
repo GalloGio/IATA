@@ -146,8 +146,6 @@ public without sharing class ISSP_TIP_Home_Controller {
                 Pagereference pageref = Page.ISSP_TIP_TermsAndConditions;
                 pageref.setRedirect(true);
                 return pageref;
-            } else {
-                return null;
             }
         } catch(Exception e) {
             //if error happens return to home page
