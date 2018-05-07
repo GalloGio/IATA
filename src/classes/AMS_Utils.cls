@@ -1091,7 +1091,9 @@ public without sharing class AMS_Utils {
         Boolean mustUpdateOSCAR = false;
 
         if(oscar == null){
-            List<AMS_OSCAR__c> oscarlst = [select Financial_Assessment_requested__c, Financial_Assessment_deadline__c, Assessment_Performed_Date__c, Financial_Review_Result__c from AMS_OSCAR__c where Id = : updatedIFAPCase.OSCAR__c];
+            List<AMS_OSCAR__c> oscarlst = [select Financial_Assessment_requested__c, Financial_Assessment_deadline__c, Assessment_Performed_Date__c, Financial_Review_Result__c, 
+                                        Bank_Guarantee_amount__c, Reason_for_change_of_Financial_result__c, Requested_Bank_Guarantee_amount__c, Bank_Guarantee_Currency__c, Bank_Guarantee_deadline__c 
+                                        from AMS_OSCAR__c where Id = : updatedIFAPCase.OSCAR__c];
             if(!oscarlst.isEmpty())
                 oscar = oscarlst.get(0);
         }
