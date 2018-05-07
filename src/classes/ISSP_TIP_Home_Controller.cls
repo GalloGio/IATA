@@ -29,11 +29,13 @@ public without sharing class ISSP_TIP_Home_Controller {
     private Case newCase {get; set;}
     public boolean isNew {get; set;}
     public list<BinRangeRec> binRangeList{get; set;}
+    public BinRangeRec selectedBinRange{get;set;}
 
     public String[] paymentGuaranteeVal{get;set;}
     public String[] acceptedTransactionVal{get;set;}
     public Decimal binRangeLen{get;set;}
 
+    public boolean acceptedTaC{get;set;}
 
     //produc country config vars
     public list<ProvProdConfigRec> provProdConfList{get; set;}
@@ -42,7 +44,7 @@ public without sharing class ISSP_TIP_Home_Controller {
 
     public list<string> selectProvConfigCountriesList{get;set;}
     public set<string> filterCountryList{get;set;}// list of countries that will be removed from the multiSelect for adding new product country config  
-    public BinRangeRec selectedBinRange{get;set;}
+
 
     
     private map<string,Decimal> paymentNetworkMap{
@@ -122,7 +124,38 @@ public without sharing class ISSP_TIP_Home_Controller {
 
     //##======================Methods================================##  
 
-    public Pagereference checkForCase(){
+    public Pagereference initActions(){
+	User user = DAL_ISSP.getUser(Userinfo.getUserId());
+      
+        try {
+            Portal_Application_Right__c appRight = [
+                Select Id, Terms_Acceptance__c, Terms_Acceptance_Date__c,Right__c
+                From Portal_Application_Right__c
+                Where ContactId__c = :String.valueOf(user.ContactId).left(15)
+                And Portal_Application__r.Name = :TIP_Utils.PORTAL_SERVICE_NAME_TIP
+            ];
+
+            // If user has no rights to access to Account statements app then is redirected to Home
+            if (appRight.Right__c!='Access Granted') {
+                Pagereference pageref = new PageReference('/ISSP_Homepage');
+                pageref.setRedirect(true);
+                return pageref;
+            }
+            // if terms and conditions are not accepted is redirected to Terms page
+            if (!appRight.Terms_Acceptance__c) {
+                Pagereference pageref = Page.ISSP_TIP_TermsAndConditions;
+                pageref.setRedirect(true);
+                return pageref;
+            } else {
+                return null;
+            }
+        } catch(Exception e) {
+            //if error happens return to home page
+	    Pagereference pageref = new PageReference('/ISSP_Homepage');
+            pageref.setRedirect(true);
+            return pageref;
+        }
+
         if (!String.isBlank(Apexpages.currentPage().getParameters().get('caseId'))) return startEnrolmentAccount();
         else if (!String.isBlank(Apexpages.currentPage().getParameters().get('prodId'))) return NewEditProduct();
     
@@ -130,7 +163,7 @@ public without sharing class ISSP_TIP_Home_Controller {
     }
 
     private void popContact() {
-        User user = DAL_ISSP.getUser(Userinfo.getUserId());
+        user = DAL_ISSP.getUser(Userinfo.getUserId());
         system.debug('user.ContactId ' + user.ContactId);
         con = DAL_ISSP.getContact(user.ContactId);
         isAdmin = (con.User_Portal_Status__c == ANG_Risk_Helper.USER_PORTAL_STATUS_APPROVED_ADIM);
@@ -760,7 +793,7 @@ public without sharing class ISSP_TIP_Home_Controller {
                 newcase.RecordTypeid = TIP_Utils.CASE_PROCESS_IDFS_RECORD_TYPE_ID;
                 newcase.AccountId = usr.contact.accountId; 
                 newcase.Visible_on_ISS_Portal__c = true;
-                newcase.Reason = TIP_Utils.CASE_REASON_PRODUCT_MANAGEMENT ;
+                newcase.Reason1__c = TIP_Utils.CASE_REASON_PRODUCT_MANAGEMENT ;
                 newcase.CaseArea__c = TIP_Utils.CASE_AREA_TRANSPARENCY_IN_PAYMENTS; 
                 newcase.Status = status;
                 newcase.Subject = TIP_Utils.CASE_SUBJECT_NEW_PRODUCT_ENROLMENT+' - '+ newpp.name;
@@ -834,6 +867,38 @@ public without sharing class ISSP_TIP_Home_Controller {
         pr.setRedirect(true);
         return pr;
 
+    }
+
+
+
+    //============================== TERMS AND CONDITIONS METHODS =============================
+    public PageReference acceptTerms() {
+
+        Portal_Application_Right__c appRight = [
+            Select Id, Terms_Acceptance__c, Terms_Acceptance_Date__c,Right__c
+            From Portal_Application_Right__c
+            Where ContactId__c = :String.valueOf(user.ContactId).left(15)
+            And Portal_Application__r.Name = :TIP_Utils.PORTAL_SERVICE_NAME_TIP
+        ];
+        system.debug('PF'+acceptedTaC);
+        if (acceptedTaC == false || acceptedTaC==null) {
+            ApexPages.addmessage(new ApexPages.message(ApexPages.severity.WARNING,Label.ISSP_Accept_Terms_Warning));
+            return null;
+        }
+        
+        appRight.Terms_Acceptance__c = acceptedTaC;
+        appRight.Terms_Acceptance_Date__c = DateTime.now();
+        update appRight;
+
+        PageReference pageref = Page.ISSP_TIP_Home;
+        pageref.setRedirect(true);
+        return pageref;
+    }
+
+    public PageReference rejectTerms() {
+        PageReference pageref = new PageReference('/ISSP_Homepage');
+        pageref.setRedirect(true);
+        return pageref;
     }
 
 }
