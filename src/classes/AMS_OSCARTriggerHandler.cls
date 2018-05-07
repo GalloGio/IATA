@@ -3467,6 +3467,11 @@ public class AMS_OSCARTriggerHandler {
                         accountToAdd = true;
                     }
 
+                    if(oscar.Is_PCI_compliant__c == 'Corporate Card'){
+                        acct.ANG_PCI_compliance_expiry_date__c = Date.newInstance(2099, 12, 31);
+                        accountToAdd = true;
+                    }
+
                     if(accountToAdd)
                         accountsToUpdate.add(acct);
                 }
@@ -3489,21 +3494,21 @@ public class AMS_OSCARTriggerHandler {
                         aa.Status__c = 'Active';
                         formsOfPaymentToUpdate.add(aa);
                     }else if(aa.Status__c == 'Active' && oscar.Is_PCI_compliant__c == 'Nil CC'){
-                        aa.Status__c = 'Non-Active';
+                        aa.Status__c = 'Not Authorized';
                         formsOfPaymentToUpdate.add(aa);
                     }
                 }
 
             }
 
-            if(oscar.Is_PCI_compliant__c <> 'Corporate Card'){ //NEWGEN-3214
+            if(oscar.Is_PCI_compliant__c <> 'Corporate Card' && oscar.Is_PCI_compliant__c <> 'Nil CC'){ //NEWGEN-3214
                 
-            String changeCodeName = oscar.Is_PCI_compliant__c == 'No' ? 'CCA' : 'CCR';
+                String changeCodeName = oscar.Is_PCI_compliant__c == 'No' ? 'CCA' : 'CCR';
 
-            ANG_OscarProcessHelper.EntityUpdater updater = ANG_OscarProcessHelper.createChangeCodeForFOP(null, oscar, [Select Id, Status__c from Account where id in:oscarAccountsMap.get(oscar.Id)], changeCodeName);
-            ANG_OscarProcessHelper.updateUpdater(updater);
+                ANG_OscarProcessHelper.EntityUpdater updater = ANG_OscarProcessHelper.createChangeCodeForFOP(null, oscar, [Select Id, Status__c from Account where id in:oscarAccountsMap.get(oscar.Id)], changeCodeName);
+                ANG_OscarProcessHelper.updateUpdater(updater);
 
-        }
+            }
 
         }
 
