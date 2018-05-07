@@ -144,12 +144,14 @@
         		submitOptInOutServerName(optinOut, JSON.stringify(countries), effectiveDate);
         		//falta dar clean ao modal
         		document.querySelector("[Id$='requestSentMsg']").style.display = '';
+            document.querySelector("[Id$='submitOptInOutBtn']").disabled = true;
             setTimeout(closeAll, 5000);
       	}
     }
 
     function closeAll() {
         document.querySelector("[Id$='requestSentMsg']").style.display = 'none';
+        document.querySelector("[Id$='submitOptInOutBtn']").disabled = false;
         optInOut();
     }
 
@@ -198,14 +200,11 @@
       <div align="center" style="color:#00AEEF; padding-bottom:5cm;padding-top:1cm;">
         <img src="https://iata--c.eu3.content.force.com/servlet/servlet.ImageServer?id=01520000000zGve&oid=00D2000000008TF&lastMod=1401896785000"/><br/>
         <h3>You don't have any pending Airline Participation {!IF(APprocess=='chg', 'Change Requests', IF(APprocess=='bnk', 'change of bank account details', 'Joining Processes'))}</h3><br/>
-        <h3 style="color:#FFAE00"><a href="/ISSP_APProcess?proc={!APprocess}&retURL=/ISSP_APCases">Create a new one</a></h3>
+
         <div class="row">
-          <div class="column">
-            <a class="btn btn-primary btn-block" href="/ISSP_APProcess?proc={!APprocess}&retURL=/ISSP_APCases">Create a new Airline Partcipation Change Request</a>
-          </div>
-          <div class="column">
-            <button type="button" id="modalButton" onclick="optInOut();" class="btn btn-primary btn-block">IATA EasyPay Opt-In / Out</button>
-          </div>
+          
+            <a class="btn btn-primary" href="/ISSP_APProcess?proc={!APprocess}&retURL=/ISSP_APCases">New Joining Request</a>&nbsp;<button style="display: {!IF(APprocess=='chg','','none')};" type="button" id="modalButton" onclick="optInOut();" class="btn btn-primary">IATA EasyPay Opt-In / Out</button>
+          
         </div>
       </div>
     </apex:pageBlock>
