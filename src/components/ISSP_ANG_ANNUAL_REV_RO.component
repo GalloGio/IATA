@@ -1,5 +1,6 @@
-<apex:component controller="ANG_AnnualRevRo">
-    <apex:attribute name="helperParam" type="ANG_AnnualRevRoHelper" description="Helper" assignTo="{! helper}" />
+<apex:component>
+    <!--apex:attribute name="helperParam" type="ANG_AnnualRevRoHelper" description="Helper" assignTo="{! helper}" /-->
+    <apex:attribute name="helper" type="ANG_AnnualRevRoHelper" description="Helper" />
 
     <style>
         .workArea {

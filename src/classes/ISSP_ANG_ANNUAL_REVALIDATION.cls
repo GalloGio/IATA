@@ -111,71 +111,6 @@ public with sharing class ISSP_ANG_ANNUAL_REVALIDATION {
         }
 
 		jsonTree = generateMenu();
-
-	}
-
-	private String generateMenu() {
-
-		//currentAccount = new ANG_AnnualRevRoCurrentAccount();
-
-		String currentIataCode = '';
-		JsonValue jsonValue;
-
-		if(currentAccount != null) {
-			currentIataCode = currentAccount.account.IataCode__c;
-		}
-
-
-		System.debug('alex parents : ' + parents);
-		System.debug('alex childs : ' + childs);
-
-		List<AssociateEntity> children = new List<AssociateEntity>();
-
-		for(Account c : childsAccounts) {
-			if(currentIataCode == c.IATACode__c) {
-				jsonValue = SELECTED_TRUE;
-			} else {
-				jsonValue = SELECTED_FALSE;
-			}
-
-			children.add(new AssociateEntity(c.IATACode__c, getIcon(c.IATACode__c), jsonValue));
-		}
-
-		JSONGenerator gen = JSON.createGenerator(true);
-
-		List<HeadEntity> hier = new List<HeadEntity>();
-
-		if(currentIataCode == '' || (currentIataCode == headEntity.IATACode__c)) {
-			jsonValue = SELECTED_OPENED;
-		} else {
-			jsonValue = OPENED_TRUE;
-		}
-
-		HeadEntity he = new HeadEntity(headEntity.IATACode__c, getIcon(headEntity.IATACode__c), children, jsonValue);
-
-System.debug('alex generateMenu');
-
-		if(this.setHe) {
-			this.currentAccount = new ANG_AnnualRevRoCurrentAccount(accountsMap.get(headEntity.IATACode__c), getStatus(headEntity.IATACode__c), getForm(headEntity.IATACode__c));
-		}
-
-		hier.add(he);
-
-		Data data = new data(hier, MULTIPLE_FALSE);
-
-		gen.writeStartObject();
-		gen.writeObjectField('core', data);
-		gen.writeEndObject();
-
-		String json = gen.getAsString();
-
-		json = json.replaceAll('\n', '');
-
-		System.debug('alex : ' + json);
-
-		this.setHe = false;
-
-		return json;
 	}
 
 	private void setParentsAndChilds() {
@@ -747,12 +682,7 @@ System.debug('alex generateMenu');
 		}
 		return aux;
     }
-/*
-		private static Id rtAccreditContPreviousOwner = Schema.SObjectType.AMS_Accreditation_Contact__c.getRecordTypeInfosByName().get('Previous Owner').getRecordTypeId();
-	private static Id rtAccreditContCurrentOwner = Schema.SObjectType.AMS_Accreditation_Contact__c.getRecordTypeInfosByName().get('Current Owner').getRecordTypeId();
-	private static Id rtAccreditContPreviousCompanyOwner = Schema.SObjectType.AMS_Accreditation_Contact__c.getRecordTypeInfosByName().get('Previous Company Owner').getRecordTypeId();
-	private static Id rtAccreditContCurrentCompanyOwner
-*/
+
 	public String getDEFAULT_ICON() {
 		return DEFAULT_ICON;
 	}
@@ -765,6 +695,70 @@ System.debug('alex generateMenu');
 	public String getPROGRESS_ICON() {
 		return PROGRESS_ICON;
 	}
+
+
+	private String generateMenu() {
+
+		System.debug('alex generateMenu');
+
+		String currentIataCode = '';
+		JsonValue jsonValue;
+
+		if(currentAccount != null) {
+			currentIataCode = currentAccount.account.IataCode__c;
+		}
+
+
+		System.debug('alex parents : ' + parents);
+		System.debug('alex childs : ' + childs);
+
+		List<AssociateEntity> children = new List<AssociateEntity>();
+
+		for(Account c : childsAccounts) {
+			if(currentIataCode == c.IATACode__c) {
+				jsonValue = SELECTED_TRUE;
+			} else {
+				jsonValue = SELECTED_FALSE;
+			}
+
+			children.add(new AssociateEntity(c.IATACode__c, getIcon(c.IATACode__c), jsonValue));
+		}
+
+		JSONGenerator gen = JSON.createGenerator(true);
+
+		List<HeadEntity> hier = new List<HeadEntity>();
+
+		if(currentIataCode == '' || (currentIataCode == headEntity.IATACode__c)) {
+			jsonValue = SELECTED_OPENED;
+		} else {
+			jsonValue = OPENED_TRUE;
+		}
+
+		HeadEntity he = new HeadEntity(headEntity.IATACode__c, getIcon(headEntity.IATACode__c), children, jsonValue);
+
+		if(this.setHe) {
+			this.currentAccount = new ANG_AnnualRevRoCurrentAccount(accountsMap.get(headEntity.IATACode__c), getStatus(headEntity.IATACode__c), getForm(headEntity.IATACode__c));
+		}
+
+		hier.add(he);
+
+		Data data = new data(hier, MULTIPLE_FALSE);
+
+		gen.writeStartObject();
+		gen.writeObjectField('core', data);
+		gen.writeEndObject();
+
+		String json = gen.getAsString();
+
+		json = json.replaceAll('\n', '');
+
+		System.debug('alex : ' + json);
+
+		this.setHe = false;
+
+		return json;
+	}
+
 
 	//
 	// INNER CLASSES
