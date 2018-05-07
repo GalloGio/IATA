@@ -765,12 +765,13 @@ trigger CaseAfterTrigger on Case (after delete, after insert, after undelete, af
 			string airlineLeaving = 'Airline Leaving';
 			string airlineJoining = 'Airline Joining';
 			string airlineSuspension = 'Airline Suspension Process';
+			String airlineChange = 'Airline Change';
 			String separator = '%%%__%%%';
 			string APCaseRTID =Schema.SObjectType.Case.RecordTypeInfosByName.get('IDFS Airline Participation Process').RecordTypeId ;
 			//date pretrasfomrationDate =  date.newinstance(2013, 11, 30);
 			list<case> casesToTrigger = new list<Case>();
 			for(case c:trigger.new){
-				if(!TransformationHelper.triggerOnCaseNSerRen &&  c.recordtypeId == APCaseRTID && (c.CaseArea__c == airlineJoining || c.CaseArea__c  == airlineLeaving || c.CaseArea__c  == airlineSuspension))
+				if(!TransformationHelper.triggerOnCaseNSerRen &&  c.recordtypeId == APCaseRTID && (c.CaseArea__c == airlineJoining || c.CaseArea__c  == airlineLeaving || c.CaseArea__c  == airlineSuspension || c.CaseArea__c == airlineChange))
 			    	casesToTrigger.add(c);
 			}
 			if(!casesToTrigger.isEmpty()){

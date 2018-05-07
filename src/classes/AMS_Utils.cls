@@ -121,6 +121,7 @@ public without sharing class AMS_Utils {
     public static final String ANG_LOCATION_TYPE_DIFFLEGALENTITY =  'Location type to different legal entity';
     public static final String ANG_LOCATION =  'Location';
     public static final String ANG_HIERARCHY =  'Hierarchy';
+    public static final String ANG_TRADE_NAME = 'Trade name';
     public static final String ANG_VMFR =  'VMFR';
     public static final String ANG_ACCREDITATION_TYPE = 'Accreditation type';
 
