@@ -963,7 +963,7 @@ public without sharing class ISSP_Registration {
                     if (serviceIdInstance != null && serviceIdInstance.TIP_Portal_Service_Id__c != null){
                         appListId = serviceIdInstance.TIP_Portal_Service_Id__c;
                     }else{
-                        appListId = [SELECT Id FROM Portal_Applications__c WHERE Name = 'Agency Accreditation' LIMIT 1].id;
+                        appListId = [SELECT Id FROM Portal_Applications__c WHERE Name = TIP_Utils.PORTAL_SERVICE_NAME_TIP LIMIT 1].id;
                     }
 
 
