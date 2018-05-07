@@ -1,10 +1,10 @@
 public class ANG_AgencyChangesConfigHelper{
 
 	public class ChangesConfig {
-		public AMS_AgencyChangesConfig__c config;
+		public ANG_AgencyChangesConfig__c config;
 		public Set<String> changeCombination;
 
-		private ChangesConfig(AMS_AgencyChangesConfig__c c){
+		private ChangesConfig(ANG_AgencyChangesConfig__c c){
 			this.config = c;
 			changeCombination = new Set<String>();
 		}
@@ -15,10 +15,10 @@ public class ANG_AgencyChangesConfigHelper{
 			if(agencyChangesConfigData == null){
 				agencyChangesConfigData = new List<ChangesConfig>();
 
-				for (AMS_AgencyChangesConfig__c c : AMS_AgencyChangesConfig__c.getall().values()) {
+				for (ANG_AgencyChangesConfig__c c : ANG_AgencyChangesConfig__c.getall().values()) {
 					ChangesConfig config = new ChangesConfig(c);
 
-					for (Schema.SObjectField field : Schema.SObjectType.AMS_AgencyChangesConfig__c.fields.getMap().values()) {
+					for (Schema.SObjectField field : Schema.SObjectType.ANG_AgencyChangesConfig__c.fields.getMap().values()) {
 
 						Schema.DescribeFieldResult fd = field.getDescribe();
 						if (fd.getName().startsWithIgnoreCase('TC_') && Boolean.valueOf(c.get(fd.getName()))) config.changeCombination.add(fd.getLabel());
@@ -43,7 +43,7 @@ public class ANG_AgencyChangesConfigHelper{
 
 		if(oscar.Process__c == 'BANK.ACCOUNT.CHANGES') return null;
 		else{
-			ChangesConfig c = getConfig(oscar.Type_of_change__c);
+			ChangesConfig c = getConfig(oscar.ANG_Type_Of_Change__c);
 
 			if(c == null) oscar.addError('Type of Change contains an invalid combination of values.');
 
@@ -71,7 +71,7 @@ public class ANG_AgencyChangesConfigHelper{
 
 	}
 
-	public static void setNotApplicableSteps(AMS_AgencyChangesConfig__c config, AMS_OSCAR__c oscar) {
+	public static void setNotApplicableSteps(ANG_AgencyChangesConfig__c config, AMS_OSCAR__c oscar) {
 		if(config == null || config.TCA_Not_Applicable_Steps__c == null) return;
 		
 		for (String step : config.TCA_Not_Applicable_Steps__c.split(';')){

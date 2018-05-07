@@ -477,8 +477,8 @@ public class AMS_ChangeCodesHelper {
             AMS_ChangeCodes__c cc1 = new AMS_ChangeCodes__c(Integration_RecId__c = 'C', Name='AMS-VR-VRR', Change_Code__c = 'VRR', Account_status_change__c = null);
             AMS_ChangeCodes__c cc2 = new AMS_ChangeCodes__c(Integration_RecId__c = 'C', Name='AMS-VR-NOT', Change_Code__c = 'NOT', Account_status_change__c = '6');
             AMS_ChangeCodes__c cc3 = new AMS_ChangeCodes__c(Integration_RecId__c = 'C', Name='AMS-VR-CLO', Change_Code__c = 'CLO', Account_status_change__c = '0');
-            AMS_ChangeCodes__c cc4 = new AMS_ChangeCodes__c(Integration_RecId__c = 'C', Name='AMS-VR-REI', Change_Code__c = 'REI', Account_status_change__c = '9');
-            AMS_ChangeCodes__c cc5 = new AMS_ChangeCodes__c(Integration_RecId__c = 'C', Name='AMS-VR-NTW', Change_Code__c = 'NTW', Account_status_change__c = '9');
+            AMS_ChangeCodes__c cc4 = new AMS_ChangeCodes__c(Integration_RecId__c = 'C', Name='AMS-VR-REI', Change_Code__c = 'REI', Account_status_change__c = '9', Reason_Code__c = '91');
+            AMS_ChangeCodes__c cc5 = new AMS_ChangeCodes__c(Integration_RecId__c = 'C', Name='AMS-VR-NTW', Change_Code__c = 'NTW', Account_status_change__c = '9', Reason_Code__c = '91');
             AMS_ChangeCodes__c cc6 = new AMS_ChangeCodes__c(Integration_RecId__c = 'C', Name='AMS-VR-VRW', Change_Code__c = 'VRW', Account_status_change__c = null);
             upsert new List<AMS_ChangeCodes__c>{cc1, cc2, cc3, cc4, cc5, cc6};
         }

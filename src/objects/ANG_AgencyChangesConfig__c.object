@@ -85,7 +85,7 @@
         <fullName>TC_Location_Type__c</fullName>
         <defaultValue>false</defaultValue>
         <externalId>false</externalId>
-        <label>Location Type</label>
+        <label>Location type</label>
         <trackTrending>false</trackTrending>
         <type>Checkbox</type>
     </fields>
