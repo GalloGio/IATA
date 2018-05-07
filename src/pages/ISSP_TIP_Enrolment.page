@@ -364,6 +364,9 @@
                               <apex:commandButton action="{!saveAsDraft}" value="{!$Label.ISSP_Save_Draft}" style="float:right" />
                            </apex:pageBlockButtons>
                          -->
+                            <div class="alert alert-warning"  role="alert">
+                                {!$Label.ISSP_AMS_Step1_Two_Weeks_Expiry}
+                            </div> 
 
 
                            <apex:pageBlockButtons >

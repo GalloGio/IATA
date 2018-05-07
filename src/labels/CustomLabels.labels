@@ -21027,6 +21027,13 @@ This Dashboard allows each airline Treasury Team to gain full visibility of thei
         <value>All unsaved changes will be discarded. Are you sure you want to leave the page?</value>
     </labels>
     <labels>
+        <fullName>ISSP_TIP_HOLD_TO_MULTISELECT</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_TIP_HOLD_TO_MULTISELECT</shortDescription>
+        <value>Hold down the Ctrl (windows) / Command (Mac) button to select multiple options.</value>
+    </labels>
+    <labels>
         <fullName>ISSP_TIP_Home_Account_must_be_Payment_Provider</fullName>
         <language>en_US</language>
         <protected>false</protected>

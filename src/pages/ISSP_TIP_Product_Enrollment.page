@@ -74,22 +74,29 @@
         <script src="{!URLFOR($Resource.bootstrapselect, '/bootstrap-select-1.12.2/js/bootstrap-select.js')}"></script>
         <script type="text/javascript"> 
                $(document).ready(function() {
-              // $(window).on("load",function() {
                 
-                //disable bin range
-                var namef = $('[id$="nameField"]');
-                var paymenNet = $('[id$="paymentNet"]');
-                if(namef.val() =='' || paymenNet.val()=='')
-                   $('[id$="newBinRangebtn"]').toggleClass('btnDisabled', true).attr('disabled', 'disabled');
-                   
-                   
+                    //disable bin range
+                    var namef = $('[id$="nameField"]');
+                    var paymenNet = $('[id$="paymentNet"]');
+                    if(namef.val() =='' || paymenNet.val()=='')
+                       $('[id$="newBinRangebtn"]').toggleClass('btnDisabled', true).attr('disabled', 'disabled');
+                       
 
-               })
+                    //change message CSS
+                    $('.errorM3').addClass('alert alert-warning');  
+                    $('.errorM3').removeClass('errorM3');  
+
+
+                    if({!editMode}){ //outs mandatory * on edit mode
+                        $("label.mandFld").each(function(index){
+                            $(this).text($(this).text()+'*');
+                        });
+                   }
+               });
+
                 function confirmDelete(opt1){
                     var msg=null;
-                   
                     msg= bootbox.confirm({
-
                             message:'{!$Label.ISSP_AMS_CONFIRM_DELETE}',
                             buttons: {
                                    confirm: {
@@ -165,12 +172,11 @@
                         });
                 }
 
-                function validateToSubmit() {
-                    var elements = document.getElementsByClassName("mandFld");
+                function validateToSubmit() {                 
                     var hasErrors=false;
                 
 
-                    $(".mandFld").each(function(index){
+                    $("input.mandFld").each(function(index){
                         if($(this).val() =='' ){
                             if($(this).next('.errorMsg').val()==undefined)
                                 $(this).after('<div class="errorMsg">{!$Label.IEC_Required_Field_Error_Msg}</div>');
@@ -181,7 +187,7 @@
                         } 
                     });
 
-                    $(".mandFldcb").each(function(index){
+                    $("input.mandFldcb").each(function(index){
                         if($(this).find($("input[type='radio']:checked")).length ==0 ){
                             if($(this).next('.errorMsg').val()==undefined)
                                 $(this).after('<div class="errorMsg">{!$Label.IEC_Required_Field_Error_Msg}</div>');
@@ -203,6 +209,12 @@
                 <div id="contentWrapper">
                     <c:ISSP_CustomNavigation />    
                     <div class="panel-primary">
+                        <apex:pageBlock rendered="{!editMode}">
+                            <div class="alert alert-warning"  role="alert">
+                                  {!$Label.ISSP_AMS_Step1_Two_Weeks_Expiry}
+                            </div> 
+                        </apex:pageBlock>
+                    
                         <div class="panel-heading head_panel_green">
                            <h3 class="panel-title">Partner Product Details</h3>
                         </div>
@@ -214,7 +226,7 @@
                                     <apex:pageBlockButtons>
                                         <apex:actionFunction name="submitProduct" action="{!submitProduct}"/>
                                         <apex:commandButton  onclick="if(confirmSubmit())return true;" value="{!$Label.ISSP_TIP_SUBMIT_TO_IATA}" rendered="{!editMode}" reRender="inHid"   />
-                                        <apex:commandButton action="{!saveDraft}" value="{!$Label.ISSP_TIP_SAVE_DRAFT}" rendered="{!editMode}"/>
+                                        <apex:commandButton action="{!saveDraft}" value="{!$Label.ISSP_Save_Draft}" rendered="{!editMode}"/>
                                         <apex:commandButton onclick="confirmCancelExitPage();return false;"  value="{!$Label.ISSP_Cancel}" rendered="{!editMode}"/> 
                                         <apex:actionFunction name="cancelLeavePage" action="{!cancelNewEditProd}" immediate="true"/>
                                         <apex:commandButton action="{!cancelNewEditProd}" immediate="true" value="{!$Label.ISSP_TIP_RETURN_HOMEPAGE}" rendered="{!!editMode}"/>                                                            
@@ -228,7 +240,7 @@
                                             </apex:outputPanel> 
                                         </apex:pageBlockSectionItem>
                                         <apex:pageBlockSectionItem labelStyle="width:26%" labelStyleClass="agencyLegalDetailsComponent" dataStyleClass="agencyLegalDetailsComponent">
-                                            <apex:outputLabel value="{!$ObjectType.Partner_products__c.fields.PP_Settlement_terms__c.Label}*"/>
+                                            <apex:outputLabel html-class="mandFld" value="{!$ObjectType.Partner_products__c.fields.PP_Settlement_terms__c.Label}"/>
                                             <apex:outputPanel >                                        
                                                 <apex:inputField html-class="mandFld" value="{!newpp.PP_Settlement_terms__c}" rendered="{!editMode}"/>
                                                 <apex:outputField value="{!newpp.PP_Settlement_terms__c}" rendered="{!!editMode}"/>
@@ -242,7 +254,7 @@
                                             </apex:outputPanel>
                                         </apex:pageBlockSectionItem>
                                         <apex:pageBlockSectionItem labelStyle="width:26%" labelStyleClass="agencyLegalDetailsComponent" dataStyleClass="agencyLegalDetailsComponent" >
-                                            <apex:outputLabel value="{!$ObjectType.Partner_products__c.fields.is_PCI_DSS_required__c.Label}*"/>
+                                            <apex:outputLabel html-class="mandFld" value="{!$ObjectType.Partner_products__c.fields.is_PCI_DSS_required__c.Label}"/>
                                             <apex:selectRadio html-class="mandFldcb" style="width:100px;margin-left:20px;" value="{!newpp.is_PCI_DSS_required__c}" readonly="{!!editMode}">
                                                 <apex:selectOption itemValue="{!UPPER($Label.ISSP_Yes)}" itemLabel="{!$Label.ISSP_Yes}" itemDisabled="{!!editMode}"/>
                                                 <apex:selectOption itemValue="{!UPPER($Label.ISSP_No)}" itemLabel="{!$Label.ISSP_No}"  itemDisabled="{!!editMode}"/>
@@ -253,28 +265,28 @@
                                             <apex:outputField value="{!newpp.PP_Payment_Product_Network_type__c}"/>
                                         </apex:pageBlockSectionItem>
                                         <apex:pageBlockSectionItem labelStyle="width:26%" labelStyleClass="agencyLegalDetailsComponent" dataStyleClass="agencyLegalDetailsComponent" >
-                                            <apex:outputLabel value="{!$ObjectType.Partner_products__c.fields.PP_Chargeback_airlines__c.Label}*"/>
+                                            <apex:outputLabel html-class="mandFld" value="{!$ObjectType.Partner_products__c.fields.PP_Chargeback_airlines__c.Label}"/>
                                             <apex:selectRadio html-class="mandFldcb" style="width:100px;margin-left:20px;" value="{!newpp.PP_Chargeback_airlines__c}"  readonly="{!!editMode}">
                                                 <apex:selectOption itemValue="Yes" itemLabel="{!$Label.ISSP_Yes}" itemDisabled="{!!editMode}" />
                                                 <apex:selectOption itemValue="No" itemLabel="{!$Label.ISSP_No}"  itemDisabled="{!!editMode}"/>
                                             </apex:selectRadio>                                          
                                         </apex:pageBlockSectionItem>
                                         <apex:pageBlockSectionItem labelStyle="width:26%" labelStyleClass="agencyLegalDetailsComponent" dataStyleClass="agencyLegalDetailsComponent" >
-                                            <apex:outputLabel value="{!$ObjectType.Partner_products__c.fields.PP_Pay_in_model__c.Label}*"/>
+                                            <apex:outputLabel value="{!$ObjectType.Partner_products__c.fields.PP_Pay_in_model__c.Label}" html-class="mandFld"/>
                                             <apex:outputPanel >                                        
                                                 <apex:inputField  value="{!newpp.PP_Pay_in_model__c}" rendered="{!editMode}" html-class="mandFld" styleClass="sectionItem" />
                                                 <apex:outputField value="{!newpp.PP_Pay_in_model__c}" rendered="{!!editMode}" />
                                             </apex:outputPanel>
                                         </apex:pageBlockSectionItem>
                                         <apex:pageBlockSectionItem labelStyle="width:26%" labelStyleClass="agencyLegalDetailsComponent" dataStyleClass="agencyLegalDetailsComponent" >
-                                            <apex:outputLabel value="{!$ObjectType.Partner_products__c.fields.PP_Chargeback_airlines_duration__c.Label}*"/>
+                                            <apex:outputLabel value="{!$ObjectType.Partner_products__c.fields.PP_Chargeback_airlines_duration__c.Label}" html-class="mandFld"/>
                                             <apex:outputPanel >                                        
                                                 <apex:inputField html-class="mandFld" value="{!newpp.PP_Chargeback_airlines_duration__c}" rendered="{!editMode}"/>
                                                 <apex:outputField value="{!newpp.PP_Chargeback_airlines_duration__c}" rendered="{!!editMode}"/>
                                             </apex:outputPanel>                                        
                                         </apex:pageBlockSectionItem>
                                         <apex:pageBlockSectionItem labelStyle="width:26%" labelStyleClass="agencyLegalDetailsComponent" dataStyleClass="agencyLegalDetailsComponent" >
-                                            <apex:outputLabel value="{!$ObjectType.Partner_products__c.fields.PP_Category__c.Label}*"/>
+                                            <apex:outputLabel value="{!$ObjectType.Partner_products__c.fields.PP_Category__c.Label}" html-class="mandFld"/>
                                             <apex:outputPanel >                                        
                                                 <apex:inputField value="{!newpp.PP_Category__c}" html-class="mandFld" rendered="{!editMode}" styleClass="sectionItem"/>
                                                 <apex:outputField value="{!newpp.PP_Category__c}" rendered="{!!editMode}"/>
@@ -303,7 +315,7 @@
                                             </apex:outputPanel>
                                         </apex:pageBlockSectionItem>
                                         <apex:pageBlockSectionItem labelStyle="width:26%" labelStyleClass="agencyLegalDetailsComponent" dataStyleClass="agencyLegalDetailsComponent" >
-                                            <apex:outputLabel value="{!$ObjectType.Partner_products__c.fields.PP_VAN_Type__c.Label}*"/>
+                                            <apex:outputLabel value="{!$ObjectType.Partner_products__c.fields.PP_VAN_Type__c.Label}" html-class="mandFld"/>
                                             <apex:outputPanel >                                        
                                                 <apex:inputField value="{!newpp.PP_VAN_Type__c}" html-class="mandFld" rendered="{!editMode}" styleClass="sectionItem"/>
                                                 <apex:outputField value="{!newpp.PP_VAN_Type__c}" rendered="{!!editMode}"/>
@@ -317,9 +329,9 @@
                                             </apex:outputPanel>
                                         </apex:pageBlockSectionItem>
                                         <apex:pageBlockSectionItem labelStyle="width:26%" labelStyleClass="agencyLegalDetailsComponent" dataStyleClass="agencyLegalDetailsComponent" >
-                                            <apex:outputLabel value="{!$ObjectType.Partner_products__c.fields.PP_Payment_guarantee__c.Label}*"/>
+                                            <apex:outputLabel value="{!$ObjectType.Partner_products__c.fields.PP_Payment_guarantee__c.Label}" html-class="mandFld"/>
                                             <apex:outputPanel >                                        
-                                                <apex:selectList value="{!paymentGuaranteeVal}" size="{!paymentGuaranteeOptList.size+1}" multiselect="true" rendered="{!editMode}" html-class="mandFld" styleClass="sectionItem">
+                                                <apex:selectList title="{!$Label.ISSP_TIP_HOLD_TO_MULTISELECT}" value="{!paymentGuaranteeVal}" size="{!paymentGuaranteeOptList.size+1}" multiselect="true" rendered="{!editMode}" html-class="mandFld" styleClass="sectionItem">
                                                     <apex:selectOptions value="{!paymentGuaranteeOptList}"/>
                                                 </apex:selectList>
                                                 <apex:outputField value="{!newpp.PP_Payment_guarantee__c}" rendered="{!!editMode}"/>
@@ -333,15 +345,16 @@
                                             </apex:outputPanel>
                                         </apex:pageBlockSectionItem>
                                         <apex:pageBlockSectionItem labelStyle="width:26%" labelStyleClass="agencyLegalDetailsComponent" dataStyleClass="agencyLegalDetailsComponent" >
-                                            <apex:outputLabel value="{!$ObjectType.Partner_products__c.fields.PP_Accepted_transactions__c.Label}*"/><apex:outputPanel >
-                                                <apex:selectList value="{!acceptedTransactionVal}" size="{!acceptedTransactionsOptList.size+1}" multiselect="true" rendered="{!editMode}" html-class="mandFld" styleClass="sectionItem">
+                                            <apex:outputLabel value="{!$ObjectType.Partner_products__c.fields.PP_Accepted_transactions__c.Label}" html-class="mandFld"/>
+                                            <apex:outputPanel >
+                                                <apex:selectList title="{!$Label.ISSP_TIP_HOLD_TO_MULTISELECT}" value="{!acceptedTransactionVal}" size="{!acceptedTransactionsOptList.size+1}" multiselect="true" rendered="{!editMode}" html-class="mandFld" styleClass="sectionItem">
                                                     <apex:selectOptions value="{!acceptedTransactionsOptList}"/>
                                                 </apex:selectList>
                                                 <apex:outputField value="{!newpp.PP_Accepted_transactions__c}" rendered="{!!editMode}"/>
                                             </apex:outputPanel>
                                         </apex:pageBlockSectionItem>
                                         <apex:pageBlockSectionItem > </apex:pageBlockSectionItem>
-                                        <apex:pageBlockSectionItem >
+                                        <apex:pageBlockSectionItem rendered="{!editMode}">
                                             <apex:outputLabel value="*{!$Label.ISSP_TIP_MANDATORY_ON_SUBMIT}"/>
                                         </apex:pageBlockSectionItem>
                                     </apex:pageBlockSection>
@@ -566,7 +579,7 @@
                                     <apex:pageBlockSection columns="2">
                                         <apex:pageBlockSectionItem>
                                             <apex:outputPanel id="countryConfigPanel">
-                                                <div style="max-height: 400px; overflow-y: auto; ">
+                                                <div style="max-height: 400px; overflow-y: auto;overflow-x: hidden; ">
                                                     <script>
                                                         function validateCountryConfiguration(){
 
