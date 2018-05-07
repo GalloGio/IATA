@@ -214,7 +214,7 @@ public without sharing class ISSP_TIP_Home_Controller {
 
     private void fillProducts(){
         products = new List<productWrapper> ();
-        for(Partner_products__c p :[SELECT id, name, PP_Payment_Network__c, PP_Effective_to_Date__c, PP_Effective_from_Date__c, toLabel(PP_status__c)
+        for(Partner_products__c p :[SELECT id, name, toLabel(PP_Payment_Network__c), PP_Effective_to_Date__c, PP_Effective_from_Date__c, toLabel(PP_status__c)
           FROM Partner_products__c 
           WHERE Provider__c  = :con.AccountId
             AND recordtypeid = :TIP_Utils.PARTNER_PRODUCT_TIP_PRODUCT_RECORD_TYPE_ID
