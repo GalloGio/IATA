@@ -11,7 +11,7 @@ public with sharing class ISSP_ANG_ANNUAL_REVALIDATION {
 	public Set<String> iataCodesOk {get; set;}
 	public Set<String> iataCodesConfirmed {get; set;}
 	public Set<String> iataCodesInProgress {get; set;}
-	public Map<String, ANG_AnnualRevFormWrapper> formsMap {get; set;}
+	public Map<String, formWrapper> formsMap {get; set;}
 	public Map<String, Account> accountsMap {get; set;}
 	public String jsonTree {get; set;}
 	public Set<Id> parents {get; set;}
@@ -54,15 +54,108 @@ public with sharing class ISSP_ANG_ANNUAL_REVALIDATION {
 	public String currentIataCode {get; set;}
 	public boolean setHe {get; set;}
 
-	private static Id rtAccreditContPreviousOwner = Schema.SObjectType.AMS_Accreditation_Contact__c.getRecordTypeInfosByName().get('Previous Owner').getRecordTypeId();
-	private static Id rtAccreditContCurrentOwner = Schema.SObjectType.AMS_Accreditation_Contact__c.getRecordTypeInfosByName().get('Current Owner').getRecordTypeId();
-	private static Id rtAccreditContPreviousCompanyOwner = Schema.SObjectType.AMS_Accreditation_Contact__c.getRecordTypeInfosByName().get('Previous Company Owner').getRecordTypeId();
-	private static Id rtAccreditContCurrentCompanyOwner = Schema.SObjectType.AMS_Accreditation_Contact__c.getRecordTypeInfosByName().get('Current Company Owner').getRecordTypeId();
+	//
+	// INNER CLASSES
+	//
+	public class FormWrapper {
+		public AMS_Pax_Accreditation_Form__c newForm {get; set;}
+		public List<AMS_Accreditation_Contact__c> previousOwners {get; set;}
+		public List<AMS_Accreditation_Contact__c> previousCompanies {get; set;}
+		public List<AMS_Accreditation_Contact__c> currentOwners {get; set;}
+		public List<AMS_Accreditation_Contact__c> currentCompanies {get; set;}
+
+		public FormWrapper(AMS_Pax_Accreditation_Form__c newForm,
+                           List<AMS_Accreditation_Contact__c> previousOwners,
+                           List<AMS_Accreditation_Contact__c> previousCompanies,
+                           List<AMS_Accreditation_Contact__c> currentOwners,
+                           List<AMS_Accreditation_Contact__c> currentCompanies) {
+
+			this.previousOwners = previousOwners;
+			this.previousCompanies = previousCompanies;
+			this.currentOwners = currentOwners;
+			this.currentCompanies = currentCompanies;
+		}
+	}
+
+	public class Data {
+		public JsonValue multiple {get; set;}
+		public List<HeadEntity> data {get; set;}
+
+		public Data(List<HeadEntity> data, JsonValue multiple) {
+			this.data = data;
+			this.multiple = multiple;
+		}
+	}
+
+	public class HeadEntity {
+		public String text {get; set;}
+		public String icon {get; set;}
+		public JsonValue state {get; set;}
+		public List<AssociateEntity> children {get; set;}
+
+		public HeadEntity (String text, String icon, List<AssociateEntity> children, JsonValue state) {
+			this.text = text;
+			this.icon = icon;
+			this.children = children;
+			this.state = state;
+		}
+	}
+
+	public class AssociateEntity {
+		public String text {get; set;}
+		public String icon {get; set;}
+		public JsonValue state {get; set;}
+
+		public AssociateEntity (String text, String icon, JsonValue state) {
+			this.text = text;
+			this.icon = icon;
+			this.state = state;
+		}
+	}
+
+	public interface JsonValue {
+
+	}
+
+	public class Opened implements JsonValue {
+		Boolean opened {get; set;}
+
+		public Opened (Boolean opened) {
+			this.opened = opened;
+		}
+	}
+
+	public class Selected implements JsonValue {
+		Boolean selected {get; set;}
+
+		public Selected (Boolean selected) {
+			this.selected = selected;
+		}
+	}
+
+	public class SelectedOpened implements JsonValue {
+		Boolean selected {get; set;}
+		Boolean opened {get; set;}
+
+		public SelectedOpened (Boolean selected, Boolean opened) {
+			this.selected = selected;
+			this.opened = opened;
+		}
+	}
+
+	public class Multiple implements JsonValue {
+		Boolean multiple {get; set;}
+
+		public Multiple (Boolean multiple) {
+			this.multiple = multiple;
+		}
+	}
+
+	//
+	// ---------------------------------------
+	//
 
 	public ISSP_ANG_ANNUAL_REVALIDATION() {
-
-		System.debug('alex NEW ISSP_ANG_ANNUAL_REVALIDATION');
-
 
 		this.setHe = true;
 
@@ -88,8 +181,6 @@ public with sharing class ISSP_ANG_ANNUAL_REVALIDATION {
 		setParentsAndChilds();
 
 		setAccounts();
-
-		createFormsForAccountsStatusOpenAndConfirmed();
 
         isStep1 = false;
         isStep2 = false;
@@ -229,7 +320,7 @@ System.debug('alex generateMenu');
 	}
 
 	public void setFormsMap() {
-		formsMap = new Map<String, ANG_AnnualRevFormWrapper>();
+		formsMap = new Map<String, FormWrapper>();
 
         List <AMS_Pax_Accreditation_Form__c> newForms = [
                     SELECT Id, Name, SAAM_Case__c, HO_Account__r.IATACode__c, Submitted_to_IATA__c, CurrencyIsoCode, IATACode__c, ISSP_AMS_Bank_account__c, ISSP_AMS_Date_license_granted__c, ISSP_AMS_Date_Registration_granted__c, ISSP_AMS_GDS_with_signed_contract__c,
@@ -277,11 +368,10 @@ System.debug('alex generateMenu');
 			List<AMS_Accreditation_Contact__c> auxPreviousCompanies = getPreviousCompanies(formsIds);
 
 			for (AMS_Pax_Accreditation_Form__c newForm : newForms) {
-				formsMap.put(newForm.IATACode__c, new ANG_AnnualRevFormWrapper(newForm,
-																			   getFormPreviousOwners(newForm.id, auxPreviousOwners),
-                                                                               getFormCurrentOwners(newForm.id, auxCurrentOwners),
-																		       getFormCurrentCompanies(newForm.id, auxCurrentCompanies),
-																		       getFormPreviousCompanies(newForm.id, auxPreviousCompanies)));
+				formsMap.put(form.IATACode__c, new FormWrapper(newForm, getFormPreviousOwners(newForm.id, auxPreviousOwners),
+                                                                        getFormCurrentOwners(newForm.id, auxCurrentOwners),
+																		getFormCurrentCompanies(newForm.id, auxCurrentCompanies),
+																		getFormPreviousCompanies(newForm.id, auxPreviousCompanies));
 			}
         }
 	}
@@ -420,7 +510,7 @@ System.debug('alex generateMenu');
 		}
 
 		for(String iataCode : formsMap.keySet()) {
-			AMS_Pax_Accreditation_Form__c form = formsMap.get(iataCode).newForm;
+			AMS_Pax_Accreditation_Form__c form = formsMap.get(iataCode);
 
 			if(form.status__c == 'InProgress') {
 				iataCodesInProgress.add(iataCode);
@@ -434,8 +524,7 @@ System.debug('alex generateMenu');
 	private static List<Account> getAccounts(Set<Id> accountIds, String recordType, Set<String> statusSet, String locationType, String sector) {
 		return [Select Id, Name, TradeName__c, IATACode__c, ANG_Accreditation_Model__c,
 					   BillingStreet, BillingCity, BillingState, BillingCountry, Email__c,
-					   Website, Phone, Mobile__c, FAX, BillingPostalCode, Company_Type__c,
-					   Country_ISO_Code__c
+					   Website, Phone, Mobile__c, FAX, BillingPostalCode, Company_Type__c
 				  From Account
 				 Where Id in :accountIds
 				   And RecordTypeId = :recordType
@@ -488,121 +577,28 @@ System.debug('alex generateMenu');
 		return null;
 	}
 
-	private ANG_AnnualRevFormWrapper getForm(String iataCode) {
+	private AMS_Pax_Accreditation_Form__c getForm(String iataCode) {
 
-		System.debug('alex getForm : ' + iataCode);
+		System.debug('alex getForm');
 
 		if(formsMap.containsKey(iataCode)) {
 			return formsMap.get(iataCode);
 		} else {
-
-			System.debug(LoggingLevel.ERROR, 'No form found for the IataCode : ' + iataCode);
-
-			return null;
-		}
-	}
-//alex
-	private void createFormsForAccountsStatusOpenAndConfirmed() {
-
-		System.debug('alex createFormsForAccountsStatusOpenAndConfirmed');
-
-		Set<Id> accounts = new Set<Id>();
-		Set<String> iataCodes = new Set<String>();
-		for(String iataCode : accountsMap.keySet()) {
-			String status = getStatus(iataCode);
-			if(status == OPEN_STATUS || status == COMPLETED_STATUS) {
-				accounts.add(accountsMap.get(iataCode).Id);
-				iataCodes.add(iataCode);
-			}
-		}
-
-		System.debug('alex IATA CODES : ' + iataCodes);
-
-		List<AMS_Accreditation_Contact__c> lstAccreditationContact = getAllAMS_Account_Role(accounts);
-
-		System.debug('alex contactos cena : ' + lstAccreditationContact);
-
-		for(String iataCode : iataCodes) {
 			AMS_Pax_Accreditation_Form__c newForm = new AMS_Pax_Accreditation_Form__c();
 
 			account a = accountsMap.get(iataCode);
 
 			newForm.HO_Account__c = a.id;
 
-			newForm.iataCode__c = iataCode;
-
 			newForm.ISSP_AMS_Legal_Status__c = ISSP_AMS_Accreditation.mapCompanyTypes(a.Company_Type__c);
 
-			if(newForm.ISSP_AMS_Legal_Status__c == null) {
-				newForm.ISSP_AMS_Legal_Status__c = '';
-			}
+			setOwners();
 
-			System.debug('alex add a new form : ' + newForm);
+			System.debug('alex newForm : ' + newForm);
 
-			formsMap.put(iataCode, new ANG_AnnualRevFormWrapper(newForm,
-																getFormPreviousOwners_2(a.id, lstAccreditationContact),
-																getFormCurrentOwners_2(a.id, lstAccreditationContact),
-																getFormCurrentCompanies_2(a.id, lstAccreditationContact),
-																getFormPreviousCompanies_2(a.id, lstAccreditationContact)));
+			return newForm;
 		}
 	}
-
-    public List<AMS_Accreditation_Contact__c> getAllAMS_Account_Role(Set<Id> accounts){
-
-        List<AMS_Accreditation_Contact__c> lstAccreditationContact = new List<AMS_Accreditation_Contact__c>();
-
-        Id rtAccRoleOwnership = Schema.SObjectType.AMS_Account_Role__c.getRecordTypeInfosByName().get('Ownership').getRecordTypeId();
-
-		List<AMS_Account_Role__c> amsOwners = [Select Account__c, Active__c, Employee_Name__c,Employee_type__c, Id,
-			                                          Owner_Account__c, Owner_Account__r.Name, Owner_Account__r.IATACode__c,
-													  Owner_Account__r.Email__c, Owner_Name__c,Percentage__c, Position__c,
-													  RecordTypeId, Title__c, Valid__c, Person__c, Person__r.First_Name__c,
-													  Person__r.Lastname__c, Person__r.Email__c, Contact__c, Contact__r.FirstName,
-													  Contact__r.LastName, Contact__r.Email, Contact__r.Phone, Contact__r.OtherStreet,
-													  Contact__r.OtherCity, Contact__r.OtherPostalCode, Contact__r.OtherCountry, Legacy_External_ID__c
-			                                     From AMS_Account_Role__c
-			                                    where Account__c in :accounts
-			                                      and RecordTypeId = :rtAccRoleOwnership
-			                                      and Active__c = true
-			                                      and Percentage__c > 0];
-
-		System.debug('alex amsOwners : ' + amsOwners);
-
-		for(AMS_Account_Role__c accRole : amsOwners) {
-			AMS_Accreditation_Contact__c c1 = ISSP_AMS_Accreditation.setAccreditationContact(accRole, null, rtAccreditContPreviousOwner, rtAccreditContPreviousCompanyOwner);
-
-
-			System.debug('alex c1 : ' + c1);
-
-			//
-			// HACK - The account id is beeing stored in the field AMS_OwnershipId__c to diferenciate the records
-            //       ,
-            //      /(  ___________
-            //     |  >:===========`
-            //      )(
-            //      ""
-			c1.AMS_OwnershipId__c = accRole.Account__c;
-			lstAccreditationContact.add(c1);
-
-			AMS_Accreditation_Contact__c c2 = ISSP_AMS_Accreditation.setAccreditationContact(accRole, null, rtAccreditContCurrentOwner, rtAccreditContCurrentCompanyOwner);
-
-			System.debug('alex c2 : ' + c2);
-
-			//
-			// HACK - The account id is beeing stored in the field AMS_OwnershipId__c to diferenciate the records
-            //       ,
-            //      /(  ___________
-            //     |  >:===========`
-            //      )(
-            //      ""
-			c2.AMS_OwnershipId__c = accRole.Account__c;
-			lstAccreditationContact.add(c2);
-		}
-
-		System.debug('alex lstAccreditationContact : ' + lstAccreditationContact);
-
-		return lstAccreditationContact;
-    }
 
     private static List<AMS_Accreditation_Contact__c> getPreviousOwners(Set<Id> newFormIds) {
 		return [Select AMS_Pax_Accreditation_Form__c, Name, First_name__c, Last_name__c, Salutation__c, Agency_owner__c, Agency_role__c, Email__c,Phone__c,
@@ -642,10 +638,8 @@ System.debug('alex generateMenu');
 
     private static List<AMS_Accreditation_Contact__c> getFormPreviousOwners(Id formId, List<AMS_Accreditation_Contact__c> previousOwners) {
 		List<AMS_Accreditation_Contact__c> aux = new List<AMS_Accreditation_Contact__c>();
-
 		for(AMS_Accreditation_Contact__c ac : previousOwners) {
-			if(ac.AMS_OwnershipId__c == formId) {
-				System.debug('alex getFormPreviousOwners : ' + ac);
+			if(ac.AMS_Pax_Accreditation_Form__c == formId) {
 				aux.add(ac);
 			}
 		}
@@ -654,10 +648,8 @@ System.debug('alex generateMenu');
 
 	private static List<AMS_Accreditation_Contact__c> getFormCurrentOwners(Id formId, List<AMS_Accreditation_Contact__c> currentOwners) {
 		List<AMS_Accreditation_Contact__c> aux = new List<AMS_Accreditation_Contact__c>();
-
 		for(AMS_Accreditation_Contact__c ac : currentOwners) {
 			if(ac.AMS_Pax_Accreditation_Form__c == formId) {
-				System.debug('alex getFormPreviousCompanies : ' + ac);
 				aux.add(ac);
 			}
 		}
@@ -666,10 +658,8 @@ System.debug('alex generateMenu');
 
 	private static List<AMS_Accreditation_Contact__c> getFormCurrentCompanies(Id formId, List<AMS_Accreditation_Contact__c> currentCompanies) {
 		List<AMS_Accreditation_Contact__c> aux = new List<AMS_Accreditation_Contact__c>();
-
 		for(AMS_Accreditation_Contact__c ac : currentCompanies) {
 			if(ac.AMS_Pax_Accreditation_Form__c == formId) {
-				System.debug('alex getFormPreviousCompanies : ' + ac);
 				aux.add(ac);
 			}
 		}
@@ -678,81 +668,14 @@ System.debug('alex generateMenu');
 
 	private static List<AMS_Accreditation_Contact__c> getFormPreviousCompanies(Id formId, List<AMS_Accreditation_Contact__c> previousCompanies) {
 		List<AMS_Accreditation_Contact__c> aux = new List<AMS_Accreditation_Contact__c>();
-
 		for(AMS_Accreditation_Contact__c ac : previousCompanies) {
 			if(ac.AMS_Pax_Accreditation_Form__c == formId) {
-				System.debug('alex getFormPreviousCompanies : ' + ac);
 				aux.add(ac);
 			}
 		}
 		return aux;
     }
 
-
-	//
-	//
-	//
-    private static List<AMS_Accreditation_Contact__c> getFormPreviousOwners_2(String accountId, List<AMS_Accreditation_Contact__c> lstAccreditationContact) {
-		List<AMS_Accreditation_Contact__c> aux = new List<AMS_Accreditation_Contact__c>();
-
-		for(AMS_Accreditation_Contact__c ac : lstAccreditationContact) {
-			System.debug('alex ac 1 : ' + accountId + ' - ' + ac.RecordTypeId );
-
-			if(ac.AMS_OwnershipId__c == accountId && ac.RecordTypeId == rtAccreditContPreviousOwner) {
-				System.debug('alex getFormPreviousOwners_2 : ' + ac);
-				aux.add(ac);
-			}
-		}
-		return aux;
-    }
-
-	private static List<AMS_Accreditation_Contact__c> getFormCurrentOwners_2(String accountId, List<AMS_Accreditation_Contact__c> lstAccreditationContact) {
-		List<AMS_Accreditation_Contact__c> aux = new List<AMS_Accreditation_Contact__c>();
-
-		for(AMS_Accreditation_Contact__c ac : lstAccreditationContact) {
-			System.debug('alex ac 2 : ' + accountId + ' - ' + ac.RecordTypeId );
-
-			if(ac.AMS_OwnershipId__c == accountId && ac.RecordTypeId == rtAccreditContCurrentOwner) {
-				System.debug('alex getFormCurrentOwners_2 : ' + ac);
-				aux.add(ac);
-			}
-		}
-		return aux;
-    }
-
-	private static List<AMS_Accreditation_Contact__c> getFormCurrentCompanies_2(String accountId, List<AMS_Accreditation_Contact__c> lstAccreditationContact) {
-		List<AMS_Accreditation_Contact__c> aux = new List<AMS_Accreditation_Contact__c>();
-
-		for(AMS_Accreditation_Contact__c ac : lstAccreditationContact) {
-			System.debug('alex ac 3 : ' + accountId + ' - ' + ac.RecordTypeId );
-
-			if(ac.AMS_OwnershipId__c == accountId && ac.RecordTypeId == rtAccreditContPreviousCompanyOwner) {
-				System.debug('alex getFormCurrentCompanies_2 : ' + ac);
-				aux.add(ac);
-			}
-		}
-		return aux;
-    }
-
-	private static List<AMS_Accreditation_Contact__c> getFormPreviousCompanies_2(String accountId, List<AMS_Accreditation_Contact__c> lstAccreditationContact) {
-		List<AMS_Accreditation_Contact__c> aux = new List<AMS_Accreditation_Contact__c>();
-
-		for(AMS_Accreditation_Contact__c ac : lstAccreditationContact) {
-			System.debug('alex ac 4 : ' + accountId + ' - ' + ac.RecordTypeId );
-
-			if(ac.AMS_OwnershipId__c == accountId && ac.RecordTypeId == rtAccreditContPreviousCompanyOwner) {
-				System.debug('alex getFormPreviousCompanies_2 : ' + ac);
-				aux.add(ac);
-			}
-		}
-		return aux;
-    }
-/*
-		private static Id rtAccreditContPreviousOwner = Schema.SObjectType.AMS_Accreditation_Contact__c.getRecordTypeInfosByName().get('Previous Owner').getRecordTypeId();
-	private static Id rtAccreditContCurrentOwner = Schema.SObjectType.AMS_Accreditation_Contact__c.getRecordTypeInfosByName().get('Current Owner').getRecordTypeId();
-	private static Id rtAccreditContPreviousCompanyOwner = Schema.SObjectType.AMS_Accreditation_Contact__c.getRecordTypeInfosByName().get('Previous Company Owner').getRecordTypeId();
-	private static Id rtAccreditContCurrentCompanyOwner
-*/
 	public String getDEFAULT_ICON() {
 		return DEFAULT_ICON;
 	}
@@ -765,86 +688,4 @@ System.debug('alex generateMenu');
 	public String getPROGRESS_ICON() {
 		return PROGRESS_ICON;
 	}
-
-	//
-	// INNER CLASSES
-	//
-	public class Data {
-		public JsonValue multiple {get; set;}
-		public List<HeadEntity> data {get; set;}
-
-		public Data(List<HeadEntity> data, JsonValue multiple) {
-			this.data = data;
-			this.multiple = multiple;
-		}
-	}
-
-	public class HeadEntity {
-		public String text {get; set;}
-		public String icon {get; set;}
-		public JsonValue state {get; set;}
-		public List<AssociateEntity> children {get; set;}
-
-		public HeadEntity (String text, String icon, List<AssociateEntity> children, JsonValue state) {
-			this.text = text;
-			this.icon = icon;
-			this.children = children;
-			this.state = state;
-		}
-	}
-
-	public class AssociateEntity {
-		public String text {get; set;}
-		public String icon {get; set;}
-		public JsonValue state {get; set;}
-
-		public AssociateEntity (String text, String icon, JsonValue state) {
-			this.text = text;
-			this.icon = icon;
-			this.state = state;
-		}
-	}
-
-	public interface JsonValue {
-
-	}
-
-	public class Opened implements JsonValue {
-		Boolean opened {get; set;}
-
-		public Opened (Boolean opened) {
-			this.opened = opened;
-		}
-	}
-
-	public class Selected implements JsonValue {
-		Boolean selected {get; set;}
-
-		public Selected (Boolean selected) {
-			this.selected = selected;
-		}
-	}
-
-	public class SelectedOpened implements JsonValue {
-		Boolean selected {get; set;}
-		Boolean opened {get; set;}
-
-		public SelectedOpened (Boolean selected, Boolean opened) {
-			this.selected = selected;
-			this.opened = opened;
-		}
-	}
-
-	public class Multiple implements JsonValue {
-		Boolean multiple {get; set;}
-
-		public Multiple (Boolean multiple) {
-			this.multiple = multiple;
-		}
-	}
-
-	//
-	// ---------------------------------------
-	//
-
 }

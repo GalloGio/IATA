@@ -54,15 +54,8 @@ public with sharing class ISSP_ANG_ANNUAL_REVALIDATION {
 	public String currentIataCode {get; set;}
 	public boolean setHe {get; set;}
 
-	private static Id rtAccreditContPreviousOwner = Schema.SObjectType.AMS_Accreditation_Contact__c.getRecordTypeInfosByName().get('Previous Owner').getRecordTypeId();
-	private static Id rtAccreditContCurrentOwner = Schema.SObjectType.AMS_Accreditation_Contact__c.getRecordTypeInfosByName().get('Current Owner').getRecordTypeId();
-	private static Id rtAccreditContPreviousCompanyOwner = Schema.SObjectType.AMS_Accreditation_Contact__c.getRecordTypeInfosByName().get('Previous Company Owner').getRecordTypeId();
-	private static Id rtAccreditContCurrentCompanyOwner = Schema.SObjectType.AMS_Accreditation_Contact__c.getRecordTypeInfosByName().get('Current Company Owner').getRecordTypeId();
 
 	public ISSP_ANG_ANNUAL_REVALIDATION() {
-
-		System.debug('alex NEW ISSP_ANG_ANNUAL_REVALIDATION');
-
 
 		this.setHe = true;
 
@@ -490,21 +483,35 @@ System.debug('alex generateMenu');
 
 	private ANG_AnnualRevFormWrapper getForm(String iataCode) {
 
-		System.debug('alex getForm : ' + iataCode);
+		System.debug('alex getForm');
 
 		if(formsMap.containsKey(iataCode)) {
 			return formsMap.get(iataCode);
 		} else {
 
-			System.debug(LoggingLevel.ERROR, 'No form found for the IataCode : ' + iataCode);
+/*
 
+			AMS_Pax_Accreditation_Form__c newForm = new AMS_Pax_Accreditation_Form__c();
+
+			account a = accountsMap.get(iataCode);
+
+			newForm.HO_Account__c = a.id;
+
+			newForm.ISSP_AMS_Legal_Status__c = ISSP_AMS_Accreditation.mapCompanyTypes(a.Company_Type__c);
+
+			setOwners();
+
+			System.debug('alex newForm : ' + newForm);
+
+			ANG_AnnualRevFormWrapper fw = new ANG_AnnualRevFormWrapper();
+
+			return fw;
+			*/
 			return null;
 		}
 	}
 //alex
 	private void createFormsForAccountsStatusOpenAndConfirmed() {
-
-		System.debug('alex createFormsForAccountsStatusOpenAndConfirmed');
 
 		Set<Id> accounts = new Set<Id>();
 		Set<String> iataCodes = new Set<String>();
@@ -516,11 +523,9 @@ System.debug('alex generateMenu');
 			}
 		}
 
-		System.debug('alex IATA CODES : ' + iataCodes);
+		getAllAMS_Account_Role__c(accounts);
 
-		List<AMS_Accreditation_Contact__c> lstAccreditationContact = getAllAMS_Account_Role(accounts);
-
-		System.debug('alex contactos cena : ' + lstAccreditationContact);
+		List<AMS_Accreditation_Contact__c> = getAllAMS_Account_Role__c(accounts);
 
 		for(String iataCode : iataCodes) {
 			AMS_Pax_Accreditation_Form__c newForm = new AMS_Pax_Accreditation_Form__c();
@@ -529,29 +534,27 @@ System.debug('alex generateMenu');
 
 			newForm.HO_Account__c = a.id;
 
-			newForm.iataCode__c = iataCode;
-
 			newForm.ISSP_AMS_Legal_Status__c = ISSP_AMS_Accreditation.mapCompanyTypes(a.Company_Type__c);
 
-			if(newForm.ISSP_AMS_Legal_Status__c == null) {
-				newForm.ISSP_AMS_Legal_Status__c = '';
-			}
-
-			System.debug('alex add a new form : ' + newForm);
-
-			formsMap.put(iataCode, new ANG_AnnualRevFormWrapper(newForm,
-																getFormPreviousOwners_2(a.id, lstAccreditationContact),
-																getFormCurrentOwners_2(a.id, lstAccreditationContact),
-																getFormCurrentCompanies_2(a.id, lstAccreditationContact),
-																getFormPreviousCompanies_2(a.id, lstAccreditationContact)));
+			formsMap.put(newForm.IATACode__c, new ANG_AnnualRevFormWrapper(newForm,
+																		   getFormPreviousOwners_2(newForm.id, auxPreviousOwners),
+																		   getFormCurrentOwners_2(newForm.id, auxCurrentOwners),
+																		   getFormCurrentCompanies_2(newForm.id, auxCurrentCompanies),
+																		   getFormPreviousCompanies_2(newForm.id, auxPreviousCompanies)));
 		}
 	}
 
-    public List<AMS_Accreditation_Contact__c> getAllAMS_Account_Role(Set<Id> accounts){
+    public List<AMS_Accreditation_Contact__c> getAllAMS_Account_Role__c(List<Id> accounts){
 
         List<AMS_Accreditation_Contact__c> lstAccreditationContact = new List<AMS_Accreditation_Contact__c>();
 
         Id rtAccRoleOwnership = Schema.SObjectType.AMS_Account_Role__c.getRecordTypeInfosByName().get('Ownership').getRecordTypeId();
+
+        Id rtAccreditContPreviousOwner = Schema.SObjectType.AMS_Accreditation_Contact__c.getRecordTypeInfosByName().get('Previous Owner').getRecordTypeId();
+        Id rtAccreditContCurrentOwner = Schema.SObjectType.AMS_Accreditation_Contact__c.getRecordTypeInfosByName().get('Current Owner').getRecordTypeId();
+        Id rtAccreditContPreviousCompanyOwner = Schema.SObjectType.AMS_Accreditation_Contact__c.getRecordTypeInfosByName().get('Previous Company Owner').getRecordTypeId();
+        Id rtAccreditContCurrentCompanyOwner = Schema.SObjectType.AMS_Accreditation_Contact__c.getRecordTypeInfosByName().get('Current Company Owner').getRecordTypeId();
+
 
 		List<AMS_Account_Role__c> amsOwners = [Select Account__c, Active__c, Employee_Name__c,Employee_type__c, Id,
 			                                          Owner_Account__c, Owner_Account__r.Name, Owner_Account__r.IATACode__c,
@@ -566,13 +569,8 @@ System.debug('alex generateMenu');
 			                                      and Active__c = true
 			                                      and Percentage__c > 0];
 
-		System.debug('alex amsOwners : ' + amsOwners);
-
 		for(AMS_Account_Role__c accRole : amsOwners) {
 			AMS_Accreditation_Contact__c c1 = ISSP_AMS_Accreditation.setAccreditationContact(accRole, null, rtAccreditContPreviousOwner, rtAccreditContPreviousCompanyOwner);
-
-
-			System.debug('alex c1 : ' + c1);
 
 			//
 			// HACK - The account id is beeing stored in the field AMS_OwnershipId__c to diferenciate the records
@@ -581,13 +579,11 @@ System.debug('alex generateMenu');
             //     |  >:===========`
             //      )(
             //      ""
-			c1.AMS_OwnershipId__c = accRole.Account__c;
+			c1.AMS_OwnershipId__c = Account__c;
 			lstAccreditationContact.add(c1);
 
 			AMS_Accreditation_Contact__c c2 = ISSP_AMS_Accreditation.setAccreditationContact(accRole, null, rtAccreditContCurrentOwner, rtAccreditContCurrentCompanyOwner);
 
-			System.debug('alex c2 : ' + c2);
-
 			//
 			// HACK - The account id is beeing stored in the field AMS_OwnershipId__c to diferenciate the records
             //       ,
@@ -595,12 +591,9 @@ System.debug('alex generateMenu');
             //     |  >:===========`
             //      )(
             //      ""
-			c2.AMS_OwnershipId__c = accRole.Account__c;
+			c2.AMS_OwnershipId__c = Account__c;
 			lstAccreditationContact.add(c2);
 		}
-
-		System.debug('alex lstAccreditationContact : ' + lstAccreditationContact);
-
 		return lstAccreditationContact;
     }
 
@@ -645,7 +638,6 @@ System.debug('alex generateMenu');
 
 		for(AMS_Accreditation_Contact__c ac : previousOwners) {
 			if(ac.AMS_OwnershipId__c == formId) {
-				System.debug('alex getFormPreviousOwners : ' + ac);
 				aux.add(ac);
 			}
 		}
@@ -657,7 +649,6 @@ System.debug('alex generateMenu');
 
 		for(AMS_Accreditation_Contact__c ac : currentOwners) {
 			if(ac.AMS_Pax_Accreditation_Form__c == formId) {
-				System.debug('alex getFormPreviousCompanies : ' + ac);
 				aux.add(ac);
 			}
 		}
@@ -669,7 +660,6 @@ System.debug('alex generateMenu');
 
 		for(AMS_Accreditation_Contact__c ac : currentCompanies) {
 			if(ac.AMS_Pax_Accreditation_Form__c == formId) {
-				System.debug('alex getFormPreviousCompanies : ' + ac);
 				aux.add(ac);
 			}
 		}
@@ -681,7 +671,6 @@ System.debug('alex generateMenu');
 
 		for(AMS_Accreditation_Contact__c ac : previousCompanies) {
 			if(ac.AMS_Pax_Accreditation_Form__c == formId) {
-				System.debug('alex getFormPreviousCompanies : ' + ac);
 				aux.add(ac);
 			}
 		}
@@ -695,11 +684,8 @@ System.debug('alex generateMenu');
     private static List<AMS_Accreditation_Contact__c> getFormPreviousOwners_2(String accountId, List<AMS_Accreditation_Contact__c> lstAccreditationContact) {
 		List<AMS_Accreditation_Contact__c> aux = new List<AMS_Accreditation_Contact__c>();
 
-		for(AMS_Accreditation_Contact__c ac : lstAccreditationContact) {
-			System.debug('alex ac 1 : ' + accountId + ' - ' + ac.RecordTypeId );
-
-			if(ac.AMS_OwnershipId__c == accountId && ac.RecordTypeId == rtAccreditContPreviousOwner) {
-				System.debug('alex getFormPreviousOwners_2 : ' + ac);
+		for(AMS_Accreditation_Contact__c ac : previousOwners) {
+			if(ac.AMS_OwnershipId__c == accountId && ac.DeveloperName = 'Previous_Owner') {
 				aux.add(ac);
 			}
 		}
@@ -709,11 +695,8 @@ System.debug('alex generateMenu');
 	private static List<AMS_Accreditation_Contact__c> getFormCurrentOwners_2(String accountId, List<AMS_Accreditation_Contact__c> lstAccreditationContact) {
 		List<AMS_Accreditation_Contact__c> aux = new List<AMS_Accreditation_Contact__c>();
 
-		for(AMS_Accreditation_Contact__c ac : lstAccreditationContact) {
-			System.debug('alex ac 2 : ' + accountId + ' - ' + ac.RecordTypeId );
-
-			if(ac.AMS_OwnershipId__c == accountId && ac.RecordTypeId == rtAccreditContCurrentOwner) {
-				System.debug('alex getFormCurrentOwners_2 : ' + ac);
+		for(AMS_Accreditation_Contact__c ac : currentOwners) {
+			if(ac.AMS_OwnershipId__c == accountId && ac.DeveloperName = 'Current_Owner') {
 				aux.add(ac);
 			}
 		}
@@ -723,11 +706,8 @@ System.debug('alex generateMenu');
 	private static List<AMS_Accreditation_Contact__c> getFormCurrentCompanies_2(String accountId, List<AMS_Accreditation_Contact__c> lstAccreditationContact) {
 		List<AMS_Accreditation_Contact__c> aux = new List<AMS_Accreditation_Contact__c>();
 
-		for(AMS_Accreditation_Contact__c ac : lstAccreditationContact) {
-			System.debug('alex ac 3 : ' + accountId + ' - ' + ac.RecordTypeId );
-
-			if(ac.AMS_OwnershipId__c == accountId && ac.RecordTypeId == rtAccreditContPreviousCompanyOwner) {
-				System.debug('alex getFormCurrentCompanies_2 : ' + ac);
+		for(AMS_Accreditation_Contact__c ac : currentCompanies) {
+			if(ac.AMS_OwnershipId__c == accountId && ac.DeveloperName = 'Current_Company_Owner') {
 				aux.add(ac);
 			}
 		}
@@ -737,22 +717,14 @@ System.debug('alex generateMenu');
 	private static List<AMS_Accreditation_Contact__c> getFormPreviousCompanies_2(String accountId, List<AMS_Accreditation_Contact__c> lstAccreditationContact) {
 		List<AMS_Accreditation_Contact__c> aux = new List<AMS_Accreditation_Contact__c>();
 
-		for(AMS_Accreditation_Contact__c ac : lstAccreditationContact) {
-			System.debug('alex ac 4 : ' + accountId + ' - ' + ac.RecordTypeId );
-
-			if(ac.AMS_OwnershipId__c == accountId && ac.RecordTypeId == rtAccreditContPreviousCompanyOwner) {
-				System.debug('alex getFormPreviousCompanies_2 : ' + ac);
+		for(AMS_Accreditation_Contact__c ac : previousCompanies) {
+			if(ac.AMS_OwnershipId__c == accountId && ac.DeveloperName = 'Previous_Company_Owner') {
 				aux.add(ac);
 			}
 		}
 		return aux;
     }
-/*
-		private static Id rtAccreditContPreviousOwner = Schema.SObjectType.AMS_Accreditation_Contact__c.getRecordTypeInfosByName().get('Previous Owner').getRecordTypeId();
-	private static Id rtAccreditContCurrentOwner = Schema.SObjectType.AMS_Accreditation_Contact__c.getRecordTypeInfosByName().get('Current Owner').getRecordTypeId();
-	private static Id rtAccreditContPreviousCompanyOwner = Schema.SObjectType.AMS_Accreditation_Contact__c.getRecordTypeInfosByName().get('Previous Company Owner').getRecordTypeId();
-	private static Id rtAccreditContCurrentCompanyOwner
-*/
+
 	public String getDEFAULT_ICON() {
 		return DEFAULT_ICON;
 	}

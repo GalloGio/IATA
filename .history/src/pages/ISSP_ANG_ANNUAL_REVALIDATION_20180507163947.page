@@ -277,7 +277,7 @@
                         <div class="panel-body" id="body-enquiries">
                             <apex:form id="step1Form" styleClass="form-horizontal">
 
-                                <apex:actionFunction name="loadIataCode" action="{!loadIataCode}" rerender="workArea" />
+                                <!--apex:actionFunction name="loadIataCode" action="{!loadIataCode}" rerender="workArea" /-->
                                 <apex:inputHidden id="currentIataCode" value="{!currentIataCode}"/>
 
                                 <apex:pageBlock id="step1Block" mode="edit">

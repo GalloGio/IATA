@@ -61,9 +61,6 @@ public with sharing class ISSP_ANG_ANNUAL_REVALIDATION {
 
 	public ISSP_ANG_ANNUAL_REVALIDATION() {
 
-		System.debug('alex NEW ISSP_ANG_ANNUAL_REVALIDATION');
-
-
 		this.setHe = true;
 
 		accountsMap = new Map<String, Account>();
@@ -696,8 +693,6 @@ System.debug('alex generateMenu');
 		List<AMS_Accreditation_Contact__c> aux = new List<AMS_Accreditation_Contact__c>();
 
 		for(AMS_Accreditation_Contact__c ac : lstAccreditationContact) {
-			System.debug('alex ac 1 : ' + accountId + ' - ' + ac.RecordTypeId );
-
 			if(ac.AMS_OwnershipId__c == accountId && ac.RecordTypeId == rtAccreditContPreviousOwner) {
 				System.debug('alex getFormPreviousOwners_2 : ' + ac);
 				aux.add(ac);
@@ -710,8 +705,6 @@ System.debug('alex generateMenu');
 		List<AMS_Accreditation_Contact__c> aux = new List<AMS_Accreditation_Contact__c>();
 
 		for(AMS_Accreditation_Contact__c ac : lstAccreditationContact) {
-			System.debug('alex ac 2 : ' + accountId + ' - ' + ac.RecordTypeId );
-
 			if(ac.AMS_OwnershipId__c == accountId && ac.RecordTypeId == rtAccreditContCurrentOwner) {
 				System.debug('alex getFormCurrentOwners_2 : ' + ac);
 				aux.add(ac);
@@ -724,8 +717,6 @@ System.debug('alex generateMenu');
 		List<AMS_Accreditation_Contact__c> aux = new List<AMS_Accreditation_Contact__c>();
 
 		for(AMS_Accreditation_Contact__c ac : lstAccreditationContact) {
-			System.debug('alex ac 3 : ' + accountId + ' - ' + ac.RecordTypeId );
-
 			if(ac.AMS_OwnershipId__c == accountId && ac.RecordTypeId == rtAccreditContPreviousCompanyOwner) {
 				System.debug('alex getFormCurrentCompanies_2 : ' + ac);
 				aux.add(ac);
@@ -738,8 +729,6 @@ System.debug('alex generateMenu');
 		List<AMS_Accreditation_Contact__c> aux = new List<AMS_Accreditation_Contact__c>();
 
 		for(AMS_Accreditation_Contact__c ac : lstAccreditationContact) {
-			System.debug('alex ac 4 : ' + accountId + ' - ' + ac.RecordTypeId );
-
 			if(ac.AMS_OwnershipId__c == accountId && ac.RecordTypeId == rtAccreditContPreviousCompanyOwner) {
 				System.debug('alex getFormPreviousCompanies_2 : ' + ac);
 				aux.add(ac);

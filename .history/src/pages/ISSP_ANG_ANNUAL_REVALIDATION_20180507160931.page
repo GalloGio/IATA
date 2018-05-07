@@ -261,6 +261,7 @@
                 console.log('no empty voffice ' + vOfficeType);
                 isAllowedCountry = 't';
             }
+
         </script>
 
         <c:ISSP_WaitingStatus />

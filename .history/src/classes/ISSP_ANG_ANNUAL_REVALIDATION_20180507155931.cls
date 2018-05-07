@@ -61,9 +61,6 @@ public with sharing class ISSP_ANG_ANNUAL_REVALIDATION {
 
 	public ISSP_ANG_ANNUAL_REVALIDATION() {
 
-		System.debug('alex NEW ISSP_ANG_ANNUAL_REVALIDATION');
-
-
 		this.setHe = true;
 
 		accountsMap = new Map<String, Account>();

@@ -116,7 +116,7 @@
                     </apex:column>
                     <apex:column breakBefore="true" colspan="12" style="display:none; background-color:RGB(236, 246, 249)" styleClass="tog{!agencycon.Id}" id="contactDetails">
                         <div class="col-md-12">
-                            <apex:outputText rendered="{!helper.currentAccount.Country_ISO_Code__c=='CN'}">
+                            <apex:outputText rendered="{!isocountry.ISO_Code__c=='CN'}">
                                 <div class="contact-detail col-md-6"><span style="font-weight:bold">{!$Label.ISSP_AMS_First_Name_Chinese}&nbsp;</span></div><div class="contact-detail col-md-6">{!agencycon.Local_First_name__c}</div>
                                 <div class="contact-detail col-md-6"><span style="font-weight:bold">{!$Label.ISSP_AMS_Last_Name_Chinese}&nbsp;</span></div><div class="contact-detail col-md-6">{!agencycon.Local_Last_Name__c}</div>
                             </apex:outputText>

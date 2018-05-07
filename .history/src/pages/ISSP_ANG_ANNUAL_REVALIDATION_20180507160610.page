@@ -261,6 +261,7 @@
                 console.log('no empty voffice ' + vOfficeType);
                 isAllowedCountry = 't';
             }
+
         </script>
 
         <c:ISSP_WaitingStatus />
@@ -315,6 +316,7 @@
                                                     </div>
 
                                                     <script>
+                                                    /*
                                                         $('#frmt').jstree(JSON.parse('{!tree}'));
                                                         $('#frmt').on("changed.jstree", function (e, data) {
 
@@ -329,6 +331,7 @@
                                                             }
 
                                                         });
+                                                        */
                                                     </script>
 
                                                 </apex:outputPanel>

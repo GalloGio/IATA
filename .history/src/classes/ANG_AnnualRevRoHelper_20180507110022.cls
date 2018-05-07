@@ -33,23 +33,19 @@ public with sharing class ANG_AnnualRevRoHelper {
 	public ANG_AnnualRevRoHelper(ANG_AnnualRevRoCurrentAccount ca) {
 		this.ca = ca;
 
-		System.debug('alex inside helper current account : ' + ca.account.iatacode__c);
-
         roleLabel = Label.ISSP_AMS_Director;
 
-		System.debug('alex this.ca.fw.newForm : ' + this.ca.fw.newForm);
-
-        if (this.ca.fw.newForm.ISSP_AMS_Legal_Status__c == 'association'
-			|| this.ca.fw.newForm.ISSP_AMS_Legal_Status__c == 'corporation'
-			|| this.ca.fw.newForm.ISSP_AMS_Legal_Status__c == 'limited company'
-			|| this.ca.fw.newForm.ISSP_AMS_Legal_Status__c == 'trust company') {
+        if (this.ca.fw.newForm.legalStatus == 'association'
+			|| this.ca.fw.newForm.legalStatus == 'corporation'
+			|| this.ca.fw.newForm.legalStatus == 'limited company'
+			|| this.ca.fw.newForm.legalStatus == 'trust company') {
 
             ownerLabel = Label.ISSP_AMS_Shareholder;
 
-        } else if (this.ca.fw.newForm.ISSP_AMS_Legal_Status__c == 'co-operative'
-				   || this.ca.fw.newForm.ISSP_AMS_Legal_Status__c == 'joint venture'
-				   || this.ca.fw.newForm.ISSP_AMS_Legal_Status__c == 'limited partnership'
-				   || this.ca.fw.newForm.ISSP_AMS_Legal_Status__c == 'partnership') {
+        } else if (this.ca.fw.newForm.legalStatus == 'co-operative'
+				   || this.ca.fw.newForm.legalStatus == 'joint venture'
+				   || this.ca.fw.newForm.legalStatus == 'limited partnership'
+				   || this.ca.fw.newForm.legalStatus == 'partnership') {
 
             ownerLabel = Label.ISSP_AMS_Partner;
 

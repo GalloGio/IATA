@@ -1,0 +1,99 @@
+<apex:component controller="ANG_AnnualRevRo">
+    <apex:attribute name="helperParam" type="ANG_AnnualRevRoHelper" description="Helper" assignTo="{! helper}" />
+
+    <style>
+        .workArea {
+            padding-right: 20px;
+        }
+    </style>
+
+    <div styleClass="workArea">
+
+        <apex:pageBlockSection columns="2" collapsible="false" id="Section0">
+            <apex:facet name="header">
+                <apex:outputpanel>Status</apex:outputpanel>
+            </apex:facet>
+
+            <apex:pageBlockSectionItem>
+                <apex:outputLabel value="{! $Label.ISSP_AMS_MSO_GSA_IATA_Code}" />
+                <apex:outputField value="{!currentAccount.IATACode__c}" />
+            </apex:pageBlockSectionItem>
+
+
+            <apex:pageBlockSectionItem>
+                <apex:outputText value="{!$Label.ISSP_ANG_ANNUAL_VAL_STATUS} {!helper.ca.statusDesc}" />
+            </apex:pageBlockSectionItem>
+
+        </apex:pageBlockSection>
+
+        <apex:pageBlockSection columns="1" collapsible="false" id="Section1">
+            <apex:facet name="header">
+                <apex:outputpanel>{! $Label.ISSP_ANG_ANNUAL_REV_Change_of_Legal_Name}</apex:outputpanel>
+            </apex:facet>
+
+            <apex:pageBlockSectionItem>
+                <apex:outputLabel value="{!$ObjectType.AMS_Pax_Accreditation_Form__c.fields.Local_Legally_Registered_Name__c.Label}" />
+                <apex:outputField value="{!currentAccount.Name}" />
+            </apex:pageBlockSectionItem>
+
+            <apex:pageBlockSectionItem>
+                <apex:outputLabel value="{!$ObjectType.AMS_Pax_Accreditation_Form__c.fields.Trade_Name__c.Label}" />
+                <apex:outputField value="{!currentAccount.TradeName__c}" />
+            </apex:pageBlockSectionItem>
+
+        </apex:pageBlockSection>
+
+        <apex:pageBlockSection columns="1" collapsible="false" id="Section2">
+
+            <apex:facet name="header">
+                <apex:outputpanel>
+                    <apex:outputpanel>{! $Label.ISSP_ANG_ANNUAL_REV_Change_of_Location}</apex:outputpanel>
+                </apex:outputpanel>
+            </apex:facet>
+
+            <apex:pageBlockSectionItem>
+                <apex:outputtext value="{0}
+                                        <br />{1}<br />{2}<br /><br />{!$Label.ISSP_Office_Email}: {3}<br /> {!$Label.ISSP_Registration_Website}: {4}<br /><br />{!$Label.ISSP_Registration_BusinessPhone}: {5}<br />{!$Label.ISSP_Registration_MobilePhone}: {6}<br />Fax: {7}" escape="false" label="{!$Label.ISSP_AMS_Step3_Office_FullAddress}">
+                    <apex:param value="{!currentAccount.BillingStreet}" />
+                    <apex:param value="{!currentAccount.BillingCity},&nbsp;{!currentAccount.BillingPostalCode}" />
+                    <apex:param value="{!IF(currentAccount.BillingState!='',currentAccount.BillingState + ',&nbsp;','')}{!currentAccount.BillingCountry}" />
+                    <apex:param value="{!currentAccount.Email__c}" />
+                    <apex:param value="{!currentAccount.Website}" />
+                    <apex:param value="{!currentAccount.Phone}" />
+                    <apex:param value="{!currentAccount.Mobile__c}" />
+                    <apex:param value="{!currentAccount.FAX}" />
+                </apex:outputtext>
+            </apex:pageBlockSectionItem>
+
+
+        </apex:pageBlockSection>
+
+        <apex:pageBlockSection columns="1" collapsible="false" id="Section3">
+
+            <apex:facet name="header">
+                <apex:outputpanel>
+                    <apex:outputpanel>{! $Label.ISSP_ANG_ANNUAL_REV_Change_Ownership_Shareholding}</apex:outputpanel>
+                </apex:outputpanel>
+            </apex:facet>
+
+            <apex:pageblockSectionItem>
+                <apex:outputLabel value="{!$ObjectType.AMS_Pax_Accreditation_Form__c.fields.Map_Company_Type_to_Legal_Status__c.Label}"/>
+                <apex:outputField value="{!newForm.ISSP_AMS_Legal_Status__c}" />
+            </apex:pageblockSectionItem>
+
+            <apex:outputPanel layout="block" id="previous-owner-companies" style="display:{!IF(hqAccount.Company_Type__c!='S', '', 'none')}">
+                <div class="bg-info col-md-12" style="margin-top:15px;"><strong>{!$Label.ISSP_AMS_NoC_Current_Companies}</strong></div>
+                <div style="height:70px">&nbsp;</div>
+                <apex:outputText value="{!IF(newlabels, $Label.ISSP_AMS_NoC_No_Company_Owners_New, $Label.ISSP_AMS_NoC_No_Company_Owners)}" rendered="{!List_PreviousCompanies.size==0}"/>
+                <apex:pageBlockTable value="{!previousOwners}" var="agencycon" id="companyList" styleClass="table-hover table table-condensed table-responsive" rendered="{!List_PreviousCompanies.size>0}">
+                        <apex:column headerValue="{!$ObjectType.Account.fields.Legal_name__c.Label}" value="{!agencycon.Name}"/>
+                        <apex:column value="{!agencycon.Registration_number__c}"/>
+                        <apex:column value="{!agencycon.IATACode__c}"/>
+                        <apex:column value="{!agencycon.Financial_interest__c}"/>
+                </apex:pageBlockTable>
+            </apex:outputPanel>
+
+        </apex:pageBlockSection>
+
+    </div>
+</apex:component>

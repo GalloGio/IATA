@@ -88,35 +88,26 @@
 
                 <apex:pageBlockTable value="{!helper.previousOwners}" var="agencycon"	id="contactList" styleClass="table-hover table table-condensed table-responsive">
 
-                    <apex:column >
-                        <span class="glyphicon glyphicon-plus" onclick="toggleContactDetails(this)" id="tog{!agencycon.Id}"/>
-                    </apex:column>
-
+                    <apex:column ><span class="glyphicon glyphicon-plus" onclick="toggleContactDetails(this)" id="tog{!agencycon.Id}"/></apex:column>
                     <apex:column headerValue="{!$ObjectType.Contact.fields.FirstName.Label}" value="{!agencycon.First_name__c}"/>
                     <apex:column headerValue="{!$ObjectType.Contact.fields.LastName.Label}" value="{!agencycon.Last_name__c}"/>
-
-                    <apex:column headerValue="{!helper.ownerLabel}" value="{!agencycon.Agency_owner__c}">
-                    </apex:column>
-
+                    <apex:column headerValue="{!CASE(ownerLabelType, 'shareholder', $Label.ISSP_AMS_Shareholder, 'partner', $Label.ISSP_AMS_Partner, $Label.ISSP_AMS_Owner)}" value="{!agencycon.Agency_owner__c}"	/>
                     <apex:column value="{!agencycon.Agency_role__c}" >
-                        <apex:facet name="header">
-                            <apex:outputText escape="false" value="{!helper.roleLabel}"/>
-                        </apex:facet>
+                        <apex:facet name="header"><apex:outputText escape="false" value="{!CASE(roleLabelType, 'director', $Label.ISSP_AMS_Director, $Label.ISSP_AMS_Manager)}"/></apex:facet>
                     </apex:column>
-
                     <apex:column headerValue="{!$ObjectType.AMS_Accreditation_Contact__c.fields.Financial_interest__c.Label}" value="{!agencycon.Financial_interest__c}"/>
 
                     <apex:column >
                         <apex:actionStatus id="actEditContact" >
                             <apex:facet name="start" >
                                 <span class="glyphicon glyphicon-refresh glyphicon-refresh-animate"></span>
-                                {!$Label.ISSP_AMS_Loading_Contact}
+                                    {!$Label.ISSP_AMS_Loading_Contact}
                             </apex:facet>
                         </apex:actionStatus>
                     </apex:column>
                     <apex:column breakBefore="true" colspan="12" style="display:none; background-color:RGB(236, 246, 249)" styleClass="tog{!agencycon.Id}" id="contactDetails">
                         <div class="col-md-12">
-                            <apex:outputText rendered="{!helper.currentAccount.Country_ISO_Code__c=='CN'}">
+                            <apex:outputText rendered="{!isocountry.ISO_Code__c=='CN'}">
                                 <div class="contact-detail col-md-6"><span style="font-weight:bold">{!$Label.ISSP_AMS_First_Name_Chinese}&nbsp;</span></div><div class="contact-detail col-md-6">{!agencycon.Local_First_name__c}</div>
                                 <div class="contact-detail col-md-6"><span style="font-weight:bold">{!$Label.ISSP_AMS_Last_Name_Chinese}&nbsp;</span></div><div class="contact-detail col-md-6">{!agencycon.Local_Last_Name__c}</div>
                             </apex:outputText>

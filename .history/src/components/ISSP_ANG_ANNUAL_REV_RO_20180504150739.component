@@ -1,0 +1,89 @@
+<apex:component controller="ANG_AnnualRevRo">
+    <apex:attribute name="helperParam" type="ANG_AnnualRevRoHelper" description="Helper" assignTo="{! helper}" />
+
+    <style>
+        .workArea {
+            padding-right: 20px;
+        }
+    </style>
+
+    <div styleClass="workArea">
+
+        <apex:pageBlockSection columns="2" collapsible="false" id="Section0">
+            <apex:facet name="header">
+                <apex:outputpanel>Status</apex:outputpanel>
+            </apex:facet>
+
+            <apex:pageBlockSectionItem>
+                <apex:outputLabel value="{! $Label.ISSP_AMS_MSO_GSA_IATA_Code}" />
+                <apex:outputField value="{!helper.ca.account.IATACode__c}" />
+            </apex:pageBlockSectionItem>
+
+
+            <apex:pageBlockSectionItem>
+                <apex:outputText value="{!$Label.ISSP_ANG_ANNUAL_VAL_STATUS} {!helper.ca.statusDesc}" />
+            </apex:pageBlockSectionItem>
+
+        </apex:pageBlockSection>
+
+        <apex:pageBlockSection columns="1" collapsible="false" id="Section1">
+            <apex:facet name="header">
+                <apex:outputpanel>{! $Label.ISSP_ANG_ANNUAL_REV_Change_of_Legal_Name}</apex:outputpanel>
+            </apex:facet>
+
+            <apex:pageBlockSectionItem>
+                <apex:outputLabel value="{!$ObjectType.AMS_Pax_Accreditation_Form__c.fields.Local_Legally_Registered_Name__c.Label}" />
+                <apex:outputField value="{!helper.ca.account.Name}" />
+            </apex:pageBlockSectionItem>
+
+            <apex:pageBlockSectionItem>
+                <apex:outputLabel value="{!$ObjectType.AMS_Pax_Accreditation_Form__c.fields.Trade_Name__c.Label}" />
+                <apex:outputField value="{!helper.ca.account.TradeName__c}" />
+            </apex:pageBlockSectionItem>
+
+        </apex:pageBlockSection>
+
+        <apex:pageBlockSection columns="1" collapsible="false" id="Section2">
+
+            <apex:facet name="header">
+                <apex:outputpanel>
+                    <apex:outputpanel>{! $Label.ISSP_ANG_ANNUAL_REV_Change_of_Location}</apex:outputpanel>
+                </apex:outputpanel>
+            </apex:facet>
+
+            <apex:pageBlockSectionItem>
+                <apex:outputtext value="{0}
+                                        <br />{1}<br />{2}<br /><br />{!$Label.ISSP_Office_Email}: {3}<br /> {!$Label.ISSP_Registration_Website}: {4}<br /><br />{!$Label.ISSP_Registration_BusinessPhone}: {5}<br />{!$Label.ISSP_Registration_MobilePhone}: {6}<br />Fax: {7}" escape="false" label="{!$Label.ISSP_AMS_Step3_Office_FullAddress}">
+                    <apex:param value="{!helper.ca.account.BillingStreet}" />
+                    <apex:param value="{!helper.ca.account.BillingCity},&nbsp;{!helper.ca.account.BillingPostalCode}" />
+                    <apex:param value="{!IF(helper.ca.account.BillingState!='',helper.ca.account.BillingState + ',&nbsp;','')}{!helper.ca.account.BillingCountry}" />
+                    <apex:param value="{!helper.ca.account.Email__c}" />
+                    <apex:param value="{!helper.ca.account.Website}" />
+                    <apex:param value="{!helper.ca.account.Phone}" />
+                    <apex:param value="{!helper.ca.account.Mobile__c}" />
+                    <apex:param value="{!helper.ca.account.FAX}" />
+                </apex:outputtext>
+            </apex:pageBlockSectionItem>
+
+
+        </apex:pageBlockSection>
+
+        <apex:pageBlockSection columns="1" collapsible="false" id="Section3">
+
+            <apex:facet name="header">
+                <apex:outputpanel>
+                    <apex:outputpanel>{! $Label.ISSP_ANG_ANNUAL_REV_Change_Ownership_Shareholding}</apex:outputpanel>
+                </apex:outputpanel>
+            </apex:facet>
+
+            <apex:pageBlockSection columns="1">
+                <apex:pageblockSectionItem labelStyle="width:80%" dataStyle="width:10%;">
+                    <apex:outputLabel value="{!$ObjectType.AMS_Pax_Accreditation_Form__c.fields.Map_Company_Type_to_Legal_Status__c.Label}"/>
+                    <apex:outputField value="{!newForm.Map_Company_Type_to_Legal_Status__c}" />
+                </apex:pageblockSectionItem>
+            </apex:pageBlockSection>
+
+        </apex:pageBlockSection>
+
+    </div>
+</apex:component>

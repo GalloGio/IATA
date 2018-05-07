@@ -345,7 +345,7 @@
                                                         <div class="panel panel-default">
 
                                                             <apex:outputPanel id="roPlane">
-                                                                <c:ISSP_ANG_ANNUAL_REV_RO helperParam="{! helper}"/>
+                                                                <!--c:ISSP_ANG_ANNUAL_REV_RO helperParam="{! helper}"/-->
                                                             </apex:outputPanel>
 
                                                             <div class="center" style="display:{!IF(currentAccount.status == 'O','inline-block','none')}">

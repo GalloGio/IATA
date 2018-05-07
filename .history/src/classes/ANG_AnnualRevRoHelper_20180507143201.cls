@@ -33,7 +33,7 @@ public with sharing class ANG_AnnualRevRoHelper {
 	public ANG_AnnualRevRoHelper(ANG_AnnualRevRoCurrentAccount ca) {
 		this.ca = ca;
 
-		System.debug('alex inside helper current account : ' + ca.account.iatacode__c);
+		System.debug('alex inside helper current account : ' + ca.account.iata_code__c);
 
         roleLabel = Label.ISSP_AMS_Director;
 

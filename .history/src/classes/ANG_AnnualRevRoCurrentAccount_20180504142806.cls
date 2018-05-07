@@ -1,6 +1,6 @@
 public with sharing class ANG_AnnualRevRoCurrentAccount {
 	public Account account {get; set;}
-	public ANG_AnnualRevFormWrapper fw {get; set;}
+	public AMS_Pax_Accreditation_Form__c newForm {get; set;}
 	public String status {get; set;} // C  - Confirmed
 									 // UP - Update in progress
 									 // UC - Update confirmed
@@ -21,9 +21,9 @@ public with sharing class ANG_AnnualRevRoCurrentAccount {
 		set;
 	}
 
-	public ANG_AnnualRevRoCurrentAccount(Account account, String status, ANG_AnnualRevFormWrapper fw) {
+	public ANG_AnnualRevRoCurrentAccount(Account account, String status, AMS_Pax_Accreditation_Form__c newForm) {
 		this.account = account;
 		this.status = status;
-		this.fw = fw;
+		this.newForm = newForm;
 	}
 }
