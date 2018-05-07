@@ -2,6 +2,8 @@ public class TIP_Utils{
 
 	//##=============CONSTANTS=====================###
 
+	//Portal Service Name
+	public static String PORTAL_SERVICE_NAME_TIP= 'Transparency in Payments (TIP)';
 	//Account RT's
     public static String STANDARD_ACCOUNT_RECORD_TYPE_ID = RecordTypeSingleton.getInstance().RtIDsPerDeveloperNamePerObj.get('Account').get('Standard_Account');  
     public static String PAYMENT_PROVIDER_RECORD_TYPE_ID = RecordTypeSingleton.getInstance().RtIDsPerDeveloperNamePerObj.get('Account').get('TIP_Payment_Provider');
