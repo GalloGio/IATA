@@ -1113,6 +1113,11 @@ global class ANG_OscarProcessHelper {
 
 	public static List<Case> createPCIComplianceOscars(List<Account> accs, Map<Id,List<Contact>> contactsAcc, Set<Id> accsToSendEmail){
 
+		return createPCIComplianceOscars(accs, contactsAcc, accsToSendEmail, 'Massive FOP Creation');
+	}
+
+	public static List<Case> createPCIComplianceOscars(List<Account> accs, Map<Id,List<Contact>> contactsAcc, Set<Id> accsToSendEmail, String origin){
+
 		Map<id,OscarObjectsWrapper> accOscarObjsMap = new Map<id,OscarObjectsWrapper>();
 		OscarObjectsWrapper oscarObjs;
 		
@@ -1124,9 +1129,16 @@ global class ANG_OscarProcessHelper {
 
 		Map<Id,Account> accountMap = new Map<Id,Account>();
 
+		String identifier;
+
+		if (origin == 'Massive FOP Creation')
+			identifier = 'NG_FOP_PortalNotification';
+		else if (origin == 'SOME STRING') //TODO: add correct origin 
+			identifier = 'SOME STRING'; //TODO: add template identifier
+
 		Notification_Template__c notificationTemplate = null;
 
-		List<Notification_Template__c> notificationTemplates = [SELECT Id,Name, Identifier__c FROM Notification_Template__c WHERE Identifier__c ='NG_FOP_PortalNotification' LIMIT 1];
+		List<Notification_Template__c> notificationTemplates = [SELECT Id,Name, Identifier__c FROM Notification_Template__c WHERE Identifier__c = :identifier LIMIT 1];
 
 		if(!notificationTemplates.isEmpty())
 			notificationTemplate = notificationTemplates.get(0);
@@ -1145,7 +1157,7 @@ global class ANG_OscarProcessHelper {
 	        fieldsOfObject.put('BSPCountry__c',acc.BillingCountry);
 	        fieldsOfObject.put('Region__c',acc.Region_formula__c);
 	        fieldsOfObject.put('CaseArea__c','Accreditation Process');
-	        fieldsOfObject.put('Origin','Massive FOP Creation');
+	        fieldsOfObject.put('Origin', origin);
 	        fieldsOfObject.put('Reason1__c','FoP Management');
 	        fieldsOfObject.put('Subject','FoP Management - ' + acc.ANG_Accreditation_Model__c + ' - ' + acc.Name);
 	        fieldsOfObject.put('Type_of_customer__c','IATA Travel Agent');
@@ -1221,14 +1233,15 @@ global class ANG_OscarProcessHelper {
 
 	    Set<Account> acctSet = new Set<Account>();
 
+		StaticResource sr;
+		if (origin == 'Massive FOP Creation')
+			sr = [Select body, name from StaticResource where Name = 'ANG_NilCreditCardSelfDeclaration'].get(0);
+
 		for (Account acc: accs){
-		// fields needed on contact: Id, Name, Email, Preferred_Language__c, BSP_CASS_Payment_contact__c, Financial_Assessment_Contact__c
 
 			if(accsToSendEmail.contains(acc.Id)){
 
 				acctSet.add(acc);
-
-				StaticResource  sr = [Select body, name from StaticResource where Name = 'ANG_NilCreditCardSelfDeclaration'].get(0);
 
 				Messaging.EmailFileAttachment[] attachments = null;
 
@@ -1250,6 +1263,7 @@ global class ANG_OscarProcessHelper {
 					attachments = new Messaging.EmailFileAttachment[]{attach};
 				}
                 
+				// fields needed on contact: Id, Name, Email, Preferred_Language__c, BSP_CASS_Payment_contact__c, Financial_Assessment_Contact__c
 	            AMS_AgencyRegulationAutoRenewal.sendEmailAlert(fetchKeyContactsForPCI(contactsAcc.get(acc.Id)), accOscarObjsMap.get(acc.Id).oscar.Id, AMS_OSCARTriggerHandler.ANGemailTemplates(AMS_Utils.NGFOP, null, true), accOscarObjsMap.get(acc.Id).oscar.Oscar_Communication_Case_Id__c, owea[0], false, attachments);				
 			}
 
