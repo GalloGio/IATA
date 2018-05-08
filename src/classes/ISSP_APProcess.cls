@@ -595,6 +595,7 @@ public without sharing class ISSP_APProcess {
         isocountry = fetchISOCountry(newCase.IFAP_Country_ISO__c);
         newCase.BSPCountry__c =  isocountry.Case_BSP_Country__c ;
         newCase.Country_concerned_by_the_query__c = isocountry.Case_BSP_Country__c;
+        newCase.Visible_on_ISS_Portal__c = true;
 
         newForm.ANG_Enable_NewGen__c = (isocountry.ANG_Portal_Service__c != null);
 
@@ -1163,7 +1164,8 @@ public without sharing class ISSP_APProcess {
         							 	   Origin = 'Portal',
         							 	   Subject = 'Airline Participation - IATA EasyPay ' + optInOutSubject + ' - ' + isoCountriesMap.get(countriesParam[0]).Name,
         							 	   Provider__c = con.AccountId,
-                                           Type_of_customer__c = 'Airline Passenger');
+                                           Type_of_customer__c = 'Airline Passenger',
+                                           Verification__c = 'BSP');
 
         insert optInOutParentCase;
 
@@ -1199,7 +1201,8 @@ public without sharing class ISSP_APProcess {
         							 Origin = 'Portal',
         							 Subject = 'Airline Participation - IATA EasyPay ' + optInOutSubject + ' - ' + isoCountriesMap.get(countriesParam[i]).Name,
         							 Provider__c = con.AccountId,
-                                     Type_of_customer__c = 'Airline Passenger');
+                                     Type_of_customer__c = 'Airline Passenger',
+                                     Verification__c = 'BSP');
         		
         		childCases.add(childCase);
         	}
@@ -1207,7 +1210,13 @@ public without sharing class ISSP_APProcess {
         	insert childCases;
         }
 
-        //populateCountriesMap();
+        return null;
+    }
+
+    public PageReference securityCheck() {
+        if ((newCase.Id != null && newCase.Status != 'Draft')) {
+            return new Pagereference('/ISSP_Case?caseId=' + newCase.Id);
+        }
 
         return null;
     }
@@ -1382,7 +1391,7 @@ public without sharing class ISSP_APProcess {
                     [SELECT CaseNumber, CreatedDate, Account_Concerned__r.Site, Id, Subject, Status, Priority, Reason1__c, CaseArea__c, Account.Billing_Address_formated__c
                      FROM Case
                      WHERE RecordType.Name IN ('IDFS Airline Participation Process') AND (Status = 'Draft' OR Status = 'Pending customer' OR Status = 'For Review and Acceptance') AND Origin = 'Portal'
-                     AND ((Case.AccountId = :con.AccountId) OR (Case.Account_Concerned__r.Top_Parent__c = :con.AccountId AND (NOT Case.Reason1__c LIKE '%via%')))
+                     AND Visible_on_ISS_Portal__c = true AND ((Case.AccountId = :con.AccountId) OR (Case.Account_Concerned__r.Top_Parent__c = :con.AccountId AND (NOT Case.Reason1__c LIKE '%via%')))
                      ORDER BY CaseNumber DESC]));
             }
             return setConn;

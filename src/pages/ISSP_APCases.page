@@ -145,6 +145,7 @@
         		//falta dar clean ao modal
         		document.querySelector("[Id$='requestSentMsg']").style.display = '';
             document.querySelector("[Id$='submitOptInOutBtn']").disabled = true;
+            document.querySelector("[Id$='modalClose']").style.display = 'none';
             setTimeout(closeAll, 5000);
       	}
     }
@@ -152,6 +153,7 @@
     function closeAll() {
         document.querySelector("[Id$='requestSentMsg']").style.display = 'none';
         document.querySelector("[Id$='submitOptInOutBtn']").disabled = false;
+        document.querySelector("[Id$='modalClose']").style.display = '';
         optInOut();
     }
 
@@ -216,7 +218,7 @@
       <!-- Modal content-->
       <div class="modal-content">
         <div class="modal-header">
-          <button type="button" class="close" data-dismiss="modal">&times;</button>
+          <button id='modalClose' type="button" class="close" data-dismiss="modal">&times;</button>
           <h4 class="modal-title">IATA EasyPay Opt-In / Out</h4>
         </div>
         <div class="modal-body">
