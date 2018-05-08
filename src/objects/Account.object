@@ -6166,6 +6166,12 @@ If(LEN(BillingCountry) &gt;0, BillingCountry,&quot;&quot;)</formula>
         <type>Checkbox</type>
     </fields>
     <fields>
+        <fullName>ChannelProgramLevelName</fullName>
+    </fields>
+    <fields>
+        <fullName>ChannelProgramName</fullName>
+    </fields>
+    <fields>
         <fullName>Check_Digit__c</fullName>
         <externalId>false</externalId>
         <label>Check Digit</label>
@@ -16172,39 +16178,19 @@ This field is kept up-to-date with the feedback of ITDI at least twice a year du
                     <label>I</label>
                 </value>
                 <value>
-                    <fullName>L</fullName>
+                    <fullName>J</fullName>
                     <default>false</default>
-                    <label>L</label>
+                    <label>J</label>
                 </value>
                 <value>
-                    <fullName>M</fullName>
+                    <fullName>K</fullName>
                     <default>false</default>
-                    <label>M</label>
+                    <label>K</label>
                 </value>
                 <value>
-                    <fullName>N</fullName>
+                    <fullName>S</fullName>
                     <default>false</default>
-                    <label>N</label>
-                </value>
-                <value>
-                    <fullName>O</fullName>
-                    <default>false</default>
-                    <label>O</label>
-                </value>
-                <value>
-                    <fullName>P</fullName>
-                    <default>false</default>
-                    <label>P</label>
-                </value>
-                <value>
-                    <fullName>Q</fullName>
-                    <default>false</default>
-                    <label>Q</label>
-                </value>
-                <value>
-                    <fullName>R</fullName>
-                    <default>false</default>
-                    <label>R</label>
+                    <label>S</label>
                 </value>
             </valueSetDefinition>
         </valueSet>
@@ -37800,34 +37786,6 @@ This field is kept up-to-date with the feedback of ITDI at least twice a year du
                 <fullName>I</fullName>
                 <default>false</default>
             </values>
-            <values>
-                <fullName>L</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>M</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>N</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>O</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>P</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Q</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>R</fullName>
-                <default>false</default>
-            </values>
         </picklistValues>
         <picklistValues>
             <picklist>Zuora__Active__c</picklist>
@@ -45580,34 +45538,6 @@ This field is kept up-to-date with the feedback of ITDI at least twice a year du
                 <fullName>I</fullName>
                 <default>false</default>
             </values>
-            <values>
-                <fullName>L</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>M</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>N</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>O</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>P</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Q</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>R</fullName>
-                <default>false</default>
-            </values>
         </picklistValues>
         <picklistValues>
             <picklist>Zuora__Active__c</picklist>
@@ -52760,34 +52690,6 @@ This field is kept up-to-date with the feedback of ITDI at least twice a year du
                 <fullName>I</fullName>
                 <default>false</default>
             </values>
-            <values>
-                <fullName>L</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>M</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>N</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>O</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>P</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Q</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>R</fullName>
-                <default>false</default>
-            </values>
         </picklistValues>
         <picklistValues>
             <picklist>Zuora__Active__c</picklist>
@@ -57170,34 +57072,6 @@ This field is kept up-to-date with the feedback of ITDI at least twice a year du
             </values>
             <values>
                 <fullName>I</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>L</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>M</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>N</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>O</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>P</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Q</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>R</fullName>
                 <default>false</default>
             </values>
         </picklistValues>
@@ -75469,34 +75343,6 @@ This field is kept up-to-date with the feedback of ITDI at least twice a year du
                 <fullName>I</fullName>
                 <default>false</default>
             </values>
-            <values>
-                <fullName>L</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>M</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>N</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>O</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>P</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Q</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>R</fullName>
-                <default>false</default>
-            </values>
         </picklistValues>
         <picklistValues>
             <picklist>Zuora__Active__c</picklist>
@@ -79825,34 +79671,6 @@ This field is kept up-to-date with the feedback of ITDI at least twice a year du
             </values>
             <values>
                 <fullName>I</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>L</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>M</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>N</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>O</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>P</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Q</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>R</fullName>
                 <default>false</default>
             </values>
         </picklistValues>
@@ -84679,34 +84497,6 @@ This field is kept up-to-date with the feedback of ITDI at least twice a year du
             </values>
             <values>
                 <fullName>I</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>L</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>M</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>N</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>O</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>P</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Q</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>R</fullName>
                 <default>false</default>
             </values>
         </picklistValues>
