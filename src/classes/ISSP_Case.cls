@@ -1578,15 +1578,17 @@ public without sharing class ISSP_Case {
     
     public static void sendMassEmail(Id caseId, Id templateId) {
         try {
-            Messaging.SingleEmailMessage mail = new Messaging.SingleEmailMessage();
-            List<CaseTeamMember> listMembers = new List<CaseTeamMember>(
-                [SELECT MemberId
-                 FROM CaseTeamMember
-                 WHERE ParentId = :caseId]);
+            OrgWideEmailAddress orgAddress = [SELECT Id FROM OrgWideEmailAddress WHERE Address = 'noreply@iata.org'];
+            list<User> listUsers = [SELECT Id, ContactId
+                FROM User
+                WHERE Id IN (SELECT MemberId FROM CaseTeamMember WHERE ParentId = :caseId)];
 
             List<Messaging.SingleEmailMessage> listEmail = new List<Messaging.SingleEmailMessage>();
-            for(caseTeamMember teamMember : listMembers){
-                mail.setTargetObjectId(teamMember.MemberId);
+            for(User user : listUsers) {
+                Messaging.SingleEmailMessage mail = new Messaging.SingleEmailMessage();
+                mail.setOrgWideEmailAddressId(orgAddress.Id);
+                mail.setTargetObjectId(user.ContactId);
+                mail.setWhatId(caseId);
                 mail.setUseSignature(false);
                 mail.setBccSender(false);
                 mail.setSaveAsActivity(false);
