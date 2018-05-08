@@ -278,7 +278,7 @@ SYSTEM.DEBUG('getRelatedAccount starting... ');
 		accountConcerned = ISSP_Selector.fetchAccountConcernedDetails(vAccountConcernedId);
 
         if(newCase.Origin == 'Portal')
-		    newCase.Subject = Label.ISSP_ANG_PCI_Compliance + ' - ' + accountConcerned.IATACode__c + ' – ' + accountConcerned.Name;
+		    newCase.Subject = Label.ISSP_ANG_PCI_Compliance + ' - ' + accountConcerned.IATACode__c + ' - ' + accountConcerned.Name;
 
 		fetchPCI_CountryRequirements();
 
