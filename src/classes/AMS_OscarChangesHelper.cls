@@ -224,6 +224,7 @@ public without sharing class AMS_OscarChangesHelper {
 				cse.Type_of_customer__c = parentCase.Type_of_customer__c;
 				cse.ContactId = parentCase.ContactId;
 				cse.Subject = parentCase.Subject;
+				cse.Description = Label.AMS_RollbackCase_Description;
 				cse.setOptions(dmo);
 				casesToInsert.add(cse);
 			}
