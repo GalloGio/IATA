@@ -1834,6 +1834,8 @@ public class AMS_OSCARTriggerHandler {
             return 'Change of Hierarchy';
         if(typeOfChange.contains('Accreditation type'))
             return 'Accreditation Type';
+        if(typeOfChange.contains('Trade name'))
+            return 'Change of Trade Name';
 
         return null;
     }
