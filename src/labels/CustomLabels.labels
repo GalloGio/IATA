@@ -19613,6 +19613,120 @@ Please note that many IATA invoices for accredited agents are collected through 
         <value>Next</value>
     </labels>
     <labels>
+        <fullName>ISSP_Portal_Product_Accepted_Transactions_Label</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP Portal Product Accepted Transactions Label</shortDescription>
+        <value>Enter the list of accepted transactions: Payment, Refund or Both payment and refund</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_Portal_Product_Acquiring_network_Label</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP Portal Product Acquiring network Label</shortDescription>
+        <value>Enter details about Acquiring network / scheme fee (s)</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_Portal_Product_Airline_payment_guarantee_Label</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP Portal Product Airline payment guarantee Label</shortDescription>
+        <value>Specify if payment is guaranteed to the airline against: fraud dispute, commercial dispute, or both fraud and commercial dispute</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_Portal_Product_Category_Label</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP Portal Product Category Label</shortDescription>
+        <value>Enter the category of product (Consumer, Corporate)</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_Portal_Product_Chargeback_right_Label</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP Portal Product Chargeback right Label</shortDescription>
+        <value>Indicate if this product has chargeback right: Yes or No</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_Portal_Product_Integration_of_ATM_Label</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP Portal Product Integration of ATM Label</shortDescription>
+        <value>Indicate which GDS supports an integration process that enable Travel Agents to have an automated access to this Alternative Transfer Method</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_Portal_Product_Interchange_Fee_Label</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP Portal Product Interchange Fee Label</shortDescription>
+        <value>Enter details about Interchange Fee (s)</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_Portal_Product_Issuer_Name_Label</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP Portal Product Issuer Name Label</shortDescription>
+        <value>Enter issuer name if different from provider name: name of regulated institution that issues this Alternative Transfer Method</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_Portal_Product_License_Label</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP Portal Product License Label</shortDescription>
+        <value>Enter information about licenses (e.g. banking license or e-money issuing license granted by a national authority)</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_Portal_Product_Maximum_Chargeback_Timeframe_Label</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP Portal Product Maximum Chargeback Timeframe Label</shortDescription>
+        <value>If subject to chargeback, please indicate the maximum number of days after transaction for which a chargeback can be issued</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_Portal_Product_Name_Label</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP Portal Product Name Label</shortDescription>
+        <value>Enter product name</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_Portal_Product_Pay_in_Model_Label</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP Portal Product Pay in Model Label</shortDescription>
+        <value>Enter the type of card (Prepaid, Pay now or Pay later)</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_Portal_Product_Payment_Network_Label</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP Portal Product Payment Network Label</shortDescription>
+        <value>Amex (AX), MasterCard (CA), UATP (TP), Visa (VI), Diners / Discover (DC/DS), Other (OTH)</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_Portal_Product_Settlement_Terms_Label</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP Portal Product Settlement Terms Label</shortDescription>
+        <value>Enter the settlement terms -  Number of days after transaction day when settlement occurs</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_Portal_Product_VAN_Type_Label</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP Portal Product VAN Type Label</shortDescription>
+        <value>Enter  if the product is a Single-use VAN or Multi-use VAN.  
+If the product is a single-use VAN, then a unique VAN number is created for every transaction.
+If the product is a multi-use VANs, then it is a unique card/account number that can be used multiple times.</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_Portal_Product_is_Subject_to_PCI_Label</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP Portal Product is Subject to PCI Label</shortDescription>
+        <value>Is the product subject to PCI DSS requirements compliance? (this is related to the product): Yes or Not Applicable</value>
+    </labels>
+    <labels>
         <fullName>ISSP_Portal_Service</fullName>
         <categories>Portal</categories>
         <language>en_US</language>
