@@ -1381,7 +1381,7 @@ public without sharing class ISSP_APProcess {
                 setConn = new ApexPages.StandardSetController(Database.getQueryLocator(
                     [SELECT CaseNumber, CreatedDate, Account_Concerned__r.Site, Id, Subject, Status, Priority, Reason1__c, CaseArea__c, Account.Billing_Address_formated__c
                      FROM Case
-                     WHERE RecordType.Name IN ('IDFS Airline Participation Process') AND (Status = 'Draft' OR Status = 'Pending customer') AND Origin = 'Portal'
+                     WHERE RecordType.Name IN ('IDFS Airline Participation Process') AND (Status = 'Draft' OR Status = 'Pending customer' OR Status = 'For Review and Acceptance') AND Origin = 'Portal'
                      AND ((Case.AccountId = :con.AccountId) OR (Case.Account_Concerned__r.Top_Parent__c = :con.AccountId AND (NOT Case.Reason1__c LIKE '%via%')))
                      ORDER BY CaseNumber DESC]));
             }
