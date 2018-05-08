@@ -41,10 +41,6 @@
         <description>ISSP Alert Treasury Dashboard Manager of access request</description>
         <protected>false</protected>
         <recipients>
-            <recipient>bakyc@iata.org</recipient>
-            <type>user</type>
-        </recipients>
-        <recipients>
             <recipient>khattabil@iata.org.prod</recipient>
             <type>user</type>
         </recipients>
