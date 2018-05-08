@@ -71,6 +71,17 @@ public without sharing class ISSP_TIP_Home_Controller {
     public ISSP_TIP_Home_Controller(){
         popContact();
         fillProducts();
+
+         pageReference currentPage = new PageReference(ApexPages.currentPage().getURL());
+        Map<String, String> params  =  currentPage.getParameters(); 
+        params.remove('prodId');
+        params.remove('caseId');
+        currentPage.getParameters().putAll(params);
+
+        //pre-load pages
+        if (currentPage.getURL() == Page.ISSP_TIP_Enrolment.getURL() && !String.isBlank(Apexpages.currentPage().getParameters().get('caseId')))  startEnrolmentAccount();
+        else if (currentPage.getURL() == Page.ISSP_TIP_Product_Enrollment.getURL() && !String.isBlank(Apexpages.currentPage().getParameters().get('prodId')))  NewEditProduct();
+        
     }
 
     //##======================Methods================================##  
