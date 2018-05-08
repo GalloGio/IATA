@@ -258,7 +258,10 @@ SYSTEM.DEBUG('getRelatedAccount starting... ');
         newCase.recordTypeId = OSCAR_RECORD_TYPE_ID;
         newCase.BSPCountry__c =  isocountry.Case_BSP_Country__c ;
         newCase.Country_concerned_by_the_query__c = isocountry.Name;
-        newCase.Reason1__c = AMS_UTILS.CASE_REASON_FOR_MANAGEMENT;
+
+        if (isocountry.ANG_Enable_NewGen__c) newCase.Reason1__c = AMS_Utils.CASE_REASON_FOR_MANAGEMENT;
+        else newCase.Reason1__c = Label.ISSP_ANG_PCI_Compliance;
+        //rui
 
         if(newCase.Status == null || newCase.Status == '')
             newCase.Status = 'Draft';
@@ -277,9 +280,12 @@ SYSTEM.DEBUG('getRelatedAccount starting... ');
 
 		accountConcerned = ISSP_Selector.fetchAccountConcernedDetails(vAccountConcernedId);
 
-        if(newCase.Origin == 'Portal')
-		    newCase.Subject = Label.ISSP_ANG_PCI_Compliance + ' - ' + accountConcerned.IATACode__c + ' – ' + accountConcerned.Name;
-
+        if(newCase.Origin == 'Portal') {
+            if (isocountry.ANG_Enable_NewGen__c) newCase.Subject = Label.ISSP_ANG_PCI_Compliance + ' - ' + accountConcerned.IATACode__c + ' – ' + accountConcerned.Name;
+            else newCase.Subject = Label.ISSP_ANG_PCI_Compliance + ' – ' + accountConcerned.Name;
+        }
+		//newCase.Subject = Label.ISSP_ANG_PCI_Compliance + ' - ' + accountConcerned.IATACode__c + ' – ' + accountConcerned.Name;
+        //rui
 		fetchPCI_CountryRequirements();
 
 	    for ( SelectOption ac : agencyCodesConcerned) {
@@ -296,7 +302,7 @@ SYSTEM.DEBUG('getRelatedAccount starting... ');
 	    }
         newForm.Agency_Codes_Concerned__c = agencyCodes;
 
-        if(newCase.Origin == 'Portal')
+        if(newCase.Origin == 'Portal') 
             newCase.Description = Label.ISSP_ANG_PROOF_OF_PCI + newForm.Agency_Codes_Concerned__c;
 
         upsert newCase;
@@ -375,7 +381,10 @@ SYSTEM.DEBUG('getRelatedAccount starting... ');
 
         update newCase;
 
-        String typeOfProcess = AMS_Utils.NGFOP;
+        String typeOfProcess;
+        if (isocountry.ANG_Enable_NewGen__c) typeOfProcess = AMS_Utils.PCI_COMPLIANT;
+        else typeOfProcess = AMS_Utils.NGFOP;
+        //rui
         system.debug('case ' + newCase + ' newCase.Account_Concerned__c ' + newCase.Account_Concerned__c + ' newForm.Id ' + newForm.Id + 'typeOfProcess ' + typeOfProcess);
 
         if(newCase.origin == 'Portal')
