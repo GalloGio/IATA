@@ -978,9 +978,9 @@
                     <label>BCH</label>
                 </value>
                 <value>
-                    <fullName>TSA</fullName>
+                    <fullName>CATA</fullName>
                     <default>false</default>
-                    <label>TSA</label>
+                    <label>CATA</label>
                 </value>
                 <value>
                     <fullName>Experience</fullName>
@@ -993,9 +993,10 @@
                     <label>Other</label>
                 </value>
                 <value>
-                    <fullName>CATA</fullName>
+                    <fullName>TSA</fullName>
                     <default>false</default>
-                    <label>CATA</label>
+                    <isActive>false</isActive>
+                    <label>TSA</label>
                 </value>
             </valueSetDefinition>
         </valueSet>
@@ -1095,10 +1096,6 @@
                 <fullName>Experience</fullName>
                 <default>false</default>
             </values>
-            <values>
-                <fullName>TSA</fullName>
-                <default>false</default>
-            </values>
         </picklistValues>
     </recordTypes>
     <recordTypes>
@@ -1181,10 +1178,6 @@
             </values>
             <values>
                 <fullName>Experience</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>TSA</fullName>
                 <default>false</default>
             </values>
         </picklistValues>
@@ -1271,10 +1264,6 @@
                 <fullName>Experience</fullName>
                 <default>false</default>
             </values>
-            <values>
-                <fullName>TSA</fullName>
-                <default>false</default>
-            </values>
         </picklistValues>
     </recordTypes>
     <recordTypes>
@@ -1357,10 +1346,6 @@
             </values>
             <values>
                 <fullName>Experience</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>TSA</fullName>
                 <default>false</default>
             </values>
         </picklistValues>
@@ -1447,10 +1432,6 @@
                 <fullName>Experience</fullName>
                 <default>false</default>
             </values>
-            <values>
-                <fullName>TSA</fullName>
-                <default>false</default>
-            </values>
         </picklistValues>
     </recordTypes>
     <recordTypes>
@@ -1533,10 +1514,6 @@
             </values>
             <values>
                 <fullName>Experience</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>TSA</fullName>
                 <default>false</default>
             </values>
         </picklistValues>
@@ -1630,10 +1607,6 @@
             </values>
             <values>
                 <fullName>Other</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>TSA</fullName>
                 <default>false</default>
             </values>
         </picklistValues>
