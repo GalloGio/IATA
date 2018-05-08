@@ -14772,12 +14772,10 @@ Select at least one authorised signatory, and choose the Financial Assessment co
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>Yours Sincerely</shortDescription>
-        <value>
-&lt;p&gt;This is to inform you that we have received your PCI DSS Attestation of Compliance / Nil Credit Card Self-Declaration and that our records have been updated accordingly.&lt;/p&gt;
+        <value>&lt;p&gt;This is to inform you that we have received your PCI DSS Attestation of Compliance / Nil Credit Card Self-Declaration and that our records have been updated accordingly.&lt;/p&gt;
 &lt;p&gt;We want to take this opportunity to thank you for having submitted the requested evidence within the deadline.&lt;/p&gt;
 &lt;p&gt;We would like to remind you that your PCI DSS Attestation of Compliance has an expiration date and therefore it has to be renewed on an annual basis.&lt;/p&gt;
-&lt;p&gt;Should you need any further information from IATA, please do not hesitate to login a new query via our Customer Portal: &lt;a href=&quot;www.iata.org/cs&quot;&gt;www.iata.org/cs&lt;/a&gt;.&lt;/p&gt;
-        </value>
+&lt;p&gt;Should you need any further information from IATA, please do not hesitate to login a new query via our Customer Portal: &lt;a href=&quot;www.iata.org/cs&quot;&gt;www.iata.org/cs&lt;/a&gt;.&lt;/p&gt;</value>
     </labels>
     <labels>
         <fullName>ISSP_ANG_AccreditationsAndChangesDescription</fullName>
