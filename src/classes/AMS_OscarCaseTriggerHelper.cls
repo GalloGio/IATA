@@ -436,7 +436,7 @@ public class AMS_OscarCaseTriggerHelper {
                     AMS_OSCAR__c oscar = oscars.get(c.Oscar__c); 
                     newCaseSubject = c.reason1__c + ' - ' + oscar.Account__r.Name;
                     /*** AMSU-133 Start ***/
-                    if(oscar.Process__c == AMS_Utils.AGENCYCHANGES && isTypeOfChange('Location', oscar)) {
+                    if(oscar.Process__c == AMS_Utils.AGENCYCHANGES && isTypeOfChange(new Set<String> {AMS_Utils.LOCATION, AMS_Utils.LOCATION_INSPECTION}, oscar)) {
                         newCaseSubject += String.isBlank(oscar.Account__r.IATACode__c) ? '' : ' - ' + oscar.Account__r.IATACode__c;
                     } 
                     /*** AMSU-133  End***/
@@ -448,14 +448,20 @@ public class AMS_OscarCaseTriggerHelper {
     }
 
     /*** AMSU-133 Start ***/
-    private static Boolean isTypeOfChange(String typeOfChange, AMS_OSCAR__c oscar) {
+    private static Boolean isTypeOfChange(Set<String> changes, AMS_OSCAR__c oscar) {
         Set<String> typesOfChange = new Set<String>();
 
         if(!String.isBlank(oscar.Type_of_change__c)) {
             typesOfChange.addAll(oscar.Type_of_change__c.split(';'));
         }
 
-        return typesOfChange.contains(typeOfChange);
+        for(String toc : changes) {
+            if(typesOfChange.contains(toc)) {
+                return true;  
+            }
+        }
+
+        return false;
     }
     /*** AMSU-133  End***/
 }
