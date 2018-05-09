@@ -21027,6 +21027,13 @@ This Dashboard allows each airline Treasury Team to gain full visibility of thei
         <value>Please check the BIN Ranges marked with \&apos;*\&apos; to ensure the lenght with the maximium allowed.</value>
     </labels>
     <labels>
+        <fullName>ISSP_TIP_CONTACT_MESSAGE</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_TIP_CONTACT_MESSAGE</shortDescription>
+        <value>The Primary contact details will be shared with airlines operating in the countries where your products are available</value>
+    </labels>
+    <labels>
         <fullName>ISSP_TIP_COUNTRY_CONFIG_SECTION</fullName>
         <language>en_US</language>
         <protected>false</protected>
