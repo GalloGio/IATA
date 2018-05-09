@@ -40,13 +40,14 @@ global class AMS_PCI_WizardNotification {
         String caseNumber = cse.CaseNumber == null ? '' : cse.CaseNumber;
         String iatacode = cse.AccountId == null || cse.Account.IATACode__c == null ? '' : cse.Account.IATACode__c;
         String sContactName = String.isBlank(cse.Contact.Name) ? '' : cse.Contact.Name;
+        Date dTodayPlus30 = (date.today() + 30);
 
        	if(!String.isBlank(htmlBody)) {
        		htmlBody = htmlBody.replace('<![CDATA[', '');
             htmlBody = htmlBody.replace('{!Contact.Name}', sContactName);
        		htmlBody = htmlBody.replace('{!Case.CaseNumber}', caseNumber);
             htmlBody = htmlBody.replace('{!Case.IATA_Code__c}', iatacode);
-            htmlBody = htmlBody.replace('{!Today()+30}', Date.today().format());
+            htmlBody = htmlBody.replace('{!Today()+30}', dTodayPlus30.format());
             htmlBody = htmlBody.replace('{!Case.Id}', cse.Id);
             htmlBody = htmlBody.replace(']]>', '');
             emailToSend.setHtmlBody(htmlBody);
@@ -56,7 +57,7 @@ global class AMS_PCI_WizardNotification {
        		textBody = textBody.replace('{!Contact.Name}', sContactName);
        		textBody = textBody.replace('{!Case.CaseNumber}', caseNumber);
             textBody = textBody.replace('{!Case.IATA_Code__c}', iatacode);
-            textBody = textBody.replace('{!Today()+30}', Date.today().format());
+            textBody = textBody.replace('{!Today()+30}', dTodayPlus30.format());
             textBody = textBody.replace('{!Case.Id}', cse.Id);
        		emailToSend.setPlainTextBody(textBody);
        	}     
