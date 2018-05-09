@@ -19727,6 +19727,27 @@ If the product is a multi-use VANs, then it is a unique card/account number that
         <value>Is the product subject to PCI DSS requirements compliance? (this is related to the product): Yes or Not Applicable</value>
     </labels>
     <labels>
+        <fullName>ISSP_Portal_Provider_Any_Other_Info_Label</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP Portal Provider Any Other Info Label</shortDescription>
+        <value>Enter any additional information related to your company (e.g. to comply with AML requirements)</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_Portal_Provider_Headquarter_Location_Label</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP Portal Provider Headquarter Location Label</shortDescription>
+        <value>Select the country where provider&apos;s headquarter is located</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_Portal_Provider_Legal_Name_Label</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP Portal Provider Legal Name Label</shortDescription>
+        <value>Enter the provider legal name</value>
+    </labels>
+    <labels>
         <fullName>ISSP_Portal_Service</fullName>
         <categories>Portal</categories>
         <language>en_US</language>
