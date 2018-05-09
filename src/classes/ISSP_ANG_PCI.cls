@@ -562,16 +562,7 @@ SYSTEM.DEBUG('getRelatedAccount starting... ');
 
     public Pagereference securityCheck() {
 
-        Boolean alreadySubmitted = false;
-
-        if(newCase.Id != null) {
-            if(newCase.OSCAR__c != null) {
-                List<AMS_Process_Detail__c>  aux = [Select id From AMS_Process_Detail__c Where OSCAR__c = :newCase.OSCAR__c limit 1];
-                alreadySubmitted = (aux.size() != 0);
-            }
-        }
-
-        if ((newCase.Id != null && newCase.Status != 'Draft' && newCase.Origin != 'Massive FOP Creation') || (newCase.Origin == 'Massive FOP Creation' && alreadySubmitted)) {
+        if ((newCase.Id != null && newCase.Status != 'Draft' && newCase.Origin != 'Massive FOP Creation') || (newCase.Origin == 'Massive FOP Creation' && !newCase.Owner.Name.startsWith('NewGen PCI'))) {
             return new Pagereference('/ISSP_Case?caseId=' + newCase.Id + '&mid=M1S2' + commParam);
         }
 
