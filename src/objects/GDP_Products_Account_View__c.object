@@ -705,6 +705,7 @@ TEXT(Month(Related_Accreditation_Class__r.Original_approval_date__c)) +
         <required>false</required>
         <trackHistory>false</trackHistory>
         <trackTrending>false</trackTrending>
+        <inlineHelpText>Concatenation of Fields Legal Name Upper 1+2+3</inlineHelpText>
         <type>Text</type>
         <unique>false</unique>
     </fields>
@@ -1256,6 +1257,7 @@ X = Not NewGen OR NewGen GoLite OR NewGen Financial Review Opt-Out</inlineHelpTe
         <required>false</required>
         <trackHistory>false</trackHistory>
         <trackTrending>false</trackTrending>
+        <inlineHelpText>Concatenation of Fields Trading Name Upper 1+2</inlineHelpText>
         <type>Text</type>
         <unique>false</unique>
     </fields>
