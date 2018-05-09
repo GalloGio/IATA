@@ -178,7 +178,7 @@ private class PlatformEvents_Helper_Test {
 			PP_Settlement_terms__c = '12',
 			Is_PCI_DSS_required__c = 'YES',
 			PP_Chargeback_airlines__c = 'No',
-			PP_Interchange_fee__c = 12,
+			PP_Interchange_fee__c = '12',
 			PP_Effective_from_Date__c = Date.today(),
 			PP_status__c = 'ACTIVE',
 			PP_Payment_Network__c = 'AX',

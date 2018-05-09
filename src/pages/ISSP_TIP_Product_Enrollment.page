@@ -657,7 +657,7 @@
                                             </apex:outputPanel>
                                         </apex:pageBlockSectionItem>
                                         <!-- <apex:pageBlockSectionItem rendered="{!!editMode}"> -->
-                                            <apex:outputLabel escape="false" value="{!Label.ISSP_TIP_Submit_case_to_IATA_to_update_country_Config}" rendered="{!!editMode}"/>
+                                            <apex:outputLabel escape="false" value="{!$Label.ISSP_TIP_Submit_case_to_IATA_to_update_country_Config}" rendered="{!!editMode}"/>
                                         <!-- </apex:pageBlockSectionItem> -->
                                     </apex:pageBlockSection>
                                     <apex:pageBlockSection columns="2">
