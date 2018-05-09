@@ -57,6 +57,25 @@
             margin : 0px 35px;
             white-space: nowrap;  
         }
+
+        .secBtn{
+            color: #337ab7 !important;
+        }
+
+        .tabl tbody label{
+            font-weight: normal;
+        }
+
+        .tabl thead label{
+            font-weight: bold;
+            font-size: small;
+        }
+
+        a.disabled {
+           pointer-events: none;
+           cursor: default;
+           color: #8a8a8a !important;
+        }
     </style>
     
    
@@ -79,7 +98,7 @@
                     var namef = $('[id$="nameField"]');
                     var paymenNet = $('[id$="paymentNet"]');
                     if(namef.val() =='' || paymenNet.val()=='')
-                       $('[id$="newBinRangebtn"]').toggleClass('btnDisabled', true).attr('disabled', 'disabled');
+                       $('[id$="newBinRangebtn"]').toggleClass('disabled', true);
                        
 
                     //change message CSS
@@ -92,6 +111,12 @@
                             $(this).text($(this).text()+'*');
                         });
                    }
+
+                   $('.cbMaster').on('click',function(){
+                        $('.cbSlave').each(function(index){
+                            this.checked=$('.cbMaster').get(0).checked;
+                        });
+                   });
                });
 
                 function confirmDelete(opt1){
@@ -110,6 +135,26 @@
                                },
                             callback:function(result) {
                                 if(result)deleteBINRangeRow(opt1); 
+                            }
+                        });
+                }
+
+                function confirmDeleteAllSelected(){
+                    var msg=null;
+                    msg= bootbox.confirm({
+                            message:'{!$Label.ISSP_AMS_CONFIRM_DELETE}',
+                            buttons: {
+                                   confirm: {
+                                       label: '{!$Label.ISSP_Yes}',
+                                       className: 'btn-success'
+                                   },
+                                   cancel: {
+                                       label: '{!$Label.ISSP_NO}',
+                                       className: 'btn-danger'
+                                   }
+                               },
+                            callback:function(result) {
+                                if(result)deleteSelectedConfig(); 
                             }
                         });
                 }
@@ -156,9 +201,9 @@
                     var paymenNet = $('[id$="paymentNet"]');
                     if((namef.val()==''||namef.val()==null || namef.val()==undefined)
                         ||(paymenNet.val()==''||paymenNet.val()==null || paymenNet.val()==undefined)){
-                        $('[id$="newBinRangebtn"]').toggleClass('btnDisabled', true).attr('disabled', 'disabled');
+                        $('[id$="newBinRangebtn"]').toggleClass('disabled', true);
                     } else {
-                        $('[id$="newBinRangebtn"]').toggleClass('btnDisabled', false).attr('disabled', null);
+                        $('[id$="newBinRangebtn"]').toggleClass('disabled', false);
                     }
                 }
 
@@ -216,7 +261,7 @@
                         </apex:pageBlock>
                     
                         <div class="panel-heading head_panel_green">
-                           <h3 class="panel-title">Partner Product Details</h3>
+                           <h3 class="panel-title">{!$Label.ISSP_TIP_PRODUCT_ENROLLMENT_TITLE}</h3>
                         </div>
                         <div class="panel-body" id="body-enquiries">
                             <apex:form id="AMSForm">
@@ -260,10 +305,17 @@
                                                 <apex:selectOption itemValue="{!UPPER($Label.ISSP_No)}" itemLabel="{!$Label.ISSP_No}"  itemDisabled="{!!editMode}"/>
                                             </apex:selectRadio>
                                         </apex:pageBlockSectionItem>
-                                        <apex:pageBlockSectionItem labelStyle="width:26%" labelStyleClass="agencyLegalDetailsComponent" dataStyleClass="agencyLegalDetailsComponent" >
+                                        <!-- <apex:pageBlockSectionItem labelStyle="width:26%" labelStyleClass="agencyLegalDetailsComponent" dataStyleClass="agencyLegalDetailsComponent" >
                                             <apex:outputLabel value="{!$ObjectType.Partner_products__c.fields.PP_Payment_Product_Network_type__c.Label}"/>
                                             <apex:outputField value="{!newpp.PP_Payment_Product_Network_type__c}"/>
-                                        </apex:pageBlockSectionItem>
+                                        </apex:pageBlockSectionItem> -->
+                                        <apex:pageBlockSectionItem labelStyle="width:26%" labelStyleClass="agencyLegalDetailsComponent" dataStyleClass="agencyLegalDetailsComponent" >
+                                           <apex:outputLabel value="{!$ObjectType.Partner_products__c.fields.PP_Banking_license__c.Label}"/>
+                                           <apex:outputPanel >                                        
+                                               <apex:inputField value="{!newpp.PP_Banking_license__c}" rendered="{!editMode}"/>
+                                               <apex:outputField value="{!newpp.PP_Banking_license__c}" rendered="{!!editMode}"/>
+                                           </apex:outputPanel>
+                                       </apex:pageBlockSectionItem>
                                         <apex:pageBlockSectionItem labelStyle="width:26%" labelStyleClass="agencyLegalDetailsComponent" dataStyleClass="agencyLegalDetailsComponent" >
                                             <apex:outputLabel html-class="mandFld" value="{!$ObjectType.Partner_products__c.fields.PP_Chargeback_airlines__c.Label}"/>
                                             <apex:selectRadio html-class="mandFldcb" style="width:100px;margin-left:20px;" value="{!newpp.PP_Chargeback_airlines__c}"  readonly="{!!editMode}">
@@ -292,12 +344,16 @@
                                                 <apex:outputField value="{!newpp.PP_Category__c}" rendered="{!!editMode}"/>
                                             </apex:outputPanel>
                                         </apex:pageBlockSectionItem>
-                                        <apex:pageBlockSectionItem labelStyle="width:26%" labelStyleClass="agencyLegalDetailsComponent" dataStyleClass="agencyLegalDetailsComponent" >
+                                       <!--  <apex:pageBlockSectionItem labelStyle="width:26%" labelStyleClass="agencyLegalDetailsComponent" dataStyleClass="agencyLegalDetailsComponent" >
                                             <apex:outputLabel value="{!$ObjectType.Partner_products__c.fields.PP_Banking_license__c.Label}"/>
                                             <apex:outputPanel >                                        
                                                 <apex:inputField value="{!newpp.PP_Banking_license__c}" rendered="{!editMode}"/>
                                                 <apex:outputField value="{!newpp.PP_Banking_license__c}" rendered="{!!editMode}"/>
                                             </apex:outputPanel>
+                                        </apex:pageBlockSectionItem> -->
+                                        <apex:pageBlockSectionItem labelStyle="width:26%" labelStyleClass="agencyLegalDetailsComponent" dataStyleClass="agencyLegalDetailsComponent" >
+                                            <apex:outputLabel value="{!$ObjectType.Partner_products__c.fields.PP_Payment_Product_Network_type__c.Label}"/>
+                                            <apex:outputField value="{!newpp.PP_Payment_Product_Network_type__c}"/>
                                         </apex:pageBlockSectionItem>
                                         <apex:pageBlockSectionItem labelStyle="width:26%" labelStyleClass="agencyLegalDetailsComponent" dataStyleClass="agencyLegalDetailsComponent" >
                                             <apex:outputLabel value="{!$ObjectType.Partner_products__c.fields.PP_Payment_Network__c.Label}"/>
@@ -358,21 +414,22 @@
                                             <apex:outputLabel value="*{!$Label.ISSP_TIP_MANDATORY_ON_SUBMIT}"/>
                                         </apex:pageBlockSectionItem>
                                     </apex:pageBlockSection>
-                                    <apex:pageBlockSection id="binbpSection" columns="2" collapsible="false" title="{!$Label.ISSP_TIP_BIN_RANGE_SECTION}">
+                                    <apex:pageBlockSection id="binbpSection" columns="1" collapsible="false" title="{!$Label.ISSP_TIP_BIN_RANGE_SECTION}">
+                                            <apex:outputLabel html-class="alert-info" style="padding : 10px; font-size : 13px; margin-left: -10px; max-width: none;" html-role="alert" escape="false" value="{!$Label.ISSP_TIP_BIN_RANGE_SECTION_MESSAGE}" rendered="{!editMode}"/>
                                         <apex:pageBlockSectionItem rendered="{!editMode}">
-                                            <apex:commandButton id="newBinRangebtn" style="margin-right:5px" oncomplete="toggleDialog();" value="{!$Label.ISSP_TIP_ADD_BIN_RANGE}" action="{!newEditBinRange}" reRender="newBinTab,modalContentoutpanel">
-                                            </apex:commandButton>
+                                            <apex:commandLink id="newBinRangebtn" styleClass="secBtn" style="margin-right:5px" oncomplete="toggleDialog();" action="{!newEditBinRange}" reRender="newBinTab,modalContentoutpanel">
+                                                <span class="glyphicon glyphicon-plus"></span>{!$Label.ISSP_TIP_ADD_BIN_RANGE}
+                                            </apex:commandLink>
                                         </apex:pageBlockSectionItem>
                                         <apex:pageBlockSectionItem rendered="{!!editMode}">
-                                            <apex:outputLabel escape="false" value="{!binRangeChangeRequestText}"/>
+                                            <apex:outputLabel escape="false" value="{!$Label.ISSP_TIP_Submit_case_to_IATA_to_update_bin_range}"/>
                                         </apex:pageBlockSectionItem>
                                     </apex:pageBlockSection>
                                     <apex:pageBlockSection id="binRangeTableSection" columns="2">                                        
                                         <apex:pageBlockSectionItem >    
                                             <apex:outputPanel id="binTable">
                                                 <script>
-                                                    var startMask=new Array(parseInt("{!binRangeLen}") + 1).join("0");
-                                                    
+                                                    var startMask=new Array(parseInt("{!binRangeLen}") + 1).join("0");                                                    
                                                     var endMask=new Array(parseInt("{!binRangeLen}") + 1).join("9");
                                                     var stayOnModal=false;
                                                     function enforceMaxLen(){
@@ -532,7 +589,7 @@
                                                     }
 
                                                 </script> 
-                                                <apex:pageBlockTable value="{!binRangeList}" var="brr" styleClass="table-hover  table table-condensed table-responsive" >
+                                                <apex:pageBlockTable value="{!binRangeList}" var="brr" style="font-weight:'normal';" styleClass="table-hover table table-condensed table-responsive tabl">
                                                 <apex:column >
                                                     <apex:facet name="header">                                                        
                                                         <apex:outputLabel styleClass="binRangeNumber" value="{!$ObjectType.TIP_BIN_Range__c.fields.TIP_Range_Start__c.label}"/>
@@ -553,10 +610,10 @@
                                                 </apex:column>
                                                 <apex:column rendered="{!editMode}" >
                                                     <apex:outputPanel rendered="{!brr.renderBtn}">                                                     
-                                                        <apex:commandLink styleclass="glyphiconTIP glyphicon-pencil" title="Edit"  oncomplete="closeDialog();" action="{!newEditBinRange}" reRender="newBinTab,modalContentoutpanel">
+                                                        <apex:commandLink styleclass="glyphiconTIP glyphicon-pencil secBtn" title="Edit"  oncomplete="closeDialog();" action="{!newEditBinRange}" reRender="newBinTab,modalContentoutpanel">
                                                             <apex:param name="binRangeRecPos" value="{!brr.pos}"/>
                                                         </apex:commandLink>                                                        
-                                                        <apex:commandLink styleClass="glyphiconTIP glyphicon-trash" title="Delete" onclick="confirmDelete({!brr.pos});" reRender="binTable"/>
+                                                        <apex:commandLink styleClass="glyphiconTIP glyphicon-trash secBtn" title="Delete" onclick="confirmDelete({!brr.pos});" reRender="binTable"/>
                                                     </apex:outputPanel>
                                                 </apex:column>
                                             </apex:pageBlockTable>
@@ -567,20 +624,42 @@
                                         </apex:pageBlockSectionItem>
                                     </apex:pageBlockSection>
                                     <!-- PROVIDER PRODUCT CONFIGURATION-->
-                                    <apex:pageBlockSection columns="2" collapsible="false" title="{!$Label.ISSP_TIP_COUNTRY_CONFIG_SECTION}" >
+                                    <apex:pageBlockSection columns="1" collapsible="false" title="{!$Label.ISSP_TIP_COUNTRY_CONFIG_SECTION}" >
                                         <apex:pageBlockSectionItem rendered="{!editMode}">
-                                            <apex:commandButton id="newCountrConfigbtn" style="margin-right:5px" oncomplete="toggleDialog();" value="Add Country Config" action="{!newEditCountryConfig}" reRender="modalContentoutpanel">
-                                            </apex:commandButton>
+                                            <apex:outputPanel>
+                                                <apex:commandLink id="newCountrConfigbtn" styleClass="secBtn" style="margin-right:15px" oncomplete="toggleDialog();" action="{!newEditCountryConfig}" reRender="modalContentoutpanel">
+                                                    <span class="glyphicon glyphicon-plus"></span>{!$Label.ISSP_TIP_ADD_COUNTRY_CONFIG}
+                                                </apex:commandLink>
+                                                <apex:commandLink styleClass="secBtn" id="deleteAllbtn" value="" onclick="confirmDeleteAllSelected()" reRender="countryConfigPanel" title="Delete">
+                                                    <span class="glyphicon glyphicon-trash"></span>{!$label.ISSP_TIP_DELETE_ALL_CONFIGS}
+                                                </apex:commandLink>
+                                            </apex:outputPanel>
                                         </apex:pageBlockSectionItem>
-                                        <apex:pageBlockSectionItem rendered="{!!editMode}">
-                                            <apex:outputLabel escape="false" value="{!binRangeChangeRequestText}"/>
-                                        </apex:pageBlockSectionItem>
+                                        <!-- <apex:pageBlockSectionItem rendered="{!!editMode}"> -->
+                                            <apex:outputLabel escape="false" value="{!Label.ISSP_TIP_Submit_case_to_IATA_to_update_country_Config}" rendered="{!!editMode}"/>
+                                        <!-- </apex:pageBlockSectionItem> -->
                                     </apex:pageBlockSection>
                                     <apex:pageBlockSection columns="2">
                                         <apex:pageBlockSectionItem>
                                             <apex:outputPanel id="countryConfigPanel">
-                                                <div style="max-height: 400px; overflow-y: auto;overflow-x: hidden; ">
+                                                <div style="max-height: 400px; overflow-y: auto;overflow-x: hidden; font-weight:normal;">
                                                     <script>
+                                                        $(document).ready(function() {
+
+                                                            if($('.cbSlave').length==0){
+                                                                $('.cbMaster').attr('disabled',true);
+                                                            }else{
+                                                                $('.cbMaster').attr('disabled',false);
+                                                            }
+
+                                                            $('.cbMaster').on('click',function(){
+                                                                 $('.cbSlave').each(function(index){
+                                                                     this.checked=$('.cbMaster').get(0).checked;
+                                                                 });
+                                                            });
+
+                                                        });
+
                                                         function validateCountryConfiguration(){
 
                                                             if($('[id$="bspctrfld"]').val() === null || $('[id$="bspctrfld"]').val() =='' ){
@@ -610,7 +689,14 @@
                                                             addEditCountryConfig();
                                                         }
                                                     </script>
-                                                    <apex:pageBlockTable value="{!provProdConfList}" var="ppc" styleClass="table-hover table table-condensed table-responsive" >
+                                                    <apex:pageBlockTable value="{!provProdConfList}" var="ppc" styleClass="table-hover table table-condensed table-responsive tabl" >
+                                                        <apex:column >
+                                                            <apex:facet name="header">                                                        
+                                                                <apex:outputLabel value=""/>
+                                                                <input type="checkbox" class='cbMaster'/>
+                                                            </apex:facet>
+                                                            <apex:inputCheckbox html-class='cbSlave' value="{!ppc.isSelected}"/>
+                                                        </apex:column>
                                                         <apex:column >
                                                             <apex:facet name="header">                                                        
                                                                 <apex:outputLabel value="{!$ObjectType.TIP_Pay_Prov_Prod_Country_Config__c.fields.TIP_BSP_Country__c.label}" style="width:150px;"/>
@@ -638,16 +724,18 @@
                                                         </apex:column>
                                                         <apex:column rendered="{!editMode}" >
                                                             <apex:outputPanel rendered="{!editMode && ppc.renderBtn}">                                                     
-                                                                <apex:commandLink styleclass="glyphiconTIP glyphicon-pencil" title="Edit"  oncomplete="closeDialog();" action="{!newEditCountryConfig}" reRender="pbCountrConfig,modalContentoutpanel">
+                                                                <apex:commandLink  styleclass="glyphiconTIP glyphicon-pencil secBtn" title="Edit"  oncomplete="closeDialog();" action="{!newEditCountryConfig}" reRender="pbCountrConfig,modalContentoutpanel">
                                                                     <apex:param name="countryConfigPos" value="{!ppc.pos}"/>
                                                                 </apex:commandLink>                                                        
-                                                                <apex:commandLink styleClass="glyphiconTIP glyphicon-trash" title="Delete" onclick="confirmDeleteConfig({!ppc.pos});" reRender="countryConfigPanel"/>
+                                                                <apex:commandLink styleClass="glyphiconTIP glyphicon-trash secBtn" title="Delete" onclick="confirmDeleteConfig({!ppc.pos});" reRender="countryConfigPanel"/>
                                                             </apex:outputPanel>
                                                         </apex:column>
                                                     </apex:pageBlockTable>
                                                     <apex:actionFunction name="deleteCconfigRow" action="{!deleteCountryConfig}" reRender="countryConfigPanel">
                                                         <apex:param name="countryConfigPos" value=""/>
                                                     </apex:actionFunction> 
+                                                    <apex:actionFunction name="deleteSelectedConfig" action="{!deleteMassCountryConfig}" reRender="countryConfigPanel">
+                                                    </apex:actionFunction>    
                                                 </div>
                                             </apex:outputPanel>
                                         </apex:pageBlockSectionItem>
@@ -663,7 +751,7 @@
                                                 <h4 class="modal-title">{!$Label.ISSP_TIP_NEW_BIN_RANGE}</h4>
                                               </div>
                                               <div class="modal-body" style="display:{!if(true,'','none')}">
-                                                <apex:pageBlockTable id="newBinTab" value="{!selectedBinRange}" var="nb" styleClass="table-hover  table table-condensed table-responsive">
+                                                <apex:pageBlockTable id="newBinTab" value="{!selectedBinRange}" var="nb" styleClass="table-hover  table table-condensed table-responsive tabl">
                                                     <apex:column >
                                                         <apex:facet name="header">                                                        
                                                             <apex:outputLabel value="{!$ObjectType.TIP_BIN_Range__c.fields.TIP_Range_Start__c.label}"/>

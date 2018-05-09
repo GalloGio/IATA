@@ -163,7 +163,7 @@
         <fullName>PP_Chargeback_airlines_duration__c</fullName>
         <externalId>false</externalId>
         <inlineHelpText>If subject to chargeback, please indicate the maximum number of days after transaction for which a chargeback can be issued</inlineHelpText>
-        <label>Maximum Chargeback Timeframe</label>
+        <label>Maximum Chargeback Timeframe (days)</label>
         <precision>4</precision>
         <required>false</required>
         <scale>0</scale>
@@ -216,12 +216,11 @@
         <fullName>PP_Interchange_Fee__c</fullName>
         <externalId>false</externalId>
         <inlineHelpText>Enter details about Interchange Fee (s)</inlineHelpText>
-        <label>Interchange Fee</label>
-        <precision>18</precision>
+        <label>Interchange Fee (Default)</label>
+        <length>255</length>
         <required>false</required>
-        <scale>0</scale>
         <trackTrending>false</trackTrending>
-        <type>Number</type>
+        <type>Text</type>
         <unique>false</unique>
     </fields>
     <fields>
@@ -449,7 +448,7 @@
         <inlineHelpText>Enter if product is a Single-use or Multi-use VAN.
 If it is a single-use VAN, then a unique VAN number is created for every transaction.
 If the product is a multi-use VANs, then it is a unique card/account number that can be used multiple times.</inlineHelpText>
-        <label>VAN Type</label>
+        <label>Type</label>
         <required>false</required>
         <trackTrending>false</trackTrending>
         <type>Picklist</type>
