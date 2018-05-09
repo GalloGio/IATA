@@ -1131,10 +1131,10 @@ global class ANG_OscarProcessHelper {
 
 		String identifier;
 
-		if (origin == 'Massive FOP Creation')
+		if (origin == AMS_Utils.ANG_MASSIVE_FOP)
 			identifier = 'NG_FOP_PortalNotification';
-		else if (origin == 'SOME STRING') //TODO: add correct origin 
-			identifier = 'SOME STRING'; //TODO: add template identifier
+		else if (origin == AMS_Utils.ANG_FOP_AUTOMATIC_RENEWAL)
+			identifier = 'NG_FOP_PortalNotification'; //change the identifier if we need to use another notification template
 
 		Notification_Template__c notificationTemplate = null;
 

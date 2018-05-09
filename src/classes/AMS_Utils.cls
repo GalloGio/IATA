@@ -266,6 +266,8 @@ public without sharing class AMS_Utils {
 
     // Case - Origin
     public static final String CASE_ORIGIN_PORTAL = 'Portal';        
+    public static final String ANG_MASSIVE_FOP = 'Massive FOP Creation';        
+    public static final String ANG_FOP_AUTOMATIC_RENEWAL = 'FoP automatic renewal';        
 
     // Case - Status    
     public static final String CASE_STATUS_CLOSED = 'Closed';

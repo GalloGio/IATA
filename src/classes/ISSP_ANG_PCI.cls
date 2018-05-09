@@ -286,6 +286,7 @@ SYSTEM.DEBUG('getRelatedAccount starting... ');
         }
 		//newCase.Subject = Label.ISSP_ANG_PCI_Compliance + ' - ' + accountConcerned.IATACode__c + ' – ' + accountConcerned.Name;
         //rui
+
 		fetchPCI_CountryRequirements();
 
 	    for ( SelectOption ac : agencyCodesConcerned) {
