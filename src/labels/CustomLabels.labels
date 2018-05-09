@@ -19470,21 +19470,21 @@ Please note that many IATA invoices for accredited agents are collected through 
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>ISSP Payment Provider Details section 1</shortDescription>
-        <value>SECTION 1 - Payment Provider Details</value>
-    </labels>
-    <labels>
-        <fullName>ISSP_Payment_Provider_Home_title</fullName>
-        <language>en_US</language>
-        <protected>false</protected>
-        <shortDescription>ISSP Payment Provider Home title</shortDescription>
-        <value>Payment Provider Enrolment/Certification</value>
+        <value>Section 1 - ATM Provider Details</value>
     </labels>
     <labels>
         <fullName>ISSP_Payment_Provider_Details_section_2</fullName>
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>ISSP Payment Provider Details section 2</shortDescription>
-        <value>SECTION 2 - Payment Provider Contacts</value>
+        <value>Section 2 - ATM Provider Contacts</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_Payment_Provider_Home_title</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP Payment Provider Home title</shortDescription>
+        <value>Alternative Transfer Method(ATM) Provider Enlistment/Certification</value>
     </labels>
     <labels>
         <fullName>ISSP_Pending</fullName>
@@ -21113,11 +21113,25 @@ This Dashboard allows each airline Treasury Team to gain full visibility of thei
         <value>Add BIN Range</value>
     </labels>
     <labels>
+        <fullName>ISSP_TIP_ADD_COUNTRY_CONFIG</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_TIP_ADD_COUNTRY_CONFIG</shortDescription>
+        <value>Add Country Config</value>
+    </labels>
+    <labels>
         <fullName>ISSP_TIP_BIN_RANGE_SECTION</fullName>
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>ISSP_TIP_BIN_RANGE_SECTION</shortDescription>
-        <value>Section 2- Bin Ranges</value>
+        <value>Section 2- BIN Ranges</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_TIP_BIN_RANGE_SECTION_MESSAGE</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_TIP_BIN_RANGE_SECTION_MESSAGE</shortDescription>
+        <value>Please enter the BIN or sub-BIN ranges associated to the product. BIN or sub-BIN ranges need to be exclusively dedicated to issuance to travel agents. There must be no range of cards issued to corporations or companies other than Travel Agents.</value>
     </labels>
     <labels>
         <fullName>ISSP_TIP_CHECK_BIN_RANGE_LENGHT</fullName>
@@ -21132,6 +21146,13 @@ This Dashboard allows each airline Treasury Team to gain full visibility of thei
         <protected>false</protected>
         <shortDescription>ISSP_TIP_COUNTRY_CONFIG_SECTION</shortDescription>
         <value>Section 3- Product Country Configuration Details</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_TIP_DELETE_ALL_CONFIGS</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_TIP_DELETE_ALL_CONFIGS</shortDescription>
+        <value>Delete All Selected</value>
     </labels>
     <labels>
         <fullName>ISSP_TIP_Discard_Unsaved_Changes</fullName>
@@ -21246,6 +21267,13 @@ This Dashboard allows each airline Treasury Team to gain full visibility of thei
         <value>Section 1- Product Details</value>
     </labels>
     <labels>
+        <fullName>ISSP_TIP_PRODUCT_ENROLLMENT_TITLE</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_TIP_PRODUCT_TITLE</shortDescription>
+        <value>ATM Provider Product</value>
+    </labels>
+    <labels>
         <fullName>ISSP_TIP_RANGE_TO_GREATER_RANGE_FROM</fullName>
         <language>en_US</language>
         <protected>false</protected>
@@ -21286,6 +21314,13 @@ This Dashboard allows each airline Treasury Team to gain full visibility of thei
         <protected>false</protected>
         <shortDescription>ISSP TIP Submit case to IATA to update bin range</shortDescription>
         <value>Please &lt;a style=&quot;color:blue &quot; href=&quot;/ISSP_FAQ2Case?topic=TIP%20HelpDesk&quot;&gt;Submit a case to IATA&lt;/a&gt; to request to update the BIN Ranges for this product</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_TIP_Submit_case_to_IATA_to_update_country_Config</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_TIP_Submit_case_to_IATA_to_update_country_Config</shortDescription>
+        <value>Please &lt;a style=&quot;color:blue &quot; href=&quot;/ISSP_FAQ2Case?topic=TIP%20HelpDesk&quot;&gt;Submit a case to IATA&lt;/a&gt; to request to update the Country Configurations for this product</value>
     </labels>
     <labels>
         <fullName>ISSP_TIP_VALUE_TOO_BIG_TO_PROVIDER</fullName>

@@ -188,7 +188,7 @@ public without sharing class ISSP_TIP_Home_Controller {
     public List<Case> getCases(){
         Set<string> closedStatusesList = createListOfClosedStatuses();
 
-    	List<Case> caseList = [SELECT id, status, CaseNumber, subject, createddate, CaseArea__c, Reason1__c, IsClosed  FROM Case 
+    	List<Case> caseList = [SELECT id, toLabel(status), CaseNumber, subject, createddate, CaseArea__c, Reason1__c, IsClosed  FROM Case 
         WHERE AccountId = :con.AccountId 
         and recordtypeid = :TIP_Utils.CASE_PROCESS_IDFS_RECORD_TYPE_ID 
         and CaseArea__c like '%Transparency in Payments%'
@@ -257,12 +257,14 @@ public without sharing class ISSP_TIP_Home_Controller {
         public string action{get;set;}//N- new M-modified D-deleted
         public string countryName{get;set;}
         public boolean renderBtn{get;set;}
+        public boolean isSelected{get;set;}
         public ProvProdConfigRec(TIP_Pay_Prov_Prod_Country_Config__c tpc,integer p,string a,string cn,boolean rb){
             pos=p;
             prodConfig=tpc;
             action=a;
             countryName=cn;
             renderBtn=rb;
+            isSelected=false;
         }
 
     }
@@ -684,7 +686,7 @@ public without sharing class ISSP_TIP_Home_Controller {
                     TIP_Status__c='Draft',
                     TIP_BSP_Country__c=c,
                     TIP_Interchange_Fee__c=selectedProvProdConf.prodConfig.TIP_Interchange_Fee__c,
-                    Network_Fee__c=selectedProvProdConf.prodConfig.TIP_Interchange_Fee__c
+                    Network_Fee__c=selectedProvProdConf.prodConfig.Network_Fee__c
                     );
                 filterCountryList.add(bspIdIsoCodeMap.get(c));
                 if(!provProdConfList.isEmpty()) provProdConfList.add(0,new ProvProdConfigRec(npcc,provProdConfList.size(),'N',isoCodeCountryMap.get(bspIdIsoCodeMap.get(c)).name,true));
@@ -710,6 +712,26 @@ public without sharing class ISSP_TIP_Home_Controller {
         }
     }
 
+    public void deleteMassCountryConfig(){
+        list<ProvProdConfigRec> removeList= new list<ProvProdConfigRec>();
+        integer p=0;
+        while(p<provProdConfList.size()){
+        //for(ProvProdConfigRec pcr:){
+        system.debug('PF provProdConfList '+provProdConfList);
+        ProvProdConfigRec pcr=provProdConfList.get(p);
+            if(pcr.isSelected){
+                filterCountryList.remove(bspIdIsoCodeMap.get(pcr.prodConfig.TIP_BSP_Country__c));
+                if(!String.isBlank(pcr.prodConfig.id)) deletedCountryConfigList.add(pcr.prodConfig);
+                provProdConfList.remove(p);
+            }else{
+                p++;
+            }
+        }
+
+        // refreshing records index
+        integer c=0;
+        for(ProvProdConfigRec pcr:provProdConfList)pcr.pos=c++;
+    }
 
 
 

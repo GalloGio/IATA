@@ -247,7 +247,9 @@ action="{!initActions}"
                                             <apex:facet name="header">
                                                 {!$Label.ISSP_Home_Table_Date_Time_Opened}
                                             </apex:facet>
-                                            {!item.createddate}
+                                            <apex:outputText value="{0,date,MM/dd/yyyy hh:mm aaa}">
+                                                <apex:param value="{!item.createddate}" /> 
+                                            </apex:outputText>
                                         </apex:column>
                                     </apex:pageBlockTable>
                                 </apex:form>

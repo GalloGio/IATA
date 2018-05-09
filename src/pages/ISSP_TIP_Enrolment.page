@@ -224,6 +224,12 @@
                     $j("#phone").hide();
                     $j("#branch_office_phone__c").hide();
                     $j("#BranchPhoneSection").hide();
+
+                    $j('[id$="BillingAddress"]').find('label').each(function(par1){ // remove "billing" on field label
+                      console.log($(this));
+                      $(this).context.textContent=$(this).context.textContent.replace("Billing", "");
+                      console.log($(this));
+                    });
                 });
             
                 function closeModal (){
@@ -382,13 +388,7 @@
                               <span id="nav_one"></span>                
                               <span id="nav_two"></span>
                               <apex:pageblock id="pageblock">
-                                 <apex:pageBlockSection columns="2" collapsible="false">
-                                    <apex:facet name="header">
-                                       <apex:outputpanel >
-                                          {!$Label.ISSP_Payment_Provider_Details_section_1}
-                                       </apex:outputpanel>
-                                    </apex:facet>
-                                 </apex:pageBlockSection>
+                                 <apex:pageBlockSection columns="2" collapsible="false" title="{!$Label.ISSP_Payment_Provider_Details_section_1}"/>
                                  <!-- ****************************************************************************** -->
                                  <!-- ***** SECTION 1 - IDENTIFICATION OF AGENCY FOR WHICH APPROVAL REQUESTED ****** -->
                                  <!--             IF THE ACCOUNT IS NOT TERMINATED OR NOT ACCREDITATED               -->
@@ -562,10 +562,9 @@
                               </apex:pageblock>
                               
                               <!-------section 2 in here---->
-                              <apex:pageBlockSection id="sectionTwo" columns="1" collapsible="false">
-                                 <apex:facet name="header">
-                                    <apex:outputpanel >{!$Label.ISSP_Payment_Provider_Details_section_2}</apex:outputpanel>
-                                 </apex:facet>
+                              <apex:pageBlockSection id="sectionTwo" columns="1" collapsible="false" title="{!$Label.ISSP_Payment_Provider_Details_section_2}">
+                                 <apex:outputLabel html-class="alert-info" style="padding : 10px; font-size : 13px; margin-left: -10px; max-width: none; width: 101%;" html-role="alert" escape="false" value="{!$Label.ISSP_TIP_CONTACT_MESSAGE}"/>
+                                 
                                  <form >
                                     <apex:commandLink style="margin-right:5px" onclick="cleanModal();return false;"><span class="glyphicon glyphicon-plus"></span>Add Contact </apex:commandLink>
                                     <apex:actionFunction name="rerenderTopPanel" rerender="sectionTwo" />
