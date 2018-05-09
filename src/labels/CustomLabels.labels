@@ -19470,21 +19470,21 @@ Please note that many IATA invoices for accredited agents are collected through 
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>ISSP Payment Provider Details section 1</shortDescription>
-        <value>SECTION 1 - Payment Provider Details</value>
-    </labels>
-    <labels>
-        <fullName>ISSP_Payment_Provider_Home_title</fullName>
-        <language>en_US</language>
-        <protected>false</protected>
-        <shortDescription>ISSP Payment Provider Home title</shortDescription>
-        <value>Payment Provider Enrolment/Certification</value>
+        <value>Section 1 - ATM Provider Details</value>
     </labels>
     <labels>
         <fullName>ISSP_Payment_Provider_Details_section_2</fullName>
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>ISSP Payment Provider Details section 2</shortDescription>
-        <value>SECTION 2 - Payment Provider Contacts</value>
+        <value>Section 2 - ATM Provider Contacts</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_Payment_Provider_Home_title</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP Payment Provider Home title</shortDescription>
+        <value>Alternative Transfer Method(ATM) Provider Enlistment/Certification</value>
     </labels>
     <labels>
         <fullName>ISSP_Pending</fullName>
