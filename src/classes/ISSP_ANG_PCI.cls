@@ -260,7 +260,7 @@ SYSTEM.DEBUG('getRelatedAccount starting... ');
         newCase.Country_concerned_by_the_query__c = isocountry.Name;
 
         if (isocountry.ANG_Enable_NewGen__c) newCase.Reason1__c = AMS_Utils.CASE_REASON_FOR_MANAGEMENT;
-        else newCase.Reason1__c = Label.ISSP_ANG_PCI_Compliance;
+        else newCase.Reason1__c = AMS_Utils.CASE_REASON_PCI_DSS_COMPLIANT;
         //rui
 
         if(newCase.Status == null || newCase.Status == '')
@@ -282,7 +282,7 @@ SYSTEM.DEBUG('getRelatedAccount starting... ');
 
         if(newCase.Origin == 'Portal') {
             if (isocountry.ANG_Enable_NewGen__c) newCase.Subject = Label.ISSP_ANG_PCI_Compliance + ' - ' + accountConcerned.IATACode__c + ' – ' + accountConcerned.Name;
-            else newCase.Subject = Label.ISSP_ANG_PCI_Compliance + ' – ' + accountConcerned.Name;
+            else newCase.Subject = Label.ISSP_ANG_FoP_Management + ' – ' + accountConcerned.Name;
         }
 		//newCase.Subject = Label.ISSP_ANG_PCI_Compliance + ' - ' + accountConcerned.IATACode__c + ' – ' + accountConcerned.Name;
         //rui

@@ -263,6 +263,7 @@ public without sharing class AMS_Utils {
     public static final String CASE_REASON_FOR_MANAGEMENT = 'FoP Management';
     public static final String CASE_REASON_VR_CLOSURE = 'CLO - Closure';  
     public static final String CASE_REASON_OPT_OUT = 'Financial review opt-in / opt-out';
+    public static final String CASE_REASON_PCI_DSS_COMPLIANT = 'PCI DSS Compliant';
 
     // Case - Origin
     public static final String CASE_ORIGIN_PORTAL = 'Portal';        
