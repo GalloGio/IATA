@@ -1234,7 +1234,7 @@ global class ANG_OscarProcessHelper {
 	    Set<Account> acctSet = new Set<Account>();
 
 		StaticResource sr;
-		if (origin == 'Massive FOP Creation')
+		if (origin == AMS_Utils.ANG_MASSIVE_FOP || origin == AMS_Utils.ANG_FOP_AUTOMATIC_RENEWAL)
 			sr = [Select body, name from StaticResource where Name = 'ANG_NilCreditCardSelfDeclaration'].get(0);
 
 		for (Account acc: accs){
