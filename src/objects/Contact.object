@@ -29409,6 +29409,8 @@ OR(
 TEXT(CEO_CFO__c)=&quot;CEO&quot;,
 TEXT(CEO_CFO__c)=&quot;CFO&quot;,
 TEXT(CEO_CFO__c)=&quot;COO&quot;,
+TEXT(CEO_CFO__c)=&quot;CIO&quot;,
+TEXT(CEO_CFO__c)=&quot;CCO&quot;,
 NOT(ISBLANK (Function__c)),
 Membership_Main_Contact__c
 ),
