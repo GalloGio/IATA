@@ -66,7 +66,7 @@ global class ANG_PCIComplianceRenewalBatch implements Database.Batchable<Account
 	global void finish(Database.BatchableContext BC) {
 
 		if(!errors.isEmpty()){
-			String errorMsg = 'Error(s) running ANG_PCIComplianceRenewalBatch:/n'+String.join(errors,',');
+			String errorMsg = 'Error(s) running ANG_PCIComplianceRenewalBatch:\n'+String.join(errors,',');
 
 			//send email w/ errors
 			List<String> emailAddresses = new List<String>();
