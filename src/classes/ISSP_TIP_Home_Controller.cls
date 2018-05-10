@@ -344,7 +344,7 @@ public without sharing class ISSP_TIP_Home_Controller {
             accountCases = [SELECT ID,Reason1__c,RecordTypeid,RecordType.Name,CaseArea__c,Status,Visible_on_ISS_Portal__c,Subject,Region__c,
                             Origin,BSPCountry__c,Country_concerned_by_the_query__c,Description
                             FROM Case 
-                                WHERE ID = :caseId]; 
+                                WHERE ID = :caseId AND Status = 'Draft' AND accountid =:con.accountid]; 
         }
         else{
             accountCases = [SELECT ID,Reason1__c,RecordTypeid,RecordType.Name,CaseArea__c,Status,Visible_on_ISS_Portal__c,Subject,Region__c,
