@@ -76,6 +76,9 @@
            cursor: default;
            color: #8a8a8a !important;
         }
+        a.disabled:hover{
+            text-decoration: none;
+        }
     </style>
     
    
@@ -197,8 +200,10 @@
                     if((namef.val()==''||namef.val()==null || namef.val()==undefined)
                         ||(paymenNet.val()==''||paymenNet.val()==null || paymenNet.val()==undefined)){
                         $('[id$="newBinRangebtn"]').toggleClass('disabled', true);
+                        $('[id$="newBinRangebtn"]').prop('disabled', true);  
                     } else {
                         $('[id$="newBinRangebtn"]').toggleClass('disabled', false);
+                        $('[id$="newBinRangebtn"]').prop('disabled', false);  
                     }
                 }
 
@@ -646,7 +651,11 @@
                                                             }else{
                                                                 $('.cbMaster').attr('disabled',false);
                                                             }
+
+                                                            if($('.cbSlave:checked').length==0){
                                                             $('[id$="deleteAllbtn"]').toggleClass('disabled', true);
+                                                                $('[id$="deleteAllbtn"]').prop('disabled', true);
+                                                            }
 
                                                             $('.cbMaster').on('click',function(){
                                                                 var val=this.checked;
@@ -656,8 +665,10 @@
 
                                                                  if($('.cbSlave:checked').length>0){
                                                                      $('[id$="deleteAllbtn"]').toggleClass('disabled', false);
+                                                                     $('[id$="deleteAllbtn"]').prop('disabled',false);
                                                                  }else{
                                                                      $('[id$="deleteAllbtn"]').toggleClass('disabled', true);
+                                                                     $('[id$="deleteAllbtn"]').prop('disabled', true);
                                                                  }
                                                             });
 
@@ -665,8 +676,10 @@
                                                             $('.cbSlave').on('click',function(){
                                                                  if($('.cbSlave:checked').length>0){
                                                                      $('[id$="deleteAllbtn"]').toggleClass('disabled', false);
+                                                                     $('[id$="deleteAllbtn"]').prop('disabled',false);
                                                                  }else{
                                                                      $('[id$="deleteAllbtn"]').toggleClass('disabled', true);
+                                                                     $('[id$="deleteAllbtn"]').prop('disabled', true);
                                                                  }
                                                             });
 
