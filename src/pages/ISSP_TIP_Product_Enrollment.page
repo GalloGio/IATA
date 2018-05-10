@@ -318,10 +318,11 @@
                                         </apex:pageBlockSectionItem> -->
                                         <apex:pageBlockSectionItem labelStyle="width:26%" labelStyleClass="agencyLegalDetailsComponent" dataStyleClass="agencyLegalDetailsComponent" >
                                            <apex:outputLabel value="{!$ObjectType.Partner_products__c.fields.PP_Banking_license__c.Label}"/>
-                                           <apex:outputPanel >                                        
-                                               <apex:inputField value="{!newpp.PP_Banking_license__c}" rendered="{!editMode}"/>
-                                               <apex:outputField value="{!newpp.PP_Banking_license__c}" rendered="{!!editMode}"/>
-                                           </apex:outputPanel>
+                                           <apex:outputPanel style="display: flex;">                                        
+                                                <apex:inputField value="{!newpp.PP_Banking_license__c}" rendered="{!editMode}"/>
+                                                <apex:outputField value="{!newpp.PP_Banking_license__c}" rendered="{!!editMode}"/>
+                                                <apex:image value="/img/msg_icons/info16.png" style="padding: 4px" styleClass="selector" title="{!$label.ISSP_Portal_Product_License_Label}" html-data-placement="top" html-data-toggle="tooltip"/>
+                                            </apex:outputPanel>
                                        </apex:pageBlockSectionItem>
                                         <apex:pageBlockSectionItem labelStyle="width:26%" labelStyleClass="agencyLegalDetailsComponent" dataStyleClass="agencyLegalDetailsComponent" >
                                             <apex:outputLabel html-class="mandFld" value="{!$ObjectType.Partner_products__c.fields.PP_Chargeback_airlines__c.Label}"/>
@@ -367,7 +368,10 @@
                                         </apex:pageBlockSectionItem> -->
                                         <apex:pageBlockSectionItem labelStyle="width:26%" labelStyleClass="agencyLegalDetailsComponent" dataStyleClass="agencyLegalDetailsComponent" >
                                             <apex:outputLabel value="{!$ObjectType.Partner_products__c.fields.PP_Payment_Product_Network_type__c.Label}"/>
-                                            <apex:outputField value="{!newpp.PP_Payment_Product_Network_type__c}"/>
+                                            <apex:outputPanel style="display: -webkit-inline-box;">
+                                                <apex:outputField value="{!newpp.PP_Payment_Product_Network_type__c}"/>
+                                                <apex:image value="/img/msg_icons/info16.png" style="padding: 4px; padding-left: 110px" styleClass="selector" title="{!$label.ISSP_Portal_Product_Type_Label}" html-data-placement="top" html-data-toggle="tooltip"/>
+                                            </apex:outputPanel>
                                         </apex:pageBlockSectionItem>
                                         <apex:pageBlockSectionItem labelStyle="width:26%" labelStyleClass="agencyLegalDetailsComponent" dataStyleClass="agencyLegalDetailsComponent" >
                                             <apex:outputLabel value="{!$ObjectType.Partner_products__c.fields.PP_Payment_Network__c.Label}"/>
