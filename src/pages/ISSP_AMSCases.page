@@ -241,7 +241,7 @@
 
             <tr>
                 <td></td>
-                <td style="display:{! IF(AND(con.Account.Category__c == 'IATA Passenger Sales Agent', isHOAccredited, namEnabled), '','none')};vertical-align:top;padding-right:20px;padding-bottom:20px;">
+                <td style="display:{! IF(AND(con.Account.Category__c == 'IATA Passenger Sales Agent', isHOAccredited), '','none')};vertical-align:top;padding-right:20px;padding-bottom:20px;">
                     <table>
                         <tr>
                             <td><input type="button" class="btn btn_iata_primary" onClick="proofOfPCI();return false;" value="{!$Label.ISSP_ANG_proof_PCI}"/></td>

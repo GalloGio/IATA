@@ -261,7 +261,6 @@ SYSTEM.DEBUG('getRelatedAccount starting... ');
 
         if (isocountry.ANG_Enable_NewGen__c) newCase.Reason1__c = AMS_Utils.CASE_REASON_FOR_MANAGEMENT;
         else newCase.Reason1__c = AMS_Utils.CASE_REASON_PCI_DSS_COMPLIANT;
-        //rui
 
         if(newCase.Status == null || newCase.Status == '')
             newCase.Status = 'Draft';
@@ -281,11 +280,9 @@ SYSTEM.DEBUG('getRelatedAccount starting... ');
 		accountConcerned = ISSP_Selector.fetchAccountConcernedDetails(vAccountConcernedId);
 
         if(newCase.Origin == 'Portal') {
-            if (isocountry.ANG_Enable_NewGen__c) newCase.Subject = Label.ISSP_ANG_PCI_Compliance + ' - ' + accountConcerned.IATACode__c + ' – ' + accountConcerned.Name;
-            else newCase.Subject = Label.ISSP_ANG_FoP_Management + ' – ' + accountConcerned.Name;
+            if (isocountry.ANG_Enable_NewGen__c) newCase.Subject = Label.ISSP_ANG_FoP_Management + ' - ' + accountConcerned.IATACode__c + ' – ' + accountConcerned.Name;
+            else newCase.Subject = Label.ISSP_ANG_PCI_DSS_Compliant + ' - ' + accountConcerned.Name;
         }
-		//newCase.Subject = Label.ISSP_ANG_PCI_Compliance + ' - ' + accountConcerned.IATACode__c + ' – ' + accountConcerned.Name;
-        //rui
 
 		fetchPCI_CountryRequirements();
 
@@ -385,7 +382,7 @@ SYSTEM.DEBUG('getRelatedAccount starting... ');
         String typeOfProcess;
         if (isocountry.ANG_Enable_NewGen__c) typeOfProcess = AMS_Utils.PCI_COMPLIANT;
         else typeOfProcess = AMS_Utils.NGFOP;
-        //rui
+
         system.debug('case ' + newCase + ' newCase.Account_Concerned__c ' + newCase.Account_Concerned__c + ' newForm.Id ' + newForm.Id + 'typeOfProcess ' + typeOfProcess);
 
         if(newCase.origin == 'Portal')
