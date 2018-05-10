@@ -386,7 +386,7 @@ global class AirlineSuspensionChildCaseCreationBatch implements Database.Batchab
 			MitaCase.BSPCountry__c = ParentCase.Account.IATA_ISO_Country__r.Name;
 					
 			// Set the option to assign the new child case using the default Assignment Rule
-			CodingChildCase.setOptions(dmo);
+			MitaCase.setOptions(dmo);
 			listInsertCases.add(MitaCase);
 			
 			insert listInsertCases;
