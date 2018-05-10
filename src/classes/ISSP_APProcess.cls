@@ -93,9 +93,8 @@ public without sharing class ISSP_APProcess {
     public List<SelectOption> countriesIn {get;set;}
     public Boolean hasCountriesIn {get;set;}
     public List<SelectOption> optInOutOptions {get;set;}
-    public String optInOutParam2 {get;set;}
-    public String countriesParam2 {get;set;}
-    public Datetime effectiveDateParam2 {get;set;}
+    public Integer airlineOptInDays {get;set;}
+    public Integer airlineOptOutDays {get;set;}
 
     public Boolean getIsNewCountryProcess() {
         try {
@@ -1114,6 +1113,9 @@ public without sharing class ISSP_APProcess {
     }
 
     private void populateCountriesMap() {
+        airlineOptInDays = Integer.valueOf(ISSP_CS__c.getValues('EasyPay Opt-In Days').Value__c);
+        airlineOptOutDays = Integer.valueOf(ISSP_CS__c.getValues('EasyPay Opt-Out Days').Value__c);
+
     	countriesIn = new List<SelectOption>();
     	hasCountriesIn = false;
     	countriesOut = new List<SelectOption>();
@@ -1121,7 +1123,7 @@ public without sharing class ISSP_APProcess {
 
     	for(Services_Rendered__c service : [SELECT Id, ISO_Country_formula__c, ANG_IATA_EasyPay_Opt_out__c, Services_Rendered_to_Airline__r.IATA_ISO_Country__c
     										FROM Services_Rendered__c
-    										WHERE Services_Rendered_to_Airline__r.IATA_ISO_Country__r.ANG_Portal_Service__c != null
+    										WHERE Services_Rendered_to_Airline__r.IATA_ISO_Country__r.Airline_EasyPay_Opt_Out_Date__c <= :Date.today()
     											AND Services_Rendered_Type__c = 'BSP Participation'
     											AND Services_Rendered_By__c = :vHQAccountId]) {
     		if (service.ANG_IATA_EasyPay_Opt_out__c) {

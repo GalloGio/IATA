@@ -64,6 +64,8 @@
     function toggleCountryLists() {
     	optinOut = $("[Id$='optInOutSelected']").val();
     	$('.selectpicker').selectpicker('render');
+      var daysIn = "{!airlineOptInDays}";
+      var daysOut = "{!airlineOptOutDays}";
     	    	
     	if (optinOut == 'IN') {
     			var countriesIn = "{!hasCountriesIn}";
@@ -74,8 +76,9 @@
           				document.querySelector("[Id$='coutriesInLabel']").style.display = '';
           				document.querySelector("[Id$='coutriesOut']").style.display = 'none';
           				document.querySelector("[Id$='coutriesOutLabel']").style.display = 'none';
+                  document.querySelector("[Id$='dateInfo']").style.display = 'none';
           				$("#datepicker").datepicker("destroy");
-          				$("#datepicker").datepicker({minDate: 0});
+          				$("#datepicker").datepicker({minDate: daysIn});
           				document.querySelector("[Id$='submitOptInOutBtn']").style.display = '';
     					} else {
     							document.querySelector("[Id$='countryDatePanel']").style.display = 'none';
@@ -91,8 +94,9 @@
           				document.querySelector("[Id$='coutriesInLabel']").style.display = 'none';
           				document.querySelector("[Id$='coutriesOut']").style.display = '';
           				document.querySelector("[Id$='coutriesOutLabel']").style.display = '';
+                  document.querySelector("[Id$='dateInfo']").style.display = '';
           				$("#datepicker").datepicker("destroy");
-          				$("#datepicker").datepicker({minDate: 30});
+          				$("#datepicker").datepicker({minDate: daysOut});
           				document.querySelector("[Id$='submitOptInOutBtn']").style.display = '';
           		} else {
           				document.querySelector("[Id$='countryDatePanel']").style.display = 'none';
@@ -116,21 +120,27 @@
 
     function submitOptInOut() {
       	var countries;
+
+        var effectiveDate = $('#datepicker').val();
+        
       	if (optinOut == 'IN') {
       			countries = $("[id$='countriesInList']").val();
       	} else {
       			countries = $("[id$='countriesOutList']").val();
       	}
 
-      	var effectiveDate = $('#datepicker').val();
-
       	var ok = 1;
 
       	if(effectiveDate == undefined || effectiveDate == null || effectiveDate == "") {
         		document.querySelector("[Id$='effectiveDateErrorMsg']").style.display = '';
         		ok = 0;
+        } else if (!effectiveDate.match(/(\d{4})-(\d{2})-(\d{2})/)) {
+            document.querySelector("[Id$='dateFormatErrorMsg']").style.display = '';
+            ok = 0;
       	} else {
         		document.querySelector("[Id$='effectiveDateErrorMsg']").style.display = 'none';
+            document.querySelector("[Id$='dateFormatErrorMsg']").style.display = 'none';
+            document.querySelector("[Id$='incorrectDateErrorMsg']").style.display = 'none';
       	}
 
       	if(countries == undefined || countries == null || countries == "") {
@@ -142,7 +152,7 @@
 
       	if(ok == 1) {
         		submitOptInOutServerName(optinOut, JSON.stringify(countries), effectiveDate);
-        		//falta dar clean ao modal
+        		//falta dar clean ao modal?
         		document.querySelector("[Id$='requestSentMsg']").style.display = '';
             document.querySelector("[Id$='submitOptInOutBtn']").disabled = true;
             document.querySelector("[Id$='modalClose']").style.display = 'none';
@@ -226,14 +236,20 @@
           <div class="alert alert-danger" id="effectiveDateErrorMsg" style ="display: none">
             <strong>An effective date must be defined.</strong>
           </div>
+          <div class="alert alert-danger" id="dateFormatErrorMsg" style ="display: none">
+            <strong>The effective date format should be like 'yyyy-mm-dd'.</strong>
+          </div>
+          <div class="alert alert-danger" id="incorrectDateErrorMsg" style ="display: none">
+            <strong>The effective date is incorrect.</strong>
+          </div>
           <div class="alert alert-danger" id="countriesErrorMsg" style ="display: none">
             <strong>One or more countries must be selected.</strong>
           </div>
           <div class="alert alert-warning" id="noCountriesInMsg" style="display: none">
-            <strong>There are no countries to Opt-In.</strong>
+            <strong>You have currently Opted-In to IATA EasyPay in all your BSP Operations.</strong>
           </div>
           <div class="alert alert-warning" id="noCountriesOutMsg" style="display: none">
-            <strong>There are no countries to Opt-Out.</strong>
+            <strong>You have currently Opted-Out from IATA EasyPay in all your BSP Operations.</strong>
           </div>
           <div class="alert alert-success" id="requestSentMsg" style="display: none">
             <strong>Your request has been sent.</strong>
@@ -298,9 +314,10 @@
                   <div class="customTable" style="margin-left: 15px;">
                     <div>
                       <apex:outputLabel value="Effective Date: "/>
+                      <apex:image id="dateInfo" value="/img/msg_icons/info16.png" style="padding: 4px; display: none" styleClass="selector" title="{!$Label.ISSP_ANG_OptIn_OptOut_DateInfo}" html-data-placement="top" html-data-toggle="tooltip"/>
                     </div>
                     <div>
-                      <input class="iatainputbox selectpicker" type="text" id="datepicker"/>
+                      <input class="iatainputbox selectpicker" type="text" id="datepicker" placeholder="yyyy-mm-dd" />
                     </div>
                   </div>
                 </div>
