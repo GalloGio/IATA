@@ -92,7 +92,7 @@ public class BatchActivateRecordsByDate_test {
         prod1.PP_Payment_guarantee__c = 'COMMERCIAL_DISPUTE'; 
         prod1.PP_Pay_in_model__c = 'Prepaid';
         prod1.PP_Accepted_transactions__c = 'Payment'; 
-        prod1.PP_VAN_type__c = 'Single Use VAN'; 
+        prod1.PP_VAN_type__c = 'SINGLE_USE_VAN'; 
         prod1.PP_Chargeback_airlines__c = 'N'; 
         prod1.PP_Effective_from_Date__c = startDate; 
         prod1.PP_Effective_to_Date__c = endDate; 
