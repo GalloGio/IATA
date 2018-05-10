@@ -112,11 +112,6 @@
                         });
                    }
 
-                   $('.cbMaster').on('click',function(){
-                        $('.cbSlave').each(function(index){
-                            this.checked=$('.cbMaster').get(0).checked;
-                        });
-                   });
                });
 
                 function confirmDelete(opt1){
@@ -651,15 +646,35 @@
                                                             }else{
                                                                 $('.cbMaster').attr('disabled',false);
                                                             }
+                                                            $('[id$="deleteAllbtn"]').toggleClass('disabled', true);
 
                                                             $('.cbMaster').on('click',function(){
+                                                                var val=this.checked;
                                                                  $('.cbSlave').each(function(index){
-                                                                     this.checked=$('.cbMaster').get(0).checked;
+                                                                     this.checked=val;
                                                                  });
+
+                                                                 if($('.cbSlave:checked').length>0){
+                                                                     $('[id$="deleteAllbtn"]').toggleClass('disabled', false);
+                                                                 }else{
+                                                                     $('[id$="deleteAllbtn"]').toggleClass('disabled', true);
+                                                                 }
                                                             });
+
+
+                                                            $('.cbSlave').on('click',function(){
+                                                                 if($('.cbSlave:checked').length>0){
+                                                                     $('[id$="deleteAllbtn"]').toggleClass('disabled', false);
+                                                                 }else{
+                                                                     $('[id$="deleteAllbtn"]').toggleClass('disabled', true);
+                                                                 }
+                                                            });
+
 
                                                         });
 
+
+                                                       
                                                         function validateCountryConfiguration(){
 
                                                             if($('[id$="bspctrfld"]').val() === null || $('[id$="bspctrfld"]').val() =='' ){

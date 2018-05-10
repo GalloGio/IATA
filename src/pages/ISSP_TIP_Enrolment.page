@@ -226,9 +226,7 @@
                     $j("#BranchPhoneSection").hide();
 
                     $j('[id$="BillingAddress"]').find('label').each(function(par1){ // remove "billing" on field label
-                      console.log($(this));
                       $(this).context.textContent=$(this).context.textContent.replace("Billing", "");
-                      console.log($(this));
                     });
                 });
             
@@ -267,7 +265,6 @@
                 }
                 
                 function editContact(contactIDToEdit) {
-                  console.log("is Edit");
                   if(contactIDToEdit== null) 
                     isEdit = false;
                   else
@@ -278,7 +275,6 @@
                 function showContactDialog() {
             
                    $j( '#ContactModal').modal('show');
-                   console.log("is edit? " , isEdit);
                    con = $j("[id$=email]").val();
                     if( isEdit){
                         $j("[id$=email]").attr('readonly', true);
@@ -365,11 +361,6 @@
                            <div class="alert alert-info" role="alert">
                               {!$Label.ISSP_AMS_Step3_Save_Anytime}
                            </div>
-                          <!--<apex:pageBlockButtons >
-                              <apex:commandButton action="{!submitAccountEnrolmentToIATA}" value="Submit to IATA" />
-                              <apex:commandButton action="{!saveAccountEnrolmentAsDraft}" value="{!$Label.ISSP_Save_Draft}" style="float:right" />
-                           </apex:pageBlockButtons>
-                         -->
                             <div class="alert alert-warning"  role="alert">
                                 {!$Label.ISSP_AMS_Step1_Two_Weeks_Expiry}
                             </div> 
@@ -379,7 +370,7 @@
                                         <apex:commandButton action="{!submitAccountEnrolmentToIATA}" value="Submit to IATA"  />
                                         <apex:commandButton action="{!saveAccountEnrolmentAsDraft}" value="{!$Label.ISSP_Save_Draft}"/>
                                         <apex:commandButton onclick="confirmCancelExitPage();return false;"  value="{!$Label.ISSP_Cancel}" />
-                                        <!-- <apex:commandButton action="{!submitForm}" value="Save as Draft" style="margin-left:10px" /> -->
+                                     
                                     </apex:pageBlockButtons>   
 
 
@@ -387,7 +378,6 @@
                            <div class="apcontainer" style="border: 1px solid #ececec;">
                               <span id="nav_one"></span>                
                               <span id="nav_two"></span>
-                              <apex:pageblock id="pageblock">
                                  <apex:pageBlockSection columns="2" collapsible="false" title="{!$Label.ISSP_Payment_Provider_Details_section_1}"/>
                                  <!-- ****************************************************************************** -->
                                  <!-- ***** SECTION 1 - IDENTIFICATION OF AGENCY FOR WHICH APPROVAL REQUESTED ****** -->
@@ -481,7 +471,6 @@
                                        </apex:pageBlockSection>
                                        <apex:pageBlockSection >
                                           <apex:selectList styleclass="form-control recSearch" style="width: 200px;"  value="{!account.TIP_HQ_Location__c}" Label="Location of Headquarter *" size="1" >
-                                             <!--  <apex:selectOption itemValue="" itemLabel="Location of Headquarter"/> -->
                                              <apex:selectOptions value="{!ISOCountry}"/>
                                           </apex:selectList>
                                           <apex:pageBlockSectionItem >
@@ -489,7 +478,6 @@
                                              <apex:inputTextArea styleclass="form-control recSearch" style="width: 200px;"  value="{!account.TIP_Documents__c}"/>
                                           </apex:pageBlockSectionItem>
                                        </apex:pageBlockSection>
-                                       <!--style="width: 200px;"-->
                                        <script type="text/javascript">
                                         var target = $j('.hophonestatusBox #recordstatuscontainer')[0],
                                 			    observer = new MutationObserver(function (mutations) {
@@ -559,7 +547,6 @@
                                     
                                     document.onload = mandatoryLabels();
                                  </script>           
-                              </apex:pageblock>
                               
                               <!-------section 2 in here---->
                               <apex:pageBlockSection id="sectionTwo" columns="1" collapsible="false" title="{!$Label.ISSP_Payment_Provider_Details_section_2}">
