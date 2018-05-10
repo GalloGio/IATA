@@ -1,7 +1,7 @@
 @isTest
 private class AMS_PCI_Compliant_Mass_OSCAR_Create_Test {
 	
-	@isTest static void test_method_one() {
+	@isTest static void test_page() {
 		DateTime dt = system.now()+90;
 		Date d = date.newinstance(dt.year(), dt.month(), dt.day());
 		System.debug('d: ' + d);
@@ -18,10 +18,12 @@ private class AMS_PCI_Compliant_Mass_OSCAR_Create_Test {
 		Account a1 = new Account(Name='Test1 Agency',
 			IATA_ISO_Country__c = isoc1.id, Sent_to_external_system__c = true, 
 			IATACode__c = '12345678', 
-			Location_Type__c = 'HO',
 			Location_Class__c= AMS_Utils.LC_PASSENGER,
 			Status__c= AMS_Utils.ACC_S9_APPROVED,
-			RecordTypeId= AMS_PCI_Compliant_Mass_OSCAR_CreationCtr.AGENCY_RECORDTYPE);
+			RecordTypeId= AMS_Utils.RECTYPE_IATAAGENCY,
+			Is_PCI_compliant__c = null,
+			Location_Type__c = AMS_Utils.HO
+			);
 		agencylist.add(a1);
 		insert agencylist;
 
@@ -33,20 +35,24 @@ private class AMS_PCI_Compliant_Mass_OSCAR_Create_Test {
 
 		Test.startTest();
 		AMS_PCI_Compliant_Mass_OSCAR_CreationCtr ctrl = new AMS_PCI_Compliant_Mass_OSCAR_CreationCtr();
-		ctrl.searchPreview();
-		ctrl.filter.region = 'Americas';
-		ctrl.selectedLocationTypes.add(new SelectOption('HO', 'HO'));
-		ctrl.CountrySelected = ctrl.countryNameListSelectOption();
-		ctrl.filter.country = new List<String> {isoc1.Id};
-		ctrl.searchPreview();
-		ctrl.createPCIOscar();
-		ctrl.checkLogs();
-		ctrl.checkBatchStatus();
-		Integer i = ctrl.srw.totalErrors;
-		i = ctrl.srw.totalAccounts;
-		List<SelectOption> opts = ctrl.countryNameListSelectOption;
-		ctrl.getApprovalButtonLabel();
+
+		ctrl.operation = 'PCI';
+		ctrl.region = 'Americas';
+
+		System.assertEquals(1, ctrl.availableCountries.size());
+		ctrl.selectedCountries = ctrl.availableCountries;
+
+		System.assertEquals(4, ctrl.availableLocations.size());
+		ctrl.selectedLocations = ctrl.availableLocations;
+
+		ctrl.search();
+
+		System.assert(!ctrl.tooMuchResults);
+		System.assertEquals(1, ctrl.totalAccounts);
+		ctrl.createOSCARs();
+
 		Test.stopTest();
+		ctrl.checkBatchStatus();
 	}
 
 }
