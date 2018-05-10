@@ -266,6 +266,8 @@ public without sharing class AMS_Utils {
 
     // Case - Origin
     public static final String CASE_ORIGIN_PORTAL = 'Portal';        
+    public static final String ANG_MASSIVE_FOP = 'Massive FOP Creation';        
+    public static final String ANG_FOP_AUTOMATIC_RENEWAL = 'FoP automatic renewal';        
 
     // Case - Status    
     public static final String CASE_STATUS_CLOSED = 'Closed';
@@ -1105,7 +1107,9 @@ public without sharing class AMS_Utils {
         Boolean mustUpdateOSCAR = false;
 
         if(oscar == null){
-            List<AMS_OSCAR__c> oscarlst = [select Financial_Assessment_requested__c, Financial_Assessment_deadline__c, Assessment_Performed_Date__c, Financial_Review_Result__c from AMS_OSCAR__c where Id = : updatedIFAPCase.OSCAR__c];
+            List<AMS_OSCAR__c> oscarlst = [select Financial_Assessment_requested__c, Financial_Assessment_deadline__c, Assessment_Performed_Date__c, Financial_Review_Result__c, 
+                                        Bank_Guarantee_amount__c, Reason_for_change_of_Financial_result__c, Requested_Bank_Guarantee_amount__c, Bank_Guarantee_Currency__c, Bank_Guarantee_deadline__c 
+                                        from AMS_OSCAR__c where Id = : updatedIFAPCase.OSCAR__c];
             if(!oscarlst.isEmpty())
                 oscar = oscarlst.get(0);
         }

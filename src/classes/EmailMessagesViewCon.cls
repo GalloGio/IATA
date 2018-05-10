@@ -234,7 +234,7 @@ public class EmailMessagesViewCon {
                 if (cse.RecordTypeId == saamRt) {
 
                     return (cse.CaseArea__c == 'Risk Management Process' || cse.CaseArea__c == 'Accreditation Process' 
-                        || cse.CaseArea__c == 'Accreditation Products' || cse.CaseArea__c == 'Cargo Process');
+                        || cse.CaseArea__c == 'Accreditation Products' || cse.CaseArea__c == 'Cargo Process' || cse.CaseArea__c == 'Collection');
                 }
 
                 // if case record type is 'IATA Financial Review', 'sMAP(sales Monitoring Alert Process)', 'SIDRA', 'SIDRA Lite' or 'Oscar communication', return true
@@ -243,9 +243,10 @@ public class EmailMessagesViewCon {
                 Id sidraId = Schema.SObjectType.Case.getRecordTypeInfosByName().get('SIDRA').getRecordTypeId();
                 Id sidraLiteId = Schema.SObjectType.Case.getRecordTypeInfosByName().get('SIDRA Lite').getRecordTypeId();
                 Id oscarComm = Schema.SObjectType.Case.getRecordTypeInfosByName().get('OSCAR Communication').getRecordTypeId();
+                Id invCollectionCases = Schema.SObjectType.Case.getRecordTypeInfosByName().get('Invoicing Collection Cases').getRecordTypeId();
 
                 return (cse.RecordTypeId == financialReviewRt || cse.RecordTypeId == sMapRt || cse.RecordTypeId == sidraId
-                    || cse.RecordTypeId == sidraLiteId || cse.RecordTypeId == oscarComm);
+                    || cse.RecordTypeId == sidraLiteId || cse.RecordTypeId == oscarComm || cse.RecordTypeId == invCollectionCases);
             }
             return false;
         } catch (Exception e) {
