@@ -715,7 +715,7 @@
                                                         }
                                                     </script>
                                                     <apex:pageBlockTable value="{!provProdConfList}" var="ppc" styleClass="table-hover table table-condensed table-responsive tabl" >
-                                                        <apex:column >
+                                                        <apex:column rendered="{!editMode}" >
                                                             <apex:facet name="header">                                                        
                                                                 <apex:outputLabel value=""/>
                                                                 <input type="checkbox" class='cbMaster'/>
