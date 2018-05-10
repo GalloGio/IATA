@@ -25,7 +25,8 @@ global class ANG_PCIComplianceRenewalBatch implements Database.Batchable<Account
 		triggerRenewalDate = Date.today().addDays(daysBeforeExpiry != null ? daysBeforeExpiry : 90);
 
 	    String query = 'SELECT Id, Name, IataCode__c, BillingCountry, Region_formula__c,ANG_Accreditation_Model__c, Legal_name__c, '+
-	    	'(SELECT Id, Name, Email, Preferred_Language__c, BSP_CASS_Payment_contact__c, Financial_Assessment_Contact__c FROM Contacts WHERE Status__c = \'Active\') '+
+	    	'(SELECT Id, Name, Email, Preferred_Language__c, BSP_CASS_Payment_contact__c, Financial_Assessment_Contact__c, User_Portal_Status__c, New_BSPLink_Contact__c '+
+	    		'FROM Contacts WHERE Status__c = \'Active\') '+
 	    	'FROM Account '+
 	    	'WHERE RecordTypeId = :AGENCYRTID '+
 	    	'AND Is_PCI_compliant__c = \'Yes\' '+
