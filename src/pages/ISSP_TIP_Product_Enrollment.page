@@ -219,20 +219,19 @@
 
                 function validateToSubmit() {                 
                     var hasErrors=false;
-                
-
-                    $("input.mandFld").each(function(index){
-                        if($(this).val() =='' ){
+                    $("input.mandFld, select.mandFld").each(function(index){
+                        console.log($(this).val());
+                         if($(this).val() ==''  || $(this).val() ==null){
                             if($(this).next('.errorMsg').val()==undefined)
                                 $(this).after('<div class="errorMsg">{!$Label.IEC_Required_Field_Error_Msg}</div>');
                             hasErrors=true;
                             $('[id$="rangeStart"]').addClass("placeholder-active");
                         }else{
-                            clearErrorElement(this);
+                            // clearErrorElement(this);
                         } 
                     });
 
-                    $("input.mandFldcb").each(function(index){
+                    $(".mandFldcb").each(function(index){
                         if($(this).find($("input[type='radio']:checked")).length ==0 ){
                             if($(this).next('.errorMsg').val()==undefined)
                                 $(this).after('<div class="errorMsg">{!$Label.IEC_Required_Field_Error_Msg}</div>');
@@ -241,8 +240,6 @@
                             clearErrorElement(this);
                         } 
                     });
-
-                   
 
 
                     if(!hasErrors) submitProduct();
@@ -387,7 +384,7 @@
                                         <apex:pageBlockSectionItem labelStyle="width:26%" labelStyleClass="agencyLegalDetailsComponent" dataStyleClass="agencyLegalDetailsComponent" >
                                             <apex:outputLabel value="{!$ObjectType.Partner_products__c.fields.PP_Payment_guarantee__c.Label}" html-class="mandFld"/>
                                             <apex:outputPanel >                                        
-                                                <apex:selectList title="{!$Label.ISSP_TIP_HOLD_TO_MULTISELECT}" value="{!paymentGuaranteeVal}" size="{!paymentGuaranteeOptList.size+1}" multiselect="true" rendered="{!editMode}" html-class="mandFld" styleClass="sectionItem">
+                                                <apex:selectList title="{!$Label.ISSP_TIP_HOLD_TO_MULTISELECT}" value="{!paymentGuaranteeVal}" size="{!paymentGuaranteeOptList.size+1}" multiselect="true" rendered="{!editMode}" styleClass="sectionItem mandFld">
                                                     <apex:selectOptions value="{!paymentGuaranteeOptList}"/>
                                                 </apex:selectList>
                                                 <apex:outputField value="{!newpp.PP_Payment_guarantee__c}" rendered="{!!editMode}"/>
@@ -403,7 +400,7 @@
                                         <apex:pageBlockSectionItem labelStyle="width:26%" labelStyleClass="agencyLegalDetailsComponent" dataStyleClass="agencyLegalDetailsComponent" >
                                             <apex:outputLabel value="{!$ObjectType.Partner_products__c.fields.PP_Accepted_transactions__c.Label}" html-class="mandFld"/>
                                             <apex:outputPanel >
-                                                <apex:selectList title="{!$Label.ISSP_TIP_HOLD_TO_MULTISELECT}" value="{!acceptedTransactionVal}" size="{!acceptedTransactionsOptList.size+1}" multiselect="true" rendered="{!editMode}" html-class="mandFld" styleClass="sectionItem">
+                                                <apex:selectList title="{!$Label.ISSP_TIP_HOLD_TO_MULTISELECT}" value="{!acceptedTransactionVal}" size="{!acceptedTransactionsOptList.size+1}" multiselect="true" rendered="{!editMode}" styleClass="sectionItem mandFld">
                                                     <apex:selectOptions value="{!acceptedTransactionsOptList}"/>
                                                 </apex:selectList>
                                                 <apex:outputField value="{!newpp.PP_Accepted_transactions__c}" rendered="{!!editMode}"/>
