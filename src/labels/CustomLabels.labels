@@ -19484,7 +19484,7 @@ Please note that many IATA invoices for accredited agents are collected through 
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>ISSP Payment Provider Home title</shortDescription>
-        <value>Alternative Transfer Method(ATM) Provider Enlistment/Certification</value>
+        <value>Alternative Transfer Method(ATM) Provider Enlistment</value>
     </labels>
     <labels>
         <fullName>ISSP_Pending</fullName>
