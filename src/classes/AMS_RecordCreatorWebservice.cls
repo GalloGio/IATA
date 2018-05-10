@@ -366,6 +366,7 @@ global without sharing class AMS_RecordCreatorWebservice {
             processOscarProcessDetail(oscar,accreditationObj,accountId);
         }
 
+        //commented as per NEWGEN-3265
         /*if(processType.equalsIgnoreCase(OPTINOPTOUT)){
         
             Map<Id, Set<Id>> stagingToAccount = new Map<Id, Set<Id>>();
