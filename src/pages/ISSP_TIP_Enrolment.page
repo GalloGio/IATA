@@ -210,6 +210,7 @@
                 var $j = jQuery.noConflict();
                 var defaultHQCountry = '{!account.Country_ISO_Code__c}';
                 var isEdit = false;
+                var isValidSalutation = true;
 
                 function refreshTable(contactIDtoPrimary) {updateRadioButton(contactIDtoPrimary);}
             
@@ -276,7 +277,7 @@
                 }
                 
                 function showContactDialog() {
-            
+                    checkForSalutation();
                    $j( '#ContactModal').modal('show');
                    console.log("is edit? " , isEdit);
                    con = $j("[id$=email]").val();
@@ -329,6 +330,7 @@
                 }
 
                 function saveContact(isEmailDuplicated){
+
                   if (jQuery('.errorMsg').length == 0 && isEmailDuplicated == "false"){
                     //cleanModal();
                     closeModal();
@@ -337,6 +339,18 @@
                     bootbox.alert("{!$label.ISSP_Application_for_Enlistment_Email_Duplicated}");
                   }
 
+                }
+
+                function checkForSalutation(){
+                  if(!isValidSalutation)
+                    $j("[id$=inSalutation]").after("<div class=\"errorMsg\"><strong>Error:</strong> You must enter a value</div>");
+                  
+                  if( $j("[id$=inSalutation]").val() == '')
+                    isValidSalutation = false; 
+                  else
+                    isValidSalutation = true;
+                  //$j("[id$=inSalutation]").addClass('errorMsg');
+                  //isValidateSalutation = true;
                 }
 
                 function confirmCancelExitPage(){
@@ -625,12 +639,14 @@
                            </div>
                            <div class="form-group" id="Salutation">
                               <div><label for="inSalutation"><span >*</span>{!$Label.ISSP_Salutation}</label></div>
-                              <apex:selectList id="inSalutation" styleclass="form-control" value="{!newContact.Salutation}" size="1" required="true">
-                                 <apex:selectOption itemValue="" itemLabel="{!$Label.ISSP_Registration_None}"/>
-                                 <apex:selectOption itemValue="Mr." itemLabel="{!$Label.ISSP_Registration_MR}"/>
-                                 <apex:selectOption itemValue="Mrs." itemLabel="{!$Label.ISSP_Registration_MRS}"/>
-                                 <apex:selectOption itemValue="Ms." itemLabel="{!$Label.ISSP_Registration_MS}"/>
-                              </apex:selectList>
+      
+                                  <apex:selectList id="inSalutation" styleclass="form-control" value="{!newContact.Salutation}" size="1" required="true">
+                                    <apex:selectOption itemValue="" itemLabel="{!$Label.ISSP_Registration_None}"/>
+                                    <apex:selectOption itemValue="Mr." itemLabel="{!$Label.ISSP_Registration_MR}"/>
+                                    <apex:selectOption itemValue="Mrs." itemLabel="{!$Label.ISSP_Registration_MRS}"/>
+                                    <apex:selectOption itemValue="Ms." itemLabel="{!$Label.ISSP_Registration_MS}"/>
+                                  </apex:selectList>
+                              
                               <div class="hiddenerror" style="display: none;">
                                  <p class="errormsg" style="line-height: 26px;">{!$Label.ISSP_Registration_Error_Salutation}</p>
                               </div>
@@ -686,7 +702,7 @@
                         </apex:outputPanel>
                      </div>
                      <div class="modal-footer">
-                        <apex:commandButton action="{!createContact}" onclick="rerenderModal();" status="WaitingStatus"  styleClass="btn btn-default"  value="{!$Label.ISSP_Submit}" oncomplete="saveContact('{!isEmailDuplicated}');rerenderContactSection();" >
+                        <apex:commandButton action="{!createContact}" onclick="rerenderModal();checkForSalutation();" status="WaitingStatus"  styleClass="btn btn-default"  value="{!$Label.ISSP_Submit}" oncomplete="saveContact('{!isEmailDuplicated}');rerenderContactSection();" >
                         </apex:commandButton>
                         &nbsp;
                         <button type="button" class="btn btn-default" onclick="closeModal();return false;">
