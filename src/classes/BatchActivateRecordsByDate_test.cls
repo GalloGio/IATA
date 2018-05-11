@@ -31,13 +31,13 @@ public class BatchActivateRecordsByDate_test {
 		
 		Partner_products__c prod;
 		//ACTIVE
-		prod = createProduct('prod1 active', '1111', parent, System.today()-5,System.today()+5);
+		prod = createProduct('prod1 active', '11', parent, System.today()-5,System.today()+5);
 
 		//INACTIVE
-		createProduct('prod2 active', '2222', parent, System.today()-20,System.today()-10);
+		createProduct('prod2 active', '22', parent, System.today()-20,System.today()-10);
 		
 		//IN PROGRESS
-		createProduct('prod3 active', '3333', parent, System.today()+10,System.today()+20);
+		createProduct('prod3 active', '33', parent, System.today()+10,System.today()+20);
 
 		
 
@@ -72,7 +72,7 @@ public class BatchActivateRecordsByDate_test {
         a1.sector__c = 'Travel Agent';
         a1.Location_Type__c = 'HO';
         a1.RecordTypeId = TIP_UTils.PAYMENT_PROVIDER_RECORD_TYPE_ID;
-        a1.IATACode__c = '100';
+        a1.IATACode__c = '1000';
         a1.IATA_ISO_Country__c = country.id;
         a1.category__c = 'Payment Provider';
         a1.Accreditation_date__c = startDate;
