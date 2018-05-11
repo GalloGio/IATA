@@ -182,7 +182,7 @@ public with sharing class AMS_PCI_Compliant_Mass_OSCAR_CreationCtr{
         query += 'WHERE Location_Class__c IN :locationClass AND Status__c IN :statuses AND Is_PCI_compliant__c = null AND Location_Type__c IN :locations';
         query += ' AND RecordtypeId = :agency AND IATA_ISO_Country__c IN :countries';
 
-        query += ' AND Id NOT IN (SELECT AccountId FROM Case WHERE Reason1__c = :reason AND IsClosed = false) ';
+        query += ' AND Id NOT IN (SELECT AccountId FROM Case WHERE Reason1__c = :reason AND RecordType.DeveloperName = 'OSCAR_Communication') ';
 
         query += 'LIMIT ' + (MAX_SEARCH_ELEMENTS + 1);
 
