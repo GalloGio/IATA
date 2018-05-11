@@ -15070,6 +15070,14 @@ Select at least one authorised signatory, and choose the Financial Assessment co
         <value>Enable Credit Card Form of Payment for the Code(s)</value>
     </labels>
     <labels>
+        <fullName>ISSP_ANG_FoP_Management</fullName>
+        <categories>ISSP, ANG</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_ANG_FoP_Management</shortDescription>
+        <value>FoP Management</value>
+    </labels>
+    <labels>
         <fullName>ISSP_ANG_GenericError</fullName>
         <language>en_US</language>
         <protected>false</protected>
@@ -15317,6 +15325,13 @@ Select at least one authorised signatory, and choose the Financial Assessment co
         <value>One or more Branch Offices</value>
     </labels>
     <labels>
+        <fullName>ISSP_ANG_OptIn_OptOut_DateInfo</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_ANG_OptIn_OptOut_DateInfo</shortDescription>
+        <value>Date from which Airlines can Opt-Out of IATA EasyPay for this country on the portal.</value>
+    </labels>
+    <labels>
         <fullName>ISSP_ANG_PCI_Choose_IATA_Code</fullName>
         <language>en_US</language>
         <protected>false</protected>
@@ -15330,6 +15345,14 @@ Select at least one authorised signatory, and choose the Financial Assessment co
         <protected>false</protected>
         <shortDescription>ISSP_ANG_PCI_Compliance</shortDescription>
         <value>PCI Compliance</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_ANG_PCI_DSS_Compliant</fullName>
+        <categories>ISSP, ANG</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_ANG_PCI_DSS_Compliant</shortDescription>
+        <value>PCI DSS Compliant</value>
     </labels>
     <labels>
         <fullName>ISSP_ANG_PCI_Selected_IATA_Code</fullName>
