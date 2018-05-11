@@ -10,7 +10,7 @@
 
 We inform that the Annual Revalidation process failed. An Administrative non-compliance has been processed.
 
-Please be informed that the new deadline is {!AMS_OSCAR__c.Sanity_check_deadline__c}
+Please be informed that the new deadline is {!AMS_OSCAR__c.OSCAR_Deadline__c}
 
 Yours faithfully,
 

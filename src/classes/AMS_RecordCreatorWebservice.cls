@@ -366,13 +366,14 @@ global without sharing class AMS_RecordCreatorWebservice {
             processOscarProcessDetail(oscar,accreditationObj,accountId);
         }
 
-        if(processType.equalsIgnoreCase(OPTINOPTOUT)){
+        //commented as per NEWGEN-3265
+        /*if(processType.equalsIgnoreCase(OPTINOPTOUT)){
         
             Map<Id, Set<Id>> stagingToAccount = new Map<Id, Set<Id>>();
             stagingToAccount.put(accreditationId, new Set<Id>{accountId});
             AMS_AccountRoleCreator.runRoleCreatorForOnlineAccreditations(stagingToAccount);
 
-        }
+        }*/
         
         return oscar.id;
     }
