@@ -30,12 +30,12 @@ global class BatchActivateRecordsByDate implements  Database.Batchable<sObject>,
 			FIELD_STATUS     => 'PP_status__c'
 		},
 		BIN_RANGE_TYPE => new Map<Integer,String> {
-			FIELD_START_DATE => 'TIP_Effective_From_Date__c',
+			FIELD_START_DATE => 'TIP_Effective_From_Date_To_Show__c',
 			FIELD_END_DATE   => 'TIP_Effective_To_Date__c',
 			FIELD_STATUS     => 'TIP_Status__c'
 		},
 		PRODUCT_CONFIG_TYPE => new Map<Integer,String> {
-			FIELD_START_DATE => 'TIP_Effective_From_Date__c',
+			FIELD_START_DATE => 'TIP_Effective_From_Date_To_Show__c',
 			FIELD_END_DATE   => 'TIP_Effective_To_Date__c',
 			FIELD_STATUS     => 'TIP_Status__c'
 		}
@@ -70,21 +70,30 @@ global class BatchActivateRecordsByDate implements  Database.Batchable<sObject>,
 			+ 'OR (Expiry_Date__c < '  + system.now().format('yyyy-MM-dd') +' AND Status__c <> \''+ TIP_Utils.PARTNER_STATUS_INACTIVE +'\' ) '
 			+ 'OR (Accreditation_date__c <= '  + system.now().format('yyyy-MM-dd') +' AND Expiry_Date__c >= '  + system.now().format('yyyy-MM-dd') +' AND Status__c <> \''+TIP_Utils.PARTNER_STATUS_ACTIVE+'\' ))';
 	
-	public final static String QUERY_PRODUCTS = 'SELECT ID, PP_status__c, PP_Effective_from_Date__c, PP_Effective_to_Date__c FROM Partner_products__c WHERE BIN_Conflict_Count__c = 0 AND recordtypeid = \'' + TIP_Utils.PARTNER_PRODUCT_TIP_PRODUCT_RECORD_TYPE_ID +'\' AND '
+	public final static String QUERY_PRODUCTS = 'SELECT ID, PP_status__c, PP_Effective_from_Date__c, PP_Effective_to_Date__c FROM Partner_products__c WHERE BIN_Conflict_Count__c = 0 AND PP_Payment_Product_Code__c <> NULL AND recordtypeid = \'' + TIP_Utils.PARTNER_PRODUCT_TIP_PRODUCT_RECORD_TYPE_ID +'\' AND '
 		+'Provider__r.Status__c = \''+TIP_Utils.PARTNER_STATUS_ACTIVE+ '\' AND PP_Status__c <> \''+TIP_Utils.PARTNER_PRODUCT_STATUS_REJECTED+ '\' AND ( '
 			+    '(PP_Effective_from_Date__c > '  + system.now().format('yyyy-MM-dd') +' AND PP_status__c <> \''+ TIP_Utils.PARTNER_PRODUCT_STATUS_IN_PROGRESS +'\' ) '
 			+ 'OR (PP_Effective_to_Date__c < '  + system.now().format('yyyy-MM-dd') +' AND PP_status__c <> \''+ TIP_Utils.PARTNER_PRODUCT_STATUS_INACTIVE +'\' ) '
 			+ 'OR (PP_Effective_from_Date__c <= '  + system.now().format('yyyy-MM-dd') +' AND PP_Effective_to_Date__c >= '  + system.now().format('yyyy-MM-dd') +' AND PP_status__c <> \''+TIP_Utils.PARTNER_PRODUCT_STATUS_ACTIVE+'\' ))';
 
-	public final static String QUERY_BIN_RANGES = 'SELECT ID, TIP_Status__c, TIP_Effective_From_Date__c, TIP_Effective_To_Date__c FROM TIP_BIN_Range__c WHERE TIP_Payment_Provider_Product__r.PP_status__c = \''+TIP_Utils.PARTNER_PRODUCT_STATUS_ACTIVE+ '\' AND ( '
+/*	public final static String QUERY_BIN_RANGES = 'SELECT ID, TIP_Status__c, TIP_Effective_From_Date__c, TIP_Effective_To_Date__c FROM TIP_BIN_Range__c WHERE TIP_Payment_Provider_Product__r.PP_status__c = \''+TIP_Utils.PARTNER_PRODUCT_STATUS_ACTIVE+ '\' AND ( '
 			+    '(TIP_Effective_From_Date__c > '  + system.now().format('yyyy-MM-dd') +' AND TIP_Status__c <> \''+ TIP_Utils.BIN_RANGE_STATUS_IN_PROGRESS +'\' ) '
 			+ 'OR (TIP_Effective_To_Date__c < '  + system.now().format('yyyy-MM-dd') +' AND TIP_Status__c <> \''+ TIP_Utils.BIN_RANGE_STATUS_INACTIVE +'\' ) '
 			+ 'OR (TIP_Effective_From_Date__c <= '  + system.now().format('yyyy-MM-dd') +' AND TIP_Effective_To_Date__c >= '  + system.now().format('yyyy-MM-dd') +' AND TIP_Status__c <> \''+TIP_Utils.BIN_RANGE_STATUS_ACTIVE+'\' ))';
+*/
 
-	public final static String QUERY_PRODUCT_CONFIGS = 'SELECT ID, TIP_Status__c, TIP_Effective_From_Date__c, TIP_Effective_To_Date__c FROM TIP_Pay_Prov_Prod_Country_Config__c WHERE TIP_Product__r.PP_status__c = \''+TIP_Utils.PARTNER_PRODUCT_STATUS_ACTIVE+ '\' AND ( '
-			+    '(TIP_Effective_From_Date__c > '  + system.now().format('yyyy-MM-dd') +' AND TIP_Status__c <> \''+ TIP_Utils.PARTNER_PRODUCT_CONFIG_STATUS_IN_PROGRESS +'\' ) '
+	public final static String QUERY_BIN_RANGES = 'SELECT ID, TIP_Status__c, TIP_Effective_From_Date_To_Show__c, TIP_Effective_To_Date__c FROM TIP_BIN_Range__c WHERE TIP_Payment_Provider_Product__r.PP_status__c = \''+TIP_Utils.PARTNER_PRODUCT_STATUS_ACTIVE+ '\' AND ('
+		+ '( TIP_Effective_To_Date__c != NULL AND ( '
+				+    '(TIP_Effective_From_Date_To_Show__c > '  + system.now().format('yyyy-MM-dd') +' AND TIP_Status__c <> \''+ TIP_Utils.BIN_RANGE_STATUS_IN_PROGRESS +'\' ) '
+				+ 'OR (TIP_Effective_To_Date__c < '  + system.now().format('yyyy-MM-dd') +' AND TIP_Status__c <> \''+ TIP_Utils.BIN_RANGE_STATUS_INACTIVE +'\' ) '
+				+ 'OR (TIP_Effective_From_Date_To_Show__c <= '  + system.now().format('yyyy-MM-dd') +' AND TIP_Effective_To_Date__c >= '  + system.now().format('yyyy-MM-dd') +' AND TIP_Status__c <> \''+TIP_Utils.BIN_RANGE_STATUS_ACTIVE+'\' ))) '
+		+' OR (TIP_Effective_To_Date__c = NULL AND TIP_Effective_From_Date_To_Show__c <= '  + system.now().format('yyyy-MM-dd') +' ))';
+
+
+	public final static String QUERY_PRODUCT_CONFIGS = 'SELECT ID, TIP_Status__c, TIP_Effective_From_Date_To_Show__c, TIP_Effective_To_Date__c FROM TIP_Pay_Prov_Prod_Country_Config__c WHERE TIP_Product__r.PP_status__c = \''+TIP_Utils.PARTNER_PRODUCT_STATUS_ACTIVE+ '\' AND ( '
+			+    '(TIP_Effective_From_Date_To_Show__c > '  + system.now().format('yyyy-MM-dd') +' AND TIP_Status__c <> \''+ TIP_Utils.PARTNER_PRODUCT_CONFIG_STATUS_IN_PROGRESS +'\' ) '
 			+ 'OR (TIP_Effective_To_Date__c < '  + system.now().format('yyyy-MM-dd') +' AND TIP_Status__c <> \''+ TIP_Utils.PARTNER_PRODUCT_CONFIG_STATUS_INACTIVE +'\' ) '
-			+ 'OR (TIP_Effective_From_Date__c <= '  + system.now().format('yyyy-MM-dd') +' AND TIP_Effective_To_Date__c >= '  + system.now().format('yyyy-MM-dd') +' AND TIP_Status__c <> \''+TIP_Utils.PARTNER_PRODUCT_CONFIG_STATUS_ACTIVE+'\' ))';
+			+ 'OR (TIP_Effective_From_Date_To_Show__c <= '  + system.now().format('yyyy-MM-dd') +' AND TIP_Effective_To_Date__c >= '  + system.now().format('yyyy-MM-dd') +' AND TIP_Status__c <> \''+TIP_Utils.PARTNER_PRODUCT_CONFIG_STATUS_ACTIVE+'\' ))';
 
 
 
@@ -142,7 +151,7 @@ global class BatchActivateRecordsByDate implements  Database.Batchable<sObject>,
 		
 	global void finish(Database.BatchableContext BC) {
 
-		update regsToUpdate; 
+		Database.update(regsToUpdate, false); 
 		system.debug('##type: ' + sObjectType);
 		system.debug('##regsToUpdate: ' + regsToUpdate);
 		

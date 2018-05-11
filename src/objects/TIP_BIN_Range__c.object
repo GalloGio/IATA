@@ -53,6 +53,16 @@
     <enableSharing>true</enableSharing>
     <enableStreamingApi>true</enableStreamingApi>
     <fields>
+        <fullName>TIP_Effective_From_Date_To_Show__c</fullName>
+        <externalId>false</externalId>
+        <formula>IF(ISNULL(TIP_Effective_From_Date__c ),  TIP_Payment_Provider_Product__r.PP_Effective_from_Date__c , TIP_Effective_From_Date__c)</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>Effective From Date To Show</label>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Date</type>
+    </fields>
+    <fields>
         <fullName>TIP_Effective_From_Date__c</fullName>
         <externalId>false</externalId>
         <label>Effective From Date</label>
