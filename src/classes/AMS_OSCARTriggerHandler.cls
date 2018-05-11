@@ -3501,6 +3501,19 @@ public class AMS_OSCARTriggerHandler {
 
             }
 
+            if(oscar.Process__c == AMS_Utils.NGCORRECTION && oscar.STEP6__c == AMS_Utils.PASSED && ( oscar.STEP6__c != oldOscars.get(oscar.id).STEP6__c)){
+
+                for(Id accId: oscarAccountsMap.get(oscar.Id)){
+
+                    Account acct = new Account(Id = accId);
+
+                    if(oscar.Is_PCI_compliant__c == 'Corporate Card'){
+                        acct.ANG_PCI_compliance_expiry_date__c = Date.newInstance(2099, 12, 31);
+                        accountsToUpdate.add(acct);
+                    }
+                }
+            }
+
             if(oscar.Is_PCI_compliant__c <> 'Corporate Card' && oscar.Is_PCI_compliant__c <> 'Nil CC'){ //NEWGEN-3214
                 
                 String changeCodeName = oscar.Is_PCI_compliant__c == 'No' ? 'CCA' : 'CCR';
