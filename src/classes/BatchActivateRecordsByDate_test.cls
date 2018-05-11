@@ -31,13 +31,13 @@ public class BatchActivateRecordsByDate_test {
 		
 		Partner_products__c prod;
 		//ACTIVE
-		prod = createProduct('prod1 active', '11', parent, System.today()-5,System.today()+5);
+		prod = createProduct('prod1 active', '1111', parent, System.today()-5,System.today()+5);
 
 		//INACTIVE
-		createProduct('prod2 active', '22', parent, System.today()-20,System.today()-10);
+		createProduct('prod2 active', '2222', parent, System.today()-20,System.today()-10);
 		
 		//IN PROGRESS
-		createProduct('prod3 active', '33', parent, System.today()+10,System.today()+20);
+		createProduct('prod3 active', '3333', parent, System.today()+10,System.today()+20);
 
 		
 
@@ -139,13 +139,6 @@ public class BatchActivateRecordsByDate_test {
 		System.assertEquals(1, [select count() from Partner_products__c where PP_status__c = :TIP_UTils.PARTNER_PRODUCT_STATUS_INACTIVE ]);
 		System.assertEquals(1, [select count() from Partner_products__c where PP_status__c = :TIP_UTils.PARTNER_PRODUCT_STATUS_IN_PROGRESS ]);
 
-
-		/* actualy would be nonsense to test the following values because there are already 
-		   workflows setting the currect status when creating and updating Bin Ranges and Product Configurations. 
-		   It wouldn't be the batch setting currectly the status for this records, it would be the workflows instead.
-
-		   The workflows only work when the records are created or updated. The batch is for checking the status everyday  
-		
 		//test Bin Ranges
 		System.assertEquals(1, [select count() from TIP_BIN_Range__c where TIP_Status__c = :TIP_UTils.BIN_RANGE_STATUS_ACTIVE ]);
 		System.assertEquals(1, [select count() from TIP_BIN_Range__c where TIP_Status__c = :TIP_UTils.BIN_RANGE_STATUS_INACTIVE ]);
@@ -155,7 +148,7 @@ public class BatchActivateRecordsByDate_test {
 		System.assertEquals(1, [select count() from TIP_Pay_Prov_Prod_Country_Config__c where TIP_Status__c = :TIP_UTils.PARTNER_PRODUCT_CONFIG_STATUS_ACTIVE ]);
 		System.assertEquals(1, [select count() from TIP_Pay_Prov_Prod_Country_Config__c where TIP_Status__c = :TIP_UTils.PARTNER_PRODUCT_CONFIG_STATUS_INACTIVE ]);
 		System.assertEquals(1, [select count() from TIP_Pay_Prov_Prod_Country_Config__c where TIP_Status__c = :TIP_UTils.PARTNER_PRODUCT_CONFIG_STATUS_IN_PROGRESS ]);
-		*/
+		
 
 	}
 
