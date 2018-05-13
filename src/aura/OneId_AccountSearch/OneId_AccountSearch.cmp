@@ -1,0 +1,104 @@
+<aura:component implements="flexipage:availableForAllPageTypes,forceCommunity:availableForAllPageTypes" controller="OneId_AccountSearch">
+    
+    <aura:attribute type="Account" name="account" required="true"/>
+    <aura:attribute name="disabled" type="Boolean" access="public" default="false"/>
+    
+    <aura:attribute type="String" name="customerType" required="true"/>
+    <aura:attribute type="String[]" name="fieldLabels" required="true" description="Labels for the result table. Must have the same order as the field names"/>
+    <aura:attribute type="String[]" name="fieldNames" required="true" description="API Names for the result table. Must have the same order as the field labels"/>
+    <aura:attribute type="String[]" name="searchFields" default="['Name']" description="Fields where the search for the input will be done. Will be added as OR on the query"/>
+    <aura:attribute type="Map" name="filters" default="{}" description="Filters to search the account"/>
+    
+    <aura:attribute type="Boolean" name="searched" default="false"/>
+    <aura:attribute type="String" name="userInput" access="private"/>
+    <aura:attribute type="Boolean" name="isValid" default="false" access="private"/>
+    
+    <aura:attribute name="accounts" type="Account[]" access="private"/>
+    <aura:attribute type="Integer" name="totalResult" access="private" />
+    
+    <aura:handler name="change" value="{!v.customerType}" action="{!c.reset}"/>
+    <aura:handler name="change" value="{!v.searchFields}" action="{!c.reset}"/>
+    <aura:handler name="change" value="{!v.filters}" action="{!c.reset}"/>
+    
+    <div class="slds-combobox_container">
+        <div aura:id="results" class="slds-combobox slds-dropdown-trigger_click" aria-expanded="true" aria-haspopup="listbox" role="combobox">
+            
+            <div class="slds-combobox__form-element slds-input-has-icon slds-input-has-icon_right" role="none">
+                <ui:inputText value="{!v.userInput}" updateOn="keyup" keyup="{!c.search}" class="slds-input slds-combobox__input" disabled="{!v.disabled}" />
+                <span class="slds-icon_container slds-icon-utility-search slds-input__icon slds-input__icon_right">
+                    <lightning:icon iconName="utility:search" size="x-small"/>
+                </span>
+            </div>
+            
+            <div id="results" role="listbox">
+                
+                <ul class="slds-dropdown slds-dropdown_fluid slds-listbox slds-listbox_vertical" role="presentation">
+                    <aura:if isTrue="{!$Browser.isPhone}">
+                        
+                        <aura:iteration items="{!v.accounts}" var="a" indexVar="i">
+  							<li role="presentation" class="slds-listbox__item">
+		                        <article class="slds-card slds-listbox__option slds-listbox__option_plain" onclick="{!c.suggestionSelected}" data-value="{!a.Name}" data-row-index="{!i}" >
+		                            <div class="slds-card__body slds-card__body_inner slds-grid slds-wrap">
+		                                    <div class="slds-col slds-size_1-of-2">
+		                                        <aura:iteration items="{!v.fieldLabels}" var="name">
+		                                            <div>{!name}</div>
+		                                        </aura:iteration>
+		                                    </div>
+		                                    <div class="slds-col slds-size_1-of-2">
+		                                        <div>{!a.Name}&nbsp;</div>
+		                                        <div>{!a.BillingStreet}&nbsp;</div>
+		                                        
+		                                        <aura:if isTrue="{!v.customerType == 'Airline'}">
+		                                        	<div>{!a.IATA_ISO_Country__r.Name}&nbsp;</div>
+		                                            <div>{!a.Airline_designator__c}&nbsp;</div>
+		                                        </aura:if>
+		                                        
+		                                        <aura:if isTrue="{!v.customerType == 'Agency' || v.customerType == 'Airline'}">
+		                                            <div>{!a.IATACode__c}&nbsp;</div>
+		                                        </aura:if>
+		                                    </div>
+		                            </div>
+		                        </article>
+		                    </li>
+                        </aura:iteration>
+                        
+                        <aura:set attribute="else">
+                            <li role="presentation" class="slds-listbox__item slds-grid headerRow">
+                                <aura:iteration items="{!v.fieldLabels}" var="name">
+                                    <div class="{!'slds-size_1-of-'+v.fieldLabels.length}">
+                                        {!name}
+                                    </div>
+                                </aura:iteration>
+                            </li>
+                            <!-- TODO: access fields dynamcally -->
+                            <aura:iteration items="{!v.accounts}" var="a" indexVar="i">
+                                <li role="presentation" class="slds-listbox__item" onclick="{!c.suggestionSelected}" data-value="{!a.Name}" data-row-index="{!i}">
+                                	<div class="slds-listbox__option slds-listbox__option_plain slds-grid">
+	                                    <div class="{!'slds-size_1-of-'+v.fieldLabels.length}">{!a.Name}</div>
+	                                    <div class="{!'slds-size_1-of-'+v.fieldLabels.length}">{!a.BillingStreet}</div>
+	                                    <div class="{!'slds-size_1-of-'+v.fieldLabels.length}">{!a.IATA_ISO_Country__r.Name}</div>
+	                                    
+	                                    <aura:if isTrue="{!v.customerType == 'Airline'}">
+	                                        <div class="{!'slds-size_1-of-'+v.fieldLabels.length}">{!a.Airline_designator__c}</div>
+	                                    </aura:if>
+	                                    
+	                                    <aura:if isTrue="{!v.customerType == 'Agency' || v.customerType == 'Airline'}">
+	                                        <div class="{!'slds-size_1-of-'+v.fieldLabels.length}">{!a.IATACode__c}</div>
+	                                    </aura:if>
+	                                </div>
+                                </li>
+                            </aura:iteration>
+                        </aura:set>
+                    </aura:if>
+                    
+                    <aura:if isTrue="{!v.accounts.length &lt; v.totalResult}">
+                        <li role="presentation" class="slds-listbox__item lastRow">
+                            First 20 results shown over {!v.totalResult}. Please refine your search
+                        </li>
+                    </aura:if>
+                </ul>        	
+            </div>
+            
+        </div>
+    </div>
+</aura:component>

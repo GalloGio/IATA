@@ -1,0 +1,14 @@
+.THIS li.form-element__help {
+	padding-top: 0px; 
+}
+
+.THIS ul.uiInputDefaultError {
+	clear: left;
+}
+
+.THIS .jobHelp {
+	padding-top: 25px;
+}
+.THIS .showBusinessPhoneError {
+	visibility: hidden;
+}

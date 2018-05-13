@@ -1,0 +1,48 @@
+<aura:component implements="flexipage:availableForAllPageTypes,forceCommunity:availableForAllPageTypes,force:hasRecordId,force:appHostable" access="global" controller="OneId_AddressDoctor">
+    
+    <aura:registerEvent name="addressSelected" type="c:OneId_AddressSelected_EVT"/>
+    
+    <!-- INTPUT -->
+    <aura:attribute name="inputValue" type="String"/>
+    <aura:attribute name="countryCode" type="String" access="public"/>
+    <aura:attribute name="type" type="String" access="public"/>
+    <aura:attribute name="disabled" type="Boolean" access="public" default="false"/>
+    
+    <!-- INTERNAL ATTRIBUTES -->
+    <aura:attribute name="response" type="Object[]" access="private"/>
+    <aura:attribute name="isValid" type="Boolean" default="false" access="private"/>
+    
+    <!-- BODY -->
+    <div class="slds-combobox_container slds-has-inline-listbox slds-has-input-focus">
+        <div class="slds-combobox  slds-dropdown-trigger_click" aura:id="results" aria-expanded="true" aria-haspopup="listbox" role="combobox">
+            <div class="slds-combobox__form-element slds-input-has-icon slds-input-has-icon_right" role="none">
+                <span class="slds-icon_container slds-icon-utility-check slds-input__icon slds-input__icon_right">
+                    <aura:if isTrue="{!v.isValid}">
+                        <lightning:icon iconName="utility:check" size="xx-small" class="indicator valid"/>
+                        <aura:set attribute="else">
+                            <lightning:icon iconName="utility:close" size="xx-small" variant="error" class="indicator"/>
+                        </aura:set>
+                    </aura:if>
+                </span>
+
+                <ui:inputText value="{!v.inputValue}" updateOn="keyup" keyup="{!c.search}" class="slds-input slds-combobox__input" disabled="{!v.disabled}" />
+            </div>
+            
+            <div id="listbox-unique-id" role="listbox">
+                <ul class="slds-listbox slds-listbox_vertical slds-dropdown slds-dropdown_fluid suggestionBox" role="presentation">
+                    
+                    <aura:iteration items="{!v.response}" var="address" indexVar="i">
+                        <li role="presentation" class="slds-listbox__item">
+                            <div class="slds-media slds-listbox__option slds-listbox__option_entity slds-listbox__option_has-meta" role="option" >                                        
+                                <span class="slds-media__body">
+                                    <span class="slds-listbox__option-text slds-listbox__option-text_entity suggestionText" onclick="{!c.suggestionSelected}" data-value="{!i}" title="{!address.addressComplete}">{!address.addressComplete}</span>
+                                </span>
+                            </div>
+                        </li>
+                    </aura:iteration>
+                    
+                </ul>
+            </div>
+        </div>
+    </div>
+</aura:component>

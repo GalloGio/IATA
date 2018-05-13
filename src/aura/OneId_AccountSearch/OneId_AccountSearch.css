@@ -1,0 +1,9 @@
+.THIS .headerRow {
+    background-color: #0E4277;
+    font-weight: bold;
+    color:white;
+}
+
+.THIS .slds-listbox__option:hover{
+    background-color: #d2d2d2;
+}
