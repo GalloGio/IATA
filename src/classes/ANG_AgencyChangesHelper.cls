@@ -253,6 +253,19 @@ public with sharing class ANG_AgencyChangesHelper {
 						changesContainer.changeCodesToCreateDef.add(changeCode);	
 					}
 
+					if(oscar.Is_PCI_compliant__c == 'Corporate Card'){
+                    	Date dt = Date.newInstance(2099, 12, 31);
+
+                    	for (Id accId : accountIdsInvolvedSet){
+
+	                    	if (changesContainer.accountsMap.get(accId) == null){
+	                    		changesContainer.addAccount(new Account(Id = accId, ANG_PCI_compliance_expiry_date__c = dt));
+	                    	}else{
+	                    		changesContainer.accountsMap.get(accId).ANG_PCI_compliance_expiry_date__c = dt;
+	                    	}
+	                    }
+                    }
+
 				}
 
 			}else if (oldOSCAR.RPM_Approval__c <> AMS_Utils.AUTH_APPROVAL && oscar.RPM_Approval__c == AMS_Utils.AUTH_APPROVAL) {
