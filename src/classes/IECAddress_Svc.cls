@@ -262,7 +262,6 @@ public class IECAddress_Svc
 								                                 , Payment_Term__c = response.SAP_SoldTo.PaymentTerms, Price_Group__c = response.SAP_SoldTo.PriceGroup));
 								}
 
-								System.debug('angielaz, inside SoldTo-->lstAccountToUpdate: ' + lstAccountToUpdate);
 
 							}
 							else if (forPartnerType == SAPPartnerType.BILL)
