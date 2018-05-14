@@ -216,7 +216,7 @@
         <fullName>PP_Interchange_Fee__c</fullName>
         <externalId>false</externalId>
         <inlineHelpText>Enter details about Interchange Fee (s)</inlineHelpText>
-        <label>Interchange Fee (Default)</label>
+        <label>Interchange Fee</label>
         <length>255</length>
         <required>false</required>
         <trackTrending>false</trackTrending>
