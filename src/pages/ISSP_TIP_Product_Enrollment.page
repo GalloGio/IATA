@@ -174,20 +174,18 @@
 
                 function validateToSubmit() {                 
                     var hasErrors=false;
-                
-
-                    $("input.mandFld").each(function(index){
-                        if($(this).val() =='' ){
-                            if($(this).next('.errorMsg').val()==undefined)
-                                $(this).after('<div class="errorMsg">{!$Label.IEC_Required_Field_Error_Msg}</div>');
+                    $("input.mandFld, select.mandFld").each(function(index){
+                        console.log($(this).val());
+                         if($(this).val() ==''  || $(this).val() ==null){
+                            if($(this).next().next('.errorMsg').val()==undefined)
+                                $(this).next().after('<div class="errorMsg">{!$Label.IEC_Required_Field_Error_Msg}</div>');
                             hasErrors=true;
-                            $('[id$="rangeStart"]').addClass("placeholder-active");
                         }else{
-                            clearErrorElement(this);
+                            clearErrorElement($(this).next());
                         } 
                     });
 
-                    $("input.mandFldcb").each(function(index){
+                    $(".mandFldcb").each(function(index){
                         if($(this).find($("input[type='radio']:checked")).length ==0 ){
                             if($(this).next('.errorMsg').val()==undefined)
                                 $(this).after('<div class="errorMsg">{!$Label.IEC_Required_Field_Error_Msg}</div>');
@@ -237,92 +235,103 @@
                                             <apex:outputPanel style="display: -webkit-inline-box;">
                                                 <apex:inputField value="{!newpp.name}" required="true" rendered="{!editMode}" id="nameField" onchange="enableBinRangeBtn();"/>
                                                 <apex:outputField value="{!newpp.name}" rendered="{!!editMode}"/>    
-                                                <apex:image value="/img/msg_icons/info16.png" style="padding: 4px" styleClass="selector" title="{!$label.ISSP_Portal_Product_Name_Label}" html-data-placement="top" html-data-toggle="tooltip"/>
+                                                <apex:image value="/img/msg_icons/info16.png" style="padding: 4px" styleClass="selector" title="{!$Label.ISSP_Portal_Product_Name_Label}" html-data-placement="top" html-data-toggle="tooltip"/>
                                             </apex:outputPanel>
                                         </apex:pageBlockSectionItem>
                                         <apex:pageBlockSectionItem labelStyle="width:26%" labelStyleClass="agencyLegalDetailsComponent" dataStyleClass="agencyLegalDetailsComponent">
-                                            <apex:outputLabel html-class="mandFld" value="{!$ObjectType.Partner_products__c.fields.PP_Settlement_terms__c.Label}"/>
+                                            <apex:outputLabel html-class="mandFld" value="{!$ObjectType.Partner_products__c.fields.PP_Settlement_Terms__c.Label}"/>
                                             <apex:outputPanel style="display: flex;">                                        
-                                                <apex:inputField html-class="mandFld" value="{!newpp.PP_Settlement_terms__c}" rendered="{!editMode}"/>
-                                                <apex:outputField value="{!newpp.PP_Settlement_terms__c}" rendered="{!!editMode}"/>
-                                                <apex:image value="/img/msg_icons/info16.png" style="padding: 4px" styleClass="selector" title="{!$label.ISSP_Portal_Product_Settlement_Terms_Label}" html-data-placement="top" html-data-toggle="tooltip"/>
-
+                                                <apex:outputPanel >                                    
+                                                    <apex:inputField html-class="mandFld" value="{!newpp.PP_Settlement_Terms__c}" rendered="{!editMode}"/>
+                                                    <apex:outputField value="{!newpp.PP_Settlement_Terms__c}" rendered="{!!editMode}"/>
+                                                    <apex:image value="/img/msg_icons/info16.png" style="padding: 4px" styleClass="selector" title="{!$Label.ISSP_Portal_Product_Settlement_Terms_Label}" html-data-placement="top" html-data-toggle="tooltip"/>
+                                                </apex:outputPanel>  
                                             </apex:outputPanel>
                                         </apex:pageBlockSectionItem>
                                         <apex:pageBlockSectionItem labelStyle="width:26%" labelStyleClass="agencyLegalDetailsComponent" dataStyleClass="agencyLegalDetailsComponent" >
-                                            <apex:outputLabel value="{!$ObjectType.Partner_products__c.fields.PP_Issuer_name__c.Label}"/>
+                                            <apex:outputLabel value="{!$ObjectType.Partner_products__c.fields.PP_Issuer_Name__c.Label}"/>
                                             <apex:outputPanel style="display: -webkit-inline-box;">                                        
-                                                <apex:inputField value="{!newpp.PP_Issuer_name__c}" rendered="{!editMode}"/>
-                                                <apex:outputField value="{!newpp.PP_Issuer_name__c}" rendered="{!!editMode}"/>
-                                                <apex:image value="/img/msg_icons/info16.png" style="padding: 4px" styleClass="selector" title="{!$label.ISSP_Portal_Product_Issuer_Name_Label}" html-data-placement="top" html-data-toggle="tooltip"/>
+                                                <apex:inputField value="{!newpp.PP_Issuer_Name__c}" rendered="{!editMode}"/>
+                                                <apex:outputField value="{!newpp.PP_Issuer_Name__c}" rendered="{!!editMode}"/>
+                                                <apex:image value="/img/msg_icons/info16.png" style="padding: 4px" styleClass="selector" title="{!$Label.ISSP_Portal_Product_Issuer_Name_Label}" html-data-placement="top" html-data-toggle="tooltip"/>
                                             </apex:outputPanel>
                                         </apex:pageBlockSectionItem>
                                         <apex:pageBlockSectionItem labelStyle="width:26%" labelStyleClass="agencyLegalDetailsComponent" dataStyleClass="agencyLegalDetailsComponent" >
                                             <apex:outputLabel html-class="mandFld" value="{!$ObjectType.Partner_products__c.fields.is_PCI_DSS_required__c.Label}"/>
                                             <apex:outputPanel style="display: flex;justify-content: space-between;">
+                                                <apex:outputPanel >
                                                 <apex:selectRadio html-class="mandFldcb" style="width:100px;margin-left:20px;" value="{!newpp.is_PCI_DSS_required__c}" readonly="{!!editMode}">
                                                     <apex:selectOption itemValue="{!UPPER($Label.ISSP_Yes)}" itemLabel="{!$Label.ISSP_Yes}" itemDisabled="{!!editMode}"/>
                                                     <apex:selectOption itemValue="{!UPPER($Label.ISSP_No)}" itemLabel="{!$Label.ISSP_No}"  itemDisabled="{!!editMode}"/>
                                                 </apex:selectRadio>
-                                                <apex:image value="/img/msg_icons/info16.png" style="padding: 4px" styleClass="selector" title="{!$label.ISSP_Portal_Product_is_Subject_to_PCI_Label}" html-data-placement="top" html-data-toggle="tooltip"/>
+                                                </apex:outputPanel>                                              
+                                                    <apex:image value="/img/msg_icons/info16.png" style="padding: 4px;max-width: 26px;max-height: 25px;" styleClass="selector" title="{!$Label.ISSP_Portal_Product_is_Subject_to_PCI_Label}" html-data-placement="top" html-data-toggle="tooltip"/>
                                         </apex:outputPanel>
                                         </apex:pageBlockSectionItem>
                                         <apex:pageBlockSectionItem labelStyle="width:26%" labelStyleClass="agencyLegalDetailsComponent" dataStyleClass="agencyLegalDetailsComponent" >
-                                            <apex:outputLabel value="{!$ObjectType.Partner_products__c.fields.PP_Payment_Product_Network_type__c.Label}"/>
-                                            <apex:outputPanel style="display: -webkit-inline-box;">
-                                                <apex:outputField value="{!newpp.PP_Payment_Product_Network_type__c}"/>
-                                                <apex:image value="/img/msg_icons/info16.png" style="padding: 4px; padding-left: 110px" styleClass="selector" title="{!$label.ISSP_Portal_Product_Type_Label}" html-data-placement="top" html-data-toggle="tooltip"/>
+                                           <apex:outputLabel value="{!$ObjectType.Partner_products__c.fields.PP_Banking_license__c.Label}"/>
+                                           <apex:outputPanel style="display: flex;">                                        
+                                                <apex:inputField value="{!newpp.PP_Banking_license__c}" rendered="{!editMode}"/>
+                                                <apex:outputField value="{!newpp.PP_Banking_license__c}" rendered="{!!editMode}"/>
+                                                <apex:image value="/img/msg_icons/info16.png" style="padding: 4px" styleClass="selector" title="{!$Label.ISSP_Portal_Product_License_Label}" html-data-placement="top" html-data-toggle="tooltip"/>
                                             </apex:outputPanel>
                                         </apex:pageBlockSectionItem>
                                         <apex:pageBlockSectionItem labelStyle="width:26%" labelStyleClass="agencyLegalDetailsComponent" dataStyleClass="agencyLegalDetailsComponent" >
-                                            <apex:outputLabel html-class="mandFld" value="{!$ObjectType.Partner_products__c.fields.PP_Chargeback_airlines__c.Label}"/>
+                                            <apex:outputLabel html-class="mandFld" value="{!$ObjectType.Partner_products__c.fields.PP_Chargeback_Airlines__c.Label}"/>
                                             <apex:outputPanel style="display: flex;justify-content: space-between;">
-                                                <apex:selectRadio html-class="mandFldcb" style="width:100px;margin-left:20px;" value="{!newpp.PP_Chargeback_airlines__c}"  readonly="{!!editMode}">
+                                                <apex:selectRadio html-class="mandFldcb" style="width:100px;margin-left:20px;" value="{!newpp.PP_Chargeback_Airlines__c}"  readonly="{!!editMode}">
                                                     <apex:selectOption itemValue="Yes" itemLabel="{!$Label.ISSP_Yes}" itemDisabled="{!!editMode}" />
                                                     <apex:selectOption itemValue="No" itemLabel="{!$Label.ISSP_No}"  itemDisabled="{!!editMode}"/>
                                                 </apex:selectRadio>  
-                                                <apex:image value="/img/msg_icons/info16.png" style="padding: 4px" styleClass="selector" title="{!$label.ISSP_Portal_Product_Chargeback_right_Label}" html-data-placement="top" html-data-toggle="tooltip"/>
+                                                <apex:image value="/img/msg_icons/info16.png" style="padding: 4px;max-width: 26px;max-height: 25px;" styleClass="selector" title="{!$Label.ISSP_Portal_Product_Chargeback_right_Label}" html-data-placement="top" html-data-toggle="tooltip"/>
                                             </apex:outputPanel>                                        
                                         </apex:pageBlockSectionItem>
                                         <apex:pageBlockSectionItem labelStyle="width:26%" labelStyleClass="agencyLegalDetailsComponent" dataStyleClass="agencyLegalDetailsComponent" >
-                                            <apex:outputLabel value="{!$ObjectType.Partner_products__c.fields.PP_Pay_in_model__c.Label}" html-class="mandFld"/>
+                                            <apex:outputLabel value="{!$ObjectType.Partner_products__c.fields.PP_Pay_in_Model__c.Label}" html-class="mandFld"/>
                                             <apex:outputPanel style="display: -webkit-inline-box;">                                        
-                                                <apex:inputField  value="{!newpp.PP_Pay_in_model__c}" rendered="{!editMode}" html-class="mandFld" styleClass="sectionItem" />
-                                                <apex:outputField value="{!newpp.PP_Pay_in_model__c}" rendered="{!!editMode}" />
-                                                <apex:image value="/img/msg_icons/info16.png" style="padding: 4px" styleClass="selector" title="{!$label.ISSP_Portal_Product_Pay_in_Model_Label}" html-data-placement="top" html-data-toggle="tooltip"/>
+                                                <apex:outputPanel >                                   
+                                                    <apex:inputField value="{!newpp.PP_Pay_in_Model__c}" rendered="{!editMode}" html-class="mandFld" styleClass="sectionItem" />
+                                                    <apex:outputField value="{!newpp.PP_Pay_in_Model__c}" rendered="{!!editMode}" />
+                                                <apex:image value="/img/msg_icons/info16.png" style="padding: 4px" styleClass="selector" title="{!$Label.ISSP_Portal_Product_Pay_in_Model_Label}" html-data-placement="top" html-data-toggle="tooltip"/>
+                                                </apex:outputPanel> 
                                             </apex:outputPanel>
                                         </apex:pageBlockSectionItem>
                                         <apex:pageBlockSectionItem labelStyle="width:26%" labelStyleClass="agencyLegalDetailsComponent" dataStyleClass="agencyLegalDetailsComponent" >
                                             <apex:outputLabel value="{!$ObjectType.Partner_products__c.fields.PP_Chargeback_airlines_duration__c.Label}" html-class="mandFld"/>
                                             <apex:outputPanel style="display: flex;">                                        
+                                                <apex:outputPanel >                                   
                                                 <apex:inputField html-class="mandFld" value="{!newpp.PP_Chargeback_airlines_duration__c}" rendered="{!editMode}"/>
                                                 <apex:outputField value="{!newpp.PP_Chargeback_airlines_duration__c}" rendered="{!!editMode}"/>
-                                                <apex:image value="/img/msg_icons/info16.png" style="padding: 4px" styleClass="selector" title="{!$label.ISSP_Portal_Product_Maximum_Chargeback_Timeframe_Label}" html-data-placement="top" html-data-toggle="tooltip"/>
+                                                    <apex:image value="/img/msg_icons/info16.png" style="padding: 4px" styleClass="selector" title="{!$Label.ISSP_Portal_Product_Maximum_Chargeback_Timeframe_Label}" html-data-placement="top" html-data-toggle="tooltip"/>
+                                                </apex:outputPanel> 
                                             </apex:outputPanel>                                        
                                         </apex:pageBlockSectionItem>
                                         <apex:pageBlockSectionItem labelStyle="width:26%" labelStyleClass="agencyLegalDetailsComponent" dataStyleClass="agencyLegalDetailsComponent" >
                                             <apex:outputLabel value="{!$ObjectType.Partner_products__c.fields.PP_Category__c.Label}" html-class="mandFld"/>
                                             <apex:outputPanel style="display: -webkit-inline-box;">                                        
+                                                <apex:outputPanel >                                    
                                                 <apex:inputField value="{!newpp.PP_Category__c}" html-class="mandFld" rendered="{!editMode}" styleClass="sectionItem"/>
                                                 <apex:outputField value="{!newpp.PP_Category__c}" rendered="{!!editMode}"/>
-                                                <apex:image value="/img/msg_icons/info16.png" style="padding: 4px" styleClass="selector" title="{!$label.ISSP_Portal_Product_Category_Label}" html-data-placement="top" html-data-toggle="tooltip"/>
+                                                    <apex:image value="/img/msg_icons/info16.png" style="padding: 4px" styleClass="selector" title="{!$Label.ISSP_Portal_Product_Category_Label}" html-data-placement="top" html-data-toggle="tooltip"/>
+                                                </apex:outputPanel> 
                                             </apex:outputPanel>
                                         </apex:pageBlockSectionItem>
                                         <apex:pageBlockSectionItem labelStyle="width:26%" labelStyleClass="agencyLegalDetailsComponent" dataStyleClass="agencyLegalDetailsComponent" >
-                                            <apex:outputLabel value="{!$ObjectType.Partner_products__c.fields.PP_Banking_license__c.Label}"/>
-                                            <apex:outputPanel style="display: flex;">                                        
-                                                <apex:inputField value="{!newpp.PP_Banking_license__c}" rendered="{!editMode}"/>
-                                                <apex:outputField value="{!newpp.PP_Banking_license__c}" rendered="{!!editMode}"/>
-                                                <apex:image value="/img/msg_icons/info16.png" style="padding: 4px" styleClass="selector" title="{!$label.ISSP_Portal_Product_License_Label}" html-data-placement="top" html-data-toggle="tooltip"/>
+                                            <apex:outputLabel value="{!$ObjectType.Partner_products__c.fields.PP_Payment_Product_Network_type__c.Label}"/>
+                                            <apex:outputPanel style="display: -webkit-inline-box;">
+                                                <apex:outputField value="{!newpp.PP_Payment_Product_Network_type__c}"/>
+                                                <apex:image value="/img/msg_icons/info16.png" style="padding: 4px" styleClass="selector" title="{!$Label.ISSP_Portal_Product_Type_Label}" html-data-placement="top" html-data-toggle="tooltip"/>
                                             </apex:outputPanel>
                                         </apex:pageBlockSectionItem>
                                         <apex:pageBlockSectionItem labelStyle="width:26%" labelStyleClass="agencyLegalDetailsComponent" dataStyleClass="agencyLegalDetailsComponent" >
-                                            <apex:outputLabel value="{!$ObjectType.Partner_products__c.fields.PP_Payment_Network__c.Label}"/>
+                                            <apex:outputLabel value="{!$ObjectType.Partner_products__c.fields.PP_Payment_Network__c.Label}" html-class="mandFld"/>
                                             <apex:outputPanel style="display: -webkit-inline-box;">                                        
                                                 <apex:actionFunction name="paymentNetworkChange" oncomplete="enableBinRangeBtn();" action="{!changePaymentNetwork}" reRender="binTable"/>
-                                                <apex:inputField id="paymentNet" value="{!newpp.PP_Payment_Network__c}" onchange="paymentNetworkChange();" rendered="{!editMode}" styleClass="sectionItem"/>
+                                                <apex:outputPanel >
+                                                    <apex:inputField id="paymentNet" html-class="mandFld" value="{!newpp.PP_Payment_Network__c}" onchange="paymentNetworkChange();" rendered="{!editMode}" styleClass="sectionItem"/>
                                                 <apex:outputField value="{!newpp.PP_Payment_Network__c}" rendered="{!!editMode}"/>
-                                                <apex:image value="/img/msg_icons/info16.png" style="padding: 4px" styleClass="selector" title="{!$label.ISSP_Portal_Product_Payment_Network_Label}" html-data-placement="top" html-data-toggle="tooltip"/>
+                                                    <apex:image value="/img/msg_icons/info16.png" style="padding: 4px" styleClass="selector" title="{!$Label.ISSP_Portal_Product_Payment_Network_Label}" html-data-placement="top" html-data-toggle="tooltip"/>
+                                                </apex:outputPanel>
                                             </apex:outputPanel>
                                         </apex:pageBlockSectionItem>
                                         <apex:pageBlockSectionItem labelStyle="width:26%" labelStyleClass="agencyLegalDetailsComponent" dataStyleClass="agencyLegalDetailsComponent" >
@@ -330,33 +339,37 @@
                                             <apex:outputPanel style="display: flex;">                                        
                                                 <apex:inputField value="{!newpp.PP_GDS_Integration__c}" rendered="{!editMode}"/>
                                                 <apex:outputField value="{!newpp.PP_GDS_Integration__c}" rendered="{!!editMode}"/>
-                                                <apex:image value="/img/msg_icons/info16.png" style="padding: 4px" styleClass="selector" title="{!$label.ISSP_Portal_Product_Integration_of_ATM_Label}" html-data-placement="top" html-data-toggle="tooltip"/>
+                                                <apex:image value="/img/msg_icons/info16.png" style="padding: 4px" styleClass="selector" title="{!$Label.ISSP_Portal_Product_Integration_of_ATM_Label}" html-data-placement="top" html-data-toggle="tooltip"/>
                                             </apex:outputPanel>
                                         </apex:pageBlockSectionItem>
                                         <apex:pageBlockSectionItem labelStyle="width:26%" labelStyleClass="agencyLegalDetailsComponent" dataStyleClass="agencyLegalDetailsComponent" >
                                             <apex:outputLabel value="{!$ObjectType.Partner_products__c.fields.PP_VAN_Type__c.Label}" html-class="mandFld"/>
                                             <apex:outputPanel style="display: -webkit-inline-box;">                                        
+                                                <apex:outputPanel >                                     
                                                 <apex:inputField value="{!newpp.PP_VAN_Type__c}" html-class="mandFld" rendered="{!editMode}" styleClass="sectionItem"/>
                                                 <apex:outputField value="{!newpp.PP_VAN_Type__c}" rendered="{!!editMode}"/>
-                                                <apex:image value="/img/msg_icons/info16.png" style="padding: 4px" styleClass="selector" title="{!$label.ISSP_Portal_Product_VAN_Type_Label}" html-data-placement="top" html-data-toggle="tooltip"/>
+                                                    <apex:image value="/img/msg_icons/info16.png" style="padding: 4px" styleClass="selector" title="{!$Label.ISSP_Portal_Product_VAN_Type_Label}" html-data-placement="top" html-data-toggle="tooltip"/>
+                                                </apex:outputPanel> 
                                             </apex:outputPanel>
                                         </apex:pageBlockSectionItem>
                                         <apex:pageBlockSectionItem labelStyle="width:26%" labelStyleClass="agencyLegalDetailsComponent" dataStyleClass="agencyLegalDetailsComponent" >
-                                            <apex:outputLabel value="{!$ObjectType.Partner_products__c.fields.PP_Interchange_fee__c.Label}"/>
+                                            <apex:outputLabel value="{!$ObjectType.Partner_products__c.fields.PP_Interchange_Fee__c.Label}"/>
                                             <apex:outputPanel style="display: flex;">                                        
-                                                <apex:inputField value="{!newpp.PP_Interchange_fee__c}" rendered="{!editMode}"/>
-                                                <apex:outputField value="{!newpp.PP_Interchange_fee__c}" rendered="{!!editMode}"/>
-                                                <apex:image value="/img/msg_icons/info16.png" style="padding: 4px" styleClass="selector" title="{!$label.ISSP_Portal_Product_Interchange_Fee_Label}" html-data-placement="top" html-data-toggle="tooltip"/>
+                                                <apex:inputField value="{!newpp.PP_Interchange_Fee__c}" rendered="{!editMode}"/>
+                                                <apex:outputField value="{!newpp.PP_Interchange_Fee__c}" rendered="{!!editMode}"/>
+                                                <apex:image value="/img/msg_icons/info16.png" style="padding: 4px" styleClass="selector" title="{!$Label.ISSP_Portal_Product_Interchange_Fee_Label}" html-data-placement="top" html-data-toggle="tooltip"/>
                                             </apex:outputPanel>
                                         </apex:pageBlockSectionItem>
                                         <apex:pageBlockSectionItem labelStyle="width:26%" labelStyleClass="agencyLegalDetailsComponent" dataStyleClass="agencyLegalDetailsComponent" >
-                                            <apex:outputLabel value="{!$ObjectType.Partner_products__c.fields.PP_Payment_guarantee__c.Label}" html-class="mandFld"/>
+                                            <apex:outputLabel value="{!$ObjectType.Partner_products__c.fields.PP_Payment_Guarantee__c.Label}" html-class="mandFld"/>
                                             <apex:outputPanel style="display: -webkit-inline-box;">                                        
-                                                <apex:selectList title="{!$Label.ISSP_TIP_HOLD_TO_MULTISELECT}" value="{!paymentGuaranteeVal}" size="{!paymentGuaranteeOptList.size+1}" multiselect="true" rendered="{!editMode}" html-class="mandFld" styleClass="sectionItem">
+                                                <apex:outputPanel >                                     
+                                                    <apex:selectList title="{!$Label.ISSP_TIP_HOLD_TO_MULTISELECT}" value="{!paymentGuaranteeVal}" size="{!paymentGuaranteeOptList.size+1}" multiselect="true" rendered="{!editMode}" styleClass="sectionItem mandFld">
                                                     <apex:selectOptions value="{!paymentGuaranteeOptList}"/>
                                                 </apex:selectList>
-                                                <apex:outputField value="{!newpp.PP_Payment_guarantee__c}" rendered="{!!editMode}"/>
-                                                <apex:image value="/img/msg_icons/info16.png" style="padding: 4px" styleClass="selector" title="{!$label.ISSP_Portal_Product_Airline_payment_guarantee_Label}" html-data-placement="top" html-data-toggle="tooltip"/>
+                                                <apex:outputField value="{!newpp.PP_Payment_Guarantee__c}" rendered="{!!editMode}"/>
+                                                <apex:image value="/img/msg_icons/info16.png" style="padding: 4px" styleClass="selector" title="{!$Label.ISSP_Portal_Product_Airline_payment_guarantee_Label}" html-data-placement="top" html-data-toggle="tooltip"/>
+                                                </apex:outputPanel> 
                                             </apex:outputPanel>
                                         </apex:pageBlockSectionItem>
                                         <apex:pageBlockSectionItem labelStyle="width:26%" labelStyleClass="agencyLegalDetailsComponent" dataStyleClass="agencyLegalDetailsComponent" >
@@ -364,17 +377,19 @@
                                             <apex:outputPanel style="display: flex;">                                        
                                                 <apex:inputField value="{!newpp.PP_Network_Fee__c}" rendered="{!editMode}"/>
                                                 <apex:outputField value="{!newpp.PP_Network_Fee__c}" rendered="{!!editMode}"/>
-                                                <apex:image value="/img/msg_icons/info16.png" style="padding: 4px" styleClass="selector" title="{!$label.ISSP_Portal_Product_Acquiring_network_Label}" html-data-placement="top" html-data-toggle="tooltip"/>
+                                                <apex:image value="/img/msg_icons/info16.png" style="padding: 4px" styleClass="selector" title="{!$Label.ISSP_Portal_Product_Acquiring_network_Label}" html-data-placement="top" html-data-toggle="tooltip"/>
                                             </apex:outputPanel>
                                         </apex:pageBlockSectionItem>
                                         <apex:pageBlockSectionItem labelStyle="width:26%" labelStyleClass="agencyLegalDetailsComponent" dataStyleClass="agencyLegalDetailsComponent" >
-                                            <apex:outputLabel value="{!$ObjectType.Partner_products__c.fields.PP_Accepted_transactions__c.Label}" html-class="mandFld"/>
+                                            <apex:outputLabel value="{!$ObjectType.Partner_products__c.fields.PP_Accepted_Transactions__c.Label}" html-class="mandFld"/>
                                             <apex:outputPanel style="display: -webkit-inline-box;">
-                                                <apex:selectList title="{!$Label.ISSP_TIP_HOLD_TO_MULTISELECT}" value="{!acceptedTransactionVal}" size="{!acceptedTransactionsOptList.size+1}" multiselect="true" rendered="{!editMode}" html-class="mandFld" styleClass="sectionItem">
+                                                <apex:outputPanel > 
+                                                    <apex:selectList title="{!$Label.ISSP_TIP_HOLD_TO_MULTISELECT}" value="{!acceptedTransactionVal}" size="{!acceptedTransactionsOptList.size+1}" multiselect="true" rendered="{!editMode}" styleClass="sectionItem mandFld">
                                                     <apex:selectOptions value="{!acceptedTransactionsOptList}"/>
                                                 </apex:selectList>
-                                                <apex:outputField value="{!newpp.PP_Accepted_transactions__c}" rendered="{!!editMode}"/>
-                                                <apex:image value="/img/msg_icons/info16.png" style="padding: 4px" styleClass="selector" title="{!$label.ISSP_Portal_Product_Accepted_Transactions_Label}" html-data-placement="top" html-data-toggle="tooltip"/>
+                                                    <apex:outputField value="{!newpp.PP_Accepted_Transactions__c}" rendered="{!!editMode}"/>
+                                                    <apex:image value="/img/msg_icons/info16.png" style="padding: 4px" styleClass="selector" title="{!$Label.ISSP_Portal_Product_Accepted_Transactions_Label}" html-data-placement="top" html-data-toggle="tooltip"/>
+                                                </apex:outputPanel> 
                                             </apex:outputPanel>
                                         </apex:pageBlockSectionItem>
                                         <apex:pageBlockSectionItem > </apex:pageBlockSectionItem>
