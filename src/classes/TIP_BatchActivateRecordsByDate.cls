@@ -1,4 +1,4 @@
-global class BatchActivateRecordsByDate implements  Database.Batchable<sObject>, Database.Stateful, Schedulable {
+global class TIP_BatchActivateRecordsByDate implements  Database.Batchable<sObject>, Database.Stateful, Schedulable {
 	
 	public static final Integer BATCH_SIZE = 200; 
 
@@ -118,7 +118,7 @@ global class BatchActivateRecordsByDate implements  Database.Batchable<sObject>,
 	Integer sObjectType;
 	List<sObject> regsToUpdate;
 	
-	global BatchActivateRecordsByDate(Integer chosenType) {
+	global TIP_BatchActivateRecordsByDate(Integer chosenType) {
 		this.sObjectType = chosenType;
 
 		if(sObjectType == PROVIDER_TYPE)             query = QUERY_PROVIDERS;
@@ -129,10 +129,10 @@ global class BatchActivateRecordsByDate implements  Database.Batchable<sObject>,
 	}
 
     public static id scheduleJob(Time runningTime){
-        BatchActivateRecordsByDate bat= new BatchActivateRecordsByDate(PROVIDER_TYPE);
+        TIP_BatchActivateRecordsByDate bat= new TIP_BatchActivateRecordsByDate(PROVIDER_TYPE);
         string format='ss mm HH * * ? *';
         string sch=Datetime.newInstance(system.Today(),runningTime).format(format);
-        return system.schedule('BatchActivateRecordsByDate for TIP Job '+sch, sch, bat);
+        return system.schedule('TIP_BatchActivateRecordsByDate for TIP Job '+sch, sch, bat);
     }
 
     public void execute(SchedulableContext context){
@@ -175,12 +175,12 @@ global class BatchActivateRecordsByDate implements  Database.Batchable<sObject>,
 		system.debug('##regsToUpdate: ' + regsToUpdate);
 		
 		if(sObjectType == PROVIDER_TYPE){
-			Database.executeBatch(new BatchActivateRecordsByDate(PRODUCT_TYPE), BATCH_SIZE);
+			Database.executeBatch(new TIP_BatchActivateRecordsByDate(PRODUCT_TYPE), BATCH_SIZE);
 		}
 
 		else if(sObjectType == PRODUCT_TYPE){
-			Database.executeBatch(new BatchActivateRecordsByDate(BIN_RANGE_TYPE), BATCH_SIZE);
-			Database.executeBatch(new BatchActivateRecordsByDate(PRODUCT_CONFIG_TYPE), BATCH_SIZE);	
+			Database.executeBatch(new TIP_BatchActivateRecordsByDate(BIN_RANGE_TYPE), BATCH_SIZE);
+			Database.executeBatch(new TIP_BatchActivateRecordsByDate(PRODUCT_CONFIG_TYPE), BATCH_SIZE);	
 		}
 	}
 	
