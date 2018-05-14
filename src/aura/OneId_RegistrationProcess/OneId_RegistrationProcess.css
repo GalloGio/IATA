@@ -16,7 +16,7 @@
     line-height: 26px !important;
     margin: 0px 12px 0px;
     border: 1px solid #0a4279;
-    color: #0a4279;
+    color: #0a4279 !important;
     border-radius: 25px;
     vertical-align: middle;
     display: block;
@@ -36,6 +36,7 @@
    font-weight: bold;
     font-size: 1.5rem;
     letter-spacing: -0.05rem;
+    color: #0a4279 !important;
 }
 /* For Mobile => Reduce large text for a better readness */
 @media (max-width: 600px) {
@@ -51,8 +52,9 @@
 
 }
 
-.THIS button.slds-accordion__summary-action:hover {  
+.THIS .slds-accordion__summary-action:hover {  
     background-color: #e4ebf3 !important;
+    cursor: pointer;
 }
 
 

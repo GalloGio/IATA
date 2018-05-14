@@ -13,8 +13,10 @@
 
 	setCountry : function (c) {
 		var filters = c.get("v.filters");
-		if(c.get("v.customerType") != 'Airline') filters['IATA_ISO_Country__c'] = c.get("v.selectedCountry");
-
+		
+		//Mehdi: the following check was removed to return results related only to the country selected even for airline.
+		//if(c.get("v.customerType") != 'Airline')
+        filters['IATA_ISO_Country__c'] = c.get("v.selectedCountry");
 		c.set("v.country", c.get("v.countryInformation.countryMap")[c.get("v.selectedCountry")]);
 	},
 	setAgencyType : function(c, e, h){
@@ -35,8 +37,6 @@
 			fieldNames = ['Name', 'BillingStreet', 'IATA_ISO_Country__r.Name', 'Airline_designator__c', 'IATACode__c', 'Sector__c', 'Category__c'];
 			searchFields.push('Airline_designator__c');
 
-			//h.sectorAndCategory(c, agencyType, ['Cargo Only', 'General Aviation', 'Governmental Aviation', 'Military', 'Other', 'Passenger and Cargo', 'Passenger Only'])
-			delete filters['IATA_ISO_Country__c'];
 			delete filters['Sector__c'];
 			delete filters['Category__c'];
 
@@ -83,14 +83,14 @@
 		action.setParams({
 				"con" : c.get("v.contact"),
 				"acc" : c.get("v.account"),
-				"serviceName" : "ISSP"
+				"serviceName" : c.get("v.serviceName")
 		});
 		
 		action.setCallback(this, function(resp){
 			var result = resp.getReturnValue();			
             // redirect to a new page when registration is done
             if(result) {            	
-                window.location.href = "registrationcomplete";
+                window.location.href = "../registrationcomplete?serviceName="+c.get("v.serviceName");
             }	
             
             if(!result) {

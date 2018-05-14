@@ -6,6 +6,10 @@
             $Resource.InternationalPhoneNumberFormatS + '/intl-tel-input-master/src/js/data.js',
             $Resource.InternationalPhoneNumberFormatS + '/intl-tel-input-master/src/spec/helpers/helpers.js',
             $Resource.InternationalPhoneNumberFormatS + '/intl-tel-input-master/build/js/utils.js')}"
+        styles="{!join(',', 
+            '/identity/s/OneIdResources/css/normalize.css',
+            '/identity/s/OneIdResources/css/OneIdStyles.css',
+            '/identity/s/OneIdResources/css/salesforce-lightning-design-system-ltng.css')}"
         afterScriptsLoaded="{!c.jsLoaded}"
     />
 
@@ -37,12 +41,12 @@
                                 
                                 <div class="slds-p-horizontal--small slds-size--1-of-1">
                                     <h3 class="slds-text-heading_small slds-accordion__summary-heading">
-                                        <button aria-controls="step1" aria-expanded="true" class="slds-button slds-button_reset slds-accordion__summary-action" onclick="{!c.section1}">
+                                        <span aria-controls="step1" aria-expanded="true" class="slds-button slds-button_reset slds-accordion__summary-action" onclick="{!c.section1}">
                                             
                                             <span class="bulletv2">1</span>
                                             
                                             <span class="category">{!$Label.c.OneId_Contact_Association_Validation}</span>
-                                        </button>
+                                        </span>
                                         
                                         <span class="{!v.activeSection==1 ? 'icon icon-navArrowLeft' : 'icon icon-navArrowDown'}" />
                                     </h3>
@@ -60,11 +64,11 @@
                             <div class="slds-accordion__summary">
                                 <div class="slds-p-horizontal--small slds-size--1-of-1">
                                     <h3 class="slds-text-heading_small slds-accordion__summary-heading">
-                                        <button aria-controls="step2" aria-expanded="false" class="slds-button slds-button_reset slds-accordion__summary-action"  onclick="{!c.section2}">
+                                        <span aria-controls="step2" aria-expanded="false" class="slds-button slds-button_reset slds-accordion__summary-action"  onclick="{!c.section2}">
                                             <span class="bulletv2">2</span>
                                             
                                             <span class="category">{!$Label.c.OneId_Contact_Creation}</span>
-                                        </button>
+                                        </span>
                                         
                                         <span class="{!v.activeSection==2 ? 'icon icon-navArrowLeft' : 'icon icon-navArrowDown'}" />
                                     </h3>
@@ -81,11 +85,11 @@
                             <div class="slds-accordion__summary">
                                 <div class="slds-p-horizontal--small slds-size--1-of-1">
                                     <h3 class="slds-text-heading_small slds-accordion__summary-heading">
-                                        <button aria-controls="step3" aria-expanded="false" class="slds-button slds-button_reset slds-accordion__summary-action"  onclick="{!c.section3}">
+                                        <span aria-controls="step3" aria-expanded="false" class="slds-button slds-button_reset slds-accordion__summary-action"  onclick="{!c.section3}">
                                             <span class="bulletv2">3</span>
                                             
                                             <span class="category">{!$Label.c.OneId_Account_Association}</span>
-                                        </button>
+                                        </span>
                                         
                                         <span class="{!v.activeSection==3 ? 'icon icon-navArrowLeft' : 'icon icon-navArrowDown'}" />
                                     </h3>

@@ -1,7 +1,7 @@
 <aura:component implements="flexipage:availableForAllPageTypes,forceCommunity:availableForAllPageTypes" controller="OneId_AccountSearch">
     
     <aura:attribute type="Account" name="account" required="true"/>
-    <aura:attribute name="disabled" type="Boolean" access="public" default="false"/>
+    <aura:attribute type="Boolean" name="disabled" access="public" default="false"/>
     
     <aura:attribute type="String" name="customerType" required="true"/>
     <aura:attribute type="String[]" name="fieldLabels" required="true" description="Labels for the result table. Must have the same order as the field names"/>
@@ -76,9 +76,9 @@
                                 	<div class="slds-listbox__option slds-listbox__option_plain slds-grid">
 	                                    <div class="{!'slds-size_1-of-'+v.fieldLabels.length}">{!a.Name}</div>
 	                                    <div class="{!'slds-size_1-of-'+v.fieldLabels.length}">{!a.BillingStreet}</div>
+                                        
+                                        <aura:if isTrue="{!v.customerType == 'Airline'}">
 	                                    <div class="{!'slds-size_1-of-'+v.fieldLabels.length}">{!a.IATA_ISO_Country__r.Name}</div>
-	                                    
-	                                    <aura:if isTrue="{!v.customerType == 'Airline'}">
 	                                        <div class="{!'slds-size_1-of-'+v.fieldLabels.length}">{!a.Airline_designator__c}</div>
 	                                    </aura:if>
 	                                    
