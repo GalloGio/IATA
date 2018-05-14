@@ -2343,7 +2343,9 @@
 
 							var natphoneacct1 = $j("input[name='{!$Component.AMSForm.AMSBlock.locationSection.addressSection.locationItemPhone.locationphoneinput}']");
 							var phoneacct1 = $j('.branch_office_phone__c');
-							var phoneacct2 = $j("input[name='{!$Component.AMSForm.AMSBlock.locationSection.addressSection.locationphone}']");
+                     var phoneacct2 = $j("input[name='{!$Component.AMSForm.AMSBlock.locationSection.addressSection.locationphone}']");
+
+                     console.log(natphoneacct1);
 
 							natphoneacct1.intlTelInput({
 								nationalMode: true,

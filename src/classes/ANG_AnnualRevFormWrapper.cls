@@ -11,16 +11,10 @@ public with sharing class ANG_AnnualRevFormWrapper {
 						List<AMS_Accreditation_Contact__c> currentCompanies,
 						List<AMS_Accreditation_Contact__c> previousCompanies) {
 
-		System.debug('alex previousOwners : ' + previousOwners);
-		System.debug('alex previousCompanies : ' + previousCompanies);
-		System.debug('alex currentOwners : ' + currentOwners);
-		System.debug('alex currentCompanies : ' + currentCompanies);
-
+		this.newForm = newForm;
 		this.previousOwners = previousOwners;
 		this.previousCompanies = previousCompanies;
 		this.currentOwners = currentOwners;
 		this.currentCompanies = currentCompanies;
 	}
-
-	public ANG_AnnualRevFormWrapper() {}
 }

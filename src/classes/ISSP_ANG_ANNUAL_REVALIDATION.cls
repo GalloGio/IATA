@@ -1,4 +1,44 @@
 public with sharing class ISSP_ANG_ANNUAL_REVALIDATION {
+	private static String OPEN_STATUS = 'O';
+	private static String COMPLETED_STATUS = 'C';
+	private static String UPDATE_PROGRESS_STATUS = 'UP';
+	private static String UPDATE_COMPLETED_STATUS = 'UC';
+
+	private static JsonValue SELECTED_FALSE = new Selected(false);
+	private static JsonValue SELECTED_TRUE = new Selected(true);
+	private static JsonValue OPENED_TRUE = new Opened(true);
+	private static JsonValue MULTIPLE_FALSE = new Multiple(false);
+	private static JsonValue SELECTED_OPENED = new SelectedOpened(true, true);
+
+	private static String MODE_READONLY { get{ return 'readOnly';} set;}
+	private static String MODE_UPDATE { get{ return 'update';} set;}
+
+	private static String FORM_STATUS_INPROGRESS = 'InProgress';
+	private static String FORM_STATUS_COMPLETED = 'Completed';
+
+	private static Set<String> statusSet = new Set<String> {
+		Ams_Utils.ACC_S9_APPROVED,
+		Ams_Utils.ACC_S8_CHANGESPROCESSED,
+		Ams_Utils.ACC_S0_TERMINATED,
+		Ams_Utils.ACC_S5_CASHNOCOMMISSION,
+		Ams_Utils.ACC_S6_CASHWITHCOMMISSION
+    };
+
+	private static Set<String> locationTypeSet = new Set<String> {
+		AMS_Utils.HE,
+		AMS_Utils.AE
+    };
+
+	private static Id rtAccreditContPreviousOwner = Schema.SObjectType.AMS_Accreditation_Contact__c.getRecordTypeInfosByName().get('Previous Owner').getRecordTypeId();
+	private static Id rtAccreditContCurrentOwner = Schema.SObjectType.AMS_Accreditation_Contact__c.getRecordTypeInfosByName().get('Current Owner').getRecordTypeId();
+	private static Id rtAccreditContPreviousCompanyOwner = Schema.SObjectType.AMS_Accreditation_Contact__c.getRecordTypeInfosByName().get('Previous Company Owner').getRecordTypeId();
+	private static Id rtAccreditContCurrentCompanyOwner = Schema.SObjectType.AMS_Accreditation_Contact__c.getRecordTypeInfosByName().get('Current Company Owner').getRecordTypeId();
+
+	public static String DEFAULT_ICON { get{ return 'glyphicon glyphicon-refresh text-primary';} set;}
+	public static String OK_ICON { get{ return 'glyphicon glyphicon-ok text-success';} set;}
+	public static String CONFIRMED_ICON { get{ return 'glyphicon glyphicon-flag text-danger';} set;}
+	public static String PROGRESS_ICON { get{ return 'glyphicon glyphicon-edit text-danger';} set;}
+
 	public String communityName { get{ return ApexPages.currentPage().getParameters().get('CommunityName'); }set;}
 	public String commParam { get { if(communityName=='CNS'){ return '&CommunityName='+ communityName;} return ''; } set;}
 	public Contact con {get; set;}
@@ -13,56 +53,24 @@ public with sharing class ISSP_ANG_ANNUAL_REVALIDATION {
 	public Set<String> iataCodesInProgress {get; set;}
 	public Map<String, ANG_AnnualRevFormWrapper> formsMap {get; set;}
 	public Map<String, Account> accountsMap {get; set;}
+	public Set<String> isoCodes {get; set;}
+	public Map<String, IATA_ISO_Country__c> isoCountryMap {get; set;}
 	public String jsonTree {get; set;}
 	public Set<Id> parents {get; set;}
 	public Set<Id> childs {get; set;}
 	public Account headEntity {get; set;}
 	List<Account> childsAccounts {get; set;}
-
-	public String tree {get {
-		return jsonTree;
-	} set;}
-
-	public static String DEFAULT_ICON = 'glyphicon glyphicon-refresh text-primary';
-	public static String OK_ICON = 'glyphicon glyphicon-ok text-success';
-	public static String CONFIRMED_ICON = 'glyphicon glyphicon-flag text-danger';
-	public static String PROGRESS_ICON = 'glyphicon glyphicon-edit text-danger';
-
-	public static String OPEN_STATUS = 'O';
-	public static String COMPLETED_STATUS = 'C';
-	public static String UPDATE_PROGRESS_STATUS = 'UP';
-	public static String UPDATE_COMPLETED_STATUS = 'UC';
-
-	public static JsonValue SELECTED_FALSE = new Selected(false);
-	public static JsonValue SELECTED_TRUE = new Selected(true);
-	public static JsonValue OPENED_TRUE = new Opened(true);
-	public static JsonValue MULTIPLE_FALSE = new Multiple(false);
-	public static JsonValue SELECTED_OPENED = new SelectedOpened(true, true);
-	public ANG_AnnualRevRoCurrentAccount currentAccount {get; set;}
-
-	public ANG_AnnualRevRoHelper helper {get {return new ANG_AnnualRevRoHelper(currentAccount);} set;}
-
-	public static Set<String> statusSet = new Set<String> {
-		Ams_Utils.ACC_S9_APPROVED,
-		Ams_Utils.ACC_S8_CHANGESPROCESSED,
-		Ams_Utils.ACC_S0_TERMINATED,
-		Ams_Utils.ACC_S5_CASHNOCOMMISSION,
-		Ams_Utils.ACC_S6_CASHWITHCOMMISSION
-    };
-
+	public String tree {get {return jsonTree;} set;}
+	public ANG_AnnualRevCurrentAccount currentAccount {get; set;}
+	//public ANG_AnnualRevHelper helper {get; set;}
 	public String caseId {get; set;}
 	public String currentIataCode {get; set;}
 	public boolean setHe {get; set;}
-
-	private static Id rtAccreditContPreviousOwner = Schema.SObjectType.AMS_Accreditation_Contact__c.getRecordTypeInfosByName().get('Previous Owner').getRecordTypeId();
-	private static Id rtAccreditContCurrentOwner = Schema.SObjectType.AMS_Accreditation_Contact__c.getRecordTypeInfosByName().get('Current Owner').getRecordTypeId();
-	private static Id rtAccreditContPreviousCompanyOwner = Schema.SObjectType.AMS_Accreditation_Contact__c.getRecordTypeInfosByName().get('Previous Company Owner').getRecordTypeId();
-	private static Id rtAccreditContCurrentCompanyOwner = Schema.SObjectType.AMS_Accreditation_Contact__c.getRecordTypeInfosByName().get('Current Company Owner').getRecordTypeId();
+	public String mode {get {return getMode(currentAccount.status);} set;}	// readOnly | update
 
 	public ISSP_ANG_ANNUAL_REVALIDATION() {
 
-		System.debug('alex NEW ISSP_ANG_ANNUAL_REVALIDATION');
-
+		System.debug('alex CONSTRUCTOR');
 
 		this.setHe = true;
 
@@ -77,18 +85,42 @@ public with sharing class ISSP_ANG_ANNUAL_REVALIDATION {
 		if (newCase != null) {
 			oscar = fetchOscar(newCase.Oscar__c);
 
+			//
+			// Get all forms and owners
+			//
 			setFormsMap();
 
+			//
+			// Fill the following sets with the correct iata codes
+			//	iataCodesOk - COMPLETED_STATUS
+			//	iataCodesConfirmed - UPDATE_COMPLETED_STATUS
+			//	iataCodesInProgress - UPDATE_PROGRESS_STATUS
+			//
 			setIataCodesOkNotOk(oscar);
-
+		} else {
+			throw new AnnualRevException('There is no case with the id : ' + caseId);
 		}
 
 		getContact();
 
+		//
+		// Determine the HE and all AE.
+		//
 		setParentsAndChilds();
 
+		//
+		// set the accountsMap
+		//
 		setAccounts();
 
+		//
+		// Set the isoCountries Map
+		//
+		setIsoCountryMap(isoCodes);
+
+		//
+		// Create forms and get owners for all accounts in states OPEN_STATUS on COMPLETED_STATUS
+		//
 		createFormsForAccountsStatusOpenAndConfirmed();
 
         isStep1 = false;
@@ -99,18 +131,17 @@ public with sharing class ISSP_ANG_ANNUAL_REVALIDATION {
             stepNumber = ApexPages.currentPage().getParameters().get('step');
 		}
 
-		System.debug('alex stepNumber : ' + stepNumber);
-
         if (stepNumber == '1' || stepNumber == '')
             isStep1 = true;
-
-        system.debug('stepNumber ' + stepNumber);
 
         if(stepNumber == '2'){
         	isStep2 = true;
         }
 
-		jsonTree = generateMenu();
+		//
+		// Generate the JS TREE Menu.
+		//
+		jsonTree = generateTree();
 	}
 
 	private void setParentsAndChilds() {
@@ -141,26 +172,34 @@ public with sharing class ISSP_ANG_ANNUAL_REVALIDATION {
 
 	private void setAccounts() {
 
-		this.headEntity = new Account();
+		this.childsAccounts = new List<Account>();
+		this.isoCodes = new Set<String>();
 
-		List<Account> al = getAccounts(parents, AMS_Utils.RECTYPE_IATAAGENCY, statusSet, AMS_Utils.HE, Ams_Utils.SECTOR_PASSENGER);
+		Id heId = ((new list<Id>(parents) )[0] );
 
-		if(al.size() != 0) {
-			this.headEntity = al[0];
+		Set<Id> aux = parents;
+		aux.addAll(childs);
 
-			this.accountsMap.put(headEntity.IATACode__c, headEntity);
+		List<Account> allAccounts = fetchAccounts(aux, AMS_Utils.RECTYPE_IATAAGENCY, statusSet, locationTypeSet, Ams_Utils.SECTOR_PASSENGER);
 
-			this.childsAccounts = getAccounts(childs, AMS_Utils.RECTYPE_IATAAGENCY, statusSet, AMS_Utils.AE, Ams_Utils.SECTOR_PASSENGER);
-
-			for(Account c : childsAccounts) {
-				this.accountsMap.put(c.IATACode__c, c);
+		Boolean found = false;
+		for(Account a : allAccounts) {
+			this.isoCodes.add(a.Country_ISO_Code__c);
+			this.accountsMap.put(a.IATACode__c, a);
+			if(a.id == heId) {
+				this.headEntity = a;
+				found = true;
+			} else {
+				this.childsAccounts.add(a);
 			}
-		} else {
-			//
-			// Check with Adrian what to do in this case.
-			//
 		}
 
+		if(!found) {
+			//
+			// The hierarchy does not have an HE!!!
+			//
+			throw new AnnualRevException('The hierarchy does not have an HE!');
+		}
 	}
 
 	public void setFormsMap() {
@@ -221,33 +260,59 @@ public with sharing class ISSP_ANG_ANNUAL_REVALIDATION {
         }
 	}
 
+    public void setIsoCountryMap(Set<String> isocodes) {
+
+		isoCountryMap = new Map<String, IATA_ISO_Country__c>();
+
+        List<IATA_ISO_Country__c> aux = [Select Id, ISO_Code__c, Local_language_Agency_details_required__c, EU_Country__c, EACP_Country__c
+                                           From IATA_ISO_Country__c
+                                          Where ISO_Code__c In :isocodes];
+
+		for(IATA_ISO_Country__c ic : aux) {
+			isoCountryMap.put(ic.ISO_Code__c, ic);
+		}
+    }
+
+	private static List<Account> fetchAccounts(Set<Id> accountIds, String recordType, Set<String> statusSet, Set<String> locationTypeSet, String sector) {
+		return [Select Id, Name, TradeName__c, IATACode__c, ANG_Accreditation_Model__c,
+					   BillingStreet, BillingCity, BillingState, BillingCountry, Email__c,
+					   Website, Phone, Mobile__c, Fax, BillingPostalCode, Company_Type__c,
+					   Country_ISO_Code__c, VAT_Number__c, Short_Name__c, Location_Class__c,
+					   Location_Type__c, IATA_ISO_Country__c, Iso_State__c, ShippingCountry,
+					   ShippingStreet, ShippingPostalCode, ShippingState, ShippingCity,
+					   Abbreviated_name__c, Abbreviated_Address__c, Remittance_frequency__c,
+					   Solicitation_Flag__c, VAT_Number_2__c, CASS_Number__c
+				  From Account
+				 Where Id in :accountIds
+				   And RecordTypeId = :recordType
+				   And Status__c in :statusSet
+				   And Location_Type__c in :locationTypeSet
+				   And Sector__c = :sector];
+	}
+
 	public PageReference loadIataCode() {
-		System.debug('alex loadIataCode : ' + currentIataCode);
-
-		this.currentAccount = new ANG_AnnualRevRoCurrentAccount(accountsMap.get(currentIataCode), getStatus(currentIataCode), getForm(currentIataCode));
-
+		this.currentAccount = new ANG_AnnualRevCurrentAccount(accountsMap.get(currentIataCode),
+															  getStatus(currentIataCode),
+															  getForm(currentIataCode),
+															  getIsoCountry(accountsMap.get(currentIataCode).Country_ISO_Code__c));
 		return null;
 	}
 
 	public PageReference confirmDetails() {
-		System.debug('alex confirmDetails : ' + currentIataCode);
-
-		System.debug('alex before this.oscar.IATA_Codes_OK__c : ' + this.oscar.IATA_Codes_OK__c);
-
 		if(this.oscar.IATA_Codes_OK__c == null || this.oscar.IATA_Codes_OK__c == '') {
 			this.oscar.IATA_Codes_OK__c = currentIataCode;
 		} else {
 			this.oscar.IATA_Codes_OK__c += ',' + currentIataCode;
 		}
 
-		System.debug('alex this.oscar.IATA_Codes_OK__c : ' + this.oscar.IATA_Codes_OK__c);
-
 		try{
 			update oscar;
 
 			iataCodesOk.add(currentIataCode);
 
-			jsonTree = generateMenu();
+			currentAccount.status = COMPLETED_STATUS;
+
+			jsonTree = generateTree();
 
 		} catch(DmlException de) {
 			// All stays the same.
@@ -257,57 +322,152 @@ public with sharing class ISSP_ANG_ANNUAL_REVALIDATION {
 	}
 
 	public PageReference discardDetails() {
-		System.debug('alex confirmDetails : ' + currentIataCode);
 
-		System.debug('alex before this.oscar.IATA_Codes_OK__c : ' + this.oscar.IATA_Codes_OK__c);
+		if(currentAccount.status == UPDATE_COMPLETED_STATUS) {
 
-		this.oscar.IATA_Codes_OK__c = this.oscar.IATA_Codes_OK__c.replaceAll(',' + currentIataCode + ',', '');
-		this.oscar.IATA_Codes_OK__c = this.oscar.IATA_Codes_OK__c.replaceAll(currentIataCode + ',', '');
-		this.oscar.IATA_Codes_OK__c = this.oscar.IATA_Codes_OK__c.replaceAll(',' + currentIataCode, '');
-		this.oscar.IATA_Codes_OK__c = this.oscar.IATA_Codes_OK__c.replaceAll(currentIataCode, '');
+			Savepoint sp = Database.setSavepoint();
 
-		System.debug('alex this.oscar.IATA_Codes_OK__c : ' + this.oscar.IATA_Codes_OK__c);
+			try{
+				delete this.currentAccount.fw.newform;
 
-		try{
-			update oscar;
+				System.debug('alex discard 1 : ' + this.currentAccount.fw.newform);
 
-			iataCodesOk.remove(currentIataCode);
+				this.currentAccount.fw.newform = createNewForm(currentIataCode);
 
-			jsonTree = generateMenu();
+				System.debug('alex discard 2 : ' + this.currentAccount.fw.newform);
 
-		} catch(DmlException de) {
-			// All stays the same.
+				iataCodesConfirmed.remove(currentIataCode);
+
+				currentAccount.status = OPEN_STATUS;
+
+				jsonTree = generateTree();
+
+			} catch(DmlException de) {
+				Database.rollback(sp);
+			}
+		} else {
+
+			this.oscar.IATA_Codes_OK__c = this.oscar.IATA_Codes_OK__c.replaceAll(',' + currentIataCode + ',', '');
+			this.oscar.IATA_Codes_OK__c = this.oscar.IATA_Codes_OK__c.replaceAll(currentIataCode + ',', '');
+			this.oscar.IATA_Codes_OK__c = this.oscar.IATA_Codes_OK__c.replaceAll(',' + currentIataCode, '');
+			this.oscar.IATA_Codes_OK__c = this.oscar.IATA_Codes_OK__c.replaceAll(currentIataCode, '');
+
+			try{
+				update oscar;
+
+				iataCodesOk.remove(currentIataCode);
+
+				currentAccount.status = OPEN_STATUS;
+
+				jsonTree = generateTree();
+
+			} catch(DmlException de) {
+				// All stays the same.
+			}
 		}
+
+		//jsonTree = generateTree();
 
 		return null;
 	}
 
 	public PageReference updateDetails() {
-		System.debug('alex updateDetails : ' + currentIataCode);
+
+		Savepoint sp = Database.setSavepoint();
+
+		try{
+			currentAccount.fw.newform.status__c = FORM_STATUS_INPROGRESS;
+
+			upsert currentAccount.fw.newform;
+
+			iataCodesInProgress.add(currentIataCode);
+
+			currentAccount.status = UPDATE_PROGRESS_STATUS;
+
+			jsonTree = generateTree();
+
+		} catch(DmlException dm) {
+			Database.rollback(sp);
+			throw new AnnualRevException(dm.getMessage());
+		}
+
+		return null;
+	}
+
+	public PageReference saveDraft() {
+		Savepoint sp = Database.setSavepoint();
+
+		try{
+			upsert currentAccount.fw.newform;
+
+			jsonTree = generateTree();
+
+		} catch(DmlException dm) {
+			Database.rollback(sp);
+			throw new AnnualRevException(dm.getMessage());
+		}
+
+		return null;
+	}
+
+
+
+	public PageReference confirmUpdate() {
+		Savepoint sp = Database.setSavepoint();
+
+		try{
+			currentAccount.fw.newform.status__c = FORM_STATUS_COMPLETED;
+
+			upsert currentAccount.fw.newform;
+
+			iataCodesInProgress.remove(currentIataCode);
+			iataCodesConfirmed.add(currentIataCode);
+
+			currentAccount.status = UPDATE_COMPLETED_STATUS;
+
+			jsonTree = generateTree();
+
+		} catch(DmlException dm) {
+			Database.rollback(sp);
+			throw new AnnualRevException(dm.getMessage());
+		}
+
+		return null;
+	}
+
+	public PageReference cancelUpdate() {
+
+		Savepoint sp = Database.setSavepoint();
+
+		try{
+			delete currentAccount.fw.newform;
+
+			this.currentAccount.fw.newform = createNewForm(currentIataCode);
+
+			iataCodesInProgress.remove(currentIataCode);
+
+			currentAccount.status = OPEN_STATUS;
+
+			jsonTree = generateTree();
+
+		} catch(DmlException de) {
+			Database.rollback(sp);
+		}
 
 		return null;
 	}
 
     public PageReference goToStep1() {
-
-		System.debug('alex goto step 1');
-
         return new PageReference('/ISSP_ANG_ANNUAL_REVALIDATION?caseId=' + newCase.Id + '&step=1' + commParam);
     }
 
     public PageReference goToStep2() {
-
-		System.debug('alex goto step 2');
-
 		this.isStep1 = false;
 		this.isStep2 = true;
         return new PageReference('/ISSP_ANG_ANNUAL_REVALIDATION?caseId=' + newCase.Id + '&step=2' + commParam);
     }
 
 	public PageReference save() {
-
-		System.debug('alex save');
-
 		return goToStep2();
 	}
 
@@ -317,7 +477,7 @@ public with sharing class ISSP_ANG_ANNUAL_REVALIDATION {
     	return null;
     }
 
-    public Pagereference saveDraft(){
+    public Pagereference saveDraftAndLeave(){
     	//save();
     	return new Pagereference('/ISSP_Homepage');
     }
@@ -340,6 +500,12 @@ public with sharing class ISSP_ANG_ANNUAL_REVALIDATION {
         con = DAL_ISSP.getContact(user.ContactId);
     }
 
+	//
+	// Fill the following sets with the correct iata codes
+	//	iataCodesOk - COMPLETED_STATUS
+	//	iataCodesConfirmed - UPDATE_COMPLETED_STATUS
+	//	iataCodesInProgress - UPDATE_PROGRESS_STATUS
+	//
 	private void setIataCodesOkNotOk(AMS_OSCAR__c oscar) {
 
 		iataCodesOk = new Set<String>();
@@ -357,26 +523,12 @@ public with sharing class ISSP_ANG_ANNUAL_REVALIDATION {
 		for(String iataCode : formsMap.keySet()) {
 			AMS_Pax_Accreditation_Form__c form = formsMap.get(iataCode).newForm;
 
-			if(form.status__c == 'InProgress') {
+			if(form.status__c == FORM_STATUS_INPROGRESS) {
 				iataCodesInProgress.add(iataCode);
-			}
-			if(form.status__c == 'Confirmed') {
+			} else if(form.status__c == FORM_STATUS_COMPLETED) {
 				iataCodesConfirmed.add(iataCode);
 			}
 		}
-	}
-
-	private static List<Account> getAccounts(Set<Id> accountIds, String recordType, Set<String> statusSet, String locationType, String sector) {
-		return [Select Id, Name, TradeName__c, IATACode__c, ANG_Accreditation_Model__c,
-					   BillingStreet, BillingCity, BillingState, BillingCountry, Email__c,
-					   Website, Phone, Mobile__c, FAX, BillingPostalCode, Company_Type__c,
-					   Country_ISO_Code__c
-				  From Account
-				 Where Id in :accountIds
-				   And RecordTypeId = :recordType
-				   And Status__c in :statusSet
-				   And Location_Type__c = :locationType
-				   And Sector__c = :sector];
 	}
 
 	private String getIcon(String iataCode) {
@@ -403,6 +555,14 @@ public with sharing class ISSP_ANG_ANNUAL_REVALIDATION {
 		}
 	}
 
+	private String getMode(String status) {
+		if(status == COMPLETED_STATUS || status == OPEN_STATUS) {
+			return MODE_READONLY;
+		} else {
+			return MODE_UPDATE;
+		}
+	}
+
     private static Case fetchCase(String caseId) {
         List <Case> newCases = [Select Id, CaseNumber, Reason1__c, CaseArea__c, Status, BSPCountry__c, Country_concerned_by_the_query__c, Oscar__c,
 								   	   Contact.Name, Account.Id, Description, Subject, Account_Concerned__c, Account_Concerned__r.Top_Parent__c, Account.Name,
@@ -424,23 +584,32 @@ public with sharing class ISSP_ANG_ANNUAL_REVALIDATION {
 	}
 
 	private ANG_AnnualRevFormWrapper getForm(String iataCode) {
-
-		System.debug('alex getForm : ' + iataCode);
-
 		if(formsMap.containsKey(iataCode)) {
 			return formsMap.get(iataCode);
 		} else {
-
+			//
+			// This will make an exception on the portal.
+			//
 			System.debug(LoggingLevel.ERROR, 'No form found for the IataCode : ' + iataCode);
 
 			return null;
 		}
 	}
-//alex
+
+	private IATA_ISO_Country__c getIsoCountry(String isoCode) {
+		if(isoCountryMap.containsKey(isoCode)) {
+			return isoCountryMap.get(isoCode);
+		} else {
+			//
+			// This will make an exception on the portal.
+			//
+			System.debug(LoggingLevel.ERROR, 'No country found for the isoCode : ' + isoCode);
+
+			return null;
+		}
+	}
+
 	private void createFormsForAccountsStatusOpenAndConfirmed() {
-
-		System.debug('alex createFormsForAccountsStatusOpenAndConfirmed');
-
 		Set<Id> accounts = new Set<Id>();
 		Set<String> iataCodes = new Set<String>();
 		for(String iataCode : accountsMap.keySet()) {
@@ -451,30 +620,17 @@ public with sharing class ISSP_ANG_ANNUAL_REVALIDATION {
 			}
 		}
 
-		System.debug('alex IATA CODES : ' + iataCodes);
-
 		List<AMS_Accreditation_Contact__c> lstAccreditationContact = getAllAMS_Account_Role(accounts);
 
-		System.debug('alex contactos cena : ' + lstAccreditationContact);
-
+		//
+		// Create the forms for all these accounts.
+		// At this point we are not saving any of these forms. They are saved only when the user decides to update details
+		//
 		for(String iataCode : iataCodes) {
-			AMS_Pax_Accreditation_Form__c newForm = new AMS_Pax_Accreditation_Form__c();
 
 			account a = accountsMap.get(iataCode);
 
-			newForm.HO_Account__c = a.id;
-
-			newForm.iataCode__c = iataCode;
-
-			newForm.ISSP_AMS_Legal_Status__c = ISSP_AMS_Accreditation.mapCompanyTypes(a.Company_Type__c);
-
-			if(newForm.ISSP_AMS_Legal_Status__c == null) {
-				newForm.ISSP_AMS_Legal_Status__c = '';
-			}
-
-			System.debug('alex add a new form : ' + newForm);
-
-			formsMap.put(iataCode, new ANG_AnnualRevFormWrapper(newForm,
+			formsMap.put(iataCode, new ANG_AnnualRevFormWrapper(createNewForm(iataCode),
 																getFormPreviousOwners_2(a.id, lstAccreditationContact),
 																getFormCurrentOwners_2(a.id, lstAccreditationContact),
 																getFormCurrentCompanies_2(a.id, lstAccreditationContact),
@@ -482,6 +638,83 @@ public with sharing class ISSP_ANG_ANNUAL_REVALIDATION {
 		}
 	}
 
+	private AMS_Pax_Accreditation_Form__c createNewForm(String iataCode) {
+
+		AMS_Pax_Accreditation_Form__c newForm = new AMS_Pax_Accreditation_Form__c();
+
+		newForm.SAAM_Case__c = newCase.Id;
+
+		if(con.Account.Sector__c.equalsIgnoreCase(AMS_Utils.SECTOR_PASSENGER))
+			newForm.Operation_Type__c = 'Travel_Agent';
+		else
+			newForm.Operation_Type__c = 'Cargo_Agent';
+
+		if (newCase.IFAP_Country_ISO__c == 'CN' && con.Account.Sector__c.equalsIgnoreCase(AMS_Utils.SECTOR_PASSENGER)) {
+			if (con.Account.Category__c == 'Domestic Agent') {
+				newForm.Operation_Type__c = 'Travel_Agent - Domestic';
+				newForm.Local_Agent_Type__c = 'Domestic';
+			} else {
+				newForm.Operation_Type__c = 'Travel_Agent - International';
+				newForm.Local_Agent_Type__c = 'International';
+			}
+		}
+
+		Account a = accountsMap.get(iataCode);
+
+		newForm.HO_Account__c = a.Id;
+
+		IATA_ISO_Country__c isoCountry = isoCountryMap.get(a.Country_ISO_Code__c);
+
+		accountStagingFieldMapping(a, newForm);
+
+		if (isoCountry.EU_Country__c) {
+			if (a.VAT_Number__c != null)
+				newForm.ISSP_AMS_VAT_number_input__c = a.VAT_Number__c.substring(2);
+		} else {
+			newForm.ISSP_AMS_VAT_number_input__c = a.VAT_Number__c;
+		}
+
+		newform.Website__c = a.Website;
+		newForm.Branch_Office_Phone_National__c = a.Phone;
+		newForm.MobileNational__c = a.Mobile__c;
+		newForm.Branch_Office_Fax_National__c = a.FAX;
+
+		newForm.iataCode__c = iataCode;
+
+		newForm.ISSP_AMS_Legal_Status__c = ISSP_AMS_Accreditation.mapCompanyTypes(a.Company_Type__c);
+
+		if(newForm.ISSP_AMS_Legal_Status__c == null) {
+			newForm.ISSP_AMS_Legal_Status__c = '';
+		}
+
+		System.debug('alex NEW FORM + ' + newForm);
+
+		return newForm;
+	}
+
+    private void accountStagingFieldMapping(Account sourceAccount, AMS_Pax_Accreditation_Form__c newForm) {
+		//Field mapping to be used when updating staging area from HO Account for HO Applications
+
+        Map<String, String> mapAccountToAccrFormFields;
+
+		mapAccountToAccrFormFields = new Map<String, String> {'Name' => 'Account_Name__c', 'IATACode__c' => 'IATACode__c', 'Short_Name__c' => 'Short_Name__c',
+			'Location_Class__c' => 'Location_Class__c', 'Location_Type__c' => 'Location_Type__c', 'TradeName__c' => 'Trade_Name__c',
+			'BillingStreet' => 'Branch_Office_Street_name_number__c', 'BillingPostalCode' => 'Branch_Office_Postal_code__c', 'BillingState' => 'Billing_State__c', 'BillingCity' => 'Branch_Office_City__c',
+			'IATA_ISO_Country__c' => 'ISO_Country__c', 'IATA_ISO_Country__c' => 'Branch_Office_Country__c', 'Iso_State__c' => 'IATA_ISO_State__c', 'ShippingCountry' => 'Shipping_Country__c', 'ShippingStreet' => 'Shipping_Street__c',
+			'ShippingPostalCode' => 'Shipping_Postal_Code__c', 'ShippingState' => 'Shipping_State__c', 'ShippingCity' => 'Shipping_City__c', 'Email__c' => 'Branch_Office_Email__c',
+			'Website' => 'Website__c', 'Phone' => 'Branch_Office_Phone__c', 'Fax' => 'Branch_Office_FAX__c', 'Mobile__c' => 'Mobile__c', 'Abbreviated_name__c' => 'Abbreviated_name__c',
+			'Abbreviated_Address__c' => 'Abbreviated_Address__c', 'Remittance_frequency__c' => 'Remittance_frequency__c', 'Solicitation_Flag__c' => 'Solicitation_Flag__c',
+			'VAT_Number_2__c' => 'VAT_Number_2__c', 'CASS_Number__c' => 'CASS_Number__c'
+			};
+
+        for (String accountApiName : mapAccountToAccrFormFields.keyset())
+            newForm.put(mapAccountToAccrFormFields.get(accountApiName), sourceAccount.get(accountApiName));
+    }
+
+	//
+	// This method is only beeing called for the accounts in states OPEN or completed.
+	// All the other accounts have already a staging area saved therefore the owners are alreasdy there.
+	//
     public List<AMS_Accreditation_Contact__c> getAllAMS_Account_Role(Set<Id> accounts){
 
         List<AMS_Accreditation_Contact__c> lstAccreditationContact = new List<AMS_Accreditation_Contact__c>();
@@ -501,13 +734,8 @@ public with sharing class ISSP_ANG_ANNUAL_REVALIDATION {
 			                                      and Active__c = true
 			                                      and Percentage__c > 0];
 
-		System.debug('alex amsOwners : ' + amsOwners);
-
 		for(AMS_Account_Role__c accRole : amsOwners) {
 			AMS_Accreditation_Contact__c c1 = ISSP_AMS_Accreditation.setAccreditationContact(accRole, null, rtAccreditContPreviousOwner, rtAccreditContPreviousCompanyOwner);
-
-
-			System.debug('alex c1 : ' + c1);
 
 			//
 			// HACK - The account id is beeing stored in the field AMS_OwnershipId__c to diferenciate the records
@@ -521,8 +749,6 @@ public with sharing class ISSP_ANG_ANNUAL_REVALIDATION {
 
 			AMS_Accreditation_Contact__c c2 = ISSP_AMS_Accreditation.setAccreditationContact(accRole, null, rtAccreditContCurrentOwner, rtAccreditContCurrentCompanyOwner);
 
-			System.debug('alex c2 : ' + c2);
-
 			//
 			// HACK - The account id is beeing stored in the field AMS_OwnershipId__c to diferenciate the records
             //       ,
@@ -534,11 +760,12 @@ public with sharing class ISSP_ANG_ANNUAL_REVALIDATION {
 			lstAccreditationContact.add(c2);
 		}
 
-		System.debug('alex lstAccreditationContact : ' + lstAccreditationContact);
-
 		return lstAccreditationContact;
     }
 
+	//
+	// Get the owners from the AMS_Accreditation_Contact__c
+	//
     private static List<AMS_Accreditation_Contact__c> getPreviousOwners(Set<Id> newFormIds) {
 		return [Select AMS_Pax_Accreditation_Form__c, Name, First_name__c, Last_name__c, Salutation__c, Agency_owner__c, Agency_role__c, Email__c,Phone__c,
                        Financial_interest__c, Contact_Id__c, Contact__c, AMS_OwnershipId__c, AMS_ContactId__c, Local_First_name__c, Local_Last_name__c, Number_Of_Shares__c,
@@ -580,7 +807,6 @@ public with sharing class ISSP_ANG_ANNUAL_REVALIDATION {
 
 		for(AMS_Accreditation_Contact__c ac : previousOwners) {
 			if(ac.AMS_OwnershipId__c == formId) {
-				System.debug('alex getFormPreviousOwners : ' + ac);
 				aux.add(ac);
 			}
 		}
@@ -592,7 +818,6 @@ public with sharing class ISSP_ANG_ANNUAL_REVALIDATION {
 
 		for(AMS_Accreditation_Contact__c ac : currentOwners) {
 			if(ac.AMS_Pax_Accreditation_Form__c == formId) {
-				System.debug('alex getFormPreviousCompanies : ' + ac);
 				aux.add(ac);
 			}
 		}
@@ -604,7 +829,6 @@ public with sharing class ISSP_ANG_ANNUAL_REVALIDATION {
 
 		for(AMS_Accreditation_Contact__c ac : currentCompanies) {
 			if(ac.AMS_Pax_Accreditation_Form__c == formId) {
-				System.debug('alex getFormPreviousCompanies : ' + ac);
 				aux.add(ac);
 			}
 		}
@@ -616,7 +840,6 @@ public with sharing class ISSP_ANG_ANNUAL_REVALIDATION {
 
 		for(AMS_Accreditation_Contact__c ac : previousCompanies) {
 			if(ac.AMS_Pax_Accreditation_Form__c == formId) {
-				System.debug('alex getFormPreviousCompanies : ' + ac);
 				aux.add(ac);
 			}
 		}
@@ -625,16 +848,13 @@ public with sharing class ISSP_ANG_ANNUAL_REVALIDATION {
 
 
 	//
-	//
+	// Get the owners from the not yet saved owners list.
 	//
     private static List<AMS_Accreditation_Contact__c> getFormPreviousOwners_2(String accountId, List<AMS_Accreditation_Contact__c> lstAccreditationContact) {
 		List<AMS_Accreditation_Contact__c> aux = new List<AMS_Accreditation_Contact__c>();
 
 		for(AMS_Accreditation_Contact__c ac : lstAccreditationContact) {
-			System.debug('alex ac 1 : ' + accountId + ' - ' + ac.RecordTypeId );
-
 			if(ac.AMS_OwnershipId__c == accountId && ac.RecordTypeId == rtAccreditContPreviousOwner) {
-				System.debug('alex getFormPreviousOwners_2 : ' + ac);
 				aux.add(ac);
 			}
 		}
@@ -645,10 +865,7 @@ public with sharing class ISSP_ANG_ANNUAL_REVALIDATION {
 		List<AMS_Accreditation_Contact__c> aux = new List<AMS_Accreditation_Contact__c>();
 
 		for(AMS_Accreditation_Contact__c ac : lstAccreditationContact) {
-			System.debug('alex ac 2 : ' + accountId + ' - ' + ac.RecordTypeId );
-
 			if(ac.AMS_OwnershipId__c == accountId && ac.RecordTypeId == rtAccreditContCurrentOwner) {
-				System.debug('alex getFormCurrentOwners_2 : ' + ac);
 				aux.add(ac);
 			}
 		}
@@ -659,10 +876,7 @@ public with sharing class ISSP_ANG_ANNUAL_REVALIDATION {
 		List<AMS_Accreditation_Contact__c> aux = new List<AMS_Accreditation_Contact__c>();
 
 		for(AMS_Accreditation_Contact__c ac : lstAccreditationContact) {
-			System.debug('alex ac 3 : ' + accountId + ' - ' + ac.RecordTypeId );
-
 			if(ac.AMS_OwnershipId__c == accountId && ac.RecordTypeId == rtAccreditContPreviousCompanyOwner) {
-				System.debug('alex getFormCurrentCompanies_2 : ' + ac);
 				aux.add(ac);
 			}
 		}
@@ -673,44 +887,20 @@ public with sharing class ISSP_ANG_ANNUAL_REVALIDATION {
 		List<AMS_Accreditation_Contact__c> aux = new List<AMS_Accreditation_Contact__c>();
 
 		for(AMS_Accreditation_Contact__c ac : lstAccreditationContact) {
-			System.debug('alex ac 4 : ' + accountId + ' - ' + ac.RecordTypeId );
-
 			if(ac.AMS_OwnershipId__c == accountId && ac.RecordTypeId == rtAccreditContPreviousCompanyOwner) {
-				System.debug('alex getFormPreviousCompanies_2 : ' + ac);
 				aux.add(ac);
 			}
 		}
 		return aux;
     }
 
-	public String getDEFAULT_ICON() {
-		return DEFAULT_ICON;
-	}
-	public String getOK_ICON() {
-		return OK_ICON;
-	}
-	public String getCONFIRMED_ICON() {
-		return CONFIRMED_ICON;
-	}
-	public String getPROGRESS_ICON() {
-		return PROGRESS_ICON;
-	}
-
-
-	private String generateMenu() {
-
-		System.debug('alex generateMenu');
-
+	private String generateTree() {
 		String currentIataCode = '';
 		JsonValue jsonValue;
 
 		if(currentAccount != null) {
 			currentIataCode = currentAccount.account.IataCode__c;
 		}
-
-
-		System.debug('alex parents : ' + parents);
-		System.debug('alex childs : ' + childs);
 
 		List<AssociateEntity> children = new List<AssociateEntity>();
 
@@ -737,7 +927,11 @@ public with sharing class ISSP_ANG_ANNUAL_REVALIDATION {
 		HeadEntity he = new HeadEntity(headEntity.IATACode__c, getIcon(headEntity.IATACode__c), children, jsonValue);
 
 		if(this.setHe) {
-			this.currentAccount = new ANG_AnnualRevRoCurrentAccount(accountsMap.get(headEntity.IATACode__c), getStatus(headEntity.IATACode__c), getForm(headEntity.IATACode__c));
+			this.currentAccount = new ANG_AnnualRevCurrentAccount(accountsMap.get(headEntity.IATACode__c),
+																  getStatus(headEntity.IATACode__c),
+																  getForm(headEntity.IATACode__c),
+                                                                  getIsoCountry(accountsMap.get(headEntity.IATACode__c).Country_ISO_Code__c));
+			//this.helper = new ANG_AnnualRevHelper(this.currentAccount);
 		}
 
 		hier.add(he);
@@ -752,8 +946,6 @@ public with sharing class ISSP_ANG_ANNUAL_REVALIDATION {
 
 		json = json.replaceAll('\n', '');
 
-		System.debug('alex : ' + json);
-
 		this.setHe = false;
 
 		return json;
@@ -763,6 +955,8 @@ public with sharing class ISSP_ANG_ANNUAL_REVALIDATION {
 	//
 	// INNER CLASSES
 	//
+	public class AnnualRevException extends Exception {}
+
 	public class Data {
 		public JsonValue multiple {get; set;}
 		public List<HeadEntity> data {get; set;}

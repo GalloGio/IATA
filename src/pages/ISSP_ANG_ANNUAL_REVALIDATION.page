@@ -9,8 +9,11 @@
 
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jstree/3.2.1/themes/default/style.min.css" />
         <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/1.12.1/jquery.min.js"></script>
+        <script src="https://code.jquery.com/ui/1.11.1/jquery-ui.min.js"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/jstree/3.2.1/jstree.min.js"></script>
         <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+        <script src="{!URLFOR($Resource.InternationalPhoneNumberFormat, '/intl-tel-input-master/build/js/intlTelInput.js')}"></script>
+        <link rel="stylesheet" href="{!URLFOR($Resource.InternationalPhoneNumberFormat, '/intl-tel-input-master/build/css/intlTelInput.css')}"/>
 
         <style>
             .section-header {
@@ -245,17 +248,34 @@
                 width: 100%;
                 padding: 10px;
             }
+
+            div.customTable2 {
+                width: 100%;
+            }
+
+            div.customTable2>div:nth-child(2n-1) {
+                padding-top: 5px;
+                width: 50%;
+                float: left;
+            }
+
+            div.customTable2>div:nth-child(2n) {
+                padding-top: 5px;
+                width: 50%;
+                float: left;
+            }
         </style>
 
         <script>
+            var $j = jQuery.noConflict();
             function gotoStep1(myValue, nextStep) {
                 console.log('myValue ' + myValue + ' nextStep ' + nextStep);
                 //defaultHQCountry = '{!newCase.IFAP_Country_ISO__c}';
-                if ($('#brcountry').css('display') == 'none') {
+                if ($j('#brcountry').css('display') == 'none') {
                     checkBranchAbroad(nextStep);
                 }
 
-                var $lists = $('select[name="' + '{!$Component.step1Form.step1Block.officetypelist}' + '"]');
+                var $lists = $j('select[name="' + '{!$Component.step1Form.step1Block.officetypelist}' + '"]');
                 vOfficeType = $lists.val();
                 var cargoAgentTypes = ["IATA Cargo Agent", "EACP Intermediary", "CASS Associate", "Courier", "Import Agent"];
                 console.log('no empty voffice ' + vOfficeType);
@@ -277,7 +297,7 @@
                         <div class="panel-body" id="body-enquiries">
                             <apex:form id="step1Form" styleClass="form-horizontal">
 
-                                <apex:actionFunction name="loadIataCode" action="{!loadIataCode}" rerender="workArea" />
+                                <apex:actionFunction name="loadIataCode" action="{!loadIataCode}" rerender="roPlane, buttonsArea" />
                                 <apex:inputHidden id="currentIataCode" value="{!currentIataCode}"/>
 
                                 <apex:pageBlock id="step1Block" mode="edit">
@@ -297,11 +317,12 @@
                                     <apex:pageMessages id="msg" />
                                     <!--Step Progress bar End -->
 
-                                    <apex:outputPanel>
+                                    <apex:outputPanel id="panel1">
                                         <div class="customTable">
                                             <!-- --------------- -->
                                             <!-- IATA CODES TREE -->
                                             <!-- --------------- -->
+
                                             <div>
                                                 <apex:outputPanel id="treeArea">
                                                     <div id="frmt">
@@ -315,19 +336,18 @@
                                                     </div>
 
                                                     <script>
-                                                        $('#frmt').jstree(JSON.parse('{!tree}'));
-                                                        $('#frmt').on("changed.jstree", function (e, data) {
 
+                                                        console.log('LOADING');
+
+                                                        $j('#frmt').jstree(JSON.parse('{!tree}'));
+                                                        $j('#frmt').on("changed.jstree", function (e, data) {
                                                             if(data.selected.length == 1) {
                                                                 var iataCode = data.instance.get_node(data.selected[0]).text;
 
-                                                                console.log(iataCode);
-
-                                                                $('[id$=currentIataCode]').val(iataCode);
+                                                                $j('[id$=currentIataCode]').val(iataCode);
 
                                                                 loadIataCode();
                                                             }
-
                                                         });
                                                     </script>
 
@@ -338,39 +358,98 @@
                                             <!-- --------- -->
                                             <!-- WORK AREA -->
                                             <!-- --------- -->
+
                                             <div>
                                                 <div>
-                                                    <apex:outputPanel id="workArea">
+                                                    <apex:outputPanel id = "panel2">
                                                         <apex:outputText value="{!$Label.ISSP_ANG_ANNUAL_REV_WORK_AREA_TITLE}"></apex:outputText>
                                                         <div class="panel panel-default">
 
                                                             <apex:outputPanel id="roPlane">
-                                                                <c:ISSP_ANG_ANNUAL_REV_RO helper="{! helper}"/>
+<!-- issue -->
+
+
+                                                                <apex:pageBlockSection collapsible="false" columns="2" id="Section0">
+                                                                    <apex:facet name="header">
+                                                                        <apex:outputpanel>{!$Label.ISSP_Status}</apex:outputpanel>
+                                                                    </apex:facet>
+
+                                                                    <apex:pageBlockSectionItem>
+                                                                        <apex:outputLabel value="{! $Label.ISSP_AMS_MSO_GSA_IATA_Code}" />
+                                                                        <apex:outputField value="{!currentAccount.account.IATACode__c}" />
+                                                                    </apex:pageBlockSectionItem>
+
+                                                                    <apex:pageBlockSectionItem>
+                                                                        <apex:outputText value="{!$Label.ISSP_ANG_ANNUAL_VAL_STATUS}" />
+                                                                        <apex:outputPanel>
+                                                                            <apex:outputText value="{!currentAccount.statusDesc}" />
+
+                                                                            <apex:commandLink id="bla" style="margin-left: 20px"
+                                                                                rendered="{!OR(currentAccount.status == 'C', currentAccount.status == 'UC')}"
+                                                                                action="{!discardDetails}"
+                                                                                status="WaitingStatus"
+                                                                                reRender="treeArea, roPlane, buttonsArea"
+                                                                                value="({!$Label.ISSP_ANG_ANNUAL_REV_DISCARD_BTN})"/>
+
+                                                                        </apex:outputPanel>
+                                                                    </apex:pageBlockSectionItem>
+
+                                                                </apex:pageBlockSection>
+
+<!-- issue -->
+                                                                <div class="center" style="display:{!IF(currentAccount.status == 'UP','inline-block','none')}">
+
+                                                                    <apex:commandButton styleclass="btn btn-default"
+                                                                        action="{!saveDraft}" onclick=""
+                                                                        status="WaitingStatus"
+                                                                        reRender="treeArea, roPlane, buttonsArea"
+                                                                        value="{!$Label.ISSP_ANG_ANNUAL_REV_SAVE_CHANGES_BTN}"/>
+
+                                                                </div>
+
+                                                                <!-- components -->
+                                                                <c:ISSP_ANG_ANNUAL_REV_RO ca="{! currentAccount}" id="readonly" rendered="{!mode == 'readOnly'}"/>
+
+                                                                <c:ISSP_ANG_ANNUAL_REV_UPDATE caParam="{! currentAccount}" id="update" rendered="{!mode == 'update'}"/>
+
                                                             </apex:outputPanel>
 
-                                                            <div class="center" style="display:{!IF(currentAccount.status == 'O','inline-block','none')}">
-                                                                <apex:commandButton styleclass="btn btn-default"
-                                                                    action="{!confirmDetails}" onclick=""
-                                                                    status="WaitingStatus"
-                                                                    value="{! $Label.ISSP_ANG_ANNUAL_REV_CONFIRM_BTN}" reRender="treeArea, roPlane"/>
+                                                            <apex:outputPanel id="buttonsArea">
 
-                                                                <apex:commandButton styleclass="btn btn-default"
-                                                                    action="{!updateDetails}" onclick=""
-                                                                    value="{! $Label.ISSP_ANG_ANNUAL_REV_UPDATE_BTN}"/>
-                                                            </div>
+                                                                <div class="center" style="display:{!IF(currentAccount.status == 'O','inline-block','none')}">
+                                                                    <apex:commandButton styleclass="btn btn-default"
+                                                                        action="{!confirmDetails}" onclick=""
+                                                                        status="WaitingStatus"
+                                                                        reRender="treeArea, roPlane, buttonsArea"
+                                                                        value="{! $Label.ISSP_ANG_ANNUAL_REV_CONFIRM_BTN}"/>
 
-                                                            <div class="center" style="display:{!IF(OR(currentAccount.status == 'C', currentAccount.status == 'UC'),'inline-block','none')}">
-                                                                <apex:commandButton styleclass="btn btn-default"
-                                                                    action="{!discardDetails}" onclick=""
-                                                                    status="WaitingStatus"
-                                                                    value="{! $Label.ISSP_ANG_ANNUAL_REV_DISCARD_BTN}" reRender="treeArea, roPlane"/>
-                                                            </div>
+                                                                    <apex:commandButton styleclass="btn btn-default"
+                                                                        action="{!updateDetails}" onclick=""
+                                                                        status="WaitingStatus"
+                                                                        reRender="treeArea, roPlane, buttonsArea"
+                                                                        value="{! $Label.ISSP_ANG_ANNUAL_REV_UPDATE_BTN}"/>
+                                                                </div>
+
+                                                                <div class="center" style="display:{!IF(currentAccount.status == 'UP','inline-block','none')}">
+                                                                    <apex:commandButton styleclass="btn btn-default"
+                                                                        action="{!confirmUpdate}" onclick=""
+                                                                        status="WaitingStatus"
+                                                                        reRender="treeArea, roPlane, buttonsArea"
+                                                                        value="{!$Label.ISSP_ANG_ANNUAL_REV_CONFIRM_UPD_BTN}"/>
+
+                                                                    <apex:commandButton styleclass="btn btn-default"
+                                                                        action="{!cancelUpdate}" onclick=""
+                                                                        status="WaitingStatus"
+                                                                        reRender="treeArea, roPlane, buttonsArea"
+                                                                        value="{!$Label.ISSP_ANG_ANNUAL_REV_CANCEL_UPD_BTN}"/>
+                                                                </div>
+
+                                                            </apex:outputPanel>
                                                         </div>
                                                     </apex:outputPanel>
 
-
                                                 </div>
-                                            </div>
+                                            </div> <!-- Work area -->
                                         </div>
                                     </apex:outputPanel>
 
@@ -405,6 +484,8 @@
                     </div>
                 </apex:outputText>
 
+
+
                 <apex:outputText rendered="{!isStep2}">
                     <div class="panel-primary">
                         <div class="panel-heading head_panel_green">
@@ -426,10 +507,10 @@
                             </apex:pageBlock>
                         </div>
                     </div>
-
                     <!-- -------------- -->
                     <!-- Bottom buttons -->
                     <!-- -------------- -->
+
                     <apex:form id="tCondiForm">
                         <apex:pageMessages />
 
@@ -440,7 +521,7 @@
                                         <apex:outputPanel>
                                             <apex:commandButton styleclass="btn btn-default" style="margin-right:8px" action="{!goToStep1}" value="{!$Label.ISSP_Back}"
                                                 immediate="true" status="buttonLoadingStep3" reRender="tCondiForm" />
-                                            <apex:commandButton styleclass="btn btn-default" action="{!saveDraft}" value="{!$Label.ISSP_Save_Draft}" style="float:right"
+                                            <apex:commandButton styleclass="btn btn-default" action="{!saveDraftAndLeave}" value="{!$Label.ISSP_Save_Draft}" style="float:right"
                                                 status="buttonLoadingStep3" reRender="tCondiForm" />
                                             <apex:commandButton styleclass="btn btn-default" action="{!submitForm}" value="{!$Label.ISSP_AMS_Submit_IATA}" status="buttonLoadingStep3"
                                                 reRender="tCondiForm" />
@@ -460,7 +541,6 @@
                             </apex:pageBlockButtons>
                         </apex:pageBlock>
                     </apex:form>
-
                 </apex:outputText>
             </div>
 

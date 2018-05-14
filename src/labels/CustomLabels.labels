@@ -27836,6 +27836,28 @@ Please &lt;a href=&quot;/ISSP_FAQ2Case?MainNav=Queries&amp;subNav=MyQueries&amp;
         <shortDescription>ISSP_ANG_ANNUAL_REV_Change_Ownership_Shareholding</shortDescription>
         <value>Agency Ownership / Shareholding and Legal Status</value>
     </labels>
-
-
+    <labels>
+        <fullName>ISSP_ANG_ANNUAL_REV_CONFIRM_UPD_BTN</fullName>
+        <categories>ISSP,ANG</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Annual revalidation confirm update button</shortDescription>
+        <value>Confirm Update</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_ANG_ANNUAL_REV_CANCEL_UPD_BTN</fullName>
+        <categories>ISSP,ANG</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Annual revalidation cancel update button</shortDescription>
+        <value>Cancel Update</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_ANG_ANNUAL_REV_SAVE_CHANGES_BTN</fullName>
+        <categories>ISSP,ANG</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Annual revalidation save changes button</shortDescription>
+        <value>Save Changes</value>
+    </labels>
 </CustomLabels>
