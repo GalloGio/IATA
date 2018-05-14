@@ -33,6 +33,8 @@ public class TIP_Utils{
 	//Case Subject
 	public static String CASE_SUBJECT_NEW_PRODUCT_ENROLMENT = 'New Product Enrolment';
 
+	//Case Status
+	public static String CASE_STATUS_DRAFT = 'Draft';
 
 	//Partner status
 	public static String PARTNER_STATUS_ACTIVE='Active';

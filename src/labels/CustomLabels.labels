@@ -19484,7 +19484,7 @@ Please note that many IATA invoices for accredited agents are collected through 
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>ISSP Payment Provider Home title</shortDescription>
-        <value>Alternative Transfer Method(ATM) Provider Enlistment/Certification</value>
+        <value>Alternative Transfer Method(ATM) Provider Enlistment</value>
     </labels>
     <labels>
         <fullName>ISSP_Pending</fullName>
@@ -19734,6 +19734,27 @@ If the product is an Agent&apos;s multi-use VANs, then it is an Agent&apos;s uni
         <protected>false</protected>
         <shortDescription>ISSP Portal Product is Subject to PCI Label</shortDescription>
         <value>Is the product subject to PCI DSS requirements compliance? (this is related to the product): Yes or Not Applicable</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_Portal_Provider_Any_Other_Info_Label</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP Portal Provider Any Other Info Label</shortDescription>
+        <value>Enter any additional information related to your company (e.g. to comply with AML requirements)</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_Portal_Provider_Headquarter_Location_Label</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP Portal Provider Headquarter Location Label</shortDescription>
+        <value>Select the country where provider&apos;s headquarter is located</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_Portal_Provider_Legal_Name_Label</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP Portal Provider Legal Name Label</shortDescription>
+        <value>Enter the provider legal name</value>
     </labels>
     <labels>
         <fullName>ISSP_Portal_Service</fullName>

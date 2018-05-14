@@ -115,27 +115,26 @@ public without sharing class ISSP_Case {
             string caseId = ApexPages.currentPage().getParameters().get('caseId');
             newCase = DAL_ISSP.getCase(caseId);
 
+            if(newCase.status == TIP_Utils.CASE_STATUS_DRAFT && newCase.CaseArea__c == TIP_Utils.CASE_AREA_TRANSPARENCY_IN_PAYMENTS){ //Transparency in Payment's portal access assignment
             User user = DAL_ISSP.getUser(Userinfo.getUserId());
             Id appListId;
             ISSP_Portal_Service_Ids__c serviceIdInstance = ISSP_Portal_Service_Ids__c.getInstance();
             if (serviceIdInstance != null && serviceIdInstance.TIP_Portal_Service_Id__c != null){
                 appListId = serviceIdInstance.TIP_Portal_Service_Id__c;
-            }else{
-                appListId = [SELECT Id FROM Portal_Applications__c WHERE Name = :TIP_Utils.CASE_AREA_TRANSPARENCY_IN_PAYMENTS LIMIT 1].id;
             }
-
 
             List <Portal_Application_Right__c> appRightList = [Select Id From Portal_Application_Right__c
                                     where Contact__c = :user.ContactId and
                                                        Right__c = 'Access Granted'  and
-                                                                  Portal_Application__c = :appListId  limit 1];
+                                                                  (Portal_Application__c = :appListId OR Portal_Application__r.Name = :TIP_Utils.CASE_AREA_TRANSPARENCY_IN_PAYMENTS) limit 1];
 
 
-            if(appRightList != null && appRightList.size() == 1 && newCase.status == 'Draft' && newCase.CaseArea__c == TIP_Utils.CASE_AREA_TRANSPARENCY_IN_PAYMENTS){
+                if(appRightList != null && appRightList.size() == 1){
                 if(newCase.Reason1__c == TIP_Utils.CASE_REASON_PAYMENT_PROVIDER_MANAGMENT) return new PageReference('/ISSP_TIP_Home?caseId='+caseid);
                 
                 Id prodId = [select TIP_Partner_Product__c from Case where id = :caseid limit 1].TIP_Partner_Product__c;
                 if(newCase.Reason1__c == TIP_Utils.CASE_REASON_PRODUCT_MANAGEMENT) return new PageReference('/ISSP_TIP_Home?prodId='+prodId);
+            }
             }
             if (!newCase.Visible_on_ISS_Portal__c) {
                 PageReference pr = new PageReference('/ISSP_Homepage' + firstCommParam);

@@ -76,6 +76,9 @@
            cursor: default;
            color: #8a8a8a !important;
         }
+        a.disabled:hover{
+            text-decoration: none;
+        }
     </style>
     
    
@@ -112,11 +115,6 @@
                         });
                    }
 
-                   $('.cbMaster').on('click',function(){
-                        $('.cbSlave').each(function(index){
-                            this.checked=$('.cbMaster').get(0).checked;
-                        });
-                   });
                });
 
                 function confirmDelete(opt1){
@@ -202,8 +200,10 @@
                     if((namef.val()==''||namef.val()==null || namef.val()==undefined)
                         ||(paymenNet.val()==''||paymenNet.val()==null || paymenNet.val()==undefined)){
                         $('[id$="newBinRangebtn"]').toggleClass('disabled', true);
+                        $('[id$="newBinRangebtn"]').prop('disabled', true);  
                     } else {
                         $('[id$="newBinRangebtn"]').toggleClass('disabled', false);
+                        $('[id$="newBinRangebtn"]').prop('disabled', false);  
                     }
                 }
 
@@ -220,7 +220,6 @@
                 function validateToSubmit() {                 
                     var hasErrors=false;
                     $("input.mandFld, select.mandFld").each(function(index){
-                        console.log($(this).val());
                          if($(this).val() ==''  || $(this).val() ==null){
                             if($(this).next().next('.errorMsg').val()==undefined)
                                 $(this).next().after('<div class="errorMsg">{!$Label.IEC_Required_Field_Error_Msg}</div>');
@@ -239,8 +238,6 @@
                             clearErrorElement(this);
                         } 
                     });
-
-                   
 
 
                     if(!hasErrors) submitProduct();
@@ -664,7 +661,7 @@
                                             </apex:outputPanel>
                                         </apex:pageBlockSectionItem>
                                         <!-- <apex:pageBlockSectionItem rendered="{!!editMode}"> -->
-                                            <apex:outputLabel escape="false" value="{!Label.ISSP_TIP_Submit_case_to_IATA_to_update_country_Config}" rendered="{!!editMode}"/>
+                                            <apex:outputLabel escape="false" value="{!$Label.ISSP_TIP_Submit_case_to_IATA_to_update_country_Config}" rendered="{!!editMode}"/>
                                         <!-- </apex:pageBlockSectionItem> -->
                                     </apex:pageBlockSection>
                                     <apex:pageBlockSection columns="2">
@@ -680,14 +677,42 @@
                                                                 $('.cbMaster').attr('disabled',false);
                                                             }
 
+                                                            if($('.cbSlave:checked').length==0){
+                                                            $('[id$="deleteAllbtn"]').toggleClass('disabled', true);
+                                                                $('[id$="deleteAllbtn"]').prop('disabled', true);
+                                                            }
+
                                                             $('.cbMaster').on('click',function(){
+                                                                var val=this.checked;
                                                                  $('.cbSlave').each(function(index){
-                                                                     this.checked=$('.cbMaster').get(0).checked;
+                                                                     this.checked=val;
                                                                  });
+
+                                                                 if($('.cbSlave:checked').length>0){
+                                                                     $('[id$="deleteAllbtn"]').toggleClass('disabled', false);
+                                                                     $('[id$="deleteAllbtn"]').prop('disabled',false);
+                                                                 }else{
+                                                                     $('[id$="deleteAllbtn"]').toggleClass('disabled', true);
+                                                                     $('[id$="deleteAllbtn"]').prop('disabled', true);
+                                                                 }
                                                             });
+
+
+                                                            $('.cbSlave').on('click',function(){
+                                                                 if($('.cbSlave:checked').length>0){
+                                                                     $('[id$="deleteAllbtn"]').toggleClass('disabled', false);
+                                                                     $('[id$="deleteAllbtn"]').prop('disabled',false);
+                                                                 }else{
+                                                                     $('[id$="deleteAllbtn"]').toggleClass('disabled', true);
+                                                                     $('[id$="deleteAllbtn"]').prop('disabled', true);
+                                                                 }
+                                                            });
+
 
                                                         });
 
+
+                                                       
                                                         function validateCountryConfiguration(){
 
                                                             if($('[id$="bspctrfld"]').val() === null || $('[id$="bspctrfld"]').val() =='' ){
@@ -718,7 +743,7 @@
                                                         }
                                                     </script>
                                                     <apex:pageBlockTable value="{!provProdConfList}" var="ppc" styleClass="table-hover table table-condensed table-responsive tabl" >
-                                                        <apex:column >
+                                                        <apex:column rendered="{!editMode}" >
                                                             <apex:facet name="header">                                                        
                                                                 <apex:outputLabel value=""/>
                                                                 <input type="checkbox" class='cbMaster'/>
