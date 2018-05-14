@@ -2676,6 +2676,24 @@ public static String fetchTypeOfCustomer (String locationType , String category)
         if(date1 == null && date2 != null) return date2;
         return null;        
     }
+
+    public static ANG_ISSP_AfpWrapper getANG_ISSP_AfpWrapper(Contact con) {
+        List<Agency_Authorization__c> authorizations;
+        List<Portal_Application_Right__c> services;
+
+        if(con != null) {      
+            authorizations = [SELECT Id,
+                                     ANG_FormOfPayment_ID__c
+                                FROM Agency_Authorization__c
+                               WHERE Account__c = :con.Account.Id AND Status__c = 'Active'];
+
+            services = [SELECT Id, Application_Name__c, Right__c, Application_Start_URL__c
+                          FROM Portal_Application_Right__c
+                         WHERE Contact__c = :con.Id];
+        }
+
+        return new ANG_ISSP_AfpWrapper(con, authorizations, services);
+    }
     
 }
 

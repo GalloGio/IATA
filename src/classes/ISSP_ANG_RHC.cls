@@ -85,26 +85,8 @@ public with sharing class ISSP_ANG_RHC {
 				   		   this.contact.Account.ANG_Accreditation_Model__c == 'Cashless');
 	}	
 
-	private void initFormsOfPayment() {		
-		List<Agency_Authorization__c> authorizations;
-		List<Portal_Application_Right__c> services;
-
-		if(this.contact != null) {		
-			authorizations = [Select Id,
-									 ANG_FormOfPayment_ID__c
-							    From Agency_Authorization__c
-							   Where Account__c =: this.contact.Account.Id
-							     And Status__c = 'Active'];
-
-			services = [Select Id,
-							   Application_Name__c,
-							   Right__c,
-							   Application_Start_URL__c
-						  From Portal_Application_Right__c
-						 Where Contact__c =: this.contact.id];
-		}
-
-		this.afpWrapper = new ANG_ISSP_AfpWrapper(this.contact, authorizations, services);
+	private void initFormsOfPayment() {
+		this.afpWrapper = AMS_Utils.getANG_ISSP_AfpWrapper(this.contact);
 	}
 
 	public void initializeRHCInfo() {

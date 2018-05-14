@@ -17,6 +17,8 @@ public class ISSP_ANG_CodeSearch {
 	public String ho_he {get; set;}
 	public Boolean showIrregularities {get; set;}
 	public String status {get; set;}
+	public Contact contact {get; set;}
+	public ANG_ISSP_AfpWrapper afpWrapper {get; set;}
 
 	public static Set<String> statusSet = new Set<String> {
 		Ams_Utils.ACC_S9_APPROVED,
@@ -90,34 +92,27 @@ public class ISSP_ANG_CodeSearch {
 				auxReplacement = Label.ISSP_Cargo;
 			}
 
-			List<Account> auxList = [Select id,
-											IATACode__c,
-											Name,
-											TradeName__c,
-											Status__c,
-											IATA_ISO_Country__r.Name,
-											ANG_Accreditation_Model__c,
-											ANG_HE_RiskStatus__c,
-											Active_Guarantees__c,
-											Accumulated_Irregularities__c,
-											Location_Type__c,
-											Top_Parent__c,
-											IATA_ISO_Country__r.ANG_Enable_NewGen__c
-									   From Account
-									  Where Sector__c = :sector
-									    And Status__c in :statusSet
-									    And RecordTypeId = :AMS_Utils.RECTYPE_IATAAGENCY
-									    And IATACode__c like :iataCodeStr];
+			Account reqAgency = [SELECT Id, IATACode__c, Name, TradeName__c, Status__c, IATA_ISO_Country__r.Name, ANG_Accreditation_Model__c,
+											ANG_HE_RiskStatus__c, Active_Guarantees__c, Accumulated_Irregularities__c, Location_Type__c,
+											Top_Parent__c, IATA_ISO_Country__r.ANG_Enable_NewGen__c
+									   	  FROM Account
+									  	  WHERE Sector__c = :sector AND Status__c IN :statusSet
+									    	AND RecordTypeId = :AMS_Utils.RECTYPE_IATAAGENCY
+									    	AND IATACode__c LIKE :iataCodeStr LIMIT 1];
 
-			if(auxList.size() != 0) {
-				Account auxAgency = auxList[0];
+			//contact = reqAgency.Contact
 
-				if(auxAgency.Location_Type__c == Ams_Utils.AE || auxAgency.Location_Type__c == Ams_Utils.BR || auxAgency.Location_Type__c == Ams_Utils.SA) {
+									    	//verificar se HE é para manter
+									    	//se nao mais um filtro no where
 
-					if(auxAgency.Location_Type__c == Ams_Utils.AE) {
+			if(reqAgency != null) { //travel agency found
+
+				if(reqAgency.Location_Type__c == Ams_Utils.AE || reqAgency.Location_Type__c == Ams_Utils.BR || reqAgency.Location_Type__c == Ams_Utils.SA) {
+
+					if(reqAgency.Location_Type__c == Ams_Utils.AE) {
 						auxReplacement = 'an ' + Label.ISSP_ANG_ASSOCIATE_ENTITY;
 					} else {
-						if(auxAgency.Location_Type__c == Ams_Utils.BR) {
+						if(reqAgency.Location_Type__c == Ams_Utils.BR) {
 							auxReplacement = 'a ' + Label.ISSP_ANG_BRANCH_OFFICE;
 						} else {
 							auxReplacement = 'a ' + Label.ISSP_ANG_CODE_SEARCH_SA;
@@ -126,24 +121,13 @@ public class ISSP_ANG_CodeSearch {
 
 					this.showParent = true;
 
-					String aux = Label.ISSP_ANG_IATA_CODE_SEARCH_HE;
-					String aux2 = aux.replace('%IATA_CODE%', auxAgency.IATACode__c);
-					String aux3 = aux2.replace('%CHILD_LOCATION%', auxReplacement);
+					String aux = Label.ISSP_ANG_IATA_CODE_SEARCH_HE.replace('%IATA_CODE%', reqAgency.IATACode__c).replace('%CHILD_LOCATION%', auxReplacement);
 
-					Account parentAgency = [Select id,
-												   IATACode__c,
-												   Name,
-												   TradeName__c,
-												   Status__c,
-												   IATA_ISO_Country__r.Name,
-												   ANG_Accreditation_Model__c,
-												   ANG_HE_RiskStatus__c,
-												   Active_Guarantees__c,
-												   Accumulated_Irregularities__c,
-												   Location_Type__c,
-												   IATA_ISO_Country__r.ANG_Enable_NewGen__c
-											  From Account
-											 Where id =: auxAgency.Top_Parent__c];
+					Account parentAgency = [SELECT Id, IATACode__c, Name, TradeName__c, Status__c, IATA_ISO_Country__r.Name,
+												   ANG_Accreditation_Model__c, ANG_HE_RiskStatus__c, Active_Guarantees__c,
+												   Accumulated_Irregularities__c, Location_Type__c, IATA_ISO_Country__r.ANG_Enable_NewGen__c
+											FROM Account
+											WHERE Id = :reqAgency.Top_Parent__c]; //airline ho
 
 					String auxHoHe = Label.ISSP_ANG_IATA_CODE_SEARCH_IATA_CODE_HO_HE;
 					if(parentAgency.Location_Type__c == Ams_Utils.HE) {
@@ -154,27 +138,62 @@ public class ISSP_ANG_CodeSearch {
 						this.ho_he = auxHoHe.replace('HO / HE', Label.ISSP_AMS_NoC_Head_Office);
 					}
 
-					heMessage = aux3.replace('%PARENT_LOCATION%', auxReplacement);
+					heMessage = aux.replace('%PARENT_LOCATION%', auxReplacement);
 
 					this.agency = parentAgency;
 
 				} else {
-					this.agency = auxAgency;
+					this.agency = reqAgency;
 				}
 
-				if(this.agency.Active_Guarantees__c != 0) {
-					this.financialSecurityExists = true;
+				System.debug('rui1:' + this.agency);
+
+				String serviceRenderendType;
+
+				if (sector == Ams_Utils.SECTOR_CARGO) 
+					serviceRenderendType = 'CASS Participation';
+				else if (sector == Ams_Utils.SECTOR_PASSENGER) 
+					serviceRenderendType = 'BSP Participation';
+
+				Boolean countryFound = false;
+
+				for (Services_Rendered__c service :[SELECT Id, ISO_Country_formula__c
+													   FROM Services_Rendered__c
+													   WHERE Services_Rendered_Type__c = :serviceRenderendType
+														AND Services_Rendered_Status__c = 'Active'
+													 	AND Services_Rendered_By__c = :this.agency.Id]) {
+					if (service.ISO_Country_formula__c == this.agency.IATA_ISO_Country__r.Name) {
+						countryFound = true;
+						break;
+					}
 				}
 
-				riskStatus = this.agency.ANG_HE_RiskStatus__c;
+				System.debug('rui2: ' + countryFound);
 
-				this.accreditationModel = AMS_Utils.officialAccreditationTypeMap.get(this.agency.ANG_Accreditation_Model__c);
+				if (countryFound) {
 
-				this.showIrregularities = (!agency.IATA_ISO_Country__r.ANG_Enable_NewGen__c || !isTravel);
+					if(this.agency.Active_Guarantees__c != 0) this.financialSecurityExists = true;
+						
+					riskStatus = this.agency.ANG_HE_RiskStatus__c;
 
-				this.status = translateAgencyStatus(agency);
+					this.accreditationModel = AMS_Utils.officialAccreditationTypeMap.get(this.agency.ANG_Accreditation_Model__c);
 
-				this.activeSearch = true;
+					this.showIrregularities = (!agency.IATA_ISO_Country__r.ANG_Enable_NewGen__c || !isTravel);
+
+					this.status = translateAgencyStatus(agency);
+
+					this.activeSearch = true;
+				} else {
+					this.activeError = true;
+
+					if (sector == Ams_Utils.SECTOR_CARGO) 
+						this.errorMessage = 'Information not available: Your Airline has no CASS Participation in the country of this IATA Code ' + this.agency.IATA_ISO_Country__r.Name;
+					else if (sector == Ams_Utils.SECTOR_PASSENGER) 
+						this.errorMessage = 'Information not available: Your Airline has no BSP Participation in the country of this IATA Code ' + this.agency.IATA_ISO_Country__r.Name;
+
+					//mudar mensagem de erro para label?
+				}
+				
 			} else {
 				this.activeError = true;
 				String aux = Label.ISSP_ANG_IATA_CODE_SEARCH_NOTHING_FOUND;

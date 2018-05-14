@@ -137,7 +137,7 @@
                     </div>
                   </apex:outputPanel>
 
-                  <hr></hr>
+                  <hr></hr> 
 
                   <apex:outputPanel id="searchResults" rendered="{!activeSearch}">
 
@@ -246,6 +246,12 @@
                       </tr>
 
                     </table>
+
+                  <!--<div name="right-side" class="col-md-4 col-sm-12">-->
+                    <div style="min-height: 350px;">
+                      <c:AFP_Component wrapperClass="{!afpWrapper}"/>
+                    </div>
+                  <!--</div>-->
 
                     <apex:outputPanel rendered="{!AND(agency.IATA_ISO_Country__r.ANG_Enable_NewGen__c, isTravel)}">
 
