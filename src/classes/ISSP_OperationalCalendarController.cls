@@ -1,3 +1,9 @@
+/**
+    Controlelr class used in three different pages:
+    ISSP_OperationalCaledar: showing the Operational calendar records in a big Calendar
+    ISSP_OperationalCaledarMini: showing the Operational calendar records in a mini Calendar
+    ISSP_OperationalCaledarDetail: showing the Operational calendar records in a table
+**/
 global without sharing class ISSP_OperationalCalendarController {
     
     public class OperationalCalendarException extends Exception {}
@@ -54,6 +60,10 @@ global without sharing class ISSP_OperationalCalendarController {
     public Date maxDate {get; set;}
     public Date minDate {get; set;}
     
+    public String  description {get; set;}
+    private String defaultcountryTranslated;
+    private String defaultFrequencyTranslated;
+    
     //Filters
     public list<SelectOption> countryOptions {get;set;}
     public set<String> setFilter{get;set;}
@@ -70,9 +80,6 @@ global without sharing class ISSP_OperationalCalendarController {
     }
     public String getListEventsJSON() {
         return JSON.serialize(this.listEvents,true);
-    }
-    public String getListEventsJSONGrouped() {
-        return JSON.serialize(groupEvents(this.listEvents),true);
     }
     public String getMapFrequenciesJSON() {
         return JSON.serialize(MAP_FREQUENCIES,true);
@@ -99,42 +106,16 @@ global without sharing class ISSP_OperationalCalendarController {
         this.contact = this.user.contact;
         this.account = this.user.contact.account;
         this.setFilter = new set<String>();
-        this.defaultCountry = IS_AIRLINE? '': this.account.IATA_ISO_Country__c;
+        this.defaultCountry = this.account.IATA_ISO_Country__c;
         this.defaultOperationType = nvl(MAP_OPERATION_TYPES.get(this.account.Location_Class__c));
         this.defaultFrequency = this.account.Remittance_frequency__c;
         this.maxDate = Date.newInstance(Date.Today().year()+1, 1, 1);
         this.minDate = Date.newInstance(Date.Today().year()-1, 1, 1);
+        initPicklistValues();
         if (IS_AIRLINE) {
-            initPicklistValues();
+            this.description = this.defaultcountryTranslated + ' - BSP/CASS Calendar';
         } else {
-            setPicklistValuesForAgents();
-            loadEventsForAgent();
-        }
-    }
-
-    /**
-        Initial values for picklists when user is an agency used in a dummy filter section
-        This section is not an actual filter selection, it only show the mandatory filters applied
-        to current user, but they cannot change
-    **/
-    public void setPicklistValuesForAgents() {
-        String str = this.defaultcountry + ',' + this.defaultOperationType + ',' + this.defaultFrequency + ',' + '';
-        this.setFilter.add(str);
-        // set country name
-        try {
-            this.countryOptions = new list<SelectOption>();
-            IATA_ISO_Country__c country = [
-                SELECT Id, Name,
-                    IATA_COUNTRY_EN__c, IATA_Country_ZH__c, IATA_Country_SP__c,
-                    IATA_Country_PT__c, IATA_Country_JP__c, IATA_Country_IT__c,
-                    IATA_Country_FR__c, IATA_Contry_KR__c
-                FROM IATA_ISO_Country__c 
-                WHERE Id = :this.defaultcountry];
-            String countryName = (String)country.get(getIsoCountryFieldName());
-            this.countryOptions.add(new SelectOption(country.Id, countryName));
-            
-        } catch (Exception e) {
-            System.debug('No country found for current agency user');
+            this.description = this.defaultcountryTranslated + ' ' + this.defaultOperationType + ' ' + this.defaultFrequencyTranslated;
         }
     }
     
@@ -186,6 +167,7 @@ global without sharing class ISSP_OperationalCalendarController {
             String countryName = (String)country.get(fieldName);
             if (countryName==null) countryName = country.Name;
             mapNameCountry.put(countryName, country);
+            if (country.Id == this.defaultCountry) this.defaultcountryTranslated = countryName;
         }
         // create the country list ordered
         this.countryOptions = new list<SelectOption>();
@@ -196,6 +178,7 @@ global without sharing class ISSP_OperationalCalendarController {
             IATA_ISO_Country__c country = mapNameCountry.get(countryName);
             this.countryOptions.add(new SelectOption(country.Id, countryName));
         }
+        this.defaultFrequencyTranslated = MAP_FREQUENCIES.get(this.defaultFrequency);
     }
     
     /**
@@ -232,16 +215,17 @@ global without sharing class ISSP_OperationalCalendarController {
         Creates a list of events based on queried operational calendars
         these events are created based on the user type, airlines or agent users
     **/
-    private static list<EventWrapper> getOperationalCalendarEvents(list<Operational_Calendar__c> listOperations, String operationType) {
+    private static list<EventWrapper> getOperationalCalendarEvents(list<Operational_Calendar__c> listOperations, Boolean isGrouped) {
         list<EventWrapper> listEvents = new list<EventWrapper>();
-        Boolean isCASS = operationType.contains('CASS');
         for (Operational_Calendar__c operation: listOperations) {
+            String operationType = nvl(operation.Operation_Type__c);
+            Boolean isCASS = operationType.contains('CASS');
             String title = operation.Period_Code__c;
             String description = getEventDescription(operation, isCASS, IS_AIRLINE);
             // The settlement events are shown only for airlines
             if (IS_AIRLINE) {
                 EventWrapper event1 = new EventWrapper();
-                event1.title = FIELD_Settlement_Day + ' - ' + operation.Operation_Currency__c;
+                event1.title = getEventTitle(operation, FIELD_Settlement_Day, isGrouped);
                 event1.start = operation.Settlement_Day__c;
                 event1.allDay = true;
                 event1.className = 'settlementEvent';
@@ -249,14 +233,14 @@ global without sharing class ISSP_OperationalCalendarController {
                 listEvents.add(event1);
                 if (isCASS) {
                     EventWrapper event2 = new EventWrapper();
-                    event2.title = FIELD_Airline_Input_Upload_Cut_Off + ' - ' + operation.Operation_Currency__c;
+                    event2.title = getEventTitle(operation, FIELD_Airline_Input_Upload_Cut_Off, isGrouped);
                     event2.start = operation.Airline_Input_Upload_Cut_Off__c;
                     event2.allDay = true;
                     event2.className = 'airlineUploadEvent';
                     event2.description = description;
                     listEvents.add(event2);
                     EventWrapper event3 = new EventWrapper();
-                    event3.title = FIELD_Airline_Correction_Response_Cut_Off + ' - ' + operation.Operation_Currency__c;
+                    event3.title = getEventTitle(operation, FIELD_Airline_Correction_Response_Cut_Off, isGrouped);
                     event3.start = operation.Airline_Correction_Response_Cut_Off__c;
                     event3.allDay = true;
                     event3.className = 'airlineCorrectionEvent';
@@ -265,14 +249,14 @@ global without sharing class ISSP_OperationalCalendarController {
                 }
             } else {
                 EventWrapper event1 = new EventWrapper();
-                event1.title = FIELD_Remittance_Day + ' - ' + operation.Operation_Currency__c;
+                event1.title = getEventTitle(operation, FIELD_Remittance_Day, isGrouped);
                 event1.start = operation.Remittance_Day__c;
                 event1.allDay = true;
                 event1.className = 'remittanceEvent';
                 event1.description = description;
                 listEvents.add(event1);
                 EventWrapper event2 = new EventWrapper();
-                event2.title = FIELD_Billing_Availability + ' - ' + operation.Operation_Currency__c;
+                event2.title = getEventTitle(operation, FIELD_Billing_Availability, isGrouped);
                 event2.start = operation.Billing_Availability__c;
                 event2.allDay = true;
                 event2.className = 'billingAvailabilityEvent';
@@ -280,14 +264,14 @@ global without sharing class ISSP_OperationalCalendarController {
                 listEvents.add(event2);
                 if (isCASS) {
                     EventWrapper event3 = new EventWrapper();
-                    event3.title = FIELD_Agent_Correction_Cut_Off + ' - ' + operation.Operation_Currency__c;
+                    event3.title = getEventTitle(operation, FIELD_Agent_Correction_Cut_Off, isGrouped);
                     event3.start = operation.Agent_Correction_Cut_Off__c;
                     event3.allDay = true;
                     event3.className = 'agentCorrectionEvent';
                     event3.description = description;
                     listEvents.add(event3);
                     EventWrapper event4 = new EventWrapper();
-                    event4.title = FIELD_CASS_reports_Availability + ' - ' + operation.Operation_Currency__c;
+                    event4.title = getEventTitle(operation, FIELD_CASS_reports_Availability, isGrouped);
                     event4.start = operation.CASS_reports_Availability__c ;
                     event4.allDay = true;
                     event4.className = 'CASSReportsEvent';
@@ -299,6 +283,16 @@ global without sharing class ISSP_OperationalCalendarController {
         return listEvents;
     }
     
+    public static String getEventTitle(Operational_Calendar__c operation, String eventName, Boolean isGrouped) {
+        if (isGrouped) {
+            String operationType = nvl(operation.Operation_Type__c);
+            String frequency = MAP_FREQUENCIES.get(operation.frequency_code__c);
+            return eventName + '-' + operationType + ' ' + frequency + ' ' + operation.Operation_Currency__c;
+        } else {
+            return eventName + ' - ' + operation.Operation_Currency__c;
+        }
+    }
+    
     /**
         Query the operational calendar records based on input filters
     **/
@@ -307,18 +301,31 @@ global without sharing class ISSP_OperationalCalendarController {
             throw new OperationalCalendarException(Label.ISSP_OperationalCalendar_Country_Filter_Required);
         }
         if (String.isBlank(operationType)) {
-            throw new OperationalCalendarException(Label.ISSP_OperationalCalendar_BSPCASS_Filter_Required);
+            // if the operation type is not defines we have to run the query for all available types
+            list<Operational_Calendar__c> listOperations = new list<Operational_Calendar__c>();
+            for (String opType: MAP_OPERATION_TYPES.values()) {
+                listOperations.addAll(runQuery(country, frequency, opType, currencyCode, billingPeriod));
+            }
+            return listOperations;
+        } else {
+            return runQuery(country, frequency, operationType, currencyCode, billingPeriod);
         }
+    }
+    
+    /**
+        Generate the query string and runs it, used only by queryListOperations()
+    **/
+    private static list<Operational_Calendar__c> runQuery(String country, String frequency, String operationType, String currencyCode, Integer billingPeriod) {
         String lookupField = operationType.contains('CASS')? 'AMS_Settlement_System_CASS__c': 'AMS_Settlement_System__c';
         String query = 'SELECT Id,RecordTypeId,First_Day__c,Frequency_code__c,HAR_Day__c,ISS_operation__c,Last_Day__c,Name,Operation_Code__c,'
             + ' Operation_Currency__c,Operation_Period_code__c,Operation_Type__c,Period_Code__c,Remittance_Day__c,Settlement_Day__c,'
             + ' EP_Settlement_date__c, Billing_Availability__c, Airline_Input_Upload_Cut_Off__c, CASS_reports_Availability__c,'
-            + ' Agent_Correction_Cut_Off__c, Airline_Correction_Response_Cut_Off__c '
+            + ' Agent_Correction_Cut_Off__c, Airline_Correction_Response_Cut_Off__c, LastModifiedDate'
             + ' FROM Operational_Calendar__c'
             + ' WHERE ISS_operation__c IN ('
             + '     SELECT ' + lookupField
             + '     FROM IATA_ISO_Country__c'
-            + '     WHERE Id = :country)'
+            + '     WHERE Id = \'' + country + '\')'
             + ' AND Operation_Type__c = \'' + operationType + '\'';
             
             if (String.isNotBlank(frequency)) {
@@ -341,26 +348,6 @@ global without sharing class ISSP_OperationalCalendarController {
     }
     
     /**
-        This method only gets the events to show an agent user, it will be executed only once at the beggining
-    **/
-    public void loadEventsForAgent() {
-        String currencyCode = '';
-        try {
-            this.listOperations = queryListOperations(this.defaultcountry, this.defaultFrequency, this.defaultOperationType, currencyCode, Date.today().year());
-        } catch (Exception e) {
-            this.listOperations = new list<Operational_Calendar__c>();
-        }
-        this.listEvents = getOperationalCalendarEvents(this.listOperations, this.defaultOperationType);
-        for (EventWrapper event: this.listEvents) {
-            if (event.start!=null && event.start.date() > this.maxDate){
-                // first day of next event's month
-                Date firstDayMonth = Date.newInstance(event.start.year(), event.start.month(),1);
-                this.maxDate = firstDayMonth.addMonths(1);
-            }
-        }
-    }
-    
-    /**
         Get the country fild value where is located the translated name of the country
     **/
     public String getIsoCountryFieldName() {
@@ -375,17 +362,24 @@ global without sharing class ISSP_OperationalCalendarController {
     **/
     @RemoteAction
     global static String loadEventsRemote(String country, String frequency, String operationType, String currencyCode) {
-        if (!IS_AIRLINE) return '';
         list<Operational_Calendar__c> listOperations = queryListOperations(country, frequency, operationType, currencyCode,null);
-        list<EventWrapper> listEvents = getOperationalCalendarEvents(listOperations, operationType);
+        list<EventWrapper> listEvents = getOperationalCalendarEvents(listOperations, false);
         return JSON.serialize(listEvents,true);
     }
     
-    @RemoteAction
-    global static String loadEventsGroupedRemote(String country, String frequency, String operationType, String currencyCode) {
-        if (!IS_AIRLINE) return '';
-        list<Operational_Calendar__c> listOperations = queryListOperations(country, frequency, operationType, currencyCode,null);
-        list<EventWrapper> listEvents = getOperationalCalendarEvents(listOperations, operationType);
+    /**
+        Get the event list for the mini calendar
+        This list is grouped by day, so there is only one event per day and each
+        individual event is described in the hover
+    **/
+    public String getListEventsJSONGrouped() {
+        String country = this.defaultCountry;
+        String frequency = this.defaultFrequency;
+        String operationType = IS_AIRLINE? null: this.defaultOperationType;
+        String currencyCode = null;
+        Integer period = null;
+        list<Operational_Calendar__c> listOperations = queryListOperations(country, frequency, operationType, currencyCode, period);
+        list<EventWrapper> listEvents = getOperationalCalendarEvents(listOperations, true);
         return JSON.serialize(groupEvents(listEvents),true);
     }
     
@@ -394,16 +388,27 @@ global without sharing class ISSP_OperationalCalendarController {
         This is called from the page, usually when a filter changes, for airlines only
     **/
     @RemoteAction
-    global static String loadDetailsRemoteForAirlines(String country, String frequency, String operationType, String currencyCode, String billingPeriod) {
-        if (!IS_AIRLINE) return '';
+    global static String loadDetailsRemote(String country, String frequency, String operationType, String currencyCode, String billingPeriod) {
+        list<Operational_Calendar__c> listOperations = queryListOperations(country, frequency, operationType, currencyCode, Integer.ValueOf(billingPeriod));
+        if (IS_AIRLINE) {
+            return serializeOperationsForAirlines(listOperations);
+        } else {
+            return serializeOperationsForAgency(listOperations);
+        }
+    }
+
+    /**
+        Specific JSON transformation only for Airlines
+    **/
+    private static String serializeOperationsForAirlines(list<Operational_Calendar__c> listOperations) {
         list<list<String>> listResults = new list<list<String>>();
         Integer numOfNonPastRow = 0;
-        for (Operational_Calendar__c operation: queryListOperations(country, frequency, operationType, currencyCode, Integer.ValueOf(billingPeriod))) {
+        for (Operational_Calendar__c operation: listOperations) {
             list<String> listLine = new list<String>();
             listLine.add(nvl(operation.Period_Code__c));
             listLine.add(dateToString(operation.First_Day__c));
             listLine.add(dateToString(operation.Last_Day__c));
-            if (operationType.contains('CASS')) {
+            if (operation.Operation_Type__c.contains('CASS')) {
                 listLine.add('-');
                 listLine.add(operation.Operation_Currency__c);
                 listLine.add(dateToString(operation.Airline_Input_Upload_Cut_Off__c));
@@ -426,37 +431,23 @@ global without sharing class ISSP_OperationalCalendarController {
             numOfNonPastRow+= rowclass=='past-row'? 0: 1;
             if (numOfNonPastRow == 1)  rowclass += ' first-nonpast-row';
             listLine.add(rowclass);
+            listLine.add(''+operation.LastModifiedDate);
             listResults.add(listLine);
         }
         return JSON.serialize(listResults,true);
     }
     
     /**
-        Find the operational calendar list and converts it to JSON, a format valid for javascript
-        This is called from the page, usually when a filter changes, for agents only
+        Specific JSON transformation only for Agencies
     **/
-    @RemoteAction
-    global static String loadDetailsRemoteForAgents(String billingPeriod) {
-        if (!IS_AGENT) return '';
-        User user = [
-            SELECT Id,
-                Contact.Account.IATA_ISO_Country__c,
-                Contact.Account.Remittance_frequency__c,
-                Contact.Account.Location_Class__c
-            FROM User
-            WHERE Id = :UserInfo.getUserId()];
-        String country = user.Contact.Account.IATA_ISO_Country__c;
-        String frequency = user.Contact.Account.Remittance_frequency__c;
-        String operationType = MAP_OPERATION_TYPES.get(user.Contact.Account.Location_Class__c);
-        String currencyCode = '';
-        
+    private static String serializeOperationsForAgency(list<Operational_Calendar__c> listOperations) {
         list<list<String>> listResults = new list<list<String>>();
-        for (Operational_Calendar__c operation: queryListOperations(country, frequency, operationType, currencyCode, Integer.ValueOf(billingPeriod))) {
+        for (Operational_Calendar__c operation: listOperations) {
             list<String> listLine = new list<String>();
             listLine.add(nvl(operation.Period_Code__c));
             listLine.add(dateToString(operation.First_Day__c));
             listLine.add(dateToString(operation.Last_Day__c));
-            if (operationType.contains('CASS')) {
+            if (operation.Operation_Type__c.contains('CASS')) {
                 listLine.add('-');
                 listLine.add(operation.Operation_Currency__c);
                 listLine.add(dateToString(operation.CASS_reports_Availability__c));
@@ -471,6 +462,7 @@ global without sharing class ISSP_OperationalCalendarController {
             listLine.add(dateToString(operation.Remittance_Day__c));
             //column to define if it's a past record
             listLine.add(getDateComparedToToday(operation.Remittance_Day__c));
+            listLine.add(''+operation.LastModifiedDate);
             listResults.add(listLine);
         }
         return JSON.serialize(listResults,true);

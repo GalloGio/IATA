@@ -1,3 +1,6 @@
+/**
+    Test Class for ISSP_OperationalCalendarController.cls 
+**/
 @isTest
 public class ISSP_OperationalCalendarControllerTest {
 
@@ -123,9 +126,18 @@ public class ISSP_OperationalCalendarControllerTest {
             controller.getListEventsJSON();
             controller.getListEventsJSONGrouped();
             controller.getMapFrequenciesJSON();
-            ISSP_OperationalCalendarController.loadEventsRemote('','','','');
-            ISSP_OperationalCalendarController.loadDetailsRemoteForAirlines('','','','','');
-            ISSP_OperationalCalendarController.loadDetailsRemoteForAgents('');
+            try {
+                ISSP_OperationalCalendarController.loadEventsRemote('','','','');
+                System.assert(false, 'Exception expected');
+            } catch (Exception e) {
+                System.assert(true);
+            }
+            try {
+                ISSP_OperationalCalendarController.loadDetailsRemote('','','','','');
+                System.assert(false, 'Exception expected');
+            } catch (Exception e) {
+                System.assert(true);
+            }
         }
         Test.StopTest();
     }
@@ -151,8 +163,7 @@ public class ISSP_OperationalCalendarControllerTest {
                 System.assert(true);
             }
             try {
-                ISSP_OperationalCalendarController.loadDetailsRemoteForAirlines('','','','','');
-                ISSP_OperationalCalendarController.loadDetailsRemoteForAgents('');
+                ISSP_OperationalCalendarController.loadDetailsRemote('','','','','');
                 System.assert(false, 'Exception expected');
             } catch(Exception e) {
                 System.assert(true);
@@ -192,9 +203,8 @@ public class ISSP_OperationalCalendarControllerTest {
             String currencyCode = 'EUR';
             String billingPeriod = String.valueOf(Date.today().year());
             ISSP_OperationalCalendarController.loadEventsRemote(country, frequency, operationType, currencyCode);
-            ISSP_OperationalCalendarController.loadDetailsRemoteForAirlines(country, frequency, operationType, currencyCode, billingPeriod);
-            ISSP_OperationalCalendarController.loadDetailsRemoteForAirlines(country, frequency, operationType, currencyCode, '1');
-            ISSP_OperationalCalendarController.loadDetailsRemoteForAgents(billingPeriod);
+            ISSP_OperationalCalendarController.loadDetailsRemote(country, frequency, operationType, currencyCode, billingPeriod);
+            ISSP_OperationalCalendarController.loadDetailsRemote(country, frequency, operationType, currencyCode, '1');
             controller.getListEventsJSON();
             controller.getListEventsJSONGrouped();
         }
@@ -232,9 +242,8 @@ public class ISSP_OperationalCalendarControllerTest {
             String currencyCode = '';
             String billingPeriod = String.valueOf(Date.today().year());
             ISSP_OperationalCalendarController.loadEventsRemote(country, frequency, operationType, currencyCode);
-            ISSP_OperationalCalendarController.loadDetailsRemoteForAirlines(country, frequency, operationType, currencyCode, billingPeriod);
-            ISSP_OperationalCalendarController.loadDetailsRemoteForAirlines(country, frequency, operationType, currencyCode, '1');
-            ISSP_OperationalCalendarController.loadDetailsRemoteForAgents(billingPeriod);
+            ISSP_OperationalCalendarController.loadDetailsRemote(country, frequency, operationType, currencyCode, billingPeriod);
+            ISSP_OperationalCalendarController.loadDetailsRemote(country, frequency, operationType, currencyCode, '1');
             controller.getListEventsJSON();
             controller.getListEventsJSONGrouped();
         }
@@ -272,8 +281,7 @@ public class ISSP_OperationalCalendarControllerTest {
             String currencyCode = '';
             String billingPeriod = String.valueOf(Date.today().year());
             ISSP_OperationalCalendarController.loadEventsRemote(country, frequency, operationType, currencyCode);
-            ISSP_OperationalCalendarController.loadDetailsRemoteForAirlines(country, frequency, operationType, currencyCode, billingPeriod);
-            ISSP_OperationalCalendarController.loadDetailsRemoteForAgents(billingPeriod);
+            ISSP_OperationalCalendarController.loadDetailsRemote(country, frequency, operationType, currencyCode, billingPeriod);
             controller.getListEventsJSON();
             controller.getListEventsJSONGrouped();
         }
@@ -311,8 +319,7 @@ public class ISSP_OperationalCalendarControllerTest {
             String currencyCode = '';
             String billingPeriod = String.valueOf(Date.today().year());
             ISSP_OperationalCalendarController.loadEventsRemote(country, frequency, operationType, currencyCode);
-            ISSP_OperationalCalendarController.loadDetailsRemoteForAirlines(country, frequency, operationType, currencyCode, billingPeriod);
-            ISSP_OperationalCalendarController.loadDetailsRemoteForAgents(billingPeriod);
+            ISSP_OperationalCalendarController.loadDetailsRemote(country, frequency, operationType, currencyCode, billingPeriod);
             controller.getListEventsJSON();
             controller.getListEventsJSONGrouped();
         }

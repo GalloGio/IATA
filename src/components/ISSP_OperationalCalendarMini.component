@@ -43,45 +43,23 @@ function loadScript(url, callback){
     loadScript("{!URLFOR($Resource.fullcalendar, '/fullcalendar-3.9.0/lib/moment.min.js')}",function(){
     loadScript("{!URLFOR($Resource.fullcalendar, '/fullcalendar-3.9.0/fullcalendar.min.js')}",function(){
     loadScript("{!URLFOR($Resource.ISSP_OperationalCalendar, '/lib/qtip/jquery.qtip.min.js')}",function(){
-        initFilters();
         initCalendar();
-        refreshEvents();
+        setCalendarEvents(events);
     });
     });
     });
 
 
     $(document).ready(function() {
-        $(".countryFilter").change(function() {
-            updatePicklistsFromCountry();
-            refreshEvents();
-        });
-        $("#typeFilter").change(function() {
-            updatePicklistsFromType();
-            refreshEvents();
-        });
-        $("#frequencyFilter").change(function() {
-            updatePicklistsFromFrequency();
-            refreshEvents();
-        });
-        $("#currencyFilter").change(function() {
-            refreshEvents();
-        });
-        $("#resetButton").click(function() {
-            $(".countryFilter").val(defaultCountry);
-            $("#typeFilter").val("");
-            updatePicklist($("#frequencyFilter"),[],0,"");
-            updatePicklist($("#currencyFilter"),[],0,"");
-            refreshEvents();
-        });
     });
 
     function initCalendar() {
         var calendar =  $('#calendar').fullCalendar({
             aspectRatio: 1,
             header: {
-                left: 'title',
-                right: 'prev,next'
+                left:'prev',
+                center: 'title',
+                right: 'next'
             },
             views: {
               listMonth: {
@@ -128,78 +106,6 @@ function loadScript(url, callback){
         });
     }
 
-    function initFilters(){
-        if (isAirline) {
-            if ("{!$CurrentPage.parameters.fcountry}">"") {
-                $(".countryFilter").val("{!$CurrentPage.parameters.fcountry}");
-            } else {
-                $(".countryFilter").val(defaultCountry);
-            }
-            updatePicklistsFromCountry();
-            if ("{!$CurrentPage.parameters.ftype}">"") {
-                $("#typeFilter").val("{!$CurrentPage.parameters.ftype}");
-                updatePicklistsFromType();
-            }
-            if ("{!$CurrentPage.parameters.ffrequency}">"") {
-                $("#frequencyFilter").val("{!$CurrentPage.parameters.ffrequency}");
-                updatePicklistsFromFrequency();
-            }
-            if ("{!$CurrentPage.parameters.fcurrency}">"") {
-                $("#currencyFilter").val("{!$CurrentPage.parameters.fcurrency}");
-            }
-        } else {
-            //if it's an agency the filters are populated with a single value, and not selectible
-            var listValues = LIST_FILTERS[0].split(",");
-            //country filter
-            $(".countryFilter").prop("disabled",true);
-            //type filter
-            $("#typeFilter").append($('<option>', {value: listValues[1],text: listValues[1]}));
-            $("#typeFilter").prop("disabled",true);
-            //frequency filter
-            var label = MAP_FREQUENCIES[listValues[2]];
-            $("#frequencyFilter").append($('<option>', {value: listValues[2],text: label}));
-            $("#frequencyFilter").prop("disabled",true);
-        }
-    }
-    
-    function refreshEvents() {
-        if (isAirline){
-            hideError();
-            //remove existing events
-            $("#calendar").fullCalendar('removeEvents' , function(e){ return true; });
-            var country = $(".countryFilter").val();
-            var frequency = $("#frequencyFilter").val();
-            var operationType = $("#typeFilter").val();
-            var currency = $("#currencyFilter").val();
-            // validate country and operationtype
-            if (country=='') {
-                showError("{!$Label.ISSP_OperationalCalendar_Country_Filter_Required}");
-                return;
-            }
-            if (operationType=='') {
-                showError("{!$Label.ISSP_OperationalCalendar_BSPCASS_Filter_Required}");
-                return;
-            }
-            //console.log("country: " + country + " frequency: " + frequency + " operationType: " + operationType + " currency: " + currency);
-            Visualforce.remoting.Manager.invokeAction(
-                '{!$RemoteAction.ISSP_OperationalCalendarController.loadEventsGroupedRemote}',
-                country, frequency, operationType, currency,
-                function(result, event){
-                    if (event.status) {
-                        setCalendarEvents($.parseJSON(result));
-                    } else if (event.type === 'exception') {
-                        showError(event.message);
-                    } else {
-                        console.log('Unknown error in refreshEvents result: ' + unescape(result));
-                    }
-                }, 
-                {escape: false}
-            );
-        } else {
-            setCalendarEvents(events);
-        }
-    }
-
     function setCalendarEvents(listEvents){
         var calendar =  $('#calendar');
         //remove existing events
@@ -215,85 +121,6 @@ function loadScript(url, callback){
         }
     }
     
-    function containsInArray(array, match) {
-        var result = [];
-        for (i = 0; i < array.length; i++) {
-            if (array[i].includes(match)) {
-                result.push(array[i])
-            }
-        }
-        return result;
-    };
-    
-    function updatePicklistsFromCountry() {
-        var country = $(".countryFilter").val();
-        var operationType = $("#typeFilter").val();
-        var filter = country + ",";
-        var listValues = containsInArray(LIST_FILTERS,filter);
-        updatePicklist($("#typeFilter"), listValues,1,operationType);
-        updatePicklist($("#frequencyFilter"), listValues,2,'');
-        updatePicklist($("#currencyFilter"), listValues,3,'');
-    }
-    
-    function updatePicklistsFromType(position) {
-        var country = $(".countryFilter").val();
-        var operationType = $("#typeFilter").val();
-        var filter = country + ",";
-        if (operationType!=undefined) {
-            filter+= operationType + ",";
-        }
-        var listValues = containsInArray(LIST_FILTERS,filter);
-        if (operationType==undefined) {
-            updatePicklist($("#typeFilter"), listValues,1,'');
-        }
-        updatePicklist($("#frequencyFilter"), listValues,2,'');
-        updatePicklist($("#currencyFilter"), listValues,3,'');
-    }
-    
-    function updatePicklistsFromFrequency() {
-        var country = $(".countryFilter").val();
-        var operationType = $("#typeFilter").val();
-        var frequency = $("#frequencyFilter").val();
-        var filter = country + "," + operationType + ",";
-        if (frequency>"") {
-             filter+= frequency + ",";
-        }
-        var listValues = containsInArray(LIST_FILTERS,filter);
-        updatePicklist($("#currencyFilter"), listValues,3,'');
-    }
-
-    function updatePicklist(inputSelect, listValues, position, defValue) {
-        if (!isAirline) return;
-        inputSelect.find('option').remove();
-        var listUniqueValues = [];
-        // get only the part required
-        $.each(listValues, function (i, item) {
-            listUniqueValues.push(item.split(",")[position]);
-        });
-        // remove duplicates
-        listUniqueValues = listUniqueValues.sort().filter(function(item, pos, self) {
-            return self.indexOf(item) == pos;
-        });
-        // add None option if required
-        if (listUniqueValues.length!=1) {
-            var emptyText = "--{!$Label.ISSP_All}--";
-            if (inputSelect.attr('id')=="typeFilter") {
-                emptyText = "{!$Label.ANG_ISSP_Picklist_None}";
-            }
-            inputSelect.append($("<option>", {value: "",text : emptyText}));
-        }
-        // Add options
-        $.each(listUniqueValues, function (i, item) {
-            var label = item;
-            if (position==2) {
-                label = MAP_FREQUENCIES[item];
-            }
-            var option = $('<option>', {value: item,text: label});
-            if (defValue==item) option.attr("selected",true);
-            inputSelect.append(option);
-        });
-    }
-    
     function showError(message) {
         $('#calendar').addClass("disabled");
         $("#errormessage")
@@ -306,40 +133,34 @@ function loadScript(url, callback){
     }
 </script>
 
-<div class="container" style="width:100%">
-    <div id="rowCalendar" class="row">
-        <div class="col-sm-4">
-            <apex:form >
-                <div class="form-group"/>
-                <div class="form-group form-group-xxs">
-                    <label for="countryFilterInput">{!$Label.ISSP_OperationalCalendar_CountryFilter}</label>
-                    <apex:selectList styleclass="countryFilter form-control input-xxs {!IF(isAirline,'required','')}" multiselect="false" size="1">
-                        <apex:selectOptions value="{!countryOptions}" />
-                    </apex:selectList>
+<!-- MAIN CALENDAR CONTAINER -->
+<div class="panel panel-primary">
+    <!-- CONTAINER TITLE -->
+    <div class="panel-heading">
+          <h3 class="panel-title">
+              <span class="glyphicon glyphicon-calendar"></span>
+              <a title="{!description}"
+                href="/ISSP_OperationalCalendar?MainNav=resources&subNav=OperationalCalendar&mid=M2S4">
+                {!description}
+              </a>
+          </h3>
+    </div>
+    <!-- CONTAINER BODY -->
+    <div class="panel-body" style="padding:2px">
+        <div class="container" style="width:100%">
+            <div id="rowCalendar" class="row">
+                <div class="col-sm-1"></div>
+                <div class="col-sm-10">
+                    <div id="calendar-container">
+                      <div id="errormessage" class="center" style="display:none"></div>
+                      <div id='calendar'></div>
+                    </div>
                 </div>
-                <div class="form-group form-group-xxs">
-                    <label for="typeFilter">{!$Label.ISSP_OperationalCalendar_BSPCASSFilter}</label>
-                    <select id="typeFilter" class="form-control input-xxs {!IF(isAirline,'required','')}"></select>
-                </div>
-                <div class="form-group form-group-xxs">
-                    <label for="frequencyFilter">{!$Label.ISSP_OperationalCalendar_FrequencyFilter}</label>
-                    <select id="frequencyFilter" class="form-control input-xxs"></select>
-                </div>
-                <apex:outputPanel layout="block" styleclass="form-group form-group-xxs" rendered="{!isAirline}">
-                    <label for="currencyFilter">{!$Label.ISSP_OperationalCalendar_CurrencyFilter}</label>
-                    <select id="currencyFilter" class="form-control input-xxs"></select>
-                </apex:outputPanel>
-                <apex:outputPanel layout="block" styleclass="form-group" rendered="{!isAirline}">
-                    <button id="resetButton" class="btn btn-primary btn-xs" type="button">{!$Label.ISSP_OperationalCalendar_Reset}</button>
-                </apex:outputPanel>
-            </apex:form>
-        </div>
-        <div class="col-sm-8">
-            <div id="calendar-container">
-              <div id="errormessage" class="center" style="display:none"></div>
-              <div id='calendar'></div>
+                <div class="col-sm-1"></div>
             </div>
         </div>
     </div>
 </div>
+
+
 </apex:component>

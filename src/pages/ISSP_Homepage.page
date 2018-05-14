@@ -605,14 +605,7 @@
                               
 <!--------------------------------------------OperationalCalendar Section------------------------------------------>
                             <apex:OutputPanel layout="block" styleclass="col-md-4 bottomrow"  id="OperationalCalendar" rendered="{!OR(isAirlineUser,isAgencyUser)}">
-                                  <div class="panel panel-primary">
-                                        <div class="panel-heading">
-                                              <h3 class="panel-title"><span class="glyphicon glyphicon-calendar"></span> Operational Calendar</h3>
-                                        </div>
-                                        <div class="panel-body" style="padding:2px">
-                                            <c:ISSP_OperationalCalendarMini />
-                                        </div>
-                                  </div>
+                                <c:ISSP_OperationalCalendarMini />
                             </apex:OutputPanel>
 <!-------------------------------------------- end OperationalCalendar Section--------------------------------------->
                         </div>

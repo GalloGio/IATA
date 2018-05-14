@@ -19947,14 +19947,6 @@ If you continue to experience issues registering for the CNS Customer Portal the
         <value>Billing Period</value>
     </labels>
     <labels>
-        <fullName>ISSP_OperationalCalendar_BSPCASS_Filter_Required</fullName>
-        <categories>ISSP, OperationalCalendar</categories>
-        <language>en_US</language>
-        <protected>false</protected>
-        <shortDescription>ISSP_OperationalCalendar_BSPCASS_Filter_Required</shortDescription>
-        <value>Please, select a value in BSP/CASS filter</value>
-    </labels>
-    <labels>
         <fullName>ISSP_OperationalCalendar_BSPCASSFilter</fullName>
         <categories>ISSP, OperationalCalendar</categories>
         <language>en_US</language>
@@ -19987,6 +19979,38 @@ If you continue to experience issues registering for the CNS Customer Portal the
         <value>Currency</value>
     </labels>
     <labels>
+        <fullName>ISSP_OperationalCalendar_DownloadDate</fullName>
+        <categories>ISSP, OperationalCalendar</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_OperationalCalendar_DownloadDate</shortDescription>
+        <value>Download Date</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_OperationalCalendar_EnableFilters</fullName>
+        <categories>ISSP, OperationalCalendar</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_OperationalCalendar_EnableFilters</shortDescription>
+        <value>Enable Filters</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_OperationalCalendar_Export_Calendar_Disclaimer</fullName>
+        <categories>ISSP, OperationalCalendar</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_OperationalCalendar_Export_Calendar_Disclaimer</shortDescription>
+        <value>Disclaimer for Export Calendar file</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_OperationalCalendar_Export_Disclaimer</fullName>
+        <categories>ISSP, OperationalCalendar</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_OperationalCalendar_Export_Disclaimer</shortDescription>
+        <value>Disclaimer for Export file to csv or pdf</value>
+    </labels>
+    <labels>
         <fullName>ISSP_OperationalCalendar_FilterTitle</fullName>
         <categories>ISSP, OperationalCalendar</categories>
         <language>en_US</language>
@@ -20008,7 +20032,15 @@ If you continue to experience issues registering for the CNS Customer Portal the
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>ISSP_OperationalCalendar_Full_Details</shortDescription>
-        <value>Full Details</value>
+        <value>Full Details and Download</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_OperationalCalendar_LastModifiedDate</fullName>
+        <categories>ISSP, OperationalCalendar</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_OperationalCalendar_LastModifiedDate</shortDescription>
+        <value>Last Modified Date</value>
     </labels>
     <labels>
         <fullName>ISSP_OperationalCalendar_No_Events</fullName>

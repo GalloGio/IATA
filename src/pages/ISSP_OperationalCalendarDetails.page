@@ -23,65 +23,26 @@
 <link href="{!URLFOR($Resource.ISSP_OperationalCalendar, '/css/buttons.bootstrap.min.css')}" rel="stylesheet"/>
 <link href="{!URLFOR($Resource.ISSP_OperationalCalendar, '/css/details.min.css')}" rel="stylesheet"/>
 
-
-<style>
-.waiting-screen {
-    position: fixed;
-    padding: 0;
-    margin: 0;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background: white;
-    z-index: 1000;
-}
-.center {
-    position: absolute;
-    top: 50%;
-    left: 50%;
-}
-.loader-small {
-    border: 5px solid #f3f3f3;
-    border-top-width: 5px;
-    border-top-style: solid;
-    border-top-color: rgb(243, 243, 243);
-    -webkit-animation: spin 1s linear infinite;
-    animation: spin 1s linear infinite;
-    border-top: 5px solid #555;
-    border-radius: 50%;
-    width: 50px;
-    height: 50px;
-}
-/* Safari */
-@-webkit-keyframes spin {
-  0% { -webkit-transform: rotate(0deg); }
-  100% { -webkit-transform: rotate(360deg); }
-}
-
-@keyframes spin {
-  0% { transform: rotate(0deg); }
-  100% { transform: rotate(360deg); }
-}
-</style>
 <script>
     var LIST_FILTERS = {!listFiltersJson};
     var MAP_FREQUENCIES = {!mapFrequenciesJson};
     var isAirline = {!isAirline};
     var defaultCountry = "{!defaultCountry}";
     var defaultOperationType = "{!defaultOperationType}";
-    
+    var defaultFrequency = "{!defaultFrequency}";
+    if (isAirline) {
+        defaultOperationType = "";
+        defaultFrequency = "";
+    }
+    //console.log(MAP_FREQUENCIES);
+    //console.log(LIST_FILTERS);
+    //console.log(defaultCountry);
+    //console.log(defaultOperationType);
+    //console.log(defaultFrequency);
     $(document).ready(function() {
         initTable();
-        
-        if (isAirline) {
-            initAirlineFilters();
-            refreshDetails();
-        }
-        if (!isAirline) {
-            initAgencyFilters();
-            refreshDetails();
-        }
+        initFilters();
+        refreshDetails();
         $(".countryFilter").change(function() {
             updatePicklistsFromCountry();
             refreshDetails();
@@ -104,22 +65,31 @@
         $('#billingPeriodFilter').change(function() {
             refreshDetails();
         });
+        $("#enableFiltersCheck").click(function() {
+            var enabled = $(this).prop('checked');
+            enableFilters(enabled);
+        });
         $("#resetButton").click(function() {
-            if (isAirline) {
-                $(".countryFilter").val(defaultCountry);
-                $("#typeFilter").val("");
-                updatePicklist($("#frequencyFilter"),[],0,"");
-                updatePicklist($("#currencyFilter"),[],0,"");
-            }
+            $(".countryFilter").val(defaultCountry);
+            updatePicklistsFromCountry();
+            $("#typeFilter").val(defaultOperationType);
+            updatePicklistsFromType();
+            $("#frequencyFilter").val(defaultFrequency);
+            updatePicklistsFromFrequency();
             $('#billingPeriodFilter').val(new Date().getFullYear());
+            $("#enableFiltersCheck").prop('checked',false);
+            enableFilters(false);
             refreshDetails();
         });
         $(".btn-default").toggleClass('btn-default btn-primary');
         $(".buttons-csv").prepend( "<span class='glyphicon glyphicon-th' style='padding-right:2px;'></span>").prop("disabled","true");
         $(".buttons-pdf").prop("disabled","true");
+        $(".buttons-csv").click(function() {
+            alert("{!$Label.ISSP_OperationalCalendar_Export_Disclaimer}");
+        });
     });
     
-    function initAirlineFilters(){
+    function initFilters(){
         if ("{!$CurrentPage.parameters.fcountry}">"") {
             $(".countryFilter").val("{!$CurrentPage.parameters.fcountry}");
         } else {
@@ -128,31 +98,42 @@
         updatePicklistsFromCountry();
         if ("{!$CurrentPage.parameters.ftype}">"") {
             $("#typeFilter").val("{!$CurrentPage.parameters.ftype}");
-            updatePicklistsFromType();
+        } else {
+            $("#typeFilter").val(defaultOperationType);
         }
+        //PDF button depends on the operation type value
+        var isCASS = $("#typeFilter").val().includes("CASS");
+        addPDFButton(isCASS);
+        updatePicklistsFromType();
         if ("{!$CurrentPage.parameters.ffrequency}">"") {
             $("#frequencyFilter").val("{!$CurrentPage.parameters.ffrequency}");
-            updatePicklistsFromFrequency();
+        } else {
+            $("#frequencyFilter").val(defaultFrequency);
         }
+        updatePicklistsFromFrequency();
         if ("{!$CurrentPage.parameters.fcurrency}">"") {
             $("#currencyFilter").val("{!$CurrentPage.parameters.fcurrency}");
         }
+        var fenablefilters = "{!$CurrentPage.parameters.fenablefilters}";
+        if (fenablefilters>"") {
+            var isEnabled = fenablefilters=='true';
+            $("#enableFiltersCheck").prop("checked",isEnabled);
+            enableFilters(isEnabled);
+        } else {
+            if (!isAirline) {
+                $("#enableFiltersCheck").prop("checked",false);
+                enableFilters(false);
+            }
+        }
     }
     
-    function initAgencyFilters() {
-        //if it's an agency the filters are populated with a single value, and not selectible
-        var listValues = LIST_FILTERS[0].split(",");
-        //country filter
-        $(".countryFilter").prop("disabled",true);
-        //type filter
-        $("#typeFilter").append($('<option>', {value: listValues[1],text: listValues[1]}));
-        $("#typeFilter").prop("disabled",true);
-        //frequency filter
-        var label = MAP_FREQUENCIES[listValues[2]];
-        $("#frequencyFilter").append($('<option>', {value: listValues[2],text: label}));
-        $("#frequencyFilter").prop("disabled",true);
+    function enableFilters(enabled) {
+        var disabled = !enabled;
+        $(".countryFilter").prop("disabled",disabled);
+        $("#typeFilter").prop("disabled",disabled);
+        $("#frequencyFilter").prop("disabled",disabled);
+        $("#currencyFilter").prop("disabled",disabled);
     }
-    
     function initTable() {
         var table = $('.table-pagination').dataTable({
             "dom": 'rtlp<"clear"i>',
@@ -196,7 +177,6 @@
                 title: function () { return getExportFileNameCSV();}
             }]
         }).container().appendTo($('#exportCSV'));
-        addPDFButton(false);
     }
     
     var pdfButton = {
@@ -207,16 +187,17 @@
         customize: function ( doc ) {
             doc.content.splice( 0, 0, {
                 margin: [ 0, 0, 0, 0 ],
-                alignment: 'left',
+                alignment: 'center',
                 image: iata_logo
             });
             doc['footer']=(function(page, pages) {
                 return {
                     columns: [
-                        new Date().toString(),
+                        '\n{!$Label.ISSP_OperationalCalendar_DownloadDate}: ' + new Date().toDateString(),
+                        '\n{!$Label.ISSP_OperationalCalendar_LastModifiedDate}: ' + getLastModifiedDate().toDateString(),
                         {
                             alignment: 'right',
-                            text: [{ text: page.toString() },  ' / ', { text: pages.toString() }]
+                            text: ['\n',{ text: page.toString() },  ' / ', { text: pages.toString() }]
                         }
                     ],
                     margin: [10, 0]
@@ -224,6 +205,19 @@
             });
         }
     };
+    
+    function getLastModifiedDate() {
+        var table = $('.table-pagination').DataTable();
+        var lastModifiedDate = null;
+        var tablerows = table.rows().data();
+        var dateColumnNumber = isAirline? 13: 10;
+        for (var i = 0; i < tablerows.length; i++) { 
+            var row = tablerows[i];
+            var modifiedDate = new Date(row[dateColumnNumber]);
+            lastModifiedDate = lastModifiedDate>modifiedDate? lastModifiedDate: modifiedDate;
+        }
+        return lastModifiedDate;
+    }
     
     function addPDFButton(isCASS) {
         if (isCASS) {
@@ -241,6 +235,7 @@
             .prepend( "<span class='glyphicon glyphicon-th' style='padding-right:2px;'></span>")
             .toggleClass('btn-default btn-primary')
             .prop("disabled", isDisabled);
+        $(".buttons-pdf").attr('onclick','alert("{!$Label.ISSP_OperationalCalendar_Export_Disclaimer}")');
     }
     
     function containsInArray(array, match) {
@@ -291,7 +286,6 @@
     }
 
     function updatePicklist(inputSelect, listValues, position, defValue) {
-        if (!isAirline) return;
         inputSelect.find('option').remove();
         var listUniqueValues = [];
         // get only the part required
@@ -305,9 +299,6 @@
         // add None option if required
         if (listUniqueValues.length!=1) {
             var emptyText = "--{!$Label.ISSP_All}--";
-            if (inputSelect.attr('id')=="typeFilter") {
-                emptyText = "{!$Label.ANG_ISSP_Picklist_None}";
-            }
             inputSelect.append($("<option>", {value: "",text : emptyText}));
         }
         // Add options
@@ -325,11 +316,10 @@
     function refreshDetails() {
         //remove existing details
         $('.table-pagination').DataTable().clear().draw();
-        if (isAirline) refreshDetailsForAirlines();
-        else refreshDetailsForAgents();
+        refreshDetails();
     }
     
-    function refreshDetailsForAirlines() {
+    function refreshDetails() {
         hideError();
         var country = $(".countryFilter").val();
         var frequency = $("#frequencyFilter").val();
@@ -341,35 +331,12 @@
             showError("{!$Label.ISSP_OperationalCalendar_Country_Filter_Required}");
             return;
         }
-        if (operationType=='') {
-            showError("{!$Label.ISSP_OperationalCalendar_BSPCASS_Filter_Required}");
-            return;
-        }
         Visualforce.remoting.Manager.invokeAction(
-            '{!$RemoteAction.ISSP_OperationalCalendarController.loadDetailsRemoteForAirlines}',
+            '{!$RemoteAction.ISSP_OperationalCalendarController.loadDetailsRemote}',
             country, frequency, operationType, currency, billingPeriod,
             function(result, event){
                 if (event.status) {
                     setTableDetails($.parseJSON(result), operationType);
-                } else if (event.type === 'exception') {
-                    showError(event.message);
-                } else {
-                    console.log('Unknown error in refreshDetails result: ' + unescape(result));
-                }
-            }, 
-            {escape: false}
-        );
-    }
-    
-    function refreshDetailsForAgents() {
-        hideError();
-        var billingPeriod = $("#billingPeriodFilter").val();
-        Visualforce.remoting.Manager.invokeAction(
-            '{!$RemoteAction.ISSP_OperationalCalendarController.loadDetailsRemoteForAgents}',
-            billingPeriod,
-            function(result, event){
-                if (event.status) {
-                    setTableDetails($.parseJSON(result), defaultOperationType);
                 } else if (event.type === 'exception') {
                     showError(event.message);
                 } else {
@@ -405,16 +372,6 @@
         table.draw();
         $(".buttons-csv").prop("disabled",listLines.length==0);
         $(".buttons-pdf").prop("disabled",listLines.length==0);
-        // call the export buttons if the qexport attribute is in the url
-        if ("{!$CurrentPage.parameters.qexport}"=="csv") {
-            $(".buttons-csv").click();
-            sleep(10000).then(() => { window.close(); })
-        }
-        if ("{!$CurrentPage.parameters.qexport}"=="pdf") {
-            addPDFButton(isCASS);
-            $(".buttons-pdf").click();
-            sleep(10000).then(() => { window.close(); })
-        }
     }
     
     function showError(message) {
@@ -441,6 +398,9 @@
         if ($("#currencyFilter").val()>"") {
           href+="&fcurrency=" + $("#currencyFilter").val();
         }
+        if ($("#enableFiltersCheck").prop("checked")) {
+            href+="&fenablefilters=true";
+        }
         window.location.href = href;
     }
     
@@ -449,15 +409,15 @@
     }
     function getExportFileNamePDF() {
         var filename = "{!$Label.ISSP_OperationalCalendar}";
-        filename += "_" + $(".countryFilter option:selected").text();
-        filename += "_" + $("#typeFilter option:selected").text();
+        filename += " " + $(".countryFilter option:selected").text();
+        filename += "-" + $("#typeFilter option:selected").text();
         if ($("#frequencyFilter").val()!="") {
-            filename += "_" + $("#frequencyFilter option:selected").text();
+            filename += " " + $("#frequencyFilter option:selected").text();
         }
         if ($("#currencyFilter").val()!="") {
-            filename += "_" + $("#currencyFilter option:selected").text();
+            filename += " " + $("#currencyFilter option:selected").text();
         }
-        filename += "_" + $("#billingPeriodFilter option:selected").text();
+        filename += " " + $("#billingPeriodFilter option:selected").text();
         return filename;
     }
     
@@ -466,31 +426,31 @@
     }
 </script>
 
-<div class="container">
+<div class="container" >
     <c:ISSP_CustomNavigation />
 
     <div id='table'>
         <div class="row">
-            <div class="col-sm-1"></div>
-            <div class="col-sm-10">
-                <div id="errormessage" class="alert alert-danger" style="display:none"></div>
-            </div>
-            <div class="col-sm-1"></div>
-        </div>
-        <div class="row">
-            <div class="col-sm-5"></div>
-            <div class="col-sm-2">
+            <div class="col-sm-12">
                 <button type="button" class="btn btn-default btn-calendar center-block" onclick="showCalendar()">{!$Label.ISSP_OperationalCalendar_Show_Calendar}</button>
             </div>
-            <div class="col-sm-3"></div>
+        </div>
+    
+        <!-- FILTERS -->
+        <div class="row">
+            <div class="col-sm-2 form-group">
+                <apex:outputPanel layout="block" styleclass="form-check" rendered="{!NOT(isAirline)}">
+                    <input type="checkbox" class="form-check-input" id="enableFiltersCheck"/>
+                    <label class="form-check-label" for="enableFiltersCheck">{!$Label.ISSP_OperationalCalendar_EnableFilters}</label>
+                </apex:outputPanel>
+            </div>
+            <div class="col-sm-8"></div>
             <div id="exportCSV" class="col-sm-2">
                 <span id="exportCSV"></span>
                 <span id="exportPDF" class="pull-right"></span>
             </div>
         </div>
-    
-        <!-- FILTERS -->
-        <apex:outputPanel layout="block" styleclass="row">
+        <div class="row">
             <apex:form>
                 <div class="col-sm-2">
                     <apex:outputPanel layout="block" styleclass="form-group">
@@ -503,7 +463,7 @@
                 <div class="col-sm-2">
                     <apex:outputPanel layout="block" styleclass="form-group">
                         <label for="typeFilter">{!$Label.ISSP_OperationalCalendar_BSPCASSFilter}</label>
-                        <select id="typeFilter" class="form-control required"></select>
+                        <select id="typeFilter" class="form-control"></select>
                     </apex:outputPanel>
                 </div>
                 <div class="col-sm-2">
@@ -513,7 +473,7 @@
                     </apex:outputPanel>
                 </div>
                 <div class="col-sm-2">
-                    <apex:outputPanel layout="block" styleclass="form-group" rendered="{!isAirline}">
+                    <apex:outputPanel layout="block" styleclass="form-group">
                         <label for="currencyFilter">{!$Label.ISSP_OperationalCalendar_CurrencyFilter}</label>
                         <select id="currencyFilter" class="form-control"></select>
                     </apex:outputPanel>
@@ -543,7 +503,16 @@
                     <button id="resetButton" class="btn btn-primary" type="button">{!$Label.ISSP_OperationalCalendar_Reset}</button>
                 </div>
             </apex:form>
-        </apex:outputPanel>
+        </div>
+        
+         <!-- ERROR MESSAGES -->
+        <div class="row">
+            <div class="col-sm-1"></div>
+            <div class="col-sm-10">
+                <div id="errormessage" class="alert alert-danger" style="display:none"></div>
+            </div>
+            <div class="col-sm-1"></div>
+        </div>
         
       <!-- AIRLINE TABLE-->
       <apex:DataTable value="{!listOperations}" var="op" styleClass="table table-condensed table-pagination" headerClass="table-header"
@@ -694,8 +663,4 @@
     </div>
 
 </div>
-
-<apex:outputPanel styleclass="waiting-screen" rendered="{!$CurrentPage.parameters.qexport!=null}">
-    <div class="loader-small center"></div>
-</apex:outputPanel>
 </apex:page>

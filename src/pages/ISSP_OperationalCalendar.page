@@ -11,8 +11,8 @@
 <script src="{!URLFOR($Resource.fullcalendar, '/fullcalendar-3.9.0/lib/jquery.min.js')}"></script>
 <script src="{!URLFOR($Resource.fullcalendar, '/fullcalendar-3.9.0/lib/jquery-ui.min.js')}"></script>
 <script src="{!URLFOR($Resource.fullcalendar, '/fullcalendar-3.9.0/fullcalendar.min.js')}"></script>
+<script src="{!URLFOR($Resource.ISSP_OperationalCalendar, '/js/ics.deps.min.js')}"></script>
 <script src="{!URLFOR($Resource.ISSP_OperationalCalendar, '/lib/qtip/jquery.qtip.min.js')}"></script>
-<script src="{!URLFOR($Resource.ISSP_OperationalCalendar, '/js/icsFormatter.min.js')}"></script>
 
 <apex:stylesheet value="{!URLFOR($Resource.fullcalendar, '/fullcalendar-3.9.0/fullcalendar.min.css')}"/>
 <apex:stylesheet value="{!URLFOR($Resource.ISSP_OperationalCalendar, '/css/main.min.css')}"/>
@@ -24,8 +24,17 @@
     var MAP_FREQUENCIES = {!mapFrequenciesJson};
     var isAirline = {!isAirline};
     var defaultCountry = "{!defaultCountry}";
+    var defaultOperationType = "{!defaultOperationType}";
+    var defaultFrequency = "{!defaultFrequency}";
+    if (isAirline) {
+        defaultOperationType = "";
+        defaultFrequency = "";
+    }
     //console.log(MAP_FREQUENCIES);
     //console.log(LIST_FILTERS);
+    //console.log(defaultCountry);
+    //console.log(defaultOperationType);
+    //console.log(defaultFrequency);
     $(document).ready(function() {
         initFilters()
         initCalendar();
@@ -46,15 +55,24 @@
         $("#currencyFilter").change(function() {
             refreshEvents();
         });
+        $("#enableFiltersCheck").click(function() {
+            var enabled = $(this).prop('checked');
+            enableFilters(enabled);
+        });
         $("#resetButton").click(function() {
             $(".countryFilter").val(defaultCountry);
-            $("#typeFilter").val("");
-            updatePicklist($("#frequencyFilter"),[],0,"");
-            updatePicklist($("#currencyFilter"),[],0,"");
+            updatePicklistsFromCountry();
+            $("#typeFilter").val(defaultOperationType);
+            updatePicklistsFromType();
+            $("#frequencyFilter").val(defaultFrequency);
+            updatePicklistsFromFrequency();
+            $("#enableFiltersCheck").prop('checked',false);
+            enableFilters(false);
             refreshEvents();
         });
         $("#syncCalendar").click(function() {
-            var calEntry = icsFormatter();
+            alert('{!$Label.ISSP_OperationalCalendar_Export_Calendar_Disclaimer}');
+            var calEntry = ics();
             var events= $('#calendar').fullCalendar('clientEvents')
             $.each(events, function (i, event) {
                     var title = event.title;
@@ -64,9 +82,8 @@
                     var description = '';
                     calEntry.addEvent(title,description, place, begin, end);
             });
-            calEntry.download('operationalCalendar');
+            calEntry.download('IATA Operational Calendar');
         });
-        
         // Calendar Style
         $( ".fc-past,.fc-future" )
           .mouseenter(function() {
@@ -82,36 +99,50 @@
     });
     
     function initFilters(){
-        if (isAirline) {
-            if ("{!$CurrentPage.parameters.fcountry}">"") {
-                $(".countryFilter").val("{!$CurrentPage.parameters.fcountry}");
-            } else {
-                $(".countryFilter").val(defaultCountry);
-            }
-            updatePicklistsFromCountry();
-            if ("{!$CurrentPage.parameters.ftype}">"") {
-                $("#typeFilter").val("{!$CurrentPage.parameters.ftype}");
-                updatePicklistsFromType();
-            }
-            if ("{!$CurrentPage.parameters.ffrequency}">"") {
-                $("#frequencyFilter").val("{!$CurrentPage.parameters.ffrequency}");
-                updatePicklistsFromFrequency();
-            }
-            if ("{!$CurrentPage.parameters.fcurrency}">"") {
-                $("#currencyFilter").val("{!$CurrentPage.parameters.fcurrency}");
-            }
+        if ("{!$CurrentPage.parameters.fcountry}">"") {
+            $(".countryFilter").val("{!$CurrentPage.parameters.fcountry}");
         } else {
-            //if it's an agency the filters are populated with a single value, and not selectible
-            var listValues = LIST_FILTERS[0].split(",");
-            //country filter
-            $(".countryFilter").prop("disabled",true);
-            //type filter
-            $("#typeFilter").append($('<option>', {value: listValues[1],text: listValues[1]}));
-            $("#typeFilter").prop("disabled",true);
-            //frequency filter
-            var label = MAP_FREQUENCIES[listValues[2]];
-            $("#frequencyFilter").append($('<option>', {value: listValues[2],text: label}));
-            $("#frequencyFilter").prop("disabled",true);
+            $(".countryFilter").val(defaultCountry);
+        }
+        updatePicklistsFromCountry();
+        if ("{!$CurrentPage.parameters.ftype}">"") {
+            $("#typeFilter").val("{!$CurrentPage.parameters.ftype}");
+        } else {
+            $("#typeFilter").val(defaultOperationType);
+        }
+        updatePicklistsFromType();
+        if ("{!$CurrentPage.parameters.ffrequency}">"") {
+            $("#frequencyFilter").val("{!$CurrentPage.parameters.ffrequency}");
+        } else {
+            $("#frequencyFilter").val(defaultFrequency);
+        }
+        updatePicklistsFromFrequency();
+        if ("{!$CurrentPage.parameters.fcurrency}">"") {
+            $("#currencyFilter").val("{!$CurrentPage.parameters.fcurrency}");
+        }
+        var fenablefilters = "{!$CurrentPage.parameters.fenablefilters}";
+        if (fenablefilters>"") {
+            var isEnabled = fenablefilters=='true';
+            $("#enableFiltersCheck").prop("checked",isEnabled);
+            enableFilters(isEnabled);
+        } else {
+            if (!isAirline) {
+                $("#enableFiltersCheck").prop("checked",false);
+                enableFilters(false);
+            }
+        }
+    }
+    
+    function enableFilters(enabled) {
+        var disabled = !enabled;
+        $(".countryFilter").prop("disabled",disabled);
+        $("#typeFilter").prop("disabled",disabled);
+        $("#frequencyFilter").prop("disabled",disabled);
+        $("#currencyFilter").prop("disabled",disabled);
+        if (enabled) {
+            $("#resetButton").removeClass("disabled");
+        } else {
+            $("#resetButton").addClass("disabled");
         }
     }
     
@@ -120,7 +151,7 @@
             height: 'auto',
             header: {
                 left: 'title',
-                center: 'showTable csvButton pdfButton',
+                center: 'showTable',
                 right: 'prev,next'
             },
             views: {
@@ -135,24 +166,6 @@
                 click: function() {
                   var href = getDetailsUrl();
                   window.location.href = href;
-                }
-              },
-              csvButton: {
-                text: 'CSV',
-                click: function() {
-                    var href = getDetailsUrl();
-                    href+="&qexport=csv";
-                    var newwindow = window.open(href,"_blank", "toolbar=no,status=no,menubar=no,scrollbars=no,resizable=no,left=10000, top=10000, width=10, height=10, visible=none","");
-                    newwindow.blur();
-                }
-              },
-              pdfButton: {
-                text: 'PDF',
-                click: function() {
-                    var href = getDetailsUrl();
-                    href+="&qexport=pdf";
-                    var newwindow = window.open(href,"_blank", "toolbar=no,status=no,menubar=no,scrollbars=no,resizable=no,left=10000, top=10000, width=10, height=10, visible=none","");
-                    newwindow.blur();
                 }
               }
             },
@@ -213,11 +226,13 @@
         if ($("#currencyFilter").val()>"") {
             href+="&fcurrency=" + $("#currencyFilter").val();
         }
+        if ($("#enableFiltersCheck").prop("checked")) {
+            href+="&fenablefilters=true";
+        }
         return href;
     }
     
     function refreshEvents() {
-        if (!isAirline) return;
         hideError();
         //remove existing events
         $("#calendar").fullCalendar('removeEvents' , function(e){ return true; });
@@ -229,11 +244,6 @@
         if (country=='') {
             enableTable(false);
             showError("{!$Label.ISSP_OperationalCalendar_Country_Filter_Required}");
-            return;
-        }
-        if (operationType=='') {
-            enableTable(false);
-            showError("{!$Label.ISSP_OperationalCalendar_BSPCASS_Filter_Required}");
             return;
         }
         //console.log("country: " + country + " frequency: " + frequency + " operationType: " + operationType + " currency: " + currency);
@@ -316,7 +326,6 @@
     }
 
     function updatePicklist(inputSelect, listValues, position, defValue) {
-        if (!isAirline) return;
         inputSelect.find('option').remove();
         var listUniqueValues = [];
         // get only the part required
@@ -330,9 +339,6 @@
         // add None option if required
         if (listUniqueValues.length!=1) {
             var emptyText = "--{!$Label.ISSP_All}--";
-            if (inputSelect.attr('id')=="typeFilter") {
-                emptyText = "{!$Label.ANG_ISSP_Picklist_None}";
-            }
             inputSelect.append($("<option>", {value: "",text : emptyText}));
         }
         // Add options
@@ -351,13 +357,9 @@
         if (enabled) {
             $('div.fc-view-container').removeClass("disabled");
             $('div.fc-right').removeClass("disabled");
-            $('button.fc-csvButton-button').removeClass("disabled");
-            $('button.fc-pdfButton-button').removeClass("disabled");
         } else {
             $('div.fc-view-container').addClass("disabled");
             $('div.fc-right').addClass("disabled");
-            $('button.fc-csvButton-button').addClass("disabled");
-            $('button.fc-pdfButton-button').addClass("disabled");
         }
     }
     
@@ -386,13 +388,13 @@
         <div class="col-sm-2">
             <apex:form >
                 <apex:outputPanel layout="block" styleclass="form-group center">
-                    <button id="syncCalendar" class="btn btn-primary" type="button">
+                    <button id="syncCalendar" class="btn btn-success" type="button">
                         <span class="glyphicon glyphicon-calendar"></span>
                         {!$Label.ISSP_OperationalCalendar_Sync_Calendar}
                     </button>
                 </apex:outputPanel>
                 <br/>
-                <h3>{!IF(isAirline,$Label.ISSP_OperationalCalendar_FilterTitle,'')}</h3>
+                <h3>{!$Label.ISSP_OperationalCalendar_FilterTitle}</h3>
                 <div class="form-group">
                     <label for="countryFilterInput">{!$Label.ISSP_OperationalCalendar_CountryFilter}</label>
                     <apex:selectList styleclass="countryFilter form-control required" multiselect="false" size="1">
@@ -401,17 +403,23 @@
                 </div>
                 <div class="form-group">
                     <label for="typeFilter">{!$Label.ISSP_OperationalCalendar_BSPCASSFilter}</label>
-                    <select id="typeFilter" class="form-control required"></select>
+                    <select id="typeFilter" class="form-control"></select>
                 </div>
                 <div class="form-group">
                     <label for="frequencyFilter">{!$Label.ISSP_OperationalCalendar_FrequencyFilter}</label>
                     <select id="frequencyFilter" class="form-control"></select>
                 </div>
-                <apex:outputPanel layout="block" styleclass="form-group" rendered="{!isAirline}">
+                <apex:outputPanel layout="block" styleclass="form-group">
                     <label for="currencyFilter">{!$Label.ISSP_OperationalCalendar_CurrencyFilter}</label>
                     <select id="currencyFilter" class="form-control"></select>
                 </apex:outputPanel>
-                <apex:outputPanel layout="block" styleclass="form-group" rendered="{!isAirline}">
+                <apex:outputPanel layout="block" styleclass="form-group" rendered="{!NOT(isAirline)}">
+                    <div class="form-check">
+                        <input type="checkbox" class="form-check-input" id="enableFiltersCheck"/>
+                        <label class="form-check-label" for="enableFiltersCheck">{!$Label.ISSP_OperationalCalendar_EnableFilters}</label>
+                    </div>
+                </apex:outputPanel>
+                <apex:outputPanel layout="block" styleclass="form-group">
                     <button id="resetButton" class="btn btn-primary" type="button">{!$Label.ISSP_OperationalCalendar_Reset}</button>
                 </apex:outputPanel>
             </apex:form>

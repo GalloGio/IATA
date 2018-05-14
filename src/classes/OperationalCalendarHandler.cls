@@ -1,3 +1,6 @@
+/**
+    Class to handle the trigger actions for the object Operational_Calendar__c
+**/
 public with sharing class OperationalCalendarHandler {
     
     public static final list<String> AIRLINE_PROFILES = ISSP_CS__c.getValues('ISS Portal Airline Profiles').Value__c.split(',');
@@ -15,24 +18,28 @@ public with sharing class OperationalCalendarHandler {
     }
     
     /**
-        Check updated Opertaional Calendar reords and select only those changing 
+        Check updated Operational Calendar reords and select only those changing 
         the Settlement_Day__c or the Remittance_Day__c
     **/
     private static void createNotifications(map<Id,Operational_Calendar__c> mapNew, map<Id,Operational_Calendar__c> mapOld) {
-        map<Id,Operational_Calendar__c> mapSettlementChanges = new map<Id,Operational_Calendar__c>();
-        map<Id,Operational_Calendar__c> mapRemittanceChanges = new map<Id,Operational_Calendar__c>();
-        
-        for (Operational_Calendar__c operationNew: mapNew.values()) {
-            Operational_Calendar__c operationOld = mapOld.get(operationNew.Id);
-            if (operationNew.Settlement_Day__c!=operationOld.Settlement_Day__c) {
-                mapSettlementChanges.put(operationNew.Id,operationNew);
+        try {
+            map<Id,Operational_Calendar__c> mapSettlementChanges = new map<Id,Operational_Calendar__c>();
+            map<Id,Operational_Calendar__c> mapRemittanceChanges = new map<Id,Operational_Calendar__c>();
+            
+            for (Operational_Calendar__c operationNew: mapNew.values()) {
+                Operational_Calendar__c operationOld = mapOld.get(operationNew.Id);
+                if (operationNew.Settlement_Day__c!=operationOld.Settlement_Day__c) {
+                    mapSettlementChanges.put(operationNew.Id,operationNew);
+                }
+                if (operationNew.Remittance_Day__c!=operationOld.Remittance_Day__c) {
+                    mapRemittanceChanges.put(operationNew.Id,operationNew);
+                }
             }
-            if (operationNew.Remittance_Day__c!=operationOld.Remittance_Day__c) {
-                mapRemittanceChanges.put(operationNew.Id,operationNew);
-            }
+            sendAgencyNotifications(mapRemittanceChanges);
+            sendAirlineNotifications(mapSettlementChanges, mapRemittanceChanges);
+        } catch (Exception e) {
+            System.debug('** Error in createNotifications: ' + e.getMessage());
         }
-        sendAgencyNotifications(mapRemittanceChanges);
-        sendAirlineNotifications(mapSettlementChanges, mapRemittanceChanges);
     }
     
     /**
@@ -71,6 +78,10 @@ public with sharing class OperationalCalendarHandler {
             AND (
                 Contact.Account.IATA_ISO_Country__r.AMS_Settlement_System__c IN :mapISSOperationListCalendar.keyset()
                 OR Contact.Account.IATA_ISO_Country__r.AMS_Settlement_System_CASS__c IN :mapISSOperationListCalendar.keyset()
+            )
+            AND (
+                Profile.Name LIKE '%Admin%'
+                OR Contact.Available_Services__c INCLUDES ('ICE – IATA Customer E-Statement','BSPLink','CassLink')
             )
         ];
         if (Test.isRunningTest()) listUser = TEST_LIST_AIRLINE_USER;
@@ -144,6 +155,10 @@ public with sharing class OperationalCalendarHandler {
             AND (
                 Contact.Account.IATA_ISO_Country__r.AMS_Settlement_System__c IN :mapISSOperationListCalendar.keyset()
                 OR Contact.Account.IATA_ISO_Country__r.AMS_Settlement_System_CASS__c IN :mapISSOperationListCalendar.keyset()
+            )
+            AND (
+                Profile.Name LIKE '%Admin%'
+                OR Contact.Available_Services__c INCLUDES ('ICE – IATA Customer E-Statement','BSPLink','CassLink')
             )
         ];
         if (Test.isRunningTest()) listUser = TEST_LIST_AGENCY_USER;
