@@ -2,7 +2,6 @@
 public class BatchActivateRecordsByDate_test {
 	
 	private static IATA_ISO_Country__c country;
-	
 	@TestSetup
 	private static void setup(){
 
@@ -150,7 +149,7 @@ public class BatchActivateRecordsByDate_test {
 		System.assertEquals(1, [select count() from Account where Status__c = :TIP_UTils.PARTNER_STATUS_IN_PROGRESS ]);
 
 		//test products
-		system.debug('##PROD: ' + [select id, pp_status__c from Partner_products__c ]);
+		system.debug('##PROD: ' + [select id, PP_Payment_Product_Code__c, pp_status__c from Partner_products__c ]);
 		System.assertEquals(2, [select count() from Partner_products__c where PP_status__c = :TIP_UTils.PARTNER_PRODUCT_STATUS_ACTIVE ]);
 		System.assertEquals(1, [select count() from Partner_products__c where PP_status__c = :TIP_UTils.PARTNER_PRODUCT_STATUS_INACTIVE ]);
 		System.assertEquals(1, [select count() from Partner_products__c where PP_status__c = :TIP_UTils.PARTNER_PRODUCT_STATUS_IN_PROGRESS ]);
@@ -160,6 +159,10 @@ public class BatchActivateRecordsByDate_test {
 		System.assertEquals(2, [select count() from TIP_BIN_Range__c where TIP_Status__c = :TIP_UTils.BIN_RANGE_STATUS_ACTIVE ]);
 		System.assertEquals(1, [select count() from TIP_BIN_Range__c where TIP_Status__c = :TIP_UTils.BIN_RANGE_STATUS_INACTIVE ]);
 		System.assertEquals(2, [select count() from TIP_BIN_Range__c where TIP_Status__c = :TIP_UTils.BIN_RANGE_STATUS_IN_PROGRESS ]);
+
+		//validate dates 
+		TIP_Bin_Range__c b = [select TIP_Effective_From_Date__c, TIP_Payment_Provider_Product__r.PP_Effective_from_Date__c from TIP_BIN_Range__c where TIP_Range_Start__c = '444444444' LIMIT 1 ];
+		System.assertEquals(b.TIP_Payment_Provider_Product__r.PP_Effective_from_Date__c, b.TIP_Effective_From_Date__c );
 
 		//test Product Configs
 		system.debug('##CONFIG: ' + [select id, TIP_status__c from TIP_Pay_Prov_Prod_Country_Config__c ]);
