@@ -86,7 +86,7 @@ public with sharing class ISSP_ANG_RHC {
 	}	
 
 	private void initFormsOfPayment() {
-		this.afpWrapper = AMS_Utils.getANG_ISSP_AfpWrapper(this.contact);
+		this.afpWrapper = AMS_Utils.getANG_ISSP_AfpWrapper(this.contact, this.contact.Account, false);
 	}
 
 	public void initializeRHCInfo() {

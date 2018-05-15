@@ -2677,9 +2677,9 @@ public static String fetchTypeOfCustomer (String locationType , String category)
         return null;        
     }
 
-    public static ANG_ISSP_AfpWrapper getANG_ISSP_AfpWrapper(Contact con) {
-        List<Agency_Authorization__c> authorizations;
-        List<Portal_Application_Right__c> services;
+    public static ANG_ISSP_AfpWrapper getANG_ISSP_AfpWrapper(Contact con, Account acc, Boolean isSearch) {
+        List<Agency_Authorization__c> authorizations = new List<Agency_Authorization__c>();
+        List<Portal_Application_Right__c> services = new List<Portal_Application_Right__c>();
 
         if(con != null) {      
             authorizations = [SELECT Id,
@@ -2692,8 +2692,7 @@ public static String fetchTypeOfCustomer (String locationType , String category)
                          WHERE Contact__c = :con.Id];
         }
 
-        return new ANG_ISSP_AfpWrapper(con, authorizations, services);
+        return new ANG_ISSP_AfpWrapper(con, authorizations, services, acc, isSearch);
     }
     
 }
-

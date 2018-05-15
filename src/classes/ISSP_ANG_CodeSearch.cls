@@ -92,20 +92,17 @@ public class ISSP_ANG_CodeSearch {
 				auxReplacement = Label.ISSP_Cargo;
 			}
 
-			Account reqAgency = [SELECT Id, IATACode__c, Name, TradeName__c, Status__c, IATA_ISO_Country__r.Name, ANG_Accreditation_Model__c,
+			Account[] agencies = [SELECT Id, IATACode__c, Name, TradeName__c, Status__c, IATA_ISO_Country__r.Name, ANG_Accreditation_Model__c,
 											ANG_HE_RiskStatus__c, Active_Guarantees__c, Accumulated_Irregularities__c, Location_Type__c,
-											Top_Parent__c, IATA_ISO_Country__r.ANG_Enable_NewGen__c, ANG_IsNewGenAgency__c
+											Top_Parent__c, IATA_ISO_Country__r.ANG_Enable_NewGen__c, ANG_IsNewGenAgency__c, 
+											Account.ANG_IEP_Status_FF__c
 									   	  FROM Account
 									  	  WHERE Sector__c = :sector AND Status__c IN :statusSet
 									    	AND RecordTypeId = :AMS_Utils.RECTYPE_IATAAGENCY
-									    	AND IATACode__c LIKE :iataCodeStr LIMIT 1];
+									    	AND IATACode__c LIKE :iataCodeStr];
 
-			//contact = reqAgency.Contact
-
-									    	//verificar se HE é para manter
-									    	//se nao mais um filtro no where
-
-			if(reqAgency != null) { //travel agency found
+			if(agencies.size() > 0) { 
+				Account reqAgency = agencies[0];
 
 				if(reqAgency.Location_Type__c == Ams_Utils.AE || reqAgency.Location_Type__c == Ams_Utils.BR || reqAgency.Location_Type__c == Ams_Utils.SA) {
 
@@ -125,7 +122,8 @@ public class ISSP_ANG_CodeSearch {
 
 					Account parentAgency = [SELECT Id, IATACode__c, Name, TradeName__c, Status__c, IATA_ISO_Country__r.Name,
 												   ANG_Accreditation_Model__c, ANG_HE_RiskStatus__c, Active_Guarantees__c,
-												   Accumulated_Irregularities__c, Location_Type__c, IATA_ISO_Country__r.ANG_Enable_NewGen__c, ANG_IsNewGenAgency__c
+												   Accumulated_Irregularities__c, Location_Type__c, IATA_ISO_Country__r.ANG_Enable_NewGen__c, 
+												   ANG_IsNewGenAgency__c, Account.ANG_IEP_Status_FF__c
 											FROM Account
 											WHERE Id = :reqAgency.Top_Parent__c]; //airline ho
 
@@ -168,15 +166,11 @@ public class ISSP_ANG_CodeSearch {
 					}
 				}
 
-				System.debug('rui2: ' + countryFound);
-
 				if (countryFound) {
 
-					if (this.agency.ANG_IsNewGenAgency__c) {
-						afpWrapper = AMS_Utils.getANG_ISSP_AfpWrapper(this.agency);
-					}
+					if (this.agency.ANG_IsNewGenAgency__c) afpWrapper = AMS_Utils.getANG_ISSP_AfpWrapper(null, this.agency, true);
 
-					if(this.agency.Active_Guarantees__c != 0) this.financialSecurityExists = true;
+					if (this.agency.Active_Guarantees__c != 0) this.financialSecurityExists = true;
 						
 					riskStatus = this.agency.ANG_HE_RiskStatus__c;
 

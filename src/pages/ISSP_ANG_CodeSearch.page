@@ -248,7 +248,7 @@
                     </table>
 
                   <!--<div name="right-side" class="col-md-4 col-sm-12">-->
-                    <div style="min-height: 350px;">
+                    <div style="min-height: 350px; display:{!IF(afpWrapper != null,'','none')};">
                       <c:AFP_Component wrapperClass="{!afpWrapper}"/>
                     </div>
                   <!--</div>-->
