@@ -138,7 +138,8 @@
     <fields>
         <fullName>PP_Chargeback_Airlines__c</fullName>
         <externalId>false</externalId>
-        <inlineHelpText>Enter if it is subject to chargeback for airlines : Yes or No</inlineHelpText>
+        <inlineHelpText>Chargeback rights is related to the risk that these funds might be withdrawn from the airline under specific circumstances.
+Indicate if this product has chargeback right: Yes or No</inlineHelpText>
         <label>Chargeback Right</label>
         <required>false</required>
         <trackTrending>false</trackTrending>
@@ -288,7 +289,8 @@
         <fullName>PP_Payment_Guarantee__c</fullName>
         <description>Payment guarantee for Airlines</description>
         <externalId>false</externalId>
-        <inlineHelpText>Enter payment guarantee for airlines : Fraud dispute, Commercial dispute or Both fraud and commercial dispute</inlineHelpText>
+        <inlineHelpText>Payment guarantee is related to the certainty that the airline will receive the funds irrespective of any issuer bankruptcy.
+Specify if payment is guaranteed to the airline against: fraud dispute, commercial dispute, or both fraud and commercial dispute</inlineHelpText>
         <label>Airline Payment Guarantee</label>
         <required>false</required>
         <trackTrending>false</trackTrending>
@@ -314,7 +316,7 @@
     <fields>
         <fullName>PP_Payment_Network__c</fullName>
         <externalId>false</externalId>
-        <inlineHelpText>Amex (AX), MasterCard (CA), UATP (TP), Visa (VI), Diners [two letter code]</inlineHelpText>
+        <inlineHelpText>Amex (AX), MasterCard (CA), UATP (TP), Visa (VI), Diners (DC)</inlineHelpText>
         <label>Payment Network</label>
         <required>false</required>
         <trackTrending>false</trackTrending>
@@ -445,9 +447,7 @@
     <fields>
         <fullName>PP_VAN_Type__c</fullName>
         <externalId>false</externalId>
-        <inlineHelpText>Enter if product is a Single-use or Multi-use VAN.
-If it is a single-use VAN, then a unique VAN number is created for every transaction.
-If the product is a multi-use VANs, then it is a unique card/account number that can be used multiple times.</inlineHelpText>
+        <inlineHelpText>Enter  if the product is an Agent&apos;s Single-use VAN (Virtual Account Number) or Agent’s Multi-use VAN. If the product is an Agent&apos;s single-use VAN, then a unique Agent’s VAN number is created for every transaction. If the product is an Agent&apos;s multi-use.</inlineHelpText>
         <label>Type</label>
         <required>false</required>
         <trackTrending>false</trackTrending>
