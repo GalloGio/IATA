@@ -228,7 +228,7 @@
 
                       <tr>
                         <td>
-                          <apex:outputLabel value="{!$Label.ISSP_ANG_IATA_CODE_SEARCH_FINANCIAL_SECURITY_EXISTS}"/>
+                          <apex:outputLabel value="{!$Label.ISSP_ANG_IATA_CODE_SEARCH_VALID_FINANCIAL_SECURITY}"/>
                         </td>
                         <td>
                           <i style="display:{!IF(financialSecurityExists,'','none')}; margin-left: 15px; color: green;" class="glyphicon glyphicon-ok"></i>
@@ -246,6 +246,8 @@
                       </tr>
 
                     </table>
+
+                    <br/>
 
                   <!--<div name="right-side" class="col-md-4 col-sm-12">-->
                     <div style="min-height: 350px; display:{!IF(afpWrapper != null,'','none')};">
