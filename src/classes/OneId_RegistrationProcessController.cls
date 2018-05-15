@@ -38,9 +38,11 @@ public without sharing class OneId_RegistrationProcessController {
             User testingUser = new User(LastName = 'DUMMY',
                  FirstName='DUMMY',
                  Alias = 'DUMMY',
+                 CommunityNickname = 'DUMMY',
                  Email = email,
                  Username = ISSP_Utilities.buildPortalUserName(email), //myEmail@company.com because myEmail.company.com@partner.iata.org
-                 ProfileId =[SELECT Id FROM Profile WHERE Name = 'Read Only' LIMIT 1].id,
+                 ProfileId = [SELECT Id FROM Profile WHERE Name = 'ISS Portal (Partner)' LIMIT 1].Id,
+                 ContactId = [SELECT Id FROM Contact WHERE Id NOT IN (SELECT ContactId FROM User) LIMIT 1].Id,
                  TimeZoneSidKey = 'GMT',
                  LanguageLocaleKey = 'en_US',
                  EmailEncodingKey = 'UTF-8',
@@ -143,8 +145,16 @@ public without sharing class OneId_RegistrationProcessController {
         system.debug('contact  --> ' + con);
         system.debug('serviceName  --> ' + serviceName);
         
-        Boolean isNewAcc = false;
+        Boolean isNewAcc = false;        
         String languageString = 'English';
+
+        //it's general public account? create contact / user
+        if(acc.Sector__c == 'General Public'){
+            Account gpAccount = [SELECT id, IATA_ISO_Country__c FROM Account WHERE Sector__c = 'General Public' and  IATA_ISO_Country__c =:acc.IATA_ISO_Country__c];
+            if(gpAccount != null)
+                acc.Id = gpAccount.Id;
+        }
+
         //it's a branch
         if(acc.ParentId != null){
             Account pAccount = [SELECT id, IATACode__c, Airline_designator__c, Name FROM Account WHERE id = :acc.ParentId];
@@ -156,16 +166,22 @@ public without sharing class OneId_RegistrationProcessController {
         }
 
         if(acc.Id != null) {
-            
-
             // Define account fields
-            acc.Legal_name__c = acc.Name;
-
+            if(acc.Sector__c != 'General Public')
+                acc.Legal_name__c = acc.Name;                    
+            
             // Define field specific to services
             if(serviceName == 'ISSP'){
-                con.User_Portal_Status__c = 'Pending Approval';
                 con.Community__c = 'ISS Customer Portal';
+                con.User_Portal_Status__c = 'Pending Approval';                
             }
+
+            //check if the general public account have contacts
+            if(acc.Sector__c == 'General Public'){
+                List<Contact> gpContact = [SELECT id, AccountId FROM Contact WHERE AccountId =:acc.Id];
+                if(gpContact.isEmpty()) //in this case the Portal Status will be Pending Approval
+                    con.User_Portal_Status__c = 'Active';
+            }    
 
             /*if(serviceName == 'FRED'){
                 con.User_Portal_Status__c = ISSP_CONSTANT.NEW_CONTACT_STATUS;
@@ -215,14 +231,15 @@ public without sharing class OneId_RegistrationProcessController {
                     permissionCSPortal(returnedString); // assign Permission Set CS Portal, give access to CS Portal Connected App
                 }
                 if(serviceName == 'ISSP' && isNewAcc == true){
-                    permissionNewAgency(returnedString);                    
-                    portalServiceNewAgency(con.Id);
+                    permissionNewAgency(returnedString);
                     updatePortalUseProfile(returnedString);
+
+                    if(acc.Sector__c == 'Travel Agent' || acc.Sector__c == 'Cargo Agent')                    
+                        portalServiceNewAgency(con.Id);
                 }
                 
             }
-        } catch(exception ex){
-            system.debug('aqui rollback1');
+        } catch(exception ex){            
             Database.rollback(sp);
             System.debug(ex);
             return false;

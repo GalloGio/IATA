@@ -1,5 +1,7 @@
 <aura:component implements="flexipage:availableForAllPageTypes,forceCommunity:availableForAllPageTypes" controller="OneId_RegistrationProcessController">
 
+	<aura:handler name="itemSelected" event="c:OneId_ItemSelected_EVT" action="{!c.handleItem}"/>
+
 	<aura:attribute type="Account" name="account" default="{ 'sobjectType': 'Account', 'Sector__c' : 'Travel Agent' }" />
 	<aura:attribute type="Contact" name="contact" default="{ 'sobjectType': 'Contact' }" />
 	<aura:attribute type="Boolean" name="search" default="true" />
@@ -67,39 +69,11 @@
 					<label class="slds-form-element__label"><abbr class="slds-required" title="required">*</abbr>{!$Label.c.ISSP_CompanyName} &nbsp; {!$Label.c.ISSP_Company_Name_Search_Format}</label>
 
 					<div class="slds-form-element__control">
-						<c:OneId_AccountSearch account="{!v.account}" customerType="{!v.customerType}" fieldLabels="{!v.fieldLabels}" fieldNames="{!v.fieldNames}" searchFields="{!v.searchFields}" filters="{!v.filters}" searched="{!v.showCreateNew}" disabled="{!v.customerType == '' || v.selectedCountry == ''}"/>
+						<c:OneId_AccountSearch account="{!v.account}" customerType="{!v.customerType}" fieldLabels="{!v.fieldLabels}" fieldNames="{!v.fieldNames}" searchFields="{!v.searchFields}" filters="{!v.filters}" disabled="{!v.customerType == '' || v.selectedCountry == ''}" showCreateNew="{!v.customerType != 'GloballSalesAgent' &amp;&amp; v.customerType != 'GeneralPublic'}"/>
 					</div>
 				</div>
 				</aura:if>
 				
-				<aura:if isTrue="{!v.showCreateNew &amp;&amp; v.customerType != 'GloballSalesAgent' &amp;&amp; v.customerType != 'GeneralPublic'}">
-					<div class="slds-form-element slds-size_1-of-1">
-						<div class="slds-grid slds-wrap slds-theme_alert-texture slds-notify_alert oneid-theme_notify">
-							<div class="slds-size_1-of-1 slds-medium-size_2-of-3 slds-m-bottom_medium">
-								<aura:if isTrue="{!v.customerType == 'Airline' &amp;&amp; !empty(v.account.IATA_ISO_Country__c) &amp;&amp; v.account.IATA_ISO_Country__c != v.selectedCountry}">
-									<p>You selected Airline Headquarter that does not match the selected country.<br/><br/>If you want to create a new branch for this company in your country, click Create New. IATA will then proceed with the verification of the information provided.</p>
-									<aura:set attribute="else">
-										<p>If you didn't find the organization you were looking for. Please modify your search and try again or click Create New to create a new company record.<br/><br/>If you continue to experience issues registering for the IATA Customer Portal then please consult our <a href="http://theiatahub.force.com/iatapkb/articles/en_US/How_To/Customer-Portal-Troubleshooting/?l=en_US" target="_blank">troubleshooting guide</a></p>
-									</aura:set>
-								</aura:if>
-							</div>
-							<div class="slds-size_1-of-1 slds-medium-size_1-of-3 slds-grid slds-grid_align-center">
-								<aura:if isTrue="{!v.customerType == 'Agency'}">
-									<ui:button label="{!$Label.c.ISSP_Create_New_Agency}" press="{!c.create}" class="sfdc_button"/>
-								</aura:if>
-								<aura:if isTrue="{!v.customerType == 'OtherCompany'}">
-									<ui:button label="{!$Label.c.ISSP_Create_New_Other_Account}" press="{!c.create}" class="sfdc_button"/>
-								</aura:if>
-								<aura:if isTrue="{!v.customerType == 'Airline' &amp;&amp; (empty(v.account.IATA_ISO_Country__c) || v.account.IATA_ISO_Country__c == v.selectedCountry)}">
-									<ui:button label="{!$Label.c.ISSP_Create_New_Airline}" press="{!c.create}" class="sfdc_button"/>
-								</aura:if>
-								<aura:if isTrue="{!v.customerType == 'Airline' &amp;&amp; !empty(v.account.IATA_ISO_Country__c) &amp;&amp; v.account.IATA_ISO_Country__c != v.selectedCountry}">
-									<ui:button label="{!$Label.c.ISSP_Create_New_Airline_Branch}" press="{!c.create}" class="sfdc_button"/>
-								</aura:if>
-							</div>
-						</div>
-					</div>
-				</aura:if>
 			</div>
 		</div>
 		
@@ -128,11 +102,13 @@
 		</div>
 	</div>
 	
-	<aura:if isTrue="{!v.showCreateNew}">
+	<aura:if isTrue="{!v.showCreateNew || (v.customerType == 'GeneralPublic' &amp;&amp; !empty(v.country))}">
 		<div class="slds-grid slds-grid_align-end slds-m-top_medium">
 			<ui:button label="Submit" press="{!c.submit}" class="sfdc_button sfdc_button slds-size_1-of-1 slds-medium-size_3-of-12"/>
 		</div>
 	</aura:if>
 	
-
+	<div aura:id="loading" class="slds-hide">
+		<lightning:spinner />
+	</div>
 </aura:component>

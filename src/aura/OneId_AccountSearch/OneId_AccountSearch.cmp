@@ -1,5 +1,7 @@
 <aura:component implements="flexipage:availableForAllPageTypes,forceCommunity:availableForAllPageTypes" controller="OneId_AccountSearch">
-    
+
+    <aura:registerEvent name="itemSelected" type="c:OneId_ItemSelected_EVT"/>
+
     <aura:attribute type="Account" name="account" required="true"/>
     <aura:attribute type="Boolean" name="disabled" access="public" default="false"/>
     
@@ -8,8 +10,7 @@
     <aura:attribute type="String[]" name="fieldNames" required="true" description="API Names for the result table. Must have the same order as the field labels"/>
     <aura:attribute type="String[]" name="searchFields" default="['Name']" description="Fields where the search for the input will be done. Will be added as OR on the query"/>
     <aura:attribute type="Map" name="filters" default="{}" description="Filters to search the account"/>
-    
-    <aura:attribute type="Boolean" name="searched" default="false"/>
+    <aura:attribute type="Boolean" name="showCreateNew" default="false" description="If true, the last option will be a create new account prompt"/>
     <aura:attribute type="String" name="userInput" access="private"/>
     <aura:attribute type="Boolean" name="isValid" default="false" access="private"/>
     
@@ -63,6 +64,7 @@
                         </aura:iteration>
                         
                         <aura:set attribute="else">
+                            <!-- TODO: use a datatable -->
                             <li role="presentation" class="slds-listbox__item slds-grid headerRow">
                                 <aura:iteration items="{!v.fieldLabels}" var="name">
                                     <div class="{!'slds-size_1-of-'+v.fieldLabels.length}">
@@ -70,7 +72,7 @@
                                     </div>
                                 </aura:iteration>
                             </li>
-                            <!-- TODO: access fields dynamcally -->
+                            <!-- TODO: access fields dynamically -->
                             <aura:iteration items="{!v.accounts}" var="a" indexVar="i">
                                 <li role="presentation" class="slds-listbox__item" onclick="{!c.suggestionSelected}" data-value="{!a.Name}" data-row-index="{!i}">
                                 	<div class="slds-listbox__option slds-listbox__option_plain slds-grid">
@@ -94,6 +96,13 @@
                     <aura:if isTrue="{!v.accounts.length &lt; v.totalResult}">
                         <li role="presentation" class="slds-listbox__item lastRow">
                             First 20 results shown over {!v.totalResult}. Please refine your search
+                        </li>
+                    </aura:if>
+                    
+
+                    <aura:if isTrue="{!v.showCreateNew}">
+                        <li role="presentation" class="slds-listbox__item lastRow">
+                            Didn't find the organization you were looking for? <a href="#" onclick="{!c.createNew }">Create New</a>
                         </li>
                     </aura:if>
                 </ul>        	

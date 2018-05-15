@@ -32,10 +32,12 @@
             
             <div class="slds-size--1-of-1">
                 <ui:inputCheckbox value="{!v.Terms}" aura:id="termsaccepted" class="uiInput uiInputCheckbox uiInput--default uiInput--checkbox ckb" labelClass="slds-form-element__label" required="true" click="{!c.checkTerms}" />
+                <div aura:id="loading" class="slds-hide">
+                    <lightning:spinner />
+                </div>
                 <a class="terms" href="http://www.iata.org/customer-portal/Pages/terms.aspx" target="_blank">{!$Label.c.ISSP_Registration_acceptGeneralConditions}</a>
             </div>
         </div>
     </div>
-    
-    
+
 </aura:component>

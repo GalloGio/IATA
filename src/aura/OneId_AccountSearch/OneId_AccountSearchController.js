@@ -43,21 +43,32 @@
         c.set('v.searched', false);
         $A.util.removeClass(c.find('results'), 'slds-is-open');
     },
-    suggestionSelected: function(component, event, helper) {
-        var selectedAccount = event.currentTarget.dataset.value;
+    suggestionSelected: function(c, e) {
+        var selectedAccount = e.currentTarget.dataset.value;
 
         if(selectedAccount != 'No result found...') { 
             // Set input with selected value
-            //var userInputCmp = component.find("userInput");
-            component.set("v.userInput", selectedAccount);
-            component.set("v.account", component.get("v.accounts")[event.currentTarget.dataset.rowIndex]);
+            //var userInputCmp = c.find("userInput");
+            c.set("v.userInput", selectedAccount);
+            c.set("v.account", c.get("v.accounts")[e.currentTarget.dataset.rowIndex]);
+
+            c.getEvent("itemSelected")
+                .setParams({
+                    "state" : "accountSelected",
+                    "account" : c.get("v.account")
+                }).fire(); 
         }else{
-            component.set("v.account.Name", component.get("v.userInput"));
-            //component.set("v.account.Legal_Name__c", component.get("v.userInput"));
+            c.set("v.account.Name", c.get("v.userInput"));
         }
 
         // Hide suggestion box
-        $A.util.removeClass(component.find('results'), 'slds-is-open');
-    }    
-    
+        $A.util.removeClass(c.find('results'), 'slds-is-open');
+    },
+    createNew : function (c) {
+        c.set("v.account.Name", c.get("v.userInput"));
+
+        c.getEvent("itemSelected")
+            .setParams({"state" : 'createNew'})
+            .fire(); 
+    }
 })

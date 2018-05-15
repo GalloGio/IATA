@@ -27,6 +27,7 @@
                 console.log('SMH - STEP 1 completed');
                 helper.notifyStepCompletion(component);
                 component.find("email").set("v.disabled", true);
+                component.find("termsaccepted").set("v.disabled", true);
                 component.set("v.showCaptch", false);
 
             } else if (event.data.action == 'iframeResize') {

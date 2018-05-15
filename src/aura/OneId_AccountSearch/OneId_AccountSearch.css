@@ -7,3 +7,18 @@
 .THIS .slds-listbox__option:hover{
     background-color: #d2d2d2;
 }
+
+.THIS .lastRow {
+	background-color: #00305b;
+	color:white;
+	font-size: 12px;
+    font-style: italic;
+}
+
+.THIS .lastRow:hover {
+	background-color: black;
+	color:white;
+}
+.THIS .lastRow a {
+	color: #00aeef !important;
+}

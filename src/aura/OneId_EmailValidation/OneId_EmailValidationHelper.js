@@ -45,6 +45,8 @@
     },
 
     checkUsername :function(c) {
+        var spinner = c.find("loading");
+        $A.util.toggleClass(spinner, "slds-hide");
 
         var emailCmp = c.find("email");
         var emailValue = emailCmp.get("v.value");
@@ -66,6 +68,7 @@
                 emailCmp.set("v.errors", [{message: $A.get("$Label.c.OneId_Registration_UserExist")}]);
                 c.set("v.Terms", false);
             }
+            $A.util.toggleClass(spinner, "slds-hide");
         });
         $A.enqueueAction(action);
     }
