@@ -838,12 +838,14 @@ public class Location_Svc {
 		                + ', Account.IATA_ISO_Billing_State__r.ISO_Code__c, Account.IATA_ISO_Billing_State__r.IEC_Valid_SAP__c'
 		                + ', Account.ShippingStreet, Account.ShippingCity, Account.ShippingPostalCode'
 		                + ', Account.IATA_ISO_Shipping_State__r.ISO_Code__c, Account.IATA_ISO_Shipping_State__r.IEC_Valid_SAP__c'
+		                + ', Account.IATA_ISO_Shipping_Country__r.ISO_Code__c'
 		                + ', Account.ParentId, Account.Parent.Name, Account.Parent.Phone, Account.Parent.Email__c, Account.Parent.Default_Payment_Type__c, Account.Parent.VAT_Number__c'
 		                + ', Account.Parent.SoldTo_Location__c, Account.Parent.SoldTo_Location__r.SAP_Id__c, Account.Parent.SoldTo_Location__r.Active__c'
 		                + ', Account.Parent.BillingStreet, Account.Parent.BillingCity, Account.Parent.BillingPostalCode, Account.Parent.IATA_ISO_Country__r.ISO_Code__c'
 		                + ', Account.Parent.IATA_ISO_Billing_State__r.ISO_Code__c, Account.Parent.IATA_ISO_Billing_State__r.IEC_Valid_SAP__c'
 		                + ', Account.Parent.ShippingStreet, Account.Parent.ShippingCity, Account.Parent.ShippingPostalCode'
 		                + ', Account.Parent.IATA_ISO_Shipping_State__r.ISO_Code__c, Account.Parent.IATA_ISO_Shipping_State__r.IEC_Valid_SAP__c'
+		                + ', Account.Parent.IATA_ISO_Shipping_Country__r.ISO_Code__c'
 		                + ' from Contact where Id in :lstContactId';
 		Map<Id, Contact> mapId_Contact = new Map<Id, Contact>((List<Contact>) Database.query(strQuery));
 		Contact oContact;
@@ -1093,7 +1095,7 @@ public class Location_Svc {
 						else
 							oAddress = new IECAddress__c (Street__c = strStreet, City__c = oAccount.ShippingCity , ZipCode__c = oAccount.ShippingPostalCode
 							                            , ISO_State__c = oAccount.IATA_ISO_Shipping_State__c, ISO_State__r = oAccount.IATA_ISO_Shipping_State__r
-							                            , ISO_Country__c = oAccount.IATA_ISO_Country__c, ISO_Country__r = oAccount.IATA_ISO_Country__r
+							                            , ISO_Country__c = oAccount.IATA_ISO_Shipping_Country__c, ISO_Country__r = oAccount.IATA_ISO_Shipping_Country__r
 							                            , Address_Type__c = (Test.isRunningTest() ? Utility.generateRandomString(8) : null));
 						lstNewAddress.add(oAddress);
 						lstAddress.add(oAddress);

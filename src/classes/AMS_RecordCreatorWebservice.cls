@@ -25,6 +25,7 @@ global without sharing class AMS_RecordCreatorWebservice {
     public static String NGFOP_PV = 'ANG.FOPMANAGEMENT.1.0';
     public static String IEP_BANK_ACCOUNT_SETUP = 'IEP.BANK.ACCOUNT.SETUP';
     public static string OPTINOPTOUT = 'ANG.FS.OPTINOUT';
+    public static String PCI_COMPLIANT = 'PCI.COMPLIANT.1.0';
 
 
     public static Set<String> accountConcernedProcesses = new Set <String>{NEWBR_PV, NEWBRABRD_PV, MAJOR_CHANGES_PV, NEWSA_PV, NEWNAE, MAJOR_CHANGESNEWGEN_PV,IEP_BANK_ACCOUNT_SETUP, NEWVR_PV};
@@ -241,7 +242,7 @@ global without sharing class AMS_RecordCreatorWebservice {
         if(typeOfProcess.equalsIgnoreCase(NEWCORRECTION_PV))
             return oscarRT.get('CORRECTION');
 
-        if(typeOfProcess.equalsIgnoreCase(NEWDGR_PV))
+        if(typeOfProcess.equalsIgnoreCase(NEWDGR_PV) || typeOfProcess.equalsIgnoreCase(PCI_COMPLIANT))
             return oscarRT.get('CERTIFICATION');
 
         if(typeOfProcess.equalsIgnoreCase(NEWVR_PV) || typeOfProcess.equalsIgnoreCase(NEWVRCA_PV))
@@ -366,13 +367,14 @@ global without sharing class AMS_RecordCreatorWebservice {
             processOscarProcessDetail(oscar,accreditationObj,accountId);
         }
 
-        if(processType.equalsIgnoreCase(OPTINOPTOUT)){
+        //commented as per NEWGEN-3265
+        /*if(processType.equalsIgnoreCase(OPTINOPTOUT)){
         
             Map<Id, Set<Id>> stagingToAccount = new Map<Id, Set<Id>>();
             stagingToAccount.put(accreditationId, new Set<Id>{accountId});
             AMS_AccountRoleCreator.runRoleCreatorForOnlineAccreditations(stagingToAccount);
 
-        }
+        }*/
         
         return oscar.id;
     }

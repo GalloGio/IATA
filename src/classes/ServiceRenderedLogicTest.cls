@@ -2,18 +2,19 @@
 private class ServiceRenderedLogicTest {
     
     static void insertCustomSetting(){
-    
-        list<Case_Reason_Service__c> lista = new list<Case_Reason_Service__c>{
-                                                                     new Case_Reason_Service__c ( name ='myReason',
-                                                                                                  service__c ='CASS Participation',
-                                                                                                  Provider_Required__c = false
-                                                                                                  ),
-                                                                     new Case_Reason_Service__c ( name ='myReason2',
-                                                                                                  service__c ='BSP Representation',
-                                                                                                  Provider_Required__c = false)
-                                                                                };
+        List<Case_Reason_Service__c> caseReasonServices = new List<Case_Reason_Service__c> {
+            new Case_Reason_Service__c (Name ='myReason',
+                                        Service__c ='CASS Participation',
+                                        Provider_Required__c = false),
+            new Case_Reason_Service__c (Name ='myReason2',
+                                        Service__c ='BSP Representation',
+                                        Provider_Required__c = false),
+            new Case_Reason_Service__c (Name ='IATA Easy Pay',
+                                        Service__c ='IATA Easy Pay',
+                                        Provider_Required__c = false)
+        };
         
-          insert lista;                                                                          
+        insert caseReasonServices;                                                                          
     
     }
     
@@ -230,6 +231,95 @@ private class ServiceRenderedLogicTest {
               test.stopTest();
             system.assertEquals(serviziodb.Inactivation_Airline_Participation_Case__c,c.Id);
             system.assertEquals(serviziodb.Services_Rendered_Status__c,'Inactive');
+            
+    }
+
+    static testMethod void changingCaseTest() {
+        TransformationHelper.trgAccountISSP_AfterBeforInsertDeleteUpdateUndelete = true;
+        TransformationHelper.CalculateBusinessHoursAges = true;
+        CaseChildHelper.noValidationsOnTrgCAseIFAP = true;     
+        insertCustomSetting();
+        
+        Map<String, Id> developerNamePerId = TransformationHelper.AccRtNamePerIds();
+
+        List<IATA_ISO_Country__c> countries = new List<IATA_ISO_Country__c>();
+        
+        IATA_ISO_Country__c countryUS = new IATA_ISO_Country__c (Name = 'US', ISO_Code__c = 'US');
+        countries.add(countryUS);
+        IATA_ISO_Country__c countryES = new IATA_ISO_Country__c (Name = 'ES', ISO_Code__c = 'ES');
+        countries.add(countryES);
+        IATA_ISO_Country__c countryPT = new IATA_ISO_Country__c (Name = 'PT', ISO_Code__c = 'PT');
+        countries.add(countryPT);
+        IATA_ISO_Country__c countryFR = new IATA_ISO_Country__c (Name = 'FR', ISO_Code__c = 'FR');
+        countries.add(countryFR);
+        
+        insert countries;
+
+        Account headquarter = new Account(Name = 'Emirates',
+                                          Field_Head_Office__c = 'Headquarter',
+                                          Airline_Designator__c = 'LH',
+                                          IATACode__c = '220',
+                                          Airline_Prefix__c = '220',
+                                          Sector__c = 'Airline',
+                                          Category__c = 'Passenger and Cargo',
+                                          Key_Customer_Reason__c = 'Volume',
+                                          TradeName__c = 'Emirates',
+                                          Legal_name__c = 'Stuff',
+                                          Name_on_AOC__c = 'Stuff',
+                                          IATA_ISO_Country__c = countryUS.Id,
+                                          RecordTypeId = 'ola');
+
+
+
+
+
+
+            
+        Account prov = new Account(name = 'Provider', billingCity = 'myCity', IATACode__c = '123', IATA_ISO_Country__c = countryUS.id, billingCountry = 'myCountry');
+        insert prov;
+
+        Account cons = new Account(name = 'Consumer', billingCity = 'myCity',IATA_ISO_Country__c = countryUS.id,IATACode__c = '123',
+                                                 billingCountry = 'myCountry', recordTypeid = developerNamePerId.get('IATA_Airline'));
+        insert cons;
+            
+        Contact con = new Contact (FirstName='Test', LastName='Name', email='test_joiningCaseAndStandardTestPositive@test.com', AccountId = cons.Id);
+        insert con;
+
+                                                                    
+        Services_Rendered__c service = new Services_Rendered__c(Services_Rendered_to_Airline__c = cons.id,
+                                                                 Services_Rendered_By__c = cons.id,
+                                                                 Services_Rendered_Type__c = 'BSP Representation',
+                                                                 Services_Rendered_Status__c = 'Active');
+        insert service; 
+                        
+        recordType APCaseRT = [SELECT Id FROM RecordType WHERE SObjectType = 'Case' AND DeveloperName = 'IDFS_Airline_Participation_Process'];
+        Date dateOFApp = Date.newInstance(1980, 5, 14);
+
+        TransformationHelper.trgAccountISSP_AfterBeforInsertDeleteUpdateUndelete = false;
+        TransformationHelper.CalculateBusinessHoursAges = false;
+        CaseChildHelper.noValidationsOnTrgCAseIFAP  = false;                                       
+        
+        Test.startTest();
+        Case c = new Case(CaseArea__c = 'Airline Leaving',
+                          RecordTypeID =  APCaseRT.id,
+                          AccountId = Cons.id,
+                          ContactId = con.Id,
+                          Provider__c = Cons.ID,
+                          Status = 'Closed',
+                          Origin = 'me',
+                          Process_Approved__c =dateOFApp,
+                          Reason1__C = 'myReason2');
+        insert c;   
+            
+        Services_Rendered__c serviziodb = [SELECT Services_Rendered_to_Airline__c,
+                                                    Services_Rendered_By__c ,
+                                                    Services_Rendered_Type__c ,
+                                                    Services_Rendered_Status__c ,Inactivation_Airline_Participation_Case__c,
+                                                    Source_Case__c  FROM Services_Rendered__c 
+                                                    WHERE ID =: service.ID];
+        Test.stopTest();
+        System.assertEquals(serviziodb.Inactivation_Airline_Participation_Case__c,c.Id);
+        System.assertEquals(serviziodb.Services_Rendered_Status__c,'Inactive');
             
     }
   

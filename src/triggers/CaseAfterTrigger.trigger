@@ -765,14 +765,23 @@ trigger CaseAfterTrigger on Case (after delete, after insert, after undelete, af
 			string airlineLeaving = 'Airline Leaving';
 			string airlineJoining = 'Airline Joining';
 			string airlineSuspension = 'Airline Suspension Process';
+			String airlineChange = 'Airline Change';
 			String separator = '%%%__%%%';
 			string APCaseRTID =Schema.SObjectType.Case.RecordTypeInfosByName.get('IDFS Airline Participation Process').RecordTypeId ;
 			//date pretrasfomrationDate =  date.newinstance(2013, 11, 30);
 			list<case> casesToTrigger = new list<Case>();
+			List<Case> airlineChangeCasesToTrigger = new List<Case>();
 			for(case c:trigger.new){
 				if(!TransformationHelper.triggerOnCaseNSerRen &&  c.recordtypeId == APCaseRTID && (c.CaseArea__c == airlineJoining || c.CaseArea__c  == airlineLeaving || c.CaseArea__c  == airlineSuspension))
 			    	casesToTrigger.add(c);
+			    else if (!TransformationHelper.triggerOnCaseNSerRen && c.recordtypeId == APCaseRTID && c.CaseArea__c == airlineChange && c.reason1__c == 'IATA Easy Pay' && c.Status == 'Closed' && c.CaseArea__c == airlineChange && (trigger.isInsert || trigger.oldmap.get(c.id).Status != 'Closed'))
+			    	airlineChangeCasesToTrigger.add(c);
 			}
+
+			if (!airlineChangeCasesToTrigger.isEmpty()) {
+				ServiceRenderedCaseLogic.saveTheServices(airlineChangeCasesToTrigger, null);
+			}
+
 			if(!casesToTrigger.isEmpty()){
 			    map<string,id> AcccRtNamePerId = TransformationHelper.AccRtNamePerIds();
 			    set<String> ServicesToCheck = new set<String>();
@@ -798,7 +807,7 @@ trigger CaseAfterTrigger on Case (after delete, after insert, after undelete, af
 			            system.debug('483  ');
 			            caseMap.put(c.id,c);
 			            caseIdPerAccID.put(c.accountID,c.id);
-					}else if( !ServicesToCheck.contains(c.reason1__c)){
+			        } else if( !ServicesToCheck.contains(c.reason1__c)){
 						c.addError(' The reason you entered is not mapped to a service. \n Please contact the administrators.\n Administration Error:Custom Setting ' );                  
 		            }
 		        }

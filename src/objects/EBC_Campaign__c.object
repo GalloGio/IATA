@@ -992,6 +992,7 @@ The value is determined by ExactTarget, and this is is only populated once a cam
         <fullName>Drafts</fullName>
         <columns>NAME</columns>
         <columns>Maximum_Allowed_Step__c</columns>
+        <columns>Billing_Account__c</columns>
         <filterScope>Everything</filterScope>
         <filters>
             <field>Status__c</field>
@@ -1046,6 +1047,7 @@ The value is determined by ExactTarget, and this is is only populated once a cam
         <columns>Campaign_ID__c</columns>
         <columns>Audience__c</columns>
         <columns>Number_of_Recipients__c</columns>
+        <columns>NumberSent__c</columns>
         <columns>Send_Datetime__c</columns>
         <filterScope>Everything</filterScope>
         <filters>
