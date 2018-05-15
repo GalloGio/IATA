@@ -84,6 +84,8 @@ private class ISSP_TIP_Home_Controller_Test{
         system.debug('##HERE: ' + [select id, CaseArea__c, reason1__c, AccountId,RecordTypeid,Status from case]);
         System.runAs(user){
             insert newCase;
+            PageReference pageRef = Page.ISSP_TIP_Home;
+            Test.setCurrentPage(pageRef);
             controller = new ISSP_TIP_Home_Controller();
             system.debug('##HERE: ' + [select id,TIP_Status__c  from TIP_BIN_Range__c]);
         }
@@ -100,6 +102,7 @@ private class ISSP_TIP_Home_Controller_Test{
 
         List<ISSP_TIP_Home_Controller.productWrapper> products = controller.products; 
         System.assertEquals(1, products.size());
+        controller.initActions();
         
     }
 
@@ -110,7 +113,7 @@ private class ISSP_TIP_Home_Controller_Test{
         controller.paymentGuaranteeVal = new String[]{'COMMERCIAL_DISPUTE'};
         System.runAs(user){
             controller.NewEditProduct();
-            controller.saveDraft();
+            controller.saveAccountEnrolmentAsDraft();
         }
     }
 
@@ -125,7 +128,7 @@ private class ISSP_TIP_Home_Controller_Test{
 
             System.currentPageReference().getParameters().put('prodId', prod.id);
             controller.NewEditProduct();
-            controller.saveDraft();
+            controller.saveAccountEnrolmentAsDraft();
             controller.cancelNewEditProd();
 
         //}
@@ -162,5 +165,117 @@ private class ISSP_TIP_Home_Controller_Test{
         System.currentPageReference().getParameters().put('binRangeRecPos', '0');
         controller.deleteBinRange();
         system.assertEquals(0, controller.binRangeList.size());
+    }
+
+    //------------------------------test for enrolment methods-------------------
+    @isTest
+    static void testCreateNewContact(){
+        setupTest();
+        System.runAs(user){
+            controller.getISOCountry();
+            controller.setContactToEdit();
+            controller.newContact.lastName='testLastName';
+            controller.newContact.Email = 'Test@test11.com';            
+            controller.createContact();
+
+            system.assertEquals(1,[select id from contact].size());//fail to create due duplicate email
+
+            controller.newContact.Email = 'test@test1233.com';            
+            controller.createContact();//create email
+            system.assertEquals(2,[select id from contact].size());
+
+            //controller.saveAccountEnrolmentAsDraft();
+        }
+    }
+
+    @isTest
+    static void testEditContact(){
+        setupTest();
+        System.runAs(user){
+            Apexpages.currentPage().getParameters().put('contactIDToEdit',[select id from contact limit 1].id);
+            controller.startEnrolmentAccount();
+            controller.setContactToEdit();
+            controller.newContact.lastName='testLastName';
+            controller.newContact.Email = 'test@test333.com';            
+            controller.createContact();//create email
+            system.assertEquals(1,[select id from contact].size());
+            
+            //controller.saveAccountEnrolmentAsDraft();
+        }
+    }
+
+   
+
+    @isTest
+    static void testsaveAccountEnrolmentAsDraft(){
+        setupTest();
+        System.runAs(user){
+            
+            controller.saveAccountEnrolmentAsDraft();
+            system.assertEquals(2,[select id from case].size());
+            
+            //controller.saveAccountEnrolmentAsDraft();
+        }
+    }
+
+    @isTest
+    static void testsubmitAccountEnrolmentToIATA(){
+        setupTest();
+        System.runAs(user){
+            controller.startEnrolmentAccount();
+            //legal name missing
+            controller.account.Name='';
+            controller.submitAccountEnrolmentToIATA();
+            controller.account.Name='acc1';
+
+            //Office Phone missing
+            controller.account.PhoneNational__c=null;
+            controller.submitAccountEnrolmentToIATA();
+            controller.account.PhoneNational__c='123123123';
+
+            //Office email missing
+            controller.account.Email__c=null;
+            controller.submitAccountEnrolmentToIATA();
+            controller.account.Email__c='asdas@asd.pt';
+
+            //BillingCity missing
+            controller.account.BillingStreet=null;
+            controller.submitAccountEnrolmentToIATA();
+            controller.account.BillingStreet='street test';
+
+            //Location of Headquarter missing
+            controller.account.BillingCity=null;
+            controller.submitAccountEnrolmentToIATA();
+            controller.account.BillingCity='city test';
+
+            //Location of Headquarter missing
+            controller.account.TIP_HQ_Location__c=null;
+            controller.submitAccountEnrolmentToIATA();
+            controller.account.TIP_HQ_Location__c=[select id from IATA_ISO_Country__c limit 1].id;
+
+            //Primary contact missing
+            controller.contactList.get(0).Primary_Contact__c=false;
+            controller.submitAccountEnrolmentToIATA();
+
+            Apexpages.currentPage().getParameters().put('contactIDToEdit',controller.contactList.get(0).id);
+            controller.updateRadioButtonStatus();
+            
+            controller.contactList.get(0).Primary_Contact__c=true;
+            controller.submitAccountEnrolmentToIATA();
+        
+            //controller.saveAccountEnrolmentAsDraft();
+        }
+    }
+    @isTest
+    static void testsecurityCheck(){
+        setupTest();
+        System.runAs(user){
+            PageReference pageRef = Page.ISSP_TIP_Home;
+            Test.setCurrentPage(pageRef);
+            System.currentPageReference().getParameters().put('caseId', newCase.id);
+            //controller.updateCase();
+            controller.saveAccountEnrolmentAsDraft();
+            controller.securityCheckForEnrolmentPage();
+        }
     }
 }
