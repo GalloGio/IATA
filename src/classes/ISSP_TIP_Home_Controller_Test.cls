@@ -167,7 +167,6 @@ private class ISSP_TIP_Home_Controller_Test{
         system.assertEquals(0, controller.binRangeList.size());
     }
 
-    //------------------------------test for enrolment methods-------------------
     @isTest
     static void testCreateNewContact(){
         setupTest();
@@ -188,6 +187,7 @@ private class ISSP_TIP_Home_Controller_Test{
         }
     }
 
+    //------------------------------test for enrolment methods-------------------
     @isTest
     static void testEditContact(){
         setupTest();
@@ -276,6 +276,39 @@ private class ISSP_TIP_Home_Controller_Test{
             //controller.updateCase();
             controller.saveAccountEnrolmentAsDraft();
             controller.securityCheckForEnrolmentPage();
+        }
+    }
+
+    @isTest
+    static void testAddUpdateCountryConfig(){
+        setupTest();
+        System.runAs(user){
+            //PageReference pageRef = Page.ISSP_TIP_Home;
+            //Test.setCurrentPage(pageRef);
+            //System.currentPageReference().getParameters().put('countryConfigPos', 0);
+            controller.AddUpdateCountryConfig();
+        }
+    }
+
+    @isTest
+    static void testNewEditCountryConfig(){
+        setupTest();
+        System.runAs(user){
+            //PageReference pageRef = Page.ISSP_TIP_Home;
+            //Test.setCurrentPage(pageRef);
+            System.currentPageReference().getParameters().put('countryConfigPos', '0');
+            controller.newEditCountryConfig();
+        }
+    }
+
+    @isTest
+    static void testDeleteCountryConfig(){
+        setupTest();
+        System.runAs(user){
+            //PageReference pageRef = Page.ISSP_TIP_Home;
+            //Test.setCurrentPage(pageRef);
+            System.currentPageReference().getParameters().put('countryConfigPos', '0');
+            controller.deleteCountryConfig();
         }
     }
 }
