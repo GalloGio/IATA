@@ -41,8 +41,8 @@
                 </apex:column>
                 
                 <apex:column headerValue="Amount">
-                    <apex:inputField value="{!ri.Instalment_Amount__c}" rendered="{! isEditMode }" />
-                    <apex:outputField value="{!ri.Instalment_Amount__c}" rendered="{! NOT(isEditMode) }" />
+                    <apex:inputField value="{!ri.Amount_Expected__c}" rendered="{! isEditMode }" />
+                    <apex:outputField value="{!ri.Amount_Expected__c}" rendered="{! NOT(isEditMode) }" />
                 </apex:column>
                 
                 <apex:column headerValue="Due Date">
@@ -56,13 +56,13 @@
                 </apex:column>
                 
                 <apex:column headerValue="Amount Received (R&S)">
-                    <apex:inputField value="{!ri.Amount_Received_R_S__c}" rendered="{! isEditMode }" />
-                    <apex:outputField value="{!ri.Amount_Received_R_S__c}" rendered="{! NOT(isEditMode) }" />
+                    <apex:inputField value="{!ri.Amount_Received__c}" rendered="{! isEditMode }" />
+                    <apex:outputField value="{!ri.Amount_Received__c}" rendered="{! NOT(isEditMode) }" />
                 </apex:column>
                 
                 <apex:column headerValue="Reception Date">
-                    <apex:inputField value="{!ri.Reception_Date__c}" rendered="{! isEditMode }" />
-                    <apex:outputField value="{!ri.Reception_Date__c}" rendered="{! NOT(isEditMode) }" />
+                    <apex:inputField value="{!ri.Date_received__c}" rendered="{! isEditMode }" />
+                    <apex:outputField value="{!ri.Date_received__c}" rendered="{! NOT(isEditMode) }" />
                 </apex:column>
             </apex:pageBlockTable>
             

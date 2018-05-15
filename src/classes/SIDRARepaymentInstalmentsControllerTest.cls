@@ -22,13 +22,30 @@
 @isTest
 private class SIDRARepaymentInstalmentsControllerTest {
 
-    static testMethod void myUnitTest() {
+    static testMethod void test_Controller_ERROR() {
+        Test.startTest();
+        
+        ApexPages.StandardController stdc = new ApexPages.StandardController(new Case());
+        SIDRARepaymentInstalmentsController controller = new SIDRARepaymentInstalmentsController(stdc);
+        
+        // test that new payment instalments are correctly created
+        controller.AddNewPaymentInstalment(); 
+        
+        controller.Edit(); 
+        controller.Cancel();
+        controller.Save();
+        controller.DeleteRpi();
+        
+        Test.stopTest();
+    }
+    
+    static testMethod void test_Controller_OK() {
         Case aCase = new Case();
         acase.RecordTypeId = RecordTypeSingleton.getInstance().RtIDsPerDeveloperNamePerObj.get('Case').get('SIDRA');
         acase.Subject = 'Test Case Subject';
         insert aCase;
         
-        list<Repayment_Instalment__c> rpi = [SELECT Id FROM Repayment_Instalment__c WHERE Case__c = :aCase.Id];
+        list<Case_Detail__c> rpi = [SELECT Id FROM Case_Detail__c WHERE Case__c = :aCase.Id];
         system.assertEquals(0, rpi.size());
         
         Test.startTest();
@@ -37,17 +54,70 @@ private class SIDRARepaymentInstalmentsControllerTest {
         SIDRARepaymentInstalmentsController controller = new SIDRARepaymentInstalmentsController(stdc);
         
         // test that new payment instalments are correctly created
-        controller.AddNewPaymentInstalment(); 
+        controller.AddNewPaymentInstalment();
         
-        rpi = [SELECT Id FROM Repayment_Instalment__c WHERE Case__c = :aCase.Id];
-        system.assertEquals(6, rpi.size());
+        rpi = [SELECT Id FROM Case_Detail__c WHERE Case__c = :aCase.Id];
+        system.assertEquals(SIDRARepaymentInstalmentsController.REPAYMENT_INSTALMENTS_QUANTITY, rpi.size());
         
         controller.Edit(); 
-        
         controller.Cancel();
+        controller.Save();
         
-        controller.Save();  
+        String label = controller.strAddNewLabel;
+        
+        Double totalAmount = controller.totalAmount;
+        Double netBalance = controller.netBalance;
         
         Test.stopTest();
     }
+    
+    static testMethod void test_Controller_OK2() {
+        Case aCase = new Case();
+        acase.RecordTypeId = RecordTypeSingleton.getInstance().RtIDsPerDeveloperNamePerObj.get('Case').get('SIDRA');
+        acase.Subject = 'Test Case Subject';
+        insert aCase;
+        
+        ApexPages.StandardController stdc = new ApexPages.StandardController(aCase);
+        SIDRARepaymentInstalmentsController controller = new SIDRARepaymentInstalmentsController(stdc);
+        
+        // test that new payment instalments are correctly created
+        controller.AddNewPaymentInstalment();
+        
+        list<Case_Detail__c> rpi = [SELECT Id FROM Case_Detail__c WHERE Case__c = :aCase.Id];
+        system.assertEquals(SIDRARepaymentInstalmentsController.REPAYMENT_INSTALMENTS_QUANTITY, rpi.size());
+        
+        Test.startTest();
+        controller = new SIDRARepaymentInstalmentsController(stdc);
+        controller.AddNewPaymentInstalment();
+        
+        rpi = [SELECT Id FROM Case_Detail__c WHERE Case__c = :aCase.Id];
+        system.assertEquals(SIDRARepaymentInstalmentsController.REPAYMENT_INSTALMENTS_QUANTITY+1, rpi.size());
+        Test.stopTest();
+    }
+    
+    static testMethod void test_Controller_OK3() {
+        Case aCase = new Case();
+        acase.RecordTypeId = RecordTypeSingleton.getInstance().RtIDsPerDeveloperNamePerObj.get('Case').get('SIDRA');
+        acase.Subject = 'Test Case Subject';
+        insert aCase;
+        
+        ApexPages.StandardController stdc = new ApexPages.StandardController(aCase);
+        SIDRARepaymentInstalmentsController controller = new SIDRARepaymentInstalmentsController(stdc);
+        
+        // test that new payment instalments are correctly created
+        controller.AddNewPaymentInstalment();
+        
+        list<Case_Detail__c> rpi = [SELECT Id FROM Case_Detail__c WHERE Case__c = :aCase.Id];
+        system.assertEquals(SIDRARepaymentInstalmentsController.REPAYMENT_INSTALMENTS_QUANTITY, rpi.size());
+        
+        Test.startTest();
+        controller = new SIDRARepaymentInstalmentsController(stdc);
+        controller.rpiIdToDelete = rpi.get(0).Id;
+        controller.DeleteRpi();
+        
+        rpi = [SELECT Id FROM Case_Detail__c WHERE Case__c = :aCase.Id];
+        system.assertEquals(SIDRARepaymentInstalmentsController.REPAYMENT_INSTALMENTS_QUANTITY-1, rpi.size());
+        Test.stopTest();
+    }
+
 }

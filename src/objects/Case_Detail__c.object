@@ -43,7 +43,7 @@
     <allowInChatterGroups>false</allowInChatterGroups>
     <compactLayoutAssignment>SYSTEM</compactLayoutAssignment>
     <deploymentStatus>Deployed</deploymentStatus>
-    <description>SIDRA Repayment Instalments. Used on SIDRA cases.</description>
+    <description>Detail object for Case for general purpose</description>
     <enableActivities>false</enableActivities>
     <enableBulkApi>true</enableBulkApi>
     <enableChangeDataCapture>false</enableChangeDataCapture>
@@ -54,12 +54,26 @@
     <enableSharing>true</enableSharing>
     <enableStreamingApi>true</enableStreamingApi>
     <fields>
-        <fullName>Amount_Received_R_S__c</fullName>
+        <fullName>Amount_Expected__c</fullName>
+        <description>Agreed amount to be paid for an instalment</description>
         <externalId>false</externalId>
-        <label>Amount Received (R&amp;S)</label>
+        <label>Amount Expected</label>
         <precision>18</precision>
         <required>false</required>
-        <scale>0</scale>
+        <scale>2</scale>
+        <trackHistory>true</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Amount_Received__c</fullName>
+        <description>Amount received on payment (of an instalment)</description>
+        <externalId>false</externalId>
+        <label>Amount Received</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>2</scale>
         <trackHistory>true</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Number</type>
@@ -67,11 +81,12 @@
     </fields>
     <fields>
         <fullName>Case__c</fullName>
+        <description>Lookup to master object</description>
         <externalId>false</externalId>
-        <label>Case</label>
+        <label>Case Number</label>
         <referenceTo>Case</referenceTo>
-        <relationshipLabel>Repayment Instalments</relationshipLabel>
-        <relationshipName>Repayment_Instalments</relationshipName>
+        <relationshipLabel>Case Details</relationshipLabel>
+        <relationshipName>Case_Details</relationshipName>
         <relationshipOrder>0</relationshipOrder>
         <reparentableMasterDetail>false</reparentableMasterDetail>
         <trackHistory>false</trackHistory>
@@ -80,23 +95,11 @@
         <writeRequiresMasterRead>false</writeRequiresMasterRead>
     </fields>
     <fields>
-        <fullName>Currency_Exchange_Rate__c</fullName>
-        <externalId>false</externalId>
-        <formula>Case__r.CurrencyExchangeRateUSD__c</formula>
-        <label>Currency Exchange Rate</label>
-        <precision>18</precision>
-        <required>false</required>
-        <scale>2</scale>
-        <trackHistory>false</trackHistory>
-        <trackTrending>false</trackTrending>
-        <type>Number</type>
-        <unique>false</unique>
-    </fields>
-    <fields>
         <fullName>Currency__c</fullName>
-        <description>Currecny inherited from the parent case.</description>
+        <description>Currency taken from the case</description>
         <externalId>false</externalId>
         <formula>Case__r.Currency__c</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
         <label>Currency</label>
         <required>false</required>
         <trackHistory>false</trackHistory>
@@ -105,28 +108,43 @@
         <unique>false</unique>
     </fields>
     <fields>
-        <fullName>Due_Date__c</fullName>
+        <fullName>Date_received__c</fullName>
+        <description>Date the payment of an instalment was received</description>
         <externalId>false</externalId>
-        <label>Due Date</label>
+        <label>Date received</label>
         <required>false</required>
         <trackHistory>true</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Date</type>
     </fields>
     <fields>
-        <fullName>Instalment_Amount__c</fullName>
+        <fullName>Due_date__c</fullName>
+        <description>Date and instalment needs to be paid</description>
         <externalId>false</externalId>
-        <label>Instalment Amount</label>
+        <label>Due date</label>
+        <required>false</required>
+        <trackHistory>true</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Date</type>
+    </fields>
+    <fields>
+        <fullName>Exchange_Rate__c</fullName>
+        <description>Exchange rate of the currency taken from the case</description>
+        <externalId>false</externalId>
+        <formula>Case__r.CurrencyExchangeRateUSD__c</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>Exchange Rate</label>
         <precision>18</precision>
         <required>false</required>
         <scale>2</scale>
-        <trackHistory>true</trackHistory>
+        <trackHistory>false</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Number</type>
         <unique>false</unique>
     </fields>
     <fields>
         <fullName>Payment_Status__c</fullName>
+        <description>Status of the payment of the instalment</description>
         <externalId>false</externalId>
         <label>Payment Status</label>
         <required>false</required>
@@ -134,6 +152,7 @@
         <trackTrending>false</trackTrending>
         <type>Picklist</type>
         <valueSet>
+            <restricted>true</restricted>
             <valueSetDefinition>
                 <sorted>false</sorted>
                 <value>
@@ -164,34 +183,45 @@
             </valueSetDefinition>
         </valueSet>
     </fields>
-    <fields>
-        <fullName>Reception_Date__c</fullName>
-        <externalId>false</externalId>
-        <label>Reception Date</label>
-        <required>false</required>
-        <trackHistory>true</trackHistory>
-        <trackTrending>false</trackTrending>
-        <type>Date</type>
-    </fields>
-    <label>Repayment Instalment</label>
+    <label>Case Detail</label>
     <nameField>
-        <displayFormat>RI-{00000}</displayFormat>
-        <label>Repayment Instalment Name</label>
+        <displayFormat>CD-{00000000}</displayFormat>
+        <label>Case Details Name</label>
         <trackHistory>false</trackHistory>
         <type>AutoNumber</type>
     </nameField>
-    <pluralLabel>Repayment Instalments</pluralLabel>
+    <pluralLabel>Case Details</pluralLabel>
+    <recordTypeTrackHistory>false</recordTypeTrackHistory>
+    <recordTypes>
+        <fullName>Repayment_Instalment</fullName>
+        <active>true</active>
+        <description>Payment information for SIDRA cases</description>
+        <label>Repayment Instalment</label>
+        <picklistValues>
+            <picklist>Payment_Status__c</picklist>
+            <values>
+                <fullName>Amount Received After Termination</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Not received by due date</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Pending</fullName>
+                <default>true</default>
+            </values>
+            <values>
+                <fullName>Received</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>To be confirmed</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+    </recordTypes>
     <searchLayouts/>
     <sharingModel>ControlledByParent</sharingModel>
-    <validationRules>
-        <fullName>Reception_date_mandatory</fullName>
-        <active>true</active>
-        <description>If the amount entered in Amount Received is higher than 0, the Reception date is mandatory.</description>
-        <errorConditionFormula>AND (
-  NOT ( ISBLANK( Amount_Received_R_S__c )),
-  ISBLANK( Reception_Date__c )
-)</errorConditionFormula>
-        <errorMessage>The Reception Date is mandatory is the Amount Received R&amp;S is filled in.</errorMessage>
-    </validationRules>
     <visibility>Public</visibility>
 </CustomObject>
