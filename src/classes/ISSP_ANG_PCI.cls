@@ -380,8 +380,8 @@ SYSTEM.DEBUG('getRelatedAccount starting... ');
         update newCase;
 
         String typeOfProcess;
-        if (isocountry.ANG_Enable_NewGen__c) typeOfProcess = AMS_Utils.PCI_COMPLIANT;
-        else typeOfProcess = AMS_Utils.NGFOP;
+        if (isocountry.ANG_Enable_NewGen__c) typeOfProcess = AMS_Utils.NGFOP;
+        else typeOfProcess = AMS_Utils.PCI_COMPLIANT;
 
         system.debug('case ' + newCase + ' newCase.Account_Concerned__c ' + newCase.Account_Concerned__c + ' newForm.Id ' + newForm.Id + 'typeOfProcess ' + typeOfProcess);
 
