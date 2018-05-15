@@ -552,7 +552,7 @@ public without sharing class ISSP_TIP_Home_Controller {
     public Pagereference NewEditProduct(){
         isNew=true;
         editMode=true;
-        renderCountryCondifPopup=false;
+        renderCountryCondifPopup=true;// render country config popup by default
         applyLanguage = UserInfo.getLanguage();
         displayLanguage = UserInfo.getLanguage(); 
 
