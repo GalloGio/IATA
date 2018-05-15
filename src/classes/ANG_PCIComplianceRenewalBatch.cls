@@ -88,7 +88,7 @@ global class ANG_PCIComplianceRenewalBatch implements Database.Batchable<Account
                 mail.setToAddresses(emailAddresses);    
                 mail.setSubject('ANG_PCIComplianceRenewalBatch Completed With Issues - End time: '+ System.now());
                 mail.setSenderDisplayName('Batch Processing Completed');
-                mail.setPlainTextBody('Batch Process has been completed with issues. SOME OSCARs were not created due to the following issues: \n\n\tUNEXPECTED ERRORS:\n\n'
+                mail.setPlainTextBody('Batch Process has been completed with issues. Some OSCARs were not created due to the following issues: \n\n\tUNEXPECTED ERRORS:\n\n'
                  +errorMsg+'\n\n-------------------\n\n\tAGENTS WITHOUT VALID CONTACTS:\n\n'+noContactAgents);
                 Messaging.sendEmail(new Messaging.SingleEmailMessage[] {mail});
             }
