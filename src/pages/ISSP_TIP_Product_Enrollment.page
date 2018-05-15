@@ -70,6 +70,9 @@
             font-weight: bold;
             font-size: small;
         }
+        .errorMsg {
+            white-space: nowrap;
+        }
 
         a.disabled {
            pointer-events: none;
