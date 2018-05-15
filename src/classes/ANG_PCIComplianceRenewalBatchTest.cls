@@ -118,4 +118,13 @@ public with sharing class ANG_PCIComplianceRenewalBatchTest {
 
 		System.assertEquals([SELECT Id FROM AMS_OSCAR__c WHERE Account__c = :a1.Id AND Process__c = :AMS_Utils.NGFOP].size(), 0, 'NO FOP OSCAR should be created');
 	}
+
+	@isTest
+    public static void testBatchScheduler(){
+    	Test.startTest();
+    	ANG_PCIComplianceRenewalScheduler sch = new ANG_PCIComplianceRenewalScheduler ();
+    	String cronExp = '0 0 7 1/1 * ? *'; 
+    	system.schedule('Test ANG_PCIComplianceRenewalScheduler', cronExp, sch);
+    	test.StopTest();
+    }
 }
