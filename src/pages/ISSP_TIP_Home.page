@@ -225,9 +225,7 @@ action="{!initActions}"
                                             <apex:facet name="header">
                                                 {!$ObjectType.Case.fields.CaseNumber.label}
                                             </apex:facet>
-                                            <apex:commandLink value="{!item.CaseNumber}" action="{!startEnrolmentAccount}">
-                                                <apex:param name="caseID" value="{!item.id}"/>
-                                            </apex:commandLink>
+                                            <apex:outputLink value="/apex/ISSP_Case?caseId={!item.Id}" target="_self">{!item.CaseNumber}</apex:outputLink>
                                         </apex:column>
                                         <apex:column >
                                             <apex:facet name="header">
