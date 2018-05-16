@@ -352,6 +352,8 @@ SYSTEM.DEBUG('getRelatedAccount starting... ');
 
         if(auxForm != null) newForm = auxForm;
 
+        //Filling the AMS_Pax_Accreditation_Form__c if the ISO_Country is non-NAM Enabled
+
         if (!isocountry.ANG_Enable_NewGen__c) {
 
             Account sourceAccount =  [SELECT Id, Name, BillingStreet, BillingCity, BillingState, BillingPostalCode, BillingCountry, Legal_name__c,
