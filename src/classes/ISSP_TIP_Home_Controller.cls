@@ -745,7 +745,7 @@ public without sharing class ISSP_TIP_Home_Controller {
 
     public Pagereference submitProduct(){
         try{
-           set<string> mandatoryFieldsToSubmitSet= new set<string>{'PP_Settlement_terms__c','is_PCI_DSS_required__c','PP_Chargeback_airlines__c','PP_Pay_in_model__c','PP_Chargeback_airlines_duration__c','PP_Category__c','PP_VAN_Type__c'}; 
+           set<string> mandatoryFieldsToSubmitSet= new set<string>{'PP_Settlement_terms__c','is_PCI_DSS_required__c','PP_Chargeback_airlines__c','PP_Pay_in_model__c','PP_Category__c'}; 
            boolean missingValues=false;
            for(string field:mandatoryFieldsToSubmitSet){
                 if(String.isBlank(String.valueOf(newpp.get(field)))){
