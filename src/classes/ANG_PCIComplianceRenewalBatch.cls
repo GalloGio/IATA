@@ -1,5 +1,7 @@
 global class ANG_PCIComplianceRenewalBatch implements Database.Batchable<Account>, Database.Stateful {
 
+	//Batch will run every day and create a pci renewal OSCAR for each account with PCI expiry date expiring in 90 days
+
 	private static final String AGENCYRTID = AMS_Utils.RECTYPE_IATAAGENCY;
 	private static final String OSCARCOMMRTID = AMS_Utils.RECTYPE_OSCARCOMM;
 	private static final Set<String> ACTIVE_ACC_STATUS = new Set<String>{AMS_Utils.ACC_S9_APPROVED, AMS_Utils.ACC_S8_CHANGESPROCESSED, AMS_Utils.ACC_S7_UNDERREVIEW, 
@@ -76,7 +78,7 @@ global class ANG_PCIComplianceRenewalBatch implements Database.Batchable<Account
 			if (!agenciesWithoutContact.isEmpty())
 				noContactAgents = +String.join(agenciesWithoutContact,'\n');
 
-			//send email w/ errors
+			//send email w/ errors to support
 			List<String> emailAddresses = new List<String>();
 			for (SalesforceSupportEmails__c supportEmail: SalesforceSupportEmails__c.getAll().values()){ 
                 emailAddresses.add(supportEmail.Support_Email__c);
