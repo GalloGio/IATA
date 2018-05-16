@@ -11,7 +11,9 @@ private class TIP_BINRangeTriggerHandlerTest {
 			TIP_Provider_Type__c = 'Open Loop',
 			TIP_HQ_Location__c = country.Id,
 			RecordTypeId =TIP_Utils.PAYMENT_PROVIDER_RECORD_TYPE_ID,
-			Accreditation_date__c = Date.today());
+			Accreditation_date__c = Date.today(),
+			IATACode__c = '1000',
+			category__c = TIP_Utils.ACCOUNT_CATEGORY_PAYMENT_PROVIDER);
 		insert provider;
 
 		Partner_products__c product = new Partner_products__c(Name = 'ProductTest1', 
