@@ -54,7 +54,7 @@ public class TIP_BatchActivateRecordsByDate_test {
 
 		//-------WITHOUT  DATES ------------
 		//ACTIVE
-		createBinRange(prodActive, null, null, '444444444' , '44444445');
+		createBinRange(prodActive, null, null, '444444444' , '444444445');
 		
 		//IN PROGRESS
 		createBinRange(prodActive, System.today()+20, null, '555555555' , '555555556');
