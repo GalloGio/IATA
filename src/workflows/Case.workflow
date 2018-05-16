@@ -3857,6 +3857,16 @@
         <template>ISS_Portal/Owner_notification_of_new_comment</template>
     </alerts>
     <alerts>
+        <fullName>Send_notification</fullName>
+        <ccEmails>chauhanm@iata.org</ccEmails>
+        <ccEmails>ndc@iata.org</ccEmails>
+        <description>Send notification</description>
+        <protected>false</protected>
+        <senderAddress>noreply@iata.org</senderAddress>
+        <senderType>OrgWideEmailAddress</senderType>
+        <template>unfiled$public/New_Case_Assigned_to_the_Queue</template>
+    </alerts>
+    <alerts>
         <fullName>Status_Approved</fullName>
         <description>ACR: Informs that Status of ACR is changed</description>
         <protected>false</protected>
@@ -4781,6 +4791,17 @@
         <lookupValueType>Queue</lookupValueType>
         <name>Change owner to global KM queue</name>
         <notifyAssignee>false</notifyAssignee>
+        <operation>LookupValue</operation>
+        <protected>false</protected>
+    </fieldUpdates>
+    <fieldUpdates>
+        <fullName>Change_owner_to_queue</fullName>
+        <description>Changes case owner to the support queue.</description>
+        <field>OwnerId</field>
+        <lookupValue>AIR_Tech_Zone_Support</lookupValue>
+        <lookupValueType>Queue</lookupValueType>
+        <name>Change owner to queue</name>
+        <notifyAssignee>true</notifyAssignee>
         <operation>LookupValue</operation>
         <protected>false</protected>
     </fieldUpdates>
@@ -8303,6 +8324,25 @@ Case(month(datevalue(now()))+1,1,31,2,28,3,31,4,30,5,31,6,30,7,31,8,31,9,30,10,3
         </criteriaItems>
         <description>workflow rule that can automatically populate the Service Leve field with the value 2 when a case is Escalated.</description>
         <triggerType>onCreateOrTriggeringUpdate</triggerType>
+    </rules>
+    <rules>
+        <fullName>Assign to AIR Tech Zone Queue</fullName>
+        <actions>
+            <name>Send_notification</name>
+            <type>Alert</type>
+        </actions>
+        <actions>
+            <name>Change_owner_to_queue</name>
+            <type>FieldUpdate</type>
+        </actions>
+        <active>true</active>
+        <criteriaItems>
+            <field>Case.RecordType__c</field>
+            <operation>equals</operation>
+            <value>AIR Tech Zone</value>
+        </criteriaItems>
+        <description>Rule to assign Case created via AIR Tech Zone community to their support queue.</description>
+        <triggerType>onCreateOnly</triggerType>
     </rules>
     <rules>
         <fullName>Automatic type of customer - Cargo</fullName>
