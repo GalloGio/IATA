@@ -69,7 +69,7 @@
                 <field>PP_Pay_in_Model__c</field>
             </layoutItems>
             <layoutItems>
-                <behavior>Required</behavior>
+                <behavior>Edit</behavior>
                 <field>PP_VAN_Type__c</field>
             </layoutItems>
             <layoutItems>

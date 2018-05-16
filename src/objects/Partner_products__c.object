@@ -714,8 +714,9 @@ Specify if payment is guaranteed to the airline against: fraud dispute, commerci
         <active>true</active>
         <description>Payment Product Code is mandatory for partner products to be approved</description>
         <errorConditionFormula>RecordType.DeveloperName==&apos;TIP_Product&apos; 
-&amp;&amp; NOT(ISPICKVAL(PP_Status__c,&apos;REJECTED&apos;) || ISPICKVAL(PP_Status__c,&apos;DRAFT&apos;) || ISPICKVAL(PP_Status__c,&apos;IN_PROGRESS&apos;))
-&amp;&amp; ISBLANK(PP_Payment_Product_Code__c)</errorConditionFormula>
+&amp;&amp; NOT(ISPICKVAL(PP_Status__c,&apos;REJECTED&apos;) || ISPICKVAL(PP_Status__c,&apos;DRAFT&apos;))
+&amp;&amp; ISBLANK(PP_Payment_Product_Code__c)
+&amp;&amp; NOT(ISBLANK(PP_Effective_from_Date__c))</errorConditionFormula>
         <errorMessage>Please fill in the Payment Product Code.</errorMessage>
     </validationRules>
     <validationRules>

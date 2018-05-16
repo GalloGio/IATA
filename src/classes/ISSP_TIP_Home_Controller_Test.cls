@@ -25,7 +25,7 @@ private class ISSP_TIP_Home_Controller_Test{
         parent.sector__c = 'Travel Agent';
         parent.Location_Type__c = 'HO';
         parent.RecordTypeId = TIP_Utils.PAYMENT_PROVIDER_RECORD_TYPE_ID;
-        parent.IATACode__c = '100';
+        parent.IATACode__c = '1000';
         parent.IATA_ISO_Country__c = country.id;
         parent.category__c = TIP_Utils.ACCOUNT_CATEGORY_PAYMENT_PROVIDER;
         insert parent;
@@ -419,13 +419,18 @@ private class ISSP_TIP_Home_Controller_Test{
     @isTest
     static void testAcceptTermsAndConditions(){
         setupTest();
-        System.assertEquals(controller.rejectTerms().getUrl(), Page.ISSP_Homepage.getUrl());
+
+        controller.rejectTerms();
+        Portal_Application_Right__c ar = [SELECT Terms_Acceptance__c FROM Portal_Application_Right__c LIMIT 1];
+        System.assertEquals(ar.Terms_Acceptance__c, false);
 
         controller.acceptTerms();
         system.assertEquals(1, Apexpages.getMessages().size());
-            
+
         controller.acceptedTaC = true;
-        System.assertEquals(controller.acceptTerms().getUrl(), Page.ISSP_TIP_Home.getUrl());
+        controller.acceptTerms();
+        ar = [SELECT Terms_Acceptance__c FROM Portal_Application_Right__c LIMIT 1];
+        System.assertEquals(ar.Terms_Acceptance__c, true);
         
     }
 }

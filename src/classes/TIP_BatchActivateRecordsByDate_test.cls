@@ -20,7 +20,7 @@ public class TIP_BatchActivateRecordsByDate_test {
 		parent = createAccount('acc1 active', System.today()-5,System.today()+5);
 		
 		//INACTIVE
-		createAccount('acc2 inactive', System.today()-20,System.today()-10);
+		//createAccount('acc2 inactive', System.today()-20,System.today()-10);
 		
 		//IN PROGRESS
 		createAccount('acc3 in progress', System.today()+10,System.today()+20);
@@ -32,8 +32,8 @@ public class TIP_BatchActivateRecordsByDate_test {
 		//ACTIVE
 		prodActive = createProduct('prod1 active', '11', parent, System.today()-5,System.today()+5);
 
-		//INACTIVE
-		createProduct('prod2 active', '22', parent, System.today()-20,System.today()-10);
+		///INACTIVE
+		//createProduct('prod2 active', '22', parent, System.today()-20,System.today()-10);
 		
 		//IN PROGRESS
 		createProduct('prod3 active', '33', parent, System.today()+10,System.today()+20);
@@ -47,14 +47,14 @@ public class TIP_BatchActivateRecordsByDate_test {
 		createBinRange(prodActive,System.today()-5,System.today()+5, '111111111','111111112');
 		
 		//INACTIVE
-		createBinRange(prodActive, System.today()-20,System.today()-10, '222222222','222222223');
+		//createBinRange(prodActive, System.today()-20,System.today()-10, '222222222','222222223');
 		
 		//IN PROGRESS
 		createBinRange(prodActive, System.today()+10,System.today()+20, '333333333' , '333333334');
 
 		//-------WITHOUT  DATES ------------
 		//ACTIVE
-		createBinRange(prodActive, null, null, '444444444' , '44444445');
+		createBinRange(prodActive, null, null, '444444444' , '444444445');
 		
 		//IN PROGRESS
 		createBinRange(prodActive, System.today()+20, null, '555555555' , '555555556');
@@ -66,7 +66,7 @@ public class TIP_BatchActivateRecordsByDate_test {
 		createProducConfiguration(prodActive,System.today()-5,System.today()+5);
 		
 		//INACTIVE
-		createProducConfiguration(prodActive, System.today()-20,System.today()-10);
+		//createProducConfiguration(prodActive, System.today()-20,System.today()-10);
 		
 		//IN PROGRESS
 		createProducConfiguration(prodActive, System.today()+10,System.today()+20);
@@ -91,6 +91,7 @@ public class TIP_BatchActivateRecordsByDate_test {
         a1.category__c = 'Payment Provider';
         a1.Accreditation_date__c = startDate;
         a1.Expiry_Date__c = endDate;
+        a1.Status__c=TIP_Utils.PARTNER_STATUS_IN_PROGRESS;
         insert a1;
         return a1;
 	}
@@ -145,19 +146,19 @@ public class TIP_BatchActivateRecordsByDate_test {
 
 		//test providers
 		System.assertEquals(1, [select count() from Account where Status__c = :TIP_UTils.PARTNER_STATUS_ACTIVE ]);
-		System.assertEquals(1, [select count() from Account where Status__c = :TIP_UTils.PARTNER_STATUS_INACTIVE ]);
+		System.assertEquals(0, [select count() from Account where Status__c = :TIP_UTils.PARTNER_STATUS_INACTIVE ]);
 		System.assertEquals(1, [select count() from Account where Status__c = :TIP_UTils.PARTNER_STATUS_IN_PROGRESS ]);
 
 		//test products
 		system.debug('##PROD: ' + [select id, PP_Payment_Product_Code__c, pp_status__c from Partner_products__c ]);
 		System.assertEquals(2, [select count() from Partner_products__c where PP_status__c = :TIP_UTils.PARTNER_PRODUCT_STATUS_ACTIVE ]);
-		System.assertEquals(1, [select count() from Partner_products__c where PP_status__c = :TIP_UTils.PARTNER_PRODUCT_STATUS_INACTIVE ]);
+		System.assertEquals(0, [select count() from Partner_products__c where PP_status__c = :TIP_UTils.PARTNER_PRODUCT_STATUS_INACTIVE ]);
 		System.assertEquals(1, [select count() from Partner_products__c where PP_status__c = :TIP_UTils.PARTNER_PRODUCT_STATUS_IN_PROGRESS ]);
 
 		//test Bin Ranges
 		system.debug('##RANGE: ' + [select id, TIP_status__c from TIP_BIN_Range__c ]);
 		System.assertEquals(2, [select count() from TIP_BIN_Range__c where TIP_Status__c = :TIP_UTils.BIN_RANGE_STATUS_ACTIVE ]);
-		System.assertEquals(1, [select count() from TIP_BIN_Range__c where TIP_Status__c = :TIP_UTils.BIN_RANGE_STATUS_INACTIVE ]);
+		System.assertEquals(0, [select count() from TIP_BIN_Range__c where TIP_Status__c = :TIP_UTils.BIN_RANGE_STATUS_INACTIVE ]);
 		System.assertEquals(2, [select count() from TIP_BIN_Range__c where TIP_Status__c = :TIP_UTils.BIN_RANGE_STATUS_IN_PROGRESS ]);
 
 		//validate dates 
@@ -167,7 +168,7 @@ public class TIP_BatchActivateRecordsByDate_test {
 		//test Product Configs
 		system.debug('##CONFIG: ' + [select id, TIP_status__c from TIP_Pay_Prov_Prod_Country_Config__c ]);
 		System.assertEquals(2, [select count() from TIP_Pay_Prov_Prod_Country_Config__c where TIP_Status__c = :TIP_UTils.PARTNER_PRODUCT_CONFIG_STATUS_ACTIVE ]);
-		System.assertEquals(1, [select count() from TIP_Pay_Prov_Prod_Country_Config__c where TIP_Status__c = :TIP_UTils.PARTNER_PRODUCT_CONFIG_STATUS_INACTIVE ]);
+		System.assertEquals(0, [select count() from TIP_Pay_Prov_Prod_Country_Config__c where TIP_Status__c = :TIP_UTils.PARTNER_PRODUCT_CONFIG_STATUS_INACTIVE ]);
 		System.assertEquals(2, [select count() from TIP_Pay_Prov_Prod_Country_Config__c where TIP_Status__c = :TIP_UTils.PARTNER_PRODUCT_CONFIG_STATUS_IN_PROGRESS ]);
 		
 
