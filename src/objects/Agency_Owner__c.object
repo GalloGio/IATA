@@ -177,12 +177,11 @@
         <columns>CREATEDBY_USER</columns>
         <columns>LAST_UPDATE</columns>
         <columns>UPDATEDBY_USER</columns>
-        <columns>AMS_GDP_Key__c</columns>
         <filterScope>Everything</filterScope>
         <filters>
-            <field>NAME</field>
+            <field>Related_Account__c</field>
             <operation>equals</operation>
-            <value>#NAME?</value>
+            <value>TAEWOONG LOGISTICS CO LTD</value>
         </filters>
         <label>For Search</label>
         <language>en_US</language>

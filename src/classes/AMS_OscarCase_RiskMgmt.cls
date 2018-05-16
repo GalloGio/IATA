@@ -221,7 +221,7 @@ public class AMS_OscarCase_RiskMgmt {
 
 			//Query the Cases and account info: from the trigger, I'm not getting all necessary lookup value. Trigger is always running AFTER
 			map<id, case> mapCases = new map<id, case>([
-			select id, recordType.DeveloperName, DEF_Withdrawal_Approval_Rejection__c, DEF_Withdrawal_Reason__c, DEF_Approval_Rejection__c, End_of_Grace_Period_Date__c,
+			select id, recordType.DeveloperName, DEF_Withdrawal_Approval_Rejection__c, Short_Payment_Date__c, DEF_Withdrawal_Reason__c, DEF_Approval_Rejection__c, End_of_Grace_Period_Date__c,
 								  Shut_Down_TKT_System_GDS_and_BSPlink__c, IRR_Approval_Rejection__c, IRR_Withdrawal_Approval_Rejection__c, IRR_Withdrawal_Reason__c, NOT_Date__c, NOT_Sent__c, NOT_Approval__c,
 								  Notify_Agreement_Approval_to_AG__c, Reason_for_Default__c, REI_ApprovalRejectin__c, Repayment_Schedule_Approval__c, SIDRA_Lite_Reason__c, TER_Approval_Rejection__c, Current_Outstanding_Amount_USD__c, Type_of_REI_WD__c,
 								  Termination_Reason__c, Ticketing_Authority_Re_assigned__c, Update_AIMS_DEF__c, Update_AIMS_IRR__c, Update_AIMS_IRRWITH__c, Update_AIMS_REI_DEFWITH__c,
@@ -514,7 +514,7 @@ public class AMS_OscarCase_RiskMgmt {
 		AACC.Irregularity_Sequence__c = (cc.Generate_Irregularity_Sequence__c && isHO && !mapIRRS.get(AccountId).isEmpty()) ? GenerateIrregularitySequence(mapIRRS.get(AccountId),mapCases.get(idCase)) : '';
 		AACC.End_of_Grace_Period_Date__c = (cc.Calculate_End_Grace_Period_Date__c && mapCases.get(idCase).End_of_Grace_Period_Date__c != null) ? GenerateDateForBulletin(mapCases.get(idCase).End_of_Grace_Period_Date__c) : '';
 		AACC.Termination_Date__c = (cc.Calculate_Termination_Date__c && mapCases.get(idCase).Termination_date__c != null) ? GenerateDateForBulletin(mapCases.get(idCase).Termination_date__c) : '';
-		AACC.Forms_of_Payment__c = AMS_ChangeCodesHelper.generateFOPString(fOPs, mapCases.get(idCase).Account.ANG_IsNewGenAgency__c);
+		AACC.Forms_of_Payment__c = AMS_ChangeCodesHelper.generateFOPString(fOPs, mapCases.get(idCase).Account.ANG_IsNewGenAgency__c, cc.Change_Code__c);
 		//AACC.Bulletin_Information__c = GenerateMemoText(mapCases.get(idCase), null
 		//												, cc.Bulletin_Memo_Text__c, cc.Bulletin_Memo_Text2__c, cc.Bulletin_Memo_Text3__c
 		//												, mapIRRS.get(AccountId), mapFinancialSecurity.get(AccountId)).toUpperCase();

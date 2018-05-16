@@ -173,11 +173,6 @@ two record types:
                     <label>Preapproved</label>
                 </value>
                 <value>
-                    <fullName>Printed/Delivered</fullName>
-                    <default>false</default>
-                    <label>Printed/Delivered</label>
-                </value>
-                <value>
                     <fullName>Cancelled ID Card</fullName>
                     <default>false</default>
                     <label>Cancelled ID Card</label>
@@ -455,6 +450,33 @@ IF(TODAY()&lt;= Valid_To_Date__c, TRUE,FALSE)
 &quot;\&quot;card-expiry-date\&quot;:\&quot;&quot;+ TEXT(Month(Valid_To_Date__c))+ &quot;-&quot; +TEXT(Day(Valid_To_Date__c))+ &quot;-&quot; +TEXT(Year(Valid_To_Date__c)) + &quot;\&quot;,&quot;+ &quot;\&quot;agency-code\&quot;:\&quot;&quot;+Agency_IATA_Code__c + &quot;\&quot;,&quot;+ &quot;\&quot;agency-name\&quot;:\&quot;&quot;+Agency_Name__c + &quot;\&quot;&quot;</formula>
         <inlineHelpText>CAC Web Service Complex Response for IDCard</inlineHelpText>
         <label>JSON WS Complex</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>JSON_WS_IDCard_App__c</fullName>
+        <description>CAC Web Service Response for IDCard App</description>
+        <externalId>false</externalId>
+        <formula>&quot;\&quot;reason\&quot;:\&quot;&quot;+ IF (Json_Is_Active__c, &quot;VALID&quot;, &quot;INVALID&quot;) + &quot;\&quot;,&quot;+ 
+&quot;\&quot;cardholder-name\&quot;:\&quot;&quot;+ FirstName__c +&quot; &quot;+ LastName__c + &quot;\&quot;,&quot;+ 
+&quot;\&quot;cardholder-idcard-name\&quot;:\&quot;&quot;+ Name_on_ID_Card__c + &quot;\&quot;,&quot;+ 
+&quot;\&quot;card-expiry-date\&quot;:\&quot;&quot;+ TEXT(Month(Valid_To_Date__c))+ &quot;-&quot; +TEXT(Day(Valid_To_Date__c))+ &quot;-&quot; +TEXT(Year(Valid_To_Date__c)) + &quot;\&quot;,&quot;+ 
+&quot;\&quot;agency-code\&quot;:\&quot;&quot;+Agency_IATA_Code__c + &quot;\&quot;,&quot;+ 
+&quot;\&quot;agency-name\&quot;:\&quot;&quot;+Agency_Name__c + &quot;\&quot;,&quot;+ 
+&quot;\&quot;cardholder-photo\&quot;:\&quot;&quot;+Photo__c + &quot;\&quot;,&quot;+ 
+&quot;\&quot;card-type\&quot;:\&quot;&quot;+TEXT(Type_of_ID_Card__c) + &quot;\&quot;,&quot;+ 
+&quot;\&quot;cardholder-gender\&quot;:\&quot;&quot;+Gender__c + &quot;\&quot;,&quot;+ 
+&quot;\&quot;weekly-hours\&quot;:\&quot;&quot;+Hours_per_week__c + &quot;\&quot;,&quot;+ 
+&quot;\&quot;cardholder-duties\&quot;:\&quot;&quot;+Duties__c + &quot;\&quot;,&quot;+ 
+&quot;\&quot;cardholder-position\&quot;:\&quot;&quot;+Position__c + &quot;\&quot;,&quot;+ 
+&quot;\&quot;industry-start-year\&quot;:\&quot;&quot;+Start_Date_Industry__c + &quot;\&quot;,&quot;+ 
+&quot;\&quot;agency-start-year\&quot;:\&quot;&quot;+Start_Date_Agency_Year__c + &quot;\&quot;,&quot;+ 
+&quot;\&quot;agency-start-month\&quot;:\&quot;&quot;+Start_Date_Agency_Month__c + &quot;\&quot;&quot;</formula>
+        <inlineHelpText>CAC Web Service Response for IDCard App</inlineHelpText>
+        <label>JSON WS IDCard App</label>
         <required>false</required>
         <trackHistory>false</trackHistory>
         <trackTrending>false</trackTrending>
@@ -1040,6 +1062,11 @@ IF(TODAY()&lt;= Valid_To_Date__c, TRUE,FALSE)
             <field>GDP_Products_Account_View__c</field>
             <operation>equals</operation>
         </filters>
+        <filters>
+            <field>Card_Status__c</field>
+            <operation>equals</operation>
+            <value>Preapproved,Sent ID Card,Valid ID Card,ID Card Pending/In Progress</value>
+        </filters>
         <label>XX-GDP Products - Account View = BLANK</label>
         <language>en_US</language>
     </listViews>
@@ -1085,15 +1112,15 @@ IF(TODAY()&lt;= Valid_To_Date__c, TRUE,FALSE)
                 <default>false</default>
             </values>
             <values>
-                <fullName>Preapproved</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Printed%2FDelivered</fullName>
+                <fullName>Expired ID Card</fullName>
                 <default>false</default>
             </values>
             <values>
                 <fullName>Sent ID Card</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Valid ID Card</fullName>
                 <default>false</default>
             </values>
         </picklistValues>
@@ -1320,7 +1347,7 @@ var cardStatus = &apos;{!ID_Card__c.Card_Status__c}&apos;;
 var sentToAIMSon = &apos;{!ID_Card__c.Sent_to_AIMS_on__c}&apos;;
 
 
-if (sentToAIMSon != null &amp;&amp; cardStatus == &apos;Printed/Delivered&apos;) 
+if (sentToAIMSon != null &amp;&amp; cardStatus == &apos;Valid ID Card&apos;) 
 { 
      var cardToUpdate= [];
      var card = new sforce.SObject(&quot;ID_Card__c&quot;); 

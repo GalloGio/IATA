@@ -92,6 +92,10 @@
                 <behavior>Edit</behavior>
                 <field>Record_Sharing_Criteria__c</field>
             </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>Training_Membership__c</field>
+            </layoutItems>
         </layoutColumns>
         <style>TwoColumnsTopToBottom</style>
     </layoutSections>
@@ -635,6 +639,10 @@
         <fields>LAST_UPDATE</fields>
         <fields>UPDATEDBY_USER</fields>
         <relatedList>Account_Domain__c.Account__c</relatedList>
+    </relatedLists>
+    <relatedLists>
+        <fields>NAME</fields>
+        <relatedList>ISSP_Web_Service_Log__c.Account__c</relatedList>
     </relatedLists>
     <relatedObjects>ParentId</relatedObjects>
     <showEmailCheckbox>false</showEmailCheckbox>

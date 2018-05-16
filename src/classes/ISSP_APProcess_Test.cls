@@ -75,6 +75,9 @@ private class ISSP_APProcess_Test
             Test.setCurrentPage(pr);
             ISSP_APProcess ctrl = new ISSP_APProcess();
             System.assertEquals(ctrl.vCaseId, testCase.Id);
+            ctrl.getIsNewCountryProcess();
+            insert new ISSP_CS__c(Name='ISSP_APProcess_New_Countries', Value__c='CH');
+            ctrl.getIsNewCountryProcess();
         }
         Test.stopTest();
 

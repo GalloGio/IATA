@@ -346,6 +346,16 @@
         <type>Checkbox</type>
     </fields>
     <fields>
+        <fullName>Favourite_Service__c</fullName>
+        <defaultValue>false</defaultValue>
+        <description>Checkbox used to know which services are the users favourites</description>
+        <externalId>false</externalId>
+        <label>Favourite Service</label>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
         <fullName>IATA_Code__c</fullName>
         <externalId>false</externalId>
         <formula>Contact__r.IATA_Code__c</formula>
@@ -514,7 +524,7 @@ In the Portal Service object, the ServiceName__c field has the same functionalit
 &quot;IFACP Endorsement &amp; Changes&quot;, $Label.ISSP_IFACP_Endorsement_Changes,
 &quot;Currency Center&quot;, $Label.ISSP_CurrencyCenter,
 &quot;GSA Appointments&quot;, $Label.ISSP_AMS_MSO_GSA_GSA_Service_Name,
-&quot;MSO Appointments&quot;, $Label.ISSP_AMS_MSO_GSA_MSO_Service_Name,
+&quot;MSO Management&quot;, $Label.ISSP_AMS_MSO_GSA_MSO_Service_Name,
 &quot;RHC Information&quot;, $Label.ANG_ISSP_RHC_Information,
 Application_Name__c
 )</formula>
@@ -647,6 +657,19 @@ ISPICKVAL( Right__c , &apos;Access Granted&apos;))</formula>
         <type>DateTime</type>
     </fields>
     <fields>
+        <fullName>Terms_Acceptance_Version__c</fullName>
+        <description>Service Terms and Condition version that the user accepted</description>
+        <externalId>false</externalId>
+        <label>Terms Acceptance Version</label>
+        <precision>12</precision>
+        <required>false</required>
+        <scale>2</scale>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
         <fullName>Terms_Acceptance__c</fullName>
         <defaultValue>false</defaultValue>
         <description>Indicates if terms and conditions have been accepted</description>
@@ -673,6 +696,7 @@ ISPICKVAL( Right__c , &apos;Access Granted&apos;))</formula>
         <columns>Contact__c</columns>
         <columns>Portal_Application__c</columns>
         <columns>Right__c</columns>
+        <columns>LAST_UPDATE</columns>
         <filterScope>Everything</filterScope>
         <filters>
             <field>Restricted_App__c</field>
@@ -1075,7 +1099,7 @@ NOT(CONTAINS($Profile.Name,&quot;System administrator&quot;))
         <errorConditionFormula>AND(
  OR (ISCHANGED(Right__c) , ISNEW() ),
  Application_Name__c = &apos;Treasury Dashboard&apos;,
- OR(ISPICKVAL(Right__c, &apos;Access Granted&apos;), ISPICKVAL(Right__c, &apos;Access Denied&apos;)),
+ OR(AND(ISPICKVAL(Right__c, &apos;Access Granted&apos;), ISPICKVAL(Right__c, &apos;Access Denied&apos;)),NOT(ISPICKVAL(PRIORVALUE(Right__c),&apos;Access Requested&apos;))), 
   $User.TD_Team__c = false
 )</errorConditionFormula>
         <errorMessage>The Access Status of this service can only be changed by IATA ‘Treasury Dashboard’ team.</errorMessage>

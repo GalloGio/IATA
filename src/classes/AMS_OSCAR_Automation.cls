@@ -499,15 +499,26 @@ public with sharing class AMS_OSCAR_Automation {
     public class AMS_OSCAR_Step15_succeeded implements IClassFactory {
         public Boolean processWork(AMS_OSCAR_Event__c lce, AMS_OSCAR__c oscar) {
             system.debug('Start AUTOMATION AMS_OSCAR_Step15_succeeded.processWork');
-            Boolean res = False;
+            Boolean res = False;               
+            Boolean hasFRRequiredStep = false;
+            
+            if (oscar.ANG_Type_Of_Change__c != null && oscar.Process__c == AMS_Utils.NGCHANGES && oscar.ANG_Type_Of_Change__c.contains(AMS_Utils.ANG_ACCREDITATION_TYPE) && oscar.STEP11__c != AMS_Utils.PASSED){
+                Account oscarAccount = [SELECT ANG_Accreditation_Model__c FROM Account WHERE Id = :oscar.Account__c];
+                if (oscarAccount.ANG_Accreditation_Model__c == AMS_Utils.ACCREDITATIONMODEL_CASH){
+                    hasFRRequiredStep = true;
+                }
+            }
 
-            if (oscar != null && ((oscar.STEP12__c != AMS_Utils.IN_PROGRESS && oscar.STEP12__c != 'Not Started') || (oscar.Process__c == AMS_Utils.NEWHELITE || oscar.Process__c == AMS_Utils.NEWHESTANDARD || oscar.Process__c == AMS_Utils.NEWAE || oscar.Process__c == AMS_Utils.NGCHANGES))) {
+            if (oscar != null && ((oscar.STEP12__c != AMS_Utils.IN_PROGRESS && oscar.STEP12__c != 'Not Started') || (oscar.Process__c == AMS_Utils.NEWHELITE || oscar.Process__c == AMS_Utils.NEWHESTANDARD || oscar.Process__c == AMS_Utils.NEWAE || oscar.Process__c == AMS_Utils.NGCHANGES))
+                && !hasFRRequiredStep) {
                 oscar.Dossier_Validation__c = Date.today();
                 oscar.Validation_result__c = 'Passed';
                 oscar.Status__c = 'Pending Approval';
                 res = True;
-            } else {
-                oscar.addError('Validation can only be Passed if Manage Financial Security step is Not Applicable, Failed or Passed.');
+            }else if(hasFRRequiredStep){
+                    oscar.addError('When changing the Accreditation Model from "Cashless" to "Cash" the step "Conduct Financial Review" must be passed');
+            }else{    
+                    oscar.addError('Validation can only be Passed if Manage Financial Security step is Not Applicable, Failed or Passed.');
             }
 
             return res;
@@ -523,11 +534,8 @@ public with sharing class AMS_OSCAR_Automation {
             if (oscar != null) {
                 oscar.Dossier_Validation__c = Date.today();
                 oscar.Validation_result__c = 'Failed';
-                
-                if(oscar.Process__c == AMS_Utils.NEWHELITE || Oscar.Process__c == AMS_Utils.NEWHESTANDARD || Oscar.Process__c == AMS_Utils.NEWAE)
-                    oscar.Status__c = 'Pending Approval';
-                else
-                    oscar.Status__c = 'On Hold_Internal';
+                //RB INC388740: Behavior should be the same for NewGen. Previously, the logic was changing status of the OSCAR to pending approval.
+                oscar.Status__c = 'On Hold_Internal';
 
                 res = True;
             }
@@ -673,7 +681,7 @@ public with sharing class AMS_OSCAR_Automation {
             system.debug('Start AUTOMATION AMS_OSCAR_Step1_succeeded.processWork');
             Boolean res = False;
 
-            if (oscar.STEP2__c != 'Passed' && !(oscar.Process__c == AMS_Utils.new_TIDS || oscar.Process__c == AMS_Utils.new_AHA || oscar.Process__c == AMS_Utils.new_AHA_BSP || oscar.Process__c == AMS_Utils.new_GSA_BSP || oscar.Process__c == AMS_Utils.new_GSA || oscar.Process__c == AMS_Utils.new_GSSA || oscar.Process__c == AMS_Utils.new_MSO || oscar.Process__c == AMS_Utils.NGCHANGES || oscar.Process__c == AMS_Utils.AGENCYCHANGES))
+            if (oscar.STEP2__c != 'Passed' && !(oscar.Process__c == AMS_Utils.new_TIDS || oscar.Process__c == AMS_Utils.new_AHA || oscar.Process__c == AMS_Utils.new_AHA_BSP || oscar.Process__c == AMS_Utils.new_GSA_BSP || oscar.Process__c == AMS_Utils.new_GSA || oscar.Process__c == AMS_Utils.new_GSSA || oscar.Process__c == AMS_Utils.new_MSO || oscar.Process__c == AMS_Utils.NGCHANGES || oscar.Process__c == AMS_Utils.AGENCYCHANGES || oscar.Process__c == AMS_Utils.NGOPTINOUT))
                 oscar.addError('Application Finalization cannot be granted if the Approval step does not equals PASSED');
             else if(oscar.Process__c == AMS_Utils.NGCHANGES && ANG_AgencyChangesHelper.containsChange(new List<String>(AMS_Utils.changesRequiringManagerApproval),oscar.ANG_Type_Of_Change__c) && oscar.RPM_Approval__c <> AMS_Utils.AUTH_APPROVAL)
                 oscar.addError('Cannot set application finalization to passed because manager approval is not authorized.');
@@ -1207,14 +1215,14 @@ public with sharing class AMS_OSCAR_Automation {
                 oscar.addError('Cannot set risk event to passed because manager approval is not authorized.');
 
             if (oscar != null) {
-			
+            
                 res = True;
             }
 
             return res;
         }
     }
-	
+    
     public class AMS_OSCAR_Step41_failed implements IClassFactory {
         public Boolean processWork(AMS_OSCAR_Event__c lce, AMS_OSCAR__c oscar) {
             system.debug('Start AUTOMATION AMS_OSCAR_Step41_failed.processWork');

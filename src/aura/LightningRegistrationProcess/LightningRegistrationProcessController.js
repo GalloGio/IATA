@@ -822,12 +822,13 @@
             } else if (event.data.action == 'callIframeResizeCallback') {
                 jQuery('.captchaIframe').removeAttr('height');
                 var captchaIframeHeight;
-                if (event.data.height == '' || event.data.height == null) {
+                if (event.data.height == null)  {
                     captchaIframeHeight = "height: 0px;";
-                } else {
+                }
+                if(event.data.height && event.data.height.length>0){ 
                     captchaIframeHeight = "height:" + event.data.height + "px;";
                 }
-                component.set("v.captchaIframeHeight", captchaIframeHeight);
+                component.set("v.captchaIframeHeight", captchaIframeHeight); 
             }
         }, false);
     },

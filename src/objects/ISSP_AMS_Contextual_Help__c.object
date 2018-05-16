@@ -85,10 +85,26 @@
         <type>TextArea</type>
     </fields>
     <fields>
+        <fullName>ISSP_AMS_HelpText_ru__c</fullName>
+        <externalId>false</externalId>
+        <label>Contextual Help Text (ru)</label>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>TextArea</type>
+    </fields>
+    <fields>
         <fullName>ISSP_AMS_HelpText_th__c</fullName>
         <externalId>false</externalId>
         <inlineHelpText>Thai</inlineHelpText>
         <label>Contextual Help Text (th)</label>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>TextArea</type>
+    </fields>
+    <fields>
+        <fullName>ISSP_AMS_HelpText_tr__c</fullName>
+        <externalId>false</externalId>
+        <label>Contextual Help Text (tr)</label>
         <required>false</required>
         <trackTrending>false</trackTrending>
         <type>TextArea</type>

@@ -118,7 +118,10 @@ public without sharing class IEC_ShoppingCartController extends IEC_PageControll
 
 		//-- Validate country compliance 
 		validateCountryCompliance();
-		if (! bAreProductsCompliant) addErrorMessage(labels.get('msgErrorCartNotCompliant'));
+		if (! bAreProductsCompliant){
+			return null;
+		} 
+		//addErrorMessage(labels.get('msgErrorCartNotCompliant'));
 		
 		//-- Customer was forced to login when click on proceed to checkout button
 		//1--> REMOVED FROM: if(pageParams.get('action') == 'checkout') return startCheckout();	
@@ -187,6 +190,9 @@ public without sharing class IEC_ShoppingCartController extends IEC_PageControll
 			}
 
 			validateCountryCompliance();
+			if (! bAreProductsCompliant){
+				return null;
+			} 
 
 			addConfirmMessage('Product ' + productCode + ' has been successfully removed.');
 			return null;
@@ -222,6 +228,9 @@ public without sharing class IEC_ShoppingCartController extends IEC_PageControll
 			}
 
 			validateCountryCompliance();
+			if (! bAreProductsCompliant){
+				return null;
+			} 
 
 			addConfirmMessage('Quantity has been successfully updated.');
 
@@ -321,7 +330,7 @@ public without sharing class IEC_ShoppingCartController extends IEC_PageControll
 		validateCountryCompliance();
 		if(!bAreProductsCompliant)
 		{
-			addErrorMessage(labels.get('msgErrorCartNotCompliant'));
+			//addErrorMessage(labels.get('msgErrorCartNotCompliant'));
 			return null;
 		}
 

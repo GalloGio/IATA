@@ -201,6 +201,11 @@
             <isFieldManaged>false</isFieldManaged>
             <isRequired>false</isRequired>
         </displayedFields>
+        <displayedFields>
+            <field>Shipping_State__c</field>
+            <isFieldManaged>false</isFieldManaged>
+            <isRequired>false</isRequired>
+        </displayedFields>
         <label>Location</label>
     </fieldSets>
     <fieldSets>
@@ -11701,6 +11706,17 @@ Account_Name__c != null  &amp;&amp;  TEXT(Location_Class__c) != null &amp;&amp; 
         </picklistValues>
         <picklistValues>
             <picklist>ANG_Accreditation_Model_to_Change__c</picklist>
+            <values>
+                <fullName>Cash</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Cashless</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>ANG_Accreditation_type__c</picklist>
             <values>
                 <fullName>Cash</fullName>
                 <default>false</default>
@@ -25285,6 +25301,30 @@ Account_Name__c != null  &amp;&amp;  TEXT(Location_Class__c) != null &amp;&amp; 
         <description>CASS Number cannot be changed if IATA Code is already generated.</description>
         <errorConditionFormula>AND(ISCHANGED( CASS_Number__c ) , NOT(ISBLANK(IATACode__c)))</errorConditionFormula>
         <errorMessage>CASS Number cannot be changed if IATA Code is already filled.</errorMessage>
+    </validationRules>
+    <validationRules>
+        <fullName>Cass_Number_edit_permission</fullName>
+        <active>true</active>
+        <description>To prevent CASS Number to be inserted by agents with a sector different of Cargo Agent.</description>
+        <errorConditionFormula>IF(
+    AND( 
+        SAAM_Case__r.Account.RecordTypeId = &quot;012w0000000QBMW&quot; , 
+        NOT( ISPICKVAL( SAAM_Case__r.Account.Sector__c, &quot;Cargo Agent&quot; ) ), 
+        NOT( ISBLANK( CASS_Number__c ) ) 
+    ),
+    true,
+    AND( 
+        SAAM_Case__r.Account.RecordTypeId = &quot;012w0000000QBMb&quot; , 
+        NOT( ISPICKVAL( Location_Class__c , &quot;C&quot; ) ),
+        NOT( ISPICKVAL( Location_Class__c , &quot;R&quot; ) ),
+        NOT( ISPICKVAL( Location_Class__c , &quot;I&quot; ) ), 
+        NOT( ISPICKVAL( Location_Class__c , &quot;Q&quot; ) ), 
+        NOT( AND( ISPICKVAL( Location_Class__c , &quot;G&quot; ), ISPICKVAL( SAAM_Case__r.OSCAR__r.Process__c, &quot;NEW.GSSA.1.0&quot; ) ) ),   
+        NOT( ISBLANK( CASS_Number__c ) ) 
+    )
+)</errorConditionFormula>
+        <errorDisplayField>CASS_Number__c</errorDisplayField>
+        <errorMessage>CASS Number should be inserted for Accounts with Location Class equals to C, R, I Q or G (for GSSA application processes) or for Cargo Agents.</errorMessage>
     </validationRules>
     <validationRules>
         <fullName>ISSP_AMS_T_C_Accepted_on_Submit</fullName>

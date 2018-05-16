@@ -12,14 +12,14 @@ public with sharing class ANG_RiskEventMigrationHelper {
 		System.debug(loggingLevel.Fine, '____ [cls ANG_RiskEventMigrationHelper - Constructor (Account)] Starting migration of change codes');
 		risksToWithdraw = new Map<string,Agency_Applied_Change_code__c>();
 		risksToInsert = new Map<string, ANG_Agency_Risk_Event__c>();
-		listChangeCodes =   [Select Change_Code__c, Created_Date_To_Show__c, Reason_Code__c,Reason_Description__c,Irregularity_Type__c,PreviousReason__c,SIDRA_Case__c,OSCAR__c, Bulletin_Information__c,Account__c,Account__r.Location_Type__c  from Agency_Applied_Change_code__c where Account__c in :accs AND Created_Date_To_Show__c = LAST_N_DAYS:730];
+		listChangeCodes = [Select Change_Code__c, Created_Date_To_Show__c, Reason_Code__c,Reason_Description__c,Irregularity_Type__c,PreviousReason__c,SIDRA_Case__c,OSCAR__c, Bulletin_Information__c,Account__c,Account__r.Location_Type__c,SIDRA_Case__r.Parent.Financial_Review_Result__c from Agency_Applied_Change_code__c where Account__c in :accs AND Created_Date_To_Show__c = LAST_N_DAYS:730];
 	}
 
 	public ANG_RiskEventMigrationHelper(Set<Id> accs) {
 		System.debug(loggingLevel.Fine, '____ [cls ANG_RiskEventMigrationHelper - Constructor (Id)] Starting migration of change codes');
 		risksToWithdraw = new Map<string,Agency_Applied_Change_code__c>();
 		risksToInsert = new Map<string, ANG_Agency_Risk_Event__c>();
-		listChangeCodes = [Select Change_Code__c, Created_Date_To_Show__c, Reason_Code__c,Reason_Description__c,Irregularity_Type__c,PreviousReason__c,SIDRA_Case__c,OSCAR__c, Bulletin_Information__c,Account__c,Account__r.Location_Type__c  from Agency_Applied_Change_code__c where Account__c in :accs AND Created_Date_To_Show__c = LAST_N_DAYS:730];
+		listChangeCodes = [Select Change_Code__c, Created_Date_To_Show__c, Reason_Code__c,Reason_Description__c,Irregularity_Type__c,PreviousReason__c,SIDRA_Case__c,OSCAR__c, Bulletin_Information__c,Account__c,Account__r.Location_Type__c,SIDRA_Case__r.Parent.Financial_Review_Result__c from Agency_Applied_Change_code__c where Account__c in :accs AND Created_Date_To_Show__c = LAST_N_DAYS:730];
 	}
 
 // =============== SIDE KICK METHODS ==============================
@@ -39,16 +39,21 @@ public with sharing class ANG_RiskEventMigrationHelper {
 		set;
 	}
 
+	private boolean setCashConditions(string riskEventType,Agency_Applied_Change_code__c a){
+		Decimal delayDays=mapRiskEventTypes.get(riskEventType).ANG_Delay_Cash_Condition__c;
+		return mapRiskEventTypes.get(riskEventType).Limit_Cash_Conditions__c || (delayDays!=null && delayDays>0 && a.Created_Date_To_Show__c.Date().addDays(Integer.valueOF(delayDays)) <=System.Today());
+	}
+
 //============== ACTION METHODS =================================
     public List<ANG_Agency_Risk_Event__c> convertChangeCodesToRiskEvents(){
     	mapRiskEventTypes = new Map<String,ANG_Risk_Event_Type__c>();
-    	for(ANG_Risk_Event_Type__c ret: [SELECT Name, Id,ANG_Risk_ID__c  from ANG_Risk_Event_Type__c]){
+    	for(ANG_Risk_Event_Type__c ret: [SELECT Name, Id,ANG_Risk_ID__c,Limit_Cash_Conditions__c,ANG_Delay_Cash_Condition__c  from ANG_Risk_Event_Type__c]){
     		mapRiskEventTypes.put(ret.Name,ret);
     	}
     	for(Agency_Applied_Change_code__c a : listChangeCodes){
     		
     		ANG_Agency_Risk_Event__c reToAdd = new ANG_Agency_Risk_Event__c(
-                                        ANG_Issued_Date__c  = date.newinstance(a.Created_Date_To_Show__c.year(), a.Created_Date_To_Show__c.month(), a.Created_Date_To_Show__c.day()) , 
+                                        ANG_Issued_Date__c  = a.Created_Date_To_Show__c.Date() , 
                                         ANG_ChangeCode__c   = a.id, 
                                         ANG_AccountId__c    = a.Account__c,
                                         ANG_OscarId__c      = a.OSCAR__c,
@@ -61,6 +66,7 @@ public with sharing class ANG_RiskEventMigrationHelper {
 			if(isAuthCashPayment(a)){	
 				reToAdd.ANG_UniqueKey__c   += mapRiskEventTypes.get(ANG_Risk_Helper.RISK_TYPE_AUTH_CASH_PAYMENT).ANG_Risk_ID__c;
 				reToAdd.ANG_Risk_Type__c    = mapRiskEventTypes.get(ANG_Risk_Helper.RISK_TYPE_AUTH_CASH_PAYMENT).id;
+				reToAdd.ANG_Limit_Cash_Conditions__c    = setCashConditions(ANG_Risk_Helper.RISK_TYPE_AUTH_CASH_PAYMENT,a);
 				risksToInsert.put( ANG_Risk_Helper.CHANGE_CODE_FIN + 'auth' +getKey(a), reToAdd.clone(false,false,false,false));  
 			}
 			/*if(isLateShortPayment(a)){
@@ -72,19 +78,22 @@ public with sharing class ANG_RiskEventMigrationHelper {
 			if(status!=null){
 				reToAdd.ANG_UniqueKey__c   += mapRiskEventTypes.get(ANG_Risk_Helper.RISK_TYPE_LATE_SHORT_PAYMENT).ANG_Risk_ID__c;
 				reToAdd.ANG_Risk_Type__c    = mapRiskEventTypes.get(ANG_Risk_Helper.RISK_TYPE_LATE_SHORT_PAYMENT).id;
-				reToAdd.ANG_Event_Status__c    = status;
+				reToAdd.ANG_Event_Status__c    = status;				
+				reToAdd.ANG_Limit_Cash_Conditions__c    = setCashConditions(ANG_Risk_Helper.RISK_TYPE_LATE_SHORT_PAYMENT,a);
 			    risksToInsert.put(ANG_Risk_Helper.CHANGE_CODE_IRR +getKey(a), reToAdd.clone(false,false,false,false));
 			}
 			
 			if(isCommonOwnershipDefault(a)){
 				reToAdd.ANG_UniqueKey__c   += mapRiskEventTypes.get(ANG_Risk_Helper.RISK_TYPE_COMMON_OWNERSHIP_DEFAULT).ANG_Risk_ID__c;
-				reToAdd.ANG_Risk_Type__c    = mapRiskEventTypes.get(ANG_Risk_Helper.RISK_TYPE_COMMON_OWNERSHIP_DEFAULT).id;
+				reToAdd.ANG_Risk_Type__c    = mapRiskEventTypes.get(ANG_Risk_Helper.RISK_TYPE_COMMON_OWNERSHIP_DEFAULT).id;				
+				reToAdd.ANG_Limit_Cash_Conditions__c    = setCashConditions(ANG_Risk_Helper.RISK_TYPE_COMMON_OWNERSHIP_DEFAULT,a);
 			    risksToInsert.put(ANG_Risk_Helper.CHANGE_CODE_RCR+ 'commom' +getKey(a), reToAdd.clone(false,false,false,false));
 			}
 
 			if(isPaymentDefault(a)){
 				reToAdd.ANG_UniqueKey__c   += mapRiskEventTypes.get(ANG_Risk_Helper.RISK_TYPE_PAYMENT_DEFAULT).ANG_Risk_ID__c;
-				reToAdd.ANG_Risk_Type__c    = mapRiskEventTypes.get(ANG_Risk_Helper.RISK_TYPE_PAYMENT_DEFAULT).id;
+				reToAdd.ANG_Risk_Type__c    = mapRiskEventTypes.get(ANG_Risk_Helper.RISK_TYPE_PAYMENT_DEFAULT).id;				
+				reToAdd.ANG_Limit_Cash_Conditions__c    = setCashConditions(ANG_Risk_Helper.RISK_TYPE_PAYMENT_DEFAULT,a);
 			    risksToInsert.put(ANG_Risk_Helper.CHANGE_CODE_RCR+ 'payment' +getKey(a), reToAdd.clone(false,false,false,false));
 			}  
 
@@ -92,19 +101,22 @@ public with sharing class ANG_RiskEventMigrationHelper {
 			if(status!=null){
 				reToAdd.ANG_UniqueKey__c   += mapRiskEventTypes.get(ANG_Risk_Helper.RISK_TYPE_FAIL_FINANCIAL_STATEMENTS).ANG_Risk_ID__c;
 				reToAdd.ANG_Risk_Type__c    = mapRiskEventTypes.get(ANG_Risk_Helper.RISK_TYPE_FAIL_FINANCIAL_STATEMENTS).id;
-			    reToAdd.ANG_Event_Status__c = status;
+			    reToAdd.ANG_Event_Status__c = status;			    
+			    reToAdd.ANG_Limit_Cash_Conditions__c    = reToAdd.ANG_Issued_Date__c.addDays(Integer.valueOF(mapRiskEventTypes.get(ANG_Risk_Helper.RISK_TYPE_FAIL_FINANCIAL_STATEMENTS).ANG_Delay_Cash_Condition__c))<=System.Today()? String.isBlank(a.SIDRA_Case__r.Parent.Financial_Review_Result__c) :false;
 			    risksToInsert.put(ANG_Risk_Helper.CHANGE_CODE_IRR +getKey(a), reToAdd.clone(false,false,false,false));
 			}  
 			
 			if(isMajorchange1(a)){
 				reToAdd.ANG_UniqueKey__c    = ''+ a.Created_Date_To_Show__c + a.Account__c + mapRiskEventTypes.get(ANG_Risk_Helper.RISK_TYPE_MAJOR_CHANGE).ANG_Risk_ID__c;
 				reToAdd.ANG_Risk_Type__c    = mapRiskEventTypes.get(ANG_Risk_Helper.RISK_TYPE_MAJOR_CHANGE).id;
+				reToAdd.ANG_Limit_Cash_Conditions__c    = setCashConditions(ANG_Risk_Helper.RISK_TYPE_MAJOR_CHANGE,a);
 			    risksToInsert.put(ANG_Risk_Helper.CHANGE_CODE_MCF + 'major1' +getKey(a), reToAdd.clone(false,false,false,false));
 			}  
 			
 			if(isMajorchange2(a)){
 				reToAdd.ANG_UniqueKey__c    = ''+ a.Created_Date_To_Show__c + a.Account__c + mapRiskEventTypes.get(ANG_Risk_Helper.RISK_TYPE_MAJOR_CHANGE).ANG_Risk_ID__c;
 				reToAdd.ANG_Risk_Type__c    = mapRiskEventTypes.get(ANG_Risk_Helper.RISK_TYPE_MAJOR_CHANGE).id;
+				reToAdd.ANG_Limit_Cash_Conditions__c    = setCashConditions(ANG_Risk_Helper.RISK_TYPE_MAJOR_CHANGE,a);
 			    risksToInsert.put(ANG_Risk_Helper.CHANGE_CODE_MCF + 'major2' +getKey(a), reToAdd.clone(false,false,false,false));
 			}
 			
@@ -114,6 +126,7 @@ public with sharing class ANG_RiskEventMigrationHelper {
 				reToAdd.ANG_UniqueKey__c   += mapRiskEventTypes.get(ANG_Risk_Helper.RISK_TYPE_UNREPORTED_CHANGE).ANG_Risk_ID__c;
 				reToAdd.ANG_Risk_Type__c    = mapRiskEventTypes.get(ANG_Risk_Helper.RISK_TYPE_UNREPORTED_CHANGE).id;
 				reToAdd.ANG_Event_Status__c    = status;
+				reToAdd.ANG_Limit_Cash_Conditions__c    = setCashConditions(ANG_Risk_Helper.RISK_TYPE_UNREPORTED_CHANGE,a);
 			    risksToInsert.put(ANG_Risk_Helper.CHANGE_CODE_NOT +getKey(a), reToAdd.clone(false,false,false,false));
 			}
 			
@@ -123,6 +136,7 @@ public with sharing class ANG_RiskEventMigrationHelper {
 				reToAdd.ANG_UniqueKey__c   += mapRiskEventTypes.get(ANG_Risk_Helper.RISK_TYPE_FAIL_FINANCIAL_SECURITY).ANG_Risk_ID__c;
 				reToAdd.ANG_Risk_Type__c    = mapRiskEventTypes.get(ANG_Risk_Helper.RISK_TYPE_FAIL_FINANCIAL_SECURITY).id;				
 				reToAdd.ANG_Event_Status__c    = status;
+				reToAdd.ANG_Limit_Cash_Conditions__c    = setCashConditions(ANG_Risk_Helper.RISK_TYPE_FAIL_FINANCIAL_SECURITY,a);
 			    risksToInsert.put(ANG_Risk_Helper.CHANGE_CODE_RVW+getKey(a), reToAdd.clone(false,false,false,false));
 			}
 			
@@ -138,6 +152,7 @@ public with sharing class ANG_RiskEventMigrationHelper {
 				reToAdd.ANG_UniqueKey__c   += mapRiskEventTypes.get(ANG_Risk_Helper.RISK_TYPE_PREJUDICED_COLLECTION).ANG_Risk_ID__c; 
 				reToAdd.ANG_Risk_Type__c    = mapRiskEventTypes.get(ANG_Risk_Helper.RISK_TYPE_PREJUDICED_COLLECTION).id;
 			    reToAdd.ANG_Event_Status__c    = status;
+			    reToAdd.ANG_Limit_Cash_Conditions__c    = setCashConditions(ANG_Risk_Helper.RISK_TYPE_PREJUDICED_COLLECTION,a);
 			    risksToInsert.put(ANG_Risk_Helper.CHANGE_CODE_RVW +getKey(a), reToAdd.clone(false,false,false,false));
 			}
 			
@@ -212,7 +227,7 @@ public with sharing class ANG_RiskEventMigrationHelper {
 	public boolean isMajorchange1(Agency_Applied_Change_code__c aacc){
 		if (aacc.Change_Code__c == ANG_Risk_Helper.CHANGE_CODE_CCF
 			|| aacc.Change_Code__c == ANG_Risk_Helper.CHANGE_CODE_CHF
-			|| aacc.Change_Code__c == ANG_Risk_Helper.CHANGE_CODE_CNF
+			//|| aacc.Change_Code__c == ANG_Risk_Helper.CHANGE_CODE_CNF // to be removed NEWGEN-3167
 			|| aacc.Change_Code__c == ANG_Risk_Helper.CHANGE_CODE_CSF)
 				return true;
 
@@ -224,7 +239,7 @@ public with sharing class ANG_RiskEventMigrationHelper {
 			&& String.isNotBlank(aacc.Bulletin_Information__c)
 			&& (aacc.Bulletin_Information__c.toUpperCase().contains('MAJOR')
 				|| aacc.Bulletin_Information__c.toUpperCase().contains('OWNERSHIP')
-				|| aacc.Bulletin_Information__c.toUpperCase().contains('LEGAL')
+			//	|| aacc.Bulletin_Information__c.toUpperCase().contains('LEGAL') // to be removed NEWGEN-3167
 				)
 			)
 				return true;
@@ -403,7 +418,7 @@ public with sharing class ANG_RiskEventMigrationHelper {
 		Map<Id, ANG_Risk_Event_Type__c> riskTypes = new Map<Id, ANG_Risk_Event_Type__c>([SELECT Id, ANG_Expiration__c FROM ANG_Risk_Event_Type__c]);
 
 		//forecast Risk Events to be Generated
-		Map<Account, List<String>> riskEvents = new Map<Account, List<String>>();
+		Map<Account, List<ANG_Agency_Risk_Event__c>> riskEvents = new Map<Account, List<ANG_Agency_Risk_Event__c>>();
 		for(ANG_Agency_Risk_Event__c re : new ANG_RiskEventMigrationHelper(accountsInTheHierarchy).convertChangeCodesToRiskEvents()){
 			Account a = accounts.get(topParents.get(re.ANG_AccountId__c));
 
@@ -416,8 +431,8 @@ public with sharing class ANG_RiskEventMigrationHelper {
 			//risk events are to be reported under Head Entity (this works because 
 			//the only risk event generated under the AE is the Major Changes, which 
 			//fails the risk assessment history with only one ocurrence)
-			if(!riskEvents.containsKey(a)) riskEvents.put(a, new List<String>{re.ANG_Risk_Type__c});
-			else riskEvents.get(a).add(re.ANG_Risk_Type__c);
+			if(!riskEvents.containsKey(a)) riskEvents.put(a, new List<ANG_Agency_Risk_Event__c>{re});
+			else riskEvents.get(a).add(re);
 		}
 
 		Map<Id, Account> updatedTopParents = new Map<Id, Account>();

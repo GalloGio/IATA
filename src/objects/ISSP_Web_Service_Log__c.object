@@ -281,6 +281,35 @@
         <language>en_US</language>
     </listViews>
     <listViews>
+        <fullName>Debug_View</fullName>
+        <columns>NAME</columns>
+        <columns>CREATED_DATE</columns>
+        <columns>CREATEDBY_USER</columns>
+        <columns>Input_Description__c</columns>
+        <columns>Web_Service__c</columns>
+        <columns>System__c</columns>
+        <columns>Success__c</columns>
+        <columns>Started__c</columns>
+        <columns>Method__c</columns>
+        <columns>Finished__c</columns>
+        <columns>Error_Message__c</columns>
+        <columns>Error_Code__c</columns>
+        <columns>Contact__c</columns>
+        <filterScope>Everything</filterScope>
+        <filters>
+            <field>Method__c</field>
+            <operation>notEqual</operation>
+            <value>checkIpCountry</value>
+        </filters>
+        <filters>
+            <field>CREATED_DATE</field>
+            <operation>equals</operation>
+            <value>4/16/2018 12:00 AM</value>
+        </filters>
+        <label>Debug View</label>
+        <language>en_US</language>
+    </listViews>
+    <listViews>
         <fullName>ISSP_WS_NewUser</fullName>
         <columns>NAME</columns>
         <columns>Web_Service__c</columns>
@@ -334,9 +363,9 @@
     <listViews>
         <fullName>KAVItoda</fullName>
         <columns>NAME</columns>
+        <columns>Success__c</columns>
         <columns>Error_Message__c</columns>
         <columns>User__c</columns>
-        <columns>Success__c</columns>
         <filterScope>Everything</filterScope>
         <filters>
             <field>System__c</field>
@@ -376,7 +405,7 @@
         <filters>
             <field>CREATED_DATE</field>
             <operation>equals</operation>
-            <value>LAST_N_MONTHS:4</value>
+            <value>YESTERDAY</value>
         </filters>
         <label>SIS</label>
         <language>en_US</language>

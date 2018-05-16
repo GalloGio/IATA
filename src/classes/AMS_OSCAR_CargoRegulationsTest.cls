@@ -2,6 +2,27 @@
     
     @testSetup static void setup(){
 		AMS_OSCAR_TestDataFactory.createCargoAgencyOSCARtestData();
+		AMS_OSCAR_TestDataFactory.increasecoverage();
+    }
+
+    private static void loadCredentials() {
+        
+        Amazon_Cred__c Amazon_Cred =  new Amazon_Cred__c(name = 'GenericAttach', Prod_Configuration__c = 'adevconf' , Dev_Configuration__c = 'adevconf');
+        insert Amazon_Cred;
+        Amazon_Cred__c Amazon_Cred2 =  new Amazon_Cred__c(name = 'RecycleBin', Prod_Configuration__c = 'adevconf' , Dev_Configuration__c = 'adevconf');
+        insert Amazon_Cred2;
+
+        list<AWSKey__c> AWS_KEYs = new list<AWSKey__c>{
+            new AWSKey__c(
+                name = 'adevconf',
+                Key__c = 'asd', 
+                Secret__c = 'asd',  
+                IAS_configuration_name__c = 'asdas', 
+                IAS_Access_Point__c = 'asd',
+                Bucket__c = 'asd',
+                AWS_ENDPOINT_URL__c = 'asd')
+        };
+        insert AWS_KEYs;
     }
 
     @isTest static void testCargoAgencyRegulationsHOClassC() {
@@ -26,10 +47,15 @@
         	dgaStaff.Type_Of_Certificate__c = 'DGR';
         	update dgaStaff;
 
+            Case case1 = [Select Id, OSCAR__c from Case where OSCAR__c = :oscar.Id];
+            loadCredentials();
+            AmazonFile__C AmzFile = new AmazonFile__C(name ='file',Full_Name_Unique__c = 'test name', case__c = case1.id, Category__c = 'Contractual', Subcategory__c = 'Signatory Authority');
+            insert AmzFile;
+
         	update oscar;
         	
         	aregs = [SELECT Id, Notification_sent__c, Account__c, Type_Of_Certificate__c FROM AMS_Agency_Regulation__c WHERE Account__c = :oscar.Account__c];
-        	system.assertEquals(4, aregs.size());
+            system.assertEquals(3, aregs.size());
 
         	//force DGR renewal oscar creation
         	for(AMS_Agency_Regulation__c areg : aregs){
@@ -73,7 +99,7 @@
             System.assert(false, 'exception expected');
         } catch (Exception e) {
             Boolean expectedExceptionThrown =  e.getMessage().contains('A BR Agency handling dangerous goods must have at least 1 DGR that is not expired.') ? true : false;
-            System.assertEquals(expectedExceptionThrown, true);
+            System.assertEquals(True, expectedExceptionThrown);
         }
         
         Test.stopTest();
@@ -96,6 +122,11 @@
         dgrStaff.Type_Of_Certificate__c = 'DGR';
         update dgrStaff;
 
+        Case case1 = [Select Id, OSCAR__c from Case where OSCAR__c = :oscar.Id];
+        loadCredentials();
+        AmazonFile__C AmzFile = new AmazonFile__C(name ='file',Full_Name_Unique__c = 'test name', case__c = case1.id, Category__c = 'Contractual', Subcategory__c = 'Signatory Authority');
+        insert AmzFile;
+
         //Location class C without enough DGR
         try {
             oscar.STEP6__c = AMS_Utils.PASSED;
@@ -103,11 +134,13 @@
             System.assert(true, 'exception NOT expected');
         } catch (Exception e) {
             Boolean expectedExceptionThrown =  e.getMessage().contains('A BR Agency handling dangerous goods must have at least 1 DGR that is not expired.') ? true : false;
-            System.assertEquals(expectedExceptionThrown, true);
+            System.debug('e.getMessage() - ' + e.getMessage());
+            System.assertEquals(True, expectedExceptionThrown);
+
         }
         
         List<AMS_Agency_Regulation__c> aregs = [SELECT Id, Account__c, Type_Of_Certificate__c FROM AMS_Agency_Regulation__c WHERE Account__c = :oscar.Account__c];
-        system.assertEquals(4, aregs.size());
+        system.assertEquals(3, aregs.size());
 
         //force DGR renewal oscar creation
         aregs[0].Notification_sent__c = true;
@@ -149,10 +182,15 @@
         	dgrStaff.Type_Of_Certificate__c = 'DGA';
         	update dgrStaff;
 
+            Case case1 = [Select Id, OSCAR__c from Case where OSCAR__c = :oscar.Id];
+            loadCredentials();
+            AmazonFile__C AmzFile = new AmazonFile__C(name ='file',Full_Name_Unique__c = 'test name', case__c = case1.id, Category__c = 'Contractual', Subcategory__c = 'Signatory Authority');
+            insert AmzFile;
+
         	update oscar;
 
         	List<AMS_Agency_Regulation__c> aregs = [SELECT Id, Type_Of_Certificate__c FROM AMS_Agency_Regulation__c WHERE Account__c = :oscar.Account__c];
-        	system.assertEquals(4, aregs.size());
+            system.assertEquals(3, aregs.size());
 
 
             //force DGR renewal oscar creation

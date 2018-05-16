@@ -124,6 +124,10 @@
             </layoutItems>
             <layoutItems>
                 <behavior>Edit</behavior>
+                <field>GDP_Opt_In__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
                 <field>PCI_DSS_Compliant__c</field>
             </layoutItems>
             <layoutItems>
@@ -460,6 +464,10 @@
             <layoutItems>
                 <behavior>Readonly</behavior>
                 <field>Last_SIDRA_Date__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>ANG_FA_Opt_out__c</field>
             </layoutItems>
         </layoutColumns>
         <style>TwoColumnsLeftToRight</style>
@@ -987,6 +995,10 @@
         <relatedList>AMS_Agency_Updates__c.Account__c</relatedList>
         <sortField>LAST_UPDATE</sortField>
         <sortOrder>Desc</sortOrder>
+    </relatedLists>
+    <relatedLists>
+        <fields>NAME</fields>
+        <relatedList>ISSP_Web_Service_Log__c.Account__c</relatedList>
     </relatedLists>
     <relatedObjects>ParentId</relatedObjects>
     <showEmailCheckbox>false</showEmailCheckbox>
