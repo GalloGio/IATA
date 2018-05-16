@@ -531,7 +531,7 @@ SYSTEM.DEBUG('getRelatedAccount starting... ');
         List <Case> newCases = [
                                    SELECT Id, CaseNumber, Reason1__c, CaseArea__c, Status, BSPCountry__c, Country_concerned_by_the_query__c, Contact.Name, Account.Id, Description, Subject, Account_Concerned__c, Account_Concerned__r.Top_Parent__c, Account.Name,
                                    Account.Billing_Address_formated__c, Verification__c, IFAP_Country_ISO__c, Case_Language__c, Region__c, Applicable_to_Which_Version_s__c, Origin, OSCAR__c,
-                                   OwnerId
+                                   OwnerId, Owner.Name
                                    FROM Case
                                    WHERE Id = :vCaseId
                                ];
