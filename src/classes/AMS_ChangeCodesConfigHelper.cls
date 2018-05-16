@@ -13,7 +13,7 @@ public class AMS_ChangeCodesConfigHelper {
         Boolean changeAccountStatus = false;
 
         //check which sould be the changes to do in the account
-        if(oscarTypeOfChange.containsIgnoreCase(AMS_Utils.MAJ_SHAREHOLDING) || oscarTypeOfChange.containsIgnoreCase(AMS_Utils.MIN_SHAREHOLDING) || oscarTypeOfChange.containsIgnoreCase(AMS_Utils.VFMR) || oscarTypeOfChange.containsIgnoreCase(AMS_Utils.ANG_TRADE_NAME)) {
+        if(oscarTypeOfChange.containsIgnoreCase(AMS_Utils.MAJ_SHAREHOLDING) || oscarTypeOfChange.containsIgnoreCase(AMS_Utils.MIN_SHAREHOLDING) || oscarTypeOfChange.containsIgnoreCase(AMS_Utils.VFMR)) {
 
             if(accountCurrentStatus != null && (Integer.valueOf(AMS_Utils.getIATANumericStatus(accountCurrentStatus)) < 8 && Integer.valueOf(AMS_Utils.getIATANumericStatus(accountCurrentStatus)) > 4)) {
 
