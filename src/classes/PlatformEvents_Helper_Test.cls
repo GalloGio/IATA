@@ -11,14 +11,14 @@ private class PlatformEvents_Helper_Test {
 			TIP_HQ_Location__c = country.Id,
 			RecordTypeId =TIP_Utils.PAYMENT_PROVIDER_RECORD_TYPE_ID,
 			Accreditation_date__c = Date.today(),
-			IataCode__c = '1234'
+			IataCode__c = '1234',
+			status__C='Active'
 			);
         
         test.startTest();
         	insert provider;
-        	
         	provider.IataCode__c = '1235';
-        	insert provider;
+        	update provider;
         
         	delete provider;
 
@@ -37,7 +37,8 @@ private class PlatformEvents_Helper_Test {
 			TIP_HQ_Location__c = country.Id,
 			RecordTypeId =TIP_Utils.PAYMENT_PROVIDER_RECORD_TYPE_ID,
 			Accreditation_date__c = Date.today(),
-			IataCode__c = '1234'
+			IataCode__c = '1234',
+			status__C='Active'
 			);
 		insert provider;
 		
@@ -68,7 +69,8 @@ private class PlatformEvents_Helper_Test {
 			TIP_HQ_Location__c = country.Id,
 			RecordTypeId =TIP_Utils.PAYMENT_PROVIDER_RECORD_TYPE_ID,
 			Accreditation_date__c = Date.today(),
-			IataCode__c = '1234'
+			IataCode__c = '1234',
+			status__C='Active'
 			);
 
 		insert provider;
@@ -114,7 +116,8 @@ private class PlatformEvents_Helper_Test {
 			TIP_HQ_Location__c = country.Id,
 			RecordTypeId =TIP_Utils.PAYMENT_PROVIDER_RECORD_TYPE_ID,
 			Accreditation_date__c = Date.today(),
-			IataCode__c = '1234'
+			IataCode__c = '1234',
+			status__C='Active'
 			);
 		insert provider;
 		
@@ -168,7 +171,8 @@ private class PlatformEvents_Helper_Test {
 					TIP_HQ_Location__c = country.Id,
 					RecordTypeId =TIP_Utils.PAYMENT_PROVIDER_RECORD_TYPE_ID,
 					Accreditation_date__c = Date.today(),
-					IataCode__c = '1234'
+					IataCode__c = '1234',
+					status__C='Active'
 					);
 		insert provider;
 		
