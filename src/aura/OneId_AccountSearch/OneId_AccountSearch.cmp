@@ -102,7 +102,7 @@
 
                     <aura:if isTrue="{!v.showCreateNew}">
                         <li role="presentation" class="slds-listbox__item lastRow">
-                            Didn't find the organization you were looking for? <a href="#" onclick="{!c.createNew }">Create New</a>
+                            Didn't find the organization you were looking for? <span onclick="{!c.createNew }">Create New</span>
                         </li>
                     </aura:if>
                 </ul>        	

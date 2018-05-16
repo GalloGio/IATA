@@ -34,7 +34,7 @@
 
         var regExpEmailformat = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/; 
         if($A.util.isEmpty(emailValue) || ! emailValue.match(regExpEmailformat)) {
-            emailCmp.set("v.errors", [{message:"Please, correct your email address."}]);
+            emailCmp.set("v.errors", [{ message: $A.get("$Label.c.ISSP_EmailError")}]);
             // Reset checkbox if eamil is not valid
             component.set("v.Terms", false);
             return false;

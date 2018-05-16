@@ -19,6 +19,8 @@
 	background-color: black;
 	color:white;
 }
-.THIS .lastRow a {
+.THIS .lastRow span {
 	color: #00aeef !important;
+	cursor: pointer;
+	font-style: italic;
 }
