@@ -13,7 +13,7 @@ private class OneId_AddressDoctorTest {
         
         // Set mock callout class 
         Test.setMock(HttpCalloutMock.class, new OneId_AddressDoctorMockImpl());
-        List<OneId_AddressDoctor.AD_Address> ADaddresses = OneId_AddressDoctor.getSuggestedAddress(userInput, countryCode);
+        List<OneId_AddressDoctor.AddressInfo> ADaddresses = OneId_AddressDoctor.getSuggestedAddress(userInput, countryCode);
         
         // Stop the test
         Test.stopTest();

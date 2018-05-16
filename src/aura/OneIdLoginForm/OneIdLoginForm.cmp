@@ -33,25 +33,25 @@
     <aura:handler event="c:setStartUrl" action="{!c.setStartUrl}"/>
     
     <div>
-        <aura:renderIf isTrue="{!v.isUsernamePasswordEnabled}">
+        <aura:if isTrue="{!v.isUsernamePasswordEnabled}">
             <span>
-                <aura:renderIf isTrue="{!v.showError}">
+                <aura:if isTrue="{!v.showError}">
                     <div id="error">
                         <ui:outputRichText value="{!v.errorMessage}"/>
                     </div>
-                </aura:renderIf>
+                </aura:if>
             </span>
-            <aura:renderIf isTrue="{!v.sanctionCountry}">
+            <aura:if isTrue="{!v.sanctionCountry}">
                 <div id="sanctionCountry">
                     <ui:outputRichText value="{!$Label.c.ISSP_Sanctions_Message}"/>
                 </div>
-            </aura:renderIf>
-            <aura:renderIf isTrue="{!!v.sanctionCountry}">
-                <aura:renderIf isTrue="{!v.show90Days}">
+            </aura:if>
+            <aura:if isTrue="{!!v.sanctionCountry}">
+                <aura:if isTrue="{!v.show90Days}">
                     <div id="userFrozen">
                         <ui:outputRichText value="{!$Label.c.ISSP_Frozen_User_Alert_Message}"/>
                     </div>
-                </aura:renderIf>
+                </aura:if>
 
                 <div id="sfdc_username_container" class="sfdc">
                     <span id="sfdc_user" class="login-icon" data-icon="a"></span>
@@ -64,27 +64,26 @@
                     <ui:inputSecret value="" updateOn="keyup" aura:id="password" placeholder="{!$Label.c.OneId_Password}" keyup="{!c.onKeyUp}" 
                                     class="input sfdc_passwordinput sfdc" label="{!$Label.c.OneId_Password}" labelClass="assistiveText"/>
                 </div>
-        
-                <div class="sfdc">
-                    <ui:button aura:id="submitButton" label="{!$Label.c.OneId_Login}" press="{!c.handleLogin}" class="sfdc_button"/>
-                </div>
                 
-                <div id="sfdc_forgot" class="sfdc">
-                    <span>
+                <div class="slds-grid-wrap slds-p-horizontal_medium">
+                    <div class="sfdc slds-col_bump-right slds-max-small-size_1-of-1 slds-order_1 slds-medium-order_2">
+                        <ui:button aura:id="submitButton" label="{!$Label.c.OneId_Login}" press="{!c.handleLogin}" class="sfdc_button"/>
+                    </div>
+                    
+                    <div id="sfdc_forgot" class="sfdc slds-p-top_medium slds-order_2 slds-medium-order_1  slds-max-small-size_1-of-1">
                         <a href="{!if(v.communityForgotPasswordUrl == null, v.forgotPasswordUrl, v.communityForgotPasswordUrl)}">
                             {!$Label.c.OneId_ForgotPassword}
                         </a>
-                    </span>
-                    <aura:renderIf isTrue="{!v.isSelfRegistrationEnabled}">
-                        <span class="pipe"> | </span>
-                        <span style="float:right" >
+                        <aura:if isTrue="{!v.isSelfRegistrationEnabled}">
+                            |
                             <a href="{!if(v.communitySelfRegisterUrl == null, v.selfRegisterUrl, v.communitySelfRegisterUrl)}">
                                 {!$Label.c.OneId_SelfRegister}
                             </a>
-                        </span>
-                    </aura:renderIf>                            
-                </div> 
-            </aura:renderIf>
-        </aura:renderIf>
+                        </aura:if>                            
+                    </div>
+                </div>
+                 
+            </aura:if>
+        </aura:if>
     </div>
 </aura:component>

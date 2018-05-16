@@ -45,7 +45,7 @@
         
         <div class="slds-col--padded slds-m-bottom--large slds-size--1-of-1">
             <label class="slds-form-element__label" ><abbr class="slds-required" title="required">*</abbr>{!v.contactLabels.Membership_Function__c}</label>
-            <ui:inputSelect multiple="true" class="multiple required" aura:id="membershipFunction" required="true">
+            <ui:inputSelect multiple="true" class="multiple required" aura:id="membershipFunction" value="{!v.contact.Function__c}" required="true">
                 <aura:iteration items="{!v.jobFunctionOptions}" var="function" indexVar="index" aura:id="function">
                     <ui:inputSelectOption text="{!function}" label="{!function}" /><!-- value="true" -->
                 </aura:iteration>
