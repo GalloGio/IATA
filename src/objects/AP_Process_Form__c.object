@@ -1843,6 +1843,17 @@ If NO, please submit a Local Bank Account in the BSP country and currency (refer
         </valueSet>
     </fields>
     <fields>
+        <fullName>Default_Commission_Rate__c</fullName>
+        <externalId>false</externalId>
+        <label>Default Commission Rate</label>
+        <precision>5</precision>
+        <required>false</required>
+        <scale>2</scale>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Percent</type>
+    </fields>
+    <fields>
         <fullName>Desired_commencment_date__c</fullName>
         <externalId>false</externalId>
         <label>Desired commencment date</label>
@@ -2503,6 +2514,28 @@ If(LEN(Case__r.Account.BillingCountry) &gt;0, Case__r.Account.BillingCountry,&qu
         <trackTrending>false</trackTrending>
         <type>Text</type>
         <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Maximum_Commission_Rate__c</fullName>
+        <externalId>false</externalId>
+        <label>Maximum Commission Rate</label>
+        <precision>5</precision>
+        <required>false</required>
+        <scale>2</scale>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Percent</type>
+    </fields>
+    <fields>
+        <fullName>Minimum_Commission_Rate__c</fullName>
+        <externalId>false</externalId>
+        <label>Minimum Commission Rate</label>
+        <precision>5</precision>
+        <required>false</required>
+        <scale>2</scale>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Percent</type>
     </fields>
     <fields>
         <fullName>Name_Appearing_in_VAT__c</fullName>
