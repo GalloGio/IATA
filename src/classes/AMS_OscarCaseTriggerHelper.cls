@@ -400,7 +400,7 @@ public class AMS_OscarCaseTriggerHelper {
 
         if(oscarCases.isEmpty()) return;
 
-        oscars = new Map<Id, AMS_OSCAR__c>([SELECT Id, OwnerId, Status__c, Account__r.Name, Account__r.Location_Type__c , Account__r.Category__c, Account__r.ANG_Accreditation_Model__c, Process__c, Account__r.IATACode__c, Account__r.IATA_ISO_Country__r.Name, Account__r.ANG_IsNewGenAgency__c FROM AMS_OSCAR__c WHERE Id IN :oscars.keySet()]);
+        oscars = new Map<Id, AMS_OSCAR__c>([SELECT Id, OwnerId, Status__c, Account__r.Name, Account__r.Location_Type__c , Account__r.Category__c, Account__r.ANG_Accreditation_Model__c, Process__c, Account__r.IATACode__c, Account__r.IATA_ISO_Country__r.Name, Account__r.ANG_IsNewGenAgency__c, Type_of_change__c FROM AMS_OSCAR__c WHERE Id IN :oscars.keySet()]);
 
         for(Case c : oscarCases){
             
@@ -432,11 +432,36 @@ public class AMS_OscarCaseTriggerHelper {
                     newCaseSubject = c.reason1__c + ' - ' + AMS_Utils.officialAccreditationTypeMap.get(oscars.get(c.Oscar__c).Account__r.ANG_Accreditation_Model__c) + ' - ' + oscars.get(c.Oscar__c).Account__r.Name;
                 else if(oscars.get(c.Oscar__c).Process__c == AMS_Utils.new_MSO || (c.Subject != null && c.Subject.startsWith('MSO code '))) //AMSU-119
 					newCaseSubject = null;
-				else
-                    newCaseSubject = c.reason1__c + ' - ' + oscars.get(c.Oscar__c).Account__r.Name;
+				else {
+                    AMS_OSCAR__c oscar = oscars.get(c.Oscar__c); 
+                    newCaseSubject = c.reason1__c + ' - ' + oscar.Account__r.Name;
+                    /*** AMSU-133 Start ***/
+                    if(oscar.Process__c == AMS_Utils.AGENCYCHANGES && isTypeOfChange(new Set<String> {AMS_Utils.LOCATION, AMS_Utils.LOCATION_INSPECTION}, oscar)) {
+                        newCaseSubject += String.isBlank(oscar.Account__r.IATACode__c) ? '' : ' - ' + oscar.Account__r.IATACode__c;
+                    } 
+                    /*** AMSU-133  End***/
+                }
 
             if(newCaseSubject != null && c.Subject != newCaseSubject && (c.Subject == null || !c.Subject.startsWith(newCaseSubject)) && AMS_OscarMigrationFromCase.changeSubject)
                 c.Subject = newCaseSubject;
         }
     }
+
+    /*** AMSU-133 Start ***/
+    private static Boolean isTypeOfChange(Set<String> changes, AMS_OSCAR__c oscar) {
+        Set<String> typesOfChange = new Set<String>();
+
+        if(!String.isBlank(oscar.Type_of_change__c)) {
+            typesOfChange.addAll(oscar.Type_of_change__c.split(';'));
+        }
+
+        for(String toc : changes) {
+            if(typesOfChange.contains(toc)) {
+                return true;  
+            }
+        }
+
+        return false;
+    }
+    /*** AMSU-133  End***/
 }
