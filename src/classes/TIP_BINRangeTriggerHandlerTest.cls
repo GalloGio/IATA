@@ -7,13 +7,15 @@ private class TIP_BINRangeTriggerHandlerTest {
 		IATA_ISO_Country__c country = new IATA_ISO_Country__c (Name = 'US', ISO_Code__c = 'US');
         insert country;
 
-		Id paymentProviderRecordTypeId = RecordTypeSingleton.getInstance().RtIDsPerDeveloperNamePerObj.get('Account').get('TIP_Payment_Provider');
-
 		Account provider = new Account(Name = 'ProviderTest1',
 			TIP_Provider_Type__c = 'Open Loop',
 			TIP_HQ_Location__c = country.Id,
-			RecordTypeId = paymentProviderRecordTypeId,
-			Accreditation_date__c = Date.today());
+			RecordTypeId =TIP_Utils.PAYMENT_PROVIDER_RECORD_TYPE_ID,
+			Accreditation_date__c = Date.today(),
+			IATACode__c = '1000',
+			category__c = TIP_Utils.ACCOUNT_CATEGORY_PAYMENT_PROVIDER,
+			status__C='Active'
+			);
 		insert provider;
 
 		Partner_products__c product = new Partner_products__c(Name = 'ProductTest1', 
@@ -21,15 +23,15 @@ private class TIP_BINRangeTriggerHandlerTest {
 			PP_Form_of_payment__c = 'CC',
 			Provider__c = provider.Id,
 			PP_Payment_guarantee__c = 'COMMERCIAL_DISPUTE',
-			PP_Accepted_transactions__c = 'Payment',
-			PP_Pay_in_model__c = 'Prepaid',
-			PP_VAN_type__c = 'Single Use VAN',
+			PP_Accepted_transactions__c = 'PAYMENT',
+			PP_Pay_in_model__c = 'PREPAID',
+			PP_VAN_type__c = 'SINGLE_USE_VAN',
 			PP_Settlement_terms__c = '12',
-			Is_PCI_DSS_required__c = 'Yes',
-			PP_Chargeback_airlines__c = 'No',
-			PP_Interchange_fee__c = 12,
+			Is_PCI_DSS_required__c = 'YES',
+			PP_Chargeback_airlines__c = 'NO',
+			PP_Interchange_fee__c = '12',
 			PP_Effective_from_Date__c = Date.today(),
-			PP_status__c = 'Active',
+			PP_status__c = 'ACTIVE',
 			PP_Payment_Network__c = 'AX',
 			PP_Category__c = 'CONSUMER');
 		insert product;
@@ -46,14 +48,17 @@ private class TIP_BINRangeTriggerHandlerTest {
 			TIP_Effective_From_Date__c = Date.today(),
 			TIP_Range_Start__c = '5000',
 			TIP_Range_End__c = '5500',
-			RecordTypeId = listedByIATARecordTypeId);
+			RecordTypeId = listedByIATARecordTypeId,
+			TIP_Status__c='ACTIVE');
 
 		TIP_BIN_Range__c padBinRange2 = new TIP_BIN_Range__c(TIP_Payment_Provider_Product__c = product.Id,
 			TIP_Effective_From_Date__c = Date.today(),
 			TIP_Range_Start__c = '6000',
 			TIP_Range_End__c = '6500',
 			RecordTypeId = listedByIATARecordTypeId,
-			TIP_Effective_To_Date__c = Date.today()+10);
+			TIP_Effective_To_Date__c = Date.today()+10,
+			TIP_Status__c='IN_PROGRESS'
+			);
 
 		padBinRanges.add(padBinRange1);
 		padBinRanges.add(padBinRange2);
@@ -65,9 +70,29 @@ private class TIP_BINRangeTriggerHandlerTest {
 			TIP_Range_Start__c = '2000',
 			TIP_Range_End__c = '2100',
 			RecordTypeId = listedByIATARecordTypeId,
-			TIP_Effective_To_Date__c = Date.today() + 10);
+			TIP_Effective_To_Date__c = Date.today() + 10,
+			TIP_Status__c='IN_PROGRESS'
+			);
 
 		insert singleBinRange;
+
+		TIP_BIN_Range__c binRange1 = new TIP_BIN_Range__c(TIP_Payment_Provider_Product__c = product.Id,
+			TIP_Effective_From_Date__c = Date.today(),
+			TIP_Range_Start__c = '2000',
+			TIP_Range_End__c = '2100',
+			RecordTypeId = TIP_Utils.BIN_RANGE_PROVIDER_RECORD_TYPE_ID,
+			TIP_Effective_To_Date__c = Date.today() + 10,
+			TIP_Status__c='IN_PROGRESS');
+
+		TIP_BIN_Range__c binRange2 = new TIP_BIN_Range__c(TIP_Payment_Provider_Product__c = product.Id,
+			TIP_Effective_From_Date__c = Date.today(),
+			TIP_Range_Start__c = '2000',
+			TIP_Range_End__c = '2100',
+			RecordTypeId = TIP_Utils.BIN_RANGE_PROVIDER_RECORD_TYPE_ID,
+			TIP_Effective_To_Date__c = Date.today() + 10,
+			TIP_Status__c='IN_PROGRESS');
+
+		insert new List<TIP_BIN_Range__c>{binRange1,binRange2};
 	}
 
 	@isTest static void testRangeLength() {
@@ -98,7 +123,8 @@ private class TIP_BINRangeTriggerHandlerTest {
 			TIP_Range_Start__c = '5800',
 			TIP_Range_End__c = '6200',
 			RecordTypeId = listedByIATARecordTypeId,
-			TIP_Effective_To_Date__c = Date.today() + 5);
+			TIP_Effective_To_Date__c = Date.today() + 5,
+			TIP_Status__c='ACTIVE');
 
 		overlapBinRanges.add(singleInsErrorA);
 
@@ -121,7 +147,8 @@ private class TIP_BINRangeTriggerHandlerTest {
 			TIP_Range_Start__c = '6300',
 			TIP_Range_End__c = '6400',
 			RecordTypeId = listedByIATARecordTypeId,
-			TIP_Effective_To_Date__c = Date.today() + 1);
+			TIP_Effective_To_Date__c = Date.today() + 1,
+			TIP_Status__c='ACTIVE');
 
 		overlapBinRanges.add(doubleInsErrorA);
 
@@ -145,7 +172,8 @@ private class TIP_BINRangeTriggerHandlerTest {
 			TIP_Effective_From_Date__c = Date.today() + 10,
 			TIP_Range_Start__c = '5400',
 			TIP_Range_End__c = '5600',
-			RecordTypeId = listedByIATARecordTypeId);
+			RecordTypeId = listedByIATARecordTypeId,
+			TIP_Status__c='IN_PROGRESS');
 
 		overlapBinRanges.add(singleInsErrorB);
 
@@ -167,7 +195,8 @@ private class TIP_BINRangeTriggerHandlerTest {
 			TIP_Effective_From_Date__c = Date.today() -2,
 			TIP_Range_Start__c = '4900',
 			TIP_Range_End__c = '5100',
-			RecordTypeId = listedByIATARecordTypeId);
+			RecordTypeId = listedByIATARecordTypeId,
+			TIP_Status__c='ACTIVE');
 
 		overlapBinRanges.add(doubleInsErrorB);
 
@@ -192,41 +221,47 @@ private class TIP_BINRangeTriggerHandlerTest {
 			TIP_Range_Start__c = '5800',
 			TIP_Range_End__c = '5900',
 			RecordTypeId = listedByIATARecordTypeId,
-			TIP_Effective_To_Date__c = Date.today() + 7);
+			TIP_Effective_To_Date__c = Date.today() + 7,
+			TIP_Status__c='ACTIVE');
 
 		TIP_BIN_Range__c mixedInsert2 = new TIP_BIN_Range__c(TIP_Payment_Provider_Product__c = product.Id,
 			TIP_Effective_From_Date__c = Date.today() - 1,
 			TIP_Range_Start__c = '5800',
 			TIP_Range_End__c = '5900',
-			RecordTypeId = listedByIATARecordTypeId);
+			RecordTypeId = listedByIATARecordTypeId,
+			TIP_Status__c='ACTIVE');
 
 		TIP_BIN_Range__c mixedInsert3 = new TIP_BIN_Range__c(TIP_Payment_Provider_Product__c = product.Id,
 			TIP_Effective_From_Date__c = Date.today(),
 			TIP_Range_Start__c = '7500',
 			TIP_Range_End__c = '7800',
 			RecordTypeId = listedByIATARecordTypeId,
-			TIP_Effective_To_Date__c = Date.today() + 2);
+			TIP_Effective_To_Date__c = Date.today() + 2,
+			TIP_Status__c='ACTIVE');
 
 		TIP_BIN_Range__c mixedInsert4 = new TIP_BIN_Range__c(TIP_Payment_Provider_Product__c = product.Id,
 			TIP_Effective_From_Date__c = Date.today() + 3,
 			TIP_Range_Start__c = '7500',
 			TIP_Range_End__c = '7800',
 			RecordTypeId = listedByIATARecordTypeId,
-			TIP_Effective_To_Date__c = Date.today() + 5);
+			TIP_Effective_To_Date__c = Date.today() + 5,
+			TIP_Status__c='IN_PROGRESS');
 
 		TIP_BIN_Range__c mixedInsert5 = new TIP_BIN_Range__c(TIP_Payment_Provider_Product__c = product.Id,
 			TIP_Effective_From_Date__c = Date.today() - 3,
 			TIP_Range_Start__c = '4900',
 			TIP_Range_End__c = '5100',
 			RecordTypeId = listedByIATARecordTypeId,
-			TIP_Effective_To_Date__c = Date.today() - 1);
+			TIP_Effective_To_Date__c = Date.today() - 1,
+			TIP_Status__c='INACTIVE');
 
 		TIP_BIN_Range__c mixedInsert6 = new TIP_BIN_Range__c(TIP_Payment_Provider_Product__c = product.Id,
 			TIP_Effective_From_Date__c = Date.today(),
 			TIP_Range_Start__c = '8000',
 			TIP_Range_End__c = '8100',
 			RecordTypeId = listedByIATARecordTypeId,
-			TIP_Effective_To_Date__c = Date.today() + 1);
+			TIP_Effective_To_Date__c = Date.today() + 1,
+			TIP_Status__c='ACTIVE');
 
 		overlapBinRanges.add(mixedInsert1);
 		overlapBinRanges.add(mixedInsert2);
@@ -267,6 +302,7 @@ private class TIP_BINRangeTriggerHandlerTest {
 		//Update multiple BINs to deploy error type B, expected success = 0
 
 		mixedInsert3.TIP_Effective_To_Date__c = null;
+
 
 		overlapBinRanges.add(mixedInsert3);
 		overlapBinRanges.add(mixedInsert5);
@@ -346,5 +382,9 @@ private class TIP_BINRangeTriggerHandlerTest {
 		}
 
 		System.assertEquals(1, sucessCounter);
+	}
+
+	@isTest public static void testCreateConflict(){
+		System.assertEquals(6, [SELECT ID FROM BIN_Range_Conflict__c].size());	
 	}
 }

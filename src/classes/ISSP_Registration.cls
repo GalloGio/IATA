@@ -960,18 +960,15 @@ public without sharing class ISSP_Registration {
                     //TIP-16 - Assign TIP Portal Service
                     Id appListId;
                     ISSP_Portal_Service_Ids__c serviceIdInstance = ISSP_Portal_Service_Ids__c.getInstance();
-                    if (serviceIdInstance != null && serviceIdInstance.TIP_Portal_Service_Id__c != null){
+                    if (serviceIdInstance != null && !String.isBlank(serviceIdInstance.TIP_Portal_Service_Id__c)){
                         appListId = serviceIdInstance.TIP_Portal_Service_Id__c;
-                    }else{
-                        appListId = [SELECT Id FROM Portal_Applications__c WHERE Name = 'Agency Accreditation' LIMIT 1].id;
-                    }
-
 
                     Portal_Application_Right__c newRight = new Portal_Application_Right__c();
                     newRight.Contact__c = con.Id;
                     newRight.Right__c = 'Access Granted';
                     newRight.Portal_Application__c = appListId;
                     insert newRight;
+            	}
             	}
                 
                 upsert con;

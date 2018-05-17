@@ -2,6 +2,8 @@ public class TIP_Utils{
 
 	//##=============CONSTANTS=====================###
 
+	//Portal Service Name
+	public static String PORTAL_SERVICE_NAME_TIP= 'Transparency in Payments (TIP)';
 	//Account RT's
     public static String STANDARD_ACCOUNT_RECORD_TYPE_ID = RecordTypeSingleton.getInstance().RtIDsPerDeveloperNamePerObj.get('Account').get('Standard_Account');  
     public static String PAYMENT_PROVIDER_RECORD_TYPE_ID = RecordTypeSingleton.getInstance().RtIDsPerDeveloperNamePerObj.get('Account').get('TIP_Payment_Provider');
@@ -17,6 +19,7 @@ public class TIP_Utils{
 
 	//Case Reason
 	public static String CASE_REASON_PAYMENT_PROVIDER_MANAGMENT= 'Payment Provider Management';
+	public static String CASE_REASON_PRODUCT_MANAGEMENT= 'Product management';
 
 	//Case Areas
 	public static String CASE_AREA_TRANSPARENCY_IN_PAYMENTS= 'Transparency in Payments (TIP)';
@@ -26,14 +29,47 @@ public class TIP_Utils{
 
 	//case Description
 	public static String CASE_DESC_REQUEST_FOR_ENLISTMENT_PAYMENT_PROVIDER = 'Request for Enlistment as Payment provider';
-	
 
 	//Case Subject
 	public static String CASE_SUBJECT_NEW_PRODUCT_ENROLMENT = 'New Product Enrolment';
 
+	//Case Status
+	public static String CASE_STATUS_DRAFT = 'Draft';
+
+	//Partner status
+	public static String PARTNER_STATUS_ACTIVE='Active';
+	public static String PARTNER_STATUS_INACTIVE='Inactive';
+	public static String PARTNER_STATUS_IN_PROGRESS='In Progress';
+	
+
+	//Partner Product status
+	public static String PARTNER_PRODUCT_STATUS_ACTIVE='ACTIVE';
+	public static String PARTNER_PRODUCT_STATUS_INACTIVE='INACTIVE';
+	public static String PARTNER_PRODUCT_STATUS_IN_PROGRESS='IN_PROGRESS';
+	public static String PARTNER_PRODUCT_STATUS_REJECTED='REJECTED';
+	public static String PARTNER_PRODUCT_STATUS_DRAFT='DRAFT';
+
+	//Partner Product status
+	public static String PARTNER_PRODUCT_NETWORK_TYPE_OPEN_LOOP='OPEN_LOOP';
+
+	//BIN Range status
+	public static String BIN_RANGE_STATUS_ACTIVE='ACTIVE';
+	public static String BIN_RANGE_STATUS_INACTIVE='INACTIVE';
+	public static String BIN_RANGE_STATUS_IN_PROGRESS='IN_PROGRESS';
+	public static String BIN_RANGE_STATUS_DRAFT='DRAFT';
+
+	//Partner Product Configuration status
+	public static String PARTNER_PRODUCT_CONFIG_STATUS_ACTIVE='ACTIVE';
+	public static String PARTNER_PRODUCT_CONFIG_STATUS_INACTIVE='INACTIVE';
+	public static String PARTNER_PRODUCT_CONFIG_STATUS_IN_PROGRESS='IN_PROGRESS';
+	public static String PARTNER_PRODUCT_CONFIG_STATUS_DRAFT='DRAFT';
+
+	//Partner product RT
+	public static String PARTNER_PRODUCT_TIP_PRODUCT_RECORD_TYPE_ID= RecordTypeSingleton.getInstance().RtIDsPerDeveloperNamePerObj.get('Partner_products__c').get('TIP_Product');
+
 	//BIN Range RT's
-	public static String LISTED_BY_IATA_RECORD_TYPE_ID = RecordTypeSingleton.getInstance().RtIDsPerDeveloperNamePerObj.get('TIP_BIN_Range__c').get('Listed_by_IATA');
-	public static String BIN_RANGE_PROVIDER_RECORD_TYPE_ID = RecordTypeSingleton.getInstance().RtIDsPerDeveloperNamePerObj.get('TIP_BIN_Range__c').get('Provider');
+	public static String LISTED_BY_IATA_RECORD_TYPE_ID = RecordTypeSingleton.getInstance().RtIDsPerDeveloperNamePerObj.get('TIP_BIN_Range__c').get('Unenrolled_Known');
+	public static String BIN_RANGE_PROVIDER_RECORD_TYPE_ID = RecordTypeSingleton.getInstance().RtIDsPerDeveloperNamePerObj.get('TIP_BIN_Range__c').get('Enrolled');
 
 	//TIP-49 - validate IATA code is unique for payment providers
   	public static void validateUniqueIATACodeForTIP(List<Account> triggerNew,map<id, Account> triggerOld) {

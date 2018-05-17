@@ -1,5 +1,9 @@
 <messaging:emailTemplate replyTo="{!$Label.ISSP_CaseCommentEmail}"  
-            subject="Expiration of online {!IF(OR(relatedTo.RecordType.DeveloperName == 'ProcessEuropeSCE', relatedTo.RecordType.DeveloperName == 'OSCAR_Communication'), ' Agency Accreditation application', ' Airline Participation Joining Process')} - case n° {!relatedTo.CaseNumber} {!relatedTo.E2CP__Case_Thread_Id__c}" 
+            subject="Expiration of online {!CASE(relatedTo.RecordType.DeveloperName,
+            'ProcessEuropeSCE', ' Agency Accreditation application',
+            'OSCAR_Communication', ' Agency Accreditation application',
+            'Process', ' Transparency in Payments(TIP) application',
+            ' Airline Participation Joining Process')} - case n° {!relatedTo.CaseNumber} {!relatedTo.E2CP__Case_Thread_Id__c}" 
             recipientType="User" relatedToType="Case"  language="{!CASE(relatedTo.Contact.Preferred_Language__c, 'Chinese','zh_CN','Thai', 'th','Vietnamese', 'vi','Arabic', 'ar', 'Korean', 'ko', 'German','DE', 'English','EN', 'French','FR', 'Italian','IT', 'Danish','da', 'Spanish','es', 'Dutch','nl', 'Finnish','fi', 'Portuguese','pt', 'Swedish','sv', 'Polish','pl', 'Norweigian','no',  'Japanese','ja','Portuguese','pt','Indonesian', 'in',   'EN')}">
 <messaging:emailHeader name="CaseId">
     {!relatedTo.Id}
@@ -25,7 +29,11 @@ You can access this application on the Customer Portal in order to complete and 
 <center><br />
 
 <a style="font-size:20px;text-align:center;font-weight:bold;background-color:#0A4279;color:white;padding:5px;text-decoration:none;border-collapse: separate!important;border-top-left-radius: 5px;border-top-right-radius: 5px;border-bottom-right-radius: 5px;border-bottom-left-radius: 5px;"
-href="{!$Label.ISSP_Email_PortalUrl}ISSP_Login?retURL=/{!IF(OR(relatedTo.RecordType.DeveloperName == 'ProcessEuropeSCE',relatedTo.RecordType.DeveloperName == 'OSCAR_Communication'),'ISSP_AMSCases','ISSP_APCases')}{!if(relatedTo.CNSCase__c, '?CommunityName=CNS', '')}">{!$Label.ISSP_Email_IataPortal}</a>
+href="{!$Label.ISSP_Email_PortalUrl}ISSP_Login?retURL=/{!CASE(relatedTo.RecordType.DeveloperName,
+'ProcessEuropeSCE', 'ISSP_AMSCases',
+'OSCAR_Communication','ISSP_AMSCases',
+'Process', 'ISSP_TIP_Home',
+'ISSP_APCases')}{!if(relatedTo.CNSCase__c, '?CommunityName=CNS', '')}">{!$Label.ISSP_Email_IataPortal}</a>
   </center>
 
 <BR/>

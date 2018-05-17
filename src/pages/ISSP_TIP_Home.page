@@ -1,4 +1,14 @@
-<apex:page id="topPage" controller="ISSP_TIP_Home_Controller" cache="false" sidebar="false" showHeader="false" standardStylesheets="false" applyBodyTag="false" applyHtmlTag="false">
+<apex:page id="topPage" 
+controller="ISSP_TIP_Home_Controller" 
+cache="false" 
+sidebar="false" 
+showHeader="false" 
+standardStylesheets="false" 
+applyBodyTag="false" 
+applyHtmlTag="false"
+action="{!initActions}"
+>
+
 
     <head>
         <meta charset="utf-8" />
@@ -20,7 +30,8 @@
 
             function validateIfportalAdmin() {
                 if ({!isAdmin}) {
-                    window.location.href = '/apex/ISSP_TIP_Enrolment';
+                    //window.location.href = '/apex/ISSP_TIP_Enrolment';
+                    navigateToEnrolmentPage();
                 } else {
                     alert("{!$label.ISSP_TIP_Home_Only_Portal_Administrators}");
                 }
@@ -207,15 +218,15 @@
 
                             <apex:pageBlock >
                                 <apex:form >
+                                    <apex:actionFunction action="{!startEnrolmentAccount}" name="navigateToEnrolmentPage"></apex:actionFunction>
                                     <hr />
                                     <apex:pageBlockTable value="{!cases}" var="item" styleClass="table-hover table table-condensed table-responsive">
                                         <apex:column >
                                             <apex:facet name="header">
                                                 {!$ObjectType.Case.fields.CaseNumber.label}
                                             </apex:facet>
-                                            <apex:outputLink value="/apex/ISSP_Case?caseId={!item.Id}&mid={!currNavState}{!if(communityName=='CNS','&CommunityName='+communityName,'')}" target="_self">{!item.CaseNumber}</apex:outputLink>
+                                            <apex:outputLink value="/apex/ISSP_Case?caseId={!item.Id}" target="_self">{!item.CaseNumber}</apex:outputLink>
                                         </apex:column>
-
                                         <apex:column >
                                             <apex:facet name="header">
                                                 {!$ObjectType.Case.fields.Subject.label}
@@ -234,7 +245,9 @@
                                             <apex:facet name="header">
                                                 {!$Label.ISSP_Home_Table_Date_Time_Opened}
                                             </apex:facet>
-                                            {!item.createddate}
+                                            <apex:outputText value="{0,date,MM/dd/yyyy hh:mm aaa}">
+                                                <apex:param value="{!item.createddate}" /> 
+                                            </apex:outputText>
                                         </apex:column>
                                     </apex:pageBlockTable>
                                 </apex:form>
@@ -266,15 +279,15 @@
                                         
                                         <apex:column >
                                             <apex:outputPanel rendered="{!item.status != 'Draft'}">
-                                                <apex:commandLink style="margin-right:5px"  rendered="{!(isAdmin && isPaymentProvider)}" action="{!NewEditProduct}">
-                                                <span class="glyphicon glyphicon-pencil"/>View/Update
+                                                <apex:commandLink style="margin-right:5px" title="View/Update" rendered="{!(isAdmin && isPaymentProvider)}" action="{!NewEditProduct}">
+                                                <span class="glyphicon glyphicon-eye-open "/> 
                                                 <apex:param name="prodId" value="{!item.id}"/>
                                                 </apex:commandLink>
                                             </apex:outputPanel>
 
                                             <apex:outputPanel rendered="{!item.status == 'Draft'}">
-                                                <apex:commandLink style="margin-right:5px" rendered="{!(isAdmin && isPaymentProvider)}" action="{!NewEditProduct}">
-                                                    <span class="glyphicon glyphicon-pencil"/> Edit
+                                                <apex:commandLink style="margin-right:5px" title="Edit" rendered="{!(isAdmin && isPaymentProvider)}" action="{!NewEditProduct}">
+                                                    <span class="glyphicon glyphicon-pencil"/> 
                                                     <apex:param name="prodId" value="{!item.id}"/>
                                                 </apex:commandLink>
                                             </apex:outputPanel>
