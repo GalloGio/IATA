@@ -1,0 +1,114 @@
+<aura:component extends="c:Base" implements="flexipage:availableForAllPageTypes,forceCommunity:availableForAllPageTypes,force:hasRecordId,force:appHostable" access="global" controller="OneId_RegistrationProcessController">
+    
+    <ltng:require scripts="{!join(',', 
+            $Resource.jquery321minStandard,
+            $Resource.InternationalPhoneNumberFormatS + '/intl-tel-input-master/build/js/intlTelInput.js',
+            $Resource.InternationalPhoneNumberFormatS + '/intl-tel-input-master/src/js/data.js',
+            $Resource.InternationalPhoneNumberFormatS + '/intl-tel-input-master/src/spec/helpers/helpers.js',
+            $Resource.InternationalPhoneNumberFormatS + '/intl-tel-input-master/build/js/utils.js')}"
+        styles="{!join(',', 
+            '/identity/s/OneIdResources/css/normalize.css',
+            '/identity/s/OneIdResources/css/OneIdStyles.css',
+            '/identity/s/OneIdResources/css/salesforce-lightning-design-system-ltng.css')}"
+        afterScriptsLoaded="{!c.jsLoaded}"
+    />
+
+    <aura:handler name="init" value="{!this}" action="{!c.doInit}"/>
+    <aura:handler name="StepCompletionNotification" event="c:OneId_StepCompletion_EVT" action="{!c.handleStepCompletion}"/>
+    
+    <aura:registerEvent name="checkStep2Completion" type="c:OneId_RequestCompletionCheck_EVT"/>
+    
+    <aura:attribute name="activeSection" type="Integer" default="1"/>
+    <aura:attribute name="stepCompletion" type="boolean[]" default="[true, true, true]"/>
+    <aura:attribute name="contact" type="Contact" default="{ 'sobjectType': 'Contact' }" />
+    <aura:attribute name="account" type="Account" default="{ 'sobjectType': 'Account' }" />
+    <aura:attribute name="serviceName" type="String" />
+    <aura:attribute name="userCountry" type="String"/>
+    
+    <!-- URL parameters -->
+    <aura:registerEvent name="fetchParams" type="c:oneIdURLParams"/>
+    <aura:handler event="c:oneIdURLParams" action="{!c.renderPage}"/>
+  
+    <div class="slds-container_medium slds-container_center">
+        <div class="slds-grid">
+            <div class="slds-p-horizontal--small slds-size--1-of-1">
+                <h1>{!$Label.c.OneId_Create_an_account}</h1>
+                <div class="slds-accordion">
+                    <div class="slds-accordion__list-item">
+                        <section aura:id="section1" class="slds-accordion__section slds-is-open">
+                            <div class="slds-accordion__summary">
+                                
+                                <div class="slds-p-horizontal--small slds-size--1-of-1">
+                                    <h3 class="slds-text-heading_small slds-accordion__summary-heading">
+                                        <span aria-controls="step1" aria-expanded="true" class="slds-button slds-button_reset slds-accordion__summary-action" onclick="{!c.section1}">
+                                            
+                                            <span class="bulletv2">1</span>
+                                            
+                                            <span class="category">{!$Label.c.OneId_Contact_Association_Validation}</span>
+                                        </span>
+                                        
+                                        <span class="{!v.activeSection==1 ? 'icon icon-navArrowLeft' : 'icon icon-navArrowDown'}" />
+                                    </h3>
+                                </div>
+                                
+                                
+                            </div>
+                            <div aria-hidden="false" class="slds-accordion__content" id="step1">
+                                <c:OneId_EmailValidation contact="{!v.contact}" showCaptcha="{!v.userCountry!='CN'}"/>
+                            </div>
+                        </section>
+                    </div>
+                    <div class="slds-accordion__list-item">
+                        <section aura:id="section2" class="slds-accordion__section">
+                            <div class="slds-accordion__summary">
+                                <div class="slds-p-horizontal--small slds-size--1-of-1">
+                                    <h3 class="slds-text-heading_small slds-accordion__summary-heading">
+                                        <span aria-controls="step2" aria-expanded="false" class="slds-button slds-button_reset slds-accordion__summary-action"  onclick="{!c.section2}">
+                                            <span class="bulletv2">2</span>
+                                            
+                                            <span class="category">{!$Label.c.OneId_Contact_Creation}</span>
+                                        </span>
+                                        
+                                        <span class="{!v.activeSection==2 ? 'icon icon-navArrowLeft' : 'icon icon-navArrowDown'}" />
+                                    </h3>
+                                </div>
+                                
+                            </div>
+                            <div aria-hidden="true" class="slds-accordion__content" id="step2">
+                                <c:OneId_ContactForm contact="{!v.contact}" userCountry="{!v.userCountry}"/>
+                            </div>
+                        </section>
+                    </div>
+                    <div class="slds-accordion__list-item">
+                        <section aura:id="section3" class="slds-accordion__section">
+                            <div class="slds-accordion__summary">
+                                <div class="slds-p-horizontal--small slds-size--1-of-1">
+                                    <h3 class="slds-text-heading_small slds-accordion__summary-heading">
+                                        <span aria-controls="step3" aria-expanded="false" class="slds-button slds-button_reset slds-accordion__summary-action"  onclick="{!c.section3}">
+                                            <span class="bulletv2">3</span>
+                                            
+                                            <span class="category">{!$Label.c.OneId_Account_Association}</span>
+                                        </span>
+                                        
+                                        <span class="{!v.activeSection==3 ? 'icon icon-navArrowLeft' : 'icon icon-navArrowDown'}" />
+                                    </h3>
+                                </div>
+                            </div>
+                            <div aria-hidden="true" class="slds-accordion__content" id="step3">
+                                
+                                <aura:if isTrue="{!v.serviceName=='FRED'}">
+                                    <!-- New version for FRED account creation -->
+                                    <c:OneId_Fred_AccountSelection contact="{!v.contact}" serviceName="{!v.serviceName}"/>
+                                    <!-- Default account creation -->
+                                    <aura:set attribute="else">
+                                        <c:OneId_AccountSelection account="{!v.account}" contact="{!v.contact}" serviceName="{!v.serviceName}"/>
+                                    </aura:set>
+                                </aura:if>
+                            </div>
+                        </section>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</aura:component>
