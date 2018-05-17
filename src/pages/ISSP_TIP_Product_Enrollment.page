@@ -70,7 +70,7 @@
             font-weight: bold;
             font-size: small;
         }
-        .errorMsg {
+        .errorMsg,.mandFld {
             white-space: nowrap;
         }
 
@@ -382,7 +382,9 @@
                                             <apex:outputPanel style="display: -webkit-inline-box;">                                        
                                                 <apex:actionFunction name="paymentNetworkChange" oncomplete="enableBinRangeBtn();" action="{!changePaymentNetwork}" reRender="binTable"/>
                                                 <apex:outputPanel >
-                                                    <apex:inputField id="paymentNet" html-class="mandFld" value="{!newpp.PP_Payment_Network__c}" onchange="paymentNetworkChange();" rendered="{!editMode}" styleClass="sectionItem"/>
+                                                    <apex:selectList id="paymentNet" html-class="mandFld" value="{!newpp.PP_Payment_Network__c}" onchange="paymentNetworkChange();" rendered="{!editMode}" styleClass="sectionItem" size="1">
+                                                        <apex:selectOptions value="{!paymentNetworkOptList}"/>
+                                                    </apex:selectList>
                                                 <apex:outputField value="{!newpp.PP_Payment_Network__c}" rendered="{!!editMode}"/>
                                                     <apex:image value="/img/msg_icons/info16.png" style="padding: 4px" styleClass="selector" title="{!$Label.ISSP_Portal_Product_Payment_Network_Label}" html-data-placement="top" html-data-toggle="tooltip" rendered="{!editMode}"/>
                                                 </apex:outputPanel>

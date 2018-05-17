@@ -46,6 +46,20 @@ public without sharing class ISSP_TIP_Home_Controller {
     public set<string> filterCountryList{get;set;}// list of countries that will be removed from the multiSelect for adding new product country config  
 
 
+
+    public List<selectOption> paymentNetworkOptList{
+        get{        
+            List<SelectOption> paymentNetworkOptList = new List<SelectOption>();      
+            paymentNetworkOptList.add(new selectOption('', '- None -'));
+            for( Schema.PicklistEntry f : Partner_products__c.PP_Payment_Network__c.getDescribe().getPicklistValues()){
+                if(!f.getLabel().contains('Other'))
+                paymentNetworkOptList.add(new SelectOption(f.getValue(), f.getLabel()));
+            }
+                
+            return paymentNetworkOptList;
+        }
+        set;}
+
     
     private map<string,Decimal> paymentNetworkMap{
             get{
