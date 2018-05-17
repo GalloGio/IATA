@@ -331,7 +331,7 @@ Specify if payment is guaranteed to the airline against: fraud dispute, commerci
                     <label>American Express (AX)</label>
                 </value>
                 <value>
-                    <fullName>DC/DS</fullName>
+                    <fullName>DC</fullName>
                     <default>false</default>
                     <label>Diners/Discover (DC/DS)</label>
                 </value>
@@ -351,9 +351,9 @@ Specify if payment is guaranteed to the airline against: fraud dispute, commerci
                     <label>Visa (VI)</label>
                 </value>
                 <value>
-                    <fullName>OTH</fullName>
+                    <fullName>O1</fullName>
                     <default>false</default>
-                    <label>Other (OTH)</label>
+                    <label>Other</label>
                 </value>
             </valueSetDefinition>
         </valueSet>
@@ -618,11 +618,11 @@ Specify if payment is guaranteed to the airline against: fraud dispute, commerci
                 <default>false</default>
             </values>
             <values>
-                <fullName>DC%2FDS</fullName>
+                <fullName>DC</fullName>
                 <default>false</default>
             </values>
             <values>
-                <fullName>OTH</fullName>
+                <fullName>O1</fullName>
                 <default>false</default>
             </values>
             <values>
