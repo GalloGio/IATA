@@ -104,7 +104,7 @@
 	
 	<aura:if isTrue="{!v.showCreateNew || (v.customerType == 'GeneralPublic' &amp;&amp; !empty(v.country))}">
 		<div class="slds-grid slds-grid_align-end slds-m-top_medium">
-			<ui:button label="Submit" press="{!c.submit}" class="sfdc_button sfdc_button slds-size_1-of-1 slds-medium-size_3-of-12"/>
+			<ui:button label="Submit" press="{!c.submit}" class="slds-size_1-of-1 slds-medium-size_3-of-12"/>
 		</div>
 	</aura:if>
 	

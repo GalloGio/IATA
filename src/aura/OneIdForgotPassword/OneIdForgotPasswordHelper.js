@@ -10,6 +10,9 @@
         console.log('aqui checkEmailUrl ' + checkEmailUrl);
         var action = component.get("c.forgotPassword");
 
+        var serviceName = component.get("v.serviceName");
+        if(!$A.util.isEmpty(serviceName)) checkEmailUrl += "?serviceName="+serviceName;
+
         action.setParams({username:username, checkEmailUrl:checkEmailUrl});
         action.setCallback(this, function(a) {
             console.log('Helper.handleForgotPassword.Callback BEGIN');
