@@ -65,14 +65,14 @@
                                     class="input sfdc_passwordinput sfdc" label="{!$Label.c.OneId_Password}" labelClass="assistiveText"/>
                 </div>
                 
-                <div class="slds-grid-wrap slds-p-horizontal_medium">
+                <div class="slds-grid-wrap slds-p-horizontal_medium slds-m-top_medium">
                     <div class="sfdc slds-col_bump-right slds-max-small-size_1-of-1 slds-order_1 slds-medium-order_2">
                         <ui:button aura:id="submitButton" label="{!$Label.c.OneId_Login}" press="{!c.handleLogin}" class="sfdc_button"/>
                     </div>
                     
-                    <div id="sfdc_forgot" class="sfdc slds-p-top_medium slds-order_2 slds-medium-order_1  slds-max-small-size_1-of-1">
-                        <a href="{!if(v.communityForgotPasswordUrl == null, v.forgotPasswordUrl, v.communityForgotPasswordUrl)}">
-                            {!$Label.c.OneId_ForgotPassword}
+                    <div class="sfdc slds-p-top_medium slds-order_2 slds-medium-order_1  slds-max-small-size_1-of-1">
+                        <a href="{!if(v.serviceName != null, v.communityForgotPasswordUrl+'?serviceName='+v.serviceName, v.communityForgotPasswordUrl)}">
+                            {!$Label.c.ISSP_ForgotYourPassword}
                         </a>
                         <aura:if isTrue="{!v.isSelfRegistrationEnabled}">
                             |
