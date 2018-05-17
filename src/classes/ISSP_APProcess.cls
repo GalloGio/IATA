@@ -95,6 +95,7 @@ public without sharing class ISSP_APProcess {
     public List<SelectOption> optInOutOptions {get;set;}
     public Integer airlineOptInDays {get;set;}
     public Integer airlineOptOutDays {get;set;}
+    public Boolean isoCountryEligible {get;set;}
 
     public Boolean getIsNewCountryProcess() {
         try {
@@ -123,6 +124,7 @@ public without sharing class ISSP_APProcess {
         isGSSAUser = false; //AS R03-SP03
         displayPopup = false;
 		flagShowCountries = false;
+        isoCountryEligible = false;
 
         newForm = new AP_Process_Form__c();
         newCase = new Case();
@@ -1406,10 +1408,13 @@ public without sharing class ISSP_APProcess {
         IATA_ISO_Country__c isocountry = [
             SELECT Id, Name, CurrencyIsoCode, EU_Country__c, AMS_Pilot_Country__c, Case_BSP_Country__c,IATA_Country_FR__c,IATA_Country_SP__c,IATA_COUNTRY_EN__c,
             IATA_Contry_KR__c,IATA_Country_IT__c,IATA_Country_JP__c,IATA_Country_PT__c,IATA_Country_ZH__c,
-            Tax_Number_label__c,Tax_number_format__c,Tax_number_help_text__c, ANG_Enable_NewGen__c, ANG_Portal_Service__c
+            Tax_Number_label__c,Tax_number_format__c,Tax_number_help_text__c, ANG_Enable_NewGen__c, ANG_Portal_Service__c, Airline_EasyPay_Opt_Out_Date__c
             FROM IATA_ISO_Country__c
             WHERE ISO_Code__c = :isocode
          ];
+
+        //ISOCountry eligibility for IEP 
+        isoCountryEligible = (isocountry.Airline_EasyPay_Opt_Out_Date__c != null && isocountry.Airline_EasyPay_Opt_Out_Date__c <= Date.today());
 
         return isocountry;
     }
