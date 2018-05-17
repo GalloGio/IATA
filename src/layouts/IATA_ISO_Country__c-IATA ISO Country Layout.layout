@@ -233,7 +233,7 @@
         <customLabel>true</customLabel>
         <detailHeading>true</detailHeading>
         <editHeading>true</editHeading>
-        <label>New Gen</label>
+        <label>NewGen</label>
         <layoutColumns>
             <layoutItems>
                 <behavior>Edit</behavior>
@@ -241,13 +241,13 @@
             </layoutItems>
             <layoutItems>
                 <behavior>Edit</behavior>
-                <field>ANG_Portal_Service__c</field>
+                <field>ANG_GDI_Enabled__c</field>
             </layoutItems>
         </layoutColumns>
         <layoutColumns>
             <layoutItems>
                 <behavior>Edit</behavior>
-                <field>ANG_GDI_Enabled__c</field>
+                <field>ANG_Portal_Service__c</field>
             </layoutItems>
             <layoutItems>
                 <behavior>Edit</behavior>
