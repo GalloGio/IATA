@@ -95,7 +95,7 @@ public without sharing class ISSP_APProcess {
     public List<SelectOption> optInOutOptions {get;set;}
     public Integer airlineOptInDays {get;set;}
     public Integer airlineOptOutDays {get;set;}
-    public Boolean isoCountryEligible {get;set;}
+    public Boolean isoCountryEligible {get;set;} //Variable to define if the isoCountry is EasyPay Eligible (used in VF Page)
 
     public Boolean getIsNewCountryProcess() {
         try {
