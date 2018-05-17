@@ -84,7 +84,6 @@ public with sharing class OneId_AddressDoctor {
 									 soapEnv+= '</v4:ServiceParameters>';
 									 soapEnv+= '<v4:ValidationParameters>';
 										soapEnv+= '<v4:MaxResultCount>5</v4:MaxResultCount>';
-										soapEnv+= '<v4:GlobalPreferredDescriptor>SHORT</v4:GlobalPreferredDescriptor>';
 										soapEnv+= '<v4:FormatWithCountry>false</v4:FormatWithCountry>';
 										soapEnv+= '<v4:StreetWithNumber>true</v4:StreetWithNumber>';
 										soapEnv+= '<v4:CountryType>ISO2</v4:CountryType>';
@@ -96,7 +95,9 @@ public with sharing class OneId_AddressDoctor {
 										soapEnv+= '<v4:Country>';
 											soapEnv+= '<v4:string>'+countryCode+'</v4:string>';
 										soapEnv+= '</v4:Country>';
-										soapEnv+= '<v4:AddressComplete>'+address+'</v4:AddressComplete>';
+										soapEnv+= '<v4:Street>';
+											soapEnv+= '<v4:string>'+address+'</v4:string>';
+										soapEnv+= '</v4:Street>';
 									 soapEnv+= '</v4:Address>';
 								soapEnv+= '</v4:addresses>';
 							 soapEnv+= '</v4:Process>';

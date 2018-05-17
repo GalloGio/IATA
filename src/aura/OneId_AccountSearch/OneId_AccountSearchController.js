@@ -7,6 +7,7 @@
 
         if(userInputValue.length > 2) {
             component.set("v.searched", true);
+            component.set("v.searching", true);
 
             var action = component.get("c.searchAccounts");
             action.setParams({
@@ -27,6 +28,8 @@
                     component.set("v.accounts",[{'Name':'No result found...'}]);
                 }
 
+                component.set("v.searching", false);
+
                 // Show suggestion box
                 if(!$A.util.hasClass(resultDiv, 'slds-is-open')) $A.util.addClass(resultDiv, 'slds-is-open');
             });
@@ -44,21 +47,24 @@
         $A.util.removeClass(c.find('results'), 'slds-is-open');
     },
     suggestionSelected: function(c, e) {
-        var selectedAccount = e.currentTarget.dataset.value;
+        var selectedAccountName = e.currentTarget.dataset.value;
 
-        if(selectedAccount != 'No result found...') { 
+        if(selectedAccountName != 'No result found...') { 
             // Set input with selected value
             //var userInputCmp = c.find("userInput");
-            c.set("v.userInput", selectedAccount);
-            c.set("v.account", c.get("v.accounts")[e.currentTarget.dataset.rowIndex]);
+            c.set("v.userInput", selectedAccountName);
 
             c.getEvent("itemSelected")
-                .setParams({
-                    "state" : "accountSelected",
-                    "account" : c.get("v.account")
-                }).fire(); 
+            .setParams({
+                "state" : "accountSelected",
+                "account" : c.get("v.accounts")[e.currentTarget.dataset.rowIndex]
+            }).fire(); 
         }else{
-            c.set("v.account.Name", c.get("v.userInput"));
+            c.getEvent("itemSelected")
+            .setParams({
+                "state" : "noAccount",
+                "account" : {Name : c.get("v.userInput")}
+            }).fire();
         }
 
         // Hide suggestion box
@@ -68,7 +74,10 @@
         c.set("v.account.Name", c.get("v.userInput"));
 
         c.getEvent("itemSelected")
-            .setParams({"state" : 'createNew'})
-            .fire(); 
+        .setParams({
+            "state" : 'createNew',
+            "account" : {Name : c.get("v.userInput")}
+        })
+        .fire(); 
     }
 })

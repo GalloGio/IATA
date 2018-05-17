@@ -49,12 +49,7 @@
     },
 
     section3 : function(cmp, evt, hlp) {
-        if(cmp.get("v.stepCompletion")[2]) {
-            hlp.openStep(cmp, 3);
-        } else {
-            // Check if step 2 is filled
-            $A.get("e.c:OneId_RequestCompletionCheck_EVT").fire();
-        }
+        $A.get("e.c:OneId_RequestCompletionCheck_EVT").fire();
     },
 
     handleStepCompletion: function (cmp, evt, hlp){
@@ -67,6 +62,10 @@
         cmp.set("v.stepCompletion", stepArray);
 
         if(stepNumber != 3 && isComplete) hlp.openStep(cmp, (stepNumber+1));
+        if(stepNumber == 3 && isComplete){
+            $A.util.toggleClass(cmp.find("mainContainer"), "slds-hide");
+            $A.util.toggleClass(cmp.find("registrationComplete"), "slds-hide");
+        }
 
     }
 })

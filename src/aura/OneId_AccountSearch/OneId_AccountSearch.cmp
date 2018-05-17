@@ -2,7 +2,6 @@
 
     <aura:registerEvent name="itemSelected" type="c:OneId_ItemSelected_EVT"/>
 
-    <aura:attribute type="Account" name="account" required="true"/>
     <aura:attribute type="Boolean" name="disabled" access="public" default="false"/>
     
     <aura:attribute type="String" name="customerType" required="true"/>
@@ -14,8 +13,9 @@
     <aura:attribute type="String" name="userInput" access="private"/>
     <aura:attribute type="Boolean" name="isValid" default="false" access="private"/>
     
-    <aura:attribute name="accounts" type="Account[]" access="private"/>
+    <aura:attribute type="Account[]" name="accounts" access="private"/>
     <aura:attribute type="Integer" name="totalResult" access="private" />
+    <aura:attribute type="Boolean" name="searching" default="false" access="private" />
     
     <aura:handler name="change" value="{!v.customerType}" action="{!c.reset}"/>
     <aura:handler name="change" value="{!v.searchFields}" action="{!c.reset}"/>
@@ -25,19 +25,24 @@
         <div aura:id="results" class="slds-combobox slds-dropdown-trigger_click" aria-expanded="true" aria-haspopup="listbox" role="combobox">
             
             <div class="slds-combobox__form-element slds-input-has-icon slds-input-has-icon_right" role="none">
-                <ui:inputText value="{!v.userInput}" updateOn="keyup" keyup="{!c.search}" class="slds-input slds-combobox__input" disabled="{!v.disabled}" />
+                <ui:inputText value="{!v.userInput}" updateOn="keyup" keyup="{!c.search}" class="slds-input slds-combobox__input" disabled="{!v.disabled}" placeholder="Search for Company Name or IATA code (minimum 3 characters)"/>
                 <span class="slds-icon_container slds-icon-utility-search slds-input__icon slds-input__icon_right">
-                    <lightning:icon iconName="utility:search" size="x-small"/>
+                    <aura:if isTrue="{!v.searching}">
+                        <lightning:spinner size="small"/>
+                        <aura:set attribute="else">
+                            <lightning:icon iconName="utility:search" size="x-small"/>
+                        </aura:set>
+                    </aura:if>
                 </span>
             </div>
             
             <div id="results" role="listbox">
                 
-                <ul class="slds-dropdown slds-dropdown_fluid slds-listbox slds-listbox_vertical" role="presentation">
+                <div class="slds-dropdown slds-dropdown_fluid slds-listbox slds-listbox_vertical" role="presentation">
                     <aura:if isTrue="{!$Browser.isPhone}">
                         
                         <aura:iteration items="{!v.accounts}" var="a" indexVar="i">
-  							<li role="presentation" class="slds-listbox__item">
+  							<div role="presentation" class="slds-listbox__item">
 		                        <article class="slds-card slds-listbox__option slds-listbox__option_plain" onclick="{!c.suggestionSelected}" data-value="{!a.Name}" data-row-index="{!i}" >
 		                            <div class="slds-card__body slds-card__body_inner slds-grid slds-wrap">
 		                                    <div class="slds-col slds-size_1-of-2">
@@ -60,52 +65,59 @@
 		                                    </div>
 		                            </div>
 		                        </article>
-		                    </li>
+		                    </div>
                         </aura:iteration>
                         
                         <aura:set attribute="else">
                             <!-- TODO: use a datatable -->
-                            <li role="presentation" class="slds-listbox__item slds-grid headerRow">
+                            <div role="presentation" class="slds-listbox__item slds-grid headerRow">
                                 <aura:iteration items="{!v.fieldLabels}" var="name">
-                                    <div class="{!'slds-size_1-of-'+v.fieldLabels.length}">
+                                    <div class="{!'slds-listbox__option slds-listbox__option_plain slds-size_1-of-'+v.fieldLabels.length}">
                                         {!name}
                                     </div>
                                 </aura:iteration>
-                            </li>
+                            </div>
                             <!-- TODO: access fields dynamically -->
-                            <aura:iteration items="{!v.accounts}" var="a" indexVar="i">
-                                <li role="presentation" class="slds-listbox__item" onclick="{!c.suggestionSelected}" data-value="{!a.Name}" data-row-index="{!i}">
-                                	<div class="slds-listbox__option slds-listbox__option_plain slds-grid">
-	                                    <div class="{!'slds-size_1-of-'+v.fieldLabels.length}">{!a.Name}</div>
-	                                    <div class="{!'slds-size_1-of-'+v.fieldLabels.length}">{!a.BillingStreet}</div>
-                                        
-                                        <aura:if isTrue="{!v.customerType == 'Airline'}">
-	                                    <div class="{!'slds-size_1-of-'+v.fieldLabels.length}">{!a.IATA_ISO_Country__r.Name}</div>
-	                                        <div class="{!'slds-size_1-of-'+v.fieldLabels.length}">{!a.Airline_designator__c}</div>
-	                                    </aura:if>
-	                                    
-	                                    <aura:if isTrue="{!v.customerType == 'Agency' || v.customerType == 'Airline'}">
-	                                        <div class="{!'slds-size_1-of-'+v.fieldLabels.length}">{!a.IATACode__c}</div>
-	                                    </aura:if>
-	                                </div>
-                                </li>
-                            </aura:iteration>
+                            <div class="tableContainer">
+                                <aura:iteration items="{!v.accounts}" var="a" indexVar="i">
+                                    <div role="presentation" class="slds-listbox__item" onclick="{!c.suggestionSelected}" data-value="{!a.Name}" data-row-index="{!i}">
+                                    	<div class="slds-listbox__option slds-listbox__option_plain slds-grid">
+    	                                    <div class="{!'slds-size_1-of-'+v.fieldLabels.length}">{!a.Name}</div>
+    	                                    <div class="{!'slds-size_1-of-'+v.fieldLabels.length}">{!a.BillingStreet}</div>
+                                            
+                                            <aura:if isTrue="{!v.customerType == 'Airline'}">
+    	                                    <div class="{!'slds-size_1-of-'+v.fieldLabels.length}">{!a.IATA_ISO_Country__r.Name}</div>
+    	                                        <div class="{!'slds-size_1-of-'+v.fieldLabels.length}">{!a.Airline_designator__c}</div>
+    	                                    </aura:if>
+    	                                    
+    	                                    <aura:if isTrue="{!v.customerType == 'Agency' || v.customerType == 'Airline'}">
+    	                                        <div class="{!'slds-size_1-of-'+v.fieldLabels.length}">{!a.IATACode__c}</div>
+    	                                    </aura:if>
+    	                                </div>
+                                    </div>
+                                </aura:iteration>
+                            </div>
                         </aura:set>
                     </aura:if>
                     
                     <aura:if isTrue="{!v.accounts.length &lt; v.totalResult}">
-                        <li role="presentation" class="slds-listbox__item lastRow">
+                        <div role="presentation" class="slds-listbox__item lastRow">
                             First 20 results shown over {!v.totalResult}. Please refine your search
-                        </li>
+                        </div>
                     </aura:if>
                     
+                    <aura:if isTrue="{!v.customerType == 'GloballSalesAgent'}">
+                        <div role="presentation" class="slds-listbox__item lastRow">
+                            No Company found for your combination of GSA code and country. Please ensure you have entered the correct information or consult our <a href="http://theiatahub.force.com/iatapkb/articles/en_US/How_To/Customer-Portal-Troubleshooting/?l=en_US" target="_blank">troubleshooting guide</a>
+                        </div>
+                    </aura:if>
 
                     <aura:if isTrue="{!v.showCreateNew}">
-                        <li role="presentation" class="slds-listbox__item lastRow">
+                        <div role="presentation" class="slds-listbox__item lastRow">
                             Didn't find the organization you were looking for? <span onclick="{!c.createNew }">Create New</span>
-                        </li>
+                        </div>
                     </aura:if>
-                </ul>        	
+                </div>        	
             </div>
             
         </div>

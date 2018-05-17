@@ -7,9 +7,9 @@
             $Resource.InternationalPhoneNumberFormatS + '/intl-tel-input-master/src/spec/helpers/helpers.js',
             $Resource.InternationalPhoneNumberFormatS + '/intl-tel-input-master/build/js/utils.js')}"
         styles="{!join(',', 
-            '/identity/s/OneIdResources/css/normalize.css',
-            '/identity/s/OneIdResources/css/OneIdStyles.css',
-            '/identity/s/OneIdResources/css/salesforce-lightning-design-system-ltng.css')}"
+            '../OneIdResources/css/normalize.css',
+            '../OneIdResources/css/OneIdStyles.css',
+            '../OneIdResources/css/salesforce-lightning-design-system-ltng.css')}"
         afterScriptsLoaded="{!c.jsLoaded}"
     />
 
@@ -30,7 +30,7 @@
     <aura:registerEvent name="fetchParams" type="c:oneIdURLParams"/>
     <aura:handler event="c:oneIdURLParams" action="{!c.renderPage}"/>
   
-    <div class="slds-container_medium slds-container_center">
+    <div aura:id="mainContainer" class="slds-container_medium slds-container_center">
         <div class="slds-grid">
             <div class="slds-p-horizontal--small slds-size--1-of-1">
                 <h1>{!$Label.c.OneId_Create_an_account}</h1>
@@ -104,5 +104,10 @@
                 </div>
             </div>
         </div>
+    </div>
+
+    <div aura:id="registrationComplete" class="slds-text-align_center slds-p-around_large slds-hide">
+        <h1 class="slds-m-bottom_medium">Registration completed successfully</h1>
+        <h3>Please check your email to get your access details</h3>
     </div>
 </aura:component>

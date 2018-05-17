@@ -18,6 +18,8 @@
 	<ltng:require 
         styles="{!$Resource.InternationalPhoneNumberFormatS + '/intl-tel-input-master/build/css/intlTelInput.css'}"
     />
+
+	<aura:method name="validateRequiredFields"/>
     
 	<ltng:require scripts="{!join(',', 
         $Resource.jquery321minStandard,
@@ -39,7 +41,7 @@
 		</div>
 
 		<div class="slds-col slds-m-bottom_medium slds-size_1-of-1">
-			<label class="slds-form-element__label"><abbr class="slds-required" title="required">*</abbr>Trade Name</label>
+			<label class="slds-form-element__label">Trade Name</label>
 			<div class="slds-form-element__control">
 				<ui:inputText value="{!v.account.TradeName__c}" class="slds-input"/>
 			</div>
@@ -164,7 +166,7 @@
 			<div class="slds-form-element">
 				<label class="slds-form-element__label">Email</label>
 				<div class="slds-form-element__control">
-					<ui:inputEmail value="{!v.account.Email__c}" class="slds-input "/>
+					<ui:inputEmail aura:id="email" value="{!v.account.Email__c}" class="slds-input "/>
 				</div>
 			</div>
 		</div>
@@ -175,7 +177,7 @@
 				<label class="slds-form-element__label"><abbr class="slds-required" title="required">*</abbr>Office Phone</label>
 				<div class="slds-form-element__control">
 					<ui:inputPhone aura:id="officePhone" value="{!v.account.Phone}" class="phoneFormat slds-input" required="true" updateOn="keyup" keyup="{!c.validateNumber}" />
-				</div>
+				</div>				
 			</div>
 		</div>
 
