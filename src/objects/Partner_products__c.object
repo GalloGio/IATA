@@ -746,6 +746,6 @@ Specify if payment is guaranteed to the airline against: fraud dispute, commerci
         <protected>false</protected>
         <showsLocation>false</showsLocation>
         <showsStatus>false</showsStatus>
-        <url>/00O9E000000McWa?pv0={!Partner_products__c.Id}</url>
+        <url>/00O9E000000McWa?pv0={!Partner_products__c.Id}&amp;pv1={!Partner_products__c.Name}</url>
     </webLinks>
 </CustomObject>
