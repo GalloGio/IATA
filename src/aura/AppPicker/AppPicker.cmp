@@ -24,8 +24,8 @@
     
     
         <!-- <div class="launcherTitle"><h1>{!$Label.c.OneId_My_available_applications}</h1></div> -->
-        <div class="slds-size_1-of-1">
-            <button class="sfdc_button uiButton" aria-live="off" type="button" data-aura-class="uiButton--default uiButton" onclick="{!c.handleClick}" style="float: none;">
+        <div class="slds-size_1-of-1 slds-m-bottom_medium">
+            <button class="sfdc_button uiButton slds-truncate" aria-live="off" type="button" data-aura-class="uiButton--default uiButton" onclick="{!c.handleClick}" style="float: none;">
                 <span class="" dir="ltr" alternativeText="Launch picker">{!$Label.c.Oneid_request_acess_to_a_new_service}</span>
             </button>
             <!--lightning:buttonIcon iconName="utility:apps" variant="bare" onclick="{! c.handleClick }" alternativeText="Launch picker" size="large"/-->
