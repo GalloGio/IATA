@@ -1844,6 +1844,7 @@ If NO, please submit a Local Bank Account in the BSP country and currency (refer
     </fields>
     <fields>
         <fullName>Default_Commission_Rate__c</fullName>
+        <description>Used as default value for commission control in a specific BSP market for the airline applying</description>
         <externalId>false</externalId>
         <label>Default Commission Rate</label>
         <precision>5</precision>
@@ -2517,6 +2518,7 @@ If(LEN(Case__r.Account.BillingCountry) &gt;0, Case__r.Account.BillingCountry,&qu
     </fields>
     <fields>
         <fullName>Maximum_Commission_Rate__c</fullName>
+        <description>Used as maximum value for commission control in a specific BSP market for the airline applying</description>
         <externalId>false</externalId>
         <label>Maximum Commission Rate</label>
         <precision>5</precision>
@@ -2528,6 +2530,7 @@ If(LEN(Case__r.Account.BillingCountry) &gt;0, Case__r.Account.BillingCountry,&qu
     </fields>
     <fields>
         <fullName>Minimum_Commission_Rate__c</fullName>
+        <description>Used as minimum value for commission control in a specific BSP market for the airline applying</description>
         <externalId>false</externalId>
         <label>Minimum Commission Rate</label>
         <precision>5</precision>
