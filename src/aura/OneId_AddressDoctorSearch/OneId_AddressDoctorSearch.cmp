@@ -1,0 +1,81 @@
+<aura:component implements="flexipage:availableForAllPageTypes,forceCommunity:availableForAllPageTypes,force:hasRecordId,force:appHostable" access="global" controller="OneId_AddressDoctor">
+    
+    <aura:registerEvent name="addressSelected" type="c:OneId_AddressSelected_EVT"/>
+    
+    <!-- INTPUT -->
+    <aura:attribute name="inputValue" type="String"/>
+    <aura:attribute name="countryCode" type="String" access="public"/>
+    <aura:attribute name="type" type="String" access="public"/>
+    <aura:attribute name="disabled" type="Boolean" access="public" default="false"/>
+    
+    <!-- INTERNAL ATTRIBUTES -->
+    <aura:attribute name="response" type="Object[]" access="private"/>
+    <aura:attribute name="isValid" type="Boolean" default="false" access="private"/>
+    <aura:attribute name="validState" type="Integer" default="0" /> <!-- 0=not validated, 1=valid -1 unvalid-->
+    
+    <!-- BODY -->
+    <div class="slds-combobox_container slds-has-inline-listbox slds-has-input-focus">
+        <div class="slds-combobox  slds-dropdown-trigger_click" aura:id="results" aria-expanded="true" aria-haspopup="listbox" role="combobox">
+            <div class="slds-combobox__form-element slds-input-has-icon slds-input-has-icon_right" role="none">
+                <!--
+                <span class="slds-icon_container slds-icon-utility-check slds-input__icon slds-input__icon_right">
+                    <aura:if isTrue="{!v.isValid}">
+                        <lightning:icon iconName="utility:check" size="xx-small" class="indicator valid"/>
+                        <aura:set attribute="else">
+                            <lightning:icon iconName="utility:close" size="xx-small" variant="error" class="indicator"/>
+                        </aura:set>
+                    </aura:if>
+                </span>
+            -->
+
+                <ui:inputText value="{!v.inputValue}" updateOn="keyup" keyup="{!c.search}" class="slds-input slds-combobox__input" disabled="{!v.disabled}" />
+
+            </div>
+
+            
+            <div id="listbox-unique-id" role="listbox">
+                <ul class="slds-listbox slds-listbox_vertical slds-dropdown slds-dropdown_fluid suggestionBox" role="presentation">
+                    
+                    <aura:iteration items="{!v.response}" var="address" indexVar="i">
+                        <li role="presentation" class="slds-listbox__item">
+                            <div class="slds-media slds-listbox__option slds-listbox__option_entity slds-listbox__option_has-meta" role="option" >                                        
+                                <span class="slds-media__body">
+                                    <span class="slds-listbox__option-text slds-listbox__option-text_entity suggestionText" onclick="{!c.suggestionSelected}" data-value="{!i}" title="{!address.addressComplete}">{!address.addressComplete}</span>
+                                </span>
+                            </div>
+                        </li>
+                    </aura:iteration>
+                    
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    <div data-aura-rendered-by="678:0" style="">
+        <div style="width: 92%; display:  inline-block; font-size: 10px; color:  orange">
+            Please validate your billing and shipping addresses by clicking on the <img src="/identity/s/validateAddressDoctorField.png" height="14" width="14" /> button{!v.validState}
+        </div>
+        <div data-aura-rendered-by="680:0" style="display:  inline-block; vertical-align:  top; float:  right;">
+            <aura:if isTrue="{!v.validState == 0}">
+
+                <input type="image" style="width:14px; height:14px;" src="/identity/s/validateAddressDoctorField.png" onclick="{!c.validateAddress}" onblur="{!c.addressBlur}"/>
+
+
+            </aura:if>
+            <aura:if isTrue="{!v.validState == 1}">
+                 <img src="{!$Resource.DSE__dataquality + '/dataquality/images/ok.gif'}" />
+
+            </aura:if>
+            <aura:if isTrue="{!v.validState == -1}">
+              <img src="{!$Resource.DSE__dataquality + '/dataquality/images/invalid.gif'}" />
+
+            </aura:if>
+           
+           
+        </div>
+    </div>
+
+
+    
+
+</aura:component>
