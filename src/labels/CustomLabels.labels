@@ -233,7 +233,7 @@
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>AMS_OSCAR_Action6</shortDescription>
-        <value>Select/Deselect Complete Hierarchy</value>
+        <value>Edit the accounts involved</value>
     </labels>
     <labels>
         <fullName>AMS_OSCAR_Action7</fullName>
