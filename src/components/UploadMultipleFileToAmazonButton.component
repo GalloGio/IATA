@@ -1,4 +1,5 @@
 <!-- This component must be inside of a form -->
+<!-- This component was made to to hold the functionality to upload files from staging area and portal -->
 <apex:component controller="UploadMultipleFileToAmazonButtonCtrl" allowDML="true" >
 	<apex:attribute name="sObjectId" type="Id" required="true" assignto="{!parentId}" description="id of the parent object" />
 	<apex:attribute name="AmazonCredential" type="String" required="true" description="credential name to access to the amazon bucket" />
