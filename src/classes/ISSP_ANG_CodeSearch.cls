@@ -144,8 +144,6 @@ public class ISSP_ANG_CodeSearch {
 					this.agency = reqAgency;
 				}
 
-				System.debug('rui1:' + this.agency);
-
 				String serviceRenderendType;
 
 				if (sector == Ams_Utils.SECTOR_CARGO) 
@@ -188,8 +186,6 @@ public class ISSP_ANG_CodeSearch {
 						this.errorMessage = 'Information not available: Your Airline has no CASS Participation in the country of this IATA Code ' + this.agency.IATA_ISO_Country__r.Name;
 					else if (sector == Ams_Utils.SECTOR_PASSENGER) 
 						this.errorMessage = 'Information not available: Your Airline has no BSP Participation in the country of this IATA Code ' + this.agency.IATA_ISO_Country__r.Name;
-
-					//mudar mensagem de erro para label?
 				}
 				
 			} else {
