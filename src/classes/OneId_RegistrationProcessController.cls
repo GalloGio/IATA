@@ -150,9 +150,8 @@ public without sharing class OneId_RegistrationProcessController {
 
         //it's general public account? create contact / user
         if(acc.Sector__c == 'General Public'){
-            Account gpAccount = [SELECT id, IATA_ISO_Country__c FROM Account WHERE Sector__c = 'General Public' and  IATA_ISO_Country__c =:acc.IATA_ISO_Country__c];
-            if(gpAccount != null)
-                acc.Id = gpAccount.Id;
+            List<Account> gpAccount = [SELECT id, IATA_ISO_Country__c FROM Account WHERE Sector__c = 'General Public' and  IATA_ISO_Country__c =:acc.IATA_ISO_Country__c];
+            if(!gpAccount.isEmpty()) acc.Id  = gpAccount[0].Id;
         }
 
         //it's a branch

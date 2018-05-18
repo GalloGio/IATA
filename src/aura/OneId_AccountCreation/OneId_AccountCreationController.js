@@ -93,8 +93,11 @@
            officePhone.set("v.errors",null);
         }
         
-        if(isAllFilled == false)
+        if(isAllFilled == false){
           return false;
+        }else{
+            return true;
+        }
         
     }
 })

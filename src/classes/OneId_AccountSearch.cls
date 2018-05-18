@@ -18,6 +18,7 @@ public without sharing class OneId_AccountSearch {
 		if(customerType == 'Agency') recordTypesSet.addAll(ISSP_Constant.accountRecordTypeByUserType.get('NonIATAAgent'));
 
 		String fieldString = 'SELECT Id, '+String.join(fieldsToQuery, ', ');
+        String limitString = ' LIMIT 20';
 
 		String objectString = ' FROM Account WHERE RecordType.DeveloperName in :recordTypesSet';
 
@@ -38,7 +39,7 @@ public without sharing class OneId_AccountSearch {
 		
 		System.debug(loggingLevel.FINE, '____ [cls OneId_AccountSearch - searchAccounts] recordTypesSet - ' + recordTypesSet);
 		System.debug(loggingLevel.FINE, '____ [cls OneId_AccountSearch - searchAccounts] query - ' + fieldString+objectString);
-		sw.accList = Database.query(fieldString+objectString);
+		sw.accList = Database.query(fieldString+objectString+limitString);
 		System.debug(loggingLevel.FINE, '____ [cls OneId_AccountSearch - searchAccounts] results - ' + sw.accList);
 
 		System.debug(loggingLevel.FINE, '____ [cls OneId_AccountSearch - searchAccounts] query - ' + 'SELECT count()'+objectString);
@@ -60,7 +61,7 @@ public without sharing class OneId_AccountSearch {
 				objectString_HQ += ' AND ('+String.join(filterString_HQ, ' OR ')+')';
 
 			System.debug(loggingLevel.FINE, '____ [cls OneId_AccountSearch - searchAccounts] query - ' + fieldString+objectString_HQ);
-			sw.accList = Database.query(fieldString+objectString_HQ);
+			sw.accList = Database.query(fieldString+objectString_HQ+limitString);
 			System.debug(loggingLevel.FINE, '____ [cls OneId_AccountSearch - searchAccounts] results - ' + sw.accList);
 			System.debug(loggingLevel.FINE, '____ [cls OneId_AccountSearch - searchAccounts] query - ' + 'SELECT count()'+objectString_HQ);
 			sw.totalResults = Database.countQuery('SELECT count()'+objectString_HQ);

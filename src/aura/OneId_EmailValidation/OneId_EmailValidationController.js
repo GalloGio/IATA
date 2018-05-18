@@ -28,7 +28,7 @@
                 helper.notifyStepCompletion(component);
                 component.find("email").set("v.disabled", true);
                 component.find("termsaccepted").set("v.disabled", true);
-                component.set("v.showCaptch", false);
+                component.set("v.showCaptcha", false);
 
             } else if (event.data.action == 'iframeResize') {
                 if (event.data.alohaCallingCreateAccountOK == 'AccountContactAndUserSuccess' ||
