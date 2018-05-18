@@ -133,8 +133,8 @@ public with sharing class AMS_OSCAR_Case_Detail_Controller {
 
     private Boolean isEditable(String fieldName){
 
-        //For newgen
-        if(this.oscarObj.Account__r.ANG_IsNewGenAgency__c)
+        //Enforce non editable fields for newgen processes.  NEWGEN-1862/NEWGEN-3387: Don't enforce for newgen changes/correction
+        if(this.oscarObj.Account__r.ANG_IsNewGenAgency__c && (this.oscarObj.Process__c != AMS_Utils.NGCHANGES && this.oscarObj.Process__c != AMS_Utils.NGCORRECTION))
             if(notEditableForNEWGEN.contains(fieldName))
                 return false;
 
