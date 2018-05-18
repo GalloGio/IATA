@@ -14962,18 +14962,18 @@ Also note that the data contained in ICE is provided to IATA by third parties at
         <value>/a2G?fcf=00Bg0000000ZLVX</value>
     </labels>
     <labels>
-        <fullName>ISSP_Application_for_Enlistment_as_a_Payment_Provider</fullName>
-        <language>en_US</language>
-        <protected>false</protected>
-        <shortDescription>ISSP Application for Enlistment as a Payment Provider</shortDescription>
-        <value>Application for Enlistment as a Payment Provider</value>
-    </labels>
-    <labels>
         <fullName>ISSP_Application_for_Enlistment_Email_Duplicated</fullName>
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>ISSP Application for Enlistment Email Duplicated</shortDescription>
         <value>Contact already exists with this email address. Please insert other Email address</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_Application_for_Enlistment_as_a_Payment_Provider</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP Application for Enlistment as a Payment Provider</shortDescription>
+        <value>Enlistment as Alternative Transfer Method (ATM) Provider</value>
     </labels>
     <labels>
         <fullName>ISSP_Apply_Filter</fullName>
