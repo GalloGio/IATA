@@ -1,3 +1,7 @@
+/**
+    Batch process to generate Airline Suspension cases for the input cases
+    Those cases are for the Airline Participation Team and Customer Service Team 
+**/
 global class AirlineSuspensionChildCaseCreationBatch implements Database.Batchable<sObject>{
 	global final Id ParentCaseId;
 	Case ParentCase;
@@ -354,10 +358,10 @@ global class AirlineSuspensionChildCaseCreationBatch implements Database.Batchab
 			CodingChildCase.ParentId = ParentCase.Id;
 			CodingChildCase.AccountId = ParentCase.AccountId;
 			CodingChildCase.ContactId = Label.AirlineSuspensionContactId != 'null' ? Label.AirlineSuspensionContactId : null;
-			CodingChildCase.Subject = 'Airline suspension - ' + parentCase.Account.Name;
+			CodingChildCase.Subject = ParentCase.Subject;
 			CodingChildCase.Description = ParentCase.Description;
 			CodingChildCase.Origin = 'Internal Case';
-    			CodingChildCase.CaseArea__c = 'Airline Coding';
+			CodingChildCase.CaseArea__c = 'Airline Coding';
 			CodingChildCase.Reason1__c = 'Airline suspension';
 			CodingChildCase.RecordTypeId = RT_InternalCases_Id;
 			CodingChildCase.Status = 'Open';
@@ -374,7 +378,7 @@ global class AirlineSuspensionChildCaseCreationBatch implements Database.Batchab
 			MitaCase.ParentId = ParentCase.Id;
 			MitaCase.AccountId = ParentCase.AccountId;
 			MitaCase.ContactId = Label.AirlineSuspensionContactId != 'null' ? Label.AirlineSuspensionContactId : null;
-			MitaCase.Subject = 'Airline suspension - ' + parentCase.Account.Name;
+			MitaCase.Subject = ParentCase.Subject;
 			MitaCase.Description = ParentCase.Description;
 			MitaCase.Origin = 'Internal Case';
 			MitaCase.CaseArea__c = 'MITA & BIETA';
