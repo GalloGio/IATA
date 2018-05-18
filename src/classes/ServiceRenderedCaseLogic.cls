@@ -298,7 +298,10 @@ public class ServiceRenderedCaseLogic {
         Map<String, List<String>> casesByParentMap = new Map<String, List<String>>();
         Map<String, String> airlinesByCaseParentMap = new Map<String, String>();
 
+        System.debug('rui77: ' + changingCases);
+
         for (Case c: changingCases) {
+          System.debug('rui55: ' + c);
             if (c.Reason1__c == 'IATA Easy Pay') {
                 airlines.add(c.Account_Concerned__c);
                 if (c.ParentId != null) {
@@ -326,18 +329,29 @@ public class ServiceRenderedCaseLogic {
                                                 AND Services_Rendered_Type__c = 'BSP Participation'
                                                 AND Services_Rendered_to_Airline__c IN :airlines];
 
+        System.debug('rui4: ' + services);
+
         Map<String, Services_Rendered__c> servicesByCaseMap = new Map<String, Services_Rendered__c>();
 
         for (Services_Rendered__c s: services) {
+          System.debug('rui3: ' + airlinesByCaseParentMap);
             for (String caseId: airlinesByCaseParentMap.keySet()) {
+              System.debug('rui7: ' + airlinesByCaseParentMap.get(caseId));
+              System.debug('rui8: ' + s.Services_Rendered_to_Airline__c);
+              System.debug('rui9: ' + caseId);
                 if (airlinesByCaseParentMap.get(caseId) == s.Services_Rendered_to_Airline__c) servicesByCaseMap.put(caseId, s);
             }
         }
 
         List<Services_Rendered__c> changingServices = new List<Services_Rendered__c>();
 
-        for (String cId: casesByParentMap.keySet()) {            
+        System.debug('rui88: ' + casesByParentMap);
+
+        for (String cId: casesByParentMap.keySet()) {
+          System.debug('rui1: ' + appFormsByCaseMap.get(cId));
+          System.debug('rui2: ' + servicesByCaseMap.get(cId));
             if (appFormsByCaseMap.get(cId).IATA_EasyPay_Opt_In_Opt_Out__c == 'OUT' && !servicesByCaseMap.get(cId).ANG_IATA_EasyPay_Opt_out__c) {
+              System.debug('rui99: ');
                 servicesByCaseMap.get(cId).ANG_IATA_EasyPay_Opt_out__c = true;
                 changingServices.add(servicesByCaseMap.get(cId));
             } else if (appFormsByCaseMap.get(cId).IATA_EasyPay_Opt_In_Opt_Out__c == 'IN' && servicesByCaseMap.get(cId).ANG_IATA_EasyPay_Opt_out__c) {
@@ -345,6 +359,8 @@ public class ServiceRenderedCaseLogic {
                 changingServices.add(servicesByCaseMap.get(cId));
             }
         }
+
+        System.debug('rui6: ' + changingServices);
 
         return changingServices;
     }
