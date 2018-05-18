@@ -92,7 +92,7 @@ public class ISSP_ANG_CodeSearch {
 				auxReplacement = Label.ISSP_Cargo;
 			}
 
-			Account[] agencies = [SELECT Id, IATACode__c, Name, TradeName__c, Status__c, IATA_ISO_Country__r.Name, ANG_Accreditation_Model__c,
+			List<Account> agencies = [SELECT Id, IATACode__c, Name, TradeName__c, Status__c, IATA_ISO_Country__r.Name, ANG_Accreditation_Model__c,
 											ANG_HE_RiskStatus__c, Active_Guarantees__c, Accumulated_Irregularities__c, Location_Type__c,
 											Top_Parent__c, IATA_ISO_Country__r.ANG_Enable_NewGen__c, ANG_IsNewGenAgency__c, 
 											Account.ANG_IEP_Status_FF__c
