@@ -2204,14 +2204,16 @@ public class AMS_OSCARTriggerHandler {
             Map<Id, List<AMS_Inspection__c>> inspectionsPerOSCAR = new Map<Id, List<AMS_Inspection__c>>();
             Map<Id, List<AMS_Inspection__c>> inspectionsPerAccount = new Map<Id, List<AMS_Inspection__c>>();
 
-            //get all inspections per oscar
+            //get all inspections
             for(AMS_Inspection__c insp: allInspections){
+                //inspections per osar
                 if(!inspectionsPerOSCAR.containsKey(insp.Oscar__c)){
                     inspectionsPerOSCAR.put(insp.Oscar__c, new List<AMS_Inspection__c>());
                 }
                 
                 inspectionsPerOSCAR.get(insp.Oscar__c).add(insp);
 
+                //inspections per account
                 if(!inspectionsPerAccount.containsKey(insp.Account__c)){
                     inspectionsPerAccount.put(insp.Account__c, new List<AMS_Inspection__c>());
                 }
@@ -2237,6 +2239,8 @@ public class AMS_OSCARTriggerHandler {
                     
                     allInspectionsToUpdate.addAll(AMS_Utils.modifyInspectionStatus(inspectionsPerOSCAR.get(oscar.Id), '0'));
                 }
+                //For this scenario we need to retrieve the inspections per account in order to update it properly.
+                //At this point the existing oscar is the new and empty one
                 if (oldOSCAR.STEP31__c <> AMS_Utils.PASSED && oscar.STEP31__c == AMS_Utils.PASSED && oscar.Location_Class__c == 'M'){
                     allInspectionsToUpdate.addAll(AMS_Utils.modifyInspectionStatus(inspectionsPerAccount.get(oscar.Account__c), '0'));   
                 }
