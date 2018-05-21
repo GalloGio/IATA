@@ -296,21 +296,19 @@ public class ServiceRenderedCaseLogic {
     private static List<Services_Rendered__c> servicesRenderendFromChangingCases(List<Case> changingCases) {
         List<String> airlines = new List<String>();
         Map<String, List<String>> casesByParentMap = new Map<String, List<String>>();
-        Map<String, String> airlinesByCaseParentMap = new Map<String, String>();
+        Map<String, String> airlinesByCaseMap = new Map<String, String>();
 
-        System.debug('rui77: ' + changingCases);
 
         for (Case c: changingCases) {
-          System.debug('rui55: ' + c);
             if (c.Reason1__c == 'IATA Easy Pay') {
                 airlines.add(c.Account_Concerned__c);
+                airlinesByCaseMap.put(c.Id, c.Account_Concerned__c);
                 if (c.ParentId != null) {
                     if (!casesByParentMap.keySet().contains(c.ParentId)) casesByParentMap.put(c.ParentId, new List<String>());
                     casesByParentMap.get(c.ParentId).add(c.Id);
-                    airlinesByCaseParentMap.put(c.ParentId, c.Account_Concerned__c);
                 } else {
                     casesByParentMap.put(c.Id, new List<String>());
-                    airlinesByCaseParentMap.put(c.Id, c.Account_Concerned__c);
+                    casesByParentMap.get(c.Id).add(c.Id);
                 }
             }
         }
@@ -329,38 +327,28 @@ public class ServiceRenderedCaseLogic {
                                                 AND Services_Rendered_Type__c = 'BSP Participation'
                                                 AND Services_Rendered_to_Airline__c IN :airlines];
 
-        System.debug('rui4: ' + services);
 
         Map<String, Services_Rendered__c> servicesByCaseMap = new Map<String, Services_Rendered__c>();
 
         for (Services_Rendered__c s: services) {
-          System.debug('rui3: ' + airlinesByCaseParentMap);
-            for (String caseId: airlinesByCaseParentMap.keySet()) {
-              System.debug('rui7: ' + airlinesByCaseParentMap.get(caseId));
-              System.debug('rui8: ' + s.Services_Rendered_to_Airline__c);
-              System.debug('rui9: ' + caseId);
-                if (airlinesByCaseParentMap.get(caseId) == s.Services_Rendered_to_Airline__c) servicesByCaseMap.put(caseId, s);
+            for (String caseId: airlinesByCaseMap.keySet()) {
+            	if (airlinesByCaseMap.get(caseId) == s.Services_Rendered_to_Airline__c) servicesByCaseMap.put(caseId, s);
             }
         }
 
         List<Services_Rendered__c> changingServices = new List<Services_Rendered__c>();
 
-        System.debug('rui88: ' + casesByParentMap);
-
-        for (String cId: casesByParentMap.keySet()) {
-          System.debug('rui1: ' + appFormsByCaseMap.get(cId));
-          System.debug('rui2: ' + servicesByCaseMap.get(cId));
-            if (appFormsByCaseMap.get(cId).IATA_EasyPay_Opt_In_Opt_Out__c == 'OUT' && !servicesByCaseMap.get(cId).ANG_IATA_EasyPay_Opt_out__c) {
-              System.debug('rui99: ');
-                servicesByCaseMap.get(cId).ANG_IATA_EasyPay_Opt_out__c = true;
-                changingServices.add(servicesByCaseMap.get(cId));
-            } else if (appFormsByCaseMap.get(cId).IATA_EasyPay_Opt_In_Opt_Out__c == 'IN' && servicesByCaseMap.get(cId).ANG_IATA_EasyPay_Opt_out__c) {
-                servicesByCaseMap.get(cId).ANG_IATA_EasyPay_Opt_out__c = false;
-                changingServices.add(servicesByCaseMap.get(cId));
+        for (String parentCaseId: casesByParentMap.keySet()) {
+        	for (String caseId: casesByParentMap.get(parentCaseId)) {        
+            	if (appFormsByCaseMap.get(parentCaseId).IATA_EasyPay_Opt_In_Opt_Out__c == 'OUT' && !servicesByCaseMap.get(caseId).ANG_IATA_EasyPay_Opt_out__c) {
+                	servicesByCaseMap.get(caseId).ANG_IATA_EasyPay_Opt_out__c = true;
+                	changingServices.add(servicesByCaseMap.get(caseId));
+            	} else if (appFormsByCaseMap.get(parentCaseId).IATA_EasyPay_Opt_In_Opt_Out__c == 'IN' && servicesByCaseMap.get(caseId).ANG_IATA_EasyPay_Opt_out__c) {
+                	servicesByCaseMap.get(caseId).ANG_IATA_EasyPay_Opt_out__c = false;
+                	changingServices.add(servicesByCaseMap.get(caseId));
+            	}
             }
         }
-
-        System.debug('rui6: ' + changingServices);
 
         return changingServices;
     }
