@@ -298,7 +298,6 @@ public class ServiceRenderedCaseLogic {
         Map<String, List<String>> casesByParentMap = new Map<String, List<String>>();
         Map<String, String> airlinesByCaseMap = new Map<String, String>();
 
-
         for (Case c: changingCases) {
             if (c.Reason1__c == 'IATA Easy Pay') {
                 airlines.add(c.Account_Concerned__c);
@@ -326,7 +325,6 @@ public class ServiceRenderedCaseLogic {
                                                WHERE Services_Rendered_to_Airline__r.IATA_ISO_Country__r.ANG_Portal_Service__c != null
                                                 AND Services_Rendered_Type__c = 'BSP Participation'
                                                 AND Services_Rendered_to_Airline__c IN :airlines];
-
 
         Map<String, Services_Rendered__c> servicesByCaseMap = new Map<String, Services_Rendered__c>();
 
