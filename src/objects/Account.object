@@ -20421,31 +20421,6 @@ This field is kept up-to-date with the feedback of ITDI at least twice a year du
         </sharedTo>
     </listViews>
     <listViews>
-        <fullName>GDP_All_Accounts</fullName>
-        <columns>ACCOUNT.NAME</columns>
-        <columns>ACCOUNT.INDUSTRY</columns>
-        <columns>ACCOUNT.TYPE</columns>
-        <columns>ACCOUNT.ADDRESS1_CITY</columns>
-        <columns>ACCOUNT.ADDRESS1_COUNTRY</columns>
-        <columns>ACCOUNT.PHONE1</columns>
-        <columns>ACCOUNT.PHONE2</columns>
-        <filterScope>Everything</filterScope>
-        <filters>
-            <field>Number_of_GDP_Billing_accounts__c</field>
-            <operation>greaterThan</operation>
-            <value>0</value>
-        </filters>
-        <filters>
-            <field>Number_of_GDP_Billing_accounts__c</field>
-            <operation>notEqual</operation>
-        </filters>
-        <label>GDP - All Accounts</label>
-        <language>en_US</language>
-        <sharedTo>
-            <role>GDP</role>
-        </sharedTo>
-    </listViews>
-    <listViews>
         <fullName>GDP_My_Accounts</fullName>
         <columns>ACCOUNT.NAME</columns>
         <columns>ACCOUNT.INDUSTRY</columns>
@@ -25356,6 +25331,39 @@ This field is kept up-to-date with the feedback of ITDI at least twice a year du
             <group>IATAWesternCaribbean</group>
             <group>IDFSAmericasRegionalOffice</group>
         </sharedTo>
+    </listViews>
+    <listViews>
+        <fullName>X00_GDP_AdHoc_Search</fullName>
+        <columns>ACCOUNT.NAME</columns>
+        <columns>ACCOUNT.INDUSTRY</columns>
+        <columns>ACCOUNT.TYPE</columns>
+        <columns>ACCOUNT.ADDRESS1_CITY</columns>
+        <columns>ACCOUNT.ADDRESS1_COUNTRY</columns>
+        <columns>Status__c</columns>
+        <columns>Category__c</columns>
+        <filterScope>Everything</filterScope>
+        <filters>
+            <field>Location_Class__c</field>
+            <operation>equals</operation>
+            <value>T</value>
+        </filters>
+        <filters>
+            <field>Category__c</field>
+            <operation>equals</operation>
+            <value>Non-IATA Travel Agent</value>
+        </filters>
+        <filters>
+            <field>IATACode__c</field>
+            <operation>startsWith</operation>
+            <value>96</value>
+        </filters>
+        <filters>
+            <field>Status__c</field>
+            <operation>equals</operation>
+            <value>Approved,Changes processed</value>
+        </filters>
+        <label>00 - GDP - AdHoc Search</label>
+        <language>en_US</language>
     </listViews>
     <listViews>
         <fullName>ZambiaCargoAgents</fullName>

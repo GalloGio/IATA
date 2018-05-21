@@ -698,8 +698,10 @@ TEXT(Month(Related_Accreditation_Class__r.Original_approval_date__c)) +
     </fields>
     <fields>
         <fullName>Legal_Name__c</fullName>
+        <description>Concatenation of Fields Legal Name Upper 1+2+3</description>
         <externalId>false</externalId>
-        <formula>TRIM(Legal_Name_1__c + &apos; &apos; + Legal_Name_2__c + &apos; &apos; + Legal_Name_3__c)</formula>
+        <formula>TRIM(Legal_Name_1_Upper__c + &apos; &apos; + Legal_Name_2_Upper__c + &apos; &apos; + Legal_Name_3_Upper__c)</formula>
+        <inlineHelpText>Concatenation of Fields Legal Name Upper 1+2+3</inlineHelpText>
         <label>Legal Name</label>
         <required>false</required>
         <trackHistory>false</trackHistory>
@@ -1257,8 +1259,10 @@ X = Not NewGen OR NewGen GoLite OR NewGen Financial Review Opt-Out</inlineHelpTe
     </fields>
     <fields>
         <fullName>Trading_Name__c</fullName>
+        <description>Concatenation of Fields Trading Name Upper 1+2</description>
         <externalId>false</externalId>
-        <formula>TRIM(Trading_Name_1__c + &apos; &apos; + Trading_Name_2__c)</formula>
+        <formula>TRIM(Trading_Name_1_Upper__c + &apos; &apos; + Trading_Name_2_Upper__c)</formula>
+        <inlineHelpText>Concatenation of Fields Trading Name Upper 1+2</inlineHelpText>
         <label>Trading Name</label>
         <required>false</required>
         <trackHistory>false</trackHistory>

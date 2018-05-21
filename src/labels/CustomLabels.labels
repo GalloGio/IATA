@@ -233,7 +233,7 @@
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>AMS_OSCAR_Action6</shortDescription>
-        <value>Select/Deselect Complete Hierarchy</value>
+        <value>Edit the accounts involved</value>
     </labels>
     <labels>
         <fullName>AMS_OSCAR_Action7</fullName>
@@ -15133,6 +15133,13 @@ Select at least one authorised signatory, and choose the Financial Assessment co
         <value>No %TYPE% Agency for this IATA Code</value>
     </labels>
     <labels>
+        <fullName>ISSP_ANG_IATA_CODE_SEARCH_RHC</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_ANG_IATA_CODE_SEARCH_RHC</shortDescription>
+        <value>Remittance Holding Capacity</value>
+    </labels>
+    <labels>
         <fullName>ISSP_ANG_IATA_CODE_SEARCH_RISK_EVENTS</fullName>
         <categories>ISSP,ANG</categories>
         <language>en_US</language>
@@ -15147,6 +15154,13 @@ Select at least one authorised signatory, and choose the Financial Assessment co
         <protected>false</protected>
         <shortDescription>Risk Status</shortDescription>
         <value>Risk Status</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_ANG_IATA_CODE_SEARCH_VALID_FINANCIAL_SECURITY</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_ANG_IATA_CODE_SEARCH_VALID_FINANCIAL_SECURITY</shortDescription>
+        <value>Valid Financial Security</value>
     </labels>
     <labels>
         <fullName>ISSP_ANG_IATA_CODE_TO_PROVIDE</fullName>
