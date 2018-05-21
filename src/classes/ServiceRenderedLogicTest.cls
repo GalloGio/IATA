@@ -306,23 +306,8 @@ private class ServiceRenderedLogicTest {
                                           RecordTypeId = airlineBranchRT,
                                           ParentId = headquarter.Id);
 
-        /*Account branch3 = new Account(Name = 'Emirates',
-                                          Field_Head_Office__c = 'Headquarter',
-                                          Airline_Designator__c = 'LH',
-                                          IATACode__c = '220',
-                                          Airline_Prefix__c = '220',
-                                          Sector__c = 'Airline',
-                                          Category__c = 'Passenger and Cargo',
-                                          Key_Customer_Reason__c = 'Volume',
-                                          TradeName__c = 'Emirates',
-                                          Legal_name__c = 'Stuff',
-                                          Name_on_AOC__c = 'Stuff',
-                                          IATA_ISO_Country__c = countryFR.Id,
-                                          RecordTypeId = airlineBranchRT);*/
-
         airlines.add(branch1);
         airlines.add(branch2);
-        //airlines.add(branch3);
         insert airlines;
             
         Contact con = new Contact (FirstName='Test', LastName='Name', email='cenas@mc.pt', AccountId = headquarter.Id);
@@ -343,14 +328,9 @@ private class ServiceRenderedLogicTest {
                                                                  Services_Rendered_Status__c = 'Active',
                                                                  ANG_IATA_EasyPay_Opt_out__c = false);
 
-        /*Services_Rendered__c serviceBranch3 = new Services_Rendered__c(Services_Rendered_to_Airline__c = branch3.Id,
-                                                                 Services_Rendered_By__c = headquarter.Id,
-                                                                 Services_Rendered_Type__c = 'BSP Participation',
-                                                                 Services_Rendered_Status__c = 'Active');*/
-
         services.add(serviceBranch1);
         services.add(serviceBranch2);
-        //services.add(serviceBranch3);
+
         insert services;
 
         for (Services_Rendered__c s: services) servicesIds.add(s.Id);
@@ -426,7 +406,6 @@ private class ServiceRenderedLogicTest {
                                                       WHERE Id IN :servicesIds];
 
         Test.stopTest();
-
         for (Services_Rendered__c us: updatedServices) System.assertEquals(true, us.ANG_IATA_EasyPay_Opt_out__c);
     }
   
