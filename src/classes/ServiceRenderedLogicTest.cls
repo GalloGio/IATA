@@ -8,9 +8,6 @@ private class ServiceRenderedLogicTest {
                                         Provider_Required__c = false),
             new Case_Reason_Service__c (Name ='myReason2',
                                         Service__c ='BSP Representation',
-                                        Provider_Required__c = false),
-            new Case_Reason_Service__c (Name ='IATA Easy Pay',
-                                        Service__c ='IATA Easy Pay',
                                         Provider_Required__c = false)
         };
         
@@ -242,18 +239,26 @@ private class ServiceRenderedLogicTest {
         
         Map<String, Id> developerNamePerId = TransformationHelper.AccRtNamePerIds();
 
+        Portal_Applications__c portalApp = new Portal_Applications__c(Name = 'Stuff');
+        insert portalApp;
+
         List<IATA_ISO_Country__c> countries = new List<IATA_ISO_Country__c>();
         
-        IATA_ISO_Country__c countryUS = new IATA_ISO_Country__c (Name = 'US', ISO_Code__c = 'US');
+        IATA_ISO_Country__c countryUS = new IATA_ISO_Country__c (Name = 'US', ISO_Code__c = 'US', ANG_Portal_Service__c = portalApp.Id);
         countries.add(countryUS);
-        IATA_ISO_Country__c countryES = new IATA_ISO_Country__c (Name = 'ES', ISO_Code__c = 'ES');
+        IATA_ISO_Country__c countryES = new IATA_ISO_Country__c (Name = 'ES', ISO_Code__c = 'ES', ANG_Portal_Service__c = portalApp.Id);
         countries.add(countryES);
-        IATA_ISO_Country__c countryPT = new IATA_ISO_Country__c (Name = 'PT', ISO_Code__c = 'PT');
+        IATA_ISO_Country__c countryPT = new IATA_ISO_Country__c (Name = 'PT', ISO_Code__c = 'PT', ANG_Portal_Service__c = portalApp.Id);
         countries.add(countryPT);
-        IATA_ISO_Country__c countryFR = new IATA_ISO_Country__c (Name = 'FR', ISO_Code__c = 'FR');
+        IATA_ISO_Country__c countryFR = new IATA_ISO_Country__c (Name = 'FR', ISO_Code__c = 'FR', ANG_Portal_Service__c = portalApp.Id);
         countries.add(countryFR);
         
         insert countries;
+
+        List<Account> airlines = new List<Account>();
+
+        Id airlineBranchRT = RecordTypeSingleton.getInstance().RtIDsPerDeveloperNamePerObj.get('Account').get('IATA_Airline_BR');
+        Id airlineHeadquartersRT = RecordTypeSingleton.getInstance().RtIDsPerDeveloperNamePerObj.get('Account').get('IATA_Airline');
 
         Account headquarter = new Account(Name = 'Emirates',
                                           Field_Head_Office__c = 'Headquarter',
@@ -267,60 +272,141 @@ private class ServiceRenderedLogicTest {
                                           Legal_name__c = 'Stuff',
                                           Name_on_AOC__c = 'Stuff',
                                           IATA_ISO_Country__c = countryUS.Id,
-                                          RecordTypeId = 'ola');
+                                          RecordTypeId = airlineHeadquartersRT);
 
+        insert headquarter;
 
+        Account branch1 = new Account(Name = 'Emirates',
+                                          Field_Head_Office__c = 'Headquarter',
+                                          Airline_Designator__c = 'LH',
+                                          IATACode__c = '220',
+                                          Airline_Prefix__c = '220',
+                                          Sector__c = 'Airline',
+                                          Category__c = 'Passenger and Cargo',
+                                          Key_Customer_Reason__c = 'Volume',
+                                          TradeName__c = 'Emirates',
+                                          Legal_name__c = 'Stuff',
+                                          Name_on_AOC__c = 'Stuff',
+                                          IATA_ISO_Country__c = countryES.Id,
+                                          RecordTypeId = airlineBranchRT,
+                                          ParentId = headquarter.Id);
 
+        Account branch2 = new Account(Name = 'Emirates',
+                                          Field_Head_Office__c = 'Headquarter',
+                                          Airline_Designator__c = 'LH',
+                                          IATACode__c = '220',
+                                          Airline_Prefix__c = '220',
+                                          Sector__c = 'Airline',
+                                          Category__c = 'Passenger and Cargo',
+                                          Key_Customer_Reason__c = 'Volume',
+                                          TradeName__c = 'Emirates',
+                                          Legal_name__c = 'Stuff',
+                                          Name_on_AOC__c = 'Stuff',
+                                          IATA_ISO_Country__c = countryPT.Id,
+                                          RecordTypeId = airlineBranchRT,
+                                          ParentId = headquarter.Id);
 
-
-
+        airlines.add(branch1);
+        airlines.add(branch2);
+        insert airlines;
             
-        Account prov = new Account(name = 'Provider', billingCity = 'myCity', IATACode__c = '123', IATA_ISO_Country__c = countryUS.id, billingCountry = 'myCountry');
-        insert prov;
-
-        Account cons = new Account(name = 'Consumer', billingCity = 'myCity',IATA_ISO_Country__c = countryUS.id,IATACode__c = '123',
-                                                 billingCountry = 'myCountry', recordTypeid = developerNamePerId.get('IATA_Airline'));
-        insert cons;
-            
-        Contact con = new Contact (FirstName='Test', LastName='Name', email='test_joiningCaseAndStandardTestPositive@test.com', AccountId = cons.Id);
+        Contact con = new Contact (FirstName='Test', LastName='Name', email='cenas@mc.pt', AccountId = headquarter.Id);
         insert con;
 
-                                                                    
-        Services_Rendered__c service = new Services_Rendered__c(Services_Rendered_to_Airline__c = cons.id,
-                                                                 Services_Rendered_By__c = cons.id,
-                                                                 Services_Rendered_Type__c = 'BSP Representation',
-                                                                 Services_Rendered_Status__c = 'Active');
-        insert service; 
-                        
-        recordType APCaseRT = [SELECT Id FROM RecordType WHERE SObjectType = 'Case' AND DeveloperName = 'IDFS_Airline_Participation_Process'];
-        Date dateOFApp = Date.newInstance(1980, 5, 14);
+        List<Services_Rendered__c> services = new List<Services_Rendered__c>();
+        List<Id> servicesIds = new List<Id>();
+                                                            
+        Services_Rendered__c serviceBranch1 = new Services_Rendered__c(Services_Rendered_to_Airline__c = branch1.Id,
+                                                                 Services_Rendered_By__c = headquarter.Id,
+                                                                 Services_Rendered_Type__c = 'BSP Participation',
+                                                                 Services_Rendered_Status__c = 'Active',
+                                                                 ANG_IATA_EasyPay_Opt_out__c = false);
+
+        Services_Rendered__c serviceBranch2 = new Services_Rendered__c(Services_Rendered_to_Airline__c = branch2.Id,
+                                                                 Services_Rendered_By__c = headquarter.Id,
+                                                                 Services_Rendered_Type__c = 'BSP Participation',
+                                                                 Services_Rendered_Status__c = 'Active',
+                                                                 ANG_IATA_EasyPay_Opt_out__c = false);
+
+        services.add(serviceBranch1);
+        services.add(serviceBranch2);
+
+        insert services;
+
+        for (Services_Rendered__c s: services) servicesIds.add(s.Id);
 
         TransformationHelper.trgAccountISSP_AfterBeforInsertDeleteUpdateUndelete = false;
         TransformationHelper.CalculateBusinessHoursAges = false;
-        CaseChildHelper.noValidationsOnTrgCAseIFAP  = false;                                       
-        
+        CaseChildHelper.noValidationsOnTrgCAseIFAP  = false; 
+
         Test.startTest();
-        Case c = new Case(CaseArea__c = 'Airline Leaving',
-                          RecordTypeID =  APCaseRT.id,
-                          AccountId = Cons.id,
-                          ContactId = con.Id,
-                          Provider__c = Cons.ID,
-                          Status = 'Closed',
-                          Origin = 'me',
-                          Process_Approved__c =dateOFApp,
-                          Reason1__C = 'myReason2');
-        insert c;   
-            
-        Services_Rendered__c serviziodb = [SELECT Services_Rendered_to_Airline__c,
-                                                    Services_Rendered_By__c ,
-                                                    Services_Rendered_Type__c ,
-                                                    Services_Rendered_Status__c ,Inactivation_Airline_Participation_Case__c,
-                                                    Source_Case__c  FROM Services_Rendered__c 
-                                                    WHERE ID =: service.ID];
+
+        List<Case> cases = new List<Case>();
+
+        Id airlineParticipationProcessRT = RecordTypeSingleton.getInstance().RtIDsPerDeveloperNamePerObj.get('Case').get('IDFS_Airline_Participation_Process');
+
+        Case optOutParentCase = new Case(RecordTypeId = airlineParticipationProcessRT,
+                                           Description = 'test',
+                                           Status = 'For Review and Acceptance',
+                                           CaseArea__c = 'Airline Change',
+                                           Reason1__c = 'IATA Easy Pay',
+                                           IFAP_Country_ISO__c = countryES.ISO_Code__c,
+                                           Visible_on_ISS_Portal__c = true,
+                                           IATAcode__c = con.Account.IATACode__c,
+                                           BSPCountry__c = countryES.Name,
+                                           Account_Concerned__c = branch1.Id,
+                                           Origin = 'Portal',
+                                           Subject = 'Airline Participation - IATA EasyPay Opt-Out - ' + countryES.Name,
+                                           Provider__c = headquarter.Id,
+                                           Type_of_customer__c = 'Airline Passenger',
+                                           Verification__c = 'BSP',
+                                           AccountId = branch1.Id,
+                                           ContactId = con.Id);
+
+        insert optOutParentCase;
+
+        AP_Process_Form__c processForm = new AP_Process_Form__c(Case__c = optOutParentCase.Id,
+                                                                IATA_EasyPay_Effective_Date__c = Date.today() + 1,
+                                                                IATA_EasyPay_Opt_In_Opt_Out__c = 'OUT',
+                                                                RecordTypeId = AMS_Utils.RECTYPE_IATAEASYPAY);
+
+        insert processForm;
+
+        Case childOutCase = new Case(RecordTypeId = airlineParticipationProcessRT,
+                                     Description = 'test child',
+                                     Status = 'For Review and Acceptance',
+                                     CaseArea__c = 'Airline Change',
+                                     Reason1__c = 'IATA Easy Pay',
+                                     ParentId = optOutParentCase.Id,
+                                     IFAP_Country_ISO__c = countryPT.ISO_Code__c,
+                                     IATAcode__c = con.Account.IATACode__c,
+                                     Visible_on_ISS_Portal__c = false,
+                                     BSPCountry__c = countryPT.Name,
+                                     Account_Concerned__c = branch2.Id,
+                                     Origin = 'Portal',
+                                     Subject = 'Airline Participation - IATA EasyPay Opt-Out - ' + countryPT.Name,
+                                     Provider__c = headquarter.Id,
+                                     Type_of_customer__c = 'Airline Passenger',
+                                     Verification__c = 'BSP',
+                                     AccountId = branch2.Id,
+                                     ContactId = con.Id);
+
+        insert childOutCase;
+
+        optOutParentCase.Status = 'Closed';
+        childOutCase.Status = 'Closed';
+
+        cases.add(optOutParentCase);
+        cases.add(childOutCase);
+
+        update cases;
+
+        List<Services_Rendered__c> updatedServices = [SELECT Id, ANG_IATA_EasyPay_Opt_out__c 
+                                                      FROM Services_Rendered__c
+                                                      WHERE Id IN :servicesIds];
+
         Test.stopTest();
-        System.assertEquals(serviziodb.Inactivation_Airline_Participation_Case__c,c.Id);
-        System.assertEquals(serviziodb.Services_Rendered_Status__c,'Inactive');
-            
+        for (Services_Rendered__c us: updatedServices) System.assertEquals(true, us.ANG_IATA_EasyPay_Opt_out__c);
     }
   
     
