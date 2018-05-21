@@ -377,6 +377,8 @@ SYSTEM.DEBUG('getRelatedAccount starting... ');
 
             for (String accountApiName : mapAccountToAccrFormFields.keyset())
                 newForm.put(mapAccountToAccrFormFields.get(accountApiName), sourceAccount.get(accountApiName));
+
+            newForm.ISSP_AMS_Legal_Status__c = mapCompanyTypes(sourceAccount.Company_Type__c);
         }
 
         upsert newForm;
@@ -429,6 +431,32 @@ SYSTEM.DEBUG('getRelatedAccount starting... ');
         return new Pagereference('/ISSP_AMS_Accreditation?caseId=' + newCase.Id + '&step=Final' + commParam);
 
     	return null;
+    }
+
+    private String mapCompanyTypes(String companyType) {
+        if(companyType == 'A') {
+            return 'Association';
+        } else if (companyType == 'C') {
+            return 'Corporation';
+        } else if (companyType == 'E') {
+            return 'Government Owned Enterprise';
+        } else if (companyType == 'L') {
+            return 'Limited Company';
+        } else if (companyType == 'O') {
+            return 'Other';
+        } else if (companyType == 'P') {
+            return 'Partnership';
+        } else if (companyType == 'R') {
+            return 'Limited Partnership';
+        } else if (companyType == 'S') {
+            return 'Sole Proprietorship';
+        } else if (companyType == 'T') {
+            return 'Trust Company';
+        } else if (companyType == 'V') {
+            return 'Co-operative';
+        } else {
+            return '';
+        }
     }
 
     /**

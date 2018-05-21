@@ -13,18 +13,20 @@ public with sharing class ANG_ISSP_AfpWrapper {
 	public String modalErrorMessageFlag {get; set;}
 	public String cashlessMessage {get; set;}
 	public String creditCardMessage {get; set;}
+	public Boolean isSearch {get; set;}
 
-	public ANG_ISSP_AfpWrapper(Contact contact, List<Agency_Authorization__c> authorizations, List<Portal_Application_Right__c> services) {
+	public ANG_ISSP_AfpWrapper(Contact contact, List<Agency_Authorization__c> authorizations, List<Portal_Application_Right__c> services, Account account, Boolean isSearch) {
 		this.isCash = NO;
 		this.isIEP = NO;
 		this.isCreditCard = NO;
 		this.isCreditCardFlag = false;
 		this.modalErrorMessage = '';
 		this.modalErrorMessageFlag = '';
+		this.isSearch = isSearch;
 
 		this.isCashless = (contact != null && 
-						   contact.Account.ANG_Accreditation_Model__c != null && 
-						   contact.Account.ANG_Accreditation_Model__c == 'Cashless');
+						   account.ANG_Accreditation_Model__c != null && 
+						   account.ANG_Accreditation_Model__c == 'Cashless');
 
 		if(this.isCashless) {
 			Boolean hasAccess = false;
@@ -67,7 +69,7 @@ public with sharing class ANG_ISSP_AfpWrapper {
 			}
 
 
-		if(authorizations != null) {
+		if(authorizations.size() > 0) {
 			for(Agency_Authorization__c auth : authorizations) {
 				if(auth.ANG_FormOfPayment_ID__c == Ams_Utils.CA && !this.isCashless) {					
 					this.isCash = YES;
@@ -79,7 +81,7 @@ public with sharing class ANG_ISSP_AfpWrapper {
 			}
 		}
 
-		if(contact.Account.ANG_IEP_Status_FF__c == Ams_Utils.OPEN) {
+		if(account.ANG_IEP_Status_FF__c == Ams_Utils.OPEN) {
 			this.isIEP = YES;
 			Boolean hasAccess = false;
 			for(Portal_Application_Right__c par: services) {
@@ -95,7 +97,7 @@ public with sharing class ANG_ISSP_AfpWrapper {
 				this.iepLinkLabel = System.Label.ANG_ISSP_Request_Access_IATA_EasyPay;
 				this.iepLink = '/ISSP_AvailableServices?MainNav=Services&subNav=Access&mid=M3S1';
 			}
-		} else if(contact.Account.ANG_IEP_Status_FF__c == Ams_Utils.NO_IEP_ACCOUNT) {
+		} else if(account.ANG_IEP_Status_FF__c == Ams_Utils.NO_IEP_ACCOUNT) {
 
             String currentUserProfileId = UserInfo.getProfileId();
             List <Profile> profileList = [SELECT Name FROM Profile WHERE Id = :currentUserProfileId];
@@ -114,19 +116,19 @@ public with sharing class ANG_ISSP_AfpWrapper {
             // A user has accecss to easypay when:
             // If the IEP status is open
             // If the IEP status is not open and is an admin and the account is HO or HE 
-            if(contact.Account.ANG_IEP_Status_FF__c == 'Open') {
+            if(account.ANG_IEP_Status_FF__c == 'Open') {
                 isIEPAccountEnable = true;                
-            } else if(isAuthorisedSignatory && isAdmin && (contact.Account.Location_Type__c == 'HO' || contact.Account.Location_Type__c == 'HE' || 
-                                 (contact.Account.Location_Type__c == 'AO' && contact.Account.Status__c == 'Listed'))) {
+            } else if(isAuthorisedSignatory && isAdmin && (account.Location_Type__c == 'HO' || account.Location_Type__c == 'HE' || 
+                                 (account.Location_Type__c == 'AO' && account.Status__c == 'Listed'))) {
                 isIEPAccountEnable = true;
             }
 
             if(!isIEPAccountEnable) {
-	            if(contact.Account.Location_Type__c == 'HO' || contact.Account.Top_Parent__r.Location_Type__c == 'HO'){
+	            if(account.Location_Type__c == 'HO' || account.Top_Parent__r.Location_Type__c == 'HO'){
 	                this.modalErrorMessage = Label.ANG_ISSP_IEP_AuthorisedSignatory_HO_auth_msg;
-	            }else if(contact.Account.Location_Type__c == 'HE' || contact.Account.Top_Parent__r.Location_Type__c == 'HE'){
+	            }else if(account.Location_Type__c == 'HE' || account.Top_Parent__r.Location_Type__c == 'HE'){
 	                this.modalErrorMessage = Label.ANG_ISSP_IEP_AuthorisedSignatory_HE_auth_msg;
-	            } else if (contact.Account.Location_Type__c == 'AO' || contact.Account.Top_Parent__r.Location_Type__c == 'AO') {
+	            } else if (account.Location_Type__c == 'AO' || account.Top_Parent__r.Location_Type__c == 'AO') {
 	                this.modalErrorMessage = Label.ANG_ISSP_IEP_AuthorisedSignatory_AO_auth_msg;
 	            }
         	}
