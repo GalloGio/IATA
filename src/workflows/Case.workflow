@@ -15136,7 +15136,7 @@ Change the case status to “Agent Notified (mail)” if case status was “Agen
         <criteriaItems>
             <field>Case.Reason1__c</field>
             <operation>notEqual</operation>
-            <value>Financial review opt-in / opt-out</value>
+            <value>Financial review opt-in / opt-out,Change of Trade Name</value>
         </criteriaItems>
         <criteriaItems>
             <field>Case.Reason1__c</field>
@@ -15247,7 +15247,7 @@ Change the case status to “Agent Notified (mail)” if case status was “Agen
         <criteriaItems>
             <field>Case.Reason1__c</field>
             <operation>equals</operation>
-            <value>Financial review opt-in / opt-out</value>
+            <value>Financial review opt-in / opt-out,Change of Trade Name</value>
         </criteriaItems>
         <criteriaItems>
             <field>Case.Reason1__c</field>
