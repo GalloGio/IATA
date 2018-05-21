@@ -14,6 +14,7 @@ public with sharing class ANG_ISSP_AfpWrapper {
 	public String cashlessMessage {get; set;}
 	public String creditCardMessage {get; set;}
 	public Boolean isSearch {get; set;}
+	public Boolean isIEPFlag {get; set;}
 
 	public ANG_ISSP_AfpWrapper(Contact contact, List<Agency_Authorization__c> authorizations, List<Portal_Application_Right__c> services, Account account, Boolean isSearch) {
 		this.isCash = NO;
@@ -23,6 +24,7 @@ public with sharing class ANG_ISSP_AfpWrapper {
 		this.modalErrorMessage = '';
 		this.modalErrorMessageFlag = '';
 		this.isSearch = isSearch;
+		this.isIEPFlag = false;
 
 		this.isCashless = (contact != null && 
 						   account.ANG_Accreditation_Model__c != null && 
@@ -83,6 +85,7 @@ public with sharing class ANG_ISSP_AfpWrapper {
 
 		if(account.ANG_IEP_Status_FF__c == Ams_Utils.OPEN) {
 			this.isIEP = YES;
+			this.isIEPFlag = true;
 			Boolean hasAccess = false;
 			for(Portal_Application_Right__c par: services) {
 				if(par.Application_Name__c.startsWith(System.Label.ANG_ISSP_IATA_EasyPay) && par.Right__c == Ams_Utils.PORTAL_APP_ACCESS_GRANTED) {
