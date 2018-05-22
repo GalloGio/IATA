@@ -11,10 +11,16 @@
 
         <apex:pageMessages ></apex:pageMessages>
 
+        <apex:pageBlockSection columns="1" collapsible="false" id="Section1Header">
+            <div class="section-header">
+                <strong>{!$Label.ISSP_ANG_ANNUAL_REV_Change_of_Legal_Name}</strong>
+            </div>
+        </apex:pageBlockSection>
+
         <apex:pageBlockSection columns="1" collapsible="false" id="Section1">
-            <apex:facet name="header">
+            <!--apex:facet name="header">
                 <apex:outputpanel>{! $Label.ISSP_ANG_ANNUAL_REV_Change_of_Legal_Name}</apex:outputpanel>
-            </apex:facet>
+            </apex:facet-->
 
             <apex:pageBlockSectionItem>
                 <apex:outputLabel value="{!$ObjectType.AMS_Pax_Accreditation_Form__c.fields.Local_Legally_Registered_Name__c.Label}" />
@@ -28,13 +34,20 @@
 
         </apex:pageBlockSection>
 
+
+        <apex:pageBlockSection columns="1" collapsible="false" id="Section2Header">
+            <div class="section-header">
+                <strong>{!$Label.ISSP_ANG_ANNUAL_REV_Change_of_Location}</strong>
+            </div>
+        </apex:pageBlockSection>
+
         <apex:pageBlockSection columns="1" collapsible="false" id="Section2">
 
-            <apex:facet name="header">
+            <!--apex:facet name="header">
                 <apex:outputpanel>
                     <apex:outputpanel>{! $Label.ISSP_ANG_ANNUAL_REV_Change_of_Location}</apex:outputpanel>
                 </apex:outputpanel>
-            </apex:facet>
+            </apex:facet-->
 
             <apex:pageBlockSectionItem>
                 <apex:outputtext value="{0}
@@ -50,22 +63,26 @@
                 </apex:outputtext>
             </apex:pageBlockSectionItem>
 
+        </apex:pageBlockSection>
 
+        <apex:pageBlockSection columns="1" collapsible="false" id="Section3Header">
+            <div class="section-header">
+                <strong>{!$Label.ISSP_ANG_ANNUAL_REV_Change_Ownership_Shareholding}</strong>
+            </div>
         </apex:pageBlockSection>
 
         <apex:pageBlockSection columns="1" collapsible="false" id="Section3">
 
-            <apex:facet name="header">
+            <!--apex:facet name="header">
                 <apex:outputpanel>
                     <apex:outputpanel>{! $Label.ISSP_ANG_ANNUAL_REV_Change_Ownership_Shareholding}</apex:outputpanel>
                 </apex:outputpanel>
-            </apex:facet>
+            </apex:facet-->
 
             <apex:pageblockSectionItem>
                 <apex:outputLabel value="{!$ObjectType.AMS_Pax_Accreditation_Form__c.fields.Map_Company_Type_to_Legal_Status__c.Label}"/>
                 <apex:outputField value="{!ca.fw.newForm.ISSP_AMS_Legal_Status__c}" />
             </apex:pageblockSectionItem>
-
 
             <apex:outputPanel id="currentPersonOwners">
                 <div class="col-md-12 bg-info"><strong>{!$Label.ISSP_AMS_NoC_Current_Owners_Managers}</strong></div>

@@ -14,6 +14,10 @@ public with sharing class ANG_AnnualRevCurrentAccount {
 	public String ownerLabelTypeAfterChange {get; set;}
 	public String roleLabelAfterChange {get; set;}
 	public String ownerLabelAfterChange {get; set;}
+	public boolean isHOcontact {get; set;}
+	public Boolean errorFoundCheckBoxes {get; set;}
+	public Boolean errorFound {get; set;}
+	public AMS_Accreditation_Contact__c newContact {get; set;}
 
 	public String statusDesc {
 		get{
@@ -30,11 +34,15 @@ public with sharing class ANG_AnnualRevCurrentAccount {
 		set;
 	}
 
-	public ANG_AnnualRevCurrentAccount(Account account, String status, ANG_AnnualRevFormWrapper fw, IATA_ISO_Country__c isocountry) {
+	public ANG_AnnualRevCurrentAccount(Account account, String status, ANG_AnnualRevFormWrapper fw, IATA_ISO_Country__c isocountry, Boolean isHOcontact) {
 		this.account = account;
 		this.status = status;
 		this.fw = fw;
 		this.isocountry = isocountry;
+		this.isHOcontact = isHOcontact;
+		this.errorFoundCheckBoxes = false;
+		this.errorFound = false;
+		this.newContact = new AMS_Accreditation_Contact__c();
 
 		setOwnerAndRoleLabels();
 	}

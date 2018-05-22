@@ -27860,4 +27860,44 @@ Please &lt;a href=&quot;/ISSP_FAQ2Case?MainNav=Queries&amp;subNav=MyQueries&amp;
         <shortDescription>Annual revalidation save changes button</shortDescription>
         <value>Save Changes</value>
     </labels>
+    <labels>
+        <fullName>ISSP_AMS_CONFIRM_CANCEL</fullName>
+        <categories>ISSP, AMS</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP AMS CONFIRM CANCEL</shortDescription>
+        <value>Are you sure you want to cancel?</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_AMS_CONFIRM_DISCARD</fullName>
+        <categories>ISSP, AMS</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP AMS CONFIRM DISCARD</shortDescription>
+        <value>Are you sure you want to discard your changes?</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_ANG_ANNUAL_REV_ADDITIONAL_INFORMATION</fullName>
+        <categories>ISSP ANG</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_ANG_ANNUAL_REV_ADDITIONAL_INFORMATION</shortDescription>
+        <value>Additional Information</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_ANG_ANNUAL_REV_ERROR_1</fullName>
+        <categories>ISSP ANG</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_ANG_ANNUAL_REV_ERROR_1</shortDescription>
+        <value>Need to confirm details or notify at least one change</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_ANG_ANNUAL_REV_ERROR_2</fullName>
+        <categories>ISSP ANG</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_ANG_ANNUAL_REV_ERROR_2</shortDescription>
+        <value>It is required to notify at least one change</value>
+    </labels>
 </CustomLabels>

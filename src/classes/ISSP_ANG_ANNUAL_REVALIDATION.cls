@@ -1,4 +1,10 @@
 public with sharing class ISSP_ANG_ANNUAL_REVALIDATION {
+	//statics for the modals
+    public static  Integer MAX_IFAP_Contacts {get{ return 1;} private set;}
+    private static final string ISO_8859_1_regEx = '^[\\x00-\\x7F\\xA0-\\xFF]+$';  //Reg exp to limit inputted chars to ISO-8859-1
+    private static integer MAX_AgencyAccount_LOOKUPS_ALLOWED = 20;
+	//statics for the modals
+
 	private static String OPEN_STATUS = 'O';
 	private static String COMPLETED_STATUS = 'C';
 	private static String UPDATE_PROGRESS_STATUS = 'UP';
@@ -33,6 +39,7 @@ public with sharing class ISSP_ANG_ANNUAL_REVALIDATION {
 	private static Id rtAccreditContCurrentOwner = Schema.SObjectType.AMS_Accreditation_Contact__c.getRecordTypeInfosByName().get('Current Owner').getRecordTypeId();
 	private static Id rtAccreditContPreviousCompanyOwner = Schema.SObjectType.AMS_Accreditation_Contact__c.getRecordTypeInfosByName().get('Previous Company Owner').getRecordTypeId();
 	private static Id rtAccreditContCurrentCompanyOwner = Schema.SObjectType.AMS_Accreditation_Contact__c.getRecordTypeInfosByName().get('Current Company Owner').getRecordTypeId();
+	private static Id rtAnnualRevalidation = Schema.SObjectType.AMS_Pax_Accreditation_Form__c.getRecordTypeInfosByName().get('Annual Revalidation').getRecordTypeId();
 
 	public static String DEFAULT_ICON { get{ return 'glyphicon glyphicon-refresh text-primary';} set;}
 	public static String OK_ICON { get{ return 'glyphicon glyphicon-ok text-success';} set;}
@@ -67,6 +74,28 @@ public with sharing class ISSP_ANG_ANNUAL_REVALIDATION {
 	public String currentIataCode {get; set;}
 	public boolean setHe {get; set;}
 	public String mode {get {return getMode(currentAccount.status);} set;}	// readOnly | update
+	public List<AMS_Accreditation_Contact__c> lstAccreditationContact {get; set;}
+	public String heIataCode {get; set;}
+	public Boolean errorFound {get; set;}
+
+	//modals
+	public string editContactId {get; set;}
+	//public AMS_Accreditation_Contact__c newContact {get; set;}
+	public string iatacode {get; set;}
+	public Boolean contactSaved {get; set;}
+    public String amsContactCountry {get; set;}
+	public String applyLanguage {get; set;}
+    public string contactType {get; set;}
+    public string companyModalNameOfEmployer {get; set;}
+    public Integer cntIFAPContacts {get; set;}
+    public string legalStatus {get; set;}
+    public string legalstatusAfterChange {get; set;}
+    public string companyModalAddress {get; set;}
+    public Account TravelAgentPrevAccount {get; set;}
+    Integer cntAgencyLookups;
+    public Boolean isAddCompanyModal {get; set;}
+    public string txtHelpCurrency {get; set;}
+	//modals
 
 	public ISSP_ANG_ANNUAL_REVALIDATION() {
 
@@ -126,6 +155,7 @@ public with sharing class ISSP_ANG_ANNUAL_REVALIDATION {
         isStep1 = false;
         isStep2 = false;
         stepNumber = '';
+		resetErrors();
 
         if (ApexPages.currentPage().getParameters().containsKey('step')) {
             stepNumber = ApexPages.currentPage().getParameters().get('step');
@@ -142,6 +172,38 @@ public with sharing class ISSP_ANG_ANNUAL_REVALIDATION {
 		// Generate the JS TREE Menu.
 		//
 		jsonTree = generateTree();
+
+		//
+		// Inits for the modals
+		//
+		amsContactCountry = '';
+		contactSaved = false;
+        companyModalNameOfEmployer = '';
+        cntIFAPContacts = 0;
+        legalstatus = '';
+        companyModalAddress = '';
+        cntAgencyLookups = 0;
+        txtHelpCurrency = '';
+
+        applyLanguage = UserInfo.getLanguage();
+
+        if(currentAccount != null && currentAccount.fw != null && this.currentAccount.fw.newForm != null && currentAccount.fw.newForm.ISSP_AMS_Legal_Status__c != null) {
+            legalstatus = currentAccount.fw.newForm.ISSP_AMS_Legal_Status__c.toLowerCase();
+        }
+
+        if (applyLanguage != 'en_US' && applyLanguage != 'es' && applyLanguage != 'fr') applyLanguage = 'en_US';
+
+        String fldName = 'ISSP_AMS_HelpText_' + applyLanguage + '__c';
+
+        ISSP_AMS_Contextual_Help__c hlp = ISSP_AMS_Contextual_Help__c.getValues('CURRENCY');
+        if (hlp != null) {
+            if ((String)hlp.get(fldName) != null) {
+                txtHelpCurrency =  (String)hlp.get(fldName);
+            } else {
+                txtHelpCurrency =  (String)hlp.get(fldName);
+            }
+        }
+
 	}
 
 	private void setParentsAndChilds() {
@@ -251,11 +313,13 @@ public with sharing class ISSP_ANG_ANNUAL_REVALIDATION {
 			List<AMS_Accreditation_Contact__c> auxPreviousCompanies = getPreviousCompanies(formsIds);
 
 			for (AMS_Pax_Accreditation_Form__c newForm : newForms) {
+
 				formsMap.put(newForm.IATACode__c, new ANG_AnnualRevFormWrapper(newForm,
 																			   getFormPreviousOwners(newForm.id, auxPreviousOwners),
                                                                                getFormCurrentOwners(newForm.id, auxCurrentOwners),
 																		       getFormCurrentCompanies(newForm.id, auxCurrentCompanies),
 																		       getFormPreviousCompanies(newForm.id, auxPreviousCompanies)));
+
 			}
         }
 	}
@@ -264,7 +328,7 @@ public with sharing class ISSP_ANG_ANNUAL_REVALIDATION {
 
 		isoCountryMap = new Map<String, IATA_ISO_Country__c>();
 
-        List<IATA_ISO_Country__c> aux = [Select Id, ISO_Code__c, Local_language_Agency_details_required__c, EU_Country__c, EACP_Country__c
+        List<IATA_ISO_Country__c> aux = [Select Id, ISO_Code__c, Local_language_Agency_details_required__c, EU_Country__c, EACP_Country__c, Hide_Tax_Number_VAT__c
                                            From IATA_ISO_Country__c
                                           Where ISO_Code__c In :isocodes];
 
@@ -281,7 +345,7 @@ public with sharing class ISSP_ANG_ANNUAL_REVALIDATION {
 					   Location_Type__c, IATA_ISO_Country__c, Iso_State__c, ShippingCountry,
 					   ShippingStreet, ShippingPostalCode, ShippingState, ShippingCity,
 					   Abbreviated_name__c, Abbreviated_Address__c, Remittance_frequency__c,
-					   Solicitation_Flag__c, VAT_Number_2__c, CASS_Number__c
+					   Solicitation_Flag__c, VAT_Number_2__c, CASS_Number__c, Sector__c
 				  From Account
 				 Where Id in :accountIds
 				   And RecordTypeId = :recordType
@@ -291,14 +355,21 @@ public with sharing class ISSP_ANG_ANNUAL_REVALIDATION {
 	}
 
 	public PageReference loadIataCode() {
+
+		resetErrors();
+
 		this.currentAccount = new ANG_AnnualRevCurrentAccount(accountsMap.get(currentIataCode),
 															  getStatus(currentIataCode),
 															  getForm(currentIataCode),
-															  getIsoCountry(accountsMap.get(currentIataCode).Country_ISO_Code__c));
+															  getIsoCountry(accountsMap.get(currentIataCode).Country_ISO_Code__c),
+															  (currentIataCode == heIataCode));
 		return null;
 	}
 
 	public PageReference confirmDetails() {
+
+		resetErrors();
+
 		if(this.oscar.IATA_Codes_OK__c == null || this.oscar.IATA_Codes_OK__c == '') {
 			this.oscar.IATA_Codes_OK__c = currentIataCode;
 		} else {
@@ -323,18 +394,22 @@ public with sharing class ISSP_ANG_ANNUAL_REVALIDATION {
 
 	public PageReference discardDetails() {
 
+		resetErrors();
+
 		if(currentAccount.status == UPDATE_COMPLETED_STATUS) {
 
 			Savepoint sp = Database.setSavepoint();
 
 			try{
+				currentAccount.fw.deleteOwners();
+
 				delete this.currentAccount.fw.newform;
 
-				System.debug('alex discard 1 : ' + this.currentAccount.fw.newform);
-
 				this.currentAccount.fw.newform = createNewForm(currentIataCode);
-
-				System.debug('alex discard 2 : ' + this.currentAccount.fw.newform);
+				this.currentAccount.fw.previousOwners = getFormPreviousOwners_2(currentAccount.account.Id, lstAccreditationContact);
+				this.currentAccount.fw.previousCompanies = getFormPreviousCompanies_2(currentAccount.account.Id, lstAccreditationContact);
+				this.currentAccount.fw.currentOwners = getFormCurrentOwners_2(currentAccount.account.Id, lstAccreditationContact);
+				this.currentAccount.fw.currentCompanies = getFormCurrentCompanies_2(currentAccount.account.Id, lstAccreditationContact);
 
 				iataCodesConfirmed.remove(currentIataCode);
 
@@ -373,12 +448,16 @@ public with sharing class ISSP_ANG_ANNUAL_REVALIDATION {
 
 	public PageReference updateDetails() {
 
+		resetErrors();
+
 		Savepoint sp = Database.setSavepoint();
 
 		try{
 			currentAccount.fw.newform.status__c = FORM_STATUS_INPROGRESS;
 
 			upsert currentAccount.fw.newform;
+
+			currentAccount.fw.saveOwners();
 
 			iataCodesInProgress.add(currentIataCode);
 
@@ -395,12 +474,17 @@ public with sharing class ISSP_ANG_ANNUAL_REVALIDATION {
 	}
 
 	public PageReference saveDraft() {
+
+		resetErrors();
+
 		Savepoint sp = Database.setSavepoint();
 
 		try{
 			upsert currentAccount.fw.newform;
 
-			jsonTree = generateTree();
+			System.debug('alex saveDraft after ' + currentAccount.fw.newform.Notify_Change_Location__c);
+
+			//jsonTree = generateTree();
 
 		} catch(DmlException dm) {
 			Database.rollback(sp);
@@ -410,23 +494,49 @@ public with sharing class ISSP_ANG_ANNUAL_REVALIDATION {
 		return null;
 	}
 
-
-
 	public PageReference confirmUpdate() {
+
+		resetErrors();
+
+		System.debug('Confirm update');
+
 		Savepoint sp = Database.setSavepoint();
 
-		try{
-			currentAccount.fw.newform.status__c = FORM_STATUS_COMPLETED;
+		try {
 
+			validateForm();
+
+			if(!errorFound) {
+
+				//
+				// The user notified at least one change. if there is any section withot any of it's checkboxes ticked then we assume that is confirm details.
+				//
+				if(!currentAccount.fw.newForm.Confirm_Legal_Details_are_correct__c && !currentAccount.fw.newForm.Notify_Change_Legal_Details__c) {
+					currentAccount.fw.newForm.Confirm_Legal_Details_are_correct__c = true;
+				}
+				if(!currentAccount.fw.newForm.Confirm_Location_Details_are_correct__c && !currentAccount.fw.newForm.Notify_Change_Location__c) {
+					currentAccount.fw.newForm.Confirm_Location_Details_are_correct__c = true;
+				}
+				if(!currentAccount.fw.newForm.Confirm_Ownership_details_are_correct__c && !currentAccount.fw.newForm.Notify_Change_Ownership__c) {
+					currentAccount.fw.newForm.Confirm_Ownership_details_are_correct__c = true;
+				}
+
+				currentAccount.fw.newform.status__c = FORM_STATUS_COMPLETED;
+			}
+
+			//
+			// The form is always saved despite having errors.
+			//
 			upsert currentAccount.fw.newform;
 
-			iataCodesInProgress.remove(currentIataCode);
-			iataCodesConfirmed.add(currentIataCode);
+			if(!errorFound) {
+				iataCodesInProgress.remove(currentIataCode);
+				iataCodesConfirmed.add(currentIataCode);
 
-			currentAccount.status = UPDATE_COMPLETED_STATUS;
+				currentAccount.status = UPDATE_COMPLETED_STATUS;
 
-			jsonTree = generateTree();
-
+				jsonTree = generateTree();
+			}
 		} catch(DmlException dm) {
 			Database.rollback(sp);
 			throw new AnnualRevException(dm.getMessage());
@@ -437,42 +547,68 @@ public with sharing class ISSP_ANG_ANNUAL_REVALIDATION {
 
 	public PageReference cancelUpdate() {
 
+		resetErrors();
+
+		System.debug('alex cancelUpdate');
+
 		Savepoint sp = Database.setSavepoint();
 
 		try{
+			currentAccount.fw.deleteOwners();
+
 			delete currentAccount.fw.newform;
+/*
+			this.currentAccount.fw = new ANG_AnnualRevFormWrapper(createNewForm(this.currentAccount.account.IataCode__c),
+															      getFormPreviousOwners_2(currentAccount.account.Id, lstAccreditationContact),
+                                                                  getFormCurrentOwners_2(currentAccount.account.Id, lstAccreditationContact),
+															      getFormCurrentCompanies_2(currentAccount.account.Id, lstAccreditationContact),
+															      getFormPreviousCompanies_2(currentAccount.account.Id, lstAccreditationContact));
 
-			this.currentAccount.fw.newform = createNewForm(currentIataCode);
 
-			iataCodesInProgress.remove(currentIataCode);
+*/
+			this.currentAccount.fw.newform = createNewForm(this.currentAccount.account.IataCode__c);
+
+			this.currentAccount.fw.previousOwners = getFormPreviousOwners_2(currentAccount.account.Id, lstAccreditationContact);
+			this.currentAccount.fw.previousCompanies = getFormPreviousCompanies_2(currentAccount.account.Id, lstAccreditationContact);
+			this.currentAccount.fw.currentOwners = getFormCurrentOwners_2(currentAccount.account.Id, lstAccreditationContact);
+			this.currentAccount.fw.currentCompanies = getFormCurrentCompanies_2(currentAccount.account.Id, lstAccreditationContact);
+
+			iataCodesInProgress.remove(this.currentAccount.account.IataCode__c);
 
 			currentAccount.status = OPEN_STATUS;
 
 			jsonTree = generateTree();
 
-		} catch(DmlException de) {
+		} catch(DmlException dm) {
 			Database.rollback(sp);
+			throw new AnnualRevException(dm.getMessage());
 		}
 
 		return null;
 	}
 
     public PageReference goToStep1() {
+		resetErrors();
+
         return new PageReference('/ISSP_ANG_ANNUAL_REVALIDATION?caseId=' + newCase.Id + '&step=1' + commParam);
     }
 
     public PageReference goToStep2() {
+		resetErrors();
+
 		this.isStep1 = false;
 		this.isStep2 = true;
         return new PageReference('/ISSP_ANG_ANNUAL_REVALIDATION?caseId=' + newCase.Id + '&step=2' + commParam);
     }
 
 	public PageReference save() {
+		resetErrors();
+
 		return goToStep2();
 	}
 
     public PageReference submitForm(){
-
+		resetErrors();
 
     	return null;
     }
@@ -486,7 +622,6 @@ public with sharing class ISSP_ANG_ANNUAL_REVALIDATION {
 		Cancel METHOD
     **/
     public PageReference cancel(){
-
         string retURL = ApexPages.currentPage().getParameters().get('retURL');
         if (retURL == null) {
             return new Pagereference('/ISSP_Homepage?mid=M0S1' +commParam);
@@ -615,12 +750,15 @@ public with sharing class ISSP_ANG_ANNUAL_REVALIDATION {
 		for(String iataCode : accountsMap.keySet()) {
 			String status = getStatus(iataCode);
 			if(status == OPEN_STATUS || status == COMPLETED_STATUS) {
-				accounts.add(accountsMap.get(iataCode).Id);
 				iataCodes.add(iataCode);
 			}
+			accounts.add(accountsMap.get(iataCode).Id);
 		}
 
-		List<AMS_Accreditation_Contact__c> lstAccreditationContact = getAllAMS_Account_Role(accounts);
+		//
+		// This list will have the owners for all accounts
+		//
+		lstAccreditationContact = getAllAMS_Account_Role(accounts);
 
 		//
 		// Create the forms for all these accounts.
@@ -640,7 +778,11 @@ public with sharing class ISSP_ANG_ANNUAL_REVALIDATION {
 
 	private AMS_Pax_Accreditation_Form__c createNewForm(String iataCode) {
 
+		System.debug('alex createNewForm iataCode : ' + iataCode);
+
 		AMS_Pax_Accreditation_Form__c newForm = new AMS_Pax_Accreditation_Form__c();
+
+		newForm.RecordTypeId = rtAnnualRevalidation;
 
 		newForm.SAAM_Case__c = newCase.Id;
 
@@ -658,6 +800,8 @@ public with sharing class ISSP_ANG_ANNUAL_REVALIDATION {
 				newForm.Local_Agent_Type__c = 'International';
 			}
 		}
+
+		System.debug('alex createNewForm accountsMap : ' + accountsMap);
 
 		Account a = accountsMap.get(iataCode);
 
@@ -679,7 +823,12 @@ public with sharing class ISSP_ANG_ANNUAL_REVALIDATION {
 		newForm.MobileNational__c = a.Mobile__c;
 		newForm.Branch_Office_Fax_National__c = a.FAX;
 
-		newForm.iataCode__c = iataCode;
+		newForm.Scope_of_Change__c = (iataCode == heIataCode) ? 'HO Only' : 'Selected Branches Only'; //Set default
+		newForm.Is_change_legal_name__c = true;
+		newForm.Is_change_location__c = true;
+		newForm.Is_change_ownership_or_shareholding__c = true;
+
+		newForm.IataCode__c = iataCode;
 
 		newForm.ISSP_AMS_Legal_Status__c = ISSP_AMS_Accreditation.mapCompanyTypes(a.Company_Type__c);
 
@@ -767,38 +916,46 @@ public with sharing class ISSP_ANG_ANNUAL_REVALIDATION {
 	// Get the owners from the AMS_Accreditation_Contact__c
 	//
     private static List<AMS_Accreditation_Contact__c> getPreviousOwners(Set<Id> newFormIds) {
-		return [Select AMS_Pax_Accreditation_Form__c, Name, First_name__c, Last_name__c, Salutation__c, Agency_owner__c, Agency_role__c, Email__c,Phone__c,
+		return [Select Id, AMS_Pax_Accreditation_Form__c, Name, First_name__c, Last_name__c, Salutation__c, Agency_owner__c, Agency_role__c, Email__c,Phone__c,
                        Financial_interest__c, Contact_Id__c, Contact__c, AMS_OwnershipId__c, AMS_ContactId__c, Local_First_name__c, Local_Last_name__c, Number_Of_Shares__c,
-                       AddressStreet__c, AddressCity__c, AddressCountry__c, AddressPostcode__c, Time_devoted_to_Agency_business__c
+                       AddressStreet__c, AddressCity__c, AddressCountry__c, AddressPostcode__c, Time_devoted_to_Agency_business__c, IATAcode__c, Registration_number__c,
+					   PhoneNational__c, FAX__c
                   From AMS_Accreditation_Contact__c
                  Where AMS_Pax_Accreditation_Form__c in :newFormIds
-				   And RecordType.DeveloperName = 'Previous_Owner'
+				   And RecordTypeId = :rtAccreditContPreviousOwner
                  Order By Name ASC];
     }
 
 	private static List<AMS_Accreditation_Contact__c> getCurrentOwners(Set<Id> newFormIds) {
-		return [Select Name, First_name__c, Last_name__c, Salutation__c, Agency_owner__c, Agency_role__c, Email__c,Phone__c,
+		return [Select Id, AMS_Pax_Accreditation_Form__c, Name, First_name__c, Last_name__c, Salutation__c, Agency_owner__c, Agency_role__c, Email__c,Phone__c,
                        Financial_interest__c, Contact_Id__c, AMS_OwnershipId__c, AMS_ContactId__c, Local_First_name__c, Local_Last_name__c, Number_Of_Shares__c,
-                       AddressStreet__c, AddressCity__c, AddressCountry__c, AddressPostcode__c, Time_devoted_to_Agency_business__c
+                       AddressStreet__c, AddressCity__c, AddressCountry__c, AddressPostcode__c, Time_devoted_to_Agency_business__c, IATAcode__c, Registration_number__c,
+					   PhoneNational__c, FAX__c
                   From AMS_Accreditation_Contact__c
                  Where AMS_Pax_Accreditation_Form__c in :newFormIds
-				   And RecordType.DeveloperName = 'Current_Owner'
+				   And RecordTypeId = :rtAccreditContCurrentOwner
                  Order By Name ASC];
     }
 
 	private static List<AMS_Accreditation_Contact__c> getCurrentCompanies(Set<Id> newFormIds) {
-		return [Select AMS_Pax_Accreditation_Form__c, Name, Financial_interest__c, Registration_number__c, IATAcode__c
+		return [Select Id, AMS_Pax_Accreditation_Form__c, Name, First_name__c, Last_name__c, Salutation__c, Agency_owner__c, Agency_role__c, Email__c,Phone__c,
+                       Financial_interest__c, Contact_Id__c, AMS_OwnershipId__c, AMS_ContactId__c, Local_First_name__c, Local_Last_name__c, Number_Of_Shares__c,
+                       AddressStreet__c, AddressCity__c, AddressCountry__c, AddressPostcode__c, Time_devoted_to_Agency_business__c, IATAcode__c, Registration_number__c,
+					   PhoneNational__c, FAX__c
                   From AMS_Accreditation_Contact__c
                  Where AMS_Pax_Accreditation_Form__c in :newFormIds
-				   And RecordType.DeveloperName = 'Current_Company_Owner'
+				   And RecordTypeId = :rtAccreditContCurrentCompanyOwner
                  Order By Name ASC];
     }
 
 	private static List<AMS_Accreditation_Contact__c> getPreviousCompanies(Set<Id> newFormIds) {
-		return [Select AMS_Pax_Accreditation_Form__c, Name, Financial_interest__c, Registration_number__c, IATAcode__c
+		return [Select Id, AMS_Pax_Accreditation_Form__c, Name, First_name__c, Last_name__c, Salutation__c, Agency_owner__c, Agency_role__c, Email__c,Phone__c,
+                       Financial_interest__c, Contact_Id__c, AMS_OwnershipId__c, AMS_ContactId__c, Local_First_name__c, Local_Last_name__c, Number_Of_Shares__c,
+                       AddressStreet__c, AddressCity__c, AddressCountry__c, AddressPostcode__c, Time_devoted_to_Agency_business__c, IATAcode__c, Registration_number__c,
+					   PhoneNational__c, FAX__c
                   From AMS_Accreditation_Contact__c
-                 WHERE AMS_Pax_Accreditation_Form__c in :newFormIds
-				   And RecordType.DeveloperName = 'Previous_Company_Owner'
+                 Where AMS_Pax_Accreditation_Form__c in :newFormIds
+				   And RecordTypeId = :rtAccreditContPreviousCompanyOwner
                  Order By Name ASC];
     }
 
@@ -806,7 +963,7 @@ public with sharing class ISSP_ANG_ANNUAL_REVALIDATION {
 		List<AMS_Accreditation_Contact__c> aux = new List<AMS_Accreditation_Contact__c>();
 
 		for(AMS_Accreditation_Contact__c ac : previousOwners) {
-			if(ac.AMS_OwnershipId__c == formId) {
+			if(ac.AMS_Pax_Accreditation_Form__c == formId) {
 				aux.add(ac);
 			}
 		}
@@ -855,7 +1012,7 @@ public with sharing class ISSP_ANG_ANNUAL_REVALIDATION {
 
 		for(AMS_Accreditation_Contact__c ac : lstAccreditationContact) {
 			if(ac.AMS_OwnershipId__c == accountId && ac.RecordTypeId == rtAccreditContPreviousOwner) {
-				aux.add(ac);
+				aux.add(ac.clone(false, false, false, false));
 			}
 		}
 		return aux;
@@ -866,7 +1023,7 @@ public with sharing class ISSP_ANG_ANNUAL_REVALIDATION {
 
 		for(AMS_Accreditation_Contact__c ac : lstAccreditationContact) {
 			if(ac.AMS_OwnershipId__c == accountId && ac.RecordTypeId == rtAccreditContCurrentOwner) {
-				aux.add(ac);
+				aux.add(ac.clone(false, false, false, false));
 			}
 		}
 		return aux;
@@ -876,8 +1033,8 @@ public with sharing class ISSP_ANG_ANNUAL_REVALIDATION {
 		List<AMS_Accreditation_Contact__c> aux = new List<AMS_Accreditation_Contact__c>();
 
 		for(AMS_Accreditation_Contact__c ac : lstAccreditationContact) {
-			if(ac.AMS_OwnershipId__c == accountId && ac.RecordTypeId == rtAccreditContPreviousCompanyOwner) {
-				aux.add(ac);
+			if(ac.AMS_OwnershipId__c == accountId && ac.RecordTypeId == rtAccreditContCurrentCompanyOwner) {
+				aux.add(ac.clone(false, false, false, false));
 			}
 		}
 		return aux;
@@ -888,7 +1045,7 @@ public with sharing class ISSP_ANG_ANNUAL_REVALIDATION {
 
 		for(AMS_Accreditation_Contact__c ac : lstAccreditationContact) {
 			if(ac.AMS_OwnershipId__c == accountId && ac.RecordTypeId == rtAccreditContPreviousCompanyOwner) {
-				aux.add(ac);
+				aux.add(ac.clone(false, false, false, false));
 			}
 		}
 		return aux;
@@ -930,8 +1087,10 @@ public with sharing class ISSP_ANG_ANNUAL_REVALIDATION {
 			this.currentAccount = new ANG_AnnualRevCurrentAccount(accountsMap.get(headEntity.IATACode__c),
 																  getStatus(headEntity.IATACode__c),
 																  getForm(headEntity.IATACode__c),
-                                                                  getIsoCountry(accountsMap.get(headEntity.IATACode__c).Country_ISO_Code__c));
-			//this.helper = new ANG_AnnualRevHelper(this.currentAccount);
+                                                                  getIsoCountry(accountsMap.get(headEntity.IATACode__c).Country_ISO_Code__c),
+																  true);
+
+			heIataCode = headEntity.IATACode__c;
 		}
 
 		hier.add(he);
@@ -949,6 +1108,221 @@ public with sharing class ISSP_ANG_ANNUAL_REVALIDATION {
 		this.setHe = false;
 
 		return json;
+	}
+
+	public void validateForm() {
+
+		errorFound = false;
+
+		if(!currentAccount.fw.newForm.Confirm_Legal_Details_are_correct__c && !currentAccount.fw.newForm.Notify_Change_Legal_Details__c &&
+			!currentAccount.fw.newForm.Confirm_Location_Details_are_correct__c && !currentAccount.fw.newForm.Notify_Change_Location__c &&
+			!currentAccount.fw.newForm.Confirm_Ownership_details_are_correct__c && !currentAccount.fw.newForm.Notify_Change_Ownership__c) {
+			//
+			// The user did not checked any of the checkboxes.
+			//
+			ApexPages.addmessage(new ApexPages.message(ApexPages.severity.FATAL, Label.ISSP_ANG_ANNUAL_REV_ERROR_1));
+			currentAccount.errorFoundCheckBoxes = true;
+			errorFound = true;
+
+		} else if(!currentAccount.fw.newForm.Notify_Change_Legal_Details__c && !currentAccount.fw.newForm.Notify_Change_Location__c && !currentAccount.fw.newForm.Notify_Change_Ownership__c) {
+			//
+			// The user has to notify at least one change
+			//
+			ApexPages.addmessage(new ApexPages.message(ApexPages.severity.FATAL, Label.ISSP_ANG_ANNUAL_REV_ERROR_2));
+			currentAccount.errorFoundCheckBoxes = true;
+			errorFound = true;
+		} else {
+			//
+			// Check everything else
+			//
+			if (currentAccount.fw.newform.Is_change_legal_name__c && currentAccount.fw.newform.Notify_Change_Legal_Details__c) {
+				if(currentAccount.fw.newform.Account_Name__c == null) {
+					currentAccount.fw.newform.Account_Name__c.addError(Label.ISSP_YouMustEnter);
+					errorFound = true;
+				}
+
+				if (currentAccount.fw.newform.ISSP_AMS_VAT_Number_Input__c == null && currentAccount.isocountry.Hide_Tax_Number_VAT__c == false) {
+					currentAccount.fw.newform.ISSP_AMS_VAT_Number_Input__c.addError(Label.ISSP_YouMustEnter);
+					errorFound = true;
+				}
+			}
+
+			if (currentAccount.fw.newform.ISSP_AMS_GDS_with_signed_contract__c == null) {
+				currentAccount.fw.newform.ISSP_AMS_GDS_with_signed_contract__c.addError(Label.ISSP_YouMustEnter);
+				errorFound = true;
+			}
+
+			if (currentAccount.fw.newform.Notify_Change_Accreditation_Type__c == true) {
+				if (String.isEmpty(currentAccount.fw.newform.ANG_Accreditation_Model_to_Change__c)) {
+					currentAccount.fw.newform.ANG_Accreditation_Model_to_Change__c.addError(Label.ISSP_YouMustEnter);
+					errorFound = true;
+				} else {
+					if (currentAccount.fw.newform.ANG_Accreditation_Model_to_Change__c == AMS_Utils.ACCREDITATIONMODEL_CASH && cntIFAPContacts == 0) {
+						ApexPages.addmessage(new ApexPages.message(ApexPages.severity.ERROR, Label.ISSP_NoC_No_Contact_Error));
+							errorFound = true;
+					}
+				}
+			}
+
+			If(currentAccount.isocountry.Local_language_Agency_details_required__c && currentAccount.fw.newform.Is_change_legal_name__c && currentAccount.fw.newform.Notify_Change_Legal_Details__c && currentAccount.fw.newform.Local_Legally_Registered_Name__c == null) {
+				currentAccount.fw.newform.Local_Legally_Registered_Name__c.addError(Label.ISSP_YouMustEnter);
+				errorFound = true;
+			}
+
+			if (currentAccount.fw.newform.Is_change_location__c && currentAccount.fw.newform.Notify_Change_Location__c) {
+				if(currentAccount.fw.newform.Branch_Office_Street_name_number__c == null) {
+						currentAccount.fw.newform.Branch_Office_Street_name_number__c.addError(Label.ISSP_YouMustEnter);
+					errorFound = true;
+				}
+
+				if (currentAccount.fw.newform.Branch_Office_City__c == null) {
+					currentAccount.fw.newform.Branch_Office_City__c.addError(Label.ISSP_YouMustEnter);
+					errorFound = true;
+				}
+
+			if (currentAccount.fw.newform.Branch_Office_Phone_National__c == null) {
+				currentAccount.fw.newform.Branch_Office_Phone_National__c.addError(Label.ISSP_YouMustEnter);
+				errorFound = true;
+				}
+			}
+
+			if (currentAccount.fw.newform.Is_change_location__c && currentAccount.fw.newform.Notify_Change_Location__c && currentAccount.isocountry.Local_language_Agency_details_required__c) {
+				if (currentAccount.fw.newform.Local_Physical_Address_Street__c == null) {
+					currentAccount.fw.newform.Local_Physical_Address_Street__c.addError(Label.ISSP_YouMustEnter);
+					errorFound = true;
+				}
+
+				if (currentAccount.fw.newform.Local_Physical_Address_City__c == null) {
+					currentAccount.fw.newform.Local_Physical_Address_City__c.addError(Label.ISSP_YouMustEnter);
+					errorFound = true;
+				}
+
+				if (currentAccount.fw.newform.Local_Physical_Address_Province__c == null) {
+					currentAccount.fw.newform.Local_Physical_Address_Province__c.addError(Label.ISSP_YouMustEnter);
+					errorFound = true;
+				}
+
+				if (currentAccount.fw.newform.Local_Postal_Address_Street__c == null) {
+					currentAccount.fw.newform.Local_Postal_Address_Street__c.addError(Label.ISSP_YouMustEnter);
+					errorFound = true;
+				}
+
+				if (currentAccount.fw.newform.Local_Postal_Address_City__c == null) {
+					currentAccount.fw.newform.Local_Postal_Address_City__c.addError(Label.ISSP_YouMustEnter);
+					errorFound = true;
+				}
+
+				if (currentAccount.fw.newform.Local_Postal_Address_Province__c == null) {
+					currentAccount.fw.newform.Local_Postal_Address_Province__c.addError(Label.ISSP_YouMustEnter);
+					errorFound = true;
+				}
+			} //EO check for Change of Location & Local Agency Details fields
+
+
+			if (currentAccount.fw.newform.Is_this_Head_Office_becoming_a_Branch__c == null && currentAccount.fw.newform.Scope_of_Change__c != 'Selected Branches Only') {
+				currentAccount.fw.newform.Is_this_Head_Office_becoming_a_Branch__c.addError(Label.ISSP_YouMustEnter);
+				errorFound = true;
+			}
+
+
+			if (currentAccount.fw.newform.Is_this_Head_Office_becoming_a_Branch__c == 'Yes' && currentAccount.fw.newform.New_Head_Office_IATA_Code__c == null) {
+				currentAccount.fw.newform.New_Head_Office_IATA_Code__c.addError(Label.ISSP_YouMustEnter);
+				errorFound = true;
+			}
+
+			if (currentAccount.fw.newform.Is_this_Branch_becoming_a_Head_Office__c == null) {
+				currentAccount.fw.newform.Is_this_Branch_becoming_a_Head_Office__c.addError(Label.ISSP_YouMustEnter);
+				errorFound = true;
+			}
+
+			if (currentAccount.fw.newform.Will_such_change_affect_locations__c == null) {
+				currentAccount.fw.newform.Will_such_change_affect_locations__c.addError(Label.ISSP_YouMustEnter);
+				errorFound = true;
+			}
+
+			if (currentAccount.fw.newform.Will_such_change_affect_locations__c == 'No' && currentAccount.fw.newform.Provide_explanation_for_change_locations__c == null) {
+				currentAccount.fw.newform.Provide_explanation_for_change_locations__c.addError(Label.ISSP_YouMustEnter);
+				errorFound = true;
+			}
+
+			if (currentAccount.fw.newform.Notify_Change_Ownership__c && currentAccount.fw.newform.ISSP_AMS_Legal_Status__c == null) {
+				currentAccount.fw.newform.ISSP_AMS_Legal_Status__c.addError(Label.ISSP_YouMustEnter);
+				errorFound = true;
+			}
+
+			if (currentAccount.fw.newform.Effective_Date_Of_Change__c == null) {
+				currentAccount.fw.newform.Effective_Date_Of_Change__c.addError(Label.ISSP_YouMustEnter);
+				errorFound = true;
+			}
+
+			if (currentAccount.fw.newform.Will_such_change_affect_the_managers__c == null) {
+				currentAccount.fw.newform.Will_such_change_affect_the_managers__c.addError(Label.ISSP_YouMustEnter);
+				errorFound = true;
+			}
+
+			if (currentAccount.fw.newform.Will_such_change_affect_the_managers__c == 'Yes' && currentAccount.fw.newform.Provide_details_for_change_affect_staff__c == null) {
+				currentAccount.fw.newform.Provide_details_for_change_affect_staff__c.addError(Label.ISSP_YouMustEnter);
+				errorFound = true;
+			}
+
+			if (currentAccount.fw.newform.Have_any_having_authorization_to_act__c == null) {
+				currentAccount.fw.newform.Have_any_having_authorization_to_act__c.addError(Label.ISSP_YouMustEnter);
+				errorFound = true;
+			}
+
+			if (currentAccount.fw.newform.Have_any_having_authorization_to_act__c == 'Yes' && currentAccount.fw.newform.Give_details_for_authorization_to_act__c == null) {
+				currentAccount.fw.newform.Give_details_for_authorization_to_act__c.addError(Label.ISSP_YouMustEnter);
+				errorFound = true;
+			}
+
+			if (currentAccount.fw.newform.Will_the_change_of_ownership_cause__c == null) {
+				currentAccount.fw.newform.Will_the_change_of_ownership_cause__c.addError(Label.ISSP_YouMustEnter);
+				errorFound = true;
+			}
+
+			if (currentAccount.fw.newform.Will_the_change_of_ownership_cause__c == 'Yes' && currentAccount.fw.newform.Give_details_for_the_change_of_ownership__c == null) {
+				currentAccount.fw.newform.Give_details_for_the_change_of_ownership__c.addError(Label.ISSP_YouMustEnter);
+				errorFound = true;
+			}
+/*
+			if (!currentAccount.fw.newform.Confirm_Legal_Details_are_correct__c && !currentAccount.fw.newform.Notify_Change_Legal_Details__c) {
+				ApexPages.addmessage(new ApexPages.message(ApexPages.severity.ERROR, Label.ISSP_AMS_NoC_error_message1));
+				errorFound = true;
+			}
+
+			if (!currentAccount.fw.newform.Confirm_Location_Details_are_correct__c && !currentAccount.fw.newform.Notify_Change_Location__c) {
+				ApexPages.addmessage(new ApexPages.message(ApexPages.severity.ERROR, Label.ISSP_AMS_NoC_error_message2));
+				errorFound = true;
+			}
+*/
+/*
+			if (!currentAccount.fw.newform.Confirm_Ownership_Details_are_correct__c && !currentAccount.fw.newform.Notify_Change_Ownership__c) {
+				ApexPages.addmessage(new ApexPages.message(ApexPages.severity.ERROR, Label.ISSP_AMS_NoC_error_message3));
+				errorFound = true;
+			}
+*/
+			if (currentAccount.fw.newform.Notify_Change_Ownership__c && !(currentAccount.fw.newform.ISSP_AMS_Legal_Status__c == 'Corporation' && currentAccount.fw.newform.ISSP_AMS_Entity_with_listed_shares__c == 'Yes')) {
+				if (currentAccount.fw.newform.ISSP_AMS_Total_Current_Ownership__c == null || currentAccount.fw.newform.ISSP_AMS_Total_Current_Ownership__c < 99.99 || currentAccount.fw.newform.ISSP_AMS_Total_Current_Ownership__c > 100) {
+					ApexPages.Message myMsg;
+					myMsg = new ApexPages.Message(ApexPages.Severity.ERROR, Label.ISSP_AMS_NoC_Percent_Ownership);
+
+					ApexPages.addMessage(myMsg);
+					errorFound = true;
+				}
+			}
+
+			currentAccount.errorFound = errorFound;
+		}
+	}
+
+	public void resetErrors() {
+
+		if(currentAccount != null) {
+			currentAccount.errorFoundCheckBoxes = false;
+			currentAccount.errorFound = false;
+		}
+
+		errorFound = false;
 	}
 
 
@@ -1034,5 +1408,498 @@ public with sharing class ISSP_ANG_ANNUAL_REVALIDATION {
 	//
 	// ---------------------------------------
 	//
+	//
+	// Modals methods
+	//
+	public void createAgencyContact() {
+        system.debug('I enter createAgencyContact');
+        system.debug('createAgencyContact contactType: ' + contactType);
+        Id rtAccreditContPreviousOwner = Schema.SObjectType.AMS_Accreditation_Contact__c.getRecordTypeInfosByName().get('Previous Owner').getRecordTypeId();
 
+        integer cntOwners;
+        integer cntEmailContacts;
+        contactSaved = true;
+        ApexPages.Message myMsg;
+
+        //saveAMSForm();
+        upsert currentAccount.fw.newform;
+
+        AMS_Accreditation_Contact__c contactToUpsert = currentAccount.newContact;
+
+
+		System.debug('alex currentAccount.newContact : ' + currentAccount.newContact);
+
+        /*
+        if (contactType == 'Trained Staff') {
+            contactToUpsert = trainedStaffContact;
+            if (!(this.currentAccount.isocountry.EACP_Country__c && newForm.Is_your_firm_handling_Dangerous_Goods__c == 'No') && contactToUpsert.Training_dangerous_goods_completed__c == null) {
+                contactToUpsert.Training_dangerous_goods_completed__c.addError(Label.ISSP_YouMustEnter);
+                contactSaved = false;
+                return;
+            }
+            if (contactToUpsert.Training_dangerous_goods_completed__c == 'Yes') {
+                if (contactToUpsert.Valid_until__c == null) {
+                    myMsg = new ApexPages.Message(ApexPages.Severity.ERROR, 'Must fill valid until');
+                    ApexPages.addMessage(myMsg);
+                    contactSaved = false;
+                    return;
+                }
+            }
+        }
+        */
+
+
+        if (contactToUpsert.AMS_Pax_Accreditation_Form__c == null)
+            contactToUpsert.AMS_Pax_Accreditation_Form__c = this.currentAccount.fw.newForm.Id;
+
+        cntOwners = [SELECT COUNT() FROM AMS_Accreditation_Contact__c
+                     WHERE AMS_Pax_Accreditation_Form__c = :this.currentAccount.fw.newForm.Id AND Agency_owner__c = true AND Id != :currentAccount.newContact.Id And RecordType.Name = :contactType];
+
+        refreshCntIFAPContacts();
+/*
+        cntEmailContacts = [SELECT COUNT()
+                              FROM AMS_Accreditation_Contact__c
+                             WHERE AMS_Pax_Accreditation_Form__c = :this.currentAccount.fw.newForm.Id
+                               AND Email__c != :null
+                               AND Email__c = :currentAccount.newContact.Email__c
+                               AND Id != :currentAccount.newContact.Id
+                               AND RecordTypeId != :rtAccreditContPreviousOwner
+                           ];
+*/
+        //System.Debug('Contact type:' + contactType);
+
+        if (contactType == 'Company' || contactType == 'Current Company Owner') {
+            currentAccount.newContact.First_name__c = '';
+            currentAccount.newContact.Last_name__c = currentAccount.newContact.Name;
+            currentAccount.newContact.Agency_owner__c = true;
+
+            if (companyModalNameOfEmployer == '' && iatacode != '' && iatacode != null) {
+                myMsg = new ApexPages.Message(ApexPages.Severity.ERROR, Label.ISSP_AMS_Invalid_IATA_Code);
+                ApexPages.addMessage(myMsg);
+                contactSaved = false;
+                return;
+            }
+            if (currentAccount.newContact.Registration_number__c == null || currentAccount.newContact.Name == null || currentAccount.newContact.Financial_interest__c == null ) {
+                contactSaved = false;
+                return;
+            }
+            if (!validateCharactersInCompanyWindow()) {
+                contactSaved = false;
+                return;
+            }
+        } else if (contactType == 'Person' || contactType == 'Current Owner') {
+            currentAccount.newContact.Name = (currentAccount.newContact.First_name__c != null ? currentAccount.newContact.First_name__c : '')  + ' ' + currentAccount.newContact.Last_name__c;
+            system.debug('currentAccount.newContact.Name ' + currentAccount.newContact.Name);
+
+            if (!validateCharactersInPersonWindow()) {
+                contactSaved = false;
+                return;
+            }
+        }
+        /*
+        else if (contactType == 'Trained Staff') {
+            trainedStaffContact.Name = trainedStaffContact.First_name__c + ' ' + trainedStaffContact.Last_name__c;
+        }
+        */
+
+        if (Test.IsRunningTest() == false) {
+            contactToUpsert.RecordTypeId = Schema.SObjectType.AMS_Accreditation_Contact__c.RecordTypeInfosByName.get(contactType).RecordTypeId;
+        }
+
+        //if (sector == AMS_Utils.SECTOR_PASSENGER) {
+            //Clear the links to Prev Emp History Agencies, if they were set from prev selection
+            if (currentAccount.newContact.Agencies_prev_worked_for__c == ''  || currentAccount.newContact.Agencies_prev_worked_for__c == 'none') {
+                currentAccount.newContact.Accredited_employer_1__c = null;
+                currentAccount.newContact.Accredited_employer_2__c = null;
+            } else if (currentAccount.newContact.Agencies_prev_worked_for__c == '1') {
+                currentAccount.newContact.Accredited_employer_2__c = null;
+            }
+        //}
+
+        currentAccount.newContact.AddressCountry__c = amsContactCountry;
+
+        try {
+
+            system.debug('in 1' + contactSaved);
+
+            if (currentAccount.newContact.AddressCountry__c == null && contactType == 'Current Owner') {
+                currentAccount.newContact.AddressCountry__c.addError(Label.ISSP_YouMustEnter);
+                contactSaved = false;
+            }
+
+            if (contactType == 'Current Owner' && (currentAccount.newContact.Agency_owner__c == true || currentAccount.newContact.Agency_role__c == true)  && (currentAccount.newContact.Time_devoted_to_Agency_business__c < 0 || currentAccount.newContact.Time_devoted_to_Agency_business__c == null))  {
+                myMsg = new ApexPages.Message(ApexPages.Severity.ERROR, Label.ISSP_AMS_Step3_ErrMsg_Time_Devoted);
+                ApexPages.addMessage(myMsg);
+                contactSaved = false;
+                return;
+            }
+
+            SYSTEM.DEBUG('NoC Agency Owner: ' + contactToUpsert.Agency_owner__c);
+            SYSTEM.DEBUG('NoC Agency Manager: ' + contactToUpsert.Agency_role__c);
+
+            if (contactType == 'Current Owner' && currentAccount.newContact.Agency_owner__c == false && currentAccount.newContact.Agency_role__c == false) {
+                myMsg = new ApexPages.Message(ApexPages.Severity.ERROR, Label.ISSP_AMS_NoC_Type_Of_Person);
+                ApexPages.addMessage(myMsg);
+                contactSaved = false;
+                return;
+            }
+
+            //Only one owner allowed for Sole Proprietorships
+            //if (cntOwners >= 1 && currentAccount.newContact.Agency_owner__c == true && legalStatusAfterChange == 'sole proprietorship') {
+            if (cntOwners >= 1 && currentAccount.newContact.Agency_owner__c == true && legalStatus == 'sole proprietorship') {
+                myMsg = new ApexPages.Message(ApexPages.Severity.ERROR, Label.ISSP_AMS_Step3_ErrMsg_Sole_Owner_Exists);
+                ApexPages.addMessage(myMsg);
+                contactSaved = false;
+            }
+
+            if (currentAccount.newContact.Agency_owner__c == true && contactType == 'Current Owner' && (currentAccount.newContact.Financial_interest__c <= 0 || currentAccount.newContact.Financial_interest__c == null))  {
+                myMsg = new ApexPages.Message(ApexPages.Severity.ERROR, Label.ISSP_AMS_Step3_ErrMsg_FIN_Interest);
+                ApexPages.addMessage(myMsg);
+                contactSaved = false;
+                return;
+            }
+
+            system.debug('in 2' + contactSaved);
+
+            system.debug('in 4' + contactSaved);
+
+            //Only Max of 3 IFAP Contacts allowed
+            if (cntIFAPContacts >= MAX_IFAP_Contacts && currentAccount.newContact.Financial_Assessment_Contact__c == true) {
+                myMsg = new ApexPages.Message(ApexPages.Severity.ERROR, Label.ISSP_AMS_Step3_ErrMsg_Max_FinContacts1 + ' ' + MAX_IFAP_CONTACTS + ' ' + Label.ISSP_AMS_Step3_ErrMsg_Max_FinContacts2);
+                ApexPages.addMessage(myMsg);
+                contactSaved = false;
+            }
+
+            if (cntEmailContacts > 0) {
+                myMsg = new ApexPages.Message(ApexPages.Severity.ERROR, Label.ISSP_Unique_Email);
+                ApexPages.addMessage(myMsg);
+                contactSaved = false;
+            }
+
+            if (!contactSaved) {
+                return;
+            }
+
+            system.debug('in 6' + contactSaved);
+
+            System.Debug('# Agencies worked for: ' + currentAccount.newContact.Agencies_prev_worked_for__c);
+            System.Debug('Prev Job Pos 1: ' + currentAccount.newContact.Prev_Job1_Position__c);
+
+            if (currentAccount.newContact.Agencies_prev_worked_for__c != 'none' && currentAccount.newContact.Agencies_prev_worked_for__c != null) {
+                if (currentAccount.newContact.Prev_Job1_Position__c == null) {
+                    currentAccount.newContact.Prev_Job1_Position__c.addError(Label.ISSP_AMS_Step3_ErrMsg_JobPosition1);
+                }
+                if (currentAccount.newContact.Prev_Job1_From__c == null) {
+                    currentAccount.newContact.Prev_Job1_From__c.addError(Label.ISSP_AMS_Step3_ErrMsg_JobPosition1);
+                }
+                if (currentAccount.newContact.Prev_Job1_Address__c == null) {
+                    currentAccount.newContact.Prev_Job1_Address__c.addError(Label.ISSP_AMS_Step3_ErrMsg_JobPosition1);
+                }
+                if (currentAccount.newContact.Prev_Job1_employer__c == null) {
+                    currentAccount.newContact.Prev_Job1_employer__c.addError(Label.ISSP_AMS_Step3_ErrMsg_JobPosition1);
+                }
+
+                if (currentAccount.newContact.Prev_Job1_Position__c == null || currentAccount.newContact.Prev_Job1_From__c == null || currentAccount.newContact.Prev_Job1_Address__c == null || currentAccount.newContact.Prev_Job1_employer__c == null) {
+                    contactSaved = false;
+                    return;
+                }
+
+                system.debug('in 7' + contactSaved);
+
+                if (currentAccount.newContact.Agencies_prev_worked_for__c == '2' || currentAccount.newContact.Agencies_prev_worked_for__c == '3 or more') {
+                    if (currentAccount.newContact.Prev_Job2_Position__c == null) {
+                        currentAccount.newContact.Prev_Job2_Position__c.addError(Label.ISSP_AMS_Step3_ErrMsg_JobPosition2);
+                    }
+                    if (currentAccount.newContact.Prev_Job2_From__c == null) {
+                        currentAccount.newContact.Prev_Job2_From__c.addError(Label.ISSP_AMS_Step3_ErrMsg_JobPosition2);
+                    }
+
+                    if (currentAccount.newContact.Prev_Job2_Address__c == null) {
+                        currentAccount.newContact.Prev_Job2_Address__c.addError(Label.ISSP_AMS_Step3_ErrMsg_JobPosition2);
+                    }
+
+                    if (currentAccount.newContact.Prev_Job2_employer__c == null) {
+                        currentAccount.newContact.Prev_Job2_employer__c.addError(Label.ISSP_AMS_Step3_ErrMsg_JobPosition2);
+                    }
+
+                    if (currentAccount.newContact.Prev_Job2_Position__c == null || currentAccount.newContact.Prev_Job2_From__c == null || currentAccount.newContact.Prev_Job2_Address__c == null || currentAccount.newContact.Prev_Job2_employer__c == null) {
+                        contactSaved = false;
+                        return;
+                    }
+
+                }
+            }
+
+            system.debug('contactSaved ' + contactSaved);
+
+             //if(newCase.Reason1__c == AMS_UTILS.CASE_REASON_ASSOCIATE_ENTITY_STANDARD) currentAccount.newContact.ANG_AE_fromOnlineForm__c = true;
+
+            upsert contactToUpsert;
+            if (contactToUpsert.Financial_Assessment_Contact__c && cntIFAPContacts < 1) {
+                cntIFAPContacts = 1;
+            }
+
+            this.currentAccount.fw.currentOwners.add(contactToUpsert);
+
+			this.currentAccount.fw.refreshForm();
+
+            currentAccount.newContact = new AMS_Accreditation_Contact__c();
+            contactToUpsert = new AMS_Accreditation_Contact__c();
+        } catch (DmlException ex) {
+            system.debug('in 9' + contactSaved);
+            contactSaved = false;
+            ApexPages.addMessages(ex);
+        }
+        iatacode = '';
+	}
+
+    public boolean validateCharactersInPersonWindow() {
+        boolean errorFound = false;
+        Pattern p = Pattern.compile(ISO_8859_1_regEx);
+
+        if (currentAccount.newContact.First_name__c != null && !p.matcher(currentAccount.newContact.First_name__c).matches()) {
+            currentAccount.newContact.First_name__c.addError(Label.ISSP_EnterValidString);
+            errorFound = true;
+        }
+        if (currentAccount.newContact.Last_name__c != null && !p.matcher(currentAccount.newContact.Last_name__c).matches()) {
+            currentAccount.newContact.Last_name__c.addError(Label.ISSP_EnterValidString);
+            errorFound = true;
+        }
+        if (currentAccount.newContact.AddressStreet__c != null && !p.matcher(currentAccount.newContact.AddressStreet__c).matches()) {
+            currentAccount.newContact.AddressStreet__c.addError(Label.ISSP_EnterValidString);
+            errorFound = true;
+        }
+
+        if (currentAccount.newContact.AddressCity__c != null && !p.matcher(currentAccount.newContact.AddressCity__c).matches()) {
+            currentAccount.newContact.AddressCity__c.addError(Label.ISSP_EnterValidString);
+            errorFound = true;
+        }
+        if (currentAccount.newContact.AddressPostcode__c != null && !p.matcher(currentAccount.newContact.AddressPostcode__c).matches()) {
+            currentAccount.newContact.AddressPostcode__c.addError(Label.ISSP_EnterValidString);
+            errorFound = true;
+        }
+        if (currentAccount.newContact.Job_title__c != null && !p.matcher(currentAccount.newContact.Job_title__c).matches()) {
+            currentAccount.newContact.Job_title__c.addError(Label.ISSP_EnterValidString);
+            errorFound = true;
+        }
+
+        if (currentAccount.newContact.Agencies_prev_worked_for__c != 'none') {
+            if (currentAccount.newContact.Prev_Job1_Employer__c != null && !p.matcher(currentAccount.newContact.Prev_Job1_Employer__c).matches()) {
+                currentAccount.newContact.Prev_Job1_Employer__c.addError(Label.ISSP_EnterValidString);
+                errorFound = true;
+            }
+            if (currentAccount.newContact.Prev_Job1_Position__c != null && !p.matcher(currentAccount.newContact.Prev_Job1_Position__c).matches()) {
+                currentAccount.newContact.Prev_Job1_Position__c.addError(Label.ISSP_EnterValidString);
+                errorFound = true;
+            }
+            if (currentAccount.newContact.Prev_Job1_Address__c != null && !p.matcher(currentAccount.newContact.Prev_Job1_Address__c).matches()) {
+                currentAccount.newContact.Prev_Job1_Address__c.addError(Label.ISSP_EnterValidString);
+                errorFound = true;
+            }
+            if (currentAccount.newContact.Agencies_prev_worked_for__c != '1') {
+                if (currentAccount.newContact.Prev_Job2_Employer__c != null && !p.matcher(currentAccount.newContact.Prev_Job2_Employer__c).matches()) {
+                    currentAccount.newContact.Prev_Job2_Employer__c.addError(Label.ISSP_EnterValidString);
+                    errorFound = true;
+                }
+                if (currentAccount.newContact.Prev_Job2_Position__c != null && !p.matcher(currentAccount.newContact.Prev_Job2_Position__c).matches()) {
+                    currentAccount.newContact.Prev_Job2_Position__c.addError(Label.ISSP_EnterValidString);
+                    errorFound = true;
+                }
+                if (currentAccount.newContact.Prev_Job2_Address__c != null && !p.matcher(currentAccount.newContact.Prev_Job2_Address__c).matches()) {
+                    currentAccount.newContact.Prev_Job2_Address__c.addError(Label.ISSP_EnterValidString);
+                    errorFound = true;
+                }
+            }
+        }
+
+        if (errorFound)
+            return false;
+
+        return true;
+    }
+
+    public void refreshCntIFAPContacts() {
+        cntIFAPContacts = [Select count()
+                             From AMS_Accreditation_Contact__c
+                            Where AMS_Pax_Accreditation_Form__c = : this.currentAccount.fw.newForm.Id
+                              And Financial_Assessment_Contact__c = true
+                              And Id != :currentAccount.newContact.Id];
+    }
+
+    public boolean validateCharactersInCompanyWindow() {
+        boolean errorFound = false;
+        //Pattern p = Pattern.compile('^[0-9\\\\A-z\\u00C0-\\u00ff\\s\\.,-\\/#!$%\\^&\\*;:{}=\\-_`~()]+$');
+        Pattern p = Pattern.compile(ISO_8859_1_regEx);
+
+        if (currentAccount.newContact.Name != null && !p.matcher(currentAccount.newContact.Name).matches()) {
+            currentAccount.newContact.Name.addError(Label.ISSP_EnterValidString);
+            errorFound = true;
+        }
+        if (currentAccount.newContact.Registration_number__c != null && !p.matcher(currentAccount.newContact.Registration_number__c).matches()) {
+            currentAccount.newContact.Registration_number__c.addError(Label.ISSP_EnterValidString);
+            errorFound = true;
+        }
+
+        if (errorFound)
+            return false;
+
+        return true;
+    }
+
+	public void editAgencyContact() {
+		currentAccount.newContact = currentAccount.fw.getAMSAccreditationContact(editContactId);
+        amsContactCountry =  currentAccount.newContact.AddressCountry__c;
+	}
+
+    public void newAgencyContact() {
+        currentAccount.newContact = new AMS_Accreditation_Contact__c();
+    }
+
+    public void cancelAgentUpdate() {
+        //Need to clear pointer to currentAccount.newContact on cancel of update; to avoid replacing contact on adding New Person
+		System.debug('alex cancelAgentUpdate');
+
+        currentAccount.newContact = new AMS_Accreditation_Contact__c();
+        iatacode = '';
+        contactSaved = false;
+    }
+
+    public void deleteAgencyContact() {
+        System.debug('alex deleteAgencyContact : ' + editContactId);
+
+
+		currentAccount.fw.deleteAgencyContact(editContactId);
+    }
+
+    public List<SelectOption> countryNameList {
+        get {
+            List<SelectOption> options = new List<SelectOption>();
+
+            list<IATA_ISO_Country__c> isoList;
+            if (applyLanguage == 'es') {
+                isoList = [SELECT Name, Id, IATA_Contry_KR__c, IATA_COUNTRY_EN__c, ISO_Code__c, AMS_Pilot_Country__c,
+                                  IATA_Country_FR__c, IATA_Country_IT__c, IATA_Country_JP__c,
+                                  IATA_Country_PT__c, IATA_Country_SP__c, IATA_Country_ZH__c
+                             FROM IATA_ISO_Country__c
+                            WHERE Case_BSP_Country__c != null
+                              AND Case_BSP_Country__c != ''
+                         ORDER BY IATA_Country_SP__c];
+            } else if (applyLanguage == 'fr') {
+                isoList = [SELECT Name, Id, IATA_Contry_KR__c, IATA_COUNTRY_EN__c, ISO_Code__c, AMS_Pilot_Country__c,
+                                  IATA_Country_FR__c, IATA_Country_IT__c, IATA_Country_JP__c,
+                                  IATA_Country_PT__c, IATA_Country_SP__c, IATA_Country_ZH__c
+                             FROM IATA_ISO_Country__c
+                            WHERE Case_BSP_Country__c != null
+                              AND Case_BSP_Country__c != ''
+                         ORDER BY IATA_Country_FR__c];
+            } else {
+                isoList = [SELECT Name, Id, IATA_Contry_KR__c, IATA_COUNTRY_EN__c, ISO_Code__c, AMS_Pilot_Country__c,
+                                  IATA_Country_FR__c, IATA_Country_IT__c, IATA_Country_JP__c,
+                                  IATA_Country_PT__c, IATA_Country_SP__c, IATA_Country_ZH__c
+                             FROM IATA_ISO_Country__c
+                            WHERE Case_BSP_Country__c != null
+                              AND Case_BSP_Country__c != ''
+                         ORDER BY Name];
+            }
+
+            options.add(new SelectOption('', Label.ISSP_SELECT_COUNTRY));
+            for (IATA_ISO_Country__c iso : isoList) {
+                if (applyLanguage == 'es') {
+                    if (iso.IATA_Country_SP__c != null)
+                        options.add(new SelectOption(iso.IATA_Country_SP__c , iso.IATA_Country_SP__c));
+                    else
+                        options.add(new SelectOption(iso.Name , iso.Name));
+                } else if (applyLanguage == 'fr') {
+                    if (iso.IATA_Country_FR__c != null)
+                        options.add(new SelectOption(iso.IATA_Country_FR__c, iso.IATA_Country_FR__c));
+                    else
+                        options.add(new SelectOption(iso.Name, iso.Name));
+                } else {
+                    options.add(new SelectOption(iso.Name, iso.Name));
+                }
+            }
+
+            return options;
+        }
+        set;
+    }
+
+    public AMS_Accreditation_Country_CheckList__c CountryCheckList {
+
+        get{
+
+            List<AMS_Accreditation_Country_CheckList__c> aux = [
+                SELECT License_required__c, Registration_required__c, Statement_of_International_Sales__c, Statement_of_International_Sales_Branch__c
+                  FROM AMS_Accreditation_Country_CheckList__c
+                 WHERE IATA_ISO_Country__r.ISO_Code__c = :currentAccount.isocountry.Iso_code__c AND Operation__c = :currentAccount.Account.Sector__c
+            ];
+
+            if(!aux.isEmpty()) {
+                return aux[0];
+            } else {
+                return null;
+            }
+        }
+        set{}
+    }
+
+    public PageReference fetchAgentDetails() {
+        String qCargoCode;
+        TravelAgentPrevAccount = new Account();
+        Account generalAccount = null;
+        companyModalAddress = '';
+        companyModalNameOfEmployer = '';
+
+        if (iatacode == null)
+            return null;
+
+        //Limit how many calls can be made to this service, to prevent a user from attempting to retrieve full list of agents
+        cntAgencyLookups += 1;
+        if (cntAgencyLookups > MAX_AgencyAccount_LOOKUPS_ALLOWED) {
+            TravelAgentPrevAccount = new Account();
+            return null;
+        }
+
+        qCargoCode = iatacode + '%';
+
+        List <Account> agentaccounts = null;
+
+        agentaccounts = [Select Id, BillingStreet, BillingCity, BillingState, BillingPostalCode,
+                                BillingCountry, Name
+                           From Account
+                          Where RecordType.DeveloperName = 'IATA_Agency'
+                            And Sector__c = :AMS_Utils.SECTOR_PASSENGER  // agentSector
+                            And IATACode__c Like :qCargoCode];
+
+        system.debug('agentaccounts:' + agentaccounts);
+
+        if (agentaccounts!= null && !agentaccounts.isEmpty()) {
+            String agentAddress;
+
+            TravelAgentPrevAccount = agentaccounts[0];
+            System.Debug('Travel Agent name:' + TravelAgentPrevAccount.Name);
+
+            agentAddress = AMS_Utils.notNull(TravelAgentPrevAccount.BillingStreet) + ' \r\n' +
+                            AMS_Utils.notNull(TravelAgentPrevAccount.BillingCity) + '' + AMS_Utils.notNull(TravelAgentPrevAccount.BillingState) +
+                            ' \r\n' + AMS_Utils.notNull(TravelAgentPrevAccount.BillingCountry);
+
+            System.Debug('IATA Agent address lookup:' + agentAddress);
+
+            currentAccount.newContact.Prev_Job2_Address__c = agentAddress;
+            currentAccount.newContact.Prev_Job2_Employer__c = TravelAgentPrevAccount.Name;
+            currentAccount.newContact.Accredited_employer_2__c = TravelAgentPrevAccount.Id;
+
+            return null;
+        } else {
+            currentAccount.newContact.Prev_Job2_Address__c = '';
+            currentAccount.newContact.Prev_Job2_Employer__c = '';
+
+            if (isAddCompanyModal != null && isAddCompanyModal == true) {
+                companyModalAddress = '';
+                companyModalNameOfEmployer = '';
+            }
+
+            return null;
+        }
+    }
 }
