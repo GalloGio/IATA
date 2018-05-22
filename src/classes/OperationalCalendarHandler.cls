@@ -81,7 +81,9 @@ public with sharing class OperationalCalendarHandler {
             )
             AND (
                 Profile.Name LIKE '%Admin%'
-                OR Contact.Available_Services__c INCLUDES ('ICE – IATA Customer E-Statement','BSPLink','CassLink')
+                OR Contact.S_ICE__c > 0
+                OR Contact.S_BSPlink__c > 0
+                OR Contact.S_CASSlink__c > 0
             )
         ];
         if (Test.isRunningTest()) listUser = TEST_LIST_AIRLINE_USER;
@@ -158,7 +160,9 @@ public with sharing class OperationalCalendarHandler {
             )
             AND (
                 Profile.Name LIKE '%Admin%'
-                OR Contact.Available_Services__c INCLUDES ('ICE – IATA Customer E-Statement','BSPLink','CassLink')
+                OR Contact.S_ICE__c > 0
+                OR Contact.S_BSPlink__c > 0
+                OR Contact.S_CASSlink__c > 0
             )
         ];
         if (Test.isRunningTest()) listUser = TEST_LIST_AGENCY_USER;
