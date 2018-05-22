@@ -19947,6 +19947,14 @@ If you continue to experience issues registering for the CNS Customer Portal the
         <value>Billing Period</value>
     </labels>
     <labels>
+        <fullName>ISSP_OperationalCalendar_BSPCASS_Filter_Required</fullName>
+        <categories>ISSP, OperationalCalendar</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_OperationalCalendar_BSPCASS_Filter_Required</shortDescription>
+        <value>Please, select a value in BSP/CASS filter</value>
+    </labels>
+    <labels>
         <fullName>ISSP_OperationalCalendar_BSPCASSFilter</fullName>
         <categories>ISSP, OperationalCalendar</categories>
         <language>en_US</language>

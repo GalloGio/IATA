@@ -31,7 +31,6 @@
     var defaultOperationType = "{!defaultOperationType}";
     var defaultFrequency = "{!defaultFrequency}";
     if (isAirline) {
-        defaultOperationType = "";
         defaultFrequency = "";
     }
     //console.log(MAP_FREQUENCIES);
@@ -299,6 +298,9 @@
         // add None option if required
         if (listUniqueValues.length!=1) {
             var emptyText = "--{!$Label.ISSP_All}--";
+            if (inputSelect.attr('id')=="typeFilter") {
+                emptyText = "{!$Label.ANG_ISSP_Picklist_None}";
+            }
             inputSelect.append($("<option>", {value: "",text : emptyText}));
         }
         // Add options
@@ -463,7 +465,7 @@
                 <div class="col-sm-2">
                     <apex:outputPanel layout="block" styleclass="form-group">
                         <label for="typeFilter">{!$Label.ISSP_OperationalCalendar_BSPCASSFilter}</label>
-                        <select id="typeFilter" class="form-control"></select>
+                        <select id="typeFilter" class="form-control required"></select>
                     </apex:outputPanel>
                 </div>
                 <div class="col-sm-2">

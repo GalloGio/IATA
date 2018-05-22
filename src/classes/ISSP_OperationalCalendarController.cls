@@ -389,6 +389,9 @@ global without sharing class ISSP_OperationalCalendarController {
     **/
     @RemoteAction
     global static String loadDetailsRemote(String country, String frequency, String operationType, String currencyCode, String billingPeriod) {
+        if (String.isBlank(operationType)) {
+            throw new OperationalCalendarException(Label.ISSP_OperationalCalendar_BSPCASS_Filter_Required);
+        }
         list<Operational_Calendar__c> listOperations = queryListOperations(country, frequency, operationType, currencyCode, Integer.ValueOf(billingPeriod));
         if (IS_AIRLINE) {
             return serializeOperationsForAirlines(listOperations);
