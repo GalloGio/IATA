@@ -90,4 +90,17 @@
             <value>@</value>
         </criteriaItems>
     </sharingCriteriaRules>
+    <sharingCriteriaRules>
+        <fullName>Standard_Contacts</fullName>
+        <accessLevel>Read</accessLevel>
+        <label>Standard Contacts</label>
+        <sharedTo>
+            <allInternalUsers></allInternalUsers>
+        </sharedTo>
+        <criteriaItems>
+            <field>RecordTypeId</field>
+            <operation>equals</operation>
+            <value>Standard</value>
+        </criteriaItems>
+    </sharingCriteriaRules>
 </SharingRules>

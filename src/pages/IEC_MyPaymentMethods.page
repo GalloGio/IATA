@@ -85,7 +85,7 @@
                                     </apex:actionStatus>
 
                                     
-                                    <table class="data-table table-saved-cards js-card-data-table">
+                                    <table id="cardstable" class="data-table table-saved-cards js-card-data-table">
                                         <caption class="table-caption">Default</caption>
                                         <tr class="heading">
                                             <th class="card">
@@ -154,7 +154,7 @@
                                 <div class="footer-actions">
                                     <ul class="list actions text-right">
                                         <li><a href="#">Cancel</a></li>
-                                        <li><apex:commandLink styleClass="button wide" action="{!setDefaultPaymentMethod}" oncomplete="javascript:document.location.reload(true);" reRender="card_list" value="Save" /></li>
+                                        <li><apex:commandLink styleClass="button wide" action="{!setDefaultPaymentMethod}" oncomplete="javascript:document.location.reload(true);" reRender="card_list, cardstable" value="Save" /></li>
                                     </ul>
                                 </div>
                             </div>
