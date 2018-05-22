@@ -349,13 +349,16 @@ public class AMS_OSCARTriggerHandler {
                                                                     AMS_Utils.new_AHA
                                                                     };
 
+        /*** AMSU-31 Start ***/
+        Set<AMS_Oscar__c> oscarsToCreateAuth = new Set<AMS_Oscar__c>();
+        /*** AMSU-31 End ***/
         for (AMS_OSCAR__c updatedOSCAR : oscarsToInsert) {
             AMS_OSCAR__c oldOSCAR = oldOscars.get(updatedOSCAR.Id);
 
             applyAccreditationProcessLogic(oldOSCAR, updatedOscar);
 
             if(!ProcessesToIgnoreChangeCode.contains(updatedOscar.Process__c))
-                applyChangeCodesWithDependencies(oldOSCAR, updatedOscar, oscarAccountIds);
+                applyChangeCodesWithDependencies(oldOSCAR, updatedOscar, oscarAccountIds, oscarsToCreateAuth);
 
 
             processFieldsTracking(oldOSCAR, updatedOscar);
@@ -398,6 +401,24 @@ public class AMS_OSCARTriggerHandler {
             if(updatedOSCAR.Process__c != AMS_Utils.CERTIFICATE) updatedOSCAR.Certificate_Quantity__c = null;
 
         }
+
+        /*** AMSU-31 Start ***/
+        if(!oscarsToCreateAuth.isEmpty()) {
+            List<Case> cases = [SELECT Id, CaseNumber, OSCAR__c, OSCAR__r.Name, Oscar__r.Account__c, Contact.Email FROM Case WHERE OSCAR__c IN :oscarsToCreateAuth];
+            List<Agency_Authorization__c> agenciesAuth = new List<Agency_Authorization__c>(); 
+            for(Case cse : cases) {
+                if(cse.CaseNumber != cse.OSCAR__r.Name) {
+                    continue;
+                }
+                Agency_Authorization__c agencyAuth = new Agency_Authorization__c(Account__c= cse.OSCAR__r.Account__c, Email_Used_for_BSP_Creation__c= cse.Contact.Email);
+                agenciesAuth.add(agencyAuth);
+            }
+
+            if(!agenciesAuth.isEmpty()) {
+            	insert agenciesAuth;
+        	}
+        }
+        /*** AMSU-31 Start ***/
 
     }
 
@@ -3110,7 +3131,7 @@ public class AMS_OSCARTriggerHandler {
 
     }
 
-    public static void applyChangeCodesWithDependencies(AMS_OSCAR__c oldOSCAR, AMS_OSCAR__c updatedOscar,Set<Id> oscarAccountIds) {
+    public static void applyChangeCodesWithDependencies(AMS_OSCAR__c oldOSCAR, AMS_OSCAR__c updatedOscar,Set<Id> oscarAccountIds, Set<AMS_Oscar__c> oscarsToCreateAuth) {
     
         ID newRT = Schema.SObjectType.AMS_OSCAR__c.getRecordTypeInfosByName().get('NEW').getRecordTypeId();
         ID newNGRT = Schema.SObjectType.AMS_OSCAR__c.getRecordTypeInfosByName().get('NG New HE').getRecordTypeId();
@@ -3121,6 +3142,14 @@ public class AMS_OSCARTriggerHandler {
         if (updatedOscar.recordTypeID == newRT || updatedOscar.recordTypeID == newNGRT || updatedOSCAR.recordTypeID == AMS_Utils.RECTYPE_NEWAE){
             if (oldOSCAR.STEP2__c != 'Passed' && updatedOscar.STEP2__c == 'Passed') {
                 AMS_OSCAR_JSON.ChangeCode changeCode = new AMS_OSCAR_JSON.ChangeCode();
+
+                /*** AMSU-31 Start ***/
+                Set<String> processesToCheck = new Set<String> {AMS_Utils.new_HO, AMS_Utils.new_BR, AMS_Utils.new_SA};
+                Set<String> classesToCheck = new Set<String> {'P', 'D'}; 
+                if(classesToCheck.contains(updatedOscar.Location_Class__c) && processesToCheck.contains(updatedOscar.Process__c)) {
+                    oscarsToCreateAuth.add(updatedOscar);
+                }
+                /*** AMSU-31 End ***/
 
                 changeCode.name = 'FIN';
                 changeCode.reasonCode = '91';

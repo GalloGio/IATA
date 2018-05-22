@@ -475,7 +475,7 @@ Should be one of - Daily, Weekly, Semi-Monthly, Monthly</inlineHelpText>
         <filters>
             <field>GSS_Subscription_Detail__c</field>
             <operation>equals</operation>
-            <value>A-S00013725</value>
+            <value>A-S00019412</value>
         </filters>
         <filters>
             <field>Subscription__c</field>
