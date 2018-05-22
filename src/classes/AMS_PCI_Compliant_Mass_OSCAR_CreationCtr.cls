@@ -170,6 +170,7 @@ public with sharing class AMS_PCI_Compliant_Mass_OSCAR_CreationCtr{
         Set<String> statuses = new Set<String> {AMS_Utils.ACC_S9_APPROVED, AMS_Utils.ACC_S5_CASHNOCOMMISSION, AMS_Utils.ACC_S6_CASHWITHCOMMISSION, AMS_Utils.ACC_S8_CHANGESPROCESSED, AMS_Utils.ACC_S4_LISTED, AMS_Utils.ACC_S7_UNDERREVIEW, 'Review'};
 
         String reason = caseReason.get(operation);
+		String recTypeOSCARCOMM = AMS_Utils.RECTYPE_OSCARCOMM; //FM - 10-05-2018 - added OSCAR Communication recordtype to use on the query below
 
         String agency = AMS_Utils.RECTYPE_IATAAGENCY;
 
@@ -182,7 +183,9 @@ public with sharing class AMS_PCI_Compliant_Mass_OSCAR_CreationCtr{
         query += 'WHERE Location_Class__c IN :locationClass AND Status__c IN :statuses AND Is_PCI_compliant__c = null AND Location_Type__c IN :locations';
         query += ' AND RecordtypeId = :agency AND IATA_ISO_Country__c IN :countries';
 
-        query += ' AND Id NOT IN (SELECT AccountId FROM Case WHERE Reason1__c = :reason AND IsClosed = false) ';
+        //FM - 10-05-2018 - removed the close condition and implemented the check by the case recordtype
+        //query += ' AND Id NOT IN (SELECT AccountId FROM Case WHERE Reason1__c = :reason AND IsClosed = false) ';
+        query += ' AND Id NOT IN (SELECT AccountId FROM Case WHERE Reason1__c = :reason AND RecordTypeId = :recTypeOSCARCOMM) ';
 
         query += 'LIMIT ' + (MAX_SEARCH_ELEMENTS + 1);
 
