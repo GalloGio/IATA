@@ -202,7 +202,8 @@
 			c.set("v.account.ShippingStreet", c.get("v.account.BillingStreet"));
 			c.set("v.account.ShippingCity", c.get("v.account.BillingCity"));
 			c.set("v.account.ShippingState", c.get("v.account.BillingState"));
-			c.set("v.account.ShippingPostalCode", c.get("v.account.BillingPostalCode"));
+            c.set("v.account.ShippingPostalCode", c.get("v.account.BillingPostalCode"));
+			c.set("v.validShipping", c.get("v.validBilling"));
 		}
 	},
 

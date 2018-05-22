@@ -139,6 +139,11 @@ public without sharing class OneId_RegistrationProcessController {
     }
 
     @AuraEnabled
+    public static Boolean checkAddress(String info, String countryCode) {
+        return OneId_AddressDoctor.isValidAddress((OneId_AddressDoctor.AddressInfo)JSON.deserialize(info, OneId_AddressDoctor.AddressInfo.class), countryCode);
+    }
+
+    @AuraEnabled
     public static boolean registration(Account acc, Contact con, String serviceName){
         system.debug('OneId registration process starting...');
         system.debug('account  --> ' + acc);

@@ -1,36 +1,34 @@
 ({
-/**
-    When a user type inside the search box
-*/
-	search : function(component, event, helper) {
+	search : function(c) {
 
-        // Unvalidate component when user tries to change input
-        component.set("v.isValid", false);
-        var userInputValue = component.get("v.inputValue");
-        var resultDiv = component.find('results');
+        var userInputValue = c.get("v.inputValue");
+        var resultDiv = c.find('results');
 
-        if($A.util.isEmpty(userInputValue) || userInputValue.length < 2) {
+        if($A.util.isEmpty(userInputValue) || userInputValue.length < 3) {
             // Hide suggestion box
             $A.util.removeClass(resultDiv, 'slds-is-open');
         } else {
-            // Call Adress Doctor when user input at least 3 characters
+            // Call Address Doctor when user input at least 3 characters
             // When user search on input field call Address doctor to get suggestion for validation of address
-            var action = component.get("c.getSuggestedAddress");
+            c.set("v.searching", true);
+            var action = c.get("c.quickSearch");
             action.setParams({
                 "userInput": userInputValue,
-                "countryCode":component.get("v.countryCode")
+                "countryCode":c.get("v.countryCode")
             });
 
             action.setCallback(this, function(a) {
                 var suggestions = a.getReturnValue();
                 //suggestions = [];
                 if(suggestions != undefined && suggestions.length > 0) {
-                    component.set("v.response", suggestions);
+                    c.set("v.response", suggestions);
                 } else {
-                    var noResult = {'addressComplete':'No result found...', 'deliveryAddressLines':userInputValue};
+                    var noResult = {'addressComplete':'No result found...', 'street':userInputValue};
                     suggestions.push(noResult);
-                    component.set("v.response",suggestions);
+                    c.set("v.response",suggestions);
                 }
+
+                c.set("v.searching", false);
                 // Show suggestion box
                 if(! $A.util.hasClass(resultDiv, 'slds-is-open')) $A.util.addClass(resultDiv, 'slds-is-open');
             });
@@ -40,23 +38,34 @@
 /**
     When a user select a sugestion from the suggestion box
 */
-    suggestionSelected: function(component, event, helper) {
-        var suggestionSelected = event.currentTarget;
+    suggestionSelected: function(c, e) {
+        var suggestionSelected = e.currentTarget;
 
         // Set input with selected value
-        var response = component.get("v.response");
+        var response = c.get("v.response");
         var index = parseInt(suggestionSelected.dataset.value);
-        component.set("v.inputValue", response[index].deliveryAddressLines);
+        c.set("v.inputValue", response[index].street);
 
         // Hide suggestion box
-        $A.util.removeClass(component.find("results"), 'slds-is-open');
-        // Validate component input
-        component.set("v.isValid", true);
+        $A.util.removeClass(c.find("results"), 'slds-is-open');
 
-        var cmpEvent = component.getEvent("addressSelected");
+        var cmpEvent = c.getEvent("addressSelected");
         cmpEvent.setParams({
-            "addressType" : component.get("v.type"),
+            "addressType" : c.get("v.type"),
             "addressSelected" : response[index] });
         cmpEvent.fire();        
-    }    
+    },
+    closeResults : function (c) {
+
+        // Hide suggestion box
+        $A.util.removeClass(c.find("results"), 'slds-is-open');
+
+        // send param with change of street
+        var cmpEvent = c.getEvent("addressSelected");
+        cmpEvent.setParams({
+            "addressType" : c.get("v.type"),
+            "addressSelected" : { 'street' : c.get("v.inputValue") } 
+        });
+        cmpEvent.fire();
+    }
 })

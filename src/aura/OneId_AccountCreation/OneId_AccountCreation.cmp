@@ -1,34 +1,36 @@
 <aura:component implements="flexipage:availableForAllPageTypes,forceCommunity:availableForAllPageTypes" controller="OneId_RegistrationProcessController">
 
-	<aura:handler name="addressSelected" event="c:OneId_AddressSelected_EVT" action="{!c.setAddress}"/>
-
 	<aura:attribute type="Account" name="account" required="true" />
-
 	<aura:attribute type="IATA_ISO_Country__c" name="country" required="true"/>
+	
 	<aura:attribute type="Boolean" name="copyAddress" default="false"/>
 	<aura:attribute type="Boolean" name="changeSector" default="true"/>
 	<aura:attribute type="Boolean" name="changeCategory" default="true"/>
 	<aura:attribute type="Boolean" name="changeName" default="true"/>
-	<aura:attribute type="Boolean" name="hasJquery" default="false"/>
 
+	<aura:attribute type="Integer" name="validBilling" default="0" access="private"/>
+	<aura:attribute type="Integer" name="validShipping" default="0" access="private"/>
+	<aura:attribute type="Boolean" name="validationError" default="false" access="private"/>
+
+	<aura:attribute type="Boolean" name="hasJquery" default="false" access="private"/>
+
+	<aura:handler name="init" value="{!this}" action="{!c.setSector}"/>
 	<aura:handler name="change" value="{!v.country}" action="{!c.changedCountry}"/>
 	<aura:handler name="change" value="{!v.account.Sector__c}" action="{!c.sectorChanged}"/>
-	<aura:handler name="init" value="{!this}" action="{!c.setSector}"/>
 
-	<ltng:require 
-        styles="{!$Resource.InternationalPhoneNumberFormatS + '/intl-tel-input-master/build/css/intlTelInput.css'}"
-    />
+	<aura:handler name="addressSelected" event="c:OneId_AddressSelected_EVT" action="{!c.setAddress}"/>
 
 	<aura:method name="validateRequiredFields"/>
-    
+	
 	<ltng:require scripts="{!join(',', 
-        $Resource.jquery321minStandard,
-        $Resource.InternationalPhoneNumberFormatS + '/intl-tel-input-master/build/js/intlTelInput.js',
-        $Resource.InternationalPhoneNumberFormatS + '/intl-tel-input-master/src/js/data.js',
-        $Resource.InternationalPhoneNumberFormatS + '/intl-tel-input-master/src/spec/helpers/helpers.js',
-        $Resource.InternationalPhoneNumberFormatS + '/intl-tel-input-master/build/js/utils.js')}"    	
-        afterScriptsLoaded="{!c.jsLoaded}"
-    />
+		$Resource.jquery321minStandard,
+		$Resource.InternationalPhoneNumberFormatS + '/intl-tel-input-master/build/js/intlTelInput.js',
+		$Resource.InternationalPhoneNumberFormatS + '/intl-tel-input-master/src/js/data.js',
+		$Resource.InternationalPhoneNumberFormatS + '/intl-tel-input-master/src/spec/helpers/helpers.js',
+		$Resource.InternationalPhoneNumberFormatS + '/intl-tel-input-master/build/js/utils.js')}"
+		styles="{!$Resource.InternationalPhoneNumberFormatS + '/intl-tel-input-master/build/css/intlTelInput.css'}"		
+		afterScriptsLoaded="{!c.jsLoaded}"
+	/>
 
 	<div class="slds-grid slds-wrap slds-gutters slds-p-horizontal_medium">
 		<h2 class="slds-text-heading_medium slds-size_1-of-1 slds-m-bottom_medium">{!$Label.c.ISSP_CompanyInformation}</h2>
@@ -71,18 +73,55 @@
 	<div class="slds-grid slds-wrap slds-gutters slds-grid_pull-padded-small slds-p-horizontal_medium">
 
 		<h2 class="slds-text-heading_medium slds-size_1-of-1 slds-m-bottom_medium">{!$Label.c.ISSP_CompanyAddressInformation}</h2>
-		
+
+		<div class="{!'addressValidationMessage slds-col slds-media slds-media_center slds-size_1-of-1 slds-m-bottom_medium slds-p-around_table-cell-spacing '+ (v.validationError ? 'slds-theme_error' : 'text-warning')}">
+			<div class="slds-media__figure">
+				<aura:if isTrue="{!v.validationError}">
+					<lightning:icon iconName="utility:error" variant="inverse" size="small"/>
+					<aura:set attribute="else">
+						<lightning:icon iconName="action:priority" size="x-small"/>
+					</aura:set>
+				</aura:if>
+			</div>
+			<div class="slds-media__body">
+				<aura:unescapedHTML value="{!$Label.c.AddressDoctorValidate}"/>
+			</div>
+		</div>
+	</div>
+
+	<div class="slds-grid slds-wrap slds-gutters slds-grid_pull-padded-small slds-p-horizontal_medium">
 		<div class="slds-col slds-m-bottom_medium slds-size_1-of-1 slds slds-order_2 slds-medium-order_1">
 			<div class="slds-form-element">
-				<label class="slds-form-element__label">Copy Billing Address to Shipping Address</label>
+				<label class="slds-form-element__label">{!$Label.c.ISSP_CopyBillingAddress}</label>
 
 				<div class="slds-form-element__control">
-					<ui:inputCheckbox value="{!v.copyAddress}" change="{!c.updateAddress}"/>
+					<ui:inputCheckbox value="{!v.copyAddress}" change="{!c.copyBilling}"/>
 				</div>
 			</div>
 		</div>
 
 		<div class="slds-col slds-m-bottom_medium slds-size_1-of-1 slds-medium-size_1-of-2 slds-order_1 slds-medium-order_2">
+			<div class="slds-media slds-media_center slds-m-bottom_small">
+				<h3 class="slds-media__body slds-text-heading_small">Billing Address</h3>
+				<div class="slds-media__figure slds-media__figure_reverse slds-is-relative">
+					<aura:if isTrue="{!v.validBilling == 0}">
+						<button class="slds-button slds-button_icon button-bordered" onclick="{!c.validateAddress}" data-mode="Billing">
+							<lightning:icon iconName="utility:check" size="xx-small"/>
+							<!-- <input type="image" src="https://iata-.-c.eu12.content.force.com/servlet/servlet.ImageServer?id=015w000000438d2&oid=00D2000000008TF"/> -->
+						</button>
+					</aura:if>
+					<aura:if isTrue="{!v.validBilling == -1}">
+						<img src="{!$Resource.DSE__dataquality + '/dataquality/images/invalid.gif'}" onclick="{!c.validateAddress}" data-mode="Billing"/>
+					</aura:if>
+					<aura:if isTrue="{!v.validBilling == 1}">
+						<img src="{!$Resource.DSE__dataquality + '/dataquality/images/ok.gif'}" onclick="{!c.validateAddress}" data-mode="Billing"/>
+					</aura:if>
+					<aura:if isTrue="{!v.validBilling == 2}">
+						<lightning:spinner size="small"/>
+					</aura:if>
+				</div>
+			</div>
+			
 			<div class="slds-form-element slds-m-bottom_small">
 				<label class="slds-form-element__label"><abbr class="slds-required" title="required">*</abbr>Billing Street</label>
 				<div class="slds-form-element__control">
@@ -116,6 +155,26 @@
 		</div>
 
 		<div class="slds-col slds-m-bottom_medium slds-size_1-of-1 slds-medium-size_1-of-2 slds-order_3">
+			<div class="slds-media slds-media_center slds-m-bottom_small">
+				<h3 class="slds-media__body slds-text-heading_small">Shipping Address</h3>
+				<div class="slds-media__figure slds-media__figure_reverse slds-is-relative">
+					<aura:if isTrue="{!v.validShipping == 0}">
+						<button class="slds-button slds-button_icon button-bordered" onclick="{!c.validateAddress}" data-mode="Shipping">
+							<lightning:icon iconName="utility:check" size="xx-small"/>
+							<!-- <input type="image" src="https://iata-.-c.eu12.content.force.com/servlet/servlet.ImageServer?id=015w000000438d2&oid=00D2000000008TF"/> -->
+						</button>
+					</aura:if>
+					<aura:if isTrue="{!v.validShipping == -1}">
+						<img src="{!$Resource.DSE__dataquality + '/dataquality/images/invalid.gif'}" onclick="{!c.validateAddress}" data-mode="Shipping"/>
+					</aura:if>
+					<aura:if isTrue="{!v.validShipping == 1}">
+						<img src="{!$Resource.DSE__dataquality + '/dataquality/images/ok.gif'}" onclick="{!c.validateAddress}" data-mode="Shipping"/>
+					</aura:if>
+					<aura:if isTrue="{!v.validShipping == 2}">
+						<lightning:spinner size="small"/>
+					</aura:if>
+				</div>
+			</div>
 			<div class="slds-form-element slds-m-bottom_small">
 				<label class="slds-form-element__label"><abbr class="slds-required" title="required">*</abbr>Shipping Street</label>
 				<div class="slds-form-element__control">

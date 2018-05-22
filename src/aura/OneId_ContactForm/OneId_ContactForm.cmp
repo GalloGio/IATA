@@ -39,7 +39,7 @@
         </div>
         
         <div class="slds-col--padded slds-m-bottom--large slds-size--1-of-1">
-            <label class="slds-form-element__label" ><abbr class="slds-required" title="required">*</abbr>{!v.contactLabels.Title}</label>
+            <label class="slds-form-element__label" ><abbr class="slds-required" title="required">*</abbr>{!$Label.c.ISSP_Registration_JobTitle}</label>
             <ui:inputText aura:id="title" value="{!v.contact.Title}" class="slds-input"/>
         </div>
         

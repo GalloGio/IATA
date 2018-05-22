@@ -108,7 +108,7 @@
                     
                     <aura:if isTrue="{!v.customerType == 'GloballSalesAgent'}">
                         <div role="presentation" class="slds-listbox__item lastRow">
-                            No Company found for your combination of GSA code and country. Please ensure you have entered the correct information or consult our <a href="http://theiatahub.force.com/iatapkb/articles/en_US/How_To/Customer-Portal-Troubleshooting/?l=en_US" target="_blank">troubleshooting guide</a>
+                            No Company found for your combination of GSA code and country? Please ensure you have entered the correct information or consult our <a href="http://theiatahub.force.com/iatapkb/articles/en_US/How_To/Customer-Portal-Troubleshooting/?l=en_US" target="_blank">troubleshooting guide</a>
                         </div>
                     </aura:if>
 
