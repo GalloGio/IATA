@@ -3435,7 +3435,7 @@ public class AMS_OSCARTriggerHandler {
                         accountToAdd = true;
                     }
 
-                    if(oscar.Is_PCI_compliant__c == 'Yes'){
+                    if(oscar.Is_PCI_compliant__c == 'Yes' || oscar.Is_PCI_compliant__c == 'Nil CC'){
                         acct.ANG_PCI_compliance_expiry_date__c = oscar.ANG_PCI_compliance_expiry_date__c;
                         accountToAdd = true;
                     }
