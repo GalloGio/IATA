@@ -1,16 +1,19 @@
 public with sharing class ISSP_ANG_ANNUAL_REV_UPDATE {
-    public static  Integer MAX_IFAP_Contacts {get{ return 1;} private set;}
+    /*public static  Integer MAX_IFAP_Contacts {get{ return 1;} private set;}
     private static final string ISO_8859_1_regEx = '^[\\x00-\\x7F\\xA0-\\xFF]+$';  //Reg exp to limit inputted chars to ISO-8859-1
     private static integer MAX_AgencyAccount_LOOKUPS_ALLOWED = 20;
+    */
 
 	public ANG_AnnualRevCurrentAccount ca {get; set;}
+    public string editContactId {get; set;}
+    public String amsContactCountry {get; set;}
+/*
 
-	public string editContactId {get; set;}
 	//public AMS_Accreditation_Contact__c newContact {get; set;}
 	public string iatacode {get; set;}
 	public Boolean contactSaved {get; set;}
-    public String amsContactCountry {get; set;}
-	public String applyLanguage {get; set;}
+
+
     public string contactType {get; set;}
     public string companyModalNameOfEmployer {get; set;}
     public Integer cntIFAPContacts {get; set;}
@@ -20,9 +23,13 @@ public with sharing class ISSP_ANG_ANNUAL_REV_UPDATE {
     public Account TravelAgentPrevAccount {get; set;}
     Integer cntAgencyLookups;
     public Boolean isAddCompanyModal {get; set;}
+    */
+    public String applyLanguage {get; set;}
     public string txtHelpCurrency {get; set;}
 
+
 	public ISSP_ANG_ANNUAL_REV_UPDATE() {
+        /*
 		amsContactCountry = '';
 		contactSaved = false;
         companyModalNameOfEmployer = '';
@@ -30,15 +37,21 @@ public with sharing class ISSP_ANG_ANNUAL_REV_UPDATE {
         legalstatus = '';
         companyModalAddress = '';
         cntAgencyLookups = 0;
-        txtHelpCurrency = '';
 
-        applyLanguage = UserInfo.getLanguage();
+
+
 
         if(this.ca != null && this.ca.fw != null && this.ca.fw.newForm != null && this.ca.fw.newForm.ISSP_AMS_Legal_Status__c != null) {
             legalstatus = this.ca.fw.newForm.ISSP_AMS_Legal_Status__c.toLowerCase();
         }
 
         if (applyLanguage != 'en_US' && applyLanguage != 'es' && applyLanguage != 'fr') applyLanguage = 'en_US';
+
+
+
+        */
+        txtHelpCurrency = '';
+        applyLanguage = UserInfo.getLanguage();
 
         String fldName = 'ISSP_AMS_HelpText_' + applyLanguage + '__c';
 
@@ -50,7 +63,13 @@ public with sharing class ISSP_ANG_ANNUAL_REV_UPDATE {
                 txtHelpCurrency =  (String)hlp.get(fldName);
             }
         }
+
+
 	}
+
+    public void newAgencyContact() {
+        ca.newContact = new AMS_Accreditation_Contact__c();
+    }
 
 	public void editAgencyContact() {
 
@@ -60,9 +79,27 @@ public with sharing class ISSP_ANG_ANNUAL_REV_UPDATE {
         amsContactCountry =  ca.newContact.AddressCountry__c;
 	}
 
-    public void newAgencyContact() {
-        ca.newContact = new AMS_Accreditation_Contact__c();
+    public AMS_Accreditation_Country_CheckList__c CountryCheckList {
+
+        get{
+
+            List<AMS_Accreditation_Country_CheckList__c> aux = [
+                SELECT License_required__c, Registration_required__c, Statement_of_International_Sales__c, Statement_of_International_Sales_Branch__c
+                  FROM AMS_Accreditation_Country_CheckList__c
+                 WHERE IATA_ISO_Country__r.ISO_Code__c = :ca.isocountry.Iso_code__c AND Operation__c = :ca.Account.Sector__c
+            ];
+
+            if(!aux.isEmpty()) {
+                return aux[0];
+            } else {
+                return null;
+            }
+        }
+        set{}
     }
+
+
+/*
 
     public void cancelAgentUpdate() {
         //Need to clear pointer to newContact on cancel of update; to avoid replacing contact on adding New Person
@@ -133,25 +170,6 @@ public with sharing class ISSP_ANG_ANNUAL_REV_UPDATE {
         set;
     }
 
-    public AMS_Accreditation_Country_CheckList__c CountryCheckList {
-
-        get{
-
-            List<AMS_Accreditation_Country_CheckList__c> aux = [
-                SELECT License_required__c, Registration_required__c, Statement_of_International_Sales__c, Statement_of_International_Sales_Branch__c
-                  FROM AMS_Accreditation_Country_CheckList__c
-                 WHERE IATA_ISO_Country__r.ISO_Code__c = :ca.isocountry.Iso_code__c AND Operation__c = :ca.Account.Sector__c
-            ];
-
-            if(!aux.isEmpty()) {
-                return aux[0];
-            } else {
-                return null;
-            }
-        }
-        set{}
-    }
-
     public PageReference fetchAgentDetails() {
         String qCargoCode;
         TravelAgentPrevAccount = new Account();
@@ -211,4 +229,5 @@ public with sharing class ISSP_ANG_ANNUAL_REV_UPDATE {
             return null;
         }
     }
+    */
 }

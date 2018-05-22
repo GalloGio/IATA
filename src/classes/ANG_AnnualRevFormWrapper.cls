@@ -69,19 +69,15 @@ public with sharing class ANG_AnnualRevFormWrapper {
 
 	public void deleteAgencyContact(Id contactId) {
 
-		//Boolean found = removeAndDelete(previousOwners, contactId);
+		System.debug('alex currentOwners : ' + currentOwners);
+		System.debug('alex currentCompanies : ' + currentCompanies);
 
-		//if(!found) {
+
 		Boolean found = removeAndDelete(currentOwners, contactId);
-		//}
 
 		if(!found) {
 			found = removeAndDelete(currentCompanies, contactId);
 		}
-
-		//if(!found) {
-			//found = removeAndDelete(previousCompanies, contactId);
-		//}
 
 	}
 
@@ -105,18 +101,27 @@ public with sharing class ANG_AnnualRevFormWrapper {
 	}
 
 	private Boolean removeAndDelete(List<AMS_Accreditation_Contact__c> lst, Id contactId) {
+
+		System.debug('alex removeAndDelete id : ' + contactId);
+
 		Boolean found = false;
 		Integer size = lst.size();
 		for(Integer i = 0; i < size; i++) {
+
 			AMS_Accreditation_Contact__c contactDel = lst.get(i);
+
+			System.debug('alex test id : ' + contactDel.id);
+
 			if(contactDel.id == contactId) {
+
+				System.debug('alex removeAndDelete found and removing');
+
 				found = true;
 				lst.remove(i);
 				delete contactDel;
 
 				break;
 			}
-			i++;
 		}
 		return found;
 	}
@@ -159,10 +164,6 @@ public with sharing class ANG_AnnualRevFormWrapper {
 			if(aux.size() != 0) {
 				this.newForm = aux[0];
 			}
-
 		}
-
 	}
-
-
 }

@@ -1,5 +1,5 @@
 <apex:page controller="ISSP_ANG_ANNUAL_REVALIDATION" cache="false" sidebar="false" showHeader="false" standardStylesheets="true"
-    applyBodyTag="false" applyHtmlTag="false">
+    applyBodyTag="false" applyHtmlTag="false" action="{!securityCheck}">
 
     <html>
 
@@ -274,17 +274,18 @@
             var $j = jQuery.noConflict();
 
             function gotoStep1(myValue, nextStep) {
+
                 //console.log('myValue ' + myValue + ' nextStep ' + nextStep);
                 //defaultHQCountry = '{!newCase.IFAP_Country_ISO__c}';
-                if ($j('#brcountry').css('display') == 'none') {
-                    checkBranchAbroad(nextStep);
-                }
+                //if ($j('#brcountry').css('display') == 'none') {
+                //    checkBranchAbroad(nextStep);
+                //}
 
-                var $lists = $j('select[name="' + '{!$Component.step1Form.step1Block.officetypelist}' + '"]');
-                vOfficeType = $lists.val();
-                var cargoAgentTypes = ["IATA Cargo Agent", "EACP Intermediary", "CASS Associate", "Courier", "Import Agent"];
+                //var $lists = $j('select[name="' + '{!$Component.step1Form.step1Block.officetypelist}' + '"]');
+                //vOfficeType = $lists.val();
+                //var cargoAgentTypes = ["IATA Cargo Agent", "EACP Intermediary", "CASS Associate", "Courier", "Import Agent"];
                 //onsole.log('no empty voffice ' + vOfficeType);
-                isAllowedCountry = 't';
+                //isAllowedCountry = 't';
             }
 
             function cancelUpdateConfirm() {
@@ -303,6 +304,15 @@
                 });
             }
 
+            function confirmContactDelete(conid, conname, contype) {
+                msg =
+                bootbox.confirm('{!$Label.ISSP_AMS_CONFIRM_DELETE}', function(result) {
+                    if(result) {
+                        alert(conid);
+                        deleteContact(conid);
+                    }
+                });
+            }
 
         </script>
 
@@ -328,9 +338,11 @@
 
                                 <apex:actionFunction name="cancelAgentUpdate" action="{!cancelAgentUpdate}" status="WaitingStatus" reRender="newContact"/>
                                 <apex:actionFunction name="cancelCompanyUpdate" action="{!cancelAgentUpdate}" status="WaitingStatus" reRender="newCompany"/>
+
                                 <apex:actionFunction name="deleteContact" immediate="true" action="{!deleteAgencyContact}" rerender="currContactList, currCompanyList, updated-company-owners,currOwnerSummaryList">
                                     <apex:param value="" name="recordId" assignTo="{!editContactId}" />
                                 </apex:actionFunction>
+
                                 <apex:actionFunction name="createAgencyCompany" action="{!createAgencyContact}"
                                         oncomplete="if ({!contactSaved==true}){hideNewCompanyDialog(); cancelCompanyUpdate();} $j('[id$=companySubmitBut]').removeAttr('disabled');"
                                         status="WaitingStatus"
@@ -351,7 +363,7 @@
                                         <div class="progress-bare progress-bar-off" role="progressbar" aria-valuenow="60" aria-valuemin="0" aria-valuemax="100" style="width: 22%">
                                             <apex:commandLink styleclass="btn btn-default" action="{!save}" onclick="gotoStep1('{!$Component.step1Form.step1Block.operationType}', '2');"
                                                 value="{!$Label.ISSP_ANG_Step2_ANNUAL_REV}" id="Next3">
-                                                <apex:param value="3" assignTo="{!step1GoToNumber}" name="step1GoToNumber" />
+                                                <apex:param value="2" assignTo="{!step1GoToNumber}" name="step1GoToNumber" />
                                             </apex:commandLink>
                                         </div>
                                     </div>
@@ -556,7 +568,7 @@
                             <apex:form>
                                 <div class="progress">
                                     <div class="progress-bar progress-bar-off" role="progressbar" aria-valuenow="20" aria-valuemin="0" aria-valuemax="100" style="width: 22%">
-                                        <apex:commandLink styleclass="btn btn-default" action="{!goToStep1}" value="{!$Label.ISSP_ANG_Step1_ANNUAL_REV}" id="Prev1Submit"
+                                        <apex:commandLink status="WaitingStatus" styleclass="btn btn-default" action="{!goToStep1}" value="{!$Label.ISSP_ANG_Step1_ANNUAL_REV}" id="Prev1Submit"
                                         />
                                     </div>
                                     <div class="progress-bar" role="progressbar" aria-valuenow="60" aria-valuemin="0" aria-valuemax="100" style="width: 22%">
@@ -564,7 +576,9 @@
                                     </div>
                                 </div>
                             </apex:form>
+
                             <apex:pageBlock>
+                                <c:ISSP_ANG_ANNUAL_REV_SUBMIT_REPORT helper="{! submitHelper}" id="submitReport"/>
                             </apex:pageBlock>
                         </div>
                     </div>
@@ -582,20 +596,17 @@
                                         <apex:outputPanel>
                                             <apex:commandButton styleclass="btn btn-default" style="margin-right:8px" action="{!goToStep1}" value="{!$Label.ISSP_Back}"
                                                 immediate="true" status="buttonLoadingStep3" reRender="tCondiForm" />
-                                            <apex:commandButton styleclass="btn btn-default" action="{!saveDraftAndLeave}" value="{!$Label.ISSP_Save_Draft}" style="float:right"
-                                                status="buttonLoadingStep3" reRender="tCondiForm" />
+
                                             <apex:commandButton styleclass="btn btn-default" action="{!submitForm}" value="{!$Label.ISSP_AMS_Submit_IATA}" status="buttonLoadingStep3"
+                                                disabled="{! NOT(submitHelper.allowSubmit)}"
                                                 reRender="tCondiForm" />
+
                                         </apex:outputPanel>
                                     </apex:facet>
                                     <apex:facet name="start">
                                         <apex:outputPanel>
-                                            <apex:commandButton styleclass="btn btn-default" style="margin-right:8px" value="{!$Label.ISSP_Back}..." disabled="true"
-                                                reRender="tCondiForm" />
-                                            <apex:commandButton styleclass="btn btn-default" value="{!$Label.ISSP_AMS_Submit_IATA}..." disabled="true" reRender="tCondiForm"
-                                            />
-                                            <apex:commandButton styleclass="btn btn-default" value="{!$Label.ISSP_Save_Draft}..." disabled="true" style="float:right"
-                                                reRender="tCondiForm" />
+                                            <apex:commandButton styleclass="btn btn-default" style="margin-right:8px" value="{!$Label.ISSP_Back}..." disabled="true" reRender="tCondiForm" />
+                                            <apex:commandButton styleclass="btn btn-default" value="{!$Label.ISSP_AMS_Submit_IATA}..." disabled="true" reRender="tCondiForm"/>
                                         </apex:outputPanel>
                                     </apex:facet>
                                 </apex:actionStatus>
@@ -634,15 +645,6 @@
                     $j('[id$=faxoutput]').text("{!currentAccount.account.Fax}");
                 $j('[id$=companyfax]').val($j('[id$=faxoutput]').text());
                 $j('[id$=companyfaxinput]').intlTelInput("setNumber",$j('[id$=companyfax]').val());
-            }
-
-            function confirmContactDelete(conid, conname, contype) {
-                msg =
-                bootbox.confirm('{!$Label.ISSP_AMS_CONFIRM_DELETE}', function(result) {
-                    if(result) {
-                        deleteContact(conid);
-                    }
-                });
             }
 
             function updateOwnerRT(recTypeName) {
@@ -687,21 +689,23 @@
 
             function toggleModalContactFields(ownerId) {
 
-                if(document.getElementById(ownerId).checked){
+                if(ownerId != null && document.getElementById(ownerId) != null) {
+                    if(document.getElementById(ownerId).checked){
 
-                    for (index = 0; index < ownerModalFields.length; index++) {
-                        document.getElementById(ownerModalFields[index]).disabled = false;
-                    }
+                        for (index = 0; index < ownerModalFields.length; index++) {
+                            document.getElementById(ownerModalFields[index]).disabled = false;
+                        }
 
-                    $j('[id$=contactFinInterest]').wrap('<div class="requiredInput">').before('<div class="requiredBlock"></div>');
+                        $j('[id$=contactFinInterest]').wrap('<div class="requiredInput">').before('<div class="requiredBlock"></div>');
 
-                } else {
-                    for (index = 0; index < ownerModalFields.length; index++) {
-                        document.getElementById(ownerModalFields[index]).disabled = true;
-                        document.getElementById(ownerModalFields[index]).value = null;
-                    }
-                    if($j('[id$=contactFinInterest]').parent().is('div')) {
-                            $j('[id$=contactFinInterest]').unwrap().prev('.requiredBlock').remove();
+                    } else {
+                        for (index = 0; index < ownerModalFields.length; index++) {
+                            document.getElementById(ownerModalFields[index]).disabled = true;
+                            document.getElementById(ownerModalFields[index]).value = null;
+                        }
+                        if($j('[id$=contactFinInterest]').parent().is('div')) {
+                                $j('[id$=contactFinInterest]').unwrap().prev('.requiredBlock').remove();
+                        }
                     }
                 }
             }

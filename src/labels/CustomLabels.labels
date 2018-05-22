@@ -27900,4 +27900,12 @@ Please &lt;a href=&quot;/ISSP_FAQ2Case?MainNav=Queries&amp;subNav=MyQueries&amp;
         <shortDescription>ISSP_ANG_ANNUAL_REV_ERROR_2</shortDescription>
         <value>It is required to notify at least one change</value>
     </labels>
+    <labels>
+        <fullName>ISSP_ANG_ANNUAL_REV_SUBMIT_NOT_ALLOW</fullName>
+        <categories>ISSP ANG</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_ANG_ANNUAL_REV_SUBMIT_NOT_ALLOW</shortDescription>
+        <value>Please ensure that the Agency details are either confirmed or updated for each IAIA Code in your hierarchy.</value>
+    </labels>
 </CustomLabels>

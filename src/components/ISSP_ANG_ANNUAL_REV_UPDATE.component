@@ -51,15 +51,14 @@
         }
     </style>
 
-    <div styleClass="workArea" id="work">
+    <script>
+    </script>
 
-    <!--{!ca.isHOcontact}-->
-    <!--{!ca.fw.newForm.id}-->
+    <div styleClass="workArea" id="work">
 
         <!--                      -->
         <!-- Agency Legal Details -->
         <!--                      -->
-
         <apex:pageBlockSection columns="1" collapsible="false" id="Section1Header">
             <div class="section-header">
                 <strong>{!$Label.ISSP_ANG_ANNUAL_REV_Change_of_Legal_Name}</strong>
@@ -448,17 +447,21 @@
                     {!$Label.ISSP_AMS_Not_Listed_Msg}
                 </div>
                 <br/><br/>
-                <!--apex:actionRegion immediate="true" renderRegionOnly="false"-->
-                    <apex:commandLink action="{!newAgencyContact}" style="margin-left:20px" oncomplete="updateOwnerRT('Current Owner');showNewContactDialog();" rerender="currContactList, newContact">
-                        <span class="glyphicon glyphicon-plus"></span>{!$Label.ISSP_AMS_Add_Person}
-                    </apex:commandLink>
-                <!--/apex:actionRegion-->
+
+                <apex:commandLink action="{!newAgencyContact}" style="margin-left:20px" oncomplete="updateOwnerRT('Current Owner');showNewContactDialog();" rerender="currContactList, newContact">
+                    <span class="glyphicon glyphicon-plus"></span>{!$Label.ISSP_AMS_Add_Person}
+                </apex:commandLink>
+
 
                 <apex:pageBlockTable value="{!ca.fw.currentOwners}" var="agencycon"	id="currContactList" styleClass="table-hover table table-condensed table-responsive">
                     <apex:column ><span class="glyphicon glyphicon-plus" onclick="toggleContactDetails(this)" id="tog{!agencycon.Id}"/></apex:column>
                     <apex:column headerValue="{!$ObjectType.Contact.fields.FirstName.Label}" value="{!agencycon.First_name__c}"/>
 
-                    <apex:column headerValue="{!$ObjectType.Contact.fields.LastName.Label}" value="{!agencycon.Last_name__c}"/>
+                    <!-- debug alex -->
+                    <!--apex:column headerValue="{!$ObjectType.Contact.fields.LastName.Label}" value="{!agencycon.Last_name__c}"/-->
+                    <apex:column headerValue="{!$ObjectType.Contact.fields.LastName.Label}" value="{!agencycon.id}"/>
+
+
                     <apex:column headerValue="{!CASE(ca.ownerLabelTypeAfterChange, 'shareholder', $Label.ISSP_AMS_Shareholder, 'partner', $Label.ISSP_AMS_Partner, $Label.ISSP_AMS_Owner)}" value="{!agencycon.Agency_owner__c}" id="ownerTitle" />
                     <apex:column id="roleTitle" value="{!agencycon.Agency_role__c}" >
                         <apex:facet name="header"><apex:outputText escape="false" value="{!CASE(ca.roleLabelTypeAfterChange, 'director', $Label.ISSP_AMS_Director, $Label.ISSP_AMS_Manager)}"/></apex:facet>
@@ -474,16 +477,16 @@
                                     {!$Label.ISSP_AMS_Loading_Contact}
                             </apex:facet>
                         </apex:actionStatus>
-                        <!--apex:actionRegion immediate="true" renderRegionOnly="false"-->
-                            <apex:commandLink action="{!editAgencyContact}" status="actEditCurrOwner" styleClass="glyphicon glyphicon-pencil" oncomplete="updateOwnerRT('Current Owner');showNewContactDialog();" rerender="currContactList, newContact">
-                                <apex:param value="{!agencycon.Id}" name="recordId" assignTo="{!editContactId}" />
-                            </apex:commandLink>
-                        <!--/apex:actionRegion-->
+
+                        <apex:commandLink action="{!editAgencyContact}" status="actEditCurrOwner" styleClass="glyphicon glyphicon-pencil" oncomplete="updateOwnerRT('Current Owner');showNewContactDialog();" rerender="currContactList, newContact">
+                            <apex:param value="{!agencycon.Id}" name="recordId" assignTo="{!editContactId}" />
+                        </apex:commandLink>
+
                     </apex:column>
                     <apex:column >
-                        <!--apex:actionRegion immediate="true" renderRegionOnly="false"-->
-                            <apex:commandLink immediate="true" onfocus="confirmContactDelete('{!agencycon.Id}', '{!agencycon.Name}', 'contact')" styleClass="glyphicon glyphicon-trash"/>
-                        <!--/apex:actionRegion-->
+
+                        <apex:commandLink immediate="true" onfocus="confirmContactDelete('{!agencycon.Id}', '{!agencycon.Name}', 'contact')" styleClass="glyphicon glyphicon-trash"/>
+
                     </apex:column>
                     <apex:column breakBefore="true" colspan="12" style="display:none; background-color:RGB(236, 246, 249)" styleClass="tog{!agencycon.Id}">
                         <div class="col-md-12">
@@ -509,13 +512,11 @@
                     <apex:outputText value="{!$Label.ISSP_AMS_Step3_4_Companies_New}" escape="false"/>
                 </div>
 
-                <!--apex:actionRegion immediate="true" renderRegionOnly="false"-->
-                    <apex:commandLink action="{!newAgencyContact}" id="addcompany" style="margin-left:20px;display:{!IF(ca.fw.newForm.ISSP_AMS_Legal_Status__c=='Sole Proprietorship','none','')}"
-                            oncomplete="updateCompanyOwnerRT('Current Company Owner');showNewCompanyDialog();"
-                            rerender="currCompanyList, newCompany, newOwnerQuestions">
-                        <span class="glyphicon glyphicon-plus"></span>{!$Label.ISSP_AMS_ADD_COMPANY}
-                    </apex:commandLink>
-                <!--/apex:actionRegion-->
+                <apex:commandLink action="{!newAgencyContact}" id="addcompany" style="margin-left:20px;display:{!IF(ca.fw.newForm.ISSP_AMS_Legal_Status__c=='Sole Proprietorship','none','')}"
+                        oncomplete="updateCompanyOwnerRT('Current Company Owner');showNewCompanyDialog();"
+                        rerender="currCompanyList, newCompany, newOwnerQuestions">
+                    <span class="glyphicon glyphicon-plus"></span>{!$Label.ISSP_AMS_ADD_COMPANY}
+                </apex:commandLink>
 
                 <apex:pageBlockTable value="{!ca.fw.currentCompanies}" var="agencycon" id="currCompanyList" styleClass="table-hover table table-condensed table-responsive">
                     <apex:column headerValue="{!$ObjectType.Account.fields.Legal_name__c.Label}" value="{!agencycon.Name}"/>
@@ -523,16 +524,16 @@
                     <apex:column value="{!agencycon.IATACode__c}"/>
                     <apex:column value="{!agencycon.Financial_interest__c}"/>
                     <apex:column >
-                        <!--apex:actionRegion immediate="true" renderRegionOnly="false"-->
-                            <apex:commandLink action="{!editAgencyContact}" styleClass="glyphicon glyphicon-pencil" oncomplete="updateCompanyOwnerRT('Current Company Owner');showNewCompanyDialog();" rerender="currCompanyList, newCompany, newOwnerQuestions">
-                                <apex:param value="{!agencycon.Id}" name="recordId" assignTo="{!editContactId}" />
-                            </apex:commandLink>
-                        <!--/apex:actionRegion-->
+
+                        <apex:commandLink action="{!editAgencyContact}" styleClass="glyphicon glyphicon-pencil" oncomplete="updateCompanyOwnerRT('Current Company Owner');showNewCompanyDialog();" rerender="currCompanyList, newCompany, newOwnerQuestions">
+                            <apex:param value="{!agencycon.Id}" name="recordId" assignTo="{!editContactId}" />
+                        </apex:commandLink>
+
                     </apex:column>
                     <apex:column >
-                        <!--apex:actionRegion immediate="true" renderRegionOnly="false"-->
-                            <apex:commandLink onfocus="confirmContactDelete('{!agencycon.Id}', '{!agencycon.Name}', 'company')" styleClass="glyphicon glyphicon-trash" />
-                        <!--/apex:actionRegion-->
+
+                        <apex:commandLink onfocus="confirmContactDelete('{!agencycon.Id}', '{!agencycon.Name}', 'company')" styleClass="glyphicon glyphicon-trash" />
+
                     </apex:column>
                 </apex:pageBlockTable>
 
