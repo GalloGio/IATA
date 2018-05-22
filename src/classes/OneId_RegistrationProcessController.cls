@@ -1,5 +1,10 @@
 public without sharing class OneId_RegistrationProcessController {
-	@AuraEnabled
+	
+    public static Boolean isNewAcc = false;   
+    public static Boolean createBranch = false;
+    public static String languageString = 'English';
+
+    @AuraEnabled
     public static String getHostURL(){
         return OneIdUtils.getOrgUrl();
     }
@@ -149,9 +154,6 @@ public without sharing class OneId_RegistrationProcessController {
         system.debug('account  --> ' + acc);
         system.debug('contact  --> ' + con);
         system.debug('serviceName  --> ' + serviceName);
-        
-        Boolean isNewAcc = false;        
-        String languageString = 'English';
 
         //it's general public account? create contact / user
         if(acc.Sector__c == 'General Public'){
@@ -167,6 +169,7 @@ public without sharing class OneId_RegistrationProcessController {
                 acc.IATACode__c = pAccount.IATACode__c;
                 acc.Airline_designator__c = pAccount.Airline_designator__c;
                 acc.Name = pAccount.Name;
+                createBranch = true;
         }
 
         if(acc.Id != null) {
@@ -234,7 +237,7 @@ public without sharing class OneId_RegistrationProcessController {
                 if(serviceName == 'ISSP'){
                     permissionCSPortal(returnedString); // assign Permission Set CS Portal, give access to CS Portal Connected App
                 }
-                if(serviceName == 'ISSP' && isNewAcc == true){
+                if(serviceName == 'ISSP' && isNewAcc == true && (acc.Sector__c == 'Travel Agent' || acc.Sector__c == 'Cargo Agent')){
                     permissionNewAgency(returnedString);
                     updatePortalUseProfile(returnedString);
 
@@ -306,13 +309,23 @@ public without sharing class OneId_RegistrationProcessController {
             else{
                 system.debug('not more than 40');
                 thisNickname = thisNickname;
+            }   
+
+            Boolean newAirline = false;
+            if(acc.Sector__c == 'Airline' && !createBranch){
+                newAirline = true;
+                isNewAcc = false;
             }
 
             System.debug('>>con ' + con);
 
             string UID = Comm_User_Helper.NewGuid();
-            User u = new User ( CommunityNickname= thisNickname , title=con.title, contactid = con.id, Firstname = con.firstname, lastname = con.lastname, emailencodingkey = 'UTF-8', localesidkey = 'en_US', email = con.email, username=ISSP_Utilities.buildPortalUserName(con.email), Alias = ISSP_Utilities.buildPortalUserName(con.email).left(5), timezonesidkey = 'America/Los_Angeles', languagelocalekey = 'en_US',Date_ToU_accepted__c = system.Now(), ToU_accepted__c = true, UID__c = UID);            
-            system.debug('aqui user ' + u);
+            String u = Comm_User_Helper.createNewUser(con, '',servName,languageString,isNewAcc,newAirline);
+            
+            system.debug('aqui userID ' + u);
+
+            //User u = new User ( CommunityNickname= thisNickname , title=con.title, contactid = con.id, Firstname = con.firstname, lastname = con.lastname, emailencodingkey = 'UTF-8', localesidkey = 'en_US', email = con.email, username=ISSP_Utilities.buildPortalUserName(con.email), Alias = ISSP_Utilities.buildPortalUserName(con.email).left(5), timezonesidkey = 'America/Los_Angeles', languagelocalekey = 'en_US',Date_ToU_accepted__c = system.Now(), ToU_accepted__c = true, UID__c = UID);            
+            /*system.debug('aqui user ' + u);
             if(servName == 'FRED') {
                 // JIRA ISI-51 + ISI-14: Self registration primary or secondary 
                 String profileID = '';
@@ -337,13 +350,13 @@ public without sharing class OneId_RegistrationProcessController {
             System.debug('con ' + con.accountId);
             System.debug('u ' + u);
             System.debug('servName ' + servName);
-            String userId = Site.createPortalUser(u, con.accountId, password, false);
+            //String userId = Site.createPortalUser(u, con.accountId, password, false);
             
             System.debug('userId ' + userId);
             
-            sendWelcomeEmail(con, u, password, servName);
+            sendWelcomeEmail(con, u, password, servName);*/
 
-            return userid;
+            return u;
             
 
         } catch (Exception e) {

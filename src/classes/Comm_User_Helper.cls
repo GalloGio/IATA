@@ -135,7 +135,7 @@ global without sharing class Comm_User_Helper {
         else if (newAirline){
           profileName = ISSP_Constant.profilNameByUserTypeMap.get('User').get('Airline');
         }
-        
+
         system.debug('profileName: ' + profileName);
         u.ProfileId = ISSP_Constant.profileIdByProfileNameMap.get(profileName);
         system.debug('u.ProfileId: ' + u.ProfileId);
@@ -154,8 +154,9 @@ global without sharing class Comm_User_Helper {
         system.debug('accountId: ' + accountId);
         String link ;
         String cleanUsername = u.userName.replace('+', plusReplacer);
+        String prefix = OneIdUtils.getSiteCompleteUrl();
         
-        if(community == ISSP || community == CNS){
+        if(community == ISSP || community == CNS || community == ONEIDENTITY){
             
             if (lang != null && lang != ''){
                 system.debug('LANG IN CREATE USER: ' + lang);
@@ -173,11 +174,19 @@ global without sharing class Comm_User_Helper {
                 string encodedPart = EncodingUtil.urlEncode(EncryptString(cleanUsername+SEPARATOR+password+SEPARATOR+UID), 'UTF-8');
                 String template ='';
                 Map<String,String> emailWrap = new Map<String,String>();
-                if(community== ISSP){
-                  link = Site.getBaseUrl()+ '/ISSP_First_Login?c='+encodedPart;
-                    template = 'ISSP_New_Member_Welcome_Email_2';
-                    emailWrap = Comm_User_Helper.ISSP_PassWordBuilMessageWrapper( con ,  password ,  link, 'ISSP'); 
-                  }else if(community == 'CNS'){
+
+               if(community == ISSP || community == ONEIDENTITY){
+                  if(community == ISSP){
+                      link = 'https://' + String.ValueOF(ISSP_CS__c.getValues('Host').value__c) + '/ISSP_First_Login?'+encodedPart;
+                      template = 'Identity_Portal_ISSP_New_User';
+                    }else{
+                      link = prefix + '/s/IdentityFirstLogin?' + encodedPart;
+                      template = 'Identity_Portal_New_User';
+                    }
+
+                    emailWrap = Comm_User_Helper.ISSP_PassWordBuilMessageWrapper( con ,  password ,  link,Comm_User_Helper.ONEIDENTITY, community); 
+
+                }else if(community == 'CNS'){
                     link = Site.getBaseUrl()+ '/ISSP_First_Login?communityName=CNS&c='+encodedPart;
                     template = 'ISSP_New_Member_Welcome_Email_2_CNS'; 
                     emailWrap = Comm_User_Helper.ISSP_PassWordBuilMessageWrapper( con ,  password ,  link, 'CNS');                   
@@ -256,7 +265,7 @@ global without sharing class Comm_User_Helper {
     }
 
 
-    public static  Map<String, String> ISSP_PassWordBuilMessageWrapper(contact con , string password , string link, String commName){
+    public static  Map<String, String> ISSP_PassWordBuilMessageWrapper(contact con , string password , string link, String commName) {
       String portalName = 'IATA';
       if(commName =='CNS'){portalName='CNS';}
 
@@ -273,7 +282,7 @@ global without sharing class Comm_User_Helper {
             '{!$Label.ISSP_Email_do_not_reply}' => Label.ISSP_Email_do_not_reply,
             '{!$Label.OneId_IATA_represent_lead_and_serve_the_airline_industry}' => Label.OneId_IATA_represent_lead_and_serve_the_airline_industry
         };
-
+            
         return mapBodyParamsIssp;
   
                 
@@ -468,7 +477,7 @@ global without sharing class Comm_User_Helper {
             
         }
     }
-     
+    
     public static boolean resetPassword(String email, string Community, Boolean bccCS) {
         //site.
         try {   
