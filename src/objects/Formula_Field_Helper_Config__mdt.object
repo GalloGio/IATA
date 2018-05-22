@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomObject xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fields>
+        <fullName>Field_to_check__c</fullName>
+        <description>API name of the field to check</description>
+        <externalId>false</externalId>
+        <fieldManageability>DeveloperControlled</fieldManageability>
+        <label>Field_to_check</label>
+        <length>80</length>
+        <required>true</required>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Helper_Type__c</fullName>
+        <externalId>false</externalId>
+        <fieldManageability>DeveloperControlled</fieldManageability>
+        <label>Helper Type</label>
+        <picklist>
+            <picklistValues>
+                <fullName>KPI1_Reason1</fullName>
+                <default>true</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>KPI1_RecordType</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>KPI2_Reason1</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>KPI2_RecordType</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>ProcessAge_Reason1</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>AccProcType_Reason1</fullName>
+                <default>false</default>
+            </picklistValues>
+            <restrictedPicklist>true</restrictedPicklist>
+            <sorted>false</sorted>
+        </picklist>
+        <required>true</required>
+        <type>Picklist</type>
+    </fields>
+    <fields>
+        <fullName>ObjectName__c</fullName>
+        <externalId>false</externalId>
+        <fieldManageability>DeveloperControlled</fieldManageability>
+        <label>ObjectName</label>
+        <picklist>
+            <picklistValues>
+                <fullName>Case</fullName>
+                <default>true</default>
+            </picklistValues>
+            <restrictedPicklist>true</restrictedPicklist>
+            <sorted>true</sorted>
+        </picklist>
+        <required>true</required>
+        <type>Picklist</type>
+    </fields>
+    <fields>
+        <fullName>Values_to_check__c</fullName>
+        <externalId>false</externalId>
+        <fieldManageability>DeveloperControlled</fieldManageability>
+        <label>Values to check</label>
+        <length>32768</length>
+        <type>LongTextArea</type>
+        <visibleLines>3</visibleLines>
+    </fields>
+    <fields>
+        <fullName>result__c</fullName>
+        <description>the result of the calculation</description>
+        <externalId>false</externalId>
+        <fieldManageability>DeveloperControlled</fieldManageability>
+        <label>result</label>
+        <length>255</length>
+        <required>true</required>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <label>Formula Field Helper Config</label>
+    <pluralLabel>Formula Field Helper Config</pluralLabel>
+    <visibility>Public</visibility>
+</CustomObject>
