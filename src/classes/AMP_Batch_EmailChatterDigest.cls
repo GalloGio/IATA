@@ -44,7 +44,7 @@ global class AMP_Batch_EmailChatterDigest implements Database.Batchable<sObject>
 			mpAccountId2Account.put(a.Id,a);
 		}
 		System.debug(mpAccountId2Account);
-		//List<FeedItem> lsAllFeedItems = AMP_ChatterTopicSubscribeController.getFeedItems(lsHQAccounts);
+		List<FeedItem> lsAllFeedItems = AMP_ChatterTopicSubscribeController.getFeedItems(lsHQAccounts);
 
 		// Send an email
 		List<Messaging.SingleEmailMessage> lsEmails = new List<Messaging.SingleEmailMessage>();
