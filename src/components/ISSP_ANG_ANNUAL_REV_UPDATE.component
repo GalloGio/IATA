@@ -438,11 +438,19 @@
                                 *******    currentOwners PERSON    ******
             -->
             <apex:outputPanel styleClass="agencyOwnershipComponent">
-                <apex:outputLabel value="In this part you will have to do something!" />
+                <div class="col-md-12 bg-warning">
+                    <br></br>
+                    <br></br>
+
+                    <strong>Please enter new ownership details below</strong>
+
+                    <br></br>
+                    <br></br>
+                </div>
             </apex:outputpanel>
 
             <apex:outputPanel id="updated-person-owners" styleClass="agencyOwnershipComponent">
-                <div class="col-md-12 bg-danger"><strong>{!$Label.ISSP_AMS_NoC_Updated_Owners_Managers}</strong></div>
+                <div class="col-md-12 bg-warning"><strong>{!$Label.ISSP_AMS_NoC_Updated_Owners_Managers}</strong></div>
                 <div id="currmsgshareholdersdetails" class="bg-warning" style="margin-top:3px; margin-bottom:5px;{!IF(ca.fw.newForm.ISSP_AMS_Curr_Entity_with_listed_shares__c == 'No', 'border: 0px !important;', 'display:none')}">
                     {!$Label.ISSP_AMS_Not_Listed_Msg}
                 </div>
@@ -506,7 +514,7 @@
                                 *******    currentCompanies    ******
             -->
             <apex:outputPanel layout="block" id="updated-company-owners" style="display:{!IF(NOT(AND(ca.fw.newForm.ISSP_AMS_Legal_Status__c=='Sole Proprietorship', ca.fw.currentCompanies.size==0)), '', 'none')}" styleClass="agencyOwnershipComponent" >
-                <div class="bg-danger col-md-12" style="margin-top:15px;"><strong>{!$Label.ISSP_AMS_NOC_Updated_Companies}</strong></div>
+                <div class="bg-warning col-md-12" style="margin-top:15px;"><strong>{!$Label.ISSP_AMS_NOC_Updated_Companies}</strong></div>
 
                 <div class="col-md-12" style="padding-bottom:12px">
                     <apex:outputText value="{!$Label.ISSP_AMS_Step3_4_Companies_New}" escape="false"/>
@@ -538,7 +546,7 @@
                 </apex:pageBlockTable>
 
                 <apex:outputPanel >
-                    <div class="col-md-12 bg-danger"><strong>{!$Label.ISSP_AMS_NoC_Other_Owner}</strong></div>
+                    <div class="col-md-12 bg-warning"><strong>{!$Label.ISSP_AMS_NoC_Other_Owner}</strong></div>
 
                     <apex:pageBlockSection columns="1">
                         <apex:pageBlockSectionItem labelStyle="width:44%">
@@ -555,7 +563,7 @@
                 </apex:outputPanel>
 
                 <apex:outputPanel id="newOwnerQuestions" rendered="{!ca.fw.currentCompanies.size > 0}">
-                    <div class="bg-danger col-md-12" style="margin-top:15px;"><strong>{!$Label.ISSP_AMS_NoC_Non_IATA_Owner_Title}</strong></div>
+                    <div class="bg-warning col-md-12" style="margin-top:15px;"><strong>{!$Label.ISSP_AMS_NoC_Non_IATA_Owner_Title}</strong></div>
                     <div class="col-md-12">
                         <apex:outputText value="{!$Label.ISSP_AMS_NoC_Non_IATA_Owner_Estimates}" escape="false"/>
                     </div>
@@ -580,20 +588,6 @@
 
                 </apex:outputPanel>
 
-                <apex:pageBlockSection id="sectionSeven" collapsible="false" columns="1" rendered="{!countryCheckList.Statement_of_International_Sales__c}">
-                    <div class="bg-info col-md-12" style="margin-top:15px;"><strong>{!$Label.ISSP_AMS_NoC_Statement_International_Sales}</strong></div>
-
-                    <apex:pageBlockSectionItem labelStyle="width:44%">
-                        <apex:outputLabel value="{!$Label.ISSP_AMS_Sales_Last_Year}"/>
-                        <apex:selectRadio style="width:100px" value="{!ca.fw.newForm.International_Sales_in_last_Year__c}" id="InternationalSalesSelect"
-                                onchange="toggleInternationalSales('{!$Component.InternationalSalesSelect}');"
-                                styleClass="{!IF(AND(ca.fw.newForm.International_Sales_in_last_Year__c==null), 'requiredIndicator', '')}">
-                            <apex:selectOption itemValue="Yes" itemLabel="{!$Label.ISSP_Yes}" />
-                            <apex:selectOption itemValue="No" itemLabel="{!$Label.ISSP_No}" />
-                        </apex:selectRadio>
-                    </apex:pageBlockSectionItem>
-
-                </apex:pageBlockSection>
             </apex:outputPanel>
         </apex:pageBlockSection>
 

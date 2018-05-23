@@ -213,9 +213,14 @@ public with sharing class ISSP_ANG_ANNUAL_REVALIDATION {
                 txtHelpCurrency =  (String)hlp.get(fldName);
             }
         }
+	}
 
+	private static void setCaseVisibleInPortal(Case newCase) {
+		if(!newCase.Visible_on_ISS_Portal__c) {
+			newCase.Visible_on_ISS_Portal__c = true;
 
-
+			update newCase;
+		}
 	}
 
 	private void setParentsAndChilds() {
@@ -510,33 +515,11 @@ public with sharing class ISSP_ANG_ANNUAL_REVALIDATION {
 
 		resetErrors();
 
-		System.debug('Confirm update');
-
 		Savepoint sp = Database.setSavepoint();
 
 		try {
 
 			validateForm();
-
-System.debug('alex confirm update errorFound : ' + errorFound);
-
-			if(!errorFound) {
-
-				//
-				// The user notified at least one change. if there is any section withot any of it's checkboxes ticked then we assume that is confirm details.
-				//
-				if(!currentAccount.fw.newForm.Confirm_Legal_Details_are_correct__c && !currentAccount.fw.newForm.Notify_Change_Legal_Details__c) {
-					currentAccount.fw.newForm.Confirm_Legal_Details_are_correct__c = true;
-				}
-				if(!currentAccount.fw.newForm.Confirm_Location_Details_are_correct__c && !currentAccount.fw.newForm.Notify_Change_Location__c) {
-					currentAccount.fw.newForm.Confirm_Location_Details_are_correct__c = true;
-				}
-				if(!currentAccount.fw.newForm.Confirm_Ownership_details_are_correct__c && !currentAccount.fw.newForm.Notify_Change_Ownership__c) {
-					currentAccount.fw.newForm.Confirm_Ownership_details_are_correct__c = true;
-				}
-
-				currentAccount.fw.newform.status__c = FORM_STATUS_COMPLETED;
-			}
 
 			//
 			// The form is always saved despite having errors.
@@ -688,9 +671,16 @@ System.debug('alex confirm update errorFound : ' + errorFound);
 
     public Pagereference securityCheck() {
 
-        if (!newCase.Owner.Name.startsWith('Annual Revalidation')) {
+        if (newCase == null || (newCase != null && !newCase.Owner.Name.startsWith('Annual Revalidation'))) {
+
             return new Pagereference('/ISSP_Case?caseId=' + newCase.Id + '&mid=M1S2' + commParam);
-        }
+
+        } else {
+			//
+			// If the case is not visible in the portal then set it visible in the portal.
+			//
+			setCaseVisibleInPortal(newCase);
+		}
 
         return null;
     }
@@ -767,7 +757,7 @@ System.debug('alex confirm update errorFound : ' + errorFound);
         List <Case> newCases = [Select Id, CaseNumber, Reason1__c, CaseArea__c, Status, BSPCountry__c, Country_concerned_by_the_query__c, Oscar__c,
 								   	   Contact.Name, Account.Id, Description, Subject, Account_Concerned__c, Account_Concerned__r.Top_Parent__c, Account.Name,
                                    	   Account.Billing_Address_formated__c, Verification__c, IFAP_Country_ISO__c, Case_Language__c, Region__c, Applicable_to_Which_Version_s__c,
-									   Owner.Name
+									   Owner.Name, Visible_on_ISS_Portal__c
                                   From Case
                                  Where Id = :caseId];
 
