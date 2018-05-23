@@ -16,52 +16,63 @@
         <externalId>false</externalId>
         <fieldManageability>DeveloperControlled</fieldManageability>
         <label>Helper Type</label>
-        <picklist>
-            <picklistValues>
-                <fullName>KPI1_Reason1</fullName>
-                <default>true</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>KPI1_RecordType</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>KPI2_Reason1</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>KPI2_RecordType</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>ProcessAge_Reason1</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>AccProcType_Reason1</fullName>
-                <default>false</default>
-            </picklistValues>
-            <restrictedPicklist>true</restrictedPicklist>
-            <sorted>false</sorted>
-        </picklist>
         <required>true</required>
         <type>Picklist</type>
+        <valueSet>
+            <restricted>true</restricted>
+            <valueSetDefinition>
+                <sorted>false</sorted>
+                <value>
+                    <fullName>KPI1_Reason1</fullName>
+                    <default>true</default>
+                    <label>KPI1_Reason1</label>
+                </value>
+                <value>
+                    <fullName>KPI1_RecordType</fullName>
+                    <default>false</default>
+                    <label>KPI1_RecordType</label>
+                </value>
+                <value>
+                    <fullName>KPI2_Reason1</fullName>
+                    <default>false</default>
+                    <label>KPI2_Reason1</label>
+                </value>
+                <value>
+                    <fullName>KPI2_RecordType</fullName>
+                    <default>false</default>
+                    <label>KPI2_RecordType</label>
+                </value>
+                <value>
+                    <fullName>ProcessAge_Reason1</fullName>
+                    <default>false</default>
+                    <label>ProcessAge_Reason1</label>
+                </value>
+                <value>
+                    <fullName>AccProcType_Reason1</fullName>
+                    <default>false</default>
+                    <label>AccProcType_Reason1</label>
+                </value>
+            </valueSetDefinition>
+        </valueSet>
     </fields>
     <fields>
         <fullName>ObjectName__c</fullName>
         <externalId>false</externalId>
         <fieldManageability>DeveloperControlled</fieldManageability>
         <label>ObjectName</label>
-        <picklist>
-            <picklistValues>
-                <fullName>Case</fullName>
-                <default>true</default>
-            </picklistValues>
-            <restrictedPicklist>true</restrictedPicklist>
-            <sorted>true</sorted>
-        </picklist>
         <required>true</required>
         <type>Picklist</type>
+        <valueSet>
+            <restricted>true</restricted>
+            <valueSetDefinition>
+                <sorted>true</sorted>
+                <value>
+                    <fullName>Case</fullName>
+                    <default>true</default>
+                    <label>Case</label>
+                </value>
+            </valueSetDefinition>
+        </valueSet>
     </fields>
     <fields>
         <fullName>Values_to_check__c</fullName>
