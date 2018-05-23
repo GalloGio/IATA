@@ -8,14 +8,12 @@
             action.setCallback(this, function(a) {
                 var sectorsMap = a.getReturnValue();
                 c.set("v.sectors", sectorsMap);
-                console.warn(c.get("v.sectors"));
 
                 var options = [];
                 for (var key in sectorsMap){
                     options.push(sectorsMap[key]);
                 }
 
-                console.warn(options)
                 c.find("sectorSelection").set("v.options", options);
             });
             $A.enqueueAction(action);

@@ -6,15 +6,11 @@
 
         var catoptions = [];
         if(c.get("v.changeCategory") && !$A.util.isEmpty(sectors)){
-            console.warn(sector);
-            console.warn(c.get("v.sectors")[sector]);
-            console.warn(c.get("v.sectors")[sector].dependentValues);
             catoptions = c.get("v.sectors")[sector].dependentValues;
         }else{
             catoptions = [{label: category, value : category, selected : true}];
         }
 
-        console.log(catoptions);
         c.find("categorySelection").set("v.options", catoptions);
     },
 	copyBillingToShipping : function(c) {
