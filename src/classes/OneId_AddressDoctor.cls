@@ -47,7 +47,7 @@ public with sharing class OneId_AddressDoctor {
 
         AddressResponse r = getAddressInformation(addressInformation, 'CERTIFIED');
 
-        Set<String> validResponses = new Set<String>{'V4','V3','V2','V1','C4','C3'};
+        Set<String> validResponses = new Set<String>{'V4','V3','C4'};
         return validResponses.contains(r.processStatus);
         /*
         Dom.XmlNode resultData = resultDataSet.getChildren()[0]; // 1st result of suggestion
