@@ -333,8 +333,10 @@ public without sharing class ISSP_Registration {
                 (SELECT Id, Valid_To_Date__c FROM ID_Cards__r WHERE Is_Active_Card__c = true)
                 from Contact where Email =:con.email.trim() and RecordTypeId=:rt.Id];
         }
-        else
+        else{
+            con.account=acc; // related account information
             conList = new list<Contact>{con};
+        }
 
         // new contact
         if (conList.size()==0) {
