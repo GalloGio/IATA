@@ -91,6 +91,38 @@ public without sharing class OneId_RegistrationProcessController {
     }
 
     @AuraEnabled
+    public static Map<String,String> getAccountLabels() {
+        List<SObjectField> contactFields = new List<Schema.SObjectField> {
+           // 'Id',
+            Account.BillingAddress,
+            Account.BillingCity,
+            Account.BillingCountry,
+            Account.BillingPostalCode,
+            Account.BillingState,
+            Account.BillingStreet,
+            Account.Category__c,
+            Account.Email__c,
+            Account.Legal_name__c,
+            Account.Name,
+            Account.Sector__c,
+            Account.ShippingAddress,
+            Account.ShippingCity,
+            Account.ShippingCountry,
+            Account.ShippingPostalCode,
+            Account.ShippingState,
+            Account.ShippingStreet,
+            Account.TradeName__c,
+            Account.Website
+        };
+
+        Map<String,String> labels = new Map<String,String>();
+        for (SObjectField f : contactFields) {
+            labels.put(f.getDescribe().getName(), f.getDescribe().getLabel());
+        }
+        return labels;
+    }
+
+    @AuraEnabled
     public static List<String> getContactJobFunctionValues(){
         List<String> values =  new  List<String>();
 

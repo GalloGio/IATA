@@ -1,5 +1,5 @@
 ({
-    setSector : function (c, e, h) {
+    handleInit : function (c, e, h) {
         var sector = c.get("v.account.Sector__c");
         var category = c.get("v.account.Category__c");
 
@@ -15,6 +15,12 @@
         }
 
         h.setCategory(c);
+
+        var action = c.get("c.getAccountLabels");
+        action.setCallback(this, function(a) {
+            c.set("v.accountLabels", a.getReturnValue());
+        });
+        $A.enqueueAction(action);
     },
     sectorChanged : function (c, e, h) {
         h.setCategory(c);
@@ -111,14 +117,14 @@
         var isAllFilled = true;
 
         if($A.util.isEmpty(category.get("v.value"))){
-           category.set("v.errors",[{message:"Please, choose the category"}]);
+           category.set("v.errors",[{message:$A.get("$Label.c.OneId_CategoryError")}]);
            isAllFilled = false;
         }else{
            category.set("v.errors",null);
         }
 
         if(!$A.util.isEmpty(emailValue) && !emailValue.match(regExpEmailformat)){
-           email.set("v.errors",[{message:"Please, enter your email"}]);
+           email.set("v.errors",[{message:$A.get("$Label.c.OneId_EmailError")}]);
            isAllFilled = false;
         }else{
            email.set("v.errors",null);

@@ -107,7 +107,7 @@
     </div>
 
     <div aura:id="registrationComplete" class="slds-text-align_center slds-p-around_large slds-hide">
-        <h1 class="slds-m-bottom_medium">Registration completed successfully</h1>
-        <h3>Please check your email to get your access details</h3>
+        <h1 class="slds-m-bottom_medium">{!$Label.c.OneId_RegistrationComplete}</h1>
+        <h3>{!$Label.c.OneId_CheckEmail}</h3>
     </div>
 </aura:component>

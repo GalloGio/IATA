@@ -2,6 +2,10 @@
 	padding-top: 0px; 
 }
 
+.THIS .intl-tel-input{
+	display: block;
+}
+
 .THIS .text-warning{
 	color: orange;
 }

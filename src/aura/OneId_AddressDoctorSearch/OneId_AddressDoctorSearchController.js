@@ -23,7 +23,7 @@
                 if(suggestions != undefined && suggestions.length > 0) {
                     c.set("v.response", suggestions);
                 } else {
-                    var noResult = {'addressComplete':'No result found...', 'street':userInputValue};
+                    var noResult = {'addressComplete': $A.get("{!$Label.c.OneId_NoResults"), 'street':userInputValue};
                     suggestions.push(noResult);
                     c.set("v.response",suggestions);
                 }

@@ -102,19 +102,19 @@
                     
                     <aura:if isTrue="{!v.accounts.length &lt; v.totalResult}">
                         <div role="presentation" class="slds-listbox__item lastRow">
-                            First 20 results shown over {!v.totalResult}. Please refine your search
+                            {!format($Label.c.OneId_TotalResults, v.totalResults)}
                         </div>
                     </aura:if>
                     
                     <aura:if isTrue="{!v.customerType == 'GloballSalesAgent'}">
                         <div role="presentation" class="slds-listbox__item lastRow">
-                            No Company found for your combination of GSA code and country? Please ensure you have entered the correct information or consult our <a href="http://theiatahub.force.com/iatapkb/articles/en_US/How_To/Customer-Portal-Troubleshooting/?l=en_US" target="_blank">troubleshooting guide</a>
+                            <aura:unescapedHTML value="{!$Label.c.OneId_GSAWarning}"/>
                         </div>
                     </aura:if>
 
                     <aura:if isTrue="{!v.showCreateNew}">
                         <div role="presentation" class="slds-listbox__item lastRow">
-                            Didn't find the organization you were looking for? <span onclick="{!c.createNew }">Create New</span>
+                            {!$Label.c.OneId_AccountNotFound} &nbsp;<span onclick="{!c.createNew }">{!$Label.c.OneId_CreateNew}</span>
                         </div>
                     </aura:if>
                 </div>        	
