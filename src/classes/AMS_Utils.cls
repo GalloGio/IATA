@@ -2624,4 +2624,45 @@ public static String fetchTypeOfCustomer (String locationType , String category)
         }
         return value;
     }
+
+    public static Id getRegionalQueue(Case newCase) {
+        //Available queue names
+        Id qId;
+
+        Set<String> queueNames = new Set<String> {'AgencyManagementAP', 'AgencyManagementAfricaME', 'AgencyManagementAmericas', 'AgencyManagementChinaNAsia', 'CasesACCEuropeOffOnshore'};
+        Map<String, QueueSobject> mapRegionalQueue = new Map<String, QueueSobject>();
+        //Build map queue.name -> queue
+        for (QueueSobject queue : [Select Queue.Id, Queue.DeveloperName From QueueSobject Where Queue.DeveloperName in: queueNames]) {
+            mapRegionalQueue.put(queue.Queue.DeveloperName, queue);
+        }
+
+        //Assigns queue according to region
+        if (newCase.Region__c == 'Africa & Middle East') {
+            if (mapRegionalQueue.get('AgencyManagementAfricaME') != null) {
+                qId = mapRegionalQueue.get('AgencyManagementAfricaME').Queue.Id;
+            }
+
+        } else if (newCase.Region__c == 'Americas') {
+            if (mapRegionalQueue.get('AgencyManagementAmericas') != null) {
+                qId = mapRegionalQueue.get('AgencyManagementAmericas').Queue.Id;
+            }
+
+        } else if (newCase.Region__c == 'Asia & Pacific') {
+            if (mapRegionalQueue.get('AgencyManagementAP') != null) {
+                qId = mapRegionalQueue.get('AgencyManagementAP').Queue.Id;
+            }
+        } else if (newCase.Region__c == 'China & North Asia') {
+            if (mapRegionalQueue.get('AgencyManagementChinaNAsia') != null) {
+                qId = mapRegionalQueue.get('AgencyManagementChinaNAsia').Queue.Id;
+            }
+        } else if (newCase.Region__c == 'Europe') {
+            if (mapRegionalQueue.get('CasesACCEuropeOffOnshore') != null) {
+                qId = mapRegionalQueue.get('CasesACCEuropeOffOnshore').Queue.Id;
+            }
+        }
+        System.DEBUG('Case region: ' + newCase.Region__c);
+        System.DEBUG('AM Queue returned: ' + qId);
+        return qId;
+    }
+
 }

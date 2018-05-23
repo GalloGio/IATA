@@ -641,6 +641,8 @@ System.debug('alex confirm update errorFound : ' + errorFound);
 		try {
 			oscar.IATA_Codes_NOK__c = submitHelper.strListUpdateCompleted.replaceAll(' ', '');
 
+			oscar.OwnerId = AMS_Utils.getRegionalQueue(newCase);
+
 			upsert oscar;
 
 			Database.DMLOptions dmo = new Database.DMLOptions();
