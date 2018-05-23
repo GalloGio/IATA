@@ -331,7 +331,7 @@ public without sharing class ISSP_Registration {
         RecordType rt = [Select r.Id,r.Name, r.DeveloperName From RecordType r where  DeveloperName='Standard_Contact'];
         if(con.Id == null) {
             //conList = [select accountId,firstName,lastName,Email from Contact where Email =:con.email.trim() and RecordTypeId=:rt.Id];
-            conList = [select accountId,firstName,lastName,Email,Salutation, Account.RecordType.DeveloperName,
+            conList = [select accountId,firstName,lastName,Email,Salutation, Account.RecordType.DeveloperName,account.sector__c,account.category__c,
                 (SELECT Id, Valid_To_Date__c FROM ID_Cards__r WHERE Is_Active_Card__c = true)
                 from Contact where Email =:con.email.trim() and RecordTypeId=:rt.Id];
         }
@@ -894,16 +894,15 @@ public without sharing class ISSP_Registration {
         //EM: Management of email according to the portal
         //userId = Comm_User_Helper.createNewUser(con,selectedCustomerType, 'ISSP', lang, isNotIATA, newAirline);
         
-        Boolean newProvider = ((acc.Sector__c == TIP_Utils.ACCOUNT_SECTOR_FINANCIAL_INSTITUTION && acc.Category__c == TIP_Utils.ACCOUNT_CATEGORY_PAYMENT_PROVIDER) ? True : False);
         if(sRefererCommunity == constIEC){
-            userId = Comm_User_Helper.createNewUser(con,selectedCustomerType, 'IEC', lang, isNotIATA, newAirline, newProvider);
+            userId = Comm_User_Helper.createNewUser(con,selectedCustomerType, 'IEC', lang, isNotIATA, newAirline);
         }
 
         else{
             if(communityName=='' || communityName==null){
-            userId = Comm_User_Helper.createNewUser(con,selectedCustomerType, 'ISSP', lang, isNotIATA, newAirline, newProvider);
+            userId = Comm_User_Helper.createNewUser(con,selectedCustomerType, 'ISSP', lang, isNotIATA, newAirline);
             }else if(communityName=='CNS'){
-                userId = Comm_User_Helper.createNewUser(con,selectedCustomerType, 'CNS', lang, isNotIATA, newAirline, newProvider);
+                userId = Comm_User_Helper.createNewUser(con,selectedCustomerType, 'CNS', lang, isNotIATA, newAirline);
             }
             
         }
