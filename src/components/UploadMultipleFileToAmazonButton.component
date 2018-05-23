@@ -101,7 +101,8 @@
 
 		xhr.onreadystatechange = function () {
 			if (this.readyState == 4) {
-				fileCounter.refreshIfEmpty();
+				//fileCounter.refreshIfEmpty(); /* AMSU-135 commented */
+				
 				var status = this.status;
 				if (status == 200) { 
 					////progressUpload(100, this.progressBar);
@@ -153,6 +154,7 @@
         }
  		UploadMultipleFileToAmazonButtonCtrl.createAmazonFileObject(path, file.size,"{!sobjectId}", "{!uploader}", fileIdentifierPick, "{!source}", function(result, event){ 
  			/* AMSU-135 force refresh on oscar process attachments list*/
+ 			fileCounter.refreshIfEmpty();
  			if(typeof(refreshList) == 'function') { console.log('refreshList -> function'); refreshList();} else {console.log('refreshList -> unknown');}
  		});
  	}
