@@ -9,6 +9,7 @@
 	<aura:attribute type="Boolean" name="changeName" default="true"/>
 
 	<aura:attribute type="Map" name="accountLabels" access="private"/>
+	<aura:attribute type="Map" name="sectors" access="private"/>
 	<aura:attribute type="Integer" name="validBilling" default="0" access="private"/>
 	<aura:attribute type="Integer" name="validShipping" default="0" access="private"/>
 	<aura:attribute type="Boolean" name="validationError" default="false" access="private"/>

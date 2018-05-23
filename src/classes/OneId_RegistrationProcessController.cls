@@ -134,12 +134,18 @@ public without sharing class OneId_RegistrationProcessController {
     }
 
     @AuraEnabled
-    public static List<PicklistEntry> getSectors(){
-        List<PicklistEntry> values =  new  List<PicklistEntry>();
-        values.add(new PicklistEntry('', System.Label.ISSP_Registration_None));
+    public static Map<String, PicklistEntry> getSectors(){
+        Map<String, PicklistEntry> values =  new  Map<String, PicklistEntry>();
+        values.put('', new PicklistEntry(System.Label.ISSP_Registration_None, ''));
 
         for (Schema.PicklistEntry p : Schema.Account.Sector__c.getDescribe().getPickListValues()){
-           values.add(new PicklistEntry(p.getLabel(), p.getValue()));
+            PicklistEntry e = new PicklistEntry(p.getLabel(), p.getValue());
+
+            for(Schema.PicklistEntry dp : OneId_PicklistHelper.getDependentValues(p.getValue())){
+                e.dependentValues.add(new PicklistEntry(dp.getLabel(), dp.getValue()));
+            }
+
+           values.put(e.value, e);
         }
         return values;
     }
@@ -147,10 +153,12 @@ public without sharing class OneId_RegistrationProcessController {
     public class PicklistEntry {
         @AuraEnabled public String label;
         @AuraEnabled public String value;
+        @AuraEnabled public List<PicklistEntry> dependentValues; 
 
         public PicklistEntry(String label, String value){
             this.label = label;
             this.value = value;
+            this.dependentValues = new List<PicklistEntry>();
         }
     }
 
@@ -397,7 +405,7 @@ public without sharing class OneId_RegistrationProcessController {
 
     }
 
-    public static void sendWelcomeEmail(Contact con, User u, String password, String serviceName){
+    /*public static void sendWelcomeEmail(Contact con, User u, String password, String serviceName){
         System.debug('sendWelcomeEmail starting... ');
         String cleanUsername = u.userName.replace('+', Comm_User_Helper.plusReplacer);
         String encodedPart ='c='+EncodingUtil.urlEncode(Comm_User_Helper.EncryptString(cleanUsername+Comm_User_Helper.SEPARATOR+password+Comm_User_Helper.SEPARATOR+u.UID__c), 'UTF-8');
@@ -414,7 +422,7 @@ public without sharing class OneId_RegistrationProcessController {
         
         emailWrap = Comm_User_Helper.ISSP_PassWordBuilMessageWrapper(con, password, link, Comm_User_Helper.ONEIDENTITY, serviceName);
         Comm_User_Helper.sendEmail(template, emailWrap, con, Comm_User_Helper.ONEIDENTITY);
-    }
+    }*/
 
     @future
     public static void updatePortalUseProfile(String userId){

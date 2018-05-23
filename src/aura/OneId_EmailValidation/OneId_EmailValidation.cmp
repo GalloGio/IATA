@@ -18,7 +18,7 @@
     <div class="slds-grid slds-gutters slds-wrap ">
         <div class="slds-col slds-col--padded">
             <div class="slds-size--1-of-1 slds-m-bottom_large ">
-                <label class="slds-form-element__label"><abbr class="slds-required" title="required">*</abbr>{!$label.c.ISSP_MyProfile_EMAIL}</label>
+                <label class="slds-form-element__label"><abbr class="slds-required" title="required">*</abbr>{!$Label.c.ISSP_MyProfile_EMAIL}</label>
                 <ui:inputEmail aura:id="email" placeholder="test@email.com" value="{!v.contact.Email}" class="slds-input" required="true" />
             </div>
             

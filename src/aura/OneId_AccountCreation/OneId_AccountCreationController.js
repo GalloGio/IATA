@@ -6,7 +6,17 @@
         if(c.get("v.changeSector")){
             var action = c.get("c.getSectors");
             action.setCallback(this, function(a) {
-                c.find("sectorSelection").set("v.options", a.getReturnValue());
+                var sectorsMap = a.getReturnValue();
+                c.set("v.sectors", sectorsMap);
+                console.warn(c.get("v.sectors"));
+
+                var options = [];
+                for (var key in sectorsMap){
+                    options.push(sectorsMap[key]);
+                }
+
+                console.warn(options)
+                c.find("sectorSelection").set("v.options", options);
             });
             $A.enqueueAction(action);
         }else{
