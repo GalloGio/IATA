@@ -25,7 +25,7 @@
                 if(accounts != undefined && accounts.length > 0) {
                     component.set("v.accounts", accounts);
                 } else {
-                    component.set("v.accounts",[{'Name':$A.get("{!$Label.c.OneId_NoResults")}]);
+                    component.set("v.accounts",[{'Name':$A.get("{!$Label.c.OneId_NoResults}")}]);
                 }
 
                 component.set("v.searching", false);
@@ -49,7 +49,7 @@
     suggestionSelected: function(c, e) {
         var selectedAccountName = e.currentTarget.dataset.value;
 
-        if(selectedAccountName != $A.get("{!$Label.c.OneId_NoResults")) { 
+        if(selectedAccountName != $A.get("{!$Label.c.OneId_NoResults}")) { 
             // Set input with selected value
             //var userInputCmp = c.find("userInput");
             c.set("v.userInput", selectedAccountName);
