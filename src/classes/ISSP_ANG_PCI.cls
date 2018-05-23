@@ -258,7 +258,9 @@ SYSTEM.DEBUG('getRelatedAccount starting... ');
         newCase.recordTypeId = OSCAR_RECORD_TYPE_ID;
         newCase.BSPCountry__c =  isocountry.Case_BSP_Country__c ;
         newCase.Country_concerned_by_the_query__c = isocountry.Name;
-        newCase.Reason1__c = AMS_UTILS.CASE_REASON_FOR_MANAGEMENT;
+
+        if (isocountry.ANG_Enable_NewGen__c) newCase.Reason1__c = AMS_Utils.CASE_REASON_FOR_MANAGEMENT;
+        else newCase.Reason1__c = AMS_Utils.CASE_REASON_PCI_DSS_COMPLIANT;
 
         if(newCase.Status == null || newCase.Status == '')
             newCase.Status = 'Draft';
@@ -277,8 +279,10 @@ SYSTEM.DEBUG('getRelatedAccount starting... ');
 
 		accountConcerned = ISSP_Selector.fetchAccountConcernedDetails(vAccountConcernedId);
 
-        if(newCase.Origin == 'Portal')
-		    newCase.Subject = Label.ISSP_ANG_PCI_Compliance + ' - ' + accountConcerned.IATACode__c + ' – ' + accountConcerned.Name;
+        if(newCase.Origin == 'Portal') {
+            if (isocountry.ANG_Enable_NewGen__c) newCase.Subject = Label.ISSP_ANG_FoP_Management + ' - ' + accountConcerned.IATACode__c + ' – ' + accountConcerned.Name;
+            else newCase.Subject = Label.ISSP_ANG_PCI_DSS_Compliant + ' - ' + accountConcerned.Name;
+        }
 
 		fetchPCI_CountryRequirements();
 
@@ -296,7 +300,7 @@ SYSTEM.DEBUG('getRelatedAccount starting... ');
 	    }
         newForm.Agency_Codes_Concerned__c = agencyCodes;
 
-        if(newCase.Origin == 'Portal')
+        if(newCase.Origin == 'Portal') 
             newCase.Description = Label.ISSP_ANG_PROOF_OF_PCI + newForm.Agency_Codes_Concerned__c;
 
         upsert newCase;
@@ -348,6 +352,35 @@ SYSTEM.DEBUG('getRelatedAccount starting... ');
 
         if(auxForm != null) newForm = auxForm;
 
+        //Filling the AMS_Pax_Accreditation_Form__c if the ISO_Country is non-NAM Enabled
+
+        if (!isocountry.ANG_Enable_NewGen__c) {
+
+            Account sourceAccount =  [SELECT Id, Name, BillingStreet, BillingCity, BillingState, BillingPostalCode, BillingCountry, Legal_name__c,
+                                    TradeName__c, Membership_status__c, IATACode__c, Sector__c, Category__c, Due_Diligence_Status__c,
+                                    Due_Diligence_Remarks__c, Level_of_risk__c, Email__c, Website, Phone, PhoneNational__c, Fax, FaxNational__c,
+                                    Mobile__c, MobileNational__c , Location_Type__c, ParentId, ShippingStreet, ShippingCity, ShippingState,
+                                    ShippingPostalCode, ShippingCountry, VAT_Number__c, Short_Name__c, Location_Class__c, IATA_ISO_Country__c,
+                                    Iso_State__c, Abbreviated_name__c, Abbreviated_Address__c, Remittance_frequency__c, Solicitation_Flag__c,
+                                    VAT_Number_2__c, CASS_Number__c,Company_Type__c, IATA_ISO_Shipping_Country__c, IATA_ISO_Shipping_State__c
+                                FROM Account WHERE Id = :newCase.Account_Concerned__c LIMIT 1];
+
+            Map<String, String> mapAccountToAccrFormFields = new Map<String, String> {'Name' => 'Account_Name__c', 'IATACode__c' => 'IATACode__c', 'Short_Name__c' => 'Short_Name__c',
+                'Location_Class__c' => 'Location_Class__c', 'Location_Type__c' => 'Location_Type__c', 'TradeName__c' => 'Trade_Name__c',
+                'BillingStreet' => 'Branch_Office_Street_name_number__c', 'BillingPostalCode' => 'Branch_Office_Postal_code__c', 'BillingState' => 'Billing_State__c', 'BillingCity' => 'Branch_Office_City__c',
+                'IATA_ISO_Country__c' => 'ISO_Country__c', 'IATA_ISO_Country__c' => 'Branch_Office_Country__c', 'Iso_State__c' => 'IATA_ISO_State__c', 'ShippingCountry' => 'Shipping_Country__c', 'ShippingStreet' => 'Shipping_Street__c',
+                'ShippingPostalCode' => 'Shipping_Postal_Code__c', 'ShippingState' => 'Shipping_State__c', 'ShippingCity' => 'Shipping_City__c', 'Email__c' => 'Branch_Office_Email__c',
+                'Website' => 'Website__c', 'Phone' => 'Branch_Office_Phone__c', 'Fax' => 'Branch_Office_FAX__c', 'Mobile__c' => 'Mobile__c', 'Abbreviated_name__c' => 'Abbreviated_name__c',
+                'Abbreviated_Address__c' => 'Abbreviated_Address__c', 'Remittance_frequency__c' => 'Remittance_frequency__c', 'Solicitation_Flag__c' => 'Solicitation_Flag__c',
+                'VAT_Number_2__c' => 'VAT_Number_2__c', 'CASS_Number__c' => 'CASS_Number__c'
+                };
+
+            for (String accountApiName : mapAccountToAccrFormFields.keyset())
+                newForm.put(mapAccountToAccrFormFields.get(accountApiName), sourceAccount.get(accountApiName));
+
+            newForm.ISSP_AMS_Legal_Status__c = mapCompanyTypes(sourceAccount.Company_Type__c);
+        }
+
         upsert newForm;
 
         AMS_OSCAR__c oscar;
@@ -375,7 +408,10 @@ SYSTEM.DEBUG('getRelatedAccount starting... ');
 
         update newCase;
 
-        String typeOfProcess = AMS_Utils.NGFOP;
+        String typeOfProcess;
+        if (isocountry.ANG_Enable_NewGen__c) typeOfProcess = AMS_Utils.NGFOP;
+        else typeOfProcess = AMS_Utils.PCI_COMPLIANT;
+
         system.debug('case ' + newCase + ' newCase.Account_Concerned__c ' + newCase.Account_Concerned__c + ' newForm.Id ' + newForm.Id + 'typeOfProcess ' + typeOfProcess);
 
         if(newCase.origin == 'Portal')
@@ -395,6 +431,32 @@ SYSTEM.DEBUG('getRelatedAccount starting... ');
         return new Pagereference('/ISSP_AMS_Accreditation?caseId=' + newCase.Id + '&step=Final' + commParam);
 
     	return null;
+    }
+
+    private String mapCompanyTypes(String companyType) {
+        if(companyType == 'A') {
+            return 'Association';
+        } else if (companyType == 'C') {
+            return 'Corporation';
+        } else if (companyType == 'E') {
+            return 'Government Owned Enterprise';
+        } else if (companyType == 'L') {
+            return 'Limited Company';
+        } else if (companyType == 'O') {
+            return 'Other';
+        } else if (companyType == 'P') {
+            return 'Partnership';
+        } else if (companyType == 'R') {
+            return 'Limited Partnership';
+        } else if (companyType == 'S') {
+            return 'Sole Proprietorship';
+        } else if (companyType == 'T') {
+            return 'Trust Company';
+        } else if (companyType == 'V') {
+            return 'Co-operative';
+        } else {
+            return '';
+        }
     }
 
     /**
@@ -497,7 +559,7 @@ SYSTEM.DEBUG('getRelatedAccount starting... ');
         List <Case> newCases = [
                                    SELECT Id, CaseNumber, Reason1__c, CaseArea__c, Status, BSPCountry__c, Country_concerned_by_the_query__c, Contact.Name, Account.Id, Description, Subject, Account_Concerned__c, Account_Concerned__r.Top_Parent__c, Account.Name,
                                    Account.Billing_Address_formated__c, Verification__c, IFAP_Country_ISO__c, Case_Language__c, Region__c, Applicable_to_Which_Version_s__c, Origin, OSCAR__c,
-                                   OwnerId
+                                   OwnerId, Owner.Name
                                    FROM Case
                                    WHERE Id = :vCaseId
                                ];
@@ -553,16 +615,7 @@ SYSTEM.DEBUG('getRelatedAccount starting... ');
 
     public Pagereference securityCheck() {
 
-        Boolean alreadySubmitted = false;
-
-        if(newCase.Id != null) {
-            if(newCase.OSCAR__c != null) {
-                List<AMS_Process_Detail__c>  aux = [Select id From AMS_Process_Detail__c Where OSCAR__c = :newCase.OSCAR__c limit 1];
-                alreadySubmitted = (aux.size() != 0);
-            }
-        }
-
-        if ((newCase.Id != null && newCase.Status != 'Draft' && newCase.Origin != 'Massive FOP Creation') || (newCase.Origin == 'Massive FOP Creation' && alreadySubmitted)) {
+        if ((newCase.Id != null && newCase.Status != 'Draft' && newCase.Origin != 'Massive FOP Creation') || (newCase.Origin == 'Massive FOP Creation' && !newCase.Owner.Name.startsWith('NewGen PCI'))) {
             return new Pagereference('/ISSP_Case?caseId=' + newCase.Id + '&mid=M1S2' + commParam);
         }
 

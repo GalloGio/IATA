@@ -137,7 +137,7 @@
                     </div>
                   </apex:outputPanel>
 
-                  <hr></hr>
+                  <hr></hr> 
 
                   <apex:outputPanel id="searchResults" rendered="{!activeSearch}">
 
@@ -228,7 +228,7 @@
 
                       <tr>
                         <td>
-                          <apex:outputLabel value="{!$Label.ISSP_ANG_IATA_CODE_SEARCH_FINANCIAL_SECURITY_EXISTS}"/>
+                          <apex:outputLabel value="{!$Label.ISSP_ANG_IATA_CODE_SEARCH_VALID_FINANCIAL_SECURITY}"/>
                         </td>
                         <td>
                           <i style="display:{!IF(financialSecurityExists,'','none')}; margin-left: 15px; color: green;" class="glyphicon glyphicon-ok"></i>
@@ -245,7 +245,25 @@
                         </td>
                       </tr>
 
+                      <tr>
+                        <td>
+                          <apex:outputLabel value="{!$Label.ISSP_ANG_IATA_CODE_SEARCH_RHC}"/>
+                        </td>
+                        <td>
+                          <i style="display:{!IF(agency.ANG_CashCondition__c,'','none')}; margin-left: 15px; color: green;" class="glyphicon glyphicon-ok"></i>
+                          <i style="display:{!IF(NOT(agency.ANG_CashCondition__c),'','none')}; margin-left: 15px; color: red;" class="glyphicon glyphicon-remove"></i>
+                        </td>
+                      </tr>
+
                     </table>
+
+                    <br/>
+
+                  <!--<div name="right-side" class="col-md-4 col-sm-12">-->
+                    <div style="min-height: 225px; display:{!IF(afpWrapper != null,'','none')};">
+                      <c:AFP_Component wrapperClass="{!afpWrapper}"/>
+                    </div>
+                  <!--</div>-->
 
                     <apex:outputPanel rendered="{!AND(agency.IATA_ISO_Country__r.ANG_Enable_NewGen__c, isTravel)}">
 

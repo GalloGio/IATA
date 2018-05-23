@@ -233,7 +233,7 @@
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>AMS_OSCAR_Action6</shortDescription>
-        <value>Select/Deselect Complete Hierarchy</value>
+        <value>Edit the accounts involved</value>
     </labels>
     <labels>
         <fullName>AMS_OSCAR_Action7</fullName>
@@ -14926,12 +14926,10 @@ Select at least one authorised signatory, and choose the Financial Assessment co
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>Yours Sincerely</shortDescription>
-        <value>
-&lt;p&gt;This is to inform you that we have received your PCI DSS Attestation of Compliance / Nil Credit Card Self-Declaration and that our records have been updated accordingly.&lt;/p&gt;
+        <value>&lt;p&gt;This is to inform you that we have received your PCI DSS Attestation of Compliance / Nil Credit Card Self-Declaration and that our records have been updated accordingly.&lt;/p&gt;
 &lt;p&gt;We want to take this opportunity to thank you for having submitted the requested evidence within the deadline.&lt;/p&gt;
 &lt;p&gt;We would like to remind you that your PCI DSS Attestation of Compliance has an expiration date and therefore it has to be renewed on an annual basis.&lt;/p&gt;
-&lt;p&gt;Should you need any further information from IATA, please do not hesitate to login a new query via our Customer Portal: &lt;a href=&quot;www.iata.org/cs&quot;&gt;www.iata.org/cs&lt;/a&gt;.&lt;/p&gt;
-        </value>
+&lt;p&gt;Should you need any further information from IATA, please do not hesitate to login a new query via our Customer Portal: &lt;a href=&quot;www.iata.org/cs&quot;&gt;www.iata.org/cs&lt;/a&gt;.&lt;/p&gt;</value>
     </labels>
     <labels>
         <fullName>ISSP_ANG_AccreditationsAndChangesDescription</fullName>
@@ -15072,6 +15070,14 @@ Select at least one authorised signatory, and choose the Financial Assessment co
         <value>Enable Credit Card Form of Payment for the Code(s)</value>
     </labels>
     <labels>
+        <fullName>ISSP_ANG_FoP_Management</fullName>
+        <categories>ISSP, ANG</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_ANG_FoP_Management</shortDescription>
+        <value>FoP Management</value>
+    </labels>
+    <labels>
         <fullName>ISSP_ANG_GenericError</fullName>
         <language>en_US</language>
         <protected>false</protected>
@@ -15127,6 +15133,13 @@ Select at least one authorised signatory, and choose the Financial Assessment co
         <value>No %TYPE% Agency for this IATA Code</value>
     </labels>
     <labels>
+        <fullName>ISSP_ANG_IATA_CODE_SEARCH_RHC</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_ANG_IATA_CODE_SEARCH_RHC</shortDescription>
+        <value>Remittance Holding Capacity</value>
+    </labels>
+    <labels>
         <fullName>ISSP_ANG_IATA_CODE_SEARCH_RISK_EVENTS</fullName>
         <categories>ISSP,ANG</categories>
         <language>en_US</language>
@@ -15141,6 +15154,13 @@ Select at least one authorised signatory, and choose the Financial Assessment co
         <protected>false</protected>
         <shortDescription>Risk Status</shortDescription>
         <value>Risk Status</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_ANG_IATA_CODE_SEARCH_VALID_FINANCIAL_SECURITY</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_ANG_IATA_CODE_SEARCH_VALID_FINANCIAL_SECURITY</shortDescription>
+        <value>Valid Financial Security</value>
     </labels>
     <labels>
         <fullName>ISSP_ANG_IATA_CODE_TO_PROVIDE</fullName>
@@ -15319,6 +15339,13 @@ Select at least one authorised signatory, and choose the Financial Assessment co
         <value>One or more Branch Offices</value>
     </labels>
     <labels>
+        <fullName>ISSP_ANG_OptIn_OptOut_DateInfo</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_ANG_OptIn_OptOut_DateInfo</shortDescription>
+        <value>Date from which Airlines can Opt-Out of IATA EasyPay for this country on the portal.</value>
+    </labels>
+    <labels>
         <fullName>ISSP_ANG_PCI_Choose_IATA_Code</fullName>
         <language>en_US</language>
         <protected>false</protected>
@@ -15332,6 +15359,14 @@ Select at least one authorised signatory, and choose the Financial Assessment co
         <protected>false</protected>
         <shortDescription>ISSP_ANG_PCI_Compliance</shortDescription>
         <value>PCI Compliance</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_ANG_PCI_DSS_Compliant</fullName>
+        <categories>ISSP, ANG</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_ANG_PCI_DSS_Compliant</shortDescription>
+        <value>PCI DSS Compliant</value>
     </labels>
     <labels>
         <fullName>ISSP_ANG_PCI_Selected_IATA_Code</fullName>

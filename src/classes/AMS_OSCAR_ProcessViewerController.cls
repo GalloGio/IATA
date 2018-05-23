@@ -349,26 +349,26 @@ public class AMS_OSCAR_ProcessViewerController {
         }
         
 
-
-        for( Schema.PicklistEntry f : ple)
-        {
+        for( Schema.PicklistEntry f : ple) {
             //this is a workaround to make the current value of the field the default value of the picklist
             if(currentPickValue != f.getValue() 
                 && (dependentPicklistValues.isEmpty() ||  dependentPicklistValues.contains(f.getValue()))
                 ){
-
+            /* Commented as per NEWGEN-3301
             if(canBeDisplayed(fieldName,oscar.Process__c,f.getValue()))
+                picklistValues.add(new SelectOption(f.getValue(), f.getLabel()));
+            */
                 picklistValues.add(new SelectOption(f.getValue(), f.getLabel()));
             }
         }
         
         return picklistValues;
     }
-
-
+    
+    /* Commented as per NEWGEN-3301
     @TestVisible private boolean canBeDisplayed(String fieldName, String oscarProcess, String fieldValue){
 
-        if(!(fieldName == 'Is_PCI_compliant__c' && fieldValue == 'Corporate Card'))
+       // if(!(fieldName == 'Is_PCI_compliant__c' && fieldValue == 'Corporate Card'))
             return true;
 
         if(!AMS_Utils.oscarNewGenProcesses.contains(oscarProcess))
@@ -379,7 +379,7 @@ public class AMS_OSCAR_ProcessViewerController {
 
         return false;
 
-    }
+    }*/
 
     public class StepFieldsDataWrapper{
         public String fieldApiName{get;set;}

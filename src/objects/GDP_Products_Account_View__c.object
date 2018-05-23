@@ -698,8 +698,10 @@ TEXT(Month(Related_Accreditation_Class__r.Original_approval_date__c)) +
     </fields>
     <fields>
         <fullName>Legal_Name__c</fullName>
+        <description>Concatenation of Fields Legal Name Upper 1+2+3</description>
         <externalId>false</externalId>
-        <formula>TRIM(Legal_Name_1__c + &apos; &apos; + Legal_Name_2__c + &apos; &apos; + Legal_Name_3__c)</formula>
+        <formula>TRIM(Legal_Name_1_Upper__c + &apos; &apos; + Legal_Name_2_Upper__c + &apos; &apos; + Legal_Name_3_Upper__c)</formula>
+        <inlineHelpText>Concatenation of Fields Legal Name Upper 1+2+3</inlineHelpText>
         <label>Legal Name</label>
         <required>false</required>
         <trackHistory>false</trackHistory>
@@ -853,7 +855,11 @@ The length is the total of the original fields (Area, Country_Code, Legal_Name, 
         <description>Indicator on the Agency Compliance to PCI DSS Rules. 
 Mapped to &quot; Is_PCI_compliant__c&quot; on AMS Account for Replication.</description>
         <externalId>false</externalId>
-        <inlineHelpText>Mapped to &quot; Is_PCI_compliant__c&quot; on AMS Account for Replication.</inlineHelpText>
+        <inlineHelpText>Mapped to &quot;Is_PCI_compliant__c&quot; on AMS Account for Replication.
+Y = Yes
+N = No
+C = Corporate Cards Only
+X = No Usage of Cards</inlineHelpText>
         <label>PCI Compliance</label>
         <required>false</required>
         <trackHistory>true</trackHistory>
@@ -877,6 +883,11 @@ Mapped to &quot; Is_PCI_compliant__c&quot; on AMS Account for Replication.</desc
                     <fullName>X</fullName>
                     <default>false</default>
                     <label>X</label>
+                </value>
+                <value>
+                    <fullName>C</fullName>
+                    <default>false</default>
+                    <label>C</label>
                 </value>
             </valueSetDefinition>
         </valueSet>
@@ -1248,8 +1259,10 @@ X = Not NewGen OR NewGen GoLite OR NewGen Financial Review Opt-Out</inlineHelpTe
     </fields>
     <fields>
         <fullName>Trading_Name__c</fullName>
+        <description>Concatenation of Fields Trading Name Upper 1+2</description>
         <externalId>false</externalId>
-        <formula>TRIM(Trading_Name_1__c + &apos; &apos; + Trading_Name_2__c)</formula>
+        <formula>TRIM(Trading_Name_1_Upper__c + &apos; &apos; + Trading_Name_2_Upper__c)</formula>
+        <inlineHelpText>Concatenation of Fields Trading Name Upper 1+2</inlineHelpText>
         <label>Trading Name</label>
         <required>false</required>
         <trackHistory>false</trackHistory>
@@ -1418,6 +1431,10 @@ X = Not NewGen OR NewGen GoLite OR NewGen Financial Review Opt-Out</inlineHelpTe
         </picklistValues>
         <picklistValues>
             <picklist>PCI_Compliance__c</picklist>
+            <values>
+                <fullName>C</fullName>
+                <default>false</default>
+            </values>
             <values>
                 <fullName>N</fullName>
                 <default>false</default>

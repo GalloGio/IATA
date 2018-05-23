@@ -294,44 +294,62 @@ public class ServiceRenderedCaseLogic {
     }
 
     private static List<Services_Rendered__c> servicesRenderendFromChangingCases(List<Case> changingCases) {
-
         List<String> airlines = new List<String>();
-        List<String> caseIds = new List<String>();
-        Map<String, String> casesMap = new Map<String, String>();
+        Map<String, List<String>> casesByParentMap = new Map<String, List<String>>();
+        Map<String, String> airlinesByCaseMap = new Map<String, String>();
 
         for (Case c: changingCases) {
             if (c.Reason1__c == 'IATA Easy Pay') {
                 airlines.add(c.Account_Concerned__c);
-                caseIds.add(c.Id);
-                casesMap.put(c.Id, c.Account_Concerned__c);
+                airlinesByCaseMap.put(c.Id, c.Account_Concerned__c);
+                if (c.ParentId != null) {
+                    if (!casesByParentMap.keySet().contains(c.ParentId)) casesByParentMap.put(c.ParentId, new List<String>());
+                    casesByParentMap.get(c.ParentId).add(c.Id);
+                } else {
+                    casesByParentMap.put(c.Id, new List<String>());
+                    casesByParentMap.get(c.Id).add(c.Id);
+                }
             }
         }
 
         List<AP_Process_Form__c> appForms = [SELECT Id, IATA_EasyPay_Opt_In_Opt_Out__c, Case__c
                                              FROM AP_Process_Form__c
-                                             WHERE Case__c IN :caseIds];
+                                             WHERE Case__c IN :casesByParentMap.keySet()];
+
+        Map<String, AP_Process_Form__c> appFormsByCaseMap = new Map<String, AP_Process_Form__c>();
+
+        for (AP_Process_Form__c a: appForms) appFormsByCaseMap.put(a.Case__c, a);
 
         List<Services_Rendered__c> services = [SELECT Id, ANG_IATA_EasyPay_Opt_out__c, Services_Rendered_to_Airline__c
-                                 FROM Services_Rendered__c
-                                 WHERE Services_Rendered_to_Airline__r.IATA_ISO_Country__r.ANG_Portal_Service__c != null
-                                    AND Services_Rendered_Type__c = 'BSP Participation'
-                                    AND Services_Rendered_to_Airline__c IN :airlines];
+                                               FROM Services_Rendered__c
+                                               WHERE Services_Rendered_to_Airline__r.IATA_ISO_Country__r.ANG_Portal_Service__c != null
+                                                AND Services_Rendered_Type__c = 'BSP Participation'
+                                                AND Services_Rendered_to_Airline__c IN :airlines];
+
+        Map<String, Services_Rendered__c> servicesByCaseMap = new Map<String, Services_Rendered__c>();
 
         for (Services_Rendered__c s: services) {
-            for (AP_Process_Form__c a: appForms) {
-                if (casesMap.get(a.Case__c) == s.Services_Rendered_to_Airline__c) {
-                    if (a.IATA_EasyPay_Opt_In_Opt_Out__c == 'OUT' && !s.ANG_IATA_EasyPay_Opt_out__c) {
-                        s.ANG_IATA_EasyPay_Opt_out__c = true;
-                    } else if (a.IATA_EasyPay_Opt_In_Opt_Out__c == 'IN' && s.ANG_IATA_EasyPay_Opt_out__c) {
-                        s.ANG_IATA_EasyPay_Opt_out__c = false;
-                    }
-                }
+            for (String caseId: airlinesByCaseMap.keySet()) {
+            	if (airlinesByCaseMap.get(caseId) == s.Services_Rendered_to_Airline__c) servicesByCaseMap.put(caseId, s);
             }
         }
 
-        return services;
-    }
+        List<Services_Rendered__c> changingServices = new List<Services_Rendered__c>();
 
+        for (String parentCaseId: casesByParentMap.keySet()) {
+        	for (String caseId: casesByParentMap.get(parentCaseId)) {        
+            	if (appFormsByCaseMap.get(parentCaseId).IATA_EasyPay_Opt_In_Opt_Out__c == 'OUT' && !servicesByCaseMap.get(caseId).ANG_IATA_EasyPay_Opt_out__c) {
+                	servicesByCaseMap.get(caseId).ANG_IATA_EasyPay_Opt_out__c = true;
+                	changingServices.add(servicesByCaseMap.get(caseId));
+            	} else if (appFormsByCaseMap.get(parentCaseId).IATA_EasyPay_Opt_In_Opt_Out__c == 'IN' && servicesByCaseMap.get(caseId).ANG_IATA_EasyPay_Opt_out__c) {
+                	servicesByCaseMap.get(caseId).ANG_IATA_EasyPay_Opt_out__c = false;
+                	changingServices.add(servicesByCaseMap.get(caseId));
+            	}
+            }
+        }
+
+        return changingServices;
+    }
 
      public static list<Case> airlineConsumerValidation(list<Case> cases){
             list<case> casesOkConsumer = new list<Case>();
