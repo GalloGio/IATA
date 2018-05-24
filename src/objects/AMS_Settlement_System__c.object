@@ -138,6 +138,11 @@
                     <label>CASSLINK</label>
                 </value>
                 <value>
+                    <fullName>IBSPS</fullName>
+                    <default>false</default>
+                    <label>IBSPS</label>
+                </value>
+                <value>
                     <fullName>ISIS</fullName>
                     <default>false</default>
                     <label>ISIS</label>
