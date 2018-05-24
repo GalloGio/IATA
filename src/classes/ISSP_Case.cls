@@ -147,6 +147,9 @@ public without sharing class ISSP_Case {
             }else if(newCase.RecordType.name == 'OSCAR Communication' && newCase.Origin == 'Massive FOP Creation' && newCase.Owner.Name.startsWith('NewGen PCI')){
                         PageReference pr = new PageReference('/ISSP_ANG_PCI?caseId=' + caseId + commParam);
                         return pr;
+            } else if (newCase.RecordType.name == 'OSCAR Communication' && newCase.Status == 'Draft' && (newCase.Reason1__c == AMS_Utils.CASE_REASON_FOR_MANAGEMENT || newCase.Reason1__c == AMS_Utils.CASE_REASON_PCI_DSS_COMPLIANT)) {
+                PageReference pr = new PageReference('/ISSP_ANG_PCI?caseId=' + caseId + commParam);
+                return pr;
             }
 
             showAlertMessage();

@@ -15381,7 +15381,7 @@ Select at least one authorised signatory, and choose the Financial Assessment co
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>ISSP_ANG_PROOF_OF_PCI</shortDescription>
-        <value>Proof of PCI Compliance for the following IATA Codes:.</value>
+        <value>Thank you for creating the Proof of PCI Compliance for the following IATA Codes:.</value>
     </labels>
     <labels>
         <fullName>ISSP_ANG_Portal_Admin</fullName>
