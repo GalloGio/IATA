@@ -20043,6 +20043,14 @@ If you continue to experience issues registering for the CNS Customer Portal the
         <value>Full Details and Download</value>
     </labels>
     <labels>
+        <fullName>ISSP_OperationalCalendar_Header</fullName>
+        <categories>ISSP, OperationalCalendar</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_OperationalCalendar_Header</shortDescription>
+        <value>{0} Calendar</value>
+    </labels>
+    <labels>
         <fullName>ISSP_OperationalCalendar_LastModifiedDate</fullName>
         <categories>ISSP, OperationalCalendar</categories>
         <language>en_US</language>

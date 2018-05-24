@@ -115,7 +115,7 @@ global without sharing class ISSP_OperationalCalendarController {
         if (IS_AIRLINE) {
             this.description = this.defaultcountryTranslated + ' - BSP/CASS Calendar';
         } else {
-            this.description = this.defaultcountryTranslated + ' ' + this.defaultOperationType + ' ' + this.defaultFrequencyTranslated;
+            this.description = this.defaultcountryTranslated + ' ' + this.defaultOperationType;
         }
     }
     

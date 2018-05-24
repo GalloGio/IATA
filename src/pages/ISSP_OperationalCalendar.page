@@ -30,6 +30,7 @@
         defaultOperationType = "";
         defaultFrequency = "";
     }
+    var title = "{!$Label.ISSP_OperationalCalendar_Header}";
     //console.log(MAP_FREQUENCIES);
     //console.log(LIST_FILTERS);
     //console.log(defaultCountry);
@@ -212,6 +213,23 @@
         });
     }
     
+    function setCalendarTitle() {
+        var countryName = $('.countryFilter :selected').text();
+        var divTitle = $("#title");
+        if ($('.countryFilter :selected').val()=="") {
+            divTitle.hide();
+            divTitle.text(title.replace("{0}",""));
+        } else {
+            if ($("#typeFilter").val()=="") {
+                divTitle.text(title.replace("{0}",countryName));
+            } else {
+                var typeText = $('#typeFilter :selected').text();
+                divTitle.text(title.replace("{0}",countryName + " " + typeText));
+            }
+            divTitle.show();
+        }
+    }
+    
     function getDetailsUrl() {
         var href="/ISSP_OperationalCalendarDetails?MainNav=resources&subNav=OperationalCalendar&mid=M2S4";
         if ($(".countryFilter").val()>"") {
@@ -234,6 +252,7 @@
     
     function refreshEvents() {
         hideError();
+        setCalendarTitle();
         //remove existing events
         $("#calendar").fullCalendar('removeEvents' , function(e){ return true; });
         var country = $(".countryFilter").val();
@@ -377,6 +396,12 @@
     <c:ISSP_CustomNavigation />
     
     <div class="row">
+        <div class="col-sm-12">
+            <div id="title"></div>
+        </div>
+    </div>
+    
+    <div class="row">
         <div class="col-sm-1"></div>
         <div class="col-sm-10">
             <div id="errormessage" class="alert alert-danger" style="display:none"></div>
@@ -387,7 +412,7 @@
     <div id="rowCalendar" class="row">
         <div class="col-sm-2">
             <apex:form >
-                <apex:outputPanel layout="block" styleclass="form-group center">
+                <apex:outputPanel layout="block" styleclass="form-group">
                     <button id="syncCalendar" class="btn btn-success" type="button">
                         <span class="glyphicon glyphicon-calendar"></span>
                         {!$Label.ISSP_OperationalCalendar_Sync_Calendar}

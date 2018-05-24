@@ -22,6 +22,8 @@
 <link href="{!URLFOR($Resource.ISSP_OperationalCalendar, '/css/dataTables.bootstrap.min.css')}" rel="stylesheet"/>
 <link href="{!URLFOR($Resource.ISSP_OperationalCalendar, '/css/buttons.bootstrap.min.css')}" rel="stylesheet"/>
 <link href="{!URLFOR($Resource.ISSP_OperationalCalendar, '/css/details.min.css')}" rel="stylesheet"/>
+<link href="//fonts.googleapis.com/css?family=Roboto:100,400,500" rel="stylesheet"/>
+
 
 <script>
     var LIST_FILTERS = {!listFiltersJson};
@@ -33,6 +35,7 @@
     if (isAirline) {
         defaultFrequency = "";
     }
+    var title = "{!$Label.ISSP_OperationalCalendar_Header}";
     //console.log(MAP_FREQUENCIES);
     //console.log(LIST_FILTERS);
     //console.log(defaultCountry);
@@ -42,6 +45,7 @@
         initTable();
         initFilters();
         refreshDetails();
+        
         $(".countryFilter").change(function() {
             updatePicklistsFromCountry();
             refreshDetails();
@@ -176,6 +180,23 @@
                 title: function () { return getExportFileNameCSV();}
             }]
         }).container().appendTo($('#exportCSV'));
+    }
+    
+    function setCalendarTitle() {
+        var countryName = $('.countryFilter :selected').text();
+        var divTitle = $("#title");
+        if ($('.countryFilter :selected').val()=="") {
+            divTitle.hide();
+            divTitle.text(title.replace("{0}",""));
+        } else {
+            if ($("#typeFilter").val()=="") {
+                divTitle.text(title.replace("{0}",countryName));
+            } else {
+                var typeText = $('#typeFilter :selected').text();
+                divTitle.text(title.replace("{0}",countryName + " " + typeText));
+            }
+            divTitle.show();
+        }
     }
     
     var pdfButton = {
@@ -316,13 +337,10 @@
     }
     
     function refreshDetails() {
+        hideError();
+        setCalendarTitle();
         //remove existing details
         $('.table-pagination').DataTable().clear().draw();
-        refreshDetails();
-    }
-    
-    function refreshDetails() {
-        hideError();
         var country = $(".countryFilter").val();
         var frequency = $("#frequencyFilter").val();
         var operationType = $("#typeFilter").val();
@@ -430,14 +448,14 @@
 
 <div class="container" >
     <c:ISSP_CustomNavigation />
-
+    
     <div id='table'>
+        <!-- TITLE -->
         <div class="row">
             <div class="col-sm-12">
-                <button type="button" class="btn btn-default btn-calendar center-block" onclick="showCalendar()">{!$Label.ISSP_OperationalCalendar_Show_Calendar}</button>
+                <div id="title"></div>
             </div>
         </div>
-    
         <!-- FILTERS -->
         <div class="row">
             <div class="col-sm-2 form-group">
@@ -446,7 +464,9 @@
                     <label class="form-check-label" for="enableFiltersCheck">{!$Label.ISSP_OperationalCalendar_EnableFilters}</label>
                 </apex:outputPanel>
             </div>
-            <div class="col-sm-8"></div>
+            <div class="col-sm-8">
+                <button type="button" class="btn btn-default btn-calendar center-block" onclick="showCalendar()">{!$Label.ISSP_OperationalCalendar_Show_Calendar}</button>
+            </div>
             <div id="exportCSV" class="col-sm-2">
                 <span id="exportCSV"></span>
                 <span id="exportPDF" class="pull-right"></span>
