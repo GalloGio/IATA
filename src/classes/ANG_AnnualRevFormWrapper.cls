@@ -18,8 +18,6 @@ public with sharing class ANG_AnnualRevFormWrapper {
 		this.currentOwners = currentOwners;
 		this.currentCompanies = currentCompanies;
 
-		System.debug('new form wrapper : ' + newForm.id);
-
 		this.ola = newForm.id;
 	}
 
@@ -42,8 +40,6 @@ public with sharing class ANG_AnnualRevFormWrapper {
 
 			}
 
-			System.debug('alex on save owners : ' + aux);
-
 			insert aux;
 		}
 	}
@@ -60,18 +56,12 @@ public with sharing class ANG_AnnualRevFormWrapper {
 
 			aux.addAll(currentCompanies);
 
-			System.debug('alex delete owners : ' + aux);
-
 			delete aux;
 
 		}
 	}
 
 	public void deleteAgencyContact(Id contactId) {
-
-		System.debug('alex currentOwners : ' + currentOwners);
-		System.debug('alex currentCompanies : ' + currentCompanies);
-
 
 		Boolean found = removeAndDelete(currentOwners, contactId);
 
@@ -92,7 +82,6 @@ public with sharing class ANG_AnnualRevFormWrapper {
 		AMS_Accreditation_Contact__c ret = new AMS_Accreditation_Contact__c();
 		for(AMS_Accreditation_Contact__c o : aux) {
 			if(o.Id == aId) {
-				//ret = o.clone(true, false, false, false);
 				ret = o;
 				break;
 			}
@@ -102,20 +91,13 @@ public with sharing class ANG_AnnualRevFormWrapper {
 
 	private Boolean removeAndDelete(List<AMS_Accreditation_Contact__c> lst, Id contactId) {
 
-		System.debug('alex removeAndDelete id : ' + contactId);
-
 		Boolean found = false;
 		Integer size = lst.size();
 		for(Integer i = 0; i < size; i++) {
 
 			AMS_Accreditation_Contact__c contactDel = lst.get(i);
 
-			System.debug('alex test id : ' + contactDel.id);
-
 			if(contactDel.id == contactId) {
-
-				System.debug('alex removeAndDelete found and removing');
-
 				found = true;
 				lst.remove(i);
 				delete contactDel;

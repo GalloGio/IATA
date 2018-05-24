@@ -562,7 +562,7 @@
                 <apex:outputText rendered="{!isStep2}">
                     <div class="panel-primary">
                         <div class="panel-heading head_panel_green">
-                            <h3 class="panel-title">{!$Label.ISSP_ANG_Voluntary_Relinquishment}</h3>
+                            <h3 class="panel-title">{!$Label.ISSP_ANG_ANNUAL_REVALIDATION}</h3>
                         </div>
                         <div class="panel-body" id="body-enquiries">
                             <apex:form>
@@ -704,7 +704,7 @@
                             document.getElementById(ownerModalFields[index]).value = null;
                         }
                         if($j('[id$=contactFinInterest]').parent().is('div')) {
-                                $j('[id$=contactFinInterest]').unwrap().prev('.requiredBlock').remove();
+                            $j('[id$=contactFinInterest]').unwrap().prev('.requiredBlock').remove();
                         }
                     }
                 }

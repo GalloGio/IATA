@@ -102,8 +102,6 @@ public with sharing class ISSP_ANG_ANNUAL_REVALIDATION {
 
 	public ISSP_ANG_ANNUAL_REVALIDATION() {
 
-		System.debug('alex CONSTRUCTOR');
-
 		this.setHe = true;
 
 		accountsMap = new Map<String, Account>();
@@ -113,8 +111,6 @@ public with sharing class ISSP_ANG_ANNUAL_REVALIDATION {
 		if (caseId != null && caseId != '') {
 			newCase = fetchCase(caseid);
 		}
-
-		System.debug('alex newCase.Owner.Name : ' + newCase.Owner.Name);
 
 		if (newCase != null) {
 			oscar = fetchOscar(newCase.Oscar__c);
@@ -439,13 +435,13 @@ public with sharing class ISSP_ANG_ANNUAL_REVALIDATION {
 			}
 		} else {
 
-			this.oscar.IATA_Codes_OK__c = this.oscar.IATA_Codes_OK__c.replaceAll(',' + currentAccount.account.IataCode__c + ',', '');
+			this.oscar.IATA_Codes_OK__c = this.oscar.IATA_Codes_OK__c.replaceAll(',' + currentAccount.account.IataCode__c + ',', ',');
 			this.oscar.IATA_Codes_OK__c = this.oscar.IATA_Codes_OK__c.replaceAll(currentAccount.account.IataCode__c + ',', '');
 			this.oscar.IATA_Codes_OK__c = this.oscar.IATA_Codes_OK__c.replaceAll(',' + currentAccount.account.IataCode__c, '');
 			this.oscar.IATA_Codes_OK__c = this.oscar.IATA_Codes_OK__c.replaceAll(currentAccount.account.IataCode__c, '');
 
 			try {
-				update oscar;
+				update this.oscar;
 
 				iataCodesOk.remove(currentAccount.account.IataCode__c);
 
@@ -497,11 +493,8 @@ public with sharing class ISSP_ANG_ANNUAL_REVALIDATION {
 		Savepoint sp = Database.setSavepoint();
 
 		try {
+
 			upsert currentAccount.fw.newform;
-
-			System.debug('alex saveDraft after ' + currentAccount.fw.newform.Notify_Change_Location__c);
-
-			//jsonTree = generateTree();
 
 		} catch(DmlException dm) {
 			Database.rollback(sp);
@@ -520,6 +513,10 @@ public with sharing class ISSP_ANG_ANNUAL_REVALIDATION {
 		try {
 
 			validateForm();
+
+			if(!errorFound) {
+				currentAccount.fw.newform.status__c = FORM_STATUS_COMPLETED;
+			}
 
 			//
 			// The form is always saved despite having errors.
@@ -545,8 +542,6 @@ public with sharing class ISSP_ANG_ANNUAL_REVALIDATION {
 	public PageReference cancelUpdate() {
 
 		resetErrors();
-
-		System.debug('alex cancelUpdate');
 
 		Savepoint sp = Database.setSavepoint();
 
@@ -603,7 +598,12 @@ public with sharing class ISSP_ANG_ANNUAL_REVALIDATION {
 
 		try {
 
-			upsert currentAccount.fw.newform;
+			//
+			// If the user is updating details then save the form.
+			//
+			if(currentAccount.status == UPDATE_PROGRESS_STATUS && currentAccount.fw.newform.status__c != FORM_STATUS_COMPLETED) {
+				upsert currentAccount.fw.newform;
+			}
 
 		} catch(DmlException dm) {
 			Database.rollback(sp);
@@ -615,9 +615,6 @@ public with sharing class ISSP_ANG_ANNUAL_REVALIDATION {
 
     public PageReference submitForm(){
 		resetErrors();
-
-		System.debug('alex SUBMIT FORM PIMBAS!!!!');
-
 
 		Savepoint sp = Database.setSavepoint();
 
@@ -781,8 +778,6 @@ public with sharing class ISSP_ANG_ANNUAL_REVALIDATION {
 			//
 			// This will make an exception on the portal.
 			//
-			System.debug(LoggingLevel.ERROR, 'No form found for the IataCode : ' + iataCode);
-
 			return null;
 		}
 	}
@@ -794,8 +789,6 @@ public with sharing class ISSP_ANG_ANNUAL_REVALIDATION {
 			//
 			// This will make an exception on the portal.
 			//
-			System.debug(LoggingLevel.ERROR, 'No country found for the isoCode : ' + isoCode);
-
 			return null;
 		}
 	}
@@ -834,8 +827,6 @@ public with sharing class ISSP_ANG_ANNUAL_REVALIDATION {
 
 	private AMS_Pax_Accreditation_Form__c createNewForm(String iataCode) {
 
-		System.debug('alex createNewForm iataCode : ' + iataCode);
-
 		AMS_Pax_Accreditation_Form__c newForm = new AMS_Pax_Accreditation_Form__c();
 
 		newForm.RecordTypeId = rtAnnualRevalidation;
@@ -856,8 +847,6 @@ public with sharing class ISSP_ANG_ANNUAL_REVALIDATION {
 				newForm.Local_Agent_Type__c = 'International';
 			}
 		}
-
-		System.debug('alex createNewForm accountsMap : ' + accountsMap);
 
 		Account a = accountsMap.get(iataCode);
 
@@ -891,8 +880,6 @@ public with sharing class ISSP_ANG_ANNUAL_REVALIDATION {
 		if(newForm.ISSP_AMS_Legal_Status__c == null) {
 			newForm.ISSP_AMS_Legal_Status__c = '';
 		}
-
-		System.debug('alex NEW FORM + ' + newForm);
 
 		return newForm;
 	}
@@ -1348,7 +1335,7 @@ public with sharing class ISSP_ANG_ANNUAL_REVALIDATION {
 				currentAccount.fw.newform.Give_details_for_the_change_of_ownership__c.addError(Label.ISSP_YouMustEnter);
 				errorFound = true;
 			}
-/*
+
 			if (!currentAccount.fw.newform.Confirm_Legal_Details_are_correct__c && !currentAccount.fw.newform.Notify_Change_Legal_Details__c) {
 				ApexPages.addmessage(new ApexPages.message(ApexPages.severity.ERROR, Label.ISSP_AMS_NoC_error_message1));
 				errorFound = true;
@@ -1358,13 +1345,12 @@ public with sharing class ISSP_ANG_ANNUAL_REVALIDATION {
 				ApexPages.addmessage(new ApexPages.message(ApexPages.severity.ERROR, Label.ISSP_AMS_NoC_error_message2));
 				errorFound = true;
 			}
-*/
-/*
+
 			if (!currentAccount.fw.newform.Confirm_Ownership_Details_are_correct__c && !currentAccount.fw.newform.Notify_Change_Ownership__c) {
 				ApexPages.addmessage(new ApexPages.message(ApexPages.severity.ERROR, Label.ISSP_AMS_NoC_error_message3));
 				errorFound = true;
 			}
-*/
+
 			if (currentAccount.fw.newform.Notify_Change_Ownership__c && !(currentAccount.fw.newform.ISSP_AMS_Legal_Status__c == 'Corporation' && currentAccount.fw.newform.ISSP_AMS_Entity_with_listed_shares__c == 'Yes')) {
 				if (currentAccount.fw.newform.ISSP_AMS_Total_Current_Ownership__c == null || currentAccount.fw.newform.ISSP_AMS_Total_Current_Ownership__c < 99.99 || currentAccount.fw.newform.ISSP_AMS_Total_Current_Ownership__c > 100) {
 					ApexPages.Message myMsg;
@@ -1476,8 +1462,7 @@ public with sharing class ISSP_ANG_ANNUAL_REVALIDATION {
 	// Modals methods
 	//
 	public void createAgencyContact() {
-        system.debug('I enter createAgencyContact');
-        system.debug('createAgencyContact contactType: ' + contactType);
+
         Id rtAccreditContPreviousOwner = Schema.SObjectType.AMS_Accreditation_Contact__c.getRecordTypeInfosByName().get('Previous Owner').getRecordTypeId();
 
         integer cntOwners;
@@ -1491,28 +1476,6 @@ public with sharing class ISSP_ANG_ANNUAL_REVALIDATION {
         AMS_Accreditation_Contact__c contactToUpsert = currentAccount.newContact;
 
 
-		System.debug('alex currentAccount.newContact : ' + currentAccount.newContact);
-
-        /*
-        if (contactType == 'Trained Staff') {
-            contactToUpsert = trainedStaffContact;
-            if (!(this.currentAccount.isocountry.EACP_Country__c && newForm.Is_your_firm_handling_Dangerous_Goods__c == 'No') && contactToUpsert.Training_dangerous_goods_completed__c == null) {
-                contactToUpsert.Training_dangerous_goods_completed__c.addError(Label.ISSP_YouMustEnter);
-                contactSaved = false;
-                return;
-            }
-            if (contactToUpsert.Training_dangerous_goods_completed__c == 'Yes') {
-                if (contactToUpsert.Valid_until__c == null) {
-                    myMsg = new ApexPages.Message(ApexPages.Severity.ERROR, 'Must fill valid until');
-                    ApexPages.addMessage(myMsg);
-                    contactSaved = false;
-                    return;
-                }
-            }
-        }
-        */
-
-
         if (contactToUpsert.AMS_Pax_Accreditation_Form__c == null)
             contactToUpsert.AMS_Pax_Accreditation_Form__c = this.currentAccount.fw.newForm.Id;
 
@@ -1520,17 +1483,6 @@ public with sharing class ISSP_ANG_ANNUAL_REVALIDATION {
                      WHERE AMS_Pax_Accreditation_Form__c = :this.currentAccount.fw.newForm.Id AND Agency_owner__c = true AND Id != :currentAccount.newContact.Id And RecordType.Name = :contactType];
 
         refreshCntIFAPContacts();
-/*
-        cntEmailContacts = [SELECT COUNT()
-                              FROM AMS_Accreditation_Contact__c
-                             WHERE AMS_Pax_Accreditation_Form__c = :this.currentAccount.fw.newForm.Id
-                               AND Email__c != :null
-                               AND Email__c = :currentAccount.newContact.Email__c
-                               AND Id != :currentAccount.newContact.Id
-                               AND RecordTypeId != :rtAccreditContPreviousOwner
-                           ];
-*/
-        //System.Debug('Contact type:' + contactType);
 
         if (contactType == 'Company' || contactType == 'Current Company Owner') {
             currentAccount.newContact.First_name__c = '';
@@ -1553,38 +1505,28 @@ public with sharing class ISSP_ANG_ANNUAL_REVALIDATION {
             }
         } else if (contactType == 'Person' || contactType == 'Current Owner') {
             currentAccount.newContact.Name = (currentAccount.newContact.First_name__c != null ? currentAccount.newContact.First_name__c : '')  + ' ' + currentAccount.newContact.Last_name__c;
-            system.debug('currentAccount.newContact.Name ' + currentAccount.newContact.Name);
 
             if (!validateCharactersInPersonWindow()) {
                 contactSaved = false;
                 return;
             }
         }
-        /*
-        else if (contactType == 'Trained Staff') {
-            trainedStaffContact.Name = trainedStaffContact.First_name__c + ' ' + trainedStaffContact.Last_name__c;
-        }
-        */
 
         if (Test.IsRunningTest() == false) {
             contactToUpsert.RecordTypeId = Schema.SObjectType.AMS_Accreditation_Contact__c.RecordTypeInfosByName.get(contactType).RecordTypeId;
         }
 
-        //if (sector == AMS_Utils.SECTOR_PASSENGER) {
-            //Clear the links to Prev Emp History Agencies, if they were set from prev selection
-            if (currentAccount.newContact.Agencies_prev_worked_for__c == ''  || currentAccount.newContact.Agencies_prev_worked_for__c == 'none') {
-                currentAccount.newContact.Accredited_employer_1__c = null;
-                currentAccount.newContact.Accredited_employer_2__c = null;
-            } else if (currentAccount.newContact.Agencies_prev_worked_for__c == '1') {
-                currentAccount.newContact.Accredited_employer_2__c = null;
-            }
-        //}
+		if (currentAccount.newContact.Agencies_prev_worked_for__c == ''  || currentAccount.newContact.Agencies_prev_worked_for__c == 'none') {
+			currentAccount.newContact.Accredited_employer_1__c = null;
+			currentAccount.newContact.Accredited_employer_2__c = null;
+		} else if (currentAccount.newContact.Agencies_prev_worked_for__c == '1') {
+			currentAccount.newContact.Accredited_employer_2__c = null;
+		}
+
 
         currentAccount.newContact.AddressCountry__c = amsContactCountry;
 
         try {
-
-            system.debug('in 1' + contactSaved);
 
             if (currentAccount.newContact.AddressCountry__c == null && contactType == 'Current Owner') {
                 currentAccount.newContact.AddressCountry__c.addError(Label.ISSP_YouMustEnter);
@@ -1597,9 +1539,6 @@ public with sharing class ISSP_ANG_ANNUAL_REVALIDATION {
                 contactSaved = false;
                 return;
             }
-
-            SYSTEM.DEBUG('NoC Agency Owner: ' + contactToUpsert.Agency_owner__c);
-            SYSTEM.DEBUG('NoC Agency Manager: ' + contactToUpsert.Agency_role__c);
 
             if (contactType == 'Current Owner' && currentAccount.newContact.Agency_owner__c == false && currentAccount.newContact.Agency_role__c == false) {
                 myMsg = new ApexPages.Message(ApexPages.Severity.ERROR, Label.ISSP_AMS_NoC_Type_Of_Person);
@@ -1623,9 +1562,6 @@ public with sharing class ISSP_ANG_ANNUAL_REVALIDATION {
                 return;
             }
 
-            system.debug('in 2' + contactSaved);
-
-            system.debug('in 4' + contactSaved);
 
             //Only Max of 3 IFAP Contacts allowed
             if (cntIFAPContacts >= MAX_IFAP_Contacts && currentAccount.newContact.Financial_Assessment_Contact__c == true) {
@@ -1644,10 +1580,6 @@ public with sharing class ISSP_ANG_ANNUAL_REVALIDATION {
                 return;
             }
 
-            system.debug('in 6' + contactSaved);
-
-            System.Debug('# Agencies worked for: ' + currentAccount.newContact.Agencies_prev_worked_for__c);
-            System.Debug('Prev Job Pos 1: ' + currentAccount.newContact.Prev_Job1_Position__c);
 
             if (currentAccount.newContact.Agencies_prev_worked_for__c != 'none' && currentAccount.newContact.Agencies_prev_worked_for__c != null) {
                 if (currentAccount.newContact.Prev_Job1_Position__c == null) {
@@ -1667,8 +1599,6 @@ public with sharing class ISSP_ANG_ANNUAL_REVALIDATION {
                     contactSaved = false;
                     return;
                 }
-
-                system.debug('in 7' + contactSaved);
 
                 if (currentAccount.newContact.Agencies_prev_worked_for__c == '2' || currentAccount.newContact.Agencies_prev_worked_for__c == '3 or more') {
                     if (currentAccount.newContact.Prev_Job2_Position__c == null) {
@@ -1694,9 +1624,6 @@ public with sharing class ISSP_ANG_ANNUAL_REVALIDATION {
                 }
             }
 
-            system.debug('contactSaved ' + contactSaved);
-
-             //if(newCase.Reason1__c == AMS_UTILS.CASE_REASON_ASSOCIATE_ENTITY_STANDARD) currentAccount.newContact.ANG_AE_fromOnlineForm__c = true;
 
             upsert contactToUpsert;
             if (contactToUpsert.Financial_Assessment_Contact__c && cntIFAPContacts < 1) {
@@ -1710,7 +1637,6 @@ public with sharing class ISSP_ANG_ANNUAL_REVALIDATION {
             currentAccount.newContact = new AMS_Accreditation_Contact__c();
             contactToUpsert = new AMS_Accreditation_Contact__c();
         } catch (DmlException ex) {
-            system.debug('in 9' + contactSaved);
             contactSaved = false;
             ApexPages.addMessages(ex);
         }
@@ -1821,17 +1747,12 @@ public with sharing class ISSP_ANG_ANNUAL_REVALIDATION {
 
     public void cancelAgentUpdate() {
         //Need to clear pointer to currentAccount.newContact on cancel of update; to avoid replacing contact on adding New Person
-		System.debug('alex cancelAgentUpdate');
-
         currentAccount.newContact = new AMS_Accreditation_Contact__c();
         iatacode = '';
         contactSaved = false;
     }
 
     public void deleteAgencyContact() {
-        System.debug('alex deleteAgencyContact : ' + editContactId);
-
-
 		currentAccount.fw.deleteAgencyContact(editContactId);
     }
 
@@ -1935,19 +1856,15 @@ public with sharing class ISSP_ANG_ANNUAL_REVALIDATION {
                             And Sector__c = :AMS_Utils.SECTOR_PASSENGER  // agentSector
                             And IATACode__c Like :qCargoCode];
 
-        system.debug('agentaccounts:' + agentaccounts);
-
         if (agentaccounts!= null && !agentaccounts.isEmpty()) {
             String agentAddress;
 
             TravelAgentPrevAccount = agentaccounts[0];
-            System.Debug('Travel Agent name:' + TravelAgentPrevAccount.Name);
 
             agentAddress = AMS_Utils.notNull(TravelAgentPrevAccount.BillingStreet) + ' \r\n' +
                             AMS_Utils.notNull(TravelAgentPrevAccount.BillingCity) + '' + AMS_Utils.notNull(TravelAgentPrevAccount.BillingState) +
                             ' \r\n' + AMS_Utils.notNull(TravelAgentPrevAccount.BillingCountry);
 
-            System.Debug('IATA Agent address lookup:' + agentAddress);
 
             currentAccount.newContact.Prev_Job2_Address__c = agentAddress;
             currentAccount.newContact.Prev_Job2_Employer__c = TravelAgentPrevAccount.Name;

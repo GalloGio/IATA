@@ -27850,7 +27850,7 @@ Please &lt;a href=&quot;/ISSP_FAQ2Case?MainNav=Queries&amp;subNav=MyQueries&amp;
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>Annual revalidation cancel update button</shortDescription>
-        <value>Cancel Update</value>
+        <value>Discard Update</value>
     </labels>
     <labels>
         <fullName>ISSP_ANG_ANNUAL_REV_SAVE_CHANGES_BTN</fullName>
@@ -27862,7 +27862,7 @@ Please &lt;a href=&quot;/ISSP_FAQ2Case?MainNav=Queries&amp;subNav=MyQueries&amp;
     </labels>
     <labels>
         <fullName>ISSP_AMS_CONFIRM_CANCEL</fullName>
-        <categories>ISSP, AMS</categories>
+        <categories>ISSP,ANG</categories>
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>ISSP AMS CONFIRM CANCEL</shortDescription>
@@ -27870,7 +27870,7 @@ Please &lt;a href=&quot;/ISSP_FAQ2Case?MainNav=Queries&amp;subNav=MyQueries&amp;
     </labels>
     <labels>
         <fullName>ISSP_AMS_CONFIRM_DISCARD</fullName>
-        <categories>ISSP, AMS</categories>
+        <categories>ISSP,ANG</categories>
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>ISSP AMS CONFIRM DISCARD</shortDescription>
@@ -27878,7 +27878,7 @@ Please &lt;a href=&quot;/ISSP_FAQ2Case?MainNav=Queries&amp;subNav=MyQueries&amp;
     </labels>
     <labels>
         <fullName>ISSP_ANG_ANNUAL_REV_ADDITIONAL_INFORMATION</fullName>
-        <categories>ISSP ANG</categories>
+        <categories>ISSP,ANG</categories>
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>ISSP_ANG_ANNUAL_REV_ADDITIONAL_INFORMATION</shortDescription>
@@ -27886,7 +27886,7 @@ Please &lt;a href=&quot;/ISSP_FAQ2Case?MainNav=Queries&amp;subNav=MyQueries&amp;
     </labels>
     <labels>
         <fullName>ISSP_ANG_ANNUAL_REV_ERROR_1</fullName>
-        <categories>ISSP ANG</categories>
+        <categories>ISSP,ANG</categories>
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>ISSP_ANG_ANNUAL_REV_ERROR_1</shortDescription>
@@ -27894,7 +27894,7 @@ Please &lt;a href=&quot;/ISSP_FAQ2Case?MainNav=Queries&amp;subNav=MyQueries&amp;
     </labels>
     <labels>
         <fullName>ISSP_ANG_ANNUAL_REV_ERROR_2</fullName>
-        <categories>ISSP ANG</categories>
+        <categories>ISSP,ANG</categories>
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>ISSP_ANG_ANNUAL_REV_ERROR_2</shortDescription>
@@ -27902,18 +27902,34 @@ Please &lt;a href=&quot;/ISSP_FAQ2Case?MainNav=Queries&amp;subNav=MyQueries&amp;
     </labels>
     <labels>
         <fullName>ISSP_ANG_ANNUAL_REV_SUBMIT_NOT_ALLOW</fullName>
-        <categories>ISSP ANG</categories>
+        <categories>ISSP,ANG</categories>
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>ISSP_ANG_ANNUAL_REV_SUBMIT_NOT_ALLOW</shortDescription>
         <value>Please ensure that the Agency details are either confirmed or updated for each IATA Code in your hierarchy.</value>
     </labels>
     <labels>
-        <fullName>ISSP_ANG_Click_Here_AnnualRev</fullName>
-        <categories>ISSP, ANG</categories>
+        <fullName>ISSP_ANG_ANNUAL_REV_ENTER_OWNER_DETAILS</fullName>
+        <categories>ISSP,ANG</categories>
         <language>en_US</language>
         <protected>false</protected>
-        <shortDescription>ISSP AMS Click Here NoC</shortDescription>
-        <value>Click here to continue with Annual Revalidation</value>
+        <shortDescription>ISSP_ANG_ANNUAL_REV_ENTER_OWNER_DETAILS</shortDescription>
+        <value>Please enter new ownership details below</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_ANG_ANNUAL_REV_Q2</fullName>
+        <categories>ISSP,ANG</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_ANG_ANNUAL_REV_Q2</shortDescription>
+        <value>* Does your company have direct or indirect relationship with an organization holding GSA appointment from a member?</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_ANG_ANNUAL_REV_Q3</fullName>
+        <categories>ISSP,ANG</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_ANG_ANNUAL_REV_Q3</shortDescription>
+        <value>* Please confirm which GDSs are used in your company?</value>
     </labels>
 </CustomLabels>

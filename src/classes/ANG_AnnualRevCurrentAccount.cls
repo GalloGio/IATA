@@ -17,6 +17,7 @@ public with sharing class ANG_AnnualRevCurrentAccount {
 	public boolean isHOcontact {get; set;}
 	public Boolean errorFoundCheckBoxes {get; set;}
 	public Boolean errorFound {get; set;}
+	public Boolean isReadonly {get; set;}
 	public AMS_Accreditation_Contact__c newContact {get; set;}
 
 	public String statusDesc {
@@ -43,6 +44,7 @@ public with sharing class ANG_AnnualRevCurrentAccount {
 		this.errorFoundCheckBoxes = false;
 		this.errorFound = false;
 		this.newContact = new AMS_Accreditation_Contact__c();
+		this.isReadonly = (this.status == 'UC');
 
 		setOwnerAndRoleLabels();
 	}
