@@ -177,10 +177,10 @@ global without sharing class Comm_User_Helper {
 
                if(community == ISSP || community == ONEIDENTITY){
                   if(community == ISSP){
-                      link = 'https://' + String.ValueOF(ISSP_CS__c.getValues('Host').value__c) + '/ISSP_First_Login?'+encodedPart;
+                      link = 'https://' + String.ValueOF(ISSP_CS__c.getValues('Host').value__c) + '/ISSP_First_Login?c='+encodedPart;
                       template = 'Identity_Portal_ISSP_New_User';
                     }else{
-                      link = prefix + '/s/IdentityFirstLogin?' + encodedPart;
+                      link = prefix + '/s/IdentityFirstLogin?c=' + encodedPart;
                       template = 'Identity_Portal_New_User';
                     }
 

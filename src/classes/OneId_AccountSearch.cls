@@ -6,6 +6,9 @@ public without sharing class OneId_AccountSearch {
 
 	@AuraEnabled
 	public static SearchWrapper searchAccounts(String search, String customerType, List<String> fieldsToQuery, List<String> fieldsToSearch, Map<String, String> filters){
+
+		// ADD Injection security
+		search = String.escapeSingleQuotes(search);
 		SearchWrapper sw = new SearchWrapper();
 
 		System.debug(loggingLevel.FINE, '____ [cls OneId_AccountSearch - searchAccounts] search - ' + search);
