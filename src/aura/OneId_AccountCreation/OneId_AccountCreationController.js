@@ -132,7 +132,7 @@
         }
 
         if(!$A.util.isEmpty(emailValue) && !emailValue.match(regExpEmailformat)){
-           email.set("v.errors",[{message:$A.get("$Label.c.OneId_EmailError")}]);
+           email.set("v.errors",[{message:$A.get("$Label.c.ISSP_AMS_Invalid_Email")}]);
            isAllFilled = false;
         }else{
            email.set("v.errors",null);
