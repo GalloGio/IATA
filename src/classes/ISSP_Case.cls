@@ -149,6 +149,8 @@ public without sharing class ISSP_Case {
                         return pr;
             } else if (newCase.RecordType.name == 'OSCAR Communication' && newCase.Status == 'Draft' && (newCase.Reason1__c == AMS_Utils.CASE_REASON_FOR_MANAGEMENT || newCase.Reason1__c == AMS_Utils.CASE_REASON_PCI_DSS_COMPLIANT)) {
                 PageReference pr = new PageReference('/ISSP_ANG_PCI?caseId=' + caseId + commParam);
+            }else if(newCase.RecordType.name == 'OSCAR Communication' && newCase.Reason1__c == 'Annual revalidation' && newCase.Owner.Name.startsWith('Annual Revalidation')){
+                PageReference pr = new PageReference('/ISSP_ANG_ANNUAL_REVALIDATION?caseId=' + caseId);
                 return pr;
             }
 
@@ -1576,12 +1578,12 @@ public without sharing class ISSP_Case {
             //finally sends an email to the full recipients list
             EmailTemplate template = [SELECT Id FROM EmailTemplate WHERE DeveloperName = 'New_DPC_Case'];
             sendMassEmail(newCase.Id,template.Id);
-            
+
         } catch (DMLException e) {
             Database.rollback(sp);
         }
     }
-    
+
     public static void sendMassEmail(Id caseId, Id templateId) {
         try {
             OrgWideEmailAddress orgAddress = [SELECT Id FROM OrgWideEmailAddress WHERE Address = 'noreply@iata.org'];
