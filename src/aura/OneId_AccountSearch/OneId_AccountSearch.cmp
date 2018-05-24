@@ -25,7 +25,7 @@
         <div aura:id="results" class="slds-combobox slds-dropdown-trigger_click" aria-expanded="true" aria-haspopup="listbox" role="combobox">
             
             <div class="slds-combobox__form-element slds-input-has-icon slds-input-has-icon_right" role="none">
-                <ui:inputText value="{!v.userInput}" updateOn="keyup" keyup="{!c.search}" class="slds-input slds-combobox__input" disabled="{!v.disabled}" placeholder="Search for Company Name or IATA code (minimum 3 characters)"/>
+                <ui:inputText value="{!v.userInput}" updateOn="keyup" keyup="{!c.search}" class="slds-input slds-combobox__input" disabled="{!v.disabled}" placeholder="{!$Label.c.OneId_AccountSearchPlaceholder}"/>
                 <span class="slds-icon_container slds-icon-utility-search slds-input__icon slds-input__icon_right">
                     <aura:if isTrue="{!v.searching}">
                         <lightning:spinner size="small"/>

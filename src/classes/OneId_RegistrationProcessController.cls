@@ -102,6 +102,7 @@ public without sharing class OneId_RegistrationProcessController {
             Account.BillingStreet,
             Account.Category__c,
             Account.Email__c,
+            Account.IATACode__c,
             Account.Legal_name__c,
             Account.Name,
             Account.Sector__c,

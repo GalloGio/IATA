@@ -7,6 +7,7 @@
 	<aura:attribute type="Account" name="account" default="{ 'sobjectType': 'Account', 'Sector__c' : 'Travel Agent' }" />
 	<aura:attribute type="Contact" name="contact" default="{ 'sobjectType': 'Contact' }" />
 	<aura:attribute type="Boolean" name="search" default="true" />
+	<aura:attribute type="String" name="serviceName" />
 
 	<aura:attribute type="String" name="customerType" default="" access="private"/>
 	<aura:attribute type="String" name="agencyType" default="Travel" access="private"/>
@@ -14,13 +15,13 @@
 	<aura:attribute type="String[]" name="fieldLabels" access="private"/>
 	<aura:attribute type="String[]" name="fieldNames" access="private"/>
 	<aura:attribute type="String[]" name="searchFields" access="private"/>
+	<aura:attribute type="Map" name="accountLabels" access="private"/>
 	<aura:attribute type="Map" name="filters" default="{}" access="private"/>
 
   	<aura:attribute type="OneId_RegistrationProcessController.CountryInformation" name="countryInformation" access="private"/>
 	<aura:attribute type="IATA_ISO_Country__c" name="country" access="private"/>
 	<aura:attribute type="String" name="selectedCountry" access="private"/>
 	<aura:attribute type="Boolean" name="showCreateNew" default="false" />
-	<aura:attribute type="String" name="serviceName" />
 
   	<aura:attribute name="agencyTypes" type="List" default="[
 		{value : 'Travel Agent', label: 'Travel'},

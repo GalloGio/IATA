@@ -10,15 +10,17 @@
 		c.set("v.account", account);
 	},
 	setCustomer : function (c) {
+		var labels = c.get("v.accountLabels");
+
 		var customerType = c.get("v.customerType");
-		var fieldLabels = ['Company Name', 'Address'];
+		var fieldLabels = [$A.get("$Label.c.ISSP_CompanyName"), $A.get("$Label.c.ISSP_Address")];
 		var fieldNames = ['Name', 'BillingStreet'];
 		var searchFields = ['Name', 'IATACode__c', 'Airline_Prefix__c'];
 		var filters = c.get("v.filters");
 		filters['IATA_ISO_Country__c'] = c.get("v.selectedCountry");
 
 		if(customerType == 'Airline'){
-			fieldLabels = ['Company Name', 'Address', 'Country', 'Designator code', 'IATA Code'];
+			fieldLabels = [$A.get("$Label.c.ISSP_CompanyName"), $A.get("$Label.c.ISSP_Address"), $A.get("$Label.c.ISSP_Country"), $A.get("$Label.c.ISSP_Designator_Code"), labels["IATACode__c"]];
 			fieldNames = ['Name', 'BillingStreet', 'IATA_ISO_Country__r.Name', 'Airline_designator__c', 'IATACode__c', 'Category__c'];
 			searchFields.push('Airline_designator__c');
 
@@ -30,7 +32,7 @@
 			delete filters['Sector__c'];
 		}
 		if(customerType == 'Agency'){
-			fieldLabels = ['Company Name', 'Address', 'IATA Code'];
+			fieldLabels = [$A.get("$Label.c.ISSP_CompanyName"), $A.get("$Label.c.ISSP_Address"), labels["IATACode__c"]];
 			fieldNames = ['Name', 'BillingStreet', 'IATACode__c'];
 
 			var agencyType = c.get("v.agencyType");

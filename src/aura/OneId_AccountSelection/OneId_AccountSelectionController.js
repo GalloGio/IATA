@@ -1,10 +1,16 @@
 ({
 	doInit: function (c) {
-        var action = c.get("c.getISOCountries");
-        action.setCallback(this, function(resp) {
+        var countryAction = c.get("c.getISOCountries");
+        countryAction.setCallback(this, function(resp) {
             c.set("v.countryInformation", resp.getReturnValue());
         });
-        $A.enqueueAction(action);
+        $A.enqueueAction(countryAction);
+
+        var labelsAction = c.get("c.getAccountLabels");
+        labelsAction.setCallback(this, function(a) {
+            c.set("v.accountLabels", a.getReturnValue());
+        });
+        $A.enqueueAction(labelsAction);
 	},
 
 	handleItem : function (c,e,h) {
