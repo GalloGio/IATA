@@ -16,7 +16,7 @@
     </values>
     <values>
         <field>Values_to_check__c</field>
-        <value xsi:type="xsd:string">New BR / IP;CHL - Change of Location;New SA / CHV – New Code;CLO - Closure;Direct Debit Setup/Update;VMFR Setup/Update;New AE;Financial review opt-in / opt-out</value>
+        <value xsi:type="xsd:string">New BR / IP;CHL - Change of Location;New SA / CHV – New Code;CLO - Closure;Direct Debit Setup/Update;VMFR Setup/Update;New AE;Financial review opt-in / opt-out;Annual Revalidation</value>
     </values>
     <values>
         <field>result__c</field>
