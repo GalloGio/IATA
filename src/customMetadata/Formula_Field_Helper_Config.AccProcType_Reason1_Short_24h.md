@@ -16,7 +16,7 @@
     </values>
     <values>
         <field>Values_to_check__c</field>
-        <value xsi:type="xsd:string">AIMS Data Entry;CAD – Data Maintenance;CHG – Data Maintenance;Default;Default withdrawal;Review;Review withdrawal;Irregularity;Termination;Irregularity withdrawal;Reinstatement;GSA / MSO / Handling Agent;Minor Database Changes</value>
+        <value xsi:type="xsd:string">AIMS Data Entry;CAD – Data Maintenance;CHG – Data Maintenance;Default;Default withdrawal;Review;Review withdrawal;Irregularity;Termination;Irregularity withdrawal;Reinstatement;GSA / MSO / Handling Agent;Minor Database Changes;Change of Trade Name</value>
     </values>
     <values>
         <field>result__c</field>
