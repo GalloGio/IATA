@@ -5,6 +5,7 @@
         <customApplicationComponent>Console.BuiltInComponent.mostRecentlyUsed</customApplicationComponent>
         <customApplicationComponent>Console.BuiltInComponent.knowledgeOne</customApplicationComponent>
         <customApplicationComponent>LiveAgentConsoleComponent</customApplicationComponent>
+        <customApplicationComponent>DG_Routing_Component</customApplicationComponent>
     </customApplicationComponents>
     <defaultLandingTab>standard-home</defaultLandingTab>
     <description>Service Console for FDS&apos;s customer service representatives</description>
