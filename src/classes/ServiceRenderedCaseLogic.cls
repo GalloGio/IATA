@@ -338,10 +338,10 @@ public class ServiceRenderedCaseLogic {
 
         for (String parentCaseId: casesByParentMap.keySet()) {
         	for (String caseId: casesByParentMap.get(parentCaseId)) {        
-            	if (appFormsByCaseMap.get(parentCaseId).IATA_EasyPay_Opt_In_Opt_Out__c == 'OUT' && !servicesByCaseMap.get(caseId).ANG_IATA_EasyPay_Opt_out__c) {
+            	if (appFormsByCaseMap.get(parentCaseId) != null && servicesByCaseMap != null && servicesByCaseMap.get(caseId) != null && appFormsByCaseMap.get(parentCaseId).IATA_EasyPay_Opt_In_Opt_Out__c == 'OUT' && !servicesByCaseMap.get(caseId).ANG_IATA_EasyPay_Opt_out__c) {
                 	servicesByCaseMap.get(caseId).ANG_IATA_EasyPay_Opt_out__c = true;
                 	changingServices.add(servicesByCaseMap.get(caseId));
-            	} else if (appFormsByCaseMap.get(parentCaseId).IATA_EasyPay_Opt_In_Opt_Out__c == 'IN' && servicesByCaseMap.get(caseId).ANG_IATA_EasyPay_Opt_out__c) {
+            	} else if (appFormsByCaseMap.get(parentCaseId) != null && servicesByCaseMap != null && servicesByCaseMap.get(caseId) != null && appFormsByCaseMap.get(parentCaseId).IATA_EasyPay_Opt_In_Opt_Out__c == 'IN' && servicesByCaseMap.get(caseId).ANG_IATA_EasyPay_Opt_out__c) {
                 	servicesByCaseMap.get(caseId).ANG_IATA_EasyPay_Opt_out__c = false;
                 	changingServices.add(servicesByCaseMap.get(caseId));
             	}
