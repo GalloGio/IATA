@@ -57,6 +57,11 @@
         <fullName>AMS_Oscar_Savepoint_fields</fullName>
         <description>Determine which fields should be saved on serialized object</description>
         <displayedFields>
+            <field>Id</field>
+            <isFieldManaged>false</isFieldManaged>
+            <isRequired>false</isRequired>
+        </displayedFields>
+        <displayedFields>
             <field>Account__c</field>
             <isFieldManaged>false</isFieldManaged>
             <isRequired>false</isRequired>

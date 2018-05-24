@@ -34,25 +34,35 @@ global class AMS_OscarChangeHistoryCleanBatch implements Database.Batchable<sObj
 	}
 
 	global Database.QueryLocator start(Database.BatchableContext BC) {
-		String queryStr = 'SELECT Id, (SELECT Id, OSCAR__C FROM AMS_Oscar_Changes_History__r) ';
-		queryStr += 'FROM AMS_OSCAR__c ';
-		queryStr += 'WHERE Id IN (SELECT OSCAR__C FROM AMS_Oscar_Change_History__c) ';
-		queryStr += 'AND Id IN (SELECT OSCAR__C FROM Case WHERE IsClosed = true AND ClosedDate < LAST_N_MONTHS:3) LIMIT 50000';
+		List<Technical_Logs__c> logs = [SELECT Id, Record__c 
+										FROM Technical_Logs__c
+										WHERE Operation__c = 'Rollback' AND CreatedDate < LAST_N_MONTHS:3 LIMIT 50000];
+
+		Set<Id> oscarIds = new Set<Id>();
+		for(Technical_Logs__c log : logs) {
+			oscarIds.add(log.Record__c);
+		}
+
+		List<Case> closedCases = [SELECT OSCAR__C 
+								  FROM Case
+								  WHERE IsClosed = true AND ClosedDate < LAST_N_MONTHS:3 AND OSCAR__C <> null AND OSCAR__C IN :oscarIds LIMIT 50000];
+
+		Set<Id> logsToDelete = new Set<Id>();
+		for(Case cse : closedCases) {
+			if(oscarIds.contains(cse.OSCAR__C)) {
+				logsToDelete.add(cse.OSCAR__C);
+			}
+		}
+
+		String queryStr = 'SELECT Id FROM Technical_Logs__c WHERE Record__c IN :logsToDelete AND Record__c <> null';
 
 		return Database.getQueryLocator(queryStr);
 	}
 
-	global void execute(Database.BatchableContext BC, List<AMS_OSCAR__c> oscars) {
-		List<AMS_Oscar_Change_History__c> recordsToDelete = new List<AMS_Oscar_Change_History__c>();
+	global void execute(Database.BatchableContext BC, List<Technical_Logs__c> logs) {
 
-		for(AMS_OSCAR__c oscar : oscars) {
-			for(AMS_Oscar_Change_History__c record : oscar.AMS_Oscar_Changes_History__r) {
-				recordsToDelete.add(record);
-			}
-		}
-
-		if(!recordsToDelete.isEmpty()) {
-			delete recordsToDelete;
+		if(!logs.isEmpty()) {
+			delete logs;
 		}
 	}
 
