@@ -374,7 +374,6 @@
                                             <apex:outputLabel value="{!$ObjectType.Partner_products__c.fields.PP_Payment_Product_Network_type__c.Label}"/>
                                             <apex:outputPanel style="display: -webkit-inline-box;">
                                                 <apex:outputField value="{!newpp.PP_Payment_Product_Network_type__c}"/>
-                                                <apex:image value="/img/msg_icons/info16.png" style="padding: 4px" styleClass="selector" title="{!$Label.ISSP_Portal_Product_Type_Label}" html-data-placement="top" html-data-toggle="tooltip" rendered="{!editMode}"/>
                                             </apex:outputPanel>
                                         </apex:pageBlockSectionItem>
                                         <apex:pageBlockSectionItem labelStyle="width:26%" labelStyleClass="agencyLegalDetailsComponent" dataStyleClass="agencyLegalDetailsComponent" >
