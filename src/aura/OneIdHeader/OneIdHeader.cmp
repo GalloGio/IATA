@@ -19,7 +19,7 @@
 		<div class="oiHeader slds-grid slds-wrap slds-grid_align-spread">
 
 			<div class="slds-col slds-max-small-size_1-of-1" id="suiteBar">
-		        <a class="homeIcon" href="{!'/' + v.commName}">
+		        <a class="homeIcon" href="{!'/' + empty(v.serviceName) ? $Label.c.OneId_Community_Name : v.serviceName}">
 		            <span class="icon icon-logo"></span>
 		            <span class="{!'subLogo' + v.serviceName}"></span>
 		        </a>

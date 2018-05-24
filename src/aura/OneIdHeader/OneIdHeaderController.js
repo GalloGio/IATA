@@ -48,11 +48,6 @@
             console.info(event.getParam("paramsMap"));
             if(/\S/.test(servName)){
                 component.set("v.serviceName", servName);
-                component.set("v.customCommunity", true);
-                if(servName != null){
-                  component.set("v.commName", servName);	    
-                }
-                
             }
         }
         
