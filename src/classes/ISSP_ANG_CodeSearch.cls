@@ -19,6 +19,7 @@ public class ISSP_ANG_CodeSearch {
 	public String status {get; set;}
 	public Contact contact {get; set;}
 	public ANG_ISSP_AfpWrapper afpWrapper {get; set;}
+	public String airlineId {get; set;}
 
 	public static Set<String> statusSet = new Set<String> {
 		Ams_Utils.ACC_S9_APPROVED,
@@ -33,6 +34,8 @@ public class ISSP_ANG_CodeSearch {
 		this.activeSearch = false;
 		this.activeError = false;
 		this.showParent = false;
+
+		this.airlineId = [SELECT Contact.AccountId FROM User WHERE Id = :UserInfo.getUserId() LIMIT 1].Contact.AccountId;
 	}
 
 	public PageReference doSearch() {
@@ -157,7 +160,7 @@ public class ISSP_ANG_CodeSearch {
 													   FROM Services_Rendered__c
 													   WHERE Services_Rendered_Type__c = :serviceRenderendType
 														AND Services_Rendered_Status__c = 'Active'
-													 	AND Services_Rendered_By__c = :this.agency.Id]) {
+													 	AND Services_Rendered_By__c = :this.airlineId]) {
 					if (service.ISO_Country_formula__c == this.agency.IATA_ISO_Country__r.Name) {
 						countryFound = true;
 						break;
