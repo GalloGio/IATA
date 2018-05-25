@@ -112,7 +112,10 @@ public with sharing class ANG_ISSP_AfpWrapper {
                 if (currentUserProfileName.contains('dmin')) isAdmin = true;
 			}
 
-			Boolean isAuthorisedSignatory = (isAdmin && contact.Authorized_Signatory__c); 
+			Boolean isAuthorisedSignatory = false;
+			if (contact != null) {
+				isAuthorisedSignatory = (isAdmin && contact.Authorized_Signatory__c); 
+			}
 
             Boolean isIEPAccountEnable = false;
 
