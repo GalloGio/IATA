@@ -352,9 +352,9 @@ global without sharing class ISSP_OperationalCalendarController {
         Get the country fild value where is located the translated name of the country
     **/
     public String getIsoCountryFieldName() {
-        String locale = UserInfo.getLanguage();
-        locale =  locale==null ? 'en': locale.left(2);
-        return ISOFIELDPERLANGUAGE.get(locale.toLowerCase());
+        String locale = UserInfo.getLanguage().left(2).toLowerCase();
+        locale = ISOFIELDPERLANGUAGE.containsKey(locale) ? locale: 'en';
+        return ISOFIELDPERLANGUAGE.get(locale);
     }
     
     /**
