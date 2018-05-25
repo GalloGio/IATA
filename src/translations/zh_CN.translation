@@ -9287,7 +9287,7 @@ and
         <name>ISSP_Email_AppReq_From</name>
     </customLabels>
     <customLabels>
-        <label>下面的同事已经被注册成为贵公司的Red付款联系人</label>
+        <label>下面的同事已经被注册成为贵公司的BSP/CASS付款联系人</label>
         <name>ISSP_Email_BSP_CASS_Payment_contact1</name>
     </customLabels>
     <customLabels>
@@ -9295,7 +9295,7 @@ and
         <name>ISSP_Email_BSP_CASS_Payment_contact1_CNS</name>
     </customLabels>
     <customLabels>
-        <label>我们会将该联系人做为贵公司关于Red的迟付款/违规违约通知接收人</label>
+        <label>该同事将做为贵公司的迟付款/违规违约通知接收人</label>
         <name>ISSP_Email_BSP_CASS_Payment_contact2</name>
     </customLabels>
     <customLabels>
@@ -9311,7 +9311,7 @@ and
         <name>ISSP_Email_BSP_CASS_Payment_contact3_CNS</name>
     </customLabels>
     <customLabels>
-        <label>新Red付款联系人</label>
+        <label>新BSP/CASS付款联系人</label>
         <name>ISSP_Email_BSP_CASS_Payment_contact_Subject</name>
     </customLabels>
     <customLabels>
