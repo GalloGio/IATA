@@ -53,7 +53,8 @@ public with sharing class ISSP_ANG_ANNUAL_REVALIDATION {
 
 	public String communityName { get{ return ApexPages.currentPage().getParameters().get('CommunityName'); }set;}
 	public String commParam { get { if(communityName=='CNS'){ return '&CommunityName='+ communityName;} return ''; } set;}
-	public Contact con {get; set;}
+	public Account caseAccount {get; set;}
+	//public Contact con {get; set;}
 	public String step1GoToNumber {get; set;}
 	public String stepNumber {get; set;}
 	public Boolean isStep1 {get; set;}
@@ -113,6 +114,15 @@ public with sharing class ISSP_ANG_ANNUAL_REVALIDATION {
 		}
 
 		if (newCase != null) {
+			//
+			// This is only for annual revalidation cases.
+			//
+			if(newCase.Reason1__c != 'Annual revalidation') {
+				throw new AnnualRevException('Invalid case!');
+			}
+
+			this.caseAccount = fetchCaseAccount(newCase.AccountId);
+
 			oscar = fetchOscar(newCase.Oscar__c);
 
 			//
@@ -131,7 +141,7 @@ public with sharing class ISSP_ANG_ANNUAL_REVALIDATION {
 			throw new AnnualRevException('There is no case with the id : ' + caseId);
 		}
 
-		getContact();
+		//getContact();
 
 		//
 		// Determine the HE and all AE.
@@ -222,7 +232,7 @@ public with sharing class ISSP_ANG_ANNUAL_REVALIDATION {
 	private void setParentsAndChilds() {
 		Set<Id> aux = new Set<Id>();
 
-		aux.add(con.accountId);
+		aux.add(caseAccount.id);
 
 		Map<Id, List<AMS_Agencies_relationhip__c>> h = AMS_HierarchyHelper.getAccountsHierarchies(aux);
 
@@ -358,13 +368,22 @@ public with sharing class ISSP_ANG_ANNUAL_REVALIDATION {
 					   Location_Type__c, IATA_ISO_Country__c, Iso_State__c, ShippingCountry,
 					   ShippingStreet, ShippingPostalCode, ShippingState, ShippingCity,
 					   Abbreviated_name__c, Abbreviated_Address__c, Remittance_frequency__c,
-					   Solicitation_Flag__c, VAT_Number_2__c, CASS_Number__c, Sector__c
+					   Solicitation_Flag__c, VAT_Number_2__c, CASS_Number__c, Sector__c, Category__c
 				  From Account
 				 Where Id in :accountIds
 				   And RecordTypeId = :recordType
 				   And Status__c in :statusSet
 				   And Location_Type__c in :locationTypeSet
 				   And Sector__c = :sector];
+	}
+
+	private static Account fetchCaseAccount(Id accountId) {
+		List<Account> al = [Select Id From Account Where Id = :accountId];
+		if(al.size() != 0) {
+			return al[0];
+		} else {
+			return null;
+		}
 	}
 
 	public PageReference loadIataCode() {
@@ -682,10 +701,10 @@ public with sharing class ISSP_ANG_ANNUAL_REVALIDATION {
         return null;
     }
 
-	public void getContact(){
+	/*public void getContact(){
         User user = DAL_ISSP.getUser(Userinfo.getUserId());
         con = DAL_ISSP.getContact(user.ContactId);
-    }
+    }*/
 
 	//
 	// Fill the following sets with the correct iata codes
@@ -829,17 +848,19 @@ public with sharing class ISSP_ANG_ANNUAL_REVALIDATION {
 
 		AMS_Pax_Accreditation_Form__c newForm = new AMS_Pax_Accreditation_Form__c();
 
+		Account a = accountsMap.get(iataCode);
+
 		newForm.RecordTypeId = rtAnnualRevalidation;
 
 		newForm.SAAM_Case__c = newCase.Id;
 
-		if(con.Account.Sector__c.equalsIgnoreCase(AMS_Utils.SECTOR_PASSENGER))
+		if(a.Sector__c.equalsIgnoreCase(AMS_Utils.SECTOR_PASSENGER))
 			newForm.Operation_Type__c = 'Travel_Agent';
 		else
 			newForm.Operation_Type__c = 'Cargo_Agent';
 
-		if (newCase.IFAP_Country_ISO__c == 'CN' && con.Account.Sector__c.equalsIgnoreCase(AMS_Utils.SECTOR_PASSENGER)) {
-			if (con.Account.Category__c == 'Domestic Agent') {
+		if (newCase.IFAP_Country_ISO__c == 'CN' && a.Sector__c.equalsIgnoreCase(AMS_Utils.SECTOR_PASSENGER)) {
+			if (a.Category__c == 'Domestic Agent') {
 				newForm.Operation_Type__c = 'Travel_Agent - Domestic';
 				newForm.Local_Agent_Type__c = 'Domestic';
 			} else {
@@ -847,8 +868,6 @@ public with sharing class ISSP_ANG_ANNUAL_REVALIDATION {
 				newForm.Local_Agent_Type__c = 'International';
 			}
 		}
-
-		Account a = accountsMap.get(iataCode);
 
 		newForm.HO_Account__c = a.Id;
 
