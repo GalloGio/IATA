@@ -584,7 +584,7 @@ public without sharing class ISSP_TIP_Home_Controller {
             list<Partner_products__c> prodlist=[Select id,name,PP_Settlement_terms__c,PP_Issuer_name__c,is_PCI_DSS_required__c,PP_Chargeback_airlines__c,PP_Pay_in_model__c,PP_Category__c,PP_Banking_license__c,PP_Payment_Network__c,PP_GDS_Integration__c,PP_VAN_Type__c,PP_Interchange_fee__c,PP_Payment_guarantee__c,PP_Network_Fee__c,PP_Accepted_transactions__c,PP_Chargeback_airlines_duration__c,Provider__c,PP_status__c,PP_Payment_Product_Network_type__c,  
                                                     (select id,TIP_Range_Start__c,TIP_Range_End__c,ToLabel(TIP_Status__c) from BIN_Ranges__r),
                                                     (select id  from cases__r where RecordTypeId =: TIP_Utils.CASE_PROCESS_IDFS_RECORD_TYPE_ID AND
-                                                        Reason1__c = :TIP_Utils.CASE_REASON_PAYMENT_PROVIDER_MANAGMENT AND
+                                                        Reason1__c = :TIP_Utils.CASE_REASON_PRODUCT_MANAGEMENT AND
                                                         CaseArea__c =: TIP_Utils.CASE_AREA_TRANSPARENCY_IN_PAYMENTS),
                                                     (select id,TIP_BSP_Country__c,TIP_BSP_Country__r.name,TIP_BSP_Country__r.ISO_Code__c,TIP_Interchange_Fee__c,Network_Fee__c,ToLabel(TIP_Status__c),TIP_Effective_To_Date__c,TIP_Effective_From_Date__c from Payment_Product_Country_Configs__r order by TIP_Status__c desc, name asc)
                                                 from Partner_products__c where id=:selectedProdId];
