@@ -1,12 +1,12 @@
 @isTest
-private class ISSP_AMS_Accreditation_Test 
+private class ISSP_AMS_Accreditation_Test
 {
     @testSetup static void customSettingSetup() {
         insert new ISSP_CS__c(Name = 'ISSP AMS ALLOWED AGENCY URL',Value__c = '^(http:\\/\\/|https:\\/\\/)?(www.)([a-zA-Z0-9\\-]+)([.])(([a-zA-Z]{3})|([a-zA-Z]{2}))');
         insert new ISSP_CS__c(Name = 'No Notification Email Contact Id',Value__c = null);
     }
 
-    @isTest static void ISSP_AMS_Accreditation_Test_1() 
+    @isTest static void ISSP_AMS_Accreditation_Test_1()
     {
         IATA_ISO_Country__c country = new IATA_ISO_Country__c(name = 'test', IATA_Contry_KR__c = 'test', CASS_Import__c = 'Yes',
                                     IATA_COUNTRY_EN__c = 'testEN' , IATA_Country_FR__c = 'testFR' , IATA_Country_ZH__c = 'testZH' ,
@@ -16,9 +16,9 @@ private class ISSP_AMS_Accreditation_Test
         IATA_ISO_Country__c country2 = new IATA_ISO_Country__c(name = 'test2', ISO_Code__c = 't2', Case_BSP_Country__c = 'test2', CASS_Import__c = 'Yes');
         insert country2;
 
-        Id rtIdBr = [ SELECT Id FROM RecordType 
+        Id rtIdBr = [ SELECT Id FROM RecordType
         WHERE SobjectType = 'Account'
-        AND DeveloperName = 'IATA_Agency'][0].Id; 
+        AND DeveloperName = 'IATA_Agency'][0].Id;
 
 
         Account parent = ISSP_ObjectFactory.createNewAccount();
@@ -28,7 +28,7 @@ private class ISSP_AMS_Accreditation_Test
         parent.Location_Type__c = 'HO';
         parent.RecordTypeId = rtIdBr ;
         parent.IATACode__c = '100';
-         
+
         insert parent;
         System.debug('parent Id: ' + parent.Id);
 
@@ -59,10 +59,10 @@ private class ISSP_AMS_Accreditation_Test
         AMS_Acc_Checklist.Operation__c = 'Travel Agent';
         AMS_Acc_Checklist.License_required__c = true ;
         AMS_Acc_Checklist.Registration_required__c = true ;
-        AMS_Acc_Checklist.Statement_of_International_Sales__c = true ; 
+        AMS_Acc_Checklist.Statement_of_International_Sales__c = true ;
         insert AMS_Acc_Checklist;
 
-        AMS_Accreditation_Requirement__c ISSP_AMS_Accreditation_Acc_Req = new AMS_Accreditation_Requirement__c(); 
+        AMS_Accreditation_Requirement__c ISSP_AMS_Accreditation_Acc_Req = new AMS_Accreditation_Requirement__c();
         ISSP_AMS_Accreditation_Acc_Req.AMS_Accreditation_Country_CheckList__c = AMS_Acc_Checklist.Id ;
         ISSP_AMS_Accreditation_Acc_Req.Language__c = 'English';
         ISSP_AMS_Accreditation_Acc_Req.Location_type__c = 'HO; Head Office;Branch';
@@ -94,7 +94,7 @@ private class ISSP_AMS_Accreditation_Test
             newForm.CurrencyIsoCode = country.CurrencyIsoCode;
             newForm.SAAM_Case__c = testCase.Id;
             insert newForm ;
-                
+
             //newContact = new AMS_Accreditation_Contact__c();
             //newContact.Name = con.Name;
             //newContact.Salutation__c = con.Salutation;
@@ -109,7 +109,7 @@ private class ISSP_AMS_Accreditation_Test
             //insert newContact;
 
             //ISSP_AMS_Statement_International_Sales__c AMS_SIS = new ISSP_AMS_Statement_International_Sales__c();
-            //AMS_SIS.AMS_Online_Accreditation__c = newForm.Id; 
+            //AMS_SIS.AMS_Online_Accreditation__c = newForm.Id;
             //insert AMS_SIS;
             ApexPages.currentPage().getParameters().put('caseId' ,testCase.Id );
             ISSP_AMS_Accreditation ctrl = new ISSP_AMS_Accreditation();
@@ -120,7 +120,7 @@ private class ISSP_AMS_Accreditation_Test
         }
         Test.stopTest();
     }
-     @isTest static void ISSP_AMS_Accreditation_Test_17() 
+     @isTest static void ISSP_AMS_Accreditation_Test_17()
     {
         IATA_ISO_Country__c country = new IATA_ISO_Country__c(name = 'test', IATA_Contry_KR__c = 'test',
                                     IATA_COUNTRY_EN__c = 'testEN' , IATA_Country_FR__c = 'testFR' , IATA_Country_ZH__c = 'testZH' ,
@@ -130,9 +130,9 @@ private class ISSP_AMS_Accreditation_Test
         IATA_ISO_Country__c country2 = new IATA_ISO_Country__c(name = 'test2', ISO_Code__c = 't2', Case_BSP_Country__c = 'test2');
         insert country2;
 
-        Id rtIdBr = [ SELECT Id FROM RecordType 
+        Id rtIdBr = [ SELECT Id FROM RecordType
         WHERE SobjectType = 'Account'
-        AND DeveloperName = 'IATA_Agency'][0].Id; 
+        AND DeveloperName = 'IATA_Agency'][0].Id;
 
 
         Account parent = ISSP_ObjectFactory.createNewAccount();
@@ -142,7 +142,7 @@ private class ISSP_AMS_Accreditation_Test
         parent.Location_Type__c = 'HO';
         parent.RecordTypeId = rtIdBr ;
         parent.IATACode__c = '100';
-         
+
         insert parent;
         System.debug('parent Id: ' + parent.Id);
 
@@ -160,7 +160,7 @@ private class ISSP_AMS_Accreditation_Test
         Contact con = ISSP_ObjectFactory.createNewContact();
         con.AccountId= child.Id;
         con.Email = 'Test@test11.com';
-        
+
         insert con;
 
         System.debug('con Id: ' + con.Id);
@@ -181,10 +181,10 @@ private class ISSP_AMS_Accreditation_Test
         AMS_Acc_Checklist.Operation__c = 'Travel Agent';
         AMS_Acc_Checklist.License_required__c = true ;
         AMS_Acc_Checklist.Registration_required__c = true ;
-        AMS_Acc_Checklist.Statement_of_International_Sales__c = true ; 
+        AMS_Acc_Checklist.Statement_of_International_Sales__c = true ;
         insert AMS_Acc_Checklist;
 
-        AMS_Accreditation_Requirement__c ISSP_AMS_Accreditation_Acc_Req = new AMS_Accreditation_Requirement__c(); 
+        AMS_Accreditation_Requirement__c ISSP_AMS_Accreditation_Acc_Req = new AMS_Accreditation_Requirement__c();
         ISSP_AMS_Accreditation_Acc_Req.AMS_Accreditation_Country_CheckList__c = AMS_Acc_Checklist.Id ;
         ISSP_AMS_Accreditation_Acc_Req.Language__c = 'English';
         ISSP_AMS_Accreditation_Acc_Req.Location_type__c = 'HO;Head Office;Branch';
@@ -224,7 +224,7 @@ private class ISSP_AMS_Accreditation_Test
 
             insert newForm ;
 
-            /*    
+            /*
             AMS_Accreditation_Contact__c newContact = new AMS_Accreditation_Contact__c();
             newContact.Registration_number__c = '123456';
             newContact.PhoneNational__c = '0534534534';
@@ -244,7 +244,7 @@ private class ISSP_AMS_Accreditation_Test
             ctrl.createAgencyContact();
             ctrl.isNewCase = true;
             ctrl.save();
-            
+
             ctrl.createBranchAccount();
             //ctrl.goToFinalStep();
         }
@@ -252,7 +252,7 @@ private class ISSP_AMS_Accreditation_Test
     }
 
 
-     @isTest static void ISSP_AMS_Accreditation_Test_2() 
+     @isTest static void ISSP_AMS_Accreditation_Test_2()
     {
         IATA_ISO_Country__c country = new IATA_ISO_Country__c(name = 'test', IATA_Contry_KR__c = 'test',
                                     IATA_COUNTRY_EN__c = 'testEN' , IATA_Country_FR__c = 'testFR' , IATA_Country_ZH__c = 'testZH' ,
@@ -262,9 +262,9 @@ private class ISSP_AMS_Accreditation_Test
         IATA_ISO_Country__c country2 = new IATA_ISO_Country__c(name = 'test2', ISO_Code__c = 't2', Case_BSP_Country__c = 'test2');
         insert country2;
 
-        Id rtIdBr = [ SELECT Id FROM RecordType 
+        Id rtIdBr = [ SELECT Id FROM RecordType
         WHERE SobjectType = 'Account'
-        AND DeveloperName = 'IATA_Agency'][0].Id; 
+        AND DeveloperName = 'IATA_Agency'][0].Id;
 
 
         Account parent = ISSP_ObjectFactory.createNewAccount();
@@ -274,7 +274,7 @@ private class ISSP_AMS_Accreditation_Test
         parent.Location_Type__c = 'HO';
         parent.RecordTypeId = rtIdBr ;
         parent.IATACode__c = '100';
-         
+
         insert parent;
         System.debug('parent Id: ' + parent.Id);
 
@@ -305,10 +305,10 @@ private class ISSP_AMS_Accreditation_Test
         AMS_Acc_Checklist.Operation__c = 'Travel Agent';
         AMS_Acc_Checklist.License_required__c = true ;
         AMS_Acc_Checklist.Registration_required__c = true ;
-        AMS_Acc_Checklist.Statement_of_International_Sales__c = true ; 
+        AMS_Acc_Checklist.Statement_of_International_Sales__c = true ;
         insert AMS_Acc_Checklist;
 
-        AMS_Accreditation_Requirement__c ISSP_AMS_Accreditation_Acc_Req = new AMS_Accreditation_Requirement__c(); 
+        AMS_Accreditation_Requirement__c ISSP_AMS_Accreditation_Acc_Req = new AMS_Accreditation_Requirement__c();
         ISSP_AMS_Accreditation_Acc_Req.AMS_Accreditation_Country_CheckList__c = AMS_Acc_Checklist.Id ;
         ISSP_AMS_Accreditation_Acc_Req.Language__c = 'English';
         ISSP_AMS_Accreditation_Acc_Req.Location_type__c = 'HO; Head Office;Branch';
@@ -340,7 +340,7 @@ private class ISSP_AMS_Accreditation_Test
             newForm.CurrencyIsoCode = country.CurrencyIsoCode;
             newForm.SAAM_Case__c = testCase.Id;
             insert newForm ;
-                
+
             //newContact = new AMS_Accreditation_Contact__c();
             //newContact.Name = con.Name;
             //newContact.Salutation__c = con.Salutation;
@@ -355,7 +355,7 @@ private class ISSP_AMS_Accreditation_Test
             //insert newContact;
 
             //ISSP_AMS_Statement_International_Sales__c AMS_SIS = new ISSP_AMS_Statement_International_Sales__c();
-            //AMS_SIS.AMS_Online_Accreditation__c = newForm.Id; 
+            //AMS_SIS.AMS_Online_Accreditation__c = newForm.Id;
             //insert AMS_SIS;
             ApexPages.currentPage().getParameters().put('caseId' ,testCase.Id );
             ApexPages.currentPage().getParameters().put('step' ,'2');
@@ -364,13 +364,13 @@ private class ISSP_AMS_Accreditation_Test
             //ctrl.newContact =  newContact ;
             //ctrl.newInternationalSales = AMS_SIS ;
 
-            
+
         }
         Test.stopTest();
     }
 
 
-     @isTest static void ISSP_AMS_Accreditation_Test_3() 
+     @isTest static void ISSP_AMS_Accreditation_Test_3()
     {
         IATA_ISO_Country__c country = new IATA_ISO_Country__c(name = 'test', IATA_Contry_KR__c = 'test',
                                     IATA_COUNTRY_EN__c = 'testEN' , IATA_Country_FR__c = 'testFR' , IATA_Country_ZH__c = 'testZH' ,
@@ -380,9 +380,9 @@ private class ISSP_AMS_Accreditation_Test
         IATA_ISO_Country__c country2 = new IATA_ISO_Country__c(name = 'test2', ISO_Code__c = 't2', Case_BSP_Country__c = 'test2');
         insert country2;
 
-        Id rtIdBr = [ SELECT Id FROM RecordType 
+        Id rtIdBr = [ SELECT Id FROM RecordType
         WHERE SobjectType = 'Account'
-        AND DeveloperName = 'IATA_Agency'][0].Id; 
+        AND DeveloperName = 'IATA_Agency'][0].Id;
 
 
         Account parent = ISSP_ObjectFactory.createNewAccount();
@@ -392,7 +392,7 @@ private class ISSP_AMS_Accreditation_Test
         parent.Location_Type__c = 'HO';
         parent.RecordTypeId = rtIdBr ;
         parent.IATACode__c = '100';
-         
+
         insert parent;
         System.debug('parent Id: ' + parent.Id);
 
@@ -423,10 +423,10 @@ private class ISSP_AMS_Accreditation_Test
         AMS_Acc_Checklist.Operation__c = 'Travel Agent';
         AMS_Acc_Checklist.License_required__c = true ;
         AMS_Acc_Checklist.Registration_required__c = true ;
-        AMS_Acc_Checklist.Statement_of_International_Sales__c = true ; 
+        AMS_Acc_Checklist.Statement_of_International_Sales__c = true ;
         insert AMS_Acc_Checklist;
 
-        AMS_Accreditation_Requirement__c ISSP_AMS_Accreditation_Acc_Req = new AMS_Accreditation_Requirement__c(); 
+        AMS_Accreditation_Requirement__c ISSP_AMS_Accreditation_Acc_Req = new AMS_Accreditation_Requirement__c();
         ISSP_AMS_Accreditation_Acc_Req.AMS_Accreditation_Country_CheckList__c = AMS_Acc_Checklist.Id ;
         ISSP_AMS_Accreditation_Acc_Req.Language__c = 'English';
         ISSP_AMS_Accreditation_Acc_Req.Location_type__c = 'HO; Head Office;Branch';
@@ -458,7 +458,7 @@ private class ISSP_AMS_Accreditation_Test
             newForm.CurrencyIsoCode = country.CurrencyIsoCode;
             newForm.SAAM_Case__c = testCase.Id;
             insert newForm ;
-                
+
             //newContact = new AMS_Accreditation_Contact__c();
             //newContact.Name = con.Name;
             //newContact.Salutation__c = con.Salutation;
@@ -473,7 +473,7 @@ private class ISSP_AMS_Accreditation_Test
             //insert newContact;
 
             //ISSP_AMS_Statement_International_Sales__c AMS_SIS = new ISSP_AMS_Statement_International_Sales__c();
-            //AMS_SIS.AMS_Online_Accreditation__c = newForm.Id; 
+            //AMS_SIS.AMS_Online_Accreditation__c = newForm.Id;
             //insert AMS_SIS;
             ApexPages.currentPage().getParameters().put('caseId' ,testCase.Id );
             ApexPages.currentPage().getParameters().put('step' ,'3');
@@ -484,13 +484,13 @@ private class ISSP_AMS_Accreditation_Test
             //ctrl.newContact =  newContact ;
             //ctrl.newInternationalSales = AMS_SIS ;
 
-            
+
         }
         Test.stopTest();
     }
 
 
-     @isTest static void ISSP_AMS_Accreditation_Test_4() 
+     @isTest static void ISSP_AMS_Accreditation_Test_4()
     {
         IATA_ISO_Country__c country = new IATA_ISO_Country__c(name = 'test', IATA_Contry_KR__c = 'test',
                                     IATA_COUNTRY_EN__c = 'testEN' , IATA_Country_FR__c = 'testFR' , IATA_Country_ZH__c = 'testZH' ,
@@ -500,9 +500,9 @@ private class ISSP_AMS_Accreditation_Test
         IATA_ISO_Country__c country2 = new IATA_ISO_Country__c(name = 'test2', ISO_Code__c = 't2', Case_BSP_Country__c = 'test2');
         insert country2;
 
-        Id rtIdBr = [ SELECT Id FROM RecordType 
+        Id rtIdBr = [ SELECT Id FROM RecordType
         WHERE SobjectType = 'Account'
-        AND DeveloperName = 'IATA_Agency'][0].Id; 
+        AND DeveloperName = 'IATA_Agency'][0].Id;
 
 
         Account parent = ISSP_ObjectFactory.createNewAccount();
@@ -512,7 +512,7 @@ private class ISSP_AMS_Accreditation_Test
         parent.Location_Type__c = 'HO';
         parent.RecordTypeId = rtIdBr ;
         parent.IATACode__c = '100';
-         
+
         insert parent;
         System.debug('parent Id: ' + parent.Id);
 
@@ -543,10 +543,10 @@ private class ISSP_AMS_Accreditation_Test
         AMS_Acc_Checklist.Operation__c = 'Travel Agent';
         AMS_Acc_Checklist.License_required__c = true ;
         AMS_Acc_Checklist.Registration_required__c = true ;
-        AMS_Acc_Checklist.Statement_of_International_Sales__c = true ; 
+        AMS_Acc_Checklist.Statement_of_International_Sales__c = true ;
         insert AMS_Acc_Checklist;
 
-        AMS_Accreditation_Requirement__c ISSP_AMS_Accreditation_Acc_Req = new AMS_Accreditation_Requirement__c(); 
+        AMS_Accreditation_Requirement__c ISSP_AMS_Accreditation_Acc_Req = new AMS_Accreditation_Requirement__c();
         ISSP_AMS_Accreditation_Acc_Req.AMS_Accreditation_Country_CheckList__c = AMS_Acc_Checklist.Id ;
         ISSP_AMS_Accreditation_Acc_Req.Language__c = 'English';
         ISSP_AMS_Accreditation_Acc_Req.Location_type__c = 'HO; Head Office;Branch';
@@ -578,7 +578,7 @@ private class ISSP_AMS_Accreditation_Test
             newForm.CurrencyIsoCode = country.CurrencyIsoCode;
             newForm.SAAM_Case__c = testCase.Id;
             insert newForm ;
-                
+
             //newContact = new AMS_Accreditation_Contact__c();
             //newContact.Name = con.Name;
             //newContact.Salutation__c = con.Salutation;
@@ -593,7 +593,7 @@ private class ISSP_AMS_Accreditation_Test
             //insert newContact;
 
             //ISSP_AMS_Statement_International_Sales__c AMS_SIS = new ISSP_AMS_Statement_International_Sales__c();
-            //AMS_SIS.AMS_Online_Accreditation__c = newForm.Id; 
+            //AMS_SIS.AMS_Online_Accreditation__c = newForm.Id;
             //insert AMS_SIS;
             ApexPages.currentPage().getParameters().put('caseId' ,testCase.Id );
             ApexPages.currentPage().getParameters().put('step' ,'4');
@@ -602,13 +602,13 @@ private class ISSP_AMS_Accreditation_Test
             //ctrl.newContact =  newContact ;
             //ctrl.newInternationalSales = AMS_SIS ;
 
-            
+
         }
         Test.stopTest();
     }
 
 
-     @isTest static void ISSP_AMS_Accreditation_Test_5() 
+     @isTest static void ISSP_AMS_Accreditation_Test_5()
     {
         IATA_ISO_Country__c country = new IATA_ISO_Country__c(name = 'test', IATA_Contry_KR__c = 'test',
                                     IATA_COUNTRY_EN__c = 'testEN' , IATA_Country_FR__c = 'testFR' , IATA_Country_ZH__c = 'testZH' ,
@@ -619,9 +619,9 @@ private class ISSP_AMS_Accreditation_Test
         IATA_ISO_Country__c country2 = new IATA_ISO_Country__c(name = 'test2', ISO_Code__c = 't2', Case_BSP_Country__c = 'test2', Local_language_Agency_details_required__c = true);
         insert country2;
 
-        Id rtIdBr = [ SELECT Id FROM RecordType 
+        Id rtIdBr = [ SELECT Id FROM RecordType
         WHERE SobjectType = 'Account'
-        AND DeveloperName = 'IATA_Agency'][0].Id; 
+        AND DeveloperName = 'IATA_Agency'][0].Id;
 
 
         Account parent = ISSP_ObjectFactory.createNewAccount();
@@ -632,7 +632,7 @@ private class ISSP_AMS_Accreditation_Test
         parent.Location_Type__c = 'HO';
         parent.RecordTypeId = rtIdBr ;
         parent.IATACode__c = '100';
-         
+
         insert parent;
         System.debug('parent Id: ' + parent.Id);
 
@@ -664,7 +664,7 @@ private class ISSP_AMS_Accreditation_Test
         AMS_Acc_Checklist1.Operation__c = 'Travel Agent';
         AMS_Acc_Checklist1.License_required__c = true ;
         AMS_Acc_Checklist1.Registration_required__c = true ;
-        AMS_Acc_Checklist1.Statement_of_International_Sales__c = true ; 
+        AMS_Acc_Checklist1.Statement_of_International_Sales__c = true ;
         insert AMS_Acc_Checklist1;
 
         AMS_Accreditation_Country_CheckList__c AMS_Acc_Checklist2 = new  AMS_Accreditation_Country_CheckList__c();
@@ -672,10 +672,10 @@ private class ISSP_AMS_Accreditation_Test
         AMS_Acc_Checklist2.Operation__c = 'Cargo Agent';
         AMS_Acc_Checklist2.License_required__c = true ;
         AMS_Acc_Checklist2.Registration_required__c = true ;
-        AMS_Acc_Checklist2.Statement_of_International_Sales__c = true ; 
+        AMS_Acc_Checklist2.Statement_of_International_Sales__c = true ;
         insert AMS_Acc_Checklist2;
 
-        AMS_Accreditation_Requirement__c ISSP_AMS_Accreditation_Acc_Req1 = new AMS_Accreditation_Requirement__c(); 
+        AMS_Accreditation_Requirement__c ISSP_AMS_Accreditation_Acc_Req1 = new AMS_Accreditation_Requirement__c();
         ISSP_AMS_Accreditation_Acc_Req1.AMS_Accreditation_Country_CheckList__c = AMS_Acc_Checklist1.Id ;
         ISSP_AMS_Accreditation_Acc_Req1.Language__c = 'English';
         ISSP_AMS_Accreditation_Acc_Req1.Location_type__c = 'HO; Head Office;Branch';
@@ -686,7 +686,7 @@ private class ISSP_AMS_Accreditation_Test
         ISSP_AMS_Accreditation_Acc_Req1.File_to_Upload__c = 'Optional';
         insert ISSP_AMS_Accreditation_Acc_Req1;
 
-        AMS_Accreditation_Requirement__c ISSP_AMS_Accreditation_Acc_Req2 = new AMS_Accreditation_Requirement__c(); 
+        AMS_Accreditation_Requirement__c ISSP_AMS_Accreditation_Acc_Req2 = new AMS_Accreditation_Requirement__c();
         ISSP_AMS_Accreditation_Acc_Req2.AMS_Accreditation_Country_CheckList__c = AMS_Acc_Checklist2.Id ;
         ISSP_AMS_Accreditation_Acc_Req2.Language__c = 'English';
         ISSP_AMS_Accreditation_Acc_Req2.Location_type__c = 'HO; Head Office;Branch';
@@ -720,7 +720,7 @@ private class ISSP_AMS_Accreditation_Test
             newForm.CurrencyIsoCode = country.CurrencyIsoCode;
             newForm.SAAM_Case__c = testCase.Id;
             insert newForm ;
-                
+
             AMS_Accreditation_Contact__c newContact = new AMS_Accreditation_Contact__c();
             newContact.Name = con.Name;
             newContact.Salutation__c = con.Salutation;
@@ -730,17 +730,17 @@ private class ISSP_AMS_Accreditation_Test
             newContact.Email__c = con.Email;
             newContact.Job_title__c = con.Title;
             newContact.Authorised_signatory__c = true;
-            newContact.Phone__c = '1123123'; 
+            newContact.Phone__c = '1123123';
             newContact.Email__c = 'test@test.com';
             newContact.Agency_owner__c = true;
             newContact.AMS_Pax_Accreditation_Form__c = newForm.Id;
             insert newContact;
 
-            Portal_Applications__c app = new Portal_Applications__c(Name = 'IFAP'); 
+            Portal_Applications__c app = new Portal_Applications__c(Name = 'IFAP');
             insert app;
 
             ISSP_AMS_Statement_International_Sales__c AMS_SIS = new ISSP_AMS_Statement_International_Sales__c();
-            AMS_SIS.AMS_Online_Accreditation__c = newForm.Id; 
+            AMS_SIS.AMS_Online_Accreditation__c = newForm.Id;
             AMS_SIS.IATA_Member_Airline__c = child.Id ;
             insert AMS_SIS;
 
@@ -748,22 +748,22 @@ private class ISSP_AMS_Accreditation_Test
             ApexPages.currentPage().getParameters().put('step' ,'5');
             ISSP_AMS_Accreditation ctrl = new ISSP_AMS_Accreditation();
             ctrl.contactType = 'Company';
-            
+
             ctrl.amsOfficeType = 'HO';
             ctrl.sector = 'Cargo Agent';
             ctrl.iatacode = '100';
             ctrl.newCase = testCase ;
             ctrl.editContactId =  newContact.Id;
-            
 
-            
+
+
             ctrl.getIATAMemberAirlines();
             ctrl.getOfficeTypes();
             ctrl.amsLocationType = 'New HO - IATA Passenger Sales Agent';
             ctrl.Save();
             ctrl.createAgencyContact();
-        
-            
+
+
             ctrl.createInternationalSales();
             ctrl.cancelAgentUpdate();
             ctrl.editSalesId = AMS_SIS.Id;
@@ -837,16 +837,16 @@ private class ISSP_AMS_Accreditation_Test
             ctrl.legalStatus = 'co-operative';
             ctrl.setPageLegalStatusLabels();
             ctrl.updateAmsCountry();
-            
-            
-            
+
+
+
         }
-            
+
     }
-  
-      
-  
-    @isTest static void ISSP_AMS_Accreditation_Test_NOC_1s() 
+
+
+
+    @isTest static void ISSP_AMS_Accreditation_Test_NOC_1s()
     {
         IATA_ISO_Country__c country = new IATA_ISO_Country__c(name = 'test', IATA_Contry_KR__c = 'test',
                                     IATA_COUNTRY_EN__c = 'testEN' , IATA_Country_FR__c = 'testFR' , IATA_Country_ZH__c = 'testZH' ,
@@ -856,9 +856,9 @@ private class ISSP_AMS_Accreditation_Test
         IATA_ISO_Country__c country2 = new IATA_ISO_Country__c(name = 'test2', ISO_Code__c = 't2', Case_BSP_Country__c = 'test2');
         insert country2;
 
-        Id rtIdBr = [ SELECT Id FROM RecordType 
+        Id rtIdBr = [ SELECT Id FROM RecordType
         WHERE SobjectType = 'Account'
-        AND DeveloperName = 'IATA_Agency'][0].Id; 
+        AND DeveloperName = 'IATA_Agency'][0].Id;
 
 
         Account parent = ISSP_ObjectFactory.createNewAccount();
@@ -868,7 +868,7 @@ private class ISSP_AMS_Accreditation_Test
         parent.Location_Type__c = 'BR';
         parent.RecordTypeId = rtIdBr ;
         parent.IATACode__c = '100';
-         
+
         insert parent;
         System.debug('parent Id: ' + parent.Id);
 
@@ -893,7 +893,7 @@ private class ISSP_AMS_Accreditation_Test
         System.debug('newUser Id: ' + newUser.Id);
         con.OwnerId = newUser.Id;
         update con;
-        
+
         parent.OwnerId = newUser.Id;
         update parent;
 
@@ -905,7 +905,7 @@ private class ISSP_AMS_Accreditation_Test
         insert AMS_Acc_Checklist2;
 
 
-        AMS_Accreditation_Requirement__c ISSP_AMS_Accreditation_Acc_Req2 = new AMS_Accreditation_Requirement__c(); 
+        AMS_Accreditation_Requirement__c ISSP_AMS_Accreditation_Acc_Req2 = new AMS_Accreditation_Requirement__c();
         ISSP_AMS_Accreditation_Acc_Req2.AMS_Accreditation_Country_CheckList__c = AMS_Acc_Checklist2.Id ;
         ISSP_AMS_Accreditation_Acc_Req2.Language__c = 'English';
         ISSP_AMS_Accreditation_Acc_Req2.Location_type__c = 'HO; Head Office;Branch';
@@ -938,7 +938,7 @@ private class ISSP_AMS_Accreditation_Test
             newForm.SAAM_Case__c = testCase.Id;
             newForm.HO_Account__c = parent.Id;
             insert newForm ;
-                
+
             AMS_Accreditation_Contact__c newContact = new AMS_Accreditation_Contact__c();
             newContact.Name = con.Name;
             newContact.Salutation__c = con.Salutation;
@@ -948,18 +948,18 @@ private class ISSP_AMS_Accreditation_Test
             newContact.Email__c = con.Email;
             newContact.Job_title__c = con.Title;
             newContact.Authorised_signatory__c = true;
-            newContact.Phone__c = '1123123'; 
+            newContact.Phone__c = '1123123';
             newContact.Email__c = 'test@test.com';
             newContact.AMS_Pax_Accreditation_Form__c = newForm.Id;
             insert newContact;
 
-            Portal_Applications__c app = new Portal_Applications__c(Name = 'IFAP'); 
+            Portal_Applications__c app = new Portal_Applications__c(Name = 'IFAP');
             insert app;
-        
+
         Test.startTest();
 
             ISSP_AMS_Statement_International_Sales__c AMS_SIS = new ISSP_AMS_Statement_International_Sales__c();
-            AMS_SIS.AMS_Online_Accreditation__c = newForm.Id; 
+            AMS_SIS.AMS_Online_Accreditation__c = newForm.Id;
             AMS_SIS.IATA_Member_Airline__c = child.Id ;
             insert AMS_SIS;
 
@@ -978,7 +978,7 @@ private class ISSP_AMS_Accreditation_Test
             owners_list = ctrl.List_Curr_Ownership_Summary ;
             Double ownership_total = ctrl.Curr_Ownership_Total;
             ownership_total = ctrl.Prev_Ownership_Total;
-            
+
             ctrl.agencyCodesConcerned = new List<SelectOption>();
             ctrl.amsOfficeType = 'Branch';
             ctrl.sector = 'Cargo Agent';
@@ -986,7 +986,7 @@ private class ISSP_AMS_Accreditation_Test
             ctrl.newCase = testCase ;
             ctrl.editContactId =  newContact.Id;
             ctrl.brAccountId = parent.Id;
-            
+
             ctrl.getBranchAccounts();
             ctrl.isocountry.OSCAR_enabled__c = true;
             ctrl.Save();
@@ -1019,10 +1019,10 @@ private class ISSP_AMS_Accreditation_Test
             ctrl.goToFinalStep();
 
         }
-            
+
     }
 
-    @isTest static void ISSP_AMS_Accreditation_Test_NOC_2s() 
+    @isTest static void ISSP_AMS_Accreditation_Test_NOC_2s()
     {
         IATA_ISO_Country__c country = new IATA_ISO_Country__c(name = 'test', IATA_Contry_KR__c = 'test',
                                     IATA_COUNTRY_EN__c = 'testEN' , IATA_Country_FR__c = 'testFR' , IATA_Country_ZH__c = 'testZH' ,
@@ -1033,9 +1033,9 @@ private class ISSP_AMS_Accreditation_Test
         IATA_ISO_Country__c country2 = new IATA_ISO_Country__c(name = 'test2', ISO_Code__c = 't2', Case_BSP_Country__c = 'test2', Local_language_Agency_details_required__c = true);
         insert country2;
 
-        Id rtIdBr = [ SELECT Id FROM RecordType 
+        Id rtIdBr = [ SELECT Id FROM RecordType
         WHERE SobjectType = 'Account'
-        AND DeveloperName = 'IATA_Agency'][0].Id; 
+        AND DeveloperName = 'IATA_Agency'][0].Id;
 
 
         Account parent = ISSP_ObjectFactory.createNewAccount();
@@ -1045,7 +1045,7 @@ private class ISSP_AMS_Accreditation_Test
         parent.Location_Type__c = 'BR';
         parent.RecordTypeId = rtIdBr ;
         parent.IATACode__c = '100';
-         
+
         insert parent;
         System.debug('parent Id: ' + parent.Id);
 
@@ -1070,7 +1070,7 @@ private class ISSP_AMS_Accreditation_Test
         System.debug('newUser Id: ' + newUser.Id);
         con.OwnerId = newUser.Id;
         update con;
-        
+
         parent.OwnerId = newUser.Id;
         update parent;
 
@@ -1084,7 +1084,7 @@ private class ISSP_AMS_Accreditation_Test
         insert AMS_Acc_Checklist2;
 
 
-        AMS_Accreditation_Requirement__c ISSP_AMS_Accreditation_Acc_Req2 = new AMS_Accreditation_Requirement__c(); 
+        AMS_Accreditation_Requirement__c ISSP_AMS_Accreditation_Acc_Req2 = new AMS_Accreditation_Requirement__c();
         ISSP_AMS_Accreditation_Acc_Req2.AMS_Accreditation_Country_CheckList__c = AMS_Acc_Checklist2.Id ;
         ISSP_AMS_Accreditation_Acc_Req2.Language__c = 'English';
         ISSP_AMS_Accreditation_Acc_Req2.Location_type__c = 'HO; Head Office;Branch';
@@ -1118,7 +1118,7 @@ private class ISSP_AMS_Accreditation_Test
             newForm.SAAM_Case__c = testCase.Id;
             newForm.HO_Account__c = parent.Id;
             insert newForm ;
-                
+
             AMS_Accreditation_Contact__c newContact = new AMS_Accreditation_Contact__c();
             newContact.Name = con.Name;
             newContact.Salutation__c = con.Salutation;
@@ -1128,16 +1128,16 @@ private class ISSP_AMS_Accreditation_Test
             newContact.Email__c = con.Email;
             newContact.Job_title__c = con.Title;
             newContact.Authorised_signatory__c = true;
-            newContact.Phone__c = '1123123'; 
+            newContact.Phone__c = '1123123';
             newContact.Email__c = 'test@test.com';
             newContact.AMS_Pax_Accreditation_Form__c = newForm.Id;
             insert newContact;
 
-            Portal_Applications__c app = new Portal_Applications__c(Name = 'IFAP'); 
+            Portal_Applications__c app = new Portal_Applications__c(Name = 'IFAP');
             insert app;
 
             ISSP_AMS_Statement_International_Sales__c AMS_SIS = new ISSP_AMS_Statement_International_Sales__c();
-            AMS_SIS.AMS_Online_Accreditation__c = newForm.Id; 
+            AMS_SIS.AMS_Online_Accreditation__c = newForm.Id;
             AMS_SIS.IATA_Member_Airline__c = child.Id ;
             insert AMS_SIS;
 
@@ -1150,14 +1150,14 @@ private class ISSP_AMS_Accreditation_Test
             ctrl.securityCheck();
             ctrl.getIsEmptySumbittedCases();
             String loginURL = ctrl.Portal_Login_URL;
-            
+
             ctrl.amsOfficeType = 'HO';
             ctrl.sector = 'Cargo Agent';
             ctrl.iatacode = '100';
             ctrl.newCase = testCase ;
             ctrl.editContactId =  newContact.Id;
             ctrl.brAccountId = parent.Id;
-            
+
             ctrl.getBranchAccounts();
             ctrl.agencyCodesConcerned = new List<SelectOption>();
             ctrl.newForm.Is_change_location__c = true;
@@ -1191,12 +1191,12 @@ private class ISSP_AMS_Accreditation_Test
             ctrl.highLightPageForErrors();
             ctrl.goToFinalStep();
             ctrl.validateDangerousGoods(5);
-   
+
         }
-            
+
     }
 
-    @isTest static void ISSP_AMS_Accreditation_Test_NOC_3s() 
+    @isTest static void ISSP_AMS_Accreditation_Test_NOC_3s()
     {
         IATA_ISO_Country__c country = new IATA_ISO_Country__c(name = 'test', IATA_Contry_KR__c = 'test',
                                     IATA_COUNTRY_EN__c = 'testEN' , IATA_Country_FR__c = 'testFR' , IATA_Country_ZH__c = 'testZH' ,
@@ -1207,9 +1207,9 @@ private class ISSP_AMS_Accreditation_Test
         IATA_ISO_Country__c country2 = new IATA_ISO_Country__c(name = 'test2', ISO_Code__c = 't2', Case_BSP_Country__c = 'test2', Local_language_Agency_details_required__c = true);
         insert country2;
 
-        Id rtIdBr = [ SELECT Id FROM RecordType 
+        Id rtIdBr = [ SELECT Id FROM RecordType
         WHERE SobjectType = 'Account'
-        AND DeveloperName = 'IATA_Agency'][0].Id; 
+        AND DeveloperName = 'IATA_Agency'][0].Id;
 
 
         Account parent = ISSP_ObjectFactory.createNewAccount();
@@ -1219,7 +1219,7 @@ private class ISSP_AMS_Accreditation_Test
         parent.Location_Type__c = 'BR';
         parent.RecordTypeId = rtIdBr ;
         parent.IATACode__c = '100';
-         
+
         insert parent;
         System.debug('parent Id: ' + parent.Id);
 
@@ -1244,7 +1244,7 @@ private class ISSP_AMS_Accreditation_Test
         System.debug('newUser Id: ' + newUser.Id);
         con.OwnerId = newUser.Id;
         update con;
-        
+
         parent.OwnerId = newUser.Id;
         update parent;
 
@@ -1258,7 +1258,7 @@ private class ISSP_AMS_Accreditation_Test
         insert AMS_Acc_Checklist2;
 
 
-        AMS_Accreditation_Requirement__c ISSP_AMS_Accreditation_Acc_Req2 = new AMS_Accreditation_Requirement__c(); 
+        AMS_Accreditation_Requirement__c ISSP_AMS_Accreditation_Acc_Req2 = new AMS_Accreditation_Requirement__c();
         ISSP_AMS_Accreditation_Acc_Req2.AMS_Accreditation_Country_CheckList__c = AMS_Acc_Checklist2.Id ;
         ISSP_AMS_Accreditation_Acc_Req2.Language__c = 'English';
         ISSP_AMS_Accreditation_Acc_Req2.Location_type__c = 'HO; Head Office;Branch';
@@ -1292,7 +1292,7 @@ private class ISSP_AMS_Accreditation_Test
             newForm.SAAM_Case__c = testCase.Id;
             newForm.HO_Account__c = parent.Id;
             insert newForm ;
-                
+
             AMS_Accreditation_Contact__c newContact = new AMS_Accreditation_Contact__c();
             newContact.Name = con.Name;
             newContact.Salutation__c = con.Salutation;
@@ -1302,16 +1302,16 @@ private class ISSP_AMS_Accreditation_Test
             newContact.Email__c = con.Email;
             newContact.Job_title__c = con.Title;
             newContact.Authorised_signatory__c = true;
-            newContact.Phone__c = '1123123'; 
+            newContact.Phone__c = '1123123';
             newContact.Email__c = 'test@test.com';
             newContact.AMS_Pax_Accreditation_Form__c = newForm.Id;
             insert newContact;
 
-            Portal_Applications__c app = new Portal_Applications__c(Name = 'IFAP'); 
+            Portal_Applications__c app = new Portal_Applications__c(Name = 'IFAP');
             insert app;
 
             ISSP_AMS_Statement_International_Sales__c AMS_SIS = new ISSP_AMS_Statement_International_Sales__c();
-            AMS_SIS.AMS_Online_Accreditation__c = newForm.Id; 
+            AMS_SIS.AMS_Online_Accreditation__c = newForm.Id;
             AMS_SIS.IATA_Member_Airline__c = child.Id ;
             insert AMS_SIS;
 
@@ -1324,14 +1324,14 @@ private class ISSP_AMS_Accreditation_Test
             ctrl.securityCheck();
             ctrl.getIsEmptySumbittedCases();
             String loginURL = ctrl.Portal_Login_URL;
-            
+
             ctrl.amsOfficeType = 'HO';
             ctrl.sector = 'Travel Agent';
             ctrl.iatacode = '100';
             ctrl.newCase = testCase ;
             ctrl.editContactId =  newContact.Id;
             ctrl.brAccountId = parent.Id;
-            
+
             ctrl.getBranchAccounts();
             ctrl.agencyCodesConcerned = new List<SelectOption>();
             ctrl.newForm.Is_change_location__c = true;
@@ -1367,12 +1367,12 @@ private class ISSP_AMS_Accreditation_Test
             ctrl.fetchCountryRequirements();
             ctrl.goToFinalStep();
             ctrl.validateDangerousGoods(5);
-   
+
         }
-            
+
     }
 
-    @isTest static void ISSP_AMS_Accreditation_Test_NOC_4s() 
+    @isTest static void ISSP_AMS_Accreditation_Test_NOC_4s()
     {
         IATA_ISO_Country__c country = new IATA_ISO_Country__c(name = 'test', IATA_Contry_KR__c = 'test',
                                     IATA_COUNTRY_EN__c = 'testEN' , IATA_Country_FR__c = 'testFR' , IATA_Country_ZH__c = 'testZH' ,
@@ -1383,9 +1383,9 @@ private class ISSP_AMS_Accreditation_Test
         IATA_ISO_Country__c country2 = new IATA_ISO_Country__c(name = 'test2', ISO_Code__c = 't2', Case_BSP_Country__c = 'test2', Local_language_Agency_details_required__c = true);
         insert country2;
 
-        Id rtIdBr = [ SELECT Id FROM RecordType 
+        Id rtIdBr = [ SELECT Id FROM RecordType
         WHERE SobjectType = 'Account'
-        AND DeveloperName = 'IATA_Agency'][0].Id; 
+        AND DeveloperName = 'IATA_Agency'][0].Id;
 
         Account parent = ISSP_ObjectFactory.createNewAccount();
         parent.BillingCity = 'test';
@@ -1423,7 +1423,7 @@ private class ISSP_AMS_Accreditation_Test
         System.debug('newUser Id: ' + newUser.Id);
         con.OwnerId = newUser.Id;
         update con;
-        
+
         parent.OwnerId = newUser.Id;
         update parent;
 
@@ -1437,7 +1437,7 @@ private class ISSP_AMS_Accreditation_Test
         insert AMS_Acc_Checklist2;
 
 
-        AMS_Accreditation_Requirement__c ISSP_AMS_Accreditation_Acc_Req2 = new AMS_Accreditation_Requirement__c(); 
+        AMS_Accreditation_Requirement__c ISSP_AMS_Accreditation_Acc_Req2 = new AMS_Accreditation_Requirement__c();
         ISSP_AMS_Accreditation_Acc_Req2.AMS_Accreditation_Country_CheckList__c = AMS_Acc_Checklist2.Id ;
         ISSP_AMS_Accreditation_Acc_Req2.Language__c = 'English';
         ISSP_AMS_Accreditation_Acc_Req2.Location_type__c = 'HO; Head Office;Branch';
@@ -1471,7 +1471,7 @@ private class ISSP_AMS_Accreditation_Test
             newForm.SAAM_Case__c = testCase.Id;
             newForm.HO_Account__c = parent.Id;
             insert newForm ;
-                
+
             AMS_Accreditation_Contact__c newContact = new AMS_Accreditation_Contact__c();
             newContact.Name = con.Name;
             newContact.Salutation__c = con.Salutation;
@@ -1481,16 +1481,16 @@ private class ISSP_AMS_Accreditation_Test
             newContact.Email__c = con.Email;
             newContact.Job_title__c = con.Title;
             newContact.Authorised_signatory__c = true;
-            newContact.Phone__c = '1123123'; 
+            newContact.Phone__c = '1123123';
             newContact.Email__c = 'test@test.com';
             newContact.AMS_Pax_Accreditation_Form__c = newForm.Id;
             insert newContact;
 
-            Portal_Applications__c app = new Portal_Applications__c(Name = 'IFAP'); 
+            Portal_Applications__c app = new Portal_Applications__c(Name = 'IFAP');
             insert app;
 
             ISSP_AMS_Statement_International_Sales__c AMS_SIS = new ISSP_AMS_Statement_International_Sales__c();
-            AMS_SIS.AMS_Online_Accreditation__c = newForm.Id; 
+            AMS_SIS.AMS_Online_Accreditation__c = newForm.Id;
             AMS_SIS.IATA_Member_Airline__c = child.Id ;
             insert AMS_SIS;
 
@@ -1505,7 +1505,7 @@ private class ISSP_AMS_Accreditation_Test
             String iatanCodeL = ctrl.iatanAccount;
             String accreditationTypeL = ctrl.accredidationType;
             String loginURL = ctrl.Portal_Login_URL;
-            
+
             ctrl.amsOfficeType = 'HO';
             ctrl.sector = 'Travel Agent';
             ctrl.iatacode = '100';
@@ -1513,7 +1513,7 @@ private class ISSP_AMS_Accreditation_Test
             ctrl.editContactId =  newContact.Id;
             ctrl.brAccountId = parent.Id;
             ctrl.getContactAccount();
-            
+
             ctrl.getBranchAccounts();
             ctrl.agencyCodesConcerned = new List<SelectOption>();
             ctrl.newForm.Is_change_location__c = true;
@@ -1546,15 +1546,15 @@ private class ISSP_AMS_Accreditation_Test
             ctrl.goToStep1();
             ctrl.newForm.Last_Scope_Of_change__c = 'HO Only';
             ctrl.newForm.Scope_of_Change__c = 'Selected Branches Only';
-            ctrl.agencyCodesConcerned = ctrl.getBranchAccounts(); 
-            ctrl.Save();           
+            ctrl.agencyCodesConcerned = ctrl.getBranchAccounts();
+            ctrl.Save();
             ctrl.goToStep2();
             ctrl.goToStep1();
             ctrl.agencyCodesConcerned = new List<SelectOption>();
             ctrl.newForm.Scope_of_Change__c = 'HO - All Branches';
             ctrl.newForm.Notify_Change_Accreditation_Type__c = true;
             ctrl.newForm.ANG_Accreditation_Model_to_Change__c = 'Cash';
-            ctrl.Save();  
+            ctrl.Save();
             ctrl.contactType = 'Trained Staff';
             ctrl.newContact = new AMS_Accreditation_Contact__c();
             ctrl.newContact.Training_dangerous_goods_completed__c = 'Yes';
@@ -1567,7 +1567,7 @@ private class ISSP_AMS_Accreditation_Test
             ctrl.newContact.Email__c = 'email@mail.com';
             ctrl.newContact.Financial_Assessment_Contact__c = true;
             ctrl.createAgencyContact();
-            ctrl.Save(); 
+            ctrl.Save();
             ctrl.goToStep3();
             ctrl.goToStep4();
             ctrl.goToStep5();
@@ -1582,12 +1582,12 @@ private class ISSP_AMS_Accreditation_Test
             ctrl.goToFinalStep();
             ctrl.validateDangerousGoods(5);
         }
-            
+
     }
-    
-    
-    
-    @isTest static void ISSP_AMS_Accreditation_Test_20() 
+
+
+
+    @isTest static void ISSP_AMS_Accreditation_Test_20()
     {
         IATA_ISO_Country__c country = new IATA_ISO_Country__c(name = 'test', IATA_Contry_KR__c = 'test',
                                     IATA_COUNTRY_EN__c = 'testEN' , IATA_Country_FR__c = 'testFR' , IATA_Country_ZH__c = 'testZH' ,
@@ -1597,21 +1597,21 @@ private class ISSP_AMS_Accreditation_Test
         IATA_ISO_Country__c country2 = new IATA_ISO_Country__c(name = 'test2', ISO_Code__c = 't2', Case_BSP_Country__c = 'test2');
         insert country2;
 
-        Id rtIdBr = [ SELECT Id FROM RecordType 
+        Id rtIdBr = [ SELECT Id FROM RecordType
         WHERE SobjectType = 'Account'
-        AND DeveloperName = 'IATA_Agency'][0].Id; 
+        AND DeveloperName = 'IATA_Agency'][0].Id;
 
-        Id rtIdOff = [ SELECT Id FROM RecordType 
+        Id rtIdOff = [ SELECT Id FROM RecordType
         WHERE SobjectType = 'AMS_Facility__c'
-        AND DeveloperName = 'Office'][0].Id; 
+        AND DeveloperName = 'Office'][0].Id;
 
-        Id rtIdWar = [ SELECT Id FROM RecordType 
+        Id rtIdWar = [ SELECT Id FROM RecordType
         WHERE SobjectType = 'AMS_Facility__c'
-        AND DeveloperName = 'Warehouse'][0].Id; 
+        AND DeveloperName = 'Warehouse'][0].Id;
 
-        Id rtIdTS = [ SELECT Id FROM RecordType 
+        Id rtIdTS = [ SELECT Id FROM RecordType
         WHERE SobjectType = 'AMS_Accreditation_Contact__c'
-        AND DeveloperName = 'Trained_Staff'][0].Id; 
+        AND DeveloperName = 'Trained_Staff'][0].Id;
 
 
         Account parent = ISSP_ObjectFactory.createNewAccount();
@@ -1621,7 +1621,7 @@ private class ISSP_AMS_Accreditation_Test
         parent.Location_Type__c = 'HO';
         parent.RecordTypeId = rtIdBr ;
         parent.IATACode__c = '100';
-         
+
         insert parent;
         System.debug('parent Id: ' + parent.Id);
 
@@ -1652,10 +1652,10 @@ private class ISSP_AMS_Accreditation_Test
         AMS_Acc_Checklist.Operation__c = 'Travel Agent';
         AMS_Acc_Checklist.License_required__c = true ;
         AMS_Acc_Checklist.Registration_required__c = true ;
-        AMS_Acc_Checklist.Statement_of_International_Sales__c = true ; 
+        AMS_Acc_Checklist.Statement_of_International_Sales__c = true ;
         insert AMS_Acc_Checklist;
 
-        AMS_Accreditation_Requirement__c ISSP_AMS_Accreditation_Acc_Req = new AMS_Accreditation_Requirement__c(); 
+        AMS_Accreditation_Requirement__c ISSP_AMS_Accreditation_Acc_Req = new AMS_Accreditation_Requirement__c();
         ISSP_AMS_Accreditation_Acc_Req.AMS_Accreditation_Country_CheckList__c = AMS_Acc_Checklist.Id ;
         ISSP_AMS_Accreditation_Acc_Req.Language__c = 'English';
         ISSP_AMS_Accreditation_Acc_Req.Location_type__c = 'HO; Head Office;Branch';
@@ -1693,7 +1693,7 @@ private class ISSP_AMS_Accreditation_Test
             newForm.CGO_Region_Percentage_Selection__c = 'Africa';
 
             insert newForm ;
-                
+
             AMS_Accreditation_Contact__c newContact = new AMS_Accreditation_Contact__c();
             newContact.Name = con.Name;
             newContact.Salutation__c = con.Salutation;
@@ -1703,17 +1703,17 @@ private class ISSP_AMS_Accreditation_Test
             newContact.Email__c = con.Email;
             newContact.Job_title__c = con.Title;
             newContact.Authorised_signatory__c = true;
-            newContact.Phone__c = '1123123'; 
+            newContact.Phone__c = '1123123';
             newContact.Email__c = 'test@test.com';
             newContact.AMS_Pax_Accreditation_Form__c = newForm.Id;
             newContact.Training_dangerous_goods_completed__c = 'Yes';
             insert newContact;
 
-            Portal_Applications__c app = new Portal_Applications__c(Name = 'IFAP'); 
+            Portal_Applications__c app = new Portal_Applications__c(Name = 'IFAP');
             insert app;
 
             ISSP_AMS_Statement_International_Sales__c AMS_SIS = new ISSP_AMS_Statement_International_Sales__c();
-            AMS_SIS.AMS_Online_Accreditation__c = newForm.Id; 
+            AMS_SIS.AMS_Online_Accreditation__c = newForm.Id;
             AMS_SIS.IATA_Member_Airline__c = child.Id ;
             insert AMS_SIS;
 
@@ -1758,10 +1758,10 @@ private class ISSP_AMS_Accreditation_Test
             ctrl.includedPageName = 'ISSP_AMS_Cargo_Form';
             ctrl.newContact.Agency_owner__c = true;
             ctrl.amsOfficeType = 'HO';
-            testCase.Reason1__c = 'New HO'; 
+            testCase.Reason1__c = 'New HO';
             ctrl.contactType = ' ';
             ctrl.legalstatus = 'sole proprietorship';
-            
+
             ctrl.createAgencyContact();
 
             facility.RecordTypeId = rtIdWar;
@@ -1785,7 +1785,7 @@ private class ISSP_AMS_Accreditation_Test
             ctrl.CheckCountryReqments();
 
         }
-            
+
     }
 
      @isTest static void ISSP_AMS_Accreditation_Test_17s()
@@ -1798,9 +1798,9 @@ private class ISSP_AMS_Accreditation_Test
         IATA_ISO_Country__c country2 = new IATA_ISO_Country__c(name = 'test2', ISO_Code__c = 't2', Case_BSP_Country__c = 'test2');
         insert country2;
 
-        Id rtIdBr = [ SELECT Id FROM RecordType 
+        Id rtIdBr = [ SELECT Id FROM RecordType
         WHERE SobjectType = 'Account'
-        AND DeveloperName = 'IATA_Agency'][0].Id; 
+        AND DeveloperName = 'IATA_Agency'][0].Id;
 
 
         Account parent = ISSP_ObjectFactory.createNewAccount();
@@ -1810,7 +1810,7 @@ private class ISSP_AMS_Accreditation_Test
         parent.Location_Type__c = 'HO';
         parent.RecordTypeId = rtIdBr ;
         parent.IATACode__c = '100';
-         
+
         insert parent;
         System.debug('parent Id: ' + parent.Id);
 
@@ -1841,10 +1841,10 @@ private class ISSP_AMS_Accreditation_Test
         AMS_Acc_Checklist.Operation__c = 'Travel Agent';
         AMS_Acc_Checklist.License_required__c = true ;
         AMS_Acc_Checklist.Registration_required__c = true ;
-        AMS_Acc_Checklist.Statement_of_International_Sales__c = true ; 
+        AMS_Acc_Checklist.Statement_of_International_Sales__c = true ;
         insert AMS_Acc_Checklist;
 
-        AMS_Accreditation_Requirement__c ISSP_AMS_Accreditation_Acc_Req = new AMS_Accreditation_Requirement__c(); 
+        AMS_Accreditation_Requirement__c ISSP_AMS_Accreditation_Acc_Req = new AMS_Accreditation_Requirement__c();
         ISSP_AMS_Accreditation_Acc_Req.AMS_Accreditation_Country_CheckList__c = AMS_Acc_Checklist.Id ;
         ISSP_AMS_Accreditation_Acc_Req.Language__c = 'English';
         ISSP_AMS_Accreditation_Acc_Req.Location_type__c = 'HO; Head Office;Branch';
@@ -1876,7 +1876,7 @@ private class ISSP_AMS_Accreditation_Test
             newForm.CurrencyIsoCode = country.CurrencyIsoCode;
             newForm.SAAM_Case__c = testCase.Id;
             insert newForm ;
-                
+
             AMS_Accreditation_Contact__c newContact = new AMS_Accreditation_Contact__c();
             newContact.Name = con.Name;
             newContact.Salutation__c = con.Salutation;
@@ -1886,18 +1886,18 @@ private class ISSP_AMS_Accreditation_Test
             newContact.Email__c = con.Email;
             newContact.Job_title__c = con.Title;
             newContact.Authorised_signatory__c = true;
-            newContact.Phone__c = '1123123'; 
+            newContact.Phone__c = '1123123';
             newContact.Email__c = 'test@test.com';
             newContact.Registration_number__c = '123';
             newContact.Financial_interest__c = 100;
             newContact.AMS_Pax_Accreditation_Form__c = newForm.Id;
             insert newContact;
 
-            Portal_Applications__c app = new Portal_Applications__c(Name = 'IFAP'); 
+            Portal_Applications__c app = new Portal_Applications__c(Name = 'IFAP');
             insert app;
 
             ISSP_AMS_Statement_International_Sales__c AMS_SIS = new ISSP_AMS_Statement_International_Sales__c();
-            AMS_SIS.AMS_Online_Accreditation__c = newForm.Id; 
+            AMS_SIS.AMS_Online_Accreditation__c = newForm.Id;
             AMS_SIS.IATA_Member_Airline__c = child.Id ;
             insert AMS_SIS;
 
@@ -1905,14 +1905,14 @@ private class ISSP_AMS_Accreditation_Test
             ApexPages.currentPage().getParameters().put('step' ,'5');
             ISSP_AMS_Accreditation ctrl = new ISSP_AMS_Accreditation();
             ctrl.contactType = 'Company';
-            
+
             ctrl.amsOfficeType = 'HO';
             ctrl.iatacode = '100';
             ctrl.newCase = testCase ;
             ctrl.editContactId =  newContact.Id;
-            
+
             ctrl.newContact.Agencies_prev_worked_for__c ='';
-                
+
             ctrl.newContact.Agencies_prev_worked_for__c = 'test';
             ctrl.newContact.Agencies_prev_worked_for__c ='test';
             ctrl.amsLocationType = 'New HO - IATA Passenger Sales Agent';
@@ -1941,8 +1941,8 @@ private class ISSP_AMS_Accreditation_Test
 
         }
     }
-   
-    
+
+
 
 
    @isTest static void ISSP_AMS_Accreditation_Test_5s()
@@ -1955,9 +1955,9 @@ private class ISSP_AMS_Accreditation_Test
         IATA_ISO_Country__c country2 = new IATA_ISO_Country__c(name = 'test2', ISO_Code__c = 't2', Case_BSP_Country__c = 'test2');
         insert country2;
 
-        Id rtIdBr = [ SELECT Id FROM RecordType 
+        Id rtIdBr = [ SELECT Id FROM RecordType
         WHERE SobjectType = 'Account'
-        AND DeveloperName = 'IATA_Agency'][0].Id; 
+        AND DeveloperName = 'IATA_Agency'][0].Id;
 
 
         Account parent = ISSP_ObjectFactory.createNewAccount();
@@ -1967,7 +1967,7 @@ private class ISSP_AMS_Accreditation_Test
         parent.Location_Type__c = 'HO';
         parent.RecordTypeId = rtIdBr ;
         parent.IATACode__c = '100';
-         
+
         insert parent;
         System.debug('parent Id: ' + parent.Id);
 
@@ -1998,10 +1998,10 @@ private class ISSP_AMS_Accreditation_Test
         AMS_Acc_Checklist.Operation__c = 'Travel Agent';
         AMS_Acc_Checklist.License_required__c = true ;
         AMS_Acc_Checklist.Registration_required__c = true ;
-        AMS_Acc_Checklist.Statement_of_International_Sales__c = true ; 
+        AMS_Acc_Checklist.Statement_of_International_Sales__c = true ;
         insert AMS_Acc_Checklist;
 
-        AMS_Accreditation_Requirement__c ISSP_AMS_Accreditation_Acc_Req = new AMS_Accreditation_Requirement__c(); 
+        AMS_Accreditation_Requirement__c ISSP_AMS_Accreditation_Acc_Req = new AMS_Accreditation_Requirement__c();
         ISSP_AMS_Accreditation_Acc_Req.AMS_Accreditation_Country_CheckList__c = AMS_Acc_Checklist.Id ;
         ISSP_AMS_Accreditation_Acc_Req.Language__c = 'English';
         ISSP_AMS_Accreditation_Acc_Req.Location_type__c = 'HO; Head Office;Branch';
@@ -2033,7 +2033,7 @@ private class ISSP_AMS_Accreditation_Test
             newForm.CurrencyIsoCode = country.CurrencyIsoCode;
             newForm.SAAM_Case__c = testCase.Id;
             insert newForm ;
-                
+
             AMS_Accreditation_Contact__c newContact = new AMS_Accreditation_Contact__c();
             newContact.Name = con.Name;
             newContact.Salutation__c = con.Salutation;
@@ -2043,16 +2043,16 @@ private class ISSP_AMS_Accreditation_Test
             newContact.Email__c = con.Email;
             newContact.Job_title__c = con.Title;
             newContact.Authorised_signatory__c = true;
-            newContact.Phone__c = '1123123'; 
+            newContact.Phone__c = '1123123';
             newContact.Email__c = 'test@test.com';
             newContact.AMS_Pax_Accreditation_Form__c = newForm.Id;
             insert newContact;
 
-            Portal_Applications__c app = new Portal_Applications__c(Name = 'IFAP'); 
+            Portal_Applications__c app = new Portal_Applications__c(Name = 'IFAP');
             insert app;
 
             ISSP_AMS_Statement_International_Sales__c AMS_SIS = new ISSP_AMS_Statement_International_Sales__c();
-            AMS_SIS.AMS_Online_Accreditation__c = newForm.Id; 
+            AMS_SIS.AMS_Online_Accreditation__c = newForm.Id;
             AMS_SIS.IATA_Member_Airline__c = child.Id ;
             insert AMS_SIS;
 
@@ -2060,13 +2060,13 @@ private class ISSP_AMS_Accreditation_Test
             ApexPages.currentPage().getParameters().put('step' ,'5');
             ISSP_AMS_Accreditation ctrl = new ISSP_AMS_Accreditation();
             ctrl.contactType = 'Company';
-            
+
             ctrl.amsOfficeType = 'HO';
             ctrl.iatacode = '100';
             ctrl.newCase = testCase ;
             ctrl.editContactId =  newContact.Id;
-            
-                
+
+
             ctrl.newContact.Agencies_prev_worked_for__c = 'test';
             ctrl.newContact.Agencies_prev_worked_for__c ='test';
             ctrl.newContact.Agency_owner__c =true;
@@ -2075,7 +2075,7 @@ private class ISSP_AMS_Accreditation_Test
             ctrl.sector = 'Travel Agent';
             ctrl.applyLanguage = 'fr';
             ctrl.fetchCountryRequirements();
-            
+
             ctrl.includedPageName = 'ISSP_AMS_Pax_Form';
             ctrl.newContact.Agencies_prev_worked_for__c= '';
             ctrl.legalstatus = 'sole proprietorship';
@@ -2128,7 +2128,7 @@ private class ISSP_AMS_Accreditation_Test
             ctrl.newForm.ISSP_AM_Means_Identified_Travel_Agency__c = 'test';
             ctrl.newForm.ISSP_AMS_Legal_Status__c = null;
             ctrl.newCase.Reason1__c = 'Old HO';
-            ctrl.amsIsGSA = 'NO';  
+            ctrl.amsIsGSA = 'NO';
             ctrl.isDupeSAAMCase = false;
             ctrl.isNewCase = true;
             ctrl.save();
@@ -2173,9 +2173,9 @@ private class ISSP_AMS_Accreditation_Test
             ctrl.newContact.Prev_Job1_Address__c = 'test';
             ctrl.newContact.Prev_Job1_employer__c = 'test';
             ctrl.createAgencyContact();
-            
 
-            
+
+
             ctrl.saveAMSFormAndGoToStep1();
             List<AMS_Accreditation_Contact__c> accList = ctrl.List_AgencyContacts;
             List<AMS_Accreditation_Contact__c> acc2List = ctrl.List_AgencyCompanies;
@@ -2250,8 +2250,8 @@ private class ISSP_AMS_Accreditation_Test
             ctrl.validateCharactersInCompanyWindow();
         }
     }
-    
-    @isTest static void ISSP_AMS_Accreditation_Test_6() 
+
+    @isTest static void ISSP_AMS_Accreditation_Test_6()
     {
         IATA_ISO_Country__c country = new IATA_ISO_Country__c(name = 'test', IATA_Contry_KR__c = 'test',
                                     IATA_COUNTRY_EN__c = 'testEN' , IATA_Country_FR__c = 'testFR' , IATA_Country_ZH__c = 'testZH' ,
@@ -2261,9 +2261,9 @@ private class ISSP_AMS_Accreditation_Test
         IATA_ISO_Country__c country2 = new IATA_ISO_Country__c(name = 'test2', ISO_Code__c = 't2', Case_BSP_Country__c = 'test2');
         insert country2;
 
-        Id rtIdBr = [ SELECT Id FROM RecordType 
+        Id rtIdBr = [ SELECT Id FROM RecordType
         WHERE SobjectType = 'Account'
-        AND DeveloperName = 'IATA_Agency'][0].Id; 
+        AND DeveloperName = 'IATA_Agency'][0].Id;
 
 
         Account parent = ISSP_ObjectFactory.createNewAccount();
@@ -2273,7 +2273,7 @@ private class ISSP_AMS_Accreditation_Test
         parent.Location_Type__c = 'HO';
         parent.RecordTypeId = rtIdBr ;
         parent.IATACode__c = '100';
-         
+
         insert parent;
         System.debug('parent Id: ' + parent.Id);
 
@@ -2304,10 +2304,10 @@ private class ISSP_AMS_Accreditation_Test
         AMS_Acc_Checklist.Operation__c = 'Travel Agent';
         AMS_Acc_Checklist.License_required__c = true ;
         AMS_Acc_Checklist.Registration_required__c = true ;
-        AMS_Acc_Checklist.Statement_of_International_Sales__c = true ; 
+        AMS_Acc_Checklist.Statement_of_International_Sales__c = true ;
         insert AMS_Acc_Checklist;
 
-        AMS_Accreditation_Requirement__c ISSP_AMS_Accreditation_Acc_Req = new AMS_Accreditation_Requirement__c(); 
+        AMS_Accreditation_Requirement__c ISSP_AMS_Accreditation_Acc_Req = new AMS_Accreditation_Requirement__c();
         ISSP_AMS_Accreditation_Acc_Req.AMS_Accreditation_Country_CheckList__c = AMS_Acc_Checklist.Id ;
         ISSP_AMS_Accreditation_Acc_Req.Language__c = 'English';
         ISSP_AMS_Accreditation_Acc_Req.Location_type__c = 'HO; Head Office;Branch';
@@ -2339,7 +2339,7 @@ private class ISSP_AMS_Accreditation_Test
             newForm.CurrencyIsoCode = country.CurrencyIsoCode;
             newForm.SAAM_Case__c = testCase.Id;
             insert newForm ;
-                
+
             AMS_Accreditation_Contact__c newContact = new AMS_Accreditation_Contact__c();
             newContact.Name = con.Name;
             newContact.Salutation__c = con.Salutation;
@@ -2349,16 +2349,16 @@ private class ISSP_AMS_Accreditation_Test
             newContact.Email__c = con.Email;
             newContact.Job_title__c = con.Title;
             newContact.Authorised_signatory__c = true;
-            newContact.Phone__c = '1123123'; 
+            newContact.Phone__c = '1123123';
             newContact.Email__c = 'test@test.com';
             newContact.AMS_Pax_Accreditation_Form__c = newForm.Id;
             insert newContact;
 
-            Portal_Applications__c app = new Portal_Applications__c(Name = 'IFAP'); 
+            Portal_Applications__c app = new Portal_Applications__c(Name = 'IFAP');
             insert app;
 
             ISSP_AMS_Statement_International_Sales__c AMS_SIS = new ISSP_AMS_Statement_International_Sales__c();
-            AMS_SIS.AMS_Online_Accreditation__c = newForm.Id; 
+            AMS_SIS.AMS_Online_Accreditation__c = newForm.Id;
             AMS_SIS.IATA_Member_Airline__c = child.Id ;
             insert AMS_SIS;
 
@@ -2367,9 +2367,9 @@ private class ISSP_AMS_Accreditation_Test
             ApexPages.currentPage().getParameters().put('sectorValue' ,'Travel_Agent');
             ISSP_AMS_Accreditation ctrl = new ISSP_AMS_Accreditation();
             //ctrl.contactType = 'Company';
-            
 
-            
+
+
 
             ctrl.goToStep1();
 
@@ -2432,7 +2432,7 @@ private class ISSP_AMS_Accreditation_Test
         Test.stopTest();
     }
 
-    @isTest static void ISSP_AMS_Accreditation_Test_7() 
+    @isTest static void ISSP_AMS_Accreditation_Test_7()
     {
         IATA_ISO_Country__c country = new IATA_ISO_Country__c(name = 'test', IATA_Contry_KR__c = 'test',
                         IATA_COUNTRY_EN__c = 'testEN' , IATA_Country_FR__c = 'testFR' , IATA_Country_ZH__c = 'testZH' ,
@@ -2442,9 +2442,9 @@ private class ISSP_AMS_Accreditation_Test
         IATA_ISO_Country__c country2 = new IATA_ISO_Country__c(name = 'test2', ISO_Code__c = 't2', Case_BSP_Country__c = 'test2');
         insert country2;
 
-        Id rtIdBr = [ SELECT Id FROM RecordType 
+        Id rtIdBr = [ SELECT Id FROM RecordType
         WHERE SobjectType = 'Account'
-        AND DeveloperName = 'IATA_Agency'][0].Id; 
+        AND DeveloperName = 'IATA_Agency'][0].Id;
 
 
         Account parent = ISSP_ObjectFactory.createNewAccount();
@@ -2454,7 +2454,7 @@ private class ISSP_AMS_Accreditation_Test
         parent.Location_Type__c = 'HO';
         parent.RecordTypeId = rtIdBr ;
         parent.IATACode__c = '100';
-         
+
         insert parent;
         System.debug('parent Id: ' + parent.Id);
 
@@ -2485,10 +2485,10 @@ private class ISSP_AMS_Accreditation_Test
         AMS_Acc_Checklist.Operation__c = 'Travel Agent';
         AMS_Acc_Checklist.License_required__c = true ;
         AMS_Acc_Checklist.Registration_required__c = true ;
-        AMS_Acc_Checklist.Statement_of_International_Sales__c = true ; 
+        AMS_Acc_Checklist.Statement_of_International_Sales__c = true ;
         insert AMS_Acc_Checklist;
 
-        AMS_Accreditation_Requirement__c ISSP_AMS_Accreditation_Acc_Req = new AMS_Accreditation_Requirement__c(); 
+        AMS_Accreditation_Requirement__c ISSP_AMS_Accreditation_Acc_Req = new AMS_Accreditation_Requirement__c();
         ISSP_AMS_Accreditation_Acc_Req.AMS_Accreditation_Country_CheckList__c = AMS_Acc_Checklist.Id ;
         ISSP_AMS_Accreditation_Acc_Req.Language__c = 'English';
         ISSP_AMS_Accreditation_Acc_Req.Location_type__c = 'HO; Head Office;Branch';
@@ -2520,7 +2520,7 @@ private class ISSP_AMS_Accreditation_Test
             newForm.CurrencyIsoCode = country.CurrencyIsoCode;
             newForm.SAAM_Case__c = testCase.Id;
             insert newForm ;
-                
+
             AMS_Accreditation_Contact__c newContact = new AMS_Accreditation_Contact__c();
             newContact.Name = con.Name;
             newContact.Salutation__c = con.Salutation;
@@ -2530,16 +2530,16 @@ private class ISSP_AMS_Accreditation_Test
             newContact.Email__c = con.Email;
             newContact.Job_title__c = con.Title;
             newContact.Authorised_signatory__c = true;
-            newContact.Phone__c = '1123123'; 
+            newContact.Phone__c = '1123123';
             newContact.Email__c = 'test@test.com';
             newContact.AMS_Pax_Accreditation_Form__c = newForm.Id;
             insert newContact;
 
-            Portal_Applications__c app = new Portal_Applications__c(Name = 'IFAP'); 
+            Portal_Applications__c app = new Portal_Applications__c(Name = 'IFAP');
             insert app;
 
             ISSP_AMS_Statement_International_Sales__c AMS_SIS = new ISSP_AMS_Statement_International_Sales__c();
-            AMS_SIS.AMS_Online_Accreditation__c = newForm.Id; 
+            AMS_SIS.AMS_Online_Accreditation__c = newForm.Id;
             AMS_SIS.IATA_Member_Airline__c = child.Id ;
             insert AMS_SIS;
 
@@ -2591,9 +2591,9 @@ private class ISSP_AMS_Accreditation_Test
 
             ctrl.con.Account.Category__c = 'Import Agent';
             ctrl.getOfficeTypes();
-            
+
             ctrl.iatacode = '100';
-            
+
 
             ctrl.goToStep1();
 
@@ -2639,9 +2639,9 @@ private class ISSP_AMS_Accreditation_Test
         IATA_ISO_Country__c country2 = new IATA_ISO_Country__c(name = 'test2', ISO_Code__c = 't2', Case_BSP_Country__c = 'test2');
         insert country2;
 
-        Id rtIdBr = [ SELECT Id FROM RecordType 
+        Id rtIdBr = [ SELECT Id FROM RecordType
         WHERE SobjectType = 'Account'
-        AND DeveloperName = 'IATA_Agency'][0].Id; 
+        AND DeveloperName = 'IATA_Agency'][0].Id;
 
 
         Account parent = ISSP_ObjectFactory.createNewAccount();
@@ -2651,7 +2651,7 @@ private class ISSP_AMS_Accreditation_Test
         parent.Location_Type__c = 'HO';
         parent.RecordTypeId = rtIdBr ;
         parent.IATACode__c = '100';
-         
+
         insert parent;
         System.debug('parent Id: ' + parent.Id);
 
@@ -2682,7 +2682,7 @@ private class ISSP_AMS_Accreditation_Test
         AMS_Acc_Checklist1.Operation__c = 'Travel Agent';
         AMS_Acc_Checklist1.License_required__c = true ;
         AMS_Acc_Checklist1.Registration_required__c = true ;
-        AMS_Acc_Checklist1.Statement_of_International_Sales__c = true ; 
+        AMS_Acc_Checklist1.Statement_of_International_Sales__c = true ;
         insert AMS_Acc_Checklist1;
 
         AMS_Accreditation_Country_CheckList__c AMS_Acc_Checklist2 = new  AMS_Accreditation_Country_CheckList__c();
@@ -2690,10 +2690,10 @@ private class ISSP_AMS_Accreditation_Test
         AMS_Acc_Checklist2.Operation__c = 'Cargo Agent';
         AMS_Acc_Checklist2.License_required__c = true ;
         AMS_Acc_Checklist2.Registration_required__c = true ;
-        AMS_Acc_Checklist2.Statement_of_International_Sales__c = true ; 
+        AMS_Acc_Checklist2.Statement_of_International_Sales__c = true ;
         insert AMS_Acc_Checklist2;
 
-        AMS_Accreditation_Requirement__c ISSP_AMS_Accreditation_Acc_Req = new AMS_Accreditation_Requirement__c(); 
+        AMS_Accreditation_Requirement__c ISSP_AMS_Accreditation_Acc_Req = new AMS_Accreditation_Requirement__c();
         ISSP_AMS_Accreditation_Acc_Req.AMS_Accreditation_Country_CheckList__c = AMS_Acc_Checklist1.Id ;
         ISSP_AMS_Accreditation_Acc_Req.Language__c = 'English';
         ISSP_AMS_Accreditation_Acc_Req.Location_type__c = 'HO; Head Office;Branch';
@@ -2727,20 +2727,20 @@ private class ISSP_AMS_Accreditation_Test
             newForm.CurrencyIsoCode = country.CurrencyIsoCode;
             newForm.SAAM_Case__c = testCase.Id;
             insert newForm ;
-           
+
             ISSP_AMS_Statement_International_Sales__c AMS_SIS = new ISSP_AMS_Statement_International_Sales__c();
-            AMS_SIS.AMS_Online_Accreditation__c = newForm.Id; 
+            AMS_SIS.AMS_Online_Accreditation__c = newForm.Id;
             //insert AMS_SIS;
             ApexPages.currentPage().getParameters().put('caseId' ,testCase.Id );
             ApexPages.currentPage().getParameters().put('sectorValue' ,'Cargo_Agent');
-            
+
             ISSP_AMS_Accreditation ctrl = new ISSP_AMS_Accreditation();
-            
+
             ctrl.newCase = testCase ;
-            
+
             //RecordType rec = new RecordType(Name = ctrl.sector);
             //insert rec;
-            
+
             //ctrl.newCase = testCase ;
 
             // applyLanguage
@@ -2862,9 +2862,9 @@ private class ISSP_AMS_Accreditation_Test
         IATA_ISO_Country__c country2 = new IATA_ISO_Country__c(name = 'test2', ISO_Code__c = 't2', Case_BSP_Country__c = 'test2');
         insert country2;
 
-        Id rtIdBr = [ SELECT Id FROM RecordType 
+        Id rtIdBr = [ SELECT Id FROM RecordType
         WHERE SobjectType = 'Account'
-        AND DeveloperName = 'IATA_Agency'][0].Id; 
+        AND DeveloperName = 'IATA_Agency'][0].Id;
 
 
         Account parent = ISSP_ObjectFactory.createNewAccount();
@@ -2874,7 +2874,7 @@ private class ISSP_AMS_Accreditation_Test
         parent.Location_Type__c = 'HO';
         parent.RecordTypeId = rtIdBr ;
         parent.IATACode__c = '100';
-         
+
         insert parent;
         System.debug('parent Id: ' + parent.Id);
 
@@ -2905,10 +2905,10 @@ private class ISSP_AMS_Accreditation_Test
         AMS_Acc_Checklist.Operation__c = 'Travel Agent';
         AMS_Acc_Checklist.License_required__c = true ;
         AMS_Acc_Checklist.Registration_required__c = true ;
-        AMS_Acc_Checklist.Statement_of_International_Sales__c = true ; 
+        AMS_Acc_Checklist.Statement_of_International_Sales__c = true ;
         insert AMS_Acc_Checklist;
 
-        AMS_Accreditation_Requirement__c ISSP_AMS_Accreditation_Acc_Req = new AMS_Accreditation_Requirement__c(); 
+        AMS_Accreditation_Requirement__c ISSP_AMS_Accreditation_Acc_Req = new AMS_Accreditation_Requirement__c();
         ISSP_AMS_Accreditation_Acc_Req.AMS_Accreditation_Country_CheckList__c = AMS_Acc_Checklist.Id ;
         ISSP_AMS_Accreditation_Acc_Req.Language__c = 'English';
         ISSP_AMS_Accreditation_Acc_Req.Location_type__c = 'HO; Head Office;Branch';
@@ -2940,7 +2940,7 @@ private class ISSP_AMS_Accreditation_Test
             newForm.CurrencyIsoCode = country.CurrencyIsoCode;
             newForm.SAAM_Case__c = testCase.Id;
             insert newForm ;
-                
+
             AMS_Accreditation_Contact__c newContact = new AMS_Accreditation_Contact__c();
             newContact.Name = con.Name;
             newContact.Salutation__c = con.Salutation;
@@ -2950,16 +2950,16 @@ private class ISSP_AMS_Accreditation_Test
             newContact.Email__c = con.Email;
             newContact.Job_title__c = con.Title;
             newContact.Authorised_signatory__c = true;
-            newContact.Phone__c = '1123123'; 
+            newContact.Phone__c = '1123123';
             newContact.Email__c = 'test@test.com';
             newContact.AMS_Pax_Accreditation_Form__c = newForm.Id;
             insert newContact;
 
-            Portal_Applications__c app = new Portal_Applications__c(Name = 'IFAP'); 
+            Portal_Applications__c app = new Portal_Applications__c(Name = 'IFAP');
             insert app;
 
             ISSP_AMS_Statement_International_Sales__c AMS_SIS = new ISSP_AMS_Statement_International_Sales__c();
-            AMS_SIS.AMS_Online_Accreditation__c = newForm.Id; 
+            AMS_SIS.AMS_Online_Accreditation__c = newForm.Id;
             AMS_SIS.IATA_Member_Airline__c = child.Id ;
             insert AMS_SIS;
 
@@ -2967,13 +2967,13 @@ private class ISSP_AMS_Accreditation_Test
             ApexPages.currentPage().getParameters().put('step' ,'5');
             ISSP_AMS_Accreditation ctrl = new ISSP_AMS_Accreditation();
             ctrl.contactType = 'Company';
-            
+
             ctrl.amsOfficeType = 'HO';
             ctrl.iatacode = '100';
             ctrl.newCase = testCase ;
             ctrl.editContactId =  newContact.Id;
-            
-                
+
+
             ctrl.newContact.Agencies_prev_worked_for__c = 'test';
             ctrl.newContact.Agencies_prev_worked_for__c ='test';
             ctrl.amsLocationType = 'New HO - IATA Passenger Sales Agent';
@@ -3030,7 +3030,7 @@ private class ISSP_AMS_Accreditation_Test
             ctrl.newForm.ISSP_AM_Means_Identified_Travel_Agency__c = 'test';
             ctrl.newForm.ISSP_AMS_Legal_Status__c = null;
             ctrl.newCase.Reason1__c = 'Old HO';
-            ctrl.amsIsGSA = 'NO';  
+            ctrl.amsIsGSA = 'NO';
             ctrl.isDupeSAAMCase = false;
             ctrl.isNewCase = true;
             ctrl.save();
@@ -3080,9 +3080,9 @@ private class ISSP_AMS_Accreditation_Test
             ctrl.newContact.Prev_Job1_Address__c = 'test';
             ctrl.newContact.Prev_Job1_employer__c = 'test';
             ctrl.createAgencyContact();
-            
 
-            
+
+
             ctrl.saveAMSFormAndGoToStep1();
             List<AMS_Accreditation_Contact__c> accList = ctrl.List_AgencyContacts;
             List<AMS_Accreditation_Contact__c> acc2List = ctrl.List_AgencyCompanies;
@@ -3158,7 +3158,7 @@ private class ISSP_AMS_Accreditation_Test
         }
     }
 
-    @isTest static void ISSP_AMS_Accreditation_Test_10() 
+    @isTest static void ISSP_AMS_Accreditation_Test_10()
     {
         IATA_ISO_Country__c country = new IATA_ISO_Country__c(name = 'test', IATA_Contry_KR__c = 'test',
                                     IATA_COUNTRY_EN__c = 'testEN' , IATA_Country_FR__c = 'testFR' , IATA_Country_ZH__c = 'testZH' ,
@@ -3168,9 +3168,9 @@ private class ISSP_AMS_Accreditation_Test
         IATA_ISO_Country__c country2 = new IATA_ISO_Country__c(name = 'test2', ISO_Code__c = 't2', Case_BSP_Country__c = 'test2');
         insert country2;
 
-        Id rtIdBr = [ SELECT Id FROM RecordType 
+        Id rtIdBr = [ SELECT Id FROM RecordType
         WHERE SobjectType = 'Account'
-        AND DeveloperName = 'IATA_Agency'][0].Id; 
+        AND DeveloperName = 'IATA_Agency'][0].Id;
 
 
         Account parent = ISSP_ObjectFactory.createNewAccount();
@@ -3180,7 +3180,7 @@ private class ISSP_AMS_Accreditation_Test
         parent.Location_Type__c = 'HO';
         parent.RecordTypeId = rtIdBr ;
         parent.IATACode__c = '100';
-        parent.IATA_ISO_Country__c = country.Id; 
+        parent.IATA_ISO_Country__c = country.Id;
 
         insert parent;
         System.debug('parent Id: ' + parent.Id);
@@ -3214,10 +3214,10 @@ private class ISSP_AMS_Accreditation_Test
         AMS_Acc_Checklist.Operation__c = 'Travel Agent';
         AMS_Acc_Checklist.License_required__c = true ;
         AMS_Acc_Checklist.Registration_required__c = true ;
-        AMS_Acc_Checklist.Statement_of_International_Sales__c = true ; 
+        AMS_Acc_Checklist.Statement_of_International_Sales__c = true ;
         insert AMS_Acc_Checklist;
 
-        AMS_Accreditation_Requirement__c ISSP_AMS_Accreditation_Acc_Req = new AMS_Accreditation_Requirement__c(); 
+        AMS_Accreditation_Requirement__c ISSP_AMS_Accreditation_Acc_Req = new AMS_Accreditation_Requirement__c();
         ISSP_AMS_Accreditation_Acc_Req.AMS_Accreditation_Country_CheckList__c = AMS_Acc_Checklist.Id ;
         ISSP_AMS_Accreditation_Acc_Req.Language__c = 'English';
         ISSP_AMS_Accreditation_Acc_Req.Location_type__c = 'HO; Head Office;Branch';
@@ -3244,7 +3244,7 @@ private class ISSP_AMS_Accreditation_Test
             testCase.IFAP_Country_ISO__c = 'tq';
             insert testCase;
 
-            
+
 
             AMS_Pax_Accreditation_Form__c newForm = new AMS_Pax_Accreditation_Form__c();
             newForm.IsGSA__c = 'No';
@@ -3261,7 +3261,7 @@ private class ISSP_AMS_Accreditation_Test
         Test.stopTest();
     }
 
-    @isTest static void ISSP_AMS_Accreditation_Test_11() 
+    @isTest static void ISSP_AMS_Accreditation_Test_11()
     {
         IATA_ISO_Country__c country = new IATA_ISO_Country__c(name = 'test', IATA_Contry_KR__c = 'test',
                                     IATA_COUNTRY_EN__c = 'testEN' , IATA_Country_FR__c = 'testFR' , IATA_Country_ZH__c = 'testZH' ,
@@ -3271,9 +3271,9 @@ private class ISSP_AMS_Accreditation_Test
         IATA_ISO_Country__c country2 = new IATA_ISO_Country__c(name = 'test2', ISO_Code__c = 't2', Case_BSP_Country__c = 'test2');
         insert country2;
 
-        Id rtIdBr = [ SELECT Id FROM RecordType 
+        Id rtIdBr = [ SELECT Id FROM RecordType
         WHERE SobjectType = 'Account'
-        AND DeveloperName = 'IATA_Agency'][0].Id; 
+        AND DeveloperName = 'IATA_Agency'][0].Id;
 
 
         Account parent = ISSP_ObjectFactory.createNewAccount();
@@ -3283,7 +3283,7 @@ private class ISSP_AMS_Accreditation_Test
         parent.Location_Type__c = 'HO';
         parent.RecordTypeId = rtIdBr ;
         parent.IATACode__c = '100';
-        parent.IATA_ISO_Country__c = country.Id; 
+        parent.IATA_ISO_Country__c = country.Id;
 
         insert parent;
         System.debug('parent Id: ' + parent.Id);
@@ -3317,10 +3317,10 @@ private class ISSP_AMS_Accreditation_Test
         AMS_Acc_Checklist.Operation__c = 'Travel Agent';
         AMS_Acc_Checklist.License_required__c = true ;
         AMS_Acc_Checklist.Registration_required__c = true ;
-        AMS_Acc_Checklist.Statement_of_International_Sales__c = true ; 
+        AMS_Acc_Checklist.Statement_of_International_Sales__c = true ;
         insert AMS_Acc_Checklist;
 
-        AMS_Accreditation_Requirement__c ISSP_AMS_Accreditation_Acc_Req = new AMS_Accreditation_Requirement__c(); 
+        AMS_Accreditation_Requirement__c ISSP_AMS_Accreditation_Acc_Req = new AMS_Accreditation_Requirement__c();
         ISSP_AMS_Accreditation_Acc_Req.AMS_Accreditation_Country_CheckList__c = AMS_Acc_Checklist.Id ;
         ISSP_AMS_Accreditation_Acc_Req.Language__c = 'English';
         ISSP_AMS_Accreditation_Acc_Req.Location_type__c = 'HO; Head Office;Branch';
@@ -3362,10 +3362,10 @@ private class ISSP_AMS_Accreditation_Test
         Test.stopTest();
     }
 
-    @isTest static void ISSP_AMS_Accreditation_Test_12() 
+    @isTest static void ISSP_AMS_Accreditation_Test_12()
     {
 
-        
+
         Id OSCAR_RECORD_TYPE_ID = Schema.SObjectType.Case.getRecordTypeInfosByName().get('OSCAR Communication').getRecordTypeId();
 
         Id rtAccRoleOwnership = Schema.SObjectType.AMS_Account_Role__c.getRecordTypeInfosByName().get('Ownership').getRecordTypeId();
@@ -3400,9 +3400,9 @@ private class ISSP_AMS_Accreditation_Test
         IATA_ISO_Country__c country2 = new IATA_ISO_Country__c(name = 'test2', ISO_Code__c = 't2', Case_BSP_Country__c = 'test2');
         insert country2;
 
-        Id rtIdBr = [ SELECT Id FROM RecordType 
+        Id rtIdBr = [ SELECT Id FROM RecordType
         WHERE SobjectType = 'Account'
-        AND DeveloperName = 'IATA_Agency'][0].Id; 
+        AND DeveloperName = 'IATA_Agency'][0].Id;
 
 
         Account parent = ISSP_ObjectFactory.createNewAccount();
@@ -3412,12 +3412,12 @@ private class ISSP_AMS_Accreditation_Test
         parent.Location_Type__c = 'HO';
         parent.RecordTypeId = rtIdBr ;
         parent.IATACode__c = '1000000';
-        parent.IATA_ISO_Country__c = country.Id; 
+        parent.IATA_ISO_Country__c = country.Id;
 
         insert parent;
         System.debug('parent Id: ' + parent.Id);
 
-       
+
 
         Account child = ISSP_ObjectFactory.createNewAccount();
         child.BillingCity = 'test2';
@@ -3477,10 +3477,10 @@ private class ISSP_AMS_Accreditation_Test
         AMS_Acc_Checklist.Operation__c = 'Travel Agent';
         AMS_Acc_Checklist.License_required__c = true ;
         AMS_Acc_Checklist.Registration_required__c = true ;
-        AMS_Acc_Checklist.Statement_of_International_Sales__c = true ; 
+        AMS_Acc_Checklist.Statement_of_International_Sales__c = true ;
         insert AMS_Acc_Checklist;
 
-        AMS_Accreditation_Requirement__c ISSP_AMS_Accreditation_Acc_Req = new AMS_Accreditation_Requirement__c(); 
+        AMS_Accreditation_Requirement__c ISSP_AMS_Accreditation_Acc_Req = new AMS_Accreditation_Requirement__c();
         ISSP_AMS_Accreditation_Acc_Req.AMS_Accreditation_Country_CheckList__c = AMS_Acc_Checklist.Id ;
         ISSP_AMS_Accreditation_Acc_Req.Language__c = 'English';
         ISSP_AMS_Accreditation_Acc_Req.Location_type__c = 'HO; Head Office;Branch';
@@ -3523,11 +3523,11 @@ private class ISSP_AMS_Accreditation_Test
             testCase2.IFAP_Country_ISO__c = 'tq';
             testCase2.RecordTypeId = OSCAR_RECORD_TYPE_ID;
             caseList.add(testCase2);
-            
+
             insert caseList;
 
             List<AMS_Pax_Accreditation_Form__c> formList = new List<AMS_Pax_Accreditation_Form__c>();
-            
+
             AMS_Pax_Accreditation_Form__c newForm = new AMS_Pax_Accreditation_Form__c();
             newForm.IsGSA__c = 'No';
             newForm.CurrencyIsoCode = country.CurrencyIsoCode;
@@ -3540,7 +3540,7 @@ private class ISSP_AMS_Accreditation_Test
             newForm2.CurrencyIsoCode = country.CurrencyIsoCode;
             newForm2.SAAM_Case__c = testCase2.Id;
             formList.add(newForm2);
-            
+
             insert formList ;
 
             ApexPages.currentPage().getParameters().put('caseId' ,testCase.Id );
@@ -3549,25 +3549,25 @@ private class ISSP_AMS_Accreditation_Test
 
             //AMS_Accreditation_Contact__c setAccreditationContact(AMS_Account_Role__c accRole, Id newFormId, Id rtRecordTypePerson, Id rtRecordTypeCompany)
 
-            AMS_Accreditation_Contact__c accrCont1 = ctrl.setAccreditationContact(ar1, newForm.id, rtAccreditContCurrentOwner, rtAccreditContCurrentCompanyOwner);
-            AMS_Accreditation_Contact__c accrCont2 = ctrl.setAccreditationContact(ar2, newForm.id, rtAccreditContCurrentOwner, rtAccreditContCurrentCompanyOwner);
-            AMS_Accreditation_Contact__c accrCont3 = ctrl.setAccreditationContact(ar3, newForm.id, rtAccreditContCurrentOwner, rtAccreditContCurrentCompanyOwner);
-            AMS_Accreditation_Contact__c accrCont4 = ctrl.setAccreditationContact(ar4, newForm.id, rtAccreditContCurrentOwner, rtAccreditContCurrentCompanyOwner);
+            AMS_Accreditation_Contact__c accrCont1 = ISSP_AMS_Accreditation.setAccreditationContact(ar1, newForm.id, rtAccreditContCurrentOwner, rtAccreditContCurrentCompanyOwner);
+            AMS_Accreditation_Contact__c accrCont2 = ISSP_AMS_Accreditation.setAccreditationContact(ar2, newForm.id, rtAccreditContCurrentOwner, rtAccreditContCurrentCompanyOwner);
+            AMS_Accreditation_Contact__c accrCont3 = ISSP_AMS_Accreditation.setAccreditationContact(ar3, newForm.id, rtAccreditContCurrentOwner, rtAccreditContCurrentCompanyOwner);
+            AMS_Accreditation_Contact__c accrCont4 = ISSP_AMS_Accreditation.setAccreditationContact(ar4, newForm.id, rtAccreditContCurrentOwner, rtAccreditContCurrentCompanyOwner);
 
 
             ctrl.setContextualHelp('en_US');
 
             Id idQueues = ctrl.getRegionalQueue();
             ctrl.newCase.Region__c = 'Africa & Middle East';
-            idQueues = ctrl.getRegionalQueue(); 
+            idQueues = ctrl.getRegionalQueue();
             ctrl.newCase.Region__c = 'Americas';
-            idQueues = ctrl.getRegionalQueue(); 
+            idQueues = ctrl.getRegionalQueue();
             ctrl.newCase.Region__c = 'Asia & Pacific';
-            idQueues = ctrl.getRegionalQueue(); 
+            idQueues = ctrl.getRegionalQueue();
             ctrl.newCase.Region__c = 'China & North Asia';
-            idQueues = ctrl.getRegionalQueue(); 
+            idQueues = ctrl.getRegionalQueue();
             ctrl.newCase.Region__c = 'Europe';
-            idQueues = ctrl.getRegionalQueue(); 
+            idQueues = ctrl.getRegionalQueue();
 
 
             ctrl.setOwners('NoC');
@@ -3653,10 +3653,10 @@ private class ISSP_AMS_Accreditation_Test
         Test.stopTest();
     }
 
-        @isTest static void ISSP_AMS_Accreditation_Test_13() 
+        @isTest static void ISSP_AMS_Accreditation_Test_13()
     {
 
-        
+
         Id OSCAR_RECORD_TYPE_ID = Schema.SObjectType.Case.getRecordTypeInfosByName().get('OSCAR Communication').getRecordTypeId();
 
         Id rtAccRoleOwnership = Schema.SObjectType.AMS_Account_Role__c.getRecordTypeInfosByName().get('Ownership').getRecordTypeId();
@@ -3691,9 +3691,9 @@ private class ISSP_AMS_Accreditation_Test
         IATA_ISO_Country__c country2 = new IATA_ISO_Country__c(name = 'test2', ISO_Code__c = 't2', Case_BSP_Country__c = 'test2');
         insert country2;
 
-        Id rtIdBr = [ SELECT Id FROM RecordType 
+        Id rtIdBr = [ SELECT Id FROM RecordType
         WHERE SobjectType = 'Account'
-        AND DeveloperName = 'IATA_Agency'][0].Id; 
+        AND DeveloperName = 'IATA_Agency'][0].Id;
 
 
         Account parent = ISSP_ObjectFactory.createNewAccount();
@@ -3703,12 +3703,12 @@ private class ISSP_AMS_Accreditation_Test
         parent.Location_Type__c = 'HO';
         parent.RecordTypeId = rtIdBr ;
         parent.IATACode__c = '1000000';
-        parent.IATA_ISO_Country__c = country.Id; 
+        parent.IATA_ISO_Country__c = country.Id;
 
         insert parent;
         System.debug('parent Id: ' + parent.Id);
 
-       
+
 
         Account child = ISSP_ObjectFactory.createNewAccount();
         child.BillingCity = 'test2';
@@ -3768,10 +3768,10 @@ private class ISSP_AMS_Accreditation_Test
         AMS_Acc_Checklist.Operation__c = 'Travel Agent';
         AMS_Acc_Checklist.License_required__c = true ;
         AMS_Acc_Checklist.Registration_required__c = true ;
-        AMS_Acc_Checklist.Statement_of_International_Sales__c = true ; 
+        AMS_Acc_Checklist.Statement_of_International_Sales__c = true ;
         insert AMS_Acc_Checklist;
 
-        AMS_Accreditation_Requirement__c ISSP_AMS_Accreditation_Acc_Req = new AMS_Accreditation_Requirement__c(); 
+        AMS_Accreditation_Requirement__c ISSP_AMS_Accreditation_Acc_Req = new AMS_Accreditation_Requirement__c();
         ISSP_AMS_Accreditation_Acc_Req.AMS_Accreditation_Country_CheckList__c = AMS_Acc_Checklist.Id ;
         ISSP_AMS_Accreditation_Acc_Req.Language__c = 'English';
         ISSP_AMS_Accreditation_Acc_Req.Location_type__c = 'HO; Head Office;Branch';
@@ -3796,10 +3796,10 @@ private class ISSP_AMS_Accreditation_Test
             //testCase.Continous_Feed_SAF__c = true;
             testCase.Account_Concerned__c = parent.Id;
             testCase.IFAP_Country_ISO__c = 'tq';
-            
+
             insert testCase;
 
-           
+
             AMS_Pax_Accreditation_Form__c newForm = new AMS_Pax_Accreditation_Form__c();
             newForm.IsGSA__c = 'No';
             newForm.CurrencyIsoCode = country.CurrencyIsoCode;
@@ -3825,28 +3825,28 @@ private class ISSP_AMS_Accreditation_Test
             ISSP_AMS_Accreditation ctrl3 = new ISSP_AMS_Accreditation(new ISSP_AddAttachment() );
             ctrl3.newCase = testCase ;
             }catch(Exception e){
-                
+
             }
 
 
             ctrl.newForm.Agency_Codes_Concerned__c = 'a;b;c';
             List<SelectOption> lsoAgencyCodesConcerned = ctrl.getAgencyCodesConcerned();
 
-            
-            ctrl.updateNoCAgencyLegalDetails();
-            
 
-            
+            ctrl.updateNoCAgencyLegalDetails();
+
+
+
         }
 
         Test.stopTest();
     }
 
     // CB - test change of bank details w creation of child cases & oscars for them
-    @isTest static void ISSP_AMS_Accreditation_Test_14() 
+    @isTest static void ISSP_AMS_Accreditation_Test_14()
     {
 
-        
+
         Id OSCAR_RECORD_TYPE_ID = Schema.SObjectType.Case.getRecordTypeInfosByName().get('OSCAR Communication').getRecordTypeId();
 
         Id rtAccRoleOwnership = Schema.SObjectType.AMS_Account_Role__c.getRecordTypeInfosByName().get('Ownership').getRecordTypeId();
@@ -3869,9 +3869,9 @@ private class ISSP_AMS_Accreditation_Test
         IATA_ISO_Country__c country2 = new IATA_ISO_Country__c(name = 'test2', ISO_Code__c = 't2', Case_BSP_Country__c = 'test2');
         insert country2;
 
-        Id rtIdBr = [ SELECT Id FROM RecordType 
+        Id rtIdBr = [ SELECT Id FROM RecordType
         WHERE SobjectType = 'Account'
-        AND DeveloperName = 'IATA_Agency'][0].Id; 
+        AND DeveloperName = 'IATA_Agency'][0].Id;
 
 
         Account parent = ISSP_ObjectFactory.createNewAccount();
@@ -3881,12 +3881,12 @@ private class ISSP_AMS_Accreditation_Test
         parent.Location_Type__c = 'HO';
         parent.RecordTypeId = rtIdBr ;
         parent.IATACode__c = '1000000';
-        parent.IATA_ISO_Country__c = country.Id; 
+        parent.IATA_ISO_Country__c = country.Id;
 
         insert parent;
         System.debug('parent Id: ' + parent.Id);
 
-       
+
 
         Account child = ISSP_ObjectFactory.createNewAccount();
         child.BillingCity = 'test2';
@@ -3926,10 +3926,10 @@ private class ISSP_AMS_Accreditation_Test
         AMS_Acc_Checklist.Operation__c = 'Travel Agent';
         AMS_Acc_Checklist.License_required__c = false ;
         AMS_Acc_Checklist.Registration_required__c = false ;
-        AMS_Acc_Checklist.Statement_of_International_Sales__c = false ; 
+        AMS_Acc_Checklist.Statement_of_International_Sales__c = false ;
         insert AMS_Acc_Checklist;
 
-        AMS_Accreditation_Requirement__c ISSP_AMS_Accreditation_Acc_Req = new AMS_Accreditation_Requirement__c(); 
+        AMS_Accreditation_Requirement__c ISSP_AMS_Accreditation_Acc_Req = new AMS_Accreditation_Requirement__c();
         ISSP_AMS_Accreditation_Acc_Req.AMS_Accreditation_Country_CheckList__c = AMS_Acc_Checklist.Id ;
         ISSP_AMS_Accreditation_Acc_Req.Language__c = 'English';
         ISSP_AMS_Accreditation_Acc_Req.Location_type__c = 'HO; Head Office;Branch';
@@ -3938,7 +3938,7 @@ private class ISSP_AMS_Accreditation_Test
         ISSP_AMS_Accreditation_Acc_Req.Name = 'TestReq1';
         insert ISSP_AMS_Accreditation_Acc_Req;
 
-        
+
         System.runAs(newUser)
         {
 
@@ -3970,7 +3970,7 @@ private class ISSP_AMS_Accreditation_Test
             insert newForm2 ;
 
             Test.startTest();
-  
+
             ApexPages.currentPage().getParameters().put('caseId', testCase2.Id );
             ApexPages.currentPage().getParameters().put('isBankAccountChange' ,'true');
             ApexPages.currentPage().getParameters().put('isNoticeOfChange' ,'true');
@@ -3992,7 +3992,7 @@ private class ISSP_AMS_Accreditation_Test
 
         }
 
-       
+
         // Check that the child case was create & it has an OSCAR attached
         list<Case> childCases = [SELECT Id, ParentId, OSCAR__c FROM Case ORDER BY CreatedDate ASC];
         System.assertNotEquals(true, childCases.isEmpty());
@@ -4003,10 +4003,10 @@ private class ISSP_AMS_Accreditation_Test
     }
 
     // CB - test notification to HO user when change of bank details submitted from BR
-    @isTest static void ISSP_AMS_Accreditation_Test_15() 
+    @isTest static void ISSP_AMS_Accreditation_Test_15()
     {
 
-        
+
         Id OSCAR_RECORD_TYPE_ID = Schema.SObjectType.Case.getRecordTypeInfosByName().get('OSCAR Communication').getRecordTypeId();
 
         Id rtAccRoleOwnership = Schema.SObjectType.AMS_Account_Role__c.getRecordTypeInfosByName().get('Ownership').getRecordTypeId();
@@ -4029,9 +4029,9 @@ private class ISSP_AMS_Accreditation_Test
         IATA_ISO_Country__c country2 = new IATA_ISO_Country__c(name = 'test2', ISO_Code__c = 't2', Case_BSP_Country__c = 'test2');
         insert country2;
 
-        Id rtIdBr = [ SELECT Id FROM RecordType 
+        Id rtIdBr = [ SELECT Id FROM RecordType
         WHERE SobjectType = 'Account'
-        AND DeveloperName = 'IATA_Agency'][0].Id; 
+        AND DeveloperName = 'IATA_Agency'][0].Id;
 
 
         Account parent = ISSP_ObjectFactory.createNewAccount();
@@ -4041,12 +4041,12 @@ private class ISSP_AMS_Accreditation_Test
         parent.Location_Type__c = 'HO';
         parent.RecordTypeId = rtIdBr ;
         parent.IATACode__c = '1000000';
-        parent.IATA_ISO_Country__c = country.Id; 
+        parent.IATA_ISO_Country__c = country.Id;
 
         insert parent;
         System.debug('parent Id: ' + parent.Id);
 
-       
+
 
         Account child = ISSP_ObjectFactory.createNewAccount();
         child.BillingCity = 'test2';
@@ -4077,7 +4077,7 @@ private class ISSP_AMS_Accreditation_Test
         System.debug('newUser Id: ' + newUser.Id);
         con.OwnerId = newUser.Id;
         update con;
-        
+
         System.runAs(newUser)
         {
 
@@ -4109,7 +4109,7 @@ private class ISSP_AMS_Accreditation_Test
             insert newForm2 ;
 
             Test.startTest();
-  
+
             ApexPages.currentPage().getParameters().put('caseId', testCase2.Id );
             ApexPages.currentPage().getParameters().put('isBankAccountChange' ,'true');
             ApexPages.currentPage().getParameters().put('isNoticeOfChange' ,'true');
@@ -4137,10 +4137,10 @@ private class ISSP_AMS_Accreditation_Test
 
     }
 
-     @isTest static void ISSP_AMS_Accreditation_Test_16() 
+     @isTest static void ISSP_AMS_Accreditation_Test_16()
     {
 
-        
+
         Id OSCAR_RECORD_TYPE_ID = Schema.SObjectType.Case.getRecordTypeInfosByName().get('OSCAR Communication').getRecordTypeId();
 
         Id rtAccRoleOwnership = Schema.SObjectType.AMS_Account_Role__c.getRecordTypeInfosByName().get('Ownership').getRecordTypeId();
@@ -4175,9 +4175,9 @@ private class ISSP_AMS_Accreditation_Test
         IATA_ISO_Country__c country2 = new IATA_ISO_Country__c(name = 'test2', ISO_Code__c = 't2', Case_BSP_Country__c = 'test2');
         insert country2;
 
-        Id rtIdBr = [ SELECT Id FROM RecordType 
+        Id rtIdBr = [ SELECT Id FROM RecordType
         WHERE SobjectType = 'Account'
-        AND DeveloperName = 'IATA_Agency'][0].Id; 
+        AND DeveloperName = 'IATA_Agency'][0].Id;
 
 
         Account parent = ISSP_ObjectFactory.createNewAccount();
@@ -4193,7 +4193,7 @@ private class ISSP_AMS_Accreditation_Test
         insert parent;
         System.debug('parent Id: ' + parent.Id);
 
-       
+
 
         Account child = ISSP_ObjectFactory.createNewAccount();
         child.BillingCity = 'test2';
@@ -4253,10 +4253,10 @@ private class ISSP_AMS_Accreditation_Test
         AMS_Acc_Checklist.Operation__c = 'Travel Agent';
         AMS_Acc_Checklist.License_required__c = true ;
         AMS_Acc_Checklist.Registration_required__c = true ;
-        AMS_Acc_Checklist.Statement_of_International_Sales__c = true ; 
+        AMS_Acc_Checklist.Statement_of_International_Sales__c = true ;
         insert AMS_Acc_Checklist;
 
-        AMS_Accreditation_Requirement__c ISSP_AMS_Accreditation_Acc_Req = new AMS_Accreditation_Requirement__c(); 
+        AMS_Accreditation_Requirement__c ISSP_AMS_Accreditation_Acc_Req = new AMS_Accreditation_Requirement__c();
         ISSP_AMS_Accreditation_Acc_Req.AMS_Accreditation_Country_CheckList__c = AMS_Acc_Checklist.Id ;
         ISSP_AMS_Accreditation_Acc_Req.Language__c = 'English';
         ISSP_AMS_Accreditation_Acc_Req.Location_type__c = 'HO; Head Office;Branch';
@@ -4301,11 +4301,11 @@ private class ISSP_AMS_Accreditation_Test
             testCase2.IFAP_Country_ISO__c = 'tq';
             testCase2.RecordTypeId = OSCAR_RECORD_TYPE_ID;
             caseList.add(testCase2);
-            
+
             insert caseList;
 
             List<AMS_Pax_Accreditation_Form__c> formList = new List<AMS_Pax_Accreditation_Form__c>();
-            
+
             AMS_Pax_Accreditation_Form__c newForm = new AMS_Pax_Accreditation_Form__c();
             newForm.IsGSA__c = 'No';
             newForm.CurrencyIsoCode = country.CurrencyIsoCode;
@@ -4318,7 +4318,7 @@ private class ISSP_AMS_Accreditation_Test
             newForm2.CurrencyIsoCode = country.CurrencyIsoCode;
             newForm2.SAAM_Case__c = testCase2.Id;
             formList.add(newForm2);
-            
+
             insert formList ;
 
             ApexPages.currentPage().getParameters().put('caseId' ,testCase.Id );
@@ -4327,25 +4327,25 @@ private class ISSP_AMS_Accreditation_Test
 
             //AMS_Accreditation_Contact__c setAccreditationContact(AMS_Account_Role__c accRole, Id newFormId, Id rtRecordTypePerson, Id rtRecordTypeCompany)
 
-            AMS_Accreditation_Contact__c accrCont1 = ctrl.setAccreditationContact(ar1, newForm.id, rtAccreditContCurrentOwner, rtAccreditContCurrentCompanyOwner);
-            AMS_Accreditation_Contact__c accrCont2 = ctrl.setAccreditationContact(ar2, newForm.id, rtAccreditContCurrentOwner, rtAccreditContCurrentCompanyOwner);
-            AMS_Accreditation_Contact__c accrCont3 = ctrl.setAccreditationContact(ar3, newForm.id, rtAccreditContCurrentOwner, rtAccreditContCurrentCompanyOwner);
-            AMS_Accreditation_Contact__c accrCont4 = ctrl.setAccreditationContact(ar4, newForm.id, rtAccreditContCurrentOwner, rtAccreditContCurrentCompanyOwner);
+            AMS_Accreditation_Contact__c accrCont1 = ISSP_AMS_Accreditation.setAccreditationContact(ar1, newForm.id, rtAccreditContCurrentOwner, rtAccreditContCurrentCompanyOwner);
+            AMS_Accreditation_Contact__c accrCont2 = ISSP_AMS_Accreditation.setAccreditationContact(ar2, newForm.id, rtAccreditContCurrentOwner, rtAccreditContCurrentCompanyOwner);
+            AMS_Accreditation_Contact__c accrCont3 = ISSP_AMS_Accreditation.setAccreditationContact(ar3, newForm.id, rtAccreditContCurrentOwner, rtAccreditContCurrentCompanyOwner);
+            AMS_Accreditation_Contact__c accrCont4 = ISSP_AMS_Accreditation.setAccreditationContact(ar4, newForm.id, rtAccreditContCurrentOwner, rtAccreditContCurrentCompanyOwner);
 
 
             ctrl.setContextualHelp('en_US');
 
             Id idQueues = ctrl.getRegionalQueue();
             ctrl.newCase.Region__c = 'Africa & Middle East';
-            idQueues = ctrl.getRegionalQueue(); 
+            idQueues = ctrl.getRegionalQueue();
             ctrl.newCase.Region__c = 'Americas';
-            idQueues = ctrl.getRegionalQueue(); 
+            idQueues = ctrl.getRegionalQueue();
             ctrl.newCase.Region__c = 'Asia & Pacific';
-            idQueues = ctrl.getRegionalQueue(); 
+            idQueues = ctrl.getRegionalQueue();
             ctrl.newCase.Region__c = 'China & North Asia';
-            idQueues = ctrl.getRegionalQueue(); 
+            idQueues = ctrl.getRegionalQueue();
             ctrl.newCase.Region__c = 'Europe';
-            idQueues = ctrl.getRegionalQueue(); 
+            idQueues = ctrl.getRegionalQueue();
 
 
             ctrl.setOwners('NoC');
@@ -4449,7 +4449,7 @@ private class ISSP_AMS_Accreditation_Test
                                     IATA_COUNTRY_EN__c = 'testEN' , IATA_Country_FR__c = 'testFR' , IATA_Country_ZH__c = 'testZH' ,
                                     IATA_Country_IT__c = 'testIT' , IATA_Country_JP__c = 'testJP' , ISO_Code__c = 'tq',
                                     IATA_Country_PT__c = 'testPT' , IATA_Country_SP__c = 'testSP' , Case_BSP_Country__c = 'test' );
-        
+
         IATA_ISO_Country__c country2 = new IATA_ISO_Country__c(name = 'test2', ISO_Code__c = 't2', Case_BSP_Country__c = 'test2', CASS_Import__c = 'Yes');
 
 
@@ -4470,7 +4470,7 @@ private class ISSP_AMS_Accreditation_Test
             str = accr.noCLocationType;
 
             accr.txtHelpCurrency = 'xpto';
-        
+
             str = accr.txtHelpCurrency;
 
             selectOptionList = new List<SelectOption>();
@@ -4495,7 +4495,7 @@ private class ISSP_AMS_Accreditation_Test
 
             accr.passedFormValidation = true;
             bol = accr.passedFormValidation;
-            
+
             accr.fileBody = Blob.valueOf('xpto');
             blb = accr.fileBody;
 
@@ -4561,7 +4561,7 @@ private class ISSP_AMS_Accreditation_Test
             accr.newForm.Shipping_State__c = invalidISOsample;
             accr.newForm.Shipping_Country__c = invalidISOsample;
             /*** AMSU-112 - End ***/
-            
+
             accr.validateCharactersInForm();
 
             accr.facilityRecordTypeName = 'Office';
@@ -4592,7 +4592,7 @@ private class ISSP_AMS_Accreditation_Test
             accr.saveFacilities();
         }
 
-        Test.stopTest();        
+        Test.stopTest();
     }
 
     @isTest
@@ -4613,7 +4613,7 @@ private class ISSP_AMS_Accreditation_Test
                                     IATA_COUNTRY_EN__c = 'testEN' , IATA_Country_FR__c = 'testFR' , IATA_Country_ZH__c = 'testZH' ,
                                     IATA_Country_IT__c = 'testIT' , IATA_Country_JP__c = 'testJP' , ISO_Code__c = 'tq',
                                     IATA_Country_PT__c = 'testPT' , IATA_Country_SP__c = 'testSP' , Case_BSP_Country__c = 'test' );
-        
+
         IATA_ISO_Country__c country2 = new IATA_ISO_Country__c(name = 'test2', ISO_Code__c = 't2', Case_BSP_Country__c = 'test2', CASS_Import__c = 'Yes');
 
 
@@ -4633,11 +4633,11 @@ private class ISSP_AMS_Accreditation_Test
             accr.isNewCase = true;
             accr.newCase.Reason1__c = 'New BR / IP';
             accr.hqAccount.Company_Type__c = companyType;
-            
+
             pageRef = accr.save();
         }
 
-        Test.stopTest();        
+        Test.stopTest();
     }
 
     @isTest
@@ -4658,7 +4658,7 @@ private class ISSP_AMS_Accreditation_Test
                                     IATA_COUNTRY_EN__c = 'testEN' , IATA_Country_FR__c = 'testFR' , IATA_Country_ZH__c = 'testZH' ,
                                     IATA_Country_IT__c = 'testIT' , IATA_Country_JP__c = 'testJP' , ISO_Code__c = 'tq',
                                     IATA_Country_PT__c = 'testPT' , IATA_Country_SP__c = 'testSP' , Case_BSP_Country__c = 'test' );
-        
+
         IATA_ISO_Country__c country2 = new IATA_ISO_Country__c(name = 'test2', ISO_Code__c = 't2', Case_BSP_Country__c = 'test2', CASS_Import__c = 'Yes');
 
 
@@ -4678,11 +4678,11 @@ private class ISSP_AMS_Accreditation_Test
             accr.isNewCase = true;
             accr.newCase.Reason1__c = 'New BR / IP';
             accr.hqAccount.Company_Type__c = companyType;
-            
+
             pageRef = accr.save();
         }
 
-        Test.stopTest();        
+        Test.stopTest();
     }
 
     @isTest
@@ -4703,7 +4703,7 @@ private class ISSP_AMS_Accreditation_Test
                                     IATA_COUNTRY_EN__c = 'testEN' , IATA_Country_FR__c = 'testFR' , IATA_Country_ZH__c = 'testZH' ,
                                     IATA_Country_IT__c = 'testIT' , IATA_Country_JP__c = 'testJP' , ISO_Code__c = 'tq',
                                     IATA_Country_PT__c = 'testPT' , IATA_Country_SP__c = 'testSP' , Case_BSP_Country__c = 'test' );
-        
+
         IATA_ISO_Country__c country2 = new IATA_ISO_Country__c(name = 'test2', ISO_Code__c = 't2', Case_BSP_Country__c = 'test2', CASS_Import__c = 'Yes');
 
 
@@ -4723,11 +4723,11 @@ private class ISSP_AMS_Accreditation_Test
             accr.isNewCase = true;
             accr.newCase.Reason1__c = 'New BR / IP';
             accr.hqAccount.Company_Type__c = companyType;
-            
+
             pageRef = accr.save();
         }
 
-        Test.stopTest();        
+        Test.stopTest();
     }
 
     @isTest
@@ -4748,7 +4748,7 @@ private class ISSP_AMS_Accreditation_Test
                                     IATA_COUNTRY_EN__c = 'testEN' , IATA_Country_FR__c = 'testFR' , IATA_Country_ZH__c = 'testZH' ,
                                     IATA_Country_IT__c = 'testIT' , IATA_Country_JP__c = 'testJP' , ISO_Code__c = 'tq',
                                     IATA_Country_PT__c = 'testPT' , IATA_Country_SP__c = 'testSP' , Case_BSP_Country__c = 'test' );
-        
+
         IATA_ISO_Country__c country2 = new IATA_ISO_Country__c(name = 'test2', ISO_Code__c = 't2', Case_BSP_Country__c = 'test2', CASS_Import__c = 'Yes');
 
 
@@ -4768,11 +4768,11 @@ private class ISSP_AMS_Accreditation_Test
             accr.isNewCase = true;
             accr.newCase.Reason1__c = 'New BR / IP';
             accr.hqAccount.Company_Type__c = companyType;
-            
+
             pageRef = accr.save();
         }
 
-        Test.stopTest();        
+        Test.stopTest();
     }
 
     @isTest
@@ -4793,7 +4793,7 @@ private class ISSP_AMS_Accreditation_Test
                                     IATA_COUNTRY_EN__c = 'testEN' , IATA_Country_FR__c = 'testFR' , IATA_Country_ZH__c = 'testZH' ,
                                     IATA_Country_IT__c = 'testIT' , IATA_Country_JP__c = 'testJP' , ISO_Code__c = 'tq',
                                     IATA_Country_PT__c = 'testPT' , IATA_Country_SP__c = 'testSP' , Case_BSP_Country__c = 'test' );
-        
+
         IATA_ISO_Country__c country2 = new IATA_ISO_Country__c(name = 'test2', ISO_Code__c = 't2', Case_BSP_Country__c = 'test2', CASS_Import__c = 'Yes');
 
 
@@ -4813,11 +4813,11 @@ private class ISSP_AMS_Accreditation_Test
             accr.isNewCase = true;
             accr.newCase.Reason1__c = 'New BR / IP';
             accr.hqAccount.Company_Type__c = companyType;
-            
+
             pageRef = accr.save();
         }
 
-        Test.stopTest();        
+        Test.stopTest();
     }
 
     @isTest
@@ -4838,7 +4838,7 @@ private class ISSP_AMS_Accreditation_Test
                                     IATA_COUNTRY_EN__c = 'testEN' , IATA_Country_FR__c = 'testFR' , IATA_Country_ZH__c = 'testZH' ,
                                     IATA_Country_IT__c = 'testIT' , IATA_Country_JP__c = 'testJP' , ISO_Code__c = 'tq',
                                     IATA_Country_PT__c = 'testPT' , IATA_Country_SP__c = 'testSP' , Case_BSP_Country__c = 'test' );
-        
+
         IATA_ISO_Country__c country2 = new IATA_ISO_Country__c(name = 'test2', ISO_Code__c = 't2', Case_BSP_Country__c = 'test2', CASS_Import__c = 'Yes');
 
 
@@ -4858,11 +4858,11 @@ private class ISSP_AMS_Accreditation_Test
             accr.isNewCase = true;
             accr.newCase.Reason1__c = 'New BR / IP';
             accr.hqAccount.Company_Type__c = companyType;
-            
+
             pageRef = accr.save();
         }
 
-        Test.stopTest();        
+        Test.stopTest();
     }
 
     @isTest
@@ -4883,7 +4883,7 @@ private class ISSP_AMS_Accreditation_Test
                                     IATA_COUNTRY_EN__c = 'testEN' , IATA_Country_FR__c = 'testFR' , IATA_Country_ZH__c = 'testZH' ,
                                     IATA_Country_IT__c = 'testIT' , IATA_Country_JP__c = 'testJP' , ISO_Code__c = 'tq',
                                     IATA_Country_PT__c = 'testPT' , IATA_Country_SP__c = 'testSP' , Case_BSP_Country__c = 'test' );
-        
+
         IATA_ISO_Country__c country2 = new IATA_ISO_Country__c(name = 'test2', ISO_Code__c = 't2', Case_BSP_Country__c = 'test2', CASS_Import__c = 'Yes');
 
 
@@ -4903,11 +4903,11 @@ private class ISSP_AMS_Accreditation_Test
             accr.isNewCase = true;
             accr.newCase.Reason1__c = 'New BR / IP';
             accr.hqAccount.Company_Type__c = companyType;
-            
+
             pageRef = accr.save();
         }
 
-        Test.stopTest();        
+        Test.stopTest();
     }
 
     @isTest
@@ -4928,7 +4928,7 @@ private class ISSP_AMS_Accreditation_Test
                                     IATA_COUNTRY_EN__c = 'testEN' , IATA_Country_FR__c = 'testFR' , IATA_Country_ZH__c = 'testZH' ,
                                     IATA_Country_IT__c = 'testIT' , IATA_Country_JP__c = 'testJP' , ISO_Code__c = 'tq',
                                     IATA_Country_PT__c = 'testPT' , IATA_Country_SP__c = 'testSP' , Case_BSP_Country__c = 'test' );
-        
+
         IATA_ISO_Country__c country2 = new IATA_ISO_Country__c(name = 'test2', ISO_Code__c = 't2', Case_BSP_Country__c = 'test2', CASS_Import__c = 'Yes');
 
 
@@ -4948,11 +4948,11 @@ private class ISSP_AMS_Accreditation_Test
             accr.isNewCase = true;
             accr.newCase.Reason1__c = 'New BR / IP';
             accr.hqAccount.Company_Type__c = companyType;
-            
+
             pageRef = accr.save();
         }
 
-        Test.stopTest();        
+        Test.stopTest();
     }
 
     @isTest
@@ -4973,7 +4973,7 @@ private class ISSP_AMS_Accreditation_Test
                                     IATA_COUNTRY_EN__c = 'testEN' , IATA_Country_FR__c = 'testFR' , IATA_Country_ZH__c = 'testZH' ,
                                     IATA_Country_IT__c = 'testIT' , IATA_Country_JP__c = 'testJP' , ISO_Code__c = 'tq',
                                     IATA_Country_PT__c = 'testPT' , IATA_Country_SP__c = 'testSP' , Case_BSP_Country__c = 'test' );
-        
+
         IATA_ISO_Country__c country2 = new IATA_ISO_Country__c(name = 'test2', ISO_Code__c = 't2', Case_BSP_Country__c = 'test2', CASS_Import__c = 'Yes');
 
 
@@ -4993,11 +4993,11 @@ private class ISSP_AMS_Accreditation_Test
             accr.isNewCase = true;
             accr.newCase.Reason1__c = 'New BR / IP';
             accr.hqAccount.Company_Type__c = companyType;
-            
+
             pageRef = accr.save();
         }
 
-        Test.stopTest();        
+        Test.stopTest();
     }
 
     @isTest
@@ -5018,7 +5018,7 @@ private class ISSP_AMS_Accreditation_Test
                                     IATA_COUNTRY_EN__c = 'testEN' , IATA_Country_FR__c = 'testFR' , IATA_Country_ZH__c = 'testZH' ,
                                     IATA_Country_IT__c = 'testIT' , IATA_Country_JP__c = 'testJP' , ISO_Code__c = 'tq',
                                     IATA_Country_PT__c = 'testPT' , IATA_Country_SP__c = 'testSP' , Case_BSP_Country__c = 'test' );
-        
+
         IATA_ISO_Country__c country2 = new IATA_ISO_Country__c(name = 'test2', ISO_Code__c = 't2', Case_BSP_Country__c = 'test2', CASS_Import__c = 'Yes');
 
 
@@ -5038,11 +5038,11 @@ private class ISSP_AMS_Accreditation_Test
             accr.isNewCase = true;
             accr.newCase.Reason1__c = 'New BR / IP';
             accr.hqAccount.Company_Type__c = companyType;
-            
+
             pageRef = accr.save();
         }
 
-        Test.stopTest();        
+        Test.stopTest();
     }
 
     @isTest
@@ -5063,7 +5063,7 @@ private class ISSP_AMS_Accreditation_Test
                                     IATA_COUNTRY_EN__c = 'testEN' , IATA_Country_FR__c = 'testFR' , IATA_Country_ZH__c = 'testZH' ,
                                     IATA_Country_IT__c = 'testIT' , IATA_Country_JP__c = 'testJP' , ISO_Code__c = 'tq',
                                     IATA_Country_PT__c = 'testPT' , IATA_Country_SP__c = 'testSP' , Case_BSP_Country__c = 'test' );
-        
+
         IATA_ISO_Country__c country2 = new IATA_ISO_Country__c(name = 'test2', ISO_Code__c = 't2', Case_BSP_Country__c = 'test2', CASS_Import__c = 'Yes');
 
 
@@ -5083,7 +5083,7 @@ private class ISSP_AMS_Accreditation_Test
             accr.isNewCase = true;
             accr.newCase.Reason1__c = 'New BR / IP';
             accr.hqAccount.Company_Type__c = companyType;
-            
+
             accr.isNoticeOfChange = false;
             accr.amsOfficeType = 'to';
             accr.newCase.Reason1__c = 'Xpto';
@@ -5094,7 +5094,7 @@ private class ISSP_AMS_Accreditation_Test
             pageRef = accr.goToFinalStep();
         }
 
-        Test.stopTest();        
+        Test.stopTest();
     }
 
     @isTest
@@ -5115,7 +5115,7 @@ private class ISSP_AMS_Accreditation_Test
                                     IATA_COUNTRY_EN__c = 'testEN' , IATA_Country_FR__c = 'testFR' , IATA_Country_ZH__c = 'testZH' ,
                                     IATA_Country_IT__c = 'testIT' , IATA_Country_JP__c = 'testJP' , ISO_Code__c = 'tq',
                                     IATA_Country_PT__c = 'testPT' , IATA_Country_SP__c = 'testSP' , Case_BSP_Country__c = 'test' );
-        
+
         IATA_ISO_Country__c country2 = new IATA_ISO_Country__c(name = 'test2', ISO_Code__c = 't2', Case_BSP_Country__c = 'test2', CASS_Import__c = 'Yes');
 
 
@@ -5135,7 +5135,7 @@ private class ISSP_AMS_Accreditation_Test
             accr.isNewCase = true;
             accr.newCase.Reason1__c = 'New BR / IP';
             accr.hqAccount.Company_Type__c = companyType;
-            
+
             accr.isNoticeOfChange = false;
             accr.amsOfficeType = 'Xpto';
             accr.newCase.Reason1__c = 'Xpto';
@@ -5146,7 +5146,7 @@ private class ISSP_AMS_Accreditation_Test
             pageRef = accr.goToFinalStep();
         }
 
-        Test.stopTest();        
+        Test.stopTest();
     }
 
     @isTest
@@ -5168,7 +5168,7 @@ private class ISSP_AMS_Accreditation_Test
                                     IATA_COUNTRY_EN__c = 'testEN' , IATA_Country_FR__c = 'testFR' , IATA_Country_ZH__c = 'testZH' ,
                                     IATA_Country_IT__c = 'testIT' , IATA_Country_JP__c = 'testJP' , ISO_Code__c = 'tq',
                                     IATA_Country_PT__c = 'testPT' , IATA_Country_SP__c = 'testSP' , Case_BSP_Country__c = 'test' );
-        
+
         IATA_ISO_Country__c country2 = new IATA_ISO_Country__c(name = 'test2', ISO_Code__c = 't2', Case_BSP_Country__c = 'test2', CASS_Import__c = 'Yes');
 
 
@@ -5226,9 +5226,9 @@ private class ISSP_AMS_Accreditation_Test
         IATA_ISO_Country__c country2 = new IATA_ISO_Country__c(name = 'test2', ISO_Code__c = 't2', Case_BSP_Country__c = 'test2', CASS_Import__c = 'Yes');
         insert country2;
 
-        Id rtIdBr = [ SELECT Id FROM RecordType 
+        Id rtIdBr = [ SELECT Id FROM RecordType
         WHERE SobjectType = 'Account'
-        AND DeveloperName = 'IATA_Agency'][0].Id; 
+        AND DeveloperName = 'IATA_Agency'][0].Id;
 
 
         Account parent = ISSP_ObjectFactory.createNewAccount();
@@ -5241,14 +5241,14 @@ private class ISSP_AMS_Accreditation_Test
         parent.IATACode__c = '100';
         parent.ANG_FA_Opt_out__c = false;
         parent.ANG_Accreditation_Model__c = AMS_Utils.ACCREDITATIONMODEL_CASH;
-         
+
         insert parent;
         System.debug('parent Id: ' + parent.Id);
 
         Contact con = ISSP_ObjectFactory.createNewContact();
         con.AccountId= parent.Id;
         con.Email = 'Test@test11.com';
-        insert con;        
+        insert con;
 
         System.debug('con Id: ' + con.Id);
         User newUser = ISSP_ObjectFactory.createPortalUser(con);
@@ -5271,7 +5271,7 @@ private class ISSP_AMS_Accreditation_Test
             testCase.IFAP_Country_ISO__c = 'tq';
             testCase.Status = 'Draft';
             testCase.Origin = 'Portal';
-            testCase.RecordTypeId = AMS_Utils.OSCAR_COMUNICATION;            
+            testCase.RecordTypeId = AMS_Utils.OSCAR_COMUNICATION;
             testCase.Reason1__c = AMS_Utils.CASE_REASON_OPT_OUT;
 
 
@@ -5282,7 +5282,7 @@ private class ISSP_AMS_Accreditation_Test
             newForm.CurrencyIsoCode = country.CurrencyIsoCode;
             newForm.SAAM_Case__c = testCase.Id;
             insert newForm ;
-                
+
             ApexPages.currentPage().getParameters().put('caseId' ,testCase.Id );
             ISSP_AMS_Accreditation ctrl = new ISSP_AMS_Accreditation();
             ctrl.newCase = testCase ;
@@ -5291,7 +5291,7 @@ private class ISSP_AMS_Accreditation_Test
             ctrl.runOptInOut();
         }
         Test.stopTest();
-    }    
+    }
 
     @isTest
     static void testOptOut2() {
@@ -5303,9 +5303,9 @@ private class ISSP_AMS_Accreditation_Test
         IATA_ISO_Country__c country2 = new IATA_ISO_Country__c(name = 'test2', ISO_Code__c = 't2', Case_BSP_Country__c = 'test2', CASS_Import__c = 'Yes');
         insert country2;
 
-        Id rtIdBr = [ SELECT Id FROM RecordType 
+        Id rtIdBr = [ SELECT Id FROM RecordType
         WHERE SobjectType = 'Account'
-        AND DeveloperName = 'IATA_Agency'][0].Id; 
+        AND DeveloperName = 'IATA_Agency'][0].Id;
 
 
         Account parent = ISSP_ObjectFactory.createNewAccount();
@@ -5318,14 +5318,14 @@ private class ISSP_AMS_Accreditation_Test
         parent.IATACode__c = '100';
         parent.ANG_FA_Opt_out__c = false;
         parent.ANG_Accreditation_Model__c = AMS_Utils.ACCREDITATIONMODEL_CASH;
-         
+
         insert parent;
         System.debug('parent Id: ' + parent.Id);
 
         Contact con = ISSP_ObjectFactory.createNewContact();
         con.AccountId= parent.Id;
         con.Email = 'Test@test11.com';
-        insert con;        
+        insert con;
 
         System.debug('con Id: ' + con.Id);
         User newUser = ISSP_ObjectFactory.createPortalUser(con);
@@ -5335,15 +5335,15 @@ private class ISSP_AMS_Accreditation_Test
 
         Test.startTest();
         System.runAs(newUser)
-        {                
+        {
             ISSP_AMS_Accreditation ctrl = new ISSP_AMS_Accreditation();
             ctrl.pEfectiveDateStr = '2018-03-31';
             List<Case> lc = ctrl.getAMSDraftCases();
             ctrl.runOptInOut();
         }
         Test.stopTest();
-    }    
-        
+    }
+
     @isTest
     static void testOptOut3() {
         IATA_ISO_Country__c country = new IATA_ISO_Country__c(name = 'test', IATA_Contry_KR__c = 'test', CASS_Import__c = 'Yes',
@@ -5354,9 +5354,9 @@ private class ISSP_AMS_Accreditation_Test
         IATA_ISO_Country__c country2 = new IATA_ISO_Country__c(name = 'test2', ISO_Code__c = 't2', Case_BSP_Country__c = 'test2', CASS_Import__c = 'Yes');
         insert country2;
 
-        Id rtIdBr = [ SELECT Id FROM RecordType 
+        Id rtIdBr = [ SELECT Id FROM RecordType
         WHERE SobjectType = 'Account'
-        AND DeveloperName = 'IATA_Agency'][0].Id; 
+        AND DeveloperName = 'IATA_Agency'][0].Id;
 
 
         Account parent = ISSP_ObjectFactory.createNewAccount();
@@ -5369,14 +5369,14 @@ private class ISSP_AMS_Accreditation_Test
         parent.IATACode__c = '100';
         parent.ANG_FA_Opt_out__c = true;
         parent.ANG_Accreditation_Model__c = AMS_Utils.ACCREDITATIONMODEL_CASH;
-         
+
         insert parent;
         System.debug('parent Id: ' + parent.Id);
 
         Contact con = ISSP_ObjectFactory.createNewContact();
         con.AccountId= parent.Id;
         con.Email = 'Test@test11.com';
-        insert con;        
+        insert con;
 
         System.debug('con Id: ' + con.Id);
         User newUser = ISSP_ObjectFactory.createPortalUser(con);
@@ -5386,14 +5386,14 @@ private class ISSP_AMS_Accreditation_Test
 
         Test.startTest();
         System.runAs(newUser)
-        {                
+        {
             ISSP_AMS_Accreditation ctrl = new ISSP_AMS_Accreditation();
             ctrl.pEfectiveDateStr = '2018-03-31';
             List<Case> lc = ctrl.getAMSDraftCases();
             ctrl.runOptInOut();
         }
         Test.stopTest();
-    }    
+    }
 
     @isTest
     static void testOptOut4() {
@@ -5405,9 +5405,9 @@ private class ISSP_AMS_Accreditation_Test
         IATA_ISO_Country__c country2 = new IATA_ISO_Country__c(name = 'test2', ISO_Code__c = 't2', Case_BSP_Country__c = 'test2', CASS_Import__c = 'Yes');
         insert country2;
 
-        Id rtIdBr = [ SELECT Id FROM RecordType 
+        Id rtIdBr = [ SELECT Id FROM RecordType
         WHERE SobjectType = 'Account'
-        AND DeveloperName = 'IATA_Agency'][0].Id; 
+        AND DeveloperName = 'IATA_Agency'][0].Id;
 
 
         Account parent = ISSP_ObjectFactory.createNewAccount();
@@ -5420,7 +5420,7 @@ private class ISSP_AMS_Accreditation_Test
         parent.IATACode__c = '100';
         parent.ANG_FA_Opt_out__c = true;
         parent.ANG_Accreditation_Model__c = AMS_Utils.ACCREDITATIONMODEL_CASH;
-         
+
         insert parent;
         System.debug('parent Id: ' + parent.Id);
 
@@ -5428,7 +5428,7 @@ private class ISSP_AMS_Accreditation_Test
         con.AccountId= parent.Id;
         con.Email = 'Test@test11.com';
         con.User_Portal_Status__c = 'Administrator';
-        insert con;        
+        insert con;
 
         System.debug('con Id: ' + con.Id);
         User newUser = ISSP_ObjectFactory.createPortalUser(con);
@@ -5438,14 +5438,14 @@ private class ISSP_AMS_Accreditation_Test
 
         Test.startTest();
         System.runAs(newUser)
-        {                
+        {
             ISSP_AMS_Accreditation ctrl = new ISSP_AMS_Accreditation();
             ctrl.pEfectiveDateStr = '2018-03-31';
             List<Case> lc = ctrl.getAMSDraftCases();
             ctrl.runOptInOut();
         }
         Test.stopTest();
-    }    
+    }
 
     @isTest
     static void testOptOut5() {
@@ -5457,9 +5457,9 @@ private class ISSP_AMS_Accreditation_Test
         IATA_ISO_Country__c country2 = new IATA_ISO_Country__c(name = 'test2', ISO_Code__c = 't2', Case_BSP_Country__c = 'test2', CASS_Import__c = 'Yes');
         insert country2;
 
-        Id rtIdBr = [ SELECT Id FROM RecordType 
+        Id rtIdBr = [ SELECT Id FROM RecordType
         WHERE SobjectType = 'Account'
-        AND DeveloperName = 'IATA_Agency'][0].Id; 
+        AND DeveloperName = 'IATA_Agency'][0].Id;
 
 
         Account parent = ISSP_ObjectFactory.createNewAccount();
@@ -5473,7 +5473,7 @@ private class ISSP_AMS_Accreditation_Test
         parent.ANG_FA_Opt_out__c = true;
         parent.Type = AMS_Utils.CATEGORY_PASSENGER_SALES_AGENT;
         parent.ANG_Accreditation_Model__c = AMS_Utils.ACCREDITATIONMODEL_CASH;
-         
+
         insert parent;
         System.debug('parent Id: ' + parent.Id);
 
@@ -5481,7 +5481,7 @@ private class ISSP_AMS_Accreditation_Test
         con.AccountId= parent.Id;
         con.Email = 'Test@test11.com';
         con.Financial_Assessment_Contact__c = true;
-        insert con;        
+        insert con;
 
         System.debug('con Id: ' + con.Id);
         User newUser = ISSP_ObjectFactory.createPortalUser(con);
@@ -5491,14 +5491,14 @@ private class ISSP_AMS_Accreditation_Test
 
         Test.startTest();
         System.runAs(newUser)
-        {                
+        {
             ISSP_AMS_Accreditation ctrl = new ISSP_AMS_Accreditation();
             ctrl.pEfectiveDateStr = '2018-03-31';
             List<Case> lc = ctrl.getAMSDraftCases();
             ctrl.runOptInOut();
         }
         Test.stopTest();
-    }    
+    }
 
     @isTest
     static void testOptOut6() {
@@ -5510,9 +5510,9 @@ private class ISSP_AMS_Accreditation_Test
         IATA_ISO_Country__c country2 = new IATA_ISO_Country__c(name = 'test2', ISO_Code__c = 't2', Case_BSP_Country__c = 'test2', CASS_Import__c = 'Yes');
         insert country2;
 
-        Id rtIdBr = [ SELECT Id FROM RecordType 
+        Id rtIdBr = [ SELECT Id FROM RecordType
         WHERE SobjectType = 'Account'
-        AND DeveloperName = 'IATA_Agency'][0].Id; 
+        AND DeveloperName = 'IATA_Agency'][0].Id;
 
 
         Account parent = ISSP_ObjectFactory.createNewAccount();
@@ -5526,7 +5526,7 @@ private class ISSP_AMS_Accreditation_Test
         parent.ANG_FA_Opt_out__c = true;
         parent.Type = AMS_Utils.CATEGORY_PASSENGER_SALES_AGENT;
         parent.ANG_Accreditation_Model__c = AMS_Utils.ACCREDITATIONMODEL_CASH;
-         
+
         insert parent;
         System.debug('parent Id: ' + parent.Id);
 
@@ -5535,7 +5535,7 @@ private class ISSP_AMS_Accreditation_Test
         con.Email = 'Test@test11.com';
         con.User_Portal_Status__c = 'Administrator';
         con.Financial_Assessment_Contact__c = true;
-        insert con;        
+        insert con;
 
         System.debug('con Id: ' + con.Id);
         User newUser = ISSP_ObjectFactory.createPortalUser(con);
@@ -5545,14 +5545,14 @@ private class ISSP_AMS_Accreditation_Test
 
         Test.startTest();
         System.runAs(newUser)
-        {                
+        {
             ISSP_AMS_Accreditation ctrl = new ISSP_AMS_Accreditation();
             ctrl.pEfectiveDateStr = '2018-03-31';
             List<Case> lc = ctrl.getAMSDraftCases();
             ctrl.runOptInOut();
         }
         Test.stopTest();
-    }  
+    }
 
     @isTest
     static void testOptOut7() {
@@ -5564,9 +5564,9 @@ private class ISSP_AMS_Accreditation_Test
         IATA_ISO_Country__c country2 = new IATA_ISO_Country__c(name = 'test2', ISO_Code__c = 't2', Case_BSP_Country__c = 'test2', CASS_Import__c = 'Yes');
         insert country2;
 
-        Id rtIdBr = [ SELECT Id FROM RecordType 
+        Id rtIdBr = [ SELECT Id FROM RecordType
         WHERE SobjectType = 'Account'
-        AND DeveloperName = 'IATA_Agency'][0].Id; 
+        AND DeveloperName = 'IATA_Agency'][0].Id;
 
 
         Account parent = ISSP_ObjectFactory.createNewAccount();
@@ -5579,14 +5579,14 @@ private class ISSP_AMS_Accreditation_Test
         parent.IATACode__c = '100';
         parent.ANG_FA_Opt_out__c = true;
         parent.ANG_Accreditation_Model__c = AMS_Utils.ACCREDITATIONMODEL_CASH;
-         
+
         insert parent;
         System.debug('parent Id: ' + parent.Id);
 
         Contact con = ISSP_ObjectFactory.createNewContact();
         con.AccountId= parent.Id;
         con.Email = 'Test@test11.com';
-        insert con;        
+        insert con;
 
         System.debug('con Id: ' + con.Id);
         User newUser = ISSP_ObjectFactory.createPortalUser(con);
@@ -5609,7 +5609,7 @@ private class ISSP_AMS_Accreditation_Test
             testCase.IFAP_Country_ISO__c = 'tq';
             testCase.Status = 'Draft';
             testCase.Origin = 'Portal';
-            testCase.RecordTypeId = AMS_Utils.OSCAR_COMUNICATION;            
+            testCase.RecordTypeId = AMS_Utils.OSCAR_COMUNICATION;
             testCase.Reason1__c = AMS_Utils.CASE_REASON_OPT_OUT;
 
 
@@ -5620,7 +5620,7 @@ private class ISSP_AMS_Accreditation_Test
             newForm.CurrencyIsoCode = country.CurrencyIsoCode;
             newForm.SAAM_Case__c = testCase.Id;
             insert newForm ;
-                
+
             ApexPages.currentPage().getParameters().put('caseId' ,testCase.Id );
             ISSP_AMS_Accreditation ctrl = new ISSP_AMS_Accreditation();
             ctrl.newCase = testCase ;
@@ -5629,15 +5629,15 @@ private class ISSP_AMS_Accreditation_Test
             ctrl.runOptInOut();
         }
         Test.stopTest();
-    }    
-    
+    }
+
 
     private static Account icc_testAccount(IATA_ISO_Country__c country) {
 
 
-        Id rtIdBr = [ SELECT Id FROM RecordType 
+        Id rtIdBr = [ SELECT Id FROM RecordType
         WHERE SobjectType = 'Account'
-        AND DeveloperName = 'IATA_Agency'][0].Id; 
+        AND DeveloperName = 'IATA_Agency'][0].Id;
 
 
         Account parent = ISSP_ObjectFactory.createNewAccount();
@@ -5650,7 +5650,7 @@ private class ISSP_AMS_Accreditation_Test
 
         // aosantos 2017-04-10 17:06
         parent.Status__c = 'Terminated';
-         
+
         insert parent;
         System.debug('parent Id: ' + parent.Id);
 
@@ -5694,13 +5694,13 @@ private class ISSP_AMS_Accreditation_Test
         String uniqueName = orgId + String.valueof(datetime.now());
         String conId15 = con.Id;
         conId15 = conId15.substring(0,15);
-       User newUser = new User(alias = 'dsfsdfds', 
-                                email = con.email, 
-                                emailencodingkey = 'UTF-8', 
-                                firstname = con.firstName, 
-                                lastname = con.lastname, 
-                                languagelocalekey = language, 
-                                localesidkey = language, 
+       User newUser = new User(alias = 'dsfsdfds',
+                                email = con.email,
+                                emailencodingkey = 'UTF-8',
+                                firstname = con.firstName,
+                                lastname = con.lastname,
+                                languagelocalekey = language,
+                                localesidkey = language,
                                 contactId = con.Id,
                                 FederationIdentifier = conId15,
                                 timezonesidkey = 'Asia/Dubai',
@@ -5722,10 +5722,10 @@ private class ISSP_AMS_Accreditation_Test
         AMS_Acc_Checklist.Operation__c = 'Travel Agent';
         AMS_Acc_Checklist.License_required__c = true ;
         AMS_Acc_Checklist.Registration_required__c = true ;
-        AMS_Acc_Checklist.Statement_of_International_Sales__c = true ; 
+        AMS_Acc_Checklist.Statement_of_International_Sales__c = true ;
         insert AMS_Acc_Checklist;
 
-        AMS_Accreditation_Requirement__c ISSP_AMS_Accreditation_Acc_Req = new AMS_Accreditation_Requirement__c(); 
+        AMS_Accreditation_Requirement__c ISSP_AMS_Accreditation_Acc_Req = new AMS_Accreditation_Requirement__c();
         ISSP_AMS_Accreditation_Acc_Req.AMS_Accreditation_Country_CheckList__c = AMS_Acc_Checklist.Id ;
         ISSP_AMS_Accreditation_Acc_Req.Language__c = 'English';
         ISSP_AMS_Accreditation_Acc_Req.Location_type__c = 'HO; Head Office;Branch';
@@ -5751,12 +5751,12 @@ private class ISSP_AMS_Accreditation_Test
         newForm.CurrencyIsoCode = country.CurrencyIsoCode;
         newForm.SAAM_Case__c = testCase.Id;
         insert newForm ;
-            
+
         ApexPages.currentPage().getParameters().put('caseId' ,testCase.Id );
         ISSP_AMS_Accreditation ctrl = new ISSP_AMS_Accreditation();
         ctrl.newCase = testCase;
         ctrl.isTestCompliant();
         return ctrl;
     }
-    
+
 }

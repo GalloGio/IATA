@@ -245,13 +245,13 @@
                         </td>
                       </tr>
 
-                      <tr>
+                      <tr style="display: {!IF(AND(agency.ANG_IsNewGenAgency__c, rhcAgencyInfo != null), '', 'none')}">
                         <td>
                           <apex:outputLabel value="{!$Label.ISSP_ANG_IATA_CODE_SEARCH_RHC}"/>
                         </td>
                         <td>
-                          <i style="display:{!IF(agency.ANG_CashCondition__c,'','none')}; margin-left: 15px; color: green;" class="glyphicon glyphicon-ok"></i>
-                          <i style="display:{!IF(NOT(agency.ANG_CashCondition__c),'','none')}; margin-left: 15px; color: red;" class="glyphicon glyphicon-remove"></i>
+                          <i style="display:{!IF(rhcAgencyInfo.ANG_CashCondition__c,'','none')}; margin-left: 15px; color: green;" class="glyphicon glyphicon-ok"></i>
+                          <i style="display:{!IF(NOT(rhcAgencyInfo.ANG_CashCondition__c),'','none')}; margin-left: 15px; color: red;" class="glyphicon glyphicon-remove"></i>
                         </td>
                       </tr>
 
@@ -260,7 +260,7 @@
                     <br/>
 
                   <!--<div name="right-side" class="col-md-4 col-sm-12">-->
-                    <div style="min-height: 225px; display:{!IF(afpWrapper != null,'','none')};">
+                    <div style="min-height: 225px; display:{!IF(AND(afpWrapper != null, agency.ANG_IsNewGenAgency__c),'','none')};">
                       <c:AFP_Component wrapperClass="{!afpWrapper}"/>
                     </div>
                   <!--</div>-->
