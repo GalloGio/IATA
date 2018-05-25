@@ -49,7 +49,11 @@
         .pconfNumber{
             text-align : right;
             margin     : 0px 10px;
+            max-width  : 150px;
             white-space: nowrap; 
+            overflow   : hidden;
+            text-overflow: ellipsis;
+
 
         }
 
@@ -746,13 +750,13 @@
                                                             <apex:facet name="header">
                                                                 <apex:outputLabel styleClass="pconfNumber" value="{!$ObjectType.TIP_Pay_Prov_Prod_Country_Config__c.fields.TIP_Interchange_Fee__c.label}"/>
                                                             </apex:facet>
-                                                            <apex:outputLabel styleClass="pconfNumber" value="{!ppc.prodConfig.TIP_Interchange_Fee__c}" />
+                                                            <apex:outputLabel styleClass="pconfNumber" title="{!ppc.prodConfig.TIP_Interchange_Fee__c}" value="{!ppc.prodConfig.TIP_Interchange_Fee__c}" />
                                                         </apex:column>
                                                         <apex:column >
                                                             <apex:facet name="header">
                                                                 <apex:outputLabel styleClass="pconfNumber" value="{!$ObjectType.TIP_Pay_Prov_Prod_Country_Config__c.fields.Network_Fee__c.label}"/>
                                                             </apex:facet>
-                                                            <apex:outputLabel styleClass="pconfNumber" value="{!ppc.prodConfig.Network_Fee__c}" />
+                                                            <apex:outputLabel styleClass="pconfNumber" title="{!ppc.prodConfig.Network_Fee__c}" value="{!ppc.prodConfig.Network_Fee__c}" />
                                                         </apex:column>
                                                         <apex:column >
                                                             <apex:facet name="header">
