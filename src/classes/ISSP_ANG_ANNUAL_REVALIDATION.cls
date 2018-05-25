@@ -491,6 +491,11 @@ public with sharing class ISSP_ANG_ANNUAL_REVALIDATION {
 
 			currentAccount.fw.saveOwners();
 
+			//
+			// To recalculate the rollup sum fields.
+			//
+			currentAccount.fw.refreshForm();
+
 			iataCodesInProgress.add(currentAccount.account.IataCode__c);
 
 			currentAccount.status = UPDATE_PROGRESS_STATUS;
@@ -1643,13 +1648,20 @@ public with sharing class ISSP_ANG_ANNUAL_REVALIDATION {
                 }
             }
 
+			//
+			// Add only new contacts
+			//
+			Boolean flagAddContactToList = (contactToUpsert.id == null);
 
             upsert contactToUpsert;
+
             if (contactToUpsert.Financial_Assessment_Contact__c && cntIFAPContacts < 1) {
                 cntIFAPContacts = 1;
             }
 
-            this.currentAccount.fw.currentOwners.add(contactToUpsert);
+			if(flagAddContactToList) {
+				this.currentAccount.fw.currentOwners.add(contactToUpsert);
+			}
 
 			this.currentAccount.fw.refreshForm();
 

@@ -308,7 +308,6 @@
                 msg =
                 bootbox.confirm('{!$Label.ISSP_AMS_CONFIRM_DELETE}', function(result) {
                     if(result) {
-                        alert(conid);
                         deleteContact(conid);
                     }
                 });
