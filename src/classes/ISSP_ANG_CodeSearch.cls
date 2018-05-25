@@ -19,6 +19,7 @@ public class ISSP_ANG_CodeSearch {
 	public String status {get; set;}
 	public Contact contact {get; set;}
 	public ANG_ISSP_AfpWrapper afpWrapper {get; set;}
+	public String airlineId {get; set;}
 
 	public static Set<String> statusSet = new Set<String> {
 		Ams_Utils.ACC_S9_APPROVED,
@@ -33,6 +34,8 @@ public class ISSP_ANG_CodeSearch {
 		this.activeSearch = false;
 		this.activeError = false;
 		this.showParent = false;
+
+		this.airlineId = [SELECT Contact.AccountId FROM User WHERE Id = :UserInfo.getUserId() LIMIT 1].Contact.AccountId;
 	}
 
 	public PageReference doSearch() {
@@ -95,11 +98,18 @@ public class ISSP_ANG_CodeSearch {
 			List<Account> agencies = [SELECT Id, IATACode__c, Name, TradeName__c, Status__c, IATA_ISO_Country__r.Name, ANG_Accreditation_Model__c,
 											ANG_HE_RiskStatus__c, Active_Guarantees__c, Accumulated_Irregularities__c, Location_Type__c,
 											Top_Parent__c, IATA_ISO_Country__r.ANG_Enable_NewGen__c, ANG_IsNewGenAgency__c, 
-											Account.ANG_IEP_Status_FF__c
+											Account.ANG_IEP_Status_FF__c, Top_Parent__r.Location_Type__c
 									   	  FROM Account
 									  	  WHERE Sector__c = :sector AND Status__c IN :statusSet
 									    	AND RecordTypeId = :AMS_Utils.RECTYPE_IATAAGENCY
 									    	AND IATACode__c LIKE :iataCodeStr];
+
+			Account airline = [SELECT Id, IATACode__c, Name, TradeName__c, Status__c, IATA_ISO_Country__r.Name, ANG_Accreditation_Model__c,
+										ANG_HE_RiskStatus__c, Active_Guarantees__c, Accumulated_Irregularities__c, Location_Type__c,
+										Top_Parent__c, IATA_ISO_Country__r.ANG_Enable_NewGen__c, ANG_IsNewGenAgency__c, 
+										Account.ANG_IEP_Status_FF__c, Field_Head_Office__c, Top_Parent__r.Location_Type__c
+								FROM Account
+								WHERE Id = :this.airlineId];
 
 			if(agencies.size() > 0) { 
 				Account reqAgency = agencies[0];
@@ -125,7 +135,8 @@ public class ISSP_ANG_CodeSearch {
 												   Accumulated_Irregularities__c, Location_Type__c, IATA_ISO_Country__r.ANG_Enable_NewGen__c, 
 												   ANG_IsNewGenAgency__c, Account.ANG_IEP_Status_FF__c
 											FROM Account
-											WHERE Id = :reqAgency.Top_Parent__c]; //airline ho
+											WHERE Id = :reqAgency.Top_Parent__c]; 
+
 
 					String auxHoHe = Label.ISSP_ANG_IATA_CODE_SEARCH_IATA_CODE_HO_HE;
 					if(parentAgency.Location_Type__c == Ams_Utils.HE) {
@@ -144,6 +155,17 @@ public class ISSP_ANG_CodeSearch {
 					this.agency = reqAgency;
 				}
 
+				if (airline.Field_Head_Office__c == 'Branch') {
+					Account parentAirline = [SELECT Id, IATACode__c, Name, TradeName__c, Status__c, IATA_ISO_Country__r.Name,
+												   ANG_Accreditation_Model__c, ANG_HE_RiskStatus__c, Active_Guarantees__c,
+												   Accumulated_Irregularities__c, Location_Type__c, IATA_ISO_Country__r.ANG_Enable_NewGen__c, 
+												   ANG_IsNewGenAgency__c, Account.ANG_IEP_Status_FF__c
+											FROM Account
+											WHERE Id = :airline.Top_Parent__c];
+
+					airline = parentAirline;
+				}
+
 				String serviceRenderendType;
 
 				if (sector == Ams_Utils.SECTOR_CARGO) 
@@ -157,7 +179,7 @@ public class ISSP_ANG_CodeSearch {
 													   FROM Services_Rendered__c
 													   WHERE Services_Rendered_Type__c = :serviceRenderendType
 														AND Services_Rendered_Status__c = 'Active'
-													 	AND Services_Rendered_By__c = :this.agency.Id]) {
+													 	AND Services_Rendered_By__c = :airline.Id]) {
 					if (service.ISO_Country_formula__c == this.agency.IATA_ISO_Country__r.Name) {
 						countryFound = true;
 						break;
