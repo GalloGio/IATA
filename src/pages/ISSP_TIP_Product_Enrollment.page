@@ -275,9 +275,9 @@
                                 <apex:pageblock id="pageblock">        
                                     <apex:PageMessages id="msgs"/>       
                                     <apex:inputHidden id="inHid" />
-                                    <apex:pageBlockButtons>
+                                    <apex:pageBlockButtons >
                                         <apex:actionFunction name="submitProduct" action="{!submitProduct}"/>
-                                        <apex:commandButton  onclick="if(confirmSubmit())return true;" value="{!$Label.ISSP_TIP_SUBMIT_TO_IATA}" rendered="{!editMode}" reRender="inHid"   />
+                                        <apex:commandButton onclick="if(confirmSubmit())return true;" value="{!$Label.ISSP_TIP_SUBMIT_TO_IATA}" rendered="{!editMode}" reRender="inHid"   />
                                         <apex:commandButton action="{!saveDraft}" value="{!$Label.ISSP_Save_Draft}" rendered="{!editMode}"/>
                                         <apex:commandButton onclick="confirmCancelExitPage();return false;"  value="{!$Label.ISSP_Cancel}" rendered="{!editMode}"/> 
                                         <apex:actionFunction name="cancelLeavePage" action="{!cancelNewEditProd}" immediate="true"/>
@@ -488,20 +488,6 @@
                                                                 clearErrorElement('[id$="bspctrfld"]'); 
                                                             }
                                                         });
-                                                        
-                                                        $('[id$="iCfld"]').on("blur", function(){
-                                                            if($('[id$="iCfld"]').val() !== ""){
-                                                                clearErrorElement('[id$="iCfld"]'); 
-                                                            }
-                                                        }); 
-
-                                                        $('[id$="nFfld"]').on("blur", function(){
-                                                            if($('[id$="nFfld"]').val() !== ""){
-                                                                clearErrorElement('[id$="nFfld"]'); 
-                                                            }
-                                                        });
-                                                        
-                                                        
 
                                                         //set mask
                                                         if($('[id$="rangeStart"]').val()===""){
@@ -664,7 +650,7 @@
                                     <!-- PROVIDER PRODUCT CONFIGURATION-->
                                     <apex:pageBlockSection columns="1" collapsible="false" title="{!$Label.ISSP_TIP_COUNTRY_CONFIG_SECTION}" >
                                         <apex:pageBlockSectionItem rendered="{!editMode}">
-                                            <apex:outputPanel>
+                                            <apex:outputPanel >
                                                 <apex:commandLink id="newCountrConfigbtn" styleClass="secBtn" style="margin-right:15px" oncomplete="toggleDialog();" action="{!newEditCountryConfig}" reRender="modalContentoutpanel">
                                                     <span class="glyphicon glyphicon-plus"></span>{!$Label.ISSP_TIP_ADD_COUNTRY_CONFIG}
                                                 </apex:commandLink>
@@ -678,7 +664,7 @@
                                         <!-- </apex:pageBlockSectionItem> -->
                                     </apex:pageBlockSection>
                                     <apex:pageBlockSection columns="2">
-                                        <apex:pageBlockSectionItem>
+                                        <apex:pageBlockSectionItem >
                                             <apex:outputPanel id="countryConfigPanel">
                                                 <div style="max-height: 400px; overflow-y: auto;overflow-x: hidden; font-weight:normal;">
                                                     <script>
@@ -734,20 +720,6 @@
                                                                 stayOnModal=true;
                                                                 return;
                                                             }
-
-                                                            if($('[id$="iCfld"]').val() === null || $('[id$="iCfld"]').val() =='' ){
-                                                                if($('[id$="iCfld"]').next('.errorMsg').val()==undefined)
-                                                                $('[id$="iCfld"]').after('<div class="errorMsg">{!$Label.IEC_Required_Field_Error_Msg}</div>');
-                                                                stayOnModal=true;
-                                                                return;
-                                                            }
-
-                                                            if($('[id$="nFfld"]').val() === endMask || $('[id$="nFfld"]').val() =='' ){
-                                                                if($('[id$="nFfld"]').next('.errorMsg').val()==undefined)
-                                                                $('[id$="nFfld"]').after('<div class="errorMsg">{!$Label.IEC_Required_Field_Error_Msg}</div>');
-                                                                stayOnModal=true;
-                                                                return;
-                                                            }
                                                             saveCountryConfigs();
                                                         }
 
@@ -790,7 +762,7 @@
                                                         </apex:column>
                                                         <apex:column rendered="{!editMode}" >
                                                             <apex:outputPanel rendered="{!editMode && ppc.renderBtn}">                                                     
-                                                                <apex:commandLink  styleclass="glyphiconTIP glyphicon-pencil secBtn" title="Edit"  oncomplete="closeDialog();" action="{!newEditCountryConfig}" reRender="pbCountrConfig,modalContentoutpanel">
+                                                                <apex:commandLink styleclass="glyphiconTIP glyphicon-pencil secBtn" title="Edit"  oncomplete="closeDialog();" action="{!newEditCountryConfig}" reRender="pbCountrConfig,modalContentoutpanel">
                                                                     <apex:param name="countryConfigPos" value="{!ppc.pos}"/>
                                                                 </apex:commandLink>                                                        
                                                                 <apex:commandLink styleClass="glyphiconTIP glyphicon-trash secBtn" title="Delete" onclick="confirmDeleteConfig({!ppc.pos});" reRender="countryConfigPanel"/>
@@ -861,7 +833,7 @@
                                                       <apex:pageBlockSection columns="1" collapsible="false">
                                                           <apex:pageBlockSectionItem labelStyle="width:26%" >
                                                             <apex:outputLabel value="{!$ObjectType.TIP_Pay_Prov_Prod_Country_Config__c.fields.TIP_BSP_Country__c.Label}"/> 
-                                                            <apex:outputPanel>
+                                                            <apex:outputPanel >
                                                                 <apex:selectList id="bspctrfld" value="{!selectProvConfigCountriesList}" size="10" multiselect="true" styleClass="sectionItem" rendered="{!selectedProvProdConf.action!='M'}">
                                                                     <apex:selectOptions value="{!bspCountrList}" />
                                                                 </apex:selectList>
