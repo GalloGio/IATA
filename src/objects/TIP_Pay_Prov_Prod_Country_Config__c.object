@@ -124,6 +124,7 @@
     </fields>
     <fields>
         <fullName>TIP_Issuing_Currency__c</fullName>
+        <description>Payments Country Configuration Issuing currency for integration purposes</description>
         <externalId>false</externalId>
         <label>Issuing Currency</label>
         <length>4</length>
