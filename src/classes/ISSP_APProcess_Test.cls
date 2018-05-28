@@ -281,7 +281,7 @@ private class ISSP_APProcess_Test
             testCase.Subject = 'Test 006';
             testCase.Reopened_case__c = 0.0;
             //testCase.Continous_Feed_SAF__c = false;
-            testCase.Status = 'Accepted';
+            testCase.Status = 'Action Needed';
             testCase.Account_Concerned__c = child.Id;
             testCase.Verification__c = 'BSP';
             insert testCase;
@@ -383,7 +383,7 @@ private class ISSP_APProcess_Test
             testCase.Subject = 'Test 006';
             testCase.Reopened_case__c = 0.0;
             //testCase.Continous_Feed_SAF__c = false;
-            testCase.Status = 'Accepted';
+            testCase.Status = 'Action Needed';
             testCase.Account_Concerned__c = child.Id;
             testCase.Verification__c = 'BSP';
             insert testCase;
@@ -498,7 +498,7 @@ private class ISSP_APProcess_Test
             testCase.Subject = 'Test 006';
             testCase.Reopened_case__c = 0.0;
             //testCase.Continous_Feed_SAF__c = false;
-            testCase.Status = 'Accepted';
+            testCase.Status = 'Action Needed';
             testCase.Account_Concerned__c = child.Id;
             testCase.Verification__c = 'BSP';
             testCase.IFAP_Country_ISO__c = 'PT';
@@ -599,7 +599,7 @@ private class ISSP_APProcess_Test
             testCase.Subject = 'Test 006';
             testCase.Reopened_case__c = 0.0;
             //testCase.Continous_Feed_SAF__c = false;
-            testCase.Status = 'Accepted';
+            testCase.Status = 'Action Needed';
             testCase.Account_Concerned__c = child.Id;
             testCase.Verification__c = 'BSP';
             testCase.IFAP_Country_ISO__c = 'PT';
@@ -728,7 +728,7 @@ private class ISSP_APProcess_Test
             testCase.Subject = 'Test 006';
             testCase.Reopened_case__c = 0.0;
             //testCase.Continous_Feed_SAF__c = false;
-            testCase.Status = 'Accepted';
+            testCase.Status = 'Action Needed';
             testCase.Account_Concerned__c = child.Id;
             testCase.Verification__c = 'BSP';
             testCase.IFAP_Country_ISO__c = 'PT';
