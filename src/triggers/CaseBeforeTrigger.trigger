@@ -159,7 +159,7 @@ trigger CaseBeforeTrigger on Case (before delete, before insert, before update) 
     if(Trigger.isInsert || Trigger.isUpdate){
 	
 		/*DigitalGenius trigger - turn off*/
-		if (Trigger.isUpdate)  dgAI2.DG_PredictionTriggerHandler.doFeedback(trigger.new);
+		//if (Trigger.isUpdate)  dgAI2.DG_PredictionTriggerHandler.doFeedback(trigger.new);
         
         /*trgCaseIFAP Trigger*/
         if(trgCaseIFAP){ //FLAG
