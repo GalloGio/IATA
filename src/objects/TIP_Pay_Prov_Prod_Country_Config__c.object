@@ -123,6 +123,17 @@
         <unique>false</unique>
     </fields>
     <fields>
+        <fullName>TIP_Issuing_Currency__c</fullName>
+        <description>Payments Country Configuration Issuing currency for integration purposes</description>
+        <externalId>false</externalId>
+        <label>Issuing Currency</label>
+        <length>4</length>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
         <fullName>TIP_Product__c</fullName>
         <externalId>false</externalId>
         <label>TIP Product</label>
