@@ -329,6 +329,8 @@ public without sharing class OneId_RegistrationProcessController {
             if(acc.Sector__c == TIP_Utils.ACCOUNT_SECTOR_FINANCIAL_INSTITUTION && acc.Category__c == TIP_Utils.ACCOUNT_CATEGORY_PAYMENT_PROVIDER){
                 con.Primary_Contact__c = true;
                 con.User_Portal_Status__c = 'Approved Admin';
+                
+                checkConAvailable(con);
 
                 con.account=acc;
                 //TIP-16 - Assign TIP Portal Service
@@ -343,9 +345,9 @@ public without sharing class OneId_RegistrationProcessController {
                     newRight.Portal_Application__c = appListId;
                     insert newRight;
                }
+            }else{
+                checkConAvailable(con);
             }
-
-            checkConAvailable(con);
 
 
             String thisNickname;

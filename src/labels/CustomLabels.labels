@@ -15826,7 +15826,7 @@ Also note that the data contained in ICE is provided to IATA by third parties at
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>ISSP Button Request Enlistment</shortDescription>
-        <value>Request Enlistment as ATM Provider</value>
+        <value>Enlist as ATM Provider</value>
     </labels>
     <labels>
         <fullName>ISSP_BuyCertificateText</fullName>
