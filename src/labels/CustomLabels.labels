@@ -20430,8 +20430,7 @@ Please note that many IATA invoices for accredited agents are collected through 
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>ISSP Portal Product Airline payment guarantee Label</shortDescription>
-        <value>Payment guarantee is related to the certainty that the airline will receive the funds irrespective of any issuer bankruptcy.
-Specify if payment is guaranteed to the airline against: fraud dispute, commercial dispute, or both fraud and commercial dispute</value>
+        <value>Specify if payment is guaranteed to the airline against: fraud dispute, commercial dispute, or both fraud and commercial dispute</value>
     </labels>
     <labels>
         <fullName>ISSP_Portal_Product_Category_Label</fullName>
