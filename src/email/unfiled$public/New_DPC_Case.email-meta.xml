@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<EmailTemplate xmlns="http://soap.sforce.com/2006/04/metadata">
+    <available>true</available>
+    <description>Notification of new DPC case created</description>
+    <encodingKey>UTF-8</encodingKey>
+    <letterhead>IATADynamicSkyLetterhead</letterhead>
+    <name>New DPC Case</name>
+    <style>freeForm</style>
+    <subject>New case in IATA Customer Portal</subject>
+    <textOnly>This is a system generated message. Please do not respond to this email.
+
+
+
+Dear Sir/Madam,
+
+Please note that a new case has been created in the IATA Customer Portal
+Case Number:{!Case.CaseNumber}
+Subject: {!Case.Subject}
+Description: {!Case.Description}
+
+To access this case please click here.</textOnly>
+    <type>html</type>
+    <uiType>Aloha</uiType>
+</EmailTemplate>

@@ -402,6 +402,31 @@
         <language>en_US</language>
     </listViews>
     <listViews>
+        <fullName>X04_Completed_Yesterday</fullName>
+        <columns>NAME</columns>
+        <columns>OBJECT_ID</columns>
+        <columns>File_Specification__c</columns>
+        <columns>Status__c</columns>
+        <columns>Size__c</columns>
+        <columns>Duration__c</columns>
+        <columns>Duration_in_minutes__c</columns>
+        <columns>Production_Date__c</columns>
+        <columns>UPDATEDBY_USER</columns>
+        <filterScope>Everything</filterScope>
+        <filters>
+            <field>Production_Date__c</field>
+            <operation>equals</operation>
+            <value>YESTERDAY</value>
+        </filters>
+        <filters>
+            <field>Status__c</field>
+            <operation>equals</operation>
+            <value>Completed</value>
+        </filters>
+        <label>04: Completed Yesterday</label>
+        <language>en_US</language>
+    </listViews>
+    <listViews>
         <fullName>X07_TXT_DAILY_File_Productions</fullName>
         <columns>NAME</columns>
         <columns>Full_SFDC_ID__c</columns>
@@ -571,19 +596,9 @@
         <columns>LAST_UPDATE</columns>
         <filterScope>Everything</filterScope>
         <filters>
-            <field>Status__c</field>
-            <operation>equals</operation>
-            <value>Completed</value>
-        </filters>
-        <filters>
-            <field>File_Specification__c</field>
-            <operation>notContain</operation>
-            <value>Daily,Weekly</value>
-        </filters>
-        <filters>
             <field>Production_Date__c</field>
             <operation>equals</operation>
-            <value>TODAY</value>
+            <value>4/1/2018</value>
         </filters>
         <label>ZZ: Ad Hoc Production Search</label>
         <language>en_US</language>

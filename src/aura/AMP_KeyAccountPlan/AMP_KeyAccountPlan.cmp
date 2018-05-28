@@ -12,6 +12,7 @@
     <aura:attribute name="showDeletionCheck" type="Boolean" default="false" />
     <aura:attribute name="activityToDelete" type="Objective__c" />
     <aura:attribute name="milestoneToDelete" type="Task" />
+    <aura:attribute name="divisionValues" type="String[]"/>
     <aura:handler name="init" value="{!this}" action="{!c.doInit}" />
 
     <aura:handler name="deleteActivity" event="c:AMP_UpdateIssueOrPriority" action="c.showDeletePopup" />
@@ -24,6 +25,7 @@
     <aura:attribute name="newActivity" type="Objective__c"
                     default="{     'sobjectType' : 'Objective__c',
                              'Name': '',
+                             'Division__c': '',
                              'Details__c': '',
                              'Status__c': '',
                              'Account_Issue_or_Priority__c': '',
@@ -71,18 +73,19 @@
                         <tr class="slds-text-heading--label slds-is-sortable slds-is-resizable">
                             <th scope="col" class="narrowColumn"><span class="slds-truncate"></span></th><!--Actions-->
                             <th scope="col" class="mediumColumn"><span class="slds-truncate">Activity</span></th>
+                            <th scope="col" class="wideColumn"><span class="slds-truncate">Division</span></th>
                             <th scope="col" class="wideColumn"><span class="slds-truncate">Description</span></th>
                             <th scope="col" class="narrowColumn"><span class="slds-truncate">Overall Status</span></th>
                             <th scope="col" class="narrowColumn"><span class="slds-truncate">End Date</span></th>
                             <th scope="col" class="mediumColumn"><span class="slds-truncate">Account Issue or Priority</span></th>
-                            <th scope="col" class="wideColumn"><span class="slds-truncate">Benefits to the Account</span></th>
+                            <th scope="col" class="wideColumn"><span class="slds-truncate">Comment</span></th>
                         </tr>
                     </thead>
 
                     <tbody>
                         <aura:iteration items="{!v.activities}" var="activity" indexVar="index">
                             <tr>
-                                <c:AMP_Activity activity="{!activity}" accountId="{!v.accountId}" index="{!index}" canEdit="{!v.canEdit}"/>
+                                <c:AMP_Activity activity="{!activity}" accountId="{!v.accountId}" index="{!index}" canEdit="{!v.canEdit}" divisionValues="{!v.divisionValues}"/>
                             </tr>
                         </aura:iteration>
                     </tbody>

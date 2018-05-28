@@ -3857,6 +3857,16 @@
         <template>ISS_Portal/Owner_notification_of_new_comment</template>
     </alerts>
     <alerts>
+        <fullName>Send_notification</fullName>
+        <ccEmails>chauhanm@iata.org</ccEmails>
+        <ccEmails>ndc@iata.org</ccEmails>
+        <description>Send notification</description>
+        <protected>false</protected>
+        <senderAddress>noreply@iata.org</senderAddress>
+        <senderType>OrgWideEmailAddress</senderType>
+        <template>unfiled$public/New_Case_Assigned_to_the_Queue</template>
+    </alerts>
+    <alerts>
         <fullName>Status_Approved</fullName>
         <description>ACR: Informs that Status of ACR is changed</description>
         <protected>false</protected>
@@ -4781,6 +4791,17 @@
         <lookupValueType>Queue</lookupValueType>
         <name>Change owner to global KM queue</name>
         <notifyAssignee>false</notifyAssignee>
+        <operation>LookupValue</operation>
+        <protected>false</protected>
+    </fieldUpdates>
+    <fieldUpdates>
+        <fullName>Change_owner_to_queue</fullName>
+        <description>Changes case owner to the support queue.</description>
+        <field>OwnerId</field>
+        <lookupValue>AIR_Tech_Zone_Support</lookupValue>
+        <lookupValueType>Queue</lookupValueType>
+        <name>Change owner to queue</name>
+        <notifyAssignee>true</notifyAssignee>
         <operation>LookupValue</operation>
         <protected>false</protected>
     </fieldUpdates>
@@ -7953,7 +7974,7 @@ Case(month(datevalue(now()))+1,1,31,2,28,3,31,4,30,5,31,6,30,7,31,8,31,9,30,10,3
             <name>Update_previous_owner</name>
             <type>FieldUpdate</type>
         </actions>
-        <active>true</active>
+        <active>false</active>
         <booleanFilter>(1 AND (2 OR 3) AND 4) AND (5 AND 6)</booleanFilter>
         <criteriaItems>
             <field>Case.RecordTypeId</field>
@@ -8303,6 +8324,25 @@ Case(month(datevalue(now()))+1,1,31,2,28,3,31,4,30,5,31,6,30,7,31,8,31,9,30,10,3
         </criteriaItems>
         <description>workflow rule that can automatically populate the Service Leve field with the value 2 when a case is Escalated.</description>
         <triggerType>onCreateOrTriggeringUpdate</triggerType>
+    </rules>
+    <rules>
+        <fullName>Assign to AIR Tech Zone Queue</fullName>
+        <actions>
+            <name>Send_notification</name>
+            <type>Alert</type>
+        </actions>
+        <actions>
+            <name>Change_owner_to_queue</name>
+            <type>FieldUpdate</type>
+        </actions>
+        <active>true</active>
+        <criteriaItems>
+            <field>Case.RecordType__c</field>
+            <operation>equals</operation>
+            <value>AIR Tech Zone</value>
+        </criteriaItems>
+        <description>Rule to assign Case created via AIR Tech Zone community to their support queue.</description>
+        <triggerType>onCreateOnly</triggerType>
     </rules>
     <rules>
         <fullName>Automatic type of customer - Cargo</fullName>
@@ -11895,6 +11935,67 @@ Case(month(datevalue(now()))+1,1,31,2,28,3,31,4,30,5,31,6,30,7,31,8,31,9,30,10,3
             <operation>equals</operation>
             <value>IATA Financial Security Monitoring</value>
         </criteriaItems>
+        <triggerType>onCreateOrTriggeringUpdate</triggerType>
+    </rules>
+    <rules>
+        <fullName>GDC MAD complaint queue assignment</fullName>
+        <actions>
+            <name>Case_status_Open</name>
+            <type>FieldUpdate</type>
+        </actions>
+        <actions>
+            <name>ComplaintUpdateowner</name>
+            <type>FieldUpdate</type>
+        </actions>
+        <actions>
+            <name>Complaint_open_date</name>
+            <type>FieldUpdate</type>
+        </actions>
+        <actions>
+            <name>Reset_Reopened_case</name>
+            <type>FieldUpdate</type>
+        </actions>
+        <actions>
+            <name>Reset_reopen_reason2</name>
+            <type>FieldUpdate</type>
+        </actions>
+        <actions>
+            <name>Update_previous_owner</name>
+            <type>FieldUpdate</type>
+        </actions>
+        <active>true</active>
+        <booleanFilter>(1 AND 2 AND (3 OR 6)) AND (4 AND 5)</booleanFilter>
+        <criteriaItems>
+            <field>Case.RecordTypeId</field>
+            <operation>equals</operation>
+            <value>Cases - Europe,ACCA Customer Service Request (External),Order of AWB / allocation (CASS),Cases - Americas,Cases - Africa &amp; Middle East,Cases - Asia &amp; Pacific,Cases - China &amp; North Asia,SAAM,Internal Cases (IDFS ISS),Process</value>
+        </criteriaItems>
+        <criteriaItems>
+            <field>Case.Region__c</field>
+            <operation>equals</operation>
+            <value>Africa &amp; Middle East,Americas,Europe</value>
+        </criteriaItems>
+        <criteriaItems>
+            <field>Case.IsComplaint__c</field>
+            <operation>equals</operation>
+            <value>True</value>
+        </criteriaItems>
+        <criteriaItems>
+            <field>Case.Topic__c</field>
+            <operation>notContain</operation>
+            <value>IATA Codes not applicable to Agents,TIESS,ICCS</value>
+        </criteriaItems>
+        <criteriaItems>
+            <field>Case.Subtopic__c</field>
+            <operation>notContain</operation>
+            <value>MITA Interline Agreements</value>
+        </criteriaItems>
+        <criteriaItems>
+            <field>Case.Customer_recovery__c</field>
+            <operation>equals</operation>
+            <value>True</value>
+        </criteriaItems>
+        <description>the query is reopened and assigned to GDC MAD complaint queue</description>
         <triggerType>onCreateOrTriggeringUpdate</triggerType>
     </rules>
     <rules>
@@ -16279,7 +16380,7 @@ Inactive (Miguel Guerreiro, 3/17/2016 12:59 PM) - self service is no longer used
             <name>Update_previous_owner</name>
             <type>FieldUpdate</type>
         </actions>
-        <active>true</active>
+        <active>false</active>
         <booleanFilter>(1 AND 7 AND (2 OR 3) AND 4) AND (5 AND 6)</booleanFilter>
         <criteriaItems>
             <field>Case.RecordTypeId</field>
@@ -16418,7 +16519,7 @@ Inactive (Miguel Guerreiro, 3/17/2016 12:59 PM) - self service is no longer used
             <name>Update_previous_owner</name>
             <type>FieldUpdate</type>
         </actions>
-        <active>true</active>
+        <active>false</active>
         <booleanFilter>(1 AND (2 OR 6)) AND (3 AND 4 AND 5)</booleanFilter>
         <criteriaItems>
             <field>Case.RecordTypeId</field>
