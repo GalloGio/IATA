@@ -1334,9 +1334,9 @@ global class ANG_OscarProcessHelper {
 				adminCon = con;
 			if (con.Financial_Assessment_Contact__c)
 				finAccessContact = con;	
-			if(con.New_BSPLink_Contact__c)
+			if(con.BSP_CASS_Payment_contact__c)
 				bspContact = con;
-			if(con.User_Portal_Status__c <> 'Approved Admin' && !con.Financial_Assessment_Contact__c &&  !con.New_BSPLink_Contact__c)
+			if(con.User_Portal_Status__c <> 'Approved Admin' && !con.Financial_Assessment_Contact__c &&  !con.BSP_CASS_Payment_contact__c)
 				regularContact = con;
 
 		} 
@@ -1359,7 +1359,7 @@ global class ANG_OscarProcessHelper {
 				contactsMap.add(con);
 			if (con.Financial_Assessment_Contact__c)
 				contactsMap.add(con);
-			if(con.New_BSPLink_Contact__c)
+			if(con.BSP_CASS_Payment_contact__c)
 				contactsMap.add(con);
 		} 
 
