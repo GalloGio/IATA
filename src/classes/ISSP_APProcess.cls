@@ -1141,6 +1141,7 @@ public without sharing class ISSP_APProcess {
     	for(Services_Rendered__c service : [SELECT Id, ISO_Country_formula__c, ANG_IATA_EasyPay_Opt_out__c, Services_Rendered_to_Airline__r.IATA_ISO_Country__c
     										FROM Services_Rendered__c
     										WHERE Services_Rendered_to_Airline__r.IATA_ISO_Country__r.Airline_EasyPay_Opt_Out_Date__c <= :Date.today()
+                                                AND Services_Rendered_to_Airline__r.IATA_ISO_Country__r.ANG_Portal_Service__c != null
     											AND Services_Rendered_Type__c = 'BSP Participation'
     											AND Services_Rendered_By__c = :vHQAccountId]) {
     		if (service.ANG_IATA_EasyPay_Opt_out__c) {
