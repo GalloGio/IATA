@@ -245,7 +245,7 @@
                         </td>
                       </tr>
 
-                      <tr style="display: {!IF(AND(agency.IATA_ISO_Country__r.ANG_Enable_NewGen__c, rhcAgencyInfo != null), '', 'none')}">
+                      <tr style="display: {!IF(AND(isTravel, agency.IATA_ISO_Country__r.ANG_Enable_NewGen__c, rhcAgencyInfo != null), '', 'none')}">
                         <td>
                           <apex:outputLabel value="{!$Label.ISSP_ANG_IATA_CODE_SEARCH_RHC}"/>
                         </td>
@@ -260,7 +260,7 @@
                     <br/>
 
                   <!--<div name="right-side" class="col-md-4 col-sm-12">-->
-                    <div style="min-height: 225px; display:{!IF(AND(afpWrapper != null, agency.IATA_ISO_Country__r.ANG_Enable_NewGen__c),'','none')};">
+                    <div style="min-height: 225px; display:{!IF(AND(isTravel, afpWrapper != null, agency.IATA_ISO_Country__r.ANG_Enable_NewGen__c),'','none')};">
                       <c:AFP_Component wrapperClass="{!afpWrapper}"/>
                     </div>
                   <!--</div>-->
