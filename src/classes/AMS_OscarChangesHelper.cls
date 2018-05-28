@@ -239,6 +239,13 @@ public without sharing class AMS_OscarChangesHelper {
 		}
 		if(!hierarchiesToRollback.isEmpty()) {
 			rollbackHierarchies(hierarchiesToRollback);
+		} else {
+			List<AMS_OSCAR__c> oscars = [SELECT Account__c FROM AMS_OSCAR__c WHERE Id IN :oscarIds];
+			Set<Id> accountIds = new Set<Id>();
+			for(AMS_OSCAR__c oscar : oscars) {
+				accountIds.add(oscar.Account__c);
+			}
+			rollbackSingleAccountHierarchy(accountIds);
 		}
 		if(!rolesToRollback.isEmpty()) {
 			rollbackRoles(rolesToRollback);
@@ -289,6 +296,14 @@ public without sharing class AMS_OscarChangesHelper {
 		if(!casesToInsert.isEmpty()) {
 			FutureProcessorControl.inFutureContext = true;
 			insert casesToInsert;
+		}
+	}
+
+	public static void rollbackSingleAccountHierarchy(Set<Id> accountIds) {
+		List<AMS_Agencies_relationhip__c> relationsToDelete = [SELECT Id, Hierarchy__c FROM AMS_Agencies_relationhip__c WHERE Child_Account__c IN :accountIds];
+
+		if(!relationsToDelete.isEmpty()) {
+			delete relationsToDelete;
 		}
 	}
 
