@@ -37,19 +37,7 @@
             <type>user</type>
         </recipients>
         <recipients>
-            <recipient>kalajil@iata.org</recipient>
-            <type>user</type>
-        </recipients>
-        <recipients>
-            <recipient>osinskan@iata.org</recipient>
-            <type>user</type>
-        </recipients>
-        <recipients>
             <recipient>pietranget@iata.org.prod</recipient>
-            <type>user</type>
-        </recipients>
-        <recipients>
-            <recipient>szajkod@iata.org</recipient>
             <type>user</type>
         </recipients>
         <senderAddress>noreply@iata.org</senderAddress>
@@ -65,19 +53,7 @@
             <type>user</type>
         </recipients>
         <recipients>
-            <recipient>kalajil@iata.org</recipient>
-            <type>user</type>
-        </recipients>
-        <recipients>
-            <recipient>osinskan@iata.org</recipient>
-            <type>user</type>
-        </recipients>
-        <recipients>
             <recipient>pietranget@iata.org.prod</recipient>
-            <type>user</type>
-        </recipients>
-        <recipients>
-            <recipient>szajkod@iata.org</recipient>
             <type>user</type>
         </recipients>
         <senderAddress>noreply@iata.org</senderAddress>

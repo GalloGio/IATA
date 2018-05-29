@@ -265,15 +265,17 @@ global class AMS_AgencyRegulationAutoRenewal implements Database.Batchable<sObje
 
     public static AMS_OSCAR__c createStagingArea(AMS_Agency_Regulation__c agReg, Account accountData, List<AMS_Agency_Regulation__c> regulations, Contact communicationCaseContact){
 
-        AMS_OSCAR__c theOscar = new AMS_OSCAR__c(RecordTypeId = AMS_Utils.RECTYPE_CERT, Account__c = agReg.Account__c,
-                                    Process__c = AMS_Utils.CERTIFICATION, Status__c='Accepted_Future Date', Change_effective_as_of__c = regulations[0].Expiry_Date__c);
-        insert theOscar;
+        //Fetching the assignment rules on case
+		AssignmentRule AR = new AssignmentRule();
+		AR = [select id from AssignmentRule where SobjectType = 'Case' and Active = true limit 1];
 
-        system.debug('createStagingArea oscar: '+ theOscar);
+		//Creating the DMLOptions for "Assign using active assignment rules" checkbox
+		Database.DMLOptions dmlOpts = new Database.DMLOptions();
+		dmlOpts.assignmentRuleHeader.assignmentRuleId= AR.id;
+		
         Case theCommunicationCase = new Case();
 
         theCommunicationCase.RecordTypeId = AMS_Utils.RECTYPE_OSCARCOMM;
-        theCommunicationCase.OSCAR__c = theOscar.Id;
         theCommunicationCase.CaseArea__c = 'Accreditation Process';
         theCommunicationCase.AccountId = agReg.Account__c;
         theCommunicationCase.Account_Concerned__c = agReg.Account__c;
@@ -284,6 +286,7 @@ global class AMS_AgencyRegulationAutoRenewal implements Database.Batchable<sObje
         if(communicationCaseContact != null)
             theCommunicationCase.ContactId = communicationCaseContact.Id;
         //theCommunicationCase.Subject = 'DGR renewal - ' + accountData.Name + ' - ' + accountData.IATACode__c;
+        theCommunicationCase.setOptions(dmlOpts);
 
         insert theCommunicationCase;
 
@@ -330,10 +333,24 @@ global class AMS_AgencyRegulationAutoRenewal implements Database.Batchable<sObje
 
         insert theStagingArea;
 
+        Case caseOscar = [SELECT OwnerId FROM Case WHERE Id =: theCommunicationCase.Id LIMIT 1];
+
+        AMS_OSCAR__c theOscar = new AMS_OSCAR__c();
+        theOscar.RecordTypeId = AMS_Utils.RECTYPE_CERT;
+        theOscar.Account__c = agReg.Account__c;
+        theOscar.Process__c = AMS_Utils.CERTIFICATION; 
+        theOscar.Status__c='Accepted_Future Date'; 
+        theOscar.Change_effective_as_of__c = regulations[0].Expiry_Date__c;
         theOscar.Oscar_Communication_Case_Id__c = theCommunicationCase.Id;
         theOscar.Emails_reference_Id__c = AMS_Utils.caseRefId(UserInfo.getOrganizationId(), theCommunicationCase.Id);
         theOscar.AMS_Online_Accreditation__c = theStagingArea.Id;
-        update theOscar;
+        theOscar.OwnerId = caseOscar.OwnerId;
+        insert theOscar;
+
+        system.debug('createStagingArea oscar: '+ theOscar);
+
+        theCommunicationCase.OSCAR__c = theOscar.Id;
+        update theCommunicationCase;
 
         convertExistingAgencyRegulationsToAccContact(theStagingArea.Id, regulations);
 
@@ -377,6 +394,11 @@ global class AMS_AgencyRegulationAutoRenewal implements Database.Batchable<sObje
     }
 
     public static void sendEmailAlert(List<Contact> recipents, Id oscarId, Map<String, Id> countryTemplates, String oscarCommCaseId, OrgWideEmailAddress owea, boolean isDGR) {
+
+		sendEmailAlert(recipents, oscarId, countryTemplates, oscarCommCaseId, owea, isDGR, null);
+    }
+
+    public static void sendEmailAlert(List<Contact> recipents, Id oscarId, Map<String, Id> countryTemplates, String oscarCommCaseId, OrgWideEmailAddress owea, boolean isDGR, Messaging.EmailFileAttachment[] attachments) {
         
         Id templateId;
         Boolean templateToIATA = false;
@@ -435,6 +457,9 @@ global class AMS_AgencyRegulationAutoRenewal implements Database.Batchable<sObje
                     }
                     mail.setTargetObjectId(recipient.Id);
                     
+                    if(attachments != null){
+                    	mail.setFileAttachments(attachments);
+					}
                     mail.setWhatId(oscarId);
                    
                     mail.setOrgWideEmailAddressId(owea.Id);

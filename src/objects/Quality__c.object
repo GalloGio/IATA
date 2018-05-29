@@ -13237,12 +13237,12 @@ IF( Requested_Other__c = FALSE, TRUE, IF( Responded_Other__c = TRUE, TRUE, FALSE
         <filters>
             <field>Status__c</field>
             <operation>equals</operation>
-            <value>Pending Closure,Pending Evidence Validation</value>
+            <value>Pending Closure,Pending Evidence Validation,Accepted - Active</value>
         </filters>
         <filters>
             <field>Deadline_for_Alignment__c</field>
             <operation>equals</operation>
-            <value>TODAY,NEXT_N_DAYS:3</value>
+            <value>TODAY,NEXT_N_DAYS:5</value>
         </filters>
         <filters>
             <field>Status__c</field>

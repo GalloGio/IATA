@@ -5,7 +5,7 @@ global class AMS_PCI_Complaint_Batch implements Database.Batchable<sObject>, Dat
     public Set<String> list_iata_iso_Country_id {get;set;}
     global List<ErrorWrapper> lstErrors {get;set;}
     global List<ResultWrapper> lstResult {get;set;}
-    public Set<Account> filteredAccounts {get;set;}
+    public Set<Id> filteredAccounts {get;set;}
     public static Map<String, EmailTemplate> countryTemplates {get;set;}
     public static Map<Id, EmailTemplate> templateIdVsTemplates {get;set;}
     public static Map<Id, List<Attachment>> templateIdVsAttachemnt {get;set;}
@@ -18,7 +18,7 @@ global class AMS_PCI_Complaint_Batch implements Database.Batchable<sObject>, Dat
         this.lstResult = new List<ResultWrapper>();
     }
 
-    global AMS_PCI_Complaint_Batch(Integer batchScope, Set<String> list_iata_iso_Country_id, Set<Account> filteredAccounts) {
+    global AMS_PCI_Complaint_Batch(Integer batchScope, Set<String> list_iata_iso_Country_id, Set<Id> filteredAccounts) {
         this.batchScope = batchScope;
         this.list_iata_iso_Country_id = list_iata_iso_Country_id;
         this.lstErrors = new List<ErrorWrapper>();

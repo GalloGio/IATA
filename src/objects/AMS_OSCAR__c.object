@@ -7530,15 +7530,6 @@ if(Change_effective_as_of__c - today() &gt; 0,&quot;30&quot;,&quot;0&quot;)))</f
     </fields>
     <label>OSCAR</label>
     <listViews>
-        <fullName>AGM_GDC_MAD_MIA_migrated_AMS_OSCAR</fullName>
-        <filterScope>Queue</filterScope>
-        <label>AGM GDC MAD - MIA migrated</label>
-        <queue>AGM_GDC_MAD_MIA_migrated</queue>
-        <sharedTo>
-            <allInternalUsers></allInternalUsers>
-        </sharedTo>
-    </listViews>
-    <listViews>
         <fullName>AGM_Non_Compliance_Americas_AMS_OSCAR</fullName>
         <filterScope>Queue</filterScope>
         <label>AGM Non Compliance - Americas</label>
@@ -7831,6 +7822,51 @@ if(Change_effective_as_of__c - today() &gt; 0,&quot;30&quot;,&quot;0&quot;)))</f
         <label>ISSP - Assignation queue</label>
         <language>en_US</language>
         <queue>ISSP_Queue_for_failed_assignation</queue>
+        <sharedTo>
+            <allInternalUsers></allInternalUsers>
+        </sharedTo>
+    </listViews>
+    <listViews>
+        <fullName>NewGen_PCI_Africa_Middle_East_AMS_OSCAR</fullName>
+        <filterScope>Queue</filterScope>
+        <label>NewGen PCI - Africa &amp; Middle East</label>
+        <queue>NewGen_PCI_Africa_Middle_East</queue>
+        <sharedTo>
+            <allInternalUsers></allInternalUsers>
+        </sharedTo>
+    </listViews>
+    <listViews>
+        <fullName>NewGen_PCI_Americas_AMS_OSCAR</fullName>
+        <filterScope>Queue</filterScope>
+        <label>NewGen PCI - Americas</label>
+        <queue>NewGen_PCI_Americas</queue>
+        <sharedTo>
+            <allInternalUsers></allInternalUsers>
+        </sharedTo>
+    </listViews>
+    <listViews>
+        <fullName>NewGen_PCI_Asia_Pacific_AMS_OSCAR</fullName>
+        <filterScope>Queue</filterScope>
+        <label>NewGen PCI - Asia &amp; Pacific</label>
+        <queue>NewGen_PCI_Asia_Pacific</queue>
+        <sharedTo>
+            <allInternalUsers></allInternalUsers>
+        </sharedTo>
+    </listViews>
+    <listViews>
+        <fullName>NewGen_PCI_China_North_Asia_AMS_OSCAR</fullName>
+        <filterScope>Queue</filterScope>
+        <label>NewGen PCI - China &amp; North Asia</label>
+        <queue>NewGen_PCI_China_North_Asia</queue>
+        <sharedTo>
+            <allInternalUsers></allInternalUsers>
+        </sharedTo>
+    </listViews>
+    <listViews>
+        <fullName>NewGen_PCI_Europe_AMS_OSCAR</fullName>
+        <filterScope>Queue</filterScope>
+        <label>NewGen PCI - Europe</label>
+        <queue>NewGen_PCI_Europe</queue>
         <sharedTo>
             <allInternalUsers></allInternalUsers>
         </sharedTo>
@@ -34616,6 +34652,10 @@ if(Change_effective_as_of__c - today() &gt; 0,&quot;30&quot;,&quot;0&quot;)))</f
         <picklistValues>
             <picklist>Is_PCI_compliant__c</picklist>
             <values>
+                <fullName>Corporate Card</fullName>
+                <default>false</default>
+            </values>
+            <values>
                 <fullName>Nil CC</fullName>
                 <default>false</default>
             </values>
@@ -37795,6 +37835,10 @@ if(Change_effective_as_of__c - today() &gt; 0,&quot;30&quot;,&quot;0&quot;)))</f
         </picklistValues>
         <picklistValues>
             <picklist>Is_PCI_compliant__c</picklist>
+            <values>
+                <fullName>Corporate Card</fullName>
+                <default>false</default>
+            </values>
             <values>
                 <fullName>Nil CC</fullName>
                 <default>false</default>

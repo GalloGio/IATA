@@ -591,7 +591,7 @@
             <operation>equals</operation>
             <value>Reference - GSS Member NewGen</value>
         </filters>
-        <label>90- Field Tracking - GSS MemberANG</label>
+        <label>90- Field Tracking - GSS Member NewGen</label>
         <language>en_US</language>
     </listViews>
     <listViews>
