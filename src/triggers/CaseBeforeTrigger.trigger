@@ -213,13 +213,13 @@ trigger CaseBeforeTrigger on Case (before delete, before insert, before update) 
                     */ // END comment - fix too many soql queries - NEWGEN-3429
 
                     //START fix too many soql queries - NEWGEN-3429
-                    for (PermissionSetAssignment psa : [SELECT AssigneeId FROM PermissionSetAssignment WHERE Assignee.IsActive = true AND PermissionSetId IN (SELECT Id FROM PermissionSet WHERE Name = 'IFAP_Authorized_Users')]){
-                        if (psa.AssigneeId == UserInfo.getUserId()){
+                    List<PermissionSetAssignment> psaList = [SELECT AssigneeId FROM PermissionSetAssignment WHERE Assignee.IsActive = true 
+                        AND AssigneeId = :UserInfo.GetUserId() AND PermissionSetId IN (SELECT Id FROM PermissionSet WHERE Name = 'IFAP_Authorized_Users')];
+                        if (!psaList.isEmpty()){
                             isIfapAuthorizedUser = true;
-                            break;
                         }
-                    }
                     //END fix too many soql queries - NEWGEN-3429
+
 
                     // Create Account and contact Map (in order to decrease the number of SOQL queries executed)
                     for (Case aCase : trigger.New) {
