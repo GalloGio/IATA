@@ -836,11 +836,12 @@
         console.log('ct');
         if (!helper.validateEmail(component)) {
             var terms = component.get("v.Terms");
+            var country = component.get("v.whichcountry");            
 
             if (terms) {
                 var vfOrigin = component.get('v.vfHost');
                 var vfWindow = component.find("vfFrame").getElement().contentWindow;
-                vfWindow.postMessage({ action: "alohaCallingCAPTCHA" }, vfOrigin);
+                vfWindow.postMessage({ action: "alohaCallingCAPTCHA",country : country }, vfOrigin);
                 helper.placeFlags(component);
             }
         }
@@ -864,6 +865,10 @@
         });
         toastEvent.fire();
     },
+    validateNumber : function(c, e, h){
+        var input = c.find(e.getSource().getLocalId());
+        input.set("v.value", input.get("v.value").replace(/[^0-9+]|(?!^)\+/g, ''));
+    }
     /*,
     resizeIframe: function(component, event, helper) {
         console.log('----------> resizing');

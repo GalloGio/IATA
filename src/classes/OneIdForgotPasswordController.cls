@@ -49,7 +49,12 @@ public without sharing class OneIdForgotPasswordController {
         }
         catch (Exception ex) {
             System.debug('basto1p -> forgotPassword ERROR ON RESET username='+username);
+            if(serviceName == 'ISSP'){
+                return Label.ISSP_Registration_generalError;    
+            }else{                
             return Label.OneId_PasswordResetFail;
+        }
+            
         }
     }
 }

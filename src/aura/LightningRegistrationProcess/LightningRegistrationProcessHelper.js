@@ -313,19 +313,15 @@
 
     },
     placeFlags: function(component) {
-        //var contactPhone = component.find("contactPhone");
         var contactPhone = $('.contactPhone');
-        console.log("contactPhone: " + contactPhone);
+        var country = component.get("v.whichcountry");
 
         if (contactPhone != null) {
-            console.log('contact phone not null');
             contactPhone.intlTelInput({
-                autoPlaceholder: true
-                    //defaultCountry: 'PT',
-                    //snationalMode: true
-                    /*preferredCountries: [""],
-                    numberType: "FIXED_LINE"*/
+                initialCountry: country,                    
+                preferredCountries: [country]
                 });
+
         }
     },
     validateContact: function(component) {
@@ -389,8 +385,12 @@
         } else { contact.Membership_Function__c = membershipFunction; }
         if (businessphone === undefined) {
             console.log('bp');
-            businessphoneField.set("v.errors", [{ message: $A.get("$Label.c.OneId_Registration_Error_BusinessPhone") }]);
+            businessphoneField.set("v.errors", [{ message: $A.get("$Label.c.ISSP_Registration_MobilePhone_Msg") }]);
             errors = true;
+            setTimeout(function(){
+                $(".contactPhone").intlTelInput("setCountry", "");
+                $(".contactPhone").intlTelInput("setCountry", component.get("v.whichcountry"));
+            }, 100);
         } else { contact.Phone = businessphone; }
         // console.log('c: ' + firstName + ' ' + lastName + ' ' + title + ' ' + businessphone + ' ' + salutation);
 
