@@ -209,7 +209,7 @@
         <layoutColumns>
             <layoutItems>
                 <behavior>Readonly</behavior>
-                <field>ACC_Process_Type__c</field>
+                <field>ACC_Process_Type_NEW__c</field>
             </layoutItems>
             <layoutItems>
                 <behavior>Readonly</behavior>
