@@ -1,6 +1,6 @@
 public with sharing class ANG_ISSP_AfpWrapper {
-	private static final String NO = 'fa fa-times fa-2x show wrong';
-	private static final String YES = 'fa fa-check fa-2x show check';
+	private static final String NO = 'glyphicon glyphicon-ok';
+	private static final String YES = 'glyphicon glyphicon-remove';
 
 	public Boolean isCashless {get; set;}
 	public Boolean isCreditCardFlag {get; set;}
