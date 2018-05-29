@@ -2,7 +2,8 @@ public without sharing class ISSP_AMS_Accreditation {
     private static String SAAM_RECORD_TYPE_ID = Schema.SObjectType.Case.RecordTypeInfosByName.get('SAAM').RecordTypeId;
     private static String OSCAR_RECORD_TYPE_ID = Schema.SObjectType.Case.RecordTypeInfosByName.get('OSCAR Communication').RecordTypeId;
     private static String RECORD_TYPE_ID = SAAM_RECORD_TYPE_ID;
-
+    
+    public static String FILE_ID_FOR_PARTNERSHIP  {get{ return 'Signed Application Form';}}
     public static  Integer MAX_IFAP_Contacts {get{ return 1;} private set;}
     private static integer MAX_AgencyAccount_LOOKUPS_ALLOWED = 20;
     private static final String WAREHOUSE_LEASE = 'WAREHOUSE_LEASE';
@@ -2731,8 +2732,9 @@ public without sharing class ISSP_AMS_Accreditation {
             newForm.Validation_ERRORS__c = FALSE;
             saveAMSForm();
             
-            if (!validateCharactersInForm())
+            if (!validateCharactersInForm() || !validateForm(true) ) {
                 return null;
+            }
             
             if (isNoticeOfChange && newForm.Is_change_ownership_or_shareholding__c) {
                 return goToStep5(); //No File Upload for NoC that isn't change of bank details
@@ -2939,6 +2941,19 @@ public without sharing class ISSP_AMS_Accreditation {
                 return goToStep5();
 
             return goToStep4();
+        }
+        
+        if (newForm.ISSP_AMS_Legal_Status__c=='Partnership') {
+            //Get File identifiers for AmzonFile records assoc. with case
+            list<AmazonFile__c> listAmazonFile = [
+                    SELECT Id
+                    FROM AmazonFile__c
+                    WHERE Case__c = :newCase.Id
+                    AND File_Identifier__c = :FILE_ID_FOR_PARTNERSHIP];
+            if (listAmazonFile.isEmpty()) {
+                ApexPages.addmessage(new ApexPages.message(ApexPages.severity.ERROR, Label.ISSP_AMS_Form_Missing_Signed_File));
+                return null;
+            }
         }
 
         if (!newform.Accept_terms_and_conditions__c) {
@@ -3852,7 +3867,7 @@ System.DEBUG('validateCharactersInForm  - 4 - errorFound: '+errorFound);
                         ShippingPostalCode, ShippingCountry, VAT_Number__c, Short_Name__c, Location_Class__c, IATA_ISO_Country__c,
                         Iso_State__c, Abbreviated_name__c, Abbreviated_Address__c, Remittance_frequency__c, Solicitation_Flag__c,
                         VAT_Number_2__c, CASS_Number__c,Company_Type__c,RecordType.DeveloperName,Status__c,IATA_ISO_Country__r.ISO_Code__c,ANG_Accreditation_Model__c, 
-                        IATA_ISO_Shipping_Country__c, IATA_ISO_Shipping_State__c
+                        IATA_ISO_Shipping_Country__c, IATA_ISO_Shipping_State__c, Ownership
                         FROM Account
                         WHERE Id = :vHQAccountId
                                    LIMIT 1

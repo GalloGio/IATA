@@ -865,7 +865,7 @@ private class ISSP_AMS_Accreditation_Test
         parent.BillingCity = 'test';
         parent.Name = 'test';
         parent.sector__c = 'Travel Agent';
-        parent.Location_Type__c = 'BR';
+        parent.Location_Type__c = 'HO';
         parent.RecordTypeId = rtIdBr ;
         parent.IATACode__c = '100';
          
@@ -877,6 +877,8 @@ private class ISSP_AMS_Accreditation_Test
         child.Name = 'test2';
         child.Site = 'headSite';
         child.sector__c = 'Travel Agent';
+        child.Location_Type__c = 'BR';
+        child.ParentId = parent.Id;
         child.Top_Parent__c = parent.Id;
         child.IATA_ISO_Country__c = country.Id;
         child.RecordTypeId = rtIdBr ;
@@ -1041,7 +1043,7 @@ private class ISSP_AMS_Accreditation_Test
         parent.BillingCity = 'test';
         parent.Name = 'test';
         parent.sector__c = 'Travel Agent';
-        parent.Location_Type__c = 'BR';
+        parent.Location_Type__c = 'HO';
         parent.RecordTypeId = rtIdBr ;
         parent.IATACode__c = '100';
          
@@ -1053,6 +1055,8 @@ private class ISSP_AMS_Accreditation_Test
         child.Name = 'test2';
         child.Site = 'headSite';
         child.sector__c = 'Travel Agent';
+        child.Location_Type__c = 'BR';
+        child.ParentId = parent.Id;
         child.Top_Parent__c = parent.Id;
         child.IATA_ISO_Country__c = country.Id;
         child.RecordTypeId = rtIdBr ;
@@ -1215,7 +1219,7 @@ private class ISSP_AMS_Accreditation_Test
         parent.BillingCity = 'test';
         parent.Name = 'test';
         parent.sector__c = 'Travel Agent';
-        parent.Location_Type__c = 'BR';
+        parent.Location_Type__c = 'HO';
         parent.RecordTypeId = rtIdBr ;
         parent.IATACode__c = '100';
          
@@ -1227,6 +1231,8 @@ private class ISSP_AMS_Accreditation_Test
         child.Name = 'test2';
         child.Site = 'headSite';
         child.sector__c = 'Travel Agent';
+        child.Location_Type__c = 'BR';
+        child.ParentId = parent.Id;
         child.Top_Parent__c = parent.Id;
         child.IATA_ISO_Country__c = country.Id;
         child.RecordTypeId = rtIdBr ;
@@ -3189,6 +3195,7 @@ private class ISSP_AMS_Accreditation_Test
         child.Name = 'test2';
         child.Site = 'headSite';
         child.sector__c = 'Travel Agent';
+        child.ParentId = parent.Id;
         child.Top_Parent__c = parent.Id;
         child.IATA_ISO_Country__c = country.Id;
         child.RecordTypeId = rtIdBr ;
@@ -3292,6 +3299,7 @@ private class ISSP_AMS_Accreditation_Test
         child.Name = 'test2';
         child.Site = 'headSite';
         child.sector__c = 'Travel Agent';
+        child.ParentId = parent.Id;
         child.Top_Parent__c = parent.Id;
         child.IATA_ISO_Country__c = country.Id;
         child.RecordTypeId = rtIdBr ;
@@ -3423,6 +3431,7 @@ private class ISSP_AMS_Accreditation_Test
         child.Name = 'test2';
         child.Site = 'headSite';
         child.sector__c = 'Travel Agent';
+        child.ParentId = parent.Id;
         child.Top_Parent__c = parent.Id;
         child.IATA_ISO_Country__c = country.Id;
         child.RecordTypeId = rtIdBr ;
@@ -3714,6 +3723,7 @@ private class ISSP_AMS_Accreditation_Test
         child.Name = 'test2';
         child.Site = 'headSite';
         child.sector__c = 'Travel Agent';
+        child.ParentId = parent.Id;
         child.Top_Parent__c = parent.Id;
         child.IATA_ISO_Country__c = country.Id;
         child.RecordTypeId = rtIdBr ;
@@ -3892,6 +3902,7 @@ private class ISSP_AMS_Accreditation_Test
         child.Name = 'test2';
         child.Site = 'headSite';
         child.sector__c = 'Travel Agent';
+        child.ParentId = parent.Id;
         child.Top_Parent__c = parent.Id;
         child.IATA_ISO_Country__c = country.Id;
         child.RecordTypeId = rtIdBr ;
@@ -4052,6 +4063,7 @@ private class ISSP_AMS_Accreditation_Test
         child.Name = 'test2';
         child.Site = 'headSite';
         child.sector__c = 'Travel Agent';
+        child.ParentId = parent.Id;
         child.Top_Parent__c = parent.Id;
         child.IATA_ISO_Country__c = country.Id;
         child.RecordTypeId = rtIdBr ;
@@ -4067,7 +4079,7 @@ private class ISSP_AMS_Accreditation_Test
 
         Contact con_adm = ISSP_ObjectFactory.createNewContact();
         con_adm.AccountId= parent.Id;
-        con_adm.Email = 'Test@test11.com';
+        con_adm.Email = 'Test2@test22.com';
         con_adm.User_Portal_Status__c = 'Approved Admin';
         insert con_adm;
 
@@ -4199,6 +4211,7 @@ private class ISSP_AMS_Accreditation_Test
         child.Name = 'test2';
         child.Site = 'headSite';
         child.sector__c = 'Travel Agent';
+        child.ParentId = parent.Id;
         child.Top_Parent__c = parent.Id;
         child.IATA_ISO_Country__c = country.Id;
         child.RecordTypeId = rtIdBr ;
