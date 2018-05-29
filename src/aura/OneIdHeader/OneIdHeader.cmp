@@ -5,7 +5,8 @@
     <aura:attribute type="Boolean" name="loaded" default="false" />
 	
     <aura:attribute type="String" name="vfHost" default=""/>	
-	<aura:attribute type="String" name="serviceName" default="" />
+    <aura:attribute type="String" name="serviceName" default="" />
+	<aura:attribute type="Boolean" name="blockLogo" default="false" />
     
     <aura:attribute type="List" name="langPickerOptions" />
     <aura:attribute type="String" name="selectedLanguage" default="en_US" />
@@ -16,13 +17,23 @@
 	
 	<aura:if isTrue="{!v.loaded}">
 
-		<div class="oiHeader slds-grid slds-wrap slds-grid_align-spread">
+		<div class="oiHeader slds-grid slds-wrap slds-grid_align-spread slds-size_1-of-1">
 
 			<div class="slds-col slds-max-small-size_1-of-1" id="suiteBar">
-		        <a class="homeIcon" href="{!'/' + empty(v.serviceName) ? $Label.c.OneId_Community_Name : v.serviceName}">
-		            <span class="icon icon-logo"></span>
-		            <span class="{!'subLogo' + v.serviceName}"></span>
-		        </a>
+		        
+
+                <aura:if isTrue="{!v.blockLogo}">
+                    <a class="homeIcon" >
+                        <span class="icon icon-logo"></span>
+                        <span class="{!'subLogo' + v.serviceName}"></span>
+                    </a>
+                    <aura:set attribute="else">
+                        <a class="homeIcon" href="{!'/' + (empty(v.serviceName) ? $Label.c.OneId_Community_Name : v.serviceName)}">
+                            <span class="icon icon-logo"></span>
+                            <span class="{!'subLogo' + v.serviceName}"></span>
+                        </a>
+                    </aura:set>
+                </aura:if>
 		    </div>
 
             <div class="slds-col slds-max-small-size_1-of-1 slds-align-bottom slds-p-horizontal_large">

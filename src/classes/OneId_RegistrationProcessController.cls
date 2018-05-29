@@ -196,6 +196,9 @@ public without sharing class OneId_RegistrationProcessController {
         system.debug('contact  --> ' + con);
         system.debug('serviceName  --> ' + serviceName);
 
+        if(serviceName == null)
+            serviceName = 'IDENTITY';
+
         //it's general public account? create contact / user
         if(acc.Sector__c == 'General Public'){
             List<Account> gpAccount = [SELECT id, IATA_ISO_Country__c FROM Account WHERE Sector__c = 'General Public' and  IATA_ISO_Country__c =:acc.IATA_ISO_Country__c];

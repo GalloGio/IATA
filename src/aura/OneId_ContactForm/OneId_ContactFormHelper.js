@@ -71,7 +71,7 @@
             var domPhone = phone.getElement();
             var country = $(domPhone).intlTelInput("getSelectedCountryData").iso2;
 
-            component.set("v.phoneErrors", $A.get("$Label.c.ISSP_Registration_MobilePhone_Msg"));
+            component.set("v.phoneErrors", $A.get("$Label.c.ISSP_Registration_BusinessPhone_Msg"));
             if(!$A.util.hasClass(container, 'slds-has-error')) $A.util.addClass(container, 'slds-has-error');
             isAllFilled = false;
 

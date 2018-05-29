@@ -19,11 +19,12 @@
 
             action.setCallback(this, function(a) {
                 var suggestions = a.getReturnValue();
+                
                 //suggestions = [];
                 if(suggestions != undefined && suggestions.length > 0) {
                     c.set("v.response", suggestions);
                 } else {
-                    var noResult = {'addressComplete': $A.get("{!$Label.c.OneId_NoResults}"), 'street':userInputValue};
+                    var noResult = {'street':userInputValue};
                     suggestions.push(noResult);
                     c.set("v.response",suggestions);
                 }

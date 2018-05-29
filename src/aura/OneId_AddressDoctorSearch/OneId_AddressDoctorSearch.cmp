@@ -32,8 +32,8 @@
                     <aura:iteration items="{!v.response}" var="address" indexVar="i">
                         <li role="presentation" class="slds-listbox__item">
                             <div class="slds-media slds-listbox__option slds-p-horizontal_small" role="option" >                                        
-                                <div class="slds-listbox__option-text slds-listbox__option-text_entity" onmousedown="{!c.suggestionSelected}" onkeydown="{!c.suggestionSelected}" data-value="{!i}" title="{!address.addressComplete}">{!address.addressComplete}</div>
-                            </div>
+                                <div class="slds-listbox__option-text slds-listbox__option-text_entity" onmousedown="{!c.suggestionSelected}" onkeydown="{!c.suggestionSelected}" data-value="{!i}" title="{!address.street+(empty(address.locality) ? '' : ','+address.locality)+(empty(address.province) ? '' : ','+address.province)+(empty(address.postalCode) ? '' : ','+address.postalCode)}">{!address.street+(empty(address.locality) ? '' : ','+address.locality)+(empty(address.province) ? '' : ','+address.province)+(empty(address.postalCode) ? '' : ','+address.postalCode)}</div>
+                            </div>                            
                         </li>
                     </aura:iteration>
                 </ul>

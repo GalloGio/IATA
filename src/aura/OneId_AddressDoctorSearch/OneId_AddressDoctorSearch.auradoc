@@ -7,7 +7,6 @@
         
         <!-- TODO: 
 			create a form to search all fields.
-			handle address verification 
 		-->
     </aura:description>
 </aura:documentation>

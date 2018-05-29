@@ -21,15 +21,11 @@
         ];
         component.set("v.langPickerOptions", langPickerOpts);
 
-        console.log('URL');
-        console.warn(component.get("v.url"));
-        if(component.get("v.url").length > 0) {
-            var splitAfterlang = component.get("v.url").split('language=');
-            if(splitAfterlang.length > 0) {
-                var splitRemaining = splitAfterlang[1].split('&');
-                if(splitRemaining.length > 0) {
-                    component.set("v.selectedLanguage", splitRemaining[0]);
-                }
+        var params = component.get("v.url");
+        if(~params.indexOf('language')) {
+            var paramList = params.split('&');
+            for(var p in paramList){
+                if(~paramList[p].indexOf('language')) component.set("v.selectedLanguage", paramList[p].split('=')[1]);
             }
         }
 
@@ -41,11 +37,8 @@
     renderPage : function (component, event, helper) {
         var state = event.getParam("state");
 
-        console.info("renderPage - state "+state);
         if(state == "answer"){
             var servName = event.getParam("paramsMap").serviceName;
-            console.info("renderPage - paramsMap ");
-            console.info(event.getParam("paramsMap"));
             if(/\S/.test(servName)){
                 component.set("v.serviceName", servName);
             }
@@ -55,9 +48,16 @@
     },
    
     langPickerChange : function(c) {
-
+        var search = location.search;
         var param = new RegExp('language=[^&$]*', 'i');
-        location.search = location.search.replace(param, 'language='+c.get("v.selectedLanguage"));
+        if(~search.indexOf('language')){
+            search = search.replace(param, 'language='+c.get("v.selectedLanguage"));
+        }else{
+            if(search.length > 0) search += '&';
+            search += 'language='+c.get("v.selectedLanguage");
+        }
+
+        location.search = search; 
 
     }
 })

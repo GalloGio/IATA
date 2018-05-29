@@ -164,3 +164,8 @@
     display: block;
     float: left;
 }
+
+.THIS .icon{
+    position: absolute;
+    right: 0;
+}

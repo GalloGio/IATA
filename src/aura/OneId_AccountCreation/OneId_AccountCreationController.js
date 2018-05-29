@@ -47,9 +47,8 @@
         var addressObj = e.getParam("addressSelected");
         var addressType = e.getParam("addressType");
 
-        if(!$A.util.isEmpty(addressObj.street)){
-            c.set("v.account."+addressType+"Street", addressObj.street);
-        }
+        c.set("v.account."+addressType+"Street", addressObj.street);
+        
         if(!$A.util.isEmpty(addressObj.locality)){
             c.set("v.account."+addressType+"City", addressObj.locality);
         }

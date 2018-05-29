@@ -46,9 +46,9 @@
                                             <span class="bulletv2">1</span>
                                             
                                             <span class="category">{!$Label.c.OneId_Contact_Association_Validation}</span>
+                                            
+                                            <span class="{!v.activeSection==1 ? 'icon icon-navArrowLeft' : 'icon icon-navArrowDown'}" />
                                         </span>
-                                        
-                                        <span class="{!v.activeSection==1 ? 'icon icon-navArrowLeft' : 'icon icon-navArrowDown'}" />
                                     </h3>
                                 </div>
                                 
@@ -68,9 +68,9 @@
                                             <span class="bulletv2">2</span>
                                             
                                             <span class="category">{!$Label.c.OneId_Contact_Creation}</span>
+                                            
+                                            <span class="{!v.activeSection==2 ? 'icon icon-navArrowLeft' : 'icon icon-navArrowDown'}" />
                                         </span>
-                                        
-                                        <span class="{!v.activeSection==2 ? 'icon icon-navArrowLeft' : 'icon icon-navArrowDown'}" />
                                     </h3>
                                 </div>
                                 
@@ -89,9 +89,9 @@
                                             <span class="bulletv2">3</span>
                                             
                                             <span class="category">{!$Label.c.OneId_Account_Association}</span>
+                                            
+                                            <span class="{!v.activeSection==3 ? 'icon icon-navArrowLeft' : 'icon icon-navArrowDown'}" />
                                         </span>
-                                        
-                                        <span class="{!v.activeSection==3 ? 'icon icon-navArrowLeft' : 'icon icon-navArrowDown'}" />
                                     </h3>
                                 </div>
                                 

@@ -9,6 +9,7 @@ public with sharing class ISSP_ChangePassword {
 
      //CNS
     public String communityName{ get{ return ApexPages.currentPage().getParameters().get('CommunityName'); }set;}
+    public String serviceName{ get{ return ApexPages.currentPage().getParameters().get('serviceName'); }set;}
     public String commParam { get { if(communityName=='CNS'){ return '&CommunityName='+ communityName;} return ''; } set;}
 
     /**
@@ -60,15 +61,23 @@ public with sharing class ISSP_ChangePassword {
             }
             else {
 
-            	PageReference pageRef = Site.changePassword(newPassword, confirmNewPassword, currentPassword);
+            	PageReference pageRef = Site.changePassword(newPassword, confirmNewPassword, currentPassword);               
+                String checkIdentity = ApexPages.currentPage().getURL();
+                
                 if(pageRef == null && newPassword == confirmNewPassword && Test.isRunningTest())
-                {
+                {                    
                     pageRef = new PageReference('/ISSP_PersonalInformation?mid=M5S1&confirm=yes' + commParam);
+                    
                 }
+                
             	if (pageRef != null){
             		if (tempPass){
             			updateUsers();
-            			pageRef = new PageReference('/ISSP_PersonalInformation?mid=M5S1&confirm=yes' + commParam);
+                        if(serviceName == 'ISSP'){
+                            pageRef = new PageReference('/ISSP_PersonalInformation?mid=M5S1&confirm=yes' + commParam);
+                        }else{
+                            pageref = new PageReference(URL.getSalesforceBaseUrl().toExternalForm() + '/s/profile/'+UserInfo.getUserId()+'?serviceName=' + serviceName);
+                        } 
             		}
             	}
             	else{
@@ -80,10 +89,11 @@ public with sharing class ISSP_ChangePassword {
             			//system.debug('severity message: ' + thisMessage.getSeverity());
             			//system.debug('message: ' + thisMessage);
             			errorMessage.add(thisMessage.getSummary());
-            			errorMessage.add(Label.ISSP_Old_Passwords);
-            		}
+                    }
+                    errorMessage.add(Label.ISSP_Old_Passwords);
             		//errorMessage.add(Label.ISSP_InvalidPassword);
-            	}
+            	}              
+                System.debug(loggingLevel.FINE, '____ [cls ISSP_ChangePassword - changePassword] pageRef - ' + pageRef);
             	return pageRef;
             }
         }
