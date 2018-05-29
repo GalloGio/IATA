@@ -204,6 +204,12 @@ public class ISSP_CaseTest {
 	}
 
 	public static testMethod void testISSP_Case_4() {
+		dgAI2__DG_Disable_Features__c dg = dgAI2__DG_Disable_Features__c.getOrgDefaults();
+		dg.dgAI2__Disable_Case_Predictions__c = true;
+		dg.dgAI2__Disable_Case_Feedback__c = true;
+		dg.dgAI2__Disable_Prediction_On_Update__c = true;
+		upsert dg;
+		
 		Account account = ISSP_ObjectFactory.createNewAccount();
         account.Name = 'Account1';
         insert account;
