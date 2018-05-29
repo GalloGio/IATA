@@ -5,6 +5,14 @@
 @isTest
 private class ISSP_APProcess_Test
 {
+    @testSetup
+    static void insertCustomSetting() {
+        List<ISSP_CS__c> settings = new List<ISSP_CS__c> {
+            new ISSP_CS__c(Name = 'EasyPay Opt-In Days', Value__c = '0'),
+            new ISSP_CS__c(Name = 'EasyPay Opt-Out Days', Value__c = '30')
+        };
+        insert settings;
+    }
 
     @isTest static void test_method_a()
     {
@@ -899,6 +907,129 @@ private class ISSP_APProcess_Test
             System.assertEquals(ctrl.list_GSTNumber.size(), 0);
 
         }
+        Test.stopTest();
+    }
+
+    @isTest static void testOptInOut() {
+        Portal_Applications__c portalApp = new Portal_Applications__c(Name = 'Stuff');
+        insert portalApp;
+
+        List<IATA_ISO_Country__c> countries = new List<IATA_ISO_Country__c>();
+
+        IATA_ISO_Country__c countryUS = new IATA_ISO_Country__c (Name = 'US', ISO_Code__c = 'US', ANG_Portal_Service__c = portalApp.Id, Airline_EasyPay_Opt_Out_Date__c = Date.today()-1);
+        countries.add(countryUS);
+        IATA_ISO_Country__c countryES = new IATA_ISO_Country__c (Name = 'ES', ISO_Code__c = 'ES', ANG_Portal_Service__c = portalApp.Id, Airline_EasyPay_Opt_Out_Date__c = Date.today()-1);
+        countries.add(countryES);
+        IATA_ISO_Country__c countryPT = new IATA_ISO_Country__c (Name = 'PT', ISO_Code__c = 'PT', ANG_Portal_Service__c = portalApp.Id, Airline_EasyPay_Opt_Out_Date__c = Date.today()-1);
+        countries.add(countryPT);
+
+        insert countries;
+
+        Id airlineBranchRT = RecordTypeSingleton.getInstance().RtIDsPerDeveloperNamePerObj.get('Account').get('IATA_Airline_BR');
+        Id airlineHeadquartersRT = RecordTypeSingleton.getInstance().RtIDsPerDeveloperNamePerObj.get('Account').get('IATA_Airline');
+
+        Account headquarter = new Account(Name = 'Emirates',
+                                          Field_Head_Office__c = 'Headquarter',
+                                          Airline_Designator__c = 'LH',
+                                          IATACode__c = '220',
+                                          Airline_Prefix__c = '220',
+                                          Sector__c = 'Airline',
+                                          Category__c = 'Passenger and Cargo',
+                                          Key_Customer_Reason__c = 'Volume',
+                                          TradeName__c = 'Emirates',
+                                          Legal_name__c = 'Stuff',
+                                          Name_on_AOC__c = 'Stuff',
+                                          IATA_ISO_Country__c = countryUS.Id,
+                                          RecordTypeId = airlineHeadquartersRT);
+
+        insert headquarter;
+
+        List<Account> airlines = new List<Account>();
+
+        Account branch1 = new Account(Name = 'Emirates',
+                                          Field_Head_Office__c = 'Headquarter',
+                                          Airline_Designator__c = 'LH',
+                                          IATACode__c = '220',
+                                          Airline_Prefix__c = '220',
+                                          Sector__c = 'Airline',
+                                          Category__c = 'Passenger and Cargo',
+                                          Key_Customer_Reason__c = 'Volume',
+                                          TradeName__c = 'Emirates',
+                                          Legal_name__c = 'Stuff',
+                                          Name_on_AOC__c = 'Stuff',
+                                          IATA_ISO_Country__c = countryES.Id,
+                                          RecordTypeId = airlineBranchRT,
+                                          ParentId = headquarter.Id);
+
+        Account branch2 = new Account(Name = 'Emirates',
+                                          Field_Head_Office__c = 'Headquarter',
+                                          Airline_Designator__c = 'LH',
+                                          IATACode__c = '220',
+                                          Airline_Prefix__c = '220',
+                                          Sector__c = 'Airline',
+                                          Category__c = 'Passenger and Cargo',
+                                          Key_Customer_Reason__c = 'Volume',
+                                          TradeName__c = 'Emirates',
+                                          Legal_name__c = 'Stuff',
+                                          Name_on_AOC__c = 'Stuff',
+                                          IATA_ISO_Country__c = countryPT.Id,
+                                          RecordTypeId = airlineBranchRT,
+                                          ParentId = headquarter.Id);
+
+        airlines.add(branch1);
+        airlines.add(branch2);
+        insert airlines;
+
+        Contact con = ISSP_ObjectFactory.createNewContact();
+        con.AccountId = headquarter.Id;
+        insert con;
+
+        User newUser = ISSP_ObjectFactory.createPortalUser(con);
+        con.OwnerId = newUser.Id;
+        update con;
+
+        List<Services_Rendered__c> services = new List<Services_Rendered__c>();
+
+        Services_Rendered__c serviceBranch1 = new Services_Rendered__c(Services_Rendered_to_Airline__c = branch1.Id,
+                                                                 Services_Rendered_By__c = headquarter.Id,
+                                                                 Services_Rendered_Type__c = 'BSP Participation',
+                                                                 Services_Rendered_Status__c = 'Active',
+                                                                 ANG_IATA_EasyPay_Opt_out__c = true);
+
+        Services_Rendered__c serviceBranch2 = new Services_Rendered__c(Services_Rendered_to_Airline__c = branch2.Id,
+                                                                 Services_Rendered_By__c = headquarter.Id,
+                                                                 Services_Rendered_Type__c = 'BSP Participation',
+                                                                 Services_Rendered_Status__c = 'Active',
+                                                                 ANG_IATA_EasyPay_Opt_out__c = false);
+
+        services.add(serviceBranch1);
+        services.add(serviceBranch2);
+
+        insert services;
+
+
+
+        Test.startTest();
+        System.runAs(newUser) {
+
+            PageReference pr = Page.ISSP_APCases;
+            List<String> countriesOut = new List<String> {countryES.Id, countryPT.Id};
+            String optInOutParam = 'OUT';
+
+            pr.getParameters().put('optInOutParam', optInOutParam);
+            pr.getParameters().put('countriesParam', System.JSON.serialize(countriesOut));
+            pr.getParameters().put('effectiveDateParam', '2999-09-10');
+
+            Test.setCurrentPage(pr);
+
+            ISSP_APProcess ctrl = new ISSP_APProcess();
+            ctrl.submitOptInOutServer();
+
+            List<Case> resultingCases = [SELECT Id FROM Case WHERE Reason1__c = 'IATA Easy Pay' AND Subject LIKE '%Airline Participation - IATA EasyPay%'];
+
+            System.assertEquals(countriesOut.size(), resultingCases.size());
+        }
+        
         Test.stopTest();
     }
 }
