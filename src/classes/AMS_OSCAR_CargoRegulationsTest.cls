@@ -26,6 +26,15 @@
     }
 
     @isTest static void testCargoAgencyRegulationsHOClassC() {
+        
+        IATA_ISO_Country__c ctry1 = new IATA_ISO_Country__c (Name='Portugal',ISO_Code__c='PT', Region__c='Europe');
+        insert ctry1;
+
+        Account acc = [SELECT Id, IATA_ISO_Country__c FROM Account WHERE Name = 'Test Cargo HO' LIMIT 1];
+
+        acc.IATA_ISO_Country__c = ctry1.Id;
+
+        update acc;
 
         AMS_OSCAR__c oscar = [SELECT Id, STEP6__c, Account__c from AMS_OSCAR__c where Process__c = :AMS_Utils.new_HO limit 1];
         List<AMS_Agency_Regulation__c> aregs;
@@ -107,11 +116,22 @@
 
     @isTest static void testCargoAgencyRegulationsBRClassC_DGR() {
 
+        IATA_ISO_Country__c ctry1 = new IATA_ISO_Country__c (Name='Portugal',ISO_Code__c='PT', Region__c='Europe');
+        insert ctry1;
+
+        Account acc = [SELECT Id, IATA_ISO_Country__c FROM Account WHERE Name = 'Test Cargo HO' LIMIT 1];
+
+        acc.IATA_ISO_Country__c = ctry1.Id;
+
+        update acc;
+
         AMS_OSCAR__c oscar = [SELECT Id, Account__c, STEP6__c from AMS_OSCAR__c where Process__c = :AMS_Utils.new_HO limit 1];
 
         //force BR
         AMS_Pax_Accreditation_Form__c stagingBR = [SELECT Id, Location_Type__c FROM AMS_Pax_Accreditation_Form__c WHERE Account_Name__c='Test Cargo HO'];
+
         stagingBR.Location_Type__c = 'BR';
+        stagingBR.ISO_Country__c = ctry1.Id;
 
         update stagingBR;
         Test.startTest();
