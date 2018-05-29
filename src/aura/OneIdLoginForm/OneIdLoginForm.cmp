@@ -55,14 +55,14 @@
 
                 <div id="sfdc_username_container" class="sfdc">
                     <span id="sfdc_user" class="login-icon" data-icon="a"></span>
-                    <ui:inputEmail value="" aura:id="username" updateOn="keyup" placeholder="{!$Label.c.OneId_Username}" keyup="{!c.onKeyUp}" 
-                                  class="input sfdc_usernameinput sfdc" label="{!$Label.c.OneId_UsernameLabel}" labelClass="assistiveText"/>
+                    <ui:inputEmail value="" aura:id="username" updateOn="keyup" placeholder="{!$Label.c.ISSP_MyProfile_EMAIL}" keyup="{!c.onKeyUp}" 
+                                  class="input sfdc_usernameinput sfdc" label="{!$Label.c.ISSP_MyProfile_EMAIL}" labelClass="assistiveText"/>
                 </div>
         
                 <div id="sfdc_password_container" class="sfdc">
                     <span id="sfdc_lock" class="login-icon sfdc" data-icon="c"></span>
-                    <ui:inputSecret value="" updateOn="keyup" aura:id="password" placeholder="{!$Label.c.OneId_Password}" keyup="{!c.onKeyUp}" 
-                                    class="input sfdc_passwordinput sfdc" label="{!$Label.c.OneId_Password}" labelClass="assistiveText"/>
+                    <ui:inputSecret value="" updateOn="keyup" aura:id="password" placeholder="{!$Label.c.ISSP_Password}" keyup="{!c.onKeyUp}" 
+                                    class="input sfdc_passwordinput sfdc" label="{!$Label.c.ISSP_Password}" labelClass="assistiveText"/>
                 </div>
                 
                 <div class="slds-grid-wrap slds-p-horizontal_medium slds-m-top_medium">
