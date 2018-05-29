@@ -260,6 +260,7 @@ public without sharing class AMS_Utils {
     public static final String CASE_REASON_BR_ABROAD = 'New BR Abroad';
     public static final String CASE_REASON_BR_IP = 'New BR / IP';
     public static final String CASE_AREA_ACCREDITATION_PROCESS = 'Accreditation Process';
+    public static final String CASE_AREA_AGENCY_RISK_MANAGEMENT = 'Agency Risk Management';
     public static final String CASE_REASON_FOR_MANAGEMENT = 'FoP Management';
     public static final String CASE_REASON_VR_CLOSURE = 'CLO - Closure';
     public static final String CASE_REASON_OPT_OUT = 'Financial review opt-in / opt-out';

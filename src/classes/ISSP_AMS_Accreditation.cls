@@ -4358,14 +4358,14 @@ System.DEBUG('validateCharactersInForm  - 4 - errorFound: '+errorFound);
             }
         }
 
-        Boolean flagShowOptOutButton = (sector ==  AMS_Utils.SECTOR_PASSENGER &&
+        Boolean flagShowOptOutButton = (sector ==  AMS_Utils.SECTOR_PASSENGER && con.Account.Category__c == AMS_Utils.CATEGORY_PASSENGER_SALES_AGENT &&
             isHOAccredited && isHOcontact && con.Account.ANG_Accreditation_Model__c == AMS_Utils.ACCREDITATIONMODEL_CASH && !con.Account.ANG_FA_Opt_out__c);
 
         Boolean flagShowOptOutButtonDisabled = (flagShowOptOutButton && isOpt_IN_OUT_InProgress);
 
         if(flagShowOptOutButtonDisabled) flagShowOptOutButton = false;
 
-        Boolean flagShowOptInButton = (sector ==  AMS_Utils.SECTOR_PASSENGER &&
+        Boolean flagShowOptInButton = (sector ==  AMS_Utils.SECTOR_PASSENGER && con.Account.Category__c == AMS_Utils.CATEGORY_PASSENGER_SALES_AGENT &&
             isHOAccredited && isHOcontact && con.Account.ANG_Accreditation_Model__c == AMS_Utils.ACCREDITATIONMODEL_CASH && con.Account.ANG_FA_Opt_out__c);
 
         Boolean flagShowOptInButtonDisabled = (flagShowOptInButton && isOpt_IN_OUT_InProgress);
@@ -8308,13 +8308,14 @@ system.debug('aqui sectorValue ' + sectorValue);
 
         newCase.RecordTypeId = AMS_Utils.OSCAR_COMUNICATION;
         newCase.Status = AMS_Utils.OPEN;
-        newCase.CaseArea__c = AMS_Utils.CASE_AREA_ACCREDITATION_PROCESS;
+        newCase.CaseArea__c = AMS_Utils.CASE_AREA_AGENCY_RISK_MANAGEMENT;
         newCase.Reason1__c = AMS_Utils.CASE_REASON_OPT_OUT;
         newCase.Origin = AMS_Utils.CASE_ORIGIN_PORTAL;
         newCase.Visible_on_ISS_Portal__c = true;
 
         newCase.BSPCountry__c =  isocountry.Case_BSP_Country__c ;
         newCase.Country_concerned_by_the_query__c = isocountry.Name;
+        newCase.Region__c = isocountry.Region__c;
         newCase.Type_of_customer__c = AMS_Utils.CASE_TYPE_OF_CUSTOMER_IATA_TRAVEL_AGENT;
         newCase.Account_Concerned__c = con.AccountId;
         newCase.Product_Category_ID__c = '_';
