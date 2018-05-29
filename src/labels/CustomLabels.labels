@@ -15137,7 +15137,7 @@ Select at least one authorised signatory, and choose the Financial Assessment co
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>ISSP_ANG_IATA_CODE_SEARCH_RHC</shortDescription>
-        <value>Remittance Holding Capacity</value>
+        <value>Remittance Holding Capacity equal to Financial Security</value>
     </labels>
     <labels>
         <fullName>ISSP_ANG_IATA_CODE_SEARCH_RISK_EVENTS</fullName>
@@ -15381,7 +15381,7 @@ Select at least one authorised signatory, and choose the Financial Assessment co
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>ISSP_ANG_PROOF_OF_PCI</shortDescription>
-        <value>Proof of PCI Compliance for the following IATA Codes:.</value>
+        <value>Thank you for creating the Proof of PCI Compliance for the following IATA Codes:.</value>
     </labels>
     <labels>
         <fullName>ISSP_ANG_Portal_Admin</fullName>
@@ -27897,5 +27897,221 @@ Please &lt;a href=&quot;/ISSP_FAQ2Case?MainNav=Queries&amp;subNav=MyQueries&amp;
         <protected>false</protected>
         <shortDescription>wire transfer payment msg</shortDescription>
         <value>Your wire transfer payment has been received.</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_ANG_ANNUAL_REVALIDATION</fullName>
+        <categories>ISSP,ANG</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>IATA Accreditation - Annual Revalidation</shortDescription>
+        <value>IATA Accreditation - Annual Revalidation</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_ANG_Step1_ANNUAL_REV</fullName>
+        <categories>ISSP,ANG</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>STEP 1 - Annual Revalidation</shortDescription>
+        <value>STEP A - Confirm Agency Details</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_ANG_Step2_ANNUAL_REV</fullName>
+        <categories>ISSP,ANG</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>STEP 2 - Annual Revalidation</shortDescription>
+        <value>STEP B - Submit to IATA</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_ANG_ANNUAL_REV_WORK_AREA_TITLE</fullName>
+        <categories>ISSP,ANG</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Annual Revalidation work area title</shortDescription>
+        <value>Please either confirm or update the details for each IATA Code in your hierarchy</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_ANG_ANNUAL_STATUS_OPEN</fullName>
+        <categories>ISSP,ANG</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Annual Revalidation open status</shortDescription>
+        <value>Not Started</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_ANG_ANNUAL_STATUS_CONFIRMED</fullName>
+        <categories>ISSP,ANG</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Annual Revalidation confirmed status</shortDescription>
+        <value>Details Confirmed</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_ANG_ANNUAL_STATUS_UPDATE_PROGRESS</fullName>
+        <categories>ISSP,ANG</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Annual Revalidation update in progress status</shortDescription>
+        <value>Update In Progress</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_ANG_ANNUAL_STATUS_UPDATE_COMPLETED</fullName>
+        <categories>ISSP,ANG</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Annual Revalidation update completed status</shortDescription>
+        <value>Update Completed</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_ANG_ANNUAL_VAL_STATUS</fullName>
+        <categories>ISSP,ANG</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Validation status label</shortDescription>
+        <value>Validation Status : </value>
+    </labels>
+    <labels>
+        <fullName>ISSP_ANG_ANNUAL_REV_CONFIRM_BTN</fullName>
+        <categories>ISSP,ANG</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Annual revalidation confirm button</shortDescription>
+        <value>Confirm details are correct</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_ANG_ANNUAL_REV_UPDATE_BTN</fullName>
+        <categories>ISSP,ANG</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Annual revalidation update button</shortDescription>
+        <value>Update details</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_ANG_ANNUAL_REV_DISCARD_BTN</fullName>
+        <categories>ISSP,ANG</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Annual revalidation discard button</shortDescription>
+        <value>Discard</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_ANG_ANNUAL_REV_Change_of_Legal_Name</fullName>
+        <categories>ISSP,ANG</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_ANG_ANNUAL_REV_Change_of_Legal_Name</shortDescription>
+        <value>Agency Legal Details</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_ANG_ANNUAL_REV_Change_of_Location</fullName>
+        <categories>ISSP. ANG</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_ANG_ANNUAL_REV_Change_of_Location</shortDescription>
+        <value>Agency Location</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_ANG_ANNUAL_REV_Change_Ownership_Shareholding</fullName>
+        <categories>ISSP, ANG</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_ANG_ANNUAL_REV_Change_Ownership_Shareholding</shortDescription>
+        <value>Agency Ownership / Shareholding and Legal Status</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_ANG_ANNUAL_REV_CONFIRM_UPD_BTN</fullName>
+        <categories>ISSP,ANG</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Annual revalidation confirm update button</shortDescription>
+        <value>Confirm Update</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_ANG_ANNUAL_REV_CANCEL_UPD_BTN</fullName>
+        <categories>ISSP,ANG</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Annual revalidation cancel update button</shortDescription>
+        <value>Discard Update</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_ANG_ANNUAL_REV_SAVE_CHANGES_BTN</fullName>
+        <categories>ISSP,ANG</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Annual revalidation save changes button</shortDescription>
+        <value>Save Changes</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_AMS_CONFIRM_CANCEL</fullName>
+        <categories>ISSP,ANG</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP AMS CONFIRM CANCEL</shortDescription>
+        <value>Are you sure you want to cancel?</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_AMS_CONFIRM_DISCARD</fullName>
+        <categories>ISSP,ANG</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP AMS CONFIRM DISCARD</shortDescription>
+        <value>Are you sure you want to discard your changes?</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_ANG_ANNUAL_REV_ADDITIONAL_INFORMATION</fullName>
+        <categories>ISSP,ANG</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_ANG_ANNUAL_REV_ADDITIONAL_INFORMATION</shortDescription>
+        <value>Additional Information</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_ANG_ANNUAL_REV_ERROR_1</fullName>
+        <categories>ISSP,ANG</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_ANG_ANNUAL_REV_ERROR_1</shortDescription>
+        <value>Need to confirm details and notify at least one change</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_ANG_ANNUAL_REV_ERROR_2</fullName>
+        <categories>ISSP,ANG</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_ANG_ANNUAL_REV_ERROR_2</shortDescription>
+        <value>It is required to notify at least one change</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_ANG_ANNUAL_REV_SUBMIT_NOT_ALLOW</fullName>
+        <categories>ISSP,ANG</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_ANG_ANNUAL_REV_SUBMIT_NOT_ALLOW</shortDescription>
+        <value>Please ensure that the Agency details are either confirmed or updated for each IATA Code in your hierarchy.</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_ANG_ANNUAL_REV_ENTER_OWNER_DETAILS</fullName>
+        <categories>ISSP,ANG</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_ANG_ANNUAL_REV_ENTER_OWNER_DETAILS</shortDescription>
+        <value>Please enter new ownership details below</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_ANG_ANNUAL_REV_Q2</fullName>
+        <categories>ISSP,ANG</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_ANG_ANNUAL_REV_Q2</shortDescription>
+        <value>* Does your company have direct or indirect relationship with an organization holding GSA appointment from a member?</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_ANG_ANNUAL_REV_Q3</fullName>
+        <categories>ISSP,ANG</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_ANG_ANNUAL_REV_Q3</shortDescription>
+        <value>* Please confirm which GDSs are used in your company?</value>
     </labels>
 </CustomLabels>

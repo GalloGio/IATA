@@ -8,7 +8,7 @@
     <meta charset="utf-8"/>
     <meta name="viewport" content="width=device-width, initial-scale=1"/>
 
-    <c:ISSP_Header></c:ISSP_Header>
+    <c:ISSP_Header ></c:ISSP_Header>
     <c:iss_ap_css />
 
   </head>
@@ -38,9 +38,9 @@
       }
 
       .search {
-      	margin-top: 20px;
-      	margin-left: 20px;
-      	margin-bottom: 20px;
+        margin-top: 20px;
+        margin-left: 20px;
+        margin-bottom: 20px;
         margin-right: 20px;
       }
 
@@ -102,7 +102,7 @@
       <c:ISSP_CustomNavigation />
       <apex:form id="mainFrm">
 
-		  <apex:actionFunction action="{!doSearch}" name="doSearchServer" rerender="searchResults">
+      <apex:actionFunction action="{!doSearch}" name="doSearchServer" rerender="searchResults">
         <apex:param id="searchStringId" name="searchString" value="" />
       </apex:actionFunction>
 
@@ -115,8 +115,8 @@
           <div class="row">
             <div class="panel panel-default">
               <div class="search">
-		            <span>
-	        	      <apex:outputLabel value="{!$Label.OneId_IATA_Code}"/>
+                <span>
+                  <apex:outputLabel value="{!$Label.OneId_IATA_Code}"/>
                   <span>
                     <apex:input id="searchInputId" value="{!iataCode}"/>
                     <a href="#" onclick="doPreSearch();"><span class="glyphicon glyphicon-search" aria-hidden="true"></span></a>
@@ -245,13 +245,13 @@
                         </td>
                       </tr>
 
-                      <tr>
+                      <tr style="display: {!IF(AND(isTravel, agency.IATA_ISO_Country__r.ANG_Enable_NewGen__c, rhcAgencyInfo != null), '', 'none')}">
                         <td>
                           <apex:outputLabel value="{!$Label.ISSP_ANG_IATA_CODE_SEARCH_RHC}"/>
                         </td>
                         <td>
-                          <i style="display:{!IF(agency.ANG_CashCondition__c,'','none')}; margin-left: 15px; color: green;" class="glyphicon glyphicon-ok"></i>
-                          <i style="display:{!IF(NOT(agency.ANG_CashCondition__c),'','none')}; margin-left: 15px; color: red;" class="glyphicon glyphicon-remove"></i>
+                          <i style="display:{!IF(rhcAgencyInfo.ANG_CashCondition__c,'','none')}; margin-left: 15px; color: green;" class="glyphicon glyphicon-ok"></i>
+                          <i style="display:{!IF(NOT(rhcAgencyInfo.ANG_CashCondition__c),'','none')}; margin-left: 15px; color: red;" class="glyphicon glyphicon-remove"></i>
                         </td>
                       </tr>
 
@@ -260,7 +260,7 @@
                     <br/>
 
                   <!--<div name="right-side" class="col-md-4 col-sm-12">-->
-                    <div style="min-height: 225px; display:{!IF(afpWrapper != null,'','none')};">
+                    <div style="min-height: 225px; display:{!IF(AND(isTravel, afpWrapper != null, agency.IATA_ISO_Country__r.ANG_Enable_NewGen__c),'','none')};">
                       <c:AFP_Component wrapperClass="{!afpWrapper}"/>
                     </div>
                   <!--</div>-->
@@ -341,9 +341,9 @@
           </div>
         </div>
 
-      	<c:ISSP_CustomFooter />
+        <c:ISSP_CustomFooter />
       </apex:form>
-  	</main>
+    </main>
 
     <script src="{!URLFOR($Resource.DataTablesBootstrap)}"></script>
     <script src="{!URLFOR($Resource.JqueryDataTables)}"></script>
