@@ -3507,7 +3507,7 @@ public class AMS_OSCARTriggerHandler {
                 
                 String changeCodeName = oscar.Is_PCI_compliant__c == 'No' ? 'CCA' : 'CCR';
 
-                ANG_OscarProcessHelper.EntityUpdater updater = ANG_OscarProcessHelper.createChangeCodeForFOP(null, oscar, [Select Id, Status__c from Account where id in:oscarAccountsMap.get(oscar.Id)], changeCodeName);
+                ANG_OscarProcessHelper.EntityUpdater updater = ANG_OscarProcessHelper.createChangeCodeForFOP(null, oscar, [Select Id, Status__c, CNS_Agency__c from Account where id in:oscarAccountsMap.get(oscar.Id)], changeCodeName);
                 ANG_OscarProcessHelper.updateUpdater(updater);
 
             }
