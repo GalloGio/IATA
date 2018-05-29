@@ -6,7 +6,7 @@
     <letterhead>IATADynamicSkyLetterhead</letterhead>
     <name>RHC Simulation 50_75</name>
     <style>freeForm</style>
-    <subject>IMPORTANT NOTIFICATION : Remittance Holding Capacity Monitoring status</subject>
+    <subject>IMPORTANT NOTIFICATION : Remittance Holding Capacity Monitoring status - {!Account.IATACode__c}</subject>
     <textOnly>Dear Agent,
 
 We would like to inform you that according to our records you have reached {!ANG_RHC_Information__c.ANG_ConsumedRHC_Percent__c}% of your Remittance Holding Capacity (RHC).

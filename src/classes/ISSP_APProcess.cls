@@ -1,3 +1,7 @@
+/**
+    Controller class used in many ISS portal pages to handle the process for 
+    Airline Participation Joining Applications and Change Requests
+**/
 public without sharing class ISSP_APProcess {
     
     private static String RECORD_TYPE_ID = Schema.SObjectType.Case.RecordTypeInfosByName.get('IDFS Airline Participation Process').RecordTypeId;
@@ -81,6 +85,17 @@ public without sharing class ISSP_APProcess {
     public GST_Information__c newGSTInfo{get;set;}
     public Boolean allGSTFieldsFilled{get;set;}
 
+    public Boolean getIsNewCountryProcess() {
+        try {
+            String value = ISSP_CS__c.getValues('ISSP_APProcess_New_Countries').Value__c;
+            if (value=='Default') return true;
+            return value.contains(apcountryisocode);
+        } catch (Exception e) {
+            System.debug(e.getMessage());
+            return false;
+        }
+    }
+    
     public ISSP_APProcess(){        
         //Set the Variables default values
         isNewCase = true;
@@ -296,7 +311,18 @@ public without sharing class ISSP_APProcess {
                             allfieldsfilled = false;
                             break;
                         }
-                    }                
+                    }
+                    
+                    // Patch to make mandatory some fields dependent from Participate_in_any_Commission_Control__c
+                    if (newForm.Participate_in_any_Commission_Control__c=='Yes') {
+                        for (String fieldName: getMandatoryFieldsForCommission()) {
+                            if (newForm.get(fieldName) == null) {
+                                allfieldsfilled = false;
+                                break;
+                            }
+                        }
+                    }
+                    
                 } else if(isCASS && strAreaType=='Airline Joining') {  //Test CASS mandatory fields
                     if(ISSP_AP_FieldLists.cass_MandatoryFieldsbyCountry.get(apcountryisocode) != null) {
                         Map<String, String> extraMandatoryFields = ISSP_AP_FieldLists.cass_MandatoryFieldsbyCountry.get(apcountryisocode);
@@ -389,7 +415,7 @@ public without sharing class ISSP_APProcess {
             CASS_PH_Bilateral_Agreement__c,CASS_PH_Preferred_Billing_Currency__c,CASS_PH_Bilat_Agreement_Tax_Rate__c,Airline_Intra_Europe_Flights__c,BSP_UA_LocalReg_Number_EDRPOU__c,BSP_UA_BankCode_MFO__c,Ecuador_Legal_Forms_requirements__c,
             BSP_Russia_Double_Tax_avoiding_Treaty__c, Colombia_City_selection__c, Colombia_City_percentage__c, Name_Appearing_in_VAT__c, Colombia_Type_of_Contributor__c, Territory_Percentage__c,
             Canada_Has_Principal_Office__c,Canada_Provincial_Offices__c,Canada_LocalVAT_Info__c, GSSA_Legal_Name_Formula__c, GSSA_Address_Formula__c, Case__r.AccountId,
-            Type_of_Change_Requested__c
+            Type_of_Change_Requested__c, Minimum_Commission_Rate__c, Maximum_Commission_Rate__c, Default_Commission_Rate__c
             FROM AP_Process_Form__c
             WHERE Case__c = :newCase.Id
             LIMIT 1 
@@ -404,7 +430,8 @@ public without sharing class ISSP_APProcess {
     public Case retrieveCase(String vCaseId){
         List <Case> newCases = [
             SELECT OwnerId, Id, CaseNumber, Reason1__c, CaseArea__c, Status, BSPCountry__c, Country_concerned_by_the_query__c, Contact.Name, Account.Id, Description, Subject, Account_Concerned__c, Account_Concerned__r.Top_Parent__c, Account.Name,
-            Account.Billing_Address_formated__c, Verification__c,IFAP_Country_ISO__c
+            Account.Billing_Address_formated__c, Verification__c,IFAP_Country_ISO__c,
+            Account_Concerned__r.IATA_ISO_Country__r.AMS_Settlement_System__r.DPC_System__c
             FROM Case 
             WHERE Id=:vCaseId 
         ];
@@ -1385,5 +1412,14 @@ public without sharing class ISSP_APProcess {
             allGSTFieldsFilled = false;
         }
     }
-            
+    
+    /**
+        Find in ISSP_AP_FieldLists those fields marked as mandatory for current DPC System
+    **/
+    public list<String> getMandatoryFieldsForCommission() {
+        String dpcSystem = newCase.Account_Concerned__r.IATA_ISO_Country__r.AMS_Settlement_System__r.DPC_System__c;
+        list<String> listFieldsToCheck = ISSP_AP_FieldLists.bspCommissionMandatoryFields.get(dpcSystem);
+        if (listFieldsToCheck==null) return new list<String>();
+        return listFieldsToCheck;
+    }
 }

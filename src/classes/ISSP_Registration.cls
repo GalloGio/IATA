@@ -48,6 +48,7 @@ public without sharing class ISSP_Registration {
 
     private Map<Id,String> countryMap;
     private Map<Id,String> countryISOCodeMap;
+    private Map<String, Id> iSOCodeMap;
 
     // Errors, Logs and Error Case:
     public list<String> errorMessage {get; set;}
@@ -268,6 +269,7 @@ public without sharing class ISSP_Registration {
         isNotIATA = false;
 
         countryISOCodeMap = new Map<Id, String>();
+        iSOCodeMap = new Map<String, Id>();
 
         doSearch = false;
 
@@ -1027,12 +1029,14 @@ public without sharing class ISSP_Registration {
             system.debug('acc.category__c: ' + acc.category__c);
             if (searchCountry!=null && searchCountry!='') {
                 acc.IATA_ISO_Country__c = searchCountry;
-                acc.IATA_ISO_Shipping_Country__c = searchCountry;
+                
                 acc.BillingCountry = searchCountryName;
                 if(sRefererCommunity == constIEC) {
                 	acc.ShippingCountry = String.isBlank(acc.ShippingCountry) ? searchCountryName : acc.ShippingCountry;
+                    acc.IATA_ISO_Shipping_Country__c = String.isBlank(acc.ShippingCountry) ? searchCountryName : iSOCodeMap.get(acc.ShippingCountry);
                 } else {
                 	acc.ShippingCountry = searchCountryName;
+                    acc.IATA_ISO_Shipping_Country__c = searchCountry;
                 }
             }
             //acc.TIESS_Code__c = searchTiess;
@@ -1090,16 +1094,19 @@ public without sharing class ISSP_Registration {
                 }
 
                 if (!String.isBlank(acc.shippingstate)) {
-                    if (acc.shippingstate == acc.billingstate && acc.shippingcountry == acc.billingcountry)
+                    if (acc.shippingstate == acc.billingstate && acc.shippingcountry == acc.billingcountry){
                         acc.IATA_ISO_Shipping_State__c = acc.IATA_ISO_Billing_State__c;
-                    else {
-                    List <IATA_ISO_State__c> states = [SELECT id FROM IATA_ISO_State__c WHERE IATA_ISO_Country__r.Name = :acc.shippingcountry AND Informatica_value__c = :acc.shippingstate LIMIT 1];
-                    if (states.size() == 0) {
-                        states = [SELECT id FROM IATA_ISO_State__c WHERE IATA_ISO_Country__r.Name = :acc.shippingcountry AND ISO_code__c = :acc.shippingstate LIMIT 1];
+                    }else{
+                        List <IATA_ISO_State__c> states = [SELECT id FROM IATA_ISO_State__c WHERE IATA_ISO_Country__r.ISO_Code__c = :acc.shippingcountry AND Informatica_value__c = :acc.shippingstate LIMIT 1];
+                        if (states.size() == 0) {
+                            states = [SELECT id FROM IATA_ISO_State__c WHERE IATA_ISO_Country__r.ISO_Code__c = :acc.shippingcountry AND ISO_code__c = :acc.shippingstate LIMIT 1];
+                        }
+
+                        if(states.size()!=0){
+                            acc.IATA_ISO_Shipping_State__c = states[0].id;
+                        }
                     }
-                    if (states.size()!=0)
-                         acc.IATA_ISO_Shipping_State__c = states[0].id;
-                    }
+
                 }
                 /*
                 if(acc.Sector__c == 'Payment Provider' && acc.Category__c = 'Financial Institution'){
@@ -1130,7 +1137,7 @@ public without sharing class ISSP_Registration {
             con.ISO_Country__c = searchCountry;
             //con.MailingCountry = searchCountryName;
             //EM: Handle ISO Shipping Country
-            con.IATA_ISO_Shipping_Country__c = searchCountry;
+            //con.IATA_ISO_Shipping_Country__c = searchCountry;
         }
 
 
@@ -1150,6 +1157,9 @@ public without sharing class ISSP_Registration {
             //EM: Copy account states to contact
             con.IATA_ISO_Billing_State__c = acc.IATA_ISO_Billing_State__c;
             con.IATA_ISO_Shipping_State__c = acc.IATA_ISO_Shipping_State__c;
+
+            //Copy Shipping Country to contact
+            con.IATA_ISO_Shipping_Country__c = acc.IATA_ISO_Shipping_Country__c; 
 
             if (sRefererCommunity == constIEC) {
             	IECUtil.DomainValidation validation = IECUtil.validateContactEmailDomain(con.Email, con.accountid);
@@ -1296,6 +1306,7 @@ public without sharing class ISSP_Registration {
                 countryMap.put(iso.Id, iso.Name);
             }
             countryISOCodeMap.put(iso.Id, iso.ISO_Code__c);
+            iSOCodeMap.put(iso.ISO_Code__c, iso.Id);
         }
         return options;
     }
@@ -1659,7 +1670,7 @@ public without sharing class ISSP_Registration {
 				List<SelectOption> options = new List<SelectOption>();
 				for(IATA_ISO_Country__c iso:[select Id,Name,ISO_Code__c, IEC_Zip_Postal_Code_required__c from IATA_ISO_Country__c
                                             where Name != 'All Countries' and Name != 'NO COUNTRY' order by Name]) {
-						options.add(new SelectOption(iso.Name,iso.Name));
+						options.add(new SelectOption(iso.ISO_Code__c,iso.Name));
 				}
                 shpCountry = options;
 			}

@@ -673,7 +673,7 @@ public with sharing class ISSP_ContactList {
         //prepare out string
         String out = getCSVHeader();
         out+= '"' + String.join(listFieldLabels,'","') + '"\n';
-        setCon.setPageSize(1000);
+        setCon.setPageSize(2000);
         for (contactWrapper wrapper: getFilteredContactList()) {
             list<String> listFieldValues = wrapperToListValues(wrapper, listFieldPaths);
             out+= '"' + String.join(listFieldValues,'","') + '"\n';

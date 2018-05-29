@@ -913,7 +913,7 @@
                                         <apex:outputfield value="{!newCase.CaseArea__c}" rendered="{!IsInterDPCCase}" />
                                         <apex:outputfield value="{!newCase.Reason1__c}" rendered="{!IsInterDPCCase}" />
                                         <apex:outputfield value="{!newCase.Subject}" />
-                                        <apex:outputfield value="{!newCase.Description}" rendered="{!NOT(IsInterDPCCase)}"/>
+                                        <apex:outputfield value="{!newCase.Description}" />
                                         <apex:outputfield value="{!newCase.Type}" rendered="{!NOT(IsInterDPCCase)}"/>
                                         <apex:outputfield value="{!newCase.Sub_Type__c}" rendered="{!NOT(IsInterDPCCase)}"/>
                                         <!-- <apex:outputfield value="{!newCase.IATA_office__c}" rendered="{!caseType='DPCSR'}" /> -->
