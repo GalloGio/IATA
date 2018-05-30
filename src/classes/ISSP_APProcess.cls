@@ -89,8 +89,6 @@ public without sharing class ISSP_APProcess {
     public List<SelectOption> countries {get;set;}
     public String selectedCountries {get;set;}
     public Boolean flagShowCountries {get;set;}
-    public String countriesLabel {get;set;}
-    public String countriesTitle {get;set;}
     public String pEffectiveDateStr {get;set;}
     public List<SelectOption> countriesOut {get;set;}
     public Boolean hasCountriesOut {get;set;}
@@ -837,7 +835,7 @@ public without sharing class ISSP_APProcess {
 
         try{
 
-            newForm.ANG_Enable_NewGen__c = (isocountry.ANG_Portal_Service__c != null);
+            newForm.ANG_Enable_NewGen__c = (isocountry.ANG_Portal_Service__c != null && isocountry.Airline_EasyPay_Opt_Out_Date__c <= Date.today() && isocountry.Airline_EasyPay_Opt_Out_Date__c != null);
 
             newForm.Submitted_to_IATA__c = TRUE;
             if(strAreaType == 'Airline Joining') {
