@@ -346,9 +346,8 @@
                                 </apex:actionFunction>
 
                                 <apex:actionFunction name="createAgencyCompany" action="{!createAgencyContact}"
-                                        oncomplete="if ({!contactSaved==true}){hideNewCompanyDialog(); cancelCompanyUpdate();} $('[id$=companySubmitBut]').removeAttr('disabled');"
-                                        status="WaitingStatus"
-                                        reRender="companyList,currCompanyList,currOwnerSummaryList,ownerList,companyMessages,updated-company-owners" >
+                                        rerender="currContactList, currCompanyList, updated-company-owners,currOwnerSummaryList"
+                                        oncomplete="if ({!contactSaved==true}){hideNewCompanyDialog(); cancelCompanyUpdate();} $('[id$=companySubmitBut]').removeAttr('disabled');">
                                     <apex:param value="" name="contype" assignTo="{!contactType}" />
                                 </apex:actionFunction>
                                 <apex:actionFunction name="fetchTravelAgent3" action="{!fetchAgentDetails}" status="loadingDetailsCompanyModal" reRender="companyModalIataCodeValidation">
@@ -977,9 +976,10 @@
                     </div>
 
                     <div class="modal-footer">
-                        <apex:commandButton action="{!NULL}" status="WaitingStatus" id="companySubmitBut" styleClass="btn btn-default" value="{!$Label.ISSP_Submit}"
-                        oncomplete="createAgencyCompany(companyOwnerRecType);"
-                        onclick="this.disabled='disabled';" >
+                        <apex:commandButton action="{!NULL}" id="companySubmitBut" styleClass="btn btn-default" value="{!$Label.ISSP_Submit}"
+                            oncomplete="createAgencyCompany(companyOwnerRecType);"
+                            reRender="companyMessages"
+                            onclick="this.disabled='disabled';">
                         </apex:commandButton>&nbsp;
                     <button type="button" class="btn btn-default" onclick="cancelCompanyUpdate(); return false;" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">{!$Label.ISSP_Cancel}</span></button>
                     </div>

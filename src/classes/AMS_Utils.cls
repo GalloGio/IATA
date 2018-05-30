@@ -2742,4 +2742,13 @@ public static String fetchTypeOfCustomer (String locationType , String category)
         return new ANG_ISSP_AfpWrapper(con, authorizations, services, acc, isSearch);
     }
 
+    public static List<Account> fetchAgentDetails(String iataCode) {
+        return [Select Id, BillingStreet, BillingCity, BillingState, BillingPostalCode,
+                       BillingCountry, Name
+                  From Account
+                 Where RecordType.DeveloperName = 'IATA_Agency'
+                   And Sector__c = :AMS_Utils.SECTOR_PASSENGER  // agentSector
+                   And IATACode__c Like :iataCode];
+    }
+
 }
