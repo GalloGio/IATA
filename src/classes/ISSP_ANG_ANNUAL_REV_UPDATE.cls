@@ -1,3 +1,7 @@
+/*
+	TEST CLASS : ISSP_ANG_ANNUAL_REVALIDATION_Test
+
+*/
 public with sharing class ISSP_ANG_ANNUAL_REV_UPDATE {
 
 	public ANG_AnnualRevCurrentAccount ca {get; set;}
@@ -16,11 +20,7 @@ public with sharing class ISSP_ANG_ANNUAL_REV_UPDATE {
 
         ISSP_AMS_Contextual_Help__c hlp = ISSP_AMS_Contextual_Help__c.getValues('CURRENCY');
         if (hlp != null) {
-            if ((String)hlp.get(fldName) != null) {
-                txtHelpCurrency =  (String)hlp.get(fldName);
-            } else {
-                txtHelpCurrency =  (String)hlp.get(fldName);
-            }
+            if ((String)hlp.get(fldName) != null) txtHelpCurrency =  (String)hlp.get(fldName); else txtHelpCurrency =  (String)hlp.get(fldName);
         }
 
 
@@ -45,11 +45,7 @@ public with sharing class ISSP_ANG_ANNUAL_REV_UPDATE {
                  WHERE IATA_ISO_Country__r.ISO_Code__c = :ca.isocountry.Iso_code__c AND Operation__c = :ca.Account.Sector__c
             ];
 
-            if(!aux.isEmpty()) {
-                return aux[0];
-            } else {
-                return null;
-            }
+            if(!aux.isEmpty()) return aux[0]; else return null;
         }
         set{}
     }
