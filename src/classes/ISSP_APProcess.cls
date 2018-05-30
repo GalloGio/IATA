@@ -837,7 +837,7 @@ public without sharing class ISSP_APProcess {
 
         try{
 
-            newForm.ANG_Enable_NewGen__c = (isocountry.ANG_Portal_Service__c != null);
+            newForm.ANG_Enable_NewGen__c = (isocountry.ANG_Portal_Service__c != null && isocountry.Airline_EasyPay_Opt_Out_Date__c <= Date.today() && isocountry.Airline_EasyPay_Opt_Out_Date__c != null);
 
             newForm.Submitted_to_IATA__c = TRUE;
             if(strAreaType == 'Airline Joining') {
