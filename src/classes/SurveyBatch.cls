@@ -727,8 +727,11 @@ global class SurveyBatch implements Database.Batchable<sObject>, Database.Statef
          //inc321684 verification for roleName = 'Staff - TIESS'
         else if (RoleName.contains('Staff - TIESS')) {
           template = templates.get('Clicktools_Contact_Email_CX_EN_AUG17');   
-        } 
+        }
+        else if (RoleName.contains('IDFS E&F Services')) {
+          template = templates.get('Clicktools_Contact_Email_CX_EN_AUG17');
 
+        }
         else if (
           RoleName.contains('China & N. Asia Customer Service') &&
           c.Region__c == 'China & North Asia' &&
