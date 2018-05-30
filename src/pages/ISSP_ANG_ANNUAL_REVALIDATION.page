@@ -346,7 +346,7 @@
                                 </apex:actionFunction>
 
                                 <apex:actionFunction name="createAgencyCompany" action="{!createAgencyContact}"
-                                        oncomplete="if ({!contactSaved==true}){hideNewCompanyDialog(); cancelCompanyUpdate();} $j('[id$=companySubmitBut]').removeAttr('disabled');"
+                                        oncomplete="if ({!contactSaved==true}){hideNewCompanyDialog(); cancelCompanyUpdate();} $('[id$=companySubmitBut]').removeAttr('disabled');"
                                         status="WaitingStatus"
                                         reRender="companyList,currCompanyList,currOwnerSummaryList,ownerList,companyMessages,updated-company-owners" >
                                     <apex:param value="" name="contype" assignTo="{!contactType}" />
@@ -404,7 +404,7 @@
                                                             if(data.selected.length == 1 && flag == 1 && '{!errorFound}' != 'true') {
                                                                 var iataCode = data.instance.get_node(data.selected[0]).text;
 
-                                                                $j('[id$=currentIataCode]').val(iataCode);
+                                                                $('[id$=currentIataCode]').val(iataCode);
 
                                                                 //console.log('****** loadIataCode *******');
 
@@ -631,63 +631,55 @@
             var companyOwnerRecType;
 
             function updatePhoneInfo() {
-                if ($j('[id$=locationphone]').val() !='' && $j('[id$=locationphone]').val()!=undefined)
-                    $j('[id$=phoneoutput]').text($j('[id$=locationphone]').val());
+                if ($('[id$=locationphone]').val() !='' && $('[id$=locationphone]').val()!=undefined)
+                    $('[id$=phoneoutput]').text($('[id$=locationphone]').val());
                 else
-                    $j('[id$=phoneoutput]').text("{!currentAccount.account.Phone}");
+                    $('[id$=phoneoutput]').text("{!currentAccount.account.Phone}");
 
-                $j('[id$=companyphone]').val($j('[id$=phoneoutput]').text());
-                $j('[id$=companyphoneinput]').intlTelInput("setNumber",$j('[id$=companyphone]').val());
+                $('[id$=companyphone]').val($('[id$=phoneoutput]').text());
+                $('[id$=companyphoneinput]').intlTelInput("setNumber",$('[id$=companyphone]').val());
             }
 
             function updateFaxInfo() {
-                if ($j('[id$=locationfax]').val() !='' && $j('[id$=locationfax]').val()!=undefined)
-                    $j('[id$=faxoutput]').text($j('[id$=locationfax]').val());
+                if ($('[id$=locationfax]').val() !='' && $('[id$=locationfax]').val()!=undefined)
+                    $('[id$=faxoutput]').text($('[id$=locationfax]').val());
                 else
-                    $j('[id$=faxoutput]').text("{!currentAccount.account.Fax}");
-                $j('[id$=companyfax]').val($j('[id$=faxoutput]').text());
-                $j('[id$=companyfaxinput]').intlTelInput("setNumber",$j('[id$=companyfax]').val());
+                    $('[id$=faxoutput]').text("{!currentAccount.account.Fax}");
+                $('[id$=companyfax]').val($('[id$=faxoutput]').text());
+                $('[id$=companyfaxinput]').intlTelInput("setNumber",$('[id$=companyfax]').val());
             }
 
             function updateOwnerRT(recTypeName) {
                 ownerRecType = recTypeName;
 
                 if (ownerRecType=='Current Owner'){
-                    $j('[id$=personEmail]').show();
-                    $j('[id$=personPhone]').show();
-                    if($j('[id$=UpdatedLegalStatus]').val()=='Corporation')
-                        $j('[id$=corporatefield2]').show();
+                    $('[id$=personEmail]').show();
+                    $('[id$=personPhone]').show();
+                    if($('[id$=UpdatedLegalStatus]').val()=='Corporation')
+                        $('[id$=corporatefield2]').show();
                     else
-                        $j('[id$=corporatefield2]').hide();
+                        $('[id$=corporatefield2]').hide();
                 }
             }
 
             function showNewContactDialog() {
-                $j(function() {
-                    $j( '#addNewContactModal').modal('show');
-                });
+                $( '#addNewContactModal').modal('show');
             }
 
             function hideNewContactDialog() {
-                $j(function() {
-                    $j( '#addNewContactModal').modal('hide');
-                });
+                $( '#addNewContactModal').modal('hide')
             }
 
             function showNewCompanyDialog() {
-                $j(function() {
-                    $j( '#addNewCompanyModal').modal('show');
-                });
+                $( '#addNewCompanyModal').modal('show');
             }
 
             function hideNewCompanyDialog() {
-                $j(function() {
-                    $j( '#addNewCompanyModal' ).modal('hide');
-                });
+                $( '#addNewCompanyModal' ).modal('hide');
             }
 
             var ownerModalFields = [];
-            ownerModalFields[0] = "{!$Component.currentAccount.newContact.contactBlock.contactFinInterest}";
+            ownerModalFields[0] = "{!$Component.newContact.contactBlock.contactFinInterest}";
 
             function toggleModalContactFields(ownerId) {
 
@@ -698,27 +690,27 @@
                             document.getElementById(ownerModalFields[index]).disabled = false;
                         }
 
-                        $j('[id$=contactFinInterest]').wrap('<div class="requiredInput">').before('<div class="requiredBlock"></div>');
+                        $('[id$=contactFinInterest]').wrap('<div class="requiredInput">').before('<div class="requiredBlock"></div>');
 
                     } else {
                         for (index = 0; index < ownerModalFields.length; index++) {
                             document.getElementById(ownerModalFields[index]).disabled = true;
                             document.getElementById(ownerModalFields[index]).value = null;
                         }
-                        if($j('[id$=contactFinInterest]').parent().is('div')) {
-                            $j('[id$=contactFinInterest]').unwrap().prev('.requiredBlock').remove();
+                        if($('[id$=contactFinInterest]').parent().is('div')) {
+                            $('[id$=contactFinInterest]').unwrap().prev('.requiredBlock').remove();
                         }
                     }
                 }
             }
 
             function toggleContactDetails(s) {
-                if($j(s).hasClass("glyphicon-plus")) {
-                    $j(s).switchClass("glyphicon-plus", "glyphicon-minus");
+                if($(s).hasClass("glyphicon-plus")) {
+                    $(s).switchClass("glyphicon-plus", "glyphicon-minus");
                 } else {
-                    $j(s).switchClass("glyphicon-minus", "glyphicon-plus");
+                    $(s).switchClass("glyphicon-minus", "glyphicon-plus");
                 }
-                $j("." + s.id).toggle();
+                $("." + s.id).toggle();
             }
 
             function updateCompanyOwnerRT(recTypeName) {
@@ -732,21 +724,21 @@
 
                 if (theValue != '') {
                     if(theValue!='Sole Proprietorship') {
-                        $j('[id$=addcompany]').show();
-                        $j('[id$=updated-company-owners]').show();
-                        $j('[id$=updated-owner-summary]').show();
+                        $('[id$=addcompany]').show();
+                        $('[id$=updated-company-owners]').show();
+                        $('[id$=updated-owner-summary]').show();
                     } else {
-                        $j('[id$=addcompany]').hide();
-                        $j('[id$=updated-owner-summary]').hide();
+                        $('[id$=addcompany]').hide();
+                        $('[id$=updated-owner-summary]').hide();
                     }
 
                     if(theValue=='Corporation')
-                        $j('[id$=currcorporatedetails]').show();
+                        $('[id$=currcorporatedetails]').show();
                     else
-                        $j('[id$=currcorporatedetails]').hide();
+                        $('[id$=currcorporatedetails]').hide();
 
                 } else {
-                    $j('[id$=addCompany]').hide();
+                    $('[id$=addCompany]').hide();
                 }
             }
         </script>
@@ -770,7 +762,7 @@
                         <apex:pageBlockSection id="contactSection" columns="4">
                             <apex:pageBlockSectionItem id="contactItemOwner" labelStyle="font-size:110%" dataStyle="width:15%">
                                 <apex:outputLabel id="ownerContactTitle">{!CASE(currentAccount.ownerLabelTypeAfterChange, 'shareholder', $Label.ISSP_AMS_Shareholder, 'partner', $Label.ISSP_AMS_Partner, $Label.ISSP_AMS_Owner)}</apex:outputLabel>
-                                <apex:inputField value="{!currentAccount.newContact.Agency_owner__c}" id="owner" onclick="toggleModalContactFields('{!$Component.currentAccount.newContact.contactBlock.contactSection.contactItemOwner.owner}')"/>
+                                <apex:inputField value="{!currentAccount.newContact.Agency_owner__c}" id="owner" onclick="toggleModalContactFields('{!$Component.newContact.contactBlock.contactSection.contactItemOwner.owner}')"/>
                             </apex:pageBlockSectionItem>
                             <apex:pageBlockSectionItem id="contactItemDom" labelStyle="white-space: nowrap;font-size:110%" dataStyle="width:15%">
                                 <apex:outputLabel id="roleContactTitle" escape="false" value="{!CASE(currentAccount.roleLabelTypeAfterChange, 'director', $Label.ISSP_AMS_Director, $Label.ISSP_AMS_Manager)}"/>
@@ -893,10 +885,10 @@
                             closeModal();
                         }
 
-                        toggleModalContactFields('{!$Component.currentAccount.newContact.contactBlock.contactSection.contactItemOwner.owner}');
+                        toggleModalContactFields('{!$Component.newContact.contactBlock.contactSection.contactItemOwner.owner}');
 
-                        var natphone = $j("input[name='{!$Component.currentAccount.newContact.contactBlock.contactphoneinput}']");
-                        var phone = $j("input[name='{!$Component.currentAccount.newContact.contactBlock.contactphone}']");
+                        var natphone = $j("input[name='{!$Component.newContact.contactBlock.contactphoneinput}']");
+                        var phone = $j("input[name='{!$Component.newContact.contactBlock.contactphone}']");
 
                         natphone.intlTelInput({
                             nationalMode: true,

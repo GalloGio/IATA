@@ -243,7 +243,7 @@
 
                     <apex:outputLabel style="margin-right:4%" value="* {!$Label.ISSP_Registration_BusinessPhone}"/>
                     <apex:inputField value="{!ca.fw.newform.Branch_Office_Phone_National__c}"
-                                        onblur="setInternationalAccountPhoneInfo('phone');$j('.branch_office_phone__c').change();updatePhoneInfo();" id="locationphoneinput"
+                                        onblur="setInternationalAccountPhoneInfo('phone');$('.branch_office_phone__c').change();updatePhoneInfo();" id="locationphoneinput"
                                         style="width:80%"/>
                 </apex:pageBlockSectionItem>
 
@@ -672,13 +672,13 @@
 
         //console.log('***************** COMPONENT ******************');
 
-        $j(document).ready(function() {
+        $(document).ready(function() {
             // binds on change to make checkbox function as radio buttons
-            $j('[data-group]').on('change', function() {
-                var $parent = $j(this);
-                $j('[data-group]').not(this).each(function(){
-                    if($j(this).data('group') == $parent.data('group')) {
-                        $j(this).prop('checked', false);
+            $('[data-group]').on('change', function() {
+                var $parent = $(this);
+                $('[data-group]').not(this).each(function(){
+                    if($(this).data('group') == $parent.data('group')) {
+                        $(this).prop('checked', false);
                     }
                 });
 
@@ -693,12 +693,12 @@
         });
 
         function showForms() {
-            $j('[data-controls]').each(function(){
-                var controlledId = $j(this).data('controls');
+            $('[data-controls]').each(function(){
+                var controlledId = $(this).data('controls');
 
-                var $form = $j('.'+controlledId);
+                var $form = $('.'+controlledId);
 
-                if($j(this).prop('checked')) {
+                if($(this).prop('checked')) {
                     $form.show();//removeClass('invisible');
                 } else {
                     $form.hide();//addClass('invisible');
@@ -746,6 +746,8 @@
 
         var natmobileacct1 = $j("input[name='{!$Component.step1Form.step1Block.update.updateComponent.Section2.addressSection.locationItemMobile.locationmobileinput}']");
         var mobileacct1 = $j("input[name='{!$Component.step1Form.step1Block.update.updateComponent.Section2.addressSection.locationmobile}']");
+
+        console.log(natmobileacct1);
 
         natmobileacct1.intlTelInput({
             nationalMode: true,

@@ -1,3 +1,7 @@
+/*
+	TEST CLASS : ISSP_ANG_ANNUAL_REVALIDATION_Test
+
+*/
 public with sharing class ANG_AnnualRevFormWrapper {
 	public AMS_Pax_Accreditation_Form__c newForm {get; set;}
 	public List<AMS_Accreditation_Contact__c> previousOwners {get; set;}
@@ -35,9 +39,7 @@ public with sharing class ANG_AnnualRevFormWrapper {
 			aux.addAll(currentCompanies);
 
 			for(AMS_Accreditation_Contact__c o : aux) {
-				if(o.AMS_Pax_Accreditation_Form__c == null)
-					o.AMS_Pax_Accreditation_Form__c = newForm.id;
-
+				if(o.AMS_Pax_Accreditation_Form__c == null) o.AMS_Pax_Accreditation_Form__c = newForm.id;
 			}
 
 			insert aux;
@@ -81,10 +83,7 @@ public with sharing class ANG_AnnualRevFormWrapper {
 
 		AMS_Accreditation_Contact__c ret = new AMS_Accreditation_Contact__c();
 		for(AMS_Accreditation_Contact__c o : aux) {
-			if(o.Id == aId) {
-				ret = o;
-				break;
-			}
+			if(o.Id == aId) { ret = o; break; }
 		}
 		return ret;
 	}
@@ -143,9 +142,9 @@ public with sharing class ANG_AnnualRevFormWrapper {
 						FROM AMS_Pax_Accreditation_Form__c
 						WHERE id = :newForm.Id];
 
-			if(aux.size() != 0) {
-				this.newForm = aux[0];
-			}
+			if(aux.size() != 0) this.newForm = aux[0];
 		}
 	}
+
+
 }

@@ -1,4 +1,4 @@
-public with sharing class ISSP_ANG_ANNUAL_REVALIDATION {
+public without sharing class ISSP_ANG_ANNUAL_REVALIDATION {
 	//statics for the modals
     public static  Integer MAX_IFAP_Contacts {get{ return 1;} private set;}
     private static final string ISO_8859_1_regEx = '^[\\x00-\\x7F\\xA0-\\xFF]+$';  //Reg exp to limit inputted chars to ISO-8859-1
@@ -19,8 +19,8 @@ public with sharing class ISSP_ANG_ANNUAL_REVALIDATION {
 	private static String MODE_READONLY { get{ return 'readOnly';} set;}
 	private static String MODE_UPDATE { get{ return 'update';} set;}
 
-	private static String FORM_STATUS_INPROGRESS = 'InProgress';
-	private static String FORM_STATUS_COMPLETED = 'Completed';
+	public static String FORM_STATUS_INPROGRESS = 'InProgress';
+	public static String FORM_STATUS_COMPLETED = 'Completed';
 
 	private static Set<String> statusSet = new Set<String> {
 		Ams_Utils.ACC_S9_APPROVED,
@@ -221,7 +221,7 @@ public with sharing class ISSP_ANG_ANNUAL_REVALIDATION {
         }
 	}
 
-	private static void setCaseVisibleInPortal(Case newCase) {
+	public static void setCaseVisibleInPortal(Case newCase) {
 		if(!newCase.Visible_on_ISS_Portal__c) {
 			newCase.Visible_on_ISS_Portal__c = true;
 
@@ -233,6 +233,8 @@ public with sharing class ISSP_ANG_ANNUAL_REVALIDATION {
 		Set<Id> aux = new Set<Id>();
 
 		aux.add(caseAccount.id);
+
+		System.debug('alex caseAccount : ' + caseAccount.id);
 
 		Map<Id, List<AMS_Agencies_relationhip__c>> h = AMS_HierarchyHelper.getAccountsHierarchies(aux);
 
@@ -253,9 +255,21 @@ public with sharing class ISSP_ANG_ANNUAL_REVALIDATION {
 				parents.add(r.Parent_Account__c);
 			}
 		}
+
+		if(parents.size() == 0) {
+			//
+			// This means the case account is a solo HE.
+			// The only parent is the case account.
+			//
+			parents.add(caseAccount.id);
+		}
 	}
 
 	private void setAccounts() {
+
+
+		System.debug('alex parents : ' + parents);
+		System.debug('alex childs : ' + childs);
 
 		this.childsAccounts = new List<Account>();
 		this.isoCodes = new Set<String>();
@@ -266,6 +280,8 @@ public with sharing class ISSP_ANG_ANNUAL_REVALIDATION {
 		aux.addAll(childs);
 
 		List<Account> allAccounts = fetchAccounts(aux, AMS_Utils.RECTYPE_IATAAGENCY, statusSet, locationTypeSet, Ams_Utils.SECTOR_PASSENGER);
+
+		System.debug('alex allAccounts : ' + allAccounts);
 
 		Boolean found = false;
 		for(Account a : allAccounts) {
@@ -279,12 +295,10 @@ public with sharing class ISSP_ANG_ANNUAL_REVALIDATION {
 			}
 		}
 
-		if(!found) {
-			//
-			// The hierarchy does not have an HE!!!
-			//
-			throw new AnnualRevException('The hierarchy does not have an HE!');
-		}
+		//
+		// The hierarchy does not have an HE!!!
+		//
+		if(!found) { throw new AnnualRevException('The hierarchy does not have an HE!'); }
 	}
 
 	public void setFormsMap() {
@@ -417,9 +431,7 @@ public with sharing class ISSP_ANG_ANNUAL_REVALIDATION {
 
 			jsonTree = generateTree();
 
-		} catch(DmlException de) {
-			// All stays the same.
-		}
+		} catch(DmlException de) { /* All stays the same. */ }
 
 		return null;
 	}
@@ -449,9 +461,7 @@ public with sharing class ISSP_ANG_ANNUAL_REVALIDATION {
 
 				jsonTree = generateTree();
 
-			} catch(DmlException de) {
-				Database.rollback(sp);
-			}
+			} catch(DmlException de) { Database.rollback(sp); }
 		} else {
 
 			this.oscar.IATA_Codes_OK__c = this.oscar.IATA_Codes_OK__c.replaceAll(',' + currentAccount.account.IataCode__c + ',', ',');
@@ -468,9 +478,7 @@ public with sharing class ISSP_ANG_ANNUAL_REVALIDATION {
 
 				jsonTree = generateTree();
 
-			} catch(DmlException de) {
-				// All stays the same.
-			}
+			} catch(DmlException de) { /* All stays the same. */ }
 		}
 
 		//jsonTree = generateTree();
@@ -502,10 +510,7 @@ public with sharing class ISSP_ANG_ANNUAL_REVALIDATION {
 
 			jsonTree = generateTree();
 
-		} catch(DmlException dm) {
-			Database.rollback(sp);
-			throw new AnnualRevException(dm.getMessage());
-		}
+		} catch(DmlException dm) { Database.rollback(sp); throw new AnnualRevException(dm.getMessage()); }
 
 		return null;
 	}
@@ -520,10 +525,7 @@ public with sharing class ISSP_ANG_ANNUAL_REVALIDATION {
 
 			upsert currentAccount.fw.newform;
 
-		} catch(DmlException dm) {
-			Database.rollback(sp);
-			throw new AnnualRevException(dm.getMessage());
-		}
+		} catch(DmlException dm) { Database.rollback(sp); throw new AnnualRevException(dm.getMessage()); }
 
 		return null;
 	}
@@ -555,10 +557,7 @@ public with sharing class ISSP_ANG_ANNUAL_REVALIDATION {
 
 				jsonTree = generateTree();
 			}
-		} catch(DmlException dm) {
-			Database.rollback(sp);
-			throw new AnnualRevException(dm.getMessage());
-		}
+		} catch(DmlException dm) { Database.rollback(sp); throw new AnnualRevException(dm.getMessage()); }
 
 		return null;
 	}
@@ -587,10 +586,7 @@ public with sharing class ISSP_ANG_ANNUAL_REVALIDATION {
 
 			jsonTree = generateTree();
 
-		} catch(DmlException dm) {
-			Database.rollback(sp);
-			throw new AnnualRevException(dm.getMessage());
-		}
+		} catch(DmlException dm) { Database.rollback(sp); throw new AnnualRevException(dm.getMessage()); }
 
 		return null;
 	}
@@ -629,10 +625,7 @@ public with sharing class ISSP_ANG_ANNUAL_REVALIDATION {
 				upsert currentAccount.fw.newform;
 			}
 
-		} catch(DmlException dm) {
-			Database.rollback(sp);
-			throw new AnnualRevException(dm.getMessage());
-		}
+		} catch(DmlException dm) { Database.rollback(sp); throw new AnnualRevException(dm.getMessage()); }
 
 		return goToStep2();
 	}
@@ -655,10 +648,7 @@ public with sharing class ISSP_ANG_ANNUAL_REVALIDATION {
 
 			upsert newCase;
 
-		} catch(DmlException dm) {
-			Database.rollback(sp);
-			throw new AnnualRevException(dm.getMessage());
-		}
+		} catch(DmlException dm) { Database.rollback(sp); throw new AnnualRevException(dm.getMessage()); }
 
 		return new Pagereference('/ISSP_AMS_Accreditation?caseId=' + newCase.Id + '&step=Final' + commParam);
     }
@@ -717,7 +707,7 @@ public with sharing class ISSP_ANG_ANNUAL_REVALIDATION {
 	//	iataCodesConfirmed - UPDATE_COMPLETED_STATUS
 	//	iataCodesInProgress - UPDATE_PROGRESS_STATUS
 	//
-	private void setIataCodesOkNotOk(AMS_OSCAR__c oscar) {
+	@TestVisible private void setIataCodesOkNotOk(AMS_OSCAR__c oscar) {
 
 		iataCodesOk = new Set<String>();
 		iataCodesConfirmed = new Set<String>();
@@ -742,7 +732,7 @@ public with sharing class ISSP_ANG_ANNUAL_REVALIDATION {
 		}
 	}
 
-	private String getIcon(String iataCode) {
+	@TestVisible private String getIcon(String iataCode) {
 		if (iataCodesOk.contains(iataCode)) {
 			return OK_ICON;
 		} else if (iataCodesConfirmed.contains(iataCode)) {
@@ -754,7 +744,7 @@ public with sharing class ISSP_ANG_ANNUAL_REVALIDATION {
 		}
 	}
 
-	private String getStatus(String iataCode) {
+	@TestVisible private String getStatus(String iataCode) {
 		if (iataCodesOk.contains(iataCode)) {
 			return COMPLETED_STATUS;
 		} else if (iataCodesConfirmed.contains(iataCode)) {
@@ -766,7 +756,7 @@ public with sharing class ISSP_ANG_ANNUAL_REVALIDATION {
 		}
 	}
 
-	private String getMode(String status) {
+	@TestVisible private String getMode(String status) {
 		if(status == COMPLETED_STATUS || status == OPEN_STATUS) {
 			return MODE_READONLY;
 		} else {
@@ -782,39 +772,28 @@ public with sharing class ISSP_ANG_ANNUAL_REVALIDATION {
                                   From Case
                                  Where Id = :caseId];
 
-        if (newCases.size() > 0) return newCases[0];
-
-		return null;
+        if (newCases.size() > 0) return newCases[0]; else return null;
     }
 
 	private static AMS_OSCAR__c fetchOscar(Id oscarId) {
 		List<AMS_OSCAR__c> auxOscars = [Select Id, IATA_Codes_NOK__c, IATA_Codes_OK__c From AMS_OSCAR__c Where Id = :oscarId];
 
-		if (auxOscars.size() > 0) return auxOscars[0];
-
-		return null;
+		if (auxOscars.size() > 0) return auxOscars[0]; else return null;
 	}
 
 	private ANG_AnnualRevFormWrapper getForm(String iataCode) {
-		if(formsMap.containsKey(iataCode)) {
-			return formsMap.get(iataCode);
-		} else {
-			//
-			// This will make an exception on the portal.
-			//
-			return null;
-		}
+		if(formsMap.containsKey(iataCode)) return formsMap.get(iataCode); else return null;
+		//
+		// Returning null will make an exception on the portal.
+		//
+
 	}
 
 	private IATA_ISO_Country__c getIsoCountry(String isoCode) {
-		if(isoCountryMap.containsKey(isoCode)) {
-			return isoCountryMap.get(isoCode);
-		} else {
-			//
-			// This will make an exception on the portal.
-			//
-			return null;
-		}
+		if(isoCountryMap.containsKey(isoCode)) return isoCountryMap.get(isoCode); else return null;
+		//
+		// Returning null will make an exception on the portal.
+		//
 	}
 
 	private void createFormsForAccountsStatusOpenAndConfirmed() {
@@ -961,6 +940,15 @@ public with sharing class ISSP_ANG_ANNUAL_REVALIDATION {
             //      )(
             //      ""
 			c1.AMS_OwnershipId__c = accRole.Account__c;
+
+			//
+			// HACK - The AMS_Account_Role__c id is beeing stored in the field AMS_ContactId__c to link the old and new records
+            //       ,
+            //      /(  ___________
+            //     |  >:===========`
+            //      )(
+            //      ""
+			c1.AMS_ContactId__c = accRole.id;
 			lstAccreditationContact.add(c1);
 
 			AMS_Accreditation_Contact__c c2 = ISSP_AMS_Accreditation.setAccreditationContact(accRole, null, rtAccreditContCurrentOwner, rtAccreditContCurrentCompanyOwner);
@@ -973,6 +961,15 @@ public with sharing class ISSP_ANG_ANNUAL_REVALIDATION {
             //      )(
             //      ""
 			c2.AMS_OwnershipId__c = accRole.Account__c;
+
+			//
+			// HACK - The AMS_Account_Role__c id is beeing stored in the field AMS_ContactId__c to link the old and new records
+            //       ,
+            //      /(  ___________
+            //     |  >:===========`
+            //      )(
+            //      ""
+			c2.AMS_ContactId__c = accRole.id;
 			lstAccreditationContact.add(c2);
 		}
 
@@ -1667,10 +1664,10 @@ public with sharing class ISSP_ANG_ANNUAL_REVALIDATION {
 
             currentAccount.newContact = new AMS_Accreditation_Contact__c();
             contactToUpsert = new AMS_Accreditation_Contact__c();
-        } catch (DmlException ex) {
-            contactSaved = false;
-            ApexPages.addMessages(ex);
-        }
+
+        } catch (DmlException ex) { contactSaved = false; ApexPages.addMessages(ex); }
+
+
         iatacode = '';
 	}
 
