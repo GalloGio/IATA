@@ -536,7 +536,8 @@ global without sharing class Comm_User_Helper {
               else if(Community == ONEIDENTITY) {
                   system.debug('prepare email body for: ' + ONEIDENTITY);
                   string prefix = OneIdUtils.getSiteCompleteUrl();
-                  link = prefix + '/s/IdentityFirstLogin?'+encodedPart+'&serviceName='+serviceName;
+                  String serviceNameParam = String.isNotEmpty(serviceName) ? '&serviceName='+serviceName : '';
+                  link = prefix + '/s/IdentityFirstLogin?'+encodedPart+serviceNameParam;
                   //template = 'Communities_Forgot_Password_Email3';
                   template = 'Identity_Changed_Password_Email_Custom';
                   //system.debug('basto1p: password='+password);

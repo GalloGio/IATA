@@ -18,6 +18,7 @@ public class IdentityFirstLogin {
             PageReference pageRef = new PageReference(data);
             String parameters = pageRef.getParameters().get('c');
             String serviceName = pageRef.getParameters().get('serviceName');
+            String serviceNameParam = String.isNotEmpty(serviceName) ? 'serviceName='+serviceName : '';
             
             parameters =  Encodingutil.urlDecode( Comm_User_Helper.DecryptString(parameters),'UTF-8') ;
             system.debug('PARAMETERS 2: ' + parameters);
@@ -44,15 +45,15 @@ public class IdentityFirstLogin {
                         
                         if(!test.isRunningTest()){
                             //ApexPages.PageReference lgn = Site.login(userName, passWord, '/identity/s/changePassword');
-                            aura.redirect(Site.login(userName, passWord, (String.isEmpty(OneIdUtils.getCommunityUrlName()) ? '' :'/' + OneIdUtils.getCommunityUrlName()) + '/OneId_changePassword?serviceName='+serviceName));
+                            aura.redirect(Site.login(userName, passWord, OneIdUtils.getSiteCompleteUrl() + '/OneId_ChangePassword?'+serviceNameParam));
                         }
                     } else {
                         if(!test.isRunningTest()){
                             //ApexPages.PageReference lgn = new PageReference('/identity/s');
                             if(serviceName == 'ISSP'){
-                                aura.redirect(new PageReference((String.isEmpty(OneIdUtils.getCommunityUrlName()) ? '' :'/' + OneIdUtils.getCommunityUrlName()) + '/s?serviceName='+serviceName));
-                            }else{
                                 aura.redirect(new PageReference((String.isEmpty(OneIdUtils.getCommunityUrlName()) ? '' :'/' + OneIdUtils.getCommunityUrlName()) + '/ISSP_Home'));
+                            }else{
+                                aura.redirect(new PageReference(OneIdUtils.getSiteCompleteUrl() + '/s?'+serviceNameParam));
                             }
                         }
                     }

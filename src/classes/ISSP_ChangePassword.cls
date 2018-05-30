@@ -9,8 +9,12 @@ public with sharing class ISSP_ChangePassword {
 
      //CNS
     public String communityName{ get{ return ApexPages.currentPage().getParameters().get('CommunityName'); }set;}
-    public String serviceName{ get{ return ApexPages.currentPage().getParameters().get('serviceName'); }set;}
     public String commParam { get { if(communityName=='CNS'){ return '&CommunityName='+ communityName;} return ''; } set;}
+
+    // 1ID
+    public Boolean isOneId { get{ return ApexPages.currentPage().getURL().contains('OneId');}}
+    public String serviceName{ get{ return ApexPages.currentPage().getParameters().get('serviceName'); }set;}
+    public String serviceNameParam { get { return String.isNotEmpty(serviceName) ? '&serviceName='+ serviceName : ''; } set;}
 
     /**
      * Constructor
@@ -73,10 +77,11 @@ public with sharing class ISSP_ChangePassword {
             	if (pageRef != null){
             		if (tempPass){
             			updateUsers();
-                        if(serviceName == 'ISSP'){
+                        if(!isOneId || serviceName == 'ISSP'){
                             pageRef = new PageReference('/ISSP_PersonalInformation?mid=M5S1&confirm=yes' + commParam);
-                        }else{
-                            pageref = new PageReference(URL.getSalesforceBaseUrl().toExternalForm() + '/s/profile/'+UserInfo.getUserId()+'?serviceName=' + serviceName);
+                        }
+                        else{
+                            pageref = new PageReference(OneIdUtils.getSiteCompleteUrl() +'/s?'+serviceNameParam);
                         } 
             		}
             	}
