@@ -7640,15 +7640,6 @@ if(Change_effective_as_of__c - today() &gt; 0,&quot;30&quot;,&quot;0&quot;)))</f
     </fields>
     <label>OSCAR</label>
     <listViews>
-        <fullName>AGM_GDC_MAD_MIA_migrated_AMS_OSCAR</fullName>
-        <filterScope>Queue</filterScope>
-        <label>AGM GDC MAD - MIA migrated</label>
-        <queue>AGM_GDC_MAD_MIA_migrated</queue>
-        <sharedTo>
-            <allInternalUsers></allInternalUsers>
-        </sharedTo>
-    </listViews>
-    <listViews>
         <fullName>AGM_Non_Compliance_Americas_AMS_OSCAR</fullName>
         <filterScope>Queue</filterScope>
         <label>AGM Non Compliance - Americas</label>
