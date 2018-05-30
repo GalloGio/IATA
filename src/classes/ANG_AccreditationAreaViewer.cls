@@ -1,4 +1,4 @@
-public with sharing class ANG_AccreditationAreaViewer {
+global with sharing class ANG_AccreditationAreaViewer {
     
     public Set<String> ahdocComparisonFields = new Set<String>{'ISSP_AMS_Legal_Status__c','ISSP_AMS_GDS_with_signed_contract__c','ISSP_AMS_Premises_located_at_airport__c'};
 
@@ -52,7 +52,7 @@ public with sharing class ANG_AccreditationAreaViewer {
         set;
     }
 
-	public AMS_Pax_Accreditation_Form__c accreditationObj { get; set; }
+    public AMS_Pax_Accreditation_Form__c accreditationObj { get; set; }
 
     public Map<String, String> fieldsMapping{
         get{
@@ -100,8 +100,39 @@ public with sharing class ANG_AccreditationAreaViewer {
             set;
         }
 
+    public static List<String> fieldsAccContacts = new List<String>{'First_Name__c','Last_Name__c','Email__c','Phone__c','Agency_owner__c','Agency_role__c','Authorised_signatory__c','Financial_Assessment_Contact__c','Portal_administrator__c','Salutation__c','Mobile__c','FAX__c','Financial_interest__c','Time_devoted_to_Agency_business__c','Date_joined_agency__c','Job_title__c','AddressStreet__c','AddressCity__c','AddressPostCode__c','AddressCountry__c'};
 
-   public Map<String,boolean> accountFieldsMapping{
+
+/*
+        //using Schema to avoid typos on field Names
+    private List<Schema.SObjectField> fieldsAccContacts{
+        get{
+            return new List<Schema.SObjectField>{
+                  AMS_Accreditation_Contact__c.First_Name__c
+                , AMS_Accreditation_Contact__c.Last_Name__c
+                , AMS_Accreditation_Contact__c.Email__c
+                , AMS_Accreditation_Contact__c.Phone__c
+                , AMS_Accreditation_Contact__c.Agency_owner__c
+                , AMS_Accreditation_Contact__c.Agency_role__c
+                , AMS_Accreditation_Contact__c.Authorised_signatory__c
+                , AMS_Accreditation_Contact__c.Financial_Assessment_Contact__c
+                , AMS_Accreditation_Contact__c.Portal_administrator__c
+                , AMS_Accreditation_Contact__c.Salutation__c
+                , AMS_Accreditation_Contact__c.Mobile__c
+                , AMS_Accreditation_Contact__c.FAX__c
+                , AMS_Accreditation_Contact__c.Financial_interest__c
+                , AMS_Accreditation_Contact__c.Time_devoted_to_Agency_business__c
+                , AMS_Accreditation_Contact__c.Date_joined_agency__c
+                , AMS_Accreditation_Contact__c.Job_title__c
+                , AMS_Accreditation_Contact__c.AddressStreet__c
+                , AMS_Accreditation_Contact__c.AddressCity__c
+                , AMS_Accreditation_Contact__c.AddressPostCode__c
+                , AMS_Accreditation_Contact__c.AddressCountry__c
+            };
+        }
+    }
+*/
+    public Map<String,boolean> accountFieldsMapping{
         get{
             if(accountFieldsMapping == null){
 
@@ -125,17 +156,31 @@ public with sharing class ANG_AccreditationAreaViewer {
         set;
     }
 
-	public ANG_AccreditationAreaViewer(ApexPages.StandardController stdController) {
-		
-		//Id objectId = ApexPages.currentPage().getParameters().get('id');
+    public List<ANG_AccreditationAreaViewer.AccreditationContact> accreditationContactFormList{
 
-		this.accreditationObj = (AMS_Pax_Accreditation_Form__c)stdController.getRecord();
+        get {
+            if(accreditationContactFormList == null )
+                accreditationContactFormList = fetchAccreditationContacts();
 
-		this.accreditationObj = fetchAccreditationFields(this.accreditationObj.Id);
+                System.debug('accreditationContactFormList is:'+accreditationContactFormList);
+                return accreditationContactFormList;
+            }
+
+        set;
+
+    }
+
+    public ANG_AccreditationAreaViewer(ApexPages.StandardController stdController) {
+        
+        //Id objectId = ApexPages.currentPage().getParameters().get('id');
+
+        this.accreditationObj = (AMS_Pax_Accreditation_Form__c)stdController.getRecord();
+
+        this.accreditationObj = fetchAccreditationFields(this.accreditationObj.Id);
 
         compareAccreditationWithAccount();
 
-	}
+    }
 
     public List<String> accreditationFields{
         get{
@@ -161,7 +206,7 @@ public with sharing class ANG_AccreditationAreaViewer {
         set;
     }
 
-	private AMS_Pax_Accreditation_Form__c fetchAccreditationFields(Id accreditationId){
+    private AMS_Pax_Accreditation_Form__c fetchAccreditationFields(Id accreditationId){
 
         //query is done using the same fields that will appear on the page
 
@@ -173,7 +218,7 @@ public with sharing class ANG_AccreditationAreaViewer {
     }
 
 
-	    //using Schema to avoid typos on field Names
+        //using Schema to avoid typos on field Names
     private List<Schema.SObjectField> accreditationFieldList{
         get{
             return new List<Schema.SObjectField>{
@@ -283,4 +328,58 @@ public with sharing class ANG_AccreditationAreaViewer {
 
         System.debug('changedFieldsSet is ' +  changedFieldsSet);
     }
+
+    public List<ANG_AccreditationAreaViewer.AccreditationContact> fetchAccreditationContacts(){
+        
+        List<ANG_AccreditationAreaViewer.AccreditationContact> accreditationContactFormListOut = new List<ANG_AccreditationAreaViewer.AccreditationContact>();
+
+        Map<String,AMS_Accreditation_Contact__c> oldContactsMap = new Map<String,AMS_Accreditation_Contact__c>();
+
+        List<AMS_Accreditation_Contact__c> accreditationContactLst = Database.query('SELECT Id, RecordType.DeveloperName , AMS_ContactId__c, ' + String.join(fieldsAccContacts, ', ')+' FROM AMS_Accreditation_Contact__c  WHERE AMS_Pax_Accreditation_Form__c = ' + '\'' + this.accreditationObj.Id + '\'');
+
+        for(AMS_Accreditation_Contact__c ac: accreditationContactLst){
+            if(!(ac.RecordType.DeveloperName == 'Current_Company_Owner' || ac.RecordType.DeveloperName == 'Current_Owner'))
+                oldContactsMap.put(ac.AMS_ContactId__c, ac);
+        }
+
+        for(AMS_Accreditation_Contact__c ac: accreditationContactLst){
+            if(ac.RecordType.DeveloperName == 'Current_Company_Owner' || ac.RecordType.DeveloperName == 'Current_Owner'){
+                accreditationContactFormListOut.add(new ANG_AccreditationAreaViewer.AccreditationContact(ac,ac.AMS_ContactId__c == null, oldContactsMap.get(ac.AMS_ContactId__c)));
+            }
+        }
+
+        return accreditationContactFormListOut;
+    }
+
+    global class AccreditationContact{
+    
+        public AMS_Accreditation_Contact__c ac{get;set;}
+        public Boolean isNew{get;set;}
+        public AMS_Accreditation_Contact__c previousAC{get;set;}
+        public Map<String,Boolean> changedFieldsMap{get;set;}
+
+        public AccreditationContact(AMS_Accreditation_Contact__c ac, Boolean isNew,AMS_Accreditation_Contact__c previousAC ){
+            this.ac = ac;
+            this.isNew = isNew;
+            this.previousAC = previousAC;
+            
+            changedFieldsMap = compareAccreditations(ac,previousAC,isNew);
+        }
+
+        public Map<String,Boolean> compareAccreditations(AMS_Accreditation_Contact__c ac,AMS_Accreditation_Contact__c previousAC, Boolean isNew){
+
+            Map<String,Boolean> toReturn = new Map<String,Boolean>();
+
+            For(String field: fieldsAccContacts){
+                if(isNew)
+                    toReturn.put(field,false);
+                else
+                    toReturn.put(field,ac.get(field) <> previousAC.get(field));
+            }
+
+            return toReturn;
+        }
+
+    }
+
 }

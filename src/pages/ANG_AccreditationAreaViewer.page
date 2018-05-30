@@ -136,7 +136,9 @@
                 background-color: lightyellow;
                 color:red;
             }
-		
+		.new {
+         	background-color:lightgreen;
+         }
 		th.editable:before{
                 color: red;
                 font-weight: bold;
@@ -144,6 +146,7 @@
          .editable *{
          	color:red;
          }
+
 		.tooltip {
         position: relative;
         display: inline-block;
@@ -206,6 +209,31 @@
 					</apex:pageBlockSectionItem>
 				</apex:repeat>
 			</apex:pageBlockSection>
+
+		<apex:outputPanel title="Owners Section" rendered="{!accreditationContactFormList.size > 0}">
+
+			<apex:pageBlockSection id="ownersSection" columns="1" title="Owners Section" collapsible="true" rendered="{!accreditationContactFormList.size > 0}">
+                
+				<apex:pageblocktable value="{!accreditationContactFormList}" var="ac" id="pbTable">
+					
+						<apex:column styleClass="{!IF(ac.isNew,'new','editable')}" headerValue="Status"><apex:outputText value="{!IF(ac.isNew,'New Owner','Modified Owner')}" /> </apex:column>
+						<apex:column styleClass="{!IF(ac.changedFieldsMap['Financial_interest__c'],'editable','')}" value="{!ac.ac.First_Name__c}"/>
+						<apex:column styleClass="{!IF(ac.changedFieldsMap['Financial_interest__c'],'editable','')}" value="{!ac.ac.Last_Name__c}"/>
+						<apex:column styleClass="{!IF(ac.changedFieldsMap['Financial_interest__c'],'editable','')}" value="{!ac.ac.Email__c}"/>
+						<apex:column styleClass="{!IF(ac.changedFieldsMap['Financial_interest__c'],'editable','')}" value="{!ac.ac.Phone__c}"/>
+						<apex:column styleClass="{!IF(ac.changedFieldsMap['Financial_interest__c'],'editable','')}" value="{!ac.ac.Agency_owner__c}"/>
+						<apex:column styleClass="{!IF(ac.changedFieldsMap['Financial_interest__c'],'editable','')}" value="{!ac.ac.Agency_role__c}"/>
+						<apex:column styleClass="{!IF(ac.changedFieldsMap['Financial_interest__c'],'editable','')}" value="{!ac.ac.Authorised_signatory__c}"/>
+						<apex:column styleClass="{!IF(ac.changedFieldsMap['Financial_interest__c'],'editable','')}" value="{!ac.ac.Financial_Assessment_Contact__c}"/>
+						<apex:column styleClass="{!IF(ac.changedFieldsMap['Financial_interest__c'],'editable','')}" value="{!ac.ac.Portal_administrator__c}"/>
+						<apex:column styleClass="{!IF(ac.changedFieldsMap['Financial_interest__c'],'editable','')}" value="{!ac.ac.Mobile__c}"/>
+						<apex:column styleClass="{!IF(ac.changedFieldsMap['Financial_interest__c'],'editable','')}" value="{!ac.ac.FAX__c}"/>
+						<apex:column styleClass="{!IF(ac.changedFieldsMap['Financial_interest__c'],'editable','')}" value="{!ac.ac.Financial_interest__c} - {!ac.changedFieldsMap['Financial_interest__c']}"/>
+				</apex:pageblocktable >
+	
+			</apex:pageBlockSection>
+		</apex:outputPanel>
+
 			<apex:pageBlockSection id="notes" columns="1" title="Notes" collapsible="true" rendered="{!doNotHaveOscarYet}">
                 <apex:dataList value="{!noteList}" var="note" rendered="{!noteList.size > 0}">
                     <apex:outputText value="{!note}"/>
