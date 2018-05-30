@@ -89,8 +89,6 @@ public without sharing class ISSP_APProcess {
     public List<SelectOption> countries {get;set;}
     public String selectedCountries {get;set;}
     public Boolean flagShowCountries {get;set;}
-    public String countriesLabel {get;set;}
-    public String countriesTitle {get;set;}
     public String pEffectiveDateStr {get;set;}
     public List<SelectOption> countriesOut {get;set;}
     public Boolean hasCountriesOut {get;set;}

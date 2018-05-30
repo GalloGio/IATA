@@ -7513,7 +7513,7 @@ RecordType.DeveloperName == &quot;BSP_Joining&quot;,
 ANG_Enable_NewGen__c,				
 ISPICKVAL(ANG_Airline_accepts_EasyPay_tr_in_BSP__c, &quot;&quot;))</errorConditionFormula>
         <errorDisplayField>ANG_Airline_accepts_EasyPay_tr_in_BSP__c</errorDisplayField>
-        <errorMessage>Please select whether or not you wish to accept IATA Easy Pay transactions in this BSP.</errorMessage>
+        <errorMessage>Please select whether or not you wish to accept IATA EasyPay transactions in this BSP.</errorMessage>
     </validationRules>
     <validationRules>
         <fullName>AP_CASS_HOT_File_EmailAddress</fullName>
