@@ -123,7 +123,7 @@ private class CaseBeforeTriggerTest {
         update cas1;
 
         Case cas3 = new Case(recordtypeID = AmericacaseRecordTypeID,
-                          Status = 'Assessment Performed',
+                          Status = 'Action Needed',
                           Origin = 'asd',
                           Region__c = 'Americas',
                           BSPCountry__c = 'Anguilla',
@@ -138,7 +138,7 @@ private class CaseBeforeTriggerTest {
         update cas3;
 
         Case cas4 = new Case(recordtypeID = AmericacaseRecordTypeID,
-                          Status = 'Assessment Performed',
+                          Status = 'Action Needed',
                           Origin = 'asd',
                           Region__c = 'Americas',
                           BSPCountry__c = 'Anguilla',
@@ -153,7 +153,7 @@ private class CaseBeforeTriggerTest {
         update cas4;
 
         Case cas5 = new Case(recordtypeID = AmericacaseRecordTypeID,
-                          Status = 'Assessment Performed',
+                          Status = 'Action Needed',
                           Origin = 'asd',
                           Region__c = 'Americas',
                           BSPCountry__c = 'Anguilla',
