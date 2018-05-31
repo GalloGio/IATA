@@ -16,6 +16,8 @@ public class PlatformEvents_Helper {
             
             if(MapMapping==null) return;
             
+            Map<ID, Schema.RecordTypeInfo> mapRT = Schema.getGlobalDescribe().get(ObjSource).getDescribe().getRecordTypeInfosById();
+            
             List<SObject> lstSObjs = new list<SObject>();
             
             for(Id ObjId : ObjectMap.keySet()){
@@ -23,7 +25,7 @@ public class PlatformEvents_Helper {
     
                 for(string FieldSource:MapMapping.keyset()){
                     if(FieldSource=='Recordtype')
-                        if(Schema.getGlobalDescribe().get(ObjSource).getDescribe().getRecordTypeInfosById().size()>1) //master is there. check if there is anything else. if no other recortyoe but master, field "RecorDTypeId" doesn't exist....
+                        if(mapRT.size()>1) //master is there. check if there is anything else. if no other recortyoe but master, field "RecorDTypeId" doesn't exist....
                             sObj.put(MapMapping.get(FieldSource) , RTName(ObjSource, (Id)(ObjectMap.get(ObjId).get('RecordtypeId'))));
                         else
                             sObj.put(MapMapping.get(FieldSource), null);
@@ -38,15 +40,16 @@ public class PlatformEvents_Helper {
             }
         
             
-            
-            for (Database.SaveResult sr : EventBus.publish(lstSObjs)) {
-                if (!sr.isSuccess()){
-                    for(Database.Error err : sr.getErrors()) {
-                        lsLogs.add(CreateLog('Platform Events for ' + ObjSource + '. Event Type: ' + sEventType
-                                 , err.getStatusCode() + ' - ' + err.getMessage()
-                                 , PE_Name
-                                 ,'PlatformEvents_Helper.publishEvents'
-                                 ,'One of the following: ' + ObjectMap.keyset()));
+            if (!Test.isRunningTest()) {
+                for (Database.SaveResult sr : EventBus.publish(lstSObjs)) {
+                    if (!sr.isSuccess()){
+                        for(Database.Error err : sr.getErrors()) {
+                            lsLogs.add(CreateLog('Platform Events for ' + ObjSource + '. Event Type: ' + sEventType
+                                     , err.getStatusCode() + ' - ' + err.getMessage()
+                                     , PE_Name
+                                     ,'PlatformEvents_Helper.publishEvents'
+                                     ,'One of the following: ' + ObjectMap.keyset()));
+                        }
                     }
                 }
             }
