@@ -1892,6 +1892,7 @@ public without sharing class ISSP_AMS_Accreditation {
             }
             
             upsert newForm;
+            if (!Test.IsRunningTest()) fetchAMSProcessForm();
            
         } catch (DmlException ex) {
             ApexPages.addMessages(ex);

@@ -122,13 +122,13 @@
             
             <div style="font-size:13px">             
                 <p style="display:{!IF(newForm.Is_change_ownership_or_shareholding__c,'','none')}">    
-<apex:outputText escape="false" value="{!IF(BEGINS(sectorValue,'Cargo_Agent'), IF(agencyCategory='IATA Cargo Agent', IF(isocountry.EACP_Country__c, $Label.ISSP_AMS_NoC_TC_Change_EACP, IF(newlabels, $Label.ISSP_AMS_NoC_TC_Change_CGO_New, $Label.ISSP_AMS_NoC_TC_Change_CGO)), $Label.ISSP_AMS_NoC_TC_Change_CASS), IF(isPartnership,$Label.ISSP_AMS_NOC_T_Partnership_1,$Label.ISSP_AMS_NoC_Bank_Change1))}"/>
+<apex:outputText escape="false" value="{!IF(BEGINS(sectorValue,'Cargo_Agent'), IF(agencyCategory='IATA Cargo Agent', IF(isocountry.EACP_Country__c, $Label.ISSP_AMS_NoC_TC_Change_EACP, IF(newlabels, $Label.ISSP_AMS_NoC_TC_Change_CGO_New, $Label.ISSP_AMS_NoC_TC_Change_CGO)), $Label.ISSP_AMS_NoC_TC_Change_CASS), $Label.ISSP_AMS_NoC_Bank_Change1)}"/>
                </p>
                 <p style="display:{!IF(newForm.Is_change_ownership_or_shareholding__c,'','none')}">
-<apex:outputText escape="false" value="{!IF(BEGINS(sectorValue,'Cargo_Agent'), IF(agencyCategory='IATA Cargo Agent', IF(isocountry.EACP_Country__c, $Label.ISSP_AMS_NoC_TC_Change_EACP2, IF(newlabels, $Label.ISSP_AMS_NoC_TC_Change_CGO2_New, $Label.ISSP_AMS_NoC_TC_Change_CGO2)), ''), IF(isPartnership,$Label.ISSP_AMS_NOC_T_Partnership_2,$Label.ISSP_AMS_NoC_Bank_Change2))}"/>
+<apex:outputText escape="false" value="{!IF(BEGINS(sectorValue,'Cargo_Agent'), IF(agencyCategory='IATA Cargo Agent', IF(isocountry.EACP_Country__c, $Label.ISSP_AMS_NoC_TC_Change_EACP2, IF(newlabels, $Label.ISSP_AMS_NoC_TC_Change_CGO2_New, $Label.ISSP_AMS_NoC_TC_Change_CGO2)), ''), $Label.ISSP_AMS_NoC_Bank_Change2)}"/>
                     </p>
                 <p style="display:{!IF(newForm.Is_change_ownership_or_shareholding__c,'','none')}">
-<apex:outputText escape="false" value="{!IF(BEGINS(sectorValue,'Cargo_Agent'), IF(agencyCategory='IATA Cargo Agent', IF(isocountry.EACP_Country__c, $Label.ISSP_AMS_NoC_TC_Change_EACP3, IF(newlabels, $Label.ISSP_AMS_NoC_TC_Change_CGO3_New, $Label.ISSP_AMS_NoC_TC_Change_CGO3)), ''), IF(isPartnership,'',$Label.ISSP_AMS_NoC_Bank_Change3))}"/>
+<apex:outputText escape="false" value="{!IF(BEGINS(sectorValue,'Cargo_Agent'), IF(agencyCategory='IATA Cargo Agent', IF(isocountry.EACP_Country__c, $Label.ISSP_AMS_NoC_TC_Change_EACP3, IF(newlabels, $Label.ISSP_AMS_NoC_TC_Change_CGO3_New, $Label.ISSP_AMS_NoC_TC_Change_CGO3)), ''), $Label.ISSP_AMS_NoC_Bank_Change3)}"/>
                     </p>
 
                 <p style="display:{!IF(newForm.Is_change_ownership_or_shareholding__c,'none','')}">

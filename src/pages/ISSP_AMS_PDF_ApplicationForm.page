@@ -717,12 +717,9 @@
                     </tr>
                     <tr>
                         <td>
-                            <apex:outputText escape="false" value="{!IF(amsOfficeType=='HO', $Label.ISSP_AMS_T_Cs1, $Label.ISSP_AMS_Pax_Branch_T_Cs)}" rendered="{!NOT(isPartnership)}"/>
-                            <apex:outputText escape="false" value="{!$Label.ISSP_AMS_T_Cs2}" rendered="{!NOT(isPartnership)}"/>
-                            <apex:outputText escape="false" value="{!$Label.ISSP_AMS_T_Cs3}" rendered="{!NOT(isPartnership)}"/>
-                            <apex:outputText escape="false" value="{!$Label.ISSP_AMS_T_Partnership_1}" rendered="{!isPartnership}"/>
-                            <apex:outputText escape="false" value="{!$Label.ISSP_AMS_T_Partnership_2}" rendered="{!isPartnership}"/>
-                            <apex:outputText escape="false" value="{!$Label.ISSP_AMS_T_Partnership_3}" rendered="{!isPartnership}"/>
+                            <apex:outputText escape="false" value="{!IF(amsOfficeType=='HO', $Label.ISSP_AMS_T_Cs1, $Label.ISSP_AMS_Pax_Branch_T_Cs)}"/>
+                            <apex:outputText escape="false" value="{!$Label.ISSP_AMS_T_Cs2}"/>
+                            <apex:outputText escape="false" value="{!$Label.ISSP_AMS_T_Cs3}"/>
                         </td>
                     </tr>
                 </table>

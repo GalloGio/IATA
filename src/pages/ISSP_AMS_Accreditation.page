@@ -936,9 +936,9 @@
             </apex:pageBlock>
         
             <c:ISSP_AMS_FormUpload reqCnt="{!cnt+1}"
-                reqRequired="true" 
-                reqName="{!FILE_ID_FOR_PARTNERSHIP}" 
-                reqDescription=""
+                reqRequired="true"
+                reqName="{!$Label.ISSP_AMS_Form_Signed_Application_Form}"
+                reqDescription="{!$Label.ISSP_AMS_Form_Signed_Application_Form_Description}"
                 reqIdentifier="{!FILE_ID_FOR_PARTNERSHIP}"
             />
         </apex:outputPanel>
@@ -952,12 +952,9 @@
                 <apex:pageBlock >
                 <apex:pageBlockSection title="{!$Label.ISSP_TC_Accept}" columns="1" collapsible="false" rendered="{!BEGINS(sectorValue, 'Travel_Agent')}">
                     <div class="aplabel">
-                        <apex:outputText escape="false" value="{!IF(amsOfficeType=='HO', $Label.ISSP_AMS_T_Cs1, $Label.ISSP_AMS_Pax_Branch_T_Cs)}" rendered="{!NOT(isPartnership)}"/>
-                        <apex:outputText escape="false" value="{!$Label.ISSP_AMS_T_Cs2}" rendered="{!NOT(isPartnership)}"/>
-                        <apex:outputText escape="false" value="{!$Label.ISSP_AMS_T_Cs3}" rendered="{!NOT(isPartnership)}"/>
-                        <apex:outputText escape="false" value="{!$Label.ISSP_AMS_T_Partnership_1}" rendered="{!isPartnership}"/>
-                        <apex:outputText escape="false" value="{!$Label.ISSP_AMS_T_Partnership_2}" rendered="{!isPartnership}"/>
-                        <apex:outputText escape="false" value="{!$Label.ISSP_AMS_T_Partnership_3}" rendered="{!isPartnership}"/>
+                        <apex:outputText escape="false" value="{!IF(amsOfficeType=='HO', $Label.ISSP_AMS_T_Cs1, $Label.ISSP_AMS_Pax_Branch_T_Cs)}"/>
+                        <apex:outputText escape="false" value="{!$Label.ISSP_AMS_T_Cs2}"/>
+                        <apex:outputText escape="false" value="{!$Label.ISSP_AMS_T_Cs3}"/>
                     </div>
                     <apex:inputField value="{!newForm.Accept_terms_and_conditions__c}" required="true"/> 
                 </apex:pageBlockSection> 
@@ -1042,11 +1039,11 @@
                 <apex:pageBlockSection title="{!$Label.ISSP_TC_Accept}" columns="1" collapsible="false">
                     <div class="aplabel">
                         <apex:outputText rendered="{!newForm.Is_change_ownership_or_shareholding__c==true}">
-                            <apex:outputText escape="false" value="{!IF(BEGINS(sectorValue,'Cargo_Agent'), IF(agencyCategory='IATA Cargo Agent', IF(isocountry.EACP_Country__c, $Label.ISSP_AMS_NoC_TC_Change_EACP, IF(newlabels, $Label.ISSP_AMS_NoC_TC_Change_CGO_New, $Label.ISSP_AMS_NoC_TC_Change_CGO)), $Label.ISSP_AMS_NoC_TC_Change_CASS), IF(isPartnership,$Label.ISSP_AMS_NOC_T_Partnership_1,$Label.ISSP_AMS_NoC_Bank_Change1))}"/>
+                            <apex:outputText escape="false" value="{!IF(BEGINS(sectorValue,'Cargo_Agent'), IF(agencyCategory='IATA Cargo Agent', IF(isocountry.EACP_Country__c, $Label.ISSP_AMS_NoC_TC_Change_EACP, IF(newlabels, $Label.ISSP_AMS_NoC_TC_Change_CGO_New, $Label.ISSP_AMS_NoC_TC_Change_CGO)), $Label.ISSP_AMS_NoC_TC_Change_CASS), $Label.ISSP_AMS_NoC_Bank_Change1)}"/>
                             <br/><br/>
-                            <apex:outputText escape="false" value="{!IF(BEGINS(sectorValue,'Cargo_Agent'), IF(agencyCategory='IATA Cargo Agent', IF(isocountry.EACP_Country__c, $Label.ISSP_AMS_NoC_TC_Change_EACP2, IF(newlabels, $Label.ISSP_AMS_NoC_TC_Change_CGO2_New, $Label.ISSP_AMS_NoC_TC_Change_CGO2)), ''), IF(isPartnership,$Label.ISSP_AMS_NOC_T_Partnership_2,$Label.ISSP_AMS_NoC_Bank_Change2))}"/>
+                            <apex:outputText escape="false" value="{!IF(BEGINS(sectorValue,'Cargo_Agent'), IF(agencyCategory='IATA Cargo Agent', IF(isocountry.EACP_Country__c, $Label.ISSP_AMS_NoC_TC_Change_EACP2, IF(newlabels, $Label.ISSP_AMS_NoC_TC_Change_CGO2_New, $Label.ISSP_AMS_NoC_TC_Change_CGO2)), ''), $Label.ISSP_AMS_NoC_Bank_Change2)}"/>
                             <br/><br/>
-                            <apex:outputText escape="false" value="{!IF(BEGINS(sectorValue,'Cargo_Agent'), IF(agencyCategory='IATA Cargo Agent', IF(isocountry.EACP_Country__c, $Label.ISSP_AMS_NoC_TC_Change_EACP3, IF(newlabels, $Label.ISSP_AMS_NoC_TC_Change_CGO3_New, $Label.ISSP_AMS_NoC_TC_Change_CGO3)), ''), IF(isPartnership,'',$Label.ISSP_AMS_NoC_Bank_Change3))}"/> 
+                            <apex:outputText escape="false" value="{!IF(BEGINS(sectorValue,'Cargo_Agent'), IF(agencyCategory='IATA Cargo Agent', IF(isocountry.EACP_Country__c, $Label.ISSP_AMS_NoC_TC_Change_EACP3, IF(newlabels, $Label.ISSP_AMS_NoC_TC_Change_CGO3_New, $Label.ISSP_AMS_NoC_TC_Change_CGO3)), ''), $Label.ISSP_AMS_NoC_Bank_Change3)}"/> 
                         </apex:outputText>  
                         <apex:outputText escape="false" value="{!$Label.ISSP_AMS_NoC_TC}" rendered="{!newForm.Is_change_ownership_or_shareholding__c==false}"/>                                     
                     <br/>
