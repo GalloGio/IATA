@@ -3,26 +3,27 @@
         var sector = c.get("v.account.Sector__c");
         var category = c.get("v.account.Category__c");
 
-        if(c.get("v.changeSector")){
-            var action = c.get("c.getSectors");
-            action.setCallback(this, function(a) {
-                var sectorsMap = a.getReturnValue();
-                c.set("v.sectors", sectorsMap);
+        var action = c.get("c.getSectors");
+        action.setCallback(this, function(a) {
+            var sectorsMap = a.getReturnValue();
+            c.set("v.sectors", sectorsMap);
 
+
+            if(c.get("v.changeSector")){
                 var options = [];
                 for (var key in sectorsMap){
                     options.push(sectorsMap[key]);
                 }
 
                 c.find("sectorSelection").set("v.options", options);
-            });
-            $A.enqueueAction(action);
-        }else{
-            var sectoroptions = [{label: sector, value : sector, selected : true}];
-            c.find("sectorSelection").set("v.options", sectoroptions);
-        }
+            }else{
+                c.find("sectorSelection").set("v.options", [{label: sector, value : sector, selected : true}]);
+            }
 
-        h.setCategory(c);
+            h.setCategory(c);
+        });
+        $A.enqueueAction(action);
+        
 
         var action = c.get("c.getAccountLabels");
         action.setCallback(this, function(a) {

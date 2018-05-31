@@ -31,12 +31,11 @@
 
 	setCountry : function (c) {
 		var filters = c.get("v.filters");
-		
-		//Mehdi: the following check was removed to return results related only to the country selected even for airline.
-		//if(c.get("v.customerType") != 'Airline')
         filters['IATA_ISO_Country__c'] = c.get("v.selectedCountry");
-		c.set("v.account.IATA_ISO_Country__c", c.get("v.selectedCountry"));
+
 		c.set("v.country", c.get("v.countryInformation.countryMap")[c.get("v.selectedCountry")]);
+		c.set("v.account.BillingCountry", c.get("v.country").Name);
+		c.set("v.account.ShippingCountry", c.get("v.country").Name);
 	},
 	setAgencyType : function(c, e, h){
 		var agencyType = c.get("v.agencyType");
