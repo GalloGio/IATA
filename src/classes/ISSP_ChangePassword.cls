@@ -77,7 +77,7 @@ public with sharing class ISSP_ChangePassword {
                     if (tempPass){
                         updateUsers();
                         if(serviceName == 'ISSP'){
-                            pageRef = new PageReference('/ISSP_PersonalInformation?mid=M5S1&confirm=yes' + commParam);
+                            pageRef = new PageReference('/../ISSP_PersonalInformation?mid=M5S1&confirm=yes' + commParam);
                         }
                         else{
                             pageref = new PageReference(OneIdUtils.getSiteCompleteUrl() +'/s?'+serviceNameParam);
