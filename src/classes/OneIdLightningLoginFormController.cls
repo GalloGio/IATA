@@ -9,7 +9,7 @@ public without sharing class OneIdLightningLoginFormController {
     public class CountryConfigException extends Exception {}
     
     //@AuraEnabled
-    public static Boolean sanctionCountry {get; set;}
+    public static Boolean sanctionCountry {get; set;}    
 
     public OneIdLightningLoginFormController() {
         
@@ -31,16 +31,15 @@ public without sharing class OneIdLightningLoginFormController {
     @AuraEnabled
     public static String login(String username, 
                                String password, 
-                               String startUrl) {
+                               String startUrl,
+                               String serviceName) {
         User oneUser;
-        String pageLink='';
-        
+        String pageLink='';        
         //Clear spaces
         username = (null != username) ? username.trim() : username;
                                    
         try{
-            System.debug('Controller.login.Begin');
-            
+            System.debug('Controller.login.Begin');            
             list<User> userList = DAL_ISSP.getUserListByNameOrEmail(username);
             system.debug('userList: ' + userList);
             system.debug('username: ' + username);
@@ -67,7 +66,7 @@ public without sharing class OneIdLightningLoginFormController {
                 
                 system.debug('user id: ' + oneUser.Id);
                 system.debug('contact id: ' + oneUser.ContactId);
-                system.debug('Portal_User_Frozen_Checkbox__c: ' + oneUser.Portal_User_Frozen_Checkbox__c);
+                system.debug('Portal_User_Frozen_Checkbox__c: ' + oneUser.Portal_User_Frozen_Checkbox__c);                
                 
                 if(String.isNotBlank(startUrl)) 
                     pageLink = startUrl;
@@ -93,7 +92,7 @@ public without sharing class OneIdLightningLoginFormController {
             system.debug('pageLink: ' + pageLink);
             system.debug('Used Username: '+username);
             
-            //login in site
+            //login in siteCompleteUrl
             ApexPages.PageReference lgn = Site.login(username, password, pageLink);
             
             system.debug('page reference return from login: '+lgn);
@@ -105,10 +104,8 @@ public without sharing class OneIdLightningLoginFormController {
             system.debug('userListConfirmTempPassword '+ userListConfirmTempPassword[0]);
             
             if (userListConfirmTempPassword[0].UID__c != '' && userListConfirmTempPassword[0].UID__c != null){
-                lgn = Site.login(username, password, (String.isEmpty(OneIdUtils.getCommunityUrlName()) ? '' :'/' + OneIdUtils.getCommunityUrlName()) + '/OneId_ChangePassword');
-                userListConfirmTempPassword[0].UID__c ='';
-                update userListConfirmTempPassword[0];
-                
+                String serviceNameParam = String.isEmpty(serviceName) ? '' : '?serviceName='+serviceName;
+                lgn = Site.login(username, password, OneIdUtils.getSiteCompleteUrl() + '/OneId_ChangePassword'+serviceNameParam);
             }
             
             //redirect to startUrl or some other page returned from the login 
@@ -134,15 +131,15 @@ public without sharing class OneIdLightningLoginFormController {
                                                          false);
     }
 
-    public static void findLocationCaller(){
+    public static void findLocationCaller(){        
         findLocation(true);
     }
-    
+
     public static void findLocation(Boolean saveLog){
   
         sanctionCountry = false;
         country = '';
-        
+
         ISSP_CS__c cs = ISSP_CS__c.getInstance('ipinfo_token');
         String ipinfo_token = cs.value__c;
 
@@ -153,7 +150,7 @@ public without sharing class OneIdLightningLoginFormController {
         newLog.System__c = 'IpInfo';
         newLog.Login_Ip__c = ipAddress;
         newLog.Finished__c = system.now();
-  
+
         system.debug('APEX findLocation.ipAddress: '+ipAddress);
         
         String IP_LOOKUP_URL = 'https://ipinfo.io/' + ipAddress + '/json?token=' + ipinfo_token;
@@ -162,12 +159,12 @@ public without sharing class OneIdLightningLoginFormController {
         req.setEndpoint(IP_LOOKUP_URL);
         req.setMethod('GET');
         req.setTimeout(2000);
-        HttpResponse res;
+        HttpResponse res;        
         try{
             OneId_Global_Settings__c gs = OneId_Global_Settings__c.getInstance();
             boolean isEnable = gs.ipinfo_call_enabled__c;
             if(isEnable) {
-                res = h.send(req);
+            res = h.send(req);            
             }else{
                 Throw new CountryConfigException('System is disable to get IP location from ipinfo Service');
             }
@@ -189,9 +186,9 @@ public without sharing class OneIdLightningLoginFormController {
                 if (saveLog){
                     insert newLog;
                 }
-                
+
                 system.debug('country: ' + country);
-                List <IATA_ISO_Country__c> countryList = 
+                List <IATA_ISO_Country__c> countryList =
                     [SELECT Id, Name, Sanctioned_Country__c FROM IATA_ISO_Country__c
                     WHERE ISO_Code__c = :country];
                 if (!countryList.isEmpty()){
@@ -231,7 +228,7 @@ public without sharing class OneIdLightningLoginFormController {
                 insert newLog;
             }
         }
-        
+
         if (ipAddress != '' && ipAddress != null && country == ''){
             system.debug('ipAddress: ' + ipAddress);
             List <String> ipList = ipAddress.split('\\.');
@@ -252,7 +249,7 @@ public without sharing class OneIdLightningLoginFormController {
             system.debug('ipLocator: ' + ipLocator);
             if (!ipLocator.isEmpty()){
                 country = ipLocator[0].Country_Code__c;
-                List <IATA_ISO_Country__c> countryList = 
+                List <IATA_ISO_Country__c> countryList =
                     [SELECT Id, Name, Sanctioned_Country__c FROM IATA_ISO_Country__c
                     WHERE ISO_Code__c = :country];
                 if (!countryList.isEmpty()){
@@ -291,7 +288,7 @@ public without sharing class OneIdLightningLoginFormController {
         siteCompleteUrl = OneIdUtils.getSiteCompleteUrl();
         return siteCompleteUrl;
     }
-    
+
     @AuraEnabled
     public static Boolean getShow90Days() {
         //show90Days=true;
