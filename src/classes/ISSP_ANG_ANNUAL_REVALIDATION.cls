@@ -1,4 +1,4 @@
-public without sharing class ISSP_ANG_ANNUAL_REVALIDATION {
+public with sharing class ISSP_ANG_ANNUAL_REVALIDATION {
 	//statics for the modals
     public static  Integer MAX_IFAP_Contacts {get{ return 1;} private set;}
     private static final string ISO_8859_1_regEx = '^[\\x00-\\x7F\\xA0-\\xFF]+$';  //Reg exp to limit inputted chars to ISO-8859-1
@@ -393,11 +393,8 @@ public without sharing class ISSP_ANG_ANNUAL_REVALIDATION {
 
 	private static Account fetchCaseAccount(Id accountId) {
 		List<Account> al = [Select Id From Account Where Id = :accountId];
-		if(al.size() != 0) {
-			return al[0];
-		} else {
-			return null;
-		}
+
+		if(al.size() != 0) return al[0]; else return null;
 	}
 
 	public PageReference loadIataCode() {
@@ -1657,7 +1654,11 @@ public without sharing class ISSP_ANG_ANNUAL_REVALIDATION {
             }
 
 			if(flagAddContactToList) {
-				this.currentAccount.fw.currentOwners.add(contactToUpsert);
+				if (contactType == 'Company' || contactType == 'Current Company Owner') {
+					this.currentAccount.fw.currentCompanies.add(contactToUpsert);
+				} else {
+					this.currentAccount.fw.currentOwners.add(contactToUpsert);
+				}
 			}
 
 			this.currentAccount.fw.refreshForm();
@@ -1877,14 +1878,12 @@ public without sharing class ISSP_ANG_ANNUAL_REVALIDATION {
 
         List <Account> agentaccounts = null;
 
-        agentaccounts = [Select Id, BillingStreet, BillingCity, BillingState, BillingPostalCode,
-                                BillingCountry, Name
-                           From Account
-                          Where RecordType.DeveloperName = 'IATA_Agency'
-                            And Sector__c = :AMS_Utils.SECTOR_PASSENGER  // agentSector
-                            And IATACode__c Like :qCargoCode];
+        agentaccounts = AMS_Utils.fetchAgentDetails(qCargoCode);
+
+		System.debug('alex agentaccounts : ' + agentaccounts);
 
         if (agentaccounts!= null && !agentaccounts.isEmpty()) {
+			generalAccount = agentaccounts[0];
             String agentAddress;
 
             TravelAgentPrevAccount = agentaccounts[0];
@@ -1893,10 +1892,13 @@ public without sharing class ISSP_ANG_ANNUAL_REVALIDATION {
                             AMS_Utils.notNull(TravelAgentPrevAccount.BillingCity) + '' + AMS_Utils.notNull(TravelAgentPrevAccount.BillingState) +
                             ' \r\n' + AMS_Utils.notNull(TravelAgentPrevAccount.BillingCountry);
 
+			companyModalNameOfEmployer = AMS_Utils.notNull(generalAccount.Name);
 
             currentAccount.newContact.Prev_Job2_Address__c = agentAddress;
             currentAccount.newContact.Prev_Job2_Employer__c = TravelAgentPrevAccount.Name;
             currentAccount.newContact.Accredited_employer_2__c = TravelAgentPrevAccount.Id;
+
+			System.debug('alex algo se passa!');
 
             return null;
         } else {
