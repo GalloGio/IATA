@@ -10447,7 +10447,7 @@ Approval: Key Contact can see pending request approve it one by one</inlineHelpT
         <description>FDS AGM checks if the branch account is in a different country to the parent&apos;s.</description>
         <externalId>false</externalId>
         <formula>IF(
- AND(RecordType.Name = &quot;Agency&quot; , OR(ispickval(Location_Type__c, &quot;BR&quot;),ispickval(Location_Type__c, &quot;AE&quot;))),
+ AND(RecordType.Name = &quot;Agency&quot; , OR(ispickval(Location_Type__c, &quot;BR&quot;),ispickval(Location_Type__c, &quot;AE&quot;),ispickval(Location_Type__c, &quot;SA&quot;))),
  IF(AND(Parent.IATA_ISO_Country__r.AMS_Settlement_System__r.Name &lt;&gt; IATA_ISO_Country__r.AMS_Settlement_System__r.Name, NOT(CNS_Agency__c)),
   &quot;Yes&quot;,
   &quot;No&quot;
@@ -89253,6 +89253,14 @@ IF(INCLUDES(Remittance_frequency__c , &quot;D&quot;),1,0) &gt; 2 )
         <active>true</active>
         <errorConditionFormula>AND (ISCHANGED( Name ), ($Profile.Name = &apos;MER Membership&apos;), NOT(ISPICKVAL( Membership_status__c , &apos;IATA member&apos;))  )</errorConditionFormula>
         <errorMessage>You cannot modify non IATA members name</errorMessage>
+    </validationRules>
+    <validationRules>
+        <fullName>No_tabs_in_VAT_Number</fullName>
+        <active>true</active>
+        <description>Tab character is forbidden in VAT_Number__c field</description>
+        <errorConditionFormula>CONTAINS(VAT_Number__c ,&quot;	&quot;)</errorConditionFormula>
+        <errorDisplayField>VAT_Number__c</errorDisplayField>
+        <errorMessage>Please remove tabs from VAT number.</errorMessage>
     </validationRules>
     <validationRules>
         <fullName>Parent_Acc_Airline_Designator_Required</fullName>
