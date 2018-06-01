@@ -6143,7 +6143,7 @@ If(LEN(BillingCountry) &gt;0, BillingCountry,&quot;&quot;)</formula>
                 <controllingFieldValue>Financial Institution</controllingFieldValue>
                 <valueName>Lessor</valueName>
             </valueSettings>
-	    <valueSettings>
+            <valueSettings>
                 <controllingFieldValue>Financial Institution</controllingFieldValue>
                 <valueName>Payment Provider</valueName>
             </valueSettings>
