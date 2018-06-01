@@ -3,7 +3,7 @@ public without sharing class OneIdLightningLoginFormController {
     public static Boolean show90Days {get; set;}
     public static string theCountry {get; set;}
     public static String country {get; set;}
-    public static string ipAddress {get; set;}
+    //public static string ipAddress {get; set;}
     public static string siteCompleteUrl {get; set;}
     
     public class CountryConfigException extends Exception {}
@@ -70,6 +70,10 @@ public without sharing class OneIdLightningLoginFormController {
                 
                 if(String.isNotBlank(startUrl)) 
                     pageLink = startUrl;
+                
+                if( ((String.isNotBlank(startUrl) && startUrl.contains('identity')) || (String.isNotBlank(startUrl))) && (String.isNotBlank(serviceName) && serviceName == 'ISSP'))
+                    pageLink = '/ISSP_Homepage';
+
                 
                 if (oneUser.Portal_User_Frozen_Checkbox__c){
                     show90Days = true;
@@ -143,7 +147,6 @@ public without sharing class OneIdLightningLoginFormController {
         ISSP_CS__c cs = ISSP_CS__c.getInstance('ipinfo_token');
         String ipinfo_token = cs.value__c;
 
-              
         ISSP_Web_Service_Log__c newLog = new ISSP_Web_Service_Log__c();
         newLog.Web_Service__c = 'IP_Info';
         newLog.Method__c = 'checkIpCountry';
@@ -151,8 +154,6 @@ public without sharing class OneIdLightningLoginFormController {
         newLog.Login_Ip__c = ipAddress;
         newLog.Finished__c = system.now();
 
-        system.debug('APEX findLocation.ipAddress: '+ipAddress);
-        
         String IP_LOOKUP_URL = 'https://ipinfo.io/' + ipAddress + '/json?token=' + ipinfo_token;
         Http h = new Http();
         HttpRequest req = new HttpRequest();
@@ -177,12 +178,10 @@ public without sharing class OneIdLightningLoginFormController {
                     (parser.getText() == 'country')) {
                     parser.nextToken();
                     country = parser.getText();
-                    system.debug('COUNTRY:' + country);
                 }
             }
             if (country != ''){
                 newLog.Success__c = true;
-                system.debug('var -> saveLog: ' + saveLog);
                 if (saveLog){
                     insert newLog;
                 }
@@ -195,7 +194,7 @@ public without sharing class OneIdLightningLoginFormController {
                     theCountry = countryList[0].Name;
                     if (countryList[0].Sanctioned_Country__c){
                         sanctionCountry = true;
-                        system.debug('TRUE -> sanctionCountry:' + sanctionCountry);
+                        system.debug('sanctionCountry:' + sanctionCountry);
                     }
                 }
             }
@@ -263,7 +262,8 @@ public without sharing class OneIdLightningLoginFormController {
                 }
             }
         }
-/* sanctionCountry = true; */
+        system.debug('fsanctionCountry ' + sanctionCountry);
+        return sanctionCountry;
     }
     
     /*
@@ -295,7 +295,7 @@ public without sharing class OneIdLightningLoginFormController {
         return show90Days;
     }
     
-    @AuraEnabled
+    /*@AuraEnabled
     public static Boolean getSanctionCountry(String clientIpAddress) {
         //Set client ip address
         ipAddress=clientIpAddress; 
@@ -304,7 +304,7 @@ public without sharing class OneIdLightningLoginFormController {
         
         //sanctionCountry=true;
         return sanctionCountry;
-    }
+    }*/
     
     @AuraEnabled
     public static Boolean getIsUsernamePasswordEnabled() {
