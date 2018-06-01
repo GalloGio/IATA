@@ -1074,6 +1074,29 @@ global class ANG_OscarProcessHelper {
 	        newAccr.SAAM_Case__c = newCaseOscar.Id;
 	        insert newAccr;
 
+			// need to create the accreditation contacts as well..
+
+			fieldList.clear();
+			schemaFieldMap = AMS_Accreditation_Contact__c.sObjectType.getDescribe().fields.getMap();
+
+			for (String field : schemaFieldMap.keySet()){
+					fieldList.add(field);
+			}
+
+			List<AMS_Accreditation_Contact__c> contactsList = Database.query('SELECT '+String.join(fieldList, ', ')+' FROM AMS_Accreditation_Contact__c WHERE AMS_Pax_Accreditation_Form__c = :accreditationId');
+
+			List<AMS_Accreditation_Contact__c> newAccreditationContactList = new List<AMS_Accreditation_Contact__c>();
+
+			for(AMS_Accreditation_Contact__c ac: contactsList){
+
+				AMS_Accreditation_Contact__c newAc = ac.clone(false, true, false, false);
+				newAc.AMS_Pax_Accreditation_Form__c = newAccr.Id;
+				newAccreditationContactList.add(newAc);
+			}
+
+			if(!newAccreditationContactList.isEmpty())
+				insert newAccreditationContactList;
+			
 			fieldsOfObject = new Map<String,Object>();
 
 	        fieldsOfObject.put('Process__c',AMS_Utils.NGCHANGES);
