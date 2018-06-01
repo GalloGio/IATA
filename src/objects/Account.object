@@ -5777,6 +5777,11 @@ If(LEN(BillingCountry) &gt;0, BillingCountry,&quot;&quot;)</formula>
                     <label>Passenger only</label>
                 </value>
                 <value>
+                    <fullName>Payment Provider</fullName>
+                    <default>false</default>
+                    <label>Payment Provider</label>
+                </value>
+                <value>
                     <fullName>Processor</fullName>
                     <default>false</default>
                     <label>Processor</label>
@@ -6137,6 +6142,10 @@ If(LEN(BillingCountry) &gt;0, BillingCountry,&quot;&quot;)</formula>
             <valueSettings>
                 <controllingFieldValue>Financial Institution</controllingFieldValue>
                 <valueName>Lessor</valueName>
+            </valueSettings>
+            <valueSettings>
+                <controllingFieldValue>Financial Institution</controllingFieldValue>
+                <valueName>Payment Provider</valueName>
             </valueSettings>
             <valueSettings>
                 <controllingFieldValue>DPC</controllingFieldValue>
@@ -12359,7 +12368,7 @@ J-Joint Vent</inlineHelpText>
         <fullName>Quality__c</fullName>
         <externalId>false</externalId>
         <formula>If( ISPICKVAL (ACLI_Status__c,&apos;Inactive Company&apos;),IMAGE(&quot;/servlet/servlet.ImageServer?id=015w0000001yjh0&amp;oid=00D2000000008TF&amp;lastMod=1394110707000&quot;,&quot;Inactive Airline&quot;),
-IF ((RecordType.DeveloperName = &quot;IATA_Airline&quot; || RecordType.DeveloperName = &quot;IATA_Agency&quot; || RecordType.DeveloperName = &quot;IATA_Airline_BR&quot; || RecordType.DeveloperName = &quot;Others&quot; || RecordType.DeveloperName = &quot;Operator&quot; ||RecordType.DeveloperName = &quot;IATA_GSA&quot; ),IMAGE(&quot;/servlet/servlet.FileDownload?file=015w0000001yCfW&quot;,&quot;YES&quot;),&quot;&quot;)
+IF ((RecordType.DeveloperName = &quot;IATA_Airline&quot; || RecordType.DeveloperName = &quot;IATA_Agency&quot; || RecordType.DeveloperName = &quot;IATA_Airline_BR&quot; || RecordType.DeveloperName = &quot;Others&quot; || RecordType.DeveloperName = &quot;Operator&quot; ||RecordType.DeveloperName = &quot;IATA_GSA&quot;||RecordType.DeveloperName = &quot;TIP_Payment_Provider&quot; ),IMAGE(&quot;/servlet/servlet.FileDownload?file=015w0000001yCfW&quot;,&quot;YES&quot;),&quot;&quot;)
 )</formula>
         <label>Verified</label>
         <required>false</required>
@@ -15291,6 +15300,11 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
             <valueSetDefinition>
                 <sorted>true</sorted>
                 <value>
+                    <fullName>Active</fullName>
+                    <default>false</default>
+                    <label>Active</label>
+                </value>
+                <value>
                     <fullName>Applicant</fullName>
                     <default>false</default>
                     <label>Applicant</label>
@@ -15324,6 +15338,16 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
                     <fullName>Endorsed</fullName>
                     <default>false</default>
                     <label>Endorsed</label>
+                </value>
+                <value>
+                    <fullName>Inactive</fullName>
+                    <default>false</default>
+                    <label>Inactive</label>
+                </value>
+                <value>
+                    <fullName>In Progress</fullName>
+                    <default>false</default>
+                    <label>In Progress</label>
                 </value>
                 <value>
                     <fullName>Listed</fullName>
@@ -15776,6 +15800,44 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
         <trackHistory>false</trackHistory>
         <type>Text</type>
         <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>TIP_Documents__c</fullName>
+        <externalId>false</externalId>
+        <inlineHelpText>Enter any additional information related to your company (e.g. to comply with AML requirements)</inlineHelpText>
+        <label>Any Other Information</label>
+        <length>32768</length>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackHistory>false</trackHistory>
+        <type>LongTextArea</type>
+        <visibleLines>3</visibleLines>
+    </fields>
+    <fields>
+        <fullName>TIP_HQ_Location__c</fullName>
+        <deleteConstraint>Restrict</deleteConstraint>
+        <externalId>false</externalId>
+        <inlineHelpText>Select the country where provider&apos;s headquarter is located</inlineHelpText>
+        <label>HQ Location</label>
+        <referenceTo>IATA_ISO_Country__c</referenceTo>
+        <relationshipLabel>Accounts (HQ Location)</relationshipLabel>
+        <relationshipName>TIP_HQ_Location</relationshipName>
+        <required>false</required>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackHistory>false</trackHistory>
+        <type>Lookup</type>
+    </fields>
+    <fields>
+        <fullName>TIP_Provider_Type__c</fullName>
+        <externalId>false</externalId>
+        <label>Provider Type</label>
+        <required>false</required>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackHistory>false</trackHistory>
+        <type>Picklist</type>
+        <valueSet>
+            <restricted>true</restricted>
+            <valueSetName>TIP_Provider_Type</valueSetName>
+        </valueSet>
     </fields>
     <fields>
         <fullName>TTY__c</fullName>
@@ -84855,6 +84917,13 @@ Source_System__c &lt;&gt;&apos;AIMS&apos;
         <errorMessage>Head office account can be edited only by administrator, please contact your administrator</errorMessage>
     </validationRules>
     <validationRules>
+        <fullName>Effective_Start_Date_on_Payment_Provider</fullName>
+        <active>true</active>
+        <errorConditionFormula>AND(ISCHANGED(RecordTypeId) ,RecordType.DeveloperName = &quot;TIP_Payment_Provider&quot;,   NOT(ISNEW()), ISBLANK(Accreditation_date__c))</errorConditionFormula>
+        <errorDisplayField>Accreditation_date__c</errorDisplayField>
+        <errorMessage>Accreditation Date is mandatory for Payment Provider</errorMessage>
+    </validationRules>
+    <validationRules>
         <fullName>Enforce_HE_Parent_on_AE_Account</fullName>
         <active>true</active>
         <description>AE cannot be a standalone agency (or has an AE as a parent) except for some Status :
@@ -85100,6 +85169,33 @@ OR(ISPICKVAL(Industry, &apos;Airline&apos;),ISPICKVAL(Industry, &apos;Travel Age
 ,ISPICKVAL(Industry, &apos;Cargo Agent&apos;)), isblank(text(Reason_for_creation__c )))</errorConditionFormula>
         <errorDisplayField>Reason_for_creation__c</errorDisplayField>
         <errorMessage>Please select the reason for creation.</errorMessage>
+    </validationRules>
+    <validationRules>
+        <fullName>TIP_IATA_CODE_LENGTH</fullName>
+        <active>true</active>
+        <description>For Providers the IATA code needs to have 4 characters</description>
+        <errorConditionFormula>$RecordType.DeveloperName=&apos;TIP_Payment_Provider&apos; &amp;&amp; LEN(IATACode__c)!=4</errorConditionFormula>
+        <errorDisplayField>IATACode__c</errorDisplayField>
+        <errorMessage>Invalid Provider Code(IATA Code). The IATA Code must contain exactly 4 characters</errorMessage>
+    </validationRules>
+    <validationRules>
+        <fullName>TIP_Payment_Provider_expiration_dates</fullName>
+        <active>true</active>
+        <errorConditionFormula>AND(RecordType.DeveloperName=&quot;TIP_Payment_Provider&quot;,  Accreditation_date__c &gt;  Expiry_Date__c )</errorConditionFormula>
+        <errorMessage>Expiry Date needs to be after Accreditation Date</errorMessage>
+    </validationRules>
+    <validationRules>
+        <fullName>Validate_Providers_Accreditation_Date</fullName>
+        <active>true</active>
+        <description>Prevents active Payment Providers to have the Accreditation date in the future</description>
+        <errorConditionFormula>(RecordType.DeveloperName = &apos;TIP_Payment_Provider&apos; 
+|| (RecordType.DeveloperName= &apos;Standard_Account&apos; &amp;&amp;
+    ISPICKVAL(Category__c , &apos;Payment Provider&apos;)
+   )
+)
+&amp;&amp;  ISPICKVAL(Status__c, &apos;Active&apos;)
+&amp;&amp; Accreditation_date__c &gt; today()</errorConditionFormula>
+        <errorMessage>Can&apos;t have active Payment Providers with the accreditation date in the future</errorMessage>
     </validationRules>
     <validationRules>
         <fullName>Virtual_Branch_Iso_Country</fullName>
