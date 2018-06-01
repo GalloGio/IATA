@@ -42,14 +42,14 @@
     </actionOverrides>
     <allowInChatterGroups>false</allowInChatterGroups>
     <compactLayoutAssignment>SYSTEM</compactLayoutAssignment>
-    <deploymentStatus>InDevelopment</deploymentStatus>
+    <deploymentStatus>Deployed</deploymentStatus>
     <enableActivities>false</enableActivities>
     <enableBulkApi>true</enableBulkApi>
     <enableChangeDataCapture>false</enableChangeDataCapture>
     <enableFeeds>false</enableFeeds>
     <enableHistory>false</enableHistory>
     <enableReports>false</enableReports>
-    <enableSearch>false</enableSearch>
+    <enableSearch>true</enableSearch>
     <enableSharing>true</enableSharing>
     <enableStreamingApi>true</enableStreamingApi>
     <fields>
@@ -86,10 +86,20 @@
         <type>Lookup</type>
     </fields>
     <fields>
+        <fullName>TIP_Effective_From_Date_To_Show__c</fullName>
+        <externalId>false</externalId>
+        <formula>IF(ISNULL(TIP_Effective_From_Date__c ),   TIP_Product__r.PP_Effective_from_Date__c , TIP_Effective_From_Date__c)</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>Effective From Date To Show</label>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Date</type>
+    </fields>
+    <fields>
         <fullName>TIP_Effective_From_Date__c</fullName>
         <externalId>false</externalId>
         <label>Effective From Date</label>
-        <required>true</required>
+        <required>false</required>
         <trackTrending>false</trackTrending>
         <type>Date</type>
     </fields>
@@ -114,11 +124,11 @@
     </fields>
     <fields>
         <fullName>TIP_Issuing_Currency__c</fullName>
+        <description>Payments Country Configuration Issuing currency for integration purposes</description>
         <externalId>false</externalId>
-        <inlineHelpText>Primary Currency and Secondary Currency fields per country . This should also be a criteria. The provider should accept at least one of the currencies valid in the BSPs where the product is available. This should be checked by IATA manually.</inlineHelpText>
         <label>Issuing Currency</label>
         <length>4</length>
-        <required>true</required>
+        <required>false</required>
         <trackTrending>false</trackTrending>
         <type>Text</type>
         <unique>false</unique>
@@ -140,7 +150,7 @@
         <fullName>TIP_Status__c</fullName>
         <externalId>false</externalId>
         <label>Status</label>
-        <required>true</required>
+        <required>false</required>
         <trackTrending>false</trackTrending>
         <type>Picklist</type>
         <valueSet>
@@ -148,30 +158,56 @@
             <valueSetDefinition>
                 <sorted>false</sorted>
                 <value>
-                    <fullName>Active</fullName>
+                    <fullName>ACTIVE</fullName>
                     <default>false</default>
                     <label>Active</label>
                 </value>
                 <value>
-                    <fullName>Inactive</fullName>
+                    <fullName>INACTIVE</fullName>
                     <default>false</default>
                     <label>Inactive</label>
                 </value>
                 <value>
-                    <fullName>In Progress</fullName>
+                    <fullName>IN_PROGRESS</fullName>
                     <default>false</default>
                     <label>In Progress</label>
+                </value>
+                <value>
+                    <fullName>DRAFT</fullName>
+                    <default>false</default>
+                    <label>Draft</label>
                 </value>
             </valueSetDefinition>
         </valueSet>
     </fields>
     <label>Payment Product Country Config</label>
+    <listViews>
+        <fullName>All</fullName>
+        <filterScope>Everything</filterScope>
+        <label>All</label>
+    </listViews>
     <nameField>
-        <label>Payment Product Country Config Name</label>
-        <type>Text</type>
+        <displayFormat>PCC-{0000000000}</displayFormat>
+        <label>Payment Product Country Config Number</label>
+        <type>AutoNumber</type>
     </nameField>
     <pluralLabel>Payment Product Country Configs</pluralLabel>
     <searchLayouts/>
     <sharingModel>ControlledByParent</sharingModel>
+    <validationRules>
+        <fullName>Check_if_product_is_Active</fullName>
+        <active>true</active>
+        <errorConditionFormula>AND(
+   NOT(ISPICKVAL(TIP_Product__r.PP_status__c, &quot;Active&quot;)),
+   ISPICKVAL(TIP_Status__c, &quot;Active&quot;)
+)</errorConditionFormula>
+        <errorMessage>Payment Product Country Config cannot be activated if related Product is not active</errorMessage>
+</validationRules>
+    <validationRules>
+        <fullName>Effective_from_before_effective_To</fullName>
+        <active>true</active>
+        <errorConditionFormula>AND( TIP_Product__r.Provider__r.RecordType.DeveloperName = &quot;TIP_Payment_Provider&quot;, TIP_Effective_From_Date__c &gt; TIP_Effective_To_Date__c )</errorConditionFormula>
+        <errorMessage>Effective to Date needs to be greater than effective from Date</errorMessage>
+    </validationRules>
     <visibility>Public</visibility>
 </CustomObject>

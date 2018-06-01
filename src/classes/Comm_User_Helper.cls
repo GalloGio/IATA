@@ -63,10 +63,6 @@ global without sharing class Comm_User_Helper {
     }
     
     public static Id createNewUser(Contact con, string selectedCustomerType, string community, string lang, Boolean newAgency, Boolean newAirline){
-    	return createNewUser(con, selectedCustomerType, community, lang, newAgency, newAirline, false);
-    }
-     
-    public static Id createNewUser(Contact con, string selectedCustomerType, string community, string lang, Boolean newAgency, Boolean newAirline, Boolean newProvider){
       try { 
         
           map<string, string> custmPortalPerIec = new map<string, string>{
@@ -140,7 +136,7 @@ global without sharing class Comm_User_Helper {
           profileName = ISSP_Constant.profilNameByUserTypeMap.get('User').get('Airline');
         }
         
-        if(newProvider){
+        if(con.account.Sector__c == TIP_Utils.ACCOUNT_SECTOR_FINANCIAL_INSTITUTION && con.account.Category__c == TIP_Utils.ACCOUNT_CATEGORY_PAYMENT_PROVIDER){
             profileName = ISSP_Constant.profilNameByUserTypeMap.get('Admin').get('Other');
         }
         

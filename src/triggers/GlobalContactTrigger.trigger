@@ -584,7 +584,6 @@ trigger GlobalContactTrigger on Contact (after delete, after insert, after undel
             }
             /*ISSP_UpdateContacKaviIdOnUser AfterUpdate*/
 
-
         }
         /*Trigger.AfterUpdate*/
 
@@ -611,6 +610,9 @@ trigger GlobalContactTrigger on Contact (after delete, after insert, after undel
             /*Contacts Trigger.AfterUndelete*/
         }
         /*Trigger.AfterUndelete*/
+    
+    	//Publish the platform events
+    	PlatformEvents_Helper.publishEvents((trigger.isDelete?trigger.OldMap:Trigger.newMap), 'Contact__e', 'Contact', trigger.isInsert, trigger.isUpdate, trigger.isDelete, trigger.isUndelete);
     }
     /*AFTER*/
 }

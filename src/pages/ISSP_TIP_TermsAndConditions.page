@@ -1,0 +1,127 @@
+<apex:page controller="ISSP_TIP_Home_Controller" showHeader="false" standardStylesheets="false" sidebar="false" >
+
+<c:ISSP_Header communityName="{!communityName}"></c:ISSP_Header>
+
+<style>
+  p {
+    font-size: small;
+    text-align: justify;
+    text-justify: inter-word;
+  }
+</style>
+<script type="text/javascript"> 
+       $(document).ready(function() {
+            //change message CSS
+            $('.warningM3').addClass('alert alert-warning');  
+            $('.warningM3').removeClass('warningM3');
+       });
+</script>
+
+<div class="container">
+
+  <c:ISSP_CustomNavigation communityName="{!communityName}"/>
+
+  <div class="row">
+    <div class="col-md-3"></div>
+
+    <div class="col-md-6">
+      <div class="panel panel-primary">
+
+        <div class="panel-heading">
+          TERMS OF USE FOR TRANSPARENCY IN PAYMENTS
+        </div>
+
+        <div class="panel-body">
+          <apex:form id="formLogin" forceSSL="true">
+          <apex:PageMessages id="msgs"/>    
+           <!--  <div class="alert alert-danger" style="display:{!if(errorMessage.size==0,'none','')}">
+              <apex:repeat value="{!errorMessage}" var="er" id="theRepeat">
+                <p><apex:outputText value="{!er}" escape="false" /></p>
+              </apex:repeat>
+            </div>
+ -->
+            <div class="input-group ">
+              <p>The<strong> IATA Transparency in Payments Initiative (&ldquo;IATA TIP&rdquo;) </strong>is a way for Alternative Transfer Method Providers (&ldquo;<strong>ATMPs</strong>&rdquo;) to enrol Alternative Transfer Methods (&ldquo;<strong>ATMs</strong>&rdquo;) with IATA and simplify the sharing of relevant information among Carriers, Agents and IATA.</p>
+              <p>IATA TIP Terms and Conditions</p>
+              <p>These IATA TIP Terms and Conditions (this &ldquo;<strong>Agreement</strong>&rdquo;) apply to your involvement in IATA TIP. You must read them carefully.&nbsp; You may at any time request a current version of this Agreement from TIP Support.&nbsp; If you require any additional information about this Agreement or IATA TIP, please contact TIP Support.</p>
+              <p>In this Agreement any capitalized terms not defined elsewhere have the meaning given to such terms in the Resolutions and:</p>
+              <p>&ldquo;<strong>Agent</strong>&rdquo; means any intermediary that sells transportation services provided by Carriers.</p>
+              <p>&ldquo;<strong>ATM</strong>&rdquo; means a Payment Method, other than the Cash Payment Method and IATA EasyPay Payment Method, used by the Agent to transfer monies collected from the customer to the Carrier.</p>
+              <p>&ldquo;<strong>ATMP</strong>&rdquo; means a supplier of an Alternative Transfer Method.</p>
+              <p>&ldquo;<strong>Business Day</strong>&rdquo; means a day on which banks are open for business in Montreal, Quebec, Canada.</p>
+              <p>&ldquo;<strong>Carrier</strong>&rdquo; means any organisation that provides passenger transportation services or Ancillary Services.</p>
+              <p>&ldquo;<strong>IATA</strong>&rdquo; means the International Air Transport Association, provider of the tools for IATA TIP and TIP Support.</p>
+              <p>&ldquo;<strong>IATA TIP</strong>&rdquo; means the IATA Transparency in Payment Initiative which provides a way for Carriers, Agents and ATMPs to communicate about ATMs and share relevant information, and a way for each Carrier to notify and manage its consent for each enrolled ATM across all transactions and all distribution channels.&nbsp;</p>
+              <p>&ldquo;<strong>Procedures</strong>&rdquo; means any instructions, guidelines or technical rules relating to your use of IATA TIP and which will be provided to you from time to time by TIP Support.</p>
+              <p>&ldquo;<strong>Resolutions</strong>&rdquo; means the IATA Passenger Agency Conference Resolutions in effect from time to time.</p>
+              <p>&ldquo;<strong>TIP Data</strong>&rdquo; means the information regarding your company and your ATM(s) provided by you to IATA.</p>
+              <p>&ldquo;<strong>TIP Support</strong>&rdquo; means the contact details set out below which you can access to obtain further information about this Agreement, the Procedures, IATA TIP or the services provided to you in connection with this Agreement.&nbsp; TIP Support will be provided by IATA.</p>
+              <p>&ldquo;<strong>Transaction</strong>&rdquo; means the purchase of passenger air transportation or Ancillary Services or any additional travel-related goods and services for which remittance to Carriers is made using an ATM.</p>
+              <p>&ldquo;<strong>you</strong>&rdquo; means the ATMP which is an authorised user of IATA TIP and any of your employees, directors, officers, representatives or agents who have been authorized by you to enlist with IATA TIP, update your contact information or enrol ATMs.</p>
+              <p>This Agreement may be modified from time to time upon prior notification to you in accordance with Section 4.</p>
+              <p>If there is anything you do not understand or agree with please contact TIP Support at:</p>
+              <p>IATA Customer Portal: l</p>
+              <p>Telephone: l</p>
+              <p>Email: l</p>
+              <ol>
+              <li>ENROLING ATMS</li>
+              </ol>
+              <p>1.1 IATA TIP is a system maintained by IATA to allow ATMPs to provide information about ATMs and to allow each Carrier to access such information and to decide to accept or not accept remittances through a particular ATM across all Transactions and all distribution channels, and notify and manage their individual consent policy to Agents.</p>
+              <p>1.2 In order to enrol an ATM in IATA TIP, you must first:</p>
+              <ul>
+              <li>agree to be bound by the terms of this Agreement and</li>
+              <li>provide the information about you requested by TIP Support so that you may be enlisted to access IATA TIP.</li>
+              </ul>
+              <p>1.3 Once you have received acknowledgement from TIP Support of your enlistment, you may enrol your ATM(s) including a description of key features (as set out in Attachment &ldquo;A&rdquo; to IATA Resolution 812(a) or Attachment &ldquo;A&rdquo; to IATA Resolution 896) following the Procedures applicable to enrolment. &nbsp;TIP Support will acknowledge receipt of the enrolment information, and will review the enrolment information to validate that it meets IATA TIP requirements. You are responsible for updating the information you provide when enrolling your ATM(s).</p>
+              <p>1.4 When you enrol your ATM(s), you are responsible for providing a Specific Alternative Transfer Method identifier (such as dedicated BINs, or dedicated sub-ranges within a BIN, or specific PANs) that can solely be used by Agents and by no other organizations.</p>
+              <p>1.5 You may at any time cancel enrolment of an ATM by providing TIP Support with five (5) Business Days notice and following the Procedures applicable to cancellation of enrolment.&nbsp; TIP Support will acknowledge cancellation of enrolment.</p>
+              <p>1.6 You are responsible for keeping your email address, street address and all other contact information up to date with TIP Support (including the identity of individuals authorized to update contact information and enrol ATMs).&nbsp; It is your responsibility to regularly verify your contact information and information related to your enrolled ATM(s) and to modify it where necessary.&nbsp; You must notify TIP Support if the identity of individuals authorized to update contact information or enrol ATMs changes (for instance, when they are no longer employed by you).</p>
+              <p>1.7 You are responsible for informing your Agent clients about all the conditions pertaining to the proper usage of your ATM(s), including the requirement for consent from the Carrier.</p>
+              <p>1.8 Granting permission to any individual user to take specific actions on your behalf does not relieve you of any of your responsibilities under this Agreement.&nbsp; You remain responsible for the consequences of all actions performed by any individual user which has been authorized by you to update contact information or enrol ATMs.</p>
+              <p>1.9 IATA is not liable to you for any damage or loss an authorized individual user may cause to you in changing your contact information or information about ATMs.</p>
+              <ol start="2">
+              <li>CANCELLATION OF YOUR IATA TIP ACCESS</li>
+              </ol>
+              <p>2.1 You may cancel your access to IATA TIP on ten (10) Business Days&rsquo; prior notice to IATA in accordance with the Procedures.</p>
+              <p>2.2 You may not enrol any ATMs following your cancellation notice.&nbsp;</p>
+              <p>2.3 IATA may terminate this Agreement (i) at any time for convenience, by giving you at least thirty (30) Business Days prior notice; or (ii) immediately for the following cases:</p>
+              <ul>
+              <li>you breach an important part of this Agreement, or repeatedly breach this Agreement; or</li>
+              <li>you make a general assignment for the benefit of creditors, or file a voluntary petition in bankruptcy or petitions for reorganization or arrangement, or where a petition in bankruptcy is filed against you, or where a receiver or trustee is appointed for all or any part of your property and assets, or you otherwise become insolvent or go into liquidation, receivership, or judicial management.</li>
+              </ul>
+              <p>If this Agreement is terminated you will be notified promptly, provided it is legally permitted for IATA to do so.</p>
+              <p>2.4 IATA may suspend or cancel your enlistment with IATA TIP or suspend, restrict, cancel or delay your ability to enrol your ATM(s) if IATA is concerned about the security of your use of or access to IATA TIP.</p>
+              <ol start="3">
+              <li>LIABILITY</li>
+              </ol>
+              <p>3.1 IATA is not liable to you for any loss, cost, liability, claim or damages arising from or in connection with:</p>
+              <ul>
+              <li>any cause which results from circumstances beyond IATA&rsquo;s control, the consequences of which would have been unavoidable despite IATA&rsquo;s reasonable efforts to the contrary;</li>
+              <li>its suspending, restricting or cancelling your enlistment with IATA TIP in accordance with this Agreement;</li>
+              <li>its suspending, restricting, cancelling or delaying your ability to enrol your ATM(s) with IATA TIP in accordance with this Agreement;</li>
+              <li>the unauthorized dissemination or distribution of your TIP Data by any Carrier, Agent or other party with whom TIP Data is permitted to be shared pursuant to this Agreement or the Resolutions; or</li>
+              <li>loss or corruption of data (including from viruses or security breaches) unless caused by IATA&rsquo;s gross negligence or willful misconduct.</li>
+              </ul>
+              <p>3.2 If you are unable to access IATA TIP or enrol your ATM(s) due to technical issues that are IATA&rsquo;s responsibility, IATA&rsquo;s liability will be limited to remedying such technical issues.</p>
+              <p>3.3 In all other circumstances of IATA&rsquo;s default, IATA&rsquo;s liability to you will be limited to US$5000.</p>
+              <p>3.4 Nothing in this Agreement shall exclude or limit your or IATA&rsquo;s liability for death or personal injury.</p>
+              <p/>
+              <apex:inputCheckbox value="{!acceptedTaC}"/>
+              {!$Label.ISSP_Registration_acceptGeneralConditions}
+            </div>
+            <hr />
+            <div class="form-group">
+              <apex:commandButton styleclass="btn_iata btn-sm btn-block btn_iata_cancel" action="{!rejectTerms}" value="{!$Label.ISSP_Back}" id="back"/>
+              <apex:commandButton styleclass="btn_iata btn-sm btn-block btn_iata_success" action="{!acceptTerms}" value="{!$Label.ISSP_Next}" id="next"/>
+            </div>
+          </apex:form>
+        </div>
+
+      </div>
+    </div>
+
+  </div>
+
+  <c:ISSP_CustomFooter communityName="{!communityName}"/>
+</div>
+</apex:page>
