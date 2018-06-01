@@ -7,13 +7,11 @@
         
         var username = component.find("username").get("v.value");
         var checkEmailUrl = component.get("v.checkEmailUrl");
-        console.log('aqui checkEmailUrl ' + checkEmailUrl);
+        var serviceName = component.get("v.serviceName");
+        console.log('aqui serviceName ' + serviceName);
         var action = component.get("c.forgotPassword");
 
-        var serviceName = component.get("v.serviceName");
-        if(!$A.util.isEmpty(serviceName)) checkEmailUrl += "?serviceName="+serviceName;
-
-        action.setParams({username:username, checkEmailUrl:checkEmailUrl});
+        action.setParams({username:username, checkEmailUrl:checkEmailUrl, serviceName:serviceName});
         action.setCallback(this, function(a) {
             console.log('Helper.handleForgotPassword.Callback BEGIN');
             var rtnValue = a.getReturnValue();

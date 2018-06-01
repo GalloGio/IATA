@@ -283,7 +283,7 @@ global without sharing class Comm_User_Helper {
             list<Document> doc = [Select id, Name, SystemModStamp From Document Where DeveloperName = :headerImgName];
             if(doc.size() > 0)
                 // Build the header image URL from the document information
-              imageURL = URL.getSalesforceBaseUrl().getProtocol()+'://'+System.URL.getSalesforceBaseUrl().getHost().remove('-api' )+'/servlet/servlet.ImageServer?id='+doc[0].id+'&oid='+userinfo.getorganizationid();            
+              imageURL = URL.getSalesforceBaseUrl().getProtocol()+'://'+System.URL.getSalesforceBaseUrl().getHost().remove('-api' )+'/servlet/servlet.ImageServer?id='+doc[0].id+'&oid='+userinfo.getorganizationid();
             // If there is a service name, that should determine the community name
             if(serviceName != '') commName = serviceName;
             else communityName = 'Identity';
