@@ -144,11 +144,12 @@ public without sharing class ISSP_Case {
                         PageReference pr = new PageReference('/ISSP_IFAPCases?id=' + caseId + commParam);
                         return pr;
                     }
-            }else if(newCase.RecordType.name == 'OSCAR Communication' && newCase.Origin == 'Massive FOP Creation' && newCase.Owner.Name.startsWith('NewGen PCI')){
+            }else if(newCase.RecordType.name == 'OSCAR Communication' && (newCase.Origin == 'Massive FOP Creation' || newCase.Origin == 'FoP automatic renewal') && newCase.Owner.Name.startsWith('NewGen PCI')){
                         PageReference pr = new PageReference('/ISSP_ANG_PCI?caseId=' + caseId + commParam);
                         return pr;
             } else if (newCase.RecordType.name == 'OSCAR Communication' && newCase.Status == 'Draft' && (newCase.Reason1__c == AMS_Utils.CASE_REASON_FOR_MANAGEMENT || newCase.Reason1__c == AMS_Utils.CASE_REASON_PCI_DSS_COMPLIANT)) {
                 PageReference pr = new PageReference('/ISSP_ANG_PCI?caseId=' + caseId + commParam);
+                return pr;
             }else if(newCase.RecordType.name == 'OSCAR Communication' && newCase.Reason1__c == 'Annual revalidation' && newCase.Owner.Name.startsWith('Annual Revalidation')){
                 PageReference pr = new PageReference('/ISSP_ANG_ANNUAL_REVALIDATION?caseId=' + caseId);
                 return pr;

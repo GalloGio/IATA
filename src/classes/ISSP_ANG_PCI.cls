@@ -300,7 +300,7 @@ SYSTEM.DEBUG('getRelatedAccount starting... ');
 	    }
         newForm.Agency_Codes_Concerned__c = agencyCodes;
 
-        if(newCase.Origin == 'Portal') 
+        if(newCase.Origin == 'Portal')
             newCase.Description = Label.ISSP_ANG_PROOF_OF_PCI + newForm.Agency_Codes_Concerned__c;
 
         upsert newCase;
@@ -385,13 +385,13 @@ SYSTEM.DEBUG('getRelatedAccount starting... ');
 
         AMS_OSCAR__c oscar;
 
-        if(newCase.Origin == 'Massive FOP Creation') {
+        if(newCase.Origin == 'Massive FOP Creation' || newCase.Origin == 'FoP automatic renewal') {
             oscar = [Select Id, Account__c, Account__r.Id, OwnerId From AMS_OSCAR__c Where id = :newCase.OSCAR__c];
         }
 
-        if(newCase.Status == 'Draft' || newCase.Origin == 'Massive FOP Creation'){
+        if(newCase.Status == 'Draft' || (newCase.Origin == 'Massive FOP Creation' || newCase.Origin == 'FoP automatic renewal')){
             if(!Test.isRunningTest()){
-                if(newCase.Origin != 'Massive FOP Creation') {
+                if(newCase.Origin != 'Massive FOP Creation' && newCase.Origin != 'FoP automatic renewal') {
                     newCase.ownerid = amsAccreditation.getRegionalQueue();
                 } else {
                     oscar.OwnerId = amsAccreditation.getRegionalQueue();
@@ -417,7 +417,7 @@ SYSTEM.DEBUG('getRelatedAccount starting... ');
         if(newCase.origin == 'Portal')
             ISSP_AMS_Accreditation.OSCARIntegration(newCase.Account_Concerned__c, newForm.Id, typeOfProcess, newCase.Id);
 
-        if(newCase.origin == 'Massive FOP Creation') {
+        if(newCase.origin == 'Massive FOP Creation' || newCase.Origin == 'FoP automatic renewal') {
 
 
             String accountIdStr = newCase.AccountId;
@@ -615,7 +615,7 @@ SYSTEM.DEBUG('getRelatedAccount starting... ');
 
     public Pagereference securityCheck() {
 
-        if ((newCase.Id != null && newCase.Status != 'Draft' && newCase.Origin != 'Massive FOP Creation') || (newCase.Origin == 'Massive FOP Creation' && !newCase.Owner.Name.startsWith('NewGen PCI'))) {
+        if ((newCase.Id != null && newCase.Status != 'Draft' && (newCase.Origin != 'Massive FOP Creation' && newCase.Origin != 'FoP automatic renewal')) || ((newCase.Origin == 'Massive FOP Creation' || newCase.Origin == 'FoP automatic renewal')  && !newCase.Owner.Name.startsWith('NewGen PCI'))) {
             return new Pagereference('/ISSP_Case?caseId=' + newCase.Id + '&mid=M1S2' + commParam);
         }
 
