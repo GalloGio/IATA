@@ -80,6 +80,8 @@ private class OneIdVfDSEControllerTest {
         ctrl.searchAccount();
         ctrl.searchIATACodeAirline = '100';
         ctrl.searchAccount();
+        Test.setCurrentPageReference(new PageReference('Page.myPage')); 
+        System.currentPageReference().getParameters().put('serviceName', 'idVariable');
         ctrl.register();
 
         ctrl.isAirline = true;
@@ -152,6 +154,8 @@ private class OneIdVfDSEControllerTest {
         ctrl.isAirline = true;
         ctrl.searchCountry = ISO_Country.Id;
         ctrl.selectedCustomerType = 'Airline';
+        Test.setCurrentPageReference(new PageReference('Page.myPage')); 
+        System.currentPageReference().getParameters().put('serviceName', 'idVariable');
         ctrl.register();
         ctrl.searchDesignatorCode = 'TT';
         ctrl.searchCountryAirline = ISO_Country.Id;
@@ -677,6 +681,8 @@ private class OneIdVfDSEControllerTest {
         ctrl.searchCountry = ISO_Country.Id;
         ctrl.searchCompanyName = 'bla';
         ctrl.searchAccount();
+        Test.setCurrentPageReference(new PageReference('Page.myPage')); 
+        System.currentPageReference().getParameters().put('serviceName', 'idVariable');
         ctrl.register();
     }
 
@@ -729,6 +735,8 @@ private class OneIdVfDSEControllerTest {
         ctrl.isAirline = true;
         ctrl.searchCountry = ISO_Country.Id;
         ctrl.selectedCustomerType = 'Airline';
+        Test.setCurrentPageReference(new PageReference('Page.myPage')); 
+        System.currentPageReference().getParameters().put('serviceName', 'idVariable');
         ctrl.register();
         ctrl.searchDesignatorCode = 'TT';
         ctrl.searchCountryAirline = ISO_Country.Id;
