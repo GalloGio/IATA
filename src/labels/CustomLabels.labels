@@ -27613,4 +27613,44 @@ Please &lt;a href=&quot;/ISSP_FAQ2Case?MainNav=Queries&amp;subNav=MyQueries&amp;
         <shortDescription>wire transfer payment msg</shortDescription>
         <value>Your wire transfer payment has been received.</value>
     </labels>
+    <labels>
+        <fullName>ICAddressDoctor_adns</fullName>
+        <categories>1ID</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ICAddressDoctor_adns</shortDescription>
+        <value>http://validator5.AddressDoctor.com/Webservice5/v4</value>
+    </labels>
+    <labels>
+        <fullName>ICAddressDoctor_login</fullName>
+        <categories>1ID</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ICAddressDoctor_login</shortDescription>
+        <value>162866</value>
+    </labels>
+    <labels>
+        <fullName>ICAddressDoctor_ns</fullName>
+        <categories>1ID</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ICAddressDoctor_ns</shortDescription>
+        <value>http://schemas.xmlsoap.org/soap/envelope/</value>
+    </labels>
+    <labels>
+        <fullName>ICAddressDoctor_password</fullName>
+        <categories>1ID</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ICAddressDoctor_password</shortDescription>
+        <value>Hus3esastAcr</value>
+    </labels>
+    <labels>
+        <fullName>ICAddressDoctor_url</fullName>
+        <categories>1ID</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ICAddressDoctor_url</shortDescription>
+        <value>https://validator5.addressdoctor.com/webservice5/v4/addressvalidation.asmx</value>
+    </labels>
 </CustomLabels>
