@@ -2,7 +2,6 @@
 
     <aura:attribute name="contactLabels" type="Map"/>
     <aura:attribute name="jobFunctionOptions" type="String[]"/>
-    <aura:attribute name="phoneErrors" type="String"/>
     <aura:attribute name="userCountry" type="String"/>
     <aura:attribute name="hasJquery" type="Boolean"/>
     <aura:attribute name="contact" type="Contact" default="{'sObjectType':'Contact'}"/>
@@ -21,7 +20,8 @@
     <div class="slds-grid slds-wrap ">
         <div class="slds-col--padded slds-m-bottom--large slds-size--1-of-1">
             <label class="slds-form-element__label"><abbr class="slds-required" title="required">*</abbr>{!v.contactLabels.Salutation}</label>
-            <ui:inputSelect aura:id="Salutation" class="slds-select">
+            <ui:inputSelect aura:id="salutation" class="slds-select">
+                <ui:inputSelectOption text="" label="{!$Label.c.ISSP_Registration_None}"/>
                 <ui:inputSelectOption text="Mr." label="{!$Label.c.ISSP_Registration_MR}"/>
                 <ui:inputSelectOption text="Mrs." label="{!$Label.c.ISSP_Registration_MRS}"/>
                 <ui:inputSelectOption text="Ms." label="{!$Label.c.ISSP_Registration_MS}"/>
@@ -50,16 +50,15 @@
                     <ui:inputSelectOption text="{!function}" label="{!function}" /><!-- value="true" -->
                 </aura:iteration>
             </ui:inputSelect>
-            <div aura:id="jobHelp" >
-                <label class="slds-form-element__label">{!$Label.c.OneId_JobFunction_Help_Msg}</label>
-            </div>
+            <ul aura:id="jobHelp" >
+                <li class="slds-form-element__help">{!$Label.c.OneId_JobFunction_Help_Msg}</li>
+            </ul>
         </div>
         
         
         <div aura:id="phoneContainer" class="slds-col--padded slds-m-bottom--large slds-size--1-of-1 slds-medium-size--1-of-2">
             <label class="slds-form-element__label" ><abbr class="slds-required" title="required">*</abbr>{!v.contactLabels.Phone}</label>
             <ui:inputPhone aura:id="contactPhone" value="{!v.contact.Phone}" class="phoneFormat slds-input" required="true" updateOn="keyup" keyup="{!c.validateNumber}" />
-            <div id="error-message" class="slds-form-element__help">{!v.phoneErrors}</div>
         </div>
         
         <div class="slds-col--padded slds-m-bottom--large slds-size--1-of-1 slds-medium-size--1-of-2">
