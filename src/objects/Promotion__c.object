@@ -130,9 +130,10 @@
         <columns>NAME</columns>
         <columns>Promotion_Code__c</columns>
         <columns>Promotion_Value__c</columns>
+        <columns>Type_of_Application__c</columns>
+        <columns>CREATED_DATE</columns>
         <columns>Promotion_Duration_Valid_From__c</columns>
         <columns>Promotion_Duration_Valid_Up_to__c</columns>
-        <columns>CREATED_DATE</columns>
         <columns>CREATEDBY_USER</columns>
         <filterScope>Everything</filterScope>
         <label>All</label>

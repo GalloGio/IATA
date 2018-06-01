@@ -11,7 +11,7 @@ global without sharing class AMS_RecordCreatorWebservice {
     private static String NEWTIDS_PV= 'NEW.TIDS.1.0';
     private static String NEWCORRECTION_PV = 'CORRECTION.1.0';
     private static String NEWDGR_PV = 'CERTIFICATION.1.0';
-    public static String NEWVR_PV = 'VR.1.0'; 
+    public static String NEWVR_PV = 'VR.1.0';
     public static String NEWVRCA_PV = 'VR.1.0.CA';
     public static String NEWCER_PV = 'CER.1.0';
     public static String NEWGSA_PV = 'NEW.GSA.1.0';
@@ -24,6 +24,9 @@ global without sharing class AMS_RecordCreatorWebservice {
     public static String MAJOR_CHANGESNEWGEN_PV = 'ANG.MAJOR.CHANGES.1.0';
     public static String NGFOP_PV = 'ANG.FOPMANAGEMENT.1.0';
     public static String IEP_BANK_ACCOUNT_SETUP = 'IEP.BANK.ACCOUNT.SETUP';
+    public static string OPTINOPTOUT = 'ANG.FS.OPTINOUT';
+    public static String PCI_COMPLIANT = 'PCI.COMPLIANT.1.0';
+
 
     public static Set<String> accountConcernedProcesses = new Set <String>{NEWBR_PV, NEWBRABRD_PV, MAJOR_CHANGES_PV, NEWSA_PV, NEWNAE, MAJOR_CHANGESNEWGEN_PV,IEP_BANK_ACCOUNT_SETUP, NEWVR_PV};
 
@@ -39,7 +42,7 @@ global without sharing class AMS_RecordCreatorWebservice {
         String oscarId = null;
 
         try{
-            
+
             List<String> fieldsToValidate = new List<String>();
 
             fieldsToValidate.add(accountId);
@@ -50,7 +53,7 @@ global without sharing class AMS_RecordCreatorWebservice {
                 throw new CalloutException('Arguments cannot be null.');
 
             String oscarRecordType = fetchOscarRecordType(typeOfProcess);
-            
+
             if(String.isBlank(oscarRecordType))
                 throw new CalloutException('Could not find any record type matching the type of process ' + typeOfProcess + '.Please check the logs or contact the System Administrator.');
                 //return 'Could not find any record type matching the type of process ' + typeOfProcess + '.Please check the logs or contact the System Administrator.';
@@ -65,7 +68,7 @@ global without sharing class AMS_RecordCreatorWebservice {
             List<Case> cases = [SELECT Id, Account_Concerned__c, AccountId, Account.Location_Type__c, Account.Category__c, OSCAR__c, OwnerId, Origin from CASE where Id = :caseId LIMIT 1];
 
             Id ownerId = null;
- 
+
             if(!cases.isEmpty() && !Test.isRunningTest()){
                 ownerId = cases.get(0).OwnerId;
             }
@@ -94,12 +97,12 @@ global without sharing class AMS_RecordCreatorWebservice {
                 }
             }
 
-            
+
 
             if(!cases.isEmpty()){
 
                 Case oscarCase = cases.get(0);
-           
+
                 oscarCase.OSCAR__c = oscarId;
 
                 if(typeOfProcess.equalsIgnoreCase(NEWBR_PV) || typeOfProcess.equalsIgnoreCase(NEWBRABRD_PV) || typeOfProcess.equalsIgnoreCase(MAJOR_CHANGES_PV) || typeOfProcess.equalsIgnoreCase(NEWSA_PV) || typeOfProcess.equalsIgnoreCase(NEWNAE) || typeOfProcess.equalsIgnoreCase(MAJOR_CHANGESNEWGEN_PV) || typeOfProcess.equalsIgnoreCase(NEWVR_PV))
@@ -139,7 +142,7 @@ global without sharing class AMS_RecordCreatorWebservice {
         if(!cases.isEmpty()){
                 System.debug('Changing the Account to the Account concerned. as the type of process is ' + typeOfProcess);
                 return cases.get(0).Account_Concerned__c;
-            
+
         }else{
             System.debug('NOT Changing the Account as the type of process is ' + typeOfProcess);
         }
@@ -180,22 +183,22 @@ global without sharing class AMS_RecordCreatorWebservice {
 
             // we need to check if the parent is a BR, in that case, he is not parent in any relationship but a child.
             if(typeOfProcess.equalsIgnoreCase(NEWSA_PV)){
-    
+
                existingRelations = [SELECT Id, Hierarchy__c from AMS_Agencies_relationhip__c where Child_Account__c =:parentAccount.Id LIMIT 1];
-            
+
                if(existingRelations.isEmpty()){
 
                     System.debug('Did not find any hierarchy, creating new one.');
 
                     hierarchy = new AMS_Agencies_Hierarchy__c(Hierarchy_Name__c = 'Hierarchy');
-            
+
                     insert hierarchy;
 
                }else{
 
                 System.debug('Already has an hierarchy with id:' + existingRelations.get(0).Id );
 
-                hierarchy = new AMS_Agencies_Hierarchy__c(Id = existingRelations.get(0).Hierarchy__c); 
+                hierarchy = new AMS_Agencies_Hierarchy__c(Id = existingRelations.get(0).Hierarchy__c);
 
                }
 
@@ -205,7 +208,7 @@ global without sharing class AMS_RecordCreatorWebservice {
                     System.debug('Did not find any hierarchy, creating new one.');
 
                     hierarchy = new AMS_Agencies_Hierarchy__c(Hierarchy_Name__c = 'Hierarchy');
-            
+
                     insert hierarchy;
             }
 
@@ -213,7 +216,7 @@ global without sharing class AMS_RecordCreatorWebservice {
 
             System.debug('Already has an hierarchy with id:' + existingRelations.get(0).Id );
 
-            hierarchy = new AMS_Agencies_Hierarchy__c(Id = existingRelations.get(0).Hierarchy__c); 
+            hierarchy = new AMS_Agencies_Hierarchy__c(Id = existingRelations.get(0).Hierarchy__c);
         }
 
         System.debug('Creating relationship with parent ' + parentAccount.Id + ' and child ' + account.Id);
@@ -239,7 +242,7 @@ global without sharing class AMS_RecordCreatorWebservice {
         if(typeOfProcess.equalsIgnoreCase(NEWCORRECTION_PV))
             return oscarRT.get('CORRECTION');
 
-        if(typeOfProcess.equalsIgnoreCase(NEWDGR_PV))
+        if(typeOfProcess.equalsIgnoreCase(NEWDGR_PV) || typeOfProcess.equalsIgnoreCase(PCI_COMPLIANT))
             return oscarRT.get('CERTIFICATION');
 
         if(typeOfProcess.equalsIgnoreCase(NEWVR_PV) || typeOfProcess.equalsIgnoreCase(NEWVRCA_PV))
@@ -256,15 +259,18 @@ global without sharing class AMS_RecordCreatorWebservice {
 
         if(typeOfProcess.equalsIgnoreCase(NEWNAE))
             return oscarRT.get('ANG_New_AE');
-        
+
         if(typeOfProcess.equalsIgnoreCase(AMS_Utils.NGCHANGES))
             return oscarRT.get('ANG_Agency_Changes');
 
         if(typeOfProcess.equalsIgnoreCase(AMS_Utils.NGFOP))
             return oscarRT.get('NGFormsOfPayment');
-        
+ 
+         if(typeOfProcess.equalsIgnoreCase(OPTINOPTOUT))
+            return oscarRT.get('ANG_FS_OPTINOUT');
+
         return null;
-    
+
     }
 
     private static boolean isSomethingEmpyOrNull(List<String> fieldsToValidate){
@@ -281,19 +287,19 @@ global without sharing class AMS_RecordCreatorWebservice {
 
         return false;
 
-    } 
+    }
 
     private Static String createOscar(String accountId, String processType, String recordTypeId, String oscarStatus, String accreditationId, Id owner, Id caseId, Id parentAccount){
 
         AMS_OSCAR__c oscar;
         AMS_Pax_Accreditation_Form__c accreditationObj;
- 
+
         if(owner == null)
             oscar = new AMS_OSCAR__c(Account__c = accountId, Process__c = processType, RecordTypeId =recordTypeId, Status__c = oscarStatus);
         else
             oscar = new AMS_OSCAR__c(Account__c = accountId, Process__c = processType, RecordTypeId =recordTypeId, Status__c = oscarStatus, OwnerId = owner );
 
-        if(processType != NEWVR_PV && processType != NEWVRCA_PV && processType != NEWCER_PV && processType != NGFOP_PV){
+        if(processType != NEWVR_PV && processType != NEWVRCA_PV && processType != NEWCER_PV && processType != NGFOP_PV && processType != OPTINOPTOUT){
             oscar.AMS_Online_Accreditation__c = accreditationId;
         }
 
@@ -302,7 +308,7 @@ global without sharing class AMS_RecordCreatorWebservice {
         }
 
         //Need to check if is a newgen process, cant use the process because voluntary relinquishment shares the same process and record type as AMS
-        Account acc = [SELECT ANG_IsNewGenAgency__c FROM Account WHERE Id =:accountId];
+        Account acc = [SELECT ANG_IsNewGenAgency__c, ANG_FA_Opt_out__c FROM Account WHERE Id =:accountId];
 
         if(processType.equalsIgnoreCase(NEWVR_PV)){
             accreditationObj = fetchAccreditationObject(accreditationId);
@@ -327,7 +333,7 @@ global without sharing class AMS_RecordCreatorWebservice {
             }
         }
 
-        Set<String> processesToUpdateCaseOnOscar = new Set<String>{AMS_Utils.NEWHESTANDARD,AMS_Utils.NEWHELITE, AMS_Utils.NEWAE, AMS_Utils.NGCORRECTION, AMS_Utils.NGCHANGES};
+        Set<String> processesToUpdateCaseOnOscar = new Set<String>{AMS_Utils.NEWHESTANDARD,AMS_Utils.NEWHELITE, AMS_Utils.NEWAE, AMS_Utils.NGCORRECTION, AMS_Utils.NGCHANGES, AMS_Utils.NGOPTINOUT};
         if(processesToUpdateCaseOnOscar.contains(processType)){
             oscar.Oscar_Communication_Case_Id__c = caseId;
         }
@@ -342,12 +348,17 @@ global without sharing class AMS_RecordCreatorWebservice {
             if(!caseList.isEmpty()){
                 oscar.Certificate_Quantity__c = Integer.valueOf(caseList.get(0).QuantityProduct__c);
             }
-            
+
         }
 
         if(processType.equalsIgnoreCase(NGFOP_PV)){
             oscar.STEP38__c = AMS_Utils.NOT_APPLICABLE;
-            oscar.STEP39__c = AMS_Utils.NOT_APPLICABLE;   
+            oscar.STEP39__c = AMS_Utils.NOT_APPLICABLE;
+        }
+
+        if(processType.equalsIgnoreCase(OPTINOPTOUT)){
+
+            oscar.ANG_FA_Opt_out__c = acc.ANG_FA_Opt_out__c == true ? 'Opt-In' : 'Opt-Out';
         }
         
         insert oscar;
@@ -356,11 +367,20 @@ global without sharing class AMS_RecordCreatorWebservice {
             processOscarProcessDetail(oscar,accreditationObj,accountId);
         }
 
+        //commented as per NEWGEN-3265
+        /*if(processType.equalsIgnoreCase(OPTINOPTOUT)){
+        
+            Map<Id, Set<Id>> stagingToAccount = new Map<Id, Set<Id>>();
+            stagingToAccount.put(accreditationId, new Set<Id>{accountId});
+            AMS_AccountRoleCreator.runRoleCreatorForOnlineAccreditations(stagingToAccount);
+
+        }*/
+        
         return oscar.id;
     }
 
     public static void fillNewAEFieldsFromParent(String parentId, String accountId, String accreditationId){
-        
+
         //Let's get the parent account
         Account acct = [Select Id, ANG_Accreditation_Model__c, Remittance_frequency__c from Account where Id = :parentId];
 
@@ -387,7 +407,7 @@ global without sharing class AMS_RecordCreatorWebservice {
 
         previousContactTypes.put('Previous_Company_Owner','Current Company Owner');
         previousContactTypes.put('Previous_Owner','Current Owner');
-      
+
         List<AMS_Accreditation_Contact__c> idsToClone = new List<AMS_Accreditation_Contact__c>();
 
         List<AMS_Accreditation_Contact__c> accContacts = [SELECT Id, RecordType.DeveloperName, Last_name__c, AMS_Pax_Accreditation_Form__c from AMS_Accreditation_Contact__c where AMS_Pax_Accreditation_Form__c = :accreditationObj.Id];
@@ -425,10 +445,10 @@ global without sharing class AMS_RecordCreatorWebservice {
             toInsert.add(contactCloned);
 
        }
-       
+
        if(!toInsert.isEmpty())
         insert toInsert;
-    
+
     }
 
     private static AMS_Pax_Accreditation_Form__c fetchAccreditationObject(String accreditationId){
@@ -437,7 +457,7 @@ global without sharing class AMS_RecordCreatorWebservice {
 
     }
 
-    private static void processOscarProcessDetail(AMS_OSCAR__c oscar, AMS_Pax_Accreditation_Form__c accreditationObj, String accountFromOscar){
+    public static void processOscarProcessDetail(AMS_OSCAR__c oscar, AMS_Pax_Accreditation_Form__c accreditationObj, String accountFromOscar){
 
         if(accreditationObj.Scope_of_Change__c == null || accreditationObj.Scope_of_Change__c == 'HO Only')
             return;
@@ -448,7 +468,7 @@ global without sharing class AMS_RecordCreatorWebservice {
         }
 
         if(accreditationObj.Scope_of_Change__c == 'HO - Selected Branches' || accreditationObj.Scope_of_Change__c == 'Selected Branches Only'){
-            
+
             List<String> iataCodes = accreditationObj.Agency_Codes_Concerned__c.split(',');
 
             List<Account> accountsToCreate = [SELECT Id from Account where IATACode__c in :iataCodes];
@@ -462,7 +482,7 @@ global without sharing class AMS_RecordCreatorWebservice {
                 if(acct.Id <> accountFromOscar){
 
                     System.debug('Oscar Account Id is ' + oscar.Account__r.Id + ' and account Id is ' + acct.Id);
-                    
+
                     AMS_Process_Detail__c  detail = new AMS_Process_Detail__c(Account__c = acct.Id , OSCAR__c = oscar.Id, RecordTypeId = rtAgencyInvolved);
 
                     detailsToInsert.add(detail);
@@ -493,7 +513,7 @@ global without sharing class AMS_RecordCreatorWebservice {
             typeOfChange = typeOfChange.removeEnd(';');
         else
             return null;
-            
+
         return typeOfChange;
 
     }
@@ -513,7 +533,7 @@ global without sharing class AMS_RecordCreatorWebservice {
 
         // get the Account and creates a change code (Agency_Applied_Change_code__c)
         // Notify the Agent via email using predefined email template
-        
+
         Boolean processedTN = false;
 
         List<Account> accountsToProcess = new List<Account>();
@@ -534,7 +554,7 @@ global without sharing class AMS_RecordCreatorWebservice {
         List<Agency_Applied_Change_code__c> accountActiveChangeCode = [SELECT Reason_Code__c, Reason_Description__c FROM Agency_Applied_Change_code__c WHERE Account__c =: accountId AND Active__c = TRUE];
 
         if(containsTradeName(accountChanges)){
-                  
+
             changeCodeTN = generateChangeCodeTN(accountChanges, account.Status__c == 'Approved');
 
             if(accountActiveChangeCode.size() > 0){
@@ -552,12 +572,12 @@ global without sharing class AMS_RecordCreatorWebservice {
         if(accountChanges.size() > 1 ||  ( accountChanges.size() == 1 && !processedTN)){
 
             changeCode = generateChangeCode(accountChanges);
-            
+
             if(accountActiveChangeCode.size() > 0){
                     changeCode.reasonCode = accountActiveChangeCode[0].Reason_Code__c;
                     changeCode.reasonDesc = accountActiveChangeCode[0].Reason_Description__c;
             }
-            
+
             accountsToProcess.add(account);
             changeCodesToProcess.add(changeCode);
             oscarsToProcess.add(null);
@@ -592,7 +612,7 @@ global without sharing class AMS_RecordCreatorWebservice {
             name = usrLst.get(0).FirstName + ' ' + usrLst.get(0).LastName;
             userEmail = usrLst.get(0).Email;
         }
-       
+
         Messaging.SingleEmailMessage mail = new Messaging.SingleEmailMessage();
 
         EmailTemplate et = [Select Id, Subject, Body, HtmlValue from EmailTemplate where Name = 'AMS Minor Changes Notification'];
@@ -603,7 +623,7 @@ global without sharing class AMS_RecordCreatorWebservice {
         String memoText = createMemoText(accountChanges);
 
         String accountURL = System.URL.getSalesforceBaseURL().toExternalForm() + '/' + acct.Id;
-        
+
         plainBody = plainBody.replace('#USERFULLNAME',name);
         plainBody = plainBody.replace('#ACCOUNTNAME',acct.Name);
         plainBody = plainBody.replace('#ACCOUNTCHANGES', memoText);
@@ -618,7 +638,7 @@ global without sharing class AMS_RecordCreatorWebservice {
         mail.setHtmlBody(htmlBody);
         mail.setPlainTextBody(plainBody);
         mail.subject = ' IATA - AMS Minor Changes Notification';
-        
+
         // set users
         List<String> emails = new List<String>{userEmail};
         mail.setToAddresses(emails);
@@ -699,18 +719,18 @@ global without sharing class AMS_RecordCreatorWebservice {
         String oscarId = null;
 
         try{
-            
+
             String oscarRecordType = oscarRT.get('NEW');
 
             Case caseObj = [SELECT Id, Account_Concerned__c, AccountId, Account.Location_Type__c, Account.Category__c, OSCAR__c, OwnerId from CASE where Id = :caseId LIMIT 1];
 
             Id ownerId = null;
 
-            if(!Test.isRunningTest()) 
+            if(!Test.isRunningTest())
                 ownerId = caseObj.OwnerId;
 
-            //Create a new Account for the SA, with the values reported in the below table 
-            
+            //Create a new Account for the SA, with the values reported in the below table
+
             Account parentAccount = [SELECT Id,Name,Short_Name__c,Abbreviated_name__c,IATA_ISO_Shipping_Country__c,TradeName__c,Company_Type__c,ShippingCity,ShippingCountry,ShippingPostalCode,ShippingState,ShippingStreet,BillingCity,BillingCountry,BillingPostalCode,BillingState,BillingStreet,IATA_ISO_Country__c,Iso_State__c,Abbreviated_address__c,Website,Phone,Fax,Email__c,Top_Parent__c from Account where Id = :caseObj.Account_Concerned__c LIMIT 1];
 
             Account newSAAccount = createSAAccount(parentAccount);
@@ -797,7 +817,7 @@ global without sharing class AMS_RecordCreatorWebservice {
         accreditationObj.Branch_Office_Postal_code__c = accountSA.BillingPostalCode;
         accreditationObj.Branch_Office_City__c = accountSA.BillingCity;
         accreditationObj.Operation_Type__c = accountSA.Sector__c.replace(' ','_');
-        
+
 
         insert accreditationObj;
 
@@ -808,14 +828,14 @@ global without sharing class AMS_RecordCreatorWebservice {
     public static Account createSAAccount(Account parentAccount){
 
         Account acctSA = new Account();
-       
+
         acctSA.RecordTypeId = AMS_Utils.getId('Account', 'Standard_Account');
         acctSA.Name = parentAccount.Name;
         acctSA.Short_Name__c = parentAccount.Short_Name__c;
         acctSA.Abbreviated_name__c = parentAccount.Abbreviated_name__c;
         acctSA.TradeName__c = parentAccount.TradeName__c;
         acctSA.Company_Type__c = parentAccount.Company_Type__c;
-        
+
         acctSA.ShippingCity = parentAccount.ShippingCity;
         acctSA.ShippingCountry = parentAccount.ShippingCountry;
         acctSA.ShippingPostalCode = parentAccount.ShippingPostalCode;

@@ -39,6 +39,7 @@ public class ISSP_CaseTest {
         	cttr.edit();
         	ISSP_Case.getFieldMappedValue('test','test');
             cttr.updateCase();
+            String fullname = cttr.fullnameNOCFile;
         }
         Test.stopTest();
 	}
@@ -203,6 +204,12 @@ public class ISSP_CaseTest {
 	}
 
 	public static testMethod void testISSP_Case_4() {
+		dgAI2__DG_Disable_Features__c dg = dgAI2__DG_Disable_Features__c.getOrgDefaults();
+		dg.dgAI2__Disable_Case_Predictions__c = true;
+		dg.dgAI2__Disable_Case_Feedback__c = true;
+		dg.dgAI2__Disable_Prediction_On_Update__c = true;
+		upsert dg;
+		
 		Account account = ISSP_ObjectFactory.createNewAccount();
         account.Name = 'Account1';
         insert account;
@@ -541,7 +548,7 @@ public class ISSP_CaseTest {
         contact.Email = 'teamcontact@email.com';
         insert contact;
         Contact teamContact = ISSP_ObjectFactory.createNewContact();
-        teamContact.Email = contact.Email;
+        teamContact.Email = 'teamcontact2@email.com';
         insert teamContact;
         User thisUser = ISSP_ObjectFactory.createPortalUser(contact);
         contact.OwnerId = thisUser.Id;
@@ -658,6 +665,7 @@ public class ISSP_CaseTest {
             cttr.pageLoad();
             cttr.whoToContact = account.Id;
             cttr.save();
+            cttr.saveAttach();
             // test insert cc other
             cttr.inputccotheremail = user.Email;
             cttr.addCCOther();
@@ -666,6 +674,8 @@ public class ISSP_CaseTest {
 
             cttr.inputDelCCOther = user.Email;
             cttr.delCCOther();
+            cttr.InterDPCAccept();
+            cttr.getCustomLabel('ISSP_NewCase');
             // test delete cc other
             list<String> result2 = cttr.getListCCOther();
             System.assert(result2.isEmpty(),'wrong result ' + result2);

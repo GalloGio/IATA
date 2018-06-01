@@ -57,6 +57,15 @@
         <senderType>OrgWideEmailAddress</senderType>
         <template>AMS/AMS_Late_NOC_Termination_Notification</template>
     </alerts>
+    <fieldUpdates>
+        <fullName>OSCAR_DGR_Certificate_Dead_Line</fullName>
+        <field>Status__c</field>
+        <literalValue>Renewal not completed</literalValue>
+        <name>OSCAR DGR Certificate Dead Line</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>Literal</operation>
+        <protected>false</protected>
+    </fieldUpdates>
     <rules>
         <fullName>AMS - Notify Owner of Late NOC Termination</fullName>
         <active>true</active>
@@ -128,5 +137,29 @@
         </criteriaItems>
         <description>OSCAR Owner will receive an email alert after the OSCAR approval processing has been completed by the assistant manager and the manager set in the Case Team.</description>
         <triggerType>onCreateOrTriggeringUpdate</triggerType>
+    </rules>
+    <rules>
+        <fullName>OSCAR DGR Certificate Dead Line</fullName>
+        <active>true</active>
+        <criteriaItems>
+            <field>AMS_OSCAR__c.Process__c</field>
+            <operation>equals</operation>
+            <value>CERTIFICATION.1.0</value>
+        </criteriaItems>
+        <criteriaItems>
+            <field>AMS_OSCAR__c.Status__c</field>
+            <operation>equals</operation>
+            <value>Accepted_Future Date,Open,Accepted_Pending Docs</value>
+        </criteriaItems>
+        <triggerType>onCreateOrTriggeringUpdate</triggerType>
+        <workflowTimeTriggers>
+            <actions>
+                <name>OSCAR_DGR_Certificate_Dead_Line</name>
+                <type>FieldUpdate</type>
+            </actions>
+            <offsetFromField>AMS_OSCAR__c.DGR_Expiry_Date__c</offsetFromField>
+            <timeLength>1</timeLength>
+            <workflowTimeTriggerUnit>Days</workflowTimeTriggerUnit>
+        </workflowTimeTriggers>
     </rules>
 </Workflow>

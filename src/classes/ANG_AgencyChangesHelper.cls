@@ -207,6 +207,9 @@ public with sharing class ANG_AgencyChangesHelper {
 
 					List<Account> accountsToUpdate = new List<Account>();
 
+					if (!new Set<String>{'COR','CAD','LET'}.contains(oscar.AMS_Correction_change_code__c))
+						oscar.addError('To pass sanity check a correction change code is required.');
+
 					if(oscar.AMS_Correction_change_code__c == 'COR' || oscar.AMS_Correction_change_code__c == 'CAD'){
 						AMS_OSCAR_JSON.ChangeCode changeCode = new AMS_OSCAR_JSON.ChangeCode();
 
@@ -249,6 +252,19 @@ public with sharing class ANG_AgencyChangesHelper {
 						changesContainer.accountsToApplyChangeCodes.add(changesContainer.accountsMap.get(oscar.Account__c));
 						changesContainer.changeCodesToCreateDef.add(changeCode);	
 					}
+
+					if(oscar.Is_PCI_compliant__c == 'Corporate Card'){
+                    	Date dt = Date.newInstance(2099, 12, 31);
+
+                    	for (Id accId : accountIdsInvolvedSet){
+
+	                    	if (changesContainer.accountsMap.get(accId) == null){
+	                    		changesContainer.addAccount(new Account(Id = accId, ANG_PCI_compliance_expiry_date__c = dt));
+	                    	}else{
+	                    		changesContainer.accountsMap.get(accId).ANG_PCI_compliance_expiry_date__c = dt;
+	                    	}
+	                    }
+                    }
 
 				}
 

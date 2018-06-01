@@ -190,6 +190,14 @@
                 <behavior>Edit</behavior>
                 <field>IsComplaint__c</field>
             </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>SAAM_Deadline_Date__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Readonly</behavior>
+                <field>Termination_date__c</field>
+            </layoutItems>
         </layoutColumns>
         <style>TwoColumnsLeftToRight</style>
     </layoutSections>
@@ -201,7 +209,7 @@
         <layoutColumns>
             <layoutItems>
                 <behavior>Readonly</behavior>
-                <field>ACC_Process_Type__c</field>
+                <field>ACC_Process_Type_NEW__c</field>
             </layoutItems>
             <layoutItems>
                 <behavior>Readonly</behavior>

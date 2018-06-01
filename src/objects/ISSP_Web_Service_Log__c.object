@@ -290,7 +290,6 @@
         <columns>System__c</columns>
         <columns>Success__c</columns>
         <columns>Started__c</columns>
-        <columns>Response__c</columns>
         <columns>Method__c</columns>
         <columns>Finished__c</columns>
         <columns>Error_Message__c</columns>
@@ -305,7 +304,7 @@
         <filters>
             <field>CREATED_DATE</field>
             <operation>equals</operation>
-            <value>3/28/2018 12:00 AM</value>
+            <value>4/16/2018 12:00 AM</value>
         </filters>
         <label>Debug View</label>
         <language>en_US</language>
@@ -364,9 +363,9 @@
     <listViews>
         <fullName>KAVItoda</fullName>
         <columns>NAME</columns>
+        <columns>Success__c</columns>
         <columns>Error_Message__c</columns>
         <columns>User__c</columns>
-        <columns>Success__c</columns>
         <filterScope>Everything</filterScope>
         <filters>
             <field>System__c</field>
@@ -376,7 +375,7 @@
         <filters>
             <field>CREATED_DATE</field>
             <operation>equals</operation>
-            <value>3/29/2018 12:00 AM,TODAY</value>
+            <value>5/9/2018 12:00 AM</value>
         </filters>
         <label>. mgo - KAVI</label>
         <language>en_US</language>
@@ -406,7 +405,7 @@
         <filters>
             <field>CREATED_DATE</field>
             <operation>equals</operation>
-            <value>LAST_N_MONTHS:4</value>
+            <value>YESTERDAY</value>
         </filters>
         <label>SIS</label>
         <language>en_US</language>

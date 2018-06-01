@@ -66,7 +66,7 @@ global class ANG_OscarProcessHelper {
 					Is_PCI_compliant__c, Account__r.Top_Parent__r.Id , AMS_Online_Accreditation__r.Id,Account__r.Location_Type__c,RecordType.DeveloperName,
 					Flag_Data_to_SAPECC__c,ID, STEP10__c,STEP17__c,STEP8__c,Process_Start_Date__c, Account__r.Due_Diligence_Status__c, AMS_Online_Accreditation__r.Location_Class__c, 
 					AMS_Online_Accreditation__r.Link_agent_name__c , AMS_Online_Accreditation__r.Branch_Office_Country__r.Due_diligence_mandatory__c, Account__r.Location_Class__c,
-					Account__r.Sector__c , Account__r.Company_type__C, STEP6__c, Is_NewGen__c, Account__r.Top_Parent__r.Status__c, (SELECT Id FROM Agencies_Applied_Change_codes__r) , (select Id from Appointments__r)
+					Account__r.Sector__c , Account__r.Company_type__C, STEP6__c, Is_NewGen__c, ANG_PCI_compliance_expiry_date__c, Account__r.Top_Parent__r.Status__c, (SELECT Id FROM Agencies_Applied_Change_codes__r) , (select Id from Appointments__r)
 					from AMS_OSCAR__c where Id = : oscarId LIMIT 1];
 
 			System.debug('[ANG_OscarProcessHelper] Fetched Account:' + theAccount);
@@ -418,6 +418,10 @@ global class ANG_OscarProcessHelper {
 
             if(AMS_Utils.oscarPCICompliantMigrationProcesses.contains(oscar.Process__c)){
                 acc.Is_PCI_compliant__c = oscar.Is_PCI_compliant__c;
+            }
+
+            if(AMS_Utils.oscarNewGenNewAppProcesses.contains(oscar.Process__c) && oscar.Is_PCI_compliant__c == 'Yes'){
+                acc.ANG_PCI_compliance_expiry_date__c = oscar.ANG_PCI_compliance_expiry_date__c;
             }
 
             updaterObj.acctMap.put(acc.Id,acc);
@@ -879,6 +883,544 @@ global class ANG_OscarProcessHelper {
 		return true;
 	}
 
+	public static String createRevalidationOscar(Account acc, List<Contact> contactsAcc, Boolean toSendEmail ){
+
+		Set<Id> accsToSendEmail = new Set<Id>();
+
+		if (toSendEmail)
+			accsToSendEmail.add(acc.Id);
+
+		Map<Id,List<Contact>> mapContactsAcc = new Map<Id,List<Contact>>{acc.Id => contactsAcc};
+
+		return createRevalidationOscars(new List<Account>{acc}, mapContactsAcc, accsToSendEmail)[0].Id;
+
+	}
+
+	public static List<Case> createRevalidationOscars(List<Account> accs, Map<Id,List<Contact>> contactsAcc, Set<Id> accsToSendEmail){
+
+		Map<id,OscarObjectsWrapper> accOscarObjsMap = new Map<id,OscarObjectsWrapper>();
+		OscarObjectsWrapper oscarObjs;
+		
+		Map<String,Object> fieldsOfObject;
+
+		List<Case> casesToInsert = new List<Case>();
+
+		Contact keyContact;
+
+		//Case:
+		for(Account acc : accs){
+
+			System.debug('[ANG_OscarProcessHelper.createRevalidationOscar] - BEGINNING INSERTING for ACCOUNT: '+acc.Id+' - '+acc.Name+' - '+acc.IataCode__c);
+
+			keyContact = fetchKeyContact(acc, contactsAcc.get(acc.Id));
+			
+			fieldsOfObject = new Map<String,Object>();
+	        fieldsOfObject.put('Account_Concerned__c',acc.Id);
+	      	fieldsOfObject.put('ContactId',keyContact.Id);
+	        fieldsOfObject.put('BSPCountry__c',acc.BillingCountry);
+	        fieldsOfObject.put('Region__c',acc.Region_formula__c);
+	        fieldsOfObject.put('CaseArea__c','Accreditation Process');
+	        fieldsOfObject.put('Origin','Internal User');
+	        fieldsOfObject.put('Reason1__c','Annual revalidation');
+	        fieldsOfObject.put('Subject','Annual revalidation - ' + acc.ANG_Accreditation_Model__c + ' - ' + acc.Name);
+	        fieldsOfObject.put('Type_of_customer__c','IATA Travel Agent');
+	        
+	       	Case cse = ANG_EntityCreator.createCase(AMS_Utils.RECTYPE_OSCARCOMM, acc.Id, fieldsOfObject);
+
+	        //assign to queue
+	       	Database.DMLOptions dmo = new Database.DMLOptions();
+	        dmo.assignmentRuleHeader.useDefaultRule = true;
+	        cse.setOptions(dmo);
+
+	        oscarObjs = new OscarObjectsWrapper();
+	        oscarObjs.cse = cse;
+	        oscarObjs.con = keyContact;
+
+	        accOscarObjsMap.put(acc.id,oscarObjs);
+	        casesToInsert.add(cse);
+		}
+
+		if (!casesToInsert.isEmpty())
+       		insert casesToInsert;
+
+       	Set<Id> casesIds = new Set<Id>();
+	    for (Case cse : casesToInsert){
+	    	casesIds.add(cse.Id);
+	    }
+
+       	for(Case insertedCase : [Select ownerId, Account_Concerned__c from Case where Id in :casesIds]){
+       		accOscarObjsMap.get(insertedCase.Account_Concerned__c).ownerId = insertedCase.ownerId;
+       	}
+
+		//AMS_OSCAR__c:
+		List<AMS_Oscar__c> oscarsToInsert = new List<AMS_OSCAR__c>(); 
+
+        for (Account acc : accs){
+        
+			fieldsOfObject = new Map<String,Object>();
+	        fieldsOfObject.put('Process__c',AMS_Utils.NGANNUALREVAL);
+			fieldsOfObject.put('Status__c','Open');
+			fieldsOfObject.put('OwnerId',accOscarObjsMap.get(acc.Id).ownerId);
+			fieldsOfObject.put('Oscar_Communication_Case_Id__c',accOscarObjsMap.get(acc.Id).cse.Id);
+
+			AMS_Oscar__c oscar = ANG_EntityCreator.createOscar(AMS_Utils.RECTYPE_NEWGENANNUALREVAL, acc.Id, fieldsOfObject);		
+	        oscarsToInsert.add(oscar);
+	        accOscarObjsMap.get(acc.Id).oscar = oscar;
+    	}
+
+    	if(!oscarsToInsert.isEmpty())
+    		insert oscarsToInsert;
+
+
+    	OrgWideEmailAddress[] owea;
+
+		if(!accsToSendEmail.isEmpty()){
+			owea = [select Id from OrgWideEmailAddress where Address = 'agencymanagement@iata.org'];
+		}
+
+		List<Case> casesToUpdate = new List<Case>();
+
+		for (Account acc: accs){
+		// fields needed on contact: Id, Name, Email, Preferred_Language__c, BSP_CASS_Payment_contact__c, Financial_Assessment_Contact__c
+
+			accOscarObjsMap.get(acc.Id).cse.Oscar__c = accOscarObjsMap.get(acc.Id).oscar.Id;
+			casesToUpdate.add(accOscarObjsMap.get(acc.Id).cse);
+
+			//if(accsToSendEmail.contains(acc.Id))
+	            //AMS_AgencyRegulationAutoRenewal.sendEmailAlert(new List<Contact>{accOscarObjsMap.get(acc.Id).con}, accOscarObjsMap.get(acc.Id).oscar.Id, AMS_OSCARTriggerHandler.ANGemailTemplates(AMS_Utils.NGANNUALREVAL, null, true), accOscarObjsMap.get(acc.Id).oscar.Oscar_Communication_Case_Id__c, owea[0], false);			
+
+			System.debug('[ANG_OscarProcessHelper.createRevalidationOscar] - FINISHING... INSERTING OSCARS: '+ accOscarObjsMap.get(acc.id).oscar.Id + ' | Case: '+accOscarObjsMap.get(acc.id).cse.Id);
+		}
+
+		if(!casesToUpdate.isEmpty())
+			update casesToUpdate;
+
+		for (Account acc: accs){
+
+			if(accsToSendEmail.contains(acc.Id))
+	            AMS_AgencyRegulationAutoRenewal.sendEmailAlert(new List<Contact>{accOscarObjsMap.get(acc.Id).con}, accOscarObjsMap.get(acc.Id).oscar.Id, AMS_OSCARTriggerHandler.ANGemailTemplates(AMS_Utils.NGANNUALREVAL, null, true), accOscarObjsMap.get(acc.Id).oscar.Oscar_Communication_Case_Id__c, owea[0], false);			
+
+		}
+
+        return casesToUpdate;
+    }
+
+	private static Contact fetchKeyContact(Account acc, List<Contact> contacts){
+
+		if(contacts == null || contacts.isEmpty())
+			return null;
+
+		Contact adminCon;
+
+		for (Contact con :contacts){
+			if (con.Financial_Assessment_Contact__c){
+				return con;	
+			}
+			adminCon = con.User_Portal_Status__c == 'Approved Admin' && adminCon == null ? con : adminCon;
+		} 
+
+		if (adminCon != null)
+			return adminCon;			
+ 
+		return contacts[0];
+	}
+
+	webservice static String[] createOscarChangesCase(Id accreditationId){
+		
+		Savepoint sp = Database.setSavepoint();
+		AMS_OSCAR__c oscar = null;
+		Case newCaseOscar = null;
+
+		try{
+
+			System.debug('Starting to create Oscar Changes from Staging area');
+			
+			List<String> fieldList = new List<String>();
+
+			Map<String, Schema.SObjectField> schemaFieldMap = AMS_Pax_Accreditation_Form__c.sObjectType.getDescribe().fields.getMap();
+
+			for (String field : schemaFieldMap.keySet()){
+					fieldList.add(field);
+			}
+
+			AMS_Pax_Accreditation_Form__c acr = Database.query('SELECT '+String.join(fieldList, ', ')+' FROM AMS_Pax_Accreditation_Form__c WHERE Id = :accreditationId LIMIT 1');
+
+			AMS_Pax_Accreditation_Form__c newAccr = acr.clone(false, true, false, false);
+
+			Case c = [Select Id , ContactId, Account.BillingCountry, Account.Region_formula__c, Account.IATACode__c, Account.Name, Reason1__c,SIDRA_Lite_Reason__c from Case where Id = :newAccr.SAAM_Case__c LIMIT 1 ];
+
+	        Id caseRT = AMS_Utils.getId('Case', 'OSCAR_Communication');
+
+			Map<String,Object> fieldsOfObject = new Map<String,Object>();
+
+	        fieldsOfObject = new Map<String,Object>();
+	        fieldsOfObject.put('ContactId',c.ContactId);
+	        fieldsOfObject.put('ParentId',c.Id);
+	        fieldsOfObject.put('BSPCountry__c',newAccr.HO_Account__r.BillingCountry);
+	        fieldsOfObject.put('CaseArea__c','Accreditation Process');
+	        fieldsOfObject.put('ContactId',c.ContactId);
+	        fieldsOfObject.put('Origin','Internal User');
+	        fieldsOfObject.put('Reason1__c','Agency Changes');
+	        fieldsOfObject.put('Region__c',newAccr.HO_Account__r.Region_formula__c);
+	        fieldsOfObject.put('Subject','Agency changes - ' + newAccr.HO_Account__r.IATACode__c + ' - ' + newAccr.HO_Account__r.Name);
+	        fieldsOfObject.put('Type_of_customer__c','IATA Travel Agent');
+
+	        newCaseOscar =ANG_EntityCreator.createCase(caseRT, newAccr.HO_Account__c, fieldsOfObject);
+
+	        insert newCaseOscar;
+
+
+
+	        newAccr.SAAM_Case__c = newCaseOscar.Id;
+	        insert newAccr;
+
+			fieldsOfObject = new Map<String,Object>();
+
+	        fieldsOfObject.put('Process__c',AMS_Utils.NGCHANGES);
+	        fieldsOfObject.put('SIDRA_lite_reason__c',c.SIDRA_Lite_Reason__c);
+			fieldsOfObject.put('Status__c','Open');
+			fieldsOfObject.put('AMS_Online_Accreditation__c',newAccr.Id);
+
+			oscar = ANG_EntityCreator.createOscar(AMS_Utils.RECTYPE_NGCHANGES, c.AccountId, fieldsOfObject);
+
+			insert oscar;
+
+			newCaseOscar.Oscar__c = oscar.Id;
+
+			update newCaseOscar;
+
+			newCaseOscar = [Select Id, Casenumber from Case where Id=:newCaseOscar.Id LIMIT 1];
+
+		}catch(Exception ex){
+
+       		Database.rollback(sp);
+
+        	String exMessage = 'Unhandle error on process:\n\r ' + AMS_Utils.errorMessageBeautifyer(ex);
+
+	        System.debug('[ANG_OscarProcessHelper create changes oscar case] Process failed with the following exception:' + ex.getStackTraceString());
+
+	        isIATACodeGenerationRunning = false;
+
+			return new String[]{'-1',exMessage};
+
+		}
+
+		System.debug('Created oscar with id: ' + oscar.Id);
+
+		return new String[]{newCaseOscar.Id,newCaseOscar.Casenumber};
+
+	}
+
+	public static List<Case> createPCIComplianceOscars(List<Account> accs, Map<Id,List<Contact>> contactsAcc, Set<Id> accsToSendEmail){
+
+		return createPCIComplianceOscars(accs, contactsAcc, accsToSendEmail, 'Massive FOP Creation');
+	}
+
+	public static List<Case> createPCIComplianceOscars(List<Account> accs, Map<Id,List<Contact>> contactsAcc, Set<Id> accsToSendEmail, String origin){
+
+		Map<id,OscarObjectsWrapper> accOscarObjsMap = new Map<id,OscarObjectsWrapper>();
+		OscarObjectsWrapper oscarObjs;
+		
+		Map<String,Object> fieldsOfObject;
+
+		List<Case> casesToInsert = new List<Case>();
+
+		Contact keyContact;
+
+		Map<Id,Account> accountMap = new Map<Id,Account>();
+
+		String identifier;
+
+		if (origin == AMS_Utils.ANG_MASSIVE_FOP)
+			identifier = 'NG_FOP_PortalNotification';
+		else if (origin == AMS_Utils.ANG_FOP_AUTOMATIC_RENEWAL)
+			identifier = 'NG_FOP_PortalNotification'; //change the identifier if we need to use another notification template
+
+		Notification_Template__c notificationTemplate = null;
+
+		List<Notification_Template__c> notificationTemplates = [SELECT Id,Name, Identifier__c FROM Notification_Template__c WHERE Identifier__c = :identifier LIMIT 1];
+
+		if(!notificationTemplates.isEmpty())
+			notificationTemplate = notificationTemplates.get(0);
+		//Case:
+		for(Account acc : accs){
+
+			accountMap.put(acc.Id,acc);
+
+			System.debug('[ANG_OscarProcessHelper.createPCIComplianceOscars] - Inserting PCI Oscar for Account: '+acc.Id+' - '+acc.Name+' - '+acc.IataCode__c);
+
+			keyContact = fetchKeyContactForPCI(acc, contactsAcc.get(acc.Id));
+			
+			fieldsOfObject = new Map<String,Object>();
+	        fieldsOfObject.put('Account_Concerned__c',acc.Id);
+	      	fieldsOfObject.put('ContactId',keyContact.Id);
+	        fieldsOfObject.put('BSPCountry__c',acc.BillingCountry);
+	        fieldsOfObject.put('Region__c',acc.Region_formula__c);
+	        fieldsOfObject.put('CaseArea__c','Accreditation Process');
+	        fieldsOfObject.put('Origin', origin);
+	        fieldsOfObject.put('Reason1__c','FoP Management');
+	        fieldsOfObject.put('Subject','FoP Management - ' + acc.ANG_Accreditation_Model__c + ' - ' + acc.Name);
+	        fieldsOfObject.put('Type_of_customer__c','IATA Travel Agent');
+	        
+	       	Case cse = ANG_EntityCreator.createCase(AMS_Utils.RECTYPE_OSCARCOMM, acc.Id, fieldsOfObject);
+
+	        //assign to queue
+	       	Database.DMLOptions dmo = new Database.DMLOptions();
+	        dmo.assignmentRuleHeader.useDefaultRule = true;
+	        cse.setOptions(dmo);
+
+	        oscarObjs = new OscarObjectsWrapper();
+	        oscarObjs.cse = cse;
+	        oscarObjs.con = keyContact;
+
+	        accOscarObjsMap.put(acc.id,oscarObjs);
+	        casesToInsert.add(cse);
+		}
+
+		if (!casesToInsert.isEmpty())
+       		insert casesToInsert;
+
+       	Set<Id> casesIds = new Set<Id>();
+	    for (Case cse : casesToInsert){
+	    	casesIds.add(cse.Id);
+	    }
+
+       	for(Case insertedCase : [Select ownerId, Account_Concerned__c from Case where Id in :casesIds]){
+       		accOscarObjsMap.get(insertedCase.Account_Concerned__c).ownerId = insertedCase.ownerId;
+       	}
+
+		//AMS_OSCAR__c:
+		List<AMS_Oscar__c> oscarsToInsert = new List<AMS_OSCAR__c>(); 
+
+        for (Account acc : accs){
+        
+			fieldsOfObject = new Map<String,Object>();
+	        fieldsOfObject.put('Process__c',AMS_Utils.NGFOP);
+			fieldsOfObject.put('Status__c','Open');
+			fieldsOfObject.put('OwnerId',accOscarObjsMap.get(acc.Id).ownerId);
+			fieldsOfObject.put('Oscar_Communication_Case_Id__c',accOscarObjsMap.get(acc.Id).cse.Id);
+
+			AMS_Oscar__c oscar = ANG_EntityCreator.createOscar(AMS_Utils.RECTYPE_NEWGENFOP, acc.Id, fieldsOfObject);		
+	        oscarsToInsert.add(oscar);
+	        accOscarObjsMap.get(acc.Id).oscar = oscar;
+    	}
+
+    	if(!oscarsToInsert.isEmpty())
+    		insert oscarsToInsert;
+
+
+    	OrgWideEmailAddress[] owea;
+
+		if(!accsToSendEmail.isEmpty()){
+			owea = [select Id from OrgWideEmailAddress where Address = 'agencymanagement@iata.org'];
+		}
+
+		List<Case> casesToUpdate = new List<Case>();
+
+		for (Account acc: accs){
+			accOscarObjsMap.get(acc.Id).cse.Oscar__c = accOscarObjsMap.get(acc.Id).oscar.Id;
+			casesToUpdate.add(accOscarObjsMap.get(acc.Id).cse);
+		}
+
+		if(!casesToUpdate.isEmpty())
+			update casesToUpdate;
+
+	    Map<Id,Case> casesMaps = new Map<Id,Case>();
+
+
+	    for(Case c: [Select Id, AccountId, Casenumber from Case where Id in :casesToUpdate])
+	    	casesMaps.put(c.AccountId, c);
+
+	    Set<Account> acctSet = new Set<Account>();
+
+		StaticResource sr;
+		if (origin == AMS_Utils.ANG_MASSIVE_FOP || origin == AMS_Utils.ANG_FOP_AUTOMATIC_RENEWAL)
+			sr = [Select body, name from StaticResource where Name = 'ANG_NilCreditCardSelfDeclaration'].get(0);
+
+		for (Account acc: accs){
+
+			if(accsToSendEmail.contains(acc.Id)){
+
+				acctSet.add(acc);
+
+				Messaging.EmailFileAttachment[] attachments = null;
+
+				if(sr <> null){
+
+					Blob tempBlob = sr.Body;
+					
+					String bodyAttached = tempBlob.toString();
+					
+					bodyAttached = bodyAttached.replace('#IATACODE',acc.IATACode__c);
+					bodyAttached = bodyAttached.replace('#TODAYDATE',String.valueOf(Datetime.now().format('dd MMMM yyyy')));
+					String accountName = acc.Legal_name__c == null ? acc.Name : acc.Legal_name__c;
+					bodyAttached = bodyAttached.replace('#LEGALNAME',accountName);
+
+					Messaging.EmailFileAttachment attach = new Messaging.EmailFileAttachment();
+					attach.setBody(Blob.valueOf(bodyAttached));
+					attach.setFileName('Nil Credit Card self-declaration.doc');
+
+					attachments = new Messaging.EmailFileAttachment[]{attach};
+				}
+                
+               	AMS_AgencyRegulationAutoRenewal.sendEmailAlert(fetchKeyContactsForPCI(contactsAcc.get(acc.Id)), accOscarObjsMap.get(acc.Id).oscar.Id, AMS_OSCARTriggerHandler.ANGemailTemplates(AMS_Utils.NGFOP, null, true), accOscarObjsMap.get(acc.Id).oscar.Oscar_Communication_Case_Id__c, owea[0], false, attachments);  
+				//if we need a fallback contact:
+               // AMS_AgencyRegulationAutoRenewal.sendEmailAlert((fetchKeyContactsForPCI(contactsAcc.get(acc.Id)).isEmpty() ? contactsAcc.get(acc.Id) : fetchKeyContactsForPCI(contactsAcc.get(acc.Id))), accOscarObjsMap.get(acc.Id).oscar.Id, AMS_OSCARTriggerHandler.ANGemailTemplates(AMS_Utils.NGFOP, null, true), accOscarObjsMap.get(acc.Id).oscar.Oscar_Communication_Case_Id__c, owea[0], false, attachments);  
+
+			}
+
+			System.debug('[ANG_OscarProcessHelper.createPCIComplianceOscars] - Finished Inserting oscars: '+ accOscarObjsMap.get(acc.id).oscar.Id + ' | Case: '+accOscarObjsMap.get(acc.id).cse.Id);
+		}
+
+		if(notificationTemplate <> null)
+			createPortalNotifications(acctSet,casesMaps,notificationTemplate);
+
+        return casesToUpdate;
+    }
+
+    private static void createPortalNotifications(Set<Account> acctSet,  Map<Id,Case> acctIdCasesMap, Notification_Template__c notificationTemplate){
+		
+		List<Contact> contactsToSend = new List<Contact>();
+		Map<Id,Id> contactAccts = new Map<Id,Id>();
+		Map<Id,Contact> contactsMap = new Map<Id,Contact>();
+		List<String> contactNot = new List<String>();
+		Map<Id,Account> accounts = new Map<Id,Account>();
+
+		for(Account acc: acctSet){
+			contactsToSend.addall(fetchKeyContactsForPCI(acc.Contacts));
+			accounts.put(acc.Id,acc);
+		}
+
+    	for(Contact c: contactsToSend){
+    		contactNot.add(c.Id+':'+notificationTemplate.Name);
+			contactAccts.put(c.Id,c.AccountId);
+    		contactsMap.put(c.Id,c);
+
+    	}
+
+    	List<Notification__c> notifications = new List<Notification__c>();
+
+		for(Notification__c nt : ISSP_CreateNotification.createnotification(contactNot, false)){
+				
+			Account acct = accounts.get(contactAccts.get(nt.Contact__c));
+
+			String casenumbmer = acctIdCasesMap.get(contactAccts.get(nt.Contact__c)).CaseNumber;
+
+			nt.Message__c = nt.Message__c
+				.replace('#CONTACTNAME', contactsMap.get(nt.Contact__c).Name)
+				.replace('#IATACODE', acct.IataCode__c)
+				.replace('#TODAY30',String.valueOf(Datetime.now().addDays(30).format('dd/MM/yyyy')))
+				.replace('#CASENUMBER',acctIdCasesMap.get(contactAccts.get(nt.Contact__c)).CaseNumber);
+				
+				notifications.add(nt);
+    	}		
+
+		if(!notifications.isEmpty()) insert notifications;
+
+	}
+
+	private static Contact fetchKeyContactForPCI(Account acc, List<Contact> contacts){
+
+		if(contacts == null || contacts.isEmpty())
+			return null;
+
+		Contact adminCon;
+		Contact finAccessContact;
+		Contact bspContact;
+		Contact regularContact;
+		for (Contact con :contacts){
+
+			if(con.User_Portal_Status__c == 'Approved Admin')
+				adminCon = con;
+			if (con.Financial_Assessment_Contact__c)
+				finAccessContact = con;	
+			if(con.BSP_CASS_Payment_contact__c)
+				bspContact = con;
+			if(con.User_Portal_Status__c <> 'Approved Admin' && !con.Financial_Assessment_Contact__c &&  !con.BSP_CASS_Payment_contact__c)
+				regularContact = con;
+
+		} 
+		
+		Contact toReturn = adminCon <> null ? adminCon : finAccessContact <> null ? finAccessContact : bspContact <> null ? bspContact : regularContact;			
+ 		
+ 		return toReturn;
+	}
+
+	private static List<Contact> fetchKeyContactsForPCI(List<Contact> contacts){
+
+		if(contacts == null || contacts.isEmpty())
+			return null;
+
+		Set<Contact> contactsMap = new set<Contact>();
+
+		for (Contact con :contacts){
+
+			if(con.User_Portal_Status__c == 'Approved Admin')
+				contactsMap.add(con);
+			if (con.Financial_Assessment_Contact__c)
+				contactsMap.add(con);
+			if(con.BSP_CASS_Payment_contact__c)
+				contactsMap.add(con);
+		} 
+
+ 		
+ 		List<Contact> toReturn = new List<Contact>();
+ 		toReturn.addAll(contactsMap);
+
+ 		return toReturn;
+	}
+    
+	public static void sendFOPPortalNotificationAndEmail(Map<String,Map<Id,Case>> notifTempNameCaseMap, Map<String,Set<Id>> templateContIdMap){
+
+		List<String> notificationTargets = new List<String>();
+		Map<Id,Case> contactCaseMap = new Map<Id,Case>();
+		Set<Id> conIds = new Set<Id>();
+
+		for (String key : templateContIdMap.keySet()){
+			conIds.addAll(templateContIdMap.get(key));
+		}
+
+		Map<Id,Contact> contacts = new Map<Id,Contact>([SELECT Id, Name, Email, Preferred_Language__c, BSP_CASS_Payment_contact__c, Financial_Assessment_Contact__c, Account.IataCode__c 
+														FROM Contact WHERE Id IN :conIds]); 
+
+		for(String key :notifTempNameCaseMap.keySet()){
+			for(case cse :notifTempNameCaseMap.get(key).values()){					
+				notificationTargets.add(cse.ContactId+':'+key);
+				contactCaseMap.put(cse.ContactId,cse);				
+			}			
+		}
+
+		List<Notification__c> notifications = ISSP_CreateNotification.createnotification(notificationTargets, false);
+
+		for (Notification__c nt :notifications){
+			nt.Message__c = nt.Message__c
+				.replace('#CONTACTNAME#',contacts.get(nt.Contact__c).Name)
+				.replace('#IATACODE#',contacts.get(nt.Contact__c).Account.IataCode__c)
+				.replace('#DEADLINEDATE#',String.valueOf(Datetime.now().addDays(15).format('dd/MM/yyyy')));
+		}
+
+		if (!notifications.isEmpty())
+			insert notifications;
+
+		System.debug('## notifications created: '+notifications.size());	
+
+		//send emails
+		OrgWideEmailAddress[] owea;
+	    owea = [select Id from OrgWideEmailAddress where Address = 'agencymanagement@iata.org'];
+
+	    if(templateContIdMap.keySet().contains(ANG_FOPOSCARNotificationBatch.FOP_REMINDER_TEMPLATE_ID)){
+	    	for (Id conId : templateContIdMap.get(ANG_FOPOSCARNotificationBatch.FOP_REMINDER_TEMPLATE_ID)){
+	    		AMS_AgencyRegulationAutoRenewal.sendEmailAlert(new List<Contact>{contacts.get(conId)}, contactCaseMap.get(conId).OSCAR__c, AMS_OSCARTriggerHandler.ANGemailTemplates(ANG_FOPOSCARNotificationBatch.FOP_REMINDER_TEMPLATE_ID, null, false), contactCaseMap.get(conId).Id, owea[0], false);      
+	    	}   	
+	    }
+	    if(templateContIdMap.keySet().contains(ANG_FOPOSCARNotificationBatch.FOP_NONCOMPLIANCE_TEMPLATE_ID)){
+	    	for (Id conId : templateContIdMap.get(ANG_FOPOSCARNotificationBatch.FOP_NONCOMPLIANCE_TEMPLATE_ID)){
+	    		AMS_AgencyRegulationAutoRenewal.sendEmailAlert(new List<Contact>{contacts.get(conId)}, contactCaseMap.get(conId).OSCAR__c, AMS_OSCARTriggerHandler.ANGemailTemplates(ANG_FOPOSCARNotificationBatch.FOP_NONCOMPLIANCE_TEMPLATE_ID, null, false), contactCaseMap.get(conId).Id, owea[0], false);      
+	    	}   	
+	    }
+
+	}
+
     public Class EntityUpdater{
 
     	public Map<Id,Account> acctMap;
@@ -901,6 +1443,26 @@ global class ANG_OscarProcessHelper {
 			toUpdate = false;
 
 		}
+
+    }
+
+    public Class OscarObjectsWrapper{
+
+    	public Account acc;
+    	public Case cse;
+    	//public AMS_Pax_Accreditation_Form__c stagingArea;
+    	public AMS_Oscar__c oscar;
+    	public Id ownerId;
+    	public Contact con;
+
+    	public OscarObjectsWrapper(){
+
+        	acc = new Account();
+    		cse = new Case();
+    		//stagingArea = new AMS_Pax_Accreditation_Form__c();
+    		oscar = new AMS_Oscar__c();
+    		con = new Contact();
+    	}
 
     }
 

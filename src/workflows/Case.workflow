@@ -3857,6 +3857,16 @@
         <template>ISS_Portal/Owner_notification_of_new_comment</template>
     </alerts>
     <alerts>
+        <fullName>Send_notification</fullName>
+        <ccEmails>chauhanm@iata.org</ccEmails>
+        <ccEmails>ndc@iata.org</ccEmails>
+        <description>Send notification</description>
+        <protected>false</protected>
+        <senderAddress>noreply@iata.org</senderAddress>
+        <senderType>OrgWideEmailAddress</senderType>
+        <template>unfiled$public/New_Case_Assigned_to_the_Queue</template>
+    </alerts>
+    <alerts>
         <fullName>Status_Approved</fullName>
         <description>ACR: Informs that Status of ACR is changed</description>
         <protected>false</protected>
@@ -4781,6 +4791,17 @@
         <lookupValueType>Queue</lookupValueType>
         <name>Change owner to global KM queue</name>
         <notifyAssignee>false</notifyAssignee>
+        <operation>LookupValue</operation>
+        <protected>false</protected>
+    </fieldUpdates>
+    <fieldUpdates>
+        <fullName>Change_owner_to_queue</fullName>
+        <description>Changes case owner to the support queue.</description>
+        <field>OwnerId</field>
+        <lookupValue>AIR_Tech_Zone_Support</lookupValue>
+        <lookupValueType>Queue</lookupValueType>
+        <name>Change owner to queue</name>
+        <notifyAssignee>true</notifyAssignee>
         <operation>LookupValue</operation>
         <protected>false</protected>
     </fieldUpdates>
@@ -7953,7 +7974,7 @@ Case(month(datevalue(now()))+1,1,31,2,28,3,31,4,30,5,31,6,30,7,31,8,31,9,30,10,3
             <name>Update_previous_owner</name>
             <type>FieldUpdate</type>
         </actions>
-        <active>true</active>
+        <active>false</active>
         <booleanFilter>(1 AND (2 OR 3) AND 4) AND (5 AND 6)</booleanFilter>
         <criteriaItems>
             <field>Case.RecordTypeId</field>
@@ -8303,6 +8324,25 @@ Case(month(datevalue(now()))+1,1,31,2,28,3,31,4,30,5,31,6,30,7,31,8,31,9,30,10,3
         </criteriaItems>
         <description>workflow rule that can automatically populate the Service Leve field with the value 2 when a case is Escalated.</description>
         <triggerType>onCreateOrTriggeringUpdate</triggerType>
+    </rules>
+    <rules>
+        <fullName>Assign to AIR Tech Zone Queue</fullName>
+        <actions>
+            <name>Send_notification</name>
+            <type>Alert</type>
+        </actions>
+        <actions>
+            <name>Change_owner_to_queue</name>
+            <type>FieldUpdate</type>
+        </actions>
+        <active>true</active>
+        <criteriaItems>
+            <field>Case.RecordType__c</field>
+            <operation>equals</operation>
+            <value>AIR Tech Zone</value>
+        </criteriaItems>
+        <description>Rule to assign Case created via AIR Tech Zone community to their support queue.</description>
+        <triggerType>onCreateOnly</triggerType>
     </rules>
     <rules>
         <fullName>Automatic type of customer - Cargo</fullName>
@@ -11898,6 +11938,67 @@ Case(month(datevalue(now()))+1,1,31,2,28,3,31,4,30,5,31,6,30,7,31,8,31,9,30,10,3
         <triggerType>onCreateOrTriggeringUpdate</triggerType>
     </rules>
     <rules>
+        <fullName>GDC MAD complaint queue assignment</fullName>
+        <actions>
+            <name>Case_status_Open</name>
+            <type>FieldUpdate</type>
+        </actions>
+        <actions>
+            <name>ComplaintUpdateowner</name>
+            <type>FieldUpdate</type>
+        </actions>
+        <actions>
+            <name>Complaint_open_date</name>
+            <type>FieldUpdate</type>
+        </actions>
+        <actions>
+            <name>Reset_Reopened_case</name>
+            <type>FieldUpdate</type>
+        </actions>
+        <actions>
+            <name>Reset_reopen_reason2</name>
+            <type>FieldUpdate</type>
+        </actions>
+        <actions>
+            <name>Update_previous_owner</name>
+            <type>FieldUpdate</type>
+        </actions>
+        <active>true</active>
+        <booleanFilter>(1 AND 2 AND (3 OR 6)) AND (4 AND 5)</booleanFilter>
+        <criteriaItems>
+            <field>Case.RecordTypeId</field>
+            <operation>equals</operation>
+            <value>Cases - Europe,ACCA Customer Service Request (External),Order of AWB / allocation (CASS),Cases - Americas,Cases - Africa &amp; Middle East,Cases - Asia &amp; Pacific,Cases - China &amp; North Asia,SAAM,Internal Cases (IDFS ISS),Process</value>
+        </criteriaItems>
+        <criteriaItems>
+            <field>Case.Region__c</field>
+            <operation>equals</operation>
+            <value>Africa &amp; Middle East,Americas,Europe</value>
+        </criteriaItems>
+        <criteriaItems>
+            <field>Case.IsComplaint__c</field>
+            <operation>equals</operation>
+            <value>True</value>
+        </criteriaItems>
+        <criteriaItems>
+            <field>Case.Topic__c</field>
+            <operation>notContain</operation>
+            <value>IATA Codes not applicable to Agents,TIESS,ICCS</value>
+        </criteriaItems>
+        <criteriaItems>
+            <field>Case.Subtopic__c</field>
+            <operation>notContain</operation>
+            <value>MITA Interline Agreements</value>
+        </criteriaItems>
+        <criteriaItems>
+            <field>Case.Customer_recovery__c</field>
+            <operation>equals</operation>
+            <value>True</value>
+        </criteriaItems>
+        <description>the query is reopened and assigned to GDC MAD complaint queue</description>
+        <triggerType>onCreateOrTriggeringUpdate</triggerType>
+    </rules>
+    <rules>
         <fullName>I%26C_Update_Status to Action Needed</fullName>
         <active>true</active>
         <formula>AND( RecordType.DeveloperName = &quot;Invoicing_Collection_Cases&quot;,  ISPICKVAL(Status, &quot;Pending customer&quot;), OR( AND(ISPICKVAL(What_is_the_reason_for_non_payment__c, &quot;Will pay&quot;), ISBLANK(POP_Received_Date__c)), AND(ISPICKVAL(What_is_the_reason_for_non_payment__c, &quot;Needs to check invoices&quot;)), AND(ISPICKVAL(Has_the_agent_paid_invoice__c, &quot;Already paid&quot;),ISBLANK(POP_Received_Date__c))  ))</formula>
@@ -11922,7 +12023,7 @@ Case(month(datevalue(now()))+1,1,31,2,28,3,31,4,30,5,31,6,30,7,31,8,31,9,30,10,3
             <name>IAPP_change_IAPP_case_owner_to_AP_HO_Q</name>
             <type>FieldUpdate</type>
         </actions>
-        <active>true</active>
+        <active>false</active>
         <criteriaItems>
             <field>Case.Eligibility_Documents_Checklist_approved__c</field>
             <operation>equals</operation>
@@ -15032,7 +15133,7 @@ Change the case status to “Agent Notified (mail)” if case status was “Agen
             <type>FieldUpdate</type>
         </actions>
         <active>true</active>
-        <booleanFilter>(1 AND 2 AND 3 AND 4 AND (5 OR (6 AND 7)) AND (10 OR (11 AND 12 AND 13 AND 17 AND 20)) AND 16 AND 18 AND 19 AND 21) OR 8 OR 9 OR (14 AND 15)</booleanFilter>
+        <booleanFilter>(1 AND 2 AND 3 AND 4 AND (5 OR (6 AND 7)) AND (10 OR (11 AND 12 AND 13 AND 17 AND 20)) AND 16 AND 18 AND 19 AND 21 AND 22) OR 8 OR 9 OR (14 AND 15)</booleanFilter>
         <criteriaItems>
             <field>Case.RecordTypeId</field>
             <operation>notEqual</operation>
@@ -15136,7 +15237,12 @@ Change the case status to “Agent Notified (mail)” if case status was “Agen
         <criteriaItems>
             <field>Case.Reason1__c</field>
             <operation>notEqual</operation>
-            <value>Financial review opt-in / opt-out</value>
+            <value>Financial review opt-in / opt-out,Change of Trade Name,Change of Hierarchy</value>
+        </criteriaItems>
+        <criteriaItems>
+            <field>Case.Reason1__c</field>
+            <operation>notEqual</operation>
+            <value>Annual revalidation</value>
         </criteriaItems>
         <description>If the case should be invisible on the portal uncheck the field &quot;Visible on ISS Portal&quot;</description>
         <triggerType>onAllChanges</triggerType>
@@ -15148,7 +15254,7 @@ Change the case status to “Agent Notified (mail)” if case status was “Agen
             <type>FieldUpdate</type>
         </actions>
         <active>true</active>
-        <booleanFilter>((1 OR 2 OR 3 OR 4 OR (10 AND (11 OR 12 OR 16 OR 17 OR 19))) AND ((5 AND 6) OR (17 AND 18))) OR ((7 AND 8 AND 9) AND 6) OR (13 AND 14) OR 15</booleanFilter>
+        <booleanFilter>((1 OR 2 OR (3 AND (21 AND 22)) OR 4 OR (10 AND (11 OR 12 OR 16 OR 17 OR 19 OR 20))) AND ((5 AND 6) OR (17 AND 18))) OR ((7 AND 8 AND 9) AND 6) OR (13 AND 14) OR 15</booleanFilter>
         <criteriaItems>
             <field>Case.RecordTypeId</field>
             <operation>equals</operation>
@@ -15242,7 +15348,22 @@ Change the case status to “Agent Notified (mail)” if case status was “Agen
         <criteriaItems>
             <field>Case.Reason1__c</field>
             <operation>equals</operation>
-            <value>Financial review opt-in / opt-out</value>
+            <value>Financial review opt-in / opt-out,Change of Trade Name,Change of Hierarchy</value>
+        </criteriaItems>
+        <criteriaItems>
+            <field>Case.Reason1__c</field>
+            <operation>equals</operation>
+            <value>Annual revalidation</value>
+        </criteriaItems>
+        <criteriaItems>
+        <field>Case.RecordTypeId</field>
+            <operation>notEqual</operation>
+            <value>IDFS Airline Participation Process</value>
+        </criteriaItems>
+        <criteriaItems>
+            <field>Case.Reason1__c</field>
+            <operation>notEqual</operation>
+            <value>IATA Easy Pay</value>
         </criteriaItems>
         <description>Enables the &quot;Visible on ISS Portal&quot;  checkbox for case record types that should by default be visible on the portal. Users can then change this option to hide the record on the portal.</description>
         <triggerType>onCreateOrTriggeringUpdate</triggerType>
@@ -16279,7 +16400,7 @@ Inactive (Miguel Guerreiro, 3/17/2016 12:59 PM) - self service is no longer used
             <name>Update_previous_owner</name>
             <type>FieldUpdate</type>
         </actions>
-        <active>true</active>
+        <active>false</active>
         <booleanFilter>(1 AND 7 AND (2 OR 3) AND 4) AND (5 AND 6)</booleanFilter>
         <criteriaItems>
             <field>Case.RecordTypeId</field>
@@ -16418,7 +16539,7 @@ Inactive (Miguel Guerreiro, 3/17/2016 12:59 PM) - self service is no longer used
             <name>Update_previous_owner</name>
             <type>FieldUpdate</type>
         </actions>
-        <active>true</active>
+        <active>false</active>
         <booleanFilter>(1 AND (2 OR 6)) AND (3 AND 4 AND 5)</booleanFilter>
         <criteriaItems>
             <field>Case.RecordTypeId</field>

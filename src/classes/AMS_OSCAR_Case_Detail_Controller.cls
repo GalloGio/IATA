@@ -133,8 +133,8 @@ public with sharing class AMS_OSCAR_Case_Detail_Controller {
 
     private Boolean isEditable(String fieldName){
 
-        //For newgen
-        if(this.oscarObj.Account__r.ANG_IsNewGenAgency__c)
+        //Enforce non editable fields for newgen processes.  NEWGEN-1862/NEWGEN-3387: Don't enforce for newgen changes/correction
+        if(this.oscarObj.Account__r.ANG_IsNewGenAgency__c && (this.oscarObj.Process__c != AMS_Utils.NGCHANGES && this.oscarObj.Process__c != AMS_Utils.NGCORRECTION))
             if(notEditableForNEWGEN.contains(fieldName))
                 return false;
 
@@ -230,21 +230,21 @@ public with sharing class AMS_OSCAR_Case_Detail_Controller {
         }
         set;
     }
-	
-	//AMSU-125
+    
+    //AMSU-125
     public Boolean loadAMSRemittance(AMS_OSCAR__c oscar) {
         Set<String> locationsClass = new Set<String> {'P', 'D'};        
-        Set<String> processesToCheck = new Set<String> {AMS_Utils.AGENCYCHANGES, AMS_Utils.new_HO, AMS_Utils.new_BR};
+        Set<String> processesToCheck = new Set<String> {AMS_Utils.AGENCYCHANGES, AMS_Utils.new_HO, AMS_Utils.new_BR, AMS_Utils.new_SA};
 
         return !String.isBlank(oscar.Process__c) && locationsClass.contains(accreditationObj.Location_Class__c) && processesToCheck.contains(oscar.Process__c);
     }
 
     public List<SelectOption> getRfPicklistValues(){
-		//AMSU-125
+        //AMSU-125
         if(loadAMSRemittance(oscarObj)) {
             return getRfPicklistValuesAMS();    
         }
-		
+        
         List<SelectOption> rfPicklistValues = new List<SelectOption>();
         Set<String> rightOptions;
         Set<String> auxOptions = new Set<String>();
@@ -306,8 +306,8 @@ public with sharing class AMS_OSCAR_Case_Detail_Controller {
             return rfPicklistValues;
         
     }
-	
-	//AMSU-125
+    
+    //AMSU-125
     public List<SelectOption> getRfPicklistValuesAMS() {
         List<SelectOption> rfPicklistValues = new List<SelectOption>();
         system.debug('operationCodes: ' +operationCodes);

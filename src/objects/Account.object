@@ -2869,7 +2869,7 @@
                 <sorted>false</sorted>
                 <value>
                     <fullName>No IEP Account</fullName>
-                    <default>true</default>
+                    <default>false</default>
                     <label>No IEP Account</label>
                 </value>
                 <value>
@@ -10438,7 +10438,7 @@ Approval: Key Contact can see pending request approve it one by one</inlineHelpT
         <description>FDS AGM checks if the branch account is in a different country to the parent&apos;s.</description>
         <externalId>false</externalId>
         <formula>IF(
- AND(RecordType.Name = &quot;Agency&quot; , OR(ispickval(Location_Type__c, &quot;BR&quot;),ispickval(Location_Type__c, &quot;AE&quot;))),
+ AND(RecordType.Name = &quot;Agency&quot; , OR(ispickval(Location_Type__c, &quot;BR&quot;),ispickval(Location_Type__c, &quot;AE&quot;),ispickval(Location_Type__c, &quot;SA&quot;))),
  IF(AND(Parent.IATA_ISO_Country__r.AMS_Settlement_System__r.Name &lt;&gt; IATA_ISO_Country__r.AMS_Settlement_System__r.Name, NOT(CNS_Agency__c)),
   &quot;Yes&quot;,
   &quot;No&quot;
@@ -10489,6 +10489,11 @@ Approval: Key Contact can see pending request approve it one by one</inlineHelpT
                     <fullName>Nil CC</fullName>
                     <default>false</default>
                     <label>Nil CC</label>
+                </value>
+                <value>
+                    <fullName>Corporate Card</fullName>
+                    <default>false</default>
+                    <label>Corporate Card</label>
                 </value>
             </valueSetDefinition>
         </valueSet>
@@ -15966,6 +15971,56 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
         <unique>false</unique>
     </fields>
     <fields>
+        <fullName>Training_Membership__c</fullName>
+        <description>The field is used to capture IATA Training related code. It was created to replace old field.
+
+Denotes an aviation training center authorized by IATA&apos;s Training and Development Institute ITDI.
+This field is kept up-to-date with the feedback of ITDI at least twice a year during the ATC Spring and Fall promotions.</description>
+        <externalId>false</externalId>
+        <inlineHelpText>• ATC - IATA Authorized Training Centers 
+• ATS - IATA Accredited Training Schools 
+• RTP - IATA Regional Training Partners 
+• IATA Academic Partners 
+• Company</inlineHelpText>
+        <label>Training Membership</label>
+        <required>false</required>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackHistory>false</trackHistory>
+        <type>MultiselectPicklist</type>
+        <valueSet>
+            <restricted>true</restricted>
+            <valueSetDefinition>
+                <sorted>false</sorted>
+                <value>
+                    <fullName>Academic Partners</fullName>
+                    <default>false</default>
+                    <label>Academic Partners</label>
+                </value>
+                <value>
+                    <fullName>ATC</fullName>
+                    <default>false</default>
+                    <label>ATC</label>
+                </value>
+                <value>
+                    <fullName>ATS</fullName>
+                    <default>false</default>
+                    <label>ATS</label>
+                </value>
+                <value>
+                    <fullName>Company</fullName>
+                    <default>false</default>
+                    <label>Company</label>
+                </value>
+                <value>
+                    <fullName>RTP</fullName>
+                    <default>false</default>
+                    <label>RTP</label>
+                </value>
+            </valueSetDefinition>
+        </valueSet>
+        <visibleLines>4</visibleLines>
+    </fields>
+    <fields>
         <fullName>Type</fullName>
         <trackFeedHistory>false</trackFeedHistory>
         <trackHistory>true</trackHistory>
@@ -16117,39 +16172,19 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
                     <label>I</label>
                 </value>
                 <value>
-                    <fullName>L</fullName>
+                    <fullName>J</fullName>
                     <default>false</default>
-                    <label>L</label>
+                    <label>J</label>
                 </value>
                 <value>
-                    <fullName>M</fullName>
+                    <fullName>K</fullName>
                     <default>false</default>
-                    <label>M</label>
+                    <label>K</label>
                 </value>
                 <value>
-                    <fullName>N</fullName>
+                    <fullName>S</fullName>
                     <default>false</default>
-                    <label>N</label>
-                </value>
-                <value>
-                    <fullName>O</fullName>
-                    <default>false</default>
-                    <label>O</label>
-                </value>
-                <value>
-                    <fullName>P</fullName>
-                    <default>false</default>
-                    <label>P</label>
-                </value>
-                <value>
-                    <fullName>Q</fullName>
-                    <default>false</default>
-                    <label>Q</label>
-                </value>
-                <value>
-                    <fullName>R</fullName>
-                    <default>false</default>
-                    <label>R</label>
+                    <label>S</label>
                 </value>
             </valueSetDefinition>
         </valueSet>
@@ -20383,31 +20418,6 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
         <sharedTo>
             <group>HUBMadrid</group>
             <group>IDFSFrance</group>
-        </sharedTo>
-    </listViews>
-    <listViews>
-        <fullName>GDP_All_Accounts</fullName>
-        <columns>ACCOUNT.NAME</columns>
-        <columns>ACCOUNT.INDUSTRY</columns>
-        <columns>ACCOUNT.TYPE</columns>
-        <columns>ACCOUNT.ADDRESS1_CITY</columns>
-        <columns>ACCOUNT.ADDRESS1_COUNTRY</columns>
-        <columns>ACCOUNT.PHONE1</columns>
-        <columns>ACCOUNT.PHONE2</columns>
-        <filterScope>Everything</filterScope>
-        <filters>
-            <field>Number_of_GDP_Billing_accounts__c</field>
-            <operation>greaterThan</operation>
-            <value>0</value>
-        </filters>
-        <filters>
-            <field>Number_of_GDP_Billing_accounts__c</field>
-            <operation>notEqual</operation>
-        </filters>
-        <label>GDP - All Accounts</label>
-        <language>en_US</language>
-        <sharedTo>
-            <role>GDP</role>
         </sharedTo>
     </listViews>
     <listViews>
@@ -25323,6 +25333,39 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
         </sharedTo>
     </listViews>
     <listViews>
+        <fullName>X00_GDP_AdHoc_Search</fullName>
+        <columns>ACCOUNT.NAME</columns>
+        <columns>ACCOUNT.INDUSTRY</columns>
+        <columns>ACCOUNT.TYPE</columns>
+        <columns>ACCOUNT.ADDRESS1_CITY</columns>
+        <columns>ACCOUNT.ADDRESS1_COUNTRY</columns>
+        <columns>Status__c</columns>
+        <columns>Category__c</columns>
+        <filterScope>Everything</filterScope>
+        <filters>
+            <field>Location_Class__c</field>
+            <operation>equals</operation>
+            <value>T</value>
+        </filters>
+        <filters>
+            <field>Category__c</field>
+            <operation>equals</operation>
+            <value>Non-IATA Travel Agent</value>
+        </filters>
+        <filters>
+            <field>IATACode__c</field>
+            <operation>startsWith</operation>
+            <value>96</value>
+        </filters>
+        <filters>
+            <field>Status__c</field>
+            <operation>equals</operation>
+            <value>Approved,Changes processed</value>
+        </filters>
+        <label>00 - GDP - AdHoc Search</label>
+        <language>en_US</language>
+    </listViews>
+    <listViews>
         <fullName>ZambiaCargoAgents</fullName>
         <columns>ACCOUNT.NAME</columns>
         <columns>ACCOUNT.SITE</columns>
@@ -25527,7 +25570,7 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
             </values>
             <values>
                 <fullName>No IEP Account</fullName>
-                <default>true</default>
+                <default>false</default>
             </values>
             <values>
                 <fullName>Open</fullName>
@@ -27862,6 +27905,29 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
             </values>
         </picklistValues>
         <picklistValues>
+            <picklist>Training_Membership__c</picklist>
+            <values>
+                <fullName>ATC</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>ATS</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Academic Partners</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Company</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>RTP</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
             <picklist>Type</picklist>
             <values>
                 <fullName>CANSO</fullName>
@@ -28056,7 +28122,7 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
             </values>
             <values>
                 <fullName>No IEP Account</fullName>
-                <default>true</default>
+                <default>false</default>
             </values>
             <values>
                 <fullName>Open</fullName>
@@ -30985,6 +31051,29 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
             </values>
         </picklistValues>
         <picklistValues>
+            <picklist>Training_Membership__c</picklist>
+            <values>
+                <fullName>ATC</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>ATS</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Academic Partners</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Company</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>RTP</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
             <picklist>Type</picklist>
             <values>
                 <fullName>ATC</fullName>
@@ -31223,7 +31312,7 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
             </values>
             <values>
                 <fullName>No IEP Account</fullName>
-                <default>true</default>
+                <default>false</default>
             </values>
             <values>
                 <fullName>Open</fullName>
@@ -33614,6 +33703,29 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
             </values>
         </picklistValues>
         <picklistValues>
+            <picklist>Training_Membership__c</picklist>
+            <values>
+                <fullName>ATC</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>ATS</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Academic Partners</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Company</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>RTP</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
             <picklist>Type</picklist>
             <values>
                 <fullName>IATA Head Office</fullName>
@@ -33752,7 +33864,7 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
             </values>
             <values>
                 <fullName>No IEP Account</fullName>
-                <default>true</default>
+                <default>false</default>
             </values>
             <values>
                 <fullName>Open</fullName>
@@ -35837,6 +35949,10 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
         <picklistValues>
             <picklist>Is_PCI_compliant__c</picklist>
             <values>
+                <fullName>Corporate Card</fullName>
+                <default>false</default>
+            </values>
+            <values>
                 <fullName>Nil CC</fullName>
                 <default>false</default>
             </values>
@@ -37523,6 +37639,29 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
             </values>
         </picklistValues>
         <picklistValues>
+            <picklist>Training_Membership__c</picklist>
+            <values>
+                <fullName>ATC</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>ATS</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Academic Partners</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Company</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>RTP</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
             <picklist>Type</picklist>
             <values>
                 <fullName>Airline Point of Sale</fullName>
@@ -37647,34 +37786,6 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
             </values>
             <values>
                 <fullName>I</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>L</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>M</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>N</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>O</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>P</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Q</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>R</fullName>
                 <default>false</default>
             </values>
         </picklistValues>
@@ -37843,7 +37954,7 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
             </values>
             <values>
                 <fullName>No IEP Account</fullName>
-                <default>true</default>
+                <default>false</default>
             </values>
             <values>
                 <fullName>Open</fullName>
@@ -39886,6 +39997,29 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
             </values>
         </picklistValues>
         <picklistValues>
+            <picklist>Training_Membership__c</picklist>
+            <values>
+                <fullName>ATC</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>ATS</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Academic Partners</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Company</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>RTP</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
             <picklist>Type</picklist>
             <values>
                 <fullName>ATC</fullName>
@@ -40100,7 +40234,7 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
             </values>
             <values>
                 <fullName>No IEP Account</fullName>
-                <default>true</default>
+                <default>false</default>
             </values>
             <values>
                 <fullName>Open</fullName>
@@ -45297,6 +45431,29 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
             </values>
         </picklistValues>
         <picklistValues>
+            <picklist>Training_Membership__c</picklist>
+            <values>
+                <fullName>ATC</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>ATS</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Academic Partners</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Company</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>RTP</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
             <picklist>Type</picklist>
             <values>
                 <fullName>Cargo Only</fullName>
@@ -45381,34 +45538,6 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
             </values>
             <values>
                 <fullName>I</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>L</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>M</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>N</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>O</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>P</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Q</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>R</fullName>
                 <default>false</default>
             </values>
         </picklistValues>
@@ -45577,7 +45706,7 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
             </values>
             <values>
                 <fullName>No IEP Account</fullName>
-                <default>true</default>
+                <default>false</default>
             </values>
             <values>
                 <fullName>Open</fullName>
@@ -48003,6 +48132,29 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
             </values>
         </picklistValues>
         <picklistValues>
+            <picklist>Training_Membership__c</picklist>
+            <values>
+                <fullName>ATC</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>ATS</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Academic Partners</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Company</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>RTP</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
             <picklist>Type</picklist>
             <values>
                 <fullName>ATC</fullName>
@@ -48237,7 +48389,7 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
             </values>
             <values>
                 <fullName>No IEP Account</fullName>
-                <default>true</default>
+                <default>false</default>
             </values>
             <values>
                 <fullName>Open</fullName>
@@ -52435,6 +52587,29 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
             </values>
         </picklistValues>
         <picklistValues>
+            <picklist>Training_Membership__c</picklist>
+            <values>
+                <fullName>ATC</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>ATS</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Academic Partners</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Company</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>RTP</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
             <picklist>Type</picklist>
             <values>
                 <fullName>Cargo Only</fullName>
@@ -52515,34 +52690,6 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
             </values>
             <values>
                 <fullName>I</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>L</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>M</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>N</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>O</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>P</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Q</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>R</fullName>
                 <default>false</default>
             </values>
         </picklistValues>
@@ -52711,7 +52858,7 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
             </values>
             <values>
                 <fullName>No IEP Account</fullName>
-                <default>true</default>
+                <default>false</default>
             </values>
             <values>
                 <fullName>Open</fullName>
@@ -56828,6 +56975,29 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
             </values>
         </picklistValues>
         <picklistValues>
+            <picklist>Training_Membership__c</picklist>
+            <values>
+                <fullName>ATC</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>ATS</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Academic Partners</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Company</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>RTP</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
             <picklist>Type</picklist>
             <values>
                 <fullName>GSSA Cargo</fullName>
@@ -56904,34 +57074,6 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
             </values>
             <values>
                 <fullName>I</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>L</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>M</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>N</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>O</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>P</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Q</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>R</fullName>
                 <default>false</default>
             </values>
         </picklistValues>
@@ -57100,7 +57242,7 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
             </values>
             <values>
                 <fullName>No IEP Account</fullName>
-                <default>true</default>
+                <default>false</default>
             </values>
             <values>
                 <fullName>Open</fullName>
@@ -59641,6 +59783,29 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
             </values>
         </picklistValues>
         <picklistValues>
+            <picklist>Training_Membership__c</picklist>
+            <values>
+                <fullName>ATC</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>ATS</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Academic Partners</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Company</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>RTP</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
             <picklist>Type</picklist>
             <values>
                 <fullName>ATC</fullName>
@@ -59875,7 +60040,7 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
             </values>
             <values>
                 <fullName>No IEP Account</fullName>
-                <default>true</default>
+                <default>false</default>
             </values>
             <values>
                 <fullName>Open</fullName>
@@ -62096,6 +62261,29 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
             </values>
         </picklistValues>
         <picklistValues>
+            <picklist>Training_Membership__c</picklist>
+            <values>
+                <fullName>ATC</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>ATS</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Academic Partners</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Company</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>RTP</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
             <picklist>Type</picklist>
             <values>
                 <fullName>ATC</fullName>
@@ -62329,7 +62517,7 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
             </values>
             <values>
                 <fullName>No IEP Account</fullName>
-                <default>true</default>
+                <default>false</default>
             </values>
             <values>
                 <fullName>Open</fullName>
@@ -64550,6 +64738,29 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
             </values>
         </picklistValues>
         <picklistValues>
+            <picklist>Training_Membership__c</picklist>
+            <values>
+                <fullName>ATC</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>ATS</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Academic Partners</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Company</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>RTP</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
             <picklist>Type</picklist>
             <values>
                 <fullName>ATC</fullName>
@@ -64783,7 +64994,7 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
             </values>
             <values>
                 <fullName>No IEP Account</fullName>
-                <default>true</default>
+                <default>false</default>
             </values>
             <values>
                 <fullName>Open</fullName>
@@ -67391,6 +67602,29 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
             </values>
         </picklistValues>
         <picklistValues>
+            <picklist>Training_Membership__c</picklist>
+            <values>
+                <fullName>ATC</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>ATS</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Academic Partners</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Company</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>RTP</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
             <picklist>Type</picklist>
             <values>
                 <fullName>CANSO</fullName>
@@ -67611,7 +67845,7 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
             </values>
             <values>
                 <fullName>No IEP Account</fullName>
-                <default>true</default>
+                <default>false</default>
             </values>
             <values>
                 <fullName>Open</fullName>
@@ -74726,6 +74960,29 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
             </values>
         </picklistValues>
         <picklistValues>
+            <picklist>Training_Membership__c</picklist>
+            <values>
+                <fullName>ATC</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>ATS</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Academic Partners</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Company</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>RTP</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
             <picklist>Type</picklist>
             <values>
                 <fullName>ATC</fullName>
@@ -75088,34 +75345,6 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
                 <fullName>I</fullName>
                 <default>false</default>
             </values>
-            <values>
-                <fullName>L</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>M</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>N</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>O</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>P</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Q</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>R</fullName>
-                <default>false</default>
-            </values>
         </picklistValues>
         <picklistValues>
             <picklist>Zuora__Active__c</picklist>
@@ -75282,7 +75511,7 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
             </values>
             <values>
                 <fullName>No IEP Account</fullName>
-                <default>true</default>
+                <default>false</default>
             </values>
             <values>
                 <fullName>Open</fullName>
@@ -79181,6 +79410,29 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
             </values>
         </picklistValues>
         <picklistValues>
+            <picklist>Training_Membership__c</picklist>
+            <values>
+                <fullName>ATC</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>ATS</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Academic Partners</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Company</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>RTP</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
             <picklist>Type</picklist>
             <values>
                 <fullName>Aircraft Manufacturers</fullName>
@@ -79423,34 +79675,6 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
                 <fullName>I</fullName>
                 <default>false</default>
             </values>
-            <values>
-                <fullName>L</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>M</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>N</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>O</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>P</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Q</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>R</fullName>
-                <default>false</default>
-            </values>
         </picklistValues>
         <picklistValues>
             <picklist>Zuora__Active__c</picklist>
@@ -79617,7 +79841,7 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
             </values>
             <values>
                 <fullName>No IEP Account</fullName>
-                <default>true</default>
+                <default>false</default>
             </values>
             <values>
                 <fullName>Open</fullName>
@@ -83960,6 +84184,29 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
             </values>
         </picklistValues>
         <picklistValues>
+            <picklist>Training_Membership__c</picklist>
+            <values>
+                <fullName>ATC</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>ATS</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Academic Partners</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Company</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>RTP</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
             <picklist>Type</picklist>
             <values>
                 <fullName>Aircraft Manufacturers</fullName>
@@ -84252,34 +84499,6 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
             </values>
             <values>
                 <fullName>I</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>L</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>M</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>N</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>O</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>P</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Q</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>R</fullName>
                 <default>false</default>
             </values>
         </picklistValues>
@@ -84823,6 +85042,14 @@ IF(INCLUDES(Remittance_frequency__c , &quot;D&quot;),1,0) &gt; 2 )
         <active>true</active>
         <errorConditionFormula>AND (ISCHANGED( Name ), ($Profile.Name = &apos;MER Membership&apos;), NOT(ISPICKVAL( Membership_status__c , &apos;IATA member&apos;))  )</errorConditionFormula>
         <errorMessage>You cannot modify non IATA members name</errorMessage>
+    </validationRules>
+    <validationRules>
+        <fullName>No_tabs_in_VAT_Number</fullName>
+        <active>true</active>
+        <description>Tab character is forbidden in VAT_Number__c field</description>
+        <errorConditionFormula>CONTAINS(VAT_Number__c ,&quot;	&quot;)</errorConditionFormula>
+        <errorDisplayField>VAT_Number__c</errorDisplayField>
+        <errorMessage>Please remove tabs from VAT number.</errorMessage>
     </validationRules>
     <validationRules>
         <fullName>Parent_Acc_Airline_Designator_Required</fullName>

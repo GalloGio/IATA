@@ -39,7 +39,7 @@ public class ANG_AccountTriggerHandler {
 	public void onAfterUpdate() {
 		updateRiskEventStatus();
 		updateRHCInformation();
-		new ANG_AgencyEventsGenerator(triggerNew,oldMap,'Account','id').run();
+		new ANG_AgencyEventsGenerator(filterByIATACode(triggerNew),oldMap,'Account','id').run();
 		manageDowngrades();
 		manageUpgrades();
 	}
@@ -50,6 +50,17 @@ public class ANG_AccountTriggerHandler {
 	// ************************************************************
 	// ********************* action methods ***********************
 	// ************************************************************
+
+	public static List<Account> filterByIATACode(List<Account> changeCodes){
+
+		List<Account> toReturn = new List<Account>();
+
+		for(Account acct : changeCodes)
+			if(acct.IATACode__c <> null)
+				toReturn.add(acct);
+
+		return toReturn;
+	}
 
 	private void adjustShortName(){
 
@@ -241,7 +252,13 @@ public class ANG_AccountTriggerHandler {
 			}
 		}
 
-		if(!mailTargets.isEmpty() && !emailTemplates.isEmpty()) System.enqueueJob(new ANG_RHCHelper.RiskAlertMailService(emails, null));
+		if(!mailTargets.isEmpty() && !emailTemplates.isEmpty()) {
+			if(!System.isBatch()) {
+				System.enqueueJob(new ANG_RHCHelper.RiskAlertMailService(emails, null));
+			} else {
+				ANG_RHCHelper.sendMailUpdate(emails);
+			}
+		}
 
 		List<Notification__c> notifications = new List<Notification__c>();
 		for(Notification__c nt : ISSP_CreateNotification.createnotification(notificationTargets, false)){

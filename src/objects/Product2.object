@@ -2359,6 +2359,11 @@ SIS Charge Code Type.</description>
                     <label>IATA Rates of Exchange</label>
                 </value>
                 <value>
+                    <fullName>Infectious Substances Shipping Guidelines</fullName>
+                    <default>false</default>
+                    <label>Infectious Substances Shipping Guidelines</label>
+                </value>
+                <value>
                     <fullName>Integrated Risk Management Guidance</fullName>
                     <default>false</default>
                     <label>Integrated Risk Management Guidance</label>
@@ -2484,9 +2489,9 @@ SIS Charge Code Type.</description>
                     <label>Publications Online</label>
                 </value>
                 <value>
-                    <fullName>Reservations Services Manual</fullName>
+                    <fullName>Reservations Handbook</fullName>
                     <default>false</default>
-                    <label>Reservations Services Manual</label>
+                    <label>Reservations Handbook</label>
                 </value>
                 <value>
                     <fullName>Revenue Accounting Manual</fullName>
@@ -6175,6 +6180,7 @@ The product will only appear on the Online Store when the date entered in this f
     </listViews>
     <listViews>
         <fullName>ZZ_GDP_Search</fullName>
+        <booleanFilter>(1 OR 2) AND 3</booleanFilter>
         <columns>PRODUCT2.NAME</columns>
         <columns>Formula_Zuora_Id__c</columns>
         <columns>IEC_Product_Information__c</columns>
@@ -6189,9 +6195,19 @@ The product will only appear on the Online Store when the date entered in this f
         <columns>IEC_Override_Profit_Center__c</columns>
         <filterScope>Everything</filterScope>
         <filters>
-            <field>SAP_Material_Number__c</field>
-            <operation>contains</operation>
-            <value>752510</value>
+            <field>PRODUCT2.LAST_UPDATE</field>
+            <operation>equals</operation>
+            <value>4/25/2018 12:00 AM</value>
+        </filters>
+        <filters>
+            <field>PRODUCT2.CREATED_DATE</field>
+            <operation>equals</operation>
+            <value>4/25/2018 12:00 AM</value>
+        </filters>
+        <filters>
+            <field>Product_Manager_lookup__c</field>
+            <operation>equals</operation>
+            <value>Luc Debono</value>
         </filters>
         <label>ZZ - GDP Search</label>
         <language>en_US</language>
@@ -7729,7 +7745,7 @@ The product will only appear on the Online Store when the date entered in this f
                 <default>false</default>
             </values>
             <values>
-                <fullName>Reservations Services Manual</fullName>
+                <fullName>Reservations Handbook</fullName>
                 <default>false</default>
             </values>
             <values>
@@ -10703,7 +10719,7 @@ The product will only appear on the Online Store when the date entered in this f
                 <default>false</default>
             </values>
             <values>
-                <fullName>Reservations Services Manual</fullName>
+                <fullName>Reservations Handbook</fullName>
                 <default>false</default>
             </values>
             <values>
@@ -13672,6 +13688,10 @@ The product will only appear on the Online Store when the date entered in this f
                 <default>false</default>
             </values>
             <values>
+                <fullName>Infectious Substances Shipping Guidelines</fullName>
+                <default>false</default>
+            </values>
+            <values>
                 <fullName>Integrated Risk Management Guidance</fullName>
                 <default>false</default>
             </values>
@@ -13772,7 +13792,7 @@ The product will only appear on the Online Store when the date entered in this f
                 <default>false</default>
             </values>
             <values>
-                <fullName>Reservations Services Manual</fullName>
+                <fullName>Reservations Handbook</fullName>
                 <default>false</default>
             </values>
             <values>
@@ -16802,7 +16822,7 @@ The product will only appear on the Online Store when the date entered in this f
                 <default>false</default>
             </values>
             <values>
-                <fullName>Reservations Services Manual</fullName>
+                <fullName>Reservations Handbook</fullName>
                 <default>false</default>
             </values>
             <values>

@@ -3797,6 +3797,11 @@
                     <label>Daniel Shemi</label>
                 </value>
                 <value>
+                    <fullName>Dominic Freienstein</fullName>
+                    <default>false</default>
+                    <label>Dominic Freienstein</label>
+                </value>
+                <value>
                     <fullName>Gurjit Gill</fullName>
                     <default>false</default>
                     <label>Gurjit Gill</label>
@@ -6261,6 +6266,10 @@
             </values>
             <values>
                 <fullName>Daniel Shemi</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Dominic Freienstein</fullName>
                 <default>false</default>
             </values>
             <values>

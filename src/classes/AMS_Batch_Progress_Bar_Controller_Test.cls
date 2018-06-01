@@ -54,10 +54,7 @@ private class AMS_Batch_Progress_Bar_Controller_Test
 
 	@isTest
 	static void batchStatusBarTest(){    
-	    Set<Account> filteredAccounts = new Set<Account>();
-	    for(List<Account> accs : [select id from Account where Name='Test1 Agency']) {
-	        filteredAccounts.addAll(accs);
-	    }
+	    Set<Id> filteredAccounts = new Map<Id, Account>([select id from Account where Name='Test1 Agency']).keySet();
 
 	    AMS_PCI_Complaint_Batch batchClass = new AMS_PCI_Complaint_Batch(1, null, filteredAccounts);
 	    //batchId = Database.executeBatch(batchClass, 1);

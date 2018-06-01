@@ -273,7 +273,7 @@
                                                 </apex:actionStatus>
                                             </button>
                                             -->
-                                            <apex:form >
+                                            <apex:form rendered="{!NOT(hasError)}">
                                                 <apex:commandButton styleClass="button" onclick="blockme();" oncomplete="j$.unblockUI(); redirectToCustomerInformation();" action="{!startCheckout}" value="{!$Label.Button_Proceed_Checkout}" />
                                             </apex:form>
                                         </li>

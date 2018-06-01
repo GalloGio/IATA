@@ -55,6 +55,11 @@
         <default>false</default>
         <label>Location type to different legal entity</label>
     </customValue>
+    <customValue>
+        <fullName>Trade name</fullName>
+        <default>false</default>
+        <label>Trade name</label>
+    </customValue>
     <masterLabel>ANG Types of Change</masterLabel>
     <sorted>false</sorted>
 </GlobalValueSet>

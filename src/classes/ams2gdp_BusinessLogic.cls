@@ -80,6 +80,7 @@ public class ams2gdp_BusinessLogic
 			if(account.Is_PCI_compliant__c == 'Yes') {PCICompliance = 'Y';}
 			else if(account.Is_PCI_compliant__c == 'No') {PCICompliance = 'N';}
 			else if(account.Is_PCI_compliant__c == 'Nil CC') {PCICompliance = 'X';}
+			else if(account.Is_PCI_compliant__c == 'Corporate Card') {PCICompliance = 'C';}
 
 			result.add(new GDP_Products_Account_View__c(AMS_GDP_Key__c  = mapping_key
 				, Parent_GDP_Account_View__c = (account.ParentId !=null)? parentMap.get(account.ParentId): null
@@ -737,7 +738,7 @@ public class ams2gdp_BusinessLogic
 				, RecordTypeId = recordTypes.get('Live')
 			));*/
 			String name = arole.Unified_Owner_Name__c;
-			if(arole.Contact__r.name != null) name = arole.Contact__r.name;
+			//if(arole.Contact__r.name != null) name = arole.Contact__r.name;
 			result.add(new Agency_Owner__c(AMS_GDP_Key__c=key+'GDP'
  				, Name =  name
  				, Percent__c=arole.Percentage__c
@@ -1139,13 +1140,13 @@ public class ams2gdp_BusinessLogic
 
 				Iterator<String> iter = grItemSplit.iterator();
 				//GR item needs to be split into 3, one each for main market, secondary market and tertiary market
-				GDP_Reference_Table__c tempRef =descriptionsMap.get(iter.next());
+				GDP_Reference_Table__c tempRef = descriptionsMapwithTable1.get('APSPEC' + iter.next());
 				gdpAgencies.Main_Market_Specialization__c=tempRef.Id;
 				if(iter.hasNext()){
-					GDP_Reference_Table__c tempRef1 =descriptionsMap.get(iter.next());
+					GDP_Reference_Table__c tempRef1 = descriptionsMapwithTable1.get('APSPEC' + iter.next());
 					gdpAgencies.Secondary_Market_Specialization__c=tempRef1.Id;
 					if(iter.hasNext()){
-						GDP_Reference_Table__c tempRef2 =descriptionsMap.get(iter.next());
+						GDP_Reference_Table__c tempRef2 = descriptionsMapwithTable1.get('APSPEC' + iter.next());
 						gdpAgencies.Tertiary_Market_Specialization__c=tempRef2.Id;
 					}
 				}
@@ -1156,13 +1157,13 @@ public class ams2gdp_BusinessLogic
 			{
 				Iterator<String> iter = grItemSplit.iterator();
 				//GR item needs to be split into 3, one each for main market, secondary market and tertiary market
-				GDP_Reference_Table__c tempRef =descriptionsMap.get(iter.next());
+				GDP_Reference_Table__c tempRef = descriptionsMapwithTable1.get('APDEST' + iter.next());
 				gdpAgencies.Main_Destination_Specialization__c=tempRef.Id;
 				if(iter.hasNext()){
-					GDP_Reference_Table__c tempRef1 =descriptionsMap.get(iter.next());
+					GDP_Reference_Table__c tempRef1 = descriptionsMapwithTable1.get('APDEST' + iter.next());
 					gdpAgencies.Secondary_Destination_Specialization__c=tempRef1.Id;
 					if(iter.hasNext()){
-						GDP_Reference_Table__c tempRef2 =descriptionsMap.get(iter.next());
+						GDP_Reference_Table__c tempRef2 = descriptionsMapwithTable1.get('APDEST' + iter.next());
 						gdpAgencies.Tertiary_Destination_Specialization__c=tempRef2.Id;
 					}
 				}

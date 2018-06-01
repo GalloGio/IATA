@@ -62,8 +62,8 @@ public class AMS_OSCAR_ProcessViewerController {
             ) || isAMSCheckRemittance; //AMSU-125
         }
     }
-	
-	//AMSU-125
+    
+    //AMSU-125
     public Boolean isAMSCheckRemittance {
         get {
             return oscar != null && checkAMSRemittance(oscar);
@@ -200,6 +200,8 @@ public class AMS_OSCAR_ProcessViewerController {
         }
     }
 
+    public String selectedTab{get;set;}
+
     public AMS_OSCAR_ProcessViewerController() {
         
         
@@ -235,7 +237,8 @@ public class AMS_OSCAR_ProcessViewerController {
 
         }   
         
-  
+    selectedTab = 'tab1';
+
     }
 
     public String convertToString(Blob value){
@@ -328,7 +331,6 @@ public class AMS_OSCAR_ProcessViewerController {
             Map<String,List<String>> dependentPicklistMap = AMS_Utils.GetDependentOptions('AMS_OSCAR__c',fr.getController().getDescribe().getName(),fr.getName());
             if(!dependentPicklistMap.isEmpty())
                 dependentPicklistValues.addAll(dependentPicklistMap.get(String.valueOf(oscar.Process__c)));
-            System.debug('Lista Dependente: ' + dependentPicklistValues);
         }
         
         List<SelectOption> picklistValues = new List<SelectOption>();
@@ -338,29 +340,46 @@ public class AMS_OSCAR_ProcessViewerController {
         String fieldName = fr.getName();
         
         String currentPickValue = String.valueOf(oscar.get(fieldName));
-        System.debug('FOR FIELD: '+ fieldName + ' value is: '+ currentPickValue);
 
-        if(currentPickValue == null && AMS_Utils.oscarNewGenProcesses.contains(oscar.Process__c))
+        if(currentPickValue == null && (AMS_Utils.oscarNewGenProcesses.contains(oscar.Process__c) || oscar.Process__c == AMS_Utils.PCI_COMPLIANT))
             picklistValues.add(new SelectOption('', '--None--'));
 
-        if(currentPickValue != null)
+        if(currentPickValue != null){
             picklistValues.add(new SelectOption(currentPickValue, currentPickValue));
+        }
         
 
-
-        for( Schema.PicklistEntry f : ple)
-        {
+        for( Schema.PicklistEntry f : ple) {
             //this is a workaround to make the current value of the field the default value of the picklist
             if(currentPickValue != f.getValue() 
                 && (dependentPicklistValues.isEmpty() ||  dependentPicklistValues.contains(f.getValue()))
-                )
+                ){
+            /* Commented as per NEWGEN-3301
+            if(canBeDisplayed(fieldName,oscar.Process__c,f.getValue()))
                 picklistValues.add(new SelectOption(f.getValue(), f.getLabel()));
-                 System.debug('FOR FIELD: '+ fieldName + ' select value is: '+ f.getValue() + ' isActive: ' + f.isActive());
+            */
+                picklistValues.add(new SelectOption(f.getValue(), f.getLabel()));
+            }
         }
         
         return picklistValues;
     }
+    
+    /* Commented as per NEWGEN-3301
+    @TestVisible private boolean canBeDisplayed(String fieldName, String oscarProcess, String fieldValue){
 
+       // if(!(fieldName == 'Is_PCI_compliant__c' && fieldValue == 'Corporate Card'))
+            return true;
+
+        if(!AMS_Utils.oscarNewGenProcesses.contains(oscarProcess))
+            return true;
+
+        if(oscarProcess == AMS_Utils.NGCORRECTION || oscarProcess == AMS_Utils.NGFOP)
+            return true;
+
+        return false;
+
+    }*/
 
     public class StepFieldsDataWrapper{
         public String fieldApiName{get;set;}
@@ -419,7 +438,7 @@ public class AMS_OSCAR_ProcessViewerController {
         }
         fields = fields.substring(0,fields.lastIndexOf(','));
         
-		return 'SELECT ' + fields + ', AMS_Online_Accreditation__r.Ready_for_Accreditation__c , RecordType.Name, RecordType.DeveloperName, Account__r.Name, AMS_Online_Accreditation__r.ANG_IsNewGenAgency__c, AMS_Online_Accreditation__r.Remittance_Frequency__c, Account__r.ANG_IsNewGenAgency__c, AMS_Online_Accreditation__r.Branch_Office_Country__c, AMS_Online_Accreditation__r.Location_Class__c FROM AMS_OSCAR__c where Id =: oscarId LIMIT 1';
+        return 'SELECT ' + fields + ', AMS_Online_Accreditation__r.Ready_for_Accreditation__c , RecordType.Name, RecordType.DeveloperName, Account__r.Name, AMS_Online_Accreditation__r.ANG_IsNewGenAgency__c, AMS_Online_Accreditation__r.Remittance_Frequency__c, Account__r.ANG_IsNewGenAgency__c, AMS_Online_Accreditation__r.Branch_Office_Country__c, AMS_Online_Accreditation__r.Location_Class__c FROM AMS_OSCAR__c where Id =: oscarId LIMIT 1';
     }
 
     private AMS_OSCAR__c fetchOscarFields(ID oscarId){
