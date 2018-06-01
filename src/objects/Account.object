@@ -12639,7 +12639,6 @@ IF ((RecordType.DeveloperName = &quot;IATA_Airline&quot; || RecordType.Developer
                     <fullName>S</fullName>
                     <default>false</default>
                     <label>Every 5 days</label>
-                    <isActive>false</isActive>
                 </value>
                 <value>
                     <fullName>B</fullName>
@@ -75383,10 +75382,6 @@ This field is kept up-to-date with the feedback of ITDI at least twice a year du
             </values>
             <values>
                 <fullName>I</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>L</fullName>
                 <default>false</default>
             </values>
             <values>
