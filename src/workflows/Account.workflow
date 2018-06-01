@@ -353,24 +353,6 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
         <protected>false</protected>
     </fieldUpdates>
     <fieldUpdates>
-        <fullName>Update_Status_to_Active</fullName>
-        <field>Status__c</field>
-        <literalValue>Active</literalValue>
-        <name>Update Status to Active</name>
-        <notifyAssignee>false</notifyAssignee>
-        <operation>Literal</operation>
-        <protected>false</protected>
-    </fieldUpdates>
-    <fieldUpdates>
-        <fullName>Update_Status_to_In_Progress</fullName>
-        <field>Status__c</field>
-        <literalValue>In Progress</literalValue>
-        <name>Update Status to In Progress</name>
-        <notifyAssignee>false</notifyAssignee>
-        <operation>Literal</operation>
-        <protected>false</protected>
-    </fieldUpdates>
-    <fieldUpdates>
         <fullName>Update_acct_name</fullName>
         <field>Name</field>
         <formula>if(NOT(ISBLANK( Parent.TradeName__c)),Parent.TradeName__c,Parent.Name)</formula>
@@ -824,28 +806,6 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
             <operation>equals</operation>
             <value>True</value>
         </criteriaItems>
-        <triggerType>onCreateOrTriggeringUpdate</triggerType>
-    </rules>
-    <rules>
-        <fullName>Update Payment Provider Status Active</fullName>
-        <actions>
-            <name>Update_Status_to_Active</name>
-            <type>FieldUpdate</type>
-        </actions>
-        <active>true</active>
-        <description>Update the Status of Payment Provider every time Accreditation Date changes to a present or past date.</description>
-        <formula>AND (RecordType.DeveloperName = &apos;TIP_Payment_Provider&apos;, Accreditation_date__c &lt;= TODAY() )</formula>
-        <triggerType>onCreateOrTriggeringUpdate</triggerType>
-    </rules>
-    <rules>
-        <fullName>Update Payment Provider Status In Progress</fullName>
-        <actions>
-            <name>Update_Status_to_In_Progress</name>
-            <type>FieldUpdate</type>
-        </actions>
-        <active>true</active>
-        <description>Update the Status of Payment Provider every time Accreditation Date changes to a future date.</description>
-        <formula>AND (RecordType.DeveloperName = &apos;TIP_Payment_Provider&apos;, Accreditation_date__c &gt; TODAY() )</formula>
         <triggerType>onCreateOrTriggeringUpdate</triggerType>
     </rules>
 </Workflow>
