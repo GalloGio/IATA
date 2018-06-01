@@ -531,7 +531,11 @@ public without sharing class LightningRegistrationProcess{
         String encodedPart ='c='+EncodingUtil.urlEncode(Comm_User_Helper.EncryptString(cleanUsername+Comm_User_Helper.SEPARATOR+password+Comm_User_Helper.SEPARATOR+u.UID__c), 'UTF-8');
         String template = 'Identity_Portal_New_User';
         string prefix = OneIdUtils.getSiteCompleteUrl();
-        String link = prefix + '/s/IdentityFirstLogin?' + encodedPart;
+        String link = prefix + '/s/IdentityFirstLogin?'
+                      + ((String.isBlank(serviceName)) ? '' : 'serviceName=' + serviceName + '&')  // OneIdEnh CSP-ID002: add service name to URL
+                      + encodedPart;
+        if(serviceName == Comm_User_Helper.ISSP)   // OneIdEnh CSP-ID002: CS Portal users to be directed to portal's first login page
+        	link = 'https://' + String.ValueOF(ISSP_CS__c.getValues('Host').value__c) + '/ISSP_First_Login?'+encodedPart;
         
         Map<String,String> emailWrap = new Map<String,String>();
         

@@ -7,8 +7,7 @@
         
         var username = component.find("username").get("v.value");
         var checkEmailUrl = component.get("v.checkEmailUrl");
-        var serviceName = component.get("v.serviceName");
-        console.log('aqui serviceName ' + serviceName);
+        var serviceName = component.get("v.serviceName");        
         var action = component.get("c.forgotPassword");
 
         action.setParams({username:username, checkEmailUrl:checkEmailUrl, serviceName:serviceName});
