@@ -75384,30 +75384,6 @@ This field is kept up-to-date with the feedback of ITDI at least twice a year du
                 <fullName>I</fullName>
                 <default>false</default>
             </values>
-            <values>
-                <fullName>M</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>N</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>O</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>P</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Q</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>R</fullName>
-                <default>false</default>
-            </values>
         </picklistValues>
         <picklistValues>
             <picklist>Zuora__Active__c</picklist>
