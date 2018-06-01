@@ -48,20 +48,16 @@ global class ANG_PCIComplianceRenewalBatch implements Database.Batchable<Account
    		List<Account> accsToProcess = new List<Account>();
    		List<String> iataCodesAndNames = new List<String>();
 	
-		for (Account acc : scope){
-			if (!acc.contacts.isEmpty()){
-				if (contactsPerAcc.keySet().contains(acc.Id)){
-					contactsPerAcc.get(acc.Id).add(acc.contacts);
-				}else{
-					contactsPerAcc.put(acc.Id, new List<Contact>{acc.contacts});				
-				}
-				accsToProcess.add(acc);		
-				iataCodesAndNames.add(acc.IataCode__c+' - '+acc.Name);			
-			} else {
-				agenciesWithoutContact.add (acc.IataCode__c+' - '+acc.Name);
-			}
-		}
 		try{
+			for (Account acc : scope){
+				if (!acc.contacts.isEmpty()){
+					iataCodesAndNames.add(acc.IataCode__c+' - '+acc.Name);			
+					accsToProcess.add(acc);		
+					contactsPerAcc.put(acc.Id, new List<Contact>(acc.contacts));				
+				} else {
+					agenciesWithoutContact.add (acc.IataCode__c+' - '+acc.Name);
+				}
+			}
 			List<Case> fopCases = ANG_OscarProcessHelper.createPCIComplianceOscars(accsToProcess, contactsPerAcc, contactsPerAcc.keySet(), AMS_Utils.ANG_FOP_AUTOMATIC_RENEWAL);
 		}catch(Exception e){
 			errors.add('Error running batch for Accounts with Iata code(s): '+String.join(iataCodesAndNames,',')+' - '+e.getMessage()+' - '+e.getStackTraceString());
