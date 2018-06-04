@@ -1,9 +1,10 @@
-<aura:component extends="c:Base" implements="flexipage:availableForAllPageTypes,forceCommunity:availableForAllPageTypes,force:hasRecordId,force:appHostable" access="global" controller="LightningRegistrationProcess">
-	
-    <ltng:require scripts="{!$Resource.jquery321minStandard}" afterScriptsLoaded="{!c.jsLoaded}"/>
+<aura:component implements="flexipage:availableForAllPageTypes,forceCommunity:availableForAllPageTypes,force:hasRecordId,force:appHostable" access="global" controller="LightningRegistrationProcess">
+
 	<aura:handler name="init" value="{!this}" action="{!c.doInit}"/>
+
     <aura:handler event="aura:waiting" action="{!c.showSpinner}"/>
-    <aura:handler event="aura:doneWaiting" action="{!c.hideSpinner}"/>	
+    <aura:handler event="aura:doneWaiting" action="{!c.hideSpinner}"/>
+
     <ltng:require styles="{!join(',', 
 							    $Resource.SLDS102 + '/assets/styles/salesforce-lightning-design-system-ltng.css',
 							    $Resource.InternationalPhoneNumberFormatS + '/intl-tel-input-master/build/css/intlTelInput.css')}"/>
@@ -70,11 +71,7 @@
 
 	<aura:attribute name="styl" type="String"/>
 	<aura:attribute name="captchaIframeHeight" type="String"/>
-	<aura:attribute name="whichcountry" type="String"/>
 
-	<aura:attribute name="customCommunity" type="Boolean" default="false" />
-    <aura:attribute name="serviceName" type="String" />
-	
     <aura:handler name="init" value="{!this}" action="{!c.initialize}" />
 
 	<ltng:require scripts="{!join(',', 
@@ -84,9 +81,6 @@
 							    $Resource.InternationalPhoneNumberFormatS + '/intl-tel-input-master/src/spec/helpers/helpers.js',
 							    $Resource.InternationalPhoneNumberFormatS + '/intl-tel-input-master/build/js/utils.js')}" />
 
-
-	<aura:registerEvent name="fetchParams" type="c:oneIdURLParams"/>
-	<aura:handler event="c:oneIdURLParams" action="{!c.renderPage}"/>
 
     <style>
     	.slds .slds-hide {
@@ -114,8 +108,8 @@
         <!-- /////////////////////////////////////////////// -->
 		<!-- $Label.c.ISSP_Registration_step_1 '' -->
         <!-- //////////////////////PAGE 1: Email/////////////////// -->
-        <!-- /////////////////////////////////////////////// -->		
-        
+        <!-- /////////////////////////////////////////////// -->
+
 		<div class="tabContainers slds">
 			<div class="tabElement section">
 				<div onclick="{!c.showPage}" id="1" class="showPage">
@@ -134,16 +128,13 @@
 						<div class="email item">
 							<label class="slds-form-element__label" ><abbr class="slds-required" title="required">*</abbr>{!v.contactLabels.Email}</label>
 							<ui:inputEmail aura:id="email" placeholder="test@email.com" value="{!v.contact.Email}" class="slds-input required-input" required="true" keypress="{!c.emailChanged}" disabled="{!v.emailLocked}" />
-						</div>						                        
-                        <div class="form-group" style="{!if(v.whichcountry=='CN','display:none','')}">
-                        	<aura:if isTrue="{!!v.emailLocked}">                                
-	                        <div class="captcha item" >
+						</div>
+						<aura:if isTrue="{!!v.emailLocked}">
+	                        <div class="captcha item">
 	                           	<iframe aura:id="vfFrame" src="{!v.vfHost + '/'+v.commName+'/OneIdVfCAPTCHA?language=' + v.language}" class="iframe captchaIframe" style="{!v.captchaIframeHeight}" scrolling="no" frameborder="0" width="100%" allowtransparency="true" />
 	                           	<div aura:id="captchaError" class="captchaError hide">{!$Label.c.OneId_Please_check_reCaptcha}</div>
 	                        </div>
                         </aura:if>
-                        </div>
-						
 						<div class="terms item">
 							<ui:inputCheckbox value="{!v.Terms}" aura:id="termsaccepted" class="uiInput uiInputCheckbox uiInput--default uiInput--checkbox" labelClass="slds-form-element__label" required="true" click="{!c.checkTerms}" disabled="{!v.emailLocked}"/>
 							<a class="termsaccepted" href="http://www.iata.org/customer-portal/Pages/terms.aspx" target="_blank">{!$Label.c.ISSP_Registration_acceptGeneralConditions}</a>
@@ -195,7 +186,7 @@
 
 							<div class="slds-col--padded slds-p-bottom--large slds-size--1-of-1 slds-medium-size--1-of-1 slds-large-size--1-of-1">
 								<div class="">
-									<label class="slds-form-element__label" ><abbr class="slds-required" title="required">*</abbr>{!$Label.c.ISSP_Registration_JobTitle}</label>
+									<label class="slds-form-element__label" ><abbr class="slds-required" title="required">*</abbr>{!v.contactLabels.Title}</label>
 									<ui:inputText aura:id="title" value="{!v.contact.Title}" class="slds-input required-input" required="true"/>
 								</div>
 							</div>
@@ -214,24 +205,23 @@
 							<div class="slds-col--padded slds-p-bottom--large slds-size--1-of-1 slds-medium-size--1-of-2 slds-large-size--1-of-2">
 									<label class="slds-form-element__label" ><abbr class="slds-required" title="required">*</abbr>{!v.contactLabels.Phone}</label>
 									<!--<ui:inputPhone aura:id="contactPhone" value="{!v.contact.Phone}" class="slds-input required-input contactPhone" required="true" keyup="{!c.validateContact}" />-->
-									<ui:inputPhone aura:id="contactPhone" value="{!v.contact.Phone}" class="slds-input required-input contactPhone" required="true"   updateOn="keyup" keyup="{!c.validateNumber}"  />
+									<ui:inputPhone aura:id="contactPhone" value="{!v.contact.Phone}" class="slds-input required-input contactPhone" required="true" />
 							</div>
 
 							<div class="slds-col--padded slds-p-bottom--large slds-size--1-of-1 slds-medium-size--1-of-2 slds-large-size--1-of-2">
 									<label class="slds-form-element__label" >{!v.contactLabels.MobilePhone}</label>
-									<ui:inputPhone aura:id="contactMobilePhone" value="{!v.contact.MobilePhone}" class="contactPhone slds-input"  updateOn="keyup" keyup="{!c.validateNumber}" />
+									<ui:inputPhone aura:id="contactMobilePhone" value="{!v.contact.MobilePhone}" class="contactPhone slds-input" />
 							</div>
 
 							<div class="slds-col--padded slds-p-bottom--large slds-size--1-of-1 slds-medium-size--1-of-2 slds-large-size--1-of-2">
 									<label class="slds-form-element__label" >{!v.contactLabels.Fax}</label>
-									<ui:inputPhone aura:id="contactFaxPhone" value="{!v.contact.Fax}" class="contactPhone slds-input" updateOn="keyup" keyup="{!c.validateNumber}"  />
+									<ui:inputPhone aura:id="contactFaxPhone" value="{!v.contact.Fax}" class="contactPhone slds-input" />
 							</div>
 
 						</div>
 
 					</div>
 				</div>
-
 	            <!--/aura:if-->
 			</div>
 

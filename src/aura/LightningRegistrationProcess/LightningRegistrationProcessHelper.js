@@ -313,15 +313,19 @@
 
     },
     placeFlags: function(component) {
+        //var contactPhone = component.find("contactPhone");
         var contactPhone = $('.contactPhone');
-        var country = component.get("v.whichcountry");
+        console.log("contactPhone: " + contactPhone);
 
         if (contactPhone != null) {
+            console.log('contact phone not null');
             contactPhone.intlTelInput({
-                initialCountry: country,                    
-                preferredCountries: [country]
+                autoPlaceholder: true
+                    //defaultCountry: 'PT',
+                    //snationalMode: true
+                    /*preferredCountries: [""],
+                    numberType: "FIXED_LINE"*/
                 });
-
         }
     },
     validateContact: function(component) {
@@ -385,12 +389,8 @@
         } else { contact.Membership_Function__c = membershipFunction; }
         if (businessphone === undefined) {
             console.log('bp');
-            businessphoneField.set("v.errors", [{ message: $A.get("$Label.c.ISSP_Registration_MobilePhone_Msg") }]);
+            businessphoneField.set("v.errors", [{ message: $A.get("$Label.c.OneId_Registration_Error_BusinessPhone") }]);
             errors = true;
-            setTimeout(function(){
-                $(".contactPhone").intlTelInput("setCountry", "");
-                $(".contactPhone").intlTelInput("setCountry", component.get("v.whichcountry"));
-            }, 100);
         } else { contact.Phone = businessphone; }
         // console.log('c: ' + firstName + ' ' + lastName + ' ' + title + ' ' + businessphone + ' ' + salutation);
 
@@ -632,31 +632,4 @@
         $A.enqueueAction(commName);
 
     },
-
-    getFindLocation : function (ip, component) {
-    console.log('getFindLocation....' + ip);      
-        var action = component.get("c.findLocation");        
-        action.setParams({"ipAddress" : ip});        
-            
-        action.setCallback(this, function(response) {            
-            var state = response.getState();
-            if (state === "SUCCESS") {
-            console.log('success');
-                console.log('response --> ' + response.getReturnValue());
-                component.set("v.whichcountry",response.getReturnValue());                
-            }            
-            else if (state === "ERROR") {
-                var errors = response.getError();
-                if (errors) {
-                    if (errors[0] && errors[0].message) {
-                        console.log("Error message: " + 
-                                 errors[0].message);
-                    }
-                } else {
-                    console.log("Unknown error");
-                }
-            }
-        });        
-        $A.enqueueAction(action);
-    }
 })
