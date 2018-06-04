@@ -2650,7 +2650,7 @@ public class AMS_OSCARTriggerHandler {
                         if(cList != null && cList.size() == 1){
 
                             Case c = cList.get(0);
-
+/*
                             list<WrapperAttach> attchs;
                             
                             try{
@@ -2662,6 +2662,9 @@ public class AMS_OSCARTriggerHandler {
                             }
 
                             List<AmazonFile__c> amazonFiles = [SELECT Id FROM AmazonFile__c WHERE case__c =: c.Id];
+*/
+
+                            List<AmazonFile__c> amazonFiles = new List<AmazonFile__c>();
 
                             //AMSU-113 - added validation for PCI Compliant
                             if(oscar.Process__c == AMS_Utils.PCI_COMPLIANT){
@@ -2670,7 +2673,7 @@ public class AMS_OSCARTriggerHandler {
                                 amazonFiles = [SELECT Id FROM AmazonFile__c WHERE case__c =: c.Id];        
                             }
                             
-                            if((attchs == null || attchs.isEmpty()) && amazonFiles.isEmpty()){
+                            if(amazonFiles.isEmpty()){
                                 //AMSU-113 - added error msg for PCI Compliant
                                 if(oscar.Process__c == AMS_Utils.PCI_COMPLIANT){
                                     oscar.addError('Error - There are no PCI Compliant attachments with associated with this case/oscar.');
@@ -3173,7 +3176,7 @@ public class AMS_OSCARTriggerHandler {
                 AMS_OSCAR_JSON.ChangeCode changeCode = new AMS_OSCAR_JSON.ChangeCode();
 
                 /*** AMSU-31 Start ***/
-                Set<String> processesToCheck = new Set<String> {AMS_Utils.new_HO, AMS_Utils.new_BR, AMS_Utils.new_SA};
+                Set<String> processesToCheck = new Set<String> {AMS_Utils.new_HO, AMS_Utils.new_BR, AMS_Utils.new_SA, AMS_Utils.new_BR_ABROAD};
                 Set<String> classesToCheck = new Set<String> {'P', 'D'}; 
                 if(classesToCheck.contains(updatedOscar.Location_Class__c) && processesToCheck.contains(updatedOscar.Process__c)) {
                     oscarsToCreateAuth.add(updatedOscar);
