@@ -1,22 +1,14 @@
 ({
     
-    qsToEventMap: {
-        'startURL'  : 'e.c:setStartUrl'
-    },
-
     handleLogin: function (component, event, helpler) {
         console.log('helper handleLogin');
 
         //Get parameters
-        var username = '';
-        username = component.find("username").get("v.value");
-        var password = '';
-        password = component.find("password").get("v.value");
-        var startUrl = component.get("v.startUrl");
-        var serviceName = component.get("v.serviceName");        
-        console.log('username ' + username);
-        //console.log('password ' + password);
-        
+        var username = component.find("username").get("v.value");
+        var password =  component.find("password").get("v.value");
+        var startUrl = decodeURIComponent(component.get("v.startUrl"));
+        var serviceName = component.get("v.serviceName");    
+
         component.set("v.errorMessage",'');
         component.set("v.showError",false);
         
@@ -33,24 +25,19 @@
             return;
         }
         
-        console.log('helper handleLogin1');
-        component.set("v.errorMessage",'');
-        component.set("v.showError",false);
-        
-        
         //Configure apex controller action function
         var action = component.get("c.login");
         
-        startUrl = decodeURIComponent(startUrl);
-        action.setParams({username:username, 
-                          password:password, 
-                          startUrl:startUrl,
-                          serviceName:serviceName});
+        action.setParams({
+            username:username, 
+            password:password, 
+            startUrl:startUrl,
+            serviceName:serviceName
+        });
         
         action.setCallback(this, function(a){
             var rtnValue = a.getReturnValue();
             if (rtnValue !== null) {
-                console.log('handleLogin.Callback rtnValue='+rtnValue);
                 component.set("v.errorMessage",rtnValue);
                 component.set("v.showError",true);
             }
@@ -99,26 +86,6 @@
             } 
          });
     },
-    
-    /*getSanctionCountry : function (component, event, helpler, clientIpAddress) {
-
-        //Configure apex controller action function
-        var action = component.get("c.getSanctionCountry");
-        
-        console.log('getSanctionCountry.Begin - IpAddress to pass: '+clientIpAddress);
-        action.setParams({clientIpAddress:clientIpAddress});
-        
-        action.setCallback(this, function(a){
-            var rtnValue = a.getReturnValue();
-            console.log('getSanctionCountry.Callback getSanctionCountry='+JSON.stringify(rtnValue));
-            if (rtnValue !== null) {
-                component.set('v.sanctionCountry',rtnValue);
-            }else{
-                console.log('getSanctionCountry.Callback is null');
-            }
-        });
-        $A.enqueueAction(action);
-    },*/
     
     getShow90Days : function (component, event, helpler) {
         var action = component.get("c.getShow90Days");

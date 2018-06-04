@@ -18,24 +18,15 @@
     <aura:attribute name="communityForgotPasswordUrl" type="String" access="private"/>
     <aura:attribute name="communitySelfRegisterUrl" type="String" access="private"/>
     <aura:attribute name="clientIpAddress" type="String" access="private"/>
-    <aura:attribute name="customCommunity" type="Boolean" default="false" />
     <aura:attribute name="serviceName" type="String" />
 
    
     <input type="hidden" id="clientIpAddressAjax" value="" />
     
-    <aura:registerevent name="sitePropagatedStartUrl" type="c:setStartUrl"/>
     <aura:handler name="init" value="{!this}" action="{!c.initialize}"/>
 
     <aura:registerEvent name="fetchParams" type="c:oneIdURLParams"/>
     <aura:handler event="c:oneIdURLParams" action="{!c.renderPage}"/>
-    <!--<aura:handler name="change" value="{!v.siteCompleteUrl}" action="{!c.getClientIpAddress}"/>-->    
-    
-    <aura:dependency resource="c:setStartUrl" type="EVENT"/>
-    <!-- Please uncomment
-    <aura:dependency resource="siteforce:registerQueryEventMap" type="EVENT"/>
-    -->
-    <aura:handler event="c:setStartUrl" action="{!c.setStartUrl}"/>
     
     <div>
         <aura:if isTrue="{!v.isUsernamePasswordEnabled}">

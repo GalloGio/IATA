@@ -20766,7 +20766,7 @@ Please note that many IATA invoices for accredited agents are collected through 
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>ISSP_Registration_Error_Salutation</shortDescription>
-        <value>Please enter you salutation</value>
+        <value>Please enter your salutation</value>
     </labels>
     <labels>
         <fullName>ISSP_Registration_Error_Subject</fullName>
