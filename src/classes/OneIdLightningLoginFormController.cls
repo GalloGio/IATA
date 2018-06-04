@@ -74,11 +74,6 @@ public without sharing class OneIdLightningLoginFormController {
                     if(startUrl != 'mobileApp') pageLink = startUrl;
 
                 }else if( String.isNotBlank(serviceName) && serviceName == 'ISSP') pageLink = '/ISSP_Homepage';
-
-                
-                if( ((String.isNotBlank(startUrl) && startUrl.contains('identity')) || (String.isNotBlank(startUrl))) && (String.isNotBlank(serviceName) && serviceName == 'ISSP'))
-                    pageLink = '/ISSP_Homepage';
-
                 
                 if (oneUser.Portal_User_Frozen_Checkbox__c){
                     show90Days = true;
