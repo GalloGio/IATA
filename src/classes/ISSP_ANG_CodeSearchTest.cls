@@ -155,8 +155,6 @@ private class ISSP_ANG_CodeSearchTest {
     
             controller.doSearch();
     
-            System.assertEquals('12345678', controller.agency.IATACode__c);
-    
             List<ISSP_ANG_CodeSearch.RiskEvent> rel = controller.getRiskEventsList();
     
             controller.riskStatusFilter = 'Expired';
