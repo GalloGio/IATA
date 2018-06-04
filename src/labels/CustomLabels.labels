@@ -9621,6 +9621,30 @@ IFG Customer Services</value>
         <value>Accreditation form:</value>
     </labels>
     <labels>
+        <fullName>ISSP_AMS_Form_Missing_Signed_File</fullName>
+        <categories>ISSP, AMS</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_AMS_Form_Missing_Signed_File</shortDescription>
+        <value>Please, upload a signed copy of the current agreement</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_AMS_Form_Signed_Application_Form</fullName>
+        <categories>ISSP, AMS</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP AMS Form Signed Application Form</shortDescription>
+        <value>Signed Application Form</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_AMS_Form_Signed_Application_Form_Description</fullName>
+        <categories>ISSP, AMS</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP AMS Form Signed Application Form Description</shortDescription>
+        <value>All partners have to sign the application form before submitting to IATA.</value>
+    </labels>
+    <labels>
         <fullName>ISSP_AMS_Gross_Amnt_First_year</fullName>
         <language>en_US</language>
         <protected>false</protected>
@@ -10967,7 +10991,7 @@ For each section below either:&lt;br/&gt;
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>ISSP_AMS_NoC_Bank_Change3</shortDescription>
-        <value>Where the Transferor is employed by, or retains a financial or beneficial interest, directly or indirectly, in the agency following the change of ownership, the undersigned Transferee knows and hereby agrees to accept responsibility for any violation by the Transferor of his Sales Agency Agreement which may have occurred within a period of two years immediately prior to the change of ownership as if such violation were a violation of the Transferee&apos;s Sales Agency Agreement.</value>
+        <value>It is hereby agreed that this Notice of Change shall become a part of every Sales Agency Agreement signed with Members of IATA for the sale of international air passenger transportation, and as such, all information contained herein will be treated as confidential (excluding the information contained in the preamble to this Notice of Change). Notwithstanding the foregoing, the applicant authorizes IATA, and represents that it has obtained meaningful consent of each individual listed in this application to use and process the information to be used by travel industry participants.</value>
     </labels>
     <labels>
         <fullName>ISSP_AMS_NoC_Bank_acount_details</fullName>
@@ -13973,7 +13997,12 @@ Select at least one authorised signatory, and choose the Financial Assessment co
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>ISSP AMS T&amp;Cs1</shortDescription>
-        <value>&lt;p&gt;I hereby certify that the foregoing statements (including statements made in any attachment hereto) are true and correct to the best of my knowledge and belief, and that I am authorized by the organization identified in the answer to Section 1 above to make these statements and file this document.&lt;br/&gt;&lt;br/&gt;It is hereby agreed that this application shall become a part of every Sales Agency Agreement signed with Members of IATA for the sale of international air passenger transportation, and as such, all information contained herein will be treated as confidential (excluding the information contained in Section 2). Notwithstanding the foregoing, the applicant authorizes IATA to use and process the information contained in Sections 1 and 4, in order to produce and distribute databases among the airline industry participants.&lt;/p&gt;</value>
+        <value>&lt;p&gt;
+I hereby certify that the foregoing statements (including statements made in any attachment hereto) are true and correct to the best of my knowledge and belief, and that I am authorized by the organization identified in the answer to 1.1 above to make these statements and file this document.
+&lt;br/&gt;
+&lt;br/&gt;
+It is hereby agreed that this application shall become a part of every Sales Agency Agreement signed with Members of IATA for the sale of international air passenger transportation, and as such, all information contained herein will be treated as confidential (excluding the information contained in Section 1). Notwithstanding the foregoing, the applicant authorizes IATA and represents that it has obtained meaningful consent of each individual listed in this application to use and process the information contained in Sections 2.1.2.2, 2.2, 4, 5.1.1 and 5.1.2, in order to produce and distribute databases to be used by travel industry participants.
+&lt;/p&gt;</value>
     </labels>
     <labels>
         <fullName>ISSP_AMS_T_Cs2</fullName>
@@ -13981,7 +14010,12 @@ Select at least one authorised signatory, and choose the Financial Assessment co
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>ISSP AMS T&amp;Cs2</shortDescription>
-        <value>&lt;p&gt;&lt;br/&gt;The applicant hereby expressly waives any and all claims, causes of action or rights to recovery and agrees to indemnify and hold harmless IATA or any of its Members, their officers, employees, agents or servants, for any loss, injury or damage based upon libel, slander or defamation of character by reason of any action taken in good faith pursuant to this application, including but not limited to a notice of disapproval.&lt;br/&gt;&lt;br/&gt;The applicant understands and agrees that if the application for accreditation as an IATA Agent is disapproved, he will not claim any commission, remuneration or compensation for the sale of air transportation over the services of any IATA Member during the period the application was under consideration.&lt;/p&gt;</value>
+        <value>&lt;p&gt;
+The applicant hereby expressly waives any and all claims, causes of action or rights to recovery and agrees to indemnify and hold harmless IATA or any of its Members, their officers, employees, agents or servants, for any loss, injury or damage based upon libel, slander or defamation of character by reason of any action taken in good faith pursuant to this application, including but not limited to a notice of disapproval.
+&lt;br/&gt;
+The Applicant understands and agrees that if the application for accreditation as an IATA Agent is disapproved, he will not claim any commission, remuneration
+or compensation for the sale of air transportation over the services of any IATA Member during the period the application was under consideration.
+&lt;/p&gt;</value>
     </labels>
     <labels>
         <fullName>ISSP_AMS_T_Cs3</fullName>
@@ -13989,7 +14023,9 @@ Select at least one authorised signatory, and choose the Financial Assessment co
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>ISSP AMS T&amp;Cs3</shortDescription>
-        <value>&lt;p&gt;The applicant understands and agrees to pay the application entry and annual fees, in the amounts determined by the Conference in consultation with the Director General and as advised by the Agency Administrator, for inclusion and retention on the Agency List. If the application is rejected, the entry and initial annual agency fees shall be returned to the applicant.&lt;br/&gt;&lt;/p&gt;</value>
+        <value>&lt;p&gt;
+The applicant understands and agrees to pay the application, entry and annual fees, in the amounts determined by the Conference in consultation with the Director General, and as advised by the Agency Administrator, for inclusion and retention on the Agency List. If the application is rejected, the entry and initial annual agency fees shall be returned to the applicant.
+&lt;/p&gt;</value>
     </labels>
     <labels>
         <fullName>ISSP_AMS_Title</fullName>
@@ -15243,6 +15279,14 @@ Large – more than USD 2.000.000 gross annual sales</value>
         <protected>false</protected>
         <shortDescription>ISSP_AP_Form</shortDescription>
         <value>Joining form</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_AP_Partnership_Download_PDF</fullName>
+        <categories>ISSP AP</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_AP_Partnership_Download_PDF</shortDescription>
+        <value>Use the link below to download the application form, sign it and upload it.</value>
     </labels>
     <labels>
         <fullName>ISSP_APrequest_AdminEmail1</fullName>
