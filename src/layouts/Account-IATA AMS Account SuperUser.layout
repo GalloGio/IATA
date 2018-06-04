@@ -661,6 +661,10 @@
         <fields>Phone</fields>
         <fields>Location_Type__c</fields>
         <fields>Status__c</fields>
+        <fields>Reason__c</fields>
+        <fields>Sector__c</fields>
+        <fields>Category__c</fields>
+        <fields>Location_Class__c</fields>
     </miniLayout>
     <relatedLists>
         <relatedList>RelatedAccountSalesTeam</relatedList>
