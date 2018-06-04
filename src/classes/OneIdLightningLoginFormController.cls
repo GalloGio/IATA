@@ -77,7 +77,7 @@ public without sharing class OneIdLightningLoginFormController {
                 
                 if (oneUser.Portal_User_Frozen_Checkbox__c){
                     show90Days = true;
-                    reactivateUser(oneUser);
+                    reactivateUser(oneUser,serviceName);
                     return Label.ISSP_Frozen_User_Alert_Message;
                 }
             }
@@ -126,21 +126,23 @@ public without sharing class OneIdLightningLoginFormController {
         }
     }
 
-    public static void reactivateUser(User thisUser){
+    public static void reactivateUser(User thisUser, String serviceName){
         thisUser.IsActive = true;
         thisUser.Portal_User_Frozen_Checkbox__c = false;
         update thisUser;
         Boolean success = Comm_User_Helper.resetPassword(thisUser.email, 
                                                          Comm_User_Helper.ONEIDENTITY, 
-                                                         false);
+                                                         false,
+                                                         serviceName);
     }
 
+    
     public static void findLocationCaller(){        
-        findLocation(true);
+        getFindLocation(true,'');
     }
 
-    public static void findLocation(Boolean saveLog){
-  
+    @AuraEnabled
+    public static Boolean getFindLocation(Boolean saveLog, String ipAddress){           
         sanctionCountry = false;
         country = '';
 
@@ -162,13 +164,7 @@ public without sharing class OneIdLightningLoginFormController {
         req.setTimeout(2000);
         HttpResponse res;        
         try{
-            OneId_Global_Settings__c gs = OneId_Global_Settings__c.getInstance();
-            boolean isEnable = gs.ipinfo_call_enabled__c;
-            if(isEnable) {
             res = h.send(req);            
-            }else{
-                Throw new CountryConfigException('System is disable to get IP location from ipinfo Service');
-            }
             JSONParser parser = JSON.createParser(res.getBody());
             system.debug('message:' + String.valueOf(parser));
             while (parser.nextToken() != null) {

@@ -61,7 +61,7 @@ global without sharing class Comm_User_Helper {
     public static Id createNewUser(Contact con, string selectedCustomerType, string community, string lang){
         return createNewUser(con, selectedCustomerType, community, lang, false, false);
     }
-     
+    
     public static Id createNewUser(Contact con, string selectedCustomerType, string community, string lang, Boolean newAgency, Boolean newAirline){
       try { 
         
@@ -135,7 +135,7 @@ global without sharing class Comm_User_Helper {
         else if (newAirline){
           profileName = ISSP_Constant.profilNameByUserTypeMap.get('User').get('Airline');
         }
-
+        
         system.debug('profileName: ' + profileName);
         u.ProfileId = ISSP_Constant.profileIdByProfileNameMap.get(profileName);
         system.debug('u.ProfileId: ' + u.ProfileId);
@@ -283,7 +283,7 @@ global without sharing class Comm_User_Helper {
             list<Document> doc = [Select id, Name, SystemModStamp From Document Where DeveloperName = :headerImgName];
             if(doc.size() > 0)
                 // Build the header image URL from the document information
-              imageURL = URL.getSalesforceBaseUrl().getProtocol()+'://'+System.URL.getSalesforceBaseUrl().getHost().remove('-api' )+'/servlet/servlet.ImageServer?id='+doc[0].id+'&oid='+userinfo.getorganizationid();
+              imageURL = URL.getSalesforceBaseUrl().getProtocol()+'://'+System.URL.getSalesforceBaseUrl().getHost().remove('-api' )+'/servlet/servlet.ImageServer?id='+doc[0].id+'&oid='+userinfo.getorganizationid();            
             // If there is a service name, that should determine the community name
             if(!String.isBlank(serviceName)) commName = serviceName;
             else communityName = 'Identity';
@@ -403,7 +403,7 @@ global without sharing class Comm_User_Helper {
          } catch (exception ex) {
              system.debug('kerensen - Site.createPortalUser(u, accountId,null, true):');
        
-           //TransformationHelper.sendSFDevsAlertMessage('USersID   ' +USersID  + '     ' + ex.getMessage(),'' +' ' + ex.getMessage() + '   ' + ex.getStackTraceString() , new list<string>{'salvatore.viticchie@b-i.com'});
+           //TransformationHelper.sendSFDevsAlertMessage('USersID   ' +USersID  + '     ' + ex.getMessage(),'' +' ' + ex.getMessage() + '   ' + ex.getStackTraceString() , new list<string>{'sfdcadmin@iata.org'});
         }
     
     }
@@ -565,7 +565,12 @@ global without sharing class Comm_User_Helper {
                   String serviceNameParam = String.isNotEmpty(serviceName) ? '&serviceName='+serviceName : '';
                   link = prefix + '/s/IdentityFirstLogin?'+encodedPart+serviceNameParam;
                   //template = 'Communities_Forgot_Password_Email3';
+                  if(serviceName == ISSP){
+                    template = 'Identity_Changed_ISSP_Password_Email_Custom';
+                  }else{
                   template = 'Identity_Changed_Password_Email_Custom';
+                  }
+                  
                   //system.debug('basto1p: password='+password);
                   // OneIdEnh CSP-ID002: Change parameters according to service name
                   if(serviceName == ISSP)

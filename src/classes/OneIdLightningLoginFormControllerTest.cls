@@ -286,7 +286,7 @@ private class  OneIdLightningLoginFormControllerTest {
         System.debug('newUser Id: ' + newUser.Id);
 
         User ui  = [SELECT id, username  FROM User where id = :newUser.id];
-        OneIdLightningLoginFormController.reactivateUser(ui);
+        OneIdLightningLoginFormController.reactivateUser(ui,'');
     }
 
     @IsTest

@@ -16,12 +16,11 @@ public without sharing class OneIdForgotPasswordController {
 
         Boolean success;
         String returnURL;
-        
+        username = username.trim(); 
         try {
             if(!Site.isValidUsername(username)) {
                 return Label.Site.invalid_email;
-            }
-            
+            }           
             
             List<User> users = [Select u.Username,u.firstName, u.Id, u.Email, u.IsActive , u.ContactID, U.UID__c
                                     From User u 

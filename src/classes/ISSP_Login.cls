@@ -235,7 +235,10 @@ public without sharing class ISSP_Login {
         findLocation(true);
         system.debug('## communityName ' + communityName);        
         String getUrl = ApexPages.currentPage().getUrl();
-        String oneIDStatus = String.ValueOF(ISSP_CS__c.getValues('1ID redirect').value__c);
+        String oneIDStatus;
+        if(ISSP_CS__c.getValues('1ID redirect').value__c != null)
+            oneIDStatus = String.ValueOF(ISSP_CS__c.getValues('1ID redirect').value__c);
+        
         String startUrl = ApexPages.currentPage().getParameters().get('startURL');
         system.debug('startURL ' + startURL);
         

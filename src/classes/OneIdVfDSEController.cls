@@ -1333,7 +1333,7 @@ public without sharing class OneIdVfDSEController {
     @Future
     public static void permissionCSPortal(String userId){
         if (userId != null && userId != '') {
-            List <PermissionSet> permListPortal = [SELECT Id FROM PermissionSet WHERE Name = 'CS_Portal'];
+            List <PermissionSet> permListPortal = [SELECT Id FROM PermissionSet WHERE Name = 'ISSP_SSO'];
             if(!permListPortal.isEmpty()){
                 PermissionSetAssignment newAssignCS = new PermissionSetAssignment();
                 newAssignCS.AssigneeId = userId;
