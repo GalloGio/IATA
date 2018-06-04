@@ -6,7 +6,7 @@
         <type>owner</type>
     </allowedSubmitters>
     <allowedSubmitters>
-        <submitter>courtasv@iata.org</submitter>
+        <submitter>garciam@iata.org</submitter>
         <type>user</type>
     </allowedSubmitters>
     <allowedSubmitters>
@@ -18,27 +18,11 @@
         <type>user</type>
     </allowedSubmitters>
     <allowedSubmitters>
-        <submitter>malika@iata.org</submitter>
-        <type>user</type>
-    </allowedSubmitters>
-    <allowedSubmitters>
         <submitter>mulai@iata.org</submitter>
         <type>user</type>
     </allowedSubmitters>
     <allowedSubmitters>
-        <submitter>naouriy@iata.org</submitter>
-        <type>user</type>
-    </allowedSubmitters>
-    <allowedSubmitters>
         <submitter>ponsa@iata.org</submitter>
-        <type>user</type>
-    </allowedSubmitters>
-    <allowedSubmitters>
-        <submitter>trentinog@iata.org</submitter>
-        <type>user</type>
-    </allowedSubmitters>
-    <allowedSubmitters>
-        <submitter>vitel@iata.org</submitter>
         <type>user</type>
     </allowedSubmitters>
     <approvalPageFields>

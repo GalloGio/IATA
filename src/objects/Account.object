@@ -10438,7 +10438,7 @@ Approval: Key Contact can see pending request approve it one by one</inlineHelpT
         <description>FDS AGM checks if the branch account is in a different country to the parent&apos;s.</description>
         <externalId>false</externalId>
         <formula>IF(
- AND(RecordType.Name = &quot;Agency&quot; , OR(ispickval(Location_Type__c, &quot;BR&quot;),ispickval(Location_Type__c, &quot;AE&quot;))),
+ AND(RecordType.Name = &quot;Agency&quot; , OR(ispickval(Location_Type__c, &quot;BR&quot;),ispickval(Location_Type__c, &quot;AE&quot;),ispickval(Location_Type__c, &quot;SA&quot;))),
  IF(AND(Parent.IATA_ISO_Country__r.AMS_Settlement_System__r.Name &lt;&gt; IATA_ISO_Country__r.AMS_Settlement_System__r.Name, NOT(CNS_Agency__c)),
   &quot;Yes&quot;,
   &quot;No&quot;
@@ -20421,31 +20421,6 @@ This field is kept up-to-date with the feedback of ITDI at least twice a year du
         </sharedTo>
     </listViews>
     <listViews>
-        <fullName>GDP_All_Accounts</fullName>
-        <columns>ACCOUNT.NAME</columns>
-        <columns>ACCOUNT.INDUSTRY</columns>
-        <columns>ACCOUNT.TYPE</columns>
-        <columns>ACCOUNT.ADDRESS1_CITY</columns>
-        <columns>ACCOUNT.ADDRESS1_COUNTRY</columns>
-        <columns>ACCOUNT.PHONE1</columns>
-        <columns>ACCOUNT.PHONE2</columns>
-        <filterScope>Everything</filterScope>
-        <filters>
-            <field>Number_of_GDP_Billing_accounts__c</field>
-            <operation>greaterThan</operation>
-            <value>0</value>
-        </filters>
-        <filters>
-            <field>Number_of_GDP_Billing_accounts__c</field>
-            <operation>notEqual</operation>
-        </filters>
-        <label>GDP - All Accounts</label>
-        <language>en_US</language>
-        <sharedTo>
-            <role>GDP</role>
-        </sharedTo>
-    </listViews>
-    <listViews>
         <fullName>GDP_My_Accounts</fullName>
         <columns>ACCOUNT.NAME</columns>
         <columns>ACCOUNT.INDUSTRY</columns>
@@ -25356,6 +25331,39 @@ This field is kept up-to-date with the feedback of ITDI at least twice a year du
             <group>IATAWesternCaribbean</group>
             <group>IDFSAmericasRegionalOffice</group>
         </sharedTo>
+    </listViews>
+    <listViews>
+        <fullName>X00_GDP_AdHoc_Search</fullName>
+        <columns>ACCOUNT.NAME</columns>
+        <columns>ACCOUNT.INDUSTRY</columns>
+        <columns>ACCOUNT.TYPE</columns>
+        <columns>ACCOUNT.ADDRESS1_CITY</columns>
+        <columns>ACCOUNT.ADDRESS1_COUNTRY</columns>
+        <columns>Status__c</columns>
+        <columns>Category__c</columns>
+        <filterScope>Everything</filterScope>
+        <filters>
+            <field>Location_Class__c</field>
+            <operation>equals</operation>
+            <value>T</value>
+        </filters>
+        <filters>
+            <field>Category__c</field>
+            <operation>equals</operation>
+            <value>Non-IATA Travel Agent</value>
+        </filters>
+        <filters>
+            <field>IATACode__c</field>
+            <operation>startsWith</operation>
+            <value>96</value>
+        </filters>
+        <filters>
+            <field>Status__c</field>
+            <operation>equals</operation>
+            <value>Approved,Changes processed</value>
+        </filters>
+        <label>00 - GDP - AdHoc Search</label>
+        <language>en_US</language>
     </listViews>
     <listViews>
         <fullName>ZambiaCargoAgents</fullName>
@@ -85034,6 +85042,14 @@ IF(INCLUDES(Remittance_frequency__c , &quot;D&quot;),1,0) &gt; 2 )
         <active>true</active>
         <errorConditionFormula>AND (ISCHANGED( Name ), ($Profile.Name = &apos;MER Membership&apos;), NOT(ISPICKVAL( Membership_status__c , &apos;IATA member&apos;))  )</errorConditionFormula>
         <errorMessage>You cannot modify non IATA members name</errorMessage>
+    </validationRules>
+    <validationRules>
+        <fullName>No_tabs_in_VAT_Number</fullName>
+        <active>true</active>
+        <description>Tab character is forbidden in VAT_Number__c field</description>
+        <errorConditionFormula>CONTAINS(VAT_Number__c ,&quot;	&quot;)</errorConditionFormula>
+        <errorDisplayField>VAT_Number__c</errorDisplayField>
+        <errorMessage>Please remove tabs from VAT number.</errorMessage>
     </validationRules>
     <validationRules>
         <fullName>Parent_Acc_Airline_Designator_Required</fullName>
