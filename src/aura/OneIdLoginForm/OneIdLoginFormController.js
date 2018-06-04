@@ -24,8 +24,6 @@
     },
 
     initialize: function(component, event, helper) {
-        $A.get("e.siteforce:registerQueryEventMap").setParams({"qsToEvent" : helper.qsToEventMap}).fire();   
-        
         helper.getIsUsernamePasswordEnabled(component, event, helper);
         helper.getIsSelfRegistrationEnabled(component, event, helper);
         helper.getCommunityForgotPasswordUrl(component, event, helper);
@@ -33,8 +31,6 @@
         helper.getSiteCompleteUrl(component, event, helper);
 
         
-        //helper.getSanctionCountry(component, event, helper, getElementById("clientIpAddressAjax").value);
-        //helper.getSanctionCountry(component, event, helper);
         helper.getShow90Days(component, event, helper);
 
         $A.get("e.c:oneIdURLParams").setParams({"state":"fetch"}).fire();
@@ -43,29 +39,19 @@
             component.set("v.loaded", true);
         }, 2000);
     },
-    
-   /* getClientIpAddress: function(component, event, helper){
-        console.log('getClientIpAddress call getSanctionCountry on Synchronous ip adress get.');
-        
-        helper.getClientIpAddressAjax(component, event, helper);
-        console.log('getClientIpAddress.AFTER AJAX CALL');
-        
-        //If ajax schyncronous
-        console.log('component.v.clientIpAddress='+component.get("v.clientIpAddress"));
-        helper.getSanctionCountry(component, event, helper, component.get("v.clientIpAddress"));
-    },*/
-        renderPage : function (component, event, helper){
-        console.log('renderpage...');
+   
+    renderPage : function (component, event, helper){
         var state = event.getParam("state");
 
         console.info("renderPage - state "+state);
         if(state == "answer"){
             var servName = event.getParam("paramsMap").serviceName;
-            console.info("renderPage - paramsMap ");
-            console.info(event.getParam("paramsMap"));
+            var redirect_uri = event.getParam("paramsMap").redirect_uri;
+            var startURL = event.getParam("paramsMap").startURL;
+
             if(/\S/.test(servName)){
+                console.warn(servName);
                 component.set("v.serviceName", servName);
-                component.set("v.customCommunity", true);
                                 
                 var labelHelpLink = $A.getReference("$Label.c.OneId_" + servName + "_Troubleshooting_Link");
                 var labelHelp = $A.getReference("$Label.c.OneId_" + servName + "_Troubleshooting");
@@ -74,6 +60,17 @@
                 component.set("v.labelHelp", labelHelp);
                 component.set("v.labelTermsOfUseLink", labelTerms);
             }
+            
+            if(/mobilesdk/.test(redirect_uri)){
+                //prevent redirection
+                component.set("v.startURL", 'mobileApp');
+                console.warn('matchedsdk');
+            }else if(/\S/.test(startURL)){
+                component.set("v.startUrl", startURL);
+                console.warn('did not matchedsdk');
+            }
+
+            console.warn('startURL '+component.get("v.startUrl"));
         }
         
         component.set("v.loaded", true);
@@ -83,13 +80,7 @@
         console.log('handleLogin');
         helper.handleLogin(component, event, helper);
     },
-    
-    setStartUrl: function (component, event, helper) {
-        var startUrl = event.getParam('startURL');
-        if(startUrl) {
-            component.set("v.startUrl", startUrl);
-        }
-    },
+
     onKeyUp: function(component, event, helper){
         //checks for "enter" key
         if(event.getParams().keyCode == 13){
