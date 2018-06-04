@@ -122,11 +122,13 @@ private class ANG_OscarProcessHelperTest {
             ),
             new AMS_ChangeCodes__c(
                 Name = 'FPR', Change_Code__c = 'FPR', Integration_RecId__c = 'C',Bulletin_Memo_Text__c = 'Agent is restricted from using Cash form of payment method due to <SIDRA Lite Reason>.'
+            ),
+            new AMS_ChangeCodes__c(
+                Name = 'NEW-AMS', Change_Code__c = 'NEW', Integration_RecId__c = 'A'
             )
         };
 
-        insert changeCodeList;
-		
+        insert changeCodeList;		
 	}
 
 	@isTest static void testIATACodeGenerationOKNoDueDiligenceCase() {
@@ -144,7 +146,7 @@ private class ANG_OscarProcessHelperTest {
 
 		ANG_OscarProcessHelper.checkSFDCLimits();
 
-		System.assertEquals('0',result[0]);
+		System.assertEquals('0',result[0], result[1]);
 
 		oscar = [Select Id, Flag_IATACode__c, STEP10__c, Flag_Data_to_Account__c, Flag_Data_to_SAPECC__c FROM AMS_OSCAR__c LIMIT 1];
 
@@ -175,7 +177,7 @@ private class ANG_OscarProcessHelperTest {
 
 		ANG_OscarProcessHelper.checkSFDCLimits();
 
-		System.assertEquals('0',result[0]);
+		System.assertEquals('0',result[0], result[1]);
 		System.assertEquals('0',result[2]); // due diligence was created
 
 		oscar = [Select Id, Flag_IATACode__c, STEP10__c, Flag_Data_to_Account__c, Flag_Data_to_SAPECC__c FROM AMS_OSCAR__c LIMIT 1];
@@ -207,7 +209,7 @@ private class ANG_OscarProcessHelperTest {
 		system.debug('testIATACodeGenerationOKTwice Result code is:'+result[0]);
 		system.debug('testIATACodeGenerationOKTwice Result message is:'+result[1]);
 
-		System.assertEquals('0',result[0]);
+		System.assertEquals('0',result[0], result[1]);
 
 		ANG_OscarProcessHelper.checkSFDCLimits();
 
@@ -218,7 +220,7 @@ private class ANG_OscarProcessHelperTest {
 
 		ANG_OscarProcessHelper.checkSFDCLimits();
 
-		System.assertEquals('0',result[0]);
+		System.assertEquals('0',result[0], result[1]);
 
 		oscar = [Select Id, Flag_IATACode__c, STEP10__c, Flag_Data_to_Account__c, Flag_Data_to_SAPECC__c FROM AMS_OSCAR__c LIMIT 1];
 
@@ -252,7 +254,7 @@ private class ANG_OscarProcessHelperTest {
 
 		ANG_OscarProcessHelper.checkSFDCLimits();
 
-		System.assertEquals('0',result[0]);
+		System.assertEquals('0',result[0], result[1]);
 
 		oscar = [Select Id, Flag_IATACode__c, STEP10__c, Flag_Data_to_Account__c, Flag_Data_to_SAPECC__c FROM AMS_OSCAR__c LIMIT 1];
 
@@ -282,7 +284,7 @@ private class ANG_OscarProcessHelperTest {
 
 		ANG_OscarProcessHelper.checkSFDCLimits();
 
-		System.assertEquals('0',result[0]);
+		System.assertEquals('0',result[0], result[1]);
 
 		oscar = [Select Id, Flag_IATACode__c, STEP10__c, Flag_Data_to_Account__c, Flag_Data_to_SAPECC__c FROM AMS_OSCAR__c LIMIT 1];
 
@@ -320,7 +322,7 @@ private class ANG_OscarProcessHelperTest {
 
 		ANG_OscarProcessHelper.checkSFDCLimits();
 
-		System.assertEquals('0',result[0]);
+		System.assertEquals('0',result[0], result[1]);
 
 		oscar = [Select Id, Flag_IATACode__c, STEP10__c, Flag_Data_to_Account__c, Flag_Data_to_SAPECC__c FROM AMS_OSCAR__c LIMIT 1];
 
@@ -355,7 +357,7 @@ private class ANG_OscarProcessHelperTest {
 
 		ANG_OscarProcessHelper.checkSFDCLimits();
 
-		System.assertEquals('0',result[0]);
+		System.assertEquals('0',result[0], result[1]);
 
 		oscar = [Select Id, Flag_IATACode__c, STEP10__c, Flag_Data_to_Account__c, Flag_Data_to_SAPECC__c FROM AMS_OSCAR__c LIMIT 1];
 
@@ -580,6 +582,52 @@ private class ANG_OscarProcessHelperTest {
 						VAT_Number_2__c,
 						Website from account limit 1];
 
+		a.IATACode__c = '7463812';
+		a.Reason__c = '91-ACCREDITED-MEET-STANDARDS';
+
+		update a;
+
+		a = [select Abbreviated_address__c, Abbreviated_name__c,
+						BillingState,
+						BillingCity,
+						Email__c,
+						Fax,
+						Phone,
+						BillingPostalCode,
+						BillingStreet,
+						CASS_Number__c,
+						BillingCountry,
+						Name,
+						Region_formula__c,
+						ANG_Accreditation_Model__c,
+						Id,
+						Iata_iso_country__c,
+						IATACode__c,
+						Iso_State__c,
+						GDS__c,
+						Company_Type__c,
+						License_Number__c,
+						VAT_Number__c,
+						Is_your_firm_handling_Dangerous_Goods__c,
+						Location_Class__c,
+						Location_Type__c,
+						Mobile__c,
+						Operation__c,
+						Remittance_frequency__c,
+						ShippingCity,
+						ShippingCountry,
+						IATA_ISO_Shipping_Country__c,
+						IATA_ISO_Shipping_State__c,
+						ShippingPostalCode,
+						ShippingState,
+						ShippingStreet,
+						Short_Name__c,
+						Solicitation_Flag__c,
+						TradeName__c,
+						VAT_Number_2__c,
+						Reason__c,
+						Website from account limit 1];
+        
 		List<Contact> conts = [select Id, Name, Email, Preferred_Language__c, BSP_CASS_Payment_contact__c, Financial_Assessment_Contact__c, User_Portal_Status__c from contact where accountid =:a.id];
 		
 		Test.startTest();
