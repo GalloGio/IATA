@@ -1648,7 +1648,9 @@ public without sharing class AMS_Utils {
             for(AMS_Inspection__c insp: inspections)
             {
 
-                insp.Account__c = insp.OSCAR__r.Account__c;
+                if(String.isNotBlank(insp.OSCAR__c) && String.isNotBlank(insp.OSCAR__r.Account__c)){ 
+                    insp.Account__c = insp.OSCAR__r.Account__c;
+                }
                 
                 insp.Date_Organisation_Status_attained__c = (insp.Date_Organisation_Status_attained__c == null) ? system.today() : insp.Date_Organisation_Status_attained__c;
                 insp.Accreditation_Endorsement_Status_code__c = statusToApply;
