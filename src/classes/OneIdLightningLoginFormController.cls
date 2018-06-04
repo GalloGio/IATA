@@ -68,8 +68,13 @@ public without sharing class OneIdLightningLoginFormController {
                 system.debug('contact id: ' + oneUser.ContactId);
                 system.debug('Portal_User_Frozen_Checkbox__c: ' + oneUser.Portal_User_Frozen_Checkbox__c);                
                 
-                if(String.isNotBlank(startUrl)) 
-                    pageLink = startUrl;
+                
+                if(String.isNotBlank(startUrl)){
+                    //if login is from mobileApp we do not redirect
+                    if(startUrl != 'mobileApp') pageLink = startUrl;
+
+                }else if( String.isNotBlank(serviceName) && serviceName == 'ISSP') pageLink = '/ISSP_Homepage';
+
                 
                 if( ((String.isNotBlank(startUrl) && startUrl.contains('identity')) || (String.isNotBlank(startUrl))) && (String.isNotBlank(serviceName) && serviceName == 'ISSP'))
                     pageLink = '/ISSP_Homepage';

@@ -64,7 +64,7 @@ private class ISSP_ANG_VoluntaryRelinquishment_Test {
 	            testCase.Subject = 'Test 006';
 	            testCase.Reopened_case__c = 0.0; 
 	            testCase.IFAP_Country_ISO__c = 'tq';
-	            testCase.Status = 'Draft';
+	            testCase.Status = 'Action Needed';
 	            testCase.Region__c = 'Africa & Middle East';
 	            testCase.Account_Concerned__c = child.Id;
             insert testCase;
@@ -149,7 +149,7 @@ private class ISSP_ANG_VoluntaryRelinquishment_Test {
 	            testCase.Subject = 'Test 006';
 	            testCase.Reopened_case__c = 0.0; 
 	            testCase.IFAP_Country_ISO__c = 'tq';
-	            testCase.Status = 'Draft';
+	            testCase.Status = 'Action Needed';
 	            testCase.Region__c = 'Africa & Middle East';	            
             insert testCase;
 
@@ -241,7 +241,7 @@ private class ISSP_ANG_VoluntaryRelinquishment_Test {
 	            testCase.Subject = 'Test 006';
 	            testCase.Reopened_case__c = 0.0; 
 	            testCase.IFAP_Country_ISO__c = 'tq';
-	            testCase.Status = 'Draft';
+	            testCase.Status = 'Action Needed';
 	            testCase.Region__c = 'Africa & Middle East';
 	            testCase.Account_Concerned__c = child.Id;
             insert testCase;
@@ -336,7 +336,7 @@ private class ISSP_ANG_VoluntaryRelinquishment_Test {
 	            testCase.Subject = 'Test 006';
 	            testCase.Reopened_case__c = 0.0; 
 	            testCase.IFAP_Country_ISO__c = 'tq';
-	            testCase.Status = 'Draft';
+	            testCase.Status = 'Action Needed';
 	            testCase.Region__c = 'Africa & Middle East';	            
             insert testCase;
 
@@ -433,7 +433,7 @@ private class ISSP_ANG_VoluntaryRelinquishment_Test {
 	            testCase.Subject = 'Test 006';
 	            testCase.Reopened_case__c = 0.0; 
 	            testCase.IFAP_Country_ISO__c = 'tq';
-	            testCase.Status = 'Draft';
+	            testCase.Status = 'Action Needed';
 	            testCase.Region__c = 'Africa & Middle East';	            
             insert testCase;
 

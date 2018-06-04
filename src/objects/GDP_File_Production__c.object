@@ -598,7 +598,22 @@
         <filters>
             <field>Production_Date__c</field>
             <operation>equals</operation>
-            <value>4/1/2018</value>
+            <value>TODAY</value>
+        </filters>
+        <filters>
+            <field>File_Specification__c</field>
+            <operation>notContain</operation>
+            <value>Daily</value>
+        </filters>
+        <filters>
+            <field>File_Specification__c</field>
+            <operation>notContain</operation>
+            <value>MITA</value>
+        </filters>
+        <filters>
+            <field>File_Specification__c</field>
+            <operation>notContain</operation>
+            <value>CAC</value>
         </filters>
         <label>ZZ: Ad Hoc Production Search</label>
         <language>en_US</language>
