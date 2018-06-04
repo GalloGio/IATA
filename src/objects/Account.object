@@ -84074,7 +84074,7 @@ This field is kept up-to-date with the feedback of ITDI at least twice a year du
                 <fullName>Under review</fullName>
                 <default>false</default>
             </values>
-        </picklistValues>
+		</picklistValues>
         <picklistValues>
             <picklist>Strategic_Partnership_Areas__c</picklist>
             <values>
@@ -84625,7 +84625,7 @@ This field is kept up-to-date with the feedback of ITDI at least twice a year du
             </values>
         </picklistValues>
     </recordTypes>
-    <recordTypes>
+	<recordTypes>
         <fullName>TIP_Payment_Provider</fullName>
         <active>true</active>
         <label>Payment Provider</label>
