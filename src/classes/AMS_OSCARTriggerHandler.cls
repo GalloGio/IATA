@@ -178,7 +178,7 @@ public class AMS_OSCARTriggerHandler {
     public static void validateRemittanceFrequency(List<AMS_OSCAR__c> oscars, Map<Id, AMS_OSCAR__c> oldMap, Map<Id, AMS_OSCAR__c> newMap) {
         List<AMS_Oscar__c> oscarsToValidate = new List<AMS_Oscar__c>();
         Map<String, Set<String>> mapClassAttributes = new Map<String, Set<String>>();
-        Set<String> processToCheck = new Set<String> {AMS_Utils.new_HO, AMS_Utils.new_BR};
+        Set<String> processToCheck = new Set<String> {AMS_Utils.new_HO, AMS_Utils.new_BR, AMS_Utils.new_SA};
 
 
         for(AMS_Oscar__c oscar : oscars) {
@@ -349,13 +349,16 @@ public class AMS_OSCARTriggerHandler {
                                                                     AMS_Utils.new_AHA
                                                                     };
 
+        /*** AMSU-31 Start ***/
+        Set<AMS_Oscar__c> oscarsToCreateAuth = new Set<AMS_Oscar__c>();
+        /*** AMSU-31 End ***/
         for (AMS_OSCAR__c updatedOSCAR : oscarsToInsert) {
             AMS_OSCAR__c oldOSCAR = oldOscars.get(updatedOSCAR.Id);
 
             applyAccreditationProcessLogic(oldOSCAR, updatedOscar);
 
             if(!ProcessesToIgnoreChangeCode.contains(updatedOscar.Process__c))
-                applyChangeCodesWithDependencies(oldOSCAR, updatedOscar, oscarAccountIds);
+                applyChangeCodesWithDependencies(oldOSCAR, updatedOscar, oscarAccountIds, oscarsToCreateAuth);
 
 
             processFieldsTracking(oldOSCAR, updatedOscar);
@@ -398,6 +401,24 @@ public class AMS_OSCARTriggerHandler {
             if(updatedOSCAR.Process__c != AMS_Utils.CERTIFICATE) updatedOSCAR.Certificate_Quantity__c = null;
 
         }
+
+        /*** AMSU-31 Start ***/
+        if(!oscarsToCreateAuth.isEmpty()) {
+            List<Case> cases = [SELECT Id, CaseNumber, OSCAR__c, OSCAR__r.Name, Oscar__r.Account__c, Contact.Email FROM Case WHERE OSCAR__c IN :oscarsToCreateAuth];
+            List<Agency_Authorization__c> agenciesAuth = new List<Agency_Authorization__c>(); 
+            for(Case cse : cases) {
+                if(cse.CaseNumber != cse.OSCAR__r.Name) {
+                    continue;
+                }
+                Agency_Authorization__c agencyAuth = new Agency_Authorization__c(Account__c= cse.OSCAR__r.Account__c, Email_Used_for_BSP_Creation__c= cse.Contact.Email);
+                agenciesAuth.add(agencyAuth);
+            }
+
+            if(!agenciesAuth.isEmpty()) {
+            	insert agenciesAuth;
+        	}
+        }
+        /*** AMSU-31 Start ***/
 
     }
 
@@ -2435,7 +2456,7 @@ public class AMS_OSCARTriggerHandler {
 
     }
     
-    @TestVisible private static Map<String, Id> ANGemailTemplates(String agencyType, String step, boolean wasApproved){
+    public static Map<String, Id> ANGemailTemplates(String agencyType, String step, boolean wasApproved){
 
         Map<String, Id> multilangTemplates = new Map<String, Id>();
 
@@ -2460,6 +2481,9 @@ public class AMS_OSCARTriggerHandler {
         else if(agencyType == AMS_Utils.NGOPTINOUT && step == AMS_Utils.PASSED && !wasApproved) templateId  = 'ANG_Financial_Assesment_Opt_out_App';
         else if(agencyType == AMS_Utils.NGOPTINOUT && step == AMS_Utils.FAILED && wasApproved) templateId  = 'ANG_Financial_Assesment_Opt_in_DIS';
         else if(agencyType == AMS_Utils.NGOPTINOUT && step == AMS_Utils.FAILED && !wasApproved) templateId  = 'ANG_Financial_Assesment_Opt_out_DIS';
+        else if(agencyType == AMS_Utils.NGFOP && step == null ) templateId  = 'ANG_FOP_OSCARCREATION';
+        else if(agencyType == ANG_FOPOSCARNotificationBatch.FOP_REMINDER_TEMPLATE_ID && step == null) templateId  = 'ANG_Mass_FOP_OSCAR_Reminder';
+        else if(agencyType == ANG_FOPOSCARNotificationBatch.FOP_NONCOMPLIANCE_TEMPLATE_ID && step == null) templateId  = 'ANG_Mass_FOP_OSCAR_NonCompliance';
 
         //Get the templates for NG accreditation outcoume
         List<EmailTemplate> etNG = Database.query('SELECT Id, DeveloperName, HtmlValue, Subject FROM EmailTemplate WHERE DeveloperName LIKE \'' + templateId + '%\'' );
@@ -3107,7 +3131,7 @@ public class AMS_OSCARTriggerHandler {
 
     }
 
-    public static void applyChangeCodesWithDependencies(AMS_OSCAR__c oldOSCAR, AMS_OSCAR__c updatedOscar,Set<Id> oscarAccountIds) {
+    public static void applyChangeCodesWithDependencies(AMS_OSCAR__c oldOSCAR, AMS_OSCAR__c updatedOscar,Set<Id> oscarAccountIds, Set<AMS_Oscar__c> oscarsToCreateAuth) {
     
         ID newRT = Schema.SObjectType.AMS_OSCAR__c.getRecordTypeInfosByName().get('NEW').getRecordTypeId();
         ID newNGRT = Schema.SObjectType.AMS_OSCAR__c.getRecordTypeInfosByName().get('NG New HE').getRecordTypeId();
@@ -3118,6 +3142,14 @@ public class AMS_OSCARTriggerHandler {
         if (updatedOscar.recordTypeID == newRT || updatedOscar.recordTypeID == newNGRT || updatedOSCAR.recordTypeID == AMS_Utils.RECTYPE_NEWAE){
             if (oldOSCAR.STEP2__c != 'Passed' && updatedOscar.STEP2__c == 'Passed') {
                 AMS_OSCAR_JSON.ChangeCode changeCode = new AMS_OSCAR_JSON.ChangeCode();
+
+                /*** AMSU-31 Start ***/
+                Set<String> processesToCheck = new Set<String> {AMS_Utils.new_HO, AMS_Utils.new_BR, AMS_Utils.new_SA, AMS_Utils.new_BR_ABROAD};
+                Set<String> classesToCheck = new Set<String> {'P', 'D'}; 
+                if(classesToCheck.contains(updatedOscar.Location_Class__c) && processesToCheck.contains(updatedOscar.Process__c)) {
+                    oscarsToCreateAuth.add(updatedOscar);
+                }
+                /*** AMSU-31 End ***/
 
                 changeCode.name = 'FIN';
                 changeCode.reasonCode = '91';
@@ -3432,7 +3464,7 @@ public class AMS_OSCARTriggerHandler {
                         accountToAdd = true;
                     }
 
-                    if(oscar.Is_PCI_compliant__c == 'Yes'){
+                    if(oscar.Is_PCI_compliant__c == 'Yes' || oscar.Is_PCI_compliant__c == 'Nil CC'){
                         acct.ANG_PCI_compliance_expiry_date__c = oscar.ANG_PCI_compliance_expiry_date__c;
                         accountToAdd = true;
                     }
@@ -3464,10 +3496,14 @@ public class AMS_OSCARTriggerHandler {
 
             }
 
+            if(oscar.Is_PCI_compliant__c <> 'Corporate Card'){ //NEWGEN-3214
+                
             String changeCodeName = oscar.Is_PCI_compliant__c == 'No' ? 'CCA' : 'CCR';
 
             ANG_OscarProcessHelper.EntityUpdater updater = ANG_OscarProcessHelper.createChangeCodeForFOP(null, oscar, [Select Id, Status__c from Account where id in:oscarAccountsMap.get(oscar.Id)], changeCodeName);
             ANG_OscarProcessHelper.updateUpdater(updater);
+
+        }
 
         }
 

@@ -24,19 +24,21 @@ public with sharing class FeedItemHelper {
 		set<Id> setRelatedAccountIds = new set<Id>();		
 		for (FeedItem fi : lstTriggerNew) {
 			//check apostrophe ' (&#39) RN-INC339011
-			String check = fi.body.toUpperCase();
-			string finalS = fi.body.toUpperCase();
-			if(check.contains('&#39;')){
-				finalS = check.remove('&#39;');
+			if (fi.body != null) {
+				String check = fi.body.toUpperCase();
+				string finalS = fi.body.toUpperCase();
+				if(check.contains('&#39;')){
+					finalS = check.remove('&#39;');
+				}
+				Pattern p = Pattern.compile('.*#\\w+(?s).*');
+				Matcher regexMatcher = p.matcher(finalS);
+	
+				if (String.valueOf(fi.ParentId).startsWith('001') 
+					&& !regexMatcher.matches() 
+					&& fi.Type == 'TextPost') {
+						setRelatedAccountIds.add(fi.ParentId);
+				}
 			}
-			Pattern p = Pattern.compile('.*#\\w+(?s).*');
-			Matcher regexMatcher = p.matcher(finalS);
-
- 	   		if (String.valueOf(fi.ParentId).startsWith('001') 
- 	   			&& !regexMatcher.matches() 
- 	   		 	&& fi.Type == 'TextPost') {
-	 	   			setRelatedAccountIds.add(fi.ParentId);
- 	   		}
  	   	}
 		if (!setRelatedAccountIds.isEmpty()) {
 

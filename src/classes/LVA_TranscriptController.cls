@@ -16,7 +16,7 @@ public class LVA_TranscriptController {
                             lva.body = lva.body.replaceAll('\n','<br/>'); 
                             lva.body = lva.body.replace(splitedBody[i], splitedBody[i].replaceAll('(.{' + MAX_LENGTH + '})', '$1<br/>') + '<br>') ;
                             
-                        } else{
+                        } else if(String.isNotBlank(splitedBody[i])){
                             lva.body = lva.body.replace(splitedBody[i],splitedBody[i] + '<br>');
                         }
                     }
