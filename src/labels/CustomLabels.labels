@@ -15093,6 +15093,14 @@ Select at least one authorised signatory, and choose the Financial Assessment co
         <value>Please refer to our paid &lt;a target=&quot;_blank&quot; href=&quot;https://customer-portal-iata.force.com/iec/ieccacfree&quot;&gt;CheckACode&lt;/a&gt; service if you require the contact details for any agency.</value>
     </labels>
     <labels>
+        <fullName>ISSP_ANG_IATA_CODE_SEARCH_DESCRIPTION</fullName>
+        <categories>ISSP, ANG</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_ANG_IATA_CODE_SEARCH_DESCRIPTION</shortDescription>
+        <value>This service enables you to look for Travel and Cargo Agents in the BSP/CASS your Airline is participating in. Simply type the IATA code in the search bar to view the main details and risk related information like the active forms of payment, risk history, their accreditation and risk status, etc.</value>
+    </labels>
+    <labels>
         <fullName>ISSP_ANG_IATA_CODE_SEARCH_FINANCIAL_SECURITY_EXISTS</fullName>
         <categories>ISSP,ANG</categories>
         <language>en_US</language>
