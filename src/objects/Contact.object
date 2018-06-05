@@ -3154,6 +3154,206 @@ IF(Authorized_Signatory__c,IMAGE(&quot;/resource/authsign&quot; ,&quot;&quot;,40
         <type>Checkbox</type>
     </fields>
     <fields>
+        <fullName>Available_Services__c</fullName>
+        <description>This field contains the names of the portal services available to the current contact. This should be updated through a trigger</description>
+        <externalId>false</externalId>
+        <label>Available Services</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <type>MultiselectPicklist</type>
+        <valueSet>
+            <valueSetDefinition>
+                <sorted>false</sorted>
+                <value>
+                    <fullName>AIRS / CAIRS Online Bulletin</fullName>
+                    <default>false</default>
+                    <label>AIRS / CAIRS Online Bulletin</label>
+                </value>
+                <value>
+                    <fullName>ASD</fullName>
+                    <default>false</default>
+                    <label>ASD</label>
+                </value>
+                <value>
+                    <fullName>Biller Direct</fullName>
+                    <default>false</default>
+                    <label>Biller Direct</label>
+                </value>
+                <value>
+                    <fullName>BSP / CASS Change of Bank details</fullName>
+                    <default>false</default>
+                    <label>BSP / CASS Change of Bank details</label>
+                </value>
+                <value>
+                    <fullName>BSP / CASS Change Request</fullName>
+                    <default>false</default>
+                    <label>BSP / CASS Change Request</label>
+                </value>
+                <value>
+                    <fullName>BSPLink</fullName>
+                    <default>false</default>
+                    <label>BSPLink</label>
+                </value>
+                <value>
+                    <fullName>CassLink</fullName>
+                    <default>false</default>
+                    <label>CassLink</label>
+                </value>
+                <value>
+                    <fullName>CASSLink Export</fullName>
+                    <default>false</default>
+                    <label>CASSLink Export</label>
+                </value>
+                <value>
+                    <fullName>CASSLink Import</fullName>
+                    <default>false</default>
+                    <label>CASSLink Import</label>
+                </value>
+                <value>
+                    <fullName>CASSLink Route Analyzer</fullName>
+                    <default>false</default>
+                    <label>CASSLink Route Analyzer</label>
+                </value>
+                <value>
+                    <fullName>CNS CASSLink</fullName>
+                    <default>false</default>
+                    <label>CNS CASSLink</label>
+                </value>
+                <value>
+                    <fullName>CNS Endorsement &amp; Changes</fullName>
+                    <default>false</default>
+                    <label>CNS Endorsement &amp; Changes</label>
+                </value>
+                <value>
+                    <fullName>Currency Center</fullName>
+                    <default>false</default>
+                    <label>Currency Center</label>
+                </value>
+                <value>
+                    <fullName>GSA Appointments</fullName>
+                    <default>false</default>
+                    <label>GSA Appointments</label>
+                </value>
+                <value>
+                    <fullName>IATA Accreditation &amp; Changes</fullName>
+                    <default>false</default>
+                    <label>IATA Accreditation &amp; Changes</label>
+                </value>
+                <value>
+                    <fullName>IATA EasyPay</fullName>
+                    <default>false</default>
+                    <label>IATA EasyPay</label>
+                </value>
+                <value>
+                    <fullName>ICCS</fullName>
+                    <default>false</default>
+                    <label>ICCS</label>
+                </value>
+                <value>
+                    <fullName>ICE – IATA Customer E-Statement</fullName>
+                    <default>false</default>
+                    <label>ICE – IATA Customer E-Statement</label>
+                </value>
+                <value>
+                    <fullName>IFAP</fullName>
+                    <default>false</default>
+                    <label>IFAP</label>
+                </value>
+                <value>
+                    <fullName>IFG Production</fullName>
+                    <default>false</default>
+                    <label>IFG Production</label>
+                </value>
+                <value>
+                    <fullName>IFG Sandbox</fullName>
+                    <default>false</default>
+                    <label>IFG Sandbox</label>
+                </value>
+                <value>
+                    <fullName>Join BSP / CASS</fullName>
+                    <default>false</default>
+                    <label>Join BSP / CASS</label>
+                </value>
+                <value>
+                    <fullName>Management Information Report</fullName>
+                    <default>false</default>
+                    <label>Management Information Report</label>
+                </value>
+                <value>
+                    <fullName>MITA Agreements</fullName>
+                    <default>false</default>
+                    <label>MITA Agreements</label>
+                </value>
+                <value>
+                    <fullName>MSO Management</fullName>
+                    <default>false</default>
+                    <label>MSO Management</label>
+                </value>
+                <value>
+                    <fullName>Payment Link</fullName>
+                    <default>false</default>
+                    <label>Payment Link</label>
+                </value>
+                <value>
+                    <fullName>Paypal</fullName>
+                    <default>false</default>
+                    <label>Paypal</label>
+                </value>
+                <value>
+                    <fullName>Resource Center</fullName>
+                    <default>false</default>
+                    <label>Resource Center</label>
+                </value>
+                <value>
+                    <fullName>Risk Profile and RHC</fullName>
+                    <default>false</default>
+                    <label>Risk Profile and RHC</label>
+                </value>
+                <value>
+                    <fullName>Simplified Interline Settlement</fullName>
+                    <default>false</default>
+                    <label>Simplified Interline Settlement</label>
+                </value>
+                <value>
+                    <fullName>SIS</fullName>
+                    <default>false</default>
+                    <label>SIS</label>
+                </value>
+                <value>
+                    <fullName>SIS Help Desk</fullName>
+                    <default>false</default>
+                    <label>SIS Help Desk</label>
+                </value>
+                <value>
+                    <fullName>Standards Setting Workspace</fullName>
+                    <default>false</default>
+                    <label>Standards Setting Workspace</label>
+                </value>
+                <value>
+                    <fullName>TIP</fullName>
+                    <default>false</default>
+                    <label>TIP</label>
+                </value>
+                <value>
+                    <fullName>Treasury Dashboard</fullName>
+                    <default>false</default>
+                    <label>Treasury Dashboard</label>
+                </value>
+                <value>
+                    <fullName>Treasury Dashboard - Premium</fullName>
+                    <default>false</default>
+                    <label>Treasury Dashboard - Premium</label>
+                </value>
+                <value>
+                    <fullName>Id Card Holder</fullName>
+                    <default>false</default>
+                    <label>Id Card Holder</label>
+                </value>
+            </valueSetDefinition>
+        </valueSet>
+        <visibleLines>3</visibleLines>
+    </fields>
+    <fields>
         <fullName>BSP_CASS_Payment_contact__c</fullName>
         <defaultValue>false</defaultValue>
         <externalId>false</externalId>
@@ -10357,33 +10557,33 @@ IF(IFG_PreProduction__c == 1, &apos;IFG PreProduction Access&apos;,
     <fields>
         <fullName>Services__c</fullName>
         <externalId>false</externalId>
-        <formula>IF(S_ASD__c&gt;0,IMAGE(&quot;/servlet/servlet.FileDownload?file=015w00000037Sln&quot; ,&quot;&quot;,40,40),&quot;&quot;)
-&amp;&quot; &quot;&amp; 
-IF(S_BSPlink__c&gt;0,IMAGE(&quot;/servlet/servlet.FileDownload?file=015w00000037SmC&quot; ,&quot;&quot;,40,40),&quot;&quot;)
-&amp;&quot; &quot;&amp; 
-IF(S_CASSlink__c&gt;0,IMAGE(&quot;/servlet/servlet.FileDownload?file=015w00000037Smv&quot; ,&quot;&quot;,40,40),&quot;&quot;)
-&amp;&quot; &quot;&amp; 
-IF(S_SIS__c&gt;0,IMAGE(&quot;/servlet/servlet.FileDownload?file=015w00000037SpQ&quot; ,&quot;&quot;,40,40),&quot;&quot;)
-&amp;&quot; &quot;&amp; 
-IF(ID_Card_Holder__c,IMAGE(&quot;/servlet/servlet.FileDownload?file=015w00000037Sne&quot; ,&quot;&quot;,40,40),&quot;&quot;)
-&amp;&quot; &quot;&amp; 
-IF(Service_TD_Basic__c + Service_TD_Premium__c&gt;0,IMAGE(&quot;/servlet/servlet.FileDownload?file=015w00000037Som&quot; ,&quot;&quot;,40,40),&quot;&quot;)
-&amp;&quot; &quot;&amp; 
-IF(MITA_Contact__c=TRUE,IMAGE(&quot;/servlet/servlet.FileDownload?file=015w00000052zdM&quot; ,&quot;&quot;,40,40),&quot;&quot;)
-&amp;&quot; &quot;&amp; 
-IF(S_EBulletin__c&gt;0,IMAGE(&quot;/servlet/servlet.FileDownload?file=0151r000006DHlF&quot; ,&quot;&quot;,40,40),&quot;&quot;)
-&amp;&quot; &quot;&amp; 
-IF(S_Accreditation_Changes__c&gt;0,IMAGE(&quot;/servlet/servlet.FileDownload?file=0151r000006DHlA&quot; ,&quot;&quot;,40,40),&quot;&quot;)
-&amp;&quot; &quot;&amp;  
-IF(S_Currency_Center__c&gt;0,IMAGE(&quot;/servlet/servlet.FileDownload?file=015w0000004yCw2&quot; ,&quot;&quot;,40,40),&quot;&quot;)
-&amp;&quot; &quot;&amp; 
-IF(S_EasyPay__c&gt;0,IMAGE(&quot;/servlet/servlet.FileDownload?file=015w00000056QFS&quot; ,&quot;&quot;,40,40),&quot;&quot;)
-&amp;&quot; &quot;&amp; 
-IF(S_ICE__c&gt;0,IMAGE(&quot;/servlet/servlet.FileDownload?file=015w0000004IwcT&quot; ,&quot;&quot;,40,40),&quot;&quot;)
-&amp;&quot; &quot;&amp; 
-IF(S_Standards_Setting_Workspace__c&gt;0,IMAGE(&quot;/servlet/servlet.FileDownload?file=015w0000005xvJ2&quot; ,&quot;&quot;,40,40),&quot;&quot;)
-&amp;&quot; &quot;&amp; 
-IF(S_Risk_RHC__c&gt;0,IMAGE(&quot;/servlet/servlet.FileDownload?file=015w0000006MxBK&quot; ,&quot;&quot;,40,40),&quot;&quot;)</formula>
+        <formula>IF(INCLUDES(Available_Services__c,&quot;ASD&quot;),IMAGE(&quot;/servlet/servlet.FileDownload?file=015w00000037Sln&quot; ,&quot;ASD&quot;,40,40),&quot;&quot;)
+&amp;&quot; &quot;&amp;
+IF(INCLUDES(Available_Services__c,&quot;BSPLink&quot;),IMAGE(&quot;/servlet/servlet.FileDownload?file=015w00000037SmC&quot; ,&quot;BSPLink&quot;,40,40),&quot;&quot;)
+&amp;&quot; &quot;&amp;
+IF(INCLUDES(Available_Services__c,&quot;CassLink&quot;),IMAGE(&quot;/servlet/servlet.FileDownload?file=015w00000037Smv&quot; ,&quot;CassLink&quot;,40,40),&quot;&quot;)
+&amp;&quot; &quot;&amp;
+IF(INCLUDES(Available_Services__c,&quot;SIS&quot;),IMAGE(&quot;/servlet/servlet.FileDownload?file=015w00000037SpQ&quot; ,&quot;SIS&quot;,40,40),&quot;&quot;)
+&amp;&quot; &quot;&amp;
+IF(ID_Card_Holder__c,IMAGE(&quot;/servlet/servlet.FileDownload?file=015w00000037Sne&quot; ,&quot;Id Card Holder&quot;,40,40),&quot;&quot;)
+&amp;&quot; &quot;&amp;
+IF(OR(INCLUDES(Available_Services__c,&quot;Treasury Dashboard&quot;),INCLUDES(Available_Services__c,&quot;Treasury Dashboard - Premium&quot;)),IMAGE(&quot;/servlet/servlet.FileDownload?file=015w00000037Som&quot; ,&quot;Treasury Dashboard&quot;,40,40),&quot;&quot;)
+&amp;&quot; &quot;&amp;
+IF(INCLUDES(Available_Services__c,&quot;MITA Agreements&quot;),IMAGE(&quot;/servlet/servlet.FileDownload?file=015w00000052zdM&quot; ,&quot;MITA Agreements&quot;,40,40),&quot;&quot;)
+&amp;&quot; &quot;&amp;
+IF(INCLUDES(Available_Services__c,&quot;AIRS / CAIRS Online Bulletin&quot;),IMAGE(&quot;/servlet/servlet.FileDownload?file=0151r000006DHlF&quot; ,&quot;AIRS / CAIRS Online Bulletin&quot;,40,40),&quot;&quot;)
+&amp;&quot; &quot;&amp;
+IF(INCLUDES(Available_Services__c,&quot;IATA Accreditation &amp; Changes&quot;),IMAGE(&quot;/servlet/servlet.FileDownload?file=0151r000006DHlA&quot; ,&quot;IATA Accreditation &amp; Changes&quot;,40,40),&quot;&quot;)
+&amp;&quot; &quot;&amp;
+IF(INCLUDES(Available_Services__c,&quot;Currency Center&quot;),IMAGE(&quot;/servlet/servlet.FileDownload?file=015w0000004yCw2&quot; ,&quot;Currency Center&quot;,40,40),&quot;&quot;)
+&amp;&quot; &quot;&amp;
+IF(INCLUDES(Available_Services__c,&quot;IATA EasyPay&quot;),IMAGE(&quot;/servlet/servlet.FileDownload?file=015w00000056QFS&quot; ,&quot;IATA EasyPay&quot;,40,40),&quot;&quot;)
+&amp;&quot; &quot;&amp;
+IF(INCLUDES(Available_Services__c,&quot;ICE – IATA Customer E-Statement&quot;),IMAGE(&quot;/servlet/servlet.FileDownload?file=015w0000004IwcT&quot; ,&quot;ICE – IATA Customer E-Statement&quot;,40,40),&quot;&quot;)
+&amp;&quot; &quot;&amp;
+IF(INCLUDES(Available_Services__c,&quot;Standards Setting Workspace&quot;),IMAGE(&quot;/servlet/servlet.FileDownload?file=015w0000005xvJ2&quot; ,&quot;Standards Setting Workspace&quot;,40,40),&quot;&quot;)
+&amp;&quot; &quot;&amp;
+IF(INCLUDES(Available_Services__c,&quot;Risk Profile and RHC&quot;),IMAGE(&quot;/servlet/servlet.FileDownload?file=015w0000006MxBK&quot; ,&quot;Risk Profile and RHC&quot;,40,40),&quot;&quot;)</formula>
         <label>Services</label>
         <required>false</required>
         <trackHistory>false</trackHistory>
