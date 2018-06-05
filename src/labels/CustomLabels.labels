@@ -2827,6 +2827,23 @@ Default,Default withdrawal,Review,Review withdrawal,Irregularity,Termination,Irr
         <value>Details</value>
     </labels>
     <labels>
+        <fullName>TitleTermsConditionFred</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>TitleTermsConditionFred</shortDescription>
+        <value>Terms &amp; Conditions Fred+</value>
+    </labels>
+    <labels>
+        <fullName>TermsConditionFred</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>TermsConditionFred</shortDescription>
+        <value>&lt;p&gt;Unless otherwise stated in terms applicable specifically to a certain component, product or service offered through the Portal, the Portal and all components thereof are provided “as is” and “as available”, without any warranty, representation or condition whatsoever, express or implied.&lt;/p&gt;
+&lt;p&gt;To the maximum extent allowed under applicable legislation, IATA disclaims any warranty, representation or condition, express or implied, in respect of the Portal and its components, including, without limitation, any warranties, representations, conditions and warranties of quality, merchantability, fitness for a particular purpose and non infringement.&lt;/p&gt;
+&lt;p&gt;Without limiting the generality of the foregoing, IATA does not represent, nor warrant, that the Portal will be uninterrupted or error free, that any deficiencies will be corrected, or that the server, the systems or the network underlying same are, or will be, free from viruses or other harmful components.;
+</value>
+    </labels>
+    <labels>
         <fullName>CurrencyCenter_Disclaimer_1</fullName>
         <language>en_US</language>
         <protected>false</protected>
@@ -24030,7 +24047,7 @@ msgErrorRenewalOrderExpired:Your renewal notification order link is either  expi
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>OneId Community Name</shortDescription>
-        <value>s/identity</value>
+        <value>identity/s</value>
     </labels>
     <labels>
         <fullName>OneId_Contact_Association_Validation</fullName>
