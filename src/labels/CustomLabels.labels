@@ -1025,22 +1025,6 @@
         <value>Country Concerned</value>
     </labels>
     <labels>
-        <fullName>OneId_ISSP_Troubleshooting</fullName>
-        <categories>OneId</categories>
-        <language>en_US</language>
-        <protected>false</protected>
-        <shortDescription>OneId_ISSP_Troubleshooting</shortDescription>
-        <value>Troubleshooting</value>
-    </labels>
-    <labels>
-        <fullName>OneId_ISSP_Troubleshooting_Link</fullName>
-        <categories>OneId</categories>
-        <language>en_US</language>
-        <protected>false</protected>
-        <shortDescription>OneId_ISSP_Troubleshooting_Link</shortDescription>
-        <value>https://portal.iata.org/faq/articles/en_US/How_To/Customer-Portal-Troubleshooting</value>
-    </labels>
-    <labels>
         <fullName>ANG_ISSP_CountryRequirementsGoBack</fullName>
         <categories>ISSP</categories>
         <language>en_US</language>
@@ -23362,14 +23346,6 @@ an IATA accredited agency, please press &quot;Back&quot; button and select anoth
         <value>Other</value>
     </labels>
     <labels>
-        <fullName>OneId_Email_Header_Identity</fullName>
-        <categories>OneId</categories>
-        <language>en_US</language>
-        <protected>false</protected>
-        <shortDescription>OneId_Email_Header_Identity</shortDescription>
-        <value>https://iata--csp1idsre--c.cs88.content.force.com/servlet/servlet.ImageServer?id=0159E000000MCzW&amp;oid=00D9E0000001L6b&amp;lastMod=1522143388000</value>
-    </labels>
-    <labels>
         <fullName>LabelsVF_IECInvoice</fullName>
         <language>en_US</language>
         <protected>false</protected>
@@ -27652,45 +27628,5 @@ Please &lt;a href=&quot;/ISSP_FAQ2Case?MainNav=Queries&amp;subNav=MyQueries&amp;
         <protected>false</protected>
         <shortDescription>wire transfer payment msg</shortDescription>
         <value>Your wire transfer payment has been received.</value>
-    </labels>
-    <labels>
-        <fullName>ICAddressDoctor_adns</fullName>
-        <categories>1ID</categories>
-        <language>en_US</language>
-        <protected>false</protected>
-        <shortDescription>ICAddressDoctor_adns</shortDescription>
-        <value>http://validator5.AddressDoctor.com/Webservice5/v4</value>
-    </labels>
-    <labels>
-        <fullName>ICAddressDoctor_login</fullName>
-        <categories>1ID</categories>
-        <language>en_US</language>
-        <protected>false</protected>
-        <shortDescription>ICAddressDoctor_login</shortDescription>
-        <value>162866</value>
-    </labels>
-    <labels>
-        <fullName>ICAddressDoctor_ns</fullName>
-        <categories>1ID</categories>
-        <language>en_US</language>
-        <protected>false</protected>
-        <shortDescription>ICAddressDoctor_ns</shortDescription>
-        <value>http://schemas.xmlsoap.org/soap/envelope/</value>
-    </labels>
-    <labels>
-        <fullName>ICAddressDoctor_password</fullName>
-        <categories>1ID</categories>
-        <language>en_US</language>
-        <protected>false</protected>
-        <shortDescription>ICAddressDoctor_password</shortDescription>
-        <value>Hus3esastAcr</value>
-    </labels>
-    <labels>
-        <fullName>ICAddressDoctor_url</fullName>
-        <categories>1ID</categories>
-        <language>en_US</language>
-        <protected>false</protected>
-        <shortDescription>ICAddressDoctor_url</shortDescription>
-        <value>https://validator5.addressdoctor.com/webservice5/v4/addressvalidation.asmx</value>
     </labels>
 </CustomLabels>
