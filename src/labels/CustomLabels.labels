@@ -3943,7 +3943,12 @@ You will receive an email with a copy of your quote or you can retrieve the quot
     <labels>
         <fullName>Home</fullName>
         <categories>IEC</categories>
-        <fullName>ICAddressDoctor_adns</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Home</shortDescription>
+        <value>Home</value>
+    </labels>
+	<fullName>ICAddressDoctor_adns</fullName>
         <categories>1ID</categories>
         <language>en_US</language>
         <protected>false</protected>
@@ -3981,12 +3986,6 @@ You will receive an email with a copy of your quote or you can retrieve the quot
         <protected>false</protected>
         <shortDescription>ICAddressDoctor_url</shortDescription>
         <value>https://validator5.addressdoctor.com/webservice5/v4/addressvalidation.asmx</value>
-    </labels>
-    <labels>
-        <language>en_US</language>
-        <protected>false</protected>
-        <shortDescription>Home</shortDescription>
-        <value>Home</value>
     </labels>
     <labels>
         <fullName>Home_Page_New_Release_Msg</fullName>
