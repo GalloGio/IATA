@@ -25,14 +25,6 @@ public with sharing class AMS_AccreditationContactController {
     public boolean isChangeProcess {get; set;}
     public boolean isNewGenProcess {get; set;}
     public List<AMS_Agency_Regulation__c> agRegList {get; set;} //AMSU-132
-    public boolean tstaffModalVisibility { //AMSU-132
-        get{
-            if(tstaffModalVisibility == null){
-                return false;
-            }
-            return tstaffModalVisibility;
-        } 
-    } 
 
     public List<AgRegItemWrapper> agRegValuesForDisplay{ //AMSU-132
         get{
@@ -47,8 +39,8 @@ public with sharing class AMS_AccreditationContactController {
                              IATA_FIATA_training_history__c, Training_dangerous_goods_completed__c, Registration_Number__c
                             FROM AMS_Agency_Regulation__c 
                             WHERE Account__c = :this.aoa.SAAM_Case__r.OSCAR__r.Account__c 
-                            AND Type_Of_Certificate__c = 'DGR'];
-                            // AND Expiry_Date__c > LAST_N_YEARS:2 
+                            AND Type_Of_Certificate__c = 'DGR'
+                            AND (Expiry_Date__c = LAST_N_YEARS:2 OR Expiry_Date__c > LAST_N_YEARS:2)];
                 
                 for(AMS_Agency_Regulation__c reg : this.agRegList){
                     Boolean bExist = false;
@@ -120,7 +112,8 @@ public with sharing class AMS_AccreditationContactController {
                             SAAM_Case__r.OSCAR__r.Account__r.Location_class__c, SAAM_Case__r.OSCAR__r.Account__r.CNS_Agency__c, 
                             SAAM_Case__r.OSCAR__r.Account__r.Location_Type__c, SAAM_Case__r.OSCAR__r.Process__c, SAAM_Case__r.OSCAR__r.Type_of_change__c,
                             SAAM_Case__r.OSCAR__r.Account__r.Sector__c, SAAM_Case__r.OSCAR__r.Account__r.Category__c,
-                            SAAM_Case__r.OSCAR__r.CNS_process__c, ANG_IsNewGenAgency__c,  SAAM_Case__r.OSCAR__r.ANG_Type_Of_Change__c
+                            SAAM_Case__r.OSCAR__r.CNS_process__c, ANG_IsNewGenAgency__c,  SAAM_Case__r.OSCAR__r.ANG_Type_Of_Change__c, SAAM_Case__r.OSCAR__r.RecordTypeId,
+                            SAAM_Case__r.OSCAR__c,SAAM_Case__r.OSCAR__r.AMS_Target_Agency__c //FM - AMSU-1
                             from AMS_Pax_Accreditation_Form__c where Id =: stdController.getRecord().id];
             this.aoa = aoaList.get(0);
             String commaSeparatedFields = AMS_AccreditationContactHelper.loadFieldsDynamically('AMS_Accreditation_Contact__c');
