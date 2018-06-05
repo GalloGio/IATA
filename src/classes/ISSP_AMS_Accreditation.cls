@@ -1919,7 +1919,7 @@ public without sharing class ISSP_AMS_Accreditation {
         }
     }
 
-    private String mapCompanyTypes(String companyType) {
+    public static String mapCompanyTypes(String companyType) {
         if(companyType == 'A') {
             return 'Association';
         } else if (companyType == 'C') {
@@ -4057,69 +4057,69 @@ System.DEBUG('validateCharactersInForm  - 4 - errorFound: '+errorFound);
         set{}
     }
 
-    public List<AMS_Accreditation_Contact__c> List_PreviousOwners {
+        public List<AMS_Accreditation_Contact__c> List_PreviousOwners {
 
-        get{
-            List<AMS_Accreditation_Contact__c> prevOwner = [
-                SELECT AMS_Pax_Accreditation_Form__c, Name, First_name__c, Last_name__c, Salutation__c, Agency_owner__c, Agency_role__c, Email__c,Phone__c,
-                Financial_interest__c, Contact_Id__c, Contact__c, AMS_OwnershipId__c, AMS_ContactId__c, Local_First_name__c, Local_Last_name__c, Number_Of_Shares__c,
-                AddressStreet__c, AddressCity__c, AddressCountry__c, AddressPostcode__c, Time_devoted_to_Agency_business__c
-                FROM AMS_Accreditation_Contact__c
-                WHERE AMS_Pax_Accreditation_Form__r.Id = :newForm.Id AND  RecordType.DeveloperName = 'Previous_Owner'
-                ORDER BY Name ASC
-            ];
-            return prevOwner;
+            get{
+                List<AMS_Accreditation_Contact__c> prevOwner = [
+                    SELECT AMS_Pax_Accreditation_Form__c, Name, First_name__c, Last_name__c, Salutation__c, Agency_owner__c, Agency_role__c, Email__c,Phone__c,
+                    Financial_interest__c, Contact_Id__c, Contact__c, AMS_OwnershipId__c, AMS_ContactId__c, Local_First_name__c, Local_Last_name__c, Number_Of_Shares__c,
+                    AddressStreet__c, AddressCity__c, AddressCountry__c, AddressPostcode__c, Time_devoted_to_Agency_business__c
+                    FROM AMS_Accreditation_Contact__c
+                    WHERE AMS_Pax_Accreditation_Form__r.Id = :newForm.Id AND  RecordType.DeveloperName = 'Previous_Owner'
+                    ORDER BY Name ASC
+                ];
+                return prevOwner;
 
+            }
+            set{}
         }
-        set{}
-    }
 
-    public List<AMS_Accreditation_Contact__c> List_CurrentOwners {
+        public List<AMS_Accreditation_Contact__c> List_CurrentOwners {
 
-        get{
-            List<AMS_Accreditation_Contact__c> currOwner = [
-                SELECT AMS_Pax_Accreditation_Form__c, Name, First_name__c, Last_name__c, Salutation__c, Agency_owner__c, Agency_role__c, Email__c,Phone__c,
-                Financial_interest__c, Contact_Id__c, AMS_OwnershipId__c, AMS_ContactId__c, Local_First_name__c, Local_Last_name__c, Number_Of_Shares__c,
-                AddressStreet__c, AddressCity__c, AddressCountry__c, AddressPostcode__c, Time_devoted_to_Agency_business__c
-                FROM AMS_Accreditation_Contact__c
-                WHERE AMS_Pax_Accreditation_Form__r.Id = :newForm.Id AND  RecordType.DeveloperName = 'Current_Owner'
-                ORDER BY Name ASC
-            ];
-            return currOwner;
+            get{
+                List<AMS_Accreditation_Contact__c> currOwner = [
+                    SELECT AMS_Pax_Accreditation_Form__c, Name, First_name__c, Last_name__c, Salutation__c, Agency_owner__c, Agency_role__c, Email__c,Phone__c,
+                    Financial_interest__c, Contact_Id__c, AMS_OwnershipId__c, AMS_ContactId__c, Local_First_name__c, Local_Last_name__c, Number_Of_Shares__c,
+                    AddressStreet__c, AddressCity__c, AddressCountry__c, AddressPostcode__c, Time_devoted_to_Agency_business__c
+                    FROM AMS_Accreditation_Contact__c
+                    WHERE AMS_Pax_Accreditation_Form__r.Id = :newForm.Id AND  RecordType.DeveloperName = 'Current_Owner'
+                    ORDER BY Name ASC
+                ];
+                return currOwner;
 
+            }
+            set{}
         }
-        set{}
-    }
 
-    public List<AMS_Accreditation_Contact__c> List_CurrentCompanies {
+        public List<AMS_Accreditation_Contact__c> List_CurrentCompanies {
 
-        get{
-            List<AMS_Accreditation_Contact__c> cons = [
-                SELECT Name, Financial_interest__c, Registration_number__c, IATAcode__c
-                FROM AMS_Accreditation_Contact__c
-                WHERE AMS_Pax_Accreditation_Form__c = :newForm.Id AND  RecordType.DeveloperName = 'Current_Company_Owner'
-                ORDER BY Name ASC
-            ];
-            return cons;
+            get{
+                List<AMS_Accreditation_Contact__c> cons = [
+                    SELECT Name, Financial_interest__c, Registration_number__c, IATAcode__c
+                    FROM AMS_Accreditation_Contact__c
+                    WHERE AMS_Pax_Accreditation_Form__c = :newForm.Id AND  RecordType.DeveloperName = 'Current_Company_Owner'
+                    ORDER BY Name ASC
+                ];
+                return cons;
 
+            }
+            set{}
         }
-        set{}
-    }
 
-    public List<AMS_Accreditation_Contact__c> List_PreviousCompanies {
+        public List<AMS_Accreditation_Contact__c> List_PreviousCompanies {
 
-        get{
-            List<AMS_Accreditation_Contact__c> cons = [
-                SELECT Name, Financial_interest__c, Registration_number__c, IATAcode__c
-                FROM AMS_Accreditation_Contact__c
-                WHERE AMS_Pax_Accreditation_Form__c = :newForm.Id AND  RecordType.DeveloperName = 'Previous_Company_Owner'
-                ORDER BY Name ASC
-            ];
-            return cons;
+            get{
+                List<AMS_Accreditation_Contact__c> cons = [
+                    SELECT Name, Financial_interest__c, Registration_number__c, IATAcode__c
+                    FROM AMS_Accreditation_Contact__c
+                    WHERE AMS_Pax_Accreditation_Form__c = :newForm.Id AND  RecordType.DeveloperName = 'Previous_Company_Owner'
+                    ORDER BY Name ASC
+                ];
+                return cons;
 
+            }
+            set{}
         }
-        set{}
-    }
 
     public List<AMS_Accreditation_Contact__c> List_AgencyCompanies {
 
@@ -4358,14 +4358,14 @@ System.DEBUG('validateCharactersInForm  - 4 - errorFound: '+errorFound);
             }
         }
 
-        Boolean flagShowOptOutButton = (sector ==  AMS_Utils.SECTOR_PASSENGER &&
+        Boolean flagShowOptOutButton = (sector ==  AMS_Utils.SECTOR_PASSENGER && con.Account.Category__c == AMS_Utils.CATEGORY_PASSENGER_SALES_AGENT &&
             isHOAccredited && isHOcontact && con.Account.ANG_Accreditation_Model__c == AMS_Utils.ACCREDITATIONMODEL_CASH && !con.Account.ANG_FA_Opt_out__c);
 
         Boolean flagShowOptOutButtonDisabled = (flagShowOptOutButton && isOpt_IN_OUT_InProgress);
 
         if(flagShowOptOutButtonDisabled) flagShowOptOutButton = false;
 
-        Boolean flagShowOptInButton = (sector ==  AMS_Utils.SECTOR_PASSENGER &&
+        Boolean flagShowOptInButton = (sector ==  AMS_Utils.SECTOR_PASSENGER && con.Account.Category__c == AMS_Utils.CATEGORY_PASSENGER_SALES_AGENT &&
             isHOAccredited && isHOcontact && con.Account.ANG_Accreditation_Model__c == AMS_Utils.ACCREDITATIONMODEL_CASH && con.Account.ANG_FA_Opt_out__c);
 
         Boolean flagShowOptInButtonDisabled = (flagShowOptInButton && isOpt_IN_OUT_InProgress);
@@ -7845,13 +7845,13 @@ system.debug('aqui sectorValue ' + sectorValue);
 
                 if(type.equalsIgnoreCase('NoC')){
 
-                    lstAccreditationContact.add( setAccreditationContact(accRole, newForm.Id, rtAccreditContPreviousOwner, rtAccreditContPreviousCompanyOwner ) );
-                    lstAccreditationContact.add( setAccreditationContact(accRole, newForm.Id, rtAccreditContCurrentOwner, rtAccreditContCurrentCompanyOwner ) );
+                    lstAccreditationContact.add( ISSP_AMS_Accreditation.setAccreditationContact(accRole, newForm.Id, rtAccreditContPreviousOwner, rtAccreditContPreviousCompanyOwner ) );
+                    lstAccreditationContact.add( ISSP_AMS_Accreditation.setAccreditationContact(accRole, newForm.Id, rtAccreditContCurrentOwner, rtAccreditContCurrentCompanyOwner ) );
                 }
 
                 if(type.equalsIgnoreCase('Branch')){
 
-                    lstAccreditationContact.add( setAccreditationContact(accRole, newForm.Id, rtAccreditContPersonOwner, rtAccreditContCompanyOwner ) );
+                    lstAccreditationContact.add( ISSP_AMS_Accreditation.setAccreditationContact(accRole, newForm.Id, rtAccreditContPersonOwner, rtAccreditContCompanyOwner ) );
 
                 }
 
@@ -7863,7 +7863,7 @@ system.debug('aqui sectorValue ' + sectorValue);
     }
 
 
-    public AMS_Accreditation_Contact__c setAccreditationContact(AMS_Account_Role__c accRole, Id newFormId, Id rtRecordTypePerson, Id rtRecordTypeCompany){
+    public static AMS_Accreditation_Contact__c setAccreditationContact(AMS_Account_Role__c accRole, Id newFormId, Id rtRecordTypePerson, Id rtRecordTypeCompany){
 
         AMS_Accreditation_Contact__c auxAccreditCont = new AMS_Accreditation_Contact__c();
 
@@ -8308,13 +8308,14 @@ system.debug('aqui sectorValue ' + sectorValue);
 
         newCase.RecordTypeId = AMS_Utils.OSCAR_COMUNICATION;
         newCase.Status = AMS_Utils.OPEN;
-        newCase.CaseArea__c = AMS_Utils.CASE_AREA_ACCREDITATION_PROCESS;
+        newCase.CaseArea__c = AMS_Utils.CASE_AREA_AGENCY_RISK_MANAGEMENT;
         newCase.Reason1__c = AMS_Utils.CASE_REASON_OPT_OUT;
         newCase.Origin = AMS_Utils.CASE_ORIGIN_PORTAL;
         newCase.Visible_on_ISS_Portal__c = true;
 
         newCase.BSPCountry__c =  isocountry.Case_BSP_Country__c ;
         newCase.Country_concerned_by_the_query__c = isocountry.Name;
+        newCase.Region__c = isocountry.Region__c;
         newCase.Type_of_customer__c = AMS_Utils.CASE_TYPE_OF_CUSTOMER_IATA_TRAVEL_AGENT;
         newCase.Account_Concerned__c = con.AccountId;
         newCase.Product_Category_ID__c = '_';

@@ -1,6 +1,6 @@
 public with sharing class ANG_ISSP_AfpWrapper {
-	private static final String NO = 'fa fa-times fa-2x show wrong';
-	private static final String YES = 'fa fa-check fa-2x show check';
+	private static final String NO = 'glyphicon glyphicon-remove';
+	private static final String YES = 'glyphicon glyphicon-ok';
 
 	public Boolean isCashless {get; set;}
 	public Boolean isCreditCardFlag {get; set;}
@@ -15,6 +15,7 @@ public with sharing class ANG_ISSP_AfpWrapper {
 	public String creditCardMessage {get; set;}
 	public Boolean isSearch {get; set;}
 	public Boolean isIEPFlag {get; set;}
+	public Boolean isCashFlag {get; set;}
 
 	public ANG_ISSP_AfpWrapper(Contact contact, List<Agency_Authorization__c> authorizations, List<Portal_Application_Right__c> services, Account account, Boolean isSearch) {
 		this.isCash = NO;
@@ -25,6 +26,7 @@ public with sharing class ANG_ISSP_AfpWrapper {
 		this.modalErrorMessageFlag = '';
 		this.isSearch = isSearch;
 		this.isIEPFlag = false;
+		this.isCashFlag = false;
 
 		this.isCashless = (contact != null && 
 						   account.ANG_Accreditation_Model__c != null && 
@@ -75,6 +77,7 @@ public with sharing class ANG_ISSP_AfpWrapper {
 			for(Agency_Authorization__c auth : authorizations) {
 				if(auth.ANG_FormOfPayment_ID__c == Ams_Utils.CA && !this.isCashless) {					
 					this.isCash = YES;
+					this.isCashFlag = true;
 				}
 				if(auth.ANG_FormOfPayment_ID__c == Ams_Utils.CC) {
 					this.isCreditCard = YES;
@@ -112,7 +115,10 @@ public with sharing class ANG_ISSP_AfpWrapper {
                 if (currentUserProfileName.contains('dmin')) isAdmin = true;
 			}
 
-			Boolean isAuthorisedSignatory = (isAdmin && contact.Authorized_Signatory__c); 
+			Boolean isAuthorisedSignatory = false;
+			if (contact != null) {
+				isAuthorisedSignatory = (isAdmin && contact.Authorized_Signatory__c); 
+			}
 
             Boolean isIEPAccountEnable = false;
 

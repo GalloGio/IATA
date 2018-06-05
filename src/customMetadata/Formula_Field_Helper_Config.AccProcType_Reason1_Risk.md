@@ -16,7 +16,7 @@
     </values>
     <values>
         <field>Values_to_check__c</field>
-        <value xsi:type="xsd:string">financial security request;Financial security release;financial security update;financial security renewal ;Yearly Review ;Ad hoc Review</value>
+        <value xsi:type="xsd:string">financial security request;Financial security release;financial security update;financial security renewal;Yearly Review;Ad hoc Review</value>
     </values>
     <values>
         <field>result__c</field>

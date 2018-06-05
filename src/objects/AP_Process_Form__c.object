@@ -1880,6 +1880,18 @@ If NO, please submit a Local Bank Account in the BSP country and currency (refer
         </valueSet>
     </fields>
     <fields>
+        <fullName>Default_Commission_Rate__c</fullName>
+        <description>Used as default value for commission control in a specific BSP market for the airline applying</description>
+        <externalId>false</externalId>
+        <label>Default Commission Rate</label>
+        <precision>5</precision>
+        <required>false</required>
+        <scale>2</scale>
+        <trackHistory>true</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Percent</type>
+    </fields>
+    <fields>
         <fullName>Desired_commencment_date__c</fullName>
         <externalId>false</externalId>
         <label>Desired commencment date</label>
@@ -2459,6 +2471,7 @@ If(LEN(Case__r.Account.BillingCountry) &gt;0, Case__r.Account.BillingCountry,&qu
     </fields>
     <fields>
         <fullName>IATA_EasyPay_Effective_Date__c</fullName>
+        <description>Effective date for airline request to opt-out / in of IATA EasyPay.</description>
         <externalId>false</externalId>
         <label>IATA EasyPay Effective Date</label>
         <required>false</required>
@@ -2468,6 +2481,7 @@ If(LEN(Case__r.Account.BillingCountry) &gt;0, Case__r.Account.BillingCountry,&qu
     </fields>
     <fields>
         <fullName>IATA_EasyPay_Opt_In_Opt_Out__c</fullName>
+        <description>Airline's selection on CS Portal (BSP Change) to either Opt-In or Opt-Out of IATA EasyPay.</description>
         <externalId>false</externalId>
         <label>IATA EasyPay Opt-In / Opt-Out</label>
         <required>false</required>
@@ -2574,6 +2588,30 @@ If(LEN(Case__r.Account.BillingCountry) &gt;0, Case__r.Account.BillingCountry,&qu
         <trackTrending>false</trackTrending>
         <type>Text</type>
         <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Maximum_Commission_Rate__c</fullName>
+        <description>Used as maximum value for commission control in a specific BSP market for the airline applying</description>
+        <externalId>false</externalId>
+        <label>Maximum Commission Rate</label>
+        <precision>5</precision>
+        <required>false</required>
+        <scale>2</scale>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Percent</type>
+    </fields>
+    <fields>
+        <fullName>Minimum_Commission_Rate__c</fullName>
+        <description>Used as minimum value for commission control in a specific BSP market for the airline applying</description>
+        <externalId>false</externalId>
+        <label>Minimum Commission Rate</label>
+        <precision>5</precision>
+        <required>false</required>
+        <scale>2</scale>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Percent</type>
     </fields>
     <fields>
         <fullName>Name_Appearing_in_VAT__c</fullName>
@@ -2744,7 +2782,7 @@ If(LEN(Case__r.Account.BillingCountry) &gt;0, Case__r.Account.BillingCountry,&qu
         <externalId>false</externalId>
         <label>Participate in any Commission Control</label>
         <required>false</required>
-        <trackHistory>false</trackHistory>
+        <trackHistory>true</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Picklist</type>
         <valueSet>
@@ -2794,7 +2832,7 @@ If(LEN(Case__r.Account.BillingCountry) &gt;0, Case__r.Account.BillingCountry,&qu
         <externalId>false</externalId>
         <label>Pay Commission to agents</label>
         <required>false</required>
-        <trackHistory>true</trackHistory>
+        <trackHistory>false</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Picklist</type>
         <valueSet>
@@ -7475,7 +7513,7 @@ RecordType.DeveloperName == &quot;BSP_Joining&quot;,
 ANG_Enable_NewGen__c,				
 ISPICKVAL(ANG_Airline_accepts_EasyPay_tr_in_BSP__c, &quot;&quot;))</errorConditionFormula>
         <errorDisplayField>ANG_Airline_accepts_EasyPay_tr_in_BSP__c</errorDisplayField>
-        <errorMessage>Please select whether or not you wish to accept IATA Easy Pay transactions in this BSP.</errorMessage>
+        <errorMessage>Please select whether or not you wish to accept IATA EasyPay transactions in this BSP.</errorMessage>
     </validationRules>
     <validationRules>
         <fullName>AP_CASS_HOT_File_EmailAddress</fullName>
