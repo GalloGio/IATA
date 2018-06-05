@@ -2665,6 +2665,7 @@ public class AMS_OSCARTriggerHandler {
 */
 
                             List<AmazonFile__c> amazonFiles = new List<AmazonFile__c>();
+                            list<Attachment> listAttachment = new List<Attachment>();
 
                             //AMSU-113 - added validation for PCI Compliant
                             if(oscar.Process__c == AMS_Utils.PCI_COMPLIANT){
@@ -2672,8 +2673,15 @@ public class AMS_OSCARTriggerHandler {
                             }else{
                                 amazonFiles = [SELECT Id FROM AmazonFile__c WHERE case__c =: c.Id];        
                             }
-                            
+
                             if(amazonFiles.isEmpty()){
+                                listAttachment = [SELECT  Id,  Name, BodyLength, CreatedById, CreatedDate, ContentType, Description, IsPrivate, LastModifiedDate, LastModifiedById, OwnerId, ParentId, CreatedBy.Name, Body
+                                FROM Attachment
+                                WHERE ParentId = :c.Id];
+
+                            }
+                            
+                            if(amazonFiles.isEmpty() && listAttachment.isEmpty()){
                                 //AMSU-113 - added error msg for PCI Compliant
                                 if(oscar.Process__c == AMS_Utils.PCI_COMPLIANT){
                                     oscar.addError('Error - There are no PCI Compliant attachments with associated with this case/oscar.');
