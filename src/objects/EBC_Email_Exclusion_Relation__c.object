@@ -235,6 +235,26 @@
         <label>IDC - Email Exclusion Relations</label>
         <language>en_US</language>
     </listViews>
+    <listViews>
+        <fullName>ZZ_Email_Excl_Relations_By_Email</fullName>
+        <columns>NAME</columns>
+        <columns>EBC_Email_Exclusion__c</columns>
+        <columns>GDP_Products_Account_View__c</columns>
+        <columns>ID_Card__c</columns>
+        <columns>Is_Global__c</columns>
+        <columns>Billing_Account__c</columns>
+        <columns>External_Id__c</columns>
+        <columns>Is_Email_Changed__c</columns>
+        <columns>CREATED_DATE</columns>
+        <filterScope>Everything</filterScope>
+        <filters>
+            <field>External_Id__c</field>
+            <operation>contains</operation>
+            <value>mary@alltravelmesquite.com</value>
+        </filters>
+        <label>ZZ - Email Excl. Relations - By Email</label>
+        <language>en_US</language>
+    </listViews>
     <nameField>
         <label>EBC Email Exclusion Relation Name</label>
         <trackHistory>true</trackHistory>
