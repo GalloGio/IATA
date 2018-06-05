@@ -15304,7 +15304,7 @@ Select at least one authorised signatory, and choose the Financial Assessment co
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>Confirmation text in the modal window to opt out the financial review</shortDescription>
-        <value>Opt-Out confimation text</value>
+        <value>GoStandard Agents for which IATA holds a valid Financial Security can opt out of the Annual Financial Review. In such cases, the Agent will be granted a Remittance Holding Capacity equal to the amount of Financial Security provided.</value>
     </labels>
     <labels>
         <fullName>ISSP_ANG_OPT_OUT_MODAL_TITLE</fullName>
