@@ -227,7 +227,7 @@
         <fullName>Check_if_product_is_Active</fullName>
         <active>true</active>
         <errorConditionFormula>AND(
-   NOT(ISPICKVAL(TIP_Payment_Provider_Product__r.PP_status__c, &quot;Active&quot;)),
+   NOT(ISPICKVAL(TIP_Payment_Provider_Product__r.PP_Status__c, &quot;Active&quot;)),
    ISPICKVAL(TIP_Status__c, &quot;Active&quot;)
 )</errorConditionFormula>
         <errorMessage>BIN Range cannot be activated if related Product is not active</errorMessage>
