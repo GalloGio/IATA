@@ -16,6 +16,11 @@ public with sharing class ISSP_ChangePassword {
     public String communityName{ get{ return ApexPages.currentPage().getParameters().get('CommunityName'); }set;}
     public String commParam { get { if(communityName=='CNS'){ return '&CommunityName='+ communityName;} return ''; } set;}
 
+    // 1ID
+    public Boolean isOneId { get{ return ApexPages.currentPage().getURL().contains('OneId');}}
+    public String serviceName{ get{ return ApexPages.currentPage().getParameters().get('serviceName'); }set;}
+    public String serviceNameParam { get { return String.isNotEmpty(serviceName) ? '&serviceName='+ serviceName : ''; } set;}
+
     /**
      * Constructor
      */

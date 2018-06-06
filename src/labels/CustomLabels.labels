@@ -1025,6 +1025,22 @@
         <value>Country Concerned</value>
     </labels>
     <labels>
+        <fullName>OneId_ISSP_Troubleshooting</fullName>
+        <categories>OneId</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>OneId_ISSP_Troubleshooting</shortDescription>
+        <value>Troubleshooting</value>
+    </labels>
+    <labels>
+        <fullName>OneId_ISSP_Troubleshooting_Link</fullName>
+        <categories>OneId</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>OneId_ISSP_Troubleshooting_Link</shortDescription>
+        <value>https://portal.iata.org/faq/articles/en_US/How_To/Customer-Portal-Troubleshooting</value>
+    </labels>
+    <labels>
         <fullName>ANG_ISSP_CountryRequirementsGoBack</fullName>
         <categories>ISSP</categories>
         <language>en_US</language>
@@ -3944,6 +3960,46 @@ You will receive an email with a copy of your quote or you can retrieve the quot
     <labels>
         <fullName>Home</fullName>
         <categories>IEC</categories>
+        <fullName>ICAddressDoctor_adns</fullName>
+        <categories>1ID</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ICAddressDoctor_adns</shortDescription>
+        <value>http://validator5.AddressDoctor.com/Webservice5/v4</value>
+    </labels>
+    <labels>
+        <fullName>ICAddressDoctor_login</fullName>
+        <categories>1ID</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ICAddressDoctor_login</shortDescription>
+        <value>162866</value>
+    </labels>
+    <labels>
+        <fullName>ICAddressDoctor_ns</fullName>
+        <categories>1ID</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ICAddressDoctor_ns</shortDescription>
+        <value>http://schemas.xmlsoap.org/soap/envelope/</value>
+    </labels>
+    <labels>
+        <fullName>ICAddressDoctor_password</fullName>
+        <categories>1ID</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ICAddressDoctor_password</shortDescription>
+        <value>Hus3esastAcr</value>
+    </labels>
+    <labels>
+        <fullName>ICAddressDoctor_url</fullName>
+        <categories>1ID</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ICAddressDoctor_url</shortDescription>
+        <value>https://validator5.addressdoctor.com/webservice5/v4/addressvalidation.asmx</value>
+    </labels>
+    <labels>
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>Home</shortDescription>
@@ -20727,7 +20783,7 @@ Please note that many IATA invoices for accredited agents are collected through 
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>ISSP_Registration_Error_Salutation</shortDescription>
-        <value>Please enter you salutation</value>
+        <value>Please enter your salutation</value>
     </labels>
     <labels>
         <fullName>ISSP_Registration_Error_Subject</fullName>
@@ -21329,6 +21385,14 @@ If you want to reset your password, go back to login screen and use &quot;forgot
         <protected>false</protected>
         <shortDescription>ISSP_Sanctions_Message</shortDescription>
         <value>Your computer IP has been identified as sourcing from one of the countries listed as embargoed by U.S. authorities.&lt;br/&gt;The platform supporting our Customer Portal complies with this U.S. regulations and thus, we are currently unable to provide access to Customer Portal from your current IP address.&lt;br/&gt;Click &lt;a href=&quot;http://www.iata.org/customer-portal/Pages/contactus-v2.aspx&quot; &gt;here&lt;/a&gt; to contact your regional IATA office.</value>
+    </labels>
+    <labels>
+        <fullName>Generic_Sanctions_Message</fullName>
+        <categories>ISSP_Login, s9</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Generic_Sanctions_Message</shortDescription>
+        <value>Your computer IP has been identified as sourcing from one of the countries listed as embargoed by U.S. authorities.&lt;br/&gt;The platform supporting our  Portal complies with this U.S. regulations and thus, we are currently unable to provide access to Portal from your current IP address.&lt;br/&gt;Click &lt;a href=&quot;http://www.iata.org/customer-portal/Pages/contactus-v2.aspx&quot; &gt;here&lt;/a&gt; to contact your regional IATA office.</value>
     </labels>
     <labels>
         <fullName>ISSP_Satisfactory</fullName>
@@ -23315,6 +23379,14 @@ an IATA accredited agency, please press &quot;Back&quot; button and select anoth
         <value>Other</value>
     </labels>
     <labels>
+        <fullName>OneId_Email_Header_Identity</fullName>
+        <categories>OneId</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>OneId_Email_Header_Identity</shortDescription>
+        <value>https://iata--csp1idsre--c.cs88.content.force.com/servlet/servlet.ImageServer?id=0159E000000MCzW&amp;oid=00D9E0000001L6b&amp;lastMod=1522143388000</value>
+    </labels>
+    <labels>
         <fullName>LabelsVF_IECInvoice</fullName>
         <language>en_US</language>
         <protected>false</protected>
@@ -23986,12 +24058,34 @@ msgErrorRenewalOrderExpired:Your renewal notification order link is either  expi
         <value>The approval of this application will have an impact on the Agency&apos;s risk properties: the new Risk Status will be &apos;B&apos; and the Cash conditions will be false.</value>
     </labels>
     <labels>
+        <fullName>OneId_AccountNotFound</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>OneId_AccountNotFound</shortDescription>
+        <value>Didn&apos;t find the organization you were looking for?</value>
+    </labels>
+    <labels>
+        <fullName>OneId_AccountSearchPlaceholder</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>OneId_AccountSearchPlaceholder</shortDescription>
+        <value>Search for Company Name or IATA code (minimum 3 characters)</value>
+    </labels>
+    <labels>
         <fullName>OneId_Account_Association</fullName>
         <categories>OneId</categories>
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>OneId_Account Association</shortDescription>
         <value>Account Association</value>
+    </labels>
+    <labels>
+        <fullName>OneId_Email_Header_Identity</fullName>
+        <categories>OneId</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>OneId_Email_Header_Identity</shortDescription>
+        <value>https://iata--csp1idsre--c.cs88.content.force.com/servlet/servlet.ImageServer?id=0159E000000MCzW&amp;oid=00D9E0000001L6b&amp;lastMod=1522143388000</value>
     </labels>
     <labels>
         <fullName>OneId_Account_Creation</fullName>
@@ -24042,6 +24136,20 @@ msgErrorRenewalOrderExpired:Your renewal notification order link is either  expi
         <value>Billing Street</value>
     </labels>
     <labels>
+        <fullName>OneId_CategoryError</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>1Id - CategoryError</shortDescription>
+        <value>Please, choose the category</value>
+    </labels>
+    <labels>
+        <fullName>OneId_CheckEmail</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>OneId_CheckEmail</shortDescription>
+        <value>Please check your email to get your access details</value>
+    </labels>
+    <labels>
         <fullName>OneId_Community_Name</fullName>
         <categories>OneId</categories>
         <language>en_US</language>
@@ -24066,6 +24174,13 @@ msgErrorRenewalOrderExpired:Your renewal notification order link is either  expi
         <value>Contact Creation</value>
     </labels>
     <labels>
+        <fullName>OneId_CreateNew</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>OneId_CreateNew</shortDescription>
+        <value>Create New</value>
+    </labels>
+    <labels>
         <fullName>OneId_CreateNewAccount</fullName>
         <categories>OneId</categories>
         <language>en_US</language>
@@ -24082,12 +24197,26 @@ msgErrorRenewalOrderExpired:Your renewal notification order link is either  expi
         <value>Registration Process</value>
     </labels>
     <labels>
+        <fullName>OneId_EmailError</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>OneId_EmailError</shortDescription>
+        <value>Please, enter your email</value>
+    </labels>
+    <labels>
         <fullName>OneId_ForgotPassword</fullName>
         <categories>OneId</categories>
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>OneId_ForgotPassword</shortDescription>
         <value>Forgot your password?</value>
+    </labels>
+    <labels>
+        <fullName>OneId_GSAWarning</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>OneId_GSAWarning</shortDescription>
+        <value>In case no company was found for your combination of GSA code and country, please ensure you have entered the correct information or consult our &lt;a href=&quot;http://theiatahub.force.com/iatapkb/articles/en_US/How_To/Customer-Portal-Troubleshooting/?l=en_US&quot; target=&quot;_blank&quot;&gt;troubleshooting guide&lt;/a&gt;</value>
     </labels>
     <labels>
         <fullName>OneId_Help_Community</fullName>
@@ -24126,6 +24255,30 @@ msgErrorRenewalOrderExpired:Your renewal notification order link is either  expi
         <protected>false</protected>
         <shortDescription>OneId_IATA Code</shortDescription>
         <value>IATA Code</value>
+    </labels>
+    <labels>
+        <fullName>OneId_ISSP_Troubleshooting</fullName>
+        <categories>OneId</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>OneId_ISSP_Troubleshooting</shortDescription>
+        <value>Troubleshooting</value>
+    </labels>
+    <labels>
+        <fullName>OneId_ISSP_Troubleshooting_Link</fullName>
+        <categories>OneId</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>OneId_ISSP_Troubleshooting_Link</shortDescription>
+        <value>https://portal.iata.org/faq/articles/en_US/How_To/Customer-Portal-Troubleshooting</value>
+    </labels>
+    <labels>
+        <fullName>OneId_ISSP_Terms_Of_Use_Link</fullName>
+        <categories>OneId</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>OneId_ISSP_Terms_Of_Use_Link</shortDescription>
+        <value>http://www.iata.org/customer-portal/Pages/terms.aspx</value>
     </labels>
     <labels>
         <fullName>OneId_IATA_represent_lead_and_serve_the_airline_industry</fullName>
@@ -24239,6 +24392,13 @@ msgErrorRenewalOrderExpired:Your renewal notification order link is either  expi
         <value>No records were found matching your search criteria. Please modify your search criteria and try again.
 &lt;br/&gt;&lt;br/&gt;
 If you continue to experience issues registering for the IATA Customer Portal then please consult our &lt;a href=http://theiatahub.force.com/iatapkb/articles/en_US/How_To/Customer-Portal-Troubleshooting/?l=en_US target=_blank&gt;troubleshooting guide&lt;/a&gt;</value>
+    </labels>
+    <labels>
+        <fullName>OneId_NoResults</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>OneId_NoResults</shortDescription>
+        <value>No result found...</value>
     </labels>
     <labels>
         <fullName>OneId_NoTermsFound</fullName>
@@ -24405,6 +24565,13 @@ If you continue to experience issues registering for the IATA Customer Portal th
         <value>Office Email</value>
     </labels>
     <labels>
+        <fullName>OneId_RegistrationComplete</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>OneId_RegistrationComplete</shortDescription>
+        <value>Registration completed successfully</value>
+    </labels>
+    <labels>
         <fullName>OneId_Registration_Error_BusinessPhone</fullName>
         <categories>OneId</categories>
         <language>en_US</language>
@@ -24509,6 +24676,13 @@ If you want to reset your password, go back to login screen and use &quot;forgot
         <protected>false</protected>
         <shortDescription>OneId_Thank you for subscribing to this new service</shortDescription>
         <value>Thank you for subscribing to this new service, your request is being processed.</value>
+    </labels>
+    <labels>
+        <fullName>OneId_TotalResults</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>OneId_TotalResults</shortDescription>
+        <value>First 20 results shown over {0}. Please refine your search</value>
     </labels>
     <labels>
         <fullName>OneId_Type</fullName>
@@ -27495,5 +27669,45 @@ Please &lt;a href=&quot;/ISSP_FAQ2Case?MainNav=Queries&amp;subNav=MyQueries&amp;
         <protected>false</protected>
         <shortDescription>wire transfer payment msg</shortDescription>
         <value>Your wire transfer payment has been received.</value>
+    </labels>
+    <labels>
+        <fullName>ICAddressDoctor_adns</fullName>
+        <categories>1ID</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ICAddressDoctor_adns</shortDescription>
+        <value>http://validator5.AddressDoctor.com/Webservice5/v4</value>
+    </labels>
+    <labels>
+        <fullName>ICAddressDoctor_login</fullName>
+        <categories>1ID</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ICAddressDoctor_login</shortDescription>
+        <value>162866</value>
+    </labels>
+    <labels>
+        <fullName>ICAddressDoctor_ns</fullName>
+        <categories>1ID</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ICAddressDoctor_ns</shortDescription>
+        <value>http://schemas.xmlsoap.org/soap/envelope/</value>
+    </labels>
+    <labels>
+        <fullName>ICAddressDoctor_password</fullName>
+        <categories>1ID</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ICAddressDoctor_password</shortDescription>
+        <value>Hus3esastAcr</value>
+    </labels>
+    <labels>
+        <fullName>ICAddressDoctor_url</fullName>
+        <categories>1ID</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ICAddressDoctor_url</shortDescription>
+        <value>https://validator5.addressdoctor.com/webservice5/v4/addressvalidation.asmx</value>
     </labels>
 </CustomLabels>

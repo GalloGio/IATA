@@ -7,9 +7,9 @@
             $Resource.InternationalPhoneNumberFormatS + '/intl-tel-input-master/src/spec/helpers/helpers.js',
             $Resource.InternationalPhoneNumberFormatS + '/intl-tel-input-master/build/js/utils.js')}"
         styles="{!join(',', 
-            '/identity/s/OneIdResources/css/normalize.css',
-            '/identity/s/OneIdResources/css/OneIdStyles.css',
-            '/identity/s/OneIdResources/css/salesforce-lightning-design-system-ltng.css')}"
+            '../OneIdResources/css/normalize.css',
+            '../OneIdResources/css/OneIdStyles.css',
+            '../OneIdResources/css/salesforce-lightning-design-system-ltng.css')}"
         afterScriptsLoaded="{!c.jsLoaded}"
     />
 
@@ -19,7 +19,8 @@
     <aura:registerEvent name="checkStep2Completion" type="c:OneId_RequestCompletionCheck_EVT"/>
     
     <aura:attribute name="activeSection" type="Integer" default="1"/>
-    <aura:attribute name="stepCompletion" type="boolean[]" default="[true, true, true]"/>
+    <aura:attribute name="stepCompletion" type="boolean[]" default="[false, false, false]"/>
+    
     <aura:attribute name="contact" type="Contact" default="{ 'sobjectType': 'Contact' }" />
     <aura:attribute name="account" type="Account" default="{ 'sobjectType': 'Account' }" />
     <aura:attribute name="serviceName" type="String" />
@@ -29,7 +30,7 @@
     <aura:registerEvent name="fetchParams" type="c:oneIdURLParams"/>
     <aura:handler event="c:oneIdURLParams" action="{!c.renderPage}"/>
   
-    <div class="slds-container_medium slds-container_center">
+    <div aura:id="mainContainer" class="slds-container_medium slds-container_center">
         <div class="slds-grid">
             <div class="slds-p-horizontal--small slds-size--1-of-1">
                 <h1>{!$Label.c.OneId_Create_an_account}</h1>
@@ -45,16 +46,16 @@
                                             <span class="bulletv2">1</span>
                                             
                                             <span class="category">{!$Label.c.OneId_Contact_Association_Validation}</span>
+                                            
+                                            <span class="{!v.activeSection==1 ? 'icon icon-navArrowLeft' : 'icon icon-navArrowDown'}" />
                                         </span>
-                                        
-                                        <span class="{!v.activeSection==1 ? 'icon icon-navArrowLeft' : 'icon icon-navArrowDown'}" />
                                     </h3>
                                 </div>
                                 
                                 
                             </div>
                             <div aria-hidden="false" class="slds-accordion__content" id="step1">
-                                <c:OneId_EmailValidation contact="{!v.contact}" showCaptcha="{!v.userCountry!='CN'}"/>
+                                <c:OneId_EmailValidation contact="{!v.contact}" userCountry="{!v.userCountry}"/>
                             </div>
                         </section>
                     </div>
@@ -67,9 +68,9 @@
                                             <span class="bulletv2">2</span>
                                             
                                             <span class="category">{!$Label.c.OneId_Contact_Creation}</span>
+                                            
+                                            <span class="{!v.activeSection==2 ? 'icon icon-navArrowLeft' : 'icon icon-navArrowDown'}" />
                                         </span>
-                                        
-                                        <span class="{!v.activeSection==2 ? 'icon icon-navArrowLeft' : 'icon icon-navArrowDown'}" />
                                     </h3>
                                 </div>
                                 
@@ -88,11 +89,12 @@
                                             <span class="bulletv2">3</span>
                                             
                                             <span class="category">{!$Label.c.OneId_Account_Association}</span>
+                                            
+                                            <span class="{!v.activeSection==3 ? 'icon icon-navArrowLeft' : 'icon icon-navArrowDown'}" />
                                         </span>
-                                        
-                                        <span class="{!v.activeSection==3 ? 'icon icon-navArrowLeft' : 'icon icon-navArrowDown'}" />
                                     </h3>
                                 </div>
+                                
                             </div>
                             <div aria-hidden="true" class="slds-accordion__content" id="step3">
                                 
@@ -110,5 +112,10 @@
                 </div>
             </div>
         </div>
+    </div>
+
+    <div aura:id="registrationComplete" class="slds-text-align_center slds-p-around_large slds-hide">
+        <h1 class="slds-m-bottom_medium">{!$Label.c.OneId_RegistrationComplete}</h1>
+        <h3>{!$Label.c.OneId_CheckEmail}</h3>
     </div>
 </aura:component>
