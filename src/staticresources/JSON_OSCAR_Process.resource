@@ -3752,7 +3752,7 @@
                 "Actions": [
                   {
                     "FunctionName": "checkAccountHierarchyCorrection",
-                    "ActionLabel": "AMS_OSCAR_Action6",
+                    "ActionLabel": "AMS_OSCAR_Action6_Corr",
                     "args": ["oscarid"]
                   }
 				],

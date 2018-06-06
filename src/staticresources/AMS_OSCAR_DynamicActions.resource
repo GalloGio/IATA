@@ -254,9 +254,9 @@ var dyn_functions = {
                 sforce.console.openSubtab(result.id, '/apex/AMS_AccountHierarchySelection?Id='+arg, true, 'Account Hierarchy Selection', null, changeTab);    
             };
 
-            if(confirm('Selected corrections will be applied to the choosen agencies including legal name, address if changed, would you still like to proceed ?')){
+            //if(confirm('Selected corrections will be applied to the choosen agencies including legal name, address if changed, would you still like to proceed ?')){
                 sforce.console.getEnclosingPrimaryTabId(openSubtab);
-            }
+            //}
        
 		},
     ANG_checkAccountHierarchy:function (arg) {

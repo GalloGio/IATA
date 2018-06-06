@@ -80,10 +80,9 @@
             if({!isCorrection} && !({!isAllHierarchySelected})){
                 
                 alert('Only able to manage Owners when the hierarchy is all selected!');
-                //cancelServer();
                 var saveBtn = document.getElementById('saveButton');
                 saveBtn.disabled = true;
-                saveServer();
+                closeTab();
             }
             
         } 
