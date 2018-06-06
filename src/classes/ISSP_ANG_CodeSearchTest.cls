@@ -19,7 +19,7 @@ private class ISSP_ANG_CodeSearchTest {
         
         Id airlineHeadquartersRT = RecordTypeSingleton.getInstance().RtIDsPerDeveloperNamePerObj.get('Account').get('IATA_Airline');
 
-        TransformationHelper.trgAccountISSP_AfterBeforInsertDeleteUpdateUndelete = false;
+        //TransformationHelper.trgAccountISSP_AfterBeforInsertDeleteUpdateUndelete = false;
 
         Account headquarter = new Account(Name = 'Emirates',
                                           ICCS_Membership_Status__c = 'Member',
@@ -69,7 +69,7 @@ private class ISSP_ANG_CodeSearchTest {
             );
 
         insert new List<Account>{a1,a2};
-
+            
         Account a3 = new Account (
                 name = 'Travel agency (child)',
                 RecordTypeId = AMS_Utils.RECTYPE_IATAAGENCY,
@@ -135,15 +135,28 @@ private class ISSP_ANG_CodeSearchTest {
         con.AccountId = a.Id;
         insert con;
 
-        User newUser = ISSP_ObjectFactory.createPortalUser(con);
+        User newUser = ISSP_ObjectFactory.createPortalBasicAirlineUser(con);
+        //newUser.UserRoleId = 
         con.OwnerId = newUser.Id;
         update con;
+		
+        List<Account> accountList = new List<Account>();
+        
+        For(Account act: [SELECT Id, Name, OwnerId FROM Account WHERE Name <> 'Emirates']){
+            act.OwnerId = newUser.Id;
+            accountList.add(act);
+        }
+        
+		Test.startTest();
+        
+        if(!accountList.isEmpty())
+            update accountList;
 
-        TransformationHelper.trgAccountISSP_AfterBeforInsertDeleteUpdateUndelete = false;
-        TransformationHelper.CalculateBusinessHoursAges = false;
+        //TransformationHelper.trgAccountISSP_AfterBeforInsertDeleteUpdateUndelete = false;
+        //TransformationHelper.CalculateBusinessHoursAges = false;
         //CaseChildHelper.noValidationsOnTrgCAseIFAP  = false; 
 
-        Test.startTest();
+        
         System.runAs(newUser) {
                 
             ISSP_ANG_CodeSearch controller = new ISSP_ANG_CodeSearch();
@@ -154,6 +167,8 @@ private class ISSP_ANG_CodeSearchTest {
             controller.iataCode = 12345678;
     
             controller.doSearch();
+    
+            //System.assertEquals('12345678', controller.agency.IATACode__c);
     
             List<ISSP_ANG_CodeSearch.RiskEvent> rel = controller.getRiskEventsList();
     
@@ -225,6 +240,7 @@ private class ISSP_ANG_CodeSearchTest {
             //
             controller.refreshRiskEventsTable();
         }
+        
         Test.stopTest();
 
     }
