@@ -5,7 +5,7 @@ private class ISSP_RegistrationTest {
 
 		ISSP_RegistrationTest.createTestData();
 		
-		ISSP_RegistrationTest.fakemethod();
+		ISSP_Registration.fakemethod();
 
 		Account acc = ISSP_ObjectFactory.createNewAccount();
 		insert acc;

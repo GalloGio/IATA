@@ -388,7 +388,7 @@ public without sharing class ISSP_Login {
     }
 	
 	//EM - To be removed
-	public static void fakemethod {
+	public static void fakemethod () {
 		if (Test.isRunningTest()) {
 			Integer i=0;
 			i=0;
