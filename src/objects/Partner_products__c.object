@@ -724,7 +724,7 @@ Specify if payment is guaranteed to the airline against: fraud dispute, commerci
         <active>true</active>
         <errorConditionFormula>AND(
    NOT(ISPICKVAL(Provider__r.Status__c , &quot;active&quot;)),
-   ISPICKVAL(PP_status__c  , &quot;Active&quot;)
+   ISPICKVAL(PP_Status__c  , &quot;Active&quot;)
 )</errorConditionFormula>
         <errorMessage>Partner Product cannot be activated if Provider Account is not active</errorMessage>
     </validationRules>
@@ -746,6 +746,6 @@ Specify if payment is guaranteed to the airline against: fraud dispute, commerci
         <protected>false</protected>
         <showsLocation>false</showsLocation>
         <showsStatus>false</showsStatus>
-        <url>/00O9E000000McWa?pv0={!Partner_products__c.Id}&amp;pv1={!Partner_products__c.Name}</url>
+        <url>/00O1r00000BFv0K?pv0={!Partner_products__c.Id}&amp;pv1={!Partner_products__c.Name}</url>
     </webLinks>
 </CustomObject>
