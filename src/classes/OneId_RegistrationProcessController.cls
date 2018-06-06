@@ -119,7 +119,8 @@ public without sharing class OneId_RegistrationProcessController {
         Map<String,String> labels = new Map<String,String>();
         for (String name : contactFields) {
             SObjectField f = accountFields.get(name);
-            labels.put(f.getDescribe().getName(), f.getDescribe().getLabel());
+            if (f!=null)
+				labels.put(f.getDescribe().getName(), f.getDescribe().getLabel());
         }
         return labels;
     } 
