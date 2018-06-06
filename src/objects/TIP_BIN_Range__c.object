@@ -119,7 +119,6 @@
         <trackTrending>false</trackTrending>
         <type>Picklist</type>
         <valueSet>
-            <restricted>true</restricted>
             <valueSetDefinition>
                 <sorted>false</sorted>
                 <value>
@@ -165,10 +164,6 @@
             <picklist>TIP_Status__c</picklist>
             <values>
                 <fullName>ACTIVE</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>DRAFT</fullName>
                 <default>false</default>
             </values>
             <values>
