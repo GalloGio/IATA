@@ -1267,15 +1267,7 @@
             <type>user</type>
         </recipients>
         <recipients>
-            <recipient>al-maanis@iata.org</recipient>
-            <type>user</type>
-        </recipients>
-        <recipients>
             <recipient>armientoe@iata.org</recipient>
-            <type>user</type>
-        </recipients>
-        <recipients>
-            <recipient>batagliaf@iata.org</recipient>
             <type>user</type>
         </recipients>
         <recipients>
@@ -1288,10 +1280,6 @@
         </recipients>
         <recipients>
             <recipient>dovgano@iata.org</recipient>
-            <type>user</type>
-        </recipients>
-        <recipients>
-            <recipient>farisd@iata.org</recipient>
             <type>user</type>
         </recipients>
         <recipients>
@@ -1347,10 +1335,6 @@
             <type>user</type>
         </recipients>
         <recipients>
-            <recipient>pommiers@iata.org</recipient>
-            <type>user</type>
-        </recipients>
-        <recipients>
             <recipient>rabahh@iata.org</recipient>
             <type>user</type>
         </recipients>
@@ -1380,10 +1364,6 @@
         </recipients>
         <recipients>
             <recipient>suwal@iata.org</recipient>
-            <type>user</type>
-        </recipients>
-        <recipients>
-            <recipient>tadrosc@iata.org</recipient>
             <type>user</type>
         </recipients>
         <recipients>
@@ -15072,7 +15052,7 @@ Change the case status to “Agent Notified (mail)” if case status was “Agen
         <criteriaItems>
             <field>Case.SuppliedEmail</field>
             <operation>equals</operation>
-            <value>garciam@iata.org,shalbakf@iata.org</value>
+            <value>garciam@iata.org,shalbakf@iata.org,info.sce@iata.org</value>
         </criteriaItems>
         <triggerType>onCreateOrTriggeringUpdate</triggerType>
     </rules>

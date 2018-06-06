@@ -61,7 +61,7 @@ global without sharing class Comm_User_Helper {
     public static Id createNewUser(Contact con, string selectedCustomerType, string community, string lang){
         return createNewUser(con, selectedCustomerType, community, lang, false, false);
     }
-     
+    
     public static Id createNewUser(Contact con, string selectedCustomerType, string community, string lang, Boolean newAgency, Boolean newAirline){
       try { 
         
@@ -134,6 +134,10 @@ global without sharing class Comm_User_Helper {
         }
         else if (newAirline){
           profileName = ISSP_Constant.profilNameByUserTypeMap.get('User').get('Airline');
+        }
+        
+        if(con.account.Sector__c == TIP_Utils.ACCOUNT_SECTOR_FINANCIAL_INSTITUTION && con.account.Category__c == TIP_Utils.ACCOUNT_CATEGORY_PAYMENT_PROVIDER){
+            profileName = ISSP_Constant.profilNameByUserTypeMap.get('Admin').get('Other');
         }
         
         system.debug('profileName: ' + profileName);
