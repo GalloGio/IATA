@@ -109,6 +109,10 @@
         <name>SIS_Help_Desk</name>
     </customApplications>
     <customApplications>
+        <label><!-- TIP --></label>
+        <name>TIP</name>
+    </customApplications>
+    <customApplications>
         <label><!-- TTBS --></label>
         <name>TTBS</name>
     </customApplications>
@@ -8442,6 +8446,14 @@ Finansal belgelerinizi yüklemek için, lütfen &lt;b&gt;&lt;a href=&apos;http:/
         <name>ISSP_Aplication_list_view</name>
     </customLabels>
     <customLabels>
+        <label><!-- ISSP Application for Enlistment Email Duplicated --></label>
+        <name>ISSP_Application_for_Enlistment_Email_Duplicated</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP Application for Enlistment as a Payment Provider --></label>
+        <name>ISSP_Application_for_Enlistment_as_a_Payment_Provider</name>
+    </customLabels>
+    <customLabels>
         <label>Filtre Uygula</label>
         <name>ISSP_Apply_Filter</name>
     </customLabels>
@@ -8548,6 +8560,10 @@ Finansal belgelerinizi yüklemek için, lütfen &lt;b&gt;&lt;a href=&apos;http:/
     <customLabels>
         <label>Şubeler</label>
         <name>ISSP_Branches</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP Button Request Enlistment --></label>
+        <name>ISSP_Button_Request_Enlistment</name>
     </customLabels>
     <customLabels>
         <label>Sevk edilecek Acente Adresini onayla</label>
@@ -9572,6 +9588,10 @@ Lütfen daha önce hangi ülke için destek aldığınızı doğrulayın:</label
         <name>ISSP_EmailsFailure</name>
     </customLabels>
     <customLabels>
+        <label><!-- ISSP Encolment page Office address --></label>
+        <name>ISSP_Encolment_page_Office_address</name>
+    </customLabels>
+    <customLabels>
         <label>Lütfen sadece Latin harfleri kullanınız</label>
         <name>ISSP_EnterValidString</name>
     </customLabels>
@@ -9847,6 +9867,10 @@ Lütfen daha önce hangi ülke için destek aldığınızı doğrulayın:</label
     <customLabels>
         <label>Ana Sayfa</label>
         <name>ISSP_Home</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP Home Table Date-Time Opened --></label>
+        <name>ISSP_Home_Table_Date_Time_Opened</name>
     </customLabels>
     <customLabels>
         <label>Şirketimin açık konuları</label>
@@ -10643,6 +10667,10 @@ IATA Müşteri Portalına kaydolurken sorun yaşamaya devam ederseniz, lütfen &
         <name>ISSP_One_Way_Passenger_Participating</name>
     </customLabels>
     <customLabels>
+        <label><!-- ISSP Ongoing TIP Requests --></label>
+        <name>ISSP_Ongoing_TIP_Requests</name>
+    </customLabels>
+    <customLabels>
         <label><!-- ISSP_Opt_In --></label>
         <name>ISSP_Opt_In</name>
     </customLabels>
@@ -10793,6 +10821,18 @@ Akredite edilmiş acenteler için bir çok IATA faturası BPS/CASS yoluyla tahsi
         <name>ISSP_Payment_Link_Description_CNS</name>
     </customLabels>
     <customLabels>
+        <label><!-- ISSP Payment Provider Details section 1 --></label>
+        <name>ISSP_Payment_Provider_Details_section_1</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP Payment Provider Details section 2 --></label>
+        <name>ISSP_Payment_Provider_Details_section_2</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP Payment Provider Home title --></label>
+        <name>ISSP_Payment_Provider_Home_title</name>
+    </customLabels>
+    <customLabels>
         <label>Bekliyor</label>
         <name>ISSP_Pending</name>
     </customLabels>
@@ -10855,6 +10895,86 @@ Akredite edilmiş acenteler için bir çok IATA faturası BPS/CASS yoluyla tahsi
     <customLabels>
         <label>İleri</label>
         <name>ISSP_Portal_Next</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP Portal Product Accepted Transactions Label --></label>
+        <name>ISSP_Portal_Product_Accepted_Transactions_Label</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP Portal Product Acquiring network Label --></label>
+        <name>ISSP_Portal_Product_Acquiring_network_Label</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP Portal Product Airline payment guarantee Label --></label>
+        <name>ISSP_Portal_Product_Airline_payment_guarantee_Label</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP Portal Product Category Label --></label>
+        <name>ISSP_Portal_Product_Category_Label</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP Portal Product Chargeback right Label --></label>
+        <name>ISSP_Portal_Product_Chargeback_right_Label</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP Portal Product Integration of ATM Label --></label>
+        <name>ISSP_Portal_Product_Integration_of_ATM_Label</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP Portal Product Interchange Fee Label --></label>
+        <name>ISSP_Portal_Product_Interchange_Fee_Label</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP Portal Product Issuer Name Label --></label>
+        <name>ISSP_Portal_Product_Issuer_Name_Label</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP Portal Product License Label --></label>
+        <name>ISSP_Portal_Product_License_Label</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP Portal Product Maximum Chargeback Timeframe Label --></label>
+        <name>ISSP_Portal_Product_Maximum_Chargeback_Timeframe_Label</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP Portal Product Name Label --></label>
+        <name>ISSP_Portal_Product_Name_Label</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP Portal Product Pay in Model Label --></label>
+        <name>ISSP_Portal_Product_Pay_in_Model_Label</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP Portal Product Payment Network Label --></label>
+        <name>ISSP_Portal_Product_Payment_Network_Label</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP Portal Product Settlement Terms Label --></label>
+        <name>ISSP_Portal_Product_Settlement_Terms_Label</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP Portal Product Type Label --></label>
+        <name>ISSP_Portal_Product_Type_Label</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP Portal Product VAN Type Label --></label>
+        <name>ISSP_Portal_Product_VAN_Type_Label</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP Portal Product is Subject to PCI Label --></label>
+        <name>ISSP_Portal_Product_is_Subject_to_PCI_Label</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP Portal Provider Any Other Info Label --></label>
+        <name>ISSP_Portal_Provider_Any_Other_Info_Label</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP Portal Provider Headquarter Location Label --></label>
+        <name>ISSP_Portal_Provider_Headquarter_Location_Label</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP Portal Provider Legal Name Label --></label>
+        <name>ISSP_Portal_Provider_Legal_Name_Label</name>
     </customLabels>
     <customLabels>
         <label>Portal servisi</label>
@@ -11576,6 +11696,138 @@ Gösterge Panosu, her bir hava yolu Maliye Ekibinin IATA’nın ana ödeme siste
     <customLabels>
         <label><!-- ISSP_TIESS_Code__Search_Format --></label>
         <name>ISSP_TIESS_Code_Search_Format</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP TIP ADD BIN RANGE --></label>
+        <name>ISSP_TIP_ADD_BIN_RANGE</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_TIP_ADD_COUNTRY_CONFIG --></label>
+        <name>ISSP_TIP_ADD_COUNTRY_CONFIG</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_TIP_BIN_RANGE_SECTION --></label>
+        <name>ISSP_TIP_BIN_RANGE_SECTION</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_TIP_BIN_RANGE_SECTION_MESSAGE --></label>
+        <name>ISSP_TIP_BIN_RANGE_SECTION_MESSAGE</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_TIP_CHECK_BIN_RANGE_LENGHT --></label>
+        <name>ISSP_TIP_CHECK_BIN_RANGE_LENGHT</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_TIP_CONTACT_MESSAGE --></label>
+        <name>ISSP_TIP_CONTACT_MESSAGE</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_TIP_COUNTRY_CONFIG_SECTION --></label>
+        <name>ISSP_TIP_COUNTRY_CONFIG_SECTION</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_TIP_DELETE_ALL_CONFIGS --></label>
+        <name>ISSP_TIP_DELETE_ALL_CONFIGS</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_TIP_Discard_Unsaved_Changes --></label>
+        <name>ISSP_TIP_Discard_Unsaved_Changes</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_TIP_HOLD_TO_MULTISELECT --></label>
+        <name>ISSP_TIP_HOLD_TO_MULTISELECT</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP TIP Home Account must be Payment Provider --></label>
+        <name>ISSP_TIP_Home_Account_must_be_Payment_Provider</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Manage Products --></label>
+        <name>ISSP_TIP_Home_Manage_Products</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP TIP Home Only Portal Administrators --></label>
+        <name>ISSP_TIP_Home_Only_Portal_Administrators</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP TIP Home Only Portal Administrators Enrol Products --></label>
+        <name>ISSP_TIP_Home_Only_Portal_Administrators_Enrol_Products</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Products table Edit option --></label>
+        <name>ISSP_TIP_Home_Products_table_Edit_option</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Products table View/Update option --></label>
+        <name>ISSP_TIP_Home_Products_table_View_Update_option</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Enrol new Product --></label>
+        <name>ISSP_TIP_Home_button_Enrol_new_Product</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_TIP_INSERT_BIN_RANGE --></label>
+        <name>ISSP_TIP_INSERT_BIN_RANGE</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_TIP_INSERT_ONE_COUNTRY_CONFIG --></label>
+        <name>ISSP_TIP_INSERT_ONE_COUNTRY_CONFIG</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP TIP MANDATORY ON SUBMIT --></label>
+        <name>ISSP_TIP_MANDATORY_ON_SUBMIT</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_TIP_MISSING_FIELDS --></label>
+        <name>ISSP_TIP_MISSING_FIELDS</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_TIP_NEW_BIN_RANGE --></label>
+        <name>ISSP_TIP_NEW_BIN_RANGE</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_TIP_NEW_PROD_COUNTRY_CONFIG --></label>
+        <name>ISSP_TIP_NEW_PROD_COUNTRY_CONFIG</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_TIP_PRODUCT_DETAILS_SECTION --></label>
+        <name>ISSP_TIP_PRODUCT_DETAILS_SECTION</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_TIP_PRODUCT_TITLE --></label>
+        <name>ISSP_TIP_PRODUCT_ENROLLMENT_TITLE</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_TIP_RANGE_TO_GREATER_RANGE_FROM --></label>
+        <name>ISSP_TIP_RANGE_TO_GREATER_RANGE_FROM</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_TIP_RETURN_HOMEPAGE --></label>
+        <name>ISSP_TIP_RETURN_HOMEPAGE</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_TIP_SAVE_DRAFT --></label>
+        <name>ISSP_TIP_SAVE_DRAFT</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_TIP_SELECT_AT_LEAST_ONE_VALUE --></label>
+        <name>ISSP_TIP_SELECT_AT_LEAST_ONE_VALUE</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_TIP_SUBMIT_TO_IATA --></label>
+        <name>ISSP_TIP_SUBMIT_TO_IATA</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP TIP Submit case to IATA to update bin range --></label>
+        <name>ISSP_TIP_Submit_case_to_IATA_to_update_bin_range</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_TIP_Submit_case_to_IATA_to_update_country_Config --></label>
+        <name>ISSP_TIP_Submit_case_to_IATA_to_update_country_Config</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_TIP_VALUE_TOO_BIG_TO_PROVIDER --></label>
+        <name>ISSP_TIP_VALUE_TOO_BIG_TO_PROVIDER</name>
     </customLabels>
     <customLabels>
         <label><!-- ISSP_TOULink --></label>
@@ -14797,91 +15049,6 @@ IATA Müşteri Portalına kaydolurken sorun yaşamaya devam ederseniz, lütfen &
         <name>Welcome</name>
     </customTabs>
     <globalPicklists>
-        <name>EF_Frequency</name>
-        <picklistValues>
-            <masterLabel>2x/Week</masterLabel>
-            <translation><!-- 2x/Week --></translation>
-        </picklistValues>
-        <picklistValues>
-            <masterLabel>4x/Month</masterLabel>
-            <translation><!-- 4x/Month --></translation>
-        </picklistValues>
-        <picklistValues>
-            <masterLabel>Fortnightly</masterLabel>
-            <translation><!-- Fortnightly --></translation>
-        </picklistValues>
-        <picklistValues>
-            <masterLabel>Monthly</masterLabel>
-            <translation><!-- Monthly --></translation>
-        </picklistValues>
-        <picklistValues>
-            <masterLabel>Weekly</masterLabel>
-            <translation><!-- Weekly --></translation>
-        </picklistValues>
-    </globalPicklists>
-    <globalPicklists>
-        <name>EF_Payment_Method</name>
-        <picklistValues>
-            <masterLabel>Bank transfer</masterLabel>
-            <translation><!-- Bank transfer --></translation>
-        </picklistValues>
-        <picklistValues>
-            <masterLabel>Credit Card</masterLabel>
-            <translation><!-- Credit Card --></translation>
-        </picklistValues>
-        <picklistValues>
-            <masterLabel>ICCS payments</masterLabel>
-            <translation><!-- ICCS payments --></translation>
-        </picklistValues>
-        <picklistValues>
-            <masterLabel>ICH</masterLabel>
-            <translation><!-- ICH --></translation>
-        </picklistValues>
-        <picklistValues>
-            <masterLabel>IRIS</masterLabel>
-            <translation><!-- IRIS --></translation>
-        </picklistValues>
-        <picklistValues>
-            <masterLabel>SPCR / SPDR</masterLabel>
-            <translation><!-- SPCR / SPDR --></translation>
-        </picklistValues>
-        <picklistValues>
-            <masterLabel>Virtual Account Payment</masterLabel>
-            <translation><!-- Virtual Account Payment --></translation>
-        </picklistValues>
-    </globalPicklists>
-    <globalPicklists>
-        <name>EF_User_Role</name>
-        <picklistValues>
-            <masterLabel>Airline Services Specialists</masterLabel>
-            <translation><!-- Airline Services Specialists --></translation>
-        </picklistValues>
-        <picklistValues>
-            <masterLabel>Client Services Specialists</masterLabel>
-            <translation><!-- Client Services Specialists --></translation>
-        </picklistValues>
-        <picklistValues>
-            <masterLabel>E&amp;F General Access</masterLabel>
-            <translation><!-- E&amp;F General Access --></translation>
-        </picklistValues>
-        <picklistValues>
-            <masterLabel>Head, Client Services</masterLabel>
-            <translation><!-- Head, Client Services --></translation>
-        </picklistValues>
-        <picklistValues>
-            <masterLabel>Manager, Airline Services &amp; Head, Business Delivery</masterLabel>
-            <translation><!-- Manager, Airline Services &amp; Head, Business Delivery --></translation>
-        </picklistValues>
-        <picklistValues>
-            <masterLabel>Manager, Business Development</masterLabel>
-            <translation><!-- Manager, Business Development --></translation>
-        </picklistValues>
-        <picklistValues>
-            <masterLabel>Manager, Invoicing &amp; Accounting &amp; Data Transformation</masterLabel>
-            <translation><!-- Manager, Invoicing &amp; Accounting &amp; Data Transformation --></translation>
-        </picklistValues>
-    </globalPicklists>
-    <globalPicklists>
         <name>ANG_Risk_Event_Conditions</name>
         <picklistValues>
             <masterLabel>&lt;</masterLabel>
@@ -14937,267 +15104,6 @@ IATA Müşteri Portalına kaydolurken sorun yaşamaya devam ederseniz, lütfen &
         </picklistValues>
     </globalPicklists>
     <globalPicklists>
-        <name>EF_Allow_Billing_Agreements</name>
-        <picklistValues>
-            <masterLabel>Allowed</masterLabel>
-            <translation><!-- Allowed --></translation>
-        </picklistValues>
-        <picklistValues>
-            <masterLabel>Allowed with Approval</masterLabel>
-            <translation><!-- Allowed with Approval --></translation>
-        </picklistValues>
-        <picklistValues>
-            <masterLabel>Not Allowed</masterLabel>
-            <translation><!-- Not Allowed --></translation>
-        </picklistValues>
-    </globalPicklists>
-    <globalPicklists>
-        <name>Sector</name>
-        <picklistValues>
-            <masterLabel>Accommodation</masterLabel>
-            <translation><!-- Accommodation --></translation>
-        </picklistValues>
-        <picklistValues>
-            <masterLabel>Airline</masterLabel>
-            <translation><!-- Airline --></translation>
-        </picklistValues>
-        <picklistValues>
-            <masterLabel>Airline Supplier</masterLabel>
-            <translation><!-- Airline Supplier --></translation>
-        </picklistValues>
-        <picklistValues>
-            <masterLabel>Association</masterLabel>
-            <translation><!-- Association --></translation>
-        </picklistValues>
-        <picklistValues>
-            <masterLabel>Cargo Agent</masterLabel>
-            <translation><!-- Cargo Agent --></translation>
-        </picklistValues>
-        <picklistValues>
-            <masterLabel>Education</masterLabel>
-            <translation><!-- Education --></translation>
-        </picklistValues>
-        <picklistValues>
-            <masterLabel>Equipment Manufacturer</masterLabel>
-            <translation><!-- Equipment Manufacturer --></translation>
-        </picklistValues>
-        <picklistValues>
-            <masterLabel>Financial Institution</masterLabel>
-            <translation><!-- Financial Institution --></translation>
-        </picklistValues>
-        <picklistValues>
-            <masterLabel>General Sales Agent</masterLabel>
-            <translation><!-- General Sales Agent --></translation>
-        </picklistValues>
-        <picklistValues>
-            <masterLabel>Governmental Institution</masterLabel>
-            <translation><!-- Governmental Institution --></translation>
-        </picklistValues>
-        <picklistValues>
-            <masterLabel>Holding Company</masterLabel>
-            <translation><!-- Holding Company --></translation>
-        </picklistValues>
-        <picklistValues>
-            <masterLabel>IATA</masterLabel>
-            <translation><!-- IATA --></translation>
-        </picklistValues>
-        <picklistValues>
-            <masterLabel>Infrastructure Partner</masterLabel>
-            <translation><!-- Infrastructure Partner --></translation>
-        </picklistValues>
-        <picklistValues>
-            <masterLabel>Media</masterLabel>
-            <translation><!-- Media --></translation>
-        </picklistValues>
-        <picklistValues>
-            <masterLabel>Non-Airline Transportation</masterLabel>
-            <translation><!-- Non-Airline Transportation --></translation>
-        </picklistValues>
-        <picklistValues>
-            <masterLabel>Recreational</masterLabel>
-            <translation><!-- Recreational --></translation>
-        </picklistValues>
-        <picklistValues>
-            <masterLabel>Travel Agent</masterLabel>
-            <translation><!-- Travel Agent --></translation>
-        </picklistValues>
-    </globalPicklists>
-    <globalPicklists>
-        <name>ANG_Risk_Status</name>
-        <picklistValues>
-            <masterLabel>A</masterLabel>
-            <translation><!-- A --></translation>
-        </picklistValues>
-        <picklistValues>
-            <masterLabel>B</masterLabel>
-            <translation><!-- B --></translation>
-        </picklistValues>
-        <picklistValues>
-            <masterLabel>C</masterLabel>
-            <translation><!-- C --></translation>
-        </picklistValues>
-        <picklistValues>
-            <masterLabel>Not Applicable</masterLabel>
-            <translation><!-- Not Applicable --></translation>
-        </picklistValues>
-    </globalPicklists>
-    <globalPicklists>
-        <name>ANG_Remittance_Frequency</name>
-        <picklistValues>
-            <masterLabel>4 times per month</masterLabel>
-            <translation><!-- 4 times per month --></translation>
-        </picklistValues>
-        <picklistValues>
-            <masterLabel>Daily</masterLabel>
-            <translation><!-- Daily --></translation>
-        </picklistValues>
-        <picklistValues>
-            <masterLabel>Every 10 days</masterLabel>
-            <translation><!-- Every 10 days --></translation>
-        </picklistValues>
-        <picklistValues>
-            <masterLabel>Every 3 days</masterLabel>
-            <translation><!-- Every 3 days --></translation>
-        </picklistValues>
-        <picklistValues>
-            <masterLabel>Every 5 days</masterLabel>
-            <translation><!-- Every 5 days --></translation>
-        </picklistValues>
-        <picklistValues>
-            <masterLabel>Fortnightly</masterLabel>
-            <translation><!-- Fortnightly --></translation>
-        </picklistValues>
-        <picklistValues>
-            <masterLabel>Monthly</masterLabel>
-            <translation><!-- Monthly --></translation>
-        </picklistValues>
-        <picklistValues>
-            <masterLabel>Weekly</masterLabel>
-            <translation><!-- Weekly --></translation>
-        </picklistValues>
-    </globalPicklists>
-    <globalPicklists>
-        <name>EF_Role</name>
-        <picklistValues>
-            <masterLabel>Account Manager</masterLabel>
-            <translation><!-- Account Manager --></translation>
-        </picklistValues>
-        <picklistValues>
-            <masterLabel>Accounts Payable</masterLabel>
-            <translation><!-- Accounts Payable --></translation>
-        </picklistValues>
-        <picklistValues>
-            <masterLabel>Accounts Receivable</masterLabel>
-            <translation><!-- Accounts Receivable --></translation>
-        </picklistValues>
-        <picklistValues>
-            <masterLabel>Debt Management</masterLabel>
-            <translation><!-- Debt Management --></translation>
-        </picklistValues>
-        <picklistValues>
-            <masterLabel>Dispute Management</masterLabel>
-            <translation><!-- Dispute Management --></translation>
-        </picklistValues>
-        <picklistValues>
-            <masterLabel>Finance (Other)</masterLabel>
-            <translation><!-- Finance (Other) --></translation>
-        </picklistValues>
-        <picklistValues>
-            <masterLabel>General Management</masterLabel>
-            <translation><!-- General Management --></translation>
-        </picklistValues>
-        <picklistValues>
-            <masterLabel>Invoicing</masterLabel>
-            <translation><!-- Invoicing --></translation>
-        </picklistValues>
-        <picklistValues>
-            <masterLabel>Operations</masterLabel>
-            <translation><!-- Operations --></translation>
-        </picklistValues>
-        <picklistValues>
-            <masterLabel>Other</masterLabel>
-            <translation><!-- Other --></translation>
-        </picklistValues>
-        <picklistValues>
-            <masterLabel>Reporting</masterLabel>
-            <translation><!-- Reporting --></translation>
-        </picklistValues>
-        <picklistValues>
-            <masterLabel>Revenue Accounting</masterLabel>
-            <translation><!-- Revenue Accounting --></translation>
-        </picklistValues>
-        <picklistValues>
-            <masterLabel>Sales &amp; Marketing</masterLabel>
-            <translation><!-- Sales &amp; Marketing --></translation>
-        </picklistValues>
-        <picklistValues>
-            <masterLabel>Technical Support</masterLabel>
-            <translation><!-- Technical Support --></translation>
-        </picklistValues>
-    </globalPicklists>
-    <globalPicklists>
-        <name>ANG_Types_of_Change</name>
-        <picklistValues>
-            <masterLabel>Accreditation type</masterLabel>
-            <translation><!-- Accreditation type --></translation>
-        </picklistValues>
-        <picklistValues>
-            <masterLabel>Hierarchy</masterLabel>
-            <translation><!-- Hierarchy --></translation>
-        </picklistValues>
-        <picklistValues>
-            <masterLabel>Legal name</masterLabel>
-            <translation><!-- Legal name --></translation>
-        </picklistValues>
-        <picklistValues>
-            <masterLabel>Legal status</masterLabel>
-            <translation><!-- Legal status --></translation>
-        </picklistValues>
-        <picklistValues>
-            <masterLabel>Location</masterLabel>
-            <translation><!-- Location --></translation>
-        </picklistValues>
-        <picklistValues>
-            <masterLabel>Location type</masterLabel>
-            <translation><!-- Location type --></translation>
-        </picklistValues>
-        <picklistValues>
-            <masterLabel>Location type to different legal entity</masterLabel>
-            <translation><!-- Location type to different legal entity --></translation>
-        </picklistValues>
-        <picklistValues>
-            <masterLabel>Major shareholding</masterLabel>
-            <translation><!-- Major shareholding --></translation>
-        </picklistValues>
-        <picklistValues>
-            <masterLabel>Minor shareholding</masterLabel>
-            <translation><!-- Minor shareholding --></translation>
-        </picklistValues>
-        <picklistValues>
-            <masterLabel>Ownership</masterLabel>
-            <translation><!-- Ownership --></translation>
-        </picklistValues>
-        <picklistValues>
-            <masterLabel>VMFR</masterLabel>
-            <translation><!-- VMFR --></translation>
-        </picklistValues>
-    </globalPicklists>
-    <globalPicklists>
-        <name>Form_Of_Payment_Options</name>
-        <picklistValues>
-            <masterLabel>CA</masterLabel>
-            <translation><!-- CA --></translation>
-        </picklistValues>
-        <picklistValues>
-            <masterLabel>CC</masterLabel>
-            <translation><!-- CC --></translation>
-        </picklistValues>
-        <picklistValues>
-            <masterLabel>EP</masterLabel>
-            <translation><!-- EP --></translation>
-        </picklistValues>
-    </globalPicklists>
-    <globalPicklists>
         <name>ANG_Financial_Review_Result</name>
         <picklistValues>
             <masterLabel>Satisfactory</masterLabel>
@@ -15237,25 +15143,6 @@ IATA Müşteri Portalına kaydolurken sorun yaşamaya devam ederseniz, lütfen &
         </picklistValues>
     </globalPicklists>
     <globalPicklists>
-        <name>EF_Invoice_Distribution</name>
-        <picklistValues>
-            <masterLabel>Electronic Via Email</masterLabel>
-            <translation><!-- Electronic Via Email --></translation>
-        </picklistValues>
-        <picklistValues>
-            <masterLabel>Electronic Via Platform</masterLabel>
-            <translation><!-- Electronic Via Platform --></translation>
-        </picklistValues>
-        <picklistValues>
-            <masterLabel>No Invoice</masterLabel>
-            <translation><!-- No Invoice --></translation>
-        </picklistValues>
-        <picklistValues>
-            <masterLabel>Paper</masterLabel>
-            <translation><!-- Paper --></translation>
-        </picklistValues>
-    </globalPicklists>
-    <globalPicklists>
         <name>EF_Payment_Terms</name>
         <picklistValues>
             <masterLabel>07 days after invoice date</masterLabel>
@@ -15280,36 +15167,6 @@ IATA Müşteri Portalına kaydolurken sorun yaşamaya devam ederseniz, lütfen &
         <picklistValues>
             <masterLabel>Payable immediately due net</masterLabel>
             <translation><!-- Payable immediately due net --></translation>
-        </picklistValues>
-    </globalPicklists>
-    <globalPicklists>
-        <name>ANG_Accreditation_Models</name>
-        <picklistValues>
-            <masterLabel>Cash</masterLabel>
-            <translation><!-- Cash --></translation>
-        </picklistValues>
-        <picklistValues>
-            <masterLabel>Cashless</masterLabel>
-            <translation><!-- Cashless --></translation>
-        </picklistValues>
-        <picklistValues>
-            <masterLabel>Legacy</masterLabel>
-            <translation><!-- Legacy --></translation>
-        </picklistValues>
-        <picklistValues>
-            <masterLabel>Multicountry</masterLabel>
-            <translation><!-- Multicountry --></translation>
-        </picklistValues>
-    </globalPicklists>
-    <globalPicklists>
-        <name>EF_Status</name>
-        <picklistValues>
-            <masterLabel>Active</masterLabel>
-            <translation><!-- Active --></translation>
-        </picklistValues>
-        <picklistValues>
-            <masterLabel>Inactive</masterLabel>
-            <translation><!-- Inactive --></translation>
         </picklistValues>
     </globalPicklists>
     <globalPicklists>
@@ -16028,343 +15885,22 @@ IATA Müşteri Portalına kaydolurken sorun yaşamaya devam ederseniz, lütfen &
         </picklistValues>
     </globalPicklists>
     <globalPicklists>
-        <name>EF_Manager_Approval</name>
+        <name>ANG_Risk_Status</name>
         <picklistValues>
-            <masterLabel>Approved</masterLabel>
-            <translation><!-- Approved --></translation>
+            <masterLabel>A</masterLabel>
+            <translation><!-- A --></translation>
         </picklistValues>
         <picklistValues>
-            <masterLabel>In Progress</masterLabel>
-            <translation><!-- In Progress --></translation>
+            <masterLabel>B</masterLabel>
+            <translation><!-- B --></translation>
         </picklistValues>
         <picklistValues>
-            <masterLabel>Not Started</masterLabel>
-            <translation><!-- Not Started --></translation>
-        </picklistValues>
-        <picklistValues>
-            <masterLabel>Recalled</masterLabel>
-            <translation><!-- Recalled --></translation>
-        </picklistValues>
-        <picklistValues>
-            <masterLabel>Rejected</masterLabel>
-            <translation><!-- Rejected --></translation>
-        </picklistValues>
-    </globalPicklists>
-    <globalPicklists>
-        <name>ANG_HE_RiskHistoryAssessment</name>
-        <picklistValues>
-            <masterLabel>Failed</masterLabel>
-            <translation><!-- Failed --></translation>
+            <masterLabel>C</masterLabel>
+            <translation><!-- C --></translation>
         </picklistValues>
         <picklistValues>
             <masterLabel>Not Applicable</masterLabel>
             <translation><!-- Not Applicable --></translation>
-        </picklistValues>
-        <picklistValues>
-            <masterLabel>Passed</masterLabel>
-            <translation><!-- Passed --></translation>
-        </picklistValues>
-    </globalPicklists>
-    <globalPicklists>
-        <name>ANG_Event_Status</name>
-        <picklistValues>
-            <masterLabel>Active</masterLabel>
-            <translation><!-- Active --></translation>
-        </picklistValues>
-        <picklistValues>
-            <masterLabel>Inactive</masterLabel>
-            <translation><!-- Inactive --></translation>
-        </picklistValues>
-        <picklistValues>
-            <masterLabel>Inactive_CHO</masterLabel>
-            <translation><!-- Inactive_CHO --></translation>
-        </picklistValues>
-        <picklistValues>
-            <masterLabel>Inactive_Cashless</masterLabel>
-            <translation><!-- Inactive_Cashless --></translation>
-        </picklistValues>
-        <picklistValues>
-            <masterLabel>Inactive_Migrated</masterLabel>
-            <translation><!-- Inactive_Migrated --></translation>
-        </picklistValues>
-        <picklistValues>
-            <masterLabel>Inactive_Revoked</masterLabel>
-            <translation><!-- Inactive_Revoked --></translation>
-        </picklistValues>
-        <picklistValues>
-            <masterLabel>Inactive_TER</masterLabel>
-            <translation><!-- Inactive_TER --></translation>
-        </picklistValues>
-        <picklistValues>
-            <masterLabel>Inactive_Withdrawn</masterLabel>
-            <translation><!-- Inactive_Withdrawn --></translation>
-        </picklistValues>
-    </globalPicklists>
-    <globalPicklists>
-        <name>Category</name>
-        <picklistValues>
-            <masterLabel>ANSP</masterLabel>
-            <translation><!-- ANSP --></translation>
-        </picklistValues>
-        <picklistValues>
-            <masterLabel>Academic/Research Body</masterLabel>
-            <translation><!-- Academic/Research Body --></translation>
-        </picklistValues>
-        <picklistValues>
-            <masterLabel>Agency Holding Company</masterLabel>
-            <translation><!-- Agency Holding Company --></translation>
-        </picklistValues>
-        <picklistValues>
-            <masterLabel>Aircraft Manufacturer</masterLabel>
-            <translation><!-- Aircraft Manufacturer --></translation>
-        </picklistValues>
-        <picklistValues>
-            <masterLabel>Airline Global Card Acquirer</masterLabel>
-            <translation><!-- Airline Global Card Acquirer --></translation>
-        </picklistValues>
-        <picklistValues>
-            <masterLabel>Airline Holding Company</masterLabel>
-            <translation><!-- Airline Holding Company --></translation>
-        </picklistValues>
-        <picklistValues>
-            <masterLabel>Airline Point of Sale</masterLabel>
-            <translation><!-- Airline Point of Sale --></translation>
-        </picklistValues>
-        <picklistValues>
-            <masterLabel>Airport Authority</masterLabel>
-            <translation><!-- Airport Authority --></translation>
-        </picklistValues>
-        <picklistValues>
-            <masterLabel>Airport Concessionaire</masterLabel>
-            <translation><!-- Airport Concessionaire --></translation>
-        </picklistValues>
-        <picklistValues>
-            <masterLabel>Apartment &amp; Villa Rental</masterLabel>
-            <translation><!-- Apartment &amp; Villa Rental --></translation>
-        </picklistValues>
-        <picklistValues>
-            <masterLabel>Banking Service</masterLabel>
-            <translation><!-- Banking Service --></translation>
-        </picklistValues>
-        <picklistValues>
-            <masterLabel>Bus Line</masterLabel>
-            <translation><!-- Bus Line --></translation>
-        </picklistValues>
-        <picklistValues>
-            <masterLabel>CASS Associate</masterLabel>
-            <translation><!-- CASS Associate --></translation>
-        </picklistValues>
-        <picklistValues>
-            <masterLabel>Car Rental</masterLabel>
-            <translation><!-- Car Rental --></translation>
-        </picklistValues>
-        <picklistValues>
-            <masterLabel>Card Brand</masterLabel>
-            <translation><!-- Card Brand --></translation>
-        </picklistValues>
-        <picklistValues>
-            <masterLabel>Cargo Agency Association</masterLabel>
-            <translation><!-- Cargo Agency Association --></translation>
-        </picklistValues>
-        <picklistValues>
-            <masterLabel>Cargo only</masterLabel>
-            <translation><!-- Cargo only --></translation>
-        </picklistValues>
-        <picklistValues>
-            <masterLabel>Casino</masterLabel>
-            <translation><!-- Casino --></translation>
-        </picklistValues>
-        <picklistValues>
-            <masterLabel>Caterer</masterLabel>
-            <translation><!-- Caterer --></translation>
-        </picklistValues>
-        <picklistValues>
-            <masterLabel>Consultancy Firm</masterLabel>
-            <translation><!-- Consultancy Firm --></translation>
-        </picklistValues>
-        <picklistValues>
-            <masterLabel>Courier</masterLabel>
-            <translation><!-- Courier --></translation>
-        </picklistValues>
-        <picklistValues>
-            <masterLabel>Cruise Line</masterLabel>
-            <translation><!-- Cruise Line --></translation>
-        </picklistValues>
-        <picklistValues>
-            <masterLabel>Domestic Agent</masterLabel>
-            <translation><!-- Domestic Agent --></translation>
-        </picklistValues>
-        <picklistValues>
-            <masterLabel>ERSP Agent</masterLabel>
-            <translation><!-- ERSP Agent --></translation>
-        </picklistValues>
-        <picklistValues>
-            <masterLabel>Engine Manufacturer</masterLabel>
-            <translation><!-- Engine Manufacturer --></translation>
-        </picklistValues>
-        <picklistValues>
-            <masterLabel>Fuel Supplier</masterLabel>
-            <translation><!-- Fuel Supplier --></translation>
-        </picklistValues>
-        <picklistValues>
-            <masterLabel>GSA General Sales Agent</masterLabel>
-            <translation><!-- GSA General Sales Agent --></translation>
-        </picklistValues>
-        <picklistValues>
-            <masterLabel>GSSA Cargo</masterLabel>
-            <translation><!-- GSSA Cargo --></translation>
-        </picklistValues>
-        <picklistValues>
-            <masterLabel>Global Distribution System</masterLabel>
-            <translation><!-- Global Distribution System --></translation>
-        </picklistValues>
-        <picklistValues>
-            <masterLabel>Ground Handler</masterLabel>
-            <translation><!-- Ground Handler --></translation>
-        </picklistValues>
-        <picklistValues>
-            <masterLabel>Handling Agent</masterLabel>
-            <translation><!-- Handling Agent --></translation>
-        </picklistValues>
-        <picklistValues>
-            <masterLabel>Hotel</masterLabel>
-            <translation><!-- Hotel --></translation>
-        </picklistValues>
-        <picklistValues>
-            <masterLabel>IATA Cargo Agent</masterLabel>
-            <translation><!-- IATA Cargo Agent --></translation>
-        </picklistValues>
-        <picklistValues>
-            <masterLabel>IATA Head Office</masterLabel>
-            <translation><!-- IATA Head Office --></translation>
-        </picklistValues>
-        <picklistValues>
-            <masterLabel>IATA Local office</masterLabel>
-            <translation><!-- IATA Local office --></translation>
-        </picklistValues>
-        <picklistValues>
-            <masterLabel>IATA Passenger Sales Agent</masterLabel>
-            <translation><!-- IATA Passenger Sales Agent --></translation>
-        </picklistValues>
-        <picklistValues>
-            <masterLabel>IATA Regional Office</masterLabel>
-            <translation><!-- IATA Regional Office --></translation>
-        </picklistValues>
-        <picklistValues>
-            <masterLabel>IBCS consolidator</masterLabel>
-            <translation><!-- IBCS consolidator --></translation>
-        </picklistValues>
-        <picklistValues>
-            <masterLabel>Import Agent</masterLabel>
-            <translation><!-- Import Agent --></translation>
-        </picklistValues>
-        <picklistValues>
-            <masterLabel>Individual Government</masterLabel>
-            <translation><!-- Individual Government --></translation>
-        </picklistValues>
-        <picklistValues>
-            <masterLabel>Inter-Governmental Body</masterLabel>
-            <translation><!-- Inter-Governmental Body --></translation>
-        </picklistValues>
-        <picklistValues>
-            <masterLabel>Landmark</masterLabel>
-            <translation><!-- Landmark --></translation>
-        </picklistValues>
-        <picklistValues>
-            <masterLabel>Large Component OEM</masterLabel>
-            <translation><!-- Large Component OEM --></translation>
-        </picklistValues>
-        <picklistValues>
-            <masterLabel>Lessor</masterLabel>
-            <translation><!-- Lessor --></translation>
-        </picklistValues>
-        <picklistValues>
-            <masterLabel>MSO Member Sales Office</masterLabel>
-            <translation><!-- MSO Member Sales Office --></translation>
-        </picklistValues>
-        <picklistValues>
-            <masterLabel>Maintenance, Repair, Overhaul</masterLabel>
-            <translation><!-- Maintenance, Repair, Overhaul --></translation>
-        </picklistValues>
-        <picklistValues>
-            <masterLabel>Museum</masterLabel>
-            <translation><!-- Museum --></translation>
-        </picklistValues>
-        <picklistValues>
-            <masterLabel>Non Governmental Organization</masterLabel>
-            <translation><!-- Non Governmental Organization --></translation>
-        </picklistValues>
-        <picklistValues>
-            <masterLabel>Non-IATA Cargo Agent</masterLabel>
-            <translation><!-- Non-IATA Cargo Agent --></translation>
-        </picklistValues>
-        <picklistValues>
-            <masterLabel>Non-IATA Passenger Agent</masterLabel>
-            <translation><!-- Non-IATA Passenger Agent --></translation>
-        </picklistValues>
-        <picklistValues>
-            <masterLabel>Non-IATA Travel Agent</masterLabel>
-            <translation><!-- Non-IATA Travel Agent --></translation>
-        </picklistValues>
-        <picklistValues>
-            <masterLabel>Other</masterLabel>
-            <translation><!-- Other --></translation>
-        </picklistValues>
-        <picklistValues>
-            <masterLabel>Other Private Sector Association</masterLabel>
-            <translation><!-- Other Private Sector Association --></translation>
-        </picklistValues>
-        <picklistValues>
-            <masterLabel>Park</masterLabel>
-            <translation><!-- Park --></translation>
-        </picklistValues>
-        <picklistValues>
-            <masterLabel>Passenger and Cargo</masterLabel>
-            <translation><!-- Passenger and Cargo --></translation>
-        </picklistValues>
-        <picklistValues>
-            <masterLabel>Passenger only</masterLabel>
-            <translation><!-- Passenger only --></translation>
-        </picklistValues>
-        <picklistValues>
-            <masterLabel>Processor</masterLabel>
-            <translation><!-- Processor --></translation>
-        </picklistValues>
-        <picklistValues>
-            <masterLabel>Publishing</masterLabel>
-            <translation><!-- Publishing --></translation>
-        </picklistValues>
-        <picklistValues>
-            <masterLabel>Railway Line</masterLabel>
-            <translation><!-- Railway Line --></translation>
-        </picklistValues>
-        <picklistValues>
-            <masterLabel>Resort</masterLabel>
-            <translation><!-- Resort --></translation>
-        </picklistValues>
-        <picklistValues>
-            <masterLabel>Security</masterLabel>
-            <translation><!-- Security --></translation>
-        </picklistValues>
-        <picklistValues>
-            <masterLabel>System Solutions Provider</masterLabel>
-            <translation><!-- System Solutions Provider --></translation>
-        </picklistValues>
-        <picklistValues>
-            <masterLabel>TIDS Agent</masterLabel>
-            <translation><!-- TIDS Agent --></translation>
-        </picklistValues>
-        <picklistValues>
-            <masterLabel>Tour Operator</masterLabel>
-            <translation><!-- Tour Operator --></translation>
-        </picklistValues>
-        <picklistValues>
-            <masterLabel>Training Centre</masterLabel>
-            <translation><!-- Training Centre --></translation>
-        </picklistValues>
-        <picklistValues>
-            <masterLabel>Travel Agency Association</masterLabel>
-            <translation><!-- Travel Agency Association --></translation>
         </picklistValues>
     </globalPicklists>
     <globalPicklists>
@@ -16972,6 +16508,737 @@ IATA Müşteri Portalına kaydolurken sorun yaşamaya devam ederseniz, lütfen &
         <picklistValues>
             <masterLabel>ZWD</masterLabel>
             <translation><!-- ZWD --></translation>
+        </picklistValues>
+    </globalPicklists>
+    <globalPicklists>
+        <name>EF_User_Role</name>
+        <picklistValues>
+            <masterLabel>Airline Services Specialists</masterLabel>
+            <translation><!-- Airline Services Specialists --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Client Services Specialists</masterLabel>
+            <translation><!-- Client Services Specialists --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>E&amp;F General Access</masterLabel>
+            <translation><!-- E&amp;F General Access --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Head, Client Services</masterLabel>
+            <translation><!-- Head, Client Services --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Manager, Airline Services &amp; Head, Business Delivery</masterLabel>
+            <translation><!-- Manager, Airline Services &amp; Head, Business Delivery --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Manager, Business Development</masterLabel>
+            <translation><!-- Manager, Business Development --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Manager, Invoicing &amp; Accounting &amp; Data Transformation</masterLabel>
+            <translation><!-- Manager, Invoicing &amp; Accounting &amp; Data Transformation --></translation>
+        </picklistValues>
+    </globalPicklists>
+    <globalPicklists>
+        <name>EF_Invoice_Distribution</name>
+        <picklistValues>
+            <masterLabel>Electronic Via Email</masterLabel>
+            <translation><!-- Electronic Via Email --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Electronic Via Platform</masterLabel>
+            <translation><!-- Electronic Via Platform --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>No Invoice</masterLabel>
+            <translation><!-- No Invoice --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Paper</masterLabel>
+            <translation><!-- Paper --></translation>
+        </picklistValues>
+    </globalPicklists>
+    <globalPicklists>
+        <name>EF_Manager_Approval</name>
+        <picklistValues>
+            <masterLabel>Approved</masterLabel>
+            <translation><!-- Approved --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>In Progress</masterLabel>
+            <translation><!-- In Progress --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Not Started</masterLabel>
+            <translation><!-- Not Started --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Recalled</masterLabel>
+            <translation><!-- Recalled --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Rejected</masterLabel>
+            <translation><!-- Rejected --></translation>
+        </picklistValues>
+    </globalPicklists>
+    <globalPicklists>
+        <name>Form_Of_Payment_Options</name>
+        <picklistValues>
+            <masterLabel>CA</masterLabel>
+            <translation><!-- CA --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>CC</masterLabel>
+            <translation><!-- CC --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>CC VA</masterLabel>
+            <translation><!-- CC VA --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>EP</masterLabel>
+            <translation><!-- EP --></translation>
+        </picklistValues>
+    </globalPicklists>
+    <globalPicklists>
+        <name>EF_Frequency</name>
+        <picklistValues>
+            <masterLabel>2x/Week</masterLabel>
+            <translation><!-- 2x/Week --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>4x/Month</masterLabel>
+            <translation><!-- 4x/Month --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Fortnightly</masterLabel>
+            <translation><!-- Fortnightly --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Monthly</masterLabel>
+            <translation><!-- Monthly --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Weekly</masterLabel>
+            <translation><!-- Weekly --></translation>
+        </picklistValues>
+    </globalPicklists>
+    <globalPicklists>
+        <name>ANG_Types_of_Change</name>
+        <picklistValues>
+            <masterLabel>Accreditation type</masterLabel>
+            <translation><!-- Accreditation type --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Hierarchy</masterLabel>
+            <translation><!-- Hierarchy --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Legal name</masterLabel>
+            <translation><!-- Legal name --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Legal status</masterLabel>
+            <translation><!-- Legal status --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Location</masterLabel>
+            <translation><!-- Location --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Location type</masterLabel>
+            <translation><!-- Location type --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Location type to different legal entity</masterLabel>
+            <translation><!-- Location type to different legal entity --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Major shareholding</masterLabel>
+            <translation><!-- Major shareholding --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Minor shareholding</masterLabel>
+            <translation><!-- Minor shareholding --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Ownership</masterLabel>
+            <translation><!-- Ownership --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>VMFR</masterLabel>
+            <translation><!-- VMFR --></translation>
+        </picklistValues>
+    </globalPicklists>
+    <globalPicklists>
+        <name>ANG_Remittance_Frequency</name>
+        <picklistValues>
+            <masterLabel>4 times per month</masterLabel>
+            <translation><!-- 4 times per month --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Daily</masterLabel>
+            <translation><!-- Daily --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Every 10 days</masterLabel>
+            <translation><!-- Every 10 days --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Every 3 days</masterLabel>
+            <translation><!-- Every 3 days --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Every 5 days</masterLabel>
+            <translation><!-- Every 5 days --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Fortnightly</masterLabel>
+            <translation><!-- Fortnightly --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Monthly</masterLabel>
+            <translation><!-- Monthly --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Weekly</masterLabel>
+            <translation><!-- Weekly --></translation>
+        </picklistValues>
+    </globalPicklists>
+    <globalPicklists>
+        <name>EF_Status</name>
+        <picklistValues>
+            <masterLabel>Active</masterLabel>
+            <translation><!-- Active --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Inactive</masterLabel>
+            <translation><!-- Inactive --></translation>
+        </picklistValues>
+    </globalPicklists>
+    <globalPicklists>
+        <name>Category</name>
+        <picklistValues>
+            <masterLabel>ANSP</masterLabel>
+            <translation><!-- ANSP --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Academic/Research Body</masterLabel>
+            <translation><!-- Academic/Research Body --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Agency Holding Company</masterLabel>
+            <translation><!-- Agency Holding Company --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Aircraft Manufacturer</masterLabel>
+            <translation><!-- Aircraft Manufacturer --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Airline Global Card Acquirer</masterLabel>
+            <translation><!-- Airline Global Card Acquirer --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Airline Holding Company</masterLabel>
+            <translation><!-- Airline Holding Company --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Airline Point of Sale</masterLabel>
+            <translation><!-- Airline Point of Sale --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Airport Authority</masterLabel>
+            <translation><!-- Airport Authority --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Airport Concessionaire</masterLabel>
+            <translation><!-- Airport Concessionaire --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Apartment &amp; Villa Rental</masterLabel>
+            <translation><!-- Apartment &amp; Villa Rental --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Banking Service</masterLabel>
+            <translation><!-- Banking Service --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Bus Line</masterLabel>
+            <translation><!-- Bus Line --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>CASS Associate</masterLabel>
+            <translation><!-- CASS Associate --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Car Rental</masterLabel>
+            <translation><!-- Car Rental --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Card Brand</masterLabel>
+            <translation><!-- Card Brand --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Cargo Agency Association</masterLabel>
+            <translation><!-- Cargo Agency Association --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Cargo only</masterLabel>
+            <translation><!-- Cargo only --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Casino</masterLabel>
+            <translation><!-- Casino --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Caterer</masterLabel>
+            <translation><!-- Caterer --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Consultancy Firm</masterLabel>
+            <translation><!-- Consultancy Firm --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Courier</masterLabel>
+            <translation><!-- Courier --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Cruise Line</masterLabel>
+            <translation><!-- Cruise Line --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Domestic Agent</masterLabel>
+            <translation><!-- Domestic Agent --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>ERSP Agent</masterLabel>
+            <translation><!-- ERSP Agent --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Engine Manufacturer</masterLabel>
+            <translation><!-- Engine Manufacturer --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Fuel Supplier</masterLabel>
+            <translation><!-- Fuel Supplier --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>GSA General Sales Agent</masterLabel>
+            <translation><!-- GSA General Sales Agent --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>GSSA Cargo</masterLabel>
+            <translation><!-- GSSA Cargo --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Global Distribution System</masterLabel>
+            <translation><!-- Global Distribution System --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Ground Handler</masterLabel>
+            <translation><!-- Ground Handler --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Handling Agent</masterLabel>
+            <translation><!-- Handling Agent --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Hotel</masterLabel>
+            <translation><!-- Hotel --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>IATA Cargo Agent</masterLabel>
+            <translation><!-- IATA Cargo Agent --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>IATA Head Office</masterLabel>
+            <translation><!-- IATA Head Office --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>IATA Local office</masterLabel>
+            <translation><!-- IATA Local office --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>IATA Passenger Sales Agent</masterLabel>
+            <translation><!-- IATA Passenger Sales Agent --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>IATA Regional Office</masterLabel>
+            <translation><!-- IATA Regional Office --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>IBCS consolidator</masterLabel>
+            <translation><!-- IBCS consolidator --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Import Agent</masterLabel>
+            <translation><!-- Import Agent --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Individual Government</masterLabel>
+            <translation><!-- Individual Government --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Inter-Governmental Body</masterLabel>
+            <translation><!-- Inter-Governmental Body --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Landmark</masterLabel>
+            <translation><!-- Landmark --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Large Component OEM</masterLabel>
+            <translation><!-- Large Component OEM --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Lessor</masterLabel>
+            <translation><!-- Lessor --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>MSO Member Sales Office</masterLabel>
+            <translation><!-- MSO Member Sales Office --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Maintenance, Repair, Overhaul</masterLabel>
+            <translation><!-- Maintenance, Repair, Overhaul --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Museum</masterLabel>
+            <translation><!-- Museum --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Non Governmental Organization</masterLabel>
+            <translation><!-- Non Governmental Organization --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Non-IATA Cargo Agent</masterLabel>
+            <translation><!-- Non-IATA Cargo Agent --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Non-IATA Passenger Agent</masterLabel>
+            <translation><!-- Non-IATA Passenger Agent --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Non-IATA Travel Agent</masterLabel>
+            <translation><!-- Non-IATA Travel Agent --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Other</masterLabel>
+            <translation><!-- Other --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Other Private Sector Association</masterLabel>
+            <translation><!-- Other Private Sector Association --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Park</masterLabel>
+            <translation><!-- Park --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Passenger and Cargo</masterLabel>
+            <translation><!-- Passenger and Cargo --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Passenger only</masterLabel>
+            <translation><!-- Passenger only --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Processor</masterLabel>
+            <translation><!-- Processor --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Publishing</masterLabel>
+            <translation><!-- Publishing --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Railway Line</masterLabel>
+            <translation><!-- Railway Line --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Resort</masterLabel>
+            <translation><!-- Resort --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Security</masterLabel>
+            <translation><!-- Security --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>System Solutions Provider</masterLabel>
+            <translation><!-- System Solutions Provider --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>TIDS Agent</masterLabel>
+            <translation><!-- TIDS Agent --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Tour Operator</masterLabel>
+            <translation><!-- Tour Operator --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Training Centre</masterLabel>
+            <translation><!-- Training Centre --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Travel Agency Association</masterLabel>
+            <translation><!-- Travel Agency Association --></translation>
+        </picklistValues>
+    </globalPicklists>
+    <globalPicklists>
+        <name>EF_Role</name>
+        <picklistValues>
+            <masterLabel>Account Manager</masterLabel>
+            <translation><!-- Account Manager --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Accounts Payable</masterLabel>
+            <translation><!-- Accounts Payable --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Accounts Receivable</masterLabel>
+            <translation><!-- Accounts Receivable --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Debt Management</masterLabel>
+            <translation><!-- Debt Management --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Dispute Management</masterLabel>
+            <translation><!-- Dispute Management --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Finance (Other)</masterLabel>
+            <translation><!-- Finance (Other) --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>General Management</masterLabel>
+            <translation><!-- General Management --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Invoicing</masterLabel>
+            <translation><!-- Invoicing --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Operations</masterLabel>
+            <translation><!-- Operations --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Other</masterLabel>
+            <translation><!-- Other --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Reporting</masterLabel>
+            <translation><!-- Reporting --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Revenue Accounting</masterLabel>
+            <translation><!-- Revenue Accounting --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Sales &amp; Marketing</masterLabel>
+            <translation><!-- Sales &amp; Marketing --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Technical Support</masterLabel>
+            <translation><!-- Technical Support --></translation>
+        </picklistValues>
+    </globalPicklists>
+    <globalPicklists>
+        <name>EF_Payment_Method</name>
+        <picklistValues>
+            <masterLabel>Bank transfer</masterLabel>
+            <translation><!-- Bank transfer --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Credit Card</masterLabel>
+            <translation><!-- Credit Card --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>ICCS payments</masterLabel>
+            <translation><!-- ICCS payments --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>ICH</masterLabel>
+            <translation><!-- ICH --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>IRIS</masterLabel>
+            <translation><!-- IRIS --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>SPCR / SPDR</masterLabel>
+            <translation><!-- SPCR / SPDR --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Virtual Account Payment</masterLabel>
+            <translation><!-- Virtual Account Payment --></translation>
+        </picklistValues>
+    </globalPicklists>
+    <globalPicklists>
+        <name>TIP_Provider_Type</name>
+        <picklistValues>
+            <masterLabel>Closed Loop</masterLabel>
+            <translation><!-- Closed Loop --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Open Loop</masterLabel>
+            <translation><!-- Open Loop --></translation>
+        </picklistValues>
+    </globalPicklists>
+    <globalPicklists>
+        <name>ANG_Accreditation_Models</name>
+        <picklistValues>
+            <masterLabel>Cash</masterLabel>
+            <translation><!-- Cash --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Cashless</masterLabel>
+            <translation><!-- Cashless --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Legacy</masterLabel>
+            <translation><!-- Legacy --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Multicountry</masterLabel>
+            <translation><!-- Multicountry --></translation>
+        </picklistValues>
+    </globalPicklists>
+    <globalPicklists>
+        <name>ANG_Event_Status</name>
+        <picklistValues>
+            <masterLabel>Active</masterLabel>
+            <translation><!-- Active --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Inactive</masterLabel>
+            <translation><!-- Inactive --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Inactive_CHO</masterLabel>
+            <translation><!-- Inactive_CHO --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Inactive_Cashless</masterLabel>
+            <translation><!-- Inactive_Cashless --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Inactive_Migrated</masterLabel>
+            <translation><!-- Inactive_Migrated --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Inactive_Revoked</masterLabel>
+            <translation><!-- Inactive_Revoked --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Inactive_TER</masterLabel>
+            <translation><!-- Inactive_TER --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Inactive_Withdrawn</masterLabel>
+            <translation><!-- Inactive_Withdrawn --></translation>
+        </picklistValues>
+    </globalPicklists>
+    <globalPicklists>
+        <name>ANG_HE_RiskHistoryAssessment</name>
+        <picklistValues>
+            <masterLabel>Failed</masterLabel>
+            <translation><!-- Failed --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Not Applicable</masterLabel>
+            <translation><!-- Not Applicable --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Passed</masterLabel>
+            <translation><!-- Passed --></translation>
+        </picklistValues>
+    </globalPicklists>
+    <globalPicklists>
+        <name>EF_Allow_Billing_Agreements</name>
+        <picklistValues>
+            <masterLabel>Allowed</masterLabel>
+            <translation><!-- Allowed --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Allowed with Approval</masterLabel>
+            <translation><!-- Allowed with Approval --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Not Allowed</masterLabel>
+            <translation><!-- Not Allowed --></translation>
+        </picklistValues>
+    </globalPicklists>
+    <globalPicklists>
+        <name>Sector</name>
+        <picklistValues>
+            <masterLabel>Accommodation</masterLabel>
+            <translation><!-- Accommodation --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Airline</masterLabel>
+            <translation><!-- Airline --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Airline Supplier</masterLabel>
+            <translation><!-- Airline Supplier --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Association</masterLabel>
+            <translation><!-- Association --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Cargo Agent</masterLabel>
+            <translation><!-- Cargo Agent --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Education</masterLabel>
+            <translation><!-- Education --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Equipment Manufacturer</masterLabel>
+            <translation><!-- Equipment Manufacturer --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Financial Institution</masterLabel>
+            <translation><!-- Financial Institution --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>General Sales Agent</masterLabel>
+            <translation><!-- General Sales Agent --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Governmental Institution</masterLabel>
+            <translation><!-- Governmental Institution --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Holding Company</masterLabel>
+            <translation><!-- Holding Company --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>IATA</masterLabel>
+            <translation><!-- IATA --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Infrastructure Partner</masterLabel>
+            <translation><!-- Infrastructure Partner --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Media</masterLabel>
+            <translation><!-- Media --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Non-Airline Transportation</masterLabel>
+            <translation><!-- Non-Airline Transportation --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Recreational</masterLabel>
+            <translation><!-- Recreational --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Travel Agent</masterLabel>
+            <translation><!-- Travel Agent --></translation>
         </picklistValues>
     </globalPicklists>
 </Translations>
