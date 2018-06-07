@@ -756,4 +756,60 @@ public class ISSP_CaseTest {
         Test.stopTest();
     }
 
+
+    public static testMethod void tesTIP() {
+      
+       
+        Account account = ISSP_ObjectFactory.createNewAccount();
+        account.Name = 'Account1';
+        insert account;
+
+        Contact con = ISSP_ObjectFactory.createNewContact();
+        con.AccountId = account.Id;
+        insert con;
+
+        Case c = new Case();
+        c.Subject = 'test 1';
+        c.AccountId = account.id;
+        c.ContactId = con.id;
+        c.Region__c = 'Europe';
+        c.RecordTypeId = TIP_Utils.CASE_PROCESS_IDFS_RECORD_TYPE_ID;
+        c.Reason1__c = TIP_Utils.CASE_REASON_PRODUCT_MANAGEMENT;
+        c.status = TIP_Utils.CASE_STATUS_DRAFT;
+        c.CaseArea__c = TIP_Utils.CASE_AREA_TRANSPARENCY_IN_PAYMENTS;
+        c.Visible_on_ISS_Portal__c = true;
+       
+       
+
+       User user = ISSP_ObjectFactory.createPortalUser(con);
+
+       Portal_Applications__c pa = new Portal_Applications__c(name = TIP_Utils.PORTAL_SERVICE_NAME_TIP);
+       insert pa;
+         
+          ISSP_Portal_Service_Ids__c psi = new ISSP_Portal_Service_Ids__c(
+
+        TIP_Portal_Service_Id__c=pa.id
+        );
+       insert psi;
+
+       Portal_Application_Right__c appRight = new Portal_Application_Right__c (
+           Right__c = 'Access Granted', 
+           Contact__c = user.ContactId, 
+           Portal_Application__c = pa.id);
+       insert appRight;
+
+       con.OwnerId = user.Id;
+       update con;
+
+       
+       Test.startTest();
+        system.runAs(user) {
+             insert c;
+            ISSP_Case cttr = new ISSP_Case();
+            ApexPages.currentPage().getParameters().put('caseId', String.valueOf(c.Id));
+            cttr.pageLoad();
+        }
+       Test.stopTest();
+     }
+
  }
