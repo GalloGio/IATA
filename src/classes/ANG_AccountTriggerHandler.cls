@@ -22,7 +22,7 @@ public class ANG_AccountTriggerHandler {
 	}
 
 	// ************************************************************
-	// ****************** distribution methods ********************teste
+	// ****************** distribution methods ********************
 	// ************************************************************
 
 	public void onBeforeInsert(){
