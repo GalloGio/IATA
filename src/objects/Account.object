@@ -6143,7 +6143,7 @@ If(LEN(BillingCountry) &gt;0, BillingCountry,&quot;&quot;)</formula>
                 <controllingFieldValue>Financial Institution</controllingFieldValue>
                 <valueName>Lessor</valueName>
             </valueSettings>
-	    <valueSettings>
+            <valueSettings>
                 <controllingFieldValue>Financial Institution</controllingFieldValue>
                 <valueName>Payment Provider</valueName>
             </valueSettings>
@@ -10447,7 +10447,7 @@ Approval: Key Contact can see pending request approve it one by one</inlineHelpT
         <description>FDS AGM checks if the branch account is in a different country to the parent&apos;s.</description>
         <externalId>false</externalId>
         <formula>IF(
- AND(RecordType.Name = &quot;Agency&quot; , OR(ispickval(Location_Type__c, &quot;BR&quot;),ispickval(Location_Type__c, &quot;AE&quot;))),
+ AND(RecordType.Name = &quot;Agency&quot; , OR(ispickval(Location_Type__c, &quot;BR&quot;),ispickval(Location_Type__c, &quot;AE&quot;),ispickval(Location_Type__c, &quot;SA&quot;))),
  IF(AND(Parent.IATA_ISO_Country__r.AMS_Settlement_System__r.Name &lt;&gt; IATA_ISO_Country__r.AMS_Settlement_System__r.Name, NOT(CNS_Agency__c)),
   &quot;Yes&quot;,
   &quot;No&quot;
@@ -12367,8 +12367,8 @@ J-Joint Vent</inlineHelpText>
     <fields>
         <fullName>Quality__c</fullName>
         <externalId>false</externalId>
-        <formula>If( ISPICKVAL (ACLI_Status__c,&apos;Inactive Company&apos;),IMAGE(&quot;/servlet/servlet.ImageServer?id=015w0000001yjh0&amp;oid=00D9E0000001DDB&amp;lastMod=1394110707000&quot;,&quot;Inactive Airline&quot;),
-IF ((RecordType.DeveloperName = &quot;IATA_Airline&quot; || RecordType.DeveloperName = &quot;IATA_Agency&quot; || RecordType.DeveloperName = &quot;IATA_Airline_BR&quot; || RecordType.DeveloperName = &quot;Others&quot; || RecordType.DeveloperName = &quot;Operator&quot; ||RecordType.DeveloperName = &quot;IATA_GSA&quot; ),IMAGE(&quot;/servlet/servlet.FileDownload?file=015w0000001yCfW&quot;,&quot;YES&quot;),&quot;&quot;)
+        <formula>If( ISPICKVAL (ACLI_Status__c,&apos;Inactive Company&apos;),IMAGE(&quot;/servlet/servlet.ImageServer?id=015w0000001yjh0&amp;oid=00D2000000008TF&amp;lastMod=1394110707000&quot;,&quot;Inactive Airline&quot;),
+IF ((RecordType.DeveloperName = &quot;IATA_Airline&quot; || RecordType.DeveloperName = &quot;IATA_Agency&quot; || RecordType.DeveloperName = &quot;IATA_Airline_BR&quot; || RecordType.DeveloperName = &quot;Others&quot; || RecordType.DeveloperName = &quot;Operator&quot; ||RecordType.DeveloperName = &quot;IATA_GSA&quot;||RecordType.DeveloperName = &quot;TIP_Payment_Provider&quot; ),IMAGE(&quot;/servlet/servlet.FileDownload?file=015w0000001yCfW&quot;,&quot;YES&quot;),&quot;&quot;)
 )</formula>
         <label>Verified</label>
         <required>false</required>
@@ -15300,6 +15300,11 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
             <valueSetDefinition>
                 <sorted>true</sorted>
                 <value>
+                    <fullName>Active</fullName>
+                    <default>false</default>
+                    <label>Active</label>
+                </value>
+                <value>
                     <fullName>Applicant</fullName>
                     <default>false</default>
                     <label>Applicant</label>
@@ -15333,6 +15338,16 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
                     <fullName>Endorsed</fullName>
                     <default>false</default>
                     <label>Endorsed</label>
+                </value>
+                <value>
+                    <fullName>Inactive</fullName>
+                    <default>false</default>
+                    <label>Inactive</label>
+                </value>
+                <value>
+                    <fullName>In Progress</fullName>
+                    <default>false</default>
+                    <label>In Progress</label>
                 </value>
                 <value>
                     <fullName>Listed</fullName>
@@ -15789,7 +15804,8 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
     <fields>
         <fullName>TIP_Documents__c</fullName>
         <externalId>false</externalId>
-        <label>Documents</label>
+        <inlineHelpText>Enter any additional information related to your company (e.g. to comply with AML requirements)</inlineHelpText>
+        <label>Any Other Information</label>
         <length>32768</length>
         <trackFeedHistory>false</trackFeedHistory>
         <trackHistory>false</trackHistory>
@@ -15800,6 +15816,7 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
         <fullName>TIP_HQ_Location__c</fullName>
         <deleteConstraint>Restrict</deleteConstraint>
         <externalId>false</externalId>
+        <inlineHelpText>Select the country where provider&apos;s headquarter is located</inlineHelpText>
         <label>HQ Location</label>
         <referenceTo>IATA_ISO_Country__c</referenceTo>
         <relationshipLabel>Accounts (HQ Location)</relationshipLabel>
@@ -27950,6 +27967,17 @@ This field is kept up-to-date with the feedback of ITDI at least twice a year du
             </values>
         </picklistValues>
         <picklistValues>
+            <picklist>TIP_Provider_Type__c</picklist>
+            <values>
+                <fullName>Closed Loop</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Open Loop</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
             <picklist>Training_Membership__c</picklist>
             <values>
                 <fullName>ATC</fullName>
@@ -31096,6 +31124,17 @@ This field is kept up-to-date with the feedback of ITDI at least twice a year du
             </values>
         </picklistValues>
         <picklistValues>
+            <picklist>TIP_Provider_Type__c</picklist>
+            <values>
+                <fullName>Closed Loop</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Open Loop</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
             <picklist>Training_Membership__c</picklist>
             <values>
                 <fullName>ATC</fullName>
@@ -33744,6 +33783,17 @@ This field is kept up-to-date with the feedback of ITDI at least twice a year du
             </values>
             <values>
                 <fullName>e-freight</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>TIP_Provider_Type__c</picklist>
+            <values>
+                <fullName>Closed Loop</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Open Loop</fullName>
                 <default>false</default>
             </values>
         </picklistValues>
@@ -37665,6 +37715,17 @@ This field is kept up-to-date with the feedback of ITDI at least twice a year du
             </values>
         </picklistValues>
         <picklistValues>
+            <picklist>TIP_Provider_Type__c</picklist>
+            <values>
+                <fullName>Closed Loop</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Open Loop</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
             <picklist>Termination_Reason__c</picklist>
             <values>
                 <fullName>Cease operations%2Fbankruptcy</fullName>
@@ -40038,6 +40099,17 @@ This field is kept up-to-date with the feedback of ITDI at least twice a year du
             </values>
             <values>
                 <fullName>e-freight</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>TIP_Provider_Type__c</picklist>
+            <values>
+                <fullName>Closed Loop</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Open Loop</fullName>
                 <default>false</default>
             </values>
         </picklistValues>
@@ -45453,6 +45525,17 @@ This field is kept up-to-date with the feedback of ITDI at least twice a year du
             </values>
         </picklistValues>
         <picklistValues>
+            <picklist>TIP_Provider_Type__c</picklist>
+            <values>
+                <fullName>Closed Loop</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Open Loop</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
             <picklist>Termination_Reason__c</picklist>
             <values>
                 <fullName>Cease operations%2Fbankruptcy</fullName>
@@ -48173,6 +48256,17 @@ This field is kept up-to-date with the feedback of ITDI at least twice a year du
             </values>
             <values>
                 <fullName>e-freight</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>TIP_Provider_Type__c</picklist>
+            <values>
+                <fullName>Closed Loop</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Open Loop</fullName>
                 <default>false</default>
             </values>
         </picklistValues>
@@ -52613,6 +52707,17 @@ This field is kept up-to-date with the feedback of ITDI at least twice a year du
             </values>
         </picklistValues>
         <picklistValues>
+            <picklist>TIP_Provider_Type__c</picklist>
+            <values>
+                <fullName>Closed Loop</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Open Loop</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
             <picklist>Termination_Reason__c</picklist>
             <values>
                 <fullName>Cease operations%2Fbankruptcy</fullName>
@@ -57001,6 +57106,17 @@ This field is kept up-to-date with the feedback of ITDI at least twice a year du
             </values>
         </picklistValues>
         <picklistValues>
+            <picklist>TIP_Provider_Type__c</picklist>
+            <values>
+                <fullName>Closed Loop</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Open Loop</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
             <picklist>Termination_Reason__c</picklist>
             <values>
                 <fullName>Cease operations%2Fbankruptcy</fullName>
@@ -59828,6 +59944,17 @@ This field is kept up-to-date with the feedback of ITDI at least twice a year du
             </values>
         </picklistValues>
         <picklistValues>
+            <picklist>TIP_Provider_Type__c</picklist>
+            <values>
+                <fullName>Closed Loop</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Open Loop</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
             <picklist>Training_Membership__c</picklist>
             <values>
                 <fullName>ATC</fullName>
@@ -62306,6 +62433,17 @@ This field is kept up-to-date with the feedback of ITDI at least twice a year du
             </values>
         </picklistValues>
         <picklistValues>
+            <picklist>TIP_Provider_Type__c</picklist>
+            <values>
+                <fullName>Closed Loop</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Open Loop</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
             <picklist>Training_Membership__c</picklist>
             <values>
                 <fullName>ATC</fullName>
@@ -64779,6 +64917,17 @@ This field is kept up-to-date with the feedback of ITDI at least twice a year du
             </values>
             <values>
                 <fullName>e-freight</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>TIP_Provider_Type__c</picklist>
+            <values>
+                <fullName>Closed Loop</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Open Loop</fullName>
                 <default>false</default>
             </values>
         </picklistValues>
@@ -67643,6 +67792,17 @@ This field is kept up-to-date with the feedback of ITDI at least twice a year du
             </values>
             <values>
                 <fullName>e-freight</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>TIP_Provider_Type__c</picklist>
+            <values>
+                <fullName>Closed Loop</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Open Loop</fullName>
                 <default>false</default>
             </values>
         </picklistValues>
@@ -74982,6 +75142,17 @@ This field is kept up-to-date with the feedback of ITDI at least twice a year du
             </values>
         </picklistValues>
         <picklistValues>
+            <picklist>TIP_Provider_Type__c</picklist>
+            <values>
+                <fullName>Closed Loop</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Open Loop</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
             <picklist>Termination_Reason__c</picklist>
             <values>
                 <fullName>Cease operations%2Fbankruptcy</fullName>
@@ -75001,6 +75172,29 @@ This field is kept up-to-date with the feedback of ITDI at least twice a year du
             </values>
             <values>
                 <fullName>Resignation</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Training_Membership__c</picklist>
+            <values>
+                <fullName>ATC</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>ATS</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Academic Partners</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Company</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>RTP</fullName>
                 <default>false</default>
             </values>
         </picklistValues>
@@ -75367,34 +75561,6 @@ This field is kept up-to-date with the feedback of ITDI at least twice a year du
                 <fullName>I</fullName>
                 <default>false</default>
             </values>
-            <values>
-                <fullName>L</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>M</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>N</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>O</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>P</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Q</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>R</fullName>
-                <default>false</default>
-            </values>
         </picklistValues>
         <picklistValues>
             <picklist>Zuora__Active__c</picklist>
@@ -75561,7 +75727,7 @@ This field is kept up-to-date with the feedback of ITDI at least twice a year du
             </values>
             <values>
                 <fullName>No IEP Account</fullName>
-                <default>true</default>
+                <default>false</default>
             </values>
             <values>
                 <fullName>Open</fullName>
@@ -79437,6 +79603,17 @@ This field is kept up-to-date with the feedback of ITDI at least twice a year du
             </values>
             <values>
                 <fullName>e-freight</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>TIP_Provider_Type__c</picklist>
+            <values>
+                <fullName>Closed Loop</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Open Loop</fullName>
                 <default>false</default>
             </values>
         </picklistValues>
@@ -84219,6 +84396,17 @@ This field is kept up-to-date with the feedback of ITDI at least twice a year du
             </values>
         </picklistValues>
         <picklistValues>
+            <picklist>TIP_Provider_Type__c</picklist>
+            <values>
+                <fullName>Closed Loop</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Open Loop</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
             <picklist>Termination_Reason__c</picklist>
             <values>
                 <fullName>Cease operations%2Fbankruptcy</fullName>
@@ -84633,6 +84821,25 @@ This field is kept up-to-date with the feedback of ITDI at least twice a year du
             </values>
         </picklistValues>
         <picklistValues>
+            <picklist>AFRD_Status__c</picklist>
+            <values>
+                <fullName>Completed</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Pending ICCS</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Pending customer</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Received</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
             <picklist>AM_Ownership_Type__c</picklist>
             <values>
                 <fullName>Government-held</fullName>
@@ -85023,10 +85230,6 @@ This field is kept up-to-date with the feedback of ITDI at least twice a year du
         </picklistValues>
         <picklistValues>
             <picklist>Airline_Model_Type__c</picklist>
-            <values>
-                <fullName>Legacy</fullName>
-                <default>false</default>
-            </values>
             <values>
                 <fullName>Low Cost Carrier</fullName>
                 <default>false</default>
@@ -86200,6 +86403,313 @@ This field is kept up-to-date with the feedback of ITDI at least twice a year du
             </values>
         </picklistValues>
         <picklistValues>
+            <picklist>Category__c</picklist>
+            <values>
+                <fullName>ANSP</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Academic%2FResearch Body</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Agency Holding Company</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Aircraft Manufacturer</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Airline Global Card Acquirer</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Airline Holding Company</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Airline Point of Sale</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Airport Authority</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Airport Concessionaire</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Airport Operator</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Apartment %26 Villa Rental</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Banking Service</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Bus Line</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>CASS Associate</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Car Rental</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Card Brand</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Cargo Agency Association</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Cargo only</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Casino</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Caterer</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Civil Aviation Authority</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Consultancy Firm</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Courier</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Cruise Line</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>DPC</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Domestic Agent</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>ERSP Agent</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Engine Manufacturer</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Fuel Supplier</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>GSA General Sales Agent</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>GSSA Cargo</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>General Aviation</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Global Distribution System</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Governmental Aviation</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Ground Handler</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Handling Agent</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Hotel</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>IATA Cargo Agent</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>IATA Head Office</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>IATA Local office</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>IATA Passenger Sales Agent</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>IATA Regional Office</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>IATAN Passenger Agent</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>IBCS consolidator</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Import Agent</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Individual Government</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Inter-Governmental Body</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Landmark</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Large Component OEM</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Lessor</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>MSO Member Sales Office</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Maintenance%2C Repair%2C Overhaul</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Military</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Museum</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Non Governmental Organization</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Non-IATA Cargo Agent</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Non-IATA Passenger Agent</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Non-IATA Travel Agent</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Other</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Other Equipment Manufacturer</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Other Private Sector Association</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Park</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Passenger and Cargo</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Passenger only</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Payment Provider</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Processor</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Publishing</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Railway Line</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Resort</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Security</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>System Solutions Provider</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>TIDS Agent</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Tour Operator</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Training Centre</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Travel Agency Association</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Vendor</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
             <picklist>Company_Type__c</picklist>
             <values>
                 <fullName>A</fullName>
@@ -86239,6 +86749,649 @@ This field is kept up-to-date with the feedback of ITDI at least twice a year du
             </values>
             <values>
                 <fullName>V</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Countries_not_live_yet__c</picklist>
+            <values>
+                <fullName>Albania</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Algeria</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Angola</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Anguilla</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Argentina</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Aruba</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Australia</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Austria</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Azerbaijan</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Bahamas</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Bahrain</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Bangladesh</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Barbados</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Belgium %26 Luxembourg</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Belize</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Benin</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Bermuda</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Bhutan</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Bolivia</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Botswana</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Brazil</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Bulgaria</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Burkina Faso</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Burundi</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Cambodia</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Cameroon</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Canada</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Cape Verde</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Cayman Islands</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Central African Republic</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Chad</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Chile</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Chinese Taipei</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Colombia</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Congo</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Cook Islands</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Costa Rica</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Croatia</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Cyprus</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Denmark</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Djibouti</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Dominica</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Dominican Republic</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Ecuador</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Egypt</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>El Salvador</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Equatorial Guinea</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Eritrea</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Estonia</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Ethiopia</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Finland</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>France</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>French Polynesia</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Gabon</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Gambia</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Georgia</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Germany</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Ghana</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Greece</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Grenada</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Guam</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Guatemala</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Guinea</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Guyana</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Haiti</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Honduras</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Hong Kong %28SAR%29%2C China</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Hungary</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Iceland</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>India</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Indonesia</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Iraq</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Ireland</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Israel</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Italy</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Jamaica</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Japan</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Jordan</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Kazakhstan</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Kenya</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Kiribati</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Kuwait</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Latvia</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Lebanon</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Lesotho</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Liberia</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Lithuania</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Madagascar</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Malawi</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Malaysia</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Mali</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Malta</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Mauritania</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Mauritius</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Mexico</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Mongolia</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Montenegro</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Montserrat</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Morocco</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Mozambique</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Myanmar</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Namibia</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Nepal</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Netherlands</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>New Caledonia</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>New Zealand</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Nicaragua</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Niger</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Nigeria</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Norway</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Oman</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Pakistan</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Panama</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Papua New Guinea</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Paraguay</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>People%27s Republic of China</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Peru</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Philippines</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Poland</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Portugal</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Qatar</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Romania</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Rwanda</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Saint Lucia</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Saudi Arabia</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Senegal</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Serbia</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Sierra Leone</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Singapore</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Slovakia</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Slovenia</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Solomon Islands</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Somalia</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>South Africa</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Spain %26 Andorra</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Sudan</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Suriname</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Swaziland</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Sweden</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Switzerland %26 Liechtenstein</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Thailand</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Timor-Leste</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Togo</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Tonga</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Trinidad and Tobago</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Tunisia</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Turkey</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Turks and Caicos Islands</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Tuvalu</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Uganda</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Ukraine</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>United Arab Emirates</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>United Kingdom</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>United States</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Uruguay</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Vanuatu</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Venezuela</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Yemen</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Zambia</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Zimbabwe</fullName>
                 <default>false</default>
             </values>
         </picklistValues>
@@ -86313,6 +87466,1004 @@ This field is kept up-to-date with the feedback of ITDI at least twice a year du
             </values>
         </picklistValues>
         <picklistValues>
+            <picklist>DSE__DS_Country_ISO_Code__c</picklist>
+            <values>
+                <fullName>AD</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>AE</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>AF</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>AG</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>AI</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>AL</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>AM</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>AN</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>AO</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>AQ</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>AR</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>AS</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>AT</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>AU</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>AW</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>AX</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>AZ</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>BA</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>BB</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>BD</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>BE</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>BF</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>BG</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>BH</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>BI</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>BJ</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>BL</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>BM</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>BN</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>BO</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>BR</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>BS</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>BT</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>BV</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>BW</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>BY</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>BZ</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>CA</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>CC</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>CD</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>CF</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>CG</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>CH</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>CI</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>CK</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>CL</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>CM</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>CN</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>CO</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>CR</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>CU</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>CV</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>CX</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>CY</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>CZ</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>DE</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>DJ</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>DK</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>DM</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>DO</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>DZ</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>EC</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>EE</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>EG</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>EH</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>ER</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>ES</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>ET</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>FI</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>FJ</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>FK</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>FM</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>FO</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>FR</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>GA</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>GB</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>GD</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>GE</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>GF</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>GG</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>GH</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>GI</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>GL</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>GM</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>GN</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>GP</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>GQ</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>GR</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>GS</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>GT</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>GU</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>GW</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>GY</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>HK</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>HM</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>HN</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>HR</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>HT</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>HU</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>ID</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>IE</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>IL</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>IN</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>IO</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>IQ</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>IR</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>IS</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>IT</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>JE</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>JM</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>JO</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>JP</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>KE</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>KG</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>KH</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>KI</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>KM</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>KN</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>KP</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>KR</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>KW</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>KY</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>KZ</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>LA</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>LB</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>LC</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>LI</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>LK</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>LR</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>LS</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>LT</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>LU</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>LV</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>LY</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>MA</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>MC</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>MD</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>ME</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>MF</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>MG</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>MH</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>MK</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>ML</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>MM</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>MN</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>MO</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>MP</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>MQ</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>MR</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>MS</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>MT</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>MU</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>MV</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>MW</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>MX</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>MY</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>MZ</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>NA</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>NC</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>NE</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>NF</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>NG</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>NI</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>NL</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>NO</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>NP</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>NR</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>NU</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>NZ</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>OM</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>PA</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>PE</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>PF</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>PG</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>PH</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>PK</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>PL</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>PM</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>PN</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>PR</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>PS</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>PT</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>PW</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>PY</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>QA</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>RE</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>RO</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>RS</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>RU</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>RW</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>SA</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>SB</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>SC</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>SD</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>SE</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>SG</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>SH</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>SI</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>SJ</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>SK</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>SL</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>SM</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>SN</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>SO</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>SR</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>ST</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>SV</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>SY</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>SZ</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>TC</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>TD</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>TF</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>TG</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>TH</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>TJ</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>TK</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>TL</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>TM</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>TN</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>TO</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>TR</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>TT</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>TV</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>TW</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>TZ</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>UA</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>UG</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>UM</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>US</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>UY</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>UZ</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>VA</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>VC</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>VE</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>VG</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>VI</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>VN</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>VU</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>WF</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>WS</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>YE</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>YT</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>ZA</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>ZM</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>ZW</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>DSE__Demo_Installed_Products__c</picklist>
+            <values>
+                <fullName>Dish Washer</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Fryer</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Test</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
             <picklist>Data_quality_feedback__c</picklist>
             <values>
                 <fullName>Account Duplicated</fullName>
@@ -86358,6 +88509,21 @@ This field is kept up-to-date with the feedback of ITDI at least twice a year du
             </values>
             <values>
                 <fullName>Sanctioned%2E Please contact compliance</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>EF_Allow_Billing_Agreements__c</picklist>
+            <values>
+                <fullName>Allowed</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Allowed with Approval</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Not Allowed</fullName>
                 <default>false</default>
             </values>
         </picklistValues>
@@ -86640,6 +88806,29 @@ This field is kept up-to-date with the feedback of ITDI at least twice a year du
             </values>
             <values>
                 <fullName>4 - China</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>ICCS_Membership_Status__c</picklist>
+            <values>
+                <fullName>Bankrupt</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Inactive</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Member</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Merged</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Prospect</fullName>
                 <default>false</default>
             </values>
         </picklistValues>
@@ -87073,9 +89262,287 @@ This field is kept up-to-date with the feedback of ITDI at least twice a year du
             </values>
         </picklistValues>
         <picklistValues>
+            <picklist>MITA_Currency__c</picklist>
+            <values>
+                <fullName>Euro</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>N%2FA</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Pound Sterling</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>US Dollar</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
             <picklist>Membership_status__c</picklist>
             <values>
                 <fullName>Not Applicable</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Non_Members_Sub_Category__c</picklist>
+            <values>
+                <fullName>-</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Air Traffic Management</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Aircraft Maintenance%2FRepair%2FOverhaul</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Aircraft Manufacturer%2FSeller</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Aircraft Parts%2FAvionics%2FSystems%2FSafety Equipment</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Airline - Charter</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Airline - Scheduled Service</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Airport Ground Support Equipment</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Airport%2FAirport Management%2FAirport Terminal</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Alcohol or Tobacco Industry</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Animal Industry</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Auditing Services</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Automobile%2FEngine Industry</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Battery Industry</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Bookseller</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Cargo%2FLogistics Services%2FFreight Forwarder</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Chemical %26 Gas Industry</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Compliance%2FRegulatory%2FSafety%2FTesting Services</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Consultant%2FLaw Firm</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Consumer Goods Industry</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Customer Loyalty Program</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Defense%2FSecurity%2FWeapons%2FAmmunition</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Ecommerce System</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Educational Institution%2FLibrary</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Energy Industry</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Engineering%2FArchitectural%2FConstruction Services</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Entertainment%2FMuseums</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Environmental Services</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Financial Institution</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Flavouring %26 Fragrances</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Flight Operations Services</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Food Industry</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>General Sales Agent %28GSA%29</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Global Distribution System</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Government Agency%2FAviation Authority</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Ground Handling%2FFueling%2FGround Power%2FAirline Catering%2FFBO</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Hotels and Accomodations</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Human Resources</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>IATA</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Industrial Products</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Information Technology%2FTelecommunications%2FElectronics Industry</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Insurance Provider</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Jewelry%2FWatches</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Market Research and Development</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Masonry Products</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Medical Services%2FHealth%2FResearch%2FPharmaceuticals</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Military Law Enforcement Agencies</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Mining %26 Metals Industry</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Operations and Management Services</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Packaging%2FLabeling%2FTransport Containers</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Passenger Services</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Police and Law Enforcement Agencies</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Printing %26 Ink Industry</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Publication Re-seller</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Pyrotechnics%2FSpecial Effects Industry</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Real Estate</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Revenue Accounting Technology</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Sales and Marketing</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Sporting Goods</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Training in Aviation or Transport of Dangerous Goods</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Travel Agency and Tour Operators</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>United Nations%2FOther NGOs</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Waste Management%2FRemediation%2FTreatment%2FEnvironmental Services</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Wholesaler of stamps%2C coins%2C %26 paper money</fullName>
                 <default>false</default>
             </values>
         </picklistValues>
@@ -87122,6 +89589,68 @@ This field is kept up-to-date with the feedback of ITDI at least twice a year du
             </values>
             <values>
                 <fullName>Pax</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>PreviousStatus__c</picklist>
+            <values>
+                <fullName>Approved</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Cash basis%2Fno commission</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Cash basis%2Fwith commission</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Changes processed</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Listed</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>New application pending</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>No longer a customer</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Not accreditated</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Not in operation</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Terminated</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Under review</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Profit_Center__c</picklist>
+            <values>
+                <fullName>DBP003</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>DBP004</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>DBP005</fullName>
                 <default>false</default>
             </values>
         </picklistValues>
@@ -87220,35 +89749,35 @@ This field is kept up-to-date with the feedback of ITDI at least twice a year du
         <picklistValues>
             <picklist>Remittance_frequency__c</picklist>
             <values>
-                <fullName>4 times per month</fullName>
+                <fullName>B</fullName>
                 <default>false</default>
             </values>
             <values>
-                <fullName>Daily</fullName>
+                <fullName>D</fullName>
                 <default>false</default>
             </values>
             <values>
-                <fullName>Every 10 days</fullName>
+                <fullName>F</fullName>
                 <default>false</default>
             </values>
             <values>
-                <fullName>Every 3 days</fullName>
+                <fullName>M</fullName>
                 <default>false</default>
             </values>
             <values>
-                <fullName>Every 5 days</fullName>
+                <fullName>R</fullName>
                 <default>false</default>
             </values>
             <values>
-                <fullName>Fortnightly</fullName>
+                <fullName>S</fullName>
                 <default>false</default>
             </values>
             <values>
-                <fullName>Monthly</fullName>
+                <fullName>V</fullName>
                 <default>false</default>
             </values>
             <values>
-                <fullName>Weekly</fullName>
+                <fullName>W</fullName>
                 <default>false</default>
             </values>
         </picklistValues>
@@ -88189,31 +90718,15 @@ This field is kept up-to-date with the feedback of ITDI at least twice a year du
         <picklistValues>
             <picklist>Status__c</picklist>
             <values>
-                <fullName>Approved</fullName>
+                <fullName>Active</fullName>
                 <default>false</default>
             </values>
             <values>
-                <fullName>Cash basis%2Fno commission</fullName>
+                <fullName>In Progress</fullName>
                 <default>false</default>
             </values>
             <values>
-                <fullName>Changes processed</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>New application pending</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>No longer a customer</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Terminated</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Under review</fullName>
+                <fullName>Inactive</fullName>
                 <default>false</default>
             </values>
         </picklistValues>
@@ -88365,6 +90878,17 @@ This field is kept up-to-date with the feedback of ITDI at least twice a year du
             </values>
             <values>
                 <fullName>e-freight</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>TIP_Provider_Type__c</picklist>
+            <values>
+                <fullName>Closed Loop</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Open Loop</fullName>
                 <default>false</default>
             </values>
         </picklistValues>
@@ -89255,6 +91779,14 @@ IF(INCLUDES(Remittance_frequency__c , &quot;D&quot;),1,0) &gt; 2 )
         <errorMessage>You cannot modify non IATA members name</errorMessage>
     </validationRules>
     <validationRules>
+        <fullName>No_tabs_in_VAT_Number</fullName>
+        <active>true</active>
+        <description>Tab character is forbidden in VAT_Number__c field</description>
+        <errorConditionFormula>CONTAINS(VAT_Number__c ,&quot;	&quot;)</errorConditionFormula>
+        <errorDisplayField>VAT_Number__c</errorDisplayField>
+        <errorMessage>Please remove tabs from VAT number.</errorMessage>
+    </validationRules>
+    <validationRules>
         <fullName>Parent_Acc_Airline_Designator_Required</fullName>
         <active>false</active>
         <description>If Industry = Airline, then Field/Head Office must be filled</description>
@@ -89303,6 +91835,33 @@ OR(ISPICKVAL(Industry, &apos;Airline&apos;),ISPICKVAL(Industry, &apos;Travel Age
 ,ISPICKVAL(Industry, &apos;Cargo Agent&apos;)), isblank(text(Reason_for_creation__c )))</errorConditionFormula>
         <errorDisplayField>Reason_for_creation__c</errorDisplayField>
         <errorMessage>Please select the reason for creation.</errorMessage>
+    </validationRules>
+    <validationRules>
+        <fullName>TIP_IATA_CODE_LENGTH</fullName>
+        <active>true</active>
+        <description>For Providers the IATA code needs to have 4 characters</description>
+        <errorConditionFormula>$RecordType.DeveloperName=&apos;TIP_Payment_Provider&apos; &amp;&amp; LEN(IATACode__c)!=4</errorConditionFormula>
+        <errorDisplayField>IATACode__c</errorDisplayField>
+        <errorMessage>Invalid Provider Code(IATA Code). The IATA Code must contain exactly 4 characters</errorMessage>
+    </validationRules>
+    <validationRules>
+        <fullName>TIP_Payment_Provider_expiration_dates</fullName>
+        <active>true</active>
+        <errorConditionFormula>AND(RecordType.DeveloperName=&quot;TIP_Payment_Provider&quot;,  Accreditation_date__c &gt;  Expiry_Date__c )</errorConditionFormula>
+        <errorMessage>Expiry Date needs to be after Accreditation Date</errorMessage>
+    </validationRules>
+    <validationRules>
+        <fullName>Validate_Providers_Accreditation_Date</fullName>
+        <active>true</active>
+        <description>Prevents active Payment Providers to have the Accreditation date in the future</description>
+        <errorConditionFormula>(RecordType.DeveloperName = &apos;TIP_Payment_Provider&apos; 
+|| (RecordType.DeveloperName= &apos;Standard_Account&apos; &amp;&amp;
+    ISPICKVAL(Category__c , &apos;Payment Provider&apos;)
+   )
+)
+&amp;&amp;  ISPICKVAL(Status__c, &apos;Active&apos;)
+&amp;&amp; Accreditation_date__c &gt; today()</errorConditionFormula>
+        <errorMessage>Can&apos;t have active Payment Providers with the accreditation date in the future</errorMessage>
     </validationRules>
     <validationRules>
         <fullName>Virtual_Branch_Iso_Country</fullName>

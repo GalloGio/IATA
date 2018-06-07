@@ -11,10 +11,9 @@ private class Comm_User_HelperTest {
         insert issc;
         
         String defaultProfileId = [SELECT Id FROM Profile WHERE Name = 'ISS Portal (Partner)'].Id;
-        ISSP_CS__c profileCS = new ISSP_CS__c();
-        profileCS.Name = 'ISS_Portal';
-        profileCS.Value__c = defaultProfileId;
-        insert profileCS;
+        ISSP_CS__c profileCS = new ISSP_CS__c(Name = 'ISS_Portal', Value__c = defaultProfileId);
+        ISSP_CS__c identityPortalCS = new ISSP_CS__c(Name = 'IdentityPortal', Value__c = 'customer-portal-iata.force.com');
+        insert new List<ISSP_CS__c>{profileCS, identityPortalCS};
 
         ID standardRT =Schema.SObjectType.Account.RecordTypeInfosByName.get('Standard Account').RecordTypeId ;
         ID Branch  =Schema.SObjectType.Account.RecordTypeInfosByName.get('Airline Branch').RecordTypeId ;

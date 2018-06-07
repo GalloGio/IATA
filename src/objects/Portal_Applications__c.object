@@ -895,7 +895,8 @@ OR(
     ), 
     AND(Name = &quot;Payment Link&quot;, NOT($User.Customer_type__c=&quot;CNS Agency&quot;)), 
     AND(Name = &quot;Paypal&quot;,$User.CNS_Account_or_Agency__c),
-    AND(Name = &quot;Resource Center&quot;, NOT($User.Customer_type__c=&quot;CNS Agency&quot;))
+    AND(Name = &quot;Resource Center&quot;, NOT($User.Customer_type__c=&quot;CNS Agency&quot;)),
+    AND(Name = &quot;Transparency in Payments (TIP)&quot;,($User.Is_TIP_User__c))
 )
 )</formula>
         <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>

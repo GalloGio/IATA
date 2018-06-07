@@ -241,7 +241,13 @@ public class ANG_AccountTriggerHandler {
 			}
 		}
 
-		if(!mailTargets.isEmpty() && !emailTemplates.isEmpty()) System.enqueueJob(new ANG_RHCHelper.RiskAlertMailService(emails, null));
+		if(!mailTargets.isEmpty() && !emailTemplates.isEmpty()) {
+			if(!System.isBatch()) {
+				System.enqueueJob(new ANG_RHCHelper.RiskAlertMailService(emails, null));
+			} else {
+				ANG_RHCHelper.sendMailUpdate(emails);
+			}
+		}
 
 		List<Notification__c> notifications = new List<Notification__c>();
 		for(Notification__c nt : ISSP_CreateNotification.createnotification(notificationTargets, false)){
