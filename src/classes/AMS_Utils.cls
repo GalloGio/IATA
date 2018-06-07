@@ -1,14 +1,30 @@
 public without sharing class AMS_Utils {
 
+    public static Map<String,IATA_ISO_Country__c> mapCountries{
+
+        get{
+
+            if(mapCountries == null)
+                mapCountries = mapCountries = new map<String,IATA_ISO_Country__c>([SELECT Id, ISO_Code__c FROM IATA_ISO_Country__c]);
+
+            return mapCountries;
+
+        }
+
+    }
+
     public static Boolean runningContactInsertUpdateFromOSCAR = false;
 
     //public static Boolean isNewGenProcess = false;
+
+    public static List<Profile> profiles;
 
     public static Set<Id> AMSPROFILES {
         get {
             Set<Id> toReturn = new Set<Id>();
 
-            List<Profile> profiles = [select ID from profile where Name IN ('FDS Hub Analyst ARM', 'FDS – Agency Management - Supervisor (Approver)', 'IDFS Americas - Hub CS Management', 'IDFS Americas - Hub Staff')];
+            if(profiles == null)
+                profiles = [select ID from profile where Name IN ('FDS Hub Analyst ARM', 'FDS – Agency Management - Supervisor (Approver)', 'IDFS Americas - Hub CS Management', 'IDFS Americas - Hub Staff')];
 
             for (Profile p : profiles)
                 toReturn.add(p.Id);
@@ -2741,6 +2757,15 @@ public static String fetchTypeOfCustomer (String locationType , String category)
         }
 
         return new ANG_ISSP_AfpWrapper(con, authorizations, services, acc, isSearch);
+    }
+
+    public static List<Account> fetchAgentDetails(String iataCode) {
+        return [Select Id, BillingStreet, BillingCity, BillingState, BillingPostalCode,
+                       BillingCountry, Name
+                  From Account
+                 Where RecordType.DeveloperName = 'IATA_Agency'
+                   And Sector__c = :AMS_Utils.SECTOR_PASSENGER  // agentSector
+                   And IATACode__c Like :iataCode];
     }
 
 }

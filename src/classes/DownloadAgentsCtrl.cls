@@ -49,18 +49,14 @@ public with sharing class DownloadAgentsCtrl {
             string[] aType = String.escapeSingleQuotes(agentType).split('-', 12);
                 String b = '';
             
-                if (aType.size()>1)
-                        b= '(';
+                if (aType.size()>1) b= '(';
                         
                 soql += ' and'+b+' Account.Type LIKE \''+aType[0]+'%\'';
                 
                  for (integer i = 1 ; i < aType.size(); i++)
                  {
-                        if (!aType[i].equals(''))
-                                soql += ' or Account.Type LIKE \''+aType[i]+'%\'';
-                                
-                        if (i == aType.size()-1)
-                                soql += ')';
+                        if (!aType[i].equals('')) soql += ' or Account.Type LIKE \''+aType[i]+'%\'';
+                        if (i == aType.size()-1) soql += ')';
                  }
             
             }
@@ -69,35 +65,24 @@ public with sharing class DownloadAgentsCtrl {
                 string[] words = String.escapeSingleQuotes(agentStatus).split('-', 12);
                 String b = '';
             
-                if (words.size()>1)
-                        b= '(';
+                if (words.size()>1) b= '(';
                         
                 soql += ' and'+b+' Account.Status__c LIKE \''+words[0]+'%\'';
                 
                  for (integer i = 1 ; i < words.size(); i++)
                  {
-                        if (!words[i].equals(''))
-                                soql += ' or Account.Status__c LIKE \''+words[i]+'%\'';
+                        if (!words[i].equals('')) soql += ' or Account.Status__c LIKE \''+words[i]+'%\'';
                                 
-                        if (i == words.size()-1)
-                                soql += ')';
+                        if (i == words.size()-1) soql += ')';
                  }
             } 
-            if (email.equals('1')){
-                soql += ' and Email != null';
-                //isSendEmailIsDisabled = false;
-            }
-            else if (email.equals('2')){
-                soql += ' and Email = null';
-                //isSendEmailIsDisabled = true;
-            }//else isSendEmailIsDisabled = true;
+            if (email.equals('1')){ soql += ' and Email != null'; }
+            else if (email.equals('2')){ soql += ' and Email = null';}
             
             //if (!yearend.equals('') && !yearend.equals('--All--'))   //phase 1 release 2
             //    soql += ' and Account.Financial_Year_End__c LIKE \''+String.escapeSingleQuotes(yearend)+'%\''; 
-            if (yearend != '' && yearend.equals('--All--'))
-                soql += ' and Account.Fin_statements_submission_deadline__c != \'\'';
-            else if (yearend != '')
-                soql += ' and Account.Fin_statements_submission_deadline__c LIKE \''+String.escapeSingleQuotes(yearend)+'%\'';
+            if (yearend != '' && yearend.equals('--All--')) soql += ' and Account.Fin_statements_submission_deadline__c != \'\'';
+            else if (yearend != '') soql += ' and Account.Fin_statements_submission_deadline__c LIKE \''+String.escapeSingleQuotes(yearend)+'%\'';
         
              // Location Type AO/HO/BR filter     
              soql += ' and (Account.Location_Type__c LIKE \'AO%\' OR Account.Location_Type__c LIKE \'HO%\' OR Account.Location_Type__c LIKE \'BR%\' OR Account.Location_Type__c LIKE \'HE%\' OR Account.Location_Type__c LIKE \'AE%\')'; 
@@ -167,17 +152,14 @@ public with sharing class DownloadAgentsCtrl {
             string[] aType = String.escapeSingleQuotes(agentType).split('-', 12);
             String b = '';
             
-            if (aType.size()>1)
-                b= '(';
+            if (aType.size()>1) b= '(';
                         
             soql += ' and'+b+' c.Contact.Account.Type LIKE \'' + aType[0] + '%\'';
                 
             for (integer i = 1 ; i < aType.size(); i++) {
-                if (!aType[i].equals(''))
-                    soql += ' or c.Contact.Account.Type LIKE \'' + aType[i] + '%\'';
+                if (!aType[i].equals('')) soql += ' or c.Contact.Account.Type LIKE \'' + aType[i] + '%\'';
                                 
-                if (i == aType.size()-1)
-                    soql += ')';
+                if (i == aType.size()-1) soql += ')';
             }
         }
 
@@ -212,9 +194,7 @@ public with sharing class DownloadAgentsCtrl {
         soql += ' and (c.Contact.Account.Location_Type__c LIKE \'AO%\' OR c.Contact.Account.Location_Type__c LIKE \'HO%\' OR c.Contact.Account.Location_Type__c LIKE \'BR%\' OR c.Contact.Account.Location_Type__c LIKE \'HE%\'  OR c.Contact.Account.Location_Type__c LIKE \'AE%\')';
         casesQuery = soql;
 
-        for (Case c : Database.query(soql)) {
-            listAgentIdWithClosedCase.add(c.Contact.Account.Id);
-        }
+        for (Case c : Database.query(soql)) { listAgentIdWithClosedCase.add(c.Contact.Account.Id);}
     }
     
   public Boolean agentHasClosedCases(Id agentId) {

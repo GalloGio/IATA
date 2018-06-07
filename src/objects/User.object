@@ -920,6 +920,15 @@ If( Contact.Account.ICH_Member__c = true,&quot;ICH&quot;, &quot;&quot;)</formula
         <type>Checkbox</type>
     </fields>
     <fields>
+        <fullName>Is_TIP_User__c</fullName>
+        <externalId>false</externalId>
+        <formula>ISPICKVAL(Contact.Account.Category__c, &apos;Payment Provider&apos;)
+&amp;&amp; ISPICKVAL(Contact.Account.Sector__c , &apos;Financial Institution&apos;)</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>Is TIP User</label>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
         <fullName>LOB_Expertise__c</fullName>
         <externalId>false</externalId>
         <label>LOB Expertise</label>
@@ -3113,6 +3122,30 @@ Currently (26/10/15) used to identify which user haven&apos;t complete the suppo
             <value>P</value>
         </filters>
         <label>Partner community users</label>
+        <language>en_US</language>
+    </listViews>
+    <listViews>
+        <fullName>Read_Only_Dev</fullName>
+        <columns>FULL_NAME</columns>
+        <columns>MARKETING_USER</columns>
+        <columns>CORE.USERS.DIVISION</columns>
+        <columns>CORE.PROFILE.NAME</columns>
+        <columns>CORE.USER_ROLE.NAME</columns>
+        <columns>CORE.USERS.ACTIVE</columns>
+        <columns>CORE.USERS.LAST_LOGIN</columns>
+        <columns>License_Cost_Center__c</columns>
+        <filterScope>Everything</filterScope>
+        <filters>
+            <field>CORE.PROFILE.NAME</field>
+            <operation>equals</operation>
+            <value>Dev - Read Only</value>
+        </filters>
+        <filters>
+            <field>CORE.USERS.ACTIVE</field>
+            <operation>equals</operation>
+            <value>1</value>
+        </filters>
+        <label>Read Only Dev</label>
         <language>en_US</language>
     </listViews>
     <listViews>

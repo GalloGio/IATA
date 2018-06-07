@@ -2359,6 +2359,11 @@ SIS Charge Code Type.</description>
                     <label>IATA Rates of Exchange</label>
                 </value>
                 <value>
+                    <fullName>Infectious Substances Shipping Guidelines</fullName>
+                    <default>false</default>
+                    <label>Infectious Substances Shipping Guidelines</label>
+                </value>
+                <value>
                     <fullName>Integrated Risk Management Guidance</fullName>
                     <default>false</default>
                     <label>Integrated Risk Management Guidance</label>
@@ -13680,6 +13685,10 @@ The product will only appear on the Online Store when the date entered in this f
             </values>
             <values>
                 <fullName>IATA Rates of Exchange</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Infectious Substances Shipping Guidelines</fullName>
                 <default>false</default>
             </values>
             <values>

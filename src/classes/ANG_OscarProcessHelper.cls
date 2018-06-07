@@ -418,6 +418,9 @@ global class ANG_OscarProcessHelper {
 
             if(AMS_Utils.oscarPCICompliantMigrationProcesses.contains(oscar.Process__c)){
                 acc.Is_PCI_compliant__c = oscar.Is_PCI_compliant__c;
+			
+                if(acc.Is_PCI_compliant__c == 'Corporate Card')
+					acc.ANG_PCI_compliance_expiry_date__c = Date.newInstance(2099, 12, 31);
             }
 
             if(AMS_Utils.oscarNewGenNewAppProcesses.contains(oscar.Process__c) && oscar.Is_PCI_compliant__c == 'Yes'){
@@ -767,7 +770,7 @@ global class ANG_OscarProcessHelper {
 			changeCode.name = changeCodeConfig.Name;
 			changeCode.reasonCode = changeCodeConfig.Reason_Code__c;
 			String memoTextTemp = changeCodeConfig.Bulletin_Memo_Text__c;
-
+			
 			System.debug('theOscar.SIDRA_lite_reason__c is ' + theOscar.SIDRA_lite_reason__c);
 
 			if(theOscar.SIDRA_lite_reason__c == null)
@@ -1074,6 +1077,29 @@ global class ANG_OscarProcessHelper {
 	        newAccr.SAAM_Case__c = newCaseOscar.Id;
 	        insert newAccr;
 
+            // need to create the accreditation contacts as well..
+			
+            			fieldList.clear();
+			schemaFieldMap = AMS_Accreditation_Contact__c.sObjectType.getDescribe().fields.getMap();
+
+			for (String field : schemaFieldMap.keySet()){
+					fieldList.add(field);
+			}
+
+			List<AMS_Accreditation_Contact__c> contactsList = Database.query('SELECT '+String.join(fieldList, ', ')+' FROM AMS_Accreditation_Contact__c WHERE AMS_Pax_Accreditation_Form__c = :accreditationId');
+
+			List<AMS_Accreditation_Contact__c> newAccreditationContactList = new List<AMS_Accreditation_Contact__c>();
+
+			for(AMS_Accreditation_Contact__c ac: contactsList){
+
+				AMS_Accreditation_Contact__c newAc = ac.clone(false, true, false, false);
+				newAc.AMS_Pax_Accreditation_Form__c = newAccr.Id;
+				newAccreditationContactList.add(newAc);
+            }
+
+			if(!newAccreditationContactList.isEmpty())
+				insert newAccreditationContactList;
+            
 			fieldsOfObject = new Map<String,Object>();
 
 	        fieldsOfObject.put('Process__c',AMS_Utils.NGCHANGES);
