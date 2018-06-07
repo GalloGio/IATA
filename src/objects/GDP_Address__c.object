@@ -348,22 +348,22 @@ SUBSTITUTE(Address_Line_3__c,
 The source of information is taken from IATA_ISO_State.
 In case the dash (-) does not exist,  e.g. CA60, it will only display the Country ISO Code.</description>
         <externalId>false</externalId>
-        <formula>IF(
-OR(IATA_ISO_Country__r.ISO_Code__c=&apos;US&apos;,
-IATA_ISO_Country__r.ISO_Code__c=&apos;CA&apos;,
-IATA_ISO_Country__r.ISO_Code__c=&apos;AU&apos;,
-IATA_ISO_Country__r.ISO_Code__c=&apos;MX&apos;,
-IATA_ISO_Country__r.ISO_Code__c=&apos;BR&apos;,
-IATA_ISO_Country__r.ISO_Code__c=&apos;AE&apos;,
-IATA_ISO_Country__r.ISO_Code__c=&apos;UP&apos;,
-IATA_ISO_Country__r.ISO_Code__c=&apos;VE&apos;),
+        <formula>IF( 
+OR(IATA_ISO_Country__r.ISO_Code__c=&apos;US&apos;, 
+IATA_ISO_Country__r.ISO_Code__c=&apos;CA&apos;, 
+IATA_ISO_Country__r.ISO_Code__c=&apos;AU&apos;, 
+IATA_ISO_Country__r.ISO_Code__c=&apos;MX&apos;, 
+IATA_ISO_Country__r.ISO_Code__c=&apos;BR&apos;, 
+IATA_ISO_Country__r.ISO_Code__c=&apos;AE&apos;, 
+IATA_ISO_Country__r.ISO_Code__c=&apos;UP&apos;, 
+IATA_ISO_Country__r.ISO_Code__c=&apos;VE&apos;), 
 
-IF( CONTAINS(IATA_ISO_State__r.ISO_Code__c, &apos;-&apos;)
-, IF(LEN(IATA_ISO_State__r.ISO_Code__c) = 5,RIGHT(IATA_ISO_State__r.ISO_Code__c, 2), RIGHT(IATA_ISO_State__r.ISO_Code__c, 3))
-, IATA_ISO_Country__r.ISO_Code__c
-),
+IF( CONTAINS(IATA_ISO_State__r.ISO_Code__c, &apos;-&apos;) 
+, RIGHT(IATA_ISO_State__r.ISO_Code__c, LEN(IATA_ISO_State__r.ISO_Code__c) - FIND(&apos;-&apos;, IATA_ISO_State__r.ISO_Code__c)) 
+, IATA_ISO_Country__r.ISO_Code__c 
+), 
 
-NULL
+NULL 
 )</formula>
         <inlineHelpText>State Code without the preceding country code. 
 The source of information is taken from IATA_ISO_State.</inlineHelpText>
