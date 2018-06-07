@@ -676,7 +676,7 @@ global class SurveyBatch implements Database.Batchable<sObject>, Database.Statef
          c.Origin != 'Email' && c.Origin != 'Fax' && c.Origin != 'Funds Management' &&
          c.Origin != 'Internal Case' && c.Origin != 'IATA internal user' && c.Origin != 'Letter' && c.Origin != 'Monthly Report' &&
          c.Origin != 'myIATA' && c.Origin != 'New ISS Deployment' && c.Origin != 'OLS' &&
-         c.Origin != 'Other' && c.Origin != 'Walk-in' && c.Origin != 'Web SAF' &&
+         c.Origin != 'Other' && c.Origin != 'Walk-in' && c.Origin != 'Web SAF' && c.Origin != 'E&F Client – Email to Case' &&
          !c.Phone_Redirected_to_Web__c &&
          c.Case_Group__c == 'Query' &&
          RoleName != null)
