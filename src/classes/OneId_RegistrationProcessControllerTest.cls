@@ -375,5 +375,54 @@ private class OneId_RegistrationProcessControllerTest {
         Test.stopTest();
 
     }
+    
+    @isTest
+     public static void testRegistrationTIP() {
+         
+         // Prepare test data
+
+         ISSP_CS__c setting = new ISSP_CS__c();
+         setting.Name = 'DefaultNewAccountOwnerId';
+         setting.Value__c = UserInfo.getUserId();
+         insert setting; 
+
+         ISSP_CS__c setting2 = new ISSP_CS__c();
+         setting2.Name = 'IdentityPortal';
+         setting2.Value__c = 'customer-portal-iata.force.com';
+         insert setting2; 
+
+         Id profileId = [ SELECT Id FROM Profile WHERE Name = 'ISS Portal Agency User (Partner)' ][0].Id;
+
+         ISSP_CS__c setting3 = new ISSP_CS__c();
+         setting3.Name = 'ISS_Portal_Agency_User';
+         setting3.Value__c = profileId;
+         insert setting3; 
+
+         IATA_ISO_Country__c country = new IATA_ISO_Country__c (Name='Portugal',ISO_Code__c='Pt')  ;
+         insert country ;
+         
+         Portal_Applications__c pa = new Portal_Applications__c(name = TIP_Utils.PORTAL_SERVICE_NAME_TIP);
+         insert pa;
+         
+         ISSP_Portal_Service_Ids__c ipsi= new ISSP_Portal_Service_Ids__c(
+             TIP_Portal_Service_Id__c=pa.id
+         );
+             
+             
+         String serviceName = 'ISSP';        
+    
+         Test.startTest();
+          
+             PortalType portalType = PortalType.PowerPartner;
+             User userWithRole = null;
+             Boolean doInsert = true;
+             Account a = new Account(name = 'TEST ACCOUNT',Sector__c=TIP_Utils.ACCOUNT_SECTOR_FINANCIAL_INSTITUTION, Category__c=TIP_Utils.ACCOUNT_CATEGORY_PAYMENT_PROVIDER,IATA_ISO_Country__c = country.Id,BillingCountry='Portugal',IATA_ISO_Shipping_Country__c=country.Id);
+         
+             Contact c = new Contact(firstname='firstname', lastname = 'lastname',Salutation = 'sig', email='tip@lls.com');
+
+             OneId_RegistrationProcessController.registration(a,c,serviceName);
+           
+         Test.stopTest();
+     }
 
 }
