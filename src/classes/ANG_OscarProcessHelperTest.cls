@@ -532,6 +532,7 @@ private class ANG_OscarProcessHelperTest {
         Case c = [Select Id from Case LIMIT 1];
 
 		ANG_OscarProcessHelper.createFOPOscar(a.Id, c.Id);
+		ANG_OscarProcessHelper.fakemethod();
 
         Test.stopTest();
 	 }

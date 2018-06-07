@@ -198,11 +198,11 @@
         <fullName>Check_if_product_is_Active</fullName>
         <active>true</active>
         <errorConditionFormula>AND(
-   NOT(ISPICKVAL(TIP_Product__r.PP_status__c, &quot;Active&quot;)),
+   NOT(ISPICKVAL(TIP_Product__r.PP_Status__c, &quot;Active&quot;)),
    ISPICKVAL(TIP_Status__c, &quot;Active&quot;)
 )</errorConditionFormula>
         <errorMessage>Payment Product Country Config cannot be activated if related Product is not active</errorMessage>
-</validationRules>
+    </validationRules>
     <validationRules>
         <fullName>Effective_from_before_effective_To</fullName>
         <active>true</active>
