@@ -575,7 +575,7 @@ global class ANG_OscarProcessHelper {
 
 			if(!accountIdsChanged.isEmpty()){
 
-				List<Account> accountToCreateCC = [Select Id, Status__c from Account where Id in :accountIdsChanged];
+				List<Account> accountToCreateCC = [Select Id, Status__c, CNS_agency__c from Account where Id in :accountIdsChanged];
 
 				String changeCodeName= null;
 				
@@ -648,7 +648,7 @@ global class ANG_OscarProcessHelper {
 
 			if(!accountIdsChanged.isEmpty()){
 				
-				List<Account> accountToCreateCC = [Select Id, Status__c from Account where Id in :accountIdsChanged];
+				List<Account> accountToCreateCC = [Select Id, Status__c, CNS_agency__c from Account where Id in :accountIdsChanged];
 
 				String changeCodeName= null;
 				
