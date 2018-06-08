@@ -1,0 +1,4 @@
+<aura:event type="COMPONENT" description="Event when 1 step is completed" >
+	<aura:attribute name="stepNumber" type="Integer"/>
+	<aura:attribute name="isComplete" type="boolean"/>
+</aura:event>

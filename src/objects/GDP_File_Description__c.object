@@ -1009,6 +1009,47 @@
         <language>en_US</language>
     </listViews>
     <listViews>
+        <fullName>X13_GSS_TXT_Changes_Non_Members</fullName>
+        <columns>NAME</columns>
+        <columns>Is_Reference__c</columns>
+        <columns>Product_Type__c</columns>
+        <columns>Reference__c</columns>
+        <columns>Class__c</columns>
+        <columns>File_Format__c</columns>
+        <columns>Frequency__c</columns>
+        <columns>Magnitude__c</columns>
+        <columns>Geo_Coverage_Definition__c</columns>
+        <columns>Order_By__c</columns>
+        <filterScope>Everything</filterScope>
+        <filters>
+            <field>Is_Reference__c</field>
+            <operation>equals</operation>
+            <value>0</value>
+        </filters>
+        <filters>
+            <field>File_Format__c</field>
+            <operation>equals</operation>
+            <value>TXT</value>
+        </filters>
+        <filters>
+            <field>Reference__c</field>
+            <operation>equals</operation>
+            <value>Reference - GSS Non Member</value>
+        </filters>
+        <filters>
+            <field>Product_Type__c</field>
+            <operation>equals</operation>
+            <value>GSS</value>
+        </filters>
+        <filters>
+            <field>Magnitude__c</field>
+            <operation>equals</operation>
+            <value>Delta</value>
+        </filters>
+        <label>13 - GSS | TXT | Changes | Non-Members</label>
+        <language>en_US</language>
+    </listViews>
+    <listViews>
         <fullName>X20_GSS_Member_XLSX_Masters</fullName>
         <columns>NAME</columns>
         <columns>Is_Reference__c</columns>
@@ -1129,6 +1170,47 @@
             <value>Delta</value>
         </filters>
         <label>22 - GSS | XLS | Changes | Members</label>
+        <language>en_US</language>
+    </listViews>
+    <listViews>
+        <fullName>X23_GSS_XLS_Changes_Non_Members</fullName>
+        <columns>NAME</columns>
+        <columns>Is_Reference__c</columns>
+        <columns>Product_Type__c</columns>
+        <columns>Reference__c</columns>
+        <columns>Class__c</columns>
+        <columns>File_Format__c</columns>
+        <columns>Frequency__c</columns>
+        <columns>Magnitude__c</columns>
+        <columns>Geo_Coverage_Definition__c</columns>
+        <columns>Order_By__c</columns>
+        <filterScope>Everything</filterScope>
+        <filters>
+            <field>Is_Reference__c</field>
+            <operation>equals</operation>
+            <value>0</value>
+        </filters>
+        <filters>
+            <field>File_Format__c</field>
+            <operation>equals</operation>
+            <value>XLSX</value>
+        </filters>
+        <filters>
+            <field>Reference__c</field>
+            <operation>equals</operation>
+            <value>Reference - GSS Non Member</value>
+        </filters>
+        <filters>
+            <field>Product_Type__c</field>
+            <operation>equals</operation>
+            <value>GSS</value>
+        </filters>
+        <filters>
+            <field>Magnitude__c</field>
+            <operation>equals</operation>
+            <value>Delta</value>
+        </filters>
+        <label>23 - GSS | XLS | Changes | Non-Members</label>
         <language>en_US</language>
     </listViews>
     <listViews>
@@ -1254,48 +1336,6 @@
             <value>Delta</value>
         </filters>
         <label>70 - GSS | XML | Changes | ALL</label>
-        <language>en_US</language>
-    </listViews>
-    <listViews>
-        <fullName>X71_GSS_XML_Masters_ALL</fullName>
-        <columns>NAME</columns>
-        <columns>Is_Reference__c</columns>
-        <columns>Product_Type__c</columns>
-        <columns>Reference__c</columns>
-        <columns>Class__c</columns>
-        <columns>File_Format__c</columns>
-        <columns>Frequency__c</columns>
-        <columns>Magnitude__c</columns>
-        <columns>Geo_Coverage_Definition__c</columns>
-        <columns>Order_By__c</columns>
-        <columns>Atom__c</columns>
-        <filterScope>Everything</filterScope>
-        <filters>
-            <field>Is_Reference__c</field>
-            <operation>equals</operation>
-            <value>0</value>
-        </filters>
-        <filters>
-            <field>File_Format__c</field>
-            <operation>equals</operation>
-            <value>XML</value>
-        </filters>
-        <filters>
-            <field>Reference__c</field>
-            <operation>contains</operation>
-            <value>Reference - GSS</value>
-        </filters>
-        <filters>
-            <field>Product_Type__c</field>
-            <operation>equals</operation>
-            <value>GSS</value>
-        </filters>
-        <filters>
-            <field>Magnitude__c</field>
-            <operation>equals</operation>
-            <value>Master</value>
-        </filters>
-        <label>71 - GSS | XML | Masters | ALL</label>
         <language>en_US</language>
     </listViews>
     <listViews>
