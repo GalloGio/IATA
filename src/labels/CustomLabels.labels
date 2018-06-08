@@ -52,6 +52,20 @@
         <value>Please note that one of the contacts already exists into the account. Use &quot;Choose existing contact&quot; option from Manage owners/contacts section (OSCAR detail) in order to link the contact.</value>
     </labels>
     <labels>
+        <fullName>AMS_File_UpdatedDate</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>AMS_File_UpdatedDate</shortDescription>
+        <value>Updated Date</value>
+    </labels>
+    <labels>
+        <fullName>AMS_File_UpdatedBy</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>AMS_File_UpdatedBy</shortDescription>
+        <value>Updated By</value>
+    </labels>
+    <labels>
         <fullName>AMS_New_Change_Code_Notification</fullName>
         <language>en_US</language>
         <protected>false</protected>
