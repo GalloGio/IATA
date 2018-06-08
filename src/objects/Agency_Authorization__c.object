@@ -181,15 +181,24 @@ IF(ISBLANK(Email_Used_for_BSP_Creation__c),0,100),2)</formula>
         <unique>false</unique>
     </fields>
     <fields>
-        <fullName>Source__c</fullName>
+        <fullName>RestrictedByProcess__c</fullName>
+        <defaultValue>false</defaultValue>
+        <description>If this Agency Authorization was restricted or restored by an Oscar Process</description>
         <externalId>false</externalId>
-        <label>Source</label>
-        <length>255</length>
-        <required>false</required>
+        <label>RestrictedByProcess</label>
         <trackHistory>false</trackHistory>
         <trackTrending>false</trackTrending>
-        <type>Text</type>
-        <unique>false</unique>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
+        <fullName>RestrictedByRHCAlert__c</fullName>
+        <defaultValue>false</defaultValue>
+        <description>If this Agency Authorization was restricted or restored by an RHC Alert</description>
+        <externalId>false</externalId>
+        <label>RestrictedByRHCAlert</label>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Checkbox</type>
     </fields>
     <fields>
         <fullName>Status__c</fullName>

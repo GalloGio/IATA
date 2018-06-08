@@ -93,6 +93,31 @@ private class ANG_RHCAlertTriggerHandler_test {
 		att.ANG_PortalNotificationTemplate__c = [SELECT Id, Name FROM Notification_template__c LIMIT 1].Name;
 		att.RecordTypeId = ANG_RHCHelper.RECTYPE_RHCATTRIBUTE;
 		insert att;
+
+
+		
+		List<AMS_ChangeCodes__c> changeCodeList = new List<AMS_ChangeCodes__c>{
+			new AMS_ChangeCodes__c(
+				Name = 'FOP', Change_Code__c = 'FOP', Integration_RecId__c = 'C',Bulletin_Memo_Text__c = 'Agent has complied to Agency Rules. Card payment methods are reinstated.'
+			),
+			new AMS_ChangeCodes__c(
+				Name = 'PCA', Change_Code__c = 'PCA', Integration_RecId__c = 'C',Bulletin_Memo_Text__c = 'Agent has complied to Agency Rules. Cash and Card payment methods are reinstated.'
+			),
+			new AMS_ChangeCodes__c(
+				Name = 'PCR', Change_Code__c = 'PCR', Integration_RecId__c = 'C',Bulletin_Memo_Text__c = 'Agent has complied to Agency Rules. Cash payment methods are reinstated.'
+			),
+			new AMS_ChangeCodes__c(
+				Name = 'CCA', Change_Code__c = 'CCA', Integration_RecId__c = 'C',Bulletin_Memo_Text__c = 'Agent is restricted from using Card form of payment method due to <SIDRA Lite Reason>.'
+			),
+			new AMS_ChangeCodes__c(
+				Name = 'CCR', Change_Code__c = 'CCR', Integration_RecId__c = 'C',Bulletin_Memo_Text__c = 'Agent is restricted from using Cash and Card payment methods due to <SIDRA Lite Reason>.'
+			),
+			new AMS_ChangeCodes__c(
+				Name = 'FPR', Change_Code__c = 'FPR', Integration_RecId__c = 'C',Bulletin_Memo_Text__c = 'Agent is restricted from using Cash form of payment method due to <SIDRA Lite Reason>.'
+			)
+		};
+
+		insert changeCodeList;
 	}
 
 	private static testmethod voId test_sucess_legacy(){
@@ -185,6 +210,7 @@ private class ANG_RHCAlertTriggerHandler_test {
 		Test.stopTest();
 	}
 
+/*
 	private static testmethod voId testRestrictFOPonRiskAlertCreation(){
 
 		Test.startTest();
@@ -274,9 +300,9 @@ private class ANG_RHCAlertTriggerHandler_test {
 
 		ID FormOfPaymentRT = AMS_Utils.getId('Agency_Authorization__c','FormOfPayment');
 
-		authorizations.add(new Agency_Authorization__c(Account__c = rhcInfo.ANG_AccountId__c, ANG_FormOfPayment_ID__c = 'CC', Status__c = 'Non-Active', RecordTypeId = FormOfPaymentRT, Source__c = 'RTS Alert'));
-		authorizations.add(new Agency_Authorization__c(Account__c = rhcInfo.ANG_AccountId__c, ANG_FormOfPayment_ID__c = 'CA', Status__c = 'Non-Active', RecordTypeId = FormOfPaymentRT, Source__c = 'RTS Alert'));
-		authorizations.add(new Agency_Authorization__c(Account__c = rhcInfo.ANG_AccountId__c, ANG_FormOfPayment_ID__c = 'EP', Status__c = 'Non-Active', RecordTypeId = FormOfPaymentRT, Source__c = 'RTS Alert'));
+		authorizations.add(new Agency_Authorization__c(Account__c = rhcInfo.ANG_AccountId__c, ANG_FormOfPayment_ID__c = 'CC', Status__c = 'Non-Active', RecordTypeId = FormOfPaymentRT, Source__c = 'RHC Alert'));
+		authorizations.add(new Agency_Authorization__c(Account__c = rhcInfo.ANG_AccountId__c, ANG_FormOfPayment_ID__c = 'CA', Status__c = 'Non-Active', RecordTypeId = FormOfPaymentRT, Source__c = 'RHC Alert'));
+		authorizations.add(new Agency_Authorization__c(Account__c = rhcInfo.ANG_AccountId__c, ANG_FormOfPayment_ID__c = 'EP', Status__c = 'Non-Active', RecordTypeId = FormOfPaymentRT, Source__c = 'RHC Alert'));
 
 		insert authorizations;
 
@@ -330,9 +356,9 @@ private class ANG_RHCAlertTriggerHandler_test {
 
 		ID FormOfPaymentRT = AMS_Utils.getId('Agency_Authorization__c','FormOfPayment');
 
-		authorizations.add(new Agency_Authorization__c(Account__c = rhcInfo.ANG_AccountId__c, ANG_FormOfPayment_ID__c = 'CC', Status__c = 'Non-Active', RecordTypeId = FormOfPaymentRT, Source__c = 'RTS Alert'));
-		authorizations.add(new Agency_Authorization__c(Account__c = rhcInfo.ANG_AccountId__c, ANG_FormOfPayment_ID__c = 'CA', Status__c = 'Non-Active', RecordTypeId = FormOfPaymentRT, Source__c = 'RTS Alert'));
-		authorizations.add(new Agency_Authorization__c(Account__c = rhcInfo.ANG_AccountId__c, ANG_FormOfPayment_ID__c = 'EP', Status__c = 'Non-Active', RecordTypeId = FormOfPaymentRT, Source__c = 'RTS Alert'));
+		authorizations.add(new Agency_Authorization__c(Account__c = rhcInfo.ANG_AccountId__c, ANG_FormOfPayment_ID__c = 'CC', Status__c = 'Non-Active', RecordTypeId = FormOfPaymentRT, Source__c = 'RHC Alert'));
+		authorizations.add(new Agency_Authorization__c(Account__c = rhcInfo.ANG_AccountId__c, ANG_FormOfPayment_ID__c = 'CA', Status__c = 'Non-Active', RecordTypeId = FormOfPaymentRT, Source__c = 'RHC Alert'));
+		authorizations.add(new Agency_Authorization__c(Account__c = rhcInfo.ANG_AccountId__c, ANG_FormOfPayment_ID__c = 'EP', Status__c = 'Non-Active', RecordTypeId = FormOfPaymentRT, Source__c = 'RHC Alert'));
 
 		insert authorizations;
 
@@ -348,13 +374,14 @@ private class ANG_RHCAlertTriggerHandler_test {
 		System.assertEquals(1,[SELECT ID from Agency_Authorization__c where ANG_FormOfPayment_ID__c = 'CA' and Status__c = 'Active'].Size());
 		System.assertEquals(1,[SELECT ID from Agency_Applied_Change_code__c where Account__c = :rhcInfo.ANG_AccountId__c and Change_Code__c = 'PCR' and Active__c = true].Size());
 
-		System.assertEquals('RTS Alert',[SELECT ID, Source__c from Agency_Authorization__c where ANG_FormOfPayment_ID__c = 'CA' and Status__c = 'Active'].get(0).Source__c);
+		System.assertEquals('RHC Alert',[SELECT ID, Source__c from Agency_Authorization__c where ANG_FormOfPayment_ID__c = 'CA' and Status__c = 'Active'].get(0).Source__c);
 
 		Test.stopTest();
 
 
 	}
     
+	
 	private static testmethod voId testRestoreFOPonRiskAlertCreation3(){
 
 		Test.startTest();
@@ -412,4 +439,732 @@ private class ANG_RHCAlertTriggerHandler_test {
 
 
 	}
+	*/
+
+/*
+SCENARIO1
+	- Accredited HE with accr. model = cash and FoP cash active 
+- A risk alert is created with 
+    * Record type = "Risk Alert" 
+    * Threshold level = 100% 
+    * Direction = UP 
+
+EXPECTED RESULT: 
+- Cash FoP will be deactivated 
+- A change code "PCA" will be created 
+
+
+TEST SCENARIO 2: 
+Prerequisite: TEST SCENARIO 1 
+- Accredited HE with accr. model = cash and FoP cash inactive 
+- A risk alert is created with 
+    * Record type = "Risk Alert" 
+    * Threshold level = 100% 
+    * Direction = DOWN 
+
+EXPECTED RESULT: 
+- Cash FoP will be reactivated 
+- A change code "PCR" will be created 
+
+TEST SCENARIO 3: 
+Prerequisite: re-run TEST SCENARIO 1 
+- Accredited HE with accr. model = cash and FoP cash inactive 
+- A risk alert is created with 
+    * Record type = "Risk Alert" 
+    * Threshold level = 75% 
+    * Direction = DOWN 
+
+EXPECTED RESULT: 
+- Cash FoP will be reactivated 
+- A change code "PCR" will be created 
+
+TEST SCENARIO 4: 
+Prerequisite: re-run TEST SCENARIO 1 
+- Accredited HE with accr. model = cash and FoP cash inactive 
+- A risk alert is created with 
+    * Record type = "Risk Alert" 
+    * Threshold level = 50% 
+    * Direction = DOWN 
+
+EXPECTED RESULT: 
+- Cash FoP will be reactivated 
+- A change code "PCR" will be created 
+
+TEST SCENARIO 5 
+- Create and process FoP OSCAR to deactivate Cash FoP (Cash FoP will be deactivated and a change code "PCA" will be created) 
+- A risk alert is created with 
+    * Record type = "Risk Alert" 
+    * Threshold level = 50% 
+    * Direction = DOWN 
+
+EXPECTED RESULT: 
+- Cash FoP will STAY deactivate 
+- NO change code "PCR" will be created 
+
+TEST SCENARIO 6 
+- Create and process FoP OSCAR to deactivate Cash FoP (Cash FoP will be deactivated and a change code "PCA" will be created) 
+- A risk alert is created with 
+    * Record type = "Risk Alert" 
+    * Threshold level = 100% 
+    * Direction = UP 
+(the Cash FoP will stay deactivated and no additional change code "PCA" will be created) 
+- Create and process FoP OSCAR to reactivate Cash FoP 
+
+EXPECTED RESULT: 
+- Cash FoP will STAY deactivate 
+- NO change code "PCR" will be created 
+
+TEST SCENARIO 7 
+Cont. from TEST SCENARIO 6 
+- A risk alert is created with 
+    * Record type = "Risk Alert" 
+    * Threshold level = 50% 
+    * Direction = DOWN 
+
+EXPECTED RESULT: 
+- Cash FoP will be reactivated 
+- A change code "PCR" will be created 
+
+TEST SCENARIO 8 
+- A risk alert is created with 
+    * Record type = "Risk Alert" 
+    * Threshold level = 100% 
+    * Direction = UP 
+- Create and process FoP OSCAR to deactivate Cash FoP (Cash FoP will be deactivated and a change code "PCA" will be created) 
+- A risk alert is created with 
+    * Record type = "Risk Alert" 
+    * Threshold level = 50% 
+    * Direction = DOWN 
+
+EXPECTED RESULT: 
+- Cash FoP will STAY deactivate 
+- NO change code "PCR" will be created 
+
+TEST SCENARIO 9 
+Cont. from TEST SCENARIO 8 
+- Create and process FoP OSCAR to reactivate Cash FoP 
+
+EXPECTED RESULT: 
+- Cash FoP will be reactivated 
+- A change code "PCR" will be created
+
+*/
+
+	private static void createScenario1(){
+
+		/*
+			SCENARIO1
+			- Accredited HE with accr. model = cash and FoP cash active 
+		- A risk alert is created with 
+			* Record type = "Risk Alert" 
+			* Threshold level = 100% 
+			* Direction = UP 
+
+		EXPECTED RESULT: 
+		- Cash FoP will be deactivated 
+		- A change code "PCA" will be created 
+		*/
+
+		ANG_RHC_Information__c rhcInfo=[SELECT Id,ANG_AccountId__c FROM ANG_RHC_Information__c LIMIT 1];
+
+		List<Agency_Authorization__c> authorizations = new List<Agency_Authorization__c>();
+
+		ID FormOfPaymentRT = AMS_Utils.getId('Agency_Authorization__c','FormOfPayment');
+
+		authorizations.add(new Agency_Authorization__c(Account__c = rhcInfo.ANG_AccountId__c, ANG_FormOfPayment_ID__c = 'CA', Status__c = 'Active', RecordTypeId = FormOfPaymentRT));
+
+		insert authorizations;
+		
+		ANG_Risk_Alert__c ara = new ANG_Risk_Alert__c(
+			ANG_RHC_Information__c = rhcInfo.Id,
+			ANG_Account__c = rhcInfo.ANG_AccountId__c,
+			ANG_Direction__c = ANG_RHCHelper.RISK_ALERT_DIRECTION_UP,
+			ANG_Threshold_Level__c = '100%'
+		);
+
+		insert ara;
+
+		Agency_Authorization__c aa = [SELECT ID, RestrictedByRHCAlert__c, Status__c from Agency_Authorization__c where ANG_FormOfPayment_ID__c = 'CA'];
+
+		System.assertEquals('Non-Active', aa.Status__c);
+		System.assertEquals(true,aa.RestrictedByRHCAlert__c);
+
+		System.assertEquals(1,[SELECT ID from Agency_Applied_Change_code__c where Account__c = :rhcInfo.ANG_AccountId__c and Change_Code__c = 'PCA' and Active__c = true].Size());
+	}
+
+	private static testmethod voId scenario2Test(){
+
+		/*TEST SCENARIO 2: 
+			
+			Prerequisite: TEST SCENARIO 1 
+			- Accredited HE with accr. model = cash and FoP cash inactive 
+			- A risk alert is created with 
+    		* Record type = "Risk Alert" 
+    		* Threshold level = 100% 
+    		* Direction = DOWN 
+
+			EXPECTED RESULT: 
+			- Cash FoP will be reactivated 
+			- A change code "PCR" will be created 
+		*/
+
+		Test.startTest();
+
+		createScenario1();
+		
+		ANG_RHC_Information__c rhcInfo = [SELECT Id,ANG_AccountId__c FROM ANG_RHC_Information__c LIMIT 1];
+
+		ANG_Risk_Alert__c ara = new ANG_Risk_Alert__c(
+			ANG_RHC_Information__c = rhcInfo.Id,
+			ANG_Account__c = rhcInfo.ANG_AccountId__c,
+			ANG_Direction__c = ANG_RHCHelper.RISK_ALERT_DIRECTION_DOWN,
+			ANG_Threshold_Level__c = '100%'
+		);
+
+		insert ara;
+
+		Agency_Authorization__c aa = [SELECT ID, RestrictedByRHCAlert__c, Status__c from Agency_Authorization__c where ANG_FormOfPayment_ID__c = 'CA'];
+
+		System.assertEquals('Active', aa.Status__c);
+		System.assertEquals(false,aa.RestrictedByRHCAlert__c);
+
+		Agency_Applied_Change_code__c aacc = [SELECT ID, Active__c from Agency_Applied_Change_code__c where Account__c = :rhcInfo.ANG_AccountId__c and Change_Code__c = 'PCR'];
+
+		System.assertEquals(aacc.Active__c,true);
+
+		Test.stopTest();
+
+	}
+
+	private static testmethod voId scenario3Test(){
+
+		/* TEST SCENARIO 3: 
+		Prerequisite: re-run TEST SCENARIO 1 
+		- Accredited HE with accr. model = cash and FoP cash inactive 
+		- A risk alert is created with 
+			* Record type = "Risk Alert" 
+			* Threshold level = 75% 
+			* Direction = DOWN 
+
+		EXPECTED RESULT: 
+		- Cash FoP will be reactivated 
+		- A change code "PCR" will be created 
+		*/
+
+		Test.startTest();
+
+		createScenario1();
+		
+		ANG_RHC_Information__c rhcInfo = [SELECT Id,ANG_AccountId__c FROM ANG_RHC_Information__c LIMIT 1];
+
+		ANG_Risk_Alert__c ara = new ANG_Risk_Alert__c(
+			ANG_RHC_Information__c = rhcInfo.Id,
+			ANG_Account__c = rhcInfo.ANG_AccountId__c,
+			ANG_Direction__c = ANG_RHCHelper.RISK_ALERT_DIRECTION_DOWN,
+			ANG_Threshold_Level__c = '75%'
+		);
+
+		insert ara;
+
+		Agency_Authorization__c aa = [SELECT ID, RestrictedByRHCAlert__c, Status__c from Agency_Authorization__c where ANG_FormOfPayment_ID__c = 'CA'];
+
+		System.assertEquals('Active', aa.Status__c);
+		System.assertEquals(false,aa.RestrictedByRHCAlert__c);
+
+		Agency_Applied_Change_code__c aacc = [SELECT ID, Active__c from Agency_Applied_Change_code__c where Account__c = :rhcInfo.ANG_AccountId__c and Change_Code__c = 'PCR'];
+
+		System.assertEquals(aacc.Active__c,true);
+
+		Test.stopTest();
+
+	}
+
+	private static testmethod voId scenario4Test(){
+
+		/*	TEST SCENARIO 4: 
+		Prerequisite: re-run TEST SCENARIO 1 
+		- Accredited HE with accr. model = cash and FoP cash inactive 
+		- A risk alert is created with 
+			* Record type = "Risk Alert" 
+			* Threshold level = 50% 
+			* Direction = DOWN 
+
+		EXPECTED RESULT: 
+		- Cash FoP will be reactivated 
+		- A change code "PCR" will be created */ 
+
+		Test.startTest();
+
+		createScenario1();
+		
+		ANG_RHC_Information__c rhcInfo = [SELECT Id,ANG_AccountId__c FROM ANG_RHC_Information__c LIMIT 1];
+
+		ANG_Risk_Alert__c ara = new ANG_Risk_Alert__c(
+			ANG_RHC_Information__c = rhcInfo.Id,
+			ANG_Account__c = rhcInfo.ANG_AccountId__c,
+			ANG_Direction__c = ANG_RHCHelper.RISK_ALERT_DIRECTION_DOWN,
+			ANG_Threshold_Level__c = '50%'
+		);
+
+		insert ara;
+
+		Agency_Authorization__c aa = [SELECT ID, RestrictedByRHCAlert__c, Status__c from Agency_Authorization__c where ANG_FormOfPayment_ID__c = 'CA'];
+
+		System.assertEquals('Active', aa.Status__c);
+		System.assertEquals(false,aa.RestrictedByRHCAlert__c);
+
+		Agency_Applied_Change_code__c aacc = [SELECT ID, Active__c from Agency_Applied_Change_code__c where Account__c = :rhcInfo.ANG_AccountId__c and Change_Code__c = 'PCR'];
+
+		System.assertEquals(aacc.Active__c,true);
+
+		Test.stopTest();
+
+	}
+
+	private static testmethod voId scenario5Test(){
+
+		/*	TEST SCENARIO 5 
+		- Create and process FoP OSCAR to deactivate Cash FoP (Cash FoP will be deactivated and a change code "PCA" will be created) 
+		- A risk alert is created with 
+			* Record type = "Risk Alert" 
+			* Threshold level = 50% 
+			* Direction = DOWN 
+
+		EXPECTED RESULT: 
+		- Cash FoP will STAY deactivate 
+		- NO change code "PCR" will be created  */ 
+
+		Test.startTest();
+
+		ANG_RHC_Information__c rhcInfo=[SELECT Id,ANG_AccountId__c FROM ANG_RHC_Information__c LIMIT 1];
+
+		List<Agency_Authorization__c> authorizations = new List<Agency_Authorization__c>();
+
+		ID FormOfPaymentRT = AMS_Utils.getId('Agency_Authorization__c','FormOfPayment');
+
+		authorizations.add(new Agency_Authorization__c(Account__c = rhcInfo.ANG_AccountId__c, ANG_FormOfPayment_ID__c = 'CA', Status__c = 'Active', RecordTypeId = FormOfPaymentRT));
+
+		insert authorizations;
+		
+		AMS_OSCAR__c oscar = createOscarFOP();
+
+		ANG_OscarProcessHelper.processRestrictFOP(oscar.Id, false ,true);
+
+		Agency_Authorization__c aa = [SELECT ID, RestrictedByRHCAlert__c,RestrictedByProcess__c, Status__c from Agency_Authorization__c where ANG_FormOfPayment_ID__c = 'CA'];
+
+		System.assertEquals('Non-Active', aa.Status__c);
+		System.assertEquals(true,aa.RestrictedByProcess__c);
+
+		System.assertEquals(1,[SELECT ID from Agency_Applied_Change_code__c where Account__c = :rhcInfo.ANG_AccountId__c and Change_Code__c = 'PCA' and Active__c = true].Size());
+	
+		ANG_Risk_Alert__c ara = new ANG_Risk_Alert__c(
+			ANG_RHC_Information__c = rhcInfo.Id,
+			ANG_Account__c = rhcInfo.ANG_AccountId__c,
+			ANG_Direction__c = ANG_RHCHelper.RISK_ALERT_DIRECTION_DOWN,
+			ANG_Threshold_Level__c = '50%'
+		);
+
+		insert ara;
+
+		aa = [SELECT ID, RestrictedByRHCAlert__c, RestrictedByProcess__c, Status__c from Agency_Authorization__c where ANG_FormOfPayment_ID__c = 'CA'];
+
+		System.assertEquals('Non-Active', aa.Status__c);
+		System.assertEquals(false,aa.RestrictedByRHCAlert__c);
+		System.assertEquals(true,aa.RestrictedByProcess__c);
+
+		System.assertEquals(0,[SELECT ID, Active__c from Agency_Applied_Change_code__c where Account__c = :rhcInfo.ANG_AccountId__c and Change_Code__c = 'PCR'].size());
+
+		Test.stopTest();
+
+	}
+
+	private static testmethod voId scenario6Test(){
+
+
+		/*TEST SCENARIO 6 
+		- Create and process FoP OSCAR to deactivate Cash FoP (Cash FoP will be deactivated and a change code "PCA" will be created) 
+		- A risk alert is created with 
+			* Record type = "Risk Alert" 
+			* Threshold level = 100% 
+			* Direction = UP 
+		(the Cash FoP will stay deactivated and no additional change code "PCA" will be created) 
+		- Create and process FoP OSCAR to reactivate Cash FoP 
+
+		EXPECTED RESULT: 
+		- Cash FoP will STAY deactivate 
+		- NO change code "PCR" will be created 
+		Explanation: even if user tries to restore cash with the OSCAR case, since we received a 100% UP RHC alert (meaning cash was deactivated by a different process), cash cannot be restored 
+		*/
+
+		Test.startTest();
+
+		ANG_RHC_Information__c rhcInfo=[SELECT Id,ANG_AccountId__c FROM ANG_RHC_Information__c LIMIT 1];
+
+		List<Agency_Authorization__c> authorizations = new List<Agency_Authorization__c>();
+
+		ID FormOfPaymentRT = AMS_Utils.getId('Agency_Authorization__c','FormOfPayment');
+
+		authorizations.add(new Agency_Authorization__c(Account__c = rhcInfo.ANG_AccountId__c, ANG_FormOfPayment_ID__c = 'CA', Status__c = 'Active', RecordTypeId = FormOfPaymentRT));
+
+		insert authorizations;
+		
+		AMS_OSCAR__c oscar = createOscarFOP();
+
+		ANG_OscarProcessHelper.processRestrictFOP(oscar.Id, false ,true);
+
+		Agency_Authorization__c aa = [SELECT ID, RestrictedByRHCAlert__c,RestrictedByProcess__c, Status__c from Agency_Authorization__c where ANG_FormOfPayment_ID__c = 'CA'];
+
+		System.assertEquals('Non-Active', aa.Status__c);
+		System.assertEquals(true,aa.RestrictedByProcess__c);
+		System.assertEquals(false,aa.RestrictedByRHCAlert__c);
+
+		Agency_Applied_Change_code__c aacc = [SELECT ID, Active__c from Agency_Applied_Change_code__c where Account__c = :rhcInfo.ANG_AccountId__c and Change_Code__c = 'PCA'];
+
+		System.assertEquals(aacc.Active__c,true);
+		
+		ANG_Risk_Alert__c ara = new ANG_Risk_Alert__c(
+			ANG_RHC_Information__c = rhcInfo.Id,
+			ANG_Account__c = rhcInfo.ANG_AccountId__c,
+			ANG_Direction__c = ANG_RHCHelper.RISK_ALERT_DIRECTION_UP,
+			ANG_Threshold_Level__c = '100%'
+		);
+	
+		insert ara;
+
+		aa = [SELECT ID, RestrictedByRHCAlert__c,RestrictedByProcess__c, Status__c from Agency_Authorization__c where ANG_FormOfPayment_ID__c = 'CA'];
+
+		System.assertEquals('Non-Active', aa.Status__c);
+		System.assertEquals(true,aa.RestrictedByProcess__c);
+		System.assertEquals(true,aa.RestrictedByRHCAlert__c);
+
+		System.assertEquals(0,[SELECT ID from Agency_Applied_Change_code__c where Account__c = :rhcInfo.ANG_AccountId__c and Change_Code__c = 'PCR'].size());
+
+		Test.stopTest();
+	}
+
+	private static testmethod voId scenario7Test(){ 
+
+
+		/* TEST SCENARIO 7 
+		- Create and process FoP OSCAR to deactivate Cash FoP (Cash FoP will be deactivated and a change code "PCA" will be created) 
+		- A risk alert is created with 
+			* Record type = "Risk Alert" 
+			* Threshold level = 100% 
+			* Direction = UP 
+		(the Cash FoP will stay deactivated and no additional change code "PCA" will be created) 
+		- Create and process FoP OSCAR to reactivate Cash FoP 
+
+		EXPECTED RESULT: 
+		- Cash FoP will STAY deactivate 
+		- NO change code "PCR" will be created 
+		Explanation: even if user tries to restore cash with the OSCAR case, since we received a 100% UP RHC alert (meaning cash was deactivated by a different process), cash cannot be restored 
+		
+		- A risk alert is created with 
+			* Record type = "Risk Alert" 
+			* Threshold level = 50% 
+			* Direction = DOWN 
+
+		EXPECTED RESULT: 
+		- Cash FoP will be reactivated 
+		- A change code "PCR" will be created 
+		*/
+
+		Test.startTest();
+
+		ANG_RHC_Information__c rhcInfo=[SELECT Id,ANG_AccountId__c FROM ANG_RHC_Information__c LIMIT 1];
+
+		List<Agency_Authorization__c> authorizations = new List<Agency_Authorization__c>();
+
+		ID FormOfPaymentRT = AMS_Utils.getId('Agency_Authorization__c','FormOfPayment');
+
+		authorizations.add(new Agency_Authorization__c(Account__c = rhcInfo.ANG_AccountId__c, ANG_FormOfPayment_ID__c = 'CA', Status__c = 'Active', RecordTypeId = FormOfPaymentRT));
+
+		insert authorizations;
+		
+		AMS_OSCAR__c oscar = createOscarFOP();
+
+		ANG_OscarProcessHelper.processRestrictFOP(oscar.Id, false ,true);
+
+		Agency_Authorization__c aa = [SELECT ID, RestrictedByRHCAlert__c,RestrictedByProcess__c, Status__c from Agency_Authorization__c where ANG_FormOfPayment_ID__c = 'CA'];
+
+		System.assertEquals('Non-Active', aa.Status__c);
+		System.assertEquals(true,aa.RestrictedByProcess__c);
+		System.assertEquals(false,aa.RestrictedByRHCAlert__c);
+
+		Agency_Applied_Change_code__c aacc = [SELECT ID, Active__c from Agency_Applied_Change_code__c where Account__c = :rhcInfo.ANG_AccountId__c and Change_Code__c = 'PCA'];
+
+		System.assertEquals(aacc.Active__c,true);
+		
+		ANG_Risk_Alert__c ara = new ANG_Risk_Alert__c(
+			ANG_RHC_Information__c = rhcInfo.Id,
+			ANG_Account__c = rhcInfo.ANG_AccountId__c,
+			ANG_Direction__c = ANG_RHCHelper.RISK_ALERT_DIRECTION_UP,
+			ANG_Threshold_Level__c = '100%'
+		);
+	
+		insert ara;
+
+		aa = [SELECT ID, RestrictedByRHCAlert__c,RestrictedByProcess__c, Status__c from Agency_Authorization__c where ANG_FormOfPayment_ID__c = 'CA'];
+
+		System.assertEquals('Non-Active', aa.Status__c);
+		System.assertEquals(true,aa.RestrictedByProcess__c);
+		System.assertEquals(true,aa.RestrictedByRHCAlert__c);
+
+		System.assertEquals(0,[SELECT ID from Agency_Applied_Change_code__c where Account__c = :rhcInfo.ANG_AccountId__c and Change_Code__c = 'PCR'].size());
+
+		ANG_OscarProcessHelper.processRestoreFOP(oscar.Id, false , true);
+
+		aa = [SELECT ID, RestrictedByRHCAlert__c,RestrictedByProcess__c, Status__c from Agency_Authorization__c where ANG_FormOfPayment_ID__c = 'CA'];
+
+		System.assertEquals('Non-Active', aa.Status__c);
+		System.assertEquals(false,aa.RestrictedByProcess__c);
+		System.assertEquals(true,aa.RestrictedByRHCAlert__c);
+
+		System.assertEquals(0,[SELECT ID from Agency_Applied_Change_code__c where Account__c = :rhcInfo.ANG_AccountId__c and Change_Code__c = 'PCR' and Active__c = true].size());
+
+		ara = new ANG_Risk_Alert__c(
+			ANG_RHC_Information__c = rhcInfo.Id,
+			ANG_Account__c = rhcInfo.ANG_AccountId__c,
+			ANG_Direction__c = ANG_RHCHelper.RISK_ALERT_DIRECTION_DOWN,
+			ANG_Threshold_Level__c = '50%'
+		);
+	
+		insert ara;
+
+		aa = [SELECT ID, RestrictedByRHCAlert__c,RestrictedByProcess__c, Status__c from Agency_Authorization__c where ANG_FormOfPayment_ID__c = 'CA'];
+
+		System.assertEquals('Active', aa.Status__c);
+		System.assertEquals(false,aa.RestrictedByProcess__c);
+		System.assertEquals(false,aa.RestrictedByRHCAlert__c);
+
+		aacc = [SELECT ID from Agency_Applied_Change_code__c where Account__c = :rhcInfo.ANG_AccountId__c and Change_Code__c = 'PCR' and Active__c = true];
+
+		Test.stopTest();
+	}
+
+	private static testmethod voId scenario8Test(){ 
+
+
+		/*
+		TEST SCENARIO 8 
+		- A risk alert is created with 
+			* Record type = "Risk Alert" 
+			* Threshold level = 100% 
+			* Direction = UP 
+		- Create and process FoP OSCAR to deactivate Cash FoP (Cash FoP will be deactivated and a change code "PCA" will be created) 
+		- A risk alert is created with 
+			* Record type = "Risk Alert" 
+			* Threshold level = 50% 
+			* Direction = DOWN 
+
+		EXPECTED RESULT: 
+		- Cash FoP will STAY deactivate 
+		- NO change code "PCR" will be created 
+		*/
+
+		Test.startTest();
+
+		ANG_RHC_Information__c rhcInfo=[SELECT Id,ANG_AccountId__c FROM ANG_RHC_Information__c LIMIT 1];
+
+		List<Agency_Authorization__c> authorizations = new List<Agency_Authorization__c>();
+
+		ID FormOfPaymentRT = AMS_Utils.getId('Agency_Authorization__c','FormOfPayment');
+
+		authorizations.add(new Agency_Authorization__c(Account__c = rhcInfo.ANG_AccountId__c, ANG_FormOfPayment_ID__c = 'CA', Status__c = 'Active', RecordTypeId = FormOfPaymentRT));
+
+		insert authorizations;
+		
+		ANG_Risk_Alert__c ara = new ANG_Risk_Alert__c(
+			ANG_RHC_Information__c = rhcInfo.Id,
+			ANG_Account__c = rhcInfo.ANG_AccountId__c,
+			ANG_Direction__c = ANG_RHCHelper.RISK_ALERT_DIRECTION_UP,
+			ANG_Threshold_Level__c = '100%'
+		);
+	
+		insert ara;
+
+		Agency_Authorization__c aa = [SELECT ID, RestrictedByRHCAlert__c,RestrictedByProcess__c, Status__c from Agency_Authorization__c where ANG_FormOfPayment_ID__c = 'CA'];
+
+		System.assertEquals('Non-Active', aa.Status__c);
+		System.assertEquals(false,aa.RestrictedByProcess__c);
+		System.assertEquals(true,aa.RestrictedByRHCAlert__c);
+
+		AMS_OSCAR__c oscar = createOscarFOP();
+
+		ANG_OscarProcessHelper.processRestrictFOP(oscar.Id, false ,true);
+
+		Agency_Applied_Change_code__c aacc = [SELECT ID, Active__c from Agency_Applied_Change_code__c where Account__c = :rhcInfo.ANG_AccountId__c and Change_Code__c = 'PCA'];
+
+		System.assertEquals(aacc.Active__c,true);
+
+		aa = [SELECT ID, RestrictedByRHCAlert__c,RestrictedByProcess__c, Status__c from Agency_Authorization__c where ANG_FormOfPayment_ID__c = 'CA'];
+
+		System.assertEquals('Non-Active', aa.Status__c);
+		System.assertEquals(true,aa.RestrictedByProcess__c);
+		System.assertEquals(true,aa.RestrictedByRHCAlert__c);
+
+		ara = new ANG_Risk_Alert__c(
+			ANG_RHC_Information__c = rhcInfo.Id,
+			ANG_Account__c = rhcInfo.ANG_AccountId__c,
+			ANG_Direction__c = ANG_RHCHelper.RISK_ALERT_DIRECTION_DOWN,
+			ANG_Threshold_Level__c = '50%'
+		);
+	
+		insert ara;
+
+		aa = [SELECT ID, RestrictedByRHCAlert__c,RestrictedByProcess__c, Status__c from Agency_Authorization__c where ANG_FormOfPayment_ID__c = 'CA'];
+
+		System.assertEquals('Non-Active', aa.Status__c);
+		System.assertEquals(true,aa.RestrictedByProcess__c);
+		System.assertEquals(false,aa.RestrictedByRHCAlert__c);
+
+		System.assertEquals(0,[SELECT ID from Agency_Applied_Change_code__c where Account__c = :rhcInfo.ANG_AccountId__c and Change_Code__c = 'PCR' and Active__c = true].size());
+
+
+		Test.stopTest();
+	}
+
+	private static testmethod voId scenario9Test(){ 
+
+
+		/*
+		TEST SCENARIO 9
+		- A risk alert is created with 
+			* Record type = "Risk Alert" 
+			* Threshold level = 100% 
+			* Direction = UP 
+		- Create and process FoP OSCAR to deactivate Cash FoP (Cash FoP will be deactivated and a change code "PCA" will be created) 
+		- A risk alert is created with 
+			* Record type = "Risk Alert" 
+			* Threshold level = 50% 
+			* Direction = DOWN 
+
+		EXPECTED RESULT: 
+		- Cash FoP will STAY deactivate 
+		- NO change code "PCR" will be created 
+
+		- Create and process FoP OSCAR to reactivate Cash FoP 
+
+		EXPECTED RESULT: 
+		- Cash FoP will be reactivated 
+		- A change code "PCR" will be created
+
+		*/
+
+		Test.startTest();
+
+		ANG_RHC_Information__c rhcInfo=[SELECT Id,ANG_AccountId__c FROM ANG_RHC_Information__c LIMIT 1];
+
+		List<Agency_Authorization__c> authorizations = new List<Agency_Authorization__c>();
+
+		ID FormOfPaymentRT = AMS_Utils.getId('Agency_Authorization__c','FormOfPayment');
+
+		authorizations.add(new Agency_Authorization__c(Account__c = rhcInfo.ANG_AccountId__c, ANG_FormOfPayment_ID__c = 'CA', Status__c = 'Active', RecordTypeId = FormOfPaymentRT));
+
+		insert authorizations;
+		
+		ANG_Risk_Alert__c ara = new ANG_Risk_Alert__c(
+			ANG_RHC_Information__c = rhcInfo.Id,
+			ANG_Account__c = rhcInfo.ANG_AccountId__c,
+			ANG_Direction__c = ANG_RHCHelper.RISK_ALERT_DIRECTION_UP,
+			ANG_Threshold_Level__c = '100%'
+		);
+	
+		insert ara;
+
+		Agency_Authorization__c aa = [SELECT ID, RestrictedByRHCAlert__c,RestrictedByProcess__c, Status__c from Agency_Authorization__c where ANG_FormOfPayment_ID__c = 'CA'];
+
+		System.assertEquals('Non-Active', aa.Status__c);
+		System.assertEquals(false,aa.RestrictedByProcess__c);
+		System.assertEquals(true,aa.RestrictedByRHCAlert__c);
+
+		AMS_OSCAR__c oscar = createOscarFOP();
+
+		ANG_OscarProcessHelper.processRestrictFOP(oscar.Id, false ,true);
+
+		Agency_Applied_Change_code__c aacc = [SELECT ID, Active__c from Agency_Applied_Change_code__c where Account__c = :rhcInfo.ANG_AccountId__c and Change_Code__c = 'PCA'];
+
+		System.assertEquals(aacc.Active__c,true);
+
+		aa = [SELECT ID, RestrictedByRHCAlert__c,RestrictedByProcess__c, Status__c from Agency_Authorization__c where ANG_FormOfPayment_ID__c = 'CA'];
+
+		System.assertEquals('Non-Active', aa.Status__c);
+		System.assertEquals(true,aa.RestrictedByProcess__c);
+		System.assertEquals(true,aa.RestrictedByRHCAlert__c);
+
+		ara = new ANG_Risk_Alert__c(
+			ANG_RHC_Information__c = rhcInfo.Id,
+			ANG_Account__c = rhcInfo.ANG_AccountId__c,
+			ANG_Direction__c = ANG_RHCHelper.RISK_ALERT_DIRECTION_DOWN,
+			ANG_Threshold_Level__c = '50%'
+		);
+	
+		insert ara;
+
+		aa = [SELECT ID, RestrictedByRHCAlert__c,RestrictedByProcess__c, Status__c from Agency_Authorization__c where ANG_FormOfPayment_ID__c = 'CA'];
+
+		System.assertEquals('Non-Active', aa.Status__c);
+		System.assertEquals(true,aa.RestrictedByProcess__c);
+		System.assertEquals(false,aa.RestrictedByRHCAlert__c);
+
+		System.assertEquals(0,[SELECT ID from Agency_Applied_Change_code__c where Account__c = :rhcInfo.ANG_AccountId__c and Change_Code__c = 'PCR' and Active__c = true].size());
+
+		ANG_OscarProcessHelper.processRestoreFOP(oscar.Id, false , true);
+
+		aacc = [SELECT ID, Active__c from Agency_Applied_Change_code__c where Account__c = :rhcInfo.ANG_AccountId__c and Change_Code__c = 'PCR'];
+
+		System.assertEquals(aacc.Active__c,true);
+
+		aa = [SELECT ID, RestrictedByRHCAlert__c,RestrictedByProcess__c, Status__c from Agency_Authorization__c where ANG_FormOfPayment_ID__c = 'CA'];
+
+		System.assertEquals('Active', aa.Status__c);
+		System.assertEquals(false,aa.RestrictedByProcess__c);
+		System.assertEquals(false,aa.RestrictedByRHCAlert__c);
+
+		Test.stopTest();
+	}
+
+	private static AMS_OSCAR__c createOscarFOP(){
+
+		Account a1 = [Select id From Account LIMIT 1];
+
+        Contact co1 = new Contact(AccountId = a1.id, Firstname = 'John', Lastname='Rambo', Phone = '666123456', MobilePhone = '911111111', Email = 'rambo.johnj@test.com', Financial_Assessment_Contact__c = false);
+		insert co1;
+
+		AMS_OSCAR__c oscar = new AMS_OSCAR__c(Process__c = AMS_Utils.NGFOP, Account__c = a1.id, RecordTypeId = AMS_Utils.RECTYPE_NEWGENFOP);
+
+		insert oscar;
+
+		Id caseRT = AMS_Utils.getId('Case', 'OSCAR_Communication');
+
+		Case oscarCase = new Case(Oscar__c = oscar.Id, RecordTypeId = caseRT);
+		oscarCase.AccountId = a1.Id;
+		oscarCase.ContactId = co1.Id;
+		insert oscarCase;
+	
+		ID rtNew = Schema.SObjectType.AMS_Pax_Accreditation_Form__c.getRecordTypeInfosByName().get('Travel Agent - Head Entity Standard no Cash').getRecordTypeId();
+
+		AMS_Pax_Accreditation_Form__c theAccreditation = new AMS_Pax_Accreditation_Form__c(RecordTypeId = rtNew);
+
+		theAccreditation.Account_Name__c='NEWGEN-559 HE5';
+		theAccreditation.ISSP_AMS_Legal_Status__c='Association';
+		theAccreditation.Branch_Office_Street_name_number__c='sdfsdf';
+		theAccreditation.Branch_Office_City__c='sdfsdfdf';
+		theAccreditation.Branch_Office_Email__c='sdfsdfgdg@f3434.com';
+		theAccreditation.Branch_Office_Phone__c='123123123';
+		theAccreditation.ISSP_AMS_Premises_located_at_airport__c='No';
+		theAccreditation.Abbreviated_name__c='NEWGEN-559 HE5';
+		theAccreditation.Abbreviated_Address__c='sdfsdf';
+		theAccreditation.Remittance_frequency__c='M';
+		theAccreditation.Solicitation_Flag__c=false;
+		theAccreditation.Location_Class__c='P';
+		theAccreditation.Location_Type__c='HE';
+		theAccreditation.SAAM_Case__c=oscarCase.Id;
+		theAccreditation.Account_Name__c = a1.Id;
+
+		insert theAccreditation;
+
+		return oscar;
+	}
+
 }
