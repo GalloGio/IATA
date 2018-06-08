@@ -85,7 +85,7 @@ private class ISSP_ANG_PCI_Test {
 	            testCase.Reopened_case__c = 0.0;            
 	            testCase.Account_Concerned__c = null;
 	            testCase.IFAP_Country_ISO__c = 'tq';
-	            testCase.Status = 'Draft';
+	            testCase.Status = 'Action Needed';
 	            testCase.Region__c = 'Africa & Middle East';
 	            testCase.Account_Concerned__c = child.Id;
             insert testCase;
@@ -198,7 +198,7 @@ private class ISSP_ANG_PCI_Test {
 	            testCase.Reopened_case__c = 0.0;            
 	            testCase.Account_Concerned__c = null;
 	            testCase.IFAP_Country_ISO__c = 'tq';
-	            testCase.Status = 'Draft';
+	            testCase.Status = 'Action Needed';
 	            testCase.Region__c = 'Africa & Middle East';
 	            testCase.Account_Concerned__c = child.Id;
             insert testCase;
@@ -314,7 +314,7 @@ private class ISSP_ANG_PCI_Test {
 	            testCase.Reopened_case__c = 0.0;            
 	            testCase.Account_Concerned__c = null;
 	            testCase.IFAP_Country_ISO__c = 'tq';
-	            testCase.Status = 'Draft';
+	            testCase.Status = 'Action Needed';
 	            testCase.Region__c = 'Africa & Middle East';
 	            testCase.Account_Concerned__c = child.Id;
             insert testCase;
@@ -425,7 +425,7 @@ private class ISSP_ANG_PCI_Test {
 	            testCase.Reopened_case__c = 0.0;            
 	            testCase.Account_Concerned__c = null;
 	            testCase.IFAP_Country_ISO__c = 'tq';
-	            testCase.Status = 'Draft';
+	            testCase.Status = 'Action Needed';
 	            testCase.Region__c = 'Africa & Middle East';
 	            testCase.Account_Concerned__c = child.Id;
             insert testCase;

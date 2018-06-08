@@ -349,13 +349,16 @@ public class AMS_OSCARTriggerHandler {
                                                                     AMS_Utils.new_AHA
                                                                     };
 
+        /*** AMSU-31 Start ***/
+        Set<AMS_Oscar__c> oscarsToCreateAuth = new Set<AMS_Oscar__c>();
+        /*** AMSU-31 End ***/
         for (AMS_OSCAR__c updatedOSCAR : oscarsToInsert) {
             AMS_OSCAR__c oldOSCAR = oldOscars.get(updatedOSCAR.Id);
 
             applyAccreditationProcessLogic(oldOSCAR, updatedOscar);
 
             if(!ProcessesToIgnoreChangeCode.contains(updatedOscar.Process__c))
-                applyChangeCodesWithDependencies(oldOSCAR, updatedOscar, oscarAccountIds);
+                applyChangeCodesWithDependencies(oldOSCAR, updatedOscar, oscarAccountIds, oscarsToCreateAuth);
 
 
             processFieldsTracking(oldOSCAR, updatedOscar);
@@ -398,6 +401,24 @@ public class AMS_OSCARTriggerHandler {
             if(updatedOSCAR.Process__c != AMS_Utils.CERTIFICATE) updatedOSCAR.Certificate_Quantity__c = null;
 
         }
+
+        /*** AMSU-31 Start ***/
+        if(!oscarsToCreateAuth.isEmpty()) {
+            List<Case> cases = [SELECT Id, CaseNumber, OSCAR__c, OSCAR__r.Name, Oscar__r.Account__c, Contact.Email FROM Case WHERE OSCAR__c IN :oscarsToCreateAuth];
+            List<Agency_Authorization__c> agenciesAuth = new List<Agency_Authorization__c>(); 
+            for(Case cse : cases) {
+                if(cse.CaseNumber != cse.OSCAR__r.Name) {
+                    continue;
+                }
+                Agency_Authorization__c agencyAuth = new Agency_Authorization__c(Account__c= cse.OSCAR__r.Account__c, Email_Used_for_BSP_Creation__c= cse.Contact.Email);
+                agenciesAuth.add(agencyAuth);
+            }
+
+            if(!agenciesAuth.isEmpty()) {
+            	insert agenciesAuth;
+        	}
+        }
+        /*** AMSU-31 Start ***/
 
     }
 
@@ -2182,33 +2203,51 @@ public class AMS_OSCARTriggerHandler {
 
         List<AMS_OSCAR__c> oscarsToProcess = new List<AMS_OSCAR__c>();
         Set<Id> oscarsToProcessIds = new Set<Id>();
+        Set<ID> accountIds = new Set<ID>();
         Map<Id, AMS_OSCAR__c> oldMap = (Map<Id,AMS_OSCAR__c>) Trigger.oldMap;
 
         for(AMS_OSCAR__c oscar : (List<AMS_OSCAR__c>)Trigger.New){
             if( AMS_Utils.isProcessUsingAppointments(oscar) ){
                 oscarsToProcess.add(oscar);
+                accountIds.add(oscar.Account__c);
                 oscarsToProcessIds.add(oscar.Id);
             }
         }
 
         if(!oscarsToProcess.isEmpty()){
 
-            List<AMS_Inspection__c> allInspections = new List<AMS_Inspection__c>([SELECT Id, Account__c,OSCAR__c,OSCAR__r.Account__c, Date_Organisation_Status_attained__c,Last_synchronization__c,Accreditation_Endorsement_Status_code__c FROM AMS_Inspection__c WHERE OSCAR__c IN :oscarsToProcessIds]);
+            List<AMS_Inspection__c> allInspections = new List<AMS_Inspection__c>([SELECT Id, Account__c, Account__r.Location_Class__c, OSCAR__c,OSCAR__r.Account__c, Date_Organisation_Status_attained__c,Last_synchronization__c,Accreditation_Endorsement_Status_code__c FROM AMS_Inspection__c WHERE OSCAR__c IN :oscarsToProcessIds]);
+
+            if(allInspections.isEmpty()){
+                allInspections = new List<AMS_Inspection__c>([SELECT Id, Account__c, Account__r.Location_Class__c, OSCAR__c,OSCAR__r.Account__c, Date_Organisation_Status_attained__c,Last_synchronization__c,Accreditation_Endorsement_Status_code__c FROM AMS_Inspection__c WHERE Account__c IN :accountIds]);
+            }
 
             Map<Id, List<AMS_Inspection__c>> inspectionsPerOSCAR = new Map<Id, List<AMS_Inspection__c>>();
+            Map<Id, List<AMS_Inspection__c>> inspectionsPerAccount = new Map<Id, List<AMS_Inspection__c>>();
 
-            //get all inspections per oscar
+            //get all inspections
             for(AMS_Inspection__c insp: allInspections){
-                if(!inspectionsPerOSCAR.containsKey(insp.Oscar__c))
+                //inspections per osar
+                if(!inspectionsPerOSCAR.containsKey(insp.Oscar__c)){
                     inspectionsPerOSCAR.put(insp.Oscar__c, new List<AMS_Inspection__c>());
-
+                }
+                
                 inspectionsPerOSCAR.get(insp.Oscar__c).add(insp);
+
+                //inspections per account
+                if(!inspectionsPerAccount.containsKey(insp.Account__c)){
+                    inspectionsPerAccount.put(insp.Account__c, new List<AMS_Inspection__c>());
+                }
+
+                inspectionsPerAccount.get(insp.Account__c).add(insp);
+
             }
 
             List<AMS_Inspection__c> allInspectionsToUpdate = new List<AMS_Inspection__c>();
 
             for(AMS_OSCAR__c oscar : oscarsToProcess){
                 AMS_OSCAR__c oldOSCAR = oldMap.get(oscar.Id);
+
                 if ((oldOSCAR.STEP1__c <> AMS_Utils.PASSED && oscar.STEP1__c == AMS_Utils.PASSED)||
                     (oldOSCAR.STEP10__c <> AMS_Utils.PASSED && oscar.STEP10__c == AMS_Utils.PASSED))
                 {
@@ -2218,7 +2257,13 @@ public class AMS_OSCARTriggerHandler {
                     (oldOSCAR.STEP18__c <> AMS_Utils.PASSED && oscar.STEP18__c == AMS_Utils.PASSED) ||
                     (oldOSCAR.STEP4__c <> AMS_Utils.PASSED && oscar.STEP4__c == AMS_Utils.PASSED))
                 {
+                    
                     allInspectionsToUpdate.addAll(AMS_Utils.modifyInspectionStatus(inspectionsPerOSCAR.get(oscar.Id), '0'));
+                }
+                //For this scenario we need to retrieve the inspections per account in order to update it properly.
+                //At this point the existing oscar is the new and empty one
+                if (oldOSCAR.STEP31__c <> AMS_Utils.PASSED && oscar.STEP31__c == AMS_Utils.PASSED && oscar.Location_Class__c == 'M'){
+                    allInspectionsToUpdate.addAll(AMS_Utils.modifyInspectionStatus(inspectionsPerAccount.get(oscar.Account__c), '0'));   
                 }
             }
 
@@ -2278,7 +2323,7 @@ public class AMS_OSCARTriggerHandler {
         Map<Id, Agency_Applied_Change_code__c> accountsChangeCode = new Map<Id, Agency_Applied_Change_code__c>();
         for (Agency_Applied_Change_code__c changeCode : [SELECT Id, Account__c, Reason_Code__c, Reason_Description__c, Bulletin_Information__c FROM Agency_Applied_Change_code__c WHERE Account__c IN :accountIds AND Active__c = true]){
             accountsChangeCode.put(changeCode.Account__c, changeCode);
-    }
+        }
 
 
         List<AMS_Utils.Container> changesContainer = new List<AMS_Utils.Container>();
@@ -3110,7 +3155,7 @@ public class AMS_OSCARTriggerHandler {
 
     }
 
-    public static void applyChangeCodesWithDependencies(AMS_OSCAR__c oldOSCAR, AMS_OSCAR__c updatedOscar,Set<Id> oscarAccountIds) {
+    public static void applyChangeCodesWithDependencies(AMS_OSCAR__c oldOSCAR, AMS_OSCAR__c updatedOscar,Set<Id> oscarAccountIds, Set<AMS_Oscar__c> oscarsToCreateAuth) {
     
         ID newRT = Schema.SObjectType.AMS_OSCAR__c.getRecordTypeInfosByName().get('NEW').getRecordTypeId();
         ID newNGRT = Schema.SObjectType.AMS_OSCAR__c.getRecordTypeInfosByName().get('NG New HE').getRecordTypeId();
@@ -3121,6 +3166,14 @@ public class AMS_OSCARTriggerHandler {
         if (updatedOscar.recordTypeID == newRT || updatedOscar.recordTypeID == newNGRT || updatedOSCAR.recordTypeID == AMS_Utils.RECTYPE_NEWAE){
             if (oldOSCAR.STEP2__c != 'Passed' && updatedOscar.STEP2__c == 'Passed') {
                 AMS_OSCAR_JSON.ChangeCode changeCode = new AMS_OSCAR_JSON.ChangeCode();
+
+                /*** AMSU-31 Start ***/
+                Set<String> processesToCheck = new Set<String> {AMS_Utils.new_HO, AMS_Utils.new_BR, AMS_Utils.new_SA, AMS_Utils.new_BR_ABROAD};
+                Set<String> classesToCheck = new Set<String> {'P', 'D'}; 
+                if(classesToCheck.contains(updatedOscar.Location_Class__c) && processesToCheck.contains(updatedOscar.Process__c)) {
+                    oscarsToCreateAuth.add(updatedOscar);
+                }
+                /*** AMSU-31 End ***/
 
                 changeCode.name = 'FIN';
                 changeCode.reasonCode = '91';
@@ -3435,7 +3488,7 @@ public class AMS_OSCARTriggerHandler {
                         accountToAdd = true;
                     }
 
-                    if(oscar.Is_PCI_compliant__c == 'Yes'){
+                    if(oscar.Is_PCI_compliant__c == 'Yes' || oscar.Is_PCI_compliant__c == 'Nil CC'){
                         acct.ANG_PCI_compliance_expiry_date__c = oscar.ANG_PCI_compliance_expiry_date__c;
                         accountToAdd = true;
                     }
