@@ -1,0 +1,83 @@
+<aura:component extends="c:Base" implements="flexipage:availableForAllPageTypes,forceCommunity:availableForAllPageTypes,force:hasRecordId,force:appHostable" access="global" controller="OneId_Fred_AddNewUser_CTRL">
+
+	<aura:handler name="init" value="{!this}" action="{!c.init}"/>
+	<aura:handler event="c:oneIdURLParams" action="{!c.renderPage}"/>
+
+	<aura:attribute name="serviceName" type="String" />
+	<aura:attribute name="isFredPrimaryUser" type="Boolean" />
+	<aura:attribute name="primaryUserId" type="String" />
+	<aura:attribute name="maxNbOfPrimaryReached" type="Boolean" default="false"/>
+	<aura:attribute name="maxNbOfSecondaryReached" type="Boolean" default="false"/>
+
+	<aura:attribute name="primaryLimit" type="Integer" default="0"/>
+	<aura:attribute name="secondaryLimit" type="Integer" default="0"/>
+
+	<aura:attribute name="roles" type="Object" />
+	<aura:attribute name="showRoles" type="Boolean" default="false"/>
+	<aura:attribute name="selectedRole" type="String" />
+
+	<div >
+	 <lightning:button variant="brand" label="Add New User" onclick="{! c.openModal}" class="submitBt" />
+	</div>
+
+
+	<section aura:id="theModal" role="dialog" tabindex="-1" aria-labelledby="modal-heading-01" aria-modal="true" aria-describedby="modal-content-id-1" class="slds-modal ">
+      <div class="slds-modal__container">
+        <header class="slds-modal__header">
+          <button class="slds-button slds-button_icon slds-modal__close slds-button_icon-inverse" title="Close">
+            <span class="slds-assistive-text">Close</span>
+          </button>
+          <h2 id="modal-heading-01" class="slds-text-heading_medium slds-hyphenate">{!$Label.c.issp_apppicker_select_role}</h2>
+        </header>
+        <div class="slds-modal__content slds-p-around_medium" id="modal-content-id-1">
+<!-- POPUP BODY -->
+ <div aura:id="roleSelection" class="roleSelection">
+                        <!--<c:OneId_RegistrationProcess />-->
+                        <div class="slds-grid">
+                            <div class="slds-text-heading--large"></div>
+                        </div>
+                        <div aura:id="requestFill" class="requestFill slds">
+                            <h2>FRED User Creation</h2>
+                            <!-- <div class="appRoles "> -->
+                            <div class="rolenavigation">
+                                <div class="slds-grid slds-wrap ">
+                                    <aura:iteration items="{!v.roles}" var="role" indexVar="index">
+                                        <!--<div class="{!index%2==1 ? 'odd' : 'even'}">-->
+                                        <div class="role slds-size--1-of-2 slds-medium-size--1-of-2 slds-large-size--1-of-2">
+                                            <div class="role-check">
+                                                <ui:inputRadio name="role" label="{!role.Role__c}" aura:id="roleOptions" click="{!c.clickRadio}" />
+                                            </div>
+                                            <div class="role-labels">
+                                                <div class="role-title">
+                                                    <label class="uiLabel-left form-element__label uiLabel">
+                                                        <span>{!role.Role__c}</span>
+                                                    </label>
+                                                    <!-- <label>{!role.Role__c}</label> -->
+                                                </div>
+                                                <div class="role-description">
+                                                    {!role.Description__c}
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </aura:iteration>
+                                </div>
+                            </div>
+
+                           
+                        </div>
+                        
+                    </div>
+        </div>
+  <!-- POPUP BODY -->
+        <footer class="slds-modal__footer">
+          <lightning:button variant="brand" label="Cancel" onclick="{! c.onCancel }" />
+          <lightning:button variant="brand" label="OK" onclick="{! c.onConfirm }" />
+          
+        </footer>
+      </div>
+    </section>
+    
+    <div aura:id="modalBackdrop" class="slds-backdrop"></div>
+
+
+</aura:component>

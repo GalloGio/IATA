@@ -1,42 +1,43 @@
 ({
+
+	doInit : function(cmp) {
+        
+    },
 /**
     Load customer type depending on service provider in URL
 */
-	doInit : function(cmp, event, helper) {
-
-    },
-
     renderPage : function (component, event, helper){
-        
+        // Get URL parameters
         var state = event.getParam("state");       
-
-        console.info("renderPage - state "+state);
         if(state == "answer"){
             var servName = event.getParam("paramsMap").serviceName;
-            var primaryUserAccountID = event.getParam("paramsMap").scu;
-            console.info("renderPage - paramsMap ");
-            console.info(event.getParam("paramsMap"));
-            if(/\S/.test(servName)){
-                console.log("@@@@@ SMH_RENDER"+primaryUserAccountID);
-                component.set("v.serviceName", servName);
-                if(primaryUserAccountID == undefined){ 
-                    helper.getCustomerTypeAvailableByServiceName(component);
-                }   
-            }
-            if(/\S/.test(primaryUserAccountID)){
-                // coming from "Create New User button" triggered by a primary user => Load account associated
-                if(primaryUserAccountID === 'true') 
-                    helper.getPartnerAccount(component);
-            }
-        }
-        component.set("v.loaded", true);
-    },
+            var userTypeToCreate = event.getParam("paramsMap").t; //t=1  (for primary) or t=2 (for secondary) 
+            var invitationId = event.getParam("paramsMap").viid; //Verifier Invitation ID
 
+            if(/\S/.test(servName)){
+                component.set("v.serviceName", servName);
+                if(! component.get("v.paramLoaded")) {
+                    // Avoid multiple calls
+                    component.set("v.paramLoaded", true);
+                    var isVerifierInvitation = false;
+                    if(/\S/.test(invitationId) && invitationId != undefined){
+                        isVerifierInvitation = true;
+                        component.set("v.verifierId", invitationId);
+                    }
+                    helper.initParams(component, isVerifierInvitation, invitationId);
+                }
+            }
+            // If registration comes from FRED (not a guest) by a primary user, I can create another primary or secondary user
+            if(/\S/.test(userTypeToCreate) && userTypeToCreate != undefined){
+                component.set("v.userTypeToCreate", userTypeToCreate);
+            }
+           
+        }
+    },
 /**
     When a user type inside the search box
 */
 	onKeyUp : function(component, event, helper) {
-		var cardHeight= 77;
         // Unvalidate component when user tries to change input
         component.set("v.isValid", false);
         component.set("v.accountSelected", false);
@@ -56,28 +57,23 @@
                 var accountSuggested = a.getReturnValue().accList;
                 component.set("v.totalResult" , a.getReturnValue().totalAccListNotLimited);
                 //suggestions = [];
-                console.log(accountSuggested);
                 if(accountSuggested != undefined && accountSuggested.length > 0) {
                     component.set("v.response", accountSuggested);
-                    // Expand section to display correctly suggestions. nb or record + 3 multiply by height of li=20 in this case
-                    component.set("v.suggestionBoxHeight", (accountSuggested.length + 1) * cardHeight );
                    
                 } else {
-                     console.log('no result');
                     var noResult = {'Name':'No result found...', 'Airline_designator__c':'-', 'ICAO_Member__r.ICAO_Iso_3_Code__c':'-', 'ICAO_Member__r.State_Name__c':'-'};
                     if(component.get("v.customerType")=='ICAO Member State')
                         noResult = {'State_Name__c':'No result found...', 'ICAO_Iso_2_Code__c':'-', 'ICAO_Iso_3_Code__c':'-'};
                     var suggestions = [];
                     suggestions.push(noResult);
                     component.set("v.response",suggestions);
-
-                    component.set("v.suggestionBoxHeight", (2 * cardHeight));
                 }
                 // Show suggestion box
                 var userInputCmpName = userInputCmp.dataset.value;
                 var resultDiv = component.find(userInputCmpName);
                 if(! $A.util.hasClass(resultDiv, 'slds-is-open'))
                     $A.util.toggleClass(resultDiv, 'slds-is-open');
+                
             });
 
             if(! $A.util.isEmpty(component.get("v.customerType"))) {
@@ -103,11 +99,14 @@
                 $A.util.removeClass(resultDiv, 'slds-is-open');
             }
         }
-
 	},
 
+    onRender: function(component, event, helper) {
+        // Expand div according to suggestion size
+        component.set("v.suggestionBoxHeight", component.find("suggestionBoxID").getElement().clientHeight);
+    },
+
     typeOfCustomerChanged: function(component, event, helper) {
-         console.log(component.get("v.contact").Phone);
         component.set("v.userInput", ""); // Empty input of user
         component.find("typeOfCustomer").set("v.errors", null); // Clear error
         component.set("v.response",[]);
@@ -118,7 +117,7 @@
         }
 
         if(component.get("v.customerType")=="Aircraft Operator")
-            component.set("v.searchPlaceholder","Please enter an account name, IATA code, ICAO code or ICAO member state");
+            component.set("v.searchPlaceholder","Please enter a commercial name");
         else if (component.get("v.customerType")=="ICAO Member State")
             component.set("v.searchPlaceholder","Please enter a state name, ISO code in 2 or 3 letters");
         else {
@@ -133,8 +132,6 @@
     suggestionSelected: function(component, event, helper) {
         var suggestionSelected = event.currentTarget;
         var accountIndex = suggestionSelected.dataset.rowIndex;
-
-        console.log(suggestionSelected.dataset.value);
 
         if(suggestionSelected.dataset.value != 'No result found...') { //TODO Compare with custom label
             // Set input with selected value
@@ -160,14 +157,20 @@
         // Show spinner during registration process
         $A.util.toggleClass(component.find("mySpinner"), "slds-hide");
 
-        console.log(component.get("v.acc"));
-        console.log(component.get("v.contact"));
-
+        // If submission is do by a primary
+        if(component.get("v.isFredPrimaryUser") && component.get("v.userTypeToCreate") != -1) {
+            component.set("v.createPrimary", component.get("v.userTypeToCreate") == 1)
+        } 
        var action = component.get("c.registration");
         action.setParams({
             "acc":component.get("v.acc"),
             "con":component.get("v.contact"),
-            "selectedCustomerType":component.get("v.customerType")
+            "selectedCustomerType":component.get("v.customerType"),
+            "con":component.get("v.contact"),
+            "isGuest" : component.get("v.isGuest"),
+            "createPrimary":component.get("v.createPrimary"),
+            "userTypeToCreate":component.get("v.userTypeToCreate")
+
         });
 
         action.setCallback(this, function(a) {
@@ -175,7 +178,17 @@
             var result = a.getReturnValue();
             // redirect to a new page when registration is done
             if(result) {
-                window.location.href = "/identity/s/registrationcomplete?serviceName="+component.get("v.serviceName");
+                if(component.get("v.isGuest"))
+                    window.location.href = "/identity/s/registrationcomplete?serviceName=FRED";
+                else {
+                    var confirmationPage = '/registrationcomplete?serviceName=FRED';
+                    var urlEvent = $A.get("e.force:navigateToURL");
+                    urlEvent.setParams({
+                      "url": confirmationPage,
+                      "isredirect" :true
+                    });
+                    urlEvent.fire();
+                }
             }
             
             if(!result) {
@@ -188,23 +201,12 @@
                 });
                 toastEvent.fire();
             } 
-            console.log(result);
         });
         $A.enqueueAction(action);
     },
 
-    createAccount : function(component, event, helper) {
-        // Hide suggestion box
-        var resultDiv = component.find("agencies");
-        if($A.util.hasClass(resultDiv, 'slds-is-open')) {
-            $A.util.removeClass(resultDiv, 'slds-is-open');
-        }
-         component.set("v.userInput", "No account found");
-         component.set("v.createAccountRequested", true);
-    },
-
+  
     goToContactUs : function(component, event, helper) {
-        window.location.href = "http://www.iata.org/whatwedo/environment/Pages/FRED+release-subscription.aspx";
-
+        window.location.href = $A.get("$Label.c.OneId_FRED_ContactUs_Link");
     }
 })

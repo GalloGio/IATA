@@ -1,7 +1,8 @@
 <aura:component extends="c:Base" implements="flexipage:availableForAllPageTypes,forceCommunity:availableForAllPageTypes,force:hasRecordId,force:appHostable" access="global" controller="OneId_Fred_AccountSelection_CTRL">
-	
+
 	<aura:handler name="init" value="{!this}" action="{!c.doInit}"/>
   <aura:handler event="c:oneIdURLParams" action="{!c.renderPage}"/>
+  <aura:handler name="render" value="{!this}" action="{!c.onRender}"/>
 
 <!-- INTPUT -->
   <aura:attribute name="serviceName" type="String" />
@@ -15,22 +16,29 @@
   <aura:attribute name="userInput" type="String" access="private"/>
   <aura:attribute name="isValid" type="Boolean" default="false" access="private"/>
   <aura:attribute name="accountSelected" type="Boolean" default="false" access="private"/>
-  <aura:attribute name="createAccountRequested" type="Boolean" default="false" access="private"/>
 
-  <aura:attribute name="acc" type="Account" default="false" access="private"/>
+  <aura:attribute name="acc" type="Account" access="private"/>
   <aura:attribute name="contact" type="Contact" access="public"/>
   <aura:attribute name="searchPlaceholder" type="String" default="Please enter an account name"/>
 
   <aura:attribute name="suggestionBoxHeight" type="Integer" default="0"/>
   <aura:attribute name="totalResult" type="Integer" />
-  <aura:attribute name="isForSecondaryUsers" type="Boolean" default="false" />
+  <aura:attribute name="isFredPrimaryUser" type="Boolean" default="false" />
+  <aura:attribute name="createPrimary" type="Boolean" default="false" />
+  
+  <aura:attribute name="isGuest" type="Boolean" default="true" />
+  <aura:attribute name="paramLoaded" type="Boolean" default="false" />
+  <aura:attribute name="userTypeToCreate" type="Integer" default="-1"/> <!-- 1=PRIMARY or 2=SECONDARY -->
+
+  <aura:attribute name="verifierId" type="String" /> <!-- veridfier id in the url -->
+  
+
   
 <!-- OUTPUT -->
   <aura:method name="isComponentValid" action="{!c.isComponentValid}" description="Return true or false if input is valid" /> 
 
 <!-- BODY -->
 <div style="margin-bottom: 10px;">
-  <span style="font-size:5px; display:none;">Param ->{!v.serviceName}</span>
 
 	<div class="slds-col--padded slds-p-bottom--large slds-size--1-of-1 slds-medium-size--1-of-1 slds-large-size--1-of-1">    
 		<label class="slds-form-element__label"><abbr class="slds-required" title="required">*</abbr>Type Of User</label>
@@ -53,20 +61,18 @@
         <div class="slds-combobox slds-dropdown-trigger_click" aura:id="agencies" aria-expanded="true" aria-haspopup="listbox" role="combobox">
           <div class="slds-combobox__form-element slds-input-has-icon slds-input-has-icon_right" role="none">
            
-         <aura:if isTrue="{!v.isForSecondaryUsers}" >
-            <input aura:id="AI_userInput2" type="text" class="slds-input slds-combobox__input" id="combobox-unique-id-32" value="{!v.userInput}" disabled="true"/>
 
-          </aura:if>
-
-          <aura:if isTrue="{! !v.isForSecondaryUsers}" >
-            <input aura:id="AI_userInput" type="text" class="slds-input slds-combobox__input" id="combobox-unique-id-32" aria-autocomplete="list" aria-controls="listbox-unique-id" autocomplete="off" role="textbox" placeholder="{!v.searchPlaceholder}"  onkeyup="{!c.onKeyUp}" value="{!v.userInput}" data-value="agencies" disabled="{!disableInput}"/>
-
+         <aura:if isTrue="{!v.isFredPrimaryUser || v.verifierId != undefined}" >
+            <lightning:input  aura:id="AI_userInput2" type="text" class="slds-input slds-combobox__input" value="{!v.userInput}" disabled="true"/>
+            <aura:set attribute="else">
+               <input aura:id="AI_userInput" type="text" class="slds-input slds-combobox__input" id="combobox-unique-id-32" aria-autocomplete="list" aria-controls="listbox-unique-id" autocomplete="off" role="textbox" placeholder="{!v.searchPlaceholder}"  onkeyup="{!c.onKeyUp}" value="{!v.userInput}" data-value="agencies" disabled="{!disableInput}"/>
+            </aura:set>
           </aura:if>
 
           </div>
 
           <div id="listbox-unique-id" role="listbox">
-            <ul class="slds-listbox slds-listbox_vertical slds-dropdown slds-dropdown_fluid suggestionBox" role="presentation">
+            <ul aura:id="suggestionBoxID" id="suggestionBoxID" class="slds-listbox slds-listbox_vertical slds-dropdown slds-dropdown_fluid suggestionBox" role="presentation">
 
                 
 
@@ -83,15 +89,15 @@
 	                        </span>
 	                    </div>
 	                      <div class="slds-col slds-size_1-of-1 slds-large-size_1-of-2 slds-medium-size_1-of-2 slds-small-size_1-of-1">
-	                         <span class="slds-listbox__option-text slds-listbox__option-text_entity" onclick="{!c.suggestionSelected}" data-value="{!account.Name}" data-accountId="{!i}"><span class="slds-form-element__label columnTitle">IATA CODE: </span><span class="columnValue">{!account.Airline_designator__c} </span>
+	                         <span class="slds-listbox__option-text slds-listbox__option-text_entity" onclick="{!c.suggestionSelected}" data-value="{!account.Name}" data-row-index="{!index}"><span class="slds-form-element__label columnTitle">IATA CODE: </span><span class="columnValue">{!account.Airline_designator__c} </span>
 	                                            </span>
 	                      </div>
 	                      <div class="slds-col slds-size_1-of-1 slds-large-size_1-of-2 slds-medium-size_1-of-2 slds-small-size_1-of-1">
-	                        <span class="slds-listbox__option-text slds-listbox__option-text_entity" onclick="{!c.suggestionSelected}" data-value="{!account.Name}" data-accountId="{!i}"><span class="slds-form-element__label columnTitle">ICAO CODE: </span><span class="columnValue">{!account.ICAO_Member__r.ICAO_Iso_3_Code__c}</span>
+	                        <span class="slds-listbox__option-text slds-listbox__option-text_entity" onclick="{!c.suggestionSelected}" data-value="{!account.Name}" data-row-index="{!index}"><span class="slds-form-element__label columnTitle">ICAO CODE: </span><span class="columnValue">{!account.ICAO_Member__r.ICAO_Iso_3_Code__c}</span>
 	                                            </span>
 	                      </div>
 	                      <div class="slds-col slds-size_1-of-1 slds-large-size_1-of-2 slds-medium-size_1-of-2 slds-small-size_1-of-1">
-	                       <span class="slds-listbox__option-text slds-listbox__option-text_entity" onclick="{!c.suggestionSelected}" data-value="{!account.Name}" data-accountId="{!i}">
+	                       <span class="slds-listbox__option-text slds-listbox__option-text_entity" onclick="{!c.suggestionSelected}" data-value="{!account.Name}" data-row-index="{!index}">
 	                          <span class="slds-form-element__label columnTitle">ICAO MEMBER STATE: </span><span class="columnValue">{!account.ICAO_Member__r.State_Name__c}
 	                          <aura:if isTrue="{!account.ICAO_Member__r.ICAO_Iso_2_Code__c!=null}">
 	                            {!' ('+account.ICAO_Member__r.ICAO_Iso_2_Code__c+')'}
@@ -121,11 +127,11 @@
                     </span></span>
                 </div>
                   <div class="slds-col slds-size_1-of-1 slds-large-size_1-of-2 slds-medium-size_1-of-2 slds-small-size_1-of-1">
-                     <span class="slds-listbox__option-text slds-listbox__option-text_entity" onclick="{!c.suggestionSelected}" data-value="{!account.State_Name__c}" data-accountId="{!i}"><span class="slds-form-element__label columnTitle">ISO 2 CODE: </span><span class="columnValue"> {!account.ICAO_Iso_2_Code__c}
+                     <span class="slds-listbox__option-text slds-listbox__option-text_entity" onclick="{!c.suggestionSelected}" data-value="{!account.State_Name__c}" data-row-index="{!index}"><span class="slds-form-element__label columnTitle">ISO 2 CODE: </span><span class="columnValue"> {!account.ICAO_Iso_2_Code__c}
                                         </span></span>
                   </div>
                   <div class="slds-col slds-size_1-of-1 slds-large-size_1-of-2 slds-medium-size_1-of-2 slds-small-size_1-of-1">
-                    <span class="slds-listbox__option-text slds-listbox__option-text_entity" onclick="{!c.suggestionSelected}" data-value="{!account.State_Name__c}" data-accountId="{!i}"><span class="slds-form-element__label columnTitle">ISO 3 CODE: </span><span class="columnValue">{!account.ICAO_Iso_3_Code__c}
+                    <span class="slds-listbox__option-text slds-listbox__option-text_entity" onclick="{!c.suggestionSelected}" data-value="{!account.State_Name__c}" data-row-index="{!index}"><span class="slds-form-element__label columnTitle">ISO 3 CODE: </span><span class="columnValue">{!account.ICAO_Iso_3_Code__c}
                                         </span></span>
                   </div>
                  
@@ -140,9 +146,6 @@
 <aura:if isTrue="{!v.response.length &lt; v.totalResult}">
               <li role="presentation" class="slds-listbox__item lastRowInfo">
                   <div id="listbox-option-unique-id-01" class="slds-media slds-listbox__option slds-listbox__option_entity slds-listbox__option_has-meta contactUsSuggestion" role="option" >
-                    <!--
-                    <lightning:button variant="brand" label="Create Account" onclick="{! c.createAccount }" />
-                  -->
                   		<span class="find">First 20 results shown over {!v.totalResult}. Please refine your search</span>
                   </div>
                 </li>
@@ -169,15 +172,12 @@
 
 
 <aura:if isTrue="{!v.accountSelected}">
-  <div class="slds-col--padded slds-p-bottom--large slds-size--1-of-1 slds-medium-size--1-of-1 slds-large-size--1-of-1">
+  <div class="slds-col--padded slds-p-bottom--large slds-size--1-of-1 slds-medium-size--1-of-1 slds-large-size--1-of-1 buttonStyle">
        <lightning:button variant="brand" label="{!$Label.site.submit}" onclick="{! c.submit}" class="submitBt" />
     </div>
 
 </aura:if>
 
-<aura:if isTrue="{!v.createAccountRequested}">
- <c:SMH_AccountAssociation_CreateAccount />
-</aura:if>
 
 
   <div class="slds-col--padded slds-p-bottom--large slds-size--1-of-1 slds-medium-size--1-of-1 slds-large-size--1-of-1" style="{! 'height:'+v.suggestionBoxHeight+'px;'}">
