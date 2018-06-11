@@ -10557,33 +10557,33 @@ IF(IFG_PreProduction__c == 1, &apos;IFG PreProduction Access&apos;,
     <fields>
         <fullName>Services__c</fullName>
         <externalId>false</externalId>
-        <formula>IF(INCLUDES(Available_Services__c,&quot;ASD&quot;),IMAGE(&quot;/servlet/servlet.FileDownload?file=015w00000037Sln&quot; ,&quot;ASD&quot;,40,40),&quot;&quot;)
-&amp;&quot; &quot;&amp;
-IF(INCLUDES(Available_Services__c,&quot;BSPLink&quot;),IMAGE(&quot;/servlet/servlet.FileDownload?file=015w00000037SmC&quot; ,&quot;BSPLink&quot;,40,40),&quot;&quot;)
-&amp;&quot; &quot;&amp;
-IF(INCLUDES(Available_Services__c,&quot;CassLink&quot;),IMAGE(&quot;/servlet/servlet.FileDownload?file=015w00000037Smv&quot; ,&quot;CassLink&quot;,40,40),&quot;&quot;)
-&amp;&quot; &quot;&amp;
-IF(INCLUDES(Available_Services__c,&quot;SIS&quot;),IMAGE(&quot;/servlet/servlet.FileDownload?file=015w00000037SpQ&quot; ,&quot;SIS&quot;,40,40),&quot;&quot;)
-&amp;&quot; &quot;&amp;
-IF(ID_Card_Holder__c,IMAGE(&quot;/servlet/servlet.FileDownload?file=015w00000037Sne&quot; ,&quot;Id Card Holder&quot;,40,40),&quot;&quot;)
-&amp;&quot; &quot;&amp;
-IF(OR(INCLUDES(Available_Services__c,&quot;Treasury Dashboard&quot;),INCLUDES(Available_Services__c,&quot;Treasury Dashboard - Premium&quot;)),IMAGE(&quot;/servlet/servlet.FileDownload?file=015w00000037Som&quot; ,&quot;Treasury Dashboard&quot;,40,40),&quot;&quot;)
-&amp;&quot; &quot;&amp;
-IF(INCLUDES(Available_Services__c,&quot;MITA Agreements&quot;),IMAGE(&quot;/servlet/servlet.FileDownload?file=015w00000052zdM&quot; ,&quot;MITA Agreements&quot;,40,40),&quot;&quot;)
-&amp;&quot; &quot;&amp;
-IF(INCLUDES(Available_Services__c,&quot;AIRS / CAIRS Online Bulletin&quot;),IMAGE(&quot;/servlet/servlet.FileDownload?file=0151r000006DHlF&quot; ,&quot;AIRS / CAIRS Online Bulletin&quot;,40,40),&quot;&quot;)
-&amp;&quot; &quot;&amp;
-IF(INCLUDES(Available_Services__c,&quot;IATA Accreditation &amp; Changes&quot;),IMAGE(&quot;/servlet/servlet.FileDownload?file=0151r000006DHlA&quot; ,&quot;IATA Accreditation &amp; Changes&quot;,40,40),&quot;&quot;)
-&amp;&quot; &quot;&amp;
-IF(INCLUDES(Available_Services__c,&quot;Currency Center&quot;),IMAGE(&quot;/servlet/servlet.FileDownload?file=015w0000004yCw2&quot; ,&quot;Currency Center&quot;,40,40),&quot;&quot;)
-&amp;&quot; &quot;&amp;
-IF(INCLUDES(Available_Services__c,&quot;IATA EasyPay&quot;),IMAGE(&quot;/servlet/servlet.FileDownload?file=015w00000056QFS&quot; ,&quot;IATA EasyPay&quot;,40,40),&quot;&quot;)
-&amp;&quot; &quot;&amp;
-IF(INCLUDES(Available_Services__c,&quot;ICE – IATA Customer E-Statement&quot;),IMAGE(&quot;/servlet/servlet.FileDownload?file=015w0000004IwcT&quot; ,&quot;ICE – IATA Customer E-Statement&quot;,40,40),&quot;&quot;)
-&amp;&quot; &quot;&amp;
-IF(INCLUDES(Available_Services__c,&quot;Standards Setting Workspace&quot;),IMAGE(&quot;/servlet/servlet.FileDownload?file=015w0000005xvJ2&quot; ,&quot;Standards Setting Workspace&quot;,40,40),&quot;&quot;)
-&amp;&quot; &quot;&amp;
-IF(INCLUDES(Available_Services__c,&quot;Risk Profile and RHC&quot;),IMAGE(&quot;/servlet/servlet.FileDownload?file=015w0000006MxBK&quot; ,&quot;Risk Profile and RHC&quot;,40,40),&quot;&quot;)</formula>
+        <formula>IF(S_ASD__c&gt;0,IMAGE(&quot;/servlet/servlet.FileDownload?file=015w00000037Sln&quot; ,&quot;&quot;,40,40),&quot;&quot;)
+&amp;&quot; &quot;&amp; 
+IF(S_BSPlink__c&gt;0,IMAGE(&quot;/servlet/servlet.FileDownload?file=015w00000037SmC&quot; ,&quot;&quot;,40,40),&quot;&quot;)
+&amp;&quot; &quot;&amp; 
+IF(S_CASSlink__c&gt;0,IMAGE(&quot;/servlet/servlet.FileDownload?file=015w00000037Smv&quot; ,&quot;&quot;,40,40),&quot;&quot;)
+&amp;&quot; &quot;&amp; 
+IF(S_SIS__c&gt;0,IMAGE(&quot;/servlet/servlet.FileDownload?file=015w00000037SpQ&quot; ,&quot;&quot;,40,40),&quot;&quot;)
+&amp;&quot; &quot;&amp; 
+IF(ID_Card_Holder__c,IMAGE(&quot;/servlet/servlet.FileDownload?file=015w00000037Sne&quot; ,&quot;&quot;,40,40),&quot;&quot;)
+&amp;&quot; &quot;&amp; 
+IF(Service_TD_Basic__c + Service_TD_Premium__c&gt;0,IMAGE(&quot;/servlet/servlet.FileDownload?file=015w00000037Som&quot; ,&quot;&quot;,40,40),&quot;&quot;)
+&amp;&quot; &quot;&amp; 
+IF(MITA_Contact__c=TRUE,IMAGE(&quot;/servlet/servlet.FileDownload?file=015w00000052zdM&quot; ,&quot;&quot;,40,40),&quot;&quot;)
+&amp;&quot; &quot;&amp; 
+IF(S_EBulletin__c&gt;0,IMAGE(&quot;/servlet/servlet.FileDownload?file=0151r000006DHlF&quot; ,&quot;&quot;,40,40),&quot;&quot;)
+&amp;&quot; &quot;&amp; 
+IF(S_Accreditation_Changes__c&gt;0,IMAGE(&quot;/servlet/servlet.FileDownload?file=0151r000006DHlA&quot; ,&quot;&quot;,40,40),&quot;&quot;)
+&amp;&quot; &quot;&amp;  
+IF(S_Currency_Center__c&gt;0,IMAGE(&quot;/servlet/servlet.FileDownload?file=015w0000004yCw2&quot; ,&quot;&quot;,40,40),&quot;&quot;)
+&amp;&quot; &quot;&amp; 
+IF(S_EasyPay__c&gt;0,IMAGE(&quot;/servlet/servlet.FileDownload?file=015w00000056QFS&quot; ,&quot;&quot;,40,40),&quot;&quot;)
+&amp;&quot; &quot;&amp; 
+IF(S_ICE__c&gt;0,IMAGE(&quot;/servlet/servlet.FileDownload?file=015w0000004IwcT&quot; ,&quot;&quot;,40,40),&quot;&quot;)
+&amp;&quot; &quot;&amp; 
+IF(S_Standards_Setting_Workspace__c&gt;0,IMAGE(&quot;/servlet/servlet.FileDownload?file=015w0000005xvJ2&quot; ,&quot;&quot;,40,40),&quot;&quot;)
+&amp;&quot; &quot;&amp; 
+IF(S_Risk_RHC__c&gt;0,IMAGE(&quot;/servlet/servlet.FileDownload?file=015w0000006MxBK&quot; ,&quot;&quot;,40,40),&quot;&quot;)</formula>
         <label>Services</label>
         <required>false</required>
         <trackHistory>false</trackHistory>
