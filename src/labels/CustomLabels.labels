@@ -23387,6 +23387,30 @@ an IATA accredited agency, please press &quot;Back&quot; button and select anoth
         <value>https://iata--csp1idsre--c.cs88.content.force.com/servlet/servlet.ImageServer?id=0159E000000MCzW&amp;oid=00D9E0000001L6b&amp;lastMod=1522143388000</value>
     </labels>
     <labels>
+        <fullName>OneId_FRED_ContactUs_Link</fullName>
+        <categories>OneId</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>OneId_FRED_ContactUs_Link</shortDescription>
+        <value>http://www.iata.org/whatwedo/environment/Pages/FRED+release-subscription.aspx</value>
+    </labels>
+    <labels>
+        <fullName>OneId_FRED_Troubleshooting</fullName>
+        <categories>OneId</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>OneId_FRED_Troubleshooting</shortDescription>
+        <value>Troubleshooting</value>
+    </labels>
+    <labels>
+        <fullName>OneId_FRED_Troubleshooting_Link</fullName>
+        <categories>OneId</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>OneId_FRED_Troubleshooting_Link</shortDescription>
+        <value>https://fred.aws-sword.net/contact</value>
+    </labels>
+    <labels>
         <fullName>LabelsVF_IECInvoice</fullName>
         <language>en_US</language>
         <protected>false</protected>

@@ -1,22 +1,14 @@
 public without sharing class OneId_Fred_AccountSelection_CTRL {
-	private static final string Airline = 'Airline';
-    private static final string Agency = 'Agency';
-    private static final string GSA = 'GloballSalesAgent';
-    private static final string TIESS = 'TIESS';
-    private static final string NonIATA = 'NonIATAAgent';
-    private static final string OtherCompany = 'OtherCompany';
-    private static final string GeneralPublic = 'GeneralPublic';
 
     @AuraEnabled
-    public static boolean registration(Account acc, Contact con, String selectedCustomerType) {
+    public static boolean registration(Account acc, Contact con, String selectedCustomerType, Boolean isGuest, Boolean createPrimary, Integer userTypeToCreate) {
         System.debug('SMH register');
         System.debug('SMH acc '+acc);
         System.debug('SMH con '+con);
 
-        //TODO: Get service name
         String serviceName = 'FRED';
 
-        // TODO: Get language from URL / Browser
+        // FRED is english only
         String languageString = 'English';
 
        // Existing account selected => Create contact
@@ -33,24 +25,26 @@ public without sharing class OneId_Fred_AccountSelection_CTRL {
             // Define account fields
             acc.Legal_name__c = acc.Name;
 
-            // Define field specific to services
-            if(serviceName == 'ISSP'){
-                con.User_Portal_Status__c ='Pending Approval';
-                con.Community__c = 'ISS Customer Portal';
-            }
+            // no need for FRED
+            //con.User_Portal_Status__c ='Pending Approval';
+            con.Community__c = 'FRED Customer Portal';
 
-            if(serviceName == 'FRED'){
-                con.User_Portal_Status__c ='Pending Approval';
-                con.Community__c = 'FRED Customer Portal';
+            // Determine if is primary or a guest
+            system.debug('@@@ isGuest '+isGuest);
+            if(isGuest) {
+                // Get account and found any user that has primary user permission set
+                Integer nbOfPrimaryInAccount = [SELECT count() FROM PermissionSetAssignment WHERE PermissionSet.Name = 'FRED_Primary_User' AND Assignee.AccountId =: acc.Id];
+                createPrimary = nbOfPrimaryInAccount == 0; // Account doesn't have primary user so I became the unique primary user
+                system.debug('@@@ createPrimary? '+createPrimary);
             }
             
             Savepoint sp = Database.setSavepoint();
             try {
-              
-                String returnedString = LightningRegistrationProcess.createContactAndAccount(con,acc,selectedCustomerType,serviceName);
-                //String returnedString = createSecondary(con,acc,selectedCustomerType,serviceName);
-
-
+                String returnedString = '';
+                if(isGuest)
+                    returnedString = LightningRegistrationProcess.createContactAndAccount(con,acc,selectedCustomerType,serviceName);
+                else // Another way to user creation because Site.createUserPortal does not work with a user connected (secondary user created by primary user)
+                    returnedString = createSecondary(con,acc,selectedCustomerType,serviceName, userTypeToCreate);
 
                 System.debug('@SMH'+returnedString);
                 if (returnedString.contains('line:')){
@@ -58,22 +52,8 @@ public without sharing class OneId_Fred_AccountSelection_CTRL {
                     Database.rollback(sp);
                     return false;
                 } else {
-                    /*
-                    if(serviceName == 'ISSP'){
-                        permissionCSPortal(returnedString); // assign Permission Set CS Portal, give access to CS Portal Connected App
-                    }
-                    if(serviceName == 'ISSP' && isNewAcc == true){
-                        permissionNewAgency(returnedString);                    
-                        portalServiceNewAgency(con.Id);
-                        updatePortalUseProfile(returnedString);
-                    }
-                    */
-
-                    if(serviceName == 'FRED'){
-                        permissionCSPortal(returnedString); // assign Permission Set CS Portal, give access to CS Portal Connected App
-                    }
+                    permissionSetAssignenent(returnedString, createPrimary, userTypeToCreate); // assign Permission Set Fed user provisionning to grant access to Connected App
                 }
-                
 
             } catch(exception ex){
                 Database.rollback(sp);
@@ -85,7 +65,7 @@ public without sharing class OneId_Fred_AccountSelection_CTRL {
     }
 
 
-    public static String createSecondary(Contact con, Account acc, String customerType, String servName) {
+    public static String createSecondary(Contact con, Account acc, String customerType, String servName, Integer userTypeToCreate) {
         String serviceName = servName;
         RecordType rt = [Select Id From RecordType WHERE SObjectType ='Contact' AND DeveloperName='Standard_Contact'];
         if(con.RecordType == null) con.RecordTypeId = rt.Id;
@@ -136,8 +116,7 @@ public without sharing class OneId_Fred_AccountSelection_CTRL {
             else
                 thisNickname = con.lastName+Datetime.now().formatLong();
 
-            system.debug('NICKNAME 1: ' + thisNickname);
-            system.debug('NICKNAME 1 length: ' + thisNickname.length());
+       
             if (thisNickname.length() > 40){
                 system.debug('more than 40');
                 thisNickname = thisNickname.left(40);
@@ -153,29 +132,13 @@ public without sharing class OneId_Fred_AccountSelection_CTRL {
             User u = new User ( CommunityNickname= thisNickname , title=con.title, contactid = con.id, Firstname = con.firstname, lastname = con.lastname, emailencodingkey = 'UTF-8', localesidkey = 'en_US', email = con.email, username=ISSP_Utilities.buildPortalUserName(con.email), Alias = ISSP_Utilities.buildPortalUserName(con.email).left(5), timezonesidkey = 'America/Los_Angeles', languagelocalekey = 'en_US',Date_ToU_accepted__c = system.Now(), ToU_accepted__c = true, UID__c = UID);
             //User u = new User (CommunityNickname= thisNickname , contactid = con.id, Firstname = con.firstname, lastname = con.lastname, emailencodingkey = 'UTF-8', localesidkey = 'en_US', email = con.email, username=ISSP_Utilities.buildPortalUserName(con.email), languagelocalekey = 'en_US', Date_ToU_accepted__c = system.Now(), ToU_accepted__c = true);
            
-            if(servName == 'FRED') {
-                // JIRA ISI-51 + ISI-14: Self registration primary or secondary 
-                String profileID = '';
-                list<Profile> fredProfiles = [SELECT Id FROM profile WHERE name like '%Fred%' ORDER BY Name];
-                // Check if primary user exists on request account
-                list<User> primaryUsers = [SELECT ProfileId FROM User WHERE Contact.AccountId =: con.accountId AND Profile_Name__c like '%Primary%'];
-                if(primaryUsers.isEmpty()) {
-                   // Create primary as primary exists yet
-                   profileID = fredProfiles[0].Id;
-                } else {
-                    // Create secondary as primary exists
-                    profileID = fredProfiles[1].Id;
-                }
-                u.ProfileID = profileID;
-            }
-
-            
-            if(servName == 'ISSP' || servName == 'FRED')
-                u.Community__c = servName;
-           
+            // Set Fred profile
+            u.ProfileID = [SELECT Id FROM profile WHERE name = 'FRED Portal (Partner)' LIMIT 1][0].Id;
+            u.Community__c = servName;
 
             System.debug('User ' + u);
             String password = Comm_User_Helper.generateRandomString(6) + '1a';
+
             
 
             Database.DMLOptions dlo = new Database.DMLOptions();
@@ -183,19 +146,21 @@ public without sharing class OneId_Fred_AccountSelection_CTRL {
             Database.saveresult sr = Database.insert(u,dlo);
 
             String userId = u.Id;
+            System.setPassword(userId, password);
+            LightningRegistrationProcess.serviceName = 'FRED';
+            LightningRegistrationProcess.sendWelcomeEmail(con, u, password);
+
             return userId;
-            } catch (Exception e) {
+
+        } catch (Exception e) {
             return e.getMessage() + ' - line: ' + e.getLineNumber();
         }
-            
     }
 
-     @AuraEnabled
+    @AuraEnabled
     public Static void checkConAvailable (Contact con){
-        System.debug('CheckConAvailable: ' + con);
         RecordType rt = [Select Id From RecordType WHERE SObjectType ='Contact' AND DeveloperName='Standard_Contact'];        
         Contact [] ec = [Select id, email, AccountId, RecordType.Id FROM Contact WHERE email =:con.email AND AccountId =:con.AccountId LIMIT 1];
-        System.debug('Record Type: ' + rt);
         
         if(ec.size() > 0){
             System.debug('Update Contact');
@@ -209,32 +174,41 @@ public without sharing class OneId_Fred_AccountSelection_CTRL {
     }
 
     @Future
-    public static void permissionCSPortal(String userId){
+    public static void permissionSetAssignenent(String userId, Boolean createPrimary, Integer userTypeToCreate){
+        system.debug('FRED - userId ' + userId);
+        system.debug('FRED - createPrimary ' + createPrimary);
+        system.debug('FRED - userTypeToCreate ' + userTypeToCreate);
         if (userId != null && userId != '') {
-            PermissionSet ps = [SELECT Id FROM PermissionSet WHERE Name = 'FRED_Provisioning' LIMIT 1];
-            if(ps != null){
-                PermissionSetAssignment newAssignCS = new PermissionSetAssignment();
-                newAssignCS.AssigneeId = userId;
-                newAssignCS.PermissionSetId = ps.Id;
-                insert newAssignCS;
+            list<PermissionSet>  pss = [SELECT Id, Name FROM PermissionSet WHERE Name = 'FRED_Provisioning' OR Name='FRED_Primary_User' OR Name='FRED_SSO'];
+            if(! pss.isEmpty()){
+                // JIRA ISI-51 + ISI-14: Self registration primary => Add special permission set to grant delegated admin persmission
+                list<PermissionSetAssignment> assignment = new list<PermissionSetAssignment>();
+                for(PermissionSet ps : pss) {
+                    if((ps.Name == 'FRED_Primary_User' && createPrimary) || userTypeToCreate == 1) {
+                        assignment.add(
+                            new PermissionSetAssignment(
+                                AssigneeId = userId,
+                                PermissionSetId = ps.Id
+                            )
+                        );
+                    } else if(ps.Name == 'FRED_Provisioning') {
+                        // Launch user provisionnning by assigning the permission set => Out of the box
+                        assignment.add(
+                            new PermissionSetAssignment(
+                                AssigneeId = userId,
+                                PermissionSetId = ps.Id
+                            )
+                        );
+                    }
+                }
+                if(! assignment.isEmpty())
+                    insert assignment;
+
             }
         }
     }
 
-    @Future
-    public static void permissionNewAgency(String userId){
-        if (userId != null && userId != '') {
-            List <PermissionSet> permList = [SELECT Id FROM PermissionSet WHERE Name = 'ISSP_New_Agency_permission_set'];            
-            if (!permList.isEmpty()){
-                PermissionSetAssignment newAssign = new PermissionSetAssignment();
-                newAssign.AssigneeId = userId;
-                newAssign.PermissionSetId = permList[0].Id;
-                insert newAssign;
-            }
-        }
-    }
-
-
+   
     public class SearchWrap {
         @AuraEnabled
         public list<Account> accList {get; set;}
@@ -259,11 +233,64 @@ public without sharing class OneId_Fred_AccountSelection_CTRL {
     }
 
     @AuraEnabled
-    public static Account getPartnerAccount() {
-        User u = [SELECT AccountId FROM User WHERE Id =: UserInfo.getUserId()];
-        if(u.AccountId != null)
-            return [SELECT RecordType.DeveloperName,  RecordType.Name, Id, Name, IATACode__c,ICAO_designator__c,Airline_designator__c, ICAO_Member__r.State_Name__c, ICAO_Member__r.ICAO_Iso_2_Code__c, ICAO_Member__r.ICAO_Iso_3_Code__c, State_Name__c,ICAO_Iso_2_Code__c,ICAO_Iso_3_Code__c FROM Account WHERE Id =: u.AccountId LIMIT 1];
-        return null;
+    public static InitParam initParams(Boolean isVerifierInvitation, String invitationId) {
+        InitParam param = new InitParam();
+        param.isVerifierInvitation = isVerifierInvitation;
+
+        // is guest OR a connected partner user (like primare user)
+        Integer nb = [SELECT count() FROM User WHERE Name = 'identity Site Guest User' AND Id =: UserInfo.getUserId()];
+        Boolean isGuest = nb > 0;
+        param.isGuest = isGuest;
+        if(!isGuest) {
+            // Is a primary user connected?
+            Integer n = [SELECT Count() FROM PermissionSetAssignment WHERE PermissionSet.name = 'FRED_Primary_User' AND AssigneeId =: UserInfo.getUserId()];
+            param.isFredPrimaryUser = n > 0;
+            param.primaryUserId = UserInfo.getUserId();
+            
+
+            // Get account linked to primary user - To block account selection
+            User u = [SELECT AccountId FROM User WHERE Id =: UserInfo.getUserId()];
+            if(u!=null && u.AccountId != null) {
+                param.partnerAccount = [SELECT RecordType.DeveloperName,  RecordType.Name, Id, Name, IATACode__c,ICAO_designator__c,Airline_designator__c, ICAO_Member__r.State_Name__c, ICAO_Member__r.ICAO_Iso_2_Code__c, ICAO_Member__r.ICAO_Iso_3_Code__c, State_Name__c,ICAO_Iso_2_Code__c,ICAO_Iso_3_Code__c FROM Account WHERE Id =: u.AccountId LIMIT 1];
+
+                // To change when implemnting another primary
+                Integer nbOfPrimaryInAccount = [SELECT count() FROM PermissionSetAssignment WHERE PermissionSet.Name = 'FRED_Primary_User' AND Assignee.AccountId =: u.AccountId];
+                param.createPrimary = nbOfPrimaryInAccount == 0;
+            }
+        } else {
+            param.primaryUserId = null;
+            param.partnerAccount = null;
+
+            // Get info from invitation
+            if(isVerifierInvitation) {
+                list<Invitation__c> invitation = [SELECT  AccountId__c FROM Invitation__c WHERE Id =: invitationId];
+                if(! invitation.isEmpty()) {
+                    list<Account> verifierAccount = [SELECT Id, Name, RecordType.Name FROM Account WHERE Id =: invitation[0].AccountId__c]; 
+                    if(! verifierAccount.isEmpty()) {
+                        param.partnerAccount = verifierAccount[0];
+                    }
+                }
+            }
+            param.isFredPrimaryUser = false;
+            param.createPrimary = false;
+        }
+        
+        return param;
+    }
+
+    public class InitParam {
+        @AuraEnabled
+        Boolean isGuest {get; set;}
+        @AuraEnabled
+        Boolean isFredPrimaryUser {get; set;}
+        @AuraEnabled
+        String primaryUserId {get; set;}
+        @AuraEnabled
+        Account partnerAccount {get; set;}
+        @AuraEnabled
+        Boolean createPrimary {get; set;}
+        @AuraEnabled
+        Boolean isVerifierInvitation {get; set;}
     }
 
     
@@ -283,12 +310,16 @@ public without sharing class OneId_Fred_AccountSelection_CTRL {
         if(customerType=='Aircraft Operator') {
             queryStr = 'SELECT Id, Name, IATACode__c,ICAO_designator__c,Airline_designator__c, ICAO_Member__r.State_Name__c, ICAO_Member__r.ICAO_Iso_2_Code__c, ICAO_Member__r.ICAO_Iso_3_Code__c ';
             String queryStr2 = ' FROM Account WHERE';
-            queryStr2 += ' RecordType.DeveloperName = \'IATA_Airline\'';
+            //queryStr2 += ' RecordType.DeveloperName = \'IATA_Airline\'';
+            queryStr2 += ' (RecordType.DeveloperName = \'IATA_Airline\' OR RecordType.DeveloperName = \'Operator\' )';
             queryStr2 += ' AND (Name like \'%' + userInput + '%\'';
+            /*
+            // Jira ISI-46: Search only by commercial name for aircraft operator
             queryStr2 += ' OR Airline_designator__c like \'%' + userInput + '%\'';
             queryStr2 += ' OR ICAO_Member__r.State_Name__c like \'%' + userInput + '%\'';
-            queryStr2 += ' OR ICAO_Member__r.ICAO_Iso_3_Code__c like \'%' + userInput + '%\')';
-            
+            queryStr2 += ' OR ICAO_Member__r.ICAO_Iso_3_Code__c like \'%' + userInput + '%\'';
+            */
+            queryStr2 += ')';
             sw.totalAccListNotLimited = Database.countQuery('select count()'+queryStr2);
 
             queryStr += queryStr2;
@@ -308,241 +339,12 @@ public without sharing class OneId_Fred_AccountSelection_CTRL {
             queryStr += queryStr2;
             queryStr += ' LIMIT '+Label.OneId_AccountSearch_Limit; // Default limit is 20
         }
-
-
-        
-        
        
         list<Account> accs = new list<Account>();
         accs = Database.query(queryStr);
         system.debug(accs);
         sw.accList = accs;
         return sw;
-    }
-
-	@AuraEnabled
-    public static SearchWrapper searchAccount(String customerType, String countryID, map<String, String> filters) {
-        SearchWrapper sw = new SearchWrapper();
-
-        system.debug('filters'+filters);
-
-        // Record types definition
-        String recordTypeSearch = customerType;
-        if(customerType == Agency && filters.containsKey('hasIATACode') && filters.get('hasIATACode') == 'false')
-            recordTypeSearch = NonIATA;
-        set<string> recordTypesSet = ISSP_Constant.accountRecordTypeByUserType.get(recordTypeSearch);
-
-        // Query + filters
-        String queryStr = 'SELECT Id,IATACode__c,Field_Head_Office__c,Name,BillingStreet,BillingCity,BillingCountry, IATA_ISO_Country__r.Name, RecordType.DeveloperName, RecordType.Name, Airline_designator__c FROM Account WHERE ';
-        queryStr += ' RecordType.DeveloperName in :recordTypesSet';
-        if(customerType != Agency)
-            queryStr += ' AND IATA_ISO_Country__c = :countryID';
-        if(customerType == Airline) {
-            if(Boolean.valueOf(filters.get('hasDesignatorCode'))) {
-                if(filters.containsKey('designatorCode') &&  String.isNotBlank(filters.get('designatorCode'))) {
-                     queryStr += ' AND Airline_designator__c=\''+filters.get('designatorCode')+'\''; 
-                }
-                if(filters.containsKey('iataCode') && String.isNotBlank(filters.get('iataCode'))) {
-                     queryStr += ' AND (IATACode__c=\''+filters.get('iataCode')+'\' OR Airline_Prefix__c=\''+filters.get('iataCode')+'\')'; 
-                }
-            } else {
-                queryStr += ' AND Name LIKE \'%'+filters.get('accountName')+'%\'';
-                queryStr += ' AND Sector__c != \'General Public\'';
-            }
-        } else if(customerType == GSA) {
-            queryStr += ' AND Name like \'%' + filters.get('accountName') + '%\'';
-        } else if(customerType == Agency && filters.containsKey('hasIATACode') && filters.get('hasIATACode') == 'true'){
-            queryStr += ' AND (IATACode__c=\''+filters.get('iataCode')+'\' OR Airline_Prefix__c=\''+filters.get('iataCode')+'\')'; 
-        } else if(customerType == OtherCompany || (customerType == Agency && filters.containsKey('hasIATACode') && filters.get('hasIATACode') == 'false')) {
-            queryStr += ' AND Name like \'%' + filters.get('accountName') + '%\' AND Sector__c != \'General Public\'';
-        } else if(customerType == GeneralPublic) {
-            queryStr += ' AND Sector__c=\'General Public\'';
-        } else    // unknown type
-            return null;
-
-        system.debug('queryStr: '+queryStr);
-        list<Account> accList = new list<Account>();
-        try {
-            accList = Database.query(queryStr);
-            system.debug(accList);
-            sw.accountFound = !accList.isEmpty();
-            
-            //If other company add another option (to create new account)
-            if (customerType == OtherCompany && sw.accountFound) {
-                Account dummy = accList[accList.size()-1].clone(false,true);
-                dummy.Name = Label.ISSP_Create_New_Other_Account;
-                dummy.IATACode__c = 'Create New Account';
-                sw.acc = new Account(Name=filters.get('accountName'));
-                accList.add(dummy);
-                sw.showcreateother = true;
-            } //else
-               // showcreateother = false;
-
-        } catch (Exception e) {
-            return null;
-        }
-
-        if(customerType == Airline) {
-            if(! accList.isEmpty()) {
-                List <Account> accListVerified = new List <Account>();
-                List <Account> accListNotVerified = new List <Account>();
-                for (Account thisAccount : accList){
-                    if (thisAccount.RecordType.DeveloperName == 'Standard_Account'){
-                        accListNotVerified.add(thisAccount);
-                    }
-                    else{
-                        accListVerified.add(thisAccount);
-                    }
-                }
-                accList = null;
-                if (!accListVerified.isEmpty()){
-                    accList = accListVerified;
-                }
-                else{
-                    accList = accListNotVerified;
-                }
-                sw.accList = accList;
-                
-            } else {
-                system.debug('filters: ' + filters);
-                 if (filters.containsKey('hasDesignatorCode') && filters.get('hasDesignatorCode')== 'true') {
-                    queryStr = 'SELECT Id,IATACode__c,Field_Head_Office__c,Name,BillingStreet,BillingCity,BillingCountry, IATA_ISO_Country__r.Name, Top_Parent__c, Top_Parent__r.Name, Sector__c, Category__c, RecordType.Name, Airline_designator__c FROM Account WHERE ';
-                    queryStr += 'RecordType.DeveloperName = \'IATA_Airline\'';
-                    if (filters.containsKey('designatorCode') && String.isNotBlank(filters.get('designatorCode')))
-                        queryStr += ' AND Airline_designator__c=\'' + filters.get('designatorCode') + '\'';
-                    if (filters.containsKey('iataCode') && String.isNotBlank(filters.get('iataCode')) ){
-                        queryStr += ' AND (IATACode__c=\'' + filters.get('iataCode') + '\' OR Airline_Prefix__c=\'' + filters.get('iataCode') + '\')';
-                    }
-                    system.debug('queryStr2: ' + queryStr);
-                    try {
-                        accList = Database.query(queryStr);
-                    } catch (Exception e) {
-                         system.debug(e);
-
-                    }
-                    if (!accList.isEmpty()){
-                            Account acc = new Account();
-                            sw.HQAccount = accList[0];
-                            sw.msg = Label.ISSP_NoRecordsFoundBranch;
-                            sw.buttonLabel = Label.ISSP_Create_New_Airline_Branch;
-                            sw.showCreateAccount = true;
-                            
-                        if (accList[0].Top_Parent__c != null){
-                            acc.Name = accList[0].Top_Parent__r.Name;
-                            acc.Top_Parent__c = accList[0].Top_Parent__c;
-                            acc.ParentId = accList[0].Top_Parent__c;
-                            
-                        } else{
-                            acc.Name = accList[0].Name;
-                            acc.Top_Parent__c = accList[0].Id;
-                            acc.ParentId = accList[0].Id;
-                        }
-                       sw.acc = acc;
-                       sw.accList = accList;
-                        return sw;
-                    } else{
-                        sw.msg = Label.OneId_NoRecordsFoundGP;
-                        sw.accList = null;
-                        return sw;
-                    } 
-                } else {
-                    sw.showCreateAccount = true;
-                    sw.msg = Label.ISSP_NoRecordsFoundCreateStandardAirline;
-                    sw.buttonLabel = Label.ISSP_Create_New_Airline;
-                    sw.acc = new Account(Name=filters.get('accountName'));
-                    sw.accList = null;
-                    return sw;
-                }
-            }
-         } else if (customerType == OtherCompany){
-            if (!sw.accountFound){
-                sw.msg = Label.ISSP_NoRecordsFoundCreateAgency;
-                sw.buttonLabel = Label.OneId_CreateNewAccount;
-                sw.showCreateAccount = true;
-            }
-        } else if (customerType == Agency && filters.containsKey('hasIATACode') && filters.get('hasIATACode') == 'false'){
-            // isNotIATA
-            if (!sw.accountFound){
-                sw.acc = new Account(Name=filters.get('accountName'));
-                if (filters.get('agencyType') == 'cargo'){
-                    sw.acc.Sector__c = 'Cargo Agent';
-                    sw.acc.Category__c = 'Non-IATA Cargo Agent';
-                } else if (filters.get('agencyType') == 'travel'){
-                    sw.acc.Sector__c = 'Travel Agent';
-                    sw.acc.Category__c = 'Non-IATA Travel Agent';
-                }
-                sw.msg = Label.ISSP_NoRecordsFoundCreateAgency;
-                sw.buttonLabel = Label.ISSP_Create_New_Agency;
-                sw.showCreateAccount = true;
-            }
-        } else if (customerType == Agency && filters.containsKey('hasIATACode') && filters.get('hasIATACode') == 'true'){
-            if (!sw.accountFound){
-                sw.msg = Label.ISSP_NoRecordsFoundNext;
-            }
-        } else if (customerType == GSA){
-            if (!sw.accountFound){
-                sw.msg = Label.ISSP_NoRecordsFoundGSA;
-            }
-        } else if (customerType == OtherCompany){
-            if (!sw.accountFound){
-                sw.msg = Label.ISSP_NoRecordsFoundCreateAgency;
-                sw.buttonLabel = Label.OneId_CreateNewAccount;
-                sw.showCreateAccount = true;
-            }
-        } else if (customerType == GeneralPublic){
-            if (!sw.accountFound){
-                sw.msg = Label.ISSP_GeneralPublicNotFound;
-                sw.buttonLabel = 'NEXT TODO';
-                sw.showCreateAccount = true;
-            }
-        }
-        sw.accList = accList;
-        return sw; 
-    }
-
-    public class searchWrapper {
-        @AuraEnabled
-        public list<Account> accList {get; set;}
-        
-        @AuraEnabled
-        public Account HQAccount {get; set;}
-        @AuraEnabled
-        public Account acc {get; set;}
-        @AuraEnabled
-        public String msg {get; set;}
-        @AuraEnabled
-        public String buttonLabel {get; set;}
-        @AuraEnabled
-        public Boolean accountFound {get; set;}
-        @AuraEnabled
-        public Boolean showCreateAccount {get; set;}
-        @AuraEnabled
-        public Boolean showcreateother {get; set;}
-    }
-
-    @AuraEnabled
-    public static list<CountryPicklist> getISOCountries() {
-        list<CountryPicklist> listCountryISOCodeLMap = new list<CountryPicklist>();
-        for(IATA_ISO_Country__c iso:[select Id,Name, ISO_Code__c from IATA_ISO_Country__c order by Name]){
-            if (iso.Name != 'All Countries'){
-                listCountryISOCodeLMap.add(new CountryPicklist(iso.Name, iso.Id, iso.ISO_Code__c));
-            }
-        }
-        return listCountryISOCodeLMap;
-    }
-
-    public class CountryPicklist {
-        @AuraEnabled
-        public String label {get; set;}
-        @AuraEnabled
-        public String value {get; set;}
-        @AuraEnabled
-        public String iso2Code {get; set;}
-        public CountryPicklist(String l, String v, String i) {
-            label = l;
-            value = v;
-            iso2Code = i;
-        }
     }
 
     @AuraEnabled
@@ -567,10 +369,5 @@ public without sharing class OneId_Fred_AccountSelection_CTRL {
             label = l;
             value = v;
         }
-    }
-
-    @AuraEnabled
-    public static string register(String accountID) {
-        return 'Registration done';
     }
 }
