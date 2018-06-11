@@ -244,13 +244,13 @@ private class ServiceRenderedLogicTest {
 
         List<IATA_ISO_Country__c> countries = new List<IATA_ISO_Country__c>();
         
-        IATA_ISO_Country__c countryUS = new IATA_ISO_Country__c (Name = 'US', ISO_Code__c = 'US', ANG_Portal_Service__c = portalApp.Id);
+        IATA_ISO_Country__c countryUS = new IATA_ISO_Country__c (Name = 'US', ISO_Code__c = 'US', Airline_EasyPay_Opt_Out_Date__c = Date.today()-2);
         countries.add(countryUS);
-        IATA_ISO_Country__c countryES = new IATA_ISO_Country__c (Name = 'ES', ISO_Code__c = 'ES', ANG_Portal_Service__c = portalApp.Id);
+        IATA_ISO_Country__c countryES = new IATA_ISO_Country__c (Name = 'ES', ISO_Code__c = 'ES', Airline_EasyPay_Opt_Out_Date__c = Date.today()-2);
         countries.add(countryES);
-        IATA_ISO_Country__c countryPT = new IATA_ISO_Country__c (Name = 'PT', ISO_Code__c = 'PT', ANG_Portal_Service__c = portalApp.Id);
+        IATA_ISO_Country__c countryPT = new IATA_ISO_Country__c (Name = 'PT', ISO_Code__c = 'PT', Airline_EasyPay_Opt_Out_Date__c = Date.today()-2);
         countries.add(countryPT);
-        IATA_ISO_Country__c countryFR = new IATA_ISO_Country__c (Name = 'FR', ISO_Code__c = 'FR', ANG_Portal_Service__c = portalApp.Id);
+        IATA_ISO_Country__c countryFR = new IATA_ISO_Country__c (Name = 'FR', ISO_Code__c = 'FR', Airline_EasyPay_Opt_Out_Date__c = Date.today()-2);
         countries.add(countryFR);
         
         insert countries;
