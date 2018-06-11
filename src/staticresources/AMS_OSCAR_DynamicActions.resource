@@ -239,6 +239,26 @@ var dyn_functions = {
         sforce.console.getEnclosingPrimaryTabId(openSubtab);
     
     },
+    //FM AMSU-1
+	checkAccountHierarchyCorrection:function (arg) {
+
+            var changeTab = function(result){
+                /*if(result.success == true){
+                    alert('Tab opened sucessfully');
+                }*/
+            };
+
+            // Use the results primary tab id and open a new subtab
+            var openSubtab = function(result)
+            {            
+                sforce.console.openSubtab(result.id, '/apex/AMS_AccountHierarchySelection?Id='+arg, true, 'Account Hierarchy Selection', null, changeTab);    
+            };
+
+            //if(confirm('Selected corrections will be applied to the choosen agencies including legal name, address if changed, would you still like to proceed ?')){
+                sforce.console.getEnclosingPrimaryTabId(openSubtab);
+            //}
+       
+		},
     ANG_checkAccountHierarchy:function (arg) {
         var changeTab = function(result){
             /*if(result.success == true){

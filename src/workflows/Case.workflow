@@ -1271,6 +1271,10 @@
             <type>user</type>
         </recipients>
         <recipients>
+            <recipient>badanovam@iata.org</recipient>
+            <type>user</type>
+        </recipients>
+        <recipients>
             <recipient>bokom@iata.org</recipient>
             <type>user</type>
         </recipients>
@@ -1284,6 +1288,10 @@
         </recipients>
         <recipients>
             <recipient>girondoe@iata.org</recipient>
+            <type>user</type>
+        </recipients>
+        <recipients>
+            <recipient>guzmanro@iata.org</recipient>
             <type>user</type>
         </recipients>
         <recipients>
@@ -1327,6 +1335,14 @@
             <type>user</type>
         </recipients>
         <recipients>
+            <recipient>naumenkoy@iata.org</recipient>
+            <type>user</type>
+        </recipients>
+        <recipients>
+            <recipient>navar@iata.org</recipient>
+            <type>user</type>
+        </recipients>
+        <recipients>
             <recipient>ogandoi@iata.org</recipient>
             <type>user</type>
         </recipients>
@@ -1364,6 +1380,14 @@
         </recipients>
         <recipients>
             <recipient>suwal@iata.org</recipient>
+            <type>user</type>
+        </recipients>
+        <recipients>
+            <recipient>taverasr@iata.org</recipient>
+            <type>user</type>
+        </recipients>
+        <recipients>
+            <recipient>theryg@iata.org</recipient>
             <type>user</type>
         </recipients>
         <recipients>

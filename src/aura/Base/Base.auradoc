@@ -1,0 +1,8 @@
+<aura:documentation>
+	<aura:description>Documentation</aura:description>
+	<aura:example name="ExampleName" ref="exampleComponentName" label="Label">
+		The component has been created to retrieve the URL parameters.
+		We can extend this abstractcomponent with all the other that we want to work with the URL Paramenters.
+		As an example, we used on the OneIdHeader and OneIdFooter component.		
+	</aura:example>
+</aura:documentation>
