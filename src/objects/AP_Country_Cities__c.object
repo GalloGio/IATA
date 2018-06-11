@@ -33,5 +33,15 @@
         <unique>false</unique>
     </fields>
     <label>Airline Participation Country cities</label>
+    <listViews>
+        <fullName>All</fullName>
+        <columns>NAME</columns>
+        <columns>Country_ISO_Code__c</columns>
+        <columns>City__c</columns>
+        <columns>Operation__c</columns>
+        <filterScope>Everything</filterScope>
+        <label>All</label>
+        <language>en_US</language>
+    </listViews>
     <visibility>Public</visibility>
 </CustomObject>
