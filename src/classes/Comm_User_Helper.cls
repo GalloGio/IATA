@@ -136,6 +136,10 @@ global without sharing class Comm_User_Helper {
           profileName = ISSP_Constant.profilNameByUserTypeMap.get('User').get('Airline');
         }
         
+        if(con.account.Sector__c == TIP_Utils.ACCOUNT_SECTOR_FINANCIAL_INSTITUTION && con.account.Category__c == TIP_Utils.ACCOUNT_CATEGORY_PAYMENT_PROVIDER){
+            profileName = ISSP_Constant.profilNameByUserTypeMap.get('Admin').get('Other');
+        }
+        
         system.debug('profileName: ' + profileName);
         u.ProfileId = ISSP_Constant.profileIdByProfileNameMap.get(profileName);
         system.debug('u.ProfileId: ' + u.ProfileId);

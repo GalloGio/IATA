@@ -1,7 +1,0 @@
-<aura:documentation>
-	<aura:description>Documentation</aura:description>
-	<aura:example name="ExampleName" ref="exampleComponentName" label="Label">
-		This is the event used to deal with url parameters.
-		The event is called in the OneIdHeader, OneIdFooter and Base.
-	</aura:example>
-</aura:documentation>

@@ -18,7 +18,8 @@ public without sharing class OneId_AccountSearch {
 		System.debug(loggingLevel.FINE, '____ [cls OneId_AccountSearch - searchAccounts] filters - ' + filters);
 
 		Set<String> recordTypesSet = ISSP_Constant.accountRecordTypeByUserType.get(customerType);
-		if(customerType == 'Agency') recordTypesSet.addAll(ISSP_Constant.accountRecordTypeByUserType.get('NonIATAAgent'));
+		if(customerType == 'Agency')
+			recordTypesSet.addAll(ISSP_Constant.accountRecordTypeByUserType.get('NonIATAAgent'));
 
 		String fieldString = 'SELECT Id, '+String.join(fieldsToQuery, ', ');
         String limitString = ' LIMIT 20';
@@ -32,13 +33,15 @@ public without sharing class OneId_AccountSearch {
 		}
 
 		Set<String> nonGeneralTypes = new Set<String>{'Airline', 'Agency', 'OtherCompany'};
-		if(nonGeneralTypes.contains(customerType)) objectString += ' AND Sector__c != \'General Public\'';
+		if(nonGeneralTypes.contains(customerType))
+			objectString += ' AND Sector__c != \'General Public\'';
 		
 		List<String> filterString = new List<String>();
 		for(String field : fieldsToSearch){
 			filterString.add(field+ ' LIKE  \'%' + search + '%\'');
 		}
-		if(!filterString.isEmpty()) objectString += ' AND ('+String.join(filterString, ' OR ')+')';
+		if(!filterString.isEmpty())
+			objectString += ' AND ('+String.join(filterString, ' OR ')+')';
 		
 		System.debug(loggingLevel.FINE, '____ [cls OneId_AccountSearch - searchAccounts] recordTypesSet - ' + recordTypesSet);
 		System.debug(loggingLevel.FINE, '____ [cls OneId_AccountSearch - searchAccounts] query - ' + fieldString+objectString);
@@ -60,8 +63,7 @@ public without sharing class OneId_AccountSearch {
 				filterString_HQ.add(field+ ' LIKE  \'%' + search + '%\'');
 			}
 
-			if(!filterString_HQ.isEmpty())
-				objectString_HQ += ' AND ('+String.join(filterString_HQ, ' OR ')+')';
+			if(!filterString_HQ.isEmpty())	objectString_HQ += ' AND ('+String.join(filterString_HQ, ' OR ')+')';
 
 			System.debug(loggingLevel.FINE, '____ [cls OneId_AccountSearch - searchAccounts] query - ' + fieldString+objectString_HQ);
 			sw.accList = Database.query(fieldString+objectString_HQ+limitString);

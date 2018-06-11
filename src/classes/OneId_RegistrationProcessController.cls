@@ -92,36 +92,38 @@ public without sharing class OneId_RegistrationProcessController {
 
     @AuraEnabled
     public static Map<String,String> getAccountLabels() {
-        List<SObjectField> contactFields = new List<Schema.SObjectField> {
+        List<String> contactFields = new List<String> {
            // 'Id',
-            Account.BillingAddress,
-            Account.BillingCity,
-            Account.BillingCountry,
-            Account.BillingPostalCode,
-            Account.BillingState,
-            Account.BillingStreet,
-            Account.Category__c,
-            Account.Email__c,
-            Account.IATACode__c,
-            Account.Legal_name__c,
-            Account.Name,
-            Account.Sector__c,
-            Account.ShippingAddress,
-            Account.ShippingCity,
-            Account.ShippingCountry,
-            Account.ShippingPostalCode,
-            Account.ShippingState,
-            Account.ShippingStreet,
-            Account.TradeName__c,
-            Account.Website
+            'BillingAddress',
+            'BillingCity',
+            'BillingCountry',
+            'BillingPostalCode',
+            'BillingState',
+            'BillingStreet',
+            'Category__c',
+            'Email__c',
+            'IATACode__c',
+            'Legal_name__c',
+            'Name',
+            'Sector__c',
+            'ShippingAddress',
+            'ShippingCity',
+            'ShippingCountry',
+            'ShippingPostalCode',
+            'ShippingState',
+            'ShippingStreet',
+            'TradeName__c',
+            'Website'
         };
-
+        Map<String, SObjectField> accountFields = Schema.SObjectType.Account.fields.getMap();
         Map<String,String> labels = new Map<String,String>();
-        for (SObjectField f : contactFields) {
-            labels.put(f.getDescribe().getName(), f.getDescribe().getLabel());
+        for (String name : contactFields) {
+            SObjectField f = accountFields.get(name);
+            if (f!=null)
+				labels.put(f.getDescribe().getName(), f.getDescribe().getLabel());
         }
         return labels;
-    }
+    } 
 
     @AuraEnabled
     public static List<String> getContactJobFunctionValues(){
@@ -335,7 +337,30 @@ public without sharing class OneId_RegistrationProcessController {
                 if(! String.isBlank(acc.IATA_ISO_Shipping_Country__c))
                     con.IATA_ISO_Shipping_Country__c = acc.IATA_ISO_Shipping_Country__c;
             }
-            checkConAvailable(con);
+
+            // TIP PORTAL ACCESS ASSIGNMENT
+            if(acc.Sector__c == TIP_Utils.ACCOUNT_SECTOR_FINANCIAL_INSTITUTION && acc.Category__c == TIP_Utils.ACCOUNT_CATEGORY_PAYMENT_PROVIDER){
+                con.Primary_Contact__c = true;
+                con.User_Portal_Status__c = 'Approved Admin';
+                
+                checkConAvailable(con);
+
+                con.account=acc;
+                //TIP-16 - Assign TIP Portal Service
+                Id appListId;
+                ISSP_Portal_Service_Ids__c serviceIdInstance = ISSP_Portal_Service_Ids__c.getInstance();
+                if (serviceIdInstance != null && !String.isBlank(serviceIdInstance.TIP_Portal_Service_Id__c)){
+                        appListId = serviceIdInstance.TIP_Portal_Service_Id__c;
+
+                    Portal_Application_Right__c newRight = new Portal_Application_Right__c();
+                    newRight.Contact__c = con.Id;
+                    newRight.Right__c = 'Access Granted';
+                    newRight.Portal_Application__c = appListId;
+                    insert newRight;
+               }
+            }else{
+                checkConAvailable(con);
+            }
 
 
             String thisNickname;
