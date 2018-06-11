@@ -532,7 +532,7 @@
                     <apex:inputHidden value="{!newFormDaily.RecordTypeId}" />
                     <apex:inputHidden value="{!newFormDaily.User__c}" />
                     <apex:inputHidden value="{!newFormDaily.Opt_in__c}" />
-                    <apex:actionFunction name="apClearAll" action="{!clearAll}"/>
+                    <apex:actionFunction name="apClearAllDaily" action="{!clearAllDaily}"/>
 
                     
                    
@@ -574,7 +574,7 @@
                                                     <apex:outputPanel rendered="{!newFormDaily.Opt_in__c}">
                                                         <apex:outputLabel value="{!$Label.ISSP_AMS_eBulletin_Clear_All}" for="clearAll"/>
                                                         &nbsp;&nbsp;
-                                                        <input type="checkbox" name="clearAll" id="clearAll" onchange="clearAllFun(); apClearAll();"/>
+                                                        <input type="checkbox" name="clearAll" id="clearAll" onchange="clearAllFun(); apClearAllDaily();"/>
                                                     </apex:outputPanel>
                                                 </apex:pageBlockSection>    
                                                     
@@ -862,7 +862,7 @@
                     <apex:inputHidden value="{!newFormWeekly.RecordTypeId}" />
                     <apex:inputHidden value="{!newFormWeekly.User__c}" />
                     <apex:inputHidden value="{!newFormWeekly.Opt_in__c}" />
-                    <apex:actionFunction name="apClearAll" action="{!clearAll}"/>
+                    <apex:actionFunction name="apClearAllWeekly" action="{!clearAllWeekly}"/>
                     
                     
                         <apex:pageBlock id="AMSBlock_step1_2" mode="edit" rendered="{!isStep1_2}">
@@ -884,7 +884,7 @@
                                                         <apex:outputPanel rendered="{!newFormWeekly.Opt_in__c}">
                                                             <apex:outputLabel value="{!$Label.ISSP_AMS_eBulletin_Clear_All}" for="clearAll"/>
                                                             &nbsp;&nbsp;
-                                                            <input type="checkbox" name="clearAll" id="clearAll" onchange="clearAllFun(); apClearAll();"/>
+                                                            <input type="checkbox" name="clearAll" id="clearAll" onchange="clearAllFun(); apClearAllWeekly();"/>
                                                         </apex:outputPanel>
                                                 </apex:pageBlockSection>    
                                             </apex:pageBlockSection> 

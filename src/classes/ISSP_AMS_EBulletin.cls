@@ -1245,17 +1245,33 @@ public with sharing class ISSP_AMS_EBulletin {
     }
 
     /*** AMSU-62 ***/
-    public PageReference clearAll() {
+    public PageReference clearAllDaily() {
         dailyCountrySelected = new List<SelectOption>();
-        weeklyCountrySelected = new List<SelectOption>();
         dailyCountrySelectAll = false;
+
+        Id userId = Userinfo.getUserId();
+        TimeZone tz = UserInfo.getTimeZone();
+        Boolean editDaily = newFormDaily.Opt_in__c;
+        Id recordId = newFormDaily.Id;
+
+        newFormDaily = new AMS_eBulletin_Profile__c(Id= recordId, Opt_in__c= editDaily, RecordTypeId= DAILY_RECORD_TYPE_ID, 
+            User__c= userId, TimeZone__c= tz.toString());
+
+        return null;
+    }
+
+    public PageReference clearAllWeekly() {
+        weeklyCountrySelected = new List<SelectOption>();
         weeklyCountrySelectAll = false;
-        newFormDaily.Area_1__c = false;
-        newFormDaily.Area_2__c = false;
-        newFormDaily.Area_3__c = false;
-        newFormWeekly.Area_1__c = false;
-        newFormWeekly.Area_2__c = false;
-        newFormWeekly.Area_3__c = false;
+
+        Id userId = Userinfo.getUserId();
+        TimeZone tz = UserInfo.getTimeZone();
+        Boolean editWeekly = newFormWeekly.Opt_in__c;
+        Id recordId = newFormWeekly.Id;
+        
+        newFormWeekly = new AMS_eBulletin_Profile__c(Id= recordId, Opt_in__c= editWeekly, RecordTypeId= WEEKLY_RECORD_TYPE_ID, 
+            User__c= userId, TimeZone__c= tz.toString());
+
         return null;
     }
 
