@@ -1,0 +1,35 @@
+.THIS .headerRow {
+    background-color: #0E4277;
+    font-weight: bold;
+    color:white;
+}
+
+.THIS .tableContainer{
+	max-height: 400px;
+	overflow-y: auto;
+}
+
+.THIS .slds-listbox__option:hover{
+    background-color: #d2d2d2;
+}
+
+.THIS .lastRow {
+	background-color: #00305b;
+	color:white;
+	font-size: 12px;
+    font-style: italic;
+    padding: 2px 6px;
+}
+
+.THIS .lastRow:hover {
+	background-color: black;
+	color:white;
+}
+.THIS .lastRow  span {
+	color: #00aeef !important;
+	cursor: pointer;
+	text-decoration: underline;
+}
+.THIS .lastRow  a {
+	color: #00aeef !important;
+}
