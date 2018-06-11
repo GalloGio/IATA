@@ -14378,6 +14378,13 @@ Select at least one authorised signatory, and choose the Financial Assessment co
         <value>Enable DAILY eBulletin</value>
     </labels>
     <labels>
+        <fullName>ISSP_AMS_eBulletin_Clear_All</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_AMS_eBulletin_Clear_All</shortDescription>
+        <value>Clear All Criteria</value>
+    </labels>
+    <labels>
         <fullName>ISSP_AMS_eBulletin_DAILY_Setup</fullName>
         <categories>ISSP, Portal, AMS, E-Bulletin</categories>
         <language>en_US</language>

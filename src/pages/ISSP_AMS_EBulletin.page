@@ -457,6 +457,16 @@
             }
         } );
 
+        function clearAllFun() {
+            $('input[type="checkbox"]:not([id$="WeeklyOptOut"], [id$="DailyOptOut2"], [id$="clearAll"], [id$="DailyOptOut"])').each(function(index) {
+                if($(this).is(":checked")) {
+                    $(this).click();
+                }
+            });
+
+            $('[id$="clearAll"]').removeAttr('checked');
+        }
+
    
     </script>
 
@@ -522,6 +532,7 @@
                     <apex:inputHidden value="{!newFormDaily.RecordTypeId}" />
                     <apex:inputHidden value="{!newFormDaily.User__c}" />
                     <apex:inputHidden value="{!newFormDaily.Opt_in__c}" />
+                    <apex:actionFunction name="apClearAll" action="{!clearAll}"/>
 
                     
                    
@@ -559,6 +570,11 @@
                                                             <apex:actionSupport action="{!saveAMSFormAndStay}" event="onchange" reRender="AMSBlock_step1_1" id="optout1" oncomplete="toggleToolTip();"/>
                                                         </apex:inputField>&nbsp;&nbsp;
                                                         <!-- <apex:outputLabel value="{!$Label.ISSP_AMS_eBulletin_DAILY_Bulletin}" for="DailyOptOut"/> -->
+                                                    </apex:outputPanel>
+                                                    <apex:outputPanel rendered="{!newFormDaily.Opt_in__c}">
+                                                        <apex:outputLabel value="{!$Label.ISSP_AMS_eBulletin_Clear_All}" for="clearAll"/>
+                                                        &nbsp;&nbsp;
+                                                        <input type="checkbox" name="clearAll" id="clearAll" onchange="clearAllFun(); apClearAll();"/>
                                                     </apex:outputPanel>
                                                 </apex:pageBlockSection>    
                                                     
@@ -663,7 +679,7 @@
                                                 <table width="100%">
                                                 <tr>
                                                     <td width="40%" >
-                                                        <apex:inputCheckBox value="{!dailyCountrySelectAll}" label="{!$Label.ISSP_AMS_eBulletin_Country_SelectAll}" rendered="{!IF(NOT(newFormDaily.Opt_in__c) ,'false','true')}">
+                                                        <apex:inputCheckBox id="selectAll" value="{!dailyCountrySelectAll}" label="{!$Label.ISSP_AMS_eBulletin_Country_SelectAll}" rendered="{!IF(NOT(newFormDaily.Opt_in__c) ,'false','true')}">
                                                             <apex:actionSupport event="onchange" action="{!dailyCountrySelectAll}"  id="cbSAd"/>
                                                         </apex:inputCheckbox>
                                                     </td>
@@ -846,7 +862,7 @@
                     <apex:inputHidden value="{!newFormWeekly.RecordTypeId}" />
                     <apex:inputHidden value="{!newFormWeekly.User__c}" />
                     <apex:inputHidden value="{!newFormWeekly.Opt_in__c}" />
-
+                    <apex:actionFunction name="apClearAll" action="{!clearAll}"/>
                     
                     
                         <apex:pageBlock id="AMSBlock_step1_2" mode="edit" rendered="{!isStep1_2}">
@@ -865,6 +881,11 @@
                                                             </apex:inputField>&nbsp;&nbsp;
                                                             <!-- <apex:outputLabel value="{!$Label.ISSP_AMS_eBulletin_WEEKLY_Bulletin}" for="WeeklyOptOut"/> -->
                                                     </apex:outputPanel>
+                                                        <apex:outputPanel rendered="{!newFormWeekly.Opt_in__c}">
+                                                            <apex:outputLabel value="{!$Label.ISSP_AMS_eBulletin_Clear_All}" for="clearAll"/>
+                                                            &nbsp;&nbsp;
+                                                            <input type="checkbox" name="clearAll" id="clearAll" onchange="clearAllFun(); apClearAll();"/>
+                                                        </apex:outputPanel>
                                                 </apex:pageBlockSection>    
                                             </apex:pageBlockSection> 
                                             
@@ -964,7 +985,7 @@
                                                 <table width="100%">
                                                 <tr>
                                                     <td width="40%">
-                                                        <apex:inputCheckBox value="{!weeklyCountrySelectAll}" label="{!$Label.ISSP_AMS_eBulletin_Country_SelectAll}" rendered="{!IF(NOT(newFormWeekly.Opt_in__c) ,'false','true')}">
+                                                        <apex:inputCheckBox id="selectAll" value="{!weeklyCountrySelectAll}" label="{!$Label.ISSP_AMS_eBulletin_Country_SelectAll}" rendered="{!IF(NOT(newFormWeekly.Opt_in__c) ,'false','true')}">
                                                             <apex:actionSupport event="onchange" action="{!weeklyCountrySelectAll}" reRender="weeklyCountry" id="cbSAw"/>
                                                         </apex:inputCheckbox>
                                                     </td>

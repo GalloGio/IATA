@@ -1244,4 +1244,19 @@ public with sharing class ISSP_AMS_EBulletin {
         return isocountry;
     }
 
+    /*** AMSU-62 ***/
+    public PageReference clearAll() {
+        dailyCountrySelected = new List<SelectOption>();
+        weeklyCountrySelected = new List<SelectOption>();
+        dailyCountrySelectAll = false;
+        weeklyCountrySelectAll = false;
+        newFormDaily.Area_1__c = false;
+        newFormDaily.Area_2__c = false;
+        newFormDaily.Area_3__c = false;
+        newFormWeekly.Area_1__c = false;
+        newFormWeekly.Area_2__c = false;
+        newFormWeekly.Area_3__c = false;
+        return null;
+    }
+
 }
