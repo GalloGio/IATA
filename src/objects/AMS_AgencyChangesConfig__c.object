@@ -3,6 +3,17 @@
     <customSettingsType>List</customSettingsType>
     <enableFeeds>false</enableFeeds>
     <fields>
+        <fullName>Process__c</fullName>
+        <externalId>false</externalId>
+        <inlineHelpText>identify if the configuration is visible for AMS, CNS R or CNS C</inlineHelpText>
+        <label>Process</label>
+        <length>50</length>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
         <fullName>TCA_Application_withdrawal__c</fullName>
         <description>Change Code to be applied after application withdrawal</description>
         <externalId>false</externalId>
