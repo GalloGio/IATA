@@ -34,7 +34,9 @@ public without sharing class OneIdLightningLoginFormController {
                                String startUrl,
                                String serviceName) {
         User oneUser;
-        String pageLink='';        
+        String pageLink='';
+        String fredSystemURL;
+        PageReference pageRef;        
         //Clear spaces
         username = (null != username) ? username.trim() : username;
                                    
@@ -89,17 +91,26 @@ public without sharing class OneIdLightningLoginFormController {
             if (relayState!=null)
                 pageLink = '/ISSP_Homepage?kaviURL='+ relayState.remove('https://').remove('http://');
             */
-            
-            
                 
             username=null != oneUser ? oneUser.Username : username;
             system.debug('pageLink: ' + pageLink);
+            system.debug('serviceName '+serviceName);
             system.debug('Used Username: '+username);
             
             //login in siteCompleteUrl
             ApexPages.PageReference lgn = Site.login(username, password, pageLink);
             
+            if(serviceName == 'FRED'){                
+                if(ISSP_CS__c.getValues('Fred_System').value__c != null){
+                    fredSystemURL = String.ValueOF(ISSP_CS__c.getValues('Fred_System').value__c);                    
+                    lgn = new PageReference(fredSystemURL);                    
+                }
+                    
+            }
+
             system.debug('page reference return from login: '+lgn);
+
+
                         
             List<User> userListConfirmTempPassword = [SELECT Id, ToU_Accepted__c, UID__c, LastPasswordChangeDate , Email, ContactId
                                 //X2FA_Session__c, TD_User__c
@@ -113,8 +124,9 @@ public without sharing class OneIdLightningLoginFormController {
             }
             
             //redirect to startUrl or some other page returned from the login 
-            //for different login cases scenarios
-            aura.redirect(lgn);
+            //for different login cases scenarios                
+                aura.redirect(lgn);    
+            
             
             //return null in case of login success
             return null;
@@ -335,120 +347,4 @@ public without sharing class OneIdLightningLoginFormController {
         Auth.AuthConfiguration authConfig = new Auth.AuthConfiguration(networkId,'');
         return authConfig;
     }
-	
-	//EM - To be removed
-	public static void fakemethod () {
-		if (Test.isRunningTest()) {
-			Integer i=0;
-			i=0;
-			i=0;
-			i=0;
-			i=0;
-			i=0;
-			i=0;
-			i=0;
-			i=0;
-			i=0;
-			i=0;
-			i=0;
-			i=0;
-			i=0;
-			i=0;
-			i=0;
-			i=0;
-			i=0;
-			i=0;
-			i=0;
-			i=0;
-			i=0;
-			i=0;
-			i=0;
-			i=0;
-			i=0;
-			i=0;
-			i=0;
-			i=0;
-			i=0;
-			i=0;
-			i=0;
-			i=0;
-			i=0;
-			i=0;
-			i=0;
-			i=0;
-			i=0;
-			i=0;
-			i=0;
-			i=0;
-			i=0;
-			i=0;
-			i=0;
-			i=0;
-			i=0;
-			i=0;
-			i=0;
-			i=0;
-			i=0;
-			i=0;
-			i=0;
-			i=0;
-			i=0;
-			i=0;
-			i=0;
-			i=0;
-			i=0;
-			i=0;
-			i=0;
-			i=0;
-			i=0;
-			i=0;
-			i=0;
-			i=0;
-			i=0;
-			i=0;
-			i=0;
-			i=0;
-			i=0;
-			i=0;
-			i=0;
-			i=0;
-			i=0;
-			i=0;
-			i=0;
-			i=0;
-			i=0;
-			i=0;
-			i=0;
-			i=0;
-			i=0;
-			i=0;
-			i=0;
-			i=0;
-			i=0;
-			i=0;
-			i=0;
-			i=0;
-			i=0;
-			i=0;
-			i=0;
-			i=0;
-			i=0;
-			i=0;
-			i=0;
-			i=0;
-			i=0;
-			i=0;
-			i=0;
-			i=0;
-			i=0;
-			i=0;
-			i=0;
-			i=0;
-			i=0;
-			i=0;
-			i=0;
-			i=0;
-		}
-
-	}
 }

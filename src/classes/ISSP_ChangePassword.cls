@@ -175,14 +175,19 @@ public with sharing class ISSP_ChangePassword {
     public Pagereference getCheckProvisioning(){
         
         PageReference pageRef;
+        String fredSystemURL;
+
+        if(ISSP_CS__c.getValues('Fred_System').value__c != null)
+            fredSystemURL = String.ValueOF(ISSP_CS__c.getValues('Fred_System').value__c);        
+
         provUser = [Select Id, Username, LastLoginDate,UID__c, ByPassValidationRule__c from user where id =:UserInfo.getUserId()];
-        system.debug('aqui provUser.ByPassValidationRule__c ' +provUser.ByPassValidationRule__c + ' statusPoller ' + statusPoller);
+        
         if(provUser.ByPassValidationRule__c == false){
             statusPoller = true;
             pageRef = null;            
         }else{
             statusPoller = false;
-            pageRef = new PageReference('https://barney.aws-sword.net/security/sf/login');                        
+            pageRef = new PageReference(fredSystemURL);                        
         }
 
         return pageRef;
