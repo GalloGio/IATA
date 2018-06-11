@@ -3873,6 +3873,14 @@ Message: {2}</value>
         <value>Generate a quote</value>
     </labels>
     <labels>
+        <fullName>Generic_Sanctions_Message</fullName>
+        <categories>ISSP_Login, s9</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Generic_Sanctions_Message</shortDescription>
+        <value>Your computer IP has been identified as sourcing from one of the countries listed as embargoed by U.S. authorities.&lt;br/&gt;The platform supporting our  Portal complies with this U.S. regulations and thus, we are currently unable to provide access to Portal from your current IP address.&lt;br/&gt;Click &lt;a href=&quot;http://www.iata.org/customer-portal/Pages/contactus-v2.aspx&quot; &gt;here&lt;/a&gt; to contact your regional IATA office.</value>
+    </labels>
+    <labels>
         <fullName>GetQuoteConfirmationMsg</fullName>
         <categories>IEC</categories>
         <language>en_US</language>
@@ -3932,8 +3940,24 @@ You will receive an email with a copy of your quote or you can retrieve the quot
         <shortDescription>Home</shortDescription>
         <value>Home</value>
     </labels>
-	<labels>
-	<fullName>ICAddressDoctor_adns</fullName>
+    <labels>
+        <fullName>Home_Page_New_Release_Msg</fullName>
+        <categories>Ecommerce</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Home Page New Release Msg.</shortDescription>
+        <value>IATA offers over 400 titles consisting of standards, manuals and guidelines that cover a variety of aviation topics, from Safety, Passenger, Cargo, to Security and more.
+Ensuring that the industry adapts and adheres to these global standards and recommended practices underpins a safe, secure, and integrated global air transport system.</value>
+    </labels>
+    <labels>
+        <fullName>IATA_Alpha</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>IATA Alpha/Numeric Code</shortDescription>
+        <value>IATA Alpha/Numeric Code</value>
+    </labels>
+    <labels>
+        <fullName>ICAddressDoctor_adns</fullName>
         <categories>1ID</categories>
         <language>en_US</language>
         <protected>false</protected>
@@ -3971,22 +3995,6 @@ You will receive an email with a copy of your quote or you can retrieve the quot
         <protected>false</protected>
         <shortDescription>ICAddressDoctor_url</shortDescription>
         <value>https://validator5.addressdoctor.com/webservice5/v4/addressvalidation.asmx</value>
-    </labels>
-    <labels>
-        <fullName>Home_Page_New_Release_Msg</fullName>
-        <categories>Ecommerce</categories>
-        <language>en_US</language>
-        <protected>false</protected>
-        <shortDescription>Home Page New Release Msg.</shortDescription>
-        <value>IATA offers over 400 titles consisting of standards, manuals and guidelines that cover a variety of aviation topics, from Safety, Passenger, Cargo, to Security and more.
-Ensuring that the industry adapts and adheres to these global standards and recommended practices underpins a safe, secure, and integrated global air transport system.</value>
-    </labels>
-    <labels>
-        <fullName>IATA_Alpha</fullName>
-        <language>en_US</language>
-        <protected>false</protected>
-        <shortDescription>IATA Alpha/Numeric Code</shortDescription>
-        <value>IATA Alpha/Numeric Code</value>
     </labels>
     <labels>
         <fullName>ICE_Portal_Service</fullName>
@@ -20016,6 +20024,13 @@ If you continue to experience issues registering for the CNS Customer Portal the
         <value>Ongoing TIP Requests</value>
     </labels>
     <labels>
+        <fullName>ISSP_OperationalCalendar_Reset</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_OperationalCalendar_Reset</shortDescription>
+        <value>Reset</value>
+    </labels>
+    <labels>
         <fullName>ISSP_Opt_In</fullName>
         <categories>ISSP, DDS</categories>
         <language>en_US</language>
@@ -21558,14 +21573,6 @@ If you want to reset your password, go back to login screen and use &quot;forgot
         <protected>false</protected>
         <shortDescription>ISSP_Sanctions_Message</shortDescription>
         <value>Your computer IP has been identified as sourcing from one of the countries listed as embargoed by U.S. authorities.&lt;br/&gt;The platform supporting our Customer Portal complies with this U.S. regulations and thus, we are currently unable to provide access to Customer Portal from your current IP address.&lt;br/&gt;Click &lt;a href=&quot;http://www.iata.org/customer-portal/Pages/contactus-v2.aspx&quot; &gt;here&lt;/a&gt; to contact your regional IATA office.</value>
-    </labels>
-    <labels>
-        <fullName>Generic_Sanctions_Message</fullName>
-        <categories>ISSP_Login, s9</categories>
-        <language>en_US</language>
-        <protected>false</protected>
-        <shortDescription>Generic_Sanctions_Message</shortDescription>
-        <value>Your computer IP has been identified as sourcing from one of the countries listed as embargoed by U.S. authorities.&lt;br/&gt;The platform supporting our  Portal complies with this U.S. regulations and thus, we are currently unable to provide access to Portal from your current IP address.&lt;br/&gt;Click &lt;a href=&quot;http://www.iata.org/customer-portal/Pages/contactus-v2.aspx&quot; &gt;here&lt;/a&gt; to contact your regional IATA office.</value>
     </labels>
     <labels>
         <fullName>ISSP_Satisfactory</fullName>
@@ -24476,14 +24483,6 @@ msgErrorRenewalOrderExpired:Your renewal notification order link is either  expi
         <value>Account Association</value>
     </labels>
     <labels>
-        <fullName>OneId_Email_Header_Identity</fullName>
-        <categories>OneId</categories>
-        <language>en_US</language>
-        <protected>false</protected>
-        <shortDescription>OneId_Email_Header_Identity</shortDescription>
-        <value>https://iata--csp1idsre--c.cs88.content.force.com/servlet/servlet.ImageServer?id=0159E000000MCzW&amp;oid=00D9E0000001L6b&amp;lastMod=1522143388000</value>
-    </labels>
-    <labels>
         <fullName>OneId_Account_Creation</fullName>
         <categories>OneId</categories>
         <language>en_US</language>
@@ -24551,7 +24550,7 @@ msgErrorRenewalOrderExpired:Your renewal notification order link is either  expi
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>OneId Community Name</shortDescription>
-        <value>identity/s</value>
+        <value>s</value>
     </labels>
     <labels>
         <fullName>OneId_Contact_Association_Validation</fullName>
@@ -24598,6 +24597,14 @@ msgErrorRenewalOrderExpired:Your renewal notification order link is either  expi
         <protected>false</protected>
         <shortDescription>OneId_EmailError</shortDescription>
         <value>Please, enter your email</value>
+    </labels>
+    <labels>
+        <fullName>OneId_Email_Header_Identity</fullName>
+        <categories>OneId</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>OneId_Email_Header_Identity</shortDescription>
+        <value>https://iata--csp1idsre--c.cs88.content.force.com/servlet/servlet.ImageServer?id=0159E000000MCzW&amp;oid=00D9E0000001L6b&amp;lastMod=1522143388000</value>
     </labels>
     <labels>
         <fullName>OneId_ForgotPassword</fullName>
@@ -24653,30 +24660,6 @@ msgErrorRenewalOrderExpired:Your renewal notification order link is either  expi
         <value>IATA Code</value>
     </labels>
     <labels>
-        <fullName>OneId_ISSP_Troubleshooting</fullName>
-        <categories>OneId</categories>
-        <language>en_US</language>
-        <protected>false</protected>
-        <shortDescription>OneId_ISSP_Troubleshooting</shortDescription>
-        <value>Troubleshooting</value>
-    </labels>
-    <labels>
-        <fullName>OneId_ISSP_Troubleshooting_Link</fullName>
-        <categories>OneId</categories>
-        <language>en_US</language>
-        <protected>false</protected>
-        <shortDescription>OneId_ISSP_Troubleshooting_Link</shortDescription>
-        <value>https://portal.iata.org/faq/articles/en_US/How_To/Customer-Portal-Troubleshooting</value>
-    </labels>
-    <labels>
-        <fullName>OneId_ISSP_Terms_Of_Use_Link</fullName>
-        <categories>OneId</categories>
-        <language>en_US</language>
-        <protected>false</protected>
-        <shortDescription>OneId_ISSP_Terms_Of_Use_Link</shortDescription>
-        <value>http://www.iata.org/customer-portal/Pages/terms.aspx</value>
-    </labels>
-    <labels>
         <fullName>OneId_IATA_represent_lead_and_serve_the_airline_industry</fullName>
         <categories>OneId</categories>
         <language>en_US</language>
@@ -24715,6 +24698,30 @@ msgErrorRenewalOrderExpired:Your renewal notification order link is either  expi
         <protected>false</protected>
         <shortDescription>OneId_ISAGO_Terms_3</shortDescription>
         <value>N/A</value>
+    </labels>
+    <labels>
+        <fullName>OneId_ISSP_Terms_Of_Use_Link</fullName>
+        <categories>OneId</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>OneId_ISSP_Terms_Of_Use_Link</shortDescription>
+        <value>http://www.iata.org/customer-portal/Pages/terms.aspx</value>
+    </labels>
+    <labels>
+        <fullName>OneId_ISSP_Troubleshooting</fullName>
+        <categories>OneId</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>OneId_ISSP_Troubleshooting</shortDescription>
+        <value>Troubleshooting</value>
+    </labels>
+    <labels>
+        <fullName>OneId_ISSP_Troubleshooting_Link</fullName>
+        <categories>OneId</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>OneId_ISSP_Troubleshooting_Link</shortDescription>
+        <value>https://portal.iata.org/faq/articles/en_US/How_To/Customer-Portal-Troubleshooting</value>
     </labels>
     <labels>
         <fullName>OneId_International_Air_Transport_Association_IATA</fullName>
@@ -24882,6 +24889,14 @@ If you continue to experience issues registering for the IATA Customer Portal th
         <protected>false</protected>
         <shortDescription>OneId_Press to Validate</shortDescription>
         <value>Press to Validate</value>
+    </labels>
+    <labels>
+        <fullName>OneId_Privacy_Policy</fullName>
+        <categories>OneId</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>OneId_Privacy_Policy</shortDescription>
+        <value>Privacy Policy</value>
     </labels>
     <labels>
         <fullName>OneId_Profile_BillingCity</fullName>
