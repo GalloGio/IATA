@@ -521,6 +521,9 @@ private class AMS_AccreditationContactControllerTest
         ApexPages.Message errorMsg = new ApexPages.Message(ApexPages.Severity.Error,'People with the following emails already exist in the system. Please link them to their original records by selecting \"Choose an existing contact\".\n\n[jd@test.com]'); 
 
         System.assert(wasMessageAdded(errorMsg));
+
+        Boolean bIsAllHierarchySelected = ctrl.isAllHierarchySelected;
+        String sDateFormatToShow = ctrl.dateFormatToShow;
             
         Test.stopTest();
 

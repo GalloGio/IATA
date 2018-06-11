@@ -236,6 +236,13 @@
         <value>Edit the accounts involved</value>
     </labels>
     <labels>
+        <fullName>AMS_OSCAR_Action6_Corr</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>AMS_OSCAR_Action6_Corr</shortDescription>
+        <value>Select/Deselect Complete Hierarchy</value>
+    </labels>
+    <labels>
         <fullName>AMS_OSCAR_Action7</fullName>
         <language>en_US</language>
         <protected>false</protected>
@@ -319,6 +326,22 @@
         <protected>false</protected>
         <shortDescription>AMS_OSCAR_CODEASSIGNMENT</shortDescription>
         <value>Code Assignment</value>
+    </labels>
+    <labels>
+        <fullName>AMS_OSCAR_CORRECTION_ALL_HIERARCHY</fullName>
+        <categories>LeftSidePanel, Headers</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>AMS_OSCAR_CORRECTION_ALL_HIERARCHY</shortDescription>
+        <value>Corrections will be applied to the Complete Hierarchy</value>
+    </labels>
+    <labels>
+        <fullName>AMS_OSCAR_CORRECTION_PER_LOCATION</fullName>
+        <categories>LeftSidePanel, Headers</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>AMS_OSCAR_CORRECTION_PER_LOCATION</shortDescription>
+        <value>Corrections will be applied to this Location only</value>
     </labels>
     <labels>
         <fullName>AMS_OSCAR_DISAPPROVAL</fullName>
