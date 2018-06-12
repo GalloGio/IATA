@@ -1,0 +1,13 @@
+.THIS .oneid-theme_notify {
+    background-color: rgba(84, 105, 141, 0.95);
+    font-size: .825rem;
+}
+.THIS .oneid-theme_notify a {
+    color: #00aeef !important;
+}
+.THIS button.sfdc_button{
+    height: initial;
+}
+.THIS .slds-theme_error a{
+	color: white !important;
+}

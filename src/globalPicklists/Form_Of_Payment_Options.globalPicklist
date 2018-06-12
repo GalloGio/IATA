@@ -5,6 +5,10 @@
         <default>false</default>
     </globalPicklistValues>
     <globalPicklistValues>
+        <fullName>CC VA</fullName>
+        <default>false</default>
+    </globalPicklistValues>
+    <globalPicklistValues>
         <fullName>CA</fullName>
         <default>false</default>
     </globalPicklistValues>
