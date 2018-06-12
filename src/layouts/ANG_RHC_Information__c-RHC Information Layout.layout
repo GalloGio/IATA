@@ -110,7 +110,12 @@
         <detailHeading>false</detailHeading>
         <editHeading>false</editHeading>
         <label>System Information</label>
-        <layoutColumns/>
+        <layoutColumns>
+            <layoutItems>
+                <behavior>Readonly</behavior>
+                <field>LastModifiedById</field>
+            </layoutItems>
+        </layoutColumns>
         <layoutColumns/>
         <style>TwoColumnsTopToBottom</style>
     </layoutSections>

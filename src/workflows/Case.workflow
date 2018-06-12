@@ -1267,15 +1267,11 @@
             <type>user</type>
         </recipients>
         <recipients>
-            <recipient>al-maanis@iata.org</recipient>
-            <type>user</type>
-        </recipients>
-        <recipients>
             <recipient>armientoe@iata.org</recipient>
             <type>user</type>
         </recipients>
         <recipients>
-            <recipient>batagliaf@iata.org</recipient>
+            <recipient>badanovam@iata.org</recipient>
             <type>user</type>
         </recipients>
         <recipients>
@@ -1291,11 +1287,11 @@
             <type>user</type>
         </recipients>
         <recipients>
-            <recipient>farisd@iata.org</recipient>
+            <recipient>girondoe@iata.org</recipient>
             <type>user</type>
         </recipients>
         <recipients>
-            <recipient>girondoe@iata.org</recipient>
+            <recipient>guzmanro@iata.org</recipient>
             <type>user</type>
         </recipients>
         <recipients>
@@ -1339,15 +1335,19 @@
             <type>user</type>
         </recipients>
         <recipients>
+            <recipient>naumenkoy@iata.org</recipient>
+            <type>user</type>
+        </recipients>
+        <recipients>
+            <recipient>navar@iata.org</recipient>
+            <type>user</type>
+        </recipients>
+        <recipients>
             <recipient>ogandoi@iata.org</recipient>
             <type>user</type>
         </recipients>
         <recipients>
             <recipient>paredesc@iata.org</recipient>
-            <type>user</type>
-        </recipients>
-        <recipients>
-            <recipient>pommiers@iata.org</recipient>
             <type>user</type>
         </recipients>
         <recipients>
@@ -1383,7 +1383,11 @@
             <type>user</type>
         </recipients>
         <recipients>
-            <recipient>tadrosc@iata.org</recipient>
+            <recipient>taverasr@iata.org</recipient>
+            <type>user</type>
+        </recipients>
+        <recipients>
+            <recipient>theryg@iata.org</recipient>
             <type>user</type>
         </recipients>
         <recipients>
@@ -15072,7 +15076,7 @@ Change the case status to “Agent Notified (mail)” if case status was “Agen
         <criteriaItems>
             <field>Case.SuppliedEmail</field>
             <operation>equals</operation>
-            <value>garciam@iata.org,shalbakf@iata.org</value>
+            <value>garciam@iata.org,shalbakf@iata.org,info.sce@iata.org</value>
         </criteriaItems>
         <triggerType>onCreateOrTriggeringUpdate</triggerType>
     </rules>

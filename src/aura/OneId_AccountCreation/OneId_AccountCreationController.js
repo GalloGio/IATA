@@ -125,21 +125,21 @@
         var isAllFilled = true;
 
         if($A.util.isEmpty(category.get("v.value"))){
-           category.set("v.errors",[{message:$A.get("$Label.c.OneId_CategoryError")}]);
+           category.set("v.errors",[{message: $A.get("$Label.c.OneId_CategoryError")}]);
            isAllFilled = false;
         }else{
            category.set("v.errors",null);
         }
 
         if(!$A.util.isEmpty(emailValue) && !emailValue.match(regExpEmailformat)){
-           email.set("v.errors",[{message:$A.get("$Label.c.ISSP_AMS_Invalid_Email")}]);
+           email.set("v.errors",[{message: $A.get("$Label.c.ISSP_AMS_Invalid_Email")}]);
            isAllFilled = false;
         }else{
            email.set("v.errors",null);
         }
 
         if($A.util.isEmpty(officePhone.get("v.value"))){
-           officePhone.set("v.errors",[{message:$A.get("$Label.c.ISSP_Registration_Error_BusinessPhone")}]);
+           officePhone.set("v.errors",[{message: $A.get("$Label.c.ISSP_Registration_Error_BusinessPhone")}]);
            isAllFilled = false;
 
            setTimeout(function(){

@@ -1,0 +1,213 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomObject xmlns="http://soap.sforce.com/2006/04/metadata">
+    <actionOverrides>
+        <actionName>Accept</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>CancelEdit</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Clone</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Delete</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Edit</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>List</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>New</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>SaveEdit</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Tab</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>View</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <allowInChatterGroups>false</allowInChatterGroups>
+    <compactLayoutAssignment>SYSTEM</compactLayoutAssignment>
+    <deploymentStatus>Deployed</deploymentStatus>
+    <enableActivities>false</enableActivities>
+    <enableBulkApi>true</enableBulkApi>
+    <enableChangeDataCapture>false</enableChangeDataCapture>
+    <enableFeeds>false</enableFeeds>
+    <enableHistory>false</enableHistory>
+    <enableReports>false</enableReports>
+    <enableSearch>true</enableSearch>
+    <enableSharing>true</enableSharing>
+    <enableStreamingApi>true</enableStreamingApi>
+    <fields>
+        <fullName>Network_Fee__c</fullName>
+        <externalId>false</externalId>
+        <inlineHelpText>Network fee per country</inlineHelpText>
+        <label>Network Fee</label>
+        <length>255</length>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>TIP_BSP_Code__c</fullName>
+        <externalId>false</externalId>
+        <formula>TIP_BSP_Country__r.BSP_Country_free_text__c</formula>
+        <label>BSP Code</label>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>TIP_BSP_Country__c</fullName>
+        <deleteConstraint>Restrict</deleteConstraint>
+        <externalId>false</externalId>
+        <label>BSP Country</label>
+        <referenceTo>IATA_ISO_Country__c</referenceTo>
+        <relationshipLabel>Payment Product Country Configs</relationshipLabel>
+        <relationshipName>TIP_Payment_Product_Country_Configs</relationshipName>
+        <required>true</required>
+        <trackTrending>false</trackTrending>
+        <type>Lookup</type>
+    </fields>
+    <fields>
+        <fullName>TIP_Effective_From_Date_To_Show__c</fullName>
+        <externalId>false</externalId>
+        <formula>IF(ISNULL(TIP_Effective_From_Date__c ),   TIP_Product__r.PP_Effective_from_Date__c , TIP_Effective_From_Date__c)</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>Effective From Date To Show</label>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Date</type>
+    </fields>
+    <fields>
+        <fullName>TIP_Effective_From_Date__c</fullName>
+        <externalId>false</externalId>
+        <label>Effective From Date</label>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Date</type>
+    </fields>
+    <fields>
+        <fullName>TIP_Effective_To_Date__c</fullName>
+        <externalId>false</externalId>
+        <label>Effective To Date</label>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Date</type>
+    </fields>
+    <fields>
+        <fullName>TIP_Interchange_Fee__c</fullName>
+        <description>Interchange fee(s) per country</description>
+        <externalId>false</externalId>
+        <label>Interchange Fee</label>
+        <length>255</length>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>TIP_Issuing_Currency__c</fullName>
+        <description>Payments Country Configuration Issuing currency for integration purposes</description>
+        <externalId>false</externalId>
+        <label>Issuing Currency</label>
+        <length>4</length>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>TIP_Product__c</fullName>
+        <externalId>false</externalId>
+        <label>TIP Product</label>
+        <referenceTo>Partner_products__c</referenceTo>
+        <relationshipLabel>Payment Product Country Configs</relationshipLabel>
+        <relationshipName>Payment_Product_Country_Configs</relationshipName>
+        <relationshipOrder>0</relationshipOrder>
+        <reparentableMasterDetail>false</reparentableMasterDetail>
+        <trackTrending>false</trackTrending>
+        <type>MasterDetail</type>
+        <writeRequiresMasterRead>false</writeRequiresMasterRead>
+    </fields>
+    <fields>
+        <fullName>TIP_Status__c</fullName>
+        <externalId>false</externalId>
+        <label>Status</label>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Picklist</type>
+        <valueSet>
+            <restricted>true</restricted>
+            <valueSetDefinition>
+                <sorted>false</sorted>
+                <value>
+                    <fullName>ACTIVE</fullName>
+                    <default>false</default>
+                    <label>Active</label>
+                </value>
+                <value>
+                    <fullName>INACTIVE</fullName>
+                    <default>false</default>
+                    <label>Inactive</label>
+                </value>
+                <value>
+                    <fullName>IN_PROGRESS</fullName>
+                    <default>false</default>
+                    <label>In Progress</label>
+                </value>
+                <value>
+                    <fullName>DRAFT</fullName>
+                    <default>false</default>
+                    <label>Draft</label>
+                </value>
+            </valueSetDefinition>
+        </valueSet>
+    </fields>
+    <label>Payment Product Country Config</label>
+    <listViews>
+        <fullName>All</fullName>
+        <filterScope>Everything</filterScope>
+        <label>All</label>
+    </listViews>
+    <nameField>
+        <displayFormat>PCC-{0000000000}</displayFormat>
+        <label>Payment Product Country Config Number</label>
+        <type>AutoNumber</type>
+    </nameField>
+    <pluralLabel>Payment Product Country Configs</pluralLabel>
+    <searchLayouts/>
+    <sharingModel>ControlledByParent</sharingModel>
+    <validationRules>
+        <fullName>Check_if_product_is_Active</fullName>
+        <active>true</active>
+        <errorConditionFormula>AND(
+   NOT(ISPICKVAL(TIP_Product__r.PP_Status__c, &quot;Active&quot;)),
+   ISPICKVAL(TIP_Status__c, &quot;Active&quot;)
+)</errorConditionFormula>
+        <errorMessage>Payment Product Country Config cannot be activated if related Product is not active</errorMessage>
+    </validationRules>
+    <validationRules>
+        <fullName>Effective_from_before_effective_To</fullName>
+        <active>true</active>
+        <errorConditionFormula>AND( TIP_Product__r.Provider__r.RecordType.DeveloperName = &quot;TIP_Payment_Provider&quot;, TIP_Effective_From_Date__c &gt; TIP_Effective_To_Date__c )</errorConditionFormula>
+        <errorMessage>Effective to Date needs to be greater than effective from Date</errorMessage>
+    </validationRules>
+    <visibility>Public</visibility>
+</CustomObject>

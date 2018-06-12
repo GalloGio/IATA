@@ -1025,22 +1025,6 @@
         <value>Country Concerned</value>
     </labels>
     <labels>
-        <fullName>OneId_ISSP_Troubleshooting</fullName>
-        <categories>OneId</categories>
-        <language>en_US</language>
-        <protected>false</protected>
-        <shortDescription>OneId_ISSP_Troubleshooting</shortDescription>
-        <value>Troubleshooting</value>
-    </labels>
-    <labels>
-        <fullName>OneId_ISSP_Troubleshooting_Link</fullName>
-        <categories>OneId</categories>
-        <language>en_US</language>
-        <protected>false</protected>
-        <shortDescription>OneId_ISSP_Troubleshooting_Link</shortDescription>
-        <value>https://portal.iata.org/faq/articles/en_US/How_To/Customer-Portal-Troubleshooting</value>
-    </labels>
-    <labels>
         <fullName>ANG_ISSP_CountryRequirementsGoBack</fullName>
         <categories>ISSP</categories>
         <language>en_US</language>
@@ -3943,7 +3927,13 @@ You will receive an email with a copy of your quote or you can retrieve the quot
     <labels>
         <fullName>Home</fullName>
         <categories>IEC</categories>
-        <fullName>ICAddressDoctor_adns</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Home</shortDescription>
+        <value>Home</value>
+    </labels>
+	<labels>
+	<fullName>ICAddressDoctor_adns</fullName>
         <categories>1ID</categories>
         <language>en_US</language>
         <protected>false</protected>
@@ -3981,12 +3971,6 @@ You will receive an email with a copy of your quote or you can retrieve the quot
         <protected>false</protected>
         <shortDescription>ICAddressDoctor_url</shortDescription>
         <value>https://validator5.addressdoctor.com/webservice5/v4/addressvalidation.asmx</value>
-    </labels>
-    <labels>
-        <language>en_US</language>
-        <protected>false</protected>
-        <shortDescription>Home</shortDescription>
-        <value>Home</value>
     </labels>
     <labels>
         <fullName>Home_Page_New_Release_Msg</fullName>
@@ -15651,6 +15635,20 @@ Also note that the data contained in ICE is provided to IATA by third parties at
         <value>/a2G?fcf=00Bg0000000ZLVX</value>
     </labels>
     <labels>
+        <fullName>ISSP_Application_for_Enlistment_Email_Duplicated</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP Application for Enlistment Email Duplicated</shortDescription>
+        <value>Contact already exists with this email address. Please insert other Email address</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_Application_for_Enlistment_as_a_Payment_Provider</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP Application for Enlistment as a Payment Provider</shortDescription>
+        <value>Enlistment as Alternative Transfer Method (ATM) Provider</value>
+    </labels>
+    <labels>
         <fullName>ISSP_Apply_Filter</fullName>
         <categories>portal, S6</categories>
         <language>en_US</language>
@@ -15862,6 +15860,13 @@ Also note that the data contained in ICE is provided to IATA by third parties at
         <protected>false</protected>
         <shortDescription>ISSP_Registration</shortDescription>
         <value>Branches</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_Button_Request_Enlistment</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP Button Request Enlistment</shortDescription>
+        <value>Enlist as ATM Provider</value>
     </labels>
     <labels>
         <fullName>ISSP_BuyCertificateText</fullName>
@@ -17875,6 +17880,13 @@ Please add below all your company valid email domains, including different ones 
         <value>dev@balink.net</value>
     </labels>
     <labels>
+        <fullName>ISSP_Encolment_page_Office_address</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP Encolment page Office address</shortDescription>
+        <value>Office address</value>
+    </labels>
+    <labels>
         <fullName>ISSP_EnterValidString</fullName>
         <language>en_US</language>
         <protected>false</protected>
@@ -18423,6 +18435,13 @@ this is the tiess topic help</value>
         <protected>false</protected>
         <shortDescription>ISSP_Home</shortDescription>
         <value>Home</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_Home_Table_Date_Time_Opened</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP Home Table Date-Time Opened</shortDescription>
+        <value>Date-Time Opened</value>
     </labels>
     <labels>
         <fullName>ISSP_Homepage_All_Company_Open_cases</fullName>
@@ -19990,6 +20009,13 @@ If you continue to experience issues registering for the CNS Customer Portal the
         <value>One Way Passenger Participating</value>
     </labels>
     <labels>
+        <fullName>ISSP_Ongoing_TIP_Requests</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP Ongoing TIP Requests</shortDescription>
+        <value>Ongoing TIP Requests</value>
+    </labels>
+    <labels>
         <fullName>ISSP_Opt_In</fullName>
         <categories>ISSP, DDS</categories>
         <language>en_US</language>
@@ -20279,6 +20305,27 @@ Please note that many IATA invoices for accredited agents are collected through 
         <value>Paypal is used to pay CNS Non-CASS invoices by Credit Card.</value>
     </labels>
     <labels>
+        <fullName>ISSP_Payment_Provider_Details_section_1</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP Payment Provider Details section 1</shortDescription>
+        <value>Section 1 - ATM Provider Details</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_Payment_Provider_Details_section_2</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP Payment Provider Details section 2</shortDescription>
+        <value>Section 2 - ATM Provider Contacts</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_Payment_Provider_Home_title</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP Payment Provider Home title</shortDescription>
+        <value>Alternative Transfer Method(ATM) Provider Enlistment</value>
+    </labels>
+    <labels>
         <fullName>ISSP_Pending</fullName>
         <categories>ISSP</categories>
         <language>en_US</language>
@@ -20403,6 +20450,149 @@ Please note that many IATA invoices for accredited agents are collected through 
         <protected>false</protected>
         <shortDescription>ISSP_Portal_Next</shortDescription>
         <value>Next</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_Portal_Product_Accepted_Transactions_Label</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP Portal Product Accepted Transactions Label</shortDescription>
+        <value>Enter the list of accepted transactions: Payment, Refund or Both payment and refund</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_Portal_Product_Acquiring_network_Label</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP Portal Product Acquiring network Label</shortDescription>
+        <value>Enter details about Acquiring network / scheme fee (s)</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_Portal_Product_Airline_payment_guarantee_Label</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP Portal Product Airline payment guarantee Label</shortDescription>
+        <value>Specify if payment is guaranteed to the airline against: fraud dispute, commercial dispute, or both fraud and commercial dispute</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_Portal_Product_Category_Label</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP Portal Product Category Label</shortDescription>
+        <value>Enter the category of product (Consumer, Corporate)</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_Portal_Product_Chargeback_right_Label</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP Portal Product Chargeback right Label</shortDescription>
+        <value>Chargeback rights is related to the risk that these funds might be withdrawn from the airline under specific circumstances.
+Indicate if this product has chargeback right: Yes or No</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_Portal_Product_Integration_of_ATM_Label</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP Portal Product Integration of ATM Label</shortDescription>
+        <value>Indicate which GDS supports an integration process that enable Travel Agents to have an automated access to this Alternative Transfer Method</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_Portal_Product_Interchange_Fee_Label</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP Portal Product Interchange Fee Label</shortDescription>
+        <value>Enter details about Interchange Fee (s)</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_Portal_Product_Issuer_Name_Label</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP Portal Product Issuer Name Label</shortDescription>
+        <value>Enter issuer name if different from provider name: name of regulated institution that issues this Alternative Transfer Method</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_Portal_Product_License_Label</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP Portal Product License Label</shortDescription>
+        <value>Enter information about licenses (e.g. banking license or e-money issuing license granted by a national authority)</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_Portal_Product_Maximum_Chargeback_Timeframe_Label</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP Portal Product Maximum Chargeback Timeframe Label</shortDescription>
+        <value>If subject to chargeback, please indicate the maximum number of days after transaction for which a chargeback can be issued</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_Portal_Product_Name_Label</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP Portal Product Name Label</shortDescription>
+        <value>Enter product name</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_Portal_Product_Pay_in_Model_Label</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP Portal Product Pay in Model Label</shortDescription>
+        <value>Enter the type of card (Prepaid, Pay now or Pay later)</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_Portal_Product_Payment_Network_Label</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP Portal Product Payment Network Label</shortDescription>
+        <value>Amex (AX), MasterCard (CA), UATP (TP), Visa (VI), Diners (DC)</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_Portal_Product_Settlement_Terms_Label</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP Portal Product Settlement Terms Label</shortDescription>
+        <value>Enter the settlement terms -  Number of days after transaction day when settlement occurs</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_Portal_Product_Type_Label</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP Portal Product Type Label</shortDescription>
+        <value>Enter the product type (Open-loop or Closed-loop)</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_Portal_Product_VAN_Type_Label</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP Portal Product VAN Type Label</shortDescription>
+        <value>Enter  if the product is an Agent&apos;s Single-use VAN (Virtual Account Number) or Agent’s Multi-use VAN.  
+If the product is an Agent&apos;s single-use VAN, then a unique Agent’s VAN number is created for every transaction.
+If the product is an Agent&apos;s multi-use VANs, then it is an Agent&apos;s unique card/account number that can be used multiple times.</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_Portal_Product_is_Subject_to_PCI_Label</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP Portal Product is Subject to PCI Label</shortDescription>
+        <value>Is the product subject to PCI DSS requirements compliance? (this is related to the product): Yes or Not Applicable</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_Portal_Provider_Any_Other_Info_Label</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP Portal Provider Any Other Info Label</shortDescription>
+        <value>Enter any additional information related to your company (e.g. to comply with AML requirements)</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_Portal_Provider_Headquarter_Location_Label</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP Portal Provider Headquarter Location Label</shortDescription>
+        <value>Select the country where provider&apos;s headquarter is located</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_Portal_Provider_Legal_Name_Label</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP Portal Provider Legal Name Label</shortDescription>
+        <value>Enter the provider legal name</value>
     </labels>
     <labels>
         <fullName>ISSP_Portal_Service</fullName>
@@ -21822,6 +22012,237 @@ This Dashboard allows each airline Treasury Team to gain full visibility of thei
         <protected>false</protected>
         <shortDescription>ISSP_TIESS_Code__Search_Format</shortDescription>
         <value>(in format TIESS_000XXXX)</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_TIP_ADD_BIN_RANGE</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP TIP ADD BIN RANGE</shortDescription>
+        <value>Add BIN Range</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_TIP_ADD_COUNTRY_CONFIG</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_TIP_ADD_COUNTRY_CONFIG</shortDescription>
+        <value>Add Country Config</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_TIP_BIN_RANGE_SECTION</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_TIP_BIN_RANGE_SECTION</shortDescription>
+        <value>Section 2- BIN Ranges</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_TIP_BIN_RANGE_SECTION_MESSAGE</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_TIP_BIN_RANGE_SECTION_MESSAGE</shortDescription>
+        <value>Please enter the BIN or sub-BIN ranges associated to the product. BIN or sub-BIN ranges need to be exclusively dedicated to issuance to travel agents. There must be no range of cards issued to corporations or companies other than Travel Agents.</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_TIP_CHECK_BIN_RANGE_LENGHT</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_TIP_CHECK_BIN_RANGE_LENGHT</shortDescription>
+        <value>Please check the BIN Ranges marked with \&apos;*\&apos; to ensure the lenght with the maximium allowed.</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_TIP_CONTACT_MESSAGE</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_TIP_CONTACT_MESSAGE</shortDescription>
+        <value>The Primary contact details will be shared with airlines operating in the countries where your products are available</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_TIP_COUNTRY_CONFIG_SECTION</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_TIP_COUNTRY_CONFIG_SECTION</shortDescription>
+        <value>Section 3- Product Country Configuration Details</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_TIP_DELETE_ALL_CONFIGS</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_TIP_DELETE_ALL_CONFIGS</shortDescription>
+        <value>Delete All Selected</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_TIP_Discard_Unsaved_Changes</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_TIP_Discard_Unsaved_Changes</shortDescription>
+        <value>All unsaved changes will be discarded. Are you sure you want to leave the page?</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_TIP_HOLD_TO_MULTISELECT</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_TIP_HOLD_TO_MULTISELECT</shortDescription>
+        <value>Hold down the Ctrl (windows) / Command (Mac) button to select multiple options.</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_TIP_Home_Account_must_be_Payment_Provider</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP TIP Home Account must be Payment Provider</shortDescription>
+        <value>Account must be of type Payment Provider</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_TIP_Home_Manage_Products</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Manage Products</shortDescription>
+        <value>Manage Products</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_TIP_Home_Only_Portal_Administrators</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP TIP Home Only Portal Administrators</shortDescription>
+        <value>Only Portal Administrators can apply to Enlistment as a Payment Provider</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_TIP_Home_Only_Portal_Administrators_Enrol_Products</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP TIP Home Only Portal Administrators Enrol Products</shortDescription>
+        <value>Only Portal Administrators can Enrol Products</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_TIP_Home_Products_table_Edit_option</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Products table Edit option</shortDescription>
+        <value>Edit</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_TIP_Home_Products_table_View_Update_option</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Products table View/Update option</shortDescription>
+        <value>View/Update</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_TIP_Home_button_Enrol_new_Product</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Enrol new Product</shortDescription>
+        <value>Enrol new Product</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_TIP_INSERT_BIN_RANGE</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_TIP_INSERT_BIN_RANGE</shortDescription>
+        <value>Please insert at least one BIN Range</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_TIP_INSERT_ONE_COUNTRY_CONFIG</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_TIP_INSERT_ONE_COUNTRY_CONFIG</shortDescription>
+        <value>Please insert at least one Country Configuration</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_TIP_MANDATORY_ON_SUBMIT</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP TIP MANDATORY ON SUBMIT</shortDescription>
+        <value>Mandatory fields upon submission to IATA</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_TIP_MISSING_FIELDS</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_TIP_MISSING_FIELDS</shortDescription>
+        <value>Please fill in the missing fields.</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_TIP_NEW_BIN_RANGE</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_TIP_NEW_BIN_RANGE</shortDescription>
+        <value>New Bin Range</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_TIP_NEW_PROD_COUNTRY_CONFIG</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_TIP_NEW_PROD_COUNTRY_CONFIG</shortDescription>
+        <value>New Product Country Configuration</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_TIP_PRODUCT_DETAILS_SECTION</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_TIP_PRODUCT_DETAILS_SECTION</shortDescription>
+        <value>Section 1- Product Details</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_TIP_PRODUCT_ENROLLMENT_TITLE</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_TIP_PRODUCT_TITLE</shortDescription>
+        <value>ATM Provider Product</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_TIP_RANGE_TO_GREATER_RANGE_FROM</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_TIP_RANGE_TO_GREATER_RANGE_FROM</shortDescription>
+        <value>&amp;lt;strong&amp;gt;Error:&amp;lt;/strong&amp;gt;Range To must be greater or equal than Range From</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_TIP_RETURN_HOMEPAGE</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_TIP_RETURN_HOMEPAGE</shortDescription>
+        <value>Return to Homepage</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_TIP_SAVE_DRAFT</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_TIP_SAVE_DRAFT</shortDescription>
+        <value>Save As Draft</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_TIP_SELECT_AT_LEAST_ONE_VALUE</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_TIP_SELECT_AT_LEAST_ONE_VALUE</shortDescription>
+        <value>&amp;lt;strong&amp;gt;Error:&amp;lt;/strong&amp;gt;You must select at least one value.</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_TIP_SUBMIT_TO_IATA</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_TIP_SUBMIT_TO_IATA</shortDescription>
+        <value>Submit To IATA</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_TIP_Submit_case_to_IATA_to_update_bin_range</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP TIP Submit case to IATA to update bin range</shortDescription>
+        <value>Please &lt;a style=&quot;color:blue &quot; href=&quot;/ISSP_FAQ2Case?topic=TIP%20HelpDesk&quot;&gt;Submit a case to IATA&lt;/a&gt; to request to update the BIN Ranges for this product</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_TIP_Submit_case_to_IATA_to_update_country_Config</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_TIP_Submit_case_to_IATA_to_update_country_Config</shortDescription>
+        <value>Please &lt;a style=&quot;color:blue &quot; href=&quot;/ISSP_FAQ2Case?topic=TIP%20HelpDesk&quot;&gt;Submit a case to IATA&lt;/a&gt; to request to update the Country Configurations for this product</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_TIP_VALUE_TOO_BIG_TO_PROVIDER</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_TIP_VALUE_TOO_BIG_TO_PROVIDER</shortDescription>
+        <value>&amp;lt;strong&amp;gt;Error:&amp;lt;/strong&amp;gt;This value is too big for this provider.</value>
     </labels>
     <labels>
         <fullName>ISSP_TOULink</fullName>
@@ -23360,14 +23781,6 @@ an IATA accredited agency, please press &quot;Back&quot; button and select anoth
         <protected>false</protected>
         <shortDescription>Label to display for missing Product Category</shortDescription>
         <value>Other</value>
-    </labels>
-    <labels>
-        <fullName>OneId_Email_Header_Identity</fullName>
-        <categories>OneId</categories>
-        <language>en_US</language>
-        <protected>false</protected>
-        <shortDescription>OneId_Email_Header_Identity</shortDescription>
-        <value>https://iata--csp1idsre--c.cs88.content.force.com/servlet/servlet.ImageServer?id=0159E000000MCzW&amp;oid=00D9E0000001L6b&amp;lastMod=1522143388000</value>
     </labels>
     <labels>
         <fullName>LabelsVF_IECInvoice</fullName>
@@ -27652,45 +28065,5 @@ Please &lt;a href=&quot;/ISSP_FAQ2Case?MainNav=Queries&amp;subNav=MyQueries&amp;
         <protected>false</protected>
         <shortDescription>wire transfer payment msg</shortDescription>
         <value>Your wire transfer payment has been received.</value>
-    </labels>
-    <labels>
-        <fullName>ICAddressDoctor_adns</fullName>
-        <categories>1ID</categories>
-        <language>en_US</language>
-        <protected>false</protected>
-        <shortDescription>ICAddressDoctor_adns</shortDescription>
-        <value>http://validator5.AddressDoctor.com/Webservice5/v4</value>
-    </labels>
-    <labels>
-        <fullName>ICAddressDoctor_login</fullName>
-        <categories>1ID</categories>
-        <language>en_US</language>
-        <protected>false</protected>
-        <shortDescription>ICAddressDoctor_login</shortDescription>
-        <value>162866</value>
-    </labels>
-    <labels>
-        <fullName>ICAddressDoctor_ns</fullName>
-        <categories>1ID</categories>
-        <language>en_US</language>
-        <protected>false</protected>
-        <shortDescription>ICAddressDoctor_ns</shortDescription>
-        <value>http://schemas.xmlsoap.org/soap/envelope/</value>
-    </labels>
-    <labels>
-        <fullName>ICAddressDoctor_password</fullName>
-        <categories>1ID</categories>
-        <language>en_US</language>
-        <protected>false</protected>
-        <shortDescription>ICAddressDoctor_password</shortDescription>
-        <value>Hus3esastAcr</value>
-    </labels>
-    <labels>
-        <fullName>ICAddressDoctor_url</fullName>
-        <categories>1ID</categories>
-        <language>en_US</language>
-        <protected>false</protected>
-        <shortDescription>ICAddressDoctor_url</shortDescription>
-        <value>https://validator5.addressdoctor.com/webservice5/v4/addressvalidation.asmx</value>
     </labels>
 </CustomLabels>
