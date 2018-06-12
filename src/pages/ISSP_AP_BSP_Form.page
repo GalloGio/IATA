@@ -64,6 +64,15 @@
     $(function () {
         $('[data-toggle="tooltip"]').tooltip()
     })
+    
+    function showCommisionSection(obj) {
+        var value = $(obj).val();
+        if (value == "Yes") {
+            $("#commision-section").show();
+        } else {
+            $("#commision-section").hide();
+        }
+    }
     </script>
     
     <!-- Modal -->
@@ -521,7 +530,7 @@
                     <apex:pageBlockSectionItem >
                         <apex:outputLabel value="* Does your Airline wish to participate in any Commission Control?" style="color:#a31717; font-weight: bold !important;"/>
                         <apex:outputPanel >
-                            <apex:inputField value="{!newForm.Participate_in_any_Commission_Control__c}" />
+                            <apex:inputField value="{!newForm.Participate_in_any_Commission_Control__c}" onchange="showCommisionSection(this);"/>
                             <apex:image value="/img/msg_icons/info16.png" title="If YES please contact IATA for details" html-data-html="true" html-data-placement="right" html-data-toggle="tooltip"/>
                         </apex:outputPanel>
                     </apex:pageBlockSectionItem>
@@ -531,8 +540,19 @@
                             <apex:inputField value="{!newForm.Participate_in_any_Remit_scheme__c}" />
                             <apex:image value="/img/msg_icons/info16.png" title="If YES please contact IATA for details" html-data-html="true" html-data-placement="right" html-data-toggle="tooltip"/>
                         </apex:outputPanel>
-                    </apex:pageBlockSectionItem>                
+                    </apex:pageBlockSectionItem>
                 </apex:pageBlockSection>
+                
+                <span id="commision-section" style="{!IF(newForm.Participate_in_any_Commission_Control__c=='Yes','','display:none')}">
+                    <apex:pageBlockSection columns="1">
+                        <apex:repeat value="{!MandatoryFieldsForCommission}" var="fieldName">
+                            <apex:pageBlockSectionItem>
+                                <apex:outputLabel value="* {!$ObjectType.AP_Process_Form__c.fields[fieldName].label}" style="color:#a31717; font-weight: bold !important;"/>
+                                <apex:inputField value="{!newForm[fieldName]}"/>
+                            </apex:pageBlockSectionItem>
+                        </apex:repeat>
+                    </apex:pageBlockSection>
+                </span>
                 
                 <span id="nav_five"></span>
                 <apex:pageBlockSection title="5. Credit Card Processing Information" columns="1">

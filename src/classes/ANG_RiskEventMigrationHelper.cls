@@ -227,7 +227,7 @@ public with sharing class ANG_RiskEventMigrationHelper {
 	public boolean isMajorchange1(Agency_Applied_Change_code__c aacc){
 		if (aacc.Change_Code__c == ANG_Risk_Helper.CHANGE_CODE_CCF
 			|| aacc.Change_Code__c == ANG_Risk_Helper.CHANGE_CODE_CHF
-			|| aacc.Change_Code__c == ANG_Risk_Helper.CHANGE_CODE_CNF
+			//|| aacc.Change_Code__c == ANG_Risk_Helper.CHANGE_CODE_CNF // to be removed NEWGEN-3167
 			|| aacc.Change_Code__c == ANG_Risk_Helper.CHANGE_CODE_CSF)
 				return true;
 
@@ -239,7 +239,7 @@ public with sharing class ANG_RiskEventMigrationHelper {
 			&& String.isNotBlank(aacc.Bulletin_Information__c)
 			&& (aacc.Bulletin_Information__c.toUpperCase().contains('MAJOR')
 				|| aacc.Bulletin_Information__c.toUpperCase().contains('OWNERSHIP')
-				|| aacc.Bulletin_Information__c.toUpperCase().contains('LEGAL')
+			//	|| aacc.Bulletin_Information__c.toUpperCase().contains('LEGAL') // to be removed NEWGEN-3167
 				)
 			)
 				return true;

@@ -323,6 +323,12 @@
                 </td>
             <td width="50%">{!newForm.Participate_in_any_Commission_Control__c}</td>
             </tr>
+            <apex:repeat value="{!MandatoryFieldsForCommission}" var="fieldName" rendered="{!newForm.Participate_in_any_Commission_Control__c=='Yes'}">
+                <tr>
+                    <td class="label" width="50%" align="right">{!$ObjectType.AP_Process_Form__c.fields[fieldName].label}</td>
+                    <td width="50%"><apex:outputField value="{!newForm[fieldName]}"/></td>
+                </tr>
+            </apex:repeat>
             <tr>
                 <td class="label" width="50%"><u>Net Remit:</u> Does your Airline wish to participate in any Net Remit scheme?:<br/>
                 * If YES, please contact IATA for details
