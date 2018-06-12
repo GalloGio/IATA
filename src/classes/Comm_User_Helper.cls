@@ -183,7 +183,7 @@ global without sharing class Comm_User_Helper {
                       link = OneIdUtils.getSiteCompleteUrl(OneIdUtils.Mode.ISSP) + '/ISSP_First_Login?c=' + encodedPart;
                       template = 'Identity_Portal_ISSP_New_User';
                     }else{
-                      link = OneIdUtils.getSiteCompleteUrl(OneIdUtils.Mode.IDENTITY) + '/s/IdentityFirstLogin?c=' + encodedPart;
+                      link = OneIdUtils.getSiteCompleteUrl(OneIdUtils.Mode.IDENTITY) + '/IdentityFirstLogin?c=' + encodedPart;
                       template = 'Identity_Portal_New_User';
                     }
 
