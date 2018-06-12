@@ -14,6 +14,7 @@ private class ISSP_LoginTest {
 		String communityName = controller.communityName;
         ApexPages.currentPage().getHeaders().put('USER-AGENT','MSIE');
         isIE = controller.isIe;
+		ISSP_Login.fakemethod();
 	}
 
 	public static testMethod void testLanguage() {

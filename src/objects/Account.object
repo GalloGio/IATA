@@ -6175,6 +6175,12 @@ If(LEN(BillingCountry) &gt;0, BillingCountry,&quot;&quot;)</formula>
         <type>Checkbox</type>
     </fields>
     <fields>
+        <fullName>ChannelProgramLevelName</fullName>
+    </fields>
+    <fields>
+        <fullName>ChannelProgramName</fullName>
+    </fields>
+    <fields>
         <fullName>Check_Digit__c</fullName>
         <externalId>false</externalId>
         <label>Check Digit</label>
@@ -16823,6 +16829,40 @@ This field is kept up-to-date with the feedback of ITDI at least twice a year du
             <value>Account.IATA_Airline</value>
         </filters>
         <label>Airlines AOC expiring in 90 days or less</label>
+        <language>en_US</language>
+        <sharedTo>
+            <roleAndSubordinatesInternal>Americas_Agency_Risk_Management_Staff</roleAndSubordinatesInternal>
+            <roleAndSubordinatesInternal>DistributionAirlineManagementHO</roleAndSubordinatesInternal>
+            <roleAndSubordinatesInternal>Distribution_Airline_Coding</roleAndSubordinatesInternal>
+        </sharedTo>
+    </listViews>
+    <listViews>
+        <fullName>Airlines_withvalidBSPCI</fullName>
+        <columns>ACCOUNT.NAME</columns>
+        <columns>Airline_designator__c</columns>
+        <columns>IATACode__c</columns>
+        <columns>Airline_Prefix__c</columns>
+        <columns>IATA_ISO_Country__c</columns>
+        <columns>BSP_CI_Valid__c</columns>
+        <columns>Airline_BSP_Participations__c</columns>
+        <columns>Airline_CASS_Participations__c</columns>
+        <filterScope>Everything</filterScope>
+        <filters>
+            <field>BSP_CI_Valid__c</field>
+            <operation>equals</operation>
+            <value>1</value>
+        </filters>
+        <filters>
+            <field>ACLI_Status__c</field>
+            <operation>equals</operation>
+            <value>Active Company</value>
+        </filters>
+        <filters>
+            <field>ACCOUNT.RECORDTYPE</field>
+            <operation>equals</operation>
+            <value>Account.IATA_Airline</value>
+        </filters>
+        <label>Airlines with valid BSP CI</label>
         <language>en_US</language>
         <sharedTo>
             <roleAndSubordinatesInternal>Americas_Agency_Risk_Management_Staff</roleAndSubordinatesInternal>
