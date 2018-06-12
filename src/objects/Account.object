@@ -16837,6 +16837,40 @@ This field is kept up-to-date with the feedback of ITDI at least twice a year du
         </sharedTo>
     </listViews>
     <listViews>
+        <fullName>Airlines_withvalidBSPCI</fullName>
+        <columns>ACCOUNT.NAME</columns>
+        <columns>Airline_designator__c</columns>
+        <columns>IATACode__c</columns>
+        <columns>Airline_Prefix__c</columns>
+        <columns>IATA_ISO_Country__c</columns>
+        <columns>BSP_CI_Valid__c</columns>
+        <columns>Airline_BSP_Participations__c</columns>
+        <columns>Airline_CASS_Participations__c</columns>
+        <filterScope>Everything</filterScope>
+        <filters>
+            <field>BSP_CI_Valid__c</field>
+            <operation>equals</operation>
+            <value>1</value>
+        </filters>
+        <filters>
+            <field>ACLI_Status__c</field>
+            <operation>equals</operation>
+            <value>Active Company</value>
+        </filters>
+        <filters>
+            <field>ACCOUNT.RECORDTYPE</field>
+            <operation>equals</operation>
+            <value>Account.IATA_Airline</value>
+        </filters>
+        <label>Airlines with valid BSP CI</label>
+        <language>en_US</language>
+        <sharedTo>
+            <roleAndSubordinatesInternal>Americas_Agency_Risk_Management_Staff</roleAndSubordinatesInternal>
+            <roleAndSubordinatesInternal>DistributionAirlineManagementHO</roleAndSubordinatesInternal>
+            <roleAndSubordinatesInternal>Distribution_Airline_Coding</roleAndSubordinatesInternal>
+        </sharedTo>
+    </listViews>
+    <listViews>
         <fullName>Americas_Airline_HQ</fullName>
         <columns>ACCOUNT.NAME</columns>
         <columns>Quality__c</columns>

@@ -105,6 +105,12 @@ public with sharing class ANG_AgencyChangesHelper {
 			return;
 		}
 
+		if(oscar.Process__c == AMS_Utils.NGCHANGES && oscar.STEP6__c != AMS_Utils.PASSED && oscar.Change_effective_as_of__c > Date.today()) {
+			system.debug('oscar status before: '+ oscar.Status__c);
+			oscar.Status__c = 'Accepted_Future Date';
+			system.debug('oscar status after: '+ oscar.Status__c);
+		}
+
 		if((oscar.Process__c == AMS_Utils.NGCHANGES || oscar.Process__c == AMS_Utils.NGCORRECTION) && oscar.ANG_Type_Of_Change__c != null){
 
 			System.debug('[ANG_AgencyChangesHelper][handleNewGenChangesProcess] -- PROCESSING agency changes');
