@@ -674,6 +674,14 @@ If( Contact.Account.ICH_Member__c = true,&quot;ICH&quot;, &quot;&quot;)</formula
         <unique>false</unique>
     </fields>
     <fields>
+        <fullName>FRED_T_Cond__c</fullName>
+        <defaultValue>false</defaultValue>
+        <externalId>false</externalId>
+        <label>FRED_T_Cond</label>
+        <trackFeedHistory>false</trackFeedHistory>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
         <fullName>FedContactId__c</fullName>
         <externalId>false</externalId>
         <formula>ContactId</formula>
