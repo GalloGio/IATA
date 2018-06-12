@@ -296,10 +296,6 @@ private class  OneIdLightningLoginFormControllerTest {
     }
 
     @IsTest
-    static void testGetSiteCompleteUrl() {
-        OneIdLightningLoginFormController.getSiteCompleteUrl();
-    }
-    @IsTest
     static void testGetSanctionCountryFalse() {
     	insert new OneId_Global_Settings__c(ipinfo_call_enabled__c = true);
         Test.startTest();

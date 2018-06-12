@@ -73,7 +73,7 @@ public without sharing class OneIdLightningLoginFormController {
                     //if login is from mobileApp we do not redirect
                     if(startUrl != 'mobileApp') pageLink = startUrl;
 
-                }else if( String.isNotBlank(serviceName) && serviceName == 'ISSP') pageLink = '/ISSP_Homepage';
+                }else if( String.isNotBlank(serviceName) && serviceName == 'ISSP') pageLink = OneIdUtils.getSiteCompleteUrl(OneIdUtils.Mode.ISSP) + '/ISSP_Homepage';
                 
                 if (oneUser.Portal_User_Frozen_Checkbox__c){
                     show90Days = true;
@@ -109,7 +109,7 @@ public without sharing class OneIdLightningLoginFormController {
             
             if (userListConfirmTempPassword[0].UID__c != '' && userListConfirmTempPassword[0].UID__c != null){
                 String serviceNameParam = String.isEmpty(serviceName) ? '' : '?serviceName='+serviceName;
-                lgn = Site.login(username, password, OneIdUtils.getSiteCompleteUrl() + '/OneId_ChangePassword'+serviceNameParam);
+                lgn = Site.login(username, password, OneIdUtils.getSiteCompleteUrl(OneIdUtils.Mode.ISSP).removeEnd('/s') + '/OneId_ChangePassword'+serviceNameParam);
             }
             
             //redirect to startUrl or some other page returned from the login 
@@ -279,12 +279,6 @@ public without sharing class OneIdLightningLoginFormController {
     }
     */
     
-    @AuraEnabled
-    public static String getSiteCompleteUrl() {
-        siteCompleteUrl = OneIdUtils.getSiteCompleteUrl();
-        return siteCompleteUrl;
-    }
-
     @AuraEnabled
     public static Boolean getShow90Days() {
         //show90Days=true;

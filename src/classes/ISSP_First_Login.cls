@@ -92,7 +92,7 @@ public without sharing class  ISSP_First_Login{
     private PageReference changePassword(){
 		system.debug('CHANGING PASS');
         //updateUsers(ids);
-        Pagereference pr =  !test.isRunningTest() ? site.login(userName,passWord,OneIdUtils.getSiteCompleteUrl() + '/OneId_ChangePassword?serviceName=ISSP'): Page.ISSP_ChangePassword;
+        Pagereference pr =  !test.isRunningTest() ? site.login(userName,passWord,OneIdUtils.getSiteCompleteUrl(OneIdUtils.Mode.IDENTITY) + '/OneId_ChangePassword?serviceName=ISSP'): Page.ISSP_ChangePassword;
         if(CommunityName=='CNS'){
            pr =  !test.isRunningTest() ? site.login(userName,passWord,'/ISSP_ChangePassword?CommunityName=CNS'): Page.ISSP_ChangePassword; 
         }
