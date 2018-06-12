@@ -44,8 +44,10 @@ global class SCIMUpdateUserPlugin extends UserProvisioning.UserProvisioningPlugi
         try {
             userProvUtils.init(uprId);
             SCIMUsersUtility.endPoint = userProvUtils.getNamedCredential();
+            userProvUtils.debug('getNamedCredential = ' + SCIMUsersUtility.endPoint);
 
             UserProvAccount upa = userProvUtils.getLinkedUserProvAccount();
+            userProvUtils.debug('UserProvAccount = ' + upa);
             if (upa != null && !String.isBlank(upa.externalUserId)) {
 
                 String params = (String)request.inputParameters.get(UserProvisioningUtils.PARAM_CALLPARAMS);
@@ -53,11 +55,21 @@ global class SCIMUpdateUserPlugin extends UserProvisioning.UserProvisioningPlugi
 
                 System.debug(loggingLevel.FINEST, '____ [cls SCIMDeleteUserPlugin - invoke] params - ' + params);
                 System.debug(loggingLevel.FINEST, '____ [cls SCIMDeleteUserPlugin - invoke] updateParams - ' + SCIMUsersUtility.updateParams);
+                userProvUtils.debug('params = ' + params);
 
                 Map<String, Object> callResult = SCIMUsersUtility.updateUser(upa.externalUserId, userPayload);
                 userProvUtils.debug('HTTP call result was ' + callResult);
 
                 Boolean isSuccess = (Boolean)callResult.get('isSuccess');
+                
+                // STUB START
+                /*
+                // STUB: TO BE REMOVED WHEN MULSOFT WILL BE READY:
+                Simulate that user creation return 200 from Mulesoft
+                */
+                isSuccess = true;
+                // STUB END
+
                 if (isSuccess) {
                     result.put(UserProvisioningUtils.PARAM_STATUS, 'Completed');
                     result.put(UserProvisioningUtils.PARAM_DETAILS,'User updated with ExternalUserId=' + result.get(UserProvisioningUtils.PARAM_EXTERNAL_USERID) + ', and ExternalUsername=' + result.get(UserProvisioningUtils.PARAM_EXTERNAL_USERNAME));
