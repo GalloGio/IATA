@@ -1140,7 +1140,8 @@ public without sharing class ISSP_APProcess {
     										FROM Services_Rendered__c
     										WHERE Services_Rendered_to_Airline__r.IATA_ISO_Country__r.Airline_EasyPay_Opt_Out_Date__c <= :Date.today()
     											AND Services_Rendered_Type__c = 'BSP Participation'
-    											AND Services_Rendered_By__c = :vHQAccountId]) {
+    											AND Services_Rendered_By__c = :vHQAccountId
+                                                AND Services_Rendered_Status__c = 'Active']) {
     		if (service.ANG_IATA_EasyPay_Opt_out__c) {
     			countriesIn.add(new SelectOption(service.Services_Rendered_to_Airline__r.IATA_ISO_Country__c, service.ISO_Country_formula__c));
     			hasCountriesIn = true;
