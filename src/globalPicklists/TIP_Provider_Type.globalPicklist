@@ -7,7 +7,7 @@
     <globalPicklistValues>
         <fullName>Closed Loop</fullName>
         <default>false</default>
-    </globalPicklistValues> 
+    </globalPicklistValues>
     <masterLabel>Provider Type</masterLabel>
     <sorted>false</sorted>
 </GlobalPicklist>
