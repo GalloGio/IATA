@@ -45,7 +45,7 @@ public class IdentityFirstLogin {
                         
                         if(!test.isRunningTest()){
                             //ApexPages.PageReference lgn = Site.login(userName, passWord, '/identity/s/changePassword');
-                            aura.redirect(Site.login(userName, passWord, OneIdUtils.getSiteCompleteUrl(OneIdUtils.Mode.IDENTITY) + '/OneId_ChangePassword?'+serviceNameParam));
+                            aura.redirect(Site.login(userName, passWord, OneIdUtils.getSiteCompleteUrl(OneIdUtils.Mode.IDENTITY).removeEnd('/s') + '/OneId_ChangePassword?'+serviceNameParam));
                         }
                     } else {
                         if(!test.isRunningTest()){

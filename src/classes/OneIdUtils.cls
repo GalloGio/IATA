@@ -38,7 +38,7 @@ public without sharing class OneIdUtils {
         
         System.debug(loggingLevel.FINE, '____ [cls OneIdUtils - getSiteCompleteUrl] Mode - ' + m);
         
-        if(m == Mode.IDENTITY && String.isNotEmpty(identityPortal)) COMMUNITY_COMPLETE_URL = defaultProtocol+identityPortal+(String.isEmpty(getCommunityUrlName()) ? '' : '/' + getCommunityUrlName());
+        if(m == Mode.IDENTITY && String.isNotEmpty(identityPortal)) COMMUNITY_COMPLETE_URL = defaultProtocol+identityPortal;
         else if (m == Mode.ISSP && String.isNotEmpty(csPortal)) COMMUNITY_COMPLETE_URL = defaultProtocol+csPortal;
         else if (m == Mode.CURRENT) COMMUNITY_COMPLETE_URL = Site.getBaseUrl();
         
