@@ -101,6 +101,10 @@
             </layoutItems>
             <layoutItems>
                 <behavior>Edit</behavior>
+                <field>Primary_Contact__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
                 <field>SIS_Contact_Type__c</field>
             </layoutItems>
             <layoutItems>

@@ -95,7 +95,7 @@
 	goToChangePassword: function(component, event, helper){
 		var urlEvent = $A.get("e.force:navigateToURL");
 		urlEvent.setParams({
-			"url": "/changePassword"
+			"url": "../../oneid_changePassword"
 		});
 		urlEvent.fire();
 	},
