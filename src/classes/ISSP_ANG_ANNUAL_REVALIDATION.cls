@@ -25,7 +25,7 @@ public with sharing class ISSP_ANG_ANNUAL_REVALIDATION {
 	private static Set<String> statusSet = new Set<String> {
 		Ams_Utils.ACC_S9_APPROVED,
 		Ams_Utils.ACC_S8_CHANGESPROCESSED,
-		Ams_Utils.ACC_S0_TERMINATED,
+		Ams_Utils.ACC_S7_UNDERREVIEW,
 		Ams_Utils.ACC_S5_CASHNOCOMMISSION,
 		Ams_Utils.ACC_S6_CASHWITHCOMMISSION
     };
