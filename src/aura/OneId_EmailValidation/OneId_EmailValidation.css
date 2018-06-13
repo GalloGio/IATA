@@ -1,0 +1,23 @@
+.THIS .termsaccepted{
+	color: #00aeef !important;
+	pointer:cursor;
+}
+
+.THIS .item {
+	display: block;
+}
+
+.THIS li.form-element__help {
+	padding-top: 0px; 
+}
+
+.THIS .uiInput.uiInputCheckbox  {
+	display: inline-block !important;
+    margin-right: 10px;
+}
+
+.THIS .terms {
+	color: #00aeef !important;
+	font-size: 14px;
+
+}

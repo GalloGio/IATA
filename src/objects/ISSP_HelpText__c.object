@@ -34,5 +34,15 @@
         <unique>false</unique>
     </fields>
     <label>ISSP HelpText</label>
+    <listViews>
+        <fullName>All</fullName>
+        <columns>NAME</columns>
+        <columns>HelpText_Label_API__c</columns>
+        <columns>Subtopic__c</columns>
+        <columns>Topic__c</columns>
+        <filterScope>Everything</filterScope>
+        <label>All</label>
+        <language>en_US</language>
+    </listViews>
     <visibility>Public</visibility>
 </CustomObject>

@@ -528,6 +528,53 @@
         <language>en_US</language>
     </listViews>
     <listViews>
+        <fullName>X21_Field_Details_XLSX_GSS_Member</fullName>
+        <columns>NAME</columns>
+        <columns>API_Object_Name__c</columns>
+        <columns>API_Name__c</columns>
+        <columns>Filter_Field_API_Name__c</columns>
+        <columns>Filter_Field_Value__c</columns>
+        <columns>Size__c</columns>
+        <columns>Position__c</columns>
+        <columns>Target__c</columns>
+        <columns>Hidden_Column__c</columns>
+        <columns>TXT_Hidden_Column__c</columns>
+        <columns>Visible__c</columns>
+        <columns>Do_not_Track__c</columns>
+        <filterScope>Everything</filterScope>
+        <filters>
+            <field>GDP_File_Description__c</field>
+            <operation>equals</operation>
+            <value>Reference - GSS Member NewGen</value>
+        </filters>
+        <label>21- Field Details - XLSX - MemberNewGen</label>
+        <language>en_US</language>
+    </listViews>
+    <listViews>
+        <fullName>X22_Field_Details_XLSX_GSS_NonMember</fullName>
+        <columns>NAME</columns>
+        <columns>API_Object_Name__c</columns>
+        <columns>API_Name__c</columns>
+        <columns>Filter_Field_API_Name__c</columns>
+        <columns>Filter_Field_Value__c</columns>
+        <columns>Name__c</columns>
+        <columns>Size__c</columns>
+        <columns>Position__c</columns>
+        <columns>Target__c</columns>
+        <columns>Hidden_Column__c</columns>
+        <columns>TXT_Hidden_Column__c</columns>
+        <columns>Visible__c</columns>
+        <columns>Do_not_Track__c</columns>
+        <filterScope>Everything</filterScope>
+        <filters>
+            <field>GDP_File_Description__c</field>
+            <operation>equals</operation>
+            <value>Reference - GSS Non Member</value>
+        </filters>
+        <label>22- Field Details - XLSX - GSS NonMember</label>
+        <language>en_US</language>
+    </listViews>
+    <listViews>
         <fullName>X90_Field_Tracking_GSS_MemberANG</fullName>
         <columns>NAME</columns>
         <columns>Position__c</columns>
@@ -544,7 +591,7 @@
             <operation>equals</operation>
             <value>Reference - GSS Member NewGen</value>
         </filters>
-        <label>90- Field Tracking - GSS MemberANG</label>
+        <label>90- Field Tracking - GSS Member NewGen</label>
         <language>en_US</language>
     </listViews>
     <listViews>

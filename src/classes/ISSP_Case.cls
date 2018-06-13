@@ -130,6 +130,28 @@ public without sharing class ISSP_Case {
         if (ApexPages.currentPage().getParameters().containsKey('caseId')) {
             string caseId = ApexPages.currentPage().getParameters().get('caseId');
             newCase = DAL_ISSP.getCase(caseId);
+
+            if(newCase.status == TIP_Utils.CASE_STATUS_DRAFT && newCase.CaseArea__c == TIP_Utils.CASE_AREA_TRANSPARENCY_IN_PAYMENTS){ //Transparency in Payment's portal access assignment
+                User user = DAL_ISSP.getUser(Userinfo.getUserId());
+                Id appListId;
+                ISSP_Portal_Service_Ids__c serviceIdInstance = ISSP_Portal_Service_Ids__c.getInstance();
+                if (serviceIdInstance != null && serviceIdInstance.TIP_Portal_Service_Id__c != null){
+                    appListId = serviceIdInstance.TIP_Portal_Service_Id__c;
+                    
+                    List <Portal_Application_Right__c> appRightList = [Select Id From Portal_Application_Right__c
+                                        where Contact__c = :user.ContactId and
+                                                           Right__c = 'Access Granted'  and
+                                                           Portal_Application__c = :appListId limit 1];
+
+
+                    if(appRightList != null && appRightList.size() == 1){
+                        if(newCase.Reason1__c == TIP_Utils.CASE_REASON_PAYMENT_PROVIDER_MANAGMENT) return new PageReference('/ISSP_TIP_Home?caseId='+caseid);
+                        
+                        Id prodId = [select TIP_Partner_Product__c from Case where id = :caseid limit 1].TIP_Partner_Product__c;
+                        if(newCase.Reason1__c == TIP_Utils.CASE_REASON_PRODUCT_MANAGEMENT) return new PageReference('/ISSP_TIP_Home?prodId='+prodId);
+                    }
+                }
+            }
             if (!newCase.Visible_on_ISS_Portal__c) {
                 PageReference pr = new PageReference('/ISSP_Homepage' + firstCommParam);
                 return pr;
@@ -144,6 +166,9 @@ public without sharing class ISSP_Case {
                         PageReference pr = new PageReference('/ISSP_IFAPCases?id=' + caseId + commParam);
                         return pr;
                     }
+            }else if(newCase.RecordType.name == 'OSCAR Communication' && newCase.Origin == 'Massive FOP Creation' && newCase.Owner.Name.startsWith('NewGen PCI')){
+                        PageReference pr = new PageReference('/ISSP_ANG_PCI?caseId=' + caseId + commParam);
+                        return pr;
             }
 
             showAlertMessage();
@@ -156,14 +181,14 @@ public without sharing class ISSP_Case {
         Shows a disclaimer if current case was closed for more than 2 weeks
     **/
     public void showAlertMessage() {
-		//AMSU-119
+        //AMSU-119
         if (getHideForClosedCases() && !isMSOcase) {
             ApexPages.Message myMsg = new ApexPages.Message(ApexPages.Severity.INFO, System.Label.ISSP_Case_Closed_More_Than_2_Months);
             ApexPages.addMessage(myMsg);
         }else if(isMSOcase){
-			ApexPages.Message myMsg = new ApexPages.Message(ApexPages.Severity.INFO, System.Label.ISSP_AMS_MSO_Case_Alert);
-			ApexPages.addMessage(myMsg);
-		}		
+            ApexPages.Message myMsg = new ApexPages.Message(ApexPages.Severity.INFO, System.Label.ISSP_AMS_MSO_Case_Alert);
+            ApexPages.addMessage(myMsg);
+        }
     }
 
     /**
@@ -206,7 +231,7 @@ public without sharing class ISSP_Case {
 
                 return '/ISSP_AMS_PDF_NOC?caseId=' + newCase.Id + '&isNoticeOfChange=true&isBankAccountChange=' + isBankAccountChange;
             }
-        
+
         }
     }
 
@@ -625,7 +650,7 @@ public without sharing class ISSP_Case {
                         AND Contact.Status__c = 'Active']) {
                     lsContacts.add(user.contact);
                 }
-                    
+
                 JSONcontacts = JSON.serialize(lsContacts);
                 System.debug(lsAccounts);
                 newCase.ACCA_Owner__c = Userinfo.getUserId();
@@ -679,11 +704,11 @@ public without sharing class ISSP_Case {
         }
     }
 
-    private String getCustomLabel(String labelName) {
+    @TestVisible private String getCustomLabel(String labelName) {
         Component.Apex.OutputText output = new Component.Apex.OutputText();
         output.expressions.value = '{!$Label.' + labelName + '}';
         return string.valueOf(output.value);
-    }    
+    }
 
 
     //basto1p
@@ -873,7 +898,7 @@ public without sharing class ISSP_Case {
             }
             Database.DMLOptions dmo = new Database.DMLOptions();
             dmo.assignmentRuleHeader.useDefaultRule = true;
-	        newCase.setOptions(dmo);
+            newCase.setOptions(dmo);
         }
 
         if (!isGSAOnly && (newCase.IATAcode__c == '' || newCase.IATAcode__c == null) && isGSAUser && !isFDSRecordType) {
@@ -899,7 +924,7 @@ public without sharing class ISSP_Case {
                 }
 
                 upsert newCase;
-                
+
                 if(isDPCUser && whoToContact != 'IATA') {
                     addListCCOthersToDPC(this.additionalRecipients);
                 }
@@ -955,11 +980,11 @@ public without sharing class ISSP_Case {
             }
             Database.DMLOptions dmo = new Database.DMLOptions();
             dmo.assignmentRuleHeader.useDefaultRule = true;
-	        newCase.setOptions(dmo);
+            newCase.setOptions(dmo);
         }
-        
+
         // CNS
-        if(con.Account.RecordType.DeveloperName == 'IATA_Agency' && con.Account.CNS_Account__c == true && newCase.CaseArea__c == 'Accreditation Process') {
+        if(con!=null && con.Account.RecordType.DeveloperName == 'IATA_Agency' && con.Account.CNS_Account__c == true && newCase.CaseArea__c == 'Accreditation Process') {
             newCase.CNSCase__c = true;
             newCase.Groups__c = 'CNS Team';
         }
@@ -1505,10 +1530,10 @@ public without sharing class ISSP_Case {
         }
          return false;
     }
-    
+
     /**
         Add a list of AdditionalRecipients to current Case based on input emails
-        but only for DPC users, so the user or contact to add must be in the same 
+        but only for DPC users, so the user or contact to add must be in the same
         Account concerned
     **/
     public void addListCCOthersToDPC(String stringEmails) {
@@ -1529,7 +1554,7 @@ public without sharing class ISSP_Case {
             WHERE Email IN :setEmail
             AND isActive = true
             AND Contact.AccountId = :newCase.Account_Concerned__c];
-        
+
         for(User user : lsUsers) {
             CaseTeamMember teammember = new CaseTeamMember(
                 ParentId = newCase.Id,
@@ -1542,7 +1567,7 @@ public without sharing class ISSP_Case {
         // Find the contacts for the emails not found
         if (!setEmail.isEmpty()) {
             list<Contact> listContact = [
-                SELECT Id,Email 
+                SELECT Id,Email
                 FROM Contact
                 WHERE Email IN :setEmail
                 AND User_Portal_Status__c IN ('Approved Admin', 'Approved User')
@@ -1559,7 +1584,7 @@ public without sharing class ISSP_Case {
                 lsNewEmails.add(contact.Email);
             }
         }
-        
+
         // insert found users as a team member of the case
         Savepoint sp = Database.setSavepoint();
         try {
@@ -1567,8 +1592,41 @@ public without sharing class ISSP_Case {
             // modify the ccother field in the case before inserting the new team members
             insertListAddressInE2CP_CCOthers(lsNewEmails);
             insert lsCaseTeamMembers;
+            //finally sends an email to the full recipients list
+            EmailTemplate template = [SELECT Id FROM EmailTemplate WHERE DeveloperName = 'New_DPC_Case'];
+            sendMassEmail(newCase.Id,template.Id);
+            
         } catch (DMLException e) {
             Database.rollback(sp);
+        }
+    }
+    
+    public static void sendMassEmail(Id caseId, Id templateId) {
+        try {
+            OrgWideEmailAddress orgAddress = [SELECT Id FROM OrgWideEmailAddress WHERE Address = 'noreply@iata.org'];
+            list<User> listUsers = [SELECT Id, ContactId
+                FROM User
+                WHERE Id IN (SELECT MemberId FROM CaseTeamMember WHERE ParentId = :caseId)];
+
+            List<Messaging.SingleEmailMessage> listEmail = new List<Messaging.SingleEmailMessage>();
+            for(User user : listUsers) {
+                Messaging.SingleEmailMessage mail = new Messaging.SingleEmailMessage();
+                mail.setOrgWideEmailAddressId(orgAddress.Id);
+                mail.setTargetObjectId(user.ContactId);
+                mail.setWhatId(caseId);
+                mail.setUseSignature(false);
+                mail.setBccSender(false);
+                mail.setSaveAsActivity(false);
+                mail.setTemplateId(templateId);
+                listEmail.add(mail);
+            }
+
+            if (!listEmail.isEmpty()) {
+                Messaging.sendEmail(listEmail);
+            }
+
+        } catch (Exception e) {
+            System.debug('Error sending an email sendMassEmail(' + caseId + ',' + templateId + ')');
         }
     }
 
@@ -1610,7 +1668,7 @@ public without sharing class ISSP_Case {
                     memberId = listUser[0].Id;
                 } else {
                     if (contact.AccountId != newCase.Account_Concerned__c){
-                        //if it's DPC, a user is not found and the selected contact is not in the 
+                        //if it's DPC, a user is not found and the selected contact is not in the
                         //same Account Concerned then we cannot continue
                         return;
                     }
@@ -1698,7 +1756,7 @@ public without sharing class ISSP_Case {
         Previous list is removed
     **/
     private void insertListAddressInE2CP_CCOthers(list<String> listInsertEmail) {
-        if (listInsertEmail.isEmpty()) return; 
+        if (listInsertEmail.isEmpty()) return;
         set<String> setNews = new set<String>();
         for (String email: listInsertEmail) {
             setNews.add(email.trim());
@@ -1729,11 +1787,11 @@ public without sharing class ISSP_Case {
     public void updateCase() {
         update newCase;
     }
-    
+
     public Boolean getIsInterDPCCase() {
         return newCase.RecordTypeId==INTER_DPC_RECORD_TYPE_ID;
     }
-    
+
     public String getAccountConcernedName() {
         try {
             return [SELECT Name FROM Account WHERE Id = :newCase.Account_Concerned__c].Name;
@@ -1741,7 +1799,7 @@ public without sharing class ISSP_Case {
             return '';
         }
     }
-    
+
     public String getCaseContactName() {
         try {
             return [SELECT Name FROM Contact WHERE Id = :newCase.contactId].Name;
@@ -1749,7 +1807,7 @@ public without sharing class ISSP_Case {
             return '';
         }
     }
-    
+
     public list<CaseHistory> getListCaseHistory() {
         list<String> listExcluded;
         try {
@@ -1757,7 +1815,7 @@ public without sharing class ISSP_Case {
         } catch (Exception e) {
             listExcluded = new list<String>();
         }
-        
+
         list<CaseHistory> listHistory = new list<CaseHistory>();
         for (CaseHistory history: [SELECT Id,Field,NewValue,OldValue,CreatedBy.Name,CreatedDate
             FROM CaseHistory

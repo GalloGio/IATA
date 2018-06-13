@@ -62,7 +62,7 @@ global class ams2gdp_Batch_Account2 implements Database.Batchable<sObject> , Dat
 		{
 			//Run only on the deltas 
 			String deltaConditions = String.format('LastModifiedDate >= {0}'
-					,new List<String>{batchInfo.Last_Sync_Start_Date__c.addDays(-1).format('yyyy-MM-dd\'T\'hh:mm:ss\'Z\'','GMT')});
+					,new List<String>{batchInfo.Last_Sync_Start_Date__c.addDays(-2).format('yyyy-MM-dd\'T\'hh:mm:ss\'Z\'','GMT')});
 
 			if(String.isNotBlank(batchInfo.Failed_Records__c))
 			{
