@@ -1073,6 +1073,11 @@ IF(TODAY()&lt;= Valid_To_Date__c, TRUE,FALSE)
             <field>GDP_Products_Account_View__c</field>
             <operation>equals</operation>
         </filters>
+        <filters>
+            <field>Card_Status__c</field>
+            <operation>equals</operation>
+            <value>Preapproved,Sent ID Card,Valid ID Card,ID Card Pending/In Progress</value>
+        </filters>
         <label>XX-GDP Products - Account View = BLANK</label>
         <language>en_US</language>
     </listViews>
