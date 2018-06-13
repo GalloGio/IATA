@@ -1271,6 +1271,10 @@
             <type>user</type>
         </recipients>
         <recipients>
+            <recipient>badanovam@iata.org</recipient>
+            <type>user</type>
+        </recipients>
+        <recipients>
             <recipient>bokom@iata.org</recipient>
             <type>user</type>
         </recipients>
@@ -1284,6 +1288,10 @@
         </recipients>
         <recipients>
             <recipient>girondoe@iata.org</recipient>
+            <type>user</type>
+        </recipients>
+        <recipients>
+            <recipient>guzmanro@iata.org</recipient>
             <type>user</type>
         </recipients>
         <recipients>
@@ -1327,6 +1335,14 @@
             <type>user</type>
         </recipients>
         <recipients>
+            <recipient>naumenkoy@iata.org</recipient>
+            <type>user</type>
+        </recipients>
+        <recipients>
+            <recipient>navar@iata.org</recipient>
+            <type>user</type>
+        </recipients>
+        <recipients>
             <recipient>ogandoi@iata.org</recipient>
             <type>user</type>
         </recipients>
@@ -1364,6 +1380,14 @@
         </recipients>
         <recipients>
             <recipient>suwal@iata.org</recipient>
+            <type>user</type>
+        </recipients>
+        <recipients>
+            <recipient>taverasr@iata.org</recipient>
+            <type>user</type>
+        </recipients>
+        <recipients>
+            <recipient>theryg@iata.org</recipient>
             <type>user</type>
         </recipients>
         <recipients>
@@ -13731,7 +13755,7 @@ Case(month(datevalue(now()))+1,1,31,2,28,3,31,4,30,5,31,6,30,7,31,8,31,9,30,10,3
         <criteriaItems>
             <field>Account.Region_formula__c</field>
             <operation>equals</operation>
-            <value>Europe,Africa &amp; Middle East</value>
+            <value>Europe,Africa &amp; Middle East,Americas</value>
         </criteriaItems>
         <criteriaItems>
             <field>Account.CCG_Participant__c</field>

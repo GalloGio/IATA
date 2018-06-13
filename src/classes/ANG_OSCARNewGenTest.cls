@@ -11,6 +11,7 @@ private class ANG_OSCARNewGenTest {
 		oscar.Validation_Status__c = AMS_Utils.PASSED;
 		oscar.RPM_Approval__c = AMS_Utils.AUTH_APPROVAL;
 		oscar.STEP34__c = AMS_Utils.PASSED;
+		oscar.STEP35__c = AMS_Utils.PASSED;
 
 		update oscar;
 

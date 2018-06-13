@@ -1,0 +1,1 @@
+<aura:event type="APPLICATION" description="Requests completion check for the OneId_ContactCreation component" />
