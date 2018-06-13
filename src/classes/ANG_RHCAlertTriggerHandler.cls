@@ -107,8 +107,8 @@ public class ANG_RHCAlertTriggerHandler{
         
         Map<String, Id> emailTemplates = new Map<String, Id>();
         if(!emailTemplateNames.isEmpty()){
-			for(EmailTemplate e : [SELECT Id, DeveloperName FROM EmailTemplate WHERE DeveloperName IN :emailTemplateNames AND isActive = true]){
-				emailTemplates.put(e.DeveloperName, e.Id);
+            for(EmailTemplate e : [SELECT Id, DeveloperName FROM EmailTemplate WHERE DeveloperName IN :emailTemplateNames AND isActive = true]){
+                emailTemplates.put(e.DeveloperName, e.Id);
             }
         }
 
@@ -222,9 +222,8 @@ public class ANG_RHCAlertTriggerHandler{
 
         for(ANG_Risk_Alert__c ralert:triggerNew){
 
-            if(!(ralert.recordTypeId == ANG_RHCHelper.RECTYPE_RISKALERT_RHC && ralert.ANG_Threshold_Level__c == '100%' &&  (ralert.ANG_Direction__c == ANG_RHCHelper.RISK_ALERT_DIRECTION_UP || ralert.ANG_Direction__c == ANG_RHCHelper.RISK_ALERT_DIRECTION_DOWN )))
+            if(!(ralert.recordTypeId == ANG_RHCHelper.RECTYPE_RISKALERT_RHC && (ralert.ANG_Threshold_Level__c == '100%' && ralert.ANG_Direction__c == ANG_RHCHelper.RISK_ALERT_DIRECTION_UP) || (( ralert.ANG_Threshold_Level__c == '100%' || ralert.ANG_Threshold_Level__c == '75%' || ralert.ANG_Threshold_Level__c == '50%') && ralert.ANG_Direction__c == ANG_RHCHelper.RISK_ALERT_DIRECTION_DOWN )))
                 continue;
-
 
                 if(ralert.ANG_Direction__c == ANG_RHCHelper.RISK_ALERT_DIRECTION_UP){
                     toDeactivateAccounts.add(ralert.ANG_Account__c);
@@ -289,12 +288,13 @@ public class ANG_RHCAlertTriggerHandler{
 
         Id formOfPaymentRT = Schema.Agency_Authorization__c.sObjectType.getDescribe().getRecordTypeInfosByName().get('Form Of Payment').getRecordTypeId();
 
-        List<Agency_Authorization__c> aaLst = [Select Id, ANG_FormOfPayment_ID__c, Status__c, Account__r.Is_PCI_compliant__c from Agency_Authorization__c where Account__c in :accounts and ANG_FormOfPayment_ID__c = 'CA' and recordTypeId = :formOfPaymentRT and Account__r.recordTypeId = :AMS_Utils.RECTYPE_IATAAGENCY];
+        List<Agency_Authorization__c> aaLst = [Select Id, Source__c, ANG_FormOfPayment_ID__c, Status__c, Account__r.Is_PCI_compliant__c from Agency_Authorization__c where Account__c in :accounts and ANG_FormOfPayment_ID__c = 'CA' and recordTypeId = :formOfPaymentRT and Account__r.recordTypeId = :AMS_Utils.RECTYPE_IATAAGENCY];
 
         for(Agency_Authorization__c aa: aaLst){
             
-            if(aa.Status__c != statusFOP){
+            if(aa.Status__c != statusFOP && ((action == LOWERFLUCTUATION && aa.Source__c == 'RTS Alert') || action == UPPERFLUCTUATION)){
                 aa.Status__c = statusFOP;
+                aa.Source__c = 'RTS Alert';
                 toReturn.add(aa);
             }
 
