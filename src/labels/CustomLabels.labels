@@ -781,6 +781,15 @@
         <value>Perform Correction</value>
     </labels>
     <labels>
+        <fullName>AMS_RollbackCase_Description</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>AMS_RollbackCase_Description</shortDescription>
+        <value>Dear colleagues, 
+
+Please issue a Credit Note in order to refund the change fee.</value>
+    </labels>
+    <labels>
         <fullName>ANG_AE_separate_Legal_Entity</fullName>
         <categories>ANG</categories>
         <language>en_US</language>
