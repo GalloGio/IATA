@@ -669,8 +669,7 @@ public without sharing class AMS_MigrationToolHelper {
 
 			AMS_OSCAR__c oscar = new AMS_OSCAR__c( 
 				Process__c = processType, RecordTypeId =oscarRTId, Status__c = caseToProcess.Status, OwnerId = caseToProcess.OwnerId,		
-				// For IEP BANK Acc Setup we'll pick Account_Concerned__c instead
-				Account__c = (processType == AMS_RecordCreatorWebservice.IEP_BANK_ACCOUNT_SETUP ? caseToProcess.Account_Concerned__c : caseToProcess.AccountId), 
+				Account__c = caseToProcess.AccountId, 
 				// For IEP BANK Account we'll populate Agency_Contact with the contact from saam case
 				Agency_Contact__c = (processType == AMS_RecordCreatorWebservice.IEP_BANK_ACCOUNT_SETUP ? cont.concernedContactId : null )
 			);
