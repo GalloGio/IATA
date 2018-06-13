@@ -351,14 +351,14 @@ two record types:
             <valueSetDefinition>
                 <sorted>false</sorted>
                 <value>
-                    <fullName>Female</fullName>
+                    <fullName>FEMALE</fullName>
                     <default>false</default>
-                    <label>Female</label>
+                    <label>FEMALE</label>
                 </value>
                 <value>
-                    <fullName>Male</fullName>
+                    <fullName>MALE</fullName>
                     <default>false</default>
-                    <label>Male</label>
+                    <label>MALE</label>
                 </value>
             </valueSetDefinition>
         </valueSet>
