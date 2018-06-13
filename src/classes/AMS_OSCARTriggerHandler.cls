@@ -2435,10 +2435,7 @@ public class AMS_OSCARTriggerHandler {
             OrgWideEmailAddress[] owea = [select Id from OrgWideEmailAddress where Address = 'agencymanagement@iata.org'];
 
             List<Contact> contList;
-            if(agencyType == AMS_Utils.IEPBANKACCOUNTSETUP)
-                contList = fetchContactFromAgencyContact(oscarId);
-            else    
-                contList = fetchContactInfoFromCase(oscarCommCaseId);
+            contList = fetchContactInfoFromCase(oscarCommCaseId);
 
             if(!contList.isEmpty())
                 AMS_AgencyRegulationAutoRenewal.sendEmailAlert(contList, oscarId, ANGemailTemplates(agencyType, step, wasApproved), oscarCommCaseId, owea[0], false);
@@ -2455,12 +2452,6 @@ public class AMS_OSCARTriggerHandler {
     private static List<Contact> fetchContactInfoFromCase(String oscarCommCaseId){
 
          return [Select Id, Name, Email, Preferred_Language__c, BSP_CASS_Payment_contact__c, Financial_Assessment_Contact__c from Contact where Id in (select ContactId from Case where Id = :oscarCommCaseId )];
-
-    }
-    
-    private static List<Contact> fetchContactFromAgencyContact(String oscarId){
-
-         return [Select Id, Name, Email, Preferred_Language__c, BSP_CASS_Payment_contact__c, Financial_Assessment_Contact__c from Contact where Id in (select Agency_Contact__c from AMS_OSCAR__c where Id = :oscarId )];
 
     }
     
