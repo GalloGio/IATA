@@ -252,8 +252,13 @@
         </filters>
         <filters>
             <field>start_date__c</field>
-            <operation>equals</operation>
-            <value>6/5/2018 12:00 AM</value>
+            <operation>greaterOrEqual</operation>
+            <value>5/21/2018 12:00 AM</value>
+        </filters>
+        <filters>
+            <field>start_date__c</field>
+            <operation>lessOrEqual</operation>
+            <value>5/22/2018 12:00 AM</value>
         </filters>
         <label>AMS - Sales Order</label>
         <language>en_US</language>
