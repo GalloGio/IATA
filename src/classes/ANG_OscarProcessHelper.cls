@@ -1104,8 +1104,9 @@ global class ANG_OscarProcessHelper {
 
 	        fieldsOfObject.put('Process__c',AMS_Utils.NGCHANGES);
 	        fieldsOfObject.put('SIDRA_lite_reason__c',c.SIDRA_Lite_Reason__c);
-			fieldsOfObject.put('Status__c','Open');
+			fieldsOfObject.put('Status__c','Open');			
 			fieldsOfObject.put('AMS_Online_Accreditation__c',newAccr.Id);
+			fieldsOfObject.put('Change_effective_as_of__c',newAccr.Effective_Date_Of_Change__c);
 
 			oscar = ANG_EntityCreator.createOscar(AMS_Utils.RECTYPE_NGCHANGES, c.AccountId, fieldsOfObject);
 
