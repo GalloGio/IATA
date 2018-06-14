@@ -63,24 +63,7 @@
         <type>Picklist</type>
         <valueSet>
             <restricted>true</restricted>
-            <valueSetDefinition>
-                <sorted>false</sorted>
-                <value>
-                    <fullName>CC</fullName>
-                    <default>false</default>
-                    <label>CC</label>
-                </value>
-                <value>
-                    <fullName>CA</fullName>
-                    <default>false</default>
-                    <label>CA</label>
-                </value>
-                <value>
-                    <fullName>EP</fullName>
-                    <default>false</default>
-                    <label>EP</label>
-                </value>
-            </valueSetDefinition>
+            <valueSetName>Form_Of_Payment_Options</valueSetName>
         </valueSet>
     </fields>
     <fields>
