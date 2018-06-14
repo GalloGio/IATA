@@ -275,7 +275,11 @@ public without sharing class ANG_AnualRevalCaseCreationController {
 
 			Set<Id> accountsToCreateIds = new Set<Id>();
 
-			For(Account acct: accountsToCreate){
+			con.setPageSize(con.getResultSize());
+			List<Account> tempAccountsToCreate = (List<Account>)con.getRecords();
+			con.setPageSize(size);
+
+			For(Account acct: tempAccountsToCreate){
 
 				if(acct.Oscars__r.isEmpty())
 					accountsToCreateIds.add(acct.Id);
@@ -283,7 +287,7 @@ public without sharing class ANG_AnualRevalCaseCreationController {
 			}
 
 			system.debug('accountsToCreateIds is ' + accountsToCreateIds);
-
+			system.debug('total size: ' + accountsToCreateIds.size());
 			if(!accountsToCreateIds.isEmpty()){
 
 				System.debug('Running batch !');
