@@ -912,18 +912,36 @@
             reqIdentifier="{!reqs.File_Identifier2__c}"
             />
         </apex:repeat>
-            
-       <apex:form id="FinalForm">
-        <apex:pageBlock rendered="{!BEGINS(sectorValue,'Travel_Agent') && !isNoticeOfChange}">
-            <apex:facet name="header">
-                <apex:outputPanel style="margin:20px 0px;font-size:110%" rendered="{!BEGINS(sectorValue, 'Travel_Agent')}">
-                    <apex:outputText escape="false" value="{!$Label.ISSP_AMS_Step5_ReviewBeforeSubmit}"/>
-                </apex:outputPanel>
-               </apex:facet>
-            <br/>
-            
-        </apex:pageBlock>  
-        </apex:form>
+        
+        <apex:variable var="isPartnership" value="{!BEGINS(sectorValue,'Travel_Agent') && OR(hqAccount.Ownership='Partnership',newForm.ISSP_AMS_Legal_Status__c=='Partnership')}"/>
+        
+        <apex:pageBlock rendered="{!BEGINS(sectorValue,'Travel_Agent') && !isNoticeOfChange && NOT(isPartnership)}">
+            <apex:form id="FinalForm">
+                <apex:facet name="header">
+                    <apex:outputPanel style="margin:20px 0px;font-size:110%" rendered="{!BEGINS(sectorValue, 'Travel_Agent')}">
+                        <apex:outputText escape="false" value="{!$Label.ISSP_AMS_Step5_ReviewBeforeSubmit}"/>
+                    </apex:outputPanel>
+                   </apex:facet>
+           </apex:form>
+        </apex:pageBlock>
+        
+        <apex:outputPanel rendered="{!BEGINS(sectorValue,'Travel_Agent') && !isNoticeOfChange && isPartnership}">
+            <apex:pageBlock>
+                <apex:form>
+                    <apex:outputText escape="false" value="{!$Label.ISSP_AP_Partnership_Download_PDF}"/>
+                    <br/>
+                    <img src="{!URLFOR($Resource.PDF_icon_large)}" style="vertical-align:middle"/>&nbsp;
+                    <apex:commandLink action="{!redirectToPDF}" value="{!$Label.ISSP_AMS_Download_PDF_Copy}" target="_new"/>
+                </apex:form>
+            </apex:pageBlock>
+        
+            <c:ISSP_AMS_FormUpload reqCnt="{!cnt+1}"
+                reqRequired="true"
+                reqName="{!$Label.ISSP_AMS_Form_Signed_Application_Form}"
+                reqDescription="{!$Label.ISSP_AMS_Form_Signed_Application_Form_Description}"
+                reqIdentifier="{!FILE_ID_FOR_PARTNERSHIP}"
+            />
+        </apex:outputPanel>
 
         <apex:outputPanel rendered="{!BEGINS(sectorValue,'Travel_Agent') && !isNoticeOfChange}">
         <div class="col-md-12"></div>
@@ -934,9 +952,9 @@
                 <apex:pageBlock >
                 <apex:pageBlockSection title="{!$Label.ISSP_TC_Accept}" columns="1" collapsible="false" rendered="{!BEGINS(sectorValue, 'Travel_Agent')}">
                     <div class="aplabel">
-                        <apex:outputText escape="false" value="{!IF(amsOfficeType=='HO', $Label.ISSP_AMS_T_Cs1, $Label.ISSP_AMS_Pax_Branch_T_Cs)}"/>      
-                        <apex:outputText escape="false" value="{!$Label.ISSP_AMS_T_Cs2}"/>      
-                        <apex:outputText escape="false" value="{!$Label.ISSP_AMS_T_Cs3}"/>                    
+                        <apex:outputText escape="false" value="{!IF(amsOfficeType=='HO', $Label.ISSP_AMS_T_Cs1, $Label.ISSP_AMS_Pax_Branch_T_Cs)}"/>
+                        <apex:outputText escape="false" value="{!$Label.ISSP_AMS_T_Cs2}"/>
+                        <apex:outputText escape="false" value="{!$Label.ISSP_AMS_T_Cs3}"/>
                     </div>
                     <apex:inputField value="{!newForm.Accept_terms_and_conditions__c}" required="true"/> 
                 </apex:pageBlockSection> 
