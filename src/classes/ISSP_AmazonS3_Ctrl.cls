@@ -161,7 +161,7 @@ global class ISSP_AmazonS3_Ctrl {
     }
 
     public ISSP_AmazonS3_Ctrl(ISSP_ModelA_Onboarding modelACtrl){
-        system.debug('aqui ISSP_AmazonS3_Ctrl pci ' + modelACtrl.onBoardingOSCARCase.Id);
+        //system.debug('aqui ISSP_AmazonS3_Ctrl pci ' + modelACtrl.onBoardingOSCARCase.Id);
         this.Id = modelACtrl.onBoardingOSCARCase.Id;
         
         if (this.id == null) return;
@@ -169,7 +169,7 @@ global class ISSP_AmazonS3_Ctrl {
         this.cse = [Select id, Status,CaseNumber,ArchivedDate__c,account.type,
                  account.IATA_ISO_Country__r.iso_code__c ,
                  IFAP_Agent_Code__c,AccountId ,Financial_Review_Type__c,IsComplaint__c,
-                 Reason1__c, CaseArea__c
+                 Reason1__c, CaseArea__c, Owner.Name
                  from Case where id = : this.id];
         
         AMAZONURL = AmazonCredentials.getCredentials(AMAZON_CREDENTIALS_NAME).EndpointBaseURL
@@ -227,6 +227,10 @@ global class ISSP_AmazonS3_Ctrl {
 
     public Boolean getCaseOwnerNewgenPCI() {
         return this.cse.Owner.Name.startsWith('NewGen PCI');
+    }
+
+    public Boolean getCaseOwnerModelA() {
+        return this.cse.Owner.Name.startsWith('Model A Onboarding');
     }
 
     private static String make_sig(string canonicalBuffer) {
