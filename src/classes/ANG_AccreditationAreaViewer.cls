@@ -92,6 +92,7 @@ global with sharing class ANG_AccreditationAreaViewer {
                                                                 ,'VAT_Number_2__c' => 'VAT_Number_2__c'
                                                                 ,'ANG_Accreditation_type__c' => 'ANG_Accreditation_Model__c'
                                                                 ,'ISSP_AMS_GDS_with_signed_contract__c' => 'GDS__c'
+                                                                ,'ISSP_AMS_Legal_Status__c' => 'Company_Type__c'
 
         };
             }
