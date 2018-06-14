@@ -1,11 +1,15 @@
 public class AMS_DemoTreeview {
     
+    private static final Set<String> ACTIVE_ACC_STATUS = new Set<String>{AMS_Utils.ACC_S9_APPROVED, AMS_Utils.ACC_S8_CHANGESPROCESSED, AMS_Utils.ACC_S7_UNDERREVIEW, 
+                                                                    AMS_Utils.ACC_S6_CASHWITHCOMMISSION, AMS_Utils.ACC_S5_CASHNOCOMMISSION, AMS_Utils.ACC_S4_LISTED};
+
     public Account currentAccount {get;set;}
     public Account parentAccount {get;set;}
     public Boolean isHQ {get;set;}
     public AMS_OSCAR__c currentOscar {get;set;}
     public Map<Id,String> accreditationAreas {get;set;}
     public Map<String,String> accreditationAreasOKNOK {get;set;}
+    public Map<String,Boolean> accountsActive {get; set;}
     public Map<Id,Account> acctsMap {get;set;}
     public Id currentCaseId {get;set;}
     
@@ -215,10 +219,16 @@ public class AMS_DemoTreeview {
         For(String iataNOK: iATA_Codes_NOK)
             toReturn.put(iataNOK,'NOK');
 
+        accountsActive = new Map<String,Boolean>();
+
         For(Account acct: acctsMap.values()){
 
             if(toReturn.get(acct.IATACode__c) == null)
                 toReturn.put(acct.IATACode__c,'UNK');
+
+            accountsActive.put(acct.IATaCode__c, ACTIVE_ACC_STATUS.contains(acct.status__c));
+
+
         }
 
         if(toReturn.get(this.parentAccount.IATACode__c) == null){
@@ -234,5 +244,6 @@ public class AMS_DemoTreeview {
 
         return toReturn;
     }
+
 
 }
