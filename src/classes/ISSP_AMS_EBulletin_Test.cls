@@ -494,6 +494,10 @@ System.debug('mCountries 2: ' + bulletin_0.mCountries);
             ISSP_AMS_EBulletin bulletin_home = new ISSP_AMS_EBulletin();
 
             PageReference pr_home = bulletin_home.checkRedirect();
+
+            /*** AMSU-62 ***/
+            bulletin_0.clearAllDaily();
+            bulletin_0.clearAllWeekly();
     	}
         Test.stopTest();
 
