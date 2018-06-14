@@ -1,7 +1,7 @@
 public class AMS_DemoTreeview {
     
     private static final Set<String> ACTIVE_ACC_STATUS = new Set<String>{AMS_Utils.ACC_S9_APPROVED, AMS_Utils.ACC_S8_CHANGESPROCESSED, AMS_Utils.ACC_S7_UNDERREVIEW, 
-                                                                    AMS_Utils.ACC_S6_CASHWITHCOMMISSION, AMS_Utils.ACC_S5_CASHNOCOMMISSION, AMS_Utils.ACC_S4_LISTED, 'Review'};
+                                                                    AMS_Utils.ACC_S6_CASHWITHCOMMISSION, AMS_Utils.ACC_S5_CASHNOCOMMISSION, AMS_Utils.ACC_S4_LISTED};
 
     public Account currentAccount {get;set;}
     public Account parentAccount {get;set;}
