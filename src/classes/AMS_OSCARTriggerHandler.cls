@@ -159,6 +159,10 @@ public class AMS_OSCARTriggerHandler {
     }
 
     public static void handleAfterInsert() {
+        /*** AMSU-134 Start ***/
+        createSavepoint((List<AMS_OSCAR__c>) Trigger.new);
+        /*** AMSU-134 End ***/
+
         updateCaseKPIFields();
     }
 
@@ -174,7 +178,52 @@ public class AMS_OSCARTriggerHandler {
         /*** AMSU-121 Start ***/
         handleChangeOfLocation((List<AMS_OSCAR__c>) Trigger.new, (Map<Id, AMS_OSCAR__c>) Trigger.oldMap);
         /*** AMSU-121 End ***/
+        /*** AMSU-134 Start ***/
+        rollbackChanges((List<AMS_OSCAR__c>) Trigger.new, (Map<Id, AMS_OSCAR__c>) Trigger.oldMap, (Map<Id, AMS_OSCAR__c>) Trigger.newMap);
+        /*** AMSU-134 End ***/
     }
+
+    /*** AMSU-134 Start ***/
+    public static void createSavepoint(List<AMS_OSCAR__c> oscars) {
+        Set<Id> oscarIds = new Set<Id>();
+        for(AMS_Oscar__c oscar : oscars) {
+            if(oscar.Process__c == AMS_Utils.AGENCYCHANGES) {
+                oscarIds.add(oscar.Id);
+            }
+        }
+
+        if(!system.isBatch() && !system.isFuture()) {
+            AMS_OscarChangesHelper.createSavepoint(oscarIds);
+        }
+    }
+
+    public static void rollbackChanges(List<AMS_OSCAR__c> oscars, Map<Id,AMS_OSCAR__c> oldMap, Map<Id,AMS_OSCAR__c> newMap) {
+        Set<Id> oscarIds = new Set<Id>();
+
+        for(AMS_OSCAR__c oscar : oscars) {
+            AMS_OSCAR__c oldOscar = oldMap.get(oscar.Id);
+            if(oscar.Process__c == AMS_Utils.AGENCYCHANGES && oldOscar.STEP4__c != AMS_Utils.PASSED && oscar.STEP4__c == AMS_Utils.PASSED) {
+                oscarIds.add(oscar.Id);
+            }
+        }   
+
+        if(oscarIds.isEmpty()) {
+            return;
+        }
+
+        List<Case> cases = [SELECT Id, Oscar__c, (SELECT Id FROM Cases WHERE IsClosed = false) FROM Case WHERE Oscar__c IN :oscarIds];
+        for(Case cse : cases) {
+            if(!cse.Cases.isEmpty()) {
+                newMap.get(cse.OSCAR__c).addError('You cannot withdrawal a case with open related cases.');
+                oscarIds.remove(cse.OSCAR__c);
+            }
+        }
+        
+        if(!oscarIds.isEmpty() && !system.isBatch() && !system.isFuture()) {
+            AMS_OscarChangesHelper.rollbackOscarChanges(oscarIds);
+        }
+    }
+    /*** AMSU-134 End ***/
 
     /*** AMSU-125 Start ***/
     public static void validateRemittanceFrequency(List<AMS_OSCAR__c> oscars, Map<Id, AMS_OSCAR__c> oldMap, Map<Id, AMS_OSCAR__c> newMap) {

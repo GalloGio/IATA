@@ -497,7 +497,7 @@ Values must be Separated by &quot;;&quot;</inlineHelpText>
         <filters>
             <field>Change_Code__c</field>
             <operation>equals</operation>
-            <value>NOT</value>
+            <value>RCR,RTR,RTE,REI</value>
         </filters>
         <label>AMS_NOT</label>
         <language>en_US</language>
