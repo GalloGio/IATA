@@ -35,7 +35,7 @@ global class SchdlEBCCreateNotificationForRenewal implements Schedulable {
 			string minute = string.valueof(nextScheduleTime.minute());
 			string second = string.valueof(nextScheduleTime.second ());
 			string cronvalue = second + ' ' + minute + ' ' + hour + ' ' + day + ' ' + month + ' ?';
-			string jobName = 'SchdlEBCCreateNotificationForRenewal ' + nextScheduleTime.format('yyyy-MM-dd HH:mm:ss');
+			string jobName = 'SchdlEBCCreateNotificationForRenewal ' + (Test.isRunningTest() ? 'Test' : '') + nextScheduleTime.format('yyyy-MM-dd HH:mm:ss');
 			
 			System.schedule(jobName, cronvalue , new SchdlEBCCreateNotificationForRenewal());
 			

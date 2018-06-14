@@ -13,4 +13,5 @@
     <tab>GSS_Subscription_Detail__c</tab>
     <tab>GDP_Area_Definition__c</tab>
     <tab>zqu__ProductRatePlan__c</tab>
+    <tab>AMS_Account_Role__c</tab>
 </CustomApplication>

@@ -1,30 +1,47 @@
 public class Customer_DTO 
 {
+    // Ecommerce Enhancements
+    private static Boolean isLoginEvent = false;
+    private static Customer_DTO loginEventSingleton = null;
+    private static Id loginContactId = null;
+
+    public static void setLoginEvent(Id contactId) {
+        isLoginEvent = true;
+        loginContactId = contactId;
+    }
+
+    public static void resetLoginEvent() {
+        isLoginEvent = false;
+        loginContactId = null;
+    }
+
+    // Ecommerce Enhancements end
+
     private static Customer_DTO singleton = null;
 
     public User sfUser { get; set; }
     public Contact sfContact { get; set; }
     public Account sfAccount { get; set; }
-    public String customerType { get; set; }
+    public String customerType { get; set;  }
 
     public Address_DTO soldTo{get;set;}
     public Address_DTO billTo{get;set;}
     public List<Address_DTO> shipTos{get;set;}
 
-    public Zuora__CustomerAccount__c zBillingAccount { get{
+    public Zuora__CustomerAccount__c zBillingAccount { get{ 
         if(zBillingAccount == null){
             Map<Id,Zuora__CustomerAccount__c> sfAccId_ZcustAccount = CustomerAccount_Sel.getZuoraCustmerAccount(new Set<Id>{sfContact.Id});
             zBillingAccount = (Test.isRunningTest()) ? IECZuoraHelper.getBillingAccountByContactId(sfContact.Id) : sfAccId_ZcustAccount.get(sfContact.Id);
-        }
+        } 
         return zBillingAccount;
     } set; }
 
     public Zuora.zObject zAccount{get{
-        if(zAccount == null){
+        if(zAccount == null){ 
             zAccount = (Test.isRunningTest()) ? IECTestUtil.createSampleZuoraAccount('99999', sfAccount.Id, sfContact.Id) : IECZuoraHelper.getZuoraAccountBySFAccountId(sfAccount.Id, sfContact.Id);   
         }
         return zAccount;
-    }set;}
+    }set;} 
 
     public List<IEC_CreditCard_DTO> creditCards {get{
         if(creditCards == null){
@@ -97,8 +114,8 @@ public class Customer_DTO
         
         //*** get information on contact and account and parent account to determine if eligible
         List<Contact> checks = [select User_IECPortal_Status__c, Account.ParentId, Account.Industry, Account.IATACode__c
-                              , Account.RecordType.DeveloperName, Account.Membership_status__c, Account.ICH_Member__c
-                              , Account.Parent.RecordType.DeveloperName, Account.Parent.Membership_status__c, Account.Parent.ICH_Member__c
+                              , Account.RecordType.DeveloperName, Account.Membership_status__c, Account.ICH_Member__c, Account.ACH_Member__c
+                              , Account.Parent.RecordType.DeveloperName, Account.Parent.Membership_status__c, Account.Parent.ICH_Member__c, Account.Parent.ACH_Member__c
                          from Contact
                          where Id = :sfContact.Id limit 1];
 
@@ -112,45 +129,22 @@ public class Customer_DTO
         
         //*** check if account is eligible
         Boolean isAccountEligible = false;
-        if (check.Account.RecordType.DeveloperName == IECConstants.Account_RecordType_BranchAirline && check.Account.ParentId != null)
+        if (check.Account.RecordType.DeveloperName == IECConstants.Account_RecordType_BranchAirline || check.Account.RecordType.DeveloperName == IECConstants.Account_RecordType_Airline )
         {
-            //*** account is airline branch -> parent must be airline headquarter and IATA member to be eligible
-            if (check.Account.Parent.RecordType.DeveloperName == IECConstants.Account_RecordType_Airline &&
-                check.Account.Parent.Membership_status__c == IECConstants.Account_MembershipStatus_IATAMember)
-                isAccountEligible = true;
+            if ( check.Account.ParentId != null && (check.Account.Parent.ICH_Member__c == true || check.Account.Parent.ACH_Member__c == true))      
+                return true;
+            if(check.Account.ICH_Member__c == true || check.Account.ACH_Member__c == true)
+                return true;
         }
         else
-        {
-            //*** account is airline headquarter and IATA member to be eligible -> eligible
-            if (check.Account.RecordType.DeveloperName == IECConstants.Account_RecordType_Airline &&
-                check.Account.Membership_status__c == IECConstants.Account_MembershipStatus_IATAMember)
-                isAccountEligible = true;
-            else
-            {
-                //*** account is of airline industry and has IATA code -> eligible if having an airline headquarter with same IATA code
-                if (check.Account.RecordType.DeveloperName == IECConstants.Account_RecordType_Standard &&
-                    check.Account.Industry == IECConstants.Account_Industry_Airline && String.isNotBlank(check.Account.IATACode__c))
-                    if ([select count()
-                         from Account
-                         where RecordType.DeveloperName = :IECConstants.Account_RecordType_Airline
-                           and Membership_status__c = :IECConstants.Account_MembershipStatus_IATAMember
-                           and IATACode__c = :check.Account.IATACode__c limit 1] > 0)
-                        isAccountEligible = true;
-            }
-        }
-        if (isAccountEligible != true) return false;
-        
-        // check if Parent Account have access to ICH
-        if (check.Account.ParentId != null && check.Account.Parent.ICH_Member__c == true) return true;
-        
-        // make sure that there is a SAP Account configured
-        List<SAP_Account__c> lstSAPAcc = [SELECT SAP_ID__c FROM SAP_Account__c WHERE Account__c = :sfAccount.Id AND GDP__c = true];
-        if (lstSAPAcc.size() == 0 || lstSAPAcc.get(0).SAP_ID__c == null) return false;
-        
-        // check if Account have access to ICH
-        return (sfAccount != null && sfAccount.ICH_Member__c == true);
+        {      
+            if(check.Account.ICH_Member__c == true || check.Account.ACH_Member__c == true)
+                return true;
     }
+    return false;
+}
 
+/*
     public static Customer_DTO getLoggedCustomer()
     {
         //-- If logged user 
@@ -173,6 +167,58 @@ public class Customer_DTO
             return null; 
         }   
     }
+*/
+
+    // Ecommerce Enhancements - new version to hook on login event
+    public static Customer_DTO getLoggedCustomer()
+    {
+        if (isLoginEvent == false) {
+            // Existing behaviour (default)
+            //-- If logged user 
+            if(UserInfo.getUserType() == 'PowerPartner')
+            {
+                if(singleton == null)
+                {
+                    Customer_DTO customer = getCustomerByUser(UserInfo.getUserId());  
+                    
+                    //-- Build Customer addresses 
+                    setCustomerAddresses(customer);
+                    singleton = customer; 
+                }
+
+                return singleton;
+            }
+            //-- Non logged user 
+            else
+            {
+                return null; 
+            }   
+        } else {
+            // New Behaviour, create simulation of logged in user on login event
+            if (loginEventSingleton == null) {
+                Customer_DTO customer = getCustomerByContact(loginContactId);
+
+                setCustomerAddresses(customer);
+                loginEventSingleton = customer;
+            }
+
+            return loginEventSingleton;
+        }
+    }
+
+    public static Customer_DTO getCustomerByContact(Id contactId) {
+        List<User> userList = [SELECT Id, ContactId FROM User WHERE ContactId = :contactId];
+
+        if (userList != null && userList.isEmpty() == false) {
+            User user = userList[0];
+
+            return getCustomerByUser(user.Id);
+        } else {
+            return null;
+        }
+    }
+
+    // Ecommerce Enhancements end
 
     public static Customer_DTO getCustomerByUser(Id userId)
     {

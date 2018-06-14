@@ -37,9 +37,11 @@ private class AMS_2_MDM_ScheduleTest{
 
 
       AMS_SAP_Settings__c sapSett = new AMS_SAP_Settings__c(Sales_Order_Batch_Size__c = 500, Batch_Size__c = '3',
-                                                            AIMS1_CRON_EXP__c = '0 0 0 15 3 ? 2022',
-                                                           	AIMS2_CRON_EXP__c = '0 0 0 15 3 ? 2022',
-                                                           	AIMS3_CRON_EXP__c = '0 0 0 15 3 ? 2022',
+                                                            REGION1_CRON_EXP__c = '0 0 0 15 3 ? 2022',
+                                                           	REGION2_CRON_EXP__c = '0 0 0 15 3 ? 2022',
+                                                            REGION3_CRON_EXP__c = '0 0 0 15 3 ? 2022',
+                                                            REGION4_CRON_EXP__c = '0 0 0 15 3 ? 2022',
+                                                            REGION5_CRON_EXP__c = '0 0 0 15 3 ? 2022',
                                                             Web_Service_endpoint__c = 'https://pixid.iata.org/XISOAPAdapter/MessageServlet');
       insert sapSett;
 
@@ -58,14 +60,16 @@ private class AMS_2_MDM_ScheduleTest{
 
       setAIMSRegion = new SET<String>();
 
-      if(Region.equalsIgnoreCase('AIMS1')){
-        setAIMSRegion.add('Americas');
-      }else if(Region.equalsIgnoreCase('AIMS2')){
-        setAIMSRegion.add('Europe');
-        setAIMSRegion.add('Africa & Middle East');
-      }else if(Region.equalsIgnoreCase('AIMS3')){
-        setAIMSRegion.add('China & North Asia');
-        setAIMSRegion.add('Asia & Pacific');
+      if(localRegion.equalsIgnoreCase('MIA')){
+          setAIMSRegion.add('Americas');
+      }else if(localRegion.equalsIgnoreCase('MAD')){
+          setAIMSRegion.add('Europe');
+      }else if(localRegion.equalsIgnoreCase('AMM')){
+          setAIMSRegion.add('Africa & Middle East');
+      }else if(localRegion.equalsIgnoreCase('SIN')){
+          setAIMSRegion.add('Asia & Pacific');
+      }else if(localRegion.equalsIgnoreCase('BJS')){
+          setAIMSRegion.add('China & North Asia');
       } 
 
       lIsoCountry = [SELECT ID FROM IATA_ISO_Country__c WHERE Region__c in :setAIMSRegion];
@@ -193,18 +197,21 @@ private class AMS_2_MDM_ScheduleTest{
         
         integer i1 = [SELECT Count() FROM CronTrigger where CronJobDetail.Name like 'AMS 2 MDM Sales Orders TEST%']; 
         
-        
-        AMS_2_MDM_Schedule.start_region('AIMS1');
-        AMS_2_MDM_Schedule.start_region('AIMS2');
-        AMS_2_MDM_Schedule.start_region('AIMS3');
+        AMS_2_MDM_Schedule.start_region('MIA');
+        AMS_2_MDM_Schedule.start_region('MAD');
+        AMS_2_MDM_Schedule.start_region('AMM');
+        AMS_2_MDM_Schedule.start_region('SIN');
+        AMS_2_MDM_Schedule.start_region('BJS');
            
         integer i2 = [SELECT Count() FROM CronTrigger where CronJobDetail.Name like 'AMS 2 MDM Sales Orders TEST%']; 
-        System.assertEquals(i2,3);
+        System.assertEquals(i2,5);
         
         AMS_2_MDM_Schedule.stop();
-        AMS_2_MDM_Schedule.stop_region('AIMS1');
-        AMS_2_MDM_Schedule.stop_region('AIMS2');
-        AMS_2_MDM_Schedule.stop_region('AIMS3');
+        AMS_2_MDM_Schedule.stop_region('MIA');
+        AMS_2_MDM_Schedule.stop_region('MAD');
+        AMS_2_MDM_Schedule.stop_region('AMM');
+        AMS_2_MDM_Schedule.stop_region('SIN');
+        AMS_2_MDM_Schedule.stop_region('BJS');
         
         integer i3 = [SELECT Count() FROM CronTrigger where CronJobDetail.Name like 'AMS 2 MDM Sales Orders TEST%']; 
         System.assertEquals(i3,0);

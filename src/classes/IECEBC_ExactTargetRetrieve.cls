@@ -1,83 +1,4 @@
 public class IECEBC_ExactTargetRetrieve {
-
-    // get Email Template Id from ExactTarget
-    Public static String getEmailTemplateId(String emailTemplateName) {
-        // http instances and variables
-        Http http = new Http();
-        HttpRequest req = new HttpRequest();        
-        String emailTemplateId = '';                
-        // header
-        IECEBC_ETHelper.setSoapRequestHeader(req, 'Retrieve');
-        // body
-        req.setBody(
-            IECEBC_ETHelper.createXMLHeader()            
-            + IECEBC_ETHelper.retrieveRequestEmailTemplate(emailTemplateName)
-            + IECEBC_ETHelper.createXMLFooter()              
-        );                
-        req.setTimeout(IECEBC_ETInit.TimeOut);        
-        
-        // get response
-        HTTPResponse response = http.send(req);        
-        if (response.getStatusCode() == 200) { 
-            emailTemplateId = IECEBC_ETHelper.parse(response, 'ID');
-        }
-        // return ID
-        return emailTemplateId;
-    }
-    
-    // get list of subscribers email list from ExactTarget
-    Public static List<String> getSubscribers() {
-        // http instances and variables
-        List<String> subscribersEmailList = new List<String>();
-        Http http = new Http();
-        HttpRequest req = new HttpRequest();        
-                    
-        // header
-        IECEBC_ETHelper.setSoapRequestHeader(req, 'Retrieve');
-        // body
-        req.setBody(
-            IECEBC_ETHelper.createXMLHeader()            
-            + IECEBC_ETHelper.retrieveRequestSubscribers('Active')
-            + IECEBC_ETHelper.createXMLFooter()              
-        );                
-        req.setTimeout(IECEBC_ETInit.TimeOut);        
-        
-        // get response
-        HTTPResponse response = http.send(req);        
-        if (response.getStatusCode() == 200) { 
-            subscribersEmailList = IECEBC_ETHelper.parseList(response, 'EmailAddress');
-        }
-        // return ID
-        return subscribersEmailList;
-    }
-    
-    // get list of portfolio objects from ExactTarget
-    Public static List<String> getPortfolioObjects() {
-        // http instances and variables
-        List<String> portfolioObjectsList = new List<String>();
-        Http http = new Http();
-        HttpRequest req = new HttpRequest();        
-                    
-        // header
-        IECEBC_ETHelper.setSoapRequestHeader(req, 'Retrieve');
-        // body 
-        // CategoryId =  2723632
-        req.setBody(
-            IECEBC_ETHelper.createXMLHeader()            
-            + IECEBC_ETHelper.retrieveRequestPortfolioObjects('2723632') // category id of the portfolio folder
-            + IECEBC_ETHelper.createXMLFooter()              
-        );                
-        req.setTimeout(IECEBC_ETInit.TimeOut);        
-        
-        // get response
-        HTTPResponse response = http.send(req);        
-        if (response.getStatusCode() == 200) { 
-            portfolioObjectsList = IECEBC_ETHelper.parseList(response, 'FileName');
-        }
-        // return ID
-        return portfolioObjectsList;
-    }
-    
     // get TriggeredSend ExternalKey from a triggeredSend Name
     Public static String getTriggeredSendExternalKey(String triggeredSendName) {
         // http instances and variables  
@@ -141,7 +62,7 @@ public class IECEBC_ExactTargetRetrieve {
         );                
         req.setTimeout(IECEBC_ETInit.TimeOut);                
         // get response
-        HTTPResponse response = http.send(req);        
+        HTTPResponse response = http.send(req); 
         if (response.getStatusCode() == 200) {           
             IECEBC_ETHelper.parseMaptriggeredSendSummary(response, triggeredSendSummaryMetrics);            
         }

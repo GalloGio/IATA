@@ -49,7 +49,9 @@ public with sharing class trgHndlrIECSubscriptionProductCharge {
                 charge.Product_Rate_Plan_Charge__c = ratePlanCharge.Id;
 
                 // Capture Rate Plan to assign it to parent subscription
-                if (!mapParentSubscription_to_RatePlanId.containsKey(charge.Zuora__Subscription__c))
+                //*** (Thai 2016-11-09) exclude shipping & tax rate plan to set to subscription
+                if (!mapParentSubscription_to_RatePlanId.containsKey(charge.Zuora__Subscription__c) &&
+                    !'Shipping,Tax'.containsIgnoreCase(charge.Zuora__RatePlanName__c))
                     mapParentSubscription_to_RatePlanId.put(charge.Zuora__Subscription__c, ratePlanCharge.zqu__ProductRatePlan__c);
             }
         }

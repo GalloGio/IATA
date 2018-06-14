@@ -26,7 +26,7 @@ public  class AmazonCredentials {
             public static AmazonCredentials getCredentials(string configurationName){
                     
                     if( CredPerName == null || CredPerName.keyset() == null || CredPerName.keyset().size() == 0  || CredPerName.get(configurationName) == null ){
-                        EF_AttachmentListController.runningForEF = false;
+                        // EF_AttachmentListController.runningForEF = false;
                         Amazon_Cred__c Amazon_Cred = Amazon_Cred__c.getInstance(configurationName);
                         if(Amazon_Cred == null){
                             

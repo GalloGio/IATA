@@ -113,8 +113,9 @@
     function workingFirstName() {
         
         var firstName = (removeDiacritics(this.document.getElementById('{!$Component.idcardForm.pb1.sc1.first}').value));
-        document.getElementById('{!$Component.idcardForm.pb1.sc1.first}').value = firstName.capitalize();
-        
+        //document.getElementById('{!$Component.idcardForm.pb1.sc1.first}').value = firstName.capitalize();
+        document.getElementById('{!$Component.idcardForm.pb1.sc1.first}').value = firstName.toUpperCase();
+
         //removing apostrophe 
         var name = (removeDiacritics(this.document.getElementById('{!$Component.idcardForm.pb1.sc1.first}').value));
         name = name.replace(/'/,' ');
@@ -129,7 +130,8 @@
     function workingLastName() {
 
         var lastName = (removeDiacritics(this.document.getElementById('{!$Component.idcardForm.pb1.sc1.last}').value));
-        document.getElementById('{!$Component.idcardForm.pb1.sc1.last}').value = lastName.capitalize();
+        //document.getElementById('{!$Component.idcardForm.pb1.sc1.last}').value = lastName.capitalize();
+        document.getElementById('{!$Component.idcardForm.pb1.sc1.last}').value = lastName.toUpperCase();
 
         //removing apostrophe 
         var name = (removeDiacritics(this.document.getElementById('{!$Component.idcardForm.pb1.sc1.last}').value));
@@ -280,7 +282,8 @@
                        </apex:outputPanel>
                        
                        <apex:outputPanel rendered="{!AND(NOT(isNew),HasPhoto)}" >
-                            <img src="{!$Label.IDCard_CroppingTool}/images/{!app.Photo__c}" style="height:120px; width:90px;"/>
+                            <!--<img src="{!$Label.IDCard_CroppingTool}/images/{!app.Photo__c}" style="height:120px; width:90px;"/>-->
+                            <apex:iframe src="apex/IDCardApplicationImageViewer?Id={!app.Id}&rnd={!NOW()}&rnd2={!app.Photo__c}" height="150px" />
                        </apex:outputPanel>
                        <apex:outputPanel rendered="{!AND(NOT(isNew),HasPhoto)}">
                            <a href="{! pagesurl['prefix']}/IDCard_AdmUserManagmentPicture?VER={!ImageLink}"  style="color:black"

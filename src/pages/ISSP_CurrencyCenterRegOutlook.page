@@ -1,0 +1,93 @@
+<apex:page controller="ISSP_CurrencyCenterRegOutlookCtrl"  standardStylesheets="false" showHeader="false" sidebar="false"  applyBodyTag="false" applyHtmlTag="false">
+<html>
+
+<c:ISSP_Header ></c:ISSP_Header>
+
+<head>
+
+<link rel="stylesheet" href="{!URLFOR($Resource.CurrencyCenter_Style, '/outlook_news.css')}" />
+</head>
+
+<body>
+	<div class="container">
+
+		<c:ISSP_CustomNavigation />
+
+		<apex:form >
+
+		<div class="row">
+      		<div class="col-xs-12 service-header">
+            
+				<div class="row">
+					<a href="/ISSP_CurrencyCenterHome" class="back-home-link">{!$Label.CurrencyCenter_Back_Home}</a>
+				</div>
+				<div class="row ">
+					<div class="col-xs-12 page-title">
+						{!$Label.CurrencyCenter_Regional_Outlook_News}
+					</div>
+				</div>
+				<div class="row">
+					<div class="col-xs-12 page-subtitle">
+						{!selectedRegion}
+					</div>
+				</div>
+				<div class="row ">
+					<div class="col-xs-12 row-buttons">
+						<apex:repeat value="{!lstRegions}" var="region">
+							<a href="/ISSP_CurrencyCenterRegOutlook?region={!URLENCODE(region)}" class="btn {!IF (region == selectedRegion, 'btn-selected', 'btn-blue')}">{!region}</a>
+						</apex:repeat>
+					</div>
+				</div>
+			</div>
+		</div>
+			
+		<div class="row">
+			<apex:repeat value="{!commentsList}" var="comment">
+				<div class="col-xs-12 col-sm-6 col-md-4">
+				<div class="news-item-box">
+						<div class="row news-title">
+							<div class="col-xs-12">{!comment.ICCS_Title__c}</div>
+						</div>
+						<div class="row news-source">
+							<div class="col-xs-12">Source: {!comment.ICCS_Source__c}</div>
+						</div>
+						<div class="row news-description">
+							<div class="col-xs-12"><apex:outputText value="{!comment.ICCS_Description__c}" escape="false"/></div>
+						</div>
+					
+						<!-- ATTACHMENTS -->
+			            <apex:outputPanel rendered="{!comment.Attachments.size!=0}">
+			            <div class="row horizontal-separator"></div>
+			            <div class="row">
+			              <div class="col-xs-12">
+			                <div class="attachments-title">{!$Label.CurrencyCenter_Attachments_Section}</div>
+			                
+			                <apex:repeat value="{!comment.Attachments}" var="att">
+			                  <div class="row attachments-row">
+			                    <div class="col-xs-12 attachments-name"><apex:outputLink styleClass="" value="/servlet/servlet.FileDownload?file={!att.Id}" target="_blank">{!att.Name}</apex:outputLink></div>
+			                    <div class="col-xs-12 attachments-description"><apex:outputText value="{!att.Description}" escape="false"/></div>
+			                  </div>
+			                </apex:repeat>
+			                
+			              </div>
+			            </div>                        
+			            </apex:outputPanel>                    
+			            <!-- END ATTACHMENTS ROW -->
+		            </div>
+	            </div>
+			</apex:repeat>
+
+
+		</div>
+
+			
+		</apex:form>
+
+		<c:ISSP_CustomFooter />
+
+	</div>
+</body>
+
+</html>
+
+</apex:page>

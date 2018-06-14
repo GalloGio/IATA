@@ -5,7 +5,7 @@ trigger EmailMessageTrigger on EmailMessage (after delete, after insert, after u
             
         } else if (Trigger.isAfter) {
             EmailMessageHandler.SetTheNOISentDateOnParentCase(Trigger.new);
-            
+            EmailMessageHandler.sendEmailToSenderWhenCaseClosed(Trigger.new);
         }
         
         

@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<EmailTemplate xmlns="http://soap.sforce.com/2006/04/metadata">
+    <apiVersion>29.0</apiVersion>
+    <available>true</available>
+    <description>Portal Administrator Rejects access to Service</description>
+    <encodingKey>UTF-8</encodingKey>
+    <name>Notify contact of access rejected VF_ADM - CNS</name>
+    <style>none</style>
+    <subject>IATA Customer Portal - Access to  rejected</subject>
+    <type>visualforce</type>
+</EmailTemplate>

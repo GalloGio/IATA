@@ -26,7 +26,7 @@
                 </apex:commandLink>
                 &nbsp; -->
 
-                <apex:commandLink value="Edit" action="{!EditCommentLine}" oncomplete="enableShowMoreOrLess();" rerender="BMATable" rendered="{!IF(AND(isEditMode, IdConcerned==item.Id), false, true)}" >
+                <apex:commandLink value="Edit" action="{!EditCommentLine}" oncomplete="enableShowMoreOrLess();" rerender="BMATable" rendered="{!IF(OR(AND(isEditMode, IdConcerned==item.Id), NOT(canEdit)), false, true)}" >
                     <apex:param name="IdConcerned" value="{!item.Id}" assignTo="{!IdConcerned}"/>
                 </apex:commandLink>
 

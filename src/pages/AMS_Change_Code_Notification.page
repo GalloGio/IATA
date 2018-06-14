@@ -1,0 +1,3 @@
+<apex:page standardController="Case" extensions="AMS_Change_Code_Notification_Controller" showHeader="true" action="{!setNotificationMessage}">
+	<apex:pageMessages escape="false" rendered="{! isSidra }"></apex:pageMessages>
+</apex:page>

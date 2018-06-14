@@ -18,9 +18,15 @@ global class Location_Batch implements Database.Batchable<Location__c>, Database
 	
 	global List<Location__c> start(Database.BatchableContext BC) 
 	{
-		return (soldToLocationIds2CreateFirst != null) 
-			?	(List<Location__c>) new Location_Sel().selectSObjectById(soldToLocationIds2CreateFirst)	
-			:	(List<Location__c>) new Location_Sel().selectSObjectById(locationIds);
+		//return (soldToLocationIds2CreateFirst != null) 
+		//	?	(List<Location__c>) new Location_Sel().selectSObjectById(soldToLocationIds2CreateFirst)	
+		//	:	(List<Location__c>) new Location_Sel().selectSObjectById(locationIds);
+		List<Id> lstLocationId = new List<Id>();
+		if (locationIds != null)
+			lstLocationId.addAll(locationIds);
+		if (soldToLocationIds2CreateFirst != null)
+			lstLocationId.addAll(soldToLocationIds2CreateFirst);
+		return Location_Sel.getLocationToSyncSAP(lstLocationId, null, null, null, null).values();
 	}
 
    	global void execute(Database.BatchableContext BC, List<Location__c> locations) 
@@ -30,6 +36,7 @@ global class Location_Batch implements Database.Batchable<Location__c>, Database
 	
 	global void finish(Database.BatchableContext BC) 
 	{
+		return;   //*** no need anymore
 		if(soldToLocationIds2CreateFirst != null) 
 		{
 			Database.executeBatch(new Location_Batch(locationIds));

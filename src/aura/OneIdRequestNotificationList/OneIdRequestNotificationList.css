@@ -1,0 +1,64 @@
+.THIS {
+}
+
+.THIS .pendingContainer{
+	padding-right:50px !important;
+}
+
+.THIS .pendingTitleDiv{
+	margin-left:24px;
+}
+
+.THIS .appListRequestBox{
+	width:100%;
+}
+
+.THIS .appListRequest{
+	padding:12px;
+	margin-top:12px;
+	margin-bottom:12px;
+	width:100%;
+	float:left;
+	display:block;
+	position:relative;
+	max-height:50px;
+
+	border-top-style:solid;
+	border-top-color:#aaa;
+	border-top-width:1px;
+}
+
+.THIS .appListRequestImgDiv{
+}
+
+.THIS .appListRequestTitleDiv{
+	line-height: 30px;
+	text-align:left;
+	width:80%;
+	float:left;
+}
+
+.THIS .appListRequestStatusDiv{
+	line-height: 30px;
+	text-align:left;
+	width:20%;
+	float:left;
+}
+
+@media screen and (max-width:1330px)
+{
+	.THIS .appListRequestTitleDiv{
+		line-height: 30px;
+		text-align:left;
+		width:100%;
+		float:left;
+	}
+
+	.THIS .appListRequestStatusDiv{
+		line-height: 30px;
+		text-align:left;
+		width:100%;
+		float:left;
+		margin-top:0.5em;
+	}
+}

@@ -23,10 +23,6 @@
         <type>Visualforce</type>
     </actionOverrides>
     <actionOverrides>
-        <actionName>Follow</actionName>
-        <type>Default</type>
-    </actionOverrides>
-    <actionOverrides>
         <actionName>List</actionName>
         <type>Default</type>
     </actionOverrides>
@@ -54,6 +50,7 @@
     <description>Used for IDFS ISS to manage their APJC Meetings (linked with the APJC object)</description>
     <enableActivities>true</enableActivities>
     <enableBulkApi>true</enableBulkApi>
+    <enableChangeDataCapture>false</enableChangeDataCapture>
     <enableFeeds>false</enableFeeds>
     <enableHistory>true</enableHistory>
     <enableReports>true</enableReports>
@@ -211,9 +208,12 @@
 Local_Governance__r.Active__c=false,
 OR(
 ISNEW(),
+ISCHANGED(Name),
+ISCHANGED(Local_Governance__c),
 ISCHANGED(Comments__c),
 ISCHANGED(Criteria_Reviewed__c),
 ISCHANGED(Date_Legal_REJECTED_the_minutes__c),
+ISCHANGED(Date_Legal_REJECTED_the_agenda__c),
 ISCHANGED(Date_Legal_Requested_to_Sign_off_Agenda__c),
 ISCHANGED(Date_Legal_Requested_to_Sign_Off_Minutes__c),
 ISCHANGED(Date_Legal_Signed_off_Agenda__c),
@@ -226,4 +226,14 @@ ISCHANGED(VMFR__c)
 )</errorConditionFormula>
         <errorMessage>It&apos; s not possible to insert a new meeting or change the existing one if the participant is related to an inactive local group.</errorMessage>
     </validationRules>
+    <validationRules>
+        <fullName>Create_Edit_Group_Meetings</fullName>
+        <active>true</active>
+        <errorConditionFormula>AND(
+Local_Governance__r.RecordType.DeveloperName  = &apos;Local_Groups&apos;,
+NOT($Permission.Modify_Local_Group_Owners)
+)</errorConditionFormula>
+        <errorMessage>You are not allowed to add or edit meetings to this group</errorMessage>
+    </validationRules>
+    <visibility>Public</visibility>
 </CustomObject>

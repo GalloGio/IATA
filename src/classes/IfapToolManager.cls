@@ -295,12 +295,7 @@ global class IfapToolManager {
                      listFile.add(file);
                      name = '';
                     }        
-                
-                if(listFile == null || listFile.size() <> 1){
-                     string secondpart = listFile.size()  == 0 ? 'no files found' : 'more than a file found';
-                     throw new TransformationException('Submitted documents by the agent: ' +secondpart);
-                }
-                
+                              
                 string nameTmp = listFile[0].getName();
                 if(nameTmp.length() < 13){if(!(Test.isRunningTest() && theCase.Account.status__c == 'No longer a customer')) throw new TransformationException('Submitted documents by the agent: wrong filename case not submitted');}
                 string xmlName =!Test.isRunningTest() ? nameTmp.subString(0,12)+'.xml' : '123456789012';

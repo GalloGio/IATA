@@ -1,5 +1,6 @@
 <aura:component controller="AMP_OwnershipController">
 	<aura:attribute name="accountId" type="String" />
+	<aura:attribute name="canEdit" type="Boolean" default="false" />
     <aura:attribute name="relatedAccounts" type="AMS_Account_Role__c[]"/><!-- List of Owners / Subsidiaries -->
     <aura:attribute name="displayType" type="String" default="Owners"/><!-- Variable that controlls what is displayed: "Owners" or "Subsidiaries" -->
 
@@ -9,11 +10,11 @@
                              'Owner_Account__c' : '',
                              'Percentage__c': 0.0
                              }"/><!-- new Owner or subsidiary -->
-    
+
     <aura:handler name="init" value="{!this}" action="{!c.doInit}" />
     <aura:handler name="deleteAccount" event="c:AMP_deleteAccount" action="c.handleDeleteAccount" />
     <aura:handler name="updateAccount" event="c:AMP_updateAccount" action="c.handleUpdateAccount" />
-    
+
     <aura:registerEvent name="AMP_OwnershipError" type="c:AMP_OwnershipError"/>
 
     <div class="slds-card">
@@ -27,12 +28,14 @@
                     <span class="slds-text-heading--small">{!v.displayType}</span>
                 </div>
             </div>
-            
+
             <div class="slds-no-flex">
+				<aura:if isTrue="{!v.canEdit}">
                 <button class="slds-button slds-button--neutral slds-col--bump-left" onclick="{!c.addAccountRole}">New</button>
+				</aura:if>
                 <!--<ui:button label="New" press="{!c.addAccountRole}"/>-->
             </div>
-            
+
         </div>
 
         <div class="slds-card__body">
@@ -49,12 +52,12 @@
                 <tbody>
                     <aura:iteration items="{!v.relatedAccounts}" var="acct" indexVar="index" >
 											<tr>
-                        <c:AMP_RelatedAccountItem relatedAccount="{!acct}" accountId="{!v.accountId}" displayType="{!v.displayType}" index="{!index}"/>
+                        	<c:AMP_RelatedAccountItem relatedAccount="{!acct}" accountId="{!v.accountId}" displayType="{!v.displayType}" index="{!index}" canEdit="{!v.canEdit}"/>
 											</tr>
                     </aura:iteration>
                 </tbody>
            </table>
-					 
+
         </div>
 
     </div>

@@ -2,19 +2,26 @@
 <Workflow xmlns="http://soap.sforce.com/2006/04/metadata">
     <alerts>
         <fullName>FDS_CodingAOC</fullName>
-        <ccEmails>alvarengam@iata.org</ccEmails>
         <description>FDS Coding - AOC Expiry alert</description>
         <protected>false</protected>
         <recipients>
-            <recipient>farrella@iata.org</recipient>
+            <recipient>gonzalezce@iata.org</recipient>
             <type>user</type>
         </recipients>
         <recipients>
-            <recipient>jeffrey@iata.org</recipient>
+            <recipient>kalajil@iata.org</recipient>
             <type>user</type>
         </recipients>
         <recipients>
-            <recipient>pacificoa@iata.org</recipient>
+            <recipient>osinskan@iata.org</recipient>
+            <type>user</type>
+        </recipients>
+        <recipients>
+            <recipient>pietranget@iata.org.prod</recipient>
+            <type>user</type>
+        </recipients>
+        <recipients>
+            <recipient>szajkod@iata.org</recipient>
             <type>user</type>
         </recipients>
         <senderAddress>noreply@iata.org</senderAddress>
@@ -23,19 +30,14 @@
     </alerts>
     <alerts>
         <fullName>FDS_CodingAOC2</fullName>
-        <ccEmails>alvarengam@iata.org</ccEmails>
         <description>FDS Coding - AOC Expiry alert 2</description>
         <protected>false</protected>
         <recipients>
-            <recipient>farrella@iata.org</recipient>
+            <recipient>gonzalezce@iata.org</recipient>
             <type>user</type>
         </recipients>
         <recipients>
-            <recipient>jeffrey@iata.org</recipient>
-            <type>user</type>
-        </recipients>
-        <recipients>
-            <recipient>kalajil@iata.org</recipient>
+            <recipient>pietranget@iata.org.prod</recipient>
             <type>user</type>
         </recipients>
         <senderAddress>noreply@iata.org</senderAddress>
@@ -44,31 +46,14 @@
     </alerts>
     <alerts>
         <fullName>FDS_Coding_AOC_Expiry_date_alert_10_Days_before2</fullName>
-        <ccEmails>airlinecoding@iata.org</ccEmails>
         <description>FDS Coding AOC Expiry date alert 10 Days before</description>
         <protected>false</protected>
         <recipients>
-            <recipient>alvarengam@iata.org</recipient>
+            <recipient>gonzalezce@iata.org</recipient>
             <type>user</type>
         </recipients>
         <recipients>
-            <recipient>farrella@iata.org</recipient>
-            <type>user</type>
-        </recipients>
-        <recipients>
-            <recipient>jeffrey@iata.org</recipient>
-            <type>user</type>
-        </recipients>
-        <recipients>
-            <recipient>kalajil@iata.org</recipient>
-            <type>user</type>
-        </recipients>
-        <recipients>
-            <recipient>pacificoa@iata.org</recipient>
-            <type>user</type>
-        </recipients>
-        <recipients>
-            <recipient>szajkod@iata.org</recipient>
+            <recipient>pietranget@iata.org.prod</recipient>
             <type>user</type>
         </recipients>
         <senderAddress>noreply@iata.org</senderAddress>
@@ -98,6 +83,18 @@
         <protected>false</protected>
     </fieldUpdates>
     <fieldUpdates>
+        <fullName>Acc_Update_Record_Sharing_Criteria_AUX</fullName>
+        <description>This field is updated with Record Sharing Criteria values</description>
+        <field>Record_Sharing_Criteria_AUX__c</field>
+        <formula>IF(INCLUDES(Record_Sharing_Criteria__c, &quot;IFG Active Users&quot;),&quot;IFG Active Users;&quot;,&quot;&quot;)
+&amp;
+IF(INCLUDES(Record_Sharing_Criteria__c, &quot;TIP User&quot;),&quot;TIP User;&quot;,&quot;&quot;)</formula>
+        <name>Acc Update Record Sharing Criteria AUX</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>Formula</operation>
+        <protected>false</protected>
+    </fieldUpdates>
+    <fieldUpdates>
         <fullName>AccountIATAAirlineSetName</fullName>
         <description>Set the name of an IATA Airline Account, first using Trade Name, and in second place Name_on_AOC__c</description>
         <field>Name</field>
@@ -113,6 +110,26 @@
         <name>AccountIATAAirlineSetName</name>
         <notifyAssignee>false</notifyAssignee>
         <operation>Formula</operation>
+        <protected>false</protected>
+    </fieldUpdates>
+    <fieldUpdates>
+        <fullName>Account_Category_IATAN_Passenger_agent</fullName>
+        <description>to cater the fact that IATAN accounts do not have a category</description>
+        <field>Category__c</field>
+        <literalValue>IATAN Passenger Agent</literalValue>
+        <name>Account Category = IATAN Passenger agent</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>Literal</operation>
+        <protected>false</protected>
+    </fieldUpdates>
+    <fieldUpdates>
+        <fullName>Account_Sector_Travel_Agent</fullName>
+        <description>to cater the fact that IATAN accounts do not have a sector</description>
+        <field>Sector__c</field>
+        <literalValue>Travel Agent</literalValue>
+        <name>Account Sector= Travel Agent</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>Literal</operation>
         <protected>false</protected>
     </fieldUpdates>
     <fieldUpdates>
@@ -249,6 +266,24 @@
         <protected>false</protected>
     </fieldUpdates>
     <fieldUpdates>
+        <fullName>Short_Name_Agency</fullName>
+        <description>Update the short name as the Trade name, and if there is no trade name it takes the Account name</description>
+        <field>Short_Name__c</field>
+        <formula>IF(
+OR( ISNULL( TradeName__c ), TradeName__c == &apos;&apos;),
+IF (
+OR( ISNULL( Name ), Name == &apos;&apos;),
+Short_Name__c,
+Name
+),
+TradeName__c
+)</formula>
+        <name>Short Name Agency</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>Formula</operation>
+        <protected>false</protected>
+    </fieldUpdates>
+    <fieldUpdates>
         <fullName>Site_index_field_updt</fullName>
         <field>Site_index__c</field>
         <formula>IF( OR( ISPICKVAL(Industry,&apos;Travel Agent&apos;), ISPICKVAL(Industry,&apos;Cargo Agent&apos;)),
@@ -285,6 +320,15 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
         <field>Industry</field>
         <literalValue>Travel Agent</literalValue>
         <name>Update Industry with Travel Agency</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>Literal</operation>
+        <protected>false</protected>
+    </fieldUpdates>
+    <fieldUpdates>
+        <fullName>Update_Cash_Condition</fullName>
+        <field>ANG_HE_CashCondition__c</field>
+        <literalValue>1</literalValue>
+        <name>Update Cash Condition</name>
         <notifyAssignee>false</notifyAssignee>
         <operation>Literal</operation>
         <protected>false</protected>
@@ -354,7 +398,7 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
             <name>UpdateIndustryCargoAgent</name>
             <type>FieldUpdate</type>
         </actions>
-        <active>true</active>
+        <active>false</active>
         <criteriaItems>
             <field>Account.Is_AIMS_Account__c</field>
             <operation>equals</operation>
@@ -408,6 +452,34 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
         <triggerType>onAllChanges</triggerType>
     </rules>
     <rules>
+        <fullName>AMS Webstar set sector and category</fullName>
+        <actions>
+            <name>Account_Category_IATAN_Passenger_agent</name>
+            <type>FieldUpdate</type>
+        </actions>
+        <actions>
+            <name>Account_Sector_Travel_Agent</name>
+            <type>FieldUpdate</type>
+        </actions>
+        <active>true</active>
+        <criteriaItems>
+            <field>Account.Source_System__c</field>
+            <operation>equals</operation>
+            <value>webstar</value>
+        </criteriaItems>
+        <criteriaItems>
+            <field>Account.RecordTypeId</field>
+            <operation>equals</operation>
+            <value>Agency</value>
+        </criteriaItems>
+        <criteriaItems>
+            <field>Account.Category__c</field>
+            <operation>equals</operation>
+        </criteriaItems>
+        <description>to fix the fact that webstar accounts do not have sector and category</description>
+        <triggerType>onAllChanges</triggerType>
+    </rules>
+    <rules>
         <fullName>Account incomplete</fullName>
         <active>true</active>
         <criteriaItems>
@@ -425,6 +497,17 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
         <active>true</active>
         <description>Update account site if the account Record Type is Airline Branch or Airline Headquarters</description>
         <formula>and( or(RecordType.DeveloperName= &apos;IATA_Airline_BR&apos;, RecordType.DeveloperName= &apos;IATA_Airline&apos;,RecordType.DeveloperName= &apos;IATA_GSA&apos; ,(and (RecordType.DeveloperName= &apos;Standard_Account&apos;, ISPICKVAL(Sector__c,&apos;Airline&apos;)))))</formula>
+        <triggerType>onAllChanges</triggerType>
+    </rules>
+    <rules>
+        <fullName>Agency Short Name</fullName>
+        <actions>
+            <name>Short_Name_Agency</name>
+            <type>FieldUpdate</type>
+        </actions>
+        <active>false</active>
+        <description>Used for updating the agency short name with the trade name if exist, if not then it updates it with the account name</description>
+        <formula>AND ( RecordType.DeveloperName = &apos;IATA_Agency&apos;, OR(ISNEW(), ISCHANGED( TradeName__c ), ISCHANGED( Name ),ISCHANGED(Short_Name__c), ISCHANGED(IATACode__c) ) )</formula>
         <triggerType>onAllChanges</triggerType>
     </rules>
     <rules>
@@ -571,6 +654,16 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
         </workflowTimeTriggers>
     </rules>
     <rules>
+        <fullName>Field update with values of field Record Sharing Criteria</fullName>
+        <actions>
+            <name>Acc_Update_Record_Sharing_Criteria_AUX</name>
+            <type>FieldUpdate</type>
+        </actions>
+        <active>false</active>
+        <formula>ISCHANGED(Record_Sharing_Criteria__c)</formula>
+        <triggerType>onAllChanges</triggerType>
+    </rules>
+    <rules>
         <fullName>IW - Check InvoiceWorks Customer Account</fullName>
         <actions>
             <name>InvoiceWorks_Account_True</name>
@@ -700,5 +793,19 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
         <description>it copies the site to this filed</description>
         <formula>true</formula>
         <triggerType>onAllChanges</triggerType>
+    </rules>
+    <rules>
+        <fullName>Update Cash Condition Rule</fullName>
+        <actions>
+            <name>Update_Cash_Condition</name>
+            <type>FieldUpdate</type>
+        </actions>
+        <active>false</active>
+        <criteriaItems>
+            <field>Account.ANG_Limit_Cash_Condition__c</field>
+            <operation>equals</operation>
+            <value>True</value>
+        </criteriaItems>
+        <triggerType>onCreateOrTriggeringUpdate</triggerType>
     </rules>
 </Workflow>

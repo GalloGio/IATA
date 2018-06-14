@@ -61,7 +61,7 @@ global class ISSP_Create_External_Users_ASD implements Schedulable {
 			for (ISSP_ASD_Users__c thisUser : userList){
 				contactIds.add(thisUser.Contact__c);
 				if(!Test.isRunningTest()){
-					ISSP_PortalUserStatusChange.runAction(thisUser.Contact__c,thisUser.Email__c, 'CreateNewUserWithCustomerProfile', 'Approved User', null);
+					ISSP_PortalUserStatusChange.runAction(thisUser.Contact__c,thisUser.Email__c, 'CreateNewUserWithCustomerProfile', 'Approved User', null, null);
 				}
 			}
 			List <User> realUserList = [SELECT Id, ContactId FROM User WHERE ContactId IN :contactIds];

@@ -1,0 +1,147 @@
+<apex:page controller="SIDRAliteMassEmailController" sidebar="false">
+  <script src="//code.jquery.com/jquery-1.12.3.min.js"/>
+  <script src="//cdn.datatables.net/1.10.4/js/jquery.dataTables.min.js" />
+  <link rel="stylesheet" href="//cdn.datatables.net/1.10.4/css/jquery.dataTables.css" />
+
+  <style>
+    .filterBox {width: 250px;}
+  </style>
+
+  <apex:form id="mainForm">
+  <script>
+  $( document ).ready(function() {
+    $(".regionPicklist option[value='GVA HO']").remove();
+    $(".regionPicklist option[value='Europe (Americas Countries)']").remove();
+    // apply table pagination
+    $(".result-table").DataTable();
+  });
+  </script>
+
+
+
+  <c:Loading />
+
+  <apex:pageBlock title="SIDRA Lite Mass Email" mode="edit">
+
+    <apex:pageMessages id="errors" />
+    <table width="100%" border="0">
+    <tr>
+      <td width="200" valign="top">
+
+        <apex:pageBlock id="filters" title="Filters" mode="edit" >
+
+          <apex:pageBlockButtons location="bottom">
+            <apex:commandButton value="Reset" action="{!filter.reset}" rerender="mainForm" status="Loading"/>
+              <apex:commandButton value="Search" action="{!search}" rerender="mainForm" status="Loading"/>
+          </apex:pageBlockButtons>
+
+          <apex:pageBlockSection id="filterSection" columns="1">
+            <apex:inputField value="{!filter.cse.BSP_CASS__c}" styleclass="filterBox"/>
+            <apex:inputField value="{!filter.cse.Region__c}" styleclass="filterBox regionPicklist" required="true"/>
+            <apex:inputField value="{!filter.cse.BSPCountry__c}" styleclass="filterBox" />
+            <!--
+            <apex:inputField value="{!filter.account.Sector__c}" styleclass="filterBox sectorPicklist" />
+            <apex:inputField value="{!filter.account.Category__c}" styleclass="filterBox categoryPicklist" />
+            -->
+            <apex:selectList value="{!filter.account.Sector__c}" label="{!$ObjectType.Account.fields.Sector__c.label}" multiselect="false" size="1" styleclass="filterBox">
+                <apex:selectOptions value="{!filter.listSector}"/>
+                <apex:actionSupport event="onchange" rerender="filterSection"/>
+            </apex:selectList>
+            <apex:selectList value="{!filter.account.Category__c}" label="{!$ObjectType.Account.fields.Category__c.label}" multiselect="false" size="1" styleclass="filterBox" disabled="{!filter.listCategory.size==0}">
+                <apex:selectOptions value="{!filter.listCategory}"/>
+            </apex:selectList>
+            <apex:selectList value="{!filter.selectedActionType}" label="Action Type" multiselect="false" size="1" styleclass="filterBox">
+                <apex:selectOptions value="{!filter.actionTypeList}"/>
+                <apex:actionSupport event="onchange" rerender="filterSection"/>
+            </apex:selectList>
+            <apex:inputField value="{!filter.cse.DEF_Withdrawal_Reason__c}" styleclass="filterBox" rendered="{!filter.selectedActionType=='DEF Withdrawal'}"/>
+            <apex:inputField value="{!filter.cse.IRR_Withdrawal_Reason__c}" styleclass="filterBox" rendered="{!filter.selectedActionType=='IRR Withdrawal'}"/>
+
+          </apex:pageBlockSection>
+
+        </apex:pageBlock>
+
+      </td>
+      <td valign="top">
+
+      <apex:pageBlock title="Cases" mode="edit" id="results" >
+
+        <apex:pageBlockButtons location="both">
+            <apex:commandButton value="Send Email from SIDRA Lite" action="{!confirmSendEmailToCurrent}" rerender="mainForm" status="Loading"/>
+            <apex:commandButton value="Send Email from Parent Case" action="{!confirmSendEmailToParent}" rerender="mainForm" status="Loading"/>
+        </apex:pageBlockButtons>
+
+        <apex:pageMessage summary="No cases found" severity="info" strength="3" rendered="{!listWrapperCase.size=0}"/>
+
+        <apex:pageBlockTable value="{!listWrapperCase}" var="wrapper" id="cases" styleclass="result-table" rendered="{!listWrapperCase.size>0}">
+
+          <apex:column >
+            <apex:facet name="header">
+              <apex:inputCheckbox id="SelectAll" value="{!SelectAllCheckbox}" >
+              <apex:actionSupport event="onclick" action="{!SelectAll}" reRender="mainForm" status="Loading" />
+            </apex:inputCheckbox>
+            </apex:facet>
+            <apex:inputCheckbox value="{!wrapper.selected}"/>
+          </apex:column>
+
+          <apex:column >
+            <apex:facet name="header">{!$ObjectType.Case.fields.CaseNumber.label}</apex:facet>
+            <apex:outputLink value="/{!wrapper.cse.Id}?retURL={!$CurrentPage.URL}">{!wrapper.cse.CaseNumber}</apex:outputLink>
+          </apex:column>
+          <apex:column value="{!wrapper.cse.SIDRA_Lite_Reason__c}"/>
+          <apex:column value="{!wrapper.cse.BSP_CASS__c}"/>
+          <apex:column value="{!wrapper.cse.Region__c}"/>
+          <apex:column value="{!wrapper.cse.BSPCountry__c}"/>
+
+          <!--Specific columns for DEF -->
+          <apex:column value="{!wrapper.cse.DEF_Approval_Rejection__c}" rendered="{!filter.selectedActionType=='DEF'}"/>
+          <apex:column value="{!wrapper.cse.Reason_for_Default__c}" rendered="{!filter.selectedActionType=='DEF'}"/>
+          <!--Specific columns for DEF Withdrawal -->
+          <apex:column value="{!wrapper.cse.DEF_Withdrawal_Approval_Rejection__c}" rendered="{!filter.selectedActionType=='DEF Withdrawal'}"/>
+          <apex:column value="{!wrapper.cse.DEF_Withdrawal_Reason__c}" rendered="{!filter.selectedActionType=='DEF Withdrawal'}"/>
+          <!--Specific columns for IRR Withdrawal -->
+          <apex:column value="{!wrapper.cse.IRR_Withdrawal_Approval_Rejection__c}" rendered="{!filter.selectedActionType=='IRR Withdrawal'}"/>
+          <apex:column value="{!wrapper.cse.IRR_Withdrawal_Reason__c}" rendered="{!filter.selectedActionType=='IRR Withdrawal'}"/>
+          <!--Specific columns for REI -->
+          <apex:column value="{!wrapper.cse.REI_ApprovalRejectin__c}" rendered="{!filter.selectedActionType=='REI'}"/>
+          <apex:column value="{!wrapper.cse.DEF_Withdrawal_Reason__c}" rendered="{!filter.selectedActionType=='REI'}"/>
+          <!--Specific columns for TER -->
+          <apex:column value="{!wrapper.cse.TER_Approval_Rejection__c}" rendered="{!filter.selectedActionType=='TER'}"/>
+          <apex:column value="{!wrapper.cse.Termination_Reason__c}" rendered="{!filter.selectedActionType=='TER'}"/>
+
+          <apex:column value="{!wrapper.cse.AccountId}"/>
+          <apex:column value="{!wrapper.cse.account.Sector__c}"/>
+          <apex:column value="{!wrapper.cse.account.Category__c}"/>
+          <apex:column value="{!wrapper.cse.CreatedDate}"/>
+
+        </apex:pageBlockTable>
+      </apex:pageBlock>
+
+      </td>
+    </tr>
+    </table>
+
+  </apex:pageBlock>
+
+  <!-- Confirm Send Email Section -->
+  <apex:actionFunction name="sendEmails" action="{!sendEmails}" rerender="mainForm" status="Loading">
+    <apex:param name="firstParam" value="" assignTo="{!confirmSendEmail}"/>
+    <apex:param name="secondParam" value="" assignTo="{!sessionId}"/>
+    <apex:param name="thirdParam" value="" assignTo="{!apiServerUrl}"/>
+  </apex:actionFunction>
+
+  <apex:outputPanel id="aproveCasesSection" rendered="{!showConfirmationSection}">
+    <script>
+      var numSelected = {!numSelected};
+      var result;
+      if (numSelected == 0)  {
+        result = true;
+      } else {
+        var result = confirm("Please confirm the communication for the {!filter.selectedActionType}, for the " + numSelected + " selected cases");
+      }
+      sendEmails(result, "{!$Api.Session_ID}", "{!$Api.Partner_Server_URL_290}");
+    </script>
+  </apex:outputPanel>
+
+  </apex:form>
+</apex:page>

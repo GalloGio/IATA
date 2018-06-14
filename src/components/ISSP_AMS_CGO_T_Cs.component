@@ -2,7 +2,7 @@
     
     <apex:pageBlockSection rendered="{!AND(BEGINS(sectorValue,'Cargo_Agent'),amsOfficeType=='Branch',$CurrentPage.parameters.mode!='pdf')}" title="{!$Label.ISSP_TC_Accept}" columns="1">
     	<div class="aplabel">
-       		<apex:outputText escape="false" value="I hereby certify that above mentioned Branch is fully owned and controlled by undersigned company and shall be subject to the applicable Cargo Agency Rules in&nbsp;{!amsCountryLabel}"/>     
+       		<apex:outputText escape="false" value="I hereby certify that above mentioned Branch is fully owned and controlled by undersigned company and shall be subject to the applicable {!IF(newlabels,'IFACP','Cargo Agency')} Rules in&nbsp;{!amsCountryLabel}"/>     
             <apex:outputText escape="false" value="I hereby certify that the foregoing statements (including statements made in any Attachments hereto) are true and correct to the best of my knowledge and belief, and that I am authorized by the company identified in Section 1 to make these statements and file this document."/>                    
         </div>
    	</apex:pageBlockSection>
@@ -14,24 +14,24 @@
    	</apex:pageBlockSection>
     
     <apex:pageBlockSection rendered="{!AND(newForm.Agent_Type__c=='IATA Cargo Agent',amsOfficeType=='HO')}" title="{!IF($CurrentPage.parameters.mode!='pdf', $Label.ISSP_TC_Accept, 'STATEMENT / UNDERTAKING')}" columns="1">
-        The undersigned applies for inclusion on the official IATA Cargo Agency List for&nbsp;<b>{!amsCountryLabel}</b>&nbsp; and agrees to pay the applicable fees (non-refundable application fee(s), registration fee(s), initial annual fee(s), Commissioner/Ombudsman fee) as per payment instructions provided.
+        The undersigned applies for inclusion on the official {!IF(newlabels,'IFACP Forwarders','IATA Cargo Agency')} List for&nbsp;<b>{!amsCountryLabel}</b>&nbsp; and agrees to pay the applicable fees (non-refundable application fee(s), registration fee(s), initial annual fee(s), Commissioner/Ombudsman fee) as per payment instructions provided.
                             <p>    
             Once your application is accepted, you will receive a Prepayment Advice with instructions to proceed with the payment of the indicated joining fee.
                             </p>
                             <p>
-            Upon registration as an IATA Cargo Agent, the undersigned undertakes to pay to IATA annually not later than 1 December the agency fee requested by IATA for each succeeding calendar year, it being understood that credit shall be allowed for any overpaid portion of the initial annual payment, and it being further understood that refunds of any agency fees in respect of any office for which registration has once been given shall be made as prescribed in the IATA Cargo Agency Rules.
+            Upon registration as an {!IF(newlabels,'IFACP Forwarder','IATA Cargo Agent')}, the undersigned undertakes to pay to IATA annually not later than 1 December the {!IF(newlabels,'fee','agency fee')} requested by IATA for each succeeding calendar year, it being understood that credit shall be allowed for any overpaid portion of the initial annual payment, and it being further understood that refunds of any {!IF(newlabels,'fees','agency fees')} in respect of any office for which registration has once been given shall be made as prescribed in the {!IF(newlabels,'IFACP Forwarders','IATA Cargo Agency')} Rules.
                                 </p>
                             <p>
-            If the application is disapproved, the registration fee(s) and initial annual agency fee(s) shall be returned to the applicant.
+            If the application is disapproved, the registration fee(s) and initial annual {!IF(newlabels,'fee','agency fee')}(s) shall be returned to the applicant.
                                 </p>
                             <p>
-                                The applicant understands and agrees that any agency agreement between the applicant and an IATA Member shall be subject to the applicable IATA Cargo Agency Rules in&nbsp;<b>{!amsCountryLabel}</b>.
+                                The applicant understands and agrees that any {!IF(newlabels,'','agency ')}agreement between the applicant and an IATA Member shall be subject to the applicable {!IF(newlabels,'IATA-FIATA Air Cargo Program','IATA Cargo Agency')} Rules in&nbsp;<b>{!amsCountryLabel}</b>.
                                 </p>
                             <p>
             The applicant hereby expressly renounces and waives any and all claims, causes of action or rights to recovery for itself, its heirs, successors, and assigns and agrees to indemnify and hold harmless IATA or any of its Members, their officers, employees, agents or servants for any loss, injury or damage based upon libel, slander or defamation of character by reason of any action taken in good faith pursuant to this application, including but not limited to a notice of disapproval stating the reasons therefore.
                                 </p>
                             <p>
-            It is hereby agreed that the sections of this application marked with an asterisk (*) shall become a part of every IATA Cargo Agency Agreement signed with IATA Members for the sale and handling of international air cargo transportation and that the Agency Administrator shall be given prior notice of any changes to the information provided in those sections. 
+            It is hereby agreed that the sections of this application marked with an asterisk (*) shall become a part of every {!IF(newlabels,'IFACP Forwarders','IATA Cargo Agency')} Agreement signed with IATA Members for the sale and handling of international air cargo transportation and that the {!IF(newlabels,'IFACP Program Secretariat','Agency Administrator')} shall be given prior notice of any changes to the information provided in those sections. 
                                 </p>
                             I hereby certify that the foregoing statements (including statements made in any Attachments hereto) are true and correct to the best of my knowledge and belief, and that I am authorized by the firm identified in SECTION 2 to make these statements and file this document.                
                        
@@ -44,7 +44,7 @@ Upon registration as an EACP Cargo Intermediary, I undertake to pay to IATA annu
         </p><br/>
        <p>
 I understand that credit shall be allowed for any overpaid portion of the initial annual payment and that refunds of any Intermediary fees in respect of any office for which registration has once been given shall 
-           be made as shown in the EACP Rules. If my application is disapproved, the registration fee(s) and initial annual agency fee(s) shall be returned to me. 
+           be made as shown in the EACP Rules. If my application is disapproved, the registration fee(s) and initial annual {!IF(newlabels,'fee','agency fee')}(s) shall be returned to me. 
 		</p><br/>
        	<p>
 I understand and agree that any Intermediary agreement between my company and an IATA Member shall be subject to the applicable EACP Rules in&nbsp;<b>{!amsCountryLabel}</b>. 
@@ -55,7 +55,7 @@ IATA or any of its Members, their officers, employees, agents or servants for an
 pursuant to this application, including but not limited to a notice of disapproval stating the reasons therefore. 
 </p><br/>
                             <p>
-It is hereby agreed that the sections of this application marked with an asterisk (*) shall become a part of every EACP Cargo Intermediary Agreement signed with IATA Members for the sale and handling of international air cargo transportation and that the Agency Administrator shall be given prior notice of any 
+It is hereby agreed that the sections of this application marked with an asterisk (*) shall become a part of every EACP Cargo Intermediary Agreement signed with IATA Members for the sale and handling of international air cargo transportation and that the {!IF(newlabels,'IFACP Program Secretariat','Agency Administrator')} shall be given prior notice of any 
 changes to the information provided in those sections. 
 </p><br/>
 I hereby certify that the foregoing statements (including statements made in any Attachments hereto) are true and correct to the best of my knowledge and belief and that I am authorized by the firm 

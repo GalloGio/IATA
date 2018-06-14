@@ -123,7 +123,7 @@
 												<apex:inputHidden id="selectedFilters" value="{!selectedFilters}" />
 
 						                    	<apex:commandButton styleClass="button secondary" value="{!$Label.Refine}" action="{!refine}" reRender="main_container" status="sortByStatus" 
-						                    		oncomplete="javascript:$('.product-list .list-item').matchHeight();"/>
+						                    		oncomplete="javascript:matchHeight2();"/>
 						                    </div>
 						                </div>
 					                </apex:form>
@@ -154,7 +154,7 @@
 												<i class="icon chevron-down"></i>
 												<apex:selectList id="sort-by" value="{!sortBy}" styleClass="user-input select" size="1">
 		                                			<apex:selectOptions value="{!sortingFields}"/>
-		                                			<apex:actionSupport event="onchange" oncomplete="javascript:$('.product-list .list-item').matchHeight();" 
+		                                			<apex:actionSupport event="onchange" oncomplete="javascript:matchHeight2();" 
 		                                				action="{!sortProducts}" status="sortByStatus" reRender="main_container" />
 		                            			</apex:selectList>
 		                            			<apex:actionStatus id="sortByStatus">
@@ -182,28 +182,28 @@
 														<a href="{!$Site.BaseUrl}/IEC_ProductDetails?id={!prod.ProductNumber}">{!prod.ProductName}</a>
 													</h2>
 													<h3 class="item-description-title">{!prod.Media}</h3>
-													<p class="item-description">
+													<p class="item-description" style="{! IF(prod.ProductInfoId == null, '', 'display:none')}">
 														Edition: {!prod.Edition} <br />
 														Language: {!prod.Language}
 													</p>
 													<p class="item-description">{!prod.ProductShortDesc}</p>
 													
 													<!-- Scenario 1: In Stock -->
-													<apex:outputPanel layout="block" styleClass="item-stock in-stock" rendered="{!prod.InventoryStatus == 'In stock'}">
+													<apex:outputPanel layout="block" styleClass="item-stock in-stock" rendered="{!prod.InventoryStatus == 'In stock' && prod.ProductInfoId == null}">
 		                                                {!prod.InventoryStatus}
 		                                            </apex:outputPanel>
 		                                            <!-- Scenario 2: Out of Stock -->
-													<apex:outputPanel layout="block" styleClass="item-stock out-of-stock" rendered="{!prod.InventoryStatus != 'In stock'}">
+													<apex:outputPanel layout="block" styleClass="item-stock out-of-stock" rendered="{!prod.InventoryStatus != 'In stock' && prod.ProductInfoId == null}">
 		                                                {!prod.InventoryStatus}
 		                                            </apex:outputPanel>
 
 		                                            <!-- Scenario 3: Pre-order -->
-		                                            <apex:outputPanel layout="block" styleClass="item-label pre-order" rendered="{!prod.InventoryStatus != 'In stock' && prod.Is_Electronic_Product != true}">
+		                                            <apex:outputPanel layout="block" styleClass="item-label pre-order" rendered="{!prod.InventoryStatus != 'In stock' && prod.Is_Electronic_Product != true && prod.ProductInfoId == null}">
 		                                                <span class="text">{!$Label.Button_Pre_Order}</span>
 		                                            </apex:outputPanel>
 
 		                                            <!-- Regular Price if exist -->
-		                                            <apex:outputPanel styleClass="item-price regular-price {!IF(AND(prod.CustomerPrice!=null , prod.CustomerPrice>0),'line-stroke','')}" layout="block" rendered="{! prod.RegularPrice!=null && prod.RegularPrice > 0}">
+		                                            <apex:outputPanel styleClass="item-price regular-price {!IF(AND(prod.CustomerPrice!=null , prod.CustomerPrice>0),'line-stroke','')}" layout="block" rendered="{! prod.RegularPrice!=null && prod.RegularPrice > 0 && prod.ProductInfoId == null && prod.Sell_Through_eCommerce}">
 														<apex:outputText styleClass="price-value" value="{0, number, currency}">
 		                                                    <apex:param value="{!prod.RegularPrice}" />
 		                                                </apex:outputText>
@@ -211,7 +211,7 @@
 													</apex:outputPanel>
 
 													<!-- Discounted price if exist -->
-													<apex:outputPanel styleClass="item-price discounted-price" layout="block" rendered="{! prod.CustomerPrice!=null && prod.CustomerPrice > 0}">
+													<apex:outputPanel styleClass="item-price discounted-price" layout="block" rendered="{! prod.CustomerPrice!=null && prod.CustomerPrice > 0 && prod.ProductInfoId == null}">
 														<apex:outputText styleClass="price-value" value="{0, number, currency}">
 		                                                    <apex:param value="{!prod.CustomerPrice}" />
 		                                                </apex:outputText>
@@ -219,7 +219,7 @@
 													</apex:outputPanel>
 
 													<!-- Price not exit: Direct Sales -->
-													<apex:outputPanel styleClass="item-price regular-price" layout="block" rendered="{! AND(prod.RegularPrice==null, prod.CustomerPrice==null)}">
+													<apex:outputPanel styleClass="item-price regular-price" layout="block" rendered="{! AND(prod.RegularPrice==null, prod.CustomerPrice==null, prod.ProductInfoId == null)}">
 														<span class="price-label">{!$Label.Direct_Sales}</span>
 													</apex:outputPanel>
 
@@ -232,13 +232,13 @@
 
 								<!-- Pagination AJAX functions -->
 								<apex:form id="frmPagination">
-									<apex:actionFunction name="gotoPage" reRender="main_container" action="{!gotoPage}" status="sortByStatus" oncomplete="javascript:$('.product-list .list-item').matchHeight();">
+									<apex:actionFunction name="gotoPage" reRender="main_container" action="{!gotoPage}" status="sortByStatus" oncomplete="javascript:matchHeight2();">
 				                        <apex:param name="pageNum" value="" />
 				                    </apex:actionFunction>
 
-				                    <apex:actionFunction name="gotoNext" reRender="main_container" action="{!gotoNext}" status="sortByStatus" oncomplete="javascript:$('.product-list .list-item').matchHeight();" />
+				                    <apex:actionFunction name="gotoNext" reRender="main_container" action="{!gotoNext}" status="sortByStatus" oncomplete="javascript:matchHeight2();" />
 
-				                    <apex:actionFunction name="gotoPrevious" reRender="main_container" action="{!gotoPrevious}" status="sortByStatus" oncomplete="javascript:$('.product-list .list-item').matchHeight();" />
+				                    <apex:actionFunction name="gotoPrevious" reRender="main_container" action="{!gotoPrevious}" status="sortByStatus" oncomplete="javascript:matchHeight2();" />
 								</apex:form>
 								
 								<!-- Pagination -->
@@ -306,6 +306,20 @@
 			<script src="{!URLFOR($Resource.EcommerceAssets, 'js/script.js')}"></script>
 
 			<script type="text/javascript">
+
+				var matchHeight2 = function(){
+					var h = 0;
+		            $(".product-list .list-item").each(function(i){
+		                if($(this).height() > h)
+		                    h = $(this).height();
+		            });
+
+		            $(".product-list .list-item").each(function(i){
+		                $(this).height(h);
+		            });
+				}
+
+
 				$(document).ready(function(){
 
 					var selected_filters;
@@ -325,7 +339,7 @@
 						$('input[id$=selectedFilters]').val(selected_filters.join(':'));
 
 						
-						console.log(selected_filters);
+						//console.log(selected_filters);
 					}
 
 					$(".frmFilters input[type='text']").on('change',function(event){

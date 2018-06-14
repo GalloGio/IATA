@@ -68,14 +68,23 @@
         
         <!-- Select contact Status -->
         <div id="statusDiv" style="display:none" >
-        <apex:pageBlockSection title="" columns="1">
-            <apex:inputField value="{!con.Status__c}" />
+        <apex:pageBlockSection title="" columns="2">
+            <apex:inputField value="{!con.Status__c}" />           
         </apex:pageBlockSection>
         </div>
         
         <div id="statusDiv" >
-        <apex:pageBlockSection title="" columns="1">
+        <apex:pageBlockSection title="" columns="2">
             <apex:inputField value="{!con.User_Portal_Status__c}" id="theStatus" onchange="showHideReason('{!$Component.theStatus}');" />
+            <apex:pageBlockSectionItem >
+          <apex:outputText value="User Community" />
+          <apex:outputPanel layout="block" styleClass="requiredInput">
+            <apex:outputPanel layout="block" styleClass="requiredBlock"/>
+             <apex:selectList id="UserCommunity" value="{!selectedVal}" multiselect="false" size="1" >
+                <apex:selectOptions value="{!communityOptions}"/>
+            </apex:selectList>
+            </apex:outputPanel>
+            </apex:pageBlockSectionItem>
         </apex:pageBlockSection>
         </div>
         

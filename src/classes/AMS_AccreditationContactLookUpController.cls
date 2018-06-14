@@ -5,6 +5,7 @@ public with sharing class AMS_AccreditationContactLookUpController
 	public String lastName {get;set;}
 	public String email {get;set;}
 	public String accountName {get;set;}
+	public String iataCode {get;set;}
 	public String objectType {get;set;}
 	private String rowNumber;
 	private String fieldType;
@@ -21,6 +22,8 @@ public with sharing class AMS_AccreditationContactLookUpController
 		lastName = System.currentPageReference().getParameters().get('lastName');
 		email = System.currentPageReference().getParameters().get('email');
 		accountName = System.currentPageReference().getParameters().get('legalName');
+		iataCode = System.currentPageReference().getParameters().get('iataCode');
+		System.debug('***iataCode: ' + iataCode);
 		
 		wrapper = new List<ContactPersonWrapper>();
 		accWrapper = new List<AccountWrapper>();
@@ -34,13 +37,50 @@ public with sharing class AMS_AccreditationContactLookUpController
 		else if(objectType == 'account')
 		{
 			
-			if(accountName == null || accountName == '')
+			List<Account> accountList = new List<Account>();
+			List<Account> accountListByIataCode = new List<Account>();
+			Set<Id> accountListAux = new Set<Id>();
+
+			if((accountName == null || accountName == '') && (iataCode == null || iataCode == ''))
 			{
 				ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.Error, 'Please fill in the Legal / Registered Name before searching.'));
 				return;
 			}
-			
-			List<Account> accountList = [select id, Name, Legal_Name__c, IATACode__c from Account where RecordType.DeveloperName = 'IATA_Agency' and (Name like :accountName + '%' or Legal_Name__c like :accountName + '%')];
+
+			if((accountName != null && accountName != '') && (iataCode != null && iataCode != ''))
+			{
+				accountList = [select id, Name, Legal_Name__c, IATACode__c from Account where RecordType.DeveloperName = 'IATA_Agency' and (Name like :accountName + '%' or Legal_Name__c like :accountName + '%') and IATACode__c like :iataCode + '%'];
+				if(accountList.isEmpty())
+				{
+					ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.Error, 'Please fill in the Legal / Registered Name with valid values before searching.'));
+					return;
+				}
+			}
+ 
+ 			if(accountList.isEmpty())
+ 			{
+ 				if(accountName != null && accountName != '')
+				{
+					accountList = [select id, Name, Legal_Name__c, IATACode__c from Account where RecordType.DeveloperName = 'IATA_Agency' and (Name like :accountName + '%' or Legal_Name__c like :accountName + '%')];
+					for(Account ac : accountList)
+					{
+						accountListAux.add(ac.Id);
+					}
+				}
+				
+				if(iataCode != null && iataCode != '')
+				{
+					accountListByIataCode = [select id, Name, Legal_Name__c, IATACode__c from Account where RecordType.DeveloperName = 'IATA_Agency' and IATACode__c like :iataCode + '%'];
+					for(Account acc : accountListByIataCode)
+					{
+						if(!accountListAux.contains(acc.Id))
+						{
+							accountList.add(acc);
+						}
+					}
+				}
+ 			}
+
 			if(accountList.size() == 0)
 			{
 				ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.Error, 'Selected values did not produce any results.'));

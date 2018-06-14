@@ -21,10 +21,6 @@
         <type>Default</type>
     </actionOverrides>
     <actionOverrides>
-        <actionName>Follow</actionName>
-        <type>Default</type>
-    </actionOverrides>
-    <actionOverrides>
         <actionName>List</actionName>
         <type>Default</type>
     </actionOverrides>
@@ -50,9 +46,10 @@
     <description>Used to capture Agency contacts listed in the online Accreditation application process</description>
     <enableActivities>false</enableActivities>
     <enableBulkApi>true</enableBulkApi>
+    <enableChangeDataCapture>false</enableChangeDataCapture>
     <enableFeeds>false</enableFeeds>
     <enableHistory>true</enableHistory>
-    <enableReports>false</enableReports>
+    <enableReports>true</enableReports>
     <enableSearch>true</enableSearch>
     <enableSharing>true</enableSharing>
     <enableStreamingApi>true</enableStreamingApi>
@@ -135,6 +132,26 @@
         <writeRequiresMasterRead>false</writeRequiresMasterRead>
     </fields>
     <fields>
+        <fullName>ANG_AE_fromOnlineForm__c</fullName>
+        <defaultValue>false</defaultValue>
+        <description>True if the contact was created on the portal.</description>
+        <externalId>false</externalId>
+        <label>ANG_AE_fromOnlineForm</label>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
+        <fullName>ANG_contactFromAccount__c</fullName>
+        <defaultValue>false</defaultValue>
+        <description>True if the contact was not created on the portal (originated on the account).</description>
+        <externalId>false</externalId>
+        <label>ANG_contactFromAccount</label>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
         <fullName>Accredited_employer_1__c</fullName>
         <deleteConstraint>SetNull</deleteConstraint>
         <externalId>false</externalId>
@@ -208,25 +225,44 @@
         <fullName>Agencies_prev_worked_for__c</fullName>
         <externalId>false</externalId>
         <label># Travel agencies previously worked for</label>
-        <picklist>
-            <picklistValues>
-                <fullName>none</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>1</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>2 or more</fullName>
-                <default>false</default>
-            </picklistValues>
-            <sorted>false</sorted>
-        </picklist>
         <required>false</required>
         <trackHistory>true</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Picklist</type>
+        <valueSet>
+            <valueSetDefinition>
+                <sorted>false</sorted>
+                <value>
+                    <fullName>none</fullName>
+                    <default>false</default>
+                    <label>none</label>
+                </value>
+                <value>
+                    <fullName>1</fullName>
+                    <default>false</default>
+                    <label>1</label>
+                </value>
+                <value>
+                    <fullName>2 or more</fullName>
+                    <default>false</default>
+                    <label>2 or more</label>
+                </value>
+            </valueSetDefinition>
+        </valueSet>
+    </fields>
+    <fields>
+        <fullName>AgencyRegulation__c</fullName>
+        <deleteConstraint>SetNull</deleteConstraint>
+        <description>link to the agency regulation that was converted into accreditation contact</description>
+        <externalId>false</externalId>
+        <label>AMS Agency Regulation</label>
+        <referenceTo>AMS_Agency_Regulation__c</referenceTo>
+        <relationshipLabel>AMS Accreditation Contacts</relationshipLabel>
+        <relationshipName>AMS_Accreditation_Contacts</relationshipName>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Lookup</type>
     </fields>
     <fields>
         <fullName>Agency_owner__c</fullName>
@@ -291,6 +327,67 @@
         <trackHistory>false</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Checkbox</type>
+    </fields>
+    <fields>
+        <fullName>Certificate_Issued_on__c</fullName>
+        <externalId>false</externalId>
+        <label>Certificate Issued on</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Date</type>
+    </fields>
+    <fields>
+        <fullName>Certificate_Issuer__c</fullName>
+        <externalId>false</externalId>
+        <label>Certificate Issuer</label>
+        <length>255</length>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Certificate_Name__c</fullName>
+        <externalId>false</externalId>
+        <label>Certificate Name</label>
+        <length>255</length>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Certificate_Validity__c</fullName>
+        <externalId>false</externalId>
+        <label>Certificate Validity</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Picklist</type>
+        <valueSet>
+            <restricted>true</restricted>
+            <valueSetDefinition>
+                <sorted>false</sorted>
+                <value>
+                    <fullName>1 year</fullName>
+                    <default>false</default>
+                    <label>1 year</label>
+                </value>
+                <value>
+                    <fullName>2 years</fullName>
+                    <default>false</default>
+                    <label>2 years</label>
+                </value>
+                <value>
+                    <fullName>3 years</fullName>
+                    <default>false</default>
+                    <label>3 years</label>
+                </value>
+            </valueSetDefinition>
+        </valueSet>
     </fields>
     <fields>
         <fullName>Company_Name_Local__c</fullName>
@@ -425,7 +522,7 @@
         <fullName>IATACode__c</fullName>
         <externalId>false</externalId>
         <label>IATA code</label>
-        <length>8</length>
+        <length>11</length>
         <required>false</required>
         <trackHistory>true</trackHistory>
         <trackTrending>false</trackTrending>
@@ -455,6 +552,15 @@
         <trackHistory>false</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Lookup</type>
+    </fields>
+    <fields>
+        <fullName>Invoicing_Contact__c</fullName>
+        <defaultValue>false</defaultValue>
+        <externalId>false</externalId>
+        <label>Invoicing Contact</label>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Checkbox</type>
     </fields>
     <fields>
         <fullName>Job_title__c</fullName>
@@ -778,29 +884,35 @@
         <fullName>Salutation__c</fullName>
         <externalId>false</externalId>
         <label>Salutation</label>
-        <picklist>
-            <picklistValues>
-                <fullName>Mr</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Mrs</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Miss</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Ms.</fullName>
-                <default>false</default>
-            </picklistValues>
-            <sorted>false</sorted>
-        </picklist>
         <required>false</required>
         <trackHistory>true</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Picklist</type>
+        <valueSet>
+            <valueSetDefinition>
+                <sorted>false</sorted>
+                <value>
+                    <fullName>Mr</fullName>
+                    <default>false</default>
+                    <label>Mr</label>
+                </value>
+                <value>
+                    <fullName>Mrs</fullName>
+                    <default>false</default>
+                    <label>Mrs</label>
+                </value>
+                <value>
+                    <fullName>Miss</fullName>
+                    <default>false</default>
+                    <label>Miss</label>
+                </value>
+                <value>
+                    <fullName>Ms.</fullName>
+                    <default>false</default>
+                    <label>Ms.</label>
+                </value>
+            </valueSetDefinition>
+        </valueSet>
     </fields>
     <fields>
         <fullName>Time_devoted_to_Agency_business__c</fullName>
@@ -818,21 +930,76 @@
         <description>b) Training course on IATA Dangerous Goods Regulations successfully completed</description>
         <externalId>false</externalId>
         <label>Training dangerous goods completed</label>
-        <picklist>
-            <picklistValues>
-                <fullName>Yes</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>No</fullName>
-                <default>false</default>
-            </picklistValues>
-            <sorted>false</sorted>
-        </picklist>
         <required>false</required>
         <trackHistory>false</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Picklist</type>
+        <valueSet>
+            <valueSetDefinition>
+                <sorted>false</sorted>
+                <value>
+                    <fullName>Yes</fullName>
+                    <default>false</default>
+                    <label>Yes</label>
+                </value>
+                <value>
+                    <fullName>No</fullName>
+                    <default>false</default>
+                    <label>No</label>
+                </value>
+            </valueSetDefinition>
+        </valueSet>
+    </fields>
+    <fields>
+        <fullName>Type_Of_Certificate__c</fullName>
+        <externalId>false</externalId>
+        <label>Type Of Certificate</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Picklist</type>
+        <valueSet>
+            <restricted>true</restricted>
+            <valueSetDefinition>
+                <sorted>false</sorted>
+                <value>
+                    <fullName>DGR</fullName>
+                    <default>false</default>
+                    <label>DGR</label>
+                </value>
+                <value>
+                    <fullName>DGA</fullName>
+                    <default>false</default>
+                    <label>DGA</label>
+                </value>
+                <value>
+                    <fullName>BCH</fullName>
+                    <default>false</default>
+                    <label>BCH</label>
+                </value>
+                <value>
+                    <fullName>CATA</fullName>
+                    <default>false</default>
+                    <label>CATA</label>
+                </value>
+                <value>
+                    <fullName>Experience</fullName>
+                    <default>false</default>
+                    <label>Experience</label>
+                </value>
+                <value>
+                    <fullName>Other</fullName>
+                    <default>false</default>
+                    <label>Other</label>
+                </value>
+                <value>
+                    <fullName>TSA</fullName>
+                    <default>false</default>
+                    <isActive>false</isActive>
+                    <label>TSA</label>
+                </value>
+            </valueSetDefinition>
+        </valueSet>
     </fields>
     <fields>
         <fullName>Valid_until__c</fullName>
@@ -840,7 +1007,7 @@
         <externalId>false</externalId>
         <label>* Valid until</label>
         <required>false</required>
-        <trackHistory>false</trackHistory>
+        <trackHistory>true</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Date</type>
     </fields>
@@ -878,6 +1045,21 @@
             </values>
         </picklistValues>
         <picklistValues>
+            <picklist>Certificate_Validity__c</picklist>
+            <values>
+                <fullName>1 year</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>2 years</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>3 years</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
             <picklist>Salutation__c</picklist>
             <values>
                 <fullName>Miss</fullName>
@@ -893,6 +1075,25 @@
             </values>
             <values>
                 <fullName>Ms%2E</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Type_Of_Certificate__c</picklist>
+            <values>
+                <fullName>BCH</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>DGA</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>DGR</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Experience</fullName>
                 <default>false</default>
             </values>
         </picklistValues>
@@ -917,6 +1118,21 @@
             </values>
         </picklistValues>
         <picklistValues>
+            <picklist>Certificate_Validity__c</picklist>
+            <values>
+                <fullName>1 year</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>2 years</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>3 years</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
             <picklist>Salutation__c</picklist>
             <values>
                 <fullName>Miss</fullName>
@@ -943,6 +1159,25 @@
             </values>
             <values>
                 <fullName>Yes</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Type_Of_Certificate__c</picklist>
+            <values>
+                <fullName>BCH</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>DGA</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>DGR</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Experience</fullName>
                 <default>false</default>
             </values>
         </picklistValues>
@@ -967,6 +1202,21 @@
             </values>
         </picklistValues>
         <picklistValues>
+            <picklist>Certificate_Validity__c</picklist>
+            <values>
+                <fullName>1 year</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>2 years</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>3 years</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
             <picklist>Salutation__c</picklist>
             <values>
                 <fullName>Miss</fullName>
@@ -993,6 +1243,25 @@
             </values>
             <values>
                 <fullName>Yes</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Type_Of_Certificate__c</picklist>
+            <values>
+                <fullName>BCH</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>DGA</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>DGR</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Experience</fullName>
                 <default>false</default>
             </values>
         </picklistValues>
@@ -1017,6 +1286,21 @@
             </values>
         </picklistValues>
         <picklistValues>
+            <picklist>Certificate_Validity__c</picklist>
+            <values>
+                <fullName>1 year</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>2 years</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>3 years</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
             <picklist>Salutation__c</picklist>
             <values>
                 <fullName>Miss</fullName>
@@ -1043,6 +1327,25 @@
             </values>
             <values>
                 <fullName>Yes</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Type_Of_Certificate__c</picklist>
+            <values>
+                <fullName>BCH</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>DGA</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>DGR</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Experience</fullName>
                 <default>false</default>
             </values>
         </picklistValues>
@@ -1067,6 +1370,21 @@
             </values>
         </picklistValues>
         <picklistValues>
+            <picklist>Certificate_Validity__c</picklist>
+            <values>
+                <fullName>1 year</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>2 years</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>3 years</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
             <picklist>Salutation__c</picklist>
             <values>
                 <fullName>Miss</fullName>
@@ -1093,6 +1411,25 @@
             </values>
             <values>
                 <fullName>Yes</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Type_Of_Certificate__c</picklist>
+            <values>
+                <fullName>BCH</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>DGA</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>DGR</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Experience</fullName>
                 <default>false</default>
             </values>
         </picklistValues>
@@ -1117,6 +1454,21 @@
             </values>
         </picklistValues>
         <picklistValues>
+            <picklist>Certificate_Validity__c</picklist>
+            <values>
+                <fullName>1 year</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>2 years</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>3 years</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
             <picklist>Salutation__c</picklist>
             <values>
                 <fullName>Miss</fullName>
@@ -1143,6 +1495,25 @@
             </values>
             <values>
                 <fullName>Yes</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Type_Of_Certificate__c</picklist>
+            <values>
+                <fullName>BCH</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>DGA</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>DGR</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Experience</fullName>
                 <default>false</default>
             </values>
         </picklistValues>
@@ -1168,6 +1539,21 @@
             </values>
         </picklistValues>
         <picklistValues>
+            <picklist>Certificate_Validity__c</picklist>
+            <values>
+                <fullName>1 year</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>2 years</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>3 years</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
             <picklist>Salutation__c</picklist>
             <values>
                 <fullName>Miss</fullName>
@@ -1197,6 +1583,33 @@
                 <default>false</default>
             </values>
         </picklistValues>
+        <picklistValues>
+            <picklist>Type_Of_Certificate__c</picklist>
+            <values>
+                <fullName>BCH</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>CATA</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>DGA</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>DGR</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Experience</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Other</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
     </recordTypes>
     <searchLayouts/>
     <sharingModel>ControlledByParent</sharingModel>
@@ -1214,4 +1627,5 @@ ISBLANK(  First_name__c )
 )</errorConditionFormula>
         <errorMessage>Please make sure you are filling the following accreditation contact fields: First Name, Last Name, Phone and Email</errorMessage>
     </validationRules>
+    <visibility>Public</visibility>
 </CustomObject>

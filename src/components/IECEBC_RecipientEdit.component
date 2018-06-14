@@ -123,12 +123,12 @@
                             </div>
                         </li>
                         
-                        <apex:outputText rendered="{!isIDCARDSelectionAllowed}"> 
+                        <apex:outputText > 
                             <apex:variable var="isOptionDisabled" value="{!NOT(ISBLANK(limitToAudience)) && limitToAudience != 'Agent'}" />
-                            <li class="{!IF(isOptionDisabled, ' disabled', '')} {!IF(newFilter.Audience__c == 'Agent', 'is-selected', '')}">
+                            <li class="{!IF(isOptionDisabled || !isIDCARDSelectionAllowed, ' disabled', '')} {!IF(newFilter.Audience__c == 'Agent', 'is-selected', '')}">
                                 <div class="radio-box">
                                     <div class="custom-user-input radio">
-                                        <apex:outputText rendered="{!NOT(isOptionDisabled)}">
+                                        <apex:outputText rendered="{!isIDCARDSelectionAllowed}">                                        
                                             <apex:outputText rendered="{!newFilter.Audience__c == 'Agent'}">
                                                 <input class="user-input radio" onchange="updateAudience(this.value);" type="radio" name="audience" id="Agent" value="Agent" checked="checked" />
                                             </apex:outputText>
@@ -136,22 +136,26 @@
                                                 <input class="user-input radio" onchange="updateAudience(this.value);" type="radio" name="audience" id="Agent" value="Agent" />
                                             </apex:outputText>
                                         </apex:outputText>
-                                        <apex:outputText rendered="{!isOptionDisabled}">
-                                            <input disabled="disabled" readonly="readonly" class="user-input radio" type="radio" name="audience" id="Agent" value="Agent" />
-                                        </apex:outputText>
-                                        
+                                        <apex:outputText rendered="{!NOT(isIDCARDSelectionAllowed)}">
+                                            <apex:outputText rendered="{!newFilter.Audience__c == 'Agent'}">
+                                                <input disabled="disabled" readonly="readonly" class="disabled user-input radio" style="min-width: 20px;" type="radio" name="audience" id="Agent" value="Agent" checked="checked" />
+                                            </apex:outputText>
+                                            <apex:outputText rendered="{!newFilter.Audience__c != 'Agent'}">
+                                                <input disabled="disabled" readonly="readonly" class="disabled user-input radio" style="min-width: 20px;" type="radio" name="audience" id="Agent" value="Agent" />
+                                            </apex:outputText>                                            
+                                        </apex:outputText>                                        
                                         <label class="custom-radio" for="Agent"><i class="icon"></i></label>
                                     </div>
                                     <label class="input-label" for="Agent">IATA/IATAN ID Cardholders</label>
                                 </div>
                             </li>
                         </apex:outputText>
-                        <apex:outputText rendered="{!isCodeSelectionAllowed}"> 
+                        <apex:outputText > 
                             <apex:variable var="isOptionDisabled" value="{!NOT(ISBLANK(limitToAudience)) && limitToAudience != 'Custom'}" />
-                            <li class="{!IF(isOptionDisabled, ' disabled', '')} {!IF(newFilter.Audience__c == 'Custom', 'is-selected', '')}">
+                            <li class="{!IF(isOptionDisabled || !isCodeSelectionAllowed, ' disabled', '')} {!IF(newFilter.Audience__c == 'Custom', 'is-selected', '')}">
                                 <div class="radio-box">
                                     <div class="custom-user-input radio">
-                                        <apex:outputText rendered="{!NOT(isOptionDisabled)}">
+                                        <apex:outputText rendered="{!isCodeSelectionAllowed}">
                                             <apex:outputText rendered="{!newFilter.Audience__c == 'Custom'}">
                                                 <input class="user-input radio" onchange="updateAudience(this.value);" type="radio" name="audience" id="new-list-3" value="Custom" checked="checked" />
                                             </apex:outputText>
@@ -159,8 +163,13 @@
                                                 <input class="user-input radio" onchange="updateAudience(this.value);" type="radio" name="audience" id="new-list-3" value="Custom" />
                                             </apex:outputText>
                                         </apex:outputText>
-                                        <apex:outputText rendered="{!isOptionDisabled}">
-                                            <input disabled="disabled" readonly="readonly" class="user-input radio" type="radio" name="audience" id="new-list-3" value="Custom" />
+                                        <apex:outputText rendered="{!NOT(isCodeSelectionAllowed)}">
+                                            <apex:outputText rendered="{!newFilter.Audience__c == 'Custom'}">
+                                                <input disabled="disabled" readonly="readonly" class="disabled user-input radio" style="min-width: 20px;" type="radio" name="audience" id="new-list-3" value="Custom" checked="checked" />
+                                            </apex:outputText>
+                                            <apex:outputText rendered="{!newFilter.Audience__c != 'Custom'}">
+                                                <input disabled="disabled" readonly="readonly" class="disabled user-input radio" style="min-width: 20px;" type="radio" name="audience" id="new-list-3" value="Custom" />
+                                            </apex:outputText>                                            
                                         </apex:outputText>
                                         
                                         <label class="custom-radio" for="new-list-3"><i class="icon"></i></label>
@@ -170,7 +179,7 @@
                                 <apex:outputPanel rendered="{!newFilter.Audience__c == 'Custom'}" styleClass="show-hide-toggle">
                                     <div class="field-group textarea">
                                         <label>
-                                            <span class="input-label">Paste your list of IATA Numeric Codes in the box below</span>
+                                            <span class="input-label" style="font-weight: normal;">Paste your list of IATA Numeric Codes in the box below</span>
                                             <apex:inputField value="{!newFilter.IATA_Codes__c}" styleClass="user-input textarea" style="font-family: tahoma, open sans-serif;" />
                                         </label>
                                         <p class="input-description">Each IATA Numeric Code needs to be entered separated by a semicolon with a max of <strong>5,000 codes</strong>.</p>
@@ -190,7 +199,7 @@
                         <ul class="list actions">
                             <apex:outputText rendered="{!campaign == null}">
                                 <li>
-                                    <a href="https://{!$Site.Domain}{!URLFOR($Page.IECEBC_RecipientList)}" class="text-link">Discard</a>
+                                    <a href="{!URLFOR($Page.IECEBC_RecipientList)}" class="text-link">Discard</a>
                                 </li>
                             </apex:outputText>
                             <li>
@@ -298,10 +307,10 @@
                                                         </apex:selectList>
                                                     </apex:outputPanel>
                                                     
-                                                <apex:commandLink styleClass="action-link" action="{!removeGeoFilter}" rerender="geoFilters">
-                                                    <i class="icon fa fa-minus-circle" aria-hidden="true"></i>Remove
-                                                    <apex:param name="firstParam" assignTo="{!geoFilterIndex}" value="{!ind}" />
-                                                </apex:commandLink>
+                                                    <apex:commandLink styleClass="action-link" action="{!removeGeoFilter}" rerender="geoFilters">
+                                                        <i class="icon fa fa-minus-circle" aria-hidden="true"></i>Remove
+                                                        <apex:param name="firstParam" assignTo="{!geoFilterIndex}" value="{!ind}" />
+                                                    </apex:commandLink>
                                                 </apex:outputText>
                                             </apex:outputPanel>
                                         </apex:repeat>
@@ -330,7 +339,7 @@
                         <ul class="list actions">
                             <apex:outputText rendered="{!campaign == null}">
                                 <li>
-                                    <a href="https://{!$Site.Domain}{!URLFOR($Page.IECEBC_RecipientList)}" class="text-link">Discard</a>
+                                    <a href="{!URLFOR($Page.IECEBC_RecipientList)}" class="text-link">Discard</a>
                                 </li>
                             </apex:outputText>
                             <li>
@@ -456,7 +465,7 @@
                         <ul class="list actions">
                             <apex:outputText rendered="{!campaign == null}">
                                 <li>
-                                    <a href="https://{!$Site.Domain}{!URLFOR($Page.IECEBC_RecipientList)}" class="text-link">Discard</a>
+                                    <a href="{!URLFOR($Page.IECEBC_RecipientList)}" class="text-link">Discard</a>
                                 </li>
                             </apex:outputText>
                             <li>
@@ -517,10 +526,10 @@
                                 <apex:outputText rendered="{!isSaved}">
                                     <script type="text/javascript">
                                     <apex:outputText rendered="{!campaign != null}">
-                                        window.location.href = 'https://{!$Site.Domain}{!URLFOR($Page.IECEBC_CampaignTemplate)}?id={!campaign.id}';
+                                        window.location.href = '{!URLFOR($Page.IECEBC_CampaignTemplate)}?id={!campaign.id}';
                                     </apex:outputText>
                                     <apex:outputText rendered="{!campaign == null}">
-                                        window.location.href = 'https://{!$Site.Domain}{!URLFOR($Page.IECEBC_RecipientList)}';
+                                        window.location.href = '{!URLFOR($Page.IECEBC_RecipientList)}';
                                     </apex:outputText>
                                     </script>
                                 </apex:outputText>
@@ -565,7 +574,7 @@
                                                     <apex:variable var="cost" value="{!productRatePlan.EBC_Currency_Cost_Per_Email__c * IF((billingAccount.eBroadcast_Email_Balance__c - newFilter.Number_of_Recipients__c) < 0, ABS(billingAccount.eBroadcast_Email_Balance__c - newFilter.Number_of_Recipients__c), 0)}" />
                                                     <strong class="text-orange">$<apex:outputText value="{0, number, ###,###,##0.00}"><apex:param value="{!cost}"/></apex:outputText></strong>
                                                     <apex:outputText rendered="{!cost > 0}">
-                                                        <p>for <apex:outputText value="{0, number, ###,###,##0}"><apex:param value="{!IF((billingAccount.eBroadcast_Email_Balance__c - newFilter.Number_of_Recipients__c) < 0, ABS(billingAccount.eBroadcast_Email_Balance__c - newFilter.Number_of_Recipients__c), 0)}"/></apex:outputText> email(s) at $<apex:outputText value="{0, number, ###,###,##0.00}"><apex:param value="{!productRatePlan.EBC_Currency_Cost_Per_Email__c}"/></apex:outputText> /email</p>
+                                                        <p>for <apex:outputText value="{0, number, ###,###,##0}"><apex:param value="{!IF((billingAccount.eBroadcast_Email_Balance__c - newFilter.Number_of_Recipients__c) < 0, ABS(billingAccount.eBroadcast_Email_Balance__c - newFilter.Number_of_Recipients__c), 0)}"/></apex:outputText> email(s) at $<apex:outputText value="{0, number, ###,###,##0.000}"><apex:param value="{!productRatePlan.EBC_Currency_Cost_Per_Email__c}"/></apex:outputText> /email</p>
                                                     </apex:outputText>
                                                 </div>
                                             </td> 
@@ -595,7 +604,7 @@
                         <ul class="list actions">
                             <apex:outputText rendered="{!campaign == null}">
                                 <li>
-                                    <a href="https://{!$Site.Domain}{!URLFOR($Page.IECEBC_RecipientList)}" class="text-link">Discard</a>
+                                    <a href="{!URLFOR($Page.IECEBC_RecipientList)}" class="text-link">Discard</a>
                                 </li>
                             </apex:outputText>
                             <li>

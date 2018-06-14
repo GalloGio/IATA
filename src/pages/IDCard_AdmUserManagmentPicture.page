@@ -1,6 +1,6 @@
 <apex:page title="IATA/IATAN ID Card Online Platform"
     sidebar="false" showHeader="false" 
-    controller="IDCard_AdmUserManagmentPictureCtrl" cache="true" expires="600">
+    controller="IDCard_AdmUserManagmentPictureCtrl" cache="false"> 
     <html xmlns="http://www.w3.org/1999/xhtml">
     <apex:includeScript value="https://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js" />
     
@@ -279,12 +279,6 @@
             
         }
 
-             $(function(){
-
-                $.receiveMessage(receiveFilenameFromIFrame);
-        
-            });
-
             function newPopup(url) {
                 popupWindow = window.open(
                     url,'popUpWindow','height=700,width=800,left=10,top=10,resizable=yes,scrollbars=yes,toolbar=no,menubar=no,location=no,directories=no,status=no')
@@ -334,13 +328,13 @@
             function setMaxLength(id, maxValue) {
                 document.getElementById(id).setAttribute('maxlength',maxValue);
             }
-                    
-            /**
-             * Function called when the iFrame sends back the filename (meaning it was uploaded, cropped and submitted)
-             */ 
-            function receiveFilenameFromIFrame(filename) {
-                document.getElementById('{!$Component.idcardForm.pb3.hdnFilename}').value = filename.data;
-            }
+    
+		    /**
+		     * Function called when cropper tool has finished uploaded the image
+		     */ 
+		    function receiveFilenameFromCropperTool(fileFullUri) {
+		        document.getElementById('{!$Component.idcardForm.pb3.hdnFilename}').value = fileFullUri;
+		    }
             
             function scrollToTop() {
                 window.scrollTo(0,0);
@@ -561,7 +555,7 @@
 
 
 <body onload="calculateDisplayedName();">
-<c:IDCardToolsComponent />
+
     
     <div id="page_wrapper">
         <apex:form forceSSL="true" id="idcardForm" enctype="multipart/form-data">
@@ -624,39 +618,7 @@
                     </apex:outputPanel>
                     
                   
-                    <apex:outputPanel id="divIframeViewer" style="width:100%" rendered="{!IsViewerDisplayed}">                         
-                       
-                          <center>
-                                <iframe name="iframeImageViewer"
-                                        src="{!$Label.IDCard_CroppingTool}IDCardPreview.aspx?filename={!PhotoFilename}&sid={!$API.Session_ID}"
-                                        frameborder="0" width="100%" height="380px"  style="padding-left: 150px;">iFrames not supported</iframe>                                         
-                            <br/>                                          
-                              <apex:commandLink styleClass="btn-BlueButtonWAR"  onclick="ShowHideDiv()" rerender="divIframeViewer,outputPanelIframe">
-                                  <span>{!$Label.ID_Card_Change_Photo_Button}</span>
-                             </apex:commandLink>
-                           <br/>
-                        </center>                                     
-                    </apex:outputPanel>
-                
-                
-                
-                
-                    <apex:outputPanel id="outputPanelIframe" rendered="{!IsCroppingToolDisplayed}">
-                    
-                        <table id="tablePhotoUpload" width="100%">
-                            <tr>
-                             <td colspan="3" style="width: 100%; height: 460px"  id="CroppingCell">
-                                <apex:outputPanel id="panelImageError">
-                                        <apex:pageMessage id="pmImage"   summary="{!$Label.IDCard_UploadCropImage}" severity="error" rendered="{!HasNotUploadedImage}" />
-                                </apex:outputPanel> 
-                                <iframe id="iframeCropping" name="iframeCropping"
-                                        src="{!$Label.IDCard_CroppingTool}Crop.aspx?filename={!PhotoFilename}&sid={!$API.Session_ID}&lang={!SelectedLanguage}"
-                                        frameborder="0" width="100%" height="100%">iFrames not supported
-                                </iframe>                                                                            
-                                </td>
-                            </tr>
-                        </table>
-                    </apex:outputPanel>
+                   <c:IDCard_Cropper sessionId="{!$Api.Session_ID}" fileId="{!PhotoFilename}" jsCallbackName="receiveFilenameFromCropperTool" />
 
                       <table  style="width: 85%;padding-left: 2px; padding-left: 2px">
                         <tr>

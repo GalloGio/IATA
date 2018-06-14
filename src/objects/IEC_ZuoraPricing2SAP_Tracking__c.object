@@ -1,0 +1,285 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomObject xmlns="http://soap.sforce.com/2006/04/metadata">
+    <actionOverrides>
+        <actionName>Accept</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>CancelEdit</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Clone</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Delete</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Edit</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>List</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>New</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>SaveEdit</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Tab</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>View</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <allowInChatterGroups>false</allowInChatterGroups>
+    <compactLayoutAssignment>SYSTEM</compactLayoutAssignment>
+    <deploymentStatus>Deployed</deploymentStatus>
+    <description>Track Zuora prices sent to SAP</description>
+    <enableActivities>false</enableActivities>
+    <enableBulkApi>true</enableBulkApi>
+    <enableChangeDataCapture>false</enableChangeDataCapture>
+    <enableFeeds>false</enableFeeds>
+    <enableHistory>false</enableHistory>
+    <enableReports>true</enableReports>
+    <enableSearch>false</enableSearch>
+    <enableSharing>true</enableSharing>
+    <enableStreamingApi>true</enableStreamingApi>
+    <fields>
+        <fullName>AmountOrPercentage__c</fullName>
+        <description>Amount or percentage of price or discount</description>
+        <externalId>false</externalId>
+        <label>Amount Or Percentage</label>
+        <precision>18</precision>
+        <required>true</required>
+        <scale>7</scale>
+        <trackTrending>false</trackTrending>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Country__c</fullName>
+        <description>Country for discount</description>
+        <externalId>false</externalId>
+        <label>Country</label>
+        <length>100</length>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Coupon__c</fullName>
+        <description>Coupon code for discount</description>
+        <externalId>false</externalId>
+        <label>Coupon</label>
+        <length>50</length>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Currency__c</fullName>
+        <description>Currency for pricing</description>
+        <externalId>false</externalId>
+        <label>Currency</label>
+        <length>3</length>
+        <required>true</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>CustomerType__c</fullName>
+        <description>Type of customer for pricing</description>
+        <externalId>false</externalId>
+        <label>Customer Type</label>
+        <length>100</length>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>EffectiveFrom__c</fullName>
+        <description>Effective start date of pricing</description>
+        <externalId>false</externalId>
+        <label>Effective From</label>
+        <required>true</required>
+        <trackTrending>false</trackTrending>
+        <type>Date</type>
+    </fields>
+    <fields>
+        <fullName>EffectiveTo__c</fullName>
+        <description>Effective end date of pricing</description>
+        <externalId>false</externalId>
+        <label>Effective To</label>
+        <required>true</required>
+        <trackTrending>false</trackTrending>
+        <type>Date</type>
+    </fields>
+    <fields>
+        <fullName>EndingUnit__c</fullName>
+        <description>Ending unit of range</description>
+        <externalId>false</externalId>
+        <label>Ending Unit</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>7</scale>
+        <trackTrending>false</trackTrending>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>IsFreeShipping__c</fullName>
+        <defaultValue>false</defaultValue>
+        <description>Is free shipping discount</description>
+        <externalId>false</externalId>
+        <label>Is Free Shipping</label>
+        <trackTrending>false</trackTrending>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
+        <fullName>IsPreSale__c</fullName>
+        <defaultValue>false</defaultValue>
+        <description>Is pre-sales discount</description>
+        <externalId>false</externalId>
+        <label>Is Pre Sale</label>
+        <trackTrending>false</trackTrending>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
+        <fullName>IsRecurring__c</fullName>
+        <defaultValue>false</defaultValue>
+        <description>Pricing is recurring</description>
+        <externalId>false</externalId>
+        <label>Is Recurring</label>
+        <trackTrending>false</trackTrending>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
+        <fullName>Key__c</fullName>
+        <caseSensitive>true</caseSensitive>
+        <externalId>true</externalId>
+        <label>Key</label>
+        <length>50</length>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>true</unique>
+    </fields>
+    <fields>
+        <fullName>LatestSourceTimestamp__c</fullName>
+        <description>Latest LastModifiedDate of zqu__ProductRatePlan__c, zqu__ProductRatePlanCharge__c and zqu__ProductRatePlanChargeTier__c to determine if pricing is changed</description>
+        <externalId>false</externalId>
+        <label>Latest Source Timestamp</label>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>DateTime</type>
+    </fields>
+    <fields>
+        <fullName>Material_Number__c</fullName>
+        <description>SAP material number</description>
+        <externalId>false</externalId>
+        <label>Material Number</label>
+        <length>20</length>
+        <required>true</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Operation__c</fullName>
+        <description>Operation to do on pricing in SAP: I for insert, U for update, D for delete</description>
+        <externalId>false</externalId>
+        <label>Operation</label>
+        <length>1</length>
+        <required>true</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Pricing_Type__c</fullName>
+        <description>Type of pricing for interface</description>
+        <externalId>false</externalId>
+        <label>Pricing Type</label>
+        <length>100</length>
+        <required>true</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Region__c</fullName>
+        <description>Region for discount</description>
+        <externalId>false</externalId>
+        <label>Region</label>
+        <length>100</length>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>SendingTimestamp__c</fullName>
+        <description>Timestamp of sending to SAP.  Empty means pricing is to send</description>
+        <externalId>false</externalId>
+        <label>Sending Timestamp</label>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>DateTime</type>
+    </fields>
+    <fields>
+        <fullName>StartingUnit__c</fullName>
+        <description>Starting unit of range</description>
+        <externalId>false</externalId>
+        <label>Starting Unit</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>7</scale>
+        <trackTrending>false</trackTrending>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <label>ZuoraPricing2SAP Price</label>
+    <listViews>
+        <fullName>All</fullName>
+        <columns>NAME</columns>
+        <columns>Operation__c</columns>
+        <columns>Material_Number__c</columns>
+        <columns>Pricing_Type__c</columns>
+        <columns>CustomerType__c</columns>
+        <columns>StartingUnit__c</columns>
+        <columns>EndingUnit__c</columns>
+        <columns>AmountOrPercentage__c</columns>
+        <columns>Key__c</columns>
+        <columns>LatestSourceTimestamp__c</columns>
+        <columns>SendingTimestamp__c</columns>
+        <columns>EffectiveFrom__c</columns>
+        <columns>EffectiveTo__c</columns>
+        <columns>Currency__c</columns>
+        <columns>Coupon__c</columns>
+        <filterScope>Everything</filterScope>
+        <label>All</label>
+        <language>en_US</language>
+    </listViews>
+    <nameField>
+        <displayFormat>T-{000000}</displayFormat>
+        <label>IEC ZuoraPricing2SAP Tracking Name</label>
+        <type>AutoNumber</type>
+    </nameField>
+    <pluralLabel>ZuoraPricing2SAP Prices</pluralLabel>
+    <searchLayouts/>
+    <sharingModel>ReadWrite</sharingModel>
+    <visibility>Public</visibility>
+</CustomObject>

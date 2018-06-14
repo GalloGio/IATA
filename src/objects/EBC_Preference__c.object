@@ -21,10 +21,6 @@
         <type>Default</type>
     </actionOverrides>
     <actionOverrides>
-        <actionName>Follow</actionName>
-        <type>Default</type>
-    </actionOverrides>
-    <actionOverrides>
         <actionName>List</actionName>
         <type>Default</type>
     </actionOverrides>
@@ -49,6 +45,7 @@
     <deploymentStatus>Deployed</deploymentStatus>
     <enableActivities>false</enableActivities>
     <enableBulkApi>true</enableBulkApi>
+    <enableChangeDataCapture>false</enableChangeDataCapture>
     <enableFeeds>false</enableFeeds>
     <enableHistory>false</enableHistory>
     <enableReports>true</enableReports>
@@ -71,12 +68,13 @@
     </fields>
     <fields>
         <fullName>Default_From_Name__c</fullName>
+        <defaultValue>&quot;International Air Transport Association&quot;</defaultValue>
         <description>The From Name that will be set by default on a new campaign</description>
         <externalId>false</externalId>
         <inlineHelpText>The From Name that will be set by default on a new campaign</inlineHelpText>
         <label>Default From Name</label>
         <length>255</length>
-        <required>true</required>
+        <required>false</required>
         <trackTrending>false</trackTrending>
         <type>Text</type>
         <unique>false</unique>
@@ -188,4 +186,5 @@
     <pluralLabel>EBC Preferences</pluralLabel>
     <searchLayouts/>
     <sharingModel>ReadWrite</sharingModel>
+    <visibility>Public</visibility>
 </CustomObject>

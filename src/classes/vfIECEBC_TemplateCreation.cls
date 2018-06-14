@@ -26,6 +26,8 @@ public class vfIECEBC_TemplateCreation extends vfIECEBC_Controller
     public List<EBC_Template__c> userEditableTemplates {
         get {  
             if (userEditableTemplates == null) {
+                System.debug(billingAccount.Id);
+                System.debug(audience);
                 userEditableTemplates = [
                     Select
                     	Id,

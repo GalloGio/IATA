@@ -1,0 +1,203 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomObject xmlns="http://soap.sforce.com/2006/04/metadata">
+    <actionOverrides>
+        <actionName>Accept</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>CancelEdit</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Clone</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Delete</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Edit</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>List</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>New</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>SaveEdit</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Tab</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>View</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <allowInChatterGroups>false</allowInChatterGroups>
+    <compactLayoutAssignment>SYSTEM</compactLayoutAssignment>
+    <deploymentStatus>Deployed</deploymentStatus>
+    <enableActivities>false</enableActivities>
+    <enableBulkApi>false</enableBulkApi>
+    <enableChangeDataCapture>false</enableChangeDataCapture>
+    <enableFeeds>false</enableFeeds>
+    <enableHistory>true</enableHistory>
+    <enableReports>true</enableReports>
+    <enableSearch>true</enableSearch>
+    <enableSharing>false</enableSharing>
+    <enableStreamingApi>false</enableStreamingApi>
+    <fields>
+        <fullName>ANG_Agency_Risk_Calculation__c</fullName>
+        <deleteConstraint>SetNull</deleteConstraint>
+        <externalId>false</externalId>
+        <label>Agency Risk Calculation</label>
+        <referenceTo>ANG_Agency_Risk_Calculation__c</referenceTo>
+        <relationshipLabel>Risk Event Types</relationshipLabel>
+        <relationshipName>Risk_Event_Types</relationshipName>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Lookup</type>
+    </fields>
+    <fields>
+        <fullName>ANG_Delay_Cash_Condition__c</fullName>
+        <defaultValue>0</defaultValue>
+        <description>Number of days Risk Event should wait before receiving the Cash Conditions check</description>
+        <externalId>false</externalId>
+        <inlineHelpText>If value equals to 0 cash condition will be enforced on creation. Leave blank to prevent limit cash condition</inlineHelpText>
+        <label>Delay Cash Condition (Days)</label>
+        <precision>3</precision>
+        <required>false</required>
+        <scale>0</scale>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>ANG_Description__c</fullName>
+        <description>The full name of this type</description>
+        <externalId>false</externalId>
+        <label>Description</label>
+        <length>255</length>
+        <required>false</required>
+        <trackHistory>true</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>ANG_Expiration__c</fullName>
+        <description>Define the life of the risk event</description>
+        <externalId>false</externalId>
+        <label>Expiration Timeframe</label>
+        <precision>18</precision>
+        <required>true</required>
+        <scale>0</scale>
+        <trackHistory>true</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>ANG_Risk_ID__c</fullName>
+        <caseSensitive>false</caseSensitive>
+        <externalId>true</externalId>
+        <label>Risk ID</label>
+        <length>10</length>
+        <required>true</required>
+        <trackHistory>true</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>true</unique>
+    </fields>
+    <fields>
+        <fullName>ANG_nr_occurence_ff__c</fullName>
+        <externalId>false</externalId>
+        <formula>IF(!ISBLANK(ANG_Agency_Risk_Calculation__c) &amp;&amp; !ISPICKVAL(ANG_Agency_Risk_Calculation__r.ANG_Adjusted__c,&apos;Yes&apos;),TEXT(ANG_Agency_Risk_Calculation__r.ANG_Occurrence_Num__c),&apos;Adjusted&apos;)</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>Nr Occurences</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Grouping_Number__c</fullName>
+        <externalId>false</externalId>
+        <label>Grouping Number</label>
+        <precision>5</precision>
+        <required>false</required>
+        <scale>0</scale>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Limit_Cash_conditions__c</fullName>
+        <defaultValue>false</defaultValue>
+        <externalId>false</externalId>
+        <label>Limit Cash conditions</label>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Checkbox</type>
+    </fields>
+    <label>Risk Event Type</label>
+    <listViews>
+        <fullName>All</fullName>
+        <columns>ANG_Risk_ID__c</columns>
+        <columns>NAME</columns>
+        <columns>ANG_Expiration__c</columns>
+        <columns>Limit_Cash_conditions__c</columns>
+        <columns>ANG_Description__c</columns>
+        <columns>ANG_nr_occurence_ff__c</columns>
+        <filterScope>Everything</filterScope>
+        <label>All</label>
+        <language>en_US</language>
+    </listViews>
+    <listViews>
+        <fullName>All1</fullName>
+        <filterScope>Everything</filterScope>
+        <label>All</label>
+    </listViews>
+    <nameField>
+        <label>Short Name</label>
+        <trackHistory>true</trackHistory>
+        <type>Text</type>
+    </nameField>
+    <pluralLabel>Risk Event Types</pluralLabel>
+    <searchLayouts>
+        <customTabListAdditionalFields>ANG_Description__c</customTabListAdditionalFields>
+        <customTabListAdditionalFields>ANG_Risk_ID__c</customTabListAdditionalFields>
+        <customTabListAdditionalFields>ANG_Expiration__c</customTabListAdditionalFields>
+        <lookupDialogsAdditionalFields>ANG_Description__c</lookupDialogsAdditionalFields>
+        <lookupDialogsAdditionalFields>ANG_Risk_ID__c</lookupDialogsAdditionalFields>
+        <lookupDialogsAdditionalFields>ANG_nr_occurence_ff__c</lookupDialogsAdditionalFields>
+        <lookupDialogsAdditionalFields>ANG_Expiration__c</lookupDialogsAdditionalFields>
+        <lookupPhoneDialogsAdditionalFields>ANG_Description__c</lookupPhoneDialogsAdditionalFields>
+        <lookupPhoneDialogsAdditionalFields>ANG_Risk_ID__c</lookupPhoneDialogsAdditionalFields>
+        <lookupPhoneDialogsAdditionalFields>ANG_Expiration__c</lookupPhoneDialogsAdditionalFields>
+        <searchFilterFields>NAME</searchFilterFields>
+        <searchFilterFields>ANG_Description__c</searchFilterFields>
+        <searchFilterFields>ANG_Risk_ID__c</searchFilterFields>
+        <searchResultsAdditionalFields>ANG_Description__c</searchResultsAdditionalFields>
+        <searchResultsAdditionalFields>ANG_Risk_ID__c</searchResultsAdditionalFields>
+        <searchResultsAdditionalFields>ANG_Expiration__c</searchResultsAdditionalFields>
+    </searchLayouts>
+    <sharingModel>ReadWrite</sharingModel>
+    <validationRules>
+        <fullName>Delay_Cash_Conditions</fullName>
+        <active>true</active>
+        <errorConditionFormula>ANG_Delay_Cash_Condition__c &gt; 0 &amp;&amp; Limit_Cash_conditions__c</errorConditionFormula>
+        <errorMessage>Delaying Cash Conditions only work when Risk Events start with false and enforce Cash Conditions some days later</errorMessage>
+    </validationRules>
+    <visibility>Public</visibility>
+</CustomObject>

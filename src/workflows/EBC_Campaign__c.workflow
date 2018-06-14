@@ -2,16 +2,29 @@
 <Workflow xmlns="http://soap.sforce.com/2006/04/metadata">
     <alerts>
         <fullName>EBC_Approval_Email</fullName>
-        <ccEmails>debonol@iata.org</ccEmails>
+        <ccEmails>globaldata@iata.org</ccEmails>
         <description>Email client to notice of approval</description>
         <protected>false</protected>
         <recipients>
             <field>Notification_Email__c</field>
             <type>email</type>
         </recipients>
-        <senderAddress>noreply@iata.org</senderAddress>
+        <senderAddress>globaldata@iata.org</senderAddress>
         <senderType>OrgWideEmailAddress</senderType>
         <template>EBC/EBC_Campaign_Approved</template>
+    </alerts>
+    <alerts>
+        <fullName>EBC_Email_Confirmation_Status_Sent</fullName>
+        <ccEmails>globaldata@iata.org</ccEmails>
+        <description>EBC Email Confirmation Status Sent</description>
+        <protected>false</protected>
+        <recipients>
+            <field>Notification_Email__c</field>
+            <type>email</type>
+        </recipients>
+        <senderAddress>globaldata@iata.org</senderAddress>
+        <senderType>OrgWideEmailAddress</senderType>
+        <template>EBC/EBC_Campaign_Sent</template>
     </alerts>
     <alerts>
         <fullName>Send_cancellation_email</fullName>
@@ -69,6 +82,21 @@
         </actions>
         <active>true</active>
         <formula>((NOW() - CreatedDate) * 24 * 60 * 60) &gt; 10 &amp;&amp; TEXT(Status__c) == &apos;DRAFT&apos;</formula>
+        <triggerType>onCreateOrTriggeringUpdate</triggerType>
+    </rules>
+    <rules>
+        <fullName>EBC Campaign Sent</fullName>
+        <actions>
+            <name>EBC_Email_Confirmation_Status_Sent</name>
+            <type>Alert</type>
+        </actions>
+        <active>true</active>
+        <criteriaItems>
+            <field>EBC_Campaign__c.Status__c</field>
+            <operation>equals</operation>
+            <value>SENT</value>
+        </criteriaItems>
+        <description>This workflow is fired when a campaign status is changed to Sent</description>
         <triggerType>onCreateOrTriggeringUpdate</triggerType>
     </rules>
 </Workflow>

@@ -32,6 +32,9 @@ private class GenerateLateRemittanceCSVControllerTest {
                                                                     Region__c = 'Europe');
         insert isoCountry;
         
+        Late_Payment_Fees_CASS_ISO_Countries_Exc__c excludedCountry = new Late_Payment_Fees_CASS_ISO_Countries_Exc__c(Name='France');
+        insert excludedCountry;
+        
         Account a = new Account( Name ='IFAP ACCT',
                                  Industry = 'pluto',
                                  IATA_ISO_Country__c = isoCountry.id,
@@ -42,6 +45,7 @@ private class GenerateLateRemittanceCSVControllerTest {
         insert a;
         
         Contact con = new Contact( LastName = 'pluto' ,
+                                 FirstName = 'Name',
                                  Phone = '123',
                                  AccountId = a.id,
                                  Financial_Assessment_Contact__c = true,
@@ -58,7 +62,7 @@ private class GenerateLateRemittanceCSVControllerTest {
         List <Case> csList = new List <Case> ();        
         // create an IFAP case, will be selected by the 3rd report when generating the CSV
         Case cs = new Case(recordtypeID = IFAPcaseRecordTypeID,
-                          Status = 'Financial Security Requested',
+                          //Status = 'Financial Security Requested',
                           Financial_Review_Result__c = 'Satisfactory - New Financial Security',
                           Financial_Review_Type__c = 'Adhoc',
                           Type_of_customer__c = 'asfg',

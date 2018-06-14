@@ -1,3 +1,89 @@
-.THIS img{
-    max-height: 100px;
+.THIS .alignText{
+    width: 100%;
+    word-break: break-word;
+    WHITE-SPACE: normal;
+    font-size: 0.60rem;
+    margin-bottom: 	10px;
+    
+}
+.THIS .float-right{
+    float: right;
+}
+
+.THIS .text-align-center{
+    text-align: center;
+}
+
+.THIS .slds-size_1-of-5{
+	flex:1 !important;
+}
+
+.THIS .slds-size_1-of-5:nth-child(3){
+	display: flex;
+}
+
+.THIS .slds-button.inline-button{
+	line-height: normal;
+    padding: 4px;
+}
+
+.THIS .slds-size_1-of-5:nth-child(3) img{
+	margin: 0 auto;
+	align-self: baseline;
+	    max-width: none;
+}
+
+
+.THIS .slds-size_1-of-5:nth-child(2){
+	flex-grow: 0.5 !important;
+}
+
+.THIS .slds-size_1-of-5:nth-child(4){
+	flex-grow: 0.95 !important;
+}
+
+.THIS .slds-size_1-of-5:nth-child(5){
+	flex-grow: 0.5 !important;
+}
+
+.THIS .slds-size_1-of-5:nth-child(5) .slds-button-group{
+	width: 100%;
+}
+
+.THIS .slds-size_1-of-5:nth-child(5) button{
+	font-size: 0.8em;
+    padding: 0;
+    width: 100%;
+    min-width: 140px;
+}
+
+.THIS .slds-page-header__detail-row.resize{
+	margin: 0.2rem 0 .75rem 1rem;
+}
+
+.THIS.slds-page-header.resizeHeader {
+    padding: 0.5rem 1rem .1rem;
+}
+
+.THIS .slds-size_1-of-2.slds-col--padded.resizeBox{
+	min-height: 90px;
+}
+.THIS .slds-tabs--default__link {
+    /*word-break: break-all !important;*/
+    height: auto !important;
+
+}
+
+.THIS .slds-button {
+    white-space: nowrap;
+}
+
+.THIS .slds-truncate {
+    /*word-wrap: break-word !important;*/
+    white-space: normal !important;
+}
+@media (max-width: 1200px) {
+    .THIS .slds-page-header__detail-row {
+        margin: 0.5rem 0 0.75rem 0rem !important;
+    }
 }

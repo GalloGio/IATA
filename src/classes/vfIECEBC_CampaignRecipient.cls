@@ -23,7 +23,17 @@ public class vfIECEBC_CampaignRecipient extends vfIECEBC_Controller {
       
     @Readonly @Remoteaction
     public static Integer getExistingFilterCnt(String filterId) {
-        return Integer.valueOf(Database.query(IECEBC_Utility.getSOQLFromMasterFilter(null, filterId))[0].get('expr0'));
+         return getCounter(filterId);
+    }
+    public static Integer getCounter(String filterId) {
+        System.debug('vfIECEBC_CampaignRecipient.public static Integer getExistingFilterCnt(String filterId) >>>');
+        boolean elastic_switch = IEC_Settings__c.getOrgDefaults().eBroadcast_Counter_Switch__c;
+        String cntQuery=IECEBC_Utility.getSOQLFromMasterFilter(null, filterId,elastic_switch);
+        if (!elastic_switch) return Integer.valueOf(Database.query(cntQuery)[0].get('expr0'));
+        IECEBCNew_eBroadcast_Counter req = new IECEBCNew_eBroadcast_Counter();
+        return req.execute(cntQuery,false); 
+        //only query salesforce and return counter when elastic switch is false
+        
     }
     
 }

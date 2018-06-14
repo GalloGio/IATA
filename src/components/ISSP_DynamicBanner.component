@@ -3,6 +3,16 @@
     .carousel{
         max-width:358px;
         }
+
+    a.right {
+      display: inline-block;
+      width: 15%;
+    }
+
+    a.left {
+      display: inline-block;
+      width: 15%;
+    }
     
     a.banner{
         color:inherit;

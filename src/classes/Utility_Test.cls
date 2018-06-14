@@ -9,23 +9,31 @@ public class Utility_Test {
 
 /****************************************************************************************************
     Created by CGI, Thai 2015-08-22
-        Cover code of method "getRTmapName_Id"
+        Cover code of methods "getRTmapName_Id", "getRecordTypeId", "getRecordTypeIdByName"
 ****************************************************************************************************/
 static testMethod void test_getRTmapName_Id() {
     List<String> listDevName = new List<String>();
     List<Id> listId = new List<Id>();
-    String strObjectName;
+    String strObjectName, strRecordTypeName;
     Map<String, Id> mapName_Id;
     
     //*** get an object having record type with its first record type 
-    for (RecordType rt : [select Id, SObjectType, DeveloperName from RecordType limit 1]) {
+    for (RecordType rt : [select Id, SObjectType, DeveloperName, Name from RecordType limit 1]) {
         strObjectName = rt.SObjectType;
+        strRecordTypeName = rt.Name;
         listDevName.add(rt.DeveloperName);
         listId.add(rt.Id);
     }
     
     mapName_Id = Utility.getRTmapName_Id(strObjectName, listDevName);
     system.assert(mapName_Id.size() == 1 && mapName_Id.get(listDevName[0]) == listId[0], 'Incorrect map: ' + mapName_Id);
+    
+    //*** covert method "getRecordTypeId"
+    try { Utility.getRecordTypeId('NotExist', 'NotExist'); } catch (Exception e) {}
+    system.assert(Utility.getRecordTypeId(strObjectName, strRecordTypeName) != null, 'Wrong value');
+    
+    //*** covert method "getRecordTypeIdByName"
+    system.assert(Utility.getRecordTypeIdByName(strObjectName).size() > 0, 'Wrong count');
 } //*** end of "test_getRTmapName_Id"
 
 /****************************************************************************************************
@@ -46,10 +54,28 @@ static testMethod void test_getNewTask(){
         Cover code of method "getNewTask"
 ****************************************************************************************************/
 static testMethod void test_getDate(){
+	try { Utility.getDate('201502aa'); } catch (Exception e) {}
 	Date dt = Utility.getDate('20150211');
 
     Utility.formatDate(dt);
 }
+
+/****************************************************************************************************
+    Created by CGI, Thai 2017-01-30
+        Cover code of methods "sendBulkEmails" and "getEmailTemplatebyTemplateId"
+****************************************************************************************************/
+static testMethod void test_sendBulkEmails(){
+    Contact oContact = new Contact(FirstName = 'FirstName', LastName = 'LastName', Email = Utility.generateRandomString(10) + 'zzztest@test.com', phone='(514) 111 2222');
+    insert oContact;
+    insert new Apex_Setting__c(Name='ContactId to populate email Template', Text_1__c=oContact.Id);
+    Mail_DTO dtoMail = new Mail_DTO();
+    dtoMail.whatId = UserInfo.getUserId();
+    dtoMail.templateId = [select Id from EmailTemplate limit 1][0].Id;
+    dtoMail.orgWideEmailAddressId = [select Id from OrgWideEmailAddress limit 1][0].Id;
+    dtoMail.recipients = new List<String>{UserInfo.getUserEmail()};
+    Utility.sendBulkEmails(new List<Mail_DTO>{dtoMail});   //*** nothing to assert
+    system.assert(Utility.getEmailTemplatebyTemplateId(dtoMail.templateId).size() == 1, 'Wrong count');
+} //*** end of "test_sendBulkEmails"
 
 /****************************************************************************************************
     Created by CGI, Kevin 2015-08-25
@@ -87,6 +113,10 @@ static testMethod void test_getAdminEmails(){
     
     Utility.getAdminEmails();
     system.assert(ena.Name == 'Products email notification admin', 'Incorrect Administrator name');
+    
+    ena.Text_1__c = 'test@test.com,test2@test.com';
+    update ena;
+    system.assert(Utility.getAdminEmails().size() == 2, 'Wrong count');
 }
 
 /****************************************************************************************************
@@ -104,7 +134,7 @@ static testMethod void test_getPicklistValue_Label() {
 
 /****************************************************************************************************
     Created by CGI, Thai 2015-08-31
-        Cover code of method "getPicklistLabel"
+        Cover code of methods "getPicklistLabel" and "getDependentOptions"
 ****************************************************************************************************/
 static testMethod void test_getPicklistLabel() {
     String strCheck1, strCheck2;
@@ -112,27 +142,44 @@ static testMethod void test_getPicklistLabel() {
     strCheck2 = null;
     strCheck1 = Utility.getPicklistLabel('Product2', 'Language__c', strCheck2);
     system.assert(strCheck1 == strCheck2, 'Have translation for \"' + strCheck2 + '\": ' + strCheck1);
+    strCheck2 = 'English';
+    strCheck1 = Utility.getPicklistLabel('Product2', 'Language__c', strCheck2);
+    system.assert(strCheck1 == strCheck2, 'Have translation for \"' + strCheck2 + '\": ' + strCheck1);
 
     //Covert dependency picklist
     Utility.PicklistEntryWrapper picklistEntryWrp = new Utility.PicklistEntryWrapper();
     picklistEntryWrp.active = picklistEntryWrp.defaultValue = '';
     //picklistEntryWrp.defaultValue = '';
-    Utility.getDependentOptions('Product2','Mega_Menu__c', 'Display_Ecom_Topic__c');
+    system.assertEquals(Utility.getDependentOptions('Product2NotExist', 'Mega_Menu__c', 'Display_Ecom_Topic__c'), null);
+    system.assertEquals(Utility.getDependentOptions('Product2', 'Mega_Menu_NotExist__c', 'Display_Ecom_Topic__c').size(), 0);
+    system.assert(Utility.getDependentOptions('Product2', 'Mega_Menu__c', 'Display_Ecom_Topic__c').size() > 0, 'Wrong count');
 
     //Cover get Order Label by Api Name
-    Map<String,String> label_ApiName = Utility.getOrderLabelByApiName(new set<String>{'Type'});
+    Map<String,String> label_ApiName = Utility.getOrderLabelByApiName(new set<String>{'type'});
     Utility.getOrderLabelByApiName();
-    Utility.getOrderItemLabelByApiName(new set<String>{'Quantity'});
+    Utility.getOrderItemLabelByApiName(new set<String>{'quantity'});
     Utility.getOrderItemLabelByApiName();
-    
-    //*** get 1 picklist value to get translated -> commented because no translation to implement
-    //for (Schema.PicklistEntry p : Product2.Language__c.getDescribe().getPicklistValues()) {
-    //    strCheck2 = p.getValue();
-    //    break;
-    //}
-    //strCheck1 = Utility.getPicklistLabel('Product2', 'Language__c', strCheck2);
-    //system.assert(strCheck1 != strCheck2, 'DON\'T have translation for \"' + strCheck2 + '\": ' + strCheck1);
 } //*** end of "test_getPicklistLabel"
+
+/****************************************************************************************************
+    Created by CGI, Thai 2017-01-30
+        Cover code of method "getPicklistSelectOptions"
+****************************************************************************************************/
+static testMethod void test_getPicklistSelectOptions() {
+    List<SelectOption> lstCheck = Utility.getPicklistSelectOptions('Product2', 'Language__c', true);
+    system.assert(String.isBlank(lstCheck[0].getValue()), 'Item 1 should be blank');
+    system.assert(lstCheck.size() > 1, 'List must have more than 1 item');
+} //*** end of "test_getPicklistSelectOptions"
+
+/****************************************************************************************************
+    Created by CGI, Thai 2017-01-30
+        Cover code of method "getFieldSetSelectOptions"
+****************************************************************************************************/
+static testMethod void test_getFieldSetSelectOptions() {
+    List<SelectOption> lstCheck = Utility.getFieldSetSelectOptions('Product2', 'Send_To_Zuora_Listener', true);
+    system.assert(String.isBlank(lstCheck[0].getValue()), 'Item 1 should be blank');
+    system.assert(lstCheck.size() > 1, 'List must have more than 1 item');
+} //*** end of "test_getFieldSetSelectOptions"
 
 /****************************************************************************************************
     Created by CGI, Thai 2015-09-01
@@ -252,5 +299,49 @@ static testMethod void test_removeNewline() {
     checkText = Utility.removeNewline(text);
     system.assert(checkText == 'a, b', 'Wrong results: ' + checkText);
 } //*** end of "test_removeNewline"
+
+/****************************************************************************************************
+    Created by CGI, Thai 2017-01-30
+        Cover code of methods "generateRandomString", "generateRandomDigit", "generateRandomInteger",
+        "generateRandomDecimal", "getPicklistValues", "getRandomPicklistValue", "IdToString",
+        "getDefaultCurrency", "truncate", "getSAPauthorization", "fixEndpointDomain",
+        "getIntegerSetting", "getNumericSetting"
+****************************************************************************************************/
+static testMethod void test_Miscellaneous() {
+    system.assert(!String.isBlank(Utility.generateRandomString(2)), 'Wrong value');
+    
+    system.assert(!String.isBlank(Utility.generateRandomDigit(2)), 'Wrong value');
+    system.assert(!String.isBlank(Utility.generateRandomDigit(2)), 'Wrong value');
+    
+    system.assert(Utility.generateRandomInteger(2, 5) >= 2, 'Wrong value');
+    
+    system.assert(Utility.generateRandomDecimal(2.5, 5) >= 2.5, 'Wrong value');
+    
+    system.assert(!String.isBlank(Utility.getRandomPicklistValue('Order', 'Type')), 'Wrong value');
+    
+    system.assert(Utility.IdToString(new Set<Id>{UserInfo.getUserId()}).size() == 1, 'Wrong count');
+    
+    system.assert(!String.isBlank(Utility.getDefaultCurrency()), 'Wrong value');
+    
+    system.assert(Utility.truncate(null, 2) == '', 'Wrong value');
+    system.assert(Utility.truncate('aabbb', 2) == 'aa', 'Wrong value');
+    
+    system.assert(Utility.truncate(null, 2, 2) == '', 'Wrong value');
+    system.assert(Utility.truncate('aabbb', 10, 2) == '', 'Wrong value');
+    system.assert(Utility.truncate('aabbb', 1, 2) == 'ab', 'Wrong value');
+    
+    IEC_SAP_Settings__c settingSAP = IEC_SAP_Settings__c.getOrgDefaults();
+    settingSAP.Web_Service_Username__c = 'aaa';
+    settingSAP.Web_Service_Password__c = IECUtil.EncryptParameter('bbb');
+    settingSAP.Web_Service_endpoint__c = 'http://iata.org/webservice';
+    upsert settingSAP;
+    system.assert(Utility.getSAPauthorization().startsWith('Basic'), 'Wrong value');
+    system.assert(Utility.fixEndpointDomain('http://xyz.org/ws?p1=v1&p2=v2') == 'http://iata.org/webservice?p1=v1&p2=v2', 'Wrong value');
+    
+    insert new Apex_Setting__c(Name='setting1', Number_1__c=1.0);
+    system.assert(Utility.getIntegerSetting('abc') == 0, 'Wrong value');
+    system.assert(Utility.getIntegerSetting('setting1') == 1, 'Wrong value');
+
+} //*** end of "test_Miscellaneous"
 
 } //*** end of class

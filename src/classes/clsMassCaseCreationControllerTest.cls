@@ -27,6 +27,7 @@ private class clsMassCaseCreationControllerTest {
         clsMassCaseCreationController.cContact c = new clsMassCaseCreationController.cContact(New Contact());
     }
     
+    
     static testMethod void testMyController() {  
 
         //Use the PageReference Apex class to instantiate a page  
@@ -51,6 +52,8 @@ private class clsMassCaseCreationControllerTest {
         // Set some properties  
         controller.CaseParameter.Subject = 'hi';
         controller.CaseParameter.Financial_Review_Type__c = 'Annual';
+        
+        System.assertEquals(controller.CaseParameter.Financial_Review_Type__c, 'Annual');
         
         // 
         
@@ -174,7 +177,7 @@ private class clsMassCaseCreationControllerTest {
     
     
     static testMethod void testReinstatedAccountShouldBeExcluded() {  
-		//the runsearch() method should exclude all the contacts related to accounts having Reinstated_Date__c in the last 6 months.
+        //the runsearch() method should exclude all the contacts related to accounts having Reinstated_Date__c in the last 6 months.
         
         IATA_ISO_Country__c isoc = new IATA_ISO_Country__c(Name = 'Bahamas', ISO_Code__c = 'BS');
         insert isoc;
@@ -190,7 +193,7 @@ private class clsMassCaseCreationControllerTest {
                                  Fin_statements_submission_deadline__c = 'January',
                                  Location_Type__c = 'AO',
                                  Has_Financial_Review_Open_Cases__c = true
-		);
+        );
         Account a2 = new Account(Name='Account reinstated in last 6 months',
                                  IATACode__c = '22222222',
                                  BillingCountry = 'Bahamas',
@@ -201,7 +204,7 @@ private class clsMassCaseCreationControllerTest {
                                  Location_Type__c = 'AO',
                                  Has_Financial_Review_Open_Cases__c = true,
                                  Reinstated_Date__c = date.today().addMonths(-3)
-		);
+        );
         Account a3 = new Account(Name='Account reinstated 1 year ago',
                                  IATACode__c = '33333333',
                                  BillingCountry = 'Bahamas',
@@ -212,14 +215,14 @@ private class clsMassCaseCreationControllerTest {
                                  Location_Type__c = 'AO',
                                  Has_Financial_Review_Open_Cases__c = true,
                                  Reinstated_Date__c = date.today().addMonths(-12)
-		);
+        );
         insert new List<Account>{a1,a2,a3};
         
         
             
-        Contact c1 = new Contact(LastName='Contact 1 OK', Email='cont1@test.com',  Financial_Assessment_Contact__c = true, AccountId=a1.id);
-        Contact c2 = new Contact(LastName='Contact 2 NO', Email='cont2@test.com',  Financial_Assessment_Contact__c = true, AccountId=a2.id);
-        Contact c3 = new Contact(LastName='Contact 3 OK', Email='cont3@test.com',  Financial_Assessment_Contact__c = true, AccountId=a3.id);
+        Contact c1 = new Contact(FirstName = 'Name', LastName='Contact 1 OK', Email='cont1@test.com',  Financial_Assessment_Contact__c = true, AccountId=a1.id);
+        Contact c2 = new Contact(FirstName = 'Name', LastName='Contact 2 NO', Email='cont2@test.com',  Financial_Assessment_Contact__c = true, AccountId=a2.id);
+        Contact c3 = new Contact(FirstName = 'Name', LastName='Contact 3 OK', Email='cont3@test.com',  Financial_Assessment_Contact__c = true, AccountId=a3.id);
         insert new List<Contact>{c1,c2,c3};
 
      
@@ -254,4 +257,119 @@ private class clsMassCaseCreationControllerTest {
         system.assertEquals(2, controller.Contacts.size());
        
     } 
+    
+    
+    static testMethod void testMassCaseSendTrackedEmail() {  
+        //the runsearch() method should exclude all the contacts related to accounts having Reinstated_Date__c in the last 6 months.
+        
+        IATA_ISO_Country__c isoc = new IATA_ISO_Country__c(Name = 'Bahamas', ISO_Code__c = 'BS', AIMS_Area_ID__c = 'A', AIMS_Area_Name__c = 'A');
+        insert isoc;
+        
+        Account a1 = new Account(Name='Account NOT reinstated',
+                                 IATACode__c = '11111111',
+                                 BillingCountry = 'Bahamas',
+                                 Status__c = 'Approved',
+                                 IATA_ISO_Country__c = isoc.Id,
+                                 Type = 'IATA Passenger Sales Agent',
+                                 Fin_statements_submission_deadline__c = 'January',
+                                 Location_Type__c = 'AO',
+                                 Has_Financial_Review_Open_Cases__c = true
+        );
+        Account a2 = new Account(Name='Account reinstated in last 6 months',
+                                 IATACode__c = '22222222',
+                                 BillingCountry = 'Bahamas',
+                                 Status__c = 'Approved',
+                                 IATA_ISO_Country__c = isoc.Id,
+                                 Type = 'IATA Passenger Sales Agent',
+                                 Fin_statements_submission_deadline__c = 'January',
+                                 Location_Type__c = 'AO',
+                                 Has_Financial_Review_Open_Cases__c = true,
+                                 Reinstated_Date__c = date.today().addMonths(-3)
+        );
+        Account a3 = new Account(Name='Account reinstated 1 year ago',
+                                 IATACode__c = '33333333',
+                                 BillingCountry = 'Bahamas',
+                                 Status__c = 'Approved',
+                                 IATA_ISO_Country__c = isoc.Id,
+                                 Type = 'IATA Passenger Sales Agent',
+                                 Fin_statements_submission_deadline__c = 'January',
+                                 Location_Type__c = 'AO',
+                                 Has_Financial_Review_Open_Cases__c = true,
+                                 Reinstated_Date__c = date.today().addMonths(-12)
+        );
+        insert new List<Account>{a1,a2,a3};
+
+        Contact c1 = new Contact(FirstName='Name', LastName='Contact 1 OK', Email='cont1@test.com',  Financial_Assessment_Contact__c = true, AccountId=a1.id);
+        Contact c2 = new Contact(FirstName='Name', LastName='Contact 2 NO', Email='cont2@test.com',  Financial_Assessment_Contact__c = true, AccountId=a2.id);
+        Contact c3 = new Contact(FirstName='Name', LastName='Contact 3 OK', Email='cont3@test.com',  Financial_Assessment_Contact__c = true, AccountId=a3.id);
+        insert new List<Contact>{c1,c2,c3};
+     
+		Signaturit_Events_WS__c ws = new Signaturit_Events_WS__c(name = 'test', events_url__c = 'http://test.com', oauth_url__c = 'test');
+		insert ws;
+     
+        PageReference pageRef = Page.Mass_Case_Creation_Page;    
+        Test.setCurrentPage(pageRef);    
+        clsMassCaseCreationController controller = new clsMassCaseCreationController();  
+        
+        List<selectOption> FinancialReviewTypes = controller.lstFinReviewType;
+          
+        controller.CaseParameter.Subject = 'hi';
+        controller.CaseParameter.Financial_Review_Type__c = 'Annual';
+        
+        Apexpages.currentPage().getParameters().put('agenttype','IATA Cargo Agent-IATA Passenger Sales Agent');
+        Apexpages.currentPage().getParameters().put('targetFinancialYear','2015');
+        Apexpages.currentPage().getParameters().put('email','1');
+        Apexpages.currentPage().getParameters().put('exclClosedCases', 'false');
+        Apexpages.currentPage().getParameters().put('agentstatus','');
+        Apexpages.currentPage().getParameters().put('yearend','--All--');
+        Apexpages.currentPage().getParameters().put('exclOpenCases','false');
+        
+        EmailTemplate__c emailTemplate = new EmailTemplate__c(IATA_ISO_Country__c = isoc.Id);
+        insert emailTemplate;
+        
+        controller.IFAP_CanCreateWhileClosedCase = false;
+        
+        controller.CaseParameter.EmailTemplate__c = emailTemplate.Id;
+        controller.aISOCountry.IATA_ISO_Country__c = isoc.Id;
+        controller.CaseParameter.Deadline_Date__c = Date.today().addMonths(2);
+        controller.runSearch();
+        
+        for(clsMassCaseCreationController.cContact ccontact : controller.Contacts){
+            ccontact.selected = true;
+        }
+
+		EmailTemplate ifapTemplate = [select ID from EmailTemplate where DeveloperName = 'IFAP'][0];
+
+		Attachment att = new Attachment(
+			Name='Attachment 1',
+			Body = Blob.valueOf('Attachment 1 body'),
+			ParentId = ifapTemplate.Id
+		);
+        
+        insert att;
+
+        test.startTest();
+                
+        controller.MassCaseCreateSendTrackedEmail();
+        
+        List<SelectOption> ISOCountryName = controller.getISOCountryName();
+        String FinancialReviewType = controller.FinancialReviewType;
+        List<SelectOption> lstLanguage = controller.lstLanguage;
+        
+        Apexpages.currentPage().getParameters().put('agentstatus','test-test');
+        Apexpages.currentPage().getParameters().put('email','2');
+        Apexpages.currentPage().getParameters().put('yearend','2017');
+        Apexpages.currentPage().getParameters().put('exclOpenCases','true');
+        
+        Boolean agentWithClosedCaseSelected = controller.agentWithClosedCaseSelected;
+        
+        controller.runSearch();
+        
+        controller.first();
+        controller.last();
+        controller.next();
+        controller.previous();
+        
+       Test.stopTest();
+    }   
 }

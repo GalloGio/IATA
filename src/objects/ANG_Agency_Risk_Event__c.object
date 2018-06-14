@@ -1,0 +1,518 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomObject xmlns="http://soap.sforce.com/2006/04/metadata">
+    <actionOverrides>
+        <actionName>Accept</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>CancelEdit</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Clone</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Delete</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Edit</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>List</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>New</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>SaveEdit</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Tab</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>View</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <allowInChatterGroups>false</allowInChatterGroups>
+    <compactLayoutAssignment>SYSTEM</compactLayoutAssignment>
+    <deploymentStatus>Deployed</deploymentStatus>
+    <enableActivities>true</enableActivities>
+    <enableBulkApi>true</enableBulkApi>
+    <enableChangeDataCapture>false</enableChangeDataCapture>
+    <enableFeeds>false</enableFeeds>
+    <enableHistory>true</enableHistory>
+    <enableReports>true</enableReports>
+    <enableSearch>true</enableSearch>
+    <enableSharing>true</enableSharing>
+    <enableStreamingApi>true</enableStreamingApi>
+    <fieldSets>
+        <fullName>RelatedList</fullName>
+        <description>This is used on the Risk Event HIstory related list on the account layout</description>
+        <displayedFields>
+            <field>ANG_Name_Link_FF__c</field>
+            <isFieldManaged>false</isFieldManaged>
+            <isRequired>false</isRequired>
+        </displayedFields>
+        <displayedFields>
+            <field>ANG_Account_IATA_Code__c</field>
+            <isFieldManaged>false</isFieldManaged>
+            <isRequired>false</isRequired>
+        </displayedFields>
+        <displayedFields>
+            <field>ANG_Risk_Type__c</field>
+            <isFieldManaged>false</isFieldManaged>
+            <isRequired>false</isRequired>
+        </displayedFields>
+        <displayedFields>
+            <field>ANG_Issued_Date__c</field>
+            <isFieldManaged>false</isFieldManaged>
+            <isRequired>false</isRequired>
+        </displayedFields>
+        <displayedFields>
+            <field>ANG_Source__c</field>
+            <isFieldManaged>false</isFieldManaged>
+            <isRequired>false</isRequired>
+        </displayedFields>
+        <displayedFields>
+            <field>ANG_Expiration_Date__c</field>
+            <isFieldManaged>false</isFieldManaged>
+            <isRequired>false</isRequired>
+        </displayedFields>
+        <displayedFields>
+            <field>ANG_Event_Status__c</field>
+            <isFieldManaged>false</isFieldManaged>
+            <isRequired>false</isRequired>
+        </displayedFields>
+        <label>RelatedList</label>
+    </fieldSets>
+    <fields>
+        <fullName>ANG_AccountId__c</fullName>
+        <externalId>false</externalId>
+        <label>Account</label>
+        <referenceTo>Account</referenceTo>
+        <relationshipLabel>Risk Events at my location</relationshipLabel>
+        <relationshipName>Location_Risk_Events</relationshipName>
+        <relationshipOrder>0</relationshipOrder>
+        <reparentableMasterDetail>false</reparentableMasterDetail>
+        <trackHistory>true</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>MasterDetail</type>
+        <writeRequiresMasterRead>false</writeRequiresMasterRead>
+    </fields>
+    <fields>
+        <fullName>ANG_Account_IATA_Code__c</fullName>
+        <externalId>false</externalId>
+        <formula>ANG_AccountId__r.IATACode__c</formula>
+        <label>IATA Code</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>ANG_CaseId__c</fullName>
+        <deleteConstraint>SetNull</deleteConstraint>
+        <externalId>false</externalId>
+        <label>Source Case</label>
+        <referenceTo>Case</referenceTo>
+        <relationshipLabel>Risk Events</relationshipLabel>
+        <relationshipName>Risk_Events</relationshipName>
+        <required>false</required>
+        <trackHistory>true</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Lookup</type>
+    </fields>
+    <fields>
+        <fullName>ANG_Cash_Conditions_Activation_FF__c</fullName>
+        <externalId>false</externalId>
+        <formula>IF(ANG_Risk_ID__c == &apos;5&apos;,
+				IF(NOT(ISBLANK(TEXT(ANG_CaseId__r.Parent.Financial_Review_Result__c))),
+							null,
+							ANG_Cash_Conditions_Activation__c
+				),
+				ANG_Cash_Conditions_Activation__c
+)</formula>
+        <label>Cash Conditions Real Activation Date</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Date</type>
+    </fields>
+    <fields>
+        <fullName>ANG_Cash_Conditions_Activation__c</fullName>
+        <description>Day in which Limit Cash Conditions will be copied from Risk Event Type (only works from false to true). Activation will be controlled by a daily batch</description>
+        <externalId>false</externalId>
+        <label>Cash Conditions Activation Date</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Date</type>
+    </fields>
+    <fields>
+        <fullName>ANG_ChangeCode__c</fullName>
+        <deleteConstraint>SetNull</deleteConstraint>
+        <externalId>false</externalId>
+        <label>Source Change Code</label>
+        <referenceTo>Agency_Applied_Change_code__c</referenceTo>
+        <relationshipLabel>Risk Events</relationshipLabel>
+        <relationshipName>Risk_Events</relationshipName>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Lookup</type>
+    </fields>
+    <fields>
+        <fullName>ANG_Created_from__c</fullName>
+        <externalId>false</externalId>
+        <label>Created from</label>
+        <length>80</length>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>ANG_Event_Status__c</fullName>
+        <externalId>false</externalId>
+        <label>Event Status</label>
+        <required>false</required>
+        <trackHistory>true</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Picklist</type>
+        <valueSet>
+            <restricted>true</restricted>
+            <valueSetName>ANG_Event_Status</valueSetName>
+        </valueSet>
+    </fields>
+    <fields>
+        <fullName>ANG_Expiration_Date__c</fullName>
+        <externalId>false</externalId>
+        <label>Expiration Date</label>
+        <required>false</required>
+        <trackHistory>true</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Date</type>
+    </fields>
+    <fields>
+        <fullName>ANG_Expired__c</fullName>
+        <defaultValue>false</defaultValue>
+        <externalId>false</externalId>
+        <label>Expired</label>
+        <trackHistory>true</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
+        <fullName>ANG_HE_AccountId__c</fullName>
+        <deleteConstraint>SetNull</deleteConstraint>
+        <externalId>false</externalId>
+        <label>HE Account</label>
+        <referenceTo>Account</referenceTo>
+        <relationshipLabel>Risk Events at all locations</relationshipLabel>
+        <relationshipName>All_Risk_Events</relationshipName>
+        <required>false</required>
+        <trackHistory>true</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Lookup</type>
+    </fields>
+    <fields>
+        <fullName>ANG_Issued_Date__c</fullName>
+        <defaultValue>TODAY()</defaultValue>
+        <externalId>false</externalId>
+        <label>Issued Date</label>
+        <required>false</required>
+        <trackHistory>true</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Date</type>
+    </fields>
+    <fields>
+        <fullName>ANG_Limit_Cash_Conditions__c</fullName>
+        <defaultValue>false</defaultValue>
+        <description>Enforces Cash Conditions on account (previously set on Risk Event Type). Meaning if an account has one active risk event with Limit Cash Conditions, Cash Conditions will be true.</description>
+        <externalId>false</externalId>
+        <label>Limit Cash Conditions</label>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
+        <fullName>ANG_Manual__c</fullName>
+        <externalId>false</externalId>
+        <formula>ISBLANK(ANG_Created_from__c)</formula>
+        <label>Manual</label>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
+        <fullName>ANG_Name_Link_FF__c</fullName>
+        <externalId>false</externalId>
+        <formula>HYPERLINK(&apos;/&apos;+Id, Name)</formula>
+        <label>Name</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>ANG_OscarId__c</fullName>
+        <deleteConstraint>SetNull</deleteConstraint>
+        <externalId>false</externalId>
+        <label>Source OSCAR</label>
+        <referenceTo>AMS_OSCAR__c</referenceTo>
+        <relationshipLabel>Agency Risk Events</relationshipLabel>
+        <relationshipName>Risk_Events</relationshipName>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Lookup</type>
+    </fields>
+    <fields>
+        <fullName>ANG_Remarks__c</fullName>
+        <description>Holds extra information provided by Supervisors and Admins</description>
+        <externalId>false</externalId>
+        <label>Remarks</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>TextArea</type>
+    </fields>
+    <fields>
+        <fullName>ANG_Risk_Configuration__c</fullName>
+        <deleteConstraint>SetNull</deleteConstraint>
+        <description>Technical Use: indicates the Id of the Risk Event Configuration that triggered the creation of the Risk Event.</description>
+        <externalId>false</externalId>
+        <label>Configuration</label>
+        <referenceTo>ANG_Risk_Event_Configuration__c</referenceTo>
+        <relationshipLabel>Agency Risk Events</relationshipLabel>
+        <relationshipName>ANG_Risk_Events</relationshipName>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Lookup</type>
+    </fields>
+    <fields>
+        <fullName>ANG_Risk_ID__c</fullName>
+        <externalId>false</externalId>
+        <formula>ANG_Risk_Type__r.ANG_Risk_ID__c</formula>
+        <label>Type ID</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>ANG_Risk_Type__c</fullName>
+        <deleteConstraint>Restrict</deleteConstraint>
+        <externalId>false</externalId>
+        <label>Type</label>
+        <referenceTo>ANG_Risk_Event_Type__c</referenceTo>
+        <relationshipLabel>Risk Events</relationshipLabel>
+        <relationshipName>Risk_Events</relationshipName>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Lookup</type>
+    </fields>
+    <fields>
+        <fullName>ANG_Source_Id__c</fullName>
+        <description>Shows the Id of the source object or the id of the record itself if no source object is used. This field is used by the ANG_RiskEventGenerator to populate the Unique Key</description>
+        <externalId>false</externalId>
+        <formula>IF(NOT(ISBLANK(ANG_CaseId__c)), ANG_CaseId__c,
+IF(NOT(ISBLANK(ANG_ChangeCode__c)), ANG_ChangeCode__c,
+IF(NOT(ISBLANK(ANG_OscarId__c)), ANG_OscarId__c,
+Id
+)))</formula>
+        <label>Source Id</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>ANG_Source__c</fullName>
+        <externalId>false</externalId>
+        <formula>IF(NOT(ISBLANK(ANG_CaseId__c)),
+  HYPERLINK(&apos;/&apos;+ANG_CaseId__c,ANG_CaseId__r.CaseNumber),
+  IF(ANG_Manual__c,
+      &apos;Manual&apos;,
+      &apos;Migrated&apos;)
+)</formula>
+        <label>Source</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>ANG_TargetAgency__c</fullName>
+        <description>Technical field: reflects the Target Agency of the Configuration. Used to avoid a query on triggers</description>
+        <externalId>false</externalId>
+        <formula>TEXT(ANG_Risk_Configuration__r.ANG_TargetAgency__c)</formula>
+        <label>Target Agency</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>ANG_UniqueKey__c</fullName>
+        <caseSensitive>false</caseSensitive>
+        <description>This field is populated by the ANG_RiskEventGenerator.loadInitialInformation() method (called on the before trigger).</description>
+        <externalId>true</externalId>
+        <label>Unique Key</label>
+        <length>40</length>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>true</unique>
+    </fields>
+    <fields>
+        <fullName>ANG_expiration_date_ff__c</fullName>
+        <externalId>false</externalId>
+        <formula>ANG_Expiration_Date__c</formula>
+        <label>Expiration Date</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Date</type>
+    </fields>
+    <fields>
+        <fullName>ANG_isCashlessAgency__c</fullName>
+        <externalId>false</externalId>
+        <formula>ISPICKVAL(ANG_AccountId__r.ANG_Accreditation_Model__c,&apos;Cashless&apos;)</formula>
+        <label>Is Cashless Agency</label>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Checkbox</type>
+    </fields>
+    <label>Agency Risk Event</label>
+    <listViews>
+        <fullName>All</fullName>
+        <filterScope>Everything</filterScope>
+        <label>All</label>
+    </listViews>
+    <nameField>
+        <displayFormat>RE-{00000000}</displayFormat>
+        <label>Name</label>
+        <trackHistory>false</trackHistory>
+        <type>AutoNumber</type>
+    </nameField>
+    <pluralLabel>Agency Risk Events</pluralLabel>
+    <recordTypeTrackHistory>false</recordTypeTrackHistory>
+    <recordTypes>
+        <fullName>RISK_EVENT</fullName>
+        <active>true</active>
+        <label>Risk Event</label>
+        <picklistValues>
+            <picklist>ANG_Event_Status__c</picklist>
+            <values>
+                <fullName>Active</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Inactive</fullName>
+                <default>true</default>
+            </values>
+            <values>
+                <fullName>Inactive_CHO</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Inactive_Cashless</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Inactive_Migrated</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Inactive_Revoked</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Inactive_TER</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Inactive_Withdrawn</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+    </recordTypes>
+    <searchLayouts>
+        <excludedStandardButtons>New</excludedStandardButtons>
+        <excludedStandardButtons>Accept</excludedStandardButtons>
+        <excludedStandardButtons>ChangeOwner</excludedStandardButtons>
+        <excludedStandardButtons>Forward</excludedStandardButtons>
+        <lookupDialogsAdditionalFields>ANG_AccountId__c</lookupDialogsAdditionalFields>
+        <lookupDialogsAdditionalFields>ANG_Risk_Type__c</lookupDialogsAdditionalFields>
+        <lookupDialogsAdditionalFields>ANG_Risk_ID__c</lookupDialogsAdditionalFields>
+        <lookupDialogsAdditionalFields>ANG_Issued_Date__c</lookupDialogsAdditionalFields>
+        <lookupDialogsAdditionalFields>ANG_Source__c</lookupDialogsAdditionalFields>
+        <lookupDialogsAdditionalFields>ANG_Expiration_Date__c</lookupDialogsAdditionalFields>
+        <lookupDialogsAdditionalFields>ANG_Expired__c</lookupDialogsAdditionalFields>
+        <searchFilterFields>NAME</searchFilterFields>
+        <searchFilterFields>ANG_AccountId__c</searchFilterFields>
+        <searchFilterFields>ANG_Source__c</searchFilterFields>
+        <searchFilterFields>ANG_Issued_Date__c</searchFilterFields>
+        <searchFilterFields>ANG_Expiration_Date__c</searchFilterFields>
+        <searchFilterFields>ANG_Expired__c</searchFilterFields>
+    </searchLayouts>
+    <sharingModel>ControlledByParent</sharingModel>
+    <startsWith>Vowel</startsWith>
+    <validationRules>
+        <fullName>Prevent_RE_in_Not_Accreditated_Agencies</fullName>
+        <active>true</active>
+        <errorConditionFormula>ANG_Manual__c &amp;&amp; ANG_AccountId__r.RecordType.DeveloperName!=&apos;IATA_Agency&apos;</errorConditionFormula>
+        <errorMessage>You can only create risk events for Accredited Agencies</errorMessage>
+    </validationRules>
+    <validationRules>
+        <fullName>Prevent_users_from_changing_issued_date</fullName>
+        <active>true</active>
+        <description>Prevent users from changing RE&apos;s issue date if the event status is &quot;Active&quot; or &quot;Inactive_Withdrawn&quot; or &quot;Inactive_Revoked&quot; or if RE is &quot;Inactive&quot; and has Expired= true</description>
+        <errorConditionFormula>ISCHANGED( ANG_Issued_Date__c )&amp;&amp;( 
+ISPICKVAL(PRIORVALUE(ANG_Event_Status__c),&apos;Active&apos; )|| 
+ISPICKVAL(PRIORVALUE(ANG_Event_Status__c),&apos;Inactive_Withdrawn&apos;)|| 
+ISPICKVAL(PRIORVALUE(ANG_Event_Status__c),&apos;Inactive_Revoked&apos;)|| 
+(ISPICKVAL(PRIORVALUE(ANG_Event_Status__c),&apos;Inactive&apos;)&amp;&amp; 
+PRIORVALUE(ANG_Expired__c)))</errorConditionFormula>
+        <errorDisplayField>ANG_Issued_Date__c</errorDisplayField>
+        <errorMessage>You can only change the Issue Date on Risk Events Pending Activation</errorMessage>
+    </validationRules>
+    <validationRules>
+        <fullName>Prevent_users_from_updating_RE_Type</fullName>
+        <active>true</active>
+        <description>Prevent users from changing the Risk Event Type after inserted</description>
+        <errorConditionFormula>!ISNEW() &amp;&amp; ISCHANGED( ANG_Risk_Type__c )</errorConditionFormula>
+        <errorDisplayField>ANG_Risk_Type__c</errorDisplayField>
+        <errorMessage>You can&apos;t change the Risk Event Type</errorMessage>
+    </validationRules>
+    <validationRules>
+        <fullName>Unique_Source_Validation</fullName>
+        <active>false</active>
+        <description>Only one source field can be filled</description>
+        <errorConditionFormula>(
+  IF(NOT(ISBLANK(ANG_CaseId__c)) , 1, 0) +
+  IF(NOT(ISBLANK(ANG_ChangeCode__c)) , 1, 0) +
+  IF(NOT(ISBLANK(ANG_OscarId__c)) , 1, 0)
+) &gt; 1</errorConditionFormula>
+        <errorMessage>Please, fill only one of the source fields</errorMessage>
+    </validationRules>
+    <visibility>Public</visibility>
+</CustomObject>

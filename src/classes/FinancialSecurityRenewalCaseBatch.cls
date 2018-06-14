@@ -3,7 +3,9 @@ global class FinancialSecurityRenewalCaseBatch implements Database.Batchable<sOb
 	global List<Financial_Security__c> start(Database.BatchableContext BC) {
 
 		List<Financial_Security__c> fslist = [SELECT Id, Security_Status__c FROM Financial_Security__c WHERE
-		                                      Days_to_Expiry_date__c <= 75 AND Security_Status__c = 'Active' AND Expiry_Date__c != null];
+		                                      ((Days_to_Expiry_date__c <= 75 AND Account__r.CNS_Agency__c != true) 
+		                                      OR (Days_to_Expiry_date__c <= 90 AND Account__r.CNS_Agency__c = true))
+		                                      AND Security_Status__c = 'Active' AND Expiry_Date__c != null];
 		return fslist;
 	}
 

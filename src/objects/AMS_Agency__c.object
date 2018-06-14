@@ -21,10 +21,6 @@
         <type>Default</type>
     </actionOverrides>
     <actionOverrides>
-        <actionName>Follow</actionName>
-        <type>Default</type>
-    </actionOverrides>
-    <actionOverrides>
         <actionName>List</actionName>
         <type>Default</type>
     </actionOverrides>
@@ -49,6 +45,7 @@
     <deploymentStatus>Deployed</deploymentStatus>
     <enableActivities>true</enableActivities>
     <enableBulkApi>true</enableBulkApi>
+    <enableChangeDataCapture>false</enableChangeDataCapture>
     <enableFeeds>false</enableFeeds>
     <enableHistory>true</enableHistory>
     <enableReports>false</enableReports>
@@ -128,57 +125,70 @@
         <fullName>Agency_Status__c</fullName>
         <externalId>false</externalId>
         <label>Agency Status</label>
-        <picklist>
-            <picklistValues>
-                <fullName>Accredited</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Cash basis/no commission</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Cash basis/with commission</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Changes processed</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Listed</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>New application pending</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Not accreditated</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Not in operation</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Terminated</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Under review</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>No longer a customer</fullName>
-                <default>false</default>
-            </picklistValues>
-            <sorted>false</sorted>
-        </picklist>
         <required>false</required>
         <trackHistory>true</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Picklist</type>
+        <valueSet>
+            <valueSetDefinition>
+                <sorted>false</sorted>
+                <value>
+                    <fullName>Accredited</fullName>
+                    <default>false</default>
+                    <label>Accredited</label>
+                </value>
+                <value>
+                    <fullName>Cash basis/no commission</fullName>
+                    <default>false</default>
+                    <label>Cash basis/no commission</label>
+                </value>
+                <value>
+                    <fullName>Cash basis/with commission</fullName>
+                    <default>false</default>
+                    <label>Cash basis/with commission</label>
+                </value>
+                <value>
+                    <fullName>Changes processed</fullName>
+                    <default>false</default>
+                    <label>Changes processed</label>
+                </value>
+                <value>
+                    <fullName>Listed</fullName>
+                    <default>false</default>
+                    <label>Listed</label>
+                </value>
+                <value>
+                    <fullName>New application pending</fullName>
+                    <default>false</default>
+                    <label>New application pending</label>
+                </value>
+                <value>
+                    <fullName>Not accreditated</fullName>
+                    <default>false</default>
+                    <label>Not accreditated</label>
+                </value>
+                <value>
+                    <fullName>Not in operation</fullName>
+                    <default>false</default>
+                    <label>Not in operation</label>
+                </value>
+                <value>
+                    <fullName>Terminated</fullName>
+                    <default>false</default>
+                    <label>Terminated</label>
+                </value>
+                <value>
+                    <fullName>Under review</fullName>
+                    <default>false</default>
+                    <label>Under review</label>
+                </value>
+                <value>
+                    <fullName>No longer a customer</fullName>
+                    <default>false</default>
+                    <label>No longer a customer</label>
+                </value>
+            </valueSetDefinition>
+        </valueSet>
     </fields>
     <fields>
         <fullName>Agent_under_economic_sanction__c</fullName>
@@ -270,49 +280,60 @@ S - Sole Proprietorship
 T - Trust Company
 V - Co-operative</inlineHelpText>
         <label>Company Type</label>
-        <picklist>
-            <picklistValues>
-                <fullName>A</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>C</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>E</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>O</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>P</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>R</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>S</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>T</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>V</fullName>
-                <default>false</default>
-            </picklistValues>
-            <sorted>false</sorted>
-        </picklist>
         <required>false</required>
         <trackHistory>true</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Picklist</type>
+        <valueSet>
+            <valueSetDefinition>
+                <sorted>false</sorted>
+                <value>
+                    <fullName>A</fullName>
+                    <default>false</default>
+                    <label>A</label>
+                </value>
+                <value>
+                    <fullName>C</fullName>
+                    <default>false</default>
+                    <label>C</label>
+                </value>
+                <value>
+                    <fullName>E</fullName>
+                    <default>false</default>
+                    <label>E</label>
+                </value>
+                <value>
+                    <fullName>O</fullName>
+                    <default>false</default>
+                    <label>O</label>
+                </value>
+                <value>
+                    <fullName>P</fullName>
+                    <default>false</default>
+                    <label>P</label>
+                </value>
+                <value>
+                    <fullName>R</fullName>
+                    <default>false</default>
+                    <label>R</label>
+                </value>
+                <value>
+                    <fullName>S</fullName>
+                    <default>false</default>
+                    <label>S</label>
+                </value>
+                <value>
+                    <fullName>T</fullName>
+                    <default>false</default>
+                    <label>T</label>
+                </value>
+                <value>
+                    <fullName>V</fullName>
+                    <default>false</default>
+                    <label>V</label>
+                </value>
+            </valueSetDefinition>
+        </valueSet>
     </fields>
     <fields>
         <fullName>Country__c</fullName>
@@ -344,61 +365,75 @@ V - Co-operative</inlineHelpText>
         <fullName>Financial_Year_End__c</fullName>
         <externalId>false</externalId>
         <label>Financial Year End</label>
-        <picklist>
-            <picklistValues>
-                <fullName>January</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>February</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>March</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>April</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>May</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>June</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>July</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>August</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>September</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>October</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>November</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>December</fullName>
-                <default>false</default>
-            </picklistValues>
-            <sorted>false</sorted>
-        </picklist>
         <required>false</required>
         <trackHistory>false</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Picklist</type>
+        <valueSet>
+            <valueSetDefinition>
+                <sorted>false</sorted>
+                <value>
+                    <fullName>January</fullName>
+                    <default>false</default>
+                    <label>January</label>
+                </value>
+                <value>
+                    <fullName>February</fullName>
+                    <default>false</default>
+                    <label>February</label>
+                </value>
+                <value>
+                    <fullName>March</fullName>
+                    <default>false</default>
+                    <label>March</label>
+                </value>
+                <value>
+                    <fullName>April</fullName>
+                    <default>false</default>
+                    <label>April</label>
+                </value>
+                <value>
+                    <fullName>May</fullName>
+                    <default>false</default>
+                    <label>May</label>
+                </value>
+                <value>
+                    <fullName>June</fullName>
+                    <default>false</default>
+                    <label>June</label>
+                </value>
+                <value>
+                    <fullName>July</fullName>
+                    <default>false</default>
+                    <label>July</label>
+                </value>
+                <value>
+                    <fullName>August</fullName>
+                    <default>false</default>
+                    <label>August</label>
+                </value>
+                <value>
+                    <fullName>September</fullName>
+                    <default>false</default>
+                    <label>September</label>
+                </value>
+                <value>
+                    <fullName>October</fullName>
+                    <default>false</default>
+                    <label>October</label>
+                </value>
+                <value>
+                    <fullName>November</fullName>
+                    <default>false</default>
+                    <label>November</label>
+                </value>
+                <value>
+                    <fullName>December</fullName>
+                    <default>false</default>
+                    <label>December</label>
+                </value>
+            </valueSetDefinition>
+        </valueSet>
     </fields>
     <fields>
         <fullName>Full_IATA_Code__c</fullName>
@@ -449,81 +484,100 @@ TOPAS-Topas
 UALA-Apollo
 WSPN-Worldspan</inlineHelpText>
         <label>GDS</label>
-        <picklist>
-            <picklistValues>
-                <fullName>ABAC</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>AGTD</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>AXSS</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>CMAS</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>DERD</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>FLGX</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>GDSL</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>INFI</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>KOTI</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>MINS</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>RESI</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>SABR</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>SITA</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>STRA</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>TOPAS</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>UALA</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>WSPN</fullName>
-                <default>false</default>
-            </picklistValues>
-            <sorted>false</sorted>
-        </picklist>
         <required>false</required>
         <trackHistory>true</trackHistory>
         <trackTrending>false</trackTrending>
         <type>MultiselectPicklist</type>
+        <valueSet>
+            <valueSetDefinition>
+                <sorted>false</sorted>
+                <value>
+                    <fullName>ABAC</fullName>
+                    <default>false</default>
+                    <label>ABAC</label>
+                </value>
+                <value>
+                    <fullName>AGTD</fullName>
+                    <default>false</default>
+                    <label>AGTD</label>
+                </value>
+                <value>
+                    <fullName>AXSS</fullName>
+                    <default>false</default>
+                    <label>AXSS</label>
+                </value>
+                <value>
+                    <fullName>CMAS</fullName>
+                    <default>false</default>
+                    <label>CMAS</label>
+                </value>
+                <value>
+                    <fullName>DERD</fullName>
+                    <default>false</default>
+                    <label>DERD</label>
+                </value>
+                <value>
+                    <fullName>FLGX</fullName>
+                    <default>false</default>
+                    <label>FLGX</label>
+                </value>
+                <value>
+                    <fullName>GDSL</fullName>
+                    <default>false</default>
+                    <label>GDSL</label>
+                </value>
+                <value>
+                    <fullName>INFI</fullName>
+                    <default>false</default>
+                    <label>INFI</label>
+                </value>
+                <value>
+                    <fullName>KOTI</fullName>
+                    <default>false</default>
+                    <label>KOTI</label>
+                </value>
+                <value>
+                    <fullName>MINS</fullName>
+                    <default>false</default>
+                    <label>MINS</label>
+                </value>
+                <value>
+                    <fullName>RESI</fullName>
+                    <default>false</default>
+                    <label>RESI</label>
+                </value>
+                <value>
+                    <fullName>SABR</fullName>
+                    <default>false</default>
+                    <label>SABR</label>
+                </value>
+                <value>
+                    <fullName>SITA</fullName>
+                    <default>false</default>
+                    <label>SITA</label>
+                </value>
+                <value>
+                    <fullName>STRA</fullName>
+                    <default>false</default>
+                    <label>STRA</label>
+                </value>
+                <value>
+                    <fullName>TOPAS</fullName>
+                    <default>false</default>
+                    <label>TOPAS</label>
+                </value>
+                <value>
+                    <fullName>UALA</fullName>
+                    <default>false</default>
+                    <label>UALA</label>
+                </value>
+                <value>
+                    <fullName>WSPN</fullName>
+                    <default>false</default>
+                    <label>WSPN</label>
+                </value>
+            </valueSetDefinition>
+        </valueSet>
         <visibleLines>5</visibleLines>
     </fields>
     <fields>
@@ -632,29 +686,35 @@ AND ( ISBLANK(Account__r.Abbreviated_name__c) ,NOT(ISBLANK(Abbreviated_name__c))
         <fullName>Legacy_System__c</fullName>
         <externalId>false</externalId>
         <label>Legacy System</label>
-        <picklist>
-            <picklistValues>
-                <fullName>AIMS</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>CAIMS</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>WEBSTAR</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>CNS</fullName>
-                <default>false</default>
-            </picklistValues>
-            <sorted>false</sorted>
-        </picklist>
         <required>false</required>
         <trackHistory>true</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Picklist</type>
+        <valueSet>
+            <valueSetDefinition>
+                <sorted>false</sorted>
+                <value>
+                    <fullName>AIMS</fullName>
+                    <default>false</default>
+                    <label>AIMS</label>
+                </value>
+                <value>
+                    <fullName>CAIMS</fullName>
+                    <default>false</default>
+                    <label>CAIMS</label>
+                </value>
+                <value>
+                    <fullName>WEBSTAR</fullName>
+                    <default>false</default>
+                    <label>WEBSTAR</label>
+                </value>
+                <value>
+                    <fullName>CNS</fullName>
+                    <default>false</default>
+                    <label>CNS</label>
+                </value>
+            </valueSetDefinition>
+        </valueSet>
     </fields>
     <fields>
         <fullName>Legal_Name_1__c</fullName>
@@ -740,157 +800,195 @@ TP=THIRD PARTY WAREHOUSE
 WS=DIRECT WEB SALES AGENT</description>
         <externalId>false</externalId>
         <label>Location Category</label>
-        <picklist>
-            <picklistValues>
-                <fullName>AL</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>AR</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>AS</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>AT</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>CL</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>CT</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>DA</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>DO</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>EA</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>ET</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>GS</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>HA</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>HS</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>IB</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>IC</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>IL</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>IP</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>IS</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>JJ</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>MB</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>MP</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>NA</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>NC</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>ND</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>NI</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>OL</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>OS</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>RA</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>RG</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>RS</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>SL</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>SO</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>TF</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>TO</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>TP</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>WS</fullName>
-                <default>false</default>
-            </picklistValues>
-            <sorted>true</sorted>
-        </picklist>
         <required>false</required>
         <trackHistory>true</trackHistory>
         <trackTrending>false</trackTrending>
         <type>MultiselectPicklist</type>
+        <valueSet>
+            <valueSetDefinition>
+                <sorted>true</sorted>
+                <value>
+                    <fullName>AL</fullName>
+                    <default>false</default>
+                    <label>AL</label>
+                </value>
+                <value>
+                    <fullName>AR</fullName>
+                    <default>false</default>
+                    <label>AR</label>
+                </value>
+                <value>
+                    <fullName>AS</fullName>
+                    <default>false</default>
+                    <label>AS</label>
+                </value>
+                <value>
+                    <fullName>AT</fullName>
+                    <default>false</default>
+                    <label>AT</label>
+                </value>
+                <value>
+                    <fullName>CL</fullName>
+                    <default>false</default>
+                    <label>CL</label>
+                </value>
+                <value>
+                    <fullName>CT</fullName>
+                    <default>false</default>
+                    <label>CT</label>
+                </value>
+                <value>
+                    <fullName>DA</fullName>
+                    <default>false</default>
+                    <label>DA</label>
+                </value>
+                <value>
+                    <fullName>DO</fullName>
+                    <default>false</default>
+                    <label>DO</label>
+                </value>
+                <value>
+                    <fullName>EA</fullName>
+                    <default>false</default>
+                    <label>EA</label>
+                </value>
+                <value>
+                    <fullName>ET</fullName>
+                    <default>false</default>
+                    <label>ET</label>
+                </value>
+                <value>
+                    <fullName>GS</fullName>
+                    <default>false</default>
+                    <label>GS</label>
+                </value>
+                <value>
+                    <fullName>HA</fullName>
+                    <default>false</default>
+                    <label>HA</label>
+                </value>
+                <value>
+                    <fullName>HS</fullName>
+                    <default>false</default>
+                    <label>HS</label>
+                </value>
+                <value>
+                    <fullName>IB</fullName>
+                    <default>false</default>
+                    <label>IB</label>
+                </value>
+                <value>
+                    <fullName>IC</fullName>
+                    <default>false</default>
+                    <label>IC</label>
+                </value>
+                <value>
+                    <fullName>IL</fullName>
+                    <default>false</default>
+                    <label>IL</label>
+                </value>
+                <value>
+                    <fullName>IP</fullName>
+                    <default>false</default>
+                    <label>IP</label>
+                </value>
+                <value>
+                    <fullName>IS</fullName>
+                    <default>false</default>
+                    <label>IS</label>
+                </value>
+                <value>
+                    <fullName>JJ</fullName>
+                    <default>false</default>
+                    <label>JJ</label>
+                </value>
+                <value>
+                    <fullName>MB</fullName>
+                    <default>false</default>
+                    <label>MB</label>
+                </value>
+                <value>
+                    <fullName>MP</fullName>
+                    <default>false</default>
+                    <label>MP</label>
+                </value>
+                <value>
+                    <fullName>NA</fullName>
+                    <default>false</default>
+                    <label>NA</label>
+                </value>
+                <value>
+                    <fullName>NC</fullName>
+                    <default>false</default>
+                    <label>NC</label>
+                </value>
+                <value>
+                    <fullName>ND</fullName>
+                    <default>false</default>
+                    <label>ND</label>
+                </value>
+                <value>
+                    <fullName>NI</fullName>
+                    <default>false</default>
+                    <label>NI</label>
+                </value>
+                <value>
+                    <fullName>OL</fullName>
+                    <default>false</default>
+                    <label>OL</label>
+                </value>
+                <value>
+                    <fullName>OS</fullName>
+                    <default>false</default>
+                    <label>OS</label>
+                </value>
+                <value>
+                    <fullName>RA</fullName>
+                    <default>false</default>
+                    <label>RA</label>
+                </value>
+                <value>
+                    <fullName>RG</fullName>
+                    <default>false</default>
+                    <label>RG</label>
+                </value>
+                <value>
+                    <fullName>RS</fullName>
+                    <default>false</default>
+                    <label>RS</label>
+                </value>
+                <value>
+                    <fullName>SL</fullName>
+                    <default>false</default>
+                    <label>SL</label>
+                </value>
+                <value>
+                    <fullName>SO</fullName>
+                    <default>false</default>
+                    <label>SO</label>
+                </value>
+                <value>
+                    <fullName>TF</fullName>
+                    <default>false</default>
+                    <label>TF</label>
+                </value>
+                <value>
+                    <fullName>TO</fullName>
+                    <default>false</default>
+                    <label>TO</label>
+                </value>
+                <value>
+                    <fullName>TP</fullName>
+                    <default>false</default>
+                    <label>TP</label>
+                </value>
+                <value>
+                    <fullName>WS</fullName>
+                    <default>false</default>
+                    <label>WS</label>
+                </value>
+            </valueSetDefinition>
+        </valueSet>
         <visibleLines>4</visibleLines>
     </fields>
     <fields>
@@ -911,65 +1009,80 @@ T-TIDS
 V-Travel Service Intermediaries-TSI (USA Only) 
 X-Handling Agents and Shipping Lines</inlineHelpText>
         <label>Location Class</label>
-        <picklist>
-            <picklistValues>
-                <fullName>C</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>D</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>E</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>G</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>K</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>M</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>N</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>O</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>P</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>S</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>T</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>V</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>X</fullName>
-                <default>false</default>
-            </picklistValues>
-            <sorted>false</sorted>
-        </picklist>
         <required>false</required>
         <trackHistory>true</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Picklist</type>
+        <valueSet>
+            <valueSetDefinition>
+                <sorted>false</sorted>
+                <value>
+                    <fullName>C</fullName>
+                    <default>false</default>
+                    <label>C</label>
+                </value>
+                <value>
+                    <fullName>D</fullName>
+                    <default>false</default>
+                    <label>D</label>
+                </value>
+                <value>
+                    <fullName>E</fullName>
+                    <default>false</default>
+                    <label>E</label>
+                </value>
+                <value>
+                    <fullName>G</fullName>
+                    <default>false</default>
+                    <label>G</label>
+                </value>
+                <value>
+                    <fullName>K</fullName>
+                    <default>false</default>
+                    <label>K</label>
+                </value>
+                <value>
+                    <fullName>M</fullName>
+                    <default>false</default>
+                    <label>M</label>
+                </value>
+                <value>
+                    <fullName>N</fullName>
+                    <default>false</default>
+                    <label>N</label>
+                </value>
+                <value>
+                    <fullName>O</fullName>
+                    <default>false</default>
+                    <label>O</label>
+                </value>
+                <value>
+                    <fullName>P</fullName>
+                    <default>false</default>
+                    <label>P</label>
+                </value>
+                <value>
+                    <fullName>S</fullName>
+                    <default>false</default>
+                    <label>S</label>
+                </value>
+                <value>
+                    <fullName>T</fullName>
+                    <default>false</default>
+                    <label>T</label>
+                </value>
+                <value>
+                    <fullName>V</fullName>
+                    <default>false</default>
+                    <label>V</label>
+                </value>
+                <value>
+                    <fullName>X</fullName>
+                    <default>false</default>
+                    <label>X</label>
+                </value>
+            </valueSetDefinition>
+        </valueSet>
     </fields>
     <fields>
         <fullName>N_Code__c</fullName>
@@ -1132,69 +1245,85 @@ X-Handling Agents and Shipping Lines</inlineHelpText>
         <externalId>false</externalId>
         <inlineHelpText>AO=Admin. Off;BR=Branch Off;CS=Cargo Sales Off;EB=ERSP Branch;EP=ERSP Parent;ES=European STP;ET=ERSP linked to TID;HO=Head off;SA=Specific Sales Activity;SE=Special Event;SP=Service Provider;ST=Satellite Ticket Printer;TD=Ticket Delivery Off;WH=Warehouse</inlineHelpText>
         <label>Site Type</label>
-        <picklist>
-            <picklistValues>
-                <fullName>AO</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>BR</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>CS</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>EB</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>EP</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>ES</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>ET</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>HO</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>SA</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>SE</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>SP</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>ST</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>TD</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>WH</fullName>
-                <default>false</default>
-            </picklistValues>
-            <sorted>false</sorted>
-        </picklist>
         <required>false</required>
         <trackHistory>true</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Picklist</type>
+        <valueSet>
+            <valueSetDefinition>
+                <sorted>false</sorted>
+                <value>
+                    <fullName>AO</fullName>
+                    <default>false</default>
+                    <label>AO</label>
+                </value>
+                <value>
+                    <fullName>BR</fullName>
+                    <default>false</default>
+                    <label>BR</label>
+                </value>
+                <value>
+                    <fullName>CS</fullName>
+                    <default>false</default>
+                    <label>CS</label>
+                </value>
+                <value>
+                    <fullName>EB</fullName>
+                    <default>false</default>
+                    <label>EB</label>
+                </value>
+                <value>
+                    <fullName>EP</fullName>
+                    <default>false</default>
+                    <label>EP</label>
+                </value>
+                <value>
+                    <fullName>ES</fullName>
+                    <default>false</default>
+                    <label>ES</label>
+                </value>
+                <value>
+                    <fullName>ET</fullName>
+                    <default>false</default>
+                    <label>ET</label>
+                </value>
+                <value>
+                    <fullName>HO</fullName>
+                    <default>false</default>
+                    <label>HO</label>
+                </value>
+                <value>
+                    <fullName>SA</fullName>
+                    <default>false</default>
+                    <label>SA</label>
+                </value>
+                <value>
+                    <fullName>SE</fullName>
+                    <default>false</default>
+                    <label>SE</label>
+                </value>
+                <value>
+                    <fullName>SP</fullName>
+                    <default>false</default>
+                    <label>SP</label>
+                </value>
+                <value>
+                    <fullName>ST</fullName>
+                    <default>false</default>
+                    <label>ST</label>
+                </value>
+                <value>
+                    <fullName>TD</fullName>
+                    <default>false</default>
+                    <label>TD</label>
+                </value>
+                <value>
+                    <fullName>WH</fullName>
+                    <default>false</default>
+                    <label>WH</label>
+                </value>
+            </valueSetDefinition>
+        </valueSet>
     </fields>
     <fields>
         <fullName>Solicitation_Flag__c</fullName>
@@ -2169,6 +2298,7 @@ X-Handling Agents and Shipping Lines</inlineHelpText>
         <description>Abbreviated name length - 30 Chars to Passenger Agencies and 60 chars to Cargo Agencies</description>
         <errorConditionFormula>AND( RecordType.Name = &apos;PASSENGER&apos; ,  LEN( Abbreviated_name__c) &gt; 30 )</errorConditionFormula>
         <errorDisplayField>Abbreviated_name__c</errorDisplayField>
-        <errorMessage>Max of 30 Chars to Passenger Agencies</errorMessage>
+        <errorMessage>Abbreviated Name of the Agency has more than 30Chars, 30 is the maximum length.</errorMessage>
     </validationRules>
+    <visibility>Public</visibility>
 </CustomObject>

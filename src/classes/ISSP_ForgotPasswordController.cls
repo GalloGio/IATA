@@ -3,6 +3,12 @@ public with sharing class ISSP_ForgotPasswordController {
 	public string lang{get
     {
         string t = '';
+        //CNS only in english
+        if(communityName=='CNS'){
+            t = 'en_US';
+            system.debug('CNS comm LANG: ' + t);
+          }
+          else{
         Cookie coo = ApexPages.currentPage().getCookies().get('lang');
         if(coo != null){
             t = string.valueOf(coo.getValue());
@@ -32,6 +38,7 @@ public with sharing class ISSP_ForgotPasswordController {
 				system.debug('NO BRWOSER LANG: ' + t);
         	}
         }
+        }   
         return t;
     }set;}
 	
@@ -44,6 +51,11 @@ public with sharing class ISSP_ForgotPasswordController {
 	public Boolean emailSent {get; set;}
 	public list<String> errorMessage {get; set;}
 	string generalError =  Label.ISSP_Registration_generalError;
+  //new CNS
+  public String communityName{
+    get{      
+      return ApexPages.currentPage().getParameters().get('CommunityName');
+    }set;}
 	
     /**
      * Constructor

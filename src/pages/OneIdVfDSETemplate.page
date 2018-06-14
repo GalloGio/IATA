@@ -1,0 +1,82 @@
+<apex:page showHeader="false" standardStylesheets="false" sidebar="false" applyHtmlTag="false" applyBodyTag="false" docType="html-5.0" controller="OneIdVfDSEController">
+
+    <html xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+
+    <apex:includeLightning />
+    <head>
+
+
+        <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
+        <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+        <!--[if lt IE 9]>
+        <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
+        <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+        <![endif]-->
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+        <meta http-equiv="x-ua-compatible" content="ie=edge" />
+        <meta name="viewport" content="width=device-width, initial-scale=1" />
+
+        <title>IATA</title>
+        <link rel="icon" type="image/png" href="https://www.iata.org/Style%20Library/IATA.org-v1/Core/Images/Icons/favicon.ico"/>
+        <link rel="shortcut icon" href="https://www.iata.org/Style%20Library/IATA.org-v1/Core/Images/Icons/favicon.ico"/>
+
+        <script src="//code.jquery.com/jquery-1.11.3.min.js"></script>
+        <script src="//code.jquery.com/ui/1.11.4/jquery-ui.js"></script>
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/js/bootstrap.min.js"></script>
+        <link rel="stylesheet" href="{!URLFOR($Resource.InternationalPhoneNumberFormat, '/intl-tel-input-master/build/css/intlTelInput.css')}"/>
+
+
+        <!-- Import the Design System style sheet -->
+        <apex:slds />
+
+        <link href="https://{!HostURL}/{!CommunityName}/s/OneIdResources/css/OneIdStyles.css" rel="stylesheet" type="text/css" />
+
+        <!--link href="https://oneidconde-customer-portal-iata.cs83.force.com/oneidentity/s/OneIdResources/css/OneIdStyles.css" rel="stylesheet" type="text/css" /-->
+
+
+    </head>
+    <style>
+        body.slds-scope {
+            background: #F1F2F4 !important;
+        }
+    </style>
+
+    <body>
+    <div id="spinner" class="slds-spinner-container">
+        <div class="slds-spinner--brand slds-spinner slds-spinner--small" aria-hidden="false" role="alert">
+            <div class="slds-spinner__dot-a"></div>
+            <div class="slds-spinner__dot-b"></div>
+        </div>
+    </div>
+
+    <!-- REQUIRED SLDS WRAPPER -->
+    <div class="slds">
+
+        <!-- PRIMARY CONTENT WRAPPER -->
+        <div class="slds-grid">
+
+            <div class="container">
+                <div class="tabElement section">
+                    <apex:insert name="Account Association"/>
+                </div>
+                <div class="tabElement section">
+                    <apex:insert name="Account Creation"/>
+                </div>
+            </div>
+
+        </div>
+        <!-- / PRIMARY CONTENT WRAPPER -->
+        <script>
+            var j$ = jQuery;
+            j$(window).load(function() {
+                j$(".slds-spinner").addClass('slds-hide');
+            })
+        </script>
+
+    </div>
+    <!-- / REQUIRED SLDS WRAPPER -->
+
+    </body>
+    </html>
+
+</apex:page>

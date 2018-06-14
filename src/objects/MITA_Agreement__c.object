@@ -21,10 +21,6 @@
         <type>Default</type>
     </actionOverrides>
     <actionOverrides>
-        <actionName>Follow</actionName>
-        <type>Default</type>
-    </actionOverrides>
-    <actionOverrides>
         <actionName>List</actionName>
         <type>Default</type>
     </actionOverrides>
@@ -49,6 +45,7 @@
     <deploymentStatus>Deployed</deploymentStatus>
     <enableActivities>false</enableActivities>
     <enableBulkApi>true</enableBulkApi>
+    <enableChangeDataCapture>false</enableChangeDataCapture>
     <enableFeeds>false</enableFeeds>
     <enableHistory>true</enableHistory>
     <enableReports>true</enableReports>
@@ -78,64 +75,106 @@
         <fullName>Agreement_type__c</fullName>
         <externalId>false</externalId>
         <label>Agreement type</label>
-        <picklist>
-            <controllingField>MITAorBIETA__c</controllingField>
-            <picklistValues>
-                <fullName>The Passenger and Cargo Interline Traffic Agreement</fullName>
-                <default>false</default>
-                <controllingFieldValues>MITA</controllingFieldValues>
-            </picklistValues>
-            <picklistValues>
-                <fullName>The Passenger Interline Agreement</fullName>
-                <default>false</default>
-                <controllingFieldValues>MITA</controllingFieldValues>
-            </picklistValues>
-            <picklistValues>
-                <fullName>The Cargo Interline Agreement</fullName>
-                <default>false</default>
-                <controllingFieldValues>MITA</controllingFieldValues>
-            </picklistValues>
-            <picklistValues>
-                <fullName>The One Way Issuing Airline</fullName>
-                <default>false</default>
-                <controllingFieldValues>MITA</controllingFieldValues>
-            </picklistValues>
-            <picklistValues>
-                <fullName>The One Way Participating Airline</fullName>
-                <default>false</default>
-                <controllingFieldValues>MITA</controllingFieldValues>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Bilateral, both carriers can issue electronic tickets</fullName>
-                <default>false</default>
-                <controllingFieldValues>BIETA</controllingFieldValues>
-            </picklistValues>
-            <picklistValues>
-                <fullName>One Way Passenger Issuing Airline</fullName>
-                <default>false</default>
-                <controllingFieldValues>BIETA</controllingFieldValues>
-            </picklistValues>
-            <picklistValues>
-                <fullName>One Way Passenger Participating</fullName>
-                <default>false</default>
-                <controllingFieldValues>BIETA</controllingFieldValues>
-            </picklistValues>
-            <picklistValues>
-                <fullName>One Way Intermodal Issuing Date</fullName>
-                <default>false</default>
-                <controllingFieldValues>BIETA</controllingFieldValues>
-            </picklistValues>
-            <picklistValues>
-                <fullName>One Way Intermodal Participating Date</fullName>
-                <default>false</default>
-                <controllingFieldValues>BIETA</controllingFieldValues>
-            </picklistValues>
-            <sorted>false</sorted>
-        </picklist>
         <required>false</required>
         <trackHistory>false</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Picklist</type>
+        <valueSet>
+            <controllingField>MITAorBIETA__c</controllingField>
+            <valueSetDefinition>
+                <sorted>false</sorted>
+                <value>
+                    <fullName>The Passenger and Cargo Interline Traffic Agreement</fullName>
+                    <default>false</default>
+                    <label>The Passenger and Cargo Interline Traffic Agreement</label>
+                </value>
+                <value>
+                    <fullName>The Passenger Interline Agreement</fullName>
+                    <default>false</default>
+                    <label>The Passenger Interline Agreement</label>
+                </value>
+                <value>
+                    <fullName>The Cargo Interline Agreement</fullName>
+                    <default>false</default>
+                    <label>The Cargo Interline Agreement</label>
+                </value>
+                <value>
+                    <fullName>The One Way Issuing Airline</fullName>
+                    <default>false</default>
+                    <label>The One Way Issuing Airline</label>
+                </value>
+                <value>
+                    <fullName>The One Way Participating Airline</fullName>
+                    <default>false</default>
+                    <label>The One Way Participating Airline</label>
+                </value>
+                <value>
+                    <fullName>Bilateral, both carriers can issue electronic tickets</fullName>
+                    <default>false</default>
+                    <label>Bilateral, both carriers can issue electronic tickets</label>
+                </value>
+                <value>
+                    <fullName>One Way Passenger Issuing Airline</fullName>
+                    <default>false</default>
+                    <label>One Way Passenger Issuing Airline</label>
+                </value>
+                <value>
+                    <fullName>One Way Passenger Participating</fullName>
+                    <default>false</default>
+                    <label>One Way Passenger Participating</label>
+                </value>
+                <value>
+                    <fullName>One Way Intermodal Issuing Date</fullName>
+                    <default>false</default>
+                    <label>One Way Intermodal Issuing Date</label>
+                </value>
+                <value>
+                    <fullName>One Way Intermodal Participating Date</fullName>
+                    <default>false</default>
+                    <label>One Way Intermodal Participating Date</label>
+                </value>
+            </valueSetDefinition>
+            <valueSettings>
+                <controllingFieldValue>MITA</controllingFieldValue>
+                <valueName>The Passenger and Cargo Interline Traffic Agreement</valueName>
+            </valueSettings>
+            <valueSettings>
+                <controllingFieldValue>MITA</controllingFieldValue>
+                <valueName>The Passenger Interline Agreement</valueName>
+            </valueSettings>
+            <valueSettings>
+                <controllingFieldValue>MITA</controllingFieldValue>
+                <valueName>The Cargo Interline Agreement</valueName>
+            </valueSettings>
+            <valueSettings>
+                <controllingFieldValue>MITA</controllingFieldValue>
+                <valueName>The One Way Issuing Airline</valueName>
+            </valueSettings>
+            <valueSettings>
+                <controllingFieldValue>MITA</controllingFieldValue>
+                <valueName>The One Way Participating Airline</valueName>
+            </valueSettings>
+            <valueSettings>
+                <controllingFieldValue>BIETA</controllingFieldValue>
+                <valueName>Bilateral, both carriers can issue electronic tickets</valueName>
+            </valueSettings>
+            <valueSettings>
+                <controllingFieldValue>BIETA</controllingFieldValue>
+                <valueName>One Way Passenger Issuing Airline</valueName>
+            </valueSettings>
+            <valueSettings>
+                <controllingFieldValue>BIETA</controllingFieldValue>
+                <valueName>One Way Passenger Participating</valueName>
+            </valueSettings>
+            <valueSettings>
+                <controllingFieldValue>BIETA</controllingFieldValue>
+                <valueName>One Way Intermodal Issuing Date</valueName>
+            </valueSettings>
+            <valueSettings>
+                <controllingFieldValue>BIETA</controllingFieldValue>
+                <valueName>One Way Intermodal Participating Date</valueName>
+            </valueSettings>
+        </valueSet>
     </fields>
     <fields>
         <fullName>Airline1_designator_code__c</fullName>
@@ -155,6 +194,45 @@
         <formula>Airline_2__r.Airline_designator__c</formula>
         <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
         <label>Airline 2 designator code</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Airline_1_AOC_Name__c</fullName>
+        <description>shows the name of AOC of the airline 1 (because for members the account name is the trade name)</description>
+        <externalId>false</externalId>
+        <formula>Airline_1__r.Name_on_AOC__c</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <inlineHelpText>shows the name of AOC of the airline 1 (because for members the account name is the trade name)</inlineHelpText>
+        <label>Airline 1 AOC Name</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Airline_1_IATA_code__c</fullName>
+        <description>shows the code of airline 1</description>
+        <externalId>false</externalId>
+        <formula>Airline_1__r.IATACode__c</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>Airline 1 IATA code</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Airline_1_Prefix_code__c</fullName>
+        <externalId>false</externalId>
+        <formula>Airline_1__r.Airline_Prefix__c</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>Airline 1 Prefix code</label>
         <required>false</required>
         <trackHistory>false</trackHistory>
         <trackTrending>false</trackTrending>
@@ -184,6 +262,45 @@
         <type>Lookup</type>
     </fields>
     <fields>
+        <fullName>Airline_2_AOC_name__c</fullName>
+        <description>shows the name of AOC of the airline 2 (because for members the account name is the trade name)</description>
+        <externalId>false</externalId>
+        <formula>Airline_2__r.Name_on_AOC__c</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <inlineHelpText>shows the name of AOC of the airline 2 (because for members the account name is the trade name)</inlineHelpText>
+        <label>Airline 2 AOC name</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Airline_2_IATA_code__c</fullName>
+        <description>shows the code of airline 2</description>
+        <externalId>false</externalId>
+        <formula>Airline_2__r.IATACode__c</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>Airline 2 IATA code</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Airline_2_Prefix_code__c</fullName>
+        <externalId>false</externalId>
+        <formula>Airline_2__r.Airline_Prefix__c</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>Airline 2 Prefix code</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
         <fullName>Airline_2__c</fullName>
         <deleteConstraint>SetNull</deleteConstraint>
         <externalId>false</externalId>
@@ -210,29 +327,35 @@
         <description>The reason why this agreement was cancelled</description>
         <externalId>false</externalId>
         <label>Cancellation Reason</label>
-        <picklist>
-            <picklistValues>
-                <fullName>Requested by Airline 1</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Requested by Airline 2</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Airline 1 leaves agreement</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Airline 2 leaves agreement</fullName>
-                <default>false</default>
-            </picklistValues>
-            <sorted>false</sorted>
-        </picklist>
         <required>false</required>
         <trackHistory>false</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Picklist</type>
+        <valueSet>
+            <valueSetDefinition>
+                <sorted>false</sorted>
+                <value>
+                    <fullName>Requested by Airline 1</fullName>
+                    <default>false</default>
+                    <label>Requested by Airline 1</label>
+                </value>
+                <value>
+                    <fullName>Requested by Airline 2</fullName>
+                    <default>false</default>
+                    <label>Requested by Airline 2</label>
+                </value>
+                <value>
+                    <fullName>Airline 1 leaves agreement</fullName>
+                    <default>false</default>
+                    <label>Airline 1 leaves agreement</label>
+                </value>
+                <value>
+                    <fullName>Airline 2 leaves agreement</fullName>
+                    <default>false</default>
+                    <label>Airline 2 leaves agreement</label>
+                </value>
+            </valueSetDefinition>
+        </valueSet>
     </fields>
     <fields>
         <fullName>Cancellation_date__c</fullName>
@@ -283,21 +406,25 @@
         <fullName>MITAorBIETA__c</fullName>
         <externalId>false</externalId>
         <label>MITA/BIETA</label>
-        <picklist>
-            <picklistValues>
-                <fullName>MITA</fullName>
-                <default>true</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>BIETA</fullName>
-                <default>false</default>
-            </picklistValues>
-            <sorted>false</sorted>
-        </picklist>
         <required>false</required>
         <trackHistory>false</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Picklist</type>
+        <valueSet>
+            <valueSetDefinition>
+                <sorted>false</sorted>
+                <value>
+                    <fullName>MITA</fullName>
+                    <default>true</default>
+                    <label>MITA</label>
+                </value>
+                <value>
+                    <fullName>BIETA</fullName>
+                    <default>false</default>
+                    <label>BIETA</label>
+                </value>
+            </valueSetDefinition>
+        </valueSet>
     </fields>
     <fields>
         <fullName>Status__c</fullName>
@@ -330,6 +457,63 @@
         <type>Date</type>
     </fields>
     <label>MITA Agreement</label>
+    <listViews>
+        <fullName>clast90days</fullName>
+        <columns>NAME</columns>
+        <columns>Active__c</columns>
+        <columns>Agreement_type__c</columns>
+        <columns>Airline_1__c</columns>
+        <columns>Airline1_designator_code__c</columns>
+        <columns>Airline_2__c</columns>
+        <columns>Airline2_designator_code__c</columns>
+        <columns>Agreement_processed_date__c</columns>
+        <columns>Cancellation_date__c</columns>
+        <columns>Cancellation_processed_date__c</columns>
+        <columns>Cancellation_Reason__c</columns>
+        <columns>Created_date__c</columns>
+        <columns>MITAorBIETA__c</columns>
+        <columns>Status__c</columns>
+        <columns>CREATEDBY_USER</columns>
+        <filterScope>Everything</filterScope>
+        <filters>
+            <field>Cancellation_processed_date__c</field>
+            <operation>equals</operation>
+            <value>LAST_90_DAYS</value>
+        </filters>
+        <label>Cancelled last 90 days</label>
+        <language>en_US</language>
+    </listViews>
+    <listViews>
+        <fullName>iclast90days</fullName>
+        <columns>NAME</columns>
+        <columns>Active__c</columns>
+        <columns>Agreement_type__c</columns>
+        <columns>Airline_1__c</columns>
+        <columns>Airline1_designator_code__c</columns>
+        <columns>Airline_2__c</columns>
+        <columns>Airline2_designator_code__c</columns>
+        <columns>Agreement_processed_date__c</columns>
+        <columns>Cancellation_date__c</columns>
+        <columns>Cancellation_processed_date__c</columns>
+        <columns>Cancellation_Reason__c</columns>
+        <columns>Created_date__c</columns>
+        <columns>MITAorBIETA__c</columns>
+        <columns>Status__c</columns>
+        <columns>CREATEDBY_USER</columns>
+        <filterScope>Everything</filterScope>
+        <filters>
+            <field>Cancellation_processed_date__c</field>
+            <operation>equals</operation>
+            <value>LAST_90_DAYS</value>
+        </filters>
+        <filters>
+            <field>Cancellation_Reason__c</field>
+            <operation>notEqual</operation>
+            <value>Airline 1 leaves agreement,Airline 2 leaves agreement</value>
+        </filters>
+        <label>Cancelled individual last 90 days</label>
+        <language>en_US</language>
+    </listViews>
     <listViews>
         <fullName>last30days</fullName>
         <columns>NAME</columns>
@@ -380,6 +564,65 @@
             <value>LAST_90_DAYS</value>
         </filters>
         <label>Created last 90 days</label>
+        <language>en_US</language>
+    </listViews>
+    <listViews>
+        <fullName>modlast30090days</fullName>
+        <columns>NAME</columns>
+        <columns>Agreement_type__c</columns>
+        <columns>Airline_1__c</columns>
+        <columns>Airline1_designator_code__c</columns>
+        <columns>Airline_2__c</columns>
+        <columns>Airline2_designator_code__c</columns>
+        <columns>Effective_date__c</columns>
+        <columns>Cancellation_date__c</columns>
+        <columns>Cancellation_Reason__c</columns>
+        <columns>UPDATEDBY_USER</columns>
+        <columns>LAST_UPDATE</columns>
+        <filterScope>Everything</filterScope>
+        <filters>
+            <field>LAST_UPDATE</field>
+            <operation>equals</operation>
+            <value>LAST_N_DAYS:30</value>
+        </filters>
+        <filters>
+            <field>MITAorBIETA__c</field>
+            <operation>equals</operation>
+            <value>MITA</value>
+        </filters>
+        <filters>
+            <field>UPDATEDBY_USER.ALIAS</field>
+            <operation>notEqual</operation>
+            <value>mgarc</value>
+        </filters>
+        <label>Modified MITA Agreements last 30 days</label>
+        <language>en_US</language>
+    </listViews>
+    <listViews>
+        <fullName>modlast3090days</fullName>
+        <columns>NAME</columns>
+        <columns>Agreement_type__c</columns>
+        <columns>Airline_1__c</columns>
+        <columns>Airline1_designator_code__c</columns>
+        <columns>Airline_2__c</columns>
+        <columns>Airline2_designator_code__c</columns>
+        <columns>Effective_date__c</columns>
+        <columns>Cancellation_date__c</columns>
+        <columns>Cancellation_Reason__c</columns>
+        <columns>UPDATEDBY_USER</columns>
+        <columns>LAST_UPDATE</columns>
+        <filterScope>Everything</filterScope>
+        <filters>
+            <field>LAST_UPDATE</field>
+            <operation>equals</operation>
+            <value>LAST_N_DAYS:30</value>
+        </filters>
+        <filters>
+            <field>MITAorBIETA__c</field>
+            <operation>equals</operation>
+            <value>MITA</value>
+        </filters>
+        <label>Modified MITA Agreements last 30 days</label>
         <language>en_US</language>
     </listViews>
     <nameField>
@@ -496,16 +739,20 @@ The seniorship is calculate on a different date for each agreement type.</descri
 &apos;Bilateral, both carriers can issue electronic tickets&apos;, 
 IF(Airline_1__r.BIETA_Bilateral_Date__c &gt; Airline_2__r.BIETA_Bilateral_Date__c,&apos;t&apos;,&apos;f&apos;), 
 
-&apos;One Way Passenger Issuing Airline&apos;, &apos;f&apos;,
+&apos;One Way Passenger Issuing Airline&apos;, 
+IF(Airline_1__r.BIETA_One_way_Electronic_Issuing_Airline__c&gt; Airline_2__r.BIETA_One_way_Electronic_Issuing_Airline__c,&apos;t&apos;,&apos;f&apos;),
 
-&apos;One Way Passenger Partcipating&apos;, &apos;f&apos;,
+&apos;One Way Passenger Partcipating&apos;, 
+IF(Airline_1__r.BIETA_One_way_Electronic_Participating__c &gt; Airline_2__r.BIETA_One_way_Electronic_Participating__c,&apos;t&apos;,&apos;f&apos;),
 
-&apos;One Way Intermodal Issuing Date&apos;, &apos;f&apos;,
+&apos;One Way Intermodal Issuing Date&apos;, 
+IF(Airline_1__r.BIETA_One_way_Intermodal_Issuing_Airline__c  &gt; Airline_2__r.BIETA_One_way_Intermodal_Issuing_Airline__c ,&apos;t&apos;,&apos;f&apos;),
 
-&apos;One Way Intermodal Participating Date&apos;, &apos;f&apos;,
+&apos;One Way Intermodal Participating Date&apos;, 
+IF(Airline_1__r.BIETA_One_way_Intermodal_Participating__c&gt; Airline_2__r.BIETA_One_way_Intermodal_Participating__c,&apos;t&apos;,&apos;f&apos;),
 
 &apos;f&apos; )=&apos;t&apos;,true,false))</errorConditionFormula>
-        <errorMessage>The selected airline has more seniority than the actual one</errorMessage>
+        <errorMessage>The selected airline 2 has more seniority than airline 1</errorMessage>
     </validationRules>
     <validationRules>
         <fullName>N4_MITA_Seniority</fullName>
@@ -513,23 +760,25 @@ IF(Airline_1__r.BIETA_Bilateral_Date__c &gt; Airline_2__r.BIETA_Bilateral_Date__
         <description>Prevents &quot;junior&quot; MITA members from requesting agreements to senior airlines.
 The seniorship is calculate on a different date for each agreement type.</description>
         <errorConditionFormula>AND(
- Active__c,ISPICKVAL(Cancellation_Reason__c, &quot;&quot;),
+AND(OR(NOT(ISBLANK(Withdrawal_Request_Reception_Date__c)),NOT(ISBLANK(Cancellation_date__c)),NOT(ISBLANK(Cancellation_processed_date__c))),
+Active__c,ISPICKVAL(Cancellation_Reason__c, &quot;&quot;)),
 IF(CASE(TEXT(Agreement_type__c), 
 &apos;The Passenger and Cargo Interline Traffic Agreement&apos;, 
-IF(AND(Airline_1__r.MITA_IATA_Interline_Passenger__c &gt; Airline_2__r.MITA_IATA_Interline_Passenger__c, Airline_1__r.MITA_IATA_Interline_Cargo__c &gt; Airline_2__r.MITA_IATA_Interline_Cargo__c),&apos;t&apos;,&apos;f&apos;), 
+IF(AND(Airline_1__r.MITA_IATA_Interline_Passenger__c &gt; Airline_2__r.MITA_IATA_Interline_Passenger__c, Airline_1__r.MITA_IATA_Interline_Cargo__c &lt; Airline_2__r.MITA_IATA_Interline_Cargo__c),&apos;t&apos;,&apos;f&apos;), 
 
 
-&apos;The Passenger Interline Agreement&apos;, &apos;f&apos;,
+&apos;The Passenger Interline Agreement&apos;,IF(AND(Airline_1__r.MITA_IATA_Interline_Passenger__c &gt; Airline_2__r.MITA_IATA_Interline_Passenger__c),&apos;t&apos;, &apos;f&apos;),
 
-&apos;The Cargo Interline Agreement&apos;, &apos;f&apos;,
+&apos;The Cargo Interline Agreement&apos;, IF(AND(Airline_1__r.MITA_IATA_Interline_Cargo__c &gt; Airline_2__r.MITA_IATA_Interline_Cargo__c),&apos;t&apos;, &apos;f&apos;),
 
-&apos;The One Way Issuing Airline&apos;, &apos;f&apos;,
+&apos;The One Way Issuing Airline&apos;,IF(AND(Airline_1__r.MITA_One_way_Pass_Issuing_Airline__c &gt; Airline_2__r.MITA_One_way_Pass_Issuing_Airline__c),&apos;t&apos;, &apos;f&apos;),
 
-&apos;The One Way Participating Airline&apos;, &apos;f&apos;,
+&apos;The One Way Participating Airline&apos;, IF(AND(Airline_1__r.MITA_One_way_Pass_Participating__c &gt; Airline_2__r.MITA_One_way_Pass_Participating__c),&apos;t&apos;, &apos;f&apos;),
 
 &apos;f&apos; 
 )=&apos;t&apos;,true,false)
 )</errorConditionFormula>
-        <errorMessage>The selected airline has more seniority than the actual one</errorMessage>
+        <errorMessage>Airline 2 has more seniority than airline 1 for this agreement type.</errorMessage>
     </validationRules>
+    <visibility>Public</visibility>
 </CustomObject>

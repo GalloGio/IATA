@@ -14,7 +14,7 @@ public class vfIECEBC extends IECPageController {
 	public static final String EBC_PRODUCT_RATE_PLAN_SUBSCRIPTION_TYPE_PRE_PAID = 'Pre-Paid';	 
 	
 	
-	public static User usr = [Select ContactId, Contact.AccountId from User where id = :Userinfo.getUserid()];
+	public static User usr = [Select Id, ContactId, Contact.AccountId from User where id = :Userinfo.getUserid()];
 	public static Zuora__CustomerAccount__c rereadBillingAccount()
 	{
 		billingAccount = null;
@@ -26,7 +26,7 @@ public class vfIECEBC extends IECPageController {
 	public static Zuora__CustomerAccount__c billingAccount {
 		get {
 			if (billingAccount == null) {
-				billingAccount = [Select Id, Name
+               billingAccount = [Select Id, Name
 									, eBroadcast_Trusted_Sender__c
                                     , eBroadcast_Email_Balance__c
                                     , Zuora__Account__c  
@@ -220,6 +220,7 @@ public class vfIECEBC extends IECPageController {
 			Set<Id> ebcProductRatePlanIdSet = new Set<Id>();
 			ebcProductRatePlanIdSet.addAll(IECEBC_Utility.ebcNonMemberProductRatePlanIdList);
 			ebcProductRatePlanIdSet.addAll(IECEBC_Utility.ebcMemberProductRatePlanIdList);
+            ebcProductRatePlanIdSet.addAll(IECEBC_Utility.ebcECommerceProductRatePlanIdList);
 			
 			List<Zuora__SubscriptionProductCharge__c> subscriptionProductChargeList = [select Id
 				, Zuora__Product__c, Zuora__Product__r.Name
@@ -394,6 +395,9 @@ public class vfIECEBC extends IECPageController {
 				//System.debug(subscriptionInfo.oSubscription.Product_Rate_Plan_Information__r.Product_Rate_Plan__c);
 				//productRatePlan = [Select Id, Name, EBC_SubscriptionType__c, EBC_Currency_Cost_Per_Email__c, EBC_PrePaid_Emails__c From zqu__ProductRatePlan__c  Where Id = :subscriptionInfo.oSubscription.Product_Rate_Plan_Information__r.Product_Rate_Plan__c];
 				//productRatePlan = subscription.Product_Rate_Plan_Information__r.Product_Rate_Plan__r;
+				System.debug(ebcSubscriptionProductCharge);
+				System.debug(ebcSubscriptionProductCharge.Product_Rate_Plan_Charge__r);
+				System.debug(ebcSubscriptionProductCharge.Product_Rate_Plan_Charge__r.zqu__ProductRatePlan__r);
 				productRatePlan = ebcSubscriptionProductCharge.Product_Rate_Plan_Charge__r.zqu__ProductRatePlan__r;
 			}
 			

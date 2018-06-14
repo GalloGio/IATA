@@ -44,7 +44,12 @@ public with sharing class Attachment_Svc
             Delete all the giving Attachments
     ****************************************************************************************************/
     public static void deleteAttachments(List<Attachment> attachments){
-        delete attachments; 
+        String prefixOrder = Order.sObjectType.getDescribe().getKeyPrefix();
+        List<Attachment> lstAttachmentToDelete = new List<Attachment>();
+        for (Attachment a : attachments)
+            if (String.valueOf(a.ParentId).startsWith(prefixOrder))
+                lstAttachmentToDelete.add(a);
+        delete lstAttachmentToDelete; 
     }
 
 	/****************************************************************************************************

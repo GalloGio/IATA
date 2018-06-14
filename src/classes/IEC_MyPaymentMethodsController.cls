@@ -343,14 +343,14 @@ public with sharing class IEC_MyPaymentMethodsController extends IEC_PageControl
 	{
 		try
 		{
-			loggedCustomer.zAccount.setValue('DefaultPaymentMethodId', defaultPaymentMethodId);
+		  loggedCustomer.zAccount.setValue('DefaultPaymentMethodId', defaultPaymentMethodId);
 			IECZuoraHelper.updateApiCall(loggedCustomer.zAccount);
 
 			loggedCustomer.loadCreditCards();
-            refreshCreditCards();
+      refreshCreditCards();
 
-            IEC_CreditCard_DTO selectedCreditCard = creditCardById.get(defaultPaymentMethodId);
-            addConfirmMessage('The credit card ' + selectedCreditCard.creditCardMaskNumber + ' has been successfully set as default card.');
+      IEC_CreditCard_DTO selectedCreditCard = creditCardById.get(defaultPaymentMethodId);
+      addConfirmMessage('The credit card ' + selectedCreditCard.creditCardMaskNumber + ' has been successfully set as default card.');
 
 			return null;
 		}
@@ -363,8 +363,31 @@ public with sharing class IEC_MyPaymentMethodsController extends IEC_PageControl
      **************************************************************************************************************/
 	private void validateConfiguration()
 	{
+
+        HPM_Setting__c hpmSetting;
+        String url = System.URL.getCurrentRequestUrl().toExternalForm();
+        system.debug('### url ' + url);
+        
+        url = url.replace('/apex','' );
+        system.debug('### new url ' + url);
+
+        for(HPM_Setting__c hpmS : [SELECT Id, Name, Base_URL__c,HPM_Page_Id__c,HPM_Tenant_Id__c,HPM_Security_Token__c,HPM_App_Url__c FROM HPM_Setting__c]){
+            if(hpmS.Base_URL__c == null || hpmS.Base_URL__c == ''){ 
+                continue;
+            }
+            system.debug('### hpmS.Base_URL__c ' + hpmS.Base_URL__c);            
+            if(url.startsWithIgnoreCase(hpmS.Base_URL__c)){                
+                hpmSetting = hpmS;                
+                break;
+            }
+        } 
+
         this.hasConfigError = false;
-        HPM_Setting__c hpmSetting = HPM_Setting__c.getInstance( 'Zuora HPM Setting' );
+
+        if(hpmSetting == null){
+            hpmSetting = HPM_Setting__c.getInstance( 'Zuora HPM Setting' );
+        }
+        
         if ( hpmSetting == null ) throw new HPMConfigException( IECErrorCodeMapping.VALUES.get( 'Sfdc.NoConfiguration' ) ); 
     
         String missingFields = ''; 

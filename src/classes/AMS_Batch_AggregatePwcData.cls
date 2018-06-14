@@ -3,8 +3,9 @@
  * because in for(Account account : scope) loop, there's a call to two methods
  * that contains a query : 49 + 49 + 1 = 99 (- 100 SOQL Apex limit)
  */
-global with sharing class AMS_Batch_AggregatePwcData implements Database.Batchable<Account> {
-
+global class AMS_Batch_AggregatePwcData implements Database.Batchable<Account> {
+	public static boolean bIsAMS_Batch_AggregatePwcDataRunning = false;
+	
     /**
      * Attributes
      */
@@ -17,7 +18,9 @@ global with sharing class AMS_Batch_AggregatePwcData implements Database.Batchab
     private static final Integer defNonPayDefaultTimeframe = 12; // In months
     private static final Integer ownShaDefaultTimeframe = 12; // In months
     private static final List<String> ownShaChangeCodes = new List<String> {'CHC', 'CHO', 'CHI', 'CHJ', 'CCL', 'CCN', 'CIJ', 'CNL', 'COL', 'CON', 'COS', 'CSC', 'HIN', 'HIS', 'HNL', 'HSL', 'HSM', 'HSN', 'ONL', 'OSL', 'OSM', 'OSN', 'SCL', 'SCM', 'SCN'};
-    private static final List<String> ownShaLastDateCodes = new List<String> {'CHO', 'CHI', 'CIJ', 'COL', 'CON', 'COS', 'HIN', 'HIS', 'HNL', 'HSL', 'HSM', 'HSN', 'ONL', 'OSL', 'OSM', 'OSN'};
+    //WHY THIS SET CONTAINS LESS ITEMS THEN THE ONE ABOVE IF THEY SHOULD CHECK THE SAME THING!?!?!
+    //private static final List<String> ownShaLastDateCodes = new List<String> {'CHO', 'CHI', 'CIJ', 'COL', 'CON', 'COS', 'HIN', 'HIS', 'HNL', 'HSL', 'HSM', 'HSN', 'ONL', 'OSL', 'OSM', 'OSN'};
+    private static final List<String> ownShaLastDateCodes = new List<String> {'CHC', 'CHO', 'CHI', 'CHJ', 'CCL', 'CCN', 'CIJ', 'CNL', 'COL', 'CON', 'COS', 'CSC', 'HIN', 'HIS', 'HNL', 'HSL', 'HSM', 'HSN', 'ONL', 'OSL', 'OSM', 'OSN', 'SCL', 'SCM', 'SCN'};
     private static final Id recordTypeDefLfcId =  RecordTypeSingleton.getInstance().RtIDsPerDeveloperNamePerObj.get('AMS_Country_Specific_Attribute__c').get('DEF_LFC');
     private static final Id recordTypeIrrsLfcId = RecordTypeSingleton.getInstance().RtIDsPerDeveloperNamePerObj.get('AMS_Country_Specific_Attribute__c').get('IRRS_LFC');
     private static final Id recordTypeIrrCpeId = RecordTypeSingleton.getInstance().RtIDsPerDeveloperNamePerObj.get('AMS_Country_Specific_Attribute__c').get('IRR_CPE');
@@ -51,6 +54,7 @@ global with sharing class AMS_Batch_AggregatePwcData implements Database.Batchab
      * Execute method for PwC interfaces
      */
     global void execute(Database.BatchableContext batchableContext, List<account> scope) {
+    	AMS_Batch_AggregatePwcData.bIsAMS_Batch_AggregatePwcDataRunning = true;
         processBatch(scope);
     }
 
@@ -102,7 +106,7 @@ global with sharing class AMS_Batch_AggregatePwcData implements Database.Batchab
 
         // Get agency applied change codes
         List<Agency_Applied_Change_code__c> agencyAppliedChangeCodes = [
-            SELECT Id, Change_Code__c, Created_Date_To_Show__c, Account__c, DEF_Non_Payment__c, Operation__c, Irregularities_Points__c, Account__r.Location_class__c, Irregularity_Type__c
+            SELECT Id, Change_Code__c, Created_Date_To_Show__c, Account__c, DEF_Non_Payment2__c, Operation__c, Irregularities_Points__c, Account__r.Location_class__c, Irregularity_Type__c
             FROM Agency_Applied_Change_code__c
             WHERE Account__c IN :accountIds];
 
@@ -131,7 +135,7 @@ global with sharing class AMS_Batch_AggregatePwcData implements Database.Batchab
                 }
 
                 // For DEFNONPAY, only if this entry is in the right DEFNONPAY timeframe
-                if((agencyAppliedChangeCode.Change_Code__c.equals('DEF') && agencyAppliedChangeCode.DEF_Non_Payment__c == true) && (currentDate < agencyAppliedChangeCode.Created_Date_To_Show__c.addMonths(defNonPayDefaultTimeframe))) {
+                if((agencyAppliedChangeCode.Change_Code__c.equals('DEF') && agencyAppliedChangeCode.DEF_Non_Payment2__c == true) && (currentDate < agencyAppliedChangeCode.Created_Date_To_Show__c.addMonths(defNonPayDefaultTimeframe))) {
                     updateAggregatePwcData(agencyAppliedChangeCode.Account__c, 'DEFNONPAY', 1, null);
                 }
 
@@ -179,7 +183,7 @@ global with sharing class AMS_Batch_AggregatePwcData implements Database.Batchab
                         // Positive and negative
                         if((agencyAppliedChangeCode.Change_Code__c == 'IRR' && (agencyAppliedChangeCode.Operation__c == 'A' || agencyAppliedChangeCode.Operation__c == '' || agencyAppliedChangeCode.Operation__c == null)) || (agencyAppliedChangeCode.Change_Code__c == 'IRS')) {
                             updateAggregatePwcData(agencyAppliedChangeCode.Account__c, 'IRRS_POS', agencyAppliedChangeCode.Irregularities_Points__c.intValue(), null);
-                        } else if((agencyAppliedChangeCode.Change_Code__c == 'IRR' && agencyAppliedChangeCode.Operation__c == 'W') || (agencyAppliedChangeCode.Change_Code__c == 'IRW')) {
+                        } else if((agencyAppliedChangeCode.Change_Code__c == 'IRR' && (agencyAppliedChangeCode.Operation__c == 'W' || agencyAppliedChangeCode.Operation__c == 'D')) || (agencyAppliedChangeCode.Change_Code__c == 'IRW')) {
                             updateAggregatePwcData(agencyAppliedChangeCode.Account__c, 'IRRS_NEG', agencyAppliedChangeCode.Irregularities_Points__c.intValue(), null);
                         }
 
@@ -233,7 +237,7 @@ global with sharing class AMS_Batch_AggregatePwcData implements Database.Batchab
                             // Positive and negative
                             if((agencyAppliedChangeCode.Change_Code__c == 'IRR' && (agencyAppliedChangeCode.Operation__c == 'A' || agencyAppliedChangeCode.Operation__c == '' || agencyAppliedChangeCode.Operation__c == null)) || (agencyAppliedChangeCode.Change_Code__c == 'IRS')) {
                                 updateAggregatePwcData(agencyAppliedChangeCode.Account__c, 'IRRS_POS', agencyAppliedChangeCode.Irregularities_Points__c.intValue(), null);
-                            } else if((agencyAppliedChangeCode.Change_Code__c == 'IRR' && agencyAppliedChangeCode.Operation__c == 'W') || (agencyAppliedChangeCode.Change_Code__c == 'IRW')) {
+                            } else if((agencyAppliedChangeCode.Change_Code__c == 'IRR' && (agencyAppliedChangeCode.Operation__c == 'W' || agencyAppliedChangeCode.Operation__c == 'D')) || (agencyAppliedChangeCode.Change_Code__c == 'IRW')) {
                                 updateAggregatePwcData(agencyAppliedChangeCode.Account__c, 'IRRS_NEG', agencyAppliedChangeCode.Irregularities_Points__c.intValue(), null);
                             }
 
@@ -249,7 +253,7 @@ global with sharing class AMS_Batch_AggregatePwcData implements Database.Batchab
                             for(AMS_Country_Specific_Attribute__c irregularityTypeException : irregularityTypeExceptions) {
 
                                 // Check matching on location class & irregularity type
-                                if(irregularityTypeException.Location_Class__c == agencyAppliedChangeCode.Account__r.Location_Class__c && irregularityTypeException.Irregularity_Type__c == agencyAppliedChangeCode.Irregularity_Type__c) {
+                                if(irregularityTypeException.Location_Class__c != agencyAppliedChangeCode.Account__r.Location_Class__c || irregularityTypeException.Irregularity_Type__c != agencyAppliedChangeCode.Irregularity_Type__c) {
 
                                     // Update linked variable
                                     validAgencyAppliedChangeCode = false;
@@ -264,7 +268,7 @@ global with sharing class AMS_Batch_AggregatePwcData implements Database.Batchab
                                 // Positive and negative
                                 if((agencyAppliedChangeCode.Change_Code__c == 'IRR' && (agencyAppliedChangeCode.Operation__c == 'A' || agencyAppliedChangeCode.Operation__c == '' || agencyAppliedChangeCode.Operation__c == null)) || (agencyAppliedChangeCode.Change_Code__c == 'IRS')) {
                                     updateAggregatePwcData(agencyAppliedChangeCode.Account__c, 'IRRS_POS', agencyAppliedChangeCode.Irregularities_Points__c.intValue(), null);
-                                } else if((agencyAppliedChangeCode.Change_Code__c == 'IRR' && agencyAppliedChangeCode.Operation__c == 'W') || (agencyAppliedChangeCode.Change_Code__c == 'IRW')) {
+                                } else if((agencyAppliedChangeCode.Change_Code__c == 'IRR' && (agencyAppliedChangeCode.Operation__c == 'W' || agencyAppliedChangeCode.Operation__c == 'D')) || (agencyAppliedChangeCode.Change_Code__c == 'IRW')) {
                                     updateAggregatePwcData(agencyAppliedChangeCode.Account__c, 'IRRS_NEG', agencyAppliedChangeCode.Irregularities_Points__c.intValue(), null);
                                 }
 

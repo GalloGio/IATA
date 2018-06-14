@@ -14,20 +14,22 @@ global class SchdlIECEBCRetrieveCumulativeStats implements Database.Batchable<sO
     }
     
     global void execute(Database.BatchableContext BC, List<sObject> scope) {
-        IECEBC_ETCampaignTrackingAsync.createCumulativeCampaignTracking((List<EBC_Campaign__c>)scope);
+        	IECEBC_ETCampaignTrackingAsync.createCumulativeCampaignTracking((List<EBC_Campaign__c>)scope);
     }
     
     global void finish(Database.BatchableContext BC) {
         
     }
     
-    // Schedulable
+    // Schedulable 
     global void execute(SchedulableContext SC)  {
-        SchdlIECEBCRetrieveCumulativeStats n = new SchdlIECEBCRetrieveCumulativeStats();
-        Database.executeBatch(n,SchdlIECEBCRetrieveCumulativeStats.BATCH_SIZE);
+        if (!Test.isRunningTest()) {
+            SchdlIECEBCRetrieveCumulativeStats n = new SchdlIECEBCRetrieveCumulativeStats();
+            Database.executeBatch(n,SchdlIECEBCRetrieveCumulativeStats.BATCH_SIZE);
+        }
     }
     global static void cancel() {
-        cancel('SchdlIECEBCRetrieveCumulativeStats');
+        cancel('SchdlIECEBCRetrieveCumulativeStats' + (Test.isRunningTest() ? 'Test' : ''));
     }
     global static void cancel(String name) {
         CronTrigger ct = [SELECT Id, CronJobDetail.Id, CronJobDetail.Name, CronJobDetail.JobType FROM CronTrigger Where CronJobDetail.Name = :name LIMIT 1];
@@ -42,6 +44,6 @@ global class SchdlIECEBCRetrieveCumulativeStats implements Database.Batchable<sO
         if (String.isBlank(sch)) {
             sch = '0 0 * * * ?';
         }
-        System.schedule('SchdlIECEBCRetrieveCumulativeStats', sch, a);
+        System.schedule('SchdlIECEBCRetrieveCumulativeStats' + (Test.isRunningTest() ? 'Test' : ''), sch, a);
     }
 }

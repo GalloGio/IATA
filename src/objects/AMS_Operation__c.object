@@ -21,10 +21,6 @@
         <type>Default</type>
     </actionOverrides>
     <actionOverrides>
-        <actionName>Follow</actionName>
-        <type>Default</type>
-    </actionOverrides>
-    <actionOverrides>
         <actionName>List</actionName>
         <type>Default</type>
     </actionOverrides>
@@ -49,6 +45,7 @@
     <deploymentStatus>Deployed</deploymentStatus>
     <enableActivities>true</enableActivities>
     <enableBulkApi>true</enableBulkApi>
+    <enableChangeDataCapture>false</enableChangeDataCapture>
     <enableFeeds>false</enableFeeds>
     <enableHistory>true</enableHistory>
     <enableReports>true</enableReports>
@@ -56,32 +53,49 @@
     <enableSharing>true</enableSharing>
     <enableStreamingApi>true</enableStreamingApi>
     <fields>
+        <fullName>Allow_multiple_remittances__c</fullName>
+        <defaultValue>false</defaultValue>
+        <description>If checked will allow more than one value for Remittance Frequency for Agencies of the same country</description>
+        <externalId>false</externalId>
+        <inlineHelpText>If checked will allow more than one value for Remittance Frequency for Agencies of the same country</inlineHelpText>
+        <label>Allow multiple remittances</label>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
         <fullName>CASS_Operations__c</fullName>
         <externalId>false</externalId>
         <label>CASS Operations</label>
-        <picklist>
-            <picklistValues>
-                <fullName>EXP</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>IMP</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Courier</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Local</fullName>
-                <default>false</default>
-            </picklistValues>
-            <sorted>false</sorted>
-        </picklist>
         <required>false</required>
         <trackHistory>false</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Picklist</type>
+        <valueSet>
+            <valueSetDefinition>
+                <sorted>false</sorted>
+                <value>
+                    <fullName>EXP</fullName>
+                    <default>false</default>
+                    <label>EXP</label>
+                </value>
+                <value>
+                    <fullName>IMP</fullName>
+                    <default>false</default>
+                    <label>IMP</label>
+                </value>
+                <value>
+                    <fullName>Courier</fullName>
+                    <default>false</default>
+                    <label>Courier</label>
+                </value>
+                <value>
+                    <fullName>Local</fullName>
+                    <default>false</default>
+                    <label>Local</label>
+                </value>
+            </valueSetDefinition>
+        </valueSet>
     </fields>
     <fields>
         <fullName>Country__c</fullName>
@@ -100,21 +114,25 @@
         <fullName>Market__c</fullName>
         <externalId>false</externalId>
         <label>Market</label>
-        <picklist>
-            <picklistValues>
-                <fullName>International</fullName>
-                <default>true</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Domestic</fullName>
-                <default>false</default>
-            </picklistValues>
-            <sorted>false</sorted>
-        </picklist>
         <required>false</required>
         <trackHistory>false</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Picklist</type>
+        <valueSet>
+            <valueSetDefinition>
+                <sorted>false</sorted>
+                <value>
+                    <fullName>International</fullName>
+                    <default>true</default>
+                    <label>International</label>
+                </value>
+                <value>
+                    <fullName>Domestic</fullName>
+                    <default>false</default>
+                    <label>Domestic</label>
+                </value>
+            </valueSetDefinition>
+        </valueSet>
     </fields>
     <fields>
         <fullName>Settlement__c</fullName>
@@ -139,4 +157,5 @@
     <pluralLabel>Operations Codes</pluralLabel>
     <searchLayouts/>
     <sharingModel>ControlledByParent</sharingModel>
+    <visibility>Public</visibility>
 </CustomObject>

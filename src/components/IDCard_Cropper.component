@@ -1,0 +1,447 @@
+<apex:component controller="IDCard_CropperCtrl">
+	<apex:attribute name="sessionId" assignTo="{!controllerSessionId}" type="String" required="true" description="id of the current session. Used to determin the image's directory." />
+	<apex:attribute name="fileId" assignTo="{!controllerFileId}" type="String" required="true" description="id of the file. Used as the file's name." />
+	
+	<apex:attribute name="jsCallbackName" type="String" required="true" description="The name of the JS function to call when the cropped image is uploaded. A single argument will be provided: The full path of the file" />
+
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/cropperjs/0.7.2/cropper.min.css"/>
+	<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/cropperjs/0.7.2/cropper.js"></script>
+	
+	<script>
+	/* TODO : MOVE TO JS FILE */
+	 /*  */ 
+	/*
+	 * Create closure to avoid poluting global namespace, and to make sure our dependencies don't change name 
+	 *
+	 * Here we use jQuery since it is available... but it isn't strictly necessary for the simple operations done here.
+	 */
+	(function($){
+	'use strict';
+
+		
+		/*
+		 * Prepare Addons & Events once the page loads
+		 */
+		$(function(){
+
+			/*
+			 * provide the cropper addon thru a closer with a small API, so that we can easily initialize
+			 * the cropper only when needed, and abstract the notion of which addon is being used. 
+			 * addon used: https://github.com/fengyuanchen/cropperjs/blob/master/README.md
+			 */
+			var cropper = (function(options){
+				var innerCropper = null
+				
+				function initializeIfNeeded(){
+					if(innerCropper != null) return;
+					
+					innerCropper = new Cropper(options.canvasToApplyTo, {
+										aspectRatio: options.targetWidth/options.targetHeight,
+										movable : false,
+										dragMode: 'move',
+										responsive : false,
+										preview: options.previewClass,
+										toggleDragModeOnDblclick : false,
+										crop: function(e) {
+											/* *
+											console.log(e.detail.x);
+											console.log(e.detail.y);toDataURL
+											console.log(e.detail.width);
+											console.log(e.detail.height);
+											console.log(e.detail.rotate);
+											console.log(e.detail.scaleX);
+											console.log(e.detail.scaleY);
+											/* */
+										}
+									});
+				
+				}
+
+				/*
+				 * Takes in a base64 jpg (exported from the canvas) and return that binary Blob equivalent of the base64
+				 */
+				function base64JpgToBlob(dataURI) {
+					var binary = atob(dataURI.split(',')[1]);
+					var array = [];
+					for(var i = 0; i < binary.length; i++) {
+						array.push(binary.charCodeAt(i));
+					}
+					return new Blob([new Uint8Array(array)], {type: 'image/jpeg'});
+				}
+				
+				return {
+					setBlobImage : function(blobURL){
+						initializeIfNeeded();
+						innerCropper.reset().replace(blobURL);
+					},
+					getCroppedBlobImage : function(){
+						if(innerCropper == null){
+							throw new Exception("Cannot get the canvas from an uninitialized cropper");
+						}
+						
+						return base64JpgToBlob(innerCropper.getCroppedCanvas({ width: 270, height: 330 }).toDataURL("image/jpeg"));
+					}
+				}
+			}( {
+				canvasToApplyTo : $('#cropper_container__crop__canvas')[0],
+				targetWidth : 270,
+				targetHeight : 330
+				,previewClass : '.cropper_container__live_preview'
+			} ));
+			
+			
+			/*
+			 * Import Image button
+			 */
+			var inputImage = $('#upload_label__input');
+			var URL = window.URL || window.webkitURL;
+			var blobURL;
+			
+			/*
+			 * check if the URL API is avaiable 
+			 * https://developer.mozilla.org/en-US/docs/Web/API/URL/createObjectURL
+			 */
+			if (window.URL) {
+			
+				/*
+				 * On input change, process the selected file and update the cropper addon with the ObjectUrl
+				 */
+				inputImage.on("change",function () {
+					var files = this.files,
+						file;
+					
+					if (cropper && files && files.length) {
+						file = files[0];
+						
+						if (/^image\/\w+/.test(file.type)) {
+							cropper.setBlobImage( URL.createObjectURL(file) );
+							inputImage.value = null;
+							
+							$(".cropper_container__crop").removeClass("hidden");
+							$(".cropper_container__validation").addClass("hidden");
+						} else {
+							window.alert('Please choose an image file.');
+						}
+					}
+				});
+			}
+			/*
+			 * Otherwise, we disable the input and add class to parent
+			 * The css will take care of showing the error message
+			 */
+			else {
+			  inputImage.prop('disabled', true);
+			  inputImage.parent().addClass("upload_label--disabled");
+			}
+			
+			
+			$(".show_preview_button").on("click",function(){
+				$(".cropper_container__preview").prop("src", URL.createObjectURL( cropper.getCroppedBlobImage() ) );
+			
+				$(".cropper_container__validation").removeClass("hidden");
+
+				////////
+				var blobImage = cropper.getCroppedBlobImage();
+				
+				//Use the upload authorization and the blob to submit it to amazon
+				$.ajax("{!uploadAuthorizationPath}", {
+					method: "PUT",
+					data: blobImage,
+					crossDomain : true,
+					processData: false,
+					cache: false,
+					contentType: 'image/jpeg;charset=UTF-8',
+					beforeSend: function (request)
+					{
+						request.setRequestHeader("Authorization","{!uploadAuthorizationSignature}");
+						request.setRequestHeader("X-Amz-Date","{!uploadAuthorizationXAmzDate}");
+					},
+					success: function () {
+						{!jsCallbackName}("{!controllerFileName}"); // uploadAuthorizationPath
+						console.log('Upload success');
+					},
+					error: function () {
+					  console.log('Upload error');
+					}
+				});
+
+			});
+			
+			/*
+			 * Crop Image button
+			 *
+			 * When the crop button is clicked, retrieve the cropped canvas and convert it to base64 url ( https://developer.mozilla.org/en-US/docs/Web/API/HTMLCanvasElement/toDataURL )
+			 * Then convert it to a Blob ( https://developer.mozilla.org/en/docs/Web/API/Blob ).
+			 * 
+			 * Alternatively we could have used the toBlob() method on the canvas, but the support is bad, hence requirering the manual conversion ( https://developer.mozilla.org/en-US/docs/Web/API/HTMLCanvasElement/toBlob )
+			 */
+			$('#crop__button').on("click",function() {
+
+				// MOVED TO "CONFIRM SELECTION"
+
+				/*
+				var blobImage = cropper.getCroppedBlobImage();
+				
+				//Use the upload authorization and the blob to submit it to amazon
+				$.ajax("{!uploadAuthorizationPath}", {
+					method: "PUT",
+					data: blobImage,
+					crossDomain : true,
+					processData: false,
+					cache: false,
+					contentType: 'image/jpeg;charset=UTF-8',
+					beforeSend: function (request)
+					{
+						request.setRequestHeader("Authorization","{!uploadAuthorizationSignature}");
+						request.setRequestHeader("X-Amz-Date","{!uploadAuthorizationXAmzDate}");
+					},
+					success: function () {
+						{!jsCallbackName}("{!uploadAuthorizationPath}");
+						console.log('Upload success');
+					},
+					error: function () {
+					  console.log('Upload error');
+					}
+				});
+
+				*/
+			});
+		
+		});
+		
+	}(jQuery))
+	</script>
+	<style>
+	/* TODO : MOVE TO CSS FILE */
+	
+	/*
+	 * CSS writen in BEM format
+	 * source: http://getbem.com/naming/
+	 */
+	 
+	canvas, img {
+	    image-rendering: optimizeQuality;
+	    image-rendering: -moz-crisp-edges;
+	    image-rendering: -webkit-optimize-contrast;
+	    image-rendering: optimize-contrast;
+	    -ms-interpolation-mode: nearest-neighbor;
+	}
+
+	 .cropper_step_title{
+	 	color: #058fda;
+	    font-family: Arial,Helvetica,sans-serif;
+	    font-size: 1em;
+	    text-transform: uppercase;
+	 }
+	 
+	.id_card_disclaimer{
+		font-size:15px;
+	}
+	 
+	.cropper_container{
+		margin:26px 0;
+		position:relative;
+		min-height:580px;
+		color:gray;
+	}
+	
+	.cropper_clear:after,
+	.cropper_clear:before{
+		clear:both;
+		content: " ";
+		display:table;
+	}
+		
+		.cropper_container__instructions{
+			width: 434px;
+			margin: auto;
+		}
+	
+			#upload_label{
+			
+			}
+			
+				#upload_label #upload_label__no_support{
+					display:none;
+					font-weight: bold;
+					font-color: red;
+				}
+			
+			#upload_label.upload_label--disabled{
+			
+			}
+			
+				#upload_label.upload_label--disabled #upload_label__button{
+					display:none;
+				}
+			
+				#upload_label.upload_label--disabled #upload_label__no_support{
+					display:block;
+				}
+				
+			.cropper_container__instructions__buttons{
+				margin-top:15px;
+			}
+			
+			.crop__button_container{
+				float:right;
+			}
+	
+	
+		.cropper_container__crop{
+			width: 100%;
+		}
+		
+			.cropper_container__crop > .cropper_step_title{
+				margin-top: 5px
+			}
+			
+			.cropper_container__crop__canvas_container{
+				width:300px;
+				height: 350px;
+				float:left;
+			}
+				.cropper_container__crop__canvas_container #cropper_container__crop__canvas{
+					max-width:100%;
+				}
+			
+			.cropper_container__live_preview_container{
+				float:right;
+				text-align: center;
+			}
+				.cropper_container__live_preview{
+					width:200px;
+					height:250px;
+					margin:auto;
+					overflow:hidden;
+				}
+				
+				.cropper_container__live_preview > img{
+					max-width:100%;
+				}
+				
+				.cropper_container__live_preview_container > .show_preview_button{
+					margin-top: 10px;
+				}
+	
+	
+		.cropper_container__validation{
+			position:absolute;
+			left:0;
+			right:0;
+			top: 0;
+			bottom:0;
+			border:1px solid black;
+			background: rgba(0,0,0, .75);
+		}
+			.cropper_container__validation > .cropper_step_title{
+				width:100%;
+				text-align:center;
+				background-color:white;
+				padding:6px 0;
+			}
+		
+		.cropper_container__validation.hidden{
+			top: -200px; display: none;
+		}
+		
+			.cropper_container__preview_container{
+				background : URL("{!URLFOR($Resource.IDCard_cropper_ressources, 'images/IDCard_preview_card.png')}") 0 0 / 585px 369px;
+				height: 369px;
+				margin: 15px auto;
+				position: absolute;
+				width: 585px;
+				
+				top:50%;
+				left:50%;
+				margin-top:-185px;
+				margin-left:-268px;
+			}	
+			.cropper_container__preview_container > .cropper_container__preview{
+				width: 26.49573%;
+				height: 56.91057%;
+				top: 24.39024%;
+				left: 70.08547%;
+				position: absolute;
+				overflow: hidden;
+			}
+			
+			.cropper_container__validation__button_bar{
+				position:absolute;
+				bottom:0;
+				width:100%;
+			}
+	</style>
+	
+	
+	<div class="id_card_disclaimer">{!$Label.ID_Card_Disclaimer}</div>
+
+	<div class="cropper_container cropper_clear">
+		
+		<div class="cropper_container__instructions">
+			<div class="cropper_step_title">{!$Label.IDCard_Step1}</div>
+		
+			<div>{!$Label.IDCard_photoReq1}<!--The photo must meet the following requirements:--></div>
+			
+			<ul>
+				<li>{!$Label.IDCard_photoReq2}<!--.JPG format--></li>
+				<li>{!$Label.IDCard_photoReq3}<!--Passport-standard size digital photo (head and shoulders against a pale background)--></li>
+			</ul>
+			
+			<!--<div>Please note that the photo shown or uploaded will be printed as is and no modifications will be made. IATA will take no responsibility should a supplier fail to recognize the ID Card holder based on the photo.</div>-->
+			<div><b>{!$Label.ID_Card_Disclaimer}</b></div>
+			
+			<div class="cropper_container__instructions__buttons cropper_clear">
+				<label id="upload_label" for="upload_label__input">
+					<input type="file" id="upload_label__input" name="file" accept="image/*" class="hidden"/>
+					<a id="upload_label__button" class="btn-BlueButtonWAR">
+						<span>Upload New Image</span>
+					</a>
+					<div id="upload_label__no_support">Your browser is not supported. Please use, the latest Firefox, Safari, Chrome, Opera, Edge or Internet Explorer 10 and up</div>
+				</label>
+			</div>
+			
+		</div>
+			
+		<div class="cropper_container__crop crop_clear hidden">
+			<div class="cropper_step_title">{!$Label.IDCard_Step2}</div>			
+		
+			<div class="cropper_container__crop__canvas_container">
+				<canvas id="cropper_container__crop__canvas"/>
+			</div>
+			
+			<div class="cropper_container__live_preview_container">
+				<!--Live preview:-->
+				<div class="cropper_container__live_preview"/>
+				
+				<a class="show_preview_button btn-BlueButtonWAR">
+					<span>{!$Label.ID_Card_Confirm_Selection}</span>
+				</a>
+			</div>
+		</div>
+		
+		<div class="cropper_container__validation {! IF (awsImageViewLink == null, 'hidden', '')}">
+			<!--<div class="cropper_step_title">Step 3: Validate your IDCard then click on "Validate" to proceed.</div>-->
+			
+			<div class="cropper_container__preview_container">
+				<img class="cropper_container__preview" src="{! IF (awsImageViewLink == null, '', awsImageViewLink)}" />
+			</div>
+			
+			<div class="cropper_container__validation__button_bar">
+				<label for="upload_label__input">
+					<a class="btn-BlueButtonWAR">
+						<span>{!$Label.IDCard_SelectNewImage}</span>
+					</a>
+				</label>
+				
+				<!--<div class="crop__button_container">
+					<a id="crop__button" class="btn-BlueButtonWAR">
+						<span>Validate </span>
+					</a>
+				</div>-->
+			</div>
+		</div>
+	
+	</div>
+
+</apex:component>

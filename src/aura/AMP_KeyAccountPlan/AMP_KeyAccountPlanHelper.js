@@ -75,5 +75,35 @@
 			$A.enqueueAction(action);
 		}
 
+	},
+    getCanEdit: function(component) {
+        var action;
+
+        action = component.get("c.getCanEdit");
+        //Set up the callback
+        var self = this;
+        action.setCallback(this, function(actionResult) {
+            // console.log(JSON.stringify(actionResult.getReturnValue()));
+            component.set("v.canEdit", actionResult.getReturnValue());
+        });
+        $A.enqueueAction(action);
+	},
+
+	fetchDivisionValues: function(component){
+		// Fetching piclist values by record type it's only possible (at this time) by calling the REST ui-api
+		// from apex there is no such thing (only all values for taht picklist), normally visualforce pages do it automatically by using tag <apex:inputField />
+		// and that's why I'll fallow the previous implementation and create the list hadcoded!
+		var decisionValues = [];
+		decisionValues.push('APCS');
+        decisionValues.push('CS');
+        decisionValues.push('DG');
+        decisionValues.push('FDS');
+        decisionValues.push('MACS');
+        decisionValues.push('MER');
+        decisionValues.push('SFO');
+
+		component.set("v.divisionValues", decisionValues);
+
 	}
+	
 })

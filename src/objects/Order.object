@@ -1,5 +1,520 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <CustomObject xmlns="http://soap.sforce.com/2006/04/metadata">
+    <actionOverrides>
+        <actionName>Activate</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Approve</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>CancelEdit</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Clone</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Deactivate</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Delete</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Edit</actionName>
+        <content>Order</content>
+        <skipRecordTypeSelect>false</skipRecordTypeSelect>
+        <type>Visualforce</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>List</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>New</actionName>
+        <content>Order</content>
+        <skipRecordTypeSelect>false</skipRecordTypeSelect>
+        <type>Visualforce</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>NewReduction</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>ReduceOrder</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>SaveEdit</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Tab</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>View</actionName>
+        <content>Order</content>
+        <skipRecordTypeSelect>false</skipRecordTypeSelect>
+        <type>Visualforce</type>
+    </actionOverrides>
+    <compactLayoutAssignment>SYSTEM</compactLayoutAssignment>
+    <enableFeeds>false</enableFeeds>
+    <fields>
+        <fullName>Accepted_Payment_Methods__c</fullName>
+        <externalId>false</externalId>
+        <label>Accepted Payment Methods</label>
+        <length>200</length>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>AccountId</fullName>
+        <trackHistory>false</trackHistory>
+        <type>Lookup</type>
+    </fields>
+    <fields>
+        <fullName>AccountNumber</fullName>
+    </fields>
+    <fields>
+        <fullName>ActivatedById</fullName>
+        <trackHistory>false</trackHistory>
+        <type>Lookup</type>
+    </fields>
+    <fields>
+        <fullName>ActivatedDate</fullName>
+        <trackHistory>false</trackHistory>
+    </fields>
+    <fields>
+        <fullName>BillToAccount_Name__c</fullName>
+        <externalId>false</externalId>
+        <label>Bill To Account Name</label>
+        <length>80</length>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>BillToAccount__c</fullName>
+        <deleteConstraint>SetNull</deleteConstraint>
+        <externalId>false</externalId>
+        <label>Bill To Account</label>
+        <referenceTo>Account</referenceTo>
+        <relationshipLabel>Orders (Bill To)</relationshipLabel>
+        <relationshipName>BillToOrder</relationshipName>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <type>Lookup</type>
+    </fields>
+    <fields>
+        <fullName>BillToContactId</fullName>
+        <trackHistory>true</trackHistory>
+        <type>Lookup</type>
+    </fields>
+    <fields>
+        <fullName>BillToContact_Email__c</fullName>
+        <externalId>false</externalId>
+        <label>Bill To Contact Email</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <type>Email</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>BillToContact_First_Name__c</fullName>
+        <externalId>false</externalId>
+        <label>Bill To Contact First Name</label>
+        <length>50</length>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>BillToContact_Job_Title__c</fullName>
+        <externalId>false</externalId>
+        <label>Bill To Contact Job Title</label>
+        <length>128</length>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>BillToContact_Last_Name__c</fullName>
+        <externalId>false</externalId>
+        <label>Bill To Contact Last Name</label>
+        <length>50</length>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>BillToContact_Name__c</fullName>
+        <externalId>false</externalId>
+        <label>Bill To Contact Name</label>
+        <length>80</length>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>BillToContact_Partner_Number__c</fullName>
+        <externalId>false</externalId>
+        <formula>BillTo_Location__r.SAP_Id__c</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>Bill To Contact SAP Partner</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>BillToContact_Phone__c</fullName>
+        <externalId>false</externalId>
+        <label>Bill To Contact Phone</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <type>Phone</type>
+    </fields>
+    <fields>
+        <fullName>BillToContact_Salutation__c</fullName>
+        <externalId>false</externalId>
+        <label>Bill To Contact Salutation</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <type>Picklist</type>
+        <valueSet>
+            <valueSetDefinition>
+                <sorted>false</sorted>
+                <value>
+                    <fullName>Mr.</fullName>
+                    <default>false</default>
+                    <label>Mr.</label>
+                </value>
+                <value>
+                    <fullName>Mrs.</fullName>
+                    <default>false</default>
+                    <label>Mrs.</label>
+                </value>
+            </valueSetDefinition>
+        </valueSet>
+    </fields>
+    <fields>
+        <fullName>BillToContact_VAT_Number__c</fullName>
+        <externalId>false</externalId>
+        <label>Bill To Contact VAT Number</label>
+        <length>20</length>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>BillTo_Account_Contact_ID__c</fullName>
+        <description>Used for querying Zuora Billing Accounts through the combination of Account/Contact ID</description>
+        <externalId>false</externalId>
+        <formula>BillToAccount__c + &apos;|&apos; + BillToContactId</formula>
+        <label>BillTo Account &amp; Contact ID</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>BillTo_Address__c</fullName>
+        <deleteConstraint>SetNull</deleteConstraint>
+        <externalId>false</externalId>
+        <label>Bill To Address</label>
+        <referenceTo>IECAddress__c</referenceTo>
+        <relationshipLabel>Orders</relationshipLabel>
+        <relationshipName>Orders</relationshipName>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <type>Lookup</type>
+    </fields>
+    <fields>
+        <fullName>BillTo_Location__c</fullName>
+        <deleteConstraint>SetNull</deleteConstraint>
+        <externalId>false</externalId>
+        <label>Bill To Location</label>
+        <lookupFilter>
+            <active>true</active>
+            <filterItems>
+                <field>Location__c.Type__c</field>
+                <operation>equals</operation>
+                <value>Bill To</value>
+            </filterItems>
+            <isOptional>false</isOptional>
+        </lookupFilter>
+        <referenceTo>Location__c</referenceTo>
+        <relationshipLabel>Orders</relationshipLabel>
+        <relationshipName>Orders</relationshipName>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <type>Lookup</type>
+    </fields>
+    <fields>
+        <fullName>BillingAddress</fullName>
+        <trackHistory>true</trackHistory>
+    </fields>
+    <fields>
+        <fullName>BillingCountryCode__c</fullName>
+        <externalId>false</externalId>
+        <label>Billing Country Code</label>
+        <length>3</length>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>BillingStateCode_SAP__c</fullName>
+        <externalId>false</externalId>
+        <formula>IF(ISBLANK(BillingStateCode__c), &quot;&quot;, IF(ISBLANK(BillingCountryCode__c), BillingStateCode__c, IF(BEGINS(BillingStateCode__c, BillingCountryCode__c &amp; &quot;-&quot;), MID(BillingStateCode__c, LEN(BillingCountryCode__c) + 2, 3), BillingStateCode__c)))</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>Billing State Code for SAP</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>BillingStateCode__c</fullName>
+        <externalId>false</externalId>
+        <label>Billing State Code</label>
+        <length>6</length>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Bulk_Order_Info__c</fullName>
+        <externalId>false</externalId>
+        <label>Bulk Order Info</label>
+        <length>100</length>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Campaign_ID__c</fullName>
+        <externalId>false</externalId>
+        <formula>Campaign__r.Id</formula>
+        <label>Campaign ID</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Campaign__c</fullName>
+        <deleteConstraint>SetNull</deleteConstraint>
+        <externalId>false</externalId>
+        <label>Campaign</label>
+        <referenceTo>Campaign</referenceTo>
+        <relationshipLabel>Renewal Notices</relationshipLabel>
+        <relationshipName>Orders</relationshipName>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <type>Lookup</type>
+    </fields>
+    <fields>
+        <fullName>CompanyAuthorizedById</fullName>
+        <trackHistory>true</trackHistory>
+        <type>Lookup</type>
+    </fields>
+    <fields>
+        <fullName>CompanyAuthorizedDate</fullName>
+        <trackHistory>true</trackHistory>
+    </fields>
+    <fields>
+        <fullName>ContractEndDate</fullName>
+    </fields>
+    <fields>
+        <fullName>ContractId</fullName>
+        <trackHistory>false</trackHistory>
+        <type>Lookup</type>
+    </fields>
+    <fields>
+        <fullName>ContractName</fullName>
+    </fields>
+    <fields>
+        <fullName>CurrencyIsoCode</fullName>
+        <trackHistory>false</trackHistory>
+    </fields>
+    <fields>
+        <fullName>CustomerAuthorizedById</fullName>
+        <trackHistory>true</trackHistory>
+        <type>Lookup</type>
+    </fields>
+    <fields>
+        <fullName>CustomerAuthorizedDate</fullName>
+        <trackHistory>true</trackHistory>
+    </fields>
+    <fields>
+        <fullName>Description</fullName>
+        <trackHistory>true</trackHistory>
+    </fields>
+    <fields>
+        <fullName>Discount_Amount__c</fullName>
+        <externalId>false</externalId>
+        <label>Discount Amount</label>
+        <summarizedField>OrderItem.Discount__c</summarizedField>
+        <summaryForeignKey>OrderItem.OrderId</summaryForeignKey>
+        <summaryOperation>sum</summaryOperation>
+        <trackHistory>false</trackHistory>
+        <type>Summary</type>
+    </fields>
+    <fields>
+        <fullName>EffectiveDate</fullName>
+        <trackHistory>true</trackHistory>
+    </fields>
+    <fields>
+        <fullName>EndDate</fullName>
+        <trackHistory>false</trackHistory>
+    </fields>
+    <fields>
+        <fullName>Has_Shipping_Instruction__c</fullName>
+        <externalId>false</externalId>
+        <formula>NOT(ISBLANK(Shipping_Instruction__c))</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>Has Shipping Instruction</label>
+        <trackHistory>false</trackHistory>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
+        <fullName>IEC_Credit_Card_Expiration__c</fullName>
+        <description>The expirationdate of the credit card.</description>
+        <externalId>false</externalId>
+        <label>IEC Credit Card Expiration</label>
+        <length>10</length>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>IEC_Credit_Card_Holder_Name__c</fullName>
+        <description>The full name (first or personal and last or family) of the holder of the credit card.</description>
+        <externalId>false</externalId>
+        <label>IEC Credit Card Holder Name</label>
+        <length>255</length>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>IEC_Credit_Card_Mask_Number__c</fullName>
+        <description>A masked version of the credit card number.</description>
+        <externalId>false</externalId>
+        <label>IEC Credit Card Mask Number</label>
+        <length>32</length>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>IEC_Credit_Card_Type__c</fullName>
+        <description>The type of credit card that is being billed.</description>
+        <externalId>false</externalId>
+        <label>IEC Credit Card Type</label>
+        <length>100</length>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>IEC_Event_Release_Id__c</fullName>
+        <externalId>false</externalId>
+        <formula>IEC_Event_Release__r.Id</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>IEC Event Release Id</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>IEC_Event_Release__c</fullName>
+        <deleteConstraint>SetNull</deleteConstraint>
+        <externalId>false</externalId>
+        <label>IEC Event Release</label>
+        <referenceTo>IEC_Event_Release__c</referenceTo>
+        <relationshipLabel>Orders</relationshipLabel>
+        <relationshipName>Orders</relationshipName>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <type>Lookup</type>
+    </fields>
+    <fields>
+        <fullName>IEC_Event_Subscription__c</fullName>
+        <deleteConstraint>SetNull</deleteConstraint>
+        <externalId>false</externalId>
+        <label>IEC Event Subscription</label>
+        <referenceTo>IEC_Event_Subscription__c</referenceTo>
+        <relationshipLabel>Orders</relationshipLabel>
+        <relationshipName>Orders</relationshipName>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <type>Lookup</type>
+    </fields>
+    <fields>
+        <fullName>IEC_Migration_Key__c</fullName>
+        <caseSensitive>false</caseSensitive>
+        <description>IEC - temporary field for data migration</description>
+        <externalId>true</externalId>
+        <label>IEC Migration Key</label>
+        <length>30</length>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <type>Text</type>
+        <unique>true</unique>
+    </fields>
+    <fields>
+        <fullName>IEC_Order_Previous_Type__c</fullName>
+        <externalId>false</externalId>
+        <label>Order Previous Type</label>
+        <length>50</length>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>IEC_Order_Quantity__c</fullName>
+        <description>IEC: total of quantity ordered, created for auto-renew based on event</description>
+        <externalId>false</externalId>
+        <label>Order Quantity</label>
+        <summarizedField>OrderItem.Quantity</summarizedField>
+        <summaryForeignKey>OrderItem.OrderId</summaryForeignKey>
+        <summaryOperation>sum</summaryOperation>
+        <trackHistory>false</trackHistory>
+        <type>Summary</type>
+    </fields>
+    <fields>
+        <fullName>IEC_Payment_Date__c</fullName>
+        <description>Date of the payment</description>
+        <externalId>false</externalId>
+        <label>IEC Payment Date</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <type>Date</type>
+    </fields>
     <fields>
         <fullName>IEC_Zuora_ST_InvoiceId__c</fullName>
         <description>IEC - Id of Zuora invoice for shipping &amp; tax subscription</description>
@@ -44,4 +559,817 @@
         <type>Text</type>
         <unique>false</unique>
     </fields>
+    <fields>
+        <fullName>Internal_Remark__c</fullName>
+        <externalId>false</externalId>
+        <label>Internal Remarks</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <type>TextArea</type>
+    </fields>
+    <fields>
+        <fullName>Invoice_Text__c</fullName>
+        <externalId>false</externalId>
+        <label>Text to print on Invoice</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <type>TextArea</type>
+    </fields>
+    <fields>
+        <fullName>IsReductionOrder</fullName>
+    </fields>
+    <fields>
+        <fullName>Is_Paid__c</fullName>
+        <defaultValue>false</defaultValue>
+        <externalId>false</externalId>
+        <label>Is Paid</label>
+        <trackHistory>false</trackHistory>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
+        <fullName>Name</fullName>
+        <trackHistory>true</trackHistory>
+    </fields>
+    <fields>
+        <fullName>Nb_Payment_Failure__c</fullName>
+        <defaultValue>0</defaultValue>
+        <description>5. Customer can make corrections and resubmit up to 3 times; if the 3rd attempt fails, the customer will be prompted to call IATA CDS</description>
+        <externalId>false</externalId>
+        <label>Nb Payment Failure</label>
+        <precision>2</precision>
+        <required>false</required>
+        <scale>0</scale>
+        <trackHistory>false</trackHistory>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>OpportunityId</fullName>
+        <trackHistory>false</trackHistory>
+        <type>Lookup</type>
+    </fields>
+    <fields>
+        <fullName>OrderReferenceNumber</fullName>
+        <trackHistory>true</trackHistory>
+    </fields>
+    <fields>
+        <fullName>Order_Channel__c</fullName>
+        <externalId>false</externalId>
+        <label>Order Channel</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <type>Picklist</type>
+        <valueSet>
+            <valueSetDefinition>
+                <sorted>false</sorted>
+                <value>
+                    <fullName>Central Direct Sales</fullName>
+                    <default>true</default>
+                    <label>Central Direct Sales</label>
+                </value>
+                <value>
+                    <fullName>eCommerce</fullName>
+                    <default>false</default>
+                    <label>eCommerce</label>
+                </value>
+                <value>
+                    <fullName>Telesales</fullName>
+                    <default>false</default>
+                    <label>Telesales</label>
+                </value>
+            </valueSetDefinition>
+        </valueSet>
+    </fields>
+    <fields>
+        <fullName>OriginalOrderId</fullName>
+        <type>Lookup</type>
+    </fields>
+    <fields>
+        <fullName>OwnerId</fullName>
+        <trackHistory>false</trackHistory>
+        <type>Lookup</type>
+    </fields>
+    <fields>
+        <fullName>Payment_Gateway_Response__c</fullName>
+        <externalId>false</externalId>
+        <inlineHelpText>Payment Gateway Response.</inlineHelpText>
+        <label>Payment Gateway Response</label>
+        <length>512</length>
+        <trackHistory>false</trackHistory>
+        <type>LongTextArea</type>
+        <visibleLines>3</visibleLines>
+    </fields>
+    <fields>
+        <fullName>Payment_Transaction_Number__c</fullName>
+        <externalId>true</externalId>
+        <label>Payment Transaction Number</label>
+        <length>100</length>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Payment_Type__c</fullName>
+        <externalId>false</externalId>
+        <label>Payment Type</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <type>Picklist</type>
+        <valueSet>
+            <valueSetDefinition>
+                <sorted>false</sorted>
+                <value>
+                    <fullName>Credit Card</fullName>
+                    <default>false</default>
+                    <label>Credit Card</label>
+                </value>
+                <value>
+                    <fullName>ICH</fullName>
+                    <default>false</default>
+                    <label>ICH</label>
+                </value>
+                <value>
+                    <fullName>Bank Transfer</fullName>
+                    <default>false</default>
+                    <label>Bank Transfer</label>
+                </value>
+                <value>
+                    <fullName>Credit Card Deferred</fullName>
+                    <default>false</default>
+                    <label>Credit Card Deferred</label>
+                </value>
+                <value>
+                    <fullName>Check</fullName>
+                    <default>false</default>
+                    <label>Check</label>
+                </value>
+                <value>
+                    <fullName>Bill me later</fullName>
+                    <default>false</default>
+                    <label>Bill me later</label>
+                </value>
+            </valueSetDefinition>
+        </valueSet>
+    </fields>
+    <fields>
+        <fullName>PoDate</fullName>
+        <trackHistory>true</trackHistory>
+    </fields>
+    <fields>
+        <fullName>PoNumber</fullName>
+        <trackHistory>true</trackHistory>
+    </fields>
+    <fields>
+        <fullName>Renewal_Notification_URL__c</fullName>
+        <externalId>false</externalId>
+        <formula>$Setup.IEC_Settings__c.IEC_User_Portal_URL__c + &apos;/IEC_ShoppingCart?order=&apos; +  OrderNumber</formula>
+        <label>Renewal Notification URL</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>SAP_Invoice__c</fullName>
+        <deleteConstraint>SetNull</deleteConstraint>
+        <externalId>false</externalId>
+        <label>SAP Invoice</label>
+        <referenceTo>IEC_SAP_Invoice__c</referenceTo>
+        <relationshipLabel>Orders</relationshipLabel>
+        <relationshipName>Orders</relationshipName>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <type>Lookup</type>
+    </fields>
+    <fields>
+        <fullName>SAP_Order_Number__c</fullName>
+        <externalId>false</externalId>
+        <label>SAP Order Number</label>
+        <length>30</length>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Sales_Order_Remark__c</fullName>
+        <externalId>false</externalId>
+        <label>Sales Order Remarks</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <type>TextArea</type>
+    </fields>
+    <fields>
+        <fullName>Sales_Volume__c</fullName>
+        <externalId>false</externalId>
+        <label>Sales Volume</label>
+        <summarizedField>OrderItem.Sales_Volume__c</summarizedField>
+        <summaryForeignKey>OrderItem.OrderId</summaryForeignKey>
+        <summaryOperation>sum</summaryOperation>
+        <trackHistory>false</trackHistory>
+        <type>Summary</type>
+    </fields>
+    <fields>
+        <fullName>Sent_to_Zuora__c</fullName>
+        <defaultValue>false</defaultValue>
+        <externalId>false</externalId>
+        <label>Sent to Zuora</label>
+        <trackHistory>false</trackHistory>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
+        <fullName>ShipToAccount_Name__c</fullName>
+        <externalId>false</externalId>
+        <label>Ship To Account Name</label>
+        <length>80</length>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>ShipToAccount__c</fullName>
+        <deleteConstraint>SetNull</deleteConstraint>
+        <externalId>false</externalId>
+        <label>Ship To Account</label>
+        <referenceTo>Account</referenceTo>
+        <relationshipLabel>Orders (Ship To)</relationshipLabel>
+        <relationshipName>ShipToOrder</relationshipName>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <type>Lookup</type>
+    </fields>
+    <fields>
+        <fullName>ShipToContactId</fullName>
+        <trackHistory>true</trackHistory>
+        <type>Lookup</type>
+    </fields>
+    <fields>
+        <fullName>ShipToContact_Email__c</fullName>
+        <externalId>false</externalId>
+        <label>Ship To Contact Email</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <type>Email</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>ShipToContact_First_Name__c</fullName>
+        <externalId>false</externalId>
+        <label>Ship To Contact First Name</label>
+        <length>50</length>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>ShipToContact_Job_Title__c</fullName>
+        <externalId>false</externalId>
+        <label>Ship To Contact Job Title</label>
+        <length>128</length>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>ShipToContact_Last_Name__c</fullName>
+        <externalId>false</externalId>
+        <label>Ship To Contact Last Name</label>
+        <length>50</length>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>ShipToContact_Name__c</fullName>
+        <externalId>false</externalId>
+        <label>Ship To Contact Name</label>
+        <length>80</length>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>ShipToContact_Partner_Number__c</fullName>
+        <externalId>false</externalId>
+        <formula>ShipTo_Location__r.SAP_Id__c</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>Ship To Contact SAP Partner</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>ShipToContact_Phone__c</fullName>
+        <externalId>false</externalId>
+        <label>Ship To Contact Phone</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <type>Phone</type>
+    </fields>
+    <fields>
+        <fullName>ShipToContact_Salutation__c</fullName>
+        <externalId>false</externalId>
+        <label>Ship To Contact Salutation</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <type>Picklist</type>
+        <valueSet>
+            <valueSetDefinition>
+                <sorted>false</sorted>
+                <value>
+                    <fullName>Mr.</fullName>
+                    <default>false</default>
+                    <label>Mr.</label>
+                </value>
+                <value>
+                    <fullName>Mrs.</fullName>
+                    <default>false</default>
+                    <label>Mrs.</label>
+                </value>
+            </valueSetDefinition>
+        </valueSet>
+    </fields>
+    <fields>
+        <fullName>ShipToContact_VAT_Number__c</fullName>
+        <externalId>false</externalId>
+        <label>Ship To Contact VAT Number</label>
+        <length>20</length>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>ShipTo_Address__c</fullName>
+        <deleteConstraint>SetNull</deleteConstraint>
+        <externalId>false</externalId>
+        <label>Ship To Address</label>
+        <referenceTo>IECAddress__c</referenceTo>
+        <relationshipLabel>Orders (Ship To Address)</relationshipLabel>
+        <relationshipName>Orders1</relationshipName>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <type>Lookup</type>
+    </fields>
+    <fields>
+        <fullName>ShipTo_Location__c</fullName>
+        <deleteConstraint>SetNull</deleteConstraint>
+        <externalId>false</externalId>
+        <label>Ship To Location</label>
+        <lookupFilter>
+            <active>true</active>
+            <filterItems>
+                <field>Location__c.Type__c</field>
+                <operation>equals</operation>
+                <value>Ship To</value>
+            </filterItems>
+            <isOptional>false</isOptional>
+        </lookupFilter>
+        <referenceTo>Location__c</referenceTo>
+        <relationshipLabel>Orders (Ship To Location)</relationshipLabel>
+        <relationshipName>Orders1</relationshipName>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <type>Lookup</type>
+    </fields>
+    <fields>
+        <fullName>ShipTo_same_BillTo__c</fullName>
+        <defaultValue>false</defaultValue>
+        <externalId>false</externalId>
+        <label>Ship To is same as Bill To</label>
+        <trackHistory>false</trackHistory>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
+        <fullName>ShippingAddress</fullName>
+        <trackHistory>true</trackHistory>
+    </fields>
+    <fields>
+        <fullName>ShippingCountryCode__c</fullName>
+        <externalId>false</externalId>
+        <label>Shipping Country Code</label>
+        <length>3</length>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>ShippingStateCode_SAP__c</fullName>
+        <externalId>false</externalId>
+        <formula>IF(ISBLANK(ShippingStateCode__c), &quot;&quot;, IF(ISBLANK(ShippingCountryCode__c), ShippingStateCode__c, IF(BEGINS(ShippingStateCode__c, ShippingCountryCode__c &amp; &quot;-&quot;), MID(ShippingStateCode__c, LEN(ShippingCountryCode__c) + 2, 3), ShippingStateCode__c)))</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>Shipping State Code for SAP</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>ShippingStateCode__c</fullName>
+        <externalId>false</externalId>
+        <label>Shipping State Code</label>
+        <length>6</length>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Shipping_Instruction__c</fullName>
+        <externalId>false</externalId>
+        <label>Shipping Instructions</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <type>TextArea</type>
+    </fields>
+    <fields>
+        <fullName>SoldToAccount_Name__c</fullName>
+        <externalId>false</externalId>
+        <label>Sold To Account Name</label>
+        <length>80</length>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>SoldToAccount_Partner_Number__c</fullName>
+        <externalId>false</externalId>
+        <formula>SoldTo_Location__r.SAP_Id__c</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>Sold To Account SAP Partner</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>SoldTo_Location__c</fullName>
+        <deleteConstraint>SetNull</deleteConstraint>
+        <externalId>false</externalId>
+        <label>SoldTo Location</label>
+        <lookupFilter>
+            <active>true</active>
+            <filterItems>
+                <field>Location__c.Type__c</field>
+                <operation>equals</operation>
+                <value>Sold To</value>
+            </filterItems>
+            <isOptional>false</isOptional>
+        </lookupFilter>
+        <referenceTo>Location__c</referenceTo>
+        <relationshipLabel>Orders (SoldTo Location)</relationshipLabel>
+        <relationshipName>Orders2</relationshipName>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <type>Lookup</type>
+    </fields>
+    <fields>
+        <fullName>Source__c</fullName>
+        <externalId>false</externalId>
+        <label>Source</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <type>Picklist</type>
+        <valueSet>
+            <valueSetDefinition>
+                <sorted>false</sorted>
+                <value>
+                    <fullName>Inbound call</fullName>
+                    <default>true</default>
+                    <label>Inbound call</label>
+                </value>
+                <value>
+                    <fullName>Outbound Solicitation</fullName>
+                    <default>false</default>
+                    <label>Outbound Solicitation</label>
+                </value>
+                <value>
+                    <fullName>eCommerce</fullName>
+                    <default>false</default>
+                    <label>eCommerce</label>
+                </value>
+                <value>
+                    <fullName>eBroadcast Campaign</fullName>
+                    <default>false</default>
+                    <label>eBroadcast Campaign</label>
+                </value>
+                <value>
+                    <fullName>IATA event</fullName>
+                    <default>false</default>
+                    <label>IATA event</label>
+                </value>
+                <value>
+                    <fullName>Non-IATA event</fullName>
+                    <default>false</default>
+                    <label>Non-IATA event</label>
+                </value>
+                <value>
+                    <fullName>Word of mouth</fullName>
+                    <default>false</default>
+                    <label>Word of mouth</label>
+                </value>
+                <value>
+                    <fullName>Automatic Renewal</fullName>
+                    <default>false</default>
+                    <label>Automatic Renewal</label>
+                </value>
+                <value>
+                    <fullName>Subscription Renewal</fullName>
+                    <default>false</default>
+                    <label>Subscription Renewal</label>
+                </value>
+            </valueSetDefinition>
+        </valueSet>
+    </fields>
+    <fields>
+        <fullName>Status_Reason__c</fullName>
+        <externalId>false</externalId>
+        <label>Status Reason</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <type>Picklist</type>
+        <valueSet>
+            <controllingField>Status</controllingField>
+            <valueSetDefinition>
+                <sorted>false</sorted>
+                <value>
+                    <fullName>Bought From Competition</fullName>
+                    <default>false</default>
+                    <label>Bought From Competition</label>
+                </value>
+                <value>
+                    <fullName>Client&apos;s Priorities Shifted</fullName>
+                    <default>false</default>
+                    <label>Client&apos;s Priorities Shifted</label>
+                </value>
+                <value>
+                    <fullName>Existing Bad Debt status with IATA</fullName>
+                    <default>false</default>
+                    <label>Existing Bad Debt status with IATA</label>
+                </value>
+                <value>
+                    <fullName>Needs Not Met by Offer</fullName>
+                    <default>false</default>
+                    <label>Needs Not Met by Offer</label>
+                </value>
+                <value>
+                    <fullName>No Budget</fullName>
+                    <default>false</default>
+                    <label>No Budget</label>
+                </value>
+                <value>
+                    <fullName>Not Aligned with Company Process</fullName>
+                    <default>false</default>
+                    <label>Not Aligned with Company Process</label>
+                </value>
+                <value>
+                    <fullName>Other</fullName>
+                    <default>false</default>
+                    <label>Other</label>
+                </value>
+                <value>
+                    <fullName>Product Availability</fullName>
+                    <default>false</default>
+                    <label>Product Availability</label>
+                </value>
+                <value>
+                    <fullName>Too Expensive</fullName>
+                    <default>false</default>
+                    <label>Too Expensive</label>
+                </value>
+            </valueSetDefinition>
+            <valueSettings>
+                <controllingFieldValue>Cancelled</controllingFieldValue>
+                <valueName>Bought From Competition</valueName>
+            </valueSettings>
+            <valueSettings>
+                <controllingFieldValue>Cancelled</controllingFieldValue>
+                <valueName>Client&apos;s Priorities Shifted</valueName>
+            </valueSettings>
+            <valueSettings>
+                <controllingFieldValue>Cancelled</controllingFieldValue>
+                <valueName>Existing Bad Debt status with IATA</valueName>
+            </valueSettings>
+            <valueSettings>
+                <controllingFieldValue>Cancelled</controllingFieldValue>
+                <valueName>Needs Not Met by Offer</valueName>
+            </valueSettings>
+            <valueSettings>
+                <controllingFieldValue>Cancelled</controllingFieldValue>
+                <valueName>No Budget</valueName>
+            </valueSettings>
+            <valueSettings>
+                <controllingFieldValue>Cancelled</controllingFieldValue>
+                <valueName>Not Aligned with Company Process</valueName>
+            </valueSettings>
+            <valueSettings>
+                <controllingFieldValue>Cancelled</controllingFieldValue>
+                <valueName>Other</valueName>
+            </valueSettings>
+            <valueSettings>
+                <controllingFieldValue>Cancelled</controllingFieldValue>
+                <valueName>Product Availability</valueName>
+            </valueSettings>
+            <valueSettings>
+                <controllingFieldValue>Cancelled</controllingFieldValue>
+                <valueName>Too Expensive</valueName>
+            </valueSettings>
+        </valueSet>
+    </fields>
+    <fields>
+        <fullName>SubTotal_Amount__c</fullName>
+        <externalId>false</externalId>
+        <label>SubTotal Amount</label>
+        <summarizedField>OrderItem.SubTotal__c</summarizedField>
+        <summaryForeignKey>OrderItem.OrderId</summaryForeignKey>
+        <summaryOperation>sum</summaryOperation>
+        <trackHistory>false</trackHistory>
+        <type>Summary</type>
+    </fields>
+    <fields>
+        <fullName>Taxes__c</fullName>
+        <externalId>false</externalId>
+        <label>Taxes</label>
+        <summarizedField>OrderItem.Tax__c</summarizedField>
+        <summaryForeignKey>OrderItem.OrderId</summaryForeignKey>
+        <summaryOperation>sum</summaryOperation>
+        <trackHistory>false</trackHistory>
+        <type>Summary</type>
+    </fields>
+    <fields>
+        <fullName>TotalAmount</fullName>
+    </fields>
+    <fields>
+        <fullName>Total_Amount__c</fullName>
+        <externalId>false</externalId>
+        <label>Total Amount</label>
+        <summarizedField>OrderItem.Total__c</summarizedField>
+        <summaryForeignKey>OrderItem.OrderId</summaryForeignKey>
+        <summaryOperation>sum</summaryOperation>
+        <trackHistory>false</trackHistory>
+        <type>Summary</type>
+    </fields>
+    <fields>
+        <fullName>Total_Freight_Charge__c</fullName>
+        <externalId>false</externalId>
+        <label>Total Freight Charge</label>
+        <summarizedField>OrderItem.Freight_Charge__c</summarizedField>
+        <summaryForeignKey>OrderItem.OrderId</summaryForeignKey>
+        <summaryOperation>sum</summaryOperation>
+        <trackHistory>false</trackHistory>
+        <type>Summary</type>
+    </fields>
+    <fields>
+        <fullName>Total_handling_charges__c</fullName>
+        <externalId>false</externalId>
+        <label>Total handling charges</label>
+        <summarizedField>OrderItem.Handling_charges__c</summarizedField>
+        <summaryForeignKey>OrderItem.OrderId</summaryForeignKey>
+        <summaryOperation>sum</summaryOperation>
+        <trackHistory>false</trackHistory>
+        <type>Summary</type>
+    </fields>
+    <fields>
+        <fullName>Type</fullName>
+        <trackHistory>true</trackHistory>
+        <type>Picklist</type>
+    </fields>
+    <fields>
+        <fullName>Zuora_Credit_Card_Id__c</fullName>
+        <externalId>false</externalId>
+        <label>Zuora Credit Card Id</label>
+        <length>32</length>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Zuora_GatewayResponse__c</fullName>
+        <externalId>false</externalId>
+        <label>Zuora GatewayResponse</label>
+        <length>255</length>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Zuora_Transaction_Id__c</fullName>
+        <externalId>false</externalId>
+        <label>Zuora Transaction Id</label>
+        <length>100</length>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <listViews>
+        <fullName>All_Cart</fullName>
+        <columns>ORDERS.ORDER_NUMBER</columns>
+        <columns>SALES.ACCOUNT.NAME</columns>
+        <columns>Accepted_Payment_Methods__c</columns>
+        <columns>Payment_Type__c</columns>
+        <columns>ORDERS.TYPE</columns>
+        <columns>ORDER.BILL_TO_CONTACT</columns>
+        <columns>IEC_Order_Quantity__c</columns>
+        <columns>Total_Amount__c</columns>
+        <columns>ORDERS.STATUS</columns>
+        <columns>Is_Paid__c</columns>
+        <columns>Zuora_GatewayResponse__c</columns>
+        <columns>ORDERS.CREATED_DATE</columns>
+        <columns>CREATEDBY_USER.ALIAS</columns>
+        <columns>ORDERS.LAST_UPDATE</columns>
+        <columns>UPDATEDBY_USER.ALIAS</columns>
+        <filterScope>Everything</filterScope>
+        <filters>
+            <field>ORDERS.TYPE</field>
+            <operation>equals</operation>
+            <value>Cart</value>
+        </filters>
+        <label>All Cart</label>
+        <language>en_US</language>
+    </listViews>
+    <listViews>
+        <fullName>All_Cart_Dina</fullName>
+        <columns>ORDERS.ORDER_NUMBER</columns>
+        <columns>SALES.ACCOUNT.NAME</columns>
+        <columns>Accepted_Payment_Methods__c</columns>
+        <columns>Payment_Type__c</columns>
+        <columns>ORDERS.TYPE</columns>
+        <columns>ORDER.BILL_TO_CONTACT</columns>
+        <columns>IEC_Order_Quantity__c</columns>
+        <columns>Total_Amount__c</columns>
+        <columns>ORDERS.STATUS</columns>
+        <columns>Is_Paid__c</columns>
+        <columns>Zuora_GatewayResponse__c</columns>
+        <columns>ORDERS.CREATED_DATE</columns>
+        <columns>CREATEDBY_USER.ALIAS</columns>
+        <columns>ORDERS.LAST_UPDATE</columns>
+        <columns>UPDATEDBY_USER.ALIAS</columns>
+        <filterScope>Everything</filterScope>
+        <filters>
+            <field>ORDERS.TYPE</field>
+            <operation>equals</operation>
+            <value>Cart</value>
+        </filters>
+        <filters>
+            <field>CORE.USERS.LAST_NAME</field>
+            <operation>equals</operation>
+            <value>Zhumassultanova</value>
+        </filters>
+        <label>All Cart Dina Zhumassultanova</label>
+        <language>en_US</language>
+    </listViews>
+    <listViews>
+        <fullName>All_Orders</fullName>
+        <columns>ORDERS.ORDER_NUMBER</columns>
+        <columns>ORDERS.CREATED_DATE</columns>
+        <columns>SALES.ACCOUNT.NAME</columns>
+        <columns>Accepted_Payment_Methods__c</columns>
+        <columns>Payment_Type__c</columns>
+        <columns>ORDERS.TYPE</columns>
+        <columns>ORDER.BILL_TO_CONTACT</columns>
+        <columns>IEC_Order_Quantity__c</columns>
+        <columns>Total_Amount__c</columns>
+        <columns>CONTRACT.CONTRACT_TERM</columns>
+        <columns>SoldTo_Location__c</columns>
+        <columns>ORDERS.STATUS</columns>
+        <columns>Is_Paid__c</columns>
+        <columns>Zuora_GatewayResponse__c</columns>
+        <columns>CREATEDBY_USER.ALIAS</columns>
+        <filterScope>Everything</filterScope>
+        <label>All Orders</label>
+        <language>en_US</language>
+    </listViews>
+    <searchLayouts>
+        <customTabListAdditionalFields>ORDERS.ORDER_NUMBER</customTabListAdditionalFields>
+        <customTabListAdditionalFields>SALES.ACCOUNT.NAME</customTabListAdditionalFields>
+        <customTabListAdditionalFields>ORDERS.STATUS</customTabListAdditionalFields>
+        <customTabListAdditionalFields>ORDERS.TOTAL_AMOUNT</customTabListAdditionalFields>
+        <lookupDialogsAdditionalFields>ORDERS.ORDER_NUMBER</lookupDialogsAdditionalFields>
+        <lookupDialogsAdditionalFields>CONTRACT.OWNERALIAS</lookupDialogsAdditionalFields>
+        <lookupPhoneDialogsAdditionalFields>ORDERS.ORDER_NUMBER</lookupPhoneDialogsAdditionalFields>
+        <lookupPhoneDialogsAdditionalFields>CONTRACT.OWNERALIAS</lookupPhoneDialogsAdditionalFields>
+        <lookupPhoneDialogsAdditionalFields>BillToContact_Phone__c</lookupPhoneDialogsAdditionalFields>
+        <lookupPhoneDialogsAdditionalFields>ShipToContact_Phone__c</lookupPhoneDialogsAdditionalFields>
+        <searchResultsAdditionalFields>ORDERS.ORDER_NUMBER</searchResultsAdditionalFields>
+    </searchLayouts>
+    <sharingModel>ControlledByParent</sharingModel>
+    <validationRules>
+        <fullName>Order_Date_in_Future</fullName>
+        <active>false</active>
+        <errorConditionFormula>EffectiveDate &lt;  TODAY()</errorConditionFormula>
+        <errorDisplayField>EffectiveDate</errorDisplayField>
+        <errorMessage>Order Start Date should not in the past</errorMessage>
+    </validationRules>
 </CustomObject>

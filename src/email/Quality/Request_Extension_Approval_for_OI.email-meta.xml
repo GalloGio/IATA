@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<EmailTemplate xmlns="http://soap.sforce.com/2006/04/metadata">
+    <available>true</available>
+    <description>Used to Request Extension Approval for OI</description>
+    <encodingKey>UTF-8</encodingKey>
+    <letterhead>IATADynamicSkyLetterhead</letterhead>
+    <name>Request Extension Approval for OI</name>
+    <style>freeForm</style>
+    <subject>OI Approval Extension Request : {!Operational_Improvements__c.Subject__c} , {!Operational_Improvements__c.Name}, Region: {!Operational_Improvements__c.Region__c}</subject>
+    <textOnly>Dear all,
+
+
+Operational Improvement - {!Operational_Improvements__c.Name} - overall deadline has been extended until {!Operational_Improvements__c.Overall_Deadline__c} and is pending for your Approval or Rejection.
+
+Please click the below link to review it and go to the approval section to Approve/Reject it:
+{!Operational_Improvements__c.Link}
+
+Related Internal Case
+Number: {!Operational_Improvements__c.Related_Case_Number__c}
+Description: {!Operational_Improvements__c.Description__c}
+Region:  {!Operational_Improvements__c.Region__c}
+OI Type: {!Operational_Improvements__c.OI_Type__c}
+
+
+
+Thank you and best regards,
+{!Operational_Improvements__c.OwnerFullName}</textOnly>
+    <type>html</type>
+</EmailTemplate>

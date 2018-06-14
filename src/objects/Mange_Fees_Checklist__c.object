@@ -21,10 +21,6 @@
         <type>Default</type>
     </actionOverrides>
     <actionOverrides>
-        <actionName>Follow</actionName>
-        <type>Default</type>
-    </actionOverrides>
-    <actionOverrides>
         <actionName>List</actionName>
         <type>Default</type>
     </actionOverrides>
@@ -50,6 +46,7 @@
     <description>Object linked to IDFS Airline Participation process</description>
     <enableActivities>true</enableActivities>
     <enableBulkApi>true</enableBulkApi>
+    <enableChangeDataCapture>false</enableChangeDataCapture>
     <enableFeeds>false</enableFeeds>
     <enableHistory>true</enableHistory>
     <enableReports>true</enableReports>
@@ -72,41 +69,49 @@
         <fullName>Forms_of_Payment__c</fullName>
         <externalId>false</externalId>
         <label>Forms of Payment</label>
-        <picklist>
-            <picklistValues>
-                <fullName>Payment via ICH</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Payment via Bank Transfer</fullName>
-                <default>false</default>
-            </picklistValues>
-            <sorted>false</sorted>
-        </picklist>
         <required>false</required>
         <trackHistory>false</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Picklist</type>
+        <valueSet>
+            <valueSetDefinition>
+                <sorted>false</sorted>
+                <value>
+                    <fullName>Payment via ICH</fullName>
+                    <default>false</default>
+                    <label>Payment via ICH</label>
+                </value>
+                <value>
+                    <fullName>Payment via Bank Transfer</fullName>
+                    <default>false</default>
+                    <label>Payment via Bank Transfer</label>
+                </value>
+            </valueSetDefinition>
+        </valueSet>
     </fields>
     <fields>
         <fullName>I_C_Confirmation__c</fullName>
         <externalId>false</externalId>
         <label>I&amp;C Confirmation</label>
-        <picklist>
-            <picklistValues>
-                <fullName>Yes</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>No</fullName>
-                <default>false</default>
-            </picklistValues>
-            <sorted>false</sorted>
-        </picklist>
         <required>false</required>
         <trackHistory>false</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Picklist</type>
+        <valueSet>
+            <valueSetDefinition>
+                <sorted>false</sorted>
+                <value>
+                    <fullName>Yes</fullName>
+                    <default>false</default>
+                    <label>Yes</label>
+                </value>
+                <value>
+                    <fullName>No</fullName>
+                    <default>false</default>
+                    <label>No</label>
+                </value>
+            </valueSetDefinition>
+        </valueSet>
     </fields>
     <fields>
         <fullName>I_C_Request__c</fullName>
@@ -139,21 +144,25 @@
         <fullName>SAP_customer_number_associated__c</fullName>
         <externalId>false</externalId>
         <label>SAP customer number associated</label>
-        <picklist>
-            <picklistValues>
-                <fullName>Yes</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>No</fullName>
-                <default>false</default>
-            </picklistValues>
-            <sorted>false</sorted>
-        </picklist>
         <required>false</required>
         <trackHistory>false</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Picklist</type>
+        <valueSet>
+            <valueSetDefinition>
+                <sorted>false</sorted>
+                <value>
+                    <fullName>Yes</fullName>
+                    <default>false</default>
+                    <label>Yes</label>
+                </value>
+                <value>
+                    <fullName>No</fullName>
+                    <default>false</default>
+                    <label>No</label>
+                </value>
+            </valueSetDefinition>
+        </valueSet>
     </fields>
     <fields>
         <fullName>Sales_Order_Sent__c</fullName>
@@ -168,25 +177,30 @@
         <fullName>Type_of_Fee__c</fullName>
         <externalId>false</externalId>
         <label>Type of Fee</label>
-        <picklist>
-            <picklistValues>
-                <fullName>Joining Fees for direct participation</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Administrative Fees (including rejoining within 18 months of voluntary withdrawal)</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>CASS Multi-country joining fees</fullName>
-                <default>false</default>
-            </picklistValues>
-            <sorted>false</sorted>
-        </picklist>
         <required>false</required>
         <trackHistory>false</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Picklist</type>
+        <valueSet>
+            <valueSetDefinition>
+                <sorted>false</sorted>
+                <value>
+                    <fullName>Joining Fees for direct participation</fullName>
+                    <default>false</default>
+                    <label>Joining Fees for direct participation</label>
+                </value>
+                <value>
+                    <fullName>Administrative Fees (including rejoining within 18 months of voluntary withdrawal)</fullName>
+                    <default>false</default>
+                    <label>Administrative Fees (including rejoining within 18 months of voluntary withdrawal)</label>
+                </value>
+                <value>
+                    <fullName>CASS Multi-country joining fees</fullName>
+                    <default>false</default>
+                    <label>CASS Multi-country joining fees</label>
+                </value>
+            </valueSetDefinition>
+        </valueSet>
     </fields>
     <label>Manage Fees Checklist</label>
     <listViews>
@@ -202,4 +216,5 @@
     <pluralLabel>Manage Fees Checklists</pluralLabel>
     <searchLayouts/>
     <sharingModel>Read</sharingModel>
+    <visibility>Public</visibility>
 </CustomObject>

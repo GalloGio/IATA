@@ -21,10 +21,6 @@
         <type>Default</type>
     </actionOverrides>
     <actionOverrides>
-        <actionName>Follow</actionName>
-        <type>Default</type>
-    </actionOverrides>
-    <actionOverrides>
         <actionName>List</actionName>
         <type>Default</type>
     </actionOverrides>
@@ -50,6 +46,7 @@
     <description>Used for airline participation to define the country requirement depending on the business line selected.</description>
     <enableActivities>false</enableActivities>
     <enableBulkApi>true</enableBulkApi>
+    <enableChangeDataCapture>false</enableChangeDataCapture>
     <enableFeeds>false</enableFeeds>
     <enableHistory>true</enableHistory>
     <enableReports>true</enableReports>
@@ -95,401 +92,500 @@
         <externalId>false</externalId>
         <inlineHelpText>Currency of the Settlement which must be the same as of the bank account in case the airline select as settlement mode: Local Bank Mandate</inlineHelpText>
         <label>Currency of the Settlement</label>
-        <picklist>
-            <picklistValues>
-                <fullName>EUR</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>XCD</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>ARS</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>USD</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>AWG</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>AUD</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>AZN</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>BHR</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>BDT</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>BBD</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>BZD</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>XOF</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>BMD</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>BOB</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>BAM</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>BWP</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>BRL</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>BGN</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>THB</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>XAF</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>CAD</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>CLP &amp; USD*</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>CNY</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Local Currency</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>&quot;COP, USD</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Airline may choose COP, USD, or both.&quot;</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>COP</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>CRC</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>HRK</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>CZK</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>DKK</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>DOP</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>EGP</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>ETB</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>FJD</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>XPF</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>GEL</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>GHS</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>GTQ</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>GYD</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>HTG</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>HNL</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>HKD</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>HUF</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>ISK</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>INR</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>IDR</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>JMD</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>JPY</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>JOD</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>KZT</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>KES</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>KRW</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>KWD</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>LTL</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>MKD</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>MWK</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>MYR</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>MRO</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>MUR</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>MXN</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>MNT</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>MAD</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>MZN</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>NPR</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>NZD</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>NGN</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>NOK</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>OMR</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>PKR</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>PGK</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>PYD</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>PHP</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>PLN</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>QAR</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>RON</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>RUB</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>WST</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>SAR</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>RSD</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>SGD</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>ZAR</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>LKR</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>SEK</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>CHF</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>TZS</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>TOP</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>TTD</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>TND</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>TRY</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>UAH</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>AED</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>GBP</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>VEF</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>VND</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>YER</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>ZMW</fullName>
-                <default>false</default>
-            </picklistValues>
-            <sorted>false</sorted>
-        </picklist>
         <required>false</required>
         <trackHistory>false</trackHistory>
         <trackTrending>false</trackTrending>
         <type>MultiselectPicklist</type>
+        <valueSet>
+            <valueSetDefinition>
+                <sorted>false</sorted>
+                <value>
+                    <fullName>EUR</fullName>
+                    <default>false</default>
+                    <label>EUR</label>
+                </value>
+                <value>
+                    <fullName>XCD</fullName>
+                    <default>false</default>
+                    <label>XCD</label>
+                </value>
+                <value>
+                    <fullName>ARS</fullName>
+                    <default>false</default>
+                    <label>ARS</label>
+                </value>
+                <value>
+                    <fullName>USD</fullName>
+                    <default>false</default>
+                    <label>USD</label>
+                </value>
+                <value>
+                    <fullName>AWG</fullName>
+                    <default>false</default>
+                    <label>AWG</label>
+                </value>
+                <value>
+                    <fullName>AUD</fullName>
+                    <default>false</default>
+                    <label>AUD</label>
+                </value>
+                <value>
+                    <fullName>AZN</fullName>
+                    <default>false</default>
+                    <label>AZN</label>
+                </value>
+                <value>
+                    <fullName>BHR</fullName>
+                    <default>false</default>
+                    <label>BHR</label>
+                </value>
+                <value>
+                    <fullName>BDT</fullName>
+                    <default>false</default>
+                    <label>BDT</label>
+                </value>
+                <value>
+                    <fullName>BBD</fullName>
+                    <default>false</default>
+                    <label>BBD</label>
+                </value>
+                <value>
+                    <fullName>BZD</fullName>
+                    <default>false</default>
+                    <label>BZD</label>
+                </value>
+                <value>
+                    <fullName>XOF</fullName>
+                    <default>false</default>
+                    <label>XOF</label>
+                </value>
+                <value>
+                    <fullName>BMD</fullName>
+                    <default>false</default>
+                    <label>BMD</label>
+                </value>
+                <value>
+                    <fullName>BOB</fullName>
+                    <default>false</default>
+                    <label>BOB</label>
+                </value>
+                <value>
+                    <fullName>BAM</fullName>
+                    <default>false</default>
+                    <label>BAM</label>
+                </value>
+                <value>
+                    <fullName>BWP</fullName>
+                    <default>false</default>
+                    <label>BWP</label>
+                </value>
+                <value>
+                    <fullName>BRL</fullName>
+                    <default>false</default>
+                    <label>BRL</label>
+                </value>
+                <value>
+                    <fullName>BGN</fullName>
+                    <default>false</default>
+                    <label>BGN</label>
+                </value>
+                <value>
+                    <fullName>THB</fullName>
+                    <default>false</default>
+                    <label>THB</label>
+                </value>
+                <value>
+                    <fullName>XAF</fullName>
+                    <default>false</default>
+                    <label>XAF</label>
+                </value>
+                <value>
+                    <fullName>CAD</fullName>
+                    <default>false</default>
+                    <label>CAD</label>
+                </value>
+                <value>
+                    <fullName>CLP &amp; USD*</fullName>
+                    <default>false</default>
+                    <label>CLP &amp; USD*</label>
+                </value>
+                <value>
+                    <fullName>CNY</fullName>
+                    <default>false</default>
+                    <label>CNY</label>
+                </value>
+                <value>
+                    <fullName>Local Currency</fullName>
+                    <default>false</default>
+                    <label>Local Currency</label>
+                </value>
+                <value>
+                    <fullName>&quot;COP, USD</fullName>
+                    <default>false</default>
+                    <label>&quot;COP, USD</label>
+                </value>
+                <value>
+                    <fullName>Airline may choose COP, USD, or both.&quot;</fullName>
+                    <default>false</default>
+                    <label>Airline may choose COP, USD, or both.&quot;</label>
+                </value>
+                <value>
+                    <fullName>COP</fullName>
+                    <default>false</default>
+                    <label>COP</label>
+                </value>
+                <value>
+                    <fullName>CRC</fullName>
+                    <default>false</default>
+                    <label>CRC</label>
+                </value>
+                <value>
+                    <fullName>HRK</fullName>
+                    <default>false</default>
+                    <label>HRK</label>
+                </value>
+                <value>
+                    <fullName>CZK</fullName>
+                    <default>false</default>
+                    <label>CZK</label>
+                </value>
+                <value>
+                    <fullName>DKK</fullName>
+                    <default>false</default>
+                    <label>DKK</label>
+                </value>
+                <value>
+                    <fullName>DOP</fullName>
+                    <default>false</default>
+                    <label>DOP</label>
+                </value>
+                <value>
+                    <fullName>EGP</fullName>
+                    <default>false</default>
+                    <label>EGP</label>
+                </value>
+                <value>
+                    <fullName>ETB</fullName>
+                    <default>false</default>
+                    <label>ETB</label>
+                </value>
+                <value>
+                    <fullName>FJD</fullName>
+                    <default>false</default>
+                    <label>FJD</label>
+                </value>
+                <value>
+                    <fullName>XPF</fullName>
+                    <default>false</default>
+                    <label>XPF</label>
+                </value>
+                <value>
+                    <fullName>GEL</fullName>
+                    <default>false</default>
+                    <label>GEL</label>
+                </value>
+                <value>
+                    <fullName>GHS</fullName>
+                    <default>false</default>
+                    <label>GHS</label>
+                </value>
+                <value>
+                    <fullName>GTQ</fullName>
+                    <default>false</default>
+                    <label>GTQ</label>
+                </value>
+                <value>
+                    <fullName>GYD</fullName>
+                    <default>false</default>
+                    <label>GYD</label>
+                </value>
+                <value>
+                    <fullName>HTG</fullName>
+                    <default>false</default>
+                    <label>HTG</label>
+                </value>
+                <value>
+                    <fullName>HNL</fullName>
+                    <default>false</default>
+                    <label>HNL</label>
+                </value>
+                <value>
+                    <fullName>HKD</fullName>
+                    <default>false</default>
+                    <label>HKD</label>
+                </value>
+                <value>
+                    <fullName>HUF</fullName>
+                    <default>false</default>
+                    <label>HUF</label>
+                </value>
+                <value>
+                    <fullName>ISK</fullName>
+                    <default>false</default>
+                    <label>ISK</label>
+                </value>
+                <value>
+                    <fullName>INR</fullName>
+                    <default>false</default>
+                    <label>INR</label>
+                </value>
+                <value>
+                    <fullName>IDR</fullName>
+                    <default>false</default>
+                    <label>IDR</label>
+                </value>
+                <value>
+                    <fullName>JMD</fullName>
+                    <default>false</default>
+                    <label>JMD</label>
+                </value>
+                <value>
+                    <fullName>JPY</fullName>
+                    <default>false</default>
+                    <label>JPY</label>
+                </value>
+                <value>
+                    <fullName>JOD</fullName>
+                    <default>false</default>
+                    <label>JOD</label>
+                </value>
+                <value>
+                    <fullName>KZT</fullName>
+                    <default>false</default>
+                    <label>KZT</label>
+                </value>
+                <value>
+                    <fullName>KES</fullName>
+                    <default>false</default>
+                    <label>KES</label>
+                </value>
+                <value>
+                    <fullName>KRW</fullName>
+                    <default>false</default>
+                    <label>KRW</label>
+                </value>
+                <value>
+                    <fullName>KWD</fullName>
+                    <default>false</default>
+                    <label>KWD</label>
+                </value>
+                <value>
+                    <fullName>LTL</fullName>
+                    <default>false</default>
+                    <label>LTL</label>
+                </value>
+                <value>
+                    <fullName>MKD</fullName>
+                    <default>false</default>
+                    <label>MKD</label>
+                </value>
+                <value>
+                    <fullName>MWK</fullName>
+                    <default>false</default>
+                    <label>MWK</label>
+                </value>
+                <value>
+                    <fullName>MYR</fullName>
+                    <default>false</default>
+                    <label>MYR</label>
+                </value>
+                <value>
+                    <fullName>MRO</fullName>
+                    <default>false</default>
+                    <label>MRO</label>
+                </value>
+                <value>
+                    <fullName>MUR</fullName>
+                    <default>false</default>
+                    <label>MUR</label>
+                </value>
+                <value>
+                    <fullName>MXN</fullName>
+                    <default>false</default>
+                    <label>MXN</label>
+                </value>
+                <value>
+                    <fullName>MNT</fullName>
+                    <default>false</default>
+                    <label>MNT</label>
+                </value>
+                <value>
+                    <fullName>MAD</fullName>
+                    <default>false</default>
+                    <label>MAD</label>
+                </value>
+                <value>
+                    <fullName>MZN</fullName>
+                    <default>false</default>
+                    <label>MZN</label>
+                </value>
+                <value>
+                    <fullName>NPR</fullName>
+                    <default>false</default>
+                    <label>NPR</label>
+                </value>
+                <value>
+                    <fullName>NZD</fullName>
+                    <default>false</default>
+                    <label>NZD</label>
+                </value>
+                <value>
+                    <fullName>NGN</fullName>
+                    <default>false</default>
+                    <label>NGN</label>
+                </value>
+                <value>
+                    <fullName>NOK</fullName>
+                    <default>false</default>
+                    <label>NOK</label>
+                </value>
+                <value>
+                    <fullName>OMR</fullName>
+                    <default>false</default>
+                    <label>OMR</label>
+                </value>
+                <value>
+                    <fullName>PKR</fullName>
+                    <default>false</default>
+                    <label>PKR</label>
+                </value>
+                <value>
+                    <fullName>PGK</fullName>
+                    <default>false</default>
+                    <label>PGK</label>
+                </value>
+                <value>
+                    <fullName>PYD</fullName>
+                    <default>false</default>
+                    <label>PYD</label>
+                </value>
+                <value>
+                    <fullName>PHP</fullName>
+                    <default>false</default>
+                    <label>PHP</label>
+                </value>
+                <value>
+                    <fullName>PLN</fullName>
+                    <default>false</default>
+                    <label>PLN</label>
+                </value>
+                <value>
+                    <fullName>QAR</fullName>
+                    <default>false</default>
+                    <label>QAR</label>
+                </value>
+                <value>
+                    <fullName>RON</fullName>
+                    <default>false</default>
+                    <label>RON</label>
+                </value>
+                <value>
+                    <fullName>RUB</fullName>
+                    <default>false</default>
+                    <label>RUB</label>
+                </value>
+                <value>
+                    <fullName>WST</fullName>
+                    <default>false</default>
+                    <label>WST</label>
+                </value>
+                <value>
+                    <fullName>SAR</fullName>
+                    <default>false</default>
+                    <label>SAR</label>
+                </value>
+                <value>
+                    <fullName>RSD</fullName>
+                    <default>false</default>
+                    <label>RSD</label>
+                </value>
+                <value>
+                    <fullName>SGD</fullName>
+                    <default>false</default>
+                    <label>SGD</label>
+                </value>
+                <value>
+                    <fullName>ZAR</fullName>
+                    <default>false</default>
+                    <label>ZAR</label>
+                </value>
+                <value>
+                    <fullName>LKR</fullName>
+                    <default>false</default>
+                    <label>LKR</label>
+                </value>
+                <value>
+                    <fullName>SEK</fullName>
+                    <default>false</default>
+                    <label>SEK</label>
+                </value>
+                <value>
+                    <fullName>CHF</fullName>
+                    <default>false</default>
+                    <label>CHF</label>
+                </value>
+                <value>
+                    <fullName>TZS</fullName>
+                    <default>false</default>
+                    <label>TZS</label>
+                </value>
+                <value>
+                    <fullName>TOP</fullName>
+                    <default>false</default>
+                    <label>TOP</label>
+                </value>
+                <value>
+                    <fullName>TTD</fullName>
+                    <default>false</default>
+                    <label>TTD</label>
+                </value>
+                <value>
+                    <fullName>TND</fullName>
+                    <default>false</default>
+                    <label>TND</label>
+                </value>
+                <value>
+                    <fullName>TRY</fullName>
+                    <default>false</default>
+                    <label>TRY</label>
+                </value>
+                <value>
+                    <fullName>UAH</fullName>
+                    <default>false</default>
+                    <label>UAH</label>
+                </value>
+                <value>
+                    <fullName>AED</fullName>
+                    <default>false</default>
+                    <label>AED</label>
+                </value>
+                <value>
+                    <fullName>GBP</fullName>
+                    <default>false</default>
+                    <label>GBP</label>
+                </value>
+                <value>
+                    <fullName>VEF</fullName>
+                    <default>false</default>
+                    <label>VEF</label>
+                </value>
+                <value>
+                    <fullName>VND</fullName>
+                    <default>false</default>
+                    <label>VND</label>
+                </value>
+                <value>
+                    <fullName>YER</fullName>
+                    <default>false</default>
+                    <label>YER</label>
+                </value>
+                <value>
+                    <fullName>ZMW</fullName>
+                    <default>false</default>
+                    <label>ZMW</label>
+                </value>
+            </valueSetDefinition>
+        </valueSet>
         <visibleLines>8</visibleLines>
     </fields>
     <fields>
@@ -507,25 +603,30 @@
         <externalId>false</externalId>
         <inlineHelpText>Does this operation have dual currencies?</inlineHelpText>
         <label>Dual currencies</label>
-        <picklist>
-            <picklistValues>
-                <fullName>YES</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>NO</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>N/A</fullName>
-                <default>false</default>
-            </picklistValues>
-            <sorted>false</sorted>
-        </picklist>
         <required>false</required>
         <trackHistory>false</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Picklist</type>
+        <valueSet>
+            <valueSetDefinition>
+                <sorted>false</sorted>
+                <value>
+                    <fullName>YES</fullName>
+                    <default>false</default>
+                    <label>YES</label>
+                </value>
+                <value>
+                    <fullName>NO</fullName>
+                    <default>false</default>
+                    <label>NO</label>
+                </value>
+                <value>
+                    <fullName>N/A</fullName>
+                    <default>false</default>
+                    <label>N/A</label>
+                </value>
+            </valueSetDefinition>
+        </valueSet>
     </fields>
     <fields>
         <fullName>Dual_currencies_com__c</fullName>
@@ -542,25 +643,30 @@
         <externalId>false</externalId>
         <inlineHelpText>Foreign VAT accepted? (eg: Home country VAT of the airline)</inlineHelpText>
         <label>Foreign VAT accepted</label>
-        <picklist>
-            <picklistValues>
-                <fullName>YES</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>NO</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>N/A</fullName>
-                <default>false</default>
-            </picklistValues>
-            <sorted>false</sorted>
-        </picklist>
         <required>false</required>
         <trackHistory>false</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Picklist</type>
+        <valueSet>
+            <valueSetDefinition>
+                <sorted>false</sorted>
+                <value>
+                    <fullName>YES</fullName>
+                    <default>false</default>
+                    <label>YES</label>
+                </value>
+                <value>
+                    <fullName>NO</fullName>
+                    <default>false</default>
+                    <label>NO</label>
+                </value>
+                <value>
+                    <fullName>N/A</fullName>
+                    <default>false</default>
+                    <label>N/A</label>
+                </value>
+            </valueSetDefinition>
+        </valueSet>
     </fields>
     <fields>
         <fullName>Foreign_VAT_accepted_com__c</fullName>
@@ -596,45 +702,54 @@
         <fullName>Line_of_business__c</fullName>
         <externalId>false</externalId>
         <label>Line of business</label>
-        <picklist>
-            <picklistValues>
-                <fullName>BSP</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>CASS</fullName>
-                <default>false</default>
-            </picklistValues>
-            <sorted>true</sorted>
-        </picklist>
         <required>false</required>
         <trackHistory>false</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Picklist</type>
+        <valueSet>
+            <valueSetDefinition>
+                <sorted>true</sorted>
+                <value>
+                    <fullName>BSP</fullName>
+                    <default>false</default>
+                    <label>BSP</label>
+                </value>
+                <value>
+                    <fullName>CASS</fullName>
+                    <default>false</default>
+                    <label>CASS</label>
+                </value>
+            </valueSetDefinition>
+        </valueSet>
     </fields>
     <fields>
         <fullName>Local_Representation_Mandatory__c</fullName>
         <externalId>false</externalId>
         <label>Local Representation Mandatory</label>
-        <picklist>
-            <picklistValues>
-                <fullName>YES</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>NO</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>N/A</fullName>
-                <default>false</default>
-            </picklistValues>
-            <sorted>false</sorted>
-        </picklist>
         <required>false</required>
         <trackHistory>false</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Picklist</type>
+        <valueSet>
+            <valueSetDefinition>
+                <sorted>false</sorted>
+                <value>
+                    <fullName>YES</fullName>
+                    <default>false</default>
+                    <label>YES</label>
+                </value>
+                <value>
+                    <fullName>NO</fullName>
+                    <default>false</default>
+                    <label>NO</label>
+                </value>
+                <value>
+                    <fullName>N/A</fullName>
+                    <default>false</default>
+                    <label>N/A</label>
+                </value>
+            </valueSetDefinition>
+        </valueSet>
     </fields>
     <fields>
         <fullName>Local_Representation_Mandatory_com__c</fullName>
@@ -662,50 +777,60 @@
         <inlineHelpText>Does the airline need to have a 
 Local Representation for Fiscal requirements?</inlineHelpText>
         <label>Local Representation for Fiscal requirem</label>
-        <picklist>
-            <picklistValues>
-                <fullName>YES</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>NO</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>N/A</fullName>
-                <default>false</default>
-            </picklistValues>
-            <sorted>false</sorted>
-        </picklist>
         <required>false</required>
         <trackHistory>false</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Picklist</type>
+        <valueSet>
+            <valueSetDefinition>
+                <sorted>false</sorted>
+                <value>
+                    <fullName>YES</fullName>
+                    <default>false</default>
+                    <label>YES</label>
+                </value>
+                <value>
+                    <fullName>NO</fullName>
+                    <default>false</default>
+                    <label>NO</label>
+                </value>
+                <value>
+                    <fullName>N/A</fullName>
+                    <default>false</default>
+                    <label>N/A</label>
+                </value>
+            </valueSetDefinition>
+        </valueSet>
     </fields>
     <fields>
         <fullName>Local_VAT_Mandatory__c</fullName>
         <externalId>false</externalId>
         <inlineHelpText>Local VAT (or any equivalent to VAT like GST, RUC, RUT, NIT) mandatory?</inlineHelpText>
         <label>Local VAT Mandatory</label>
-        <picklist>
-            <picklistValues>
-                <fullName>YES</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>NO</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>N/A</fullName>
-                <default>false</default>
-            </picklistValues>
-            <sorted>false</sorted>
-        </picklist>
         <required>false</required>
         <trackHistory>false</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Picklist</type>
+        <valueSet>
+            <valueSetDefinition>
+                <sorted>false</sorted>
+                <value>
+                    <fullName>YES</fullName>
+                    <default>false</default>
+                    <label>YES</label>
+                </value>
+                <value>
+                    <fullName>NO</fullName>
+                    <default>false</default>
+                    <label>NO</label>
+                </value>
+                <value>
+                    <fullName>N/A</fullName>
+                    <default>false</default>
+                    <label>N/A</label>
+                </value>
+            </valueSetDefinition>
+        </valueSet>
     </fields>
     <fields>
         <fullName>Local_VAT_Mandatory_com__c</fullName>
@@ -723,25 +848,30 @@ Local Representation for Fiscal requirements?</inlineHelpText>
         <inlineHelpText>Does the airline need to have a local accountant 
 or any kind of 3rd party for taxation issues?</inlineHelpText>
         <label>Local accountant mandatory</label>
-        <picklist>
-            <picklistValues>
-                <fullName>YES</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>NO</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>N/A</fullName>
-                <default>false</default>
-            </picklistValues>
-            <sorted>false</sorted>
-        </picklist>
         <required>false</required>
         <trackHistory>false</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Picklist</type>
+        <valueSet>
+            <valueSetDefinition>
+                <sorted>false</sorted>
+                <value>
+                    <fullName>YES</fullName>
+                    <default>false</default>
+                    <label>YES</label>
+                </value>
+                <value>
+                    <fullName>NO</fullName>
+                    <default>false</default>
+                    <label>NO</label>
+                </value>
+                <value>
+                    <fullName>N/A</fullName>
+                    <default>false</default>
+                    <label>N/A</label>
+                </value>
+            </valueSetDefinition>
+        </valueSet>
     </fields>
     <fields>
         <fullName>Local_accountant_mandatory_com__c</fullName>
@@ -768,25 +898,30 @@ or any kind of 3rd party for taxation issues?</inlineHelpText>
         <externalId>false</externalId>
         <inlineHelpText>Is it legally mandatory for the airlines to give commission to agencies?</inlineHelpText>
         <label>Mandatory to give commission to agencies</label>
-        <picklist>
-            <picklistValues>
-                <fullName>YES</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>NO</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>N/A</fullName>
-                <default>false</default>
-            </picklistValues>
-            <sorted>false</sorted>
-        </picklist>
         <required>false</required>
         <trackHistory>false</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Picklist</type>
+        <valueSet>
+            <valueSetDefinition>
+                <sorted>false</sorted>
+                <value>
+                    <fullName>YES</fullName>
+                    <default>false</default>
+                    <label>YES</label>
+                </value>
+                <value>
+                    <fullName>NO</fullName>
+                    <default>false</default>
+                    <label>NO</label>
+                </value>
+                <value>
+                    <fullName>N/A</fullName>
+                    <default>false</default>
+                    <label>N/A</label>
+                </value>
+            </valueSetDefinition>
+        </valueSet>
     </fields>
     <fields>
         <fullName>Special_VAT_status_allowed__c</fullName>
@@ -794,25 +929,30 @@ or any kind of 3rd party for taxation issues?</inlineHelpText>
         <inlineHelpText>Can an airline have a special VAT status 
 (or any special taxation status)?</inlineHelpText>
         <label>Special VAT status allowed</label>
-        <picklist>
-            <picklistValues>
-                <fullName>YES</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>NO</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>N/A</fullName>
-                <default>false</default>
-            </picklistValues>
-            <sorted>false</sorted>
-        </picklist>
         <required>false</required>
         <trackHistory>false</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Picklist</type>
+        <valueSet>
+            <valueSetDefinition>
+                <sorted>false</sorted>
+                <value>
+                    <fullName>YES</fullName>
+                    <default>false</default>
+                    <label>YES</label>
+                </value>
+                <value>
+                    <fullName>NO</fullName>
+                    <default>false</default>
+                    <label>NO</label>
+                </value>
+                <value>
+                    <fullName>N/A</fullName>
+                    <default>false</default>
+                    <label>N/A</label>
+                </value>
+            </valueSetDefinition>
+        </valueSet>
     </fields>
     <fields>
         <fullName>Special_VAT_status_allowed_com__c</fullName>
@@ -829,21 +969,25 @@ or any kind of 3rd party for taxation issues?</inlineHelpText>
         <externalId>false</externalId>
         <inlineHelpText>Which type of address is accepted &amp; inserted into ISS systems (BSPLink, CASSLink etc..)</inlineHelpText>
         <label>Type of address accepted</label>
-        <picklist>
-            <picklistValues>
-                <fullName>Local</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Foreign</fullName>
-                <default>false</default>
-            </picklistValues>
-            <sorted>false</sorted>
-        </picklist>
         <required>false</required>
         <trackHistory>false</trackHistory>
         <trackTrending>false</trackTrending>
         <type>MultiselectPicklist</type>
+        <valueSet>
+            <valueSetDefinition>
+                <sorted>false</sorted>
+                <value>
+                    <fullName>Local</fullName>
+                    <default>false</default>
+                    <label>Local</label>
+                </value>
+                <value>
+                    <fullName>Foreign</fullName>
+                    <default>false</default>
+                    <label>Foreign</label>
+                </value>
+            </valueSetDefinition>
+        </valueSet>
         <visibleLines>3</visibleLines>
     </fields>
     <fields>
@@ -871,50 +1015,60 @@ or any kind of 3rd party for taxation issues?</inlineHelpText>
         <externalId>false</externalId>
         <inlineHelpText>VAT no. always inserted into ISS systems? (BSPLink, Casslink etc..)</inlineHelpText>
         <label>VAT no. always inserted into ISS systems</label>
-        <picklist>
-            <picklistValues>
-                <fullName>YES</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>NO</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>N/A</fullName>
-                <default>false</default>
-            </picklistValues>
-            <sorted>false</sorted>
-        </picklist>
         <required>false</required>
         <trackHistory>false</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Picklist</type>
+        <valueSet>
+            <valueSetDefinition>
+                <sorted>false</sorted>
+                <value>
+                    <fullName>YES</fullName>
+                    <default>false</default>
+                    <label>YES</label>
+                </value>
+                <value>
+                    <fullName>NO</fullName>
+                    <default>false</default>
+                    <label>NO</label>
+                </value>
+                <value>
+                    <fullName>N/A</fullName>
+                    <default>false</default>
+                    <label>N/A</label>
+                </value>
+            </valueSetDefinition>
+        </valueSet>
     </fields>
     <fields>
         <fullName>bank_account_in_of_the_settlement__c</fullName>
         <externalId>false</externalId>
         <inlineHelpText>Airline can (regardless of local representation or not) open a local bank account in the settlement currency:</inlineHelpText>
         <label>Local bank accnt in settlement currency</label>
-        <picklist>
-            <picklistValues>
-                <fullName>YES</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>NO</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>N/A</fullName>
-                <default>false</default>
-            </picklistValues>
-            <sorted>false</sorted>
-        </picklist>
         <required>false</required>
         <trackHistory>false</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Picklist</type>
+        <valueSet>
+            <valueSetDefinition>
+                <sorted>false</sorted>
+                <value>
+                    <fullName>YES</fullName>
+                    <default>false</default>
+                    <label>YES</label>
+                </value>
+                <value>
+                    <fullName>NO</fullName>
+                    <default>false</default>
+                    <label>NO</label>
+                </value>
+                <value>
+                    <fullName>N/A</fullName>
+                    <default>false</default>
+                    <label>N/A</label>
+                </value>
+            </valueSetDefinition>
+        </valueSet>
     </fields>
     <fields>
         <fullName>bank_account_in_of_the_settlement_com__c</fullName>
@@ -949,6 +1103,19 @@ or any kind of 3rd party for taxation issues?</inlineHelpText>
         <label>AP Country Requirements for BSP</label>
         <language>en_US</language>
     </listViews>
+    <listViews>
+        <fullName>AP_Country_Requirements_for_CASS</fullName>
+        <columns>NAME</columns>
+        <columns>Country__c</columns>
+        <filterScope>Everything</filterScope>
+        <filters>
+            <field>Line_of_business__c</field>
+            <operation>equals</operation>
+            <value>CASS</value>
+        </filters>
+        <label>AP Country Requirements for CASS</label>
+        <language>en_US</language>
+    </listViews>
     <nameField>
         <label>AP Country  Requierment Name</label>
         <trackHistory>false</trackHistory>
@@ -958,4 +1125,5 @@ or any kind of 3rd party for taxation issues?</inlineHelpText>
     <searchLayouts/>
     <sharingModel>ControlledByParent</sharingModel>
     <startsWith>Vowel</startsWith>
+    <visibility>Public</visibility>
 </CustomObject>

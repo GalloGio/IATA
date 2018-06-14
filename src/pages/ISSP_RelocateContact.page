@@ -1,0 +1,185 @@
+<apex:page standardController="Contact"
+           extensions="ISSP_RelocateContact"
+           showHeader="false"
+           sidebar="false"
+           standardStylesheets="false"
+           action="{!initAction}">
+
+    <c:ISSP_Header ></c:ISSP_Header>
+    <div class="container">
+        <c:ISSP_CustomNavigation />
+
+        <h4>
+            {!$Label.ISSP_Company_Administration}
+            <span class="glyphicon glyphicon-chevron-right small " aria-hidden="true"></span>
+            {!$Label.ISSP_Contacts}
+            <span class="glyphicon glyphicon-chevron-right small " aria-hidden="true"></span>
+            {!$Label.ISSP_Contact_Information}
+            <span class="glyphicon glyphicon-chevron-right small " aria-hidden="true"></span>
+            {!$Label.ISSP_Relocate_Contact}
+            <br/>
+            <small>{!$Label.ISSP_Relocate_Description}</small>
+        </h4>
+
+        <apex:form id="mainForm">
+        <div class="panel panel-primary">
+            <div class="panel-heading head_panel_green">
+                <a name="form"></a>
+                <h3 class="panel-title">{!$Label.ISSP_Relocate_Contact}</h3>
+            </div>
+            <div class="panel-body">
+                
+                <!-- Errors section -->
+                <div class="alert alert-danger" style="display:{!if(errorMessage.size==0,'none','')}" >
+                    <strong>Error: </strong>
+                    <apex:repeat value="{!errorMessage}" var="er" id="theRepeat">
+                        <p> {!er}</p>
+                    </apex:repeat>
+                </div>
+                
+                <!-- Buttons section -->
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="col-lg-4"></div>
+                        <div class="col-lg-1">
+                            <apex:outputPanel rendered="{!selectedAccountId!=null}">
+                                <apex:commandButton id="saveButton" styleClass="btn btn_iata btn-success" action="{!RelocateContact}" value="Save" />
+                            </apex:outputPanel>
+                        </div>
+                        <div class="col-lg-1"><apex:commandButton id="cancelButton" styleClass="btn btn_iata btn-danger" action="{!getReturnPage}" value="Cancel"/></div>
+                        <div class="col-lg-6"></div>
+                    </div>
+                </div>
+                <div style="margin-bottom:30px"/>
+                
+                <!-- Upper section - Contact info -->
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="panel-body form-horizontal" style="padding-top: 0px;" >
+                            <div class="row">
+                                <label class="lbl col-lg-5 h4" style="padding-left:28px">{!$ObjectType.Contact.label}</label>
+                                <div class="col-lg-7 h4">{!Contact.Salutation} {!contact.Name}</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="row h4 text-center bg-primary" style="border-radius: 5px; padding: 10px; margin: 20px 25%;">
+                            {!$Label.ISSP_Relocate_Current_Account}
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="row h4 text-center bg-primary" style="border-radius: 5px; padding: 10px; margin: 20px 25%;">
+                            {!$Label.ISSP_Relocate_Move_To}
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="row">
+                    <div class="col-md-6"></div>
+                    <apex:outputPanel layout="block" rendered="{!NOT(IsMapAccountsEmpty)}" styleclass="col-md-6">
+                        <div class="row text-center" style="padding: 0px 15% 20px 15%;">
+                            <apex:selectList styleclass="form-control rec text-center" value="{!selectedAccountId}" multiselect="false" size="1">
+                                <apex:selectOptions value="{!listOptionAccount}"/>
+                                <apex:actionSupport event="onchange" action="{!selectAccount}" rerender="mainForm"/>
+                            </apex:selectList>
+                        </div>
+                    </apex:outputPanel>
+                </div>
+                
+                <div class="row">
+                    <!-- Left Column -->
+                    <div class="col-md-6">
+                        <div class="panel-body form-horizontal" style="padding-top: 0px;" >
+                            <div class="row">
+                                <label class="lbl col-lg-5" style="padding-left:28px" for="exampleInputEmail1">{!$ObjectType.Account.fields.Name.Label}</label>
+                                <div class="col-lg-7">
+                                    {!Contact.Account.Name}
+                                </div>
+                            </div>
+                            <div class="row">
+                                <label class="lbl col-lg-5" style="padding-left:28px" for="exampleInputEmail1">{!$ObjectType.Account.fields.Site.Label}</label>
+                                <div class="col-lg-7">
+                                    {!Contact.Account.Site}
+                                </div>
+                            </div>
+                            <div class="row">
+                                <label class="lbl col-lg-5" style="padding-left:28px" for="exampleInputEmail1">{!$ObjectType.Account.fields.IATA_ISO_Country__c.Label}</label>
+                                <div class="col-lg-7">
+                                    {!Contact.Account.IATA_ISO_Country__r.Name}
+                                </div>
+                            </div>
+                            <div class="row">
+                                <label class="lbl col-lg-5" style="padding-left:28px" for="exampleInputEmail1">{!$ObjectType.Account.fields.Location_Type__c.Label}</label>
+                                <div class="col-lg-7">
+                                    {!Contact.Account.Location_Type__c}
+                                </div>
+                            </div>
+                            <div class="row">
+                                <label class="lbl col-lg-5" style="padding-left:28px">{!$label.ISSP_CompanyAddressInformation}</label>
+                                <div class="col-lg-7">
+                                    {!contact.Account.BillingStreet}<br/>
+                                    {!contact.Account.BillingCity} 
+                                    {!contact.Account.BillingPostalCode}<br/>
+                                    {!contact.Account.BillingState}<br/>
+                                    {!contact.Account.BillingCountry}<br/>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Left Column END -->
+                    
+                    <!-- Right Column -->
+                    <div class="col-md-6">
+                        <div class="panel-body form-horizontal" style="padding-top: 0px;" >
+                            <apex:outputPanel rendered="{!selectedAccount!=null}">
+                                <div class="row">
+                                    <label class="lbl col-lg-5" style="padding-left:28px" for="exampleInputEmail1">{!$ObjectType.Account.fields.Name.Label}</label>
+                                    <div class="col-lg-7">
+                                        {!selectedAccount.Name}
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <label class="lbl col-lg-5" style="padding-left:28px" for="exampleInputEmail1">{!$ObjectType.Account.fields.Site.Label}</label>
+                                    <div class="col-lg-7">
+                                        {!selectedAccount.Site}
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <label class="lbl col-lg-5" style="padding-left:28px" for="exampleInputEmail1">{!$ObjectType.Account.fields.IATA_ISO_Country__c.Label}</label>
+                                    <div class="col-lg-7">
+                                        {!selectedAccount.IATA_ISO_Country__r.Name}
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <label class="lbl col-lg-5" style="padding-left:28px" for="exampleInputEmail1">{!$ObjectType.Account.fields.Location_Type__c.Label}</label>
+                                    <div class="col-lg-7">
+                                        {!selectedAccount.Location_Type__c}
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <label class="lbl col-lg-5" style="padding-left:28px">{!$label.ISSP_CompanyAddressInformation}</label>
+                                    <div class="col-lg-7">
+                                        {!selectedAccount.BillingStreet}<br/>
+                                        {!selectedAccount.BillingCity} 
+                                        {!selectedAccount.BillingPostalCode}<br/>
+                                        {!selectedAccount.BillingState}<br/>
+                                        {!selectedAccount.BillingCountry}<br/>
+                                        
+                                    </div>
+                                </div>
+                            </apex:outputPanel>
+                        </div>
+                    </div>
+                    <!-- Right Column END -->
+                </div>
+            
+            </div>
+        </div>
+        </apex:form>
+
+        <c:ISSP_CustomFooter />
+    </div>
+</apex:page>

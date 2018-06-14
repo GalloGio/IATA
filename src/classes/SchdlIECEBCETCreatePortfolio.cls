@@ -10,7 +10,7 @@ global class SchdlIECEBCETCreatePortfolio implements Database.Batchable<sObject>
             Datetime nextSchedules = Datetime.now().addMinutes(2);
             sch = String.valueOf(nextSchedules.second()) + ' ' + String.valueOf(nextSchedules.minute()) + ' * * * ?';
         }
-        System.schedule('SchdlIECEBCETCreatePortfolio', sch, a);
+        System.schedule('SchdlIECEBCETCreatePortfolio' + (Test.isRunningTest() ? 'Test' : ''), sch, a);
     }
     
     global static void reschedule() {

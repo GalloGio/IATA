@@ -21,10 +21,6 @@
         <type>Default</type>
     </actionOverrides>
     <actionOverrides>
-        <actionName>Follow</actionName>
-        <type>Default</type>
-    </actionOverrides>
-    <actionOverrides>
         <actionName>List</actionName>
         <type>Default</type>
     </actionOverrides>
@@ -50,12 +46,50 @@
     <description>Relationship between a Client and an Airline for E&amp;F stating what charges we bill in what currency and payment method.</description>
     <enableActivities>true</enableActivities>
     <enableBulkApi>true</enableBulkApi>
+    <enableChangeDataCapture>false</enableChangeDataCapture>
     <enableFeeds>false</enableFeeds>
-    <enableHistory>false</enableHistory>
+    <enableHistory>true</enableHistory>
     <enableReports>true</enableReports>
-    <enableSearch>false</enableSearch>
+    <enableSearch>true</enableSearch>
     <enableSharing>true</enableSharing>
     <enableStreamingApi>true</enableStreamingApi>
+    <fields>
+        <fullName>Airline_ID__c</fullName>
+        <description>E&amp;F Salesforce Airline Id for reporting purposes</description>
+        <externalId>false</externalId>
+        <formula>Airline__r.Id</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>Airline ID</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Airline_Location_ID__c</fullName>
+        <externalId>false</externalId>
+        <formula>Airline__r.EF_SIS_Location_ID__c</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>Airline Location ID</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Airline_Name__c</fullName>
+        <externalId>false</externalId>
+        <formula>Airline__r.Name</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>Airline Name</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
     <fields>
         <fullName>Airline__c</fullName>
         <deleteConstraint>SetNull</deleteConstraint>
@@ -64,6 +98,7 @@
         <referenceTo>Account</referenceTo>
         <relationshipName>EF_Relationships_Airline</relationshipName>
         <required>false</required>
+        <trackHistory>true</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Lookup</type>
     </fields>
@@ -73,6 +108,7 @@
         <formula>IF(ISPICKVAL(Contract__r.EF_Allow_Billing_Agreements__c, &apos;Allowed&apos;),&apos;Allowed&apos;, &apos;Other&apos;)</formula>
         <label>Allow Billing Agreements</label>
         <required>false</required>
+        <trackHistory>false</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Text</type>
         <unique>false</unique>
@@ -84,16 +120,32 @@
         <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
         <label>Base URL</label>
         <required>false</required>
+        <trackHistory>false</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Text</type>
         <unique>false</unique>
     </fields>
     <fields>
-        <fullName>Billing_Agreement_Name__c</fullName>
+        <fullName>Bill_to__c</fullName>
+        <description>SAP Bill To Number</description>
         <externalId>false</externalId>
-        <label>Billing Agreement Name</label>
-        <length>255</length>
+        <inlineHelpText>SAP Bill To Number</inlineHelpText>
+        <label>Bill to</label>
+        <length>10</length>
         <required>false</required>
+        <trackHistory>true</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>BillingAgreement_Name__c</fullName>
+        <externalId>false</externalId>
+        <formula>Contract__r.Name  &amp; &apos; - &apos; &amp;  Airline__r.Name</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>Billing Agreement Name</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Text</type>
         <unique>false</unique>
@@ -101,11 +153,15 @@
     <fields>
         <fullName>Billing_Currency__c</fullName>
         <externalId>false</externalId>
-        <globalPicklist>EF_Currency</globalPicklist>
         <label>Billing Currency</label>
         <required>false</required>
+        <trackHistory>true</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Picklist</type>
+        <valueSet>
+            <restricted>true</restricted>
+            <valueSetName>EF_Currency</valueSetName>
+        </valueSet>
     </fields>
     <fields>
         <fullName>Client__c</fullName>
@@ -115,8 +171,35 @@
         <referenceTo>Account</referenceTo>
         <relationshipName>EF_Relationships_Client</relationshipName>
         <required>false</required>
+        <trackHistory>true</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Lookup</type>
+    </fields>
+    <fields>
+        <fullName>Contract_Group_Code__c</fullName>
+        <description>E&amp;F Contract Group Code for reporting purposes</description>
+        <externalId>false</externalId>
+        <formula>Contract__r.EF_Group_Code__c</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>Contract Group Code</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Contract_Payment_Terms__c</fullName>
+        <description>E&amp;F Contract Payment Terms</description>
+        <externalId>false</externalId>
+        <formula>TEXT(Contract__r.EF_Payment_Terms__c)</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>Payment Terms</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
     </fields>
     <fields>
         <fullName>Contract__c</fullName>
@@ -126,6 +209,7 @@
         <relationshipName>EF_Relationships</relationshipName>
         <relationshipOrder>0</relationshipOrder>
         <reparentableMasterDetail>false</reparentableMasterDetail>
+        <trackHistory>true</trackHistory>
         <trackTrending>false</trackTrending>
         <type>MasterDetail</type>
         <writeRequiresMasterRead>false</writeRequiresMasterRead>
@@ -138,6 +222,7 @@
         <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
         <label>Currency</label>
         <required>false</required>
+        <trackHistory>false</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Text</type>
         <unique>false</unique>
@@ -145,19 +230,71 @@
     <fields>
         <fullName>Data_Currency__c</fullName>
         <externalId>false</externalId>
-        <globalPicklist>EF_Currency</globalPicklist>
         <label>Data Currency</label>
         <required>false</required>
+        <trackHistory>true</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Picklist</type>
+        <valueSet>
+            <restricted>true</restricted>
+            <valueSetName>EF_Currency</valueSetName>
+        </valueSet>
+    </fields>
+    <fields>
+        <fullName>EF_Airline_Id__c</fullName>
+        <externalId>false</externalId>
+        <formula>Airline__r.EF_Airline_ID__c</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>E&amp;F Airline Id</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
     </fields>
     <fields>
         <fullName>EF_Approver_Email__c</fullName>
         <externalId>false</externalId>
         <label>E&amp;F Approver Email</label>
         <required>false</required>
+        <trackHistory>false</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Email</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>EF_Comments__c</fullName>
+        <externalId>false</externalId>
+        <inlineHelpText>Use this field to store general comments regarding the record update you are performing.</inlineHelpText>
+        <label>Comments</label>
+        <length>255</length>
+        <required>false</required>
+        <trackHistory>true</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>EF_History__c</fullName>
+        <description>Concatenates E&amp;F related Case or Contact linking and Comments into a read-only field.</description>
+        <externalId>false</externalId>
+        <label>History</label>
+        <length>32768</length>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>LongTextArea</type>
+        <visibleLines>6</visibleLines>
+    </fields>
+    <fields>
+        <fullName>EF_Location_ID_Name__c</fullName>
+        <externalId>false</externalId>
+        <formula>EF_Location_ID__r.Name</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>E&amp;F Location ID Name</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
         <unique>false</unique>
     </fields>
     <fields>
@@ -177,23 +314,30 @@
         <referenceTo>EF_Related_Records__c</referenceTo>
         <relationshipName>EF_LocationRelationships</relationshipName>
         <required>false</required>
+        <trackHistory>true</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Lookup</type>
     </fields>
     <fields>
         <fullName>EF_Status__c</fullName>
         <externalId>false</externalId>
-        <globalPicklist>EF_Status</globalPicklist>
+        <inlineHelpText>If no active material line item exist, the E&amp;F Status is automatically set to Inactive</inlineHelpText>
         <label>E&amp;F Status</label>
         <required>false</required>
+        <trackHistory>true</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Picklist</type>
+        <valueSet>
+            <restricted>true</restricted>
+            <valueSetName>EF_Status</valueSetName>
+        </valueSet>
     </fields>
     <fields>
         <fullName>EF_Submitter_Email__c</fullName>
         <externalId>false</externalId>
         <label>E&amp;F Submitter Email</label>
         <required>false</required>
+        <trackHistory>false</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Email</type>
         <unique>false</unique>
@@ -217,6 +361,7 @@
         <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
         <label>Invoice Distribution Method Code</label>
         <required>false</required>
+        <trackHistory>false</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Text</type>
         <unique>false</unique>
@@ -224,11 +369,15 @@
     <fields>
         <fullName>Invoice_Distribution_Method__c</fullName>
         <externalId>false</externalId>
-        <globalPicklist>EF_Invoice_Distribution</globalPicklist>
         <label>Invoice Distribution Method</label>
         <required>false</required>
+        <trackHistory>true</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Picklist</type>
+        <valueSet>
+            <restricted>true</restricted>
+            <valueSetName>EF_Invoice_Distribution</valueSetName>
+        </valueSet>
     </fields>
     <fields>
         <fullName>Location_Code_Details__c</fullName>
@@ -236,6 +385,7 @@
         <label>Location Code Details</label>
         <length>255</length>
         <required>false</required>
+        <trackHistory>true</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Text</type>
         <unique>false</unique>
@@ -247,6 +397,7 @@
         <label>Location Code</label>
         <length>255</length>
         <required>false</required>
+        <trackHistory>true</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Text</type>
         <unique>false</unique>
@@ -256,41 +407,66 @@
         <description>Helper field for &quot;require approval&quot; functionality.</description>
         <externalId>false</externalId>
         <label>Manager Approval</label>
-        <picklist>
-            <picklistValues>
-                <fullName>Not Started</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>In Progress</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Approved</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Rejected</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Recalled</fullName>
-                <default>false</default>
-            </picklistValues>
-            <sorted>false</sorted>
-        </picklist>
         <required>false</required>
+        <trackHistory>true</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Picklist</type>
+        <valueSet>
+            <valueSetDefinition>
+                <sorted>false</sorted>
+                <value>
+                    <fullName>Not Started</fullName>
+                    <default>false</default>
+                    <label>Not Started</label>
+                </value>
+                <value>
+                    <fullName>In Progress</fullName>
+                    <default>false</default>
+                    <label>In Progress</label>
+                </value>
+                <value>
+                    <fullName>Approved</fullName>
+                    <default>false</default>
+                    <label>Approved</label>
+                </value>
+                <value>
+                    <fullName>Rejected</fullName>
+                    <default>false</default>
+                    <label>Rejected</label>
+                </value>
+                <value>
+                    <fullName>Recalled</fullName>
+                    <default>false</default>
+                    <label>Recalled</label>
+                </value>
+            </valueSetDefinition>
+        </valueSet>
+    </fields>
+    <fields>
+        <fullName>Payer__c</fullName>
+        <description>SAP Payer Number</description>
+        <externalId>false</externalId>
+        <inlineHelpText>SAP Payer Number</inlineHelpText>
+        <label>Payer</label>
+        <length>10</length>
+        <required>false</required>
+        <trackHistory>true</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
     </fields>
     <fields>
         <fullName>Payment_Currency__c</fullName>
         <externalId>false</externalId>
-        <globalPicklist>EF_Currency</globalPicklist>
         <label>Payment Currency</label>
         <required>false</required>
+        <trackHistory>true</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Picklist</type>
+        <valueSet>
+            <restricted>true</restricted>
+            <valueSetName>EF_Currency</valueSetName>
+        </valueSet>
     </fields>
     <fields>
         <fullName>Payment_Method_Code__c</fullName>
@@ -307,16 +483,20 @@
 					ISPICKVAL(Payment_Method__c, &apos;Virtual Account Payment&apos;), &apos;V&apos;,
 					IF(
 						ISPICKVAL(Payment_Method__c, &apos;ICCS payments&apos;), &apos;Y&apos;,
+            IF(
+            ISPICKVAL(Payment_Method__c, &apos;IRIS&apos;), &apos;R&apos;,
 						&apos;&apos;
 					)
 				)
 			)
 		)
 	)
+  )
 )</formula>
         <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
         <label>Payment Method Code</label>
         <required>false</required>
+        <trackHistory>false</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Text</type>
         <unique>false</unique>
@@ -324,37 +504,24 @@
     <fields>
         <fullName>Payment_Method__c</fullName>
         <externalId>false</externalId>
-        <globalPicklist>EF_Payment_Method</globalPicklist>
         <label>Payment Method</label>
         <required>false</required>
+        <trackHistory>true</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Picklist</type>
+        <valueSet>
+            <restricted>true</restricted>
+            <valueSetName>EF_Payment_Method</valueSetName>
+        </valueSet>
     </fields>
     <fields>
         <fullName>Payment_Terms_Code__c</fullName>
         <externalId>false</externalId>
-        <formula>IF(
-	ISPICKVAL(Payment_Terms__c, &apos;Payable immediately due net&apos;), &apos;0001&apos;,
-	IF(
-		ISPICKVAL(Payment_Terms__c, &apos;30 days after invoice date&apos;), &apos;0011&apos;,
-		IF(
-			ISPICKVAL(Payment_Terms__c, &apos;10 days after invoice date&apos;), &apos;0012&apos;,
-			IF(
-				ISPICKVAL(Payment_Terms__c, &apos;15 days after invoice date&apos;), &apos;0013&apos;,
-				IF(
-					ISPICKVAL(Payment_Terms__c, &apos;20 days after invoice date&apos;), &apos;0018&apos;,
-					IF(
-						ISPICKVAL(Payment_Terms__c, &apos;07 days after invoice date&apos;), &apos;Z007&apos;,
-						&apos;&apos;
-					)
-				)
-			)
-		)
-	)
-)</formula>
+        <formula>Contract__r.EF_Payment_Terms_Code__c</formula>
         <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
         <label>Payment Terms Code</label>
         <required>false</required>
+        <trackHistory>false</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Text</type>
         <unique>false</unique>
@@ -362,17 +529,22 @@
     <fields>
         <fullName>Payment_Terms__c</fullName>
         <externalId>false</externalId>
-        <globalPicklist>EF_Payment_Terms</globalPicklist>
         <label>Payment Terms</label>
         <required>false</required>
+        <trackHistory>true</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Picklist</type>
+        <valueSet>
+            <restricted>true</restricted>
+            <valueSetName>EF_Payment_Terms</valueSetName>
+        </valueSet>
     </fields>
     <fields>
         <fullName>Requested_Changes__c</fullName>
         <externalId>false</externalId>
         <label>Requested Changes</label>
         <length>10000</length>
+        <trackHistory>false</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Html</type>
         <visibleLines>10</visibleLines>
@@ -383,6 +555,7 @@
         <description>Helper field that gets set to TRUE if one of the Billing Agreements &quot;require approval&quot; fields gets changed.</description>
         <externalId>false</externalId>
         <label>Require Approval</label>
+        <trackHistory>true</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Checkbox</type>
     </fields>
@@ -392,33 +565,125 @@
         <description>Helper field for &quot;require approval&quot; functionality.</description>
         <externalId>false</externalId>
         <label>Send to SAP</label>
+        <trackHistory>true</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Checkbox</type>
+    </fields>
+    <fields>
+        <fullName>Ship_to__c</fullName>
+        <description>SAP Ship to Number</description>
+        <externalId>false</externalId>
+        <inlineHelpText>SAP Ship to Number</inlineHelpText>
+        <label>Ship to</label>
+        <length>10</length>
+        <required>false</required>
+        <trackHistory>true</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Skip_Approval__c</fullName>
+        <defaultValue>false</defaultValue>
+        <description>Helper field to allow skipping of the approval process.</description>
+        <externalId>false</externalId>
+        <label>Skip Approval</label>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
+        <fullName>Sold_to__c</fullName>
+        <description>SAP Sold To</description>
+        <externalId>false</externalId>
+        <inlineHelpText>SAP Sold To</inlineHelpText>
+        <label>Sold to</label>
+        <length>10</length>
+        <required>false</required>
+        <trackHistory>true</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
     </fields>
     <fields>
         <fullName>Status__c</fullName>
         <description>Helper field for &quot;require approval&quot; functionality.</description>
         <externalId>false</externalId>
-        <globalPicklist>EF_Status</globalPicklist>
         <label>Status</label>
         <required>false</required>
+        <trackHistory>false</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Picklist</type>
+        <valueSet>
+            <restricted>true</restricted>
+            <valueSetName>EF_Status</valueSetName>
+        </valueSet>
     </fields>
     <label>E&amp;F Airline Billing Agreement</label>
     <listViews>
         <fullName>All</fullName>
+        <columns>NAME</columns>
+        <columns>CREATEDBY_USER</columns>
+        <columns>CREATED_DATE</columns>
         <filterScope>Everything</filterScope>
         <label>All</label>
+        <language>en_US</language>
+    </listViews>
+    <listViews>
+        <fullName>E_F_Billing_Agreements</fullName>
+        <columns>NAME</columns>
+        <columns>BillingAgreement_Name__c</columns>
+        <columns>Airline__c</columns>
+        <columns>Client__c</columns>
+        <columns>Contract__c</columns>
+        <columns>Contract_Group_Code__c</columns>
+        <columns>EF_Airline_Id__c</columns>
+        <columns>EF_Status__c</columns>
+        <filterScope>Everything</filterScope>
+        <label>E&amp;F Billing Agreements</label>
+        <language>en_US</language>
+        <sharedTo>
+            <roleAndSubordinatesInternal>IDFSEFServices</roleAndSubordinatesInternal>
+        </sharedTo>
     </listViews>
     <nameField>
         <displayFormat>E&amp;F ABA-{0000}{MM}{YY}</displayFormat>
         <label>E&amp;F Airline Billing Agreement Number</label>
+        <trackHistory>true</trackHistory>
         <type>AutoNumber</type>
     </nameField>
     <pluralLabel>E&amp;F Airline Billing Agreements</pluralLabel>
-    <searchLayouts/>
+    <searchLayouts>
+        <lookupDialogsAdditionalFields>BillingAgreement_Name__c</lookupDialogsAdditionalFields>
+        <lookupDialogsAdditionalFields>Client__c</lookupDialogsAdditionalFields>
+        <lookupDialogsAdditionalFields>Airline__c</lookupDialogsAdditionalFields>
+        <searchResultsAdditionalFields>BillingAgreement_Name__c</searchResultsAdditionalFields>
+        <searchResultsAdditionalFields>Client__c</searchResultsAdditionalFields>
+        <searchResultsAdditionalFields>Airline__c</searchResultsAdditionalFields>
+    </searchLayouts>
     <sharingModel>ControlledByParent</sharingModel>
+    <validationRules>
+        <fullName>EF_Prevent_Airline_Change_After_Creation</fullName>
+        <active>true</active>
+        <errorConditionFormula>ISCHANGED( Airline__c )  &amp;&amp;  !ISNEW()</errorConditionFormula>
+        <errorDisplayField>Airline__c</errorDisplayField>
+        <errorMessage>Airline cannot be modified after Billing Agreement creation</errorMessage>
+    </validationRules>
+    <validationRules>
+        <fullName>EF_Prevent_Client_Change_After_Creation</fullName>
+        <active>true</active>
+        <errorConditionFormula>ISCHANGED( Client__c ) &amp;&amp;  !ISNEW()</errorConditionFormula>
+        <errorDisplayField>Client__c</errorDisplayField>
+        <errorMessage>Client cannot be modified after Billing Agreement creation</errorMessage>
+    </validationRules>
+    <validationRules>
+        <fullName>EF_Prevent_For_Inactive_Accounts</fullName>
+        <active>true</active>
+        <description>Prevent creation of Billing Agreements if the Airline or client accounts are inactive</description>
+        <errorConditionFormula>AND( ISNEW(),
+OR(ISPICKVAL( Airline__r.EF_Status__c , &apos;Inactive&apos;), ISPICKVAL( Client__r.EF_Status__c , &apos;Inactive&apos;)))</errorConditionFormula>
+        <errorMessage>Billing Agreements can&apos;t be created if either the Client or Airline are Inactive</errorMessage>
+    </validationRules>
     <validationRules>
         <fullName>EF_Prevent_For_Not_Allowed_Contracts</fullName>
         <active>true</active>
@@ -442,6 +707,7 @@
 )</errorConditionFormula>
         <errorMessage>Business Development Managers and E&amp;F General Access roles are not allowed to update or create Airline Billing Agreements.</errorMessage>
     </validationRules>
+    <visibility>Public</visibility>
     <webLinks>
         <fullName>Edit_All</fullName>
         <availability>online</availability>

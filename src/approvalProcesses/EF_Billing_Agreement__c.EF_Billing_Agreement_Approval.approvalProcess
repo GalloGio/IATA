@@ -3,16 +3,29 @@
     <active>true</active>
     <allowRecall>true</allowRecall>
     <allowedSubmitters>
+        <submitter>EF_Client_Users_Group</submitter>
+        <type>group</type>
+    </allowedSubmitters>
+    <allowedSubmitters>
+        <submitter>EF_Operator_Users_Group</submitter>
+        <type>group</type>
+    </allowedSubmitters>
+    <allowedSubmitters>
+        <submitter>EFServices</submitter>
+        <type>group</type>
+    </allowedSubmitters>
+    <allowedSubmitters>
         <type>owner</type>
+    </allowedSubmitters>
+    <allowedSubmitters>
+        <submitter>E_F</submitter>
+        <type>role</type>
     </allowedSubmitters>
     <approvalPageFields>
         <field>Name</field>
         <field>Billing_Currency__c</field>
         <field>Client__c</field>
-        <field>EF_Location_ID__c</field>
-        <field>EF_Status__c</field>
-        <field>Payment_Method__c</field>
-        <field>Payment_Terms__c</field>
+        <field>Requested_Changes__c</field>
     </approvalPageFields>
     <approvalStep>
         <allowDelegate>false</allowDelegate>
@@ -24,7 +37,7 @@
         <label>Step 1</label>
         <name>Step_1</name>
     </approvalStep>
-    <description>User story 778 pt. 2.</description>
+    <description>E&amp;F Release 1, User-story 778: Approval process for E&amp;F Airline Billing Agreements. Fired on changes to several key fields, but not all fields.</description>
     <emailTemplate>E_F_Services/EF_Billing_Agreement_Approval_Request</emailTemplate>
     <enableMobileDeviceAccess>false</enableMobileDeviceAccess>
     <entryCriteria>
@@ -32,6 +45,11 @@
             <field>EF_Billing_Agreement__c.Require_Approval__c</field>
             <operation>equals</operation>
             <value>True</value>
+        </criteriaItems>
+        <criteriaItems>
+            <field>EF_Billing_Agreement__c.Skip_Approval__c</field>
+            <operation>equals</operation>
+            <value>False</value>
         </criteriaItems>
     </entryCriteria>
     <finalApprovalActions>
@@ -91,6 +109,10 @@
         <action>
             <name>EF_Set_Require_Approval_To_Recalled</name>
             <type>FieldUpdate</type>
+        </action>
+        <action>
+            <name>Notify_Approver_of_Recall</name>
+            <type>Alert</type>
         </action>
     </recallActions>
     <recordEditability>AdminOnly</recordEditability>

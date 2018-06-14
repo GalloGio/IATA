@@ -29,7 +29,7 @@ global class SchdlEBCPeriodicQueryOnAgent {
 			string minute = string.valueof(nextScheduleTime.minute());
 			string second = string.valueof(nextScheduleTime.second ());
 			string cronvalue = second + ' ' + minute + ' ' + hour + ' ' + day + ' ' + month + ' ?';
-			string jobName = 'SchdlEBCPriodicQueryOnAgent ' + nextScheduleTime.format('yyyy-MM-dd HH:mm:ss');
+			string jobName = 'SchdlEBCPriodicQueryOnAgent ' + (Test.isRunningTest() ? 'Test' : '') + nextScheduleTime.format('yyyy-MM-dd HH:mm:ss');
 			
 			system.schedule(jobName, cronvalue , new SchdlEBCAgencyCacheRefresh());
 			

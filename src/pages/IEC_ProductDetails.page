@@ -1,5 +1,5 @@
 <apex:page controller="IEC_ProductDetailsController" action="{!onLoadAction}" language="{!language}" 
-    docType="html-5.0"  applyBodyTag="false" applyHtmlTag="false" showHeader="false" sidebar="false" standardStylesheets="false" cache="true">
+    docType="html-5.0"  applyBodyTag="false" applyHtmlTag="false" showHeader="false" sidebar="false" standardStylesheets="false" cache="false">
     
     <!--[if lte IE 8]>
     <html lang="en" class="ie lte-ie8 no-svg">
@@ -8,7 +8,34 @@
         <html lang="en" class="ie ie9">
     <![endif]-->
     <!--[if !IE]><!-->
-    
+   <apex:includeScript value="{!URLFOR($Resource.blockui,'/blockui/jquery.min.js')}"/>
+   <apex:includeScript value="{!URLFOR($Resource.blockui,'/blockui/jquery-ui.js')}"/>
+   <apex:includeScript value="{!URLFOR($Resource.blockui,'/blockui/jquery.blockUI.js')}"/>
+   <apex:stylesheet value="{!URLFOR($Resource.blockui,'/blockui/jquery-ui.css')}"/>
+
+<script type="text/javascript">
+    j$ = jQuery.noConflict(); 
+   function blockme() {
+       j$.blockUI({ css: {
+           border: 'none',
+           padding: '15px',
+           backgroundColor: '#000',
+           '-webkit-border-radius': '10px',
+           '-moz-border-radius': '10px',
+           opacity: .5,
+           color: '#fff'
+           } }); 
+     }
+
+    function redirectToCart() {
+        var current = window.self.location.href;
+        
+        var prefix = current.substr(0, current.lastIndexOf("/"));
+
+        window.location.href = prefix + '/IEC_ShoppingCart';
+    }
+   </script>
+
     <html lang="{!language}">
     <!--<![endif]-->
 
@@ -50,7 +77,14 @@
                             <!-- breadcrumb -->
                             <ol class="list breadcrumb">
                                 <li><a href="{!$Site.BaseUrl}">{!$Label.Home}</a></li>
-                                <li><a href="{!$Site.BaseUrl}/IEC_ProductList?category={!selected_mega_menu}">{!mega_menus[product.megaMenu]}</a></li>
+                                <li>
+                                    <a style="{! IF(selectedCategory.value == '', 'display:none', '')}" href="{!$Site.BaseUrl}/IEC_ProductList?category={!selectedCategory.value}">{!selectedCategory.label}</a>
+                                    <apex:outputText value="" rendered="{! selectedCategory.value == ''}" />
+                                </li>
+                                <li>
+                                    <a style="{! IF(selectedCategory.value == '' || selectedTopic == null || selectedTopic == '', 'display:none', '')}" href="{!$Site.BaseUrl}/IEC_ProductList?category={!selectedCategory.value}&topic={!selectedTopic}">{!selectedTopicLabel}</a>
+                                    <apex:outputText value="" rendered="{! selectedCategory.value == '' || selectedTopic == null || selectedTopic == ''}" />
+                                </li>
                                 <li>{!product.ProductName}</li>
                             </ol>
 
@@ -71,7 +105,7 @@
                                         <div class="table-container">
                                             <table class="data-table table-product-data">                                           
                                                 <!-- Regular Price if exist -->
-                                                <apex:variable var="regularPrice" value="1" rendered="{! AND(product.RegularPrice!=null , product.RegularPrice>0) }">
+                                                <apex:variable var="regularPrice" value="1" rendered="{! AND(product.RegularPrice!=null , product.RegularPrice>0, product.Sell_Through_eCommerce) }">
                                                     <tr>
                                                         <th scope="row">{!$Label.regular_price}</th>
                                                         <td>
@@ -89,6 +123,18 @@
                                                         <td>
                                                             <apex:outputText styleClass="item-price item-price discounted-price" value="{0, number, currency}">
                                                                 <apex:param value="{!product.CustomerPrice}" />
+                                                            </apex:outputText>
+                                                        </td>
+                                                    </tr>
+                                                </apex:variable>
+
+                                                <!-- Setup fee if exist -->
+                                                <apex:variable var="setupFee" value="1" rendered="{! AND(product.setupFee != null , product.setupFee > 0) }">
+                                                    <tr>
+                                                        <th scope="row"><i>Flat fee</i></th>
+                                                        <td>
+                                                            <apex:outputText styleClass="item-price regular-price" value="{0, number, currency}">
+                                                                <apex:param value="{!product.setupFee}" />
                                                             </apex:outputText>
                                                         </td>
                                                     </tr>
@@ -210,32 +256,23 @@
                                     </div>
 
                                     <!-- If direct Sales -->
-                                    <apex:outputPanel layout="block" styleClass="product-quantity-container" rendered="{! bIsDirectSales}">
+                                    <apex:outputPanel layout="block" styleClass="product-quantity-container" rendered="{! or(and(bIsDirectSales , NOT(bIsProductCompliant)),bIsDirectSales, NOT(bIsProductCompliant))}">
                                         <div class="contact-info">
                                             <span class="icon phone-square">{!$Label.ContactDirectSalesMessage}</span>
                                             <a class="phone-link" href="tel:1-800-716-6326">1 800 716 6326</a>
                                         </div>
                                     </apex:outputPanel>
-
                                     <!-- Add to cart block -->
-                                    <apex:outputPanel layout="block" styleClass="product-quantity-container js-add-product" rendered="{! NOT(bIsDirectSales)}">
+                                    <apex:outputPanel layout="block" styleClass="product-quantity-container js-add-product" rendered="{! or(and(bIsDirectSales==false, bIsProductCompliant)) }">
                                         <label class="input-label">
                                             <span class="show-for-extra-small">{!$Label.QTY}:</span>
                                             <span class="hide-for-extra-small">{!$Label.Quantity}:</span>
-                                            <apex:input type="number" styleClass="user-input quantity js-input-quantity" html-min="1" html-step="{!IF(product.IsQuantityInteger, '1', 'any')}" id="orderQty" value="{!product.OrderQuantity}" size="5" disabled="{!NOT(bIsProductCompliant)}"/>
+                                            <apex:input type="number" styleClass="user-input quantity js-input-quantity" html-min="1" html-step="{!IF(product.IsQuantityInteger, '1', 'any')}" id="orderQty" value="{!product.OrderQuantity}" size="5"/> 
                                             <!-- <input type="number" class="user-input quantity js-input-quantity" /> -->
                                         </label>
 
-                                        <!-- <apex:actionFunction name="addToCart" action="{!addToCart}" status="add2CartStatus" reRender="frmAddToCart" />
-
-                                        <button class="button {!IF(bIsPreOrder,'pre-order', 'wide')}" onclick="addToCart()">
-                                            {!IF(bIsOutOfStock,$Label.PreOrderAddToCart, $Label.AddToCart)}
-                                            <apex:actionStatus id="add2CartStatus">
-                                                <apex:facet name="start">&nbsp;<img src="{!$Resource.IEC_ImageLoaderLight}" align="middle" alt="x" /></apex:facet>
-                                            </apex:actionStatus>
-                                        </button> -->
-                                        <apex:commandButton styleClass="button {!IF(bIsPreOrder,'pre-order', 'wide')}" reRender="frmAddToCart" action="{!addToCart}" value="{!IF(bIsPreOrder,$Label.PreOrderAddToCart, $Label.AddToCart)}" />
-                                        
+                                        <apex:commandButton styleClass="button {!IF(bIsPreOrder,'pre-order', 'wide')}" reRender="frmAddToCart" onclick="blockme()" oncomplete="j$.unblockUI(); redirectToCart();" action="{!addToCart}" value="{!IF(bIsPreOrder,$Label.PreOrderAddToCart, $Label.AddToCart)}" />
+                                  
                                     </apex:outputPanel>
                                 </apex:form>
 

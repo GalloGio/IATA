@@ -1,0 +1,42 @@
+<messaging:emailTemplate subject="{!$Label.ISSP_Email_Welcome_CNS}" recipientType="User" language="{!recipient.LanguageLocaleKey}"
+relatedToType="User"
+>
+<messaging:htmlEmailBody >
+<div style="margin:auto; width:600px">
+ <span style="font-family:Open Sans,GillSansMT,Lucida Sans Unicode, Lucida Grande, sans-serif;color:#004577;">  
+ <apex:image value="https://iata--c.eu3.content.force.com/servlet/servlet.ImageServer?id=015w0000004lIxL&oid=00D2000000008TF&lastMod=1246550288000"/>
+  <br />
+<i>{!$Label.ISSP_Email_do_not_reply}</i><p />
+
+{!$Label.ISSP_Email_Dear_Pre} {!relatedTo.Contact.Salutation} {!relatedTo.FirstName} {!relatedTo.LastName}{!$Label.ISSP_Email_Dear_Post} <BR/>
+<BR/>
+{!$Label.ISSP_EmailChanged} {!relatedTo.Email} ({!$Label.ISSP_OldEmail} {!relatedTo.ISSP_Old_Email__c}).
+<BR/>
+<BR/>
+{!$Label.ISSP_EmailChangedText1} <BR/><BR/>
+<center><br />
+
+<a style="font-size:20px;text-align:center;font-weight:bold;background-color:#0A4279;color:white;padding:5px;text-decoration:none;border-collapse: separate!important;border-top-left-radius: 5px;border-top-right-radius: 5px;border-bottom-right-radius: 5px;border-bottom-left-radius: 5px;"
+href="{!$Label.ISSP_Email_PortalUrl_CNS}">{!$Label.ISSP_ClickHereLogIn}</a>
+  </center>
+
+<BR/>
+{!$Label.ISSP_Email_ThankYou} <BR/>
+<BR/>
+{!$Label.ISSP_Email_CNS_Service} <BR/>
+
+<p>
+<!--The URL of the following image is the one of PROD-->
+<!--<apex:image value="https://iata--transform--c.cs18.content.force.com/servlet/servlet.ImageServer?id=01511000000VVJN" width="176" height="89" />
+<a href="http://www.iata.org/customer-portal/Pages/index.aspx">
+<apex:image value="https://iata--c.eu3.content.force.com/servlet/servlet.ImageServer?id=015w0000002ZArv&oid=00D2000000008TF&lastMod=1428578119000"/>
+</a>-->
+</p>
+
+<apex:image value="https://iata--c.eu3.content.force.com/servlet/servlet.ImageServer?id=015w0000004lJ0P&oid=00D2000000008TF&lastMod=1392385307000"/>
+<!--<apex:image value="{!$Label.ISSP_Email_PortalUrl}servlet/servlet.ImageServer?id=015w0000001yKkp&oid=00D2000000008TF"/>-->
+<BR/>
+</span>
+</div>
+</messaging:htmlEmailBody>
+</messaging:emailTemplate>

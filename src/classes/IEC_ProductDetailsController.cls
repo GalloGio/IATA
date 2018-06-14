@@ -24,6 +24,9 @@ public with sharing class IEC_ProductDetailsController extends IEC_PageControlle
 	//Available Discounts for the product 
 	public List<PriceDetail_DTO> discounts{get;set;}
 
+	public String selectedTopic{get;set;}
+	public String selectedTopicLabel{get;set;}
+
 	/**************************************************************************************************************
      *  IEC_ProductDetailsController: Class Constructor                                                           *
      *  Author: David Daboué                                                                                      *  
@@ -47,9 +50,9 @@ public with sharing class IEC_ProductDetailsController extends IEC_PageControlle
 		String searchCond = '  SAP_Material_Number__c=\''+productNumber+'\' ';
 		String recommendedCond = '  (SAP_Material_Number__c!=\''+productNumber+'\' AND Recommended__c=true) ';
 
-		List<EComProduct_DTO> products = Product_Sel.getEComProduct(null, true, searchCond, null, false);
+		List<EComProduct_DTO> products = Product_Sel.getEComProduct(null, true, searchCond, null, false, null);
 
-		List<EComProduct_DTO> lst_recommendedProducts = Product_Sel.getEComProduct(null, true, recommendedCond, 'Recommended_Ranking__c', false); 
+		List<EComProduct_DTO> lst_recommendedProducts = Product_Sel.getEComProduct(null, true, recommendedCond, 'Recommended_Ranking__c', false, null); 
 		recommendedProducts = new List<EComProduct_DTO>();
 		for(Integer x = 0; x < lst_recommendedProducts.size(); x++)
 		{
@@ -60,10 +63,14 @@ public with sharing class IEC_ProductDetailsController extends IEC_PageControlle
 			}
 		}
 
+		System.debug('products.size(): ' + products.size());
+
 		if(products.size() >0)
 		{
 			product = products[0];
 			Date dt = Date.today();
+
+			System.debug('product: ' + product);
 
 			if(product.ProductInfoId != null)
 		    {
@@ -94,7 +101,7 @@ public with sharing class IEC_ProductDetailsController extends IEC_PageControlle
 
 
 
-		    Product2 sfProduct = [SELECT Id, Sell_through_eCommerce__c FROM Product2 WHERE Id = :product.ProductId LIMIT 1];
+		    Product2 sfProduct = [SELECT Id, Sell_through_eCommerce__c, Display_Ecom_Topic__c FROM Product2 WHERE Id = :product.ProductId LIMIT 1];
 
 
 			bIsInStock 		= 	product.InventoryStatus == 'In stock';
@@ -127,8 +134,31 @@ public with sharing class IEC_ProductDetailsController extends IEC_PageControlle
 
 	        //Validate Product compliance 
 	        validateCountryCompliance();
-            if (!bIsProductCompliant) ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.ERROR, labels.get('msgErrorProductNotCompliant')));
-            
+            if (!bIsProductCompliant) //ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.ERROR, labels.get('msgErrorProductNotCompliant')));
+            	addErrorMessage(labels.get('msgErrorProductNotCompliant'));
+			//*** get category
+			selectedCategory = new SelectOption('', '');
+			for(SelectOption so : categories)
+				if (so.getValue() == product.megaMenu)
+				{
+					selectedCategory = so;
+					break;
+				}
+
+			//*** get topic
+			selectedTopic = sfProduct.Display_Ecom_Topic__c;
+			selectedTopicLabel = '';
+			if (!String.isBlank(selectedTopic))
+			{
+				selectedTopic = selectedTopic.split(';')[0];   //*** take the first topic if contains multiple
+				if (subCategories.containsKey(selectedCategory.getValue()))
+					for (SelectOption so : subCategories.get(selectedCategory.getValue()))
+						if (so.getValue() == selectedTopic)
+						{
+							selectedTopicLabel = so.getLabel();
+							break;
+						}
+			}
 		}
 		else
 		{
@@ -136,6 +166,8 @@ public with sharing class IEC_ProductDetailsController extends IEC_PageControlle
 			addErrorMessage(Label.Product_Not_Found);
 		}
 
+
+		System.debug('selected_mega_menu = publications');
 
 		selected_mega_menu = 'publications';
 		return null;
@@ -147,19 +179,38 @@ public with sharing class IEC_ProductDetailsController extends IEC_PageControlle
      **************************************************************************************************************/
 	public PageReference addToCart()
 	{
+		System.debug('addToCart()');
+
 		try
 		{
 			if (!bIsProductCompliant)
 	        {
+				System.debug('Product Is Not Compliant');
+
 	        	addErrorMessage(labels.get('msgErrorProductNotCompliant'));
 				return null;
 	        }
 	        else 
 	        {
-	        	return IECOrder_Svc.addCartToCookie(product.ProductNumber, product.OrderQuantity,'/IEC_ShoppingCart');	        	
+				System.debug('Product Is Compliant - invoking addCartToCookie');
+
+				
+				// Ecommerce Enhancements R2 - aosantos, do not redirect immediately when creating cookie, it might not be stored
+				if (newShoppingCart == false) {
+	        		PageReference resultPageRef = IECOrder_Svc.addCartToCookie(product.ProductNumber, product.OrderQuantity,'/IEC_ShoppingCart');
+				} else {
+					storeCart.addItem(product.ProductNumber, product.OrderQuantity, null);
+				}
+
+				return null;
 	        }
 		}	
-		catch(Exception e){addErrorMessage(e.getMessage() + ' - ' +e.getStackTraceString());return null;}
+		catch(Exception e) {
+			System.debug(e.getStackTraceString());
+
+			addErrorMessage(e.getMessage() + ' - ' +e.getStackTraceString());
+			return null;
+		}
 	}
 
 	/**************************************************************************************************************

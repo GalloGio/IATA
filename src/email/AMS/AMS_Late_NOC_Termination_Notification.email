@@ -1,0 +1,5 @@
+<p>Dear {!Receiving_User.Name}. </p>
+
+<p>Please note the that termination date for the <strong>OSCAR {!AMS_OSCAR__c.Name}</strong> has been met. Ensure the necessary steps are performed.</p>
+
+<p>To review other records that are nearing termination, access the Late NOC Dashboard</p>

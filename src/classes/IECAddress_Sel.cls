@@ -47,9 +47,10 @@ public without sharing class IECAddress_Sel extends Selector{
         street = Utility.removeNewline(street);
         
         String query = String.format(
-            'SELECT {0}, ISO_State__r.ISO_Code__c, ISO_Country__r.ISO_Code__c  ' + 
+            'SELECT {0}, ISO_State__r.ISO_Code__c, ISO_State__r.Name, ISO_State__r.IEC_Valid_SAP__c, ISO_Country__r.ISO_Code__c, ISO_Country__r.Name  ' + 
             'FROM {1} ' + 
-            'WHERE Street__c = :street and City__c = :city and ISO_Country__r.ISO_Code__c =:isoCountryCode and ISO_State__r.ISO_Code__c =:isoStateCode and ZipCode__c =:zipCode ' , 
+            'WHERE Street__c = :street and City__c = :city and ISO_Country__r.ISO_Code__c =:isoCountryCode and ISO_State__r.ISO_Code__c =:isoStateCode and ZipCode__c =:zipCode ' +
+            'ORDER BY Id' ,
             new List<String>{
                 String.join(getDefaultFields(), ', '),
                 getSObjectType().getDescribe().getName()

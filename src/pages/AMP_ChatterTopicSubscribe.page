@@ -1,0 +1,35 @@
+<apex:page showHeader="true" sidebar="true" controller="AMP_ChatterTopicSubscribeController">
+<h1>Digest for Chatter Posts by Topic(s) – Email Settings</h1>
+By selecting the topic(s) you wish to follow and the frequency of digests, you will automatically receive emails showing all posts made on the topic(s) selected at the prescribed frequency. This feature only applies to chatter posts made on IATA member airline headquarter accounts.
+
+Please select the topic(s) that you would like to follow:
+
+	<apex:form>
+
+	<table>
+		<apex:repeat value="{!TopicWrappers}" var="t">
+		<tr>
+			<td>
+				<apex:inputCheckBox value="{!t.active}" >
+						<apex:actionSupport event="onchange" rerender="feeditems" action="{!filterTopicFeedItems}"/>
+				</apex:inputcheckbox>
+			</td>
+			<td><apex:outputText value="{!t.topic}"	/></td></tr>
+		</apex:repeat>
+	</table>
+	How frequently would you like to receive the digest?
+	<apex:selectRadio value="{!dailyOrWeekly}">
+		<apex:selectOptions value="{!DailyOrWeeklyOptions}"/>
+		<apex:actionSupport event="onchange" rerender="feeditems" action="{!filterTopicFeedItems}"/>
+	</apex:selectRadio>
+	<apex:commandButton value="Save" action="{!savePreferences}" rerender="" />
+	<apex:commandButton value="Unsubscribe" action="{!unsubscribe}" rerender="" />
+	</apex:form>
+	<apex:outputPanel id="feeditems" rendered="{!showPreview}">
+	<apex:outputText escape="false" value="{!preview}" />
+
+				</apex:outputPanel>
+	<style>
+		h1{display: block;margin-bottom: 1em;}
+	</style>
+</apex:page>

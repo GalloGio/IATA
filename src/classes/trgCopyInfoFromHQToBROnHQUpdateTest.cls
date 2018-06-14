@@ -28,8 +28,8 @@ private class trgCopyInfoFromHQToBROnHQUpdateTest {
                                 , recordtypeId = developerNamePerId.get('IATA_Airline_BR'));
         insert branch;
         
-        head.TradeName__c = 'friday';
-        update head;
+        //head.TradeName__c = 'friday';
+        //update head;
         
         set<string> fieldValuesToCheck =  new set<String>{   'Area_of_Operation__c',
                                                                 'Type_of_Service__c', 

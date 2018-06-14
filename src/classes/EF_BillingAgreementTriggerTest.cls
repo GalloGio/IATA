@@ -28,7 +28,7 @@ private class EF_BillingAgreementTriggerTest {
 		rel.EF_Location_ID__c =  [select Id, Name from EF_Related_Records__c where Name='Main' limit 1].Id;
 
 		List<EF_Billing_Agreement__c> baList = [select id from EF_Billing_Agreement__c];
-		System.assertEquals(0, baList.size());
+		System.assertEquals(2, baList.size());
 		Test.startTest();
 		try
 		{
@@ -39,7 +39,7 @@ private class EF_BillingAgreementTriggerTest {
 		}
 		
 		baList = [select id from EF_Billing_Agreement__c];
-		System.assertEquals(0, baList.size());
+		System.assertEquals(2, baList.size());
 		Test.stopTest();
 	}
 

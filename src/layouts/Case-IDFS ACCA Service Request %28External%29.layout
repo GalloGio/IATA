@@ -415,6 +415,8 @@
         </relatedContentItems>
     </relatedContent>
     <relatedLists>
+        <customButtons>Custom_New</customButtons>
+        <excludeButtons>New</excludeButtons>
         <fields>NAME</fields>
         <fields>CREATED_DATE</fields>
         <fields>RECORDTYPE</fields>

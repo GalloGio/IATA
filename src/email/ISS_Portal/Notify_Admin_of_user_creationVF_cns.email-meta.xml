@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<EmailTemplate xmlns="http://soap.sforce.com/2006/04/metadata">
+    <apiVersion>29.0</apiVersion>
+    <available>true</available>
+    <description>User Created</description>
+    <encodingKey>UTF-8</encodingKey>
+    <name>Notify_Admin_of_user_creationVF - CNS</name>
+    <style>none</style>
+    <subject>IATA Customer Portal - User Created</subject>
+    <type>visualforce</type>
+</EmailTemplate>

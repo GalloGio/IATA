@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<EmailTemplate xmlns="http://soap.sforce.com/2006/04/metadata">
+    <available>true</available>
+    <encodingKey>UTF-8</encodingKey>
+    <name>AMS - Late NOC Termination Notification</name>
+    <style>none</style>
+    <subject>Late/Absent NOC - Termination Warning</subject>
+    <textOnly>Dear {!Receiving_User.Name}.
+
+Please note the that termination date for the OSCAR {!AMS_OSCAR__c.Name} has been met. Ensure the necessary steps are performed.
+
+To review other records that are nearing termination, access the Late NOC Dashboard</textOnly>
+    <type>custom</type>
+</EmailTemplate>

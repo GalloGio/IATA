@@ -1,38 +1,43 @@
 <aura:component >
     <aura:attribute name="bma" type="Objective__c" default="{ 'sobjectType': 'Objective__c'}" />
     <aura:attribute name="comment" type="Comment__c" default="{ 'sobjectType': 'Comment__c'}" />
+    <aura:attribute name="accountId" type="String" />
+    <aura:attribute name="canEdit" type="Boolean" default="false" />
+    <aura:attribute type="String[]" name="statusValues"/>
+    <aura:attribute type="String" name="status"/>
+
     <aura:attribute name="displayType" type="String" default="Account"/><!-- Variable that controlls what is displayed: "Account" or "Division" -->
     <aura:attribute name="isEditMode" type="Boolean" default="false"/>
     <aura:attribute name="isError" type="Boolean" default="false"/>
     <aura:attribute name="index" type="Integer" />
-    
+
     <aura:registerEvent name="updateBMA" type="c:AMP_UpdateBMA"/>
     <aura:registerEvent name="deleteBMA" type="c:AMP_DeleteBMA"/>
     <aura:handler name="init" value="{!this}" action="{!c.doInit}" />
     <aura:handler name="editMenuClick" event="c:AMP_EditMenuItemClick" action="{!c.switchToEditMode}"/>
     <aura:handler name="deleteMenuClick" event="c:AMP_DeleteMenuItemClick" action="{!c.deleteItem}"/>
-    
+
     <aura:handler event="c:AMP_BMActivityError" action="{!c.HandleBMAError}"/>
-    
+
     <tr>
-        
+
         <aura:if isTrue="{!v.isEditMode}">
             <td>
                 <button class="slds-button slds-button--icon-border slds-button--icon-small" onclick="{!c.cancelEditMode}">
                     <c:svg xlinkHref="{!$Resource.SLDS102 + '/assets/icons/utility-sprite/svg/symbols.svg#close'}" class="slds-button__icon" />
                     <span class="slds-assistive-text">Cancel</span>
                 </button>
-                
+
                 <button class="slds-button slds-button--icon-border slds-button--icon-small" onclick="{!c.clickSaveComment}">
                     <c:svg xlinkHref="{!$Resource.SLDS102 + '/assets/icons/utility-sprite/svg/symbols.svg#check'}" class="slds-button__icon" />
                     <span class="slds-assistive-text">Save</span>
                 </button>
-                                
+
                 <aura:if isTrue="{!v.isError}">
-                    
+
                     <a href="javascript:void(0);" class="slds-button" >
                         <c:svg xlinkHref="{!$Resource.SLDS102 + '/assets/icons/utility-sprite/svg/symbols.svg#warning'}" class="slds-icon slds-icon-text-error slds-icon--small" />
-                        
+
                         <span class="slds-assistive-text">Review the Following Errors</span>
                     </a>
                     <div class="slds-popover slds-nubbin--top-left slds-theme--error" role="alert" aria-live="polite">
@@ -40,26 +45,36 @@
                             {!v.errorMessage}
                         </div>
                     </div>
-                    
+
                 </aura:if>
             </td>
             <td><ui:outputText value="{!v.bma.Name}"/></td>
             <!-- <td><ui:inputText value="{!v.bma.Details__c}" class="slds-truncate" aura:id="details"/></td> -->
             <td><ui:outputText value="{!v.bma.Type__c}"/></td>
             <td>
-                <ui:inputSelect aura:id="accountStatus" class="slds-select">
-                    <ui:inputSelectOption label="Not Started" text="Not Started" value="{!v.bma.Comments__r[0].Status__c == 'Not Started'}"/>
-                    <ui:inputSelectOption label="In Progress" text="In Progress" value="{!v.bma.Comments__r[0].Status__c == 'In Progress'}"/>
-                    <ui:inputSelectOption label="Completed" text="Completed" value="{!v.bma.Comments__r[0].Status__c == 'Completed'}"/>
-                    <ui:inputSelectOption label="On hold" text="On hold" value="{!v.bma.Comments__r[0].Status__c == 'On hold'}"/>
+
+                <ui:inputSelect aura:id="accountStatus" class="slds-select" >
+
+                    <aura:iteration items="{!v.statusValues}" var="sv">
+                      <aura:if isTrue="{!v.status == sv}">
+                          <ui:inputSelectOption text="{!sv}" value="true" label="{!sv}"/>
+                          <aura:set attribute="else">
+                              <ui:inputSelectOption text="{!sv}" label="{!sv}"/>
+                          </aura:set>
+                      </aura:if>
+                    </aura:iteration>
                 </ui:inputSelect>
             </td>
-            <td><ui:inputTextArea value="{!v.bma.Comments__r[0].Detail__c}" class="slds-textarea" rows="5"/></td>
-            
+            <td><ui:inputTextArea value="{!v.bma.Comments__r[0].Detail__c}" class="slds-textarea" rows="5" aura:id="detail"/></td>
+
             <aura:set attribute="else">
-                <aura:renderIf isTrue="{!v.displayType=='Division'}">
-                    <td><c:AMP_EditSaveMenu /></td>
-                </aura:renderIf>
+                <aura:If isTrue="{!v.displayType=='Division'}">
+                    <td>
+                    <aura:If isTrue="{!v.canEdit==true}">
+                        <c:AMP_EditSaveMenu  canDelete="false"/>
+                    </aura:If>
+                    </td>
+                </aura:If>
                 <td><ui:outputText value="{!v.bma.Name}" class="textwrap"/></td>
                 <aura:renderIf isTrue="{!v.displayType=='Account'}">
                     <td><c:AMP_LongText text="{!v.bma.Details__c}" /></td>
@@ -71,8 +86,8 @@
                 <td><c:AMP_LongText text="{!v.bma.Comments__r[0].Detail__c}" /></td>
             </aura:set>
         </aura:if>
-        
-        
-        
+
+
+
     </tr>
 </aura:component>

@@ -1,7 +1,7 @@
 <apex:page showHeader="false" sidebar="false" standardController="AMS_OSCAR__c" extensions="AMS_AccountHierarchySelectionController" tabStyle="AMS_OSCAR__c">
 
 	<apex:includeScript value="{!$Resource.jquery2_1_4}"/>
-	<apex:includeScript value="/support/console/20.0/integration.js"/>
+	<apex:includeScript value="/support/console/34.0/integration.js"/>
     <script type="text/javascript">
     	function logCLose(closetab) {
     		console.info(closetab);
@@ -26,6 +26,24 @@
 		    var tabId = result.id;
 		    sforce.console.closeTab(tabId);
 		};
+
+		function refreshTab(){
+
+				if (sforce.console.isInConsole()) {
+						sforce.console.getEnclosingTabId(function(enclosingResult){
+								sforce.console.getEnclosingPrimaryTabId(function(primaryResult){
+										sforce.console.refreshPrimaryTabById(primaryResult.id,true,null);
+										closeTab();
+								});
+						});
+				} else {
+						// for inline Vf
+						window.top.location.href = '/'+redirectUrl
+						// for normal vf
+						// window.location.href = '/'+redirectUrl
+				}
+		}
+
 
 		function bindCheckboxes() {
 			$('[data-group="main"]').on("change", function () {
@@ -78,12 +96,12 @@
 			}
 	</style>
 	
-	<apex:sectionHeader title="Account Hierarchy Selection" subtitle="{!oscar.Account__r.Name}"/>
+	<apex:sectionHeader title="Account Hierarchy Selection" subtitle="{!AMS_OSCAR__c.Account__r.Name}"/>
 	
 	<apex:form styleClass="pos-relative">
 		<apex:pageBlock mode="edit" rendered="{!editable}">
 
-			<apex:panelGrid id="fields" columns="2">
+			<apex:panelGrid id="fields" columns="2" rendered="{!showTopPanel}">
 				<apex:pageBlockSection id="controlField" columns="1">
 					<apex:inputField value="{!oscar.Type_of_change__c}">
 						<apex:actionSupport event="onchange" status="blockEditing" reRender="dependentFields, notes"/>
@@ -102,11 +120,19 @@
 			</apex:pageBlockSection>
 
 
-			<apex:pageBlockSection id="table" columns="1" title="Select Accounts" rendered="{!hierarchy.size > 0}">
+			<apex:pageBlockSection id="table" columns="1" title="Select Accounts" rendered="{!hierarchyValues.size > 0}">
 
 				<apex:pageMessages id="pageMessages"/>
 
-				<apex:pageBlockTable value="{!hierarchy}" var="hi"> 
+                <apex:outputPanel id="buttonPanel">
+                    <apex:commandButton action="{!Beginning}" title="Beginning" value="<<" disabled="{!disablePrevious}" reRender="hierarchyList,buttonPanel"/>
+                    <apex:commandButton action="{!Previous}" title="Previous" value="<" disabled="{!disablePrevious}" reRender="hierarchyList,buttonPanel"/>        
+                    <apex:outputText>Page {!(currentPage + 1)} of {!totalPages}</apex:outputText>
+                    <apex:commandButton action="{!Next}" title="Next" value=">" disabled="{!disableNext}" reRender="hierarchyList,buttonPanel"/>
+                    <apex:commandButton action="{!End}" title="End" value=">>" disabled="{!disableNext}" reRender="hierarchyList,buttonPanel"/>
+                </apex:outputPanel>
+					
+                <apex:pageBlockTable id="hierarchyList" value="{!hierarchyValuesForDisplay[currentPage]}" var="hi"> 
 					
 					<apex:column headerValue="Main">
 						<apex:inputCheckbox html-data-group="main" html-data-controls="{!hi.acc.Id}" value="{!hi.main}"/>
@@ -122,9 +148,12 @@
 						<apex:inputCheckbox html-data-group="select" html-data-controlledBy="{!hi.acc.Id}" value="{!hi.selected}"/>
 					</apex:column>
 
-					<apex:repeat value="{!accountFieldList}" var="field">
-						<apex:column value="{!hi.acc[field]}"/>
-					</apex:repeat>
+					<apex:column value="{!hi.acc['Name']}"/>
+					<apex:column value="{!hi.acc['Location_Type__c']}"/>
+					<apex:column value="{!hi.acc['IATACode__c']}"/>
+					<apex:column value="{!hi.acc['Status__c']}"/>
+					<apex:column value="{!hi.acc['BillingCity']}"/>
+					<apex:column value="{!hi.acc['Category__c']}"/>
 				</apex:pageBlockTable>
 
 				<script>
@@ -144,22 +173,30 @@
 			</apex:pageBlockSection>
 
 			<apex:pageBlockButtons location="bottom">
-				<apex:commandButton action="{!save}" oncomplete="{!IF(closeTab, 'closeTab();', '')}" status="blockEditing" value="{!$Label.site.save}" reRender="pageMessages"/>
+				<apex:commandButton action="{!save}" oncomplete="{!IF(closeTab, 'refreshTab();', '')}" status="blockEditing" value="{!$Label.site.save}" reRender="pageMessages"/>
 				<apex:commandButton onclick="closeTab(); return false;" status="blockEditing" value="{!$Label.site.cancel}" immediate="true"/>
 			</apex:pageBlockButtons>
 		</apex:pageBlock>
 
 		<apex:pageBlock tabStyle="AMS_OSCAR__c" rendered="{!NOT(editable)}">
 
-			<apex:pageBlockSection id="controlField" columns="1">
+			<apex:pageBlockSection id="controlField" columns="1" rendered="{!showTopPanel}">
 				<apex:outputField value="{!oscar.Type_of_change__c}"/>
 				<apex:outputField value="{!oscar.AMS_Target_Agency__c}" rendered="{!showTargetAgency}"/>
 				<apex:outputField value="{!oscar.Change_of_location_type_behavior__c}" rendered="{!showLocationTypeBehavior}"/>
 			</apex:pageBlockSection>
 
-			<apex:pageBlockSection id="table" columns="1" title="Accounts Selected" rendered="{!hierarchy.size > 0}">
+			<apex:pageBlockSection id="table" columns="1" title="Accounts Selected" rendered="{!hierarchyValues.size > 0}">
 
-				<apex:pageBlockTable value="{!hierarchy}" var="hi"> 
+                <apex:outputPanel id="buttonPanel">
+                    <apex:commandButton action="{!Beginning}" title="Beginning" value="<<" disabled="{!disablePrevious}" reRender="hierarchyList,buttonPanel"/>
+                    <apex:commandButton action="{!Previous}" title="Previous" value="<" disabled="{!disablePrevious}" reRender="hierarchyList,buttonPanel"/>        
+                    <apex:outputText>Page {!(currentPage + 1)} of {!totalPages}</apex:outputText>
+                    <apex:commandButton action="{!Next}" title="Next" value=">" disabled="{!disableNext}" reRender="hierarchyList,buttonPanel"/>
+                    <apex:commandButton action="{!End}" title="End" value=">>" disabled="{!disableNext}" reRender="hierarchyList,buttonPanel"/>
+                </apex:outputPanel>
+					
+                <apex:pageBlockTable id="hierarchyList" value="{!hierarchyValuesForDisplay[currentPage]}" var="hi"> 
 					
 					<apex:column headerValue="Main">
 						<apex:inputCheckbox value="{!hi.main}" disabled="true"/>
@@ -169,9 +206,12 @@
 						<apex:inputCheckbox value="{!hi.selected}" disabled="true"/>
 					</apex:column>
 
-					<apex:repeat value="{!accountFieldList}" var="field">
-						<apex:column value="{!hi.acc[field]}"/>
-					</apex:repeat>
+					<apex:column value="{!hi.acc['Name']}"/>
+					<apex:column value="{!hi.acc['Location_Type__c']}"/>
+					<apex:column value="{!hi.acc['IATACode__c']}"/>
+					<apex:column value="{!hi.acc['Status__c']}"/>
+					<apex:column value="{!hi.acc['BillingCity']}"/>
+					<apex:column value="{!hi.acc['Category__c']}"/>
 				</apex:pageBlockTable>
 			</apex:pageBlockSection>
 

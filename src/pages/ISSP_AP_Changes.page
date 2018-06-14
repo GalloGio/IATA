@@ -371,7 +371,7 @@
                     <apex:pageBlockSectionItem >
                         <apex:outputLabel value="* Country" style="color:#a31717; font-weight: bold !important;"/>
                         <apex:selectList style="width:300px" value="{!newForm.Fin_Adm_Contact_Country__c}" required="false" size="1">
-                            <apex:selectOptions value="{!items}"/>
+                            <apex:selectOptions value="{!financialCountryNameList}"/>
                         </apex:selectList>
                     </apex:pageBlockSectionItem>
 

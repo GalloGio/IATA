@@ -67,10 +67,12 @@ global without sharing class restIEC_Attachment {
         Boolean isUpdated = false;
         if (uploadStatus.containsKey('Image_Url') && !String.isBlank((String)uploadStatus.get('Image_Url'))) {
             resource.Image_URL__c = (String)uploadStatus.get('Image_Url');
+            resource.Image_URL__c = resource.Image_URL__c.replace('http://', 'https://');
             isUpdated = true;
         }
         if (uploadStatus.containsKey('Thumb_Url') && !String.isBlank((String)uploadStatus.get('Thumb_Url'))) {
             resource.Thumbnail_URL__c = (String)uploadStatus.get('Thumb_Url');
+            resource.Thumbnail_URL__c = resource.Thumbnail_URL__c.replace('http://', 'https://');
             isUpdated = true;
         }
         if (uploadStatus.containsKey('Width') && Integer.valueOf(uploadStatus.get('Width')) != 0) {

@@ -21,10 +21,6 @@
         <type>Default</type>
     </actionOverrides>
     <actionOverrides>
-        <actionName>Follow</actionName>
-        <type>Default</type>
-    </actionOverrides>
-    <actionOverrides>
         <actionName>List</actionName>
         <type>Default</type>
     </actionOverrides>
@@ -50,6 +46,7 @@
     <description>This object holds the common information, default values of eBroadcast product that are necessary to operate.</description>
     <enableActivities>false</enableActivities>
     <enableBulkApi>true</enableBulkApi>
+    <enableChangeDataCapture>false</enableChangeDataCapture>
     <enableFeeds>false</enableFeeds>
     <enableHistory>true</enableHistory>
     <enableReports>false</enableReports>
@@ -85,6 +82,18 @@
         <unique>false</unique>
     </fields>
     <fields>
+        <fullName>EBC_Admin_CC_Email__c</fullName>
+        <description>Internal Email Address where campaigns are sent for IATA Monitoring and Safekeeping</description>
+        <externalId>false</externalId>
+        <inlineHelpText>Internal Email Address where campaigns are sent for IATA Monitoring and Safekeeping</inlineHelpText>
+        <label>EBC Admin CC Email</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Email</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
         <fullName>E_Commerce_Base_Url__c</fullName>
         <defaultValue>&quot;https://customer-portal-iata.force.com/iec&quot;</defaultValue>
         <description>This is the community base url for the eBroadcast pages</description>
@@ -95,6 +104,126 @@
         <trackHistory>false</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Url</type>
+    </fields>
+    <fields>
+        <fullName>E_Member_Prepaid_Product_Rate_Plan_01__c</fullName>
+        <deleteConstraint>SetNull</deleteConstraint>
+        <description>E-Commerce Member Prepaid</description>
+        <externalId>false</externalId>
+        <inlineHelpText>E-Commerce Member Prepaid</inlineHelpText>
+        <label>E-Commerce Member Prepaid 01</label>
+        <referenceTo>zqu__ProductRatePlan__c</referenceTo>
+        <relationshipLabel>EBC Setups (E-Commerce Member Prepaid 01)</relationshipLabel>
+        <relationshipName>EBC_Setups</relationshipName>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Lookup</type>
+    </fields>
+    <fields>
+        <fullName>E_Member_Prepaid_Product_Rate_Plan_02__c</fullName>
+        <deleteConstraint>SetNull</deleteConstraint>
+        <description>E-Commerce Member Prepaid Plan</description>
+        <externalId>false</externalId>
+        <inlineHelpText>E-Commerce Member Prepaid Plan</inlineHelpText>
+        <label>E-Commerce Member Prepaid 02</label>
+        <referenceTo>zqu__ProductRatePlan__c</referenceTo>
+        <relationshipLabel>EBC Setups (E-Commerce Member Prepaid 02)</relationshipLabel>
+        <relationshipName>EBC_Setups1</relationshipName>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Lookup</type>
+    </fields>
+    <fields>
+        <fullName>E_Member_Prepaid_Product_Rate_Plan_03__c</fullName>
+        <deleteConstraint>SetNull</deleteConstraint>
+        <description>E-Commerce Member Prepaid Plan</description>
+        <externalId>false</externalId>
+        <inlineHelpText>E-Commerce Member Prepaid Plan</inlineHelpText>
+        <label>E-Commerce Member Prepaid 03</label>
+        <referenceTo>zqu__ProductRatePlan__c</referenceTo>
+        <relationshipLabel>EBC Setups (E-Commerce Member Prepaid 03)</relationshipLabel>
+        <relationshipName>EBC_Setups2</relationshipName>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Lookup</type>
+    </fields>
+    <fields>
+        <fullName>E_Member_Prepaid_Product_Rate_Plan_04__c</fullName>
+        <deleteConstraint>SetNull</deleteConstraint>
+        <description>E-Commerce Member Prepaid Plan</description>
+        <externalId>false</externalId>
+        <inlineHelpText>E-Commerce Member Prepaid Plan</inlineHelpText>
+        <label>E-Commerce Member Prepaid 04</label>
+        <referenceTo>zqu__ProductRatePlan__c</referenceTo>
+        <relationshipLabel>EBC Setups (E-Commerce Member Prepaid 04)</relationshipLabel>
+        <relationshipName>EBC_Setups3</relationshipName>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Lookup</type>
+    </fields>
+    <fields>
+        <fullName>E_N_Member_Prepaid_Product_Rate_Plan_01__c</fullName>
+        <deleteConstraint>SetNull</deleteConstraint>
+        <description>E-Commerce Non-Member Prepaid Plan</description>
+        <externalId>false</externalId>
+        <inlineHelpText>E-Commerce Non-Member Prepaid Plan</inlineHelpText>
+        <label>E-Commerce Non-Member Prepaid Plan 1</label>
+        <referenceTo>zqu__ProductRatePlan__c</referenceTo>
+        <relationshipLabel>EBC Setups (E-Commerce Non-Member Prepaid Plan 1)</relationshipLabel>
+        <relationshipName>EBC_Setups4</relationshipName>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Lookup</type>
+    </fields>
+    <fields>
+        <fullName>E_N_Member_Prepaid_Product_Rate_Plan_02__c</fullName>
+        <deleteConstraint>SetNull</deleteConstraint>
+        <description>E-Commerce Non-Member Prepaid Plan</description>
+        <externalId>false</externalId>
+        <inlineHelpText>E-Commerce Non-Member Prepaid Plan</inlineHelpText>
+        <label>E-Commerce Non-Member Prepaid Plan 2</label>
+        <referenceTo>zqu__ProductRatePlan__c</referenceTo>
+        <relationshipLabel>EBC Setups (E-Commerce Non-Member Prepaid Plan 2)</relationshipLabel>
+        <relationshipName>EBC_Setups5</relationshipName>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Lookup</type>
+    </fields>
+    <fields>
+        <fullName>E_N_Member_Prepaid_Product_Rate_Plan_03__c</fullName>
+        <deleteConstraint>SetNull</deleteConstraint>
+        <description>E-Commerce Non-Member Prepaid Plan</description>
+        <externalId>false</externalId>
+        <inlineHelpText>E-Commerce Non-Member Prepaid Plan</inlineHelpText>
+        <label>E-Commerce Non-Member Prepaid Plan 3</label>
+        <referenceTo>zqu__ProductRatePlan__c</referenceTo>
+        <relationshipLabel>EBC Setups (E-Commerce Non-Member Prepaid Plan 3)</relationshipLabel>
+        <relationshipName>EBC_Setups6</relationshipName>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Lookup</type>
+    </fields>
+    <fields>
+        <fullName>E_N_Member_Prepaid_Product_Rate_Plan_04__c</fullName>
+        <deleteConstraint>SetNull</deleteConstraint>
+        <description>E-Commerce Non-Member Prepaid Plan</description>
+        <externalId>false</externalId>
+        <inlineHelpText>E-Commerce Non-Member Prepaid Plan</inlineHelpText>
+        <label>E-Commerce Non-Member Prepaid Plan 4</label>
+        <referenceTo>zqu__ProductRatePlan__c</referenceTo>
+        <relationshipLabel>EBC Setups (E-Commerce Non-Member Prepaid Plan 4)</relationshipLabel>
+        <relationshipName>EBC_Setups7</relationshipName>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Lookup</type>
     </fields>
     <fields>
         <fullName>Enhanced_Reporting_Product_Rate_Plan__c</fullName>
@@ -446,4 +575,5 @@ This is defined in Product Category.</inlineHelpText>
     </searchLayouts>
     <sharingModel>ReadWrite</sharingModel>
     <startsWith>Vowel</startsWith>
+    <visibility>Public</visibility>
 </CustomObject>

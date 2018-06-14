@@ -26,6 +26,8 @@ public class vfIECEBC_ReportList extends vfIECEBC_Abstract_List {
             fields.add('Owner.Name'); 
             fields.add('EBC_Master_Filter__r.Name');
             fields.add('LastModifiedDate');
+            fields.add('OpenRate7Days__c');
+            fields.add('ClickRate7Days__c');
         }
         
         return 'Select ' + String.join(fields, ',') + ' FROM EBC_Campaign__c WHERE Billing_Account__c = \'' + vfIECEBC.billingAccount.Id + '\' AND Status__c IN (\'SENT\',\'STARTED\')';

@@ -14,7 +14,26 @@ private class EF_AttachmentListControllerTest {
         //         ParentId = cse.id;
         //     );
         //     insert att;
-
+        //Create public group
+        
+        Group efPrivateGroup = null;
+        List<Group> efPrivateGroups = [select Name, DeveloperName from Group where DeveloperName = 'EF_Private_Document_Access' limit 1];
+        if(efPrivateGroups.size() == 0)
+        {
+            efPrivateGroup = new Group();
+            efPrivateGroup.Name='EF Private Document Access';
+            efPrivateGroup.DeveloperName='EF_Private_Document_Access';
+            insert efPrivateGroup;
+        } else
+        {
+           efPrivateGroup = efPrivateGroups.get(0);
+        }
+        
+        GroupMember efGM = new GroupMember();
+        efGM.UserOrGroupId = UserInfo.getUserId();
+        efGM.GroupId= efPrivateGroup.Id;
+        //insert efGM;
+        
         List<Amazon_Cred__c> listAmazonCred =  new List<Amazon_Cred__c>{
             new Amazon_Cred__c(
                 name = 'GenericAttach',
@@ -86,6 +105,12 @@ private class EF_AttachmentListControllerTest {
             )
         };
         insert AWS_KEYs;
+
+        EF_Amazonfile_Private__c ap = new EF_Amazonfile_Private__c();
+        ap.Name = 'Case';
+        ap.SObject_3_first_chars__c = '500';
+        ap.EF_Private__c = false;
+        insert ap;
     }
 
     static testMethod void testEF_AttachmentListController() {
@@ -110,6 +135,40 @@ private class EF_AttachmentListControllerTest {
 
         System.assert(controller.listAttachments.size() > 0);
 
+        String s = controller.sapNumberRequiredJSON;
+        s = controller.expiryDateRequiredJSON;
+        s = controller.expiredRequiredJSON;
+
+        // s = controller.MAX_FILE_SIZE;
+        s = controller.amazonURL;
+        s = controller.credentialName;
+        s = controller.amazonPath;
+        s = controller.expiredRequiredJSON;
+        s = controller.getTransferAttachmentsUrl();
+        s = controller.uploader;
+        s = controller.source;
+        Boolean b = controller.scroll;
+        // 0018E00000Gfake
+
+        PageReference p = controller.refreshList();
+        p = controller.cancelPopupAttach();
+        p = controller.updateAttach();
+        p = controller.goToAttachmentPage();
+        p = controller.cancelPopupAttach();
+
+        controller.callEditAttachment();
+
+        AmazonFile__c af = controller.amazonFileToUpload;
+        // controller.makeAllPublic();
+        // controller.makeAllPrivate();
+        // controller.changePermissionToAll(true);
+
+        String credentialName = controller.credentialName;
+        EF_AttachmentListController.UploadFile u = EF_AttachmentListController.createUploadFile('0018E00000Gfake', 'filenameupload',  'contentType', 1000000, '001', credentialName);
+
+        boolean c = EF_AttachmentListController.createAmazonFileObject('String amazonKey', 10000000, 'String parentId', 'String recordType',
+                                                        'String efCategory', 'String efSubCategory', 'String efExpiryDate', false, 'String efSapNumber',
+                                                        'String additionalInformation', false);
     }
 
     static testMethod void testRemoteActions() {
@@ -148,5 +207,5 @@ private class EF_AttachmentListControllerTest {
         EF_AttachmentListController.deleteAttachment(String.valueOf(arch.Id), null);
         EF_AttachmentListController.deleteAttachment(String.valueOf(aFile.Id), 'asd');
     }
-    
+       
 }

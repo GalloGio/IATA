@@ -438,8 +438,8 @@ private class AMS_RecordCreatorWebserviceTest {
 		AMS_OSCAR__c oscar = oscarLst.get(0);
 
 		System.assertEquals(oscar.Type_of_change__c,'Ownership to non-IATA Agent');
-
-		List<AMS_Process_Detail__c> details = [SELECT Id from AMS_Process_Detail__c where OSCAR__c = :oscarId];
+//DTULLO: Added Record Type
+		List<AMS_Process_Detail__c> details = [SELECT Id from AMS_Process_Detail__c where OSCAR__c = :oscarId and RecordType.Developername = 'Agency_Involved'];
 
 		System.assertEquals(details.size(),2);
 
@@ -505,4 +505,90 @@ private class AMS_RecordCreatorWebserviceTest {
 
 		Test.stopTest();
 	}
+
+	@isTest static void createAccreditationForSA() {
+
+		IATA_ISO_Country__c ctry = [SELECT id from IATA_ISO_Country__c limit 1];
+            
+        Id accountRT = AMS_Utils.getId('Account', 'Standard_Account');
+
+		Account acct = new Account();
+
+		acct.NAME = 'Lions Travel 8 HO';
+		acct.TYPE = 'Non-IATA Passenger Agent';
+		acct.RECORDTYPEID = accountRT;
+		acct.BILLINGCOUNTRY = 'Italy';
+		acct.INDUSTRY = 'Travel Agent';
+		acct.CURRENCYISOCODE = 'USD';
+		acct.TRADENAME__C = 'Lions Travel 8 HO';
+		acct.IATA_MEMBER__C = false;
+		acct.LOCATION_TYPE__C = 'HO';
+		acct.LEGAL_NAME__C = 'Lions Travel 8 HO legal name';
+		acct.SHORT_NAME__C = 'Lions Travel 8 HO short name';
+		acct.IATA_ISO_COUNTRY__C = ctry.Id;
+		acct.CATEGORY__C = 'IATA Passenger Sales Agent';
+		acct.SECTOR__C = 'Travel Agent';
+		acct.LOCATION_CLASS__C = 'P';
+		acct.COMPANY_TYPE__C = 'A';
+		acct.IN_A_AIRPORT__C = false;
+		acct.REASON_FOR_CREATION__C = 'Created by customer';
+
+		
+		insert acct;
+
+		Contact co1 = new Contact(AccountId = acct.Id, Firstname = 'teste1', Lastname='test1', Phone = '911111111', MobilePhone = '911111111', Email = 'test@test.com', Financial_Assessment_Contact__c = false);
+		
+		Contact co2 = new Contact(AccountId = acct.Id, Firstname = 'teste2', Lastname='test2', Phone = '911111111', MobilePhone = '911111111', Email = 'test2@test.com', Financial_Assessment_Contact__c = false);
+		
+		List<Contact> contacts = new List<Contact>{co1,co2};
+
+		insert contacts;
+
+		AMS_Account_Role__c role = new AMS_Account_Role__c();
+		role.Owner_Name__c = 'Contact 1';
+		role.Contact__c = co1.Id;
+		role.Account__c = acct.Id;
+		role.Percentage__c = 50;
+
+		AMS_Account_Role__c role2 = new AMS_Account_Role__c();
+		role2.Owner_Name__c = 'Contact 2';
+		role2.Contact__c = co2.Id;
+		role2.Account__c = acct.Id;
+		role2.Percentage__c = 50;
+
+		List<AMS_Account_Role__c> roles = new List<AMS_Account_Role__c>{role,role2};
+
+		insert roles;
+
+		System.debug('Contacts created');
+
+		ID rtSAAMCase = Schema.SObjectType.Case.getRecordTypeInfosByName().get('SAAM').getRecordTypeId();
+
+		Case saamCase = new Case(RecordTypeId = rtSAAMCase, AccountId = acct.Id, Account_Concerned__c = acct.Id, ContactId = co1.Id);
+
+		insert saamCase;
+
+		Test.startTest();
+
+		AMS_RecordCreatorWebservice.createAccreditationForSA(saamCase.Id);
+
+		List<Account> accounts = [SELECT Id from Account where ParentId = :acct.Id];
+
+		System.assertEquals(1,accounts.size());
+
+		List<AMS_Pax_Accreditation_Form__c> accreditationForms = [SELECT Id from AMS_Pax_Accreditation_Form__c where SAAM_Case__c = :saamCase.Id];
+
+		System.assertEquals(1,accreditationForms.size());
+
+		List<AMS_Accreditation_Contact__c> accreditationContacts = [SELECT Id from AMS_Accreditation_Contact__c where AMS_Pax_Accreditation_Form__c = :accreditationForms.get(0).Id];
+
+		System.assertEquals(2,accreditationContacts.size());
+
+		List<AMS_Agencies_relationhip__c> relationShips = [SELECT Id from AMS_Agencies_relationhip__c where Parent_Account__c = :acct.Id and Child_Account__c = :accounts.get(0).Id];
+
+		System.assertEquals(1,relationShips.size());
+
+		Test.stopTest();
+	}
+
 }

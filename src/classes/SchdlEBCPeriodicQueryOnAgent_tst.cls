@@ -25,7 +25,7 @@ private class SchdlEBCPeriodicQueryOnAgent_tst {
 		string second = string.valueof(nextScheduleTime.second ());
 		string cronvalue = second + ' ' + minute + ' * * * ?' ;
 		
-		string jobName = 'SchdlEBCPeriodicQueryOnAgent ' + nextScheduleTime.format('hh:mm');
+		string jobName = 'SchdlEBCPeriodicQueryOnAgent ' + (Test.isRunningTest() ? 'Test' : '') + nextScheduleTime.format('hh:mm');
 		system.schedule(jobName, cronvalue , new SchdlEBCPeriodicQueryOnAgency());
 		
 		Test.stopTest();

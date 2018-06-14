@@ -18,7 +18,7 @@ showHeader="true" sidebar="true"  >
             <apex:outputLink target="_blank" value="/{!c.Id}" rendered="{! AND(c.AM_First_Name_Latin_Char__c == null, c.AM_Last_Name_Latin_Char__c == null)}">{!c.Name}</apex:outputLink>
         </apex:column>
         <apex:column value="{!c.Airline_Contact_Type__c}" />
-        <apex:column value="{!c.Function__c}" headerValue="Job Function"/>
+        <apex:column value="{!c.Function__c}" headerValue="Primary for"/>
         <apex:column >
             <apex:facet name="header">Title</apex:facet>
 

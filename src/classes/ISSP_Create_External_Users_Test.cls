@@ -28,6 +28,10 @@ private class ISSP_Create_External_Users_Test {
 
         Test.startTest();
         ISSP_Create_External_Users.scheduleName('test','0 02 * * * ?');
+
+        ISSP_Create_External_Users.scheduleIt();
+        ISSP_Create_External_Users.scheduleIt('0 04 * * * ?');
+        
         Test.stopTest();
         
         //ISSP_Create_External_Users.scheduleIt();
@@ -61,6 +65,9 @@ private class ISSP_Create_External_Users_Test {
 
         Test.startTest();
         ISSP_Create_External_Users_ASD.scheduleName('test','0 02 * * * ?');
+
+        ISSP_Create_External_Users_ASD.scheduleIt();
+        ISSP_Create_External_Users_ASD.scheduleIt('0 04 * * * ?');
         Test.stopTest();
         
         //ISSP_Create_External_Users_ASD.scheduleIt();
@@ -94,6 +101,9 @@ private class ISSP_Create_External_Users_Test {
 
         Test.startTest();
         ISSP_Create_External_Users_SIS.scheduleName('test','0 02 * * * ?');
+
+        ISSP_Create_External_Users_SIS.scheduleIt();
+        ISSP_Create_External_Users_SIS.scheduleIt('0 04 * * * ?');
         Test.stopTest();
         
         //ISSP_Create_External_Users_SIS.scheduleIt();
@@ -127,6 +137,9 @@ private class ISSP_Create_External_Users_Test {
 
         Test.startTest();
         ISSP_Create_External_Users_BSP.scheduleName('test','0 02 * * * ?');
+
+        ISSP_Create_External_Users_BSP.scheduleIt();
+        ISSP_Create_External_Users_BSP.scheduleIt('0 04 * * * ?');
         Test.stopTest();
         
         //ISSP_Create_External_Users_BSP.scheduleIt();

@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<StandardValueSet xmlns="http://soap.sforce.com/2006/04/metadata">
+    <sorted>false</sorted>
+    <standardValue>
+        <fullName>Live Agent</fullName>
+        <default>true</default>
+        <label>Live Agent</label>
+    </standardValue>
+</StandardValueSet>

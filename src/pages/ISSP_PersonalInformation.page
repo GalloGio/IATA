@@ -1,6 +1,6 @@
 <apex:page controller="ISSP_PersonalInformation" extensions="ISSP_PersonalInformationWithoutSharing"  standardStylesheets="false" showHeader="false" sidebar="false"  applyBodyTag="false" applyHtmlTag="false">
 <html>
- <c:ISSP_Header ></c:ISSP_Header>    
+ <c:ISSP_Header communityName="{!communityName}"></c:ISSP_Header>    
  <body>
      <link rel="stylesheet" href="{!URLFOR($Resource.InternationalPhoneNumberFormat, '/intl-tel-input-master/build/css/intlTelInput.css')}"/>
     <script type="text/javascript">
@@ -27,7 +27,7 @@
          	.required {color: #C90435;font-size: 24px;padding: 0 5px 0 0;}
     </style>
     <div class="container">
-        <c:ISSP_CustomNavigation />
+        <c:ISSP_CustomNavigation communityName="{!communityName}"/>
         <apex:messages />
         <div class="panel panel-primary">
             <div class="panel-heading head_panel_green">
@@ -181,6 +181,7 @@
                                 </div>
                             </div>
                             <!-- end row -->
+                            <apex:outputPanel rendered="{!isHOAccredited}">
                             <div class="row form-group">
                                 <div class="col-md-4" style="padding-left:28px">
                                     <label class="lbl" for="exampleInputEmail1">{!$ObjectType.Contact.fields.BSP_CASS_Payment_contact__c.Label}</label>
@@ -190,6 +191,18 @@
                                     <span class="saveMode">
                                         <apex:outputField value="{!con.BSP_CASS_Payment_contact__c}"/>
                                     </span>
+                                </div>
+                            </div>
+                            <div class="row form-group">
+                                <div class="col-md-4" style="padding-left:28px">
+                                    <label class="lbl" for="exampleInputEmail1">{!$ObjectType.Contact.fields.Authorized_Signatory__c.Label}</label>
+                                </div>
+                                <div class="col-md-8">
+                                    <apex:outputField value="{!con.Authorized_Signatory__c}" rendered="{!NOT(con.User_Portal_Status__c == 'Approved Admin')}"/>
+                                    <apex:inputField styleclass="editMode" value="{!con.Authorized_Signatory__c}" rendered="{!(con.User_Portal_Status__c == 'Approved Admin')}"/>
+                                    <span class="saveMode">
+                                        <apex:outputField value="{!con.Authorized_Signatory__c}" rendered="{!(con.User_Portal_Status__c == 'Approved Admin')}"/>
+                                    </span>                                    
                                 </div>
                             </div>
                             <!-- end row -->
@@ -204,6 +217,7 @@
                                     </span>
                                 </div>
                             </div>
+                            </apex:outputPanel>
                             <!-- end row -->
                             
                             <div class="row">
@@ -297,7 +311,7 @@
                             <div class="modal-content">
                                 <div class="modal-body">
                                     <p>
-                                        <iframe src="/ISSP_ChangeEmail" id="simpleArticleFrame" class="custom-popup-iframe"></iframe>
+                                        <iframe src="/ISSP_ChangeEmail{!if(communityName=='CNS','?CommunityName='+communityName,'')}" id="simpleArticleFrame" class="custom-popup-iframe"></iframe>
                                     </p>
                                 </div>
                             </div>
@@ -309,7 +323,7 @@
             <!-- end panel body -->
         </div>
         <!-- end  div class="panel panel-primary"-->
-              <c:ISSP_CustomFooter />
+              <c:ISSP_CustomFooter communityName="{!communityName}"/>
     </div>
     <script>
       function validateUserProfile(){

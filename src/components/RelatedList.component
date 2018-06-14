@@ -23,20 +23,68 @@
     <apex:includeScript value="{!$Resource.jquery2_1_4}"/>
 
     <script>
-        
-        function updateSelected(className, value) {
+
+    function updateSelected(className, value, element) {
+        // get the master row values for the hidden, left and right multiselects
+        var opt = document.getElementById(element.id) ;
+        var optu = document.getElementById(element.id+'_unselected') ;
+        var opts = document.getElementById(element.id+'_selected') ;
 
             // loop all rows
             $(".targetTable tbody tr").each(function() {
                 // on a row, find the checkbox and change the values if it's checked
                 if($(this).find(".selectedCheckbox").prop("checked")) {
                     $(this).find("."+className).val(value);
-                } 
+                // extra trick for multiselects, because Visualforce renders them as
+                // 1. hidden, 2. left and 3. right lists
+                $(this).find("select."+className).each(function() {
+                    var selectId =  $(this).attr('id');
+                    // clear the old values, and copy the ones from the master row
+                    $(this).find('option').remove();
+                    // the hidden multi-select
+                    if(selectId.indexOf('_unselected') == -1 && selectId.indexOf('_selected') == -1) {
+                        for(var h = 0; h<opt.length; h++) {
+                            var selected = opt.options[h].selected;
+                            if(selected) {
+                                $(this).append('<option value="'+opt.options[h].value +'" selected="selected">'+ opt.options[h].label + '</option>');
+                            } else {
+                                $(this).append('<option value="'+opt.options[h].value + '">'+ opt.options[h].label + '</option>');
+                            }
+                        }
+                    }
+                    // the left side
+                    if(selectId.indexOf('_unselected') !== -1) {
+                        if(opts !== null) {
+                            for(var i=0; i< optu.options.length; i++) {
+                                $(this).find('optgroup').append('<option value="+optu.options[i].value+">'+ optu.options[i].label + '</option>');
+                            }
+                        }
+                    }
+                    // right side
+                    if(selectId.indexOf('_selected') !== -1) {
+                        if(opts !== null) {
+                            for(var i=0; i< opts.options.length; i++) {
+                                var op = '<option value="'+opts.options[i].value+'">'+ opts.options[i].label + '</option>';
+                                $(this).find('optgroup').append(op);
+                            }
+                        }
+                    }
+                });
+                }
             });
         }
-    
+
+        function selectAll() {
+
+            // loop all rows
+            $(".targetTable tbody tr").each(function() {
+                // on a row, find the checkbox and change the values to checked
+                $(this).find(".selectedCheckbox").prop("checked", true);
+            });
+        }
+
         function redirectNew() {
-            window.location.href = "{!urlForNewRecord}";
+            window.top.location.href = "{!urlForNewRecord}";
 
             return false;
         }
@@ -46,14 +94,15 @@
         <apex:pageBlockButtons location="top" rendered="{!IF(hideButtons,false,true)}">
             <!-- <apex:outputLink value="{!urlForNewRecord}" rendered="{!showNewButton}" styleClass="btn commandButton">New {!objectDescribe.label}</apex:outputLink> -->
             <apex:outputPanel layout="none" rendered="{!IF(OR(ISBLANK(urlForNewRecord),NOT(ShowNewButton)),false,true)}">
-                <input type="button" onclick="return redirectNew();" class="btn" value="New {!objectDescribe.label}"/>
+                <input type="button" onclick="return redirectNew();" class="btn newButton" value="New {!objectDescribe.label}"/>
             </apex:outputPanel>
 
             <!-- Show 'Edit All' button if the updatable fields are defined And showUpdateButton (user has permissions to edit) is set to true -->
             <apex:commandButton value="Edit All" action="{!changeInlineEditMode}" rendered="{!AND(NOT(ISNULL(updatableFields)),updatableFields.size > 0,showUpdateButton, NOT(inlineEditMode), NOT(defaultEditAll))}" rerender="pageBlock" styleClass="btn commandButton"></apex:commandButton>
             <!-- Show 'Save' and 'Cancel' buttons if inlineEditeMode is set to true -->
             <apex:commandButton value="Save" onclick="if(!confirm('Are you sure?')) return false;" action="{!updateRecords}" rendered="{!inlineEditMode}" rerender="pageBlock" styleClass="btn commandButton"></apex:commandButton>
-            <apex:commandButton value="Cancel" action="{!cancelChanges}" rendered="{!inlineEditMode}" styleClass="btn commandButton"></apex:commandButton>
+            <apex:commandButton value="Close" action="{!cancelChanges}" rendered="{!inlineEditMode}" styleClass="btn commandButton"></apex:commandButton>
+            <apex:commandButton value="Select All" onclick="selectAll();" reRender="false" rendered="{!massUpdateValues && inLineEditMode}"></apex:commandButton>
         </apex:pageBlockButtons>
 
         <!-- Output error/warning messages here -->
@@ -62,7 +111,7 @@
         <!-- Only show table if there are records returned -->
         <!-- Mass Updater -->
         <apex:pageBlock title="Mass Update Values" rendered="{!massUpdateValues && inLineEditMode}">
-            <apex:pageBlockTable title="Mass Update Values" value="{!topRecord}" var="r" rendered="{!OR(NOT(ISNULL(records)),records.size > 0)}">
+            <apex:pageBlockTable styleClass="sourceTable" title="Mass Update Values" value="{!topRecord}" var="r" rendered="{!OR(NOT(ISNULL(records)),records.size > 0)}">
                 <!-- Loop through list of field names to dynamically render the correct columns -->
                 <apex:repeat value="{!updatableFields}" var="fld">
                     <!-- Set correct style alignment based on values stored in fieldAlignMap -->
@@ -74,7 +123,7 @@
                             </apex:outputPanel>
                         </apex:facet>
                         <!-- Render field as an Output field if it's not updatable or input field if it's updatable -->
-                        <apex:inputField value="{!r[fld]}" onchange="updateSelected('{!fld}', this.value);"/>
+                        <apex:inputField value="{!r[fld]}" onchange="updateSelected('{!fld}', this.value, this);" />
                     </apex:column>
                 </apex:repeat>
             </apex:pageBlockTable>
@@ -96,7 +145,7 @@
             <apex:column headerValue="Select" rendered="{!massUpdateValues && inLineEditMode}">
                 <input id="{!r['Id']}" class="selectedCheckbox" type="checkbox" value="false"/>
             </apex:column>
-            
+
             <!-- Loop through list of field names to dynamically render the correct columns -->
             <apex:repeat value="{!fieldNames}" var="fld">
                 <!-- Set correct style alignment based on values stored in fieldAlignMap -->

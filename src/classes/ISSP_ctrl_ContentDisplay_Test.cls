@@ -1,4 +1,4 @@
-@isTest(SeeAllData=true)
+@isTest
 
 private class ISSP_ctrl_ContentDisplay_Test {
 
@@ -49,6 +49,8 @@ private class ISSP_ctrl_ContentDisplay_Test {
 			Test.startTest();
 
 			Apexpages.currentPage().getParameters().put('id',contentVersion.ContentDocumentId);
+			ISSP_CS__c cs = new ISSP_CS__c(Name = 'Host', Value__c = 'portal.iata.org');
+            database.insert(cs);
 			ISSP_ctrl_ContentDisplay controller = new ISSP_ctrl_ContentDisplay();
 
 			System.assertEquals(true, Apexpages.currentPage().getParameters().get('id') != null);

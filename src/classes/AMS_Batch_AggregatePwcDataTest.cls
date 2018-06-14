@@ -131,13 +131,15 @@ private class AMS_Batch_AggregatePwcDataTest {
         agencyAppliedChangeCode1.RecordTypeId = recordTypeStandard.Id;
         agencyAppliedChangeCode1.Account__c = account1.Id;
         agencyAppliedChangeCode1.Change_Code__c = 'DEF';
-        agencyAppliedChangeCode1.DEF_Non_Payment__c = true;
+        agencyAppliedChangeCode1.Reason_Description__c = 'DEFAULT-OVERDUE REMITTANCE';
+        //agencyAppliedChangeCode1.DEF_Non_Payment__c = true;
         agencyAppliedChangeCode1.Date_time_of_change__c = currentDateTime;
         Agency_Applied_Change_code__c agencyAppliedChangeCode2 = new Agency_Applied_Change_code__c();
         agencyAppliedChangeCode2.RecordTypeId = recordTypeStandard.Id;
         agencyAppliedChangeCode2.Account__c = account1.Id;
         agencyAppliedChangeCode2.Change_Code__c = 'DEF';
-        agencyAppliedChangeCode2.DEF_Non_Payment__c = false;
+        agencyAppliedChangeCode2.Reason_Description__c = 'nonnonpayment';
+        //agencyAppliedChangeCode2.DEF_Non_Payment__c = false;
         agencyAppliedChangeCode2.Date_time_of_change__c = DateTime.newInstance(1970, 1, 1);
         Agency_Applied_Change_code__c agencyAppliedChangeCode3 = new Agency_Applied_Change_code__c();
         agencyAppliedChangeCode3.RecordTypeId = recordTypeStandard.Id;
@@ -287,7 +289,7 @@ private class AMS_Batch_AggregatePwcDataTest {
         // Check that our data are correct - IRRS
         System.assertEquals(12, resultAccount1.AMS_PWC_INT_IRRS__c);
         System.assertEquals(5, resultAccount2.AMS_PWC_INT_IRRS__c);
-        System.assertEquals(5, resultAccount4.AMS_PWC_INT_IRRS__c);
+        System.assertEquals(-5, resultAccount4.AMS_PWC_INT_IRRS__c);
 
         // Check that our data are correct - Own/share change
         System.assertEquals('Y', resultAccount1.AMS_PWC_INT_OWNSHA_CHANGE__c);
@@ -296,5 +298,14 @@ private class AMS_Batch_AggregatePwcDataTest {
         System.assertEquals(currentDateTime, resultAccount1.AMS_PWC_INT_OWNSHA_LASTDATE__c);
 
     }
-
+      
+      
+      @isTest
+    public static void testBatchScheduler(){
+      Test.startTest();
+      AMS_BatchScheduler_AggregatePwcData sh1 = new AMS_BatchScheduler_AggregatePwcData();
+      String sch = '0 0 23 * * ?'; 
+      system.schedule('Test Aggregate PwC data scheduler', sch, sh1);
+      test.StopTest();
+    }
 }

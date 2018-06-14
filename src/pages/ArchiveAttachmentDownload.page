@@ -36,9 +36,14 @@
                 script.type = "text/javascript";
                 script.src = "{!awsCredential.AWS_ENDPOINT_URL__c}{!Archived_Attachment__c.AWS_S3_URL__c}" + queryString;
                 $("head").append(script); // jQuery version
-                
+                var string = "{!awsCredential.AWS_ENDPOINT_URL__c}{!Archived_Attachment__c.AWS_S3_URL__c}" + queryString;
+                if(string.includes("//sfdc")){
+                    var removeData = string.replace("//sfdc", "/sfdc"); 
+                    $("#AWSLinkValidity").html(new Date());                   
+                    return removeData;
+                }  
                  $("#AWSLinkValidity").html(new Date());
-                return "{!awsCredential.AWS_ENDPOINT_URL__c}{!Archived_Attachment__c.AWS_S3_URL__c}" + queryString;
+                return string;
                 
             }
             var a = getAWSLink();//"<a href='"+getAWSLink()+"'>"+getAWSLink()+"</a>";

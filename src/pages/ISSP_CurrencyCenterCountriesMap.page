@@ -1,0 +1,150 @@
+<apex:page controller="ISSP_CurrencyCenterCountriesMapCtrl" action="{!checkAccess}" standardStylesheets="false" showHeader="false" sidebar="false"  applyBodyTag="false" applyHtmlTag="false">
+
+<html>
+ 	<c:ISSP_Header ></c:ISSP_Header>
+ 	<head>
+ 		<script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+		<script type="text/javascript" src="https://www.google.com/jsapi"></script>
+
+		<script>
+		    var countryLinks = [];
+        <apex:variable value="{!0}" var="rowIndex"/>
+        <apex:repeat value="{!lstCountries}" var="country" >
+            countryLinks[{!rowIndex}] = "{!country.Id}";
+            <apex:variable var="rowIndex" value="{!rowIndex + 1}"/>
+        </apex:repeat>
+
+        google.charts.load('upcoming', {'packages':['geochart']});
+	      google.charts.setOnLoadCallback(drawRegionsMap);
+			  var chart;
+
+	      function drawRegionsMap() {
+
+            var dataTable = new google.visualization.DataTable();
+            dataTable.addColumn('string', 'Country');
+            dataTable.addColumn({type: 'string', role: 'tooltip', 'p': {'html': true}});
+
+            dataTable.addRows([
+                    <apex:variable value="{!0}" var="rowIndex"/>
+                    <apex:repeat value="{!lstCountries}" var="country" >
+                        {! IF (rowIndex == 0, '', ',')}
+                        ['{!country.IsoCode}','<h4>{!JSENCODE(country.Name)}</h4><div style="font-family: Arial, Helvetica, sans-serif; font-size: 11px; display: inline-block; white-space: nowrap;">{!$Label.CurrencyCenter_Actual_Amount_Blocked}: <b>{!JSENCODE(country.AmtBlocked)}</b><br/>{!$Label.CurrencyCenter_Issue_Started}: <b>{!country.IssueStarted}</b><br/>{!$Label.CurrencyCenter_Number_of_Airlines_Reporting}: <b>{!country.NbAirlinesReporting}</b></div>']
+                        <apex:variable var="rowIndex" value="{!rowIndex + 1}"/>
+                    </apex:repeat>
+                ]);
+		        
+		        var options = {
+              datalessRegionColor: '#D4D9DB',
+              defaultColor:'{! IF(listType == 'Blocked Funds', '#E4166D', IF(listType == 'Watch List', '#F19200', '#61B31B')) }',
+              backgroundColor: '#F5F5F5',
+              tooltip:{trigger: 'focus', isHtml: true, showTitle: false}
+            }; 
+			
+		        chart = new google.visualization.GeoChart(document.getElementById('regions_div'));
+            
+            function myClickHandler(){
+                var selection = chart.getSelection();
+                var index;
+                for (var i = 0; i < selection.length; i++) {
+                    var item = selection[i];
+                    if (item.row != null) {
+                        index = item.row;
+                    } 
+                }
+
+                if (index !== undefined) {
+                    window.location = '/ISSP_CurrencyCenterCountry?Id=' + countryLinks[index];
+                }
+            }
+
+            google.visualization.events.addListener(chart, 'select', myClickHandler);
+            
+
+		        chart.draw(dataTable, options);
+      	}
+
+      	function highlightCountry(index) {
+      		  chart.setSelection([{row:index, column: null}]);
+      	}
+
+      	function clearHighlight() {
+      		  chart.setSelection();
+      	}
+		</script>
+
+    <link rel="stylesheet" href="{!URLFOR($Resource.CurrencyCenter_Style, '/countries_map.css')}" />
+
+    <style>
+      path:not([fill^="#d4d9dc"]):hover {
+        cursor:pointer;                
+      }
+    </style>
+		
+ 	</head>
+
+ 	<body>
+     	<div class="container">
+
+        <c:ISSP_CustomNavigation />
+      
+      	<apex:form >  
+
+
+        <div class="row">
+          <div class="col-xs-12 header-{! IF(listType == 'Blocked Funds', 'blocked-funds', IF(listType == 'Watch List', 'watch-list', 'all-others')) }">
+            
+            <div class="row">
+              <a href="/ISSP_CurrencyCenterHome" class="back-home-link">{!$Label.CurrencyCenter_Back_Home}</a>
+            </div>
+
+            <div class="row page-title-wrapper {! IF(listType == 'Blocked Funds', 'blocked-funds', IF(listType == 'Watch List', 'watch-list', 'all-others')) }">
+              <div class="col-xs-12">
+                <div class="page-title">{! IF(listType == 'Blocked Funds', $Label.CurrencyCenter_Blocked_Funds_Countries, IF(listType == 'Watch List', $Label.CurrencyCenter_Watch_List_Countries, $Label.CurrencyCenter_All_Other_Countries)) }</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="row ">
+          
+          <!-- COUNTRIES MAP -->
+          <div class="col-md-12 col-lg-8 col-map">
+            <div id="regions_div" ></div>
+          </div>
+          
+          <!-- COUNTRIES LIST -->
+          <div class="col-md-12 col-lg-4 col-countries">
+            
+            <div class="panel">
+              <div class="panel-heading">
+                <h4 class="panel-title">
+                  {! $Label.CurrencyCenter_Select_Country }
+                </h4>
+              </div>
+              <div class="panel-body countries-list">
+                  
+                  <apex:variable value="{!-1}" var="rowIndex"/>
+                  <!--LAST VISIT:{!previousVisit}-->
+                  <apex:repeat value="{!lstCountries}" var="country" >
+                    <apex:variable var="rowIndex" value="{!rowIndex + 1}"/>
+                    <div class="col-xs-12 country-list-item">
+                      <apex:outputLink value="/ISSP_CurrencyCenterCountry?Id={!country.Id}" onmouseover="highlightCountry({!rowIndex});" onmouseout="clearHighlight();"><img src="{!URLFOR($Resource.CurrencyCenter_Style, '/flags/' + country.IsoCode + '.png')}" />&nbsp;{!country.Name}</apex:outputLink>
+                      <apex:outputText rendered="{!isChangedList[rowIndex]}">&#42;&#42;&#42;</apex:outputText>
+                                    
+                    </div>
+                  </apex:repeat>
+                
+              </div>
+            </div>
+
+          </div>
+        </div>
+
+
+        <c:ISSP_CustomFooter />
+      	
+      	</apex:form>
+     	</div>
+ 	</body>
+</html>
+</apex:page>

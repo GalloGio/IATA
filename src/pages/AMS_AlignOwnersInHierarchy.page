@@ -1,0 +1,67 @@
+<apex:page showHeader="true" sidebar="true" controller="AMS_AlignOwnersInHierarchy" tabStyle="Account" title="Thor Hammer for Hierarchies">
+
+	<style>
+		.pos-relative{ position: relative; }
+		.loading-backdrop{ 
+			position: absolute; 
+			top: 0; 
+			bottom: 0; 
+			right: 0; 
+			left: 0; 
+			background: #FFF; 
+			opacity: 0.5; 
+			z-index: 95;
+		}
+		.loading-img{
+			position: absolute;
+			top: 50%;
+			left: 50%;
+			margin-top: -16px;
+			margin-left: -16px;
+			z-index: 96;
+			}
+		.requiredInput{
+			display: inline-block;
+		}
+	</style>
+
+    <apex:form id="accountFilters" styleClass="pos-relative">
+    <apex:pageBlock title="Thor Hammer for Account Hierarchies" >
+    
+    	<apex:outputPanel layout="block" id="form">
+    		<apex:outputText style="font-weight:bold;float:left;size:" value="Enter the Parent Account Id:"></apex:outputText>
+    		<apex:pageBlockSection >
+        		<apex:inputTextarea value="{!parentAccountId}"/>
+        		<!--<apex:commandButton action="{!alignOwnersInHierarchyByAccountId}" value="Align Hierarchy" />-->
+        		<apex:commandLink styleClass="btn" style="padding: 10px; text-decoration: none; background:white; width:100% " action="{!alignOwnersInHierarchyByAccountId}" value="Align Hierarchy" status="loadingHeader"/>
+        	</apex:pageBlockSection>
+		</apex:outputPanel>
+	
+        <apex:actionStatus id="loadingHeader" >
+			<apex:facet name="start">
+				<apex:outputPanel layout="none">
+					<apex:outputPanel layout="block" styleClass="loading-backdrop"/>
+					<apex:image value="/../img/loading32.gif" styleClass="loading-img"/>
+				</apex:outputPanel>
+			</apex:facet>
+		</apex:actionStatus>
+		</apex:pageBlock>
+    </apex:form>
+
+	<apex:form id="accountResult" styleClass="pos-relative">
+		<apex:actionPoller interval="5" action="{!checkBatchStatus}" enabled="{!statusPooler}" reRender="owners"/>
+    	<apex:pageBlock id="owners" >
+			<apex:pageBlockSection title="Owners Updated" rendered="{!statusBatch}">
+				<apex:pageBlockTable value="{!newOwners}" var="a">
+					<apex:column value="{!a.RecordTypeId}"/>
+					<apex:column value="{!a.Account__c}"/>
+					<apex:column value="{!a.Owner_Name__c}"/>
+					<apex:column value="{!a.Owner_Account__c}"/>
+					<apex:column value="{!a.Percentage__c}"/>
+				</apex:pageBlockTable>
+			</apex:pageBlockSection>
+		</apex:pageBlock >
+	</apex:form>
+
+   
+</apex:page>

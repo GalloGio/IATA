@@ -1,0 +1,192 @@
+<apex:page id="AMSPurgeIATACodePage" controller="AMS_PurgeIATACodeController" readOnly="true">
+
+<apex:includeScript value="{!$Resource.PurgeIATACodeExampleFile}"/>
+
+    <apex:tabPanel switchType="server" value="{!selectedTab}" id="theTabPanel">
+
+        <apex:tab label="Full Purge Extract" name="tab1" id="tabOne">
+
+
+            <apex:pageBlock mode="edit" id="pageBlock1">
+
+                <apex:pageBlockSection id="notesFullPurge" columns="1" title="Notes" collapsible="false">
+
+                    <apex:dataList value="{!noteListFullPurge}" var="noteFull" rendered="{!noteListFullPurge.size > 0}">
+
+                        <apex:outputText value="{!noteFull}" />
+
+                    </apex:dataList>
+
+                </apex:pageBlockSection>
+
+                <apex:pageBlockSection id="CSVArea" title="CSV File Download" collapsible="false" rendered="{!fullPurgeId != null}">
+
+                    <apex:pageBlockSectionItem >
+
+                        <button onclick="window.open('/apex/AMS_SOQL_ExportPage?Id={!fullPurgeId}'); return false;">Download Results here</button>
+
+                    </apex:pageBlockSectionItem>
+
+                </apex:pageBlockSection>
+
+            </apex:pageBlock>
+
+
+
+
+        </apex:tab>
+        <apex:tab label="Lite Purge Extract" name="tab2" id="tabTwo">
+
+
+
+            <apex:pageBlock mode="edit" id="pageBlock2">
+
+                <apex:pageBlockSection id="notesLitePurge" columns="1" title="Notes" collapsible="false">
+
+                    <apex:dataList value="{!noteListLitePurge}" var="noteLite" rendered="{!noteListLitePurge.size > 0}">
+
+                        <apex:outputText value="{!noteLite}" />
+
+                    </apex:dataList>
+
+                </apex:pageBlockSection>
+
+                <apex:pageBlockSection id="CSVArea" title="CSV File Download" collapsible="false" rendered="{!litePurgeId != null}">
+
+                    <apex:pageBlockSectionItem >
+
+                        <button onclick="window.open('/apex/AMS_SOQL_ExportPage?Id={!litePurgeId}'); return false;">Download Results here</button>
+
+                    </apex:pageBlockSectionItem>
+
+                </apex:pageBlockSection>
+
+            </apex:pageBlock>
+
+
+
+        </apex:tab>
+
+
+
+        <apex:tab label="Purge Execution" name="tab3" id="tabThree">
+
+            <apex:form >
+
+                <apex:pagemessages />
+                <apex:pageBlock mode="edit" id="pageBlock3">
+
+                <apex:pageBlockSection id="notesPurgeUpload" columns="1" title="Notes" collapsible="false">
+
+                    <apex:dataList value="{!noteListUpload}" var="noteUpload" rendered="{!noteListUpload.size > 0}">
+
+                        <apex:outputText value="{!noteUpload}" />
+
+                    </apex:dataList>
+
+                </apex:pageBlockSection>
+
+
+                    <apex:pageBlockSection id="uploadBlockSection" columns="1" title="Upload File Section" collapsible="false">
+
+
+                        <!--  Component to allow user to upload file from local machine -->
+                        <center>
+
+                            <apex:inputFile value="{!contentFile}" filename="{!nameFile}" />
+
+                            <apex:commandButton action="{!ReadFile}" value="Upload File" id="theButton" />
+                            <br/>
+                            <br/> <font color="red"> <b>Note: Please use the standard template to upload Purged Accounts. <a href="{!URLFOR($Resource.PurgeIATACodeExampleFile,
+                  '')}" target="_blank"> Click here </a> to download the template. </b> </font>
+                        </center>
+
+                        <br/>
+                        <br/>
+                        <!-- After the user clicks the 'Upload File' button, this section displays the inserted data -->
+
+                        <apex:pageblocktable value="{!purgeFileContentList}" var="pfc" rendered="{!NOT(ISNULL(purgeFileContentList))}">
+
+                            <apex:column headerValue="Account Id">
+                                <apex:outputLink value="/{!pfc.Identifier}" target="_blank">{!pfc.Identifier}</apex:outputLink>
+                            </apex:column>
+                            <apex:column headerValue="Full IATA Code">
+                                <apex:outputText value="{!pfc.IATACode}" />
+                            </apex:column>
+                            <apex:column headerValue="C Code">
+                                <apex:outputText value="{!pfc.C_Code}" />
+                            </apex:column>
+                            <apex:column headerValue="A Code">
+                                <apex:outputText value="{!pfc.A_Code}" />
+                            </apex:column>
+                            <apex:column headerValue="N Code">
+                                <apex:outputText value="{!pfc.N_Code}" />
+                            </apex:column>
+                            <apex:column headerValue="Site">
+                                <apex:outputText value="{!pfc.Site}" />
+                            </apex:column>
+                            <apex:column headerValue="Account Name">
+                                <apex:outputText value="{!pfc.Name}" />
+                            </apex:column>
+                            <apex:column headerValue="Location Type">
+                                <apex:outputText value="{!pfc.LocationType}" />
+                            </apex:column>
+                            <apex:column headerValue="Location Class">
+                                <apex:outputText value="{!pfc.LocationClass}" />
+                            </apex:column>
+                            <apex:column headerValue="Expiry Date">
+                                <apex:outputText value="{!pfc.ExpiryDate}" />
+                            </apex:column>
+                            <apex:column headerValue="Accreditation Date">
+                                <apex:outputText value="{!pfc.AccreditationDate}" />
+                            </apex:column>
+                            <apex:column headerValue="Not to Purge (SFDC)">
+                                <apex:outputText value="{!pfc.ToNOTPurgeSFDC}" />
+                            </apex:column>
+                            <apex:column headerValue="Not to Purge (External Systems)">
+                                <apex:outputText value="{!pfc.ToNOTPurgeExternal}" />
+                            </apex:column>
+
+                        </apex:pageblocktable>
+
+
+                        <br />
+                        <br />
+
+                        <apex:pageBlockSectionItem id="buttonActionPurge">
+
+                            <apex:commandButton value="Begin Account Purge Process" action="{!runPurgeProcess}" id="actionButton" disabled="{!NOT(canExecutePurge)}" />
+
+                        </apex:pageBlockSectionItem>
+
+                    </apex:pageBlockSection>
+
+
+
+
+                </apex:pageBlock>
+
+            </apex:form>
+            <apex:form >
+                <apex:pageBlock id="pageBlock4"  mode="edit">
+
+                    <apex:pageBlockSection columns="1" title="Process Status" rendered="{!batchStatusBool}">
+
+                        <apex:outputText styleClass="processText" value="Purge Process status: {!purgeStatus}" />
+
+                        <apex:actionPoller interval="5" action="{!checkBatchStatus}" enabled="{!pollerBool}" reRender="pageBlock4" />
+
+                    </apex:pageBlockSection>
+
+
+                </apex:pageBlock>
+            </apex:form>
+
+
+        </apex:tab>
+
+
+
+    </apex:tabPanel>
+
+</apex:page>

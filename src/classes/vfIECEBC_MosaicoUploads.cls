@@ -78,8 +78,8 @@ global class vfIECEBC_MosaicoUploads extends vfIECEBC_Controller {
             files.add(new Map<String, Object>{
                 'name' => a.Name, 
                     'size' => a.Image_Size__c,
-                    'url' => '/iec/services/apexrest/Resources/' + a.Attachments[0].Id,
-                    'thumbnailUrl' => '/iec/services/apexrest/Resources/' + a.Attachments[0].Id
+                    'url' => 'services/apexrest/Resources/' + a.Attachments[0].Id,
+                    'thumbnailUrl' => 'services/apexrest/Resources/' + a.Attachments[0].Id
                     });
         }
         

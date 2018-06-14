@@ -5,7 +5,7 @@
     <name>E&amp;F Contract Approval Request</name>
     <style>none</style>
     <subject>A Contract has been updated and is waiting for approval</subject>
-    <textOnly>Dear {!User.FirstName},  a Contract has been updated by {!Contract.LastModifiedBy}.
+    <textOnly>Dear recipient,  a Contract has been updated by {!Contract.LastModifiedBy}.
 The following key-fields have changed:
 
 {!Contract.Requested_Changes__c}</textOnly>

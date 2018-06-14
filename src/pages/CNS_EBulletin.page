@@ -1,0 +1,1657 @@
+<apex:page controller="CNS_EBulletin"
+           cache="false"
+           sidebar="false"
+           showHeader="false"
+           language="{!displayLanguage}"
+           standardStylesheets="true"
+           applyBodyTag="false"
+           applyHtmlTag="false"
+           docType="html-5.0" 
+           action="{!saveAMSFormAndStay}"
+           >
+
+    <html> 
+        <c:ISSP_Header ></c:ISSP_Header>
+        <body>
+        <script src="{!URLFOR($Resource.bootbox)}" />
+        <script src="{!URLFOR($Resource.datePickerFix)}" />
+        <!--script src="{!URLFOR($Resource.jQuery_Week_Picker)}" /-->
+        <!--script src="{!URLFOR($Resource.datePicker_langs)}" /-->
+        
+        
+        <link rel="stylesheet" href="{!URLFOR($Resource.InternationalPhoneNumberFormat, '/intl-tel-input-master/build/css/intlTelInput.css')}"/>
+        <link href="//cdnjs.cloudflare.com/ajax/libs/select2/4.0.0/css/select2.min.css" rel="stylesheet" />
+        <script src="//cdnjs.cloudflare.com/ajax/libs/select2/4.0.0/js/select2.min.js"></script>
+        <!--script src="{!URLFOR($Resource.jquery_file_upload, '/jQuery-File-Upload-9.11.2/js/jquery.iframe-transport.js')}" /-->
+        <!--script src="{!URLFOR($Resource.jquery_file_upload, '/jQuery-File-Upload-9.11.2/js/jquery.fileupload.js')}" /-->
+       
+        
+        
+    <style>
+
+        input + label {
+            font-weight:normal;
+        } 
+
+        th + td label {
+            font-weight:normal;
+        } 
+
+        .pbTitle {
+            width: {!IF(isstep2,'90% !important','40% !important')};
+        }
+       
+       .pbBody {
+        padding-left:10px !important;    
+       }
+            
+       .pbBody a{color:#337ab7 !important}
+               
+        .bPageBlock {
+            border-top-width : thin !important;
+        }
+        
+        .labelCol{
+            font-weight:normal !important;
+            font-size:14px !important;
+        }
+
+        /*.labelColDisabled{
+            color:'red' !important;
+            font-weight:normal !important;
+            font-size:14px !important;
+        }
+        .labelColEnabled{
+            color:'green' !important;
+            font-weight:normal !important;
+            font-size:14px !important;
+        }*/
+
+        .bEditBlock input {
+            vertical-align:top !important;
+        }
+       
+       .btn {
+            padding: 2px 12px !important;
+        }
+                             
+        .btn-primary {
+            color: #fff !important;
+            background: inherit !important;
+            background-color: #337ab7 !important;
+            border-color: #2e6da4 !important;
+            border: 1px solid transparent !important;
+            /*background: */
+        }
+        
+        .tb-header {
+            padding-right:20px;
+        }
+                 
+        .modalrow {
+            padding-top:10px;
+        }
+            
+        ul li, ol li {
+            margin-left: inherit;
+            padding-left: inherit;
+        }
+        
+        #contentWrapper {  background: #fff !important; margin: 0 auto;max-width: 1170px;}
+            
+        .requiredText {display:none;}
+        
+        .dateFormat {display:none;}
+        
+        .errorMsg {color:#d74c3b}
+            
+        .progress-bar-off {
+                color:#6BBBEA;
+                font-weight:bold;
+                background-image:none !important;
+                background-color:transparent !important;
+                border-right:2px solid white;
+        }
+        
+        .progress-bar {
+                font-size:inherit;
+        }
+        
+        .data2Col {
+            padding-left:0px !important;
+            padding-bottom: 0px !important;
+            /*color:{!IF(newFormDaily.StatusDisplay__c=='Enabled' || newFormWeekly.StatusDisplay__c=='Enabled','green',IF(newFormDaily.StatusDisplay__c=='Disabled' || newFormWeekly.StatusDisplay__c=='Disabled','red','#4a4a56'))} !important;*/
+        }
+
+        
+        .pbSubheader {
+            background-color:  #1797c0 !important;
+            color: #fff;
+            font-weight:bold;
+            font-size:15px;
+        }
+                 
+        .pbSubsection {  
+            margin-top:0px !important;
+        }
+
+        .contact-detail {
+            font-size:12px;
+            margin-bottom:3px;
+        }
+                   
+        .tbFooter {
+         text-align:right;
+        }
+                   
+        .requiredBlock {
+            width:5px !important;
+        }
+
+        .checkbox-td {
+            text-align: center;
+        }
+
+        .summary-table th {
+            text-align: center;
+        }
+
+        .summary-table td.dataCell {
+            border: 1px solid #e0e3e5 !important;
+        }
+        
+            .col1 {
+                padding-bottom:5px;
+                width:40%;
+                vertical-align: text-top;
+                font-weight:bold
+            }
+            
+            .col1_regular {
+                padding-bottom:5px;
+                width:25%;
+                vertical-align: text-top;
+                font-weight:bold
+            }       
+                   
+            .col2 {width:60%; padding-left:50px;vertical-align: text-top;}
+            .col2_regular {width:25%; padding-left:50px;vertical-align: text-top;}
+            .col2_4 {width:10%;padding-left:5px;vertical-align: text-top;}
+            .col3 {width:50%;vertical-align: text-top;}
+            
+            .col1_inner {width:25%; vertical-align: text-top;}
+            .col2_inner {width:25%; vertical-align: text-top;}
+                   
+             .row1 {padding-bottom:16px; vertical-align: text-top;}
+
+        #container{width:100%;height: 40px;}
+        #right{float:right;width:20%;}
+        #right:hover a{
+            color:#FFF;
+        }
+        #left{float:left;width:80%;}
+
+        /*------------------------------------*\
+            LISTS
+        \*------------------------------------*/
+        #quad ul{
+            /*width:760px;
+            margin-bottom:20px;
+            list-style-type: square inside;*/
+            overflow:hidden;
+            border-top:1px solid #ccc;
+            
+        }
+        #quad li{
+            width:25%;
+            /*line-height:1.5em;*/
+            border-bottom:1px solid #ccc;
+            list-style-type: square !important;
+            list-style-position: inside !important;
+            float:left;
+            padding-left: 10px !important;
+           /* display:inline;*/
+            
+        }
+        /*#double li  { width:50%;}
+        #triple li  { width:33.333%; }
+        #quad li        { width:25%; }
+        #six li     { width:16.666%; }*/
+
+        .title{
+            font-weight:bold !important;
+            color:rgb(51, 122, 183) !important;
+        }
+
+        .h4, h4 {
+            font-size: 18px;
+            color:rgb(51, 122, 183) ;
+        }
+
+        td{
+            color:#4a4a56 !important;
+        }
+    </style>
+    
+    <script>
+            
+            function isInArray(arr, val) {
+                for(var i=0; i<arr.length; i++) {
+                    if (arr[i] == val) return true;
+                }
+                return false;
+           }
+                   
+           
+            $(function () {
+                $('[data-toggle="tooltip"]').tooltip()
+            })
+           
+        function resetStep1(v) {  
+            operationType = v ;         
+            if(v=='Cargo_Agent') {
+                $('#isGSA').hide();
+                $('#langPanel').hide();
+            } else {
+                $('#isGSA').show();
+                $('#langPanel').show();
+            }   
+        }
+                   
+        function togglePageItem(v, fldId) {
+            var el = document.getElementById(fldId);
+            if(v=='HO - Selected Branches' || v=='Selected Branches Only') {
+                el.style.display='block';
+            } else {
+                el.style.display='none';
+            }
+        }
+                 
+        
+    
+        function isIE(){
+            //alert(navigator.userAgent);
+            //return /MSIE/.test(navigator.userAgent);
+            if (/MSIE/.test(navigator.userAgent)){
+                return true;
+            }
+            else if (/rv:11/.test(navigator.userAgent)){
+                return true;
+            }
+            else{
+                return false;
+            }
+        }
+    var vReqNo
+
+
+    /**
+        Javascript for DatePicker week selector
+    **/    
+    (function($){
+    var $calroot;
+
+    function selectCurrentWeek() {
+        window.setTimeout(function () {
+            var t = $calroot.find('.ui-datepicker-current-day a');//.addClass('ui-state-active');
+            t= t.closest('tr');
+            t.find('td>a').addClass('ui-state-active');//.parent().addClass('ui-state-active');
+        }, 1);
+        
+    }
+    function onSelect(dateText, inst) { 
+        var date = $(this).datepicker('getDate');
+        startDate = new Date(date.getFullYear(), date.getMonth(), date.getDate() - date.getDay());
+        endDate = new Date(date.getFullYear(), date.getMonth(), date.getDate() - date.getDay() + 6);
+        var dateFormat = inst.settings.dateFormat || $.datepicker._defaults.dateFormat;
+
+        startDate.setDate(startDate.getDate() - 2);
+        endDate.setDate(endDate.getDate() -2);
+
+        jQuery('[id$=pWeekStart]').val($.datepicker.formatDate('dd/mm/yy', startDate));
+        jQuery('[id$=pWeekEnd]').val($.datepicker.formatDate('dd/mm/yy', endDate));
+        
+        // alert( jQuery('[id$=pWeekStart]').val());
+        // alert( jQuery('[id$=pWeekEnd]').val());
+                
+        $calroot.trigger('weekselected',{
+            start:startDate,
+            end:endDate,
+            weekOf:startDate
+        });
+        selectCurrentWeek();
+    }
+
+    function onSelectDaily(dateText, inst) { 
+        var date = $(this).datepicker('getDate');
+        jQuery('[id$=pDateStart]').val($.datepicker.formatDate('dd/mm/yy', date));
+
+        var sDate = $.datepicker.formatDate('dd/mm/yy', date) ;
+        var sMaxDate = $.datepicker.formatDate('dd/mm/yy', $( this ).datepicker( "option", "maxDate" )) ;
+
+        if(sDate == sMaxDate){
+            jQuery('[id$=period1]').show();
+        }else{
+            jQuery('[id$=period1]').hide();
+        }
+    }
+
+    function getWeeklyMaxDay(){
+        dayOfWeek = new Date().getDay();
+        dayOfMonth = new Date().getDate();
+        maxDay = dayOfMonth;
+        testDay = 0;
+
+        if(dayOfWeek == 6){
+            maxDay = maxDay-1;
+        }else if(dayOfWeek > 6){
+            maxDay = maxDay-1;
+        }else if(dayOfWeek < 6){
+            while(testDay != 5){
+                dayOfMonth = dayOfMonth -1;
+                testDate = new Date(new Date().getFullYear(), new Date().getMonth(), dayOfMonth );
+                testDay = testDate.getDay();
+            }
+            maxDay = dayOfMonth;
+        } 
+        
+        //Initial values for the selected week
+        weekInitialStartDate=maxDay-5;
+        weekInitialEndDate=maxDay;
+  
+        return maxDay;
+    }
+    
+    var reqOpt = {
+        onSelect:onSelect,
+        showOtherMonths: true,
+        selectOtherMonths: true,
+        firstDay: 6,
+        minDate: new Date({!eBulletin_StartDate_year}, {!eBulletin_StartDate_month}, {!eBulletin_StartDate_day}),
+            maxDate: new Date(new Date().getFullYear(), new Date().getMonth(), getWeeklyMaxDay() )
+    };
+
+    var reqOptDaily = {
+        onSelect:onSelectDaily,
+        showOtherMonths: true,
+        selectOtherMonths: true,
+        firstDay: 6,
+        minDate: new Date(new Date().getFullYear(), new Date().getMonth(), new Date().getDate()  - 6),
+        maxDate: new Date(new Date().getFullYear(), new Date().getMonth(), new Date().getDate()  )
+    };
+
+    $.fn.weekpicker = function(options){
+        
+        var $this = this;
+        $calroot = $this;
+        
+        $.datepicker.setDefaults($.datepicker.regional['{!displayLanguageDatePicker}']);
+        $this.datepicker(reqOpt);
+
+        //events
+        $dprow = $this.find('.ui-datepicker');
+        
+        $dprow.on('mousemove','tr', function() { 
+            $(this).find('td a').addClass('ui-state-hover'); 
+        });
+        $dprow.on('mouseleave','tr', function() { 
+            $(this).find('td a').removeClass('ui-state-hover'); 
+        });
+
+        // var bIsStep3 = {!isStep3};
+        // if(bIsStep3){
+            //Ser current week as selected
+            var date = $(this).datepicker('getDate');
+            startDate = new Date(date.getFullYear(), date.getMonth(), date.getDate() - date.getDay()-7);
+            endDate = new Date(date.getFullYear(), date.getMonth(), date.getDate() - date.getDay() -1);
+            var dateFormat = $.datepicker._defaults.dateFormat;
+
+            startDate.setDate(startDate.getDate() - 2);
+            endDate.setDate(endDate.getDate() -2);
+
+            jQuery('[id$=pWeekStart]').val($.datepicker.formatDate('dd/mm/yy', startDate));
+            jQuery('[id$=pWeekEnd]').val($.datepicker.formatDate('dd/mm/yy', endDate));
+        // }
+        // alert( jQuery('[id$=pWeekStart]').val());
+        // alert( jQuery('[id$=pWeekEnd]').val());
+                
+        $calroot.trigger('weekselected',{
+            start:startDate,
+            end:endDate,
+            weekOf:startDate
+        });
+        selectCurrentWeek();
+    };
+
+    $.fn.datepickerDaily = function(options){
+        var $this = this;
+        $calroot = $this;
+        $.datepicker.setDefaults($.datepicker.regional['{!displayLanguageDatePicker}']);
+        $this.datepicker(reqOptDaily);
+
+        var date = $(this).datepicker('getDate');
+        jQuery('[id$=pDateStart]').val($.datepicker.formatDate('dd/mm/yy', date));
+        
+    }
+})(jQuery);
+    
+        
+
+        $( function() {
+            var bIsStep2 = {!isStep2};
+            if(bIsStep2){
+                $('.date-picker').datepickerDaily();
+            }else{
+                $('.week-picker').weekpicker();
+            }
+        } );
+
+   
+    </script>
+
+    <apex:outputPanel id="amscountrylabel"> 
+      <script>  
+      function getCountryFromController() {
+        //$('#brcountry').text("{ !amsAllLangCountryLabel}");
+        //$('[id$=countrySelected]').val('{ !con.Account.IATA_ISO_Country__r.ISO_Code__c}');
+      }
+      </script>
+    </apex:outputPanel>
+            
+     <div class="container">
+       <div id="contentWrapper">
+           <!-- <c:ISSP_CustomNavigation /> -->
+            
+   
+            
+    
+    <!-- ----------------------------------------->
+    <!--STEP 1 -->
+    <!----------------------------------------- -->
+     <apex:outputText rendered="{!IF(isStep1_1, true, IF(isStep1_2, true, false))}">
+        <div class="panel-primary">
+            <div class="panel-heading head_panel_green" id="container">
+                <div id="left"><h3 class="panel-title">{!$Label.ISSP_AMS_eBulletin_Title} - {!$Label.ISSP_AMS_eBulletin_Selection_Criteria}</h3></div>
+                <div id="right">   
+                    <span class="glyphicon glyphicon-info-sign" aria-hidden="true"></span>&nbsp;
+                    <h3 class="panel-title">
+                    <apex:outputLink value="{!$Label.ISSP_PKB_URL}{!CASE(displayLanguage, 'ar', 'ar', 'fr', 'fr', 'it', 'it', 'de', 'de', 'es', 'es', 'pt_BR', 'pt_BR', 'ja', 'ja', 'ko', 'ko', 'in', 'in', 'th', 'th', 'vi', 'vi', 'zh_CN', 'zh_CN', 'en_US')}/How_To/Customer-Portal-Troubleshooting/?l={!CASE(displayLanguage, 'ar', 'ar', 'fr', 'fr', 'it', 'it', 'de', 'de', 'es', 'es', 'pt_BR', 'pt_BR', 'ja', 'ja', 'ko', 'ko', 'in', 'in', 'th', 'th', 'vi', 'vi', 'zh_CN', 'zh_CN', 'en_US')}" rendered="{!$Site.RegistrationEnabled}" target="_blank">{!$Label.ISSP_AMS_eBulletin_eBulletin_UserGuide}</apex:outputLink>
+                    </h3>
+                </div>
+            </div>
+
+            <div class="panel-body" id="body-enquiries">
+                
+                <apex:form >
+                    
+                    <apex:pageMessages id="theMessages" />
+                
+                    <div class="progress">
+                        <div class="progress-bar {!IF(isStep1_2, 'progress-bar-off', '')}" role="progressbar" style="width: 50%;display:{!IF(isStep1_2, 'none', '')}">
+                            {!$Label.ISSP_AMS_eBulletin_DAILY_Bulletin}
+                        </div>
+                        <div class="progress-bar {!IF(isStep1_2, 'progress-bar-off', '')}" role="progressbar" style="width: 50%;display:{!IF(isStep1_1, 'none', '')}">
+                            <apex:commandLink action="{!goToStep1_1}" value="{!$Label.ISSP_AMS_eBulletin_DAILY_Bulletin}" id="DailyBulletinLink"/>
+                        </div>
+                        <div class="progress-bar {!IF(isStep1_1, 'progress-bar-off', '')}" role="progressbar" style="width: 50%;display:{!IF(isStep1_1, 'none', '')}">
+                            {!$Label.ISSP_AMS_eBulletin_WEEKLY_Bulletin}
+                        </div>
+                        <div class="progress-bar {!IF(isStep1_1, 'progress-bar-off', '')}" role="progressbar" style="width: 50%;display:{!IF(isStep1_2, 'none', '')}">
+                            <apex:commandLink action="{!goToStep1_2}" value="{!$Label.ISSP_AMS_eBulletin_WEEKLY_Bulletin}" id="WeeklyBulletinLink"/>
+                        </div>
+
+
+
+
+                    </div>
+                </apex:form>
+                <apex:form >
+
+                    <apex:inputHidden value="{!newFormDaily.RecordTypeId}" />
+                    <apex:inputHidden value="{!newFormDaily.User__c}" />
+                    <apex:inputHidden value="{!newFormDaily.Opt_in__c}" />
+
+                    
+                   
+                    <div >
+                        <apex:pageBlock id="AMSBlock_step1_1" mode="edit" rendered="{!isStep1_1}">
+                            <center>
+                            <apex:pageBlockSection columns="1" id="TimeZoneSection" collapsible="false" rendered="false">
+                                <apex:facet name="header">
+                                    <apex:outputpanel >
+                                        {!$Label.ISSP_AMS_eBulletin_TimeZone_Selection}
+                                    </apex:outputpanel>
+                                </apex:facet>
+                                <apex:selectList id="TimeZon" value="{!newFormDaily.TimeZone__c}" size="1" required="true" label="{!$Label.ISSP_AMS_eBulletin_Receive_eBulletin_TimeZone}">
+                                  <apex:selectOptions value="{!TimeZone}"/>
+                                </apex:selectList>
+
+                            </apex:pageBlockSection>
+
+
+                                                 
+
+
+
+                            <apex:pageBlockSection columns="1" id="LegalStatusSection" collapsible="false">
+                                
+                                        <apex:pageBlockSection columns="2"  collapsible="false">
+                                            <apex:pageBlockSection columns="1"  collapsible="false">
+                                                <apex:pageBlockSection columns="1">
+                                                    
+                                                        
+                                                    <apex:outputPanel >    
+                                                        <!-- <apex:outputLabel value="{!$Label.ISSP_AMS_eBulletin_lbl_Enable}" for="DailyOptOut"/> -->
+                                                        <apex:outputLabel value="{!$Label.ISSP_AMS_eBulletin_DAILY_Bulletin}" for="DailyOptOut"/>&nbsp;&nbsp;
+                                                        <apex:inputField value="{!newFormDaily.Opt_in__c}" id="DailyOptOut" label="">
+                                                            <apex:actionSupport action="{!saveAMSFormAndStay}" event="onchange" reRender="AMSBlock_step1_1" id="optout1"/>
+                                                        </apex:inputField>&nbsp;&nbsp;
+                                                        <!-- <apex:outputLabel value="{!$Label.ISSP_AMS_eBulletin_DAILY_Bulletin}" for="DailyOptOut"/> -->
+                                                    </apex:outputPanel>
+                                                </apex:pageBlockSection>    
+                                                    
+                                                
+                                            
+                                            </apex:pageBlockSection> 
+                                        
+                                            <apex:pageBlockSection columns="1"  collapsible="false">
+                                                <apex:pageBlockSection columns="1" rendered="{!IF(NOT(newFormDaily.Opt_in__c) ,'false','true')}">
+                                                    <apex:pageBlockSectionItem labelStyle="width:5%;font-weight:normal;">
+                                                        <apex:inputField value="{!newFormDaily.Opt_out_Bulletin__c}" id="DailyOptOut2"/>
+                                                        <apex:outputLabel value="{!$Label.ISSP_AMS_eBulletin_OptOut_Daily_Notifications}" for="DailyOptOut2"/>
+                                                    </apex:pageBlockSectionItem>
+                                                </apex:pageBlockSection>   
+                                                
+                                                <apex:pageBlockSection columns="1" rendered="{!IF(newFormDaily.Opt_in__c ,'false','true')}">
+                                                    <apex:pageBlockSectionItem labelStyle="width:5%;font-weight:normal;">
+                                                        <apex:outputField value="{!newFormDaily.Opt_out_Bulletin__c}" id="DailyOptOut3"  rendered="{!IF(newFormDaily.Opt_in__c ,'false','true')}" />
+                                                        <apex:outputLabel value="{!$Label.ISSP_AMS_eBulletin_OptOut_Daily_Notifications}" for="DailyOptOut3"/>
+                                                    </apex:pageBlockSectionItem>
+                                                </apex:pageBlockSection> 
+                                                
+                                            </apex:pageBlockSection> 
+                                        </apex:pageBlockSection>    
+                                        
+                                        
+
+                                            
+                                        <apex:pageBlockSection columns="2"  collapsible="false">
+
+                                            <apex:facet name="header">
+                                                <apex:outputpanel >
+                                                    {!$Label.ISSP_AMS_eBulletin_CountrySelection}
+                                                </apex:outputpanel>
+                                            </apex:facet>
+
+                                            <apex:pageBlockSection columns="1"  collapsible="false">
+                                                <table width="100%" border="0">
+                                                    <tr>
+                                                        <td width="100%" style="font-weight:bold">
+                                                            {!$Label.ISSP_AMS_eBulletin_Filter_Geographic_Area}
+                                                        </td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>
+                                                            <apex:pageBlockSection columns="1" rendered="{!IF(NOT(newFormDaily.Opt_in__c) ,'false','true')}">
+
+                                                                <apex:pageBlockSectionItem labelStyle="width:5%">
+                                                                    <apex:inputCheckbox value="{!newFormDaily.Area_1__c}" id="Area_1" >
+                                                                        <apex:actionSupport event="onchange" reRender="dailyCountry" id="Us1"/>
+                                                                    </apex:inputCheckbox>
+                                                                    <apex:outputLabel value="{!$Label.ISSP_AMS_eBulletin_Area1}" for="Area_1"/>
+                                                                </apex:pageBlockSectionItem>
+                                                            </apex:pageBlockSection>
+                                                            <apex:outputField dir="LTR" value="{!newFormDaily.Area_1__c}" label="{!$Label.ISSP_AMS_eBulletin_Area1}" 
+                                                                rendered="{!IF(newFormDaily.Opt_in__c ,'false','true')}" />
+                                                       
+                                                            <apex:pageBlockSection columns="1" rendered="{!IF(NOT(newFormDaily.Opt_in__c) ,'false','true')}">
+                                                                <apex:pageBlockSectionItem labelStyle="width:5%">
+                                                                    <apex:inputCheckBox value="{!newFormDaily.Area_2__c}" id="Area_2">
+                                                                        <apex:actionSupport event="onchange" reRender="dailyCountry" id="Us2"/>
+                                                                    </apex:inputCheckbox>
+                                                                    <apex:outputLabel value="{!$Label.ISSP_AMS_eBulletin_Area2}" for="Area_2"/>
+                                                                </apex:pageBlockSectionItem>
+                                                            </apex:pageBlockSection>
+                                                            <apex:outputField dir="RTL" value="{!newFormDaily.Area_2__c}" label="{!$Label.ISSP_AMS_eBulletin_Area2}" 
+                                                                rendered="{!IF(newFormDaily.Opt_in__c ,'false','true')}" />                                 
+                                                       
+                                                            <apex:pageBlockSection columns="1" rendered="{!IF(NOT(newFormDaily.Opt_in__c) ,'false','true')}" >
+                                                                <apex:pageBlockSectionItem labelStyle="width:5%">
+                                                                    <apex:inputCheckBox value="{!newFormDaily.Area_3__c}" id="Area_3">
+                                                                        <apex:actionSupport event="onchange" reRender="dailyCountry" id="Us3"/>
+                                                                    </apex:inputCheckbox>
+                                                                     <apex:outputLabel value="{!$Label.ISSP_AMS_eBulletin_Area3}" for="Area_3"/>
+                                                                </apex:pageBlockSectionItem>
+                                                            </apex:pageBlockSection>
+                                                            <apex:outputField value="{!newFormDaily.Area_3__c}" label="{!$Label.ISSP_AMS_eBulletin_Area3}" 
+                                                                rendered="{!IF(newFormDaily.Opt_in__c ,'false','true')}" />
+                                                        </td>
+                                                    </tr>
+                                                   
+                                                </table> 
+                                            </apex:pageBlockSection>
+                                            <apex:pageBlockSection columns="1"  collapsible="false">
+                                                <table width="100%" >
+                                                <tr>
+                                                    <td>
+                                                        
+                                                        <c:MultiselectPicklist id="dailyCountry"
+                                                                       leftLabel="{!$Label.ISSP_AMS_eBulletin_AvailableCountries}" 
+                                                                       leftOptions="{!countryNameListSelectOptionDaily}"
+                                                                       rightLabel="{!$Label.ISSP_AMS_eBulletin_SelectedCountries}"
+                                                                       rightOptions="{!dailyCountrySelected}"
+                                                                       size="8"
+                                                                       width="300px"
+                                                                       btn_up_down="false"
+                                                                       readonly="{!IF(NOT(newFormDaily.Opt_in__c) ,'true','false')}"
+                                                        />
+                                                    </td>
+                                                </tr>
+                                                </table>
+                                                <table width="100%">
+                                                <tr>
+                                                    <td width="40%" >
+                                                        <apex:inputCheckBox value="{!dailyCountrySelectAll}" label="{!$Label.ISSP_AMS_eBulletin_Country_SelectAll}" rendered="{!IF(NOT(newFormDaily.Opt_in__c) ,'false','true')}">
+                                                            <apex:actionSupport event="onchange" action="{!dailyCountrySelectAll}"  id="cbSAd"/>
+                                                        </apex:inputCheckbox>
+                                                    </td>
+                                                </tr>
+                                                </table> 
+
+                                                <!--table width="100%" style="{!IF(newFormDaily.Opt_in__c ,'display:none','')}">
+                                                <tr>
+                                                    <td width="100%" style="font-weight:bold">
+                                                        {!$Label.ISSP_AMS_eBulletin_Countries}
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td align="center">
+                                                        <apex:dataList value="{!dailyCountryName}" var="countryName">
+                                                            <apex:outputText value="{!countryName}"/>
+                                                        </apex:dataList>
+                                                    </td>
+                                                </tr>
+                                                </table-->
+                                            </apex:pageBlockSection>
+                                        </apex:pageBlockSection>
+                                        
+                                        <!-- *********************************************************************************************** -->
+                                        <!-- *********************************************************************************************** -->
+                                        <!-- Daily Frequency disabled by request of business -->
+                                        <!-- *********************************************************************************************** -->
+                                        <!-- *********************************************************************************************** -->
+                                        <table width="100%" style="display:none">
+                                            <tr>
+                                                <td width="100%" style="font-weight:bold">
+                                                    {!$Label.ISSP_AMS_eBulletin_DailyFrequency}
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td>
+                                                    <apex:inputField value="{!newFormDaily.Daily_Frequency__c}" rendered="{!IF(NOT(newFormDaily.Opt_in__c) ,'false','true')}" />
+                                                    <apex:outputField value="{!newFormDaily.Daily_Frequency__c}" rendered="{!IF(newFormDaily.Opt_in__c ,'false','true')}" />
+                                                </td>
+                                            </tr>
+                                        </table> 
+                                        <!-- *********************************************************************************************** -->
+                                        <!-- *********************************************************************************************** -->
+                                        <!-- *********************************************************************************************** -->
+                                        
+
+                                        <apex:pageBlockSection columns="1"  collapsible="false">
+                                            <apex:facet name="header">
+                                                <apex:outputpanel >
+                                                    {!$Label.ISSP_AMS_eBulletin_ProgramSelection}
+                                                </apex:outputpanel>
+                                            </apex:facet>
+                                                        
+                                            <apex:pageBlockSection columns="1" rendered="{!IF(NOT(newFormDaily.Opt_in__c) ,'false','true')}">
+                                                <apex:pageBlockSectionItem labelStyle="width:5%">
+                                                    <apex:inputCheckBox value="{!newFormDaily.Program_Passage__c}" id="DailyPAXProgram"/>
+                                                    <apex:outputLabel value="{!$Label.ISSP_AMS_eBulletin_Passenger}" for="DailyPAXProgram"/>
+                                                </apex:pageBlockSectionItem>
+                                            </apex:pageBlockSection>
+                                            <apex:outputField value="{!newFormDaily.Program_Passage__c}" rendered="{!IF(newFormDaily.Opt_in__c ,'false','true')}" label="{!$Label.ISSP_AMS_eBulletin_Passenger}"/>
+                                       
+                                            <apex:pageBlockSection columns="1" rendered="{!IF(NOT(newFormDaily.Opt_in__c) ,'false','true')}">
+                                                <apex:pageBlockSectionItem labelStyle="width:5%">
+                                                    <apex:inputCheckBox value="{!newFormDaily.Program_Cargo__c}" Id="DailyCGOProgram"/>
+                                                    <apex:outputLabel value="{!$Label.ISSP_AMS_eBulletin_Cargo}" for="DailyCGOProgram"/>
+                                                </apex:pageBlockSectionItem>
+                                            </apex:pageBlockSection>
+                                            <apex:outputField value="{!newFormDaily.Program_Cargo__c}" rendered="{!IF(newFormDaily.Opt_in__c ,'false','true')}" label="{!$Label.ISSP_AMS_eBulletin_Cargo}"/>
+                                      
+                                            <apex:pageBlockSection columns="1" rendered="{!IF(NOT(newFormDaily.Opt_in__c) ,'false','true')}">
+                                                <apex:pageBlockSectionItem labelStyle="width:5%">
+                                                    <apex:inputCheckBox value="{!newFormDaily.Program_CASS_Associates__c}" id="DailyCASSProgram"/>
+                                                    <apex:outputLabel value="{!$Label.ISSP_AMS_eBulletin_CASS}" for="DailyCASSProgram"/>
+                                                </apex:pageBlockSectionItem>
+                                            </apex:pageBlockSection>
+                                            <apex:outputField value="{!newFormDaily.Program_CASS_Associates__c}" rendered="{!IF(newFormDaily.Opt_in__c ,'false','true')}" label="{!$Label.ISSP_AMS_eBulletin_CASS}"/>
+                                        
+                                            <apex:pageBlockSection columns="1" rendered="{!IF(NOT(newFormDaily.Opt_in__c) ,'false','true')}">
+                                                <apex:pageBlockSectionItem labelStyle="width:5%">
+                                                    <apex:inputCheckBox value="{!newFormDaily.Program_Domestic__c}" id="DailyDomesticProgram"/>
+                                                    <apex:outputLabel value="{!$Label.ISSP_AMS_eBulletin_Domestic}" for="DailyDomesticProgram"/>
+                                                </apex:pageBlockSectionItem>
+                                            </apex:pageBlockSection>
+                                            <apex:outputField value="{!newFormDaily.Program_Domestic__c}" rendered="{!IF(newFormDaily.Opt_in__c ,'false','true')}" label="{!$Label.ISSP_AMS_eBulletin_Domestic}"/>
+                                        </apex:pageBlockSection>                               
+                                    
+
+                                        <apex:pageBlockSection columns="1"  collapsible="false">
+                                            <apex:facet name="header">
+                                                <apex:outputpanel >
+                                                    {!$Label.ISSP_AMS_eBulletin_AgencyInformation} 
+                                                </apex:outputpanel>
+                                            </apex:facet>
+                                                    
+                                            <apex:pageBlockSection columns="1" rendered="{!IF(NOT(newFormDaily.Opt_in__c) ,'false','true')}">
+                                                <apex:pageBlockSectionItem labelStyle="width:5%">
+                                                    <apex:inputCheckBox value="{!newFormDaily.Agency_Info_Irregularities__c}" id="DailyIrreg"/>
+                                                    <apex:outputLabel value="{!$Label.ISSP_AMS_eBulletin_Irregularities}" for="DailyIrreg"/>
+                                                </apex:pageBlockSectionItem>
+                                            </apex:pageBlockSection>                             
+                                            <apex:outputField value="{!newFormDaily.Agency_Info_Irregularities__c}" rendered="{!IF(newFormDaily.Opt_in__c ,'false','true')}" label="{!$Label.ISSP_AMS_eBulletin_Irregularities}"/>
+                                        
+                                            <apex:pageBlockSection columns="1" rendered="{!IF(NOT(newFormDaily.Opt_in__c) ,'false','true')}">
+                                                <apex:pageBlockSectionItem labelStyle="width:5%">
+                                                    <apex:inputCheckBox value="{!newFormDaily.Agency_Info_Defaults__c}" id="DailyDefaults"/>
+                                                    <apex:outputLabel value="{!$Label.ISSP_AMS_eBulletin_Defaults}" for="DailyDefaults"/>
+                                                </apex:pageBlockSectionItem>
+                                            </apex:pageBlockSection>    
+                                            <apex:outputField value="{!newFormDaily.Agency_Info_Defaults__c}" rendered="{!IF(newFormDaily.Opt_in__c ,'false','true')}" label="{!$Label.ISSP_AMS_eBulletin_Defaults}"/>
+                                       
+                                             <apex:pageBlockSection columns="1" rendered="{!IF(NOT(newFormDaily.Opt_in__c) ,'false','true')}">
+                                                <apex:pageBlockSectionItem labelStyle="width:5%">
+                                                    <apex:inputCheckBox value="{!newFormDaily.Agency_Info_Termination_Closures__c}" id="DailyClosures"/>
+                                                    <apex:outputLabel value="{!$Label.ISSP_AMS_eBulletin_Termination_Closures}" for="DailyClosures"/>
+                                                </apex:pageBlockSectionItem>
+                                            </apex:pageBlockSection>    
+                                            <apex:outputField value="{!newFormDaily.Agency_Info_Termination_Closures__c}" rendered="{!IF(newFormDaily.Opt_in__c ,'false','true')}" label="{!$Label.ISSP_AMS_eBulletin_Termination_Closures}"/>
+                                        
+                                            <apex:pageBlockSection columns="1" rendered="{!IF(NOT(newFormDaily.Opt_in__c) ,'false','true')}">
+                                                <apex:pageBlockSectionItem labelStyle="width:5%">
+                                                    <apex:inputCheckBox value="{!newFormDaily.Agency_Info_Reviews__c}" id="DailyReviews"/>
+                                                    <apex:outputLabel value="{!$Label.ISSP_AMS_eBulletin_Reviews}" for="DailyReviews"/>
+                                                </apex:pageBlockSectionItem>
+                                             </apex:pageBlockSection>    
+                                            <apex:outputField value="{!newFormDaily.Agency_Info_Reviews__c}" rendered="{!IF(newFormDaily.Opt_in__c ,'false','true')}" label="{!$Label.ISSP_AMS_eBulletin_Reviews}"/>
+                                        </apex:pageBlockSection>
+                                    
+
+                            </apex:pageBlockSection>
+                            </center>
+                            
+
+                            <apex:pageBlockSection columns="1">
+                                <apex:pageBlockSectionItem dataStyle="text-align:right; width: 25%;" rendered="{!isStep1_1}">
+                                    <apex:outputPanel >
+                                        <apex:commandButton action="{!goToStep2}" value="{!$Label.ISSP_Cancel}" />
+                                        &nbsp;&nbsp;
+                                        <apex:commandButton action="{!saveAMSFormAndGoForward}" value="{!$Label.ISSP_AMS_eBulletin_btn_SaveGenerateReport}" rendered="{!newFormDaily.Opt_in__c}"/>
+                                    </apex:outputPanel>
+                                </apex:pageBlockSectionItem>
+                            </apex:pageBlockSection>
+                        </apex:pageBlock>
+                    </div>
+
+                </apex:form>
+                <apex:form >
+
+                    <apex:inputHidden value="{!newFormWeekly.RecordTypeId}" />
+                    <apex:inputHidden value="{!newFormWeekly.User__c}" />
+                    <apex:inputHidden value="{!newFormWeekly.Opt_in__c}" />
+
+                    
+                    
+                        <apex:pageBlock id="AMSBlock_step1_2" mode="edit" rendered="{!isStep1_2}">
+            
+                            <apex:pageBlockSection columns="1" id="LegalStatusSection2" collapsible="false">
+
+                                        <apex:pageBlockSection columns="2"  collapsible="false">
+                                            <apex:pageBlockSection columns="1"  collapsible="false">
+                                                <apex:pageBlockSection columns="1" >
+                                                        <apex:outputPanel >    
+                                                            <!-- <apex:outputLabel value="{!$Label.ISSP_AMS_eBulletin_lbl_Enable}" for="WeeklyOptOut"/> -->
+                                                            <apex:outputLabel value="{!$Label.ISSP_AMS_eBulletin_WEEKLY_Bulletin}" for="WeeklyOptOut"/>
+                                                            &nbsp;&nbsp;
+                                                            <apex:inputField value="{!newFormWeekly.Opt_in__c}" id="WeeklyOptOut" label="">
+                                                                <apex:actionSupport action="{!saveAMSFormAndStay}" event="onchange" reRender="AMSBlock_step1_2" id="optout1"/>
+                                                            </apex:inputField>&nbsp;&nbsp;
+                                                            <!-- <apex:outputLabel value="{!$Label.ISSP_AMS_eBulletin_WEEKLY_Bulletin}" for="WeeklyOptOut"/> -->
+                                                    </apex:outputPanel>
+                                                </apex:pageBlockSection>    
+                                            </apex:pageBlockSection> 
+                                            
+                                            <apex:pageBlockSection columns="1"  collapsible="false">
+                                                <apex:pageBlockSection columns="1" rendered="{!IF(NOT(newFormWeekly.Opt_in__c) ,'false','true')}">
+                                                    <apex:pageBlockSectionItem labelStyle="width:5%;font-weight:normal;">
+                                                        <apex:inputField value="{!newFormWeekly.Opt_out_Bulletin__c}" id="DailyOptOut2"/>
+                                                        <apex:outputLabel value="{!$Label.ISSP_AMS_eBulletin_OptOut_Weekly_Notifications}" for="DailyOptOut2"/>
+                                                    </apex:pageBlockSectionItem>
+                                                </apex:pageBlockSection>   
+                                                
+                                                <apex:pageBlockSection columns="1" rendered="{!IF(newFormWeekly.Opt_in__c ,'false','true')}">
+                                                    <apex:pageBlockSectionItem labelStyle="width:5%;font-weight:normal;">
+                                                        <apex:outputField value="{!newFormWeekly.Opt_out_Bulletin__c}" id="DailyOptOut3"  rendered="{!IF(newFormWeekly.Opt_in__c ,'false','true')}" />
+                                                        <apex:outputLabel value="{!$Label.ISSP_AMS_eBulletin_OptOut_Weekly_Notifications}" for="DailyOptOut3"/>
+                                                    </apex:pageBlockSectionItem>
+                                                </apex:pageBlockSection> 
+                                                
+                                            </apex:pageBlockSection> 
+                                        </apex:pageBlockSection>    
+                                        
+                                            
+                                        <apex:pageBlockSection columns="2"  collapsible="false">
+
+                                            <apex:facet name="header">
+                                                <apex:outputpanel >
+                                                    {!$Label.ISSP_AMS_eBulletin_CountrySelection}
+                                                </apex:outputpanel>
+                                            </apex:facet>
+
+                                            <apex:pageBlockSection columns="1"  collapsible="false">
+
+                                                <table width="100%">
+                                                <tr>
+                                                    <td width="100%" style="font-weight:bold">
+                                                        {!$Label.ISSP_AMS_eBulletin_Filter_Geographic_Area}
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td>
+                                                        <apex:pageBlockSection columns="1" rendered="{!IF(NOT(newFormWeekly.Opt_in__c) ,'false','true')}">
+
+                                                            <apex:pageBlockSectionItem labelStyle="width:5%">
+                                                                <apex:inputCheckbox value="{!newFormWeekly.Area_1__c}" id="Area_1_Weekly">
+                                                                    <apex:actionSupport event="onchange" reRender="weeklyCountry" id="Us4"/>
+                                                                </apex:inputCheckbox>
+                                                                <apex:outputLabel value="{!$Label.ISSP_AMS_eBulletin_Area1}" for="Area_1_Weekly"/>
+                                                            </apex:pageBlockSectionItem>
+                                                        </apex:pageBlockSection>
+                                                        <apex:outputField value="{!newFormWeekly.Area_1__c}" label="{!$Label.ISSP_AMS_eBulletin_Area1}" 
+                                                        rendered="{!IF(newFormWeekly.Opt_in__c ,'false','true')}"/>
+                                                            
+                                                        <apex:pageBlockSection columns="1" rendered="{!IF(NOT(newFormWeekly.Opt_in__c) ,'false','true')}">
+                                                            <apex:pageBlockSectionItem labelStyle="width:5%">
+                                                                <apex:inputCheckbox value="{!newFormWeekly.Area_2__c}" id="Area_2_Weekly">
+                                                                    <apex:actionSupport event="onchange" reRender="weeklyCountry" id="Us5"/>
+                                                                </apex:inputCheckbox>
+                                                                <apex:outputLabel value="{!$Label.ISSP_AMS_eBulletin_Area2}" for="Area_2_Weekly"/>
+                                                            </apex:pageBlockSectionItem>
+                                                        </apex:pageBlockSection>
+                                                        <apex:outputField value="{!newFormWeekly.Area_2__c}" label="{!$Label.ISSP_AMS_eBulletin_Area2}" rendered="{!IF(newFormWeekly.Opt_in__c ,'false','true')}"/>
+                                                    
+                                                        <apex:pageBlockSection columns="1" rendered="{!IF(NOT(newFormWeekly.Opt_in__c) ,'false','true')}">
+                                                            <apex:pageBlockSectionItem labelStyle="width:5%">
+                                                                <apex:inputCheckbox value="{!newFormWeekly.Area_3__c}" id="Area_3_Weekly">
+                                                                    <apex:actionSupport event="onchange" reRender="weeklyCountry" id="Us6"/>
+                                                                </apex:inputCheckbox>
+                                                                <apex:outputLabel value="{!$Label.ISSP_AMS_eBulletin_Area3}" for="Area_3_Weekly"/>
+                                                            </apex:pageBlockSectionItem>
+                                                        </apex:pageBlockSection>
+                                                        <apex:outputField value="{!newFormWeekly.Area_3__c}" label="{!$Label.ISSP_AMS_eBulletin_Area3}" rendered="{!IF(newFormWeekly.Opt_in__c ,'false','true')}"/>
+
+                                                    </td>
+                                                </tr>
+                                                </table>
+
+                                            </apex:pageBlockSection>
+
+                                            <apex:pageBlockSection columns="1"  collapsible="false">
+                                                <table width="100%" >
+                                                <tr>
+                                                    <td align="center">
+                                                        <c:MultiselectPicklist id="weeklyCountry" 
+                                                                       leftLabel="{!$Label.ISSP_AMS_eBulletin_AvailableCountries}"  
+                                                                       leftOptions="{!countryNameListSelectOptionWeekly}"
+                                                                       rightLabel="{!$Label.ISSP_AMS_eBulletin_SelectedCountries}"
+                                                                       rightOptions="{!weeklyCountrySelected}"
+                                                                       size="8"
+                                                                       width="300px"
+                                                                       btn_up_down="false"
+                                                                       readonly="{!IF(NOT(newFormWeekly.Opt_in__c) ,'true','false')}"
+                                                        />
+                                                    </td>
+                                                </tr>
+                                                </table>
+
+                                                <table width="100%">
+                                                <tr>
+                                                    <td width="40%">
+                                                        <apex:inputCheckBox value="{!weeklyCountrySelectAll}" label="{!$Label.ISSP_AMS_eBulletin_Country_SelectAll}" rendered="{!IF(NOT(newFormWeekly.Opt_in__c) ,'false','true')}">
+                                                            <apex:actionSupport event="onchange" action="{!weeklyCountrySelectAll}" reRender="weeklyCountry" id="cbSAw"/>
+                                                        </apex:inputCheckbox>
+                                                    </td>
+                                                </tr>
+                                                </table> 
+
+                                                <!--table width="100%" style="{!IF(newFormWeekly.Opt_in__c,'display:none','')}">
+                                                <tr>
+                                                    <td width="100%" style="font-weight:bold">
+                                                        {!$Label.ISSP_AMS_eBulletin_Countries}
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td align="center">
+                                                        <apex:dataList value="{!weeklyCountryName}" var="countryName">
+                                                            <apex:outputText value="{!countryName}"/>
+                                                        </apex:dataList>
+                                                    </td>
+                                                </tr>
+                                                </table-->
+
+
+                                            </apex:pageBlockSection>
+                                        </apex:pageBlockSection>    
+
+
+                                        <apex:pageBlockSection columns="1"  collapsible="false">
+                                            <apex:facet name="header">
+                                                <apex:outputpanel >
+                                                    {!$Label.ISSP_AMS_eBulletin_ProgramSelection}
+                                                </apex:outputpanel>
+                                            </apex:facet>
+
+                                            <apex:pageBlockSection columns="1" rendered="{!IF(NOT(newFormWeekly.Opt_in__c) ,'false','true')}">
+                                                <apex:pageBlockSectionItem labelStyle="width:5%">
+                                                    <apex:inputCheckBox value="{!newFormWeekly.Program_Passage__c}" id="WeeklyPAXProgram"/>
+                                                     <apex:outputLabel value="{!$Label.ISSP_AMS_eBulletin_Passenger}" for="WeeklyPAXProgram"/>
+                                                </apex:pageBlockSectionItem>
+                                            </apex:pageBlockSection>
+                                            <apex:outputField value="{!newFormWeekly.Program_Passage__c}" rendered="{!IF(newFormWeekly.Opt_in__c ,'false','true')}" label="{!$Label.ISSP_AMS_eBulletin_Passenger}"/>
+                                       
+                                            <apex:pageBlockSection columns="1" rendered="{!IF(NOT(newFormWeekly.Opt_in__c) ,'false','true')}">
+                                                <apex:pageBlockSectionItem labelStyle="width:5%">
+                                                    <apex:inputCheckBox value="{!newFormWeekly.Program_Cargo__c}" id="WeeklyCGOProgram"/>
+                                                    <apex:outputLabel value="{!$Label.ISSP_AMS_eBulletin_Cargo}" for="WeeklyCGOProgram"/>
+                                                </apex:pageBlockSectionItem>
+                                            </apex:pageBlockSection>
+                                            <apex:outputField value="{!newFormWeekly.Program_Cargo__c}" rendered="{!IF(newFormWeekly.Opt_in__c ,'false','true')}" label="{!$Label.ISSP_AMS_eBulletin_Cargo}"/>
+                                       
+                                            <apex:pageBlockSection columns="1" rendered="{!IF(NOT(newFormWeekly.Opt_in__c) ,'false','true')}">
+                                                <apex:pageBlockSectionItem labelStyle="width:5%">
+                                                    <apex:inputCheckBox value="{!newFormWeekly.Program_CASS_Associates__c}" id="WeeklyCASSProgram"/>
+                                                    <apex:outputLabel value="{!$Label.ISSP_AMS_eBulletin_CASS}" for="WeeklyCASSProgram"/>
+                                                </apex:pageBlockSectionItem>
+                                            </apex:pageBlockSection>
+                                            <apex:outputField value="{!newFormWeekly.Program_CASS_Associates__c}" rendered="{!IF(newFormWeekly.Opt_in__c ,'false','true')}" label="{!$Label.ISSP_AMS_eBulletin_CASS}"/>
+                                       
+                                            <apex:pageBlockSection columns="1" rendered="{!IF(NOT(newFormWeekly.Opt_in__c) ,'false','true')}">
+                                                <apex:pageBlockSectionItem labelStyle="width:5%">
+                                                    <apex:inputCheckBox value="{!newFormWeekly.Program_Domestic__c}" id="DailyDomesticProgram"/>
+                                                    <apex:outputLabel value="{!$Label.ISSP_AMS_eBulletin_Domestic}" for="DailyDomesticProgram"/>
+                                                </apex:pageBlockSectionItem>
+                                            </apex:pageBlockSection>
+                                            <apex:outputField value="{!newFormWeekly.Program_Domestic__c}" rendered="{!IF(newFormDaily.Opt_in__c ,'false','true')}" label="{!$Label.ISSP_AMS_eBulletin_Domestic}"/>
+                                    
+                                        </apex:pageBlockSection>
+
+                                        <apex:pageBlockSection columns="1"  collapsible="false">
+                                            <apex:facet name="header">
+                                                <apex:outputpanel >
+                                                    {!$Label.ISSP_AMS_eBulletin_AgencyInformation}
+                                                </apex:outputpanel>
+                                            </apex:facet>
+                       
+                                            <apex:pageBlockSection columns="1" rendered="{!IF(NOT(newFormWeekly.Opt_in__c) ,'false','true')}">
+                                                <apex:pageBlockSectionItem labelStyle="width:5%">
+                                                    <apex:inputCheckBox value="{!newFormWeekly.Agency_Info_Irregularities__c}" id="WeeklyIrreg"/>
+                                                    <apex:outputLabel value="{!$Label.ISSP_AMS_eBulletin_Irregularities}" for="WeeklyIrreg"/>
+                                                </apex:pageBlockSectionItem>
+                                            </apex:pageBlockSection>     
+                                            <apex:outputField value="{!newFormWeekly.Agency_Info_Irregularities__c}" rendered="{!IF(newFormWeekly.Opt_in__c ,'false','true')}" label="{!$Label.ISSP_AMS_eBulletin_Irregularities}"/>
+                                        
+                                            <apex:pageBlockSection columns="1" rendered="{!IF(NOT(newFormWeekly.Opt_in__c) ,'false','true')}">
+                                                <apex:pageBlockSectionItem labelStyle="width:5%">
+                                                    <apex:inputCheckBox value="{!newFormWeekly.Agency_Info_Defaults__c}" id="WeeklyDefaults"/>
+                                                    <apex:outputLabel value="{!$Label.ISSP_AMS_eBulletin_Defaults}" for="WeeklyDefaults"/>
+                                                </apex:pageBlockSectionItem>
+                                            </apex:pageBlockSection>
+                                            <apex:outputField value="{!newFormWeekly.Agency_Info_Defaults__c}" rendered="{!IF(newFormWeekly.Opt_in__c ,'false','true')}" label="{!$Label.ISSP_AMS_eBulletin_Defaults}"/>
+                                      
+                                            <apex:pageBlockSection columns="1" rendered="{!IF(NOT(newFormWeekly.Opt_in__c) ,'false','true')}">
+                                                <apex:pageBlockSectionItem labelStyle="width:5%">
+                                                    <apex:inputCheckBox value="{!newFormWeekly.Agency_Info_Termination_Closures__c}" id="WeeklyClosures"/>
+                                                     <apex:outputLabel value="{!$Label.ISSP_AMS_eBulletin_Termination_Closures}" for="WeeklyClosures"/>
+                                                </apex:pageBlockSectionItem>
+                                            </apex:pageBlockSection>
+                                            <apex:outputField value="{!newFormWeekly.Agency_Info_Termination_Closures__c}" rendered="{!IF(newFormWeekly.Opt_in__c ,'false','true')}" label="{!$Label.ISSP_AMS_eBulletin_Termination_Closures}"/>
+                                        
+                                            <apex:pageBlockSection columns="1" rendered="{!IF(NOT(newFormWeekly.Opt_in__c) ,'false','true')}">
+                                                <apex:pageBlockSectionItem labelStyle="width:5%">
+                                                    <apex:inputCheckBox value="{!newFormWeekly.Agency_Info_Reviews__c}" id="WeeklyReviews"/>
+                                                    <apex:outputLabel value="{!$Label.ISSP_AMS_eBulletin_Reviews}" for="WeeklyReviews"/>
+                                                </apex:pageBlockSectionItem>
+                                            </apex:pageBlockSection>
+                                            <apex:outputField value="{!newFormWeekly.Agency_Info_Reviews__c}" rendered="{!IF(newFormWeekly.Opt_in__c ,'false','true')}" label="{!$Label.ISSP_AMS_eBulletin_Reviews}"/>
+                                      
+                                            <apex:pageBlockSection columns="1" rendered="{!IF(NOT(newFormWeekly.Opt_in__c) ,'false','true')}">
+                                                <apex:pageBlockSectionItem labelStyle="width:5%">
+                                                    <apex:inputCheckBox value="{!newFormWeekly.Agency_Info_New_Aplication_Processes__c}" id="WeeklyNewApps"/>
+                                                    <apex:outputLabel value="{!$Label.ISSP_AMS_eBulletin_NewApplicationProcesses}" for="WeeklyNewApps"/>
+                                                </apex:pageBlockSectionItem>
+                                            </apex:pageBlockSection>
+                                            <apex:outputField value="{!newFormWeekly.Agency_Info_New_Aplication_Processes__c}" rendered="{!IF(newFormWeekly.Opt_in__c ,'false','true')}" label="{!$Label.ISSP_AMS_eBulletin_NewApplicationProcesses}"/>
+                                       
+                                            <apex:pageBlockSection columns="1" rendered="{!IF(NOT(newFormWeekly.Opt_in__c) ,'false','true')}">
+                                                <apex:pageBlockSectionItem labelStyle="width:5%">
+                                                    <apex:inputCheckBox value="{!newFormWeekly.Agency_Info_Agency_Changes__c}" id="WeeklyChanges"/>
+                                                    <apex:outputLabel value="{!$Label.ISSP_AMS_eBulletin_AgencyChanges}" for="WeeklyChanges"/>
+                                                </apex:pageBlockSectionItem>
+                                            </apex:pageBlockSection>
+                                            <apex:outputField value="{!newFormWeekly.Agency_Info_Agency_Changes__c}"  rendered="{!IF(newFormWeekly.Opt_in__c ,'false','true')}" label="{!$Label.ISSP_AMS_eBulletin_AgencyChanges}"/>
+                                                  
+                                        </apex:pageBlockSection>
+                            </apex:pageBlockSection>
+
+                            <apex:pageBlockSection columns="1">
+                                <apex:pageBlockSectionItem dataStyle="text-align:right; width: 50%;" rendered="{!isStep1_2}">
+                                    <apex:outputPanel >
+                                        <apex:commandButton action="{!goToStep2}" value="{!$Label.ISSP_Cancel}" />
+                                        &nbsp;&nbsp;
+                                        <apex:commandButton action="{!saveAMSFormAndGoForward}" value="{!$Label.ISSP_AMS_eBulletin_btn_SaveGenerateReport}" rendered="{!newFormWeekly.Opt_in__c}"/>
+                                    </apex:outputPanel>    
+                                </apex:pageBlockSectionItem>
+                            </apex:pageBlockSection>
+
+                            <!--/center-->
+                        </apex:pageBlock>
+                    <!--/div-->
+                       
+                    <div>
+                        <apex:pageBlock rendered="false">
+                            <apex:pageBlockSection >
+                                <apex:pageBlockSectionItem dataStyle="text-align:left; width: 50%;" rendered="{!IF(NOT(newFormWeekly.Opt_in__c) ,'false','true')}">
+                                    <apex:commandLink action="{!suspendSubscription}" value="Suspend Subscription" />
+                                </apex:pageBlockSectionItem>
+                                <apex:pageBlockSectionItem dataStyle="text-align:left; width: 50%;" rendered="{!IF(newFormWeekly.Opt_in__c,'false','true')}">
+                                    <apex:commandLink action="{!suspendSubscription}" value="Activate Subscription" />
+                                </apex:pageBlockSectionItem>
+                                <apex:pageBlockSectionItem dataStyle="text-align:right; width: 50%;" rendered="{!isStep1}">
+                                       <apex:commandButton action="{!saveAMSFormAndGoForward}" value="{!$Label.ISSP_AMS_eBulletin_btn_SaveGenerateReport}"/>
+                                </apex:pageBlockSectionItem>
+                            </apex:pageBlockSection>
+
+                            <!-- apex:pageBlockButtons location="top"  >
+                                <apex:commandButton action="{ ! suspendSubscription}" value="Suspend Subscription" rendered="{ !onOff}"/>&nbsp;
+                                
+                            </apex:pageBlockButtons>
+                            <apex:pageBlockButtons location="bottom" >
+                                <apex:commandButton action="{ !saveAMSFormAndGoBack}" value="{ !$Label.ISSP_Back}" rendered="{ !NOT(onOff)}"/>&nbsp;
+                                <apex:commandButton action="{ !saveAMSFormAndGoForward}" value="{ !$Label.ISSP_Next}" rendered="{ !isStep1}"/>
+                                <apex:commandButton action="{ !saveAMSFormAndGoForward}" value="Confirm" rendered="{ !isStep2}"/>
+                            </apex:pageBlockButtons -->
+
+                        </apex:pageBlock>   
+                    </div>
+                   
+                    
+                </apex:form>
+             </div>   
+        </div>
+     </apex:outputText>
+           
+     <apex:outputText rendered="{!IF(isStep2, true, IF(isStep3, true,  false))}">
+
+         <div class="panel-primary">
+            <div class="panel-heading head_panel_green" id="container">
+                <div id="left"><h3 class="panel-title">{!$Label.ISSP_AMS_eBulletin_Title}</h3></div>
+                <div id="right">   
+                    <h3 class="panel-title">
+                    <span class="glyphicon glyphicon-info-sign" aria-hidden="true"></span>&nbsp;
+                    <a href="#"><apex:outputLink value="{!$Label.ISSP_PKB_URL}{!CASE(displayLanguage, 'ar', 'ar', 'fr', 'fr', 'it', 'it', 'de', 'de', 'es', 'es', 'pt_BR', 'pt_BR', 'ja', 'ja', 'ko', 'ko', 'in', 'in', 'th', 'th', 'vi', 'vi', 'zh_CN', 'zh_CN', 'en_US')}/How_To/Customer-Portal-Troubleshooting/?l={!CASE(displayLanguage, 'ar', 'ar', 'fr', 'fr', 'it', 'it', 'de', 'de', 'es', 'es', 'pt_BR', 'pt_BR', 'ja', 'ja', 'ko', 'ko', 'in', 'in', 'th', 'th', 'vi', 'vi', 'zh_CN', 'zh_CN', 'en_US')}" rendered="{!$Site.RegistrationEnabled}" target="_blank">{!$Label.ISSP_AMS_eBulletin_eBulletin_UserGuide}</apex:outputLink></a>
+                    </h3>
+                </div>
+            </div>
+
+            <div class="panel-body" id="body-enquiries">
+                <apex:form >
+                <div class="progress">
+                    <div class="progress-bar {!IF(isStep3, 'progress-bar-off', '')}" role="progressbar" style="width: 50%;display:{!IF(isStep3, 'none', '')}">
+                        {!$Label.ISSP_AMS_eBulletin_DAILY_Bulletin}
+                    </div>
+                    <div class="progress-bar {!IF(isStep3, 'progress-bar-off', '')}" role="progressbar" style="width: 50%;display:{!IF(isStep2, 'none', '')}">
+                        <apex:commandLink action="{!goToStep2}" value="{!$Label.ISSP_AMS_eBulletin_DAILY_Bulletin}" id="DailyBulletinLink"/>
+                    </div>
+                    <div class="progress-bar {!IF(isStep2, 'progress-bar-off', '')}" role="progressbar" style="width: 50%;display:{!IF(isStep2, 'none', '')}">
+                        {!$Label.ISSP_AMS_eBulletin_WEEKLY_Bulletin}
+                    </div>
+                    <div class="progress-bar {!IF(isStep2, 'progress-bar-off', '')}" role="progressbar" style="width: 50%;display:{!IF(isStep3, 'none', '')}">
+                        <apex:commandLink action="{!goToStep3}" value="{!$Label.ISSP_AMS_eBulletin_WEEKLY_Bulletin}" id="WeeklyBulletinLink"/>
+                    </div>
+
+                </div>
+                </apex:form>
+                <apex:form >
+
+                    
+
+                    <apex:pageMessages id="theMessages" />
+                    
+                    <apex:outputPanel rendered="false">
+                        <script>
+                        // Check_CountryReqments();
+                        </script> 
+                    </apex:outputPanel>
+                  
+                    <center>
+                        
+                                <!-- apex:commandButton styleclass="btn btn-default" action="{!goToStep1}" value="{!$Label.ISSP_Back}" id="Previous"/ -->
+                        <div >
+                            <apex:pageBlock id="AMSBlock_step2" mode="edit" rendered="{!isStep2}">
+                                <apex:pageBlockSection columns="1" id="LegalStatusSection_step2" collapsible="false">
+                                    <!--apex:facet name="header">
+                                        <apex:outputpanel >
+                                            {!$Label.ISSP_AMS_eBulletin_DAILY_Bulletin}
+                                        </apex:outputpanel>
+                                    </apex:facet-->
+                                    
+                                    <table width="100%">
+                                    <tr>
+                                        <td width="40%">
+
+                                            <table width="100%">
+                                            <tr>
+                                                <td>
+                                                    <apex:outputpanel >
+                                                        <span class="h4">{!$Label.ISSP_AMS_eBulletin_FilterOptionsDaily}</span> 
+                                                        <apex:commandButton action="{!goToStep1_1}" value="{!$Label.ISSP_AMS_eBulletin_btn_EditSelectionCriteria}" rendered="false" style="margin-left:30px;vertical-align:bottom !important"/>
+                                                    </apex:outputpanel>
+                                                </td>
+                                            </tr>
+                                            </table> 
+
+                                            <table width="100%" >
+                                            <tr>
+                                                <td width="50%" class="title">
+                                                    {!$Label.ISSP_AMS_eBulletin_SubscriptionInformation}
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td align="center" class="labelCol" >
+                                                    <apex:pageBlockSectionItem dataStyle="color:{!IF(newFormDaily.StatusDisplay__c=='Enabled' ,'green',IF(newFormDaily.StatusDisplay__c=='Disabled','red','#4a4a56'))} !important;"
+                                                    >
+                                                        <apex:outputLabel value="{!$Label.ISSP_AMS_eBulletin_Status}" for="statusDaily" Style="font-weight:normal !important; font-size:14px !important;"/>
+                                                        <!-- <apex:outputField value="{!newFormDaily.StatusDisplay__c}" id="statusDaily"/> -->
+                                                        <apex:outputText style="font-weight:bold !important;" value="{!IF(newFormDaily.StatusDisplay__c=='Enabled',$Label.ISSP_AMS_eBulletin_Enabled,$Label.ISSP_AMS_eBulletin_Disabled)}" id="statusDaily"/>
+                                                    </apex:pageBlockSectionItem>
+                                               </td>
+                                            </tr>
+                                            <tr>
+                                                <td align="center" class="labelCol">
+                                                    <apex:outputField value="{!newFormDaily.Opt_out_Bulletin__c}" id="Opt_out_Bulletin__c" label="{!$Label.ISSP_AMS_eBulletin_OptOut_Daily_Notifications}"/>
+                                               </td>
+                                            </tr>
+                                            </table> 
+                                            
+                                            <br/>
+
+                                            <table width="100%">
+                                            <tr>
+                                                <td width="50%" class="title">
+                                                    {!$Label.ISSP_AMS_eBulletin_Program}
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td>
+                                                    <apex:outputField value="{!newFormDaily.Program_Passage__c}" label="{!$Label.ISSP_AMS_eBulletin_Passenger}"/>
+                                               </td>
+                                            </tr>
+                                            <tr>
+                                                <td>
+                                                    <apex:outputField value="{!newFormDaily.Program_Cargo__c}" label="{!$Label.ISSP_AMS_eBulletin_Cargo}"/>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td>
+                                                    <apex:outputField value="{!newFormDaily.Program_CASS_Associates__c}" label="{!$Label.ISSP_AMS_eBulletin_CASS}"/>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td>
+                                                    <apex:outputField value="{!newFormDaily.Program_Domestic__c}" label="{!$Label.ISSP_AMS_eBulletin_Domestic}" />
+                                                </td>
+                                            </tr>
+                                            </table> 
+                                            
+                                            <br/>
+                                           
+                                            <table width="100%">
+                                            <tr>
+                                                <td width="50%" class="title">
+                                                    {!$Label.ISSP_AMS_eBulletin_AgencyInformation}
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td>
+                                                    <apex:outputField value="{!newFormDaily.Agency_Info_Irregularities__c}" label="{!$Label.ISSP_AMS_eBulletin_Irregularities}"/>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td>
+                                                    <apex:outputField value="{!newFormDaily.Agency_Info_Defaults__c}" label="{!$Label.ISSP_AMS_eBulletin_Defaults}"/>
+                                               </td>
+                                            </tr>
+                                            <tr>
+                                                <td>
+                                                    <apex:outputField value="{!newFormDaily.Agency_Info_Termination_Closures__c}" label="{!$Label.ISSP_AMS_eBulletin_Termination_Closures}"/>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td>
+                                                    <apex:outputField value="{!newFormDaily.Agency_Info_Reviews__c}" label="{!$Label.ISSP_AMS_eBulletin_Reviews}"/>
+                                               </td>
+                                            </tr>
+                                            </table> 
+
+                                            <br/>
+
+                                            <table width="100%">
+                                            <tr>
+                                                <td width="70%" class="title">
+                                                    {!$Label.ISSP_AMS_eBulletin_GeographicArea}
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td>
+                                                    <apex:outputField value="{!newFormDaily.Area_1__c}" label="{!$Label.ISSP_AMS_eBulletin_Area1}" />
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td>
+                                                    <apex:outputField value="{!newFormDaily.Area_2__c}" label="{!$Label.ISSP_AMS_eBulletin_Area2}" />
+                                                    
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td>
+                                                    <apex:outputField value="{!newFormDaily.Area_3__c}" label="{!$Label.ISSP_AMS_eBulletin_Area3}" />
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td style="font-weight:bold">
+                                                    &nbsp;&nbsp;
+                                                </td>
+                                            </tr>
+                                            </table> 
+
+                                            <!--table width="100%">
+                                            <tr>
+                                                <td width="100%" style="font-weight:bold">
+                                                    {!$Label.ISSP_AMS_eBulletin_Countries}
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td align="center">
+                                                    <apex:dataList value="{!dailyCountryName}" var="countryName">
+                                                        <apex:outputText value="{!countryName}"/>
+                                                    </apex:dataList>
+                                                </td>
+                                            </tr>
+                                            </table-->
+                                    
+                                        </td>
+                                        <td width="10%">
+                                            &nbsp;
+                                        </td>
+                                        <td width="50%" style="padding-top:40px">
+                                            <table width="100%">
+                                            <tr>
+                                                <td class="title">
+                                                    {!$Label.ISSP_AMS_eBulletin_info_Daily_available_days} 
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td>
+                                                    <apex:outputpanel id="periodddd">
+                                                    <table width="100%">
+
+                                                    <tr style="">
+                                                        <td>
+                                                            <apex:inputHidden value="{!pDateStart}" id="pDateStart" />
+                                                            <div class="date-picker"></div>
+                                                            <apex:selectRadio value="{!daysOfWeek}" id="DailyRadio" layout="pageDirection" style="width:50%;white-space:pre;" rendered="false">
+                                                                <apex:selectOptions value="{!itemsDaysOfWeek}"  />
+                                                                <apex:actionSupport event="onchange" reRender="period" />
+                                                                <apex:actionSupport event="onload" reRender="period" />
+                                                            </apex:selectRadio>
+                                                        </td>
+                                                        <td style="padding-top: 20px;padding-left: 20px;">
+                                                            <apex:outputpanel id="period">
+                                                                <apex:outputpanel id="period1" rendered="{!IF(daysOfWeek <> null && daysOfWeek == todayOption,true,false)}">
+                                                                    <div class="title">
+                                                                        {!$Label.ISSP_AMS_eBulletin_RunReport}
+                                                                    </div>
+                                                                    <apex:selectList id="todayPeriod" style="width:70%" value="{!todayPeriod}" size="1" >
+                                                                        <apex:selectOption itemValue="today" itemLabel="{!$Label.ISSP_AMS_eBulletin_RunReport_opt_Today}" />
+                                                                        <apex:selectOption itemValue="last" itemLabel="{!$Label.ISSP_AMS_eBulletin_RunReport_opt_LastExecution}" /> 
+                                                                    </apex:selectList><p/>
+                                                                
+                                                                </apex:outputpanel>
+                                                            </apex:outputpanel>
+                                                        </td>
+                                                    </tr>
+                                                    </table>
+                                                    </apex:outputpanel>
+                                               </td>
+                                            </tr>
+                                            
+                                            <tr>
+                                                <td>
+                                                    <br/> 
+                                                    {!$Label.ISSP_AMS_eBulletin_info_1}<br/> 
+                                                    {!$Label.ISSP_AMS_eBulletin_info_2}
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td>
+                                                    <br/>
+                                        
+                                                     <apex:actionFunction name="planeStartDaily" action="{!isGettingReportStartDaily}" reRender="waitingPlaneDaily,btnDailyDownload"/>
+                                                    <apex:outputPanel id='waitingPlaneDaily'>
+                                                        <apex:pageBlockSectionItem rendered="{!isGettingReportDaily}">
+                                                            <div class="title">
+                                                                <img src="{!URLFOR($Resource.IataLoadingImage)}"/><br/>
+                                                                <b>{!$Label.ISSP_AMS_eBulletin_Processing_eBulletin}</b>
+                                                            </div>
+                                                        </apex:pageBlockSectionItem>
+                                                    </apex:outputPanel>
+                                                    <apex:commandButton id="btnDailyDownload" action="{!dailyReportDownload}" onclick="planeStartDaily();" reRender="batchStatusPollerDaily" value="{!$Label.ISSP_AMS_eBulletin_btn_DownloadDailyReport}" disabled="{!IF(AND(newFormDaily.Opt_in__c, NOT(isGettingReportDaily)) ,'false','true')}"/>
+                                                    <apex:outputPanel id="batchStatusPollerDaily">
+                                                        <apex:actionPoller oncomplete="openWindow();" reRender="newWindow,theMessages,waitingPlaneDaily,btnDailyDownload" interval="5" action="{!checkBatchStatus}" enabled="{!isBatchProcessing}"/>
+                                                    </apex:outputPanel>
+                                                            
+                                                    <apex:outputPanel id="newWindow">
+                                                        <script>      
+                                                            function openWindow(){        
+                                                                var sWindow = '{!dailyFileDownload}';
+                                                                if(sWindow != ''){
+                                                                    window.open(sWindow);
+                                                                }
+                                                            }
+                                                        </script>
+                                                    </apex:outputPanel>
+
+                                                    
+                                                </td>
+                                            </tr>
+                                            </table> 
+                                            
+                                        </td>
+                                    </tr>
+                                    </table> 
+
+                                    <apex:outputpanel >
+                                        <div class="title">
+                                            {!$Label.ISSP_AMS_eBulletin_Countries}
+                                        </div>
+                                        <ul id="quad">
+                                            <apex:repeat value="{!dailyCountryName}" var="countryName" id="other">
+                                                <li style="color:#4a4a56 ;">{!countryName}</li>
+                                            </apex:repeat>
+                                        </ul>
+                                            
+                                    </apex:outputpanel>
+                                    <br/>&nbsp;
+                                    <br/>
+                                </apex:pageBlockSection>
+                            </apex:pageBlock>
+
+
+                            <apex:pageBlock id="AMSBlock_step3" mode="edit" rendered="{!isStep3}">
+                                <apex:pageBlockSection columns="1" id="LegalStatusSection" collapsible="false">
+                                    <!--apex:facet name="header">
+                                        <apex:outputpanel >
+                                            {!$Label.ISSP_AMS_eBulletin_WEEKLY_Bulletin}
+                                        </apex:outputpanel>
+                                    </apex:facet-->
+                                
+                                    
+                                    <table width="100%">
+                                    <tr>
+                                        <td width="40%">
+
+                                            <table width="100%">
+                                            <tr>
+                                                <td>
+                                                <apex:outputpanel >
+                                                        <span class="h4">{!$Label.ISSP_AMS_eBulletin_FilterOptionsWeekly}</span> 
+                                                    <apex:commandButton action="{!goToStep1_2}" value="{!$Label.ISSP_AMS_eBulletin_btn_EditSelectionCriteria}" rendered="false" style="margin-left:20px;vertical-align:bottom !important"/>
+                                                    </apex:outputpanel>
+                                               </td>
+                                            </tr>
+                                            </table> 
+                                            
+                                            <table width="100%">
+                                            <tr>
+                                                <td width="50%" class="title">
+                                                    {!$Label.ISSP_AMS_eBulletin_SubscriptionInformation}
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td align="center" class="labelCol">
+                                                    <apex:pageBlockSectionItem dataStyle="color:{!IF(newFormWeekly.StatusDisplay__c == 'Enabled', 'green', IF(newFormWeekly.StatusDisplay__c == 'Disabled','red','#4a4a56'))} !important;"
+                                                    >
+                                                        <apex:outputLabel value="{!$Label.ISSP_AMS_eBulletin_Status}" for="statusWeekly" Style="font-weight:normal !important; font-size:14px !important;"/>
+                                                        <!-- <apex:outputField  value="{!newFormWeekly.StatusDisplay__c}" id="statusWeekly"/> -->
+                                                        <apex:outputText style="font-weight:bold !important;" value="{!IF(newFormWeekly.StatusDisplay__c=='Enabled',$Label.ISSP_AMS_eBulletin_Enabled,$Label.ISSP_AMS_eBulletin_Disabled)}" id="statusWeekly"/>
+                                                    </apex:pageBlockSectionItem>
+                                               </td>
+                                            </tr>
+                                            <tr>
+                                                <td align="center">
+                                                    <apex:outputField value="{!newFormWeekly.Opt_out_Bulletin__c}" id="Opt_out_Bulletin__c" label="{!$Label.ISSP_AMS_eBulletin_OptOut_Weekly_Notifications}"/>
+                                               </td>
+                                            </tr>
+                                            
+                                            </table> 
+                                            
+                                            <br/>
+
+                                            <table width="100%">
+                                            <tr>
+                                                <td width="50%" class="title">
+                                                    {!$Label.ISSP_AMS_eBulletin_Program}
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td>
+                                                    <apex:outputField value="{!newFormWeekly.Program_Passage__c}" label="{!$Label.ISSP_AMS_eBulletin_Passenger}"/>
+                                               </td>
+                                            </tr>
+                                            <tr>
+                                                <td>
+                                                    <apex:outputField value="{!newFormWeekly.Program_Cargo__c}" label="{!$Label.ISSP_AMS_eBulletin_Cargo}"/>
+                                               </td>
+                                            </tr>
+                                            <tr>
+                                                <td>
+                                                    <apex:outputField value="{!newFormWeekly.Program_CASS_Associates__c}" label="{!$Label.ISSP_AMS_eBulletin_CASS}"/>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td>
+                                                    <apex:outputField value="{!newFormWeekly.Program_Domestic__c}" label="{!$Label.ISSP_AMS_eBulletin_Domestic}"/>
+                                                </td>
+                                            </tr>
+                                            </table> 
+                                            
+                                            <br/>
+
+                                            <table width="100%">
+                                            <tr>
+                                                <td width="50%" class="title">
+                                                    {!$Label.ISSP_AMS_eBulletin_AgencyInformation}
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td>
+                                                    <apex:outputField value="{!newFormWeekly.Agency_Info_Irregularities__c}" label="{!$Label.ISSP_AMS_eBulletin_Irregularities}"/>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td>
+                                                    <apex:outputField value="{!newFormWeekly.Agency_Info_Defaults__c}" label="{!$Label.ISSP_AMS_eBulletin_Defaults}"/>
+                                               </td>
+                                            </tr>
+                                            <tr>
+                                                <td>
+                                                    <apex:outputField value="{!newFormWeekly.Agency_Info_Termination_Closures__c}" label="{!$Label.ISSP_AMS_eBulletin_Termination_Closures}"/>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td>
+                                                    <apex:outputField value="{!newFormWeekly.Agency_Info_Reviews__c}" label="{!$Label.ISSP_AMS_eBulletin_Reviews}"/>
+                                               </td>
+                                            </tr>
+                                            <tr>
+                                                <td>
+                                                    <apex:outputField value="{!newFormWeekly.Agency_Info_New_Aplication_Processes__c}" label="{!$Label.ISSP_AMS_eBulletin_NewApplicationProcesses}"/>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td>
+                                                    <apex:outputField value="{!newFormWeekly.Agency_Info_Agency_Changes__c}" label="{!$Label.ISSP_AMS_eBulletin_AgencyChanges}"/>
+                                               </td>
+                                            </tr>
+                                            </table> 
+
+                                            <table width="100%">
+                                            <tr>
+                                                <td width="100%" class="title">
+                                                    {!$Label.ISSP_AMS_eBulletin_GeographicArea}
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td>
+                                                    <apex:outputField value="{!newFormWeekly.Area_1__c}" label="{!$Label.ISSP_AMS_eBulletin_Area1}" />
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td>
+                                                    <apex:outputField value="{!newFormWeekly.Area_2__c}" label="{!$Label.ISSP_AMS_eBulletin_Area2}" />
+                                                    
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td>
+                                                    <apex:outputField value="{!newFormWeekly.Area_3__c}" label="{!$Label.ISSP_AMS_eBulletin_Area3}" />
+                                                    
+                                                </td>
+                                            </tr>
+                                            </table> 
+
+                                                
+
+                                        </td>
+                                        <td width="10%">
+                                            &nbsp;
+                                        </td>
+                                        <td width="50%" style="padding-top:35px">
+                                            <table width="100%">
+                                            <tr>
+                                                <td>
+                                                    <table width="100%">
+                                                    <tr>
+                                                        <td class="title">
+                                                            {!$Label.ISSP_AMS_eBulletin_SelectWeek} 
+                                                        </td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>
+                                                            <apex:inputHidden value="{!pWeekStart}" id="pWeekStart" />
+                                                            <apex:inputHidden value="{!pWeekEnd}" id="pWeekEnd" />
+                                                            <div class="week-picker"></div>
+                                                      </td>
+                                                    </tr>
+
+
+
+                                                    <tr style="display:hidden">
+                                                        <td>
+                                                            <apex:selectList styleClass="contactcountry" id="week" style="width:70%" value="{!week}" size="9" rendered="false">
+                                                                <apex:selectOptions value="{!itemsWeeks}"/>
+                                                            </apex:selectList>
+                                                       </td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>
+                                                            <br/>
+                                                                
+                                                                <apex:actionFunction name="planeStartWeekly" action="{!isGettingReportStartWeekly}" reRender="waitingPlaneWeekly,btnWeeklyDownload"/>
+                                                                <apex:outputPanel id='waitingPlaneWeekly'>
+                                                                    <apex:pageBlockSectionItem rendered="{!isGettingReportWeekly}">
+                                                                        <div class="title">
+                                                                            <img src="{!URLFOR($Resource.IataLoadingImage)}"/><br/>
+                                                                            <b>{!$Label.ISSP_AMS_eBulletin_Processing_eBulletin}</b>
+                                                                        </div>
+                                                                    </apex:pageBlockSectionItem>
+                                                                </apex:outputPanel>
+                                                                <apex:commandButton id="btnWeeklyDownload" action="{!weeklyReportDownload}" onclick="planeStartWeekly();" reRender="batchStatusPollerWeekly" value="{!$Label.ISSP_AMS_eBulletin_btn_DownloadWeeklyReport}" disabled="{!IF(AND(newFormWeekly.Opt_in__c, NOT(isGettingReportWeekly)) ,'false','true')}"/>
+                                                                <apex:outputPanel id="batchStatusPollerWeekly">
+                                                                    <apex:actionPoller oncomplete="openWindow();" reRender="newWindow,theMessages,waitingPlaneWeekly,btnWeeklyDownload" interval="5" action="{!checkBatchStatus}" enabled="{!isBatchProcessing}"/>
+                                                                </apex:outputPanel>
+                                                            
+                                                                
+                                                            
+                                                                <apex:outputPanel id="newWindow">
+                                                                <script>      
+                                                                    function openWindow(){        
+                                                                        var sWindow = '{!weeklyFileDownload}';
+                                                                        if(sWindow != ''){
+                                                                            window.open(sWindow);
+                                                                        }
+                                                                    }
+                                                                </script>
+                                                                </apex:outputPanel>
+                                                            
+                                                    
+                                                        </td>
+                                                    </tr>
+                                                    </table> 
+                                                </td>
+                                            </tr>
+                                            </table>                            
+
+                                        </td>
+                                    </tr>
+                                    </table>    
+
+                                    <apex:outputpanel >
+                                        <div class="title">
+                                            {!$Label.ISSP_AMS_eBulletin_Countries}
+                                        </div>
+                                        <ul id="quad">
+                                            <apex:repeat value="{!weeklyCountryName}" var="countryName" id="other">
+                                                <li style="color:#4a4a56 ;">{!countryName}</li>
+                                            </apex:repeat>
+                                        </ul>
+                                    </apex:outputpanel>
+                                    <br/>&nbsp;
+                                    <br/>
+                                </apex:pageBlockSection>
+                                
+                            </apex:pageBlock>   
+                        </div>
+                       
+                    </center>
+                </apex:form>
+             </div>   
+        </div>
+
+
+     </apex:outputText>
+    
+      
+
+           
+         </div>
+         <c:ISSP_CustomFooter />
+         </div>
+       
+    </body>  
+</html>
+
+</apex:page>

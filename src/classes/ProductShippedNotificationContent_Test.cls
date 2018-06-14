@@ -41,8 +41,11 @@ private class ProductShippedNotificationContent_Test {
 	        TestDataGenerator.generateApexSetting();
 	        List<Account> accounts = TestDataGenerator.generateAccounts(1,true); // 1 Account
 	        List<Contact> contacts = TestDataGenerator.generateContacts(accounts[0].Id,2,true); // 2 Contacts
-	        List<Order> orders = TestDataGenerator.generateOrder(1, accounts[0].Id, contacts[1].Id, contacts[1].Id,true); // 1 Order
-	        List<OrderItem> orderItems = TestDataGenerator.generateWebDownloadOrderItem(orders[0].Id, 3,true);// 3 lineItems for Order
+	        //List<Order> orders = TestDataGenerator.generateOrder(1, accounts[0].Id, contacts[1].Id, contacts[1].Id,true); // 1 Order
+            List<Order> orders = TestDataGenerator.generateOrder(1, accounts[0].Id, usr.ContactId, usr.ContactId,true); // 1 Order
+	        List<OrderItem> orderItems = TestDataGenerator.generateWebDownloadOrderItem(orders[0].Id, 3,false);// 3 lineItems for Order
+	        orderItems[0].Setup_Fee__c = 10;
+	        insert orderItems;
 
 	        //Cover the ProductShippedNotificationContent_Ctrl class
         	ProductShippedNotificationContent_Ctrl prdShipNotif = new ProductShippedNotificationContent_Ctrl();

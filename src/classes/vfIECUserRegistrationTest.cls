@@ -32,8 +32,6 @@ private class vfIECUserRegistrationTest {
         if (parentAcc != null)
             acc.ParentId = parentAcc.Id;
 
-        insert acc;
-
         return acc;
     }
 
@@ -52,8 +50,6 @@ private class vfIECUserRegistrationTest {
         con.LastName = 'LastName ' + nameSufix;
         con.Email = 'contact' + nameSufix + '@iata.org.ecom';
         con.OwnerId = ownerId;
-
-        insert con;
 
         return con;
     }
@@ -160,13 +156,12 @@ private class vfIECUserRegistrationTest {
 
 
         Account acc = createNewAccount('03.1', airlineHQAccountRT, ISOCountryCAN, '030', null);
+        insert acc;
         Contact con = createNewContact('03.1', acc.Id);
+        insert con;
 
         return con;
-
     }
-
-
 
     private static void InitSearchAccounts() {
 
@@ -183,26 +178,35 @@ private class vfIECUserRegistrationTest {
 
         ISOCountryCAN = [SELECT id, Name, ISO_Code__c FROM IATA_ISO_Country__c WHERE ISO_Code__c =: 'CA' limit 1 ];
 
-
         //Creates an Airline Account HQ and BR
         Account acc4 = createNewAccount('04', airlineHQAccountRT, ISOCountryCAN, '040', null);
+        insert acc4;
+        
+        List<Account> l = new List<Account>();
         Account acc7 = createNewAccount('07', airlineBRAccountRT, ISOCountryCAN, '070', acc4);
-
+		l.add(acc7);
+        
         //Creates a GAS Account
         Account acc8 = createNewAccount('08', gasAccountRT, ISOCountryCAN, '080', null);
+        l.add(acc8);
 
         //Creates an Agency Account
         Account acc9 = createNewAccount('09', agencyAccountRT, ISOCountryCAN, '09009009', null);
+        l.add(acc9);
 
         //Creates a Non Agency Account
         Account acc10 = createNewAccount('10', othersAccountRT, ISOCountryCAN, '010', null);
+        l.add(acc10);
 
         //Creates a Non Airline Account
         Account acc11 = createNewAccount('11', othersAccountRT, ISOCountryCAN, '011', null);
+        l.add(acc11);
 
         //Creates a Non Airline Account
         Account acc12 = createNewAccount('12', othersAccountRT, ISOCountryCAN, '012', null);
-
+        l.add(acc12);
+        
+        insert l;
     }
 
 
@@ -216,6 +220,7 @@ private class vfIECUserRegistrationTest {
 
         //Creates an Account with Contact and portal user
         Account acc3 = createNewAccount('03', airlineHQAccountRT, ISOCountryCAN, '030', null);
+        insert acc3;
 
         return acc3.Id;
     }
@@ -232,7 +237,9 @@ private class vfIECUserRegistrationTest {
 
         //Creates 2 accounts: HQ and Branch.
         Account accHQ = createNewAccount(accName + 'HQ', airlineHQAccountRT, ISOCountryCAN, '040', null);
+        insert accHQ;
         Account acc = createNewAccount(accName + 'BR', airlineBRAccountRT, ISOCountryCAN, '050', accHQ);
+        insert acc;
 
         //Add the domain to the parent HQ account
         if (emailDomain != null)
@@ -457,8 +464,6 @@ private class vfIECUserRegistrationTest {
     static testMethod void emailDomainValidation_Test() {
         TransformationHelper.trgAccountISSP_AfterBeforInsertDeleteUpdateUndelete = true;
         Account account1 = InitEmailDomainValidation('01', null);
-        Account account2 = InitEmailDomainValidation('02', 'noemail.com');
-        Account account3 = InitEmailDomainValidation('03', 'iata.org');
 
         Contact con = new Contact();
         con.Email = 'contact@iata.org';
@@ -466,37 +471,50 @@ private class vfIECUserRegistrationTest {
         PageReference pgRef = Page.IECUserRegistration;
         Test.setCurrentPage(pgRef);
 
-
         User usr = IECTestUtil.createSampleGuestUserAndLogin();
-
 
         System.runAs(usr) {
 
+            Test.startTest();
             //Instantiate Controller
             vfIECUserRegistration pgCont = new vfIECUserRegistration();
 
             //Validate No Email registered under account
             IECUtil.DomainValidation validation1 = IECUtil.validateContactEmailDomain(con.Email, account1.Id);
             system.assert(validation1 == IECUtil.DomainValidation.NOREGISTEREDDOMAIN, 'Email validation NOREGISTEREDDOMAIN');
+					
+			Test.stopTest();
+        }
+    }
 
+    /////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    //Test the email validation for account domain
+    static testMethod void emailDomainValidation_Test_2() {
+        TransformationHelper.trgAccountISSP_AfterBeforInsertDeleteUpdateUndelete = true;
+        Account account2 = InitEmailDomainValidation('02', 'noemail.com');
 
+        Contact con = new Contact();
+        con.Email = 'contact@iata.org';
+
+        PageReference pgRef = Page.IECUserRegistration;
+        Test.setCurrentPage(pgRef);
+
+        User usr = IECTestUtil.createSampleGuestUserAndLogin();
+
+        System.runAs(usr) {
+
+            Test.startTest();
+            //Instantiate Controller
+            vfIECUserRegistration pgCont = new vfIECUserRegistration();
+			
             //Validate Email not matching a registered Email domain under the account
             IECUtil.DomainValidation validation2 = IECUtil.validateContactEmailDomain(con.Email, account2.Id);
             system.assert(validation2 == IECUtil.DomainValidation.NOTMATCHINGDOMAINS,  'Email validation NOTMATCHINGDOMAINS');
-
-
-            //Validate Email not matching a registered Email domain under the account
-            IECUtil.DomainValidation validation3 = IECUtil.validateContactEmailDomain(con.Email, account3.Id);
-            system.assert(validation3 == IECUtil.DomainValidation.MATCHINGDOMAIN, 'Email validation MATCHINGDOMAINS');
-
+			
+			Test.stopTest();
         }
-
-
-
-    }
-
-
-
+    }    
+    
     /////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     //Test the search of different Accounts based on Customer type
     static testMethod void searchAccounts_Test() {
@@ -563,14 +581,8 @@ private class vfIECUserRegistrationTest {
             pgCont.sCompanyName = 'Account 12';
             pgCont.searchAccount();
             system.assert(pgCont.lSearchOptios.size() > 0, 'Search OTHER result empty');
-
-
         }
-
     }
-
-
-
 
     /////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     //Test the search of different Accounts based on Customer type
@@ -836,7 +848,10 @@ private class vfIECUserRegistrationTest {
         String airlineHQAccountRT = IECUsermanager.getAccountRecordTypeByName(IECConstants.Account_RecordType_Airline);
 
         Account acc = createNewAccount('01', airlineHQAccountRT, ISOCountryCAN, '010', null);
+        insert acc;
+        
         Contact con = createNewContact('TestUserReg', acc.Id);
+        insert con;
 
         PageReference pgRef = Page.IECUserRegistration;
         Test.setCurrentPage(pgRef);

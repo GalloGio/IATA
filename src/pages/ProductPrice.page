@@ -5,13 +5,13 @@
     </style>
     <apex:pageBlock title="Standard Price" rendered="{!standardPrices != null && standardPrices.size > 0}">
         <apex:dataTable rowClasses="odd,even" cellPadding="4" value="{!standardPrices}" var="price" width="100%">            
-            <apex:column width="25%">
+            <apex:column width="20%">
                 <apex:facet name="header">Unit Price</apex:facet>
                 <apex:outputText value="{0, number, currency}">
                     <apex:param value="{!price.unitPrice}"/>
                 </apex:outputText>                
             </apex:column>
-            <apex:column width="25%">
+            <apex:column width="20%">
                 <apex:facet name="header">Volume Price</apex:facet>             
                 <apex:dataTable value="{!price.volumePrice}" var="v" width="100%" rendered="{!price.volumePrice != null && price.volumePrice.size > 0}">
                     <apex:column width="30%">
@@ -31,14 +31,20 @@
                     </apex:column>
                 </apex:dataTable>
             </apex:column>
-            <apex:column width="25%">
+            <apex:column width="20%">
+                <apex:facet name="header">Flat Fee</apex:facet>
+                <apex:outputText value="{0, number, currency}">
+                    <apex:param value="{!price.setupFee}"/>
+                </apex:outputText>                
+            </apex:column>
+            <apex:column width="20%">
                 <apex:facet name="header">Discount Amount</apex:facet>
                 <apex:outputText value="{0, number, currency}">
                     <apex:param value="{!price.discountAmount}"/>
                 </apex:outputText>   
                 <apex:outputText value="(Free Shipping)" rendered="{!price.isFreeShipping && price.discountAmount !=null}"/>                
             </apex:column>
-            <apex:column width="25%">
+            <apex:column width="20%">
                 <apex:facet name="header">Discount Percentage</apex:facet>
                 <apex:outputText value="{0,number,0}%" rendered="{!price.discountPercentage !=null}">
                     <apex:param value="{!price.discountPercentage}" />
@@ -54,13 +60,13 @@
                 <apex:facet name="header">Customer Type</apex:facet>
                 {!price.discountName}              
             </apex:column>
-            <apex:column width="20%">
+            <apex:column width="16%">
                 <apex:facet name="header">Unit Price</apex:facet>
                 <apex:outputText value="{0, number, currency}">
                     <apex:param value="{!price.unitPrice}"/>
                 </apex:outputText>                
             </apex:column>
-            <apex:column width="20%">
+            <apex:column width="16%">
                 <apex:facet name="header">Volume Price</apex:facet>             
                 <apex:dataTable value="{!price.volumePrice}" var="v" width="100%" rendered="{!price.volumePrice != null && price.volumePrice.size > 0}">
                     <apex:column >
@@ -80,14 +86,20 @@
                     </apex:column>
                 </apex:dataTable>
             </apex:column>
-            <apex:column width="20%">
+            <apex:column width="16%">
+                <apex:facet name="header">Flat Fee</apex:facet>
+                <apex:outputText value="{0, number, currency}">
+                    <apex:param value="{!price.setupFee}"/>
+                </apex:outputText>                
+            </apex:column>
+            <apex:column width="16%">
                 <apex:facet name="header">Discount Amount</apex:facet>
                 <apex:outputText value="{0, number, currency}">
                     <apex:param value="{!price.discountAmount}"/>
                 </apex:outputText>   
                 <apex:outputText value="(Free Shipping)" rendered="{!price.isFreeShipping && price.discountAmount !=null}"/>                
             </apex:column>
-            <apex:column width="20%">
+            <apex:column width="16%">
                 <apex:facet name="header">Discount Percentage</apex:facet>
                 <apex:outputText value="{0,number,0}%" rendered="{!price.discountPercentage !=null}">
                     <apex:param value="{!price.discountPercentage}" />
@@ -103,13 +115,13 @@
                 <apex:facet name="header">Region</apex:facet>
                 {!price.discountName}              
             </apex:column>
-            <apex:column width="20%">
+            <apex:column width="16%">
                 <apex:facet name="header">Unit Price</apex:facet>
                 <apex:outputText value="{0, number, currency}">
                     <apex:param value="{!price.unitPrice}"/>
                 </apex:outputText>                
             </apex:column>
-            <apex:column width="20%">
+            <apex:column width="16%">
                 <apex:facet name="header">Volume Price</apex:facet>             
                 <apex:dataTable value="{!price.volumePrice}" var="v" width="100%" rendered="{!price.volumePrice != null && price.volumePrice.size > 0}">
                     <apex:column >
@@ -129,14 +141,20 @@
                     </apex:column>
                 </apex:dataTable>
             </apex:column>
-            <apex:column width="20%">
+            <apex:column width="16%">
+                <apex:facet name="header">Flat Fee</apex:facet>
+                <apex:outputText value="{0, number, currency}">
+                    <apex:param value="{!price.setupFee}"/>
+                </apex:outputText>                
+            </apex:column>
+            <apex:column width="16%">
                 <apex:facet name="header">Discount Amount</apex:facet>
                 <apex:outputText value="{0, number, currency}">
                     <apex:param value="{!price.discountAmount}"/>
                 </apex:outputText>   
                 <apex:outputText value="(Free Shipping)" rendered="{!price.isFreeShipping && price.discountAmount !=null}"/>                
             </apex:column>
-            <apex:column width="20%">
+            <apex:column width="16%">
                 <apex:facet name="header">Discount Percentage</apex:facet>
                 <apex:outputText value="{0,number,0}%" rendered="{!price.discountPercentage !=null}">
                     <apex:param value="{!price.discountPercentage}" />
@@ -152,13 +170,13 @@
                 <apex:facet name="header">Country</apex:facet>
                 {!price.discountName}              
             </apex:column>
-            <apex:column width="20%">
+            <apex:column width="16%">
                 <apex:facet name="header">Unit Price</apex:facet>
                 <apex:outputText value="{0, number, currency}">
                     <apex:param value="{!price.unitPrice}"/>
                 </apex:outputText>                
             </apex:column>
-            <apex:column width="20%">
+            <apex:column width="16%">
                 <apex:facet name="header">Volume Price</apex:facet>             
                 <apex:dataTable value="{!price.volumePrice}" var="v" width="100%" rendered="{!price.volumePrice != null && price.volumePrice.size > 0}">
                     <apex:column >
@@ -178,14 +196,20 @@
                     </apex:column>
                 </apex:dataTable>
             </apex:column>
-            <apex:column width="20%">
+            <apex:column width="16%">
+                <apex:facet name="header">Flat Fee</apex:facet>
+                <apex:outputText value="{0, number, currency}">
+                    <apex:param value="{!price.setupFee}"/>
+                </apex:outputText>                
+            </apex:column>
+            <apex:column width="16%">
                 <apex:facet name="header">Discount Amount</apex:facet>
                 <apex:outputText value="{0, number, currency}">
                     <apex:param value="{!price.discountAmount}"/>
                 </apex:outputText>   
                 <apex:outputText value="(Free Shipping)" rendered="{!price.isFreeShipping && price.discountAmount !=null}"/>                
             </apex:column>
-            <apex:column width="20%">
+            <apex:column width="16%">
                 <apex:facet name="header">Discount Percentage</apex:facet>
                 <apex:outputText value="{0,number,0}%" rendered="{!price.discountPercentage !=null}">
                     <apex:param value="{!price.discountPercentage}" />
@@ -201,13 +225,13 @@
                 <apex:facet name="header">Coupon Code</apex:facet>
                 {!price.discountName}              
             </apex:column>
-            <apex:column width="20%">
+            <apex:column width="16%">
                 <apex:facet name="header">Unit Price</apex:facet>
                 <apex:outputText value="{0, number, currency}">
                     <apex:param value="{!price.unitPrice}"/>
                 </apex:outputText>                
             </apex:column>
-            <apex:column width="20%">
+            <apex:column width="16%">
                 <apex:facet name="header">Volume Price</apex:facet>             
                 <apex:dataTable value="{!price.volumePrice}" var="v" width="100%" rendered="{!price.volumePrice != null && price.volumePrice.size > 0}">
                     <apex:column >
@@ -227,14 +251,20 @@
                     </apex:column>
                 </apex:dataTable>
             </apex:column>
-            <apex:column width="20%">
+            <apex:column width="16%">
+                <apex:facet name="header">Flat Fee</apex:facet>
+                <apex:outputText value="{0, number, currency}">
+                    <apex:param value="{!price.setupFee}"/>
+                </apex:outputText>                
+            </apex:column>
+            <apex:column width="16%">
                 <apex:facet name="header">Discount Amount</apex:facet>
                 <apex:outputText value="{0, number, currency}">
                     <apex:param value="{!price.discountAmount}"/>
                 </apex:outputText>   
                 <apex:outputText value="(Free Shipping)" rendered="{!price.isFreeShipping && price.discountAmount !=null}"/>                
             </apex:column>
-            <apex:column width="20%">
+            <apex:column width="16%">
                 <apex:facet name="header">Discount Percentage</apex:facet>
                 <apex:outputText value="{0,number,0}%" rendered="{!price.discountPercentage !=null}">
                     <apex:param value="{!price.discountPercentage}" />
@@ -246,13 +276,13 @@
     
     <apex:pageBlock title="PreSale Price" rendered="{!preSalePrices != null && preSalePrices.size > 0}">
         <apex:dataTable rowClasses="odd,even" cellPadding="4" value="{!preSalePrices}" var="price" width="100%">            
-            <apex:column width="25%">
+            <apex:column width="20%">
                 <apex:facet name="header">Unit Price</apex:facet>
                 <apex:outputText value="{0, number, currency}">
                     <apex:param value="{!price.unitPrice}"/>
                 </apex:outputText>                
             </apex:column>
-            <apex:column width="25%">
+            <apex:column width="20%">
                 <apex:facet name="header">Volume Price</apex:facet>             
                 <apex:dataTable value="{!price.volumePrice}" var="v" width="100%" rendered="{!price.volumePrice != null && price.volumePrice.size > 0}">
                     <apex:column >
@@ -272,14 +302,20 @@
                     </apex:column>
                 </apex:dataTable>
             </apex:column>
-            <apex:column width="25%">
+            <apex:column width="20%">
+                <apex:facet name="header">Flat Fee</apex:facet>
+                <apex:outputText value="{0, number, currency}">
+                    <apex:param value="{!price.setupFee}"/>
+                </apex:outputText>                
+            </apex:column>
+            <apex:column width="20%">
                 <apex:facet name="header">Discount Amount</apex:facet>
                 <apex:outputText value="{0, number, currency}">
                     <apex:param value="{!price.discountAmount}"/>
                 </apex:outputText>   
                 <apex:outputText value="(Free Shipping)" rendered="{!price.isFreeShipping && price.discountAmount !=null}"/>                
             </apex:column>
-            <apex:column width="25%">
+            <apex:column width="20%">
                 <apex:facet name="header">Discount Percentage</apex:facet>
                 <apex:outputText value="{0,number,0}%" rendered="{!price.discountPercentage !=null}">
                     <apex:param value="{!price.discountPercentage}" />

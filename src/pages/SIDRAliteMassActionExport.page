@@ -1,0 +1,1 @@
+<apex:page controller="SIDRAliteMassActionController" contentType="text/csv#SidraLiteActionCases.csv" showHeader="false" sidebar="false">{!csvcontent}</apex:page>

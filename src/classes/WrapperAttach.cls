@@ -36,11 +36,16 @@ global class WrapperAttach implements Comparable {
     public Date efExpiryDate { get; set; }
     public Boolean efExpired { get; set; }
     public Boolean efSkipValidation { get; set; }
-    
+    public Boolean efPrivate { get; set; }
+
     public ISSPAttachmentPermission__c permission {get;set;}
     public Attachment fileAttachment {get;set;}
     public Archived_Attachment__c fileArchived {get;set;}
     public AmazonFile fileAmazon {get;set;}
+
+    /*** AMSU-139 ***/
+    public String updatedBy {get;set;}
+    public DateTime updatedDate {get;set;}
 
     public WrapperAttach(Attachment file, ISSPAttachmentPermission__c permission) {
         this.isSelected = false;
@@ -59,7 +64,7 @@ global class WrapperAttach implements Comparable {
         this.createdByName = file.createdBy.Name;
         this.viewURL = new PageReference('/servlet/servlet.FileDownload?file=' + file.Id).getUrl();
         setPermission();
-        
+
     }
 
     public WrapperAttach(Archived_Attachment__c file) {
@@ -109,9 +114,12 @@ global class WrapperAttach implements Comparable {
         this.efSAPNumber = file.getEFSAPNumber();
         this.efExpiryDate = file.getEFExpiryDate();
         this.efExpired = file.getEFExpired();
+        this.efPrivate = file.getEFPrivate();
         this.efSkipValidation = file.getEFSkipValidation();
+        this.updatedBy = file.getUpdatedBy();
+        this.updatedDate = file.getUpdatedDate();
     }
-        
+
     private void setPermission() {
         if (this.permission == null ) {
             this.permission = new ISSPAttachmentPermission__c(
@@ -122,7 +130,7 @@ global class WrapperAttach implements Comparable {
         }
         this.isPublic = this.permission.ShowToPortalUsers__c;
     }
-    
+
     /**
         Get the link to a page to view current attachment
     **/
@@ -135,7 +143,7 @@ global class WrapperAttach implements Comparable {
         // view amazon File is not handeled here, use AmazonRest.genPublicExpiringAWSLink()
         return null;
     }
-    
+
     public Boolean getIsAmazon() {
         return this.filetype == 'Amazon';
     }
@@ -145,7 +153,7 @@ global class WrapperAttach implements Comparable {
     public Boolean getIsSalesforce() {
         return this.filetype == 'Salesforce';
     }
-    
+
     /**
         Change the permission (to see it in the portal) of current attachment
     **/
@@ -154,12 +162,12 @@ global class WrapperAttach implements Comparable {
             this.permission.ShowToPortalUsers__c = ! this.permission.ShowToPortalUsers__c;
             upsert this.permission;
         } else if (filetype == 'Archived') {
-            
+
         } else if (this.filetype == 'Amazon') {
             this.fileAmazon.changePermission();
         }
     }
-    
+
     public void changePermission(Boolean value) {
         if (filetype == 'Salesforce') {
             if ( this.permission.ShowToPortalUsers__c != value ) {
@@ -167,12 +175,12 @@ global class WrapperAttach implements Comparable {
                 upsert this.permission;
             }
         } else if (filetype == 'Archived') {
-            
+
         } else if (this.filetype == 'Amazon') {
             this.fileAmazon.changePermission(value);
         }
     }
-        
+
     /**
         Copy current file to another object
     **/
@@ -183,16 +191,18 @@ global class WrapperAttach implements Comparable {
             if ( ! result ) {
                 return null;
             }
-            
+
+            AmazonFile__c aFile = this.fileAmazon.amazonfile.clone(false, true);
+            aFile.Full_Name_Unique__c = destFileName;
+            aFile.Case__c = sobjectId;
+
             AmazonFile cloned = this.fileAmazon.clone();
-            cloned.amazonFile.Id = null;
-            cloned.amazonFile.Full_Name_Unique__c = destFileName;
-            cloned.amazonFile.Case__c = sobjectId;
+            cloned.amazonFile = aFile;
             return cloned;
         }
         return null;
     }
-    
+
     /**
         Move this file from Amazon Bucket to the recycleBin bucket
     **/
@@ -207,13 +217,13 @@ global class WrapperAttach implements Comparable {
         }
         return false;
     }
-    
+
     public void updateAttach() {
         if (this.filetype == 'Amazon') {
             this.fileAmazon.amazonFile.Description__c = this.description;
             this.fileAmazon.amazonFile.Internal_Comments__c = this.internalComments;
             this.fileAmazon.amazonFile.isPublic__c = isPublic;
-            
+
             update this.fileAmazon.amazonFile;
         }
         if (filetype == 'Salesforce' ) {
@@ -230,7 +240,7 @@ global class WrapperAttach implements Comparable {
             update this.fileArchived;
         }
     }
-    
+
     /**
         override compareTo method to allow sorts
     **/
@@ -240,9 +250,9 @@ global class WrapperAttach implements Comparable {
         return -1;
     }
 
-        
+
     /** STATIC METHODS **/
-    
+
     /**
         Get all attachments related to an object
     **/
@@ -255,7 +265,7 @@ global class WrapperAttach implements Comparable {
         listAttachments.addAll(getAmazonAttachments(sobjectId));
         return listAttachments;
     }
-    
+
     /**
         Get all attachments related to an object but only visible for Portal
     **/
@@ -263,18 +273,18 @@ global class WrapperAttach implements Comparable {
        Boolean fullAttachmentAccess;
        list<AttachmentListLimitedAccess__c> perms = [select SetupOwnerId , Name, Id from AttachmentListLimitedAccess__c where SetupOwnerId = :userinfo.getProfileId() or SetupOwnerId = :userinfo.getUserId()];
        fullAttachmentAccess = perms.size()==0;
-        
+
         list<WrapperAttach> listAttachments = new list<WrapperAttach>();
         for (WrapperAttach attach: getListAttachments(sobjectId) ) {
              SYSTEM.DEBUG('Attach File type:' + attach.filetype);
-            
+
             if (attach.isPublic || (attach.filetype=='Salesforce' && fullAttachmentAccess)) {
                 listAttachments.add(attach);
             }
         }
         return listAttachments;
     }
-    
+
     /**
         Get all standard salesforce attachments related to an object
         @param withBody query Body field in attachmets, only for these cases where the size is not a problem
@@ -283,20 +293,20 @@ global class WrapperAttach implements Comparable {
         list<WrapperAttach> listAttach = new list<WrapperAttach>();
         try {
             list<Attachment> listAttachment = new list<Attachment>();
-            
+
             if(withBody) {
                 // query with body field
                 listAttachment = [SELECT  Id,  Name, BodyLength, CreatedById, CreatedDate, ContentType, Description, IsPrivate, LastModifiedDate, LastModifiedById, OwnerId, ParentId, CreatedBy.Name, Body
-                FROM Attachment 
+                FROM Attachment
                 WHERE ParentId = :sobjectId];
-                
+
             }  else {
                 // query without body field
                 listAttachment = [SELECT  Id,  Name, BodyLength, CreatedById, CreatedDate, ContentType, Description, IsPrivate, LastModifiedDate, LastModifiedById, OwnerId, ParentId, CreatedBy.Name
-                FROM Attachment 
+                FROM Attachment
                 WHERE ParentId = :sobjectId];
             }
-            
+
             map<Id, ISSPAttachmentPermission__c> mapPermission = getMapPermission(listAttachment);
 
             for ( Attachment attach: listAttachment ) {
@@ -307,7 +317,7 @@ global class WrapperAttach implements Comparable {
         }
         return listAttach;
     }
-    
+
     /**
         Return a map with all permissions to the input objects
     **/
@@ -320,14 +330,14 @@ global class WrapperAttach implements Comparable {
             SELECT Id, AttachmentId__c, ShowToPortalUsers__c
             FROM ISSPAttachmentPermission__c
             WHERE AttachmentId__c IN :listId];
-        
+
         map<Id, ISSPAttachmentPermission__c> mapPermission = new map<Id, ISSPAttachmentPermission__c>();
         for (ISSPAttachmentPermission__c permission: listPermission) {
             mapPermission.put(permission.AttachmentId__c, permission);
         }
         return mapPermission;
     }
-    
+
     /**
         Get all Archived Attachments related to this object
     private static list<WrapperAttach> getArchivedAttachments(Id sobjectId) {
@@ -343,7 +353,7 @@ global class WrapperAttach implements Comparable {
                 and ArchivedMessage__c = null
                 order by Original_Creation_Date__c desc
             ];
-            
+
             for(Archived_Attachment__c attach: archivedAttachments){
                 listAttach.add(new WrapperAttach(attach));
             }
@@ -353,7 +363,7 @@ global class WrapperAttach implements Comparable {
         return listAttach;
     }
     **/
-    
+
     /**
         Get all files in the bucket related to this object
     **/
@@ -363,16 +373,18 @@ global class WrapperAttach implements Comparable {
             String folder = getAmazonFolder(sobjectId);
             list<AmazonRest.S3File> listS3Files = AmazonRest.getListFiles(folder, CREDENTIAL);
             list<AmazonFile> listAmazonfiles = AmazonFile.getFiles( sobjectId, listS3Files);
-            
+
             for(AmazonFile file: listAmazonfiles){
-                listAttach.add(new WrapperAttach(file));
+                if(file.getFullName() != '500/' + sobjectId + '/Notice_of_Change_form.pdf') {
+                    listAttach.add(new WrapperAttach(file));
+                }
             }
         } catch (Exception e) {
             System.debug(e.getMessage());
         }
         return listAttach;
     }
-    
+
     /**
         Get an attachmet in Amazon if it exists
     **/
@@ -380,13 +392,13 @@ global class WrapperAttach implements Comparable {
         try {
             AmazonFile aFile = AmazonFile.getFile( sobjectId, fullName, CREDENTIAL);
             return new WrapperAttach(aFile);
-            
+
         } catch (Exception e) {
             System.debug('ERROR in getAmazonAttachment( ' + sobjectId + ', ' + fullName + ') : ' + e.getMessage());
             return null;
-        } 
+        }
     }
-    
+
     /**
         Return the folder where we store the attachments for an specific sobject
     **/

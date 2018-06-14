@@ -77,7 +77,7 @@ public class Contact_Svc {
 			//Call SAP to sync the Customer information
 			if(soldToLocationIds2CreateFirst.size() > 0){
 				IECAddress_Svc.syncCustomerMasterWithSAP(locationIds,soldToLocationIds2CreateFirst);
-			}else{
+			} else if (locationIds.size() > 0) {
 				IECAddress_Svc.syncCustomerMasterWithSAP(locationIds);
 			}
 		}

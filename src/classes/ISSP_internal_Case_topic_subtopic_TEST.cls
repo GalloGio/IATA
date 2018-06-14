@@ -47,9 +47,7 @@ private class ISSP_internal_Case_topic_subtopic_TEST {
 		insert cs_rt;
 		System.debug('SOS1 cs_rt ' + cs_rt);
         System.runAs(newUser)
-        {
-			
-
+        {		
 			ApexPages.StandardController sc = new ApexPages.StandardController(con);
 			ApexPages.currentPage().getParameters().put('Id',c.id);
 			ISSP_internal_Case_topic_subtopic ctrl = new ISSP_internal_Case_topic_subtopic(sc);
@@ -65,11 +63,18 @@ private class ISSP_internal_Case_topic_subtopic_TEST {
 
 			ctrl.topic = '1';
 			ctrl.subtopic = 'TIESS Banking';
-			ctrl.SaveTopicSubtopic();
-			 
-			//ctrl.ChangemodeMethod();
-			
+			ctrl.SaveTopicSubtopic();			 
+            
+            ctrl.myTopic = '123';
+            ctrl.topic = '';
+            ctrl.subtopic = '';
+            ctrl.SaveTopicSubtopic();
+            ctrl.topic = '1';
+            ctrl.addDecsription();   
+            ctrl.isEditMode = true;         
+			ctrl.ChangemodeMethod();			
 		}
+
 		Test.stopTest();
 	}
 

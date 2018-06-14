@@ -9,7 +9,28 @@
     <![endif]-->
     <!--[if !IE]><!-->
     
-    <html lang="{!language}">
+   <apex:includeScript value="{!URLFOR($Resource.blockui,'/blockui/jquery.min.js')}"/>
+   <apex:includeScript value="{!URLFOR($Resource.blockui,'/blockui/jquery-ui.js')}"/>
+   <apex:includeScript value="{!URLFOR($Resource.blockui,'/blockui/jquery.blockUI.js')}"/>
+   <apex:stylesheet value="{!URLFOR($Resource.blockui,'/blockui/jquery-ui.css')}"/>
+   
+   <html lang="{!language}">
+
+   <script type="text/javascript">
+    j$ = jQuery.noConflict(); 
+   function blockme() {
+       j$.blockUI({ css: {
+           border: 'none',
+           padding: '15px',
+           backgroundColor: '#000',
+           '-webkit-border-radius': '10px',
+           '-moz-border-radius': '10px',
+           opacity: .5,
+           color: '#fff'
+           } }); 
+     }
+   </script>
+
     <!--<![endif]-->
         
         <head>
@@ -110,7 +131,7 @@
                                                     <div class="field-group text inline mandatory {!IF(errors['email']!='false', ' error','')}" data-placement="left">
                                                         <label>
                                                             <span class="input-label">{!$Label.Email_address}</span>
-                                                            <apex:inputText id="email" value="{!vfOrder.billToAddress.email}" styleClass="email user-input text validate[required, custom[email]]" />
+                                                            <apex:inputText id="email" value="{!vfOrder.billToAddress.email}" disabled="true" styleClass="email user-input text validate[required, custom[email]]" />
                                                         </label>
                                                     </div>
                                                 </div>
@@ -125,14 +146,14 @@
                                                         <label>
                                                             <span class="input-label text">{!$Label.Address_Line_1}</span>
                                                             {!vfOrder.billToAddress}
-                                                            <apex:inputText id="billingAddress1" value="{!vfOrder.billToAddress.street1}" styleClass="billingAddress1 user-input text validate[required]"/>
+                                                            <apex:inputText id="billingAddress1" value="{!vfOrder.billToAddress.street1}" styleClass="billingAddress1 user-input text validate[required,maxSize[70]]"/>
                                                         </label>
                                                     </div>
 
                                                     <apex:outputPanel id="postalCodeBlock" styleClass="field-group text inline mandatory {!IF(errors['postalCode']!='false', ' error','')}" layout="block" html-data-placement="right">
                                                         <label>
                                                             <span class="input-label text">{!$Label.Postal_code}</span>
-                                                            <apex:inputText id="billingPostalCode" value="{!vfOrder.billToAddress.postalCode}" styleClass="billingPostalCode user-input text {!IF(vfOrder.billToAddress.isPostalCodeRequired,'validate[required]','')}"/>
+                                                            <apex:inputText id="billingPostalCode" value="{!vfOrder.billToAddress.postalCode}" html-placeholder="{!IF(unlockZipCode, '', 'N/A')}" disabled="{!IF(unlockZipCode, 'false', 'true')}" styleClass="billingPostalCode user-input text {!IF(vfOrder.billToAddress.isPostalCodeRequired,'validate[required]','')}"/>
                                                         </label>
                                                     </apex:outputPanel>
 
@@ -205,7 +226,7 @@
                                     <div class="footer-actions text-right">
                                         <apex:actionFunction name="saveCustomerInformation" reRender="frmCustomerInfo" action="{!saveCustomerInformation}" status="saveStatus" />
                                             
-                                        <button class="button wide" type="button" onclick="saveCustomerInformation();">
+                                        <button class="button wide" type="button" onclick="saveCustomerInformation();blockme();" oncomplete="j$.unblockUI();">
                                             {!$Label.IDCard_Continue_Button}
                                             <apex:actionStatus id="saveStatus">
                                                 <apex:facet name="start"><img src="{!$Resource.IEC_progress}" style="margin-top: 5px; margin-left: 5px;" alt="x" /></apex:facet>
@@ -220,7 +241,7 @@
                                 </apex:variable>
 
                                 <!-- Cart Empty -->
-                                <apex:variable var="cartEmpty" value="0" rendered="{!OR(vfOrder.orderItems == null, vfOrder.orderItems.size == 0)}">
+                                <apex:variable var="cartEmpty" value="0" rendered="{!OR(vfOrder.orderItems == null, vfOrder.orderItems.size == 0) && stopProcess != true}">
                                     <div class="footer-actions text-right">
                                         <a href="{!$Site.BaseUrl}/IEC_ProductList" class="button wide">{!$Label.Button_Continue_Shopping}</a>
                                     </div>
@@ -286,6 +307,11 @@
                     });
 
                     $("form").validationEngine();
+                    $("select[id*='billingCountry']").on("change", function(){
+						$("input[id*='billingAddress1']").val("");
+						$("input[id*='billingPostalCode']").val("");
+						$("input[id*='billingCity']").val("");
+					});
                 });
             </script>
 

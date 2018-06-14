@@ -32,7 +32,7 @@ console.log(JSON.stringify(account));
 					for(var j = 0; j < groups.length; j++) {
 						var found = false;
 						for(var i = 0; i < participants.length; i++) {
-							 if(participants[i].Local_Governance__r.Name === groupNames[j]) {
+							 if(participants[i].Local_Governance__c === groups[j].Id) {
 								found = true;
 								var pWrapper = {
 									GroupId : participants[i].Local_Governance__c,
@@ -41,8 +41,13 @@ console.log(JSON.stringify(account));
 									Salutation : participants[i].Contact__r.Salutation,
 									FirstName : participants[i].Contact__r.FirstName,
 									LastName : participants[i].Contact__r.LastName,
-									Title : participants[i].Contact__r.Title
+									Title : participants[i].Contact__r.Title,
+									Representing : participants[i].Representing__c
 								};
+								if(pWrapper.Representing !== undefined) {
+								   console.log('rep');
+								   component.set("v.representativesFound", true);
+								}
 								ParticipantWrappers.push(pWrapper);
 							 }
 							//  console.log(ParticipantWrappers[j].groupName);

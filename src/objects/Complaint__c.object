@@ -21,10 +21,6 @@
         <type>Default</type>
     </actionOverrides>
     <actionOverrides>
-        <actionName>Follow</actionName>
-        <type>Default</type>
-    </actionOverrides>
-    <actionOverrides>
         <actionName>List</actionName>
         <type>Default</type>
     </actionOverrides>
@@ -50,6 +46,7 @@
     <description>Complaint module used to deal with the complaint procedure in the Service Centre Europe</description>
     <enableActivities>true</enableActivities>
     <enableBulkApi>true</enableBulkApi>
+    <enableChangeDataCapture>false</enableChangeDataCapture>
     <enableEnhancedLookup>true</enableEnhancedLookup>
     <enableFeeds>false</enableFeeds>
     <enableHistory>true</enableHistory>
@@ -181,45 +178,55 @@
         <fullName>Complaint_Category__c</fullName>
         <externalId>false</externalId>
         <label>Category</label>
-        <picklist>
-            <picklistValues>
-                <fullName>Agency Management</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Agency Risk Management</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Airline Management</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Customer Services</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Invoicing</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Operational Systems</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Remittance &amp; Settlement</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Reporting &amp; Billing</fullName>
-                <default>false</default>
-            </picklistValues>
-            <sorted>true</sorted>
-        </picklist>
         <required>false</required>
         <trackHistory>false</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Picklist</type>
+        <valueSet>
+            <valueSetDefinition>
+                <sorted>true</sorted>
+                <value>
+                    <fullName>Agency Management</fullName>
+                    <default>false</default>
+                    <label>Agency Management</label>
+                </value>
+                <value>
+                    <fullName>Agency Risk Management</fullName>
+                    <default>false</default>
+                    <label>Agency Risk Management</label>
+                </value>
+                <value>
+                    <fullName>Airline Management</fullName>
+                    <default>false</default>
+                    <label>Airline Management</label>
+                </value>
+                <value>
+                    <fullName>Customer Services</fullName>
+                    <default>false</default>
+                    <label>Customer Services</label>
+                </value>
+                <value>
+                    <fullName>Invoicing</fullName>
+                    <default>false</default>
+                    <label>Invoicing</label>
+                </value>
+                <value>
+                    <fullName>Operational Systems</fullName>
+                    <default>false</default>
+                    <label>Operational Systems</label>
+                </value>
+                <value>
+                    <fullName>Remittance &amp; Settlement</fullName>
+                    <default>false</default>
+                    <label>Remittance &amp; Settlement</label>
+                </value>
+                <value>
+                    <fullName>Reporting &amp; Billing</fullName>
+                    <default>false</default>
+                    <label>Reporting &amp; Billing</label>
+                </value>
+            </valueSetDefinition>
+        </valueSet>
     </fields>
     <fields>
         <fullName>Complaint_Closed_Date__c</fullName>
@@ -268,57 +275,70 @@
         <fullName>Complaint_Entity_Originator__c</fullName>
         <externalId>false</externalId>
         <label>Entity Originator</label>
-        <picklist>
-            <picklistValues>
-                <fullName>ACC</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Clearing Bank</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>CS</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>DPC</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>GDS</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Local Office</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Other IATA division</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>QPI&amp;T</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>R&amp;S</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>SOS</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Systems</fullName>
-                <default>false</default>
-            </picklistValues>
-            <sorted>true</sorted>
-        </picklist>
         <required>false</required>
         <trackHistory>true</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Picklist</type>
+        <valueSet>
+            <valueSetDefinition>
+                <sorted>true</sorted>
+                <value>
+                    <fullName>ACC</fullName>
+                    <default>false</default>
+                    <label>ACC</label>
+                </value>
+                <value>
+                    <fullName>Clearing Bank</fullName>
+                    <default>false</default>
+                    <label>Clearing Bank</label>
+                </value>
+                <value>
+                    <fullName>CS</fullName>
+                    <default>false</default>
+                    <label>CS</label>
+                </value>
+                <value>
+                    <fullName>DPC</fullName>
+                    <default>false</default>
+                    <label>DPC</label>
+                </value>
+                <value>
+                    <fullName>GDS</fullName>
+                    <default>false</default>
+                    <label>GDS</label>
+                </value>
+                <value>
+                    <fullName>Local Office</fullName>
+                    <default>false</default>
+                    <label>Local Office</label>
+                </value>
+                <value>
+                    <fullName>Other IATA division</fullName>
+                    <default>false</default>
+                    <label>Other IATA division</label>
+                </value>
+                <value>
+                    <fullName>QPI&amp;T</fullName>
+                    <default>false</default>
+                    <label>QPI&amp;T</label>
+                </value>
+                <value>
+                    <fullName>R&amp;S</fullName>
+                    <default>false</default>
+                    <label>R&amp;S</label>
+                </value>
+                <value>
+                    <fullName>SOS</fullName>
+                    <default>false</default>
+                    <label>SOS</label>
+                </value>
+                <value>
+                    <fullName>Systems</fullName>
+                    <default>false</default>
+                    <label>Systems</label>
+                </value>
+            </valueSetDefinition>
+        </valueSet>
     </fields>
     <fields>
         <fullName>Complaint_Opened_Date__c</fullName>
@@ -333,73 +353,89 @@
         <fullName>Complaint_Priority__c</fullName>
         <externalId>false</externalId>
         <label>Priority</label>
-        <picklist>
-            <picklistValues>
-                <fullName>High</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Medium</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Low</fullName>
-                <default>false</default>
-            </picklistValues>
-            <sorted>false</sorted>
-        </picklist>
         <required>false</required>
         <trackHistory>true</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Picklist</type>
+        <valueSet>
+            <valueSetDefinition>
+                <sorted>false</sorted>
+                <value>
+                    <fullName>High</fullName>
+                    <default>false</default>
+                    <label>High</label>
+                </value>
+                <value>
+                    <fullName>Medium</fullName>
+                    <default>false</default>
+                    <label>Medium</label>
+                </value>
+                <value>
+                    <fullName>Low</fullName>
+                    <default>false</default>
+                    <label>Low</label>
+                </value>
+            </valueSetDefinition>
+        </valueSet>
     </fields>
     <fields>
         <fullName>Complaint_Reason__c</fullName>
         <externalId>false</externalId>
         <label>Reason</label>
-        <picklist>
-            <picklistValues>
-                <fullName>Service partially or not delivered</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Delay</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Customer Care</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Incomplete/Incorrect information</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Disagreement on Procedure</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Reply not handled</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>BSPlink Issues</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>CASSlink Issues</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>MyIATA issues</fullName>
-                <default>false</default>
-            </picklistValues>
-            <sorted>false</sorted>
-        </picklist>
         <required>false</required>
         <trackHistory>true</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Picklist</type>
+        <valueSet>
+            <valueSetDefinition>
+                <sorted>false</sorted>
+                <value>
+                    <fullName>Service partially or not delivered</fullName>
+                    <default>false</default>
+                    <label>Service partially or not delivered</label>
+                </value>
+                <value>
+                    <fullName>Delay</fullName>
+                    <default>false</default>
+                    <label>Delay</label>
+                </value>
+                <value>
+                    <fullName>Customer Care</fullName>
+                    <default>false</default>
+                    <label>Customer Care</label>
+                </value>
+                <value>
+                    <fullName>Incomplete/Incorrect information</fullName>
+                    <default>false</default>
+                    <label>Incomplete/Incorrect information</label>
+                </value>
+                <value>
+                    <fullName>Disagreement on Procedure</fullName>
+                    <default>false</default>
+                    <label>Disagreement on Procedure</label>
+                </value>
+                <value>
+                    <fullName>Reply not handled</fullName>
+                    <default>false</default>
+                    <label>Reply not handled</label>
+                </value>
+                <value>
+                    <fullName>BSPlink Issues</fullName>
+                    <default>false</default>
+                    <label>BSPlink Issues</label>
+                </value>
+                <value>
+                    <fullName>CASSlink Issues</fullName>
+                    <default>false</default>
+                    <label>CASSlink Issues</label>
+                </value>
+                <value>
+                    <fullName>MyIATA issues</fullName>
+                    <default>false</default>
+                    <label>MyIATA issues</label>
+                </value>
+            </valueSetDefinition>
+        </valueSet>
     </fields>
     <fields>
         <fullName>Complaint_Recommendations__c</fullName>
@@ -424,164 +460,268 @@
         <fullName>Complaint_Status__c</fullName>
         <externalId>false</externalId>
         <label>Status</label>
-        <picklist>
-            <picklistValues>
-                <fullName>Open</fullName>
-                <default>true</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>In-Progress</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Closed</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Closed pending follow up</fullName>
-                <default>false</default>
-            </picklistValues>
-            <sorted>false</sorted>
-        </picklist>
         <required>false</required>
         <trackHistory>true</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Picklist</type>
+        <valueSet>
+            <valueSetDefinition>
+                <sorted>false</sorted>
+                <value>
+                    <fullName>Open</fullName>
+                    <default>true</default>
+                    <label>Open</label>
+                </value>
+                <value>
+                    <fullName>In-Progress</fullName>
+                    <default>false</default>
+                    <label>In-Progress</label>
+                </value>
+                <value>
+                    <fullName>Closed</fullName>
+                    <default>false</default>
+                    <label>Closed</label>
+                </value>
+                <value>
+                    <fullName>Closed pending follow up</fullName>
+                    <default>false</default>
+                    <label>Closed pending follow up</label>
+                </value>
+            </valueSetDefinition>
+        </valueSet>
     </fields>
     <fields>
         <fullName>Complaint_Subcategory__c</fullName>
         <externalId>false</externalId>
         <label>Subcategory</label>
-        <picklist>
-            <controllingField>Complaint_Category__c</controllingField>
-            <picklistValues>
-                <fullName>Accreditation Fees</fullName>
-                <default>false</default>
-                <controllingFieldValues>Agency Management</controllingFieldValues>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Adjustments/Clawbacks</fullName>
-                <default>false</default>
-                <controllingFieldValues>Remittance &amp; Settlement</controllingFieldValues>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Airline Changes</fullName>
-                <default>false</default>
-                <controllingFieldValues>Airline Management</controllingFieldValues>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Airline Joining</fullName>
-                <default>false</default>
-                <controllingFieldValues>Airline Management</controllingFieldValues>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Airline Leaving</fullName>
-                <default>false</default>
-                <controllingFieldValues>Airline Management</controllingFieldValues>
-            </picklistValues>
-            <picklistValues>
-                <fullName>AIRS/CAIRS Bulletin</fullName>
-                <default>false</default>
-                <controllingFieldValues>Agency Management</controllingFieldValues>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Charges/Invoices Management</fullName>
-                <default>false</default>
-                <controllingFieldValues>Invoicing</controllingFieldValues>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Disagreement on Procedure</fullName>
-                <default>false</default>
-                <controllingFieldValues>Customer Services</controllingFieldValues>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Documentation Management</fullName>
-                <default>false</default>
-                <controllingFieldValues>Agency Management</controllingFieldValues>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Documents Reporting</fullName>
-                <default>false</default>
-                <controllingFieldValues>Reporting &amp; Billing</controllingFieldValues>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Financial Review</fullName>
-                <default>false</default>
-                <controllingFieldValues>Agency Risk Management</controllingFieldValues>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Financial Security</fullName>
-                <default>false</default>
-                <controllingFieldValues>Agency Risk Management</controllingFieldValues>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Irregularity/Default/Reinstatement</fullName>
-                <default>false</default>
-                <controllingFieldValues>Agency Management</controllingFieldValues>
-                <controllingFieldValues>Remittance &amp; Settlement</controllingFieldValues>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Negative Sales Refund</fullName>
-                <default>false</default>
-                <controllingFieldValues>Remittance &amp; Settlement</controllingFieldValues>
-            </picklistValues>
-            <picklistValues>
-                <fullName>New Applications/Changes</fullName>
-                <default>false</default>
-                <controllingFieldValues>Agency Management</controllingFieldValues>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Price List Management</fullName>
-                <default>false</default>
-                <controllingFieldValues>Invoicing</controllingFieldValues>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Products issues</fullName>
-                <default>false</default>
-                <controllingFieldValues>Agency Management</controllingFieldValues>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Query Management</fullName>
-                <default>false</default>
-                <controllingFieldValues>Customer Services</controllingFieldValues>
-            </picklistValues>
-            <picklistValues>
-                <fullName>R&amp;S  Procedures</fullName>
-                <default>false</default>
-                <controllingFieldValues>Remittance &amp; Settlement</controllingFieldValues>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Request/Set up not done</fullName>
-                <default>false</default>
-                <controllingFieldValues>Customer Services</controllingFieldValues>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Settlement</fullName>
-                <default>false</default>
-                <controllingFieldValues>Remittance &amp; Settlement</controllingFieldValues>
-            </picklistValues>
-            <picklistValues>
-                <fullName>System Discrepancies</fullName>
-                <default>false</default>
-                <controllingFieldValues>Reporting &amp; Billing</controllingFieldValues>
-            </picklistValues>
-            <picklistValues>
-                <fullName>System Maintenance</fullName>
-                <default>false</default>
-                <controllingFieldValues>Agency Management</controllingFieldValues>
-                <controllingFieldValues>Operational Systems</controllingFieldValues>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Validations Management</fullName>
-                <default>false</default>
-                <controllingFieldValues>Reporting &amp; Billing</controllingFieldValues>
-            </picklistValues>
-            <sorted>true</sorted>
-        </picklist>
         <required>false</required>
         <trackHistory>false</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Picklist</type>
+        <valueSet>
+            <controllingField>Complaint_Category__c</controllingField>
+            <valueSetDefinition>
+                <sorted>true</sorted>
+                <value>
+                    <fullName>Accreditation Fees</fullName>
+                    <default>false</default>
+                    <label>Accreditation Fees</label>
+                </value>
+                <value>
+                    <fullName>Adjustments/Clawbacks</fullName>
+                    <default>false</default>
+                    <label>Adjustments/Clawbacks</label>
+                </value>
+                <value>
+                    <fullName>Airline Changes</fullName>
+                    <default>false</default>
+                    <label>Airline Changes</label>
+                </value>
+                <value>
+                    <fullName>Airline Joining</fullName>
+                    <default>false</default>
+                    <label>Airline Joining</label>
+                </value>
+                <value>
+                    <fullName>Airline Leaving</fullName>
+                    <default>false</default>
+                    <label>Airline Leaving</label>
+                </value>
+                <value>
+                    <fullName>AIRS/CAIRS Bulletin</fullName>
+                    <default>false</default>
+                    <label>AIRS/CAIRS Bulletin</label>
+                </value>
+                <value>
+                    <fullName>Charges/Invoices Management</fullName>
+                    <default>false</default>
+                    <label>Charges/Invoices Management</label>
+                </value>
+                <value>
+                    <fullName>Disagreement on Procedure</fullName>
+                    <default>false</default>
+                    <label>Disagreement on Procedure</label>
+                </value>
+                <value>
+                    <fullName>Documentation Management</fullName>
+                    <default>false</default>
+                    <label>Documentation Management</label>
+                </value>
+                <value>
+                    <fullName>Documents Reporting</fullName>
+                    <default>false</default>
+                    <label>Documents Reporting</label>
+                </value>
+                <value>
+                    <fullName>Financial Review</fullName>
+                    <default>false</default>
+                    <label>Financial Review</label>
+                </value>
+                <value>
+                    <fullName>Financial Security</fullName>
+                    <default>false</default>
+                    <label>Financial Security</label>
+                </value>
+                <value>
+                    <fullName>Irregularity/Default/Reinstatement</fullName>
+                    <default>false</default>
+                    <label>Irregularity/Default/Reinstatement</label>
+                </value>
+                <value>
+                    <fullName>Negative Sales Refund</fullName>
+                    <default>false</default>
+                    <label>Negative Sales Refund</label>
+                </value>
+                <value>
+                    <fullName>New Applications/Changes</fullName>
+                    <default>false</default>
+                    <label>New Applications/Changes</label>
+                </value>
+                <value>
+                    <fullName>Price List Management</fullName>
+                    <default>false</default>
+                    <label>Price List Management</label>
+                </value>
+                <value>
+                    <fullName>Products issues</fullName>
+                    <default>false</default>
+                    <label>Products issues</label>
+                </value>
+                <value>
+                    <fullName>Query Management</fullName>
+                    <default>false</default>
+                    <label>Query Management</label>
+                </value>
+                <value>
+                    <fullName>R&amp;S  Procedures</fullName>
+                    <default>false</default>
+                    <label>R&amp;S  Procedures</label>
+                </value>
+                <value>
+                    <fullName>Request/Set up not done</fullName>
+                    <default>false</default>
+                    <label>Request/Set up not done</label>
+                </value>
+                <value>
+                    <fullName>Settlement</fullName>
+                    <default>false</default>
+                    <label>Settlement</label>
+                </value>
+                <value>
+                    <fullName>System Discrepancies</fullName>
+                    <default>false</default>
+                    <label>System Discrepancies</label>
+                </value>
+                <value>
+                    <fullName>System Maintenance</fullName>
+                    <default>false</default>
+                    <label>System Maintenance</label>
+                </value>
+                <value>
+                    <fullName>Validations Management</fullName>
+                    <default>false</default>
+                    <label>Validations Management</label>
+                </value>
+            </valueSetDefinition>
+            <valueSettings>
+                <controllingFieldValue>Agency Management</controllingFieldValue>
+                <valueName>Accreditation Fees</valueName>
+            </valueSettings>
+            <valueSettings>
+                <controllingFieldValue>Agency Management</controllingFieldValue>
+                <valueName>AIRS/CAIRS Bulletin</valueName>
+            </valueSettings>
+            <valueSettings>
+                <controllingFieldValue>Agency Management</controllingFieldValue>
+                <valueName>Documentation Management</valueName>
+            </valueSettings>
+            <valueSettings>
+                <controllingFieldValue>Agency Management</controllingFieldValue>
+                <controllingFieldValue>Remittance &amp; Settlement</controllingFieldValue>
+                <valueName>Irregularity/Default/Reinstatement</valueName>
+            </valueSettings>
+            <valueSettings>
+                <controllingFieldValue>Agency Management</controllingFieldValue>
+                <valueName>New Applications/Changes</valueName>
+            </valueSettings>
+            <valueSettings>
+                <controllingFieldValue>Agency Management</controllingFieldValue>
+                <valueName>Products issues</valueName>
+            </valueSettings>
+            <valueSettings>
+                <controllingFieldValue>Agency Management</controllingFieldValue>
+                <controllingFieldValue>Operational Systems</controllingFieldValue>
+                <valueName>System Maintenance</valueName>
+            </valueSettings>
+            <valueSettings>
+                <controllingFieldValue>Remittance &amp; Settlement</controllingFieldValue>
+                <valueName>Adjustments/Clawbacks</valueName>
+            </valueSettings>
+            <valueSettings>
+                <controllingFieldValue>Remittance &amp; Settlement</controllingFieldValue>
+                <valueName>Negative Sales Refund</valueName>
+            </valueSettings>
+            <valueSettings>
+                <controllingFieldValue>Remittance &amp; Settlement</controllingFieldValue>
+                <valueName>R&amp;S  Procedures</valueName>
+            </valueSettings>
+            <valueSettings>
+                <controllingFieldValue>Remittance &amp; Settlement</controllingFieldValue>
+                <valueName>Settlement</valueName>
+            </valueSettings>
+            <valueSettings>
+                <controllingFieldValue>Reporting &amp; Billing</controllingFieldValue>
+                <valueName>Documents Reporting</valueName>
+            </valueSettings>
+            <valueSettings>
+                <controllingFieldValue>Reporting &amp; Billing</controllingFieldValue>
+                <valueName>System Discrepancies</valueName>
+            </valueSettings>
+            <valueSettings>
+                <controllingFieldValue>Reporting &amp; Billing</controllingFieldValue>
+                <valueName>Validations Management</valueName>
+            </valueSettings>
+            <valueSettings>
+                <controllingFieldValue>Invoicing</controllingFieldValue>
+                <valueName>Charges/Invoices Management</valueName>
+            </valueSettings>
+            <valueSettings>
+                <controllingFieldValue>Invoicing</controllingFieldValue>
+                <valueName>Price List Management</valueName>
+            </valueSettings>
+            <valueSettings>
+                <controllingFieldValue>Customer Services</controllingFieldValue>
+                <valueName>Disagreement on Procedure</valueName>
+            </valueSettings>
+            <valueSettings>
+                <controllingFieldValue>Customer Services</controllingFieldValue>
+                <valueName>Query Management</valueName>
+            </valueSettings>
+            <valueSettings>
+                <controllingFieldValue>Customer Services</controllingFieldValue>
+                <valueName>Request/Set up not done</valueName>
+            </valueSettings>
+            <valueSettings>
+                <controllingFieldValue>Airline Management</controllingFieldValue>
+                <valueName>Airline Changes</valueName>
+            </valueSettings>
+            <valueSettings>
+                <controllingFieldValue>Airline Management</controllingFieldValue>
+                <valueName>Airline Joining</valueName>
+            </valueSettings>
+            <valueSettings>
+                <controllingFieldValue>Airline Management</controllingFieldValue>
+                <valueName>Airline Leaving</valueName>
+            </valueSettings>
+            <valueSettings>
+                <controllingFieldValue>Agency Risk Management</controllingFieldValue>
+                <valueName>Financial Review</valueName>
+            </valueSettings>
+            <valueSettings>
+                <controllingFieldValue>Agency Risk Management</controllingFieldValue>
+                <valueName>Financial Security</valueName>
+            </valueSettings>
+        </valueSet>
     </fields>
     <fields>
         <fullName>Correct_resolution__c</fullName>
@@ -621,21 +761,25 @@ IF(ISPICKVAL( Object_type__c, &quot;Customer Recovery&quot;), IMAGE(&quot;/servl
         <fullName>Object_type__c</fullName>
         <externalId>false</externalId>
         <label>Object type</label>
-        <picklist>
-            <picklistValues>
-                <fullName>Complaint</fullName>
-                <default>true</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Customer recovery</fullName>
-                <default>false</default>
-            </picklistValues>
-            <sorted>false</sorted>
-        </picklist>
         <required>false</required>
         <trackHistory>false</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Picklist</type>
+        <valueSet>
+            <valueSetDefinition>
+                <sorted>false</sorted>
+                <value>
+                    <fullName>Complaint</fullName>
+                    <default>true</default>
+                    <label>Complaint</label>
+                </value>
+                <value>
+                    <fullName>Customer recovery</fullName>
+                    <default>false</default>
+                    <label>Customer recovery</label>
+                </value>
+            </valueSetDefinition>
+        </valueSet>
     </fields>
     <fields>
         <fullName>Owner__c</fullName>
@@ -781,6 +925,15 @@ IF(ISPICKVAL( Object_type__c, &quot;Customer Recovery&quot;), IMAGE(&quot;/servl
         <queue>CasesOCITComplaints</queue>
         <sharedTo>
             <group>HUBMadrid</group>
+        </sharedTo>
+    </listViews>
+    <listViews>
+        <fullName>Cases_Complaints_GDC_MAD_Complaint</fullName>
+        <filterScope>Queue</filterScope>
+        <label>Cases - Complaints GDC MAD</label>
+        <queue>Cases_Complaints_GDC_MAD</queue>
+        <sharedTo>
+            <allInternalUsers></allInternalUsers>
         </sharedTo>
     </listViews>
     <listViews>
@@ -1014,6 +1167,7 @@ IF(ISPICKVAL( Object_type__c, &quot;Customer Recovery&quot;), IMAGE(&quot;/servl
         <errorDisplayField>Complaint_Status__c</errorDisplayField>
         <errorMessage>Please change the status of the complaint to a Closed status</errorMessage>
     </validationRules>
+    <visibility>Public</visibility>
     <webLinks>
         <fullName>Email_Opening_ENG</fullName>
         <availability>online</availability>

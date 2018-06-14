@@ -1,0 +1,89 @@
+<messaging:emailTemplate subject="{!$Label.ISSP_Email_CaseComment_Subject}{!relatedTo.CaseNumber} - {!relatedTo.Subject}  {!relatedTo.E2CP__Case_Thread_Id__c}" 
+            recipientType="User" relatedToType="Case"  language="{!CASE(relatedTo.Contact.Preferred_Language__c, 'Arabic', 'ar', 'Chinese','zh_CN', 'English','en_US', 'German','de', 'French','fr', 'Italian','it', 'Indonesian', 'in', 'Japanese','ja',  'Korean', 'ko', 'Portuguese','pt_BR', 'Spanish', 'es', 'Thai', 'th', 'Vietnamese', 'vi', 'en_US')}">
+    <messaging:emailHeader name="CaseId">
+        {!relatedTo.Id}
+     </messaging:emailHeader>
+<messaging:htmlEmailBody >
+<div style="margin:auto; width:600px">
+<span style="font-family:Open Sans,GillSansMT,Lucida Sans Unicode, Lucida Grande, sans-serif;color:#004577;">  
+<apex:image value="{!if(relatedTo.CNSCase__c, 'https://iata--c.eu3.content.force.com/servlet/servlet.ImageServer?id=015w0000004lIxL&oid=00D2000000008TF', 'https://iata--c.eu3.content.force.com/servlet/servlet.ImageServer?id=01520000000ej3A&oid=00D2000000008TF&lastMod=1246550288000')}"/>
+{!$Label.ISSP_Email_aNewComment}
+<apex:outputPanel rendered="{!relatedTo.Visible_on_ISS_Portal__c}">
+<a href="{!$Label.ISSP_Email_PortalUrl}ISSP_Login?retURL=/ISSP_Case?caseId={!relatedTo.id}{!if(relatedTo.CNSCase__c, '&CommunityName=CNS', '')}">{!relatedTo.CaseNumber}</a>.
+</apex:outputPanel>
+<apex:outputPanel rendered="{!!relatedTo.Visible_on_ISS_Portal__c}">
+{!relatedTo.CaseNumber}
+</apex:outputPanel>
+<br/><br/>
+<br/>
+{!$Label.Country_concerned_by_the_query}: {!relatedTo.Country_concerned_by_the_query__c}
+<br/><br/>
+<center><apex:outputText value=" - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -" /></center>
+<apex:outputField value="{!relatedTo.E2CP__Most_Recent_Public_Comment__c}"></apex:outputField>
+<br/>
+<center><apex:outputText value=" - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -" /></center>
+<br/>
+<apex:outputPanel rendered="{!relatedTo.Visible_on_ISS_Portal__c}">
+<apex:outputText value="{!$Label.ISSP_Email_YouCanAccess}" />
+</apex:outputPanel>
+</span>
+<apex:outputPanel rendered="{!relatedTo.Visible_on_ISS_Portal__c}">
+<br/><br/><center>
+<a style="font-size:20px;text-align:center;font-weight:bold;background-color:#0A4279;color:white;padding:5px;text-decoration:none;border-collapse: separate!important;border-top-left-radius: 5px;border-top-right-radius: 5px;border-bottom-right-radius: 5px;border-bottom-left-radius: 5px;"
+href="{!$Label.ISSP_Email_PortalUrl}ISSP_Login?retURL=/ISSP_Case?caseId={!relatedTo.id}{!if(relatedTo.CNSCase__c, '&CommunityName=CNS', '')}">{!if(relatedTo.CNSCase__c, $Label.ISSP_Email_CNS_Portal, $Label.ISSP_Email_IataPortal)}</a>
+</center>
+</apex:outputPanel>
+<br/>
+<apex:outputPanel rendered="{!relatedTo.Groups__c = 'ICCS Team'}">
+<p style="BACKGROUND-COLOR: white; MARGIN-BOTTOM: 0pt">
+<b><span style="FONT-FAMILY: 'Arial','sans-serif'; COLOR: #333399; FONT-SIZE: 12pt">
+IATA Currency Clearance Service (ICCS) Team
+<br/>
+</span></b>
+</p>
+</apex:outputPanel>
+<apex:outputPanel rendered="{!relatedTo.Groups__c = 'AP Team'}">
+<p style="BACKGROUND-COLOR: white; MARGIN-BOTTOM: 0pt">
+<b><span style="FONT-FAMILY: 'Arial','sans-serif'; COLOR: #333399; FONT-SIZE: 12pt">
+Global Airline Participation Team - IATA
+<br/>
+</span></b>
+<span style="FONT-FAMILY: 'Arial','sans-serif'; COLOR: #333399; FONT-SIZE: 12pt">
+Financial and Distribution Services
+<br/>
+</span>
+</p>
+</apex:outputPanel>
+<apex:outputPanel rendered="{!relatedTo.Visible_on_ISS_Portal__c && relatedTo.Groups__c = 'Default'}">
+<p style="BACKGROUND-COLOR: white; MARGIN-BOTTOM: 0pt">
+<b><span style="FONT-FAMILY: 'Arial','sans-serif'; COLOR: #333399; FONT-SIZE: 12pt">
+{!if(relatedTo.CNSCase__c, 'CNS', 'IATA')} Customer Service {!if(relatedTo.CNSCase__c, '', 'Americas')}
+<br/>{!if(relatedTo.CNSCase__c, '', 'International Air Transport Association')}
+</span></b>
+</p>
+</apex:outputPanel>
+<p>
+
+<apex:outputPanel rendered="{!relatedTo.Groups__c != 'AGM Team'}">
+<a href="http://www.iata.org/customer-portal/Pages/index.aspx">
+<apex:image value="{!IF(relatedTo.CNSCase__c, '', 'https://iata--c.eu3.content.force.com/servlet/servlet.ImageServer?id=015w0000002ZArv&oid=00D2000000008TF&lastMod=1428578119000')}"/>
+</a>
+</apex:outputPanel>
+
+<apex:outputPanel rendered="{!relatedTo.Groups__c = 'AGM Team'}">
+<b><span style="FONT-FAMILY: 'Arial','sans-serif'; COLOR: #333399; FONT-SIZE: 12pt">
+IATA Agency Management
+</span></b>
+<br/>
+<apex:image value="https://iata--c.eu3.content.force.com/servlet/servlet.ImageServer?id=015w0000006BIMp&oid=00D2000000008TF&lastMod=1507038116000"/>
+</apex:outputPanel>
+
+</p>
+<br/>
+<br/>
+<apex:image value="{!IF(relatedTo.CNSCase__c, 'https://iata--c.eu3.content.force.com/servlet/servlet.ImageServer?id=015w0000004lJ0P&oid=00D2000000008TF','https://iata--c.eu3.content.force.com/servlet/servlet.ImageServer?id=015w0000001yYtT&oid=00D2000000008TF&lastMod=1392385307000')}"/>
+<br/>
+{!relatedTo.E2CP__Case_Thread_Id__c}
+</div>
+</messaging:htmlEmailBody>
+</messaging:emailTemplate>

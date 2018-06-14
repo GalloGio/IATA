@@ -90,6 +90,9 @@ private class AuthorizedSignatoriesPackageTest {
                 exceptionRaised = true;
             }
             system.assertEquals(true,exceptionRaised);
+
+            delete asps;
+            undelete asps;
         	
         
         test.stopTest();

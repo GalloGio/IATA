@@ -27,6 +27,8 @@ public with sharing class AMP_KeyAccountPlanExtension {
 	private Id taskRecordTypeId {get;set;}
 	private Id objectiveRecordTypeId {get;set;}
 
+	public Boolean canEdit {get; set;}
+
     // public AMP_KeyAccountPlanExtension() {}
     public AMP_KeyAccountPlanExtension(ApexPages.StandardController stdController) {
         // this.mysObject = (sObject)stdController.getRecord();
@@ -45,7 +47,41 @@ public with sharing class AMP_KeyAccountPlanExtension {
 			lsMilestones = getTasks(objectiveId);
 			objectiveName = [SELECT Id, Name FROM Objective__c WHERE Id =:objectiveId LIMIT 1].Name;
 		}
+		canEdit = getCanEdit();
     }
+
+	public static List<String> getKAPFields() {
+        List<String> kapAccessFields = new String [] {
+            // 'Id',
+            'Name',
+			'Account_Issue_or_Priority__c',
+			// 'Account_Issue_or_Priority__r.Name',
+			'Benefits_to_Account__c',
+			'Details__c',
+			'AM_Level_of_importance__c',
+			'Status__c',
+			'Deadline__c',
+			'Division__c'
+        };
+        return kapAccessFields;
+
+        }
+	@AuraEnabled
+	public static Boolean getCanEdit() {
+	  Boolean canEdit = true;
+	  // Obtain the field name/token map for the Objective__c object
+	  Map<String,Schema.SObjectField> m = Schema.SObjectType.Objective__c.fields.getMap();
+
+	  List<String> lsKAPFields = getKAPFields();
+	  for (String fieldToCheck : lsKAPFields) {
+	      // Check if the user has access to view field
+	      if (!m.get(fieldToCheck).getDescribe().isUpdateable() ) {
+	          canEdit = false;
+	      }
+	  }
+
+	  return canEdit;
+	}
 
 	public void updateLists() {
 		DateTime now = System.now();
@@ -156,16 +192,20 @@ public with sharing class AMP_KeyAccountPlanExtension {
 		try {
 			for(Task t : lsMilestones) {
 				if(t.Id == idTaskConcerned) {
-					tmpTask = t;
+					tmpTask = t;					
 					break;
 				}
 			}
 
+			tmpTask.Subject = tmpTask.Subject__c;
 			upsert tmpTask;
 			isTaskEditMode = false;
 			lsMilestones = getTasks(objectiveId);
 
-		} catch(Exception e) {}
+		} catch(Exception e) {
+			ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.ERROR, e.getMessage()));
+
+		}
 	}
 
 	public void deleteTask() {
@@ -201,16 +241,13 @@ public with sharing class AMP_KeyAccountPlanExtension {
 			}
 		}
 		try {
-			if(newObjective.Account_Issue_or_Priority__c == null && newObjective.Benefits_to_Account__c == null) {
-				ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.ERROR,'Please enter either Account Issue or Benefits'));
-			} else {
 
-				upsert newObjective;
-				lsObjectives =  getObjectives(accountId);
-				updateLists();
-				isEditMode = false;
-				isNewLine = false;
-			}
+			upsert newObjective;
+			lsObjectives =  getObjectives(accountId);
+			updateLists();
+			isEditMode = false;
+			isNewLine = false;
+			
 			System.debug(newObjective);
 		} catch (DMLException e) {
 			ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.ERROR,e.getMessage()));
@@ -261,8 +298,8 @@ public with sharing class AMP_KeyAccountPlanExtension {
 		lsObjectives =
 			[SELECT Id, Name, Account_Issue_or_Priority__c, Account_Issue_or_Priority__r.Name, Benefits_to_Account__c,
 							Details__c, AM_Level_of_importance__c,
-							Status__c, Deadline__c,
-							(SELECT Id, Subject, Description,  ActivityDate, Status, Owner.Name, OwnerId,
+							Status__c, Deadline__c, Account__c, Division__c,
+							(SELECT Id, Subject, Description,  ActivityDate, Status, Owner.Name, OwnerId,Subject__c,
 											AM_Involved__c, AM_Responsible__c, AM_Support_Required_from_Account__c
 							FROM Tasks
 							ORDER BY CreatedDate DESC)
@@ -294,6 +331,8 @@ public with sharing class AMP_KeyAccountPlanExtension {
 
 	@AuraEnabled
 	public static List<Task> getTasksByAccount(Id accountId) {
+				System.Debug('started from here?');
+
 		List<Task> lsTasks = new List<Task>();
 		if(accountId != null) {
 			List<Objective__c> activities =  getObjectives(accountId);
@@ -304,11 +343,11 @@ public with sharing class AMP_KeyAccountPlanExtension {
 
 			lsTasks =
 				[SELECT Id, Subject, Description,  ActivityDate, Status, Owner.Name, OwnerId,
-						AM_Involved__c, AM_Responsible__c, AM_Support_Required_from_Account__c,
+						AM_Involved__c, AM_Responsible__c, AM_Support_Required_from_Account__c, Subject__c,
 						WhatId
 				FROM Task
 				WHERE WhatId IN :lsActivityIds
-				ORDER BY CreatedDate DESC
+				ORDER BY ActivityDate ASC
 				];
 		}
 		return lsTasks;
@@ -320,10 +359,10 @@ public with sharing class AMP_KeyAccountPlanExtension {
 		if(objectiveId != null) {
 			lsTasks =
 				[SELECT Id, Subject, Description,  ActivityDate, Status, Owner.Name, OwnerId,
-						AM_Involved__c, AM_Responsible__c, AM_Support_Required_from_Account__c
+						AM_Involved__c, AM_Responsible__c, AM_Support_Required_from_Account__c, Subject__c
 				FROM Task
 				WHERE WhatId = :objectiveId
-				ORDER BY CreatedDate DESC
+				ORDER BY ActivityDate ASC
 				];
 		}
 		return lsTasks;
@@ -344,5 +383,6 @@ public with sharing class AMP_KeyAccountPlanExtension {
 		delete milestone;
 		return milestone;
 	}
+
 
 }

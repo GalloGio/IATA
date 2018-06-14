@@ -75,11 +75,11 @@
     <body>
     
         <div class="header">
-            <div><apex:image width="100%" value="{!URLFOR($Resource.AP_PDF_Header)}"/></div>
+            <div><apex:image width="100%" value="{!IF(newlabels,URLFOR($Resource.AP_PDF_Header_FIATA),if(communityName=='CNS', URLFOR($Resource.AP_PDF_Header_CNS), URLFOR($Resource.AP_PDF_Header)))}"/></div> <!-- CNS UPDATE -->
         </div>
           
          <center>
-            <h2 class="panel-title">APPLICATION FOR APPROVAL</h2>
+            <h2 class="panel-title">{!$Label.ISSP_AMS_PDF_CGO_Title}</h2>
             <h2 class="panel-title">{!newForm.Agent_Type__c}</h2>
         </center>
           
@@ -89,25 +89,25 @@
                     <td width="33%" align="left">
                         {!DAY(TODAY())}&nbsp;
                         {!CASE(MONTH(TODAY()),
-                        1, "January",
-                        2, "February",
-                        3, "March",
-                        4, "April",
-                        5, "May",
-                        6, "June",
-                        7, "July",
-                        8, "August",
-                        9, "September",
-                        10, "October",
-                        11, "November",
-                        12, "December",
-                        "None")}&nbsp;{!YEAR(TODAY())}
-                    </td>
+                        1, $Label.ISSP_AMS_Month_January,
+                        2, $Label.ISSP_AMS_Month_February,
+                        3, $Label.ISSP_AMS_Month_March,
+                        4, $Label.ISSP_AMS_Month_April,
+                        5, $Label.ISSP_AMS_Month_May,
+                        6, $Label.ISSP_AMS_Month_June,
+                        7, $Label.ISSP_AMS_Month_July,
+                        8, $Label.ISSP_AMS_Month_August,
+                        9, $Label.ISSP_AMS_Month_September,
+                        10, $Label.ISSP_AMS_Month_October,
+                        11, $Label.ISSP_AMS_Month_November,
+                        12, $Label.ISSP_AMS_Month_December,
+                        "$Label.ISSP_AMS_Month_None")}&nbsp;{!YEAR(TODAY())}
+                     </td>
                     <td width="33%" align="center">
-                        <a href="http://www.iata.org">www.iata.org</a>
+                        <a href="{!IF(communityName=='CNS', 'http://www.cnsc.net', 'http://www.iata.org')}"> {!IF(communityName=='CNS', 'www.cnsc.net', 'www.iata.org')}</a> <!-- CNS UPDATE -->
                     </td>
                     <td width="33%" align="right">
-                        Page <span class="pagenumber"/> of <span class="pagecount"/>
+                        {!$Label.ISSP_Page} <span class="pagenumber"/> {!$Label.ISSP_of} <span class="pagecount"/>
                     </td>
                 </tr>
             </table>
@@ -125,11 +125,11 @@
          	<c:ISSP_AMS_CGO_T_Cs ></c:ISSP_AMS_CGO_T_Cs>
   <apex:outputPanel rendered="{!OR(newForm.Agent_Type__c=='IATA Cargo Agent',newForm.Agent_Type__c=='EACP Intermediary')}">         
   <table border="0" cellpadding="3">
-      <tr><th></th><th>Signatory:</th><th style="width:10%">&nbsp;</th><th>{!$Label.ISSP_AMS_NoC_Witness}</th><th></th></tr>
+      <tr><th></th><th>{!$Label.ISSP_AMS_Signatory}</th><th style="width:10%">&nbsp;</th><th>{!$Label.ISSP_AMS_NoC_Witness}</th><th></th></tr>
       <tr><td>{!$Label.ISSP_AMS_NoC_Signature}</td><td>____________________</td><td style="width:10%">&nbsp;</td><td>{!$Label.ISSP_AMS_NoC_Signature}</td><td>____________________</td></tr>
-      <tr><td style="padding-bottom:15px">Name</td><td>____________________<br/>{!$Label.ISSP_AMS_NoC_type_or_print}</td><td style="width:10%">&nbsp;</td><td style="padding-bottom:15px">Name &amp; address</td><td>____________________</td></tr>
-      <tr><td style="padding-bottom:30px">Title or<br/>capacity</td><td>____________________<br/>{!$Label.ISSP_AMS_NoC_type_or_print}</td><td style="width:10%">&nbsp;</td><td>&nbsp;</td><td>____________________</td></tr>
-      <tr><td>Date</td><td>____________________</td><td style="width:10%">&nbsp;</td><td>Date</td><td>____________________</td></tr>
+      <tr><td style="padding-bottom:15px">{!$Label.ISSP_AMS_Name}</td><td>____________________<br/>{!$Label.ISSP_AMS_NoC_type_or_print}</td><td style="width:10%">&nbsp;</td><td style="padding-bottom:15px">{!$Label.ISSP_AMS_Name_and_Address}</td><td>____________________</td></tr>
+      <tr><td style="padding-bottom:30px">{!$Label.ISSP_AMS_Title}<br/>{!$Label.ISSP_AMS_Capacity}</td><td>____________________<br/>{!$Label.ISSP_AMS_NoC_type_or_print}</td><td style="width:10%">&nbsp;</td><td>&nbsp;</td><td>____________________</td></tr>
+      <tr><td>{!$Label.ISSP_Create_New_Airline_Branch}</td><td>____________________</td><td style="width:10%">&nbsp;</td><td>{!$Label.ISSP_Create_New_Airline_Branch}</td><td>____________________</td></tr>
   </table>
   </apex:outputPanel>
             </div>   

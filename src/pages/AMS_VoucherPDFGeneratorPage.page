@@ -1,0 +1,44 @@
+<apex:page showHeader="false" sidebar="false" renderAs="pdf" controller="AMS_VoucherPDFGeneratorController" applyBodyTag="false" readOnly="true">
+    <apex:stylesheet value="{!$Resource.voucherpdfgeneratorpage}"/>
+    <apex:variable value="{!0}" var="rowNum"/>
+    <apex:repeat value="{!vouchersToPrintList}" var="voucher">
+            <div id="voucherContent" style="width: 99%; height: 95mm; border: 1mm solid none; display: block;">
+                <div id="voucherAddress" style="width: 50%; display: block; float:left;">                    
+                    <div id="street" class="{!IF(MOD(rowNum, 3) == 0,'street1', IF(MOD(rowNum, 3) == 1,'street2', 'street3'))}">
+                        <apex:outputText value="{0}-{1} {2}">
+                        	<apex:param value="{!LEFT(voucher.Voucher_Information__r.Account__r.IATACode__c, 2)}"/>
+                        	<apex:param value="{!RIGHT(LEFT(voucher.Voucher_Information__r.Account__r.IATACode__c, 3), 1)}"/>
+                        	<apex:param value="{!RIGHT(LEFT(voucher.Voucher_Information__r.Account__r.IATACode__c, 7), 4)}"/>
+                        </apex:outputText>                           
+                    </div>
+                    <div id="city" style="margin-left: 32.79mm;">
+                        <apex:outputText value="{!voucher.Voucher_Information__r.Account__r.Name}"/>
+                    </div>
+                    <div id="state" style="margin-left: 32.79mm;">
+                        <apex:outputText value="{!voucher.Voucher_Information__r.Account__r.BillingStreet}"/>
+                    </div>
+                    <div id="postalCode" style="margin-left: 32.79mm;"> 
+                        <apex:outputText value="{!voucher.Voucher_Information__r.Account__r.BillingPostalCode} {!voucher.Voucher_Information__r.Account__r.BillingCity}"/>
+                    </div>
+					<div id="country" style="margin-left: 32.79mm;">
+                        <apex:outputText value="{!voucher.Voucher_Information__r.Account__r.BillingCountry}"/>
+                    </div>
+                </div>
+                <div id="voucherInfo">
+                    <div class="{!IF(MOD(rowNum, 3) == 0,'voucherYear1', IF(MOD(rowNum, 3) == 1,'voucherYear2', 'voucherYear3'))}">
+                        <apex:outputText value="{!VALUE(voucher.Voucher_Information__r.Year__c)+2} "/>
+                    </div>
+                    <div class="{!IF(MOD(rowNum, 3) == 0,'voucherName1', IF(MOD(rowNum, 3) == 1,'voucherName2', 'voucherName3'))}">
+                        <apex:outputText value="{!voucher.Name}"/>
+                    </div>
+                    <div class="{!IF(MOD(rowNum, 3) == 0,'voucherNumber1', IF(MOD(rowNum, 3) == 1,'voucherNumber2', 'voucherNumber3'))}">
+                    	<apex:outputText style="white-space:nowrap;" value="{!voucher.SequenceNumber__c}"/>
+                    </div>
+                </div>
+            </div>
+        <apex:outputPanel rendered="{!MOD(rowNum, 3) == 2 && rowNum < vouchersToPrintList.size - 1}" layout="none">            
+            <div style="page-break-after:always;"/>
+        </apex:outputPanel> 
+        <apex:variable var="rowNum" value="{!rowNum + 1}"/>        
+    </apex:repeat>
+</apex:page>

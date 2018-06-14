@@ -3,6 +3,7 @@
 	<aura:attribute name="relatedAccount" type="AMS_Account_Role__c" default="{ 'sobjectType': 'AMS_Account_Role__c', Account__c : '', Owner_Account__c: ''}" />
     <aura:attribute name="displayType" type="String" default="Owners"/><!-- Variable that controlls what is displayed: Owners or Subsidiaries -->
     <aura:attribute name="isEditMode" type="Boolean" default="false"/>
+	<aura:attribute name="canEdit" type="Boolean" default="false" />
     <aura:attribute name="isError" type="Boolean" default="false"/>
     <aura:handler name="init" value="{!this}" action="{!c.doInit}" />
     <aura:attribute name="errorMessage" type="String"/>
@@ -68,10 +69,20 @@
 
         <aura:set attribute="else">
             <!-- <tr> -->
-                <td><c:AMP_EditSaveMenu /></td>
-                <td><span class="slds-truncate">{!v.displayType == 'Owners' ? v.relatedAccount.Owner_Account__r.Name : v.relatedAccount.Account__r.Name}</span></td>
-                <td><span class="slds-truncate">{!v.displayType == 'Owners' ? v.relatedAccount.Owner_Account__r.Membership_status__c : v.relatedAccount.Account__r.Membership_status__c}</span></td>
-                <td><span class="slds-truncate">{!v.relatedAccount.Percentage__c}</span></td>
+                <td>
+					<aura:if isTrue="{!v.canEdit}">
+						<c:AMP_EditSaveMenu />
+					</aura:if>
+				</td>
+                <aura:if isTrue="{!v.displayType == 'Owners'}">
+                    <td><a href="{!'/'+ v.relatedAccount.Owner_Account__r.Id }" target="_blank">{! v.relatedAccount.Owner_Account__r.Name }</a></td>
+                    <td><span class="slds-truncate">{! v.relatedAccount.Owner_Account__r.Membership_status__c }</span></td>                        
+                <aura:set attribute="else">
+                    <td><a href="{!'/'+ v.relatedAccount.Account__r.Id }" target="_blank">{! v.relatedAccount.Account__r.Name }</a></td>
+                    <td><span class="slds-truncate">{! v.relatedAccount.Account__r.Membership_status__c }</span></td>          
+                </aura:set>
+                </aura:if>          
+                <td><span class="slds-truncate">{!v.relatedAccount.Percentage__c}<aura:if isTrue="{!v.relatedAccount.Percentage__c >= 0}">%</aura:if></span></td>                 
             <!-- </tr> -->
         </aura:set>
     </aura:if>

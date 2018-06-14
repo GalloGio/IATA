@@ -41,8 +41,13 @@ public class Location_Svc {
 	//Sync Locations with SAP when a location is created or edited
 	public static void SendLocationToSAP(List<Location__c> locations){
 		if(locations == null || locations.size() == 0) return; 
-		
-		system.debug('in SendLocationToSAP');
+
+		List<Id> lstLocationId = new List<Id>();
+		for(Location__c location : locations)
+			lstLocationId.add(location.Id);
+		System.enqueueJob(new Location_Queue(Location_Sel.getLocationToSyncSAP(new List<Id>(lstLocationId), null, null, null, null).values()));
+
+/*		system.debug('in SendLocationToSAP');
 		
 		set<Id> accountIds = new set<Id>();
 		map<Id,Location__c> accountId_Location = new map<Id,Location__c>();
@@ -61,7 +66,7 @@ public class Location_Svc {
 	    	if (sAccRecTypeToSAP.contains(location.Account_Record_Type_Id__c))
 	    	{
 		    	*/
-		    	// Sync SOLD-TO Accounts to SAP
+/*		    	// Sync SOLD-TO Accounts to SAP
 		    	if (location.Type__c == 'Sold To'
 			    	// Only if it is active As Sold-To Deactivation only happens from SAP
 			    	&& location.Active__c)
@@ -70,7 +75,7 @@ public class Location_Svc {
 		    	}
 	    	/*}*/
 
-			//verified if the bill to and Ship to is related to a contact
+/*			//verified if the bill to and Ship to is related to a contact
 			if((location.Type__c == IECConstants.BILLTO || location.Type__c == IECConstants.SHIPTO) && location.Contact__c != null){
 				accountIds.add(location.Account__c);
 			}
@@ -114,7 +119,7 @@ public class Location_Svc {
 		//Call SAP to sync the Customer information
 		if(soldToLocationIds2CreateFirst.size() > 0) IECAddress_Svc.syncCustomerMasterWithSAP(locationIds,soldToLocationIds2CreateFirst);
 		else IECAddress_Svc.syncCustomerMasterWithSAP(locationIds);
-		
+*/		
 	}
 
 	//sold to Location to create
@@ -197,7 +202,7 @@ public class Location_Svc {
 		*/
 		
 		// The list of Location Ids that will be synced with SAP
-		Set<Id> setSoldToIdsToSAP = new Set<Id>();
+		//Set<Id> setSoldToIdsToSAP = new Set<Id>();
 		
 		// The list of Location Ids that will be synced with Zuora
 		Set<Id> setBillToIdsToZuora = new Set<Id>();
@@ -217,16 +222,17 @@ public class Location_Svc {
 		    	Location__c oldLoc = mapOldLocation.get(loc.Id);
 
 		    	// Sync SOLD-TO Accounts to SAP
-		    	if (loc.Type__c == 'Sold To'
-		    		// Only if it is active As Sold-To Deactivation only happens from SAP
-		    		&& loc.Active__c
-		    		// And only track address changes
-		    		&& loc.Address__c != oldLoc.Address__c)
-		    	{
-		    		setSoldToIdsToSAP.add(loc.Id);
-	    		}
+		    	//if (loc.Type__c == 'Sold To'
+		    	//	// Only if it is active As Sold-To Deactivation only happens from SAP
+		    	//	&& loc.Active__c
+		    	//	// And only track address changes
+		    	//	&& loc.Address__c != oldLoc.Address__c)
+		    	//{
+		    	//	setSoldToIdsToSAP.add(loc.Id);
+	    		//}
 	    		// Sync BILL-TO Contacts to Zuora
-		    	else if (loc.Type__c == 'Bill To')
+		    	//else 
+		    	if (loc.Type__c == 'Bill To')
 		    	{
 		    		// Only if it is active
 		    		if (loc.Active__c
@@ -252,10 +258,10 @@ public class Location_Svc {
 	    }
 	    
 	    // Make the SAP call to update the account/contact
-	    if (!setSoldToIdsToSAP.isEmpty())
-	    {
-	    	IECAddress_Svc.syncCustomerMasterWithSAP(setSoldToIdsToSAP);
-	    }
+	    //if (!setSoldToIdsToSAP.isEmpty())
+	    //{
+	    //	IECAddress_Svc.syncCustomerMasterWithSAP(setSoldToIdsToSAP);
+	    //}
 	    
 	    /* Commented by Samy (2016-02-29) Only one billing location is supported
 	    // Will determine here the replacement locations for any de-activated bill-to locations
@@ -348,32 +354,36 @@ public class Location_Svc {
 		Set<String> setCurrentLocationId = new Set<String>();
         
         for (Location__c loc : lstLocation) {
-        	// Check locations of type 'Sold To' to verify only one Address per Account
-			if(loc.Type__c  == 'Sold To')
+			if ((loc.Type__c  == 'Sold To' && loc.Account__c != null) ||
+				((loc.Type__c  == 'Bill To' || loc.Type__c  == 'Ship To') && loc.Account__c != null && loc.Contact__c != null))
 			{
-	        	// Build a set of Account Ids to validate
-				setSoldToAccountId.add(loc.Account__c);
-				// This will only apply if this is an update trigger
-				if (loc.Id != null)
-					setCurrentLocationId.add(loc.Id);
-			}
-			// Check locations of type 'Bill To' to verify only one Address per Account/Contact
-			else if(loc.Type__c  == 'Bill To')
-			{
-	        	// Build a set of Account/Contact Ids to validate
-				setBillToAccountContactId.add(String.valueOf(loc.Account__c).left(15) + '|' + String.valueOf(loc.Contact__c).left(15));
-				// This will only apply if this is an update trigger
-				if (loc.Id != null)
-					setCurrentLocationId.add(loc.Id);
-			}
-			// Check locations of type 'Ship To' to verify uniqueness of Account/Contact/Address combination
-			else if(loc.Type__c  == 'Ship To')
-			{
-	        	// Build a set of Account/Contact Ids to validate
-				setShipToAccountContactAddressId.add(String.valueOf(loc.Account__c).left(15) + '|' + String.valueOf(loc.Contact__c).left(15) + '|' + String.valueOf(loc.Address__c).left(15));
-				// This will only apply if this is an update trigger
-				if (loc.Id != null)
-					setCurrentLocationId.add(loc.Id);
+				// Check locations of type 'Sold To' to verify only one Address per Account
+				if(loc.Type__c  == 'Sold To')
+				{
+				// Build a set of Account Ids to validate
+					setSoldToAccountId.add(loc.Account__c);
+					// This will only apply if this is an update trigger
+					if (loc.Id != null)
+						setCurrentLocationId.add(loc.Id);
+				}
+				// Check locations of type 'Bill To' to verify only one Address per Account/Contact
+				else if(loc.Type__c  == 'Bill To')
+				{
+				// Build a set of Account/Contact Ids to validate
+					setBillToAccountContactId.add(String.valueOf(loc.Account__c).left(15) + '|' + String.valueOf(loc.Contact__c).left(15));
+					// This will only apply if this is an update trigger
+					if (loc.Id != null)
+						setCurrentLocationId.add(loc.Id);
+				}
+				// Check locations of type 'Ship To' to verify uniqueness of Account/Contact/Address combination
+				else if(loc.Type__c  == 'Ship To')
+				{
+					// Build a set of Account/Contact Ids to validate
+					setShipToAccountContactAddressId.add(String.valueOf(loc.Account__c).left(15) + '|' + String.valueOf(loc.Contact__c).left(15) + '|' + String.valueOf(loc.Address__c).left(15));
+					// This will only apply if this is an update trigger
+					if (loc.Id != null)
+						setCurrentLocationId.add(loc.Id);
+				}
 			}
         }
 
@@ -473,13 +483,14 @@ public class Location_Svc {
     }
 
     //Create a new Location
-    public static Location__c createLocation(Id addressId,Id contactId,String email, String phone, String VATNumber, String type_x){
-    	return createLocation(addressId, contactId, email, phone, VATNumber, type_x, null, null);
+    public static Location__c createLocation(Id accountId,Id addressId,Id contactId,String email, String phone, String VATNumber, String type_x){
+    	return createLocation(accountId, addressId, contactId, email, phone, VATNumber, type_x, null, null);
     }
-    public static Location__c createLocation(Id addressId,Id contactId,String email, String phone, String VATNumber, String type_x, String attention, String addressName){
+    public static Location__c createLocation(Id accountId,Id addressId,Id contactId,String email, String phone, String VATNumber, String type_x, String attention, String addressName){
     	
     	Location__c location    =   new Location__c();
 	    location.Type__c        =   type_x;
+	    location.Account__c     =   accountId;
 	    location.Address__c     =   addressId;
 	    location.Contact__c     =   contactId;
 	    location.VAT_Number__c  =   VATNumber;
@@ -497,15 +508,16 @@ public class Location_Svc {
 	    }
 	    return location;
     }
-
-    public static Location__c createLocation(Id addressId,Id contactId,String VATNumber, String shipTo){
+/*
+    public static Location__c createLocation(Id accountId,Id addressId,Id contactId,String VATNumber, String shipTo){
     	Contact contact = new Contact_Sel().getContactById(contactId);
-    	return createLocation(addressId, contact, VATNumber, shipTo);
+    	return createLocation(accountId, addressId, contact, VATNumber, shipTo);
     }
-	public static Location__c createLocation(Id addressId,Contact contact,String VATNumber, String shipTo){
+	public static Location__c createLocation(Id accountId,Id addressId,Contact contact,String VATNumber, String shipTo){
 
 	    Location__c location    =   new Location__c();
 	    location.Type__c        =   shipTo;
+	    location.Account__c     =   accountId;
 	    location.Address__c     =   addressId;
 	    location.Contact__c     =   (contact != null) ? contact.Id : '';
 	    location.VAT_Number__c  =   VATNumber;
@@ -525,10 +537,10 @@ public class Location_Svc {
 	    }
 	    return location;
 	}
-	
+*/	
 	// Check for Sold/Bill/Ship-To location for a specific contact and Initialize if doesn't exist
 	//	returns boolean result based on whether were able to successfully create or find existing location records 
-	public static Boolean InitializeContactLocations(Id idContact)
+/*	public static Boolean InitializeContactLocations(Id idContact)
 	{
 		if (idContact == null) return false;
 		
@@ -794,4 +806,405 @@ public class Location_Svc {
         
         return (bBillToFound && bShipToFound && bSoldToFound);
 	}
+*/
+
+	/****************************************************************************************************
+	    Created by Thai 2016-12-05
+	        Format filter to query addresses
+	****************************************************************************************************/
+	String formatAddressToQuery(String Street, String City, String isoCountryCode, String isoStateCode, String PostalCode)
+	{
+		return '(Street__c=' + (String.isBlank(Street) ? 'null' : '\'' + Utility.removeNewline(Street).replace('\'', '\\\'') + '\'')
+		     + ' and City__c=' + (String.isBlank(City) ? 'null' : '\'' + City.replace('\'', '\\\'') + '\'')
+		     + ' and ISO_Country__r.ISO_Code__c=' + (String.isBlank(isoCountryCode) ? 'null' : '\'' + isoCountryCode + '\'')
+		     + ' and ISO_State__r.ISO_Code__c=' + (String.isBlank(isoStateCode) ? 'null' : '\'' + isoStateCode + '\'')
+		     + ' and ZipCode__c=' + (String.isBlank(PostalCode) ? 'null)' : '\'' + PostalCode.replace('\'', '\\\'') + '\')');
+	} //*** end of "formatAddressToQuery"
+
+
+	/****************************************************************************************************
+	    Created by Thai 2016-12-05
+	        Initialize default location records for contacts/accounts
+	****************************************************************************************************/
+	public static List<String> initializeDefaultLocations(List<Id> lstContactId)
+	{
+		List<String> lstResult = new List<String>(), lstResultBeforeUpsert = new List<String>();
+		String strQuery = 'select Id, Email, Phone, Name, FirstName, LastName, Salutation'
+		                + ', BillTo_Location__c, BillTo_Location__r.SAP_Id__c, BillTo_Location__r.Active__c'
+		                + ', ShipTo_Location__c, ShipTo_Location__r.SAP_Id__c, ShipTo_Location__r.Active__c'
+		                + ', AccountId, Account.Name, Account.Phone, Account.Email__c, Account.Default_Payment_Type__c, Account.VAT_Number__c'
+		                + ', Account.SoldTo_Location__c, Account.SoldTo_Location__r.SAP_Id__c, Account.SoldTo_Location__r.Active__c'
+		                + ', Account.BillingStreet, Account.BillingCity, Account.BillingPostalCode, Account.IATA_ISO_Country__r.ISO_Code__c'
+		                + ', Account.IATA_ISO_Billing_State__r.ISO_Code__c, Account.IATA_ISO_Billing_State__r.IEC_Valid_SAP__c'
+		                + ', Account.ShippingStreet, Account.ShippingCity, Account.ShippingPostalCode'
+		                + ', Account.IATA_ISO_Shipping_State__r.ISO_Code__c, Account.IATA_ISO_Shipping_State__r.IEC_Valid_SAP__c'
+		                + ', Account.IATA_ISO_Shipping_Country__r.ISO_Code__c'
+		                + ', Account.ParentId, Account.Parent.Name, Account.Parent.Phone, Account.Parent.Email__c, Account.Parent.Default_Payment_Type__c, Account.Parent.VAT_Number__c'
+		                + ', Account.Parent.SoldTo_Location__c, Account.Parent.SoldTo_Location__r.SAP_Id__c, Account.Parent.SoldTo_Location__r.Active__c'
+		                + ', Account.Parent.BillingStreet, Account.Parent.BillingCity, Account.Parent.BillingPostalCode, Account.Parent.IATA_ISO_Country__r.ISO_Code__c'
+		                + ', Account.Parent.IATA_ISO_Billing_State__r.ISO_Code__c, Account.Parent.IATA_ISO_Billing_State__r.IEC_Valid_SAP__c'
+		                + ', Account.Parent.ShippingStreet, Account.Parent.ShippingCity, Account.Parent.ShippingPostalCode'
+		                + ', Account.Parent.IATA_ISO_Shipping_State__r.ISO_Code__c, Account.Parent.IATA_ISO_Shipping_State__r.IEC_Valid_SAP__c'
+		                + ', Account.Parent.IATA_ISO_Shipping_Country__r.ISO_Code__c'
+		                + ' from Contact where Id in :lstContactId';
+		Map<Id, Contact> mapId_Contact = new Map<Id, Contact>((List<Contact>) Database.query(strQuery));
+		Contact oContact;
+		Account oAccount, oParentAccount;
+		List<Account> lstAccountToUpdate = new List<Account>();
+		Map<String, Location__c> mapPartner_Location = new Map<String, Location__c>();
+		List<IEC_Error_Log__c> lstSyncResult, lstError = new List<IEC_Error_Log__c>();
+		IECAddress__c oAddress;
+		List<IECAddress__c> lstAddress = new List<IECAddress__c>(), lstNewAddress = new List<IECAddress__c>();
+		List<Location__c> lstUpdateLocation = new List<Location__c>();
+		Location__c oLocation;
+		Map<String, Location__c> mapUpdateId_Location = new Map<String, Location__c>();
+		String sVATNumber, soldToSAPId, billToSAPId, shipToSAPId, strQueryAddress, strStreet;
+		Location_Svc cls = new Location_Svc();
+		Id idRecord;
+		Integer i1, i2;
+		
+		//*** check if need to create locations
+		strQuery = '';
+		strQueryAddress = '';
+		for (i1 = 0; i1 < lstContactId.size(); i1++)
+		{
+			oContact = mapId_Contact.get(lstContactId[i1]);
+			lstResult.add('');
+			if (oContact != null)
+			{
+				oAccount = oContact.Account;
+				oParentAccount = (!String.isBlank(oAccount.ParentId) && oAccount.ParentId != oAccount.Id) ? oAccount.Parent : oAccount;
+				
+				//*** no need if all SAP IDs are found, if not then prepare to query locations and addresses for contact
+				if (!String.isBlank(oParentAccount.SoldTo_Location__r.SAP_Id__c) && oParentAccount.SoldTo_Location__r.Active__c == true &&
+				    !String.isBlank(oContact.BillTo_Location__r.SAP_Id__c) && oContact.BillTo_Location__r.Active__c == true &&
+				    !String.isBlank(oContact.ShipTo_Location__r.SAP_Id__c) && oContact.ShipTo_Location__r.Active__c == true)
+					lstResult[i1] = null;
+				else
+				{
+					strQuery += ' or (Account__c=\'' + oParentAccount.Id + '\' and (Type__c=\'Sold To\' or (Type__c in (\'Bill To\',\'Ship To\') and Contact__c=\'' + oContact.Id + '\')))';
+					if (!String.isBlank(oParentAccount.BillingStreet) || !String.isBlank(oParentAccount.BillingCity) ||
+						!String.isBlank(oParentAccount.IATA_ISO_Billing_State__r.ISO_Code__c) || !String.isBlank(oParentAccount.BillingPostalCode))
+						strQueryAddress += ' or ' + cls.formatAddressToQuery(oParentAccount.BillingStreet, oParentAccount.BillingCity, oParentAccount.IATA_ISO_Country__r.ISO_Code__c
+						                                                   , oParentAccount.IATA_ISO_Billing_State__r.ISO_Code__c, oParentAccount.BillingPostalCode);
+					if (!String.isBlank(oParentAccount.ShippingStreet) || !String.isBlank(oParentAccount.ShippingCity) ||
+						!String.isBlank(oParentAccount.IATA_ISO_Shipping_State__r.ISO_Code__c) || !String.isBlank(oParentAccount.ShippingPostalCode))
+						strQueryAddress += ' or ' + cls.formatAddressToQuery(oParentAccount.ShippingStreet, oParentAccount.ShippingCity, oParentAccount.IATA_ISO_Country__r.ISO_Code__c
+						                                                   , oParentAccount.IATA_ISO_Shipping_State__r.ISO_Code__c, oParentAccount.ShippingPostalCode);
+					if (oParentAccount.BillingStreet != oAccount.BillingStreet || oParentAccount.BillingCity != oAccount.BillingCity || oParentAccount.BillingPostalCode != oAccount.BillingPostalCode ||
+					    oParentAccount.IATA_ISO_Country__r.ISO_Code__c != oAccount.IATA_ISO_Country__r.ISO_Code__c || oParentAccount.IATA_ISO_Billing_State__r.ISO_Code__c != oAccount.IATA_ISO_Billing_State__r.ISO_Code__c)
+						if (!String.isBlank(oAccount.BillingStreet) || !String.isBlank(oAccount.BillingCity) ||
+							!String.isBlank(oAccount.IATA_ISO_Billing_State__r.ISO_Code__c) || !String.isBlank(oAccount.BillingPostalCode))
+							strQueryAddress += ' or ' + cls.formatAddressToQuery(oAccount.BillingStreet, oAccount.BillingCity, oAccount.IATA_ISO_Country__r.ISO_Code__c
+							                                                   , oAccount.IATA_ISO_Billing_State__r.ISO_Code__c, oAccount.BillingPostalCode);
+					if (oParentAccount.ShippingStreet != oAccount.ShippingStreet || oParentAccount.ShippingCity != oAccount.ShippingCity || oParentAccount.ShippingPostalCode != oAccount.ShippingPostalCode ||
+					    oParentAccount.IATA_ISO_Country__r.ISO_Code__c != oAccount.IATA_ISO_Country__r.ISO_Code__c || oParentAccount.IATA_ISO_Shipping_State__r.ISO_Code__c != oAccount.IATA_ISO_Shipping_State__r.ISO_Code__c)
+						if (!String.isBlank(oAccount.ShippingStreet) || !String.isBlank(oAccount.ShippingCity) ||
+							!String.isBlank(oAccount.IATA_ISO_Shipping_State__r.ISO_Code__c) || !String.isBlank(oAccount.ShippingPostalCode))
+							strQueryAddress += ' or ' + cls.formatAddressToQuery(oAccount.ShippingStreet, oAccount.ShippingCity, oAccount.IATA_ISO_Country__r.ISO_Code__c
+							                                                   , oAccount.IATA_ISO_Shipping_State__r.ISO_Code__c, oAccount.ShippingPostalCode);
+				}
+			}
+		}
+		if (strQuery == '')
+			return lstResult;
+		
+		//*** backup results -> will return this results when error on insert/update
+		lstResultBeforeUpsert.addAll(lstResult);
+		
+		//*** get existing active locations -> the latest SAP Id will be in the map
+		strQuery = 'select Id, Type__c, VAT_Number__c, Phone__c, Email__c, SAP_Id__c, Active__c'
+		         + ', Address__c, Address__r.Street__c, Address__r.City__c, Address__r.ZipCode__c'
+		         + ', Address__r.ISO_State__c, Address__r.ISO_State__r.ISO_Code__c, Address__r.ISO_State__r.IEC_Valid_SAP__c'
+		         + ', Address__r.ISO_Country__r.ISO_Code__c, Address__r.ISO_Country__c'
+		         + ', Contact__c, Contact__r.Salutation, Contact__r.FirstName, Contact__r.LastName'
+		         + ', Account__c, Account__r.Name, Account__r.Phone, Account__r.Email__c, Account__r.Default_Payment_Type__c'
+		         + ', Account__r.SoldTo_Location__r.SAP_Id__c'
+		         + ' from Location__c where Active__c=true and (' + strQuery.substring(4) + ') order by SAP_Id__c nulls first';
+		for (Location__c loc : Database.query(strQuery))
+			mapPartner_Location.put(loc.Type__c + (loc.Type__c == IECConstants.SOLDTO ? loc.Account__c : loc.Contact__c), loc);
+		
+		//*** get addresses
+		if (strQueryAddress != '')
+		{
+			strQueryAddress = 'select Id, Street__c, City__c, ISO_Country__c, ISO_Country__r.ISO_Code__c, ISO_State__c, ISO_State__r.ISO_Code__c, ISO_State__r.IEC_Valid_SAP__c, ZipCode__c'
+			                + ' from IECAddress__c where ' + strQueryAddress.substring(4);
+			lstAddress = Database.query(strQueryAddress);
+		}
+		
+		//*** create/update locations
+		for (i1 = 0; i1 < lstContactId.size(); i1++)
+		{
+			oContact = mapId_Contact.get(lstContactId[i1]);
+			if (lstResult[i1] == null || oContact == null)
+				continue;
+			
+			oAccount = oContact.Account;
+			oParentAccount = (!String.isBlank(oAccount.ParentId) && oAccount.ParentId != oAccount.Id) ? oAccount.Parent : oAccount;
+			
+			// validate VAT Number is not empty
+			sVATNumber = null;
+			if (String.isNotBlank(oParentAccount.VAT_Number__c))
+				try
+				{
+					if (IECVATUtil.Validate_VAT(oParentAccount.IATA_ISO_Country__r.ISO_Code__c, oParentAccount.VAT_Number__c) == '')
+						sVATNumber = oParentAccount.VAT_Number__c;
+				}
+				catch (Exception e) { /* ignore error */ }
+			
+			//*** get/create sold to entity
+			if (!String.isBlank(oParentAccount.SoldTo_Location__r.SAP_Id__c) && oParentAccount.SoldTo_Location__r.Active__c == true)
+				soldToSAPId = oParentAccount.SoldTo_Location__r.SAP_Id__c;
+			else
+			{
+				oLocation = mapPartner_Location.get(IECConstants.SOLDTO + oParentAccount.Id);
+				if (oLocation == null)
+				{
+					//*** get/create address
+					strStreet = Utility.removeNewline(oParentAccount.BillingStreet);
+					for (i2 = 0; i2 < lstAddress.size(); i2++)
+						if (strStreet == lstAddress[i2].Street__c && oParentAccount.BillingCity == lstAddress[i2].City__c && oParentAccount.BillingPostalCode == lstAddress[i2].ZipCode__c &&
+						    oParentAccount.IATA_ISO_Country__r.ISO_Code__c == lstAddress[i2].ISO_Country__r.ISO_Code__c && oParentAccount.IATA_ISO_Billing_State__r.ISO_Code__c == lstAddress[i2].ISO_State__r.ISO_Code__c)
+							break;
+					if (i2 >= lstAddress.size())
+					{
+						oAddress = new IECAddress__c (Street__c = strStreet, City__c = oParentAccount.BillingCity , ZipCode__c = oParentAccount.BillingPostalCode
+						                            , ISO_State__c = oParentAccount.IATA_ISO_Billing_State__c, ISO_State__r = oParentAccount.IATA_ISO_Billing_State__r
+						                            , ISO_Country__c = oParentAccount.IATA_ISO_Country__c, ISO_Country__r = oParentAccount.IATA_ISO_Country__r
+						                            , Address_Type__c = (Test.isRunningTest() ? Utility.generateRandomString(8) : null));
+						lstNewAddress.add(oAddress);
+						lstAddress.add(oAddress);
+					}
+					else
+						oAddress = lstAddress[i2];
+					
+					//*** create the location
+					oLocation = new Location__c(Account__c = oParentAccount.Id, Account__r = oParentAccount, Address__c = oAddress.Id, Address__r = oAddress
+					                          , Id = null, Active__c = true, Type__c = IECConstants.SOLDTO, SAP_Id__c=null, VAT_Number__c = sVATNumber);
+					mapPartner_Location.put(IECConstants.SOLDTO + oParentAccount.Id, oLocation);
+				}
+				
+				//*** prepare to update account
+				if (oParentAccount.SoldTo_Location__c != oLocation.Id || oLocation.Id == null)
+					mapUpdateId_Location.put('ST' + oParentAccount.Id, oLocation);
+				
+				//*** send location to SAP if no ID yet
+				soldToSAPId = oLocation.SAP_Id__c;
+				if (String.isBlank(soldToSAPId))
+				{
+					lstUpdateLocation.add(oLocation);
+					lstSyncResult = IECAddress_Svc.syncCustomerWithSAP(new List<Location__c>{oLocation}, null, false, lstAccountToUpdate);
+					if (lstSyncResult[0] == null)
+						soldToSAPId = oLocation.SAP_Id__c;
+					else
+					{
+						lstResult[i1] += '\nST' + lstSyncResult[0].Extra_Information__c;
+						lstError.addAll(lstSyncResult);
+					}
+				}
+			} //*** end for sold to
+
+			//*** create bill to entity if necessary
+			if (!String.isBlank(oContact.BillTo_Location__r.SAP_Id__c) && oContact.BillTo_Location__r.Active__c == true)
+				billToSAPId = oContact.BillTo_Location__r.SAP_Id__c;
+			else
+			{
+				oLocation = mapPartner_Location.get(IECConstants.BILLTO + oContact.Id);
+				if (oLocation == null)
+				{
+					//*** get/create address
+					strStreet = Utility.removeNewline(oAccount.BillingStreet);
+					for (i2 = 0; i2 < lstAddress.size(); i2++)
+						if (strStreet == lstAddress[i2].Street__c && oAccount.BillingCity == lstAddress[i2].City__c && oAccount.BillingPostalCode == lstAddress[i2].ZipCode__c &&
+						    oAccount.IATA_ISO_Country__r.ISO_Code__c == lstAddress[i2].ISO_Country__r.ISO_Code__c && oAccount.IATA_ISO_Billing_State__r.ISO_Code__c == lstAddress[i2].ISO_State__r.ISO_Code__c)
+							break;
+					if (i2 >= lstAddress.size())
+					{
+						oAddress = new IECAddress__c (Street__c = strStreet, City__c = oAccount.BillingCity , ZipCode__c = oAccount.BillingPostalCode
+						                            , ISO_State__c = oAccount.IATA_ISO_Billing_State__c, ISO_State__r = oAccount.IATA_ISO_Billing_State__r
+						                            , ISO_Country__c = oAccount.IATA_ISO_Country__c, ISO_Country__r = oAccount.IATA_ISO_Country__r
+						                            , Address_Type__c = (Test.isRunningTest() ? Utility.generateRandomString(8) : null));
+						lstNewAddress.add(oAddress);
+						lstAddress.add(oAddress);
+					}
+					else
+						oAddress = lstAddress[i2];
+					
+					//*** create the location
+					oLocation = new Location__c(Account__c = oParentAccount.Id, Account__r = oParentAccount, Address__c = oAddress.Id, Address__r = oAddress
+					                          , Contact__c = oContact.Id, Contact__r = oContact, Email__c = oContact.Email, Phone__c = oContact.Phone
+					                          , Id = null, Active__c = true, Type__c = IECConstants.BILLTO, SAP_Id__c=null, VAT_Number__c = sVATNumber);
+					mapPartner_Location.put(IECConstants.BILLTO + oContact.Id, oLocation);
+				}
+				
+				//*** prepare to update contact
+				if (oContact.BillTo_Location__c != oLocation.Id || oLocation.Id == null)
+					mapUpdateId_Location.put('BT' + oContact.Id, oLocation);
+				
+				//*** send location to SAP if no ID yet
+				billToSAPId = oLocation.SAP_Id__c;
+				if (String.isBlank(billToSAPId))
+				{
+					lstUpdateLocation.add(oLocation);
+					if (!String.isBlank(soldToSAPId))
+					{
+						lstSyncResult = IECAddress_Svc.syncCustomerWithSAP(new List<Location__c>{oLocation}, new Map<Id, String>{oContact.Id => soldToSAPId}, false);
+						if (lstSyncResult[0] == null)
+							billToSAPId = oLocation.SAP_Id__c;
+						else
+						{
+							lstResult[i1] += '\nBT' + lstSyncResult[0].Extra_Information__c;
+							lstError.addAll(lstSyncResult);
+						}
+					}
+				}
+			} //*** end for bill to
+
+			//*** create ship to entity if necessary
+			if (!String.isBlank(oContact.ShipTo_Location__r.SAP_Id__c) && oContact.ShipTo_Location__r.Active__c == true)
+				shipToSAPId = oContact.ShipTo_Location__r.SAP_Id__c;
+			else
+			{
+				oLocation = mapPartner_Location.get(IECConstants.SHIPTO + oContact.Id);
+				if (oLocation == null)
+				{
+					//*** get/create address
+					if (String.isBlank(oAccount.ShippingStreet))
+					{
+						strStreet = Utility.removeNewline(oAccount.BillingStreet);
+						for (i2 = 0; i2 < lstAddress.size(); i2++)
+							if (strStreet == lstAddress[i2].Street__c && oAccount.BillingCity == lstAddress[i2].City__c && oAccount.BillingPostalCode == lstAddress[i2].ZipCode__c &&
+							    oAccount.IATA_ISO_Country__r.ISO_Code__c == lstAddress[i2].ISO_Country__r.ISO_Code__c && oAccount.IATA_ISO_Billing_State__r.ISO_Code__c == lstAddress[i2].ISO_State__r.ISO_Code__c)
+								break;
+					}
+					else
+					{
+						strStreet = Utility.removeNewline(oAccount.ShippingStreet);
+						for (i2 = 0; i2 < lstAddress.size(); i2++)
+							if (strStreet == lstAddress[i2].Street__c && oAccount.ShippingCity == lstAddress[i2].City__c && oAccount.ShippingPostalCode == lstAddress[i2].ZipCode__c &&
+							    oAccount.IATA_ISO_Country__r.ISO_Code__c == lstAddress[i2].ISO_Country__r.ISO_Code__c && oAccount.IATA_ISO_Shipping_State__r.ISO_Code__c == lstAddress[i2].ISO_State__r.ISO_Code__c)
+								break;
+					}
+					if (i2 >= lstAddress.size())
+					{
+						if (String.isBlank(oAccount.ShippingStreet))
+							oAddress = new IECAddress__c (Street__c = strStreet, City__c = oAccount.BillingCity , ZipCode__c = oAccount.BillingPostalCode
+							                            , ISO_State__c = oAccount.IATA_ISO_Billing_State__c, ISO_State__r = oAccount.IATA_ISO_Billing_State__r
+							                            , ISO_Country__c = oAccount.IATA_ISO_Country__c, ISO_Country__r = oAccount.IATA_ISO_Country__r
+							                            , Address_Type__c = (Test.isRunningTest() ? Utility.generateRandomString(8) : null));
+						else
+							oAddress = new IECAddress__c (Street__c = strStreet, City__c = oAccount.ShippingCity , ZipCode__c = oAccount.ShippingPostalCode
+							                            , ISO_State__c = oAccount.IATA_ISO_Shipping_State__c, ISO_State__r = oAccount.IATA_ISO_Shipping_State__r
+							                            , ISO_Country__c = oAccount.IATA_ISO_Shipping_Country__c, ISO_Country__r = oAccount.IATA_ISO_Shipping_Country__r
+							                            , Address_Type__c = (Test.isRunningTest() ? Utility.generateRandomString(8) : null));
+						lstNewAddress.add(oAddress);
+						lstAddress.add(oAddress);
+					}
+					else
+						oAddress = lstAddress[i2];
+					
+					//*** create the location
+					oLocation = new Location__c(Account__c = oParentAccount.Id, Account__r = oParentAccount, Address__c = oAddress.Id, Address__r = oAddress
+					                          , Contact__c = oContact.Id, Contact__r = oContact, Email__c = oContact.Email, Phone__c = oContact.Phone, Attention__c = oContact.Name, Address_Name__c = 'New'
+					                          , Id = null, Active__c = true, Type__c = IECConstants.SHIPTO, SAP_Id__c=null, VAT_Number__c = sVATNumber);
+					mapPartner_Location.put(IECConstants.SHIPTO + oContact.Id, oLocation);
+				}
+				
+				//*** prepare to update contact
+				if (oContact.ShipTo_Location__c != oLocation.Id || oLocation.Id == null)
+					mapUpdateId_Location.put('SH' + oContact.Id, oLocation);
+				
+				//*** send location to SAP if no ID yet
+				shipToSAPId = oLocation.SAP_Id__c;
+				if (String.isBlank(shipToSAPId))
+				{
+					lstUpdateLocation.add(oLocation);
+					if (!String.isBlank(soldToSAPId))
+					{
+						lstSyncResult = IECAddress_Svc.syncCustomerWithSAP(new List<Location__c>{oLocation}, new Map<Id, String>{oContact.Id => soldToSAPId}, false);
+						if (lstSyncResult[0] == null)
+							shipToSAPId = oLocation.SAP_Id__c;
+						else
+						{
+							lstResult[i1] += '\nSH' + lstSyncResult[0].Extra_Information__c;
+							lstError.addAll(lstSyncResult);
+						}
+					}
+				}
+			} //*** end for ship to
+			
+			if (String.isBlank(lstResult[i1]))
+				lstResult[i1] = null;
+		} //*** end of loop for contacts
+		
+		try
+		{
+			//*** insert addresses
+			if (lstNewAddress.size() > 0)
+				insert lstNewAddress;
+			
+			//*** insert/update locations
+			if (lstUpdateLocation.size() > 0)
+			{
+				//*** set address before insert/update
+				for (i1 = 0; i1 < lstUpdateLocation.size(); i1++)
+					if (String.isBlank(lstUpdateLocation[i1].Address__c))
+						lstUpdateLocation[i1].Address__c = lstUpdateLocation[i1].Address__r.Id;
+				upsert lstUpdateLocation;
+			}
+			
+			//*** update account/contact
+			List<SObject> lstUpdate = new List<SObject>();
+			for (String k : mapUpdateId_Location.keySet())
+				if (k.startsWith('ST'))   //*** sold to
+				{
+					idRecord = Id.valueOf(k.substring(2));
+					//*** search if account to update is already in list of accounts to update
+					for (i1 = 0; i1 < lstAccountToUpdate.size(); i1++)
+						if (lstAccountToUpdate[i1].Id == idRecord)
+						{
+							lstAccountToUpdate[i1].SoldTo_Location__c = mapUpdateId_Location.get(k).Id;
+							break;
+						}
+					//*** add to list of accounts to update if not already in list
+					if (i1 >= lstAccountToUpdate.size())
+						lstUpdate.add(new Account(Id=k.substring(2), SoldTo_Location__c=mapUpdateId_Location.get(k).Id));
+				}
+				else if (k.startsWith('BT'))
+					if (mapUpdateId_Location.containsKey('SH' + k.substring(2)))   //*** bill to and ship to
+						lstUpdate.add(new Contact(Id=k.substring(2), BillTo_Location__c=mapUpdateId_Location.get(k).Id
+						                        , ShipTo_Location__c=mapUpdateId_Location.get('SH' + k.substring(2)).Id));
+					else   //*** bill to without ship to
+						lstUpdate.add(new Contact(Id=k.substring(2), BillTo_Location__c=mapUpdateId_Location.get(k).Id));
+				else if (!mapUpdateId_Location.containsKey('BT' + k.substring(2)))   //*** ship to without bill to
+					lstUpdate.add(new Contact(Id=k.substring(2), ShipTo_Location__c=mapUpdateId_Location.get(k).Id));
+			if (lstUpdate.size() > 0)
+				update lstUpdate;
+			if (lstAccountToUpdate.size() > 0)
+				update lstAccountToUpdate;
+		}
+		catch (Exception e)
+		{
+			lstError.add(IECErrorLogger.createErrorLog('Location_Svc.initializeDefaultLocations'
+			                                         , '***** New addresses\n' + lstNewAddress + '\n***** Locations\n' + lstUpdateLocation + '\n***** Accounts/Contacts: ' + mapUpdateId_Location
+			                                         , e.getMessage(), e.getStackTraceString()));
+			lstResult.clear();
+			lstResult.addAll(lstResultBeforeUpsert);
+			for (i1 = 0; i1 < lstResult.size(); i1++)
+				if (lstResult[i1] != null)
+					lstResult[i1] += '\n' + e.getMessage();
+		}
+		
+		//*** log error if any
+		if (lstError.size() > 0)
+			try
+			{
+				insert lstError;
+			}
+			catch (Exception e) { /* ignore error */ }
+		
+		return lstResult;
+	} //*** end of "initializeDefaultLocations"
+
+
 }

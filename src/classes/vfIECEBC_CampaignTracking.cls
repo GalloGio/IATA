@@ -15,7 +15,7 @@ public class vfIECEBC_CampaignTracking extends vfIECEBC_Controller{
     // Campaign Tracking Data Table Analysis
     // ===========================================================
     
-    public Map<String, Integer> Kpis {
+    public Map<String, Double> Kpis {
         get{
             EBC_Campaign__c campaign = [SELECT Id, 
                                         NumberofClicks__c, NumberSent__c, NumberofOpens__c,
@@ -29,7 +29,7 @@ public class vfIECEBC_CampaignTracking extends vfIECEBC_Controller{
                                         FROM EBC_Campaign__c
                                         WHERE Id = :ApexPages.currentPage().getParameters().get('id')];  
             
-            Map<String, Integer> Kpis = new Map<String, Integer>();
+            Map<String, Double> Kpis = new Map<String, Double>();
             
             Kpis.put('delivered24Hours', Integer.valueOf(campaign.Delivered24Hours__c));
             Kpis.put('delivered48Hours', Integer.valueOf(campaign.Delivered48Hours__c));
@@ -58,37 +58,37 @@ public class vfIECEBC_CampaignTracking extends vfIECEBC_Controller{
             if(Integer.valueOf(campaign.OpenRate24Hours__c) == null){
                 Kpis.put('openRate24Hours', -1);
             }else{
-               Kpis.put('openRate24Hours', Integer.valueOf(campaign.OpenRate24Hours__c)); 
+               Kpis.put('openRate24Hours', Double.valueOf(campaign.OpenRate24Hours__c)); 
             }
             
             if(Integer.valueOf(campaign.OpenRate48Hours__c) == null){
                 Kpis.put('openRate48Hours', -1);
             }else{
-                Kpis.put('openRate48Hours', Integer.valueOf(campaign.OpenRate48Hours__c));
+                Kpis.put('openRate48Hours', Double.valueOf(campaign.OpenRate48Hours__c));
             }
             
             if(Integer.valueOf(campaign.OpenRate7Days__c) == null){
                 Kpis.put('openRate7Days', -1);
             }else{
-                Kpis.put('openRate7Days', Integer.valueOf(campaign.OpenRate7Days__c));
+                Kpis.put('openRate7Days', Double.valueOf(campaign.OpenRate7Days__c));
             }
             
             if(Integer.valueOf(campaign.ClickRate24Hours__c) == null){
                 Kpis.put('clickRate24Hours', -1);
             }else{
-                Kpis.put('clickRate24Hours', Integer.valueOf(campaign.ClickRate24Hours__c));
+                Kpis.put('clickRate24Hours', Double.valueOf(campaign.ClickRate24Hours__c));
             }
                         
             if(Integer.valueOf(campaign.ClickRate48Hours__c) == null){
                 Kpis.put('clickRate48Hours', -1);
             }else{
-                Kpis.put('clickRate48Hours', Integer.valueOf(campaign.ClickRate48Hours__c));
+                Kpis.put('clickRate48Hours', Double.valueOf(campaign.ClickRate48Hours__c));
             }
             
             if(Integer.valueOf(campaign.ClickRate7Days__c) == null){
                 Kpis.put('clickRate7Days', -1);
             }else{
-                Kpis.put('clickRate7Days', Integer.valueOf(campaign.ClickRate7Days__c));
+                Kpis.put('clickRate7Days', Double.valueOf(campaign.ClickRate7Days__c));
             }
            
             return Kpis;
@@ -96,13 +96,16 @@ public class vfIECEBC_CampaignTracking extends vfIECEBC_Controller{
         private set;
     }
     public Integer Adjustments {
-        get {           
-         	List<AggregateResult> rec = [Select Sum(Total_Count__c) cnt                            	
-                                                      From EBC_Activity__c
-                                                      Where EBC_Campaign__c = :campaign.Id
-                                                     And Activity_Type__c = 'Adjustment'
-                                                     ];
-            return  Integer.valueOf(rec[0].get('cnt'));
+        get {
+            if (Adjustments == null) {
+                List<AggregateResult> rec = [Select Sum(Total_Count__c) cnt                            	
+                                             From EBC_Activity__c
+                                             Where EBC_Campaign__c = :campaign.Id
+                                             And Activity_Type__c = 'Adjustment'
+                                            ];
+                Adjustments = Integer.valueOf(rec[0].get('cnt'));
+            }
+            return Adjustments;
         }
         private set;
     }
@@ -129,7 +132,10 @@ public class vfIECEBC_CampaignTracking extends vfIECEBC_Controller{
                     String extId = (String)ar.get('External_Id__c');
                     EBC_Click_Event__c ece = [Select URL__c From EBC_Click_Event__c Where External_Id__c = :extId LIMIT 1];
                     
-                    if (ece.URL__c == 'Unsubscribe') continue;
+                    if (ece.URL__c==null) continue;
+                    if (ece.URL__c == 'Unsubscribe') continue;                   
+                    if (ece.URL__c.ContainsIgnoreCase('iecebc_optout')) continue;
+                    
                     
                     cnt++;
                     
@@ -329,10 +335,14 @@ public class vfIECEBC_CampaignTracking extends vfIECEBC_Controller{
         return  JSON.serialize(fst7DaysClicks);
     }
     
-    //Retrieve campaign sent date
-    public String getSentDate(){      
-        String senddate = [Select Send_Datetime__c from EBC_Campaign__c where ID = :campaign.Id].get(0).Send_Datetime__c.format('M/d/yyyy h:mm a');
-        return 'Sent time ' + senddate;     
+    public String SentDate {
+        get {
+            if (SentDate == null) {
+                SentDate = 'Sent time ' + [Select Send_Datetime__c from EBC_Campaign__c where ID = :campaign.Id].get(0).Send_Datetime__c.format('M/d/yyyy h:mm a');
+            }
+            return SentDate;
+        }
+        set;
     }
     
     //Generation a map <Hour,null> based on hours for retrieve opens/clicks use 
@@ -345,6 +355,7 @@ public class vfIECEBC_CampaignTracking extends vfIECEBC_Controller{
     }
     
     //Generation a map <Hour,null> based on hours for retrieve opens/clicks use 
+    /*
     public static Map<Integer, String> generateMapString(Integer numberOfHours){    
         Map<Integer, String> initMap = new Map<Integer, String>();
         for (integer i=0; i<numberOfHours; i++){
@@ -352,6 +363,7 @@ public class vfIECEBC_CampaignTracking extends vfIECEBC_Controller{
         }       
         return initMap;
     }
+    */
     
     //X-axis for 7-days chart
     public String getXAxis7d(){

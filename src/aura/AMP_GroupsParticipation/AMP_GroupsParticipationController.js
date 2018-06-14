@@ -1,5 +1,6 @@
 ({
 	doInit : function(component, event, helper) {
+		helper.getReportId(component);
 		var action = component.get("c.getParticipants");
 		var accountId = component.get("v.accountId");
 
@@ -47,14 +48,19 @@
                              Under : previousUnder != currentUnder ? currentUnder : '',
 							 GroupId : participants[i].Local_Governance__c,
 							 GroupName : participants[i].Local_Governance__r.Name,
-							 GroupOwner : ownerName,
+							 GroupOwner : ownerName != '' ? ownerName : participants[i].Local_Governance__r.Group_Owner_Text__c,
 							 Mission : participants[i].Local_Governance__r.Mission__c,
 							 Role : participants[i].Participant_Type__c.replace(/^\d+\s/,''),
 							 Salutation : participants[i].Contact__r.Salutation,
 							 FirstName : participants[i].Contact__r.FirstName,
 							 LastName : participants[i].Contact__r.LastName,
-							 Title : participants[i].Contact__r.Title
+							 Title : participants[i].Contact__r.Title,
+							 Representing : participants[i].Representing__c
 						 };
+						 if(pWrapper.Representing !== undefined) {
+							console.log('rep');
+							component.set("v.representativesFound", true);
+						 }
 						 ParticipantWrappers.push(pWrapper);
                          previousUnder = currentUnder;
 					 }

@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<GlobalPicklist xmlns="http://soap.sforce.com/2006/04/metadata">
+    <globalPicklistValues>
+        <fullName>Not Applicable</fullName>
+        <default>false</default>
+    </globalPicklistValues>
+    <globalPicklistValues>
+        <fullName>Passed</fullName>
+        <default>false</default>
+    </globalPicklistValues>
+    <globalPicklistValues>
+        <fullName>Failed</fullName>
+        <default>false</default>
+    </globalPicklistValues>
+    <masterLabel>Risk History Assessment Values</masterLabel>
+    <sorted>false</sorted>
+</GlobalPicklist>

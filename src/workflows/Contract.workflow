@@ -2,10 +2,11 @@
 <Workflow xmlns="http://soap.sforce.com/2006/04/metadata">
     <alerts>
         <fullName>EF_Notify_Contract_Owner_of_Manager_Approval</fullName>
-        <description>Notify Contract Owner of Manager Approval</description>
+        <description>Notify Submitter of Manager Approval</description>
         <protected>false</protected>
         <recipients>
-            <type>owner</type>
+            <field>EF_Submitter_Email__c</field>
+            <type>email</type>
         </recipients>
         <senderAddress>noreply@iata.org</senderAddress>
         <senderType>OrgWideEmailAddress</senderType>
@@ -13,14 +14,27 @@
     </alerts>
     <alerts>
         <fullName>EF_Notify_Contract_Owner_of_Manager_Rejection</fullName>
-        <description>Notify Contract Owner of Manager Rejection</description>
+        <description>Notify Submitter of Manager Rejection</description>
         <protected>false</protected>
         <recipients>
-            <type>owner</type>
+            <field>EF_Submitter_Email__c</field>
+            <type>email</type>
         </recipients>
         <senderAddress>noreply@iata.org</senderAddress>
         <senderType>OrgWideEmailAddress</senderType>
         <template>E_F_Services/EF_Billing_Agreement_Rejected</template>
+    </alerts>
+    <alerts>
+        <fullName>Notify_Approver_of_Recall</fullName>
+        <description>Notify Approver of Recall</description>
+        <protected>false</protected>
+        <recipients>
+            <field>EF_Approver_Email__c</field>
+            <type>email</type>
+        </recipients>
+        <senderAddress>noreply@iata.org</senderAddress>
+        <senderType>OrgWideEmailAddress</senderType>
+        <template>E_F_Services/EF_Contract_Recalled</template>
     </alerts>
     <alerts>
         <fullName>Send_Email_When_Renewal_process_started</fullName>
@@ -43,7 +57,7 @@
     </alerts>
     <fieldUpdates>
         <fullName>EF_Set_Contract_Approval_To_Approved</fullName>
-        <field>EF_Manager_Approval__c</field>
+        <field>Manager_Approval__c</field>
         <literalValue>Approved</literalValue>
         <name>E&amp;F Set Contract Approval To Approved</name>
         <notifyAssignee>false</notifyAssignee>
@@ -52,7 +66,7 @@
     </fieldUpdates>
     <fieldUpdates>
         <fullName>EF_Set_Contract_Approval_To_Recalled</fullName>
-        <field>EF_Manager_Approval__c</field>
+        <field>Manager_Approval__c</field>
         <literalValue>Recalled</literalValue>
         <name>E&amp;F Set Contract Approval To Recalled</name>
         <notifyAssignee>false</notifyAssignee>
@@ -61,7 +75,7 @@
     </fieldUpdates>
     <fieldUpdates>
         <fullName>EF_Set_Contract_Approval_To_Reject</fullName>
-        <field>EF_Manager_Approval__c</field>
+        <field>Manager_Approval__c</field>
         <literalValue>Rejected</literalValue>
         <name>E&amp;F Set Contract Approval To Reject</name>
         <notifyAssignee>false</notifyAssignee>
@@ -70,7 +84,7 @@
     </fieldUpdates>
     <fieldUpdates>
         <fullName>EF_Set_Contract_Approval_to_In_Progress</fullName>
-        <field>EF_Manager_Approval__c</field>
+        <field>Manager_Approval__c</field>
         <literalValue>In Progress</literalValue>
         <name>E&amp;F Set Contract Approval to In Progress</name>
         <notifyAssignee>false</notifyAssignee>

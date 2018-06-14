@@ -70,6 +70,13 @@ private class ISSP_Ctrl_BannertestpageTest {
         {
 			ISSP_Ctrl_Bannertestpage controller = new ISSP_Ctrl_Bannertestpage();
 			controller.getDefaultBanner();
+
+			List<String> lsLanguages = new List<String> {'es', 'ko', 'zh_CN', 'pt_BR', 'fr', 'ja', 'it', 'de', 'th', 'in', 'vi', 'ar'};
+			for(String s: lsLanguages) {
+				newUser.languagelocalekey = s;
+				update newUser;
+				controller.setBannerLanguage();
+			}
 		}
 		Test.stopTest();
 	}

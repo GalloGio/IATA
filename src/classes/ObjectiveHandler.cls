@@ -164,7 +164,7 @@ public with sharing class ObjectiveHandler {
 	/**
 		gets a formatted name for the objective based on its recordtype
 	**/
-	private static String getObjectiveName(Objective__c objective) {
+	private static String getObjectiveName(Objective__c objective) { 
 		if (objective.RecordTypeId == MAP_RT.get('Division').Id ) {
 			return nvl(objective.Division__c) + '-' + objective.Description__c + '-' + objective.Forecast_Deadline__c.year();
 
@@ -177,7 +177,13 @@ public with sharing class ObjectiveHandler {
 		} else if (objective.RecordTypeId == MAP_RT.get('Account').Id ) {
 			try {
 				Account account = mapAccount.get(objective.Account__c);
-				return nvl(objective.Division__c) + '-' + account.Name + '-' + objective.Description__c + '-' +objective.Forecast_Deadline__c.year();
+				String objName = nvl(objective.Division__c) + '-' + account.Name + '-' + objective.Description__c + '-' +objective.Forecast_Deadline__c.year();
+				if( objName.length() > 80){
+					Integer lengthToRemove = objName.length() - 80;
+					Integer accountNameLength = (account.Name.length()) - lengthToRemove;
+					return nvl(objective.Division__c) + '-' + account.Name.substring(0,accountNameLength) + '-' + objective.Description__c + '-' +objective.Forecast_Deadline__c.year();
+				}
+				return objName;
 			} catch (Exception e ) {
 				return nvl(objective.Division__c) + '-' + objective.Description__c + '-' +objective.Forecast_Deadline__c.year();
 			}

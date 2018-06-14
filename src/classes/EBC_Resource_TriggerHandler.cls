@@ -28,6 +28,7 @@ public class EBC_Resource_TriggerHandler {
     
     @future (callout=true)
     public static void triggerExactTargetDownloadRequest(Map<String, String> filenameToUrl) {
-        IECEBC_ETPortfolioCreate.CreatePortfolioObject(filenameToUrl);
+        System.debug(filenameToUrl);
+        if (!Test.isRunningTest()) IECEBC_ETPortfolioCreate.CreatePortfolioObject(filenameToUrl);
     }
 }

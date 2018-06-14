@@ -1,35 +1,54 @@
 <apex:page standardController="LocalGovernance__c" extensions="NewLocalGroupCtrl" action="{!redirect}">
     <c:Loading />
     <apex:form >
-    <apex:sectionHeader title="Local Group Edit" subtitle="{!IF(ISBLANK(LocalGovernance__c.Name), 'New Local Group', LocalGovernance__c.Name)}" /> 
+    <apex:sectionHeader title="Local Group Edit" subtitle="{!IF(ISBLANK(LocalGovernance__c.Name), 'New Local Group', LocalGovernance__c.Name)}" />
     <apex:pageBlock title="Local Group Edit" id="ThePageBlock" mode="edit">
         <apex:Pagemessages escape="false"/>
         <apex:outputPanel id="theForm">
         <apex:pageBlockSection title="Information" id="theSection">
-            
+
             <apex:inputField value="{!LocalGovernance__c.Cargo_Passenger__c}" required="true"/>
             <apex:inputField value="{!LocalGovernance__c.Local_Governance_type__c}" required="true"  >
-            	<apex:actionSupport event="onchange" action="{!onChangeGroupType}" onsubmit="startLoading();" oncomplete="stopLoading();" rerender="theForm"/>    
+            	<apex:actionSupport event="onchange" action="{!onChangeGroupType}" onsubmit="startLoading();" oncomplete="stopLoading();" rerender="theForm"/>
             </apex:inputField>
-            
+
+            <apex:pageBlockSectionItem ></apex:pageBlockSectionItem>
             <apex:inputField value="{!LocalGovernance__c.Country__c}" />
-            
+            <apex:pageBlockSectionItem ></apex:pageBlockSectionItem>
+
             <apex:selectList value="{!LocalGovernance__c.Cluster__c}" size="1" rendered="{!allClustersSize>1}">
                 <apex:selectOptions value="{!allClusters}"></apex:selectOptions>
             </apex:selectList>
             <apex:pageBlockSectionItem rendered="{!allClustersSize<=1}" />
-            
-            
+
+
             <apex:inputField value="{!LocalGovernance__c.Reporting_to__c}" required="true" />
             <apex:inputField value="{!LocalGovernance__c.Group_Owner__c}" styleClass="hidePicklist"/>
-            
-            
+
+            <apex:inputField value="{!LocalGovernance__c.Active__c}" styleClass="hidePicklist"/>
+
+
+        </apex:pageBlockSection>
+        <apex:pageBlockSection title="Terms of Reference"  id="torSection" >
+            <apex:inputField value="{!LocalGovernance__c.Restricted_of_Participants__c}"  />
+            <apex:pageBlockSectionItem ></apex:pageBlockSectionItem>
+
+            <apex:inputField value="{!LocalGovernance__c.Maximum_Number_of_Participiants__c}" id="numParticipiants" />
+            <apex:inputField value="{!LocalGovernance__c.Open_to__c}" />
+            <!-- <apex:inputField value="{!LocalGovernance__c.Open_to_non_IATA_Airlines_and_Others__c}"  /> -->
+
+            <apex:pageBlockSectionItem ></apex:pageBlockSectionItem>
+            <apex:inputField value="{!LocalGovernance__c.Frequency_of_Face_to_Face_Meetings__c}" />
+            <apex:inputField value="{!LocalGovernance__c.Mission__c}" required="true" />
+            <apex:inputField value="{!LocalGovernance__c.Frequency_of_Meetings__c}" />
+            <apex:inputField value="{!LocalGovernance__c.Latest_Successes__c}" />
+            <apex:inputField value="{!LocalGovernance__c.What_is_Group_Working_on_Now__c}" />
         </apex:pageBlockSection>
         </apex:outputPanel>
         <style>
         	.hidePicklist select{display:none;}
         </style>
-        
+
         <apex:pageBlockButtons >
             <apex:commandButton value="Save" action="{!MySave}" />
             <apex:commandButton value="Cancel" action="{!Cancel}"/>

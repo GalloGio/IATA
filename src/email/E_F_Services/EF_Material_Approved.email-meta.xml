@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<EmailTemplate xmlns="http://soap.sforce.com/2006/04/metadata">
+    <available>true</available>
+    <encodingKey>UTF-8</encodingKey>
+    <name>E&amp;F Material Approved</name>
+    <style>none</style>
+    <subject>Material Line Item changes approved</subject>
+    <textOnly>Dear recipient,
+
+your changes for a Material Line Item record have been approved.</textOnly>
+    <type>custom</type>
+</EmailTemplate>

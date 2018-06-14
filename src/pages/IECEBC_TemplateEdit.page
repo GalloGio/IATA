@@ -14,21 +14,56 @@
             	.plugin-container.loaded {}
 	            	.plugin-container.loaded iframe { display: block !important; }
 	            	.plugin-container.loaded div#notice { display: none !important; }
+                
+                
+                #IECEBC_MosaicoEditor {
+	                border-bottom: 1px solid #ccc;
+                }
+                .inner-wrapper {
+                	 max-width: 100% !important;
+                }
+                .main-content { margin-bottom: 0 !important; }
+                footer { display: none !important; }
+                #notice {
+	                text-align: center;
+                }
+                #notice .container {
+                    position: relative;
+                    top: 50%;
+                    transform: translateY(-50%);
+                }
+                html, body { overflow-y: hidden; }
             </style>
             <!-- End of Page </head> -->
         </apex:define>
         <apex:define name="pageScriptAdditions">
             <!-- If any page specific .js, add them here -->
+            <script>
+            	function adjustMosaicoHeight() {
+                    viewportHeight = jQuery( window ).height();
+                    footerHeight = 0;
+                    headerHeight = jQuery('.page-header').outerHeight();
+                    iframeDiff = jQuery('#IECEBC_MosaicoEditor').outerHeight() - jQuery('#IECEBC_MosaicoEditor').innerHeight();
+                	jQuery('#IECEBC_MosaicoEditor').height(viewportHeight - (footerHeight + headerHeight + iframeDiff));
+                    
+                    noticeDiff = jQuery('#notice').outerHeight() - jQuery('#notice').innerHeight();
+                	jQuery('#notice').height(viewportHeight - (footerHeight + headerHeight + noticeDiff));
+                }
+            
+            	jQuery(document).ready(adjustMosaicoHeight);
+            	jQuery(window).resize(adjustMosaicoHeight);
+            </script>
         </apex:define>
         <apex:define name="pageContent">
             <!-- Start of Page Content -->
             <main class="main-content">
-                <div class="inner-wrapper">
-                   
-                        <div class="plugin-container" style="border: 1px solid #ccc; padding: 20px;">
-                            <iframe id="IECEBC_MosaicoEditor" src="/iec/IECEBC_MosaicoEditor?Id={!EBC_Template__c.Id}" frameborder="false" scrolling="true" width="100%" height="600"></iframe>
+                <div class="inner-wrapper" style="padding: 0;">
+                        <div class="plugin-container">
+                            <iframe id="IECEBC_MosaicoEditor" src="{!URLFOR($Page.IECEBC_MosaicoEditor)}?Id={!EBC_Template__c.Id}" frameborder="false" scrolling="true" width="100%" height="600"></iframe>
                             <div id="notice">
-                                <img src="/img/loading32.gif" align="left" /> Loading Editor. If you have problem to see the editor, please <a href="/iec/IECEBC_MosaicoEditor?Id={!EBC_Template__c.Id}">click here</a>.
+                                <div class="container">
+                                    <img src="/img/loading32.gif" valign="middle" /> Loading Editor. If you have problem to see the editor, please <a href="{!URLFOR($Page.IECEBC_MosaicoEditor)}?Id={!EBC_Template__c.Id}">click here</a>.
+                                </div>
                             </div>
                         </div>
                         <script type="text/javascript">
@@ -43,21 +78,10 @@
                             } catch(e) { }
                             
                             if (!isCallbackAvailable) {
-                                jQuery('#notice').html('Your browser cannot load the embeded editor. Please open it full screen by following <a href="/iec/IECEBC_MosaicoEditor?Id={!EBC_Template__c.Id}">click here</a>');
+                                jQuery('#notice').html('Your browser cannot load the embeded editor. Please open it full screen by following <a href="{!URLFOR($Page.IECEBC_MosaicoEditor)}?Id={!EBC_Template__c.Id}">click here</a>');
                             }
                         }
                         </script>
-                    <apex:form >
-                        <div class="footer-actions text-right">
-                            <ul class="list actions">
-                                
-                                <apex:outputText >
-	                                <li><apex:commandLink action="{!previous}" value="Previous" styleClass="button" /></li>
-                                </apex:outputText>
-                                
-                            </ul>
-                        </div>
-                    </apex:form>
                 </div>
             </main>
             <!-- End of Page Content -->

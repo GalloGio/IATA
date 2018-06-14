@@ -39,6 +39,7 @@ private class CaseChildHelperTest {
         insert a;
         
         Contact con =new contact(lastname = 'pluto' ,
+                                 firstName = 'Name',
                                  phone = '123',
                                  accountid = a.id,
                                  Financial_Assessment_Contact__c = true);
@@ -64,7 +65,7 @@ private class CaseChildHelperTest {
                           contactid = con.id,
                           AccountId = a.id,
                           Assessment_Performed_Date__c = date.today(),
-                          Financial_Review_Result__c = 'very good'                                                    
+                          Financial_Review_Result__c = 'Satisfactory - No Action'                                                    
         );
         //try{ insert cas; }catch(Exception e){ exceptionRaised = true;}
         //system.assertEquals(false, exceptionRaised);
@@ -84,7 +85,7 @@ private class CaseChildHelperTest {
                           AccountId = a.id,
                           FS_Deadline_Date__c = dead,
                           Assessment_Performed_Date__c = date.today(),
-                          Financial_Review_Result__c = 'very good'                                                    
+                          Financial_Review_Result__c = 'Satisfactory - No Action'                                                    
         );
         try{ insert cas; }catch(Exception e){ exceptionRaised = true;}
         system.assertEquals(true,exceptionRaised);
@@ -130,6 +131,7 @@ private class CaseChildHelperTest {
         insert a;
         
         Contact con =new contact(lastname = 'pluto' ,
+                                 firstName = 'Name',
                                  phone = '123',
                                  accountid = a.id,
                                  Financial_Assessment_Contact__c = true);
@@ -155,7 +157,7 @@ private class CaseChildHelperTest {
                           contactid = con.id,
                           AccountId = a.id,
                           Assessment_Performed_Date__c = date.today(),
-                          Financial_Review_Result__c = 'very good',
+                          Financial_Review_Result__c = 'Satisfactory - No Action',
                           resubmission_of_accounts__c = 'resubmission to tax authorities'                                               
         );
         //try{ insert cas; }catch(Exception e){ exceptionRaised = true;}

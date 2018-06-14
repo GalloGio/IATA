@@ -1,0 +1,129 @@
+<apex:page showHeader="true" sidebar="true" controller="AMS_CertificateManagerController">
+
+	<style>
+		.pos-relative{ position: relative; }
+		.loading-backdrop{ 
+			position: absolute; 
+			top: 0; 
+			bottom: 0; 
+			right: 0; 
+			left: 0; 
+			background: #FFF; 
+			opacity: 0.5; 
+			z-index: 95;
+		}
+		.loading-img{
+			position: absolute;
+			top: 50%;
+			left: 50%;
+			margin-top: -16px;
+			margin-left: -16px;
+			z-index: 96;
+		}
+	</style>
+
+	<apex:sectionHeader subtitle="Annual Certificate Campaign" />
+	<apex:form styleClass="pos-relative" >
+
+	<apex:actionStatus id="loading" >
+		<apex:facet name="start">
+			<apex:outputPanel layout="none">
+				<apex:outputPanel layout="block" styleClass="loading-backdrop"/>
+				<apex:image value="/../img/loading32.gif" styleClass="loading-img"/>
+			</apex:outputPanel>
+		</apex:facet>
+	</apex:actionStatus> 
+
+	<apex:pageBlock mode="edit">
+
+		<apex:pageBlockSection id="notes" columns="1" title="Notes" collapsible="true">
+		
+		    <apex:dataList value="{!noteList}" var="note" rendered="{!noteList.size > 0}">
+		        <apex:outputText value="{!note}"/>
+		    </apex:dataList>
+		</apex:pageBlockSection>
+
+		<apex:pageBlockSection title="Upload File" columns="1">
+
+			<apex:pageMessages rendered="{!NOT(showWarning)}" escape="false"/>
+			
+			<apex:pageBlockSection columns="2">
+				<apex:inputFile value="{!fileBody}" accept=".csv, .txt, .xls, .xlsx"/>
+				<apex:commandButton value="Read File" action="{!parseFile}" status="loading"/>
+			</apex:pageBlockSection>
+		</apex:pageBlockSection>
+			
+		<apex:actionRegion >
+
+			<apex:pageBlockSection title="Action" rendered="{!parsedFile && ISBLANK(requestCreation)}" columns="1">
+
+				<apex:pageMessages rendered="{!showWarning}" escape="false"/>
+
+				<apex:pageBlockSectionItem rendered="{!showWarning}">
+					<apex:outputLabel value="I wish to generate new certificates for all accounts on the file"/>
+					<apex:inputCheckbox value="{!ignoreWarning}">
+						<apex:actionSupport event="onchange" rerender="buttonSection"/>
+					</apex:inputCheckbox>
+				</apex:pageBlockSectionItem>
+
+				<apex:pageBlockSection columns="2" >
+
+					<apex:pageBlockSectionItem >
+						<apex:outputLabel value="Year:"/>
+						<apex:outputPanel >
+							<apex:selectList size="1" multiselect="false" value="{!year}">
+								<apex:selectOptions value="{!years}"/>
+								<apex:actionSupport event="onchange" reRender="selectYear"/>
+							</apex:selectList>
+							<apex:outputPanel id="selectYear"><apex:inputText value="{!yearText}" rendered="{!year == 'Other'}" /></apex:outputPanel>
+						</apex:outputPanel>
+					</apex:pageBlockSectionItem>
+
+					<apex:outputPanel id="buttonSection">
+						<apex:commandButton value="Generate Certificates" action="{!generateCertificates}" disabled="{!NOT(AND(parsedFile, OR(NOT(showWarning), ignoreWarning)))}" reRender="results"/>
+					</apex:outputPanel>
+
+				</apex:pageBlockSection>
+			</apex:pageBlockSection>
+		</apex:actionRegion>
+	</apex:pageBlock>
+		
+	<apex:outputPanel layout="block" id="results">
+		<style>
+			.status{ color: #b9bc0d; }
+			.status.Completed { color: #119b13; }
+			.status.Failed { color: #9e0e21; }
+		</style>
+
+		<apex:actionRegion >
+			<apex:pageBlock title="Results" rendered="{!NOT(ISBLANK(requestCreation))}">
+				<apex:actionPoller reRender="results" enabled="{!AND(job.Status != 'Failed', job.Status != 'Completed')}" interval="15" />
+
+				<apex:pageBlockSection columns="1">
+					<apex:pageBlockSectionItem dataStyleClass="status {!job.Status}">
+						<apex:outputLabel value="Status:"/>
+						<apex:outputPanel >
+							<apex:image value="/../img/icon/pending12.gif" rendered="{!AND(job.Status != 'Failed', job.Status != 'Completed')}"/>
+							<apex:image value="/../img/icon/approve12.gif" rendered="{!job.Status == 'Completed'}"/>
+							<apex:image value="/../img/icon/reject12.gif" rendered="{!job.Status == 'Failed'}"/>
+							 &nbsp; <apex:outputText value="{!job.status & ' ' & job.ExtendedStatus}"/>
+						</apex:outputPanel>
+					</apex:pageBlockSectionItem>
+
+					<apex:pageBlockTable value="{!requests}" var="request">
+						<apex:column headerValue="Request">
+							<apex:outputLink value="{!URLFOR($Action.AMS_Certificate_Request__c.View,request.id)}">{!request.name}</apex:outputLink>
+						</apex:column>
+						<apex:column headerValue="Certificate">
+							<apex:dataList value="{!request.Attachments}" var="att">
+								<apex:outputLink target="_blank" value="{!URLFOR($Action.Attachment.Download,att.id)}">{!att.Name}</apex:outputLink>
+							</apex:dataList>
+						</apex:column>
+					</apex:pageBlockTable>
+				</apex:pageBlockSection>
+			</apex:pageBlock>
+		</apex:actionRegion>
+	</apex:outputPanel>
+
+	</apex:form>
+</apex:page>

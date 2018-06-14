@@ -1,0 +1,9 @@
+<aura:documentation>
+	<aura:description>
+        <p>Component that checks Email, Captcha and Terms and conditions</p>
+        <p>If you want to receive information back, pass on the contact that will hold the email</p>
+        <p>This component registers the StepCompletion event, with information with which step was completed</p>
+        
+        <!-- TODO: create base step component for the step, that receives an identifier. Use the identifier on the event. If showCaptcha == false, drop the validation -->
+    </aura:description>
+</aura:documentation>

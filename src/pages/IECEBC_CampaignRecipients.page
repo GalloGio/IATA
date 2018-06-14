@@ -147,7 +147,7 @@
                                                     <td>
                                                         <div class="item-value">
                                                             <strong class="text-orange">USD $<span class="existingListProvisionalCost">n/a</span></strong>
-                                                            <p class="existingListRecipientCount3" style="display: none;">for <span class="existingListRecipientCount2">n/a</span> email(s) at $<apex:outputText value="{0, number, ###,###,##0.00}"><apex:param value="{!productRatePlan.EBC_Currency_Cost_Per_Email__c}"/></apex:outputText> /email</p>
+                                                            <p class="existingListRecipientCount3" style="display: none;">for <span class="existingListRecipientCount2">n/a</span> email(s) at $<apex:outputText value="{0, number, ###,###,##0.000}"><apex:param value="{!productRatePlan.EBC_Currency_Cost_Per_Email__c}"/></apex:outputText> /email</p>
                                                         </div>
                                                     </td>
                                                 </tr>

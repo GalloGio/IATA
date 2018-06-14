@@ -12,10 +12,7 @@ public class AMS_OSCAR_ApprovalHelper
 				
 				ProcessInstanceStep pisAux = processInstanceSteps.get(pis.ProcessInstance.TargetObjectId);
 				
-				if(pisAux.CreatedDate < pis.CreatedDate) {
-					
-					processInstanceSteps.put(pis.ProcessInstance.TargetObjectId, pis);
-				}
+				if(pisAux.CreatedDate < pis.CreatedDate) processInstanceSteps.put(pis.ProcessInstance.TargetObjectId, pis);
 			}else{
 				
 				processInstanceSteps.put(pis.ProcessInstance.TargetObjectId, pis);
@@ -53,14 +50,7 @@ public class AMS_OSCAR_ApprovalHelper
 		// Submit the approval request for the account
 		Approval.ProcessResult result = Approval.process(req);
 		
-		if(!result.isSuccess()){
-			String msg = '';
-			for(Database.Error err : result.getErrors()) msg += '\n'+err.getMessage();
-			msg = msg.substring(2);
-
-			//error should be handled by caller class
-			throw new ApprovalException(msg);
-		}
+		if(!result.isSuccess()) handleError(result);
 	}
 
 	//Approve or rejects a single ProcessInstanceWorkItem with comments
@@ -78,22 +68,28 @@ public class AMS_OSCAR_ApprovalHelper
 		if(action != null) req.setAction(action);
 		if(userIds != null) req.setNextApproverIds(userIds);
 		if(workItemId != null) req.setWorkitemId(workItemId);
+
+		System.debug(loggingLevel.FINE, '____ [cls AMS_OSCAR_ApprovalHelper - process] req - ' + req);
 		
-		Approval.ProcessResult result =  Approval.process(req);
+		Approval.ProcessResult result =  Approval.process(req, false);
 
-		if(!result.isSuccess()){
-			String msg = '';
-			for(Database.Error err : result.getErrors()) msg += '\n'+err.getMessage();
-			msg = msg.substring(2);
+		System.debug(loggingLevel.FINE, '____ [cls AMS_OSCAR_ApprovalHelper - process] result - ' + result);
 
-			//error should be handled by caller class
-			throw new ApprovalException(msg);
-		}
+		if(!result.isSuccess()) handleError(result);
 	}
 
 	//Approves all records
 	public static void approveAll(Id[] workItemIds, Id[] userIds, String comments)
 	{
 		for(Id workItemId : workItemIds) process('Approve', workItemId, userIds, comments);
+	}
+
+	private static void handleError(Approval.ProcessResult result){
+		String msg = '';
+		for(Database.Error err : result.getErrors()) msg += '\n'+err.getMessage();
+		msg = msg.substring(1);
+
+		//error should be handled by caller class
+		throw new ApprovalException(msg);
 	}
 }

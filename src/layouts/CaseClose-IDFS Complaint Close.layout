@@ -47,6 +47,10 @@
         <layoutColumns>
             <layoutItems>
                 <behavior>Required</behavior>
+                <field>Type</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Required</behavior>
                 <field>Type_of_customer__c</field>
             </layoutItems>
             <layoutItems>
@@ -56,6 +60,10 @@
             <layoutItems>
                 <behavior>Edit</behavior>
                 <field>Reopening_reason__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Required</behavior>
+                <field>Case_Language__c</field>
             </layoutItems>
             <layoutItems>
                 <emptySpace>true</emptySpace>

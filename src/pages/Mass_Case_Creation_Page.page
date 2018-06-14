@@ -77,12 +77,15 @@
         
           if(doIt){
                 // run Mass case creation
-                if (sendEmail == 'true'){
-                  MassCaseCreateSendEmail();
-                   }
+                if (sendEmail == 'email'){
+					MassCaseCreateSendEmail();
+                }
+				else if(sendEmail == 'tracked email'){
+					MassCaseCreateSendTrackedEmail();
+                }
                 else{
-               MassCaseCreate();
-                    }
+					MassCaseCreate();
+				}
           }
          return false;
        }
@@ -174,6 +177,9 @@
  
  
     <apex:actionFunction name="MassCaseCreateSendEmail" action="{!MassCaseCreateSendEmail}"  >
+      </apex:actionFunction>
+      
+    <apex:actionFunction name="MassCaseCreateSendTrackedEmail" action="{!MassCaseCreateSendTrackedEmail}"  >
       </apex:actionFunction>
       
       <apex:actionFunction name="MassCaseCreate" action="{!MassCaseCreate}"  >
@@ -567,8 +573,9 @@
        <!--action="{!MassCaseCreate}"  action="{!MassCaseCreateSendEmail}" -->
             <apex:pageBlockButtons >
            
-                <apex:commandButton value="Create Cases Only"  onclick="validateOpenCases('false'),startLoading();"   rerender="results, errors" disabled="{!isCreateCasesIsDisabled}"  status="loading" oncomplete="stopLoading();" /> <!-- salvo disabled="{!isCreateCasesIsDisabled}" -->
-                <apex:commandButton value="Create Cases and Send Emails" onclick="validateOpenCases('true');" rerender="results, errors" disabled="{!isSendEmailIsDisabled}" />
+                <apex:commandButton value="Create Cases Only"  onclick="validateOpenCases('no email'),startLoading();"   rerender="results, errors" disabled="{!isCreateCasesIsDisabled}"  status="loading" oncomplete="stopLoading();" /> <!-- salvo disabled="{!isCreateCasesIsDisabled}" -->
+                <apex:commandButton value="Create Cases and Send Emails" onclick="validateOpenCases('email');" rerender="results, errors" disabled="{!isSendEmailIsDisabled}" />
+                <apex:commandButton value="Create Cases and Send Tracked Emails" onclick="validateOpenCases('tracked email');" rerender="results, errors" disabled="{!isSendEmailIsDisabled}" rendered="{!$Permission.Can_send_a_tracked_email}"/>
                 <apex:commandButton value="Extract CSV" onclick="extractXLS();"  />
                           <script>
                             function extractXLS() {

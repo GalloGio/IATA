@@ -21,10 +21,6 @@
         <type>Default</type>
     </actionOverrides>
     <actionOverrides>
-        <actionName>Follow</actionName>
-        <type>Default</type>
-    </actionOverrides>
-    <actionOverrides>
         <actionName>List</actionName>
         <type>Default</type>
     </actionOverrides>
@@ -50,6 +46,7 @@
     <description>This object is in a master-detail with the Airline Suspension object and will contain the information in the funds management overview table: amounts due by the airline and amounts held by IATA in favour of the airline.</description>
     <enableActivities>false</enableActivities>
     <enableBulkApi>true</enableBulkApi>
+    <enableChangeDataCapture>false</enableChangeDataCapture>
     <enableFeeds>false</enableFeeds>
     <enableHistory>true</enableHistory>
     <enableReports>true</enableReports>
@@ -66,7 +63,7 @@
         <relationshipName>Funds_Management_Lines</relationshipName>
         <relationshipOrder>0</relationshipOrder>
         <reparentableMasterDetail>false</reparentableMasterDetail>
-        <trackHistory>false</trackHistory>
+        <trackHistory>true</trackHistory>
         <trackTrending>false</trackTrending>
         <type>MasterDetail</type>
         <writeRequiresMasterRead>false</writeRequiresMasterRead>
@@ -79,7 +76,7 @@
         <precision>18</precision>
         <required>true</required>
         <scale>2</scale>
-        <trackHistory>false</trackHistory>
+        <trackHistory>true</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Number</type>
         <unique>false</unique>
@@ -90,7 +87,7 @@
         <externalId>false</externalId>
         <label>Comments</label>
         <length>1024</length>
-        <trackHistory>false</trackHistory>
+        <trackHistory>true</trackHistory>
         <trackTrending>false</trackTrending>
         <type>LongTextArea</type>
         <visibleLines>4</visibleLines>
@@ -103,7 +100,7 @@
         <precision>18</precision>
         <required>true</required>
         <scale>2</scale>
-        <trackHistory>false</trackHistory>
+        <trackHistory>true</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Number</type>
         <unique>false</unique>
@@ -114,7 +111,7 @@
         <label>Location</label>
         <length>255</length>
         <required>false</required>
-        <trackHistory>false</trackHistory>
+        <trackHistory>true</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Text</type>
         <unique>false</unique>
@@ -125,7 +122,7 @@
         <label>Reported by</label>
         <length>255</length>
         <required>false</required>
-        <trackHistory>false</trackHistory>
+        <trackHistory>true</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Text</type>
         <unique>false</unique>
@@ -135,27 +132,31 @@
         <description>Use &quot;Held&quot; for amounts held by IATA in favour of the airline and &quot;Duet&quot; for amounts due by the airline.</description>
         <externalId>false</externalId>
         <label>Type</label>
-        <picklist>
-            <picklistValues>
-                <fullName>Held</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Due</fullName>
-                <default>false</default>
-            </picklistValues>
-            <sorted>false</sorted>
-        </picklist>
         <required>false</required>
-        <trackHistory>false</trackHistory>
+        <trackHistory>true</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Picklist</type>
+        <valueSet>
+            <valueSetDefinition>
+                <sorted>false</sorted>
+                <value>
+                    <fullName>Held</fullName>
+                    <default>false</default>
+                    <label>Held</label>
+                </value>
+                <value>
+                    <fullName>Due</fullName>
+                    <default>false</default>
+                    <label>Due</label>
+                </value>
+            </valueSetDefinition>
+        </valueSet>
     </fields>
     <label>Funds Management Line</label>
     <nameField>
         <displayFormat>FM-{00000}</displayFormat>
         <label>Funds Management Line Name</label>
-        <trackHistory>false</trackHistory>
+        <trackHistory>true</trackHistory>
         <type>AutoNumber</type>
     </nameField>
     <pluralLabel>Funds Management Lines</pluralLabel>
@@ -170,4 +171,5 @@
 )</errorConditionFormula>
         <errorMessage>The due amount needs to be a negative value.</errorMessage>
     </validationRules>
+    <visibility>Public</visibility>
 </CustomObject>

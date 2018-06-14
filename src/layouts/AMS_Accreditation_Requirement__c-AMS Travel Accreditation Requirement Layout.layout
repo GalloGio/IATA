@@ -16,6 +16,10 @@
                 <field>Location_type__c</field>
             </layoutItems>
             <layoutItems>
+                <behavior>Required</behavior>
+                <field>ANG_Accreditation_Model__c</field>
+            </layoutItems>
+            <layoutItems>
                 <behavior>Edit</behavior>
                 <field>Language__c</field>
             </layoutItems>

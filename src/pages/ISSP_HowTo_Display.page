@@ -8,7 +8,7 @@
     >
    <html>
     
-    	<c:ISSP_Header ></c:ISSP_Header>    
+    	<c:ISSP_Header communityName="{!communityName}"></c:ISSP_Header>    
  	<body>
  	<c:pkb_css />
     <style type="text/css">
@@ -82,7 +82,7 @@
  
 
     <div class="container">
-        <c:ISSP_CustomNavigation />
+        <c:ISSP_CustomNavigation communityName="{!communityName}"/>
      <div>
         <div id="left_column">
         	<apex:outputPanel styleClass="relatedArticles" layout="block">
@@ -198,7 +198,7 @@
     </div>
     </div><!-- end container-->
     
-    <c:ISSP_CustomFooter />
+    <c:ISSP_CustomFooter communityName="{!communityName}"/>
           
 </body>
     

@@ -107,7 +107,7 @@ public without sharing class vfIECUpdateAddress   extends IECPageController {
 
                 // customer does not have a billing or shipping address,
                 if(oContact.BillTo_Location__c == null || oContact.ShipTo_Location__c == null){
-                    Boolean locationInit = Location_Svc.InitializeContactLocations(oContact.Id);
+                    Boolean locationInit = (Location_Svc.initializeDefaultLocations(new List<Id>{oContact.Id})[0] == null);
                     if(!locationInit){
                         ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.ERROR, label.Address_edition_error ));
                         return null;
@@ -477,6 +477,7 @@ public without sharing class vfIECUpdateAddress   extends IECPageController {
                 if(lstAddress != null && lstAddress.size() > 0){
                     shippingNewAddress = lstAddress.get(0).Id;
                 }else{
+                    oShippingAddress.Id = null;
                     insert oShippingAddress;
                     shippingNewAddress = oShippingAddress.Id;
                 }

@@ -11,14 +11,19 @@
 					<apex:column styleClass="narrow-table-column">
 						<apex:facet name="header">Actions</apex:facet>
 
-						<apex:commandLink value="Del" action="{!deleteTask}" styleClass="actionLink" onclick="if(!confirm('Are you sure you want to delete this line?')){return false};" rendered="{!IF(AND(isTaskEditMode, idTaskConcerned==task.Id), false, true)}" >
+						<apex:commandLink value="Del" action="{!deleteTask}" styleClass="actionLink" onclick="if(!confirm('Are you sure you want to delete this line?')){return false};" rendered="{!IF(OR(AND(isTaskEditMode, idTaskConcerned==task.Id), NOT(canEdit)), false, true)}" status="actStatusId">
 								<apex:param name="idTaskConcerned" value="{!task.Id}" assignTo="{!idTaskConcerned}"/>
 						</apex:commandLink>
-						<apex:commandLink value="Save" action="{!saveTask}" styleClass="actionLink" reRender="theBlock" oncomplete="enableShowMoreOrLess();"   rendered="{!IF(AND(isTaskEditMode, idTaskConcerned==task.Id), true, false)}">
+					<apex:commandLink value="Save" action="{!saveTask}" styleClass="actionLink" reRender="theBlock" oncomplete="enableShowMoreOrLess();"   rendered="{!IF(AND(isTaskEditMode, idTaskConcerned==task.Id), true, false)}" status="actStatusId">
 								<apex:param name="idTaskConcerned" value="{!task.Id}" assignTo="{!idTaskConcerned}"/>
 						</apex:commandLink>
+                    <apex:actionStatus id="actStatusId" >
+                        <apex:facet name="start" >
+                          <img src="/img/loading.gif" style="float: right;"/>
+                        </apex:facet>
+                    </apex:actionStatus>
 						&nbsp;|&nbsp;
-						<apex:commandLink value="Edit" action="{!editTask}" styleClass="actionLink" reRender="theBlock" oncomplete="enableShowMoreOrLess();"   rendered="{!IF(AND(isTaskEditMode, idTaskConcerned==task.Id), false, true)}" >
+						<apex:commandLink value="Edit" action="{!editTask}" styleClass="actionLink" reRender="theBlock" oncomplete="enableShowMoreOrLess();"   rendered="{!IF(OR(AND(isTaskEditMode, idTaskConcerned==task.Id), NOT(canEdit)), false, true)}" >
 								<apex:param name="idTaskConcerned" value="{!task.Id}" assignTo="{!idTaskConcerned}"/>
 						</apex:commandLink>
 
@@ -31,12 +36,17 @@
 			</apex:column>
 
 					<apex:column headerValue="Milestone">
-							<apex:outputLink value="/{!task.Id}" rendered="{!!AND(isTaskEditMode,idTaskConcerned==task.Id)}">{!task.Subject}</apex:outputLink>
-							<apex:inputText value="{!task.Subject}" rendered="{!AND(isTaskEditMode,idTaskConcerned==task.Id)}"/>
+							<apex:outputText rendered="{!!AND(isTaskEditMode,idTaskConcerned==task.Id)}">{!task.Subject__c}</apex:outputText>
+              <apex:define name="requiredInputDiv">
+                  <div class="requiredInput">
+                     <apex:define name="requiredInputDiv"><div class="requiredBlock"/></apex:define>
+                     <apex:inputField value="{!task.Subject__c}" rendered="{!AND(isTaskEditMode,idTaskConcerned==task.Id)}" style="width: 80%; height: 40px" required="true"/>
+                 </div>
+              </apex:define>
 					</apex:column>
 
 					<apex:column headerValue="Responsible" >
-							<apex:inputField value="{!task.AM_Responsible__c}" rendered="{!AND(isTaskEditMode,idTaskConcerned==task.Id)}"/>
+							<apex:inputField value="{!task.AM_Responsible__c}" rendered="{!AND(isTaskEditMode,idTaskConcerned==task.Id)}" style="width: 80%; height: 40px"/>
               <!-- <apex:outputField value="{!task.AM_Responsible__c}" rendered="{!!AND(isTaskEditMode,idTaskConcerned==task.Id)}"/> -->
               <apex:outputPanel styleClass="long-text-area hidden" rendered="{!!AND(isTaskEditMode,idTaskConcerned==task.Id)}" >
                 <apex:outputText value="{!task.AM_Responsible__c}"   />
@@ -50,7 +60,7 @@
 
 					<apex:column headerValue="Involved" >
 							<!-- <apex:outputField value="{!task.AM_Involved__c}" rendered="{!!AND(isTaskEditMode,idTaskConcerned==task.Id)}"/> -->
-							<apex:inputField value="{!task.AM_Involved__c}" rendered="{!AND(isTaskEditMode,idTaskConcerned==task.Id)}"/>
+							<apex:inputField value="{!task.AM_Involved__c}" rendered="{!AND(isTaskEditMode,idTaskConcerned==task.Id)}" style="width: 80%; height: 40px"/>
               <apex:outputPanel styleClass="long-text-area hidden" rendered="{!!AND(isTaskEditMode,idTaskConcerned==task.Id)}" >
                 <apex:outputText value="{!task.AM_Involved__c}"   />
                 <a href="#" class="show-less">[show less]</a>
@@ -63,7 +73,7 @@
 
 					<apex:column headerValue="Support Required From Account" >
 							<!-- <apex:outputField value="{!task.AM_Support_Required_from_Account__c}" rendered="{!!AND(isTaskEditMode,idTaskConcerned==task.Id)}"/> -->
-							<apex:inputField value="{!task.AM_Support_Required_from_Account__c}" rendered="{!AND(isTaskEditMode,idTaskConcerned==task.Id)}"/>
+							<apex:inputField value="{!task.AM_Support_Required_from_Account__c}" rendered="{!AND(isTaskEditMode,idTaskConcerned==task.Id)}" style="width: 80%; height: 40px"/>
               <apex:outputPanel styleClass="long-text-area hidden" rendered="{!!AND(isTaskEditMode,idTaskConcerned==task.Id)}" >
                 <apex:outputText value="{!task.AM_Support_Required_from_Account__c}"   />
                 <a href="#" class="show-less">[show less]</a>
@@ -79,9 +89,14 @@
 							<apex:inputField value="{!task.Status}" rendered="{!AND(isTaskEditMode,idTaskConcerned==task.Id)}"/>
 					</apex:column>
 
+          <apex:column headerValue="End Date" styleClass="narrow-table-column">
+              <apex:outputField value="{!task.ActivityDate}" rendered="{!!AND(isTaskEditMode,idTaskConcerned==task.Id)}"/>
+              <apex:inputField value="{!task.ActivityDate}" rendered="{!AND(isTaskEditMode,idTaskConcerned==task.Id)}" required="true"/>
+          </apex:column>
+
 					<apex:column headerValue="Comments" >
 							<!-- <apex:outputField value="{!task.Description}" rendered="{!!AND(isTaskEditMode,idTaskConcerned==task.Id)}"/> -->
-							<apex:inputField value="{!task.Description}" rendered="{!AND(isTaskEditMode,idTaskConcerned==task.Id)}"/>
+							<apex:inputField value="{!task.Description}" rendered="{!AND(isTaskEditMode,idTaskConcerned==task.Id)}" style="width: 80%; height: 40px"/>
               <apex:outputPanel styleClass="long-text-area hidden" rendered="{!!AND(isTaskEditMode,idTaskConcerned==task.Id)}" >
                 <apex:outputText value="{!task.Description}"   />
                 <a href="#" class="show-less">[show less]</a>
@@ -92,14 +107,9 @@
               </apex:outputPanel>
 					</apex:column>
 
-					<apex:column headerValue="End Date" styleClass="narrow-table-column">
-							<apex:outputField value="{!task.ActivityDate}" rendered="{!!AND(isTaskEditMode,idTaskConcerned==task.Id)}"/>
-							<apex:inputField value="{!task.ActivityDate}" rendered="{!AND(isTaskEditMode,idTaskConcerned==task.Id)}"/>
-					</apex:column>
-
 			</apex:pageBlockTable>
 
-				<apex:commandLink value="New Milestone" action="{!newTask}" reRender="theBlock"  styleClass="btn" rendered="{!!isTaskEditMode}"/>
+				<apex:commandLink value="New Milestone" action="{!newTask}" reRender="theBlock"  styleClass="btn" rendered="{!AND(!isTaskEditMode, canEdit)}"/>
 				<br />
 				<br />
 				<apex:outputLink value="#" onclick="window.close();return false;" styleClass="btn">Back to Activities</apex:outputLink>

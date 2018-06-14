@@ -32,7 +32,7 @@ public class AMS_SettlementsAndOperationLoaderCtrl{
     
     private final static Integer COUNTRY_NAME =5;
     
-    public  Map<String,String> dpcPerBSP {get;set;}
+    //public  Map<String,String> dpcPerBSP {get;set;}
     
     
     //NOTE: here one Map should be enought for both bsp and cass... lazy man to rewrite
@@ -44,7 +44,7 @@ public class AMS_SettlementsAndOperationLoaderCtrl{
     public  Map<String,AMS_Settlement_System__c > unassignedISS{get;set;}
     
     
-        //used to save ISS BSP related to a specific country
+    //used to save ISS BSP related to a specific country
     public  Map<String,IATA_ISO_Country__c >countriesPerBSPName {get;set;}
     //used to store ISS CASS relat
     public  Map<String,IATA_ISO_Country__c >countriesPerCassName {get;set;}
@@ -117,12 +117,8 @@ public class AMS_SettlementsAndOperationLoaderCtrl{
                try{
                     StaticResource sr = [SELECT Id,NamespacePrefix,SystemModstamp FROM StaticResource WHERE Name = 'Ams_integration' LIMIT 1];
                     String prefix = sr.NamespacePrefix;
-                    if( String.isEmpty(prefix) ) {
-                        prefix = '';
-                    } else {
-                        //If has NamespacePrefix
-                        prefix += '__';
-                    }
+                    if( String.isNotEmpty(prefix) ) prefix += '__';
+                    else prefix = '';
                     //Get the path of MyJsonFile.json file in Zip static resource
                     String srPath = '/resource/' + sr.SystemModstamp.getTime() + '/' + prefix + 'Ams_integration/bsp3.csv'; 
                     PageReference pg = new PageReference( srPath );
@@ -232,8 +228,7 @@ public class AMS_SettlementsAndOperationLoaderCtrl{
         //update countries withing these lookup
         for(AMS_Settlement_System__c s:[select Id, NAme from AMS_Settlement_System__c  where Name in :countriesPerBSPName.keySet() ]){
           IATA_ISO_Country__c c = countriesPerBSPName.get(s.Name);
-          if(countries2Update.get(c.Id)!=null)
-              c = countries2Update.get(c.Id);
+          if(countries2Update.get(c.Id)!=null) c = countries2Update.get(c.Id);
           c.AMS_Settlement_System__c  = s.Id;
           countries2Update.put(c.Id, c);
         }
@@ -273,12 +268,9 @@ public class AMS_SettlementsAndOperationLoaderCtrl{
                try{
                     StaticResource sr = [SELECT Id,NamespacePrefix,SystemModstamp FROM StaticResource WHERE Name = 'Ams_integration' LIMIT 1];
                     String prefix = sr.NamespacePrefix;
-                    if( String.isEmpty(prefix) ) {
-                        prefix = '';
-                    } else {
-                        //If has NamespacePrefix
-                        prefix += '__';
-                    }
+                    if( String.isNotEmpty(prefix) ) prefix += '__';
+                    else prefix = '';
+
                     //Get the path of MyJsonFile.json file in Zip static resource
                     String srPath = '/resource/' + sr.SystemModstamp.getTime() + '/' + prefix + 'Ams_integration/operations.csv'; 
                     PageReference pg = new PageReference( srPath );
@@ -326,24 +318,17 @@ public class AMS_SettlementsAndOperationLoaderCtrl{
                    operation.Country__c = countryMap.get(iso).Id;
                    
                    operation.currencyIsoCode = curr;
-                   if(lastLetter=='D')
-                       operation.Market__c ='Domestic';
-                   else 
-                       operation.Market__c ='International';
-                   if(type=='BSP'){
-                       operation.Settlement__c= countryMap.get(iso).AMS_Settlement_System__c;
-                   }
+                   if(lastLetter=='D') operation.Market__c ='Domestic';
+                   else operation.Market__c ='International';
+
+                   if(type=='BSP') operation.Settlement__c= countryMap.get(iso).AMS_Settlement_System__c;
                    else{
                        operation.Settlement__c= countryMap.get(iso).AMS_Settlement_System_CASS__c;
                        //: EXP (E) , IMP (I) , Courier (C) , Local (L)
-                       if(initLetter=='E')
-                           operation.CASS_Operations__c = 'EXP';
-                       if(initLetter=='I')
-                           operation.CASS_Operations__c = 'IMP' ;
-                       if(initLetter=='C')
-                           operation.CASS_Operations__c = 'Courier';
-                       if(initLetter=='L')
-                           operation.CASS_Operations__c = 'Local';
+                       if(initLetter=='E') operation.CASS_Operations__c = 'EXP';
+                       if(initLetter=='I') operation.CASS_Operations__c = 'IMP' ;
+                       if(initLetter=='C') operation.CASS_Operations__c = 'Courier';
+                       if(initLetter=='L') operation.CASS_Operations__c = 'Local';
                    }
                    operations.put(opName ,operation);
                 }

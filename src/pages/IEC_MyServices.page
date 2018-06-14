@@ -82,11 +82,11 @@
 			                    <apex:outputpanel id="panelAccessEBro" layout="none" rendered="{!bProdAccessEBro}">
 			                    	<tr class="listing-item">
 				                        <td class="service-name" data-label="Service name">
-				                            E-Broadcast
+				                            eBroadcast
 				                        </td>
 				                        <td class="link" data-label="Link">
 				                            <apex:commandLink action="{!NavigateTo}">
-												E-Broadcast
+												eBroadcast
 												<apex:param name="sPageName" value="IECEBC_Dashboard" assignTo="{!sPageName}"/>
 												<apex:param name="sProductCode" value="EBC" assignTo="{!sProductCode}"/>
 						                    </apex:commandLink>

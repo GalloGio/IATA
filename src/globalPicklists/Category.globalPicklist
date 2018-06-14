@@ -209,10 +209,6 @@
         <default>false</default>
     </globalPicklistValues>
     <globalPicklistValues>
-        <fullName>Other Equipment Manufacturer</fullName>
-        <default>false</default>
-    </globalPicklistValues>
-    <globalPicklistValues>
         <fullName>Other Private Sector Association</fullName>
         <default>false</default>
     </globalPicklistValues>

@@ -1,0 +1,85 @@
+<messaging:emailTemplate subject="{!$Label.ISSP_Email_IataPortal} - {!$Label.ISSP_Email_AccessRejected_subject1}
+{!IF(relatedTo.Portal_Application__r.Name == 'Treasury Dashboard - Premium','Treasury Dashboard Premium', relatedTo.Portal_Application__r.Name)}
+{!$Label.ISSP_Email_AccessRejected_subject2}"
+recipientType="Contact" language="{!CASE(relatedTo.Contact__r.Preferred_Language__c, 'Chinese','zh_CN','Thai', 'th','Vietnamese', 'vi','Arabic', 'ar', 'Korean', 'ko', 'German','DE', 'English','EN', 'French','FR', 'Italian','IT', 'Danish','da', 'Spanish','es', 'Dutch','nl', 'Finnish','fi', 'Portuguese','pt', 'Swedish','sv', 'Polish','pl', 'Norweigian','no',  'Japanese','ja','Portuguese','pt','Indonesian', 'in',   'EN')}" relatedToType="Portal_Application_Right__c">
+<messaging:htmlEmailBody >
+<div style="margin:auto; width:600px">
+ <span style="font-family:Open Sans,GillSansMT,Lucida Sans Unicode, Lucida Grande, sans-serif;color:#004577;">  
+ <apex:image value="https://iata--c.eu3.content.force.com/servlet/servlet.ImageServer?id=015w0000004lIxL&oid=00D2000000008TF&lastMod=1246550288000"/>
+<!--<apex:image value="{!$Label.ISSP_Email_PortalUrl}servlet/servlet.ImageServer?id=0152000000111UE&oid=00D2000000008TF"/>--><BR/>
+
+<i>{!$Label.ISSP_Email_do_not_reply}</i><p />
+{!$Label.ISSP_Email_Dear_Pre} {!relatedTo.Contact__r.Salutation} {!relatedTo.Contact__r.FirstName} {!relatedTo.Contact__r.LastName}{!$Label.ISSP_Email_Dear_Post}<BR/>
+<BR/>
+{!$Label.ISSP_Email_AccessRejected1} {!relatedTo.Portal_Application__r.Name} {!$Label.ISSP_Email_AccessRejected4_CNS}.<BR/>
+
+<BR/>
+
+<apex:outputPanel rendered="{!relatedTo.Access_Status_Reason__c != ''}" >
+{!$Label.ISSP_Email_Rejected_Reason} {!relatedTo.Access_Status_Reason__c}
+<BR/><BR/>
+</apex:outputPanel>
+
+{!$Label.ISSP_Email_Log_Case_CNS}
+
+<a href="{!$Label.ISSP_Email_PortalUrl_CNS}ISSP_FAQ2Case?retURL=%2FISSP_FAQ2Case">{!$Label.ISSP_Email_Here}</a>.<BR/>
+
+<br />
+{!$Label.ISSP_Email_ThankYou}<BR/>
+<BR/>
+{!$Label.ISSP_Email_CNS_Service}<BR/>
+
+
+
+<p>
+<!--The URL of the following image is the one of PROD-->
+<!--<apex:image value="https://iata--transform--c.cs18.content.force.com/servlet/servlet.ImageServer?id=01511000000VVJN" width="176" height="89" />-->
+<!--<apex:image value="https://iata--transform--c.cs18.content.force.com/servlet/servlet.ImageServer?id=01511000000VVJN" width="176" height="89" />-->
+
+<!--
+<apex:outputPanel rendered="{!relatedTo.Portal_Application__r.Name = 'Treasury Dashboard'}" >
+<a href='http://www.iata.org/services/finance/Pages/treasury-dashboard.aspx'>
+<img src='https://iata--c.eu3.content.force.com/servlet/servlet.ImageServer?id=015w0000002q9vF&oid=00D2000000008TF&lastMod=1435050326000' height='40%' width='20%' />
+</a>
+</apex:outputPanel>
+
+<apex:outputPanel rendered="{!relatedTo.Portal_Application__r.Name = 'Treasury Dashboard - Premium'}" >
+<a href='http://www.iata.org/services/finance/Pages/treasury-dashboard.aspx'>
+<img src='https://iata--c.eu3.content.force.com/servlet/servlet.ImageServer?id=015w0000002q9vF&oid=00D2000000008TF&lastMod=1435050326000' height='40%' width='20%' />
+</a>
+</apex:outputPanel>
+
+<apex:outputPanel rendered="{!AND(relatedTo.Portal_Application__r.Name != 'Treasury Dashboard - Premium', relatedTo.Portal_Application__r.Name != 'Treasury Dashboard')}" >
+<a href='http://www.iata.org/customer-portal/Pages/index.aspx'>
+<img src='https://iata--c.eu3.content.force.com/servlet/servlet.ImageServer?id=015w0000002ZArv&oid=00D2000000008TF&lastMod=1428578119000' />
+</a>
+</apex:outputPanel>
+-->
+<!--
+{!
+CASE(
+relatedTo.Portal_Application__r.Name,
+"Treasury Dashboard",
+'<a href=\"http://www.iata.org/services/finance/Pages/treasury-dashboard.aspx\">
+<img src=\"https://iata--c.eu3.content.force.com/servlet/servlet.ImageServer?id=015w0000002q9vF&oid=00D2000000008TF&lastMod=1435050326000\" height=\"40%\" width=\"20%\" />',
+
+"Treasury Dashboard - Premium",
+'<a href=\"http://www.iata.org/services/finance/Pages/treasury-dashboard.aspx\">
+<img src=\"https://iata--c.eu3.content.force.com/servlet/servlet.ImageServer?id=015w0000002q9vF&oid=00D2000000008TF&lastMod=1435050326000\" height=\"40%\" width=\"20%\" />',
+
+'<a href=\"http://www.iata.org/customer-portal/Pages/index.aspx\">
+<img src=\"https://iata--c.eu3.content.force.com/servlet/servlet.ImageServer?id=015w0000002ZArv&oid=00D2000000008TF&lastMod=1428578119000 />'
+)}
+-->
+
+</p>
+
+
+<apex:image value="https://iata--c.eu3.content.force.com/servlet/servlet.ImageServer?id=015w0000004lJ0P&oid=00D2000000008TF&lastMod=1392385307000"/>
+<!--<apex:image value="{!$Label.ISSP_Email_PortalUrl}servlet/servlet.ImageServer?id=015w0000001yKkp&oid=00D2000000008TF"/>-->
+<BR/>
+
+</span>
+</div>
+</messaging:htmlEmailBody>
+</messaging:emailTemplate>

@@ -1,0 +1,3 @@
+<apex:page standardController="EF_Billing_Agreement__c" extensions="EF_BaHistoryController" showHeader="false" sidebar="true">
+	<apex:outputField value="{!con.EF_History__c}"/>
+</apex:page>

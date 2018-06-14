@@ -6,6 +6,9 @@ public class ISSP_Account{
     public string noirr {get;private set;}
     public boolean isIATAAgencyAcct {get;set;}
     public boolean isIATAAirlineAcct {get;set;}
+
+    //CNS
+    public String communityName{ get{ return ApexPages.currentPage().getParameters().get('CommunityName'); }set;}
     
     public ISSP_Account( ){
         isIATAAgencyAcct = false;
@@ -15,7 +18,7 @@ public class ISSP_Account{
 
         AccountList =new List<Account>([select id , Name , Field_Head_Office__c ,Quality__c , Last_SIDRA_Date__c, BillingCountry, BillingCity, BillingStreet, ShippingCountry ,ShippingCity ,ShippingStreet, Phone , Fax , 
                                                 Admission_Date__c , TradeName__c , Airline_designator__c, Sector__c, Category__c, Location_Type__c, IATACode__c, IATA_ISO_Country__r.Name, Accumulated_Irregularities__c,
-                                        		Membership_status__c, Fin_statements_submission_deadline__c, ICAO_designator__c
+                                                Membership_status__c, Fin_statements_submission_deadline__c, ICAO_designator__c
                                                    From Account
                                                    Where Id =: AccountId ]);
                                                     

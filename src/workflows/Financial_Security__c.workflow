@@ -479,7 +479,7 @@
     </rules>
     <rules>
         <fullName>SARA Security Status %3D Expired2 and Region %3C%3E ASPAC</fullName>
-        <active>true</active>
+        <active>false</active>
         <criteriaItems>
             <field>Financial_Security__c.Unlimited_Security__c</field>
             <operation>equals</operation>
@@ -512,7 +512,7 @@
     </rules>
     <rules>
         <fullName>SARA Security Status %3D Expired2 and Region %3D ASPAC</fullName>
-        <active>true</active>
+        <active>false</active>
         <criteriaItems>
             <field>Financial_Security__c.Unlimited_Security__c</field>
             <operation>equals</operation>

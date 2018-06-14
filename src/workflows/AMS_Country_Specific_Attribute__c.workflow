@@ -16,7 +16,7 @@
             <type>FieldUpdate</type>
         </actions>
         <active>true</active>
-        <formula>ISNEW() || ISCHANGED(Location_Class__c) || ISCHANGED(IATA_ISO_Country__c)</formula>
+        <formula>IF(RecordType.DeveloperName=&quot;Irregularity_Threshold&quot;, ISNEW() || ISCHANGED(Location_Class__c) || ISCHANGED(IATA_ISO_Country__c), false)</formula>
         <triggerType>onAllChanges</triggerType>
     </rules>
 </Workflow>

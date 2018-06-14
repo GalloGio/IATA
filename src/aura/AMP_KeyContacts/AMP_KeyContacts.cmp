@@ -22,7 +22,7 @@
 			<!-- <th scope="col"><span class="slds-truncate">Actions</span></th> -->
             <th scope="col"><span class="slds-truncate">Name</span></th>
             <th scope="col"><span class="slds-truncate">Type</span></th>
-            <th scope="col"><span class="slds-truncate">Job Function</span></th>
+            <th scope="col"><span class="slds-truncate">Primary for</span></th>
             <th scope="col"><span class="slds-truncate">Title</span></th>
             <th scope="col"><span class="slds-truncate">Phone</span></th>
             <th scope="col"><span class="slds-truncate">Mobile</span></th>
@@ -35,7 +35,7 @@
              <!-- <td><c:AMP_EditSaveMenu /></td> -->
            <td><a href="{!'/'+contact.Id}" target="_blank">{!contact.Name}</a></td>
            <td> <aura:unescapedHtml value="{!contact.Airline_Contact_Type__c}"/></td>
-           <td>{!contact.Membership_Function__c}</td>
+           <td>{!contact.Function__c}</td>
            <td>{!contact.Title}</td>
            <td>{!contact.Phone}</td>
            <td>{!contact.MobilePhone}</td>

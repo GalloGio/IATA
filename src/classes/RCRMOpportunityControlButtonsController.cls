@@ -11,7 +11,7 @@ public with sharing class RCRMOpportunityControlButtonsController {
     public Boolean showSendForValidationButton {
         public get {
             String currentUserProfile = [SELECT Name FROM Profile WHERE Id = :UserInfo.getProfileId()].Name;
-            String allowedProfiles = 'MACS - Administrator,MACS - Customer Care,MACS - Direct Sales,MACS - Events - Worldtek,MACS - Field Sales,MACS - IATAN - TIESS,' + 
+            String allowedProfiles = 'MACS - Administrator,MACS - Product,MACS - Customer Care,MACS - Direct Sales,MACS - Events - Worldtek,MACS - Field Sales,MACS - IATAN - TIESS,' + 
             		'MACS - Marketing & Publishing,MACS - Strategic Partnerships,System Administrator,GDP - Administrator,IATA - Sales Director';
             String validStatuses = 'No validation yet,Rejected by PM';
             

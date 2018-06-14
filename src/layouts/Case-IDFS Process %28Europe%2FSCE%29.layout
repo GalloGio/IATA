@@ -7,7 +7,10 @@
     <customButtons>Reset_New_interactions</customButtons>
     <customButtons>Create_IFAP_case</customButtons>
     <customButtons>EasyUpload</customButtons>
-    <customButtons>SIDRA_Lite_Action</customButtons>
+    <customButtons>SIDRA_Lite_Action_NEW</customButtons>
+    <customButtons>Migrate_SAAM_Case</customButtons>
+    <customButtons>Create_SAAM_Case</customButtons>
+    <customButtons>E2CP__New_Comment</customButtons>
     <emailDefault>false</emailDefault>
     <excludeButtons>Delete</excludeButtons>
     <excludeButtons>Submit</excludeButtons>
@@ -196,11 +199,19 @@
             </layoutItems>
             <layoutItems>
                 <behavior>Readonly</behavior>
+                <field>Case_Email_Domain_Validation__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Readonly</behavior>
                 <field>SuppliedPhone</field>
             </layoutItems>
             <layoutItems>
                 <behavior>Edit</behavior>
                 <field>Account_Concerned__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>CNSCase__c</field>
             </layoutItems>
             <layoutItems>
                 <behavior>Edit</behavior>
@@ -303,6 +314,26 @@
         <layoutColumns>
             <layoutItems>
                 <behavior>Edit</behavior>
+                <field>Financial_Security_Amount__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>Financial_Security_Currency__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>Bank_Guarantee_requested__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>Bank_Guarantee_deadline__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>Bank_Guarantee_received__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
                 <field>Financial_Assessment_requested__c</field>
             </layoutItems>
             <layoutItems>
@@ -316,14 +347,6 @@
             <layoutItems>
                 <behavior>Edit</behavior>
                 <field>Local_Inspection_received__c</field>
-            </layoutItems>
-            <layoutItems>
-                <behavior>Edit</behavior>
-                <field>Bank_Guarantee_requested__c</field>
-            </layoutItems>
-            <layoutItems>
-                <behavior>Edit</behavior>
-                <field>Bank_Guarantee_received__c</field>
             </layoutItems>
             <layoutItems>
                 <behavior>Edit</behavior>
@@ -349,10 +372,6 @@
             </layoutItems>
             <layoutItems>
                 <behavior>Edit</behavior>
-                <field>Bank_Guarantee_deadline__c</field>
-            </layoutItems>
-            <layoutItems>
-                <behavior>Edit</behavior>
                 <field>Bank_Guarantee_amount__c</field>
             </layoutItems>
             <layoutItems>
@@ -362,6 +381,10 @@
             <layoutItems>
                 <behavior>Edit</behavior>
                 <field>Criteria_remarks__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>SIDRA_Exclude_from_report_exceptions__c</field>
             </layoutItems>
         </layoutColumns>
         <style>TwoColumnsLeftToRight</style>
@@ -385,6 +408,10 @@
             <layoutItems>
                 <behavior>Edit</behavior>
                 <field>Rejection_Withdrawal_remarks__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>Reason_for_change_of_Financial_result__c</field>
             </layoutItems>
         </layoutColumns>
         <style>TwoColumnsLeftToRight</style>

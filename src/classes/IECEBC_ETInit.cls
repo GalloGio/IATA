@@ -19,8 +19,11 @@ public class IECEBC_ETInit {
     
     public static Credentials setCredentials(){
         Credentials cr = new Credentials();
-        cr.Username = 'kejia.hu@cgi.com';
-        cr.Password  = 'Alban2016%';         
+        cr.Username  = IEC_Settings__c.getOrgDefaults().EBC_ExactTarget_Username__c;
+        cr.Password  = IEC_Settings__c.getOrgDefaults().EBC_ExactTarget_Password__c;
+                    
+        //cr.Username = 'kejia.hu@cgi.com';
+        //cr.Password  = 'Alban2016%';         
         return cr;
     } 
 }

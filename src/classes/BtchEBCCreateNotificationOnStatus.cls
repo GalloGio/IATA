@@ -214,7 +214,6 @@ global class BtchEBCCreateNotificationOnStatus implements Database.Batchable<sOb
 			} // end of if billingAcct.eBroadcast_Preferences__r
 		} // end for Zuora__CustomerAccount__c
 		
-		
 		// complete the information based on SubscriptionProductCharge/ProductRatePlan or Subscription
 		for ( Zuora__SubscriptionProductCharge__c subProdCharge : subProdChargeIdToObjectMap.values())
 		{
@@ -259,8 +258,8 @@ global class BtchEBCCreateNotificationOnStatus implements Database.Batchable<sOb
 			if (billingAccountId != null) {
 				EBC_Account_Notification__c accNotification = billingAccountIdToEbcAccountNotificationMap.get(billingAccountId);
 				
-				Integer numOfEmailSent = (Integer) campaignAggr.get('numOfEmailSent');
-				accNotification.Number_of_Email_Recipients_Last_Month__c = numOfEmailSent;
+				Decimal numOfEmailSentDEC = (Decimal)campaignAggr.get('numOfEmailSent');
+				accNotification.Number_of_Email_Recipients_Last_Month__c = (Integer) numOfEmailSentDEC;
 				
 				Integer numOfCampaigns =  (Integer) campaignAggr.get('numOfCampaigns');
 				accNotification.Number_of_Campaigns_Last_Month__c = numOfcampaigns;
@@ -343,5 +342,6 @@ global class BtchEBCCreateNotificationOnStatus implements Database.Batchable<sOb
 		System.debug( '\n\BillingAcct query num of recs:' + customerAccountList.size());
 		System.debug( 'BillingAcct query result:' + customerAccountList);
 	} // showQuery
-	*/
+	*/	 
 } // end of BtchEBCCreateNotificationOnStatus class
+

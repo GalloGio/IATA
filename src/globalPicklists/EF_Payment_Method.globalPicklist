@@ -24,6 +24,10 @@
         <fullName>ICCS payments</fullName>
         <default>false</default>
     </globalPicklistValues>
+    <globalPicklistValues>
+        <fullName>IRIS</fullName>
+        <default>false</default>
+    </globalPicklistValues>
     <masterLabel>E&amp;F Payment Method</masterLabel>
     <sorted>false</sorted>
 </GlobalPicklist>

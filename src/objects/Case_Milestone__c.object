@@ -21,10 +21,6 @@
         <type>Default</type>
     </actionOverrides>
     <actionOverrides>
-        <actionName>Follow</actionName>
-        <type>Default</type>
-    </actionOverrides>
-    <actionOverrides>
         <actionName>List</actionName>
         <type>Default</type>
     </actionOverrides>
@@ -49,6 +45,7 @@
     <deploymentStatus>Deployed</deploymentStatus>
     <enableActivities>false</enableActivities>
     <enableBulkApi>true</enableBulkApi>
+    <enableChangeDataCapture>false</enableChangeDataCapture>
     <enableFeeds>false</enableFeeds>
     <enableHistory>false</enableHistory>
     <enableReports>true</enableReports>
@@ -83,44 +80,54 @@
         <fullName>Classification_Phase__c</fullName>
         <externalId>false</externalId>
         <label>Classification Phase</label>
-        <picklist>
-            <picklistValues>
-                <fullName>Initial evaluation and approval</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Business clarification by DPC</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>PQ delivery and approval</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Development</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>UAT approval</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Deployment and Documentation</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Documentation Review</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Finalization</fullName>
-                <default>false</default>
-            </picklistValues>
-            <sorted>false</sorted>
-        </picklist>
         <required>false</required>
         <trackTrending>false</trackTrending>
         <type>Picklist</type>
+        <valueSet>
+            <valueSetDefinition>
+                <sorted>false</sorted>
+                <value>
+                    <fullName>Initial evaluation and approval</fullName>
+                    <default>false</default>
+                    <label>Initial evaluation and approval</label>
+                </value>
+                <value>
+                    <fullName>Business clarification by DPC</fullName>
+                    <default>false</default>
+                    <label>Business clarification by DPC</label>
+                </value>
+                <value>
+                    <fullName>PQ delivery and approval</fullName>
+                    <default>false</default>
+                    <label>PQ delivery and approval</label>
+                </value>
+                <value>
+                    <fullName>Development</fullName>
+                    <default>false</default>
+                    <label>Development</label>
+                </value>
+                <value>
+                    <fullName>UAT approval</fullName>
+                    <default>false</default>
+                    <label>UAT approval</label>
+                </value>
+                <value>
+                    <fullName>Deployment and Documentation</fullName>
+                    <default>false</default>
+                    <label>Deployment and Documentation</label>
+                </value>
+                <value>
+                    <fullName>Documentation Review</fullName>
+                    <default>false</default>
+                    <label>Documentation Review</label>
+                </value>
+                <value>
+                    <fullName>Finalization</fullName>
+                    <default>false</default>
+                    <label>Finalization</label>
+                </value>
+            </valueSetDefinition>
+        </valueSet>
     </fields>
     <fields>
         <fullName>End_Date__c</fullName>
@@ -291,16 +298,19 @@ TEXT( FLOOR( ( Time_With_Support__c  - FLOOR( Time_With_Support__c ) ) * 60 ) ) 
         <fullName>Type__c</fullName>
         <externalId>false</externalId>
         <label>Type</label>
-        <picklist>
-            <picklistValues>
-                <fullName>DPC Application Change Request</fullName>
-                <default>false</default>
-            </picklistValues>
-            <sorted>false</sorted>
-        </picklist>
         <required>false</required>
         <trackTrending>false</trackTrending>
         <type>Picklist</type>
+        <valueSet>
+            <valueSetDefinition>
+                <sorted>false</sorted>
+                <value>
+                    <fullName>DPC Application Change Request</fullName>
+                    <default>false</default>
+                    <label>DPC Application Change Request</label>
+                </value>
+            </valueSetDefinition>
+        </valueSet>
     </fields>
     <label>Case Milestone</label>
     <nameField>
@@ -318,4 +328,5 @@ TEXT( FLOOR( ( Time_With_Support__c  - FLOOR( Time_With_Support__c ) ) * 60 ) ) 
         <errorConditionFormula>End_Date__c &lt;  Milestone_Date__c</errorConditionFormula>
         <errorMessage>The End Date must be greater than the Milestone Date.</errorMessage>
     </validationRules>
+    <visibility>Public</visibility>
 </CustomObject>

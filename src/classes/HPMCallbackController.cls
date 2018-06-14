@@ -52,7 +52,24 @@ public with sharing class HPMCallbackController {
      *    callback should not be trusted. 
      */
     public Boolean validateCallbackSignature() {
-      HPM_Setting__c hpmsetting = HPM_Setting__c.getInstance ('Zuora HPM Setting');
+      
+       String paramPageId = callbackparameters.get('id');
+
+      List<HPM_Setting__c> allSettings = HPM_Setting__c.getAll().values();
+      HPM_Setting__c hpmSetting;
+
+      for (HPM_Setting__c mySetting : allSettings) {
+        if (mySetting.HPM_Page_Id__c == paramPageId) { 
+          hpmSetting = mySetting;
+          break;
+        }
+      }
+
+      if (hpmSetting == null) {
+        hpmsetting = HPM_Setting__c.getInstance ('Zuora HPM Setting');
+      }
+
+      //HPM_Setting__c hpmsetting = HPM_Setting__c.getInstance ('Zuora HPM Setting');
       String apiSecurityKey = hpmsetting.HPM_Security_Token__c; 
       String pageId = hpmsetting.HPM_Page_Id__c;
       String tenantId = hpmsetting.HPM_Tenant_Id__c;

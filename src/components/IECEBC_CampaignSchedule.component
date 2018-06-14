@@ -81,7 +81,7 @@
                     <apex:outputPanel id="pageMessagesBlock">
                         <apex:pageMessages rendered="{!c.Is_Step5_Writable__c}" />
                         <apex:outputText rendered="{!NOT(ISBLANK(validationMessage))}">
-                            <p style="font-weight: bold; color: #c00;">{!validationMessage}</p>
+                            <p style="margin-top: 15px; font-weight: bold; color: #c00;">{!validationMessage}</p>
                         </apex:outputText>
                     </apex:outputPanel>
                 </div>

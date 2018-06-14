@@ -15,8 +15,14 @@ public with sharing class ISSP_CaseList {
         
     public boolean apList {get;set;}
     public boolean apUser {get;set;}
-    
+    private Id myAccountId {get;set;}
+
     public string soqlOrder {get;set;}
+    //basto1p
+    public Map<String,String> mapFieldsValue {get;set;}
+
+    //CNS
+    public String communityName{ get{ return ApexPages.currentPage().getParameters().get('CommunityName'); }set;}
 
     public String sortExpression {
      get { return sortExp; }
@@ -66,7 +72,7 @@ public with sharing class ISSP_CaseList {
             //TF
             apList = false;
             apUser = false;
-            User myUser = [select Id,ContactId from User where Id =:Userinfo.getUserId()];
+            User myUser = [select Id,ContactId, Contact.AccountId from User where Id =:Userinfo.getUserId()];
             if (myUser.ContactId != null){
 				List <Portal_Application_Right__c> appRightList = [Select Id From Portal_Application_Right__c
 																where Contact__c =: myUser.ContactId and
@@ -75,6 +81,7 @@ public with sharing class ISSP_CaseList {
 		        if (!appRightList.isEmpty()){
 		                apUser = true;
 		        }
+                myAccountId = myUser.Contact.AccountId;
             }
                 
             Id profileId=userinfo.getProfileId();
@@ -179,6 +186,18 @@ public with sharing class ISSP_CaseList {
         if(String.isNotBlank(selectedList))
 			queryConditions = caseListViewMap.get(selectedList).SOQL_Filter__c;             
                 
+        if(caseListViewMap.get(selectedList).isOwnedByMe__c)
+           queryConditions += ' AND OwnerId = \'' + UserInfo.getUserId() + '\' ';
+        if(caseListViewMap.get(selectedList).isMyAccount__c) {
+            List<User> lsUsers = [SELECT Id FROM User WHERE AccountId = :myAccountId AND Contact.User_Portal_Status__c IN ('Approved User','Approved Admin')];
+            String userIds = '';
+            for(User u : lsUsers) {
+                userIds += '\'' + u.Id  + '\',';
+            }
+            if(userIds.endsWith(',')) userIds = userIds.substring(0,userIds.length()-1);
+            if(userIds != '') queryConditions += ' AND OwnerId IN (' + userIds + ') ';
+        }
+
         return String.isNotBlank(queryConditions) ? queryConditions : ''; 
     }
     
@@ -196,10 +215,23 @@ public with sharing class ISSP_CaseList {
                 for(Schema.FieldSetMember f : this.getFields()) {
                     fieldPathSet.add(f.getFieldPath());
                 }
-
-                String query = '  Account.Name , Contact.Name   ';
+                //basto1p
+                String query = '  Account.Name , Contact.Name, Owner.Name  ';
+                Boolean hasStatus = false;
+                
                 for(String fieldPath  : fieldPathSet) {
+
+                    if(fieldPath.trim() == 'Status')
+                    {
+                        hasStatus = true;
+                    }
+
                     query +=  ',' + fieldPath;
+                }
+
+                if(!hasStatus)
+                {
+                    query += ', Status';
                 }
                 
                 string queryString ;
@@ -229,7 +261,25 @@ public with sharing class ISSP_CaseList {
     }
      
     Public List<Case> getCases(){
-        return (List<Case>)setCon.getRecords();
+        system.debug('basto1p - getCases BEGIN');
+        //basto1p
+        List<Case> casesList=new List<Case>();
+        casesList=setCon.getRecords();
+
+        system.debug('basto1p - getCases.casesList='+casesList);
+
+        mapFieldsValue=new Map<String, String>();
+        String statusFieldValMapKey='';
+        for (Case Item : casesList) {
+
+            //Add mapping for Status field
+            statusFieldValMapKey=ISSP_Case.STATUS_FLD_NAME+Item.Status;
+            mapFieldsValue.put(statusFieldValMapKey,ISSP_Case.getFieldMappedValue(ISSP_Case.STATUS_FLD_NAME,Item.Status));
+        }
+        system.debug('basto1p - mapFieldsValue='+mapFieldsValue);
+
+        return casesList;
+        //return (List<Case>)setCon.getRecords();
     }
     
 }

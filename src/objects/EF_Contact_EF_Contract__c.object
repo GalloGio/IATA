@@ -1,0 +1,169 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomObject xmlns="http://soap.sforce.com/2006/04/metadata">
+    <actionOverrides>
+        <actionName>Accept</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>CancelEdit</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Clone</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Delete</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Edit</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>List</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>New</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>SaveEdit</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Tab</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>View</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <allowInChatterGroups>false</allowInChatterGroups>
+    <compactLayoutAssignment>SYSTEM</compactLayoutAssignment>
+    <deploymentStatus>Deployed</deploymentStatus>
+    <description>E&amp;F CRM. Join object between Contact and Contracts.</description>
+    <enableActivities>true</enableActivities>
+    <enableBulkApi>true</enableBulkApi>
+    <enableChangeDataCapture>false</enableChangeDataCapture>
+    <enableFeeds>false</enableFeeds>
+    <enableHistory>false</enableHistory>
+    <enableReports>true</enableReports>
+    <enableSearch>true</enableSearch>
+    <enableSharing>true</enableSharing>
+    <enableStreamingApi>true</enableStreamingApi>
+    <fields>
+        <fullName>Contact_Account__c</fullName>
+        <externalId>false</externalId>
+        <formula>EF_Contact__r.Account.Name</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>Contact Account</label>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Contract_Name__c</fullName>
+        <externalId>false</externalId>
+        <formula>EF_Contract__r.Name</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>Contract Name</label>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>EF_Contact__c</fullName>
+        <deleteConstraint>SetNull</deleteConstraint>
+        <externalId>false</externalId>
+        <label>Contact</label>
+        <referenceTo>Contact</referenceTo>
+        <relationshipLabel>E&amp;F Contacts in E&amp;F Contracts (Contact)</relationshipLabel>
+        <relationshipName>EF_Contacts_in_EF_Contracts</relationshipName>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Lookup</type>
+    </fields>
+    <fields>
+        <fullName>EF_Contract__c</fullName>
+        <deleteConstraint>SetNull</deleteConstraint>
+        <externalId>false</externalId>
+        <label>Contract</label>
+        <referenceTo>Contract</referenceTo>
+        <relationshipLabel>E&amp;F Contacts in E&amp;F Contracts (Contract)</relationshipLabel>
+        <relationshipName>EF_Contacts_in_EF_Contracts</relationshipName>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Lookup</type>
+    </fields>
+    <fields>
+        <fullName>EF_Status__c</fullName>
+        <externalId>false</externalId>
+        <label>Status</label>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Picklist</type>
+        <valueSet>
+            <restricted>true</restricted>
+            <valueSetName>EF_Status</valueSetName>
+        </valueSet>
+    </fields>
+    <fields>
+        <fullName>Role__c</fullName>
+        <externalId>false</externalId>
+        <label>Role</label>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>MultiselectPicklist</type>
+        <valueSet>
+            <restricted>true</restricted>
+            <valueSetName>EF_Role</valueSetName>
+        </valueSet>
+        <visibleLines>4</visibleLines>
+    </fields>
+    <label>E&amp;F Contact in E&amp;F Contract</label>
+    <nameField>
+        <displayFormat>E&amp;F-CC-{0000000000}</displayFormat>
+        <label>E&amp;F Contact in E&amp;F Contract Name</label>
+        <type>AutoNumber</type>
+    </nameField>
+    <pluralLabel>E&amp;F Contacts in E&amp;F Contracts</pluralLabel>
+    <searchLayouts>
+        <lookupDialogsAdditionalFields>Role__c</lookupDialogsAdditionalFields>
+        <lookupDialogsAdditionalFields>EF_Status__c</lookupDialogsAdditionalFields>
+        <lookupPhoneDialogsAdditionalFields>Role__c</lookupPhoneDialogsAdditionalFields>
+        <lookupPhoneDialogsAdditionalFields>EF_Status__c</lookupPhoneDialogsAdditionalFields>
+        <searchFilterFields>Role__c</searchFilterFields>
+        <searchFilterFields>EF_Status__c</searchFilterFields>
+        <searchFilterFields>NAME</searchFilterFields>
+    </searchLayouts>
+    <sharingModel>ReadWrite</sharingModel>
+    <validationRules>
+        <fullName>CannotAddInactiveContact</fullName>
+        <active>true</active>
+        <description>The contact selected is Inactive for E&amp;F and can&apos;t be selected</description>
+        <errorConditionFormula>AND(
+ISNEW(),
+OR( 
+ISBLANK(TEXT(EF_Contact__r.EF_Status__c)),
+ISPICKVAL( EF_Contact__r.EF_Status__c,&apos;Inactive&apos;)
+)
+)</errorConditionFormula>
+        <errorMessage>The contact selected is Inactive for E&amp;F and can&apos;t be selected</errorMessage>
+    </validationRules>
+    <validationRules>
+        <fullName>StatusMustBeConsistentWithEFStatusConta</fullName>
+        <active>true</active>
+        <description>Status can&apos;t be active if Contact E&amp;F Status is Inactive</description>
+        <errorConditionFormula>AND(
+ISPICKVAL(EF_Status__c, &apos;Active&apos;),
+ISPICKVAL(EF_Contact__r.EF_Status__c, &apos;Inactive&apos;)
+)</errorConditionFormula>
+        <errorDisplayField>EF_Status__c</errorDisplayField>
+        <errorMessage>Status can&apos;t be active if Contact E&amp;F Status is Inactive</errorMessage>
+    </validationRules>
+    <visibility>Public</visibility>
+</CustomObject>

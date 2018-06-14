@@ -5,7 +5,7 @@
             <apex:stylesheet value="{!URLFOR($Resource.IDCard_Styles, 'IATA_IDCard.css')}" />
             <meta http-equiv="Content-Type" content="text/html; charset=utf-8" /> 
             <title>IATA/IATAN ID Card Online Platform</title>
-        </head> 
+        </head>
         
         <body onload="calculateDisplayedName();">
             
@@ -30,10 +30,10 @@
     }
     
     /**
-             * Function called when the iFrame sends back the filename (meaning it was uploaded, cropped and submitted)
-             */ 
-    function receiveFilenameFromIFrame(filename) {
-        document.getElementById('{!$Component.idcardForm.pb3.hdnFilename}').value = filename.data;
+     * Function called when cropper tool has finished uploaded the image
+     */ 
+    function receiveFilenameFromCropperTool(fileFullUri) {
+        document.getElementById('{!$Component.idcardForm.pb3.hdnFilename}').value = fileFullUri;
     }
     
     function scrollToTop() {
@@ -58,7 +58,7 @@
         if (this.document.getElementById('{!$Component.idcardForm.pb1.section1.itemLastName.txtLastName}'))
         {
             
-            var lastName = (removeDiacritics (this.document.getElementById('{!$Component.idcardForm.pb1.section1.itemLastName.txtLastName}').value));
+            var lastName = (removeDiacritics (this.document.getElementById('{!$Component.idcardForm.pb1.section1.itemLastName.txtLastName}').value)).trim();
             var middleInitial = (removeDiacritics (this.document.getElementById('{!$Component.idcardForm.pb1.section1.itemMiddleInitial.txtMiddleInitial}').value)).trim().toUpperCase();
             var firstName = (removeDiacritics (this.document.getElementById('{!$Component.idcardForm.pb1.section1.itemFirstName.txtFirstName}').value) );            
             var displayName = "";
@@ -159,7 +159,8 @@
     function workingFirstName() {
 
         var firstName = (removeDiacritics(this.document.getElementById('{!$Component.idcardForm.pb1.section1.itemFirstName.txtFirstName}').value));
-        document.getElementById('{!$Component.idcardForm.pb1.section1.itemFirstName.txtFirstName}').value = firstName.capitalize();
+        //document.getElementById('{!$Component.idcardForm.pb1.section1.itemFirstName.txtFirstName}').value = firstName.capitalize();
+        document.getElementById('{!$Component.idcardForm.pb1.section1.itemFirstName.txtFirstName}').value = firstName.toUpperCase();
 
         //removing apostrophe 
         var name = (removeDiacritics(this.document.getElementById('{!$Component.idcardForm.pb1.section1.itemFirstName.txtFirstName}').value));
@@ -175,7 +176,8 @@
     function workingLastName() {
 
         var lastName = (removeDiacritics(this.document.getElementById('{!$Component.idcardForm.pb1.section1.itemLastName.txtLastName}').value));
-        document.getElementById('{!$Component.idcardForm.pb1.section1.itemLastName.txtLastName}').value = lastName.capitalize();
+        //document.getElementById('{!$Component.idcardForm.pb1.section1.itemLastName.txtLastName}').value = lastName.capitalize();
+        document.getElementById('{!$Component.idcardForm.pb1.section1.itemLastName.txtLastName}').value = lastName.toUpperCase();
 
         //removing apostrophe 
         var name = (removeDiacritics(this.document.getElementById('{!$Component.idcardForm.pb1.section1.itemLastName.txtLastName}').value));
@@ -213,7 +215,7 @@
             var windowWidth = document.documentElement.clientWidth;
             var windowHeight = document.documentElement.clientHeight;
             var popupHeight = $("#popupLogin").height();
-            var popupWidth = $("#popupLogin").width(); 
+            var popupWidth = $("#popupLogin").width();
             
             // change the popupLogin content
             if ($(this).is("#DestinationGeography-EN")) {
@@ -360,7 +362,7 @@
                         
                         <p>
                             <h1>
-                               <apex:outputText >{!PageTitle}</apex:outputText>
+                                <apex:outputText >{!PageTitle}</apex:outputText>
                         </h1>
                     </p>
                     <apex:pageBlockSection columns="1" rendered="{!NOT(keyAccount&&personalPurchase)}" >
@@ -643,7 +645,6 @@ status="saveStatus" />-->
                             <p>
                                 <h1>
                                     <apex:outputText >{!PageTitle}</apex:outputText>
-                                    
                             </h1>
                         </p>
                         
@@ -819,11 +820,15 @@ rendered="{!isEmployee}" accept="application/pdf" />
                         <apex:inputHidden id="hdnFilename" value="{!hiddenFilename}" />
                     </apex:outputPanel>
                     
+                    <c:IDCard_Cropper sessionId="{!$Api.Session_ID}" fileId="{!PhotoFilename}" jsCallbackName="receiveFilenameFromCropperTool" />
                     
+
+
+            <!-- OLD IMAGE CROPPER & UPLOADER        
                     <apex:outputPanel id="divIframeViewer" style="width:100%" rendered="{!IsViewerDisplayed}">                   <apex:outputText styleClass="sectionHeader" rendered="{!CanRenderPage}"><b style="font-size:15px">{!$Label.ID_Card_Disclaimer}</b></apex:outputText>      
                         <center>
                             <iframe name="iframeImageViewer"
-                                    src="{!$Label.IDCard_CroppingTool}IDCardPreview.aspx?filename={!PhotoFilename}&sid={!$API.Session_ID}"
+                                    src="{!$Label.IDCard_CroppingTool}IDCardPreview.aspx?filename={!PhotoFilename}&sid={!$Api.Session_ID}"
                                     frameborder="0" width="100%" height="380px"  style="padding-left: 150px;">iFrames not supported</iframe>                                         
                             <br/>                                          
                             <apex:commandLink styleClass="btn-BlueButtonWAR"  onclick="ShowHideDiv()" rerender="divIframeViewer,outputPanelIframe">
@@ -841,15 +846,14 @@ rendered="{!isEmployee}" accept="application/pdf" />
                                         <apex:pageMessage id="pmImage"   summary="{!$Label.IDCard_UploadCropImage}" severity="error" rendered="{!HasNotUploadedImage}" />
                                     </apex:outputPanel> 
                                     <iframe id="iframeCropping" name="iframeCropping"
-                                            src="{!$Label.IDCard_CroppingTool}Crop.aspx?filename={!PhotoFilename}&sid={!$API.Session_ID}&lang={!SelectedLanguage}"
+                                            src="{!$Label.IDCard_CroppingTool}Crop.aspx?filename={!PhotoFilename}&sid={!$Api.Session_ID}&lang={!SelectedLanguage}"
                                             frameborder="0" width="100%" height="100%">iFrames not supported
                                     </iframe>                                                                            
                                 </td>
                             </tr>
                         </table>
                     </apex:outputPanel>
-                    
-                    
+            -->        
                     
                     <table  style="width: 85%;padding-left: 2px; padding-left: 2px">
                         <tr>
@@ -935,7 +939,7 @@ rendered="{!isEmployee}" accept="application/pdf" />
                             <table id="expediteTable">
                                 <tr>
                                     <td style="width: 170px">
-                                        <span class="labelCol">{!$Label.IDCard_Expedite_Delivery}</span>
+                                        <span class="labelCol">{!$Label.IDCard_Expedite_Delivery}</span>                                          
                                     </td>
                                     <td>
                                         <apex:inputField id="chckExpedite" value="{!IDCardApplicationNR.IDCard_Expedite_Delivery__c}">
@@ -943,10 +947,10 @@ rendered="{!isEmployee}" accept="application/pdf" />
                                         </apex:inputField>
                                         &nbsp;&nbsp; 
                                         <apex:outputText id="lblExpedite" value="{!expediteFees} {!IDCardApplicationNR.CurrencyIsoCode}" label="" rendered="{!IsExpediteAvailable}" />
-                                    </td>
+                                    </td>                                     
                                 </tr>
                             </table>
-                            
+                                  <span>{!$Label.IDCard_Expedite_Note}</span>                             
                         </apex:actionRegion>
                         <script> 
                         var tableStyle = document.getElementById('expediteTable').style;                                

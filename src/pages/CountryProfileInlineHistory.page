@@ -1,0 +1,28 @@
+<apex:page standardController="Country_Profile__c" extensions="CountryProfileInlineHistoryController" showHeader="true" sidebar="true">
+
+<apex:pageBlock >
+<apex:pageBlockTable value="{!historiesList}" var="row" >
+	<apex:column >
+		<apex:facet name="header">Date</apex:facet>
+		<apex:outputText value=" {!row.createdDate}" />
+	</apex:column>
+                
+	<apex:column >
+		<apex:facet name="header">User</apex:facet>
+		<apex:outputText value="{!row.createdByName}"/>
+	</apex:column>
+
+	<apex:column >
+		<apex:facet name="header">Action</apex:facet>
+		<apex:outputPanel rendered="{!NOT(row.isCustom)}">
+			<b>{!row.fieldName}</b> changed from <b>{!row.oldValue}</b> to <b>{!row.newValue}</b>
+		</apex:outputPanel>
+		<apex:outputPanel rendered="{!row.isCustom}">
+			<b>{!row.fieldName}</b> changed. Click <a href="/{!row.Id}" target="_blank" >here</a> to see the details.
+		</apex:outputPanel>
+	</apex:column>
+                
+</apex:pageBlockTable>
+</apex:pageBlock>
+
+</apex:page>

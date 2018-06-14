@@ -2,6 +2,7 @@
     <aura:attribute name="accountId" type="String" />
     <aura:attribute name="boardMonitoredActivities" type="Objective__c[]"/><!-- List of BMAs -->
     <aura:attribute name="bma" type="Objective__c"/><!-- BMA to update -->
+    <aura:attribute name="canEdit" type="Boolean" default="false" />
     <aura:attribute name="displayType" type="String" default="Account"/><!-- Variable that controlls what is displayed: "Account" or "Division" -->
 	<aura:attribute name="title" type="String" default="BMA/RSA/OSA"/>
     
@@ -49,7 +50,7 @@
                 </thead>
                 <tbody>
                     <aura:iteration items="{!v.boardMonitoredActivities}" var="bma" indexVar="index">
-                        <c:AMP_BoardMonitoredActivity bma="{!bma}" displayType="{!v.displayType}" index="{!index}"/>
+                        <c:AMP_BoardMonitoredActivity bma="{!bma}" accountId="{!v.accountId}" displayType="{!v.displayType}" index="{!index}"  canEdit="{!v.canEdit}"/>
                     </aura:iteration>
                 </tbody>
             </table>

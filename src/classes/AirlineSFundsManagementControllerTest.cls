@@ -119,6 +119,12 @@ private class AirlineSFundsManagementControllerTest {
         // check the export to excel list - should have 1 line (1 held + 1 due on the same line)
         system.assertEquals(1, controller.lstExportExcel.size());
 
+        controller.SaveLine();
+        controller.EditComments();
+        controller.CancelEditComments();
+        controller.SaveComments();
+        controller.RefreshEstimatedValues();
+
         test.stopTest();
     }
 }

@@ -116,6 +116,7 @@ public without sharing class OrderItem_Svc {
 	    		Mail_DTO mail = new Mail_DTO();
 	    		mail.targetObjectId = oi.Order.BillToContactId;
 	    		mail.whatId = oi.Id;
+                mail.orgWideEmailAddressId = Utility.getTextSetting('Ecom OrgWideEmailAddressId for notif');
 	    		mail.templateId = Utility.getTextSetting('Product shipped template Id');
 	    		mail.recipients = new List<String>();
 	    		//mail.recipients.add(oi.Order.ShipToContact_Email__c);
@@ -200,4 +201,80 @@ public without sharing class OrderItem_Svc {
             }
         }
     } //*** end of "setOrderToPaid"
+
+    /** Ecommerce Enhancements R2 **/
+    public static void setOrderItemAcceptedPaymentMethods(List<OrderItem> newList, Map<Id,OrderItem> oldMap) {
+        Set<String> idSet = new Set<String>();
+
+        if (newList != null) {
+            for (OrderItem orderItem : newList) {
+                OrderItem oldOrderItem = (oldMap != null ? oldMap.get(orderItem.Id) : null);
+                String oldPricebookEntryId = (oldOrderItem != null ? oldOrderItem.PricebookEntryId : null);
+                String newPricebookEntryId = orderItem.PricebookEntryId;
+                
+                if (oldPricebookEntryId == null) {
+                    oldPricebookEntryId = '';
+                }
+
+                if (newPricebookEntryId == null) {
+                    newPricebookEntryId = '';
+                }
+
+                System.debug('OrderItemId: ' + orderItem.Id + ', old PricebookEntryId: ' + oldPricebookEntryId + ', new PricebookEntryId: ' + newPricebookEntryId);
+
+                if (orderItem.Accepted_Payment_Methods__c == null || newPricebookEntryId.equals(oldPricebookEntryId) == false) {
+                    System.debug('    Adding OrderItemId: ' + orderItem.Id + ' for setting in future method');
+                    idSet.add(orderItem.Id);
+                }
+            }
+        }
+
+        if (idSet.isEmpty() == false) {
+            if (System.isBatch()) {
+                batchSetOrderItemAcceptedPaymentMethods(idSet);
+            } else if (! System.isFuture()) {
+                futureSetOrderItemAcceptedPaymentMethods(idSet);
+            }
+        }
+    }
+
+    @future
+    public static void futureSetOrderItemAcceptedPaymentMethods(Set<String> idSet) {
+        List<OrderItem> orderItemList = [SELECT Id, OrderId, PricebookEntry.Product2.Accepted_Payment_Methods__c FROM OrderItem WHERE Id IN :idSet];
+        Set<Id> orderIdSet = new Set<Id>();
+        List<Order> orderUpdateList = new List<Order>();
+
+        for (OrderItem orderItem : orderItemList) {
+            String acceptedPaymentMethods = orderItem.PricebookEntry.Product2.Accepted_Payment_Methods__c;
+
+            orderItem.Accepted_Payment_Methods__c = acceptedPaymentMethods;
+
+            orderIdSet.add(orderItem.OrderId);
+        }
+
+        update orderItemList;
+
+        for (Id orderId : orderIdSet) {
+            orderUpdateList.add(new Order(Id = orderId));
+        }
+
+        update orderUpdateList;
+    }
+
+    public static void batchSetOrderItemAcceptedPaymentMethods(Set<String> idSet) {
+        List<OrderItem> orderItemList = [SELECT Id, OrderId, PricebookEntry.Product2.Accepted_Payment_Methods__c FROM OrderItem WHERE Id IN :idSet];
+        Set<Id> orderIdSet = new Set<Id>();
+        List<Order> orderUpdateList = new List<Order>();
+
+        for (OrderItem orderItem : orderItemList) {
+            orderIdSet.add(orderItem.OrderId);
+        }
+
+        for (Id orderId : orderIdSet) {
+            orderUpdateList.add(new Order(Id = orderId));
+        }
+
+        update orderUpdateList;
+    }
+
 }

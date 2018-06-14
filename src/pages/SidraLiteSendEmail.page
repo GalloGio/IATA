@@ -1,0 +1,113 @@
+<apex:page standardController="Case" extensions="SidraLiteSendEmailController" >
+
+  <apex:form id="mainForm">
+    <apex:actionFunction name="updateSection" action="{!findTemplates}" rerender="mainForm" status="Loading"/>
+
+    <c:Loading />
+
+    <apex:pageMessages id="errors" />
+
+    <apex:sectionHeader title="SIDRA Lite Send Single Email" subtitle="{!cse.CaseNumber}"/>
+
+    <apex:pageBlock id="filters" mode="edit" rendered="{!cse!=null}">
+      <apex:pageBlockButtons location="bottom">
+          <apex:commandButton value="Cancel" action="{!returnToCase}" immediate="true" />
+          <apex:commandButton value="Continue" action="{!goToCongaSendEmail}" rerender="mainForm" status="Loading"
+            onclick="if(!confirm('Please note that the below field(s) from the action type will be updated immediately when you click continue, even if you click cancel from the following steps.')) return false;" />
+      </apex:pageBlockButtons>
+
+      <apex:pageBlockSection id="step1" columns="1" showHeader="true" title="Where do you want to send the email from?">
+        <apex:pageBlockSectionItem >
+          <apex:outputLabel value=""/>
+          <apex:selectRadio title="title" value="{!selectedToCase}" >
+              <apex:selectOption itemValue="current" itemLabel="(This Case) {!cse.CaseNumber} {!cse.Subject}"/>
+              <apex:selectOption itemValue="parent" itemLabel="(Parent Case) {!cse.Parent.CaseNumber} {!cse.Parent.Subject}" itemDisabled="{!cse.Parent==null}"/>
+          </apex:selectRadio>
+        </apex:pageBlockSectionItem>
+      </apex:pageBlockSection>
+
+      <apex:pageBlockSection id="step2" columns="1" showHeader="true" title="Select Action Type">
+        <apex:pageBlockSectionItem >
+          <apex:outputLabel value="Select Action Type"/>
+          <apex:selectList title="title" value="{!selectedType}" size="1" onchange="updateSection();" >
+            <!--<apex:actionSupport event="onchange" rerender="mainForm" status="Loading"/>-->
+            <apex:selectOption itemValue="" itemLabel="--Select--"/>
+            <apex:selectOption itemValue="IRR" itemLabel="Irregularity"/>
+            <apex:selectOption itemValue="IRRWD" itemLabel="Irregularity Withdrawal"/>
+            <apex:selectOption itemValue="DEF" itemLabel="Default/Suspension"/>
+            <apex:selectOption itemValue="DEFWD" itemLabel="Default/Suspension Withdrawal"/>
+            <apex:selectOption itemValue="REI" itemLabel="Reinstatement"/>
+            <apex:selectOption itemValue="NOT" itemLabel="Notice of Termination"/>
+            <apex:selectOption itemValue="TER" itemLabel="Termination"/>
+          </apex:selectList>
+        </apex:pageBlockSectionItem>
+
+        <br/>
+        <apex:outputLabel value="Update fields" rendered="{!selectedType!=''}"/>
+
+        <apex:inputField value="{!dummyCase.NOI_sent__c}" rendered="{!selectedType=='IRR'}"/>
+        <apex:inputField value="{!dummyCase.Update_AIMS_IRR__c}" rendered="{!selectedType=='IRR'}"/>
+
+        <apex:inputField value="{!dummyCase.Confirm_IRR_Withdrawal_to_AG__c}" rendered="{!selectedType=='IRRWD'}"/>
+        <apex:inputField value="{!dummyCase.Update_AIMS_IRRWITH__c}" rendered="{!selectedType=='IRRWD'}"/>
+
+        <apex:inputField value="{!dummyCase.Update_AIMS_DEF__c}" rendered="{!selectedType=='DEF'}"/>
+        <apex:inputField value="{!dummyCase.Inform_Agent_DEF__c}" rendered="{!selectedType=='DEF'}"/>
+        <apex:inputField value="{!dummyCase.Inform_Airlines_Locally_Default__c}" rendered="{!selectedType=='DEF'}"/>
+        <apex:inputField value="{!dummyCase.Issue_Declaration_of_Default_to_Agent__c}" rendered="{!selectedType=='DEF'}"/>
+        <apex:inputField value="{!dummyCase.Shut_Down_TKT_System_GDS_and_BSPlink__c}" rendered="{!selectedType=='DEF'}"/>
+        <apex:inputField value="{!dummyCase.Deactivate_Agent_in_Systems__c}" rendered="{!selectedType=='DEF'}"/>
+
+        <apex:inputField value="{!dummyCase.Confirm_Reinstatement_to_AG__c}" rendered="{!selectedType=='DEFWD'}"/>
+        <apex:inputField value="{!dummyCase.Activate_Agent_in_Systems__c}" rendered="{!selectedType=='DEFWD'}"/>
+        <apex:inputField value="{!dummyCase.Open_TKT_System__c}" rendered="{!selectedType=='DEF Withdrawal'}"/>
+        <apex:inputField value="{!dummyCase.Inform_Airlines_REI_DEFWD__c}" rendered="{!selectedType=='DEFWD'}"/>
+        <apex:inputField value="{!dummyCase.Ticketing_Authority_Re_assigned__c}" rendered="{!selectedType=='DEFWD'}"/>
+        <apex:inputField value="{!dummyCase.Update_AIMS_REI_DEFWITH__c}" rendered="{!selectedType=='DEFWD'}"/>
+
+        <apex:inputField value="{!dummyCase.Confirm_Reinstatement_to_AG__c}" rendered="{!selectedType=='REI'}"/>
+        <apex:inputField value="{!dummyCase.Activate_Agent_in_Systems__c}" rendered="{!selectedType=='REI'}"/>
+        <apex:inputField value="{!dummyCase.Open_TKT_System__c}" rendered="{!selectedType=='REI'}"/>
+        <apex:inputField value="{!dummyCase.Inform_Airlines_REI_DEFWD__c}" rendered="{!selectedType=='REI'}"/>
+        <apex:inputField value="{!dummyCase.Ticketing_Authority_Re_assigned__c}" rendered="{!selectedType=='REI'}"/>
+        <apex:inputField value="{!dummyCase.Update_AIMS_REI_DEFWITH__c}" rendered="{!selectedType=='REI'}"/>
+
+        <apex:inputField value="{!dummyCase.NOT_Sent__c}" rendered="{!selectedType=='NOT'}"/>
+
+        <apex:inputField value="{!dummyCase.Notify_TER_to_AG__c}" rendered="{!selectedType=='TER'}"/>
+        <apex:inputField value="{!dummyCase.Update_AIMS_TER__c}" rendered="{!selectedType=='TER'}"/>
+      </apex:pageBlockSection>
+
+      <apex:pageBlockSection id="step3" columns="1" showHeader="true" title="Do you want to use these templates?" rendered="{!selectedType!=null}">
+        <apex:pageBlockSectionItem >
+          <apex:outputLabel value="Email Template"/>
+          <apex:pageBlockSectionItem >
+            <apex:outputLink value="/{!emailtemplate.Id}" rendered="{!emailtemplate!=null}">{!emailtemplate.Name}</apex:outputLink>
+            <apex:outputLabel value="Not found" rendered="{!emailtemplate==null}"/>
+          </apex:pageBlockSectionItem>
+        </apex:pageBlockSectionItem>
+        <apex:pageBlockSectionItem >
+          <apex:outputLabel value="Merge Template"/>
+          <apex:pageBlockSectionItem >
+            <apex:pageBlockSectionItem >
+              <apex:outputLink value="/{!mergeTemplate.Id}" rendered="{!mergeTemplate!=null}">{!mergeTemplate.Name}</apex:outputLink>
+              <apex:outputLink value="/{!congaTemplate.Id}" rendered="{!congaTemplate!=null}">{!congaTemplate.Name}</apex:outputLink>
+            </apex:pageBlockSectionItem>
+            <apex:outputLabel value="Not found" rendered="{!AND(mergeTemplate==null,congaTemplate==null)}"/>
+          </apex:pageBlockSectionItem>
+        </apex:pageBlockSectionItem>
+
+        <apex:pageBlockSectionItem >
+          <apex:outputLabel value=""/>
+          <apex:selectRadio title="title" value="{!selectedCustomize}" >
+              <apex:selectOption itemValue="false" itemLabel="Use Templates" itemDisabled="{!AND(congaTemplate==null,mergeTemplate==null)}"/>
+              <apex:selectOption itemValue="true" itemLabel="Select Manually"/>
+          </apex:selectRadio>
+        </apex:pageBlockSectionItem>
+      </apex:pageBlockSection>
+
+    </apex:pageBlock>
+
+  </apex:form>
+
+</apex:page>

@@ -9,6 +9,7 @@ public with sharing class AMP_OwnershipController {
     public Id IdConcerned {get; set;}
     private Id OwnershipRtId {get; set;}
 
+    public Boolean canEdit {get; set;}
 
     // The extension constructor initializes the private member
     // variable mysObject by using the getRecord method from the standard
@@ -20,8 +21,17 @@ public with sharing class AMP_OwnershipController {
 
         lstOwners = getOwners();
         lstSubsidiaries = getSubsidiaries();
+        canEdit = getCanEdit();
     }
 
+    @AuraEnabled
+    public static Boolean getCanEdit() {
+        Boolean canEdit = true;
+        if(!Schema.SObjectType.AMS_Account_Role__c.fields.Account__c.isUpdateable()) canEdit = false;
+        if(!Schema.SObjectType.AMS_Account_Role__c.fields.Owner_Account__c.isUpdateable()) canEdit = false;
+        if(!Schema.SObjectType.AMS_Account_Role__c.fields.Percentage__c.isUpdateable()) canEdit = false;
+        return canEdit;
+    }
 
     @AuraEnabled
     public static list<AMS_Account_Role__c> getOwners(Id AccountId) {

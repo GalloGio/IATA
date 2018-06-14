@@ -1,0 +1,235 @@
+<apex:page showHeader="false" sidebar="false" standardController="Account" extensions="ANG_RiskEventHistoryExtension">
+		
+	<apex:includeScript value="/support/console/37.0/integration.js"/>
+	<apex:includeScript value="{!$Resource.jquery2_1_4}"/>
+
+	<apex:variable var="accountLink" value="{!URLFOR($Action.Account.View, Account.Id)}"/>
+	<apex:variable var="newLink" value="{!URLFOR($Action.ANG_Agency_Risk_Event__c.New, null, ['CF00Nw0000008gnwL'=Account.Name, 'CF00Nw0000008gnwL_lkid'=Account.Id, 'retURL'=accountLink, 'saveURL'=accountLink])}"/>
+
+	<style>
+		.alignLeft{
+			text-align: left;
+		}
+		.alignRight{
+			text-align: right;
+		}
+		.commandButton{
+			margin: 1px;
+			padding: 0 3px;
+			text-decoration: none;
+		}
+		.paginatorWrap{
+			background: url("/img/alohaSkin/listFooter.png") repeat-x scroll 0 0 #F2F2F2;
+			border: 1px solid #EAEAEA;
+			background-color: #F3F3F3;
+			border-top: 1px solid #FFFFFF;
+			padding: 5px;
+		}
+	</style>
+
+	<script>
+		function navigate(url, title) {
+			if (sforce.console.isInConsole()){
+				sforce.console.getEnclosingPrimaryTabId(function (result) {
+					sforce.console.openSubtab(result.id , url, true, title, null);
+				});
+			}
+			else window.top.location.href = url;
+
+			return false;
+		}
+
+		function deleteRecord(id){
+
+			Visualforce.remoting.Manager.invokeAction(
+				'{!$RemoteAction.ANG_RiskEventHistoryExtension.deleteRecord}',
+				id, 
+				function(result, event){
+					if (event.status) {
+						resetPaginator();
+					} else {
+						$('[id$="errorMessage"]').find('.messageText').html(event.message);
+						$('[id$="errorMessage"]').show();
+					}
+				}
+			);
+
+			return false;
+		}
+
+		function bindLinks(){			
+			var links = [].slice.call(document.querySelectorAll(".targetTable a:not(.preventRedirection)"));
+			links.forEach(function(el){
+				if(el.innerHTML != 'Del'){
+					var linkURL = el.getAttribute("href");
+					var title = el.getAttribute('data-tabname');
+					el.addEventListener('click', function(e){
+						e.preventDefault();
+						e.stopPropagation();
+						navigate(linkURL, (title == null ? el.innerText : title));
+						return false;
+					}, false);
+				}
+			});
+		}
+
+		function openPopUp(Id) {
+			var w = 500;
+			var h = 500;
+			
+			// Fixes dual-screen position Most browsers Firefox
+			var dualScreenLeft = window.screenLeft != undefined ? window.screenLeft : screen.left;
+			var dualScreenTop = window.screenTop != undefined ? window.screenTop : screen.top;
+			width = window.innerWidth ? window.innerWidth : document.documentElement.clientWidth ? document.documentElement.clientWidth : screen.width;
+			height = window.innerHeight ? window.innerHeight : document.documentElement.clientHeight ? document.documentElement.clientHeight : screen.height;
+
+			var left = ((width / 2) - (w / 2)) + dualScreenLeft;
+			var top = ((height / 2) - (h / 2)) + dualScreenTop;
+
+			var newWindow = window.open(
+				'/apex/ANG_RiskEventPopUp?id='+Id,
+				'_blank',
+				'toolbar=no,status=no,directories=no,menubar=no,resizable=yes,scrollable=yes,width=' + w + ',height=' + h + ',top=' + top + ',left=' + left
+			);
+
+			// Puts focus on the newWindow
+			if (window.focus) {
+				newWindow.focus();
+			}
+
+			return false;
+		}
+	</script>
+
+	<apex:form styleClass="observed" >
+		<apex:actionFunction action="{!resetPaginator}" name="resetPaginator" immediate="true" reRender="pageBlock"/>
+
+		<apex:pageBlock title="{!$ObjectType.ANG_Agency_Risk_Event__c.LabelPlural}" mode="detail" id="pageBlock">
+
+			<apex:pageBlockButtons location="top" rendered="{!Account.ANG_IsNewGenAgency__c && $ObjectType.ANG_Agency_Risk_Event__c.createable}">
+				<input type="button" onclick="return navigate('{!newLink}', 'New {!$ObjectType.ANG_Agency_Risk_Event__c.Label}');" class="btn newButton" value="New {!$ObjectType.ANG_Agency_Risk_Event__c.Label}"/>
+			</apex:pageBlockButtons>
+
+			<!-- Output error/warning messages here -->
+			<apex:pageMessages />
+			<apex:outputPanel id="errorMessage" style="display: none;">
+				<apex:pageMessage summary="placeholder" severity="ERROR" strength="2" />
+			</apex:outputPanel>
+
+			<!-- Only show table if there are records returned -->
+			<apex:pageBlockTable styleClass="targetTable" title="Records" value="{!records}" var="r" rendered="{!records.size > 0}">
+				<apex:column headerValue="Action" rendered="{!OR($ObjectType.ANG_Agency_Risk_Event__c.updateable, $ObjectType.ANG_Agency_Risk_Event__c.deletable)}" styleClass="actionColumn">
+
+					<apex:outputPanel layout="None"  rendered="{!$ObjectType.ANG_Agency_Risk_Event__c.updateable}" >
+						<apex:outputLink value="/{!r.risk.Id}/e?retURL={!accountLink}&saveURL={!accountLink}'" styleClass="actionLink" html-data-tabName="{!r.risk.Name}">Edit</apex:outputLink>
+					</apex:outputPanel>
+
+					<apex:outputPanel layout="None" rendered="{!AND($ObjectType.ANG_Agency_Risk_Event__c.updateable, $ObjectType.ANG_Agency_Risk_Event__c.deletable)}" >
+						&nbsp;|&nbsp;
+					</apex:outputPanel>
+
+					<apex:outputPanel layout="None"  rendered="{!$ObjectType.ANG_Agency_Risk_Event__c.deletable}" >
+						<apex:outputLink onclick="if(confirm('Are you sure?')) return deleteRecord('{!r.risk.Id}')" styleClass="actionLink">Del</apex:outputLink>
+					</apex:outputPanel>
+				</apex:column>
+
+				<!-- Loop through list of field names to dynamically render the correct columns -->
+				<apex:repeat value="{!fieldNames}" var="fld">
+					<!-- Set correct style alignment based on values stored in fieldAlignMap -->
+					<apex:column headerClass="{!IF(isNumberField[fld], 'alignRight', 'alignLeft')}" styleClass="{!IF(isNumberField[fld], 'alignRight', 'alignLeft')}">
+					
+						<apex:facet name="header">
+							<apex:outputPanel layout="block">
+								<!-- Display header value valued on nameLabelMap ie: (AccountId -> Acount) -->
+								<apex:outputText value="{!$ObjectType.ANG_Agency_Risk_Event__c.fields[fld].Label}"/>
+							</apex:outputPanel>
+						</apex:facet>
+						
+						<!-- Exceptional rendering for multiple agencies type -->
+						<apex:outputPanel layout="none" rendered="{!AND(r.accountsInvolved.size > 1, OR(fld == 'Name', fld == 'ANG_Name_Link_FF__c', fld == 'ANG_Account_IATA_Code__c'))}">
+							<apex:outputLink styleclass="preventRedirection" onclick="return openPopUp('{!r.risk.Id}');">{!IF(fld == 'ANG_Account_IATA_Code__c', 'Multiple Agencies', r.risk.Name)}</apex:outputLink>
+						</apex:outputPanel>
+						<apex:outputPanel layout="none" rendered="{!OR(r.accountsInvolved.size = 1, AND(fld != 'Name', fld != 'ANG_Name_Link_FF__c', fld != 'ANG_Account_IATA_Code__c'))}">
+							<apex:outputField value="{!r.risk[fld]}"/>
+						</apex:outputPanel>
+					</apex:column>
+				</apex:repeat>
+			</apex:pageBlockTable>
+
+			<!-- Show notice if related list has no records -->
+			<apex:outputPanel layout="block" styleClass="noRecordsFound" rendered="{!records.size == 0}">
+				No records to display
+			</apex:outputPanel>
+
+			<!-- Add pagination toolbar to bottom of table if pageSize is defined -->
+			<apex:outputPanel layout="block" styleClass="paginatorWrap" rendered="{!records.size > 0}">
+				<div class="paginator">
+					<span class="prevNextLinks">
+						<!-- First Button -->
+						<span class="prevNext">
+							<!-- Show first button if page set has previous page-->
+							<apex:commandLink value="" action="{!paginator.first}" rendered="{!paginator.hasPrevious}" rerender="pageBlock" title="First">
+								<img class="first" src="/s.gif" alt="" />
+							</apex:commandLink>
+
+							<!-- Show disabled first button page set is on page 1-->
+							<apex:outputPanel rendered="{!NOT(paginator.hasPrevious)}">
+								<img class="firstoff" src="/s.gif" alt="" />
+							</apex:outputPanel>
+						</span>
+
+						<!-- Previous Button -->
+						<span class="prevNext">
+							<!-- Show previous button page set has previous page-->
+							<apex:commandLink value="" action="{!paginator.previous}" rendered="{!paginator.hasPrevious}" rerender="pageBlock">
+								<img class="prev" src="/s.gif" alt="" />Previous
+							</apex:commandLink>
+
+							<!-- Show disabled first button page set is on page 1-->
+							<apex:outputPanel rendered="{!NOT(paginator.hasPrevious)}">
+								<img class="prevoff" src="/s.gif" alt="" />Previous
+							</apex:outputPanel>
+						</span>
+
+						<!-- Next Button -->
+						<span class="prevNext">
+							<!-- Show next button if page set has next -->
+							<apex:commandLink value="" action="{!paginator.next}" rendered="{!paginator.hasNext}" rerender="pageBlock">
+								Next<img class="next" alt="Next" title="Next" src="/s.gif" />
+							</apex:commandLink>
+
+							<!-- Show disabled next button if page set has no next -->
+							<apex:outputPanel rendered="{!NOT(paginator.hasNext)}">
+								Next<img class="nextOff" alt="Next" title="Next" src="/s.gif" />
+							</apex:outputPanel>
+						</span>
+
+						<!-- Last Button -->
+						<span class="prevNext">
+							<!-- Show last button if page set has next -->
+							<apex:commandLink value="" action="{!paginator.last}" rendered="{!paginator.hasNext}" rerender="pageBlock" title="Last">
+								<img class="last" src="/s.gif" alt="" />
+							</apex:commandLink>
+
+							<!-- Show disabled last button if page set has no next -->
+							<apex:outputPanel rendered="{!NOT(paginator.hasNext)}">
+								<img class="lastoff" src="/s.gif" alt="" />
+							</apex:outputPanel>
+						</span>
+					</span>
+					<span class="right">
+						<!-- allow user to input page number of page set for direct navigation -->
+						Page&nbsp;
+						<apex:inputText value="{!paginator.pageNumber}" styleClass="pageInput">
+							<apex:actionSupport event="onchange" rerender="pageBlock"/>
+						</apex:inputText>of {!paginator.totalPages}
+					</span>
+				</div>
+			</apex:outputPanel>
+
+			<script>
+				bindLinks();
+			</script>
+		</apex:pageBlock>
+	</apex:form>
+</apex:page>

@@ -1,48 +1,87 @@
-<apex:page controller="ISSP_ContactList" tabStyle="Contact" action="{!initialization}"  standardStylesheets="false" showHeader="false" sidebar="false"  applyBodyTag="false" applyHtmlTag="false">
+<apex:page controller="ISSP_ContactList" tabStyle="Contact" action="{!initialization}"  standardStylesheets="false" showHeader="false" sidebar="false"  applyBodyTag="false" applyHtmlTag="false" >
  <html>
- <c:ISSP_Header ></c:ISSP_Header>    
+ <c:ISSP_Header  communityName="{!communityName}" ></c:ISSP_Header>
  <body>
+    <apex:includeScript value="https://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js" />
+    <apex:includeScript value="https://ajax.googleapis.com/ajax/libs/jqueryui/1.10.3/jquery-ui.min.js" />
     <div class="container">
- <c:ISSP_CustomNavigation />
+ <c:ISSP_CustomNavigation communityName="{!communityName}" />
 
     <script>
-    
+      $(document).ready(function() {
+        $(window).keydown(function(event){
+          if(event.keyCode == 13) {
+            event.preventDefault();
+            doSearch();
+            return false;
+          }
+        });
+      });      
+
+    // When document is ready
+    $(document).ready(function() {
+      onready();
+    });
+
+    function onready() {
+        // Color invalid domain in red
+        $(".domainpartred").each(function(){
+            var inner = $(this).html();
+            var innserSplited = inner.split('@');
+            var domainColorSpan = '<span class="colorred">'.concat('@').concat(innserSplited[1]).concat('</span>');
+            $(this).html(innserSplited[0]).append(domainColorSpan);
+            $('.colorred').css("color", "red");
+        });
+
+        // Color valid domain in green
+        $(".domainpartgreen").each(function(){
+            var inner = $(this).html();
+            var innserSplited = inner.split('@');
+            var domainColorSpan = '<span class="colorgreen">'.concat('@').concat(innserSplited[1]).concat('</span>');
+            $(this).html(innserSplited[0]).append(domainColorSpan);
+            $('.colorgreen').css("color", "green");
+        });
+
+        // Create Jquery tooltip only for the invalid email domain validation (cross)
+        $(".emadomvalinvpopup").tooltip();
+    }
+
     function selectAllCheckboxes(obj,receivedInputID){
-        var inputCheckBox = document.getElementsByTagName("input");                  
-        for(var i=0; i<inputCheckBox.length; i++){          
-            if(inputCheckBox[i].id.indexOf(receivedInputID)!=-1){                                     
+        var inputCheckBox = document.getElementsByTagName("input");
+        for(var i=0; i<inputCheckBox.length; i++){
+            if(inputCheckBox[i].id.indexOf(receivedInputID)!=-1){
                 inputCheckBox[i].checked = obj.checked;
             }
         }
     }
-    
+
     function showIdModal(){
-    	$('#idCardModal').modal('show');
+      $('#idCardModal').modal('show');
     }
-    
+
     function closeIdModal(){
-    	$('#idCardModal').modal('hide');
+      $('#idCardModal').modal('hide');
     }
-    
+
     function showReasonModal(){
-    	$('#inactiveReason').modal('show');
+      $('#inactiveReason').modal('show');
     }
-    
+
     function closeModal(){
-    	$('#inactiveReason').modal('hide');
+      $('#inactiveReason').modal('hide');
     }
-    
+
     function showRejectReasonModal(){
-    	$('#rejectionReason').modal('show');
+      $('#rejectionReason').modal('show');
     }
-    
+
     function closeRejectModal(){
-    	$('#rejectionReason').modal('hide');
+      $('#rejectionReason').modal('hide');
     }
-    
+
     </script>
 
-    
+
     <style type="text/css">
     a.alpha-link {
        font-weight: normal;
@@ -50,23 +89,26 @@
        padding: 0 4px;
        color: #015BA7 !important;
     }
-     
+
     a.alpha-link+a.alpha-link {
        border-left: 1px solid #CFCECE;
     }
-     
+
     a.alpha-link:hover {
        background-color: #e0f5fc !important;
     }
-     
+
     a.alpha-select {
        font-weight: bold;
        text-decoration: none;
        background-color: #C6E1FF;
        color: #000000 !important;
     }
+
+    /* Jquery tootip style customization */
+    .tooltip {font-size:13px;}
     </style>
-    
+
     <apex:form id="contactListForm">
 
     <apex:actionFunction name="next" action="{!setCon.next}" rerender="Contacts" />
@@ -74,15 +116,18 @@
     <apex:actionFunction name="first" action="{!setCon.first}" rerender="Contacts" />
     <apex:actionFunction name="last" action="{!setCon.last}" rerender="Contacts" />
     <apex:actionFunction name="refresh" action="{!refresh}" rerender="contactListForm" />
-    <apex:inputHidden value="{!selectedList}" id="selectedItemHidden"/> 
+    <apex:inputHidden value="{!selectedList}" id="selectedItemHidden"/>
+
+    <apex:actionFunction action="{!doSearch}" name="doSearch" rerender="Contacts"/>
+
     <!-- <apex:pageMessages /> -->
     <h4>{!$Label.ISSP_Company_Administration} <span class="glyphicon glyphicon-chevron-right small " aria-hidden="true"></span>
         {!$Label.ISSP_Contacts}<br />
          <small>{!$Label.ISSP_PageDescription_ISSP_ContactList}</small></h4>
-    
+
     <img src="/s.gif" alt="Contact" class="pageTitleIcon" title="Contact"/>
 <div class="row">
-<div class="col-md-4 col-sm-6 col-xs-12">   
+<div class="col-md-4 col-sm-6 col-xs-12">
     <select id="testSelect" class="form-control selector" onchange="$('[id$=selectedItemHidden]').val($(this).val());refresh();">
         <apex:repeat value="{!ListViewNameList}" var="csName" id="theRepea1">
             <option value="{!csName}">{!$Label[contactListViewMap[csName].Label_API_name__c]}</option>
@@ -90,13 +135,13 @@
     </select>
     </div>
     <div class="{!if(isAdmin,"col-md-3 pull-right","")}">
-          <apex:commandButton onClick="navigateToUrl('/apex/ISSP_PortalUserCreation?retUrl=%2Fapex%2FISSP_ContactList&mid=M4S1','LIST_VIEW','newContact');return false;" value="{!$Label.ISSP_Contact_OneStepCreate}" rendered="{!isAdmin}" StyleClass="btn_iata_primary btn btn-block"/>
+          <apex:commandButton onClick="navigateToUrl('/apex/ISSP_PortalUserCreation?retUrl=%2Fapex%2FISSP_ContactList&mid=M4S1{!if(communityName=='CNS','&CommunityName='+communityName,'')}','LIST_VIEW','newContact');return false;" value="{!$Label.ISSP_Contact_OneStepCreate}" rendered="{!isAdmin}" StyleClass="btn_iata_primary btn btn-block"/>
            </div>
      </div>
     <script>
         $('#testSelect').val( '{!selectedList}' );
     </script>
-    
+
     <apex:outputPanel id="theRepeat" >
     <div class="alert alert-danger" style="display:{!if(errorMessage.size == 0,'none','')}">
         <strong>{!$Label.ISSP_Error}</strong>
@@ -105,11 +150,11 @@
         </apex:repeat>
     </div>
     </apex:outputPanel>
-    
+
     <apex:outputPanel id="theSecondModal" >
     <apex:outputPanel rendered="{!contactsWithIdCard}" >
-   	<script>showIdModal();</script>
-   	<!-- Id Card users being inactivated -->
+    <script>showIdModal();</script>
+    <!-- Id Card users being inactivated -->
     <div class="modal fade" id="idCardModal">
       <div class="modal-dialog">
         <div class="modal-content">
@@ -117,26 +162,27 @@
             <h4 class="modal-title">{!$Label.ISSP_InactiveUser_Important}</h4>
           </div>
           <div class="modal-body">
-          	<apex:outputText value="{!contactsWithIdCardString}" escape="false" />
+            <apex:outputText value="{!contactsWithIdCardString}" escape="false" />
           </div>
           <div class="modal-footer">
-          	<apex:commandButton action="{!inactivate}" onclick="closeIdModal();" value="{!$Label.ISSP_Confirm}" rerender="Contacts, theRepeat" StyleClass="btn btn-default"/>
-          	<apex:commandButton action="{!resetIdCard}" value="{!$Label.ISSP_Cancel}" onclick="closeIdModal();" rerender="Contacts, theRepeat" StyleClass="btn btn-primary"/>
+            <apex:commandButton action="{!inactivate}" onclick="closeIdModal();" value="{!$Label.ISSP_Confirm}" rerender="Contacts, theRepeat" StyleClass="btn btn-default"/>
+            <apex:commandButton action="{!resetIdCard}" value="{!$Label.ISSP_Cancel}" onclick="closeIdModal();" rerender="Contacts, theRepeat" StyleClass="btn btn-primary"/>
           </div>
         </div>
       </div>
      </div>
-	</apex:outputPanel>
-	</apex:outputPanel>
-    
+  </apex:outputPanel>
+  </apex:outputPanel>
+
     <apex:pageBlock id="Contacts" >
       <!--  <apex:pageBlockButtons location="top"> -->
+      <script>onready();</script>
       <br />
       <div class="row">
           <div class="{!if(!isAdmin,"col-md-3","")}">
             <apex:commandButton onClick="navigateToUrl('/003/e?retURL=%2FISSP_ContactList','LIST_VIEW','newContact');return false;" value="{!$Label.ISSP_NewContact}" rendered="{!!isAdmin}" StyleClass="btn_iata_primary btn btn-block "/>
           </div>
-          
+
           <div class="{!if(AND(isAdmin, buttonReject),"col-md-3","")}">
           <apex:commandButton value="{!$Label.ISSP_Reject}" rendered="{!AND(isAdmin, buttonReject)}" rerender="theRepeat" onclick="showRejectReasonModal();" StyleClass="btn_iata_primary btn btn-block" />
            </div>
@@ -152,18 +198,43 @@
            </div>
           <div class="{!if(AND(isAdmin, buttonChange),"col-md-3","")}">
             <apex:commandButton action="{!changeUserPortalStatus}" value="{!$Label.ISSP_ChangeUserPortalStatus}" rendered="{!AND(isAdmin, buttonChange)}" rerender="Contacts, theRepeat" StyleClass="btn_iata_primary btn btn-block"/>
-          </div> 
+          </div>
+      </div>
+      <!-- buttons to export data -->
+      <div class="row text-right">
+        <span style="margin: 15px">
+            <apex:outputLink styleclass="btn btn_iata_primary btn-xs hidden" value="/ISSP_ContactListPDF?selectedList={!selectedList}" target="_blank">
+                <span class="glyphicon glyphicon-th" aria-hidden="true"></span>
+                {!$Label.ISSP_Download_in_PDF}
+            </apex:outputlink>
+            <apex:outputLink styleclass="btn btn_iata_primary btn-xs" value="/ISSP_ContactListCSV?selectedList={!selectedList}">
+                <span class="glyphicon glyphicon-th" aria-hidden="true"></span>
+                {!$Label.ISSP_Download_in_CSV}
+            </apex:outputlink>
+        </span>
       </div>
       <!--  </apex:pageBlockButtons> -->
       <span style="float: right; margin: 5px 5px 5px 5px;">
         <apex:repeat value="{!AlphaList}" var="a">
-            <apex:commandLink value="{!a}" action="{!refresh}" 
+            <apex:commandLink value="{!a}" action="{!refresh}"
                 styleClass="alpha-link{!if(AlphaFilter=a,' alpha-select','')}" >
                 <apex:param name="AlphaFilter" value="{!a}" assignTo="{!AlphaFilter}" />
             </apex:commandLink>
         </apex:repeat>
-    </span>
-       
+      </span>
+
+      <!-- SEARCH -->
+      <span>
+        <apex:outputLabel style="font-weight: normal; font-size: 91%; padding: 0 4px; color: #015BA7" value="{! $Label.ISSP_ANG_SearchContacts}"/>        
+        <span>
+          <apex:inputText style="font-weight: normal; font-size: 91%; padding: 0 4px; color: #015BA7" id="searchString" value="{!searchString}"/>  
+          <!--apex:outputLink styleclass="btn btn_iata_primary btn-xs hidden" value="OLA" target="_blank">
+            <span class="glyphicon glyphicon-search" aria-hidden="true"></span>
+          </apex:outputLink-->
+          <a href="#" onclick="doSearch();"><span class="glyphicon glyphicon-search" aria-hidden="true"></span></a>
+        </span>
+      </span>
+
         <!-- <apex:pageMessages escape="false"/> -->
         <apex:pageBlockTable value="{!contactList}" var="item" styleClass="table-hover  table table-condensed table-responsive" id="pbt_contacts">
             <apex:column >
@@ -172,15 +243,28 @@
                 </apex:facet>
                 <apex:inputCheckBox value="{!item.selected}" id="inputId" />
             </apex:column>
-            <apex:column > 
+            <apex:column >
                 <apex:facet name="header" >
                     {!$Label.ISSP_My_Contact_Action}
                 </apex:facet>
-                <apex:outputLink value="/ISSP_Contact?Id={!item.recordContact.Id}&action=edit" target="_self">{!$Label.ISSP_Edit}</apex:outputLink> 
+                <apex:outputLink value="/ISSP_Contact?Id={!item.recordContact.Id}&action=edit{!if(communityName=='CNS','&CommunityName='+communityName,'')}" target="_self">{!$Label.ISSP_Edit}</apex:outputLink> 
             </apex:column>
-            
             <apex:repeat value="{!fields}" var="f">
                   <apex:column >
+
+                   <!-- For e-mail field, display if this a valid e-mail -->
+                  <apex:outputpanel rendered="{! IF(f.FieldPath=='Email', true, false) }">
+                      <apex:outputpanel rendered="{! IF(item.recordContact.ValidContactDomainName__c == 'valid', true, false) }">
+                          <apex:image url="{! $Resource.IntelliMail__check }" width="16" height="16" />
+                      </apex:outputpanel>
+                      <apex:outputpanel rendered="{! IF(item.recordContact.ValidContactDomainName__c == 'invalid', true, false) }">
+                          <span title="{! $Label.ISSP_ContactList_HoverPopup_Text }" class="emadomvalinvpopup">
+                              <apex:image url="{! $Resource.AccountDomainValidation_Invalid }" width="16" height="16" />
+                          </span>
+                      </apex:outputpanel>
+                      <apex:outputText value="&nbsp;" escape="false" />
+                   </apex:outputpanel>
+
                     <apex:facet name="header">
                        <apex:commandLink action="{!refresh}" reRender="pbt_contacts">{!f.label}
                          <apex:outputPanel layout="none" rendered="{!AND(OR(sortExpression==f.FieldPath,AND(sortExpression=='Name',f.FieldPath=='ISSP_Contact_Name__c')), sortDirection='ASC')}">&#9650;</apex:outputPanel>
@@ -188,23 +272,44 @@
                          <apex:param value="{!f.FieldPath}" name="column" assignTo="{!sortExpression}" ></apex:param>
                        </apex:commandLink>
                     </apex:facet>
+
                     <apex:outputpanel rendered="{!IF(f.FieldPath != 'ISSP_Contact_Name__c' && f.FieldPath != 'ISSP_Account_Name__c',true,false)}">
-                        <apex:outputfield value="{!item.recordContact[f.fieldPath]}" />
+                        <apex:outputpanel rendered="{! IF(f.FieldPath!='Email', true, false) }">
+                            <apex:outputfield value="{!item.recordContact[f.fieldPath]}" />
+                        </apex:outputpanel>
+                        <apex:outputpanel rendered="{! IF(f.FieldPath=='Email', true, false) }">
+                            <apex:outputpanel rendered="{! IF(item.recordContact.ValidContactDomainName__c == 'valid', true, false) }">
+                                <a href="mailto:{! item.recordContact[f.fieldPath] }"><span class="domainpartgreen"><apex:outputText value="{! item.recordContact[f.fieldPath] }" /></span></a>
+                            </apex:outputpanel>
+                            <apex:outputpanel rendered="{! IF(item.recordContact.ValidContactDomainName__c == 'invalid', true, false) }">
+                                <a href="mailto:{! item.recordContact[f.fieldPath] }"><span class="domainpartred"><apex:outputText value="{! item.recordContact[f.fieldPath] }" /></span></a>
+                            </apex:outputpanel>
+                            <apex:outputpanel rendered="{! IF(item.recordContact.ValidContactDomainName__c == '', true, false) }">
+                                <apex:outputField value="{! item.recordContact[f.fieldPath] }" />
+                            </apex:outputpanel>
+                        </apex:outputpanel>
                     </apex:outputpanel>
-                    
+
                     <apex:outputpanel rendered="{!IF(f.FieldPath=='ISSP_Contact_Name__c',true,false)}">
-                     <apex:outputLink value="/apex/ISSP_Contact?Id={!item.recordContact.Id}&mid=M4S1" target="_self">{!item.recordContact.name}</apex:outputLink>
+                     <apex:outputLink value="/apex/ISSP_Contact?Id={!item.recordContact.Id}&mid=M4S1{!if(communityName=='CNS','&CommunityName='+communityName,'')}" target="_self">{!item.recordContact.name}</apex:outputLink>
                     </apex:outputpanel>
-                    
-                    <apex:outputpanel rendered="{!IF(f.FieldPath=='ISSP_Account_Name__c',true,false)}"> 
-                     <apex:outputLink value="/apex/ISSP_Account?Id={!item.recordContact.Accountid}&mid=M4S1" target="_self">{!item.recordContact.Account.Name}</apex:outputLink> 
+
+                    <apex:outputpanel rendered="{!IF(f.FieldPath=='ISSP_Account_Name__c',true,false)}">
+                     <apex:outputLink value="/apex/ISSP_Account?Id={!item.recordContact.Accountid}&mid=M4S1{!if(communityName=='CNS','&CommunityName='+communityName,'')}" target="_self">{!item.recordContact.Account.Name}</apex:outputLink> 
                     </apex:outputpanel>
-                    
+
                   </apex:column>
             </apex:repeat>
-            
+
+            <apex:column rendered="{!isAdmin}">
+                <apex:facet name="header" >
+                    {!$ObjectType.User.fields.LastLoginDate.label}
+                </apex:facet>
+                <apex:outputField value="{!item.user.LastLoginDate}" rendered="{!item.user!=null}"/>
+            </apex:column>
+
         </apex:pageBlockTable>
-         
+
         <div class="bottomNav" id="j_id0:YourListViewId_bottomNav">
            <div class="paginator">
               <span class="left">
@@ -213,46 +318,46 @@
              </span>
           </span>
           <span class="prevNextLinks">
-          
+
            <span class="prevNext"  style="display:{!IF(setCon.HasPrevious,'none','')}">
             <img src="/s.gif" class="firstoff" alt="First Page"/>
            </span>
            <span style="display:{!IF(setCon.HasPrevious,'','none')}">
                <a href="javascript:first()" class="prevNext"><img src="/s.gif" title="First Page" alt="First Page" class="first"/></a>
            </span>
-           
+
            <span class="prevOff" style="display:{!IF(setCon.HasPrevious,'none','')}">
                <span class="glyphicon glyphicon-triangle-left" aria-hidden="true"></span>{!$Label.ISSP_Previous}
             </span>
             <span style="display:{!IF(setCon.HasPrevious,'','none')}">
                 <a href="javascript:previous()" class="prevNext"><span class="glyphicon glyphicon-triangle-left" aria-hidden="true"></span>{!$Label.ISSP_Previous}</a>
             </span>
-            
+
            <span class="nextOff" style="display:{!IF(setCon.HasNext,'none','')}">{!$Label.ISSP_Next}
                <span class="glyphicon glyphicon-triangle-right" aria-hidden="true"></span>
             </span>
             <span style="display:{!IF(setCon.HasNext,'','none')}">
                 <a href="javascript:next()" class="prevNext">{!$Label.ISSP_Next}<span class="glyphicon glyphicon-triangle-right" aria-hidden="true"></span></a>
             </span>
-            
+
            <span class="prevNext" style="display:{!IF(setCon.HasNext,'none','')}">
                 <img src="/s.gif" class="lastoff" alt="Last Page"/>
            </span>
            <span class="prevNext" style="display:{!IF(setCon.HasNext,'','none')}">
                <a href="javascript:last()"><img src="/s.gif" title="Last Page" alt="Last Page" class="last"/></a>
            </span>
-           
+
            </span>
            <span class="right">{!$Label.ISSP_Page}
                {!setCon.PageNumber}
                {!$Label.ISSP_of} {!CEILING(noOfRecords/size)}
-        
+
         </span>
    </div>
    <div class="clearingBox"></div>
 </div>
-    </apex:pageBlock> 
-    
+    </apex:pageBlock>
+
     <!-- Modal ask for inactivation reason -->
     <div class="modal fade" id="inactiveReason">
       <div class="modal-dialog">
@@ -262,17 +367,20 @@
           </div>
           <div class="modal-body">
             <apex:selectList id="reasonList" value="{!contactStatus}" size="1" styleClass="UserStatus form-control"  >
-				<apex:selectOptions value="{!inactiveReasonOptions}" />
-			</apex:selectList>
+        <apex:selectOptions value="{!inactiveReasonOptions}" />
+      </apex:selectList>
           </div>
           <div class="modal-footer">
-          	<apex:commandButton action="{!checkIdCard}" onclick="closeModal();" value="{!$Label.ISSP_Confirm}" rerender="theSecondModal, theRepeat" StyleClass="btn btn-default"/>
-          	<apex:commandButton value="{!$Label.ISSP_Cancel}" onclick="closeModal();" rerender="Contacts, theRepeat" StyleClass="btn btn-primary"/>
+            <apex:commandButton action="{!checkIdCard}" onclick="closeModal();" value="{!$Label.ISSP_Confirm}" 
+              rerender="theSecondModal, theRepeat,Contacts, loadStatusSpinner" 
+              status="loadStatusSpinner"
+              StyleClass="btn btn-default"/>
+            <apex:commandButton value="{!$Label.ISSP_Cancel}" onclick="closeModal();" rerender="Contacts, theRepeat" StyleClass="btn btn-primary"/>
           </div>
         </div>
       </div>
      </div>
-     
+
      <!-- Modal ask for rejection reason -->
     <div class="modal fade" id="rejectionReason">
       <div class="modal-dialog">
@@ -282,19 +390,61 @@
           </div>
           <div class="modal-body">
             <apex:selectList id="reasonRejectList" value="{!contactStatus}" size="1" styleClass="UserStatus form-control"  >
-				<apex:selectOptions value="{!rejectionReasonOptions}" />
-			</apex:selectList>
+        <apex:selectOptions value="{!rejectionReasonOptions}" />
+      </apex:selectList>
           </div>
           <div class="modal-footer">
-          	<apex:commandButton action="{!reject}" onclick="closeRejectModal();" value="{!$Label.ISSP_Confirm}" rerender="Contacts, theRepeat" StyleClass="btn btn-default"/>
-          	<apex:commandButton value="{!$Label.ISSP_Cancel}" onclick="closeRejectModal();" rerender="Contacts, theRepeat" StyleClass="btn btn-primary"/>
+            <apex:commandButton action="{!reject}" onclick="closeRejectModal();" value="{!$Label.ISSP_Confirm}" rerender="Contacts, theRepeat" StyleClass="btn btn-default"/>
+            <apex:commandButton value="{!$Label.ISSP_Cancel}" onclick="closeRejectModal();" rerender="Contacts, theRepeat" StyleClass="btn btn-primary"/>
           </div>
         </div>
       </div>
      </div>
-   
+
  </apex:form>
-  <c:ISSP_CustomFooter />
+  <c:ISSP_CustomFooter communityName="{!communityName}"/>
+
+  <div id="load_scrl" class="loadingBox loader" style="display:none;"> </div>
+  <div class="loadingBox overlay"> </div>
+
+  <apex:actionStatus onstart="startLoading();" onstop="endLoading();" id="loadStatusSpinner"/>
+
+  <style>
+      .overlay {
+          display: none;
+          height: 100%;
+          left: 0;
+          position: fixed;
+          top: 0;
+          opacity: 0.3;
+          -moz-opacity: 0.3;
+          width: 100%;
+          -ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=30)";
+          filter: alpha(opacity=30);
+          background: #000;
+          -khtml-opacity: 0.3;
+          z-index: 1000;
+      }
+      .loader {
+          background: url('/img/loading32.gif') scroll no-repeat 0 0;
+          width: 32px;
+          height: 32px;
+          position: absolute;
+          left: 50%;
+      }
+  </style>
+
+  <script type="text/javascript">
+      function startLoading(){
+          $('#load_scrl').css('top', $(document).scrollTop() + 200);
+          $('.loadingBox').show();
+      }
+      function endLoading(){
+           $('.loadingBox').hide();
+      }
+  </script> 
+
+
 </div><!-- end container -->
      </body>
     </html>

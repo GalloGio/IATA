@@ -2,16 +2,20 @@
 private class IEC_Evt_Renew_ProcessPmt_Batch_Test {
 	private static List<Account> lstAccount;
 	private static List<Contact> lstContact;
+	private static List<IEC_Event_Subscription__c> lstSubscription;
 	private static List<Order> lstOrder;
 	private static List<OrderItem> lstOrderItem;
-	private static IEC_Event_Release__c oEventRelease;
+	private static IEC_Event_Release__c oEventRelease, oEventRelease2;
 	private static Set<Id> setOrderId;
 
 	private static void InitializeData()
 	{
 		 //-- Generate Setting 
-        try{insert new Apex_Setting__c(Name='IEC evt renewal batch size for taxes', Number_1__c=1);} 
-        catch(Exception ex){}
+        delete [select Id from Apex_Setting__c where Name like 'ECommerce Products Filter%'];
+        List<Apex_Setting__c> lstSetting = new List<Apex_Setting__c>();
+        lstSetting.add(new Apex_Setting__c(Name='IEC evt renewal batch size for taxes', Number_1__c=1));
+        lstSetting.add(new Apex_Setting__c(Name='IEC evt renewal processPmt batch size', Number_1__c=5));
+        Database.insert(lstSetting, false);
         
 		/* Possible scenarios and generated errors in the batch are as follows
 			[0] ERROR - Tax and Shipping have not been calculated on the order
@@ -30,6 +34,7 @@ private class IEC_Evt_Renew_ProcessPmt_Batch_Test {
         for (Account oAccount : lstAccount)
         {
         	oAccount.Default_Payment_Type__c = 'Credit Card';
+        	oAccount.Customer_Type__c = 'Member Airline';
         }
 
 		// Make one account with non-supported default payment to test validation
@@ -84,34 +89,34 @@ private class IEC_Evt_Renew_ProcessPmt_Batch_Test {
 	    *****************************************/
 	    //-- Generate Product
 	    Product2 oProduct = TestDataGenerator.generateProductsWithPrice(1)[0];
-	    oProduct.Inventory_Status__c = 'In stock';
-		oProduct.SAP_Material_Number__c = '8888-98';
-		oProduct.Activity_Code__c = '8888';
+		oProduct.Sell_through_eCommerce__c = true; 
+		oProduct.Inventory_Status__c = 'In stock';
+		//oProduct.SAP_Material_Number__c = '8888-98';
+		//oProduct.Activity_Code__c = '8888';
+		oProduct.Activity_Code__c = oProduct.SAP_Material_Number__c.left(4);
 		oProduct.Line_of_Business__c = 'Publications';
  		update oProduct;
  		
-		zqu__ZProduct__c zProduct = [SELECT Id, SAPProductMaterialNo__c FROM zqu__ZProduct__c WHERE Id = :oProduct.ZProduct__c];
-		zProduct.SAPProductMaterialNo__c = '8888-98';
-    	update zProduct;
+		//zqu__ZProduct__c zProduct = [SELECT Id, SAPProductMaterialNo__c FROM zqu__ZProduct__c WHERE Id = :oProduct.ZProduct__c];
+		//zProduct.SAPProductMaterialNo__c = '8888-98';
+    	//update zProduct;
  		
- 		Product2 p = [SELECT SAP_Material_Number__c
-				, Display_to_ECommerce__c
-				, Line_of_Business__c
-				, IEC_Parent_Product__c
-				, Restricted_Customer_Type__c
-			FROM Product2 WHERE ID = :oProduct.Id][0];
+ 		//Product2 p = [SELECT SAP_Material_Number__c
+		//		, Display_to_ECommerce__c
+		//		, Line_of_Business__c
+		//		, IEC_Parent_Product__c
+		//		, Restricted_Customer_Type__c
+		//	FROM Product2 WHERE ID = :oProduct.Id][0];
 
 
 		//Create IEC_Event_Subscription__c
-		IEC_Event_Subscription__c eveSubscription = new IEC_Event_Subscription__c(
-			Subscriber__c = lstContact[1].Id,
-			Product__c = oProduct.Id,
-			Start_Date__c = Date.today().AddDays(-20),
-			Quantity__c = 1
-		);
-		insert eveSubscription;	
+		lstSubscription = new List<IEC_Event_Subscription__c>();
+		for (integer i = 0; i < lstContact.size(); i++)
+			lstSubscription.add(new IEC_Event_Subscription__c(Subscriber__c=lstContact[i].Id, Product__c=oProduct.Id, Start_Date__c=Date.today().addDays(-20), Quantity__c=1, Active__c=true));
+		insert lstSubscription;
 		
 	    oEventRelease = TestDataGenerator.generateEventRelease(oProduct.Id, 'Member Airline', true);
+	    oEventRelease2 = TestDataGenerator.generateEventRelease(oProduct.Id, 'Member Airline', true);
         
         /*****************************************
 	    **	Create Orders
@@ -129,14 +134,20 @@ private class IEC_Evt_Renew_ProcessPmt_Batch_Test {
 	        lstOrder[i].ShipToContactId = lstContact[i].Id;
 
 	        lstOrder[i].IEC_Event_Release__c = oEventRelease.Id;
+	        lstOrder[i].IEC_Event_Subscription__c = lstSubscription[i].Id;
         }
+        lstOrder[0].IEC_Event_Subscription__c = null;
+        lstOrder[1].IEC_Event_Subscription__c = null;
         insert lstOrder;
         
         /*****************************************
 	    **	Create Order Items
 	    *****************************************/
 	    setOrderId = new Set<Id>();
-        lstOrderItem = TestDataGenerator.generateOrderItem(lstOrder[0].Id, 7, false);
+	    delete [select Id from PricebookEntry where Product2Id = :oProduct.Id];
+        lstOrderItem = TestDataGenerator.generateOrderItem(lstOrder[0].Id, new List<Product2>{oProduct}, false);
+        for (integer i = 0; i < lstAccount.size() - 1; i++)
+            lstOrderItem.add(lstOrderItem[0].clone(false, true));
         for (integer i = 0; i < lstOrderItem.size(); i++)
         {
         	setOrderId.add(lstOrder[i].Id);
@@ -160,11 +171,9 @@ private class IEC_Evt_Renew_ProcessPmt_Batch_Test {
     	
     	InitializeData();
 
-     	Test.startTest();
-			try{
-				IEC_Evt_Renew_SOAP.Event_Release(oEventRelease.Id);
-			}
-			catch(Exception ex){}
+		Test.startTest();
+		IEC_Evt_Renew_ProcessPmt_Batch batch = new IEC_Evt_Renew_ProcessPmt_Batch(oEventRelease.Id);
+		Database.ExecuteBatch(batch,7);
 		Test.stopTest();
 
 		// Run the asserts after the STOPTEST to make sure the batch has finished
@@ -180,12 +189,21 @@ private class IEC_Evt_Renew_ProcessPmt_Batch_Test {
 		//System.assertEquals(false, setOrdersWithError.contains(lstOrder[5].Id), 'Order #6 shouldn\'t cause errors.');
 		//System.assertEquals(false, setOrdersWithError.contains(lstOrder[6].Id), 'Order #7 shouldn\'t cause errors.');
 
-		try{IEC_Evt_Renew_SOAP.reprocessError(oEventRelease.Id);}
-		catch(Exception ex){}
+		try {
+			delete [select Id from IEC_Event_Release_Log__c where IEC_Event_Release__c = :oEventRelease.Id];
+			insert new IEC_Event_Release_Log__c(IEC_Event_Release__c=oEventRelease.Id, Subscription__c=lstSubscription[0].Id, Order__c=lstOrder[0].Id);
+			IEC_Evt_Renew_SOAP.reprocessError(oEventRelease.Id);
+			insert new IEC_Event_Release_Log__c(IEC_Event_Release__c=oEventRelease.Id, Subscription__c=lstSubscription[1].Id);
+			IEC_Evt_Renew_SOAP.reprocessError(oEventRelease.Id);
+		} catch(Exception ex) { system.assert(false, 'IEC_Evt_Renew_SOAP.reprocessError: ' + ex); }
 		
+		//Cover the Update Release button function on event release object
+		try {
+			IEC_Evt_Renew_SOAP.eventRegenerateRelease(oEventRelease2.Id);
+		} catch(Exception ex) { system.assert(false, 'IEC_Evt_Renew_SOAP.eventRegenerateRelease: ' + ex); }
     }
 
-    /*@isTest (seeAllData=true)
+    @isTest (seeAllData=true)
     static void test_IEC_Evt_Renew_SOAP() {
     	
     	InitializeData();
@@ -209,6 +227,6 @@ private class IEC_Evt_Renew_ProcessPmt_Batch_Test {
 		IEC_EventRelease_Svc.preventDeletion(new List<IEC_Event_Release__c>{eveRelease});
 
 		System.assertEquals(null, eveRelease.Processing_Status__c);
-    }*/
+    }
     	
 }

@@ -21,7 +21,16 @@
     
     <div class="panel-primary">
             <div class="panel-heading head_panel_green">
- 	<h3 class="panel-title">{!IF(BEGINS(sectorValue,'Travel_Agent'), lblPAXTitle, 'Application for approval as' + IF(OR(BEGINS(newForm.Agent_Type__c, 'I'),BEGINS(newForm.Agent_Type__c, 'E')), ' an ', ' a ') + newForm.Agent_Type__c)}</h3>
+ 	<h3 class="panel-title">
+        <!-- { ! I F(BEGINS(sectorValue,'Travel_Agent'), lblPAXTitle, 'Application for approval as' + IF(OR(BEGINS(newForm.Agent_Type__c, 'I'),BEGINS(newForm.Agent_Type__c, 'E')), ' an ', ' a ') + newForm.Agent_Type__c) } -->
+        {!IF(isNoticeOfChange, lblNoCRequest,
+                    IF(BEGINS(sectorValue,'Travel_Agent'), lblPAXTitle, 
+                        IF(newForm.Agent_Type__c == 'IATA Cargo Agent', lblCargoTitle,
+                            IF(newForm.Agent_Type__c == 'EACP Intermediary', lblEACPTitle, 
+                                IF(newForm.Agent_Type__c == 'CASS Associate', lblCASSTitle, 
+                                    IF(newForm.Agent_Type__c == 'Import Agent', lblImporAgentTitle, 
+                                        IF(newForm.Agent_Type__c == 'Courier', lblCourierTitle, $Label.ISSP_AMS_StepsAll_Application_Approval_Title)))))))}
+    </h3>
             </div>
     <div class="panel-body" id="body-enquiries">
     <apex:form >
@@ -33,7 +42,7 @@
                 <apex:commandLink styleclass="btn btn-default" action="{!goToStep2}" value="{!lblStepB}" id="Prev2"/>
             </div>
             <div class="progress-bar progress-bar-off" role="progressbar" aria-valuenow="60" aria-valuemin="0" aria-valuemax="100" style="width: 22%;">
-               <apex:commandLink styleclass="btn btn-default" action="{!goToStep3}" value="{!lblStepC}" id="Prev3"/>
+               <apex:commandLink styleclass="btn btn-default" action="{!goToStep3}" value="{!IF(NOT(isNoticeOfChange),lblStepC, lblNoCStepC)}" id="Prev3"/>
             </div>
             <div class="progress-bar" role="progressbar" aria-valuenow="80" aria-valuemin="0" aria-valuemax="100" style="width: 16%;">
                 {!lblStepD}
@@ -44,7 +53,8 @@
         </div>
         </apex:form>
      <div class="col-md-12">
-        <apex:pageBlock mode="detail" id="theBlock" title="{!amsCountryLabel} - {!IF(displayLanguage=='en_US', IF(sectorValue=='Travel_Agent', $Label.ISSP_Travel_Agent, $Label.ISSP_Cargo_Agent), $Label.ISSP_Requirements)} {!IF(displayLanguage=='en_US', $Label.ISSP_Requirements, IF(sectorValue=='Travel_Agent', $Label.ISSP_Travel_Agent, $Label.ISSP_Cargo_Agent))}">
+        <apex:variable var="sectorValueLabel" value="{!IF(sectorValue=='Travel_Agent', $Label.ISSP_Travel_Agent, IF(newlabels, $Label.ISSP_Cargo_Agent_New, $Label.ISSP_Cargo_Agent))}" />
+        <apex:pageBlock mode="detail" id="theBlock" title="{!amsCountryLabel} - {!IF(displayLanguage=='en_US', sectorValueLabel, $Label.ISSP_Requirements)} {!IF(displayLanguage=='en_US', $Label.ISSP_Requirements, sectorValueLabel)}">
             <div class="bg-info"><strong>{!$Label.ISSP_AMS_Step4_File_Upload}</strong></div>
             <br />
                 <apex:pageMessages />

@@ -100,7 +100,7 @@ private class BtchGDPReplicate_tst {
 		oAccreditation1.AIMS_ID__c = oAccount1.AIMS_ID__c + 'ACC1';
 		oAccreditation1.WebStar_ID__c = null;
 		
-		oAccreditation1.Endorsed_Accredited_By__c = refTableEndorser.Id; // this is used for testing BtchGDPReplicateTerritories
+		// oAccreditation1.Endorsed_Accredited_By_Formula__c = refTableEndorser.Id; // this is used for testing BtchGDPReplicateTerritories
 		oAccreditation1.Class__c = refTableClass.Id; // this is used for testing BtchGDPReplicateTerritories
 		
 		sObjList.add(oAccreditation1);
@@ -143,11 +143,13 @@ private class BtchGDPReplicate_tst {
 		GDP_Address__c oGDP_Address1 = IECTestUtil.CreateSampleGDPAddress(oAccount1);
 		oGDP_Address1.AIMS_ID__c = oAccount1.AIMS_ID__c + 'LOC';
 		oGDP_Address1.WebStar_ID__c = null;
+		oGDP_Address1.Address_Type__c = 'Location';
 		sObjList.add(oGDP_Address1);
 
 		GDP_Address__c oGDP_Address2 = IECTestUtil.CreateSampleGDPAddress(oAccount2);
-		oGDP_Address2.WebStar_ID__c = oAccount2.WebStar_ID__c + 'LOC';
+		oGDP_Address2.WebStar_ID__c = oAccount2.WebStar_ID__c + 'MAI';
 		oGDP_Address2.AIMS_ID__c = null;
+		oGDP_Address2.Address_Type__c = 'Mailing';
 		sObjList.add(oGDP_Address2);
 
 		GDP_Agency_Profile_Specialization__c oGDP_Agency_Profile_Specialization1 = IECTestUtil.CreateSampleGDPAgencyProfileSpecialization(oAccount1);
@@ -191,6 +193,7 @@ private class BtchGDPReplicate_tst {
 		oGDPAccount1.WebStar_ID__c = null;
 //		oGDPAccount1.RecordTypeId = IECUtil.GetRecordTypeId('GDP_Products_Account_View__c', 'GDP');
 		oGDPAccount1.RecordTypeId = RecTypeMap.get('GDP_Products_Account_View__c.GDP');
+		oGDPAccount1.IATA_Code__c = '1234561';
 		sObjList.add(oGDPAccount1);
 		
 		GDP_Products_Account_View__c oGDPAccount2 = IECTestUtil.createSampleGDPAccount('Account 1', '87654321');
@@ -198,6 +201,7 @@ private class BtchGDPReplicate_tst {
 		oGDPAccount2.AIMS_ID__c = null;
 //		oGDPAccount2.RecordTypeId = IECUtil.GetRecordTypeId('GDP_Products_Account_View__c', 'GDP');
 		oGDPAccount2.RecordTypeId = RecTypeMap.get('GDP_Products_Account_View__c.GDP');
+		oGDPAccount2.IATA_Code__c = '1234562';
 		sObjList.add(oGDPAccount2);
 
 		GDP_Products_Account_View__c oGDPAccount3 = IECTestUtil.createSampleGDPAccount('Account 1', '45698723');
@@ -206,6 +210,7 @@ private class BtchGDPReplicate_tst {
 //		oGDPAccount3.RecordTypeId = IECUtil.GetRecordTypeId('GDP_Products_Account_View__c', 'GDP');
 		oGDPAccount3.RecordTypeId = RecTypeMap.get('GDP_Products_Account_View__c.GDP');
 		oGDPAccount3.Parent_Account_AIMS_ID__c = oAccount1.AIMS_ID__c;
+		oGDPAccount3.IATA_Code__c = '1234563';
 		sObjList.add(oGDPAccount3);
 		
 		GDP_Products_Account_View__c oGDPAccount4 = IECTestUtil.createSampleGDPAccount('Account 1', '32178945');
@@ -214,6 +219,7 @@ private class BtchGDPReplicate_tst {
 //		oGDPAccount4.RecordTypeId = IECUtil.GetRecordTypeId('GDP_Products_Account_View__c', 'GDP');
 		oGDPAccount4.RecordTypeId = RecTypeMap.get('GDP_Products_Account_View__c.GDP');
 		oGDPAccount4.Parent_Account_WebStar_ID__c = oAccount2.WebStar_ID__c;
+		oGDPAccount4.IATA_Code__c = '1234564';
 		sObjList.add(oGDPAccount4);
 
 		Accreditation__c oAccreditation1_GDP = IECTestUtil.CreateSampleAccreditation(oAccount1, oGDPAccount1, 'GDP');
@@ -229,11 +235,13 @@ private class BtchGDPReplicate_tst {
 		GDP_Address__c oGDP_Address1_GDP = IECTestUtil.CreateSampleGDPAddress(oAccount1, oGDPAccount1, 'GDP');
 		oGDP_Address1_GDP.AIMS_ID__c = oAccount1.AIMS_ID__c + 'LOCGDP';
 		oGDP_Address1_GDP.WebStar_ID__c = null;
+		oGDP_Address1_GDP.Address_Type__c = 'Location';
 		sObjList.add(oGDP_Address1_GDP);
 
 		GDP_Address__c oGDP_Address2_GDP = IECTestUtil.CreateSampleGDPAddress(oAccount2, oGDPAccount2, 'GDP');
-		oGDP_Address2_GDP.WebStar_ID__c = oAccount2.WebStar_ID__c + 'LOCGDP';
+		oGDP_Address2_GDP.WebStar_ID__c = oAccount2.WebStar_ID__c + 'MAIGDP';
 		oGDP_Address2_GDP.AIMS_ID__c = null;
+		oGDP_Address2_GDP.Address_Type__c = 'Mailing';
 		sObjList.add(oGDP_Address2_GDP);
 
 		GDP_Phone__c oGDP_Phone1_GDP = IECTestUtil.CreateSampleGDPPhone(oAccount1, oGDPAccount1, 'GDP');
@@ -248,6 +256,7 @@ private class BtchGDPReplicate_tst {
 		
 		
 		sObjList.sort();
+		SYstem.debug('sObjList::'+sObjList);
 		insert sObjList;
 		
 		// set static variable for testing the territory
@@ -278,7 +287,7 @@ private class BtchGDPReplicate_tst {
 		
 		List<Accreditation__c> accredall = [select Id, Name, AIMS_ID__c, Related_Account__c
 												, Related_Account__r.Name
-												, Endorsed_Accredited_By__c, Endorsed_Accredited_By__r.Code__c 
+												, Endorsed_Accredited_By_Formula__c 
 												, Class__c, Class__r.Code__c
 												from Accreditation__c
 										   		order by Id];
@@ -311,13 +320,7 @@ private class BtchGDPReplicate_tst {
 			+ '		AND LastModifiedDate < ' + batchStartTime.formatGMT('yyyy-MM-dd\'T\'HH:mm:ss\'Z\'')
 			+ '		AND (AIMS_ID__c != null)'
 			//+ '		AND RecordTypeId = \'' + IECUtil.GetRecordTypeId('GSA_Territory__c', 'Live') + '\''
-			+ '		AND Related_Account__c IN (SELECT Related_Account__c FROM Accreditation__c WHERE ' 
-					+ ' Endorsed_Accredited_By__r.Code__c IN (\'IATA\',\'IATAN\',\'DOM\') ' 
-					+ ' AND ' 
-					+ ' Class__r.Code__c IN (\'C\',\'D\',\'E\',\'F\',\'G\',\'K\',\'M\',\'N\',\'O\',\'P\',\'S\',\'T\',\'V\',\'X\') '
-					+ ' AND '
-					+ ' Related_Account__r.Id != null'
-					+ ')'
+			+ '     AND Related_Account__c IN (SELECT Id FROM Account WHERE Location_Class__c IN (\'C\',\'D\',\'E\',\'F\',\'G\',\'K\',\'M\',\'N\',\'O\',\'P\',\'S\',\'T\',\'V\',\'X\') AND Main_Accreditation_Organization__c IN (\'IATA\',\'IATAN\',\'DOM\'))'                   
 			+ '		AND Related_Accreditation__c != null '
 			;
 			
@@ -388,46 +391,41 @@ private class BtchGDPReplicate_tst {
 		System.debug('Unit Test: Finish: TestGDPReplicateScheduleAccount');
 	}
 	
-	static testMethod void TestGDPReplicateAccount() {
-		System.debug('Unit Test: Start: TestGDPReplicateAccount');
+	// static testMethod void TestGDPReplicateAccount() {
+	// 	System.debug('Unit Test: Start: TestGDPReplicateAccount');
 
 
-		Test.startTest();
+	// 	Test.startTest();
 
-		//*
-		// Account 
-		//*
-		IEC_Batch_Replication__c btchRep = IECUtil.GetBatchReplication('GDP Replicate: Account');
-		BtchGDPReplicateAccount btchProc = new BtchGDPReplicateAccount();
-		btchProc.idRecordTypeGDP = IECUtil.GetRecordTypeId('GDP_Products_Account_View__c', 'GDP');
-		btchProc.query =
-			'SELECT AIMS_ID__c, Webstar_ID__c, GDP_Location_Type__c, Airline_Code__c, Name, TradeName__c'
-			+ '		, Email__c, Website, TTY__c, Passenger_And_Cargo__c, Incorporation_Type__c, GDP_Opt_In__c'
-			+ '		, Tax_ID_1__c, Tax_ID_2__c, BSP_CASS_Code__c, License_Number__c, Preferred_Language__c'
-			+ '		, CASS_Number_Xref__c, IATACode__c, CASS_Number__c, Ticketing_Agent_Last_Name__c'
-			+ '		, Ticketing_Agent_First_Name__c, Manager_Last_Name__c, Manager_First_Name__c'
-			+ '		, ParentId, Parent.AIMS_ID__c, Parent.Webstar_ID__c'
-			+ '	FROM Account'
-			+ '	WHERE LastModifiedDate >= ' + btchRep.Last_Modified_Date__c.formatGMT('yyyy-MM-dd\'T\'HH:mm:ss\'Z\'')
-			+ '		AND IATACode__c != null'
-			+ '		AND ((Is_AIMS_Account__c = true AND AIMS_ID__c != null) OR Webstar_ID__c != null)'
-			+ '		AND Account.ID IN ('
-			+ '			SELECT Related_Account__c'
-			+ '			FROM Accreditation__c'
-			+ '			WHERE Endorsed_Accredited_By__r.Code__c IN (\'IATA\',\'IATAN\')'
-			+ '				AND Class__r.Code__c IN (\'C\',\'D\',\'E\',\'F\',\'G\',\'K\',\'M\',\'N\',\'O\',\'P\',\'S\',\'T\',\'V\',\'X\')'
-			+ '				AND Related_Account__r.Id != null'
-			+ '			)'
-			+ '		AND RecordTypeId = \''
-			+ IECUtil.GetRecordTypeId('Account', 'IATA_Agency') 
-			+ '\'';
-		System.debug('SSS: SOQL Query: ' + btchProc.query);
-		Database.executeBatch(btchProc);
+	// 	//*
+	// 	// Account 
+	// 	//*
+	// 	IEC_Batch_Replication__c btchRep = IECUtil.GetBatchReplication('GDP Replicate: Account');
+	// 	BtchGDPReplicateAccount btchProc = new BtchGDPReplicateAccount();
+	// 	btchProc.idRecordTypeGDP = IECUtil.GetRecordTypeId('GDP_Products_Account_View__c', 'GDP');
+	// 	btchProc.query =
+	// 		'SELECT AIMS_ID__c, Webstar_ID__c, GDP_Location_Type__c, Airline_Code__c, Name, TradeName__c'
+	// 		+ '		, Email__c, Website, TTY__c, Passenger_And_Cargo__c, Incorporation_Type__c, GDP_Opt_In__c'
+	// 		+ '		, Tax_ID_1__c, Tax_ID_2__c, BSP_CASS_Code__c, License_Number__c, Preferred_Language__c'
+	// 		+ '		, CASS_Number_Xref__c, IATACode__c, CASS_Number__c, Ticketing_Agent_Last_Name__c'
+	// 		+ '		, Ticketing_Agent_First_Name__c, Manager_Last_Name__c, Manager_First_Name__c'
+	// 		+ '		, ParentId, Parent.AIMS_ID__c, Parent.Webstar_ID__c'
+	// 		+ '	FROM Account'
+	// 		+ '	WHERE LastModifiedDate >= ' + btchRep.Last_Modified_Date__c.formatGMT('yyyy-MM-dd\'T\'HH:mm:ss\'Z\'')
+	// 		+ '		AND IATACode__c != null'
+	// 		+ '		AND ((Is_AIMS_Account__c = true AND AIMS_ID__c != null) OR Webstar_ID__c != null)'
+	// 		+ '     AND Location_Class__c IN (\'C\',\'D\',\'E\',\'F\',\'G\',\'K\',\'M\',\'N\',\'O\',\'P\',\'S\',\'T\',\'V\',\'X\') AND Main_Accreditation_Organization__c IN (\'IATA\',\'IATAN\',\'DOM\')'                    
+	// 		+ '		AND Main_Accreditation_Organization__c IN (\'IATA\',\'IATAN\',\'DOM\')'
+	// 		+ '		AND RecordTypeId = \''
+	// 		+ IECUtil.GetRecordTypeId('Account', 'IATA_Agency') 
+	// 		+ '\'';
+	// 	System.debug('SSS: SOQL Query: ' + btchProc.query);
+	// 	Database.executeBatch(btchProc);
 
-		Test.stopTest();
+	// 	Test.stopTest();
 		
-		System.debug('Unit Test: Finish: TestGDPReplicateAccount');
-	}
+	// 	System.debug('Unit Test: Finish: TestGDPReplicateAccount');
+	// }
 	
 	
 	static testMethod void TestGDPReplicateAccount2() {
@@ -518,7 +516,7 @@ private class BtchGDPReplicate_tst {
 		btchProc.dtSystemNow = btchRepAcc.Last_Modified_Date__c;
 		btchProc.query =
 			'SELECT AIMS_ID__c, WebStar_ID__c, Accreditation_ID__c, Class__c'
-			+ '		, Endorsed_Accredited_By__c, Last_change_date__c, Last_re_inspection_date__c'
+			+ '		, Endorsed_Accredited_By_Formula__c, Last_change_date__c, Last_re_inspection_date__c'
 			+ '		, Original_approval_date__c, Status__c, Date__c'
 			+ '		, Related_Account__r.AIMS_ID__c, Related_Account__r.WebStar_ID__c, Related_Account__r.IATACode__c'
 			+ '	FROM Accreditation__c'

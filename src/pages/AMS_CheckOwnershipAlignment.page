@@ -1,0 +1,39 @@
+<apex:page showHeader="true" sidebar="true" controller="AMS_CheckOwnershipAlignmentController" tabStyle="Account" title="Check owners integrity with HO">
+
+
+<apex:form id="accountFilters">
+<apex:pageBlock title="Check if owners are align with HO" >
+
+
+        <!--<apex:outputText style="font-weight:bold;float:left;align:left" value="Enter the HOs Info:"></apex:outputText> -->
+        <apex:pageBlockSection title="Enter the HOs Info:" columns="2">
+
+
+                <apex:inputText value="{!email}" label="Email"/>
+                <apex:inputText value="{!batchSize}" label="Batch Size"/>
+
+                <apex:selectList id="countries" value="{!qRegion}" label="Select Regions" size="1" required="true">
+                <apex:selectOptions value="{!rOptions}"/>
+                </apex:selectList>
+                <!--<apex:commandButton action="{!alignOwnersInHierarchyByAccountId}" value="Align Hierarchy" />-->
+        </apex:pageBlockSection>
+        <apex:pageBlockButtons location="bottom">
+                    <apex:commandButton action="{!checkowners}" value="Check Owners" status="loadingHeader"/>
+        </apex:pageBlockButtons>
+
+
+<apex:actionStatus id="loadingHeader" >
+        <apex:facet name="start">
+                <apex:outputPanel layout="none">
+                        <apex:outputPanel layout="block" styleClass="loading-backdrop"/>
+                        <apex:image value="/../img/loading32.gif" styleClass="loading-img"/>
+                </apex:outputPanel>
+        </apex:facet>
+</apex:actionStatus>
+</apex:pageBlock>
+</apex:form>
+
+<apex:form id="accountResult" styleClass="pos-relative">
+
+</apex:form>
+</apex:page>

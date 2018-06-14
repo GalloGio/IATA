@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomObject xmlns="http://soap.sforce.com/2006/04/metadata">
+    <customSettingsType>List</customSettingsType>
+    <description>table to contain exceptions at ISO country code + class + change code combinations, so we can track for instance CHL - C - AR --&gt; change code CHL is not billable for class C in Argentina.</description>
+    <enableFeeds>false</enableFeeds>
+    <fields>
+        <fullName>Change_Code__c</fullName>
+        <externalId>false</externalId>
+        <label>Change Code</label>
+        <length>3</length>
+        <required>true</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Country_To_Exclude__c</fullName>
+        <description>Country To Exclude if the Change code is Billable
+Possible values are Country ISO Code Ex: PT OR US or ES</description>
+        <externalId>false</externalId>
+        <inlineHelpText>Country To Exclude if the Change code is Billable
+Possible values are Country ISO Code Ex: PT OR US or ES</inlineHelpText>
+        <label>Country To Exclude</label>
+        <length>2</length>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Location_Class_To_Exclude__c</fullName>
+        <description>Location Class To Exclude if the Change code is Billable
+Possible values - &apos;A&apos;,&apos;C&apos;,&apos;D&apos;,&apos;E&apos;,&apos;G&apos;,&apos;I&apos;,&apos;K&apos;,&apos;M&apos;,&apos;N&apos;,&apos;O&apos;,&apos;P&apos;,&apos;Q&apos;,&apos;R&apos;,&apos;S&apos;,&apos;T&apos;,&apos;V&apos;,&apos;X&apos;,&apos;J&apos;</description>
+        <externalId>false</externalId>
+        <inlineHelpText>Location Class To Exclude if the Change code is Billable
+Possible values - &apos;A&apos;,&apos;C&apos;,&apos;D&apos;,&apos;E&apos;,&apos;G&apos;,&apos;I&apos;,&apos;K&apos;,&apos;M&apos;,&apos;N&apos;,&apos;O&apos;,&apos;P&apos;,&apos;Q&apos;,&apos;R&apos;,&apos;S&apos;,&apos;T&apos;,&apos;V&apos;,&apos;X&apos;,&apos;J&apos;</inlineHelpText>
+        <label>Location Class To Exclude</label>
+        <length>1</length>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Location_Type_To_Exclude__c</fullName>
+        <description>Location Type To Exclude:
+-Leaving it empty would mean all location types of the change code/country/class are not billable
+-Having some values (e.g. BR, SA, AE) in it would mean that BR,SA,AE are not billable but the other location types of the change code/country/class remain billable</description>
+        <externalId>false</externalId>
+        <inlineHelpText>-Leaving it empty would mean all location types of the change code/country/class are not billabl
+-Having some values (e.g. BR,SA,AE) in it would mean that BR,SA,AE are not billable but the other location types of the change code/country/class remain bill</inlineHelpText>
+        <label>Location Type To Exclude</label>
+        <length>50</length>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <label>AMS Change Codes Billable Setup</label>
+    <visibility>Protected</visibility>
+</CustomObject>

@@ -74,6 +74,10 @@
                 <behavior>Edit</behavior>
                 <field>Branch_Office_Country__c</field>
             </layoutItems>
+            <layoutItems>
+                <behavior>Readonly</behavior>
+                <field>ANG_IsNewGenAgency__c</field>
+            </layoutItems>
         </layoutColumns>
         <layoutColumns>
             <layoutItems>

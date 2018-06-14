@@ -1,0 +1,152 @@
+<apex:page controller="ANG_ConversionToolController" showHeader="true">
+
+	<style>
+		.hidden {
+			display: none;
+		}
+	</style>
+
+	<apex:sectionHeader title="Agencies migration tool" />   
+
+	<apex:form >
+		<apex:PageBlock id="selection" >
+
+		<apex:pageMessages ></apex:pageMessages>
+
+		    <apex:pageBlockSection id="notes" columns="1" title="Notes" collapsible="true">
+            
+                <apex:dataList value="{!noteList}" var="note" rendered="{!noteList.size > 0}">
+            
+                    <apex:outputText value="{!note}"/>
+            
+                </apex:dataList>
+            </apex:pageBlockSection>
+
+
+			<apex:panelGrid id="CountrySearchId" columns="2" width="30%">
+
+                <apex:pageBlockSection columns="3" title="Country Selection">
+                    
+                    <apex:pageblockSectionItem >
+                        <apex:outputLabel value="Please choose a Country"/>
+                    </apex:pageblockSectionItem>
+
+                    <apex:pageblockSectionItem >
+                    	   <apex:outputPanel styleClass="requiredInput" layout="block">
+                           		<apex:inputfield value="{!iataCountryName.IATA_ISO_Country__c}" required="true"/>
+                        </apex:outputPanel>
+                    </apex:pageblockSectionItem>
+
+					<apex:pageblockSectionItem >
+                        <apex:commandButton action="{!runAnalysis}" value="Run Analysis"/>
+					</apex:pageblockSectionItem>
+
+				</apex:pageBlockSection>
+
+			</apex:panelGrid>
+
+
+			<apex:pageBlockSection title="Analysis overview" collapsible="true" id="Overview"  rendered="{!displayTable}" columns="1">
+
+				<apex:outputPanel id="out" rendered="{!displayTable}">
+
+					<table style="width:60%;padding: 0px;border: 1px solid #dddddd;border-spacing: 0px;">
+						<tr style="background-color: #dddddd;">
+							<th style="background-color: #dddddd;padding: 8px"><apex:outputLabel >{!selectedCountryName}</apex:outputLabel></th>
+						</tr>
+						<tr>
+							<td>   
+								<apex:pageblockTable value="{!OverviewTable}" var="tbl" headerClass="hidden" style="border:1px;" frame="vsides">
+									<apex:column value="{!tbl.messageText}" style="border:1px ridge #dddddd;"/>
+									<apex:column value="{!tbl.count}" style="border:1px ridge #dddddd;" />
+									<apex:column style="border:1px ridge #dddddd;text-align:center">
+										<apex:commandLink action="{!showDetailPage}" value="Detail"  rendered="{!IF((tbl.isDetail=true),true,false)}"  >
+											<apex:param name="detailCode" value="{!tbl.detailCode}" assignTo="{!errorDetailCode}"/>
+										</apex:commandLink>
+										<apex:outputText value="" rendered="{!IF((!tbl.isDetail=true),true,false)}"/>
+									</apex:column>
+								</apex:pageBlockTable>
+							</td>
+						</tr>
+					</table>
+					<p></p>
+					<table style="width:60%;padding: 0px;border: 1px solid #dddddd;border-spacing: 0px;">
+						<tr style="background-color: #dddddd;">
+							<th style="background-color: #dddddd;padding: 8px"><apex:outputLabel >Risk Events will be added to agents based in {!selectedCountryName}</apex:outputLabel></th>
+						</tr>
+						<tr>
+							<td>   
+								<apex:pageblockTable value="{!OverviewRiskEventTable}" var="tbl" headerClass="hidden" style="border:1px;" frame="vsides">
+									<apex:column value="{!tbl.messageText}" style="border:1px ridge #dddddd;"/>
+									<apex:column value="{!tbl.count}" style="border:1px ridge #dddddd;" />
+								</apex:pageBlockTable>
+							</td>
+						</tr>
+					</table>
+
+				</apex:outputPanel>
+
+			</apex:pageblocksection>   
+
+			
+
+
+			<apex:pageBlockSection title="Run the migration" collapsible="true" id="RunMigration"  rendered="{!displayTable}" columns="1">
+
+				<apex:outputPanel id="out2" rendered="{!displayTable}" style="width:100%;">
+
+             	<apex:pageblockSectionItem >
+                    <apex:outputText value="Click on the button to start the migration for {!selectedCountryName}. Keep in mind this will not affect the Hierarchies with BR Abroad or with mixed location classes."/>
+            	</apex:pageblockSectionItem>
+            	<br/>
+				<apex:pageblockSectionItem >
+                     <apex:outputText value="This operation may take a few minutes, we'll send you an email when it will be completed."/>
+				</apex:pageblockSectionItem>
+
+					<apex:commandButton action="{!runMigration}" value="Run migraton" rendered="true"  />
+
+				</apex:outputPanel>
+
+			</apex:pageblocksection>
+
+			<apex:pageBlockSection title="Run the migration analyses with a report" collapsible="true" id="RunMigrationWithReport"  rendered="{!displayTable}" columns="1">
+
+				<apex:outputPanel id="out3" rendered="{!displayTable}" style="width:100%;">
+
+             	<apex:pageblockSectionItem >
+                    <apex:outputText value="Click on the button to start the analyses for {!selectedCountryName}."/>
+            	</apex:pageblockSectionItem>
+            	<br/>
+				<apex:pageblockSectionItem >
+                     <apex:outputText value="This operation may take a few minutes, we'll send you an email when it will be completed."/>
+				</apex:pageblockSectionItem>
+
+					<apex:commandButton action="{!runFullAnalysesWithReport}" value="Run Full Analyses (with report)" rendered="true"  />
+
+				</apex:outputPanel>
+
+			</apex:pageblocksection>
+
+			</apex:PageBlock>  
+
+		<apex:pageBlock mode="edit" id="StatusPageBlock">
+
+            <apex:pageBlockSection columns="1" title="Process Status" rendered="{!batchStatusBool}">
+
+                <apex:actionStatus id="act" startText="Checking..." />
+
+                <apex:outputText styleClass="processText" value="Migration process status: {!batchJob.Status}"/>
+
+                <apex:outputText styleClass="processText" value="Hierarchies processed: {!batchJob.JobItemsProcessed}"/>
+
+                <apex:outputText styleClass="processText" value="Errors found: {!batchJob.NumberOfErrors}"/>
+
+                <apex:actionPoller interval="5" action="{!getBatchStatus}" enabled="{!pollerBool}" reRender="StatusPageBlock" status="act"/>
+            
+            </apex:pageBlockSection>
+
+		</apex:pageBlock>
+
+	</apex:form>
+
+</apex:page>

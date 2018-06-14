@@ -1,3 +1,30 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<SharingRules xmlns="http://soap.sforce.com/2006/04/metadata"/>
-
+<SharingRules xmlns="http://soap.sforce.com/2006/04/metadata">
+    <sharingCriteriaRules>
+        <fullName>Local_Groups_Write</fullName>
+        <accessLevel>Edit</accessLevel>
+        <description>Every body can see LG, and all those having the Local group owner PS can modify them. So by sharing R/W, with everybody, only those having edit in the object, will meet the condition</description>
+        <label>Local Groups Write</label>
+        <sharedTo>
+            <allInternalUsers></allInternalUsers>
+        </sharedTo>
+        <criteriaItems>
+            <field>RecordTypeId</field>
+            <operation>equals</operation>
+            <value>Local Groups</value>
+        </criteriaItems>
+    </sharingCriteriaRules>
+    <sharingCriteriaRules>
+        <fullName>Show_non_drafts_to_all</fullName>
+        <accessLevel>Read</accessLevel>
+        <label>Show non-drafts to all</label>
+        <sharedTo>
+            <allInternalUsers></allInternalUsers>
+        </sharedTo>
+        <criteriaItems>
+            <field>RecordTypeId</field>
+            <operation>equals</operation>
+            <value>Reg/Div Groups</value>
+        </criteriaItems>
+    </sharingCriteriaRules>
+</SharingRules>

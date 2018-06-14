@@ -57,11 +57,25 @@ private class AMS_IataCodeRangesLoaderCtrlTest {
 //        MAX Last four               (6999)
 //        MIN-MAX area code differ?   (blank or DIFF)
 
-        String doc = 'Country Code;Country Description;State Code;State Description;Country State Code;State Number;Class Code;Class Description;Prefix;MIN Area Code;MIN Last four;MAX Area Code;MAX Last four;MIN-MAX area code differ?\r\nAF;AFGHANISTAN;AF01;AFGHANISTAN;AF;1;C;CARGO;1;3;1;3;6999;blank\r\nAR;ARGENTINA;AR02;ARGENTINA;AR;2;P;PAX;1;3;1;3;6999;DIFF';
+        String doc =    'Country Code;Country Description;State Code;State Description;Country State Code;State Number;Class Code;Class Description;Prefix;MIN Area Code;MIN Last four;MAX Area Code;MAX Last four;MIN-MAX area code differ?'+
+                        '\r\nAF;AFGHANISTAN;AF01;AFGHANISTAN;AF;1;C;CARGO;1;3;1;3;6999;blank'+
+                        '\r\nAR;ARGENTINA;AR02;ARGENTINA;AR;2;P;PAX;1;3;1;3;6999;DIFF'+
+                        '\r\nUS;USA;AL;ALABAMA;AL;2;P;PAX;1;3;1;3;6999;DIFF'+
+                        '\r\nUS;USA;TX;TEXAS;TX;2;P; ;1;3;1;3;6999;DIFF'+
+                        '\r\ninvalid;line';
+
+        for(Integer i = 0; i <200; i++) doc += '\r\nAR;ARGENTINA;AR'+i+';ARGENTINA;AR'+i+';2;C;CARGO'+i+';1;3;'+i+';3;'+(5000+1)+';blank';
+
         Blob myBlob = Blob.valueof(doc);
 
         Test.startTest();
         AMS_IataCodeRangesLoaderCtrl3 ctrl = new AMS_IataCodeRangesLoaderCtrl3();
+
+        //test error
+        ctrl.parseLines();
+        ctrl.importCSVFile();
+
+        //test sucess
         ctrl.csvFileBody = myBlob;
         ctrl.importCSVFile();
         ctrl.saveRecord();

@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<EmailTemplate xmlns="http://soap.sforce.com/2006/04/metadata">
+    <available>true</available>
+    <description>Template to send RHC notification during RHC simulation</description>
+    <encodingKey>UTF-8</encodingKey>
+    <letterhead>IATADynamicSkyLetterhead</letterhead>
+    <name>RHC Simulation 50_75</name>
+    <style>freeForm</style>
+    <subject>IMPORTANT NOTIFICATION : Remittance Holding Capacity Monitoring status - {!Account.IATACode__c}</subject>
+    <textOnly>Dear Agent,
+
+We would like to inform you that according to our records you have reached {!ANG_RHC_Information__c.ANG_ConsumedRHC_Percent__c}% of your Remittance Holding Capacity (RHC).
+
+It should be noted that your RHC amount is set at {!ANG_RHC_Information__c.ANG_RHC_Amount__c} and the currently used amount is {!ANG_RHC_Information__c.ANG_ConsumedRHC__c}.
+
+At this time and until 01st March 2018, this message is for your information only – no action is required. However, please note that as of 01 March 2018, if your Agency’s  total Cash amounts outstanding to the BSP reach 100% of your RHC,  Cash as a form of payment will be temporarily restricted until a remittance is received, although, you will be able to continue issuing tickets through other forms of payment such as Credit Card (if applicable), IATA EasyPay and/or other alternative transfer methods.
+
+For more information on Remittance Holding Capacity, please do not hesitate to contact us via the IATA Customer Portal.
+
+Best Regards,
+
+
+IATA – Global Delivery Center</textOnly>
+    <type>html</type>
+</EmailTemplate>

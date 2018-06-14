@@ -52,7 +52,7 @@ public without sharing class Account_Sel extends Selector {
 
         String query = String.format(
             'SELECT {0}, IATA_ISO_Country__r.ISO_Code__c, IATA_ISO_Billing_State__r.ISO_Code__c, IATA_ISO_Shipping_State__r.ISO_Code__c ' + 
-            ', Parent.Name, Parent.SoldTo_Location__c ' +
+            ', Parent.Name, Parent.SoldTo_Location__c, Parent.Default_Payment_Type__c, Parent.SoldTo_Location__r.SAP_Id__c, SoldTo_Location__r.SAP_Id__c ' +
             'FROM {1} ' + 
             'WHERE Id = :accountId ' , 
             new List<String>{

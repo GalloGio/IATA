@@ -49,10 +49,10 @@
         </apex:pageBlockSection>
         
         <!-- ************************* section 2 for HO or section 1 for branch ************************* -->
-        <apex:pageBlockSection columns="2" id="SectionTwo" collapsible="false">
+        <apex:pageBlockSection columns="2" id="SectionTwo" collapsible="false" rendered="{!AND(NOT(isTerminatedAgent), NOT(isNewHOforAccredAgent))}">
             <apex:facet name="header">
                 <apex:outputpanel >
-                    {!IF(AND(amsOfficeType=='HO',newCase.Reason1__c!='New BR Abroad'), $Label.ISSP_AMS_STEP_3_2_Title, $Label.ISSP_AMS_STEP_3_1_Branch_Title)}
+                    {!IF(AND(amsOfficeType=='HO',newCase.Reason1__c!='New BR Abroad'), IF(newlabels, $Label.ISSP_AMS_STEP_3_2_Title_New, $Label.ISSP_AMS_STEP_3_2_Title), IF(newlabels,$Label.ISSP_AMS_STEP_3_1_Branch_Title_New,$Label.ISSP_AMS_STEP_3_1_Branch_Title))}
                     <apex:commandButton styleclass="btn btn-default" action="{!goToStep3Section2}" value="{!$Label.ISSP_EditSection}" id="Edit-Section2" style="float:right" rendered="{!amsOfficeType == 'HO'}"/>
 					<!---
                     <apex:commandButton styleclass="btn btn-default" action="{!goToStep3Section1}" value="{!$Label.ISSP_EditSection}" id="Edit-Section1-For-Branch" style="float:right" rendered="{!amsOfficeType != 'HO'}"/>
@@ -98,27 +98,27 @@
 
        
         <!-- ************************* section 2 for Branch & Branch Abroad ************************* -->                  
-        <apex:pageBlockSection columns="2" id="SectionTwoForBranch" rendered="{!OR(NOT(amsOfficeType=='HO'),newCase.Reason1__c=='New BR Abroad')}" collapsible="false">
+        <apex:pageBlockSection columns="2" id="SectionTwoForBranch" rendered="{!OR(AND(amsOfficeType=='HO', OR(isTerminatedAgent, isNewHOforAccredAgent)),newCase.Reason1__c=='New BR Abroad')}" collapsible="false">
             <apex:facet name="header">
                 <apex:outputpanel >
-                    {!$Label.ISSP_AMS_STEP_3_2_Title}
+                    {!IF(newlabels, $Label.ISSP_AMS_STEP_3_2_Title_New, $Label.ISSP_AMS_STEP_3_2_Title)}
                     <apex:commandButton styleclass="btn btn-default" action="{!goToStep3Section2}" value="{!$Label.ISSP_EditSection}" id="Edit-Section3" style="float:right"/>
                 </apex:outputpanel>                       
             </apex:facet>
-            <tr style="display:{!IF(newCase.Reason1__c=='New BR Abroad','none','')}"><td colspan="4" class="bg-info"><strong>{!$Label.ISSP_AMS_Section_2_SubSection_1}</strong></td></tr>
-            <apex:outputtext rendered="{!amsOfficeType=='Branch'}"><!--empty: move following field to next row --></apex:outputtext>
-            
+            <tr style="display:{!IF(OR(newCase.Reason1__c=='New BR Abroad', isTerminatedAgent, isNewHOforAccredAgent),'none','')}"><td colspan="4" class="bg-info"><strong>{!$Label.ISSP_AMS_Section_2_SubSection_1}</strong></td></tr>
+
            	<apex:outputText value="{!$Label.ISSP_AMS_Is_this_branch_office}" style="font-weight:bold" rendered="{!amsOfficeType=='Branch'}"/>
           	<apex:outputtext rendered="{!amsOfficeType=='Branch'}"><!--empty: move following field to next row --></apex:outputtext>    
          	<apex:outputText label="{!$ObjectType.AMS_Pax_Accreditation_Form__c.fields.Wholly_owned_by_this_Head_Office__c.Label}" value="{!CASE(newForm.Wholly_owned_by_this_Head_Office__c,'Yes', $Label.ISSP_Yes,'No', $Label.ISSP_No, '')}" rendered="{!amsOfficeType=='Branch'}"/>
            	<apex:outputText label="{!$ObjectType.AMS_Pax_Accreditation_Form__c.fields.Wholly_managed_by_this_Head_Office__c.Label}" value="{!CASE(newForm.Wholly_managed_by_this_Head_Office__c,'Yes', $Label.ISSP_Yes, 'No', $Label.ISSP_No, '')}" rendered="{!amsOfficeType=='Branch'}"/>            
            
-			<tr style="display:{!IF(newCase.Reason1__c=='New BR Abroad','none','')}"><td colspan="4" class="bg-info"><strong>{!$Label.ISSP_AMS_Section_2_SubSection_2}</strong></td></tr>
-          	 
+			<tr style="display:{!IF(OR(newCase.Reason1__c=='New BR Abroad', isTerminatedAgent, isNewHOforAccredAgent), 'none','')}"><td colspan="4" class="bg-info"><strong>{!$Label.ISSP_AMS_Section_2_SubSection_2}</strong></td></tr>
+          	
+          
             <apex:outputText escape="false" label="{!$Label.ISSP_AMS_Step3_OnlineAgency}" value="{!CASE(newForm.ISSP_AMS_Online_Agency_Application__c,'Yes', $Label.ISSP_Yes, 'No', $Label.ISSP_No,'')}"/>
             <apex:outputField rendered="{!newForm.ISSP_AMS_Online_Agency_Application__c == 'Yes'}" label="{!$ObjectType.AMS_Pax_Accreditation_Form__c.fields.ISSP_AMS_Online_Agency_URL__c.Label}" value="{!newForm.ISSP_AMS_Online_Agency_URL__c}"/>
-            
             <apex:outputtext rendered="{!newForm.ISSP_AMS_Online_Agency_Application__c == 'Yes'}"><!--empty: move following field to next row --></apex:outputtext>
+         
             <apex:outputPanel rendered="{!AND(newForm.Wholly_owned_by_this_Head_Office__c!='Yes', amsOfficeType=='Branch')}">
             	<tr><td colspan="4"><strong>{!$Label.ISSP_AMS_Step3_Owned_by_OtherOrg_Branch}</strong></td></tr>
 			 </apex:outputPanel>
@@ -126,22 +126,22 @@
           	<apex:outputField label="{!$ObjectType.AMS_Pax_Accreditation_Form__c.fields.ISSP_AMS_Legal_Reg_Name_Address__c.Label}" value="{!newForm.ISSP_AMS_Legal_Reg_Name_Address__c}" rendered="{!AND(newForm.Wholly_owned_by_this_Head_Office__c!='Yes',amsOfficeType=='Branch')}"/>
             <apex:outputField label="{!$ObjectType.AMS_Pax_Accreditation_Form__c.fields.ISSP_AMS_Principal_business_Org__c.Label}" value="{!newForm.ISSP_AMS_Principal_business_Org__c}" rendered="{!AND(newForm.Wholly_owned_by_this_Head_Office__c!='Yes',amsOfficeType=='Branch')}"/>
 			
-            <apex:outputtext rendered="{!newCase.Reason1__c=='New BR Abroad'}"><!--empty: move following field to next row --></apex:outputtext>
-            <apex:pageblocksectionitem rendered="{!newCase.Reason1__c=='New BR Abroad'}">
+            <apex:outputtext rendered="{!OR(newCase.Reason1__c=='New BR Abroad')}"><!--empty: move following field to next row --></apex:outputtext>
+            <apex:pageblocksectionitem rendered="{!OR(newCase.Reason1__c=='New BR Abroad', isTerminatedAgent, isNewHOforAccredAgent)}">
            		<apex:outputlabel value="* {!$ObjectType.Account.fields.Legal_name__c.Label}" />
                	<apex:outputfield value="{!newForm.Account_Name__c}"/>
           	</apex:pageblocksectionitem>
-          	<apex:outputfield value="{!newForm.Trade_Name__c}" rendered="{!newCase.Reason1__c=='New BR Abroad'}"/>
+          	<apex:outputfield value="{!newForm.Trade_Name__c}" rendered="{!OR(newCase.Reason1__c=='New BR Abroad', isTerminatedAgent, isNewHOforAccredAgent)}"/>
             
         </apex:pageBlockSection>
 
         <span class="summary-subsection">
-            <apex:pageBlockSection rendered="{!OR(amsOfficeType != 'HO', newCase.Reason1__c=='New BR Abroad')}" collapsible="false">
+            <apex:pageBlockSection rendered="{!OR(AND(amsOfficeType=='HO', OR(isTerminatedAgent, isNewHOforAccredAgent)),newCase.Reason1__c=='New BR Abroad')}" collapsible="false">
                   
                     <apex:outputText label="{!$ObjectType.AMS_Pax_Accreditation_Form__c.fields.ISSP_AMS_Pax_Office_Open_Date__c.Label}" value="{0,date, MMMM d,  yyyy}">
                         <apex:param value="{!newForm.ISSP_AMS_Pax_Office_Open_Date__c}" />
                     </apex:outputText>
-                
+                	<apex:outputtext ><!--empty: move following field to next row --></apex:outputtext>
                 	<apex:outputfield value="{!newForm.ISSP_AMS_License_No__c}" rendered="{!(countryCheckList.License_required__c==true)}" />
             		<apex:outputfield value="{!newForm.ISSP_AMS_Trade_Reg_No__c}" rendered="{!(countryCheckList.Registration_required__c==true)}" />
             		<apex:outputText value="{0,date, MMMM d,  yyyy}" rendered="{!(countryCheckList.License_required__c==true)}" label="{!$ObjectType.AMS_Pax_Accreditation_Form__c.fields.ISSP_AMS_Date_license_granted__c.Label}">
@@ -156,8 +156,8 @@
         </span>
 
         <span class="summary-subsection">
-            <apex:pageBlockSection rendered="{!OR(NOT(amsOfficeType=='HO'),newCase.Reason1__c=='New BR Abroad')}" collapsible="false">
-                <apex:outputText value="{!$Label.ISSP_AMS_Branch_Office_address_details}" style="font-weight:bold"/>
+            <apex:pageBlockSection rendered="{!OR(AND(amsOfficeType=='HO', OR(isTerminatedAgent, isNewHOforAccredAgent)),newCase.Reason1__c=='New BR Abroad')}" collapsible="false">
+                <apex:outputText value="{!IF(OR(isTerminatedAgent, isNewHOforAccredAgent), $Label.ISSP_AMS_New_HO_details, $Label.ISSP_AMS_Branch_Office_address_details)}" style="font-weight:bold"/>
 
                 <apex:outputtext ><!--empty: move following field to next row --></apex:outputtext>
 
@@ -283,21 +283,48 @@
                 <apex:outputText rendered="{!agencycon.Agency_owner__c}"><img src="/img/checkbox_checked.gif"/></apex:outputText>
             </apex:column> 
             <apex:column styleClass="checkbox-td">
-                <apex:facet name="header">{!CASE(roleLabelType, 'director', $Label.ISSP_AMS_Director, $Label.ISSP_AMS_Manager)}</apex:facet>
+                <apex:facet name="header"><apex:outputText escape="false" value="{!CASE(roleLabelType, 'director', $Label.ISSP_AMS_Director, $Label.ISSP_AMS_Manager)}"/></apex:facet>
                 <apex:outputText rendered="{!agencycon.Agency_role__c}"><img src="/img/checkbox_checked.gif"/></apex:outputText>
             </apex:column> 
+            <!--
             <apex:column styleClass="checkbox-td">
                 <apex:facet name="header"><apex:outputText escape="false" value="&nbsp;{!$Label.ISSP_AMS_Authorised_Sig}"/></apex:facet>
                 <apex:outputText rendered="{!agencycon.Authorised_signatory__c}"><img src="/img/checkbox_checked.gif"/></apex:outputText>
             </apex:column> 
-            <apex:column rendered="{!amsOfficeType == 'HO'}" styleClass="checkbox-td">
+            <apex:column rendered="{!IF(AND(amsOfficeType=='HO', newForm.Agent_Type__c!='Standard no Cash'),true,false)}" styleClass="checkbox-td"> 
                 <apex:facet name="header"><apex:outputText escape="false" value="&nbsp;{!$Label.ISSP_AMS_Fin_Contact}"/></apex:facet>
                 <apex:outputText rendered="{!agencycon.Financial_Assessment_Contact__c}"><img src="/img/checkbox_checked.gif"/></apex:outputText>
-            </apex:column> 
+            </apex:column>
             <apex:column rendered="{!amsOfficeType == 'HO'}" styleClass="checkbox-td">
                 <apex:facet name="header"><apex:outputText escape="false" value="{!$Label.ISSP_AMS_Portal_Admin}"/></apex:facet>
                 <apex:outputText rendered="{!agencycon.id == newForm.ISSP_AMS_Portal_admin__c}"><img src="/img/checkbox_checked.gif"/></apex:outputText>
             </apex:column>                        
+            -->
+            <apex:column  styleClass="checkbox-td">
+                <apex:facet name="header"><apex:outputText escape="false" value="{!$Label.ISSP_AMS_Roles_and_Responsibilities}"/></apex:facet>
+                <table>
+                    <tr>
+                        <td style="border: 0;"><img src="/img/checkbox_{! IF(agencycon.Authorised_signatory__c,'','un')}checked.gif"/></td>
+                        <td style="border: 0;"><apex:outputText escape="false" value="{!$Label.ISSP_AMS_Authorised_Sig}"/></td>
+                    </tr>
+
+                    <apex:outputPanel rendered="{!amsOfficeType == 'HO'}" >
+                    <tr>
+                        <td style="border: 0;"><img src="/img/checkbox_{! IF(agencycon.Financial_Assessment_Contact__c,'','un')}checked.gif"/></td>
+                        <td style="border: 0;"><apex:outputText escape="false" value="{!$Label.ISSP_AMS_Fin_Contact}"/></td>
+                    </tr>
+                    <tr>
+                        <td style="border: 0;"><img src="/img/checkbox_{! IF(agencycon.id == newForm.ISSP_AMS_Portal_admin__c,'','un')}checked.gif"/></td>
+                        <td style="border: 0;"><apex:outputText escape="false" value="{!$Label.ISSP_AMS_Portal_Admin}"/></td>
+                    </tr>
+                    <tr>
+                        <td style="border: 0;"><img src="/img/checkbox_{! IF(agencycon.Id == newForm.ISSP_AMS_Invoicing_Contact__c,'','un')}checked.gif"/></td>
+                        <td style="border: 0;"><apex:outputText escape="false" value="{!$Label.ISSP_AMS_Invoicing_Contact}"/></td>
+                    </tr>
+                    </apex:outputPanel>
+                </table>
+                
+            </apex:column>
         </apex:pageBlockTable>
     </apex:pageBlockSection>
     </span>
@@ -363,7 +390,7 @@
             <apex:outputText label="{!$ObjectType.AMS_Pax_Accreditation_Form__c.fields.ISSP_AMS_Gross_Amnt_First_year__c.Label}" value="{!newForm.ISSP_AMS_Gross_Amnt_First_year__c} {!newForm.CurrencyIsoCode}"/>                 
             <apex:outputText label="{!$ObjectType.AMS_Pax_Accreditation_Form__c.fields.ISSP_AMS_Gross_Amnt_Second_year__c.Label}" value="{!newForm.ISSP_AMS_Gross_Amnt_Second_year__c} {!newForm.CurrencyIsoCode}"/>
             <apex:outputText label="{!$Label.ISSP_AMS_Step3_IATA_Reg_Cargo_Agent}" value="{!IF(newForm.ISSP_AMS_IATA_Registered_Cargo_Agent__c=='Yes', $Label.ISSP_Yes, $Label.ISSP_No)}" rendered="{!amsOfficeType == 'HO'}"/>
-            <apex:outputField rendered="{!newForm.ISSP_AMS_IATA_Registered_Cargo_Agent__c == 'Yes'}" label="{!$ObjectType.AMS_Pax_Accreditation_Form__c.fields.IATA_Cargo_Code__c.Label}" value="{!newForm.IATA_Cargo_Code__c}"/>
+            <apex:outputField rendered="{!newForm.ISSP_AMS_IATA_Registered_Cargo_Agent__c == 'Yes'}" label="{!$ObjectType.AMS_Pax_Accreditation_Form__c.fields.IATA_Cargo_Code__c.Label}" value="{!newForm.IATA_Cargo_Code__c}"/>                      
             <apex:outputField label="{!$Label.ISSP_AMS_Step3_Indicate_GDSs}" value="{!newForm.ISSP_AMS_GDS_with_signed_contract__c}" rendered="{!amsOfficeType == 'HO'}"/>
 
         </apex:pageBlockSection>

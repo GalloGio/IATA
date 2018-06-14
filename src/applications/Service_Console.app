@@ -4,6 +4,8 @@
         <alignment>right</alignment>
         <customApplicationComponent>Console.BuiltInComponent.mostRecentlyUsed</customApplicationComponent>
         <customApplicationComponent>Console.BuiltInComponent.knowledgeOne</customApplicationComponent>
+        <customApplicationComponent>LiveAgentConsoleComponent</customApplicationComponent>
+        <customApplicationComponent>DG_Routing_Component</customApplicationComponent>
     </customApplicationComponents>
     <defaultLandingTab>standard-home</defaultLandingTab>
     <description>Service Console for FDS&apos;s customer service representatives</description>
@@ -13,8 +15,10 @@
     <enableListViewReskin>true</enableListViewReskin>
     <enableMultiMonitorComponents>true</enableMultiMonitorComponents>
     <enablePinTabs>true</enablePinTabs>
-    <enableTabHover>false</enableTabHover>
+    <enableTabHover>true</enableTabHover>
     <enableTabLimits>false</enableTabLimits>
+    <footerColor>#099AD6</footerColor>
+    <headerColor>#FFFFFF</headerColor>
     <isServiceCloudConsole>true</isServiceCloudConsole>
     <keyboardShortcuts>
         <defaultShortcut>
@@ -29,33 +33,33 @@
         </defaultShortcut>
         <defaultShortcut>
             <action>FOCUS_DETAIL_VIEW</action>
-            <active>true</active>
+            <active>false</active>
             <keyCommand>SHIFT+S</keyCommand>
         </defaultShortcut>
         <defaultShortcut>
             <action>FOCUS_PRIMARY_TAB_PANEL</action>
-            <active>true</active>
+            <active>false</active>
             <keyCommand>P</keyCommand>
         </defaultShortcut>
         <defaultShortcut>
             <action>FOCUS_SUBTAB_PANEL</action>
-            <active>true</active>
+            <active>false</active>
             <keyCommand>S</keyCommand>
         </defaultShortcut>
         <defaultShortcut>
             <action>FOCUS_LIST_VIEW</action>
-            <active>true</active>
+            <active>false</active>
             <keyCommand>N</keyCommand>
         </defaultShortcut>
         <defaultShortcut>
             <action>FOCUS_FIRST_LIST_VIEW</action>
-            <active>true</active>
+            <active>false</active>
             <keyCommand>SHIFT+F</keyCommand>
         </defaultShortcut>
         <defaultShortcut>
             <action>FOCUS_SEARCH_INPUT</action>
             <active>true</active>
-            <keyCommand>R</keyCommand>
+            <keyCommand>CTRL+Q</keyCommand>
         </defaultShortcut>
         <defaultShortcut>
             <action>MOVE_LEFT</action>
@@ -79,7 +83,7 @@
         </defaultShortcut>
         <defaultShortcut>
             <action>OPEN_TAB_SCROLLER_MENU</action>
-            <active>true</active>
+            <active>false</active>
             <keyCommand>D</keyCommand>
         </defaultShortcut>
         <defaultShortcut>
@@ -90,11 +94,11 @@
         <defaultShortcut>
             <action>CLOSE_TAB</action>
             <active>true</active>
-            <keyCommand>C</keyCommand>
+            <keyCommand>CTRL+Y</keyCommand>
         </defaultShortcut>
         <defaultShortcut>
             <action>REFRESH_TAB</action>
-            <active>false</active>
+            <active>true</active>
             <keyCommand>SHIFT+R</keyCommand>
         </defaultShortcut>
         <defaultShortcut>
@@ -105,12 +109,12 @@
         <defaultShortcut>
             <action>EDIT</action>
             <active>true</active>
-            <keyCommand>E</keyCommand>
+            <keyCommand>F2</keyCommand>
         </defaultShortcut>
         <defaultShortcut>
             <action>SAVE</action>
             <active>true</active>
-            <keyCommand>CTRL+S</keyCommand>
+            <keyCommand>F4</keyCommand>
         </defaultShortcut>
         <defaultShortcut>
             <action>CONSOLE_LINK_DIALOG</action>
@@ -119,7 +123,7 @@
         </defaultShortcut>
         <defaultShortcut>
             <action>HOTKEYS_PANEL</action>
-            <active>false</active>
+            <active>true</active>
             <keyCommand>SHIFT+K</keyCommand>
         </defaultShortcut>
         <defaultShortcut>
@@ -164,7 +168,7 @@
         </defaultShortcut>
         <defaultShortcut>
             <action>REOPEN_LAST_TAB</action>
-            <active>false</active>
+            <active>true</active>
             <keyCommand>SHIFT+C</keyCommand>
         </defaultShortcut>
     </keyboardShortcuts>
@@ -175,6 +179,17 @@
         <width>25</width>
     </listPlacement>
     <listRefreshMethod>refreshListRows</listRefreshMethod>
+    <liveAgentConfig>
+        <enableLiveChat>true</enableLiveChat>
+        <openNewAccountSubtab>false</openNewAccountSubtab>
+        <openNewCaseSubtab>false</openNewCaseSubtab>
+        <openNewContactSubtab>false</openNewContactSubtab>
+        <openNewLeadSubtab>false</openNewLeadSubtab>
+        <openNewVFPageSubtab>false</openNewVFPageSubtab>
+        <showKnowledgeArticles>true</showKnowledgeArticles>
+    </liveAgentConfig>
+    <logo>Customer_Portal_Files/IATA_Logo_Cust_Portal.gif</logo>
+    <primaryTabColor>#3B3D3D</primaryTabColor>
     <pushNotifications>
         <pushNotification>
             <fieldNames>Category__c</fieldNames>
@@ -207,6 +222,7 @@
         </pushNotification>
     </pushNotifications>
     <saveUserSessions>true</saveUserSessions>
+    <tab>standard-home</tab>
     <tab>standard-Chatter</tab>
     <tab>My_Status</tab>
     <tab>standard-Case</tab>
@@ -216,7 +232,15 @@
     <tab>standard-Contact</tab>
     <tab>standard-report</tab>
     <tab>Operational_Improvements__c</tab>
+    <tab>standard-LiveAgentSupervisor</tab>
+    <tab>standard-LiveChatTranscript</tab>
+    <tab>standard-LiveChatVisitor</tab>
+    <tab>standard-LiveAgentSession</tab>
+    <tab>AMS_Account_Role__c</tab>
     <workspaceMappings>
+        <mapping>
+            <tab>AMS_Account_Role__c</tab>
+        </mapping>
         <mapping>
             <tab>Agents__c</tab>
         </mapping>
@@ -240,6 +264,21 @@
         </mapping>
         <mapping>
             <tab>standard-Dashboard</tab>
+        </mapping>
+        <mapping>
+            <tab>standard-LiveAgentSession</tab>
+        </mapping>
+        <mapping>
+            <tab>standard-LiveAgentSupervisor</tab>
+        </mapping>
+        <mapping>
+            <tab>standard-LiveChatTranscript</tab>
+        </mapping>
+        <mapping>
+            <tab>standard-LiveChatVisitor</tab>
+        </mapping>
+        <mapping>
+            <tab>standard-home</tab>
         </mapping>
         <mapping>
             <tab>standard-report</tab>

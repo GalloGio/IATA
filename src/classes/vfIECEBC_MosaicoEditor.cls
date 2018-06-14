@@ -87,7 +87,7 @@ global class vfIECEBC_MosaicoEditor extends vfIECEBC_Controller {
         newAttachments.add(a);
         
         // Html
-		xHtmlContent = xHtmlContent.replaceAll('/iec/services/apexrest/Resources/(00P[a-zA-Z0-9]{15})', '{EBCResource' + '{' + '$1' + '}' + '/EBCResource}');
+		xHtmlContent = xHtmlContent.replaceAll('services/apexrest/Resources/(00P[a-zA-Z0-9]{15})', '{EBCResource' + '{' + '$1' + '}' + '/EBCResource}');
 
         Pattern p = Pattern.compile(vfIECEBC_Template.regexImagePlaceholder);
         Matcher mo = p.matcher(xHtmlContent);
@@ -135,13 +135,17 @@ global class vfIECEBC_MosaicoEditor extends vfIECEBC_Controller {
     
     public static Integer getStaticDailyCount(Id templateId) {
         datetime dt = System.now()-1;
-        return Database.countQuery('SELECT count() FROM EBC_Template_Test__c WHERE EBC_Template__c = :templateId AND Event_Date__c > :dt');
+        return Database.countQuery('SELECT count() FROM EBC_Template_Test__c WHERE EBC_Template__c = :templateId AND Event_Date__c >= :dt') + 1;
+    }
+    
+    webService static Integer dailyCount(Id templateId) {
+        return getStaticDailyCount(templateId);
     }
     
     webService static void sendTest(Id templateId, String email) {
         Integer dailyCount = getStaticDailyCount(templateId);
 
-        if (dailyCount >= 10) {
+        if (dailyCount > 10) {
             throw new DailyLimitReached_Exception('Daily limit of 10 tests for that design/template has been reached.');
         }
         
@@ -174,7 +178,7 @@ global class vfIECEBC_MosaicoEditor extends vfIECEBC_Controller {
         
         String mailingId = 'TEST_' + template.Id + '_'+IECEBC_Utility.generateRandomString(12);
         
-        IECEBC_ETTriggeredSendDefinitionCreate.createTriggeredSendDefinition(mailingId, template.External_Id__c, 'Default', '27f87e21-4ed1-e511-9e76-8cdcd4af9375');
+        IECEBC_ETTriggeredSendDefinitionCreate.createTriggeredSendDefinition(mailingId, template.External_Id__c, 'EBC', 'f12d235d-74b6-e611-8302-8cdcd4afd9e9');
         IECEBC_ETTriggeredSendDefinitionStart.updateTriggeredSendDefinition(mailingId);
         
         Map<String, String> attributes = new Map<String, String>();

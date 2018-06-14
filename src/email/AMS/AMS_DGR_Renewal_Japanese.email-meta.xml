@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<EmailTemplate xmlns="http://soap.sforce.com/2006/04/metadata">
+    <available>true</available>
+    <encodingKey>UTF-8</encodingKey>
+    <letterhead>IATADynamicSkyLetterhead</letterhead>
+    <name>AMS DGR Renewal JP</name>
+    <style>freeForm</style>
+    <subject>Ref nr {!AMS_OSCAR__c.Name} – DGR renewal</subject>
+    <textOnly>Dear Sir/Madam,
+
+関係者各位、
+
+
+Under the provisions of the IATA Resolutions, all Approved Cargo Agents/Intermediaries should continue to meet at all times the requirements and criteria set forth in Program Handbook to ensure retention as an IATA Cargo Agent/Intermediary.
+
+IATA規定の基づき、全てのIATA公認貨物代理店は代理店ハンドブックに則る要件を満たす必要があります。
+
+
+In accordance with IATA Resolutions, your Company is required to have at least two full-time employees holding a valid Dangerous Goods Acceptance certificate issued within the previous two years to provide the services and handling functions described in the Handbook.
+
+IATA規定に則り、貴社には最低2名の過去2年以内に取得した有効な危険物資格を保持する者の在籍が必須となります。
+
+
+According to our records, Dangerous Goods certificates provided by your Company will expire on {!AMS_OSCAR__c.Change_effective_as_of__c}.  Therefore, please send evidence/copies of new and/or updated Dangerous Goods Acceptance certificates, together with any other information you feel may have a bearing on your qualifications, to indicate that your Company is in compliance with such requirement.
+
+IATAの記録によりますと、貴社よりご提出いただいた、危険物資格証書は{!AMS_OSCAR__c.Change_effective_as_of__c}に有効期限が切れます。貴社が必須要件を満たしている証明の為、新しく取得したまたは更新された危険物資格証書をIATAまで送付ください。その他危険物資格に関して提出が必要と思われる書類も証明書と共に送付ください。
+
+
+The above requested certificates should be sent to IATA through our Customer Service Portal web page: http://www.iata.org/cs to arrive no later than{!AMS_OSCAR__c.Change_effective_as_of__c}. Please attach a scanned copy to case{!AMS_OSCAR__c.Name} visible on your portal home page under ‘My recent cases’ section.
+
+上記提出の必要な証書はカスタマーポータル: http://www.iata.org/csより{!AMS_OSCAR__c.Change_effective_as_of__c}までにIATAへ送付ください。なお、証書のスキャンコピーはポータルホームページ上の「My recent cases」の下にありますケース{!AMS_OSCAR__c.Name}に添付いただけますようにお願い致します。
+
+
+The Agency Administrator will carry out a review, and make a decision based upon the evidence available. Therefore, in your own interest, please give this matter your immediate attention.
+
+担当者が内容の確認をし、ご提出頂いた書類を元に判断をさせていただきます。
+
+お手数ですが、早急のご対応をお願い致します。
+
+
+We would appreciate your acknowledgement of this letter and confirmation that you will give this matter your immediate attention.
+
+この通知を受取られましたら、受取ならびに早急にご対応いただける旨をご返信いただけますようお願い致します。
+
+
+
+Yours faithfully,
+
+Agency Management
+International Air Transport Association
+-----------------------------------------------------------------------------
+In order to obtain information or assistance from IATA, do not hesitate to access at any time our Customer Portal
+
+{!AMS_OSCAR__c.Emails_reference_Id__c}</textOnly>
+    <type>html</type>
+</EmailTemplate>

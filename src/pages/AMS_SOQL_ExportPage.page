@@ -1,0 +1,8 @@
+<apex:page standardController="AMS_SOQL_Query_Export__c" cache="true"  extensions="AMS_SOQL_Export" readOnly="true" showHeader="false" standardStylesheets="false" sidebar="false" contentType="application/octet-stream#{!fileName}.csv">
+
+  <apex:repeat value="{!queryFields}" var="fieldName">{!fieldName},</apex:repeat>{!newLine}
+  
+  <apex:repeat value="{!queryResults}" var="record"><apex:repeat value="{!queryFields}" var="fieldName">{!record[fieldName]},</apex:repeat>{!newLine}</apex:repeat>
+  
+
+</apex:page>

@@ -1,0 +1,70 @@
+<!-- This page is used to mass update All Material line items present on the billing agreements belonging to one contract-->
+<apex:page standardController="Contract"
+           extensions="EF_MassUpdateMatLiController">
+    <apex:pageMessages />
+    <apex:form >
+        <apex:pageBlock mode="mainDetail">
+            <apex:pageBlockButtons location="top">
+                <apex:commandButton onclick="window.close();" value="Close" />
+                <apex:commandButton action="{!save}" value="Update" />
+            </apex:pageBlockButtons>
+
+
+        <apex:pageBlockSection title="" showHeader="false"
+				collapsible="false" columns="1" id="sampleComponent">
+				<apex:inputField value="{!sampleMaterial.EF_Material__c}" styleClass="EF_Material__c" onchange="updateSelected('EF_Material__c', this.value, this);" />
+				<apex:inputField value="{!sampleMaterial.EF_Status__c}" styleClass="EF_Status__c" onchange="updateSelected('EF_Status__c', this.value, this);" />
+
+		</apex:pageBlockSection>
+
+        <apex:pageBlockSection title="Components" showHeader="true"
+				collapsible="false" columns="1" id="listComponents">
+            <apex:pageBlockTable id="tableAttachments" value="{!materials}" var="mat" styleClass="targetTable">
+                <apex:column >
+                    <apex:facet name="header">
+                        <apex:commandLink value="{!checkHeader}" action="{!selectAll}"
+                                          rerender="listComponents" style="text-decoration: underline; color: #D2165A; font-size: 1.0em;" />
+                    </apex:facet>
+                    <!-- This is our selected Boolean property in our wrapper class -->
+                    <apex:inputCheckbox value="{!mat.selected}" styleClass="selectedCheckbox"/>
+				</apex:column>
+
+                <apex:column headerValue="Billing Agreement">
+                    <apex:outputField value="{!mat.mmli.EF_Relationship__c}"/>
+                </apex:column>
+                <!-- <apex:column headerValue="Billing Agreement">
+                    <apex:outputText value="{!mat.mmli.EF_Relationship__r.BillingAgreement_Name__c}"/>
+                </apex:column> -->
+                <apex:column headerValue="Material Line Item">
+           			<apex:outputField value="{!mat.mmli.Name}"/>
+                </apex:column>
+                <apex:column headerValue="Material">
+           			<apex:inputField value="{!mat.mmli.EF_Material__c}" styleClass="EF_Material__c"/>
+                </apex:column>
+                <apex:column headerValue="Status">
+           			<apex:inputField value="{!mat.mmli.EF_Status__c}" styleClass="EF_Status__c"/>
+                </apex:column>
+            </apex:pageBlockTable>
+            </apex:pageBlockSection>
+       </apex:pageBlock>
+
+    </apex:form>
+	<apex:includeScript value="{!$Resource.jquery2_1_4}"/>
+    <script>
+
+        function updateSelected(className, value) {
+            // loop all rows
+            $(".targetTable tbody tr").each(function() {
+
+                // on a row, find the checkbox and change the values if it's checked
+                if($(this).find(".selectedCheckbox").prop("checked")) {
+                    $(this).find("."+className).val(value);
+                }
+            });
+        }
+
+
+
+    </script>
+
+</apex:page>

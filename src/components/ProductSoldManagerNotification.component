@@ -1,109 +1,117 @@
 <apex:component controller="ProductSoldManagerNotification_Ctrl" access="global" >
-	
-	<apex:attribute name="OrderId" assignTo="{!idOrder}" description="Order ID" type="Id"/>
-	<apex:attribute name="OrderItemId" assignTo="{!idOrderItem}" description="Order Item ID" type="Id" />
+    
+    <apex:attribute name="OrderId" assignTo="{!idOrder}" description="Order ID" type="Id"/>
+    <apex:attribute name="OrderItemId" assignTo="{!idOrderItem}" description="Order Item ID" type="Id" />
 
-	<meta http-equiv="Content-Type" content="text/html; charset=us-ascii" />
-	<body>
-	    <p>
-	        <center style="background-color: #993233; color: white">
-	            <h2>
-	                Shipment Notification &amp; Supporting Documentation</h2>
-	            <br />
-	        </center>
-	        <pr></pr>
-	    </p>
-	    The following activity was sold:
-	    <br />
-	    <table style="font-size: small; background-color: #EEEEEE" width="500">
-	        <tr style="background-color: #336799; color: white">
-	            <th>
-	                Activity Number
-	            </th>
-	            <th>
-	                Description of the Activity
-	            </th>
-	            <th>
-	                Quantity
-	            </th>
-	        </tr>
-	        <tr>
-	            <td>
-	                {!orderItem.SAP_Product_Number__c}
-	            </td>
-	            <td>
-	                {!orderItem.Product_Name__c}
-	            </td>
-	            <td>
-	                {!qty}
-	            </td>
-	        </tr>
+    <meta http-equiv="Content-Type" content="text/html; charset=us-ascii" />
+    <body>
+        <p>
+            <center style="background-color: #993233; color: white">
+                <h2>
+                    Shipment Notification &amp; Supporting Documentation</h2>
+                <br />
+            </center>
+            <pr></pr>
+        </p>
+        The following activity was sold:
+        <br />
+        <table style="font-size: small; background-color: #EEEEEE" width="500">
+            <tr style="background-color: #336799; color: white">
+                <th>
+                    Activity Number
+                </th>
+                <th>
+                    Description of the Activity
+                </th>
+                <th>
+                    Quantity
+                </th>
+            </tr>
+            <tr>
+                <td>
+                    {!orderItem.SAP_Product_Number__c}
+                </td>
+                <td>
+                    {!orderItem.Product_Name__c}
+                </td>
+                <td>
+                    {!qty}
+                </td>
+            </tr>
 
-	</table>
-	<br />
-	<table style="font-size: small; background-color: #EEEEEE" width="500">
-		<tr>
-	        <td width="125"></td>
-	        <td></td>
-	    </tr>
-	    <tr>
-	        <td width="125">
-	            Legacy Order Number
-	        </td>
-	        <td>
-	            {!order.OrderNumber}
-	        </td>
-	    </tr>
-	    <tr>
-	        <td width="125">
-	            Sold-to Name
-	        </td>
-	        <td>
-	            {!order.BillToAccount_Name__c}
-	        </td>
-	    </tr>
-	    <tr>
-	        <td width="125">
-	            Ship-to Name
-	        </td>
-	        <td>
-	            {!order.BillToAccount_Name__c}
-	        </td>
-	    </tr>
-	    <tr>
-	        <td width="125">
-	            Contact Person
-	        </td>
-	        <td>
-	            {!order.BillToContact_Name__c}
-	        </td>
-	    </tr>
-	    <tr>
-	        <td width="125">
-	            E-mail Address
-	        </td>
-	        <td>
-	            {!order.BillToContact_Email__c}
-	        </td>
-	    </tr>
-	</table>
-	<br />
+    </table>
+    <br />
+    <table style="font-size: small; background-color: #EEEEEE" width="500">
+        <tr>
+            <td width="125"></td>
+            <td></td>
+        </tr>
+        <tr>
+            <td width="125">
+                Legacy Order Number
+            </td>
+            <td>
+                {!order.OrderNumber}
+            </td>
+        </tr>
+        <tr>
+            <td width="125">
+                Sold-to Name
+            </td>
+            <td>
+                {!order.BillToAccount_Name__c}
+            </td>
+        </tr>
+        <tr>
+            <td width="125">
+                Ship-to Name
+            </td>
+            <td>
+                {!order.BillToAccount_Name__c}
+            </td>
+        </tr>
+        <tr>
+            <td width="125">
+                Contact Person
+            </td>
+            <td>
+                {!order.BillToContact_Name__c}
+            </td>
+        </tr>
+        <tr>
+            <td width="125">
+                E-mail Address
+            </td>
+            <td>
+                {!order.BillToContact_Email__c}
+            </td>
+        </tr>
+        <tr>
+            <td width="125">
+                Payment Method
+            </td>
+            <td>
+                {!order.Payment_Type__c}
+            </td>
+        </tr>
+    </table>
+    <br />
 
-	<table style="font-size: small; background-color: #C7E3FF" width="500">
+    <table style="font-size: small; background-color: #C7E3FF" width="500">
     <tbody>
-    	<tr>
-	        <td>
-	            Shipping Address
-	        </td>
-	        <td>
-	            {!order.BillToContact_Name__c}
-	        </td>
+        <tr>
+            <td>
+                Shipping Address
+            </td>
+            <td>
+                {!order.ShipToAccount_Name__c}
+            </td>
         </tr>
         <tr>
             <td>
             </td>
             <td>
-                {!order.ShipToContact_First_Name__c} {!order.ShipToContact_Last_Name__c}
+                {!order.ShipToContact_Name__c}
             </td>
         </tr>
         <tr>
@@ -157,11 +165,11 @@
             <td>
             </td>
         </tr>
-	</tbody>
-	</table>
+    </tbody>
+    </table>
 
-	
-	</body> 
+    
+    </body> 
 
 
 </apex:component>

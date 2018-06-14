@@ -97,6 +97,10 @@
                 <field>Target__c</field>
             </layoutItems>
             <layoutItems>
+                <behavior>Edit</behavior>
+                <field>Decreasing_Target__c</field>
+            </layoutItems>
+            <layoutItems>
                 <behavior>Readonly</behavior>
                 <field>Target_Progress__c</field>
             </layoutItems>
@@ -175,6 +179,14 @@
         <relatedList>Objective__c.Parent_Objective__c</relatedList>
     </relatedLists>
     <relatedLists>
+        <excludeButtons>New</excludeButtons>
+        <fields>Detail__c</fields>
+        <fields>Achievement__c</fields>
+        <fields>Country_News__c</fields>
+        <fields>Divisional_News__c</fields>
+        <relatedList>Comment__c.Parent_Objective__c</relatedList>
+    </relatedLists>
+    <relatedLists>
         <excludeButtons>NewEvent</excludeButtons>
         <fields>TASK.SUBJECT</fields>
         <fields>TASK.WHO_NAME</fields>
@@ -184,14 +196,6 @@
         <fields>TASK.PRIORITY</fields>
         <fields>CORE.USERS.FULL_NAME</fields>
         <relatedList>RelatedActivityList</relatedList>
-    </relatedLists>
-    <relatedLists>
-        <excludeButtons>New</excludeButtons>
-        <fields>Detail__c</fields>
-        <fields>Achievement__c</fields>
-        <fields>Country_News__c</fields>
-        <fields>Divisional_News__c</fields>
-        <relatedList>Comment__c.Parent_Objective__c</relatedList>
     </relatedLists>
     <relatedLists>
         <excludeButtons>LogCall</excludeButtons>

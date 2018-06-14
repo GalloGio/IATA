@@ -21,10 +21,6 @@
         <type>Default</type>
     </actionOverrides>
     <actionOverrides>
-        <actionName>Follow</actionName>
-        <type>Default</type>
-    </actionOverrides>
-    <actionOverrides>
         <actionName>List</actionName>
         <type>Default</type>
     </actionOverrides>
@@ -49,6 +45,7 @@
     <deploymentStatus>Deployed</deploymentStatus>
     <enableActivities>false</enableActivities>
     <enableBulkApi>true</enableBulkApi>
+    <enableChangeDataCapture>false</enableChangeDataCapture>
     <enableFeeds>false</enableFeeds>
     <enableHistory>false</enableHistory>
     <enableReports>false</enableReports>
@@ -59,140 +56,174 @@
         <fullName>Family__c</fullName>
         <externalId>false</externalId>
         <label>Family</label>
-        <picklist>
-            <picklistValues>
-                <fullName>Z01</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Z02</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Z03</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Z04</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Z05</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Z06</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Z07</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Z08</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Z09</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Z10</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Z11</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Z12</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Z13</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Z14</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Z15</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Z16</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Z17</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Z18</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Z19</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Z20</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Z21</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Z22</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Z23</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Z24</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Z25</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Z26</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Z27</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Z28</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Z29</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Z30</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Z31</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>ZEF</fullName>
-                <default>false</default>
-            </picklistValues>
-            <sorted>true</sorted>
-        </picklist>
         <required>false</required>
         <trackTrending>false</trackTrending>
         <type>Picklist</type>
+        <valueSet>
+            <valueSetDefinition>
+                <sorted>true</sorted>
+                <value>
+                    <fullName>Z01</fullName>
+                    <default>false</default>
+                    <label>Z01</label>
+                </value>
+                <value>
+                    <fullName>Z02</fullName>
+                    <default>false</default>
+                    <label>Z02</label>
+                </value>
+                <value>
+                    <fullName>Z03</fullName>
+                    <default>false</default>
+                    <label>Z03</label>
+                </value>
+                <value>
+                    <fullName>Z04</fullName>
+                    <default>false</default>
+                    <label>Z04</label>
+                </value>
+                <value>
+                    <fullName>Z05</fullName>
+                    <default>false</default>
+                    <label>Z05</label>
+                </value>
+                <value>
+                    <fullName>Z06</fullName>
+                    <default>false</default>
+                    <label>Z06</label>
+                </value>
+                <value>
+                    <fullName>Z07</fullName>
+                    <default>false</default>
+                    <label>Z07</label>
+                </value>
+                <value>
+                    <fullName>Z08</fullName>
+                    <default>false</default>
+                    <label>Z08</label>
+                </value>
+                <value>
+                    <fullName>Z09</fullName>
+                    <default>false</default>
+                    <label>Z09</label>
+                </value>
+                <value>
+                    <fullName>Z10</fullName>
+                    <default>false</default>
+                    <label>Z10</label>
+                </value>
+                <value>
+                    <fullName>Z11</fullName>
+                    <default>false</default>
+                    <label>Z11</label>
+                </value>
+                <value>
+                    <fullName>Z12</fullName>
+                    <default>false</default>
+                    <label>Z12</label>
+                </value>
+                <value>
+                    <fullName>Z13</fullName>
+                    <default>false</default>
+                    <label>Z13</label>
+                </value>
+                <value>
+                    <fullName>Z14</fullName>
+                    <default>false</default>
+                    <label>Z14</label>
+                </value>
+                <value>
+                    <fullName>Z15</fullName>
+                    <default>false</default>
+                    <label>Z15</label>
+                </value>
+                <value>
+                    <fullName>Z16</fullName>
+                    <default>false</default>
+                    <label>Z16</label>
+                </value>
+                <value>
+                    <fullName>Z17</fullName>
+                    <default>false</default>
+                    <label>Z17</label>
+                </value>
+                <value>
+                    <fullName>Z18</fullName>
+                    <default>false</default>
+                    <label>Z18</label>
+                </value>
+                <value>
+                    <fullName>Z19</fullName>
+                    <default>false</default>
+                    <label>Z19</label>
+                </value>
+                <value>
+                    <fullName>Z20</fullName>
+                    <default>false</default>
+                    <label>Z20</label>
+                </value>
+                <value>
+                    <fullName>Z21</fullName>
+                    <default>false</default>
+                    <label>Z21</label>
+                </value>
+                <value>
+                    <fullName>Z22</fullName>
+                    <default>false</default>
+                    <label>Z22</label>
+                </value>
+                <value>
+                    <fullName>Z23</fullName>
+                    <default>false</default>
+                    <label>Z23</label>
+                </value>
+                <value>
+                    <fullName>Z24</fullName>
+                    <default>false</default>
+                    <label>Z24</label>
+                </value>
+                <value>
+                    <fullName>Z25</fullName>
+                    <default>false</default>
+                    <label>Z25</label>
+                </value>
+                <value>
+                    <fullName>Z26</fullName>
+                    <default>false</default>
+                    <label>Z26</label>
+                </value>
+                <value>
+                    <fullName>Z27</fullName>
+                    <default>false</default>
+                    <label>Z27</label>
+                </value>
+                <value>
+                    <fullName>Z28</fullName>
+                    <default>false</default>
+                    <label>Z28</label>
+                </value>
+                <value>
+                    <fullName>Z29</fullName>
+                    <default>false</default>
+                    <label>Z29</label>
+                </value>
+                <value>
+                    <fullName>Z30</fullName>
+                    <default>false</default>
+                    <label>Z30</label>
+                </value>
+                <value>
+                    <fullName>Z31</fullName>
+                    <default>false</default>
+                    <label>Z31</label>
+                </value>
+                <value>
+                    <fullName>ZEF</fullName>
+                    <default>false</default>
+                    <label>ZEF</label>
+                </value>
+            </valueSetDefinition>
+        </valueSet>
     </fields>
     <fields>
         <fullName>Product__c</fullName>
@@ -210,364 +241,454 @@
         <fullName>Subject__c</fullName>
         <externalId>false</externalId>
         <label>Subject</label>
-        <picklist>
-            <picklistValues>
-                <fullName>Aircraft Engineering and Maintenance</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Airline Forecasts and Statistics</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Airline Management</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Airline Operations, Quality</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Air navigation Services</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Airport</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Airport Capacity</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Airport Forecast and Statistics</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Air Traffic Management</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Auditing</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Aviation Performance</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Cabin Safety</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Capacity</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Cargo and DGR</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Cargo Forecast and Statistics</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Cargo Operations and Statistics</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Civil Aviation</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Clearing Services</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Coding</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Communication, Navigation and Surveillance</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Cost Reductions</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Credit Card Services</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Currency Services</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Customer Service</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Customs and Regulations</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Dangerous Goods</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Distribution</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Economics</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Emergency Response</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Environment</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Environment and Fuel</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Fares and Ticketing</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Finance and Accounting</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Financial Management</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Financial Services</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Flight Operations</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Fraud Prevention</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Fuel</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Global Distribution Systems</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Ground Handling Operations</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Ground Operations</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Infectious Substances</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Inflight Services</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Information Technology</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Infrastructure and Safety</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Infrastructure Strategy</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Inspection, Certification and Safety Oversight</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Insurance</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>International Travel and Tourism Programme</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Invoicing Services</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>IOSA</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Law and Regulations</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Legal</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Live Animals</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Management Skills</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Medicine</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>New Technology</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Operations and Management</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Passenger and Baggage Processing</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Perishable Goods</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Policies and Regulations</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Project management</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Proration</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Quality Management</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Reservations</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Resolutions</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Revenue Accounting</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Revenue Management</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Safety</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Safety Data Management and Analysis</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Safety Issues</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Safety Management Systems (SMS)</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Sales and Marketing</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Scheduling</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Security</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Security Issues</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Settlement Systems</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Simplifying Passenger Travel</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Simplifying the Business</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Standards</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Tariffs</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Taxation</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Travel Agency Codes and Designators</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Travel Agent&apos;s Resolutions</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Travel Agents</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Travel and Tourism</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Unit Load Devices</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>User Charges</fullName>
-                <default>false</default>
-            </picklistValues>
-            <sorted>true</sorted>
-        </picklist>
         <required>false</required>
         <trackTrending>false</trackTrending>
         <type>Picklist</type>
+        <valueSet>
+            <valueSetDefinition>
+                <sorted>true</sorted>
+                <value>
+                    <fullName>Aircraft Engineering and Maintenance</fullName>
+                    <default>false</default>
+                    <label>Aircraft Engineering and Maintenance</label>
+                </value>
+                <value>
+                    <fullName>Airline Forecasts and Statistics</fullName>
+                    <default>false</default>
+                    <label>Airline Forecasts and Statistics</label>
+                </value>
+                <value>
+                    <fullName>Airline Management</fullName>
+                    <default>false</default>
+                    <label>Airline Management</label>
+                </value>
+                <value>
+                    <fullName>Airline Operations, Quality</fullName>
+                    <default>false</default>
+                    <label>Airline Operations, Quality</label>
+                </value>
+                <value>
+                    <fullName>Air navigation Services</fullName>
+                    <default>false</default>
+                    <label>Air navigation Services</label>
+                </value>
+                <value>
+                    <fullName>Airport</fullName>
+                    <default>false</default>
+                    <label>Airport</label>
+                </value>
+                <value>
+                    <fullName>Airport Capacity</fullName>
+                    <default>false</default>
+                    <label>Airport Capacity</label>
+                </value>
+                <value>
+                    <fullName>Airport Forecast and Statistics</fullName>
+                    <default>false</default>
+                    <label>Airport Forecast and Statistics</label>
+                </value>
+                <value>
+                    <fullName>Air Traffic Management</fullName>
+                    <default>false</default>
+                    <label>Air Traffic Management</label>
+                </value>
+                <value>
+                    <fullName>Auditing</fullName>
+                    <default>false</default>
+                    <label>Auditing</label>
+                </value>
+                <value>
+                    <fullName>Aviation Performance</fullName>
+                    <default>false</default>
+                    <label>Aviation Performance</label>
+                </value>
+                <value>
+                    <fullName>Cabin Safety</fullName>
+                    <default>false</default>
+                    <label>Cabin Safety</label>
+                </value>
+                <value>
+                    <fullName>Capacity</fullName>
+                    <default>false</default>
+                    <label>Capacity</label>
+                </value>
+                <value>
+                    <fullName>Cargo and DGR</fullName>
+                    <default>false</default>
+                    <label>Cargo and DGR</label>
+                </value>
+                <value>
+                    <fullName>Cargo Forecast and Statistics</fullName>
+                    <default>false</default>
+                    <label>Cargo Forecast and Statistics</label>
+                </value>
+                <value>
+                    <fullName>Cargo Operations and Statistics</fullName>
+                    <default>false</default>
+                    <label>Cargo Operations and Statistics</label>
+                </value>
+                <value>
+                    <fullName>Civil Aviation</fullName>
+                    <default>false</default>
+                    <label>Civil Aviation</label>
+                </value>
+                <value>
+                    <fullName>Clearing Services</fullName>
+                    <default>false</default>
+                    <label>Clearing Services</label>
+                </value>
+                <value>
+                    <fullName>Coding</fullName>
+                    <default>false</default>
+                    <label>Coding</label>
+                </value>
+                <value>
+                    <fullName>Communication, Navigation and Surveillance</fullName>
+                    <default>false</default>
+                    <label>Communication, Navigation and Surveillance</label>
+                </value>
+                <value>
+                    <fullName>Cost Reductions</fullName>
+                    <default>false</default>
+                    <label>Cost Reductions</label>
+                </value>
+                <value>
+                    <fullName>Credit Card Services</fullName>
+                    <default>false</default>
+                    <label>Credit Card Services</label>
+                </value>
+                <value>
+                    <fullName>Currency Services</fullName>
+                    <default>false</default>
+                    <label>Currency Services</label>
+                </value>
+                <value>
+                    <fullName>Customer Service</fullName>
+                    <default>false</default>
+                    <label>Customer Service</label>
+                </value>
+                <value>
+                    <fullName>Customs and Regulations</fullName>
+                    <default>false</default>
+                    <label>Customs and Regulations</label>
+                </value>
+                <value>
+                    <fullName>Dangerous Goods</fullName>
+                    <default>false</default>
+                    <label>Dangerous Goods</label>
+                </value>
+                <value>
+                    <fullName>Distribution</fullName>
+                    <default>false</default>
+                    <label>Distribution</label>
+                </value>
+                <value>
+                    <fullName>Economics</fullName>
+                    <default>false</default>
+                    <label>Economics</label>
+                </value>
+                <value>
+                    <fullName>Emergency Response</fullName>
+                    <default>false</default>
+                    <label>Emergency Response</label>
+                </value>
+                <value>
+                    <fullName>Environment</fullName>
+                    <default>false</default>
+                    <label>Environment</label>
+                </value>
+                <value>
+                    <fullName>Environment and Fuel</fullName>
+                    <default>false</default>
+                    <label>Environment and Fuel</label>
+                </value>
+                <value>
+                    <fullName>Fares and Ticketing</fullName>
+                    <default>false</default>
+                    <label>Fares and Ticketing</label>
+                </value>
+                <value>
+                    <fullName>Finance and Accounting</fullName>
+                    <default>false</default>
+                    <label>Finance and Accounting</label>
+                </value>
+                <value>
+                    <fullName>Financial Management</fullName>
+                    <default>false</default>
+                    <label>Financial Management</label>
+                </value>
+                <value>
+                    <fullName>Financial Services</fullName>
+                    <default>false</default>
+                    <label>Financial Services</label>
+                </value>
+                <value>
+                    <fullName>Flight Operations</fullName>
+                    <default>false</default>
+                    <label>Flight Operations</label>
+                </value>
+                <value>
+                    <fullName>Fraud Prevention</fullName>
+                    <default>false</default>
+                    <label>Fraud Prevention</label>
+                </value>
+                <value>
+                    <fullName>Fuel</fullName>
+                    <default>false</default>
+                    <label>Fuel</label>
+                </value>
+                <value>
+                    <fullName>Global Distribution Systems</fullName>
+                    <default>false</default>
+                    <label>Global Distribution Systems</label>
+                </value>
+                <value>
+                    <fullName>Ground Handling Operations</fullName>
+                    <default>false</default>
+                    <label>Ground Handling Operations</label>
+                </value>
+                <value>
+                    <fullName>Ground Operations</fullName>
+                    <default>false</default>
+                    <label>Ground Operations</label>
+                </value>
+                <value>
+                    <fullName>Infectious Substances</fullName>
+                    <default>false</default>
+                    <label>Infectious Substances</label>
+                </value>
+                <value>
+                    <fullName>Inflight Services</fullName>
+                    <default>false</default>
+                    <label>Inflight Services</label>
+                </value>
+                <value>
+                    <fullName>Information Technology</fullName>
+                    <default>false</default>
+                    <label>Information Technology</label>
+                </value>
+                <value>
+                    <fullName>Infrastructure and Safety</fullName>
+                    <default>false</default>
+                    <label>Infrastructure and Safety</label>
+                </value>
+                <value>
+                    <fullName>Infrastructure Strategy</fullName>
+                    <default>false</default>
+                    <label>Infrastructure Strategy</label>
+                </value>
+                <value>
+                    <fullName>Inspection, Certification and Safety Oversight</fullName>
+                    <default>false</default>
+                    <label>Inspection, Certification and Safety Oversight</label>
+                </value>
+                <value>
+                    <fullName>Insurance</fullName>
+                    <default>false</default>
+                    <label>Insurance</label>
+                </value>
+                <value>
+                    <fullName>International Travel and Tourism Programme</fullName>
+                    <default>false</default>
+                    <label>International Travel and Tourism Programme</label>
+                </value>
+                <value>
+                    <fullName>Invoicing Services</fullName>
+                    <default>false</default>
+                    <label>Invoicing Services</label>
+                </value>
+                <value>
+                    <fullName>IOSA</fullName>
+                    <default>false</default>
+                    <label>IOSA</label>
+                </value>
+                <value>
+                    <fullName>Law and Regulations</fullName>
+                    <default>false</default>
+                    <label>Law and Regulations</label>
+                </value>
+                <value>
+                    <fullName>Legal</fullName>
+                    <default>false</default>
+                    <label>Legal</label>
+                </value>
+                <value>
+                    <fullName>Live Animals</fullName>
+                    <default>false</default>
+                    <label>Live Animals</label>
+                </value>
+                <value>
+                    <fullName>Management Skills</fullName>
+                    <default>false</default>
+                    <label>Management Skills</label>
+                </value>
+                <value>
+                    <fullName>Medicine</fullName>
+                    <default>false</default>
+                    <label>Medicine</label>
+                </value>
+                <value>
+                    <fullName>New Technology</fullName>
+                    <default>false</default>
+                    <label>New Technology</label>
+                </value>
+                <value>
+                    <fullName>Operations and Management</fullName>
+                    <default>false</default>
+                    <label>Operations and Management</label>
+                </value>
+                <value>
+                    <fullName>Passenger and Baggage Processing</fullName>
+                    <default>false</default>
+                    <label>Passenger and Baggage Processing</label>
+                </value>
+                <value>
+                    <fullName>Perishable Goods</fullName>
+                    <default>false</default>
+                    <label>Perishable Goods</label>
+                </value>
+                <value>
+                    <fullName>Policies and Regulations</fullName>
+                    <default>false</default>
+                    <label>Policies and Regulations</label>
+                </value>
+                <value>
+                    <fullName>Project management</fullName>
+                    <default>false</default>
+                    <label>Project management</label>
+                </value>
+                <value>
+                    <fullName>Proration</fullName>
+                    <default>false</default>
+                    <label>Proration</label>
+                </value>
+                <value>
+                    <fullName>Quality Management</fullName>
+                    <default>false</default>
+                    <label>Quality Management</label>
+                </value>
+                <value>
+                    <fullName>Reservations</fullName>
+                    <default>false</default>
+                    <label>Reservations</label>
+                </value>
+                <value>
+                    <fullName>Resolutions</fullName>
+                    <default>false</default>
+                    <label>Resolutions</label>
+                </value>
+                <value>
+                    <fullName>Revenue Accounting</fullName>
+                    <default>false</default>
+                    <label>Revenue Accounting</label>
+                </value>
+                <value>
+                    <fullName>Revenue Management</fullName>
+                    <default>false</default>
+                    <label>Revenue Management</label>
+                </value>
+                <value>
+                    <fullName>Safety</fullName>
+                    <default>false</default>
+                    <label>Safety</label>
+                </value>
+                <value>
+                    <fullName>Safety Data Management and Analysis</fullName>
+                    <default>false</default>
+                    <label>Safety Data Management and Analysis</label>
+                </value>
+                <value>
+                    <fullName>Safety Issues</fullName>
+                    <default>false</default>
+                    <label>Safety Issues</label>
+                </value>
+                <value>
+                    <fullName>Safety Management Systems (SMS)</fullName>
+                    <default>false</default>
+                    <label>Safety Management Systems (SMS)</label>
+                </value>
+                <value>
+                    <fullName>Sales and Marketing</fullName>
+                    <default>false</default>
+                    <label>Sales and Marketing</label>
+                </value>
+                <value>
+                    <fullName>Scheduling</fullName>
+                    <default>false</default>
+                    <label>Scheduling</label>
+                </value>
+                <value>
+                    <fullName>Security</fullName>
+                    <default>false</default>
+                    <label>Security</label>
+                </value>
+                <value>
+                    <fullName>Security Issues</fullName>
+                    <default>false</default>
+                    <label>Security Issues</label>
+                </value>
+                <value>
+                    <fullName>Settlement Systems</fullName>
+                    <default>false</default>
+                    <label>Settlement Systems</label>
+                </value>
+                <value>
+                    <fullName>Simplifying Passenger Travel</fullName>
+                    <default>false</default>
+                    <label>Simplifying Passenger Travel</label>
+                </value>
+                <value>
+                    <fullName>Simplifying the Business</fullName>
+                    <default>false</default>
+                    <label>Simplifying the Business</label>
+                </value>
+                <value>
+                    <fullName>Standards</fullName>
+                    <default>false</default>
+                    <label>Standards</label>
+                </value>
+                <value>
+                    <fullName>Tariffs</fullName>
+                    <default>false</default>
+                    <label>Tariffs</label>
+                </value>
+                <value>
+                    <fullName>Taxation</fullName>
+                    <default>false</default>
+                    <label>Taxation</label>
+                </value>
+                <value>
+                    <fullName>Travel Agency Codes and Designators</fullName>
+                    <default>false</default>
+                    <label>Travel Agency Codes and Designators</label>
+                </value>
+                <value>
+                    <fullName>Travel Agent&apos;s Resolutions</fullName>
+                    <default>false</default>
+                    <label>Travel Agent&apos;s Resolutions</label>
+                </value>
+                <value>
+                    <fullName>Travel Agents</fullName>
+                    <default>false</default>
+                    <label>Travel Agents</label>
+                </value>
+                <value>
+                    <fullName>Travel and Tourism</fullName>
+                    <default>false</default>
+                    <label>Travel and Tourism</label>
+                </value>
+                <value>
+                    <fullName>Unit Load Devices</fullName>
+                    <default>false</default>
+                    <label>Unit Load Devices</label>
+                </value>
+                <value>
+                    <fullName>User Charges</fullName>
+                    <default>false</default>
+                    <label>User Charges</label>
+                </value>
+            </valueSetDefinition>
+        </valueSet>
     </fields>
     <label>Product Subject</label>
     <nameField>
@@ -578,4 +699,5 @@
     <pluralLabel>Product Subjects</pluralLabel>
     <searchLayouts/>
     <sharingModel>Read</sharingModel>
+    <visibility>Public</visibility>
 </CustomObject>

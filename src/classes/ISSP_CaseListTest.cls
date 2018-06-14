@@ -15,6 +15,9 @@ public class ISSP_CaseListTest {
         cttr.setSortDirection('DESC');
         system.assertEquals('DESC', cttr.getSortDirection());
         cttr.sortExpression = 'ASC';
+        cttr.isPWCProfile = false;
+        cttr.isDPCUser = false;
+        String communityName = cttr.communityName;        
     }
     
     public static testMethod void testISSP_CaseList_2() {
@@ -48,6 +51,34 @@ public class ISSP_CaseListTest {
         cttr.setSortDirection('DESC');
         system.assertEquals('DESC', cttr.getSortDirection());
         cttr.sortExpression = 'ASC';
+    }
+
+    // cover the extra features for DPC: myOwnCases and myCompanyCases
+    public static testMethod void testDPC() {
+        // pick a portal user to test as
+        User testUser = [SELECT Id, ProfileId FROM User WHERE ContactId != null AND isActive = true LIMIT 1];
+        String profId = (String)testUser.ProfileId; // (String)testUser.ProfileId.substring(0,15)
+        profId = profId.substring(0,15);
+        ISSPCaseListView__c cs = new ISSPCaseListView__c();
+        cs.Name = 'Test';
+        cs.Profiles_Id__c = profId; //Userinfo.getProfileId()
+        cs.Field_Set_API_Name__c = 'ISSP_AllClosedCases';
+        cs.SOQL_Filter__c = 'where id != null ';
+        cs.isOwnedByMe__c = true;
+        cs.isMyAccount__c = true;
+        insert cs;
+        System.runAS(testUser) {
+            ISSP_CaseList cttr = new ISSP_CaseList();
+            // cttr = new ISSP_CaseList();
+            cttr.initialization();
+            cttr.getCases();
+            cttr.refresh();
+
+            cttr.setSortDirection('DESC');
+            system.assertEquals('DESC', cttr.getSortDirection());
+            cttr.sortExpression = 'ASC';
+        }
+
     }
 
 }

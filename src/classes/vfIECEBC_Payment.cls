@@ -38,6 +38,7 @@ public without sharing class vfIECEBC_Payment extends vfIECEBC_Controller
 	
 	public Zuora__CustomerAccount__c paymentBillingAccount {
 		get {
+           /*
 			if (paymentBillingAccount == null) 
 			{
 				paymentBillingAccount = new Zuora__CustomerAccount__C (Name = billingAccount.Name
@@ -46,7 +47,7 @@ public without sharing class vfIECEBC_Payment extends vfIECEBC_Controller
 															, Zuora__BillToState__c = billingAccount.Zuora__BillToState__c
 															, Zuora__BillToPostalCode__c = billingAccount.Zuora__BillToPostalCode__c
 															, Zuora__BillToCountry__c = billingAccount.Zuora__BillToCountry__c );
-			}
+			}*/
 			return paymentBillingAccount;
 		}
 		set;

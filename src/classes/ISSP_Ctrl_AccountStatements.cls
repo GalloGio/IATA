@@ -1,16 +1,19 @@
-public without sharing class ISSP_Ctrl_AccountStatements {
+@RestResource(urlMapping='/newgenapp/v1/iceGetBalances/*')
+global class ISSP_Ctrl_AccountStatements {
 
 	public static final String APP_NAME = 'ICE – IATA Customer E-Statement';
 
 	public ContentVersion faq {get;set;}
 	public ContentVersion document {get;set;}
-	public Account headofficeAccount {get; set;}
+	public Account account {get; set;}
+    public Account headofficeAccount {get; set;}
 	public DateTime lastUpdatedOn {get; set;}
 	public list<Account_Statement__c> listStatements {get; set;}
 	public list<WrapperStatement> listWrapper {get; set;}
     public list<String> listCurrency {get; set;}
 	public list<String> listMessages {get; set;}
 	private User currentUser;
+    public Portal_Application_Right__c appRight {get; set;}
 
 	/**
 		Start actions, check rights and terms and conditions
@@ -18,12 +21,17 @@ public without sharing class ISSP_Ctrl_AccountStatements {
 	public PageReference initActions() {
 		try {
 			String strId = this.currentUser.ContactId;
-			Portal_Application_Right__c appRight = [
-				Select Id, Terms_Acceptance__c, Terms_Acceptance_Date__c, Right__c
+			this.appRight = [
+				Select Id, Terms_Acceptance__c, Terms_Acceptance_Date__c, Right__c, Enable_Notifications__c,
+				ICCS_Currency_Center_Current_Visit__c, ICCS_Currency_Center_Previous_Visit__c
 				From Portal_Application_Right__c
 				Where ContactId__c = :strId.left(15)
 				And Portal_Application__r.Name = :APP_NAME
 			];
+			// update visit Fields
+			this.appRight.ICCS_Currency_Center_Previous_Visit__c = this.appRight.ICCS_Currency_Center_Current_Visit__c;
+			this.appRight.ICCS_Currency_Center_Current_Visit__c = System.now();
+			update this.appRight;
 			// If user has no rights to access to Account statements app then is redirected to Home
 			if (appRight.Right__c!='Access Granted') {
 				Pagereference pageref = new PageReference('/ISSP_Homepage');
@@ -50,6 +58,11 @@ public without sharing class ISSP_Ctrl_AccountStatements {
 		return URL.getSalesforceBaseUrl().toExternalForm();
 	}
 
+    public Pagereference updateAppRight() {
+        update this.appRight;
+        return null;
+    }
+
 	/**
 		CONSTRUCTOR
 	**/
@@ -60,7 +73,9 @@ public without sharing class ISSP_Ctrl_AccountStatements {
 		this.listMessages = new list<String>();
 		// get current user
 		this.currentUser = [
-			Select Id, ContactId, Contact.AccountId, Contact.Account.Status__c
+			Select Id, ContactId, Contact.AccountId, Contact.Account.Status__c,
+				Contact.Account.Sector__c,
+				Contact.Account.Country_ISO_Code__c
 			From User
 			Where id = :UserInfo.getUserId()];
 
@@ -73,11 +88,10 @@ public without sharing class ISSP_Ctrl_AccountStatements {
 		}
 
 		// get HQ account
-		Id parentAccountId = getMaxParentAccount(this.currentUser.Contact.AccountId);
+		this.account = this.currentUser.Contact.Account;
+		Id parentAccountId = getMaxParentAccount(this.account.Id);
 		this.headofficeAccount = [Select Id, IATACode__c from Account where id = :parentAccountId];
 		list<Account> listAccount = getAllHierarchy(this.currentUser.Contact.AccountId);
-
-
 
 		// get Account Statements related with all accounts in the hierarchy
 		this.listStatements = [
@@ -113,6 +127,30 @@ public without sharing class ISSP_Ctrl_AccountStatements {
 		markLastUpdated();
 		markFirstOldPeriod();
         initListCurrency();
+	}
+
+	/**
+		Get method for NewGenAPP mobile
+	**/
+	@HttpGet
+	global static List <WrapperStatement> doGet(){
+		ISSP_Ctrl_AccountStatements acc = new ISSP_Ctrl_AccountStatements();
+
+		if(acc.listWrapper != null && !acc.listWrapper.isEmpty()){
+			String disclaimer = Label.ISSP_Account_Statements_Disclaimer;
+
+	        if(acc.account.Country_ISO_Code__c == 'CN' && acc.account.Sector__c == 'Travel Agent'){
+	        	disclaimer += Label.ISSP_Account_Statements_Disclaimer_China_TravelAgent;
+	        }
+
+	        for(WrapperStatement wrapper : acc.listWrapper){
+	        	wrapper.disclaimer = disclaimer;
+	        	wrapper.listCurrency = acc.listCurrency;
+	        	wrapper.location = Label.ISSP_Account_Statement_Location;
+	        }
+	    }
+
+		return acc.listWrapper;
 	}
 
 	/**
@@ -247,16 +285,19 @@ public without sharing class ISSP_Ctrl_AccountStatements {
 	/**
 		class to store a list of Account Statements and the sumarized data
 	**/
-	public class WrapperStatement implements Comparable {
-		public Account_Statement__c parent {get;set;}
-		public list<Account_Statement__c> listStatements {get; set;}
-		public String accountSite {get;set;}
-		public Boolean showDetail {get;set;}
-		public DateTime lastUpdatedDate {get; set;}
-		public Boolean lastUpdatedMark {get; set;}
-        public Boolean showSeparation {get; set;}
+	global class WrapperStatement implements Comparable {
+		global Account_Statement__c parent {get;set;}
+		global list<Account_Statement__c> listStatements {get; set;}
+		global String accountSite {get;set;}
+		global Boolean showDetail {get;set;}
+		global DateTime lastUpdatedDate {get; set;}
+		global Boolean lastUpdatedMark {get; set;}
+        global Boolean showSeparation {get; set;}
+        global String disclaimer { get; set; }
+        global List <String> listCurrency {get; set;}
+        global String location { get; set;}
 
-		public WrapperStatement(Account_Statement__c statement) {
+		global WrapperStatement(Account_Statement__c statement) {
 			this.parent = statement.clone();
 			this.listStatements = new list<Account_Statement__c>();
 			this.listStatements.add(statement);
@@ -264,6 +305,9 @@ public without sharing class ISSP_Ctrl_AccountStatements {
 			this.accountSite = statement.Account__r.Site;
 			this.showSeparation = false;
 			this.lastUpdatedMark = false;
+			this.disclaimer = '';
+			this.listCurrency = new List <String>();
+			this.location = '';
 		}
 
 		/**

@@ -1,0 +1,3 @@
+<apex:page standardController="EF_Contact_Relationship__c">
+    <c:EF_AttachmentList sobjectId="{!EF_Contact_Relationship__c.Id}"/>
+</apex:page>

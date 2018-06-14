@@ -1,0 +1,63 @@
+<apex:page showHeader="true" sidebar="true" controller="ams2gdp_SchedulerPageController" docType="html-5.0" title="AMS to GDP Manual Sync">
+	
+	<apex:stylesheet value="{!URLFOR($Resource.BootstrapCSS, 'css/bootstrap.css')}" />
+
+	<div class="container-fluid">
+		<apex:form id="frm">
+			<apex:actionFunction name="refreshJobOptions" reRender="options" />
+			<div class="row">
+				<div class="col-md-6">
+					<apex:pageBlock title="Select a Batch to process">
+						<div class="form-group">
+							<label>Job</label>
+							<apex:selectList required="true" size="1" value="{!jobName}" styleClass="form-control" onchange="refreshJobOptions()">
+								<apex:selectOptions value="{!availableJobs}"/>
+							</apex:selectList>								
+						</div>
+
+						<apex:outputPanel layout="none" id="options">
+							<apex:outputPanel layout="block" styleclass="form-group" rendered="{!AND(jobName != 'ams2gdp_Batch_Update',jobName != '')}">
+								<label>Records (using Semi-Column Separated SFDC ID’s)</label>
+								<apex:inputTextarea styleClass="form-control" value="{!recordIds}" />
+							</apex:outputPanel>
+                            <apex:outputPanel layout="block" styleclass="checkbox" rendered="{!jobName == 'ams2gdp_Batch_Account'}">
+								<label>
+                                    <apex:inputCheckbox value="{!processNext}" />
+                                    Process Related Records ?
+                                </label>								
+							</apex:outputPanel>
+                            
+						</apex:outputPanel>
+						<p>
+                            {!query}
+                        </p>
+						<div class="form-group">
+							<apex:commandButton styleClass="btn btn-default" value="Execute Job" action="{!executeJob}" rerender="frm" status="status">
+							<apex:param name="manual" value="true" assignTo="{!isManual}"/>
+                            </apex:commandButton>
+						</div>
+					</apex:pageBlock>
+				</div>
+				<div class="col-md-6">
+					<apex:pageBlock title="Job Status">	
+						<apex:actionPoller action="{!refresh}" status="status" reRender="statusTable" interval="15"/>
+						<apex:actionStatus id="status">
+							<apex:facet name="start">&nbsp;<img src="{!$Resource.IEC_progress}" alt="x" /></apex:facet>
+						</apex:actionStatus>
+
+						<apex:pageBlockTable value="{!jobs}" var="job" rendered="true" id="statusTable">
+				          	<apex:column value="{!job.ApexClass.Name}"/>
+                            <apex:column value="{!job.Status}"/>
+				          	<apex:column value="{!job.TotalJobItems}"/>
+				          	<apex:column value="{!job.JobItemsProcessed}"/>
+				          	<apex:column value="{!job.NumberOfErrors}"/>
+				      	</apex:pageBlockTable>
+					</apex:pageBlock>
+				</div>
+			</div>
+
+		</apex:form>	
+	</div>
+	
+		
+</apex:page>

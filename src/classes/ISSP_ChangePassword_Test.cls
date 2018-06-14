@@ -46,14 +46,53 @@ private class ISSP_ChangePassword_Test {
     	PageReference pgRef = Page.ISSP_ChangePassword;
     	Test.setCurrentPage(pgRef);
     	
-    	User usr = IECTestUtil.createSampleGuestUserAndLogin();
-    	usr.UID__c = '1234';
+    	// insert account
+        Account newAccount = new Account();
+        newAccount.RecordTypeId = Schema.SObjectType.Account.getRecordTypeInfosByName().get('Standard Account').getRecordTypeId();
+        newAccount.Name = 'Company';
+        insert newAccount;
+ 
+        // create Bill To contact info
+        Contact newContact = new Contact();
+        newContact.RecordTypeId = IECUserManager.getContactRecordTypeForIEC();
+        newContact.AccountId = newAccount.Id;
+        newContact.OwnerId = IECUserManager.getIECContactOwnerId();
+        newContact.FirstName = 'Test';
+        newContact.LastName = 'User';
+        newContact.Title = 'TestTitle';
+        newContact.Email = 'testIECGuest@test.iata.org';
+        newContact.Phone = '514123345';
+        newContact.User_IECPortal_Status__c = IECConstants.APPROVED_CONTACT_STATUS;
+        insert newContact;
+
+        User u = new User(
+            Username = ISSP_Utilities.buildPortalUserName('testIECGuest@test.iata.org')
+            , Email = 'testIECGuest@test.iata.org'
+            , emailencodingkey = 'UTF-8'
+            , Alias = IECUserManager.createAliasFromName(newContact.LastName)
+            , FirstName = newContact.FirstName
+            , LastName = newContact.LastName
+            , LocaleSidKey = 'en_US'
+            , CommunityNickname = 'testIECGuest@iata.org'
+            , ProfileId = IECUserManager.getProfileIdForIECUser()
+            , LanguageLocaleKey = 'en_US'
+            , timezonesidkey = 'America/New_York'
+            , ContactId = newContact.Id
+            , IsActive = true
+            , ReceivesAdminInfoEmails = false
+            , ReceivesInfoEmails = false
+            , UID__c = '1234'
+        );
+        insert u;
+
+        String userId = Site.createPortalUser(u, newAccount.Id, 'testpassword');
+        IECUserManager.login(u.Username, 'testpassword', null);
     	
     	//List <User> userList = [SELECT Id, UID__c FROM User WHERE Id = :usr.Id];
     	//User myUser = userList[0];
     	//myUser.UID__c = '1234';
     	//update myUser;
-    	System.runAs(usr) {
+    	System.runAs(u) {
 	        ISSP_ChangePassword pgCont = new ISSP_ChangePassword();
 	        
 	        // Test 001: Leave all fields blank
@@ -66,6 +105,7 @@ private class ISSP_ChangePassword_Test {
 	        pgCont.currentPassword = 'a';
 	        pgCont.newPassword = 'b';
 	        pgCont.confirmNewPassword = 'c';
+	        ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.ERROR, 'Test'));
 	        pgCont.changePassword();
 	        
 	        // Test 003: Correct
@@ -73,7 +113,7 @@ private class ISSP_ChangePassword_Test {
 	        pgCont.newPassword = 'b1234567';
 	        pgCont.confirmNewPassword = 'b1234567';
 	        pgCont.changePassword();
-	        
+
     	}
     	Test.stopTest();
     }
@@ -141,4 +181,5 @@ private class ISSP_ChangePassword_Test {
 		ctrl.changePassword();
 	    ISSP_First_Login.updateUsers(UserInfo.getUserId());
 	}
+
 }

@@ -1,0 +1,74 @@
+<apex:page setup="false" docType="html" cache="false"  language="{!Language}"  title="IATA/IATAN ID Card Online Platform"       
+    sidebar="false" showHeader="false" controller="IDCard_DetailsAdmPaymentsCtrl">
+
+    <c:IDCard_HeaderComponent />
+        <div class="HeaderIMGSmall"> 
+            <apex:form forceSSL="true" id="idcardForm">
+               	<table width="80%">
+                    <tr>
+	                    <td>
+	                        <div class="select-style" style="display:{!if(availableIataCodeSize>1,'none','none')}">
+	                          	<apex:actionRegion >
+			                         <apex:selectList id="cIataCodeSelect" value="{!IataCodeParameter}" size="1" required="true">
+			                         <apex:selectOptions value="{!IataCodesItems}" />
+			                         <apex:actionSupport event="onchange" onsubmit="refreshIataCode()" reRender=""></apex:actionSupport>
+			                         </apex:selectList>
+	                          </apex:actionRegion>
+	                        </div>
+	                    </td>
+	                    
+	                    <td><apex:image styleClass="IATALogo" url="{!URLFOR($Resource.IDCard_Styles,'img/IATA_LOGO.png')}" /></td>
+	                    <td>
+		                    <div class="select-style">
+		                        <apex:actionRegion >
+		                	        <apex:selectList id="langSelect" value="{!SelectedLanguage}" size="1" required="true">
+		                            <apex:selectOptions value="{!LangItems}" />
+		                            <apex:actionSupport event="onchange" onsubmit="refreshLanguage()" reRender=""></apex:actionSupport>
+		                            </apex:selectList>
+		                        </apex:actionRegion>
+		                    </div>
+	                    </td>
+	                    
+	                    <td><c:IDCard_logoutComponent /></td>
+                    </tr>
+               	</table>
+            </apex:form>
+            <h1>{!$Label.IDCard_Landing_Title}</h1>
+        </div>
+
+
+        <div class="background" style="min-height:600px;background-color:#C9E5FF">
+            <div class="tab-content">
+            	<apex:form forceSSL="true" id="formSF">
+                	<apex:pageMessages id="Msgs2" escape="false" />
+                    <div >
+                        <table id="ApplicationTable" class="display" >
+                            <thead>
+                                 <apex:repeat value="{!singleAppsPerMassApps}" var="k">		            
+	          						<h1 align="center">This purchase had been ordered by: {!contacts[k].Name}</h1>
+	          						<br></br>	           
+	                				<thead>	                	
+					                    <th style="font-size:20px;" width="30%">Card holder</th>
+					                    <th style="font-size:20px;" width="30%">Application type</th>
+					                    <th style="font-size:20px;" width="30%">Application Status</th>
+					                    <th style="font-size:20px;" width="30%">Application Price</th>	                
+	                				</thead>
+	                				<tbody>
+						                <apex:repeat value="{!singleAppsPerMassApps[k]}" var="app" >
+									        <tr style="border:10000px solid  black;" >
+					                            <td align="center">{!app.Displayed_Name__c}</td>
+					                            <td align="center" >{!app.Type_of_application__c}</td>
+					                            <td align="center" >{!app.Application_Status__c} </td>
+					                            <td align="center" >{!app.Applicable_Fee__c}</td>
+									        </tr> 
+									    </apex:repeat>
+				    				</tbody>
+				   				</apex:repeat>
+                            </thead>
+                        </table> 
+                    </div>
+                </apex:form>
+            </div>
+        </div>
+		<c:IDCard_footerComponent />
+</apex:page>

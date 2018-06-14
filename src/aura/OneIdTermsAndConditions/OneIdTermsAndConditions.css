@@ -1,0 +1,36 @@
+.THIS .termscontainer{
+	display:block;
+	width:100%;
+	max-width:1180px;
+	height:100%;
+	min-height:100vh;
+}
+
+.THIS .textcontainer{
+	width:100%;
+	display:block;
+	height:100%;
+}
+
+.THIS .terms{
+	display:block;
+	width:100%;
+	height:100%;
+}
+
+.THIS .align_verticalaxis{
+	margin-left:auto;
+	margin-right:auto;
+}
+
+.THIS .service_title{
+
+}
+
+.THIS .terms_title{
+
+}
+
+.THIS .terms{
+	line-height:2em;
+}

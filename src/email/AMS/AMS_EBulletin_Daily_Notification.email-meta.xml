@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<EmailTemplate xmlns="http://soap.sforce.com/2006/04/metadata">
+    <available>true</available>
+    <encodingKey>UTF-8</encodingKey>
+    <name>AMS - EBulletin Daily Notification</name>
+    <style>none</style>
+    <subject>Daily EBulletin Notification</subject>
+    <textOnly>Dear {!Receiving_User.Name}.
+
+In order to generate a Daily Report containing these events/occurrences, please click here (link to the Portal Service).
+
+In case you already downloaded a report today, please note that you can select the option “Since last download today” to retrieve only the new events not yet downloaded. You can always generate the full Daily Bulletin by selecting “Full day”.
+
+Please, note that the User Guide can be downloaded from the AIRS/CAIRS Online Bulletin service on the on the Portal.
+
+For any further information or to request assistance, please do not hesitate to contact our Customer Service teams www.iata.org/cs
+
+IATA Customer Service</textOnly>
+    <type>custom</type>
+</EmailTemplate>

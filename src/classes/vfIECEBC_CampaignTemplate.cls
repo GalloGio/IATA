@@ -54,7 +54,7 @@ public class vfIECEBC_CampaignTemplate extends vfIECEBC_Controller {
     }
     
     public String getAudience() {
-    	return campaign.Audience__c != 'Custom' ? campaign.Audience__c : 'Agency';
+        return campaign.Audience__c != 'Custom' ? campaign.Audience__c : 'Agency';
     }
     
     public EBC_Template__c customHtmlTemplate {
@@ -69,7 +69,7 @@ public class vfIECEBC_CampaignTemplate extends vfIECEBC_Controller {
                     WHERE
                         Recordtype.DeveloperName = 'Global' AND 
                         Audience__c = :getAudience() AND
-                    	External_Id__c LIKE 'customhtml-%'
+                        External_Id__c LIKE 'customhtml-%'
                     LIMIT 1
                 ];
             }
@@ -92,7 +92,7 @@ public class vfIECEBC_CampaignTemplate extends vfIECEBC_Controller {
             
             return pr;
         } catch(MissingTemplate_Exception e) {
-            ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.ERROR,'Please select a template.'));
+            ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.ERROR,'Please select a Template before proceeding.'));
         }
         
         return null;
@@ -111,7 +111,7 @@ public class vfIECEBC_CampaignTemplate extends vfIECEBC_Controller {
             
             return pr;
         } catch(MissingTemplate_Exception e) {
-            ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.ERROR,'Please select a template.'));
+            ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.ERROR,'Please select a Template before proceeding.'));
         }
         
         return null;

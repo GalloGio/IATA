@@ -21,10 +21,6 @@
         <type>Default</type>
     </actionOverrides>
     <actionOverrides>
-        <actionName>Follow</actionName>
-        <type>Default</type>
-    </actionOverrides>
-    <actionOverrides>
         <actionName>List</actionName>
         <type>Default</type>
     </actionOverrides>
@@ -49,8 +45,9 @@
     <deploymentStatus>Deployed</deploymentStatus>
     <enableActivities>false</enableActivities>
     <enableBulkApi>true</enableBulkApi>
+    <enableChangeDataCapture>false</enableChangeDataCapture>
     <enableFeeds>false</enableFeeds>
-    <enableHistory>false</enableHistory>
+    <enableHistory>true</enableHistory>
     <enableReports>true</enableReports>
     <enableSearch>true</enableSearch>
     <enableSharing>true</enableSharing>
@@ -64,6 +61,7 @@
         <relationshipName>IATA_ISO_States</relationshipName>
         <relationshipOrder>0</relationshipOrder>
         <reparentableMasterDetail>false</reparentableMasterDetail>
+        <trackHistory>true</trackHistory>
         <trackTrending>false</trackTrending>
         <type>MasterDetail</type>
         <writeRequiresMasterRead>false</writeRequiresMasterRead>
@@ -74,6 +72,7 @@
         <description>IEC - true means to display in list of provinves for eCommerce because the ISO code matched with SAP</description>
         <externalId>false</externalId>
         <label>Valid for Ecommerce</label>
+        <trackHistory>true</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Checkbox</type>
     </fields>
@@ -83,6 +82,7 @@
         <label>ISO CODE STANDARD</label>
         <length>25</length>
         <required>false</required>
+        <trackHistory>true</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Text</type>
         <unique>false</unique>
@@ -93,6 +93,7 @@
         <label>ISO Code</label>
         <length>6</length>
         <required>true</required>
+        <trackHistory>true</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Text</type>
         <unique>false</unique>
@@ -103,6 +104,7 @@
         <label>Informatica Value</label>
         <length>255</length>
         <required>false</required>
+        <trackHistory>true</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Text</type>
         <unique>false</unique>
@@ -115,6 +117,37 @@
         <label>Local Language</label>
         <length>255</length>
         <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Valid_for_Address__c</fullName>
+        <defaultValue>false</defaultValue>
+        <externalId>false</externalId>
+        <label>Valid for Address</label>
+        <trackHistory>true</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
+        <fullName>Valid_for_GDP__c</fullName>
+        <defaultValue>false</defaultValue>
+        <externalId>false</externalId>
+        <label>Valid for GDP</label>
+        <trackHistory>true</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
+        <fullName>numeric_code__c</fullName>
+        <externalId>false</externalId>
+        <inlineHelpText>Used by GDP</inlineHelpText>
+        <label>numeric code</label>
+        <length>10</length>
+        <required>false</required>
+        <trackHistory>true</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Text</type>
         <unique>false</unique>
@@ -128,16 +161,91 @@
         <columns>ISO_CODE_STANDARD__c</columns>
         <columns>Local_Language__c</columns>
         <columns>CURRENCY_ISO_CODE</columns>
+        <columns>numeric_code__c</columns>
         <filterScope>Everything</filterScope>
         <label>All</label>
         <language>en_US</language>
     </listViews>
+    <listViews>
+        <fullName>ISO_States_in_AU_BR_CA_MX_US_VE</fullName>
+        <columns>NAME</columns>
+        <columns>IATA_ISO_Country__c</columns>
+        <columns>ISO_Code__c</columns>
+        <columns>ISO_CODE_STANDARD__c</columns>
+        <columns>numeric_code__c</columns>
+        <filterScope>Everything</filterScope>
+        <filters>
+            <field>IATA_ISO_Country__c</field>
+            <operation>equals</operation>
+            <value>Australia,Brazil,Canada,Mexico,Venezuela,United States</value>
+        </filters>
+        <label>ISO States in AU, BR, CA, MX, US, VE</label>
+        <language>en_US</language>
+    </listViews>
+    <listViews>
+        <fullName>Valid_for_EBC</fullName>
+        <columns>NAME</columns>
+        <columns>IATA_ISO_Country__c</columns>
+        <columns>ISO_Code__c</columns>
+        <columns>ISO_CODE_STANDARD__c</columns>
+        <columns>Local_Language__c</columns>
+        <columns>Valid_for_GDP__c</columns>
+        <columns>numeric_code__c</columns>
+        <filterScope>Everything</filterScope>
+        <filters>
+            <field>Valid_for_GDP__c</field>
+            <operation>equals</operation>
+            <value>1</value>
+        </filters>
+        <label>Valid for EBC/GDP</label>
+        <language>en_US</language>
+    </listViews>
+    <listViews>
+        <fullName>Valid_for_Ecommerce</fullName>
+        <columns>NAME</columns>
+        <columns>IATA_ISO_Country__c</columns>
+        <columns>ISO_Code__c</columns>
+        <columns>ISO_CODE_STANDARD__c</columns>
+        <columns>Local_Language__c</columns>
+        <columns>IEC_Valid_SAP__c</columns>
+        <columns>Valid_for_Address__c</columns>
+        <filterScope>Everything</filterScope>
+        <filters>
+            <field>IEC_Valid_SAP__c</field>
+            <operation>equals</operation>
+            <value>1</value>
+        </filters>
+        <label>Valid for Ecommerce</label>
+        <language>en_US</language>
+    </listViews>
+    <listViews>
+        <fullName>ZZ_Search_By_Country</fullName>
+        <columns>NAME</columns>
+        <columns>IATA_ISO_Country__c</columns>
+        <columns>ISO_Code__c</columns>
+        <columns>ISO_CODE_STANDARD__c</columns>
+        <columns>Local_Language__c</columns>
+        <columns>Valid_for_GDP__c</columns>
+        <columns>numeric_code__c</columns>
+        <filterScope>Everything</filterScope>
+        <filters>
+            <field>IATA_ISO_Country__c</field>
+            <operation>equals</operation>
+            <value>Venezuela</value>
+        </filters>
+        <label>ZZ - Search By Country</label>
+        <language>en_US</language>
+    </listViews>
     <nameField>
         <label>ISO State Name</label>
+        <trackHistory>true</trackHistory>
         <type>Text</type>
     </nameField>
     <pluralLabel>IATA ISO States</pluralLabel>
-    <searchLayouts/>
+    <searchLayouts>
+        <lookupDialogsAdditionalFields>ISO_Code__c</lookupDialogsAdditionalFields>
+    </searchLayouts>
     <sharingModel>ControlledByParent</sharingModel>
     <startsWith>Vowel</startsWith>
+    <visibility>Public</visibility>
 </CustomObject>

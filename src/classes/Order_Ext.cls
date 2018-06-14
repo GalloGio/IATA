@@ -100,6 +100,7 @@ global class Order_Ext
     public String existingShippingVATNumber = '';
     public String existingShippingEmail;
     public String existingShippingPhone;
+    public String existingShippingAttention;
 
     public String selectedCountryIsoCode{get;set;}
     public String selectedStateIsoCode{get;set;}
@@ -124,7 +125,8 @@ global class Order_Ext
     ****************************************************************************************************/
     public Order_Ext(ApexPages.StandardController controller) {
         
-        labels = Utility.buildMapFromString(Label.LabelsVF_Order + '\n' + Label.LabelsVF_Order2, '\n', ':');
+
+        labels = Utility.buildMapFromString(Label.LabelsVF_Order + '\n' + Label.LabelsVF_Order2 + '\n' + Label.LabelsVF_Order3, '\n', ':');
         
         //*** get order's record
         vfOrder = (Order) controller.getRecord();
@@ -248,6 +250,85 @@ global class Order_Ext
         shipToZipCodeRequired       =   false;  
         countryAndStateEditable     =   false;  
 
+        //*** check SAP partners and try to create them if missing
+        if (vfOrder.Id != null && vfOrder.Status == 'New' &&
+            (String.isBlank(vfOrder.SoldToAccount_Partner_Number__c) || String.isBlank(vfOrder.BillToContact_Partner_Number__c) || String.isBlank(vfOrder.ShipToContact_Partner_Number__c)))
+        {
+            List<IEC_Error_Log__c> lstSyncResult;
+            List<Id> lstSyncId = new List<Id>();
+            List<Account> lstAccountToUpdate = new List<Account>();
+            Location__c locationSoldTo, locationBillTo, locationShipTo;
+            
+            //*** get list of locations to synchronize
+            if (String.isBlank(vfOrder.SoldToAccount_Partner_Number__c) && !String.isBlank(vfOrder.SoldTo_Location__c))
+                lstSyncId.add(vfOrder.SoldTo_Location__c);
+            if (String.isBlank(vfOrder.BillToContact_Partner_Number__c) && !String.isBlank(vfOrder.BillTo_Location__c))
+                lstSyncId.add(vfOrder.BillTo_Location__c);
+            if (String.isBlank(vfOrder.ShipToContact_Partner_Number__c) && !String.isBlank(vfOrder.ShipTo_Location__c))
+                lstSyncId.add(vfOrder.ShipTo_Location__c);
+            
+            //*** create partners if necessary
+            if (lstSyncId.size() > 0)
+            {
+                //*** query locations to create SAP partner
+                Map<Id, Location__c> mapLocationId_Location = Location_Sel.getLocationToSyncSAP(lstSyncId, null, null, null, null);
+                Map<Id, String> mapContactId_SoldToSAP = new Map<Id, String>();
+                locationSoldTo = mapLocationId_Location.get(vfOrder.SoldTo_Location__c);
+                locationBillTo = mapLocationId_Location.get(vfOrder.BillTo_Location__c);
+                locationShipTo = mapLocationId_Location.get(vfOrder.ShipTo_Location__c);
+                
+                //*** synchronize sold to if necessary
+                if (locationSoldTo != null)
+                {
+                    lstSyncResult = IECAddress_Svc.syncCustomerWithSAP(new List<Location__c>{locationSoldTo}, null, false, lstAccountToUpdate);
+                    if (lstSyncResult[0] != null)
+                    {
+                        //*** creation failed -> display error message and prevent update
+                        mapLocationId_Location.remove(locationSoldTo.Id);
+                        ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.ERROR, 'No SAP Sold To: ' + lstSyncResult[0].Extra_Information__c));
+                    }
+                    else
+                    {
+                        //*** creation success -> prepare to create bill to and/or ship to partner within same sold to partner
+                        if (locationBillTo != null && locationBillTo.Account__c == locationSoldTo.Account__c)
+                            mapContactId_SoldToSAP.put(locationBillTo.Contact__c, locationSoldTo.SAP_Id__c);
+                        if (locationShipTo != null && locationShipTo.Account__c == locationSoldTo.Account__c)
+                            mapContactId_SoldToSAP.put(locationShipTo.Contact__c, locationSoldTo.SAP_Id__c);
+                    }
+                }
+                
+                //*** synchronize bill to if necessary
+                if (locationBillTo != null)
+                {
+                    lstSyncResult = IECAddress_Svc.syncCustomerWithSAP(new List<Location__c>{locationBillTo}, mapContactId_SoldToSAP, false);
+                    if (lstSyncResult[0] != null)
+                    {
+                        //*** creation failed -> display error message and prevent update
+                        mapLocationId_Location.remove(locationBillTo.Id);
+                        ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.ERROR, 'No SAP Bill To: ' + lstSyncResult[0].Extra_Information__c));
+                    }
+                }
+                
+                //*** synchronize ship to if necessary
+                if (locationShipTo != null)
+                {
+                    lstSyncResult = IECAddress_Svc.syncCustomerWithSAP(new List<Location__c>{locationShipTo}, mapContactId_SoldToSAP, false);
+                    if (lstSyncResult[0] != null)
+                    {
+                        //*** creation failed -> display error message and prevent update
+                        mapLocationId_Location.remove(locationShipTo.Id);
+                        ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.ERROR, 'No SAP Ship To: ' + lstSyncResult[0].Extra_Information__c));
+                    }
+                }
+                
+                //*** save changes
+                if (mapLocationId_Location.size() > 0)
+                    update mapLocationId_Location.values();
+                if (lstAccountToUpdate.size() > 0)
+                    update lstAccountToUpdate;
+            }
+        } //*** end of checking SAP partners
+
         Id billToAddressId;
         
         //set the new BillTo_Location__c and ShipTo_Location__c when the order is create from a Contact
@@ -266,7 +347,7 @@ global class Order_Ext
                 //Create a new BillTo and ShipTo Location if the Contact don't have one
                 Contact selectedContact = new Contact_Sel().getContactById(contactId);
                 if(selectedContact.BillTo_Location__c == null || selectedContact.ShipTo_Location__c == null){
-                    Boolean initializeLocations = Location_Svc.InitializeContactLocations(contactId);
+                    Boolean initializeLocations = (Location_Svc.initializeDefaultLocations(new List<Id>{contactId})[0] == null);
                     if(!initializeLocations){
                         ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.ERROR, Label.Address_creation_error));
                         return null;
@@ -667,6 +748,12 @@ global class Order_Ext
         showProductSelection = false;
         showAddProducts = false;
 
+        // Ecommerce Enhancements R2
+        // Refresh the Order Fields
+        if(vfOrder.Id != null) {
+            vfOrder = Order_Sel.getOrderForVF(vfOrder.Id);
+        }
+
         return null; 
     }
 
@@ -685,16 +772,16 @@ public void setDefaultAddress(){
 
 //Get the BillTo Default location value and Set the order Account
 public void getContactLocations(){
-
-    if(vfOrder.BillToContactId == null){ ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.ERROR, 'Contact cannot be null')); return; }
+    if(vfOrder.BillToContactId == null)
+        return;
 
     //Create a new BillTo and ShipTo Location if the Contact don't have one
     Contact billToContact = new Contact_Sel().getContactById(vfOrder.BillToContactId);
     if(billToContact.BillTo_Location__c == null || billToContact.ShipTo_Location__c == null){
-        Boolean initializeLocations = Location_Svc.InitializeContactLocations(vfOrder.BillToContactId);
-        if(!initializeLocations){
-            ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.ERROR, Label.Address_creation_error)); return;
-        }
+        List<String> lstResult = Location_Svc.initializeDefaultLocations(new List<Id>{vfOrder.BillToContactId});
+        if(lstResult[0] != null)
+            ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.ERROR, lstResult[0].replace('\n', '<br/>')));
+        billToContact = new Contact_Sel().getContactById(vfOrder.BillToContactId);
     }
 
     map<Id,Location__c> locationMap = new Location_Sel().getContactsBillToLocations(new set<Id>{vfOrder.BillToContactId});
@@ -738,16 +825,29 @@ public void getContactLocations(){
     vfOrder.BillToContact_VAT_Number__c = existingBillToVatNumber;
     vatNumberBillTo = existingBillToVatNumber;
 
-    User user = [select id, contactId from User where contactId=:vfOrder.BillToContactId];
-    if(vfOrder.BillToContactId != null && user != null)
-        vfOrder.OwnerId = user.Id;
+    refreshBillingInfo(billToLocation);
+
+    //INC331542
+    //User user = [select id, contactId from User where contactId=:vfOrder.BillToContactId];
+    //if(vfOrder.BillToContactId != null && user != null)
+    //    vfOrder.OwnerId = user.Id;
 
 }
 
 //Set the ShipTo location default value
 public void getContactShipToLocations(){
+    if (vfOrder.ShipToContactId == null)
+        return;
+
     //Set the default selected billTo value
     Contact shipToContact = new Contact_Sel().getContactById(vfOrder.ShipToContactId);
+    if(shipToContact.BillTo_Location__c == null || shipToContact.ShipTo_Location__c == null){
+        List<String> lstResult = Location_Svc.initializeDefaultLocations(new List<Id>{vfOrder.ShipToContactId});
+        if(lstResult[0] != null)
+            ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.ERROR, lstResult[0].replace('\n', '<br/>')));
+        shipToContact = new Contact_Sel().getContactById(vfOrder.ShipToContactId);
+    }
+
     if(shipToContact != null && shipToContact.ShipTo_Location__c != null){
         selectedShipToLocation = shipToContact.ShipTo_Location__c;
         shipToLocation = getLocationById(selectedShipToLocation);
@@ -761,17 +861,14 @@ public void getContactShipToLocations(){
         existingShippingZipCode         =   shipToLocation.Address__r.ZipCode__c;
         existingShippingEmail           =   shipToLocation.Email__c;
         existingShippingPhone           =   shipToLocation.Phone__c;
-        
-        vfOrder.ShipToAccount_Name__c   =   shipToLocation.Account_Name__c;
-        vfOrder.ShipToContact_Name__c   =   shipToLocation.Contact_First_Name__c + ' ' + shipToLocation.Contact_Last_Name__c;
-        vfOrder.ShipToContact_Phone__c  =   shipToLocation.Phone__c;
-        vfOrder.ShipToContact_Email__c  =   shipToLocation.Email__c;
 
         vatNumber                       =   shipToLocation.VAT_Number__c;
         vATNumberRequired               =   shipToLocation.Address__r.ISO_Country__r.VAT_Validation_Required__c;
 
         //verified if the billTo zip code is required
         shipToZipCodeRequired           =   shipToLocation.Address__r.IEC_Zip_Postal_Code_required__c;
+
+        refreshShippingInfo(shipToLocation, true);
 
     }
 }
@@ -864,7 +961,22 @@ public void autoCompleteBillToAddresses(){
         selectedStateIsoCode    =   addresses[0].ISO_State_Code__c;
         zipCode                 =   addresses[0].ZipCode__c;
 
-        buildCountryStatePicklistFromIECAddress();
+        //*** refresh state picklist
+        Integer ixCountry = Utility.findItemInSelectList(listCountry, selectedCountryIsoCode, null);
+        listBillingState.clear();
+        if (ixCountry >= 0)
+            buildStatePicklist(ixCountry - 1, listBillingState);
+
+        //*** determine to hide/show VAT number
+        vATNumberRequiredBillTo = ISO_Country_State_Helper.requiredVATNumber(selectedCountryIsoCode);
+        List<IATA_ISO_Country__c> isoCountry = ISO_Country_State_Helper.getIsoCountryByIsoCode(selectedCountryIsoCode);
+        if(isoCountry != null && isoCountry.size() > 0){
+            IECVATUtil.VATConfiguration vatConfig = IECVATUtil.GetVATConfiguration(isoCountry[0].Name);
+            vATNumberRequiredBillTo = (vatConfig != null) ? vatConfig.VATValidationRequired : false;
+        }
+
+        //*** determine if zipcode is required
+        billToZipCodeRequired = ISO_Country_State_Helper.requiredZipCode(selectedCountryIsoCode);
     }
 
 }
@@ -879,7 +991,22 @@ public void autoCompleteShipToAddresses(){
         selectedShipStateIsoCode    =   addresses[0].ISO_State_Code__c;
         shipZipCode                 =   addresses[0].ZipCode__c;
 
-        buildCountryStatePicklistFromIECAddress();
+        //*** refresh state picklist
+        Integer ixCountry = Utility.findItemInSelectList(listCountry, selectedShipCountryIsoCode, null);
+        listShippingState.clear();
+        if (ixCountry >= 0)
+            buildStatePicklist(ixCountry - 1, listShippingState);
+
+        //*** determine to hide/show VAT number
+        vATNumberRequired = ISO_Country_State_Helper.requiredVATNumber(selectedShipCountryIsoCode);
+        List<IATA_ISO_Country__c> isoCountry = ISO_Country_State_Helper.getIsoCountryByIsoCode(selectedShipCountryIsoCode);
+        if(isoCountry != null && isoCountry.size() > 0){
+            IECVATUtil.VATConfiguration vatConfig = IECVATUtil.GetVATConfiguration(isoCountry[0].Name);
+            vATNumberRequired = (vatConfig != null) ? vatConfig.VATValidationRequired : false;
+        }
+
+        //*** determine if zipcode is required
+        shipToZipCodeRequired = ISO_Country_State_Helper.requiredZipCode(selectedShipCountryIsoCode);
     }
 }
 
@@ -888,32 +1015,46 @@ public void autoCompleteShipToAddresses(){
 public void editAddressOrderReadOnly(){
 
     editMod = true;
+
+    existingBillToLocationId       = billToLocation.Id;
+    existingBillingCountryIsoCode  = billToLocation.Address__r.ISO_Country__r.ISO_Code__c;
+    existingBillingIsoCode         = billToLocation.Address__r.ISO_State__r.ISO_Code__c;
+    existingBillingStreet          = billToLocation.Address__r.Street__c;
+    existingBillingCity            = billToLocation.Address__r.City__c;
+    existingBillingZipCode         = billToLocation.Address__r.ZipCode__c;
+    existingBillToVatNumber        = billToLocation.VAT_Number__c;
+    existingEmail                  = billToLocation.Email__c;
+    existingPhone                  = billToLocation.Phone__c;
+
+    selectedCountryIsoCode         = existingBillingCountryIsoCode;
+    selectedStateIsoCode           = existingBillingIsoCode;
+    street                         = existingBillingStreet;
+    city                           = existingBillingCity;
+    zipCode                        = existingBillingZipCode;
+    vatNumberBillTo                = existingBillToVatNumber;
+    vATNumberRequiredBillTo        = billToLocation.Address__r.ISO_Country__r.VAT_Validation_Required__c; 
+    billToZipCodeRequired          = billToLocation.Address__r.IEC_Zip_Postal_Code_required__c;
+
     buildCountryStatePicklistFromIECAddress();
-    vatNumberBillTo                 =   billToLocation.VAT_Number__c;
-
-    vATNumberRequiredBillTo         =   billToLocation.Address__r.ISO_Country__r.VAT_Validation_Required__c; 
-
-    //verified if the zipCode is required
-    billToZipCodeRequired           =   billToLocation.Address__r.IEC_Zip_Postal_Code_required__c;
-
     changeBillToCountry();
 }
 
-public void editShipToAddressOrderReadOnly(){
-    shipToEditMod = true;
-    buildCountryStatePicklistFromIECAddress();
-}
+//public void editShipToAddressOrderReadOnly(){
+//    shipToEditMod = true;
+//    buildCountryStatePicklistFromIECAddress();
+//}
 
 //Cancel
 public void CancelAddressOrderReadOnly(){
-    setDefaultAddress();
     editMod = false;
 
-    if(billToLocation != null){
-        vatNumberBillTo                 =   billToLocation.VAT_Number__c;
-        vATNumberRequiredBillTo         =   billToLocation.Address__r.ISO_Country__r.VAT_Validation_Required__c;
-    }
-
+    billToLocation.Email__c      = existingEmail;
+    billToLocation.Phone__c      = existingPhone;
+    billToLocation.VAT_Number__c = existingBillToVatNumber;
+    vatNumberBillTo              = existingBillToVatNumber;
+    vATNumberRequiredBillTo      = billToLocation.Address__r.ISO_Country__r.VAT_Validation_Required__c; 
+    setDefaultAddress();
+    refreshBillingInfo(billToLocation);
 }
 
 //Verified if a VAT number is valid
@@ -939,140 +1080,119 @@ public void saveAddressOrderReadOnly(){
 
     //Verified if here is a VAT number 
     String currentVatNumber = ApexPages.currentPage().getParameters().get('vatNumberBillTo');
-    
-    vatNumberBillTo     =   currentVatNumber;
-
     if(currentVatNumber != null && currentVatNumber != '' && selectedCountryIsoCode != null){
         String resp = verifiedVATNumer(currentVatNumber, selectedCountryIsoCode);
         if(resp != 'true'){ ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.ERROR, resp)); return; }
     }
 
     Boolean error= false;
-    if(selectedCountryIsoCode == null || selectedCountryIsoCode == ''){ ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.ERROR, Label.Country_cannot_be_empty)); error = true; }
-
-    //Validate State
-    if(listBillingState != null && listBillingState.size() > 0 && selectedStateIsoCode == null){ ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.ERROR, Label.State_cannot_be_empty)); error = true; }
-
-    if(street == null || street == ''){ ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.ERROR, label.Street_cannot_be_empty)); error = true; }
-    
-    if(city == null || city == ''){ ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.ERROR, Label.City_cannot_be_empty)); error = true; }
-
-    if(billToZipCodeRequired && (zipCode == null || zipCode == '')){ ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.ERROR, Label.Zip_code_cannot_be_empty)); error = true; }
-
-    if(billToLocation.Email__c == null || billToLocation.Email__c == ''){ ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.ERROR, Label.Email_cannot_be_empty)); error = true; }
-    
-
-    if(error){ editMod = true; return; }
-
-    editMod = false;
 
     street = ApexPages.currentPage().getParameters().get('billToautocomplete');
 
-    Boolean addresschanged = false;
+    if(String.isBlank(billToLocation.Phone__c)) { ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.ERROR, labels.get('errMissPhone'))); error = true; }
+    if(String.isBlank(billToLocation.Email__c)) { ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.ERROR, Label.Email_cannot_be_empty)); error = true; }
+    if(String.isBlank(street))                  { ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.ERROR, label.Street_cannot_be_empty)); error = true; }
+    if(String.isBlank(city))                    { ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.ERROR, Label.City_cannot_be_empty)); error = true; }
+    if(String.isBlank(selectedCountryIsoCode))  { ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.ERROR, Label.Country_cannot_be_empty)); error = true; }
+    if(listBillingState != null && listBillingState.size() > 0 && String.isBlank(selectedStateIsoCode)) { ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.ERROR, Label.State_cannot_be_empty)); error = true; }
+    if(billToZipCodeRequired && String.isBlank(zipCode)) { ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.ERROR, Label.Zip_code_cannot_be_empty)); error = true; }
+
+    if(error) return;
+
+    Boolean addressChanged = false, otherChanged = false;
 
     //Verified if the country changed
-    if(selectedCountryIsoCode != existingBillingCountryIsoCode){ addresschanged = true; }
-    if(selectedStateIsoCode != existingBillingIsoCode){ addresschanged = true; }
-    if(street != existingBillingStreet){ addresschanged = true; }
-    if(city != existingBillingCity){ addresschanged = true; }
-    if(zipCode != existingBillingZipCode){ addresschanged = true; }
-    if(billToLocation.Email__c != existingEmail){ addresschanged = true; }
-    if(billToLocation.Phone__c != existingPhone){ addresschanged = true; }
-    if(vatNumberBillTo != existingBillToVatNumber){ addresschanged = true; }
+    if(selectedCountryIsoCode != existingBillingCountryIsoCode){ addressChanged = true; }
+    if(selectedStateIsoCode != existingBillingIsoCode){ addressChanged = true; }
+    if(street != existingBillingStreet){ addressChanged = true; }
+    if(city != existingBillingCity){ addressChanged = true; }
+    if(zipCode != existingBillingZipCode){ addressChanged = true; }
+    if(billToLocation.Email__c != existingEmail){ otherChanged = true; }
+    if(billToLocation.Phone__c != existingPhone){ otherChanged = true; }
+    if(currentVatNumber != existingBillToVatNumber){ otherChanged = true; }
 
-    if(!addresschanged) return;
+    if(!addressChanged && !otherChanged) { editMod = false; return; }
 
-    //Get the Country
-    IATA_ISO_Country__c selectedCountry; 
-    List<IATA_ISO_Country__c> isoCountries = ISO_Country_State_Helper.getIsoCountryByIsoCode(selectedCountryIsoCode); 
-    if(isoCountries != null && isoCountries.size() > 0){
-        selectedCountry = isoCountries[0];
-        country = isoCountries[0].Name;
+    //*** get/create new address
+    IECAddress__c billingAddress = null;
+    for (IECAddress__c addr : new IECAddress_Sel().getAddress(street, city, selectedCountryIsoCode, selectedStateIsoCode, zipCode))
+    {
+        billingAddress = addr;
+        break;
     }
+    if (billingAddress == null)
+        billingAddress = IECAddress_Svc.newAddressForSAPSync(street, city, selectedCountryIsoCode, selectedStateIsoCode, zipCode);
 
-    String stateCode = selectedStateIsoCode;
-
-    //get State
-    IATA_ISO_State__c selectedState;
-    List<IATA_ISO_State__c> isoStates = ISO_Country_State_Helper.getIsoStateByIsoCode(selectedCountryIsoCode, stateCode);  
-    if(isoStates != null && isoStates.size() > 0){
-        selectedState = isoStates[0];
-        state = isoStates[0].Name;
-    }
-
-    List<IECAddress__c> existingAddresses = new IECAddress_Sel().getAddress(street,city,selectedCountryIsoCode, stateCode, zipCode);
-    
-    Id newAddressId;
-
-    if(existingAddresses == null || existingAddresses.isEmpty()){
-
-        //Create a new IECAddress
-        IECAddress__c iecAddress = new IECAddress__c();
-        iecAddress.Street__c = street;
-        iecAddress.City__c = city;
-        if(selectedCountry != null) iecAddress.ISO_Country__c = selectedCountry.Id;
-        if(selectedState != null) iecAddress.ISO_State__c = selectedState.Id;
-        iecAddress.ZipCode__c = zipCode;
-
-        try{
-            insert iecAddress;
-            vfOrder.BillTo_Address__c = iecAddress.Id;
-            newAddressId = iecAddress.Id;
-        }catch(Exception ex){
-            ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.ERROR, Label.Address_creation_error)); return;
-        }
-
-    }else{
-        //change the VfOrder location reference
-        vfOrder.BillTo_Address__c = newAddressId = existingAddresses[0].Id;
-        //newAddressId = existingAddresses[0].Id;
-    }
-
-    List<Location__c> locations = new Location_Sel().getLocations(new set<Id>{vfOrder.BillTo_Location__c});
-    
-    if(locations != null && locations.size() > 0){
-
-        Location__c location = locations[0];
-        Boolean createNewBillToLocation = false;
+    Location__c billingLocation = Location_Sel.getLocationToSyncSAP(new List<Id>{vfOrder.BillTo_Location__c}, null, null, null, null).get(vfOrder.BillTo_Location__c);
+    Location__c billingLocationOld = null;
+    if(selectedCountryIsoCode != existingBillingCountryIsoCode || selectedStateIsoCode != existingBillingIsoCode || String.isBlank(billingLocation.SAP_Id__c))
+    {
+        //*** country/state change or invalid SAP Id -> deactivate old location and create a new one
+        billingLocationOld = billingLocation; 
+        billingLocationOld.Active__c = false; 
         
-        if(selectedCountryIsoCode != existingBillingCountryIsoCode || selectedStateIsoCode != existingBillingIsoCode){
-            //Update the location before create a new location to avoid the Validation of having just one active billing location
-            location.Active__c = false;
-            createNewBillToLocation = true;
-        }else{
-            //Update the existing location
-            location.Address__c = newAddressId;
-            location.VAT_Number__c = currentVatNumber;
+        //*** create new location -> cancel action on error
+        billingLocation = new Location__c(Active__c = true, Type__c = IECConstants.BILLTO, Address__c = billingAddress.Id, Address__r = billingAddress
+                                        , Account__c = billingLocation.Account__c, Account__r = billingLocation.Account__r
+                                        , Contact__c = billingLocation.Contact__c, Contact__r = billingLocation.Contact__r
+                                        , Email__c = billToLocation.Email__c, Phone__c = billToLocation.Phone__c, VAT_Number__c = currentVatNumber);
+        List<IEC_Error_Log__c> lstSyncResult = IECAddress_Svc.syncCustomerWithSAP(new List<Location__c>{billingLocation}, null, false);
+        if (lstSyncResult[0] != null)
+        {
+            ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.ERROR, lstSyncResult[0].Extra_Information__c));
+            return;
         }
-        update location;
-        System.debug('location::'+location);
-        System.debug('vfOrder.BillTo_Location__c::'+vfOrder.BillTo_Location__c);
+    }
+    else
+    {
+        //*** update existing location since no change on country/state and have valid SAP Id -> let system handles in future mode
+        billingLocationOld = billingLocation;
+        if (addressChanged)
+        {
+            billingLocation.Address__c = billingAddress.Id;
+            billingLocation.Address__r = billingAddress;
+        }
+        billingLocation.Email__c = billToLocation.Email__c;
+        billingLocation.Phone__c = billToLocation.Phone__c;
+        billingLocation.VAT_Number__c = currentVatNumber;
+    }
 
-        //If the Customer modified his country and state, Create a new Location and disable the old one
-        if(createNewBillToLocation){
-
-            Location__c newlocation = Location_Svc.createLocation(newAddressId,location.Contact__c,billToLocation.Email__c,billToLocation.Phone__c,currentVatNumber, IECConstants.BILLTO /*location.Type__c*/);
-            //Update the Contact default billTo
-            Contact billToContact = new Contact_Sel().getContactById(location.Contact__c);
-            System.debug('vfOrder::'+vfOrder);
-            System.debug('billToContact::'+billToContact);
-            System.debug('newlocation::'+newlocation);
-            billToContact.BillTo_Location__c    =   vfOrder.BillTo_Location__c = newlocation.Id;
-            //vfOrder.BillTo_Location__c          =   newlocation.Id;
-            update billToContact;
+    Savepoint sp = Database.setSavepoint();
+    try
+    {
+        //*** save data for address and locations
+        if (billingAddress.Id == null)
+            insert billingAddress;
+        if (billingLocationOld != null)
+        {
+            if (billingLocationOld.Address__c == null)
+                billingLocationOld.Address__c = billingLocationOld.Address__r.Id;
+            update billingLocationOld;
+        }
+        if (billingLocation.Id == null)
+        {
+            billingLocation.Address__c = billingLocation.Address__r.Id;
+            insert billingLocation;
         }
 
+        if (billingLocationOld.Id != billingLocation.Id)
+            update new Contact(Id=billingLocation.Contact__c, BillTo_Location__c=billingLocation.Id);
+    }
+    catch(Exception ex)
+    {
+        ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.ERROR, ex.getMessage() + '<br/>' + ex.getStackTraceString()));
+        Database.rollback(sp);
+        return;
     }
     
-    vfOrder.BillToContact_VAT_Number__c = currentVatNumber;
-    //Update the current Order
-    if(vfOrder.Id != null){
-        vfOrder.BillTo_Address__c = newAddressId;
-        update vfOrder;
-        vfOrder = Order_Sel.getOrderForVF(vfOrder.Id);
-    }
-    vatNumberBillTo     =   currentVatNumber;
-
+    //*** save successfull -> prepare control variables and turn off edit address
+    vfOrder.BillTo_Location__c = billingLocation.Id;
+    vfOrder.BillTo_Address__c  = billingLocation.Address__c;
+    billToLocation = new Location_Sel().getLocationById(new Set<Id>{billingLocation.Id}).get(billingLocation.Id);
+    vatNumberBillTo = billToLocation.VAT_Number__c;
+    setDefaultAddress();
+    refreshBillingInfo(billToLocation);
+    editMod = false;
 }
 
 //Add a new ShipTo address
@@ -1093,6 +1213,16 @@ public void addShpAddressOrder(){
     vATNumberRequired           =   false;
     editModShp                  =   true;
 
+    existingShippingCountryIsoCode  =   shipToLocation.Address__r.ISO_Country__r.ISO_Code__c;
+    existingShippingStateIsoCode    =   shipToLocation.Address__r.ISO_State__r.ISO_Code__c;
+    existingShippingStreet          =   shipToLocation.Address__r.Street__c;
+    existingShippingCity            =   shipToLocation.Address__r.City__c;
+    existingShippingZipCode         =   shipToLocation.Address__r.ZipCode__c;
+    existingShippingVATNumber       =   shipToLocation.VAT_Number__c;
+    existingShippingEmail           =   vfOrder.ShipToContact_Email__c;
+    existingShippingPhone           =   vfOrder.ShipToContact_Phone__c;
+    existingShippingAttention       =   vfOrder.ShipToContact_Name__c;
+
     buildCountryStatePicklistFromIECAddress();
 }
 
@@ -1100,7 +1230,8 @@ public void addShpAddressOrder(){
 public void editShpAddressOrder(){
 
     editModShp                      =   true;
-    countryAndStateEditable         =   false;
+    countryAndStateEditable         =   true;
+    selectedShipToLocation          =   shipToLocation.Id;
     
     //Set the Shipping address
     shipStreet                      =   shipToLocation.Street__c;
@@ -1120,28 +1251,38 @@ public void editShpAddressOrder(){
     existingShippingCity            =   shipToLocation.Address__r.City__c;
     existingShippingZipCode         =   shipToLocation.Address__r.ZipCode__c;
     existingShippingVATNumber       =   shipToLocation.VAT_Number__c;
+    existingShippingEmail           =   vfOrder.ShipToContact_Email__c;
+    existingShippingPhone           =   vfOrder.ShipToContact_Phone__c;
+    existingShippingAttention       =   vfOrder.ShipToContact_Name__c;
 
     //verified if the billTo zip code is required
     shipToZipCodeRequired       =   shipToLocation.Address__r.IEC_Zip_Postal_Code_required__c;
 
     buildCountryStatePicklistFromIECAddress();
-
 }
 
 //Cancel ShipTo address
 public void CancelAddressOrder(){
     editModShp = false;
-    //reset the default selectedShipToLocation
-    getContactShipToLocations();
-    if(shipToLocation != null){
-        vatNumber           =   shipToLocation.VAT_Number__c;
-        vATNumberRequired   =   shipToLocation.Address__r.ISO_Country__r.VAT_Validation_Required__c;
-    }
-    
+
+    selectedShipToLocation          = shipToLocation.Id;
+    shipStreet                      = shipToLocation.Street__c;
+    shipCity                        = shipToLocation.City__c;
+    shipCountry                     = shipToLocation.Address__r.ISO_Country__r.Name;
+    shipState                       = shipToLocation.Address__r.ISO_State__r.Name;
+    selectedShipCountryIsoCode      = shipToLocation.ISO_Country_Code__c;
+    selectedShipStateIsoCode        = shipToLocation.ISO_State_Code__c;
+    shipZipCode                     = shipToLocation.ZipCode__c;
+    vatNumber                       = shipToLocation.VAT_Number__c;
+    vATNumberRequired               = shipToLocation.Address__r.ISO_Country__r.VAT_Validation_Required__c;
+    vfOrder.ShipToContact_Email__c  = existingShippingEmail;
+    vfOrder.ShipToContact_Phone__c  = existingShippingPhone;
+    vfOrder.ShipToContact_Name__c   = existingShippingAttention;
+    refreshShippingInfo(shipToLocation, false);
 }
 
 //Create a new IECAddress
-public static IECAddress__c newIecAddress(String street, String city, String zipCode,Id isoCountryId,Id isoStateId){
+/*public static IECAddress__c newIecAddress(String street, String city, String zipCode,Id isoCountryId,Id isoStateId){
     
     IECAddress__c iecAddress    =   new IECAddress__c();
     iecAddress.Street__c        =   street;
@@ -1157,7 +1298,7 @@ public static IECAddress__c newIecAddress(String street, String city, String zip
     }
 
     return iecAddress;
-}
+}*/
 
 
 //Save ShipTo address
@@ -1166,11 +1307,11 @@ public void saveAddressOrder(){
     Boolean errors = false;
 
     //verified if the new Address exist in IECAddress
-    if(shipStreet == '' || shipStreet == null)
+    //if(shipStreet == '' || shipStreet == null)
         shipStreet = ApexPages.currentPage().getParameters().get('autoCompShipToLoading');
 
-    String hiddenShipToautocomplete = ApexPages.currentPage().getParameters().get('hiddenShipToautocomplete');
-    if(hiddenShipToautocomplete != null && hiddenShipToautocomplete != ''){ shipStreet = hiddenShipToautocomplete; }
+    //String hiddenShipToautocomplete = ApexPages.currentPage().getParameters().get('hiddenShipToautocomplete');
+    //if(hiddenShipToautocomplete != null && hiddenShipToautocomplete != ''){ shipStreet = hiddenShipToautocomplete; }
 
     //Verified if here is a VAT number 
     String currentVatNumber = ApexPages.currentPage().getParameters().get('vatNumber');
@@ -1182,135 +1323,126 @@ public void saveAddressOrder(){
         if(resp != 'true'){ ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.ERROR, resp)); errors = true; }
     }
 
-    if(selectedShipCountryIsoCode == null || selectedShipCountryIsoCode == ''){ ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.ERROR, Label.Country_cannot_be_empty)); errors = true; }
-    
-    if(shipStreet == null || shipStreet == ''){ ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.ERROR, label.Street_cannot_be_empty)); errors = true; }
-    
-    if(shipCity == null || shipCity == ''){ ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.ERROR, Label.City_cannot_be_empty)); errors = true; }
-
-    if(shipToZipCodeRequired && (shipZipCode == null || shipZipCode == '')){ ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.ERROR, Label.Zip_code_cannot_be_empty)); errors = true; }
-    
-    if(vfOrder.ShipToContact_Email__c == null || vfOrder.ShipToContact_Email__c == ''){ ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.ERROR, Label.Email_cannot_be_empty)); errors = true; }
-
-    if(vfOrder.ShipToAccount_Name__c == null || vfOrder.ShipToAccount_Name__c == ''){ ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.ERROR, 'Company name cannot be empty')); errors = true; }
-    
-    if(vfOrder.ShipToContact_Name__c == null || vfOrder.ShipToContact_Name__c == ''){ ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.ERROR, 'Attention field cannot be empty')); errors = true; }
+    //if(String.isBlank(vfOrder.ShipToAccount_Name__c)) { ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.ERROR, labels.get('errMissCompany'))); errors = true; }
+    if(String.isBlank(vfOrder.ShipToContact_Name__c)) { ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.ERROR, labels.get('errMissAttn'))); errors = true; }
+    if(String.isBlank(vfOrder.ShipToContact_Phone__c)){ ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.ERROR, labels.get('errMissPhone'))); errors = true; }
+    if(String.isBlank(vfOrder.ShipToContact_Email__c)){ ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.ERROR, Label.Email_cannot_be_empty)); errors = true; }
+    if(String.isBlank(shipStreet))                    { ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.ERROR, label.Street_cannot_be_empty)); errors = true; }
+    if(String.isBlank(shipCity))                      { ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.ERROR, Label.City_cannot_be_empty)); errors = true; }
+    if(String.isBlank(selectedShipCountryIsoCode))    { ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.ERROR, Label.Country_cannot_be_empty)); errors = true; }
+    if(listShippingState != null && listShippingState.size() > 0 && String.isBlank(selectedShipStateIsoCode)) { ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.ERROR, Label.State_cannot_be_empty)); errors = true; }
+    if(shipToZipCodeRequired && String.isBlank(shipZipCode)) { ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.ERROR, Label.Zip_code_cannot_be_empty)); errors = true; }
 
     if(errors){ return; }
 
-    //Get the Country
-    IATA_ISO_Country__c selectedCountry; 
-    List<IATA_ISO_Country__c> isoCountries = ISO_Country_State_Helper.getIsoCountryByIsoCode(selectedShipCountryIsoCode);
-    if(isoCountries != null && isoCountries.size() > 0){
-        selectedCountry = isoCountries[0];
-        country = isoCountries[0].Name;
-    }
+    Boolean shippingAddressChanged = false, otherChanged = false;
+    if(existingShippingCountryIsoCode != selectedShipCountryIsoCode){ shippingAddressChanged = true; }
+    if(existingShippingStateIsoCode != selectedShipStateIsoCode){ shippingAddressChanged = true; }
+    if(existingShippingStreet != shipStreet){ shippingAddressChanged = true; }
+    if(existingShippingCity != shipCity){ shippingAddressChanged = true; }
+    if(existingShippingZipCode != shipZipCode){ shippingAddressChanged = true; }
+    if(existingShippingVATNumber != currentVatNumber){ otherChanged = true; }
+    if(existingShippingEmail != vfOrder.ShipToContact_Email__c){ otherChanged = true; }
+    if(existingShippingPhone != vfOrder.ShipToContact_Phone__c){ otherChanged = true; }
+    if(existingShippingAttention != vfOrder.ShipToContact_Name__c){ otherChanged = true; }
 
-    String stateCode = selectedShipStateIsoCode;
+    if(!String.isBlank(selectedShipToLocation) && !shippingAddressChanged && !otherChanged) {editModShp = false; return; }
 
-    //get State
-    Id stateId;
-    IATA_ISO_State__c selectedState;
-    List<IATA_ISO_State__c> isoStates = ISO_Country_State_Helper.getIsoStateByIsoCode(selectedShipCountryIsoCode,stateCode);  
+    //*** get active Ship To locations
+    Map<Id, Location__c> mapId_Location = Location_Sel.getLocationToSyncSAP(null, null, new List<Id>{vfOrder.ShipToContactId}, IECConstants.SHIPTO, true);
 
-    if(isoStates != null && isoStates.size() > 0){
-        selectedState = isoStates[0];
-        state = isoStates[0].Name; stateId = isoStates[0].Id;
-    }
+    List<IECAddress__c> lstAddress = new IECAddress_Sel().getAddress(shipStreet, shipCity, selectedShipCountryIsoCode, selectedShipStateIsoCode, shipZipCode);
+    Set<Id> setAddressId = new Set<Id>();
+    if (lstAddress.size() > 0)
+    {
+        //*** prepare checking address exists
+        for (IECAddress__c addr : lstAddress)
+            setAddressId.add(addr.Id);
 
-    //get the existing IECAddress
-    List<IECAddress__c> existingAddresses = new IECAddress_Sel().getAddress(shipStreet,shipCity,selectedShipCountryIsoCode, stateCode, shipZipCode);
-    
-    //Add a new Address
-    if(selectedShipToLocation == null || selectedShipToLocation == ''){
-        
-        //Create a new IECAddress and Location
-        IECAddress__c iecAddress = new IECAddress__c();
-        //Create a new IECAddress
-        if(existingAddresses != null && existingAddresses.size() > 0){
-            iecAddress = existingAddresses[0];
-        }else{
-            Id selectedCountryId = (selectedCountry != null) ? selectedCountry.Id : null;
-            iecAddress = newIecAddress(shipStreet,shipCity,shipZipCode,selectedCountryId,stateId);
-        }
-        
-        //Create shipTo Location
-        Location__c newLocation = Location_Svc.createLocation(iecAddress.Id,vfOrder.ShipToContactId,vfOrder.ShipToContact_Email__c, vfOrder.ShipToContact_Phone__c, currentVatNumber,IECConstants.SHIPTO);
-        
-        //If the location is null show a message to the CSR
-        if(newLocation == null){
-            ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.ERROR, label.Address_edition_error)); return;
-        } 
-
-        //ShipToLocations
-        vfOrder.ShipTo_Location__c = newLocation.Id;
-        getShipToLocations();
-        selectedShipToLocation = vfOrder.ShipTo_Location__c;
-        shipToLocation = getLocationById(newLocation.Id);
-
-    }else{
-
-        //Create new IECAddress or User and existing one
-        Boolean shippingAddressChanged = false;
-        if(existingShippingCountryIsoCode != selectedShipCountryIsoCode){ shippingAddressChanged = true; }
-        //if(existingShippingStateIsoCode != selectedShipStateIsoCode)
-        if(selectedShipStateIsoCode != null && existingShippingStateIsoCode!= null && !existingShippingStateIsoCode.endsWithIgnoreCase('-' + selectedShipStateIsoCode)){ shippingAddressChanged = true; }
-        
-        if(existingShippingStreet != shipStreet){ shippingAddressChanged = true; }
-
-        if(existingShippingCity != shipCity){ shippingAddressChanged = true; }
-
-        if(existingShippingZipCode != shipZipCode){ shippingAddressChanged = true; }
-
-        if(existingShippingVATNumber != currentVatNumber){ shippingAddressChanged = true; }
-
-        //if nothing changed return && !nameEmailAndPhoneChanged && vfOrder.Id != null
-        if(!shippingAddressChanged){ editModShp = false; return; }
-
-        Id newAddressId;
-        
-        if(existingAddresses == null || existingAddresses.isEmpty()){
-            //Create a new IECAddress
-            Id selectedCountryId = (selectedCountry != null) ? selectedCountry.Id : null;
-            IECAddress__c iecAddress = newIecAddress(shipStreet,shipCity,shipZipCode,selectedCountryId,stateId);
-            if(iecAddress != null){
-                vfOrder.ShipTo_Address__c = newAddressId = iecAddress.Id;
-                //newAddressId = iecAddress.Id;
+        //*** validate if inserting/updating address already exists
+        for (Id idLocation : mapId_Location.keySet())
+            if ((String.isBlank(selectedShipToLocation) || idLocation != selectedShipToLocation) && setAddressId.contains(mapId_Location.get(idLocation).Address__c))
+            {
+                ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.ERROR, labels.get('msgAddrExist')));
+                return;
             }
-        }else{
-            //change the VfOrder location reference
-            vfOrder.ShipTo_Address__c = newAddressId = existingAddresses[0].Id;
-            //newAddressId = existingAddresses[0].Id;
+    }
+    else
+        lstAddress.add(IECAddress_Svc.newAddressForSAPSync(shipStreet, shipCity, selectedShipCountryIsoCode, selectedShipStateIsoCode, shipZipCode));
+
+    Location__c locationShipToInactive = null;
+    Location__c locationShipTo = mapId_Location.get(shipToLocation.Id);
+    if (String.isBlank(selectedShipToLocation) || existingShippingCountryIsoCode != selectedShipCountryIsoCode || existingShippingStateIsoCode != selectedShipStateIsoCode)
+    {
+        //*** country/province changed -> deactivate current location
+        if (!String.isBlank(selectedShipToLocation))
+        {
+            locationShipToInactive = locationShipTo;
+            locationShipToInactive.Active__c = false;
         }
 
-        List<Location__c> locations = new Location_Sel().getLocations(new set<Id>{selectedShipToLocation});
-        
-        //update the Location 92384753760
-        if(locations != null && locations.size() > 0){
-            Location__c location = locations[0];
-            location.Address__c = newAddressId;
-            location.VAT_Number__c = currentVatNumber;
-
-            try{
-                update location;  
-            }catch(Exception ex){
-                ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.ERROR, ex.getMessage())); return;
-            }
-            
-            shipToLocation = getLocationById(location.Id);
+        //*** prepare to create new location -> cancel action on error
+        locationShipTo = new Location__c(Active__c = true, Type__c = IECConstants.SHIPTO, Address__c = lstAddress[0].Id, Address__r = lstAddress[0]
+                                       , Account__c = locationShipTo.Account__c, Account__r = locationShipTo.Account__r
+                                       , Contact__c = locationShipTo.Contact__c, Contact__r = locationShipTo.Contact__r
+                                       , Address_Name__c = 'New', Attention__c = vfOrder.ShipToContact_Name__c
+                                       , Email__c = vfOrder.ShipToContact_Email__c, Phone__c = vfOrder.ShipToContact_Phone__c, VAT_Number__c = currentVatNumber);
+        List<IEC_Error_Log__c> lstSyncResult = IECAddress_Svc.syncCustomerWithSAP(new List<Location__c>{locationShipTo}, null, false);
+        if (lstSyncResult[0] != null)
+        {
+            ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.ERROR, lstSyncResult[0].Extra_Information__c));
+            return;
         }
+    }
+    else
+    {
+        //*** update existing location since no change on country/state -> let system handles in future mode
+        locationShipTo.Attention__c = vfOrder.ShipToContact_Name__c;
+        locationShipTo.Email__c = vfOrder.ShipToContact_Email__c;
+        locationShipTo.Phone__c = vfOrder.ShipToContact_Phone__c;
+        locationShipTo.VAT_Number__c = currentVatNumber;
 
-        //Update the Order
-        if(vfOrder.Id != null){
-            vfOrder.ShipTo_Address__c = newAddressId;
-            update vfOrder;
-            vfOrder = Order_Sel.getOrderForVF(vfOrder.Id);
-        }
-
+        //*** determine if to update address
+        if (!setAddressId.contains(locationShipTo.Address__c))
+            locationShipTo.Address__c = null;
     }
 
+    Savepoint sp = Database.setSavepoint();
+    try
+    {
+        //*** create address if applicable
+        if (lstAddress[0].Id == null)
+            insert lstAddress[0];
+        
+        //*** inactivate existing location if applicable
+        if (locationShipToInactive != null)
+            update locationShipToInactive;
+        
+        //*** create/update location
+        if (locationShipTo.Address__c == null)
+            locationShipTo.Address__c = lstAddress[0].Id;
+        upsert locationShipTo;
+
+        //*** change default ship to location if necessary
+        if (locationShipToInactive != null)
+            if (0 < [select count() from Contact where Id = :locationShipToInactive.Contact__c and ShipTo_Location__c=:locationShipToInactive.Id])
+                update new Contact(Id=locationShipTo.Contact__c, ShipTo_Location__c=locationShipTo.Id);
+    }
+    catch(Exception ex)
+    {
+        ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.ERROR, ex.getMessage() + '<br/>' + ex.getStackTraceString()));
+        Database.rollback(sp);
+        return;
+    }
+
+    //*** save successfull -> prepare control variables and turn off edit address
+    selectedShipToLocation = locationShipTo.Id;
+    vfOrder.ShipTo_Location__c = locationShipTo.Id;
+    vfOrder.ShipTo_Address__c  = locationShipTo.Address__c;
+    shipToLocation = new Location_Sel().getLocationById(new Set<Id>{locationShipTo.Id}).get(locationShipTo.Id);
+    vatNumber = shipToLocation.VAT_Number__c;
+    refreshShippingInfo(shipToLocation, false);
     editModShp = false;
-
 }
 
 
@@ -1496,8 +1628,8 @@ public void changeBillToCountryUsingLocation(Boolean checkWithCountryName) {
     
     selectedStateIsoCode = '';
     state = '';
+} //*** end of "changeBillToCountryUsingLocation"
 
-} //*** end of "chan
 
 public void changeShipToCountryUsingLocation() { changeShipToCountryUsingLocation(false); }
 public void changeShipToCountryUsingLocation(Boolean checkWithCountryName) {
@@ -1574,6 +1706,10 @@ public void changeBillToState() {
 ****************************************************************************************************/
 public void payOrder_Prepare() {
     
+    if(vfOrder.Id != null) {
+        vfOrder = Order_Sel.getOrderForVF(vfOrder.Id);
+    }
+
     //Validate BillToLocation & ShipToLocation are valid in SAP 
     List<Location__c> locations = new Location_Sel().getLocations(new Set<Id>{
         vfOrder.BillTo_Location__c,
@@ -1665,8 +1801,8 @@ public PageReference cancelOrder() {
         vfOrder.SoldTo_Location__c      = vfAccount.SoldTo_Location__c;
 
         //Order contact information
-        vfOrder.BillToAccount__c                =   billToLoca.Account__c;
-        vfOrder.BillToAccount_Name__c           =   billToLoca.Account_Name__c;
+        vfOrder.BillToAccount__c                =   billToLoca.Contact__r.AccountId;
+        vfOrder.BillToAccount_Name__c           =   billToLoca.Contact__r.Account.Name;
         vfOrder.BillToContact_Salutation__c     =   billToLoca.Contact_Salutation__c;
         vfOrder.BillToContact_First_Name__c     =   billToLoca.Contact_First_Name__c;
         vfOrder.BillToContact_Last_Name__c      =   billToLoca.Contact_Last_Name__c;
@@ -1693,22 +1829,22 @@ public PageReference cancelOrder() {
     //Refresh Shipping information
     public void refreshShippingInfo(Location__c shipToLoca, Boolean mapEmailAndPhone){
 
-        vfOrder.ShipTo_location__c      =   shipToLoca.Id;
+        vfOrder.ShipTo_Location__c      =   shipToLoca.Id;
         vfOrder.ShipTo_Address__c       =   shipToLoca.Address__c;
 
         if(mapEmailAndPhone){
             //Order contact information
-            vfOrder.ShipToAccount__c            =   shipToLoca.Account__c;
-            vfOrder.ShipToAccount_Name__c       =   shipToLoca.Account_Name__c;
+            vfOrder.ShipToAccount__c            =   shipToLoca.Contact__r.AccountId;
+            vfOrder.ShipToAccount_Name__c       =   shipToLoca.Contact__r.Account.Name;
             vfOrder.ShipToContact_Salutation__c =   shipToLoca.Contact_Salutation__c;
             vfOrder.ShipToContact_First_Name__c =   shipToLoca.Contact_First_Name__c;
             vfOrder.ShipToContact_Last_Name__c  =   shipToLoca.Contact_Last_Name__c;
-            vfOrder.ShipToContact_Name__c       =   shipToLoca.Contact_First_Name__c + ' ' + shipToLoca.Contact_Last_Name__c;
+            vfOrder.ShipToContact_Job_Title__c  =   shipToLoca.Contact_Title__c;
+            vfOrder.ShipToContact_Name__c       =   shipToLoca.Attention__c;
             vfOrder.ShipToContact_Phone__c      =   shipToLoca.Phone__c;
             vfOrder.ShipToContact_Email__c      =   shipToLoca.Email__c;
         }
 
-        vfOrder.ShipToContact_Job_Title__c      =   shipToLoca.Contact_Title__c;
         vfOrder.ShipToContact_VAT_Number__c     =   shipToLoca.VAT_Number__c;
 
         //Map the order Shipping Address
@@ -1738,7 +1874,6 @@ public PageReference saveOrder() {
         errorMsg += labels.get('errMissSoldTo');
 
     //selectedBillToLocation =   vfOrder.BillTo_Location__c;
-    system.debug('vfOrder.BillTo_Location__c ' + vfOrder.BillTo_Location__c);
     if(vfOrder.BillTo_Location__c == null){ errorMsg += labels.get('errMissBillTo'); }
     //-- Added by David D: Validate Billing Address 
     else{
@@ -1758,131 +1893,41 @@ public PageReference saveOrder() {
             errorMsg += '<br> Invalid Shipping Address';
         }
     }
+
+    //*** copy billing information to shipping if indicated same
+    if (vfOrder.ShipTo_same_BillTo__c){
+        if(String.isBlank(vfOrder.ShipToAccount_Name__c))  vfOrder.ShipToAccount_Name__c  = vfOrder.BillToAccount_Name__c;
+        if(String.isBlank(vfOrder.ShipToContact_Name__c))  vfOrder.ShipToContact_Name__c  = vfOrder.BillToContact_Name__c;
+        if(String.isBlank(vfOrder.ShipToContact_Phone__c)) vfOrder.ShipToContact_Phone__c = vfOrder.BillToContact_Phone__c;
+        if(String.isBlank(vfOrder.ShipToContact_Email__c)) vfOrder.ShipToContact_Email__c = vfOrder.BillToContact_Email__c;
+        vfOrder.ShipToAccount__c            = vfOrder.BillToAccount__c;
+        vfOrder.ShipToContactId             = vfOrder.BillToContactId;
+        vfOrder.ShipToContact_Salutation__c = vfOrder.BillToContact_Salutation__c;
+        vfOrder.ShipToContact_First_Name__c = vfOrder.BillToContact_First_Name__c;
+        vfOrder.ShipToContact_Last_Name__c  = vfOrder.BillToContact_Last_Name__c;
+        vfOrder.ShipToContact_Job_Title__c  = vfOrder.BillToContact_Job_Title__c;
+        vfOrder.ShipTo_Address__c           = vfOrder.BillTo_Address__c;
+        vfOrder.ShippingStreet              = vfOrder.BillingStreet;
+        vfOrder.ShippingCity                = vfOrder.BillingCity;
+        vfOrder.ShippingCountry             = vfOrder.BillingCountry;
+        vfOrder.ShippingCountryCode__c      = vfOrder.BillingCountryCode__c;
+        vfOrder.ShippingState               = vfOrder.BillingState;
+        vfOrder.ShippingStateCode__c        = vfOrder.BillingStateCode__c;
+        vfOrder.ShippingPostalCode          = vfOrder.BillingPostalCode;
+        vfOrder.ShipToContact_VAT_Number__c = vfOrder.BillToContact_VAT_Number__c;
+    }
+
+    //*** validate other required shipping information
+    if(String.isBlank(vfOrder.ShipToAccount_Name__c))  errorMsg += '<br> ' + labels.get('errMissCompany');
+    if(String.isBlank(vfOrder.ShipToContact_Name__c))  errorMsg += '<br> ' + labels.get('errMissAttn');
+    if(String.isBlank(vfOrder.ShipToContact_Phone__c)) errorMsg += '<br> ' + labels.get('errMissPhone');
+    if(String.isBlank(vfOrder.ShipToContact_Email__c)) errorMsg += '<br> ' + Label.Email_cannot_be_empty;
     
     //*** display error if any
     if (errorMsg != '') { ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.ERROR, errorMsg.substring(5))); return null; }
 
-    Location__c billToLocation  = new Location__c();
-    Location__c shipToLocation = new Location__c();
-
-    //get the BillTo Location
-    List<Location__c> locations = new Location_Sel().getLocations(new set<Id>{vfOrder.BillTo_Location__c});
-    System.debug('vfOrder.BillTo_Location__c::'+vfOrder.BillTo_Location__c);
-    
-    system.debug('locations ' + locations);
-    if(locations != null && locations.size() > 0)
-        billToLocation = locations[0];
-        
-    system.debug('billToLocation ' + billToLocation);
-
-    system.debug('vfOrder.ShipTo_same_BillTo__c ' + vfOrder.ShipTo_same_BillTo__c);
-    //*** copy bill to information to ship to if applicable
-    if (vfOrder.ShipTo_same_BillTo__c) {
-        
-        //Get the ShipTo Location related to the billToAddressId
-        Boolean createNewLocation = true;
-
-        if(vfOrder.ShipTo_Location__c != null ){
-            if(String.isEmpty(selectedShipStateIsoCode)){
-                selectedShipStateIsoCode = vfOrder.ShippingStateCode__c;
-            }
-        }
-        if(vfOrder.ShipTo_Location__c  != null && vfOrder.ShippingCountry == vfOrder.BillingCountry && selectedShipStateIsoCode == selectedStateIsoCode){
-            List<Location__c> lstExistingShipToLocation = new Location_sel().getLocations(new set<Id>{vfOrder.ShipTo_Location__c});
-            
-            if(lstExistingShipToLocation != null && lstExistingShipToLocation.size() > 0){
-                lstExistingShipToLocation[0].Address__c = vfOrder.BillTo_Address__c;
-                vfOrder.ShipTo_Address__c = vfOrder.BillTo_Address__c;
-                createNewLocation = false;
-                update lstExistingShipToLocation[0];
-            }
-        }
-
-        if(createNewLocation){
-            List<Location__c> shipToLocations = new Location_Sel().getLocationByAddressId(billToLocation.Address__c);// [select id,Address__c from Location__c where Address__c =:billToAddressId and Type__c = :IECConstants.SHIPTO ];
-            if(shipToLocations != null && shipToLocations.size() > 0){
-                //-- Ensure the location bellongs to customer 
-                for(Location__c loc: shipToLocations)
-                {
-                    if(billToLocation.Contact__c == loc.Contact__c)
-                    {
-                        shipToLocation = loc;
-                        shipToLocation.Phone__c = vfOrder.BillToContact_Phone__c;
-                        shipToLocation.Email__c = vfOrder.BillToContact_Email__c;
-                        shipToLocation.VAT_Number__c = billToLocation.VAT_Number__c;
-                        update shipToLocation;
-                        createNewLocation = false;
-                        break;
-                    }    
-                }
-            }
-        }
-        
-
-        if(createNewLocation){
-            //Create a new Shipping location
-            Location__c newLocation =   new Location__c();
-            newLocation.Type__c     =   IECConstants.SHIPTO;
-            newLocation.Address__c  =   billToLocation.Address__c;
-            newLocation.Active__c   =   true;
-            newLocation.Account__c  =   billToLocation.Account__c;
-            newLocation.Contact__c  =   billToLocation.Contact__c;
-            newLocation.Phone__c    =   billToLocation.Phone__c;
-            newLocation.Email__c    =   billToLocation.Email__c;
-            newLocation.VAT_Number__c = billToLocation.VAT_Number__c;
-
-            //Insert the new Shiping location
-            try{
-                Insert newLocation;
-                shipToLocation = newLocation;
-            }catch(Exception ex){}
-            
-        }
-
-        selectedShipToLocation = shipToLocation.Id;
-        vfOrder.ShipToContactId = vfOrder.BillToContactId;
-
-    }else{
-        //get ShipTo Location
-        List<Location__c> shipLocations = new Location_Sel().getLocations(new set<Id>{selectedShipToLocation});
-        if(shipLocations != null && shipLocations.size() > 0)
-            shipToLocation = shipLocations[0];
-    }    
-
-    //Refresh the billing information
-    refreshBillingInfo(billToLocation);
-    
-    //Refresh Shipping information
-    refreshShippingInfo(shipToLocation, false);
-
-    if (vfOrder.ShipTo_same_BillTo__c){
-        //Map the Phone and Email
-        if(vfOrder.ShipToContact_Phone__c == null || vfOrder.ShipToContact_Phone__c == '')
-            vfOrder.ShipToContact_Phone__c      =   vfOrder.BillToContact_Phone__c;
-        if(vfOrder.ShipToContact_Email__c == null || vfOrder.ShipToContact_Email__c == '')
-            vfOrder.ShipToContact_Email__c      =   vfOrder.BillToContact_Email__c;
-        if(vfOrder.ShipToAccount_Name__c == null || vfOrder.ShipToAccount_Name__c == '')
-            vfOrder.ShipToAccount_Name__c       =   vfOrder.BillToAccount_Name__c;
-        if(vfOrder.ShipToContact_Name__c == null || vfOrder.ShipToContact_Name__c == '')
-            vfOrder.ShipToContact_Name__c       =   vfOrder.BillToContact_Name__c;
-            
-        //Map the order Shipping Address
-        vfOrder.ShippingStreet          =   vfOrder.BillingStreet;
-        vfOrder.ShippingCity            =   vfOrder.BillingCity;
-        vfOrder.ShippingCountry         =   vfOrder.BillingCountry;
-        vfOrder.ShippingCountryCode__c  =   vfOrder.BillingCountryCode__c;
-        
-        vfOrder.ShippingState           =   vfOrder.BillingState;
-        vfOrder.ShippingStateCode__c    =   vfOrder.BillingStateCode__c;
-        vfOrder.ShippingPostalCode      =   vfOrder.BillingPostalCode;
-        
-        vfOrder.ShipToContact_VAT_Number__c = vfOrder.BillToContact_VAT_Number__c;
-        
-    }
-
-
     //Add the sold to location in the Order
-    if(vfOrder.AccountId != null){
+    if(vfOrder.AccountId != null && vfOrder.SoldTo_Location__c == null){
         map<Id,Location__c> soldToLocationMap = new Location_Sel().getSoldToAccountLocation(new set<Id>{vfOrder.AccountId});
         if(soldToLocationMap != null && soldToLocationMap.size() >0){
             vfOrder.SoldTo_Location__c = soldToLocationMap.values()[0].Id;
@@ -1897,6 +1942,44 @@ public PageReference saveOrder() {
     //*** no error -> save data
     Savepoint sp = Database.setSavepoint();
     try {
+        //*** create ship to location if necessary in case of indicated same as bill to 
+        if (vfOrder.ShipTo_same_BillTo__c)
+        {
+            Map<Id, Location__c> mapLocationId_Location = Location_Sel.getLocationToSyncSAP(null, null, new List<Id>{vfOrder.BillToContactId}, null, true);
+            Location__c billingLocation = mapLocationId_Location.get(vfOrder.BillTo_Location__c);
+            
+            //*** find ship to location have same address
+            Location__c shippingLocation;
+            for (Location__c loc : mapLocationId_Location.values())
+                if (loc.Type__c == IECConstants.SHIPTO && loc.Address__c == billingLocation.Address__c)
+                {
+                    shippingLocation = loc;
+                    break;
+                }
+            //*** not found -> create new location
+            if (shippingLocation == null)
+            {
+                shippingLocation = new Location__c(Active__c = true, Type__c = IECConstants.SHIPTO
+                                               , Address__c = billingLocation.Address__c, Address__r = billingLocation.Address__r
+                                               , Account__c = billingLocation.Account__c, Account__r = billingLocation.Account__r
+                                               , Contact__c = billingLocation.Contact__c, Contact__r = billingLocation.Contact__r
+                                               , Address_Name__c = 'New', Attention__c = billingLocation.Contact__r.Name
+                                               , Email__c = billingLocation.Email__c, Phone__c = billingLocation.Phone__c
+                                               , VAT_Number__c = billingLocation.VAT_Number__c);
+                IECAddress_Svc.syncCustomerWithSAP(new List<Location__c>{shippingLocation}, null, false);   //*** ignore error
+                insert shippingLocation;
+            }
+            vfOrder.ShipTo_Location__c = shippingLocation.Id;
+        }
+        
+        //INC331542
+        //Set the user associated to the assigned contact as the ownerId
+        User user = [select id, contactId from User where contactId=:vfOrder.BillToContactId];
+        if(vfOrder.BillToContactId != null && user != null){
+            vfOrder.OwnerId = user.Id;
+        }
+        
+        //*** save order
         upsert vfOrder;
     } catch (Exception e) {
         ApexPages.addMessages(e);
@@ -1954,11 +2037,50 @@ public String callSAP_Freight_Tax() {
 void buildPaymentTypePicklist() {
     //if (listPaymentType == null) {
     if (isPaying) {
+        List<String> adminUsersProfiles = Utility.getTextSettingToArray('IEC Admin Users Profiles for CSR', ',');
+        Set<String> adminUsersProfilesSet = new Set<String>();
         List<String> allowedPaymentType = Utility.getTextSettingToArray('Order Payment Types allowed for CSR', ',');
         Map<String, String> mapPaymentType = Utility.getPicklistValue_Label('Order', 'Payment_Type__c');
         //String paymentType = '';
         Decimal TotalAmount = 0;
-        
+        Boolean isAdminUserProfile = false;
+        Profile userProfile = [SELECT Id, Name FROM Profile WHERE Id = :userInfo.getProfileId() LIMIT 1];
+        String userProfileName = userProfile.Name;
+
+        for (String profileName : adminUsersProfiles) {
+            adminUsersProfilesSet.add(profileName);
+        }
+
+        if (adminUsersProfilesSet.contains(userProfileName)) {
+            isAdminUserProfile = true;
+        }
+
+        // Ecommerce Enhancements R2
+        Map<String,String> uiToPaymentMethodMap = new Map<String,String> {
+            'Bank Transfer'         => IECConstants.PaymentThresholdType_BankTransfer,
+            'Credit Card'           => IECConstants.PaymentThresholdType_CreditCard,
+            'IATA Clearing House'   => IECConstants.PaymentThresholdType_ICH
+        };
+        String acceptedPaymentMethods = vfOrder.Accepted_Payment_Methods__c;
+        List<String> acceptedPaymentMethodsList = new List<String>();
+        Set<String> acceptedPaymentMethodsSet = new Set<String>();
+
+        System.debug('OrderId: ' + vfOrder.Id + ', AcceptedPaymentMethods: ' + acceptedPaymentMethods);
+
+        if (acceptedPaymentMethods != null) {
+            acceptedPaymentMethodsList = acceptedPaymentMethods.split(';');
+        }
+
+        for (String accepted : acceptedPaymentMethodsList) {
+            String pm = uiToPaymentMethodMap.get(accepted);
+
+            if (pm != null) {
+                System.debug('OrderId: ' + vfOrder.Id + ', Payment Method Accepted: ' + pm);
+
+                acceptedPaymentMethodsSet.add(pm);
+            }
+        }
+
         if (listPaymentType == null)
             listPaymentType = new List<SelectOption>();
         else
@@ -1972,38 +2094,44 @@ void buildPaymentTypePicklist() {
         for (String payType : allowedPaymentType)
             if (mapPaymentType.containsKey(payType)) {
                 if (payType == 'Credit Card Deferred') {
-                    if (IECSubscriptionManager.canPurchaseAmountWithPaymentMethod(IECConstants.PaymentThresholdType_CreditCard, TotalAmount))
-                        listPaymentType.add(new SelectOption(payType, mapPaymentType.get(payType)));
-                    else
-                        listPaymentType.add(new SelectOption(payType, mapPaymentType.get(payType) + labels.get('msgPayTypeThreshold'), true));
+                    if (isAdminUserProfile || acceptedPaymentMethodsSet.contains(IECConstants.PaymentThresholdType_CreditCard)) {
+                        if (IECSubscriptionManager.canPurchaseAmountWithPaymentMethod(IECConstants.PaymentThresholdType_CreditCard, TotalAmount))
+                            listPaymentType.add(new SelectOption(payType, mapPaymentType.get(payType)));
+                        else
+                            listPaymentType.add(new SelectOption(payType, mapPaymentType.get(payType) + labels.get('msgPayTypeThreshold'), true));
+                    }
                 }
                 else if (payType == 'Bank Transfer' || payType == 'Check') {
-                    if (IECSubscriptionManager.canPurchaseAmountWithPaymentMethod(IECConstants.PaymentThresholdType_BankTransfer, TotalAmount))
-                        listPaymentType.add(new SelectOption(payType, mapPaymentType.get(payType)));
-                    else
-                        listPaymentType.add(new SelectOption(payType, mapPaymentType.get(payType) + labels.get('msgPayTypeThreshold'), true));
+                    if (isAdminUserProfile || acceptedPaymentMethodsSet.contains(IECConstants.PaymentThresholdType_BankTransfer)) {
+                        if (IECSubscriptionManager.canPurchaseAmountWithPaymentMethod(IECConstants.PaymentThresholdType_BankTransfer, TotalAmount))
+                            listPaymentType.add(new SelectOption(payType, mapPaymentType.get(payType)));
+                        else
+                            listPaymentType.add(new SelectOption(payType, mapPaymentType.get(payType) + labels.get('msgPayTypeThreshold'), true));
+                    }
                 }
                 else if (payType == 'ICH') {
-                    try { //*** try-catch because error may happen sometime mostly new customer
-                        //IECCustomer customer = new IECCustomer(vfOrder.BillToContactId);
+                    if (isAdminUserProfile || acceptedPaymentMethodsSet.contains(IECConstants.PaymentThresholdType_ICH)) {
+                        try { //*** try-catch because error may happen sometime mostly new customer
+                            //IECCustomer customer = new IECCustomer(vfOrder.BillToContactId);
 
-                        //Get the Ecom user base on the order BillTocontactId
-                        User iecCustomer = new User_sel().getUserByContactId(vfOrder.BillToContactId);
-                        Customer_DTO customerDto;
-                        if(iecCustomer != null)
-                            customerDto = Customer_DTO.getCustomerByUser(iecCustomer.Id);
+                            //Get the Ecom user base on the order BillTocontactId
+                            User iecCustomer = new User_sel().getUserByContactId(vfOrder.BillToContactId);
+                            Customer_DTO customerDto;
+                            if(iecCustomer != null)
+                                customerDto = Customer_DTO.getCustomerByUser(iecCustomer.Id);
 
-                        //if (customerDto != null && customerDto.canPayByICH())   //*** (Thai) relax this rule in production in waiting of final rule
-                        if (customerDto != null)
-                        {
-                            if (IECSubscriptionManager.canPurchaseAmountWithPaymentMethod(IECConstants.PaymentThresholdType_ICH, TotalAmount))
-                                listPaymentType.add(new SelectOption(payType, mapPaymentType.get(payType)));
+                            if (customerDto != null && customerDto.canPayByICH())   //*** (Thai) relax this rule in production in waiting of final rule
+                            if (customerDto != null)
+                            {
+                                if (IECSubscriptionManager.canPurchaseAmountWithPaymentMethod(IECConstants.PaymentThresholdType_ICH, TotalAmount))
+                                    listPaymentType.add(new SelectOption(payType, mapPaymentType.get(payType)));
+                                else
+                                    listPaymentType.add(new SelectOption(payType, mapPaymentType.get(payType) + labels.get('msgPayTypeThreshold'), true));
+                            }
                             else
-                                listPaymentType.add(new SelectOption(payType, mapPaymentType.get(payType) + labels.get('msgPayTypeThreshold'), true));
-                        }
-                        else
-                            listPaymentType.add(new SelectOption(payType, mapPaymentType.get(payType) + labels.get('msgPayTypeNotAllowed'), true));
-                    } catch (Exception e) {}
+                                listPaymentType.add(new SelectOption(payType, mapPaymentType.get(payType) + labels.get('msgPayTypeNotAllowed'), true));
+                        } catch (Exception e) {}
+                    }
                 }
                 else if (payType == 'Bill me later') {
                     Account soldToAccount = [select Payment_Term__c from Account where Id = :vfOrder.AccountId limit 1][0];

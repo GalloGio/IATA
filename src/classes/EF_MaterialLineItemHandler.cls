@@ -1,6 +1,168 @@
-public class EF_MaterialLineItemHandler {
+public class EF_MaterialLineItemHandler
+{
+    private static boolean run = true;
 
+    public static List<EF_Material_Line_Item__c> identifyToApproveRecords(List<EF_Material_Line_Item__c> newValues)
+    {
+        List<EF_Material_Line_Item__c> toApproveList = new List<EF_Material_Line_Item__c>();
+        Id baMaterialRtId = AMS_Utils.getId('EF_Material_Line_Item__c', 'Relationship_Line_Item');
+        for(EF_Material_Line_Item__c mat : newValues)
+        {
+            if(mat.RecordTypeId == baMaterialRtId)
+            {
+                if(mat.Allow_Billing_Agreements__c != null)
+                {
+                    if(mat.Allow_Billing_Agreements__c.equalsIgnoreCase('Allowed with Approval'))
+                    {
+                        toApproveList.add(mat);
+                    }
+                }
+            } else
+            {
+                toApproveList.add(mat);
+            }
+        }
+        return toApproveList;
+    }
+
+    public static void validateNoInactiveMaterialsFromContract(Map<Id, EF_Material_Line_Item__c> newMap)
+    {
+        Map<Id, EF_Material_Line_Item__c> relevantMaterials  = new Map<Id, EF_Material_Line_Item__c>();
+        for(EF_Material_Line_Item__c mat : newMap.values())
+        {
+            if(mat.EF_Relationship__c != null && mat.EF_Status__c == 'Active')
+            {
+                relevantMaterials.put(mat.Id, mat);
+            }
+        }
+
+        if(relevantMaterials.size() > 0)
+        {
+            List<EF_Material_Line_Item__c> allMaterials = [select Id, EF_Material__c, EF_Relationship__r.Contract__c, EF_Status__c, Name from EF_Material_Line_Item__c where Id in :relevantMaterials.keySet()];
+            Set<Id> contractIds = new Set<Id>();
+            for(EF_Material_Line_Item__c mat : allMaterials)
+            {
+                contractIds.add(mat.EF_Relationship__r.Contract__c);
+            }
+
+            Map<Id, List<EF_Material_Line_Item__c>> contractIdMaterialsMap = new Map<Id, List<EF_Material_Line_Item__c>>();
+            
+            // Only select Inactive materials to reduce the amount of records to loop through later on
+            List<EF_Material_Line_Item__c> contractMaterials = [select Id, EF_Material__c, EF_Status__c, Contract__c, Name from EF_Material_Line_Item__c where Contract__c in :contractIds and EF_Status__c = 'Inactive'];
+            for(EF_Material_Line_Item__c contractMaterial : contractMaterials)
+            {
+                if(contractIdMaterialsMap.get(contractMaterial.Contract__c) != null)
+                {
+                    contractIdMaterialsMap.get(contractMaterial.Contract__c).add(contractMaterial);
+                } else
+                {
+                    contractIdMaterialsMap.put(contractMaterial.Contract__c, new List<EF_Material_Line_Item__c>());
+                    contractIdMaterialsMap.get(contractMaterial.Contract__c).add(contractMaterial);
+                }
+            }
+
+            for(EF_Material_Line_Item__c mat : allMaterials)
+            {
+                if(contractIdMaterialsMap.get(mat.EF_Relationship__r.Contract__c) != null)
+                {
+                    // Loop through the INACTIVE Contract's Material Line Items and identify if the same EF_Material__c linking exists
+                    // If it does, it means that the Contract's Material Line Item for that Material is Inactive => Throw an error
+                    for(EF_Material_Line_Item__c contractMaterial : contractIdMaterialsMap.get(mat.EF_Relationship__r.Contract__c))
+                    {
+                        if(mat.EF_Material__c == contractMaterial.EF_Material__c)
+                        {
+                            newMap.get(mat.Id).addError('The selected Material is set to Inactive state on the Contract level. Please select an active one instead.');
+                            return;
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+    public static void handleApprovedAndRejectedApprovals(List<EF_Material_Line_Item__c> newValues, Map<Id, EF_Material_Line_Item__c> oldValues)
+    {
+        List<String> fields = new List<String>{'EF_Status__c', 'EF_Material__c'};
+        List<Contract> approvedList = EF_BaContractApprovalHelper.identifyApprovedRecords(newValues, oldValues);
+        List<Contract> rejectedList = EF_BaContractApprovalHelper.identifyRejectedOrRecalledRecords(newValues, oldValues);
+        if(approvedList.size() > 0)
+        {
+            EF_BaContractApprovalHelper.copyValuesFromTempStorageOnrecordApproval(approvedList, fields, 'EF_Material_Line_Item__c');
+        }
+        if(rejectedList.size() > 0)
+        {
+            EF_BaContractApprovalHelper.removeTempStorageRecordOnRecordRejection(rejectedList, 'EF_Material_Line_Item__c');
+        }
+    }
+
+    public static void handleWithApprovalUpdates(Map<Id, EF_Material_Line_Item__c> newMaterials, Map<Id, EF_Material_Line_Item__c> oldMaterials)
+    {
+        if(EF_ContractHandler.isUserCsSpecialist())
+        {
+            List<EF_Approval__c> approvalStorageList = new List<EF_Approval__c>();
+            List<String> fields = new List<String>{'EF_Status__c', 'EF_Material_Name__c'};
+            List<String> editFields = new List<String>{'EF_Status__c', 'EF_Material__c'};
+            User currentUser = [select Id, Email, EF_Contract_Approver_Email__c, EF_Billing_Agreement_Approver_Email__c from User where Id = :UserInfo.getUserId()];
+            for(EF_Material_Line_Item__c mat : newMaterials.values())
+            {
+                if(EF_BaContractApprovalHelper.identifyRecordChanges(mat, oldMaterials.get(mat.Id), fields, false))
+                {
+                    EF_Approval__c approval = EF_BaContractApprovalHelper.fillTemporaryApprovalStorage(new EF_Approval__c(), (sObject) mat, editFields, 'EF_Material_Line_Item__c');
+                    mat.Require_Approval__c = true;
+                    setApproverEmail(mat, currentUser);
+                    approvalStorageList.add(approval);
+                    EF_BaContractApprovalHelper.rollbackPreviousValues(mat, oldMaterials.get(mat.Id), editFields);
+                }
+            }
+
+            if(approvalStorageList.size() > 0)
+            {
+                insert approvalStorageList;
+            }
+        }
+    }
+
+    // If user is a CS Specialist, make the Contract inactive and require approval
+    public static void handleWithApprovalInserts(List<EF_Material_Line_Item__c> materialList)
+    {
+        if(EF_ContractHandler.isUserCsSpecialist())
+        {
+            List<String> fields = new List<String>{'EF_Status__c', 'EF_Material_Name__c'};
+            List<String> editFields = new List<String>{'EF_Status__c', 'EF_Material__c'};
+
+            for(EF_Material_Line_Item__c mat : materialList)
+            {
+                mat.Require_Approval__c = true;
+                mat.EF_Status__c = 'Inactive';
+                EF_BaContractApprovalHelper.identifyRecordChanges(mat, null, fields, true);
+            }
+        }
+    }
+
+    public static void startApprovalProcesses(List<EF_Material_Line_Item__c> cList)
+    {
+        for(EF_Material_Line_Item__c c : cList)
+        {
+            if(c.Require_Approval__c)
+            {
+                EF_BaContractApprovalHelper.submitForApproval(c.Id, UserInfo.getUserId(), '');
+            }
+        }
+    }
     
+    public static void setApproverEmail(EF_Material_Line_Item__c mat, User currentUser)
+    {
+        if(mat.Contract__c != null)
+        {
+            mat.EF_Approver_Email__c = currentUser.EF_Contract_Approver_Email__c;
+        }
+        if(mat.EF_Relationship__c != null)
+        {
+            mat.EF_Approver_Email__c = currentUser.EF_Billing_Agreement_Approver_Email__c;
+        }
+        mat.EF_Submitter_Email__c = currentUser.Email;
+    }
+
     public static void validateContractMaterialRemoval(List<EF_Material_Line_Item__c> newLines, Map<Id, EF_Material_Line_Item__c> materialLineItemOldMap, boolean isUpdate)
     {
         // Ignore new inserts and only activate code on Update or Deletion
@@ -38,7 +200,7 @@ public class EF_MaterialLineItemHandler {
             {
                 for(EF_Material_Line_Item__c mat : materialLineItemOldMap.values())
                 {
-                    if(mat.Contract__c != null)
+                    if(mat.Contract__c != null && !contractMaterialsMap.isEmpty())
                     {
                         if(contractMaterialsMap.get(mat.Contract__c).contains(mat.EF_Material__c))
                         {
@@ -68,7 +230,7 @@ public class EF_MaterialLineItemHandler {
         }
     }
 
-
+    /* Commented out due to approval processing doing this and additional actions for now....
     public static void emailIfMaterialChanges(List<EF_Material_Line_Item__c> materialLineItemList, Map<Id,EF_Material_Line_Item__c> materialLineItemOldMap)
     {
         List<EF_Material_Line_Item__c> toApproveList = new List<EF_Material_Line_Item__c>();
@@ -245,13 +407,12 @@ public class EF_MaterialLineItemHandler {
             htmlRow = '<tr><td border="1"><a href="'+baseUrl+'/'+line.Id+'">'+line.Name+'</a></td><td border="1">--</td><td border="1">'+newValue.Name+'</td></tr>';
         return htmlRow;
     }
-
+    */
 
     //
     // Check is the material Item that is in the BillingAgreement exists in the contract.
     //
-
-    public static void checkBillingAgreementContractItems (List<EF_Material_Line_Item__c> materialLineItemList, Map<Id,EF_Material_Line_Item__c> materialLineItemOldMap) {
+    public static void checkBillingAgreementContractItems(List<EF_Material_Line_Item__c> materialLineItemList, Map<Id,EF_Material_Line_Item__c> materialLineItemOldMap) {
         
         List<EF_Material_Line_Item__c> workdata = new List<EF_Material_Line_Item__c>();
         Set<Id> baIdSet = new Set<Id>();
@@ -260,8 +421,6 @@ public class EF_MaterialLineItemHandler {
         // Get all the new material lines and Billing agreements
         //
         for (EF_Material_Line_Item__c mli : materialLineItemList) {
-            
-            // TODO add a clause to check is the material has changed 
             
             if ((mli.EF_Relationship__c != null && materialLineItemOldMap == null) || 
                 (materialLineItemOldMap != null && materialLineItemOldMap.containsKey(mli.Id) && mli.EF_Relationship__c != materialLineItemOldMap.get(mli.Id).EF_Relationship__c) ||
@@ -318,6 +477,110 @@ public class EF_MaterialLineItemHandler {
                     mli.addError(Label.EF_Line_Item_Not_In_Contract_Error);
                 }
             }
+        }
+    }
+
+    public static void checkBillingAgreementContractItems(List<EF_Material_Line_Item__c> materialLineItemList)
+    {
+        
+        List<EF_Material_Line_Item__c> workdata = new List<EF_Material_Line_Item__c>();
+        Set<Id> baIdSet = new Set<Id>();
+
+        for (EF_Material_Line_Item__c mli : materialLineItemList)
+        {
+            if (mli.EF_Relationship__c != null)
+            {
+                workdata.add(mli);
+                baIdSet.add(mli.EF_Relationship__c);
+            }
+        }
+
+        if (workdata.size() > 0)
+        {
+            Map<Id, Id> mliToContractMap = new Map<Id, Id>();
+            for (EF_Material_Line_Item__c mli : [select Id, EF_Relationship__r.Contract__c from EF_Material_Line_Item__c where Id IN :workdata])
+            {
+                mliToContractMap.put(mli.Id, mli.EF_Relationship__r.Contract__c);
+            }
+
+            Map<Id,Contract> contracts = new Map<Id,Contract>([select Id, (select Id, EF_Material__c from EF_Material_Line_Items__r) from Contract where Id IN :mliToContractMap.values()]);
+            Contract cont;
+            Boolean found;
+            
+            for (EF_Material_Line_Item__c mli : workdata)
+            {
+                cont = contracts.get(mliToContractMap.get(mli.Id));
+                found = false;
+                if(cont != null)
+                {
+                    if (cont.EF_Material_Line_Items__r != null) {
+                        
+                        for (EF_Material_Line_Item__c contractMLI : cont.EF_Material_Line_Items__r) {
+                            
+                            if (contractMLI.EF_Material__c == mli.EF_Material__c)
+                            {
+                                found = true;
+                                break;
+                            }
+                        }
+                    }
+                }
+                if (found == false)
+                {
+                    mli.addError(Label.EF_Line_Item_Not_In_Contract_Error);
+                }
+            }
+        }
+    }
+    
+    public static void checkIfBillingAgreementDeactivationRequired(Map<Id,EF_Material_Line_Item__c> materialLineItemOldMap){
+    	
+    	// Retrieve the list of Billing Agreements to be checked
+    	List<Id> involvedBAs = new List<Id>();
+    	for(EF_Material_Line_Item__c mat : materialLineItemOldMap.values()){
+    		if(mat.EF_Relationship__c != null){
+    			involvedBAs.add(mat.EF_Relationship__c);
+    		}
+    	}
+    	
+		// Retrieve the list of Billing Agreement for which there is at least one active Material Line Item
+    	AggregateResult[] activableBAs = [Select EF_Relationship__c FROM EF_Material_Line_Item__c WHERE EF_Relationship__c IN :involvedBAs AND EF_Status__c = 'Active' GROUP BY EF_Relationship__c];
+
+		// For each involved Billing Agreement, check if it still has a Material Line Item
+		List<Id> withoutItemBAs = new List<Id>();
+		for(Id involvedBa : involvedBAs){
+			Boolean baHasItem = false;
+
+			for(AggregateResult activableBA : activableBAs){
+				if(activableBA.get('EF_Relationship__c') == involvedBa){
+					baHasItem = true;
+					break;
+				}
+			}
+			
+			if(!baHasItem){
+				withoutItemBAs.add(involvedBa);
+			}
+		}
+
+		// Retrieve and update the billing agreements that need to be updated
+		List<EF_Billing_Agreement__c> billingAgreementsToUpdate = [SELECT Status__c FROM EF_Billing_Agreement__c WHERE Id IN :withoutItemBAs];
+		for(EF_Billing_Agreement__c ba : billingAgreementsToUpdate){
+			ba.EF_Status__c = 'Inactive';
+		}
+		update billingAgreementsToUpdate;
+    }
+
+    public static boolean runOnce()
+    {
+        if(run)
+        {
+            run = false;
+            return true;
+        }
+        else
+        {
+            return run;
         }
     }
 }

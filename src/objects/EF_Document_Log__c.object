@@ -1,0 +1,571 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomObject xmlns="http://soap.sforce.com/2006/04/metadata">
+    <actionOverrides>
+        <actionName>Accept</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>CancelEdit</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Clone</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Delete</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Edit</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>List</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>New</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>SaveEdit</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Tab</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>View</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <allowInChatterGroups>false</allowInChatterGroups>
+    <compactLayoutAssignment>SYSTEM</compactLayoutAssignment>
+    <deploymentStatus>Deployed</deploymentStatus>
+    <description>Used for E&amp;F document mass-upload metadata storage and logs the activity statuses for document upload to transformation of standard Attachment into Amazon attachment.</description>
+    <enableActivities>false</enableActivities>
+    <enableBulkApi>true</enableBulkApi>
+    <enableChangeDataCapture>false</enableChangeDataCapture>
+    <enableFeeds>false</enableFeeds>
+    <enableHistory>true</enableHistory>
+    <enableReports>true</enableReports>
+    <enableSearch>true</enableSearch>
+    <enableSharing>true</enableSharing>
+    <enableStreamingApi>true</enableStreamingApi>
+    <fields>
+        <fullName>Additional_Information__c</fullName>
+        <description>Same type of a field as AmazonFile&apos;s Additional Information.</description>
+        <externalId>false</externalId>
+        <label>Additional Information</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>TextArea</type>
+    </fields>
+    <fields>
+        <fullName>AttachmentId__c</fullName>
+        <description>Salesforce Standard Attachment ID to be updated via CSV to create a link between a Document Log record and the Attachment to be processes.</description>
+        <externalId>true</externalId>
+        <label>Attachment ID</label>
+        <length>18</length>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Category__c</fullName>
+        <description>Same as AmazonFile.EF_Category__c.</description>
+        <externalId>false</externalId>
+        <label>Category</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Picklist</type>
+        <valueSet>
+            <restricted>true</restricted>
+            <valueSetDefinition>
+                <sorted>false</sorted>
+                <value>
+                    <fullName>Contractual</fullName>
+                    <default>false</default>
+                    <label>Contractual</label>
+                </value>
+                <value>
+                    <fullName>Meeting Minutes</fullName>
+                    <default>false</default>
+                    <label>Meeting Minutes</label>
+                </value>
+                <value>
+                    <fullName>Client Pricing or Charges</fullName>
+                    <default>false</default>
+                    <label>Client Pricing or Charges</label>
+                </value>
+                <value>
+                    <fullName>Garnishee/Sanctions</fullName>
+                    <default>false</default>
+                    <label>Garnishee/Sanctions</label>
+                </value>
+                <value>
+                    <fullName>VAT Certificate</fullName>
+                    <default>false</default>
+                    <label>VAT Certificate</label>
+                </value>
+                <value>
+                    <fullName>Operating License/Certificate</fullName>
+                    <default>false</default>
+                    <label>Operating License/Certificate</label>
+                </value>
+                <value>
+                    <fullName>Aircraft/Fleet Information</fullName>
+                    <default>false</default>
+                    <label>Aircraft/Fleet Information</label>
+                </value>
+                <value>
+                    <fullName>Operational Calendars</fullName>
+                    <default>false</default>
+                    <label>Operational Calendars</label>
+                </value>
+                <value>
+                    <fullName>Debt Management</fullName>
+                    <default>false</default>
+                    <label>Debt Management</label>
+                </value>
+                <value>
+                    <fullName>Communications</fullName>
+                    <default>false</default>
+                    <label>Communications</label>
+                </value>
+                <value>
+                    <fullName>Ad-Hoc Report</fullName>
+                    <default>false</default>
+                    <label>Ad-Hoc Report</label>
+                </value>
+                <value>
+                    <fullName>Audit</fullName>
+                    <default>false</default>
+                    <label>Audit</label>
+                </value>
+                <value>
+                    <fullName>Miscellaneous</fullName>
+                    <default>false</default>
+                    <label>Miscellaneous</label>
+                </value>
+            </valueSetDefinition>
+        </valueSet>
+    </fields>
+    <fields>
+        <fullName>Created_By__c</fullName>
+        <description>Field to store original creator of the file. This may be a non-Salesforce User.</description>
+        <externalId>false</externalId>
+        <label>Created By</label>
+        <length>255</length>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Created_On__c</fullName>
+        <externalId>false</externalId>
+        <label>Created On</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>DateTime</type>
+    </fields>
+    <fields>
+        <fullName>EF_Private__c</fullName>
+        <defaultValue>false</defaultValue>
+        <description>Used for records that are only visible for members of a E&amp;F Private Access public group.</description>
+        <externalId>false</externalId>
+        <label>E&amp;F Private</label>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
+        <fullName>Enterprise_Keywords__c</fullName>
+        <description>Optional field to store enterprise keywords.</description>
+        <externalId>false</externalId>
+        <label>Enterprise Keywords</label>
+        <length>32768</length>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>LongTextArea</type>
+        <visibleLines>3</visibleLines>
+    </fields>
+    <fields>
+        <fullName>Expired__c</fullName>
+        <defaultValue>false</defaultValue>
+        <externalId>false</externalId>
+        <label>Expired</label>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
+        <fullName>Expiry_Date__c</fullName>
+        <description>The document expiry date.</description>
+        <externalId>false</externalId>
+        <label>Expiry Date</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Date</type>
+    </fields>
+    <fields>
+        <fullName>FileName__c</fullName>
+        <description>Name of the Document file.</description>
+        <externalId>false</externalId>
+        <label>File Name</label>
+        <length>255</length>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>FilePath__c</fullName>
+        <description>Path to the file inside Amazon.</description>
+        <externalId>false</externalId>
+        <label>File Path</label>
+        <length>255</length>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Log__c</fullName>
+        <description>Stores lines of logging activities.</description>
+        <externalId>false</externalId>
+        <label>Log</label>
+        <length>32768</length>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>LongTextArea</type>
+        <visibleLines>4</visibleLines>
+    </fields>
+    <fields>
+        <fullName>Modified_By__c</fullName>
+        <description>Last modifier of the file. This may be a non-Salesforce user as well.</description>
+        <externalId>false</externalId>
+        <label>Modified By</label>
+        <length>255</length>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Modified_On__c</fullName>
+        <description>Last modification date and time. Not to be updated along with LastModified standard field.</description>
+        <externalId>false</externalId>
+        <label>Modified On</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>DateTime</type>
+    </fields>
+    <fields>
+        <fullName>ParentId__c</fullName>
+        <description>Salesforce Record ID to which this file is attached to.</description>
+        <externalId>false</externalId>
+        <label>Parent Record ID</label>
+        <length>18</length>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>SAP_Reference__c</fullName>
+        <description>If there&apos;s a relevant SAP reference available, it should be filled inside this field.</description>
+        <externalId>false</externalId>
+        <label>SAP Reference</label>
+        <length>250</length>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Send_to_Amazon__c</fullName>
+        <defaultValue>false</defaultValue>
+        <description>A trigger identifies when this field gets set to true, and will then activate processes to push the standard attachment to Amazon.</description>
+        <externalId>false</externalId>
+        <label>Send to Amazon</label>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
+        <fullName>Status__c</fullName>
+        <description>Contains process statuses to be used for reporting and possibly restarting processing of a certain status via batch jobs.</description>
+        <externalId>false</externalId>
+        <label>Process Status</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Picklist</type>
+        <valueSet>
+            <restricted>true</restricted>
+            <valueSetDefinition>
+                <sorted>false</sorted>
+                <value>
+                    <fullName>Attachment - Uploaded</fullName>
+                    <default>false</default>
+                    <label>Attachment - Uploaded</label>
+                </value>
+                <value>
+                    <fullName>Attachment - Failure</fullName>
+                    <default>false</default>
+                    <label>Attachment - Failure</label>
+                </value>
+                <value>
+                    <fullName>Metadata Updated</fullName>
+                    <default>false</default>
+                    <label>Metadata Updated</label>
+                </value>
+                <value>
+                    <fullName>Amazon - Upload Error</fullName>
+                    <default>false</default>
+                    <label>Amazon - Upload Error</label>
+                </value>
+                <value>
+                    <fullName>Amazon - Upload Successful</fullName>
+                    <default>false</default>
+                    <label>Amazon - Upload Successful</label>
+                </value>
+                <value>
+                    <fullName>Attachment - Delete Error</fullName>
+                    <default>false</default>
+                    <label>Attachment - Delete Error</label>
+                </value>
+                <value>
+                    <fullName>Process Completed</fullName>
+                    <default>false</default>
+                    <label>Process Completed</label>
+                </value>
+            </valueSetDefinition>
+        </valueSet>
+    </fields>
+    <fields>
+        <fullName>SubCategory__c</fullName>
+        <description>Same as AmazonFile__c.EF_SubCategory__c.</description>
+        <externalId>false</externalId>
+        <label>SubCategory</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Picklist</type>
+        <valueSet>
+            <controllingField>Category__c</controllingField>
+            <restricted>true</restricted>
+            <valueSetDefinition>
+                <sorted>false</sorted>
+                <value>
+                    <fullName>Contract/Amendment</fullName>
+                    <default>false</default>
+                    <label>Contract/Amendment</label>
+                </value>
+                <value>
+                    <fullName>Notam/AIP</fullName>
+                    <default>false</default>
+                    <label>Notam/AIP</label>
+                </value>
+                <value>
+                    <fullName>Signatory Authority</fullName>
+                    <default>false</default>
+                    <label>Signatory Authority</label>
+                </value>
+                <value>
+                    <fullName>Bank</fullName>
+                    <default>false</default>
+                    <label>Bank</label>
+                </value>
+                <value>
+                    <fullName>Termination</fullName>
+                    <default>false</default>
+                    <label>Termination</label>
+                </value>
+                <value>
+                    <fullName>Signatory Authentication</fullName>
+                    <default>false</default>
+                    <label>Signatory Authentication</label>
+                </value>
+                <value>
+                    <fullName>Proof of legal existence</fullName>
+                    <default>false</default>
+                    <label>Proof of legal existence</label>
+                </value>
+                <value>
+                    <fullName>Deal Value Calculation</fullName>
+                    <default>false</default>
+                    <label>Deal Value Calculation</label>
+                </value>
+                <value>
+                    <fullName>Implementation Summary</fullName>
+                    <default>false</default>
+                    <label>Implementation Summary</label>
+                </value>
+                <value>
+                    <fullName>BSP</fullName>
+                    <default>false</default>
+                    <label>BSP</label>
+                </value>
+                <value>
+                    <fullName>ICH</fullName>
+                    <default>false</default>
+                    <label>ICH</label>
+                </value>
+                <value>
+                    <fullName>Client</fullName>
+                    <default>false</default>
+                    <label>Client</label>
+                </value>
+                <value>
+                    <fullName>Airline Status</fullName>
+                    <default>false</default>
+                    <label>Airline Status</label>
+                </value>
+                <value>
+                    <fullName>Legal Case</fullName>
+                    <default>false</default>
+                    <label>Legal Case</label>
+                </value>
+                <value>
+                    <fullName>Funds Management</fullName>
+                    <default>false</default>
+                    <label>Funds Management</label>
+                </value>
+                <value>
+                    <fullName>Campaign</fullName>
+                    <default>false</default>
+                    <label>Campaign</label>
+                </value>
+                <value>
+                    <fullName>Inbound letter/fax</fullName>
+                    <default>false</default>
+                    <label>Inbound letter/fax</label>
+                </value>
+                <value>
+                    <fullName>Outbound letter/fax</fullName>
+                    <default>false</default>
+                    <label>Outbound letter/fax</label>
+                </value>
+                <value>
+                    <fullName>Circular/Notification</fullName>
+                    <default>false</default>
+                    <label>Circular/Notification</label>
+                </value>
+            </valueSetDefinition>
+            <valueSettings>
+                <controllingFieldValue>Contractual</controllingFieldValue>
+                <valueName>Contract/Amendment</valueName>
+            </valueSettings>
+            <valueSettings>
+                <controllingFieldValue>Contractual</controllingFieldValue>
+                <valueName>Notam/AIP</valueName>
+            </valueSettings>
+            <valueSettings>
+                <controllingFieldValue>Contractual</controllingFieldValue>
+                <valueName>Signatory Authority</valueName>
+            </valueSettings>
+            <valueSettings>
+                <controllingFieldValue>Contractual</controllingFieldValue>
+                <valueName>Bank</valueName>
+            </valueSettings>
+            <valueSettings>
+                <controllingFieldValue>Contractual</controllingFieldValue>
+                <valueName>Termination</valueName>
+            </valueSettings>
+            <valueSettings>
+                <controllingFieldValue>Contractual</controllingFieldValue>
+                <valueName>Signatory Authentication</valueName>
+            </valueSettings>
+            <valueSettings>
+                <controllingFieldValue>Contractual</controllingFieldValue>
+                <valueName>Proof of legal existence</valueName>
+            </valueSettings>
+            <valueSettings>
+                <controllingFieldValue>Contractual</controllingFieldValue>
+                <valueName>Deal Value Calculation</valueName>
+            </valueSettings>
+            <valueSettings>
+                <controllingFieldValue>Contractual</controllingFieldValue>
+                <valueName>Implementation Summary</valueName>
+            </valueSettings>
+            <valueSettings>
+                <controllingFieldValue>Operational Calendars</controllingFieldValue>
+                <valueName>BSP</valueName>
+            </valueSettings>
+            <valueSettings>
+                <controllingFieldValue>Operational Calendars</controllingFieldValue>
+                <valueName>ICH</valueName>
+            </valueSettings>
+            <valueSettings>
+                <controllingFieldValue>Operational Calendars</controllingFieldValue>
+                <valueName>Client</valueName>
+            </valueSettings>
+            <valueSettings>
+                <controllingFieldValue>Debt Management</controllingFieldValue>
+                <valueName>Airline Status</valueName>
+            </valueSettings>
+            <valueSettings>
+                <controllingFieldValue>Debt Management</controllingFieldValue>
+                <valueName>Legal Case</valueName>
+            </valueSettings>
+            <valueSettings>
+                <controllingFieldValue>Debt Management</controllingFieldValue>
+                <valueName>Funds Management</valueName>
+            </valueSettings>
+            <valueSettings>
+                <controllingFieldValue>Communications</controllingFieldValue>
+                <valueName>Campaign</valueName>
+            </valueSettings>
+            <valueSettings>
+                <controllingFieldValue>Communications</controllingFieldValue>
+                <valueName>Inbound letter/fax</valueName>
+            </valueSettings>
+            <valueSettings>
+                <controllingFieldValue>Communications</controllingFieldValue>
+                <valueName>Outbound letter/fax</valueName>
+            </valueSettings>
+            <valueSettings>
+                <controllingFieldValue>Communications</controllingFieldValue>
+                <valueName>Circular/Notification</valueName>
+            </valueSettings>
+        </valueSet>
+    </fields>
+    <label>E&amp;F Document Log</label>
+    <listViews>
+        <fullName>All</fullName>
+        <columns>NAME</columns>
+        <columns>Status__c</columns>
+        <columns>CREATED_DATE</columns>
+        <columns>LAST_UPDATE</columns>
+        <filterScope>Everything</filterScope>
+        <label>All</label>
+        <language>en_US</language>
+    </listViews>
+    <nameField>
+        <displayFormat>EFDL-{00000000}</displayFormat>
+        <label>E&amp;F Document Log Name</label>
+        <trackHistory>false</trackHistory>
+        <type>AutoNumber</type>
+    </nameField>
+    <pluralLabel>E&amp;F Document Logs</pluralLabel>
+    <searchLayouts/>
+    <sharingModel>ReadWrite</sharingModel>
+    <visibility>Public</visibility>
+</CustomObject>

@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<EmailTemplate xmlns="http://soap.sforce.com/2006/04/metadata">
+    <available>true</available>
+    <encodingKey>UTF-8</encodingKey>
+    <name>E&amp;F Material Approval Request</name>
+    <style>none</style>
+    <subject>A Material Line Item has been updated and is waiting for approval</subject>
+    <textOnly>Dear recipient,  a Material Line Item has been updated by {!EF_Material_Line_Item__c.LastModifiedBy}.
+The following key-fields have changed:
+
+{!EF_Material_Line_Item__c.Requested_Changes__c}</textOnly>
+    <type>custom</type>
+</EmailTemplate>

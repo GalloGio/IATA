@@ -12,6 +12,7 @@ global  class AWSTools {
 	 private String OwnerId ;
 	 public static String ERROR_MESSAGE  = 'ERROR';
 	 public static String SUCCESS_MESSAGE  = 'SUCCESS';
+	 private static String default_permission  = 'authenticated-read';
 	 
 	 private AWSTools(String name ){
 	 	if(Test.isRunningTest()) return;
@@ -97,6 +98,30 @@ global  class AWSTools {
 			  return true;
 	    }catch(Exception ex){
 		    system.debug('[Attachment Migration Process debug] Error while deleting file on Amazon : '+ex.getMessage());
+		    return false;
+		}
+	 	
+	 	
+	 }
+
+	// public S3.Status DeleteObject(String Bucket,String Key,String AWSAccessKeyId,DateTime Timestamp,String Signature,String Credential) 
+	// public S3.CopyObjectResult CopyObject(String SourceBucket,String SourceKey,String DestinationBucket,String DestinationKey,String MetadataDirective,S3.MetadataEntry[] Metadata,S3.AccessControlList AccessControlList,DateTime CopySourceIfModifiedSince,DateTime CopySourceIfUnmodifiedSince,String[] CopySourceIfMatch,String[] CopySourceIfNoneMatch,String StorageClass,String AWSAccessKeyId,DateTime Timestamp,String Signature,String Credential) 
+	 
+	 /**
+	 * Ask to S3 rename a file by copying with the new name and deleting the old file
+	 */
+	 public boolean renameFileInS3(String bucketObject, String originalFileName, String newFileName){
+	 	try{  
+	  		system.debug('[File rename debug] try to rename ' + originalFileName + ' to ' + newFileName + ' in Bucket ' + bucketObject);
+			Datetime now = Datetime.now();	
+			if(!Test.isRunningTest())  {
+				as3.CopyObject(bucketObject,originalFileName,bucketObject,newFileName,null,null,null,null,null,null,null,null,as3.key,now,as3.signature('CopyObject',now),as3.secret);
+
+			  	as3.DeleteObject(bucketObject,originalFileName,as3.key,now,as3.signature('DeleteObject',now),as3.secret);
+			}
+			return true;
+	    }catch(Exception ex){
+		    system.debug('[File rename debug] Error while renaming file on Amazon : '+ex.getMessage());
 		    return false;
 		}
 	 	

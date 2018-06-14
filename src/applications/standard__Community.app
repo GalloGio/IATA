@@ -9,8 +9,8 @@
     <tab>standard-Dashboard</tab>
     <tab>Business_Unit__c</tab>
     <tab>Licenses__c</tab>
-    <tab>standard-Answers</tab>
     <tab>CSS_Tracking__c</tab>
     <tab>standard-Questions</tab>
     <tab>Operational_Improvements__c</tab>
+    <tab>AMS_Account_Role__c</tab>
 </CustomApplication>

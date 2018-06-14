@@ -1,4 +1,4 @@
-<apex:page standardController="AMS_Pax_Accreditation_Form__c" extensions="AMS_AccreditationContactController" sidebar="false" showHeader="false" standardStylesheets="false" applyBodyTag="false" docType="html-5.0" id="page">
+<apex:page standardController="AMS_Pax_Accreditation_Form__c" extensions="AMS_AccreditationContactController" sidebar="false" showHeader="false" standardStylesheets="true" applyBodyTag="false" docType="html-5.0" id="page">
 
 <html xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:ev="http://www.w3.org/2001/xml-events">
     <apex:includeScript value="{!$Resource.jquerymin}"/>
@@ -49,13 +49,20 @@
         .slds-m-bottom--xx-small {
             font-size: 13px !important;
         }
+
+        textarea {
+            resize: none;
+        }
         
     </style>
     <apex:includeScript value="/support/console/20.0/integration.js"/>
     <script type="text/javascript">
         function setTabTitle() {
             //Set the current tab's title
-            sforce.console.setTabTitle('Agency owners');
+            if({!isCertificationOSCAR})
+                sforce.console.setTabTitle('Agency trained staff');
+            else
+                sforce.console.setTabTitle('Agency owners');
         }
         var pageLoad = window.onload;
         window.onload = function()
@@ -65,7 +72,20 @@
                 pageLoad();
             }
             setTabTitle();
+            checkCorrection(); //FM AMSU-1
         }
+
+        //FM AMSU-1
+        function checkCorrection(){
+            if({!isCorrection} && !({!isAllHierarchySelected})){
+                
+                alert('Only able to manage Owners when the hierarchy is all selected!');
+                var saveBtn = document.getElementById('saveButton');
+                saveBtn.disabled = true;
+                closeTab();
+            }
+            
+        } 
     </script>
     <script>
         function saveServerJs()
@@ -150,14 +170,16 @@
             var rowNumber = valueString.split(':')[1];
             var elementId = valueString.split(':')[0];
             var legalName = document.getElementById("page:form:" + elementId + ':' + rowNumber + ":legalName").value;
-            var newWindow = window.open('/apex/AMSAccreditationContactLookup?fieldId=' + valueString + '&legalName=' + legalName+ '&object=account', "lookup", "width=" + w + ",height=" + h + ",top=" + top + ",left=" + left + ",toolbar=no,status=no,directories=no,menubar=no,resizable=no,scrollable=no", true);
+            var iataCode = document.getElementById("page:form:" + elementId + ':' + rowNumber + ":accountIataCode").value;
+
+            var newWindow = window.open('/apex/AMSAccreditationContactLookup?fieldId=' + valueString + '&legalName=' + legalName+ '&object=account&iataCode=' + iataCode, "lookup", "width=" + w + ",height=" + h + ",top=" + top + ",left=" + left + ",toolbar=no,status=no,directories=no,menubar=no,resizable=no,scrollable=no", true);
 
             // Puts focus on the newWindow
             if (window.focus) {
                 newWindow.focus();
             }
         }
-        
+
         function closeTab()
         {
             sforce.console.getEnclosingTabId(closeSubtab);
@@ -191,30 +213,34 @@
             <apex:form id="form">
                 
                 <!-- SERVER FUNCTIONS -->
-                <apex:actionFunction name="saveServer" action="{!onSave}" reRender="selected, accounts, messages, messages2" status="loadingStatus" onComplete="onSaveCompleteJs();{!IF(successfulSave, 'closeTab()', '')}"/>
+                <apex:actionFunction name="saveServer" action="{!onSave}" reRender="selected, accounts, trainedstaff, messages, messages2" status="loadingStatus" onComplete="onSaveCompleteJs();{!IF(successfulSave, 'closeTab()', '')}"/>
                 <apex:actionFunction name="cancelServer" action="{!onCancel}" immediate="true"/>
-                <apex:actionFunction name="addEmptyRowServer" action="{!addEmptyRow}" reRender="selected, accounts, messages, messages2" status="loadingStatus" />
-                <apex:actionFunction name="cloneLastRowServer" action="{!cloneLastRow}" reRender="selected, accounts, messages, messages2" status="loadingStatus">
+                <apex:actionFunction name="addEmptyRowServer" action="{!addEmptyRow}" reRender="selected, accounts, trainedstaff,messages, messages2" status="loadingStatus" />
+                <apex:actionFunction name="cloneLastRowServer" action="{!cloneLastRow}" reRender="selected, accounts, trainedstaff, messages, messages2" status="loadingStatus">
                 </apex:actionFunction>
-                <apex:actionFunction name="addEmptyCompanyRow" action="{!addEmptyCompanyRow}" reRender="selected, accounts, messages, messages2" status="loadingStatus" />
+                <apex:actionFunction name="addEmptyCompanyRow" action="{!addEmptyCompanyRow}" reRender="selected, accounts, trainedstaff, messages, messages2" status="loadingStatus" />
+                <apex:actionFunction name="addEmptyTrainedStaffRow" action="{!addEmptyTrainedStaffRow}" reRender="selected, accounts, trainedstaff, messages, messages2" status="loadingStatus" />
 
                 <apex:actionFunction name="changeOwnershipServer" action="{!removeOwnership}" reRender="financialInterest,roleSelection, messages" status="loadingStatus">
                     <apex:param value="" assignTo="{!toNullify}" name="toNullify" />
                 </apex:actionFunction>
 
-                <apex:actionFunction name="removeFromAcListServer" action="{!removeFromAcList}" immediate="true" reRender="selected, accounts, messages, messages2" status="loadingStatus">
+                <apex:actionFunction name="removeFromAcListServer" action="{!removeFromAcList}" immediate="true" reRender="selected, accounts, trainedstaff, messages, messages2" status="loadingStatus">
                     <apex:param value="" assignTo="{!toUnselect}" name="toUnselect" />
                 </apex:actionFunction>
-                <apex:actionFunction name="removeFromAccountListServer" action="{!removeFromAccountList}" immediate="true" reRender="selected, accounts, messages, messages2" status="loadingStatus">
+                <apex:actionFunction name="removeFromTsListServer" action="{!removeFromTsList}" immediate="true" reRender="selected, accounts, trainedstaff, messages, messages2" status="loadingStatus">
+                    <apex:param value="" assignTo="{!toUnselect}" name="toUnselect" />
+                </apex:actionFunction>
+                <apex:actionFunction name="removeFromAccountListServer" action="{!removeFromAccountList}" immediate="true" reRender="selected, accounts, trainedstaff, messages, messages2" status="loadingStatus">
                     <apex:param value="" assignTo="{!toUnselect}" name="toUnselect" />
                 </apex:actionFunction>
                 
-                <apex:actionFunction name="linkACwithSelection" immediate="true" action="{!linkACwithContactOrPersonSelection}" reRender="selected, accounts, messages, messages2" status="loadingStatus">
+                <apex:actionFunction name="linkACwithSelection" immediate="true" action="{!linkACwithContactOrPersonSelection}" reRender="selected, accounts, trainedstaff, messages, messages2" status="loadingStatus">
                     <apex:param value="" assignTo="{!rowNumber}" name="linkedRow" />
                     <apex:param value="" assignTo="{!linkedRecordId}" name="linkedContactOrPerson" />
                 </apex:actionFunction>
 
-                <apex:actionFunction name="linkAccountWithSelection" immediate="true" action="{!linkAccountWithAccountSelection}" reRender="selected, accounts, messages, messages2" status="loadingStatus">
+                <apex:actionFunction name="linkAccountWithSelection" immediate="true" action="{!linkAccountWithAccountSelection}" reRender="selected, accounts, trainedstaff, messages, messages2" status="loadingStatus">
                     <apex:param value="" assignTo="{!rowNumber}" name="linkedRow" />
                     <apex:param value="" assignTo="{!linkedRecordId}" name="linkedContactOrPerson" />
                 </apex:actionFunction>
@@ -235,7 +261,8 @@
                 <div class="slds-page-header" role="banner" id="topLevelHeader">
                     <div class="slds-grid">
                         <div class="slds-col slds-has-flexi-truncate">
-                            <h1 class="slds-text-heading--small slds-truncate" title="Agency owners and employees" id="mainHeader"><b>Agency Owners</b></h1>
+                            <h1 class="slds-text-heading--small slds-truncate" title="Agency owners and employees" id="mainHeader"><b>
+                            {!IF(NOT(isCertificationOSCAR), 'Agency Owners', 'Agency Trained Staff')}</b></h1>
                         </div>
                     </div>
                     <nav class="slds-m-bottom--xx-small" role="navigation">
@@ -269,16 +296,17 @@
                     <div class="slds-grid">
                         <div class="slds-col">
                             <div class="slds-card">
-                                <div class="slds-card__header slds-grid">
-                                    <div class="slds-media slds-media--center slds-has-flexi-truncate">
-                                        <div class="slds-media__figure">
-
-                                        </div>
-                                        <div class="slds-media__body">
-                                            <h2 class="slds-text-heading--small slds-truncate"><b>Ownership listing, individuals:</b></h2>
+                                <apex:outputPanel rendered="{!NOT(isCertificationOSCAR)}">
+                                    <div class="slds-card__header slds-grid">
+                                        <div class="slds-media slds-media--center slds-has-flexi-truncate">
+                                            <div class="slds-media__figure">
+                                            </div>
+                                                <div class="slds-media__body">
+                                                    <h2 class="slds-text-heading--small slds-truncate"><b>Ownership listing, individuals:</b></h2>
+                                                </div>
                                         </div>
                                     </div>
-                                </div>
+                                </apex:outputPanel>
                                 <apex:outputPanel id="selected">
                                     <div class="slds-card__body">
                                         <apex:variable value="{!0}" var="acIndex" />
@@ -361,7 +389,7 @@
                                             <table class="slds-table slds-table--bordered slds-max-small-table--stacked-horizontal slds-no-row-hover">
                                                 <thead>
                                                     <tr>
-                                                        <th class="slds-text-heading--label slds-size--1-of-4" scope="col">
+                                                        <th class="slds-text-heading--label slds-size--1-of-5" scope="col">
                                                             {!$ObjectType.AMS_Accreditation_Contact__c.Fields.Agency_owner__c.Label}&nbsp;&nbsp;
                                                             <apex:actionRegion >
                                                                 <apex:inputCheckbox value="{!s.ac.Agency_owner__c}" onChange="changeOwnershipServer({!acIndex})" disabled="{!blockOwnershipEdit}">
@@ -374,21 +402,29 @@
                                                             <!-- <apex:inputField value="{!s.ac.Agency_owner__c}" onChange="changeOwnershipServer({!acIndex})" rendered="{!blockOwnershipEdit}" html-disabled=""/>
                                                             <apex:inputField value="{!s.ac.Agency_owner__c}" onChange="changeOwnershipServer({!acIndex})" id="agencyOwner" rendered="{!NOT(blockOwnershipEdit)}"/> -->
                                                         </th>
-                                                        <th class="slds-text-heading--label slds-size--1-of-4" scope="col">
+                                                        <th class="slds-text-heading--label slds-size--1-of-5" scope="col">
                                                             {!$ObjectType.AMS_Accreditation_Contact__c.Fields.Agency_role__c.Label}&nbsp;&nbsp;
                                                             <apex:inputField value="{!s.ac.Agency_role__c}" rendered="{!s.blockEdit}" html-disabled=""/>
                                                             <apex:inputField value="{!s.ac.Agency_role__c}" id="agencyRole" rendered="{!NOT(s.blockEdit)}"/>
                                                         </th>
-                                                        <th class="slds-text-heading--label slds-size--1-of-4" scope="col">
+                                                        <th class="slds-text-heading--label slds-size--1-of-5" scope="col">
                                                             {!$ObjectType.AMS_Accreditation_Contact__c.Fields.Authorised_signatory__c.Label}&nbsp;&nbsp;
                                                             <apex:inputField value="{!s.ac.Authorised_signatory__c}" rendered="{!s.blockEdit}" html-disabled=""/>
                                                             <apex:inputField value="{!s.ac.Authorised_signatory__c}" id="authorizedSignatory" rendered="{!NOT(s.blockEdit)}"/>
                                                         </th>
-                                                        <th class="slds-text-heading--label slds-size--1-of-4" scope="col">
+                                                        <th class="slds-text-heading--label slds-size--1-of-5" scope="col">
                                                             {!$ObjectType.AMS_Accreditation_Contact__c.Fields.Financial_Assessment_Contact__c.Label}&nbsp;&nbsp;
                                                             <apex:inputField value="{!s.ac.Financial_Assessment_Contact__c}" rendered="{!s.blockEdit}" html-disabled=""/>
                                                             <apex:inputField value="{!s.ac.Financial_Assessment_Contact__c}" id="financialAssessment" rendered="{!NOT(s.blockEdit)}"/>
                                                         </th>
+                                                        <th class="slds-text-heading--label slds-size--1-of-5" scope="col">
+                                                            <apex:outputPanel rendered="{!isNewGenProcess}">
+                                                                {!$ObjectType.AMS_Accreditation_Contact__c.Fields.Portal_administrator__c.Label}&nbsp;&nbsp;
+                                                            </apex:outputPanel>
+                                                            <apex:inputField value="{!s.ac.Portal_administrator__c}" rendered="{!AND(s.blockEdit,isNewGenProcess)}" html-disabled=""/>
+                                                            <apex:inputField value="{!s.ac.Portal_administrator__c}" id="portalAdmin" rendered="{!AND(NOT(s.blockEdit), isNewGenProcess)}"/>
+                                                        </th>
+                                                        
                                                     </tr>
                                                 </thead>
                                             </table>
@@ -433,7 +469,10 @@
                                                             </td>
                                                             
                                                             <td class="slds-size--1-of-8" data-label="{!$ObjectType.AMS_Accreditation_Contact__c.Fields.Date_joined_agency__c.Label}">
-                                                                <apex:inputTextArea rows="1" html-class="slds-input inputPointer" value="{!s.dateJoined}" html-placeholder="YYYY-MM-DD" disabled="{!s.blockEdit}"/>
+                                                                <!--apex:inputTextArea rows="1" html-class="slds-input inputPointer" value="{!s.dateJoined}" html-placeholder="YYYY-MM-DD" disabled="{!s.blockEdit}"/-->
+                                                                
+                                                                <apex:inputField html-class="slds-input inputPointer" value="{!s.ac.Date_joined_agency__c}" html-placeholder="{!dateFormatToShow}" rendered="{!s.blockEdit}" html-disabled=""/>
+                                                                <apex:inputField html-class="slds-input inputPointer" value="{!s.ac.Date_joined_agency__c}" html-placeholder="{!dateFormatToShow}" id="Date_joined_agency" rendered="{!NOT(s.blockEdit)}"/>
                                                             </td>
                                                             
                                                             <td class="slds-size--1-of-8" data-label="{!$ObjectType.AMS_Accreditation_Contact__c.Fields.Job_title__c.Label}">
@@ -510,11 +549,17 @@
                                                             </td>
                                                             
                                                             <td class="slds-size--1-of-7" data-label="{!$ObjectType.AMS_Accreditation_Contact__c.Fields.Prev_Job1_From__c.Label}">
-                                                                <apex:inputTextArea rows="1" html-class="slds-input inputPointer" value="{!s.prev1From}" id="prev1from" html-placeholder="YYYY-MM-DD" disabled="{!s.blockEdit}"/>
+                                                                <!--apex:inputTextArea rows="1" html-class="slds-input inputPointer" value="{!s.prev1From}" id="prev1from" html-placeholder="YYYY-MM-DD" disabled="{!s.blockEdit}"/-->
+
+                                                                <apex:inputField html-class="slds-input inputPointer" value="{!s.ac.Prev_Job1_From__c}" html-placeholder="{!dateFormatToShow}" rendered="{!s.blockEdit}" html-disabled=""/>
+                                                                <apex:inputField html-class="slds-input inputPointer" value="{!s.ac.Prev_Job1_From__c}" html-placeholder="{!dateFormatToShow}" id="Prev_Job1_From" rendered="{!NOT(s.blockEdit)}"/>
                                                             </td>
                                                             
                                                             <td class="slds-size--1-of-7" data-label="{!$ObjectType.AMS_Accreditation_Contact__c.Fields.Prev_Job1_To__c.Label}">
-                                                                <apex:inputTextArea rows="1" html-class="slds-input inputPointer" value="{!s.prev1To}" id="prev1to" html-placeholder="YYYY-MM-DD" disabled="{!s.blockEdit}"/>
+                                                                <!--apex:inputTextArea rows="1" html-class="slds-input inputPointer" value="{!s.prev1To}" id="prev1to" html-placeholder="YYYY-MM-DD" disabled="{!s.blockEdit}"/-->
+
+                                                                <apex:inputField html-class="slds-input inputPointer" value="{!s.ac.Prev_Job1_To__c}" html-placeholder="{!dateFormatToShow}" rendered="{!s.blockEdit}" html-disabled=""/>
+                                                                <apex:inputField html-class="slds-input inputPointer" value="{!s.ac.Prev_Job1_To__c}" html-placeholder="{!dateFormatToShow}" id="Prev_Job1_To" rendered="{!NOT(s.blockEdit)}"/>
                                                             </td>
                                                             
                                                             <td class="slds-size--1-of-7" data-label="{!$ObjectType.AMS_Accreditation_Contact__c.Fields.Prev_Job1_IATA_accredited__c.Label}">
@@ -545,11 +590,17 @@
                                                             </td>
                                                             
                                                             <td class="slds-size--1-of-7" data-label="{!$ObjectType.AMS_Accreditation_Contact__c.Fields.Prev_Job2_From__c.Label}">
-                                                                <apex:inputTextArea rows="1" html-class="slds-input inputPointer" value="{!s.prev2From}" id="prev2from" html-placeholder="YYYY-MM-DD" disabled="{!s.blockEdit}"/>
+                                                                <!--apex:inputTextArea rows="1" html-class="slds-input inputPointer" value="{!s.prev2From}" id="prev2from" html-placeholder="YYYY-MM-DD" disabled="{!s.blockEdit}"/-->
+
+                                                                <apex:inputField html-class="slds-input inputPointer" value="{!s.ac.Prev_Job2_From__c}" html-placeholder="{!dateFormatToShow}" rendered="{!s.blockEdit}" html-disabled=""/>
+                                                                <apex:inputField html-class="slds-input inputPointer" value="{!s.ac.Prev_Job2_From__c}" html-placeholder="{!dateFormatToShow}" id="Prev_Job2_From" rendered="{!NOT(s.blockEdit)}"/>
                                                             </td>
                                                             
                                                             <td class="slds-size--1-of-7" data-label="{!$ObjectType.AMS_Accreditation_Contact__c.Fields.Prev_Job2_To__c.Label}">
-                                                                <apex:inputTextArea rows="1" html-class="slds-input inputPointer" value="{!s.prev2To}" id="prev2to" html-placeholder="YYYY-MM-DD" disabled="{!s.blockEdit}"/>
+                                                                <!--apex:inputTextArea rows="1" html-class="slds-input inputPointer" value="{!s.prev2To}" id="prev2to" html-placeholder="YYYY-MM-DD" disabled="{!s.blockEdit}"/-->
+
+                                                                <apex:inputField html-class="slds-input inputPointer" value="{!s.ac.Prev_Job2_To__c}" html-placeholder="{!dateFormatToShow}" rendered="{!s.blockEdit}" html-disabled=""/>
+                                                                <apex:inputField html-class="slds-input inputPointer" value="{!s.ac.Prev_Job2_To__c}" html-placeholder="{!dateFormatToShow}" id="Prev_Job2_To" rendered="{!NOT(s.blockEdit)}"/>
                                                             </td>
                                                             
                                                             <td class="slds-size--1-of-7" data-label="{!$ObjectType.AMS_Accreditation_Contact__c.Fields.Prev_Job2_IATA_accredited__c.Label}">
@@ -645,15 +696,119 @@
                                     </div>
                                     </apex:outputPanel>
                                 </apex:outputPanel>
+
+                                <!-- TRAINED STAFF SECTION FOR CARGO AGENCIES-->
+                                <apex:outputPanel id="trainedstaff">
+                                    <apex:outputPanel id="tstaff" rendered="{!trainedStaffWrapper.size > 0}">
+                                    <div class="slds-card__body" id="test2">
+                                        <div class="slds-media__body">
+                                            <h2 class="slds-text-heading--small slds-truncate slds-box"><b>Agency Trained Staff:</b></h2>
+                                        </div>
+                                        <apex:variable value="{!0}" var="trainedStaffIndex" />
+                                        <apex:repeat id="tstRepeat" value="{!trainedStaffWrapper}" var="tsw">
+                                            <table id="wt" class="slds-table slds-table--bordered slds-max-small-table--stacked-horizontal slds-no-row-hover">
+                                                <thead>
+                                                    <tr>
+                                                        <th class="slds-row-action slds-size--1-of-12" scope="col"></th>
+                                                        <th class="slds-text-heading--label slds-size--1-of-5" scope="col">{!$ObjectType.AMS_Accreditation_Contact__c.Fields.Certificate_Name__c.Label}</th>
+                                                        <th class="slds-text-heading--label slds-size--1-of-5" scope="col">{!$ObjectType.AMS_Accreditation_Contact__c.Fields.Certificate_Issuer__c.Label}</th>
+                                                        <th class="slds-text-heading--label slds-size--1-of-5" scope="col">{!$ObjectType.AMS_Accreditation_Contact__c.Fields.First_Name__c.Label}</th>
+                                                        <th class="slds-text-heading--label slds-size--1-of-5" scope="col">{!$ObjectType.AMS_Accreditation_Contact__c.Fields.Last_name__c.Label}</th>
+                                                        <th class="slds-text-heading--label slds-size--1-of-5" scope="col"></th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                        <tr class="slds-hint-parent">
+                                                        <td class="slds-size--1-of-12">
+                                                            <apex:outputPanel>
+                                                            <img onclick="if(confirm('Are you sure?')){removeFromTsListServer({!trainedStaffIndex});}return false;" alt="remove" class="pointer" style="max-width: 22px; max-height: 22px;" src="{!$Resource.remove_icon}"/>
+                                                             </apex:outputPanel>
+                                                        </td>
+
+                                                            <td class="slds-size--1-of-5" data-label="{ObjectType.AMS_Accreditation_Contact__c.Fields.Certificate_Name__c.Label}">
+                                                                <apex:inputField html-class="slds-input inputPointer" value="{!tsw.ac.Certificate_Name__c}"/>
+                                                            </td>
+                                                             <td class="slds-size--1-of-5" data-label="{ObjectType.AMS_Accreditation_Contact__c.Fields.Certificate_Issuer__c.Label}">
+                                                                <apex:inputField html-class="slds-input inputPointer" value="{!tsw.ac.Certificate_Issuer__c}"/>
+                                                            </td>
+                                                            <td class="slds-size--1-of-5" data-label="{ObjectType.AMS_Accreditation_Contact__c.Fields.First_Name__c.Label}">
+                                                                <apex:inputField html-class="slds-input inputPointer" value="{!tsw.ac.First_name__c}"/>
+                                                            </td>
+                                                            <td class="slds-size--1-of-5" data-label="{ObjectType.AMS_Accreditation_Contact__c.Fields.Last_name__c.Label}">
+                                                                <apex:inputField html-class="slds-input inputPointer" value="{!tsw.ac.Last_name__c}"/>
+                                                            </td>
+                                                            <td class="slds-size--1-of-5" >
+                                                            </td>
+                                                        </tr>
+                                                </tbody>
+                                                <thead>
+                                                    <tr>
+                                                        <th class="slds-text-heading--label slds-size--1-of-5" scope="col">{!$ObjectType.AMS_Accreditation_Contact__c.Fields.Type_Of_Certificate__c.Label}</th>
+                                                        <th class="slds-text-heading--label slds-size--1-of-5" scope="col">{!$ObjectType.AMS_Accreditation_Contact__c.Fields.Certificate_Issued_on__c.Label}</th>
+                                                        <th class="slds-text-heading--label slds-size--1-of-5" scope="col">{!$ObjectType.AMS_Accreditation_Contact__c.Fields.Certificate_Validity__c.Label}</th>
+                                                        <th class="slds-text-heading--label slds-size--1-of-5" scope="col">{!$ObjectType.AMS_Accreditation_Contact__c.Fields.Valid_until__c.Label}</th>
+                                                        <th class="slds-text-heading--label slds-size--1-of-5" scope="col">{!$ObjectType.AMS_Accreditation_Contact__c.Fields.Position_trained_staff__c.Label}</th>
+                                                        <th class="slds-text-heading--label slds-size--1-of-5" scope="col">{!$ObjectType.AMS_Accreditation_Contact__c.Fields.Registration_number__c.Label}</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                        <tr>
+                                                            <td class="slds-size--1-of-5" data-label="{ObjectType.AMS_Accreditation_Contact__c.Fields.Type_of_Certificate__c.Label}">
+                                                                <apex:inputField html-class="slds-input inputPointer" value="{!tsw.ac.Type_Of_Certificate__c}"/>
+                                                            </td>
+
+                                                            <td class="slds-size--1-of-5" data-label="{ObjectType.AMS_Accreditation_Contact__c.Fields.Certificate_Issued_on__c.Label}">
+                                                                <!--apex:inputTextArea rows="1" html-class="slds-input inputPointer" value="{!tsw.certificateIssueDate}" html-placeholder="YYYY-MM-DD">
+                                                                    <apex:actionSupport event="onchange" reRender="expiration"/>
+                                                                </apex:inputTextArea-->
+                                                                <apex:inputField value="{!tsw.ac.Certificate_Issued_on__c}" html-class="slds-input inputPointer" html-placeholder="{!dateFormatToShow}">
+                                                                    <apex:actionSupport event="onchange" reRender="expiration"/>
+                                                                </apex:inputField>
+                                                            </td>
+                                                            <td class="slds-size--1-of-5" data-label="{ObjectType.AMS_Accreditation_Contact__c.Fields.Certificate_Validity__c.Label}">
+                                                                <apex:inputField html-class="slds-input inputPointer" value="{!tsw.ac.Certificate_Validity__c}">
+                                                                    <apex:actionSupport event="onchange" reRender="expiration"/>
+                                                                </apex:inputField>
+                                                            </td>
+                                                            <td class="slds-size--1-of-5" data-label="{ObjectType.AMS_Accreditation_Contact__c.Fields.Valid_until__c.Label}">
+                                                                <!--apex:inputTextArea id="expiration" rows="1" html-class="slds-input inputPointer" value="{!tsw.validUntil}" html-placeholder="YYYY-MM-DD"/-->
+                                                                <apex:inputField value="{!tsw.ac.Valid_until__c}" html-class="slds-input inputPointer" html-placeholder="{!dateFormatToShow}">
+                                                                </apex:inputField>
+                                                            </td>
+                                                            <td class="slds-size--1-of-5" data-label="{ObjectType.AMS_Accreditation_Contact__c.Fields.Position_trained_staff__c.Label}">
+                                                                <apex:inputField html-class="slds-input inputPointer" value="{!tsw.ac.Position_trained_staff__c}"/>
+                                                            </td>
+                                                            <td class="slds-size--1-of-5" data-label="{ObjectType.AMS_Accreditation_Contact__c.Fields.Position_trained_staff__c.Label}">
+                                                                <apex:inputField html-class="slds-input inputPointer" value="{!tsw.ac.Registration_number__c}"/>
+                                                            </td>
+                                                        </tr>
+                                                </tbody>
+                                            </table>
+                                        <apex:variable value="{!trainedStaffIndex + 1}" var="trainedStaffIndex"/>
+                                        <apex:outputPanel rendered="{!trainedStaffIndex > 0}">
+                                            <div class="slds-box-x--small slds-theme--info slds-theme--alert-texture">&nbsp;</div>
+                                        </apex:outputPanel>
+                                        </apex:repeat>
+                                    </div>
+                                    </apex:outputPanel>
+                                </apex:outputPanel>
                                 
                                 
                                 <div class="slds-card__footer" id="footerDiv">                                 
                                     <div class="slds-button-group" role="group">
-                                        <a href="#" onClick="addEmptyRowServer();return false;">Add a Person<span class="slds-assistive-text">entity type</span></a>&nbsp;|&nbsp;
-                                        <a href="#" onClick="cloneLastRowServer();return false;">Copy Last Person<span class="slds-assistive-text">entity type</span></a>&nbsp;
-                                        <apex:outputPanel rendered="{!NOT(blockOwnershipEdit)}">
+                                        <apex:outputPanel rendered="{!NOT(isCertificationOSCAR)}">
+                                            <a href="#" onClick="addEmptyRowServer();return false;">Add a Person<span class="slds-assistive-text">entity type</span></a>&nbsp;|&nbsp;
+                                        </apex:outputPanel>
+                                        <apex:outputPanel rendered="{!NOT(isCertificationOSCAR)}">
+                                            <a href="#" onClick="cloneLastRowServer();return false;">Copy Last Person<span class="slds-assistive-text">entity type</span></a>&nbsp;
+                                        </apex:outputPanel>
+                                        <apex:outputPanel rendered="{!AND(NOT(blockOwnershipEdit), NOT(isCertificationOSCAR))}">
                                             |&nbsp;
                                             <a href="#" onClick="addEmptyCompanyRow();return false;">Add a Company<span class="slds-assistive-text">entity type</span></a>
+                                        </apex:outputPanel>
+                                        <apex:outputPanel rendered="{!AND(OR(isNewProcess,isChangeProcess,isCertificationOSCAR),OR(isCargoAgency,isCASSAssociate))}">
+                                            |&nbsp;
+                                            <a href="#" onClick="addEmptyTrainedStaffRow();return false;">Add Trained Staff<span class="slds-assistive-text">entity type</span></a>
                                         </apex:outputPanel>
                                         &nbsp;&nbsp;&nbsp;&nbsp;
                                         <div class="slds-button-group" role="group">
@@ -676,5 +831,12 @@
             </apex:form>
         </apex:outputPanel>
     </div>
+    <style type="text/css">
+    .dateFormat{
+       display:none;
+    }
+    //visibility:hidden;
+       
+    </style>
 </html>
 </apex:page>

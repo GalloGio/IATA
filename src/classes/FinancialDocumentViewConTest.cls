@@ -12,7 +12,7 @@ private class FinancialDocumentViewConTest {
         Case testCase1 = new Case();
         
         testCase1.CaseArea__c = 'TTBS';
-        testCase1.Tax_Effective_Date__c = Date.valueOf('2011-08-29');
+        //testCase1.Tax_Effective_Date__c = Date.valueOf('2011-08-29');
         testCase1.Origin = 'Other';
         testCase1.SuppliedEmail = 'paia@iata.org';
         testCase1.SuppliedPhone = '12456987456';

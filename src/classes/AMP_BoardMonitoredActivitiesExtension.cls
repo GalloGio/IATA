@@ -4,6 +4,7 @@ public with sharing class AMP_BoardMonitoredActivitiesExtension {
 	public list<Objective__c> lstBMAs {get; set;}
 	public list<Objective__c> lstDivisionBMAs {get; set;}
 	private Objective__c newObjective {get; set;}
+	public Boolean canEdit {get; set;}
 	public Boolean isEditMode {get; set;}
 	public Boolean isNewLine {get; set;}
 	public Id IdConcerned {get; set;}
@@ -23,6 +24,7 @@ public with sharing class AMP_BoardMonitoredActivitiesExtension {
   			CommentRecordTypeId =  [SELECT Id FROM RecordType WHERE SObjectType = 'Comment__c' AND DeveloperName = 'Objective_Related' ].Id;
   			lstBMAs = getBMAs();
   			lstDivisionBMAs = getDivisionBMAs();
+			canEdit = getCanEdit();
   		}
 
   		public list<Objective__c> getBMAs() {
@@ -57,14 +59,35 @@ public with sharing class AMP_BoardMonitoredActivitiesExtension {
 			return bma;
 		}
 
+		// @AuraEnabled
+		// public static Comment__c upsertComment(Comment__c comment) {
+		// 	if(comment.RecordTypeId == null ) {
+		// 		Id CommentRecordTypeId =  [SELECT Id FROM RecordType WHERE SObjectType = 'Comment__c' AND DeveloperName = 'Objective_Related' ].Id;
+		// 		comment.RecordTypeId = CommentRecordTypeId;
+		// 	}
+		// 	upsert comment;
+		// 	return comment;
+		// }
+		//
 		@AuraEnabled
-		public static Comment__c upsertComment(Comment__c comment) {
+		public static Objective__c upsertComment(Comment__c comment) {
 			if(comment.RecordTypeId == null ) {
 				Id CommentRecordTypeId =  [SELECT Id FROM RecordType WHERE SObjectType = 'Comment__c' AND DeveloperName = 'Objective_Related' ].Id;
 				comment.RecordTypeId = CommentRecordTypeId;
 			}
+			System.debug('------ ' + comment);
 			upsert comment;
-			return comment;
+			System.debug('------ ' + comment);
+			// return comment;
+
+			List<Objective__c> lstBMAs = new List<Objective__c>();
+			lstBMAs =
+			[SELECT Id, Name, Details__c, Type__c, Status__c, AM_Comments__c,
+			(SELECT Id, Name, Detail__c, Status__c FROM Comments__r WHERE Id = :comment.Id ORDER BY CreatedDate DESC LIMIT 1)
+			FROM Objective__c
+			WHERE Id = :comment.Parent_Objective__c ];
+			System.debug('------ ' + lstBMAs);
+			return lstBMAs[0];
 		}
 
 		public list<Objective__c> getDivisionBMAs() {
@@ -207,5 +230,32 @@ public with sharing class AMP_BoardMonitoredActivitiesExtension {
 			// 		ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.ERROR,e.getMessage()));
 			// }
 		}
+
+		public static List<String> getCommentFields() {
+			List<String> commentAccessFields = new String [] {
+				'Detail__c',
+				'Status__c'
+
+			};
+			return commentAccessFields;
+
+			}
+
+		@AuraEnabled
+	    public static Boolean getCanEdit() {
+	        Boolean canEdit = true;
+	        // Obtain the field name/token map for the Comment__c object
+	        Map<String,Schema.SObjectField> m = Schema.SObjectType.Comment__c.fields.getMap();
+
+	        List<String> lsCommentFields = getCommentFields();
+	        for (String fieldToCheck : lsCommentFields) {
+	            // Check if the user has access to view field
+	            if (!m.get(fieldToCheck).getDescribe().isUpdateable() ) {
+	                canEdit = false;
+	            }
+	        }
+
+	        return canEdit;
+	    }
 
 	}

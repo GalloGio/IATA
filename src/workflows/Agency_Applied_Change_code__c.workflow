@@ -25,6 +25,15 @@
         <reevaluateOnChange>true</reevaluateOnChange>
     </fieldUpdates>
     <fieldUpdates>
+        <fullName>Change_Code_Unpublish</fullName>
+        <field>To_Publish_in_e_Bulletin__c</field>
+        <literalValue>0</literalValue>
+        <name>Change Code: Unpublish</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>Literal</operation>
+        <protected>false</protected>
+    </fieldUpdates>
+    <fieldUpdates>
         <fullName>Expire_IRR</fullName>
         <field>Irregularities_Expired__c</field>
         <literalValue>1</literalValue>
@@ -66,7 +75,7 @@
         <criteriaItems>
             <field>Agency_Applied_Change_code__c.Change_Code__c</field>
             <operation>equals</operation>
-            <value>IRR</value>
+            <value>IRR,IRS,IRW</value>
         </criteriaItems>
         <description>Assign Recordtype &quot;Irregularities&quot; for Change Code with Type &quot;IRR&quot;</description>
         <triggerType>onCreateOnly</triggerType>
@@ -81,7 +90,7 @@
         <criteriaItems>
             <field>Agency_Applied_Change_code__c.Change_Code__c</field>
             <operation>notEqual</operation>
-            <value>IRR</value>
+            <value>IRR,IRS,IRW</value>
         </criteriaItems>
         <description>Assign Recordtype &quot;Standard&quot; for Change Code with Type not equal to &quot;IRR&quot;</description>
         <triggerType>onCreateOnly</triggerType>
@@ -146,5 +155,16 @@
         <description>For IRRegularities with an A operation, rename them</description>
         <formula>AND(NOT(RIGHT(AIMS_ID__c,1)=&apos;A&apos;), Operation__c = &apos;A&apos;)</formula>
         <triggerType>onCreateOrTriggeringUpdate</triggerType>
+    </rules>
+    <rules>
+        <fullName>Unpublish MSO</fullName>
+        <actions>
+            <name>Change_Code_Unpublish</name>
+            <type>FieldUpdate</type>
+        </actions>
+        <active>true</active>
+        <description>Set the published in bulletin flag to false if process is MSO</description>
+        <formula>IF( OR( ISPICKVAL( Account__r.Location_Class__c , &apos;M&apos;), ISPICKVAL( Account__r.Location_Class__c , &apos;T&apos;), ISPICKVAL( Account__r.Location_Class__c , &apos;G&apos;), ISPICKVAL( Account__r.Location_Class__c , &apos;X&apos;), CONTAINS( TEXT( OSCAR__r.Process__c ) , &apos;CER.1.0&apos;)), true, false)</formula>
+        <triggerType>onCreateOnly</triggerType>
     </rules>
 </Workflow>

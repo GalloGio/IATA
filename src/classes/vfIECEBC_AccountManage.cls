@@ -13,6 +13,7 @@
   *  - 20160810-sl: graph is added
   *  - 20160826-sl: add Renew Link
   *  - 20161010-ab: activity UAT-162
+  *  - 20161128-ab: activity UAT-208
   */
 
 
@@ -217,6 +218,7 @@ public with sharing class vfIECEBC_AccountManage extends vfIECEBC_Abstract_List
 		get{
 			String activitySetString = ''; // include '' as the default search
 			String activityNotSetString = '';
+            String activityNotZeroCredit=' and (Total_Count__c>0 or Total_Count__c<0)';
 			boolean ArraySelected=false;
 			boolean ArrayNotSelected=false;
 			for (ActivityTypeWrapper atw : activityTypeWrapperList)
@@ -238,7 +240,7 @@ public with sharing class vfIECEBC_AccountManage extends vfIECEBC_Abstract_List
 			if (ArrayNotSelected) activityNotSetString = ' and  Activity_Type__c Not in (' + activityNotSetString + ')';
 			
 			//System.debug( 'selectedActivityTypeClause getter returns: [' + activitySetString +']');
-			return activitySetString+activityNotSetString;
+			return activitySetString+activityNotSetString+activityNotZeroCredit;
 		}
 		private set;
 	} // end selectedActivityTypeClause getter setter

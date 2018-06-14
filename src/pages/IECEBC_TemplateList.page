@@ -189,7 +189,7 @@
                                             <img src="{!URLFOR($Resource.eBroadcastAssets, '/assets/img/components/templates/template-1.png')}" alt="Template 1" width="50px"/>
                                         </td>
                                         <td class="name">
-                                            <a href="https://{!$Site.Domain}{!URLFOR($Page.IECEBC_TemplateEdit)}?Id={!i.Id}" class="text-link" >{!i.Name}</a>
+                                            <a href="{!URLFOR($Page.IECEBC_TemplateEdit)}?Id={!i.Id}" class="text-link" >{!i.Name}</a>
                                             
                                             <!-- 
                                             <apex:outputText rendered="{!i.eBroadcast_Campaigns__r.size > 0}">

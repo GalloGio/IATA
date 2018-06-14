@@ -10,7 +10,8 @@ public class AMS_AgencyChangesConfigHelper{
                 'VMFR' => true,
                 'Location type' => false,
                 'Name' => true,
-                'Minor Shareholding' => true};
+                'Minor Shareholding' => true,
+            	'CNS - Removal of trade name' => true};
 
 	public static List<Map<String, String>> getAgencyChangesConfigData() {
 
@@ -53,13 +54,13 @@ public class AMS_AgencyChangesConfigHelper{
 	}
 
 	public static Boolean isSelectedTypeOfChangeValid(String typesOfChange, Map<String, String> config) {
-
 		Set<String> tocList = new Set<String>();
-
+		system.debug(LoggingLevel.ERROR,'LF: typesOfChange = '+typesOfChange);
 		if(typesOfChange!=null)
 			tocList.addAll(typesOfChange.split(';'));
-
+system.debug(LoggingLevel.ERROR,'LF: config.keySet() = '+config.keySet());
 		for (String toc : config.keySet()) {
+			system.debug(LoggingLevel.ERROR,'LF: toc = '+toc);
 			if (toc.startsWith('B_'))
 				if (tocList.contains(toc.substringAfter('_'))) {
 					if (Boolean.valueOf(config.get(toc)) == false)

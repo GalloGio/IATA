@@ -34,7 +34,8 @@ global class AMS_HierarchyHelper {
 		for (Id accountId : accountsIds)
 			result.put(accountId, new List<AMS_Agencies_relationhip__c>());
 
-		for (AMS_Agencies_relationhip__c r : [SELECT Hierarchy__c, Parent_Account__c,  Child_Account__c, Parent_Account__r.Location_Type__c,  Child_Account__r.Location_Type__c,  Child_Account__r.Status__c, Parent_Account__r.Status__c
+		for (AMS_Agencies_relationhip__c r : [SELECT Hierarchy__c, Parent_Account__c,  Child_Account__c, Parent_Account__r.Location_Type__c,  Child_Account__r.Location_Type__c, Child_Account__r.Status__c, Parent_Account__r.Status__c, 
+												Child_Account__r.Reason__c, Parent_Account__r.Reason__c //FM AMSU-1
 		                                      FROM AMS_Agencies_relationhip__c
 		                                      WHERE Hierarchy__c IN :hierarchyToAccounts.keyset() ]) {
 
@@ -300,7 +301,8 @@ global class AMS_HierarchyHelper {
 					hierarchyToDelete = rel.Hierarchy__c;
 
 				//BRs under the oldHO will move under the targetHO
-				if (rel.Parent_Account__c == oldHO && rel.Child_Account__r.Location_Type__c == AMS_Utils.BR && rel.Child_Account__r.Status__c != AMS_Utils.ACC_S0_TERMINATED){
+				if ((rel.Parent_Account__c == oldHO && rel.Child_Account__r.Location_Type__c == AMS_Utils.BR && rel.Child_Account__r.Status__c != AMS_Utils.ACC_S0_TERMINATED) 
+					|| (rel.Parent_Account__c == oldHO && rel.Child_Account__r.Location_Type__c == AMS_Utils.SA && rel.Child_Account__r.Status__c == AMS_Utils.ACC_S1_NOTACCREDITED)){
 					rel.Parent_Account__c = targetHO;
 					rel.Hierarchy__c = newHierarchyName;
 				}
@@ -467,9 +469,9 @@ global class AMS_HierarchyHelper {
 			//only active hierarchy agencies are to be considered
 			Account parent = accounts.get(parentId);
 			Account child = accounts.get(childId);
-			if (parent.Status__c != AMS_Utils.ACC_S0_TERMINATED && parent.Status__c != AMS_Utils.ACC_S1_NOTACCREDITED && !agenciesSelected.contains(parentId))
+			if (parent !=null && parent.Status__c != AMS_Utils.ACC_S0_TERMINATED && parent.Status__c != AMS_Utils.ACC_S1_NOTACCREDITED && !agenciesSelected.contains(parentId))
 				return false;
-			if (child.Status__c != AMS_Utils.ACC_S0_TERMINATED && child.Status__c != AMS_Utils.ACC_S1_NOTACCREDITED && !agenciesSelected.contains(childId))
+			if (child !=null && child.Status__c != AMS_Utils.ACC_S0_TERMINATED && child.Status__c != AMS_Utils.ACC_S1_NOTACCREDITED && child.Status__c != null && !agenciesSelected.contains(childId))
 				return false;
 		}
 
@@ -510,7 +512,7 @@ global class AMS_HierarchyHelper {
 	// This will create a process detail for this Oscar for each account in the hierarhcy (except for the main account related to the oscar)
 	// This method won't create any duplicate if there is already a process detail with the same OSCAR-Account
 	webservice static void createProcessDetailForFullHierarchy(ID theOscarId, ID theMainAccountId) {
-
+		ID rtAgencyInvolved = Schema.SObjectType.AMS_Process_Detail__c.getRecordTypeInfosByName().get('Agency Involved').getRecordTypeId();
 		Map<Id, List<AMS_Agencies_relationhip__c>> hierarchies = getAccountsHierarchies(new Set<Id> {theMainAccountId});
 
 		Set<Id> accountIdToBeAdded = new Set<Id>();
@@ -520,24 +522,97 @@ global class AMS_HierarchyHelper {
 			accountIdToBeAdded.add(rel.Child_Account__c);
 		}
 
-		// remove the accounts terminated from the list of process detail to be created
-		for (Account a : [SELECT Id, Name, Status__c FROM Account WHERE Id IN :accountIdToBeAdded AND Status__c = :AMS_Utils.ACC_S0_TERMINATED])
-			accountIdToBeAdded.remove(a.Id);
+		AMS_OSCAR__c oscar = [SELECT Process__c FROM AMS_OSCAR__c WHERE Id = :theOscarId LIMIT 1];
+
+		if(oscar.Process__c == AMS_Utils.VOLRELINQUISH || oscar.Process__c == AMS_Utils.VOLRELINQUISH_CA){
+
+			// remove the accounts terminated and not accreditated from the list of process detail to be created
+			for (Account a : [SELECT Id, Name, Status__c FROM Account WHERE Id IN :accountIdToBeAdded AND (Status__c = :AMS_Utils.ACC_S0_TERMINATED OR Status__c =: AMS_Utils.ACC_S1_NOTACCREDITED OR Status__c = '')]){
+
+				accountIdToBeAdded.remove(a.Id);
+			}
+
+		} else {
+
+			// remove the accounts terminated from the list of process detail to be created
+			for (Account a : [SELECT Id, Name, Status__c FROM Account WHERE Id IN :accountIdToBeAdded AND (Status__c = :AMS_Utils.ACC_S0_TERMINATED OR Status__c = '')]){
+
+				accountIdToBeAdded.remove(a.Id);
+			}
+
+		}
 
 
 		Set<Id> alreadyThere = new Set<Id>();
-		for (AMS_Process_Detail__c det : [SELECT Account__c FROM AMS_Process_Detail__c WHERE Oscar__c = :theOscarId ]) {
+		//DTULLO: Added check on the record type
+		//for (AMS_Process_Detail__c det : [SELECT Account__c FROM AMS_Process_Detail__c WHERE Oscar__c = :theOscarId ]) {
+		for (AMS_Process_Detail__c det : [SELECT Account__c FROM AMS_Process_Detail__c WHERE Oscar__c = :theOscarId and recordtype.developername='Agency_Involved']) {
 			alreadyThere.add(det.Account__c);
 		}
 
 		List<AMS_Process_Detail__c> pds = new List<AMS_Process_Detail__c>();
 		for (Id accountId : accountIdToBeAdded) {
 			if (accountId != theMainAccountId && !alreadyThere.contains(accountId))
-				pds.add(new AMS_Process_Detail__c(Account__c = accountId, OSCAR__c = theOscarId));
+				//DTULLO: Added Record Type
+				pds.add(new AMS_Process_Detail__c(Account__c = accountId, OSCAR__c = theOscarId, recordtypeid = rtAgencyInvolved));
 		}
 
 		insert pds;
 
+	}
+
+	//verifies if every account involved has all its children selected
+	public static Boolean isAllChildrenSelected(AMS_Oscar__c oscar) {
+		List<AMS_Oscar__c> oscars = new List<AMS_Oscar__c>{oscar};
+
+		//fetch all relationships for each account
+		Map<Id, List<AMS_Agencies_relationhip__c>> relationshipMap = getAccountsHierarchies(new Set<Id>{oscar.Account__c});
+
+
+		//gets selected accounts for each oscar
+		Map<Id, Set<Id>> accountsInvolved = new Map<Id, Set<Id>>{ oscar.Id => new Set<Id>{oscar.Account__c} };
+		//DTULLO: Added check on record-type
+		//for(AMS_Process_Detail__c pd : [SELECT Id, Account__c, OSCAR__c FROM AMS_Process_Detail__c WHERE Oscar__c = :accountsInvolved.keyset()]){
+		for(AMS_Process_Detail__c pd : [SELECT Id, Account__c, OSCAR__c FROM AMS_Process_Detail__c WHERE Oscar__c = :accountsInvolved.keyset() and recordtype.developername='Agency_Involved']){
+			accountsInvolved.get(pd.OSCAR__c).add(pd.Account__c);
+		}
+
+		return isAllChildrenSelected(oscars, relationshipMap, accountsInvolved).get(oscar.Id);
+	}
+
+	public static Map<Id, Boolean> isAllChildrenSelected(List<AMS_Oscar__c> oscars, Map<Id, List<AMS_Agencies_relationhip__c>> relationshipMap, Map<Id, Set<Id>> accountsInvolved) {
+
+		Map<Id, Boolean> results = new Map<Id, Boolean>();
+
+		//initialize map
+		for(AMS_Oscar__c oscar : oscars){
+			results.put(oscar.Id, true);
+		}
+
+		//create a map for the child accounts for every level on the hierarchy
+		Map<Id, Map<Id, Set<Id>>> childAccounts = new Map<Id, Map<Id, Set<Id>>>();
+		for(AMS_Oscar__c oscar : oscars){
+			childAccounts.put(oscar.Id, new Map<Id, Set<Id>>());
+			childAccounts.get(oscar.Id).put(oscar.Account__c, new Set<Id>());
+
+			for(AMS_Agencies_relationhip__c r : relationshipMap.get(oscar.Account__c)){
+
+				if(!childAccounts.get(oscar.Id).containsKey(r.Parent_Account__c)) childAccounts.get(oscar.Id).put(r.Parent_Account__c, new Set<Id>());
+				if(!childAccounts.get(oscar.Id).containsKey(r.Child_Account__c)) childAccounts.get(oscar.Id).put(r.Child_Account__c, new Set<Id>());
+
+				if(r.Child_Account__r.Status__c != null && r.Child_Account__r.Status__c != AMS_Utils.ACC_S0_TERMINATED && r.Child_Account__r.Status__c != AMS_Utils.ACC_S1_NOTACCREDITED && r.Child_Account__r.Status__c != '') childAccounts.get(oscar.Id).get(r.Parent_Account__c).add(r.Child_Account__c);
+			}
+		}
+
+		//check if all the selected account childrens are also selected
+		for(AMS_Oscar__c oscar : oscars){
+			for(Id accId : accountsInvolved.get(oscar.Id)){
+				for(Id childId : childAccounts.get(oscar.Id).get(accId)){
+					if(!accountsInvolved.get(oscar.Id).contains(childId)) results.put(oscar.Id, false);
+				}
+			}
+		}
+		return results;
 	}
 
 	//compares the owners between several accounts in the same hierarchy
@@ -763,6 +838,17 @@ global class AMS_HierarchyHelper {
 
 		return output;
 
+	}
+
+	public class AccountStruct{
+		
+	    public String parentIATACode;
+	    public String locationType;
+
+	    public AccountStruct(String parentIATACode, String locationType) {
+	        this.parentIATACode = parentIATACode;
+	        this.locationType = locationType;
+	    }
 	}
 
 }

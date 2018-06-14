@@ -1,0 +1,154 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomObject xmlns="http://soap.sforce.com/2006/04/metadata">
+    <customSettingsType>List</customSettingsType>
+    <description>This custom setting defines the list of user roles that are available for each connected app: to be used on the Identity Community</description>
+    <enableFeeds>false</enableFeeds>
+    <fields>
+        <fullName>Active__c</fullName>
+        <defaultValue>true</defaultValue>
+        <externalId>false</externalId>
+        <label>Active</label>
+        <trackTrending>false</trackTrending>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
+        <fullName>App_Picture_Url__c</fullName>
+        <externalId>false</externalId>
+        <label>App Picture Url</label>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>TextArea</type>
+    </fields>
+    <fields>
+        <fullName>Connected_App_Description__c</fullName>
+        <externalId>false</externalId>
+        <label>Connected App Description</label>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>TextArea</type>
+    </fields>
+    <fields>
+        <fullName>Connected_App_Provisioning_Name__c</fullName>
+        <externalId>false</externalId>
+        <label>Connected App Provisioning Name</label>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>TextArea</type>
+    </fields>
+    <fields>
+        <fullName>Connected_App__c</fullName>
+        <externalId>false</externalId>
+        <label>Connected App SSO Name</label>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>TextArea</type>
+    </fields>
+    <fields>
+        <fullName>Default_User_Role__c</fullName>
+        <defaultValue>false</defaultValue>
+        <description>Default user Role to be used on the portal. Role assigned by default to be stored in the Portal Service Access Object</description>
+        <externalId>false</externalId>
+        <label>Default User Role</label>
+        <trackTrending>false</trackTrending>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
+        <fullName>Description__c</fullName>
+        <externalId>false</externalId>
+        <label>Description</label>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>TextArea</type>
+    </fields>
+    <fields>
+        <fullName>Manage_User_Access__c</fullName>
+        <defaultValue>false</defaultValue>
+        <description>User portal roles that will receive the notification mail.</description>
+        <externalId>false</externalId>
+        <label>Manage User Access</label>
+        <trackTrending>false</trackTrending>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
+        <fullName>Min_Users_With_Role__c</fullName>
+        <externalId>false</externalId>
+        <label>Min. users with Role</label>
+        <precision>4</precision>
+        <required>false</required>
+        <scale>0</scale>
+        <trackTrending>false</trackTrending>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Order__c</fullName>
+        <externalId>false</externalId>
+        <label>Order</label>
+        <precision>2</precision>
+        <required>false</required>
+        <scale>0</scale>
+        <trackTrending>false</trackTrending>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>PermissionSet_Provisioning__c</fullName>
+        <externalId>false</externalId>
+        <label>PermissionSet Provisioning</label>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>TextArea</type>
+    </fields>
+    <fields>
+        <fullName>Permission_set_SSO__c</fullName>
+        <externalId>false</externalId>
+        <label>PermissionSet SSO</label>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>TextArea</type>
+    </fields>
+    <fields>
+        <fullName>Provisioning_Id__c</fullName>
+        <externalId>false</externalId>
+        <label>Connected App Provisioning Id</label>
+        <length>18</length>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Role__c</fullName>
+        <externalId>false</externalId>
+        <label>Role</label>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>TextArea</type>
+    </fields>
+    <fields>
+        <fullName>isCommunity__c</fullName>
+        <defaultValue>false</defaultValue>
+        <externalId>false</externalId>
+        <label>isCommunity</label>
+        <trackTrending>false</trackTrending>
+        <type>Checkbox</type>
+    </fields>
+    <label>Connected App Roles</label>
+    <listViews>
+        <fullName>All</fullName>
+        <columns>NAME</columns>
+        <columns>Connected_App_Provisioning_Name__c</columns>
+        <columns>PermissionSet_Provisioning__c</columns>
+        <columns>Connected_App__c</columns>
+        <columns>Permission_set_SSO__c</columns>
+        <columns>Role__c</columns>
+        <columns>Min_Users_With_Role__c</columns>
+        <columns>Default_User_Role__c</columns>
+        <columns>Manage_User_Access__c</columns>
+        <columns>Order__c</columns>
+        <filterScope>Everything</filterScope>
+        <label>All</label>
+        <language>en_US</language>
+    </listViews>
+    <visibility>Public</visibility>
+</CustomObject>

@@ -6,19 +6,39 @@ public with sharing class FeedItemHelper {
 	 *  Validation put in place for the Account Management project.
 	 */
 	public static void CheckPostTopics(list<FeedItem> lstTriggerNew) {
-		
 		String strAcceptedValues = '';
+		List<AMP_Account_Topics__c> topics = AMP_Account_Topics__c.getAll().Values();
 
-		for (AMP_Account_Topics__c at : AMP_Account_Topics__c.getAll().Values()) {
-			strAcceptedValues += (strAcceptedValues == '' ? '' : ', ') + at.Name;
+		//sort topics by name
+		List<String> topicstr = new List<String>();
+		for (AMP_Account_Topics__c at : topics){
+			topicstr.add(at.Name);
+		}
+		topicstr.sort();
+
+		for (String at : topicstr) {
+			strAcceptedValues += (strAcceptedValues == '' ? '' : '; ') + at;
 		}
 
 		// get the accounts of interest to which the feed items are linked - we only apply the logic to Airline HQ accounts that are IATA Members
-		set<Id> setRelatedAccountIds = new set<Id>();
+		set<Id> setRelatedAccountIds = new set<Id>();		
 		for (FeedItem fi : lstTriggerNew) {
- 	   		if (String.valueOf(fi.ParentId).startsWith('001') && !fi.Body.contains('#') && fi.Type == 'TextPost') {
- 	   			setRelatedAccountIds.add(fi.ParentId);
- 	   		}
+			//check apostrophe ' (&#39) RN-INC339011
+			if (fi.body != null) {
+				String check = fi.body.toUpperCase();
+				string finalS = fi.body.toUpperCase();
+				if(check.contains('&#39;')){
+					finalS = check.remove('&#39;');
+				}
+				Pattern p = Pattern.compile('.*#\\w+(?s).*');
+				Matcher regexMatcher = p.matcher(finalS);
+	
+				if (String.valueOf(fi.ParentId).startsWith('001') 
+					&& !regexMatcher.matches() 
+					&& fi.Type == 'TextPost') {
+						setRelatedAccountIds.add(fi.ParentId);
+				}
+			}
  	   	}
 		if (!setRelatedAccountIds.isEmpty()) {
 
@@ -32,13 +52,11 @@ public with sharing class FeedItemHelper {
 
 
 				for (FeedItem fi : lstTriggerNew) {
- 	   			fi.addError ('Please use hashtags (#) to define the topic(s) of your post.\r\nYou can choose one or more of the following topics:\r\n' + strAcceptedValues);
+ 	   				fi.addError ('Please use hashtags (#) to define the topic(s) of your post.\r\nYou can choose one or more of the following topics:\r\n' + strAcceptedValues);
 					// if (String.valueOf(fi.ParentId).startsWith('001') && !fi.Body.contains('#') && fi.Type == 'TextPost') {
 					// }
 				}
  	   		}
  	   	}
-
 	}
-
 }

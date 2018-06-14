@@ -63,8 +63,10 @@ public class ISSP_NotificationUtilities
         List<Notification__c> lstNotifications = new List<Notification__c>();
         for (Contact con : lstContacts)
         {
+            Notification_template__c selectedTemplate = findLanguageTemplate(con, notificationTemplate);
+            
             //Set default message by notification template message.
-            String message = notificationTemplate != null ? notificationTemplate.Message__c : '';
+            String message = selectedTemplate != null ? selectedTemplate.Message__c : '';
 
             //Check if there is a message by group field, if there is set is as the curreny message.
             if (contactGroupField != null && contactGroupField != '')
@@ -77,21 +79,23 @@ public class ISSP_NotificationUtilities
             }
 			
 			DateTime expirationDate = null;
-			if (notificationTemplate.Expire_in_days__c != null){
-        		expirationDate = system.Now() + notificationTemplate.Expire_in_days__c;
+			if (selectedTemplate.Expire_in_days__c != null){
+        		expirationDate = system.Now() + selectedTemplate.Expire_in_days__c;
         	}
+            
+            
 			
             //Create notification and add it the list of notifications to be sent.
             lstNotifications.add( 
                 new Notification__c(
                 contact__c = con.Id,
                 Message__c = message,
-                Alert_Contact_By_Email__c = notificationTemplate.Alert_Contact_By_Email__c,
-                Subject__c = notificationTemplate.Subject__c,
-                Type__c = notificationTemplate.Type__c,
-                Notificatin_color__c = notificationTemplate.Notification_color__c ,
+                Alert_Contact_By_Email__c = selectedTemplate.Alert_Contact_By_Email__c,
+                Subject__c = selectedTemplate.Subject__c,
+                Type__c = selectedTemplate.Type__c,
+                Notificatin_color__c = selectedTemplate.Notification_color__c ,
                 Notification_Campagne_Name__c = null,
-                Critical_notification__c = notificationTemplate.CriticalNotification__c,
+                Critical_notification__c = selectedTemplate.CriticalNotification__c,
                 Expiry_Date__c = expirationDate
             ));
         }
@@ -101,6 +105,23 @@ public class ISSP_NotificationUtilities
             System.debug('CREATING NOTIFICATIONS: ' + lstNotifications.size());
             insert lstNotifications;
         }
+    }
+    
+    /**
+        Finds a template in the related templates list(if it exists) with the same 
+        language as the input contact.
+        Otherwise the same input template is returned
+    **/
+    private static Notification_template__c findLanguageTemplate(Contact contact, Notification_template__c template) {
+        if (template.Language__c == contact.Preferred_Language__c || template.Notification_templates__r == null) {
+            return template;
+        }
+        for (Notification_template__c languageTemplate: template.Notification_templates__r) {
+            if (languageTemplate.Language__c == contact.Preferred_Language__c) {
+                return languageTemplate;
+            }
+        }
+        return template;
     }
 
     /**

@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomObject xmlns="http://soap.sforce.com/2006/04/metadata">
+    <customSettingsType>Hierarchy</customSettingsType>
+    <enableFeeds>false</enableFeeds>
+    <fields>
+        <fullName>Community_Name__c</fullName>
+        <externalId>false</externalId>
+        <label>Community Name</label>
+        <length>80</length>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>ipinfo_call_enabled__c</fullName>
+        <defaultValue>true</defaultValue>
+        <description>Enable or disable the ipinfo call to get IP location</description>
+        <externalId>false</externalId>
+        <label>ipinfo call enabled</label>
+        <trackTrending>false</trackTrending>
+        <type>Checkbox</type>
+    </fields>
+    <label>OneId Global Settings</label>
+    <visibility>Protected</visibility>
+</CustomObject>

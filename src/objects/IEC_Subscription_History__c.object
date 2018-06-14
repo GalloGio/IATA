@@ -21,10 +21,6 @@
         <type>Default</type>
     </actionOverrides>
     <actionOverrides>
-        <actionName>Follow</actionName>
-        <type>Default</type>
-    </actionOverrides>
-    <actionOverrides>
         <actionName>List</actionName>
         <type>Default</type>
     </actionOverrides>
@@ -50,6 +46,7 @@
     <description>Object that tracks different aspects of a subscription purchase for the IATA eCommerce project (e.g. subscription, invoice, payment method, T&amp;C accepted, etc)</description>
     <enableActivities>false</enableActivities>
     <enableBulkApi>true</enableBulkApi>
+    <enableChangeDataCapture>false</enableChangeDataCapture>
     <enableFeeds>false</enableFeeds>
     <enableHistory>true</enableHistory>
     <enableReports>true</enableReports>
@@ -76,7 +73,7 @@
         <relationshipLabel>IEC Subscriptions History</relationshipLabel>
         <relationshipName>IEC_Subscriptions_History</relationshipName>
         <required>false</required>
-        <trackHistory>false</trackHistory>
+        <trackHistory>true</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Lookup</type>
     </fields>
@@ -86,29 +83,35 @@
         <externalId>false</externalId>
         <inlineHelpText>The action that generated the Subscription History</inlineHelpText>
         <label>Action</label>
-        <picklist>
-            <picklistValues>
-                <fullName>Subscription</fullName>
-                <default>true</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Renew</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Upgrade</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Trial</fullName>
-                <default>false</default>
-            </picklistValues>
-            <sorted>false</sorted>
-        </picklist>
         <required>false</required>
-        <trackHistory>false</trackHistory>
+        <trackHistory>true</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Picklist</type>
+        <valueSet>
+            <valueSetDefinition>
+                <sorted>false</sorted>
+                <value>
+                    <fullName>Subscription</fullName>
+                    <default>true</default>
+                    <label>Subscription</label>
+                </value>
+                <value>
+                    <fullName>Renew</fullName>
+                    <default>false</default>
+                    <label>Renew</label>
+                </value>
+                <value>
+                    <fullName>Upgrade</fullName>
+                    <default>false</default>
+                    <label>Upgrade</label>
+                </value>
+                <value>
+                    <fullName>Trial</fullName>
+                    <default>false</default>
+                    <label>Trial</label>
+                </value>
+            </valueSetDefinition>
+        </valueSet>
     </fields>
     <fields>
         <fullName>Billing_Account_Number__c</fullName>
@@ -118,7 +121,7 @@
         <label>Billing Account Number</label>
         <length>50</length>
         <required>true</required>
-        <trackHistory>false</trackHistory>
+        <trackHistory>true</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Text</type>
         <unique>false</unique>
@@ -129,7 +132,7 @@
         <label>Billing City</label>
         <length>255</length>
         <required>false</required>
-        <trackHistory>false</trackHistory>
+        <trackHistory>true</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Text</type>
         <unique>false</unique>
@@ -140,7 +143,7 @@
         <label>Billing Country</label>
         <length>255</length>
         <required>false</required>
-        <trackHistory>false</trackHistory>
+        <trackHistory>true</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Text</type>
         <unique>false</unique>
@@ -151,7 +154,7 @@
         <label>Billing State</label>
         <length>255</length>
         <required>false</required>
-        <trackHistory>false</trackHistory>
+        <trackHistory>true</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Text</type>
         <unique>false</unique>
@@ -162,7 +165,7 @@
         <label>Billing Street</label>
         <length>255</length>
         <required>false</required>
-        <trackHistory>false</trackHistory>
+        <trackHistory>true</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Text</type>
         <unique>false</unique>
@@ -173,7 +176,7 @@
         <label>Billing Zip</label>
         <length>255</length>
         <required>false</required>
-        <trackHistory>false</trackHistory>
+        <trackHistory>true</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Text</type>
         <unique>false</unique>
@@ -185,7 +188,7 @@
         <label>Credit Card</label>
         <length>50</length>
         <required>false</required>
-        <trackHistory>false</trackHistory>
+        <trackHistory>true</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Text</type>
         <unique>false</unique>
@@ -198,7 +201,7 @@
         <label>Invoice Number</label>
         <length>50</length>
         <required>false</required>
-        <trackHistory>false</trackHistory>
+        <trackHistory>true</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Text</type>
         <unique>false</unique>
@@ -211,7 +214,7 @@
         <label>Invoice Zuora ID</label>
         <length>100</length>
         <required>false</required>
-        <trackHistory>false</trackHistory>
+        <trackHistory>true</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Text</type>
         <unique>false</unique>
@@ -227,7 +230,7 @@
         <relationshipLabel>IEC Subscriptions History</relationshipLabel>
         <relationshipName>IEC_Subscriptions_History</relationshipName>
         <required>false</required>
-        <trackHistory>false</trackHistory>
+        <trackHistory>true</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Lookup</type>
     </fields>
@@ -242,7 +245,7 @@
         <relationshipLabel>IEC Subscriptions History</relationshipLabel>
         <relationshipName>IEC_Subscriptions_History</relationshipName>
         <required>false</required>
-        <trackHistory>false</trackHistory>
+        <trackHistory>true</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Lookup</type>
     </fields>
@@ -269,7 +272,7 @@
         <label>Purchased Product SKU</label>
         <length>50</length>
         <required>false</required>
-        <trackHistory>false</trackHistory>
+        <trackHistory>true</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Text</type>
         <unique>false</unique>
@@ -284,7 +287,7 @@
         <precision>4</precision>
         <required>false</required>
         <scale>0</scale>
-        <trackHistory>false</trackHistory>
+        <trackHistory>true</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Number</type>
         <unique>false</unique>
@@ -300,7 +303,7 @@
         <relationshipLabel>IEC Subscriptions History</relationshipLabel>
         <relationshipName>IEC_Subscriptions_History</relationshipName>
         <required>false</required>
-        <trackHistory>false</trackHistory>
+        <trackHistory>true</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Lookup</type>
     </fields>
@@ -315,7 +318,7 @@
         <relationshipLabel>IEC Subscriptions History</relationshipLabel>
         <relationshipName>IEC_Subscriptions_History</relationshipName>
         <required>false</required>
-        <trackHistory>false</trackHistory>
+        <trackHistory>true</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Lookup</type>
     </fields>
@@ -325,25 +328,30 @@
         <externalId>false</externalId>
         <inlineHelpText>The payment method selected at the time of purchase</inlineHelpText>
         <label>Selected Payment Method</label>
-        <picklist>
-            <picklistValues>
-                <fullName>Credit Card</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Bank Transfer</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>ICH</fullName>
-                <default>false</default>
-            </picklistValues>
-            <sorted>false</sorted>
-        </picklist>
         <required>false</required>
-        <trackHistory>false</trackHistory>
+        <trackHistory>true</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Picklist</type>
+        <valueSet>
+            <valueSetDefinition>
+                <sorted>false</sorted>
+                <value>
+                    <fullName>Credit Card</fullName>
+                    <default>false</default>
+                    <label>Credit Card</label>
+                </value>
+                <value>
+                    <fullName>Bank Transfer</fullName>
+                    <default>false</default>
+                    <label>Bank Transfer</label>
+                </value>
+                <value>
+                    <fullName>ICH</fullName>
+                    <default>false</default>
+                    <label>ICH</label>
+                </value>
+            </valueSetDefinition>
+        </valueSet>
     </fields>
     <fields>
         <fullName>Subscription_Number__c</fullName>
@@ -364,12 +372,36 @@
         <label>VAT Number</label>
         <length>40</length>
         <required>false</required>
-        <trackHistory>false</trackHistory>
+        <trackHistory>true</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Text</type>
         <unique>false</unique>
     </fields>
     <label>IEC Subscription History</label>
+    <listViews>
+        <fullName>AGM_Certificates</fullName>
+        <columns>NAME</columns>
+        <columns>Subscription_Number__c</columns>
+        <columns>Accepted_Terms_and_Conditions__c</columns>
+        <columns>Billing_Account_Number__c</columns>
+        <columns>Invoice_Number__c</columns>
+        <columns>Purchased_Product_Category__c</columns>
+        <columns>Purchased_Product_Information__c</columns>
+        <columns>Purchased_Product_Rate_Plan_Information__c</columns>
+        <columns>Purchased_Product_SKU__c</columns>
+        <columns>Rate_Plan_Quantity__c</columns>
+        <columns>Selected_Payment_Method__c</columns>
+        <columns>Action__c</columns>
+        <columns>CREATED_DATE</columns>
+        <filterScope>Everything</filterScope>
+        <filters>
+            <field>Purchased_Product_Category__c</field>
+            <operation>contains</operation>
+            <value>Certificat</value>
+        </filters>
+        <label>AGM Certificates</label>
+        <language>en_US</language>
+    </listViews>
     <listViews>
         <fullName>All</fullName>
         <columns>NAME</columns>
@@ -411,4 +443,5 @@
         <searchFilterFields>Purchased_Product_Rate_Plan_Information__c</searchFilterFields>
     </searchLayouts>
     <sharingModel>ReadWrite</sharingModel>
+    <visibility>Public</visibility>
 </CustomObject>

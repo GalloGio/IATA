@@ -13,26 +13,36 @@
                 bottom: 160px;
             }
             .movetableup {
-                position: relative;
+                position: relative; 
                 bottom: 246px;
             }
+            .text-normal * {
+                font-weight: normal;
+            }
         </style>
-        <c:ISSP_Header ></c:ISSP_Header>    
+        <c:ISSP_Header communityName="{!communityName}"></c:ISSP_Header>    
         <body>
         <script src="{!URLFOR($Resource.bootbox)}" />
         <script type="text/javascript">
                 var $j = jQuery.noConflict();
+                var typeAccredSelected = '';
    
                 $j(function () {
                     $j('[data-toggle="tooltip"]').tooltip();
                 })
 
                 function checkEligibility(isBankAccountChange){
-                    if ('{!isHOAccredited}'=='false'){
-                        bootbox.alert("{!$Label.ISSP_AMS_NoC_Message_Accredited_Agent}");
-                    }
-                    else
-                        navigateToUrl('/ISSP_AMS_Accreditation?isNoticeOfChange=true&isBankAccountChange='+isBankAccountChange+'&retUrl=/ISSP_HomePage','LIST_VIEW','newCase');
+                    if ('{!isHOAccredited}'=='false') {
+                        bootbox.alert("{!if(communityName=='CNS', $Label.ISSP_AMS_NoC_Message_Accredited_Agent_CNS, $Label.ISSP_AMS_NoC_Message_Accredited_Agent)}");
+                    } else if ('{!con.Account.Location_Type__c}' == 'AE' && isBankAccountChange === 'false') {
+                        bootbox.alert('{!$Label.ISSP_AMS_Cases_Notify_IATA_Changes_Error}');
+                    } else {
+                        navigateToUrl('/ISSP_AMS_Accreditation?isNoticeOfChange=true&isBankAccountChange='+isBankAccountChange + '{!commParam}' +'&retUrl=/ISSP_HomePage','LIST_VIEW','newCase');
+                    }                  
+                }
+
+                function proofOfPCI(){
+                    navigateToUrl('/ISSP_ANG_PCI?&retUrl=/ISSP_HomePage','LIST_VIEW','newCase');
                 }
             
                 function proceedToVMFR() {
@@ -42,28 +52,71 @@
                         }
                     });
                 }
+ 
+                function proceedToVR() {
+                    if ('{!con.Authorized_Signatory__c}' == 'false' && '{!con.User_Portal_Status__c}' == 'Approved Admin'){
+                        bootbox.alert('{!$Label.ISSP_ANG_Portal_Admin_Authorized_Signature}');
+                    }else if ('{!con.Authorized_Signatory__c}' == 'false' && '{!con.User_Portal_Status__c}' != 'Approved Admin'){
+                        bootbox.alert('{!$Label.ISSP_ANG_Portal_Admin}');
+                    }
+                    else{
+                        navigateToUrl('/ISSP_ANG_VoluntaryRelinquishment','_self');
+                    }               
+                }
+
+                function newnAccreditationApplicationNavigateTo() {
+                    if ('{!isoCountry.ANG_Enable_NewGen__c}' == 'true' && '{!isHOAccredited}' == 'false') {
+                        $j('#modalChooseAccreditationType').modal('toggle');
+                    } else {
+                        navigateToUrl('/ISSP_AMS_Accreditation?{!if(communityName=='CNS', 'CommunityName=CNS&', '')}retUrl=/ISSP_HomePage','LIST_VIEW','newCase');
+                    }
+                    return false;                
+                }
+
+                function modalChooseAccreditationTypeClose() {
+                    $j('#modalChooseAccreditationType').modal('toggle');
+                }
+
+                function redirectAccreditationType() {
+
+                    typeAccredSelected = $j('input[type=radio]:checked').val();
+
+                    if(typeAccredSelected == '') {
+                        document.querySelector("[Id$='accreditationTypeRequired']").style.display = '';
+                    } else {
+                        if(typeAccredSelected == 'Travel_Agent') {                        
+                           navigateToUrl('/ISSP_ANG_ProductComparison','LIST_VIEW','newCase');
+                        } else {
+                           navigateToUrl('/ISSP_AMS_Accreditation?{!if(communityName=='CNS', 'CommunityName=CNS&', '')}retUrl=/ISSP_HomePage&sectorValue=Cargo_Agent','LIST_VIEW','newCase');
+                        }
+                    }
+                }
         </script>
     
     <div class="container">   
-        <c:ISSP_CustomNavigation />
+        <c:ISSP_CustomNavigation communityName="{!communityName}"/>
     <div>
-        <img src="/resource/1440419254000/IATA_Logo_Large" width="138" height="102" style="float:left"/>
+        <apex:image value="{!URLFOR($Resource.IATA_Logo_Large)}" width="138" height="102" style="float:left" rendered="{!communityName!='CNS'}"/>
     </div>
     <div style="padding-top:16px;padding-left:44px">
-        <h3>{!$Label.ISSP_AMS_Step0_SAA}</h3>
-        <apex:outputText value="{!$Label.ISSP_AMS_Step0_Intro}" escape="false"/>
+        <h3>{!if(communityName=='CNS', $Label.ISSP_AMS_Step0_SAA_CNS, IF(newlabels, $Label.ISSP_AMS_Step0_SAA_New, $Label.ISSP_AMS_Step0_SAA))}</h3>
+        <apex:outputText value="{!if(communityName=='CNS', $Label.ISSP_AMS_Step0_Intro_CNS, IF(newlabels, $Label.ISSP_AMS_Step0_Intro_New, $Label.ISSP_AMS_Step0_Intro))}" escape="false"/>
     </div>
     <div style="padding-left:138px">
           <apex:form > 
+
         <table width="100%">
             <tr>
-                <td style="width:45%;vertical-align:top;"><h3><apex:outputText value="{!$Label.ISSP_AMS_Step0_Agency_Accreditation}"/></h3></td>
+                <td style="width:45%;vertical-align:top;"><h3><apex:outputText value="{!if(communityName=='CNS', $Label.ISSP_AMS_Step0_Agency_Accreditation_CNS, IF(newlabels, $Label.ISSP_AMS_Step0_Agency_Accreditation_New, $Label.ISSP_AMS_Step0_Agency_Accreditation))}"/></h3></td>
                 <td style="display:{!IF(AND(isEligableForChange,isoCountry.Enable_Notice_of_Change__c),'','none')};vertical-align:top"><h3><apex:outputText value="{!$Label.ISSP_AMS_Step0_Changes}" rendered="{!isoCountry.Enable_Notice_of_Change__c}"/></h3></td>
             </tr>
             <tr>
                 <td style="vertical-align:top;padding-bottom:10px;padding-right:20px">
-                    <input type="button" class="btn btn_iata_primary" onClick="navigateToUrl('/ISSP_AMS_Accreditation?retUrl=/ISSP_HomePage','LIST_VIEW','newCase');return false;" value="{!$Label.ISSP_AMS_Step0_New_Application}"/>
-                    <div><apex:outputText value="{!$Label.ISSP_AMS_Step0_Intro_Accred}" escape="false"/>
+                    <!--input type="button" class="btn btn_iata_primary" onClick="navigateToUrl('/ISSP_AMS_Accreditation?{!if(communityName=='CNS', 'CommunityName=CNS&', '')}retUrl=/ISSP_HomePage','LIST_VIEW','newCase');return false;" value="{!if(communityName=='CNS', $Label.ISSP_AMS_Step0_New_Application_CNS, IF(newlabels, $Label.ISSP_AMS_Step0_New_Application_New, $Label.ISSP_AMS_Step0_New_Application))}"/-->
+
+                    <input type="button" class="btn btn_iata_primary" onClick="newnAccreditationApplicationNavigateTo();" value="{!if(communityName=='CNS', $Label.ISSP_AMS_Step0_New_Application_CNS, IF(newlabels, $Label.ISSP_AMS_Step0_New_Application_New, $Label.ISSP_AMS_Step0_New_Application))}"/>
+
+                    <div><apex:outputText value="{!if(communityName=='CNS', $Label.ISSP_AMS_Step0_Intro_Accred_CNS, IF(newlabels, $Label.ISSP_AMS_Step0_Intro_Accred_New, $Label.ISSP_AMS_Step0_Intro_Accred))}" escape="false"/>
                     <apex:image value="/img/msg_icons/info16.png" style="margin-left:3px;" title="{!$Label.ISSP_AMS_Step0_Intro_Accred_Msg}" html-data-html="true" html-data-placement="right" html-data-toggle="tooltip" />
                     </div>
                 </td>
@@ -73,8 +126,9 @@
             </tr>
             <tr>
                 <td style="vertical-align:top">
-                    <strong><apex:outputText escape="false" value="{!$Label.ISSP_AMS_Step0_In_Addition}" rendered="{!AND(isHOAccredited, sector=='Travel Agent')}"/></strong><br/>
-                    <apex:commandLink action="{!redirectToCasePage}" value="{!$Label.ISSP_AMS_Step0_Specific_Sales_Activity}" id="SACommandLink" rendered="{!AND(isHOAccredited, sector=='Travel Agent')}">
+                    <apex:commandLink action="{!redirectToCountryRequirementPage}" value="{!$Label.ISSP_ANG_Country_Req}" id="countryReq" rendered="{!OR(con.Account.Category__c == 'IATA Passenger Sales Agent',con.Account.Category__c == 'Non-IATA Travel Agent')}"/><br></br><br></br>
+                    <strong><apex:outputText escape="false" value="{!$Label.ISSP_AMS_Step0_In_Addition}" rendered="{!AND(isHOAccredited, NOT(isoCountry.ANG_Enable_NewGen__c), sector=='Travel Agent')}"/></strong><br/>
+                    <apex:commandLink action="{!redirectToCasePage}" value="{!$Label.ISSP_AMS_Step0_Specific_Sales_Activity}" id="SACommandLink" rendered="{!AND(isHOAccredited, NOT(isoCountry.ANG_Enable_NewGen__c), sector=='Travel Agent')}">
                         <apex:param assignTo="{!agentCaseType}" value="SA" />
                     </apex:commandLink><br/>
                     <!-- TIDS out-of-scope for now
@@ -82,52 +136,72 @@
                         <apex:param assignTo="{!agentCaseType}" value="TIDS" />
                     </apex:commandLink>
                     -->
+                    <br/>
                 </td>
                 <td style="display:{!IF(AND(isEligableForChange,isoCountry.Enable_Notice_of_Change__c),'','none')};vertical-align:top">
                     <table>
                         <tr>
                             <td><input type="button" class="btn btn_iata_primary" onClick="checkEligibility('false');return false;" value="{!$Label.ISSP_AMS_Step0_Other_Changes}"/></td>
-                            <td style="padding-left:8px"><apex:outputText escape="false" value="{!$Label.ISSP_AMS_Step0_Other_Changes_Msg}"/></td>
+                            <td style="padding-left:8px">
+                                <apex:outputText rendered="{! NOT(namPaxAgent)}" escape="false" value="{!$Label.ISSP_AMS_Step0_Other_Changes_Msg}"/>
+                                <apex:outputText rendered="{! namPaxAgent}" escape="false" value="{!$Label.ISSP_ANG_Step0_Other_Changes_Msg_NamPaxAgent}"/>
+                            </td>
+                        <!--<td style="display:{!con.Account.Category__c == 'IATA Passenger Sales Agent'};vertical-align:top">-->
+                        </tr>
+                    </table>
+                </td>
+            </tr>
+            <tr>
+                <td></td>
+                <td style="display:{! IF(AND(con.Account.Category__c == 'IATA Passenger Sales Agent', isHOAccredited, namEnabled), '','none')};vertical-align:top;padding-right:20px">
+                    <table>
+                        <tr>                            
+                            <td><input type="button" class="btn btn_iata_primary" onClick="proofOfPCI();return false;" value="{!$Label.ISSP_ANG_proof_PCI}"/></td>
+                            <td style="padding-left:8px"><apex:outputText escape="false" value="{!$Label.ISSP_ANG_proof_PCI_Info}"/></td>
                         </tr>
                     </table>
                 </td>
             </tr>
                 <tr>
                     <td style="padding-top:20px">
-                        <apex:outputText escape="false" value="{!$Label.ISSP_AMS_Step0_Agency_Article}"/>
-                        <a href="#"><apex:outputLink value="{!$Label.ISSP_PKB_URL}{!CASE(displayLanguage, 'ar', 'ar', 'fr', 'fr', 'it', 'it', 'de', 'de', 'es', 'es', 'pt_BR', 'pt_BR', 'ja', 'ja', 'ko', 'ko', 'in', 'in', 'th', 'th', 'vi', 'vi', 'zh_CN', 'zh_CN', 'en_US')}/How_To/Customer-Portal-Troubleshooting/?l={!CASE(displayLanguage, 'ar', 'ar', 'fr', 'fr', 'it', 'it', 'de', 'de', 'es', 'es', 'pt_BR', 'pt_BR', 'ja', 'ja', 'ko', 'ko', 'in', 'in', 'th', 'th', 'vi', 'vi', 'zh_CN', 'zh_CN', 'en_US')}" rendered="{!$Site.RegistrationEnabled}" target="_blank">{!$Label.ISSP_Article}</apex:outputLink></a>
+                        <apex:outputText escape="false" value="{!$Label.ISSP_AMS_Step0_Agency_Article}" rendered="{!communityName!='CNS'}"/>
+                        <a href="#"><apex:outputLink value="{!$Label.ISSP_PKB_URL}{!CASE(displayLanguage, 'ar', 'ar', 'fr', 'fr', 'it', 'it', 'de', 'de', 'es', 'es', 'pt_BR', 'pt_BR', 'ja', 'ja', 'ko', 'ko', 'in', 'in', 'th', 'th', 'vi', 'vi', 'zh_CN', 'zh_CN', 'en_US')}/How_To/Customer-Portal-Troubleshooting/?l={!CASE(displayLanguage, 'ar', 'ar', 'fr', 'fr', 'it', 'it', 'de', 'de', 'es', 'es', 'pt_BR', 'pt_BR', 'ja', 'ja', 'ko', 'ko', 'in', 'in', 'th', 'th', 'vi', 'vi', 'zh_CN', 'zh_CN', 'en_US')}" rendered="{!$Site.RegistrationEnabled}" target="_blank">{!if(communityName=='CNS', '', $Label.ISSP_Article)}</apex:outputLink></a>
                     </td>
                     <td style="vertical-align:bottom" class="{!IF(AND(isEligableForChange,isoCountry.Enable_Notice_of_Change__c),'',(IF(!isoCountry.Enable_Notice_of_Change__c,'none','moveup')))}">
                         <apex:outputText escape="false" value="{!$Label.ISSP_AMS_Step0_Minor_Changes}" rendered="{!AND(isoCountry.Enable_Notice_of_Change__c,isoCountry.Enable_Minor_Changes_from_Portal__c,bIsAdmin)}"/>
                     </td>
             </tr>
             <tr>
-                <td><h3><apex:outputText value="{!$Label.ISSP_AMS_Step0_Other_Forms}"/></h3></td>
+                <td><h3><apex:outputText value="{!$Label.ISSP_AMS_Step0_Other_Forms}" rendered="{!isUserAccAccredited}"/></h3></td>
                 <td class="{!IF(AND(isEligableForChange,isoCountry.Enable_Notice_of_Change__c),'',(IF(!isoCountry.Enable_Notice_of_Change__c,'movetableup','moveup')))}"><h3><apex:outputText value="{!$Label.ISSP_AMS_Step0_Ongoing_Drafts}"/></h3></td>
             </tr>
             <tr>
                 <td style="vertical-align:top">
-                    <apex:commandLink action="{!redirectToCasePage}" value="{!$Label.ISSP_AMS_Step0_Request_Voluntary_Reliquishment}" id="VRCommandLink" rendered="{!isHOAccredited}">
-                        <apex:param assignTo="{!agentCaseType}" value="VR" />
+                    <apex:commandLink action="{!redirectToCasePage}" value="{!$Label.ISSP_AMS_Step0_Request_Voluntary_Reliquishment}" id="VRCommandLink" rendered="{!isUserAccAccredited}" onclick="proceedToVR();return false;">
+                        <!--<apex:param assignTo="{!agentCaseType}" value="VR" />-->
                     </apex:commandLink>
-                    <apex:outputText escape="false" rendered="{!isHOAccredited}"><br/></apex:outputText>
-                    <a href="#" onclick="proceedToVMFR();return true;">{!$Label.ISSP_AMS_Step0_VMFR}</a>
+                    <apex:outputText escape="false" rendered="{!AND(isUserAccAccredited, communityName!='CNS')}"><br/>
+                        <a href="#" onclick="proceedToVMFR();return true;">{!$Label.ISSP_AMS_Step0_VMFR}</a>
+                    </apex:outputText>
                 </td>
                 <td style="vertical-align:top" class="{!IF(AND(isEligableForChange,isoCountry.Enable_Notice_of_Change__c),'',(IF(!isoCountry.Enable_Notice_of_Change__c,'movetableup','moveup')))}">
             <apex:pageBlock >
                 
             <apex:pageBlockTable value="{!AMSDraftCases}" var="MyAMSCases" styleClass="table" rendered="{!NOT(IsEmpty)}">
             <apex:column headerValue="{!$ObjectType.Case.fields.CaseNumber.label}" rendered="{!NOT(AND(isoCountry.Enable_Notice_of_Change__c==false,NOT(BEGINS(MyAMSCases.Reason1__c, 'New'))))}">
-                <apex:outputLink value="/ISSP_AMS_Accreditation?caseId={!MyAMSCases.Id}&step=2" rendered="{!BEGINS(MyAMSCases.Reason1__c, 'New')}">{!MyAMSCases.CaseNumber}</apex:outputLink>
-                <apex:outputLink value="/ISSP_AMS_Accreditation?caseId={!MyAMSCases.Id}&isNoticeOfChange=true&isBankAccountChange=true&step=2" rendered="{!MyAMSCases.Reason1__c=='Bank Detail Update'}">{!MyAMSCases.CaseNumber}</apex:outputLink>
-                <apex:outputLink value="/ISSP_AMS_Accreditation?caseId={!MyAMSCases.Id}&isNoticeOfChange=true&isBankAccountChange=false&step=2" rendered="{!NOT(OR(BEGINS(MyAMSCases.Reason1__c, 'New'),MyAMSCases.Reason1__c=='Bank Detail Update'))}">{!MyAMSCases.CaseNumber}</apex:outputLink>
+                <apex:outputLink value="/ISSP_AMS_Accreditation?caseId={!MyAMSCases.Id}&step=2{!if(communityName=='CNS', '&CommunityName=CNS', '')}" rendered="{!BEGINS(MyAMSCases.Reason1__c, 'New')}">{!MyAMSCases.CaseNumber}</apex:outputLink>
+                <apex:outputLink value="/ISSP_AMS_Accreditation?caseId={!MyAMSCases.Id}&isNoticeOfChange=true&isBankAccountChange=true&step=2{!if(communityName=='CNS', '&CommunityName=CNS', '')}" rendered="{!MyAMSCases.Reason1__c=='Bank Detail Update'}">{!MyAMSCases.CaseNumber}</apex:outputLink>
+
+                <apex:outputLink value="/ISSP_ANG_PCI?caseId={!MyAMSCases.Id}&step=1{!if(communityName=='CNS', '&CommunityName=CNS', '')}" rendered="{!MyAMSCases.Reason1__c=='FoP Management'}">{!MyAMSCases.CaseNumber}</apex:outputLink>
+
+                <apex:outputLink value="/ISSP_AMS_Accreditation?caseId={!MyAMSCases.Id}&isNoticeOfChange=true&isBankAccountChange=false&step=2{!if(communityName=='CNS', '&CommunityName=CNS', '')}" rendered="{!NOT(OR(BEGINS(MyAMSCases.Reason1__c, 'New'),MyAMSCases.Reason1__c=='Bank Detail Update',MyAMSCases.Reason1__c=='FoP Management'))}">{!MyAMSCases.CaseNumber}</apex:outputLink>
             </apex:column>
             <apex:column value="{!MyAMSCases.Subject}" rendered="{!NOT(AND(isoCountry.Enable_Notice_of_Change__c==false,NOT(BEGINS(MyAMSCases.Reason1__c, 'New'))))}"/>
             <apex:column value="{!MyAMSCases.Portal_Case_Status__c}" rendered="{!NOT(AND(isoCountry.Enable_Notice_of_Change__c==false,NOT(BEGINS(MyAMSCases.Reason1__c, 'New'))))}"/>
             <apex:column value="{!MyAMSCases.CreatedDate}" rendered="{!NOT(AND(isoCountry.Enable_Notice_of_Change__c==false,NOT(BEGINS(MyAMSCases.Reason1__c, 'New'))))}"/>
             </apex:pageBlockTable>
             
-            <apex:outputText styleClass="bg-info" value="{!$Label.ISSP_AMS_No_Pending}" rendered="{!IsEmpty}"/>
+            <apex:outputText styleClass="bg-info" value="{!if(communityName=='CNS', $Label.ISSP_AMS_No_Pending_CNS, $Label.ISSP_AMS_No_Pending)}" rendered="{!IsEmpty}"/>
                 
             </apex:pageBlock>    
                 
@@ -135,11 +209,60 @@
             </tr>
             
         </table>
+
+        <div class="modal" id="modalChooseAccreditationType" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+          <apex:outputPanel layout="block" styleClass="modal-dialog" id="modalChooseAccreditationTypeContent"> 
+            <div class="modal-content" id="modalChooseAccreditationContent"> 
+              <div class="modal-header"> 
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                <!--h4 class="modal-title">{!$Label.ISSP_Add_User_to_this_service}</h4-->
+                <h4 class="modal-title">{!$Label.ANG_ISSP_AccreditationTypeTitle}</h4>
+              </div>
+
+              <div class="modal-body" id="modalChooseAccreditationBody">
+                <div class="alert alert-danger" id="accreditationTypeRequired" style ="display: none">
+                  <strong> {!$Label.ANG_ISSP_AccreditationTypeRequired} </strong>
+                </div>
+
+                <div class="row">
+                  <apex:outputPanel layout="block" styleClass="col-md-12">
+                    <apex:outputLabel escape="false" value="{!$Label.ANG_ISSP_TypeAccreditadionQuestion}" />
+                  </apex:outputPanel>
+                </div>
+
+                <div class="row">
+                </div>
+
+                <div class="row" id="modalChooseAccreditationRow">
+                  <apex:outputPanel layout="block" styleClass="col-md-12 text-normal" id="modalChooseAccreditationPanel">
+                      <apex:selectRadio value="{!accredidationType}" layout="pageDirection" id="accredTypeId">
+                        <apex:selectOption itemValue="Travel_Agent" itemLabel="{!$Label.ISSP_Travel_Agent}" id="travelAgentCheck" />
+                        <apex:selectOption itemValue="Cargo_Agent" itemLabel="{!$Label.ISSP_Cargo_Agent}" id="cargoAgentCheck" />
+                      </apex:selectRadio>
+                  </apex:outputPanel>
+                </div>
+              </div>  
+
+              <div class="modal-footer">
+                <div class="col-md-12">
+                  <div class="row">
+                    <div class="col-md-6">                    
+                      <button type="button" onclick="modalChooseAccreditationTypeClose()" class="btn btn-danger btn-block">{!$label.LAQ_Close}</button>
+                    </div>
+                    <div class="col-md-6">
+                      <button type="button" onclick="redirectAccreditationType()" class="btn btn-success btn-block">{!$label.IDCard_Continue_Button}</button>                
+                    </div>
+                  </div>
+                </div>            
+              </div>          
+            </div>
+          </apex:outputPanel>
+        </div>
      
    </apex:form>
    </div>
     
-    <c:ISSP_CustomFooter />
+    <c:ISSP_CustomFooter communityName="{!communityName}"/>
 </div><!-- end container-->
         
   </body>  

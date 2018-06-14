@@ -43,6 +43,15 @@ public class vfIECEBC_OptOut {
         }
         set;
     }
+
+    public Boolean fromResubscribe {
+
+        get {
+            String resubscribe = ApexPages.currentPage().getParameters().get('isFromResubscribe');
+            return resubscribe != null && resubscribe != '';
+        }
+        set;
+    }
     
     public PageReference unsubscribe() {
         List<String> userReasons = new List<String>();
@@ -57,30 +66,50 @@ public class vfIECEBC_OptOut {
         ee.Source_Campaign__c = campaignId;
         ee.Other_Reason__c = String.join(userReasons, '\n');
         
-        ee.Type__c = 'OPTOUT';
+        //don't trigger the workflow - EBC Unsubscribe - in the context of a portal user
+        if(!Test.isRunningTest())
+            ee.Type__c = 'OPTOUT';
+
         if (sender != 'all') {
-	        ee.Unsubscribe_From__c = billingAccountId;
+            List<Zuora__CustomerAccount__c> bAccount = new List<Zuora__CustomerAccount__c>([SELECT id, Name from Zuora__CustomerAccount__c where id = :billingAccountId]);
+            if(bAccount != null){
+                for(Zuora__CustomerAccount__c ba : bAccount){
+                    ee.BillingAccName__c = ba.Name;
+                }
+            }
+            ee.Unsubscribe_From__c = billingAccountId;
         }
-        
         insert ee;
         
         PageReference pr = Page.IECEBC_PublicConfirmation;
         pr.setRedirect(true);
-        //pr.getParameters().put('e', ApexPages.currentPage().getParameters().get('e'));
+        pr.getParameters().put('e', ApexPages.currentPage().getParameters().get('e'));
         return pr;
     }
-    
+    public string getemailurl(){        
+        return EncodingUtil.urlEncode(ApexPages.currentPage().getParameters().get('e'), 'UTF-8');
+        //return ApexPages.currentPage().getParameters().get('e');
+    }
     public Map<String, Boolean> reasons {
         get {
             if (reasons == null) {
-                reasons = new Map<String, Boolean>{
-                    'The content is not relevant to me' => false,
-                    'This email address is not meant for such content' => false,
-                    'You send too many emails' => false,
-                    'I get too many emails in general' => false
-                };
+                reasons = new Map<String, Boolean>();
+                for (String st:reasonslist) reasons.put(st,false);  
             }
             return reasons;
+        }
+        set;
+    }
+    public List<String> reasonslist {
+        get {
+            if (reasonslist ==null){
+                reasonslist = new List<String>{
+                'The content is not relevant for me' ,
+                'I receive too many emails in general',
+                'I receive too many emails from this service',
+                'This email address is not meant for such content'};
+            }      
+            return reasonslist;
         }
         set;
     }

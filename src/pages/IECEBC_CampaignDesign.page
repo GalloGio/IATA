@@ -14,21 +14,61 @@
             	.plugin-container.loaded {}
 	            	.plugin-container.loaded iframe { display: block !important; }
 	            	.plugin-container.loaded div#notice { display: none !important; }
+                
+                #IECEBC_MosaicoEditor {
+	                border-bottom: 1px solid #ccc;
+                }
+                .footer-actions {
+                	margin: 0 !important;
+                	padding: 10px;
+                	border: 0 !important;
+                }
+                .main-content { margin-bottom: 0 !important; }
+                footer { display: none !important; }
+                #notice {
+	                text-align: center;
+                }
+                #notice .container {
+                    position: relative;
+                    top: 50%;
+                    transform: translateY(-50%);
+                }
+                .inner-wrapper {
+                	 max-width: 100% !important;
+                }
+                html, body { overflow-y: hidden; }
             </style>
             <!-- End of Page </head> -->
         </apex:define>
         <apex:define name="pageScriptAdditions">
             <!-- If any page specific .js, add them here -->
+            <script>
+            	function adjustMosaicoHeight() {
+                    viewportHeight = jQuery( window ).height();
+                    footerHeight = jQuery('.footer-actions').outerHeight();
+                    headerHeight = jQuery('.page-header').outerHeight();
+                    iframeDiff = jQuery('#IECEBC_MosaicoEditor,#IECEBC_CampaignPreview').outerHeight() - jQuery('#IECEBC_MosaicoEditor,#IECEBC_CampaignPreview').innerHeight();
+                	jQuery('#IECEBC_MosaicoEditor,#IECEBC_CampaignPreview').height(viewportHeight - (footerHeight + headerHeight + iframeDiff));
+                    
+                    noticeDiff = jQuery('#notice').outerHeight() - jQuery('#notice').innerHeight();
+                	jQuery('#notice').height(viewportHeight - (footerHeight + headerHeight + noticeDiff));
+                }
+            
+            	jQuery(document).ready(adjustMosaicoHeight);
+            	jQuery(window).resize(adjustMosaicoHeight);
+            </script>
         </apex:define>
         <apex:define name="pageContent">
             <!-- Start of Page Content -->
             <main class="main-content">
-                <div class="inner-wrapper">
+                <div class="inner-wrapper" style="padding: 0 !important;">
                     <apex:outputText rendered="{!campaign.Is_Step4_Writable__c}">
                         <div class="plugin-container">
-                            <iframe id="IECEBC_MosaicoEditor" src="/iec/IECEBC_MosaicoEditor?Id={!campaign.EBC_Design__c}" frameborder="false" scrolling="true" width="100%" height="1200"></iframe>
+                            <iframe id="IECEBC_MosaicoEditor" src="{!URLFOR($Page.IECEBC_MosaicoEditor)}?Id={!campaign.EBC_Design__c}" frameborder="false" scrolling="true" width="100%" height="1200"></iframe>
                             <div id="notice">
-                                <img src="/img/loading32.gif" align="left" /> Loading Editor. If you have problem to see the editor, please <a href="/iec/IECEBC_MosaicoEditor?Id={!campaign.EBC_Design__c}">click here</a>.
+                                <div class="container">
+                                    <img src="/img/loading32.gif" valign="middle" /> Loading Editor. If you have problem to see the editor, please <a href="{!URLFOR($Page.IECEBC_MosaicoEditor)}?Id={!campaign.EBC_Design__c}">click here</a>.
+                                </div>
                             </div>
                         </div>
                         <script type="text/javascript">
@@ -48,7 +88,7 @@
                             } catch(e) { }
                             
                             if (!isCallbackAvailable) {
-                                jQuery('#notice').html('Your browser cannot load the embeded editor. Please open it full screen by following <a href="/iec/IECEBC_MosaicoEditor?Id={!campaign.EBC_Design__c}">click here</a>');
+                                jQuery('#notice').html('Your browser cannot load the embeded editor. Please open it full screen by following <a href="{!URLFOR($Page.IECEBC_MosaicoEditor)}?Id={!campaign.EBC_Design__c}">click here</a>');
                             }
                         }
                         </script>
@@ -56,9 +96,9 @@
                     <apex:outputText rendered="{!NOT(campaign.Is_Step4_Writable__c)}">
                         <c:IECEBC_ProgressComponent currentStepNumber="{!currentStepNumber}" campaign="{!EBC_Campaign__c}" />
                         
-                        <h1 class="page-title">Design your campaign</h1>
+                        <h1 class="page-title">Campaign Design</h1>
                         
-                        <iframe id="IECEBC_CampaignPreview" src="/iec/IECEBC_CampaignPreview?Id={!campaign.EBC_Design__c}" frameborder="false" scrolling="true" width="100%" height="600"></iframe>
+                        <iframe id="IECEBC_CampaignPreview" src="{!URLFOR($Page.IECEBC_CampaignPreview)}?Id={!campaign.EBC_Design__c}" frameborder="false" scrolling="true" width="100%" height="1200"></iframe>
                     </apex:outputText>
                     <apex:form >
                         <div class="footer-actions text-right">
@@ -68,13 +108,12 @@
                                 </apex:outputText>
                                 
                                 <apex:outputText rendered="{!campaign.Is_Step4_Writable__c}">
-                                    <li><apex:commandLink onclick="if (isCallbackAvailable) { viewModel.save.execute(); } location.href='/iec/iecebc_dashboard'; return false;" styleClass="button secondary" value="Save and Return to Dashboard" /></li>
+                                    <li><apex:commandLink onclick="if (isCallbackAvailable) { viewModel.save.execute(); } location.href='{!URLFOR($Page.IECEBC_Dashboard)}'; return false;" styleClass="button secondary" value="Save and Return to Dashboard" /></li>
+	                                <li><apex:commandLink action="{!saveAsTemplate}" onclick="if(isCallbackAvailable) { viewModel.save.execute(true); }" oncomplete="viewModel.notifier.clear(); viewModel.notifier.success(document.getElementById('IECEBC_MosaicoEditor').contentWindow.globalViewModel.t('Template created successfully.'));" styleClass="button secondary" value="Save As Template" /></li>
                                 </apex:outputText>
                                 
-                                <li><apex:commandLink action="{!saveAsTemplate}" onclick="if(isCallbackAvailable) { viewModel.save.execute(true); }" oncomplete="console.log('x'); viewModel.notifier.clear(); viewModel.notifier.success(document.getElementById('IECEBC_MosaicoEditor').contentWindow.globalViewModel.t('Template created successfully.'));" styleClass="button secondary" value="Save As Template" /></li>
-                                
                                 <apex:outputText rendered="{!campaign.Is_Step4_Writable__c}">
-                                    <li><apex:commandLink action="{!next}" onclick="if(isCallbackAvailable) { viewModel.save.execute(); location.href='/iec/IECEBC_CampaignSchedule?id={!campaign.Id}'; return false; }" styleClass="button" value="Continue" /></li>
+                                    <li><apex:commandLink action="{!next}" onclick="if(isCallbackAvailable) { viewModel.save.execute(); location.href='{!URLFOR($Page.IECEBC_CampaignSchedule)}?id={!campaign.Id}'; return false; }" styleClass="button" value="Continue" /></li>
                                 </apex:outputText>
                                 
                                 <apex:outputText rendered="{!NOT(campaign.Is_Step4_Writable__c)}">

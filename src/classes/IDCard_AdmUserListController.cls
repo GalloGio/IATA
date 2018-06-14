@@ -23,7 +23,7 @@ global with sharing class IDCard_AdmUserListController extends IDCardAbstractCon
   public Map<string, ContactViewProxy> contMap {get; set;}
   //public Map<string,ContactViewProxy> contMap{get;set;}
 
-  private final string CANCELLED = 'Cancelled';
+  private final string CANCELLED = 'Cancelled ID Card';
 
   public boolean createNewIDCardApp {get; set;}
   public Blob file {get; set;}
@@ -443,7 +443,7 @@ global with sharing class IDCard_AdmUserListController extends IDCardAbstractCon
                                    ORDER BY Valid_To_Date__c DESC
                                    LIMIT 1];
       for (ID_Card__c idc : idcs) {
-        idc.MustSyncWithAIMS__c = true;
+        //idc.MustSyncWithAIMS__c = true;
         idc.Card_status__c = CANCELLED;
         idc.Cancellation_date__c = date.today();
       }

@@ -72,6 +72,10 @@
                 <behavior>Edit</behavior>
                 <field>ISSP_AMS_Date_license_granted__c</field>
             </layoutItems>
+            <layoutItems>
+                <behavior>Readonly</behavior>
+                <field>ANG_IsNewGenAgency__c</field>
+            </layoutItems>
         </layoutColumns>
         <layoutColumns>
             <layoutItems>

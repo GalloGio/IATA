@@ -56,15 +56,15 @@ public class AMS_EmployeeHelperTest{
     public static testmethod void testAddContactIfEmpty(){
         Account acc = new Account(Name='Test Account');
         insert acc ;
-        Contact c = new Contact(LastName = 'Test Contact', AccountId = acc.Id);
+        Contact c = new Contact(FirstName = 'Name', LastName = 'Test Contact', AccountId = acc.Id);
         insert c;
-        Contact c2 = new Contact(LastName = 'Test Contact 2', AccountId = acc.Id);
+        Contact c2 = new Contact(FirstName = 'Name', LastName = 'Test Contact 2', AccountId = acc.Id);
         insert c2;
-        AMS_Person__c p = new AMS_Person__c(Lastname__c = 'Test Contact', legacy_system__c ='WEBSTAR', DOB__c = Date.newInstance(2000, 1, 1), Email__c = 'testing@test.com');
+        AMS_Person__c p = new AMS_Person__c(First_Name__c = 'Name', Lastname__c = 'Test Contact', legacy_system__c ='WEBSTAR', DOB__c = Date.newInstance(2000, 1, 1), Email__c = 'testing@test.com');
         insert p;
-        AMS_Person__c p2 = new AMS_Person__c(Lastname__c = 'Test Contact 2');
+        AMS_Person__c p2 = new AMS_Person__c(First_Name__c = 'Name', Lastname__c = 'Test Contact 2');
         insert p2;
-        AMS_Person__c p3 = new AMS_Person__c(Lastname__c = 'Test Person 3', Email__c = 'teste@test.com');
+        AMS_Person__c p3 = new AMS_Person__c(First_Name__c = 'Name', Lastname__c = 'Test Person 3', Email__c = 'teste@test.com');
         insert p3;
         IATA_ISO_Country__c ctry = new IATA_ISO_Country__c (Name='US',ISO_Code__c='US')  ;
         insert ctry ;

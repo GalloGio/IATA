@@ -95,6 +95,8 @@ public class AMS_AgencyUpdateHelperTest {
     public static Account a2 = null;
     public static Account a3 = null;
     public static Account a4 = null;
+    public static Account a5 = null;
+    public static Account a6 = null;
     
     public static AMS_Agency_Profile__c ap1 = null;
     public static AMS_Agency_Profile__c ap2 = null;
@@ -219,7 +221,7 @@ public class AMS_AgencyUpdateHelperTest {
         updateAll.add(a4);
         update updateAll;
         
-        List<AMS_Agency_Updates__c> agencyUpdateList = [select id, Update_Type__c, RelationShip__c, Account__c from AMS_Agency_Updates__c];
+        List<AMS_Agency_Updates__c> agencyUpdateList = [select id, Update_Type__c, RelationShip__c, Account__c from AMS_Agency_Updates__c WHERE Integration_System__c = 'SAP PI'];
         System.assertEquals(4, agencyUpdateList.size());
         for(AMS_Agency_Updates__c au :agencyUpdateList){
             //System.assertEquals('Update', au.Update_Type__c);
@@ -481,7 +483,7 @@ public class AMS_AgencyUpdateHelperTest {
         a1.Name='Update Agency 1';
         update a1;
         
-        AMS_Agency_Updates__c agencyUpdate = [select id, Update_Type__c, RelationShip__c, Account__c from AMS_Agency_Updates__c];
+        AMS_Agency_Updates__c agencyUpdate = [select id, Update_Type__c, RelationShip__c, Account__c from AMS_Agency_Updates__c WHERE Integration_System__c = 'SAP PI'];
 
         Test.startTest();
         agencyUpdate.Update_Type__c = 'Update_Sent';
@@ -489,6 +491,146 @@ public class AMS_AgencyUpdateHelperTest {
 
 
         //system.assertEquals(true, [SELECT Sent_To_External_System__c FROM Account WHERE Id = :a1.id].Sent_To_External_System__c);
+        Test.stopTest();
+    }
+
+
+
+
+
+    static testMethod void test_agencyUpdate_sentUpdate2() {
+        configureTest();
+
+        AMS_Agency_Updates__c agencyUpdate1 = new AMS_Agency_Updates__c(Update_Type__c = 'Update',  Account__c = a1.id);
+        insert agencyUpdate1;
+        
+        List<Agency_Applied_Change_code__c> aacclist = new List<Agency_Applied_Change_code__c>();
+        Agency_Applied_Change_code__c aacc1 = new Agency_Applied_Change_code__c(Account__c = a1.Id, Change_Code__c = 'TST',  Sent_to_external_system__c = false);
+        aacclist.add(aacc1);
+        insert aacclist;
+
+        List<SObject> updateAll = new List<SObject>();
+        a1.Name='Update Agency 1';
+        update a1;
+        
+        List<AMS_Agency_Updates__c> agencyUpdate = [select id, Update_Type__c, RelationShip__c, Account__c from AMS_Agency_Updates__c];
+
+        Test.startTest();
+        agencyUpdate[0].Update_Type__c = 'Update_Sent';
+        update agencyUpdate;
+
+        Test.stopTest();
+    }
+
+
+    // Increase Code Coverage
+    public static testmethod void test_ICC_01() {
+        List<AMS_ChangeCodes__c> changeCodeList = new List<AMS_ChangeCodes__c>{
+            new AMS_ChangeCodes__c(
+                Name = '10', Change_Code__c = 'DWD', Integration_RecId__c = 'C'
+            ),
+            new AMS_ChangeCodes__c(
+                Name = '100', Change_Code__c = 'TRW', Integration_RecId__c = 'C'
+            ),
+            new AMS_ChangeCodes__c(
+                Name = '200', Change_Code__c = 'TST', Integration_RecId__c = 'D'
+            ),
+            new AMS_ChangeCodes__c(
+                Name = '300', Change_Code__c = 'TRT', Integration_RecId__c = 'F'
+            )
+        };
+
+        insert changeCodeList;
+
+        List<AMS_ChangeCodes_Integration__c> changeCodeIntegrationList = new List<AMS_ChangeCodes_Integration__c>{
+            new AMS_ChangeCodes_Integration__c(
+                Name = 'test1',
+                RecId_A__c = 'C',
+                RecId_B__c = 'F',
+                RecId_Res__c = 'F'
+            )
+        };
+
+        insert changeCodeIntegrationList;
+
+
+        insert ctry ;
+        a1 = new Account(Name='Test1 Parent Agency',Short_Name__c='Test1 Parent Agency', IATAcode__c = '1234567', IATA_ISO_Country__c = ctry.id, Sector__c = 'Travel Agent'/*, RecordTypeId = agenciesRT.get('PASSENGER')*/);
+        a2 = new Account(Name='Test1 Child Agency',Short_Name__c='Test1 Child Agency', IATAcode__c = '4566123', IATA_ISO_Country__c = ctry.id, Sector__c = 'Travel Agent'/*, RecordTypeId = agenciesRT.get('PASSENGER')*/);
+        a3 = new Account(Name='Test2 Parent Agency',Short_Name__c='Test2 Parent Agency', IATAcode__c = '7891234', IATA_ISO_Country__c = ctry.id, Sector__c = 'Travel Agent'/*, RecordTypeId = agenciesRT.get('PASSENGER')*/);
+        a4 = new Account(Name='Test2 Child Agency',Short_Name__c='Test2 Child Agency', IATAcode__c = '0001234', IATA_ISO_Country__c = ctry.id, Sector__c = 'Travel Agent'/*, RecordTypeId = agenciesRT.get('PASSENGER')*/);
+        a5 = new Account(Name='Test3 Parent Agency',Short_Name__c='Test3 Parent Agency', IATAcode__c = '7891235', IATA_ISO_Country__c = ctry.id, Sector__c = 'Travel Agent'/*, RecordTypeId = agenciesRT.get('PASSENGER')*/);
+        a6 = new Account(Name='Test3 Child Agency',Short_Name__c='Test3 Child Agency', IATAcode__c = '0001235', IATA_ISO_Country__c = ctry.id, Sector__c = 'Travel Agent'/*, RecordTypeId = agenciesRT.get('PASSENGER')*/);
+        agencylist.add(a1);
+        agencylist.add(a2);
+        agencylist.add(a3);
+        agencylist.add(a4);
+        agencylist.add(a5);
+        agencylist.add(a6);
+        insert agencylist;
+
+        List<Agency_Applied_Change_code__c> aacclist = new List<Agency_Applied_Change_code__c>();
+        Agency_Applied_Change_code__c aacc1 = new Agency_Applied_Change_code__c(Account__c = a1.Id, Change_Code__c = 'TST',  Sent_to_external_system__c = false);
+        Agency_Applied_Change_code__c aacc2 = new Agency_Applied_Change_code__c(Account__c = a2.Id, Change_Code__c = 'TST',  Sent_to_external_system__c = false);
+        Agency_Applied_Change_code__c aacc3 = new Agency_Applied_Change_code__c(Account__c = a3.Id, Change_Code__c = 'TST',  Sent_to_external_system__c = false);
+        aacclist.add(aacc1);
+        aacclist.add(aacc2);
+        aacclist.add(aacc3);
+        insert aacclist;
+
+        List<AMS_Agencies_Hierarchy__c> hierachieslist = new List<AMS_Agencies_Hierarchy__c>();
+        AMS_Agencies_Hierarchy__c ah1 = new AMS_Agencies_Hierarchy__c(Hierarchy_Name__c='Test Hierarchy');
+        AMS_Agencies_Hierarchy__c ah2 = new AMS_Agencies_Hierarchy__c(Hierarchy_Name__c='Another Test Hierarchy');
+        hierachieslist.add(ah1);
+        hierachieslist.add(ah2);
+        insert hierachieslist;
+
+        List<AMS_Agencies_relationhip__c> relationshiplist = new List<AMS_Agencies_relationhip__c>();
+        AMS_Agencies_relationhip__c ar1 = new AMS_Agencies_relationhip__c(Relationship_details__c='Test',Hierarchy__c=ah1.id,Child_Account__c=a2.id,Parent_Account__c=a1.id);
+        AMS_Agencies_relationhip__c ar2 = new AMS_Agencies_relationhip__c(Relationship_details__c='Test',Hierarchy__c=ah2.id,Child_Account__c=a4.id,Parent_Account__c=a3.id);
+        AMS_Agencies_relationhip__c ar3 = new AMS_Agencies_relationhip__c(Relationship_details__c='Test',Hierarchy__c=ah1.id,Child_Account__c=a6.id,Parent_Account__c=a4.id);
+        relationshiplist.add(ar1);
+        relationshiplist.add(ar2);
+        relationshiplist.add(ar3);
+        insert relationshiplist;
+
+        Test.startTest();
+        ah1.Hierarchy_Name__c = 'Test update';
+        ah2.Hierarchy_Name__c = 'Test update';
+        ar1.Relationship_details__c = 'Test update';
+        ar2.Relationship_details__c = 'Test update';
+        List<SObject> updateAll = new List<SObject>();
+        updateAll.add(ah1);
+        updateAll.add(ah2);
+        updateAll.add(ar1);
+        updateAll.add(ar2);
+        update updateAll;
+
+
+        Agency_Applied_Change_code__c xpto1 = new Agency_Applied_Change_code__c(Account__c = a1.Id, Change_Code__c = 'TRW',  Sent_to_external_system__c = false);
+        Agency_Applied_Change_code__c xpto2 = new Agency_Applied_Change_code__c(Account__c = a1.Id, Change_Code__c = 'TRT',  Sent_to_external_system__c = false);
+
+        insert xpto1;
+        insert xpto2;
+
+        List<AMS_Agency_Updates__c> agencyUpdateList = [select id, Change_Code__c, Update_Type__c, RelationShip__c, Account__c from AMS_Agency_Updates__c where Account__c = :agencyList[0].Id];
+
+        agencyList[0].Last_Integration_Date__c = null;
+
+        update agencyList[0];
+
+
+        for (AMS_Agency_Updates__c au : agencyUpdateList) {
+            au.Change_Code__c = 'DWD';
+            au.Update_Type__c = 'Update';
+        }
+
+        update agencyUpdateList;
+
+        AMS_AgencyUpdateHelper.agencyUpdate(agencyList);
+
+        AMS_AgencyUpdateHelper.agencyUpdate(agencyUpdateList);
+
         Test.stopTest();
     }
     

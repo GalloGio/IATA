@@ -5,7 +5,7 @@
            standardStylesheets="false"
            >
 <html>
- <c:ISSP_Header ></c:ISSP_Header>    
+ <c:ISSP_Header communityName="{!communityName}"></c:ISSP_Header>    
  <body>
      <style>
      	.pbBody td {width:30%; padding-top:10px}
@@ -32,7 +32,7 @@
          
     </style>
   <div class="container">
-      <c:ISSP_CustomNavigation />
+      <c:ISSP_CustomNavigation communityName="{!communityName}"/>
 
       <h4>{!$Label.ISSP_Assign_IFAP}</h4>
       <br/>
@@ -46,7 +46,7 @@ rendered="{!AND(isIATAAgencyAcct, isTopParentAcct)}"  buttonLocation="both" butt
 <apex:outputText rendered="{!!isIATAAgencyAcct}" value="Assigning the Financial Assessment Contact is only applicable for Accounts of 
 type IATA Passenger Sales Agent or IATA Cargo Agent."/>
 
-<c:ISSP_CustomFooter />
+<c:ISSP_CustomFooter communityName="{!communityName}"/>
   </div><!-- end container-->  
         </body>
     </html>      

@@ -4,6 +4,9 @@
     <email>agencyriskmgmtgva@iata.org</email>
     <name>Agency Risk Management - head office</name>
     <queueSobject>
+        <sobjectType>AMS_OSCAR__c</sobjectType>
+    </queueSobject>
+    <queueSobject>
         <sobjectType>Case</sobjectType>
     </queueSobject>
 </Queue>
