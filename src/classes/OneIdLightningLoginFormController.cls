@@ -73,7 +73,10 @@ public without sharing class OneIdLightningLoginFormController {
                     //if login is from mobileApp we do not redirect
                     if(startUrl != 'mobileApp') pageLink = startUrl;
 
-                }else if( String.isNotBlank(serviceName) && serviceName == 'ISSP') pageLink = OneIdUtils.getSiteCompleteUrl(OneIdUtils.Mode.ISSP) + '/ISSP_Homepage';
+                }
+
+                //Overrides previous action
+                if( String.isNotBlank(serviceName) && serviceName == 'ISSP') pageLink = OneIdUtils.getSiteCompleteUrl(OneIdUtils.Mode.ISSP) + '/ISSP_Homepage';
                 
                 if (oneUser.Portal_User_Frozen_Checkbox__c){
                     show90Days = true;
