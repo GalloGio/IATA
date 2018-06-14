@@ -190,7 +190,7 @@
                                     {!c.Location_Type__c} ({!c.Location_Class__c})
                                 </apex:outputPanel>
 
-                                <apex:image styleClass="verificationIcon" value="{!IF(NOT(accountsActive[c.IATACode__c]), URLFOR($Resource.AMS_Icons, 'not_started.png'), IF(accreditationAreasOKNOK[c.IATACode__c] == 'OK', URLFOR($Resource.AMS_Icons, 'passed.png') , IF(accreditationAreasOKNOK[c.IATACode__c] == 'NOK',URLFOR($Resource.AMS_Icons, 'failed.png') , URLFOR($Resource.AMS_Icons, 'in_progress.png')) )) }" width="17" height="17"/>
+                                <apex:image styleClass="verificationIcon" value="{!IF(NOT(accountsActive[c.IATACode__c]), URLFOR($Resource.AMS_Icons, 'not_applicable.png'), IF(accreditationAreasOKNOK[c.IATACode__c] == 'OK', URLFOR($Resource.AMS_Icons, 'passed.png') , IF(accreditationAreasOKNOK[c.IATACode__c] == 'NOK',URLFOR($Resource.AMS_Icons, 'failed.png') , URLFOR($Resource.AMS_Icons, 'in_progress.png')) )) }" width="17" height="17"/>
 
 
                                 <br></br>
