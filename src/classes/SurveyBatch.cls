@@ -43,11 +43,11 @@ global class SurveyBatch implements Database.Batchable<sObject>, Database.Statef
 
   // Mapping of the complaint queues per region
   global map<String, String> mapComplaintQueueNamePerRegion = new map<String, String> {
-    'Africa & Middle East' => 'CasesComplaintsAME',
-    'Americas' => 'Cases_Complaints_Americas',
+    'Africa & Middle East' => 'Cases_Complaints_GDC_MAD',
+    'Americas' => 'Cases_Complaints_GDC_MAD',
     'China & North Asia' => 'Cases_Complaints_BJS',
     'Asia & Pacific' => 'Cases_Complaints_SIN',
-    'Europe' => 'CasesOCITComplaints'
+    'Europe' => 'Cases_Complaints_GDC_MAD'
   };
 
   // List of the DeveloperNames of the Case record types that are in the scope of this customer recorvery process

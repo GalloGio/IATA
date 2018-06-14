@@ -228,7 +228,7 @@
 						<apex:column styleClass="{!IF(ac.changedFieldsMap['Portal_administrator__c'],'editable','')}" value="{!ac.ac.Portal_administrator__c}"/>
 						<apex:column styleClass="{!IF(ac.changedFieldsMap['Mobile__c'],'editable','')}" value="{!ac.ac.Mobile__c}"/>
 						<apex:column styleClass="{!IF(ac.changedFieldsMap['FAX__c'],'editable','')}" value="{!ac.ac.FAX__c}"/>
-						<apex:column styleClass="{!IF(ac.changedFieldsMap['Financial_interest__c'],'editable','')}" value="{!ac.ac.Financial_interest__c} - {!ac.changedFieldsMap['Financial_interest__c']}"/>
+						<apex:column styleClass="{!IF(ac.changedFieldsMap['Financial_interest__c'],'editable','')}" value="{!ac.ac.Financial_interest__c}"/>
 				</apex:pageblocktable >
 	
 			</apex:pageBlockSection>
