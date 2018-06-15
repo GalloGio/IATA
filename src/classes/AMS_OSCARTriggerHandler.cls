@@ -3611,7 +3611,7 @@ public class AMS_OSCARTriggerHandler {
         String statusForCC = 'Active';
 
         if(oscar.Process__c == AMS_Utils.NEWAE || oscar.Process__c == AMS_Utils.NEWHESTANDARD)
-            statusForCC = oscar.Is_PCI_compliant__c == 'Yes' ? 'Active' : 'Non-Active';
+            statusForCC = (oscar.Is_PCI_compliant__c == 'Yes' || oscar.Is_PCI_compliant__c == 'Corporate Card'  ? 'Active' : 'Non-Active');
         else if(oscar.Process__c == AMS_Utils.NEWHELITE){
 
             if(oscar.Is_PCI_compliant__c == 'Yes' && oscar.Is_using_credit_card__c && oscar.STEP35__c == AMS_Utils.PASSED)
