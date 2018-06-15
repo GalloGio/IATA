@@ -1046,7 +1046,7 @@ global class ANG_OscarProcessHelper {
 					fieldList.add(field);
 			}
 
-			AMS_Pax_Accreditation_Form__c acr = Database.query('SELECT '+String.join(fieldList, ', ')+' FROM AMS_Pax_Accreditation_Form__c WHERE Id = :accreditationId LIMIT 1');
+			AMS_Pax_Accreditation_Form__c acr = Database.query('SELECT '+String.join(fieldList, ', ')+', HO_Account__r.BillingCountry, HO_Account__r.Region_formula__c, HO_Account__r.IATACode__c, HO_Account__r.Name FROM AMS_Pax_Accreditation_Form__c WHERE Id = :accreditationId LIMIT 1');
 
 			AMS_Pax_Accreditation_Form__c newAccr = acr.clone(false, true, false, false);
 
