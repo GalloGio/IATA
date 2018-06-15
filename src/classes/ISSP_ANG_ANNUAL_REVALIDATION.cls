@@ -1232,7 +1232,8 @@ public with sharing class ISSP_ANG_ANNUAL_REVALIDATION {
 				}
 			}
 
-			If(currentAccount.isocountry.Local_language_Agency_details_required__c && currentAccount.fw.newform.Is_change_legal_name__c && currentAccount.fw.newform.Notify_Change_Legal_Details__c && currentAccount.fw.newform.Local_Legally_Registered_Name__c == null) {
+			if(currentAccount.isocountry.Local_language_Agency_details_required__c && currentAccount.fw.newform.Is_change_legal_name__c && currentAccount.fw.newform.Notify_Change_Legal_Details__c) {
+			//if(currentAccount.fw.newform.Is_change_legal_name__c && currentAccount.fw.newform.Notify_Change_Legal_Details__c && currentAccount.fw.newform.Local_Legally_Registered_Name__c == null) {	
 				currentAccount.fw.newform.Local_Legally_Registered_Name__c.addError(Label.ISSP_YouMustEnter);
 				errorFound = true;
 			}
