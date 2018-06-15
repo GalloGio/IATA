@@ -6101,34 +6101,7 @@
                 ],
                 "DisplayFields": [
                   "Update_IRIS_processing__c",
-                  "Confirm_DD_setup_with_R_S__c",
                   "STEP41__c"
-                ],
-                "IsDependent": false
-              }
-            ]
-          },
-          {
-            "Name": "AMS_OSCAR_SETUP_FINALIZATION",
-            "Steps": [
-              {
-                "Name": "STEP42",
-                "Required": [],
-                "Actions": [],
-                "Automations": [
-                  {
-                    "Status": "Passed",
-                    "ClassName": "AMS_OSCAR_Automation.AMS_OSCAR_Step42_succeeded"
-                  },
-                  {
-                    "Status": "Failed",
-                    "ClassName": "AMS_OSCAR_Automation.AMS_OSCAR_Step42_failed"
-                  }
-                ],
-                "DisplayFields": [
-                  "Confirm_DD_setup_with_agent__c",
-                  "Effective_date__c",
-                  "STEP42__c"
                 ],
                 "IsDependent": false
               }
