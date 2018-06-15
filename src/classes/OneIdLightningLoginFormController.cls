@@ -69,7 +69,8 @@ public without sharing class OneIdLightningLoginFormController {
                 system.debug('Portal_User_Frozen_Checkbox__c: ' + oneUser.Portal_User_Frozen_Checkbox__c);                
                 
                 
-                if(String.isNotBlank(startUrl)){
+                //sometimes, javascript from component is passing "undefined". Must be interpreted as NULL
+                if(String.isNotBlank(startUrl) && !startUrl.equalsIgnoreCase('undefined')){
                     //if login is from mobileApp we do not redirect
                     if(startUrl != 'mobileApp') pageLink = startUrl;
 
