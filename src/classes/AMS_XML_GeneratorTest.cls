@@ -1,14 +1,14 @@
 @isTest
 private class AMS_XML_GeneratorTest {
     
-    private static Id  programRT  =  TransformationHelper.RtIDsPerDeveloperNamePerObj(new list<string> {'AMS_Segment__c'}).get('AMS_Segment__c').get('IATA_Code_Programs');
+    private static Id  programRT  =  RecordTypeSingleton.getInstance().getRecordTypeId('AMS_Segment__c', 'IATA_Code_Programs');
     
     private static AMS_Segment__c prog1 = new AMS_Segment__c (label__c='A',RecordTypeId=programRT );
     private static AMS_Segment__c prog2 = new AMS_Segment__c (label__c='S',RecordTypeId=programRT );
     private static AMS_Segment__c prog3 = new AMS_Segment__c (label__c='C',RecordTypeId=programRT );
-    private static Id rtAccRoleOwnership = Schema.SObjectType.AMS_Account_Role__c.getRecordTypeInfosByName().get('Ownership').getRecordTypeId();
-    private static Id rtAccRoleEmployee = Schema.SObjectType.AMS_Account_Role__c.getRecordTypeInfosByName().get('Employee').getRecordTypeId();
-    private static Id rtIATAStandardContact = Schema.SObjectType.Contact.getRecordTypeInfosByName().get('IATA Standard Contact').getRecordTypeId();
+    private static Id rtAccRoleOwnership = RecordTypeSingleton.getInstance().getRecordTypeId('AMS_Account_Role__c', 'Ownership');
+    private static Id rtAccRoleEmployee = RecordTypeSingleton.getInstance().getRecordTypeId('AMS_Account_Role__c', 'Employee');
+    private static Id rtIATAStandardContact = RecordTypeSingleton.getInstance().getRecordTypeId('Contact', 'IATAStandardContact');
 
     private static AMS_Segment__c[] prgms = null;
 
@@ -63,8 +63,6 @@ private class AMS_XML_GeneratorTest {
 
         insert listofxml;
         
-        system.debug(Logginglevel.ERROR, 'ALEX 1 --> Query issued: ' + Limits.getQueries());
-
         AMS_XML_Tags__c xmltag1 = new AMS_XML_Tags__c(Name='Account',Name__c='Account',Tag__c='account');
         AMS_XML_Tags__c xmltag2 = new AMS_XML_Tags__c(Name='IATA_ISO_State',Name__c='IATA_ISO_State',Tag__c='iso_state');
         
@@ -72,13 +70,9 @@ private class AMS_XML_GeneratorTest {
         listofxmltag.add(xmltag1);
         insert listofxmltag;
         
-        system.debug(Logginglevel.ERROR, 'ALEX 2 --> Query issued: ' + Limits.getQueries());
-
         prgms = new AMS_Segment__c[]{prog1,prog2,prog3};
         insert prgms;
         
-        system.debug(Logginglevel.ERROR, 'ALEX 3 --> Query issued: ' + Limits.getQueries());
-
         Set<String> sAgIDs = new Set<String>();
 
         List<AMS_Settlement_System__c> settlementSystemList = new List<AMS_Settlement_System__c>();
@@ -88,8 +82,6 @@ private class AMS_XML_GeneratorTest {
         settlementSystemList.add(sett_cass);
         insert settlementSystemList;
         
-        system.debug(Logginglevel.ERROR, 'ALEX 4 --> Query issued: ' + Limits.getQueries());
-
         //Countries
         List<IATA_ISO_Country__c> countrylist = new List<IATA_ISO_Country__c>();
         IATA_ISO_Country__c ctr1 = new IATA_ISO_Country__c(Name='Test1 country',ISO_Code__c='PT',AMS_Settlement_System__c = sett_dpc.Id, AMS_Settlement_System_CASS__c = sett_cass.Id);
@@ -102,8 +94,6 @@ private class AMS_XML_GeneratorTest {
         countrylist.add(ctr4);
         insert countrylist;
         
-        system.debug(Logginglevel.ERROR, 'ALEX 5 --> Query issued: ' + Limits.getQueries());
-
         List<IATA_ISO_State__c> statelist = new List<IATA_ISO_State__c>();
         IATA_ISO_State__c st1 = new IATA_ISO_State__c(Name='Test1 state',IATA_ISO_Country__c=ctr1.Id, ISO_Code__c='PT50',Iso_code_standard__c='PT50');
         IATA_ISO_State__c st2 = new IATA_ISO_State__c(Name='Test2 state',IATA_ISO_Country__c=ctr2.Id, ISO_Code__c='AU-ACT',Iso_code_standard__c='AU-ACT');
@@ -115,16 +105,9 @@ private class AMS_XML_GeneratorTest {
         statelist.add(st4);
         insert statelist;
         
-        system.debug(Logginglevel.ERROR, 'ALEX 6 --> Query issued: ' + Limits.getQueries());
-
-
         IATA_ISO_Country__c ctry = new IATA_ISO_Country__c (Name='US',ISO_Code__c='US',AMS_Settlement_System__c = sett_dpc.Id, AMS_Settlement_System_CASS__c = sett_cass.Id);
         insert ctry ;
         
-        system.debug(Logginglevel.ERROR, 'ALEX 7 --> Query issued: ' + Limits.getQueries());
-
-        Map<string, Id>  agenciesRT = TransformationHelper.RtIDsPerDeveloperNamePerObj(new list<string> {'AMS_Agency__c'}).get('AMS_Agency__c');
-
         List<Account> accountList = new List<Account>();
         Account ag1 = new Account(Name='Test1 Account', IATA_ISO_Country__c = ctr1.id, Sector__c = 'Travel Agent', IATACode__c = '1234567', Phone = '+351000000000',Abbreviated_address__c='Abbreviated_address__c',BillingStreet='BillingStreet',ShippingStreet='ShippingStreet',ShippingState='Test1 state',ShippingCountry='Test1 country',Accreditation_date__c=Date.newInstance(2016, 11, 11),Original_Approval_DAte__c=Date.newInstance(2016, 11, 11),Status__c='Approved',TradeName__c='TradeName',Location_Category__c='A;B',GDS__c='A;B',Location_Type__c='HO',Type='IATA Passenger Sales Agent',GDP_Opt_In__c=True);
         Account ag2 = new Account(Name='Test2 Account', IATA_ISO_Country__c = ctr1.id, Sector__c = 'Travel Agent', IATACode__c = '1234567', Phone = '+351000000000000',Abbreviated_address__c='Abbreviated_address__c',BillingStreet='BillingStreet',ShippingStreet='ShippingStreet',ShippingState='Test1 state',ShippingCountry='Test1 country',Original_Approval_DAte__c=Date.newInstance(2016, 11, 11),Status__c='Approved',Fax='+351911234567' );
@@ -144,8 +127,6 @@ private class AMS_XML_GeneratorTest {
         ag1.ParentId = ag6.id;
         update ag1;
         
-        system.debug(Logginglevel.ERROR, 'ALEX 8 --> Query issued: ' + Limits.getQueries());
-
         List<Agency_Applied_Change_code__c> aaccList = new List<Agency_Applied_Change_code__c>();
         Agency_Applied_Change_code__c aacc1 = new Agency_Applied_Change_code__c(Active__c = true, 
                         Account__c = ag1.Id, Change_Code__c = 'FIN', Bulletin_Information__c = 'changeCode.memoText',
@@ -181,8 +162,6 @@ private class AMS_XML_GeneratorTest {
         aaccList.add(aacc8);
         insert aaccList;
         
-        system.debug(Logginglevel.ERROR, 'ALEX 9 --> Query issued: ' + Limits.getQueries());
-            
         sAgIDs.add(ag1.Id);
         sAgIDs.add(ag2.Id);
         sAgIDs.add(ag3.Id);
@@ -199,8 +178,6 @@ private class AMS_XML_GeneratorTest {
         affiliationlist.add(aff4);
         insert affiliationlist;
         
-        system.debug(Logginglevel.ERROR, 'ALEX 10 --> Query issued: ' + Limits.getQueries());
-
         List<AMS_Agency_Affiliation__c> agencyAffiliationlist = new List<AMS_Agency_Affiliation__c>();
         AMS_Agency_Affiliation__c agaff1 = new AMS_Agency_Affiliation__c(Account__c=ag1.id, Affiliation__c=aff1.id);
         AMS_Agency_Affiliation__c agaff2 = new AMS_Agency_Affiliation__c(Account__c=ag2.id, Affiliation__c=aff2.id);
@@ -212,8 +189,6 @@ private class AMS_XML_GeneratorTest {
         agencyAffiliationlist.add(agaff4);
         insert agencyAffiliationlist;
         
-        system.debug(Logginglevel.ERROR, 'ALEX 11 --> Query issued: ' + Limits.getQueries());
-       
         List<AMS_Address__c> addresslist = new List<AMS_Address__c>();
         AMS_Address__c add1 = new AMS_Address__c(Address_1__c='Test1 Address',Account__c=ag1.Id,Country__c=ctr1.Id,State__c=st1.Id,Address_Type__c='Mailing');
         AMS_Address__c add2 = new AMS_Address__c(Address_1__c='Test2 Address',Account__c=ag2.Id,Country__c=ctr2.Id,State__c=st2.Id,Address_Type__c='Mailing');
@@ -224,8 +199,6 @@ private class AMS_XML_GeneratorTest {
         addresslist.add(add3);
         addresslist.add(add4);
         insert addresslist;
-
-        system.debug(Logginglevel.ERROR, 'ALEX 12 --> Query issued: ' + Limits.getQueries());
 
         List<AMS_Owner__c> ownerlist = new List<AMS_Owner__c>();
         AMS_Owner__c own1 = new AMS_Owner__c(Name='Test1 owner');
@@ -238,8 +211,6 @@ private class AMS_XML_GeneratorTest {
         ownerlist.add(own4);
         insert ownerlist;
         
-        system.debug(Logginglevel.ERROR, 'ALEX 13 --> Query issued: ' + Limits.getQueries());
-
         List<User> userList = new List<User>();
         User u1 = new User(FirstName='Test1 User',Division='UnitTest',License_Cost_Center__c='AAA000AA00',Username='test1@iata.org.amsdev1', LastName='Test1', Email='test1@iata.org', Alias='Test1', CommunityNickname='Test1', TimeZoneSidKey='Europe/Brussels', LocaleSidKey='en_US', EmailEncodingKey='UTF-8', ProfileId='00e20000000h0gFAAQ', LanguageLocaleKey='en_US');
         User u2 = new User(FirstName='Test2 User',Division='UnitTest',License_Cost_Center__c='AAA000AA00',Username='test2@iata.org.amsdev1', LastName='Test2', Email='test2@iata.org', Alias='Test2', CommunityNickname='Test2', TimeZoneSidKey='Europe/Brussels', LocaleSidKey='en_US', EmailEncodingKey='UTF-8', ProfileId='00e20000000h0gFAAQ', LanguageLocaleKey='en_US');
@@ -250,8 +221,6 @@ private class AMS_XML_GeneratorTest {
         userList.add(u3);
         userList.add(u4);
         insert userList;
-        
-        system.debug(Logginglevel.ERROR, 'ALEX 14 --> Query issued: ' + Limits.getQueries());
         
         List<Contact> contactList = new List<Contact>();
         Contact c1 = new Contact(AccountId=ag1.Id,FirstName='Test1 Contact',LastName='Test1',Preferred_Language__c='English',RecordTypeId=rtIATAStandardContact,Financial_Assessment_Contact__c=true);
@@ -264,8 +233,6 @@ private class AMS_XML_GeneratorTest {
         contactList.add(c4);
         insert contactList;
         
-        system.debug(Logginglevel.ERROR, 'ALEX 15 --> Query issued: ' + Limits.getQueries());
-        
         List<AMS_Person__c> personList = new List<AMS_Person__c>();
         AMS_Person__c p1 = new AMS_Person__c(Name='Test1 Person', User__c=u1.Id);//Contact__c=c1.Id,
         AMS_Person__c p2 = new AMS_Person__c(Name='Test2 Person', User__c=u2.Id);//Contact__c=c2.Id,
@@ -276,8 +243,6 @@ private class AMS_XML_GeneratorTest {
         personList.add(p3);
         personList.add(p4);
         insert personList;  
-        
-        system.debug(Logginglevel.ERROR, 'ALEX 16 --> Query issued: ' + Limits.getQueries());
         
         List<AMS_Account_Role__c> employeeList = new List<AMS_Account_Role__c>();
         AMS_Account_Role__c e1 = new AMS_Account_Role__c(Employee_Name__c='Test1 employee',RecordTypeId=rtAccRoleEmployee,Person__c=p1.Id,Employee_type__c='RG,CL',Account__c=ag1.Id,isManager__c=True,isTicketingAgent__c=True);
@@ -290,8 +255,6 @@ private class AMS_XML_GeneratorTest {
         employeeList.add(e4);
         insert employeeList;    
         
-        system.debug(Logginglevel.ERROR, 'ALEX 17 --> Query issued: ' + Limits.getQueries());
-
         List<AMS_Account_Role__c> ownershipList = new List<AMS_Account_Role__c>();
         AMS_Account_Role__c o1 = new AMS_Account_Role__c(Employee_Name__c='Test1 employee',Owner_Account__c=ag5.id,Percentage__c=100,RecordTypeId=rtAccRoleOwnership,Person__c=p1.Id,Employee_type__c='RG,CL',Account__c=ag1.Id);
         AMS_Account_Role__c o2 = new AMS_Account_Role__c(Employee_Name__c='Test2 employee',Owner_Account__c=ag5.id,Percentage__c=100,RecordTypeId=rtAccRoleOwnership,Person__c=p2.Id,Employee_type__c='RG,CL',Account__c=ag2.Id);
@@ -303,16 +266,12 @@ private class AMS_XML_GeneratorTest {
         ownershipList.add(o4);
         insert ownershipList;
 
-        system.debug(Logginglevel.ERROR, 'ALEX 18 --> Query issued: ' + Limits.getQueries());
-
         List< AMS_Agency_Segment__c > agsgts = new List< AMS_Agency_Segment__c >();
         for(Account a:accountList){
              agsgts.add(new AMS_Agency_Segment__c(account__c=a.Id, Segment__c = prog1.Id));
         }
         insert agsgts;
         
-        system.debug(Logginglevel.ERROR, 'ALEX 19 --> Query issued: ' + Limits.getQueries());
-       
         List<AMS_Accreditation_Organization__c> accredOrgList = new List<AMS_Accreditation_Organization__c>();
         AMS_Accreditation_Organization__c accredOrg1 = new AMS_Accreditation_Organization__c(Country__c=ctr1.Id,State__c=st1.Id);
         AMS_Accreditation_Organization__c accredOrg2 = new AMS_Accreditation_Organization__c(Country__c=ctr2.Id,State__c=st2.Id);
@@ -324,8 +283,6 @@ private class AMS_XML_GeneratorTest {
         accredOrgList.add(accredOrg4);
         insert accredOrgList;
         
-        system.debug(Logginglevel.ERROR, 'ALEX 20 --> Query issued: ' + Limits.getQueries());
-
         List<AMS_Inspection__c> inspectionList = new List<AMS_Inspection__c>();
         AMS_Inspection__c insp1 = new AMS_Inspection__c(Account__c=ag1.Id,Accreditation_Endorsement_organisation__c=accredOrg1.Id,Accreditation_Endorsement_Status_code__c='0');
         AMS_Inspection__c insp2 = new AMS_Inspection__c(Account__c=ag2.Id,Accreditation_Endorsement_organisation__c=accredOrg2.Id,Accreditation_Endorsement_Status_code__c='0');
@@ -337,8 +294,6 @@ private class AMS_XML_GeneratorTest {
         inspectionList.add(insp4);
         insert inspectionList;
         
-        system.debug(Logginglevel.ERROR, 'ALEX 21 --> Query issued: ' + Limits.getQueries());
-            
         List<AMS_Agencies_Hierarchy__c> agenciesHierarchyList = new List<AMS_Agencies_Hierarchy__c>();
         AMS_Agencies_Hierarchy__c agH1 = new AMS_Agencies_Hierarchy__c(Hierarchy_Name__c='Test1 agenciesHierarchy');
         AMS_Agencies_Hierarchy__c agH2 = new AMS_Agencies_Hierarchy__c(Hierarchy_Name__c='Test2 agenciesHierarchy');
@@ -349,8 +304,6 @@ private class AMS_XML_GeneratorTest {
         agenciesHierarchyList.add(agH3);
         agenciesHierarchyList.add(agH4);
         insert agenciesHierarchyList;
-        
-        system.debug(Logginglevel.ERROR, 'ALEX 22 --> Query issued: ' + Limits.getQueries());
         
         Test.startTest();
 
@@ -365,8 +318,6 @@ private class AMS_XML_GeneratorTest {
         agenciesRelationhipList.add(agR4);
         insert agenciesRelationhipList;
         
-        system.debug(Logginglevel.ERROR, 'ALEX 23 --> Query issued: ' + Limits.getQueries());
-
         List<AMS_Airport__c> airportList = new List<AMS_Airport__c>();
         AMS_Airport__c air1 = new AMS_Airport__c(Name='Test1 airport');
         AMS_Airport__c air2 = new AMS_Airport__c(Name='Test2 airport');
@@ -378,8 +329,6 @@ private class AMS_XML_GeneratorTest {
         airportList.add(air4);
         insert airportList;
         
-        system.debug(Logginglevel.ERROR, 'ALEX 24 --> Query issued: ' + Limits.getQueries());
-
         List<AMS_Agency_Airport__c> agAirportList = new List<AMS_Agency_Airport__c>();
         AMS_Agency_Airport__c agAir1 = new AMS_Agency_Airport__c(Airport__c=air1.Id,Account__c=ag1.Id);
         AMS_Agency_Airport__c agAir2 = new AMS_Agency_Airport__c(Airport__c=air2.Id,Account__c=ag2.Id);
@@ -391,8 +340,6 @@ private class AMS_XML_GeneratorTest {
         agAirportList.add(agAir4);
         insert agAirportList;
         
-        system.debug(Logginglevel.ERROR, 'ALEX 25 --> Query issued: ' + Limits.getQueries());
-
         List<AMS_Agency_Profile__c> agProfileList = new List<AMS_Agency_Profile__c>();
         AMS_Agency_Profile__c agProf1 = new AMS_Agency_Profile__c(Account__c=ag1.Id,GR_Code__c='MK',GR_Item__c='BH;CR;GN');
         AMS_Agency_Profile__c agProf2 = new AMS_Agency_Profile__c(Account__c=ag2.Id,GR_Code__c='MK',GR_Item__c='BH;CR;GN');
@@ -404,8 +351,6 @@ private class AMS_XML_GeneratorTest {
         agProfileList.add(agProf4);
         insert agProfileList;
         
-        system.debug(Logginglevel.ERROR, 'ALEX 26 --> Query issued: ' + Limits.getQueries());
-
         List<AMS_Fields_Translation__c> ltrans = new List<AMS_Fields_Translation__c>();
         
         AMS_Fields_Translation__c trans1 = new AMS_Fields_Translation__c(Account__c=ag1.id,Field_name__c='Name',Translation__c='name',Language__c='CN');
@@ -426,8 +371,6 @@ private class AMS_XML_GeneratorTest {
         
         insert ltrans;
         
-        system.debug(Logginglevel.ERROR, 'ALEX 27 --> Query issued: ' + Limits.getQueries());
-
         String[] r = new String[6];
         r[0]='GroupID';
         r[1]='3';
@@ -450,8 +393,6 @@ private class AMS_XML_GeneratorTest {
 
         insert authorizations;
         
-        system.debug(Logginglevel.ERROR, 'ALEX 28 --> Query issued: ' + Limits.getQueries());
-
         ANG_RHC_Information__c rhcInfo = new ANG_RHC_Information__c(
             ANG_AccountId__c =ag1.id,
             CurrencyIsoCode ='USD',
@@ -463,8 +404,6 @@ private class AMS_XML_GeneratorTest {
 
 /* EOF NEWGEN-801 */
         
-        system.debug(Logginglevel.ERROR, 'ALEX 29 --> Query issued: ' + Limits.getQueries());        
-
         //AMS_Agency__c agTest1 = (AMS_Agency__c)[SELECT Account__c,Administrator__c,Airline_Code__c,
         //            A_Code__c,BSP_Code__c,CASS_Number__c,Chk_Dgt__c,
         //            Company_Type__c,C_Code__c,DPC_Operation__c,IATACode__c,Id,

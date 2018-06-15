@@ -1,8 +1,8 @@
 global with sharing class ANG_ConversionHelper {
 	
 	//Record Types for the Account
-    public static final String ACCOUNT_AGENCY_RT     = RecordTypeSingleton.getInstance().RtIDsPerDeveloperNamePerObj.get('Account').get('IATA_Agency') ;
-    public static final String ACCOUNT_STANDARD_RT   = RecordTypeSingleton.getInstance().RtIDsPerDeveloperNamePerObj.get('Account').get('Standard_Account') ;
+    public static final String ACCOUNT_AGENCY_RT     = RecordTypeSingleton.getInstance().getRecordTypeId('Account', 'IATA_Agency');
+    public static final String ACCOUNT_STANDARD_RT   = RecordTypeSingleton.getInstance().getRecordTypeId('Account', 'Standard_Account');
 
     public static final Set<String> ALLOWEDRECORDTYPES = new Set<String>{ACCOUNT_AGENCY_RT,ACCOUNT_STANDARD_RT};
 

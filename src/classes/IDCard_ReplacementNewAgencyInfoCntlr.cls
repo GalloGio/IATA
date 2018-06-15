@@ -132,8 +132,8 @@ public with sharing class IDCard_ReplacementNewAgencyInfoCntlr extends IDCardAbs
         try {
             ID_Card_Application__c idCardApp = [Select i.Id, i.RecordTypeId, i.IATA_Code__c, i.VER_Number__c From ID_Card_Application__c i where i.Id = :idCardAppID limit 1];
             idCardApp.IATA_Code__c = NewAgencyCode;
-            String singleKAIDCAppId =  IDCardWebService.getIdCardAppRT('Single_ID_Card_Operation');
-            String defaultIDCApp =  IDCardWebService.getIdCardAppRT('Standard');
+            String singleKAIDCAppId =  RecordTypeSingleton.getInstance().getRecordTypeId('ID_Card_Application__c', 'Single_ID_Card_Operation');
+            String defaultIDCApp =  RecordTypeSingleton.getInstance().getRecordTypeId('ID_Card_Application__c', 'Standard');
             String feature = theAccount.ID_Card_KeyAccount_features__c;
             system.debug('[REPLACEMENT] original Application Record type:' + idCardApp.RecordTypeId);
             if (feature == null)feature = '';

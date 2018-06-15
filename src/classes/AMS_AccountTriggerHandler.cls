@@ -199,7 +199,7 @@ public class AMS_AccountTriggerHandler {
 
     private static List<Account> filterValidAgencies(List<Account> accts){
 
-        ID standardRT = RecordTypeSingleton.getInstance().RtIDsPerDeveloperNamePerObj.get('Account').get('IATA_Agency') ;
+        ID standardRT = RecordTypeSingleton.getInstance().getRecordTypeId('Account', 'IATA_Agency') ;
 
         List<Account> toReturn = new List<Account>();
 

@@ -82,12 +82,12 @@ private class RCRMOpportunityHandlingTest {
 		insert listPbEntry;
 		
 		// Create an Airline HQ account
-        Id AirlineHQ_RT_Id = RecordTypeSingleton.getInstance().RtIDsPerDeveloperNamePerObj.get('Account').get('IATA_Airline');
+        Id AirlineHQ_RT_Id = RecordTypeSingleton.getInstance().getRecordTypeId('Account', 'IATA_Airline');
         a = new Account(Name = 'Qatar Airways', Airline_designator__c = 'QR', RecordTypeId = AirlineHQ_RT_Id);
         insert a;
         
         // create RCRM opportunity
-        Id RT_RCRM_Opportunity_Id = RecordTypeSingleton.getInstance().RtIDsPerDeveloperNamePerObj.get('Opportunity').get('RCRM_Opportunity');
+        Id RT_RCRM_Opportunity_Id = RecordTypeSingleton.getInstance().getRecordTypeId('Opportunity', 'RCRM_Opportunity');
         oppRCRM_1 = new Opportunity(Name = 'RCRM Opp P1', RecordTypeId = RT_RCRM_Opportunity_Id, AccountId = a.Id, CurrencyIsoCode = 'USD', 
     			Product_Family__c = 'Fam1', CloseDate = date.today(), StageName = '3. Needs Assessment', Pricebook2Id = pricebookId,  
     			OwnerId = sm.Id, Renewal_under_Sales_Responsibility__c = true, Sales_Team__c = 'MACS - Field Sales');

@@ -161,7 +161,7 @@ global class AcliSyncBatch implements Database.Batchable<String>, Database.State
         	} else {
         		///// If not account in SF found, create a new account
         		Account newAcc = AcliAccount.createAcctFromAcliAccount(acliAcc);
-        		newAcc.RecordTypeId = RecordTypeSingleton.getInstance().RtIDsPerDeveloperNamePerObj.get('Account').get('IATA_Airline');
+        		newAcc.RecordTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('Account', 'IATA_Airline');
         		
         		mapAccountsToUpsertPerSapId.put( acliAcc.AcliSAPId, newAcc );
         		

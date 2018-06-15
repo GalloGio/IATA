@@ -335,12 +335,12 @@ public with sharing class AMS_XML_Generator {
         System.debug('orderedAgencyIds:' + orderedAgencyIds);
 
         //Get AMS_Segment__c RecordType ID for "IATA Code Programs"
-        Id rtProgram = Schema.SObjectType.AMS_Segment__c.getRecordTypeInfosByName().get('IATA Code Programs').getRecordTypeId();
+        Id rtProgram = RecordTypeSingleton.getInstance().getRecordTypeId('AMS_Segment__c', 'IATA_Code_Programs');
         //Get AMS_Agencies_Hierarchy__c RecordType ID for "MAIN"
-        Id rtHierarchy = Schema.SObjectType.AMS_Agencies_Hierarchy__c.getRecordTypeInfosByName().get('MAIN').getRecordTypeId();
+        Id rtHierarchy = RecordTypeSingleton.getInstance().getRecordTypeId('AMS_Agencies_Hierarchy__c', 'MAIN');
 
-        Id rtAccRoleOwnership = Schema.SObjectType.AMS_Account_Role__c.getRecordTypeInfosByName().get('Ownership').getRecordTypeId();
-        Id rtAccRoleEmployee = Schema.SObjectType.AMS_Account_Role__c.getRecordTypeInfosByName().get('Employee').getRecordTypeId();
+        Id rtAccRoleOwnership = RecordTypeSingleton.getInstance().getRecordTypeId('AMS_Account_Role__c', 'Ownership');
+        Id rtAccRoleEmployee = RecordTypeSingleton.getInstance().getRecordTypeId('AMS_Account_Role__c', 'Employee');
         
         System.debug('XML Generator - Requested Agencies from MDM PI - ' + agency);
         sDebug += '\nAgencies List:' + agency;
@@ -709,7 +709,7 @@ public with sharing class AMS_XML_Generator {
             }
         }
 
-        Id formOfPaymentRTId   = Schema.Agency_Authorization__c.sObjectType.getDescribe().getRecordTypeInfosByName().get('Form Of Payment').getRecordTypeId();
+        Id formOfPaymentRTId   = RecordTypeSingleton.getInstance().getRecordTypeId('Agency_Authorization__c', 'FormOfPayment');
 
 /*  NEWGEN-801 */
 

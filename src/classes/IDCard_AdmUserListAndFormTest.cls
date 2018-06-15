@@ -57,8 +57,8 @@ private class IDCard_AdmUserListAndFormTest {
 	        Insert p1;
 	        Insert p2;
 	        
-	        Id rtacc = Schema.SObjectType.Account.getRecordTypeInfosByName().get('Agency').getRecordTypeId();
-	        Id rtcon = Schema.SObjectType.Contact.getRecordTypeInfosByName().get('Standard').getRecordTypeId();
+	        Id rtacc = RecordTypeSingleton.getInstance().getRecordTypeId('Account', 'IATA_Agency');
+	        Id rtcon = RecordTypeSingleton.getInstance().getRecordTypeId('Contact', 'Standard_Contact');
 	        
 	        a = new Account(Name='Test Account',
 	                        IATACode__c = '12312312',
@@ -227,7 +227,7 @@ private class IDCard_AdmUserListAndFormTest {
 	        
 	        insert idcs;
 	        
-	        Id rt =  Schema.SObjectType.ID_Card_Application__c.getRecordTypeInfosByName().get('Single ID Card Operation').getRecordTypeId();
+	        Id rt =  RecordTypeSingleton.getInstance().getRecordTypeId('ID_Card_Application__c','Single_ID_Card_Operation');
 	        List<ID_Card_Application__c> apps = new List<ID_Card_Application__c>();
 	        for(integer i=5; i <10; i++){
 		        apps.add(new ID_Card_Application__c(VER_Number__c = cs[i].VER_Number_2__c,
@@ -397,7 +397,7 @@ private class IDCard_AdmUserListAndFormTest {
 	    	
 	        insert idcs;
 	        
-	        Id rt =  Schema.SObjectType.ID_Card_Application__c.getRecordTypeInfosByName().get('Single ID Card Operation').getRecordTypeId();
+	        Id rt =  RecordTypeSingleton.getInstance().getRecordTypeId('ID_Card_Application__c','Single_ID_Card_Operation');
 	        List<ID_Card_Application__c> apps = new List<ID_Card_Application__c>();
 	        //for(integer i=5; i <10; i++){
 		        apps.add(new ID_Card_Application__c(VER_Number__c = cs[0].VER_Number_2__c,
@@ -610,7 +610,7 @@ private class IDCard_AdmUserListAndFormTest {
 	        insert idcs;
 	        
 	        
-	        Id rt =  Schema.SObjectType.ID_Card_Application__c.getRecordTypeInfosByName().get('Single ID Card Operation').getRecordTypeId();
+	        Id rt =  RecordTypeSingleton.getInstance().getRecordTypeId('ID_Card_Application__c','Single_ID_Card_Operation');
 	        List<ID_Card_Application__c> apps = new List<ID_Card_Application__c>();
 	        apps.add(new ID_Card_Application__c(VER_Number__c = cs[4].VER_Number_2__c,
                                                 Displayed_Name__c = cs[4].Name,
@@ -769,7 +769,7 @@ private class IDCard_AdmUserListAndFormTest {
             pendingctrl.createMassUpdateIdCardApplication();
             
             // A mass application and a case are created
-            Id rtmass =  Schema.SObjectType.ID_Card_Application__c.getRecordTypeInfosByName().get('Mass Order Application').getRecordTypeId();
+            Id rtmass =  RecordTypeSingleton.getInstance().getRecordTypeId('ID_Card_Application__c','Mass_Order_Application');
             ID_Card_Application__c mass = [SELECT Id, Application_Status__c, Payment_type__c FROM ID_Card_Application__c WHERE RecordTypeId = :rtmass];
                     
             system.assertNotEquals(IDCardUtil.PAYMENT_TYPE_CC, mass.Payment_Type__c);
@@ -880,7 +880,7 @@ private class IDCard_AdmUserListAndFormTest {
 	        insert idcs;
 	        
 	        
-	        Id rt =  Schema.SObjectType.ID_Card_Application__c.getRecordTypeInfosByName().get('Single ID Card Operation').getRecordTypeId();
+	        Id rt =  RecordTypeSingleton.getInstance().getRecordTypeId('ID_Card_Application__c','Single_ID_Card_Operation');
 	        List<ID_Card_Application__c> apps = new List<ID_Card_Application__c>();
 	        apps.add(new ID_Card_Application__c(VER_Number__c = cs[4].VER_Number_2__c,
                                                 Displayed_Name__c = cs[4].Name,
@@ -1026,7 +1026,7 @@ private class IDCard_AdmUserListAndFormTest {
             pendingctrl.createMassUpdateIdCardApplication();
             
             // A mass application and a case are created
-            Id rtmass =  Schema.SObjectType.ID_Card_Application__c.getRecordTypeInfosByName().get('Mass Order Application').getRecordTypeId();
+            Id rtmass =  RecordTypeSingleton.getInstance().getRecordTypeId('ID_Card_Application__c','Mass_Order_Application');
             ID_Card_Application__c mass = [SELECT Id, Application_Status__c, Payment_type__c FROM ID_Card_Application__c WHERE RecordTypeId = :rtmass];
                     
             system.assertNotEquals(IDCardUtil.PAYMENT_TYPE_CC, mass.Payment_Type__c);
@@ -1160,7 +1160,7 @@ private class IDCard_AdmUserListAndFormTest {
 	        
 	        insert idcs;
 	        
-	        Id rt =  Schema.SObjectType.ID_Card_Application__c.getRecordTypeInfosByName().get('Single ID Card Operation').getRecordTypeId();
+	        Id rt =  RecordTypeSingleton.getInstance().getRecordTypeId('ID_Card_Application__c','Single_ID_Card_Operation');
 	        List<ID_Card_Application__c> apps = new List<ID_Card_Application__c>();
 	        for(integer i=5; i <10; i++){
 		        apps.add(new ID_Card_Application__c(VER_Number__c = cs[i].VER_Number_2__c,

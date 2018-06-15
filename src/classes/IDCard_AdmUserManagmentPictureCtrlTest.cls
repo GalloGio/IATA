@@ -42,11 +42,10 @@ private class IDCard_AdmUserManagmentPictureCtrlTest {
         insert awsk_prd;
 
         
-        Id rtacc = Schema.SObjectType.Account.getRecordTypeInfosByName().get('Agency').getRecordTypeId();
-        Id rtcon = Schema.SObjectType.Contact.getRecordTypeInfosByName().get('Standard').getRecordTypeId();
-            Map<string,Id> idcardAppRT =  TransformationHelper.RtIDsPerDeveloperNamePerObj(new list<string> {'ID_Card_Application__c'}).get('ID_Card_Application__c');
-
-        Id rtidca = idcardAppRT.get('Single_ID_Card_Operation');
+        Id rtacc = RecordTypeSingleton.getInstance().getRecordTypeId('Account', 'IATA_Agency');
+        Id rtcon = RecordTypeSingleton.getInstance().getRecordTypeId('Contact', 'Standard_Contact');
+        
+        Id rtidca = RecordTypeSingleton.getInstance().getRecordTypeId('ID_Card_Application__c','Single_ID_Card_Operation');
 
       IATA_ISO_Country__c isoc = new IATA_ISO_Country__c( Name = 'Australia',
                     ISO_Code__c = '12',

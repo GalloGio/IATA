@@ -100,8 +100,6 @@ global class AmsIataCodeGenerator{
         
         Boolean isImportAgentWithLink = false;
         
-        //Map<string, Id>  agenciesRT  =  TransformationHelper.RtIDsPerDeveloperNamePerObj(new list<string> {'AMS_Agency__c'}).get('AMS_Agency__c');#AMSFTS
-        Id  programRT  =  TransformationHelper.RtIDsPerDeveloperNamePerObj(new list<string> {'AMS_Segment__c'}).get('AMS_Segment__c').get('IATA_Code_Programs');
         try
         {
 

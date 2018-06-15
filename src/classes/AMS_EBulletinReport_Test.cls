@@ -70,7 +70,7 @@ private class AMS_EBulletinReport_Test {
         String CHANGELOCATIONTYPE = 'Location type';
         String CHANGEOWNERSHIPIATA= 'Ownership to IATA Agent';
         String CHANGEOWNERSHIPNONIATA= 'Ownership to non-IATA Agent';
-		ID rtAgency = Schema.SObjectType.Account.getRecordTypeInfosByName().get('Agency').getRecordTypeId();
+		ID rtAgency = RecordTypeSingleton.getInstance().getRecordTypeId('Account', 'IATA_Agency');
        
       
         Account acc1 = new Account(RecordTypeId = rtAgency, Name = 'My Travels', IATAcode__c = '1111110', IATA_ISO_Country__c = us.id, 

@@ -19,8 +19,8 @@ public class IDCard_CheckoutSingleApplicationTest {
 	        Insert p1;
 	        Insert p2;
 	        
-	        Id rtacc = Schema.SObjectType.Account.getRecordTypeInfosByName().get('Agency').getRecordTypeId();
-	        Id rtcon = Schema.SObjectType.Contact.getRecordTypeInfosByName().get('Standard').getRecordTypeId();
+	        Id rtacc = RecordTypeSingleton.getInstance().getRecordTypeId('Account', 'IATA_Agency');
+            Id rtcon = RecordTypeSingleton.getInstance().getRecordTypeId('Contact', 'Standard_Contact');
 	        
 	        Account a = new Account(Name='Test Account',
 	                        IATACode__c = '12312312',
@@ -69,7 +69,7 @@ public class IDCard_CheckoutSingleApplicationTest {
 	        mas.add(new Managed_agency__c(Contact__c=cs[0].id, Account__c=a2.id));
 	        insert mas;
 	              
-        	Id rt =  Schema.SObjectType.ID_Card_Application__c.getRecordTypeInfosByName().get('Single ID Card Operation').getRecordTypeId();
+        	Id rt =  RecordTypeSingleton.getInstance().getRecordTypeId('ID_Card_Application__c', 'Single_ID_Card_Operationn');
        		app = new ID_Card_Application__c(VER_Number__c = cs[0].VER_Number_2__c,
                                                     Displayed_Name__c = cs[0].Name,
                                                     First_Name__c = cs[0].FirstName,
@@ -131,7 +131,7 @@ public class IDCard_CheckoutSingleApplicationTest {
 			getException = true;
         }
         
-        Id rt =  Schema.SObjectType.ID_Card_Application__c.getRecordTypeInfosByName().get('Single ID Card Operation').getRecordTypeId();
+        Id rt =  RecordTypeSingleton.getInstance().getRecordTypeId('ID_Card_Application__c', 'Single_ID_Card_Operationn');
        	app = new ID_Card_Application__c(VER_Number__c = '123',
                                                     Displayed_Name__c = 'Nome Cognome',
                                                     First_Name__c = 'FirstName',
@@ -141,7 +141,7 @@ public class IDCard_CheckoutSingleApplicationTest {
             										IATA_Code__c = '12312312',
             										RecordTypeId = rt );
         insert app;
-        Id rtacc = Schema.SObjectType.Account.getRecordTypeInfosByName().get('Agency').getRecordTypeId();
+        Id rtacc = RecordTypeSingleton.getInstance().getRecordTypeId('Account', 'IATA_Agency');
 	        
         Account a = new Account(Name='Test Account',
 	                        IATACode__c = '12312312',

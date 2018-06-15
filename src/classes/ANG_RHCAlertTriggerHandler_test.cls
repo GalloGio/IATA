@@ -36,7 +36,7 @@ private class ANG_RHCAlertTriggerHandler_test {
 			Remittance_frequency__c = 'M',
 			ANG_Accreditation_Model__c = 'Cash',
 			IATA_ISO_Country__c = country.Id,
-			RecordTypeId = RecordTypeSingleton.getInstance().RtIDsPerDeveloperNamePerObj.get('Account').get('IATA_Agency')
+			RecordTypeId = RecordTypeSingleton.getInstance().getRecordTypeID('Account', 'IATA_Agency')
 		);
 		insert a;
 		
@@ -45,7 +45,7 @@ private class ANG_RHCAlertTriggerHandler_test {
 			Subject = 'rception case', 
 			AccountId = a.Id, 
 			Status = 'Open', 
-			RecordTypeId = RecordTypeSingleton.getInstance().RtIDsPerDeveloperNamePerObj.get('Case').get('InternalCasesEuropeSCE') 
+			RecordTypeId = RecordTypeSingleton.getInstance().getRecordTypeID('Case', 'InternalCasesEuropeSCE') 
 		);
 		insert c;
 
@@ -118,7 +118,7 @@ private class ANG_RHCAlertTriggerHandler_test {
 			ANG_Threshold_Level__c = '50%'
 		);
 
-		String processRecorType = RecordTypeSingleton.getInstance().RtIDsPerDeveloperNamePerObj.get('Case').get('CS_Process_IDFS_ISS');
+		String processRecorType = RecordTypeSingleton.getInstance().getRecordTypeID('Case', 'CS_Process_IDFS_ISS');
 
 		System.assertEquals(0, [SELECT Id FROM Case WHERE RecordTypeId = :processRecorType].size(), 'No process should be created at this time');
 		

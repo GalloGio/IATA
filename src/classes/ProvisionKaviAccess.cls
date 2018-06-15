@@ -81,7 +81,7 @@ global with sharing class ProvisionKaviAccess {
                 contact.FirstName = usr.FirstName;
                 contact.LastName = usr.LastName;
                 contact.AccountId = acc.Id;
-                contact.RecordTypeId = Schema.SObjectType.Contact.getRecordTypeInfosByName().get('Standard').getRecordTypeId();
+                contact.RecordTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('Contact', 'Standard_Contact');
                 contact.Email = usr.Email;
                 contact.Status__c = 'Active';
             	   //We associate the new Contact with the user thru the lookup(User) field
@@ -104,7 +104,7 @@ global with sharing class ProvisionKaviAccess {
           Account acc = new Account();
             acc = new Account();
             acc.Name = 'IATA SSW ACCOUNT';
-            acc.RecordTypeId = Schema.SObjectType.Account.getRecordTypeInfosByName().get('Standard Account').getRecordTypeId();
+            acc.RecordTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('Account', 'Standard_Account');
             //acc.Sector__c = 'IATA';
             //acc.Category__c = 'IATA Cargo Agent';
             try {insert acc;}

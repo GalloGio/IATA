@@ -74,7 +74,7 @@ private class AMS_RecordCreatorWebserviceTest {
 
 		System.debug('Contacts created');
 
-		ID rtCommCase = Schema.SObjectType.Case.getRecordTypeInfosByName().get('OSCAR Communication').getRecordTypeId();
+		ID rtCommCase = RecordTypeSingleton.getInstance().getRecordTypeId('Case', 'OSCAR_Communication');
 
 		Case oscarCase = new Case(RecordTypeId = rtCommCase, AccountId = acct.Id, Account_Concerned__c = acct.Id, ContactId = co1.Id);
 
@@ -562,7 +562,7 @@ private class AMS_RecordCreatorWebserviceTest {
 
 		System.debug('Contacts created');
 
-		ID rtSAAMCase = Schema.SObjectType.Case.getRecordTypeInfosByName().get('SAAM').getRecordTypeId();
+		ID rtSAAMCase = RecordTypeSingleton.getInstance().getRecordTypeId('Case', 'ProcessEuropeSCE');//SAAM
 
 		Case saamCase = new Case(RecordTypeId = rtSAAMCase, AccountId = acct.Id, Account_Concerned__c = acct.Id, ContactId = co1.Id);
 

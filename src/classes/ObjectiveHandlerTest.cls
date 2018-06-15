@@ -32,7 +32,7 @@ public class ObjectiveHandlerTest {
 	}
 
 	public static Objective__c getAccountObjective() {
-		String rtAirlaine = Schema.SObjectType.Account.getRecordTypeInfosByName().get('Airline Headquarters').getRecordTypeId();
+		String rtAirlaine = RecordTypeSingleton.getInstance().getRecordTypeId('Account', 'IATA_Airline');
 
 		Account account = new Account(
 			Name = 'testAccount',

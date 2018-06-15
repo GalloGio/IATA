@@ -20,10 +20,6 @@ public with sharing class ANG_RiskForecastPropertiesController {
         set;
     }
 
-    //Case Record Types
-    public static final String SIDRA      = Schema.Case.sObjectType.getDescribe().getRecordTypeInfosByName().get('SIDRA').getRecordTypeId();
-    public static final String SIDRALITE   = Schema.Case.sObjectType.getDescribe().getRecordTypeInfosByName().get('SIDRA Lite').getRecordTypeId();
-
     public Boolean displayPopup {get;set;}
 
     public ANG_RiskForecastPropertiesController(ApexPages.StandardController stdController) {

@@ -43,7 +43,7 @@ public class IfapToolManagerTest {
         insert isoCountry;
 
         Account agent = New Account(name = 'The Agent',
-                                    recordtypeId = TransformationHelper.RtIDsPerDeveloperNamePerObj(new list<string>{'Account'}).get('Account').get('IATA_Agency'),
+                                    recordtypeId = RecordTypeSingleton.getInstance().getRecordTypeId('Account', 'IATA_Agency'),
                                     IATACode__c = '1234567' ,
                                     IATA_ISO_Country__c=isoCountry.id,
                                     Type = 'Passenger' ,
@@ -248,22 +248,6 @@ public class IfapToolManagerTest {
 
     static testMethod void submitCaseQualityIssuesToMFTTest(){
         beforeTest();
-        
-        /*
-        Account account = new Account();
-        account.Name = 'TestAccount';
-        account.Type = 'Airport';
-        account.IATACode__c = '1234567';
-        insert account;
-
-        Case cse = new Case(
-            RecordtypeId = Schema.SObjectType.Case.getRecordTypeInfosByName().get('IATA Financial Review').getRecordTypeId(),
-            status='Assessment Performed',
-            IFAP_Financial_Year__c = '2015',
-            AccountId = account.Id
-        );
-        insert cse;
-         */
         
         Id recordtypeId = clsCaseRecordTypeIDSingleton.getInstance().RecordTypes.get('IATA Financial Review'); 
 

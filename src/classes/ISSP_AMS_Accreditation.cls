@@ -1,6 +1,6 @@
 public without sharing class ISSP_AMS_Accreditation {
-    private static String SAAM_RECORD_TYPE_ID = Schema.SObjectType.Case.RecordTypeInfosByName.get('SAAM').RecordTypeId;
-    private static String OSCAR_RECORD_TYPE_ID = Schema.SObjectType.Case.RecordTypeInfosByName.get('OSCAR Communication').RecordTypeId;
+    private static String SAAM_RECORD_TYPE_ID = RecordTypeSingleton.getInstance().getRecordTypeId('Case', 'SAAM');
+    private static String OSCAR_RECORD_TYPE_ID = RecordTypeSingleton.getInstance().getRecordTypeId('Case', 'OSCAR_Communication');
     private static String RECORD_TYPE_ID = SAAM_RECORD_TYPE_ID;
 
     public static  Integer MAX_IFAP_Contacts {get{ return 1;} private set;}
@@ -718,8 +718,8 @@ public without sharing class ISSP_AMS_Accreditation {
             else
                 sectorValue = newForm.Type_of_Operation__c.replace(' ', '_');
 
-            if (newForm.RecordTypeId == Schema.SObjectType.AMS_Pax_Accreditation_Form__c.RecordTypeInfosByName.get('Change of Bank Account Details').RecordTypeId ||
-                newForm.RecordTypeId == Schema.SObjectType.AMS_Pax_Accreditation_Form__c.RecordTypeInfosByName.get('Other Changes').RecordTypeId)
+            if (newForm.RecordTypeId == RecordTypeSingleton.getInstance().getRecordTypeId('AMS_Pax_Accreditation_Form__c', 'Change_of_Bank_Account_Details') ||
+                newForm.RecordTypeId == RecordTypeSingleton.getInstance().getRecordTypeId('AMS_Pax_Accreditation_Form__c', 'Other_Changes'))
             isNoticeOfChange = true;
 
             noticeOfChangeList = new List<String>();
@@ -1525,12 +1525,12 @@ public without sharing class ISSP_AMS_Accreditation {
             }
 
             if (isBankAccountChange) {
-                newForm.RecordTypeId = Schema.SObjectType.AMS_Pax_Accreditation_Form__c.RecordTypeInfosByName.get('Change of Bank Account Details').RecordTypeId;
+                newForm.RecordTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('AMS_Pax_Accreditation_Form__c', 'Change_of_Bank_Account_Details');
             } else {
                 if (!getIsAccreditationModelNotNullOrLegacy()) {
-                    newForm.RecordTypeId = Schema.SObjectType.AMS_Pax_Accreditation_Form__c.RecordTypeInfosByName.get('Other Changes').RecordTypeId;
+                    newForm.RecordTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('AMS_Pax_Accreditation_Form__c', 'Other_Changes');
                 } else {
-                    newForm.RecordTypeId = Schema.SObjectType.AMS_Pax_Accreditation_Form__c.RecordTypeInfosByName.get('Other Changes - NAM').RecordTypeId;
+                    newForm.RecordTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('AMS_Pax_Accreditation_Form__c', 'Other_Changes_NAM');
                 }
             }
             newCase.CaseArea__c = 'Accreditation Process';
@@ -1740,44 +1740,44 @@ public without sharing class ISSP_AMS_Accreditation {
         if (sectorValue.StartsWith('Travel_Agent')) {
             system.debug('newCase.Reason1__c: ' + newCase.Reason1__c);
             if (newCase.Reason1__c == AMS_Utils.CASE_REASON_NEW_HO) {
-                newForm.RecordTypeId = Schema.SObjectType.AMS_Pax_Accreditation_Form__c.RecordTypeInfosByName.get('Travel Agent - HO').RecordTypeId;
+                newForm.RecordTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('AMS_Pax_Accreditation_Form__c', 'Travel_Agent_HO');
             } else if (newCase.Reason1__c == AMS_Utils.CASE_REASON_BR_IP) {
-                newForm.RecordTypeId = Schema.SObjectType.AMS_Pax_Accreditation_Form__c.RecordTypeInfosByName.get('Travel Agent - Branch').RecordTypeId;
+                newForm.RecordTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('AMS_Pax_Accreditation_Form__c', 'Travel_Agent_Branch');
             } else if (newCase.Reason1__c == AMS_Utils.CASE_REASON_BR_ABROAD) {
-                newForm.RecordTypeId = Schema.SObjectType.AMS_Pax_Accreditation_Form__c.RecordTypeInfosByName.get('Travel Agent - Branch Abroad').RecordTypeId;
+                newForm.RecordTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('AMS_Pax_Accreditation_Form__c', 'Travel_Agent_Branch_Abroad');
             }
             else if (newCase.Reason1__c == AMS_UTILS.CASE_REASON_HE_STANDARD) {
-                newForm.RecordTypeId = Schema.SObjectType.AMS_Pax_Accreditation_Form__c.RecordTypeInfosByName.get('Travel Agent - Head Entity Standard with Cash').RecordTypeId;
+                newForm.RecordTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('AMS_Pax_Accreditation_Form__c', 'Travel_Agent_Head_Entity_Standard_with_Cash');
             }else if (newCase.Reason1__c == AMS_UTILS.CASE_REASON_HE_LITE) {
-                newForm.RecordTypeId = Schema.SObjectType.AMS_Pax_Accreditation_Form__c.RecordTypeInfosByName.get('Travel Agent - Head Entity Standard no Cash').RecordTypeId;
+                newForm.RecordTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('AMS_Pax_Accreditation_Form__c', 'Travel_Agent_Head_Entity_Standard_no_Cash');
             }else if(newCase.Reason1__c == AMS_UTILS.CASE_REASON_ASSOCIATE_ENTITY_STANDARD){
-                newForm.RecordTypeId = Schema.SObjectType.AMS_Pax_Accreditation_Form__c.RecordTypeInfosByName.get('Travel Agent - Associate Entity').RecordTypeId;
+                newForm.RecordTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('AMS_Pax_Accreditation_Form__c', 'Travel_Agent_Associate_Entity');
             }
 
         } else if (sectorValue.StartsWith('Cargo_Agent')) {
             system.debug('newCase.Reason1__c: ' + newCase.Reason1__c);
-            system.debug('Schema.SObjectType.AMS_Pax_Accreditation_Form__c.RecordTypeInfosByName.get(Cargo Agent - HO).RecordTypeId: ' + Schema.SObjectType.AMS_Pax_Accreditation_Form__c.RecordTypeInfosByName.get('Cargo Agent - HO').RecordTypeId);
+            system.debug('RecordTypeSingleton.getInstance().getRecordTypeId(AMS_Pax_Accreditation_Form__c, Cargo_Agent_HO): ' + RecordTypeSingleton.getInstance().getRecordTypeId('AMS_Pax_Accreditation_Form__c', 'Cargo_Agent_HO'));
             system.debug('newForm.RecordTypeId: ' + newForm);
             if (newCase.Reason1__c == AMS_Utils.CASE_REASON_NEW_HO && newForm.Agent_Type__c == 'IATA Cargo Agent') {
-                newForm.RecordTypeId = Schema.SObjectType.AMS_Pax_Accreditation_Form__c.RecordTypeInfosByName.get('Cargo Agent - HO').RecordTypeId;
+                newForm.RecordTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('AMS_Pax_Accreditation_Form__c', 'Cargo_Agent_HO');
             } else if (newCase.Reason1__c == AMS_Utils.CASE_REASON_NEW_HO && newForm.Agent_Type__c == 'EACP Intermediary') {
-                newForm.RecordTypeId = Schema.SObjectType.AMS_Pax_Accreditation_Form__c.RecordTypeInfosByName.get('Cargo EACP - HO').RecordTypeId;
+                newForm.RecordTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('AMS_Pax_Accreditation_Form__c', 'Cargo_EACP_HO');
             } else if (newCase.Reason1__c == AMS_Utils.CASE_REASON_BR_IP && newForm.Agent_Type__c == 'EACP Intermediary') {
-                newForm.RecordTypeId = Schema.SObjectType.AMS_Pax_Accreditation_Form__c.RecordTypeInfosByName.get('Cargo EACP - Branch').RecordTypeId;
+                newForm.RecordTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('AMS_Pax_Accreditation_Form__c', 'Cargo_EACP_Branch');
             } else if (newCase.Reason1__c == AMS_Utils.CASE_REASON_BR_IP && newForm.Agent_Type__c == 'IATA Cargo Agent') {
-                newForm.RecordTypeId = Schema.SObjectType.AMS_Pax_Accreditation_Form__c.RecordTypeInfosByName.get('Cargo Agent - Branch').RecordTypeId;
+                newForm.RecordTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('AMS_Pax_Accreditation_Form__c', 'Cargo_Agent_Branch');
             } else if (newCase.Reason1__c == AMS_Utils.CASE_REASON_NEW_HO && newForm.Agent_Type__c == AMS_Utils.CATEGORY_CASSASSOCIATE) {
-                newForm.RecordTypeId = Schema.SObjectType.AMS_Pax_Accreditation_Form__c.RecordTypeInfosByName.get('CASS Associate - HO').RecordTypeId;
+                newForm.RecordTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('AMS_Pax_Accreditation_Form__c', 'CASS_Associate_HO');
             } else if (newCase.Reason1__c == AMS_Utils.CASE_REASON_BR_IP && newForm.Agent_Type__c == AMS_Utils.CATEGORY_CASSASSOCIATE) {
-                newForm.RecordTypeId = Schema.SObjectType.AMS_Pax_Accreditation_Form__c.RecordTypeInfosByName.get('CASS Associate - Branch').RecordTypeId;
+                newForm.RecordTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('AMS_Pax_Accreditation_Form__c', 'CASS_Associate_Branch');
             } else if (newCase.Reason1__c == AMS_Utils.CASE_REASON_NEW_HO && newForm.Agent_Type__c == AMS_Utils.CATEGORY_COURIER) {
-                newForm.RecordTypeId = Schema.SObjectType.AMS_Pax_Accreditation_Form__c.RecordTypeInfosByName.get('Courier - HO').RecordTypeId;
+                newForm.RecordTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('AMS_Pax_Accreditation_Form__c', 'Courier_HO');
             } else if (newCase.Reason1__c == AMS_Utils.CASE_REASON_BR_IP && newForm.Agent_Type__c == AMS_Utils.CATEGORY_COURIER) {
-                newForm.RecordTypeId = Schema.SObjectType.AMS_Pax_Accreditation_Form__c.RecordTypeInfosByName.get('Courier - Branch').RecordTypeId;
+                newForm.RecordTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('AMS_Pax_Accreditation_Form__c', 'Courier_Branch');
             } else if (newCase.Reason1__c == AMS_Utils.CASE_REASON_NEW_HO && newForm.Agent_Type__c == AMS_Utils.CATEGORY_IMPORT_AGENT) {
-                newForm.RecordTypeId = Schema.SObjectType.AMS_Pax_Accreditation_Form__c.RecordTypeInfosByName.get('CASS Import - HO').RecordTypeId;
+                newForm.RecordTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('AMS_Pax_Accreditation_Form__c', 'CASS_Import_HO');
             } else if (newCase.Reason1__c == AMS_Utils.CASE_REASON_BR_IP && newForm.Agent_Type__c == AMS_Utils.CATEGORY_IMPORT_AGENT) {
-                newForm.RecordTypeId = Schema.SObjectType.AMS_Pax_Accreditation_Form__c.RecordTypeInfosByName.get('CASS Import - Branch').RecordTypeId;
+                newForm.RecordTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('AMS_Pax_Accreditation_Form__c', 'CASS_Import_Branch');
             }
             //Set the field values for Special Cargo types Volumes (Section 8)
             if (specialTrafficList != null) {
@@ -2004,7 +2004,7 @@ public without sharing class ISSP_AMS_Accreditation {
     }
 
     private void updateAccountByBranchApp(Account SFDCAccount) {
-        SFDCAccount.RecordTypeId = Schema.SObjectType.Account.RecordTypeInfosByName.get('Standard Account').RecordTypeId;
+        SFDCAccount.RecordTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('Account', 'Standard_Account');
         if (!test.isRunningTest()) {
             SFDCAccount.OwnerId = ISSP_Constant.newAccountOwnerId;
         } else if (test.isRunningTest()) {
@@ -2053,7 +2053,7 @@ public without sharing class ISSP_AMS_Accreditation {
     private void createHOAccount(Account parentHO) {
          Account newHOAccount = new Account(Name = newForm.Account_Name__c);
 
-        newHOAccount.RecordTypeId = Schema.SObjectType.Account.RecordTypeInfosByName.get('Standard Account').RecordTypeId;
+        newHOAccount.RecordTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('Account', 'Standard_Account');
 
         if (!test.isRunningTest()) {
             newHOAccount.OwnerId = ISSP_Constant.newAccountOwnerId;
@@ -2139,7 +2139,7 @@ public without sharing class ISSP_AMS_Accreditation {
     public void createAgencyContact() {
         system.debug('I enter createAgencyContact');
         system.debug('createAgencyContact contactType: ' + contactType);
-        Id rtAccreditContPreviousOwner = Schema.SObjectType.AMS_Accreditation_Contact__c.getRecordTypeInfosByName().get('Previous Owner').getRecordTypeId();
+        Id rtAccreditContPreviousOwner = RecordTypeSingleton.getInstance().getRecordTypeId('AMS_Accreditation_Contact__c', 'Previous_Owner');
 
         integer cntOwners;
         integer cntEmailContacts;
@@ -4802,8 +4802,8 @@ System.DEBUG('validateCharactersInForm  - 4 - errorFound: '+errorFound);
 
     private void setPortalAdminContact() {
         Id personRecordTypeId;
-        if (Schema.SObjectType.AMS_Accreditation_Contact__c.getRecordTypeInfosByName().get('Person') != null) {
-            personRecordTypeId = Schema.SObjectType.AMS_Accreditation_Contact__c.getRecordTypeInfosByName().get('Person').getRecordTypeId();
+        if (RecordTypeSingleton.getInstance().getRecordTypeId('AMS_Accreditation_Contact__c', 'Person') != null) {
+            personRecordTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('AMS_Accreditation_Contact__c', 'Person');
         }
 
         List<AMS_Accreditation_Contact__c> amscontacts = [SELECT Id, Name, Portal_administrator__c
@@ -4817,8 +4817,8 @@ System.DEBUG('validateCharactersInForm  - 4 - errorFound: '+errorFound);
 
     private void setInvoicingContact() {
         Id personRecordTypeId;
-        if (Schema.SObjectType.AMS_Accreditation_Contact__c.getRecordTypeInfosByName().get('Person') != null) {
-            personRecordTypeId = Schema.SObjectType.AMS_Accreditation_Contact__c.getRecordTypeInfosByName().get('Person').getRecordTypeId();
+        if (RecordTypeSingleton.getInstance().getRecordTypeId('AMS_Accreditation_Contact__c','Person') != null) {
+            personRecordTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('AMS_Accreditation_Contact__c','Person');
         }
 
         List<AMS_Accreditation_Contact__c> amscontacts = [SELECT Id, Name, Invoicing_Contact__c
@@ -4829,201 +4829,6 @@ System.DEBUG('validateCharactersInForm  - 4 - errorFound: '+errorFound);
             update amsContacts[0];
         }
     }
-
-    //public void convertAMSContacts() {
-    //    Id personRecordTypeId;
-    //    Map<AMS_Accreditation_Contact__c, Contact> MapNewContactToAMSAccreditationContact = new Map<AMS_Accreditation_Contact__c, Contact>();
-    //    Portal_Applications__c ifap = [SELECT Id FROM Portal_Applications__c WHERE Name = 'IFAP'];
-    //    if (Schema.SObjectType.AMS_Accreditation_Contact__c.getRecordTypeInfosByName().get('Person') != null) {
-    //        personRecordTypeId = Schema.SObjectType.AMS_Accreditation_Contact__c.getRecordTypeInfosByName().get('Person').getRecordTypeId();
-    //    }
-
-    //    List<AMS_Accreditation_Contact__c> amscontacts = [SELECT Name, Authorised_signatory__c, AddressCity__c, AddressCountry__c, AddressStreet__c,
-    //                                       AddressPostcode__c, Agency_role__c, Email__c, FAX__c, Financial_Assessment_Contact__c, First_name__c,
-    //                                       Last_name__c, Mobile__c, Agency_Owner__c, Phone__c, Portal_administrator__c, Salutation__c, Contact_Id__c, Contact_Id__r.Salutation,
-    //                                       Contact_Id__r.FirstName, Contact_Id__r.LastName, Contact_Id__r.Phone, Contact_Id__r.MobilePhone, Contact_Id__r.FAX, Contact_Id__r.AccountId
-    //                                       FROM AMS_Accreditation_Contact__c WHERE Email__c != null AND recordTypeId = :personRecordTypeId AND AMS_Pax_Accreditation_Form__c = :newForm.Id];
-
-    //    List<String> amscontactsEmails = getAmscontactsEmails(amscontacts);
-
-    //    List<Contact> contactListAll = [SELECT Id, AccountId, Email FROM Contact WHERE Email IN: amscontactsEmails LIMIT 50000];
-
-    //    Map<String, List<Contact>> contactListByEmailMap = new Map<String, List<Contact>>();
-    //    Map<String, List<Contact>> contactOtherListByEmailMap = new Map<String, List<Contact>>();
-    //    fillContactByEmailMaps(contactListAll, contactListByEmailMap, contactOtherListByEmailMap);
-    //    List<Portal_Application_Right__c> ifapaccessList = new List<Portal_Application_Right__c>();
-    //    List<Contact> contactList = new List<Contact>();
-
-    //    //Loop through AMS Contacts and create SFDC ones
-    //    system.debug('XDDKFJG contactListAll: ' + contactListAll);
-    //    system.debug('XDDKFJG amscontacts: ' + amscontacts);
-
-    //    for (AMS_Accreditation_Contact__c amscon : amscontacts) {
-
-    //        system.debug('XDDKFJG CURRENT amscon: ' + amscon);
-    //        Boolean isNotDuplicate = true;
-    //        if (contactListByEmailMap.containsKey(amscon.Email__c) || contactOtherListByEmailMap.containsKey(amscon.Email__c)) {
-    //            isNotDuplicate = false;
-    //            system.debug('XDDKFJG DUPLICATE');
-    //            amsDuplicateContactList.add(amscon);
-    //        }
-
-    //        if (newForm.ISSP_AMS_Portal_admin__c == amscon.Id )
-    //            amscon.Portal_administrator__c = true;
-    //        else
-    //            amscon.Portal_administrator__c = false;
-
-    //        List<Contact> contactListOther = new List<Contact>();
-    //        if (contactOtherListByEmailMap.containsKey(amscon.Email__c)) {
-    //            contactListOther.addAll(contactOtherListByEmailMap.get(amscon.Email__c));
-    //        }
-    //        if (amscon.Contact__c != null) {
-    //            Contact SFDCContact = new Contact(id = amscon.Contact__c);
-    //            updateContactByAmsContact(amscon, SFDCContact);
-    //            contactList.add(SFDCContact) ;
-    //        }
-
-    //        system.debug('XDDKFJG isNotDuplicate: ' + isNotDuplicate);
-
-    //        if (isNotDuplicate) {
-
-    //            system.debug('XDDKFJG 1 contact with email: ' + amscon.Email__c);
-    //            //Does SFDC contact already exist with this email address for any other account?
-
-
-    //             List<Contact> contactListOther = new List<Contact>();
-    //             if(contactOtherListByEmailMap.containsKey(amscon.Email__c)){
-    //                 contactListOther.addAll(contactOtherListByEmailMap.get(amscon.Email__c));
-    //             }
-
-    //            //Does SFDC contact already exist with this email address for HO account i.e current user's account?
-
-    //            if (contactListByEmailMap.containsKey(amscon.Email__c)) {
-    //                contactList.addAll(contactListByEmailMap.get(amscon.Email__c));
-    //            }
-
-    //            system.debug('con: ' + con);
-    //            system.debug('con.Id: ' + con.Id);
-    //            system.debug('con.AccountId: ' + con.AccountId);
-    //            system.debug('contactList: ' + contactList);
-    //            if (contactListOther.isEmpty() ) {
-
-    //                system.debug('contactListOther is empty');
-    //                Contact newSFDCContact = new Contact();
-
-    //                updateContactByAmsContact(amscon, newSFDCContact);
-    //                system.debug('kerensen newSFDCContact ' + newSFDCContact);
-    //                contactList.add(newSFDCContact);
-
-    //                MapNewContactToAMSAccreditationContact.put(amscon, newSFDCContact);
-
-    //                /* if(amscon.Financial_Assessment_Contact__c){
-    //                     newSFDCContact.User_Portal_Status__c = 'Approved User';
-    //                     newSFDCContact.Financial_Assessment_Contact__c = true;
-    //                 }
-    //                 if(amscon.Portal_administrator__c){
-    //                     newSFDCContact.User_Portal_Status__c = 'Approved Admin';
-    //                 }
-
-    //                 newSFDCContactList.add(newSFDCContact);
-
-    //                 if(amscon.Financial_Assessment_Contact__c) {
-    //                     system.debug('is ifap');
-    //                     //TO DO - setup as Active Portal User
-    //                     String profileId = ISSP_Constant.profileIdByProfileNameMap.get('ISS Portal Agency User');
-    //                     ISSP_PortalUserStatusChange.createNewUser(profileId, newSFDCContact.Id);
-
-    //                     //Grant IFAP Portal Service to user
-    //                     Portal_Application_Right__c ifapaccess = new Portal_Application_Right__c();
-    //                     ifapaccess.Contact__c = newSFDCContact.Id;
-    //                     ifapaccess.Portal_Application__c = ifap.Id;
-    //                     ifapaccess.Right__c = 'Access Granted';
-    //                     ifapaccessList.add(ifapaccess);
-    //                 }
-
-    //                 if(amscon.Portal_administrator__c) {
-    //                     system.debug('is admin');
-    //                     //TO Do - setup contact as Portal Admin
-    //                     String profileId = ISSP_Constant.profileIdByProfileNameMap.get('ISS Portal Agency Delegated Admin User');
-    //                     ISSP_PortalUserStatusChange.createNewUser(profileId, newSFDCContact.Id);
-    //                 }*/
-
-    //            }
-    //        } else if (amscon.Contact__c == null) {
-    //            amscon.Duplicate_contact_exists__c = true;
-    //        }
-    //    }
-    //    /*
-    //    List<sObject> sObjectToInsertList = new List<sObject>();
-    //    for(Portal_Application_Right__c ifapaccess : ifapaccessList){
-    //        sObjectToInsertList.add(ifapaccess);
-    //    }
-    //    */
-
-    //    try {
-    //        system.debug('XDDKFJG contactList ' + contactList);
-
-    //        update amscontacts;
-
-    //        upsert contactList;
-    //        update updateAMSAccreditationContactContactIdField(MapNewContactToAMSAccreditationContact);
-
-
-    //        //insert sObjectToInsertList;
-
-    //    } catch (DmlException ex) {
-    //        system.debug('XDDKFJG error inserting contacts and portal application rights');
-    //        ApexPages.addMessages(ex);
-    //    }
-
-    //    system.debug('XDDKFJG amsDuplicateContactList: ' + amsDuplicateContactList);
-    //}
-
-    //public List<AMS_Accreditation_Contact__c> updateAMSAccreditationContactContactIdField( Map<AMS_Accreditation_Contact__c, Contact> MapNewContactToAMSAccreditationContact) {
-    //    List<AMS_Accreditation_Contact__c> ListAMSAccreditationContact = new List<AMS_Accreditation_Contact__c>();
-    //    for (AMS_Accreditation_Contact__c con : MapNewContactToAMSAccreditationContact.keySet()) {
-    //        if (con.Contact__c == null) {
-    //            con.Contact__c = MapNewContactToAMSAccreditationContact.get(con).Id ;
-    //            system.debug('The contact id to update ' + con);
-    //            ListAMSAccreditationContact.add(con);
-    //        }
-    //    }
-
-    //    system.debug('XDDKFJG update map with contact is' + ListAMSAccreditationContact);
-    //    return ListAMSAccreditationContact;
-
-    //}
-    //public Void updateContactByAmsContact(AMS_Accreditation_Contact__c amscon, Contact SFDCContact) {
-    //    if (amsOfficeType == AMS_Utils.HO || (SFDCContact.Id != null && amscon.Contact_Id__r.AccountId == vHQAccountId))
-    //        SFDCContact.AccountId = vHQAccountId;
-    //    else
-    //        SFDCContact.AccountId = newform.ISSP_Branch_AccountId__c;
-    //    SFDCContact.Salutation = amscon.Salutation__c;
-    //    SFDCContact.FirstName = amscon.First_name__c;
-    //    SFDCContact.LastName = amscon.Last_name__c;
-    //    SFDCContact.RecordTypeId = Schema.SObjectType.Contact.RecordTypeInfosByName.get('Standard').RecordTypeId;
-    //    system.debug('SFDCContact.AccountId: ' + SFDCContact.AccountId);
-    //    system.debug('SFDCContact.LastName: ' + SFDCContact.LastName);
-
-    //    SFDCContact.Phone = amscon.Phone__c;
-    //    SFDCContact.MobilePhone = amscon.Mobile__c;
-    //    SFDCContact.FAX = amscon.Fax__c;
-    //    SFDCContact.Email = amscon.Email__c;
-    //    SFDCContact.MailingCity = amscon.AddressCity__c;
-    //    SFDCContact.MailingCountry = amscon.AddressCountry__c;
-    //    SFDCContact.MailingStreet = amscon.AddressStreet__c;
-    //    SFDCContact.MailingPostalCode = amscon.AddressPostCode__c;
-    //    system.debug('amscon.Financial_Assessment_Contact__c ' + amscon.Financial_Assessment_Contact__c);
-    //    system.debug('amscon.Portal_administrator__c ' + amscon.Portal_administrator__c);
-    //    SFDCContact.Designated_IFAP_Contact__c = amscon.Financial_Assessment_Contact__c;
-    //    SFDCContact.Designated_Portal_Admin__c = amscon.Portal_administrator__c;
-    //    SFDCContact.Designated_Authorized_Signatory__c = amscon.Authorised_signatory__c;
-    //    SFDCContact.BSP_CASS_Payment_contact__c = amscon.CASS_contact__c;
-
-    //    if (String.isBlank(SFDCContact.MailingCountry)) { //TODO - remove this if, this is only here due to data corruption
-    //        SFDCContact.MailingCountry = amsAllLangCountryLabel;
-    //    }
-    //}
 
 
     private void retCargoCountryReqments(boolean isFromValidation) {
@@ -7681,15 +7486,15 @@ system.debug('aqui sectorValue ' + sectorValue);
         Boolean notToAdd = false;
         //Get owners related to the account
 
-        Id rtAccRoleOwnership = Schema.SObjectType.AMS_Account_Role__c.getRecordTypeInfosByName().get('Ownership').getRecordTypeId();
+        Id rtAccRoleOwnership = RecordTypeSingleton.getInstance().getRecordTypeId('AMS_Account_Role__c', 'Ownership');
         //BR
-        Id rtAccreditContPersonOwner = Schema.SObjectType.AMS_Accreditation_Contact__c.getRecordTypeInfosByName().get('Person').getRecordTypeId();
-        Id rtAccreditContCompanyOwner = Schema.SObjectType.AMS_Accreditation_Contact__c.getRecordTypeInfosByName().get('Company').getRecordTypeId();
+        Id rtAccreditContPersonOwner = RecordTypeSingleton.getInstance().getRecordTypeId('AMS_Accreditation_Contact__c', 'Person');
+        Id rtAccreditContCompanyOwner = RecordTypeSingleton.getInstance().getRecordTypeId('AMS_Accreditation_Contact__c', 'Company');
         //NoC
-        Id rtAccreditContPreviousOwner = Schema.SObjectType.AMS_Accreditation_Contact__c.getRecordTypeInfosByName().get('Previous Owner').getRecordTypeId();
-        Id rtAccreditContCurrentOwner = Schema.SObjectType.AMS_Accreditation_Contact__c.getRecordTypeInfosByName().get('Current Owner').getRecordTypeId();
-        Id rtAccreditContPreviousCompanyOwner = Schema.SObjectType.AMS_Accreditation_Contact__c.getRecordTypeInfosByName().get('Previous Company Owner').getRecordTypeId();
-        Id rtAccreditContCurrentCompanyOwner = Schema.SObjectType.AMS_Accreditation_Contact__c.getRecordTypeInfosByName().get('Current Company Owner').getRecordTypeId();
+        Id rtAccreditContPreviousOwner = RecordTypeSingleton.getInstance().getRecordTypeId('AMS_Accreditation_Contact__c', 'Previous_Owner');
+        Id rtAccreditContCurrentOwner = RecordTypeSingleton.getInstance().getRecordTypeId('AMS_Accreditation_Contact__c', 'Current_Owner');
+        Id rtAccreditContPreviousCompanyOwner = RecordTypeSingleton.getInstance().getRecordTypeId('AMS_Accreditation_Contact__c', 'Previous_Company_Owner');
+        Id rtAccreditContCurrentCompanyOwner = RecordTypeSingleton.getInstance().getRecordTypeId('AMS_Accreditation_Contact__c', 'Current_Company_Owner');
 
         List<AMS_Accreditation_Contact__c> countAccreditationContact = [SELECT Id, ANG_contactFromAccount__c, RecordTypeId FROM AMS_Accreditation_Contact__c WHERE AMS_Pax_Accreditation_Form__c = :newForm.Id];
         //NEWGEN-205

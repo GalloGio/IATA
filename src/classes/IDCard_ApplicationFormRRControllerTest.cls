@@ -426,9 +426,8 @@ private class IDCard_ApplicationFormRRControllerTest {
     	TransformationHelper.trgAccountISSP_AfterBeforInsertDeleteUpdateUndelete = true;
     	InitIDCard_ApplicationFormRRControllerTest();
     	
-    	Id rtacc = Schema.SObjectType.Account.getRecordTypeInfosByName().get('Agency').getRecordTypeId();
-        Id rtcon = Schema.SObjectType.Contact.getRecordTypeInfosByName().get('Standard').getRecordTypeId();
-        
+        Id rtacc = RecordTypeSingleton.getInstance().getRecordTypeId('Account', 'IATA_Agency');
+        Id rtcon = RecordTypeSingleton.getInstance().getRecordTypeId('Contact', 'Standard_Contact');
         
         test.startTest();
         IATA_ISO_Country__c isoc = new IATA_ISO_Country__c( Name = 'Australia',

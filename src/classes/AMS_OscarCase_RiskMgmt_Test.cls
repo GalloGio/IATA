@@ -9,7 +9,7 @@ private class AMS_OscarCase_RiskMgmt_Test {
         insert lsCountries;
 
         //Create Accounts
-        id AgencyRecordTypeId = RecordTypeSingleton.getInstance().RtIDsPerDeveloperNamePerObj.get('Account').get('IATA_Agency') ;
+        id AgencyRecordTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('Account', 'IATA_Agency');
         list<Account> lsAccntHO = new list<Account>();
         lsAccntHO.add(new Account(Name='Accnt1', RecordTypeId = AgencyRecordTypeId, IATA_ISO_Country__c=lsCountries.get(0).Id, Location_Class__c='P', Location_type__c = 'HO', Status__c = 'Approved', Reason__c = '90-MEETS CRITERIA')); //Empty Location Class. Will give Error
         lsAccntHO.add(new Account(Name='Accnt2', RecordTypeId = AgencyRecordTypeId, IATA_ISO_Country__c=lsCountries.get(1).Id, Location_Class__c='C', Location_type__c = 'HO', Status__c = 'Approved', Reason__c = '90-MEETS CRITERIA'));
@@ -45,9 +45,9 @@ private class AMS_OscarCase_RiskMgmt_Test {
         insert oc;
     }
 
-    private static id SIDRALiteRTId = RecordTypeSingleton.getInstance().RtIDsPerDeveloperNamePerObj.get('Case').get('SIDRA_Lite');
-    private static id SIDRARTId = RecordTypeSingleton.getInstance().RtIDsPerDeveloperNamePerObj.get('Case').get('SIDRA');
-    private static Id RTOSCAR = RecordTypeSingleton.getInstance().RtIDsPerDeveloperNamePerObj.get('Case').get('OSCAR_Communication');
+    private static id SIDRALiteRTId = RecordTypeSingleton.getInstance().getRecordTypeId('Case', 'SIDRA_Lite');
+    private static id SIDRARTId = RecordTypeSingleton.getInstance().getRecordTypeId('Case', 'SIDRA');
+    private static Id RTOSCAR = RecordTypeSingleton.getInstance().getRecordTypeId('Case', 'OSCAR_Communication');
 
     static testmethod void TestCountryNotPilot(){
         Account a = [select id from Account where name='Accnt1'];

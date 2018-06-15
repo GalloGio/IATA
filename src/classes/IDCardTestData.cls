@@ -23,10 +23,8 @@ public with sharing class IDCardTestData{
         IDCards_Promotions = new List<Promotion__c>();
         
         //List of Account Data 
-        Map<string,Id> idcardAppRT =  TransformationHelper.RtIDsPerDeveloperNamePerObj(new list<string> {'Account'}).get('Account');
-        Id rtidca = idcardAppRT.get('IATA_Agency');
-        Map<string,Id> contactRT =  TransformationHelper.RtIDsPerDeveloperNamePerObj(new list<string> {'Contact'}).get('Contact');
-        Id rtcont = contactRT.get('Standard_Contact');
+        Id rtidca = RecordTypeSingleton.getInstance().getRecordTypeId('Account', 'IATA_Agency');
+        Id rtcont = RecordTypeSingleton.getInstance().getRecordTypeId('Contact', 'Standard_Contact');
         
         
         Account account1 = new Account();

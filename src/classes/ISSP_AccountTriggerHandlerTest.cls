@@ -43,7 +43,7 @@ private class ISSP_AccountTriggerHandlerTest
         Account acc = ISSP_ObjectFactory.createNewAccount();
         acc.Name = 'Test 001';
         acc.Type = 'IATA Cargo Agent';
-        acc.RecordTypeId = Account.sObjectType.getDescribe().getRecordTypeInfosByName().get('Agency').getRecordTypeId();
+        acc.RecordTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('Account', 'IATA_Agency');
         insert acc;
         
         //Contact cont = (Contact)ISSP_ObjectFactory.createSObject('Contact',false,1);
@@ -86,7 +86,7 @@ private class ISSP_AccountTriggerHandlerTest
         Account acc = ISSP_ObjectFactory.createNewAccount();
         acc.Name = 'Test 001';
         acc.Type = 'IATA Cargo Agent';
-        acc.RecordTypeId = Account.sObjectType.getDescribe().getRecordTypeInfosByName().get('Agency').getRecordTypeId();
+        acc.RecordTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('Account', 'IATA_Agency');
         insert acc;
         
         //Contact cont = (Contact)ISSP_ObjectFactory.createSObject('Contact',false,1);

@@ -52,8 +52,8 @@ public with sharing class IDCard_PendingOpsAndProcessedAppTest {
             Insert p1;
             Insert p2;
             
-            Id rtacc = Schema.SObjectType.Account.getRecordTypeInfosByName().get('Agency').getRecordTypeId();
-            Id rtcon = Schema.SObjectType.Contact.getRecordTypeInfosByName().get('Standard').getRecordTypeId();
+            Id rtacc = RecordTypeSingleton.getInstance().getRecordTypeId('Account', 'IATA_Agency');
+            Id rtcon = RecordTypeSingleton.getInstance().getRecordTypeId('Contact', 'Standard_Contact');
             
             a = new Account(Name='Test Account',
                             IATACode__c = '12312312',
@@ -170,7 +170,7 @@ public with sharing class IDCard_PendingOpsAndProcessedAppTest {
             
             insert idcs;
             
-            Id rt =  Schema.SObjectType.ID_Card_Application__c.getRecordTypeInfosByName().get('Single ID Card Operation').getRecordTypeId();
+            Id rt =  RecordTypeSingleton.getInstance().getRecordTypeId('ID_Card_Application__c', 'Single_ID_Card_Operationn');
             List<ID_Card_Application__c> apps = new List<ID_Card_Application__c>();
             for(integer i=5; i <10; i++){
                 apps.add(new ID_Card_Application__c(VER_Number__c = cs[i].VER_Number_2__c,
@@ -245,9 +245,9 @@ public with sharing class IDCard_PendingOpsAndProcessedAppTest {
             system.debug(LoggingLevel.ERROR,'############### testAcceptRejectPendingApp()  ####################');
             initData();
        
-            Id rtsingle =  Schema.SObjectType.ID_Card_Application__c.getRecordTypeInfosByName().get('Single ID Card Operation').getRecordTypeId();
-            Id rtmass =  Schema.SObjectType.ID_Card_Application__c.getRecordTypeInfosByName().get('Mass Order Application').getRecordTypeId();
-            Id rtcase = Schema.SObjectType.Case.getRecordTypeInfosByName().get('ID Card Mass Application').getRecordTypeId();
+            Id rtsingle =  RecordTypeSingleton.getInstance().getRecordTypeId('ID_Card_Application__c', 'Single_ID_Card_Operationn');
+            Id rtmass =  RecordTypeSingleton.getInstance().getRecordTypeId('ID_Card_Application__c', 'Mass_Order_Application');
+            Id rtcase = RecordTypeSingleton.getInstance().getRecordTypeId('Case', 'ID_Card_Mass_Application');
             
             List<ID_Card_Application__c> apps = new List<ID_Card_Application__c>();
             for(integer i=0; i <10; i++){
@@ -469,9 +469,9 @@ public with sharing class IDCard_PendingOpsAndProcessedAppTest {
             
             a.ID_Card_KeyAccount_features__c = 'ID Card Paid by Applicant; Payment by Credit Card; Payment by Wire / Cheque';
             update a;
-            Id rtsingle =  Schema.SObjectType.ID_Card_Application__c.getRecordTypeInfosByName().get('Single ID Card Operation').getRecordTypeId();
-            Id rtmass =  Schema.SObjectType.ID_Card_Application__c.getRecordTypeInfosByName().get('Mass Order Application').getRecordTypeId();
-            Id rtcase = Schema.SObjectType.Case.getRecordTypeInfosByName().get('ID Card Mass Application').getRecordTypeId();
+            Id rtsingle =  RecordTypeSingleton.getInstance().getRecordTypeId('ID_Card_Application__c', 'Single_ID_Card_Operationn');
+            Id rtmass =  RecordTypeSingleton.getInstance().getRecordTypeId('ID_Card_Application__c', 'Mass_Order_Application');
+            Id rtcase = RecordTypeSingleton.getInstance().getRecordTypeId('Case', 'ID_Card_Mass_Application');
             
             List<ID_Card_Application__c> apps = new List<ID_Card_Application__c>();
             apps.add(new ID_Card_Application__c(VER_Number__c = cs[0].VER_Number_2__c,
@@ -600,9 +600,9 @@ public with sharing class IDCard_PendingOpsAndProcessedAppTest {
             initData();
             a.ID_Card_KeyAccount_features__c = 'ID Card Paid by Applicant; Payment by Credit Card; Payment by Wire / Cheque';
             update a;
-            Id rtsingle =  Schema.SObjectType.ID_Card_Application__c.getRecordTypeInfosByName().get('Single ID Card Operation').getRecordTypeId();
-            Id rtmass =  Schema.SObjectType.ID_Card_Application__c.getRecordTypeInfosByName().get('Mass Order Application').getRecordTypeId();
-            Id rtcase = Schema.SObjectType.Case.getRecordTypeInfosByName().get('ID Card Mass Application').getRecordTypeId();
+            Id rtsingle =  RecordTypeSingleton.getInstance().getRecordTypeId('ID_Card_Application__c', 'Single_ID_Card_Operationn');
+            Id rtmass =  RecordTypeSingleton.getInstance().getRecordTypeId('ID_Card_Application__c', 'Mass_Order_Application');
+            Id rtcase = RecordTypeSingleton.getInstance().getRecordTypeId('Case', 'ID_Card_Mass_Application');
             
             List<ID_Card_Application__c> apps = new List<ID_Card_Application__c>();
             apps.add(new ID_Card_Application__c(VER_Number__c = cs[0].VER_Number_2__c,
@@ -712,9 +712,9 @@ system.debug(LoggingLevel.ERROR,'################  [TESTCLASS] Fine checkout ###
             initData();
             a.ID_Card_KeyAccount_features__c = 'ID Card Paid by Applicant; Payment by Credit Card; Payment by Wire / Cheque; Process application without waiting for';
             update a;
-            Id rtsingle =  Schema.SObjectType.ID_Card_Application__c.getRecordTypeInfosByName().get('Single ID Card Operation').getRecordTypeId();
-            Id rtmass =  Schema.SObjectType.ID_Card_Application__c.getRecordTypeInfosByName().get('Mass Order Application').getRecordTypeId();
-            Id rtcase = Schema.SObjectType.Case.getRecordTypeInfosByName().get('ID Card Mass Application').getRecordTypeId();
+            Id rtsingle =  RecordTypeSingleton.getInstance().getRecordTypeId('ID_Card_Application__c', 'Single_ID_Card_Operationn');
+            Id rtmass =  RecordTypeSingleton.getInstance().getRecordTypeId('ID_Card_Application__c', 'Mass_Order_Application');
+            Id rtcase = RecordTypeSingleton.getInstance().getRecordTypeId('Case', 'ID_Card_Mass_Application');
             
             List<ID_Card_Application__c> apps = new List<ID_Card_Application__c>();
             apps.add(new ID_Card_Application__c(VER_Number__c = cs[0].VER_Number_2__c,
@@ -828,9 +828,9 @@ system.debug(LoggingLevel.ERROR,'################  [TESTCLASS] Fine checkout ###
             initData();
             a.ID_Card_KeyAccount_features__c = 'ID Card Paid by Applicant; Payment by Credit Card; Payment by Wire / Cheque; Process application without waiting for';
             update a;
-            Id rtsingle =  Schema.SObjectType.ID_Card_Application__c.getRecordTypeInfosByName().get('Single ID Card Operation').getRecordTypeId();
-            Id rtmass =  Schema.SObjectType.ID_Card_Application__c.getRecordTypeInfosByName().get('Mass Order Application').getRecordTypeId();
-            Id rtcase = Schema.SObjectType.Case.getRecordTypeInfosByName().get('ID Card Mass Application').getRecordTypeId();
+            Id rtsingle =  RecordTypeSingleton.getInstance().getRecordTypeId('ID_Card_Application__c', 'Single_ID_Card_Operationn');
+            Id rtmass =  RecordTypeSingleton.getInstance().getRecordTypeId('ID_Card_Application__c', 'Mass_Order_Application');
+            Id rtcase = RecordTypeSingleton.getInstance().getRecordTypeId('Case', 'ID_Card_Mass_Application');
             
             List<ID_Card_Application__c> apps = new List<ID_Card_Application__c>();
             apps.add(new ID_Card_Application__c(VER_Number__c = cs[0].VER_Number_2__c,

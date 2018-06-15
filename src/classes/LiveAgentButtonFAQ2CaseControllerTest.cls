@@ -30,7 +30,7 @@ private class LiveAgentButtonFAQ2CaseControllerTest {
 		country.Case_BSP_Country__c  = 'United Kingdom';
 		insert country;
 
-		Id AirlineId = RecordTypeSingleton.getInstance().RtIDsPerDeveloperNamePerObj.get('Account').get('IATA_Airline');
+		Id AirlineId = RecordTypeSingleton.getInstance().getRecordTypeId('Account', 'IATA_Airline');
 
 		Account acc = new Account();
 		acc.name ='testAcc';

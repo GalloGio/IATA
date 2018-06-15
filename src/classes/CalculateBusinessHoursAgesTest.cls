@@ -79,12 +79,12 @@ private class CalculateBusinessHoursAgesTest {
      static void inserTestData2() {
 
         BusinessHours  defaultBusinessHours = [ SELECT Id from BusinessHours where IsDefault  = true];
-        ID casesEurRT = RecordTypeSingleton.getInstance().RtIDsPerDeveloperNamePerObj.get('Case').get('CasesEurope') ;
+        ID casesEurRT = RecordTypeSingleton.getInstance().getRecordTypeId('Case', 'CasesEurope') ;
         
-        Account a = new Account(Name = 'test', RecordTypeId = RecordTypeSingleton.getInstance().RtIDsPerDeveloperNamePerObj.get('Account').get('Standard_Account') );
+        Account a = new Account(Name = 'test', RecordTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('Account', 'Standard_Account') );
         insert a;
         
-        Contact con = new Contact(AccountId = a.id, FirstName = 'Name', LastName = 'Test', Email = 'test@test.com', phone = '321321', RecordTypeId = RecordTypeSingleton.getInstance().RtIDsPerDeveloperNamePerObj.get('Contact').get('Standard_Contact') );
+        Contact con = new Contact(AccountId = a.id, FirstName = 'Name', LastName = 'Test', Email = 'test@test.com', phone = '321321', RecordTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('Contact', 'Standard_Contact') );
         insert con;
         
         Case c = new Case(ContactId = con.Id, Status = 'Open', BusinessHoursId = defaultBusinessHours.id, RecordTypeId = casesEurRT);

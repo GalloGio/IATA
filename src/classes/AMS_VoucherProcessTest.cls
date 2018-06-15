@@ -6,7 +6,7 @@ private class AMS_VoucherProcessTest {
 		Date myDate = Date.newInstance(2012, 2, 17);
 
 
-        ID rtAgency = Schema.SObjectType.Account.getRecordTypeInfosByName().get('Agency').getRecordTypeId();
+        ID rtAgency = RecordTypeSingleton.getInstance().getRecordTypeId('Account', 'IATA_Agency');
 
         IATA_ISO_Country__c portugal = new IATA_ISO_Country__c(AMS_Vouchers_Benchmark__c=600000 ,AMS_Max_Vouchers_Per_Year__c = 4, Name='Portugal', ISO_Code__c='IT', Region__c='Europe', ISS_Office_Location__c='Portugal');
         insert portugal;

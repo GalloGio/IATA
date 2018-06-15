@@ -1,7 +1,7 @@
 trigger trgIDCard_Application_MassUpdate on ID_Card_Application__c (after insert, after update) {
 
 
-	String massAppRT = IDCardWebService.getIdCardAppRT('Mass_Order_Application');
+	String massAppRT = RecordTypeSingleton.getInstance().getRecordTypeId('ID_Card_Application__c', 'Mass_Order_Application');
 
 	//INC195282 -  the respective mass CASE should have Status = Closed and ID Card Status = Cancelled whenever a mass IDCA has Application Status = Cancelled.
 	List<ID_Card_Application__c> listMassApps = new List<ID_Card_Application__c>();

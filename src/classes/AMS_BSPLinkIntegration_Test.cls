@@ -2,7 +2,7 @@
 private class AMS_BSPLinkIntegration_Test {
 	@testsetup
 	static void CreateData(){
-		id SIDRALiteRTId = RecordTypeSingleton.getInstance().RtIDsPerDeveloperNamePerObj.get('Case').get('SIDRA_Lite');
+		id SIDRALiteRTId = RecordTypeSingleton.getInstance().getRecordTypeId('Case', 'SIDRA_Lite');
 		
 		//Create countries
 		list<IATA_ISO_Country__c> lsCountries = new list<IATA_ISO_Country__c>();
@@ -10,7 +10,7 @@ private class AMS_BSPLinkIntegration_Test {
 		insert lsCountries;
 		
 		//Create Accounts
-		id AgencyRecordTypeId = RecordTypeSingleton.getInstance().RtIDsPerDeveloperNamePerObj.get('Account').get('IATA_Agency') ;
+		id AgencyRecordTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('Account', 'IATA_Agency') ;
 		list<Account> lsAccntHO = new list<Account>();
 		lsAccntHO.add(new Account(Name='Accnt1', RecordTypeId = AgencyRecordTypeId, IATA_ISO_Country__c=lsCountries.get(0).Id, Location_Class__c='P', Location_type__c = 'HO', Status__c = 'Accredited', Reason__c = '90-MEETS CRITERIA', Sector__c='Travel Agent'));
 		lsAccntHO.add(new Account(Name='Accnt2', RecordTypeId = AgencyRecordTypeId, IATA_ISO_Country__c=lsCountries.get(0).Id, Location_Class__c='P', Location_type__c = 'HO', Status__c = 'Accredited', Reason__c = '90-MEETS CRITERIA', Sector__c='Travel Agent'));
@@ -320,7 +320,7 @@ private class AMS_BSPLinkIntegration_Test {
     static testMethod void testBatch(){
     	id AccntId = [select Id from Account where name ='Accnt1'].get(0).Id;
     	id CountryId = [select id from IATA_ISO_Country__c limit 1].get(0).Id;
-    	id AgencyRecordTypeId = RecordTypeSingleton.getInstance().RtIDsPerDeveloperNamePerObj.get('Account').get('IATA_Agency') ;
+    	id AgencyRecordTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('Account', 'IATA_Agency') ;
     	list<Account> lsAccntBR = new list<Account>();
     	
     	for(integer i=0;i<85;i++){

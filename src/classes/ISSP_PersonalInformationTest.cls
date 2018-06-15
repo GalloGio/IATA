@@ -94,7 +94,7 @@ private class ISSP_PersonalInformationTest {
 		con.Senior_Contact_Email__c = 'senior@dev.com';
 		con.AccountId= acc.Id;
 		con.User_Portal_Status__c = 'Regional Administrator';
-		con.RecordTypeId = Schema.SObjectType.Contact.getRecordTypeInfosByName().get('Standard').getRecordTypeId();
+		con.RecordTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('Contact', 'Standard_Contact');
 		
 		system.debug('contact >> ' + con);
 		insert con;

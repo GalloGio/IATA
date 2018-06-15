@@ -16,7 +16,7 @@ private class ANG_RiskAlertPurgeTest {
 			Location_Class__c = 'P',
 			Remittance_frequency__c = 'M',
 			ANG_Accreditation_Model__c = 'Cash',
-			RecordTypeId = RecordTypeSingleton.getInstance().RtIDsPerDeveloperNamePerObj.get('Account').get('IATA_Agency')
+			RecordTypeId = RecordTypeSingleton.getInstance().getRecordTypeID('Account', 'IATA_Agency')
 		);
 		insert a;
 

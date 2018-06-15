@@ -13,10 +13,10 @@ public with sharing class ANG_Risk_Helper{
     public static final String RHC_INFO_STD_RT = 'RHC_Information';
 
     //RECORDTYPES
-    public static final String RECTYPE_ADJUSTMENT           = RecordTypeSingleton.getInstance().RtIDsPerDeveloperNamePerObj.get('ANG_Agency_Risk_Calculation__c').get('Adjustment');          
-    public static final String RECTYPE_RISKSTATUSASSESSMENT = RecordTypeSingleton.getInstance().RtIDsPerDeveloperNamePerObj.get('ANG_Agency_Risk_Calculation__c').get('Risk_Status_Assessment');
-    public static final String RECTYPE_RULES                = RecordTypeSingleton.getInstance().RtIDsPerDeveloperNamePerObj.get('ANG_Agency_Risk_Calculation__c').get('Rules');
-    public static final String RECTYPE_STDRHCINFO           = RecordTypeSingleton.getInstance().RtIDsPerDeveloperNamePerObj.get('ANG_RHC_Information__c').get(RHC_INFO_STD_RT);
+    public static final String RECTYPE_ADJUSTMENT           = RecordTypeSingleton.getInstance().getRecordTypeID('ANG_Agency_Risk_Calculation__c', 'Adjustment');          
+    public static final String RECTYPE_RISKSTATUSASSESSMENT = RecordTypeSingleton.getInstance().getRecordTypeID('ANG_Agency_Risk_Calculation__c', 'Risk_Status_Assessment');
+    public static final String RECTYPE_RULES                = RecordTypeSingleton.getInstance().getRecordTypeID('ANG_Agency_Risk_Calculation__c', 'Rules');
+    public static final String RECTYPE_STDRHCINFO           = RecordTypeSingleton.getInstance().getRecordTypeID('ANG_RHC_Information__c', RHC_INFO_STD_RT);
 
 
 	//Account - Financial_Review_Result__c

@@ -3,7 +3,7 @@ private class ANG_RHCHelperTest {
 	
 	static testMethod void rhcInfoInitialization() {
 
-		Id devRecordTypeId = Schema.SObjectType.AMS_Country_Specific_Attribute__c.getRecordTypeInfosByName().get('Minimum RHC Amount').getRecordTypeId();
+		Id devRecordTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('AMS_Country_Specific_Attribute__c', 'Minimum_RHC_Amount');
 
 		List<IATA_ISO_Country__c> ctry = new List<IATA_ISO_Country__c>();
 
@@ -44,7 +44,7 @@ private class ANG_RHCHelperTest {
 
 	static testMethod void rhcInfoInitialization2() {
 
-		Id devRecordTypeId = Schema.SObjectType.AMS_Country_Specific_Attribute__c.getRecordTypeInfosByName().get('Minimum RHC Amount').getRecordTypeId();
+		Id devRecordTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('AMS_Country_Specific_Attribute__c', 'Minimum_RHC_Amount');
 
 		List<IATA_ISO_Country__c> ctry = new List<IATA_ISO_Country__c>();
 

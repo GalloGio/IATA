@@ -120,9 +120,9 @@ public with sharing class NewParticipantByEmailCtrl {
 
     // NOTE: the contact MUST include the fields c.Account.Parent, c.Account.RecordTypeId and c.Account.Top_Parent__c!!!
     public static Id calculateMainAccount(Contact c){
-    	Id rtHQ =  Schema.SObjectType.Account.getRecordTypeInfosByName().get('Airline Headquarters').getRecordTypeId();
-        Id rtBr =  Schema.SObjectType.Account.getRecordTypeInfosByName().get('Airline Branch').getRecordTypeId();
-        Id rtAg =  Schema.SObjectType.Account.getRecordTypeInfosByName().get('Agency').getRecordTypeId();
+    	Id rtHQ =  RecordTypeSingleton.getInstance().getRecordTypeId('Account', 'IATA_Airline');
+        Id rtBr =  RecordTypeSingleton.getInstance().getRecordTypeId('Account', 'IATA_Airline_BR');
+        Id rtAg =  RecordTypeSingleton.getInstance().getRecordTypeId('Account', 'IATA_Agency');
 
  		if(c.Account.RecordTypeId==rtHQ)
  			return c.AccountId;

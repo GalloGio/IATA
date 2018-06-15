@@ -132,10 +132,11 @@ public class TransformationHelper {
     private static  map<string,map<string,id>>  RtIDsPerDeveloperNamePerObjMap = new map<string,map<string,id>>();
  
  
+    
     // caution it's case sensitive
     // It receives a list of string containing the API name of the objects we want the rt ids
     // It returns a map : nameOfTheSobject => developerName of the RT => ID of the rt
-    public static map<string,map<string,id>> RtIDsPerDeveloperNamePerObj(list<string> SobjectTypes){
+    /*public static map<string,map<string,id>> RtIDsPerDeveloperNamePerObj(list<string> SobjectTypes){
     
         map<string,map<string,id>> RtIDsPerDeveloperNamePerObjs = new map<string,map<string,id>>();
         
@@ -168,7 +169,7 @@ public class TransformationHelper {
     
         return RtIDsPerDeveloperNamePerObjs;
     }
-    
+    */
      
      public  static boolean triggerOnCaseNSerRen = false;
      
@@ -196,18 +197,20 @@ public class TransformationHelper {
     }
     
     
-        public static map<string,id> AccRtNamePerIds (){
+    /*
+    public static map<string,id> AccRtNamePerIds (){
         
         return RtIDsPerDeveloperNamePerObj(new list<String>{'Account'}).get('Account');
         
     }
+    */
 
     public static void sendEmailSupport( string subject, string message ){
-      if (Test.isRunningTest() ) {
+      if(Test.isRunningTest()){
         System.debug('SendEmailSupport skipped because this is a Test. Subject: ' + subject + ', message: ' + message);
         return;
       }
-      
+
       List<ID> userIDs = getUserIds(getSupportEmails());
       List<Messaging.SingleEmailMessage> emailsToSend = new List<Messaging.SingleEmailMessage>();
 

@@ -34,13 +34,13 @@ private class AirlineSuspensionCsTemplateMergeTest {
         insert country_qr;
 
         // Create an Airline HQ account
-        Id AirlineHQ_RT_Id = RecordTypeSingleton.getInstance().RtIDsPerDeveloperNamePerObj.get('Account').get('IATA_Airline');
+        Id AirlineHQ_RT_Id = RecordTypeSingleton.getInstance().getRecordTypeId('Account', 'IATA_Airline');
         Account acct_hq = new Account(Name = 'Qatar Airways', Airline_designator__c = 'QR', ICCS_Membership_Status__c = 'Member', Industry = 'Airline', Type = 'Passenger',
                                       RecordTypeId = AirlineHQ_RT_Id, IATA_ISO_Country__c = country_qr.Id, Membership_status__c = 'Non-IATA member');
         insert acct_hq;
 
         // Create an Airline BR account for the HQ above
-        Id AirlineBR_RT_Id = RecordTypeSingleton.getInstance().RtIDsPerDeveloperNamePerObj.get('Account').get('IATA_Airline_BR');
+        Id AirlineBR_RT_Id = RecordTypeSingleton.getInstance().getRecordTypeId('Account', 'IATA_Airline_BR');
         Account acct_br = new Account(Name = 'Qatar Airways FR', ParentId = acct_hq.Id, Airline_designator__c = 'QR', ICCS_Membership_Status__c = 'Member', Industry = 'Airline', Type = 'Passenger',
                                       RecordTypeId = AirlineBR_RT_Id, IATA_ISO_Country__c = country_fr.Id);
         insert acct_br;
@@ -52,13 +52,13 @@ private class AirlineSuspensionCsTemplateMergeTest {
 
 
         // create an airline suspension case
-        Id AirlineSuspension_RT_Id = RecordTypeSingleton.getInstance().RtIDsPerDeveloperNamePerObj.get('Case').get('Airline_Suspension');
+        Id AirlineSuspension_RT_Id = RecordTypeSingleton.getInstance().getRecordTypeId('Case', 'Airline_Suspension');
         Case cs = new Case(RecordTypeId = AirlineSuspension_RT_Id, Subject = 'test', Origin = 'Email', CaseArea__c = 'Airline Change', Status = 'Open',
                            AccountId = acct_hq.Id);
         insert cs;
 
         // create a child CS case
-        Id Internal_RT_Id = RecordTypeSingleton.getInstance().RtIDsPerDeveloperNamePerObj.get('Case').get('InternalCasesEuropeSCE');
+        Id Internal_RT_Id = RecordTypeSingleton.getInstance().getRecordTypeId('Case', 'InternalCasesEuropeSCE');
         Case c = new Case(CaseArea__c = 'Airline Joining',
                           RecordTypeID =  Internal_RT_Id,
                           AccountId = acct_br.id,

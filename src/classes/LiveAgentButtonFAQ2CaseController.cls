@@ -170,7 +170,7 @@ public with sharing class LiveAgentButtonFAQ2CaseController {
 
     public String getCaseRecordTypeId() {
 
-         return RecordTypeSingleton.getInstance().RtIDsPerDeveloperNamePerObj.get('Case').get(caseRecordTypeName);
+         return RecordTypeSingleton.getInstance().getRecordTypeId('Case', caseRecordTypeName);
     }
 
     public IATA_ISO_Country__c country{

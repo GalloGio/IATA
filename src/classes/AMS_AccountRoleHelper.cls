@@ -6,7 +6,7 @@ public class AMS_AccountRoleHelper {
 	public Map<Id, AMS_Account_Role__c> newMap = (Map<Id,AMS_Account_Role__c>) Trigger.newMap;
 	public Map<Id, AMS_Account_Role__c> oldMap = (Map<Id,AMS_Account_Role__c>) Trigger.oldMap;
 
-	public Id ownerRecTypeId = Schema.AMS_Account_Role__c.sObjectType.getDescribe().getRecordTypeInfosByName().get('Ownership').getRecordTypeId();
+	public Id ownerRecTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('AMS_Account_Role__c', 'Ownership');
 
 	private List<String> aimsLegacySystems{
 		get{
@@ -21,7 +21,7 @@ public class AMS_AccountRoleHelper {
 		System.debug(loggingLevel.Debug, '\n____ [cls AMS_AccountRoleHelper - aimsOwnerMerge] ************ start ');
 
 		List<AMS_Account_Role__c> ownersToCheck = new List<AMS_Account_Role__c>();
-		Id ownerRecType = Schema.AMS_Account_Role__c.sObjectType.getDescribe().getRecordTypeInfosByName().get('Ownership').getRecordTypeId();
+		Id ownerRecType = RecordTypeSingleton.getInstance().getRecordTypeId('AMS_Account_Role__c', 'Ownership');
 		for(AMS_Account_Role__c owner : triggerNew){
 		    if(owner.Percentage__c != null && owner.Owner_Sequence__c != null && owner.RecordTypeId == ownerRecTypeId) ownersToCheck.add(owner);
 		}

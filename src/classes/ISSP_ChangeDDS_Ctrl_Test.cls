@@ -10,14 +10,14 @@ private class ISSP_ChangeDDS_Ctrl_Test {
         Account acc = new Account();
         acc.Name = 'TestAgency';
         acc.IATACode__c = '123';
-        acc.RecordTypeId = RecordTypeSingleton.getInstance().RtIDsPerDeveloperNamePerObj.get('Account').get('IATA_Agency');
+        acc.RecordTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('Account', 'IATA_Agency');
         lsAccnt.add(acc);
         
         //Standard Account
         acc = new Account();
         acc.Name = 'TestStdAccnt';
         acc.IATACode__c = '456';
-        acc.RecordTypeId = RecordTypeSingleton.getInstance().RtIDsPerDeveloperNamePerObj.get('Account').get('Standard_Account');
+        acc.RecordTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('Account', 'Standard_Account');
         lsAccnt.add(acc);
         
         insert lsAccnt;

@@ -252,7 +252,7 @@ public class ISSP_Portal_Application_RightTest {
     static testMethod void testSIS_GrantAccess_Error() {
         User thisUser = [SELECT Id FROM User WHERE Id = :UserInfo.getUserId()];
         ISSP_WS_SIS_Callout_Common_Test.load_ISSP_CS();
-        Id recordtypeAgency = RecordTypeSingleton.getInstance().RtIDsPerDeveloperNamePerObj.get('Account').get('IATA_Agency') ;
+        Id recordtypeAgency = RecordTypeSingleton.getInstance().getRecordTypeId('Account', 'IATA_Agency') ;
         Portal_Applications__c sisApp = new Portal_Applications__c(Name = 'SIS');
         insert sisApp;
         ISSP_ObjectFactory.fiilIncludedFields();
@@ -291,7 +291,7 @@ public class ISSP_Portal_Application_RightTest {
     static testMethod void testSIS_GrantAccess_CreatingUser_OK() {
         User thisUser = [SELECT Id FROM User WHERE Id = :UserInfo.getUserId()];
         ISSP_WS_SIS_Callout_Common_Test.load_ISSP_CS();
-        Id recordtypeAgency = RecordTypeSingleton.getInstance().RtIDsPerDeveloperNamePerObj.get('Account').get('IATA_Agency') ;
+        Id recordtypeAgency = RecordTypeSingleton.getInstance().getRecordTypeId('Account', 'IATA_Agency') ;
         Portal_Applications__c sisApp = new Portal_Applications__c(Name = 'SIS');
         insert sisApp;
         ISSP_ObjectFactory.fiilIncludedFields();
@@ -330,7 +330,7 @@ public class ISSP_Portal_Application_RightTest {
     static testMethod void testSIS_GrantAccess_ExistingUser_OK() {
         User thisUser = [SELECT Id FROM User WHERE Id = :UserInfo.getUserId()];
         ISSP_WS_SIS_Callout_Common_Test.load_ISSP_CS();
-        Id recordtypeAgency = RecordTypeSingleton.getInstance().RtIDsPerDeveloperNamePerObj.get('Account').get('IATA_Agency') ;
+        Id recordtypeAgency = RecordTypeSingleton.getInstance().getRecordTypeId('Account', 'IATA_Agency') ;
         Portal_Applications__c sisApp = new Portal_Applications__c(Name = 'SIS');
         insert sisApp;
         ISSP_ObjectFactory.fiilIncludedFields();
@@ -386,7 +386,7 @@ public class ISSP_Portal_Application_RightTest {
     static testMethod void testSIS_RevokeAccess_ERROR() {
         User thisUser = [SELECT Id FROM User WHERE Id = :UserInfo.getUserId()];
         ISSP_WS_SIS_Callout_Common_Test.load_ISSP_CS();
-        Id recordtypeAgency = RecordTypeSingleton.getInstance().RtIDsPerDeveloperNamePerObj.get('Account').get('IATA_Agency') ;
+        Id recordtypeAgency = RecordTypeSingleton.getInstance().getRecordTypeId('Account', 'IATA_Agency') ;
         Portal_Applications__c sisApp = new Portal_Applications__c(Name = 'SIS');
         insert sisApp;
         ISSP_ObjectFactory.fiilIncludedFields();
@@ -433,7 +433,7 @@ public class ISSP_Portal_Application_RightTest {
     static testMethod void testSIS_RevokeAccess_OK() {
         User thisUser = [SELECT Id FROM User WHERE Id = :UserInfo.getUserId()];
         ISSP_WS_SIS_Callout_Common_Test.load_ISSP_CS();
-        Id recordtypeAgency = RecordTypeSingleton.getInstance().RtIDsPerDeveloperNamePerObj.get('Account').get('IATA_Agency') ;
+        Id recordtypeAgency = RecordTypeSingleton.getInstance().getRecordTypeId('Account', 'IATA_Agency') ;
         Portal_Applications__c sisApp = new Portal_Applications__c(Name = 'SIS');
         insert sisApp;
         ISSP_ObjectFactory.fiilIncludedFields();

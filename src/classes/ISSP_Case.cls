@@ -247,7 +247,7 @@ public without sharing class ISSP_Case {
         popContact();
 
         //TF - SP9-C5
-        ID FDScaseRecordTypeID = RecordTypeSingleton.getInstance().RtIDsPerDeveloperNamePerObj.get('Case').get('FDS_ICCS_Email_to_Case');
+        ID FDScaseRecordTypeID = RecordTypeSingleton.getInstance().getRecordTypeId('Case', 'FDS_ICCS_Email_to_Case');
         String recordTypeId = ApexPages.currentPage().getParameters().get('recordTypeId');
 
         //AS - SP10; get the recordtyype name for new cases, esp. for SIS

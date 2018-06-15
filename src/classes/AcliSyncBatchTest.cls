@@ -106,7 +106,7 @@ private class AcliSyncBatchTest {
         IATA_ISO_Country__c country_a = new IATA_ISO_Country__c(Name = 'Argentina', ISO_Code__c = 'AR', Acli_Country__c = 'Argentina');
         insert country_a;
 
-        Id AirlineHQ_RT_Id = RecordTypeSingleton.getInstance().RtIDsPerDeveloperNamePerObj.get('Account').get('IATA_Airline');
+        Id AirlineHQ_RT_Id = RecordTypeSingleton.getInstance().getRecordTypeId('Account', 'IATA_Airline');
         Account EI = new Account(Name = 'Aer Lingus INTENTIONAL TYPO', Airline_designator__c = 'EI', ACLI_SAP_Id__c = '0010000141', Membership_status__c = 'Non-IATA member', RecordTypeId = AirlineHQ_RT_Id,
         			IATA_ISO_Country__c = country_i.Id);
         insert EI;
@@ -116,7 +116,7 @@ private class AcliSyncBatchTest {
         insert SU;
 
         // create 1 Airline Coding case
-        ID AirlineCodingRTId = RecordTypeSingleton.getInstance().RtIDsPerDeveloperNamePerObj.get('Case').get('Airline_Coding_Application');
+        ID AirlineCodingRTId = RecordTypeSingleton.getInstance().getRecordTypeId('Case', 'Airline_Coding_Application');
         Case cs1 = new Case(recordtypeID = AirlineCodingRTId,
                               Region__c = 'China & North Asia',
                               BSPCountry__c = 'China',

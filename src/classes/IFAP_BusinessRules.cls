@@ -161,8 +161,7 @@ public with sharing class IFAP_BusinessRules {
         List<Case> cList = new List<Case>();
 
         // get the IFAP case recordtype (we get it from the singleton class)
-        //ID IFAPcaseRecordTypeID = clsCaseRecordTypeIDSingleton.getInstance().RecordTypes.get('IATA Financial Review');
-        ID IFAPcaseRecordTypeID = RecordTypeSingleton.getInstance().RtIDsPerDeveloperNamePerObj.get('Case').get('IATA_Financial_Review');
+        ID IFAPcaseRecordTypeID = RecordTypeSingleton.getInstance().getRecordTypeId('Case', 'IATA_Financial_Review');
 
         BatchNumber__c batch = [Select Id, Name from BatchNumber__c where Id = : batchNumberId];
         Group g = [Select id, name from Group where type = 'Queue' and name = 'Cases - Agent Financial Review'];
@@ -452,7 +451,7 @@ public with sharing class IFAP_BusinessRules {
 
     public static Integer accountNbrClosedCase(String accountId, String financialYear) {
         //ID IFAPcaseRecordTypeID = clsCaseRecordTypeIDSingleton.getInstance().RecordTypes.get('IATA Financial Review');
-        ID IFAPcaseRecordTypeID = RecordTypeSingleton.getInstance().RtIDsPerDeveloperNamePerObj.get('Case').get('IATA_Financial_Review');
+        ID IFAPcaseRecordTypeID = RecordTypeSingleton.getInstance().getRecordTypeId('Case', 'IATA_Financial_Review');
 
         List<Case> cases = [Select c.Status, c.IFAP_Financial_Year__c, c.IFAP_Financial_Month__c, c.AccountId, c.RecordTypeId From Case c where c.AccountId = : accountId and c.Status = 'Closed' and c.IFAP_Financial_Year__c = : financialYear and c.RecordTypeId = : IFAPcaseRecordTypeID];
         return (cases == null ? 0 : cases.size());
@@ -460,7 +459,7 @@ public with sharing class IFAP_BusinessRules {
 
     public static Boolean isSAAMCase(String caseId) {
         //ID ProcessISSPcaseRecordTypeID = clsCaseRecordTypeIDSingleton.getInstance().RecordTypes.get('SAAM');
-        ID ProcessISSPcaseRecordTypeID = RecordTypeSingleton.getInstance().RtIDsPerDeveloperNamePerObj.get('Case').get('ProcessEuropeSCE');
+        ID ProcessISSPcaseRecordTypeID = RecordTypeSingleton.getInstance().getRecordTypeId('Case', 'ProcessEuropeSCE');
 
         List<Case> theCase = [select c.Id, c.Subject, c.RecordTypeId from Case c where c.Id = :caseId and c.RecordTypeId = :ProcessISSPcaseRecordTypeID];
         return (theCase != null && theCase.size() > 0);
@@ -468,7 +467,7 @@ public with sharing class IFAP_BusinessRules {
 
     public static Boolean caseHasChildIFAPCases(String caseId) {
         //ID IFAPcaseRecordTypeID = clsCaseRecordTypeIDSingleton.getInstance().RecordTypes.get('IATA Financial Review');
-        ID IFAPcaseRecordTypeID = RecordTypeSingleton.getInstance().RtIDsPerDeveloperNamePerObj.get('Case').get('IATA_Financial_Review');
+        ID IFAPcaseRecordTypeID = RecordTypeSingleton.getInstance().getRecordTypeId('Case', 'IATA_Financial_Review');
         List<Case> childCases = [Select c.Status, c.RecordTypeId From Case c where c.ParentId = : caseId and c.RecordTypeId = : IFAPcaseRecordTypeID];
         return (childCases != null && childCases.size() > 0);
     }

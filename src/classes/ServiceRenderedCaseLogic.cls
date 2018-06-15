@@ -9,11 +9,11 @@ public class ServiceRenderedCaseLogic {
    
  /* it returns the list of cases with errors
      this method has the sideeffect of updating the accounts recordtypes */
-  public static map<Id,Case> changeRTtoBranchAccts(map<Id,Id> caseIDPerAccId,map<string,id> AcccRtNamePerId, map<Id,Case> caseMap){
+  public static map<Id,Case> changeRTtoBranchAccts(map<Id,Id> caseIDPerAccId, map<Id,Case> caseMap){
    
             set<Id> AcctIDs = caseIDPerAccId.keySet();
-            ID Standard = AcccRtNamePerId.get('Standard_Account');
-            Id Branch = AcccRtNamePerId.get('IATA_Airline_BR');
+            ID Standard = RecordTypeSingleton.getInstance().getRecordTypeId('Account', 'Standard_Account');
+            Id Branch = RecordTypeSingleton.getInstance().getRecordTypeId('Account', 'IATA_Airline_BR');
             integer i=0;
             
             map<Integer,Account> AccPerIntAcc = new map<Integer,Account>();
@@ -132,8 +132,7 @@ public class ServiceRenderedCaseLogic {
   
  
    
-   public static void reparentProvider(list<Case>  casesToTrigger,map<string,id> AcccRtNamePerId,
-                                         set<String> ServicesToCheck, map<String,Case_Reason_Service__c> ServicesPerReason){
+   public static void reparentProvider(list<Case>  casesToTrigger, set<String> ServicesToCheck, map<String,Case_Reason_Service__c> ServicesPerReason){
    
                          list<Case> casesWithoutProvider = new list<Case>();
                            for (Case c : casesToTrigger) {
@@ -149,7 +148,7 @@ public class ServiceRenderedCaseLogic {
                      
                            }
                        if(!casesWithoutProvider.isEmpty())
-                           ServiceRenderedCaseLogic.ReassignProvider(casesWithoutProvider,AcccRtNamePerId);
+                           ServiceRenderedCaseLogic.ReassignProvider(casesWithoutProvider);
    
    }
  
@@ -204,7 +203,7 @@ public class ServiceRenderedCaseLogic {
     
  
         
-     private static void ReassignProvider(List<Case> Cases,map<string,id> AcccRtNamePerId){
+     private static void ReassignProvider(List<Case> Cases){
           
            map<Id,list<Case>>  CasesPerConsumer = new map<Id,list<Case>>();
             
@@ -220,7 +219,7 @@ public class ServiceRenderedCaseLogic {
                     
             for(Account a :[SELECT ParentID,RecordTypeID,ID FROM Account WHERE Id IN:accIDs]){
             
-                    if(a.RecordTypeID == AcccRtNamePerId.get('IATA_Airline')){                          
+                    if(a.RecordTypeID == RecordTypeSingleton.getInstance().getRecordTypeId('Account', 'IATA_Airline')){                          
                         for(Id accID:CasesPerConsumer.keyset()) 
                             for(case c:CasesPerConsumer.get(accID))
                                 c.provider__c = a.id;
@@ -310,13 +309,11 @@ public class ServiceRenderedCaseLogic {
           }
              
             set<Id> accIDs = CasesPerConsumer.keySet();          
-            map<string,id> AcccRtNamePerId = TransformationHelper.AccRtNamePerIds();
-                    
                     
             for(Account a :[SELECT RecordTypeID,ID FROM Account WHERE Id IN:accIDs]){
             
-                    if(a.RecordTypeID == AcccRtNamePerId.get('IATA_Airline')  
-                            || a.RecordTypeID == AcccRtNamePerId.get('IATA_Airline_BR')){
+                    if(a.RecordTypeID == RecordTypeSingleton.getInstance().getRecordTypeId('Account', 'IATA_Airline')  
+                            || a.RecordTypeID == RecordTypeSingleton.getInstance().getRecordTypeId('Account', 'IATA_Airline_BR')){
                         
                         for(Id accID:CasesPerConsumer.keyset()) 
                             casesOkConsumer.addAll(CasesPerConsumer.get(accID));

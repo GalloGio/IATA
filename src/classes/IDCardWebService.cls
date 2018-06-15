@@ -20,17 +20,6 @@ global with sharing class IDCardWebService {
     private static Map<String,String> idcardAppRT = null;
     
     /**
-    Static way to get Once a selected record type Id. Process will be done Once only
-      
-    */ 
-    public static String getIdCardAppRT (String rt){
-        if( idcardAppRT == null){
-             idcardAppRT =  TransformationHelper.RtIDsPerDeveloperNamePerObj(new list<string> {'ID_Card_Application__c'}).get('ID_Card_Application__c');
-        }
-        return idcardAppRT.get(rt);
-    }
-    
-    /**
     This method will process and ID card applicsation :
     requirement
         - must be a single application
@@ -51,7 +40,7 @@ global with sharing class IDCardWebService {
         try {
             string IdCardApplicationQuery = 'SELECT '+ TransformationHelper.getAllFields(Schema.SObjectType.ID_Card_Application__c.fields.getMap())+
                                                    '  FROM ID_Card_Application__c  '+ 
-                                                   '  WHERE Id = \''+id+'\' and recordTypeId = \''+getIdCardAppRT('Single_ID_Card_Operation')+'\''+
+                                                   '  WHERE Id = \''+id+'\' and recordTypeId = \''+RecordTypeSingleton.getInstance().getRecordTypeId('ID_Card_Application__c', 'Single_ID_Card_Operation')+'\''+
                                                    '  and Single_Application_Processing_Step__c = \'In Queue for processing\' '; 
             list<ID_Card_Application__c> pendingApplications = (list<ID_Card_Application__c>)(database.query(IdCardApplicationQuery));
             if(pendingApplications.size()==1){

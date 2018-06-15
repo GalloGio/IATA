@@ -27,11 +27,10 @@ public class  ID_Card_Mass_Application_Test {
     public static List<ID_Card_Application__c> idcs;
     
     public static void initData(){
-        Id rtacc = Schema.SObjectType.Account.getRecordTypeInfosByName().get('Agency').getRecordTypeId();
-        Id rtcon = Schema.SObjectType.Contact.getRecordTypeInfosByName().get('Standard').getRecordTypeId();
-            Map<string,Id> idcardAppRT =  TransformationHelper.RtIDsPerDeveloperNamePerObj(new list<string> {'ID_Card_Application__c'}).get('ID_Card_Application__c');
+        Id rtacc = RecordTypeSingleton.getInstance().getRecordTypeId('Account', 'IATA_Agency');
+        Id rtcon = RecordTypeSingleton.getInstance().getRecordTypeId('Contact', 'Standard_Contact');
         
-        Id rtidca = idcardAppRT.get('Single_ID_Card_Operation');
+        Id rtidca = RecordTypeSingleton.getInstance().getRecordTypeId('ID_Card_Application__c', 'Single_ID_Card_Operation');
                 
         IATA_ISO_Country__c isoc = new IATA_ISO_Country__c( Name = 'Australia',
                                         ISO_Code__c = '12',
@@ -144,8 +143,7 @@ public class  ID_Card_Mass_Application_Test {
         test.startTest();
         //If contact Id is not passed it should not find any contact
         IDCard_AdmPendingOpsController ctrl = new IDCard_AdmPendingOpsController();
-        Map<string,Id> idcardAppRT =  TransformationHelper.RtIDsPerDeveloperNamePerObj(new list<string> {'ID_Card_Application__c'}).get('ID_Card_Application__c');
-        Id rtidca = idcardAppRT.get('Mass_Order_Application');
+        Id rtidca = RecordTypeSingleton.getInstance().getRecordTypeId('ID_Card_Application__c', 'Mass_Order_Application');
         
         
         // now it should work
@@ -179,8 +177,7 @@ public class  ID_Card_Mass_Application_Test {
         test.startTest();
         //If contact Id is not passed it should not find any contact
         IDCard_AdmPendingOpsController ctrl = new IDCard_AdmPendingOpsController();
-        Map<string,Id> idcardAppRT =  TransformationHelper.RtIDsPerDeveloperNamePerObj(new list<string> {'ID_Card_Application__c'}).get('ID_Card_Application__c');
-        Id rtidca = idcardAppRT.get('Mass_Order_Application');
+        Id rtidca = RecordTypeSingleton.getInstance().getRecordTypeId('ID_Card_Application__c', 'Mass_Order_Application');
         
         
         // now it should work

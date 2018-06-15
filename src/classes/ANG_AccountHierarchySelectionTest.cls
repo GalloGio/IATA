@@ -131,7 +131,7 @@ private class ANG_AccountHierarchySelectionTest {
 		AMS_OSCAR__c oscar = new AMS_OSCAR__c(Account__c = AE.id, New_parent__c = AE.id, recordTypeId = oscarRT, Process__c = 'ANG.MAJOR.CHANGES.1.0' );
 		insert oscar;
 
-		ID rtAgencyInvolved = Schema.SObjectType.AMS_Process_Detail__c.getRecordTypeInfosByName().get('Agency Involved').getRecordTypeId();
+		ID rtAgencyInvolved = RecordTypeSingleton.getInstance().getRecordTypeId('AMS_Process_Detail__c', 'Agency_Involved');
 
 		List<AMS_Process_Detail__c> agenciesinvolved = new List<AMS_Process_Detail__c>();
 
@@ -157,7 +157,7 @@ private class ANG_AccountHierarchySelectionTest {
 
 		// let's start !!
 
-		ID rtChangesStagingId = Schema.SObjectType.AMS_Pax_Accreditation_Form__c.getRecordTypeInfosByName().get('New Gen Changes').getRecordTypeId();
+		ID rtChangesStagingId = RecordTypeSingleton.getInstance().getRecordTypeId('AMS_Pax_Accreditation_Form__c', 'New_Gen_Changes');
 
 		// Create the Staging area for the Account
 		AMS_Pax_Accreditation_Form__c stagingArea = new  AMS_Pax_Accreditation_Form__c(

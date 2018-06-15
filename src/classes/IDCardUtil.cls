@@ -275,7 +275,7 @@ global with sharing class IDCardUtil {
         }
 
         if (isWithExpedite) {
-            if (applicationRecordType != null && applicationRecordType == TransformationHelper.RtIDsPerDeveloperNamePerObj(new list<string> {'ID_Card_Application__c'}).get('ID_Card_Application__c').get('Single_ID_Card_Operation'))
+            if (applicationRecordType != null && applicationRecordType == RecordTypeSingleton.getInstance().getRecordTypeId('ID_Card_Application__c', 'Single_ID_Card_Operation'))
                 detailledFee.put('ExpediteFee', (thePriceTable.Mass_Purchase_exp__c));
             else
                 detailledFee.put('ExpediteFee', (thePriceTable.Expedite__c));
@@ -1344,8 +1344,6 @@ public static String generateVER(Account theAccount) {
         newCase.RecordTypeId =  clsCaseRecordTypeIDSingleton.getInstance().RecordTypes.get('ID Card Mass Application');
         newCase.Subject = 'Case for ID Card Mass Application ' + idCardApp.Name;
 
-
-        ID keyAccountIDCardCaseRecordTypeID = RecordTypeSingleton.getInstance().RtIDsPerDeveloperNamePerObj.get('Case').get('ID_Card_Mass_Application');
         newCase.Status = 'In progress';
         newCase.OwnerId = System.Userinfo.getUserId();
 
@@ -1387,8 +1385,6 @@ public static String generateVER(Account theAccount) {
         newCase.RecordTypeId = IDCardcaseRecordTypeID;
         newCase.Subject = 'Case for ID Card Application ' + idCardApp.Name;
 
-
-        ID keyAccountIDCardCaseRecordTypeID = RecordTypeSingleton.getInstance().RtIDsPerDeveloperNamePerObj.get('Case').get('ID_Card_Mass_Application');
         newCase.Status = 'In progress';
         newCase.OwnerId = System.Userinfo.getUserId();
 
@@ -1871,7 +1867,7 @@ public static String generateVER(Account theAccount) {
 
             ID_Card_Application__c newIDCardApplication = new ID_Card_Application__c();
 
-            ID idcaRT = RecordTypeSingleton.getInstance().RtIDsPerDeveloperNamePerObj.get('ID_Card_Application__c').get('Standard') ;
+            ID idcaRT = RecordTypeSingleton.getInstance().getRecordTypeId('ID_Card_Application__c', 'Standard') ;
 
             newIDCardApplication.RecordTypeId = idcaRT;
             newIDCardApplication.Title__c = idcardObject.Title__c;

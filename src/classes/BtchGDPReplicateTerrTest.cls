@@ -49,7 +49,6 @@ private class BtchGDPReplicateTerrTest {
 		//oAccount1.AIMS_ID__c = IECUtil.NewGuid().substring(0, 10);
 		oAccount1.AIMS_ID__c = aimsID_good;
 //		oAccount1.RecordTypeId = IECUtil.GetRecordTypeId('Account', 'IATA_Agency');
-//		oAccount1.RecordTypeId = Schema.SObjectType.Account.getRecordTypeInfosByName().get('IATA Agency').getRecordTypeId();
 		oAccount1.RecordTypeId = RecTypeMap.get('Account.IATA_Agency');
 		oAccount1.IATACode__c = iataCode_good; // '12345678';
 		sObjList.add(oAccount1);

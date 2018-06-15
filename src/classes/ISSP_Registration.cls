@@ -1050,7 +1050,7 @@ public without sharing class ISSP_Registration {
             }
             system.debug('RecordTypeId: ' + getRecordTypeCode(customerTypeCreate));
             system.debug('createBranch: ' + createBranch);
-            acc.RecordTypeId = Schema.Account.sObjectType.getDescribe().getRecordTypeInfosByName().get('Standard Account').getRecordTypeId();
+            acc.RecordTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('Account', 'Standard_Account');
             acc.OwnerId = ISSP_Constant.newAccountOwnerId;
             if (createBranch){
                 acc.Reason_for_creation__c = 'Branch is missing';

@@ -3,7 +3,7 @@ private class AMS_PCI_Complaint_Batch_Test {
 
 	@testSetup static void setup() {		
 
-		ID certRT = Schema.SObjectType.AMS_OSCAR__c.getRecordTypeInfosByName().get('CERTIFICATION').getRecordTypeId(); //FM AMSU-113
+		ID certRT = RecordTypeSingleton.getInstance().getRecordTypeId('AMS_OSCAR__c', 'CERTIFICATION'); //FM AMSU-113
 		
 		DateTime dt = system.now()+90;
 		Date d = date.newinstance(dt.year(), dt.month(), dt.day());

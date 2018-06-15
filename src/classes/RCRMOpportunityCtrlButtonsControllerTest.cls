@@ -70,12 +70,12 @@ private class RCRMOpportunityCtrlButtonsControllerTest {
             insert standardPrice1;
             
             // Create an Airline HQ account
-            Id AirlineHQ_RT_Id = RecordTypeSingleton.getInstance().RtIDsPerDeveloperNamePerObj.get('Account').get('IATA_Airline');
+            Id AirlineHQ_RT_Id = RecordTypeSingleton.getInstance().getRecordTypeId('Account', 'IATA_Airline');
             Account a = new Account(Name = 'Qatar Airways', Airline_designator__c = 'QR', RecordTypeId = AirlineHQ_RT_Id);
             insert a;
             
             Opportunity oppRCRM_1;
-            Id RT_RCRM_Opportunity_Id = RecordTypeSingleton.getInstance().RtIDsPerDeveloperNamePerObj.get('Opportunity').get('RCRM_Opportunity');
+            Id RT_RCRM_Opportunity_Id = RecordTypeSingleton.getInstance().getRecordTypeId('Opportunity', 'RCRM_Opportunity');
             
                     
             

@@ -55,7 +55,6 @@ private class BtchGDPReplicate_tst {
 		//oAccount1.AIMS_ID__c = IECUtil.NewGuid().substring(0, 10);
 		oAccount1.AIMS_ID__c = aimsID_good;
 //		oAccount1.RecordTypeId = IECUtil.GetRecordTypeId('Account', 'IATA_Agency');
-//		oAccount1.RecordTypeId = Schema.SObjectType.Account.getRecordTypeInfosByName().get('IATA Agency').getRecordTypeId();
 		oAccount1.RecordTypeId = RecTypeMap.get('Account.IATA_Agency');
 		oAccount1.IATACode__c = '12345678';
 		sObjList.add(oAccount1);
@@ -366,7 +365,8 @@ private class BtchGDPReplicate_tst {
 	// ========================================================================
 	// The test methods are listed below
 	// ========================================================================
-	static testMethod void TestGDPReplicateScheduleAccount() {
+	@isTest
+	static void TestGDPReplicateScheduleAccount() {
 		System.debug('Unit Test: Start: TestGDPReplicateScheduleAccount');
 
 
@@ -391,44 +391,9 @@ private class BtchGDPReplicate_tst {
 		System.debug('Unit Test: Finish: TestGDPReplicateScheduleAccount');
 	}
 	
-	// static testMethod void TestGDPReplicateAccount() {
-	// 	System.debug('Unit Test: Start: TestGDPReplicateAccount');
-
-
-	// 	Test.startTest();
-
-	// 	//*
-	// 	// Account 
-	// 	//*
-	// 	IEC_Batch_Replication__c btchRep = IECUtil.GetBatchReplication('GDP Replicate: Account');
-	// 	BtchGDPReplicateAccount btchProc = new BtchGDPReplicateAccount();
-	// 	btchProc.idRecordTypeGDP = IECUtil.GetRecordTypeId('GDP_Products_Account_View__c', 'GDP');
-	// 	btchProc.query =
-	// 		'SELECT AIMS_ID__c, Webstar_ID__c, GDP_Location_Type__c, Airline_Code__c, Name, TradeName__c'
-	// 		+ '		, Email__c, Website, TTY__c, Passenger_And_Cargo__c, Incorporation_Type__c, GDP_Opt_In__c'
-	// 		+ '		, Tax_ID_1__c, Tax_ID_2__c, BSP_CASS_Code__c, License_Number__c, Preferred_Language__c'
-	// 		+ '		, CASS_Number_Xref__c, IATACode__c, CASS_Number__c, Ticketing_Agent_Last_Name__c'
-	// 		+ '		, Ticketing_Agent_First_Name__c, Manager_Last_Name__c, Manager_First_Name__c'
-	// 		+ '		, ParentId, Parent.AIMS_ID__c, Parent.Webstar_ID__c'
-	// 		+ '	FROM Account'
-	// 		+ '	WHERE LastModifiedDate >= ' + btchRep.Last_Modified_Date__c.formatGMT('yyyy-MM-dd\'T\'HH:mm:ss\'Z\'')
-	// 		+ '		AND IATACode__c != null'
-	// 		+ '		AND ((Is_AIMS_Account__c = true AND AIMS_ID__c != null) OR Webstar_ID__c != null)'
-	// 		+ '     AND Location_Class__c IN (\'C\',\'D\',\'E\',\'F\',\'G\',\'K\',\'M\',\'N\',\'O\',\'P\',\'S\',\'T\',\'V\',\'X\') AND Main_Accreditation_Organization__c IN (\'IATA\',\'IATAN\',\'DOM\')'                    
-	// 		+ '		AND Main_Accreditation_Organization__c IN (\'IATA\',\'IATAN\',\'DOM\')'
-	// 		+ '		AND RecordTypeId = \''
-	// 		+ IECUtil.GetRecordTypeId('Account', 'IATA_Agency') 
-	// 		+ '\'';
-	// 	System.debug('SSS: SOQL Query: ' + btchProc.query);
-	// 	Database.executeBatch(btchProc);
-
-	// 	Test.stopTest();
-		
-	// 	System.debug('Unit Test: Finish: TestGDPReplicateAccount');
-	// }
 	
-	
-	static testMethod void TestGDPReplicateAccount2() {
+	@isTest
+	static void TestGDPReplicateAccount2() {
 		System.debug('Unit Test: Start: TestGDPReplicateAccount 2');
 
 		
@@ -466,7 +431,8 @@ private class BtchGDPReplicate_tst {
 		System.debug('Unit Test: Finish: TestGDPReplicateAccount');
 	}
 	
-	static testMethod void TestGDPReplicateAccountCategory() {
+	@isTest
+	static void TestGDPReplicateAccountCategory() {
 		System.debug('Unit Test: Start: TestGDPReplicateAccountCategory');
 
 		
@@ -498,7 +464,8 @@ private class BtchGDPReplicate_tst {
 		System.debug('Unit Test: Finish: TestGDPReplicateAccountCategory');
 	}
 	
-	static testMethod void TestGDPReplicateAccreditation() {
+	@isTest
+	static void TestGDPReplicateAccreditation() {
 		System.debug('Unit Test: Start: TestGDPReplicateAccreditation');
 
 		
@@ -532,7 +499,8 @@ private class BtchGDPReplicate_tst {
 		System.debug('Unit Test: Finish: TestGDPReplicateAccreditation');
 	}
 	
-	static testMethod void TestGDPReplicateAdjacentAirport() {
+	@isTest
+	static void TestGDPReplicateAdjacentAirport() {
 		System.debug('Unit Test: Start: TestGDPReplicateAdjacentAirport');
 
 		
@@ -564,7 +532,8 @@ private class BtchGDPReplicate_tst {
 		System.debug('Unit Test: Finish: TestGDPReplicateAdjacentAirport');
 	}
 	
-	static testMethod void TestGDPReplicateAgencyOwner() {
+	@isTest
+	static void TestGDPReplicateAgencyOwner() {
 		System.debug('Unit Test: Start: TestGDPReplicateAgencyOwner');
 
 		
@@ -596,7 +565,8 @@ private class BtchGDPReplicate_tst {
 		System.debug('Unit Test: Finish: TestGDPReplicateAgencyOwner');
 	}
 	
-	static testMethod void TestGDPReplicateAffiliation() {
+	@isTest
+	static void TestGDPReplicateAffiliation() {
 		System.debug('Unit Test: Start: TestGDPReplicateAffiliation');
 
 		//Init();
@@ -628,7 +598,8 @@ private class BtchGDPReplicate_tst {
 		System.debug('Unit Test: Finish: TestGDPReplicateAffiliation');
 	}
 	
-	static testMethod void TestGDPReplicateAddress() {
+	@isTest
+	static void TestGDPReplicateAddress() {
 		System.debug('Unit Test: Start: TestGDPReplicateAddress');
 
 		
@@ -662,7 +633,8 @@ private class BtchGDPReplicate_tst {
 		System.debug('Unit Test: Finish: TestGDPReplicateAddress');
 	}
 	
-	static testMethod void TestGDPReplicateAgencyProfile() {
+	@isTest
+	static void TestGDPReplicateAgencyProfile() {
 		System.debug('Unit Test: Start: TestGDPReplicateAgencyProfile');
 
 		
@@ -698,7 +670,8 @@ private class BtchGDPReplicate_tst {
 		System.debug('Unit Test: Finish: TestGDPReplicateAgencyProfile');
 	}
 	
-	static testMethod void TestGDPReplicatePhone() {
+	@isTest
+	static void TestGDPReplicatePhone() {
 		System.debug('Unit Test: Start: TestGDPReplicatePhone');
 
 		
@@ -730,7 +703,8 @@ private class BtchGDPReplicate_tst {
 		System.debug('Unit Test: Finish: TestGDPReplicatePhone');
 	}
 	
-	static testMethod void TestGDPReplicateGDS() {
+	@isTest
+	static void TestGDPReplicateGDS() {
 		System.debug('Unit Test: Start: TestGDPReplicateGDS');
 
 		
@@ -762,49 +736,9 @@ private class BtchGDPReplicate_tst {
 		System.debug('Unit Test: Finish: TestGDPReplicateGDS');
 	}
 	
-	// ========================================================================
-	// test BtchGDPReplicateTerritories.cls
-	/*
-	static testMethod void TestGDPReplicateTerritories_01_GoodCase() {
-		System.debug('Unit Test: Start: TestGDPReplicateTerritories');
-		// set the log: the previous GDP Replication was done 4 hour before
-		IECUtil.SetBatchReplication('GDP Replicate: Territories', System.now().addDays(-1));
-		
-		// add good Territory record
-		// 
-		System.debug('iataCode_:' + iataCode_good);
-		System.debug('aimsID:' + aimsID_good);
-		GSA_Territory__c oGSA_Territory_GDP = newTerritory( aimsID_good) ; // oAccount1.AIMS_ID__c;
-		oGSA_Territory_GDP.IATA_Code__c = iataCode_good; // '1234567'; // oAccount1.IATACode__c.substring(0,7);
-		insert oGSA_Territory_GDP;	
-		
-		System.debug('Unit Test: Start: TestGDPReplicateTerritories check');
-		
-		// ideally this should return 0, as no error was created at this time
-		Integer numberOfErrorLogBefore = [select count() from IEC_Error_Log__c ];
-		System.debug( 'IEC Error log list at the beginning: numberOfErrorLogBefore ' +  numberOfErrorLogBefore);
-		List<IEC_Error_Log__c> iecErrorLogList01 = [select Id, Source__c, Errror_Message__c from IEC_Error_Log__c order by LastModifiedDate limit 15];
-		System.debug( 'IEC Error log list at the beginning: ' + iecErrorLogList01);
-		System.assertEquals(0, iecErrorLogList01.size(), 'This should give zero error logged at the beginning.');
-		
-		Test.startTest();
-		
-		System.debug('Unit Test: Start: startTest:');
-		BtchGDPReplicateTerritories.callBatchReplicateTerritories(DateTime.now().addHours(4));
-		
-		Test.stopTest();
-		
-		// no error should have been reported, as this is a good test case
-		Integer numberOfErrorLogAfter = [select count() from IEC_Error_Log__c ];
-		System.debug( 'IEC Error log list after: numberOfErrorLogAfter ' +  numberOfErrorLogAfter);
-		List<IEC_Error_Log__c> iecErrorLogList02 = [select Id, Source__c, Errror_Message__c from IEC_Error_Log__c order by LastModifiedDate limit 15];
-		System.debug( 'IEC Error log list after test: ' + iecErrorLogList02);
-		// System.assertEquals(0, iecErrorLogList02.size(), 'This should give zero error logged.'); // we cannot enforce this, as apparently some other class will generate error on purpose
-		System.debug('Unit Test: Finish: TestGDPReplicateTerritories');
-	} // end TestGDPReplicateTerritories_01_GoodCase
-	*/
 	
-	static testMethod void TestGDPReplicateAccountUpdate() {
+	@isTest
+	static void TestGDPReplicateAccountUpdate() {
 		System.debug('Unit Test: Start: TestGDPReplicateAccountUpdate');
 
 
@@ -831,19 +765,18 @@ private class BtchGDPReplicate_tst {
 	}
 	
 	
-	
-	 static testMethod void TestIECErrorLog() {
+	@isTest
+	static void TestIECErrorLog() {
 		 
 		IECErrorLogger logger = new IECErrorLogger();
 		 
-		 //cover the if string > 255 chars
-		 String tempString = 'temptemptemptemptemptemptemptemptemptemptemptemptemptemptemptemptemptemptemptemptemptemptemptemptemptemptemptemptemptemptemptemptemptemptemptemptemptemptemptemptemptemptemptemptemptemptemptemptemptemptemptemptemptemptemptemptemptemptemptemptemptemptemptemptemptemptemptemptemptemptemptemptemptemptemptemptemptemptemptemptemptemptemptemptemptemptemptemptemptemptemptemptemptemptemptemptemptemptemp';
-		
-		 IECErrorLogger.logBatchError(tempString, tempString, tempString, 'tempString', 'tempString');
-		 IECErrorLogger.logError(null, tempString, tempString, 'tempString', 'tempString', 'tempString');
-		 IECErrorLogger.logInfo(null, tempString, tempString, 'tempString', 'tempString');
+	 	//cover the if string > 255 chars
+	 	String tempString = 'temptemptemptemptemptemptemptemptemptemptemptemptemptemptemptemptemptemptemptemptemptemptemptemptemptemptemptemptemptemptemptemptemptemptemptemptemptemptemptemptemptemptemptemptemptemptemptemptemptemptemptemptemptemptemptemptemptemptemptemptemptemptemptemptemptemptemptemptemptemptemptemptemptemptemptemptemptemptemptemptemptemptemptemptemptemptemptemptemptemptemptemptemptemptemptemptemptemptemp';
+	
+		IECErrorLogger.logBatchError(tempString, tempString, tempString, 'tempString', 'tempString');
+		IECErrorLogger.logError(null, tempString, tempString, 'tempString', 'tempString', 'tempString');
+		IECErrorLogger.logInfo(null, tempString, tempString, 'tempString', 'tempString');
 		  
-		 
 	}
 	
 	

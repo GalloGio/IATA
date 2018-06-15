@@ -69,7 +69,7 @@ private class ANG_OscarConversionBatchTest {
 		System.assertEquals('Accreditation Process', comCase.CaseArea__c);
 		System.assertEquals('New HE standard', comCase.Reason1__c);
 		
-		String RECTYPE_NEWHE= Schema.AMS_OSCAR__c.sObjectType.getDescribe().getRecordTypeInfosByName().get('NG New HE').getRecordTypeId();
+		String RECTYPE_NEWHE= RecordTypeSingleton.getInstance().getRecordTypeId('AMS_OSCAR__c', 'ANG_New_HE');
 
 		System.assertEquals(RECTYPE_NEWHE, oscar.RecordTypeId);
 		System.assertEquals('ANG.NEW.HE.STANDARD.1.0', oscar.Process__c);

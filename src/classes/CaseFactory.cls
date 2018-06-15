@@ -23,7 +23,7 @@ public with sharing class CaseFactory {
 		
 				
 		fsCase.Origin = 'Internal Case';
-		fsCase.RecordTypeId = RecordTypeSingleton.getInstance().RtIDsPerDeveloperNamePerObj.get('Case').get('ProcessEuropeSCE'); // label "Process (IDFS ISS)" / "SAAM"
+		fsCase.RecordTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('Case', 'ProcessEuropeSCE'); // label "Process (IDFS ISS)" / "SAAM"
 		
 		fsCase.Subject = '#SARA ' + FSRecord.Account_Country__c + ' Renewal - ' + FSRecord.IATA_code__c + ' - ' + FSRecord.Expiry_Date__c;
 		fsCase.Status = 'Open';

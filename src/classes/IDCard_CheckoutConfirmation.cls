@@ -92,9 +92,9 @@ public with sharing class IDCard_CheckoutConfirmation extends IDCardAbstractCont
             System.debug('/*//*/* ' + idCardApp.Name);
             iDCardApplication = idCardApp;
 
-            String massAppRT = IDCardWebService.getIdCardAppRT('Mass_Order_Application');
+            String massAppRT = RecordTypeSingleton.getInstance().getRecordTypeId('ID_Card_Application__c', 'Mass_Order_Application');
             isMassApplicationPurchase = (massAppRT == idCardApp.RecordTypeId);
-            if (idCardApp.RecordTypeId == IDCardWebService.getIdCardAppRT('Single_ID_Card_Operation')) {
+            if (idCardApp.RecordTypeId == RecordTypeSingleton.getInstance().getRecordTypeId('ID_Card_Application__c', 'Single_ID_Card_Operation')) {
                 ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.ERROR, 'As a member of a Key Account, you shouln\'t have paid for a Single Application. Please contact IATA with ref: ' + idCardApp.Name));
                 success = false;
                 return;

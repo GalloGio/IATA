@@ -82,26 +82,26 @@ trigger CaseBeforeTrigger on Case (before delete, before insert, before update) 
     ID sisHelpDeskCaseRecordTypeID = clsCaseRecordTypeIDSingleton.getInstance().RecordTypes.get(Label.Cases_SIS_Help_Desk);
     //ID caseRecordTypeID = clsCaseRecordTypeIDSingleton.getInstance().RecordTypes.get('SIDRA');
     ID caseSEDARecordTypeID = clsCaseRecordTypeIDSingleton.getInstance().RecordTypes.get('SEDA');//INC200638
-    Id RT_ICCS_Id = RecordTypeSingleton.getInstance().RtIDsPerDeveloperNamePerObj.get('Case').get('FDS_ICCS_Product_Management');
-    Id RT_ICCS_BA_Id = RecordTypeSingleton.getInstance().RtIDsPerDeveloperNamePerObj.get('Case').get('FDS_ICCS_Bank_Account_Management');
-    Id RT_ICCS_CD_Id = RecordTypeSingleton.getInstance().RtIDsPerDeveloperNamePerObj.get('Case').get('FDS_ICCS_CitiDirect');
+    Id RT_ICCS_Id = RecordTypeSingleton.getInstance().getRecordTypeId('Case', 'FDS_ICCS_Product_Management');
+    Id RT_ICCS_BA_Id = RecordTypeSingleton.getInstance().getRecordTypeId('Case', 'FDS_ICCS_Bank_Account_Management');
+    Id RT_ICCS_CD_Id = RecordTypeSingleton.getInstance().getRecordTypeId('Case', 'FDS_ICCS_CitiDirect');
     ID FSMcaseRecordTypeID = clsCaseRecordTypeIDSingleton.getInstance().RecordTypes.get('IATA Financial Security Monitoring');
     ID FSMRecordTypeID = clsCaseRecordTypeIDSingleton.getInstance().RecordTypes.get('IATA Financial Security Monitoring');
     ID NCRecordTypeID = clsCaseRecordTypeIDSingleton.getInstance().RecordTypes.get('SAAM');
     ID caseRecordType = clsCaseRecordTypeIDSingleton.getInstance().RecordTypes.get('ID Card Application');
     Id RT_ICCS_ASP_Id = Schema.SObjectType.Case.RecordTypeInfosByName.get('FDS ASP Management').getRecordTypeId() ;
-    ID AirlineCodingRTId = RecordTypeSingleton.getInstance().RtIDsPerDeveloperNamePerObj.get('Case').get('Airline_Coding_Application');
-    ID ProcesscaseRecordTypeID = RecordTypeSingleton.getInstance().RtIDsPerDeveloperNamePerObj.get('Case').get('ProcessEuropeSCE');
-    ID EuropecaseRecordTypeID = RecordTypeSingleton.getInstance().RtIDsPerDeveloperNamePerObj.get('Case').get('CasesEurope');
-    ID AmericacaseRecordTypeID = RecordTypeSingleton.getInstance().RtIDsPerDeveloperNamePerObj.get('Case').get('CasesAmericas');
-    ID AfricaMEcaseRecordTypeID = RecordTypeSingleton.getInstance().RtIDsPerDeveloperNamePerObj.get('Case').get('CasesMENA');
-    ID AsiaPacificcaseRecordTypeID = RecordTypeSingleton.getInstance().RtIDsPerDeveloperNamePerObj.get('Case').get('ExternalCasesIDFSglobal');
-    ID ChinaAsiacaseRecordTypeID = RecordTypeSingleton.getInstance().RtIDsPerDeveloperNamePerObj.get('Case').get('Cases_China_North_Asia');
-    ID InternalcaseRecordTypeID = RecordTypeSingleton.getInstance().RtIDsPerDeveloperNamePerObj.get('Case').get('InternalCasesEuropeSCE');
-    ID InvCollectioncaseRecordTypeID = RecordTypeSingleton.getInstance().RtIDsPerDeveloperNamePerObj.get('Case').get('Invoicing_Collection_Cases');
-    ID CSProcesscaseRecordTypeID = RecordTypeSingleton.getInstance().RtIDsPerDeveloperNamePerObj.get('Case').get('CS_Process_IDFS_ISS');
-    ID SEDAcaseRecordTypeID = RecordTypeSingleton.getInstance().RtIDsPerDeveloperNamePerObj.get('Case').get('SEDA');
-    ID ISSPcaseRecordTypeID = RecordTypeSingleton.getInstance().RtIDsPerDeveloperNamePerObj.get('Case').get('ISS_Portal_New_Case_RT');//TF - SP9-C5
+    ID AirlineCodingRTId = RecordTypeSingleton.getInstance().getRecordTypeId('Case', 'Airline_Coding_Application');
+    ID ProcesscaseRecordTypeID = RecordTypeSingleton.getInstance().getRecordTypeId('Case', 'ProcessEuropeSCE');
+    ID EuropecaseRecordTypeID = RecordTypeSingleton.getInstance().getRecordTypeId('Case', 'CasesEurope');
+    ID AmericacaseRecordTypeID = RecordTypeSingleton.getInstance().getRecordTypeId('Case', 'CasesAmericas');
+    ID AfricaMEcaseRecordTypeID = RecordTypeSingleton.getInstance().getRecordTypeId('Case', 'CasesMENA');
+    ID AsiaPacificcaseRecordTypeID = RecordTypeSingleton.getInstance().getRecordTypeId('Case', 'ExternalCasesIDFSglobal');
+    ID ChinaAsiacaseRecordTypeID = RecordTypeSingleton.getInstance().getRecordTypeId('Case', 'Cases_China_North_Asia');
+    ID InternalcaseRecordTypeID = RecordTypeSingleton.getInstance().getRecordTypeId('Case', 'InternalCasesEuropeSCE');
+    ID InvCollectioncaseRecordTypeID = RecordTypeSingleton.getInstance().getRecordTypeId('Case', 'Invoicing_Collection_Cases');
+    ID CSProcesscaseRecordTypeID = RecordTypeSingleton.getInstance().getRecordTypeId('Case', 'CS_Process_IDFS_ISS');
+    ID SEDAcaseRecordTypeID = RecordTypeSingleton.getInstance().getRecordTypeId('Case', 'SEDA');
+    ID ISSPcaseRecordTypeID = RecordTypeSingleton.getInstance().getRecordTypeId('Case', 'ISS_Portal_New_Case_RT');//TF - SP9-C5
     ID CSRcaseRecordTypeID = clsCaseRecordTypeIDSingleton.getInstance().RecordTypes.get('BSPlink Customer Service Requests (CSR)');
     ID PortalRecordTypeID  = clsCaseRecordTypeIDSingleton.getInstance().RecordTypes.get('External Cases (InvoiceWorks)');
 	ID ifgCaseRecordTypeID = clsCaseRecordTypeIDSingleton.getInstance().RecordTypes.get('Cases - IFG');
@@ -615,8 +615,6 @@ trigger CaseBeforeTrigger on Case (before delete, before insert, before update) 
             }
             if(!casesToTrigger.isEmpty()){
                 system.debug('##ROW##');
-                map<string,id> AcccRtNamePerId = TransformationHelper.AccRtNamePerIds();
-                system.debug('##ROW## AcccRtNamePerId '+AcccRtNamePerId);
                 set<String> ServicesToCheck = new set<String>();
                 map<String,Case_Reason_Service__c> ServicesPerReason  = new map<String,Case_Reason_Service__c>();
                 list<Case> cases = new list<Case>();
@@ -633,7 +631,7 @@ trigger CaseBeforeTrigger on Case (before delete, before insert, before update) 
                 system.debug('STC: ' + STC);
                 //this logic is fired just when the case is inserted but not approved yet we just see if there's the need to reassign the provider by
                 //taking a look at the custom setting where we keep this information   
-                ServiceRenderedCaseLogic.reparentProvider(casesToTrigger,AcccRtNamePerId,ServicesToCheck,ServicesPerReason);   
+                ServiceRenderedCaseLogic.reparentProvider(casesToTrigger, ServicesToCheck, ServicesPerReason);   
             }
         }
         /*trgCreateUpdateServiceRenderedRecord Trigger*/
@@ -1360,8 +1358,8 @@ trigger CaseBeforeTrigger on Case (before delete, before insert, before update) 
             set<string> CountryNameSet = new set<string>();
             map<string,IATA_ISO_Country__c> IATAISOCountryMap = new map<string,IATA_ISO_Country__c>();
             List<Mapping_for_CSR_Cases__c> CSRCasesMapping = Mapping_for_CSR_Cases__c.getAll().values();
-            Id RT_Fin_Sec_Monitoring_Id = RecordTypeSingleton.getInstance().RtIDsPerDeveloperNamePerObj.get('Case').get('IATA_Financial_Security_Monitoring');
-            Id Financtial_Sec_Monitoring_Id = RecordTypeSingleton.getInstance().RtIDsPerDeveloperNamePerObj.get('EmailTemplate__c').get('FSM');
+            Id RT_Fin_Sec_Monitoring_Id = RecordTypeSingleton.getInstance().getRecordTypeId('Case', 'IATA_Financial_Security_Monitoring');
+            Id Financtial_Sec_Monitoring_Id = RecordTypeSingleton.getInstance().getRecordTypeId('EmailTemplate__c', 'FSM');
             List<Case> parentAccount;
             List<Contact> accountFromRelatedContact;
             for(Case newCase : trigger.new){

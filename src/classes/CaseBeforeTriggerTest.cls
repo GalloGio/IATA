@@ -16,9 +16,9 @@ private class CaseBeforeTriggerTest {
     @isTest static void unitTest1() {
         ID hqrt = Schema.SObjectType.Account.RecordTypeInfosByName.get('Airline Headquarters').RecordTypeId ;
         ID CSRcaseRecordTypeID = clsCaseRecordTypeIDSingleton.getInstance().RecordTypes.get('BSPlink Customer Service Requests (CSR)');
-        Id RT_Fin_Sec_Monitoring_Id = RecordTypeSingleton.getInstance().RtIDsPerDeveloperNamePerObj.get('Case').get('IATA_Financial_Security_Monitoring');
+        Id RT_Fin_Sec_Monitoring_Id = RecordTypeSingleton.getInstance().getRecordTypeId('Case', 'IATA_Financial_Security_Monitoring');
         ID SIDRAcaseRecordTypeID = clsCaseRecordTypeIDSingleton.getInstance().RecordTypes.get('SIDRA');
-        ID AmericacaseRecordTypeID = RecordTypeSingleton.getInstance().RtIDsPerDeveloperNamePerObj.get('Case').get('CasesAmericas');
+        ID AmericacaseRecordTypeID = RecordTypeSingleton.getInstance().getRecordTypeId('Case', 'CasesAmericas');
 
         IATA_ISO_Country__c isoCountry = new IATA_ISO_Country__c(name = 'suisse',ISO_Code__c ='SS',AIMS_Area_Name__c='suisse',AIMS_Area_ID__c= '1' );
         insert isoCountry;
@@ -221,146 +221,12 @@ private class CaseBeforeTriggerTest {
         insert c;
     }
 
-/*
-    @isTest static void unitTestPortal() {
-        ID hqrt = Schema.SObjectType.Account.RecordTypeInfosByName.get('Airline Headquarters').RecordTypeId ;
-        ID PortalsharingRTID = clsCaseRecordTypeIDSingleton.getInstance().RecordTypes.get('External Cases (InvoiceWorks)');
-        Id RT_ICC_Id = clsCaseRecordTypeIDSingleton.getInstance().RecordTypes.get('Invoicing Collection Cases');
-        ID RecId = RecordTypeSingleton.getInstance().RtIDsPerDeveloperNamePerObj.get('Case').get('Cases_SIS_Help_Desk');
-        
-        IATA_ISO_Country__c isoCountry = new IATA_ISO_Country__c(name = 'suisse',ISO_Code__c ='SS',AIMS_Area_Name__c='suisse',AIMS_Area_ID__c= '1' );
-        insert isoCountry;
-
-        Profile testProfile = [SELECT Id FROM Profile WHERE Name = 'System Administrator'];
-        User testUser = New User(
-            Alias = 'standt', Email='standarduser@testorg.com',
-            EmailEncodingKey='UTF-8', LastName='Testing', LanguageLocaleKey='en_US',
-            LocaleSidKey='en_US', ProfileId = testProfile.Id,
-            TimeZoneSidKey='America/Los_Angeles', UserName='test.username@test.com',
-            License_Cost_Center__c = 'ISF005CH01'
-        );
-        insert testUser;
-        
-        Product_Category__c PC = new Product_Category__c(
-                Name = 'test',
-                Active__c = true,
-                Short_Description__c = 'test test');
-        insert PC;
-        
-        BusinessHours bHourObj = new BusinessHours();
-        bHourObj = [Select id, name from BusinessHours where name =: 'EUR - France'];
-
-        Account a = new Account( name ='IFAP ACCT',
-                                 industry = 'pluto',
-                                 IATA_ISO_Country__c=isoCountry.id,
-                                 recordtypeID = hqrt,
-                                 IATACode__c ='1234567',
-                                 Site_Index__c = '1234567',
-                                 Type = 'IATA Cargo Agent',
-                                 billingCountry = 'ss',Location_Type__c = 'AO',
-                                 category__c = 'IATA Cargo Agent',
-                                 sector__c = 'Cargo Agent');
-        insert a;
-        
-        Account aICH = new Account( name ='ICH ACCT',
-                                 industry = 'pluto',
-                                 IATA_ISO_Country__c=isoCountry.id,
-                                 recordtypeID = hqrt,
-                                 IATACode__c ='1834567',
-                                 Site_Index__c = '1834567',
-                                 Type = 'IATA Cargo Agent',
-                                 billingCountry = 'ss',Location_Type__c = 'AO',
-                                 category__c = 'IATA Cargo Agent',
-                                 sector__c = 'Cargo Agent');
-        insert aICH;
-         
-        Contact con =new contact(lastname = 'pluto' ,
-                                 phone = '123',
-                                 accountid = a.id,
-                                 User_Portal_Status__c = 'Approved Admin',
-                                 Financial_Assessment_Contact__c = true);
-        insert con;
-        
-        Contact conICH =new contact(lastname = 'ICH Help Desk' ,
-                                 phone = '321',
-                                 accountid = aICH.id,
-                                 Financial_Assessment_Contact__c = true);
-        insert conICH;
-                           
-        EmailTemplate__c template = new EmailTemplate__c( 
-                        Template_Language__c = 'English', 
-                        IATA_ISO_Country__c = isoCountry.Id, 
-                        Agent_Type__c='All');
-        insert template;
-        
-        test.startTest();
-        
-        // Insert correctly a case
-        Case cas = new Case(recordtypeID = PortalsharingRTID,
-                          Status = 'Assessment Performed',
-                          Origin = 'asd',
-                          IFAP_Area__c = 'asda',
-                          Case_Creator_Email__c = 'gianluigi.test@gmail.com',
-                          Accelya_Request_Type__c = 'General Queries',
-                          Country_concerned__c = 'Italy',
-                          contactid = con.id,
-                          AccountId = a.id                         
-        );
-        insert cas; 
-        // Insert correctly a case
-        Case cas1 = new Case(recordtypeID = RT_ICC_Id,
-                          Status = 'Open',
-                          Casearea__c = 'Collection', 
-                          Reason1__c = 'Debt Recovery',
-                          contactid = con.id,
-                          AccountId = a.id,
-                          BusinessHoursId = bHourObj.id                      
-        );
-        insert cas1; 
-
-        Case cas2 = new Case(recordtypeID = RecId,
-                          Status = 'Open',
-                          Origin = 'asd',
-                          DPC_Software__c = 'Multicarta',
-                          parentid = cas.id,
-                          Country_concerned__c = 'Italy',
-                          contactid = conICH.id,
-                          AccountId = aICH.id
-        );
-        insert cas2; 
-        
-        update cas2;
-        string prodCat = PC.id;
-        Case cas3 = new Case(recordtypeID = NCRecordTypeID,
-                          Status = 'Open',
-                          Region__c = 'Americas',
-                          BSPCountry__c = 'Anguilla',
-                          CaseArea__c = 'Accreditation Products',
-                          Reason1__c = 'PAX/CARGO Certificate',
-                          Product_Category_ID__c = prodCat,
-                          IATACodeProduct__c = '38222693',
-                          QuantityProduct__c = '2',
-                          contactid = con.id,
-                          AccountId = a.id
-        );
-        insert cas3; 
-        
-        cas3.ownerid = testUser.id;
-        cas3.status = 'closed';
-        System.runAs(testUser) {
-          update cas3;
-        }
-        
-
-    }
-	*/
-    //*********************************
 
     @isTest static void unitTest2() {
         ID hqrt = Schema.SObjectType.Account.RecordTypeInfosByName.get('Airline Headquarters').RecordTypeId ;
         ID CSRcaseRecordTypeID = clsCaseRecordTypeIDSingleton.getInstance().RecordTypes.get('BSPlink Customer Service Requests (CSR)');
-        Id RT_ICCS_Id = RecordTypeSingleton.getInstance().RtIDsPerDeveloperNamePerObj.get('Case').get('FDS_ICCS_Product_Management');
-        Id RT_ICCS_BA_Id = RecordTypeSingleton.getInstance().RtIDsPerDeveloperNamePerObj.get('Case').get('FDS_ICCS_Bank_Account_Management');
+        Id RT_ICCS_Id = RecordTypeSingleton.getInstance().getRecordTypeId('Case', 'FDS_ICCS_Product_Management');
+        Id RT_ICCS_BA_Id = RecordTypeSingleton.getInstance().getRecordTypeId('Case', 'FDS_ICCS_Bank_Account_Management');
 
         IATA_ISO_Country__c isoCountry = new IATA_ISO_Country__c(name = 'suisse',ISO_Code__c ='SS',AIMS_Area_Name__c='suisse',AIMS_Area_ID__c= '1' );
         insert isoCountry;
@@ -468,13 +334,13 @@ private class CaseBeforeTriggerTest {
         // Create an Airline HQ account & a contact for it
         //RecordType RT_AirlineHQ = [SELECT Id FROM RecordType WHERE SObjectType = 'Account' AND DeveloperName = 'IATA_Airline'];
         //Id AirlineHQ_RT_Id = Schema.SObjectType.Account.RecordTypeInfosByName.get('Airline Headquarters').RecordTypeId ;
-        Id AirlineHQ_RT_Id = RecordTypeSingleton.getInstance().RtIDsPerDeveloperNamePerObj.get('Account').get('IATA_Airline');
+        Id AirlineHQ_RT_Id = RecordTypeSingleton.getInstance().getRecordTypeId('Account', 'IATA_Airline');
         Account a = new Account(Name = 'Qatar Airways', Airline_designator__c = 'QR', ICCS_Membership_Status__c = 'Member', RecordTypeId = AirlineHQ_RT_Id);
         insert a;
         
         //RecordType RT_ContactStd = [SELECT Id FROM RecordType WHERE SObjectType = 'Contact' AND DeveloperName = 'Standard_Contact'];
         //Id ContactStd_RT_Id = Schema.SObjectType.Contact.RecordTypeInfosByName.get('Standard').RecordTypeId ;
-        Id ContactStd_RT_Id = RecordTypeSingleton.getInstance().RtIDsPerDeveloperNamePerObj.get('Contact').get('Standard_Contact');
+        Id ContactStd_RT_Id = RecordTypeSingleton.getInstance().getRecordTypeId('Contact', 'Standard_Contact');
         Contact c = new Contact(FirstName = 'Test', LastName = 'Contact', email = 'test@test.com', AccountId = a.Id, RecordTypeId = ContactStd_RT_Id);
         insert c;
         
@@ -493,7 +359,7 @@ private class CaseBeforeTriggerTest {
         // Create a Case for the Account
         //RecordType RT_ICCS = [SELECT Id FROM RecordType WHERE SObjectType = 'Case' AND DeveloperName = 'IDFS_ICCS_Process'];
         //Id ICCS_RT_Id = Schema.SObjectType.Case.RecordTypeInfosByName.get('FDS ICCS Product Management').RecordTypeId ;
-        Id ICCS_RT_Id = RecordTypeSingleton.getInstance().RtIDsPerDeveloperNamePerObj.get('Case').get('FDS_ICCS_Product_Management');
+        Id ICCS_RT_Id = RecordTypeSingleton.getInstance().getRecordTypeId('Case', 'FDS_ICCS_Product_Management');
         ID PortalsharingRTID = clsCaseRecordTypeIDSingleton.getInstance().RecordTypes.get('External Cases (InvoiceWorks)');
         ID sisHelpDeskCaseRecordTypeID = clsCaseRecordTypeIDSingleton.getInstance().RecordTypes.get(Label.Cases_SIS_Help_Desk);
         Case cs = new Case(RecordTypeId = ICCS_RT_Id, Subject = 'test', Origin = 'Email', CaseArea__c = 'ICCS – Assign Product', Status = 'Open',
@@ -648,13 +514,13 @@ private class CaseBeforeTriggerTest {
         // Create an Airline HQ account & a contact for it
         //RecordType RT_AirlineHQ = [SELECT Id FROM RecordType WHERE SObjectType = 'Account' AND DeveloperName = 'IATA_Airline'];
         //Id AirlineHQ_RT_Id = Schema.SObjectType.Account.RecordTypeInfosByName.get('Airline Headquarters').RecordTypeId ;
-        Id AirlineHQ_RT_Id = RecordTypeSingleton.getInstance().RtIDsPerDeveloperNamePerObj.get('Account').get('IATA_Airline');
+        Id AirlineHQ_RT_Id = RecordTypeSingleton.getInstance().getRecordTypeId('Account', 'IATA_Airline');
         Account a = new Account(Name = 'Qatar Airways', Airline_designator__c = 'QR', ICCS_Membership_Status__c = 'Member', RecordTypeId = AirlineHQ_RT_Id);
         insert a;
         
         //RecordType RT_ContactStd = [SELECT Id FROM RecordType WHERE SObjectType = 'Contact' AND DeveloperName = 'Standard_Contact'];
         //Id ContactStd_RT_Id = Schema.SObjectType.Contact.RecordTypeInfosByName.get('Standard').RecordTypeId ;
-        Id ContactStd_RT_Id = RecordTypeSingleton.getInstance().RtIDsPerDeveloperNamePerObj.get('Contact').get('Standard_Contact');
+        Id ContactStd_RT_Id = RecordTypeSingleton.getInstance().getRecordTypeId('Contact', 'Standard_Contact');
         Contact c = new Contact(FirstName = 'Test', LastName = 'Contact', email = 'test@test.com', AccountId = a.Id, RecordTypeId = ContactStd_RT_Id);
         insert c;
         
@@ -673,7 +539,7 @@ private class CaseBeforeTriggerTest {
         // Create a Case for the Account
         //RecordType RT_ICCS = [SELECT Id FROM RecordType WHERE SObjectType = 'Case' AND DeveloperName = 'IDFS_ICCS_Process'];
         //Id ICCS_RT_Id = Schema.SObjectType.Case.RecordTypeInfosByName.get('FDS ICCS Product Management').RecordTypeId ;
-        Id ICCS_RT_Id = RecordTypeSingleton.getInstance().RtIDsPerDeveloperNamePerObj.get('Case').get('FDS_ICCS_Product_Management');
+        Id ICCS_RT_Id = RecordTypeSingleton.getInstance().getRecordTypeId('Case', 'FDS_ICCS_Product_Management');
         Case cs = new Case(RecordTypeId = ICCS_RT_Id, Subject = 'test', Origin = 'Email', CaseArea__c = 'ICCS – Assign Product', Status = 'Open',
                         ContactId = c.Id, AccountId = a.Id, ICCS_Product__c = 'BSP', ICCS_Country__c = 'France', ICCS_Currencies__c = 'USD', 
                         Accelerated_Function__c = true);  
@@ -772,13 +638,13 @@ private class CaseBeforeTriggerTest {
         // Create an Airline HQ account & a contact for it
         //RecordType RT_AirlineHQ = [SELECT Id FROM RecordType WHERE SObjectType = 'Account' AND DeveloperName = 'IATA_Airline'];
         //Id AirlineHQ_RT_Id = Schema.SObjectType.Account.RecordTypeInfosByName.get('Airline Headquarters').RecordTypeId ;
-        Id AirlineHQ_RT_Id = RecordTypeSingleton.getInstance().RtIDsPerDeveloperNamePerObj.get('Account').get('IATA_Airline');
+        Id AirlineHQ_RT_Id = RecordTypeSingleton.getInstance().getRecordTypeId('Account', 'IATA_Airline');
         Account a = new Account(Name = 'Qatar Airways', Airline_designator__c = 'QR', ICCS_Membership_Status__c = 'Member', RecordTypeId = AirlineHQ_RT_Id);
         insert a;
         
         //RecordType RT_ContactStd = [SELECT Id FROM RecordType WHERE SObjectType = 'Contact' AND DeveloperName = 'Standard_Contact'];
         //Id ContactStd_RT_Id = Schema.SObjectType.Contact.RecordTypeInfosByName.get('Standard').RecordTypeId ;
-        Id ContactStd_RT_Id = RecordTypeSingleton.getInstance().RtIDsPerDeveloperNamePerObj.get('Contact').get('Standard_Contact');
+        Id ContactStd_RT_Id = RecordTypeSingleton.getInstance().getRecordTypeId('Contact', 'Standard_Contact');
         Contact c = new Contact(FirstName = 'Test', LastName = 'Contact', email = 'test@test.com', AccountId = a.Id, RecordTypeId = ContactStd_RT_Id);
         insert c;
         
@@ -838,13 +704,13 @@ private class CaseBeforeTriggerTest {
         // Create an Airline HQ account & a contact for it
         //RecordType RT_AirlineHQ = [SELECT Id FROM RecordType WHERE SObjectType = 'Account' AND DeveloperName = 'IATA_Airline'];
         //Id AirlineHQ_RT_Id = Schema.SObjectType.Account.RecordTypeInfosByName.get('Airline Headquarters').RecordTypeId ;
-        Id AirlineHQ_RT_Id = RecordTypeSingleton.getInstance().RtIDsPerDeveloperNamePerObj.get('Account').get('IATA_Airline');
+        Id AirlineHQ_RT_Id = RecordTypeSingleton.getInstance().getRecordTypeId('Account', 'IATA_Airline');
         Account a = new Account(Name = 'Qatar Airways', Airline_designator__c = 'QR', ICCS_Membership_Status__c = 'Member', RecordTypeId = AirlineHQ_RT_Id);
         insert a;
         
         //RecordType RT_ContactStd = [SELECT Id FROM RecordType WHERE SObjectType = 'Contact' AND DeveloperName = 'Standard_Contact'];
         //Id ContactStd_RT_Id = Schema.SObjectType.Contact.RecordTypeInfosByName.get('Standard').RecordTypeId ;
-        Id ContactStd_RT_Id = RecordTypeSingleton.getInstance().RtIDsPerDeveloperNamePerObj.get('Contact').get('Standard_Contact');
+        Id ContactStd_RT_Id = RecordTypeSingleton.getInstance().getRecordTypeId('Contact', 'Standard_Contact');
         Contact c = new Contact(FirstName = 'Test', LastName = 'Contact', email = 'test@test.com', AccountId = a.Id, RecordTypeId = ContactStd_RT_Id);
         insert c;
         
@@ -856,7 +722,7 @@ private class CaseBeforeTriggerTest {
         test.startTest();
         
         // Create a Case for the Account
-        Id RT_ICCS_BA_Id = RecordTypeSingleton.getInstance().RtIDsPerDeveloperNamePerObj.get('Case').get('FDS_ICCS_Bank_Account_Management');
+        Id RT_ICCS_BA_Id = RecordTypeSingleton.getInstance().getRecordTypeId('Case', 'FDS_ICCS_Bank_Account_Management');
         Case cs = new Case(RecordTypeId = RT_ICCS_BA_Id, Subject = 'test', Origin = 'Email', CaseArea__c = 'ICCS – Update Bank Account', Status = 'Open',
                         ContactId = c.Id, AccountId = a.Id, ICCS_Bank_Account__c = ba.Id, CurrencyIsoCode = 'EUR');  
         insert cs;
@@ -922,13 +788,13 @@ private class CaseBeforeTriggerTest {
         // Create an Airline HQ account & a contact for it
         //RecordType RT_AirlineHQ = [SELECT Id FROM RecordType WHERE SObjectType = 'Account' AND DeveloperName = 'IATA_Airline'];
         //Id AirlineHQ_RT_Id = Schema.SObjectType.Account.RecordTypeInfosByName.get('Airline Headquarters').RecordTypeId ;
-        Id AirlineHQ_RT_Id = RecordTypeSingleton.getInstance().RtIDsPerDeveloperNamePerObj.get('Account').get('IATA_Airline');
+        Id AirlineHQ_RT_Id = RecordTypeSingleton.getInstance().getRecordTypeId('Account', 'IATA_Airline');
         Account a = new Account(Name = 'Qatar Airways', Airline_designator__c = 'QR', ICCS_Membership_Status__c = 'Member', RecordTypeId = AirlineHQ_RT_Id);
         insert a;
         
         //RecordType RT_ContactStd = [SELECT Id FROM RecordType WHERE SObjectType = 'Contact' AND DeveloperName = 'Standard_Contact'];
         //Id ContactStd_RT_Id = Schema.SObjectType.Contact.RecordTypeInfosByName.get('Standard').RecordTypeId ;
-        Id ContactStd_RT_Id = RecordTypeSingleton.getInstance().RtIDsPerDeveloperNamePerObj.get('Contact').get('Standard_Contact');
+        Id ContactStd_RT_Id = RecordTypeSingleton.getInstance().getRecordTypeId('Contact', 'Standard_Contact');
         Contact c = new Contact(FirstName = 'Test', LastName = 'Contact', email = 'test@test.com', AccountId = a.Id, RecordTypeId = ContactStd_RT_Id);
         insert c;
         
@@ -939,7 +805,7 @@ private class CaseBeforeTriggerTest {
         //////////////////////////
         test.startTest();
         
-        Id RT_ICCS_CD_Id = RecordTypeSingleton.getInstance().RtIDsPerDeveloperNamePerObj.get('Case').get('FDS_ICCS_CitiDirect');
+        Id RT_ICCS_CD_Id = RecordTypeSingleton.getInstance().getRecordTypeId('Case', 'FDS_ICCS_CitiDirect');
         
         // Create a Case for the Account
         
@@ -976,11 +842,11 @@ private class CaseBeforeTriggerTest {
         IATA_ISO_Country__c country = new IATA_ISO_Country__c(Name = 'France', ISO_Code__c = 'FR');
         insert country;
         
-        Id AirlineHQ_RT_Id = RecordTypeSingleton.getInstance().RtIDsPerDeveloperNamePerObj.get('Account').get('IATA_Airline');
+        Id AirlineHQ_RT_Id = RecordTypeSingleton.getInstance().getRecordTypeId('Account', 'IATA_Airline');
         Account a = new Account(Name = 'Qatar Airways', Airline_designator__c = 'QR', ICCS_Membership_Status__c = 'Member', RecordTypeId = AirlineHQ_RT_Id);
         insert a;
         
-        Id ContactStd_RT_Id = RecordTypeSingleton.getInstance().RtIDsPerDeveloperNamePerObj.get('Contact').get('Standard_Contact');
+        Id ContactStd_RT_Id = RecordTypeSingleton.getInstance().getRecordTypeId('Contact', 'Standard_Contact');
         Contact c = new Contact(FirstName = 'Test', LastName = 'Contact', email = 'test@test.com', AccountId = a.Id, RecordTypeId = ContactStd_RT_Id);
         insert c;
         
@@ -1004,7 +870,7 @@ private class CaseBeforeTriggerTest {
         cas.ownerid = testUser.id;
         update cas;
         
-        ID AirlineCodingRTId = RecordTypeSingleton.getInstance().RtIDsPerDeveloperNamePerObj.get('Case').get('Airline_Coding_Application');
+        ID AirlineCodingRTId = RecordTypeSingleton.getInstance().getRecordTypeId('Case', 'Airline_Coding_Application');
         // Insert correctly a case
         Case cas1 = new Case(recordtypeID = AirlineCodingRTId,
                           Status = 'Assessment Performed',
@@ -1039,18 +905,18 @@ private class CaseBeforeTriggerTest {
         // Create an Airline HQ account & a contact for it
         //Id AirlineHQ_RT_Id = Schema.SObjectType.Account.RecordTypeInfosByName.get('Airline Headquarters').RecordTypeId ;
         //Id AirlineHQ_RT_Id = mapRTIdsPerRTName.get('Airline Headquarters');
-        Id AirlineHQ_RT_Id = RecordTypeSingleton.getInstance().RtIDsPerDeveloperNamePerObj.get('Account').get('IATA_Airline');
+        Id AirlineHQ_RT_Id = RecordTypeSingleton.getInstance().getRecordTypeId('Account', 'IATA_Airline');
         Account a = new Account(Name = 'Qatar Airways', Airline_designator__c = 'QR', ICCS_Membership_Status__c = 'Member', RecordTypeId = AirlineHQ_RT_Id);
         insert a;
         
         //Id ContactStd_RT_Id = Schema.SObjectType.Contact.RecordTypeInfosByName.get('Standard').RecordTypeId ;
         //Id ContactStd_RT_Id = mapRTIdsPerRTName.get('Standard');
-        Id ContactStd_RT_Id = RecordTypeSingleton.getInstance().RtIDsPerDeveloperNamePerObj.get('Contact').get('Standard_Contact');
+        Id ContactStd_RT_Id = RecordTypeSingleton.getInstance().getRecordTypeId('Contact', 'Standard_Contact');
         Contact c = new Contact(FirstName = 'Test', LastName = 'Contact', email = 'test@test.com', AccountId = a.Id, RecordTypeId = ContactStd_RT_Id);
         insert c;
         
         // create an Airline Coding Application case on the account
-        ID AirlineCodingRTId = RecordTypeSingleton.getInstance().RtIDsPerDeveloperNamePerObj.get('Case').get('Airline_Coding_Application');
+        ID AirlineCodingRTId = RecordTypeSingleton.getInstance().getRecordTypeId('Case', 'Airline_Coding_Application');
         Case cs_coding1 = new Case(recordtypeID = AirlineCodingRTId, Status = 'Open', AccountId = a.id, Subject = 'cs1');
         insert cs_coding1;
         
@@ -1060,7 +926,7 @@ private class CaseBeforeTriggerTest {
         // Create a Case for the Account
         //Id RT_ICCS_ASP_Id = Schema.SObjectType.Case.RecordTypeInfosByName.get('FDS ASP Management').RecordTypeId ;
         //Id RT_ICCS_ASP_Id = mapRTIdsPerRTName.get('FDS ASP Management');
-        Id RT_ICCS_ASP_Id = RecordTypeSingleton.getInstance().RtIDsPerDeveloperNamePerObj.get('Case').get('FDS_ASP_Management');
+        Id RT_ICCS_ASP_Id = RecordTypeSingleton.getInstance().getRecordTypeId('Case', 'FDS_ASP_Management');
         Case cs = new Case(RecordTypeId = RT_ICCS_ASP_Id, Subject = 'test', Origin = 'Email', CaseArea__c = 'FDS - Create Authorized Signatories Package', Status = 'Open',
                         ContactId = c.Id, AccountId = a.Id, Confirmation_Remarks__c = 'remarks', Eligibility_Documents_Checklist_approved__c = true);  
         insert cs;
@@ -2032,7 +1898,7 @@ private class CaseBeforeTriggerTest {
     @isTest static void DeleteBeforeTest() {
        
        ID hqrt =Schema.SObjectType.Account.RecordTypeInfosByName.get('Airline Headquarters').RecordTypeId ;
-       ID IFAPcaseRecordTypeID = RecordTypeSingleton.getInstance().RtIDsPerDeveloperNamePerObj.get('Case').get('IATA_Financial_Review'); 
+       ID IFAPcaseRecordTypeID = RecordTypeSingleton.getInstance().getRecordTypeId('Case', 'IATA_Financial_Review'); 
          
        IATA_ISO_Country__c isoCountry = new IATA_ISO_Country__c(name = 'suisse',ISO_Code__c ='SS',AIMS_Area_Name__c='suisse',AIMS_Area_ID__c= '1' );
        insert isoCountry;

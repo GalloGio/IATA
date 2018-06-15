@@ -74,7 +74,7 @@ global class IDFS_Util
                 Select Id, Subject, Region__c, Reason1__c, Country__c, CaseArea__c, BSPCountry__c, Complaint_Analysis__c
                 from Case where id =:caseId];
 
-            Id rtInternalCase = Schema.SObjectType.Case.getRecordTypeInfosByName().get('Internal Cases (IDFS ISS)').getRecordTypeId();
+            Id rtInternalCase = RecordTypeSingleton.getInstance().getRecordTypeId('Case', 'InternalCasesEuropeSCE');//InternalCasesEuropeSCE
 
             Case newCase = new Case(
                 RecordtypeId = rtInternalCase,

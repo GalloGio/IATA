@@ -32,7 +32,7 @@ public  class AccountTriggerHelper {
   public static void AccountNoDuplicateBranch (list<Account> triggerNew, map<Id, Account> triggerOldMap) {
 
 
-    ID standardRT = RecordTypeSingleton.getInstance().RtIDsPerDeveloperNamePerObj.get('Account').get('Standard_Account') ;
+    ID standardRT = RecordTypeSingleton.getInstance().getRecordTypeId('Account', 'Standard_Account');
     map<Integer, Account> TriggerNewAcctsMap = new map<Integer, Account>();
 
     Integer i = 0;
@@ -103,7 +103,7 @@ public  class AccountTriggerHelper {
 
 
       for (String rTName : developerNames) {
-        ID rT = RecordTypeSingleton.getInstance().RtIDsPerDeveloperNamePerObj.get('Account').get(rtName) ;
+        ID rT = RecordTypeSingleton.getInstance().getRecordTypeId('Account', rtName);
         developerNamePerRecordTypeIds.put(rT, rTname);
         recordTypeIds.add(rT);
       }
@@ -198,7 +198,8 @@ public  class AccountTriggerHelper {
 
     //  throw new transformationException('' +triggerNew);
 
-    set<string> fieldsToCheck = new set<String> {    'Type',
+    set<string> fieldsToCheck = new set<String> {
+        'Type',
         'Area_of_Operation__c',
         'Type_of_Service__c',
         'BSP_CI_Valid__c',
@@ -207,12 +208,13 @@ public  class AccountTriggerHelper {
         'CASS_FOC_Valid__c',
         'Airline_designator__c',
         'IATACode__c',
-        'TradeName__c'  , 'ACLI_Status__c'
-                                                };
+        'TradeName__c',
+        'ACLI_Status__c'
+    };
 
-    ID hqRT = RecordTypeSingleton.getInstance().RtIDsPerDeveloperNamePerObj.get('Account').get('IATA_Airline') ;
-    ID brRT = RecordTypeSingleton.getInstance().RtIDsPerDeveloperNamePerObj.get('Account').get('IATA_Airline_BR') ;
-    ID StandardRT = RecordTypeSingleton.getInstance().RtIDsPerDeveloperNamePerObj.get('Account').get('Standard_Account') ;
+    ID hqRT = RecordTypeSingleton.getInstance().getRecordTypeId('Account', 'IATA_Airline');
+    ID brRT = RecordTypeSingleton.getInstance().getRecordTypeId('Account', 'IATA_Airline_BR');
+    ID StandardRT = RecordTypeSingleton.getInstance().getRecordTypeId('Account', 'Standard_Account');
 
     map<Id, list<Account>> branchesPerParentIDs = new map<Id, list<Account>>();
     //      throw new transformationException('' +triggerisInsert  );
@@ -285,11 +287,9 @@ public  class AccountTriggerHelper {
         'TradeName__c',  'ACLI_Status__c', 'Airline_Prefix__c'
                                                 };
 
-    //  map<string,id> developerNamePerId = TransformationHelper.AccRtNamePerIds();
-
-    ID hqRT = RecordTypeSingleton.getInstance().RtIDsPerDeveloperNamePerObj.get('Account').get('IATA_Airline') ;
-    ID brRT = RecordTypeSingleton.getInstance().RtIDsPerDeveloperNamePerObj.get('Account').get('IATA_Airline_BR') ;
-    ID StandardRT = RecordTypeSingleton.getInstance().RtIDsPerDeveloperNamePerObj.get('Account').get('Standard_Account') ;
+    ID hqRT = RecordTypeSingleton.getInstance().getRecordTypeId('Account', 'IATA_Airline');
+    ID brRT = RecordTypeSingleton.getInstance().getRecordTypeId('Account', 'IATA_Airline_BR');
+    ID StandardRT = RecordTypeSingleton.getInstance().getRecordTypeId('Account', 'Standard_Account');
 
 
     map<Id, Account> parentAcctPerIds = new map<Id, Account>();

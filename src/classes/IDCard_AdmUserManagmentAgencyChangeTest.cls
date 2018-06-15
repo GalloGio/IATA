@@ -43,8 +43,8 @@ public class IDCard_AdmUserManagmentAgencyChangeTest {
             Insert p1;
             Insert p2;
             
-            Id rtacc = Schema.SObjectType.Account.getRecordTypeInfosByName().get('Agency').getRecordTypeId();
-            Id rtcon = Schema.SObjectType.Contact.getRecordTypeInfosByName().get('Standard').getRecordTypeId();
+            Id rtacc = RecordTypeSingleton.getInstance().getRecordTypeId('Account', 'IATA_Agency');
+            Id rtcon = RecordTypeSingleton.getInstance().getRecordTypeId('Contact', 'Standard_Contact');
             
             a = new Account(Name='Test Account',
                             IATACode__c = '12312312',
@@ -99,7 +99,7 @@ public class IDCard_AdmUserManagmentAgencyChangeTest {
     
     static testMethod void testListPage(){
         initData();
-        Id rtcon = Schema.SObjectType.Contact.getRecordTypeInfosByName().get('Standard').getRecordTypeId();
+        Id rtcon = RecordTypeSingleton.getInstance().getRecordTypeId('Contact', 'Standard_Contact');
         Contact externalc = new Contact(FirstName = 'External',
                                     LastName = 'Cont\'act\\',
                                     BirthDate = date.today().addYears(-30),

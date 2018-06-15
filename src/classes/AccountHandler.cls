@@ -136,12 +136,14 @@ public class AccountHandler{
 	
 	/*** AMSU-128 Start ***/
 	public static void terminateMSOAppointments(List<Account> listAccount, Map<Id, Account> oldMap) {
-		if(Schema.SObjectType.Account.getRecordTypeInfosByName().get('Airline Headquarters') == null || Schema.SObjectType.Account.getRecordTypeInfosByName().get('Agency') == null) {
+
+
+		Id airlineHQRT = RecordTypeSingleton.getInstance().getRecordTypeId('Account', 'IATA_Airline');
+		Id agencyRT = RecordTypeSingleton.getInstance().getRecordTypeId('Account', 'IATA_Agency');
+		
+		if(airlineHQRT == null || agencyRT == null) {
 			return;
 		}
-
-		Id airlineHQRT = Schema.SObjectType.Account.getRecordTypeInfosByName().get('Airline Headquarters').getRecordTypeId();
-		Id agencyRT = Schema.SObjectType.Account.getRecordTypeInfosByName().get('Agency').getRecordTypeId();
 		List<Account> accountsToCheck = new List<Account>();
 		for(Account acc : listAccount) {
 			Account oldAcc = oldMap.get(acc.Id);

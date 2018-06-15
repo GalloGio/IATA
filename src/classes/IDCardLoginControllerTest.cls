@@ -14,7 +14,7 @@ public class IDCardLoginControllerTest{
 
         List<ID_Card_Application__c> idCardAppToInsert = new List<ID_Card_Application__c>();
 
-        Id idCardAppRT =  Schema.SObjectType.ID_Card_Application__c.getRecordTypeInfosByName().get('Single ID Card Operation').getRecordTypeId();
+        Id idCardAppRT =  RecordTypeSingleton.getInstance().getRecordTypeId('ID_Card_Application__c', 'Single_ID_Card_Operationn');
         testData.IDCards_IDCardApplications[3].RecordTypeId = idCardAppRT;
         idCardAppToInsert.add(testData.IDCards_IDCardApplications[1]);
         idCardAppToInsert.add(testData.IDCards_IDCardApplications[3]);

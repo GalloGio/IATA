@@ -655,7 +655,7 @@ public with sharing class IDCard_ApplicationFormNRController  extends IDCardAbst
           update IDCardApplicationNR;
 
           //upgrade for payment: according to record type will redirect to payment or not.
-          String singleRT = IDCardWebService.getIdCardAppRT('Single_ID_Card_Operation');
+          String singleRT = RecordTypeSingleton.getInstance().getRecordTypeId('ID_Card_Application__c', 'Single_ID_Card_Operation');
 
           
           if (IDCardApplicationNR.RecordTypeId != null && IDCardApplicationNR.RecordTypeId.equals(singleRT)) {
@@ -715,7 +715,7 @@ public with sharing class IDCard_ApplicationFormNRController  extends IDCardAbst
           update IDCardApplicationNR;
 
           //upgrade for payment: according to record type will redirect to payment or not.
-          String singleRT = IDCardWebService.getIdCardAppRT('Single_ID_Card_Operation');
+          String singleRT = RecordTypeSingleton.getInstance().getRecordTypeId('ID_Card_Application__c', 'Single_ID_Card_Operation');
           if (IDCardApplicationNR.RecordTypeId != null && IDCardApplicationNR.RecordTypeId.equals(singleRT)) {
             Pagereference checkoutPage = Page.IDCard_CheckoutSingleApplication;
             checkoutPage.getParameters().put(IDCardUtil.PARAM_APPID, IDCardUtil.EncryptEncodeParameter(IDCardApplicationNR.Id));

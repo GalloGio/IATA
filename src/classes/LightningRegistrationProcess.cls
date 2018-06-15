@@ -7,8 +7,7 @@ public without sharing class LightningRegistrationProcess{
     @AuraEnabled
     public static String checkemail(String email) {
 
-        //acc.RecordTypeId = Schema.Account.sObjectType.getDescribe().getRecordTypeInfosByName().get('Standard Account').getRecordTypeId();
-        RecordType rt = [Select Id From RecordType WHERE SObjectType ='Contact' AND DeveloperName='Standard_Contact'];
+        ID rtId = RecordTypeSingleton.getInstance().getRecordTypeId('Contact', 'Standard_Contact');
         User [] u = [SELECT Id FROM User
               WHERE email =: email AND IsActive = true limit 1];
         Contact [] c = [SELECT Id, email, RecordType.Id FROM Contact
@@ -19,7 +18,7 @@ public without sharing class LightningRegistrationProcess{
             if(c.size() == 0){
                 System.Debug('create_contactanduser');
                 return 'create_contactanduser';
-            } else if(c[0].RecordType.Id == rt.Id){
+            } else if(c[0].RecordType.Id == rtId){
                 System.Debug('create_user');
                 return 'create_user';
             } else {
@@ -423,14 +422,14 @@ public without sharing class LightningRegistrationProcess{
     @AuraEnabled
     public Static void checkConAvailable (Contact con){
         System.debug('CheckConAvailable: ' + con);
-        RecordType rt = [Select Id From RecordType WHERE SObjectType ='Contact' AND DeveloperName='Standard_Contact'];        
+        Id rtId = RecordTypeSingleton.getInstance().getRecordTypeId('Contact', 'Standard_Contact');        
         Contact [] ec = [Select id, email, AccountId, RecordType.Id FROM Contact WHERE email =:con.email AND AccountId =:con.AccountId LIMIT 1];
-        System.debug('Record Type: ' + rt);
+        System.debug('Record Type: ' + rtId);
         
         if(ec.size() > 0){
             System.debug('Update Contact');
             con.Id = ec[0].Id;
-            con.RecordTypeId = rt.Id;
+            con.RecordTypeId = rtId;
             database.update(con);
         } else {
             System.debug('Insert new contact');
@@ -442,8 +441,8 @@ public without sharing class LightningRegistrationProcess{
     public Static String createContactAndAccount (Contact con, Account acc, String customerType) {
         // ISSP_Registration registration = new ISSP_Registration();
         // Boolean b = registration.pageIsValid();
-        RecordType rt = [Select Id From RecordType WHERE SObjectType ='Contact' AND DeveloperName='Standard_Contact'];
-        if(con.RecordType == null) con.RecordTypeId = rt.Id;
+        Id rtId = RecordTypeSingleton.getInstance().getRecordTypeId('Contact', 'Standard_Contact');
+        if(con.RecordType == null) con.RecordTypeId = rtId;
 
         //Debug
         System.debug('Contact ' + con);

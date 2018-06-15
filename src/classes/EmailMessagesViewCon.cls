@@ -230,7 +230,7 @@ public class EmailMessagesViewCon {
 
                 // if case record type is 'SAAM', caseArea has to be 'Risk Management Process', 'Accreditation Process', 'Accreditation Products'
                 // or 'Cargo Process'  
-                Id saamRt = Schema.SObjectType.Case.getRecordTypeInfosByName().get('SAAM').getRecordTypeId();
+                Id saamRt = RecordTypeSingleton.getInstance().getRecordTypeId('Case', 'ProcessEuropeSCE');//SAAM
                 if (cse.RecordTypeId == saamRt) {
 
                     return (cse.CaseArea__c == 'Risk Management Process' || cse.CaseArea__c == 'Accreditation Process' 
@@ -238,12 +238,12 @@ public class EmailMessagesViewCon {
                 }
 
                 // if case record type is 'IATA Financial Review', 'sMAP(sales Monitoring Alert Process)', 'SIDRA', 'SIDRA Lite' or 'Oscar communication', return true
-                Id financialReviewRt = Schema.SObjectType.Case.getRecordTypeInfosByName().get('IATA Financial Review').getRecordTypeId();
-                Id sMapRt = Schema.SObjectType.Case.getRecordTypeInfosByName().get('sMAP(sales Monitoring Alert Process)').getRecordTypeId();
-                Id sidraId = Schema.SObjectType.Case.getRecordTypeInfosByName().get('SIDRA').getRecordTypeId();
-                Id sidraLiteId = Schema.SObjectType.Case.getRecordTypeInfosByName().get('SIDRA Lite').getRecordTypeId();
-                Id oscarComm = Schema.SObjectType.Case.getRecordTypeInfosByName().get('OSCAR Communication').getRecordTypeId();
-                Id invCollectionCases = Schema.SObjectType.Case.getRecordTypeInfosByName().get('Invoicing Collection Cases').getRecordTypeId();
+                Id financialReviewRt = RecordTypeSingleton.getInstance().getRecordTypeId('Case', 'IATA_Financial_Review');
+                Id sMapRt = RecordTypeSingleton.getInstance().getRecordTypeId('Case', 'sMAP_sales_Monitoring_Alert_Process');
+                Id sidraId = RecordTypeSingleton.getInstance().getRecordTypeId('Case', 'SIDRA');
+                Id sidraLiteId = RecordTypeSingleton.getInstance().getRecordTypeId('Case', 'SIDRA_Lite');
+                Id oscarComm = RecordTypeSingleton.getInstance().getRecordTypeId('Case', 'OSCAR_Communication');
+                Id invCollectionCases = RecordTypeSingleton.getInstance().getRecordTypeId('Case', 'Invoicing_Collection_Cases');
 
                 return (cse.RecordTypeId == financialReviewRt || cse.RecordTypeId == sMapRt || cse.RecordTypeId == sidraId
                     || cse.RecordTypeId == sidraLiteId || cse.RecordTypeId == oscarComm || cse.RecordTypeId == invCollectionCases);
