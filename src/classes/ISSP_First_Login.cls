@@ -80,10 +80,13 @@ public without sharing class  ISSP_First_Login{
         
 	private PageReference home(){
         system.debug('GOING HOME');
-		Pagereference pr = Page.ISSP_Login;
-
-		pr.setRedirect(true);
-		return pr;   
+        
+		// 1ID - changed from Portal login page to 1ID login page
+	    //Pagereference pr = Page.ISSP_Login;
+        //pr.setRedirect(true);
+        PageReference pr = new PageReference(OneIdUtils.getSiteCompleteUrl(OneIdUtils.Mode.IDENTITY) + '/login/?serviceName=ISSP');
+		
+        return pr;   
 
     }
    
