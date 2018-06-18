@@ -1508,35 +1508,22 @@ global class ANG_OscarProcessHelper {
 
 		List<Case> casesToInsert = new List<Case>();
 
-	/*
-		Map<Id,List<Contact>> contactsAcc = new Map<Id,List<Contact>>();
-
-		for (Contact con : [SELECT Id, Name, Email, Preferred_Language__c, BSP_CASS_Payment_contact__c, Financial_Assessment_Contact__c from Contact WHERE AccountId in :accsMap.keySet()]){
-			if(contactsAcc.keySet().contains(con.AccountId))
-				contactsAcc.get(con.AccountId).add(con);
-			else
-				contactsAcc.put(con.AccountId,new List<Contact>{con});
-		}*/
-
 		Map<Id,Contact> contactAcc = new Map<Id,Contact>();
-		//TODO: add filter for easy pay portal service
-		for (Contact con : [SELECT Id, Name, Email, Preferred_Language__c, BSP_CASS_Payment_contact__c, Financial_Assessment_Contact__c, AccountId from Contact WHERE AccountId IN :accsMap.keySet()]){
+
+		for (Contact con : [SELECT Id, Name, Email, Preferred_Language__c, BSP_CASS_Payment_contact__c, Financial_Assessment_Contact__c, AccountId 
+			FROM Contact WHERE AccountId IN :accsMap.keySet() 
+			AND Id IN (SELECT Contact__c FROM Portal_Application_Right__c WHERE Portal_Application__r.Name = 'IATA EasyPay (EDENRED)')]){
 			contactAcc.put(con.AccountId,con);
 		} 
-
-		Contact keyContact;
 
 		//Case:
 		for(Account acc : accs){
 
 			System.debug('[ANG_OscarProcessHelper.createIEPAccountOscar] - BEGINNING INSERTING for ACCOUNT: '+acc.Id+' - '+acc.Name+' - '+acc.IataCode__c);
-
-			//keyContact = fetchKeyContact(acc, contactsAcc.get(acc.Id));
-			keyContact = contactAcc.get(acc.Id);
 			
 			fieldsOfObject = new Map<String,Object>();
 	        fieldsOfObject.put('Account_Concerned__c',acc.Id);
-	      	fieldsOfObject.put('ContactId',keyContact.Id);
+	      	fieldsOfObject.put('ContactId',contactAcc.get(acc.Id).Id);
 	        fieldsOfObject.put('BSPCountry__c',acc.BillingCountry);
 	        fieldsOfObject.put('Region__c',acc.Region_formula__c);
 	        fieldsOfObject.put('CaseArea__c','Accreditation Process');
@@ -1554,7 +1541,7 @@ global class ANG_OscarProcessHelper {
 
 	        oscarObjs = new OscarObjectsWrapper();
 	        oscarObjs.cse = cse;
-	        oscarObjs.con = keyContact;
+	        oscarObjs.con = contactAcc.get(acc.Id);
 
 	        accOscarObjsMap.put(acc.id,oscarObjs);
 	        casesToInsert.add(cse);
@@ -1609,10 +1596,9 @@ global class ANG_OscarProcessHelper {
 
 			accOscarObjsMap.get(acc.Id).cse.Oscar__c = accOscarObjsMap.get(acc.Id).oscar.Id;
 			casesToUpdate.add(accOscarObjsMap.get(acc.Id).cse);
-	/*
-			//if(accsToSendEmail.contains(acc.Id))
-		        AMS_AgencyRegulationAutoRenewal.sendEmailAlert(new List<Contact>{accOscarObjsMap.get(acc.Id).con}, accOscarObjsMap.get(acc.Id).oscar.Id, AMS_OSCARTriggerHandler.ANGemailTemplates(AMS_Utils.NGANNUALREVAL, null, true), accOscarObjsMap.get(acc.Id).oscar.Oscar_Communication_Case_Id__c, owea[0], false);			
-	*/
+		    
+		    AMS_AgencyRegulationAutoRenewal.sendEmailAlert(new List<Contact>{accOscarObjsMap.get(acc.Id).con}, accOscarObjsMap.get(acc.Id).oscar.Id, AMS_OSCARTriggerHandler.ANGemailTemplates(AMS_Utils.IEPBANKACCOUNTSETUP, 'Creation', true), accOscarObjsMap.get(acc.Id).oscar.Oscar_Communication_Case_Id__c, owea[0], false);			
+
 			System.debug('[ANG_OscarProcessHelper.createIEPAccountOscar] - FINISHING... INSERTING OSCARS: '+ accOscarObjsMap.get(acc.id).oscar.Id + ' | Case: '+accOscarObjsMap.get(acc.id).cse.Id);
 		}
 			
