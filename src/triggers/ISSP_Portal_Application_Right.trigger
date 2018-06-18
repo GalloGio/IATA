@@ -1724,7 +1724,7 @@ trigger ISSP_Portal_Application_Right on Portal_Application_Right__c (after inse
 		else if (access.Application_Name__c == 'Standards Setting Workspace'){
 			if (trigger.isInsert && access.Right__c == 'Access Granted'){
 				contactKaviAdd.add(access.Contact__c);
-			}
+			} 
 			else if (trigger.isUpdate){
 				Portal_Application_Right__c oldAccess = trigger.oldMap.get(access.Id);
 				if (access.Right__c != oldAccess.Right__c){
@@ -1849,7 +1849,7 @@ trigger ISSP_Portal_Application_Right on Portal_Application_Right__c (after inse
 		ISSP_UserTriggerHandler.deleteTwoFactor(contactRemove2FAIdSet);
 	}
 
-	//update Federation
+	//update Federation 
 	if (!contactFedIdMap.isEmpty()){
 		ISSP_UserTriggerHandler.updateFederation(contactFedIdMap);
 	}
@@ -1866,13 +1866,15 @@ trigger ISSP_Portal_Application_Right on Portal_Application_Right__c (after inse
 
 	if (!contactKaviAdd.isEmpty()){
 		string kaviUser = [SELECT Kavi_User__c from Contact where Id in:contactKaviAdd limit 1].Kavi_User__c;
+		
 		if (kaviUser != null ){
 		ISSP_WS_KAVI.createOrUpdateKaviUsersAccounts('create2',contactKaviAdd);
 			}
 		else  
 		{
 			ISSP_WS_KAVI.createOrUpdateKaviUsersAccounts('create',contactKaviAdd);
-		}
+		}			
+		ISSP_WS_KAVI.addUserPSA(contactKaviAdd); 
 	}
 
 	/*
