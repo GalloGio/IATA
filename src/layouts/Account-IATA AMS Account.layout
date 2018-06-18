@@ -718,7 +718,7 @@
                 <height>300</height>
                 <page>AMS_AccountOwners</page>
                 <showLabel>false</showLabel>
-                <showScrollbars>false</showScrollbars>
+                <showScrollbars>true</showScrollbars>
                 <width>100%</width>
             </layoutItems>
         </layoutColumns>
