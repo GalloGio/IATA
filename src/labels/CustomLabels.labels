@@ -15279,6 +15279,13 @@ Select at least one authorised signatory, and choose the Financial Assessment co
         <value>1. IATA Accredited Head Entity Details</value>
     </labels>
     <labels>
+        <fullName>ISSP_ANG_MODEL_A_ONBOARDING_TITLE</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_ANG_MODEL_A_ONBOARDING_TITLE</shortDescription>
+        <value>IATA EasyPay Customer Onboarding</value>
+    </labels>
+    <labels>
         <fullName>ISSP_ANG_MustAddContactsToService</fullName>
         <language>en_US</language>
         <protected>false</protected>
