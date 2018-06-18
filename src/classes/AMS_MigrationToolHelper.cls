@@ -679,8 +679,14 @@ public without sharing class AMS_MigrationToolHelper {
 			caseToProcess.OSCAR__c = oscar.Id;
 
 			//  For IEP BANK Acc Setup force flag to false by default ('ISS Portal - Make case invisible' worflow cannot run for this process)
-			if(processType == AMS_RecordCreatorWebservice.IEP_BANK_ACCOUNT_SETUP)
+			if(processType == AMS_RecordCreatorWebservice.IEP_BANK_ACCOUNT_SETUP){
 				caseToProcess.Visible_on_ISS_Portal__c = false;
+				 //assign to queue
+		         Database.DMLOptions dmo = new Database.DMLOptions();
+		         dmo.assignmentRuleHeader.useDefaultRule = true;
+		         caseToProcess.setOptions(dmo);
+			}
+
 			
 			update caseToProcess;
 		}
