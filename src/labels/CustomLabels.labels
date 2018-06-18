@@ -15324,6 +15324,13 @@ The applicant understands and agrees to pay the application, entry and annual fe
         <value>1. IATA Accredited Head Entity Details</value>
     </labels>
     <labels>
+        <fullName>ISSP_ANG_MODEL_A_ONBOARDING_TITLE</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_ANG_MODEL_A_ONBOARDING_TITLE</shortDescription>
+        <value>IATA EasyPay Customer Onboarding</value>
+    </labels>
+    <labels>
         <fullName>ISSP_ANG_MustAddContactsToService</fullName>
         <language>en_US</language>
         <protected>false</protected>

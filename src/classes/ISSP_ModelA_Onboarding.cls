@@ -80,7 +80,7 @@ public class ISSP_ModelA_Onboarding {
 
 	public PageReference submitForm() {
 		if (validateAttachedFiles()) {
-			AMS_OSCAR__c oscar = [SELECT Id, Account__c, Account__r.Id, OwnerId FROM AMS_OSCAR__c WHERE Id = :this.onBoardingOSCARCase.Id];
+			AMS_OSCAR__c oscar = [SELECT Id, Account__c, Account__r.Id, OwnerId FROM AMS_OSCAR__c WHERE Id = :this.onBoardingOSCARCase.OSCAR__c];
 
 			oscar.OwnerId = getRegionalQueue();
 			update oscar;

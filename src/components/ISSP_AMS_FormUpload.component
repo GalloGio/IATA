@@ -32,7 +32,7 @@
                                         <apex:outputText rendered="{!OR(caseStatus=='Draft',caseStatus == 'Open - EDMC', caseOwnerNewgenPCI, caseOwnerModelA, !CONTAINS(reviewStatuses, FileIdInReviewStatuses))}">
                                             <input type="file" id="input-{!reqCnt}" class="input-{!reqCnt}" name="file" style="color:black;" onchange="this.style.color = 'transparent'"/>
                                         </apex:outputText>
-                                        <apex:outputText rendered="{!AND(caseStatus!='Draft',caseStatus != 'Open - EDMC', !caseOwnerNewgenPCI, caseOwnerModelA, CONTAINS(reviewStatuses, FileIdInReviewStatuses))}">
+                                        <apex:outputText rendered="{!AND(caseStatus!='Draft',caseStatus != 'Open - EDMC', !caseOwnerNewgenPCI, !caseOwnerModelA, CONTAINS(reviewStatuses, FileIdInReviewStatuses))}">
                                             <input type="file" class="input-{!reqCnt}" name="file" style="color:transparent;" disabled="true"/>
                                         </apex:outputText>
                                     </apex:outputText>
