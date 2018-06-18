@@ -852,6 +852,7 @@
                                         <apex:outputfield value="{!newCase.CaseNumber}" />
                                         <apex:outputfield value="{!newCase.Subject}" />
                                         <apex:outputfield value="{!newCase.Status}" />
+                                        <apex:outputfield value="{!newCase.Source_of_Case__c}" />
                                         <apex:outputfield value="{!newCase.Priority}" />
                                         <apex:outputfield value="{!newCase.SAAM_Deadline_Date__c}" />
                                         <apex:outputfield value="{!newCase.Reason_for_Deadline__c}" />
@@ -1073,14 +1074,14 @@
                                     </apex:pageblocksection>
                                     
                                     <!-- ACR Fourth Section - View Mode -->
-                                    <apex:pageblocksection rendered="{!AND(caseType='ACR', NOT(isEditMode))}" title="Estimated costs" columns="1">
+                                    <apex:pageblocksection rendered="{!AND(caseType='ACR', NOT(isEditMode))}" title="Action Item" columns="1">
                                         <apex:outputfield value="{!newCase.Action__c}" />
                                         <apex:outputfield value="{!newCase.Due_Date__c}" />
                                         <apex:outputfield value="{!newCase.Action_Person__c}" />
 
                                     </apex:pageblocksection>
                                     <!-- ACR Fourth Section - Edit Mode -->
-                                    <apex:pageblocksection rendered="{!AND(caseType='ACR', isEditMode)}" title="Estimated costs" columns="1">
+                                    <apex:pageblocksection rendered="{!AND(caseType='ACR', isEditMode)}" title="Action Item" columns="1">
                                         <apex:inputfield value="{!newCase.Action__c}" />
                                         <apex:inputfield value="{!newCase.Due_Date__c}" />
                                         <apex:inputfield value="{!newCase.Action_Person__c}" />
