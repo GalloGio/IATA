@@ -3152,6 +3152,11 @@
                     <default>false</default>
                     <label>Blocked</label>
                 </value>
+                <value>
+                    <fullName>Rejected by IATA compliance team</fullName>
+                    <default>false</default>
+                    <label>Rejected by IATA compliance team</label>
+                </value>
             </valueSetDefinition>
         </valueSet>
     </fields>
@@ -34322,6 +34327,10 @@ This field is kept up-to-date with the feedback of ITDI at least twice a year du
             </values>
             <values>
                 <fullName>Open</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Rejected by IATA compliance team</fullName>
                 <default>false</default>
             </values>
             <values>
@@ -80431,6 +80440,10 @@ This field is kept up-to-date with the feedback of ITDI at least twice a year du
             </values>
             <values>
                 <fullName>Open</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Rejected by IATA compliance team</fullName>
                 <default>false</default>
             </values>
             <values>
