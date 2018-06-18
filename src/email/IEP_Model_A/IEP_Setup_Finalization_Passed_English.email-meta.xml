@@ -5,12 +5,15 @@
     <encodingKey>UTF-8</encodingKey>
     <name>IEP Setup Finalization Passed</name>
     <style>none</style>
-    <subject>Ref nr {!AMS_OSCAR__c.Name} – IEP Bank Account Approval</subject>
-    <textOnly>Dear Sir/Madam,  
+    <subject>Ref nr {!AMS_OSCAR__c.Name} – IEP Account Approval</subject>
+    <textOnly>Dear Sir/Madam,
 
-Please be informed that your Bank Account registration is now completed. You can now use this Bank Account to funds your EasyPay wallet(s). Don’t hesitate to contact the IATA Customer Service team for more information.
+Please be informed that your Account registration for EasyPay is now completed. You can now use the Bank Account you registered to funds your EasyPay wallet(s). Don’t hesitate to contact the IATA Customer Service team for more information.
 
-Thank you. 
+
+Thank you.
+
 IATA Customer Service Portal</textOnly>
     <type>custom</type>
+    <uiType>Aloha</uiType>
 </EmailTemplate>

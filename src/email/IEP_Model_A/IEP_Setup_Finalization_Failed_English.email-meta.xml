@@ -5,12 +5,13 @@
     <encodingKey>UTF-8</encodingKey>
     <name>IEP Setup Finalization Failed</name>
     <style>none</style>
-    <subject>Ref nr {!AMS_OSCAR__c.Name} – IEP Bank Account Rejection</subject>
+    <subject>Ref nr {!AMS_OSCAR__c.Name} – IEP Account Rejection</subject>
     <textOnly>Dear Sir/Madam,
 
-We regret to inform you that your request for registering your Bank Account for EasyPay service has not been approved. Don’t hesitate to contact the IATA Customer Service team for more information.
+We regret to inform you that your request for registering your Account for EasyPay service has not been approved. Don’t hesitate to contact the IATA Customer Service team for more information.
 
 Thank you.
 IATA Customer Service Portal</textOnly>
     <type>custom</type>
+    <uiType>Aloha</uiType>
 </EmailTemplate>

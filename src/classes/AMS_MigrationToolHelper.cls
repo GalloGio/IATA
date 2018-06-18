@@ -669,10 +669,7 @@ public without sharing class AMS_MigrationToolHelper {
 
 			AMS_OSCAR__c oscar = new AMS_OSCAR__c( 
 				Process__c = processType, RecordTypeId =oscarRTId, Status__c = caseToProcess.Status, OwnerId = caseToProcess.OwnerId,		
-				// For IEP BANK Acc Setup we'll pick Account_Concerned__c instead
-				Account__c = (processType == AMS_RecordCreatorWebservice.IEP_BANK_ACCOUNT_SETUP ? caseToProcess.Account_Concerned__c : caseToProcess.AccountId), 
-				// For IEP BANK Account we'll populate Agency_Contact with the contact from saam case
-				Agency_Contact__c = (processType == AMS_RecordCreatorWebservice.IEP_BANK_ACCOUNT_SETUP ? cont.concernedContactId : null )
+				Account__c = caseToProcess.AccountId
 			);
 
 			insert oscar;
@@ -682,8 +679,14 @@ public without sharing class AMS_MigrationToolHelper {
 			caseToProcess.OSCAR__c = oscar.Id;
 
 			//  For IEP BANK Acc Setup force flag to false by default ('ISS Portal - Make case invisible' worflow cannot run for this process)
-			if(processType == AMS_RecordCreatorWebservice.IEP_BANK_ACCOUNT_SETUP)
+			if(processType == AMS_RecordCreatorWebservice.IEP_BANK_ACCOUNT_SETUP){
 				caseToProcess.Visible_on_ISS_Portal__c = false;
+				 //assign to queue
+		         Database.DMLOptions dmo = new Database.DMLOptions();
+		         dmo.assignmentRuleHeader.useDefaultRule = true;
+		         caseToProcess.setOptions(dmo);
+			}
+
 			
 			update caseToProcess;
 		}

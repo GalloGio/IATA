@@ -159,6 +159,10 @@ public class AMS_OSCARTriggerHandler {
     }
 
     public static void handleAfterInsert() {
+        /*** AMSU-134 Start ***/
+        createSavepoint((List<AMS_OSCAR__c>) Trigger.new);
+        /*** AMSU-134 End ***/
+
         updateCaseKPIFields();
     }
 
@@ -174,7 +178,52 @@ public class AMS_OSCARTriggerHandler {
         /*** AMSU-121 Start ***/
         handleChangeOfLocation((List<AMS_OSCAR__c>) Trigger.new, (Map<Id, AMS_OSCAR__c>) Trigger.oldMap);
         /*** AMSU-121 End ***/
+        /*** AMSU-134 Start ***/
+        rollbackChanges((List<AMS_OSCAR__c>) Trigger.new, (Map<Id, AMS_OSCAR__c>) Trigger.oldMap, (Map<Id, AMS_OSCAR__c>) Trigger.newMap);
+        /*** AMSU-134 End ***/
     }
+
+    /*** AMSU-134 Start ***/
+    public static void createSavepoint(List<AMS_OSCAR__c> oscars) {
+        Set<Id> oscarIds = new Set<Id>();
+        for(AMS_Oscar__c oscar : oscars) {
+            if(oscar.Process__c == AMS_Utils.AGENCYCHANGES) {
+                oscarIds.add(oscar.Id);
+            }
+        }
+
+        if(!system.isBatch() && !system.isFuture()) {
+            AMS_OscarChangesHelper.createSavepoint(oscarIds);
+        }
+    }
+
+    public static void rollbackChanges(List<AMS_OSCAR__c> oscars, Map<Id,AMS_OSCAR__c> oldMap, Map<Id,AMS_OSCAR__c> newMap) {
+        Set<Id> oscarIds = new Set<Id>();
+
+        for(AMS_OSCAR__c oscar : oscars) {
+            AMS_OSCAR__c oldOscar = oldMap.get(oscar.Id);
+            if(oscar.Process__c == AMS_Utils.AGENCYCHANGES && oldOscar.STEP4__c != AMS_Utils.PASSED && oscar.STEP4__c == AMS_Utils.PASSED) {
+                oscarIds.add(oscar.Id);
+            }
+        }   
+
+        if(oscarIds.isEmpty()) {
+            return;
+        }
+
+        List<Case> cases = [SELECT Id, Oscar__c, (SELECT Id FROM Cases WHERE IsClosed = false) FROM Case WHERE Oscar__c IN :oscarIds];
+        for(Case cse : cases) {
+            if(!cse.Cases.isEmpty()) {
+                newMap.get(cse.OSCAR__c).addError('You cannot withdrawal a case with open related cases.');
+                oscarIds.remove(cse.OSCAR__c);
+            }
+        }
+        
+        if(!oscarIds.isEmpty() && !system.isBatch() && !system.isFuture()) {
+            AMS_OscarChangesHelper.rollbackOscarChanges(oscarIds);
+        }
+    }
+    /*** AMSU-134 End ***/
 
     /*** AMSU-125 Start ***/
     public static void validateRemittanceFrequency(List<AMS_OSCAR__c> oscars, Map<Id, AMS_OSCAR__c> oldMap, Map<Id, AMS_OSCAR__c> newMap) {
@@ -2460,10 +2509,7 @@ public class AMS_OSCARTriggerHandler {
             OrgWideEmailAddress[] owea = [select Id from OrgWideEmailAddress where Address = 'agencymanagement@iata.org'];
 
             List<Contact> contList;
-            if(agencyType == AMS_Utils.IEPBANKACCOUNTSETUP)
-                contList = fetchContactFromAgencyContact(oscarId);
-            else    
-                contList = fetchContactInfoFromCase(oscarCommCaseId);
+            contList = fetchContactInfoFromCase(oscarCommCaseId);
 
             if(!contList.isEmpty())
                 AMS_AgencyRegulationAutoRenewal.sendEmailAlert(contList, oscarId, ANGemailTemplates(agencyType, step, wasApproved), oscarCommCaseId, owea[0], false);
@@ -2480,12 +2526,6 @@ public class AMS_OSCARTriggerHandler {
     private static List<Contact> fetchContactInfoFromCase(String oscarCommCaseId){
 
          return [Select Id, Name, Email, Preferred_Language__c, BSP_CASS_Payment_contact__c, Financial_Assessment_Contact__c from Contact where Id in (select ContactId from Case where Id = :oscarCommCaseId )];
-
-    }
-    
-    private static List<Contact> fetchContactFromAgencyContact(String oscarId){
-
-         return [Select Id, Name, Email, Preferred_Language__c, BSP_CASS_Payment_contact__c, Financial_Assessment_Contact__c from Contact where Id in (select Agency_Contact__c from AMS_OSCAR__c where Id = :oscarId )];
 
     }
     
@@ -2507,12 +2547,15 @@ public class AMS_OSCARTriggerHandler {
         else if(agencyType == AMS_Utils.NGCHANGES && step == AMS_Utils.SANITYCHECK) templateId                  = 'ANG_Changes_SanityCheck_Passed';
         else if(agencyType == AMS_Utils.NGCHANGES && step == AMS_Utils.APPROVAL && wasApproved) templateId      = 'ANG_Changes_APP';
         else if(agencyType == AMS_Utils.NGCHANGES && step == AMS_Utils.APPROVAL && !wasApproved) templateId     = 'ANG_Changes_DIS';
+        else if(agencyType == AMS_Utils.IEPBANKACCOUNTSETUP && step == 'Creation') templateId    = 'IEP_Setup_Creation';
         else if(agencyType == AMS_Utils.IEPBANKACCOUNTSETUP && step == AMS_Utils.SANITYCHECK) templateId    = 'IEP_Setup_SanityCheck_Passed';
-        else if(agencyType == AMS_Utils.IEPBANKACCOUNTSETUP && step == AMS_Utils.SETUPFINALIZATION && wasApproved) templateId   = 'IEP_Setup_Finalization_Passed';
-        else if(agencyType == AMS_Utils.IEPBANKACCOUNTSETUP && step == AMS_Utils.SETUPFINALIZATION && !wasApproved) templateId  = 'IEP_Setup_Finalization_Failed';
+        else if(agencyType == AMS_Utils.IEPBANKACCOUNTSETUP && step == AMS_Utils.DUEDILIGENCE && wasApproved) templateId   = 'IEP_Setup_Finalization_Passed';
+        else if(agencyType == AMS_Utils.IEPBANKACCOUNTSETUP && step == AMS_Utils.DUEDILIGENCE && !wasApproved) templateId  = 'IEP_Setup_Finalization_Failed';
+        //else if(agencyType == AMS_Utils.IEPBANKACCOUNTSETUP && step == AMS_Utils.SETUPFINALIZATION && wasApproved) templateId   = 'IEP_Setup_Finalization_Passed';
+        //else if(agencyType == AMS_Utils.IEPBANKACCOUNTSETUP && step == AMS_Utils.SETUPFINALIZATION && !wasApproved) templateId  = 'IEP_Setup_Finalization_Failed';
         else if(agencyType == AMS_Utils.NGOPTINOUT && step == AMS_Utils.PASSED && wasApproved) templateId  = 'ANG_Financial_Assesment_Opt_in_App';
         else if(agencyType == AMS_Utils.NGOPTINOUT && step == AMS_Utils.PASSED && !wasApproved) templateId  = 'ANG_Financial_Assesment_Opt_out_App';
-        else if(agencyType == AMS_Utils.NGOPTINOUT && step == AMS_Utils.FAILED && wasApproved) templateId  = 'ANG_Financial_Assesment_Opt_in_DIS';
+        //else if(agencyType == AMS_Utils.NGOPTINOUT && step == AMS_Utils.FAILED && wasApproved) templateId  = 'ANG_Financial_Assesment_Opt_in_DIS';
         else if(agencyType == AMS_Utils.NGOPTINOUT && step == AMS_Utils.FAILED && !wasApproved) templateId  = 'ANG_Financial_Assesment_Opt_out_DIS';
         else if(agencyType == AMS_Utils.NGANNUALREVAL && step == AMS_Utils.FAILED && !wasApproved) templateId  = 'ANG_Annual_Revalidation_Failed';
         else if(agencyType == AMS_Utils.NGANNUALREVAL && step == null) templateId  = 'ANG_Anual_Renewal_Case';
@@ -2972,21 +3015,22 @@ public class AMS_OSCARTriggerHandler {
 
         }
 
-        if(updatedOscar.Process__c == AMS_Utils.IEPBANKACCOUNTSETUP && oldOSCAR.STEP42__c <> updatedOscar.STEP42__c && updatedOscar.STEP42__c == 'Passed'){
+        if(updatedOscar.Process__c == AMS_Utils.IEPBANKACCOUNTSETUP && oldOSCAR.STEP17__c <> updatedOscar.STEP17__c && updatedOscar.STEP17__c == 'Passed'){
 
             System.debug('Sending the email for the user to anounce Finalization Passing of the IEP bank account setup oscar');
 
             //using an already existing method to send email alert to user.
-            AMS_OSCARTriggerHandler.sendEmailAlert(updatedOscar.Id, updatedOscar.Oscar_Communication_Case_Id__c, updatedOscar.Process__c, AMS_Utils.SETUPFINALIZATION, true);
+            AMS_OSCARTriggerHandler.sendEmailAlert(updatedOscar.Id, updatedOscar.Oscar_Communication_Case_Id__c, updatedOscar.Process__c, AMS_Utils.DUEDILIGENCE, true);
 
         }
 
-        if(updatedOscar.Process__c == AMS_Utils.IEPBANKACCOUNTSETUP && oldOSCAR.STEP42__c <> updatedOscar.STEP42__c && updatedOscar.STEP42__c == 'Failed'){
+        if(updatedOscar.Process__c == AMS_Utils.IEPBANKACCOUNTSETUP && oldOSCAR.STEP17__c <> updatedOscar.STEP17__c && updatedOscar.STEP17__c == 'Failed'){
 
+            updatedOscar.Status__c = 'Closed';
             System.debug('Sending the email for the user to anounce Finalization Failure of the IEP bank account setup oscar');
 
             //using an already existing method to send email alert to user.
-            AMS_OSCARTriggerHandler.sendEmailAlert(updatedOscar.Id, updatedOscar.Oscar_Communication_Case_Id__c, updatedOscar.Process__c, AMS_Utils.SETUPFINALIZATION, false);
+            AMS_OSCARTriggerHandler.sendEmailAlert(updatedOscar.Id, updatedOscar.Oscar_Communication_Case_Id__c, updatedOscar.Process__c, AMS_Utils.DUEDILIGENCE, false);
 
         }
 
@@ -3611,7 +3655,7 @@ public class AMS_OSCARTriggerHandler {
         String statusForCC = 'Active';
 
         if(oscar.Process__c == AMS_Utils.NEWAE || oscar.Process__c == AMS_Utils.NEWHESTANDARD)
-            statusForCC = oscar.Is_PCI_compliant__c == 'Yes' ? 'Active' : 'Non-Active';
+            statusForCC = (oscar.Is_PCI_compliant__c == 'Yes' || oscar.Is_PCI_compliant__c == 'Corporate Card'  ? 'Active' : 'Non-Active');
         else if(oscar.Process__c == AMS_Utils.NEWHELITE){
 
             if(oscar.Is_PCI_compliant__c == 'Yes' && oscar.Is_using_credit_card__c && oscar.STEP35__c == AMS_Utils.PASSED)
@@ -3877,7 +3921,7 @@ public class AMS_OSCARTriggerHandler {
                 System.debug('Sending email alert for process ' + oscar.Process__c + ' with value for Opt set to ' + oscar.ANG_FA_Opt_out__c);
                 AMS_OSCARTriggerHandler.sendEmailAlert(oscar.Id, oscar.Oscar_Communication_Case_Id__c, oscar.Process__c, AMS_Utils.PASSED, oscar.ANG_FA_Opt_out__c == 'Opt-In');
                 
-            }else if (oscar.STEP1__c == AMS_Utils.FAILED){
+            }else if (oscar.STEP1__c == AMS_Utils.FAILED && oscar.ANG_FA_Opt_out__c == 'Opt-Out'){
 
                 System.debug('Sending email alert for process ' + oscar.Process__c + ' with value for Opt set to ' + oscar.ANG_FA_Opt_out__c);
                 AMS_OSCARTriggerHandler.sendEmailAlert(oscar.Id, oscar.Oscar_Communication_Case_Id__c, oscar.Process__c, AMS_Utils.FAILED, oscar.ANG_FA_Opt_out__c == 'Opt-In');
