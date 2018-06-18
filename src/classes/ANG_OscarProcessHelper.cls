@@ -1592,7 +1592,6 @@ global class ANG_OscarProcessHelper {
 
 			
 		for (Account acc: accs){
-		// fields needed on contact: Id, Name, Email, Preferred_Language__c, BSP_CASS_Payment_contact__c, Financial_Assessment_Contact__c
 
 			accOscarObjsMap.get(acc.Id).cse.Oscar__c = accOscarObjsMap.get(acc.Id).oscar.Id;
 			casesToUpdate.add(accOscarObjsMap.get(acc.Id).cse);
@@ -1605,14 +1604,6 @@ global class ANG_OscarProcessHelper {
 
 		if(!casesToUpdate.isEmpty())
 			update casesToUpdate;
-
-		/*
-		for (Account acc: accs){
-
-			if(accsToSendEmail.contains(acc.Id))
-	            AMS_AgencyRegulationAutoRenewal.sendEmailAlert(new List<Contact>{accOscarObjsMap.get(acc.Id).con}, accOscarObjsMap.get(acc.Id).oscar.Id, AMS_OSCARTriggerHandler.ANGemailTemplates(AMS_Utils.NGANNUALREVAL, null, true), accOscarObjsMap.get(acc.Id).oscar.Oscar_Communication_Case_Id__c, owea[0], false);			
-		}
-		*/
 
     }
 	
