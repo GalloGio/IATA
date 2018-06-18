@@ -231,8 +231,43 @@ public without sharing class ISSP_Login {
     	set;
     }
 
-    public void findLocationCaller(){                
+    public PageReference findLocationCaller(){                
         findLocation(true);
+        system.debug('## communityName ' + communityName);        
+        String getUrl = ApexPages.currentPage().getUrl();
+        String oneIDStatus;
+        if(ISSP_CS__c.getValues('1ID redirect').value__c != null)
+            oneIDStatus = String.ValueOF(ISSP_CS__c.getValues('1ID redirect').value__c);
+        
+        String startUrl = ApexPages.currentPage().getParameters().get('startURL');
+        String retURL = ApexPages.currentPage().getParameters().get('retURL');
+        system.debug('startURL ' + startURL);
+        
+        if(startUrl == null && retURL != null){            
+            startUrl = retURL;
+        }
+        
+        if(startUrl != null){            
+            if(oneIDStatus == 'ON'){                
+                PageReference pr = new PageReference(OneIdUtils.getSiteCompleteUrl(OneIdUtils.Mode.IDENTITY) + '/login/?startURL='+startUrl+'&serviceName=ISSP');
+                pr.setRedirect(true);                        
+                return pr;    
+            }else{                
+                return null;
+            }            
+        }
+        else if(communityName == null && startUrl == null){            
+            if(oneIDStatus == 'ON'){                
+                PageReference pr = new PageReference(OneIdUtils.getSiteCompleteUrl(OneIdUtils.Mode.IDENTITY) + '/login/?startURL=%2F'+'ISSP_Homepage&serviceName=ISSP');
+                pr.setRedirect(true);
+                return pr;    
+            }else{
+                return null;
+            }
+        }
+        else{                 
+            return null;
+        }  
     }    
 
     public string theCountry {get; set;}

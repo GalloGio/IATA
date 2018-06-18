@@ -74,6 +74,10 @@ public without sharing class OneIdLightningLoginFormController {
                     //if login is from mobileApp we do not redirect
                     if(startUrl != 'mobileApp') pageLink = startUrl;
 
+                    if( String.isNotBlank(serviceName) && serviceName == 'ISSP'){
+                       pageLink = '/identity/apex/CommunitiesLanding?serviceName=ISSP&startUrl=' + startUrl;
+                    }
+
                 }else if( String.isNotBlank(serviceName) && serviceName == 'ISSP'){
                 	 //pageLink = '/ISSP_Homepage';
                 	 //Let's leverage "standard" page's controller doing the magic. Just add the param, redirection will be done by the page controller
@@ -114,7 +118,7 @@ public without sharing class OneIdLightningLoginFormController {
             
             if (userListConfirmTempPassword[0].UID__c != '' && userListConfirmTempPassword[0].UID__c != null){
                 String serviceNameParam = String.isEmpty(serviceName) ? '' : '?serviceName='+serviceName;
-                lgn = Site.login(username, password, OneIdUtils.getSiteCompleteUrl(OneIdUtils.Mode.ISSP).removeEnd('/s') + '/OneId_ChangePassword'+serviceNameParam);
+                lgn = Site.login(username, password, OneIdUtils.getSiteCompleteUrl(OneIdUtils.Mode.IDENTITY).removeEnd('/s') + '/OneId_ChangePassword'+serviceNameParam);
             }
             
             //redirect to startUrl or some other page returned from the login 

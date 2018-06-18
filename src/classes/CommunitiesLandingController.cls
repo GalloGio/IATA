@@ -7,11 +7,18 @@ public with sharing class CommunitiesLandingController {
     public PageReference forwardToStartPage() {
     	//TD: use this controller to manage redirection from the serviceName param
     	string serviceName = ApexPages.currentPage().getParameters().get('serviceName');
+        string startUrl = ApexPages.currentPage().getParameters().get('startUrl');
     	
     	if(string.isBlank(serviceName))
 	        return Network.communitiesLanding();
 	    else{
-	    	if(serviceName=='ISSP') return new pageReference(OneIdUtils.getSiteCompleteUrl(OneIdUtils.Mode.ISSP) + '/ISSP_Homepage');
+            if(serviceName=='ISSP'){
+              if(String.isNotBlank(startUrl) && !startUrl.equalsIgnoreCase('undefined')){
+                return new pageReference(OneIdUtils.getSiteCompleteUrl(OneIdUtils.Mode.ISSP) + startUrl);
+              }else{
+                return new pageReference(OneIdUtils.getSiteCompleteUrl(OneIdUtils.Mode.ISSP) + '/ISSP_Homepage');
+              }
+            } 
 	    }
 	    
 	    //Just in case
