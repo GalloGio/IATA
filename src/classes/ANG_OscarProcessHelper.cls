@@ -696,11 +696,15 @@ global class ANG_OscarProcessHelper {
 
     		if( restrictCash || restrictCreditCard){
 
-	    		if(restrictCash && aa.ANG_FormOfPayment_ID__c == 'CA' && aa.Status__c != valueToAdd){
-					aa.Status__c = valueToAdd;
+	    		if(restrictCash && aa.ANG_FormOfPayment_ID__c == 'CA'){
+
+					if(aa.Status__c != valueToAdd){
+						aa.Status__c = valueToAdd;
+						accountIdsChanged.add(aa.Account__c);
+					}
+
 	    			aa.RestrictedByProcess__c = true;
 	    			aaLstToUpdate.add(aa);
-	    			accountIdsChanged.add(aa.Account__c);
 	    		}
 
 	    		if(restrictCreditCard && aa.ANG_FormOfPayment_ID__c == 'CC' && aa.Status__c != valueToAdd){
@@ -713,13 +717,15 @@ global class ANG_OscarProcessHelper {
 
     		if(restoreCash || restoreCreditCard){
 
-				if(restoreCash && aa.ANG_FormOfPayment_ID__c == 'CA' && aa.Status__c != valueToAdd){
+				if(restoreCash && aa.ANG_FormOfPayment_ID__c == 'CA'){
 
-					if(!aa.RestrictedByRHCAlert__c)
+					if(!aa.RestrictedByRHCAlert__c){
 	    				aa.Status__c = valueToAdd;
+						accountIdsChanged.add(aa.Account__c);
+					}
+					
 	    			aa.RestrictedByProcess__c = false;
     				aaLstToUpdate.add(aa);
-    				accountIdsChanged.add(aa.Account__c);
     			}
 
 	    		if(restoreCreditCard && aa.Account__r.Is_PCI_compliant__c == 'Yes' && aa.ANG_FormOfPayment_ID__c == 'CC' && aa.Status__c != valueToAdd){
