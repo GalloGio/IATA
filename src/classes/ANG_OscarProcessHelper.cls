@@ -1526,7 +1526,7 @@ global class ANG_OscarProcessHelper {
 
 		Map<Id,Contact> contactAcc = new Map<Id,Contact>();
 		//TODO: add filter for easy pay portal service
-		for (Contact con : [SELECT Id, Name, Email, Preferred_Language__c, BSP_CASS_Payment_contact__c, Financial_Assessment_Contact__c from Contact WHERE AccountId IN :accsMap.keySet()]){
+		for (Contact con : [SELECT Id, Name, Email, Preferred_Language__c, BSP_CASS_Payment_contact__c, Financial_Assessment_Contact__c, AccountId from Contact WHERE AccountId IN :accsMap.keySet()]){
 			contactAcc.put(con.AccountId,con);
 		} 
 
