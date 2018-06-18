@@ -13,7 +13,7 @@ public class ISSP_ModelA_Onboarding {
 
 	private void fetchOnBoardingOSCARCase() {
 		if (ApexPages.currentPage().getParameters().containsKey('caseId')) {
-			this.onBoardingOSCARCase = [SELECT Id, AccountId, Region__c FROM Case WHERE Id = :ApexPages.currentPage().getParameters().get('caseId')];
+			this.onBoardingOSCARCase = [SELECT Id, AccountId, Region__c, OSCAR__c FROM Case WHERE Id = :ApexPages.currentPage().getParameters().get('caseId')];
 		}
 	}
 
@@ -99,7 +99,7 @@ public class ISSP_ModelA_Onboarding {
 		boolean errorFound = false;
 
 		Map<String, String> folderMap = new Map<String, String>();
-    	folderMap = ISSP_SELECTOR.getMapAmazonFileIdentifiers(this.onBoardingOSCARCase.Id);
+    	folderMap = ISSP_SELECTOR.getMapAmazonFileIdentifiers(this.onBoardingOSCARCase.OSCAR__c);
 
     	for (AMS_Accreditation_Requirement__c thisReq : this.countryRequirementsList) { 
             if (!folderMap.containsKey(thisReq.File_Identifier2__c) && thisReq.File_to_Upload__c == 'Mandatory') {
