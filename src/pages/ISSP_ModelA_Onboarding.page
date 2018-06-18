@@ -1,5 +1,5 @@
 <apex:page controller="ISSP_ModelA_Onboarding" extensions="ISSP_AmazonS3_Ctrl" showHeader="false" sidebar="false"
-	applyBodyTag="false" applyHtmlTag="false" docType="html-5.0" standardStylesheets="false">
+	applyBodyTag="false" applyHtmlTag="false" docType="html-5.0" standardStylesheets="true">
 
 	<html>
 
