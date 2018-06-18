@@ -334,6 +334,7 @@ trigger CaseAfterTrigger on Case (after delete, after insert, after undelete, af
 	ID SISHelpDeskRecordtype = clsCaseRecordTypeIDSingleton.getInstance().RecordTypes.get('Cases - SIS Help Desk');
 	ID CSRcaseRecordTypeID = clsCaseRecordTypeIDSingleton.getInstance().RecordTypes.get('BSPlink Customer Service Requests (CSR)');
 	Id CaseSAAMId = Schema.SObjectType.Case.getRecordTypeInfosByName().get('SAAM').getRecordTypeId();
+	Id OscarComRTId = clsCaseRecordTypeIDSingleton.getInstance().RecordTypes.get('OSCAR Communication');
     /*Record type*/	
     
     /*Variables*/
@@ -1184,13 +1185,14 @@ trigger CaseAfterTrigger on Case (after delete, after insert, after undelete, af
 			List<Case> CaseToUpdate_Lst = new List<Case>();
 			for (Case c : Trigger.new) {
 				//If the case is Closed and Matches the following cretiria
-		        if (c.RecordTypeId == CaseSAAMId && c.Status == 'Closed' &&  Trigger.oldMap.get(c.Id).Status != 'Closed' && c.CaseArea__c == 'Accreditation Products' 
+				/* AMSU-150 added Oscar Communication record type */
+		        if ((c.RecordTypeId == CaseSAAMId || c.RecordTypeId == OscarComRTId) && c.Status == 'Closed' &&  Trigger.oldMap.get(c.Id).Status != 'Closed' && c.CaseArea__c == 'Accreditation Products' 
 						&& c.Reason1__c == 'PAX/CARGO Certificate' && c.Product_Category_ID__c != null && !c.Product_Category_ID__c.contains('Triggered') && Integer.valueOf(c.QuantityProduct__c) > 0){
 					//Creates new IEC_Subscription_History
 					IEC_Subscription_History__c  IEC_SubHistory  = new IEC_Subscription_History__c  () ;
 					IEC_SubHistory.Related_Account__c			 = c.Account_Concerned__c ;
 					IEC_SubHistory.Rate_Plan_Quantity__c		 = Integer.valueOf(c.QuantityProduct__c) ;
-					IEC_SubHistory.Related_Contact__c			 = c.ContactId ;
+					/* IEC_SubHistory.Related_Contact__c			 = c.ContactId ; */ /* commented because of AMSU-150 */
 					IEC_SubHistory.Billing_Account_Number__c	 = c.IATACodeProduct__c ;
 					IEC_SubHistory.Invoice_Number__c			 = 'put any value for the moment';
 					IEC_SubHistory.Billing_Street__c			 = c.Account_Concerned__r.BillingStreet ;

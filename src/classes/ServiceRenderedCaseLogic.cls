@@ -322,7 +322,7 @@ public class ServiceRenderedCaseLogic {
 
         List<Services_Rendered__c> services = [SELECT Id, ANG_IATA_EasyPay_Opt_out__c, Services_Rendered_to_Airline__c
                                                FROM Services_Rendered__c
-                                               WHERE Services_Rendered_to_Airline__r.IATA_ISO_Country__r.ANG_Portal_Service__c != null
+                                               WHERE Services_Rendered_to_Airline__r.IATA_ISO_Country__r.Airline_EasyPay_Opt_Out_Date__c <= :Date.today()
                                                 AND Services_Rendered_Type__c = 'BSP Participation'
                                                 AND Services_Rendered_to_Airline__c IN :airlines];
 

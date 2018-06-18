@@ -83,7 +83,7 @@
     </fields>
     <fields>
         <fullName>Record__c</fullName>
-        <externalId>false</externalId>
+        <externalId>true</externalId>
         <label>Record</label>
         <length>255</length>
         <required>false</required>
@@ -148,7 +148,7 @@
         <filters>
             <field>Record__c</field>
             <operation>contains</operation>
-            <value>86515343</value>
+            <value>14367916,1432102</value>
         </filters>
         <label>AMS - 1 record</label>
         <language>en_US</language>
@@ -252,8 +252,13 @@
         </filters>
         <filters>
             <field>start_date__c</field>
-            <operation>equals</operation>
-            <value>6/5/2018 12:00 AM</value>
+            <operation>greaterOrEqual</operation>
+            <value>5/21/2018 12:00 AM</value>
+        </filters>
+        <filters>
+            <field>start_date__c</field>
+            <operation>lessOrEqual</operation>
+            <value>5/22/2018 12:00 AM</value>
         </filters>
         <label>AMS - Sales Order</label>
         <language>en_US</language>

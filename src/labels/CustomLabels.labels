@@ -236,6 +236,13 @@
         <value>Edit the accounts involved</value>
     </labels>
     <labels>
+        <fullName>AMS_OSCAR_Action6_Corr</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>AMS_OSCAR_Action6_Corr</shortDescription>
+        <value>Select/Deselect Complete Hierarchy</value>
+    </labels>
+    <labels>
         <fullName>AMS_OSCAR_Action7</fullName>
         <language>en_US</language>
         <protected>false</protected>
@@ -319,6 +326,22 @@
         <protected>false</protected>
         <shortDescription>AMS_OSCAR_CODEASSIGNMENT</shortDescription>
         <value>Code Assignment</value>
+    </labels>
+    <labels>
+        <fullName>AMS_OSCAR_CORRECTION_ALL_HIERARCHY</fullName>
+        <categories>LeftSidePanel, Headers</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>AMS_OSCAR_CORRECTION_ALL_HIERARCHY</shortDescription>
+        <value>Corrections will be applied to the Complete Hierarchy</value>
+    </labels>
+    <labels>
+        <fullName>AMS_OSCAR_CORRECTION_PER_LOCATION</fullName>
+        <categories>LeftSidePanel, Headers</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>AMS_OSCAR_CORRECTION_PER_LOCATION</shortDescription>
+        <value>Corrections will be applied to this Location only</value>
     </labels>
     <labels>
         <fullName>AMS_OSCAR_DISAPPROVAL</fullName>
@@ -770,6 +793,15 @@
         <protected>false</protected>
         <shortDescription>AMS_PERFORM_CORRECTION</shortDescription>
         <value>Perform Correction</value>
+    </labels>
+    <labels>
+        <fullName>AMS_RollbackCase_Description</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>AMS_RollbackCase_Description</shortDescription>
+        <value>Dear colleagues, 
+
+Please issue a Credit Note in order to refund the change fee.</value>
     </labels>
     <labels>
         <fullName>ANG_AE_separate_Legal_Entity</fullName>
@@ -1825,6 +1857,13 @@ Please &lt;a href=&quot;/ISSP_FAQ2Case?MainNav=Queries&amp;subNav=MyQueries&amp;
         <protected>false</protected>
         <shortDescription>ANG_ISSP_e_mail_address</shortDescription>
         <value>E-mail address</value>
+    </labels>
+    <labels>
+        <fullName>ANG_NON_COMPLIANCE</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ANG_NON_COMPLIANCE</shortDescription>
+        <value>Non-compliance</value>
     </labels>
     <labels>
         <fullName>ANG_OSCAR_CHANGE_APPROVAL_FINALIZATION</fullName>
@@ -4019,6 +4058,14 @@ Message: {2}</value>
         <value>Generate a quote</value>
     </labels>
     <labels>
+        <fullName>Generic_Sanctions_Message</fullName>
+        <categories>ISSP_Login, s9</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Generic_Sanctions_Message</shortDescription>
+        <value>Your computer IP has been identified as sourcing from one of the countries listed as embargoed by U.S. authorities.&lt;br/&gt;The platform supporting our  Portal complies with this U.S. regulations and thus, we are currently unable to provide access to Portal from your current IP address.&lt;br/&gt;Click &lt;a href=&quot;http://www.iata.org/customer-portal/Pages/contactus-v2.aspx&quot; &gt;here&lt;/a&gt; to contact your regional IATA office.</value>
+    </labels>
+    <labels>
         <fullName>GetQuoteConfirmationMsg</fullName>
         <categories>IEC</categories>
         <language>en_US</language>
@@ -4093,6 +4140,46 @@ Ensuring that the industry adapts and adheres to these global standards and reco
         <protected>false</protected>
         <shortDescription>IATA Alpha/Numeric Code</shortDescription>
         <value>IATA Alpha/Numeric Code</value>
+    </labels>
+    <labels>
+        <fullName>ICAddressDoctor_adns</fullName>
+        <categories>1ID</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ICAddressDoctor_adns</shortDescription>
+        <value>http://validator5.AddressDoctor.com/Webservice5/v4</value>
+    </labels>
+    <labels>
+        <fullName>ICAddressDoctor_login</fullName>
+        <categories>1ID</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ICAddressDoctor_login</shortDescription>
+        <value>162866</value>
+    </labels>
+    <labels>
+        <fullName>ICAddressDoctor_ns</fullName>
+        <categories>1ID</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ICAddressDoctor_ns</shortDescription>
+        <value>http://schemas.xmlsoap.org/soap/envelope/</value>
+    </labels>
+    <labels>
+        <fullName>ICAddressDoctor_password</fullName>
+        <categories>1ID</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ICAddressDoctor_password</shortDescription>
+        <value>Hus3esastAcr</value>
+    </labels>
+    <labels>
+        <fullName>ICAddressDoctor_url</fullName>
+        <categories>1ID</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ICAddressDoctor_url</shortDescription>
+        <value>https://validator5.addressdoctor.com/webservice5/v4/addressvalidation.asmx</value>
     </labels>
     <labels>
         <fullName>ICE_Portal_Service</fullName>
@@ -9767,6 +9854,30 @@ IFG Customer Services</value>
         <value>Accreditation form:</value>
     </labels>
     <labels>
+        <fullName>ISSP_AMS_Form_Missing_Signed_File</fullName>
+        <categories>ISSP, AMS</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_AMS_Form_Missing_Signed_File</shortDescription>
+        <value>Please, upload a signed copy of the current agreement</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_AMS_Form_Signed_Application_Form</fullName>
+        <categories>ISSP, AMS</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP AMS Form Signed Application Form</shortDescription>
+        <value>Signed Application Form</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_AMS_Form_Signed_Application_Form_Description</fullName>
+        <categories>ISSP, AMS</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP AMS Form Signed Application Form Description</shortDescription>
+        <value>All partners have to sign the application form before submitting to IATA.</value>
+    </labels>
+    <labels>
         <fullName>ISSP_AMS_Gross_Amnt_First_year</fullName>
         <language>en_US</language>
         <protected>false</protected>
@@ -11113,7 +11224,7 @@ For each section below either:&lt;br/&gt;
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>ISSP_AMS_NoC_Bank_Change3</shortDescription>
-        <value>Where the Transferor is employed by, or retains a financial or beneficial interest, directly or indirectly, in the agency following the change of ownership, the undersigned Transferee knows and hereby agrees to accept responsibility for any violation by the Transferor of his Sales Agency Agreement which may have occurred within a period of two years immediately prior to the change of ownership as if such violation were a violation of the Transferee&apos;s Sales Agency Agreement.</value>
+        <value>It is hereby agreed that this Notice of Change shall become a part of every Sales Agency Agreement signed with Members of IATA for the sale of international air passenger transportation, and as such, all information contained herein will be treated as confidential (excluding the information contained in the preamble to this Notice of Change). Notwithstanding the foregoing, the applicant authorizes IATA, and represents that it has obtained meaningful consent of each individual listed in this application to use and process the information to be used by travel industry participants.</value>
     </labels>
     <labels>
         <fullName>ISSP_AMS_NoC_Bank_acount_details</fullName>
@@ -14119,7 +14230,12 @@ Select at least one authorised signatory, and choose the Financial Assessment co
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>ISSP AMS T&amp;Cs1</shortDescription>
-        <value>&lt;p&gt;I hereby certify that the foregoing statements (including statements made in any attachment hereto) are true and correct to the best of my knowledge and belief, and that I am authorized by the organization identified in the answer to Section 1 above to make these statements and file this document.&lt;br/&gt;&lt;br/&gt;It is hereby agreed that this application shall become a part of every Sales Agency Agreement signed with Members of IATA for the sale of international air passenger transportation, and as such, all information contained herein will be treated as confidential (excluding the information contained in Section 2). Notwithstanding the foregoing, the applicant authorizes IATA to use and process the information contained in Sections 1 and 4, in order to produce and distribute databases among the airline industry participants.&lt;/p&gt;</value>
+        <value>&lt;p&gt;
+I hereby certify that the foregoing statements (including statements made in any attachment hereto) are true and correct to the best of my knowledge and belief, and that I am authorized by the organization identified in the answer to 1.1 above to make these statements and file this document.
+&lt;br/&gt;
+&lt;br/&gt;
+It is hereby agreed that this application shall become a part of every Sales Agency Agreement signed with Members of IATA for the sale of international air passenger transportation, and as such, all information contained herein will be treated as confidential (excluding the information contained in Section 1). Notwithstanding the foregoing, the applicant authorizes IATA and represents that it has obtained meaningful consent of each individual listed in this application to use and process the information contained in Sections 2.1.2.2, 2.2, 4, 5.1.1 and 5.1.2, in order to produce and distribute databases to be used by travel industry participants.
+&lt;/p&gt;</value>
     </labels>
     <labels>
         <fullName>ISSP_AMS_T_Cs2</fullName>
@@ -14127,7 +14243,12 @@ Select at least one authorised signatory, and choose the Financial Assessment co
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>ISSP AMS T&amp;Cs2</shortDescription>
-        <value>&lt;p&gt;&lt;br/&gt;The applicant hereby expressly waives any and all claims, causes of action or rights to recovery and agrees to indemnify and hold harmless IATA or any of its Members, their officers, employees, agents or servants, for any loss, injury or damage based upon libel, slander or defamation of character by reason of any action taken in good faith pursuant to this application, including but not limited to a notice of disapproval.&lt;br/&gt;&lt;br/&gt;The applicant understands and agrees that if the application for accreditation as an IATA Agent is disapproved, he will not claim any commission, remuneration or compensation for the sale of air transportation over the services of any IATA Member during the period the application was under consideration.&lt;/p&gt;</value>
+        <value>&lt;p&gt;
+The applicant hereby expressly waives any and all claims, causes of action or rights to recovery and agrees to indemnify and hold harmless IATA or any of its Members, their officers, employees, agents or servants, for any loss, injury or damage based upon libel, slander or defamation of character by reason of any action taken in good faith pursuant to this application, including but not limited to a notice of disapproval.
+&lt;br/&gt;
+The Applicant understands and agrees that if the application for accreditation as an IATA Agent is disapproved, he will not claim any commission, remuneration
+or compensation for the sale of air transportation over the services of any IATA Member during the period the application was under consideration.
+&lt;/p&gt;</value>
     </labels>
     <labels>
         <fullName>ISSP_AMS_T_Cs3</fullName>
@@ -14135,7 +14256,9 @@ Select at least one authorised signatory, and choose the Financial Assessment co
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>ISSP AMS T&amp;Cs3</shortDescription>
-        <value>&lt;p&gt;The applicant understands and agrees to pay the application entry and annual fees, in the amounts determined by the Conference in consultation with the Director General and as advised by the Agency Administrator, for inclusion and retention on the Agency List. If the application is rejected, the entry and initial annual agency fees shall be returned to the applicant.&lt;br/&gt;&lt;/p&gt;</value>
+        <value>&lt;p&gt;
+The applicant understands and agrees to pay the application, entry and annual fees, in the amounts determined by the Conference in consultation with the Director General, and as advised by the Agency Administrator, for inclusion and retention on the Agency List. If the application is rejected, the entry and initial annual agency fees shall be returned to the applicant.
+&lt;/p&gt;</value>
     </labels>
     <labels>
         <fullName>ISSP_AMS_Title</fullName>
@@ -15670,6 +15793,14 @@ Large – more than USD 2.000.000 gross annual sales</value>
         <protected>false</protected>
         <shortDescription>ISSP_AP_Form</shortDescription>
         <value>Joining form</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_AP_Partnership_Download_PDF</fullName>
+        <categories>ISSP AP</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_AP_Partnership_Download_PDF</shortDescription>
+        <value>Use the link below to download the application form, sign it and upload it.</value>
     </labels>
     <labels>
         <fullName>ISSP_APrequest_AdminEmail1</fullName>
@@ -20403,6 +20534,13 @@ If you continue to experience issues registering for the CNS Customer Portal the
         <value>Ongoing TIP Requests</value>
     </labels>
     <labels>
+        <fullName>ISSP_OperationalCalendar_Reset</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_OperationalCalendar_Reset</shortDescription>
+        <value>Reset</value>
+    </labels>
+    <labels>
         <fullName>ISSP_Opt_In</fullName>
         <categories>ISSP, DDS</categories>
         <language>en_US</language>
@@ -21343,7 +21481,7 @@ If the product is an Agent&apos;s multi-use VANs, then it is an Agent&apos;s uni
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>ISSP_Registration_Error_Salutation</shortDescription>
-        <value>Please enter you salutation</value>
+        <value>Please enter your salutation</value>
     </labels>
     <labels>
         <fullName>ISSP_Registration_Error_Subject</fullName>
@@ -24833,6 +24971,20 @@ msgErrorRenewalOrderExpired:Your renewal notification order link is either  expi
         <value>The approval of this application will have an impact on the Agency&apos;s risk properties: the new Risk Status will be &apos;B&apos; and the Cash conditions will be false.</value>
     </labels>
     <labels>
+        <fullName>OneId_AccountNotFound</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>OneId_AccountNotFound</shortDescription>
+        <value>Didn&apos;t find the organization you were looking for?</value>
+    </labels>
+    <labels>
+        <fullName>OneId_AccountSearchPlaceholder</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>OneId_AccountSearchPlaceholder</shortDescription>
+        <value>Search for Company Name or IATA code (minimum 3 characters)</value>
+    </labels>
+    <labels>
         <fullName>OneId_Account_Association</fullName>
         <categories>OneId</categories>
         <language>en_US</language>
@@ -24889,12 +25041,26 @@ msgErrorRenewalOrderExpired:Your renewal notification order link is either  expi
         <value>Billing Street</value>
     </labels>
     <labels>
+        <fullName>OneId_CategoryError</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>1Id - CategoryError</shortDescription>
+        <value>Please, choose the category</value>
+    </labels>
+    <labels>
+        <fullName>OneId_CheckEmail</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>OneId_CheckEmail</shortDescription>
+        <value>Please check your email to get your access details</value>
+    </labels>
+    <labels>
         <fullName>OneId_Community_Name</fullName>
         <categories>OneId</categories>
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>OneId Community Name</shortDescription>
-        <value>s/identity</value>
+        <value>s</value>
     </labels>
     <labels>
         <fullName>OneId_Contact_Association_Validation</fullName>
@@ -24913,6 +25079,13 @@ msgErrorRenewalOrderExpired:Your renewal notification order link is either  expi
         <value>Contact Creation</value>
     </labels>
     <labels>
+        <fullName>OneId_CreateNew</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>OneId_CreateNew</shortDescription>
+        <value>Create New</value>
+    </labels>
+    <labels>
         <fullName>OneId_CreateNewAccount</fullName>
         <categories>OneId</categories>
         <language>en_US</language>
@@ -24929,12 +25102,34 @@ msgErrorRenewalOrderExpired:Your renewal notification order link is either  expi
         <value>Registration Process</value>
     </labels>
     <labels>
+        <fullName>OneId_EmailError</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>OneId_EmailError</shortDescription>
+        <value>Please, enter your email</value>
+    </labels>
+    <labels>
+        <fullName>OneId_Email_Header_Identity</fullName>
+        <categories>OneId</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>OneId_Email_Header_Identity</shortDescription>
+        <value>https://iata--csp1idsre--c.cs88.content.force.com/servlet/servlet.ImageServer?id=0159E000000MCzW&amp;oid=00D9E0000001L6b&amp;lastMod=1522143388000</value>
+    </labels>
+    <labels>
         <fullName>OneId_ForgotPassword</fullName>
         <categories>OneId</categories>
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>OneId_ForgotPassword</shortDescription>
         <value>Forgot your password?</value>
+    </labels>
+    <labels>
+        <fullName>OneId_GSAWarning</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>OneId_GSAWarning</shortDescription>
+        <value>In case no company was found for your combination of GSA code and country, please ensure you have entered the correct information or consult our &lt;a href=&quot;http://theiatahub.force.com/iatapkb/articles/en_US/How_To/Customer-Portal-Troubleshooting/?l=en_US&quot; target=&quot;_blank&quot;&gt;troubleshooting guide&lt;/a&gt;</value>
     </labels>
     <labels>
         <fullName>OneId_Help_Community</fullName>
@@ -25015,6 +25210,30 @@ msgErrorRenewalOrderExpired:Your renewal notification order link is either  expi
         <value>N/A</value>
     </labels>
     <labels>
+        <fullName>OneId_ISSP_Terms_Of_Use_Link</fullName>
+        <categories>OneId</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>OneId_ISSP_Terms_Of_Use_Link</shortDescription>
+        <value>http://www.iata.org/customer-portal/Pages/terms.aspx</value>
+    </labels>
+    <labels>
+        <fullName>OneId_ISSP_Troubleshooting</fullName>
+        <categories>OneId</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>OneId_ISSP_Troubleshooting</shortDescription>
+        <value>Troubleshooting</value>
+    </labels>
+    <labels>
+        <fullName>OneId_ISSP_Troubleshooting_Link</fullName>
+        <categories>OneId</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>OneId_ISSP_Troubleshooting_Link</shortDescription>
+        <value>https://portal.iata.org/faq/articles/en_US/How_To/Customer-Portal-Troubleshooting</value>
+    </labels>
+    <labels>
         <fullName>OneId_International_Air_Transport_Association_IATA</fullName>
         <categories>OneId</categories>
         <language>en_US</language>
@@ -25086,6 +25305,13 @@ msgErrorRenewalOrderExpired:Your renewal notification order link is either  expi
         <value>No records were found matching your search criteria. Please modify your search criteria and try again.
 &lt;br/&gt;&lt;br/&gt;
 If you continue to experience issues registering for the IATA Customer Portal then please consult our &lt;a href=http://theiatahub.force.com/iatapkb/articles/en_US/How_To/Customer-Portal-Troubleshooting/?l=en_US target=_blank&gt;troubleshooting guide&lt;/a&gt;</value>
+    </labels>
+    <labels>
+        <fullName>OneId_NoResults</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>OneId_NoResults</shortDescription>
+        <value>No result found...</value>
     </labels>
     <labels>
         <fullName>OneId_NoTermsFound</fullName>
@@ -25175,6 +25401,14 @@ If you continue to experience issues registering for the IATA Customer Portal th
         <value>Press to Validate</value>
     </labels>
     <labels>
+        <fullName>OneId_Privacy_Policy</fullName>
+        <categories>OneId</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>OneId_Privacy_Policy</shortDescription>
+        <value>Privacy Policy</value>
+    </labels>
+    <labels>
         <fullName>OneId_Profile_BillingCity</fullName>
         <language>en_US</language>
         <protected>false</protected>
@@ -25250,6 +25484,13 @@ If you continue to experience issues registering for the IATA Customer Portal th
         <protected>false</protected>
         <shortDescription>OneId_Profile_OfficeEmail</shortDescription>
         <value>Office Email</value>
+    </labels>
+    <labels>
+        <fullName>OneId_RegistrationComplete</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>OneId_RegistrationComplete</shortDescription>
+        <value>Registration completed successfully</value>
     </labels>
     <labels>
         <fullName>OneId_Registration_Error_BusinessPhone</fullName>
@@ -25356,6 +25597,13 @@ If you want to reset your password, go back to login screen and use &quot;forgot
         <protected>false</protected>
         <shortDescription>OneId_Thank you for subscribing to this new service</shortDescription>
         <value>Thank you for subscribing to this new service, your request is being processed.</value>
+    </labels>
+    <labels>
+        <fullName>OneId_TotalResults</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>OneId_TotalResults</shortDescription>
+        <value>First 20 results shown over {0}. Please refine your search</value>
     </labels>
     <labels>
         <fullName>OneId_Type</fullName>

@@ -558,7 +558,9 @@ private class ISSP_ANG_ANNUAL_REVALIDATION_Test {
 
 		ctrl = new ISSP_ANG_ANNUAL_REVALIDATION();
 
+		Test.startTest();
 		ctrl.submitForm();
+		Test.stopTest();
 
 		String statusDesc = ctrl.currentAccount.statusDesc;
 

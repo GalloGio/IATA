@@ -146,6 +146,15 @@ public class AMS_AgencyChangesTest {
 											AccountId = (theAccount.ParentId == null ? theAccount.Id : theAccount.ParentId), ContactId = theContact.Id	);
 		insert theCommunicationCase;
 		
+		Attachment attc = new Attachment(
+          OwnerId = UserInfo.getUserId(),
+          IsPrivate = true,
+          ParentId = theCommunicationCase.Id,
+          Body = Blob.valueOf('Test'),
+          Name = 'test'
+        );
+        insert attc;
+        
 		// Create the Staging area for the Account
 		theStagingAcc = new  AMS_Pax_Accreditation_Form__c(Account_Name__c = theAccount.Name, 
 															IATAcode__c = theAccount.IATAcode__c, 

@@ -29,7 +29,9 @@ public class ANG_AccountTriggerHandler {
 		adjustShortName();
 		updateRiskStatus();
 	}
-	public void onAfterInsert() {}
+	public void onAfterInsert() {
+		createIEPModelAOscars();
+	}
 
 	public void onBeforeUpdate(){
 		adjustShortName();
@@ -42,6 +44,7 @@ public class ANG_AccountTriggerHandler {
 		new ANG_AgencyEventsGenerator(filterByIATACode(triggerNew),oldMap,'Account','id').run();
 		manageDowngrades();
 		manageUpgrades();
+		createIEPModelAOscars();
 	}
 
 	public void onBeforeDelete(){}
@@ -331,7 +334,7 @@ public class ANG_AccountTriggerHandler {
 		if(changedConditions.isEmpty() && changedStatus.isEmpty()) return;
 
 		//find rhc records
-		for(ANG_RHC_Information__c r : [SELECT Id, ANG_AccountId__c, ANG_CashCondition__c, ANG_Financial_Security__c, ANG_RHC_Amount__c, ANG_RHC_Amount_Forecasted__c, ANG_RME_Amount__c, ANG_Exceeding_Financial_Security__c, ANG_RHC_Amount_Provisional__c FROM ANG_RHC_Information__c WHERE ANG_AccountId__c IN :changedStatus OR ANG_AccountId__c IN :changedConditions.keySet()]){
+		for(ANG_RHC_Information__c r : [SELECT CurrencyIsoCode, Id, ANG_AccountId__c, ANG_CashCondition__c, ANG_Financial_Security__c, ANG_RHC_Amount__c, ANG_RHC_Amount_Forecasted__c, ANG_RME_Amount__c, ANG_Exceeding_Financial_Security__c, ANG_RHC_Amount_Provisional__c FROM ANG_RHC_Information__c WHERE ANG_AccountId__c IN :changedStatus OR ANG_AccountId__c IN :changedConditions.keySet()]){
 			rhcToUpdate.put(r.ANG_AccountId__c, r);
 		}
 
@@ -566,5 +569,29 @@ public class ANG_AccountTriggerHandler {
 		}
 
 		return remitFreq;
+	}
+
+	private void createIEPModelAOscars(){
+
+		Map<Id,Account> iepAccounts = new Map<Id,Account>();
+
+		for(Account a :triggerNew){
+
+			if(a.ANG_IEP_Status__c == 'In Progress' && oldMap.get(a.Id).ANG_IEP_Status__c != 'In Progress') 
+				iepAccounts.put(a.Id,a);
+
+		}
+
+		Map<Id,Account> modelACountriesAccs = new Map<Id,Account>([SELECT Id FROM Account WHERE Id IN :iepAccounts.keySet() AND IATA_ISO_Country__r.ANG_IEP_Model__c = 'Model A']);
+		
+		for(Id iepAcc: iepAccounts.keySet()){
+
+			If(!modelACountriesAccs.keySet().contains(iepAcc))
+				iepAccounts.remove(iepAcc);
+
+		}
+
+		if(!iepAccounts.isEmpty())
+			ANG_OscarProcessHelper.createIEPAccountOscar(iepAccounts);
 	}
 }
