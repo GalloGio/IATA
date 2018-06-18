@@ -27,14 +27,25 @@
             $A.enqueueAction(action);
         });
     },
-    renderPage : function (c, e){
+    renderPage : function (c, e, helper){
         var state = e.getParam("state");       
 
         if(state == "answer"){
+
             var servName = e.getParam("paramsMap").serviceName;
+            var invitationId = e.getParam("paramsMap").token; //Verifier Invitation ID
+
             if(/\S/.test(servName)){
                 c.set("v.serviceName", servName);
                 c.set("v.customCommunity", true);
+            }
+
+            // When a verifier receive an email from FRED with invitationID (created thru API by FRED in SF) 
+            if(/\S/.test(invitationId) && invitationId != undefined){
+                console.log(invitationId);
+                c.set("v.verifierId", invitationId);
+                helper.loadVerifierInfo(c, invitationId);
+                
             }
         }
     },

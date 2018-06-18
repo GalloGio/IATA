@@ -53,14 +53,15 @@ global class SCIMCreateUserPlugin extends UserProvisioning.UserProvisioningPlugi
 
             Boolean isSuccess = (Boolean)callResult.get('isSuccess');
             String responseStr = (String)callResult.get('httpResponseStr');
-            
+
             // STUB START
             /*
             // STUB: TO BE REMOVED WHEN MULSOFT WILL BE READY:
             Simulate that user creation return 200 from Mulesoft
             */
             isSuccess = true;
-            responseStr = '{"id":"Stub_value", "userName":"Stub_value@stub.com", "active":"true"}';
+            double rand = Math.random();
+            responseStr = '{"id":"Stub_value'+rand+'", "userName":"Stub_value'+rand+'@stub.com", "active":"true"}';
             // STUB END
             if (isSuccess) {
 

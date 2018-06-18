@@ -34,7 +34,7 @@
         action.setCallback(this, function(resp) {
       
             var params = resp.getReturnValue();
-            console.log(params);
+            console.log('ooo'+params);
             var partnerAccount = params.partnerAccount;
             var isFredPrimaryUser = params.isFredPrimaryUser;
             cmp.set("v.isFredPrimaryUser", isFredPrimaryUser);

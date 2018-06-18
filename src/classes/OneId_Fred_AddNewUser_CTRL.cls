@@ -7,6 +7,7 @@ public with sharing class OneId_Fred_AddNewUser_CTRL {
 		Integer n = [SELECT Count() FROM PermissionSetAssignment WHERE PermissionSet.name = 'FRED_Primary_User' AND AssigneeId =: UserInfo.getUserId()];
 		
 
+		One_Id_Service_Provider_Config__c config = [select id, Max_Number_Of_Primary_User__c, Max_Number_Of_Secondary_User__c, Service_Provider_Name__c, Service_Bundle__r.name, Customer_Type_Activation__c  FROM One_Id_Service_Provider_Config__c  WHERE Service_Provider_Name__c = 'FRED' LIMIT 1];
 
 		// Get account linked to primary user - To block account selection
 		Integer nbOfPrimaryInAccount = 0;
@@ -29,6 +30,8 @@ public with sharing class OneId_Fred_AddNewUser_CTRL {
 		pu.primaryUserId = UserInfo.getUserId();
 		pu.nbOfPrimaryInAccount = nbOfPrimaryInAccount;
 		pu.nbOfSecondaryInAccount = nbSecondary;
+		pu.maxPrimary = (Integer) config.Max_Number_Of_Primary_User__c;
+		pu.maxSecondary = (Integer) config.Max_Number_Of_Secondary_User__c;
 
 		return pu;
 	}
@@ -42,6 +45,10 @@ public with sharing class OneId_Fred_AddNewUser_CTRL {
 		Integer nbOfPrimaryInAccount {get; set;}
 		@AuraEnabled
 		Integer nbOfSecondaryInAccount {get; set;}
+		@AuraEnabled
+		Integer maxPrimary {get; set;}
+		@AuraEnabled
+		Integer maxSecondary {get; set;}
 	}
 
 	 @AuraEnabled

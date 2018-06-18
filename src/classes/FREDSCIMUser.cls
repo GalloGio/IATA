@@ -181,8 +181,8 @@ global with sharing class FREDSCIMUser extends SCIMUser {
             this.entitlements.add(enAccountType);
 
             Entitlements enExtSystem = new Entitlements();
-			enExtSystem.type = 'FRED_PLUS';
-            enExtSystem.value = 'External Systems';
+			enExtSystem.type = 'External Systems';
+            enExtSystem.value = 'FRED_PLUS';
             this.entitlements.add(enExtSystem);
             
 
@@ -214,10 +214,15 @@ global with sharing class FREDSCIMUser extends SCIMUser {
           if (email != null) { 
 		    SCIMUser.Emails e = new SCIMUser.Emails();
 		    e.value = email;
-		    e.type = 'work';
-		    e.primary = isPrimaryUser;
+		    e.type = 'home';
+		    e.primary = false;
 
-		    super.Emails = new List<SCIMUser.Emails>{e};
+            SCIMUser.Emails e2 = new SCIMUser.Emails();
+            e2.value = email;
+            e2.type = 'work';
+            e2.primary = true;
+
+		    super.Emails = new List<SCIMUser.Emails>{e,e2};
 		}
 
         }

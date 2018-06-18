@@ -1,10 +1,27 @@
 public without sharing class OneId_Fred_AccountSelection_CTRL {
+    public class RegistrationResponse {
+        @AuraEnabled
+        public boolean success {get; set;}
+        @AuraEnabled
+        public String error  {get; set;}
+
+        public RegistrationResponse(Boolean success) {
+            this.success = success;
+        }
+        public RegistrationResponse(Boolean success, String error) {
+            this.success = success;
+            this.error = error;
+        }
+    }
 
     @AuraEnabled
-    public static boolean registration(Account acc, Contact con, String selectedCustomerType, Boolean isGuest, Boolean createPrimary, Integer userTypeToCreate) {
+    public static RegistrationResponse registration(Account acc, Contact con, String selectedCustomerType, Boolean isGuest, Boolean createPrimary, Integer userTypeToCreate) {
         System.debug('SMH register');
         System.debug('SMH acc '+acc);
         System.debug('SMH con '+con);
+        System.debug('SMH createPrimary '+createPrimary);
+        System.debug('SMH userTypeToCreate '+userTypeToCreate);
+        System.debug('SMH isGuest '+isGuest);
 
         String serviceName = 'FRED';
 
@@ -31,37 +48,76 @@ public without sharing class OneId_Fred_AccountSelection_CTRL {
 
             // Determine if is primary or a guest
             system.debug('@@@ isGuest '+isGuest);
+            
+            Integer nbOfPrimaryInAccount = 0;
+            Integer nbOfSecondaryInAccount = 0;
+
+            map<Id, User> userInAccount =  new map<Id, User>([SELECT id, name FROM User WHERE contact.accountId =: acc.Id AND isactive=true]);
+
+            list<PermissionSetAssignment> primaries = [SELECT AssigneeId FROM PermissionSetAssignment WHERE PermissionSet.Name = 'FRED_Primary_User' AND Assignee.AccountId =: acc.Id];
+            set<Id> primariesIds = new set<Id>();
+            for(PermissionSetAssignment psa : primaries) {
+                primariesIds.add(psa.AssigneeId);
+            }
+            nbOfPrimaryInAccount = primariesIds.size();
+
+
+            if(! userInAccount.isEmpty()) {
+                for (Id userId :userInAccount.keySet()) {
+                    if(! primariesIds.contains(userId))
+                        nbOfSecondaryInAccount++;
+                }
+            }
+
             if(isGuest) {
                 // Get account and found any user that has primary user permission set
-                Integer nbOfPrimaryInAccount = [SELECT count() FROM PermissionSetAssignment WHERE PermissionSet.Name = 'FRED_Primary_User' AND Assignee.AccountId =: acc.Id];
+                //Integer nbOfPrimaryInAccount = [SELECT count() FROM PermissionSetAssignment WHERE PermissionSet.Name = 'FRED_Primary_User' AND Assignee.AccountId =: acc.Id];
                 createPrimary = nbOfPrimaryInAccount == 0; // Account doesn't have primary user so I became the unique primary user
                 system.debug('@@@ createPrimary? '+createPrimary);
             }
             
+            // Load  FRED limit and compare to account number
+            One_Id_Service_Provider_Config__c config = [select id, Max_Number_Of_Primary_User__c, Max_Number_Of_Secondary_User__c, Service_Provider_Name__c, Service_Bundle__r.name, Customer_Type_Activation__c  FROM One_Id_Service_Provider_Config__c  WHERE Service_Provider_Name__c =: serviceName LIMIT 1];
+           
+ System.debug('SMH LIMIT PRIMARY: '+nbOfPrimaryInAccount+'over'+config.Max_Number_Of_Primary_User__c);
+ System.debug('SMH LIMIT SECONDARY: '+nbOfSecondaryInAccount+'over'+config.Max_Number_Of_Secondary_User__c);
+        System.debug('SMH isGuest '+isGuest);
+
+            if((createPrimary && nbOfPrimaryInAccount >= config.Max_Number_Of_Primary_User__c) || (!createPrimary && nbOfSecondaryInAccount >= config.Max_Number_Of_Secondary_User__c)) {
+                // Limit reached
+                return new RegistrationResponse(false, 'Number of maximum account reached. Please contact the support.');
+            }
+                
+
             Savepoint sp = Database.setSavepoint();
             try {
                 String returnedString = '';
                 if(isGuest)
                     returnedString = LightningRegistrationProcess.createContactAndAccount(con,acc,selectedCustomerType,serviceName);
-                else // Another way to user creation because Site.createUserPortal does not work with a user connected (secondary user created by primary user)
+                else {// Another way to user creation because Site.createUserPortal does not work with a user connected (secondary user created by primary user)
+                    
                     returnedString = createSecondary(con,acc,selectedCustomerType,serviceName, userTypeToCreate);
+                }
 
                 System.debug('@SMH'+returnedString);
                 if (returnedString.contains('line:')){
                     // Error during creation of contact and user
                     Database.rollback(sp);
-                    return false;
+                    return new RegistrationResponse(false, returnedString);
                 } else {
-                    permissionSetAssignenent(returnedString, createPrimary, userTypeToCreate); // assign Permission Set Fed user provisionning to grant access to Connected App
+                    // For guest, primary permission set is done at change password step
+                    if(! isGuest) { // Assign permission set only in case primary user tries to create a primary
+                        permissionSetAssignenent(returnedString, createPrimary, userTypeToCreate); // assign Permission Set Fed user provisionning to grant access to Connected App
+                    }
                 }
 
             } catch(exception ex){
                 Database.rollback(sp);
                 System.debug(ex);
-                return false;
+                return new RegistrationResponse(false, ''+ex);
             }
         }
-       return true;
+       return new RegistrationResponse(true);
     }
 
 
@@ -132,14 +188,12 @@ public without sharing class OneId_Fred_AccountSelection_CTRL {
             User u = new User ( CommunityNickname= thisNickname , title=con.title, contactid = con.id, Firstname = con.firstname, lastname = con.lastname, emailencodingkey = 'UTF-8', localesidkey = 'en_US', email = con.email, username=ISSP_Utilities.buildPortalUserName(con.email), Alias = ISSP_Utilities.buildPortalUserName(con.email).left(5), timezonesidkey = 'America/Los_Angeles', languagelocalekey = 'en_US',Date_ToU_accepted__c = system.Now(), ToU_accepted__c = true, UID__c = UID);
             //User u = new User (CommunityNickname= thisNickname , contactid = con.id, Firstname = con.firstname, lastname = con.lastname, emailencodingkey = 'UTF-8', localesidkey = 'en_US', email = con.email, username=ISSP_Utilities.buildPortalUserName(con.email), languagelocalekey = 'en_US', Date_ToU_accepted__c = system.Now(), ToU_accepted__c = true);
            
-            // Set Fred profile
-            u.ProfileID = [SELECT Id FROM profile WHERE name = 'FRED Portal (Partner)' LIMIT 1][0].Id;
+            // Set Fred profile => Request by Mehdi to use ISSP Profile to avoid managing a new one
+            u.ProfileID = [SELECT Id FROM profile WHERE name = 'ISS Portal (Partner)' LIMIT 1][0].Id;
             u.Community__c = servName;
 
             System.debug('User ' + u);
             String password = Comm_User_Helper.generateRandomString(6) + '1a';
-
-            
 
             Database.DMLOptions dlo = new Database.DMLOptions();
             dlo.EmailHeader.triggerUserEmail= false;
@@ -179,31 +233,22 @@ public without sharing class OneId_Fred_AccountSelection_CTRL {
         system.debug('FRED - createPrimary ' + createPrimary);
         system.debug('FRED - userTypeToCreate ' + userTypeToCreate);
         if (userId != null && userId != '') {
-            list<PermissionSet>  pss = [SELECT Id, Name FROM PermissionSet WHERE Name = 'FRED_Provisioning' OR Name='FRED_Primary_User' OR Name='FRED_SSO'];
+            list<PermissionSet>  pss = [SELECT Id, Name FROM PermissionSet WHERE Name='FRED_Primary_User'];
             if(! pss.isEmpty()){
                 // JIRA ISI-51 + ISI-14: Self registration primary => Add special permission set to grant delegated admin persmission
                 list<PermissionSetAssignment> assignment = new list<PermissionSetAssignment>();
                 for(PermissionSet ps : pss) {
-                    if((ps.Name == 'FRED_Primary_User' && createPrimary) || userTypeToCreate == 1) {
+                    if(userTypeToCreate == 1) {
                         assignment.add(
                             new PermissionSetAssignment(
                                 AssigneeId = userId,
                                 PermissionSetId = ps.Id
                             )
                         );
-                    } else if(ps.Name == 'FRED_Provisioning') {
-                        // Launch user provisionnning by assigning the permission set => Out of the box
-                        assignment.add(
-                            new PermissionSetAssignment(
-                                AssigneeId = userId,
-                                PermissionSetId = ps.Id
-                            )
-                        );
-                    }
+                    } 
                 }
                 if(! assignment.isEmpty())
                     insert assignment;
-
             }
         }
     }
@@ -320,6 +365,7 @@ public without sharing class OneId_Fred_AccountSelection_CTRL {
             queryStr2 += ' OR ICAO_Member__r.ICAO_Iso_3_Code__c like \'%' + userInput + '%\'';
             */
             queryStr2 += ')';
+            queryStr2 += ' AND (fredp_aircraftoperator_eligibility__c = true)'; // Jira ISI-42
             sw.totalAccListNotLimited = Database.countQuery('select count()'+queryStr2);
 
             queryStr += queryStr2;

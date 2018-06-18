@@ -1,6 +1,5 @@
 ({
 	doInit : function(component, event, helper) {
-		
 		helper.getHostURL(component, event);
         helper.getCommunityName(component, event);
 
@@ -24,7 +23,6 @@
                 $A.util.removeClass(page2, 'page-invisible');
 
                 // Notify registration component taht step 1 is valid
-                console.log('SMH - STEP 1 completed');
                 helper.notifyStepCompletion(component);
                 component.find("email").set("v.disabled", true);
                 component.find("termsaccepted").set("v.disabled", true);
@@ -73,7 +71,27 @@
 	checkTerms: function(component, event, helper) {
         // Check fields validity
         if (component.get("v.Terms") && helper.validateEmail(component)) {
-            helper.checkUsername(component);
+            var userValid = helper.checkUsername(component);
+
+            // In case of invtation (verifier)
+            if(component.get("v.isVerifierInvitation") && userValid)
+                helper.notifyStepCompletion(component);
+
         }
-    }
+    },
+
+    renderPage : function (component, event, helper){
+        // Get URL parameters
+        var state = event.getParam("state");       
+        if(state == "answer"){
+            var invitationId = event.getParam("paramsMap").token; //Verifier Invitation ID
+            // When a verifier receive an email from FRED with invitationID (created thru API by FRED in SF) 
+            if(/\S/.test(invitationId) && invitationId != undefined){
+                // email should be disabled and captcha not visible
+                component.find("email").set("v.disabled", true);
+                component.set("v.showCaptcha", true);
+                component.set("v.isVerifierInvitation", true);
+            }
+        }
+    },
 })

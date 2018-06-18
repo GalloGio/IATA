@@ -1,18 +1,20 @@
 ({
 
-	doInit : function(cmp) {
-        
-    },
+	
 /**
     Load customer type depending on service provider in URL
 */
-    renderPage : function (component, event, helper){
+    doInit : function (component, event, helper){
+         var urlParamEncoded = window.location.search.substring(1).toString();
+        var urlParameters = decodeURIComponent(urlParamEncoded); // Right part after base URL
+        var paramsMap = JSON.parse((urlParameters == '') ? '{}' : decodeURIComponent('{"' + urlParamEncoded.replace(new RegExp('&', 'g'), '","').replace(new RegExp('=', 'g'),'":"') + '"}') );
+                
+
         // Get URL parameters
-        var state = event.getParam("state");       
-        if(state == "answer"){
-            var servName = event.getParam("paramsMap").serviceName;
-            var userTypeToCreate = event.getParam("paramsMap").t; //t=1  (for primary) or t=2 (for secondary) 
-            var invitationId = event.getParam("paramsMap").viid; //Verifier Invitation ID
+     
+            var servName = paramsMap.serviceName;
+            var userTypeToCreate = paramsMap.t; //t=1  (for primary) or t=2 (for secondary) 
+            var invitationId = paramsMap.token; //Verifier Invitation ID
 
             if(/\S/.test(servName)){
                 component.set("v.serviceName", servName);
@@ -24,6 +26,7 @@
                         isVerifierInvitation = true;
                         component.set("v.verifierId", invitationId);
                     }
+                    console.log('wwww');
                     helper.initParams(component, isVerifierInvitation, invitationId);
                 }
             }
@@ -32,7 +35,6 @@
                 component.set("v.userTypeToCreate", userTypeToCreate);
             }
            
-        }
     },
 /**
     When a user type inside the search box
@@ -174,8 +176,9 @@
         });
 
         action.setCallback(this, function(a) {
+            
 
-            var result = a.getReturnValue();
+            var result = a.getReturnValue().success;
             // redirect to a new page when registration is done
             if(result) {
                 if(component.get("v.isGuest"))
@@ -192,14 +195,21 @@
             }
             
             if(!result) {
+
+               console.log(a.getReturnValue());
                 $A.util.toggleClass(component.find("mySpinner"), "slds-hide");
+                alert(a.getReturnValue().error);
+                /*
+                // Show toast not working as guest (public pages)- Wok only when logged in
                 var toastEvent = $A.get("e.force:showToast");
                 toastEvent.setParams({
                     "type": 'error',
-                    "title": 'error',
-                    "message": 'error'
+                    "title": 'Error',
+                    "message": a.getReturnValue().error
                 });
                 toastEvent.fire();
+                */
+                 console.log('end');
             } 
         });
         $A.enqueueAction(action);

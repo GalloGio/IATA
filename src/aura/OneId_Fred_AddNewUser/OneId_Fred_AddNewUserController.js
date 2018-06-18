@@ -1,30 +1,22 @@
 ({
 	init : function(component, event, helper) {
-     
-	},
 
-    /**
+         component.set("v.serviceName", 'FRED');
+               
+         //component.set("v.primaryLimit", params.serviceConfig.Max_Number_Of_Primary_User__c); 
+         //component.set("v.secondaryLimit", params.serviceConfig.Max_Number_Of_Secondary_User__c);
+
+         helper.loadAccountInfo(component);
+
+        helper.showRoles(component, event, helper); 
+	},
+/**
     Load customer type depending on service provider in URL
 */
     renderPage : function (component, event, helper){
-        // Get URL parameters
-        var state = event.getParam("state");       
-        if(state == "answer"){
-             var params = event.getParam("paramsMap");
-
-             console.log(params.serviceName);
-            //var userTypeToCreate = event.getParam("paramsMap").ut; //ut=1  (for primary) or ut=2 (for secondary) 
-            if(/\S/.test(params.serviceName)){
-                component.set("v.serviceName", params.serviceName);
-               
-                 component.set("v.primaryLimit", params.serviceConfig.Max_Number_Of_Primary_User__c); 
-                 component.set("v.secondaryLimit", params.serviceConfig.Max_Number_Of_Secondary_User__c);
-
-                 helper.loadAccountInfo(component, params.serviceConfig.Max_Number_Of_Primary_User__c,  params.serviceConfig.Max_Number_Of_Secondary_User__c);
-
-                helper.showRoles(component, event, helper); 
-            }
-        }
+        
+       
+        
     },
 
 	redirectToSelfRegistrationPage : function(component, event, helper) {
@@ -38,13 +30,11 @@
         }
 	},
 
-
     openModal : function(cmp, evt, hlp) {    
          // open popup with user type selection
         $A.util.addClass(cmp.find("theModal"), "slds-fade-in-open");
         $A.util.addClass(cmp.find("modalBackdrop"),  "slds-backdrop--open");
     },
-    
 
      onCancel : function(cmp, evt, hlp) {
        // Hide modal

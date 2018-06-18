@@ -11,7 +11,7 @@
 
 
     
-    loadAccountInfo : function(component, primaryLimit, secondaryLimit) {
+    loadAccountInfo : function(component) {
 
     // Display component only if it's a primary user (= having persmission set primary user)
 		var action = component.get("c.isFredPrimaryUser");
@@ -23,8 +23,8 @@
 
                 component.set("v.isFredPrimaryUser", p.isFredPrimaryUser);
                 component.set("v.primaryUserId", p.primaryUserId);
-                component.set("v.maxNbOfPrimaryReached", p.nbOfPrimaryInAccount >= primaryLimit); 
-            	component.set("v.maxNbOfSecondaryReached", p.nbOfSecondaryInAccount >= secondaryLimit);
+                component.set("v.maxNbOfPrimaryReached", p.nbOfPrimaryInAccount >= p.maxPrimary); 
+            	component.set("v.maxNbOfSecondaryReached", p.nbOfSecondaryInAccount >= p.maxSecondary);
 
             } else if (state === "ERROR") {
                 var errors = response.getError();

@@ -119,11 +119,10 @@ public without sharing class OneId_RegistrationProcessController {
         Map<String,String> labels = new Map<String,String>();
         for (String name : contactFields) {
             SObjectField f = accountFields.get(name);
-            if (f!=null)
-				labels.put(f.getDescribe().getName(), f.getDescribe().getLabel());
+            labels.put(f.getDescribe().getName(), f.getDescribe().getLabel());
         }
         return labels;
-    } 
+    }
 
     @AuraEnabled
     public static List<String> getContactJobFunctionValues(){
@@ -337,30 +336,7 @@ public without sharing class OneId_RegistrationProcessController {
                 if(! String.isBlank(acc.IATA_ISO_Shipping_Country__c))
                     con.IATA_ISO_Shipping_Country__c = acc.IATA_ISO_Shipping_Country__c;
             }
-
-            // TIP PORTAL ACCESS ASSIGNMENT
-            if(acc.Sector__c == TIP_Utils.ACCOUNT_SECTOR_FINANCIAL_INSTITUTION && acc.Category__c == TIP_Utils.ACCOUNT_CATEGORY_PAYMENT_PROVIDER){
-                con.Primary_Contact__c = true;
-                con.User_Portal_Status__c = 'Approved Admin';
-                
-                checkConAvailable(con);
-
-                con.account=acc;
-                //TIP-16 - Assign TIP Portal Service
-                Id appListId;
-                ISSP_Portal_Service_Ids__c serviceIdInstance = ISSP_Portal_Service_Ids__c.getInstance();
-                if (serviceIdInstance != null && !String.isBlank(serviceIdInstance.TIP_Portal_Service_Id__c)){
-                        appListId = serviceIdInstance.TIP_Portal_Service_Id__c;
-
-                    Portal_Application_Right__c newRight = new Portal_Application_Right__c();
-                    newRight.Contact__c = con.Id;
-                    newRight.Right__c = 'Access Granted';
-                    newRight.Portal_Application__c = appListId;
-                    insert newRight;
-               }
-            }else{
-                checkConAvailable(con);
-            }
+            checkConAvailable(con);
 
 
             String thisNickname;
@@ -520,6 +496,31 @@ public without sharing class OneId_RegistrationProcessController {
             database.insert(con);
             
         }
+    }
+
+     @AuraEnabled
+    public static Contact loadVerifierInfo (String invitationId){
+        
+        list<Invitation__c> invitation = [select id,AccountId__c, Business_Fax__c, Business_Phone__c, 
+        Email__c, First_Name__c, Job_Function__c, Job_Title__c, 
+        Last_Name__c, Mobile_Phone__c, Name, Salutation__c from Invitation__c WHERE Id =: invitationId];        
+        if(! invitation.isEmpty()) {
+            Invitation__c inv = invitation[0];
+            Contact c = new Contact (
+                Fax = inv.Business_Fax__c,
+                Phone = inv.Business_Phone__c,
+                Email = inv.Email__c,
+                FirstName = inv.First_Name__c,
+                Function__c = inv.Job_Function__c,
+                Membership_Function__c = inv.Job_Function__c,
+                Title = inv.Job_Title__c,
+                LastName = inv.Last_Name__c,
+                MobilePhone = inv.Mobile_Phone__c,
+                Salutation = inv.Salutation__c
+            );
+            return c;
+        }
+        return null;
     }
 
 }

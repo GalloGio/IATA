@@ -2,7 +2,6 @@
 	getHostURL: function(component, event) {
         var vfOrigin = component.get("c.getHostURL");
         vfOrigin.setCallback(this, function(response) {
-            console.log('response ' + response.getReturnValue());
             component.set("v.vfHost", 'https://' + response.getReturnValue());
         });
         $A.enqueueAction(vfOrigin);
@@ -12,7 +11,6 @@
     getCommunityName: function(component, event) {
         var commName = component.get("c.getCommunityName");
         commName.setCallback(this, function(response) {
-            console.log('getCommunityName response ' + response.getReturnValue());
             component.set("v.commName", response.getReturnValue());
         });
         $A.enqueueAction(commName);
@@ -31,7 +29,6 @@
     validateEmail :function(component) {
         var emailCmp = component.find("email");
         var emailValue = emailCmp.get("v.value");
-
         var regExpEmailformat = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/; 
         if($A.util.isEmpty(emailValue)) {
             emailCmp.set("v.errors", [{ message: $A.get("$Label.c.ISSP_EmailError")}]);
@@ -64,11 +61,20 @@
             var isUserCanBeCreated = a.getReturnValue();
 
             if(isUserCanBeCreated){
-                var country = c.get("v.userCountry");
-                var vfOrigin = c.get('v.vfHost');
-                var vfWindow = c.find("vfFrame").getElement().contentWindow;
-                vfWindow.postMessage({ action: "alohaCallingCAPTCHA",country : country }, vfOrigin);
-                emailCmp.set("v.errors", null);
+                // For verifier avoid captcha
+                if(c.get("v.isVerifierInvitation")) {
+                    this.notifyStepCompletion(c);
+                    c.find("email").set("v.disabled", true);
+                    c.find("termsaccepted").set("v.disabled", true);
+                    c.set("v.showCaptcha", false);
+
+                } else {
+                    var country = c.get("v.userCountry");
+                    var vfOrigin = c.get('v.vfHost');
+                    var vfWindow = c.find("vfFrame").getElement().contentWindow;
+                    vfWindow.postMessage({ action: "alohaCallingCAPTCHA",country : country }, vfOrigin);
+                    emailCmp.set("v.errors", null);
+                }
             }else{
                 emailCmp.set("v.errors", [{message: $A.get("$Label.c.OneId_Registration_UserExist")}]);
                 c.set("v.Terms", false);

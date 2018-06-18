@@ -1,7 +1,9 @@
 <aura:component extends="c:Base" implements="flexipage:availableForAllPageTypes,forceCommunity:availableForAllPageTypes,force:hasRecordId,force:appHostable" access="global" controller="OneId_Fred_AddNewUser_CTRL">
 
 	<aura:handler name="init" value="{!this}" action="{!c.init}"/>
-	<aura:handler event="c:oneIdURLParams" action="{!c.renderPage}"/>
+    
+<aura:handler event="c:oneIdURLParams" action="{!c.renderPage}"/> 
+
 
 	<aura:attribute name="serviceName" type="String" />
 	<aura:attribute name="isFredPrimaryUser" type="Boolean" />
@@ -15,6 +17,7 @@
 	<aura:attribute name="roles" type="Object" />
 	<aura:attribute name="showRoles" type="Boolean" default="false"/>
 	<aura:attribute name="selectedRole" type="String" />
+
 
 	<div >
 	 <lightning:button variant="brand" label="Add New User" onclick="{! c.openModal}" class="submitBt" />
