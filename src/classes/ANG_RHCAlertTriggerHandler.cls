@@ -288,14 +288,34 @@ public class ANG_RHCAlertTriggerHandler{
 
         Id formOfPaymentRT = Schema.Agency_Authorization__c.sObjectType.getDescribe().getRecordTypeInfosByName().get('Form Of Payment').getRecordTypeId();
 
-        List<Agency_Authorization__c> aaLst = [Select Id, Source__c, ANG_FormOfPayment_ID__c, Status__c, Account__r.Is_PCI_compliant__c from Agency_Authorization__c where Account__c in :accounts and ANG_FormOfPayment_ID__c = 'CA' and recordTypeId = :formOfPaymentRT and Account__r.recordTypeId = :AMS_Utils.RECTYPE_IATAAGENCY];
+        List<Agency_Authorization__c> aaLst = [Select Id, RestrictedByRHCAlert__c,RestrictedByProcess__c, ANG_FormOfPayment_ID__c, Status__c, Account__r.Is_PCI_compliant__c from Agency_Authorization__c where Account__c in :accounts and ANG_FormOfPayment_ID__c = 'CA' and recordTypeId = :formOfPaymentRT and Account__r.recordTypeId = :AMS_Utils.RECTYPE_IATAAGENCY];
 
         for(Agency_Authorization__c aa: aaLst){
             
-            if(aa.Status__c != statusFOP && ((action == LOWERFLUCTUATION && aa.Source__c == 'RTS Alert') || action == UPPERFLUCTUATION)){
-                aa.Status__c = statusFOP;
-                aa.Source__c = 'RTS Alert';
+            Boolean originalRestriction = aa.RestrictedByRHCAlert__c;
+
+            //if(aa.Status__c != statusFOP && ((action == LOWERFLUCTUATION && aa.Source__c == 'RHC Alert') || action == UPPERFLUCTUATION)){
+            if(aa.Status__c != statusFOP){ // we need to change something, let's see if we 'can'...
+                
+                if(action == LOWERFLUCTUATION){
+                    if(!aa.RestrictedByProcess__c)
+                        aa.Status__c = statusFOP;
+                    aa.RestrictedByRHCAlert__c = false;
+                }
+
+                if(action == UPPERFLUCTUATION){
+                    aa.Status__c = statusFOP;
+                    aa.RestrictedByRHCAlert__c = true;
+                }
+                
                 toReturn.add(aa);
+                
+            }else{
+
+                aa.RestrictedByRHCAlert__c = (action == UPPERFLUCTUATION);
+
+                if(originalRestriction <> aa.RestrictedByRHCAlert__c)
+                    toReturn.add(aa);
             }
 
         }
