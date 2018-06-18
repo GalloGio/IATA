@@ -358,7 +358,7 @@ two record types:
                 <value>
                     <fullName>MALE</fullName>
                     <default>false</default>
-                    <label>MALE</label>
+                    <label>Male</label>
                 </value>
             </valueSetDefinition>
         </valueSet>
@@ -1136,6 +1136,17 @@ IF(TODAY()&lt;= Valid_To_Date__c, TRUE,FALSE)
             </values>
         </picklistValues>
         <picklistValues>
+            <picklist>Gender__c</picklist>
+            <values>
+                <fullName>FEMALE</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>MALE</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
             <picklist>Nature_of_ID_Card__c</picklist>
             <values>
                 <fullName>New</fullName>
@@ -1242,6 +1253,17 @@ IF(TODAY()&lt;= Valid_To_Date__c, TRUE,FALSE)
             </values>
             <values>
                 <fullName>Valid ID Card</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Gender__c</picklist>
+            <values>
+                <fullName>FEMALE</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>MALE</fullName>
                 <default>false</default>
             </values>
         </picklistValues>
