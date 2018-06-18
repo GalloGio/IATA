@@ -3025,6 +3025,7 @@ public class AMS_OSCARTriggerHandler {
 
         if(updatedOscar.Process__c == AMS_Utils.IEPBANKACCOUNTSETUP && oldOSCAR.STEP17__c <> updatedOscar.STEP17__c && updatedOscar.STEP17__c == 'Failed'){
 
+            updatedOscar.Status__c = 'Closed';
             System.debug('Sending the email for the user to anounce Finalization Failure of the IEP bank account setup oscar');
 
             //using an already existing method to send email alert to user.
