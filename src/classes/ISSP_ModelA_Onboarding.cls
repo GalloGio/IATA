@@ -99,7 +99,7 @@ public class ISSP_ModelA_Onboarding {
 		boolean errorFound = false;
 
 		Map<String, String> folderMap = new Map<String, String>();
-    	folderMap = ISSP_SELECTOR.getMapAmazonFileIdentifiers(this.onBoardingOSCARCase.OSCAR__c);
+    	folderMap = ISSP_SELECTOR.getMapAmazonFileIdentifiers(this.onBoardingOSCARCase.Id);
 
     	for (AMS_Accreditation_Requirement__c thisReq : this.countryRequirementsList) { 
             if (!folderMap.containsKey(thisReq.File_Identifier2__c) && thisReq.File_to_Upload__c == 'Mandatory') {
