@@ -128,7 +128,7 @@ public class ISSP_ModelA_Onboarding {
         //Available queue names
         Id qId;
 
-        Set<String> queueNames = new Set<String> {'Model_A_Onboarding_Africa_Mid_East', 'Model_A_Onboarding_Americas', 'Model_A_Onboarding_Asia_Pacific', 'Model_A_Onboarding_China_North_Asia', 'Model_A_Onboarding_Europe'};
+        Set<String> queueNames = new Set<String> {'AgencyManagementAP', 'AgencyManagementAfricaME', 'AgencyManagementAmericas', 'AgencyManagementChinaNAsia', 'CasesACCEuropeOffOnshore'};
         Map<String, QueueSobject> mapRegionalQueue = new Map<String, QueueSobject>();
         //Build map queue.name -> queue
         for (QueueSobject queue : [Select Queue.Id, Queue.DeveloperName From QueueSobject Where Queue.DeveloperName in: queueNames]) {
@@ -137,26 +137,26 @@ public class ISSP_ModelA_Onboarding {
 
         //Assigns queue according to region
         if (this.region == 'Africa & Middle East') {
-            if (mapRegionalQueue.get('Model_A_Onboarding_Africa_Mid_East') != null) {
-                qId = mapRegionalQueue.get('Model_A_Onboarding_Africa_Mid_East').Queue.Id;
+            if (mapRegionalQueue.get('AgencyManagementAfricaME') != null) {
+                qId = mapRegionalQueue.get('AgencyManagementAfricaME').Queue.Id;
             }
 
         } else if (this.region == 'Americas') {
-            if (mapRegionalQueue.get('Model_A_Onboarding_Americas') != null) {
-                qId = mapRegionalQueue.get('Model_A_Onboarding_Americas').Queue.Id;
+            if (mapRegionalQueue.get('AgencyManagementAmericas') != null) {
+                qId = mapRegionalQueue.get('AgencyManagementAmericas').Queue.Id;
             }
 
         } else if (this.region == 'Asia & Pacific') {
-            if (mapRegionalQueue.get('Model_A_Onboarding_Asia_Pacific') != null) {
-                qId = mapRegionalQueue.get('Model_A_Onboarding_Asia_Pacific').Queue.Id;
+            if (mapRegionalQueue.get('AgencyManagementAP') != null) {
+                qId = mapRegionalQueue.get('AgencyManagementAP').Queue.Id;
             }
         } else if (this.region == 'China & North Asia') {
-            if (mapRegionalQueue.get('Model_A_Onboarding_China_North_Asia') != null) {
-                qId = mapRegionalQueue.get('Model_A_Onboarding_China_North_Asia').Queue.Id;
+            if (mapRegionalQueue.get('AgencyManagementChinaNAsia') != null) {
+                qId = mapRegionalQueue.get('AgencyManagementChinaNAsia').Queue.Id;
             }
         } else if (this.region == 'Europe') {
-            if (mapRegionalQueue.get('Model_A_Onboarding_Europe') != null) {
-                qId = mapRegionalQueue.get('Model_A_Onboarding_Europe').Queue.Id;
+            if (mapRegionalQueue.get('CasesACCEuropeOffOnshore') != null) {
+                qId = mapRegionalQueue.get('CasesACCEuropeOffOnshore').Queue.Id;
             }
         }
 
