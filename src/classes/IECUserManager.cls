@@ -284,11 +284,7 @@ public without sharing class IECUserManager {
      */
     public static Id getAccountRecordTypeByName(String recordTypeName) {
         
-        List<RecordType> recordTypes = [Select r.Name, r.Id, r.DeveloperName From RecordType r where r.DeveloperName  = :recordTypeName and SobjectType = 'Account'];
-        if (recordTypes != null && recordTypes.size() > 0)
-            return recordTypes.get(0).Id;
-            
-        return null;
+        return RecordTypeSingleton.getInstance().getRecordTypeId('Account', recordTypeName);
     }
         
     /**
@@ -308,8 +304,7 @@ public without sharing class IECUserManager {
         else 
             recordTypeName = IECConstants.Account_RecordType_Others;
         
-        List<RecordType> recordTypes = [Select r.Name, r.Id, r.DeveloperName From RecordType r where r.DeveloperName = :recordTypeName and SobjectType = 'Account'];
-        return recordTypes.get(0).Id;
+        return RecordTypeSingleton.getInstance().getRecordTypeId('Account', recordTypeName);
     }
     
     /**
@@ -318,9 +313,7 @@ public without sharing class IECUserManager {
     public static Id getContactRecordTypeForIEC() {
         
         // TODO: to change once the ISS portal/registration is done
-        String recordTypeName = 'Standard'; //'GDP Contact'; //'IATA Standard Contact'
-        List<RecordType> recordTypes = [Select r.Name, r.Id From RecordType r where r.Name = :recordTypeName and r.SobjectType = 'Contact'];
-        return recordTypes.get(0).Id;
+        return RecordTypeSingleton.getInstance().getRecordTypeId('Contact', 'Standard');
     }
     
     /**

@@ -696,7 +696,6 @@ public without sharing class ISSP_APProcess {
                 newForm.RecordTypeId = Schema.SObjectType.AP_Process_Form__c.RecordTypeInfosByName.get(strLoB + ' Change').RecordTypeId;
             }
             
-            //newForm.RecordTypeId =[Select Id,SobjectType,Name From RecordType WHERE Name = :strLoB and SobjectType ='AP_Process_Form__c'  limit 1].Id;
         }
         
        upsert newForm;    

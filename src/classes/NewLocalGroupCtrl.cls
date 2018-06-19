@@ -16,26 +16,13 @@ global  class NewLocalGroupCtrl {
 
     public PageReference redirect(){
         Boolean redirect = false;
-      List<RecordType> lsRecordTypes =
-            [SELECT Id, DeveloperName FROM RecordType
-            WHERE SObjectType = 'LocalGovernance__c' ];
-      Set<Id> setRegDivRecordTypes = new Set<Id>();
-        Set<Id> setLocalGroupRecordTypes = new Set<Id>();
-        for (RecordType rt : lsRecordTypes) {
-            if(rt.DeveloperName == 'Reg_Div_Groups') {
-                setRegDivRecordTypes.add(rt.Id);
-            } else if(rt.DeveloperName == 'Local_Groups') {
-                setLocalGroupRecordTypes.add(rt.Id);
-            }
-        }
         String recordId =  ApexPages.currentPage().getParameters().get('id');
-        /*if(recordId != null) {
-            lg = [SELECT Id, Name, RecordTypeId, RecordType.Name, Local_Governance_type__c,Country__c, Cluster__c FROM LocalGovernance__c WHERE Id = :recordId];
-        }
-        System.debug(lg.RecordTypeId + ' ' + lg.RecordType.Name);*/
         // 1. if there is already a recordtype set redirect accordingly
-        if(setRegDivRecordTypes.contains(lg.RecordTypeId)) { redirect = true;}
-        else if(setLocalGroupRecordTypes.contains(lg.RecordTypeId)) {redirect = false;}
+        if(RecordTypeSingleton.getInstance().getRecordTypeId('LocalGovernance__c', 'Reg_Div_Groups') == lg.RecordTypeId){
+            redirect = true;
+        }else if(RecordTypeSingleton.getInstance().getRecordTypeId('LocalGovernance__c', 'Local_Groups') == lg.RecordTypeId){
+            redirect = false;
+        }
         // 2. if the user can only see one recordtype it's null and we check which type the user has access to
         if(!redirect && lg.RecordTypeId == null) {
             for(RecordTypeInfo info: LocalGovernance__c.SObjectType.getDescribe().getRecordTypeInfos()) {

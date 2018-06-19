@@ -150,7 +150,7 @@ global with sharing class AMS_DataMigration {
     private static Boolean processAccountRole(String recordId, String bulkNumber){       
     
         // -- Ownership
-        Id ownershipRT = Schema.SObjectType.AMS_Account_Role__c.getRecordTypeInfosByName().get('Ownership').getRecordTypeId();
+        Id ownershipRT = RecordTypeSingleton.getInstance().getRecordTypeId('AMS_Account_Role__c', 'Ownership');
         List<AMS_Account_Role__c> accountRolesToInsert = new List<AMS_Account_Role__c>();
         List<AMS_Agency_Ownership__c> ownershipsToUpdate = new List<AMS_Agency_Ownership__c>();
         List<AMS_Agency_Ownership__c> otherOwnershipsToUpdate = new List<AMS_Agency_Ownership__c>();

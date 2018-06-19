@@ -1614,7 +1614,7 @@ public class  AmsIataCodeGeneratorTest
         System.debug('Staging location class is ' + theStagingAcc.Location_Class__c);
 
         // Create OSCAR and Communication Case
-        ID rtNew = Schema.SObjectType.AMS_OSCAR__c.getRecordTypeInfosByName().get('NEW').getRecordTypeId();
+        ID rtNew = RecordTypeSingleton.getInstance().getRecordTypeId('AMS_OSCAR__c', 'NEW');
         
         AMS_OSCAR__c theOscar = new AMS_OSCAR__c(RecordTypeId = rtNew, Account__c = theAccount.Id, Process__c = 'NEW.HO.1.0', AMS_Online_Accreditation__c = theStagingAcc.Id );
         insert theOscar;
@@ -1631,13 +1631,11 @@ public class  AmsIataCodeGeneratorTest
     static AMS_OSCAR__c createCaseAndOSCARNoCass(Account theAccount, Contact theContact, String cassNumber){
 
         // Create the Staging area for the Account
-        //ID rtCommCase = Schema.SObjectType.Case.getRecordTypeInfosByName().get('OSCAR Communication').getRecordTypeId();
-
         Case cse = new Case();
         cse.QuantityProduct__c = '1';
         insert cse;
 
-        ID rtAgency = Schema.SObjectType.Account.getRecordTypeInfosByName().get('Agency').getRecordTypeId();
+        ID rtAgency = RecordTypeSingleton.getInstance().getRecordTypeId('Account', 'IATA_Agency');
 
         AMS_Pax_Accreditation_Form__c theStagingAcc = new  AMS_Pax_Accreditation_Form__c(Account_Name__c = theAccount.Name, IATAcode__c = theAccount.IATAcode__c, Branch_Office_Country__c = c2.Id, 
                                                             Location_Class__c = theAccount.Location_Class__c, Location_Type__c = theAccount.Location_Type__c, SAAM_Case__c = cse.id);

@@ -2883,19 +2883,12 @@ for (string topicver:listofAllowedTopics){
     //Output : record Type ID
     @TestVisible
     private Id getCaseRecordTypeIdByName(String inRecordTypeName){
-        SObjectType ObjType;
-        map<String, Schema.RecordTypeInfo> TypeInfoMap;
-        Schema.RecordTypeInfo TypeInfo;
-        Id RecTypeId;
-
-        // use Account sObject type as an example
-        ObjType =  Case.SObjectType;
-        TypeInfoMap = ObjType.getDescribe().getRecordTypeInfosByName();
-        TypeInfo = TypeInfoMap.get(inRecordTypeName);
-        if (TypeInfo != null) {
-            return RecTypeId = TypeInfo.getRecordTypeId();
-        }
-        else return null ;
+        if (inRecordTypeName != null) {
+            return RecordTypeSingleton.getInstance().getRecordTypeId('Case', inRecordTypeName);
+        } else {
+            return null;
+        } 
+            
     }
 
 

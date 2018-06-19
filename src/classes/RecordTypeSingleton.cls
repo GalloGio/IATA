@@ -40,9 +40,9 @@ public class RecordTypeSingleton {
 
 	/**
 	 * Method that returns the record type object
-	 * @param objectName the name of the object
-	 * @param devName the name of the record type (DeveloperName)
-	 * @return record type object
+	 * @param objectName  the name of the object
+	 * @param devName 	  the name of the record type (DeveloperName)
+	 * @return 			  record type object
 	 */
 	public RecordType getRecordType(String objectName, String devName){
 
@@ -54,8 +54,8 @@ public class RecordTypeSingleton {
 	/**
 	 * Method that returns the Id of the record type
 	 * @param objectName the name of the object
-	 * @param devName the name of the record type (DeveloperName)
-	 * @return id of the record type object
+	 * @param devName 	 the name of the record type (DeveloperName)
+	 * @return 			 id of the record type object
 	 */
 	public Id getRecordTypeId(String objectName, String devName){
 
@@ -64,6 +64,45 @@ public class RecordTypeSingleton {
 	}
 
 
-	public Map<String, Map<String, Id>> RtIDsPerDeveloperNamePerObj;
+	/**
+	 * Method that returns a list of record types Ids for a specified object and a list of developer names
+	 * @param  objectName  the name of the object
+	 * @param  devNameList List of the name of the record type (DeveloperName)
+	 * @return             List of record type Ids for the passed object name and list of record type names
+	 */
+	public List<Id> getRecordTypeObjIdList(String objectName, List<String> devNameList){
+
+		List<Id> returnRecTypeObjIdList = new List<Id>();
+
+		for(String devName : devNameList){
+
+			returnRecTypeObjIdList.add(getRecordTypeId(objectName, devName));
+		}
+
+		return returnRecTypeObjIdList;
+
+	}
+
+
+	/**
+	 * Method that returns a list of record types Ids for a specified object and that are not on the list of developer names
+	 * @param  objectName        the name of the object
+	 * @param  exceptDevNameList List of the name of the record type (DeveloperName) to exclude
+	 * @return                   List of record type Ids for the passed object name and that is not present on the list of record type names
+	 */
+	public List<Id> getRecordTypeObjIdListExceptPassedNames(String objectName, List<String> exceptDevNameList){
+
+		List<Id> returnRecTypeObjIdList = new List<Id>();
+
+		for(RecordType recType : recordTypesByName.get(objectName).values()){
+
+			if(!exceptDevNameList.contains(recType.DeveloperName)){
+
+				returnRecTypeObjIdList.add(recType.Id);
+			}
+		}
+
+		return returnRecTypeObjIdList;
+	}
 
 }

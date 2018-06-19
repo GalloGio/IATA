@@ -105,7 +105,7 @@ trigger trgICCS_ASP_CaseClosed on Case (after insert, after update) {
 
 		for (Case c : Trigger.new) {
 	        
-			Id CaseSAAMId = Schema.SObjectType.Case.getRecordTypeInfosByName().get('SAAM').getRecordTypeId();
+			Id CaseSAAMId = RecordTypeSingleton.getInstance().getRecordTypeId('Case', 'ProcessEuropeSCE');//SAAM
 			//If the case is Closed and Matches the following cretiria
 	        if ( c.RecordTypeId == CaseSAAMId  &&
 			     c.Status == 'Closed' &&  Trigger.oldMap.get(c.Id).Status != 'Closed' &&

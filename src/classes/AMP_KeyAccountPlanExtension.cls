@@ -32,8 +32,8 @@ public with sharing class AMP_KeyAccountPlanExtension {
     // public AMP_KeyAccountPlanExtension() {}
     public AMP_KeyAccountPlanExtension(ApexPages.StandardController stdController) {
         // this.mysObject = (sObject)stdController.getRecord();
-		taskRecordTypeId = [SELECT Id FROM RecordType WHERE SObjectType='Task' AND DeveloperName='Key_Account_Plan_Milestone'].Id;
-		objectiveRecordTypeId = [SELECT Id FROM RecordType WHERE SObjectType='Objective__c' AND DeveloperName='Key_Account_Plan'].Id;
+		taskRecordTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('Task', 'Key_Account_Plan_Milestone');
+		objectiveRecordTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('Objective__c', 'Key_Account_Plan');
 
 		accountId =  ApexPages.currentPage().getParameters().get('accountId');
 		accountName = [SELECT Id, Name FROM Account WHERE Id = :accountId].Name;
@@ -293,7 +293,7 @@ public with sharing class AMP_KeyAccountPlanExtension {
 
 	@AuraEnabled
     public static List<Objective__c> getObjectives(Id accountId) {
-		Id objectiveRecordTypeId = [SELECT Id FROM RecordType WHERE SObjectType='Objective__c' AND DeveloperName='Key_Account_Plan'].Id;
+		Id objectiveRecordTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('Objective__c', 'Key_Account_Plan');
         List<Objective__c> lsObjectives = new List<Objective__c>();
 		lsObjectives =
 			[SELECT Id, Name, Account_Issue_or_Priority__c, Account_Issue_or_Priority__r.Name, Benefits_to_Account__c,
@@ -314,7 +314,7 @@ public with sharing class AMP_KeyAccountPlanExtension {
 	@AuraEnabled
 	public static Objective__c upsertActivity(Objective__c activity) {
 		if(activity.RecordTypeId == null ) {
-			Id objectiveRecordTypeId = [SELECT Id FROM RecordType WHERE SObjectType='Objective__c' AND DeveloperName='Key_Account_Plan'].Id;
+			Id objectiveRecordTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('Objective__c', 'Key_Account_Plan');
 			activity.RecordTypeId = objectiveRecordTypeId;
 		}
 		upsert activity;
@@ -371,7 +371,7 @@ public with sharing class AMP_KeyAccountPlanExtension {
 	@AuraEnabled
 	public static Task upsertMilestone(Task milestone) {
 		if(milestone.RecordTypeId == null ) {
-			Id taskRecordTypeId = [SELECT Id FROM RecordType WHERE SObjectType='Task' AND DeveloperName='Key_Account_Plan_Milestone'].Id;
+			Id taskRecordTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('Task', 'Key_Account_Plan_Milestone');
 			milestone.RecordTypeId = taskRecordTypeId;
 		}
 		upsert milestone;

@@ -1,6 +1,6 @@
 public with sharing class SIDRAliteMassEmailController{
 
-    public static final Id SIDRA_LITE_RECORDTYPE = Schema.SObjectType.Case.getRecordTypeInfosByName().get('SIDRA Lite').getRecordtypeId();
+    public static final Id SIDRA_LITE_RECORDTYPE = RecordTypeSingleton.getInstance().getRecordTypeId('Case', 'SIDRA_Lite');
     public static final String APPROVED = 'Approved';
     public static final String REJECTED = 'Rejected';
 

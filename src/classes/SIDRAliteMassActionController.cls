@@ -4,13 +4,11 @@ public with sharing class SIDRAliteMassActionController {
     public static final Integer MAX_SEARCH_ELEMENTS =900;
     public Integer getMinCasesForBatch(){ return MIN_CASES_FOR_BATCH;}
 
-    public static final Schema.RecordTypeInfo RECORDTYPE_SIDRA_LITE = Schema.SObjectType.Case.getRecordTypeInfosByName().get('SIDRA Lite');
     public static final Schema.RecordTypeInfo RECORDTYPE_IFAP = Schema.SObjectType.Case.getRecordTypeInfosByName().get('IATA Financial Review');
     public static final Schema.RecordTypeInfo RECORDTYPE_SMAP = Schema.SObjectType.Case.getRecordTypeInfosByName().get('sMAP(sales Monitoring Alert Process)');
     public static final Schema.RecordTypeInfo RECORDTYPE_SAAM = Schema.SObjectType.Case.getRecordTypeInfosByName().get('SAAM');
     public static final Schema.RecordTypeInfo RECORDTYPE_OSCAR = Schema.SObjectType.Case.getRecordTypeInfosByName().get('OSCAR Communication');
     public static final Schema.RecordTypeInfo RECORDTYPE_INVOICING = Schema.SObjectType.Case.getRecordTypeInfosByName().get('Invoicing Collection Cases');
-    public static final Id RECORDTYPE_SIDRA_LITE_ID = RECORDTYPE_SIDRA_LITE.getRecordTypeId();
     public static final Id RECORDTYPE_IFAP_ID = RECORDTYPE_IFAP.getRecordTypeId();
     public static final Id RECORDTYPE_SMAP_ID = RECORDTYPE_SMAP.getRecordTypeId();
     public static final Id RECORDTYPE_SAAM_ID = RECORDTYPE_SAAM.getRecordTypeId();
@@ -111,6 +109,9 @@ public with sharing class SIDRAliteMassActionController {
     }
 
     private String getBaseQuery(Id recordtypeId) {
+
+        Id sidraLiteRTId = RecordTypeSingleton.getInstance().getRecordTypeId('Case', 'SIDRA_Lite');
+
         String query = 'Select Id, Status, Financial_Review_Type__c,'
             + ' FA_Letter_Sent__c, Deadline_Date__c, firstFAnonComplianceDate__c, FA_Second_Deadline_Date__c, FA_Third_Deadline_Date__c, secondFAnonComplianceDate__c, Third_FA_non_Compliance_Date__c,'
             + ' FS_Letter_Sent__c, FS_Deadline_Date__c, firstFSnonComplianceDate__c, FS_Second_Deadline_Date__c, FS_Third_Deadline_Date__c, secondFSnonComplianceDate__c, FS_third_non_compliance_date__c,'
@@ -127,7 +128,7 @@ public with sharing class SIDRAliteMassActionController {
             + '     TER_Approval_Rejection__c, Termination_Reason__c, Propose_Default__c, NOT_Date__c,'
             + '     Account.Id, Account.Type, Account.Status__c, Comments__c'
             + '     from Cases'
-            + '     where RecordtypeId = :RECORDTYPE_SIDRA_LITE_ID '
+            + '     where RecordtypeId = :sidraLiteRTId '
             + ' )'
             + ' from Case'
             + ' Where RecordtypeId = \'' + recordtypeId + '\''
@@ -640,7 +641,7 @@ public with sharing class SIDRAliteMassActionController {
                 TER_Approval_Rejection__c, Termination_Reason__c, Propose_Default__c, NOT_Date__c, Comments__c,
                 Account.Id, Account.Type, Account.Status__c
             FROM Case
-            WHERE RecordtypeId = :RECORDTYPE_SIDRA_LITE.getRecordTypeId()
+            WHERE RecordtypeId = :RecordTypeSingleton.getInstance().getRecordTypeId('Case', 'SIDRA_Lite')
             AND ParentId in :listParentId]) {
                 mapChild.put(child.ParentId, child);
         }

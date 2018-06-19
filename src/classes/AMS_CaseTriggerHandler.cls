@@ -54,7 +54,7 @@ public class AMS_CaseTriggerHandler {
     	set<string> setStatusToInclude = new set<string>{'Approved','Cash basis/no commission','Cash basis/with commission','Changes processed','Listed','Under review'};
     	
     	if(!mapAccntHO.isEmpty()){
-    		ID RTId = TransformationHelper.RtIDsPerDeveloperNamePerObj(new list<string>{'AMS_Process_Detail__c'}).get('AMS_Process_Detail__c').get('CaseRelatedAgencies');
+    		ID RTId = RecordTypeSingleton.getInstance().getRecordTypeId('AMS_Process_Detail__c', 'CaseRelatedAgencies');
     		list<AMS_Process_Detail__c> lsToInsert = new list<AMS_Process_Detail__c>();
     		for(Account a:[select id, status__c
     						, ParentId, Parent.Status__c

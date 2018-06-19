@@ -331,11 +331,11 @@ public list<String> errorMessage {get; set;}
                 ChoosenCS = FinalMatch_Lst[0];
                 //Select the choosen Record Type
                 String recordType = ChoosenCS.RecordType__c;
-                List <RecordType> recordTypeList = [SELECT Id FROM RecordType WHERE DeveloperName = :recordType AND sObjectType = 'Case'];
+                Id recordTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('Case', recordType);
 
-                if (!recordTypeList.isEmpty()){
+                if (String.isNotBlank(recordTypeId)){
                     //Assign RecordType according to custom Settings
-                    parentCase.RecordTypeId = recordTypeList[0].Id;
+                    parentCase.RecordTypeId = recordTypeId;
                     system.debug('KER0 parentCase.RecordTypeId'+parentCase.RecordTypeId);
                     system.debug('KER0 ChoosenCS.OwnerId__c'+ChoosenCS.OwnerId__c);
 

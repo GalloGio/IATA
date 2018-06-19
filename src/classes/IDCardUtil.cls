@@ -1044,7 +1044,7 @@ public static String generateVER(Account theAccount) {
             idCard.MustSyncWithAIMS__c = true;
 
             if (IdCardAIMSrt == null)
-                IdCardAIMSrt = [SELECT ID FROM RecordType WHERE DeveloperName = 'AIMS'][0].Id;
+                IdCardAIMSrt = RecordTypeSingleton.getInstance().getRecordTypeId('ID_Card__c', 'AIMS');
             idcard.RecordTypeId = IdCardAIMSrt;
 
             //Get Start and End date and put them on the new idcard

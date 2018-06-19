@@ -23,7 +23,7 @@ private class AMP_CoreRelationshipExtensionTest {
 			insert country_qr;
 
 
-			Id accountRecordTypeId = [SELECT Id FROM RecordType WHERE Name ='Airline Headquarters'].Id;
+			Id accountRecordTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('Account', 'IATA_Airline');
 			Account a = new Account(
 				Name = 'Qatar Airways', Airline_designator__c = 'QR', ICCS_Membership_Status__c = 'Member', Industry='Airline', Type='Passenger',
 				RecordTypeId = accountRecordTypeId, IATA_ISO_Country__c = country_qr.Id, Membership_status__c = 'Non-IATA member');
@@ -54,14 +54,14 @@ private class AMP_CoreRelationshipExtensionTest {
 			testGroup.Name = 'testGroup';
 			testGroup.Region__c = 'testGroup';
 			testGroup.Division__c = 'N/A';
-			testGroup.RecordTypeId = [SELECT Id FROM RecordType WHERE SObjectType='LocalGovernance__c' AND DeveloperName = 'Reg_Div_Groups'].Id;
+			testGroup.RecordTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('LocalGovernance__c', 'Reg_Div_Groups');
 			insert testGroup;
 
 			LocalGovernance__c testGroup2 = new LocalGovernance__c();
 			testGroup2.Name = 'testGroup2';
 			testGroup2.Region__c = 'testGroup2';
 			testGroup2.Division__c = 'N/A';
-			testGroup2.RecordTypeId = [SELECT Id FROM RecordType WHERE SObjectType='LocalGovernance__c' AND DeveloperName = 'Reg_Div_Groups'].Id;
+			testGroup2.RecordTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('LocalGovernance__c', 'Reg_Div_Groups');
 			insert testGroup2;
 
 			Participant__c testParticipant = new Participant__c();

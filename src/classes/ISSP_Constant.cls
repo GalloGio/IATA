@@ -137,7 +137,7 @@ Constant Class
     //New Test Portal User Profile Id
     public final static string TEST_User_ProfileID = [select Id from profile where Name=:'ISS Portal Delegated Admin User'].Id;
     public final static string TEST_Basic_Airline_User_ProfileID = [select Id from profile where Name=:'ISS Portal Airline User (Partner)'].Id;
-    public final static string Standard_Contact_Record_Type = [select Id from RecordType where Name = 'Standard' AND SobjectType = 'Contact'].Id;
+    public final static string Standard_Contact_Record_Type = RecordTypeSingleton.getInstance().getRecordTypeId('Contact', 'Standard_Contact');
     
     // owner for new account created by the ISSP Portal registration
     // because we cant create portal user it the account's owner is portal guest

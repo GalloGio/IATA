@@ -27,7 +27,7 @@ private class Customer_DTO_Test
         Map<String, Id> mapRTName_Id = Utility.getRTmapName_Id('Account', null);
 
         Account oAccountHQ = TestDataGenerator.generateAccounts(1, false)[0];
-        oAccountHQ.RecordTypeId = mapRTName_Id.get(IECConstants.Account_RecordType_Airline);
+        oAccountHQ.RecordTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('Account', 'IATA_Airline');
         oAccountHQ.Membership_status__c = IECConstants.Account_MembershipStatus_IATAMember;
         oAccountHQ.IATACode__c = '~1~!~2~@~';
         oAccountHQ.IATA_ISO_Country__c = addresses[0].ISO_Country__c;

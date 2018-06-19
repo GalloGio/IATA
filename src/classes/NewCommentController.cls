@@ -1,6 +1,5 @@
 public with sharing class NewCommentController {
 
-    public static final map<String,Schema.RecordTypeInfo> MAP_RT = Schema.SObjectType.Comment__c.getRecordTypeInfosByName();
     public Id objectiveId;
 
     public NewCommentController(ApexPages.standardController controller) {

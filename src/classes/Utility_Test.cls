@@ -28,12 +28,6 @@ static testMethod void test_getRTmapName_Id() {
     mapName_Id = Utility.getRTmapName_Id(strObjectName, listDevName);
     system.assert(mapName_Id.size() == 1 && mapName_Id.get(listDevName[0]) == listId[0], 'Incorrect map: ' + mapName_Id);
     
-    //*** covert method "getRecordTypeId"
-    try { Utility.getRecordTypeId('NotExist', 'NotExist'); } catch (Exception e) {}
-    system.assert(Utility.getRecordTypeId(strObjectName, strRecordTypeName) != null, 'Wrong value');
-    
-    //*** covert method "getRecordTypeIdByName"
-    system.assert(Utility.getRecordTypeIdByName(strObjectName).size() > 0, 'Wrong count');
 } //*** end of "test_getRTmapName_Id"
 
 /****************************************************************************************************

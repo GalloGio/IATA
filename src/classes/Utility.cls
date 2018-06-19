@@ -799,38 +799,6 @@ public without sharing class Utility {
     } //*** end of "getDefaultCurrency"
     
     /****************************************************************************************************
-        Created by CGI David D 2015-12-22
-            Get RecordType Id by Name
-    ****************************************************************************************************/
-    public static Id getRecordTypeId(String objectName, String recordTypeName)
-    {
-        try
-        {
-            return Schema.getGlobalDescribe().get(objectName).getDescribe().getRecordTypeInfosByName().get(recordTypeName).getRecordTypeId();
-        }
-        catch(Exception ex)
-        {
-            return null;
-        }
-    }
-    
-    /****************************************************************************************************
-        Created by CGI Kevin Ky 2015-12-29
-            Get RecordType Id by Name
-    ****************************************************************************************************/
-    public static map<String,Id> getRecordTypeIdByName(String sobjectType){
-        
-        map<String,Id> recordTypeName_Id = new map<String,Id>();
-
-        List<RecordType> lstRecordType = [SELECT id, Name from RecordType where sObjectType = :sobjectType and isActive = true];
-        for(RecordType rt : lstRecordType){
-            recordTypeName_Id.put(rt.Name.toLowerCase(),rt.Id);
-        }
-
-        return recordTypeName_Id;
-    }
-    
-    /****************************************************************************************************
         Created by CGI Thai 2016-03-23
             Replace newline character by something else.  Developped for Street field
     ****************************************************************************************************/

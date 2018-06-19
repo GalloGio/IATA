@@ -247,12 +247,6 @@ public with sharing class IFAP_BusinessRules {
 
     public static Boolean CheckFinancialAssessmentContactExist(Contact theContact) {
 
-        // not sure if necessary to get contact record type..
-        // get the IFAP case recordtype
-        // RecordType ContactRecordType = [Select r.Id, r.Name from RecordType r where r.DeveloperName = 'IATAStandardContact' limit 1];
-        // RecordType ContactRecordTypeStandard = [Select r.Id, r.Name from RecordType r where r.DeveloperName = 'Standard' limit 1];
-
-
         // Check for the record type, the agent type (P/C) and for the financial assessment contact boolean field
         //        //(theContact.RecordTypeId == ContactRecordType.Id || theContact.RecordTypeId == ContactRecordTypeStandard.Id ) &&
         if (
@@ -556,8 +550,8 @@ public with sharing class IFAP_BusinessRules {
      */
     public static Boolean assignAssessmentTemplateToAccountsWhereMissing(Integer maxLimit) {
 
-        List<RecordType> accountRecordTypes = [Select r.Id, r.Name From RecordType r Where r.SobjectType  = 'Account' and r.Name = 'Standard Account'];
-        Account[] listAccountToAssign = [Select a.Id, a.Name, a.Type, a.BillingCountry, a.Assessment_Template__c From Account a where a.Assessment_Template__c = null and a.RecordTypeId = :accountRecordTypes.get(0).Id limit :maxLimit];
+        Id accountRecordTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('Account', 'Standard_Account');
+        Account[] listAccountToAssign = [Select a.Id, a.Name, a.Type, a.BillingCountry, a.Assessment_Template__c From Account a where a.Assessment_Template__c = null and a.RecordTypeId = :accountRecordTypeId limit :maxLimit];
 
         for (Account a : listAccountToAssign) {
             //Boolean result = setAssessmentTemplateToAccount(a);
