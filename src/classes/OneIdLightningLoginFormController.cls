@@ -75,13 +75,15 @@ public without sharing class OneIdLightningLoginFormController {
                     if(startUrl != 'mobileApp') pageLink = startUrl;
 
                     if( String.isNotBlank(serviceName) && serviceName == 'ISSP'){
-                       pageLink = '/identity/apex/CommunitiesLanding?serviceName=ISSP&startUrl=' + startUrl;
+                       //pageLink = '/identity/apex/CommunitiesLanding?serviceName=ISSP&startUrl=' + startUrl;
+                       pageLink = '/apex/CommunitiesLanding?serviceName=ISSP&startUrl=' + startUrl;
                     }
 
                 }else if( String.isNotBlank(serviceName) && serviceName == 'ISSP'){
                 	 //pageLink = '/ISSP_Homepage';
                 	 //Let's leverage "standard" page's controller doing the magic. Just add the param, redirection will be done by the page controller
-                	 pageLink = '/identity/apex/CommunitiesLanding?serviceName=ISSP';
+                	 //pageLink = '/identity/apex/CommunitiesLanding?serviceName=ISSP';
+                     pageLink = '/apex/CommunitiesLanding?serviceName=ISSP';
                 }
                 
                 if (oneUser.Portal_User_Frozen_Checkbox__c){
