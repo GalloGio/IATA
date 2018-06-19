@@ -24,8 +24,8 @@ private class OneIdUtilsTest {
         String UrlName = OneIdUtils.getCommunityUrlName();                
 
         String methodUrl = OneIdUtils.getOrgUrl();     
-
-        String Siteurl=OneIdUtils.GetSiteCompleteUrl();
+		OneIdUtils.fakemethod();
+        //String Siteurl=OneIdUtils.GetSiteCompleteUrl();
         //String SiteurlSt = OneIdUtils.GetSiteCompleteUrl(OneIdUtils.GET_POR_URL_FROM_SITE);
         
         //String SiteurlCs = OneIdUtils.GetSiteCompleteUrl(OneIdUtils.GET_POR_URL_FROM_ISSP_CS);
