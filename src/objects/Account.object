@@ -22658,6 +22658,32 @@ This field is kept up-to-date with the feedback of ITDI at least twice a year du
         </sharedTo>
     </listViews>
     <listViews>
+        <fullName>Mauritania_Travel_Agents</fullName>
+        <columns>ACCOUNT.NAME</columns>
+        <columns>ACCOUNT.SITE</columns>
+        <columns>ACCOUNT.ADDRESS1_COUNTRY</columns>
+        <columns>ACCOUNT.ADDRESS1_CITY</columns>
+        <columns>ACCOUNT.TYPE</columns>
+        <columns>CORE.USERS.ALIAS</columns>
+        <filterScope>Everything</filterScope>
+        <filters>
+            <field>ACCOUNT.SITE</field>
+            <operation>startsWith</operation>
+            <value>512</value>
+        </filters>
+        <filters>
+            <field>ACCOUNT.TYPE</field>
+            <operation>contains</operation>
+            <value>Passenger</value>
+        </filters>
+        <label>Mauritania - Travel Agents</label>
+        <language>en_US</language>
+        <sharedTo>
+            <group>IATAEasternAfrica</group>
+            <group>IDFSAfricaRegionalOffice</group>
+        </sharedTo>
+    </listViews>
+    <listViews>
         <fullName>MauritiusTravelAgents</fullName>
         <columns>ACCOUNT.NAME</columns>
         <columns>ACCOUNT.SITE</columns>
