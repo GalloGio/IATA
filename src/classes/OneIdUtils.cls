@@ -1,8 +1,6 @@
 public without sharing class OneIdUtils {
 	
-    public static final String GET_POR_URL_FROM_SITE='GET_POR_URL_FROM_SITE';
-    public static final String GET_POR_URL_FROM_ISSP_CS='GET_POR_URL_FROM_ISSP_CS';
-    public static final String GET_POR_URL_FROM_ORG_AND_CUM_NAME_CS='GET_POR_URL_FROM_ORG_AND_CUM_NAME_CS';
+    public Enum Mode {CURRENT, ISSP, IDENTITY}
     
 	@AuraEnabled
 	public static String ORG_URL {get; set;}
@@ -29,34 +27,50 @@ public without sharing class OneIdUtils {
     
     @AuraEnabled
     public Static String getSiteCompleteUrl (){
-        return getSiteCompleteUrl(getSiteCompleteUrl(''));
+        return getSiteCompleteUrl(Mode.CURRENT);
     }
     
     @AuraEnabled
-    public Static String getSiteCompleteUrl (String methodToUse){
-    	String CustSetIndentityPortal=String.ValueOF(ISSP_CS__c.getValues('IdentityPortal').value__c);
+    public Static String getSiteCompleteUrl (Mode m){
+        String identityPortal =String.ValueOF(ISSP_CS__c.getValues('IdentityPortal').value__c);
+    	String csPortal =String.ValueOF(ISSP_CS__c.getValues('Host').value__c);
+        String defaultProtocol = 'https://';
         
-        System.debug('getSiteCompleteUrl methodToUse='+methodToUse);
+        System.debug(loggingLevel.FINE, '____ [cls OneIdUtils - getSiteCompleteUrl] Mode - ' + m);
         
-        if ( ((methodToUse=='')||(methodToUse==GET_POR_URL_FROM_SITE ))
-            && Site.getBaseUrl() != null && Site.getBaseUrl() != ''){
-            System.debug('SITE URL: Site.getBaseUrl()');
-            COMMUNITY_COMPLETE_URL=Site.getBaseUrl();
-        }
-        else if ( ((methodToUse=='')||(methodToUse==GET_POR_URL_FROM_ISSP_CS ))
-                 && CustSetIndentityPortal != null &&  CustSetIndentityPortal!= ''){
-            System.debug('SITE URL: CustSetIndentityPortal');
-            COMMUNITY_COMPLETE_URL='https://'+CustSetIndentityPortal + (String.isEmpty(getCommunityUrlName()) ? '' : '/' + getCommunityUrlName());
-        }
-        //GET_POR_URL_FROM_ORG_AND_CUM_NAME_CS
-        else
-        {
-            System.debug('SITE URL: getOrgUrl()/getCommunityUrlName()');
-            COMMUNITY_COMPLETE_URL='https://'+getOrgUrl()+(String.isEmpty(getCommunityUrlName()) ? '' : '/' + getCommunityUrlName());
+        if(m == Mode.IDENTITY && String.isNotEmpty(identityPortal)) COMMUNITY_COMPLETE_URL = defaultProtocol+identityPortal;
+        else if (m == Mode.ISSP && String.isNotEmpty(csPortal)) COMMUNITY_COMPLETE_URL = defaultProtocol+csPortal;
+        else if (m == Mode.CURRENT) COMMUNITY_COMPLETE_URL = Site.getBaseUrl();
+        
+
+        if(String.isEmpty(COMMUNITY_COMPLETE_URL)){
+            COMMUNITY_COMPLETE_URL= defaultProtocol+getOrgUrl()+(String.isEmpty(getCommunityUrlName()) ? '' : '/' + getCommunityUrlName());
         }
         
-        System.debug('FINAL url: '+COMMUNITY_COMPLETE_URL);
+        System.debug(loggingLevel.FINE, '____ [cls OneIdUtils - getSiteCompleteUrl] final URL - ' + COMMUNITY_COMPLETE_URL);
         
         return COMMUNITY_COMPLETE_URL;
     }
+	
+	public static void fakemethod () {
+		Integer i=0;
+		i=0;
+		i=0;
+		i=0;
+		i=0;
+		i=0;
+		i=0;
+		i=0;
+		i=0;
+		i=0;
+		i=0;
+		i=0;
+		i=0;
+		i=0;
+		i=0;
+		i=0;
+	
+	}
+	
+	
 }

@@ -119,6 +119,15 @@ public class AmazonFile {
         return amazonFile==null? null: this.amazonFile.Skip_Validation__c;
     }
     
+    /*** AMSU-139 ***/
+    public String getUpdatedBy() {
+        return amazonFile==null? null: this.amazonFile.AMS_Updated_By__c;
+    }
+
+    public Datetime getUpdatedDate() {
+        return amazonFile==null? null: this.amazonFile.AMS_Updated_Date__c;
+    }
+        
     // for compatibility with AmazonFinancial.page
     public PageReference deleteFile() {
         delFile();
@@ -205,7 +214,7 @@ public class AmazonFile {
                 Select Id, Name, Full_Name_Unique__c, CreatedDate, CreatedById, CreatedBy.Name, Case__c, isPublic__c, Description__c, File_Identifier__c,
                 File_Identifier_picklist__c, Review_Status__c, Source__c, RecordTypeId, RecordType.DeveloperName, Internal_Comments__c, 
                 Document_Date__c, Category__c, Subcategory__c, Expiry_Date__c, Expired__c,SAP_Number__c, Skip_Validation__c,
-                Additional_Information__c, EF_Private__c
+                Additional_Information__c, EF_Private__c, AMS_Updated_By__c, AMS_Updated_Date__c
                 From AmazonFile__c 
                 Where id = :sobjectId
             ];
@@ -247,7 +256,7 @@ public class AmazonFile {
                 Select Id, Name, Full_Name_Unique__c, CreatedDate, CreatedById, CreatedBy.Name, Case__c, isPublic__c, Description__c, File_Identifier__c,
                 File_Identifier_picklist__c, Review_Status__c, Source__c, RecordTypeId, RecordType.DeveloperName, Internal_Comments__c,
                 Document_Date__c, Category__c, Subcategory__c, Expiry_Date__c, Expired__c, SAP_Number__c, Skip_Validation__c,
-                Additional_Information__c, EF_Private__c
+                Additional_Information__c, EF_Private__c, AMS_Updated_By__c, AMS_Updated_Date__c
                 From AmazonFile__c
                 Where Case__c = :sobjectId
             ];
@@ -258,7 +267,7 @@ public class AmazonFile {
                 Select Id, Name, Full_Name_Unique__c, CreatedDate, CreatedById, CreatedBy.Name, Case__c, isPublic__c, Description__c, File_Identifier__c,
                 File_Identifier_picklist__c, Review_Status__c, Source__c, RecordTypeId, RecordType.DeveloperName, Internal_Comments__c, 
                 Document_Date__c, Category__c, Subcategory__c, Expiry_Date__c, Expired__c, SAP_Number__c, Skip_Validation__c,
-                Additional_Information__c, EF_Private__c
+                Additional_Information__c, EF_Private__c, AMS_Updated_By__c, AMS_Updated_Date__c
                 From AmazonFile__c
                 Where sObject_Id__c = :sobjectId
             ];
