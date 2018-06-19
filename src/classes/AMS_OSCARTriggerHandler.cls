@@ -2548,8 +2548,9 @@ public class AMS_OSCARTriggerHandler {
         else if(agencyType == AMS_Utils.NGCHANGES && step == AMS_Utils.APPROVAL && wasApproved) templateId      = 'ANG_Changes_APP';
         else if(agencyType == AMS_Utils.NGCHANGES && step == AMS_Utils.APPROVAL && !wasApproved) templateId     = 'ANG_Changes_DIS';
         else if(agencyType == AMS_Utils.IEPBANKACCOUNTSETUP && step == AMS_Utils.SANITYCHECK) templateId    = 'IEP_Setup_SanityCheck_Passed';
-        else if(agencyType == AMS_Utils.IEPBANKACCOUNTSETUP && step == AMS_Utils.DUEDILIGENCE && wasApproved) templateId   = 'IEP_Setup_Finalization_Passed';
-        else if(agencyType == AMS_Utils.IEPBANKACCOUNTSETUP && step == AMS_Utils.DUEDILIGENCE && !wasApproved) templateId  = 'IEP_Setup_Finalization_Failed';
+        else if(agencyType == AMS_Utils.IEPBANKACCOUNTSETUP && step == AMS_Utils.DUEDILIGENCE && !wasApproved) templateId   = 'IEP_Setup_Finalization_Failed';
+        else if(agencyType == AMS_Utils.IEPBANKACCOUNTSETUP && step == AMS_Utils.SETUPPROCESSING && wasApproved) templateId  = 'IEP_Setup_Finalization_Passed';
+        else if(agencyType == AMS_Utils.IEPBANKACCOUNTSETUP && step == AMS_Utils.SETUPPROCESSING && !wasApproved) templateId  = 'IEP_Setup_Finalization_Failed';
         //else if(agencyType == AMS_Utils.IEPBANKACCOUNTSETUP && step == AMS_Utils.SETUPFINALIZATION && wasApproved) templateId   = 'IEP_Setup_Finalization_Passed';
         //else if(agencyType == AMS_Utils.IEPBANKACCOUNTSETUP && step == AMS_Utils.SETUPFINALIZATION && !wasApproved) templateId  = 'IEP_Setup_Finalization_Failed';
         else if(agencyType == AMS_Utils.NGOPTINOUT && step == AMS_Utils.PASSED && wasApproved) templateId  = 'ANG_Financial_Assesment_Opt_in_App';
@@ -3014,15 +3015,6 @@ public class AMS_OSCARTriggerHandler {
 
         }
 
-        if(updatedOscar.Process__c == AMS_Utils.IEPBANKACCOUNTSETUP && oldOSCAR.STEP17__c <> updatedOscar.STEP17__c && updatedOscar.STEP17__c == 'Passed'){
-
-            System.debug('Sending the email for the user to anounce Finalization Passing of the IEP bank account setup oscar');
-
-            //using an already existing method to send email alert to user.
-            AMS_OSCARTriggerHandler.sendEmailAlert(updatedOscar.Id, updatedOscar.Oscar_Communication_Case_Id__c, updatedOscar.Process__c, AMS_Utils.DUEDILIGENCE, true);
-
-        }
-
         if(updatedOscar.Process__c == AMS_Utils.IEPBANKACCOUNTSETUP && oldOSCAR.STEP17__c <> updatedOscar.STEP17__c && updatedOscar.STEP17__c == 'Failed'){
 
             updatedOscar.Status__c = 'Closed';
@@ -3030,6 +3022,15 @@ public class AMS_OSCARTriggerHandler {
 
             //using an already existing method to send email alert to user.
             AMS_OSCARTriggerHandler.sendEmailAlert(updatedOscar.Id, updatedOscar.Oscar_Communication_Case_Id__c, updatedOscar.Process__c, AMS_Utils.DUEDILIGENCE, false);
+
+        }
+
+        if(updatedOscar.Process__c == AMS_Utils.IEPBANKACCOUNTSETUP && oldOSCAR.STEP41__c <> updatedOscar.STEP41__c && updatedOscar.STEP17__c == 'Passed'){
+
+            System.debug('Sending the email for the user to anounce Finalization Passing/Falling of the IEP bank account setup oscar');
+
+            //using an already existing method to send email alert to user.
+            AMS_OSCARTriggerHandler.sendEmailAlert(updatedOscar.Id, updatedOscar.Oscar_Communication_Case_Id__c, updatedOscar.Process__c, AMS_Utils.SETUPPROCESSING, updatedOscar.STEP41__c == 'Passed');
 
         }
 
