@@ -185,6 +185,7 @@
     </fields>
     <fields>
         <fullName>AMS_Rejection_Withdrawal_remarks__c</fullName>
+        <description>Text field to allow user to add rejection/withdrawal comments</description>
         <externalId>false</externalId>
         <label>Rejection / Withdrawal remarks</label>
         <length>32768</length>
