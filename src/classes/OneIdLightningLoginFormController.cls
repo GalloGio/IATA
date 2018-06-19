@@ -107,6 +107,12 @@ public without sharing class OneIdLightningLoginFormController {
             system.debug('pageLink: ' + pageLink);
             system.debug('Used Username: '+username);
             
+            //Login on the portal community using a portal URL
+            if( String.isNotBlank(serviceName) && serviceName == 'ISSP'){
+                 String s = startUrl != null ? startUrl : '/ISSP_Homepage';
+                 ApexPages.PageReference lgnPortal = Site.login(username, password, OneIdUtils.getSiteCompleteUrl(OneIdUtils.Mode.ISSP) + s);
+            }
+            
             //login in siteCompleteUrl
             ApexPages.PageReference lgn = Site.login(username, password, pageLink);
             
