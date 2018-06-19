@@ -4,12 +4,10 @@
 	<html>
 
 
-	<head>
-    	<meta charset="utf-8"/>
-    	<meta name="viewport" content="width=device-width, initial-scale=1"/>
+    <meta charset="utf-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1"/>
 
-    	<c:ISSP_Header />
-  	</head>
+    <c:ISSP_Header />
 
   	<style type="text/css">
   		main {
@@ -226,7 +224,7 @@
     			
 				<apex:form>
 			        
-			    	        <apex:commandButton styleClass="btn btn-default" action="{!cancel}" value="{!$Label.ISSP_Cancel}"/>
+			    	        <apex:commandButton styleClass="btn btn-default" action="{!cancel}" value="{!$Label.ISSP_Back}"/>
 			                <apex:commandButton styleClass="btn btn-default" action="{!submitForm}" value="{!$Label.ISSP_AMS_Submit_IATA}"/>
 			                		                
 			            
