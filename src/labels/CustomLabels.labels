@@ -19674,7 +19674,7 @@ this is the tiess topic help</value>
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>ISSP_My_Cases_Created</shortDescription>
-        <value>My cases that I created</value>
+        <value>Cases I Closed</value>
     </labels>
     <labels>
         <fullName>ISSP_My_Cases_Working_On</fullName>
@@ -19682,7 +19682,7 @@ this is the tiess topic help</value>
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>ISSP_My_Cases_Working_On</shortDescription>
-        <value>My cases that I am working on</value>
+        <value>Cases I&apos;m working on</value>
     </labels>
     <labels>
         <fullName>ISSP_My_Company_Cases</fullName>
