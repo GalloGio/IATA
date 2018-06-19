@@ -1609,6 +1609,13 @@ global class ANG_OscarProcessHelper {
 		if(!casesToUpdate.isEmpty())
 			update casesToUpdate;
 
+		//sending email with url for portal    
+        for (Account acc: accs){
+        
+            AMS_AgencyRegulationAutoRenewal.sendEmailAlert(new List<Contact>{accOscarObjsMap.get(acc.Id).con}, accOscarObjsMap.get(acc.Id).oscar.Id, AMS_OSCARTriggerHandler.ANGemailTemplates(AMS_Utils.IEPBANKACCOUNTSETUP, 'Creation', true), accOscarObjsMap.get(acc.Id).oscar.Oscar_Communication_Case_Id__c, owea[0], false);         
+
+        }
+
     }
 	
 	//EM - To be removed
