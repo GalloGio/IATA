@@ -240,11 +240,16 @@ public without sharing class ISSP_Login {
             oneIDStatus = String.ValueOF(ISSP_CS__c.getValues('1ID redirect').value__c);
         
         String startUrl = ApexPages.currentPage().getParameters().get('startURL');
+        String retURL = ApexPages.currentPage().getParameters().get('retURL');
         system.debug('startURL ' + startURL);
+        
+        if(startUrl == null && retURL != null){            
+            startUrl = retURL;
+        }
         
         if(startUrl != null){            
             if(oneIDStatus == 'ON'){                
-                PageReference pr = new PageReference('/identity/s/login/?startURL='+startUrl+'&serviceName=ISSP');
+                PageReference pr = new PageReference(OneIdUtils.getSiteCompleteUrl(OneIdUtils.Mode.IDENTITY) + '/login/?startURL='+startUrl+'&serviceName=ISSP');
                 pr.setRedirect(true);                        
                 return pr;    
             }else{                
@@ -253,7 +258,7 @@ public without sharing class ISSP_Login {
         }
         else if(communityName == null && startUrl == null){            
             if(oneIDStatus == 'ON'){                
-                PageReference pr = new PageReference('/identity/s/login/?startURL=%2F'+'ISSP_Homepage&serviceName=ISSP');
+                PageReference pr = new PageReference(OneIdUtils.getSiteCompleteUrl(OneIdUtils.Mode.IDENTITY) + '/login/?startURL=%2F'+'ISSP_Homepage&serviceName=ISSP');
                 pr.setRedirect(true);
                 return pr;    
             }else{
