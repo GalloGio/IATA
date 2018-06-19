@@ -52,6 +52,18 @@ public class AMS_OSCAR_HightlightsPanelController {
         try {
             update theOscar;
             this.saveAction = true;
+        } catch(DmlException e) {
+            /*** AMSU-37 ***/
+            String e_message = e.getMessage();
+            if(e_message.contains('FIELD_CUSTOM_VALIDATION_EXCEPTION')) {
+                e_message = e_message.substringBetween('FIELD_CUSTOM_VALIDATION_EXCEPTION, ', ': ');
+                ApexPages.addMessage(new ApexPages.message(ApexPages.Severity.ERROR, e_message));
+            } else {
+                ApexPages.addMessages(e);
+            }
+
+            System.debug(loggingLevel.ERROR, '____ [cls AMS_OSCAR_HightlightsPanelController - saveStatus] error - ' + e.getMessage());
+            this.theOSCAR = fetchOscarFields(this.oscarId);
         } catch(Exception e) {
             //DML Exceptions are sometimes displayed on the page
             if(e.getTypeName() != 'System.DmlException' || !ApexPages.hasMessages()) ApexPages.addMessage(new ApexPages.message(ApexPages.Severity.ERROR, 'Couldn\'t save changes '+ e.getMessage()));

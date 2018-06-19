@@ -344,6 +344,11 @@ public without sharing class AMS_Utils {
     public static final String REJECTED_CLOSED = 'Rejected Closed';
     public static final String ACCEPTED = 'Accepted';
 
+    /* AMSU-37 */
+    public static final String APP_DISAPPROVED = '12-APPLICATION DISAPPROVED';
+    public static final String APP_WITHDRAWN = '11-APPLICATION WITHDRAWN';
+
+
     static {
         refreshCache();
     }

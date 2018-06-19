@@ -795,6 +795,20 @@
         <value>Perform Correction</value>
     </labels>
     <labels>
+        <fullName>AMS_PendingHOAccr</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>AMS_PendingHOAccr</shortDescription>
+        <value>You cannot create &quot;New Head Office&quot; application while an another one is open. Check case {0}</value>
+    </labels>
+    <labels>
+        <fullName>AMS_RRejected</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>AMS_RRejected</shortDescription>
+        <value>Request Rejected</value>
+    </labels>
+    <labels>
         <fullName>AMS_RollbackCase_Description</fullName>
         <language>en_US</language>
         <protected>false</protected>

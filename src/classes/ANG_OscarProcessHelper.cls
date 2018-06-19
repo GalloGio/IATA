@@ -44,7 +44,8 @@ global class ANG_OscarProcessHelper {
 					Is_your_firm_handling_Dangerous_Goods__c, IATA_ISO_Billing_State__c, IATA_ISO_Shipping_Country__c, IATA_ISO_Shipping_Country__r.Name, IATA_ISO_Shipping_State__c,
 					IATA_ISO_Shipping_State__r.Name, ISO_State__r.Name, Link_agent_name__c, ANG_Accreditation_Model__c, IATA_ISO_Country__r.CurrencyIsoCode, IATA_ISO_Country__r.Due_diligence_mandatory__c,
 					IATA_ISO_Country__r.AMS_Settlement_System__r.CurrencyIsoCode,
-					(SELECT Id FROM RHC_Informations__r), Is_PCI_compliant__c,Link_agent_code__c, Sector__c, Category__c, Check_Digit__c, RecordTypeId,Due_Diligence_Status__c,CNS_Agency__c, GDP_Opt_In__c 
+					(SELECT Id FROM RHC_Informations__r), Is_PCI_compliant__c,Link_agent_code__c, Sector__c, Category__c, Check_Digit__c, RecordTypeId,Due_Diligence_Status__c,CNS_Agency__c, GDP_Opt_In__c ,
+					(SELECT Id, Change_Code__c, Active__c FROM Agencies_Applied_Change_codes__r WHERE Active__c = true), Reason__c
 					FROM Account
 					WHERE Id =:accountId FOR UPDATE];
 
@@ -102,11 +103,14 @@ global class ANG_OscarProcessHelper {
 
 			System.debug('[ANG_OscarProcessHelper] Execution time so far:' + (datetime.now().getTime() - processStartTime.getTime()) /1000);
 
-	        if(!oscar.Flag_IATACode__c){
+			/*** AMSU-37 ***/
+			Boolean sIATACodeGeneration = doAgainIATACodeGeneration(oscar, theAccount);
+
+	        if(!oscar.Flag_IATACode__c || sIATACodeGeneration){
 
 				System.debug('[ANG_OscarProcessHelper] Starting IATA Code Generation.');
 
-				if(!Test.isRunningTest())
+				if(!Test.isRunningTest() && !sIATACodeGeneration)
 		        	updater = AmsIataCodeGenerator.generatedAgencyIATACode(theAccount,theAccreditation,updater);
 
 
@@ -877,6 +881,26 @@ global class ANG_OscarProcessHelper {
 		}
 
 		return true;
+	}
+
+	/*** AMSU-37 ***/
+	public static Boolean doAgainIATACodeGeneration(AMS_Oscar__c oscar, Account agency) {
+		Set<String> accountStatus = new Set<String> {'12-APPLICATION DISAPPROVED', '11-APPLICATION WITHDRAWN'};
+		Set<String> processes = AMS_Utils.oscarNewProcesses; 
+		Set<String> appliedChangeCodes = new Set<String> {'DIS', 'NWD'}; 
+		List<Agency_Applied_Change_code__c> changeCodes = agency.Agencies_Applied_Change_codes__r;
+
+		if(!accountStatus.contains(agency.Reason__c) || !processes.contains(oscar.Process__c)) {
+			return false;
+		}
+
+		for(Agency_Applied_Change_code__c changeCode : changeCodes) {
+			if(appliedChangeCodes.contains(changeCode.Change_Code__c)) {
+				return true;
+			}
+		}
+
+		return false;
 	}
 
 	public static List<Case> createPCIComplianceOscars(List<Account> accs, Map<Id,List<Contact>> contactsAcc, Set<Id> accsToSendEmail){
