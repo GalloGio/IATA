@@ -15,5 +15,9 @@ trigger AmazonFileTrg on AmazonFile__c (
     }else if(Trigger.isBefore && (Trigger.isInsert || Trigger.isUpdate)){
     	AmazonFileTrgHelper.checkEFRequiredFields(trigger.NewMap);
         AmazonFileTrgHelper.setFileIdentifier((List<AmazonFile__c>) trigger.new); //AMSU-28;AMSU-113
-    }
+    	/*** AMSU-139 ***/
+        if(Trigger.isUpdate) {
+            AmazonFileTrgHelper.checkApprover(Trigger.new, Trigger.oldMap);
+        }
+	}
 }

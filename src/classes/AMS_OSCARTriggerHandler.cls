@@ -3416,7 +3416,9 @@ public class AMS_OSCARTriggerHandler {
                         //Checks if all Hierarchy was Selected
                         Boolean isAllHierarchySelected = AMS_HierarchyHelper.isAllHierarchySelected(agenciesAffectedWithHO, accountHierarchyRelationships.get(updatedOscar.Account__c), accounts);
 
-                        if(isAllHierarchySelected){
+                        if(isEmptyAccountHierarchyRelationshipsMap(accountHierarchyRelationships)){
+                            sType_of_change = 'CorrectionSingleAccount';
+                        } else if(isAllHierarchySelected){
                             sType_of_change = 'CorrectionAllHierarchy';
                         }else{
                             sType_of_change = 'CorrectionPerLocation';

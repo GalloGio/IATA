@@ -80,9 +80,12 @@ public without sharing class  ISSP_First_Login{
         
 	private PageReference home(){
         system.debug('GOING HOME');
-		Pagereference pr = Page.ISSP_Login;
 
-		pr.setRedirect(true);
+        // 1ID - changed from Portal login page to 1ID login page
+	    //Pagereference pr = Page.ISSP_Login;
+        //pr.setRedirect(true);
+        PageReference pr = new PageReference(OneIdUtils.getSiteCompleteUrl(OneIdUtils.Mode.IDENTITY) + '/login/?serviceName=ISSP');
+
 		return pr;   
 
     }
@@ -92,7 +95,7 @@ public without sharing class  ISSP_First_Login{
     private PageReference changePassword(){
 		system.debug('CHANGING PASS');
         //updateUsers(ids);
-        Pagereference pr =  !test.isRunningTest() ? site.login(userName,passWord,'/ISSP_ChangePassword'): Page.ISSP_ChangePassword;
+        Pagereference pr =  !test.isRunningTest() ? site.login(userName,passWord,OneIdUtils.getSiteCompleteUrl(OneIdUtils.Mode.IDENTITY).removeEnd('/s') + '/OneId_ChangePassword?serviceName=ISSP'): Page.ISSP_ChangePassword;
         if(CommunityName=='CNS'){
            pr =  !test.isRunningTest() ? site.login(userName,passWord,'/ISSP_ChangePassword?CommunityName=CNS'): Page.ISSP_ChangePassword; 
         }
