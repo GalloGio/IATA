@@ -367,5 +367,17 @@ public class AmazonFileTrgHelper {
         update updOscar;
     }
 
+	/*** AMSU-139 ***/
+    public static void checkApprover(List<AmazonFile__c> records, Map<Id,AmazonFile__c> oldMap) {
+        String usrName = UserInfo.getName();
+        Set<String> statusToCheck = new Set<String> {AMS_Utils.REJECTED, AMS_Utils.REJECTED_CLOSED, AMS_Utils.ACCEPTED};
+        for(AmazonFile__c record : records) {
+            AmazonFile__c oldRecord = oldMap.get(record.Id);
+            if(statusToCheck.contains(record.Review_Status__c) && record.Review_Status__c <> oldRecord.Review_Status__c) {
+                record.AMS_Updated_Date__c = Datetime.now();
+                record.AMS_Updated_By__c = usrName;
+            }
+        }
+    }
 
 }

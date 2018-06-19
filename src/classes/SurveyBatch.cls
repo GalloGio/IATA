@@ -728,7 +728,7 @@ global class SurveyBatch implements Database.Batchable<sObject>, Database.Statef
         else if (RoleName.contains('Staff - TIESS')) {
           template = templates.get('Clicktools_Contact_Email_CX_EN_AUG17');   
         }
-        else if (RoleName.contains('IDFS E&F Services')) {
+        else if (RoleName.contains('E&F')) {
           template = templates.get('Clicktools_Contact_Email_CX_EN_AUG17');
 
         }

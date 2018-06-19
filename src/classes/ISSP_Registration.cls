@@ -4,7 +4,7 @@ public without sharing class ISSP_Registration {
         String communityName = ApexPages.currentPage().getParameters().get('CommunityName');
 
         if(communityName == null){
-            PageReference pr = new PageReference('/identity/s/login/SelfRegister?serviceName=ISSP');
+            PageReference pr = new PageReference(OneIdUtils.getSiteCompleteUrl(OneIdUtils.Mode.IDENTITY) + '/login/SelfRegister?serviceName=ISSP');
             pr.setRedirect(true);                        
             return pr;    
         }else{ //keep using the ISSP Registration page
