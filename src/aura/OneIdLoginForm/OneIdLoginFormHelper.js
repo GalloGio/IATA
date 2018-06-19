@@ -46,10 +46,8 @@
     },
     
    getClientIpAddressAjax : function (component, event, helpler) { 
-       var siteCompleteUrl=component.get('v.siteCompleteUrl');
        var url;
        //url='https://oneidconde-customer-portal-iata.cs83.force.com/oneidentity/services/apexrest/OneIdGetHttpContext';
-       //url=siteCompleteUrl+'/services/apexrest/OneIdGetHttpContext';
        url=$A.get("$Label.c.OneId_URL_javaScript") + '/services/apexrest/OneIdGetHttpContext';
        
        console.log('URL web service REST to get IP Adress: '+url);      
@@ -138,18 +136,6 @@
             var rtnValue = a.getReturnValue();
             if (rtnValue !== null) {
                 component.set('v.communitySelfRegisterUrl',rtnValue);
-            }
-        });
-        $A.enqueueAction(action);
-    },
-    
-    getSiteCompleteUrl : function (component, event, helpler) {
-        var action = component.get("c.getSiteCompleteUrl");
-        action.setCallback(this, function(a){
-            var rtnValue = a.getReturnValue();
-            console.log('getSiteCompleteUrl.Callback rtnValue='+JSON.stringify(rtnValue));
-            if (rtnValue !== null) {
-                component.set('v.siteCompleteUrl',rtnValue);
             }
         });
         $A.enqueueAction(action);
