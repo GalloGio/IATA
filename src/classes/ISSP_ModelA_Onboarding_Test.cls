@@ -16,8 +16,11 @@ private class ISSP_ModelA_Onboarding_Test {
                 AMS_Accreditation_Country_CheckList__c = cc.id,
                 Name = 'Name1',
                 Requirement_text__c = 'Text1',
-                ANG_Accreditation_Model__c = 'Legacy',
-                Language__c = 'en_AU');
+                Language__c = 'English',
+                Type_Of_Agent__c = 'IATA Cargo Agent',
+                RecordTypeId = RecordTypeSingleton.getInstance().RtIDsPerDeveloperNamePerObj.get('AMS_Accreditation_Requirement__c').get('IEP_Model_A'),
+                File_to_Upload__c = 'Mandatory',
+                File_Identifier2__c = 'REG_CERT');
 
         Account a = new Account (Name = 'Travel agency',
                                 RecordTypeId = AMS_Utils.RECTYPE_IATAAGENCY,
@@ -40,7 +43,8 @@ private class ISSP_ModelA_Onboarding_Test {
 
         Portal_Application_Right__c par = new Portal_Application_Right__c(Contact__c = con.Id,
                                                                         Portal_Application__c = portalApp.Id,
-                                                                        Right__c = 'Access Granted');
+                                                                        Right__c = 'Access Granted',
+                                                                        ANG_Portal_Service_Role__c = 'IEP Admin');
         insert par;
     }
 
@@ -49,14 +53,22 @@ private class ISSP_ModelA_Onboarding_Test {
         ANG_OscarProcessHelper.createIEPAccountOscar(accountMap);
         Case c = [SELECT Id FROM Case LIMIT 1];
         
-        
-        
         Test.setCurrentPageReference(new PageReference('Page.ISSP_ModelA_Onboarding'));
         System.currentPageReference().getParameters().put('caseId', c.Id);
         
         ISSP_ModelA_Onboarding controller = new ISSP_ModelA_Onboarding();
+
+        //falta criar ficheiro :s
+
+        /*list<AmazonFile__c> listAmazonFile = [
+                Select Size_MB__c, Name, Full_Name_Unique__c, CreatedDate, CreatedById, CreatedBy.Name, Case__c , File_Identifier__c
+                From AmazonFile__c
+                Where Case__c = :caseId
+                                             ];*/
+
+        AmazonFile__c file = new AmazonFile__c(Case__c = c.Id, Name = 'Name1');
         
-        
+        controller.submitForm();
     }
     
 }

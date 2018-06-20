@@ -162,4 +162,13 @@ public class ISSP_ModelA_Onboarding {
 
         return qId;
     }
+
+    public Pagereference securityCheck() {
+
+        if (!this.onBoardingOSCARCase.Owner.Name.startsWith('Model A Onboarding') && this.onBoardingOSCARCase.RecordType.Name != 'OSCAR Communication') {
+            return new Pagereference('/ISSP_Case?caseId=' + this.onBoardingOSCARCase.Id);
+        }
+
+        return null;
+    }
 }
