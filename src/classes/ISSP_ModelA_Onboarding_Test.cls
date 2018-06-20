@@ -14,7 +14,7 @@ private class ISSP_ModelA_Onboarding_Test {
                                                                 ANG_Enable_NewGen__c = true,
                                                                 Region__c = 'Americas');
 
-        IATA_ISO_Country__c algeria = new IATA_ISO_Country__c (Name = 'Alegria_test',
+        IATA_ISO_Country__c algeria = new IATA_ISO_Country__c (Name = 'Algeria_test',
                                                                 ISO_Code__c = 'DZ',
                                                                 ANG_Enable_NewGen__c = true,
                                                                 Region__c = 'Africa & Middle East');
@@ -180,22 +180,136 @@ private class ISSP_ModelA_Onboarding_Test {
 
         insert accounts;
 
-        /*Portal_Applications__c portalApp = new Portal_Applications__c(Name = 'IATA EasyPay (EDENRED)');
+        Portal_Applications__c portalApp = new Portal_Applications__c(Name = 'IATA EasyPay (EDENRED)');
         insert portalApp;
 
-        Contact con = ISSP_ObjectFactory.createNewContact();
-        con.AccountId = a1.Id;
-        insert con;
+        List<Contact> contacts = new List<Contact>();
 
-        Portal_Application_Right__c par = new Portal_Application_Right__c(Contact__c = con.Id,
+        Contact con1 = ISSP_ObjectFactory.createNewContact();
+        con1.AccountId = a1.Id;
+
+        Contact con2 = ISSP_ObjectFactory.createNewContact();
+        con2.AccountId = a2.Id;
+
+        Contact con3 = ISSP_ObjectFactory.createNewContact();
+        con3.AccountId = a3.Id;
+
+        Contact con4 = ISSP_ObjectFactory.createNewContact();
+        con4.AccountId = a4.Id;
+
+        Contact con5 = ISSP_ObjectFactory.createNewContact();
+        con5.AccountId = a5.Id;
+
+        contacts.add(con1);
+        contacts.add(con2);
+        contacts.add(con3);
+        contacts.add(con4);
+        contacts.add(con5);
+
+        insert contacts;
+
+        List<Portal_Application_Right__c> rights = new List<Portal_Application_Right__c>();
+
+        Portal_Application_Right__c par1 = new Portal_Application_Right__c(Contact__c = con1.Id,
                                                                         Portal_Application__c = portalApp.Id,
                                                                         Right__c = 'Access Granted',
                                                                         ANG_Portal_Service_Role__c = 'IEP Admin');
-        insert par;*/
+
+        Portal_Application_Right__c par2 = new Portal_Application_Right__c(Contact__c = con2.Id,
+                                                                        Portal_Application__c = portalApp.Id,
+                                                                        Right__c = 'Access Granted',
+                                                                        ANG_Portal_Service_Role__c = 'IEP Admin');
+
+        Portal_Application_Right__c par3 = new Portal_Application_Right__c(Contact__c = con3.Id,
+                                                                        Portal_Application__c = portalApp.Id,
+                                                                        Right__c = 'Access Granted',
+                                                                        ANG_Portal_Service_Role__c = 'IEP Admin');
+
+        Portal_Application_Right__c par4 = new Portal_Application_Right__c(Contact__c = con4.Id,
+                                                                        Portal_Application__c = portalApp.Id,
+                                                                        Right__c = 'Access Granted',
+                                                                        ANG_Portal_Service_Role__c = 'IEP Admin');
+
+        Portal_Application_Right__c par5 = new Portal_Application_Right__c(Contact__c = con5.Id,
+                                                                        Portal_Application__c = portalApp.Id,
+                                                                        Right__c = 'Access Granted',
+                                                                        ANG_Portal_Service_Role__c = 'IEP Admin');
+        
+        rights.add(par1);
+        rights.add(par2);
+        rights.add(par3);
+        rights.add(par4);
+        rights.add(par5);
+
+        insert rights;
     }
 
     @isTest static void testFetchRequirementsEurope() {
         Map<Id, Account> accountMap = new Map<Id, Account>([SELECT Id, Name, IATACode__c, BillingCountry, Region_formula__c, ANG_Accreditation_Model__c FROM Account WHERE Name = 'Travel Portugal']);
+        ANG_OscarProcessHelper.createIEPAccountOscar(accountMap);
+        Case c = [SELECT Id FROM Case LIMIT 1];
+        
+        Test.setCurrentPageReference(new PageReference('Page.ISSP_ModelA_Onboarding'));
+        System.currentPageReference().getParameters().put('caseId', c.Id);
+        
+        Test.startTest();
+        
+        ISSP_ModelA_Onboarding controller = new ISSP_ModelA_Onboarding();
+        controller.submitForm();
+
+        Test.stopTest();
+    }
+    
+    @isTest static void testFetchRequirementsAmericas() {
+        Map<Id, Account> accountMap = new Map<Id, Account>([SELECT Id, Name, IATACode__c, BillingCountry, Region_formula__c, ANG_Accreditation_Model__c FROM Account WHERE Name = 'Travel Argentina']);
+        ANG_OscarProcessHelper.createIEPAccountOscar(accountMap);
+        Case c = [SELECT Id FROM Case LIMIT 1];
+        
+        Test.setCurrentPageReference(new PageReference('Page.ISSP_ModelA_Onboarding'));
+        System.currentPageReference().getParameters().put('caseId', c.Id);
+        
+        Test.startTest();
+        
+        ISSP_ModelA_Onboarding controller = new ISSP_ModelA_Onboarding();
+        controller.submitForm();
+
+        Test.stopTest();
+    }
+
+    @isTest static void testFetchRequirementsAfrica() {
+        Map<Id, Account> accountMap = new Map<Id, Account>([SELECT Id, Name, IATACode__c, BillingCountry, Region_formula__c, ANG_Accreditation_Model__c FROM Account WHERE Name = 'Travel Algeria']);
+        ANG_OscarProcessHelper.createIEPAccountOscar(accountMap);
+        Case c = [SELECT Id FROM Case LIMIT 1];
+        
+        Test.setCurrentPageReference(new PageReference('Page.ISSP_ModelA_Onboarding'));
+        System.currentPageReference().getParameters().put('caseId', c.Id);
+        
+        Test.startTest();
+        
+        ISSP_ModelA_Onboarding controller = new ISSP_ModelA_Onboarding();
+        controller.submitForm();
+
+        Test.stopTest();
+    }
+
+    @isTest static void testFetchRequirementsChina() {
+        Map<Id, Account> accountMap = new Map<Id, Account>([SELECT Id, Name, IATACode__c, BillingCountry, Region_formula__c, ANG_Accreditation_Model__c FROM Account WHERE Name = 'Travel China']);
+        ANG_OscarProcessHelper.createIEPAccountOscar(accountMap);
+        Case c = [SELECT Id FROM Case LIMIT 1];
+        
+        Test.setCurrentPageReference(new PageReference('Page.ISSP_ModelA_Onboarding'));
+        System.currentPageReference().getParameters().put('caseId', c.Id);
+        
+        Test.startTest();
+        
+        ISSP_ModelA_Onboarding controller = new ISSP_ModelA_Onboarding();
+        controller.submitForm();
+
+        Test.stopTest();
+    }
+
+    @isTest static void testFetchRequirementsAsia() {
+        Map<Id, Account> accountMap = new Map<Id, Account>([SELECT Id, Name, IATACode__c, BillingCountry, Region_formula__c, ANG_Accreditation_Model__c FROM Account WHERE Name = 'Travel Australia']);
         ANG_OscarProcessHelper.createIEPAccountOscar(accountMap);
         Case c = [SELECT Id FROM Case LIMIT 1];
         
