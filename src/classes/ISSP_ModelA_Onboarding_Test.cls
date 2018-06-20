@@ -28,11 +28,17 @@ private class ISSP_ModelA_Onboarding_Test {
                                                                 ISO_Code__c = 'AU',
                                                                 ANG_Enable_NewGen__c = true,
                                                                 Region__c = 'Asia & Pacific');
+        
+        IATA_ISO_Country__c error = new IATA_ISO_Country__c (Name = 'Error_test',
+                                                                ISO_Code__c = 'ER',
+                                                                ANG_Enable_NewGen__c = true,
+                                                                Region__c = 'Europe');
         countries.add(portugal);
         countries.add(argentina);
         countries.add(algeria);
         countries.add(china);
         countries.add(australia);
+        countries.add(error);
 
         insert countries;
 
@@ -52,11 +58,15 @@ private class ISSP_ModelA_Onboarding_Test {
 
         AMS_Accreditation_Country_CheckList__c cc5 = new AMS_Accreditation_Country_CheckList__c(IATA_ISO_Country__c = australia.id,
                                                                                             Operation__c = 'Travel Agent');
+        
+        AMS_Accreditation_Country_CheckList__c cc6 = new AMS_Accreditation_Country_CheckList__c(IATA_ISO_Country__c = error.id,
+                                                                                            Operation__c = 'Travel Agent');
         checklists.add(cc1);
         checklists.add(cc2);
         checklists.add(cc3);
         checklists.add(cc4);
         checklists.add(cc5);
+        checklists.add(cc6);
 
         insert checklists;
 
@@ -106,12 +116,22 @@ private class ISSP_ModelA_Onboarding_Test {
                                                                                     RecordTypeId = AMS_Utils.RECTYPE_IEP_MODEL_A,
                                                                                     File_to_Upload__c = 'Optional',
                                                                                     File_Identifier2__c = 'REG_CERT');
+        
+        AMS_Accreditation_Requirement__c ac6 = new AMS_Accreditation_Requirement__c(AMS_Accreditation_Country_CheckList__c = cc6.Id,
+                                                                                    Name = 'Name1',
+                                                                                    Requirement_text__c = 'Text1',
+                                                                                    Language__c = 'English',
+                                                                                    Type_Of_Agent__c = 'IATA Travel Agent',
+                                                                                    RecordTypeId = AMS_Utils.RECTYPE_IEP_MODEL_A,
+                                                                                    File_to_Upload__c = 'Mandatory',
+                                                                                    File_Identifier2__c = 'REG_CERT');
 
         requirements.add(ac1);
         requirements.add(ac2);
         requirements.add(ac3);
         requirements.add(ac4);
         requirements.add(ac5);
+        requirements.add(ac6);
         
         insert requirements;
 
@@ -170,13 +190,25 @@ private class ISSP_ModelA_Onboarding_Test {
                                 Location_type__c = AMS_Utils.HE,
                                 ANG_Accreditation_Model__c = AMS_Utils.ACCREDITATIONMODEL_CASH,
                                 OwnerId = UserInfo.getUserId(),
-                                IATACode__c = '12345672');
+                                IATACode__c = '12345645');
+        
+        Account a6 = new Account (Name = 'Travel Error',
+                                RecordTypeId = AMS_Utils.RECTYPE_IATAAGENCY,
+                                IATA_ISO_Country__c = error.Id,
+                                Region__c = error.Region__c,
+                                Sector__c = Ams_Utils.SECTOR_PASSENGER,
+                                Status__c = Ams_Utils.ACC_S9_APPROVED,
+                                Location_type__c = AMS_Utils.HE,
+                                ANG_Accreditation_Model__c = AMS_Utils.ACCREDITATIONMODEL_CASH,
+                                OwnerId = UserInfo.getUserId(),
+                                IATACode__c = '12345644');
 
         accounts.add(a1);
         accounts.add(a2);
         accounts.add(a3);
         accounts.add(a4);
         accounts.add(a5);
+        accounts.add(a6);
 
         insert accounts;
 
@@ -199,14 +231,20 @@ private class ISSP_ModelA_Onboarding_Test {
 
         Contact con5 = ISSP_ObjectFactory.createNewContact();
         con5.AccountId = a5.Id;
+        
+        Contact con6 = ISSP_ObjectFactory.createNewContact();
+        con6.AccountId = a6.Id;
 
         contacts.add(con1);
         contacts.add(con2);
         contacts.add(con3);
         contacts.add(con4);
         contacts.add(con5);
+        contacts.add(con6);
 
         insert contacts;
+        
+        System.debug('rui3: ' + con5.AccountId);
 
         List<Portal_Application_Right__c> rights = new List<Portal_Application_Right__c>();
 
@@ -235,11 +273,17 @@ private class ISSP_ModelA_Onboarding_Test {
                                                                         Right__c = 'Access Granted',
                                                                         ANG_Portal_Service_Role__c = 'IEP Admin');
         
+        Portal_Application_Right__c par6 = new Portal_Application_Right__c(Contact__c = con6.Id,
+                                                                        Portal_Application__c = portalApp.Id,
+                                                                        Right__c = 'Access Granted',
+                                                                        ANG_Portal_Service_Role__c = 'IEP Admin');
+        
         rights.add(par1);
         rights.add(par2);
         rights.add(par3);
         rights.add(par4);
         rights.add(par5);
+        rights.add(par6);
 
         insert rights;
     }
@@ -321,6 +365,24 @@ private class ISSP_ModelA_Onboarding_Test {
         ISSP_ModelA_Onboarding controller = new ISSP_ModelA_Onboarding();
         controller.submitForm();
 
+        Test.stopTest();
+    }
+    
+    @isTest static void testError() {
+        Map<Id, Account> accountMap = new Map<Id, Account>([SELECT Id, Name, IATACode__c, BillingCountry, Region_formula__c, ANG_Accreditation_Model__c FROM Account WHERE Name = 'Travel Error']);
+        ANG_OscarProcessHelper.createIEPAccountOscar(accountMap);
+        Case c = [SELECT Id FROM Case LIMIT 1];
+        
+        Test.setCurrentPageReference(new PageReference('Page.ISSP_ModelA_Onboarding'));
+        System.currentPageReference().getParameters().put('caseId', c.Id);
+        
+        Test.startTest();
+        
+        ISSP_ModelA_Onboarding controller = new ISSP_ModelA_Onboarding();
+        controller.submitForm();
+        controller.cancel();
+        //controller.securityCheck();
+        
         Test.stopTest();
     }
     
