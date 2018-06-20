@@ -91,8 +91,8 @@ private class ANG_FOPOSCARNotificationBatchTest {
 		agencylist.add(a1);
 		insert agencylist;
 
-		Contact co1 = new Contact(AccountId = a1.id, Firstname = 'teste1', Lastname='test1', Phone = '911111111', MobilePhone = '911111111', 
-									Email = 'test@test.com', BSP_CASS_Payment_contact__c = true, User_Portal_Status__c = 'Approved Admin',
+		Contact co1 = new Contact(AccountId = a1.id, Firstname = 'teste18964654', Lastname='test198654188', Phone = '911111111', MobilePhone = '911111111', 
+									Email = 'test@test09237947698764981345.com', BSP_CASS_Payment_contact__c = true, User_Portal_Status__c = 'Approved Admin',
 									Preferred_Language__c = 'English', Financial_Assessment_Contact__c = false);	
 		insert co1;
 
@@ -181,8 +181,8 @@ private class ANG_FOPOSCARNotificationBatchTest {
 		agencylist.add(a1);
 		insert agencylist;
 
-		Contact co1 = new Contact(AccountId = a1.id, Firstname = 'teste1', Lastname='test1', Phone = '911111111', MobilePhone = '911111111', 
-									Email = 'test@test.com', BSP_CASS_Payment_contact__c = true, User_Portal_Status__c = 'Approved Admin',
+		Contact co1 = new Contact(AccountId = a1.id, Firstname = 'teste1043651048967017', Lastname='test187536835678', Phone = '911111111', MobilePhone = '911111111', 
+									Email = 'test@test48736174619.com', BSP_CASS_Payment_contact__c = true, User_Portal_Status__c = 'Approved Admin',
 									Preferred_Language__c = 'English', Financial_Assessment_Contact__c = false);	
 		insert co1;
 
