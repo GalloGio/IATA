@@ -63,8 +63,8 @@ private class OneId_Fred_AccountSelection_CTRL_TEST {
     	invitation = [SELECT Id, AccountId__c FROM Invitation__c LIMIT 1][0];
 
 	//Boolean isVerifierInvitation, String invitationId
-	       OneId_Fred_AccountSelection_CTRL.initParams(false, null);
-	       system.debug(invitation);
+    communityUser = [SELECT Id FROM User WHERE lastname = 'contact1' LIMIT 1][0];
+	       OneId_Fred_AccountSelection_CTRL.initParams(false, null);	       
 	       OneId_Fred_AccountSelection_CTRL.initParams(true, invitation.Id);
 	       system.runAs(communityUser) {
 	            OneId_Fred_AccountSelection_CTRL.initParams(false, null);
@@ -77,7 +77,7 @@ private class OneId_Fred_AccountSelection_CTRL_TEST {
     static void registration() {
     	icaoMember = [SELECT Id, Name, Legal_name__c, Reason_for_creation__c, ownerId, recordtypeid,Category__c, Category_Other_Value__c,BillingCountry, IATA_ISO_Country__c, IATA_ISO_Billing_State__c, IATA_ISO_Shipping_State__c FROM Account WHERE name = 'Air France' LIMIT 1][0];
     	communityUser = [SELECT Id FROM User WHERE lastname = 'contact1' LIMIT 1][0];
-    	Contact c = new Contact(LastName ='contact2',AccountId = icaoMember.Id);
+    	Contact c = new Contact(LastName ='contact2',AccountId = icaoMember.Id, email='mytest@test.com');
     	// As guest
     	OneId_Fred_AccountSelection_CTRL.registration(icaoMember, c, 'ICAO Member State', true, true, null);
     	system.runAs(communityUser) {
@@ -86,6 +86,33 @@ private class OneId_Fred_AccountSelection_CTRL_TEST {
        }
        OneId_Fred_AccountSelection_CTRL.permissionSetAssignenent(UserInfo.getUserId(), true, 1);
     }
+
+    @isTest 
+    static void registrationII() {
+        IATA_ISO_Country__c isoCountry = new IATA_ISO_Country__c(name = 'Canada',ISO_Code__c ='CN' );
+        insert isoCountry;
+        
+        
+        Account acc = new Account(
+                name= 'Air France', 
+                recordTypeId = [SELECT Id FROM RecordType WHERE developerName = 'IATA_Airline'][0].Id,
+                IATA_ISO_Country__c = isoCountry.Id,
+                Legal_name__c = 'legal',
+                BillingCity = 'test',
+                BillingCountry = 'Canada',
+                BillingStreet = 'some street',
+                Category__c = 'Travel Agent'
+        );
+
+       //icaoMember = [SELECT Id, Name, Legal_name__c, Reason_for_creation__c, ownerId, recordtypeid,Category__c, Category_Other_Value__c,BillingCountry, IATA_ISO_Country__c, IATA_ISO_Billing_State__c, IATA_ISO_Shipping_State__c FROM Account WHERE name = 'Air France' LIMIT 1][0];
+        communityUser = [SELECT Id FROM User WHERE lastname = 'contact1' LIMIT 1][0];
+        Contact c = new Contact(LastName ='contact2',AccountId = acc.Id, email='mytest@test.com');
+        // As guest
+        
+            OneId_Fred_AccountSelection_CTRL.registration(acc, c, 'ICAO Member State', false, true, null);       
+        
+    }
+
 
     @isTest 
     static void search() {

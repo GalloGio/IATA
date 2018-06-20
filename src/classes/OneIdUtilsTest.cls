@@ -7,7 +7,7 @@ private class OneIdUtilsTest {
         String orgUrl = URL.getSalesforceBaseUrl().getHost();
         
         //TODO: Set portal context
-   		String comunityUrl=Site.getBaseUrl();
+        String comunityUrl=Site.getBaseUrl();
        
         ISSP_CS__c setting = new ISSP_CS__c();
         setting.Name = 'IdentityPortal';
@@ -17,7 +17,11 @@ private class OneIdUtilsTest {
         OneId_Global_Settings__c setting2 = new OneId_Global_Settings__c();
         setting2.Community_Name__c = 'oneidentity';
         insert setting2;
-        
+
+        ISSP_CS__c cs = new ISSP_CS__c();
+        cs.Name='Host';
+        cs.Value__c='csp1idsre-customer-portal-iata.cs88.force.com';
+        insert cs;        
         
         test.startTest();
         
@@ -26,10 +30,10 @@ private class OneIdUtilsTest {
         String methodUrl = OneIdUtils.getOrgUrl();     
 
         String Siteurl=OneIdUtils.GetSiteCompleteUrl();
-        String SiteurlSt = OneIdUtils.GetSiteCompleteUrl(OneIdUtils.GET_POR_URL_FROM_SITE);
+        //String SiteurlSt = OneIdUtils.GetSiteCompleteUrl(OneIdUtils.GET_POR_URL_FROM_SITE);
         
-        String SiteurlCs = OneIdUtils.GetSiteCompleteUrl(OneIdUtils.GET_POR_URL_FROM_ISSP_CS);
-        String SiteurlOrgCusTy = OneIdUtils.GetSiteCompleteUrl(OneIdUtils.GET_POR_URL_FROM_ORG_AND_CUM_NAME_CS);
+        String SiteurlCs = OneIdUtils.GetSiteCompleteUrl();
+        String SiteurlOrgCusTy = OneIdUtils.GetSiteCompleteUrl();
         
         test.stopTest();
         system.assertEquals(methodUrl, orgUrl);

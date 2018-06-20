@@ -1,4 +1,4 @@
-public with sharing class ISSP_ChangePassword {
+public without sharing class ISSP_ChangePassword {
     
     public String currentPassword { get; set; }
     public String newPassword { get; set; }
@@ -9,7 +9,8 @@ public with sharing class ISSP_ChangePassword {
     public Boolean termsAndConditionChecked { get; set; }
     public Boolean displayPopup{get;set;}
     public Boolean fredError{get;set;}
-    public Boolean statusPoller{get;set;}        
+    public Boolean statusPoller{get;set;} 
+    private List <User> userList{get;set;}        
     User provUser;
 
      //CNS
@@ -34,7 +35,7 @@ public with sharing class ISSP_ChangePassword {
         provUser = new User();         
         errorMessage = new list<string>();
         integer passwordDays = integer.ValueOF(ISSP_CS__c.getValues('PasswordResetPeriod').value__c);
-        List <User> userList = [SELECT Id, UID__c, LastPasswordChangeDate, Email
+        userList = [SELECT Id, UID__c, LastPasswordChangeDate, Email, contact.AccountId 
                                 FROM User WHERE Id = :UserInfo.getUserId()];
         if (!userList.isEmpty()){
             if (userList[0].UID__c != '' && userList[0].UID__c != null){
@@ -97,16 +98,16 @@ public with sharing class ISSP_ChangePassword {
                     if (tempPass){                        
                         updateUsers();
                         if(serviceName == 'ISSP' || !isOneId){
-                            pageRef = new PageReference('/ISSP_PersonalInformation?mid=M5S1&confirm=yes' + commParam);
+                            pageRef = new PageReference(OneIdUtils.getSiteCompleteUrl(OneIdUtils.Mode.ISSP) + '/ISSP_PersonalInformation?mid=M5S1&confirm=yes' + commParam);
                         }
                         else if(serviceName == 'FRED'){                            
                             pageRef = null;   
                         }
                         else{
-                            pageref = new PageReference(OneIdUtils.getSiteCompleteUrl() +'/s?'+serviceNameParam);
+                            pageref = new PageReference(OneIdUtils.getSiteCompleteUrl(OneIdUtils.Mode.IDENTITY) + '?' + serviceNameParam);
                         } 
                     }else if(!isOneId){
-                        pageRef = new PageReference('/ISSP_PersonalInformation?mid=M5S1&confirm=yes' + commParam);
+                        pageRef = new PageReference(OneIdUtils.getSiteCompleteUrl(OneIdUtils.Mode.ISSP) + '/ISSP_PersonalInformation?mid=M5S1&confirm=yes' + commParam);
                     }
                 }
                 else{
@@ -128,7 +129,7 @@ public with sharing class ISSP_ChangePassword {
                 
                 if(errorMessage.isEmpty() && serviceName == 'FRED'){
                     statusPoller = true;
-                    provisioning();
+                    provisioning();                    
                 }
 
                 System.debug(loggingLevel.FINE, '____ [cls ISSP_ChangePassword - changePassword] pageRef - ' + pageRef);
@@ -157,7 +158,8 @@ public with sharing class ISSP_ChangePassword {
         displayPopup = false;        
     }
 
-    public void provisioning(){                
+    public void provisioning(){ 
+    /*               
         provUser = [Select Id, Username, LastLoginDate,UID__c, ByPassValidationRule__c from user where id =:UserInfo.getUserId()];
         PermissionSetAssignment[] lstcurrentUserPerSet = [SELECT Id, PermissionSet.Name,AssigneeId 
                                                                 FROM PermissionSetAssignment 
@@ -169,7 +171,10 @@ public with sharing class ISSP_ChangePassword {
                 assignPset.AssigneeId = provUser.Id;
                 assignPset.PermissionSetId = fredprovisioning[0].Id;
             insert assignPset;
-        }             
+        }      
+        */
+
+        LightningConnectedAppHelper.submit('FRED', 'FRED Primary User');
     }
 
     public Pagereference getCheckProvisioning(){
@@ -178,16 +183,33 @@ public with sharing class ISSP_ChangePassword {
         String fredSystemURL;
 
         if(ISSP_CS__c.getValues('Fred_System').value__c != null)
-            fredSystemURL = String.ValueOF(ISSP_CS__c.getValues('Fred_System').value__c);        
+            fredSystemURL = String.ValueOF(ISSP_CS__c.getValues('Fred_System').value__c);
+            
+        List<UserProvisioningRequest> userProvisining = [Select id,State From UserProvisioningRequest where SalesforceUserId =:UserInfo.getUserId()];                
+         
+        if(userProvisining[0].State == 'Completed' ){
+            // Assign Primary permission set  if it's the 1st registred
+            Integer nbOfPrimaryInAccount = [SELECT count() FROM PermissionSetAssignment WHERE PermissionSet.Name = 'FRED_Primary_User' AND Assignee.AccountId =: userList[0].contact.AccountId ];
+            if(nbOfPrimaryInAccount == 0) {
+                insert new PermissionSetAssignment(
+                    AssigneeId = UserInfo.getUserId(),
+                    PermissionSetId = [SELECT Id FROM PermissionSet WHERE Name='FRED_Primary_User' LIMIT 1].Id
+                );
+            }
 
-        provUser = [Select Id, Username, LastLoginDate,UID__c, ByPassValidationRule__c from user where id =:UserInfo.getUserId()];
-        
-        if(provUser.ByPassValidationRule__c == false){
-            statusPoller = true;
-            pageRef = null;            
-        }else{
+            // Hide spinner and redirect
+            statusPoller = false;            
+            pageRef = new PageReference(fredSystemURL);
+
+        }else if(userProvisining[0].State == 'Failed'){
             statusPoller = false;
-            pageRef = new PageReference(fredSystemURL);                        
+            ApexPages.Message myMsg = new ApexPages.Message(ApexPages.Severity.ERROR, 'provisioning error contact admin');
+            ApexPages.addMessage(myMsg);
+            pageRef = null;
+
+        }else{
+             statusPoller = true;
+             pageRef = null;
         }
 
         return pageRef;

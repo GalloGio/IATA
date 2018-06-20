@@ -16,17 +16,21 @@
                     var paramsMap = this.getParseUrl(urlParamEncoded,urlParameters);
                 }
                 
-                if(paramsMap.serviceName == null && paramsMap.RelayState == null){                                    
+                if(paramsMap.serviceName == null && paramsMap.RelayState == null && urlParameters.indexOf('RelayState') < 0){                                    
                     if(paramsMap.startUrl == null){                                               
                         var paramsMapTemp = this.getParseUrl(urlParamEncoded,paramsMap.startUrl);                                                
                         paramsMap =  JSON.stringify(paramsMap).concat(JSON.stringify(paramsMapTemp));                        
                     }
                 }
                 
-                if(paramsMap.RelayState != null){
-                    var service = paramsMap.RelayState.split('=')[1];                    
+                
+                if(urlParameters.indexOf('RelayState') > 0){                    
+                    var pMap = JSON.stringify(paramsMap);                    
+                    var pMapUnescape = unescape(pMap);
+                    var getServiceName = pMapUnescape.split('serviceName=')[1];                    
+                    var service = getServiceName.substring(0, getServiceName.indexOf('&'));                                                            
                     paramsMap.serviceName = service;                    
-                }
+                }                
                 
                 component.set("v.url", urlParameters);                
                 component.set("v.paramsMap", paramsMap);
