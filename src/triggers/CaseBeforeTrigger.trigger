@@ -161,6 +161,17 @@ trigger CaseBeforeTrigger on Case (before delete, before insert, before update) 
 		/*DigitalGenius trigger - turn off*/
 		//if (Trigger.isUpdate)  dgAI2.DG_PredictionTriggerHandler.doFeedback(trigger.new);
         
+        
+        /* Create Formula Helper record */
+        /*KPI Helper*/
+        if(trigger.isUpdate || trigger.isInsert){
+	        if(!FormulaField_Helper.isRunningFromHelper){
+	        	FormulaField_Helper.isRunningFromCAse = true;
+	        	FormulaField_Helper.CreateHelperRecord(trigger.new);
+	        }
+        }
+        
+        
         /*trgCaseIFAP Trigger*/
         if(trgCaseIFAP){ //FLAG
             system.debug('trgCaseIFAP');
@@ -198,7 +209,9 @@ trigger CaseBeforeTrigger on Case (before delete, before insert, before update) 
                     //emailtemplate query from isinsert and isupdate to the share code
                     IFAPemailtemplate = [Select et.IATA_ISO_Country__r.Id from EmailTemplate__c et where et.recordType.Name = 'IFAP'];
                     //GM - IMPRO - END
+
                     //Ifap Authorized users have a specific permission set
+                    /* START comment: fix too many soql queries - NEWGEN-3429
                     List<PermissionSet> PSet = [SELECT Id FROM PermissionSet WHERE Name = 'IFAP_Authorized_Users'];
                     if(PSet <> null && PSet.size()>0){
                         ID PSetID = PSet[0].Id;
@@ -208,6 +221,17 @@ trigger CaseBeforeTrigger on Case (before delete, before insert, before update) 
                                 isIfapAuthorizedUser = true;
                         }
                     }
+                    */ // END comment - fix too many soql queries - NEWGEN-3429
+
+                    //START fix too many soql queries - NEWGEN-3429
+                    List<PermissionSetAssignment> psaList = [SELECT AssigneeId FROM PermissionSetAssignment WHERE Assignee.IsActive = true 
+                        AND AssigneeId = :UserInfo.GetUserId() AND PermissionSetId IN (SELECT Id FROM PermissionSet WHERE Name = 'IFAP_Authorized_Users')];
+                        if (!psaList.isEmpty()){
+                            isIfapAuthorizedUser = true;
+                        }
+                    //END fix too many soql queries - NEWGEN-3429
+
+
                     // Create Account and contact Map (in order to decrease the number of SOQL queries executed)
                     for (Case aCase : trigger.New) {
                         // Search for the contact related to the case

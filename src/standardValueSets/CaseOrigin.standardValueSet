@@ -1147,6 +1147,11 @@
         <label>Financial Security Monitoring</label>
     </standardValue>
     <standardValue>
+        <fullName>FoP automatic renewal</fullName>
+        <default>false</default>
+        <label>FoP automatic renewal</label>
+    </standardValue>
+    <standardValue>
         <fullName>Funds Management</fullName>
         <default>false</default>
         <label>Funds Management</label>

@@ -96,6 +96,24 @@ private class ANG_FOPOSCARNotificationBatchTest {
 									Preferred_Language__c = 'English', Financial_Assessment_Contact__c = false);	
 		insert co1;
 
+		User  user = new User(
+            alias = ISSP_PortalUserStatusChange.createAlias(co1.firstName, co1.lastName), 
+            email = co1.email, 
+            emailencodingkey = 'UTF-8', 
+            firstname = co1.firstName, 
+            lastname = co1.lastname, 
+            languagelocalekey = 'en_US', 
+            localesidkey = 'en_US', 
+            contactId = co1.Id,
+            timezonesidkey = 'Asia/Dubai', 
+            username = ISSP_Utilities.buildPortalUserName(co1.email),//AEF
+            CommunityNickname = 'nick456',
+            ProfileId = [select Id from Profile where name = 'ISS Portal Agency Delegated Admin User'].Id,
+            IsActive = true
+        );
+
+        insert user;
+
 		Map<String,Object> fieldsOfObject = new Map<String,Object>();
         fieldsOfObject.clear();
 		fieldsOfObject.put('Process__c',AMS_Utils.NGFOP);
@@ -167,6 +185,24 @@ private class ANG_FOPOSCARNotificationBatchTest {
 									Email = 'test@test.com', BSP_CASS_Payment_contact__c = true, User_Portal_Status__c = 'Approved Admin',
 									Preferred_Language__c = 'English', Financial_Assessment_Contact__c = false);	
 		insert co1;
+
+		User  user = new User(
+            alias = ISSP_PortalUserStatusChange.createAlias(co1.firstName, co1.lastName), 
+            email = co1.email, 
+            emailencodingkey = 'UTF-8', 
+            firstname = co1.firstName, 
+            lastname = co1.lastname, 
+            languagelocalekey = 'en_US', 
+            localesidkey = 'en_US', 
+            contactId = co1.Id,
+            timezonesidkey = 'Asia/Dubai', 
+            username = ISSP_Utilities.buildPortalUserName(co1.email),//AEF
+            CommunityNickname = 'nick123',
+           ProfileId = [select Id from Profile where name = 'ISS Portal Agency Delegated Admin User'].Id,
+            IsActive = true
+        );
+
+        insert user;
 
 		Map<String,Object> fieldsOfObject = new Map<String,Object>();
         fieldsOfObject.clear();
