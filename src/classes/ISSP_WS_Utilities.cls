@@ -205,7 +205,7 @@ public without sharing class ISSP_WS_Utilities {
             + ' AND (SIS_ID__c = null OR SIS_ID__c = \'\')';
 		
 		//EM - fix sfdc bug
-		if (Test.isRunningTest()))
+		if (Test.isRunningTest())
 			query = query.replace('BillingAddress, ', '');
 		
         System.debug('query ' + query);
@@ -255,7 +255,7 @@ public without sharing class ISSP_WS_Utilities {
             + ' FROM Account WHERE Id IN :listAccountId';
 		
 		//EM - fix sfdc bug
-		if (Test.isRunningTest()))
+		if (Test.isRunningTest())
 			query = query.replace('BillingAddress, ', '');
 		
         System.debug('query ' + query);
