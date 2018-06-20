@@ -147,8 +147,14 @@
     <label>BIN Range</label>
     <listViews>
         <fullName>All</fullName>
+        <columns>NAME</columns>
+        <columns>TIP_Range_Start__c</columns>
+        <columns>TIP_Range_End__c</columns>
+        <columns>TIP_Effective_From_Date__c</columns>
+        <columns>TIP_Effective_To_Date__c</columns>
         <filterScope>Everything</filterScope>
         <label>All</label>
+        <language>en_US</language>
     </listViews>
     <nameField>
         <displayFormat>BIN-{0000000}</displayFormat>
