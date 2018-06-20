@@ -1279,9 +1279,10 @@ public without sharing class ISSP_Registration {
             return null;
         log(customerType + ', ' + devName);
         try {
-            List<RecordType> rtSet = [select id from RecordType where DeveloperName=:devName];
-            if (rtSet!=null && rtSet.size()>0 && rtSet.get(0)!=null)
-                return rtSet.get(0).id;
+            Id rtSetId = RecordTypeSingleton.getInstance().getRecordTypeId('Account', devName);
+            if(String.isNotBlank(rtSetId)){
+                return rtSetId;
+            }
         } catch (Exception e) {
             log('error getting type');
         }

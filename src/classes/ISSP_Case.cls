@@ -236,7 +236,6 @@ public without sharing class ISSP_Case {
     }
 
     public ISSP_Case() {
-        System.debug('xx2 Controller ');
         newCase = new Case();
 
         showAP = false;

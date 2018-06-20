@@ -1,7 +1,8 @@
 @isTest
 private class VFEmailTemplatePreviewControllerTest {
 
-    static testMethod void testController() {
+    @isTest
+	static void testController() {
         //create data
         Id countryId = createIsoCountry();
 

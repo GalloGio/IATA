@@ -380,11 +380,7 @@ global class SIDRARnSIntegrationWS {
     //date format: YYYY-MM-DD
     public SIDRA_eDefault__c CreateDefaultRow(Case theCase, date dateMovement, double sAmount, string sType) {
         SIDRA_eDefault__c oReturn;// = new SIDRA_eDefault__c();
-        string sRecordTypeId = '';
-
-        for (RecordType rt : [Select r.Id, r.DeveloperName From RecordType r Where SobjectType  = 'SIDRA_eDefault__c'])
-            if (rt.DeveloperName == sType)
-                sRecordTypeId = rt.Id;
+        Id sRecordTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('SIDRA_eDefault__c', sType);
 
         if (sRecordTypeId != '') {
             if (sType != '') {

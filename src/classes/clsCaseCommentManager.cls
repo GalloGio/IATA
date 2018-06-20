@@ -1335,11 +1335,7 @@ public class clsCaseCommentManager {
     
     public static testmethod void testNotifyContacts(){
         
-        List<RecordType> rts = [Select Id from RecordType where name = 'Application Change Request (DPC Systems - locked)' limit 1];
-        
-        RecordType rt;
-        if(rts.size() > 0)
-            rt = rts[0];
+        Id rtId = RecordTypeSingleton.getInstance().getRecordTypeId('Case', 'Application_Change_Request_DPC_Systems_locked');
         
         Account acc = new Account(Name='Test Account',BillingCity='Montreal', BillingCountry='Canada');
         insert acc;
@@ -1348,8 +1344,9 @@ public class clsCaseCommentManager {
         insert cont;
         
         Case case2 = new Case(contactId=cont.Id, Subject='Test Case');
-        if(rt != null)
-            case2.recordtypeId=rt.Id;
+        if(String.isNotBlank(rtId)){
+            case2.recordtypeId=rtId;
+        }
         insert case2;
         
         CaseComment cm = new CaseComment(parentId=case2.Id);

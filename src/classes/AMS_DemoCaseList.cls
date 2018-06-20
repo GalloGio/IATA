@@ -32,21 +32,8 @@ public class AMS_DemoCaseList {
         sidraRT = RecordTypeSingleton.getInstance().getRecordTypeId('Case', 'SIDRA');
         oscarCommunication = RecordTypeSingleton.getInstance().getRecordTypeId('Case', 'OSCAR_Communication');
 
-        /*for(RecordType rt:[select id from RecordType where RecordType.DeveloperName='CasesMENA' or RecordType.DeveloperName='Cases_China_North_Asia' or RecordType.DeveloperName='CasesAmericas' or
-                    RecordType.DeveloperName='ExternalCasesIDFSglobal' or RecordType.DeveloperName='CasesEurope']){
-            aux.add(rt.id);
-        }
-        casesRT = aux;
-        */
-       
-       casesRT = RecordTypeSingleton.getInstance().getRecordTypeObjIdList('Case', new List<String>{'CasesMENA', 'Cases_China_North_Asia', 'CasesAmericas', 'ExternalCasesIDFSglobal', 'CasesEurope'});
+        casesRT = RecordTypeSingleton.getInstance().getRecordTypeObjIdList('Case', new List<String>{'CasesMENA', 'Cases_China_North_Asia', 'CasesAmericas', 'ExternalCasesIDFSglobal', 'CasesEurope'});
         
-        /*for(RecordType rmt:[select id from RecordType where RecordType.DeveloperName != 'SIDRA' and RecordType.DeveloperName != 'IATA_Financial_Review' and 
-            RecordType.DeveloperName != 'ProcessEuropeSCE' and RecordType.DeveloperName !='CasesMENA' and RecordType.DeveloperName !='Cases_China_North_Asia' and RecordType.DeveloperName !='CasesAmericas' and 
-                    RecordType.DeveloperName != 'ExternalCasesIDFSglobal' and RecordType.DeveloperName != 'CasesEurope' and RecordType.DeveloperName != 'OSCAR_Communication']){
-            auxRemaining.add(rmt.id);
-        }*/
-
         remainingRT = RecordTypeSingleton.getInstance().getRecordTypeObjIdListExceptPassedNames('Case', new List<String>{'SIDRA', 'IATA_Financial_Review', 'ProcessEuropeSCE', 'CasesMENA', 'Cases_China_North_Asia', 
                                                                                                                          'CasesAmericas', 'ExternalCasesIDFSglobal', 'CasesEurope', 'OSCAR_Communication'});
 

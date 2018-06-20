@@ -3,7 +3,7 @@
  */
  public class OneIdProvisioningDAO {
 
-    public  static Map<string,map<string,id>> AppRecordTypesConfig = TransformationHelper.RtIDsPerDeveloperNamePerObj(new list<string>{'One_Id_Service_Provider_Config__c'});
+    //public  static Map<string,map<string,id>> AppRecordTypesConfig = TransformationHelper.RtIDsPerDeveloperNamePerObj(new list<string>{'One_Id_Service_Provider_Config__c'});
 
     public static List<One_Id_Service_Provider_Config__c> getFilteredServiceBundles(Account filter){
 
@@ -62,7 +62,7 @@
         List<One_Id_Service_Provider_Config__c> toReturn = new List<One_Id_Service_Provider_Config__c>();
 
         if(String.isNotBlank(bundleId)){
-            Id recTypeId = OneIdProvisioningDAO.AppRecordTypesConfig.get('One_Id_Service_Provider_Config__c').get('Service_Bundle');
+            Id recTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('One_Id_Service_Provider_Config__c', 'Service_Bundle');
 
             toReturn = [select id, Service_Provider_Name__c, Profile_Id__c, Terms_Custom_Label_1__c, Terms_Custom_Label_2__c, Terms_Custom_Label_3__c
             from One_Id_Service_Provider_Config__c
@@ -74,7 +74,7 @@
     
     public static List<One_Id_Service_Provider_Config__c> getAppListForAppicker(){
 
-        Id recTypeId = OneIdProvisioningDAO.AppRecordTypesConfig.get('One_Id_Service_Provider_Config__c').get('Service_Bundle');
+        Id recTypeId =RecordTypeSingleton.getInstance().getRecordTypeId('One_Id_Service_Provider_Config__c', 'Service_Bundle');
 
         List<One_Id_Service_Provider_Config__c> toReturn = new List<One_Id_Service_Provider_Config__c>();
         List<One_Id_Service_Provider_Config__c> bundlesAvailable = new List<One_Id_Service_Provider_Config__c>();
@@ -125,8 +125,7 @@
 
         if(String.isNotBlank(bundleName)) {
 
-            Id recTypeId = OneIdProvisioningDAO.AppRecordTypesConfig.get('One_Id_Service_Provider_Config__c').get(
-                'Service_Bundle');
+            Id recTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('One_Id_Service_Provider_Config__c', 'Service_Bundle');
 
             toReturn = [select id, Service_Provider_Name__c,Description__c, Description_Custom_Label__c, App_Picture_Url__c, License_Upgrade_Required__c, Profile_Id__c
             from One_Id_Service_Provider_Config__c where Is_Active__c = true and Portal_Visible__c = true
@@ -144,8 +143,7 @@
 
         if(String.isNotBlank(bundleName)) {
 
-            Id recTypeId = OneIdProvisioningDAO.AppRecordTypesConfig.get('One_Id_Service_Provider_Config__c').get(
-                'Service_Bundle');
+            Id recTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('One_Id_Service_Provider_Config__c', 'Service_Bundle');
 
             toReturn = [select id, Service_Provider_Name__c,Description__c, Description_Custom_Label__c, App_Picture_Url__c, License_Upgrade_Required__c, Profile_Id__c
             from One_Id_Service_Provider_Config__c where Is_Active__c = true and Portal_Visible__c = true
@@ -162,8 +160,7 @@
 
         if(String.isNotBlank(bundleName)) {
 
-            Id recTypeId = OneIdProvisioningDAO.AppRecordTypesConfig.get('One_Id_Service_Provider_Config__c').get(
-                'Service_Bundle');
+            Id recTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('One_Id_Service_Provider_Config__c', 'Service_Bundle');
 
             toReturn = [select id, Service_Provider_Name__c,TermConditions__c, Description_Custom_Label__c, Description__c,App_Picture_Url__c, License_Upgrade_Required__c, Profile_Id__c
             from One_Id_Service_Provider_Config__c where Is_Active__c = true and Portal_Visible__c = true
@@ -182,8 +179,7 @@
 
         if(String.isNotBlank(bundleName)) {
 
-            Id recTypeId = OneIdProvisioningDAO.AppRecordTypesConfig.get('One_Id_Service_Provider_Config__c').get(
-                'Service_Bundle');
+            Id recTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('One_Id_Service_Provider_Config__c', 'Service_Bundle');
 
             temp = [select id, Service_Provider_Name__c,Description__c,App_Picture_Url__c, License_Upgrade_Required__c, Profile_Id__c,
             Service_Bundle__r.Service_Provider_Name__c,
@@ -222,8 +218,7 @@
 
 
 
-        Id recTypeId = OneIdProvisioningDAO.AppRecordTypesConfig.get('One_Id_Service_Provider_Config__c').get(
-            'Service_Bundle');
+        Id recTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('One_Id_Service_Provider_Config__c', 'Service_Bundle');
 
         temp = [select id, Service_Provider_Name__c,Description__c,App_Picture_Url__c, License_Upgrade_Required__c, Profile_Id__c,
         Service_Bundle__r.Service_Provider_Name__c,
@@ -260,8 +255,7 @@
 
         if(!bundleNames.isEmpty()) {
 
-            Id recTypeId = OneIdProvisioningDAO.AppRecordTypesConfig.get('One_Id_Service_Provider_Config__c').get(
-                    'Service_Bundle');
+            Id recTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('One_Id_Service_Provider_Config__c', 'Service_Bundle');
 
             temp = [select id, Service_Provider_Name__c,Description__c,App_Picture_Url__c, License_Upgrade_Required__c, Profile_Id__c,
                     Service_Bundle__r.Service_Provider_Name__c,

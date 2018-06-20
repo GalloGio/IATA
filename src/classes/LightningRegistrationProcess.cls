@@ -439,10 +439,8 @@ public without sharing class LightningRegistrationProcess{
 
     @AuraEnabled
     public Static String createContactAndAccount (Contact con, Account acc, String customerType) {
-        // ISSP_Registration registration = new ISSP_Registration();
-        // Boolean b = registration.pageIsValid();
-        Id rtId = RecordTypeSingleton.getInstance().getRecordTypeId('Contact', 'Standard_Contact');
-        if(con.RecordType == null) con.RecordTypeId = rtId;
+        Id stdContactRtId = RecordTypeSingleton.getInstance().getRecordTypeId('Contact', 'Standard_Contact');
+        if(con.RecordType == null) con.RecordTypeId = stdContactRtId;
 
         //Debug
         System.debug('Contact ' + con);
@@ -454,11 +452,13 @@ public without sharing class LightningRegistrationProcess{
                 acc.Reason_for_creation__c = 'Created by customer';
                 //Since we need to create a portal user, we need to assign the account to a user with a specified role, otherwise an error is thrown
                 acc.ownerid = ISSP_Constant.newAccountOwnerId;
-                String recname = ISSP_Constant.accountDefaultRecordTypeByCustomerType.get(customerType);
-                List<RecordType> rtSet = [select id from RecordType where DeveloperName=:recname];
-                    if (rtSet!=null && rtSet.size()>0 && rtSet.get(0)!=null)
-                acc.recordtypeid = rtSet[0].id;
                 
+                String recname = ISSP_Constant.accountDefaultRecordTypeByCustomerType.get(customerType);
+                Id rtId = RecordTypeSingleton.getInstance().getRecordTypeId('Account', recname);
+                if (String.isNotBlank(rtId)){
+                    acc.recordtypeid = rtId;
+                }
+
                 if (!String.isBlank(acc.Category__c) && acc.Category__c != 'Other')
                     acc.Category_Other_Value__c = null;
                 

@@ -8,8 +8,7 @@
  */
  
 trigger trgICCS_ASP_Case_Validation on Case (before insert, before update) {
-	//RecordType RT_ICCS_ASP = [SELECT Id FROM RecordType WHERE DeveloperName = 'FDS_ASP_Management'];
-	Id RT_ICCS_ASP_Id = Schema.SObjectType.Case.RecordTypeInfosByName.get('FDS ASP Management').getRecordTypeId() ;
+	Id RT_ICCS_ASP_Id = RecordTypeSingleton.getInstance().getRecordTypeId('Case', 'FDS_ASP_Management');
 	ID AirlineCodingRTId = RecordTypeSingleton.getInstance().getRecordTypeId('Case', 'Airline_Coding_Application');
 	
 	// get a list of the Ids of all the Accounts linked to the Trigger cases
@@ -31,7 +30,6 @@ trigger trgICCS_ASP_Case_Validation on Case (before insert, before update) {
 	// only continue if there are related accounts
 	set<Id> setRelatedAcctIds = new set<Id>();
 	setRelatedAcctIds.addAll(lstRelatedAccountIds);
-	//setRelatedAcctIds.addAll(lstClosedCasesAccountIds);
 	
 	// get a map of relevant cases per Account Id
 	Map<Id, Case> mapCasesPerAccountId = new Map<Id, Case>(); // for ICCS ASP

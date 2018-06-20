@@ -17,7 +17,6 @@ trigger trgCustomerPortalCaseSharing on Case (after insert, before insert, befor
     BusinessHours bHourObj = new BusinessHours();
     // Get 'External Cases (InvoiceWorks)' record type ID from the singleton instead of getting it from the database 
     ID caseRecordTypeID  = clsCaseRecordTypeIDSingleton.getInstance().RecordTypes.get('External Cases (InvoiceWorks)');
-    //RecordType rType = [Select id, name from RecordType where name =: 'External Cases (InvoiceWorks)'];
     try{  
         
         if(!Trigger.isAfter){
@@ -58,22 +57,6 @@ trigger trgCustomerPortalCaseSharing on Case (after insert, before insert, befor
 	            } 
             }  
         } 
-        /*      
-        If((Trigger.isInsert && Trigger.isAfter) || (Trigger.isBefore && Trigger.isUpdate)){
-            if(futureLimit < 10){
-                if (!FutureProcessorControl.inFutureContext) {
-                    for(Case ObjCase : Trigger.new){    
-                        if(ObjCase.Power_User_Account__c != null){
-                            AcctIds.add(ObjCase.Power_User_Account__c);
-                        }                                   
-                    }
-                    if(!AcctIds.isEmpty()){
-                        CaseSharingClass.CaseShareMethod(AcctIds);
-                    }               
-                }
-            }
-                       
-        }    */   
     }
     catch(Exception e){
         System.debug('Error Message -----: ' + e.getMessage());

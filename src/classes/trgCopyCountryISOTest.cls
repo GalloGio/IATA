@@ -1,7 +1,8 @@
 @isTest
 private class trgCopyCountryISOTest {
 
-    static testMethod void notAIMSTest() {
+    @isTest
+	static void notAIMSTest() {
         
         map<string,id> developerNamePerId = developerNamePerIds();
         
@@ -35,7 +36,8 @@ private class trgCopyCountryISOTest {
     }
    
     
-       static testMethod void notDomainAIMSTest() {
+    @isTest
+	static void notDomainAIMSTest() {
         
        list<Id> developerNamePerId = notOurDomaindeveloperNamePerIds();
         
@@ -68,7 +70,8 @@ private class trgCopyCountryISOTest {
         
     } 
     
-     static testMethod void AIMSTest() {
+    @isTest
+	static void AIMSTest() {
            // System Administrator - automated processes
         profile pro = [select id from profile where name ='System Administrator - automated processes'];
 

@@ -957,7 +957,6 @@ trigger CaseAfterTrigger on Case (after delete, after insert, after undelete, af
 			for(Case newCaseObj : trigger.new){ 
 				isCaseMustBeDeleted = false;
 				//GM - IMPRO - START
-				//RecordType caseRecordType = [Select Id, Name from RecordType where Id=: newCaseObj.RecordTypeId];
 				// SIS email to case
 				if ((newCaseObj.Origin == 'E-mail to Case - IS Help Desk' || newCaseObj.Origin == 'E-mail to Case - SIS Help Desk') 
 						&& newCaseObj.RecordTypeid != null && newCaseObj.RecordTypeid == SISHelpDeskRecordtype) {

@@ -56,14 +56,10 @@ public without sharing class OneIdVfDSEController {
     public list<String> infoMessage {get; set;}
     private String log;
     private string generalError =  Label.ISSP_Registration_generalError;
-    //public String caseSubject {get; set;}
     public Boolean passwordReset {get; set;}//TF-SP11
-   // public String caseDescription {get; set;}
-   // public OneIdVfDSEController thisCtrlForNewCaseForm {get{return this;}}
     public boolean displayNewCaseForm {get; set;}
 
     //EM
-    //public ISSP_reCAPTCHA  reCAPTCHA {get; set;}
     public vfIECreCAPTCHA  reCAPTCHA    {get; set;}
 
     public string selectedCustomerType{get;set;}
@@ -98,7 +94,6 @@ public without sharing class OneIdVfDSEController {
     public boolean showConfirmMessage {get; set;}
     public boolean createAccountErroeMode {get; set;}
     public boolean preventAddressDoctorService {get; set;}
-    //public Case case {get; set;}
 
     public Boolean isAirline {get; set;}
     public Boolean isAgency {get; set;}
@@ -122,26 +117,18 @@ public without sharing class OneIdVfDSEController {
 
     public Boolean captchaVerified {get; set;}
     public String captchaId {get; set;}
-    //public String captchaAnswer {get; set;}
 
     public Boolean show90Days {get; set;}
 
     public String country {get; set;}
 
     // Start MM: "Project Registration Merge" - Define a referrer which will be checked against parameters included in the URL �First_Community�:
-    //public string sRefererCommunity {get; set;}
     // EM: New
-    //public string urlredirect {get; set;}
-    //public string constIEC {get {return 'iec';}}
-    //public string constISS {get {return 'iss';}}
     //End
     public String templatename {get;set;}
     public Boolean onegpa {get;set;}
 
     //EM
-    //public String phone1 {get;set;}
-    //public String phone2 {get;set;}
-    //public String phone3 {get;set;}
     public boolean showcreateother {get;set;}
     public String except {get;set;}
     public String addressdoctorerror {get;set;}
@@ -181,26 +168,14 @@ public without sharing class OneIdVfDSEController {
         errorMessage = new list<string>();
         infoMessage = new list<string>();
         log = '';
-        //String urlSubject = ApexPages.currentPage().getParameters().get('subject');
         country = ApexPages.currentPage().getParameters().get('country');
         lang = ApexPages.currentPage().getParameters().get('language');
 
-        //if(urlSubject <> null) {
-        //    caseSubject = urlSubject;
-        //} else {
-        //    caseSubject = Label.ISSP_Registration_Subject_Default; //TF - SP11
-        //}
-
         passwordReset = false; //TF - SP11
 
-        //con = new Contact(User_Portal_Status__c = ISSP_Constant.NEW_CONTACT_STATUS);
         con = new Contact();
-        //if (sRefererCommunity == constIEC)    con.User_IECPortal_Status__c = IECConstants.NEW_CONTACT_STATUS;
         accList = new list<Account>();
         acc = new Account(name='');
-        //reCAPTCHA = new ISSP_reCAPTCHA();
-        //reCAPTCHA.verified = false;
-        //reCAPTCHA.verified = true;
         captchaVerified = false;
         createBranch = false;
         accountFound = false;
@@ -234,8 +209,6 @@ public without sharing class OneIdVfDSEController {
 
 
     }
-
- 
 
 
     /*
@@ -299,14 +272,7 @@ public without sharing class OneIdVfDSEController {
                 return null;
             }
         }
-            /*
-            else if (isGSA){
-                if (searchIATACode.length() != 3){
-                    errorMessage.add(Label.ISSP_IATA_Code_GSA);
-                    return null;
-                }
-            }
-            */
+            
         else if (isAgency){
             try {
                 iataCodeInput =  Decimal.valueOf(searchIATACode);
@@ -375,11 +341,7 @@ public without sharing class OneIdVfDSEController {
         else if (isAirline && !toSearchDesignatorCode) {
             whereStr = 'Name like \'%' + searchCompanyName + '%\' and IATA_ISO_Country__c=\'' + searchCountry + '\' AND Sector__c != \'General Public\'';
         }
-            /*
-            else if (isGSA) {
-                whereStr = 'IATACode__c=\'' + searchIATACode + '\' and IATA_ISO_Country__c=\'' + searchCountry + '\'';
-            }
-            */
+            
         else if (isGSA) {
             whereStr = 'Name like \'%' + searchCompanyName + '%\' and IATA_ISO_Country__c=\'' + searchCountry + '\'';
         }
@@ -564,11 +526,6 @@ public without sharing class OneIdVfDSEController {
         if (accList.size()==1)
             selectedAccId = accList.get(0).id;
 
-        //if (accList.size()==1 && isGeneral) {
-        //  onegpa=true;
-        //    infoMessage.add('AAA');
-        //}
-
         system.debug('selectedAccId after search: ' + selectedAccId);
 
         if (!accList.isEmpty()){
@@ -599,22 +556,11 @@ public without sharing class OneIdVfDSEController {
             //EM: Back to the community page
             //EM : Back to the starting page
             //PageReference pr;
-            //pr = new PageReference('/login');
 
-            //return pr;
             returnToParent = ReturnToParentEnum.ReturnToLogin;
             return null;
         }
 
-        /*else{
-            PageReference pr = new PageReference('/ISSP_Login');
-            return pr;
-        }
-
-        errorMessage.clear();
-        selectedCustomerType = GeneralPublic;
-        return Page.ISSP_createContact;
-        */
     }
 
 
@@ -730,7 +676,6 @@ public without sharing class OneIdVfDSEController {
 
         if (searchCountry!=null && searchCountry!=''){
             con.ISO_Country__c = searchCountry;
-            //con.MailingCountry = searchCountryName;
             //EM: Handle ISO Shipping Country
             con.IATA_ISO_Shipping_Country__c = searchCountry;
             con.Country__c = searchCountryName;
@@ -765,14 +710,9 @@ public without sharing class OneIdVfDSEController {
             return null;
 
         }
-        //errorMessage.add(System.Label.ISSP_Registration_Thank_you);
-        //errorMessage.add(System.Label.ISSP_Registration_Redirection);
 
         sendEmailToAdmin = true;
 
-        // create new User
-        //return submitUser();
-        
         acc.Legal_name__c = acc.Name;
         String languageString = 'English';
         if (lang != null && lang != ''){
@@ -816,60 +756,7 @@ public without sharing class OneIdVfDSEController {
         }
 
     }
-/*
-    public PageReference submitCase() {
-        system.debug('\n\n\n Creating Case \n\n\n');
-        system.debug('Password reset: ' + passwordReset);
-        String subject = (errorMessage!=null && errorMessage.size()>0 ? errorMessage[0] : label.ISSP_generalError);
-        createCase(subject, con, selectedCustomerType, searchIATACode, caseDescription);
-        displayNewCaseForm = false;
-        PageReference ThanksPage = new PageReference(label.ISSP_SharePoint_Thanks);
-        ThanksPage.setRedirect(true);
-        return ThanksPage ;
-    }
 
-    public void createCase(String subject, Contact con, String customerType, String IATACode, String description) {
-        if (countryMap==null)
-            getISOCountry();
-        String country = countryMap.get(con.ISO_Country__c);
-        String allSubject = 'REGISTRATION ERROR - ' + subject + ' (' + con.Email + '), Name: ' + con.FirstName + ' ' + con.LastName + ', Type: ' + customerType + ', Country: ' + countryMap.get(con.ISO_Country__c) + ', IATA Code: ' + IATACode;
-        if (allSubject.length() > 255)
-            allSubject = allSubject.substring(0,254);
-        String reason = '';
-        String contactId = null;
-        if (passwordReset){//TF - SP11
-            allSubject = caseSubject;//TF - SP11
-            reason = 'Registration process';
-            List <Contact> searchContactList = [SELECT Id FROM Contact WHERE Email = :con.Email];
-            if (searchContactList.size() == 1){
-                contactId = searchContactList[0].Id;
-            }
-        }
-        Case cas = new Case(
-                CaseArea__c = 'Customer Portal Enquiry',
-            //Subject  = 'REGISTRATION ERROR - ' + subject + ' (' + con.Email + ')',
-                Subject  = allSubject,
-                SuppliedName = con.Salutation + ' ' + con.FirstName + ' ' + con.LastName,
-                SuppliedEmail = con.Email,
-                SuppliedPhone = con.Phone,
-                Description = description,
-                Country_concerned_by_the_query__c = countryMap.get(con.ISO_Country__c),
-                Cargo_Business__c = customerType,
-                IATAcode__c = IATACode,
-                Origin = 'Portal',
-                Reason1__c = reason,
-                ContactId = contactId
-        );
-        try {
-            insert cas;
-            system.debug('\n\n\n cas: ' + cas + '\n\n\n');
-            //errorMessage.add(cas + '');
-        } catch (Exception e) {
-            system.debug('\n\n\n Error: ' + e + '\n\n\n');
-            errorMessage.add('Error in creation of a new case: ' + e);
-        }
-    }
-*/
     @TestVisible
     private String getRecordTypeCode(String customerType) {
         String devName = ISSP_Constant.accountDefaultRecordTypeByCustomerType.get(customerType);
@@ -877,9 +764,10 @@ public without sharing class OneIdVfDSEController {
             return null;
         log(customerType + ', ' + devName);
         try {
-            List<RecordType> rtSet = [select id from RecordType where DeveloperName=:devName];
-            if (rtSet!=null && rtSet.size()>0 && rtSet.get(0)!=null)
-                return rtSet.get(0).id;
+            Id rtId = RecordTypeSingleton.getInstance().getRecordTypeId('Account', devName);
+            if(String.isNotBlank(rtId)){
+                return rtId;
+            }
         } catch (Exception e) {
             log('error getting type');
         }

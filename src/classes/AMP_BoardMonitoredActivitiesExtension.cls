@@ -62,7 +62,7 @@ public with sharing class AMP_BoardMonitoredActivitiesExtension {
 		@AuraEnabled
 		public static Objective__c upsertComment(Comment__c comment) {
 			if(comment.RecordTypeId == null ) {
-				Id CommentRecordTypeId =  [SELECT Id FROM RecordType WHERE SObjectType = 'Comment__c' AND DeveloperName = 'Objective_Related' ].Id;
+				Id CommentRecordTypeId =  RecordTypeSingleton.getInstance().getRecordTypeId('Comment__c', 'Objective_Related');
 				comment.RecordTypeId = CommentRecordTypeId;
 			}
 			System.debug('------ ' + comment);
