@@ -99,18 +99,8 @@ public without sharing class OneIdLightningLoginFormController {
             
             //login in siteCompleteUrl
             ApexPages.PageReference lgn = Site.login(username, password, pageLink);
-            
-            if(serviceName == 'FRED'){                
-                if(ISSP_CS__c.getValues('Fred_System').value__c != null){
-                    fredSystemURL = String.ValueOF(ISSP_CS__c.getValues('Fred_System').value__c);                    
-                    lgn = new PageReference(fredSystemURL);                    
-                }
-                    
-            }
 
             system.debug('page reference return from login: '+lgn);
-
-
                         
             List<User> userListConfirmTempPassword = [SELECT Id, ToU_Accepted__c, UID__c, LastPasswordChangeDate , Email, ContactId
                                 //X2FA_Session__c, TD_User__c
