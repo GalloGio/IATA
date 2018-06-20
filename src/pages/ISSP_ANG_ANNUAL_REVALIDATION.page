@@ -265,6 +265,22 @@
                 width: 50%;
                 float: left;
             }
+
+            th.vfLabelColTextWrap {
+                white-space: normal !important; 
+            }
+            
+            .labelCol {
+                white-space: normal !important; 
+            }
+            
+            .bPageBlock {
+                white-space: normal !important;
+            }
+            
+            .detailList {
+                white-space: normal !important;
+            }
         </style>
 
         <script>

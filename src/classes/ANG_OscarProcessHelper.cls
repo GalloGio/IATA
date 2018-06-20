@@ -1077,7 +1077,7 @@ global class ANG_OscarProcessHelper {
 	        fieldsOfObject.put('Region__c',newAccr.HO_Account__r.Region_formula__c);
 	        fieldsOfObject.put('Subject','Agency changes - ' + newAccr.HO_Account__r.IATACode__c + ' - ' + newAccr.HO_Account__r.Name);
 	        fieldsOfObject.put('Type_of_customer__c','IATA Travel Agent');
-
+	        fieldsOfObject.put('Visible_on_ISS_Portal__c',true);
 	        newCaseOscar =ANG_EntityCreator.createCase(caseRT, newAccr.HO_Account__c, fieldsOfObject);
 
 	        insert newCaseOscar;
