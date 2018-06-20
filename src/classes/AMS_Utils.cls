@@ -372,6 +372,11 @@ public without sharing class AMS_Utils {
 
     //Mass created FOP case/OSCAR is assigned to one of theses queues when created:
     public static final Set<String> MASS_FOP_QUEUES = new Set<String>{'NewGen PCI - Africa & Middle East','NewGen PCI - Americas','NewGen PCI - Asia & Pacific','NewGen PCI - China & North Asia','NewGen PCI - Europe'};
+	
+	/* AMSU-139 */
+    public static final String REJECTED = 'Rejected';
+    public static final String REJECTED_CLOSED = 'Rejected Closed';
+    public static final String ACCEPTED = 'Accepted';
 
     static {
         refreshCache();

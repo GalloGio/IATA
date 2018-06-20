@@ -151,6 +151,10 @@
                 <behavior>Edit</behavior>
                 <field>Local_Physical_Address_Area__c</field>
             </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>Billing_State__c</field>
+            </layoutItems>
         </layoutColumns>
         <layoutColumns>
             <layoutItems>
