@@ -13,7 +13,7 @@ public class ISSP_ModelA_Onboarding {
 
 	private void fetchOnBoardingOSCARCase() {
 		if (ApexPages.currentPage().getParameters().containsKey('caseId')) {
-			this.onBoardingOSCARCase = [SELECT Id, AccountId, Region__c, OSCAR__c FROM Case WHERE Id = :ApexPages.currentPage().getParameters().get('caseId')];
+			this.onBoardingOSCARCase = [SELECT Id, AccountId, Region__c, OSCAR__c, Owner.Name FROM Case WHERE Id = :ApexPages.currentPage().getParameters().get('caseId')];
 		}
 	}
 
@@ -161,5 +161,14 @@ public class ISSP_ModelA_Onboarding {
         }
 
         return qId;
+    }
+
+    public Pagereference securityCheck() {
+
+        if (this.onBoardingOSCARCase.Id != null && !this.onBoardingOSCARCase.Owner.Name.startsWith('Model A Onboarding')) {
+            return new Pagereference('/ISSP_Case?caseId=' + this.onBoardingOSCARCase.Id);
+        }
+
+        return null;
     }
 }

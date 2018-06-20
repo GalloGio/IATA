@@ -2018,7 +2018,8 @@ RecordType.DeveloperName = &apos;Travel_Agent&apos;
         <description>Location type is required when creating an Accreditation Requirement.</description>
         <errorConditionFormula>AND(  
 ISBLANK(Location_type__c),
-RecordType.DeveloperName   &lt;&gt; &apos;Change&apos; 
+RecordType.DeveloperName &lt;&gt; &apos;Change&apos;,
+RecordType.DeveloperName &lt;&gt; &apos;IEP_Model_A&apos;			
 )</errorConditionFormula>
         <errorMessage>Please enter location types.</errorMessage>
     </validationRules>
