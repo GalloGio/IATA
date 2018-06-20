@@ -1077,7 +1077,7 @@ global class ANG_OscarProcessHelper {
 	        fieldsOfObject.put('Region__c',newAccr.HO_Account__r.Region_formula__c);
 	        fieldsOfObject.put('Subject','Agency changes - ' + newAccr.HO_Account__r.IATACode__c + ' - ' + newAccr.HO_Account__r.Name);
 	        fieldsOfObject.put('Type_of_customer__c','IATA Travel Agent');
-
+	        fieldsOfObject.put('Visible_on_ISS_Portal__c',true);
 	        newCaseOscar =ANG_EntityCreator.createCase(caseRT, newAccr.HO_Account__c, fieldsOfObject);
 
 	        insert newCaseOscar;
@@ -1518,7 +1518,10 @@ global class ANG_OscarProcessHelper {
 
 		for (Contact con : [SELECT Id, Name, Email, Preferred_Language__c, BSP_CASS_Payment_contact__c, Financial_Assessment_Contact__c, AccountId 
 			FROM Contact WHERE AccountId IN :accsMap.keySet() 
-			AND Id IN (SELECT Contact__c FROM Portal_Application_Right__c WHERE Portal_Application__r.Name = 'IATA EasyPay (EDENRED)')]){
+            AND Id IN (SELECT Contact__c FROM Portal_Application_Right__c WHERE Right__c = 'Access Granted'
+                AND ANG_Portal_Service_Role__c = 'IEP Admin' 
+                AND Portal_Application__r.Name = 'IATA EasyPay (EDENRED)')]){
+                
 			contactAcc.put(con.AccountId,con);
 		} 
 
@@ -1527,6 +1530,8 @@ global class ANG_OscarProcessHelper {
 
 			System.debug('[ANG_OscarProcessHelper.createIEPAccountOscar] - BEGINNING INSERTING for ACCOUNT: '+acc.Id+' - '+acc.Name+' - '+acc.IataCode__c);
 			
+            if(contactAcc.get(acc.Id) == null) acc.addError('An IEP Admin Contact is needed on this Account for the IEP Account OSCAR');
+            
 			fieldsOfObject = new Map<String,Object>();
 	        fieldsOfObject.put('Account_Concerned__c',acc.Id);
 	      	fieldsOfObject.put('ContactId',contactAcc.get(acc.Id).Id);
@@ -1602,7 +1607,6 @@ global class ANG_OscarProcessHelper {
 			accOscarObjsMap.get(acc.Id).cse.Oscar__c = accOscarObjsMap.get(acc.Id).oscar.Id;
 			casesToUpdate.add(accOscarObjsMap.get(acc.Id).cse);
 		    
-		    AMS_AgencyRegulationAutoRenewal.sendEmailAlert(new List<Contact>{accOscarObjsMap.get(acc.Id).con}, accOscarObjsMap.get(acc.Id).oscar.Id, AMS_OSCARTriggerHandler.ANGemailTemplates(AMS_Utils.IEPBANKACCOUNTSETUP, 'Creation', true), accOscarObjsMap.get(acc.Id).oscar.Oscar_Communication_Case_Id__c, owea[0], false);			
 
 			System.debug('[ANG_OscarProcessHelper.createIEPAccountOscar] - FINISHING... INSERTING OSCARS: '+ accOscarObjsMap.get(acc.id).oscar.Id + ' | Case: '+accOscarObjsMap.get(acc.id).cse.Id);
 		}
@@ -1610,6 +1614,13 @@ global class ANG_OscarProcessHelper {
 
 		if(!casesToUpdate.isEmpty())
 			update casesToUpdate;
+
+		//sending email with url for portal    
+        for (Account acc: accs){
+        
+            AMS_AgencyRegulationAutoRenewal.sendEmailAlert(new List<Contact>{accOscarObjsMap.get(acc.Id).con}, accOscarObjsMap.get(acc.Id).oscar.Id, AMS_OSCARTriggerHandler.ANGemailTemplates(AMS_Utils.IEPBANKACCOUNTSETUP, 'Creation', true), accOscarObjsMap.get(acc.Id).oscar.Oscar_Communication_Case_Id__c, owea[0], false);         
+
+        }
 
     }
 	
