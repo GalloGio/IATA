@@ -203,7 +203,11 @@ public without sharing class ISSP_WS_Utilities {
             + String.join(ISSP_WS_SIS_Callout_CreateAccount.LIST_FIELD_NAMES,',')
             + ' FROM Account WHERE Id IN :listAccountId '
             + ' AND (SIS_ID__c = null OR SIS_ID__c = \'\')';
-
+		
+		//EM - fix sfdc bug
+		if (Test.isRunningTest())
+			query = query.replace('BillingAddress, ', '');
+		
         System.debug('query ' + query);
         list<Account> listAccount = Database.query(query);
         System.debug('listAccount ' + listAccount);
@@ -249,6 +253,11 @@ public without sharing class ISSP_WS_Utilities {
         String query = 'SELECT Id, BillingAddress, Country_ISO_Code__c, Status__c, '
         + String.join(ISSP_WS_SIS_Callout_UpdateAccount.LIST_FIELD_NAMES,',')
             + ' FROM Account WHERE Id IN :listAccountId';
+		
+		//EM - fix sfdc bug
+		if (Test.isRunningTest())
+			query = query.replace('BillingAddress, ', '');
+		
         System.debug('query ' + query);
         list<Account> listAccount = Database.query(query);
         System.debug('listAccount ' + listAccount);
