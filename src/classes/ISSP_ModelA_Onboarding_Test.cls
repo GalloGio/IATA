@@ -243,8 +243,6 @@ private class ISSP_ModelA_Onboarding_Test {
         contacts.add(con6);
 
         insert contacts;
-        
-        System.debug('rui3: ' + con5.AccountId);
 
         List<Portal_Application_Right__c> rights = new List<Portal_Application_Right__c>();
 
@@ -300,6 +298,9 @@ private class ISSP_ModelA_Onboarding_Test {
         
         ISSP_ModelA_Onboarding controller = new ISSP_ModelA_Onboarding();
         controller.submitForm();
+        
+        Group groupResult = [SELECT Id, Name FROM Group WHERE Type = 'Queue' AND Id IN (SELECT OwnerId FROM Case)];
+        System.assertEquals('Agency Management - Europe', groupResult.Name);
 
         Test.stopTest();
     }
@@ -316,6 +317,9 @@ private class ISSP_ModelA_Onboarding_Test {
         
         ISSP_ModelA_Onboarding controller = new ISSP_ModelA_Onboarding();
         controller.submitForm();
+        
+        Group groupResult = [SELECT Id, Name FROM Group WHERE Type = 'Queue' AND Id IN (SELECT OwnerId FROM Case)];
+        System.assertEquals('Agency Management - Americas', groupResult.Name);
 
         Test.stopTest();
     }
@@ -332,6 +336,9 @@ private class ISSP_ModelA_Onboarding_Test {
         
         ISSP_ModelA_Onboarding controller = new ISSP_ModelA_Onboarding();
         controller.submitForm();
+        
+        Group groupResult = [SELECT Id, Name FROM Group WHERE Type = 'Queue' AND Id IN (SELECT OwnerId FROM Case)];
+        System.assertEquals('Agency Management - Africa & ME', groupResult.Name);
 
         Test.stopTest();
     }
@@ -348,6 +355,9 @@ private class ISSP_ModelA_Onboarding_Test {
         
         ISSP_ModelA_Onboarding controller = new ISSP_ModelA_Onboarding();
         controller.submitForm();
+        
+        Group groupResult = [SELECT Id, Name FROM Group WHERE Type = 'Queue' AND Id IN (SELECT OwnerId FROM Case)];
+        System.assertEquals('Agency Management - China & N. Asia', groupResult.Name);
 
         Test.stopTest();
     }
@@ -364,6 +374,9 @@ private class ISSP_ModelA_Onboarding_Test {
         
         ISSP_ModelA_Onboarding controller = new ISSP_ModelA_Onboarding();
         controller.submitForm();
+        
+        Group groupResult = [SELECT Id, Name FROM Group WHERE Type = 'Queue' AND Id IN (SELECT OwnerId FROM Case)];
+        System.assertEquals('Agency Management - A&P', groupResult.Name);
 
         Test.stopTest();
     }
@@ -381,7 +394,9 @@ private class ISSP_ModelA_Onboarding_Test {
         ISSP_ModelA_Onboarding controller = new ISSP_ModelA_Onboarding();
         controller.submitForm();
         controller.cancel();
-        //controller.securityCheck();
+        
+        Group groupResult = [SELECT Id, Name FROM Group WHERE Type = 'Queue' AND Id IN (SELECT OwnerId FROM Case)];
+        System.assertEquals('Model A Onboarding - Europe', groupResult.Name);
         
         Test.stopTest();
     }
