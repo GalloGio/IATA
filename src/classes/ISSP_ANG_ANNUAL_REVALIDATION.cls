@@ -1232,10 +1232,10 @@ public with sharing class ISSP_ANG_ANNUAL_REVALIDATION {
 				}
 			}
 
-			If(currentAccount.isocountry.Local_language_Agency_details_required__c && currentAccount.fw.newform.Is_change_legal_name__c && currentAccount.fw.newform.Notify_Change_Legal_Details__c && currentAccount.fw.newform.Local_Legally_Registered_Name__c == null) {
+			/*if(currentAccount.isocountry.Local_language_Agency_details_required__c && currentAccount.fw.newform.Is_change_legal_name__c && currentAccount.fw.newform.Notify_Change_Legal_Details__c && currentAccount.fw.newform.Local_Legally_Registered_Name__c == null) {	
 				currentAccount.fw.newform.Local_Legally_Registered_Name__c.addError(Label.ISSP_YouMustEnter);
 				errorFound = true;
-			}
+			}*/
 
 			if (currentAccount.fw.newform.Is_change_location__c && currentAccount.fw.newform.Notify_Change_Location__c) {
 				if(currentAccount.fw.newform.Branch_Office_Street_name_number__c == null) {
@@ -1254,7 +1254,7 @@ public with sharing class ISSP_ANG_ANNUAL_REVALIDATION {
 				}
 			}
 
-			if (currentAccount.fw.newform.Is_change_location__c && currentAccount.fw.newform.Notify_Change_Location__c && currentAccount.isocountry.Local_language_Agency_details_required__c) {
+			/*if (currentAccount.fw.newform.Is_change_location__c && currentAccount.fw.newform.Notify_Change_Location__c && currentAccount.isocountry.Local_language_Agency_details_required__c) {
 				if (currentAccount.fw.newform.Local_Physical_Address_Street__c == null) {
 					currentAccount.fw.newform.Local_Physical_Address_Street__c.addError(Label.ISSP_YouMustEnter);
 					errorFound = true;
@@ -1284,7 +1284,7 @@ public with sharing class ISSP_ANG_ANNUAL_REVALIDATION {
 					currentAccount.fw.newform.Local_Postal_Address_Province__c.addError(Label.ISSP_YouMustEnter);
 					errorFound = true;
 				}
-			} //EO check for Change of Location & Local Agency Details fields
+			}*/ //EO check for Change of Location & Local Agency Details fields
 
 /*
 			check with Adrian
