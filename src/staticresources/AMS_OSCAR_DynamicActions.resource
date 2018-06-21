@@ -562,7 +562,7 @@ var dyn_functions = {
 
     forecast:function (arg) {
         
-        var c = sforce.connection.query("SELECT Id FROM Case where OSCAR__c ='" + arg + "' AND ( ParentId = null or Parent.RecordType.Name != 'OSCAR Communication' ) LIMIT 1").getArray("records")[0];
+        var c = sforce.connection.query("SELECT Id FROM Case where OSCAR__c ='" + arg + "' AND ( ParentId = null or Parent.RecordType.Name != 'OSCAR Communication' or Parent.Reason1__c = 'Annual revalidation') LIMIT 1").getArray("records")[0];
 
         var w = 800;
         var h = 200;
