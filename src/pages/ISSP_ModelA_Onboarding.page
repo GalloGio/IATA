@@ -222,7 +222,7 @@
     			        	reqIdentifier="{!reqs.File_Identifier2__c}"/>
     				</apex:repeat>
     			
-				<apex:form>
+				<apex:form style="text-align:center;">
 			        
 			    	        <apex:commandButton styleClass="btn btn-default" action="{!cancel}" value="{!$Label.ISSP_Back}"/>
 			                <apex:commandButton styleClass="btn btn-default" action="{!submitForm}" value="{!$Label.ISSP_AMS_Submit_IATA}"/>
