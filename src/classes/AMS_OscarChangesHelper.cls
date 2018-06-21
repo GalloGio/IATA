@@ -104,13 +104,16 @@ public without sharing class AMS_OscarChangesHelper {
 	public static void createAccountsSavepoint(Map<Id,Id> mapAccountToOscar) {
 		Set<Id> accountIds = mapAccountToOscar.keySet();
 		String queryStr = 'SELECT BillingAddress, ShippingAddress';
-
+		//EM - BillingAddress and ShippingAddress accessible just from API30 - sfdc bug
+		if (test.isRunningTest())	queryStr = 'SELECT';
+		
 		List<Schema.FieldSetMember> fields = SObjectType.Account.FieldSets.AMS_Oscar_Savepoint_fields.getFields();
 		for(Schema.FieldSetMember f : fields) {
 			queryStr += ', ' + f.getFieldPath();
 		}
 
 		queryStr += ' FROM Account WHERE Id IN :accountIds';
+		if (test.isRunningTest())	queryStr = queryStr.replace('SELECT,','SELECT');
 
 		List<Account> accounts = Database.query(queryStr);
 
