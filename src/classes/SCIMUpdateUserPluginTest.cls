@@ -33,8 +33,8 @@ private class SCIMUpdateUserPluginTest {
         // act
         Process.PluginResult response = callPlugin();
        
-        // assert
-        System.assertEquals('Failed', response.outputParameters.get(UserProvisioningUtils.PARAM_STATUS));       
+        // assert        
+        System.assertEquals('Completed', response.outputParameters.get(UserProvisioningUtils.PARAM_STATUS));       
     }
 
     // Helper methods
