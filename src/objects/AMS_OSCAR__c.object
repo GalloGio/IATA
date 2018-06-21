@@ -33643,11 +33643,19 @@ if(Change_effective_as_of__c - today() &gt; 0,&quot;30&quot;,&quot;0&quot;)))</f
                 <default>false</default>
             </values>
             <values>
+                <fullName>Closed_Disapproved</fullName>
+                <default>false</default>
+            </values>
+            <values>
                 <fullName>Closed_Rejected</fullName>
                 <default>false</default>
             </values>
             <values>
                 <fullName>Closed_Withdrawn</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Input requested</fullName>
                 <default>false</default>
             </values>
             <values>
@@ -33668,6 +33676,10 @@ if(Change_effective_as_of__c - today() &gt; 0,&quot;30&quot;,&quot;0&quot;)))</f
             </values>
             <values>
                 <fullName>Pending Approval</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Pending Reconsideration</fullName>
                 <default>false</default>
             </values>
             <values>
