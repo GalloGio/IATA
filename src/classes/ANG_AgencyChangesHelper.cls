@@ -210,7 +210,7 @@ public with sharing class ANG_AgencyChangesHelper {
 
                         if(changesContainer.accountsMap.get(oscar.Account__c).Due_Diligence_Status__c == AMS_Utils.IN_PROGRESS) oscar.STEP17__c = AMS_Utils.IN_PROGRESS;
                         else{
-                            String dlResult = AMS_OSCAR_Webservice.createAMLCase((String) oscar.Id);
+                            String dlResult = AMS_OSCAR_Webservice.createAMLCaseWithNoOscarUpdate(oscar);
                             if (dlResult.startsWith('ERROR')) oscar.addError(dlResult);
                             else changesContainer.accountsMap.get(oscar.Account__c).Due_Diligence_Status__c = AMS_Utils.IN_PROGRESS;
                         }
