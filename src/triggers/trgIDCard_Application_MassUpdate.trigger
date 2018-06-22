@@ -7,7 +7,7 @@ trigger trgIDCard_Application_MassUpdate on ID_Card_Application__c (after insert
 	List<ID_Card_Application__c> listMassApps = new List<ID_Card_Application__c>();
 	if (trigger.isUpdate) {
 		for (ID_Card_Application__c app : trigger.new) {
-			if (app.Application_Status__c == 'Cancelled' && app.RecordTypeId.equals(massAppRT))
+			if (app.Application_Status__c == 'Cancelled' && massAppRT.equals(app.RecordTypeId))
 				listMassApps.add(app);
 		}
 	}
@@ -27,7 +27,7 @@ trigger trgIDCard_Application_MassUpdate on ID_Card_Application__c (after insert
 	//determine all account
 	List<String> iataCodes = new List<String>();
 	for (ID_Card_Application__c app : trigger.new) {
-		if (app.RecordTypeId.equals(massAppRT))
+		if (massAppRT.equals(app.RecordTypeId))
 			iataCodes.add(app.IATA_Code__c);
 	}
 
@@ -36,10 +36,8 @@ trigger trgIDCard_Application_MassUpdate on ID_Card_Application__c (after insert
 		accountPerIATACode.put(a.IATACode__c, a);
 	}
 
-	//List<Case> toInsertCase = new List<Case>(); --> INC158853
-
 	for (ID_Card_Application__c app : trigger.new) {
-		if (app.RecordTypeId != null && app.RecordTypeId.equals(massAppRT)) {
+		if (app.RecordTypeId != null && massAppRT.equals(app.RecordTypeId)) {
 			Account acc = accountPerIATACode.get(app.IATA_Code__c);
 			//according to account we have to process or not
 			String appStatus = app.Application_Status__c;
@@ -53,13 +51,6 @@ trigger trgIDCard_Application_MassUpdate on ID_Card_Application__c (after insert
 			system.debug('[trgIDCard_Application_MassUpdate] for app ' + app.Id + ' Status ' + appStatus + '  /  Feat.:' + accFeatures);
 			//only consider this action if Application_Status__c had been updated.
 			if (Trigger.isInsert || (Trigger.isUpdate &&  app.Application_Status__c != Trigger.oldMap.get(app.Id).Application_Status__c)) {
-				//system.debug('[trgIDCard_Application_MassUpdate]')
-
-				//INC158853
-				/*if(Trigger.isInsert){
-				    system.debug('[trgIDCard_Application_MassUpdate] Create case because toInsert');
-				    toInsertCase.add(IDCardUtil.createKeyAccountIdCardMassApplicationCase(app,acc,false));
-				}*/
 
 				//credit card
 				if ( appStatus.tolowerCase().equals('paid')  && app.Payment_Type__c == IDCardUtil.PAYMENT_TYPE_CC) {
