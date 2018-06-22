@@ -1235,8 +1235,6 @@ ISPICKVAL( Status , &quot;Open&quot;)
                 <value>Americas</value>
             </criteriaItems>
             <team>SIDRA AME HUB AM CASS</team>
-            <team>SIDRA AME HUB AM RPM</team>
-            <team>SIDRA AME HUB AM TEAM</team>
         </ruleEntry>
         <ruleEntry>
             <assignedTo>Agency_Management_A_ME_Non_Complianc</assignedTo>
