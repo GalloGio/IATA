@@ -28,9 +28,5 @@
         <members>*</members>
         <name>Queue</name>
     </types>
-	<types>
-        <members>Case</members>
-        <name>AssignmentRules</name>
-    </types>
     <version>43.0</version>
 </Package>

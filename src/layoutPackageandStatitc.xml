@@ -8,6 +8,10 @@
         <members>*</members>
         <name>CustomApplication</name>
     </types>
+	<types>
+        <members>*</members>
+        <name>Flow</name>
+    </types>
     <types>
         <members>*</members>
         <name>CustomLabel</name>
