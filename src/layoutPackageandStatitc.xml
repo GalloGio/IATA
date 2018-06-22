@@ -24,17 +24,17 @@
         <members>*</members>
         <name>CustomTab</name>
     </types>
-	<types>
+    <types>
         <members>*</members>
         <name>Flow</name>
-    </types>
-	<types>
-        <members>*</members>
-        <name>FlowDefinition</name>
     </types>
     <types>
         <members>*</members>
         <name>Flow</name>
+    </types>
+    <types>
+        <members>*</members>
+        <name>FlowDefinition</name>
     </types>
     <types>
         <members>*</members>
