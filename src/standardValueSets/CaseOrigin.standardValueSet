@@ -1172,6 +1172,11 @@
         <label>Letter</label>
     </standardValue>
     <standardValue>
+        <fullName>Massive FOP Creation</fullName>
+        <default>false</default>
+        <label>Massive FOP Creation</label>
+    </standardValue>
+    <standardValue>
         <fullName>Monthly Report</fullName>
         <default>false</default>
         <label>Monthly Report</label>
@@ -1225,10 +1230,5 @@
         <fullName>Web SAF</fullName>
         <default>false</default>
         <label>Web SAF</label>
-    </standardValue>
-    <standardValue>
-        <fullName>Massive FOP Creation</fullName>
-        <default>false</default>
-        <label>Massive FOP Creation</label>
     </standardValue>
 </StandardValueSet>
