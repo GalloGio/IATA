@@ -2,6 +2,10 @@
 <Package xmlns="http://soap.sforce.com/2006/04/metadata">
     <types>
         <members>*</members>
+        <name>StandardValueSet</name>
+    </types>
+    <types>
+        <members>*</members>
         <name>ApprovalProcess</name>
     </types>
     <types>
@@ -11,7 +15,6 @@
         <members>Activity</members>
         <members>Asset</members>
         <members>Campaign</members>
-        <members>CampaignMember</members>
         <members>Case</members>
         <members>CaseContactRole</members>
         <members>Contact</members>
@@ -35,7 +38,16 @@
     </types>
     <types>
         <members>*</members>
+        <name>EmailTemplate</name>
+    </types>
+
+    <types>
+        <members>*</members>
         <name>Workflow</name>
     </types>
-    <version>40.0</version>
+    <types>
+        <members>*</members>
+        <name>CustomPermission</name>
+    </types>
+    <version>43.0</version>
 </Package>
