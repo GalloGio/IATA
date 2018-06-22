@@ -223,7 +223,7 @@ public without sharing class ISSP_AMS_MSO_Request_Controller {
             IATA_ISO_Country__c selectedCountryInfo = [SELECT Name, Id, Region__c FROM IATA_ISO_Country__c WHERE Id = :countrySelected];
           	
             if (oscarCase.Id == null) {
-                msoAccount.RecordTypeId = TransformationHelper.RtIDsPerDeveloperNamePerObj(new list<string> {'Account'}).get('Account').get('Standard_Account');//acctRT.Id;
+                msoAccount.RecordTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('Account', 'Standard_Account');//acctRT.Id;
                 msoAccount.Name = currentUserContact.Account.Name;
                 msoAccount.Sector__c = 'Travel Agent';
                 msoAccount.Category__c = 'MSO Member Sales Office';
@@ -234,7 +234,7 @@ public without sharing class ISSP_AMS_MSO_Request_Controller {
                 insert msoAccount;
 
                 // create new OSCAR
-                oscar.RecordTypeId = TransformationHelper.RtIDsPerDeveloperNamePerObj(new list<string> {'AMS_OSCAR__c'}).get('AMS_OSCAR__c').get('NEW');//oscarRT.Id;
+                oscar.RecordTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('AMS_OSCAR__c', 'NEW');//oscarRT.Id;
                 oscar.Name = 'tempName'; //oscarCase.CaseNumber;                
                 oscar.Process__c = 'NEW.MSO.1.0';
                 oscar.Account__c = msoAccount.Id;
@@ -248,7 +248,7 @@ public without sharing class ISSP_AMS_MSO_Request_Controller {
                 // create new OSCAR Communication case
                 oscarCase.AccountId = currentUserContact.AccountId;
                 oscarCase.ContactId = noEmailContactId; //currentUser.ContactId;
-                oscarCase.RecordTypeId = TransformationHelper.RtIDsPerDeveloperNamePerObj(new list<string> {'Case'}).get('Case').get('OSCAR_Communication');//caseRT.Id;
+                oscarCase.RecordTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('Case', 'OSCAR_Communication');//caseRT.Id;
                 //oscarCase.Subject = 'New MSO Code - ' + currentUserContact.Account.Name + ' - Self-service (IATA Portal)';
                 oscarCase.Subject = 'New MSO Code - ' + currentUserContact.Account.Name;
                 oscarCase.CaseArea__c = 'Accreditation Process';
@@ -264,7 +264,7 @@ public without sharing class ISSP_AMS_MSO_Request_Controller {
                 oscarCase = [SELECT Id, CaseNumber FROM Case WHERE Id =:oscarCase.Id];
 
                 // create new accreditation form
-                accreditationForm.RecordTypeId = TransformationHelper.RtIDsPerDeveloperNamePerObj(new list<string> {'AMS_Pax_Accreditation_Form__c'}).get('AMS_Pax_Accreditation_Form__c').get('GeneralOnlineAccreditation');//accreditationRT.Id;
+                accreditationForm.RecordTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('AMS_Pax_Accreditation_Form__c', 'GeneralOnlineAccreditation');//accreditationRT.Id;
                 accreditationForm.SAAM_Case__c = oscarCase.Id;
                 accreditationForm.Account_Name__c = currentUserContact.Account.Name;
                 accreditationForm.Location_Class__c = 'M';

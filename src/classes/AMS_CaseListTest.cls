@@ -14,22 +14,20 @@ private class AMS_CaseListTest {
 
         Account acc = [select id from Account];
 
-        Map<string, Id> caseRT  =  TransformationHelper.RtIDsPerDeveloperNamePerObj(new list<string> {'Case'}).get('Case');
-
         Contact co1 = new Contact(AccountId = acc.id, Firstname = 'teste1', Lastname='test1', Phone = '911111111', MobilePhone = '911111111', Email = 'test@test.com',
                                     Financial_Assessment_Contact__c = false);
         insert co1;
 
-        Case c1 = new Case(recordTypeId = caseRT.get('ProcessEuropeSCE'), accountid = acc.id, ContactId = co1.id, CaseArea__c = 'Accreditation Process');
-        Case c2 = new Case(recordTypeId = caseRT.get('ProcessEuropeSCE'), accountid = acc.id, ContactId = co1.id, CaseArea__c = 'Accreditation Process');
-        Case c3 = new Case(recordTypeId = caseRT.get('ProcessEuropeSCE'), accountid = acc.id, ContactId = co1.id, CaseArea__c = 'Risk Management Process');
-        Case c4 = new Case(recordTypeId = caseRT.get('ProcessEuropeSCE'), accountid = acc.id, ContactId = co1.id, CaseArea__c = 'Risk Management Process');
-        Case c5 = new Case(recordTypeId = caseRT.get('SIDRA'), ContactId = co1.id, accountid = acc.id);
-        Case c6 = new Case(recordTypeId = caseRT.get('SIDRA'), ContactId = co1.id, accountid = acc.id);
-        Case c7 = new Case(recordTypeId = caseRT.get('CasesMENA'), ContactId = co1.id, accountid = acc.id);
-        Case c8 = new Case(recordTypeId = caseRT.get('CasesMENA'), ContactId = co1.id, accountid = acc.id);
-        Case c9 = new Case(recordTypeId = caseRT.get('InternalCasesEuropeSCE'), ContactId = co1.id, accountid = acc.id);
-        Case c10 = new Case(recordTypeId = caseRT.get('InternalCasesEuropeSCE'), ContactId = co1.id, accountid = acc.id);
+        Case c1 = new Case(recordTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('Case', 'ProcessEuropeSCE'), accountid = acc.id, ContactId = co1.id, CaseArea__c = 'Accreditation Process');
+        Case c2 = new Case(recordTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('Case', 'ProcessEuropeSCE'), accountid = acc.id, ContactId = co1.id, CaseArea__c = 'Accreditation Process');
+        Case c3 = new Case(recordTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('Case', 'ProcessEuropeSCE'), accountid = acc.id, ContactId = co1.id, CaseArea__c = 'Risk Management Process');
+        Case c4 = new Case(recordTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('Case', 'ProcessEuropeSCE'), accountid = acc.id, ContactId = co1.id, CaseArea__c = 'Risk Management Process');
+        Case c5 = new Case(recordTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('Case', 'SIDRA'), ContactId = co1.id, accountid = acc.id);
+        Case c6 = new Case(recordTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('Case', 'SIDRA'), ContactId = co1.id, accountid = acc.id);
+        Case c7 = new Case(recordTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('Case', 'CasesMENA'), ContactId = co1.id, accountid = acc.id);
+        Case c8 = new Case(recordTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('Case', 'CasesMENA'), ContactId = co1.id, accountid = acc.id);
+        Case c9 = new Case(recordTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('Case', 'InternalCasesEuropeSCE'), ContactId = co1.id, accountid = acc.id);
+        Case c10 = new Case(recordTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('Case', 'InternalCasesEuropeSCE'), ContactId = co1.id, accountid = acc.id);
 
         List<Case> listOfCases = new List<Case>();
         listOfCases.add(c1);

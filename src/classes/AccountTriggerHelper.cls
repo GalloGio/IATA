@@ -91,7 +91,7 @@ public  class AccountTriggerHelper {
 
 
 
-      set<String> developerNames = new set<String> {'IATA_Agency' , 'IATA_Airline_BR', 'IATA_Airline', 'IATA_GSA', 'IATA_GSA_BR', 'IATA', 'Others', 'Standard_Account'};
+      set<String> developerNames = new set<String> {'IATA_Agency' , 'IATA_Airline_BR', 'IATA_Airline', 'IATA_GSA', 'IATA', 'Others', 'Standard_Account'};
       map<Id, String> developerNamePerRecordTypeIds = new map<Id, String>();
       set<id> recordTypeIds = new set<id>();
       map<integer, Account> AccountPerInteger = new map<integer, Account>();
@@ -102,7 +102,7 @@ public  class AccountTriggerHelper {
 
 
 
-      for (String rTName : developerNames) {
+      for (String rtName : developerNames) {
         ID rT = RecordTypeSingleton.getInstance().getRecordTypeId('Account', rtName);
         developerNamePerRecordTypeIds.put(rT, rTname);
         recordTypeIds.add(rT);
@@ -121,15 +121,16 @@ public  class AccountTriggerHelper {
                   )
            ) {
 
-          if (IsoIDPerAccount.get(a.IATA_ISO_Country__c) == null)
+          if (IsoIDPerAccount.get(a.IATA_ISO_Country__c) == null){
             IsoIDPerAccount.put(a.IATA_ISO_Country__c, new list<Integer>());
+          }
           IsoIDPerAccount.get(a.IATA_ISO_Country__c).add(i);
           IataIDs.add(a.IATA_ISO_Country__c);
           AccountPerInteger.put(i, a);
           i++;
 
 
-        } else  if (a.BillingCountry  <> NULL &&
+        } else if (a.BillingCountry  <> NULL &&
                     recordTypeIds.contains(a.RecordTypeId) &&
                     a.BillingCountry <> null &&
                     a.Is_AIMS_Account__c &&
@@ -199,17 +200,17 @@ public  class AccountTriggerHelper {
     //  throw new transformationException('' +triggerNew);
 
     set<string> fieldsToCheck = new set<String> {
-        'Type',
-        'Area_of_Operation__c',
-        'Type_of_Service__c',
-        'BSP_CI_Valid__c',
-        'BSP_FOC_Valid__c',
-        'CASS_CI_Valid__c',
-        'CASS_FOC_Valid__c',
-        'Airline_designator__c',
-        'IATACode__c',
-        'TradeName__c',
-        'ACLI_Status__c'
+      'Type',
+      'Area_of_Operation__c',
+      'Type_of_Service__c',
+      'BSP_CI_Valid__c',
+      'BSP_FOC_Valid__c',
+      'CASS_CI_Valid__c',
+      'CASS_FOC_Valid__c',
+      'Airline_designator__c',
+      'IATACode__c',
+      'TradeName__c',
+      'ACLI_Status__c'
     };
 
     ID hqRT = RecordTypeSingleton.getInstance().getRecordTypeId('Account', 'IATA_Airline');

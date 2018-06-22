@@ -17,8 +17,6 @@ private class AMS_AccreditationContactControllerTest
 		IATA_ISO_Country__c isoc = new IATA_ISO_Country__c(Name = 'Test', ISO_Code__c = 'TS');       
         insert isoc;
 
-        Map<string, Id> accountRoleRT = TransformationHelper.RtIDsPerDeveloperNamePerObj(new list<string> {'AMS_Account_Role__c'}).get('AMS_Account_Role__c');
-		
 		Id accRtId = AMS_Utils.getId('Account', 'IATA_Agency');
 
         List<Account> accs = new List<Account>();
@@ -84,7 +82,8 @@ private class AMS_AccreditationContactControllerTest
      	
     }
 
-    static testMethod void testAddingNewContactAndCompanyRowsSucceeds()
+    @isTest
+	static void testAddingNewContactAndCompanyRowsSucceeds()
     {
         setup();
         
@@ -114,7 +113,8 @@ private class AMS_AccreditationContactControllerTest
     }
     
     
-    static testMethod void testContactAndPersonLinkingSucceeds()
+    @isTest
+	static void testContactAndPersonLinkingSucceeds()
     {
         setup();
         
@@ -146,7 +146,8 @@ private class AMS_AccreditationContactControllerTest
         Test.stopTest();
     }
     
-    static testMethod void testAccountLinkingSucceeds()
+    @isTest
+	static void testAccountLinkingSucceeds()
     {
         setup();
         
@@ -169,7 +170,8 @@ private class AMS_AccreditationContactControllerTest
         Test.stopTest();
     }
     
-    static testMethod void testPopUpControllerWithContactSearch()
+    @isTest
+	static void testPopUpControllerWithContactSearch()
     {
         setup();
         
@@ -192,7 +194,8 @@ private class AMS_AccreditationContactControllerTest
         Test.stopTest();
     }
     
-    static testMethod void testPopUpControllerWithAccountSearch()
+    @isTest
+	static void testPopUpControllerWithAccountSearch()
     {
         setup();
         
@@ -216,7 +219,8 @@ private class AMS_AccreditationContactControllerTest
         Test.stopTest();
     }
     
-    static testMethod void testPopUpControllerWithPersonSearch()
+    @isTest
+	static void testPopUpControllerWithPersonSearch()
     {
         setup();
         
@@ -239,7 +243,8 @@ private class AMS_AccreditationContactControllerTest
         Test.stopTest();
     }
 
-    static testMethod void testPopUpControllerErrors() {
+    @isTest
+	static void testPopUpControllerErrors() {
         setup();
         
         Test.startTest();
@@ -270,7 +275,8 @@ private class AMS_AccreditationContactControllerTest
         Test.stopTest();
     }
 
-    static testMethod void testaddTrainedStaff()
+    @isTest
+	static void testaddTrainedStaff()
     {
         setup();
         
@@ -324,37 +330,8 @@ private class AMS_AccreditationContactControllerTest
         Test.stopTest();
     }
 
-
-    //FM - AMSU-72 - since the fields now have the date picker, entering incorrect dates no longer occurs so this test is not necessary any more
-    //static testMethod void testIncorrectDate()
-    //{
-    //    setup();
-        
-    //    Test.startTest();
-    //        ApexPages.StandardController sc = new ApexPages.StandardController(aoa);
-    //        AMS_AccreditationContactController ctrl = new AMS_AccreditationContactController(sc);
-            
-    //        //add owner from contact
-    //        Contact c1 = new Contact(AccountId = acc.id, Firstname = 'c1ObsoleteName', Lastname='c1LastName', Phone = '911111111', MobilePhone = '911111111', Email = 'test@test.com', Financial_Assessment_Contact__c = false);
-    //        insert c1; 
-
-    //        ctrl.rowNumber = '00000000000000000000000000000000000000000000000000000000';
-    //        ctrl.linkedRecordId = c1.Id;
-    //        ctrl.acWrapper.get(0).ac.Financial_interest__c = 100;
-    //        ctrl.acWrapper.get(0).ac.Agency_owner__c = true;
-    //        ctrl.acWrapper.get(0).dateJoined = '20101-01-10';
-    //        ctrl.acWrapper.get(0).ac.Date_joined_agency__c = '20101-01-10';
-    //        ctrl.linkACwithContactOrPersonSelection();
-
-    //        ctrl.onSave();
-
-    //        System.assert(wasMessageAdded(new ApexPages.Message(ApexPages.Severity.Error, 'Please make sure the date field format is "YYYY-MM-DD". First error with: '+ctrl.acWrapper.get(0).ac.First_Name__c + ' '+ ctrl.acWrapper.get(0).ac.Last_Name__c + ' with date: 20101-01-10')));
-
-
-    //    Test.stopTest();
-    //}
-
-    static testMethod void testIncorrectDateTrainedStaff()
+    @isTest
+	static void testIncorrectDateTrainedStaff()
     {
         setup();
         
@@ -411,7 +388,8 @@ private class AMS_AccreditationContactControllerTest
         Test.stopTest();
     }
 
-    static testMethod void verifyOwnerFlagIsSelectIfFinancialInterestAboveZero(){
+    @isTest
+	static void verifyOwnerFlagIsSelectIfFinancialInterestAboveZero(){
 
         setup();
         
@@ -439,7 +417,8 @@ private class AMS_AccreditationContactControllerTest
 
     }
 
-    static testMethod void verifyDGRTrainedStaffValiduntilPopulated(){
+    @isTest
+	static void verifyDGRTrainedStaffValiduntilPopulated(){
 
         setup();
         
@@ -473,7 +452,8 @@ private class AMS_AccreditationContactControllerTest
 
     }
 
-    static testMethod void verifyAccountIdNull(){
+    @isTest
+	static void verifyAccountIdNull(){
 
         setup();
         
@@ -501,7 +481,8 @@ private class AMS_AccreditationContactControllerTest
 
     }
 
-    static testMethod void testBlockExistingEmails(){
+    @isTest
+	static void testBlockExistingEmails(){
 
         setup();
         

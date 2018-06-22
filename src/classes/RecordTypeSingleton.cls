@@ -58,8 +58,11 @@ public class RecordTypeSingleton {
 	 * @return 			 id of the record type object
 	 */
 	public Id getRecordTypeId(String objectName, String devName){
+		System.debug('angielaz, getRecordTypeId-->getInstance().recordTypesByName.get(objectName): ' + recordTypesByName.get(objectName).get(devName));
 
-		return recordTypesByName.get(objectName).get(devName).Id;
+		Id id = recordTypesByName.get(objectName).get(devName).Id;
+
+		return id;
 
 	}
 
@@ -70,7 +73,7 @@ public class RecordTypeSingleton {
 	 * @param  devNameList List of the name of the record type (DeveloperName)
 	 * @return             List of record type Ids for the passed object name and list of record type names
 	 */
-	public List<Id> getRecordTypeObjIdList(String objectName, List<String> devNameList){
+	public List<Id> getRecordTypeObjIdListForSpecfifiedNames(String objectName, List<String> devNameList){
 
 		List<Id> returnRecTypeObjIdList = new List<Id>();
 

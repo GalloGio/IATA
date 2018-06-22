@@ -3,9 +3,9 @@ private class ISSP_AMS_MSO_Update_Controller_Test {
 	
 	@isTest static void test_correction() {
 
-        Id conRtId = TransformationHelper.RtIDsPerDeveloperNamePerObj(new list<string> {'Contact'}).get('Contact').get('Standard_Contact');//[SELECT Id FROM RecordType WHERE DeveloperName ='Standard_Contact' AND SobjectType = 'Contact'].Id;
-        Id accRtId = TransformationHelper.RtIDsPerDeveloperNamePerObj(new list<string> {'Account'}).get('Account').get('IATA_Airline');//[SELECT Id FROM RecordType WHERE DeveloperName ='IATA_Airline' AND SobjectType = 'Account'].Id;
-        Id agcRtId = TransformationHelper.RtIDsPerDeveloperNamePerObj(new list<string> {'Account'}).get('Account').get('IATA_Agency');// [SELECT Id FROM RecordType WHERE DeveloperName ='IATA_Agency' AND SobjectType = 'Account'].Id;
+        Id conRtId = RecordTypeSingleton.getInstance().getRecordTypeId('Contact', 'Standard_Contact');
+        Id accRtId = RecordTypeSingleton.getInstance().getRecordTypeId('Account', 'IATA_Airline');
+        Id agcRtId = RecordTypeSingleton.getInstance().getRecordTypeId('Account', 'IATA_Agency');
 
         IATA_ISO_Country__c isoc = new IATA_ISO_Country__c(Name = 'Test', ISO_Code__c = 'FR', Case_BSP_Country__c='Test');       
         insert isoc;
@@ -114,9 +114,9 @@ private class ISSP_AMS_MSO_Update_Controller_Test {
 	
 	@isTest static void test_termination() {
 		
-        Id conRtId = TransformationHelper.RtIDsPerDeveloperNamePerObj(new list<string> {'Contact'}).get('Contact').get('Standard_Contact');//[SELECT Id FROM RecordType WHERE DeveloperName ='Standard_Contact' AND SobjectType = 'Contact'].Id;
-        Id accRtId = TransformationHelper.RtIDsPerDeveloperNamePerObj(new list<string> {'Account'}).get('Account').get('IATA_Airline');//[SELECT Id FROM RecordType WHERE DeveloperName ='IATA_Airline' AND SobjectType = 'Account'].Id;
-        Id agcRtId = TransformationHelper.RtIDsPerDeveloperNamePerObj(new list<string> {'Account'}).get('Account').get('IATA_Agency');// [SELECT Id FROM RecordType WHERE DeveloperName ='IATA_Agency' AND SobjectType = 'Account'].Id;
+        Id conRtId = RecordTypeSingleton.getInstance().getRecordTypeId('Contact', 'Standard_Contact');
+        Id accRtId = RecordTypeSingleton.getInstance().getRecordTypeId('Account', 'IATA_Airline');
+        Id agcRtId = RecordTypeSingleton.getInstance().getRecordTypeId('Account', 'IATA_Agency');
 
         IATA_ISO_Country__c isoc = new IATA_ISO_Country__c(Name = 'Test', ISO_Code__c = 'FR', Case_BSP_Country__c='Test');       
         insert isoc;
@@ -187,7 +187,6 @@ private class ISSP_AMS_MSO_Update_Controller_Test {
 			Test.startTest(); 
             	ctrl.terminate();
 
-            	//ISSP_AMS_MSO_Update_Controller.closeOscar(ctrl.oscar.Id, ctrl.OscarCase.Id, con.id, ISSP_AMS_MSO_Update_Controller.ACTION_CORRECTION);
 			Test.stopTest();
         }
 
@@ -198,9 +197,9 @@ private class ISSP_AMS_MSO_Update_Controller_Test {
 
 	@isTest static void test_increase_coverage() {
 
-        Id conRtId = TransformationHelper.RtIDsPerDeveloperNamePerObj(new list<string> {'Contact'}).get('Contact').get('Standard_Contact');//[SELECT Id FROM RecordType WHERE DeveloperName ='Standard_Contact' AND SobjectType = 'Contact'].Id;
-        Id accRtId = TransformationHelper.RtIDsPerDeveloperNamePerObj(new list<string> {'Account'}).get('Account').get('IATA_Airline');//[SELECT Id FROM RecordType WHERE DeveloperName ='IATA_Airline' AND SobjectType = 'Account'].Id;
-        Id agcRtId = TransformationHelper.RtIDsPerDeveloperNamePerObj(new list<string> {'Account'}).get('Account').get('IATA_Agency');// [SELECT Id FROM RecordType WHERE DeveloperName ='IATA_Agency' AND SobjectType = 'Account'].Id;
+        Id conRtId = RecordTypeSingleton.getInstance().getRecordTypeId('Contact', 'Standard_Contact');
+        Id accRtId = RecordTypeSingleton.getInstance().getRecordTypeId('Account', 'IATA_Airline');
+        Id agcRtId = RecordTypeSingleton.getInstance().getRecordTypeId('Account', 'IATA_Agency');
 
         IATA_ISO_Country__c isoc = new IATA_ISO_Country__c(Name = 'Test', ISO_Code__c = 'FR', Case_BSP_Country__c='Test');       
         insert isoc;

@@ -212,7 +212,7 @@ private class AmazonFinancialTest {
         insert isoCountry;
 
         Account agent = New Account(name = 'The Agent',
-                                    recordtypeId = TransformationHelper.RtIDsPerDeveloperNamePerObj(new list<string>{'Account'}).get('Account').get('IATA_Agency'),
+                                    recordtypeId = RecordTypeSingleton.getInstance().getRecordTypeId('Account', 'IATA_Agency'),
                                     IATACode__c = '1234567' ,
                                     IATA_ISO_Country__c=isoCountry.id,
                                     Type = 'Passenger'      );
@@ -339,7 +339,7 @@ private class AmazonFinancialTest {
         insert isoCountry;
 
         Account agent = New Account(name = 'The Agent',
-                                    recordtypeId = TransformationHelper.RtIDsPerDeveloperNamePerObj(new list<string>{'Account'}).get('Account').get('IATA_Agency'),
+                                    recordtypeId = RecordTypeSingleton.getInstance().getRecordTypeId('Account', 'IATA_Agency'),
                                     IATACode__c = '1234567' ,
                                     IATA_ISO_Country__c=isoCountry.id,
                                     Type = 'Passenger'      );

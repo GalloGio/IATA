@@ -32,7 +32,7 @@ public class AMS_DemoCaseList {
         sidraRT = RecordTypeSingleton.getInstance().getRecordTypeId('Case', 'SIDRA');
         oscarCommunication = RecordTypeSingleton.getInstance().getRecordTypeId('Case', 'OSCAR_Communication');
 
-        casesRT = RecordTypeSingleton.getInstance().getRecordTypeObjIdList('Case', new List<String>{'CasesMENA', 'Cases_China_North_Asia', 'CasesAmericas', 'ExternalCasesIDFSglobal', 'CasesEurope'});
+        casesRT = RecordTypeSingleton.getInstance().getRecordTypeObjIdListForSpecfifiedNames('Case', new List<String>{'CasesMENA', 'Cases_China_North_Asia', 'CasesAmericas', 'ExternalCasesIDFSglobal', 'CasesEurope'});
         
         remainingRT = RecordTypeSingleton.getInstance().getRecordTypeObjIdListExceptPassedNames('Case', new List<String>{'SIDRA', 'IATA_Financial_Review', 'ProcessEuropeSCE', 'CasesMENA', 'Cases_China_North_Asia', 
                                                                                                                          'CasesAmericas', 'ExternalCasesIDFSglobal', 'CasesEurope', 'OSCAR_Communication'});

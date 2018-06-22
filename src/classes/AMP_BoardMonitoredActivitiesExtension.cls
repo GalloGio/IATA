@@ -21,7 +21,7 @@ public with sharing class AMP_BoardMonitoredActivitiesExtension {
   			this.acc = [SELECT Id, Name, Sector__c, Category__c FROM Account WHERE Id=:this.acc.Id];
   			AccountRecordTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('Objective__c', 'Account');
   			DivisionRecordTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('Objective__c', 'Division');
-  			CommentRecordTypeId =  RecordTypeSingleton.getInstance().getRecordTypeId('Objective__c', 'Objective_Related');
+  			CommentRecordTypeId =  RecordTypeSingleton.getInstance().getRecordTypeId('Comment__c', 'Objective_Related');
   			lstBMAs = getBMAs();
   			lstDivisionBMAs = getDivisionBMAs();
 			canEdit = getCanEdit();

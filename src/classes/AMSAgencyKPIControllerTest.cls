@@ -5,9 +5,6 @@
         IATA_ISO_Country__c isoc = new IATA_ISO_Country__c(Name = 'Test', ISO_Code__c = 'TS');
         insert isoc;
 
-        //Map<string, Id>  agenciesRT  =  TransformationHelper.RtIDsPerDeveloperNamePerObj(new list<string> {'AMS_Agency__c'}).get('AMS_Agency__c');
-
-
         List<Account> accountList = new List<Account>();
         Account acc1 = new Account(Name='Test1 Account', Sector__c='Travel Agent', IATAcode__c = '12345677', IATA_ISO_Country__c=isoc.id);
         Account acc2 = new Account(Name='Test2 Account', Sector__c='Travel Agent', IATAcode__c = '12345678', IATA_ISO_Country__c=isoc.id);

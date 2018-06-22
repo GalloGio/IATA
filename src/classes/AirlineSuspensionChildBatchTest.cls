@@ -37,12 +37,11 @@ private class AirlineSuspensionChildBatchTest {
 
         insert new Case_Reason_Service__c(Name = 'BSP Participation', Service__c = 'BSP Participation', Provider_Required__c = false);
 
-        //Airline_Suspension__c airline = new Airline_Suspension__c(Case__c = cs.id, Participates_in_IATA_Governance_Groups__c = 'Not Applicable' );
-        //insert airline;
         return cs;
     } 
     
-    public static testMethod void testBatch_CreateCountrySupensionCases() {
+    @isTest
+    public static void testBatch_CreateCountrySupensionCases() {
         Case cs = loadData();
         
         test.startTest();
@@ -66,7 +65,8 @@ private class AirlineSuspensionChildBatchTest {
         system.assertEquals(6, lstAllCases.size());
     }
     
-    public static testMethod void testBatch_CreateCountrySupensionCases_AirlineDeactivation() {
+    @isTest
+    public static void testBatch_CreateCountrySupensionCases_AirlineDeactivation() {
         Case cs = loadData();
         Id AirlineDeactivationRT = RecordTypeSingleton.getInstance().getRecordTypeId('Case', 'Airline_Deactivation');
         cs.RecordtypeId = AirlineDeactivationRT;
@@ -82,19 +82,13 @@ private class AirlineSuspensionChildBatchTest {
         test.stopTest();
     }
     
-    public static testMethod void testBatch_CloseAllChildSuspensionCases() {
+    @isTest
+    public static void testBatch_CloseAllChildSuspensionCases() {
         Case child = loadData();
         Case parent = child.clone();
         insert parent;
         child.ParentId = parent.Id;
         update child;
-        
-        //Airline_Suspension__c suspension = new Airline_Suspension__c();
-        //suspension.ChildSuspensionCasesGenerated__c = 'No';
-        //suspension.Reason_for_Suspension__c = 'Debt to IATA';
-        //suspension.Settle_Directly_To__c = 'IATA'; 
-        //suspension.Case__c = parent.Id;
-        //insert suspension;
 
         test.startTest();
         // instantiate the suspension page controller

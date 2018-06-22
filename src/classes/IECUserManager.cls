@@ -313,7 +313,7 @@ public without sharing class IECUserManager {
     public static Id getContactRecordTypeForIEC() {
         
         // TODO: to change once the ISS portal/registration is done
-        return RecordTypeSingleton.getInstance().getRecordTypeId('Contact', 'Standard');
+        return RecordTypeSingleton.getInstance().getRecordTypeId('Contact', 'Standard_Contact');
     }
     
     /**

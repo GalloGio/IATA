@@ -88,7 +88,7 @@ private class AMS_OscarCaseTriggerHelper_Test {
 			new AMS_Country_Specific_Attribute__c(
 				Threshold__c = 10.0,
 				Location_Class__c = 'Xpto',
-				RecordTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('AMS_Country_Specific_Attribute__c', 'Irregularity Threshold'),
+				RecordTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('AMS_Country_Specific_Attribute__c', 'Irregularity_Threshold'),
 				IATA_ISO_Country__C = countryList[0].Id
 			)
 		);
@@ -105,7 +105,7 @@ private class AMS_OscarCaseTriggerHelper_Test {
                 Company_Type__c = 'A',
                 IATACode__c = '100',
                 IATA_ISO_Country__c = country.Id,
-                RecordTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('Account', 'Agency')
+                RecordTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('Account', 'IATA_Agency')
         );
 
 		accountList.add(account);
@@ -121,7 +121,7 @@ private class AMS_OscarCaseTriggerHelper_Test {
                 Company_Type__c = 'A',
                 IATACode__c = '100',
                 IATA_ISO_Country__c = countryList[1].Id,
-                RecordTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('Account', 'Agency')
+                RecordTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('Account', 'IATA_Agency')
 			)
 		);
 
@@ -136,7 +136,7 @@ private class AMS_OscarCaseTriggerHelper_Test {
                 Company_Type__c = 'A',
                 IATACode__c = '100',
                 IATA_ISO_Country__c = countryList[2].Id,
-                RecordTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('Account', 'Agency')
+                RecordTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('Account', 'IATA_Agency')
 			)
 		);
 
@@ -151,7 +151,7 @@ private class AMS_OscarCaseTriggerHelper_Test {
                 Company_Type__c = 'A',
                 IATACode__c = '100',
                 IATA_ISO_Country__c = countryList[3].Id,
-                RecordTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('Account', 'Agency')
+                RecordTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('Account', 'IATA_Agency')
 			)
 		);
 
@@ -166,7 +166,7 @@ private class AMS_OscarCaseTriggerHelper_Test {
                 Company_Type__c = 'A',
                 IATACode__c = '100',
                 IATA_ISO_Country__c = countryList[4].Id,
-                RecordTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('Account', 'Agency')
+                RecordTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('Account', 'IATA_Agency')
 			)
 		);
 
@@ -181,7 +181,7 @@ private class AMS_OscarCaseTriggerHelper_Test {
                 Company_Type__c = 'A',
                 IATACode__c = '100',
                 IATA_ISO_Country__c = countryList[5].Id,
-                RecordTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('Account', 'Agency')
+                RecordTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('Account', 'IATA_Agency')
 			)
 		);
 

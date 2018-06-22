@@ -694,11 +694,8 @@ global class AmsIataCodeGenerator{
     Calculate the CheckDigit based on all elelment from IATA Code
     boolean parameter for to save or not the record
     */
-    //public static void checkDigitCreation(Ams_Agency__c agt, boolean saveRecord){#AMSTFS
     public static void checkDigitCreation(AMS_Pax_Accreditation_Form__c agt, Account act, boolean saveRecord){
-        //throw new TransformationException('checkDigit('+agt.Name+','+saverecord+')');
      
-        // #AMSFTS Map<string, Id>  agenciesRT  =  TransformationHelper.RtIDsPerDeveloperNamePerObj(new list<string> {'AMS_Agency__c'}).get('AMS_Agency__c');
         Map<String,String> letterIndex = new Map<String,String>{'A'=> '10','B'=> '11','C' => '','D'=> '13','E'=> '14','F'=> '15','G'=> '16','H'=> '17','I'=> '18','J'=> '19','K'=> '20','L'=> '21','M'=> '22','N'=> '23','O'=> '24','P'=> '25','Q'=> '26','R'=> '27','S'=> '28','T'=> '29','U'=> '30','V'=> '31','W'=> '32','X'=> '33','Y'=> '34','Z'=> '35'};
         String nACode = agt.A_code__c;
         String nCCode  ='' ; 
@@ -776,18 +773,6 @@ global class AmsIataCodeGenerator{
     {
         checkDigitCreation(agt, act, true);
     }
-    
-    /*#AMSFTSpublic static void checkDigitCreation(list<Ams_Agency__c> agts){
-        for(Ams_Agency__c agt:agts)
-            checkDigitCreation(agt);
-    }
-    
-     
-    public static void checkDigitCreation(list<Ams_Agency__c> agts,boolean saveRecord){
-        for(Ams_Agency__c agt:agts)
-            checkDigitCreation(agt,saveRecord);
-    }#AMSFTS*/
-    
     
     public static void sendLogsToUser(String body, String title)
     {

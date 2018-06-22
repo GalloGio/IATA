@@ -29,8 +29,7 @@ private class IDCard_CheckoutController_KATest {
 
 	private static void createTestData() {
 
-		Map<string,Id> idcardAppRT =  TransformationHelper.RtIDsPerDeveloperNamePerObj(new list<string> {'Account'}).get('Account');
-		Id rtidca = idcardAppRT.get('IATA_Agency');
+		Id rtidca = RecordTypeSingleton.getInstance().getRecordTypeId('Account', 'IATA_Agency');
 
 		Account account1 = new Account();
 		account1.RecordTypeId = rtidca;

@@ -1,5 +1,5 @@
 public without sharing class ISSP_AMS_Accreditation {
-    private static String SAAM_RECORD_TYPE_ID = RecordTypeSingleton.getInstance().getRecordTypeId('Case', 'SAAM');
+    private static String SAAM_RECORD_TYPE_ID = RecordTypeSingleton.getInstance().getRecordTypeId('Case', 'ProcessEuropeSCE');//SAAM
     private static String OSCAR_RECORD_TYPE_ID = RecordTypeSingleton.getInstance().getRecordTypeId('Case', 'OSCAR_Communication');
     private static String RECORD_TYPE_ID = SAAM_RECORD_TYPE_ID;
 

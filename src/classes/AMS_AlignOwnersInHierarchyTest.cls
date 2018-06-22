@@ -7,7 +7,7 @@ private class AMS_AlignOwnersInHierarchyTest {
 
         Id ownerRecTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('AMS_Account_Role__c', 'Ownership');
 
-        ID rtAgency = RecordTypeSingleton.getInstance().getRecordTypeId('Account', 'Agency');
+        ID rtAgency = RecordTypeSingleton.getInstance().getRecordTypeId('Account', 'IATA_Agency');
 
         IATA_ISO_Country__c portugal = new IATA_ISO_Country__c(Name='Portugal', ISO_Code__c='IT', Region__c='Europe', ISS_Office_Location__c='Portugal');
         insert portugal;

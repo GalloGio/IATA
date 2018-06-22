@@ -25,10 +25,6 @@ public with sharing class AMS_OSCAR_TestDataFactory
 		AMS_OSCAR__c OSCAR = new AMS_OSCAR__c(STEP1__c = 'In Progress', Account__c = a1.id,Change_effective_as_of__c = Date.today());
 		insert OSCAR;
 
-		Map<string, Id> caseRT  =  TransformationHelper.RtIDsPerDeveloperNamePerObj(new list<string> {'Case'}).get('Case');
-
-		//Case c = new Case(OSCAR__c = OSCAR.Id, recordtypeid = caseRT.get('OSCAR_Communication'));
-		//insert c;
 		Agency_Applied_Change_code__c aacc = new Agency_Applied_Change_code__c(Active__c = true, /*Change_Code__c = acc.id,MACREVIEW*/ Account__c = a1.id);
 		insert aacc;
 		Contact co1 = new Contact(AccountId = a1.id, Firstname = 'teste1', Lastname='test1', Phone = '911111111', MobilePhone = '911111111', Email = 'test@test.com', Financial_Assessment_Contact__c = false);
@@ -46,9 +42,6 @@ public with sharing class AMS_OSCAR_TestDataFactory
 
 		insert customsettings;
 
-		
-
-		
 	}
 
 	public static void createOSCARtestDataAccHier()
@@ -163,10 +156,6 @@ public with sharing class AMS_OSCAR_TestDataFactory
 		AMS_OSCAR__c OSCAR = new AMS_OSCAR__c(STEP1__c = 'In Progress', Account__c = HO1.id,Change_effective_as_of__c = Date.today());
 		insert OSCAR;
 
-		Map<string, Id> caseRT  =  TransformationHelper.RtIDsPerDeveloperNamePerObj(new list<string> {'Case'}).get('Case');
-
-		//Case c = new Case(OSCAR__c = OSCAR.Id, recordtypeid = caseRT.get('OSCAR_Communication'));
-		//insert c;
 		Agency_Applied_Change_code__c aacc = new Agency_Applied_Change_code__c(Active__c = true, /*Change_Code__c = acc.id,MACREVIEW*/ Account__c = a1.id);
 		insert aacc;
 		Contact co1 = new Contact(AccountId = HO1.id, Firstname = 'teste1', Lastname='test1', Phone = '911111111', MobilePhone = '911111111', Email = 'test@test.com', Financial_Assessment_Contact__c = false);
@@ -183,9 +172,6 @@ public with sharing class AMS_OSCAR_TestDataFactory
 		customsettings.add(new AMS_OSCAR_HistoryFields__c(Name = 'STEP1__c', HasExternalLabel__c = true, FieldName__c ='STEP1'));
 
 		insert customsettings;
-
-		
-
 		
 	}
 
@@ -230,11 +216,6 @@ public with sharing class AMS_OSCAR_TestDataFactory
 		AMS_OSCAR__c OSCAR = new AMS_OSCAR__c(STEP1__c = 'Not started', Account__c = a1.id, Process__c = AMS_Utils.new_HO,Change_effective_as_of__c = Date.today(), BusinessHours__c = bhs[0].Id);
 		insert OSCAR;
 
-		Map<string, Id> caseRT  =  TransformationHelper.RtIDsPerDeveloperNamePerObj(new list<string> {'Case'}).get('Case');
-
-		//Case c = new Case(OSCAR__c = OSCAR.Id, recordtypeid = caseRT.get('OSCAR_Communication'));
-		//insert c;
-		
 		List<Agency_Applied_Change_code__c> aaccList = new List<Agency_Applied_Change_code__c>();
 		
 		Agency_Applied_Change_code__c aacc1 = new Agency_Applied_Change_code__c(Active__c = true, /*Change_Code__c = acc.id,MACREVIEW*/ Account__c = a1.id);
@@ -271,9 +252,6 @@ public with sharing class AMS_OSCAR_TestDataFactory
 
 		//Create Inspections connected to OSCAR
 		
-		//AMS_Accreditation_Organization__c ao = new AMS_Accreditation_Organization__c(Air_Code__c = 'DOM');
-		//insert ao;
-
 		AMS_OSCAR__c OSCAR_GSA = new AMS_OSCAR__c(STEP1__c = 'In Progress', Account__c = a1.id, Process__c =AMS_Utils.new_GSA);
 		
 		insert OSCAR_GSA;
@@ -291,16 +269,6 @@ public with sharing class AMS_OSCAR_TestDataFactory
 		agencyInspectionList.add(new AMS_Inspection__c(Oscar__c=OSCAR_GSA.id, Airline__c = airline.Id,/*Accreditation_Endorsement_organisation__c=ao.id,*/Accreditation_Endorsement_Status_code__c = '8'));
 		
 		insert	agencyInspectionList;
-
-		//Create hierarchy
-        /*AMS_Agencies_Hierarchy__c H1 = new AMS_Agencies_Hierarchy__c(Hierarchy_Name__c = 'Hierarchy 1');
-        List<AMS_Agencies_Hierarchy__c> hs = new List<AMS_Agencies_Hierarchy__c> {H1};
-        insert hs;
-
-        List<AMS_Agencies_relationhip__c> rels = new List<AMS_Agencies_relationhip__c>();
-        rels.add(new AMS_Agencies_relationhip__c(Hierarchy__c = H1.Id, Parent_Account__c = a1.Id, Child_Account__c = a2.Id));
-
-        insert rels;*/
 
 	}
 
@@ -370,9 +338,6 @@ public with sharing class AMS_OSCAR_TestDataFactory
 
 		AMS_Accreditation_Contact__c acontact3 = new AMS_Accreditation_Contact__c(AMS_Pax_Accreditation_Form__c = stagingArea.Id, First_name__c='Daff', Last_name__c='Duck', Valid_until__c = Date.today().addYears(2), Type_Of_Certificate__c = AMS_Utils.CERT_CATA, RecordTypeId=trainedStaff);
 
-		//AMS_Accreditation_Contact__c acontact4 = new AMS_Accreditation_Contact__c(AMS_Pax_Accreditation_Form__c = stagingArea.Id, First_name__c='Beaky', Last_name__c='Buzzard', Valid_until__c = Date.today().addYears(2), Type_Of_Certificate__c = AMS_Utils.CERT_TSA, RecordTypeId=trainedStaff);
-
-		//insert new List<AMS_Accreditation_Contact__c>{acontact1,acontact2,acontact3,acontact4};
 		insert new List<AMS_Accreditation_Contact__c>{acontact1,acontact2,acontact3};
 
 	}

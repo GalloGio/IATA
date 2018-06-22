@@ -98,7 +98,6 @@ Constant Class
         'IATA_Agency'=>'Agency',
         'IATA_Airline_BR'=>'Airline',
         'IATA_Airline'=>'Airline',
-        'IATA_GSA_BR'=>'GSA',
         'IATA_GSA'=>'GSA'
         };
         

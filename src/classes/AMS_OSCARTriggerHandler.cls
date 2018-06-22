@@ -2255,7 +2255,7 @@ public class AMS_OSCARTriggerHandler {
         List<AMS_OSCAR__c> triggerNew = (List<AMS_OSCAR__c>)Trigger.new;
         Map<Id, AMS_OSCAR__c> oldMap = (Map<Id, AMS_OSCAR__c>)Trigger.oldMap;
 
-        Id volRelRT = RecordTypeSingleton.getInstance().getRecordTypeId('AMS_OSCAR__c', 'VOLUNTARY RELINQUISHMENT');
+        Id volRelRT = RecordTypeSingleton.getInstance().getRecordTypeId('AMS_OSCAR__c', 'VOLUNTARY_RELINQUISHMENT');
         List<AMS_Oscar__c> oscars = filterOSCARbyRT(volRelRT, triggerNew);
 
         if(oscars.isEmpty()) return;

@@ -1,7 +1,6 @@
 @isTest
 private class RecordTypeSingletonTest {
 	
-	
 	@isTest 
 	private static void getRecordTypesTest() {
 		//Id retrieved using Schema class
@@ -16,6 +15,28 @@ private class RecordTypeSingletonTest {
 		System.assertEquals('Account', rtAccountStdd.SobjectType, 'The returned type, ' + rtAccountStdd.SobjectType + ', does not match Account');
 		System.assertEquals('Standard_Account', rtAccountStdd.DeveloperName, 'The returned record type, ' + rtAccountStdd.DeveloperName + ', does not match Standard_Account');
 
+	}
+
+	@isTest
+	private static void getRecordTypeObjIdListTest(){
+		//Map of RecordTypeInfo retrieved using Schema class
+		Map<String, Schema.RecordTypeInfo> recordTypesMap = Schema.Participant__c.sObjectType.getDescribe().getRecordTypeInfosByDeveloperName();
+		
+		List<Id> rtIdsList = RecordTypeSingleton.getInstance().getRecordTypeObjIdListForSpecfifiedNames('Participant__c', new List<String>{'Local_Group_Participants'});
+		// assertions to test RecordTypeSingleton.getInstance().getRecordTypeObjIdListForSpecfifiedNames()
+		System.assertEquals(recordTypesMap.get('Local_Group_Participants').getRecordTypeId(), rtIdsList.get(0), 'The returned List of Ids retrieved a wrong Id for Local_Group_Participants: ' +  rtIdsList.get(0));
+		System.assertNotEquals(recordTypesMap.get('Reg_Div_Group_Participants').getRecordTypeId(), rtIdsList.get(0), 'The returned List of Ids retrieved a Id for Reg_Div_Group_Participants: ' +  rtIdsList.get(0));
+
+	}
+
+	@isTest
+	private static void getRecordTypeObjIdListExceptPassedNamesTest(){
+		//Map of RecordTypeInfo retrieved using Schema class
+		Map<String, Schema.RecordTypeInfo> recordTypesMap = Schema.Account.sObjectType.getDescribe().getRecordTypeInfosByDeveloperName();
+		
+		List<Id> rtIdsExceptList = RecordTypeSingleton.getInstance().getRecordTypeObjIdListExceptPassedNames('Account', new List<String>{'IATA_Agency'});
+		// assertion to test RecordTypeSingleton.getInstance().getRecordTypeObjIdListExceptPassedNames()
+		System.assert(!rtIdsExceptList.contains(recordTypesMap.get('IATA_Agency').getRecordTypeId()), 'The returned List of Ids retrieved a Id for IATA_Agency: ' +  rtIdsExceptList.get(0));
 	}
 	
 }
