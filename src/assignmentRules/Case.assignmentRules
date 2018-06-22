@@ -1222,21 +1222,6 @@ ISPICKVAL( Status , &quot;Open&quot;)
             </criteriaItems>
         </ruleEntry>
         <ruleEntry>
-            <assignedTo>AGM_Non_Compliance_Americas</assignedTo>
-            <assignedToType>Queue</assignedToType>
-            <criteriaItems>
-                <field>Case.RecordTypeId</field>
-                <operation>equals</operation>
-                <value>SIDRA Lite</value>
-            </criteriaItems>
-            <criteriaItems>
-                <field>Case.Region__c</field>
-                <operation>equals</operation>
-                <value>Americas</value>
-            </criteriaItems>
-            <team>SIDRA AME HUB AM CASS</team>
-        </ruleEntry>
-        <ruleEntry>
             <assignedTo>Agency_Management_A_ME_Non_Complianc</assignedTo>
             <assignedToType>Queue</assignedToType>
             <criteriaItems>
