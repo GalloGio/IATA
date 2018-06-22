@@ -30,7 +30,7 @@
     </types>
 	<types>
         <members>Case</members>
-        <name>AssignmentRule</name>
+        <name>AssignmentRules</name>
     </types>
     <version>43.0</version>
 </Package>
