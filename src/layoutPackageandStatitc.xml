@@ -8,10 +8,6 @@
         <members>*</members>
         <name>CustomApplication</name>
     </types>
-	<types>
-        <members>*</members>
-        <name>Flow</name>
-    </types>
     <types>
         <members>*</members>
         <name>CustomLabel</name>
@@ -27,6 +23,14 @@
     <types>
         <members>*</members>
         <name>CustomTab</name>
+    </types>
+	<types>
+        <members>*</members>
+        <name>Flow</name>
+    </types>
+	<types>
+        <members>*</members>
+        <name>FlowDefinition</name>
     </types>
     <types>
         <members>*</members>
