@@ -38,6 +38,20 @@
         <value>Conga Merge</value>
     </labels>
     <labels>
+        <fullName>AMS_AttchNotifyOwner</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>AMS_AttchNotifyOwner</shortDescription>
+        <value>AMS_OSCARAttchOwnerNotification</value>
+    </labels>
+    <labels>
+        <fullName>AMS_Notify_OSCAR_Owner</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>AMS_Notify_OSCAR_Owner</shortDescription>
+        <value>Notify OSCAR Owner</value>
+    </labels>
+    <labels>
         <fullName>AMS_Due_Diligence_Lock</fullName>
         <language>en_US</language>
         <protected>false</protected>
@@ -19228,6 +19242,13 @@ this is the tiess topic help</value>
         <protected>false</protected>
         <shortDescription>ISSP_LanguageDependentLink</shortDescription>
         <value>en_US</value>
+    </labels>
+    <labels>
+        <fullName>AMS_NotificationSent</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>AMS_NotificationSent</shortDescription>
+        <value>Notification sent to Case owner.</value>
     </labels>
     <labels>
         <fullName>ISSP_Last_Updated_on</fullName>
