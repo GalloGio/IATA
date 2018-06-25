@@ -7700,6 +7700,15 @@ if(Change_effective_as_of__c - today() &gt; 0,&quot;30&quot;,&quot;0&quot;)))</f
         </sharedTo>
     </listViews>
     <listViews>
+        <fullName>Annual_Revalidation_AMS_OSCAR</fullName>
+        <filterScope>Queue</filterScope>
+        <label>Annual Revalidation</label>
+        <queue>Annual_Revalidation</queue>
+        <sharedTo>
+            <allInternalUsers></allInternalUsers>
+        </sharedTo>
+    </listViews>
+    <listViews>
         <fullName>Asia_Pacific_OSCAR_AMS_OSCAR</fullName>
         <filterScope>Queue</filterScope>
         <label>Asia &amp; Pacific [OSCAR]</label>
