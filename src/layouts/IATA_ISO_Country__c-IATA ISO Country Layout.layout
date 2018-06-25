@@ -392,6 +392,10 @@
     </relatedLists>
     <relatedLists>
         <fields>NAME</fields>
+        <relatedList>ICCS_Product_Country__c.Country__c</relatedList>
+    </relatedLists>
+    <relatedLists>
+        <fields>NAME</fields>
         <fields>Product__c</fields>
         <relatedList>Non_Compliant_Country__c.IATA_ISO_Country__c</relatedList>
     </relatedLists>
