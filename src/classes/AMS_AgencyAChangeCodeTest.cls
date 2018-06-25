@@ -47,7 +47,7 @@ private class AMS_AgencyAChangeCodeTest {
     static void createCaseAndOSCAR(Account theAccount, Contact theContact){
 
         // Create the Staging area for the Account
-        ID rtCommCase = RecordTypeSingleton.getInstance().getRecordTypeId('Case', 'OSCAR _Communication');
+        ID rtCommCase = RecordTypeSingleton.getInstance().getRecordTypeId('Case', 'OSCAR_Communication');
         ID rtAgency = RecordTypeSingleton.getInstance().getRecordTypeId('Account', 'IATA_Agency');
 
         Case theCommunicationCase = new Case(RecordTypeId = rtCommCase, Subject =  theAccount.Name, 

@@ -14,7 +14,7 @@ public class IDCardLoginControllerTest{
 
         List<ID_Card_Application__c> idCardAppToInsert = new List<ID_Card_Application__c>();
 
-        Id idCardAppRT =  RecordTypeSingleton.getInstance().getRecordTypeId('ID_Card_Application__c', 'Single_ID_Card_Operationn');
+        Id idCardAppRT =  RecordTypeSingleton.getInstance().getRecordTypeId('ID_Card_Application__c', 'Single_ID_Card_Operation');
         testData.IDCards_IDCardApplications[3].RecordTypeId = idCardAppRT;
         idCardAppToInsert.add(testData.IDCards_IDCardApplications[1]);
         idCardAppToInsert.add(testData.IDCards_IDCardApplications[3]);
@@ -75,7 +75,8 @@ public class IDCardLoginControllerTest{
       idCardLoginController.findLocation();
     }
 
-    public static TestMethod void TestVerify(){
+    @isTest
+    public static void TestVerify(){
         TestIDCardLoginController();
 
         Test.startTest();
@@ -200,7 +201,8 @@ public class IDCardLoginControllerTest{
         Test.stopTest();
     }
 
-    public static TestMethod void TestVerifyAlternative(){
+    @isTest
+    public static void TestVerifyAlternative(){
         TransformationHelper.trgAccountISSP_AfterBeforInsertDeleteUpdateUndelete = true;
         TestIDCardLoginController();
 
@@ -213,7 +215,7 @@ public class IDCardLoginControllerTest{
 
         controllerPage.getParameters().put('recaptcha_challenge_field','challengeTest');
         controllerPage.getParameters().put('recaptcha_response_field', 'responseTest');
-    idCardLoginController.reset();
+        idCardLoginController.reset();
         string t = idCardLoginController.publicKey;
         idCardLoginController.setSelectedLanguage('en_US');
         t = idCardLoginController.getSelectedLanguage();
@@ -227,7 +229,7 @@ public class IDCardLoginControllerTest{
         Test.startTest();
         Date dateTemp = testData.IDCards_IDCardApplications[0].Date_of_Birth__c;
         idCardLoginController.IATACodeLocation2 = testData.IDCards_IDCardApplications[0].IATA_Code__c;
-         idCardLoginController.FNAME = testData.IDCards_IDCardApplications[0].First_Name__c;
+        idCardLoginController.FNAME = testData.IDCards_IDCardApplications[0].First_Name__c;
         idCardLoginController.LNAME = testData.IDCards_IDCardApplications[0].Last_Name__c;
         idCardLoginController.DOB = dateTemp.month() + '/' + dateTemp.day() + '/' + dateTemp.year();
         nextPage = idCardLoginController.verifyAlternative();

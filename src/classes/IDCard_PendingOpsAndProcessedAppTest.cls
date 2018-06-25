@@ -168,7 +168,7 @@ public with sharing class IDCard_PendingOpsAndProcessedAppTest {
 
         insert idcs;
 
-        Id rt =  RecordTypeSingleton.getInstance().getRecordTypeId('ID_Card_Application__c', 'Single_ID_Card_Operationn');
+        Id rt =  RecordTypeSingleton.getInstance().getRecordTypeId('ID_Card_Application__c', 'Single_ID_Card_Operation');
         List<ID_Card_Application__c> apps = new List<ID_Card_Application__c>();
         for (integer i = 5; i < 10; i++) {
             apps.add(new ID_Card_Application__c(VER_Number__c = cs[i].VER_Number_2__c,
@@ -244,7 +244,7 @@ public with sharing class IDCard_PendingOpsAndProcessedAppTest {
         system.debug(LoggingLevel.ERROR, '############### testAcceptRejectPendingApp()  ####################');
         initData();
 
-        Id rtsingle =  RecordTypeSingleton.getInstance().getRecordTypeId('ID_Card_Application__c', 'Single_ID_Card_Operationn');
+        Id rtsingle =  RecordTypeSingleton.getInstance().getRecordTypeId('ID_Card_Application__c', 'Single_ID_Card_Operation');
         Id rtmass =  RecordTypeSingleton.getInstance().getRecordTypeId('ID_Card_Application__c', 'Mass_Order_Application');
         Id rtcase = RecordTypeSingleton.getInstance().getRecordTypeId('Case', 'ID_Card_Mass_Application');
 
@@ -469,7 +469,7 @@ public with sharing class IDCard_PendingOpsAndProcessedAppTest {
 
         a.ID_Card_KeyAccount_features__c = 'ID Card Paid by Applicant; Payment by Credit Card; Payment by Wire / Cheque';
         update a;
-        Id rtsingle =  RecordTypeSingleton.getInstance().getRecordTypeId('ID_Card_Application__c', 'Single_ID_Card_Operationn');
+        Id rtsingle =  RecordTypeSingleton.getInstance().getRecordTypeId('ID_Card_Application__c', 'Single_ID_Card_Operation');
         Id rtmass =  RecordTypeSingleton.getInstance().getRecordTypeId('ID_Card_Application__c', 'Mass_Order_Application');
         Id rtcase = RecordTypeSingleton.getInstance().getRecordTypeId('Case', 'ID_Card_Mass_Application');
 
@@ -601,7 +601,7 @@ public with sharing class IDCard_PendingOpsAndProcessedAppTest {
         initData();
         a.ID_Card_KeyAccount_features__c = 'ID Card Paid by Applicant; Payment by Credit Card; Payment by Wire / Cheque';
         update a;
-        Id rtsingle =  RecordTypeSingleton.getInstance().getRecordTypeId('ID_Card_Application__c', 'Single_ID_Card_Operationn');
+        Id rtsingle =  RecordTypeSingleton.getInstance().getRecordTypeId('ID_Card_Application__c', 'Single_ID_Card_Operation');
         Id rtmass =  RecordTypeSingleton.getInstance().getRecordTypeId('ID_Card_Application__c', 'Mass_Order_Application');
         Id rtcase = RecordTypeSingleton.getInstance().getRecordTypeId('Case', 'ID_Card_Mass_Application');
 
@@ -714,7 +714,7 @@ public with sharing class IDCard_PendingOpsAndProcessedAppTest {
         initData();
         a.ID_Card_KeyAccount_features__c = 'ID Card Paid by Applicant; Payment by Credit Card; Payment by Wire / Cheque; Process application without waiting for';
         update a;
-        Id rtsingle =  RecordTypeSingleton.getInstance().getRecordTypeId('ID_Card_Application__c', 'Single_ID_Card_Operationn');
+        Id rtsingle =  RecordTypeSingleton.getInstance().getRecordTypeId('ID_Card_Application__c', 'Single_ID_Card_Operation');
         Id rtmass =  RecordTypeSingleton.getInstance().getRecordTypeId('ID_Card_Application__c', 'Mass_Order_Application');
         Id rtcase = RecordTypeSingleton.getInstance().getRecordTypeId('Case', 'ID_Card_Mass_Application');
 
@@ -802,25 +802,6 @@ public with sharing class IDCard_PendingOpsAndProcessedAppTest {
         List<ID_Card__c> cards = [SELECT VER_Number__c, Is_Active_Card__c, Date_Of_Birth__c, Valid_To_Date__c, Photo__c, Name_on_ID_Card__c, FirstName__c, LastName__c,
                                   ID_Card_Application__c, Card_Status__c, Cancellation_Date__c, Blacklisted__c, Agency_IATA_Code__c
                                   FROM ID_Card__c];
-        /*   system.assertEquals(1, cards.size());
-
-           // Check the data stored on idcard
-           integer i = 0;
-           for(ID_Card__c card : cards){
-               system.assertEquals(cs[i].FirstName, card.FirstName__c);
-               system.assertEquals(cs[i].LastName, card.LastName__c);
-               system.assertEquals(cs[i].Date_Of_Birth__c, card.Date_Of_Birth__c);
-               system.assertEquals(cs[i].FirstName+' '+cs[i].LastName, card.Name_on_ID_Card__c);
-               system.assertEquals(false, card.Blacklisted__c);
-               system.assertEquals(null, card.Cancellation_Date__c);
-               system.assertEquals('Approved', card.Card_Status__c);
-               system.assertEquals(singles[i].Id, card.ID_Card_Application__c);
-               system.assertEquals(singles[i].Photo__c, card.Photo__c);
-               system.assertEquals(singles[i].VER_Number__c, card.VER_Number__c);
-
-               i++;
-           }
-           */
     }
 
 
@@ -831,7 +812,7 @@ public with sharing class IDCard_PendingOpsAndProcessedAppTest {
         initData();
         a.ID_Card_KeyAccount_features__c = 'ID Card Paid by Applicant; Payment by Credit Card; Payment by Wire / Cheque; Process application without waiting for';
         update a;
-        Id rtsingle =  RecordTypeSingleton.getInstance().getRecordTypeId('ID_Card_Application__c', 'Single_ID_Card_Operationn');
+        Id rtsingle =  RecordTypeSingleton.getInstance().getRecordTypeId('ID_Card_Application__c', 'Single_ID_Card_Operation');
         Id rtmass =  RecordTypeSingleton.getInstance().getRecordTypeId('ID_Card_Application__c', 'Mass_Order_Application');
         Id rtcase = RecordTypeSingleton.getInstance().getRecordTypeId('Case', 'ID_Card_Mass_Application');
 

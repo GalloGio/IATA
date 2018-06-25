@@ -66,7 +66,7 @@ public class IDCard_CheckoutSingleApplicationTest {
         mas.add(new Managed_agency__c(Contact__c = cs[0].id, Account__c = a2.id));
         insert mas;
 
-        Id rt =  RecordTypeSingleton.getInstance().getRecordTypeId('ID_Card_Application__c', 'Single_ID_Card_Operationn');
+        Id rt =  RecordTypeSingleton.getInstance().getRecordTypeId('ID_Card_Application__c', 'Single_ID_Card_Operation');
         app = new ID_Card_Application__c(VER_Number__c = cs[0].VER_Number_2__c,
                                          Displayed_Name__c = cs[0].Name,
                                          First_Name__c = cs[0].FirstName,
@@ -130,7 +130,7 @@ public class IDCard_CheckoutSingleApplicationTest {
             getException = true;
         }
 
-        Id rt =  RecordTypeSingleton.getInstance().getRecordTypeId('ID_Card_Application__c', 'Single_ID_Card_Operationn');
+        Id rt =  RecordTypeSingleton.getInstance().getRecordTypeId('ID_Card_Application__c', 'Single_ID_Card_Operation');
         app = new ID_Card_Application__c(VER_Number__c = '123',
                                          Displayed_Name__c = 'Nome Cognome',
                                          First_Name__c = 'FirstName',

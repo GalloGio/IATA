@@ -383,8 +383,8 @@ global without sharing class AMS_RecordCreatorWebservice {
         Map<String,String> previousContactTypes = new Map<String,String>();
 
 
-        previousContactTypes.put('Previous_Company_Owner','Current Company Owner');
-        previousContactTypes.put('Previous_Owner','Current Owner');
+        previousContactTypes.put('Previous_Company_Owner','Previous_Company_Owner');
+        previousContactTypes.put('Previous_Owner','Previous_Company_Owner');
 
         List<AMS_Accreditation_Contact__c> idsToClone = new List<AMS_Accreditation_Contact__c>();
 

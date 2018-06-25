@@ -1024,7 +1024,6 @@ public with sharing class AMS_AccountRoleCreator
 
         if(!newContactsToInsert.isEmpty()){
             AMS_Utils.runningContactInsertUpdateFromOSCAR = true;
-            system.debug('ANG INSERT 3');
             insert verifyNoDuplicateIFAPcontactExists(newContactsToInsert.values());
             AMS_Utils.runningContactInsertUpdateFromOSCAR = false;
         }

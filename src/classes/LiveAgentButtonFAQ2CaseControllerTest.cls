@@ -140,7 +140,7 @@ private class LiveAgentButtonFAQ2CaseControllerTest {
 			ctrl.country.region__c='China & North Asia';
 			System.assert(ctrl.getCaseRecordTypeId() != null);
 			ctrl.country.region__c='testnull';
-			System.assert(ctrl.getCaseRecordTypeId() == null);
+			System.assert(ctrl.getCaseRecordTypeId() == 'InternalCasesEuropeSCE');
 		}
 	}
 }

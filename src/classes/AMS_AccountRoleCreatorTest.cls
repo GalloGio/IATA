@@ -749,7 +749,7 @@ public with sharing class AMS_AccountRoleCreatorTest {
         list<Contact> lsContacts = AMS_AccountRoleCreator.transformACsWithPersonLinking_createContactList(lsAccCont, null); 
     }
 
-     @isTest static void test_RoleCreationForCorrectionProcess(){
+    @isTest static void test_RoleCreationForCorrectionProcess(){
     Test.startTest();
         Id ownerRecTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('AMS_Account_Role__c', 'Ownership');
         Id correctionOSCARRecTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('AMS_OSCAR__c', 'CORRECTION');

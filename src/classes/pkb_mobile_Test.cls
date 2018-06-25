@@ -1,6 +1,6 @@
+@isTest
 public class pkb_mobile_Test {
 
-    // static String lang  = KnowledgeArticleVersion.Language.getDescribe().getPickListValues().get(0).getValue();
     static String lang  = 'en_US'; 
     static String siteName = 'PKB2_MOBILE_' + String.valueOf(Crypto.getRandomInteger());
     static String publishStatus = 'draft';
@@ -15,7 +15,8 @@ public class pkb_mobile_Test {
         Test methods
     ********************************************************************/
 
-    static testMethod void test_getCurrentSiteSetting() {
+    @isTest
+    static void test_getCurrentSiteSetting() {
 
         PKB__c pkS = populateSetup();
         pkb_Controller.DEFAULT_SITE_NAME = siteName;
@@ -32,7 +33,8 @@ public class pkb_mobile_Test {
         system.assertEquals(null, pS.Id);
     }
 
-    static testMethod void test_getGroupToRoot() {
+    @isTest
+    static void test_getGroupToRoot() {
 
         PKB__c pkS = populateSetup();
         pkb_Controller.DEFAULT_SITE_NAME = siteName;
@@ -45,7 +47,8 @@ public class pkb_mobile_Test {
         }
     }
 
-    static testMethod void test_controller() {
+    @isTest
+    static void test_controller() {
 
         PKB__c pkS = populateSetup();
         pkb_Controller.DEFAULT_SITE_NAME = siteName;
@@ -55,7 +58,6 @@ public class pkb_mobile_Test {
 
     }
 
-    //public static pkb_mobile_proxy.ResponseItem getLanguages()
     @isTest
     static  void test_getLanguages() {
 
@@ -74,7 +76,6 @@ public class pkb_mobile_Test {
         system.assert(resp.isSuccess);
     }
 
-    //public static List<String> getLanguagesList(){
     @isTest
     static  void test_getLanguagesList() {
 
@@ -95,7 +96,6 @@ public class pkb_mobile_Test {
 
     }
 
-    //public static pkb_mobile_proxy.ResponseItem getCurrentSiteSetUp(){
     @isTest
     static  void test_getCurrentSiteSetUp() {
 
@@ -153,7 +153,6 @@ public class pkb_mobile_Test {
     }
 
 
-    //public static pkb_mobile_proxy.ResponseItem getPopularArticles(pkb_mobile_proxy.RequestItem req){
     @isTest(SeeAllData=true)
     static  void test_getPopularArticles() {
 
@@ -187,7 +186,6 @@ public class pkb_mobile_Test {
 
 
     //Recommended are keyword articles
-    //public static pkb_mobile_proxy.ResponseItem getRecommendedArticles(pkb_mobile_proxy.RequestItem req){
     @isTest(SeeAllData=true)
     static  void test_getRecommendedArticles() {
 
@@ -232,7 +230,6 @@ public class pkb_mobile_Test {
 
     }
 
-    //public static pkb_mobile_proxy.ResponseItem getFeaturedArticles(pkb_mobile_proxy.RequestItem req){
     @isTest(SeeAllData=true)
     static void test_getFeaturedArticles() {
 
@@ -266,7 +263,8 @@ public class pkb_mobile_Test {
         system.assert(!resp.isSuccess);
 
     }
-     @isTest
+    
+    @isTest
     static void test_mobileKnowledgeArticleData(){
          pkb_mobile_proxy.mobileKnowledgeArticleData mkad = new pkb_mobile_proxy.mobileKnowledgeArticleData();
          String summary = mkad.summary;
@@ -274,7 +272,7 @@ public class pkb_mobile_Test {
          DateTime lastModifiedDate = mkad.lastModifiedDate;
          DateTime firstPublishedDate = mkad.firstPublishedDate;
     }
-    //public static pkb_mobile_proxy.ResponseItem getArticleDetail(pkb_mobile_proxy.RequestItem req){
+
     @isTest(SeeAllData=true)
     static void test_getArticleDetail() {
 
@@ -315,7 +313,6 @@ public class pkb_mobile_Test {
     }
 
 
-    //public static pkb_mobile_proxy.ResponseItem searchString(pkb_mobile_proxy.RequestItem req){
     @isTest(SeeAllData=true)
     static  void test_searchString() {
 
@@ -346,9 +343,8 @@ public class pkb_mobile_Test {
 
     }
 
-
-    //public static pkb_mobile_proxy.ResponseItem processContactUs(pkb_mobile_proxy.RequestItem req){
-    static  testMethod void test_processContactUs() {
+    @isTest
+    static void test_processContactUs() {
 
         pkb_mobile_proxy.RequestItem testRequestItem = new pkb_mobile_proxy.RequestItem();
         testRequestItem.contactData = new map<String,String>();
@@ -357,7 +353,6 @@ public class pkb_mobile_Test {
         testRequestItem.sessionId = 'TESTSESSION';
 
         Integer initialSize = [select Id from Case where CreatedById =: UserInfo.getUserId()].size();
-        //String emo = Case.Customer_emoticon_value__c.getDescribe().getPickListValues().get(0).getValue();
 
         Test.startTest();
 
@@ -368,7 +363,6 @@ public class pkb_mobile_Test {
         testRequestItem.contactData.put('questionBody','WHAT WHOULD PKB2 DO');//;
         testRequestItem.contactData.put('latitude','0.2');//;
         testRequestItem.contactData.put('longitude','0.2');//;
-        //testRequestItem.contactData.put('emoIcon',emo);//;
 
         pkb_mobile_proxy.ResponseItem resp =  pkb_mobile_controller.processContactUs(testRequestItem);
         Test.stopTest();
@@ -381,16 +375,13 @@ public class pkb_mobile_Test {
         Case c = [select Id, pkbgeolocalization__Latitude__s,pkbgeolocalization__Longitude__s/*,Customer_emoticon_value__c, Customer_emoticon__c*/  from Case where id =: resp.caseId];
         system.assertEquals(c.pkbgeolocalization__Latitude__s,0.2 );
         system.assertEquals(c.pkbgeolocalization__Longitude__s, 0.2);
-        //system.assertEquals(emo, c.Customer_emoticon_value__c);
-        //system.assert(c.Customer_emoticon__c.contains(emo) );
 
 
     }
 
 
 
-    //public static pkb_mobile_proxy.ResponseItem processContactUs(pkb_mobile_proxy.RequestItem req){
-    static  testMethod void test_processContactUsAndDeflection() {
+    static void test_processContactUsAndDeflection() {
 
         //create deflection
 
@@ -400,7 +391,6 @@ public class pkb_mobile_Test {
         testRequestItem.sessionId = 'TESTSESSION';
 
         Integer initialSize = [select Id from PKB_Article_Feedback_Deflection__c ].size();
-        //String emo = Case.Customer_emoticon_value__c.getDescribe().getPickListValues().get(0).getValue();
 
         Test.startTest();
 
@@ -467,7 +457,8 @@ public class pkb_mobile_Test {
 
     }
 
-    static  testMethod void test_processContactUs_invalidData() {
+    @isTest
+    static void test_processContactUs_invalidData() {
 
         pkb_mobile_proxy.ResponseItem resp = null;
         pkb_mobile_proxy.RequestItem testRequestItem = new pkb_mobile_proxy.RequestItem();
@@ -529,8 +520,8 @@ public class pkb_mobile_Test {
 
     }
 
-    //  public static pkb_mobile_proxy.ResponseItem submitFeedBack(pkb_mobile_proxy.RequestItem req){
-    static  testMethod void test_submitFeedBack() {
+    @isTest
+    static void test_submitFeedBack() {
 
         pkb_mobile_proxy.RequestItem testRequestItem = new pkb_mobile_proxy.RequestItem();
         testRequestItem.articleFeedback = new pkb_mobile_proxy.FeedBackDetails();
@@ -538,8 +529,6 @@ public class pkb_mobile_Test {
 
 
         Integer initialSize = [select Id from PKB_Article_Feedback_Deflection__c ].size();
-
-        //String emo = Case.Customer_emoticon_value__c.getDescribe().getPickListValues().get(0).getValue();
 
         Test.startTest();
 
@@ -578,7 +567,7 @@ public class pkb_mobile_Test {
 
 
     @isTest(SeeAllData=true)
-    static  void test_pkb_SiteMap() {
+    static void test_pkb_SiteMap() {
 
         pkb_SiteMap.MAX_ARTICLES = 7;
         //count Initial amount of kav
@@ -607,17 +596,13 @@ public class pkb_mobile_Test {
                         ' (PublishStatus = \''+pkb_SiteMap.DEFAULT_PUBLISH_STATUS+'\' AND IsVisibleInPkb = true AND Language=\'fr\' )  ' +
                         ' LIMIT '+ Limits.getLimitQueryRows();
 
-        Integer current_fr  =  0;//Database.countQuery(q); if we had multilanguage
+        Integer current_fr  =  0;
 
 
         populatePKB2Environment();
         PKB__c pkS = populateSetup();
 
         pkb_SiteMap pSM = new pkb_SiteMap();
-
-        //assert size of article types
-        //Integer allTypes = KnowledgeArticleVersion.ArticleType.getDescribe().getPickListValues().size();
-        //system.assertEquals(allTypes, pSM.availableArticleTypes.size());
 
         //assert size of languages
         Integer allLang = KnowledgeArticleVersion.Language.getDescribe().getPickListValues().size();
@@ -637,8 +622,6 @@ public class pkb_mobile_Test {
         }
         totalP +=numPages;
         List<pkb_SiteMap.SMWrapper> lI = pSM.getSiteMapsList();
-
-       // system.assertEquals(totalP, lI.size());
 
         // test offset
 
@@ -673,7 +656,8 @@ public class pkb_mobile_Test {
         PKB MOBILE PROXY Test methods
     ********************************************************************/
 
-    static testMethod void test_getRemoteAction() {
+    @isTest
+    static void test_getRemoteAction() {
         string response = '';
         String testRequestJson = '';
         pkb_mobile_proxy.RequestItem testRequestItem = null;
@@ -732,13 +716,14 @@ public class pkb_mobile_Test {
         Test.stopTest();
     }
 
-    static testMethod void testSendEmail(){
-     //   Object e = new Object('First exception');       
+    @isTest
+    static void testSendEmail(){
         pkb_mobile_proxy.notifyAdmin(new TestException('Test Exc'), 'testIntro', 'testAdminEmail@test.com');
     }
 
 
-    static testMethod void uploadTest() {
+    @isTest
+    static void uploadTest() {
         //Split string 'file' in to two chunks, first chunk must be divisible by 3 for base64 encode with no padding
         Blob part1 = Blob.valueOf('This text re'); //length is 12
         Blob part2 = Blob.valueOf('presents a dummy file');
@@ -821,7 +806,7 @@ public class pkb_mobile_Test {
     }
 
 
-        @isTest(SeeAllData=true)
+    @isTest(SeeAllData=true)
     static void test_getArticleTypeLayout(){
         PKB__c pkS = pkb_mobile_Test.populateSetup();
 
@@ -843,7 +828,8 @@ public class pkb_mobile_Test {
         system.assertEquals(l,elm.layout__c);
     }
 
-    static testMethod void testPageController() {
+    @isTest
+    static void testPageController() {
 
         PKB__c pkS = populateSetup();
         pkb_Controller.DEFAULT_SITE_NAME = siteName;
@@ -1013,7 +999,8 @@ public class pkb_mobile_Test {
     }
 
     /** language labels**/
-    static testMethod void test_LanguageLabels() {
+    @isTest
+    static void test_LanguageLabels() {
         //check that we have defined all languages on the user locale picklist
         Map<String,String> langMap= pkb_mobile_controller.getLangMap();
         if (langMap.containsKey('da')){
@@ -1095,4 +1082,4 @@ public class pkb_mobile_Test {
         system.assertNotEquals(Label.pkb2_lang_ur,'');
     }
 
-    }
+}

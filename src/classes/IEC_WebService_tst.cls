@@ -1,7 +1,8 @@
 @isTest(SeeAllData=true)
 private class IEC_WebService_tst {
 
-    static testMethod void testAssignOpportunityToQuote() {
+    @isTest
+    static void testAssignOpportunityToQuote() {
 
         User usr = IECTestUtil.createSampleGuestUserAndLogin();
         IECCustomer loggedCustomer;
@@ -38,7 +39,8 @@ private class IEC_WebService_tst {
         test.stopTest();
     }
 
-    static testMethod void testContactUpdate() {
+    @isTest
+    static void testContactUpdate() {
 
         Account oAccount = IECTestUtil.createSampleAccount();
         insert oAccount;

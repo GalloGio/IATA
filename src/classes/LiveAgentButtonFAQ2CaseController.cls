@@ -175,7 +175,6 @@ public with sharing class LiveAgentButtonFAQ2CaseController {
 
     public IATA_ISO_Country__c country{
         get{
-            system.debug('basto1p countryConcerned='+countryConcerned);
 
             if (country == null && !String.isBlank(countryConcerned)){
                 country = [SELECT Id, Name, ISO_Code__c, Region__c
@@ -204,7 +203,8 @@ public with sharing class LiveAgentButtonFAQ2CaseController {
             }else if(country.Region__c == 'China & North Asia'){
                 return 'Cases_China_North_Asia';
             }
-            return null;
+            //default value in order to do not return null
+            return 'InternalCasesEuropeSCE';
         }
     }
     

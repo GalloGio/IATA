@@ -11,8 +11,9 @@ private class AMS_Irregularities_Utils_Test {
         insert HO1;
     }
 	
-    static testMethod void TestAccumulatedIrregularities() {
-    	ID rtIRR = RecordTypeSingleton.getInstance().getRecordTypeId('Agency_Applied_Change_Code__c', 'Irregularities');
+    @isTest
+    static void TestAccumulatedIrregularities() {
+    	ID rtIRR = RecordTypeSingleton.getInstance().getRecordTypeId('Agency_Applied_Change_code__c', 'Irregularities');
         list<Account> lsAccnt = [select id, Accumulated_Irregularities__c from Account where name = 'My Travels'];
         
         system.assert(lsAccnt.size() == 1);
@@ -51,9 +52,9 @@ private class AMS_Irregularities_Utils_Test {
         test.stopTest();
     }
     
-    
-    static testMethod void TestAccumulatedIrregularities_fromAccount() {
-    	ID rtIRR = RecordTypeSingleton.getInstance().getRecordTypeId('Agency_Applied_Change_Code__c', 'Irregularities');
+    @isTest
+    static void TestAccumulatedIrregularities_fromAccount() {
+    	ID rtIRR = RecordTypeSingleton.getInstance().getRecordTypeId('Agency_Applied_Change_code__c', 'Irregularities');
         list<Account> lsAccnt = [select id, Accumulated_Irregularities__c from Account where name = 'My Travels'];
         
         system.assert(lsAccnt.size() == 1);
