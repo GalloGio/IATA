@@ -71,10 +71,6 @@
             <type>user</type>
         </recipients>
         <recipients>
-            <recipient>danielovd@iata.org</recipient>
-            <type>user</type>
-        </recipients>
-        <recipients>
             <recipient>diasdasalj@iata.org</recipient>
             <type>user</type>
         </recipients>
