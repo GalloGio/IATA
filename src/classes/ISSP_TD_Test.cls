@@ -1,7 +1,8 @@
 @isTest
 private class ISSP_TD_Test {
 
-    static testMethod void myUnitTest() {
+	@isTest
+    static void myUnitTest() {
     	
     	String profileId = [SELECT Id FROM Profile WHERE Name = 'ISS Portal DPC' LIMIT 1].Id;
     	Account acc = ISSP_ObjectFactory.createNewAccount();
@@ -64,7 +65,8 @@ private class ISSP_TD_Test {
 
     }
     
-    static testMethod void processPluginTest() {
+    @isTest
+    static void processPluginTest() {
     	ISSP_CS__c newCS = new ISSP_CS__c();
     	newCS.Name = 'TwoFA_Emails';
     	newCS.Value__c = 'test@test.com';
@@ -160,8 +162,6 @@ private class ISSP_TD_Test {
 	        Portal_Application_Right__c appRight = new Portal_Application_Right__c(Contact__c = contact.Id, Portal_Application__c = app.Id, Right__c = 'Access Requested');
 	        insert appRight;
 	        appRight.Right__c = 'Access Denied';
-	        update appRight;
-	        appRight.Right__c = 'Access Granted';
 	        update appRight;
     	}
     }

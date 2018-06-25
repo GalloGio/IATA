@@ -4,30 +4,6 @@
 public class OneIdProvisioningDAO {
 
 
-    public static List<One_Id_Service_Provider_Config__c> getFilteredServiceBundles(Account filter) {
-
-        List<One_Id_Service_Provider_Config__c> toReturn = new List<One_Id_Service_Provider_Config__c>();
-
-        /*if(filter != null && !String.isBlank(filter.Sector__c) && String.isBlank(filter.Category__c)){
-
-          System.debug('selecting with filtering ' + filter);
-
-
-        }
-        else{
-
-            toReturn = [select id,One_Id_Service_Provider_Config__c, Connected_App_SSO_Name__c,PermissionSet_SSO__c,Connected_App_Provisioning_Name__c, Connected_App_SSO_Name__c,
-                      Service_Bundle__r.App_Picture_Url__c,Service_Bundle__r.Description__c,Service_Bundle__r.Portal_Visible__c,Service_Bundle__r.License_Upgrade_Required__c,Service_Bundle__r.Profile_Id__c,Sector__c,Service_Bundle__r.Service_Provider_Name__c,
-                    One_Id_Service_Provider_Config__r.Service_Provider_Name__c
-
-                 from One_Id_App_Config_Detail__c where  Service_Bundle__r.Is_Active__c = true and One_Id_Service_Provider_Config__r.Is_Active__c = true]
-
-                 }*/
-
-        return toReturn;
-
-    }
-
     public static List<One_Id_Service_Provider_Config__c> getAppInfo(String bundleId) {
         List<One_Id_Service_Provider_Config__c> toReturn = new List<One_Id_Service_Provider_Config__c>();
 

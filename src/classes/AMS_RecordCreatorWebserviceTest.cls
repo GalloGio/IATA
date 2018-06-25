@@ -497,7 +497,7 @@ private class AMS_RecordCreatorWebserviceTest {
 
 		String oscarId = AMS_RecordCreatorWebservice.createAccreditation(acct.Id,accr.Id,'MAJOR.CHANGES',caseCom.Id);
 
-		List<AMS_Accreditation_Contact__c> contactsCreated = [SELECT Id from AMS_Accreditation_Contact__c where RecordType.DeveloperName IN ('Company','Current_Company_Owner','Current_Owner','Person','Trained_Staff') and AMS_Pax_Accreditation_Form__c = :accr.Id];
+		List<AMS_Accreditation_Contact__c> contactsCreated = [SELECT Id from AMS_Accreditation_Contact__c where RecordType.DeveloperName IN ('Company','Current_Company_Owner', 'Current_Owner','Person','Trained_Staff') and AMS_Pax_Accreditation_Form__c = :accr.Id];
 
 		System.assertEquals(contactsCreated.size(),2);
 

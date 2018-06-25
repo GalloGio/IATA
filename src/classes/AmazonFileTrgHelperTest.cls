@@ -106,14 +106,11 @@ private class AmazonFileTrgHelperTest {
 
         Test.setMock(HttpCalloutMock.class, multiCalloutMock);
         undelete AmzFile;
-   //  System.assertEquals(/*check for expected results here...*/);
-
 
         list<AmazonFile__C> amzFileUndelete = [SELECT Id FROM AmazonFile__C WHERE isDeleted =: true and id =: AmzFile.id All ROWS];
 
         system.assert(amzFileUndelete == null || amzFileUndelete.size() == 0);
         
-
 
     }
     

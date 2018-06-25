@@ -42,7 +42,7 @@ public with sharing class UserProvisioningTestUtils {
 
         //Manuel Conde
         List<PermissionSet> psIds = [SELECT Id,name FROM PermissionSet LIMIT 2];
-        Id recTypeId = OneIdProvisioningDAO.AppRecordTypesConfig.get('One_Id_Service_Provider_Config__c').get('Service_Bundle');
+        Id recTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('One_Id_Service_Provider_Config__c', 'Service_Bundle');
 
         One_Id_Service_Provider_Config__c oi = new One_Id_Service_Provider_Config__c(Service_Provider_Name__c = 'Bundle',
                 License_Upgrade_Required__c= true,
@@ -66,11 +66,7 @@ public with sharing class UserProvisioningTestUtils {
         // already in the system when ConnectedTestUtil is implemented by SFDC.
         // For now our stubbed createConnectedApp() will know to strip the suffix
         // and then perform the SOQL query.
-       /* User thisUser = [ select Id from User where Id = :UserInfo.getUserId() ];
-        System.runAs ( thisUser ) {
-        String fullAppName = appName + '|4t8izz2t';
-        ConnectedApplication capp = UserProvisioning.ConnectorTestUtil.createConnectedApp(fullAppName);
-        }*/
+       
         Id cAppId = getConnectedApp(appName);
         
         // Build user provisioning account linked to the test user
@@ -155,7 +151,7 @@ public with sharing class UserProvisioningTestUtils {
         //Manuel Conde
         List<PermissionSet> psIds = [SELECT Id,name FROM PermissionSet LIMIT 2];
         
-        Id recTypeId = OneIdProvisioningDAO.AppRecordTypesConfig.get('One_Id_Service_Provider_Config__c').get('Service_Bundle');
+        Id recTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('One_Id_Service_Provider_Config__c', 'Service_Bundle');
 
         One_Id_Service_Provider_Config__c oi = new One_Id_Service_Provider_Config__c(Service_Provider_Name__c = 'Bundle',
                 License_Upgrade_Required__c= true,

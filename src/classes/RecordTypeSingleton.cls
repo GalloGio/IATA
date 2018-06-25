@@ -58,11 +58,8 @@ public class RecordTypeSingleton {
 	 * @return 			 id of the record type object
 	 */
 	public Id getRecordTypeId(String objectName, String devName){
-		System.debug('angielaz, getRecordTypeId-->getInstance().recordTypesByName.get(objectName): ' + recordTypesByName.get(objectName).get(devName));
 
-		Id id = recordTypesByName.get(objectName).get(devName).Id;
-
-		return id;
+		return recordTypesByName.get(objectName).get(devName).Id;
 
 	}
 
