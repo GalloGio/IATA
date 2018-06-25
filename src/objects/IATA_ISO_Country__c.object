@@ -2960,7 +2960,7 @@ Enabled: Sufficient for Agents to simply upload scanned copy to online applicati
         <fullName>IEP_Model_required_for_Portal_Service</fullName>
         <active>true</active>
         <description>Makes ANG_IEP_Model__c mandatory when populating ANG_Portal_Service__c</description>
-        <errorConditionFormula>AND( ISBLANK(TEXT(ANG_IEP_Model__c)) ,  ISCHANGED(ANG_Portal_Service__c) , NOT(ISBLANK(ANG_Portal_Service__c)))</errorConditionFormula>
+        <errorConditionFormula>AND( ISBLANK(TEXT(ANG_IEP_Model__c)) ,  OR(ISCHANGED(ANG_Portal_Service__c),ISCHANGED(ANG_IEP_Model__c)) , NOT(ISBLANK(ANG_Portal_Service__c)))</errorConditionFormula>
         <errorDisplayField>ANG_IEP_Model__c</errorDisplayField>
         <errorMessage>EasyPay Model is required when enabling this country for the EasyPay Portal Service</errorMessage>
     </validationRules>
