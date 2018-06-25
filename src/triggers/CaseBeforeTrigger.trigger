@@ -162,16 +162,6 @@ trigger CaseBeforeTrigger on Case (before delete, before insert, before update) 
 		//if (Trigger.isUpdate)  dgAI2.DG_PredictionTriggerHandler.doFeedback(trigger.new);
         
         
-        /* Create Formula Helper record */
-        /*KPI Helper*/
-        if(trigger.isUpdate || trigger.isInsert){
-	        if(!FormulaField_Helper.isRunningFromHelper){
-	        	FormulaField_Helper.isRunningFromCAse = true;
-	        	FormulaField_Helper.CreateHelperRecord(trigger.new);
-	        }
-        }
-        
-        
         /*trgCaseIFAP Trigger*/
         if(trgCaseIFAP){ //FLAG
             system.debug('trgCaseIFAP');
