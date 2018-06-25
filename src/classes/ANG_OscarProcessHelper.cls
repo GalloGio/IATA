@@ -1117,6 +1117,7 @@ global class ANG_OscarProcessHelper {
 			fieldsOfObject.put('Status__c','Open');			
 			fieldsOfObject.put('AMS_Online_Accreditation__c',newAccr.Id);
 			fieldsOfObject.put('Change_effective_as_of__c',newAccr.Effective_Date_Of_Change__c);
+	        fieldsOfObject.put('Oscar_Communication_Case_Id__c',newCaseOscar.id);
 
 			oscar = ANG_EntityCreator.createOscar(AMS_Utils.RECTYPE_NGCHANGES, newAccr.HO_Account__c, fieldsOfObject);
 

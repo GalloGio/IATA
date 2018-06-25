@@ -4,12 +4,12 @@ global class ANG_AnualRevalCaseCreationBatch implements Database.Batchable<sObje
 	
 	global Set<Id> accountIds;
 
-	global Set<String> resultItems;
+	global List<ANG_ConversionHelper.ConversionBatchItem> resultItems;
 
 
 	global ANG_AnualRevalCaseCreationBatch(Set<Id> accountIdsIn) {
 		
-		resultItems = new Set<String>();
+		resultItems = new List<ANG_ConversionHelper.ConversionBatchItem>();
 
 		List<String> fieldListAcct = new List<String>();
 
@@ -53,10 +53,18 @@ global class ANG_AnualRevalCaseCreationBatch implements Database.Batchable<sObje
 
 			System.debug('Case created with Id : ' + caseIdCreate );
 			
-			resultItems.add(acct.IATACode__c + ' - Success:'+caseIdCreate);
+			//resultItems.add(acct.IATACode__c + ' - Success:'+caseIdCreate);
+			
+			ANG_ConversionHelper.ConversionBatchItem item = new ANG_ConversionHelper.ConversionBatchItem(new ANG_ConversionHelper.HierarchyStructure(acct), 1, BC.getJobId(), false, null);
+			resultItems.add(item);
 
 		}catch(Exception e){
-			Database.rollback(sp);throw e;
+			
+			ANG_ConversionHelper.ConversionBatchItem item = new ANG_ConversionHelper.ConversionBatchItem(new ANG_ConversionHelper.HierarchyStructure(acct), 1, BC.getJobId(), true, e.getMessage());
+
+			System.debug(item);resultItems.add(item);Database.rollback(sp);throw e;
+
+			//Database.rollback(sp);resultItems.add(acct.IATACode__c + ' - Error:' + e.getMessage());throw e;
 		}
 	}
 	
@@ -79,12 +87,19 @@ global class ANG_AnualRevalCaseCreationBatch implements Database.Batchable<sObje
 		String toReturnBody = 'The Batch Apex job ('+BC.getJobId()+')processed  '+a.TotalJobItems+' batches with '+a.NumberOfErrors+' failures.'+' Job Item processed are'+a.JobItemsProcessed+'\n\n';
 		
 		toReturnBody+= ':: Execution Summay ::'+'\n';
+	
+		toReturnBody+= ':: Errors Found ::'+'\n';
 
-		for(String value: resultItems){
-			
-			toReturnBody+= value + '\n';
+		for(ANG_ConversionHelper.ConversionBatchItem item:resultItems) 
+			if(item.isError)
+				toReturnBody+=item+'\n';
+		
+		toReturnBody+= '\n\n';
+		toReturnBody+= ':: Accounts Processed ::'+'\n';
 
-		}
+		for(ANG_ConversionHelper.ConversionBatchItem item:resultItems)
+			if(!item.isError)
+				toReturnBody+=item+'\n';
 
 		mail.setPlainTextBody(toReturnBody);
 

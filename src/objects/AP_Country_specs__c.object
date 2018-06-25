@@ -21,5 +21,17 @@
         <unique>false</unique>
     </fields>
     <label>Airline Participation Country specifics</label>
+    <listViews>
+        <fullName>Country_specs_bank_mandates</fullName>
+        <columns>NAME</columns>
+        <columns>SETUP_TYPE</columns>
+        <columns>Download_URL__c</columns>
+        <columns>Link_label__c</columns>
+        <columns>CREATED_DATE</columns>
+        <columns>LAST_UPDATE</columns>
+        <filterScope>Everything</filterScope>
+        <label>Country specs bank mandates</label>
+        <language>en_US</language>
+    </listViews>
     <visibility>Public</visibility>
 </CustomObject>
