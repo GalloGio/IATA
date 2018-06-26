@@ -80,7 +80,8 @@
             if(! $A.util.isEmpty(component.get("v.customerType"))) {
                 if($A.util.isEmpty(userInputCmp.value) || userInputCmp.value.length < 2) {
                     // Hide suggestion box
-                    var userInputCmpName = userInputCmp.dataset.value;                    
+                    var userInputCmpName = userInputCmp.dataset.value;
+                    var resultDiv = component.find(userInputCmpName);
                     if($A.util.hasClass(resultDiv, 'slds-is-open')) {
                         $A.util.removeClass(resultDiv, 'slds-is-open');
                     }
