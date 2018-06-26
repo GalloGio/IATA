@@ -28,8 +28,7 @@
   
   <aura:attribute name="isGuest" type="Boolean" default="true" />
   <aura:attribute name="paramLoaded" type="Boolean" default="false" />
-  <aura:attribute name="userTypeToCreate" type="Integer" default="-1"/> <!-- 1=PRIMARY or 2=SECONDARY -->
-  <aura:attribute type="Boolean" name="searching" default="false" access="private" />
+  <aura:attribute name="userTypeToCreate" type="Integer" default="-1"/> <!-- 1=PRIMARY or 2=SECONDARY -->  
 
   <aura:attribute name="verifierId" type="String" /> <!-- veridfier id in the url -->
   
@@ -66,17 +65,7 @@
          <aura:if isTrue="{!v.isFredPrimaryUser || v.verifierId != undefined}" >
             <lightning:input  aura:id="AI_userInput2" type="text" class="slds-input slds-combobox__input" value="{!v.userInput}" disabled="true"/>
             <aura:set attribute="else">
-               <input aura:id="AI_userInput" type="text" class="slds-input slds-combobox__input" id="combobox-unique-id-32" aria-autocomplete="list" aria-controls="listbox-unique-id" autocomplete="off" role="textbox" placeholder="{!v.searchPlaceholder}"  onkeyup="{!c.onKeyUp}" value="{!v.userInput}" data-value="agencies" disabled="{!disableInput}"/>
-
-               <span class="slds-icon_container slds-icon-utility-search slds-input__icon slds-input__icon_right">
-                    <aura:if isTrue="{!v.searching}">
-                        <lightning:spinner size="small"/>
-                        <aura:set attribute="else">
-                            <lightning:icon iconName="utility:search" size="x-small"/>
-                        </aura:set>
-                    </aura:if>
-                </span>
-
+               <input aura:id="AI_userInput" type="text" class="slds-input slds-combobox__input" id="combobox-unique-id-32" aria-autocomplete="list" aria-controls="listbox-unique-id" autocomplete="off" role="textbox" placeholder="{!v.searchPlaceholder}"  onkeyup="{!c.onKeyUp}" value="{!v.userInput}" data-value="agencies" disabled="{!disableInput}"/>              
             </aura:set>
           </aura:if>
 
