@@ -220,6 +220,17 @@ public class ANG_RHCAlertTriggerHandler{
         Set<Id> toDeactivateAccounts = new Set<Id>(); 
         List<Agency_Authorization__c> toUpdate = new List<Agency_Authorization__c>();
 
+        Set<Id> accountIds = new Set<Id>();
+    
+        for(ANG_Risk_Alert__c ralert:triggerNew){
+            accountIds.add(ralert.ANG_Account__c);
+        }
+
+        Map<Id,ANG_Risk_Alert__c> accountAlerts = new Map<Id,ANG_Risk_Alert__c>();
+
+       for(ANG_Risk_Alert__c ralert : [Select Id, ANG_Direction__c, ANG_Account__c,ANG_Threshold_Level__c  from ANG_Risk_Alert__c where ANG_Account__c in: accountIds and Id not in:triggerNew Order by CreatedDate ASC])
+            accountAlerts.put(ralert.ANG_Account__c, ralert);
+        
         for(ANG_Risk_Alert__c ralert:triggerNew){
 
             if(!(ralert.recordTypeId == ANG_RHCHelper.RECTYPE_RISKALERT_RHC && (ralert.ANG_Threshold_Level__c == '100%' && ralert.ANG_Direction__c == ANG_RHCHelper.RISK_ALERT_DIRECTION_UP) || (( ralert.ANG_Threshold_Level__c == '100%' || ralert.ANG_Threshold_Level__c == '75%' || ralert.ANG_Threshold_Level__c == '50%') && ralert.ANG_Direction__c == ANG_RHCHelper.RISK_ALERT_DIRECTION_DOWN )))
@@ -230,7 +241,8 @@ public class ANG_RHCAlertTriggerHandler{
                 }
                 
                 if(ralert.ANG_Direction__c == ANG_RHCHelper.RISK_ALERT_DIRECTION_DOWN){
-                    toActivateAccounts.add(ralert.ANG_Account__c);  
+                    if(accountAlerts.get(ralert.ANG_Account__c) != null && accountAlerts.get(ralert.ANG_Account__c).ANG_Direction__c == ANG_RHCHelper.RISK_ALERT_DIRECTION_UP && accountAlerts.get(ralert.ANG_Account__c).ANG_Threshold_Level__c == '100%')
+                        toActivateAccounts.add(ralert.ANG_Account__c);  
                 }
             
         }
@@ -288,34 +300,22 @@ public class ANG_RHCAlertTriggerHandler{
 
         Id formOfPaymentRT = Schema.Agency_Authorization__c.sObjectType.getDescribe().getRecordTypeInfosByName().get('Form Of Payment').getRecordTypeId();
 
-        List<Agency_Authorization__c> aaLst = [Select Id, RestrictedByRHCAlert__c,RestrictedByProcess__c, ANG_FormOfPayment_ID__c, Status__c, Account__r.Is_PCI_compliant__c from Agency_Authorization__c where Account__c in :accounts and ANG_FormOfPayment_ID__c = 'CA' and recordTypeId = :formOfPaymentRT and Account__r.recordTypeId = :AMS_Utils.RECTYPE_IATAAGENCY];
+        List<Agency_Authorization__c> aaLst = [Select Id, ANG_FormOfPayment_ID__c, Status__c, Account__r.Is_PCI_compliant__c from Agency_Authorization__c where Account__c in :accounts and ANG_FormOfPayment_ID__c = 'CA' and recordTypeId = :formOfPaymentRT and Account__r.recordTypeId = :AMS_Utils.RECTYPE_IATAAGENCY];
 
         for(Agency_Authorization__c aa: aaLst){
             
-            Boolean originalRestriction = aa.RestrictedByRHCAlert__c;
-
-            //if(aa.Status__c != statusFOP && ((action == LOWERFLUCTUATION && aa.Source__c == 'RHC Alert') || action == UPPERFLUCTUATION)){
-            if(aa.Status__c != statusFOP){ // we need to change something, let's see if we 'can'...
+            if(aa.Status__c != statusFOP){ 
                 
                 if(action == LOWERFLUCTUATION){
-                    if(!aa.RestrictedByProcess__c)
-                        aa.Status__c = statusFOP;
-                    aa.RestrictedByRHCAlert__c = false;
+                    aa.Status__c = statusFOP;
                 }
 
                 if(action == UPPERFLUCTUATION){
                     aa.Status__c = statusFOP;
-                    aa.RestrictedByRHCAlert__c = true;
                 }
                 
                 toReturn.add(aa);
                 
-            }else{
-
-                aa.RestrictedByRHCAlert__c = (action == UPPERFLUCTUATION);
-
-                if(originalRestriction <> aa.RestrictedByRHCAlert__c)
-                    toReturn.add(aa);
             }
 
         }

@@ -177,7 +177,7 @@
 </style>
 
 	<apex:sectionHeader title="Staging Area" subtitle="Staging Area for Account {!accreditationObj.HO_Account__r.IATACode__c}"/>
-	<apex:form>
+	<apex:form >
 		<div Id="loaderPageBlock" style="display:none;">
 			<div class="overlay">
 				<div class="overlay-content">
@@ -229,7 +229,7 @@
 						<apex:column styleClass="{!IF(ac.changedFieldsMap['Mobile__c'],'editable','')}" value="{!ac.ac.Mobile__c}"/>
 						<apex:column styleClass="{!IF(ac.changedFieldsMap['FAX__c'],'editable','')}" value="{!ac.ac.FAX__c}"/>
 						<apex:column styleClass="{!IF(ac.changedFieldsMap['Financial_interest__c'],'editable','')}" value="{!ac.ac.Financial_interest__c}"/>
-				</apex:pageblocktable >
+				</apex:pageblocktable>
 	
 			</apex:pageBlockSection>
 		</apex:outputPanel>
@@ -243,7 +243,7 @@
 				<apex:commandButton value="Create Change Process" style=" display:inline;" onclick="createChangesOscar('{!accreditationObj.Id}')" oncomplete="undoStuff();" reRender="mainPageBlock"/>
 			</apex:pageBlockButtons>
 			<br/><br/><br/>
-			<apex:outputText  style="color: red;font-size: 14px;" rendered="{!!doNotHaveOscarYet}">
+			<apex:outputText style="color: red;font-size: 14px;" rendered="{!!doNotHaveOscarYet}">
                 <div class="warningMessage1">
                     <div>This Staging Area already has a case, click below to open the case</div>
                     <br />
