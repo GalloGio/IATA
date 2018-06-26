@@ -689,7 +689,7 @@ global class ANG_OscarProcessHelper {
 
     	Set<Id> accountIdsChanged = new Set<Id>();
 
-    	List<Agency_Authorization__c> aaLst = [Select Id,RestrictedByRHCAlert__c,RestrictedByProcess__c, ANG_FormOfPayment_ID__c, Status__c, Account__c, Account__r.Is_PCI_compliant__c from Agency_Authorization__c where Account__c in :accounts];
+    	List<Agency_Authorization__c> aaLst = [Select Id, ANG_FormOfPayment_ID__c, Status__c, Account__c, Account__r.Is_PCI_compliant__c from Agency_Authorization__c where Account__c in :accounts];
     	List<Agency_Authorization__c> aaLstToUpdate = new List<Agency_Authorization__c>();
 
     	for(Agency_Authorization__c aa: aaLst){
@@ -703,7 +703,6 @@ global class ANG_OscarProcessHelper {
 						accountIdsChanged.add(aa.Account__c);
 					}
 
-	    			aa.RestrictedByProcess__c = true;
 	    			aaLstToUpdate.add(aa);
 	    		}
 
@@ -719,12 +718,8 @@ global class ANG_OscarProcessHelper {
 
 				if(restoreCash && aa.ANG_FormOfPayment_ID__c == 'CA'){
 
-					if(!aa.RestrictedByRHCAlert__c){
-	    				aa.Status__c = valueToAdd;
-						accountIdsChanged.add(aa.Account__c);
-					}
-					
-	    			aa.RestrictedByProcess__c = false;
+					aa.Status__c = valueToAdd;
+					accountIdsChanged.add(aa.Account__c);
     				aaLstToUpdate.add(aa);
     			}
 
