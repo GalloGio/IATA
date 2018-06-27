@@ -38,7 +38,8 @@ set{parentAccountId =value;AirlineBranchController();}
              Services_rendered_By__r.Name,Services_rendered_By__r.Parent.id, 
              Services_Rendered_Type__c, Services_Rendered_By__r.billingcountry,
               Name, Services_Rendered_By__r.Services_Rendered_Country__c,
-              Services_Rendered_By__r.Services_Rendered_Country_GSA__c
+              Services_Rendered_By__r.Services_Rendered_Country_GSA__c,
+              ANG_IATA_EasyPay_Opt_out__c
                from Services_Rendered__c 
                where 
                (Services_Rendered_To_Airline__c =: +parentAccountId 
