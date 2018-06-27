@@ -102,6 +102,15 @@
             </criteriaItems>
         </ruleEntry>
         <ruleEntry>
+            <assignedTo>IATA_Training_DL_Ind_Student_Enrolment</assignedTo>
+            <assignedToType>Queue</assignedToType>
+            <criteriaItems>
+                <field>Case.Topic__c</field>
+                <operation>equals</operation>
+                <value>Distance Learning</value>
+            </criteriaItems>
+        </ruleEntry>
+        <ruleEntry>
             <assignedTo>Queue_IFG_Support_Level_1</assignedTo>
             <assignedToType>Queue</assignedToType>
             <criteriaItems>
