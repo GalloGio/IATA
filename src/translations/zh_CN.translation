@@ -521,6 +521,14 @@
         <name>AMS_OSCAR_STEP42</name>
     </customLabels>
     <customLabels>
+        <label><!-- AMS_OSCAR_STEP43 --></label>
+        <name>AMS_OSCAR_STEP43</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- AMS_OSCAR_STEP44 --></label>
+        <name>AMS_OSCAR_STEP44</name>
+    </customLabels>
+    <customLabels>
         <label><!-- AMS OSCAR STEP5 --></label>
         <name>AMS_OSCAR_STEP5</name>
     </customLabels>
@@ -645,6 +653,10 @@
         <name>ANG_ISSP_AssociateEntity</name>
     </customLabels>
     <customLabels>
+        <label><!-- Case reason used in the case subject --></label>
+        <name>ANG_ISSP_CASE_REASON_OPT_OUT</name>
+    </customLabels>
+    <customLabels>
         <label><!-- ANG_ISSP_ChangeContactHierarchyError --></label>
         <name>ANG_ISSP_ChangeContactHierarchyError</name>
     </customLabels>
@@ -697,8 +709,16 @@
         <name>ANG_ISSP_ConversionFromGoLiteTooltip</name>
     </customLabels>
     <customLabels>
+        <label><!-- ANG ISSP Conversion From GoStandard to GoLite Tooltip --></label>
+        <name>ANG_ISSP_ConversionFromGoStandardGoLiteTooltip</name>
+    </customLabels>
+    <customLabels>
         <label><!-- ANG ISSP Conversion From GoStandard Tooltip --></label>
         <name>ANG_ISSP_ConversionFromGoStandardTooltip</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ANG ISSP Conversion From Tooltip --></label>
+        <name>ANG_ISSP_ConversionFromTooltip</name>
     </customLabels>
     <customLabels>
         <label><!-- ANG_ISSP_CountryConcerned --></label>
@@ -797,6 +817,10 @@
         <name>ANG_ISSP_IEP_OpeningInProgress</name>
     </customLabels>
     <customLabels>
+        <label><!-- ANG_ISSP_IEP_Portal_Access_Request_msg --></label>
+        <name>ANG_ISSP_IEP_Portal_Access_Request_msg</name>
+    </customLabels>
+    <customLabels>
         <label><!-- ANG_ISSP_IEP_Portal_Request_Access_Msg --></label>
         <name>ANG_ISSP_IEP_Portal_Request_Access_Msg</name>
     </customLabels>
@@ -809,6 +833,10 @@
         <name>ANG_ISSP_Min_Users_With_Role_Error_Msg</name>
     </customLabels>
     <customLabels>
+        <label><!-- ANG_ISSP_Min_Users_With_Role_Error_Msg --></label>
+        <name>ANG_ISSP_Min_Users_With_Role_Error_Msg2</name>
+    </customLabels>
+    <customLabels>
         <label><!-- ANG_ISSP_Notify_Admin_app_req_1 --></label>
         <name>ANG_ISSP_Notify_Admin_app_req_1</name>
     </customLabels>
@@ -817,8 +845,32 @@
         <name>ANG_ISSP_Notify_Admin_app_req_2</name>
     </customLabels>
     <customLabels>
+        <label><!-- ANG_ISSP_Notify_Admin_app_req_1 --></label>
+        <name>ANG_ISSP_Notify_Admin_app_req_here1</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ANG_ISSP_Notify_Admin_app_req_2 --></label>
+        <name>ANG_ISSP_Notify_Admin_app_req_here2</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ANG_ISSP_Notify_Admin_app_req_3 --></label>
+        <name>ANG_ISSP_Notify_Admin_app_req_here3</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ANG_ISSP_Notify_Admin_app_req_4 --></label>
+        <name>ANG_ISSP_Notify_Admin_app_req_here4</name>
+    </customLabels>
+    <customLabels>
         <label><!-- ANG_ISSP_Open_IATA_EasyPay_Account --></label>
         <name>ANG_ISSP_Open_IATA_EasyPay_Account</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Error message when the opt out date is empty --></label>
+        <name>ANG_ISSP_OptInEmptyDateErrorMessage</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Error message when the opt out date is empty --></label>
+        <name>ANG_ISSP_OptOutEmptyDateErrorMessage</name>
     </customLabels>
     <customLabels>
         <label><!-- ANG_ISSP_PORTAL_SERVICE_ROLE --></label>
@@ -835,6 +887,14 @@
     <customLabels>
         <label><!-- ANG_ISSP_PortalRoleErrorMessage --></label>
         <name>ANG_ISSP_PortalRoleErrorMessage</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ANG_ISSP_ProductAnnualFinancialReviews --></label>
+        <name>ANG_ISSP_ProductAnnualFinancialReviews</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ANG_ISSP_ProductCashFacility --></label>
+        <name>ANG_ISSP_ProductCashFacility</name>
     </customLabels>
     <customLabels>
         <label><!-- ANG_ISSP_ProductComparisonApplyNow --></label>
@@ -929,6 +989,10 @@
         <name>ANG_ISSP_ProductComparisonFeature9Tooltip</name>
     </customLabels>
     <customLabels>
+        <label><!-- ANG ISSP Product Comparison Link --></label>
+        <name>ANG_ISSP_ProductComparisonLink</name>
+    </customLabels>
+    <customLabels>
         <label><!-- ANG_ISSP_ProductComparisonTitle1 --></label>
         <name>ANG_ISSP_ProductComparisonTitle1</name>
     </customLabels>
@@ -939,6 +1003,14 @@
     <customLabels>
         <label><!-- ANG_ISSP_ProductComparisonViewHere --></label>
         <name>ANG_ISSP_ProductComparisonViewHere</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ANG_ISSP_ProductCreditCardTransactions --></label>
+        <name>ANG_ISSP_ProductCreditCardTransactions</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ANG_ISSP_ProductIATAEasyPayTransactions --></label>
+        <name>ANG_ISSP_ProductIATAEasyPayTransactions</name>
     </customLabels>
     <customLabels>
         <label><!-- ANG_ISSP_ProductMulticountry --></label>
@@ -979,6 +1051,10 @@
     <customLabels>
         <label><!-- ANG ISSP REH AccessEasyPay --></label>
         <name>ANG_ISSP_REH_AccessEasyPay</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ANG ISSP REH DateAssigned --></label>
+        <name>ANG_ISSP_REH_DateAssigned</name>
     </customLabels>
     <customLabels>
         <label><!-- ANG ISSP REH DateIssued --></label>
@@ -1035,6 +1111,10 @@
     <customLabels>
         <label><!-- ANG_ISSP_e_mail_address --></label>
         <name>ANG_ISSP_e_mail_address</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ANG_NON_COMPLIANCE --></label>
+        <name>ANG_NON_COMPLIANCE</name>
     </customLabels>
     <customLabels>
         <label><!-- ANG OSCAR CHANGE APPROVAL FINALIZATION --></label>
@@ -4789,8 +4869,16 @@ and
         <name>ISSP_AMS_CGO_T_Cs_Title1</name>
     </customLabels>
     <customLabels>
+        <label><!-- ISSP AMS CONFIRM CANCEL --></label>
+        <name>ISSP_AMS_CONFIRM_CANCEL</name>
+    </customLabels>
+    <customLabels>
         <label><!-- ISSP AMS CONFIRM DELETE --></label>
         <name>ISSP_AMS_CONFIRM_DELETE</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP AMS CONFIRM DISCARD --></label>
+        <name>ISSP_AMS_CONFIRM_DISCARD</name>
     </customLabels>
     <customLabels>
         <label><!-- ISSP_AMS_Title_Capacity --></label>
@@ -8089,6 +8177,102 @@ and
         <name>ISSP_ANG_ANG_PCI_Process_Notification_Mail_Body</name>
     </customLabels>
     <customLabels>
+        <label><!-- IATA Accreditation - Annual Revalidation --></label>
+        <name>ISSP_ANG_ANNUAL_REVALIDATION</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_ANG_ANNUAL_REV_ADDITIONAL_INFORMATION --></label>
+        <name>ISSP_ANG_ANNUAL_REV_ADDITIONAL_INFORMATION</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Annual revalidation cancel update button --></label>
+        <name>ISSP_ANG_ANNUAL_REV_CANCEL_UPD_BTN</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Annual revalidation confirm button --></label>
+        <name>ISSP_ANG_ANNUAL_REV_CONFIRM_BTN</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Annual revalidation confirm update button --></label>
+        <name>ISSP_ANG_ANNUAL_REV_CONFIRM_UPD_BTN</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_ANG_ANNUAL_REV_Change_Ownership_Shareholding --></label>
+        <name>ISSP_ANG_ANNUAL_REV_Change_Ownership_Shareholding</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_ANG_ANNUAL_REV_Change_of_Legal_Name --></label>
+        <name>ISSP_ANG_ANNUAL_REV_Change_of_Legal_Name</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_ANG_ANNUAL_REV_Change_of_Location --></label>
+        <name>ISSP_ANG_ANNUAL_REV_Change_of_Location</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Annual revalidation discard button --></label>
+        <name>ISSP_ANG_ANNUAL_REV_DISCARD_BTN</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_ANG_ANNUAL_REV_ENTER_OWNER_DETAILS --></label>
+        <name>ISSP_ANG_ANNUAL_REV_ENTER_OWNER_DETAILS</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_ANG_ANNUAL_REV_ERROR_1 --></label>
+        <name>ISSP_ANG_ANNUAL_REV_ERROR_1</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_ANG_ANNUAL_REV_ERROR_2 --></label>
+        <name>ISSP_ANG_ANNUAL_REV_ERROR_2</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_ANG_ANNUAL_REV_Q2 --></label>
+        <name>ISSP_ANG_ANNUAL_REV_Q2</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_ANG_ANNUAL_REV_Q3 --></label>
+        <name>ISSP_ANG_ANNUAL_REV_Q3</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Annual revalidation save changes button --></label>
+        <name>ISSP_ANG_ANNUAL_REV_SAVE_CHANGES_BTN</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_ANG_ANNUAL_REV_SUBMIT_NOT_ALLOW --></label>
+        <name>ISSP_ANG_ANNUAL_REV_SUBMIT_NOT_ALLOW</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Annual revalidation update button --></label>
+        <name>ISSP_ANG_ANNUAL_REV_UPDATE_BTN</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Annual Revalidation work area title --></label>
+        <name>ISSP_ANG_ANNUAL_REV_WORK_AREA_TITLE</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Annual Revalidation confirmed status --></label>
+        <name>ISSP_ANG_ANNUAL_STATUS_CONFIRMED</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Annual Revalidation open status --></label>
+        <name>ISSP_ANG_ANNUAL_STATUS_OPEN</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Annual Revalidation update completed status --></label>
+        <name>ISSP_ANG_ANNUAL_STATUS_UPDATE_COMPLETED</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Annual Revalidation update in progress status --></label>
+        <name>ISSP_ANG_ANNUAL_STATUS_UPDATE_PROGRESS</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Validation status label --></label>
+        <name>ISSP_ANG_ANNUAL_VAL_STATUS</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Associate Entity --></label>
+        <name>ISSP_ANG_ASSOCIATE_ENTITY</name>
+    </customLabels>
+    <customLabels>
         <label><!-- Accreditations and changes description --></label>
         <name>ISSP_ANG_AccreditationsAndChangesDescription</name>
     </customLabels>
@@ -8101,8 +8285,24 @@ and
         <name>ISSP_ANG_Authorized_Signatory</name>
     </customLabels>
     <customLabels>
+        <label><!-- Branch Office --></label>
+        <name>ISSP_ANG_BRANCH_OFFICE</name>
+    </customLabels>
+    <customLabels>
         <label><!-- ISSP ANG Branch Office address details --></label>
         <name>ISSP_ANG_Branch_Office_address_details</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Link to the IATAs CheckACode page --></label>
+        <name>ISSP_ANG_CODE_SEARCH_CHECK_A_CODE_LINK</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- IATA Code (HO / HE) --></label>
+        <name>ISSP_ANG_CODE_SEARCH_IATA_CODE_HO_HE</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Location type SA name --></label>
+        <name>ISSP_ANG_CODE_SEARCH_SA</name>
     </customLabels>
     <customLabels>
         <label><!-- ISSP_ANG_Click_Here_PCI --></label>
@@ -8145,8 +8345,56 @@ and
         <name>ISSP_ANG_Enabel_Credit_Card_Codes</name>
     </customLabels>
     <customLabels>
+        <label><!-- ISSP_ANG_FoP_Management --></label>
+        <name>ISSP_ANG_FoP_Management</name>
+    </customLabels>
+    <customLabels>
         <label><!-- Generic error message --></label>
         <name>ISSP_ANG_GenericError</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Link to the IATAs CheckACode page --></label>
+        <name>ISSP_ANG_IATA_CODE_SEARCH_CHECK_A_CODE_LINK</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_ANG_IATA_CODE_SEARCH_DESCRIPTION --></label>
+        <name>ISSP_ANG_IATA_CODE_SEARCH_DESCRIPTION</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Financial Security Exists --></label>
+        <name>ISSP_ANG_IATA_CODE_SEARCH_FINANCIAL_SECURITY_EXISTS</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- He message --></label>
+        <name>ISSP_ANG_IATA_CODE_SEARCH_HE</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- IATA Code (HO / HE) --></label>
+        <name>ISSP_ANG_IATA_CODE_SEARCH_IATA_CODE_HO_HE</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- An invalid iata code was inputed in the search --></label>
+        <name>ISSP_ANG_IATA_CODE_SEARCH_INVALID</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- The entered IATA code does not exists --></label>
+        <name>ISSP_ANG_IATA_CODE_SEARCH_NOTHING_FOUND</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_ANG_IATA_CODE_SEARCH_RHC --></label>
+        <name>ISSP_ANG_IATA_CODE_SEARCH_RHC</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Risk Events --></label>
+        <name>ISSP_ANG_IATA_CODE_SEARCH_RISK_EVENTS</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Risk Status --></label>
+        <name>ISSP_ANG_IATA_CODE_SEARCH_RISK_STATUS</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_ANG_IATA_CODE_SEARCH_VALID_FINANCIAL_SECURITY --></label>
+        <name>ISSP_ANG_IATA_CODE_SEARCH_VALID_FINANCIAL_SECURITY</name>
     </customLabels>
     <customLabels>
         <label><!-- ISSP_ANG_IATA_CODE_TO_PROVIDE --></label>
@@ -8169,6 +8417,10 @@ and
         <name>ISSP_ANG_MustAddContactsToService</name>
     </customLabels>
     <customLabels>
+        <label><!-- Must Add Users To Service --></label>
+        <name>ISSP_ANG_MustAddUsersToService</name>
+    </customLabels>
+    <customLabels>
         <label><!-- ISSP_ANG_ONE_OR_MORE_AE --></label>
         <name>ISSP_ANG_ONE_OR_MORE_AE</name>
     </customLabels>
@@ -8185,8 +8437,60 @@ and
         <name>ISSP_ANG_OPTION_PAX_HE_standard</name>
     </customLabels>
     <customLabels>
+        <label><!-- Message that appears when the portal user is both IFAP and admin --></label>
+        <name>ISSP_ANG_OPT_IN_FINANCIAL_MESSAGE_1</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Message that appears when the portal user is both IFAP and regular user --></label>
+        <name>ISSP_ANG_OPT_IN_FINANCIAL_MESSAGE_2</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Message that appears when the portal user is not IFAP nut is a portal admin --></label>
+        <name>ISSP_ANG_OPT_IN_FINANCIAL_MESSAGE_3</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Message that appears when the portal user is neither IFAP or portal admin --></label>
+        <name>ISSP_ANG_OPT_IN_FINANCIAL_MESSAGE_4</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Opt-in of Financial Review button label --></label>
+        <name>ISSP_ANG_OPT_IN_FINANCIAL_REVIEW_BTN</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Opt-in of Financial Review modal --></label>
+        <name>ISSP_ANG_OPT_IN_MODAL_TITLE</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Success messagem on opt-in --></label>
+        <name>ISSP_ANG_OPT_IN_SUCCESS_MESSAGE</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Opt-out of Financial Review button label --></label>
+        <name>ISSP_ANG_OPT_OUT_FINANCIAL_REVIEW_BTN</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Confirmation text in the modal window to opt out the financial review --></label>
+        <name>ISSP_ANG_OPT_OUT_MODAL_CONFIRMATION_TEXT</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Title in the modal window to opt out the financial review --></label>
+        <name>ISSP_ANG_OPT_OUT_MODAL_TITLE</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Error message when the contact is not an IFAP contact --></label>
+        <name>ISSP_ANG_OPT_OUT_NON_FINANCIAL_ASSESSEMENT_ERROR</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Success messagem on opt-out --></label>
+        <name>ISSP_ANG_OPT_OUT_SUCCESS_MESSAGE</name>
+    </customLabels>
+    <customLabels>
         <label><!-- ISSP_ANG_One_or_More --></label>
         <name>ISSP_ANG_One_or_More</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_ANG_OptIn_OptOut_DateInfo --></label>
+        <name>ISSP_ANG_OptIn_OptOut_DateInfo</name>
     </customLabels>
     <customLabels>
         <label><!-- ISSP_ANG_PCI_Choose_IATA_Code --></label>
@@ -8195,6 +8499,10 @@ and
     <customLabels>
         <label><!-- ISSP_ANG_PCI_Compliance --></label>
         <name>ISSP_ANG_PCI_Compliance</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_ANG_PCI_DSS_Compliant --></label>
+        <name>ISSP_ANG_PCI_DSS_Compliant</name>
     </customLabels>
     <customLabels>
         <label><!-- ISSP_ANG_PCI_Selected_IATA_Code --></label>
@@ -8211,6 +8519,10 @@ and
     <customLabels>
         <label><!-- ISSP_ANG_Portal_Admin_Authorized_Signature --></label>
         <name>ISSP_ANG_Portal_Admin_Authorized_Signature</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Help text for Portal Role IEP Admin --></label>
+        <name>ISSP_ANG_Portal_IEPAdmin</name>
     </customLabels>
     <customLabels>
         <label><!-- Help text for Portal Role Agency Read Only --></label>
@@ -8233,6 +8545,10 @@ and
         <name>ISSP_ANG_Portal_Role_TicketIssuer</name>
     </customLabels>
     <customLabels>
+        <label><!-- Help text for Portal Role Ticket Issuer --></label>
+        <name>ISSP_ANG_Portal_TicketIssuer</name>
+    </customLabels>
+    <customLabels>
         <label><!-- ISSP_ANG_ProdCompAnnualFees --></label>
         <name>ISSP_ANG_ProdCompAnnualFees</name>
     </customLabels>
@@ -8253,6 +8569,14 @@ and
         <name>ISSP_ANG_RHC_Risk_Event_Status</name>
     </customLabels>
     <customLabels>
+        <label><!-- Approved --></label>
+        <name>ISSP_ANG_STATUS_APPROVED</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Terminated --></label>
+        <name>ISSP_ANG_STATUS_TERMINATED</name>
+    </customLabels>
+    <customLabels>
         <label><!-- ISSP_ANG_STEP_1_Identi_Appro_Req_AE --></label>
         <name>ISSP_ANG_STEP_1_Identi_Appro_Req_AE</name>
     </customLabels>
@@ -8269,6 +8593,10 @@ and
         <name>ISSP_ANG_Step0_Other_Changes_Msg_NamPaxAgent</name>
     </customLabels>
     <customLabels>
+        <label><!-- STEP 1 - Annual Revalidation --></label>
+        <name>ISSP_ANG_Step1_ANNUAL_REV</name>
+    </customLabels>
+    <customLabels>
         <label><!-- ISSP_ANG_Step1_HE --></label>
         <name>ISSP_ANG_Step1_HE</name>
     </customLabels>
@@ -8283,6 +8611,10 @@ and
     <customLabels>
         <label><!-- ISSP_ANG_Step1_VR --></label>
         <name>ISSP_ANG_Step1_VR</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- STEP 2 - Annual Revalidation --></label>
+        <name>ISSP_ANG_Step2_ANNUAL_REV</name>
     </customLabels>
     <customLabels>
         <label><!-- ISSP_ANG_Step2_Owned_by_OtherOrg_Branch --></label>
@@ -14961,6 +15293,10 @@ an IATA accredited agency, please press &quot;&quot;Back&quot;&quot; button and 
     <customTabs>
         <label><!-- AMS PCI Compliant Mass Oscar Creation --></label>
         <name>AMS_PCI_Compliant_Mass_Oscar_Creation</name>
+    </customTabs>
+    <customTabs>
+        <label><!-- Annual Revalidation Campaign --></label>
+        <name>ANG_Anual_Revalidation_Tool</name>
     </customTabs>
     <customTabs>
         <label><!-- AWS Explorer --></label>
