@@ -731,6 +731,20 @@
         <value>Setup Finalization</value>
     </labels>
     <labels>
+        <fullName>AMS_OSCAR_STEP43</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>AMS_OSCAR_STEP43</shortDescription>
+        <value>Administrative non-compliance</value>
+    </labels>
+    <labels>
+        <fullName>AMS_OSCAR_STEP44</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>AMS_OSCAR_STEP44</shortDescription>
+        <value>Notice of Termination</value>
+    </labels>
+    <labels>
         <fullName>AMS_OSCAR_STEP5</fullName>
         <language>en_US</language>
         <protected>false</protected>
@@ -957,6 +971,14 @@ Please issue a Credit Note in order to refund the change fee.</value>
         <value>Associate Entity(s) :</value>
     </labels>
     <labels>
+        <fullName>ANG_ISSP_CASE_REASON_OPT_OUT</fullName>
+        <categories>ISSP,ANG</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Case reason used in the case subject</shortDescription>
+        <value>Financial review opt-in / opt-out</value>
+    </labels>
+    <labels>
         <fullName>ANG_ISSP_ChangeContactHierarchyError</fullName>
         <categories>ISSP</categories>
         <language>en_US</language>
@@ -1004,7 +1026,7 @@ Please issue a Credit Note in order to refund the change fee.</value>
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>ANG_ISSP_Change_IEP_Status_InProgress_To_Open_Html_Mail_line3</shortDescription>
-        <value>Your colleagues can now apply to access your newly opened account from the IATA Customer Service Portal. The &lt;a href=&quot;http://portal.iata.org/faq/articles/en_US/How_To/Customer-Portal-Troubleshooting/?l=en_US&quot;&gt;FAQ&lt;/a&gt; above describes how you can manage user access.</value>
+        <value>Your colleagues can now apply to access your newly opened account from the IATA Customer Service Portal. The &amp;lt;a href=&quot;http://portal.iata.org/faq/articles/en_US/How_To/Customer-Portal-Troubleshooting/?l=en_US&quot;&amp;gt;FAQ&amp;lt;/a&amp;gt; above describes how you can manage user access.</value>
     </labels>
     <labels>
         <fullName>ANG_ISSP_Change_IEP_Status_InProgress_To_Open_Txt_Mail</fullName>
@@ -1056,11 +1078,25 @@ Please issue a Credit Note in order to refund the change fee.</value>
         <value>Conversion From GoLite Tooltip</value>
     </labels>
     <labels>
+        <fullName>ANG_ISSP_ConversionFromGoStandardGoLiteTooltip</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ANG ISSP Conversion From GoStandard to GoLite Tooltip</shortDescription>
+        <value>Conversion From Tooltip</value>
+    </labels>
+    <labels>
         <fullName>ANG_ISSP_ConversionFromGoStandardTooltip</fullName>
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>ANG ISSP Conversion From GoStandard Tooltip</shortDescription>
         <value>Conversion From GoStandard Tooltip</value>
+    </labels>
+    <labels>
+        <fullName>ANG_ISSP_ConversionFromTooltip</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ANG ISSP Conversion From Tooltip</shortDescription>
+        <value>Conversion From Tooltip</value>
     </labels>
     <labels>
         <fullName>ANG_ISSP_CountryConcerned</fullName>
@@ -1076,7 +1112,7 @@ Please issue a Credit Note in order to refund the change fee.</value>
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>ANG_ISSP_CountryRequirementsGoBack</shortDescription>
-        <value>Return to comparison of Accreditation Types</value>
+        <value>Return to comparison of accreditation type</value>
     </labels>
     <labels>
         <fullName>ANG_ISSP_CountryRequirementsGoBackToOnlineAcc</fullName>
@@ -1258,6 +1294,14 @@ Please &lt;a href=&quot;/ISSP_FAQ2Case?MainNav=Queries&amp;subNav=MyQueries&amp;
         <value>An Authorised Signatory from your Head Entity has already initiated the opening of your Agency&apos;s IEP Account. Once the IEP Account is successfully opened you will be able to access this service.</value>
     </labels>
     <labels>
+        <fullName>ANG_ISSP_IEP_Portal_Access_Request_msg</fullName>
+        <categories>ISSP</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ANG_ISSP_IEP_Portal_Access_Request_msg</shortDescription>
+        <value>Adding these users to your IATA EasyPay Account is now in progress. In order to finalise user access an IEP Admin or Master Wallet Manager from your Agency is required to grant access and assign these users to a wallet before they can start using the service. All IEP Admins and Master Wallet Managers will be notified by email once this pending access request is ready for processing.</value>
+    </labels>
+    <labels>
         <fullName>ANG_ISSP_IEP_Portal_Request_Access_Msg</fullName>
         <categories>ISSP</categories>
         <language>en_US</language>
@@ -1284,6 +1328,14 @@ Please &lt;a href=&quot;/ISSP_FAQ2Case?MainNav=Queries&amp;subNav=MyQueries&amp;
         <value>The following contact is the only currently active IATA EasyPay administrator for this agency and it cannot be deactivated. Please contact IATA Customer Service for support.</value>
     </labels>
     <labels>
+        <fullName>ANG_ISSP_Min_Users_With_Role_Error_Msg2</fullName>
+        <categories>ISSP</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ANG_ISSP_Min_Users_With_Role_Error_Msg</shortDescription>
+        <value>for this Agency and therefore cannot be deactivated.</value>
+    </labels>
+    <labels>
         <fullName>ANG_ISSP_Notify_Admin_app_req_1</fullName>
         <categories>ISSP</categories>
         <language>en_US</language>
@@ -1300,11 +1352,59 @@ Please &lt;a href=&quot;/ISSP_FAQ2Case?MainNav=Queries&amp;subNav=MyQueries&amp;
         <value>to access your IATA EasyPay portal.</value>
     </labels>
     <labels>
+        <fullName>ANG_ISSP_Notify_Admin_app_req_here1</fullName>
+        <categories>ISSP</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ANG_ISSP_Notify_Admin_app_req_1</shortDescription>
+        <value>&lt;a href=&quot;</value>
+    </labels>
+    <labels>
+        <fullName>ANG_ISSP_Notify_Admin_app_req_here2</fullName>
+        <categories>ISSP</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ANG_ISSP_Notify_Admin_app_req_2</shortDescription>
+        <value>ISSP_EditPortalServiceAccess?&amp;mid=M4S2&amp;Id=</value>
+    </labels>
+    <labels>
+        <fullName>ANG_ISSP_Notify_Admin_app_req_here3</fullName>
+        <categories>ISSP</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ANG_ISSP_Notify_Admin_app_req_3</shortDescription>
+        <value>&quot;&gt;</value>
+    </labels>
+    <labels>
+        <fullName>ANG_ISSP_Notify_Admin_app_req_here4</fullName>
+        <categories>ISSP</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ANG_ISSP_Notify_Admin_app_req_4</shortDescription>
+        <value>&lt;/a&gt;</value>
+    </labels>
+    <labels>
         <fullName>ANG_ISSP_Open_IATA_EasyPay_Account</fullName>
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>ANG_ISSP_Open_IATA_EasyPay_Account</shortDescription>
         <value>Open IATA EasyPay Account</value>
+    </labels>
+    <labels>
+        <fullName>ANG_ISSP_OptInEmptyDateErrorMessage</fullName>
+        <categories>ISSP,ANG</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Error message when the opt out date is empty</shortDescription>
+        <value>Please specify an Opt-In date.</value>
+    </labels>
+    <labels>
+        <fullName>ANG_ISSP_OptOutEmptyDateErrorMessage</fullName>
+        <categories>ISSP,ANG</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Error message when the opt out date is empty</shortDescription>
+        <value>Please specify an Opt-Out date.</value>
     </labels>
     <labels>
         <fullName>ANG_ISSP_PORTAL_SERVICE_ROLE</fullName>
@@ -1333,6 +1433,22 @@ Please &lt;a href=&quot;/ISSP_FAQ2Case?MainNav=Queries&amp;subNav=MyQueries&amp;
         <protected>false</protected>
         <shortDescription>ANG_ISSP_PortalRoleErrorMessage</shortDescription>
         <value>The portal role is required</value>
+    </labels>
+    <labels>
+        <fullName>ANG_ISSP_ProductAnnualFinancialReviews</fullName>
+        <categories>ISSP</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ANG_ISSP_ProductAnnualFinancialReviews</shortDescription>
+        <value>Annual Financial Reviews (Label)</value>
+    </labels>
+    <labels>
+        <fullName>ANG_ISSP_ProductCashFacility</fullName>
+        <categories>ISSP</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ANG_ISSP_ProductCashFacility</shortDescription>
+        <value>Cash Facility (Label)</value>
     </labels>
     <labels>
         <fullName>ANG_ISSP_ProductComparisonApplyNow</fullName>
@@ -1519,12 +1635,19 @@ Please &lt;a href=&quot;/ISSP_FAQ2Case?MainNav=Queries&amp;subNav=MyQueries&amp;
         <value>Feature 9 Tooltip</value>
     </labels>
     <labels>
+        <fullName>ANG_ISSP_ProductComparisonLink</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ANG ISSP Product Comparison Link</shortDescription>
+        <value>Product Comparison</value>
+    </labels>
+    <labels>
         <fullName>ANG_ISSP_ProductComparisonTitle1</fullName>
         <categories>ISSP</categories>
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>ANG_ISSP_ProductComparisonTitle1</shortDescription>
-        <value>IATA Online Agency Accreditation</value>
+        <value>IATA Online Accreditation Agency</value>
     </labels>
     <labels>
         <fullName>ANG_ISSP_ProductComparisonTitle2</fullName>
@@ -1541,6 +1664,22 @@ Please &lt;a href=&quot;/ISSP_FAQ2Case?MainNav=Queries&amp;subNav=MyQueries&amp;
         <protected>false</protected>
         <shortDescription>ANG_ISSP_ProductComparisonViewHere</shortDescription>
         <value>View here</value>
+    </labels>
+    <labels>
+        <fullName>ANG_ISSP_ProductCreditCardTransactions</fullName>
+        <categories>ISSP</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ANG_ISSP_ProductCreditCardTransactions</shortDescription>
+        <value>Credit Card Transactions (Label)</value>
+    </labels>
+    <labels>
+        <fullName>ANG_ISSP_ProductIATAEasyPayTransactions</fullName>
+        <categories>ISSP</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ANG_ISSP_ProductIATAEasyPayTransactions</shortDescription>
+        <value>IATA EasyPay Transactions (Label)</value>
     </labels>
     <labels>
         <fullName>ANG_ISSP_ProductMulticountry</fullName>
@@ -1620,6 +1759,13 @@ Please &lt;a href=&quot;/ISSP_FAQ2Case?MainNav=Queries&amp;subNav=MyQueries&amp;
         <protected>false</protected>
         <shortDescription>ANG ISSP REH AccessEasyPay</shortDescription>
         <value>Access your IATA EasyPay Account</value>
+    </labels>
+    <labels>
+        <fullName>ANG_ISSP_REH_DateAssigned</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ANG ISSP REH DateAssigned</shortDescription>
+        <value>Date Assigned</value>
     </labels>
     <labels>
         <fullName>ANG_ISSP_REH_DateIssued</fullName>
@@ -1725,6 +1871,13 @@ Please &lt;a href=&quot;/ISSP_FAQ2Case?MainNav=Queries&amp;subNav=MyQueries&amp;
         <protected>false</protected>
         <shortDescription>ANG_ISSP_e_mail_address</shortDescription>
         <value>E-mail address</value>
+    </labels>
+    <labels>
+        <fullName>ANG_NON_COMPLIANCE</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ANG_NON_COMPLIANCE</shortDescription>
+        <value>Non-compliance</value>
     </labels>
     <labels>
         <fullName>ANG_OSCAR_CHANGE_APPROVAL_FINALIZATION</fullName>
@@ -2483,7 +2636,7 @@ Default,Default withdrawal,Review,Review withdrawal,Irregularity,Termination,Irr
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>CaseValidation - Reason</shortDescription>
-        <value>Airline data changes,Airline joining,Airline leaving,Airline participation/details,Airline suspension,Fees,Billing data update request,Central Billing,Credit Note request,Invoice information query,Amount to be paid by agents,Amount to be paid by airline,Amount to be paid to agents,Deduction/recovery issue,Dispute,Proof of Payment (IN),Remittance related query,Settlement related query,Airline/Operator Data Changes,New Airline/Operator,Debt Recovery,Billing Query,User Management,Other,Airline Reconciliation,Payments</value>
+        <value>Airline data changes,Airline joining,Airline leaving,Airline participation/details,Airline suspension,Fees,Billing data update request,Central Billing,Credit Note request,Invoice information query,Amount to be paid by agents,Amount to be paid by airline,Amount to be paid to agents,Deduction/recovery issue,Dispute,Proof of Payment (IN),Remittance related query,Settlement related query</value>
     </labels>
     <labels>
         <fullName>CaseValidation_RecordType</fullName>
@@ -9039,7 +9192,7 @@ IFG Customer Services</value>
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>ISSP AMS Compare Accreditation Types</shortDescription>
-        <value>Compare Accreditation Types</value>
+        <value>Compare Accreditation types</value>
     </labels>
     <labels>
         <fullName>ISSP_AMS_Compare_Accreditation_Types_RHC</fullName>
@@ -9047,7 +9200,7 @@ IFG Customer Services</value>
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>ISSP AMS Compare Accreditation Types in RHC page</shortDescription>
-        <value>Click here to compare the Accreditation Types</value>
+        <value>Click here to compare the accreditation types</value>
     </labels>
     <labels>
         <fullName>ISSP_AMS_Completed_dangerous_goods_awareness_certificate</fullName>
@@ -11030,7 +11183,7 @@ For each section below either:&lt;br/&gt;
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>ISSP AMS NoC Acreditation Type Section Header</shortDescription>
-        <value>1. Accreditation Type</value>
+        <value>1. Accreditation type</value>
     </labels>
     <labels>
         <fullName>ISSP_AMS_NoC_Additional_Information</fullName>
@@ -14904,6 +15057,14 @@ The applicant understands and agrees to pay the application, entry and annual fe
         <value>Only Legal Authorized Signatories can notify IATA about office closures. You can designate your Agency&apos;s Authorized Signatory in the &apos;Company Administration -&gt; Contacts section&apos; href=&quot;http://www.cnsc.net/Pages/default.aspx&quot;&gt;here&lt;/a&gt;</value>
     </labels>
     <labels>
+        <fullName>ISSP_ANG_ASSOCIATE_ENTITY</fullName>
+        <categories>ISSP,ANG</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Associate Entity</shortDescription>
+        <value>Associate Entity</value>
+    </labels>
+    <labels>
         <fullName>ISSP_ANG_ANG_PCI_Process_Notification_Mail_Body</fullName>
         <categories>ISSP, ANG, Email</categories>
         <language>en_US</language>
@@ -14938,11 +15099,43 @@ The applicant understands and agrees to pay the application, entry and annual fe
         <value>Only Legal Authorized Signatories can notify IATA about office closures. You can designate your Agency&apos;s Authorized Signatory in the &apos;Company Administration -&gt; Contacts section&apos;.</value>
     </labels>
     <labels>
+        <fullName>ISSP_ANG_BRANCH_OFFICE</fullName>
+        <categories>ISSP,ANG</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Branch Office</shortDescription>
+        <value>Branch Office</value>
+    </labels>
+    <labels>
         <fullName>ISSP_ANG_Branch_Office_address_details</fullName>
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>ISSP ANG Branch Office address details</shortDescription>
         <value>Associate Entity address details:</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_ANG_CODE_SEARCH_CHECK_A_CODE_LINK</fullName>
+        <categories>ISSP,ANG</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Link to the IATAs CheckACode page</shortDescription>
+        <value>Please refer to our paid &lt;a href=&quot;https://customer-portal-iata.force.com/iec/ieccacfree&quot;&gt;CheckACode&lt;/a&gt; service if you require the contact details for any agency.</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_ANG_CODE_SEARCH_IATA_CODE_HO_HE</fullName>
+        <categories>ISSP,ANG</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>IATA Code (HO / HE)</shortDescription>
+        <value>IATA Code (HO / HE)</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_ANG_CODE_SEARCH_SA</fullName>
+        <categories>ISSP,ANG</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Location type SA name</shortDescription>
+        <value>Specific Sales Activity (SA)</value>
     </labels>
     <labels>
         <fullName>ISSP_ANG_Click_Here_PCI</fullName>
@@ -15021,11 +15214,105 @@ The applicant understands and agrees to pay the application, entry and annual fe
         <value>Enable Credit Card Form of Payment for the Code(s)</value>
     </labels>
     <labels>
+        <fullName>ISSP_ANG_FoP_Management</fullName>
+        <categories>ISSP, ANG</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_ANG_FoP_Management</shortDescription>
+        <value>FoP Management</value>
+    </labels>
+    <labels>
         <fullName>ISSP_ANG_GenericError</fullName>
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>Generic error message</shortDescription>
         <value>An error has occurred. Please contact support</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_ANG_IATA_CODE_SEARCH_CHECK_A_CODE_LINK</fullName>
+        <categories>ISSP,ANG</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Link to the IATAs CheckACode page</shortDescription>
+        <value>Please refer to our paid &lt;a target=&quot;_blank&quot; href=&quot;https://customer-portal-iata.force.com/iec/ieccacfree&quot;&gt;CheckACode&lt;/a&gt; service if you require the contact details for any agency.</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_ANG_IATA_CODE_SEARCH_DESCRIPTION</fullName>
+        <categories>ISSP, ANG</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_ANG_IATA_CODE_SEARCH_DESCRIPTION</shortDescription>
+        <value>This service enables you to look for Travel and Cargo Agents in the BSP/CASS your Airline is participating in. Simply type the IATA code in the search bar to view the main details and risk related information like the active forms of payment, risk history, their accreditation and risk status, etc.</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_ANG_IATA_CODE_SEARCH_FINANCIAL_SECURITY_EXISTS</fullName>
+        <categories>ISSP,ANG</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Financial Security Exists</shortDescription>
+        <value>Financial Security Exists</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_ANG_IATA_CODE_SEARCH_HE</fullName>
+        <categories>ISSP,ANG</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>He message</shortDescription>
+        <value>The IATA Code &lt;strong&gt;%IATA_CODE%&lt;/strong&gt; is for %CHILD_LOCATION%. The %PARENT_LOCATION% details are as follows</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_ANG_IATA_CODE_SEARCH_IATA_CODE_HO_HE</fullName>
+        <categories>ISSP,ANG</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>IATA Code (HO / HE)</shortDescription>
+        <value>IATA Code (HO / HE)</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_ANG_IATA_CODE_SEARCH_INVALID</fullName>
+        <categories>ISSP,ANG</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>An invalid iata code was inputed in the search</shortDescription>
+        <value>You have entered an incorrect IATA Code. Accepted formats are 7 or 8 digits for Travel Agents and 10 to 11 digits for Cargo.</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_ANG_IATA_CODE_SEARCH_NOTHING_FOUND</fullName>
+        <categories>ISSP,ANG</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>The entered IATA code does not exists</shortDescription>
+        <value>No %TYPE% Agency for this IATA Code</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_ANG_IATA_CODE_SEARCH_RHC</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_ANG_IATA_CODE_SEARCH_RHC</shortDescription>
+        <value>Remittance Holding Capacity equal to Financial Security</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_ANG_IATA_CODE_SEARCH_RISK_EVENTS</fullName>
+        <categories>ISSP,ANG</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Risk Events</shortDescription>
+        <value>Risk Events</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_ANG_IATA_CODE_SEARCH_RISK_STATUS</fullName>
+        <categories>ISSP,ANG</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Risk Status</shortDescription>
+        <value>Risk Status</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_ANG_IATA_CODE_SEARCH_VALID_FINANCIAL_SECURITY</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_ANG_IATA_CODE_SEARCH_VALID_FINANCIAL_SECURITY</shortDescription>
+        <value>Valid Financial Security</value>
     </labels>
     <labels>
         <fullName>ISSP_ANG_IATA_CODE_TO_PROVIDE</fullName>
@@ -15065,6 +15352,13 @@ The applicant understands and agrees to pay the application, entry and annual fe
         <value>At least one contact must be selected</value>
     </labels>
     <labels>
+        <fullName>ISSP_ANG_MustAddUsersToService</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Must Add Users To Service</shortDescription>
+        <value>At least one user must be selected</value>
+    </labels>
+    <labels>
         <fullName>ISSP_ANG_ONE_OR_MORE_AE</fullName>
         <language>en_US</language>
         <protected>false</protected>
@@ -15093,12 +15387,115 @@ The applicant understands and agrees to pay the application, entry and annual fe
         <value>IATA Passenger Sales</value>
     </labels>
     <labels>
+        <fullName>ISSP_ANG_OPT_IN_FINANCIAL_MESSAGE_1</fullName>
+        <categories>ISSP,ANG</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Message that appears when the portal user is both IFAP and admin</shortDescription>
+        <value>According to our records you are listed as the IFAP Contact for your agency. If this is still the case then please proceed to request to opt-in to the Financial Review process, else assign the correct person as the IFAP Contact on the &lt;a href=&apos;/ISSP_CompanyInformation?mid=M5S2&apos;;&gt;Company Information page&lt;/a&gt; and ask them to proceed with the request.</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_ANG_OPT_IN_FINANCIAL_MESSAGE_2</fullName>
+        <categories>ISSP,ANG</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Message that appears when the portal user is both IFAP and regular user</shortDescription>
+        <value>According to our records you are listed as the IFAP Contact for your agency. If this is still the case then please proceed to request to opt-in to the Financial Review process, else please ask your Portal Administrator to assign the correct person as the IFAP Contact and have them proceed with the request.</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_ANG_OPT_IN_FINANCIAL_MESSAGE_3</fullName>
+        <categories>ISSP,ANG</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Message that appears when the portal user is not IFAP nut is a portal admin</shortDescription>
+        <value>Only your Agency&apos;s IFAP Contact can request to Opt-In to the Financial review process. You can view your current IFAP Contact on the &lt;a href=&apos;/ISSP_CompanyInformation?mid=M5S2&apos;;&gt;Company Information page&lt;/a&gt; , where you can assign the correct person if required, before asking them to proceed with this request.</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_ANG_OPT_IN_FINANCIAL_MESSAGE_4</fullName>
+        <categories>ISSP,ANG</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Message that appears when the portal user is neither IFAP or portal admin</shortDescription>
+        <value>Only your Agency&apos;s IFAP Contact can request to Opt-In to the Financial review process.. If you hold this role within your Agency then please contact your Portal Administrator, to have them assign you as the IFAP Contact so that you can proceed with this request.</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_ANG_OPT_IN_FINANCIAL_REVIEW_BTN</fullName>
+        <categories>ISSP,ANG</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Opt-in of Financial Review button label</shortDescription>
+        <value>Request to Opt-In to Financial Review</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_ANG_OPT_IN_MODAL_TITLE</fullName>
+        <categories>ISSP,ANG</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Opt-in of Financial Review modal</shortDescription>
+        <value>Request to Opt-In to Financial Review</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_ANG_OPT_IN_SUCCESS_MESSAGE</fullName>
+        <categories>ISSP,ANG</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Success messagem on opt-in</shortDescription>
+        <value>Thanks for requesting to Opt-In to the Financial review process. IATA will contact you shortly concerning this request.</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_ANG_OPT_OUT_FINANCIAL_REVIEW_BTN</fullName>
+        <categories>ISSP,ANG</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Opt-out of Financial Review button label</shortDescription>
+        <value>Request to Opt-Out of Financial review</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_ANG_OPT_OUT_MODAL_CONFIRMATION_TEXT</fullName>
+        <categories>ISSP,ANG</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Confirmation text in the modal window to opt out the financial review</shortDescription>
+        <value>GoStandard Agents for which IATA holds a valid Financial Security can opt out of the Annual Financial Review. In such cases, the Agent will be granted a Remittance Holding Capacity equal to the amount of Financial Security provided.</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_ANG_OPT_OUT_MODAL_TITLE</fullName>
+        <categories>ISSP,ANG</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Title in the modal window to opt out the financial review</shortDescription>
+        <value>Request to Opt-Out of Financial review</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_ANG_OPT_OUT_NON_FINANCIAL_ASSESSEMENT_ERROR</fullName>
+        <categories>ISSP,ANG</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Error message when the contact is not an IFAP contact</shortDescription>
+        <value>Only your Agency&apos;s IFAP Contact can request to Opt-out of the Financial Review</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_ANG_OPT_OUT_SUCCESS_MESSAGE</fullName>
+        <categories>ISSP,ANG</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Success messagem on opt-out</shortDescription>
+        <value>Thanks for requesting to Opt-Out of the Financial review process. IATA will contact you shortly concerning this request.</value>
+    </labels>
+    <labels>
         <fullName>ISSP_ANG_One_or_More</fullName>
         <categories>ISSP, ANG</categories>
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>ISSP_ANG_One_or_More</shortDescription>
         <value>One or more Branch Offices</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_ANG_OptIn_OptOut_DateInfo</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_ANG_OptIn_OptOut_DateInfo</shortDescription>
+        <value>Date from which Airlines can Opt-Out of IATA EasyPay for this country on the portal.</value>
     </labels>
     <labels>
         <fullName>ISSP_ANG_PCI_Choose_IATA_Code</fullName>
@@ -15116,6 +15513,14 @@ The applicant understands and agrees to pay the application, entry and annual fe
         <value>PCI Compliance</value>
     </labels>
     <labels>
+        <fullName>ISSP_ANG_PCI_DSS_Compliant</fullName>
+        <categories>ISSP, ANG</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_ANG_PCI_DSS_Compliant</shortDescription>
+        <value>PCI DSS Compliant</value>
+    </labels>
+    <labels>
         <fullName>ISSP_ANG_PCI_Selected_IATA_Code</fullName>
         <language>en_US</language>
         <protected>false</protected>
@@ -15128,7 +15533,7 @@ The applicant understands and agrees to pay the application, entry and annual fe
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>ISSP_ANG_PROOF_OF_PCI</shortDescription>
-        <value>Proof of PCI Compliance for the following IATA Codes:.</value>
+        <value>Thank you for creating the Proof of PCI Compliance for the following IATA Codes:.</value>
     </labels>
     <labels>
         <fullName>ISSP_ANG_Portal_Admin</fullName>
@@ -15147,6 +15552,13 @@ The applicant understands and agrees to pay the application, entry and annual fe
         <value>Only Legal Authorized Signatories can notify IATA about office closures. You can designate your Agency Authorized Signatory in the &lt;a href=&quot;/ISSP_ContactList?MainNav=Admin&quot;subNav=contacts&quot;mid=M4S1&quot; target=&quot;_self&quot;&gt;Company Administration -&gt; Contacts section&lt;/a&gt; page.</value>
     </labels>
     <labels>
+        <fullName>ISSP_ANG_Portal_IEPAdmin</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Help text for Portal Role IEP Admin</shortDescription>
+        <value>Help text for Portal Role IEP Admin</value>
+    </labels>
+    <labels>
         <fullName>ISSP_ANG_Portal_Role_AgencyReadOnly</fullName>
         <language>en_US</language>
         <protected>false</protected>
@@ -15158,28 +15570,35 @@ The applicant understands and agrees to pay the application, entry and annual fe
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>Help text for Portal Role IEP Admin</shortDescription>
-        <value>&lt;ul&gt;&lt;li&gt;Full access to the Master Wallet and any Sub-wallet(s)&lt;/li&gt;&lt;li&gt;Generates direct funded Wallet(s)&lt;/li&gt;&lt;li&gt;Generates and manages indirect funded Sub-wallet(s)&lt;/li&gt;&lt;li&gt;Full IEP Account management, including account closure&lt;/li&gt;&lt;li&gt;Full user management, and assignment of users to Master and Sub-Wallet(s), including responding to user access requests&lt;/li&gt;&lt;li&gt;Adds, withdraws and transfers funds for Master Wallet and all Sub-Wallet(s)&lt;/li&gt;&lt;li&gt;Manages Bank Account registration and closure&lt;/li&gt;&lt;/ul&gt;</value>
+        <value>&lt;ul&gt;&lt;li&gt;Full access to the Master Wallet and any Sub-wallet(s); establish new and close Sub-wallets&lt;/li&gt;&lt;li&gt;Full IEP Account management, including account closure&lt;/li&gt;&lt;li&gt;Full user management, and assignment of users to Master and Sub-Wallet(s)&lt;/li&gt;&lt;li&gt;Adds, withdraws and transfers Master Wallet funds and all Sub-Wallet(s)&lt;/li&gt;&lt;/ul&gt;</value>
     </labels>
     <labels>
         <fullName>ISSP_ANG_Portal_Role_MasterWalletManager</fullName>
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>Help text for Portal Role Master Wallet Manager</shortDescription>
-        <value>&lt;ul&gt;&lt;li&gt;Manages Bank Account registration and closure&lt;/li&gt;&lt;li&gt;Allowed to Add funds from the registered Bank Account to the direct funded wallet(s)&lt;/li&gt;&lt;li&gt;Withdraw funds from the direct funded wallet(s)&lt;/li&gt;&lt;li&gt;Transfer funds between the Master Wallet and all Sub-Wallet(s)&lt;/li&gt;&lt;li&gt;Manages users&apos; access as “Sub-wallet Manager” or “Ticket Issuer” role&lt;/li&gt;&lt;/ul&gt;</value>
+        <value>&lt;ul&gt;&lt;li&gt;Adds, withdraws and transfers Master Wallet funds and all Sub-Wallet(s)&lt;/li&gt;&lt;li&gt;Manages user access as “Sub-wallet Manager” or “Ticket Issuer” role&lt;/li&gt;lt;/ul&gt;</value>
     </labels>
     <labels>
         <fullName>ISSP_ANG_Portal_Role_SubwalletManager</fullName>
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>Help text for Portal Role Sub-wallet Manager</shortDescription>
-        <value>&lt;ul&gt;&lt;li&gt;Manages funds of the assigned Sub-wallet(s)&lt;/li&gt;&lt;li&gt;Manages “Ticket Issuer”&apos; IATA EasyPay users&apos; access and Sub-wallet(s)&lt;/li&gt;&lt;li&gt;Generates IATA EasyPay Numbers from the assigned wallet(s) to be used to issue tickets via GDS&lt;/li&gt;&lt;/ul&gt;</value>
+        <value>&lt;ul&gt;&lt;li&gt;Manages funds of the assigned Sub-wallet(s)&lt;/li&gt;&lt;li&gt;Manages “Ticket Issuer” user access within the Sub-wallet(s)&lt;/li&gt;&lt;li&gt;Generates IATA EasyPay Numbers from any assigned wallet(s) to be used to issue tickets via your GDS&lt;/li&gt;&lt;/ul&gt;</value>
     </labels>
     <labels>
         <fullName>ISSP_ANG_Portal_Role_TicketIssuer</fullName>
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>Help text for Portal Role Ticket Issuer</shortDescription>
-        <value>&lt;ul&gt;&lt;li&gt;Generates IATA EasyPay Numbers from any assigned wallet(s) to be used to issue tickets via GDS&lt;/li&gt;&lt;/ul&gt;</value>
+        <value>&lt;ul&gt;&lt;li&gt;Generates IATA EasyPay Numbers from any assigned wallet(s) to be used to issue tickets via your GDS&lt;/li&gt;&lt;/ul&gt;</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_ANG_Portal_TicketIssuer</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Help text for Portal Role Ticket Issuer</shortDescription>
+        <value>Help text for Portal Role Ticket Issuer</value>
     </labels>
     <labels>
         <fullName>ISSP_ANG_ProdCompAnnualFees</fullName>
@@ -15190,7 +15609,6 @@ The applicant understands and agrees to pay the application, entry and annual fe
     </labels>
     <labels>
         <fullName>ISSP_ANG_ProdCompCostTooltip</fullName>
-        <categories>ANG</categories>
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>ISSP_ANG_ProdCompCostTooltip</shortDescription>
@@ -15221,6 +15639,22 @@ Large – more than USD 2.000.000 gross annual sales</value>
         <protected>false</protected>
         <shortDescription>Risk Event Status</shortDescription>
         <value>Risk Event Status</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_ANG_STATUS_APPROVED</fullName>
+        <categories>ISSP,ANG</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Approved</shortDescription>
+        <value>Approved</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_ANG_STATUS_TERMINATED</fullName>
+        <categories>ISSP,ANG</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Terminated</shortDescription>
+        <value>Terminated</value>
     </labels>
     <labels>
         <fullName>ISSP_ANG_STEP_1_Identi_Appro_Req_AE</fullName>
@@ -16810,7 +17244,7 @@ Can you please confirm which country you&apos;ve previously received support for
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>ISSP_CountryConcerned</shortDescription>
-        <value>Country/Territory concerned</value>
+        <value>Country concerned</value>
     </labels>
     <labels>
         <fullName>ISSP_Country_Requirements</fullName>
@@ -16825,7 +17259,7 @@ Can you please confirm which country you&apos;ve previously received support for
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>ISSP_Country_of_Publication</shortDescription>
-        <value>Country/Territory of Publication</value>
+        <value>Country of Publication</value>
     </labels>
     <labels>
         <fullName>ISSP_Create_New_Agency</fullName>
@@ -18212,7 +18646,7 @@ Please add below all your company valid email domains, including different ones 
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>ISSP_Filter_by_Country</shortDescription>
-        <value>Filter by Country/Territory</value>
+        <value>Filter by Country</value>
     </labels>
     <labels>
         <fullName>ISSP_Filter_by_Country_Publication</fullName>
@@ -20220,7 +20654,7 @@ If you continue to experience issues registering for the CNS Customer Portal the
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>ISSP_PCI_Case_Submited</shortDescription>
-        <value>Thank you for submitting your self-declaration or PCI DSS Certificate.</value>
+        <value>Thank you for submiting the request for Credit Card form of Payment.</value>
     </labels>
     <labels>
         <fullName>ISSP_PCI_Least_One_IATA_CODE</fullName>
@@ -20887,7 +21321,7 @@ If the product is an Agent&apos;s multi-use VANs, then it is an Agent&apos;s uni
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>ISSP RHC HUB RP</shortDescription>
-        <value>Accreditation and Risk Profile</value>
+        <value>Risk Profile</value>
     </labels>
     <labels>
         <fullName>ISSP_ReasonInactivation</fullName>
@@ -23677,7 +24111,7 @@ an IATA accredited agency, please press &quot;Back&quot; button and select anoth
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>LVA_CallUsAvailableHours</shortDescription>
-        <value>We attend the lines:</value>
+        <value>Available Period:</value>
     </labels>
     <labels>
         <fullName>LVA_CallUsNoConfigAvailable</fullName>
@@ -28177,5 +28611,221 @@ Please &lt;a href=&quot;/ISSP_FAQ2Case?MainNav=Queries&amp;subNav=MyQueries&amp;
         <protected>false</protected>
         <shortDescription>wire transfer payment msg</shortDescription>
         <value>Your wire transfer payment has been received.</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_ANG_ANNUAL_REVALIDATION</fullName>
+        <categories>ISSP,ANG</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>IATA Accreditation - Annual Revalidation</shortDescription>
+        <value>IATA Accreditation - Annual Revalidation</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_ANG_Step1_ANNUAL_REV</fullName>
+        <categories>ISSP,ANG</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>STEP 1 - Annual Revalidation</shortDescription>
+        <value>STEP A - Confirm Agency Details</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_ANG_Step2_ANNUAL_REV</fullName>
+        <categories>ISSP,ANG</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>STEP 2 - Annual Revalidation</shortDescription>
+        <value>STEP B - Submit to IATA</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_ANG_ANNUAL_REV_WORK_AREA_TITLE</fullName>
+        <categories>ISSP,ANG</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Annual Revalidation work area title</shortDescription>
+        <value>Please either confirm or update the details for each IATA Code in your hierarchy</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_ANG_ANNUAL_STATUS_OPEN</fullName>
+        <categories>ISSP,ANG</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Annual Revalidation open status</shortDescription>
+        <value>Not Started</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_ANG_ANNUAL_STATUS_CONFIRMED</fullName>
+        <categories>ISSP,ANG</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Annual Revalidation confirmed status</shortDescription>
+        <value>Details Confirmed</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_ANG_ANNUAL_STATUS_UPDATE_PROGRESS</fullName>
+        <categories>ISSP,ANG</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Annual Revalidation update in progress status</shortDescription>
+        <value>Update In Progress</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_ANG_ANNUAL_STATUS_UPDATE_COMPLETED</fullName>
+        <categories>ISSP,ANG</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Annual Revalidation update completed status</shortDescription>
+        <value>Update Completed</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_ANG_ANNUAL_VAL_STATUS</fullName>
+        <categories>ISSP,ANG</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Validation status label</shortDescription>
+        <value>Validation Status : </value>
+    </labels>
+    <labels>
+        <fullName>ISSP_ANG_ANNUAL_REV_CONFIRM_BTN</fullName>
+        <categories>ISSP,ANG</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Annual revalidation confirm button</shortDescription>
+        <value>Confirm details are correct</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_ANG_ANNUAL_REV_UPDATE_BTN</fullName>
+        <categories>ISSP,ANG</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Annual revalidation update button</shortDescription>
+        <value>Update details</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_ANG_ANNUAL_REV_DISCARD_BTN</fullName>
+        <categories>ISSP,ANG</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Annual revalidation discard button</shortDescription>
+        <value>Discard</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_ANG_ANNUAL_REV_Change_of_Legal_Name</fullName>
+        <categories>ISSP,ANG</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_ANG_ANNUAL_REV_Change_of_Legal_Name</shortDescription>
+        <value>Agency Legal Details</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_ANG_ANNUAL_REV_Change_of_Location</fullName>
+        <categories>ISSP. ANG</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_ANG_ANNUAL_REV_Change_of_Location</shortDescription>
+        <value>Agency Location</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_ANG_ANNUAL_REV_Change_Ownership_Shareholding</fullName>
+        <categories>ISSP, ANG</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_ANG_ANNUAL_REV_Change_Ownership_Shareholding</shortDescription>
+        <value>Agency Ownership / Shareholding and Legal Status</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_ANG_ANNUAL_REV_CONFIRM_UPD_BTN</fullName>
+        <categories>ISSP,ANG</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Annual revalidation confirm update button</shortDescription>
+        <value>Confirm Update</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_ANG_ANNUAL_REV_CANCEL_UPD_BTN</fullName>
+        <categories>ISSP,ANG</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Annual revalidation cancel update button</shortDescription>
+        <value>Discard Update</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_ANG_ANNUAL_REV_SAVE_CHANGES_BTN</fullName>
+        <categories>ISSP,ANG</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Annual revalidation save changes button</shortDescription>
+        <value>Save Changes</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_AMS_CONFIRM_CANCEL</fullName>
+        <categories>ISSP,ANG</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP AMS CONFIRM CANCEL</shortDescription>
+        <value>Are you sure you want to cancel?</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_AMS_CONFIRM_DISCARD</fullName>
+        <categories>ISSP,ANG</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP AMS CONFIRM DISCARD</shortDescription>
+        <value>Are you sure you want to discard your changes?</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_ANG_ANNUAL_REV_ADDITIONAL_INFORMATION</fullName>
+        <categories>ISSP,ANG</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_ANG_ANNUAL_REV_ADDITIONAL_INFORMATION</shortDescription>
+        <value>Additional Information</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_ANG_ANNUAL_REV_ERROR_1</fullName>
+        <categories>ISSP,ANG</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_ANG_ANNUAL_REV_ERROR_1</shortDescription>
+        <value>Need to confirm details and notify at least one change</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_ANG_ANNUAL_REV_ERROR_2</fullName>
+        <categories>ISSP,ANG</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_ANG_ANNUAL_REV_ERROR_2</shortDescription>
+        <value>It is required to notify at least one change</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_ANG_ANNUAL_REV_SUBMIT_NOT_ALLOW</fullName>
+        <categories>ISSP,ANG</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_ANG_ANNUAL_REV_SUBMIT_NOT_ALLOW</shortDescription>
+        <value>Please ensure that the Agency details are either confirmed or updated for each IATA Code in your hierarchy.</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_ANG_ANNUAL_REV_ENTER_OWNER_DETAILS</fullName>
+        <categories>ISSP,ANG</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_ANG_ANNUAL_REV_ENTER_OWNER_DETAILS</shortDescription>
+        <value>Please enter new ownership details below</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_ANG_ANNUAL_REV_Q2</fullName>
+        <categories>ISSP,ANG</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_ANG_ANNUAL_REV_Q2</shortDescription>
+        <value>* Does your company have direct or indirect relationship with an organization holding GSA appointment from a member?</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_ANG_ANNUAL_REV_Q3</fullName>
+        <categories>ISSP,ANG</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_ANG_ANNUAL_REV_Q3</shortDescription>
+        <value>* Please confirm which GDSs are used in your company?</value>
     </labels>
 </CustomLabels>
