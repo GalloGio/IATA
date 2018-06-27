@@ -966,7 +966,7 @@ public without sharing class OneIdVfDSEController {
         if (countryMapEmpty)
             countryMap = new Map<Id, String>();
 
-        for(IATA_ISO_Country__c iso:[select Id,Name,ISO_Code__c from IATA_ISO_Country__c order by Name]){
+        for(IATA_ISO_Country__c iso: IATAIsoCountryDAO.getIsoCountries()){
             if (iso.Name != 'All Countries'){
                 options.add(new SelectOption(iso.Id,iso.Name));
                 if (countryMapEmpty) {

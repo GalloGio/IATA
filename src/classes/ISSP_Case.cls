@@ -733,77 +733,23 @@ public without sharing class ISSP_Case {
         String currentLanguage = UserInfo.getLanguage();
         List<SelectOption> options = new List<SelectOption>();
         list<IATA_ISO_Country__c> isoList;
-        /*list<IATA_ISO_Country__c> isoList = [select Name,Id, IATA_Contry_KR__c, IATA_COUNTRY_EN__c,
-        IATA_Country_FR__c, IATA_Country_IT__c, IATA_Country_JP__c,
-        IATA_Country_PT__c, IATA_Country_SP__c, IATA_Country_ZH__c
-        from IATA_ISO_Country__c
-        where Case_BSP_Country__c!=null
-        and Case_BSP_Country__c!=''
-        order by Name];*/
+ 
         if (currentLanguage == 'es') {
-            isoList = [select Region__c, Name, Id, IATA_Contry_KR__c, IATA_COUNTRY_EN__c,
-                       IATA_Country_FR__c, IATA_Country_IT__c, IATA_Country_JP__c,
-                       IATA_Country_PT__c, IATA_Country_SP__c, IATA_Country_ZH__c
-                       from IATA_ISO_Country__c
-                       where Case_BSP_Country__c != null
-                       and Case_BSP_Country__c != ''
-                       order by IATA_Country_SP__c];
+            isoList = IATAIsoCountryDAO.sortIATAIsoCountryList(IATAIsoCountryDAO.getIsoCountriesByCaseBSPCountryNotNull(), 'IATA_Country_SP__c');
         } else if (currentLanguage == 'ko') {
-            isoList = [select Region__c, Name, Id, IATA_Contry_KR__c, IATA_COUNTRY_EN__c,
-                       IATA_Country_FR__c, IATA_Country_IT__c, IATA_Country_JP__c,
-                       IATA_Country_PT__c, IATA_Country_SP__c, IATA_Country_ZH__c
-                       from IATA_ISO_Country__c
-                       where Case_BSP_Country__c != null
-                       and Case_BSP_Country__c != ''
-                       order by IATA_Contry_KR__c];
+            isoList = IATAIsoCountryDAO.sortIATAIsoCountryList(IATAIsoCountryDAO.getIsoCountriesByCaseBSPCountryNotNull(), 'IATA_Contry_KR__c');
         } else if (currentLanguage == 'zh_CN') {
-            isoList = [select Region__c, Name, Id, IATA_Contry_KR__c, IATA_COUNTRY_EN__c,
-                       IATA_Country_FR__c, IATA_Country_IT__c, IATA_Country_JP__c,
-                       IATA_Country_PT__c, IATA_Country_SP__c, IATA_Country_ZH__c
-                       from IATA_ISO_Country__c
-                       where Case_BSP_Country__c != null
-                       and Case_BSP_Country__c != ''
-                       order by IATA_Country_ZH__c];
+            isoList = IATAIsoCountryDAO.sortIATAIsoCountryList(IATAIsoCountryDAO.getIsoCountriesByCaseBSPCountryNotNull(), 'IATA_Country_ZH__c');
         } else if (currentLanguage == 'pt_BR') {
-            isoList = [select Region__c, Name, Id, IATA_Contry_KR__c, IATA_COUNTRY_EN__c,
-                       IATA_Country_FR__c, IATA_Country_IT__c, IATA_Country_JP__c,
-                       IATA_Country_PT__c, IATA_Country_SP__c, IATA_Country_ZH__c
-                       from IATA_ISO_Country__c
-                       where Case_BSP_Country__c != null
-                       and Case_BSP_Country__c != ''
-                       order by IATA_Country_PT__c];
+            isoList = IATAIsoCountryDAO.sortIATAIsoCountryList(IATAIsoCountryDAO.getIsoCountriesByCaseBSPCountryNotNull(), 'IATA_Country_PT__c');
         } else if (currentLanguage == 'fr') {
-            isoList = [select Region__c, Name, Id, IATA_Contry_KR__c, IATA_COUNTRY_EN__c,
-                       IATA_Country_FR__c, IATA_Country_IT__c, IATA_Country_JP__c,
-                       IATA_Country_PT__c, IATA_Country_SP__c, IATA_Country_ZH__c
-                       from IATA_ISO_Country__c
-                       where Case_BSP_Country__c != null
-                       and Case_BSP_Country__c != ''
-                       order by IATA_Country_FR__c];
+            isoList = IATAIsoCountryDAO.sortIATAIsoCountryList(IATAIsoCountryDAO.getIsoCountriesByCaseBSPCountryNotNull(), 'IATA_Country_FR__c');
         } else if (currentLanguage == 'ja') {
-            isoList = [select Region__c, Name, Id, IATA_Contry_KR__c, IATA_COUNTRY_EN__c,
-                       IATA_Country_FR__c, IATA_Country_IT__c, IATA_Country_JP__c,
-                       IATA_Country_PT__c, IATA_Country_SP__c, IATA_Country_ZH__c
-                       from IATA_ISO_Country__c
-                       where Case_BSP_Country__c != null
-                       and Case_BSP_Country__c != ''
-                       order by IATA_Country_JP__c];
+            isoList = IATAIsoCountryDAO.sortIATAIsoCountryList(IATAIsoCountryDAO.getIsoCountriesByCaseBSPCountryNotNull(), 'IATA_Country_JP__c');
         } else if (currentLanguage == 'it') {
-            isoList = [select Region__c, Name, Id, IATA_Contry_KR__c, IATA_COUNTRY_EN__c,
-                       IATA_Country_FR__c, IATA_Country_IT__c, IATA_Country_JP__c,
-                       IATA_Country_PT__c, IATA_Country_SP__c, IATA_Country_ZH__c
-                       from IATA_ISO_Country__c
-                       where Case_BSP_Country__c != null
-                       and Case_BSP_Country__c != ''
-                       order by IATA_Country_IT__c];
+            isoList = IATAIsoCountryDAO.sortIATAIsoCountryList(IATAIsoCountryDAO.getIsoCountriesByCaseBSPCountryNotNull(), 'IATA_Country_IT__c');
         } else {
-            isoList = [select Region__c, Name, Id, IATA_Contry_KR__c, IATA_COUNTRY_EN__c,
-                       IATA_Country_FR__c, IATA_Country_IT__c, IATA_Country_JP__c,
-                       IATA_Country_PT__c, IATA_Country_SP__c, IATA_Country_ZH__c
-                       from IATA_ISO_Country__c
-                       where Case_BSP_Country__c != null
-                       and Case_BSP_Country__c != ''
-                       order by Name];
+            isoList = IATAIsoCountryDAO.getIsoCountriesByCaseBSPCountryNotNull();
         }
         options.add(new SelectOption('', '--None--'));
         for (IATA_ISO_Country__c iso : isoList) {

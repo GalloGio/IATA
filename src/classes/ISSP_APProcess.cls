@@ -923,14 +923,8 @@ public without sharing class ISSP_APProcess {
         get {
             List<SelectOption> options = new List<SelectOption>();
             
-            list<IATA_ISO_Country__c> isoList;
-        
-            isoList = [SELECT Name,Id, IATA_Contry_KR__c, IATA_COUNTRY_EN__c,ISO_Code__c, AMS_Pilot_Country__c,
-                        IATA_Country_FR__c, IATA_Country_IT__c, IATA_Country_JP__c,
-                        IATA_Country_PT__c, IATA_Country_SP__c, IATA_Country_ZH__c
-                        FROM IATA_ISO_Country__c
-                        ORDER BY Name];
-            
+            list<IATA_ISO_Country__c> isoList = IATAIsoCountryDAO.getIsoCountries();
+                    
           options.add(new SelectOption('', Label.ISSP_SELECT_COUNTRY));
           for(IATA_ISO_Country__c iso : isoList){
             options.add(new SelectOption(iso.Name,iso.Name));
@@ -945,15 +939,7 @@ public without sharing class ISSP_APProcess {
         get {
             List<SelectOption> options = new List<SelectOption>();
             
-            list<IATA_ISO_Country__c> isoList;
-        
-            isoList = [SELECT Name,Id, IATA_Contry_KR__c, IATA_COUNTRY_EN__c,ISO_Code__c, AMS_Pilot_Country__c,
-                        IATA_Country_FR__c, IATA_Country_IT__c, IATA_Country_JP__c,
-                        IATA_Country_PT__c, IATA_Country_SP__c, IATA_Country_ZH__c
-                        FROM IATA_ISO_Country__c
-                        WHERE Case_BSP_Country__c!=null
-                        AND Case_BSP_Country__c!=''
-                        ORDER BY Name];
+            list<IATA_ISO_Country__c> isoList = IATAIsoCountryDAO.getIsoCountriesByCaseBSPCountryNotNull();
             
           options.add(new SelectOption('', Label.ISSP_SELECT_COUNTRY));
           for(IATA_ISO_Country__c iso : isoList){
@@ -1264,16 +1250,7 @@ public without sharing class ISSP_APProcess {
     }
     
     public IATA_ISO_Country__c fetchISOCountry(string isocode) {
-         
-        IATA_ISO_Country__c isocountry = [
-            SELECT Id, Name, CurrencyIsoCode, EU_Country__c, AMS_Pilot_Country__c, Case_BSP_Country__c,IATA_Country_FR__c,IATA_Country_SP__c,IATA_COUNTRY_EN__c,
-            IATA_Contry_KR__c,IATA_Country_IT__c,IATA_Country_JP__c,IATA_Country_PT__c,IATA_Country_ZH__c,
-            Tax_Number_label__c,Tax_number_format__c,Tax_number_help_text__c
-            FROM IATA_ISO_Country__c
-            WHERE ISO_Code__c = :isocode
-         ];
-          
-        return isocountry;
+        return IATAIsoCountryDAO.getIsoCountriesByIds(new Set<String>{isocode}).get(0);
     }
     
     public List<SelectOption> getChangeItems() {

@@ -168,9 +168,7 @@ public without sharing class ISSP_Registration {
 		get{
 			if(countriesNamesWithoutZipCode == null) {
 				Set<String> countriesNamesWithoutZipCodeLst = new Set<String>();
-				List<IATA_ISO_Country__c> lstCountries = [SELECT Name, IEC_Zip_Postal_Code_required__c 
-														  FROM IATA_ISO_Country__c
-														  WHERE IEC_Zip_Postal_Code_required__c = false];
+				List<IATA_ISO_Country__c> lstCountries = IATAIsoCountryDAO.getIsoCountriesByZipCoderequired(false);
 				
 				for(IATA_ISO_Country__c c : lstCountries) {
 					countriesNamesWithoutZipCodeLst.add(c.Name.toUpperCase().trim());
@@ -1463,7 +1461,7 @@ public without sharing class ISSP_Registration {
 
 
         if(CommunityName == 'CNS') {
-            Id USAid = [SELECT Id, Name FROM IATA_ISO_Country__c WHERE Name = 'United States'].Id;
+            Id USAid = IATAIsoCountryDAO.getIsoCountryByCountriesName(new Set<String>{'United States'}).get(0).Id;
             searchCountry = USAid;
             searchCountryAirline = USAid;
             searchIATACodeAirline = USAid;
@@ -1579,7 +1577,7 @@ public without sharing class ISSP_Registration {
         }
 
         if(CommunityName == 'CNS') {
-            Id USAid = [SELECT Id, Name FROM IATA_ISO_Country__c WHERE Name = 'United States'].Id;
+            Id USAid = IATAIsoCountryDAO.getIsoCountryByCountriesName(new Set<String>{'United States'}).get(0).Id;
             searchCountry = USAid;
             searchCountryAirline = USAid;
             searchIATACodeAirline = USAid;
@@ -1666,9 +1664,10 @@ public without sharing class ISSP_Registration {
 		get{
 			if(shpCountry == null) {
 				List<SelectOption> options = new List<SelectOption>();
-				for(IATA_ISO_Country__c iso:[select Id,Name,ISO_Code__c, IEC_Zip_Postal_Code_required__c from IATA_ISO_Country__c
-                                            where Name != 'All Countries' and Name != 'NO COUNTRY' order by Name]) {
+				for(IATA_ISO_Country__c iso : IATAIsoCountryDAO.getIsoCountries()){
+                    if(iso.Name != 'All Countries' && iso.Name != 'NO COUNTRY'){
 						options.add(new SelectOption(iso.ISO_Code__c,iso.Name));
+                    }
 				}
                 shpCountry = options;
 			}

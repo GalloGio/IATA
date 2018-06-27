@@ -150,7 +150,7 @@ public without sharing class ISSP_AMS_MSO_Update_Controller {
     }
     
     public void refreshStates(){
-        list<IATA_ISO_Country__c> isoList = [SELECT Name, Id, IATA_COUNTRY_EN__c, ISO_Code__c, AMS_Pilot_Country__c, IATA_Country_FR__c, IATA_Country_SP__c, IATA_Country_ZH__c, (SELECT Id, Name FROM IATA_ISO_States__r ORDER BY Name) FROM IATA_ISO_Country__c WHERE Id = :msoAccount.IATA_ISO_Country__c ORDER BY Name];
+        list<IATA_ISO_Country__c> isoList = IATAIsoCountryDAO.getIsoCountriesByIds(new Set<ID>{msoAccount.IATA_ISO_Country__c});
         
         IATA_ISO_Country__c iso = isoList[0];    
             
@@ -257,7 +257,7 @@ public without sharing class ISSP_AMS_MSO_Update_Controller {
 
         try {
 
-            IATA_ISO_Country__c selectedCountryInfo = [SELECT Name, Id, Region__c FROM IATA_ISO_Country__c WHERE Id = :countrySelected];
+            IATA_ISO_Country__c selectedCountryInfo = IATAIsoCountryDAO.getIsoCountriesByIds(new Set<ID>{countrySelected}).get(0);
 
             if (oscarCase.Id == null) {
                 // create new OSCAR
@@ -321,7 +321,7 @@ public without sharing class ISSP_AMS_MSO_Update_Controller {
 
     public PageReference terminate() {
         try {
-                IATA_ISO_Country__c selectedCountryInfo = [SELECT Name, Id, Region__c FROM IATA_ISO_Country__c WHERE Id = :countrySelected];
+                IATA_ISO_Country__c selectedCountryInfo = IATAIsoCountryDAO.getIsoCountriesByIds(new Set<ID>{countrySelected}).get(0);
                 
                 // create new OSCAR
                 oscar.RecordTypeId = TransformationHelper.RtIDsPerDeveloperNamePerObj(new list<string> {'AMS_OSCAR__c'}).get('AMS_OSCAR__c').get('VOLUNTARY_RELINQUISHMENT');

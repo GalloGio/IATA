@@ -15,16 +15,9 @@ trigger RangeNamingConventionTrigger on Code_Range__c (before insert, before upd
         newRangesPerRecordType.get(aRange.recordtypeId).add(aRange);
     }
     
-    Map<String , IATA_ISO_Country__c> countries  = new Map<String , IATA_ISO_Country__c>();
-    for(IATA_ISO_Country__c c:[select Id, Name ,ISO_Code__c from IATA_ISO_Country__c ])
-        countries.put(c.Id, c);
-    Map<String , IATA_ISO_State__c> states= new Map<String , IATA_ISO_State__c>();
-    for(IATA_ISO_State__c s:[select Id, Name ,ISO_Code__c from IATA_ISO_State__c])
-        states.put(s.Id, s);
-            
-    
-    //process Naming convention
-    
+    Map<ID , IATA_ISO_Country__c> countries  = new Map<ID , IATA_ISO_Country__c>(IATAIsoCountryDAO.getIsoCountries());
+    Map<String , IATA_ISO_State__c> states = new Map<String , IATA_ISO_State__c>(IATAIsoStateDAO.getIsoStates());           
+        
     //ITA CODE RANGE
     List<Code_Range__c > newIataCodeRange = newRangesPerRecordType.get(rangesRT.get('IATA_Code'));
     List<Code_Range__c > duplicateIataCodeRange = new List<Code_Range__c >();

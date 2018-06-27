@@ -742,7 +742,7 @@ trigger CaseBeforeTrigger on Case (before delete, before insert, before update) 
                 }
                 // Airline & IATA Country > Account Concerned
                 if (!lstAccountIds.isEmpty()) {
-                    system.debug('##ROW##');
+
                     // Get a map of related accounts - only airlines
                     set<String> setAirlineAccountRTs = new set<String> {'IATA_Airline', 'IATA_Airline_BR'};
                     Map<Id, Account> mapRelatedAirlineAccountsPerId = new Map<Id, Account>([SELECT Id, Airline_designator__c, IATACode__c, IATA_ISO_Country__r.ISO_Code__c 
@@ -751,7 +751,7 @@ trigger CaseBeforeTrigger on Case (before delete, before insert, before update) 
                     if (!mapRelatedAirlineAccountsPerId.values().isEmpty()) {
                         system.debug('##ROW##');
                         // Get all the ISO Countries & create a map, using the Case BSP Country as key
-                        List<IATA_ISO_Country__c> lstAllISOCountries = [SELECT Id, Case_BSP_Country__c, ISO_Code__c FROM IATA_ISO_Country__c];
+                        List<IATA_ISO_Country__c> lstAllISOCountries = IATAIsoCountryDAO.getIsoCountries();
                         Map<String, String> mapCountryCodePerBSPName = new Map<String, String>();
                         for (IATA_ISO_Country__c ic : lstAllISOCountries) {
                             mapCountryCodePerBSPName.put(ic.Case_BSP_Country__c, ic.ISO_Code__c);

@@ -860,12 +860,9 @@ public with sharing class SIDRAliteMassActionController {
         public list<SelectOption> getListIFAPCountries() {
             list<SelectOption> listOptions = new list<SelectOption>();
             listOptions.add(new SelectOption('', '--None--'));
-            for( IATA_ISO_Country__c isoCountry : [
-                    SELECT Name From IATA_ISO_Country__c
-                    WHERE Region__c = :this.cse.Region__c
-                    AND Name != 'All Region'
-                    ORDER BY Name]) {
-                listOptions.add(new SelectOption(isoCountry.Name, isoCountry.Name));
+            for(IATA_ISO_Country__c isoCountry : IATAIsoCountryDAO.getIsoCountriesByRegion(new Set<String>{this.cse.Region__c})){
+                if(isoCountry.Name != 'All Region')
+                    listOptions.add(new SelectOption(isoCountry.Name, isoCountry.Name));
             }
             return listOptions;
         }

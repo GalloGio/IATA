@@ -178,12 +178,10 @@ public with sharing class LiveAgentButtonFAQ2CaseController {
             system.debug('basto1p countryConcerned='+countryConcerned);
 
             if (country == null && !String.isBlank(countryConcerned)){
-                country = [SELECT Id, Name, ISO_Code__c, Region__c
-                            FROM IATA_ISO_Country__c
-                            WHERE Case_BSP_Country__c != null AND Case_BSP_Country__c != '' AND ISO_Code__c = :countryConcerned
-                            LIMIT 1][0];
+                country = IATAIsoCountryDAO.getIsoCountryByIsoCodes(new Set<String>{countryConcerned}).get(0);
+                if(country.Case_BSP_Country__c == null || country.Case_BSP_Country__c == '')
+                    country = null;
             }
-
             return country;
         }
         set{
