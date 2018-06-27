@@ -62,7 +62,7 @@ global class ANG_AnualRevalCaseCreationBatch implements Database.Batchable<sObje
 			
 			ANG_ConversionHelper.ConversionBatchItem item = new ANG_ConversionHelper.ConversionBatchItem(new ANG_ConversionHelper.HierarchyStructure(acct), 1, BC.getJobId(), true, e.getMessage());
 
-			System.debug(item);resultItems.add(item);Database.rollback(sp);throw e;
+			System.debug(item);resultItems.add(item);Database.rollback(sp);//throw e;
 
 			//Database.rollback(sp);resultItems.add(acct.IATACode__c + ' - Error:' + e.getMessage());throw e;
 		}
