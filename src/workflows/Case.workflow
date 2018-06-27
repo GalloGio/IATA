@@ -15360,7 +15360,7 @@ Change the case status to “Agent Notified (mail)” if case status was “Agen
             <value>Annual revalidation</value>
         </criteriaItems>
         <criteriaItems>
-        <field>Case.RecordTypeId</field>
+            <field>Case.RecordTypeId</field>
             <operation>notEqual</operation>
             <value>IDFS Airline Participation Process</value>
         </criteriaItems>
