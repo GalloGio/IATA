@@ -11,11 +11,6 @@ global with sharing class IDCardWebService {
         return true;
     }
     
-    public static testmethod void SessionIsValid_Test()
-    {
-        system.assertEquals(IDCardWebService.SessionIsValid(), true);
-    }
-    
     
     private static Map<String,String> idcardAppRT = null;
     
