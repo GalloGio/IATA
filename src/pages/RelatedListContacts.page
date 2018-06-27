@@ -1,0 +1,299 @@
+<apex:page showHeader="true" sidebar="false" standardController="Account" readOnly="true" tabStyle="Account"
+    lightningStylesheets="true">
+
+<apex:includeScript value="/support/console/37.0/integration.js"/>
+<apex:includeScript value="{!$Resource.jquery2_1_4}"/>
+
+<apex:includeScript value="{!URLFOR($Resource.bootstrap,'/bootstrap-3.3.4-dist/js/bootstrap.min.js')}"/>
+<apex:stylesheet value="{!URLFOR($Resource.bootstrap,'/bootstrap-3.3.4-dist/css/bootstrap.min.css')}" />
+
+<apex:includescript value="{!URLFOR($Resource.DataTables,'DataTables-1.10.15/js/jquery.dataTables.min.js')}" />
+<apex:stylesheet value="{!URLFOR($Resource.DataTables,'DataTables-1.10.15/css/jquery.dataTables.min.css')}" />
+
+<apex:stylesheet value="{!URLFOR($Resource.bootstrapselect, '/bootstrap-select-1.12.2/css/bootstrap-select.min.css')}" />
+<apex:includescript value="{!URLFOR($Resource.bootstrapselect, '/bootstrap-select-1.12.2/js/bootstrap-select.min.js')}" />
+
+<style>
+    .pbBody {overflow: visible !important;}
+    .full-width { width: 100%;}
+    .no-padding { padding: 0px};
+    .no-margin { margin: 0px};
+    #maintable {display: none}
+    .underline { text-decoration: underline;}
+    .nodecoration { text-decoration: none;}
+    .nodecoration:hover { text-decoration: none;}
+    .center { text-align: center;}
+    
+    /** styles for salesforce classic **/
+    div.classic #headerContainer h3 {
+        color: black;
+        font-size: 14.2px;
+        font-weight: 700;
+    }
+    div.classic .headerCellFilter {
+        background-color: rgb(248,248,248);
+        border: 0px solid black !important;
+        padding: 2px !important;
+    }
+    div.classic .headerCellTitle {
+        background-color: rgb(242, 243, 243);
+        font-size: 12.6px;
+    }
+    div.classic .contactImage {
+        width: 24px;
+        height: 24px;
+        background-image: url(/img/sprites/master.png);
+        background-position: 0 -502px;
+        padding-top: 2px;
+        padding-top: 2px;
+    }
+    div.classic .bootstrap-select button {
+        color: black !important;
+    }
+    div.classic .bPageTitle {
+        margin-top: 0px !important;
+        margin-bottom: 0px !important;
+    }
+    div.classic .pageTitleIcon {
+        margin-top: 30px !important;
+    }
+    div.classic .pageDescription {
+        margin-top: 0px !important;
+    }
+    
+    /** styles for lightning version **/
+    div.lightning .btn {
+        font-size: 1em;
+        padding: 5px;
+    }
+    div.lightning .headerCellFilter {
+        font-size: 1.6em;
+    }
+    div.lightning .headerCellTitle {
+        font-size: 1.6em;
+    }
+    div.lightning #maintable_filter>label {
+        font-size: 1em;
+    }
+    div.lightning #maintable_length>label {
+        font-size: 1em;
+    }
+</style>
+
+<script>
+    var fieldnames = "{!$ObjectType.Contact.FieldSets.RelatedListForAccount}".replace("[","").replace("]","").split(", ");
+    $( document ).ready(function() {
+        var contactTable = initDataTable();
+        initFilters(contactTable);
+        
+        $(".dropdown-filter").on( "change", function () {
+            //var searchString = this.value==""? "": "^" + this.value + "$";
+            var values = $(this).selectpicker('val');
+            $(values).each(function(index,element) {
+                values[index] = "^" + values[index] + "$";
+            });
+            var searchString = values==null? []: values.join("|");
+            console.log(searchString);
+            contactTable
+                .column( $(this).attr("name") + ":name")
+                .search(searchString,true,false)
+                .draw();
+        } );
+        $(".multidropdown-filter").on( "change", function () {
+            var values = $(this).selectpicker('val');
+            var searchString = values==null? []: values.join("|");
+            console.log(searchString);
+            contactTable
+                .column( $(this).attr("name") + ":name")
+                .search(searchString,true,false)
+                .draw();
+        } );
+        $("#resetButton").click( function(){
+            $(".dropdown-filter").selectpicker('deselectAll');
+            $(".multidropdown-filter").selectpicker('deselectAll');
+            $("input[type=search]").val("");
+            contactTable.search("").draw();
+        });
+    });
+    
+    function initDataTable() {
+        var columnsDef = [];
+        columnsDef.push({ name: "contact_actions", "searchable": false, "orderable": false});
+        $(fieldnames).each(function(index, fieldname) {
+            columnsDef.push({
+                name: fieldname,
+                "searchable": true,
+                "orderable": true
+            });
+        });
+        
+        var contactTable = $('#maintable').DataTable({
+            "dom": 'ifrt<"bottom"lp><"clear">',
+            "lengthMenu": [[10, 25, 50, 100, 200, -1], [10, 25, 50, 100, 200, "All"]],
+            "pageLength": 100,
+            "columns": columnsDef,
+            "order": [[ 1, "asc" ]],
+            "bSortCellsTop": true
+        });
+        $('#maintable').show();
+        return contactTable;
+    }
+    
+    function initFilters(table) {
+        $(".dropdown-filter").each( function() {
+            var thisDropDown = $(this);
+            // Find all different values in a column to fill the picklist selector
+            table
+                .column(thisDropDown.attr("name") + ":name")
+                .cache("search")
+                .sort()
+                .unique()
+                .each( function(text) {
+                    if (text.trim()!="") {
+                        thisDropDown.append("<option value=\"" + text + "\">" + text + "</option>");
+                    }
+                });
+        });
+        $(".multidropdown-filter").each( function() {
+            var thisDropDown = $(this);
+            // Find all different values in a column to fill the picklist selector
+            var picklistValues = [];
+            table
+                .column(thisDropDown.attr("name") + ":name")
+                .cache("search")
+                .sort()
+                .unique()
+                .each( function(text) {
+                    $(text.split(";")).each( function (index,element) {
+                        if (element!="" && !picklistValues.includes(element)) {
+                            picklistValues.push(element);
+                        }
+                    });
+                });
+            $(picklistValues).sort().each( function(index,value) {
+                thisDropDown.append("<option value=\"" + value + "\">" + value + "</option>");
+            });
+        });
+    }
+    
+    function navigate(url, title) {
+        if (sforce.console.isInConsole()){
+            sforce.console.getEnclosingPrimaryTabId(function (result) {
+                sforce.console.openSubtab(result.id , url, true, title, null);
+            });
+        } else {
+            window.top.location.href = url;
+        }
+        return false;
+    }
+</script>
+
+    <apex:variable var="isLigthning" value="{!$User.UIThemeDisplayed=='Theme4d'}"/>
+    <apex:variable var="fields" value="{!$ObjectType.Contact.FieldSets.RelatedListForAccount}"/>
+
+    <div class="{!IF(isLigthning,'lightning','classic')}">
+        
+        <apex:outputLink value="{!URLFOR($Action.Account.View,Account.Id)}" rendered="{!NOT(isLigthning)}">Go back to parent Account</apex:outputLink>
+        <apex:sectionHeader title="Contact List for Account" subtitle="{!Account.Name}" rendered="{!NOT(isLigthning)}"/>
+  
+        <apex:pageBlock>
+            <!-- Header for Salesforce Classic style -->
+            <apex:outputPanel styleclass="container full-width" rendered="{!NOT(isLigthning)}">
+                <div class="row">
+                    <div id="headerContainer" class="col-sm-2">
+                        <img src="/img/s.gif" alt="" class="contactImage" title=""/>
+                        <h3>{!$ObjectType.Contact.labelPlural}</h3>
+                    </div>
+                    <div class="col-sm-8 center">
+                        <input type="button" onclick="return navigate('{!URLFOR($Action.Contact.NewContact,null,[con4_lkid=Account.Id],true)}', 'New Contact');" class="btn" value="New Contact"/>
+                        <input type="button" onclick="return navigate('{!URLFOR($Action.Contact.Merge,Id)}', 'Merge Contacts');" class="btn" value="Merge Contacts"/>
+                        <input type="button" onclick="return navigate('{!URLFOR($Page.Assign_Financial_Contact,null,[id=Account.Id])}', 'Assign Financial Assessment Contact');" class="btn" value="Assign Financial Assessment Contact"/>
+                    </div>
+                </div>
+            </apex:outputPanel>
+            
+            <!-- Header for Lightning style -->
+            <apex:outputPanel styleclass="container full-width no-margin no-padding" rendered="{!isLigthning}">
+                <div class="row">
+                    <div id="headerContainer" class="col-sm-2">
+                        <h3>{!Account.Name}</h3>
+                        <apex:outputLink value="{!URLFOR($Action.Account.View,Account.Id)}">Go back to parent Account</apex:outputLink>
+                    </div>
+                    <div class="col-sm-8 center">
+                        <apex:outputLink value="{!URLFOR($Action.Contact.NewContact,null,[con4_lkid=Account.Id],true)}" styleclass="nodecoration">
+                            <input type="button" class="btn" value="New Contact"/>
+                        </apex:outputLink>
+                        <apex:outputLink value="{!URLFOR($Action.Contact.Merge,Id)}" styleclass="nodecoration">
+                            <input type="button" class="btn" value="Merge Contacts"/>
+                        </apex:outputLink>
+                        <apex:outputLink value="{!URLFOR($Page.Assign_Financial_Contact,null,[id=Account.Id])}" styleclass="nodecoration">
+                            <input type="button" class="btn" value="Assign Financial Assessment Contact"/>
+                        </apex:outputLink>
+                    </div>
+                </div>
+            </apex:outputPanel>
+
+            <input id="resetButton" class="btn" type="button" value="Reset Filters"></input>
+            <table id="maintable" class="table list compact">
+                <!-- 2 rows header -->
+                <thead>
+                    <!-- 1st row header for column names -->
+                    <tr class="headerRowTitle">
+                        <th class="headerCellTitle">Action</th>
+                        <apex:repeat value="{!fields}" var="f">
+                            <th class="headerCellTitle">{!$ObjectType.Contact.fields[f].label}</th>
+                        </apex:repeat>
+                    </tr>
+                    <!-- 2nd row header for filters -->
+                    <tr class="headerRowFilter">
+                        <th class="headerCellFilter"></th>
+                        <apex:repeat value="{!fields}" var="f">
+                            <th class="headerCellFilter">
+                                <!-- Filter when field type is PICKLIST -->
+                                <apex:outputPanel rendered="{!$ObjectType.Contact.fields[f].type=='picklist'}">
+                                    <select class="dropdown-filter full-width selectpicker" title="Select" multiple="multiple" name="{!f}"></select>
+                                </apex:outputPanel>
+                                <!-- Filter when field type is MULTIPICKLIST -->
+                                <apex:outputPanel rendered="{!$ObjectType.Contact.fields[f].type=='multipicklist'}">
+                                    <select class="multidropdown-filter full-width selectpicker" title="Select" multiple="multiple" name="{!f}"></select>
+                                </apex:outputPanel>
+                            </th>
+                        </apex:repeat>
+                    </tr>
+                </thead>
+                <!-- rows for data -->
+                <tbody>
+                    <apex:repeat value="{!Account.Contacts}" var="contact">
+                        <tr>
+                            <td>
+                                <apex:outputLink value="{!URLFOR($Action.Contact.Edit,contact.Id)}" styleclass="underline">Edit</apex:outputLink>
+                                &nbsp;|&nbsp;
+                                <apex:outputLink onclick="return confirm('Are you sure?');" value="{!URLFOR($Action.Contact.Delete,contact.Id)}" styleclass="underline">Del</apex:outputLink>
+                            </td>
+                            <apex:repeat value="{!fields}" var="f">
+                                <!-- Generic column -->
+                                <apex:outputPanel layout="block" rendered="{!f!='Name' && f!='Available_Services__c'}">
+                                    <td>
+                                        <apex:outputField value="{!contact[f]}"/>
+                                    </td>
+                                </apex:outputPanel>
+                                <!-- Column version for field Name -->
+                                <apex:outputPanel layout="block" rendered="{!f=='Name'}">
+                                    <td data-search="{!contact[f]}" data-sort="{!contact[f]}">
+                                        <apex:outputLink value="{!URLFOR($Action.Contact.View,contact.Id)}" styleclass="underline">{!contact[f]}</apex:outputLink>
+                                    </td>
+                                </apex:outputPanel>
+                                <!-- Column version for field Available_Services__c -->
+                                <apex:outputPanel layout="block" rendered="{!f=='Available_Services__c'}">
+                                    <td data-search="{!contact[f]}" data-sort="{!contact[f]}">
+                                        <apex:outputField value="{!contact.Available_Services_Images__c}" rendered="{!contact.Available_Services_Images__c!=''}"/>
+                                    </td>
+                                </apex:outputPanel>
+                            </apex:repeat>
+                        </tr>
+                    </apex:repeat>
+                </tbody>
+            </table>
+        </apex:pageBlock>
+    </div>
+</apex:page>
