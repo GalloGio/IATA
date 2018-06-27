@@ -362,9 +362,7 @@ public class ams2gdp_TestDataGenerator
         }
         catch (Exception e) {}
 
-        return [select Id, Name, ISO_Code__c, ISO_Code_Numeric__c, Region__c
-                     , (select Id, Name, ISO_Code__c from IATA_ISO_States__r)
-                from IATA_ISO_Country__c];
+        return IATAIsoCountryDAO.getIsoCountries();
     }
 
 

@@ -44,9 +44,7 @@ public class AMS_AccreditationOnlineTriggerHelper {
             }        
         }
 
-        List<IATA_ISO_Country__c> lstCountries = [SELECT Id, Name, ISO_Code__c, AMS_Default_State__c
-                                                  FROM IATA_ISO_Country__c
-                                                  WHERE Id = :csw.isoCountriesIds];
+        List<IATA_ISO_Country__c> lstCountries = IATAIsoCountryDAO.getIsoCountriesByIds(csw.isoCountriesIds);
 
         for(IATA_ISO_Country__c country : lstCountries) {
             if(!String.isBlank(country.AMS_Default_State__c)) {

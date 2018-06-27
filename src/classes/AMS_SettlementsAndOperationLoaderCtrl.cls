@@ -68,7 +68,7 @@ public class AMS_SettlementsAndOperationLoaderCtrl{
         csvAsString = null;
         
         //set the list of Country
-        for(IATA_ISO_Country__c c:[select Name,AMS_Settlement_System__c, Id,ISO_Code__c from IATA_ISO_Country__c ])
+        for(IATA_ISO_Country__c c: IATAIsoCountryDAO.getIsoCountries())
             countryMap.put(c.ISO_Code__c.trim() ,c);
         //load record types for Settlements
         settlementRT  =  TransformationHelper.RtIDsPerDeveloperNamePerObj(new list<string> {'AMS_Settlement_System__c'}).get('AMS_Settlement_System__c');
@@ -106,7 +106,7 @@ public class AMS_SettlementsAndOperationLoaderCtrl{
             
             //set the list of Country
             countryMap.clear();
-            for(IATA_ISO_Country__c c:[select Name,  AMS_Settlement_System__c, AMS_Settlement_System_CASS__c, Id,  ISO_Code__c from IATA_ISO_Country__c ])
+            for(IATA_ISO_Country__c c: IATAIsoCountryDAO.getIsoCountries())
                 countryMap.put(c.ISO_Code__c.trim() ,c);
            
            if(!selected){
@@ -255,7 +255,7 @@ public class AMS_SettlementsAndOperationLoaderCtrl{
     private PageReference  importOperationsCSV(){
         //set the list of Country
         countryMap.clear();
-        for(IATA_ISO_Country__c c:[select Name,  AMS_Settlement_System__c, AMS_Settlement_System_CASS__c, Id,  ISO_Code__c from IATA_ISO_Country__c ])
+        for(IATA_ISO_Country__c c: IATAIsoCountryDAO.getIsoCountries())
             countryMap.put(c.ISO_Code__c.trim() ,c);
          operations = new Map<String,AMS_Operation__c> ();
          try{

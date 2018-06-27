@@ -45,7 +45,9 @@ public class ISO_Country_State_Helper {
 			mapName_Code.put(s, null);
 	
 		//*** get country codes
-		for (IATA_ISO_Country__c country : [select ISO_Code__c, Name from IATA_ISO_Country__c where Name in :listCountryName and ISO_Code__c != null])
+		Set<String> countryList = new Set<String>();
+		countryList.addAll(listCountryName);
+		for (IATA_ISO_Country__c country : IATAIsoCountryDAO.getIsoCountryByCountriesName(countryList))
 			mapName_Code.put(country.Name, country.ISO_Code__c);
 		
 		return mapName_Code;
@@ -63,9 +65,12 @@ public class ISO_Country_State_Helper {
 			mapName_Code.put(s, null);
 	
 		//*** get state codes
-		for (IATA_ISO_State__c state : [select ISO_Code__c, Name from IATA_ISO_State__c where Name in :mapStateName_CountryCode.keySet() and ISO_Code__c != null and IEC_Valid_SAP__c = true])
-			if (state.ISO_Code__c.startsWith('' + mapStateName_CountryCode.get(state.Name) + '-'))
-				mapName_Code.put(state.Name, state.ISO_Code__c);
+		for (IATA_ISO_State__c state : IATAIsoStateDAO.getIsoStateByStateName(mapStateName_CountryCode.keySet())){
+			if (state.ISO_Code__c != null && state.IEC_Valid_SAP__c == true && 
+				state.ISO_Code__c.startsWith('' + mapStateName_CountryCode.get(state.Name) + '-')){
+					mapName_Code.put(state.Name, state.ISO_Code__c);
+			}
+		}
 		
 		return mapName_Code;
 	} //*** end of "getCountryCodeFromName"

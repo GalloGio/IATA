@@ -70,7 +70,7 @@ public  class IDCard_CheckoutController extends IDCardAbstractController {
     public Boolean IsExpediteDeliveryAddedtoIDCardPrice {
         get {
             
-                IATA_ISO_Country__c contactCountry =  [Select i.Name, i.Id, i.ISO_Code__c, i.IATA_Regional_Office__c,i.AIMS_Area_Name__c From IATA_ISO_Country__c i where i.AIMS_Area_Name__c = :theAccount.BillingCountry];
+                IATA_ISO_Country__c contactCountry = IATAIsoCountryDAO.getIsoCountriesByAIMSAreaName(theAccount.BillingCountry)[0];
                 Price_Table__c[] listPriceTables = [Select p.Expedite_Delivery_added_to_IDCard_Price__c From Price_Table__c p where p.Type_Class_of_Agent__c = :accountType and p.ISO_Country__r.Id = :contactCountry.Id];
                 if (listPriceTables == null || listPriceTables.size() == 0) {
                     throw new IDCardApplicationException(String.Format(Label.IDCard_No_Price_Table_Found, new String[] {'<i>' + contactCountry.ISO_Code__c + '</i>', '<i>' + accountType + '</i>'}));
@@ -160,7 +160,7 @@ public  class IDCard_CheckoutController extends IDCardAbstractController {
              ////Checks if User can pay by Cheque
              // Map the account agent type to the Price Table agent type
              accountType = IDCardUtil.GetAgentTypeFromAccountType(theAccount.type);
-             IATA_ISO_Country__c contactCountry =  [Select i.Name, i.Id, i.ISO_Code__c, i.IATA_Regional_Office__c,i.AIMS_Area_Name__c From IATA_ISO_Country__c i where i.AIMS_Area_Name__c = :theAccount.BillingCountry];
+             IATA_ISO_Country__c contactCountry =  IATAIsoCountryDAO.getIsoCountriesByAIMSAreaName(theAccount.BillingCountry)[0];
              Price_Table__c[] listPriceTables = [Select p.Can_Pay_by_Cheque__c, p.CurrencyIsoCode, p.Profit_Center__c From Price_Table__c p where p.Type_Class_of_Agent__c = :accountType and p.ISO_Country__r.Id = :contactCountry.Id];
              CanPayByCheque = listPriceTables[0].Can_Pay_by_Cheque__c;
              if (listPriceTables[0].Profit_Center__c != null && listPriceTables[0].Profit_Center__c != '')

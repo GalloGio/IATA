@@ -79,7 +79,7 @@ public with sharing class ANG_ConversionToolController {
     public pageReference runAnalysis(){
 		
 		String selectedCountryId = iataCountryName.IATA_ISO_Country__c;
-		IATA_ISO_Country__c iataCountry = [select Name from IATA_ISO_Country__c where Id = :selectedCountryId limit 1];
+		IATA_ISO_Country__c iataCountry = IATAIsoCountryDAO.getIsoCountriesByIds(new Set<String>{selectedCountryId})[0];
 		selectedCountryName = iataCountry.Name;
 		system.debug('----------------------iataCountryName.IATA_ISO_Country__c = '+iataCountryName.IATA_ISO_Country__c );
 		system.debug('----------------------selectedCountryName = '+selectedCountryName );

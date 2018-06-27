@@ -951,15 +951,15 @@ public class IECAddress_Svc
 		IATA_ISO_Country__c isoCountry = null;
 		IATA_ISO_State__c isoState = null;
 		if (!String.isBlank(stateCode) && !String.isBlank(countryCode))
-			for (IATA_ISO_State__c state : [select Id, Name, ISO_Code__c, IEC_Valid_SAP__c, IATA_ISO_Country__r.Id, IATA_ISO_Country__r.Name, IATA_ISO_Country__r.ISO_Code__c
-			                                from IATA_ISO_State__c
-			                                where ISO_Code__c = :stateCode AND IATA_ISO_Country__r.ISO_Code__c = :countryCode
-			                                limit 1])
-				isoState = state;
+			for (IATA_ISO_State__c state : IATAIsoStateDAO.getIsoStateByIsoCodes(new Set<String>{stateCode})){
+				if(state.IATA_ISO_Country__r.ISO_Code__c == countryCode){
+					isoState = state;
+				}
+			}
 		if (isoState != null && isoState.Id != null)
 			isoCountry = isoState.IATA_ISO_Country__r;
 		else if (!String.isBlank(countryCode))
-			for (IATA_ISO_Country__c country : [select Id, Name, ISO_Code__c from IATA_ISO_Country__c where ISO_Code__c = :countryCode limit 1])
+			for (IATA_ISO_Country__c country : IATAIsoCountryDAO.getIsoCountryByIsoCodes(new Set<String>{countryCode}))
 				isoCountry = country;
 
 		//*** return address compatible for call out to SAP in case of new address

@@ -38,8 +38,7 @@ public with sharing class IFAP_BusinessRules {
         // try to find the country base on the Billing country
         try {
 
-            IATA_ISO_Country__c[] associatedCountry = [Select i.Name, i.Id From IATA_ISO_Country__c i where Name = : accountMap.get(theCase.id).BillingCountry];
-            //IATA_ISO_Country__c[] associatedCountry = [Select i.Name, i.Id From IATA_ISO_Country__c i where Name =: accountMap.get(theCase.id).BillingCountry];
+            IATA_ISO_Country__c[] associatedCountry = IATAIsoCountryDAO.getIsoCountryByCountriesName(new Set<String>{accountMap.get(theCase.id).BillingCountry});
 
             // the country is valid if the country was found
             system.debug('\nassociatedCountry.size():' + associatedCountry.size());
@@ -125,7 +124,7 @@ public with sharing class IFAP_BusinessRules {
         IATA_ISO_Country__c country ;
         try {
 
-            country = [Select i.Name, i.Region__c, i.AIMS_Area_Name__c, i.AIMS_Area_ID__c, ISO_Code__c From IATA_ISO_Country__c i where Name = : accountMap.get(theCase.id).BillingCountry limit 1];
+            country = IATAIsoCountryDAO.getIsoCountryByCountriesName(new Set<String>{accountMap.get(theCase.id).BillingCountry})[0];
 
         } catch (Exception e) {
             theCase.IFAP_Area__c.addError('The account\'s country is not a valid IATA_ISO_Country: ' + accountMap.get(theCase.id).BillingCountry);
@@ -400,7 +399,7 @@ public with sharing class IFAP_BusinessRules {
             return true;
 
         /*// retreive template's ISO country*/
-        IATA_ISO_Country__c[] templateCountry = [Select i.Name, i.ISO_Code__c From IATA_ISO_Country__c i where i.Id = : emailTemplate.IATA_ISO_Country__r.Id];
+        IATA_ISO_Country__c[] templateCountry = IATAIsoCountryDAO.getIsoCountriesByIds(new Set<ID>{emailTemplate.IATA_ISO_Country__r.Id});
 
         if (templateCountry.size() == 0)
             return false;

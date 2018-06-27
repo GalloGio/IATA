@@ -21,7 +21,7 @@ public without sharing class AMS_Utils {
         get{
             if(iataIsoStates == null){
                 iataIsoStates = new Map<String, IATA_ISO_State__c>();
-                for(IATA_ISO_State__c state : [SELECT Id, Name, ISO_Code__c FROM IATA_ISO_State__c]){
+                for(IATA_ISO_State__c state : IATAIsoStateDAO.getIsoStates()){
                     iataIsoStates.put(state.Name.toLowerCase(), state);
                 }
                 System.debug(loggingLevel.Debug, '____ [cls AMS_Utils - iataIsoStates] iataIsoStates - ' + iataIsoStates);
@@ -36,7 +36,7 @@ public without sharing class AMS_Utils {
         get{
             if(iataIsoCountries == null){
                 iataIsoCountries = new Map<String, IATA_ISO_Country__c>();
-                for(IATA_ISO_Country__c country : [SELECT Id, Name FROM IATA_ISO_Country__c]){
+                for(IATA_ISO_Country__c country : IATAIsoCountryDAO.getIsoCountries()){
                     iataIsoCountries.put(country.Name.toLowerCase(), country);
                 }
                 System.debug(loggingLevel.Debug, '____ [cls AMS_Utils - iataIsoCountries] iataIsoCountries - ' + iataIsoCountries);
