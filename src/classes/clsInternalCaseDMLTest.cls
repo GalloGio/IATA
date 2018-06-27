@@ -4,8 +4,8 @@ private class clsInternalCaseDMLTest {
     @isTest static void test_method_one() {
         
         // Get Record Type Cases - SIS Help Desk ID
-        ID CasesRegionRecordTypeID = clsCaseRecordTypeIDSingleton.getInstance().RecordTypes.get('Cases - Europe');
-        ID IDFSISSRecordTypeID = clsCaseRecordTypeIDSingleton.getInstance().RecordTypes.get('Internal Cases (IDFS ISS)');
+        ID CasesRegionRecordTypeID = RecordTypeSingleton.getInstance().getRecordTypeId('Case', 'CasesEurope');
+        ID IDFSISSRecordTypeID = RecordTypeSingleton.getInstance().getRecordTypeId('Case', 'InternalCasesEuropeSCE');
         test.startTest();
         Account account1 = new Account();
         account1.Name = 'Test account';

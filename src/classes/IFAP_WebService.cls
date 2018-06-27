@@ -136,7 +136,6 @@ global class IFAP_WebService {
 
     WebService static String generateURLForNewCaseFromSAAM(String saamCaseId) {
 
-        //ID IFAPcaseRecordTypeID = clsCaseRecordTypeIDSingleton.getInstance().RecordTypes.get('IATA Financial Review');
         ID IFAPcaseRecordTypeID = RecordTypeSingleton.getInstance().getRecordTypeId('Case', 'IATA_Financial_Review');
 
         String url = '/500/e?retURL=/' + saamCaseId + '&RecordType=' + IFAPcaseRecordTypeID;

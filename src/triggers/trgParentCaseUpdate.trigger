@@ -9,8 +9,8 @@ trigger trgParentCaseUpdate on Case (after insert, before update){
     
     System.Debug('futureLimit : ----- '+ futureLimit);         
     /*get the IFAP case recordtype*/
-    ID IFAPcaseRecordTypeID = clsCaseRecordTypeIDSingleton.getInstance().RecordTypes.get('IATA Financial Review');
-    ID FSMcaseRecordTypeID = clsCaseRecordTypeIDSingleton.getInstance().RecordTypes.get('IATA Financial Security Monitoring');
+    ID IFAPcaseRecordTypeID = RecordTypeSingleton.getInstance().getRecordTypeId('Case', 'IATA_Financial_Review');
+    ID FSMcaseRecordTypeID = RecordTypeSingleton.getInstance().getRecordTypeId('Case', 'IATA_Financial_Security_Monitoring');
     Boolean isIFAPCase = false;
     
     

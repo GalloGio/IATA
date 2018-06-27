@@ -3,7 +3,7 @@ trigger trgIDCard_Contact_BeforeUpdate on Contact (before update, before insert)
     boolean CardToSync = false;
 
     // Get RecordTypeID
-    ID contactTypeID = clsContactTypeIDSingleton.getInstance().RecordTypes.get('Standard');
+    ID contactTypeID = RecordTypeSingleton.getInstance().getRecordTypeId('Contact', 'Standard_Contact');
 
     if (trigger.isInsert) {
         // force to sync ver num and ver num 2

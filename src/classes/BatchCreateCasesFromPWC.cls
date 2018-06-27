@@ -1,6 +1,6 @@
 global class BatchCreateCasesFromPWC implements Database.Batchable<WSCreateCasesFromPWC.SecurityCase>, Database.Stateful {
 
-	private final Id CASE_RECORDTYPE_FSM = clsCaseRecordTypeIDSingleton.getInstance().RecordTypes.get('IATA Financial Security Monitoring');
+	private final Id CASE_RECORDTYPE_FSM = RecordTypeSingleton.getInstance().getRecordTypeId('Case', 'IATA_Financial_Security_Monitoring');
 	private final String ERROR_REQUEST_FILE = 'Request file has a problem, cannot be processed';
 	
 	private String jsonString;

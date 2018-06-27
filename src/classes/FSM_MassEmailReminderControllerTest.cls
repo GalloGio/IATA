@@ -1,6 +1,6 @@
 @isTest
 private class FSM_MassEmailReminderControllerTest {
-	private static final string CASE_RECORDTYPE_FSM = clsCaseRecordTypeIDSingleton.getInstance().RecordTypes.get('IATA Financial Security Monitoring');
+	private static final string CASE_RECORDTYPE_FSM = RecordTypeSingleton.getInstance().getRecordTypeId('Case', 'IATA_Financial_Security_Monitoring');
 	//Create County codes
 	private static list<IATA_ISO_Country__c> CreateCountryCodes(){
 		list<IATA_ISO_Country__c> lsISO = new list<IATA_ISO_Country__c>();

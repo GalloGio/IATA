@@ -93,7 +93,7 @@ global class AMS_OSCAR_Webservice {
 
         try {
 
-            ID IFAPcaseRecordTypeID = clsCaseRecordTypeIDSingleton.getInstance().RecordTypes.get('IATA Financial Review');
+            ID IFAPcaseRecordTypeID = RecordTypeSingleton.getInstance().getRecordTypeId('Case', 'IATA_Financial_Review');
 
             List<AMS_OSCAR__c> oscar = [select Name, Account__c, Account__r.BillingCountry, Account__r.Type, Account__r.Name from AMS_OSCAR__c where Id = : oscarId];
             if (oscar != null && oscar.size() > 0) {
@@ -175,7 +175,7 @@ global class AMS_OSCAR_Webservice {
 
         try {
 
-            ID InternalCaseRecordTypeID = clsCaseRecordTypeIDSingleton.getInstance().RecordTypes.get('Internal Cases (IDFS ISS)');
+            ID InternalCaseRecordTypeID = RecordTypeSingleton.getInstance().getRecordTypeId('Case', 'InternalCasesEuropeSCE');
 
             List<Case> cases = [select Id, OSCAR__r.Account__r.IATA_ISO_Country__r.Name, OSCAR__r.AMS_Online_Accreditation__r.Account_Name__c, OSCAR__r.Account__r.Name from Case where OSCAR__c = : oscar.Id AND ( ParentId = null or Parent.RecordType.Name != 'OSCAR Communication' ) limit 1];
 

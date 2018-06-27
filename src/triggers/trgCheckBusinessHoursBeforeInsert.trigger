@@ -11,7 +11,7 @@ trigger trgCheckBusinessHoursBeforeInsert on Case(before insert, before update)
 
 
     boolean hasOneSISCase = false;
-    ID sisHelpDeskCaseRecordTypeID = clsCaseRecordTypeIDSingleton.getInstance().RecordTypes.get(Label.Cases_SIS_Help_Desk);
+    ID sisHelpDeskCaseRecordTypeID = RecordTypeSingleton.getInstance().getRecordTypeId('Case', 'Cases_SIS_Help_Desk');
 
     for (Case newCaseObj: trigger.new)
     {

@@ -298,9 +298,9 @@ public with sharing class IDCard_CheckoutConfirmation extends IDCardAbstractCont
         idCardApplicationCaseNumber = iDCardApplication.Case_Number__c;
         if (idCardApplicationCaseNumber == null || idCardApplicationCaseNumber == '' || idCardApplicationCaseNumber == 'Loading...') {
 
-            Id IDCardcaseRecordTypeID = clsCaseRecordTypeIDSingleton.getInstance().RecordTypes.get('ID Card Application');
+            Id IDCardcaseRecordTypeID = RecordTypeSingleton.getInstance().getRecordTypeId('Case', 'ID_Card_Application');
             if (isMassApplicationPurchase) {
-                IDCardcaseRecordTypeID = clsCaseRecordTypeIDSingleton.getInstance().RecordTypes.get('ID Card Mass Application');
+                IDCardcaseRecordTypeID = RecordTypeSingleton.getInstance().getRecordTypeId('Case', 'ID_Card_Mass_Application');
             }
             system.debug('[checkoutConfirmation] lookfor case: SELECT CaseNumber FROM Case c WHERE c.Related_ID_Card_Application__r.Id =' + iDCardApplication.Id + ' and c.RecordTypeId =' + IDCardcaseRecordTypeID + ' limit 1');
 

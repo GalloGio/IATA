@@ -1,8 +1,8 @@
 trigger UserInfoUpdate on Case (before insert, before update) 
 {   
     //getting record types
-    ID SIDRAcaseRecordTypeID = clsCaseRecordTypeIDSingleton.getInstance().RecordTypes.get('SIDRA');
-    ID SIDRABRcaseRecordTypeID = clsCaseRecordTypeIDSingleton.getInstance().RecordTypes.get('SIDRA BR');
+    ID SIDRAcaseRecordTypeID = RecordTypeSingleton.getInstance().getRecordTypeId('Case', 'SIDRA');
+    ID SIDRABRcaseRecordTypeID = RecordTypeSingleton.getInstance().getRecordTypeId('Case', 'SIDRA_BR');
     
     List<User> currentUser;   
     Boolean isCurrentUserInit = false;            

@@ -404,7 +404,7 @@ public class AMS_OSCAR_ProcessViewerController {
 
         if(isIdFromOscar){
 
-            ID oSCARCaseRecordTypeID = clsCaseRecordTypeIDSingleton.getInstance().RecordTypes.get('OSCAR Communication');
+            ID oSCARCaseRecordTypeID = RecordTypeSingleton.getInstance().getRecordTypeId('Case', 'OSCAR_Communication');
 
             cases =  [SELECT Id, OSCAR__c FROM Case WHERE OSCAR__c =: objectId AND RecordTypeID =: oSCARCaseRecordTypeID AND ParentId = null LIMIT 1 ];
 

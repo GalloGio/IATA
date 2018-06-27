@@ -1,6 +1,6 @@
 trigger GlobalContactTrigger on Contact (after delete, after insert, after undelete, after update, before delete, before insert, before update) {   
 
-    ID standardContactRecordTypeID = clsContactTypeIDSingleton.getInstance().RecordTypes.get('Standard');
+    ID standardContactRecordTypeID = RecordTypeSingleton.getInstance().getRecordTypeId('Contact', 'Standard_Contact');
 
     boolean Contacts = true;
     boolean AMP_ContactTrigger = true;

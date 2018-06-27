@@ -1,8 +1,8 @@
 @isTest
 private class trg_Case_FSM_Handle_NonCompliance_Test {
 
-    private static final string CASE_RECORDTYPE_FSM = clsCaseRecordTypeIDSingleton.getInstance().RecordTypes.get('IATA Financial Security Monitoring');
-    private static final string NCRecordTypeID = clsCaseRecordTypeIDSingleton.getInstance().RecordTypes.get('SAAM');
+    private static final string CASE_RECORDTYPE_FSM = RecordTypeSingleton.getInstance().getRecordTypeId('Case', 'IATA_Financial_Security_Monitoring');
+    private static final string NCRecordTypeID = RecordTypeSingleton.getInstance().getRecordTypeId('Case', 'ProcessEuropeSCE');//SAAM
     public static final String PAX = 'Travel Agent';
 	public static final String CARGO = 'Cargo Agent';
 	

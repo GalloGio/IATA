@@ -481,7 +481,7 @@ public with sharing class clsMassCaseCreationController {
     String yearend = Apexpages.currentPage().getParameters().get('yearend');  //phase 1 release 2
     String targetFinancialYear = Apexpages.currentPage().getParameters().get('targetFinancialYear');  // phase 4
 
-    ID IFAPcaseRecordTypeID = clsCaseRecordTypeIDSingleton.getInstance().RecordTypes.get('IATA Financial Review');
+    ID IFAPcaseRecordTypeID = RecordTypeSingleton.getInstance().getRecordTypeId('Case', 'IATA_Financial_Review');
 
     // search for agents that have closed cases for the same financial year
     String soql = 'select c.Contact.Account.Id, c.Contact.Account.Name from Case c where c.RecordTypeId=\'' + IFAPcaseRecordTypeID + '\' and c.Status = \'Closed\' and c.IFAP_Financial_Year__c = \'' + targetFinancialYear + '\' and c.Contact.Account.name != null and c.Contact.Account.IATACode__c != null and c.Contact.Financial_Assessment_Contact__c = true';

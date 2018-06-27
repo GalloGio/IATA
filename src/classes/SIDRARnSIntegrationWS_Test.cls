@@ -205,7 +205,7 @@ private class SIDRARnSIntegrationWS_Test {
 
         Case aCase = new Case();
 
-        acase.RecordTypeId = clsCaseRecordTypeIDSingleton.getInstance().RecordTypes.get('SIDRA');
+        acase.RecordTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('Case', 'SIDRA');
         acase.Subject = 'Test Case Subject';
         insert aCase;
 
@@ -220,7 +220,7 @@ private class SIDRARnSIntegrationWS_Test {
     static void UpdateCaseNullShortPayment(){
         Test.startTest();
         Case aCase = new Case();
-        acase.RecordTypeId = clsCaseRecordTypeIDSingleton.getInstance().RecordTypes.get('SIDRA');
+        acase.RecordTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('Case', 'SIDRA');
         acase.Subject = 'Test Case Subject';
         insert aCase;
 
@@ -235,7 +235,7 @@ private class SIDRARnSIntegrationWS_Test {
     static void UpdateCaseNullBillingAmount(){
         Test.startTest();
         Case aCase = new Case();
-        acase.RecordTypeId = clsCaseRecordTypeIDSingleton.getInstance().RecordTypes.get('SIDRA');
+        acase.RecordTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('Case', 'SIDRA');
         acase.Subject = 'Test Case Subject';
         insert aCase;
 
@@ -250,7 +250,7 @@ private class SIDRARnSIntegrationWS_Test {
     static void UpdateCaseNullCollectedAmount(){
         Test.startTest();
         Case aCase = new Case();
-        acase.RecordTypeId = clsCaseRecordTypeIDSingleton.getInstance().RecordTypes.get('SIDRA');
+        acase.RecordTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('Case', 'SIDRA');
         acase.Subject = 'Test Case Subject';
         insert aCase;
 
@@ -265,7 +265,7 @@ private class SIDRARnSIntegrationWS_Test {
     static void UpdateCaseNullOutstandingAmount(){
         Test.startTest();
         Case aCase = new Case();
-        acase.RecordTypeId = clsCaseRecordTypeIDSingleton.getInstance().RecordTypes.get('SIDRA');
+        acase.RecordTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('Case', 'SIDRA');
         acase.Subject = 'Test Case Subject';
         insert aCase;
 
@@ -280,7 +280,7 @@ private class SIDRARnSIntegrationWS_Test {
     static void UpdateCaseNullIataCharges(){
         Test.startTest();
         Case aCase = new Case();
-        acase.RecordTypeId = clsCaseRecordTypeIDSingleton.getInstance().RecordTypes.get('SIDRA');
+        acase.RecordTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('Case', 'SIDRA');
         acase.Subject = 'Test Case Subject';
         insert aCase;
 
@@ -300,7 +300,7 @@ private class SIDRARnSIntegrationWS_Test {
     static void UpdateCaseInvalidGDIPremium(){
         Test.startTest();
         Case aCase = new Case();
-        acase.RecordTypeId = clsCaseRecordTypeIDSingleton.getInstance().RecordTypes.get('SIDRA');
+        acase.RecordTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('Case', 'SIDRA');
         acase.Subject = 'Test Case Subject';
         insert aCase;
 
@@ -315,7 +315,7 @@ private class SIDRARnSIntegrationWS_Test {
     static void UpdateCaseInvalidAgencyFees(){
         Test.startTest();
         Case aCase = new Case();
-        acase.RecordTypeId = clsCaseRecordTypeIDSingleton.getInstance().RecordTypes.get('SIDRA');
+        acase.RecordTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('Case', 'SIDRA');
         acase.Subject = 'Test Case Subject';
         insert aCase;
 
@@ -330,7 +330,7 @@ private class SIDRARnSIntegrationWS_Test {
     static void UpdateCaseInvalidLateDatePayment(){
         Test.startTest();
         Case aCase = new Case();
-        acase.RecordTypeId = clsCaseRecordTypeIDSingleton.getInstance().RecordTypes.get('SIDRA');
+        acase.RecordTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('Case', 'SIDRA');
         acase.Subject = 'Test Case Subject';
         insert aCase;
 
@@ -345,7 +345,7 @@ private class SIDRARnSIntegrationWS_Test {
     static void DailyUpdateValidCaseTest(){
         Test.startTest();
         Case aCase = new Case();
-        acase.RecordTypeId = clsCaseRecordTypeIDSingleton.getInstance().RecordTypes.get('SIDRA');
+        acase.RecordTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('Case', 'SIDRA');
         acase.Subject = 'Test Case Subject';
         insert aCase;
 
@@ -359,7 +359,7 @@ private class SIDRARnSIntegrationWS_Test {
     static void DailyUpdateNullOutstandingAmountTest(){
         Test.startTest();
         Case aCase = new Case();
-        acase.RecordTypeId = clsCaseRecordTypeIDSingleton.getInstance().RecordTypes.get('SIDRA');
+        acase.RecordTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('Case', 'SIDRA');
         acase.Subject = 'Test Case Subject';
         insert aCase;
 
@@ -373,7 +373,7 @@ private class SIDRARnSIntegrationWS_Test {
     static void DailyUpdateNullDefaultedAmountTest(){
         Test.startTest();
         Case aCase = new Case();
-        acase.RecordTypeId = clsCaseRecordTypeIDSingleton.getInstance().RecordTypes.get('SIDRA');
+        acase.RecordTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('Case', 'SIDRA');
         acase.Subject = 'Test Case Subject';
         insert aCase;
 
@@ -387,7 +387,7 @@ private class SIDRARnSIntegrationWS_Test {
     static void DailyUpdateNullCollectedAmountTest(){
         Test.startTest();
         Case aCase = new Case();
-        acase.RecordTypeId = clsCaseRecordTypeIDSingleton.getInstance().RecordTypes.get('SIDRA');
+        acase.RecordTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('Case', 'SIDRA');
         acase.Subject = 'Test Case Subject';
         insert aCase;
 
@@ -401,7 +401,7 @@ private class SIDRARnSIntegrationWS_Test {
     static void DailyUpdateNullProratedAmountTest(){
         Test.startTest();
         Case aCase = new Case();
-        acase.RecordTypeId = clsCaseRecordTypeIDSingleton.getInstance().RecordTypes.get('SIDRA');
+        acase.RecordTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('Case', 'SIDRA');
         acase.Subject = 'Test Case Subject';
         insert aCase;
 
@@ -415,7 +415,7 @@ private class SIDRARnSIntegrationWS_Test {
     static void DailyUpdateNullPaidBackAmountTest(){
         Test.startTest();
         Case aCase = new Case();
-        acase.RecordTypeId = clsCaseRecordTypeIDSingleton.getInstance().RecordTypes.get('SIDRA');
+        acase.RecordTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('Case', 'SIDRA');
         acase.Subject = 'Test Case Subject';
         insert aCase;
 
@@ -429,7 +429,7 @@ private class SIDRARnSIntegrationWS_Test {
     static void DailyUpdateNullSubsequentSalesTest(){
         Test.startTest();
         Case aCase = new Case();
-        acase.RecordTypeId = clsCaseRecordTypeIDSingleton.getInstance().RecordTypes.get('SIDRA');
+        acase.RecordTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('Case', 'SIDRA');
         acase.Subject = 'Test Case Subject';
         insert aCase;
 
@@ -443,7 +443,7 @@ private class SIDRARnSIntegrationWS_Test {
     static void DailyUpdateNullOutstandingAmountAllPeriodTest(){
         Test.startTest();
         Case aCase = new Case();
-        acase.RecordTypeId = clsCaseRecordTypeIDSingleton.getInstance().RecordTypes.get('SIDRA');
+        acase.RecordTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('Case', 'SIDRA');
         acase.Subject = 'Test Case Subject';
         insert aCase;
 
@@ -457,7 +457,7 @@ private class SIDRARnSIntegrationWS_Test {
     static void DailyUpdateNullCollectedAmountAllPeriodTest(){
         Test.startTest();
         Case aCase = new Case();
-        acase.RecordTypeId = clsCaseRecordTypeIDSingleton.getInstance().RecordTypes.get('SIDRA');
+        acase.RecordTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('Case', 'SIDRA');
         acase.Subject = 'Test Case Subject';
         insert aCase;
 
@@ -472,7 +472,7 @@ private class SIDRARnSIntegrationWS_Test {
         Account accnt = new Account(Name='Test');
         insert accnt;
         Case aCase = new Case();
-        acase.RecordTypeId = clsCaseRecordTypeIDSingleton.getInstance().RecordTypes.get('SIDRA');
+        acase.RecordTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('Case', 'SIDRA');
         acase.Subject = 'Test Case Subject';
         acase.AccountId = accnt.id;
         insert aCase;
@@ -492,7 +492,7 @@ private class SIDRARnSIntegrationWS_Test {
         Account accnt = new Account(Name='Test');
         insert accnt;
         Case aCase = new Case();
-        acase.RecordTypeId = clsCaseRecordTypeIDSingleton.getInstance().RecordTypes.get('SIDRA');
+        acase.RecordTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('Case', 'SIDRA');
         acase.Subject = 'Test Case Subject';
         acase.AccountId = accnt.id;
         insert aCase;
@@ -512,7 +512,7 @@ private class SIDRARnSIntegrationWS_Test {
         Account accnt = new Account(Name='Test');
         insert accnt;
         Case aCase = new Case();
-        acase.RecordTypeId = clsCaseRecordTypeIDSingleton.getInstance().RecordTypes.get('SIDRA');
+        acase.RecordTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('Case', 'SIDRA');
         acase.Subject = 'Test Case Subject';
         acase.AccountId = accnt.id;
         insert aCase;
@@ -560,7 +560,7 @@ private class SIDRARnSIntegrationWS_Test {
     @isTest
     static void DeleteCasesByPeriodCaseOKTest(){
         Test.startTest();
-        Case aCase = new Case(RecordTypeId = (clsCaseRecordTypeIDSingleton.getInstance().RecordTypes.get('SIDRA'))
+        Case aCase = new Case(RecordTypeId = (RecordTypeSingleton.getInstance().getRecordTypeId('Case', 'SIDRA'))
                               ,Subject = 'Test Case Subject'
                               ,BSP_CASS__c = 'BSP'
                               ,Currency__c = 'USD'
@@ -573,7 +573,7 @@ private class SIDRARnSIntegrationWS_Test {
     @isTest
     static void DeleteCasesByPeriodCaseOKTest2(){
         Test.startTest();
-        Case aCase = new Case(RecordTypeId = (clsCaseRecordTypeIDSingleton.getInstance().RecordTypes.get('SIDRA'))
+        Case aCase = new Case(RecordTypeId = (RecordTypeSingleton.getInstance().getRecordTypeId('Case', 'SIDRA'))
                               ,Subject = 'Test Case Subject'
                               ,BSP_CASS__c = 'BSP'
                               ,Currency__c = 'USD'

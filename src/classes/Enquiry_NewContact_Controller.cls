@@ -296,8 +296,7 @@ public class Enquiry_NewContact_Controller {
         if (GeneralAccounts.isEmpty()) throw new transformationException('NO GENERAL PUBLIC ACCOUNT FOUND');
         account  GeneralAccount =  GeneralAccounts[0];
         con.AccountId = GeneralAccount.Id;
-        ID StandrdContactRecordTypeID = clsContactTypeIDSingleton.getInstance().RecordTypes.get('Standard');
-        con.RecordTypeId = StandrdContactRecordTypeID ;
+        con.RecordTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('Contact', 'Standard_Contact');
         Insert con;
         //show msg and redirect to the log an enquiry page
         RedirectToForm();
