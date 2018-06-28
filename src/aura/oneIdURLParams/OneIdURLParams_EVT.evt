@@ -1,0 +1,5 @@
+<aura:event type="APPLICATION" description="Event that fetches and answers URL requests">
+	<aura:attribute name="state" type="String" required="true"/>
+	<aura:attribute name="url" type="String" />
+	<aura:attribute name="paramsMap" type="Object" />
+ </aura:event>

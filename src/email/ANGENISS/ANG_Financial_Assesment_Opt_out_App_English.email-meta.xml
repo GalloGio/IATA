@@ -5,7 +5,7 @@
     <letterhead>IATADynamicSkyLetterhead</letterhead>
     <name>ANG Financial Assesment Opt-out App EN</name>
     <style>freeForm</style>
-    <subject>Ref nr {!AMS_OSCAR__c.Name} – Financial Assesment Opt-out accepted</subject>
+    <subject>Ref nr {!AMS_OSCAR__c.Name} – Financial Assessment Opt-out accepted</subject>
     <textOnly>Dear Sir/Madam,
 
 Your request of opting-out from the process of financial review has been accepted.

@@ -56,10 +56,11 @@ private class AMS_OSCAR_ProcessViewerControllerTest {
         result = controller.getIsAgencyChange();
         result = controller.isNewGenHEProcess;
         result = controller.isAnalystProfile;
+        /* commented as per NEWGEN-3301
         result = controller.canBeDisplayed('Is_PCI_compliant__c',AMS_Utils.NGCORRECTION,'Corporate Card');
         result = controller.canBeDisplayed('Is_PCI_compliant__c',AMS_Utils.NEWHELITE,'Corporate Card');
         result = controller.canBeDisplayed('AnotherStuff',AMS_Utils.NGCORRECTION,'Corporate Card');
-        
+        */
         Test.stopTest();
     }
     
