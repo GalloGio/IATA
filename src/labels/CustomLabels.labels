@@ -8236,6 +8236,13 @@ IFG Customer Services</value>
         <value>* Number of years for which you have successfully traded?</value>
     </labels>
     <labels>
+        <fullName>OneId_Max_Account_Reached</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>OneId_Max_Account_Reached</shortDescription>
+        <value>Maximum number of accounts reached. Please click on troubleshooting link in the page footer</value>
+    </labels>
+    <labels>
         <fullName>ISSP_AMS_CGO_ReadOnly_Q5</fullName>
         <language>en_US</language>
         <protected>false</protected>
@@ -19994,6 +20001,14 @@ If you continue to experience issues registering for the CNS Customer Portal the
         <value>Please note that you are not allowed to re-use your last 4 passwords.</value>
     </labels>
     <labels>
+        <fullName>OneId_Passwords_Mix</fullName>
+        <categories>ISSP_ChangePassword, s6</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>OneId_Passwords_Mix</shortDescription>
+        <value>Your password must have a mix of letters and numbers</value>
+    </labels>
+    <labels>
         <fullName>ISSP_One_Way_Intermodal_Issuing_Date</fullName>
         <categories>ISSP, MITA</categories>
         <language>en_US</language>
@@ -24726,6 +24741,14 @@ msgErrorRenewalOrderExpired:Your renewal notification order link is either  expi
         <value>http://www.iata.org/customer-portal/Pages/terms.aspx</value>
     </labels>
     <labels>
+        <fullName>OneId_FRED_Terms_Of_Use_Link</fullName>
+        <categories>OneId</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>OneId_FRED_Terms_Of_Use_Link</shortDescription>
+        <value>http://www.iata.org/customer-portal/Pages/terms.aspx</value>
+    </labels>
+    <labels>
         <fullName>OneId_IATA_represent_lead_and_serve_the_airline_industry</fullName>
         <categories>OneId</categories>
         <language>en_US</language>
@@ -25015,6 +25038,13 @@ If you continue to experience issues registering for the IATA Customer Portal th
         <protected>false</protected>
         <shortDescription>OneId_RegistrationComplete</shortDescription>
         <value>Registration completed successfully</value>
+    </labels>
+    <labels>
+        <fullName>OneId_AuthorizationPending</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>OneId_RegistrationComplete</shortDescription>
+        <value>Autorization Pending</value>
     </labels>
     <labels>
         <fullName>OneId_Registration_Error_BusinessPhone</fullName>

@@ -17,13 +17,13 @@ public class TIP_BatchActivateRecordsByDate_test {
 		account parent;
 
 		//ACTIVE
-		parent = createAccount('acc1 active', System.today()-5,System.today()+5);
+		parent = createAccount('acc1 active', System.today()-5,System.today()+5,'1000');
 		
 		//INACTIVE
 		//createAccount('acc2 inactive', System.today()-20,System.today()-10);
 		
 		//IN PROGRESS
-		createAccount('acc3 in progress', System.today()+10,System.today()+20);
+		createAccount('acc3 in progress', System.today()+10,System.today()+20,'1002');
 
 
 		//--------------CREATE PRODUCTS--------------------
@@ -79,14 +79,14 @@ public class TIP_BatchActivateRecordsByDate_test {
 		createProducConfiguration(prodActive, System.today()+20, null);
 	}
 
-	private static Account createAccount(String name, Date startDate, Date endDate){
+	private static Account createAccount(String name, Date startDate, Date endDate, String iataCode){
 		Account a1 = ISSP_ObjectFactory.createNewAccount();
         a1.BillingCity = 'test';
         a1.Name = name;
         a1.sector__c = 'Travel Agent';
         a1.Location_Type__c = 'HO';
         a1.RecordTypeId = TIP_UTils.PAYMENT_PROVIDER_RECORD_TYPE_ID;
-        a1.IATACode__c = '1000';
+        a1.IATACode__c =iataCode;
         a1.IATA_ISO_Country__c = country.id;
         a1.category__c = 'Payment Provider';
         a1.Accreditation_date__c = startDate;

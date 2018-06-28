@@ -9,7 +9,8 @@ public without sharing class ISSP_ChangePassword {
     public Boolean termsAndConditionChecked { get; set; }
     public Boolean displayPopup{get;set;}
     public Boolean fredError{get;set;}
-    public Boolean statusPoller{get;set;} 
+    public Boolean statusPoller{get;set;}
+    public Boolean fredFirst{get;set;} 
     private List <User> userList{get;set;}        
     User provUser;
 
@@ -32,6 +33,7 @@ public without sharing class ISSP_ChangePassword {
         termsAndConditionChecked = false;
         fredError = false;
         statusPoller = false;
+        fredFirst = false;
         provUser = new User();         
         errorMessage = new list<string>();
         integer passwordDays = integer.ValueOF(ISSP_CS__c.getValues('PasswordResetPeriod').value__c);
@@ -126,7 +128,7 @@ public without sharing class ISSP_ChangePassword {
 
                     //errorMessage.add(Label.ISSP_InvalidPassword);
                 }
-                
+                fredFirst = true; 
                 if(errorMessage.isEmpty() && serviceName == 'FRED'){
                     statusPoller = true;
                     provisioning();                    

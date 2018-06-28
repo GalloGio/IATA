@@ -28,7 +28,8 @@
   
   <aura:attribute name="isGuest" type="Boolean" default="true" />
   <aura:attribute name="paramLoaded" type="Boolean" default="false" />
-  <aura:attribute name="userTypeToCreate" type="Integer" default="-1"/> <!-- 1=PRIMARY or 2=SECONDARY -->  
+  <aura:attribute name="userTypeToCreate" type="Integer" default="-1"/> <!-- 1=PRIMARY or 2=SECONDARY -->
+  <aura:attribute type="Boolean" name="searching" default="false" access="private" />
 
   <aura:attribute name="verifierId" type="String" /> <!-- veridfier id in the url -->
   
@@ -65,7 +66,17 @@
          <aura:if isTrue="{!v.isFredPrimaryUser || v.verifierId != undefined}" >
             <lightning:input  aura:id="AI_userInput2" type="text" class="slds-input slds-combobox__input" value="{!v.userInput}" disabled="true"/>
             <aura:set attribute="else">
-               <input aura:id="AI_userInput" type="text" class="slds-input slds-combobox__input" id="combobox-unique-id-32" aria-autocomplete="list" aria-controls="listbox-unique-id" autocomplete="off" role="textbox" placeholder="{!v.searchPlaceholder}"  onkeyup="{!c.onKeyUp}" value="{!v.userInput}" data-value="agencies" disabled="{!disableInput}"/>              
+               <input aura:id="AI_userInput" type="text" class="slds-input slds-combobox__input" id="combobox-unique-id-32" aria-autocomplete="list" aria-controls="listbox-unique-id" autocomplete="off" role="textbox" placeholder="{!v.searchPlaceholder}"  onkeyup="{!c.onKeyUp}" value="{!v.userInput}" data-value="agencies" disabled="{!disableInput}"/>
+
+               <span class="slds-icon_container slds-icon-utility-search slds-input__icon slds-input__icon_right">
+                    <aura:if isTrue="{!v.searching}">
+                        <lightning:spinner size="small"/>
+                        <aura:set attribute="else">
+                            <lightning:icon iconName="utility:search" size="x-small"/>
+                        </aura:set>
+                    </aura:if>
+                </span>
+
             </aura:set>
           </aura:if>
 
@@ -95,13 +106,13 @@
 	                      <div class="slds-col slds-size_1-of-1 slds-large-size_1-of-2 slds-medium-size_1-of-2 slds-small-size_1-of-1">
 	                        <span class="slds-listbox__option-text slds-listbox__option-text_entity" onclick="{!c.suggestionSelected}" data-value="{!account.Name}" data-row-index="{!index}"><span class="slds-form-element__label columnTitle">ICAO CODE: </span><span class="columnValue">{!account.ICAO_Member__r.ICAO_Iso_3_Code__c}</span>
 	                                            </span>
-	                      </div>
+	                      </div>                        
 	                      <div class="slds-col slds-size_1-of-1 slds-large-size_1-of-2 slds-medium-size_1-of-2 slds-small-size_1-of-1">
 	                       <span class="slds-listbox__option-text slds-listbox__option-text_entity" onclick="{!c.suggestionSelected}" data-value="{!account.Name}" data-row-index="{!index}">
-	                          <span class="slds-form-element__label columnTitle">ICAO MEMBER STATE: </span><span class="columnValue">{!account.ICAO_Member__r.State_Name__c}
-	                          <aura:if isTrue="{!account.ICAO_Member__r.ICAO_Iso_2_Code__c!=null}">
+	                          <span class="slds-form-element__label columnTitle">ICAO MEMBER STATE: </span><span class="columnValue">{!account.IATA_ISO_Country__r.ISO_Code__c}
+	                          <!--<aura:if isTrue="{!account.ICAO_Member__r.ICAO_Iso_2_Code__c!=null}">
 	                            {!' ('+account.ICAO_Member__r.ICAO_Iso_2_Code__c+')'}
-	                          </aura:if>
+	                          </aura:if>-->
 	                          </span>
 	                        </span>
 	                      </div>
@@ -127,13 +138,13 @@
                     </span></span>
                 </div>
                   <div class="slds-col slds-size_1-of-1 slds-large-size_1-of-2 slds-medium-size_1-of-2 slds-small-size_1-of-1">
-                     <span class="slds-listbox__option-text slds-listbox__option-text_entity" onclick="{!c.suggestionSelected}" data-value="{!account.State_Name__c}" data-row-index="{!index}"><span class="slds-form-element__label columnTitle">ISO 2 CODE: </span><span class="columnValue"> {!account.ICAO_Iso_2_Code__c}
+                     <span class="slds-listbox__option-text slds-listbox__option-text_entity" onclick="{!c.suggestionSelected}" data-value="{!account.State_Name__c}" data-row-index="{!index}"><span class="slds-form-element__label columnTitle">ISO 2 CODE: </span><span class="columnValue"> {!account.IATA_ISO_Country__r.ISO_Code__c}
                                         </span></span>
                   </div>
-                  <div class="slds-col slds-size_1-of-1 slds-large-size_1-of-2 slds-medium-size_1-of-2 slds-small-size_1-of-1">
+                 <!-- <div class="slds-col slds-size_1-of-1 slds-large-size_1-of-2 slds-medium-size_1-of-2 slds-small-size_1-of-1">
                     <span class="slds-listbox__option-text slds-listbox__option-text_entity" onclick="{!c.suggestionSelected}" data-value="{!account.State_Name__c}" data-row-index="{!index}"><span class="slds-form-element__label columnTitle">ISO 3 CODE: </span><span class="columnValue">{!account.ICAO_Iso_3_Code__c}
                                         </span></span>
-                  </div>
+                  </div>-->
                  
                   </div>
 

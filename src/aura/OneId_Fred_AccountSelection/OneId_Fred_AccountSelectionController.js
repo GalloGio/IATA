@@ -44,7 +44,8 @@
         component.set("v.isValid", false);
         component.set("v.accountSelected", false);
 
-        if(helper.isMandatoryFieldsOK(component)) {            
+        if(helper.isMandatoryFieldsOK(component)) {
+            component.set("v.searching", true);
             // When user search on input field call Address doctor to get suggestion for validation of address
             var userInputCmp = event.currentTarget;
             
@@ -71,7 +72,8 @@
                 }
                 // Show suggestion box
                 var userInputCmpName = userInputCmp.dataset.value;
-                var resultDiv = component.find(userInputCmpName);                
+                var resultDiv = component.find(userInputCmpName);
+                component.set("v.searching", false);
                 if(! $A.util.hasClass(resultDiv, 'slds-is-open'))
                     $A.util.toggleClass(resultDiv, 'slds-is-open');
                 

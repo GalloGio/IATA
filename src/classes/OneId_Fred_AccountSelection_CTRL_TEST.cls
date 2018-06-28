@@ -52,6 +52,7 @@ private class OneId_Fred_AccountSelection_CTRL_TEST {
                 emailencodingkey='UTF-8', lastname='contact1', languagelocalekey='en_US',
                 localesidkey='en_US', profileid = p, country='United States',IsActive =true,
                 ContactId = communityUserContact.Id,
+                License_Cost_Center__c = 'ISF005CH01',
                 timezonesidkey='America/Los_Angeles', username='contact1@noemail.com');
         insert communityUser;
         
@@ -103,7 +104,7 @@ private class OneId_Fred_AccountSelection_CTRL_TEST {
                 BillingStreet = 'some street',
                 Category__c = 'Travel Agent'
         );
-
+        insert acc;
        //icaoMember = [SELECT Id, Name, Legal_name__c, Reason_for_creation__c, ownerId, recordtypeid,Category__c, Category_Other_Value__c,BillingCountry, IATA_ISO_Country__c, IATA_ISO_Billing_State__c, IATA_ISO_Shipping_State__c FROM Account WHERE name = 'Air France' LIMIT 1][0];
         communityUser = [SELECT Id FROM User WHERE lastname = 'contact1' LIMIT 1][0];
         Contact c = new Contact(LastName ='contact2',AccountId = acc.Id, email='mytest@test.com');

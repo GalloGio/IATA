@@ -49,6 +49,7 @@ private class OneId_Fred_AddNewUser_CTRL_TEST {
                 emailencodingkey='UTF-8', lastname='contact1', languagelocalekey='en_US',
                 localesidkey='en_US', profileid = p, country='United States',IsActive =true,
                 ContactId = communityUserContact.Id,
+                License_Cost_Center__c = 'ISF005CH01',
                 timezonesidkey='America/Los_Angeles', username='contact1@noemail.com');
         insert communityUser;
         

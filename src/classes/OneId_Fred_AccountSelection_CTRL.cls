@@ -85,7 +85,7 @@ public without sharing class OneId_Fred_AccountSelection_CTRL {
 
             if((createPrimary && nbOfPrimaryInAccount >= config.Max_Number_Of_Primary_User__c) || (!createPrimary && nbOfSecondaryInAccount >= config.Max_Number_Of_Secondary_User__c)) {
                 // Limit reached
-                return new RegistrationResponse(false, 'Number of maximum account reached. Please contact the support.');
+                return new RegistrationResponse(false, Label.OneId_Max_Account_Reached);
             }
                 
 
@@ -353,7 +353,7 @@ public without sharing class OneId_Fred_AccountSelection_CTRL {
         queryStr += ' AND Name like \'%' + userInput + '%\'';
 
         if(customerType=='Aircraft Operator') {
-            queryStr = 'SELECT Id, Name, IATACode__c,ICAO_designator__c,Airline_designator__c, ICAO_Member__r.State_Name__c, ICAO_Member__r.ICAO_Iso_2_Code__c, ICAO_Member__r.ICAO_Iso_3_Code__c ';
+            queryStr = 'SELECT Id, Name, IATACode__c,ICAO_designator__c,Airline_designator__c, ICAO_Member__r.State_Name__c, ICAO_Member__r.ICAO_Iso_2_Code__c, ICAO_Member__r.ICAO_Iso_3_Code__c,IATA_ISO_Country__r.ISO_Code__c ';
             String queryStr2 = ' FROM Account WHERE';
             //queryStr2 += ' RecordType.DeveloperName = \'IATA_Airline\'';
             queryStr2 += ' (RecordType.DeveloperName = \'IATA_Airline\' OR RecordType.DeveloperName = \'Operator\' )';
@@ -373,7 +373,7 @@ public without sharing class OneId_Fred_AccountSelection_CTRL {
         }
 
         if(customerType=='ICAO Member State') {
-            queryStr = 'SELECT Id, State_Name__c,ICAO_Iso_2_Code__c,ICAO_Iso_3_Code__c ';
+            queryStr = 'SELECT Id, State_Name__c,ICAO_Iso_2_Code__c,ICAO_Iso_3_Code__c,IATA_ISO_Country__r.ISO_Code__c ';
             String queryStr2 = ' FROM Account WHERE';
             queryStr2 += ' RecordType.DeveloperName = \'ICAO_Member_State\'';
             queryStr2 += ' AND (State_Name__c like \'%' + userInput + '%\'';
