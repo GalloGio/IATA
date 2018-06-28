@@ -95,7 +95,7 @@ private class ANG_RHCAlertTriggerHandler_test {
 		insert att;
 	}
 
-	private static testmethod voId test_sucess_legacy(){
+	private static testmethod void test_sucess_legacy(){
 
 		Test.startTest();
 
