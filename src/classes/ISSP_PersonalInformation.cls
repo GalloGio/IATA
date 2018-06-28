@@ -48,9 +48,6 @@ public with sharing class ISSP_PersonalInformation {
 	public Boolean hasIdCard {get;set;}
     public boolean showIEPStatus {get;set;}
     public Boolean flagCashOptedOutFinReview {get;set;}
-
-    public Boolean canChangeTradeName {get; private set;}
-    public Boolean isNAMEnabled {get; private set;}
     
     public List<AccountTeamMember> portalAdmins { 
         get {
@@ -87,8 +84,6 @@ public with sharing class ISSP_PersonalInformation {
         bBlockTradeNameChange = false;
         isHOAccredited = false;
         bUserHO = false;
-        canChangeTradeName = false;
-        isNAMEnabled = false;
 
         bIsOSCARenabledBR = false;
         bIsMinorChangeEnabledBR = false;
@@ -172,8 +167,6 @@ public with sharing class ISSP_PersonalInformation {
         flagCashOptedOutFinReview = (con.Account.ANG_Accreditation_Model__c == AMS_Utils.ACCREDITATIONMODEL_CASH && con.Account.ANG_FA_Opt_out__c);
 
         //AEF: portalAdmins is filled in extensions controller ISSP_PersonalInformationWithoutSharing
-
-        canChangeTradeName = (bIsAdmin && isIATAAgencyAcct && bIsMinorChangeEnabled && !isTerminatedAgent && !bBlockTradeNameChange && !isNAMEnabled);
     }
     
     private void popContact(){
@@ -202,7 +195,6 @@ public with sharing class ISSP_PersonalInformation {
         bIsOSCARenabled = con.Account.IATA_ISO_Country__r.OSCAR_enabled__c;
         bIsMinorChangeEnabled = con.Account.IATA_ISO_Country__r.Enable_Minor_Changes_from_Portal__c;
         bBlockTradeNameChange = con.Account.IATA_ISO_Country__r.Prevent_Portal_Trade_Name_Change__c;
-        isNAMEnabled = con.Account.IATA_ISO_Country__r.ANG_Enable_NewGen__c;
     }
     
     /*public void save(){
