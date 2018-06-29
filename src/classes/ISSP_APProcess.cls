@@ -923,7 +923,7 @@ public without sharing class ISSP_APProcess {
         get {
             List<SelectOption> options = new List<SelectOption>();
             
-            list<IATA_ISO_Country__c> isoList = IATAIsoCountryDAO.getIsoCountries();
+            list<IATA_ISO_Country__c> isoList = IATAIsoCountryDAO.sortIATAIsoCountryList(IATAIsoCountryDAO.getIsoCountries(), 'Name');
                     
           options.add(new SelectOption('', Label.ISSP_SELECT_COUNTRY));
           for(IATA_ISO_Country__c iso : isoList){
@@ -939,7 +939,7 @@ public without sharing class ISSP_APProcess {
         get {
             List<SelectOption> options = new List<SelectOption>();
             
-            list<IATA_ISO_Country__c> isoList = IATAIsoCountryDAO.getIsoCountriesByCaseBSPCountryNotNull();
+            list<IATA_ISO_Country__c> isoList = IATAIsoCountryDAO.sortIATAIsoCountryList(IATAIsoCountryDAO.getIsoCountriesByCaseBSPCountryNotNull(), 'Name');
             
           options.add(new SelectOption('', Label.ISSP_SELECT_COUNTRY));
           for(IATA_ISO_Country__c iso : isoList){
@@ -964,32 +964,10 @@ public without sharing class ISSP_APProcess {
         }
         
         if(category <> 'IBCS consolidator'){
-        options.add(new SelectOption('CASS Export','CASS Export'));
-        options.add(new SelectOption('CASS Import','CASS Import'));
+            options.add(new SelectOption('CASS Export','CASS Export'));
+            options.add(new SelectOption('CASS Import','CASS Import'));
         }
-        
-        /**
-        if(strParentMembershipStatus=='IATA member') {
-            if(!isGSSAUser) {
-                options.add(new SelectOption('BSP Direct - Member','BSP'));
-                options.add(new SelectOption('CASS Direct - Member','CASS Export'));
-                options.add(new SelectOption('CASS Import Direct - Member','CASS Import'));
-            } else {
-                options.add(new SelectOption('CASS via GSSA - Member','CASS Export'));
-                options.add(new SelectOption('CASS Import via GHA - Member','CASS Import'));
-            }
-        } else { //IATA Non-Member
-            if(!isGSSAUser) {
-                options.add(new SelectOption('BSP Direct - Non-Member','BSP'));
-                options.add(new SelectOption('CASS Direct - Non-Member','CASS Export'));
-                options.add(new SelectOption('CASS Import Direct - Non-Member','CASS Import'));
-            } else {
-                options.add(new SelectOption('CASS via GSSA - Non-Member','CASS Export'));
-                options.add(new SelectOption('CASS Import via GHA - Non-Member','CASS Import'));
-            }
-        }
-    **/
-        
+                
         return options;
     }
     

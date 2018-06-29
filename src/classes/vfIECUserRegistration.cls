@@ -146,7 +146,7 @@ public without sharing class vfIECUserRegistration  extends IECPageController {
     //Returns the list of countries pairs: id-name
     public List<SelectOption> getISOCountry() {
         List<SelectOption> options = new List<SelectOption>();
-        for(IATA_ISO_Country__c iso:IATAIsoCountryDAO.getIsoCountries()){
+        for(IATA_ISO_Country__c iso : IATAIsoCountryDAO.sortIATAIsoCountryList(IATAIsoCountryDAO.getIsoCountries(), 'Name')){
             options.add(new SelectOption(iso.Id,iso.Name));
         }
         return options;
@@ -158,7 +158,7 @@ public without sharing class vfIECUserRegistration  extends IECPageController {
         List<SelectOption> options = new List<SelectOption>();
         options.add(new SelectOption('','-Select a Country-'));
         
-        for(IATA_ISO_Country__c iso:IATAIsoCountryDAO.getIsoCountries()){
+        for(IATA_ISO_Country__c iso : IATAIsoCountryDAO.sortIATAIsoCountryList(IATAIsoCountryDAO.getIsoCountries(), 'Name')){
             options.add(new SelectOption(iso.Name,iso.Name));
         }
         return options;

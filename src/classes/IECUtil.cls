@@ -201,7 +201,7 @@ public without sharing class IECUtil {
         List<SelectOption> options = new List<SelectOption>();
         options.add(new SelectOption('','-Select a Country-'));
         
-        for(IATA_ISO_Country__c iso: IATAIsoCountryDAO.getIsoCountries()){
+        for(IATA_ISO_Country__c iso: IATAIsoCountryDAO.sortIATAIsoCountryList(IATAIsoCountryDAO.getIsoCountries(), 'Name')){
         	options.add(new SelectOption(iso.Name,iso.Name));
         }
         return options;
@@ -214,7 +214,7 @@ public without sharing class IECUtil {
         List<SelectOption> options = new List<SelectOption>();
         options.add(new SelectOption('','-Select a Country-'));
         
-        for(IATA_ISO_Country__c iso : IATAIsoCountryDAO.getIsoCountries()){
+        for(IATA_ISO_Country__c iso : IATAIsoCountryDAO.sortIATAIsoCountryList(IATAIsoCountryDAO.getIsoCountries(), 'Name')){
         	options.add(new SelectOption(iso.Id,iso.Name));
         }
         return options;
@@ -411,7 +411,7 @@ public without sharing class IECUtil {
 		if (lstISOCode == null || lstISOCode.size() == 0) return null;
 		
 		List<String> lstCountryName = new List<String>();
-		for (IATA_ISO_Country__c country : IATAIsoCountryDAO.getIsoCountryByIsoCodes(new Set<String>(lstISOCode))) {
+		for (IATA_ISO_Country__c country : IATAIsoCountryDAO.sortIATAIsoCountryList(IATAIsoCountryDAO.getIsoCountryByIsoCodes(new Set<String>(lstISOCode)), 'Name')) {
 			lstCountryName.add(country.Name);
 		}
 		
@@ -424,7 +424,7 @@ public without sharing class IECUtil {
 		Set<String> isoCodeSet = new Set<String>();
 		isoCodeSet.addAll(lstISOCode); 
 		List<String> lstStateName = new List<String>();
-		for (IATA_ISO_State__c state : IATAIsoStateDAO.getIsoStateByIsoCodes(isoCodeSet)){
+		for (IATA_ISO_State__c state : IATAIsoStateDAO.sortIATAIsoStateList(IATAIsoStateDAO.getIsoStateByIsoCodes(isoCodeSet), 'Name')){
 			lstStateName.add(state.Name);
 		}
 		

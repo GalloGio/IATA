@@ -190,7 +190,7 @@ public class ISO_Country_State_Helper {
 		List<SelectOption> options = new List<SelectOption>();
         options.add(new SelectOption('',Label.Select_a_Country));
 
-    	for(IATA_ISO_Country__c c : IATAIsoCountryDAO.getIsoCountries()){
+    	for(IATA_ISO_Country__c c : IATAIsoCountryDAO.sortIATAIsoCountryList(IATAIsoCountryDAO.getIsoCountries(), 'Name')){
     		if(c.Name != 'All Countries')
     			options.add(new SelectOption(c.ISO_Code__c, c.Name));
     	}
@@ -203,7 +203,7 @@ public class ISO_Country_State_Helper {
 		List<SelectOption> options = new List<SelectOption>();
 		List<SelectOption> ret = new List<SelectOption>();
         
-        List<IATA_ISO_State__c> states = IATAIsoStateDAO.getIsoStates();
+        List<IATA_ISO_State__c> states = IATAIsoStateDAO.sortIATAIsoStateList(IATAIsoStateDAO.getIsoStates(), 'Name');
 
     	if(states != null && states.size() > 0){
     		for(IATA_ISO_State__c s : states)
@@ -227,7 +227,7 @@ public class ISO_Country_State_Helper {
 		options.add(new SelectOption('',Label.Select_a_Country));
 		Map<String, Boolean> mapZipCodeApplicable = new Map<String, Boolean>();
 		
-		for(IATA_ISO_Country__c c :IATAIsoCountryDAO.getIsoCountries()){
+		for(IATA_ISO_Country__c c : IATAIsoCountryDAO.sortIATAIsoCountryList(IATAIsoCountryDAO.getIsoCountries(), 'Name')){
     		if(c.ISO_Code__c != null && c.Name != 'All Countries'){
 				options.add(new SelectOption(c.ISO_Code__c, c.Name));
 				mapZipCodeApplicable.put(c.ISO_Code__c, c.IEC_Zip_Postal_Code_required__c);

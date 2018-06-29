@@ -749,7 +749,7 @@ public without sharing class ISSP_Case {
         } else if (currentLanguage == 'it') {
             isoList = IATAIsoCountryDAO.sortIATAIsoCountryList(IATAIsoCountryDAO.getIsoCountriesByCaseBSPCountryNotNull(), 'IATA_Country_IT__c');
         } else {
-            isoList = IATAIsoCountryDAO.getIsoCountriesByCaseBSPCountryNotNull();
+            isoList = IATAIsoCountryDAO.sortIATAIsoCountryList(IATAIsoCountryDAO.getIsoCountriesByCaseBSPCountryNotNull(), 'Name');
         }
         options.add(new SelectOption('', '--None--'));
         for (IATA_ISO_Country__c iso : isoList) {

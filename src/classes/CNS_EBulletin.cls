@@ -546,7 +546,7 @@ public with sharing class CNS_EBulletin {
             } else if (applyLanguage == 'fr') {
                 isoList = isoList = IATAIsoCountryDAO.sortIATAIsoCountryList(IATAIsoCountryDAO.getIsoCountriesByRegion(sRegion), 'IATA_Country_FR__c');
             } else {
-                isoList = IATAIsoCountryDAO.getIsoCountriesByRegion(sRegion);
+                isoList = IATAIsoCountryDAO.sortIATAIsoCountryList(IATAIsoCountryDAO.getIsoCountriesByRegion(sRegion), 'Name');
             }
 
             for (IATA_ISO_Country__c iso : isoList) {
@@ -582,7 +582,7 @@ public with sharing class CNS_EBulletin {
         
             List<IATA_ISO_Country__c> isoList;
             
-            isoList = IATAIsoCountryDAO.getIsoCountriesByCaseBSPCountryNotNull();
+            isoList = IATAIsoCountryDAO.sortIATAIsoCountryList(IATAIsoCountryDAO.getIsoCountriesByCaseBSPCountryNotNull(), 'Name');
             
             for (IATA_ISO_Country__c iso : isoList) {
                 mCountries.put(iso.ISO_Code__c , iso);
@@ -628,7 +628,7 @@ public with sharing class CNS_EBulletin {
             
             //Fetch country list for CNS
             //
-            List<IATA_ISO_Country__c> isoList = IATAIsoCountryDAO.getIsoCountries();
+            List<IATA_ISO_Country__c> isoList = IATAIsoCountryDAO.sortIATAIsoCountryList(IATAIsoCountryDAO.getIsoCountries(), 'Name');
             String sCountryList = '';
                  
             Boolean Start = true;

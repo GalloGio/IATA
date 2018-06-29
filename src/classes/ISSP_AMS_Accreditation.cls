@@ -909,7 +909,7 @@ public without sharing class ISSP_AMS_Accreditation {
                 AND Case_BSP_Country__c != ''
                 ORDER BY IATA_Country_FR__c];
             } else {
-                isoList = IATAIsoCountryDAO.getIsoCountriesByCaseBSPCountryNotNull();
+                isoList = IATAIsoCountryDAO.sortIATAIsoCountryList(IATAIsoCountryDAO.getIsoCountriesByCaseBSPCountryNotNull(), 'Name');
             }
 
             options.add(new SelectOption('', Label.ISSP_SELECT_COUNTRY));
@@ -4676,7 +4676,7 @@ System.DEBUG('validateCharactersInForm  - 4 - errorFound: '+errorFound);
     public void getPilotCountries() {
         List<IATA_ISO_Country__c> isoList;
 
-        isoList = IATAIsoCountryDAO.getIsoCountriesByCaseBSPCountryNotNull();
+        isoList = IATAIsoCountryDAO.sortIATAIsoCountryList(IATAIsoCountryDAO.getIsoCountriesByCaseBSPCountryNotNull(), 'Name');
 
         String tmpList;
         Integer idx = 0;
@@ -4695,7 +4695,7 @@ System.DEBUG('validateCharactersInForm  - 4 - errorFound: '+errorFound);
     public void getCountriesMap() {
         List<IATA_ISO_Country__c> isoList;
 
-        isoList = IATAIsoCountryDAO.getIsoCountriesByCaseBSPCountryNotNull();
+        isoList = IATAIsoCountryDAO.sortIATAIsoCountryList(IATAIsoCountryDAO.getIsoCountriesByCaseBSPCountryNotNull(), 'Name');
        
         Map<String, String> mapCountriesList = new Map<String, String>();
         List<String> notAllowedCountries = new List<String>();

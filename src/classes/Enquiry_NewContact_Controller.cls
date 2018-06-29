@@ -172,10 +172,9 @@ public class Enquiry_NewContact_Controller {
            Language =  Language <> null ?  Language.left(2) : 'en';
            string isoField =  ISOFIELDPERLANGUAGE.get(Language.toLowerCase());
            
-          for (IATA_ISO_Country__c iso : IATAIsoCountryDAO.getIsoCountries()) {
+          for (IATA_ISO_Country__c iso : IATAIsoCountryDAO.sortIATAIsoCountryList(IATAIsoCountryDAO.getIsoCountries(), 'Name')) {
                                                                                 
               if(String.isNotBlank(string.valueOf(iso.get(isoField)))){
-              //        ISOCountryName.add(new SelectOption(iso.Id,string.valueOf(iso.get(isoField))));
                 ISOCountry.add(new SelectOption(iso.Id,string.valueOf(iso.get(isoField))));
               }
           }

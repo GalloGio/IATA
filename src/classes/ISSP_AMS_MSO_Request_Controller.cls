@@ -117,7 +117,7 @@ public without sharing class ISSP_AMS_MSO_Request_Controller {
             } else if (applyLanguage == 'fr') {
                 isoList = IATAIsoCountryDAO.sortIATAIsoCountryList(IATAIsoCountryDAO.getIsoCountriesByCaseBSPCountryNotNull(), 'IATA_Country_FR__c');
             } else {
-                isoList = IATAIsoCountryDAO.getIsoCountriesByCaseBSPCountryNotNull();
+                isoList = IATAIsoCountryDAO.sortIATAIsoCountryList(IATAIsoCountryDAO.getIsoCountriesByCaseBSPCountryNotNull(), 'Name');
             }
             
             for (IATA_ISO_Country__c c : isoList) {

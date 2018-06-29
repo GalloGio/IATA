@@ -50,7 +50,7 @@ public with sharing class GDP_CountryDefinitionWizard {
         
         
         //Read all the kown Counties from IATA List and excluded the one selected already        
-        List<IATA_ISO_Country__c> dlist = IATAIsoCountryDAO.getIsoCountries();
+        List<IATA_ISO_Country__c> dlist = IATAIsoCountryDAO.sortIATAIsoCountryList(IATAIsoCountryDAO.getIsoCountries(), 'Name');
         
         Counter=0;                      
         for(IATA_ISO_Country__c dli:dlist)

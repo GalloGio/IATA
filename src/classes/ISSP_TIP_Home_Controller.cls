@@ -107,7 +107,7 @@ public without sharing class ISSP_TIP_Home_Controller {
         get{
             if(isoCodeCountryMap==null){
                 isoCodeCountryMap= new map<string,IATA_ISO_Country__C>();
-                for(IATA_ISO_Country__C  isoc:IATAIsoCountryDAO.getIsoCountries()){
+                for(IATA_ISO_Country__C  isoc : IATAIsoCountryDAO.sortIATAIsoCountryList(IATAIsoCountryDAO.getIsoCountries(), 'Name')){
                     isoCodeCountryMap.put(isoc.ISO_Code__c,isoc);    
                 }
             }
@@ -500,7 +500,7 @@ public without sharing class ISSP_TIP_Home_Controller {
     public List<SelectOption> getISOCountry() {
         List<SelectOption> options = new List<SelectOption>();      
         options.add(new SelectOption('',Label.ISSP_SELECT_COUNTRY));
-        for(IATA_ISO_Country__c iso: IATAIsoCountryDAO.getIsoCountries()){
+        for(IATA_ISO_Country__c iso: IATAIsoCountryDAO.sortIATAIsoCountryList(IATAIsoCountryDAO.getIsoCountries(), 'Name')){
             if(iso.Name != 'All Countries' && iso.Name != 'NO COUNTRY'){
                 options.add(new SelectOption(iso.Id,iso.Name));
             }

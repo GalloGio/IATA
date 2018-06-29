@@ -591,7 +591,7 @@ public with sharing class ISSP_AMS_EBulletin {
             } else if (applyLanguage == 'fr') {
                 isoList = IATAIsoCountryDAO.sortIATAIsoCountryList(IATAIsoCountryDAO.getIsoCountriesByRegion(sRegion), 'IATA_Country_FR__c');
             } else {
-                isoList = IATAIsoCountryDAO.getIsoCountriesByRegion(sRegion);
+                isoList = IATAIsoCountryDAO.sortIATAIsoCountryList(IATAIsoCountryDAO.getIsoCountriesByRegion(sRegion), 'Name');
             }
 
             //options.add(new SelectOption('', Label.ISSP_SELECT_COUNTRY));

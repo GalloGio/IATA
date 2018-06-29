@@ -216,7 +216,7 @@ public with sharing class ISSP_Ctrl_Country_Requirements {
     public List<SelectOption> getCountries() {
         List<SelectOption> options = new List<SelectOption>();
         options.add(new SelectOption('', '--None--'));
-        for (IATA_ISO_Country__c isoCountry : IATAIsoCountryDAO.getIsoCountries()){
+        for (IATA_ISO_Country__c isoCountry : IATAIsoCountryDAO.sortIATAIsoCountryList(IATAIsoCountryDAO.getIsoCountries(), 'Name')){
             if(isoCountry.Name != 'All Countries')
                 options.add(new SelectOption(isoCountry.Id, isoCountry.Name));
         }

@@ -79,7 +79,7 @@ public class CampaignCustomers_Ctrl
 
         //Countries
         availableCountries = new List<SelectOption>();
-        for(IATA_ISO_Country__c c : IATAIsoCountryDAO.getIsoCountries()){
+        for(IATA_ISO_Country__c c : IATAIsoCountryDAO.sortIATAIsoCountryList(IATAIsoCountryDAO.getIsoCountries(), 'Name')){
             if(c.Name != 'All Countries'){
                 availableCountries.add(new SelectOption(c.Id, c.Name));
             }

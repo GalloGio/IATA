@@ -39,7 +39,7 @@ public with sharing class AMS_PCI_Compliant_Mass_OSCAR_CreationCtr{
         get{
             if(availableCountries == null){
                 availableCountries = new List<SelectOption>();
-                for (IATA_ISO_Country__c c : IATAIsoCountryDAO.getIsoCountriesByCaseBSPCountryNotNull()) {
+                for (IATA_ISO_Country__c c : IATAIsoCountryDAO.sortIATAIsoCountryList(IATAIsoCountryDAO.getIsoCountriesByCaseBSPCountryNotNull(), 'Name')) {
                     if(c.Region__c == region && c.Sub_Region__c != 'USA'){
                         if(operation == 'PCI' || c.ANG_Enable_NewGen__c){
                             availableCountries.add(new SelectOption(c.Id , c.Name));

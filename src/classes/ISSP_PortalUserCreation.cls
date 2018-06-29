@@ -151,7 +151,7 @@ public with sharing class ISSP_PortalUserCreation {
     public List<SelectOption> getCountries() {
         List<SelectOption> options = new List<SelectOption>();
         
-        List <IATA_ISO_Country__c> isoList = IATAIsoCountryDAO.getIsoCountries();
+        List <IATA_ISO_Country__c> isoList = IATAIsoCountryDAO.sortIATAIsoCountryList(IATAIsoCountryDAO.getIsoCountries(), 'Name');
         options.add(new SelectOption('', '--None--'));
         for(IATA_ISO_Country__c iso : isoList){
             options.add(new SelectOption(iso.Id,iso.Name));

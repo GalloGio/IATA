@@ -1981,7 +1981,7 @@ for (string topicver:listofAllowedTopics){
             isoList = IATAIsoCountryDAO.sortIATAIsoCountryList(IATAIsoCountryDAO.getIsoCountriesByCaseBSPCountryNotNull(), 'IATA_Country_IT__c');
         }
         else{
-            isoList = IATAIsoCountryDAO.getIsoCountriesByCaseBSPCountryNotNull();
+            isoList = IATAIsoCountryDAO.sortIATAIsoCountryList(IATAIsoCountryDAO.getIsoCountriesByCaseBSPCountryNotNull(), 'Name');
         }
 
         options.add(new SelectOption('', '--None--'));
@@ -2155,7 +2155,7 @@ for (string topicver:listofAllowedTopics){
     */
     public static list<IATA_ISO_Country__c> getIsoCountryList()
     {
-        return IATAIsoCountryDAO.getIsoCountriesByCaseBSPCountryNotNull();
+        return IATAIsoCountryDAO.sortIATAIsoCountryList(IATAIsoCountryDAO.getIsoCountriesByCaseBSPCountryNotNull(), 'Name');
     }
 
     /**

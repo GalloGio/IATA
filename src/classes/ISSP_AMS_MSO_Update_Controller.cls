@@ -150,7 +150,8 @@ public without sharing class ISSP_AMS_MSO_Update_Controller {
     }
     
     public void refreshStates(){
-        list<IATA_ISO_Country__c> isoList = IATAIsoCountryDAO.getIsoCountriesByIds(new Set<ID>{msoAccount.IATA_ISO_Country__c});
+        list<IATA_ISO_Country__c> isoList = IATAIsoCountryDAO.sortIATAIsoCountryList(
+            IATAIsoCountryDAO.getIsoCountriesByIds(new Set<ID>{msoAccount.IATA_ISO_Country__c}), 'Name');
         
         IATA_ISO_Country__c iso = isoList[0];    
             

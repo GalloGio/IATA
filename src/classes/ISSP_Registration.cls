@@ -1675,7 +1675,6 @@ public without sharing class ISSP_Registration {
 
         }
 
-
     }
 
 	//TC 2017-0516
@@ -1683,7 +1682,7 @@ public without sharing class ISSP_Registration {
 		get{
 			if(shpCountry == null) {
 				List<SelectOption> options = new List<SelectOption>();
-				for(IATA_ISO_Country__c iso : IATAIsoCountryDAO.getIsoCountries()){
+				for(IATA_ISO_Country__c iso : IATAIsoCountryDAO.sortIATAIsoCountryList(IATAIsoCountryDAO.getIsoCountries(), 'Name')){
                     if(iso.Name != 'All Countries' && iso.Name != 'NO COUNTRY'){
 						options.add(new SelectOption(iso.ISO_Code__c,iso.Name));
                     }

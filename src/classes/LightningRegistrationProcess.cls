@@ -203,7 +203,7 @@ public without sharing class LightningRegistrationProcess{
 
     @AuraEnabled
     public Static List<String> GetFieldPicklistValuesCountry(){
-        List <IATA_ISO_Country__c> countries = IATAIsoCountryDAO.getIsoCountries();
+        List <IATA_ISO_Country__c> countries = IATAIsoCountryDAO.sortIATAIsoCountryList(IATAIsoCountryDAO.getIsoCountries(), 'Name');
   
         List <String> cnt = new List <String>();
         cnt.add('');

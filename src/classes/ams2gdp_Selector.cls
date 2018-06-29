@@ -125,7 +125,7 @@ public class ams2gdp_Selector
 	public static Map<String, String> getPhoneCodesByCountry()
 	{
 		Map<String, String> result = new Map<String, String>(); /*, Phone_Area_Codes__c*/
-		for (IATA_ISO_Country__c c : IATAIsoCountryDAO.getIsoCountries()) {
+		for (IATA_ISO_Country__c c : IATAIsoCountryDAO.sortIATAIsoCountryList(IATAIsoCountryDAO.getIsoCountries(), 'Name')) {
 			result.put(c.ISO_Code__c, c.International_dialing_code_ISD__c);
 		}
 
