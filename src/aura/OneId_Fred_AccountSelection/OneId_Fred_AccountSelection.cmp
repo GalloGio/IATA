@@ -3,7 +3,7 @@
 	<aura:handler name="init" value="{!this}" action="{!c.doInit}"/>
   <aura:handler name="render" value="{!this}" action="{!c.onRender}"/>
   <aura:registerEvent name="sendParams" type="c:oneIdURLParams"/>
-
+  <aura:registerEvent name="StepCompletionNotification" type="c:OneId_StepCompletion_EVT"/>
 <!-- INTPUT -->
   <aura:attribute name="serviceName" type="String" />
   <aura:attribute name="label" type="String" access="public"/>

@@ -179,10 +179,17 @@
         action.setCallback(this, function(a) {
             
 
-            var result = a.getReturnValue().success;
+            var result = a.getReturnValue().success;            
             // redirect to a new page when registration is done
-            if(result) {
-                if(component.get("v.isGuest"))
+            if(result) {                
+                component.getEvent("StepCompletionNotification")
+                    .setParams({
+                        "stepNumber" : 3,
+                        "isComplete" : true,
+                         })
+                    .fire();
+
+                /*if(component.get("v.isGuest"))
                     window.location.href = "/identity/s/registrationcomplete?serviceName=FRED";
                 else {
                     var confirmationPage = '/registrationcomplete?serviceName=FRED';
@@ -192,7 +199,7 @@
                       "isredirect" :true
                     });
                     urlEvent.fire();
-                }
+                }*/                
             }
             
             if(!result) {
@@ -212,6 +219,7 @@
                 */
                  console.log('end');
             } 
+            $A.util.toggleClass(component.find("mySpinner"), "slds-hide");
         });
         $A.enqueueAction(action);
     },

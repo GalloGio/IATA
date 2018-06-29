@@ -25040,11 +25040,11 @@ If you continue to experience issues registering for the IATA Customer Portal th
         <value>Registration completed successfully</value>
     </labels>
     <labels>
-        <fullName>OneId_AuthorizationPending</fullName>
+        <fullName>OneId_Authorization_Pending</fullName>
         <language>en_US</language>
         <protected>false</protected>
-        <shortDescription>OneId_RegistrationComplete</shortDescription>
-        <value>Autorization Pending</value>
+        <shortDescription>OneId_Authorization_Pending</shortDescription>
+        <value>Authorization Pending.</value>
     </labels>
     <labels>
         <fullName>OneId_Registration_Error_BusinessPhone</fullName>
