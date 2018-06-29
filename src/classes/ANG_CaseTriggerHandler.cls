@@ -113,17 +113,18 @@ public class ANG_CaseTriggerHandler {
 
 		//List<Financial_Security__c> financialSecurities = [SELECT Id, Account__c FROM Financial_Security__c WHERE Reception_Case__c IN newMap.keySet() AND Security_Status__c IN ('Close to Expiry Date','Active')];
 		for(Account a : [SELECT Id, 
-							(SELECT Id, Financial_Security_Amount__c FROM Cases),
-							(SELECT Id, Account__c FROM Financial_Securities__r WHERE Reception_Case__c IN :caseIds AND Security_Status__c IN ('Close to Expiry Date','Active')), 
+							(SELECT Id, Financial_Security_Amount__c FROM Cases WHERE Id IN :caseIds),
+							(SELECT Id, Account__c, Release_Case__c FROM Financial_Securities__r WHERE Reception_Case__c IN :caseIds AND Security_Status__c IN ('Close to Expiry Date','Active')), 
 							(SELECT Id, ANG_AccountId__c, ANG_Minimum_Financial_Security__c FROM RHC_Informations__r) 
 						FROM Account
 						WHERE ANG_IsNewGenAgency__c = true AND Id IN :accsIds]){
 
-			if(!a.Financial_Securities__r.isEmpty() && !a.RHC_Informations__r.isEmpty()){
-				a.RHC_Informations__r[0].ANG_Minimum_Financial_Security__c = a.Financial_Securities__r[0].ANG_Minimum_Financial_Security__c;
-				rhcInfos.add(a.RHC_Informations__r[0]);
-			}
+			if(!a.Financial_Securities__r.isEmpty() && !a.RHC_Informations__r.isEmpty() 
+				&& a.Cases[0].Financial_Security_Amount__c != a.RHC_Informations__r[0].ANG_Minimum_Financial_Security__c){
 
+					a.RHC_Informations__r[0].ANG_Minimum_Financial_Security__c = a.Cases[0].Financial_Security_Amount__c;
+					rhcInfos.add(a.RHC_Informations__r[0]);													
+			}
 		}
 
 		if(rhcInfos.isEmpty()) return;
@@ -131,16 +132,4 @@ public class ANG_CaseTriggerHandler {
 		update rhcInfos;
 	}
 
-
-
-
-		/*
-		if(!financialSecurities.isEmpty()){
-
-			Set<Id> accsIds = new Set<Id>();
-			for(Financial_Security__c fs :financialSecurities){
-				accsIds.add(fs.Account__c)
-			}
-
-		}*/
 }
