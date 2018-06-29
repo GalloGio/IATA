@@ -213,7 +213,7 @@
                     <label>M,G</label>
                 </value>
                 <value>
-                    <fullName>C</fullName>
+                    <fullName>C,R</fullName>
                     <default>false</default>
                     <label>C</label>
                 </value>

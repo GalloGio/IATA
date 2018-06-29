@@ -913,8 +913,6 @@
             />
         </apex:repeat>
         
-        <apex:variable var="isPartnership" value="{!BEGINS(sectorValue,'Travel_Agent') && OR(hqAccount.Ownership='Partnership',newForm.ISSP_AMS_Legal_Status__c=='Partnership')}"/>
-        
         <apex:pageBlock rendered="{!BEGINS(sectorValue,'Travel_Agent') && !isNoticeOfChange && NOT(isPartnership)}">
             <apex:form id="FinalForm">
                 <apex:facet name="header">

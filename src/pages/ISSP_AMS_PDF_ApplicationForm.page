@@ -705,8 +705,6 @@
                 </apex:pageBlock>
             </div>
 
-            <apex:variable var="isPartnership" value="{!OR(hqAccount.Ownership='Partnership',newForm.ISSP_AMS_Legal_Status__c=='Partnership')}"/>
-
             <!-- ************************* T&C ************************* -->
             <div>
                 <table class="aptable">
