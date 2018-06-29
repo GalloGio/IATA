@@ -65,7 +65,7 @@
         <description>Capture Form Lead General</description>
         <protected>false</protected>
         <recipients>
-            <recipient>koht@iata.org.inactive</recipient>
+            <recipient>koht@iata.org</recipient>
             <type>user</type>
         </recipients>
         <recipients>

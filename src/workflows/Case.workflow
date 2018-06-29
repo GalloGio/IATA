@@ -143,7 +143,7 @@
     </alerts>
     <alerts>
         <fullName>Approved_Ad_hoc_calendar_change</fullName>
-        <ccEmails>iccso@iata.org,efs@iata.org</ccEmails>
+        <ccEmails>iccso@iata.org,efs@iata.org,efclient@iata.org</ccEmails>
         <description>Approved - Ad-hoc calendar change</description>
         <protected>false</protected>
         <recipients>
@@ -1267,15 +1267,11 @@
             <type>user</type>
         </recipients>
         <recipients>
-            <recipient>al-maanis@iata.org</recipient>
-            <type>user</type>
-        </recipients>
-        <recipients>
             <recipient>armientoe@iata.org</recipient>
             <type>user</type>
         </recipients>
         <recipients>
-            <recipient>batagliaf@iata.org</recipient>
+            <recipient>badanovam@iata.org</recipient>
             <type>user</type>
         </recipients>
         <recipients>
@@ -1291,11 +1287,11 @@
             <type>user</type>
         </recipients>
         <recipients>
-            <recipient>farisd@iata.org</recipient>
+            <recipient>girondoe@iata.org</recipient>
             <type>user</type>
         </recipients>
         <recipients>
-            <recipient>girondoe@iata.org</recipient>
+            <recipient>guzmanro@iata.org</recipient>
             <type>user</type>
         </recipients>
         <recipients>
@@ -1339,15 +1335,19 @@
             <type>user</type>
         </recipients>
         <recipients>
+            <recipient>naumenkoy@iata.org</recipient>
+            <type>user</type>
+        </recipients>
+        <recipients>
+            <recipient>navar@iata.org</recipient>
+            <type>user</type>
+        </recipients>
+        <recipients>
             <recipient>ogandoi@iata.org</recipient>
             <type>user</type>
         </recipients>
         <recipients>
             <recipient>paredesc@iata.org</recipient>
-            <type>user</type>
-        </recipients>
-        <recipients>
-            <recipient>pommiers@iata.org</recipient>
             <type>user</type>
         </recipients>
         <recipients>
@@ -1383,7 +1383,11 @@
             <type>user</type>
         </recipients>
         <recipients>
-            <recipient>tadrosc@iata.org</recipient>
+            <recipient>taverasr@iata.org</recipient>
+            <type>user</type>
+        </recipients>
+        <recipients>
+            <recipient>theryg@iata.org</recipient>
             <type>user</type>
         </recipients>
         <recipients>
@@ -13751,7 +13755,7 @@ Case(month(datevalue(now()))+1,1,31,2,28,3,31,4,30,5,31,6,30,7,31,8,31,9,30,10,3
         <criteriaItems>
             <field>Account.Region_formula__c</field>
             <operation>equals</operation>
-            <value>Europe,Africa &amp; Middle East</value>
+            <value>Europe,Africa &amp; Middle East,Americas</value>
         </criteriaItems>
         <criteriaItems>
             <field>Account.CCG_Participant__c</field>
@@ -15072,7 +15076,7 @@ Change the case status to “Agent Notified (mail)” if case status was “Agen
         <criteriaItems>
             <field>Case.SuppliedEmail</field>
             <operation>equals</operation>
-            <value>garciam@iata.org,shalbakf@iata.org</value>
+            <value>garciam@iata.org,shalbakf@iata.org,info.sce@iata.org</value>
         </criteriaItems>
         <triggerType>onCreateOrTriggeringUpdate</triggerType>
     </rules>
@@ -15133,7 +15137,7 @@ Change the case status to “Agent Notified (mail)” if case status was “Agen
             <type>FieldUpdate</type>
         </actions>
         <active>true</active>
-        <booleanFilter>(1 AND 2 AND 3 AND 4 AND (5 OR (6 AND 7)) AND (10 OR (11 AND 12 AND 13 AND 17 AND 20)) AND 16 AND 18 AND 19 AND 21) OR 8 OR 9 OR (14 AND 15)</booleanFilter>
+        <booleanFilter>(1 AND 2 AND 3 AND 4 AND (5 OR (6 AND 7)) AND (10 OR (11 AND 12 AND 13 AND 17 AND 20)) AND 16 AND 18 AND 19 AND 21 AND 22) OR 8 OR 9 OR (14 AND 15)</booleanFilter>
         <criteriaItems>
             <field>Case.RecordTypeId</field>
             <operation>notEqual</operation>
@@ -15237,7 +15241,12 @@ Change the case status to “Agent Notified (mail)” if case status was “Agen
         <criteriaItems>
             <field>Case.Reason1__c</field>
             <operation>notEqual</operation>
-            <value>Financial review opt-in / opt-out</value>
+            <value>Financial review opt-in / opt-out,Change of Trade Name,Change of Hierarchy</value>
+        </criteriaItems>
+        <criteriaItems>
+            <field>Case.Reason1__c</field>
+            <operation>notEqual</operation>
+            <value>Annual revalidation</value>
         </criteriaItems>
         <description>If the case should be invisible on the portal uncheck the field &quot;Visible on ISS Portal&quot;</description>
         <triggerType>onAllChanges</triggerType>
@@ -15249,7 +15258,7 @@ Change the case status to “Agent Notified (mail)” if case status was “Agen
             <type>FieldUpdate</type>
         </actions>
         <active>true</active>
-        <booleanFilter>((1 OR 2 OR 3 OR 4 OR (10 AND (11 OR 12 OR 16 OR 17 OR 19))) AND ((5 AND 6) OR (17 AND 18))) OR ((7 AND 8 AND 9) AND 6) OR (13 AND 14) OR 15</booleanFilter>
+        <booleanFilter>((1 OR 2 OR (3 AND (21 AND 22)) OR 4 OR (10 AND (11 OR 12 OR 16 OR 17 OR 19 OR 20))) AND ((5 AND 6) OR (17 AND 18))) OR ((7 AND 8 AND 9) AND 6) OR (13 AND 14) OR 15</booleanFilter>
         <criteriaItems>
             <field>Case.RecordTypeId</field>
             <operation>equals</operation>
@@ -15343,7 +15352,22 @@ Change the case status to “Agent Notified (mail)” if case status was “Agen
         <criteriaItems>
             <field>Case.Reason1__c</field>
             <operation>equals</operation>
-            <value>Financial review opt-in / opt-out</value>
+            <value>Financial review opt-in / opt-out,Change of Trade Name,Change of Hierarchy</value>
+        </criteriaItems>
+        <criteriaItems>
+            <field>Case.Reason1__c</field>
+            <operation>equals</operation>
+            <value>Annual revalidation</value>
+        </criteriaItems>
+        <criteriaItems>
+            <field>Case.RecordTypeId</field>
+            <operation>notEqual</operation>
+            <value>IDFS Airline Participation Process</value>
+        </criteriaItems>
+        <criteriaItems>
+            <field>Case.Reason1__c</field>
+            <operation>notEqual</operation>
+            <value>IATA Easy Pay</value>
         </criteriaItems>
         <description>Enables the &quot;Visible on ISS Portal&quot;  checkbox for case record types that should by default be visible on the portal. Users can then change this option to hide the record on the portal.</description>
         <triggerType>onCreateOrTriggeringUpdate</triggerType>
