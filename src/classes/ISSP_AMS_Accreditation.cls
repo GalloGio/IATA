@@ -2968,19 +2968,6 @@ public without sharing class ISSP_AMS_Accreditation {
             return goToStep4();
         }
         
-        if (newForm.ISSP_AMS_Legal_Status__c=='Partnership') {
-            //Get File identifiers for AmzonFile records assoc. with case
-            list<AmazonFile__c> listAmazonFile = [
-                    SELECT Id
-                    FROM AmazonFile__c
-                    WHERE Case__c = :newCase.Id
-                    AND File_Identifier__c = :FILE_ID_FOR_PARTNERSHIP];
-            if (listAmazonFile.isEmpty()) {
-                ApexPages.addmessage(new ApexPages.message(ApexPages.severity.ERROR, Label.ISSP_AMS_Form_Missing_Signed_File));
-                return null;
-            }
-        }
-
         if (!newform.Accept_terms_and_conditions__c) {
             ApexPages.addmessage(new ApexPages.message(ApexPages.severity.ERROR, Label.ISSP_AMS_Accept_TOS));
             return null;
@@ -3009,6 +2996,18 @@ public without sharing class ISSP_AMS_Accreditation {
             System.Debug('isHOAccredited: ' + isHOAccredited);
 
             if (!isNoticeOfChange) {
+                //ONLY FOR PARTNERSHIP: Check if the signed PDF was uploaded to Amazon
+                if (getIsPartnership()) {
+                    list<AmazonFile__c> listAmazonFile = [
+                            SELECT Id
+                            FROM AmazonFile__c
+                            WHERE Case__c = :newCase.Id
+                            AND File_Identifier__c = :FILE_ID_FOR_PARTNERSHIP];
+                    if (listAmazonFile.isEmpty()) {
+                        ApexPages.addmessage(new ApexPages.message(ApexPages.severity.ERROR, Label.ISSP_AMS_Form_Missing_Signed_File));
+                        return null;
+                    }
+                }
                 if (amsOfficeType == 'Branch' || newCase.Reason1__c == AMS_Utils.CASE_REASON_BR_ABROAD) {
                     createBranchAccount();
                     if(newCase.Reason1__c == AMS_Utils.CASE_REASON_BR_ABROAD)
@@ -8316,6 +8315,18 @@ system.debug('aqui sectorValue ' + sectorValue);
         } else {
             system.debug('Add notification ERROR: no portal admins found on HO account');
         }
+    }
+    
+    /**
+        Return true if this forms is considered Partnership
+        There are some differences in the page and the final PDF whe the form is partnership
+        Those differences apply to both New Application and Notice Of Change
+    **/
+    public Boolean getIsPartnership() {
+        Boolean result = this.sectorValue=='Travel_Agent' && 
+            (this.hqAccount.Ownership=='Partnership' || this.newForm.ISSP_AMS_Legal_Status__c=='Partnership');
+        System.debug('**Is Partnership ' + result);
+        return result;
     }
 
     public Pagereference runOptInOut() {

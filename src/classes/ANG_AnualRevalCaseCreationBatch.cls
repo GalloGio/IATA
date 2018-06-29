@@ -6,6 +6,7 @@ global class ANG_AnualRevalCaseCreationBatch implements Database.Batchable<sObje
 
 	global List<ANG_ConversionHelper.ConversionBatchItem> resultItems;
 
+	global List<String> fieldListContact;
 
 	global ANG_AnualRevalCaseCreationBatch(Set<Id> accountIdsIn) {
 		
@@ -19,7 +20,7 @@ global class ANG_AnualRevalCaseCreationBatch implements Database.Batchable<sObje
 			fieldListAcct.add(field);
 		}
 
-		List<String> fieldListContact = new List<String>();
+		fieldListContact = new List<String>();
 
 		Map<String, Schema.SObjectField> schemaFieldMapContacts = Contact.sObjectType.getDescribe().fields.getMap();
 
@@ -27,7 +28,7 @@ global class ANG_AnualRevalCaseCreationBatch implements Database.Batchable<sObje
 			fieldListContact.add(field);
 		}
 
-		this.query = 'SELECT '+ String.join(fieldListAcct, ', ') + ' , ( SELECT ' +String.join(fieldListContact, ', ') + ' FROM Contacts) FROM Account WHERE Id in:accountIds';
+		this.query = 'SELECT '+ String.join(fieldListAcct, ', ') + ' FROM Account WHERE Id in:accountIds';
 
 		this.accountIds = accountIdsIn;
 	}
@@ -42,14 +43,22 @@ global class ANG_AnualRevalCaseCreationBatch implements Database.Batchable<sObje
 		System.SavePoint sp;
 
 		Account acct = (Account) scope.get(0);
-
-		try{
+		
+        System.debug('Starting to process account ' + acct);
+        
+        try{
 	
 			sp = Database.setSavePoint();
 
+            String queryContacts = 'SELECT ' +String.join(fieldListContact, ', ') + ' FROM Contact where accountId = \''+acct.Id+'\'';
+        
+        	System.debug('Query is:'+queryContacts);
+        
+			List<Contact> contacts = Database.query(queryContacts);
+            
 			System.debug('Creating Oscar for Reval process for account ' + acct.Id + '('+acct.IATACode__c+')');
 
-			Id caseIdCreate = ANG_OscarProcessHelper.createRevalidationOscar(acct, acct.Contacts, true);
+			Id caseIdCreate = ANG_OscarProcessHelper.createRevalidationOscar(acct, contacts, true);
 
 			System.debug('Case created with Id : ' + caseIdCreate );
 			
@@ -60,9 +69,11 @@ global class ANG_AnualRevalCaseCreationBatch implements Database.Batchable<sObje
 
 		}catch(Exception e){
 			
+            System.debug('Exception processing account ' + acct.Id + ':' + e.getStackTraceString());
+            
 			ANG_ConversionHelper.ConversionBatchItem item = new ANG_ConversionHelper.ConversionBatchItem(new ANG_ConversionHelper.HierarchyStructure(acct), 1, BC.getJobId(), true, e.getMessage());
 
-			System.debug(item);resultItems.add(item);Database.rollback(sp);throw e;
+			System.debug(item);resultItems.add(item);Database.rollback(sp);//throw e;
 
 			//Database.rollback(sp);resultItems.add(acct.IATACode__c + ' - Error:' + e.getMessage());throw e;
 		}
@@ -84,7 +95,7 @@ global class ANG_AnualRevalCaseCreationBatch implements Database.Batchable<sObje
 		mail.setSenderDisplayName('Apex Newgen Anual Revalidation Module');
 		mail.setSubject('Batch Processing '+a.Status);
 
-		String toReturnBody = 'The Batch Apex job ('+BC.getJobId()+')processed  '+a.TotalJobItems+' batches with '+a.NumberOfErrors+' failures.'+' Job Item processed are'+a.JobItemsProcessed+'\n\n';
+		String toReturnBody = 'The Batch Apex job ('+BC.getJobId()+')processed  '+a.TotalJobItems+' batches.'+' Job Item processed are'+a.JobItemsProcessed+'\n\n';
 		
 		toReturnBody+= ':: Execution Summay ::'+'\n';
 	
