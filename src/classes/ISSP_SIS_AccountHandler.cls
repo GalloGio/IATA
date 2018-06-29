@@ -110,10 +110,7 @@ public with sharing class ISSP_SIS_AccountHandler {
         try {
             // if is null initialize list of allowed countries using the CS
             if (ALLOWED_COUNTRIES==null) {
-                ALLOWED_COUNTRIES = new map<Id,IATA_ISO_Country__c>(
-                    [SELECT Id
-                    FROM IATA_ISO_Country__c
-                    WHERE ISO_Code__c IN :ISSP_SIS_Account_Allowed_Countries__c.getAll().keyset()]).keyset();
+                ALLOWED_COUNTRIES = new map<Id,IATA_ISO_Country__c>(IATAIsoCountryDAO.getIsoCountryByIsoCodes(ISSP_SIS_Account_Allowed_Countries__c.getAll().keyset())).keyset();
             }
             return account.RecordtypeId==RT_AGENCY &&
                 (account.Quality__c.contains('YES') || account.Quality__c.contains('015w0000001yCfW')) &&
@@ -167,9 +164,7 @@ public with sharing class ISSP_SIS_AccountHandler {
         for (Account account: listAccount) {
             setCountryId.add(account.IATA_ISO_Country__c);
         }
-        map<String,IATA_ISO_Country__c> mapCountries = new map<String,IATA_ISO_Country__c>(
-            [SELECT Id, ISO_Code__c FROM IATA_ISO_Country__c WHERE id IN :setCountryId]
-        );
+        map<String,IATA_ISO_Country__c> mapCountries = new map<String,IATA_ISO_Country__c>(IATAIsoCountryDAO.getIsoCountriesByIds(setCountryId));
         
         for (Account account: listAccount) {
             // include country objetct in the account

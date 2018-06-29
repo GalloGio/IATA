@@ -60,13 +60,15 @@ public class IATAIsoCountryDAO {
                                                         Enable_Minor_Changes_from_Portal__c, AMS_Accreditation_New_Labels__c,
                                                         EBulletin_enabled__c,
 
-                                                        //ISSP_AMS_MSO_Update_Controller.cls
                                                         (SELECT Id, Name, ISO_Code__c
                                                         FROM IATA_ISO_States__r
-                                                        ORDER BY Name)
+                                                        ORDER BY Name),
 
-											  	FROM IATA_ISO_Country__c
-											  	ORDER BY Name]);
+                                                        (SELECT Id, Minimum_DGR_BR__c, Minimum_DGR_HO__c, Location_Class__c, RecordType.Name, 
+                                                        		Threshold__c
+													   	FROM AMS_Country_Specific_Attributes__r)
+
+											  	FROM IATA_ISO_Country__c ]);
 	}
 
 	/**
@@ -223,12 +225,9 @@ public class IATAIsoCountryDAO {
 
 		List<IATA_ISO_Country__c> isoCountryList = new List<IATA_ISO_Country__c>();
 		
-		for(String aimsAreaName : aimsAreaNamesList){
-			for(IATA_ISO_Country__c isoCountry : IATAIsoCountryDAO.getIsoCountries()){
-				if(isoCountry.AIMS_Area_Name__c == aimsAreaName){
-					isoCountryList.add(isoCountry);
-					break;
-				}
+		for(IATA_ISO_Country__c isoCountry : IATAIsoCountryDAO.getIsoCountries()){
+			if(aimsAreaNamesList.contains(isoCountry.AIMS_Area_ID__c)){
+				isoCountryList.add(isoCountry);
 			}
 		}
 		return isoCountryList;
@@ -242,6 +241,24 @@ public class IATAIsoCountryDAO {
 	 */
 	public static List<IATA_ISO_Country__c> getIsoCountriesByAIMSAreaName(String aimsAreaName){
 		return getIsoCountriesByAIMSAreaName(new Set<String>{aimsAreaName});
+	}
+
+	/**
+	 * Method that return IATA_ISO_Country list filtered by Case_BSP_Country__c
+	 *
+	 * @param Set of Strings - IsoCodes
+	 * @return List of IATA_ISO_Country
+	 */
+	public static List<IATA_ISO_Country__c> getIsoCountriesByCaseBSPCountries(Set<String> caseBSPCountries){
+
+		List<IATA_ISO_Country__c> isoCountryList = new List<IATA_ISO_Country__c>();
+		
+		for(IATA_ISO_Country__c isoCountry : IATAIsoCountryDAO.getIsoCountries()){
+			if(caseBSPCountries.contains(isoCountry.Case_BSP_Country__c)){
+				isoCountryList.add(isoCountry);
+			}
+		}
+		return isoCountryList;
 	}
 
 
@@ -299,8 +316,11 @@ public class IATAIsoCountryDAO {
 
 
 	/**
-	 *Method that sort the list
+	 * Sort the list of IATA_ISO_Country__c using as field a parameter
 	 *
+	 * @param List<IATA_ISO_Country__c> isoCountryList
+	 * @param String sortedField 
+	 * @return List of IATA_ISO_Country__c
 	 */
 	public static List<IATA_ISO_Country__c> sortIATAIsoCountryList(List<IATA_ISO_Country__c> isoCountryList, String sortedField){
 
@@ -318,7 +338,6 @@ public class IATAIsoCountryDAO {
 		}
 
 		return sortedIsoCountryList;
-
 	}
 
 
@@ -334,12 +353,12 @@ public class IATAIsoCountryDAO {
 	    // Constructor 
 	    public IATAIsoCountryWrapper(IATA_ISO_Country__c c, String sortedField) {
 	        this.country = c;
-	        field = sortedField;
+	        this.field = sortedField;
 	    }
 	    
 	    // Compare opportunities based on the opportunity amount.
 	    public Integer compareTo(Object compareTo) {
-	        // Cast argument to OpportunityWrapper
+	        // Cast argument to IATAIsoCountryWrapper
 	        IATAIsoCountryWrapper compareToContry = (IATAIsoCountryWrapper)compareTo;
 	        
 	        // The return value of 0 indicates that both elements are equal.

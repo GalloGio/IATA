@@ -78,15 +78,12 @@ global class AMS_AgencyRegulationAutoRenewal implements Database.Batchable<sObje
 		//minimum requirements for location class 'R'
 		Map<String, Integer> minimumHODgrRequirements = new Map<String, Integer>();
 		Map<String, Integer> minimumBRDgrRequirements = new Map<String, Integer>();
-		for(IATA_ISO_Country__c country : [SELECT Id, (SELECT Id, Minimum_DGR_BR__c, Minimum_DGR_HO__c, Location_Class__c
-													   FROM AMS_Country_Specific_Attributes__r
-													   WHERE RecordType.Name = 'DGR Minimum Requirements')
-										   FROM IATA_ISO_Country__c
-										   WHERE Id IN :isoCountries])
-		{
+
+		for(IATA_ISO_Country__c country : IATAIsoCountryDAO.getIsoCountriesByIds(isoCountries))	{
+
 			system.debug('country.AMS_Country_Specific_Attributes__r ' + country.AMS_Country_Specific_Attributes__r);
 			for(AMS_Country_Specific_Attribute__c att : country.AMS_Country_Specific_Attributes__r){
-				if(att != null){
+				if(att != null && att.RecordType.Name == 'DGR Minimum Requirements' ){
 					minimumHODgrRequirements.put(''+country.Id+att.Location_Class__c, att.Minimum_DGR_HO__c == null ? 0 : Integer.valueOf(att.Minimum_DGR_HO__c));
 					minimumBRDgrRequirements.put(''+country.Id+att.Location_Class__c, att.Minimum_DGR_BR__c == null ? 0 : Integer.valueOf(att.Minimum_DGR_BR__c));
 				}

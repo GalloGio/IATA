@@ -231,8 +231,7 @@ public class AMS_IataCodeRangesLoaderCtrl2{
         }  
         
         //clean DATA
-        List<Code_Range__c > crs =[select Id, name from Code_Range__c ];
-        //Map<String,Code_Range__c > existingRangesMap = new Map<String,Code_Range__c > ();
+        List<Code_Range__c> crs = CodeRangeDAO.getAllCodeRanges();
         
         System.debug('[IATA CODE GENERATION] Existing Ranges : '+crs.size());
         for(Code_Range__c c:crs){  

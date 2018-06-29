@@ -259,7 +259,11 @@ global class AmsIataCodeGenerator{
                     }
 
                     String countryDefaultState = theAccreditation.Branch_Office_Country__r.AMS_Default_State__c;
-                    List<IATA_ISO_State__c> defaultIsoStateList = [select id, Name, ISO_Code__c from iata_iso_state__c where ISO_Code__c = :countryDefaultState and IATA_ISO_Country__c = :theAccreditation.Branch_Office_Country__c];
+                    List<IATA_ISO_State__c> defaultIsoStateList = new List<IATA_ISO_State__c>();
+                    for(IATA_ISO_State__c state : IATAIsoStateDAO.getIsoStateByIsoCodes(new Set<String>{countryDefaultState})){
+                        if(state.IATA_ISO_Country__c == theAccreditation.Branch_Office_Country__c)
+                            defaultIsoStateList.add(state);
+                    }
 
                     if(defaultIsoStateList.isEmpty()){
 
@@ -326,7 +330,11 @@ global class AmsIataCodeGenerator{
                     }
 
                     String countryDefaultState = theAccreditation.Branch_Office_Country__r.AMS_Default_State__c;
-                    List<IATA_ISO_State__c> defaultIsoStateList = [select id, Name, ISO_Code__c from iata_iso_state__c where ISO_Code__c = :countryDefaultState and IATA_ISO_Country__c = :theAccreditation.Branch_Office_Country__c];
+                    List<IATA_ISO_State__c> defaultIsoStateList = new List<IATA_ISO_State__c>();
+                    for(IATA_ISO_State__c state : IATAIsoStateDAO.getIsoStateByIsoCodes(new Set<String>{countryDefaultState})){
+                        if(state.IATA_ISO_Country__c == theAccreditation.Branch_Office_Country__c)
+                            defaultIsoStateList.add(state);
+                    }
 
                     if(defaultIsoStateList.isEmpty()){
 

@@ -34,12 +34,17 @@ trigger RangeNamingConventionTrigger on Code_Range__c (before insert, before upd
         newIataCodeRangePerName.put(aRange.Name, aRange);
     }
     
-    if(!currentIds.isEmpty())
-	    duplicateIataCodeRange  = [select Id, Name from Code_Range__c  where Name in :newIataCodeRangePerName.keySet() and id not in :currentIds];
-	else
-		duplicateIataCodeRange  = [select Id, Name from Code_Range__c  where Name in :newIataCodeRangePerName.keySet()];
+    if(!currentIds.isEmpty()){
+        for(Code_Range__c code : CodeRangeDAO.getCodeRangeByName(newIataCodeRangePerName.keySet())){
+	       if(!currentIds.contains(code.id)){
+                duplicateIataCodeRange.add(code);
+            }
+        }
+	}else{
+		duplicateIataCodeRange  = CodeRangeDAO.getCodeRangeByName(newIataCodeRangePerName.keySet());
+    }
     
-    for(Code_Range__c   dup:duplicateIataCodeRange  ){
+    for(Code_Range__c dup : duplicateIataCodeRange){
         newIataCodeRangePerName.get(dup.Name).addError('Range '+dup.Name+' cannot be create. An other range already exist with same name');
     }
     

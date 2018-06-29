@@ -271,21 +271,12 @@ public class AMS_OscarCaseTriggerHelper {
         }
 
         Map<String, Decimal> thresholds = new Map<String, Decimal>();
-        for(IATA_ISO_Country__c country : [SELECT
-                                                        Id
-                                                        , (SELECT
-                                                                Id
-                                                                , Threshold__c
-                                                                , Location_Class__c
-                                                            FROM AMS_Country_Specific_Attributes__r
-                                                            WHERE RecordType.DeveloperName = 'Irregularity_Threshold'
-                                                            AND Threshold__c != null
-                                                            AND Location_Class__c != null)
-                                                    FROM IATA_ISO_Country__c
-                                                    WHERE Id IN :isoCountries])
-        {
+        for(IATA_ISO_Country__c country : IATAIsoCountryDAO.getIsoCountriesByIds(isoCountries)){
+
             for(AMS_Country_Specific_Attribute__c att : country.AMS_Country_Specific_Attributes__r){
-                thresholds.put(''+country.Id+att.Location_Class__c, att.Threshold__c);
+                if(att.RecordType.DeveloperName == 'Irregularity_Threshold' && att.Threshold__c != null && att.Location_Class__c != null){
+                    thresholds.put(''+country.Id+att.Location_Class__c, att.Threshold__c);
+                }
             }
         }
         System.debug(loggingLevel.Debug, '____ [trg AMS_OscarCaseTriggerHelper - checkIrregularityThresold] thresholds - ' + thresholds);

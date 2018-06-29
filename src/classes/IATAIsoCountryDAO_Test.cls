@@ -6,11 +6,11 @@ public class IATAIsoCountryDAO_Test {
 
 		List<IATA_ISO_Country__c> countryList = new List<IATA_ISO_Country__c>();
 
-		countryList.add(new IATA_ISO_Country__c(Name='Canada', ISO_Code__c = 'CA', Case_BSP_Country__c = 'Canada', AIMS_Area_Name__c = 'CANADA'));
-		countryList.add(new IATA_ISO_Country__c(Name='Chile', ISO_Code__c = 'CL', Case_BSP_Country__c = 'Chile', AIMS_Area_Name__c = 'CHILE'));
-        countryList.add(new IATA_ISO_Country__c(Name='Mexico', ISO_Code__c = 'MX', Case_BSP_Country__c = '', AIMS_Area_Name__c = 'MEXICO'));
-        countryList.add(new IATA_ISO_Country__c(Name='United States', ISO_Code__c = 'US', AIMS_Area_Name__c = 'UNITED STATES'));
-        countryList.add(new IATA_ISO_Country__c(Name='Portugal', ISO_Code__c = 'PT', AIMS_Area_Name__c = 'PORTUGAL'));
+		countryList.add(new IATA_ISO_Country__c(Name='Canada', ISO_Code__c = 'CA', Case_BSP_Country__c = 'Canada', AIMS_Area_Name__c = 'CANADA', Region__C = 'Americas'));
+		countryList.add(new IATA_ISO_Country__c(Name='Chile', ISO_Code__c = 'CL', Case_BSP_Country__c = 'Chile', AIMS_Area_Name__c = 'CHILE', Region__C = 'Americas'));
+        countryList.add(new IATA_ISO_Country__c(Name='Mexico', ISO_Code__c = 'MX', Case_BSP_Country__c = '', AIMS_Area_Name__c = 'MEXICO', Region__C = 'Americas'));
+        countryList.add(new IATA_ISO_Country__c(Name='United States', ISO_Code__c = 'US', AIMS_Area_Name__c = 'UNITED STATES', Region__C = 'Americas'));
+        countryList.add(new IATA_ISO_Country__c(Name='Portugal', ISO_Code__c = 'PT', AIMS_Area_Name__c = 'PORTUGAL', Region__C = 'Europe'));
 
 		insert countryList; 
 	}
@@ -91,20 +91,26 @@ public class IATAIsoCountryDAO_Test {
 
 
 	/**
-	 *
+	 * Test Method that return a list of IATA_ISO_Country__c 
+	 * filtered by Region__C field
 	 */
 	@isTest static void testGetIsoCountriesByRegion(){
 
 		Test.startTest();
 
+		Set<String> regionSet = new Set<String>{'Europe'};
+		List<IATA_ISO_Country__c> isoCountryList = IATAIsoCountryDAO.getIsoCountriesByRegion(regionSet);
+
+		System.assertEquals(isoCountryList.size(), 1);
+		System.assertEquals(isoCountryList.get(0).Name, 'Portugal');
 
 		Test.stopTest();
-
 	} 
 
 
 	/**
-	 *
+	 * Test Method where is returned list of IATA_ISO_Country__c with the field
+	 * CaseBSPCountry not null and not empty.
 	 */
 	@isTest static void testGetIsoCountriesByCaseBSPCountryNotNull(){
 
@@ -122,7 +128,7 @@ public class IATAIsoCountryDAO_Test {
 
 
 	/**
-	 * Method that test the generic comparable class.
+	 * Test Method that orders a list of IATA_ISO_Country__c by the datafield passed by parameter.
 	 * 
 	 */
 	@isTest static void testSortIATAIsoCountryList(){

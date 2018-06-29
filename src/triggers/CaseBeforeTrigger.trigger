@@ -1368,11 +1368,15 @@ trigger CaseBeforeTrigger on Case (before delete, before insert, before update) 
                 CountryNameSet.add(newCase.Country_concerned_by_the_query__c);
             }
             //Gavinho - 27-03-2017 
-            for(IATA_ISO_Country__c iso : [select Id,ISO_Code__c,Name,Region__c,Case_BSP_Country__c from IATA_ISO_Country__c where Name in:CountryNameSet OR Case_BSP_Country__c IN :CountryNameSet]){
+            List<IATA_ISO_Country__c> isoCountryByName = IATAIsoCountryDAO.getIsoCountryByCountriesName(CountryNameSet);
+            List<IATA_ISO_Country__c> isoCountryByCaseBSPCountry = IATAIsoCountryDAO.getIsoCountriesByCaseBSPCountries(CountryNameSet);
+            Set<IATA_ISO_Country__c> setIsoCountry = new Set<IATA_ISO_Country__c>(isoCountryByName);
+            setIsoCountry.addAll(isoCountryByCaseBSPCountry);
+
+            for(IATA_ISO_Country__c iso : setIsoCountry){
                 IATAISOCountryMap.put(iso.Name,iso); //RN-INC392800
-              /*  if(iso.Case_BSP_Country__c != null && !IATAISOCountryMap.containsKey(iso.Case_BSP_Country__c)) //same cases the country has different name that the bsp iso country) 
-                    IATAISOCountryMap.put(iso.Case_BSP_Country__c ,iso);*/
             }
+            
             for(Case newCase : trigger.new){
                 if(IATAISOCountryMap.get(newCase.Country_concerned_by_the_query__c)!=null){
                     system.debug('\n\n\n Region__c '+newCase.Region__c +'\n\n\n');
@@ -1380,7 +1384,7 @@ trigger CaseBeforeTrigger on Case (before delete, before insert, before update) 
                     newCase.IFAP_Country_ISO__c = iso.ISO_Code__c;
                     newCase.BSPCountry__c = iso.Case_BSP_Country__c;
                     newCase.Region__c = iso.Region__c;
-                     system.debug('\n\n\n Region__c '+newCase.Region__c +'\n\n\n');
+                    system.debug('\n\n\n Region__c '+newCase.Region__c +'\n\n\n');
                 }else{
                     newCase.Country_concerned_by_the_query__c = newCase.BSPCountry__c;
                 }

@@ -11,27 +11,27 @@ public class ISO_Country_State_Helper {
 		List<ISO_Country_State_DTO> listCountry = new List<ISO_Country_State_DTO>();
 		ISO_Country_State_DTO oneCountry;
 		
-		for (IATA_ISO_Country__c country : [select Id, ISO_Code__c, Name
-			                                     , (select Id, ISO_Code__c, Name from IATA_ISO_States__r where ISO_Code__c != null and IEC_Valid_SAP__c = true order by Name)
-			                                from IATA_ISO_Country__c
-			                                where ISO_Code__c != null
-			                                  and Name != 'All Countries'
-			                                order by Name]) {
-			oneCountry = new ISO_Country_State_DTO(country.Id, country.ISO_Code__c, country.Name);
-			//*** add only states having name to country structure
-			for (IATA_ISO_State__c state : country.IATA_ISO_States__r)
-                /*if (state.ISO_Code__c.startsWith(country.ISO_Code__c + '-')) */
-                //if (state.Name != state.ISO_Code__c)
-				{
-					oneCountry.StateId.add(state.Id);
-					oneCountry.StateCode.add(state.ISO_Code__c);
-					oneCountry.StateName.add(state.Name);
+		for (IATA_ISO_Country__c country : IATAIsoCountryDAO.sortIATAIsoCountryList(IATAIsoCountryDAO.getIsoCountries(), 'Name')){
+
+			if(country.ISO_Code__c != null && country.Name != 'All Countries'){
+				oneCountry = new ISO_Country_State_DTO(country.Id, country.ISO_Code__c, country.Name);
+
+				//*** add only states having name to country structure
+				for (IATA_ISO_State__c state : country.IATA_ISO_States__r) {
+
+					if(state.ISO_Code__c != null && state.IEC_Valid_SAP__c == true){
+						oneCountry.StateId.add(state.Id);
+						oneCountry.StateCode.add(state.ISO_Code__c);
+						oneCountry.StateName.add(state.Name);
+					}
 				}
-			listCountry.add(oneCountry);
+				listCountry.add(oneCountry);
+			}
 		}
 		
 		return listCountry;
-	} //*** end of "getCountry_State"
+	} 
+	//*** end of "getCountry_State"
 	
 	/****************************************************************************************************
 	    Created by CGI, Thai 2015-10-30
