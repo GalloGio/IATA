@@ -134,22 +134,28 @@
     
     getCommunitySelfRegisterUrl : function (component, event, helpler) {
         var action = component.get("c.getSelfRegistrationUrl");
+
+        var urlParamEncoded = window.location.search.substring(1).toString();                
+        var urlParameters = decodeURIComponent(urlParamEncoded); // Right part after base URL  
+        console.log('aqui urlParamEncoded ' + urlParamEncoded);
+        console.log('aqui urlParameters ' + urlParameters);
+
+        if(urlParameters.indexOf('isFromTosca') > 0){
+            component.set("v.isFromTosca",true);
+        }
+
+        var tosca = component.get("v.isFromTosca");
+        var urlTosca = '';
+        console.log('aqui tosca ' + tosca);
+        
+        if(tosca == true){
+            urlTosca = '?isFromTosca&';
+        }
+
         action.setCallback(this, function(a){
             var rtnValue = a.getReturnValue();
             if (rtnValue !== null) {
-                component.set('v.communitySelfRegisterUrl',rtnValue);
-            }
-        });
-        $A.enqueueAction(action);
-    },
-    
-    getSiteCompleteUrl : function (component, event, helpler) {
-        var action = component.get("c.getSiteCompleteUrl");
-        action.setCallback(this, function(a){
-            var rtnValue = a.getReturnValue();
-            console.log('getSiteCompleteUrl.Callback rtnValue='+JSON.stringify(rtnValue));
-            if (rtnValue !== null) {
-                component.set('v.siteCompleteUrl',rtnValue);
+                component.set('v.communitySelfRegisterUrl',rtnValue+urlTosca);
             }
         });
         $A.enqueueAction(action);

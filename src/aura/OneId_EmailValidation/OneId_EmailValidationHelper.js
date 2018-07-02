@@ -69,10 +69,12 @@
                     c.set("v.showCaptcha", false);
 
                 } else {
+                    
+                    var isFromTosca = c.get("v.isFromTosca");
                     var country = c.get("v.userCountry");
                     var vfOrigin = c.get('v.vfHost');
                     var vfWindow = c.find("vfFrame").getElement().contentWindow;
-                    vfWindow.postMessage({ action: "alohaCallingCAPTCHA",country : country }, vfOrigin);
+                    vfWindow.postMessage({ action: "alohaCallingCAPTCHA",country : country, isFromTosca : isFromTosca }, vfOrigin);
                     emailCmp.set("v.errors", null);
                 }
             }else{

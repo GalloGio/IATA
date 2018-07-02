@@ -2,6 +2,15 @@
 	doInit : function(component, event, helper) {
 		helper.getHostURL(component, event);
         helper.getCommunityName(component, event);
+        
+        var urlParamEncoded = window.location.search.substring(1).toString();                
+        var urlParameters = decodeURIComponent(urlParamEncoded); // Right part after base URL  
+        console.log('aqui urlParamEncoded ' + urlParamEncoded);
+        console.log('aqui urlParameters ' + urlParameters);
+        
+		if(urlParameters.indexOf('isFromTosca') > 0){
+            component.set("v.isFromTosca",true);
+        }
 
          window.addEventListener("message", function(event) {
             var vfOrigin = component.get('v.vfHost');

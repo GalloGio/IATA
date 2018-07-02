@@ -63,11 +63,11 @@
             
             if(event.data.action == "alohaCallingCAPTCHA"){  
                 
-                if(event.data.country != 'CN'){
+                if(event.data.country != 'CN' || event.data.isFromTosca == true){
                     var message = document.getElementById("g-recaptcha-response").value;                                    
                 }
                 
-                if(event.data.country == 'CN'){                    
+                if(event.data.country == 'CN' || event.data.isFromTosca == true){                    
                     parent.postMessage({ action: "alohaCallingCAPTCHA", alohaResponseCAPTCHA : "OK" },  hostURL);
                 }
                 else if (message == ''){                    

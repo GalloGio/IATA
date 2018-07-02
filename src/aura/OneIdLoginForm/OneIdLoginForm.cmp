@@ -20,7 +20,8 @@
     <aura:attribute name="clientIpAddress" type="String" access="private"/>
     <aura:attribute name="serviceName" type="String" />
 
-   
+    <aura:attribute name="isFromTosca" type="Boolean" default="false"/>
+
     <input type="hidden" id="clientIpAddressAjax" value="" />
     
     <aura:handler name="init" value="{!this}" action="{!c.initialize}"/>
@@ -36,18 +37,17 @@
                         <ui:outputRichText value="{!v.errorMessage}"/>
                     </div>
                 </aura:if>
-            </span>            
-            <aura:if isTrue="{!and(v.sanctionCountry,!empty(v.serviceName))}">                
-                    <div id="sanctionCountry">
-                        <ui:outputRichText value="{!$Label.c.ISSP_Sanctions_Message}"/>
-                    </div>
+            </span>
+            <aura:if isTrue="{!and(v.sanctionCountry,!empty(v.serviceName))}">
+                <div id="sanctionCountry">
+                    <ui:outputRichText value="{!$Label.c.ISSP_Sanctions_Message}"/>
+                </div>
             </aura:if>
             <aura:if isTrue="{!and(v.sanctionCountry,!!empty(v.serviceName))}">                
                     <div id="sanctionCountry">
                         <ui:outputRichText value="{!$Label.c.Generic_Sanctions_Message}"/>
                     </div>
             </aura:if>
-            
             <aura:if isTrue="{!!v.sanctionCountry}">
                 <aura:if isTrue="{!v.show90Days}">
                     <div id="userFrozen">
@@ -76,11 +76,18 @@
                         <a href="{!if(v.serviceName != null, v.communityForgotPasswordUrl+'?serviceName='+v.serviceName, v.communityForgotPasswordUrl)}">
                             {!$Label.site.forgot_your_password_q}
                         </a>
-                        <aura:if isTrue="{!v.isSelfRegistrationEnabled}">
-                            |
-                            <a href="{!if(v.serviceName != null, v.communitySelfRegisterUrl+'?serviceName='+v.serviceName, v.communitySelfRegisterUrl)}">
-                                {!$Label.site.new_user_q}
-                            </a>
+                        <aura:if isTrue="{!v.isSelfRegistrationEnabled}">   
+                        |                         
+                            <aura:if isTrue="{!v.isFromTosca}">
+                                <a href="{!v.communitySelfRegisterUrl+'serviceName='+v.serviceName}">
+                                    {!$Label.site.new_user_q}
+                                </a>                            
+                                <aura:set attribute="else">
+                                    <a href="{!if(v.serviceName != null, v.communitySelfRegisterUrl+'?serviceName='+v.serviceName, v.communitySelfRegisterUrl)}">
+                                        {!$Label.site.new_user_q}
+                                    </a>
+                                </aura:set>
+                            </aura:if>
                         </aura:if>                            
                     </div>
                 </div>
