@@ -14,10 +14,8 @@ public class CodeRangeDAO {
 	 */
 	private static Map<ID, Code_Range__c> fetchMapCodeRange(){
 
-		return new Map<ID, Code_Range__c>([SELECT Id, Name,
-											IATA_ISO_State__r.Name, Area__c, Area_Code__c, Prefix__c,
-                 							IATA_ISO_Country__c, IATA_ISO_State__c, 
-                							Max_Range__c, Min_Range__c, ProgramCode__c, Program__c 
+		return new Map<ID, Code_Range__c>([SELECT Id, Name,	IATA_ISO_State__r.Name, Area__c, Area_Code__c, Prefix__c,
+                 								  IATA_ISO_Country__c, IATA_ISO_State__c, Max_Range__c, Min_Range__c, ProgramCode__c, Program__c 
 										   FROM Code_Range__c]);
 	}
 

@@ -18,8 +18,7 @@ public class IATAIsoCountryDAO {
 
 		return new Map<ID, IATA_ISO_Country__c>([SELECT Id, Name, ISO_Code__c, International_dialing_code_ISD__c, Region__c, 
 													  	AMS_Default_State__c, AIMS_Area_Name__c, AIMS_Area_ID__c, AMS_Settlement_System__c, 
-													  	AMS_Settlement_System_CASS__c,
-														Case_BSP_Country__c, IATA_Regional_Office__c, ISO_Code_Numeric__c,
+													  	AMS_Settlement_System_CASS__c, Case_BSP_Country__c, IATA_Regional_Office__c, ISO_Code_Numeric__c,
 
 														//AMS_XML_Generator Fields
 														BSP_Country_free_text__c, CASS_Country_free_text__c,SLA_Type__c, Sub_Region__c, 
@@ -58,7 +57,7 @@ public class IATAIsoCountryDAO {
                                                         Local_language_Agency_details_required__c, Prevent_Portal_Trade_Name_Change__c,
                                                         Enable_Notice_of_Change__c, SAAM_enable_non_IATA_Cargo_Agents__c,
                                                         Enable_Minor_Changes_from_Portal__c, AMS_Accreditation_New_Labels__c,
-                                                        EBulletin_enabled__c,
+                                                        EBulletin_enabled__c, AMS_Vouchers_Benchmark__c, AMS_Max_Vouchers_Per_Year__c,
 
                                                         (SELECT Id, Name, ISO_Code__c
                                                         FROM IATA_ISO_States__r
