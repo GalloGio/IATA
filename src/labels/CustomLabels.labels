@@ -15445,12 +15445,28 @@ The applicant understands and agrees to pay the application, entry and annual fe
         <value>This service enables you to look for Travel and Cargo Agents in the BSP/CASS your Airline is participating in. Simply type the IATA code in the search bar to view the main details and risk related information like the active forms of payment, risk history, their accreditation and risk status, etc.</value>
     </labels>
     <labels>
+        <fullName>ISSP_ANG_IATA_CODE_SEARCH_EQUAL_FINANCIAL_SEC</fullName>
+        <categories>ISSP, ANG</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_ANG_IATA_CODE_SEARCH_EQUAL_FINANCIAL_SEC</shortDescription>
+        <value>Equal to Financial Security</value>
+    </labels>
+    <labels>
         <fullName>ISSP_ANG_IATA_CODE_SEARCH_FINANCIAL_SECURITY_EXISTS</fullName>
         <categories>ISSP,ANG</categories>
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>Financial Security Exists</shortDescription>
         <value>Financial Security Exists</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_ANG_IATA_CODE_SEARCH_FORMULA</fullName>
+        <categories>ISSP, ANG</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_ANG_IATA_CODE_SEARCH_FORMULA</shortDescription>
+        <value>According to Formula</value>
     </labels>
     <labels>
         <fullName>ISSP_ANG_IATA_CODE_SEARCH_HE</fullName>
@@ -15489,7 +15505,7 @@ The applicant understands and agrees to pay the application, entry and annual fe
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>ISSP_ANG_IATA_CODE_SEARCH_RHC</shortDescription>
-        <value>Remittance Holding Capacity equal to Financial Security</value>
+        <value>Remittance Holding Capacity</value>
     </labels>
     <labels>
         <fullName>ISSP_ANG_IATA_CODE_SEARCH_RISK_EVENTS</fullName>
