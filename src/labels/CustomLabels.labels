@@ -799,7 +799,7 @@
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>AMS_PendingHOAccr</shortDescription>
-        <value>You cannot create &quot;New Head Office&quot; application while an another one is open. Check case {0}</value>
+        <value>You cannot create &quot;New Head Office&quot; application while an another one is open. Check case &lt;href=&quot;{0}&quot;&gt;{1}&lt;a&#47;&gt;</value>
     </labels>
     <labels>
         <fullName>AMS_RRejected</fullName>
