@@ -58,7 +58,7 @@
                   				</div>
                                	<span class="saveMode saveModeTradeName" style="line-height: 24px;">
                                 	<apex:outputField value="{!con.Account.TradeName__c}"/>
-                                    <apex:outputLink value="#form" styleClass="saveMode" onclick="$('.saveModeTradeName').hide();$('.editModeTradeName').show();$('.editModeBtn').show();" rendered="{!canChangeTradeName}"> [{!$Label.ISSP_edit_lowercase}]</apex:outputLink>
+                                    <apex:outputLink value="#form" styleClass="saveMode" onclick="$('.saveModeTradeName').hide();$('.editModeTradeName').show();$('.editModeBtn').show();" rendered="{!AND(bIsAdmin,isIATAAgencyAcct,bIsMinorChangeEnabled,!isTerminatedAgent, NOT(bBlockTradeNameChange))}"> [{!$Label.ISSP_edit_lowercase}]</apex:outputLink>
                                     </span>
                             	</div>
                             </div>
