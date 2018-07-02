@@ -15,7 +15,7 @@
     <apex:column >
         <apex:facet name="header">Action</apex:facet>
         <apex:outputPanel >
-            <b>{!row.ApiName}</b> changed from <b>{!row.oldValue}</b> to <b>{!row.newValue}</b>
+            <b>{!row.What}</b> changed from <b>{!row.oldValue}</b> to <b>{!row.newValue}</b>
         </apex:outputPanel>
     </apex:column>
                 

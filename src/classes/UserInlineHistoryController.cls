@@ -10,7 +10,7 @@ public with sharing class UserInlineHistoryController {
         
         //get history records, both standard and custom
         customHistoryList = new List<User_History__c>(
-                            [SELECT Id,CreatedById,CreatedBy.Name,CreatedDate,ApiName__c,Old_Value__c,New_Value__c 
+                            [SELECT Id,CreatedById,CreatedBy.Name,CreatedDate,What__c,Old_Value__c,New_Value__c 
                             FROM User_History__c
                             WHERE User__c =: cp.Id
                             ORDER BY CreatedDate DESC]);
@@ -25,7 +25,7 @@ public with sharing class UserInlineHistoryController {
                                 history.CreatedDate,
                                 history.Old_Value__c,
                                 history.New_Value__c,
-                                history.ApiName__c,
+                                history.What__c,
                                 true));
         }
 
@@ -41,17 +41,15 @@ public with sharing class UserInlineHistoryController {
         public Datetime createdDate {get; set;}
         public String oldValue {get; set;}
         public String newValue {get; set;}
-        public String ApiName {get; set;}
-        //public Boolean isCustom {get; set;}
+        public String what {get; set;}       
 
-        public CountryProfileHistoryWrapper(Id id,String createdByName, Datetime createdDate, String oldValue, String newValue, String ApiName, Boolean isCustom){
+        public CountryProfileHistoryWrapper(Id id,String createdByName, Datetime createdDate, String oldValue, String newValue, String What, Boolean isCustom){
             this.id = id;
             this.createdByName = createdByName;
             this.createdDate = createdDate;
             this.oldValue = oldValue;
             this.newValue = newValue;
-            this.ApiName = ApiName;
-            //this.isCustom = isCustom;
+            this.what = What;            
         }
 
         public Integer compareTo(Object compareTo) {
