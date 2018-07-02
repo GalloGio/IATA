@@ -1436,7 +1436,7 @@ public without sharing class ISSP_AMS_Accreditation {
                 /*** AMSU-37 Start ***/
                 system.debug('newCase: ' + newCase);
                 List<String> csNumber = hasPendingHOAccreditations(newCase);
-                if(!csNumber.isEmpty() != null) {
+                if(!csNumber.isEmpty()) {
                     ApexPages.addmessage(new ApexPages.message(ApexPages.severity.ERROR, String.format(Label.AMS_PendingHOAccr,csNumber)));
                     return null;
                 }
