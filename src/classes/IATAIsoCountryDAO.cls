@@ -37,13 +37,11 @@ public class IATAIsoCountryDAO {
                                                         Acli_Country__c,
 
                                                         AMS_Pilot_Country__c,
-
                                                         Travel_Branch_Country__c, 
                                                         Travel_HO_Country__c, 
                                                         Cargo_Branch_Country__c, 
                                                         Cargo_HO_Country__c, 
                                                         Branches_abroad_not_allowed__c,
-
                                                         Sanctioned_Country__c,
                                                         Profit_Center__c,
                                                         Is_Non_Compliant__c,
@@ -225,7 +223,7 @@ public class IATAIsoCountryDAO {
 		List<IATA_ISO_Country__c> isoCountryList = new List<IATA_ISO_Country__c>();
 		
 		for(IATA_ISO_Country__c isoCountry : IATAIsoCountryDAO.getIsoCountries()){
-			if(aimsAreaNamesList.contains(isoCountry.AIMS_Area_ID__c)){
+			if(aimsAreaNamesList.contains(isoCountry.AIMS_Area_Name__c)){
 				isoCountryList.add(isoCountry);
 			}
 		}
