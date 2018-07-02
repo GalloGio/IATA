@@ -178,6 +178,7 @@ private class LogPhoneCaseControllerTest {
             controller.isNewTaskRequested = true;
             
             controller.Save();
+            controller.cancel();
             
             // Test that the case has been created and not closed
             cases = [SELECT Id, Status FROM Case ORDER BY Id DESC];
