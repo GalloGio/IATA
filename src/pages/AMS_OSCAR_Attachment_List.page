@@ -382,6 +382,14 @@
                         </apex:outputText>
                     </apex:outputPanel>
                 </apex:column>
+                <apex:column headerValue="History" >
+                    <apex:outputPanel layout="block" rendered="{!attach.isAmazon}">
+                        <apex:outputLink value="/{!attach.id}" id="theLink" target="_blank"> History </apex:outputLink>  
+                    </apex:outputPanel>
+                    <apex:outputPanel layout="block" rendered="{!attach.isSalesforce}">
+                        <apex:outputText value="---------"/>  
+                    </apex:outputPanel>
+                </apex:column>
             </apex:pageBlockTable>
 
             <apex:outputPanel styleClass="backdrop"/>
