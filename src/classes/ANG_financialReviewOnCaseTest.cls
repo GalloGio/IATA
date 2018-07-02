@@ -145,4 +145,28 @@ private class ANG_financialReviewOnCaseTest {
         System.assertEquals(1, updatedAcc.Agencies_Applied_Change_codes__r.size(), 'Change Code was not created');
     }
 
+    testMethod static void updateSAAMStatusToUpdateFinancialReview(){  
+        Account beforeUpdateAcc =[select id, ANG_HE_RiskStatus__c,Financial_Review_Result__c,(select id from contacts) from account limit 1];
+        system.assertEquals('B',beforeUpdateAcc.ANG_HE_RiskStatus__c);
+        Test.startTest();
+           Case c = new Case(
+                   RecordTypeId = RecordTypeSingleton.getInstance().RtIDsPerDeveloperNamePerObj.get('Case').get('ProcessEuropeSCE'),
+                   AccountId = beforeUpdateAcc.Id, 
+                   Subject = 'rception case2',
+                   contactId=beforeUpdateAcc.contacts.get(0).Id,
+                   Status = 'Closed', 
+                   Assessment_Performed_Date__c= system.today(),
+                   Financial_Review_Result__c='Satisfactory - New Financial Security',
+                   CaseArea__c = ANG_Risk_Helper.CASE_AREA_RISK_MANAGEMENT_PROCESS,
+                   Reason1__c='Adhoc Review'
+                    );
+           insert c;
+        Test.stopTest();
+        account afterUpdateAcc =[select ANG_HE_RiskStatus__c,Financial_Review_Result__c, (select id from Agencies_Applied_Change_codes__r) from account limit 1];   
+
+        system.assertEquals(c.Financial_Review_Result__c,afterUpdateAcc.Financial_Review_Result__c);
+        system.assertEquals('A',afterUpdateAcc.ANG_HE_RiskStatus__c);
+        System.assertEquals(1, afterUpdateAcc.Agencies_Applied_Change_codes__r.size(), 'Change Code was not created');
+    }
+
 }

@@ -69,11 +69,22 @@ public without sharing class OneIdLightningLoginFormController {
                 system.debug('Portal_User_Frozen_Checkbox__c: ' + oneUser.Portal_User_Frozen_Checkbox__c);                
                 
                 
-                if(String.isNotBlank(startUrl)){
+                //sometimes, javascript from component is passing "undefined". Must be interpreted as NULL
+                if(String.isNotBlank(startUrl) && !startUrl.equalsIgnoreCase('undefined')){
                     //if login is from mobileApp we do not redirect
                     if(startUrl != 'mobileApp') pageLink = startUrl;
 
-                }else if( String.isNotBlank(serviceName) && serviceName == 'ISSP') pageLink = '/ISSP_Homepage';
+                    if( String.isNotBlank(serviceName) && serviceName == 'ISSP'){
+                       //pageLink = '/identity/apex/CommunitiesLanding?serviceName=ISSP&startUrl=' + startUrl;
+					   pageLink = '/apex/CommunitiesLanding?serviceName=ISSP&startUrl=' + startUrl;
+                    }
+
+                }else if( String.isNotBlank(serviceName) && serviceName == 'ISSP'){
+                	 //pageLink = '/ISSP_Homepage';
+                	 //Let's leverage "standard" page's controller doing the magic. Just add the param, redirection will be done by the page controller
+                	 //pageLink = '/identity/apex/CommunitiesLanding?serviceName=ISSP';
+					 pageLink = '/apex/CommunitiesLanding?serviceName=ISSP';
+                }
                 
                 if (oneUser.Portal_User_Frozen_Checkbox__c){
                     show90Days = true;
@@ -109,7 +120,7 @@ public without sharing class OneIdLightningLoginFormController {
             
             if (userListConfirmTempPassword[0].UID__c != '' && userListConfirmTempPassword[0].UID__c != null){
                 String serviceNameParam = String.isEmpty(serviceName) ? '' : '?serviceName='+serviceName;
-                lgn = Site.login(username, password, OneIdUtils.getSiteCompleteUrl() + '/OneId_ChangePassword'+serviceNameParam);
+                lgn = Site.login(username, password, OneIdUtils.getSiteCompleteUrl(OneIdUtils.Mode.IDENTITY).removeEnd('/s') + '/OneId_ChangePassword'+serviceNameParam);
             }
             
             //redirect to startUrl or some other page returned from the login 
@@ -280,12 +291,6 @@ public without sharing class OneIdLightningLoginFormController {
     */
     
     @AuraEnabled
-    public static String getSiteCompleteUrl() {
-        siteCompleteUrl = OneIdUtils.getSiteCompleteUrl();
-        return siteCompleteUrl;
-    }
-
-    @AuraEnabled
     public static Boolean getShow90Days() {
         //show90Days=true;
         return show90Days;
@@ -340,6 +345,32 @@ public without sharing class OneIdLightningLoginFormController {
 	public static void fakemethod () {
 		if (Test.isRunningTest()) {
 			Integer i=0;
+			i=0;
+			i=0;
+			i=0;
+			i=0;
+			i=0;
+			i=0;
+			i=0;
+			i=0;
+			i=0;
+			i=0;
+			i=0;
+			i=0;
+			i=0;
+			i=0;
+			i=0;
+			i=0;
+			i=0;
+			i=0;
+			i=0;
+			i=0;
+			i=0;
+			i=0;
+			i=0;
+			i=0;
+			i=0;
+			i=0;
 			i=0;
 			i=0;
 			i=0;

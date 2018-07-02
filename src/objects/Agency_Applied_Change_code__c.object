@@ -588,6 +588,16 @@
                     <label>NWD</label>
                 </value>
                 <value>
+                    <fullName>OIN</fullName>
+                    <default>false</default>
+                    <label>OIN</label>
+                </value>
+                <value>
+                    <fullName>OOT</fullName>
+                    <default>false</default>
+                    <label>OOT</label>
+                </value>
+                <value>
                     <fullName>PCA</fullName>
                     <default>false</default>
                     <label>PCA</label>
@@ -2447,6 +2457,14 @@ IF(AND(ISPICKVAL(Change_Code__c,&apos;IEP&apos;),OR(ISPICKVAL(Account__r.Locatio
             </values>
             <values>
                 <fullName>NWD</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>OIN</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>OOT</fullName>
                 <default>false</default>
             </values>
             <values>

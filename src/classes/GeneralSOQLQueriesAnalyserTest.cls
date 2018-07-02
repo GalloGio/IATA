@@ -146,6 +146,7 @@ private class GeneralSOQLQueriesAnalyserTest {
         fieldsOfObject = new Map<String,Object>();
         fieldsOfObject.put('STEP6__c',AMS_Utils.PASSED);
         fieldsOfObject.put('Is_PCI_compliant__c','Yes');
+        fieldsOfObject.put('ANG_PCI_compliance_expiry_date__c',Date.today());
 
         oscar = ANG_EntityCreator.updateOscar(oscar, fieldsOfObject);
         update oscar;

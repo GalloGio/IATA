@@ -522,7 +522,7 @@ Values must be Separated by &quot;;&quot;</inlineHelpText>
         <filters>
             <field>Change_Code__c</field>
             <operation>equals</operation>
-            <value>NOT</value>
+            <value>PCI</value>
         </filters>
         <label>AMS_debug</label>
         <language>en_US</language>
