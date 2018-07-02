@@ -8120,6 +8120,13 @@ IFG Customer Services</value>
         <value>Address:</value>
     </labels>
     <labels>
+        <fullName>ISSP_AMS_Agency_Accreditation</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_AMS_Agency_Accreditation</shortDescription>
+        <value>Agency Accreditation</value>
+    </labels>
+    <labels>
         <fullName>ISSP_AMS_Agency_Type</fullName>
         <categories>ISSP, AMS</categories>
         <language>en_US</language>
