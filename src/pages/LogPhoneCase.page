@@ -65,6 +65,17 @@
 					</apex:outputPanel>
 				</apex:pageBlockSectionItem>
 				<apex:pageBlockSectionItem />
+
+				<apex:pageBlockSectionItem>
+					<apex:outputLabel value="Case Type"/>
+					<apex:outputPanel layout="block" styleClass="requiredInput">
+					<apex:outputPanel layout="block" styleClass="requiredBlock"/>
+						<apex:selectList id="Case_type" value="{!newCase.Type}" size="1" multiselect="false" required="true" >
+							<apex:selectOptions value="{!lstCaseTypes}" />
+						</apex:selectList>
+					</apex:outputPanel>
+				</apex:pageBlockSectionItem>
+				<apex:pageBlockSectionItem />
 				
 			</apex:pageBlockSection>
 			

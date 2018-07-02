@@ -147,4 +147,16 @@ public with sharing class LogPhoneCaseController {
         }
         return options;
 	}
+
+    private static final list<String> VALID_CASE_TYPES = new list<String>{'Complaint','Compliment','General Question','Incident','Request'};
+    public List<SelectOption> getlstCaseTypes() {
+        List<SelectOption> options = new List<SelectOption>();
+        options.add(new SelectOption('','--None--'));
+        for(Schema.PicklistEntry entry : Case.Type.getDescribe().getPicklistValues()) {
+            if (VALID_CASE_TYPES.contains(entry.getValue())) {
+                options.add(new SelectOption(entry.getLabel(), entry.getValue())); 
+            }
+        }
+        return options;
+    }
 }
