@@ -122,10 +122,12 @@ public class AMS_AgencyRegulationTriggerHandler {
             lsAccountIds.add(ar.Account__c);
         }
         lsAccounts =
-            [SELECT Id, Location_type__c, Is_DGR_Compliant__c, IATA_ISO_Country__c
+            [SELECT Id, Location_type__c, Is_DGR_Compliant__c, IATA_ISO_Country__c, RecordType.DeveloperName, (SELECT Id FROM Cases WHERE OSCAR__r.Process__c LIKE '%NEW%')
             FROM Account
             WHERE Id IN :lsAccountIds
-            AND RecordType.DeveloperName = 'IATA_Agency'
+            AND (RecordType.DeveloperName = 'IATA_Agency' 
+            OR (RecordType.DeveloperName = 'Standard_Account' 
+            AND (Location_type__c = 'HO' OR Location_type__c = 'BR')))
             AND Location_Class__c = 'C'];
         List<IATA_ISO_Country__c> lsCountries = [SELECT Id, Name FROM IATA_ISO_Country__c WHERE ISO_Code__c = 'CN'];
         IATA_ISO_Country__c china;
@@ -138,6 +140,10 @@ public class AMS_AgencyRegulationTriggerHandler {
             AND Expired__c = false
             AND Type_Of_Certificate__c = 'DGR'];
         for(Account a :lsAccounts) {
+
+            if(a.RecordType.DeveloperName == 'Standard_Account' && a.Cases.isEmpty())
+                continue;
+
             Integer count = 0;
             Boolean isCompliant = false;
             for(AMS_Agency_Regulation__c ar : lsAllAgencyRegulations) {
