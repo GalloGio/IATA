@@ -22,7 +22,9 @@ public class ANG_UserTriggerHandler {
             assignContactFederationId();
     }
 
-    public void onBeforeUpdate(){ 
+    public void onBeforeUpdate(){ }
+    
+    public void onAfterUpdate(){ 
         ANG_TrackingHistory.trackHistory(Trigger.newMap, Trigger.oldMap, 'User', 'User_History__c');
     }
 
