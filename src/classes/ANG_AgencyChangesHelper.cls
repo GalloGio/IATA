@@ -1093,7 +1093,7 @@ public with sharing class ANG_AgencyChangesHelper {
 		Id formOfPaymentRT = null;
 
 		if(!accountsToProcess.isEmpty())
-			formOfPaymentRT = AMS_Utils.getId('Agency_Authorization__c','FormOfPayment');
+			formOfPaymentRT = RecordTypeSingleton.getInstance().getRecordTypeId('Agency_Authorization__c','FormOfPayment');
 
 		For(Id accountId: accountsToProcess){
 

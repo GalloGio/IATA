@@ -84,11 +84,11 @@ trigger CaseBeforeTrigger on Case (before delete, before insert, before update) 
     Id RT_ICCS_BA_Id = RecordTypeSingleton.getInstance().getRecordTypeId('Case', 'FDS_ICCS_Bank_Account_Management');
     Id RT_ICCS_CD_Id = RecordTypeSingleton.getInstance().getRecordTypeId('Case', 'FDS_ICCS_CitiDirect');
     ID FSMcaseRecordTypeID = RecordTypeSingleton.getInstance().getRecordTypeId('Case', 'IATA_Financial_Security_Monitoring');
-    ID NCRecordTypeID = RecordTypeSingleton.getInstance().getRecordTypeId('Case', 'SAAM');
+    //ID NCRecordTypeID = RecordTypeSingleton.getInstance().getRecordTypeId('Case', 'ProcessEuropeSCE');//SAAM
     ID caseRecordType = RecordTypeSingleton.getInstance().getRecordTypeId('Case', 'ID_Card_Application');
     Id RT_ICCS_ASP_Id = RecordTypeSingleton.getInstance().getRecordTypeId('Case', 'FDS_ASP_Management');
     ID AirlineCodingRTId = RecordTypeSingleton.getInstance().getRecordTypeId('Case', 'Airline_Coding_Application');
-    ID ProcesscaseRecordTypeID = RecordTypeSingleton.getInstance().getRecordTypeId('Case', 'ProcessEuropeSCE');
+    //ID ProcesscaseRecordTypeID = RecordTypeSingleton.getInstance().getRecordTypeId('Case', 'ProcessEuropeSCE');
     ID EuropecaseRecordTypeID = RecordTypeSingleton.getInstance().getRecordTypeId('Case', 'CasesEurope');
     ID AmericacaseRecordTypeID = RecordTypeSingleton.getInstance().getRecordTypeId('Case', 'CasesAmericas');
     ID AfricaMEcaseRecordTypeID = RecordTypeSingleton.getInstance().getRecordTypeId('Case', 'CasesMENA');
@@ -489,7 +489,7 @@ trigger CaseBeforeTrigger on Case (before delete, before insert, before update) 
         if (Case_FSM_Handle_NonCompliance_BI_BU) {
             system.debug('Case_FSM_Handle_NonCompliance_BI_BU');
             for (Case NCCase : trigger.new) {
-                if (NCCase.RecordTypeId == NCRecordTypeID) {
+                if (NCCase.RecordTypeId == ProcessISSPcaseRecordTypeID) {
                     setFSMCaseId.add(NCCase.ParentId);
                 }
             }
@@ -648,7 +648,7 @@ trigger CaseBeforeTrigger on Case (before delete, before insert, before update) 
                 for (Case aCase : trigger.New) {
                     system.debug('RECORD TYPE: ' + aCase.RecordTypeId);
                     // check if correct record type
-                    if ((aCase.RecordTypeId == SIDRAcaseRecordTypeID) || (aCase.RecordTypeId == ProcesscaseRecordTypeID) || (aCase.RecordTypeId == EuropecaseRecordTypeID)
+                    if ((aCase.RecordTypeId == SIDRAcaseRecordTypeID) || (aCase.RecordTypeId == ProcessISSPcaseRecordTypeID) || (aCase.RecordTypeId == EuropecaseRecordTypeID)
                             || (aCase.RecordTypeId == AmericacaseRecordTypeID) || (aCase.RecordTypeId == AfricaMEcaseRecordTypeID) || (aCase.RecordTypeId == AsiaPacificcaseRecordTypeID)
                             || (aCase.RecordTypeId == ChinaAsiacaseRecordTypeID) || (aCase.RecordTypeId == InternalcaseRecordTypeID) || (aCase.RecordTypeId == InvCollectioncaseRecordTypeID)
                             || (aCase.RecordTypeId == CSProcesscaseRecordTypeID) || (aCase.RecordTypeId == SEDAcaseRecordTypeID) || (aCase.RecordTypeId == ISSPcaseRecordTypeID)) { //TF - SP9-C5
@@ -1252,7 +1252,7 @@ trigger CaseBeforeTrigger on Case (before delete, before insert, before update) 
                 //Search Parent Case (FSM)
                 for (Case NCCase : trigger.new) {
                     system.debug('##ROW##');
-                    if (NCCase.RecordTypeId == NCRecordTypeID && mapFSMCases.keyset().contains(NCCase.ParentId)) {
+                    if (NCCase.RecordTypeId == ProcessISSPcaseRecordTypeID && mapFSMCases.keyset().contains(NCCase.ParentId)) {
                         system.debug('##ROW##');
                         Case FSMCase;
                         if (mapFSMCaseToUpdate.containsKey(NCCase.ParentId))
@@ -1865,7 +1865,7 @@ trigger CaseBeforeTrigger on Case (before delete, before insert, before update) 
                 map<Id, Case> mapFSMCaseToUpdate = new map<Id, Case>(); //List of FSM case to update
                 //Search Parent Case (FSM)
                 for (Case NCCase : trigger.new) {
-                    if (NCCase.RecordTypeId == NCRecordTypeID && mapFSMCases.keyset().contains(NCCase.ParentId)) {
+                    if (NCCase.RecordTypeId == ProcessISSPcaseRecordTypeID && mapFSMCases.keyset().contains(NCCase.ParentId)) {
                         Case FSMCase;
                         if (mapFSMCaseToUpdate.containsKey(NCCase.ParentId))
                             FSMCase = mapFSMCaseToUpdate.get(NCCase.ParentId);

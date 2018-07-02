@@ -289,7 +289,7 @@ private class AMS_BSPLinkIntegration_Test {
 
 		AMS_Oscar__c osc = [select Id, Account__c from AMS_Oscar__c where Account__r.Name='Accnt3.2'].get(0);
 
-		Case oscarCase = new Case(Oscar__c = osc.Id, RecordTypeId = AMS_Utils.getId('Case', 'OSCAR_Communication'), AccountId = osc.Account__c);
+		Case oscarCase = new Case(Oscar__c = osc.Id, RecordTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('Case', 'OSCAR_Communication'), AccountId = osc.Account__c);
         insert oscarCase;
 
 		test.startTest();

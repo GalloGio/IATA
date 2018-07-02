@@ -1,6 +1,6 @@
 public with sharing class ANG_AgencyAuthorizationTriggerHandler {
 
-    public static final ID formOfPaymentRT = AMS_Utils.getId('Agency_Authorization__c','FormOfPayment');
+    public static final ID formOfPaymentRT = RecordTypeSingleton.getInstance().getRecordTypeId('Agency_Authorization__c','FormOfPayment');
     public static Map<Id,String> accountsName = new Map<Id,String>();
     public static void handleBeforeInsert(List<Agency_Authorization__c> newMap){
 		verifyAAUniqueness(newMap);

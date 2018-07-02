@@ -302,7 +302,7 @@ public class ANG_RHC_Information_test{
 
         insert rels;
 
-        Id formOfPaymentRT = AMS_Utils.getId('Agency_Authorization__c','FormOfPayment');
+        Id formOfPaymentRT = RecordTypeSingleton.getInstance().getRecordTypeId('Agency_Authorization__c','FormOfPayment');
 
         List<Agency_Authorization__c> authorizations = new List<Agency_Authorization__c>();
 

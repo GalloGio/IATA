@@ -4,23 +4,11 @@ public with sharing class SIDRAliteMassActionController {
     public static final Integer MAX_SEARCH_ELEMENTS =900;
     public Integer getMinCasesForBatch(){ return MIN_CASES_FOR_BATCH;}
 
-    public static final Schema.RecordTypeInfo RECORDTYPE_IFAP = Schema.SObjectType.Case.getRecordTypeInfosByName().get('IATA Financial Review');
-    public static final Schema.RecordTypeInfo RECORDTYPE_SMAP = Schema.SObjectType.Case.getRecordTypeInfosByName().get('sMAP(sales Monitoring Alert Process)');
-    public static final Schema.RecordTypeInfo RECORDTYPE_SAAM = Schema.SObjectType.Case.getRecordTypeInfosByName().get('SAAM');
-    public static final Schema.RecordTypeInfo RECORDTYPE_OSCAR = Schema.SObjectType.Case.getRecordTypeInfosByName().get('OSCAR Communication');
-    public static final Schema.RecordTypeInfo RECORDTYPE_INVOICING = Schema.SObjectType.Case.getRecordTypeInfosByName().get('Invoicing Collection Cases');
-    public static final Id RECORDTYPE_IFAP_ID = RECORDTYPE_IFAP.getRecordTypeId();
-    public static final Id RECORDTYPE_SMAP_ID = RECORDTYPE_SMAP.getRecordTypeId();
-    public static final Id RECORDTYPE_SAAM_ID = RECORDTYPE_SAAM.getRecordTypeId();
-    public static final Id RECORDTYPE_OSCAR_ID = RECORDTYPE_OSCAR.getRecordTypeId();
-    public static final Id RECORDTYPE_INVOICING_ID = RECORDTYPE_INVOICING.getRecordTypeId();
-    public static final map<Id,Schema.RecordTypeInfo> LIST_RT = new map<Id,Schema.RecordTypeInfo>{
-        RECORDTYPE_IFAP_ID => RECORDTYPE_IFAP,
-        RECORDTYPE_SMAP_ID => RECORDTYPE_SMAP,
-        RECORDTYPE_SAAM_ID => RECORDTYPE_SAAM,
-        RECORDTYPE_OSCAR_ID => RECORDTYPE_OSCAR,
-        RECORDTYPE_INVOICING_ID => RECORDTYPE_INVOICING
-    };
+    public static final Id RECORDTYPE_IFAP_ID = RecordTypeSingleton.getInstance().getRecordTypeId('Case', 'IATA_Financial_Review');
+    public static final Id RECORDTYPE_SMAP_ID = RecordTypeSingleton.getInstance().getRecordTypeId('Case', 'sMAP_sales_Monitoring_Alert_Process');
+    public static final Id RECORDTYPE_SAAM_ID = RecordTypeSingleton.getInstance().getRecordTypeId('Case', 'ProcessEuropeSCE');//SAAM
+    public static final Id RECORDTYPE_OSCAR_ID = RecordTypeSingleton.getInstance().getRecordTypeId('Case', 'OSCAR_Communication');
+    public static final Id RECORDTYPE_INVOICING_ID = RecordTypeSingleton.getInstance().getRecordTypeId('Case', 'Invoicing_Collection_Cases');
 
     public static final set<String> TYPE_ACCOUNT_PAX =   SidraLiteUtil.TYPE_ACCOUNT_PAX;
     public static final set<String> TYPE_ACCOUNT_CARGO = SidraLiteUtil.TYPE_ACCOUNT_CARGO;
@@ -38,9 +26,6 @@ public with sharing class SIDRAliteMassActionController {
     public Boolean showResultSection{get;set;}
     public Boolean showProcessBatchSection{get;set;}
 
-    // Confirm action section
-    //public Boolean showConfirmTriggerSidraLiteAction {get;set;}
-
     public class SIDRAliteMassActionException extends Exception{}
 
     /**
@@ -52,7 +37,6 @@ public with sharing class SIDRAliteMassActionController {
         this.filter = new WrapperFilter();
         this.showResultSection = false;
         this.showProcessBatchSection = false;
-        //this.showConfirmTriggerSidraLiteAction = false;
         this.selectedIds = '';
 
         // check if it's an admin user
@@ -205,7 +189,7 @@ public with sharing class SIDRAliteMassActionController {
         list<Case> listCase3 = new list<Case>(); // list for 3th non compliance
         // IF FS
         if (isEmpty(this.filter.ifapType) || this.filter.ifapType == 'FS') {
-            String query1 = getBaseQuery(RECORDTYPE_IFAP.getRecordTypeId());
+            String query1 = getBaseQuery(RECORDTYPE_IFAP_ID);
             query1 += ' AND FS_Letter_Sent__c = true';
             query1 += ' AND Status in :STATUS_FOR_FS';
             query1 += ' AND firstFSnonComplianceDate__c = null';
@@ -217,7 +201,7 @@ public with sharing class SIDRAliteMassActionController {
             }
             listCase1.addAll(executeQuery(query1));
 
-            String query2 = getBaseQuery(RECORDTYPE_IFAP.getRecordTypeId());
+            String query2 = getBaseQuery(RECORDTYPE_IFAP_ID);
             query2 += ' AND Status in :STATUS_FOR_FS';
             query2 += ' AND firstFSnonComplianceDate__c != null';
             query2 += ' AND secondFSnonComplianceDate__c = null';
@@ -227,7 +211,7 @@ public with sharing class SIDRAliteMassActionController {
             }
             listCase2.addAll(executeQuery(query2));
 
-            String query3 = getBaseQuery(RECORDTYPE_IFAP.getRecordTypeId());
+            String query3 = getBaseQuery(RECORDTYPE_IFAP_ID);
             query3 += ' AND Status in :STATUS_FOR_FS';
             query3 += ' AND firstFSnonComplianceDate__c != null';
             query3 += ' AND secondFSnonComplianceDate__c != null';
@@ -240,7 +224,7 @@ public with sharing class SIDRAliteMassActionController {
         }
         //IF FA
         if (isEmpty(this.filter.ifapType) || this.filter.ifapType == 'FA') {
-            String query1 = getBaseQuery(RECORDTYPE_IFAP.getRecordTypeId());
+            String query1 = getBaseQuery(RECORDTYPE_IFAP_ID);
             query1 += ' AND FA_Letter_Sent__c = true';
             query1 += ' AND Status in :STATUS_FOR_FA';
             query1 += ' AND firstFAnonComplianceDate__c = null';
@@ -252,7 +236,7 @@ public with sharing class SIDRAliteMassActionController {
             }
             listCase1.addAll(executeQuery(query1));
 
-            String query2 = getBaseQuery(RECORDTYPE_IFAP.getRecordTypeId());
+            String query2 = getBaseQuery(RECORDTYPE_IFAP_ID);
             query2 += ' AND Status in :STATUS_FOR_FA';
             query2 += ' AND firstFAnonComplianceDate__c != null';
             query2 += ' AND secondFAnonComplianceDate__c = null';
@@ -262,7 +246,7 @@ public with sharing class SIDRAliteMassActionController {
             }
             listCase2.addAll(executeQuery(query2));
 
-            String query3 = getBaseQuery(RECORDTYPE_IFAP.getRecordTypeId());
+            String query3 = getBaseQuery(RECORDTYPE_IFAP_ID);
             query3 += ' AND Status in :STATUS_FOR_FA';
             query3 += ' AND firstFAnonComplianceDate__c != null';
             query3 += ' AND secondFAnonComplianceDate__c != null';
@@ -824,18 +808,6 @@ public with sharing class SIDRAliteMassActionController {
             this.cse.Region__c = SidraLiteUtil.getDefaultRegion();
             this.cse.BSPCountry__c = '';
 
-            //this.cse.RecordtypeId = RECORDTYPE_SAAM_ID;
-            //this.cse.Region__c = 'Americas';
-            //this.cse.Reason1__c = 'Annual Fees';
-        }
-
-        public list<SelectOption> getListRecordtype() {
-            list<SelectOption> listOptions = new list<SelectOption>();
-            listOptions.add(new SelectOption('', '--None--'));
-            for ( Schema.RecordTypeInfo rt: LIST_RT.values() ) {
-                listOptions.add(new SelectOption(rt.getRecordTypeId(), rt.getName()));
-            }
-            return listOptions;
         }
 
         public list<SelectOption> getListReasons() {
@@ -882,23 +854,23 @@ public with sharing class SIDRAliteMassActionController {
 
 
         public Boolean getIsIFAP() {
-            return this.cse.RecordtypeId == RECORDTYPE_IFAP.getRecordTypeId();
+            return this.cse.RecordtypeId == RECORDTYPE_IFAP_ID;
         }
 
         public Boolean getIsSMAP() {
-            return this.cse.RecordtypeId == RECORDTYPE_SMAP.getRecordTypeId();
+            return this.cse.RecordtypeId == RECORDTYPE_SMAP_ID;
         }
 
         public Boolean getIsOSCAR() {
-            return this.cse.RecordtypeId == RECORDTYPE_OSCAR.getRecordTypeId();
+            return this.cse.RecordtypeId == RECORDTYPE_OSCAR_ID;
         }
 
         public Boolean getIsSAAM() {
-            return this.cse.RecordtypeId == RECORDTYPE_SAAM.getRecordTypeId();
+            return this.cse.RecordtypeId == RECORDTYPE_SAAM_ID;
         }
 
         public Boolean getIsInvoicing() {
-            return this.cse.RecordtypeId == RECORDTYPE_INVOICING.getRecordTypeId();
+            return this.cse.RecordtypeId == RECORDTYPE_INVOICING_ID;
         }
 
         public String getShortName() {

@@ -148,8 +148,8 @@
         IATA_ISO_State__c stt = new IATA_ISO_State__c(Name= 'FR20', ISO_Code__c = 'FR', IATA_ISO_Country__c = ctry.Id);
         insert stt;
         
-        Id accountRT = AMS_Utils.getId('Account', 'Standard_Account');
-        Id caseRT = AMS_Utils.getId('Case', 'OSCAR_Communication');
+        Id accountRT = RecordTypeSingleton.getInstance().getRecordTypeId('Account', 'Standard_Account');
+        Id caseRT = RecordTypeSingleton.getInstance().getRecordTypeId('Case', 'OSCAR_Communication');
         
         Account a1 = new Account(IATACode__c = '1234567', IATA_ISO_Country__c = ctry.id, RecordTypeId = accountRT ,Name='NewGenAgency',Short_Name__c='NewGenAgency', Location_Class__c = 'P', Location_Type__c = 'HE', Remittance_frequency__c = 'M', Sector__C = 'Travel Agent' , Category__C = 'Non-IATA Passenger Agent', Reason_for_creation__c = 'Account is missing' , Company_Type__c = 'A');
 
@@ -279,7 +279,7 @@
 
         Test.startTest();
         
-        Id oscarCommRecordTypeId = AMS_Utils.getId('Case', 'OSCAR_Communication');
+        Id oscarCommRecordTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('Case', 'OSCAR_Communication');
 
         Account a = [SELECT id from Account where Name = 'Test1 Agency' LIMIT 1];
 
@@ -390,7 +390,7 @@
         
         insert oscar;
          
-        Id oscarCommRecordTypeId = AMS_Utils.getId('Case', 'OSCAR_Communication');
+        Id oscarCommRecordTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('Case', 'OSCAR_Communication');
 
         Case newCase = new Case(Status = 'New', OSCAR__c = oscar.Id, RecordTypeID = oscarCommRecordTypeId);
 
@@ -445,7 +445,7 @@
         
         newCase = [SELECT id , OSCAR__c from Case where OSCAR__c <> null LIMIT 1];
         
-        Id oscarCommRecordTypeId2 = AMS_Utils.getId('Case', 'ID_Card_Mass_Application');
+        Id oscarCommRecordTypeId2 = RecordTypeSingleton.getInstance().getRecordTypeId('Case', 'ID_Card_Mass_Application');
         newCase.RecordTypeId = oscarCommRecordTypeId2;
         
         try {
@@ -500,8 +500,8 @@
         IATA_ISO_State__c stt = new IATA_ISO_State__c(Name= 'FR20', ISO_Code__c = 'FR', IATA_ISO_Country__c = ctry.Id);
         insert stt;
         
-        Id accountRT = AMS_Utils.getId('Account', 'Standard_Account');
-        Id caseRT = AMS_Utils.getId('Case', 'OSCAR_Communication');
+        Id accountRT = RecordTypeSingleton.getInstance().getRecordTypeId('Account', 'Standard_Account');
+        Id caseRT = RecordTypeSingleton.getInstance().getRecordTypeId('Case', 'OSCAR_Communication');
         
         Account a1 = new Account(IATACode__c = '1234567', IATA_ISO_Country__c = ctry.id, RecordTypeId = accountRT ,Name='NewGenAgency',Short_Name__c='NewGenAgency', Location_Class__c = 'P', Location_Type__c = 'HE', Remittance_frequency__c = 'M', Sector__C = 'Travel Agent' , Category__C = 'Non-IATA Passenger Agent', Reason_for_creation__c = 'Account is missing' , Company_Type__c = 'A');
 
@@ -957,7 +957,7 @@
         
         insert oscar;
          
-        Id oscarCommRecordTypeId = AMS_Utils.getId('Case', 'OSCAR_Communication');
+        Id oscarCommRecordTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('Case', 'OSCAR_Communication');
 
         Case newCase = new Case(Status = 'New', OSCAR__c = oscar.Id, RecordTypeID = oscarCommRecordTypeId);
 
@@ -1011,7 +1011,7 @@
         
         insert oscar;
          
-        Id oscarCommRecordTypeId = AMS_Utils.getId('Case', 'OSCAR_Communication');
+        Id oscarCommRecordTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('Case', 'OSCAR_Communication');
 
         Case newCase = new Case(Status = 'New', OSCAR__c = oscar.Id, RecordTypeID = oscarCommRecordTypeId);
 
@@ -1064,7 +1064,7 @@
         
         insert oscar;
          
-        Id oscarCommRecordTypeId = AMS_Utils.getId('Case', 'OSCAR_Communication');
+        Id oscarCommRecordTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('Case', 'OSCAR_Communication');
 
         Case newCase = new Case(Status = 'New', OSCAR__c = oscar.Id, RecordTypeID = oscarCommRecordTypeId);
 
@@ -1120,7 +1120,7 @@
         
         insert oscar;
          
-        Id oscarCommRecordTypeId = AMS_Utils.getId('Case', 'OSCAR_Communication');
+        Id oscarCommRecordTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('Case', 'OSCAR_Communication');
 
         Case newCase = new Case(Status = 'New', OSCAR__c = oscar.Id, RecordTypeID = oscarCommRecordTypeId);
 

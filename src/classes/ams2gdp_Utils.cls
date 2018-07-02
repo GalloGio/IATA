@@ -156,16 +156,6 @@ public class ams2gdp_Utils
 		return lstLines; 
 	}
 
-	public static Map<String, String> getRecordTypeIdByName(String obj)
-	{
-		Map<String, String> result = new Map<String, String>();
-
-		for(RecordType rt : [SELECT Id, Name FROM RecordType WHERE IsActive=true AND SobjectType = :obj])
-		result.put(rt.Name, rt.Id);
-		
-
-		return result;
-	}
 
 	public static void upsertAMS_GDP_Batch(String batchName, Datetime syncStartedDate, Integer errorsCount, Integer totalRecords, List<String> failed_records, Boolean isManual){
         if(isManual){

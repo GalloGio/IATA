@@ -4,7 +4,6 @@ public class ams2gdp_TestDataGenerator
 	public static List<Account> generateAccounts(Integer nb, Boolean doInsert)
 	{
 		List<Account> accounts = new List<Account>();
-		Map<String, String> recordTypes = ams2gdp_Utils.getRecordTypeIdByName('Account');
 		List<IATA_ISO_Country__c> countries = generateISOCountryState();
 
         for(Integer i = 0; i < nb; i++)
@@ -31,7 +30,7 @@ public class ams2gdp_TestDataGenerator
                 Phone = '+1-888-123-456'+i,
                 Fax = '+1-999-123-45'+i,
                 GDS__c = 'ABAC;UALA',
-                RecordTypeId = recordTypes.get('Agency'),
+                RecordTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('Account', 'IATA_Agency'),
                 IATACode__c = 'I'+i,
                 IATA_ISO_Country__c=countries[0].Id
             ));
@@ -568,7 +567,6 @@ public class ams2gdp_TestDataGenerator
 		List<Account> accounts = generateAccounts(nb,true);
 		List<GDP_Reference_Table__c> refTable = generateReferenceTables(nb, doInsert);
 		List<GDP_Products_Account_View__c> gdpProducts= generateGDPProductsView(nb,doInsert);
-		Map<String, String> recordTypes = ams2gdp_Utils.getRecordTypeIdByName('Assoc_Affiliation_Membership__c');
 
 		//Live Record Type
 		for(Integer x=0; x<nb; x++)
@@ -576,7 +574,7 @@ public class ams2gdp_TestDataGenerator
 			result.add(new Assoc_Affiliation_Membership__c(
 				Related_Account__c = accounts[x].Id
 				, Assoc_Affiliation_Code__c = refTable[x].Id
-				, RecordTypeId=recordTypes.get('Live')
+				, RecordTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('Assoc_Affiliation_Membership__c', 'Live')
 			));
 		}
 		//GDP Record Type
@@ -585,7 +583,7 @@ public class ams2gdp_TestDataGenerator
 			result.add(new Assoc_Affiliation_Membership__c(
 				Related_GDP_Products_Account_View__c = gdpProducts[x].Id
 				, Assoc_Affiliation_Code__c = refTable[x].Id
-				, RecordTypeId=recordTypes.get('GDP')
+				, RecordTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('Assoc_Affiliation_Membership__c', 'GDP')
 			));
 		}
 
@@ -605,21 +603,6 @@ public class ams2gdp_TestDataGenerator
 		List<GDP_Reference_Table__c> refTable = generateReferenceTables(nb, doInsert);
 		List<Account> accounts = generateAccounts(nb,true);
 		List<GDP_Products_Account_View__c> gdpProducts= generateGDPProductsView(nb,doInsert);
-		Map<String, String> recordTypes = ams2gdp_Utils.getRecordTypeIdByName('Accreditation__c');
-
-		////Live record Type
-		//for(Integer x=0; x<nb; x++)
-		//{
-		//	result.add(new Accreditation__c(
-		//		AMS_GDP_Key__c = 'C'+x,
-		//		AIMS_Id__c=(Math.mod(x, 2)==0) ? null:'ABCD123' + x,
-		//		Webstar_Id__c=(Math.mod(x, 2)==0) ?'ABCD123'+x:null,
-		//		Endorsed_Accredited_By_Formula__c= refTable[x].Id,
-		//		Related_Account__c=accounts[x].Id,
-		//		RecordTypeId=recordTypes.get('Live')
-		//	));
-		//}
-
 		//GDP Record Type
 		for(Integer x=0; x<nb; x++)
 		{
@@ -627,8 +610,8 @@ public class ams2gdp_TestDataGenerator
 				AMS_GDP_Key__c = 'C'+x,
 				AIMS_Id__c=(Math.mod(x, 2)==0) ? null:'ABCD123' + x +'GDP',
 				Webstar_Id__c=(Math.mod(x, 2)==0) ?'ABCD123'+x + 'GDP':null,
-				Related_GDP_Products_Account_View__c=gdpProducts[x].Id,
-				RecordTypeId=recordTypes.get('GDP')
+				Related_GDP_Products_Account_View__c = gdpProducts[x].Id,
+				RecordTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('Accreditation__c', 'GDP')
 			));
 		}
 
@@ -647,15 +630,14 @@ public class ams2gdp_TestDataGenerator
 		List<Account> accounts = generateAccounts(nb,true);
 		List<GDP_Reference_Table__c> refTable = generateReferenceTables(nb, doInsert);
 		List<GDP_Products_Account_View__c> gdpProducts= generateGDPProductsView(nb,doInsert);
-		Map<String, String> recordTypes = ams2gdp_Utils.getRecordTypeIdByName('Adjacent_Airport__c');
 
 		//Live Record Type
 		for(Integer x=0; x<nb; x++)
 		{
 			result.add(new Adjacent_Airport__c(
 				Related_Account__c = accounts[x].Id
-				, RecordTypeId=recordTypes.get('Live')
-				, AirportCode__c=refTable[x].Id
+				, RecordTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('Adjacent_Airport__c', 'Live')
+				, AirportCode__c = refTable[x].Id
 			));
 		}
 		//GDP Record Type
@@ -663,8 +645,8 @@ public class ams2gdp_TestDataGenerator
 		{
 			result.add(new Adjacent_Airport__c(
 				Related_GDP_Products_Account_View__c = gdpProducts[x].Id
-				, RecordTypeId=recordTypes.get('GDP')
-				, AirportCode__c=refTable[x].Id
+				, RecordTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('Adjacent_Airport__c', 'GDP')
+				, AirportCode__c = refTable[x].Id
 			));
 		}
 
@@ -683,7 +665,6 @@ public class ams2gdp_TestDataGenerator
 		List<Account> accounts = generateAccounts(nb,true);
 		List<IATA_ISO_Country__c> countries = generateISOCountryState();
 		List<GDP_Products_Account_View__c> gdpProducts= generateGDPProductsView(nb,doInsert);
-		Map<String, String> recordTypes = ams2gdp_Utils.getRecordTypeIdByName('GDP_Address__c');
 
 		// Live record Type
 		for(Integer x=0; x<nb; x++)
@@ -691,7 +672,7 @@ public class ams2gdp_TestDataGenerator
 			result.add(new GDP_Address__c(Related_Account__c = accounts[x].Id
 				, AIMS_Id__c = (Math.mod(x, 2)==0) ? null : '12345'+x
 				, Webstar_Id__c=(Math.mod(x, 2)==0) ?'12345'+x:null
-				, RecordTypeId = recordTypes.get('Live')
+				, RecordTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('GDP_Address__c', 'Live')
 
 			));
 		}
@@ -701,7 +682,7 @@ public class ams2gdp_TestDataGenerator
 			result.add(new GDP_Address__c(Related_GDP_Products_Account_View__c = gdpProducts[x].Id
 				,  AIMS_Id__c = (Math.mod(x, 2)==0) ? null : '12345'+x+'GDP'
 				, Webstar_Id__c=(Math.mod(x, 2)==0) ?'12345'+x+'GDP':null
-				, RecordTypeId = recordTypes.get('GDP')
+				, RecordTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('GDP_Address__c', 'GDP')
 			));
 		}
 
@@ -711,32 +692,22 @@ public class ams2gdp_TestDataGenerator
 		return result;
 
 	}
-public static List<GDP_Phone__c> generateGDP_Phones(Integer nb, Boolean doInsert)
+	
+	public static List<GDP_Phone__c> generateGDP_Phones(Integer nb, Boolean doInsert)
 	{
 		List<GDP_Phone__c> result = new List<GDP_Phone__c>();
 
 		List<Account> accounts = generateAccounts(nb,true);
 		List<IATA_ISO_Country__c> countries = generateISOCountryState();
 		List<GDP_Products_Account_View__c> gdpProducts= generateGDPProductsView(nb,doInsert);
-		Map<String, String> recordTypes = ams2gdp_Utils.getRecordTypeIdByName('GDP_Phone__c');
 
-		// Live record Type
-		for(Integer x=0; x<nb; x++)
-		{
-			//result.add(new GDP_Phone__c(Related_Account__c = accounts[x].Id
-			//	, AIMS_Id__c = (Math.mod(x, 2)==0) ? null : '12345'+x+'67'
-			//	, Webstar_Id__c=(Math.mod(x, 2)==0) ?'12345'+x+'67':null
-			//	, RecordTypeId = recordTypes.get('Live')
-
-			//));
-		}
 		// GDP record Type
 		for(Integer x=0; x<nb; x++)
 		{
 			result.add(new GDP_Phone__c(Related_GDP_Products_Account_View__c = gdpProducts[x].Id
 				, AIMS_Id__c = (Math.mod(x, 2)==0) ? null : '12345'+x+'67'+'GDP'
 				, Webstar_Id__c=(Math.mod(x, 2)==0) ?'12345'+x+'67'+'GDP':null
-				, RecordTypeId = recordTypes.get('GDP')
+				, RecordTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('GDP_Phone__c', 'GDP')
 			));
 		}
 
@@ -752,7 +723,6 @@ public static List<GDP_Phone__c> generateGDP_Phones(Integer nb, Boolean doInsert
 
 		List<Agency_Owner__c> result= new List<Agency_Owner__c>();
 		List<Account> accounts = generateAccounts(nb,true);
-		Map<String, String> recordTypes = ams2gdp_Utils.getRecordTypeIdByName('Agency_Owner__c');
 		List<GDP_Products_Account_View__c> gdpProducts= generateGDPProductsView(nb,doInsert);
 
 		//Live Record Type
@@ -762,7 +732,7 @@ public static List<GDP_Phone__c> generateGDP_Phones(Integer nb, Boolean doInsert
 				Related_Account__c = accounts[x].Id,
 				AIMS_Id__c='1234567'+x,
 				Webstar_Id__c='1234567'+x,
-				RecordTypeId=recordTypes.get('Live')
+				RecordTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('Agency_Owner__c', 'Live')
 				));
 
 		}
@@ -771,10 +741,10 @@ public static List<GDP_Phone__c> generateGDP_Phones(Integer nb, Boolean doInsert
 		for(Integer x=0;x<nb;x++)
 		{
 			result.add(new Agency_Owner__c(
-				Related_GDP_Products_Account_View__c= gdpProducts[x].Id,
-				AIMS_Id__c='1234567'+x+'GDP',
-				Webstar_Id__c='1234567'+x+'GDP',
-				RecordTypeId=recordTypes.get('GDP')
+				Related_GDP_Products_Account_View__c = gdpProducts[x].Id,
+				AIMS_Id__c ='1234567'+x+'GDP',
+				Webstar_Id__c ='1234567'+x+'GDP',
+				RecordTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('Agency_Owner__c', 'GDP')
 				));
 
 		}

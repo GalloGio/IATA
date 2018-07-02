@@ -403,22 +403,6 @@ global class AMS_BSPLinkIntegration {
 		list<Agency_Authorization__c> lsToReturn = [select Id, Account__c, Account__r.Sector__c, Status__c, IATACode__c, ISO_Country__c, Email_Used_for_BSP_Creation__c
 													from Agency_Authorization__c where Authority__c='BSPLink' and Account__c in:setAccntToRemove];
 		
-		/* Future enhancements? if they do not exists, create. Will encounter error "You have uncommitted..."
-		
-		list<Agency_Authorization__c> authTocreate = new list<Agency_Authorization__c>();
-		Set<Id> setAccntFound = new Set<Id>();
-		for(Agency_Authorization__c aa:lsToReturn)
-			setAccntFound.add(aa.Account__c);
-		
-		for(id i:setAccntToRemove)
-			if(!setAccntFound.contains(i))
-				authTocreate.add(new Agency_Authorization__c(Account__c = i, RecordTypeId=AMS_Utils.getId('Agency_Authorization__c', 'BSPLink')));
-		
-		if(!authTocreate.isEmpty()){
-			insert authTocreate;
-			lsToReturn.addAll(authTocreate);
-		}
-		*/
 		return lsToReturn;
 	}
 

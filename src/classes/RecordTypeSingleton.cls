@@ -65,6 +65,18 @@ public class RecordTypeSingleton {
 
 
 	/**
+	 * Method that returns a list of record types for a specified object name
+	 * @param  objectName the name of the object
+	 * @return            the list of record types for the passed object name
+	 */
+	public List<RecordType> getRecordTypesBySObject(String objectName){
+
+		return recordTypesByName.get(objectName).values();
+
+	}
+
+
+	/**
 	 * Method that returns a list of record types Ids for a specified object and a list of developer names
 	 * @param  objectName  the name of the object
 	 * @param  devNameList List of the name of the record type (DeveloperName)

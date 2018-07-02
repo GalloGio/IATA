@@ -11,7 +11,7 @@ public with sharing class AMS_OSCAR_TestDataFactory
         IATA_ISO_State__c stt = new IATA_ISO_State__c(Name= 'Test', ISO_Code__c = 'TS', IATA_ISO_Country__c = ctry.Id);
         insert stt;
 		
-		Id accountRT = AMS_Utils.getId('Account', 'Standard_Account');
+		Id accountRT = RecordTypeSingleton.getInstance().getRecordTypeId('Account', 'Standard_Account');
 		Account account = new Account();
 		account.Name = 'TestAccount';
 		account.Type = 'Airport';
@@ -29,7 +29,7 @@ public with sharing class AMS_OSCAR_TestDataFactory
 		insert aacc;
 		Contact co1 = new Contact(AccountId = a1.id, Firstname = 'teste1', Lastname='test1', Phone = '911111111', MobilePhone = '911111111', Email = 'test@test.com', Financial_Assessment_Contact__c = false);
 		insert co1;
-		Case oscarCase = new Case(Oscar__c = oscar.Id, RecordTypeId = AMS_Utils.getId('Case', 'OSCAR_Communication'));
+		Case oscarCase = new Case(Oscar__c = oscar.Id, RecordTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('Case', 'OSCAR_Communication'));
         oscarCase.AccountId = a1.Id;
         oscarCase.ContactId = co1.Id;
         insert oscarCase;
@@ -76,7 +76,7 @@ public with sharing class AMS_OSCAR_TestDataFactory
         IATA_ISO_State__c stt = new IATA_ISO_State__c(Name= 'Test', ISO_Code__c = 'TS', IATA_ISO_Country__c = ctry.Id);
         insert stt;
 		
-		Id accountRT = AMS_Utils.getId('Account', 'Standard_Account');
+		Id accountRT = RecordTypeSingleton.getInstance().getRecordTypeId('Account', 'Standard_Account');
 		Account account = new Account();
 		account.Name = 'TestAccount';
 		account.Type = 'Airport';
@@ -160,7 +160,7 @@ public with sharing class AMS_OSCAR_TestDataFactory
 		insert aacc;
 		Contact co1 = new Contact(AccountId = HO1.id, Firstname = 'teste1', Lastname='test1', Phone = '911111111', MobilePhone = '911111111', Email = 'test@test.com', Financial_Assessment_Contact__c = false);
 		insert co1;
-		Case oscarCase = new Case(Oscar__c = oscar.Id, RecordTypeId = AMS_Utils.getId('Case', 'OSCAR_Communication'));
+		Case oscarCase = new Case(Oscar__c = oscar.Id, RecordTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('Case', 'OSCAR_Communication'));
         oscarCase.AccountId = HO1.Id;
         oscarCase.ContactId = co1.Id;
         insert oscarCase;
@@ -186,14 +186,14 @@ public with sharing class AMS_OSCAR_TestDataFactory
         IATA_ISO_State__c stt = new IATA_ISO_State__c(Name= 'Test', ISO_Code__c = 'TS', IATA_ISO_Country__c = ctry.Id);
         insert stt;
 		
-		Id accountRT = AMS_Utils.getId('Account', 'Standard_Account');
+		Id accountRT = RecordTypeSingleton.getInstance().getRecordTypeId('Account', 'Standard_Account');
 		Account account = new Account();
 		account.Name = 'TestAccount';
 		account.Type = 'Airport';
 		account.IATACode__c = '1234567';
 		insert account;
 
-		Id airlineRT = AMS_Utils.getId('Account', 'IATA_Airline');
+		Id airlineRT = RecordTypeSingleton.getInstance().getRecordTypeId('Account', 'IATA_Airline');
 		Account airline = new Account();
 		airline.Name = 'TestAirline';
 		airline.Sector__c = 'Airline';
@@ -232,7 +232,7 @@ public with sharing class AMS_OSCAR_TestDataFactory
 		coList.add(co2);
 
 		insert coList;
-		Case oscarCase = new Case(Oscar__c = oscar.Id, RecordTypeId = AMS_Utils.getId('Case', 'OSCAR_Communication'));
+		Case oscarCase = new Case(Oscar__c = oscar.Id, RecordTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('Case', 'OSCAR_Communication'));
         oscarCase.AccountId = a1.Id;
         oscarCase.ContactId = co1.Id;
         insert oscarCase;
@@ -256,17 +256,17 @@ public with sharing class AMS_OSCAR_TestDataFactory
 		
 		insert OSCAR_GSA;
 
-		Case oscarCase_GSA = new Case(Oscar__c = OSCAR_GSA.Id, RecordTypeId = AMS_Utils.getId('Case', 'OSCAR_Communication'));
+		Case oscarCase_GSA = new Case(Oscar__c = OSCAR_GSA.Id, RecordTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('Case', 'OSCAR_Communication'));
         oscarCase_GSA.AccountId = a2.Id;
         oscarCase_GSA.ContactId = co2.Id;
         insert oscarCase_GSA;
 
 		List<AMS_Inspection__c> agencyInspectionList = new List<AMS_Inspection__c>();
-		agencyInspectionList.add(new AMS_Inspection__c(Oscar__c=OSCAR_GSA.id, Airline__c = airline.Id,/*Accreditation_Endorsement_organisation__c=ao.id,*/Accreditation_Endorsement_Status_code__c = '0'));
-		agencyInspectionList.add(new AMS_Inspection__c(Oscar__c=OSCAR_GSA.id, Airline__c = airline.Id,/*Accreditation_Endorsement_organisation__c=ao.id,*/Accreditation_Endorsement_Status_code__c = '1'));
-		agencyInspectionList.add(new AMS_Inspection__c(Oscar__c=OSCAR_GSA.id, Airline__c = airline.Id,/*Accreditation_Endorsement_organisation__c=ao.id,*/Accreditation_Endorsement_Status_code__c = '2'));
-		agencyInspectionList.add(new AMS_Inspection__c(Oscar__c=OSCAR_GSA.id, Airline__c = airline.Id,/*Accreditation_Endorsement_organisation__c=ao.id,*/Accreditation_Endorsement_Status_code__c = '3'));
-		agencyInspectionList.add(new AMS_Inspection__c(Oscar__c=OSCAR_GSA.id, Airline__c = airline.Id,/*Accreditation_Endorsement_organisation__c=ao.id,*/Accreditation_Endorsement_Status_code__c = '8'));
+		agencyInspectionList.add(new AMS_Inspection__c(Oscar__c=OSCAR_GSA.id, Airline__c = airline.Id,Accreditation_Endorsement_Status_code__c = '0'));
+		agencyInspectionList.add(new AMS_Inspection__c(Oscar__c=OSCAR_GSA.id, Airline__c = airline.Id,Accreditation_Endorsement_Status_code__c = '1'));
+		agencyInspectionList.add(new AMS_Inspection__c(Oscar__c=OSCAR_GSA.id, Airline__c = airline.Id,Accreditation_Endorsement_Status_code__c = '2'));
+		agencyInspectionList.add(new AMS_Inspection__c(Oscar__c=OSCAR_GSA.id, Airline__c = airline.Id,Accreditation_Endorsement_Status_code__c = '3'));
+		agencyInspectionList.add(new AMS_Inspection__c(Oscar__c=OSCAR_GSA.id, Airline__c = airline.Id,Accreditation_Endorsement_Status_code__c = '8'));
 		
 		insert	agencyInspectionList;
 
@@ -279,14 +279,14 @@ public with sharing class AMS_OSCAR_TestDataFactory
 		IATA_ISO_Country__c ctry2 = new IATA_ISO_Country__c (Name='AR',ISO_Code__c='AR');
 		insert new List<IATA_ISO_Country__c>{ctry1, ctry2};
 
-		AMS_Country_Specific_Attribute__c csa1 = new AMS_Country_Specific_Attribute__c(RecordTypeId = AMS_Utils.getId('AMS_Country_Specific_Attribute__c', 'DGR_Minimum_Requirements'), Location_Class__c='R', Minimum_DGR_BR__c=1, Minimum_DGR_HO__c=1, IATA_ISO_Country__c=ctry1.Id);
-        AMS_Country_Specific_Attribute__c csa2 = new AMS_Country_Specific_Attribute__c(RecordTypeId = AMS_Utils.getId('AMS_Country_Specific_Attribute__c', 'DGR_Minimum_Requirements'), Location_Class__c='R', Minimum_DGR_BR__c=1, Minimum_DGR_HO__c=1, IATA_ISO_Country__c=ctry2.Id);
+		AMS_Country_Specific_Attribute__c csa1 = new AMS_Country_Specific_Attribute__c(RecordTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('AMS_Country_Specific_Attribute__c', 'DGR_Minimum_Requirements'), Location_Class__c='R', Minimum_DGR_BR__c=1, Minimum_DGR_HO__c=1, IATA_ISO_Country__c=ctry1.Id);
+        AMS_Country_Specific_Attribute__c csa2 = new AMS_Country_Specific_Attribute__c(RecordTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('AMS_Country_Specific_Attribute__c', 'DGR_Minimum_Requirements'), Location_Class__c='R', Minimum_DGR_BR__c=1, Minimum_DGR_HO__c=1, IATA_ISO_Country__c=ctry2.Id);
         insert new List<AMS_Country_Specific_Attribute__c>{csa1,csa2};
 
         IATA_ISO_State__c stt = new IATA_ISO_State__c(Name= 'Test', ISO_Code__c = 'FR20', IATA_ISO_Country__c = ctry1.Id);
         insert stt;
 
-		Id accountRT = AMS_Utils.getId('Account', 'IATA_Agency');
+		Id accountRT = RecordTypeSingleton.getInstance().getRecordTypeId('Account', 'IATA_Agency');
 
 		Account cargoHO = new Account(IATA_ISO_Country__c = ctry1.id, RecordTypeId = accountRT, IATACode__c='12345670001',
 									Name='Test Cargo HO',Short_Name__c='Test Cargo', Sector__c = 'Cargo Agent',
@@ -310,7 +310,7 @@ public with sharing class AMS_OSCAR_TestDataFactory
 		List<Contact> cos = new List<Contact>{co1,co2}; 
 		insert cos;
 
-		Case oscarCase = new Case(Oscar__c = oscar.Id, RecordTypeId = AMS_Utils.getId('Case', 'OSCAR_Communication'));
+		Case oscarCase = new Case(Oscar__c = oscar.Id, RecordTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('Case', 'OSCAR_Communication'));
         oscarCase.AccountId = cargoHO.Id;
         oscarCase.ContactId = co1.Id;
         insert oscarCase;
@@ -330,7 +330,7 @@ public with sharing class AMS_OSCAR_TestDataFactory
         OSCAR.AMS_Online_Accreditation__c = stagingArea.Id;
         update oscar;
 
-        Id trainedStaff = AMS_Utils.getId('AMS_Accreditation_Contact__c', 'Trained_Staff');
+        Id trainedStaff = RecordTypeSingleton.getInstance().getRecordTypeId('AMS_Accreditation_Contact__c', 'Trained_Staff');
 
 		AMS_Accreditation_Contact__c acontact1 = new AMS_Accreditation_Contact__c(AMS_Pax_Accreditation_Form__c = stagingArea.Id, First_name__c='Bugs', Last_name__c='Bunny', Valid_until__c = Date.today().addYears(2), Type_Of_Certificate__c = AMS_Utils.CERT_DGR, RecordTypeId=trainedStaff);
 
@@ -351,8 +351,8 @@ public with sharing class AMS_OSCAR_TestDataFactory
         IATA_ISO_State__c stt = new IATA_ISO_State__c(Name= 'FR20', ISO_Code__c = 'FR', IATA_ISO_Country__c = ctry.Id);
         insert stt;
 		
-		Id accountRT = AMS_Utils.getId('Account', 'Standard_Account');
-		Id caseRT = AMS_Utils.getId('Case', 'OSCAR_Communication');
+		Id accountRT = RecordTypeSingleton.getInstance().getRecordTypeId('Account', 'Standard_Account');
+		Id caseRT = RecordTypeSingleton.getInstance().getRecordTypeId('Case', 'OSCAR_Communication');
 		
 		List<Account> accountList = new List<Account>();
 		Account a1 = new Account(IATA_ISO_Country__c = ctry.id, RecordTypeId = accountRT, IATACode__c='1234567',Name='NewGenAgency',Short_Name__c='NewGenAgency');

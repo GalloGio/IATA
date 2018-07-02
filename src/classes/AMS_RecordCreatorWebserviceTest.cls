@@ -6,7 +6,7 @@ private class AMS_RecordCreatorWebserviceTest {
         IATA_ISO_Country__c ctry = new IATA_ISO_Country__c(Name='Italy', ISO_Code__c='IT', Region__c='Europe', ISS_Office_Location__c='Italy');
         insert ctry;
 
-		Id accountRT = AMS_Utils.getId('Account', 'Standard_Account');
+		Id accountRT = RecordTypeSingleton.getInstance().getRecordTypeId('Account', 'Standard_Account');
 
 		Account acct = new Account();
 
@@ -57,15 +57,11 @@ private class AMS_RecordCreatorWebserviceTest {
 
 		insert acct2;
 
-
-		//List<Account> accts = new List<Account>{acct,acct2};
-		//insert accts;
-
 		System.debug('Accounts created');
 
-		Contact co1 = new Contact(AccountId = acct.Id, Firstname = 'teste1', Lastname='test1', Phone = '911111111', MobilePhone = '911111111', Email = 'test@test.com', Financial_Assessment_Contact__c = false);
+		Contact co1 = new Contact(AccountId = acct.Id, Firstname = 'teste11', Lastname='test11', Phone = '9111111111', MobilePhone = '9111111111', Email = 'test11@test.com', Financial_Assessment_Contact__c = false);
 		
-		Contact co2 = new Contact(AccountId = acct2.Id, Firstname = 'teste2', Lastname='test2', Phone = '911111112', MobilePhone = '911111112', Email = 'test2@test.com', Financial_Assessment_Contact__c = false);
+		Contact co2 = new Contact(AccountId = acct2.Id, Firstname = 'teste22', Lastname='test22', Phone = '9111111122', MobilePhone = '9111111122', Email = 'test22@test.com', Financial_Assessment_Contact__c = false);
 		
 		List<Contact> contacts = new List<Contact>{co1,co2};
 		insert contacts;
@@ -248,7 +244,7 @@ private class AMS_RecordCreatorWebserviceTest {
 		insert h;
 
 
-		Id accountRT = AMS_Utils.getId('Account', 'Standard_Account');
+		Id accountRT = RecordTypeSingleton.getInstance().getRecordTypeId('Account', 'Standard_Account');
 		
 		IATA_ISO_Country__c ctry = [SELECT ID FROM IATA_ISO_Country__c LIMIT 1];
 
@@ -349,9 +345,7 @@ private class AMS_RecordCreatorWebserviceTest {
 
 		insert h;
 
-		//insert rel;
-
-		Id accountRT = AMS_Utils.getId('Account', 'Standard_Account');
+		Id accountRT = RecordTypeSingleton.getInstance().getRecordTypeId('Account', 'Standard_Account');
 		
 		IATA_ISO_Country__c ctry = [SELECT ID FROM IATA_ISO_Country__c LIMIT 1];
 
@@ -486,8 +480,8 @@ private class AMS_RecordCreatorWebserviceTest {
 
 		update accr;
 
-		Id previousOwner = AMS_Utils.getId('AMS_Accreditation_Contact__c', 'Previous_Company_Owner');
-		Id previousCompanyOwner = AMS_Utils.getId('AMS_Accreditation_Contact__c', 'Previous_Company_Owner');
+		Id previousOwner = RecordTypeSingleton.getInstance().getRecordTypeId('AMS_Accreditation_Contact__c', 'Previous_Company_Owner');
+		Id previousCompanyOwner = RecordTypeSingleton.getInstance().getRecordTypeId('AMS_Accreditation_Contact__c', 'Previous_Company_Owner');
 
 		AMS_Accreditation_Contact__c acontact1 = new AMS_Accreditation_Contact__c(AMS_Pax_Accreditation_Form__c = accr.Id, Company__c = acct.Id, First_name__c='NameToUse1', Last_name__c='Last1', Job_title__c='ABC', Mobile__c='+1112345678', Phone__c='3424322341', Email__c='uni123que@email2.com', RecordTypeId=previousOwner);
 
@@ -508,7 +502,7 @@ private class AMS_RecordCreatorWebserviceTest {
 
 		IATA_ISO_Country__c ctry = [SELECT id from IATA_ISO_Country__c limit 1];
             
-        Id accountRT = AMS_Utils.getId('Account', 'Standard_Account');
+        Id accountRT = RecordTypeSingleton.getInstance().getRecordTypeId('Account', 'Standard_Account');
 
 		Account acct = new Account();
 

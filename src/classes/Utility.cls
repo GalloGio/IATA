@@ -371,25 +371,6 @@ public without sharing class Utility {
     
 
     /****************************************************************************************************
-        Created by CGI, Thai 2015-08-24
-            Return map of name of record type and its ID
-    ****************************************************************************************************/
-    public static Map<String, Id> getRTmapName_Id(String strObjectName, List<String> listDevName) {
-        Map<String, Id> mapName_Id = new Map<String, Id>();
-        
-        //*** build query command
-        String SOQL = 'select Id, DeveloperName from RecordType where SObjectType = :strObjectName';
-        if (listDevName != null && listDevName.size() > 0)
-            SOQL += ' and DeveloperName in :listDevName';
-        
-        //*** build and return map of name of record type and its ID
-        for (RecordType rt : Database.query(SOQL))
-            mapName_Id.put(rt.DeveloperName, rt.Id);
-        return mapName_Id;
-    } //*** end of "getRTmapName_Id"
-
-
-    /****************************************************************************************************
         Created by CGI, David D 2015-08-24
             Return random String
     ****************************************************************************************************/

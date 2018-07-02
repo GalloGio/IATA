@@ -4,7 +4,7 @@ private class AMS_CaseListTest {
     @testSetup static void setup(){
         TransformationHelper.trgAccountISSP_AfterBeforInsertDeleteUpdateUndelete = true;
         TransformationHelper.triggerOnCaseNSerRen = true;
-		Id standardAccountRt = AMS_Utils.getId('Account', 'Standard_Account');
+		Id standardAccountRt = RecordTypeSingleton.getInstance().getRecordTypeId('Account', 'Standard_Account');
 
         IATA_ISO_Country__c ctry = new IATA_ISO_Country__c (Name='US',ISO_Code__c='US')  ;
         insert ctry ;
@@ -64,7 +64,7 @@ private class AMS_CaseListTest {
     }
 
     @isTest static void test_CaseList() {
-    	Id standardAccountRt = AMS_Utils.getId('Account', 'Standard_Account');
+    	Id standardAccountRt = RecordTypeSingleton.getInstance().getRecordTypeId('Account', 'Standard_Account');
         PageReference pageRef = Page.AMS_DemoCaseListPage;
         Test.setCurrentPageReference(pageRef);
 

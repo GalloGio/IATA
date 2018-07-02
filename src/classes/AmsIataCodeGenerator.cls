@@ -181,7 +181,7 @@ global class AmsIataCodeGenerator{
                 theAccount.N_Code__c = theAccreditation.IATACode__c.subString(3, 7);
                 theAccount.IATACode__c = theAccreditation.IATACode__c;
                 
-                theAccount.RecordTypeId = AMS_Utils.getId('Account', 'IATA_Agency');
+                theAccount.RecordTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('Account', 'IATA_Agency');
                 if(theAccreditation.ANG_IsNewGenAgency__c) theAccount.Sector__c = AMS_Utils.SECTOR_PASSENGER;
                 if(allowedProgramCodes.contains(theAccreditation.Location_Class__c))
                 {
@@ -547,7 +547,7 @@ global class AmsIataCodeGenerator{
 
                             //theAccount.IATACode__c = theAccreditation.IATACode__c;
                             if(theAccreditation.ANG_IsNewGenAgency__c) theAccount.Sector__c = AMS_Utils.SECTOR_PASSENGER;
-                            theAccount.RecordTypeId = AMS_Utils.getId('Account', 'IATA_Agency');
+                            theAccount.RecordTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('Account', 'IATA_Agency');
                             if(allowedProgramCodes.contains(theAccreditation.Location_Class__c))
                             {
                                 if(theAccreditation.SAAM_Case__r.OSCAR__r.Process__c == AMS_Utils.new_GSSA && theAccount.Location_Class__c == 'G') {
@@ -568,13 +568,7 @@ global class AmsIataCodeGenerator{
                                     theAccount.Sector__c = programSectorMap.get(theAccount.Location_Class__c); // AMS Enhancements AMSU-24                                    
                                 }
                             }
-                            else
-                            {
-                                // TODO Later... These are already mapped, but there's no task to activate these yet
-                                // When the moment comes, we should remove the above IF and this ELSE
-                                
-                                // theAccount.Category__c = programCategoryMap.get(theAccount.Location_Class__c);
-                            }
+                            
                             System.debug('[generatedAgencyIATACode] storing accreditation with iata code: '+theAccreditation.IATACode__c);
                             List<Code_Range__c> codeRangesToLock = [select id, AMS_Deplicate_Prevention_Lock__c from Code_Range__c where id = :range.Id for update];
                             Code_Range__c codeRange = codeRangesToLock.get(0);

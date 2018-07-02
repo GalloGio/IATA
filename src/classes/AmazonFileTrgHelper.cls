@@ -200,7 +200,7 @@ public class AmazonFileTrgHelper {
 
             for (AmazonFile__c af : trgNewMap.values()) {
 
-                if (af.RecordTypeId == AMS_Utils.getId('AmazonFile__c', 'EF_File')) {
+                if (af.RecordTypeId == RecordTypeSingleton.getInstance().getRecordTypeId('AmazonFile__c', 'EF_File')) {
 
                     efFiles.add(af);
                 }

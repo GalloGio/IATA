@@ -10,7 +10,7 @@ public class ANG_AgencyChangesHelperTest {
         IATA_ISO_State__c stt = new IATA_ISO_State__c(Name= 'Test', ISO_Code__c = 'TS', IATA_ISO_Country__c = ctry.Id);
         insert stt;
 		
-		Id accountAgencyRT = AMS_Utils.getId('Account', 'IATA_Agency');
+		Id accountAgencyRT = RecordTypeSingleton.getInstance().getRecordTypeId('Account', 'IATA_Agency');
 
 		Account account = new Account();
 		account.Name = 'Main HE Account H1';
@@ -268,7 +268,7 @@ public class ANG_AgencyChangesHelperTest {
 
         IATA_ISO_State__c stt =[select id from  IATA_ISO_State__c];
 		
-		Id accountAgencyRT = AMS_Utils.getId('Account', 'IATA_Agency');
+		Id accountAgencyRT = RecordTypeSingleton.getInstance().getRecordTypeId('Account', 'IATA_Agency');
 
 		Account destinationAccount = new Account();
 		destinationAccount.Name = 'Destination HE Account';
@@ -396,7 +396,7 @@ public class ANG_AgencyChangesHelperTest {
 
         IATA_ISO_State__c stt =[select id from  IATA_ISO_State__c];
 		
-		Id accountAgencyRT = AMS_Utils.getId('Account', 'IATA_Agency');
+		Id accountAgencyRT = RecordTypeSingleton.getInstance().getRecordTypeId('Account', 'IATA_Agency');
 
 		Account destinationAccount = new Account();
 		destinationAccount.Name = 'Destination HE Account';
@@ -513,7 +513,7 @@ public class ANG_AgencyChangesHelperTest {
 
         IATA_ISO_State__c stt =[select id from  IATA_ISO_State__c];
 		
-		Id accountAgencyRT = AMS_Utils.getId('Account', 'IATA_Agency');
+		Id accountAgencyRT = RecordTypeSingleton.getInstance().getRecordTypeId('Account', 'IATA_Agency');
 
 		Account destinationAccount = new Account();
 		destinationAccount.Name = 'Destination HE Account';
@@ -631,7 +631,7 @@ public class ANG_AgencyChangesHelperTest {
 
         IATA_ISO_State__c stt =[select id from  IATA_ISO_State__c];
 		
-		Id accountAgencyRT = AMS_Utils.getId('Account', 'IATA_Agency');
+		Id accountAgencyRT = RecordTypeSingleton.getInstance().getRecordTypeId('Account', 'IATA_Agency');
 
 		Account destinationAccount = new Account();
 		destinationAccount.Name = 'Destination HE Account';
@@ -757,7 +757,7 @@ public class ANG_AgencyChangesHelperTest {
 
         IATA_ISO_State__c stt =[select id from  IATA_ISO_State__c];
 		
-		Id accountAgencyRT = AMS_Utils.getId('Account', 'IATA_Agency');
+		Id accountAgencyRT = RecordTypeSingleton.getInstance().getRecordTypeId('Account', 'IATA_Agency');
 
 		Account newHeSingle = new Account();
 		newHeSingle.Name = 'Destination HE Account';
@@ -859,7 +859,7 @@ public class ANG_AgencyChangesHelperTest {
 
         IATA_ISO_State__c stt =[select id from  IATA_ISO_State__c];
 		
-		Id accountAgencyRT = AMS_Utils.getId('Account', 'IATA_Agency');
+		Id accountAgencyRT = RecordTypeSingleton.getInstance().getRecordTypeId('Account', 'IATA_Agency');
 
 		Account newHeSingle = new Account();
 		newHeSingle.Name = 'Original HE Account';
@@ -1197,7 +1197,7 @@ public class ANG_AgencyChangesHelperTest {
 
         List<AMS_Accreditation_Contact__c> accreditationContacts = new List<AMS_Accreditation_Contact__c>();
 
-        Id personAccreditationRT = AMS_Utils.getId('AMS_Accreditation_Contact__c', 'Person');
+        Id personAccreditationRT = RecordTypeSingleton.getInstance().getRecordTypeId('AMS_Accreditation_Contact__c', 'Person');
 
         accreditationContacts.add(new AMS_Accreditation_Contact__c(Agency_Owner__c = true, Financial_interest__c = 20, AMS_Pax_Accreditation_Form__c = stagingArea.Id, Company__c = he.Id, First_name__c='NameToUse1', Last_name__c='Last1', Job_title__c='ABC1', Mobile__c='+4112345671', Phone__c='3424322341', Email__c='unique@email1.com', RecordTypeId=personAccreditationRT));
         accreditationContacts.add(new AMS_Accreditation_Contact__c(Agency_Owner__c = true, Financial_interest__c = 20, AMS_Pax_Accreditation_Form__c = stagingArea.Id, Company__c = he.Id, First_name__c='NameToUse2', Last_name__c='Last2', Job_title__c='ABC2', Mobile__c='+4112345672', Phone__c='3424322342', Email__c='unique@email2.com', RecordTypeId=personAccreditationRT));
@@ -1264,7 +1264,7 @@ public class ANG_AgencyChangesHelperTest {
 		System.assert(ae2 != null);
 		System.assert(ae3 != null);
 
-		Id ownerRtId = AMS_Utils.getId('AMS_Account_Role__c', 'Ownership');
+		Id ownerRtId = RecordTypeSingleton.getInstance().getRecordTypeId('AMS_Account_Role__c', 'Ownership');
         
         List<AMS_Account_Role__c> accountRoles = new List<AMS_Account_Role__c>();
 
@@ -1318,7 +1318,7 @@ public class ANG_AgencyChangesHelperTest {
 
         List<AMS_Accreditation_Contact__c> accreditationContacts = new List<AMS_Accreditation_Contact__c>();
 
-        Id personAccreditationRT = AMS_Utils.getId('AMS_Accreditation_Contact__c', 'Person');
+        Id personAccreditationRT = RecordTypeSingleton.getInstance().getRecordTypeId('AMS_Accreditation_Contact__c', 'Person');
 
         accreditationContacts.add(new AMS_Accreditation_Contact__c(AMS_Ownership_Role__c = accountRoles.get(0).Id ,Agency_Owner__c = true, Financial_interest__c = 20, AMS_Pax_Accreditation_Form__c = stagingArea.Id, Company__c = he.Id, First_name__c='NameToUse1', Last_name__c='Last1', Job_title__c='ABC1', Mobile__c='+4112345671', Phone__c='3424322341', Email__c='unique@email1.com', RecordTypeId=personAccreditationRT));
         accreditationContacts.add(new AMS_Accreditation_Contact__c(AMS_Ownership_Role__c = accountRoles.get(1).Id ,Agency_Owner__c = true, Financial_interest__c = 20, AMS_Pax_Accreditation_Form__c = stagingArea.Id, Company__c = he.Id, First_name__c='NameToUse2', Last_name__c='Last2', Job_title__c='ABC2', Mobile__c='+4112345672', Phone__c='3424322342', Email__c='unique@email2.com', RecordTypeId=personAccreditationRT));
@@ -1385,7 +1385,7 @@ public class ANG_AgencyChangesHelperTest {
 		System.assert(ae2 != null);
 		System.assert(ae3 != null);
 
-		Id ownerRtId = AMS_Utils.getId('AMS_Account_Role__c', 'Ownership');
+		Id ownerRtId = RecordTypeSingleton.getInstance().getRecordTypeId('AMS_Account_Role__c', 'Ownership');
         
         List<AMS_Account_Role__c> accountRoles = new List<AMS_Account_Role__c>();
 
@@ -1442,7 +1442,7 @@ public class ANG_AgencyChangesHelperTest {
 
         List<AMS_Accreditation_Contact__c> accreditationContacts = new List<AMS_Accreditation_Contact__c>();
 
-        Id personAccreditationRT = AMS_Utils.getId('AMS_Accreditation_Contact__c', 'Person');
+        Id personAccreditationRT = RecordTypeSingleton.getInstance().getRecordTypeId('AMS_Accreditation_Contact__c', 'Person');
 
         accreditationContacts.add(new AMS_Accreditation_Contact__c(AMS_Ownership_Role__c = accountRoles.get(0).Id ,Agency_Owner__c = true, Financial_interest__c = 20, AMS_Pax_Accreditation_Form__c = stagingArea.Id, Company__c = he.Id, First_name__c='NameToUse1', Last_name__c='Last1', Job_title__c='ABC1', Mobile__c='+4112345671', Phone__c='3424322341', Email__c='unique@email1.com', RecordTypeId=personAccreditationRT));
         accreditationContacts.add(new AMS_Accreditation_Contact__c(AMS_Ownership_Role__c = accountRoles.get(1).Id ,Agency_Owner__c = true, Financial_interest__c = 20, AMS_Pax_Accreditation_Form__c = stagingArea.Id, Company__c = he.Id, First_name__c='NameToUse2', Last_name__c='Last2', Job_title__c='ABC2', Mobile__c='+4112345672', Phone__c='3424322342', Email__c='unique@email2.com', RecordTypeId=personAccreditationRT));
@@ -1513,7 +1513,7 @@ public class ANG_AgencyChangesHelperTest {
 		System.assert(ae2 != null);
 		System.assert(ae3 != null);
 
-		Id	formOfPaymentRT = AMS_Utils.getId('Agency_Authorization__c','FormOfPayment');
+		Id	formOfPaymentRT = RecordTypeSingleton.getInstance().getRecordTypeId('Agency_Authorization__c','FormOfPayment');
 
 		List<Agency_Authorization__c> toUpsert = new List<Agency_Authorization__c>();
 
@@ -1627,7 +1627,7 @@ public class ANG_AgencyChangesHelperTest {
 		he.ANG_Accreditation_Model__c = 'Cash';
 		update he;
 
-		Id	formOfPaymentRT = AMS_Utils.getId('Agency_Authorization__c','FormOfPayment');
+		Id	formOfPaymentRT = RecordTypeSingleton.getInstance().getRecordTypeId('Agency_Authorization__c','FormOfPayment');
 
 		List<Agency_Authorization__c> toUpsert = new List<Agency_Authorization__c>();
 
@@ -1775,7 +1775,7 @@ public class ANG_AgencyChangesHelperTest {
 		Account a1 = [Select Id, IATACode__c,IATA_ISO_Country__c,Location_Class__c, Location_Type__c, ANG_IEP_HE_AccntNum__c, ANG_IEP_Status__c, ANG_HE_CashCondition__c, ANG_HE_RiskHistoryAssessment__c, ANG_HE_RiskStatus__c from Account where Name = 'Account AE1 H1'];
 		Account he1 = [Select Id, IATACode__c, IATA_ISO_Country__c,Location_Class__c,Location_Type__c, ANG_IEP_HE_AccntNum__c, ANG_IEP_Status__c, ANG_HE_CashCondition__c, ANG_HE_RiskHistoryAssessment__c, ANG_HE_RiskStatus__c from Account where Name = 'Main HE Account H1'];
 
-		Id oscarRT = AMS_Utils.getId('AMS_OSCAR__c', 'ANG_Agency_Changes');
+		Id oscarRT = RecordTypeSingleton.getInstance().getRecordTypeId('AMS_OSCAR__c', 'ANG_Agency_Changes');
 
 		AMS_OSCAR__c oscar = new AMS_OSCAR__c(Account__c = a1.id, New_parent__c = a1.id, recordTypeId = oscarRT, Process__c = 'ANG.MAJOR.CHANGES.1.0' );
 		insert oscar;
@@ -1838,7 +1838,7 @@ public class ANG_AgencyChangesHelperTest {
 
 		List<AMS_Accreditation_Contact__c> accreditationContacts = new List<AMS_Accreditation_Contact__c>();
 
-        Id personAccreditationRT = AMS_Utils.getId('AMS_Accreditation_Contact__c', 'Person');
+        Id personAccreditationRT = RecordTypeSingleton.getInstance().getRecordTypeId('AMS_Accreditation_Contact__c', 'Person');
 
         accreditationContacts.add(new AMS_Accreditation_Contact__c(Agency_Owner__c = true, Financial_interest__c = 100, AMS_Pax_Accreditation_Form__c = stagingArea.Id, Company__c = he1.Id, First_name__c='NameToUse1', Last_name__c='Last1', Job_title__c='ABC1', Mobile__c='+4112345671', Phone__c='3424322341', Email__c='unique@email1.com', RecordTypeId=personAccreditationRT));
 
@@ -1962,7 +1962,7 @@ public class ANG_AgencyChangesHelperTest {
 		a1.ANG_Accreditation_Model__c = 'Cash';
 		he1.ANG_Accreditation_Model__c = 'Cashless';
 
-		Id oscarRT = AMS_Utils.getId('AMS_OSCAR__c', 'ANG_Agency_Changes');
+		Id oscarRT = RecordTypeSingleton.getInstance().getRecordTypeId('AMS_OSCAR__c', 'ANG_Agency_Changes');
 
 		AMS_OSCAR__c oscar = new AMS_OSCAR__c(Account__c = a1.id, New_parent__c = a1.id, recordTypeId = oscarRT, Process__c = 'ANG.MAJOR.CHANGES.1.0' );
 		insert oscar;
@@ -2035,7 +2035,7 @@ public class ANG_AgencyChangesHelperTest {
 		
 		List<AMS_Accreditation_Contact__c> accreditationContacts = new List<AMS_Accreditation_Contact__c>();
 
-        Id personAccreditationRT = AMS_Utils.getId('AMS_Accreditation_Contact__c', 'Person');
+        Id personAccreditationRT = RecordTypeSingleton.getInstance().getRecordTypeId('AMS_Accreditation_Contact__c', 'Person');
 
         accreditationContacts.add(new AMS_Accreditation_Contact__c(Agency_Owner__c = true, Financial_interest__c = 100, AMS_Pax_Accreditation_Form__c = stagingArea.Id, Company__c = he1.Id, First_name__c='NameToUse1', Last_name__c='Last1', Job_title__c='ABC1', Mobile__c='+4112345671', Phone__c='3424322341', Email__c='unique@email1.com', RecordTypeId=personAccreditationRT));
 
@@ -2231,7 +2231,7 @@ public class ANG_AgencyChangesHelperTest {
 		
 		List<AMS_Accreditation_Contact__c> accreditationContacts = new List<AMS_Accreditation_Contact__c>();
 
-        Id personAccreditationRT = AMS_Utils.getId('AMS_Accreditation_Contact__c', 'Person');
+        Id personAccreditationRT = RecordTypeSingleton.getInstance().getRecordTypeId('AMS_Accreditation_Contact__c', 'Person');
 
         accreditationContacts.add(new AMS_Accreditation_Contact__c(Agency_Owner__c = true, Financial_interest__c = 100, AMS_Pax_Accreditation_Form__c = stagingArea.Id, Company__c = he1.Id, First_name__c='NameToUse1', Last_name__c='Last1', Job_title__c='ABC1', Mobile__c='+4112345671', Phone__c='3424322341', Email__c='unique@email1.com', RecordTypeId=personAccreditationRT));
 
@@ -2315,7 +2315,7 @@ public class ANG_AgencyChangesHelperTest {
 
         accreditationContacts = new List<AMS_Accreditation_Contact__c>();
 
-        personAccreditationRT = AMS_Utils.getId('AMS_Accreditation_Contact__c', 'Person');
+        personAccreditationRT = RecordTypeSingleton.getInstance().getRecordTypeId('AMS_Accreditation_Contact__c', 'Person');
 
         accreditationContacts.add(new AMS_Accreditation_Contact__c(Agency_Owner__c = true, Financial_interest__c = 100, AMS_Pax_Accreditation_Form__c = stagingArea2.Id, Company__c = he1.Id, First_name__c='NameToUse2', Last_name__c='Last1', Job_title__c='ABC1', Mobile__c='+4112345671', Phone__c='3424322341', Email__c='unique2@email1.com', RecordTypeId=personAccreditationRT));
 
@@ -2334,12 +2334,6 @@ public class ANG_AgencyChangesHelperTest {
 
 		System.debug('Case Id is:'+oscarCase2.Id);
 
-		//Attachment att2 = new Attachment();
-		//att2.Name = 'Certificates '+oscarCase2.Id+'.pdf';
-		//att2.Body = pdfArchive;
-		//att2.ParentId = oscarCase2.Id;
-		//insert att2;
-		
 		update oscar2;
 
 		Test.stopTest();
@@ -2475,7 +2469,7 @@ public class ANG_AgencyChangesHelperTest {
 		
 		List<AMS_Accreditation_Contact__c> accreditationContacts = new List<AMS_Accreditation_Contact__c>();
 
-        Id personAccreditationRT = AMS_Utils.getId('AMS_Accreditation_Contact__c', 'Person');
+        Id personAccreditationRT = RecordTypeSingleton.getInstance().getRecordTypeId('AMS_Accreditation_Contact__c', 'Person');
 
         accreditationContacts.add(new AMS_Accreditation_Contact__c(Agency_Owner__c = true, Financial_interest__c = 100, AMS_Pax_Accreditation_Form__c = stagingArea.Id, Company__c = he1.Id, First_name__c='NameToUse1', Last_name__c='Last1', Job_title__c='ABC1', Mobile__c='+4112345671', Phone__c='3424322341', Email__c='unique@email1.com', RecordTypeId=personAccreditationRT));
 
@@ -2550,7 +2544,7 @@ public class ANG_AgencyChangesHelperTest {
 		a1.ANG_Accreditation_Model__c = 'Cash';
 		he1.ANG_Accreditation_Model__c = 'Cashless';
 
-		Id oscarRT = AMS_Utils.getId('AMS_OSCAR__c', 'ANG_Agency_Changes');
+		Id oscarRT = RecordTypeSingleton.getInstance().getRecordTypeId('AMS_OSCAR__c', 'ANG_Agency_Changes');
 
 		AMS_OSCAR__c oscar = new AMS_OSCAR__c(Account__c = a1.id, New_parent__c = a1.id, recordTypeId = oscarRT, Process__c = 'ANG.MAJOR.CHANGES.1.0' );
 		insert oscar;
@@ -2622,7 +2616,7 @@ public class ANG_AgencyChangesHelperTest {
 		
 		List<AMS_Accreditation_Contact__c> accreditationContacts = new List<AMS_Accreditation_Contact__c>();
 
-        Id personAccreditationRT = AMS_Utils.getId('AMS_Accreditation_Contact__c', 'Person');
+        Id personAccreditationRT = RecordTypeSingleton.getInstance().getRecordTypeId('AMS_Accreditation_Contact__c', 'Person');
 
         accreditationContacts.add(new AMS_Accreditation_Contact__c(Agency_Owner__c = true, Financial_interest__c = 100, AMS_Pax_Accreditation_Form__c = stagingArea.Id, Company__c = he1.Id, First_name__c='NameToUse1', Last_name__c='Last1', Job_title__c='ABC1', Mobile__c='+4112345671', Phone__c='3424322341', Email__c='unique@email1.com', RecordTypeId=personAccreditationRT));
 
@@ -2686,7 +2680,7 @@ public class ANG_AgencyChangesHelperTest {
 		a1.ANG_Accreditation_Model__c = 'Cash';
 		he1.ANG_Accreditation_Model__c = 'Cashless';
 
-		Id oscarRT = AMS_Utils.getId('AMS_OSCAR__c', 'ANG_Agency_Changes');
+		Id oscarRT = RecordTypeSingleton.getInstance().getRecordTypeId('AMS_OSCAR__c', 'ANG_Agency_Changes');
 
 		AMS_OSCAR__c oscar = new AMS_OSCAR__c(Account__c = a1.id, New_parent__c = a1.id, recordTypeId = oscarRT, Process__c = 'ANG.MAJOR.CHANGES.1.0' );
 		insert oscar;
@@ -2758,7 +2752,7 @@ public class ANG_AgencyChangesHelperTest {
 		
 		List<AMS_Accreditation_Contact__c> accreditationContacts = new List<AMS_Accreditation_Contact__c>();
 
-        Id personAccreditationRT = AMS_Utils.getId('AMS_Accreditation_Contact__c', 'Person');
+        Id personAccreditationRT = RecordTypeSingleton.getInstance().getRecordTypeId('AMS_Accreditation_Contact__c', 'Person');
 
         accreditationContacts.add(new AMS_Accreditation_Contact__c(Agency_Owner__c = true, Financial_interest__c = 100, AMS_Pax_Accreditation_Form__c = stagingArea.Id, Company__c = he1.Id, First_name__c='NameToUse1', Last_name__c='Last1', Job_title__c='ABC1', Mobile__c='+4112345671', Phone__c='3424322341', Email__c='unique@email1.com', RecordTypeId=personAccreditationRT));
 

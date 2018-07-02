@@ -7,7 +7,7 @@ public with sharing class AMS_AccreditationContactHelper
         String query = 'select ' + commaSeparatedFields;
         query = query + ', Person__r.Email__c, Person__r.Contact__r.Id, Person__r.First_Name__c, Person__r.LastName__c, Person__r.Phone__c, ' + 
                         'Person__r.Contact__r.Email, Contact__r.Id, Contact__r.AccountId ';
-        query = query + ' from AMS_Account_Role__c where RecordTypeId = \'' + AMS_Utils.getId('AMS_Account_Role__c', 'Employee') + '\' and (Person__r.Email__c in :emailSet or Person__r.Id in :acPersonSet)';
+        query = query + ' from AMS_Account_Role__c where RecordTypeId = \'' + RecordTypeSingleton.getInstance().getRecordTypeId('AMS_Account_Role__c', 'Employee') + '\' and (Person__r.Email__c in :emailSet or Person__r.Id in :acPersonSet)';
         List<AMS_Account_Role__c> roleList = Database.query(query);
         Map<String, AMS_Account_Role__c> rolePersonMap = new Map<String, AMS_Account_Role__c>();
         for(AMS_Account_Role__c ar : roleList)
@@ -26,8 +26,7 @@ public with sharing class AMS_AccreditationContactHelper
         String commaSeparatedFields = AMS_AccreditationContactHelper.loadFieldsDynamically('AMS_Account_Role__c');
         String query = 'select ' + commaSeparatedFields;
         query = query + ', Contact__r.FirstName, Contact__r.LastName, Contact__r.Email, Contact__r.Phone, Contact__r.Title, Contact__r.Membership_Main_Contact__c ';
-        //query = query + ' from AMS_Account_Role__c where RecordTypeId = \'' + AMS_Utils.getId('AMS_Account_Role__c', 'Employee') + '\' and Person__c = null and (Contact__r.Email in :emailSet or Contact__r.Id in :acContactSet)';
-        query = query + ' from AMS_Account_Role__c where RecordTypeId = \'' + AMS_Utils.getId('AMS_Account_Role__c', 'Ownership') + '\' and Person__c = null and (Contact__r.Email in :emailSet or Contact__r.Id in :acContactSet)';
+        query = query + ' from AMS_Account_Role__c where RecordTypeId = \'' + RecordTypeSingleton.getInstance().getRecordTypeId('AMS_Account_Role__c', 'Ownership') + '\' and Person__c = null and (Contact__r.Email in :emailSet or Contact__r.Id in :acContactSet)';
         List<AMS_Account_Role__c> roleList = Database.query(query);
         Map<String, AMS_Account_Role__c> roleContactMap = new Map<String, AMS_Account_Role__c>();
         for(AMS_Account_Role__c ar : roleList)
@@ -41,17 +40,6 @@ public with sharing class AMS_AccreditationContactHelper
         return roleContactMap;
     }
     
-    /* DNG - not being used 
-    public static List<AMS_Account_Role__c> findAllRolesForAccount(String accountId)
-    {
-        String commaSeparatedFields = AMS_AccreditationContactHelper.loadFieldsDynamically('AMS_Account_Role__c');
-        String query = 'select ' + commaSeparatedFields;
-        query = query + ', Contact__r.FirstName, Contact__r.LastName, Contact__r.Email, Contact__r.Phone, Contact__r.Title, Contact__r.Membership_Main_Contact__c ';
-        query = query + ' Person_AMS__r.Email__c from AMS_Account_Role__c where RecordTypeId = \'' + AMS_Utils.getId('AMS_Account_Role__c', 'Employee') + '\' and Account = :accountId';
-        List<AMS_Account_Role__c> roleList = Database.query(query);
-        return roleList;
-    }
-    */
     
     
     public static Map<Id, Contact> findContactsByEmail(Set<String> emailSet)
@@ -129,7 +117,7 @@ public with sharing class AMS_AccreditationContactHelper
         if(ac.Agency_owner__c)
         {
             role.Owner_Name__c      = (ac.First_Name__c != null) ? ac.First_Name__c + ' ' + ac.Last_Name__c : ac.Last_Name__c;
-            role.RecordTypeId = AMS_Utils.getId('AMS_Account_Role__c', 'Ownership');
+            role.RecordTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('AMS_Account_Role__c', 'Ownership');
             
             // This is actually not needed for person owners
             //if(ac.RecordTypeId == AMS_Utils.AccreditationContactCompanyRT)
@@ -139,12 +127,7 @@ public with sharing class AMS_AccreditationContactHelper
 
             }
         }
-        //TD: Removed Employee from Role. Keep them on Contact object only
-        /* else
-        {
-            // DANI: remove this! role.RecordTypeId = AMS_Utils.getId('AMS_Account_Role__c', 'Employee');
-            role.RecordTypeId = AMS_Utils.getId('AMS_Account_Role__c', 'Employee');
-        }*/
+
         return role;
     }
     
@@ -184,17 +167,10 @@ public with sharing class AMS_AccreditationContactHelper
         
         if(ac.Agency_owner__c)
         {
-            // role.Owner_Account__c    = ac.Company__c;
-            //role.Owner_Name__c        = ac.First_Name__c + ' ' + ac.Last_Name__c;
-            role.RecordTypeId = AMS_Utils.getId('AMS_Account_Role__c', 'Ownership');
+            role.RecordTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('AMS_Account_Role__c', 'Ownership');
             role.Owner_Name__c      = (ac.First_Name__c == null ? '' : ac.First_Name__c  ) + (ac.Last_Name__c == null ? '' : ( ' ' + ac.Last_Name__c));
         }
-        //TD: Removed Employee from Role. Keep them on Contact object only
-        /*
-         else
-        {
-            role.RecordTypeId = AMS_Utils.getId('AMS_Account_Role__c', 'Employee');
-        }*/
+        
         return role;
     }
     
@@ -207,7 +183,7 @@ public with sharing class AMS_AccreditationContactHelper
             role.Account__c         = ac.AMS_Pax_Accreditation_Form__r.SAAM_Case__r.OSCAR__r.Account__c;
             role.Owner_Account__c   = ac.Company__c;
             role.Percentage__c      = ac.Financial_Interest__c;
-            role.RecordTypeId = AMS_Utils.getId('AMS_Account_Role__c', 'Ownership');
+            role.RecordTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('AMS_Account_Role__c', 'Ownership');
         }
         return role;
     }
@@ -219,7 +195,7 @@ public with sharing class AMS_AccreditationContactHelper
             role.Account__c         = ac.AMS_Pax_Accreditation_Form__r.SAAM_Case__r.OSCAR__r.Account__c;
             role.Owner_Account__c   = ac.Company__c;
             role.Percentage__c      = ac.Financial_Interest__c;
-            role.RecordTypeId = AMS_Utils.getId('AMS_Account_Role__c', 'Ownership');
+            role.RecordTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('AMS_Account_Role__c', 'Ownership');
         }
         return role;
     }
@@ -239,7 +215,7 @@ public with sharing class AMS_AccreditationContactHelper
         con.Birthdate = ac.Birthdate__c;
         con.Email = ac.Email__c;
         con.ISO_Country__c = ac.ISO_Country__c;
-        con.RecordTypeId = AMS_Utils.getId('Contact', 'Standard_Contact');
+        con.RecordTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('Contact', 'Standard_Contact');
         con.Training_dangerous_goods_completed__c = ac.Training_dangerous_goods_completed__c;
         con.list_Dangerous_Goods_Awareness__c = ac.list_Dangerous_Goods_Awareness__c;
         con.Authorized_Signatory__c = ac.Authorised_signatory__c;
@@ -257,7 +233,7 @@ public with sharing class AMS_AccreditationContactHelper
         acc.Name = ac.Name;
         acc.Legal_Name__c = ac.Name;
         acc.Registration_Number__c = ac.Registration_Number__c;
-        acc.RecordTypeId = AMS_Utils.getId('Account', 'Standard_Account');
+        acc.RecordTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('Account', 'Standard_Account');
 
         return acc;
     }
@@ -282,7 +258,7 @@ public with sharing class AMS_AccreditationContactHelper
     
     public static List<Contact> findContactsByNameOrEmail(String firstName, String lastName, String email)
     {
-        String standardContactRtId = AMS_Utils.getId('Contact', 'Standard_Contact');
+        String standardContactRtId = RecordTypeSingleton.getInstance().getRecordTypeId('Contact', 'Standard_Contact');
 
         String query = 'select Id, FirstName, LastName, Title, AccountId, Membership_Main_Contact__c, MailingCountry, MailingState, ' + 
                         'MailingStreet, MailingCity, MailingPostalCode, Phone, Mobilephone, Fax, Financial_Assessment_Contact__c, Birthdate, Email, ISO_Country__c, RecordTypeId ' +

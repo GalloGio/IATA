@@ -6,7 +6,7 @@ private class ANG_RecordCreatorWebserviceTest {
 		IATA_ISO_Country__c ctry = new IATA_ISO_Country__c(Name='Portugal', ISO_Code__c='PT', Region__c='Europe', ISS_Office_Location__c='Portugal', ANG_Enable_NewGen__c=true);
         insert ctry;
 
-		Id accountRT = AMS_Utils.getId('Account', 'Standard_Account');
+		Id accountRT = RecordTypeSingleton.getInstance().getRecordTypeId('Account', 'Standard_Account');
 
 		Account acct = new Account();
 

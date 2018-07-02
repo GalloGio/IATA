@@ -3341,7 +3341,7 @@ public class AMS_OSCARTriggerHandler {
 
     private static void createAgencyAuthorizations(AMS_OSCAR__c oscar){
         List<Agency_Authorization__c> authorizations = new List<Agency_Authorization__c>();
-        ID FormOfPaymentRT = AMS_Utils.getId('Agency_Authorization__c','FormOfPayment');
+        ID FormOfPaymentRT = RecordTypeSingleton.getInstance().getRecordTypeId('Agency_Authorization__c','FormOfPayment');
 
         String statusForCC = 'Active';
 
@@ -3365,7 +3365,7 @@ public class AMS_OSCARTriggerHandler {
 
     private static void copyAgencyAuthorizationsFromParent(AMS_OSCAR__c oscar){
         List<Agency_Authorization__c> authorizations = new List<Agency_Authorization__c>();
-        ID FormOfPaymentRT = AMS_Utils.getId('Agency_Authorization__c','FormOfPayment');
+        ID FormOfPaymentRT = RecordTypeSingleton.getInstance().getRecordTypeId('Agency_Authorization__c','FormOfPayment');
 
         Account account = [SELECT ParentId FROM Account WHERE Id =: oscar.Account__c ];
         List<Agency_Authorization__c> parentFormsOfPayment = [SELECT Account__c, ANG_FormOfPayment_ID__c, Status__c, RecordTypeId FROM Agency_Authorization__c WHERE Account__c =: account.ParentId AND Status__c = 'Active' AND RecordTypeId =: FormOfPaymentRT];
@@ -3433,7 +3433,7 @@ public class AMS_OSCARTriggerHandler {
             accountIdsInvolvedSet.addAll(accountIds);
         }
 
-        ID FormOfPaymentRT = AMS_Utils.getId('Agency_Authorization__c','FormOfPayment');
+        ID FormOfPaymentRT = RecordTypeSingleton.getInstance().getRecordTypeId('Agency_Authorization__c','FormOfPayment');
         List<Agency_Authorization__c> formsOfPaymentList = [SELECT Id, Account__c, ANG_FormOfPayment_ID__c, Status__c, RecordTypeId FROM Agency_Authorization__c WHERE Account__c in :accountIdsInvolvedSet and RecordTypeId =: FormOfPaymentRT and ANG_FormOfPayment_ID__c = 'CC'];
 
         for(AMS_OSCAR__c oscar: oscarsToInsertList){

@@ -1251,7 +1251,7 @@ global with sharing class ANG_ConversionHelper {
 
         List<Agency_Authorization__c> authorizations = new List<Agency_Authorization__c>();
         
-        ID FormOfPaymentRT = AMS_Utils.getId('Agency_Authorization__c','FormOfPayment');
+        ID FormOfPaymentRT = RecordTypeSingleton.getInstance().getRecordTypeId('Agency_Authorization__c','FormOfPayment');
         
         List<Account> acctToInsert = [SELECT Id, IATACode__c, Status__c, Purge_Flag__c from Account where Id in:accts];
         

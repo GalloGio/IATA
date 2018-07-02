@@ -18,7 +18,7 @@ public with sharing class EF_RelatedRecordsHandlerTest {
 			insert cs;   
 
 			EF_Related_Records__c rr = new EF_Related_Records__c();
-			rr.RecordTypeId = AMS_Utils.getId('EF_Related_Records__c', 'Relationship');
+			rr.RecordTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('EF_Related_Records__c', 'Relationship');
 			rr.Contract__c = contract.Id;
 			rr.Contact__c = c.Id;
 			rr.Case__c = cs.Id;

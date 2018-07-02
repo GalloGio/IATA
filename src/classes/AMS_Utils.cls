@@ -81,8 +81,6 @@ public without sharing class AMS_Utils {
         private set;
     }
 
-    private static Map<String, RecordType> currentCache = null;
-
     public static String userSessionId = UserInfo.getSessionId();
 
     public static final String SANITYCHECK = 'Perform Sanity Check';
@@ -338,10 +336,6 @@ public without sharing class AMS_Utils {
 
     //Mass created FOP case/OSCAR is assigned to one of theses queues when created:
     public static final Set<String> MASS_FOP_QUEUES = new Set<String>{'NewGen PCI - Africa & Middle East','NewGen PCI - Americas','NewGen PCI - Asia & Pacific','NewGen PCI - China & North Asia','NewGen PCI - Europe'};
-
-    static {
-        refreshCache();
-    }
 
     public static String ENCRYPTION_KEY {
         get {
@@ -1800,37 +1794,6 @@ public static String errorMessageBeautifyer(Exception ex) {
     return 'ERROR: ' + errorString.unescapeHtml4();
 }
 
-public static RecordType getRecordType(String sObjectType, String developerName) {
-    RecordType result = currentCache.get(developerName + '%%' + sObjectType);
-    if (result == null) {
-        throw new AMS_ApplicationException('Could not find RecordType for ' + sObjectType + ', ' + developerName);
-    }
-    return result;
-}
-
-public static RecordType getRecordType(Id recordTypeId) {
-    if (currentCache == null) {
-        refreshCache();
-    }
-
-    RecordType result = currentCache.get(recordTypeId);
-    if (result == null) {
-        refreshCache();
-        result = currentCache.get(recordTypeId);
-    }
-    return result;
-}
-
-/**
- * Get the recordTypeId for the given sObjectType and developerName
- */
-public static Id getId(String sObjectType, String developerName) {
-    RecordType rt = getRecordType(sObjectType, developerName);
-    if (rt != null) {
-        return rt.id;
-    }
-    return null;
-}
 
 /////////////////////////////////////////////////////////////////////////////////////
 // Private methods
@@ -1857,16 +1820,6 @@ private static String DecryptString(String key, String str) {
     Blob encryptedData = Encodingutil.base64Decode(str);
     Blob decryptedData = Crypto.decryptWithManagedIV(ENCRYPTION_ALGORYTHM, EncodingUtil.base64Decode(key), encryptedData);
     return decryptedData.toString();
-}
-
-private static void refreshCache() {
-    Map<String, RecordType> newCache = new Map<String, RecordType>();
-
-    for (RecordType rt : [ select id, name, developerName, SObjectType from RecordType ]) {
-        newCache.put(rt.developerName + '%%' + rt.SObjectType, rt);
-        newCache.put(rt.Id, rt);
-    }
-    currentCache = newCache;
 }
 
 public static String findObjectNameFromRecordIdPrefix(String recordIdOrPrefix) {

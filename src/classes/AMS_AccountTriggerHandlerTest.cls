@@ -244,15 +244,18 @@ private class AMS_AccountTriggerHandlerTest {
         IATA_ISO_Country__c ctry = new IATA_ISO_Country__c (Name='US',ISO_Code__c='US')  ;
         insert ctry;
 
-        AMS_Country_Specific_Attribute__c irrThsd = new AMS_Country_Specific_Attribute__c(IATA_ISO_Country__c = ctry.Id, Location_Class__c = 'Test', Threshold__c = 1, RecordTypeId = AMS_Utils.getId('AMS_Country_Specific_Attribute__c', 'Irregularity_Threshold'));
+        AMS_Country_Specific_Attribute__c irrThsd = new AMS_Country_Specific_Attribute__c(IATA_ISO_Country__c = ctry.Id, Location_Class__c = 'Test', Threshold__c = 1, 
+        												RecordTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('AMS_Country_Specific_Attribute__c', 'Irregularity_Threshold'));
         insert irrThsd;
 
-        Account a = new Account(IATA_ISO_Country__c = ctry.id, RecordTypeId = AMS_Utils.getId('Account', 'Standard_Account'), Name='Test Agency', IATAcode__c = '1234567', Location_Class__c = 'Test');
+        Account a = new Account(IATA_ISO_Country__c = ctry.id, RecordTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('Account', 'Standard_Account'), Name='Test Agency', IATAcode__c = '1234567', Location_Class__c = 'Test');
         insert a;
 
         Test.startTest();
 
-        	Agency_Applied_Change_code__c irr = new Agency_Applied_Change_code__c(Account__c = a.Id, RecordTypeId = AMS_Utils.getId('Agency_Applied_Change_code__c', 'Irregularities'), Change_Code__c = 'IRR', Operation__c = 'A', Irregularities_Points__c = 1, Irregularities_Expired__c = false);
+        	Agency_Applied_Change_code__c irr = new Agency_Applied_Change_code__c(Account__c = a.Id, 
+        											RecordTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('Agency_Applied_Change_code__c', 'Irregularities'), 
+        											Change_Code__c = 'IRR', Operation__c = 'A', Irregularities_Points__c = 1, Irregularities_Expired__c = false);
         	insert irr;
 
         	Account aAssert = [SELECT Id, Count_Accumulated_Irregularities__c, SUM_A_Irregularities__c, SUM_W_Irregularities__c FROM Account WHERE Id = :a.Id];
@@ -266,7 +269,8 @@ private class AMS_AccountTriggerHandlerTest {
 		/*IATA_ISO_Country__c ctry = new IATA_ISO_Country__c (Name='US',ISO_Code__c='US')  ;
 		insert ctry;*/
 
-		Account a = new Account(RecordTypeId = AMS_Utils.getId('Account', 'Standard_Account'), Name='Test Agency', IATAcode__c = '1234567', Location_Class__c = 'Test');
+		Account a = new Account(RecordTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('Account', 'Standard_Account'), 
+								Name='Test Agency', IATAcode__c = '1234567', Location_Class__c = 'Test');
 		insert a;
 
 		insert new AMS_Oscar__c(Account__c = a.Id, Status__c = 'Open');

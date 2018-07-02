@@ -237,7 +237,7 @@ private class AMS_UtilsTest {
         IATA_ISO_Country__c ctry = new IATA_ISO_Country__c (Name='US',ISO_Code__c='US')  ;
         insert ctry ;
 
-        Id accountRT = AMS_Utils.getId('Account', 'Standard_Account');
+        Id accountRT = RecordTypeSingleton.getInstance().getRecordTypeId('Account', 'Standard_Account');
 
         Account a1 = new Account(IATA_ISO_Country__c = ctry.id, RecordTypeId = accountRT, IATACode__c='1234567',Name='Test1 Agency',Short_Name__c='Test1 Agency');
         insert a1;
@@ -248,14 +248,8 @@ private class AMS_UtilsTest {
         AMS_OSCAR__c OSCAR2 = new AMS_OSCAR__c(STEP1__c = 'In Progress', Account__c = a1.id);
         insert OSCAR2;
 
-        //Contact co1 = new Contact(AccountId = a1.id, Firstname = 'teste1', Lastname='test1', Phone = '911111111', MobilePhone = '911111111', Email = 'test@test.com', Financial_Assessment_Contact__c = false);
-        //insert co1;
+        Case oscarCase = new Case(Oscar__c = oscar.Id, RecordTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('Case', 'OSCAR_Communication'));
 
-        Case oscarCase = new Case(Oscar__c = oscar.Id, RecordTypeId = AMS_Utils.getId('Case', 'OSCAR_Communication'));
-
-
-        //oscarCase.AccountId = a1.Id;
-        //oscarCase.ContactId = co1.Id;
         oscarCase.Financial_Assessment_requested__c = date.today();
         oscarCase.Deadline_Date__c= date.today();
         oscarCase.Assessment_Performed_Date__c= date.today();
@@ -265,7 +259,7 @@ private class AMS_UtilsTest {
         oscarCase.FS_Deadline_Date__c = date.today();
         insert oscarCase;
 
-        Case oscarCaseToCompare = new Case(Oscar__c = oscar2.Id, RecordTypeId = AMS_Utils.getId('Case', 'OSCAR_Communication'));
+        Case oscarCaseToCompare = new Case(Oscar__c = oscar2.Id, RecordTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('Case', 'OSCAR_Communication'));
 
         oscarCaseToCompare.Financial_Assessment_requested__c = date.today().addDays(-1);
         oscarCaseToCompare.Deadline_Date__c= date.today().addDays(-1);
@@ -408,7 +402,7 @@ private class AMS_UtilsTest {
         IATA_ISO_Country__c ctry = new IATA_ISO_Country__c (Name='US',ISO_Code__c='US')  ;
         insert ctry ;
 
-        Id accountRT = AMS_Utils.getId('Account', 'Standard_Account');
+        Id accountRT = RecordTypeSingleton.getInstance().getRecordTypeId('Account', 'Standard_Account');
 
         Account a1 = new Account(IATA_ISO_Country__c = ctry.id, RecordTypeId = accountRT, IATACode__c='1234567',
                                  Name='Test1 Agency Ltd',Short_Name__c='Test1 Agency' , CASS_Number__c  = '1234567');
@@ -434,10 +428,9 @@ private class AMS_UtilsTest {
 
         try{
 
-            RecordType RT = AMS_Utils.getRecordType('Account', 'Standard_Account');
-            AMS_Utils.getRecordType(RT.Id);
+            RecordType RT =RecordTypeSingleton.getInstance().getRecordTypeId('Account', 'Standard_Account');
 
-            AMS_Utils.getRecordType('Account', 'Non_Existent_Record_Type');
+            RecordTypeSingleton.getInstance().getRecordTypeId('Account', 'Non_Existent_Record_Type');
 
         }
         catch(Exception e)
@@ -595,7 +588,7 @@ private class AMS_UtilsTest {
         IATA_ISO_Country__c ctry = new IATA_ISO_Country__c (Name='US',ISO_Code__c='US')  ;
         insert ctry;
 
-        Id accountRT = AMS_Utils.getId('Account', 'IATA_Agency');
+        Id accountRT = RecordTypeSingleton.getInstance().getRecordTypeId('Account', 'IATA_Agency');
 
         //create account to match triggering fields on settings
         Account acct = new Account(IATA_ISO_Country__c = ctry.id, Location_Type__c = 'HE', RecordTypeId = accountRT, IATACode__c='1234567',

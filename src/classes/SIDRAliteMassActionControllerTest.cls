@@ -75,7 +75,6 @@ public class SIDRAliteMassActionControllerTest {
 
         Test.startTest();
         SIDRAliteMassActionController controller = new SIDRAliteMassActionController();
-        controller.filter.getListRecordtype();
         controller.filter.getListIFAPCountries();
         controller.triggerSidraLiteAction();
         controller.exportCSV();
@@ -296,7 +295,7 @@ public class SIDRAliteMassActionControllerTest {
         oscarCase.Reason1__c = new list<String>(SidraLiteHelperForOSCAR.VALID_REASONS1).get(0);
         insert oscarCase;
         
-        Id agencyRT = AMS_Utils.getId('Account', 'IATA_Agency');
+        Id agencyRT = RecordTypeSingleton.getInstance().getRecordTypeId('Account', 'IATA_Agency');
         Account account = new Account(RecordTypeId = agencyRT, Name='Test Account');
         insert account;
 
@@ -341,7 +340,7 @@ public class SIDRAliteMassActionControllerTest {
         oscarCase.Documentation_Complete__c = null;
         insert oscarCase;
 
-        Id agencyRT = AMS_Utils.getId('Account', 'IATA_Agency');
+        Id agencyRT = RecordTypeSingleton.getInstance().getRecordTypeId('Account', 'IATA_Agency');
         Account account = new Account(RecordTypeId = agencyRT, Name='Test Account');
         insert account;
 

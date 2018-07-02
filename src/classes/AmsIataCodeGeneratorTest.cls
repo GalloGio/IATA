@@ -1297,12 +1297,16 @@ public class  AmsIataCodeGeneratorTest
 
         AMS_OSCAR__c oscar1 = createCaseAndOSCAR(account1,contact1,null);
         AMS_OSCAR__c oscar2 = createCaseAndOSCAR(account1Br,contact1,null);
-        AMS_Accreditation_Contact__c ac = new AMS_Accreditation_Contact__c(AMS_Pax_Accreditation_Form__c = oscar2.AMS_Online_Accreditation__c, First_name__c='Joan', Last_name__c='Wylde', Phone__c='323562762', Email__c='jw@email.com', Valid_Until__c = Date.today(), RecordTypeId=AMS_Utils.getId('AMS_Accreditation_Contact__c', 'Trained_Staff'), Type_Of_Certificate__c = 'DGR');
+        AMS_Accreditation_Contact__c ac = new AMS_Accreditation_Contact__c(AMS_Pax_Accreditation_Form__c = oscar2.AMS_Online_Accreditation__c, First_name__c='Joan', 
+            Last_name__c='Wylde', Phone__c='323562762', Email__c='jw@email.com', Valid_Until__c = Date.today(), 
+            RecordTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('AMS_Accreditation_Contact__c', 'Trained_Staff'), Type_Of_Certificate__c = 'DGR');
         insert ac;
         oscar2.STEP6__c = 'Passed';
         update oscar2;
         AMS_OSCAR__c oscar3 = createCaseAndOSCAR(account2Br,contact1,account1Br.Cass_Number__c);
-        AMS_Accreditation_Contact__c ac2 = new AMS_Accreditation_Contact__c(AMS_Pax_Accreditation_Form__c = oscar3.AMS_Online_Accreditation__c, First_name__c='Joan', Last_name__c='Wylde', Phone__c='323562762', Email__c='jw@email.com', Valid_Until__c = Date.today(), RecordTypeId=AMS_Utils.getId('AMS_Accreditation_Contact__c', 'Trained_Staff'), Type_Of_Certificate__c = 'DGR');
+        AMS_Accreditation_Contact__c ac2 = new AMS_Accreditation_Contact__c(AMS_Pax_Accreditation_Form__c = oscar3.AMS_Online_Accreditation__c, First_name__c='Joan', 
+            Last_name__c='Wylde', Phone__c='323562762', Email__c='jw@email.com', Valid_Until__c = Date.today(), 
+            RecordTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('AMS_Accreditation_Contact__c', 'Trained_Staff'), Type_Of_Certificate__c = 'DGR');
         insert ac2;
         oscar3.STEP6__c = 'Passed';
         update oscar3;
@@ -1429,15 +1433,12 @@ public class  AmsIataCodeGeneratorTest
 
         AMS_OSCAR__c oscar3 = createCaseAndOSCAR(account2Br,contact1,'002');
 
-        /*AMS_OSCAR__c oscar4 = createCaseAndOSCAR(account3Br,contact1,'003');
-
-        AMS_OSCAR__c oscar5 = createCaseAndOSCAR(account4Br,contact1,'004');
-
-        AMS_OSCAR__c oscar6 = createCaseAndOSCAR(account5Br,contact1,'005');*/
 
         AMS_Pax_Accreditation_Form__c accreditationObj = [SELECT ID , CASS_Number__c from AMS_Pax_Accreditation_Form__c where Id in (select AMS_Online_Accreditation__c from AMS_OSCAR__c where Id = :oscar2.Id)];
 
-        AMS_Accreditation_Contact__c ac2 = new AMS_Accreditation_Contact__c(AMS_Pax_Accreditation_Form__c = accreditationObj.Id, First_name__c='Joan', Last_name__c='Wylde', Phone__c='323562762', Email__c='jw@email.com', Valid_Until__c = Date.today(), RecordTypeId=AMS_Utils.getId('AMS_Accreditation_Contact__c', 'Trained_Staff'), Type_Of_Certificate__c = 'DGR');
+        AMS_Accreditation_Contact__c ac2 = new AMS_Accreditation_Contact__c(AMS_Pax_Accreditation_Form__c = accreditationObj.Id, First_name__c='Joan', 
+            Last_name__c='Wylde', Phone__c='323562762', Email__c='jw@email.com', Valid_Until__c = Date.today(), 
+            RecordTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('AMS_Accreditation_Contact__c', 'Trained_Staff'), Type_Of_Certificate__c = 'DGR');
         insert ac2;
 
         oscar2.STEP6__c = 'Passed';
@@ -1456,7 +1457,9 @@ public class  AmsIataCodeGeneratorTest
         accreditationObj.IATACode__c = '123456789';
         update accreditationObj;
 
-        AMS_Accreditation_Contact__c ac3 = new AMS_Accreditation_Contact__c(AMS_Pax_Accreditation_Form__c = accreditationObj.Id, First_name__c='Joan', Last_name__c='Wylde', Phone__c='323562762', Email__c='jw@email.com', Valid_Until__c = Date.today(), RecordTypeId=AMS_Utils.getId('AMS_Accreditation_Contact__c', 'Trained_Staff'), Type_Of_Certificate__c = 'DGR');
+        AMS_Accreditation_Contact__c ac3 = new AMS_Accreditation_Contact__c(AMS_Pax_Accreditation_Form__c = accreditationObj.Id, First_name__c='Joan', 
+            Last_name__c ='Wylde', Phone__c ='323562762', Email__c ='jw@email.com', Valid_Until__c = Date.today(), 
+            RecordTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('AMS_Accreditation_Contact__c', 'Trained_Staff'), Type_Of_Certificate__c = 'DGR');
         insert ac3;
 
         oscar3.STEP6__c = 'Passed';

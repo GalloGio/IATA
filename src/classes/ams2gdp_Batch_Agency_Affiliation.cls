@@ -25,18 +25,11 @@ global class ams2gdp_Batch_Agency_Affiliation implements Database.Batchable<sObj
 		processNextBatch = runNext;
 		extraIds = ids;
 
-		Map<String, String> recordTypes = ams2gdp_Utils.getRecordTypeIdByName('Account');
-
 		String fields = ' Id, Name, Legacy_External_ID__c, Account__c, Legacy_System__c '
 			+ ', Affiliation__r.Name, Affiliation__r.Affiliation_Code__c ';
 
-		//-- Query conditions
-		// String accreditation_condition = 'SELECT Related_Account__c '
-		// 	+	'FROM Accreditation__c '
-		// 	+	'WHERE Endorsed_Accredited_By_Formula__c IN (\'IATA\',\'IATAN\',\'DOM\')'
-		// 	+	'	AND Status__r.Code__c IN (\'0\',\'4\',\'5\',\'6\',\'7\',\'8\',\'9\') ';
 
-		List<String> conditions = new List<String>{'Account__r.RecordTypeId= \''+recordTypes.get('Agency')+'\''
+		List<String> conditions = new List<String>{'Account__r.RecordTypeId= \''+ RecordTypeSingleton.getInstance().getRecordTypeId('Account', 'IATA_Agency') +'\''
 			, 'Account__r.IATACode__c != null'
 			, 'Account__r.Main_Accreditation_Organization__c IN (\'IATA\',\'IATAN\',\'DOM\') '
 			, 'Account__r.CNS_Agency__c = false'

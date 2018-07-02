@@ -618,7 +618,7 @@ public without sharing class ISSP_Case {
                 Boolean isIATA = false;
                 if(whoToContact == 'IATA') isIATA = true;
                 if(!isIATA ) {
-                    newCase.RecordTypeId = DAL_ISSP.getRecordTypeId('Inter_DPCs');
+                    newCase.RecordTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('Case', 'Inter_DPCs');
                     newCase.Account_Concerned__c = whoToContact;
                 }
                 List<Account> lsAccounts = new List<Account>();
@@ -890,10 +890,10 @@ public without sharing class ISSP_Case {
             Boolean isIATA = false;
             if(whoToContact == 'IATA') isIATA = true;
             if(!isIATA ) {
-                newCase.RecordTypeId = DAL_ISSP.getRecordTypeId('Inter_DPCs');
+                newCase.RecordTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('Case', 'Inter_DPCs');
                 newCase.Account_Concerned__c = whoToContact;
             } else {
-                newCase.RecordTypeId = DAL_ISSP.getRecordTypeId('IATA_Service_Request');
+                newCase.RecordTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('Case', 'IATA_Service_Request');
             }
             Database.DMLOptions dmo = new Database.DMLOptions();
             dmo.assignmentRuleHeader.useDefaultRule = true;
@@ -972,10 +972,10 @@ public without sharing class ISSP_Case {
             Boolean isIATA = false;
             if(whoToContact == 'IATA') isIATA = true;
             if(!isIATA ) {
-                newCase.RecordTypeId = DAL_ISSP.getRecordTypeId('Inter_DPCs');
+                newCase.RecordTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('Case', 'Inter_DPCs');
                 newCase.Account_Concerned__c = whoToContact;
             } else {
-                newCase.RecordTypeId = DAL_ISSP.getRecordTypeId('IATA_Service_Request');
+                newCase.RecordTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('Case', 'IATA_Service_Request');
             }
             Database.DMLOptions dmo = new Database.DMLOptions();
             dmo.assignmentRuleHeader.useDefaultRule = true;

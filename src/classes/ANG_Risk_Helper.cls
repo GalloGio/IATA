@@ -190,7 +190,7 @@ public with sharing class ANG_Risk_Helper{
 			if(calculationTable == null || calculationTable.isEmpty()){
 				calculationTable = new Map<String,ANG_Agency_Risk_Calculation__c>();
 
-				Id riskStatusAssessmentRT = AMS_Utils.getRecordType('ANG_Agency_Risk_Calculation__c', 'Risk_Status_Assessment').Id;
+				Id riskStatusAssessmentRT = RecordTypeSingleton.getInstance().getRecordTypeId('ANG_Agency_Risk_Calculation__c', 'Risk_Status_Assessment');
 				for(ANG_Agency_Risk_Calculation__c arc: [SELECT Id, ANG_Financial_Review_Result__c , ANG_Risk_History_Assessment__c,ANG_Risk_History__c,ANG_Limit_Cash_Condition__c FROM ANG_Agency_Risk_Calculation__c WHERE recordTypeId = :riskStatusAssessmentRT]){
 					calculationTable.put(arc.ANG_Financial_Review_Result__c + arc.ANG_Risk_History_Assessment__c , arc);
 				}

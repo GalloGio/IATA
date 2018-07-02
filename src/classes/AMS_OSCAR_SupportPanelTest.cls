@@ -6,7 +6,7 @@ public class AMS_OSCAR_SupportPanelTest {
         PageReference pageRef = Page.AMS_OSCAR_SupportPanel;
         Test.setCurrentPage(pageRef);
         
-        Id agencyRT = AMS_Utils.getId('Account', 'IATA_Agency');
+        Id agencyRT = RecordTypeSingleton.getInstance().getRecordTypeId('Account', 'IATA_Agency');
         Account acc1 = new Account(RecordTypeId = agencyRT, Name='Test1 Account');
         insert acc1;
         

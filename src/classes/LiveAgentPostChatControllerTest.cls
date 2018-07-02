@@ -10,7 +10,7 @@ private class LiveAgentPostChatControllerTest {
 		country.Case_BSP_Country__c  = 'United Kingdom';
 		insert country;
 
-		Id standardAccountRt = AMS_Utils.getId('Account', 'Standard_Account');
+		Id standardAccountRt = RecordTypeSingleton.getInstance().getRecordTypeId('Account', 'Standard_Account');
 		Account a = new Account(IATA_ISO_Country__c = country.id, RecordTypeId = standardAccountRt, Name='Test Agency', IATAcode__c = '1234567', Short_Name__c = 'Test Agency', Source_System__c = 'AIMS');
 		insert a;
 

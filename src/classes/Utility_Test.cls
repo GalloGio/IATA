@@ -8,30 +8,6 @@ public class Utility_Test {
 
 
     /****************************************************************************************************
-        Created by CGI, Thai 2015-08-22
-            Cover code of methods "getRTmapName_Id", "getRecordTypeId", "getRecordTypeIdByName"
-    ****************************************************************************************************/
-    @isTest
-	static void test_getRTmapName_Id() {
-        List<String> listDevName = new List<String>();
-        List<Id> listId = new List<Id>();
-        String strObjectName, strRecordTypeName;
-        Map<String, Id> mapName_Id;
-
-        //*** get an object having record type with its first record type
-        for (RecordType rt : [select Id, SObjectType, DeveloperName, Name from RecordType limit 1]) {
-            strObjectName = rt.SObjectType;
-            strRecordTypeName = rt.Name;
-            listDevName.add(rt.DeveloperName);
-            listId.add(rt.Id);
-        }
-
-        mapName_Id = Utility.getRTmapName_Id(strObjectName, listDevName);
-        system.assert(mapName_Id.size() == 1 && mapName_Id.get(listDevName[0]) == listId[0], 'Incorrect map: ' + mapName_Id);
-
-    } //*** end of "test_getRTmapName_Id"
-
-    /****************************************************************************************************
         Created by CGI, Kevin 2015-08-25
             Cover code of method "getNewTask"
     ****************************************************************************************************/
