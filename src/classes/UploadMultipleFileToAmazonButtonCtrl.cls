@@ -31,9 +31,9 @@ global class UploadMultipleFileToAmazonButtonCtrl {
     /*** AMSU-154 ***/
     /*** notify Owner ***/
     @RemoteAction
-    global static String notifyOscarOwner(Id caseId) {
+    global static String notifyOscarOwner(Id caseId, String fileIdentifier) {
         try {
-            Case cse = [SELECT Id, OwnerId, Reason1__c, CaseArea__c, CaseNumber FROM Case WHERE Id = :caseId];
+            Case cse = [SELECT Id, OwnerId, Reason1__c, CaseArea__c, CaseNumber, Subject FROM Case WHERE Id = :caseId];
             User usr = [SELECT Id, Name FROM User WHERE Id = :cse.OwnerId];
             EmailTemplate template = [Select DeveloperName, Id, HtmlValue, Body, Subject From EmailTemplate where DeveloperName = :Label.AMS_AttchNotifyOwner];
             Id orgAddressId = [select Id from OrgWideEmailAddress where Address = :Label.noreplyEmail][0].Id;
@@ -56,8 +56,10 @@ global class UploadMultipleFileToAmazonButtonCtrl {
                 htmlBody = htmlBody.replace('{!$User.LastName}', UserInfo.getLastName());
                 htmlBody = htmlBody.replace('{!Case.Link}', caseLink);
                 htmlBody = htmlBody.replace('{!Case.CaseNumber}', cse.CaseNumber);
-                htmlBody = htmlBody.replace('{!Case.CaseArea__c}', cse.CaseArea__c);
-                htmlBody = htmlBody.replace('{!Case.Reason1__c}', cse.Reason1__c);
+                htmlBody = htmlBody.replace('{!Case.Subject}', String.isBlank(cse.Subject) ? '' : cse.Subject);
+                htmlBody = htmlBody.replace('{!FileIdentifier}', String.isBlank(fileIdentifier) ? '' : fileIdentifier);  
+                htmlBody = htmlBody.replace('{!Case.CaseArea__c}', String.isBlank(cse.CaseArea__c) ? '' : cse.CaseArea__c);
+                htmlBody = htmlBody.replace('{!Case.Reason1__c}', String.isBlank(cse.Reason1__c) ? '' : cse.Reason1__c);
                 htmlBody = htmlBody.replace(']]>', '');
                 emailToSend.setHtmlBody(htmlBody);
             }

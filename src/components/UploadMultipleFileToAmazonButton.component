@@ -95,7 +95,7 @@
 
 			/*** AMSU-154 ***/
 			if(notifyOwner.length) {
-				UploadMultipleFileToAmazonButtonCtrl.notifyOscarOwner("{!sObjectId}", function(result, event) {
+				UploadMultipleFileToAmazonButtonCtrl.notifyOscarOwner("{!sObjectId}", fileIdentifierPick , function(result, event) {
 					alert(result);
 				});
 			}
