@@ -2,19 +2,11 @@
            sidebar="false" showHeader="false" applyBodyTag="false" applyHtmlTag="false" 
            standardStylesheets="false" language="{!displayLanguage}">
     <html>
-    <c:ISSP_Header/>
+    <c:ISSP_Header />
 
         <body>
         <script src="{!URLFOR($Resource.bootbox)}"/>
         <style>
-
-            @media (min-width: 768px) {
-                #bankDetails {
-                    min-height: 142px !important;
-                    background-color: red;
-                }
-            }
-
             .section-header {
                 background-color: rgb(43, 120, 228);
                 color: white;
@@ -143,7 +135,11 @@
                 if ('{!sector}' == 'Travel Agent') {
                     navigateToUrl('/ISSP_AMS_Accreditation?retUrl=/ISSP_HomePage&sectorValue=Cargo_Agent');
                 } else if ('{!sector}' == 'Cargo Agent') {
-                    navigateToUrl('/ISSP_AMS_Accreditation?retUrl=/ISSP_HomePage&sectorValue=Travel_Agent');
+                    if ('{!namEnabled}' == 'true') {
+                        navigateToUrl('/ISSP_ANG_ProductComparison','LIST_VIEW','newCase');
+                    } else {
+                        navigateToUrl('/ISSP_AMS_Accreditation?retUrl=/ISSP_HomePage&sectorValue=Travel_Agent'); 
+                    }
                 } 
                 return false;
             }
@@ -198,7 +194,7 @@
             }
 
             </script>
-        <main class="container">
+        <div class="container">
             <c:ISSP_CustomNavigation communityName="{!communityName}"/>
             <div>
                 <apex:image value="{!URLFOR($Resource.IATA_Logo_Large)}" width="138" height="102" style="float:left" rendered="{!communityName!='CNS'}"/>
@@ -250,7 +246,7 @@
                             </div>
                                     
                             <div class="col-md-5">
-                                <input type="button" class="btn btn_iata_primary" onClick="newSectorApplicationNavigateTo();" value="{!IF(sector=='Travel Agent', 'Apply for New Cargo Head Office', IF(NOT(namEnabled) ,'$Label.ISSP_AMS_Apply_New_Travel_Head_Office', '$Label.ISSP_AMS_Apply_New_Travel_Head_Entity'))}"/>
+                                <input type="button" class="btn btn_iata_primary" onClick="newSectorApplicationNavigateTo();" value="{!IF(sector=='Travel Agent', 'Apply for New Cargo Head Office', IF(NOT(namEnabled) ,$Label.ISSP_AMS_Apply_New_Travel_Head_Office, $Label.ISSP_AMS_Apply_New_Travel_Head_Entity))}" style="display:{!IF(isHOAccredited, '','none')};"/>
                             </div>
                         </div>
                                 
@@ -275,7 +271,7 @@
                             </div>
                         </header>
                             
-                        <div class="bankDetails row" style="padding-top: 20px">
+                        <div class="row bankDetails" style="padding-top: 20px">
                             <div class="col-md-12" style="display:{!IF(AND(isEligableForChange,isoCountry.Enable_Notice_of_Change__c),'','none')};">
                                 <input type="button" class="btn btn_iata_primary" onClick="checkEligibility('true');return false;" value="{!$Label.ISSP_AMS_Step0_Change_Bank_Details}"/>
                             </div>
@@ -303,7 +299,7 @@
                         </header>
                             
                         <div style="padding-top: 20px">
-                            <apex:pageBlock>
+                            <apex:pageBlock >
                                 <apex:pageBlockTable id="DraftCases" value="{!AMSDraftCases}" var="MyAMSCases" styleClass="table" rendered="{!NOT(IsEmpty)}">
                                     <apex:column headerValue="{!$ObjectType.Case.fields.CaseNumber.label}" rendered="{!NOT(AND(isoCountry.Enable_Notice_of_Change__c==false,NOT(BEGINS(MyAMSCases.Reason1__c, 'New'))))}">
                                         <apex:outputLink value="/ISSP_AMS_Accreditation?caseId={!MyAMSCases.Id}&step=2{!if(communityName=='CNS', '&CommunityName=CNS', '')}" rendered="{!BEGINS(MyAMSCases.Reason1__c, 'New')}">{!MyAMSCases.CaseNumber}</apex:outputLink>
@@ -426,8 +422,7 @@
             </apex:form>
 
             <c:ISSP_CustomFooter communityName="{!communityName}"/>
-        </main>
-
+        </div>
     </body>
     </html>
 </apex:page>
