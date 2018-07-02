@@ -494,7 +494,7 @@ public with sharing class SidraLiteManager {
             parentCase.FirstFSnonComplianceDate__c = Date.today();
             if (SidraLiteUtil.isPassenger(account)) {
                 
-                if(parentCase.Account.ANG_IsNewGenAgency__c)
+                if(Account.ANG_IsNewGenAgency__c)
                     parentCase.FS_Second_Deadline_Date__c = parentCase.firstFSnonComplianceDate__c.addDays(60);
                 else
                     parentCase.FS_Second_Deadline_Date__c = parentCase.firstFSnonComplianceDate__c.addDays(31);
