@@ -1,5 +1,7 @@
 public class AMS_ChangeCodesHelper {
 
+    public static List<AMS_ChangeCodes__c> codesConfs;
+    
         //Account ID => Change Code Struct
         public static Map<ID,ChangeCodeStruct> aaccHistoryPerAcct = new Map <ID,ChangeCodeStruct> ();
 
@@ -566,7 +568,8 @@ public class AMS_ChangeCodesHelper {
         Boolean CCToBeGenerated;
         Map<Account,AMS_ChangeCodes__c> mapAccCodeConf = new Map<Account,AMS_ChangeCodes__c>();
 
-        List<AMS_ChangeCodes__c> codesConfs = [SELECT Name, Change_Code__c, Published_in_bulletin__c, Bulletin_Memo_Text__c,
+        if(codesConfs == null)
+            codesConfs = [SELECT Name, Change_Code__c, Published_in_bulletin__c, Bulletin_Memo_Text__c,
                                     Bulletin_Memo_Text2__c, Bulletin_Memo_Text3__c, Integration_RecId__c, Field1__c, Field1Values__c, Field2__c,
                                     Field2Values__c, Field3__c, Field3Values__c, Field4__c, Field4Values__c, Field5__c, Field5Values__c,
                                     Field6__c, Field6Values__c FROM AMS_ChangeCodes__c WHERE Skip_Agency_Update__c = true];

@@ -147,6 +147,46 @@
           font-size: 13px;
         }
       }
+
+      /* The Modal (background) */
+      .modal {
+          display: none; /* Hidden by default */
+          position: fixed; /* Stay in place */
+          z-index: 1; /* Sit on top */
+          padding-top: 100px; /* Location of the box */
+          left: 0;
+          top: 0;
+          width: 100%; /* Full width */
+          height: 100%; /* Full height */
+          overflow: auto; /* Enable scroll if needed */
+          background-color: rgb(0,0,0); /* Fallback color */
+          background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
+      }
+
+      /* Modal Content */
+      .modal-content {
+          background-color: #fefefe;
+          margin: auto;
+          padding: 20px;
+          border: 1px solid #888;
+          width: 40%;
+      }
+
+      /* The Close Button */
+      .closeModal {
+          color: #aaaaaa;
+          float: right;
+          font-size: 28px;
+          font-weight: bold;
+      }
+
+      .closeModal:hover,
+      .closeModal:focus {
+          color: #000;
+          text-decoration: none;
+          cursor: pointer;
+      }
+
     </style>
     <main class="container">
       <c:ISSP_CustomNavigation />
@@ -237,8 +277,18 @@
 
             <div class="row" style="display: {!IF(isCashless,'none','block')}">
               <div class="col-col-xs-12 col-md-8 col-md-offset-2">
-                <button id="requestRME" onclick="requestBalanceUpdate(); return false;" class="btn btn-block btn_iata_primary">{!$Label.ANG_ISSP_RHC_Request_Balance_Update}</button>
+                <button id="requestRME" onclick="requestBalanceUpdate();return false;" class="btn btn-block btn_iata_primary">{!$Label.ANG_ISSP_RHC_Request_Balance_Update}</button>
               </div>
+            <!-- The Modal -->
+            <div id="myModal" class="modal">
+
+              <!-- Modal content -->
+              <div class="modal-content">
+                <span class="closeModal">&times;</span>
+                <p>There was an error in updating your balance. Please try again and if the issue persists contact <b><a href="/ISSP_FAQ2Case">customer support.</a></b></p>
+              </div>
+
+            </div>
             </div>
 
             <div class="row" style="display: {!IF(isCashless,'none','block')}">
@@ -460,18 +510,28 @@
     var accountId = '{!accountId}';
 
     function requestBalanceUpdate() {
-      var $button = $("#requestRME");
-      var requestText = $button.text();
-      $button.text('...').attr("disabled", "disabled");
-      
-      var result = sforce.apex.execute("ANG_RME_Alert_Service","requestBalanceUpdate",{accountId: accountId}); 
+        
 
-      console.info(result[0]);
-
-      if(result[0].isSuccess == "true"){
-        window.location.reload();
+          var $button = $("#requestRME");
+          
+          var requestText = $button.text();
+          $button.text('...').attr("disabled", "disabled");
+        
+        var result = null;
+        
+    try {
+            result = sforce.apex.execute("ANG_RME_Alert_Service","requestBalanceUpdate",{accountId: accountId}); 
+            console.info(result[0]);
+    }catch(err) {
+      console.info(err);
+            //alert(err);
+        }
+        
+      if(result == null || result[0].isSuccess != "true"){
+      modal.style.display = "block";
+          //alert(result[0].description);
       }else{
-        alert(result[0].description);
+    window.location.reload();
       }
 
       $button.text(requestText).removeAttr('disabled');
@@ -553,6 +613,30 @@
       
       gaugeScript();
     </script>
+
+    <script>
+    // Get the modal
+    var modal = document.getElementById('myModal');
+
+    // Get the button that opens the modal
+    var btn = document.getElementById("requestRME");
+
+    // Get the <span> element that closes the modal
+    var span = document.getElementsByClassName("closeModal")[0];
+
+    // When the user clicks on <span> (x), close the modal
+    span.onclick = function() {
+        modal.style.display = "none";
+    }
+
+    // When the user clicks anywhere outside of the modal, close it
+    window.onclick = function(event) {
+        if (event.target == modal) {
+            modal.style.display = "none";
+        }
+    }
+    </script>
+
   </body>
   </html>
 </apex:page>

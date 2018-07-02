@@ -46,7 +46,8 @@ public with sharing class ISSP_PersonalInformation {
 	public String ValidatedAirlineUser_Str {get;set;}
 	
 	public Boolean hasIdCard {get;set;}
-    public boolean showIEPStatus {get;set;}    
+    public boolean showIEPStatus {get;set;}
+    public Boolean flagCashOptedOutFinReview {get;set;}
     
     public List<AccountTeamMember> portalAdmins { 
         get {
@@ -163,6 +164,8 @@ public with sharing class ISSP_PersonalInformation {
             showIEPStatus = true;
         }
        
+        flagCashOptedOutFinReview = (con.Account.ANG_Accreditation_Model__c == AMS_Utils.ACCREDITATIONMODEL_CASH && con.Account.ANG_FA_Opt_out__c);
+
         //AEF: portalAdmins is filled in extensions controller ISSP_PersonalInformationWithoutSharing 
     }
     
