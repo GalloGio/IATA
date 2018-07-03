@@ -2481,7 +2481,7 @@ If(LEN(Case__r.Account.BillingCountry) &gt;0, Case__r.Account.BillingCountry,&qu
     </fields>
     <fields>
         <fullName>IATA_EasyPay_Opt_In_Opt_Out__c</fullName>
-        <description>Airline's selection on CS Portal (BSP Change) to either Opt-In or Opt-Out of IATA EasyPay.</description>
+        <description>Airline&apos;s selection on CS Portal (BSP Change) to either Opt-In or Opt-Out of IATA EasyPay.</description>
         <externalId>false</externalId>
         <label>IATA EasyPay Opt-In / Opt-Out</label>
         <required>false</required>

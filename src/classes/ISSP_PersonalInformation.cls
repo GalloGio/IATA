@@ -58,6 +58,7 @@ public with sharing class ISSP_PersonalInformation {
     public Boolean isNAMEnabledBR {get; private set;}
     public boolean isIATAAgencyCargoBR {get; private set;}
     public boolean isIATAAgencyTravelBR {get; private set;}
+
     
     public List<AccountTeamMember> portalAdmins { 
         get {
@@ -94,6 +95,7 @@ public with sharing class ISSP_PersonalInformation {
         bBlockTradeNameChange = false;
         isHOAccredited = false;
         bUserHO = false;
+
         canChangeTradeName = false;
         isNAMEnabled = false;
         isIATAAgencyCargo = false;

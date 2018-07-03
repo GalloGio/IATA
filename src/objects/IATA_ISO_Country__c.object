@@ -253,6 +253,7 @@ Default state must NOT be set for countries that have it mandatory (US, Canada, 
         <fullName>Airline_EasyPay_Opt_Out_Date__c</fullName>
         <description>Airlines will be able to Opt-Out of IEP on the CS Portal as from this date. Country not available for Opt-out if left empty.</description>
         <externalId>false</externalId>
+        <inlineHelpText>Airlines will be able to Opt-Out of IEP on the CS Portal as from this date. Country not available for Opt-out if left empty.</inlineHelpText>
         <label>Airline EasyPay Opt-Out Date</label>
         <required>false</required>
         <trackHistory>false</trackHistory>
