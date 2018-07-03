@@ -937,6 +937,11 @@
         <label>E-mail to Case - QMS - Zimbabwe</label>
     </standardValue>
     <standardValue>
+        <fullName>E-mail to Case - Reporting and Billing</fullName>
+        <default>false</default>
+        <label>E-mail to Case - Reporting and Billing</label>
+    </standardValue>
+    <standardValue>
         <fullName>E-mail to Case - Romania &amp; Moldova</fullName>
         <default>false</default>
         <label>E-mail to Case - Romania &amp; Moldova</label>

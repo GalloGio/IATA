@@ -8890,6 +8890,10 @@ Finansal belgelerinizi yüklemek için, lütfen &lt;b&gt;&lt;a href=&apos;http:/
         <name>ISSP_Assign_IFAP</name>
     </customLabels>
     <customLabels>
+        <label><!-- ISSP_Assigned_cases_DPC --></label>
+        <name>ISSP_Assigned_cases_DPC</name>
+    </customLabels>
+    <customLabels>
         <label>Dosya Ekle</label>
         <name>ISSP_Attach_File</name>
     </customLabels>

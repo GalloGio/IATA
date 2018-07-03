@@ -1172,7 +1172,7 @@ ISPICKVAL( Status , &quot;Open&quot;)
         <ruleEntry>
             <assignedTo>AirlineParticipationHeadOffice</assignedTo>
             <assignedToType>Queue</assignedToType>
-            <booleanFilter>((1 AND 2) OR 3) AND 4</booleanFilter>
+            <booleanFilter>(1 AND (2 OR 3)) AND 4</booleanFilter>
             <criteriaItems>
                 <field>Case.RecordTypeId</field>
                 <operation>equals</operation>
@@ -1180,7 +1180,7 @@ ISPICKVAL( Status , &quot;Open&quot;)
             </criteriaItems>
             <criteriaItems>
                 <field>Case.Origin</field>
-                <operation>notEqual</operation>
+                <operation>equals</operation>
                 <value>Portal</value>
             </criteriaItems>
             <criteriaItems>
@@ -1276,7 +1276,7 @@ ISPICKVAL( Status , &quot;Open&quot;)
             <criteriaItems>
                 <field>Case.RecordTypeId</field>
                 <operation>equals</operation>
-                <value>Internal Cases (IDFS ISS),SAAM</value>
+                <value>Internal Cases (IDFS ISS),SAAM,OSCAR Communication</value>
             </criteriaItems>
             <criteriaItems>
                 <field>Case.CaseArea__c</field>
@@ -1825,7 +1825,7 @@ ISPICKVAL( Status , &quot;Open&quot;)
         <ruleEntry>
             <assignedTo>CasesReportingBilling</assignedTo>
             <assignedToType>Queue</assignedToType>
-            <booleanFilter>(1 OR 2) AND 3 AND 4 AND 5</booleanFilter>
+            <booleanFilter>((1 OR 2) AND 3 AND 4 AND 5) OR (6)</booleanFilter>
             <criteriaItems>
                 <field>Case.RecordTypeId</field>
                 <operation>equals</operation>
@@ -1849,6 +1849,11 @@ ISPICKVAL( Status , &quot;Open&quot;)
                 <field>Case.Region__c</field>
                 <operation>contains</operation>
                 <value>Europe</value>
+            </criteriaItems>
+            <criteriaItems>
+                <field>Case.Origin</field>
+                <operation>equals</operation>
+                <value>E-mail to Case - Reporting and Billing</value>
             </criteriaItems>
         </ruleEntry>
         <ruleEntry>
@@ -3113,6 +3118,7 @@ ISPICKVAL( Status , &quot;Open&quot;)
         <ruleEntry>
             <assignedTo>Agency_Risk_Management_China_NA</assignedTo>
             <assignedToType>Queue</assignedToType>
+            <booleanFilter>(1 AND 2) OR (2 AND 3 AND 4)</booleanFilter>
             <criteriaItems>
                 <field>Case.Subject</field>
                 <operation>startsWith</operation>
@@ -3122,6 +3128,16 @@ ISPICKVAL( Status , &quot;Open&quot;)
                 <field>Case.Region__c</field>
                 <operation>equals</operation>
                 <value>China &amp; North Asia</value>
+            </criteriaItems>
+            <criteriaItems>
+                <field>Case.CaseArea__c</field>
+                <operation>equals</operation>
+                <value>Agency Risk Management</value>
+            </criteriaItems>
+            <criteriaItems>
+                <field>Case.RecordTypeId</field>
+                <operation>equals</operation>
+                <value>OSCAR Communication</value>
             </criteriaItems>
         </ruleEntry>
         <ruleEntry>
@@ -4860,7 +4876,7 @@ ISPICKVAL( Status , &quot;Open&quot;)
             <criteriaItems>
                 <field>Case.RecordTypeId</field>
                 <operation>equals</operation>
-                <value>Internal Cases (IDFS ISS)</value>
+                <value>Internal Cases (IDFS ISS),OSCAR Communication</value>
             </criteriaItems>
             <criteriaItems>
                 <field>Case.Region__c</field>

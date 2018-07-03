@@ -8899,6 +8899,10 @@ ICE의 업데이트 되는 정보들은 타사에서 24 시간의 간격을 두�
         <name>ISSP_Assign_IFAP</name>
     </customLabels>
     <customLabels>
+        <label><!-- ISSP_Assigned_cases_DPC --></label>
+        <name>ISSP_Assigned_cases_DPC</name>
+    </customLabels>
+    <customLabels>
         <label>파일 첨부하기</label>
         <name>ISSP_Attach_File</name>
     </customLabels>

@@ -8934,6 +8934,10 @@ Veuillez également noter que les informations visibles sur ICE sont mises à di
         <name>ISSP_Assign_IFAP</name>
     </customLabels>
     <customLabels>
+        <label><!-- ISSP_Assigned_cases_DPC --></label>
+        <name>ISSP_Assigned_cases_DPC</name>
+    </customLabels>
+    <customLabels>
         <label>Joindre fichier</label>
         <name>ISSP_Attach_File</name>
     </customLabels>

@@ -8922,6 +8922,10 @@ sido designado &quot;&quot;Contacto de Estados Financieros&quot;&quot;&quot;</la
         <name>ISSP_Assign_IFAP</name>
     </customLabels>
     <customLabels>
+        <label><!-- ISSP_Assigned_cases_DPC --></label>
+        <name>ISSP_Assigned_cases_DPC</name>
+    </customLabels>
+    <customLabels>
         <label>Adjuntar archivo</label>
         <name>ISSP_Attach_File</name>
     </customLabels>
