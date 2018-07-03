@@ -1,4 +1,4 @@
-public with sharing class ISSP_ANG_ANNUAL_REVALIDATION {
+public class ISSP_ANG_ANNUAL_REVALIDATION {
 	//statics for the modals
     public static  Integer MAX_IFAP_Contacts {get{ return 1;} private set;}
     private static final string ISO_8859_1_regEx = '^[\\x00-\\x7F\\xA0-\\xFF]+$';  //Reg exp to limit inputted chars to ISO-8859-1

@@ -1538,6 +1538,7 @@ global class ANG_OscarProcessHelper {
 	        fieldsOfObject.put('Reason1__c','IEP Bank account setup');
 	        fieldsOfObject.put('Subject','IEP Bank account setup - ' + acc.ANG_Accreditation_Model__c + ' - ' + acc.Name);
 	        fieldsOfObject.put('Type_of_customer__c','IATA Travel Agent');
+	        fieldsOfObject.put('Visible_on_ISS_Portal__c',true);
 	        
 	       	Case cse = ANG_EntityCreator.createCase(AMS_Utils.RECTYPE_OSCARCOMM, acc.Id, fieldsOfObject);
 
