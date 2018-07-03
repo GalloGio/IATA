@@ -8120,12 +8120,67 @@ IFG Customer Services</value>
         <value>Address:</value>
     </labels>
     <labels>
+        <fullName>ISSP_AMS_Agency_Accreditation</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_AMS_Agency_Accreditation</shortDescription>
+        <value>Agency Accreditation</value>
+    </labels>
+    <labels>
         <fullName>ISSP_AMS_Agency_Type</fullName>
         <categories>ISSP, AMS</categories>
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>ISSP AMS Agency Type</shortDescription>
         <value>Type of Agency</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_AMS_Apply_New_Associate_Entity</fullName>
+        <categories>ISSP, AMS</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_AMS_Apply_New_Associate_Entity</shortDescription>
+        <value>Apply for a New Associate Entity</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_AMS_Apply_New_Branch_Office</fullName>
+        <categories>ISSP, AMS</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_AMS_Apply_New_Branch_Office</shortDescription>
+        <value>Apply for a New Branch Office</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_AMS_Apply_New_Head_Entity</fullName>
+        <categories>ISSP, AMS</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_AMS_Apply_New_Head_Entity</shortDescription>
+        <value>Apply for a New Head Entity</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_AMS_Apply_New_Office</fullName>
+        <categories>ISSP, AMS</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_AMS_Apply_New_Office</shortDescription>
+        <value>Apply for a New Head Office</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_AMS_Apply_New_Travel_Head_Entity</fullName>
+        <categories>ISSP, AMS</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_AMS_Apply_New_Travel_Head_Entity</shortDescription>
+        <value>Apply for New Travel Head Entity</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_AMS_Apply_New_Travel_Head_Office</fullName>
+        <categories>ISSP, AMS</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_AMS_Apply_New_Travel_Head_Office</shortDescription>
+        <value>Apply for New Travel Head Office</value>
     </labels>
     <labels>
         <fullName>ISSP_AMS_Associate_Entity_Cash</fullName>
@@ -12846,7 +12901,7 @@ It is hereby agreed that this application shall become a part of every Passenger
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>ISSP AMS Step0 Minor Changes</shortDescription>
-        <value>Changes to your Trade Name, Phone or FAX numbers can be made directly from your &lt;a href=&quot;/ISSP_CompanyInformation?mid=M5S2&quot; target=&quot;_self&quot;&gt;Company Information&lt;/a&gt; page.</value>
+        <value>Minor changes to your Agency details e.g. Phone number, email address etc.  can be made directly from your &lt;a href=&quot;/ISSP_CompanyInformation?mid=M5S2&quot; target=&quot;_self&quot;&gt;Company Information&lt;/a&gt; page.</value>
     </labels>
     <labels>
         <fullName>ISSP_AMS_Step0_New_Application</fullName>
@@ -12894,7 +12949,7 @@ It is hereby agreed that this application shall become a part of every Passenger
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>ISSP AMS Step0 Other Changes Msg</shortDescription>
-        <value>For changes to your Location, Company Name, Legal Status or &lt;br/&gt;Ownership / Shareholding.</value>
+        <value>For changes to your Location, Company Name, Legal Status or Ownership / Shareholding.</value>
     </labels>
     <labels>
         <fullName>ISSP_AMS_Step0_Other_Forms</fullName>
