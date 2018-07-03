@@ -206,7 +206,8 @@ public with sharing class ANG_AgencyChangesHelper {
 
 					performRiskEventActions(oscar,currHEAccount,isAllHierarchySelected);
 
-					if (changesContainer.accountsMap.get(oscar.Account__c).IATA_ISO_Country__r.Due_diligence_mandatory__c && oscar.STEP17__c != AMS_Utils.NOT_APPLICABLE) {
+					if (changesContainer.accountsMap.get(oscar.Account__c).IATA_ISO_Country__r.Due_diligence_mandatory__c && oscar.STEP17__c != AMS_Utils.NOT_APPLICABLE && 
+						oscar.Type_of_change__c != AMS_Utils.ANG_LOCATION) {
 
                         if(changesContainer.accountsMap.get(oscar.Account__c).Due_Diligence_Status__c == AMS_Utils.IN_PROGRESS) oscar.STEP17__c = AMS_Utils.IN_PROGRESS;
                         else{
