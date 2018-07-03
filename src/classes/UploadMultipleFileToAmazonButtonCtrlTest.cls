@@ -74,7 +74,7 @@ public class UploadMultipleFileToAmazonButtonCtrlTest {
 		Case cse = new Case();
 		insert cse;
 		Test.StartTest();
-		String result = UploadMultipleFileToAmazonButtonCtrl.notifyOscarOwner(cse.Id);
+		String result = UploadMultipleFileToAmazonButtonCtrl.notifyOscarOwner(cse.Id, 'test');
 
 		system.debug(result);
 		Test.StopTest();
