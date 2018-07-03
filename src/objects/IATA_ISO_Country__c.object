@@ -2860,6 +2860,30 @@ Enabled: Sufficient for Agents to simply upload scanned copy to online applicati
         </sharedTo>
     </listViews>
     <listViews>
+        <fullName>New_and_Old_Acc_Model</fullName>
+        <columns>NAME</columns>
+        <columns>ISO_Code__c</columns>
+        <columns>Enable_Minor_Changes_from_Portal__c</columns>
+        <columns>Enable_Notice_of_Change__c</columns>
+        <columns>OSCAR_enabled__c</columns>
+        <columns>Region__c</columns>
+        <columns>Sub_Region__c</columns>
+        <columns>Country_Manager__c</columns>
+        <columns>ANG_Enable_NewGen__c</columns>
+        <filterScope>Everything</filterScope>
+        <filters>
+            <field>ANG_Enable_NewGen__c</field>
+            <operation>equals</operation>
+            <value>1</value>
+        </filters>
+        <label>NGISS enabled Countries</label>
+        <language>en_US</language>
+        <sharedTo>
+            <group>Account_management_team</group>
+            <group>IDFSAllusersexcludingIWandACCA</group>
+        </sharedTo>
+    </listViews>
+    <listViews>
         <fullName>RU_EG_IN</fullName>
         <columns>NAME</columns>
         <columns>BSP_Country_free_text__c</columns>

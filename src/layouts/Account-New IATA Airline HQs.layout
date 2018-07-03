@@ -885,11 +885,21 @@
     <miniLayout>
         <fields>Name</fields>
         <fields>ParentId</fields>
+        <fields>Membership_status__c</fields>
+        <fields>ICH_Member__c</fields>
+        <fields>ICCS_Membership_Status__c</fields>
+        <fields>SIS_Status__c</fields>
+        <fields>Due_Diligence_Status__c</fields>
+        <fields>Airline_BSP_Participations__c</fields>
+        <fields>Airline_CASS_Participations__c</fields>
+        <fields>IATA_ISO_Country__c</fields>
         <fields>EF_SIS_Designator__c</fields>
         <fields>EF_SIS_Code__c</fields>
         <fields>SIS_ID__c</fields>
-        <fields>SIS_Status__c</fields>
         <fields>SIS_Sub_Status__c</fields>
+        <fields>BSP_CI_Valid__c</fields>
+        <fields>BSP_FOC_Valid__c</fields>
+        <fields>CASS_CI_Valid__c</fields>
     </miniLayout>
     <relatedLists>
         <fields>NAME</fields>
