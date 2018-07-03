@@ -461,7 +461,7 @@ public class AMS_OSCARTriggerHandler {
                 if(cse.CaseNumber != cse.OSCAR__r.Name) {
                     continue;
                 }
-                Agency_Authorization__c agencyAuth = new Agency_Authorization__c(Account__c= cse.OSCAR__r.Account__c, Email_Used_for_BSP_Creation__c= cse.Contact.Email);
+                Agency_Authorization__c agencyAuth = new Agency_Authorization__c(Account__c= cse.OSCAR__r.Account__c, Email_Used_for_BSP_Creation__c= cse.Contact.Email, Status__c = 'Active');
                 agenciesAuth.add(agencyAuth);
             }
 
