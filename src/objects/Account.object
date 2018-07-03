@@ -21903,13 +21903,9 @@ This field is kept up-to-date with the feedback of ITDI at least twice a year du
             <value>402</value>
         </filters>
         <filters>
-            <field>ACCOUNT.TYPE</field>
+            <field>Category__c</field>
             <operation>equals</operation>
             <value>IATA Passenger Sales Agent</value>
-        </filters>
-        <filters>
-            <field>ACCOUNT.ADDRESS1_COUNTRY</field>
-            <operation>equals</operation>
         </filters>
         <label>Jordan - Travel Agents</label>
         <language>en_US</language>

@@ -167,13 +167,10 @@ public with sharing class ISSP_SIS_AccountHandler {
         for (Account account: listAccount) {
             setCountryId.add(account.IATA_ISO_Country__c);
         }
-        map<String,IATA_ISO_Country__c> mapCountries = new map<String,IATA_ISO_Country__c>(
-            [SELECT Id, ISO_Code__c FROM IATA_ISO_Country__c WHERE id IN :setCountryId]
-        );
         
         for (Account account: listAccount) {
             // include country objetct in the account
-            account.IATA_ISO_Country__r = mapCountries.get(account.IATA_ISO_Country__c);
+            account.IATA_ISO_Country__r = AMS_utils.mapCountries.get(account.IATA_ISO_Country__c);
             
             if (String.isBlank(account.SIS_Status__c) || String.isBlank(account.SIS_Sub_Status__c) ) {
                 ISSP_SIS_Account_Status__c setting = findCustomSettingSISStatus(account);

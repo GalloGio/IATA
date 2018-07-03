@@ -224,6 +224,17 @@ Default state must NOT be set for countries that have it mandatory (US, Canada, 
         <unique>false</unique>
     </fields>
     <fields>
+        <fullName>Airline_EasyPay_Opt_Out_Date__c</fullName>
+        <description>Airlines will be able to Opt-Out of IEP on the CS Portal as from this date. Country not available for Opt-out if left empty.</description>
+        <externalId>false</externalId>
+        <inlineHelpText>Airlines will be able to Opt-Out of IEP on the CS Portal as from this date. Country not available for Opt-out if left empty.</inlineHelpText>
+        <label>Airline EasyPay Opt-Out Date</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Date</type>
+    </fields>
+    <fields>
         <fullName>BSP_Country_free_text__c</fullName>
         <externalId>false</externalId>
         <label>BSP Billing</label>
@@ -2846,6 +2857,30 @@ Enabled: Sufficient for Agents to simply upload scanned copy to online applicati
         <language>en_US</language>
         <sharedTo>
             <group>DDS_team</group>
+        </sharedTo>
+    </listViews>
+    <listViews>
+        <fullName>New_and_Old_Acc_Model</fullName>
+        <columns>NAME</columns>
+        <columns>ISO_Code__c</columns>
+        <columns>Enable_Minor_Changes_from_Portal__c</columns>
+        <columns>Enable_Notice_of_Change__c</columns>
+        <columns>OSCAR_enabled__c</columns>
+        <columns>Region__c</columns>
+        <columns>Sub_Region__c</columns>
+        <columns>Country_Manager__c</columns>
+        <columns>ANG_Enable_NewGen__c</columns>
+        <filterScope>Everything</filterScope>
+        <filters>
+            <field>ANG_Enable_NewGen__c</field>
+            <operation>equals</operation>
+            <value>1</value>
+        </filters>
+        <label>NGISS enabled Countries</label>
+        <language>en_US</language>
+        <sharedTo>
+            <group>Account_management_team</group>
+            <group>IDFSAllusersexcludingIWandACCA</group>
         </sharedTo>
     </listViews>
     <listViews>

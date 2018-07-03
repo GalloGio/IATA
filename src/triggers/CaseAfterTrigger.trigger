@@ -383,51 +383,41 @@ trigger CaseAfterTrigger on Case (after delete, after insert, after undelete, af
 
 		for(Case cse : cases) {
 			if(cse.RecordTypeId == IFAPcaseRecordTypeID){
-		    	caseRecType = true;
-		    	casesToConsider.add(cse);
-		    	sCaseIds.add(cse.Id);
-		    	caseAccsSet.add(cse.accountId);
-		    } 
+				casesToConsider.add(cse);
+			} 
 		}
-		//set containing Newgen Account Ids
 
-		Map<Id, Account> ngAccounts = new Map<Id, Account>([select id, Assessment_Performed_Date__c, Financial_Review_Result__c from account where id in :caseAccsSet and ANG_IsNewGenAgency__c=true]);
-		//IFAP P5 start   
-		map<Id,Account> AcctToBeUpdatedPerId = new map<Id,Account>(); 
+		Map<Id, Account> AcctToBeUpdatedPerId = new Map<Id, Account>(); 
 		if(!casesToConsider.isEmpty() && (trigger.isUpdate || trigger.isInsert)){
-			list<Case> casesToUdpateTheAccts = new list<Case>();
-			map<id,case> casesToUpdateNGaccsMap = new map<id,case>();
-			for(Case c: CasesToConsider){
-				if(!ngAccounts.containsKey(c.accountId) &&
-					c.status == 'Assessment Performed' && c.Financial_Review_Result__c <> null && c.Assessment_Performed_Date__c <> null &&
-					(trigger.isInsert || (trigger.newMap.get(c.id).Assessment_Performed_Date__c <> trigger.oldMap.get(c.id).Assessment_Performed_Date__c 
-					|| trigger.newMap.get(c.id).Financial_Review_Result__c <> trigger.oldMap.get(c.id).Financial_Review_Result__c
-					|| trigger.newMap.get(c.id).status  <> trigger.oldMap.get(c.id).status))
-				){ 
-					casesToUdpateTheAccts.add(c);
-				}
-				else
-				 if((Trigger.isInsert || (Trigger.isUpdate && c.status != trigger.oldMap.get(c.id).status)) 
-					&& ngAccounts.containsKey(c.accountId) 
-					&& AMS_Utils.CASE_STATUS_UPDATE_FINANCIAL_REVIEW_SET.contains(c.status)
-					&& ngAccounts.get(c.accountId).Financial_Review_Result__c != c.Financial_Review_Result__c){
-             		
-             		Account account = ngAccounts.get(c.accountId);
-             		//NEWGEN - adds NG account to be updated
-             		AcctToBeUpdatedPerId.put(c.accountId, new account(
-								id =c.accountId,
-								Financial_Review_Result__c=c.Financial_Review_Result__c,
-								Assessment_Performed_Date__c = AMS_Utils.getBiggestDate(c.Assessment_Performed_Date__c, account.Assessment_Performed_Date__c)
-								)
-					);
-					ANG_AccountTriggerHandler.isLastFinancialReviewUpgrade = true;
+			
+			//IFAP P5 start
+			Map<Id, List<Case>> casesPerAccount = new Map<Id, List<Case>>();
+
+			//filter IFAP cases with the correct data and aggregate them per account
+			for(Case c : casesToConsider){
+				Case oldCase = Trigger.isUpdate ? trigger.oldMap.get(c.Id) : null;
+				if(c.status == 'Assessment Performed' && c.Financial_Review_Result__c <> null && c.Assessment_Performed_Date__c <> null &&
+					(
+						trigger.isInsert || 
+						(c.Assessment_Performed_Date__c <> oldCase.Assessment_Performed_Date__c || c.Financial_Review_Result__c <> oldCase.Financial_Review_Result__c	|| c.status  <> oldCase.status)
+					)
+				){
+					if(!casesPerAccount.containsKey(c.AccountId)) casesPerAccount.put(c.AccountId, new List<Case>());
+					casesPerAccount.get(c.AccountId).add(c);
 				}
 			}
-			if(!casesToUdpateTheAccts.isEmpty())  {              
+
+			if(!casesPerAccount.isEmpty())  {
 				// throw new transformationException();
-				 map<Id,Account> temMap =IFAP_AfterTrigger.updateTheAcctsTrigger(casesToUdpateTheAccts);
-				 AcctToBeUpdatedPerId.putAll(temMap);
-			}   
+
+				//NewGen agents will handled by the ANG_CaseTriggerHandler, so we filter them out
+				for(Account a : [SELECT Id, Assessment_Performed_Date__c, Financial_Review_Result__c FROM account WHERE Id IN :casesPerAccount.keySet() and ANG_IsNewGenAgency__c = true]){
+					casesPerAccount.remove(a.Id);
+				}
+
+				//copy relevant fields to the account and store them to update later
+				AcctToBeUpdatedPerId.putAll(IFAP_AfterTrigger.latestDate(casesPerAccount));
+			}
 		} 
 		System.debug('***After checking record type ' + caseRecType);
 		if(!casesToConsider.isEmpty()){
@@ -776,14 +766,23 @@ trigger CaseAfterTrigger on Case (after delete, after insert, after undelete, af
 			string airlineLeaving = 'Airline Leaving';
 			string airlineJoining = 'Airline Joining';
 			string airlineSuspension = 'Airline Suspension Process';
+			String airlineChange = 'Airline Change';
 			String separator = '%%%__%%%';
 			string APCaseRTID =Schema.SObjectType.Case.RecordTypeInfosByName.get('IDFS Airline Participation Process').RecordTypeId ;
 			//date pretrasfomrationDate =  date.newinstance(2013, 11, 30);
 			list<case> casesToTrigger = new list<Case>();
+			List<Case> airlineChangeCasesToTrigger = new List<Case>();
 			for(case c:trigger.new){
 				if(!TransformationHelper.triggerOnCaseNSerRen &&  c.recordtypeId == APCaseRTID && (c.CaseArea__c == airlineJoining || c.CaseArea__c  == airlineLeaving || c.CaseArea__c  == airlineSuspension))
 			    	casesToTrigger.add(c);
+			    else if (!TransformationHelper.triggerOnCaseNSerRen && c.recordtypeId == APCaseRTID && c.CaseArea__c == airlineChange && c.reason1__c == 'IATA Easy Pay' && c.Status == 'Closed' && c.CaseArea__c == airlineChange && (trigger.isInsert || trigger.oldmap.get(c.id).Status != 'Closed'))
+			    	airlineChangeCasesToTrigger.add(c);
 			}
+
+			if (!airlineChangeCasesToTrigger.isEmpty()) {
+				ServiceRenderedCaseLogic.saveTheServices(airlineChangeCasesToTrigger, null);
+			}
+
 			if(!casesToTrigger.isEmpty()){
 			    map<string,id> AcccRtNamePerId = TransformationHelper.AccRtNamePerIds();
 			    set<String> ServicesToCheck = new set<String>();
@@ -809,7 +808,7 @@ trigger CaseAfterTrigger on Case (after delete, after insert, after undelete, af
 			            system.debug('483  ');
 			            caseMap.put(c.id,c);
 			            caseIdPerAccID.put(c.accountID,c.id);
-					}else if( !ServicesToCheck.contains(c.reason1__c)){
+			        } else if( !ServicesToCheck.contains(c.reason1__c)){
 						c.addError(' The reason you entered is not mapped to a service. \n Please contact the administrators.\n Administration Error:Custom Setting ' );                  
 		            }
 		        }
@@ -880,9 +879,6 @@ trigger CaseAfterTrigger on Case (after delete, after insert, after undelete, af
 		}
 		/*trgCaseEscalationMailNotificationICH Trigger*/
 		/*Risk Event Management*/
-  		if(Trigger.isInsert || Trigger.isUpdate){
-    		new ANG_RiskEventGenerator(Trigger.New, Trigger.oldMap).generate();
-  		}
 
   		if(Trigger.isUpdate){
   			List<Id> updatedIFAPS = new List<Id>();
@@ -902,6 +898,7 @@ trigger CaseAfterTrigger on Case (after delete, after insert, after undelete, af
   			}
   		}
   		/*Risk Event Management*/
+  		
 	}
 	/*Share trigger code*/
 	
@@ -1075,6 +1072,10 @@ trigger CaseAfterTrigger on Case (after delete, after insert, after undelete, af
 			SidraLiteManager.afterInsertSidraLiteCases(Trigger.new);
 		}
 		/*trgCase Trigger.isInsert*/
+
+		/*ANG Triggers*/
+		new ANG_CaseTriggerHandler().onAfterInsert();
+		/*ANG Triggers*/
 	/*Trigger.isInsert*/
 	}
 	/****************************************************************************************************************************************************/    
@@ -1228,6 +1229,9 @@ trigger CaseAfterTrigger on Case (after delete, after insert, after undelete, af
 		}
 		/*AMS_OSCARCaseTrigger Trigger.isUpdate*/
 
+		/*ANG Triggers*/
+		new ANG_CaseTriggerHandler().onAfterUpdate();
+		/*ANG Triggers*/
 	/*Trigger.isUpdate*/
 	}
 	/****************************************************************************************************************************************************/    
@@ -1238,6 +1242,10 @@ trigger CaseAfterTrigger on Case (after delete, after insert, after undelete, af
 			
 		}
 		/*trgCaseIFAP_AfterInsertDeleteUpdateUndelete Trigger.isDelete*/
+
+		/*ANG Triggers*/
+		new ANG_CaseTriggerHandler().onAfterDelete();
+		/*ANG Triggers*/
 	/*Trigger.isDelete*/
 	}
 }
