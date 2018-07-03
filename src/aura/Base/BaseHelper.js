@@ -1,44 +1,27 @@
 ({
     getParam: function(component, event, helper){ 
-        console.info("Event received params ");
         
         if(event.getParam("state") == "fetch"){
             var c = component.get("v.checked");
                     
             if(!c){                
-                console.log('getParam');
-                var urlParamEncoded = window.location.search.substring(1).toString();                
-                var urlParameters = decodeURIComponent(urlParamEncoded); // Right part after base URL   
-                var paramsMap = {};
-                paramsMap.serviceName = '';
-                
-                if(urlParameters != ''){                
-                    var paramsMap = this.getParseUrl(urlParamEncoded,urlParameters);
+                var paramsMap = this.createObject(window.location.search.substring(1).toString());
+
+                if(!paramsMap.serviceName) paramsMap.serviceName = '';
+
+                //this is works for RelayState=service=name AS PART of the start URL (FRED)
+                var str = decodeURIComponent(paramsMap.startURL);
+                if(paramsMap.serviceName == '' && str && str.indexOf('RelayState') > 0 && str.indexOf('serviceName=') > 0){
+                    var temp = str.split('serviceName=')[1];
+                    paramsMap.serviceName = temp.substring(0, temp.indexOf('&'));
                 }
                 
-                if(paramsMap.serviceName == null && paramsMap.RelayState == null && urlParameters.indexOf('RelayState') < 0){                                    
-                    if(paramsMap.startUrl == null){                                               
-                        var paramsMapTemp = this.getParseUrl(urlParamEncoded,paramsMap.startUrl);                                                
-                        paramsMap =  JSON.stringify(paramsMap).concat(JSON.stringify(paramsMapTemp));                        
-                    }
-                }
-                
-                
-                if(urlParameters.indexOf('RelayState') > 0){                    
-                    var pMap = JSON.stringify(paramsMap);                    
-                    var pMapUnescape = unescape(pMap);
-                    var getServiceName = pMapUnescape.split('serviceName=')[1];                    
-                    var service = getServiceName.substring(0, getServiceName.indexOf('&'));                                                            
-                    paramsMap.serviceName = service;                    
-                }                
-                
-                component.set("v.url", urlParameters);                
+                component.set("v.url", window.location.toString());                
                 component.set("v.paramsMap", paramsMap);
                 component.set("v.checked", true);
 
                 // Load config from service bundle object if any
-                this.getConfig(component, paramsMap);
-                //component.set("v.checked", true);
+                this.getConfig(component);
             }
 
             $A.get("e.c:oneIdURLParams").setParams({
@@ -50,26 +33,22 @@
         }
     },
 
-    getParseUrl: function(urlParamEncoded, urlParameters){         
-        var paramsMap = JSON.parse((urlParameters == '') ? '{}' : decodeURIComponent('{"' + urlParamEncoded.replace(new RegExp('&', 'g'), '","').replace(new RegExp('=', 'g'),'":"') + '"}') );        
+    createObject: function(urlParamEncoded){         
+        var paramsMap = JSON.parse((urlParamEncoded == '') ? '{}' : decodeURIComponent('{"' + urlParamEncoded.replace(new RegExp('&', 'g'), '","').replace(new RegExp('=', 'g'),'":"') + '"}') );        
         return paramsMap;
     },
 
-    getConfig: function(component, paramsMap) { 
-        console.log('config1'+paramsMap.serviceName);
+    getConfig: function(component) { 
+        var paramsMap = component.get("v.paramsMap");
         if(paramsMap.serviceName != undefined) {
             var action = component.get("c.loadConfig");
             action.setParams({
                 "serviceName": paramsMap.serviceName
             });
             action.setCallback(this, function(a) {
-                console.log('config2');
                 var config = a.getReturnValue();
-                console.log('config2a'+config);
                 if(config != null) {
-                     console.log('config3');
                     paramsMap.serviceConfig = config;
-                    console.log('config'+config);
                     component.set("v.paramsMap", paramsMap);
                     }
                     // Sent event to other components aftter loading service object config
