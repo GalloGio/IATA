@@ -353,7 +353,7 @@ public without sharing class OneId_Fred_AccountSelection_CTRL {
         queryStr += ' AND Name like \'%' + userInput + '%\'';
 
         if(customerType=='Aircraft Operator') {
-            queryStr = 'SELECT Id, Name, IATACode__c, ICAO_designator__c, Airline_designator__c, ICAO_designator__c, IATA_ISO_Country__r.fred_icaomemberstate__r.IATA_ISO_Country__r.ISO_Code__c ';
+            queryStr = 'SELECT Id, Name, IATACode__c, ICAO_designator__c, Airline_designator__c, IATA_ISO_Country__r.fred_icaomemberstate__r.IATA_ISO_Country__r.ISO_Code__c ';
             String queryStr2 = ' FROM Account WHERE';
             //queryStr2 += ' RecordType.DeveloperName = \'IATA_Airline\'';
             queryStr2 += ' (RecordType.DeveloperName = \'IATA_Airline\' OR RecordType.DeveloperName = \'Operator\' )';
