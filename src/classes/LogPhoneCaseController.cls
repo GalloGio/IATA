@@ -65,7 +65,7 @@ public with sharing class LogPhoneCaseController {
         newcase.Description = 'Phone call';
         newcase.Origin = 'Phone';
         newcase.Status = 'Open';
-        newcase.SuppliedPhone = 'Phone';
+        newcase.SuppliedPhone = '';
         newcase.BSPCountry__c = (parentcase != null && parentcase.BSPCountry__c != null) ? parentcase.BSPCountry__c : con.Account.IATA_ISO_Country__r.Name;
         newcase.Region__c = (parentcase != null && parentcase.Region__c != null) ? parentcase.Region__c : con.Account.Region_formula__c;
         newcase.Type_of_customer__c = (parentcase != null && parentcase.Type_of_customer__c != null) ? parentcase.Type_of_customer__c : con.Account.Account_Type__c;
