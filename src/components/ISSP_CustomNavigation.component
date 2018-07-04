@@ -190,7 +190,7 @@ $(".topmenu").hover(function(){
       }
       
        .bankDetails {
-        	min-height: 140px;
+        	min-height: 142px;
       	}
       }
 
