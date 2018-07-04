@@ -3167,8 +3167,9 @@ public class AMS_OSCARTriggerHandler {
                 && !tocList.contains(AMS_Utils.ANG_LOCATION_TYPE)
                 && !tocList.contains(AMS_Utils.ANG_LOCATION_TYPE_DIFFLEGALENTITY)
                 && !tocList.contains(AMS_Utils.ANG_OWNERSHIP)
+                && !tocList.contains(AMS_Utils.ANG_LOCATION)
             ){
-                updatedOSCAR.addError('Penalty fees can only be applied for \n-'+AMS_Utils.ANG_LEGAL_NAME+'\n-'+AMS_Utils.ANG_LEGAL_STATUS+'\n-'+AMS_Utils.ANG_MAJOR_SHAREHOLDING+'\n-'+AMS_Utils.ANG_LOCATION_TYPE+'\n-'+AMS_Utils.ANG_OWNERSHIP+'\n-'+AMS_Utils.ANG_LOCATION_TYPE_DIFFLEGALENTITY);
+                updatedOSCAR.addError('Penalty fees can only be applied for \n-'+AMS_Utils.ANG_LEGAL_NAME+'\n-'+AMS_Utils.ANG_LEGAL_STATUS+'\n-'+AMS_Utils.ANG_MAJOR_SHAREHOLDING+'\n-'+AMS_Utils.ANG_LOCATION_TYPE+'\n-'+AMS_Utils.ANG_OWNERSHIP+'\n-'+AMS_Utils.ANG_LOCATION_TYPE_DIFFLEGALENTITY+'\n-'+AMS_Utils.ANG_LOCATION);
             }
         }
 
