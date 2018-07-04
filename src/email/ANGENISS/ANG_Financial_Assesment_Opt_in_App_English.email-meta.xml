@@ -12,7 +12,7 @@
 
 {!Account.BillingStreet}
 
-{!Account.BillingCity}{!Account.BillingPostalCode}
+{!Account.BillingCity} {!Account.BillingPostalCode}
 
 {!Account.BillingCountry}
 

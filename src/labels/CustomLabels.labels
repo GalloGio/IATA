@@ -8120,12 +8120,67 @@ IFG Customer Services</value>
         <value>Address:</value>
     </labels>
     <labels>
+        <fullName>ISSP_AMS_Agency_Accreditation</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_AMS_Agency_Accreditation</shortDescription>
+        <value>Agency Accreditation</value>
+    </labels>
+    <labels>
         <fullName>ISSP_AMS_Agency_Type</fullName>
         <categories>ISSP, AMS</categories>
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>ISSP AMS Agency Type</shortDescription>
         <value>Type of Agency</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_AMS_Apply_New_Associate_Entity</fullName>
+        <categories>ISSP, AMS</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_AMS_Apply_New_Associate_Entity</shortDescription>
+        <value>Apply for a New Associate Entity</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_AMS_Apply_New_Branch_Office</fullName>
+        <categories>ISSP, AMS</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_AMS_Apply_New_Branch_Office</shortDescription>
+        <value>Apply for a New Branch Office</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_AMS_Apply_New_Head_Entity</fullName>
+        <categories>ISSP, AMS</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_AMS_Apply_New_Head_Entity</shortDescription>
+        <value>Apply for a New Head Entity</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_AMS_Apply_New_Office</fullName>
+        <categories>ISSP, AMS</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_AMS_Apply_New_Office</shortDescription>
+        <value>Apply for a New Head Office</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_AMS_Apply_New_Travel_Head_Entity</fullName>
+        <categories>ISSP, AMS</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_AMS_Apply_New_Travel_Head_Entity</shortDescription>
+        <value>Apply for New Travel Head Entity</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_AMS_Apply_New_Travel_Head_Office</fullName>
+        <categories>ISSP, AMS</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_AMS_Apply_New_Travel_Head_Office</shortDescription>
+        <value>Apply for New Travel Head Office</value>
     </labels>
     <labels>
         <fullName>ISSP_AMS_Associate_Entity_Cash</fullName>
@@ -12846,7 +12901,7 @@ It is hereby agreed that this application shall become a part of every Passenger
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>ISSP AMS Step0 Minor Changes</shortDescription>
-        <value>Changes to your Trade Name, Phone or FAX numbers can be made directly from your &lt;a href=&quot;/ISSP_CompanyInformation?mid=M5S2&quot; target=&quot;_self&quot;&gt;Company Information&lt;/a&gt; page.</value>
+        <value>Minor changes to your Agency details e.g. Phone number, email address etc.  can be made directly from your &lt;a href=&quot;/ISSP_CompanyInformation?mid=M5S2&quot; target=&quot;_self&quot;&gt;Company Information&lt;/a&gt; page.</value>
     </labels>
     <labels>
         <fullName>ISSP_AMS_Step0_New_Application</fullName>
@@ -12894,7 +12949,7 @@ It is hereby agreed that this application shall become a part of every Passenger
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>ISSP AMS Step0 Other Changes Msg</shortDescription>
-        <value>For changes to your Location, Company Name, Legal Status or &lt;br/&gt;Ownership / Shareholding.</value>
+        <value>For changes to your Location, Company Name, Legal Status or Ownership / Shareholding.</value>
     </labels>
     <labels>
         <fullName>ISSP_AMS_Step0_Other_Forms</fullName>
@@ -15445,12 +15500,28 @@ The applicant understands and agrees to pay the application, entry and annual fe
         <value>This service enables you to look for Travel and Cargo Agents in the BSP/CASS your Airline is participating in. Simply type the IATA code in the search bar to view the main details and risk related information like the active forms of payment, risk history, their accreditation and risk status, etc.</value>
     </labels>
     <labels>
+        <fullName>ISSP_ANG_IATA_CODE_SEARCH_EQUAL_FINANCIAL_SEC</fullName>
+        <categories>ISSP, ANG</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_ANG_IATA_CODE_SEARCH_EQUAL_FINANCIAL_SEC</shortDescription>
+        <value>Equal to Financial Security</value>
+    </labels>
+    <labels>
         <fullName>ISSP_ANG_IATA_CODE_SEARCH_FINANCIAL_SECURITY_EXISTS</fullName>
         <categories>ISSP,ANG</categories>
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>Financial Security Exists</shortDescription>
         <value>Financial Security Exists</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_ANG_IATA_CODE_SEARCH_FORMULA</fullName>
+        <categories>ISSP, ANG</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_ANG_IATA_CODE_SEARCH_FORMULA</shortDescription>
+        <value>According to Formula</value>
     </labels>
     <labels>
         <fullName>ISSP_ANG_IATA_CODE_SEARCH_HE</fullName>
@@ -15489,7 +15560,7 @@ The applicant understands and agrees to pay the application, entry and annual fe
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>ISSP_ANG_IATA_CODE_SEARCH_RHC</shortDescription>
-        <value>Remittance Holding Capacity equal to Financial Security</value>
+        <value>Remittance Holding Capacity</value>
     </labels>
     <labels>
         <fullName>ISSP_ANG_IATA_CODE_SEARCH_RISK_EVENTS</fullName>

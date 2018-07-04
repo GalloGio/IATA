@@ -5,6 +5,54 @@ public without sharing class AMS_MigrationToolHelper {
 
 	private Static Map<string, Id> oscarRT = TransformationHelper.RtIDsPerDeveloperNamePerObj(new list<string> {'AMS_OSCAR__c'}).get('AMS_OSCAR__c');
 
+	private static final Set<String> newgenProcesses = new Set<String>{'ANG.MAJOR.CHANGES.1.0','VR.1.0','CER.1.0','CORRECTION.1.0','BANK.ACCOUNT.CHANGES','NGFormsOfPayment','ANG_FS_OPTINOUT','ANG.NEW.HE.LITE.1.0','ANG.NEW.AE.1.0','ANG.NEW.HE.STANDARD.1.0'};
+
+	private static Map<String, Id> oscarNewgenRTMap {
+
+		get{
+            return new Map<String, String> {
+			'ANG.MAJOR.CHANGES.1.0' => AMS_Utils.RECTYPE_NGCHANGES,
+			'CORRECTION.1.0' => AMS_Utils.RECTYPE_NGCORRECTION,
+			'ANG.FOPMANAGEMENT.1.0' => AMS_Utils.RECTYPE_NEWGENFOP,
+			'ANG.FS.OPTINOUT' => AMS_Utils.RECTYPE_NEWGENOPTINOUT,
+			'ANG.NEW.HE.LITE.1.0' => AMS_Utils.RECTYPE_NEWHE,
+			'ANG.NEW.AE.1.0' => AMS_Utils.RECTYPE_NEWAE,
+			'ANG.NEW.HE.STANDARD.1.0' => AMS_Utils.RECTYPE_NEWHE
+		};
+		}
+		set;
+	}
+
+    private static Map<String, String> processTypeMapNewgen {
+        get {
+            return new Map<String, String> {
+			'Change of Hierarchy' => 'ANG.MAJOR.CHANGES.1.0',
+			'CHN - Change of Name' => 'ANG.MAJOR.CHANGES.1.0',
+			'CHO / CHS – Change of Ownership / Legal Status' => 'ANG.MAJOR.CHANGES.1.0',
+			'Agency Changes' => 'ANG.MAJOR.CHANGES.1.0',
+			'VMFR Setup/Update' => 'ANG.MAJOR.CHANGES.1.0',
+			'Accreditation Type' => 'ANG.MAJOR.CHANGES.1.0',
+			'CHG – Data Maintenance' => 'ANG.MAJOR.CHANGES.1.0',
+			'CHL - Change of Location' => 'ANG.MAJOR.CHANGES.1.0',
+			'Change of Trade Name' => 'ANG.MAJOR.CHANGES.1.0',
+			'Major Change' => 'ANG.MAJOR.CHANGES.1.0',
+			'CHC – Change of Shareholding' => 'ANG.MAJOR.CHANGES.1.0',
+			'CLO - Closure' => 'VR.1.0',
+			'Financial Security Release' => 'VR.1.0',
+			'Certificate' => 'CER.1.0',
+			'FoP Management' => 'ANG.FOPMANAGEMENT.1.0',
+			'PAX/CARGO Certificate' => 'CER.1.0',
+			'Corrections'	=> 'CORRECTION.1.0',
+			'Bank Detail Update' => 'BANK.ACCOUNT.CHANGES',
+			'Financial review opt-in / opt-out' => 'ANG.FS.OPTINOUT',
+			'New HE lite' => 'ANG.NEW.HE.LITE.1.0',
+			'New AE' => 'ANG.NEW.AE.1.0',
+			'New HE standard' => 'ANG.NEW.HE.STANDARD.1.0'
+            };
+        }
+        set;
+    }
+
     private static Map<String, String> processTypeMap {
         get {
             return new Map<String, String> {
@@ -211,7 +259,12 @@ public without sharing class AMS_MigrationToolHelper {
 
 		Case caseToProcess = cont.c;
 
-		String processType = processTypeInput == null ? processTypeMap.get(caseToProcess.Reason1__c):processTypeInput;
+		String processType;
+		
+		if(!caseToProcess.Account.ANG_IsNewGenAgency__c)
+			processType = processTypeInput == null ? processTypeMap.get(caseToProcess.Reason1__c):processTypeInput;
+		else
+			processType = processTypeInput == null ? processTypeMapNewgen.get(caseToProcess.Reason1__c):processTypeInput;
 
 		if(processType == null){
 
@@ -609,8 +662,15 @@ public without sharing class AMS_MigrationToolHelper {
 	private static CaseContainer processNotFromPortalNew(CaseContainer cont, String processTypeInput){
 
 		Case caseToProcess = cont.c;
+		
+		boolean isNewgenAccount = caseToProcess.Account.ANG_IsNewGenAgency__c;
 
-		String processType = processTypeInput == null ? processTypeMap.get(caseToProcess.Reason1__c) : processTypeInput;
+		String processType;
+		
+		if(!isNewgenAccount)
+			processType = processTypeInput == null ? processTypeMap.get(caseToProcess.Reason1__c):processTypeInput;
+		else
+			processType = processTypeInput == null ? processTypeMapNewgen.get(caseToProcess.Reason1__c):processTypeInput;
 
 		if(processType == null){
 
@@ -659,6 +719,9 @@ public without sharing class AMS_MigrationToolHelper {
 		else{
 
 			Id oscarRTId = null;
+
+			if(isNewgenAccount)
+				oscarRTId = oscarNewgenRTMap.get(processType);
 
 			if(processType == 'VR.1.0' || processType == 'VR.1.0.CA')
 				oscarRTId = oscarRT.get('VOLUNTARY_RELINQUISHMENT');
