@@ -237,12 +237,6 @@
                                 <apex:image value="/img/msg_icons/info16.png" title="{!$Label.ISSP_AMS_Step0_Intro_Accred_Msg}" html-data-html="true" html-data-placement="right" html-data-toggle="tooltip" /><br/>
                                         
                                 <apex:commandLink action="{!redirectToCountryRequirementPage}" value="{!$Label.ISSP_ANG_Country_Req}" id="countryReq" rendered="{!OR(con.Account.Category__c == 'IATA Passenger Sales Agent',con.Account.Category__c == 'Non-IATA Travel Agent')}"/><br/><br/>
-                                        
-                                <strong><apex:outputText escape="false" value="{!$Label.ISSP_AMS_Step0_In_Addition}" rendered="{!AND(isHOAccredited, NOT(isoCountry.ANG_Enable_NewGen__c), sector=='Travel Agent')}"/></strong><br/>
-                                        
-                                <apex:commandLink action="{!redirectToCasePage}" value="{!$Label.ISSP_AMS_Step0_Specific_Sales_Activity}" id="SACommandLink" rendered="{!AND(isHOAccredited, NOT(isoCountry.ANG_Enable_NewGen__c), sector=='Travel Agent')}">
-                                    <apex:param assignTo="{!agentCaseType}" value="SA" />
-                                </apex:commandLink>
                             </div>
                                     
                             <div class="col-md-5">
@@ -260,7 +254,17 @@
                                 <input style="display:{!IF(flagShowOptInOutButton,'','none')};" type="button" class="btn btn_iata_primary" onclick="optInOut();return false;" value="{!optInOutBtn}"/>
                                 <input style="display:{!IF(flagShowOptInOutButtonDisabled,'','none')};" type="button" class="btn btn_iata_primary" value="{!optInOutBtn}" disabled="true"/>
                             </div>
-                        </div>    
+                        </div>
+
+                         <div class="row" style="padding-bottom: 20px">
+                            <div class="col-md-7">
+                                <strong><apex:outputText escape="false" value="{!$Label.ISSP_AMS_Step0_In_Addition}" rendered="{!AND(isHOAccredited, NOT(isoCountry.ANG_Enable_NewGen__c), sector=='Travel Agent')}"/></strong><br/>
+                                        
+                                <apex:commandLink action="{!redirectToCasePage}" value="{!$Label.ISSP_AMS_Step0_Specific_Sales_Activity}" id="SACommandLink" rendered="{!AND(isHOAccredited, NOT(isoCountry.ANG_Enable_NewGen__c), sector=='Travel Agent')}">
+                                    <apex:param assignTo="{!agentCaseType}" value="SA" />
+                                </apex:commandLink>
+                            </div>
+                         </div>   
                     </section>
                         
                     <section name="right-side-agency-changes" class="col-md-4" style="min-height: 350px;">
