@@ -93,10 +93,10 @@ public without sharing class OneId_Fred_AccountSelection_CTRL {
             try {
                 String returnedString = '';
                 if(isGuest)
-                    returnedString = LightningRegistrationProcess.createContactAndAccount(con,acc,selectedCustomerType,serviceName);
+                    returnedString = LightningRegistrationProcess.createContactAndAccount(con, acc, selectedCustomerType, serviceName);
                 else {// Another way to user creation because Site.createUserPortal does not work with a user connected (secondary user created by primary user)
                     
-                    returnedString = createSecondary(con,acc,selectedCustomerType,serviceName, userTypeToCreate);
+                    returnedString = createSecondary(con, acc, selectedCustomerType, serviceName, userTypeToCreate);
                 }
 
                 System.debug('@SMH'+returnedString);
@@ -168,7 +168,7 @@ public without sharing class OneId_Fred_AccountSelection_CTRL {
             }
             String thisNickname;
             if (String.isNotBlank(con.lastName) && con.lastName.length() > 3)
-                thisNickname = con.lastName.substring(0,3)+Datetime.now().formatLong();
+                thisNickname = con.lastName.substring(0, 3)+Datetime.now().formatLong();
             else
                 thisNickname = con.lastName+Datetime.now().formatLong();
 
@@ -185,7 +185,7 @@ public without sharing class OneId_Fred_AccountSelection_CTRL {
             System.debug('>>con ' + con);
 
             string UID = Comm_User_Helper.NewGuid();
-            User u = new User ( CommunityNickname= thisNickname , title=con.title, contactid = con.id, Firstname = con.firstname, lastname = con.lastname, emailencodingkey = 'UTF-8', localesidkey = 'en_US', email = con.email, username=ISSP_Utilities.buildPortalUserName(con.email), Alias = ISSP_Utilities.buildPortalUserName(con.email).left(5), timezonesidkey = 'America/Los_Angeles', languagelocalekey = 'en_US',Date_ToU_accepted__c = system.Now(), ToU_accepted__c = true, UID__c = UID);
+            User u = new User ( CommunityNickname= thisNickname , title=con.title, contactid = con.id, Firstname = con.firstname, lastname = con.lastname, emailencodingkey = 'UTF-8', localesidkey = 'en_US', email = con.email, username=ISSP_Utilities.buildPortalUserName(con.email), Alias = ISSP_Utilities.buildPortalUserName(con.email).left(5), timezonesidkey = 'America/Los_Angeles', languagelocalekey = 'en_US', Date_ToU_accepted__c = system.Now(), ToU_accepted__c = true, UID__c = UID);
             //User u = new User (CommunityNickname= thisNickname , contactid = con.id, Firstname = con.firstname, lastname = con.lastname, emailencodingkey = 'UTF-8', localesidkey = 'en_US', email = con.email, username=ISSP_Utilities.buildPortalUserName(con.email), languagelocalekey = 'en_US', Date_ToU_accepted__c = system.Now(), ToU_accepted__c = true);
            
             // Set Fred profile => Request by Mehdi to use ISSP Profile to avoid managing a new one
@@ -197,7 +197,7 @@ public without sharing class OneId_Fred_AccountSelection_CTRL {
 
             Database.DMLOptions dlo = new Database.DMLOptions();
             dlo.EmailHeader.triggerUserEmail= false;
-            Database.saveresult sr = Database.insert(u,dlo);
+            Database.saveresult sr = Database.insert(u, dlo);
 
             String userId = u.Id;
             System.setPassword(userId, password);
@@ -296,7 +296,7 @@ public without sharing class OneId_Fred_AccountSelection_CTRL {
             // Get account linked to primary user - To block account selection
             User u = [SELECT AccountId FROM User WHERE Id =: UserInfo.getUserId()];
             if(u!=null && u.AccountId != null) {
-                param.partnerAccount = [SELECT RecordType.DeveloperName,  RecordType.Name, Id, Name, IATACode__c,ICAO_designator__c,Airline_designator__c, ICAO_Member__r.State_Name__c, ICAO_Member__r.ICAO_Iso_2_Code__c, ICAO_Member__r.ICAO_Iso_3_Code__c, State_Name__c,ICAO_Iso_2_Code__c,ICAO_Iso_3_Code__c FROM Account WHERE Id =: u.AccountId LIMIT 1];
+                param.partnerAccount = [SELECT RecordType.DeveloperName, RecordType.Name, Id, Name, IATACode__c, ICAO_designator__c, Airline_designator__c, State_Name__c, ICAO_Iso_2_Code__c, ICAO_Iso_3_Code__c FROM Account WHERE Id =: u.AccountId LIMIT 1];
 
                 // To change when implemnting another primary
                 Integer nbOfPrimaryInAccount = [SELECT count() FROM PermissionSetAssignment WHERE PermissionSet.Name = 'FRED_Primary_User' AND Assignee.AccountId =: u.AccountId];
@@ -348,12 +348,12 @@ public without sharing class OneId_Fred_AccountSelection_CTRL {
 
         set<string> recordTypesSet = ISSP_Constant.accountRecordTypeByUserType.get(recordTypeSearch);
 
-        String queryStr = 'SELECT Id,IATACode__c,Airline_designator__c,Field_Head_Office__c,Name,BillingStreet,BillingCity,BillingCountry FROM Account WHERE ';
+        String queryStr = 'SELECT Id, IATACode__c, Airline_designator__c, Field_Head_Office__c, Name, BillingStreet, BillingCity, BillingCountry FROM Account WHERE ';
         queryStr += ' RecordType.DeveloperName in :recordTypesSet';
         queryStr += ' AND Name like \'%' + userInput + '%\'';
 
         if(customerType=='Aircraft Operator') {
-            queryStr = 'SELECT Id, Name, IATACode__c,ICAO_designator__c,Airline_designator__c, ICAO_Member__r.State_Name__c, ICAO_Member__r.ICAO_Iso_2_Code__c, ICAO_Member__r.ICAO_Iso_3_Code__c,IATA_ISO_Country__r.ISO_Code__c ';
+            queryStr = 'SELECT Id, Name, IATACode__c, ICAO_designator__c, Airline_designator__c, ICAO_designator__c, IATA_ISO_Country__r.fred_icaomemberstate__r.IATA_ISO_Country__r.ISO_Code__c ';
             String queryStr2 = ' FROM Account WHERE';
             //queryStr2 += ' RecordType.DeveloperName = \'IATA_Airline\'';
             queryStr2 += ' (RecordType.DeveloperName = \'IATA_Airline\' OR RecordType.DeveloperName = \'Operator\' )';
@@ -361,8 +361,6 @@ public without sharing class OneId_Fred_AccountSelection_CTRL {
             /*
             // Jira ISI-46: Search only by commercial name for aircraft operator
             queryStr2 += ' OR Airline_designator__c like \'%' + userInput + '%\'';
-            queryStr2 += ' OR ICAO_Member__r.State_Name__c like \'%' + userInput + '%\'';
-            queryStr2 += ' OR ICAO_Member__r.ICAO_Iso_3_Code__c like \'%' + userInput + '%\'';
             */
             queryStr2 += ')';
             queryStr2 += ' AND (fredp_aircraftoperator_eligibility__c = true)'; // Jira ISI-42
@@ -373,7 +371,7 @@ public without sharing class OneId_Fred_AccountSelection_CTRL {
         }
 
         if(customerType=='ICAO Member State') {
-            queryStr = 'SELECT Id, State_Name__c,ICAO_Iso_2_Code__c,ICAO_Iso_3_Code__c,IATA_ISO_Country__r.ISO_Code__c ';
+            queryStr = 'SELECT Id, State_Name__c, ICAO_Iso_2_Code__c, ICAO_Iso_3_Code__c, IATA_ISO_Country__r.ISO_Code__c ';
             String queryStr2 = ' FROM Account WHERE';
             queryStr2 += ' RecordType.DeveloperName = \'ICAO_Member_State\'';
             queryStr2 += ' AND (State_Name__c like \'%' + userInput + '%\'';

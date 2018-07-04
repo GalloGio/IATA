@@ -109,7 +109,7 @@
 	                      </div>                        
 	                      <div class="slds-col slds-size_1-of-1 slds-large-size_1-of-2 slds-medium-size_1-of-2 slds-small-size_1-of-1">
 	                       <span class="slds-listbox__option-text slds-listbox__option-text_entity" onclick="{!c.suggestionSelected}" data-value="{!account.Name}" data-row-index="{!index}">
-	                          <span class="slds-form-element__label columnTitle">ICAO MEMBER STATE: </span><span class="columnValue">{!account.IATA_ISO_Country__r.ISO_Code__c}
+	                          <span class="slds-form-element__label columnTitle">ICAO MEMBER STATE: </span><span class="columnValue">{!account.IATA_ISO_Country__r.fred_icaomemberstate__r.IATA_ISO_Country__r.ISO_Code__c}
 	                          <!--<aura:if isTrue="{!account.ICAO_Member__r.ICAO_Iso_2_Code__c!=null}">
 	                            {!' ('+account.ICAO_Member__r.ICAO_Iso_2_Code__c+')'}
 	                          </aura:if>-->
