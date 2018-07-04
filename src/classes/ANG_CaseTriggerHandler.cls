@@ -20,6 +20,7 @@ public class ANG_CaseTriggerHandler {
 	public void onAfterUpdate() {
 		updateFinancialReviewResultOnAccount();
 		new ANG_RiskEventGenerator(Trigger.New, Trigger.oldMap).generate();
+		checkMinimumFSChanged(triggerNew, oldMap);
 	}
 
 	//public void onBeforeDelete() {}
@@ -92,4 +93,43 @@ public class ANG_CaseTriggerHandler {
 
 		if(!toUpdate.isEmpty()) update toUpdate;
 	}
+
+	private static void checkMinimumFSChanged(List<Case> triggerNew, Map<Id,Case> oldMap){
+		Set<Id> accsIds = new Set<Id>();
+		for(Case c : triggerNew){
+			if (c.Financial_Security_Amount__c != null && oldMap.get(c.Id).Financial_Security_Amount__c != c.Financial_Security_Amount__c){
+				accsIds.add(c.AccountId);			
+			}
+		}
+
+		if(!accsIds.isEmpty())
+			updateRHCInfoFSMinimumAmount(oldMap.keySet(), accsIds); //call method @future
+	}
+
+	@future
+	private static void updateRHCInfoFSMinimumAmount(Set<Id> caseIds, Set<Id> accsIds){
+
+		List<ANG_RHC_Information__c> rhcInfos = new List<ANG_RHC_Information__c>();
+
+		//List<Financial_Security__c> financialSecurities = [SELECT Id, Account__c FROM Financial_Security__c WHERE Reception_Case__c IN newMap.keySet() AND Security_Status__c IN ('Close to Expiry Date','Active')];
+		for(Account a : [SELECT Id, 
+							(SELECT Id, Financial_Security_Amount__c FROM Cases WHERE Id IN :caseIds),
+							(SELECT Id, Account__c, Release_Case__c FROM Financial_Securities__r WHERE Reception_Case__c IN :caseIds AND Security_Status__c IN ('Close to Expiry Date','Active')), 
+							(SELECT Id, ANG_AccountId__c, ANG_Minimum_Financial_Security__c FROM RHC_Informations__r) 
+						FROM Account
+						WHERE ANG_IsNewGenAgency__c = true AND Id IN :accsIds]){
+
+			if(!a.Financial_Securities__r.isEmpty() && !a.RHC_Informations__r.isEmpty() 
+				&& a.Cases[0].Financial_Security_Amount__c != a.RHC_Informations__r[0].ANG_Minimum_Financial_Security__c){
+
+					a.RHC_Informations__r[0].ANG_Minimum_Financial_Security__c = a.Cases[0].Financial_Security_Amount__c;
+					rhcInfos.add(a.RHC_Informations__r[0]);													
+			}
+		}
+
+		if(rhcInfos.isEmpty()) return;
+
+		update rhcInfos;
+	}
+
 }
