@@ -315,7 +315,7 @@ public without sharing class PortalServiceAccessTriggerHandler {
         list<Id> listContactId = new list<Id>();
         for (Portal_Application_Right__c rightNew: mapNews.values()) {
             Portal_Application_Right__c rightOld = mapOlds.get(rightNew.Id);
-            if (rightNew.Right__c=='Access Granted' && rightOld.Right__c!='Access Granted') {
+            if (rightNew.Right__c!=rightOld.Right__c) {
                 listContactId.add(rightNew.Contact__c);
             }
         }

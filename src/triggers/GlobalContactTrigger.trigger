@@ -184,6 +184,7 @@ trigger GlobalContactTrigger on Contact (after delete, after insert, after undel
                         list<String> listServices = c.Available_Services__c.split(';');
                         listServices.add(IdCardUtil.IDCARD_SERVICE_NAME);
                         c.Available_Services__c = String.join(listServices,';');
+                        if (c.Available_Services_Images__c==null) c.Available_Services_Images__c='';
                         c.Available_Services_Images__c += IdCardUtil.getCardHolderImageHtml();
                     }
                     // if ID card service is in the list but id card holder is false we need to remove it (both service value and image)
@@ -199,7 +200,7 @@ trigger GlobalContactTrigger on Contact (after delete, after insert, after undel
                         // remove from images
                         list<String> listImages = new list<String>();
                         for (String image: c.Available_Services_Images__c.split('<img')) {
-                            if (!image.contains(IdCardUtil.IDCARD_SERVICE_NAME)) {
+                            if (image!='' && !image.contains(IdCardUtil.IDCARD_SERVICE_NAME)) {
                                 listImages.add('<img' + image);
                             }
                         }
