@@ -16554,6 +16554,14 @@ Also note that the data contained in ICE is provided to IATA by third parties at
         <value>Assign New Financial Assessment Contact</value>
     </labels>
     <labels>
+        <fullName>ISSP_Assigned_cases_DPC</fullName>
+        <categories>ISSP</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_Assigned_cases_DPC</shortDescription>
+        <value>Assigned cases in my company</value>
+    </labels>
+    <labels>
         <fullName>ISSP_Attach_File</fullName>
         <categories>Portal</categories>
         <language>en_US</language>
@@ -17190,7 +17198,7 @@ Can you please confirm which country you&apos;ve previously received support for
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>ISSP Change Request Description</shortDescription>
-        <value>This service allows you to change your BSP / CASS Participation details - Local address, Tax number or Financial / Admin Contact (MasterTable) - online</value>
+        <value>This service allows you to change your BSP / CASS Participation details - Local address, Tax number or Financial / Admin Contact (MasterTable) and IATA Easy Pay opt-in or opt-out</value>
     </labels>
     <labels>
         <fullName>ISSP_ClickHereLogIn</fullName>
