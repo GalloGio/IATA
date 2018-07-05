@@ -7,6 +7,26 @@ public without sharing class AMS_MigrationToolHelper {
 
 	private static final Set<String> newgenProcesses = new Set<String>{'ANG.MAJOR.CHANGES.1.0','VR.1.0','CER.1.0','CORRECTION.1.0','BANK.ACCOUNT.CHANGES','NGFormsOfPayment','ANG_FS_OPTINOUT','ANG.NEW.HE.LITE.1.0','ANG.NEW.AE.1.0','ANG.NEW.HE.STANDARD.1.0'};
 
+	private static final Set<String> doesNotNeedStagingAreaProcesses = new Set<String>{'VR.1.0','VR.1.0.CA','CER.1.0',AMS_Utils.NGOPTINOUT,AMS_Utils.NGFOP,AMS_Utils.BANKACCCHANGES};
+	
+	private static Map<String,String> newgenCaseReason{
+		get{
+            return new Map<String, String> {
+			AMS_Utils.NEWHELITE => 'New HE lite',
+			AMS_Utils.NEWHESTANDARD => 'New HE standard',
+			AMS_Utils.NEWAE => 'New AE',
+			AMS_Utils.NGCHANGES => 'Agency changes',
+			AMS_Utils.NGCORRECTION => 'Corrections',
+			AMS_Utils.CERTIFICATION => 'PAX/CARGO Certificate',
+			AMS_Utils.VOLRELINQUISH => 'CLO - Closure',
+			AMS_Utils.BANKACCCHANGES => 'Agency changes',
+			AMS_Utils.NGFOP => 'FoP Management',
+			AMS_Utils.NGOPTINOUT => 'Financial review opt-in / opt-out'
+		};
+		}
+		set;
+	}
+
 	private static Map<String, Id> oscarNewgenRTMap {
 
 		get{
@@ -285,7 +305,7 @@ public without sharing class AMS_MigrationToolHelper {
 
         AMS_Pax_Accreditation_Form__c accreditationObj = null;
         
-        if(processType != 'VR.1.0' && processType != 'VR.1.0.CA' && processType != 'CER.1.0'){
+        if(!doesNotNeedStagingAreaProcesses.contains(processType)){
 
 			accreditationObj = fetchAccreditation(caseToProcess.Id);
 
@@ -313,7 +333,10 @@ public without sharing class AMS_MigrationToolHelper {
 			oscarId = oscar.Id;
 
 			caseToProcess.OSCAR__c = oscar.Id;
-			
+			caseToProcess.CaseArea__c = 'Accreditation Process';
+			caseToProcess.Reason1__c = newgenCaseReason.get(processType);
+			caseToProcess.Subject = caseToProcess.Reason1__c + ' - ' + caseToProcess.Account.Name;
+
 			update caseToProcess;
 		}
 
@@ -685,11 +708,15 @@ public without sharing class AMS_MigrationToolHelper {
 
 		caseToProcess.RecordTypeId = rtCommCase;
 
+		caseToProcess.CaseArea__c = 'Accreditation Process';
+		caseToProcess.Reason1__c = newgenCaseReason.get(processTypeInput);
+		caseToProcess.Subject = caseToProcess.Reason1__c + ' - ' + caseToProcess.Account.Name;
+
         update caseToProcess;
 
         AMS_Pax_Accreditation_Form__c accreditationObj = null;
 
-		if(processType != 'VR.1.0' && processType != 'VR.1.0.CA' && processType != 'CER.1.0' && processType != AMS_RecordCreatorWebservice.IEP_BANK_ACCOUNT_SETUP){
+		if(!doesNotNeedStagingAreaProcesses.contains(processType) && processType != AMS_RecordCreatorWebservice.IEP_BANK_ACCOUNT_SETUP ){
         
 	        accreditationObj = createAccreditation(caseToProcess.Id,caseToProcess.AccountId,processType);
 
@@ -704,14 +731,13 @@ public without sharing class AMS_MigrationToolHelper {
 
 		}
 
-		if(processType != 'CERTIFICATION.1.0' && processType != 'VR.1.0' && processType != 'VR.1.0.CA' && processType != 'CER.1.0' 
-			&& processType != AMS_RecordCreatorWebservice.IEP_BANK_ACCOUNT_SETUP)
+		if(!doesNotNeedStagingAreaProcesses.contains(processType)  && processType != AMS_RecordCreatorWebservice.IEP_BANK_ACCOUNT_SETUP)
 			List<AMS_Accreditation_Contact__c> contacts = createAccreditationContacts(accreditationObj,caseToProcess.AccountId,processType);
 
 
 		String oscarId = null;
 
-		if(processType != 'VR.1.0' && processType != 'VR.1.0.CA' && processType != 'CER.1.0' && processType != AMS_RecordCreatorWebservice.IEP_BANK_ACCOUNT_SETUP){
+		if(!doesNotNeedStagingAreaProcesses.contains(processType) && processType != AMS_RecordCreatorWebservice.IEP_BANK_ACCOUNT_SETUP){
 
 			oscarId = AMS_RecordCreatorWebservice.createAccreditation(caseToProcess.AccountId, accreditationObj.Id, processType, caseToProcess.Id);
 
