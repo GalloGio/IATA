@@ -47,6 +47,10 @@
 		    $('[data-toggle="tooltip"]').tooltip();   
 		});
 		*/
+
+		$(document).ready(function(){
+    		$('[data-toggle="popover"]').popover();   
+		});
 	</script>		
 
     <div class="col-md-12" id="productComparison">
@@ -113,8 +117,8 @@
 
 										<apex:outPutpanel rendered="{!!(cell.tooltip == '')}">
 											<apex:outputLabel value = "{! cell.slabel}" />
-											&nbsp;
-											<apex:image value="/img/msg_icons/info16.png" title="{! cell.tooltip}" html-data-placement="right" html-data-toggle="tooltip"/>														
+											
+											<a href="#" title="{!cell.name}" data-toggle="popover" data-trigger="hover" data-content="{!cell.tooltip}"><apex:image value="/img/msg_icons/info16.png"/></a>
 										</apex:outPutpanel>
 									</td>
 								</apex:outputPanel>
