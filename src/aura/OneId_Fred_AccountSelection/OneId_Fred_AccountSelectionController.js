@@ -120,11 +120,11 @@
         }
 
         if(component.get("v.customerType")=="Aircraft Operator")
-            component.set("v.searchPlaceholder","Please enter a commercial name");
+            component.set("v.searchPlaceholder","Please enter a Commercial Name");
         else if (component.get("v.customerType")=="ICAO Member State")
-            component.set("v.searchPlaceholder","Please enter a state name, ISO code in 2 or 3 letters");
+            component.set("v.searchPlaceholder","Please enter a State Name, ISO code in 2 or 3 letters");
         else {
-            component.set("v.searchPlaceholder","Please enter an account name");
+            component.set("v.searchPlaceholder","Please enter an Account Name");
         }
 
     },
