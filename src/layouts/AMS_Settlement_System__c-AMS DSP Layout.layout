@@ -112,6 +112,7 @@
         <fields>BSP_Billing__c</fields>
         <fields>CurrencyIsoCode</fields>
         <fields>DPC_System__c</fields>
+        <fields>ISS_Joining_fee_cluster__c</fields>
     </miniLayout>
     <relatedLists>
         <relatedList>RelatedNoteList</relatedList>
