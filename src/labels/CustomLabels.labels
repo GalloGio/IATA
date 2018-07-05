@@ -24672,6 +24672,14 @@ msgErrorRenewalOrderExpired:Your renewal notification order link is either  expi
         <value>Forgot your password?</value>
     </labels>
     <labels>
+        <fullName>OneId_Fred_Select_Type_of_Company</fullName>
+        <categories>OneId, Fred</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>OneId_Fred_Select_Type_of_Company</shortDescription>
+        <value>- Select the Type of Organization -</value>
+    </labels>
+    <labels>
         <fullName>OneId_GSAWarning</fullName>
         <language>en_US</language>
         <protected>false</protected>

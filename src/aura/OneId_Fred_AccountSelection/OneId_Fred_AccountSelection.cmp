@@ -44,7 +44,7 @@
 	<div class="slds-col--padded slds-p-bottom--large slds-size--1-of-1 slds-medium-size--1-of-1 slds-large-size--1-of-1">    
 		<label class="slds-form-element__label"><abbr class="slds-required" title="required">*</abbr>Type Of User</label>
 	    <ui:inputSelect aura:id="typeOfCustomer" class="slds-input required-input" required="true" value="{!v.customerType}" change="{!c.typeOfCustomerChanged}">
-            <ui:inputSelectOption text="" label="{!$Label.c.ISSP_Select_Type_of_Company}"/>
+            <ui:inputSelectOption text="" label="{!$Label.c.OneId_Fred_Select_Type_of_Company}"/>
 	    		<!-- Get customer type depeding on service name in URL  -->          
 	            <aura:iteration items="{!v.customerTypesByServiceName}" var="customerType">
              		<ui:inputSelectOption text="{!customerType.label}" label="{!customerType.value}"/>
