@@ -2713,6 +2713,19 @@ Disabled: SAAM case created, no link to OSCAR.</inlineHelpText>
         <type>Checkbox</type>
     </fields>
     <fields>
+        <fullName>fred_icaomemberstate__c</fullName>
+        <deleteConstraint>SetNull</deleteConstraint>
+        <externalId>false</externalId>
+        <label>FRED ICAO Member State</label>
+        <referenceTo>Account</referenceTo>
+        <relationshipLabel>ISO Country / Territory Name</relationshipLabel>
+        <relationshipName>IATA_ISO_Countries</relationshipName>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Lookup</type>
+    </fields>
+    <fields>
         <fullName>original_bank_details_not_required__c</fullName>
         <defaultValue>false</defaultValue>
         <externalId>false</externalId>
@@ -2740,6 +2753,7 @@ Enabled: Sufficient for Agents to simply upload scanned copy to online applicati
         <columns>CASS_Export__c</columns>
         <columns>CASS_Import__c</columns>
         <columns>CASS_Country_free_text__c</columns>
+        <columns>Country_Manager__c</columns>
         <filterScope>Everything</filterScope>
         <filters>
             <field>NAME</field>
