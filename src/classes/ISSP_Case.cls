@@ -628,25 +628,28 @@ public without sharing class ISSP_Case {
                     newCase.RecordTypeId = DAL_ISSP.getRecordTypeId('Inter_DPCs');
                     newCase.Account_Concerned__c = whoToContact;
                 }
+                
                 List<Account> lsAccounts = new List<Account>();
                 if(accaRoleIds.Value__c != null && accaRoleIds.Value__c.contains(UserInfo.getUserRoleId().Substring(0,15))){
-                if(dpcRecordType.Value__c != null && dpcSector.Value__c != null && dpcCategory.Value__c != null) {
-                    list<String> listRecordTypes = dpcRecordType.Value__c.split(',');
-                    lsAccounts =
-                        [SELECT Id, Name FROM Account
-                        WHERE Recordtype.DeveloperName IN :listRecordTypes
-                        AND Sector__c = :dpcSector.Value__c
-                        AND Category__c = :dpcCategory.Value__c];
-                }
+                    if(dpcRecordType.Value__c != null && dpcSector.Value__c != null && dpcCategory.Value__c != null) {
+                        list<String> listRecordTypes = dpcRecordType.Value__c.split(',');
+                        lsAccounts =
+                            [SELECT Id, Name FROM Account
+                            WHERE Recordtype.DeveloperName IN :listRecordTypes
+                            AND Sector__c = :dpcSector.Value__c
+                            AND Category__c = :dpcCategory.Value__c];
+                    }
                 } else {
                     if(accaAccounts.Value__c != null ) lsAccountIds = accaAccounts.Value__c.split(',');
                     if(lsAccountIds != null ) {
-                    lsAccounts =
-                        [SELECT Id, Name FROM Account
-                        WHERE Id IN :lsAccountIds];
+                        lsAccounts =
+                            [SELECT Id, Name FROM Account
+                            WHERE Id IN :lsAccountIds];
                     }
-
                 }
+                
+                
+                
                 List<Contact> lsContacts = new list<Contact>();
                 for (User user: [SELECT ContactId, Contact.Name, Contact.Email, Contact.AccountId
                         FROM User
@@ -667,7 +670,9 @@ public without sharing class ISSP_Case {
                 this.lst_whoToContact.add(new SelectOption('',''));
                 Account iataAccount;
                 for(Account a : lsAccounts) {
-                    this.lst_whoToContact.add(new SelectOption(a.Id,a.Name));
+                    if (a.Id != this.con.AccountId) {
+                        this.lst_whoToContact.add(new SelectOption(a.Id,a.Name));
+                    }
                 }
                 this.lst_whoToContact.add(new SelectOption('IATA','IATA'));
             }
