@@ -1,5 +1,0 @@
-<messaging:emailTemplate subject="Confirmation Order {!relatedTo.OrderNumber}" recipientType="Contact" relatedToType="Order">
-    <messaging:htmlEmailBody >
-        <c:ProductSoldNotificationContent OrderId="{!relatedTo.Id}" />
-    </messaging:htmlEmailBody>
-</messaging:emailTemplate>
