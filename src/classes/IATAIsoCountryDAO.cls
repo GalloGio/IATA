@@ -56,17 +56,21 @@ public class IATAIsoCountryDAO {
                                                         Enable_Notice_of_Change__c, SAAM_enable_non_IATA_Cargo_Agents__c,
                                                         Enable_Minor_Changes_from_Portal__c, AMS_Accreditation_New_Labels__c,
                                                         EBulletin_enabled__c, AMS_Vouchers_Benchmark__c, AMS_Max_Vouchers_Per_Year__c,
+                                                        LVA_CountryLanguage__c, CNS_Country__c, 
 
-                                                        (SELECT Id, Name, ISO_Code__c
+                                                        (SELECT Id, Name, ISO_Code__c, IEC_Valid_SAP__c
                                                         FROM IATA_ISO_States__r
                                                         ORDER BY Name),
 
                                                         (SELECT Id, Minimum_DGR_BR__c, Minimum_DGR_HO__c, Location_Class__c, RecordType.Name, 
-                                                        		Threshold__c
+                                                        		Threshold__c, RecordType.DeveloperName
 													   	FROM AMS_Country_Specific_Attributes__r)
 
 											  	FROM IATA_ISO_Country__c ]);
 	}
+
+
+	
 
 	/**
 	 * Method that return the mapIataIsoCountry using as key an ID of IATA_ISO_Country__c
@@ -136,7 +140,7 @@ public class IATAIsoCountryDAO {
 	public static List<IATA_ISO_Country__c> getIsoCountriesByIds(Set<ID> idList){
 
 		List<IATA_ISO_Country__c> isoCountryList = new List<IATA_ISO_Country__c>();
-		
+
 		for(Id isoCountryId : idList){
 			if(IATAIsoCountryDAO.getMapIataIsoCountry().containsKey(isoCountryId)){
 				isoCountryList.add(IATAIsoCountryDAO.getMapIataIsoCountry().get(isoCountryId));
@@ -222,9 +226,13 @@ public class IATAIsoCountryDAO {
 
 		List<IATA_ISO_Country__c> isoCountryList = new List<IATA_ISO_Country__c>();
 		
-		for(IATA_ISO_Country__c isoCountry : IATAIsoCountryDAO.getIsoCountries()){
-			if(aimsAreaNamesList.contains(isoCountry.AIMS_Area_Name__c)){
-				isoCountryList.add(isoCountry);
+		for(String areaName : aimsAreaNamesList){
+			for(IATA_ISO_Country__c isoCountry : IATAIsoCountryDAO.getIsoCountries()){
+				if(areaName.containsIgnoreCase(isoCountry.AIMS_Area_Name__c)){
+					isoCountryList.add(isoCountry);
+					if(isoCountry.AIMS_Area_Name__c != '')
+						break;
+				}
 			}
 		}
 		return isoCountryList;
@@ -370,5 +378,16 @@ public class IATAIsoCountryDAO {
 	        
 	        return returnValue;       
 	    }
+	}
+
+
+	/**
+	 * Only used to refresh map IataIsoCountry.
+	 * Just for testing
+	 */
+	public static void resetMapIataIsoCountry(){
+		IATAIsoCountryDAO.mapIataIsoCountry = null ;
+		IATAIsoCountryDAO.mapIataIsoCountryByName = null; 
+		IATAIsoCountryDAO.mapIataIsoCountrybyIsoCode = null;
 	}
 }

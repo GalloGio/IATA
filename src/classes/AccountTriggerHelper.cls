@@ -159,8 +159,7 @@ public  class AccountTriggerHelper {
         list<IATA_ISO_Country__c> isoCountriesByID = IATAIsoCountryDAO.getIsoCountriesByIds(IataIDs);
         list<IATA_ISO_Country__c> isoCountriesByAIMSAreaName = IATAIsoCountryDAO.getIsoCountriesByAIMSAreaName(billingNames);
 
-        Set<IATA_ISO_Country__c> isoCountries = new Set<IATA_ISO_Country__c>();
-        isoCountries.addAll(isoCountriesByID);
+        Set<IATA_ISO_Country__c> isoCountries = new Set<IATA_ISO_Country__c>(isoCountriesByID);
         isoCountries.addAll(isoCountriesByAIMSAreaName); 
 
         Map<Id, String> mapISOCountriesNamePerId = new   Map<Id, String>();

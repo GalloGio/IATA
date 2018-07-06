@@ -56,7 +56,8 @@ public class ISSP_CaseListTest {
     // cover the extra features for DPC: myOwnCases and myCompanyCases
     public static testMethod void testDPC() {
         // pick a portal user to test as
-        User testUser = [SELECT Id, ProfileId FROM User WHERE ContactId != null AND isActive = true LIMIT 1];
+        //User testUser = [SELECT Id, ProfileId FROM User WHERE ContactId != null AND isActive = true LIMIT 1];
+        User testUser = [Select id, ProfileId from User where Id = :UserInfo.getUserId()];
         String profId = (String)testUser.ProfileId; // (String)testUser.ProfileId.substring(0,15)
         profId = profId.substring(0,15);
         ISSPCaseListView__c cs = new ISSPCaseListView__c();

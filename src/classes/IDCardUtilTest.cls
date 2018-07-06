@@ -333,6 +333,7 @@ private class IDCardUtilTest {
         
         insert application;
         Test.startTest();
+        IATAIsoCountryDAO.resetMapIataIsoCountry();
         ID contactID = IDCardUtil.CreateContactWhenNewCardIsApproved(application);
         Test.stopTest();
     }

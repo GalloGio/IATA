@@ -4,12 +4,14 @@ public with sharing class iecWebDownload_Ctrl_Test {
 	@isTest (SeeAllData = true)
 	static void test_iecWebDownload_Ctrl(){
 
-		User usr = IECTestUtil.createSampleGuestUserAndLogin(IECConstants.Account_ClientType_MemberAirline);
+		User usr = [Select id, ContactId from User where Id = :UserInfo.getUserId()];
 		
 		iecWebDownload_Ctrl iecWebDownloadNot = new iecWebDownload_Ctrl();
 		iecWebDownloadNot.pageLoad();
 
 		System.runAs(usr){
+
+			Test.startTest();
 			// Create Orders 
 			TestDataGenerator.generateApexSetting();
 			List<Account> accounts = TestDataGenerator.generateAccounts(1,true); // 1 Account
@@ -61,6 +63,8 @@ public with sharing class iecWebDownload_Ctrl_Test {
 			iecWebUpload_Ctrl.backToRegularProduct(lstProduct[0].Id);
 			lstProduct = [SELECT id,SAP_Material_Number__c,File_Path__c from Product2 where id =:lstProduct[0].Id];
 			System.assertEquals(lstProduct[0].File_Path__c,null);
+
+			Test.stopTest();
 
 		}
 

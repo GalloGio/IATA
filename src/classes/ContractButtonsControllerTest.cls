@@ -64,6 +64,7 @@ private class ContractButtonsControllerTest {
                 gm.UserOrGroupId = pm.id;
                 insert gm;
             
+            Test.startTest();
             
             // Create a new ISO Country
             IATA_ISO_Country__c country = new IATA_ISO_Country__c(Name = 'France', ISO_Code__c = 'FR');
@@ -86,7 +87,6 @@ private class ContractButtonsControllerTest {
             
             // create 2 RCRM opportunities - 1 with renewal under Sales resp, the other under PM resp
             RT_RCRM_Opportunity_Id = RecordTypeSingleton.getInstance().RtIDsPerDeveloperNamePerObj.get('Opportunity').get('RCRM_Opportunity');
-            
             system.runAs(sm) {
                 oppRCRM_1 = new Opportunity(Name = 'RCRM Opp P1', RecordTypeId = RT_RCRM_Opportunity_Id, AccountId = testAccount.Id, CurrencyIsoCode = 'USD', 
                         Product_Family__c = 'Fam1', CloseDate = date.today(), StageName = '3. Needs Assessment', Pricebook2Id = pricebookId,  
@@ -113,6 +113,7 @@ private class ContractButtonsControllerTest {
                 newOLI = new OpportunityLineItem(OpportunityId = oppRCRM_2.Id, PricebookEntryId = standardPrice1.Id, Quantity = 1, UnitPrice = 10000);
                 insert newOLI;
             }
+            Test.stopTest();
         }
     }
     
@@ -121,7 +122,7 @@ private class ContractButtonsControllerTest {
 
         loadData();
 
-        Test.startTest();
+        //Test.startTest();
             
             oppRCRM_2.StageName = '6. Contract stage';
             oppRCRM_2.Start_Date__c = date.newInstance(date.today().year(), 1, 1);
@@ -193,7 +194,7 @@ private class ContractButtonsControllerTest {
                 
             }
             
-        Test.StopTest();
+        //Test.StopTest();
     }
     
     static  void ContractTest_SMRole() {
@@ -226,7 +227,7 @@ private class ContractButtonsControllerTest {
             newOLI = new OpportunityLineItem(OpportunityId = oppRCRM_2.Id, PricebookEntryId = standardPrice1.Id, Quantity = 1, UnitPrice = 10000);
             insert newOLI;
         }
-        Test.startTest();
+        //Test.startTest();
         
             oppRCRM_2.StageName = '6. Contract stage';
             oppRCRM_2.Start_Date__c = date.newInstance(date.today().year(), 1, 1);
@@ -285,14 +286,14 @@ private class ContractButtonsControllerTest {
                 
             }
             
-        Test.StopTest();
+        //Test.StopTest();
     }
     
     static testMethod void ContractTest_PMRole_CancelContract() {
         loadData();
         User thisUser = [ select Id from User where Id = :UserInfo.getUserId() ];
 
-        Test.startTest();
+        //Test.startTest();
         
             oppRCRM_2.StageName = '6. Contract stage';
             oppRCRM_2.Start_Date__c = date.newInstance(date.today().year(), 1, 1);
@@ -356,7 +357,7 @@ private class ContractButtonsControllerTest {
                 system.assertEquals(true, lstFutureRSL.isEmpty());
             }
             
-        Test.StopTest();
+        //Test.StopTest();
     }
 
 }

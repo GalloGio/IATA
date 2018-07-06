@@ -76,6 +76,7 @@ private class IDCard_CheckoutController_KATest {
 		idCardApplication1.Type_of_application__c = IDCardUtil.APPLICATIONTYPE_NEW;
 		idCardApplication1.UIR__c = '';
 		idCardApplication1.VER_Number__c = '';
+		idCardApplication1.RecordTypeId = IDCardWebService.getIdCardAppRT('Mass_Order_Application');
 		insert idCardApplication1;
 	}
 }

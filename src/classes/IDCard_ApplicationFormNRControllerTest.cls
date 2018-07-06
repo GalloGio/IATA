@@ -440,7 +440,8 @@ private class IDCard_ApplicationFormNRControllerTest {
                                                    
         cs = (list<Contact>)(database.query(query));
          
-        
+        IATAIsoCountryDAO.resetMapIataIsoCountry();
+
         List<ID_Card_Application__c> idcs = new List<ID_Card_Application__c>();
         idcs.add(IDCardApplicationFactory.createIDCardApplication(cs.get(0), 'New'));
         idcs.add(IDCardApplicationFactory.createIDCardApplication(cs.get(1), 'New'));

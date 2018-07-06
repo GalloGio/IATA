@@ -1446,7 +1446,9 @@ public with sharing class TestDataGenerator
         }
         catch (Exception e) {}
         
-        return IATAIsoCountryDAO.getIsoCountries();
+        return [select Id, Name, ISO_Code__c, ISO_Code_Numeric__c, Region__c
+                     , (select Id, Name, ISO_Code__c from IATA_ISO_States__r)
+                from IATA_ISO_Country__c];
     } //*** end of "generateISOCountryState"
     
     public static List<Term_And_Condition__c> generateTermAndConditions(Integer nb, Boolean doInsert)

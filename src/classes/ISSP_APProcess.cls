@@ -1228,7 +1228,7 @@ public without sharing class ISSP_APProcess {
     }
     
     public IATA_ISO_Country__c fetchISOCountry(string isocode) {
-        return IATAIsoCountryDAO.getIsoCountriesByIds(new Set<String>{isocode}).get(0);
+        return IATAIsoCountryDAO.getIsoCountryByIsoCodes(new Set<String>{isocode}).get(0);
     }
     
     public List<SelectOption> getChangeItems() {

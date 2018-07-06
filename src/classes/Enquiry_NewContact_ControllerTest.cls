@@ -26,10 +26,10 @@ public class Enquiry_NewContact_ControllerTest{
 		
 		
 		insert LOGs;
-		isoCountries = new list<IATA_ISO_Country__c>{	new IATA_ISO_Country__c(Name = 'italia',ISO_Code__c  ='ir'),
-														new IATA_ISO_Country__c(Name = 'francia',ISO_Code__c  ='fr'),
-														new IATA_ISO_Country__c(Name = 'svizzera',ISO_Code__c  ='sv'),
-														new IATA_ISO_Country__c(Name = 'germania',ISO_Code__c  ='de')
+		isoCountries = new list<IATA_ISO_Country__c>{	new IATA_ISO_Country__c(Name = 'Italia',ISO_Code__c  ='ir'),
+														new IATA_ISO_Country__c(Name = 'Francia',ISO_Code__c  ='fr'),
+														new IATA_ISO_Country__c(Name = 'Svizzera',ISO_Code__c  ='sv'),
+														new IATA_ISO_Country__c(Name = 'Germania',ISO_Code__c  ='de')
 		};
 		
 			insert isoCountries;
