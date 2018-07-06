@@ -103,9 +103,10 @@
 								<apex:outputPanel rendered="{! cell.name == 'Cost'}">
 									<td style="text-align: left; vertical-align: top; padding-right: 10px; padding-left: 10px;">
 										<apex:outputLabel value="{! cell.slabel}"/>
-										<apex:outPutpanel rendered="{!!(helper.costTooltip == '')}">										
-											&nbsp;
-											<apex:image value="/img/msg_icons/info16.png" title="{! helper.costTooltip}" html-data-placement="right" html-data-toggle="tooltip"/>	
+										<apex:outPutpanel rendered="{!!(helper.costTooltip == '')}">
+
+											<a href="#" title="{!cell.name}" data-toggle="popover" data-trigger="hover" data-content="{!helper.costTooltip}"><apex:image value="/img/msg_icons/info16.png"/></a>
+
 										</apex:outPutpanel>
 									</td>
 								</apex:outputPanel>
