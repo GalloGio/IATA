@@ -2696,6 +2696,20 @@ public class AMS_OSCARTriggerHandler {
 
             if(oldMap.get(oscar.Id).STEP6__c <> AMS_Utils.PASSED && oscar.STEP6__c == AMS_Utils.PASSED){
 
+                if (AMS_Utils.oscarNewGenProcesses.contains(oscar.Process__c)) {
+                    if(oscar.Process__c == AMS_Utils.NGCORRECTION) {
+                        if (oscar.Is_PCI_compliant__c == 'Yes' && oscar.ANG_PCI_compliance_expiry_date__c == null) {
+                            oscar.addError('Please specify the PCI compliance expiry date.');
+                            return;
+                        }
+
+                        if((oscar.Is_PCI_compliant__c == 'No' || oscar.Is_PCI_compliant__c == null) && oscar.ANG_PCI_compliance_expiry_date__c <> null){
+                            oscar.addError('Cannot change the PCI compliance expiry date if the Agent is not PCI compliant.');
+                            return;
+                        }
+                    }
+                }
+
                 if(AMS_Utils.processesANGrequiredAttachValidation.contains(oscar.Process__c)){
                     
                     boolean isToValidate = true;

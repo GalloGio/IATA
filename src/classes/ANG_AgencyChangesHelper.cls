@@ -919,6 +919,10 @@ public with sharing class ANG_AgencyChangesHelper {
                 if(oscarToProcess.Process__c ==  AMS_Utils.NGCORRECTION && oscarToProcess.Is_PCI_compliant__c != acc.Is_PCI_compliant__c){
                     acc.Is_PCI_compliant__c = oscarToProcess.Is_PCI_compliant__c;
                 }
+
+                if(oscarToProcess.Process__c ==  AMS_Utils.NGCORRECTION && oscarToProcess.ANG_PCI_compliance_expiry_date__c != acc.ANG_PCI_compliance_expiry_date__c){
+                    acc.ANG_PCI_compliance_expiry_date__c = oscarToProcess.ANG_PCI_compliance_expiry_date__c;
+                }
                     
 
 				for(String accFieldApiName: accountFieldNewValue.keySet())
