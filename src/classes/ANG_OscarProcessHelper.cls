@@ -699,9 +699,9 @@ global class ANG_OscarProcessHelper {
 	    		if(restrictCash && aa.ANG_FormOfPayment_ID__c == 'CA'){
 
 					if(aa.Status__c != valueToAdd){
-						aa.Status__c = valueToAdd;
-						accountIdsChanged.add(aa.Account__c);
-					}
+		    			aa.Status__c = valueToAdd;
+		    			accountIdsChanged.add(aa.Account__c);
+		    		}
 
 	    			aaLstToUpdate.add(aa);
 	    		}
@@ -718,8 +718,8 @@ global class ANG_OscarProcessHelper {
 
 				if(restoreCash && aa.ANG_FormOfPayment_ID__c == 'CA'){
 
-					aa.Status__c = valueToAdd;
-					accountIdsChanged.add(aa.Account__c);
+    				aa.Status__c = valueToAdd;
+    				accountIdsChanged.add(aa.Account__c);
     				aaLstToUpdate.add(aa);
     			}
 
