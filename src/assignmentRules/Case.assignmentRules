@@ -256,11 +256,6 @@
                 <operation>equals</operation>
                 <value>Internal Cases (IDFS ISS),Process</value>
             </criteriaItems>
-            <criteriaItems>
-                <field>Case.Status</field>
-                <operation>equals</operation>
-                <value>Open</value>
-            </criteriaItems>
         </ruleEntry>
         <ruleEntry>
             <assignedTo>GDS_FOP_Support</assignedTo>
@@ -1172,7 +1167,7 @@ ISPICKVAL( Status , &quot;Open&quot;)
         <ruleEntry>
             <assignedTo>AirlineParticipationHeadOffice</assignedTo>
             <assignedToType>Queue</assignedToType>
-            <booleanFilter>(1 AND (2 OR 3)) AND 4</booleanFilter>
+            <booleanFilter>(1 AND 2 AND 4) OR 3</booleanFilter>
             <criteriaItems>
                 <field>Case.RecordTypeId</field>
                 <operation>equals</operation>
@@ -1181,12 +1176,12 @@ ISPICKVAL( Status , &quot;Open&quot;)
             <criteriaItems>
                 <field>Case.Origin</field>
                 <operation>equals</operation>
-                <value>Portal</value>
+                <value>Portal,Airline Participation</value>
             </criteriaItems>
             <criteriaItems>
                 <field>Case.Origin</field>
                 <operation>equals</operation>
-                <value>Airline Participation</value>
+                <value>E-mail to Case - AP central team email</value>
             </criteriaItems>
             <criteriaItems>
                 <field>Case.CaseArea__c</field>
