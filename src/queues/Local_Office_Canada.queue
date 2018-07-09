@@ -3,6 +3,14 @@
     <doesSendEmailToMembers>false</doesSendEmailToMembers>
     <email>boescheb@iata.org</email>
     <name>Local Office - Canada</name>
+    <queueMembers>
+        <publicGroups>
+            <publicGroup>IATACanada</publicGroup>
+        </publicGroups>
+        <users>
+            <user>medeirosk@iata.org</user>
+        </users>
+    </queueMembers>
     <queueSobject>
         <sobjectType>Case</sobjectType>
     </queueSobject>

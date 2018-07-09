@@ -3,6 +3,11 @@
     <doesSendEmailToMembers>false</doesSendEmailToMembers>
     <email>noreply@iata.org</email>
     <name>TIESS - Asia &amp; Pacific</name>
+    <queueMembers>
+        <publicGroups>
+            <publicGroup>IDFSAsiaPacificallusers</publicGroup>
+        </publicGroups>
+    </queueMembers>
     <queueSobject>
         <sobjectType>Case</sobjectType>
     </queueSobject>

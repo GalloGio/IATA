@@ -3,6 +3,15 @@
     <doesSendEmailToMembers>true</doesSendEmailToMembers>
     <email>mohananb@iata.org</email>
     <name>Cases - Complaints SIN</name>
+    <queueMembers>
+        <users>
+            <user>mohananb@iata.org</user>
+            <user>vitharanai@iata.org</user>
+            <user>yangj@iata.org</user>
+            <user>siddiquio@iata.org</user>
+            <user>rodrigos@iata.org</user>
+        </users>
+    </queueMembers>
     <queueSobject>
         <sobjectType>Case</sobjectType>
     </queueSobject>
