@@ -108025,6 +108025,13 @@ OR(ISPICKVAL(Industry, &apos;Airline&apos;),ISPICKVAL(Industry, &apos;Travel Age
         <errorConditionFormula>AND(RecordType.DeveloperName = &apos;IATA_Airline_BR&apos;, ISPICKVAL( Branch_Type__c , &apos;Virtual&apos;),  ISBLANK(  IATA_ISO_Country__c ) )</errorConditionFormula>
         <errorMessage>For a Virtual Branch Iso Country is mandatory</errorMessage>
     </validationRules>
+    <validationRules>
+        <fullName>Location_Type_cannot_choose_HE_or_AE</fullName>
+        <active>true</active>
+        <description>User cannot set location type HE/AE if the location class is not P/D and country is not NewGen.</description>
+        <errorConditionFormula>AND(OR(ISNEW(),OR(ISCHANGED(Location_Type__c),ISCHANGED(Location_Class__c))),OR(ISPICKVAL(Location_Type__c,&apos;HE&apos;),ISPICKVAL(Location_Type__c,&apos;AE&apos;)),OR(NOT(ANG_IsNewGenAgency__c),NOT(OR(ISPICKVAL(Location_Class__c,&apos;P&apos;),ISPICKVAL(Location_Class__c,&apos;D&apos;)))))</errorConditionFormula>
+        <errorMessage>You cannot set location type HE/AE if the location class is not P/D and country is not NewGen.</errorMessage>
+    </validationRules>	
     <webLinks>
         <fullName>APXTConga4__Conga_Composer_OAuth</fullName>
         <availability>online</availability>
