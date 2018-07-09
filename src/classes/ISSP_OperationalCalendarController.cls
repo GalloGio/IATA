@@ -185,28 +185,30 @@ global without sharing class ISSP_OperationalCalendarController {
         Generate the text inside the popup when the mouse is over
     **/
     private static String getEventDescription(Operational_Calendar__c operation, Boolean isCASS, Boolean isAirline) {
-        list<String> listFiledNames;
+        Schema.FieldSet fieldset;
         if (isAirline) {
             if (isCASS) {
-                listFiledNames = new list<String>{'First_Day__c','Last_Day__c','Airline_Input_Upload_Cut_Off__c','CASS_reports_Availability__c','Agent_Correction_Cut_Off__c','Airline_Correction_Response_Cut_Off__c','Billing_Availability__c','Remittance_Day__c','Settlement_Day__c'};
+                fieldset = SObjectType.operational_Calendar__c.FieldSets.ISSP_Page_Hover_For_CASS_Airline;
             } else {
-                listFiledNames = new list<String>{'First_Day__c','Last_Day__c','Billing_Availability__c','Remittance_Day__c','Settlement_Day__c'};
+                fieldset = SObjectType.operational_Calendar__c.FieldSets.ISSP_Page_Hover_For_BSP_Airline;
             }
         } else {
             //AGENTS
             if (isCASS) {
-                listFiledNames = new list<String>{'First_Day__c','Last_Day__c','CASS_reports_Availability__c','Agent_Correction_Cut_Off__c','Billing_Availability__c','Remittance_Day__c'};
+                fieldset = SObjectType.operational_Calendar__c.FieldSets.ISSP_Page_Hover_For_CASS_Agency;
             } else {
-                listFiledNames = new list<String>{'First_Day__c','Last_Day__c','Billing_Availability__c','Remittance_Day__c'};
+                fieldset = SObjectType.operational_Calendar__c.FieldSets.ISSP_Page_Hover_For_BSP_Agency;
             }
         }
         String description = '';
-        for (String fieldName: listFiledNames) {
-            String label = MAP_CALENDAR_FIELDS.get(fieldName).getDescribe().getLabel();
-            if (fieldName=='First_Day__c') label = System.Label.ISSP_OperationalCalendar_BillingFirstDay;
-            if (fieldName=='Last_Day__c') label = System.Label.ISSP_OperationalCalendar_BillingLastDay;
-            String value = dateToString((DateTime)operation.get(fieldName));
-            description+= '<strong>' + label + '</strong> ' + value + '</br>';
+        for(Schema.FieldSetMember f : fieldset.getFields()) {
+            //String label = MAP_CALENDAR_FIELDS.get(fieldName).getDescribe().getLabel();
+            String fieldName = f.getFieldPath();
+            String fieldLabel = f.getLabel();
+            if (fieldName=='First_Day__c') fieldLabel = System.Label.ISSP_OperationalCalendar_BillingFirstDay;
+            if (fieldName=='Last_Day__c') fieldLabel = System.Label.ISSP_OperationalCalendar_BillingLastDay;
+            String fieldValue = getFieldValue(operation, f);
+            description+= '<strong>' + fieldLabel + '</strong> ' + fieldValue + '</br>';
         }
         return description;
     } 
@@ -394,79 +396,61 @@ global without sharing class ISSP_OperationalCalendarController {
             throw new OperationalCalendarException(Label.ISSP_OperationalCalendar_BSPCASS_Filter_Required);
         }
         list<Operational_Calendar__c> listOperations = queryListOperations(country, frequency, operationType, currencyCode, Integer.ValueOf(billingPeriod));
-        if (IS_AIRLINE) {
-            return serializeOperationsForAirlines(listOperations);
-        } else {
-            return serializeOperationsForAgency(listOperations);
-        }
+        return serializeOperations(IS_AIRLINE, operationType, listOperations);
     }
 
     /**
-        Specific JSON transformation only for Airlines
+        Finds the appropriate fieldset based on the operation type and if it's airline or agency
     **/
-    private static String serializeOperationsForAirlines(list<Operational_Calendar__c> listOperations) {
+    private static Schema.FieldSet getDescriptionFieldSet(Boolean isAirline, String operationType) {
+        if (IS_AIRLINE) {
+            if (operationType.contains('CASS')) {
+                return SObjectType.operational_Calendar__c.FieldSets.ISSP_Page_Detail_For_CASS_Airline;
+            } else {
+                return SObjectType.operational_Calendar__c.FieldSets.ISSP_Page_Detail_For_BSP_Airline;
+            }
+        } else {
+            if (operationType.contains('CASS')) {
+                return SObjectType.operational_Calendar__c.FieldSets.ISSP_Page_Detail_For_CASS_Agency;
+            } else {
+                return SObjectType.operational_Calendar__c.FieldSets.ISSP_Page_Detail_For_BSP_Agency;
+            }
+        }
+    }
+    
+    /**
+        Creates a JSON string having full data to populate the table
+        first line is the header, and subsequent the data
+    **/
+    private static String serializeOperations(Boolean isAirline, String operationType, list<Operational_Calendar__c> listOperations) {
+        Schema.FieldSet fieldset = getDescriptionFieldSet(isAirline, operationType);
         list<list<String>> listResults = new list<list<String>>();
+        //headers
+        list<String> listHeaders = new list<String>();
+        // first 2 headers are empty for the extra colums for calculations
+        listHeaders.add('');
+        listHeaders.add('');
+        for(Schema.FieldSetMember f : fieldset.getFields()) {
+            listHeaders.add(f.getLabel());
+        }
+        listResults.add(listHeaders);
+        //data
         Integer numOfNonPastRow = 0;
         for (Operational_Calendar__c operation: listOperations) {
             list<String> listLine = new list<String>();
-            listLine.add(nvl(operation.Period_Code__c));
-            listLine.add(dateToString(operation.First_Day__c));
-            listLine.add(dateToString(operation.Last_Day__c));
-            if (operation.Operation_Type__c.contains('CASS')) {
-                listLine.add('-');
-                listLine.add(operation.Operation_Currency__c);
-                listLine.add(dateToString(operation.Airline_Input_Upload_Cut_Off__c));
-                listLine.add(dateToString(operation.CASS_reports_Availability__c));
-                listLine.add(dateToString(operation.Agent_Correction_Cut_Off__c));
-                listLine.add(dateToString(operation.Airline_Correction_Response_Cut_Off__c));
-            } else {
-                listLine.add(MAP_FREQUENCIES.get(operation.frequency_code__c));
-                listLine.add(operation.Operation_Currency__c);
-                listLine.add('-');
-                listLine.add('-');
-                listLine.add('-');
-                listLine.add('-');
-            }
-            listLine.add(dateToString(operation.Billing_Availability__c));
-            listLine.add(dateToString(operation.Remittance_Day__c));
-            listLine.add(dateToString(operation.Settlement_Day__c));
-            //column to define special classes for this line
-            String rowclass = getDateComparedToToday(operation.Settlement_Day__c);
+            //special columns to define if it's a past record
+            Date dateToCompare = isAirline? operation.Settlement_Day__c: operation.Remittance_Day__c;
+            String rowclass = getDateComparedToToday(dateToCompare);
             numOfNonPastRow+= rowclass=='past-row'? 0: 1;
             if (numOfNonPastRow == 1)  rowclass += ' first-nonpast-row';
             listLine.add(rowclass);
             listLine.add(''+operation.LastModifiedDate);
-            listResults.add(listLine);
-        }
-        return JSON.serialize(listResults,true);
-    }
-    
-    /**
-        Specific JSON transformation only for Agencies
-    **/
-    private static String serializeOperationsForAgency(list<Operational_Calendar__c> listOperations) {
-        list<list<String>> listResults = new list<list<String>>();
-        for (Operational_Calendar__c operation: listOperations) {
-            list<String> listLine = new list<String>();
-            listLine.add(nvl(operation.Period_Code__c));
-            listLine.add(dateToString(operation.First_Day__c));
-            listLine.add(dateToString(operation.Last_Day__c));
-            if (operation.Operation_Type__c.contains('CASS')) {
-                listLine.add('-');
-                listLine.add(operation.Operation_Currency__c);
-                listLine.add(dateToString(operation.CASS_reports_Availability__c));
-                listLine.add(dateToString(operation.Agent_Correction_Cut_Off__c));
-            } else {
-                listLine.add(MAP_FREQUENCIES.get(operation.frequency_code__c));
-                listLine.add(operation.Operation_Currency__c);
-                listLine.add('-');
-                listLine.add('-');
+            
+            // regular data fields
+            for(Schema.FieldSetMember f : fieldset.getFields()) {
+                String fieldValue = getFieldValue(operation, f);
+                listLine.add(fieldValue);
             }
-            listLine.add(dateToString(operation.Billing_Availability__c));
-            listLine.add(dateToString(operation.Remittance_Day__c));
-            //column to define if it's a past record
-            listLine.add(getDateComparedToToday(operation.Remittance_Day__c));
-            listLine.add(''+operation.LastModifiedDate);
             listResults.add(listLine);
         }
         return JSON.serialize(listResults,true);
@@ -503,9 +487,30 @@ global without sharing class ISSP_OperationalCalendarController {
     public static String nvl(String input) {
         return input==null? '': input;
     }
-    
-    public static String dateToString(DateTime input) {
+    public static String toString(Object input) {
+        return input==null? '': String.ValueOf(input);
+    }
+    public static String toString(Date input) {
+        return input==null? '': datetime.newInstance(input, Time.newInstance(12,0,0,0)).format('dd MMM YYYY');
+    }
+    public static String toString(DateTime input) {
         return input==null? '': input.format('dd MMM YYYY');
+    }
+    
+    public static String getFieldValue(Operational_Calendar__c obj, Schema.FieldSetMember f) {
+        try {
+            if (f.getType()==Schema.DisplayType.Date) {
+                return toString((Date)obj.get(f.getFieldPath()));
+            }
+            if (f.getType()==Schema.DisplayType.DateTime) {
+                return toString((DateTime)obj.get(f.getFieldPath()));
+            }
+            return toString(obj.get(f.getFieldPath()));
+            
+        } catch (Exception e) {
+            System.debug('**ERROR in getFieldValue ' + e.getMessage());
+            return '';
+        }
     }
     
     public static list<EventWrapper> groupEvents(list<EventWrapper> listEvents) {

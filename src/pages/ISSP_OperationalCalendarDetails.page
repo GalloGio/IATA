@@ -42,7 +42,6 @@
     //console.log(defaultOperationType);
     //console.log(defaultFrequency);
     $(document).ready(function() {
-        initTable();
         initFilters();
         refreshDetails();
         
@@ -104,9 +103,6 @@
         } else {
             $("#typeFilter").val(defaultOperationType);
         }
-        //PDF button depends on the operation type value
-        var isCASS = $("#typeFilter").val().includes("CASS");
-        addPDFButton(isCASS);
         updatePicklistsFromType();
         if ("{!$CurrentPage.parameters.ffrequency}">"") {
             $("#frequencyFilter").val("{!$CurrentPage.parameters.ffrequency}");
@@ -230,7 +226,7 @@
         var table = $('.table-pagination').DataTable();
         var lastModifiedDate = null;
         var tablerows = table.rows().data();
-        var dateColumnNumber = isAirline? 13: 10;
+        var dateColumnNumber = 1;
         for (var i = 0; i < tablerows.length; i++) { 
             var row = tablerows[i];
             var modifiedDate = new Date(row[dateColumnNumber]);
@@ -339,8 +335,6 @@
     function refreshDetails() {
         hideError();
         setCalendarTitle();
-        //remove existing details
-        $('.table-pagination').DataTable().clear().draw();
         var country = $(".countryFilter").val();
         var frequency = $("#frequencyFilter").val();
         var operationType = $("#typeFilter").val();
@@ -356,7 +350,7 @@
             country, frequency, operationType, currency, billingPeriod,
             function(result, event){
                 if (event.status) {
-                    setTableDetails($.parseJSON(result), operationType);
+                    createDataTable($.parseJSON(result));
                 } else if (event.type === 'exception') {
                     showError(event.message);
                 } else {
@@ -367,29 +361,35 @@
         );
     }
     
-    function setTableDetails(listLines, operationType){
-        var table = $('.table-pagination').DataTable();
-        //remove existing details
-        table.clear();
-        var isCASS = operationType.includes("CASS");
-        var isBSP = operationType.includes("BSP");
-        if (isAirline) {
-            table.column(3).visible(isBSP);
-            table.column(5).visible(isCASS);
-            table.column(6).visible(isCASS);
-            table.column(7).visible(isCASS);
-            table.column(8).visible(isCASS);
-        } else {
-            table.column(3).visible(isBSP);
-            table.column(5).visible(isCASS);
-            table.column(6).visible(isCASS);
+    function createDataTable(listLines){
+        // recreate the table inside div table-container
+        var container = $("div#table-container");
+        container.empty();
+        var table = $('<table><thead><tr class="table-header"></tr></thead><tbody></tbody></table>').attr({ class: "table table-condensed table-pagination" });
+        container.append(table);
+        var header = table.find("tr");
+        var listHeaderLabels = listLines.shift();
+        var listHiddenColumns = [];
+        // populating headers
+        for(var i=0; i<listHeaderLabels.length; i++) {
+            var label = listHeaderLabels[i];
+            if (label=="") listHiddenColumns.push(i);
+            $("<th></th>").attr({ class: "table-header" }).text(label).appendTo(header);
         }
-        var dateCompCol = isAirline? 12: 9;
+        // hidding columns without label in header (used for calculations)
+        var table = $('.table-pagination').DataTable();
+        for(var i=0; i<listHiddenColumns.length; i++) {
+            table.column(listHiddenColumns[i]).visible(false);
+        }
+        // populating data lines 
         $.each(listLines, function (i, line) {
             var node = table.row.add(line).node();
-            $(node).addClass(line[dateCompCol]);
+            $(node).addClass(line[0]); //first column contains the class name to use in this row
         });
         table.draw();
+        //PDF button depends on the operation type value
+        var isCASS = $("#typeFilter").val().includes("CASS");
+        addPDFButton(isCASS);
         $(".buttons-csv").prop("disabled",listLines.length==0);
         $(".buttons-pdf").prop("disabled",listLines.length==0);
     }
@@ -527,7 +527,7 @@
             </apex:form>
         </div>
         
-         <!-- ERROR MESSAGES -->
+        <!-- ERROR MESSAGES -->
         <div class="row">
             <div class="col-sm-1"></div>
             <div class="col-sm-10">
@@ -536,151 +536,8 @@
             <div class="col-sm-1"></div>
         </div>
         
-      <!-- AIRLINE TABLE-->
-      <apex:DataTable value="{!listOperations}" var="op" styleClass="table table-condensed table-pagination" headerClass="table-header"
-        rendered="{!isAirline}">
-        
-        <apex:column styleclass="text-width-xs">
-          <apex:facet name="header">{!$ObjectType.operational_Calendar__c.fields.Period_Code__c.label}</apex:facet>
-          <apex:outputText value="{!op.Period_Code__c}"/>
-        </apex:column>
-        
-        <apex:column styleclass="text-width-xs">
-          <apex:facet name="header">{!$Label.ISSP_OperationalCalendar_BillingFirstDay}</apex:facet>
-          <apex:outputText value="{0,date,d MMM yyyy}">
-            <apex:param value="{!op.First_Day__c}" />
-          </apex:outputText>
-        </apex:column>
-        
-        <apex:column styleclass="text-width-xs">
-          <apex:facet name="header">{!$Label.ISSP_OperationalCalendar_BillingLastDay}</apex:facet>
-          <apex:outputText value="{0,date,d MMM yyyy}">
-            <apex:param value="{!op.Last_Day__c}" />
-          </apex:outputText>
-        </apex:column>
-        
-        <apex:column styleclass="text-width-xs">
-          <apex:facet name="header">{!$Label.ISSP_OperationalCalendar_FrequencyFilter}</apex:facet>
-          <apex:outputText value="{!op.frequency_code__c}"/>
-        </apex:column>
-        
-        <apex:column styleclass="text-width-xs">
-          <apex:facet name="header">{!$Label.ISSP_OperationalCalendar_CurrencyFilter}</apex:facet>
-          <apex:outputText value="{!op.Operation_Currency__c}"/>
-        </apex:column>
-        
-        <apex:column styleclass="text-width-xs">
-          <apex:facet name="header">{!$ObjectType.operational_Calendar__c.fields.Airline_Input_Upload_Cut_Off__c.label}</apex:facet>
-          <apex:outputText value="{0,date,d MMM yyyy}">
-            <apex:param value="{!op.Airline_Input_Upload_Cut_Off__c}" />
-          </apex:outputText>
-        </apex:column>
-        
-        <apex:column styleclass="text-width-xs">
-          <apex:facet name="header">{!$ObjectType.operational_Calendar__c.fields.CASS_reports_Availability__c.label}</apex:facet>
-          <apex:outputText value="{0,date,d MMM yyyy}">
-            <apex:param value="{!op.CASS_reports_Availability__c}" />
-          </apex:outputText>
-        </apex:column>
-        
-        <apex:column styleclass="text-width-xs">
-          <apex:facet name="header">{!$ObjectType.operational_Calendar__c.fields.Agent_Correction_Cut_Off__c.label}</apex:facet>
-          <apex:outputText value="{0,date,d MMM yyyy}">
-            <apex:param value="{!op.Agent_Correction_Cut_Off__c}" />
-          </apex:outputText>
-        </apex:column>
-        
-        <apex:column styleclass="text-width-xs" >
-          <apex:facet name="header">{!$ObjectType.operational_Calendar__c.fields.Airline_Correction_Response_Cut_Off__c.label}</apex:facet>
-          <apex:outputText value="{0,date,d MMM yyyy}">
-            <apex:param value="{!op.Airline_Correction_Response_Cut_Off__c}" />
-          </apex:outputText>
-        </apex:column>
-        
-        <apex:column styleclass="text-width-xs">
-          <apex:facet name="header">{!$ObjectType.operational_Calendar__c.fields.Billing_Availability__c.label}</apex:facet>
-          <apex:outputText value="{0,date,d MMM yyyy}">
-            <apex:param value="{!op.Billing_Availability__c}" />
-          </apex:outputText>
-        </apex:column>
-        
-        <apex:column styleclass="text-width-xs">
-          <apex:facet name="header">{!$ObjectType.operational_Calendar__c.fields.Remittance_Day__c.label}</apex:facet>
-          <apex:outputText value="{0,date,d MMM yyyy}">
-            <apex:param value="{!op.Remittance_Day__c}" />
-          </apex:outputText>
-        </apex:column>
-
-        <apex:column styleclass="text-width-xs">
-          <apex:facet name="header">{!$ObjectType.operational_Calendar__c.fields.Settlement_Day__c.label}</apex:facet>
-          <apex:outputText value="{0,date,d MMM yyyy}">
-            <apex:param value="{!op.Settlement_Day__c}" />
-          </apex:outputText>
-        </apex:column>
-        
-      </apex:DataTable>
-      <!-- AGENT TABLE-->
-      <apex:DataTable value="{!listOperations}" var="op" styleClass="table table-condensed table-pagination" headerClass="table-header"
-        rendered="{!NOT(IsAirline)}">
-        
-        <apex:column styleclass="text-width-xs">
-          <apex:facet name="header">{!$ObjectType.operational_Calendar__c.fields.Period_Code__c.label}</apex:facet>
-          <apex:outputText value="{!op.Period_Code__c}"/>
-        </apex:column>
-        
-        <apex:column styleclass="text-width-xs">
-          <apex:facet name="header">{!$Label.ISSP_OperationalCalendar_BillingFirstDay}</apex:facet>
-          <apex:outputText value="{0,date,d MMM yyyy}">
-            <apex:param value="{!op.First_Day__c}" />
-          </apex:outputText>
-        </apex:column>
-        
-        <apex:column styleclass="text-width-xs">
-          <apex:facet name="header">{!$Label.ISSP_OperationalCalendar_BillingLastDay}</apex:facet>
-          <apex:outputText value="{0,date,d MMM yyyy}">
-            <apex:param value="{!op.Last_Day__c}" />
-          </apex:outputText>
-        </apex:column>
-        
-        <apex:column styleclass="text-width-xs">
-          <apex:facet name="header">{!$Label.ISSP_OperationalCalendar_FrequencyFilter}</apex:facet>
-          <apex:outputText value="{!op.frequency_code__c}"/>
-        </apex:column>
-        
-        <apex:column styleclass="text-width-xs">
-          <apex:facet name="header">{!$Label.ISSP_OperationalCalendar_CurrencyFilter}</apex:facet>
-          <apex:outputText value="{!op.Operation_Currency__c}"/>
-        </apex:column>
-        
-        <apex:column styleclass="text-width-xs">
-          <apex:facet name="header">{!$ObjectType.operational_Calendar__c.fields.CASS_reports_Availability__c.label}</apex:facet>
-          <apex:outputText value="{0,date,d MMM yyyy}">
-            <apex:param value="{!op.CASS_reports_Availability__c}" />
-          </apex:outputText>
-        </apex:column>
-        
-        <apex:column styleclass="text-width-xs">
-          <apex:facet name="header">{!$ObjectType.operational_Calendar__c.fields.Agent_Correction_Cut_Off__c.label}</apex:facet>
-          <apex:outputText value="{0,date,d MMM yyyy}">
-            <apex:param value="{!op.Agent_Correction_Cut_Off__c}" />
-          </apex:outputText>
-        </apex:column>
-        
-        <apex:column styleclass="text-width-xs">
-          <apex:facet name="header">{!$ObjectType.operational_Calendar__c.fields.Billing_Availability__c.label}</apex:facet>
-          <apex:outputText value="{0,date,d MMM yyyy}">
-            <apex:param value="{!op.Billing_Availability__c}" />
-          </apex:outputText>
-        </apex:column>
-        
-        <apex:column styleclass="text-width-xs">
-          <apex:facet name="header">{!$ObjectType.operational_Calendar__c.fields.Remittance_Day__c.label}</apex:facet>
-          <apex:outputText value="{0,date,d MMM yyyy}">
-            <apex:param value="{!op.Remittance_Day__c}" />
-          </apex:outputText>
-        </apex:column>
-        
-      </apex:DataTable>
+        <!-- DATA TABLE -->
+        <div id="table-container"></div>
 
     </div>
 
