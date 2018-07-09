@@ -281,6 +281,19 @@
         </valueSet>
     </fields>
     <label>ISS Operation</label>
+    <listViews>
+        <fullName>ISS_Joining_fee_clusters</fullName>
+        <columns>NAME</columns>
+        <columns>BSP_Billing__c</columns>
+        <columns>ISS_Joining_fee_cluster__c</columns>
+        <filterScope>Everything</filterScope>
+        <filters>
+            <field>ISS_Joining_fee_cluster__c</field>
+            <operation>notEqual</operation>
+        </filters>
+        <label>ISS Joining fee clusters</label>
+        <language>en_US</language>
+    </listViews>
     <nameField>
         <label>Name</label>
         <trackHistory>false</trackHistory>

@@ -3,6 +3,21 @@
     <doesSendEmailToMembers>false</doesSendEmailToMembers>
     <email>noreply@iata.org</email>
     <name>Cases - Canada</name>
+    <queueMembers>
+        <publicGroups>
+            <publicGroup>IATACanada</publicGroup>
+            <publicGroup>IDFSAllusersexcludingIWandACCA</publicGroup>
+            <publicGroup>IDFSAmericasCustomerService</publicGroup>
+            <publicGroup>IDFSAmericasRS</publicGroup>
+        </publicGroups>
+        <roleAndSubordinatesInternal>
+            <roleAndSubordinateInternal>DistributionCustomerExperienceHOI</roleAndSubordinateInternal>
+        </roleAndSubordinatesInternal>
+        <roles>
+            <role>MADHubCSManagerA</role>
+            <role>MADHubCSstaffA</role>
+        </roles>
+    </queueMembers>
     <queueSobject>
         <sobjectType>Case</sobjectType>
     </queueSobject>
