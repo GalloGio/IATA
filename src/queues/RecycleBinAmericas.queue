@@ -3,6 +3,14 @@
     <doesSendEmailToMembers>false</doesSendEmailToMembers>
     <email>noreply@iata.org</email>
     <name>Recycle Bin Americas</name>
+    <queueMembers>
+        <publicGroups>
+            <publicGroup>IDFSAllusersexcludingIWandACCA</publicGroup>
+        </publicGroups>
+        <roleAndSubordinatesInternal>
+            <roleAndSubordinateInternal>IDFSAmericasRegionalOfficeI</roleAndSubordinateInternal>
+        </roleAndSubordinatesInternal>
+    </queueMembers>
     <queueSobject>
         <sobjectType>AMS_OSCAR__c</sobjectType>
     </queueSobject>

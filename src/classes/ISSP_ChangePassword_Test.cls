@@ -112,6 +112,8 @@ private class ISSP_ChangePassword_Test {
 	        pgCont.currentPassword = 'a';
 	        pgCont.newPassword = 'b1234567';
 	        pgCont.confirmNewPassword = 'b1234567';
+			pgCont.serviceName = 'serviceName';
+			pgCont.serviceNameParam = 'serviceNameParam';
 	        pgCont.changePassword();
 
     	}

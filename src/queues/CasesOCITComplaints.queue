@@ -3,6 +3,12 @@
     <doesSendEmailToMembers>false</doesSendEmailToMembers>
     <email>iata.recyclebin.europe@gmail.com</email>
     <name>Cases - OCIT Europe</name>
+    <queueMembers>
+        <publicGroups>
+            <publicGroup>HUBMadrid</publicGroup>
+            <publicGroup>IDFSAllusersexcludingIWandACCA</publicGroup>
+        </publicGroups>
+    </queueMembers>
     <queueSobject>
         <sobjectType>Case</sobjectType>
     </queueSobject>

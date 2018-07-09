@@ -3,6 +3,13 @@
     <doesSendEmailToMembers>false</doesSendEmailToMembers>
     <email>venton@iata.org</email>
     <name>Local Office - BENELUX</name>
+    <queueMembers>
+        <publicGroups>
+            <publicGroup>HUBMadrid</publicGroup>
+            <publicGroup>IDFSBelgiumLuxembourg</publicGroup>
+            <publicGroup>IDFSNetherlands</publicGroup>
+        </publicGroups>
+    </queueMembers>
     <queueSobject>
         <sobjectType>Case</sobjectType>
     </queueSobject>

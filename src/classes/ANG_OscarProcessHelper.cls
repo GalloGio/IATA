@@ -699,9 +699,9 @@ global class ANG_OscarProcessHelper {
 	    		if(restrictCash && aa.ANG_FormOfPayment_ID__c == 'CA'){
 
 					if(aa.Status__c != valueToAdd){
-						aa.Status__c = valueToAdd;
-						accountIdsChanged.add(aa.Account__c);
-					}
+		    			aa.Status__c = valueToAdd;
+		    			accountIdsChanged.add(aa.Account__c);
+		    		}
 
 	    			aaLstToUpdate.add(aa);
 	    		}
@@ -718,8 +718,8 @@ global class ANG_OscarProcessHelper {
 
 				if(restoreCash && aa.ANG_FormOfPayment_ID__c == 'CA'){
 
-					aa.Status__c = valueToAdd;
-					accountIdsChanged.add(aa.Account__c);
+    				aa.Status__c = valueToAdd;
+    				accountIdsChanged.add(aa.Account__c);
     				aaLstToUpdate.add(aa);
     			}
 
@@ -1538,6 +1538,7 @@ global class ANG_OscarProcessHelper {
 	        fieldsOfObject.put('Reason1__c','IEP Bank account setup');
 	        fieldsOfObject.put('Subject','IEP Bank account setup - ' + acc.ANG_Accreditation_Model__c + ' - ' + acc.Name);
 	        fieldsOfObject.put('Type_of_customer__c','IATA Travel Agent');
+	        fieldsOfObject.put('Visible_on_ISS_Portal__c',true);
 	        
 	       	Case cse = ANG_EntityCreator.createCase(AMS_Utils.RECTYPE_OSCARCOMM, acc.Id, fieldsOfObject);
 

@@ -3,6 +3,13 @@
     <doesSendEmailToMembers>false</doesSendEmailToMembers>
     <email>boonchimv@iata.org</email>
     <name>Invoicing Management - Americas</name>
+    <queueMembers>
+        <publicGroups>
+            <publicGroup>IDFSAllusersexcludingIWandACCA</publicGroup>
+            <publicGroup>IDFSAmericasallusers</publicGroup>
+            <publicGroup>IDFSAmericasOperations</publicGroup>
+        </publicGroups>
+    </queueMembers>
     <queueSobject>
         <sobjectType>Case</sobjectType>
     </queueSobject>

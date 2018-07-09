@@ -10,6 +10,6 @@
         <default>false</default>
         <label>Closed Loop</label>
     </customValue>
-    <masterLabel>Provider Type</masterLabel> 
+    <masterLabel>Provider Type</masterLabel>
     <sorted>false</sorted>
 </GlobalValueSet>
