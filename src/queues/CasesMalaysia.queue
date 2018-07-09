@@ -3,6 +3,19 @@
     <doesSendEmailToMembers>false</doesSendEmailToMembers>
     <email>noreply@iata.org</email>
     <name>Cases - Malaysia</name>
+    <queueMembers>
+        <publicGroups>
+            <publicGroup>IATAMalaysia</publicGroup>
+            <publicGroup>IDFSAllusersexcludingIWandACCA</publicGroup>
+            <publicGroup>IDFSAsiaPacificallusers</publicGroup>
+        </publicGroups>
+        <roleAndSubordinatesInternal>
+            <roleAndSubordinateInternal>APCustomerServiceStaffI</roleAndSubordinateInternal>
+        </roleAndSubordinatesInternal>
+        <users>
+            <user>chopras@iata.org</user>
+        </users>
+    </queueMembers>
     <queueSobject>
         <sobjectType>Case</sobjectType>
     </queueSobject>
