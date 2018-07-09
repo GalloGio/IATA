@@ -448,6 +448,8 @@ Values must be Separated by &quot;;&quot;</inlineHelpText>
         <columns>Field6__c</columns>
         <columns>Bulletin_Memo_Text__c</columns>
         <columns>Clear_Irregularities__c</columns>
+        <columns>Reason_Code__c</columns>
+        <columns>Reason_Code_Description__c</columns>
         <filterScope>Everything</filterScope>
         <filters>
             <field>Change_Code__c</field>
