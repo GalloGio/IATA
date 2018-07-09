@@ -3,6 +3,11 @@
     <doesSendEmailToMembers>false</doesSendEmailToMembers>
     <email>noreply@iata.org</email>
     <name>Cases - GDC MAD Commissioner</name>
+    <queueMembers>
+        <publicGroups>
+            <publicGroup>Hub_Madrid_ACC_RPM</publicGroup>
+        </publicGroups>
+    </queueMembers>
     <queueSobject>
         <sobjectType>Case</sobjectType>
     </queueSobject>
