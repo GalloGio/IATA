@@ -3,6 +3,18 @@
     <doesSendEmailToMembers>false</doesSendEmailToMembers>
     <email>weblinkcs@iata.org</email>
     <name>Weblink - head office</name>
+    <queueMembers>
+        <publicGroups>
+            <publicGroup>MACSWeblinkDashboards</publicGroup>
+        </publicGroups>
+        <roleAndSubordinatesInternal>
+            <roleAndSubordinateInternal>DistributionAirlineManagementHOI</roleAndSubordinateInternal>
+            <roleAndSubordinateInternal>DistributionManagementHOI</roleAndSubordinateInternal>
+        </roleAndSubordinatesInternal>
+        <users>
+            <user>khaderb@iata.org</user>
+        </users>
+    </queueMembers>
     <queueSobject>
         <sobjectType>Case</sobjectType>
     </queueSobject>

@@ -3,6 +3,16 @@
     <doesSendEmailToMembers>false</doesSendEmailToMembers>
     <email>danielle.sabin@ipayables.com</email>
     <name>iPayables Escalations (IATA IW Cases)</name>
+    <queueMembers>
+        <publicGroups>
+            <publicGroup>IATAIWProjectTeam</publicGroup>
+        </publicGroups>
+        <roles>
+            <role>IATAInvoiceWorksA</role>
+            <role>IATAIWCallCentreA</role>
+            <role>iPayablesA</role>
+        </roles>
+    </queueMembers>
     <queueSobject>
         <sobjectType>Case</sobjectType>
     </queueSobject>

@@ -3,6 +3,16 @@
     <doesSendEmailToMembers>false</doesSendEmailToMembers>
     <email>iataprojectteam@b-process.com</email>
     <name>BProcess UAT - PM team</name>
+    <queueMembers>
+        <publicGroups>
+            <publicGroup>IATAIWProjectTeam</publicGroup>
+        </publicGroups>
+        <roles>
+            <role>BProcessA</role>
+            <role>IATAInvoiceWorksA</role>
+            <role>IATAIWCallCentreA</role>
+        </roles>
+    </queueMembers>
     <queueSobject>
         <sobjectType>Case</sobjectType>
     </queueSobject>
