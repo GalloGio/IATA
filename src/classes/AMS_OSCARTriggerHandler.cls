@@ -466,8 +466,8 @@ public class AMS_OSCARTriggerHandler {
             }
 
             if(!agenciesAuth.isEmpty()) {
-            	insert agenciesAuth;
-        	}
+                insert agenciesAuth;
+            }
         }
         /*** AMSU-31 Start ***/
 
@@ -3317,7 +3317,7 @@ public class AMS_OSCARTriggerHandler {
                         }
                     }
 
-					List<Account> accountsToCheck = [SELECT Id, Status__c, Reason__c FROM Account WHERE Id IN :allHierarchyAccountIds]; 
+                    List<Account> accountsToCheck = [SELECT Id, Status__c, Reason__c FROM Account WHERE Id IN :allHierarchyAccountIds]; 
 
                     //Remove TERMINATED and NOT ACCREDITED Accounts from list
                     for(Account acc: accountsToCheck){
@@ -3401,10 +3401,10 @@ public class AMS_OSCARTriggerHandler {
                         //if nothing from the cycle above we still need to input at least the existing accounts retrieve before
                         if(isEmptyAccountHierarchyRelationshipsMap(accountHierarchyRelationships)){// it means that the account does not have an hierarchy yet generated.
                             for(Account acc: accountsToCheck){
-								if(acc.Id != updatedOscar.Account__c && acc.Status__c !=null && acc.Status__c != AMS_Utils.ACC_S0_TERMINATED && acc.Status__c != AMS_Utils.ACC_S1_NOTACCREDITED ){
+                                if(acc.Id != updatedOscar.Account__c && acc.Status__c !=null && acc.Status__c != AMS_Utils.ACC_S0_TERMINATED && acc.Status__c != AMS_Utils.ACC_S1_NOTACCREDITED ){
                                     //accounts.put(acc.Id, acc);
                                     accounts.put(acc.Id, new Account(id = acc.Id, Status__c = acc.Status__c, Reason__c = acc.Reason__c));
-								}else if(acc.Id == updatedOscar.Account__c && acc.Status__c !=null){
+                                }else if(acc.Id == updatedOscar.Account__c && acc.Status__c !=null){
                                     //accounts.put(acc.Id, acc);
                                     accounts.put(acc.Id, new Account(id = acc.Id, Status__c = acc.Status__c, Reason__c = acc.Reason__c));
                                 }
@@ -3481,7 +3481,7 @@ public class AMS_OSCARTriggerHandler {
                             AMS_ChangeCodes__c cad = AMS_ChangeCodes__c.getInstance('CADM');
                             changeCode.name = cad.Change_Code__c;
                             changeCode.memoText = cad.Bulletin_Memo_Text__c;
-							changeCode.publishedOnEBulletin = false;
+                            changeCode.publishedOnEBulletin = false;
 
                             changeCodeHO.name = cad.Change_Code__c;
                             changeCodeHO.memoText = cad.Bulletin_Memo_Text__c;
@@ -3973,7 +3973,11 @@ public class AMS_OSCARTriggerHandler {
                 changeCode.reasonCode = accountsChangeCode.get(acct.Id).Reason_Code__c;
                 changeCode.reasonDesc  = accountsChangeCode.get(acct.Id).Reason_Description__c;
 
-                AMS_ChangeCodesHelper.createAAChangeCodes(new List<AMS_OSCAR_JSON.ChangeCode> {changeCode}, new List<AMS_OSCAR__c> {accountsOscars.get(acct.Id)}, new List<Account> {acct}, true);
+               // AMS_ChangeCodesHelper.ObjectChange objectChange = new AMS_ChangeCodesHelper.ObjectChange('Account','ANG_FA_Opt_out__c', String.valueOf(!acct.ANG_FA_Opt_out__c), String.valueOf(acct.ANG_FA_Opt_out__c));
+                AMS_ChangeCodesHelper.ObjectChange objectChange = new AMS_ChangeCodesHelper.ObjectChange('Account','ANG_FA_Opt_out__c', String.valueOf(accountsFs.get(acct.Id).ANG_FA_Opt_out__c), String.valueOf(acct.ANG_FA_Opt_out__c));
+                AMS_ChangeCodesHelper.ObjectChangesStruct objectChangeStruct = new AMS_ChangeCodesHelper.ObjectChangesStruct(new List<AMS_ChangeCodesHelper.ObjectChange>{objectChange});
+
+                AMS_ChangeCodesHelper.createAAChangeCodes(new List<AMS_ChangeCodesHelper.ObjectChangesStruct> {objectChangeStruct}, new List<AMS_OSCAR_JSON.ChangeCode> {changeCode}, new List<AMS_OSCAR__c> {accountsOscars.get(acct.Id)}, new List<Account> {acct}, true);
             }
 
         }
