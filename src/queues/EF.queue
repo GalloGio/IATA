@@ -3,6 +3,15 @@
     <doesSendEmailToMembers>false</doesSendEmailToMembers>
     <email>noreply@iata.org</email>
     <name>E&amp;F</name>
+    <queueMembers>
+        <publicGroups>
+            <publicGroup>EFServices</publicGroup>
+        </publicGroups>
+        <roles>
+            <role>E_F</role>
+            <role>IDFSEFServicesA</role>
+        </roles>
+    </queueMembers>
     <queueSobject>
         <sobjectType>Case</sobjectType>
     </queueSobject>

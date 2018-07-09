@@ -937,6 +937,11 @@
         <label>E-mail to Case - QMS - Zimbabwe</label>
     </standardValue>
     <standardValue>
+        <fullName>E-mail to Case - Reporting and Billing</fullName>
+        <default>false</default>
+        <label>E-mail to Case - Reporting and Billing</label>
+    </standardValue>
+    <standardValue>
         <fullName>E-mail to Case - Romania &amp; Moldova</fullName>
         <default>false</default>
         <label>E-mail to Case - Romania &amp; Moldova</label>
@@ -1177,6 +1182,11 @@
         <label>Letter</label>
     </standardValue>
     <standardValue>
+        <fullName>Massive FOP Creation</fullName>
+        <default>false</default>
+        <label>Massive FOP Creation</label>
+    </standardValue>
+    <standardValue>
         <fullName>Monthly Report</fullName>
         <default>false</default>
         <label>Monthly Report</label>
@@ -1230,10 +1240,5 @@
         <fullName>Web SAF</fullName>
         <default>false</default>
         <label>Web SAF</label>
-    </standardValue>
-    <standardValue>
-        <fullName>Massive FOP Creation</fullName>
-        <default>false</default>
-        <label>Massive FOP Creation</label>
     </standardValue>
 </StandardValueSet>
