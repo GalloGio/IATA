@@ -2697,6 +2697,11 @@
             <isRequired>false</isRequired>
         </displayedFields>
         <displayedFields>
+            <field>ANG_PCI_compliance_expiry_date__c</field>
+            <isFieldManaged>false</isFieldManaged>
+            <isRequired>false</isRequired>
+        </displayedFields>
+        <displayedFields>
             <field>Remittance_frequency__c</field>
             <isFieldManaged>false</isFieldManaged>
             <isRequired>false</isRequired>
