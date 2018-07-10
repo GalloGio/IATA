@@ -4,14 +4,13 @@ public with sharing class iecWebDownload_Ctrl_Test {
 	@isTest (SeeAllData = true)
 	static void test_iecWebDownload_Ctrl(){
 
-		User usr = [Select id, ContactId from User where Id = :UserInfo.getUserId()];
-		
+		User usr = IECTestUtil.createSampleGuestUserAndLogin(IECConstants.Account_ClientType_MemberAirline);
+
 		iecWebDownload_Ctrl iecWebDownloadNot = new iecWebDownload_Ctrl();
 		iecWebDownloadNot.pageLoad();
-
+		
 		System.runAs(usr){
-
-			Test.startTest();
+			
 			// Create Orders 
 			TestDataGenerator.generateApexSetting();
 			List<Account> accounts = TestDataGenerator.generateAccounts(1,true); // 1 Account
@@ -38,6 +37,7 @@ public with sharing class iecWebDownload_Ctrl_Test {
 
 			iecWebDownload_Ctrl.updateOrderItemDownloadNumber(orderItems[0].OrderItemNumber, 'OneTimeWebDownload/9648-53/Visio-Quote_Business_Process.pdf');
 
+
 			System.assertEquals(1*24*60*60,iecWebDownload.expires);
 			System.assertEquals(1,orders.size());
 			System.assertEquals(3,orderItems.size());
@@ -63,8 +63,6 @@ public with sharing class iecWebDownload_Ctrl_Test {
 			iecWebUpload_Ctrl.backToRegularProduct(lstProduct[0].Id);
 			lstProduct = [SELECT id,SAP_Material_Number__c,File_Path__c from Product2 where id =:lstProduct[0].Id];
 			System.assertEquals(lstProduct[0].File_Path__c,null);
-
-			Test.stopTest();
 
 		}
 

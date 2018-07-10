@@ -323,7 +323,10 @@ private class vfIECRenew_tst {
         	country.Tax_2_Label__c = 'Tax 2 ID';
 	        insert country;
 
+	        //refresh Iso Country static map 
+	        IATAIsoCountryDAO.resetMapIataIsoCountry();
 	        pgCont.oBillingAddress.ISO_Country__c = country.Id;
+
 	        
 	        pgCont.updateContactInfo();
 	        system.assert(IECTestUtil.PageContainsMessage(ApexPages.getMessages(), Label.IEC_Error_Required_field + ' Tax 1 ID'));

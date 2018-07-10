@@ -926,7 +926,7 @@ public class VfIECShoppingCart extends IECPageController {
     public void updateContactInfo() {
     	Savepoint sp = Database.setSavepoint();
         try {
-            
+
             List<String> lstErrorMessages = new List<String>();
             
             // validate mandatory fields

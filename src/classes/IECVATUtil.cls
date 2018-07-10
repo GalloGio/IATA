@@ -12,16 +12,17 @@ public class IECVATUtil {
 		if (String.isBlank(CountryName)) return null;
 		
 		List<IATA_ISO_Country__c> lstCountry = IATAIsoCountryDAO.getIsoCountryByCountriesName(new Set<String>{CountryName});
-		
+
 		return (lstCountry != null && lstCountry.isEmpty()) ? null : new VATConfiguration(lstCountry.get(0));
 	}
 	
 	// Query the VAT configuration for the country based on the country ID
 	public static VATConfiguration GetVATConfiguration(Id idCountry) {
-		if (idCountry == null) return null;
-		
+
+ 		if (idCountry == null) return null;
+
 		List<IATA_ISO_Country__c> lstCountry = IATAIsoCountryDAO.getIsoCountriesByIds(new Set<ID>{idCountry});
-		
+
 		return (lstCountry.isEmpty()) ? null : new VATConfiguration(lstCountry.get(0));
 	}
 	
