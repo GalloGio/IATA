@@ -46063,6 +46063,16 @@ $Profile.Name = &apos;System Administrator - automated processes&apos;
 )</errorConditionFormula>
         <errorMessage>In order to close the agency, make sure all previous steps have been completed</errorMessage>
     </validationRules>
+    <validationRules>
+        <fullName>Location_Type_verification</fullName>
+        <active>true</active>
+        <errorConditionFormula>AND(
+OR( ISPICKVAL(Account__r.Location_Type__c,&quot;HE&quot;),ISPICKVAL(Account__r.Location_Type__c,&quot;AE&quot;)),
+NOT( OR( ISPICKVAL(Account__r.Location_Class__c,&quot;P&quot;),ISPICKVAL(Account__r.Location_Class__c,&quot;D&quot;))
+)
+)</errorConditionFormula>
+        <errorMessage>Cannot set the account as HE or AE if its location class is not either &apos;P&apos; or &apos;D&apos;</errorMessage>
+    </validationRules>
     <visibility>Public</visibility>
     <webLinks>
         <fullName>ANG_Edit_the_accounts_involved</fullName>
