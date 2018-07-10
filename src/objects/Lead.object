@@ -5847,28 +5847,6 @@ albam@iata.org</description>
         </sharedTo>
     </listViews>
     <listViews>
-        <fullName>Created_Today1</fullName>
-        <columns>FULL_NAME</columns>
-        <columns>LEAD.COMPANY</columns>
-        <columns>LEAD.EMAIL</columns>
-        <columns>LEAD.STATUS</columns>
-        <columns>LEAD.CREATED_DATE</columns>
-        <columns>CORE.USERS.ALIAS</columns>
-        <columns>LEAD.UNREAD</columns>
-        <columns>CREATEDBY_USER.ALIAS</columns>
-        <filterScope>Everything</filterScope>
-        <filters>
-            <field>LEAD.CREATED_DATE</field>
-            <operation>equals</operation>
-            <value>TODAY</value>
-        </filters>
-        <label>Created Today</label>
-        <language>en_US</language>
-        <sharedTo>
-            <group>MACSAllIATACommercial</group>
-        </sharedTo>
-    </listViews>
-    <listViews>
         <fullName>DirectSalesAll</fullName>
         <filterScope>Queue</filterScope>
         <label>Direct Sales - All</label>
