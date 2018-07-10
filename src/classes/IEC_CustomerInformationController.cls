@@ -9,7 +9,12 @@ global without sharing class IEC_CustomerInformationController extends IEC_PageC
 	//TC map to know which countries don't have zip code
 	public Map<String, Boolean> zipCodeApplicableMap {
 		get{
-			return zipCodeApplicableMap != null ? zipCodeApplicableMap : new Map<String, Boolean>();
+            if(zipCodeApplicableMap == null){
+                Map<String, Object> countries = ISO_Country_State_Helper.getCountriesOptionsMap();
+                zipCodeApplicableMap = (Map<String, Boolean>) countries.get('zipCodeApplicable');
+            }
+
+			return zipCodeApplicableMap;
 		}
 		set;
 	}
