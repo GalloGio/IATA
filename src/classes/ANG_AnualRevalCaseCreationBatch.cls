@@ -50,8 +50,13 @@ global class ANG_AnualRevalCaseCreationBatch implements Database.Batchable<sObje
 	
 			sp = Database.setSavePoint();
 
-            String queryContacts = 'SELECT ' +String.join(fieldListContact, ', ') + ' FROM Contact where accountId = \''+acct.Id+'\'';
-        
+			String queryContacts;
+
+			if(acct.ParentId == null)
+	            queryContacts = 'SELECT ' +String.join(fieldListContact, ', ') + ' FROM Contact where accountId = \''+acct.Id+'\'';
+			else
+				queryContacts = 'SELECT ' +String.join(fieldListContact, ', ') + ' FROM Contact where accountId in (\''+acct.Id+'\',\''+acct.ParentId+'\')';
+
         	System.debug('Query is:'+queryContacts);
         
 			List<Contact> contacts = Database.query(queryContacts);

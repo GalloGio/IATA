@@ -6,6 +6,7 @@ global class ANG_MassiveFOPCaseCreationBatch implements Database.Batchable<sObje
 
 	global Set<String> resultItems;
 
+	global List<String> fieldListContact;
 
 	global ANG_MassiveFOPCaseCreationBatch(Set<Id> accountIdsIn) {
 		
@@ -19,7 +20,7 @@ global class ANG_MassiveFOPCaseCreationBatch implements Database.Batchable<sObje
 			fieldListAcct.add(field);
 		}
 
-		List<String> fieldListContact = new List<String>();
+		fieldListContact = new List<String>();
 
 		Map<String, Schema.SObjectField> schemaFieldMapContacts = Contact.sObjectType.getDescribe().fields.getMap();
 
@@ -27,7 +28,7 @@ global class ANG_MassiveFOPCaseCreationBatch implements Database.Batchable<sObje
 			fieldListContact.add(field);
 		}
 
-		this.query = 'SELECT '+ String.join(fieldListAcct, ', ') + ' , ( SELECT ' +String.join(fieldListContact, ', ') + ' FROM Contacts where Status__c  =\'Active\' ) FROM Account WHERE Id in:accountIds';
+		this.query = 'SELECT '+ String.join(fieldListAcct, ', ') + ' FROM Account WHERE Id in:accountIds';
 
 		this.accountIds = accountIdsIn;
 	}
@@ -44,12 +45,23 @@ global class ANG_MassiveFOPCaseCreationBatch implements Database.Batchable<sObje
 		Account acct = (Account) scope.get(0);
 
 		try{
-	
+
 			sp = Database.setSavePoint();
+
+			String queryContacts;
+
+			if(acct.ParentId == null)
+	            queryContacts = 'SELECT ' +String.join(fieldListContact, ', ') + ' FROM Contact where accountId = \''+acct.Id+'\'';
+			else
+				queryContacts = 'SELECT ' +String.join(fieldListContact, ', ') + ' FROM Contact where accountId in (\''+acct.Id+'\',\''+acct.ParentId+'\')';
+
+        	System.debug('Query is:'+queryContacts);
+        
+			List<Contact> contacts = Database.query(queryContacts);
 
 			System.debug('Creating Oscar for Manage Forms of Payment for account ' + acct.Id + '('+acct.IATACode__c+')');
 
-			Id caseIdCreate = ANG_OscarProcessHelper.createPCIComplianceOscars(new List<Account>{acct}, new Map<Id,List<Contact>>{acct.Id => acct.contacts}, new Set<Id>{acct.Id}).get(0).Id;
+			Id caseIdCreate = ANG_OscarProcessHelper.createPCIComplianceOscars(new List<Account>{acct}, new Map<Id,List<Contact>>{acct.Id => contacts}, new Set<Id>{acct.Id}).get(0).Id;
 
 			System.debug('Case created with Id : ' + caseIdCreate );
 			
