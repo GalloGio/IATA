@@ -1,0 +1,56 @@
+<apex:page controller="ANG_Apply_RHC_Equal_FS_Controller" showHeader="true" docType="html-5.0">
+	<script>
+
+	</script>
+
+	<apex:sectionHeader title="Apply RHC equal FS"/>
+	<apex:form>
+
+		<apex:actionFunction name="changeInput" reRender="actionModeBlock"/>
+		<apex:actionFunction name="enableSearchButton" reRender="searchButton"/>
+
+		<apex:pageBlock mode="edit">
+			<apex:pageBlockSection columns="1" title="Action and Mode" id="actionModeBlock">
+
+				<apex:pageblockSectionItem id="actionSelection">
+				    <apex:outputLabel value="Action"/>
+				    <apex:outputPanel>
+				        <apex:selectList size="1" value="{!actionValue}" onchange="enableSearchButton();">
+				            <apex:selectoptions value="{!actions}"/>
+				        </apex:selectList>
+				    </apex:outputPanel>
+				</apex:pageblockSectionItem>
+
+				<apex:pageblockSectionItem id="modeSelection">
+				    <apex:outputLabel value="Mode"/>
+				    <apex:outputPanel>
+				        <apex:selectList size="1" value="{!modeValue}" onchange="changeInput(); enableSearchButton();">
+				            <apex:selectoptions value="{!modes}"/>
+				        </apex:selectList>
+				    </apex:outputPanel>
+				</apex:pageblockSectionItem>
+
+				<apex:pageblockSectionItem id="bspSelection" rendered="{!modeValue == 'BSP'}">
+				    <apex:outputLabel value="Select a BSP Code"/>
+				    <apex:outputPanel>
+				        <apex:selectList size="1" value="{!bspValue}" onchange="enableSearchButton();">
+				            <apex:selectoptions value="{!bsps}"/>
+				        </apex:selectList>
+				    </apex:outputPanel>
+				</apex:pageblockSectionItem>
+
+				<apex:pageblockSectionItem id="iataCodeText" rendered="{!modeValue == 'IATA_Code'}">
+				    <apex:outputLabel value="Please insert the IATA Code"/>
+				    <apex:outputPanel>
+				        <apex:inputText value="{!iataCode}" id="iataCodeInput" onkeyup="enableSearchButton();"/>
+				    </apex:outputPanel>
+				</apex:pageblockSectionItem>
+				
+			</apex:pageBlockSection>
+
+			<apex:pageBlockButtons id="searchButtonBlock" location="bottom">
+	    		<apex:commandButton value="Search Agencies" id="searchButton" disabled="{!OR(OR(actionValue == '', modeValue == ''), AND(modeValue == 'BSP', bspValue == ''), AND(modeValue == 'IATA_Code', iataCode == null))}"/>
+			</apex:pageBlockButtons>
+		</apex:pageBlock>
+	</apex:form>
+</apex:page>
