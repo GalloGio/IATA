@@ -74,7 +74,9 @@ public with sharing class AMS_VoucherManagerController {
 
                 Set<Id> setCountries = new Set<Id>();
 
-                List<IATA_ISO_Country__c> contrTmpLst = IATAIsoCountryDAO.getIsoCountriesByIds(setCountries);
+                Set<String> countryList = new  Set<String>();
+                countryList.addAll(countriesLst);
+                List<IATA_ISO_Country__c> contrTmpLst = IATAIsoCountryDAO.getIsoCountriesByIds(countryList);
 
                 for(IATA_ISO_Country__c country: contrTmpLst){
                         setCountries.add(country.Id);
