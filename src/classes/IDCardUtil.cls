@@ -1346,12 +1346,12 @@ public static String generateVER(Account theAccount) {
         if (idCardApp.IDCard_Expedite_Delivery__c)
             newCase.Priority = 'Low';
 
-        IATA_ISO_Country__c isoCountry = IATAIsoCountryDAO.getIsoCountriesByAIMSAreaName(theAccount.BillingCountry)[0];
+        List<IATA_ISO_Country__c> isoCountry = IATAIsoCountryDAO.getIsoCountriesByAIMSAreaName(theAccount.BillingCountry);
 
-        if (isoCountry.Case_BSP_Country__c != null && isoCountry.Case_BSP_Country__c != '')
-            newCase.BSPCountry__c = isoCountry.Case_BSP_Country__c;
-        if (isoCountry.Region__c != null && isoCountry.Region__c != '')
-            newCase.Region__c = isoCountry.Region__c;
+        if (isoCountry[0].Case_BSP_Country__c != null && isoCountry[0].Case_BSP_Country__c != '')
+            newCase.BSPCountry__c = isoCountry[0].Case_BSP_Country__c;
+        if (isoCountry[0].Region__c != null && isoCountry[0].Region__c != '')
+            newCase.Region__c = isoCountry[0].Region__c;
 
         // set contact
         if (idCardApp.VER_Number__c != null && idCardApp.VER_Number__c != '') {
@@ -1388,12 +1388,12 @@ public static String generateVER(Account theAccount) {
         if (idCardApp.IDCard_Expedite_Delivery__c)
             newCase.Priority = 'Low';
 
-        IATA_ISO_Country__c isoCountry = IATAIsoCountryDAO.getIsoCountriesByAIMSAreaName(theAccount.BillingCountry)[0];
+        List<IATA_ISO_Country__c> isoCountry = IATAIsoCountryDAO.getIsoCountriesByAIMSAreaName(theAccount.BillingCountry);
 
-        if (isoCountry.Case_BSP_Country__c != null && isoCountry.Case_BSP_Country__c != '')
-            newCase.BSPCountry__c = isoCountry.Case_BSP_Country__c;
-        if (isoCountry.Region__c != null && isoCountry.Region__c != '')
-            newCase.Region__c = isoCountry.Region__c;
+        if (isoCountry[0].Case_BSP_Country__c != null && isoCountry[0].Case_BSP_Country__c != '')
+            newCase.BSPCountry__c = isoCountry[0].Case_BSP_Country__c;
+        if (isoCountry[0].Region__c != null && isoCountry[0].Region__c != '')
+            newCase.Region__c = isoCountry[0].Region__c;
 
         // set contact
         if (idCardApp.VER_Number__c != null && idCardApp.VER_Number__c != '') {
@@ -1444,12 +1444,12 @@ public static String generateVER(Account theAccount) {
         //      newCase.ID_Card_Status__c = CASECARDSTATUS_PENDING_PAYMENT;
 
 
-        IATA_ISO_Country__c isoCountry = IATAIsoCountryDAO.getIsoCountriesByAIMSAreaName(theAccount.BillingCountry)[0];
+       List<IATA_ISO_Country__c> isoCountry = IATAIsoCountryDAO.getIsoCountriesByAIMSAreaName(theAccount.BillingCountry);
 
-        if (isoCountry.Case_BSP_Country__c != null && isoCountry.Case_BSP_Country__c != '')
-            newCase.BSPCountry__c = isoCountry.Case_BSP_Country__c;
-        if (isoCountry.Region__c != null && isoCountry.Region__c != '')
-            newCase.Region__c = isoCountry.Region__c;
+        if (isoCountry[0].Case_BSP_Country__c != null && isoCountry[0].Case_BSP_Country__c != '')
+            newCase.BSPCountry__c = isoCountry[0].Case_BSP_Country__c;
+        if (isoCountry[0].Region__c != null && isoCountry[0].Region__c != '')
+            newCase.Region__c = isoCountry[0].Region__c;
 
 
         // set contact
