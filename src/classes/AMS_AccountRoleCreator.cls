@@ -391,15 +391,6 @@ public with sharing class AMS_AccountRoleCreator
 
             oldAndNewOwnersMap.put(accreditationId,getNewAndOldOwnersForChangeCodeCreation(allAccountRoles,accreditationContactsToProcess,accounts));
 
-            //RB: Bypass hierarchy verification when hierarchy is too big with many owners
-            Apex_Setting__c idAccountOwner = Apex_Setting__c.getInstance('Stop Owner Alignment');
-            system.debug('Stop Owner Verification: '+ idAccountOwner.Text_1__c);
-            system.debug('Stop Owner Verification user ID: '+ UserInfo.getUserId());    
-
-            if(idAccountOwner.Text_1__c == String.valueOf(UserInfo.getUserId())) {
-                return oldAndNewOwnersMap;
-            }
-
             // just to further ahead in the process have a way to link Accreditation Contacts and AMS Account Roles
             Map<Id,AMS_Account_Role__c> rolesMap = new Map<Id,AMS_Account_Role__c>();
 
