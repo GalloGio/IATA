@@ -67,6 +67,7 @@
     @isTest static void updateOSCARTestOKFirstStep() {
 
         AMS_OSCAR_TestDataFactory.createOSCARwithInspectionsTestData();
+		loadCredentials();
 
         Test.startTest();
         Account a = [SELECT id from Account where Name = 'Test1 Agency' LIMIT 1];
@@ -295,6 +296,7 @@
     @isTest static void updateOSCARTestNOKSecondStep() {
 
         AMS_OSCAR_TestDataFactory.createOSCARwithInspectionsTestData();
+		loadCredentials();
 
         Test.startTest();
         
@@ -740,6 +742,7 @@
     static testMethod void triggerHandler() {
 
         AMS_OSCAR_TestDataFactory.createOSCARwithInspectionsTestData();
+		loadCredentials();
 
         insert new AMS_AgencyChangesConfig__c(Name = 'Test Combination', TC_Name__c = true);
 
@@ -953,6 +956,7 @@
         
 
         AMS_OSCAR_TestDataFactory.createCargoAgencyOSCARtestData();
+		loadCredentials();
          
         Account a = [SELECT id from Account where Name = 'Test Cargo HO' LIMIT 1];
 
@@ -976,6 +980,7 @@
     @isTest static void testMCLocationType() {
 
         AMS_OSCAR_TestDataFactory.createOSCARwithInspectionsTestData();
+		loadCredentials();
 
         Test.startTest();
 
@@ -1044,6 +1049,7 @@
     @isTest static void testMCOwnershipToIATA() {
 
         AMS_OSCAR_TestDataFactory.createOSCARwithInspectionsTestData();
+		loadCredentials();
 
         Test.startTest();
 
@@ -1105,6 +1111,7 @@
     @isTest static void testMCOwnershipToNonIATA() {
 
         AMS_OSCAR_TestDataFactory.createOSCARwithInspectionsTestData();
+		loadCredentials();
 
         Test.startTest();
 
@@ -1165,6 +1172,7 @@
     @isTest static void testMCChangeOfLocation() {
 
         AMS_OSCAR_TestDataFactory.createOSCARwithInspectionsTestData();
+		loadCredentials();
 
         Test.startTest();
 
