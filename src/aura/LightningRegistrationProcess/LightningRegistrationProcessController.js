@@ -499,7 +499,8 @@
         //alert("Company type: " +companyType);
 
         var action = component.get("c.createContactAndAccount");
-        action.setParams({ con: contact, acc: account, customerType: companyType });
+        var servName = component.get("v.serviceName");
+        action.setParams({ con: contact, acc: account, customerType: companyType, servName: servName });
         action.setCallback(this, function(a) {
             //alert("Saving");
             var state = a.getState();
@@ -558,12 +559,13 @@
         }
         var account = results[index];
         var companyType = component.get("v.AccountT");
+        var servName = component.get("v.serviceName");
         var action = component.get("c.createContactAndAccount");
         console.log("Customer type: " + companyType);
         console.log("contact: " + contact);
         console.log("account: " + account);
 
-        action.setParams({ con: contact, acc: account, customerType: companyType });
+        action.setParams({ con: contact, acc: account, customerType: companyType, servName: servName });
         action.setCallback(this, function(a) {
             console.log("Execute");
             var state = a.getState();

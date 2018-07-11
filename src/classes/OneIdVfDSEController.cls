@@ -859,7 +859,7 @@ public without sharing class OneIdVfDSEController {
 
         Savepoint sp = Database.setSavepoint();
         try {
-            String returnedString = LightningRegistrationProcess.createContactAndAccount(con,acc,selectedCustomerType);
+            String returnedString = LightningRegistrationProcess.createContactAndAccount(con,acc,selectedCustomerType,serviceName);
             if (returnedString.contains('line:')){
                 Database.rollback(sp);
 
