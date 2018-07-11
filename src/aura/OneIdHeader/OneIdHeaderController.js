@@ -22,7 +22,6 @@
         component.set("v.langPickerOptions", langPickerOpts);
 
         var params = new URL(component.get("v.url")).search.substring(1);
-        console.error(params);
         if(~params.indexOf('language')) {
             var paramList = params.split('&');
             for(var p in paramList){

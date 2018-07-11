@@ -20,7 +20,7 @@
     <aura:registerEvent name="checkStep2Completion" type="c:OneId_RequestCompletionCheck_EVT"/>
     
     <aura:attribute name="activeSection" type="Integer" default="1"/>
-    <aura:attribute name="stepCompletion" type="boolean[]" default="[true, true, true]"/>
+    <aura:attribute name="stepCompletion" type="boolean[]" default="[false, false, false]"/>
     
     <aura:attribute name="contact" type="Contact" default="{ 'sobjectType': 'Contact' }" />
     <aura:attribute name="account" type="Account" default="{ 'sobjectType': 'Account' }" />
@@ -47,9 +47,10 @@
                                             <span class="bulletv2">1</span>
                                             
                                             <span class="category">{!$Label.c.OneId_Contact_Association_Validation}</span>
-                                        </span>
                                         
                                         <span class="{!v.activeSection==1 ? 'icon icon-navArrowLeft' : 'icon icon-navArrowDown'}" />
+
+                                        </span>
                                     </h3>
                                 </div>
                                 
@@ -69,9 +70,9 @@
                                             <span class="bulletv2">2</span>
                                             
                                             <span class="category">{!$Label.c.OneId_Contact_Creation}</span>
-                                        </span>
                                         
                                         <span class="{!v.activeSection==2 ? 'icon icon-navArrowLeft' : 'icon icon-navArrowDown'}" />
+                                        </span>
                                     </h3>
                                 </div>
                                 
@@ -90,9 +91,9 @@
                                             <span class="bulletv2">3</span>
                                             
                                             <span class="category">{!$Label.c.OneId_Account_Association}</span>
-                                        </span>
                                         
                                         <span class="{!v.activeSection==3 ? 'icon icon-navArrowLeft' : 'icon icon-navArrowDown'}" />
+                                        </span>
                                     </h3>
                                 </div>
                                 

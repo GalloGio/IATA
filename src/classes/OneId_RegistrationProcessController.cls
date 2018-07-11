@@ -336,8 +336,31 @@ public without sharing class OneId_RegistrationProcessController {
                 if(! String.isBlank(acc.IATA_ISO_Shipping_Country__c))
                     con.IATA_ISO_Shipping_Country__c = acc.IATA_ISO_Shipping_Country__c;
             }
-            checkConAvailable(con);
 
+            // TIP PORTAL ACCESS ASSIGNMENT
+            if(acc.Sector__c == TIP_Utils.ACCOUNT_SECTOR_FINANCIAL_INSTITUTION && acc.Category__c == TIP_Utils.ACCOUNT_CATEGORY_PAYMENT_PROVIDER){
+                con.Primary_Contact__c = true;
+                con.User_Portal_Status__c = 'Approved Admin';
+                
+                checkConAvailable(con);
+
+                con.account=acc;
+                //TIP-16 - Assign TIP Portal Service
+                Id appListId;
+                ISSP_Portal_Service_Ids__c serviceIdInstance = ISSP_Portal_Service_Ids__c.getInstance();
+                if (serviceIdInstance != null && !String.isBlank(serviceIdInstance.TIP_Portal_Service_Id__c)){
+                        appListId = serviceIdInstance.TIP_Portal_Service_Id__c;
+
+                    Portal_Application_Right__c newRight = new Portal_Application_Right__c();
+                    newRight.Contact__c = con.Id;
+                    newRight.Right__c = 'Access Granted';
+                    newRight.Portal_Application__c = appListId;
+                    insert newRight;
+               }
+            }else{
+                checkConAvailable(con);
+            }
+            
 
             String thisNickname;
             if (String.isNotBlank(con.lastName) && con.lastName.length() > 3)
