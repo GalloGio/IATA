@@ -202,11 +202,8 @@ global without sharing class ISSP_OperationalCalendarController {
         }
         String description = '';
         for(Schema.FieldSetMember f : fieldset.getFields()) {
-            //String label = MAP_CALENDAR_FIELDS.get(fieldName).getDescribe().getLabel();
             String fieldName = f.getFieldPath();
             String fieldLabel = f.getLabel();
-            if (fieldName=='First_Day__c') fieldLabel = System.Label.ISSP_OperationalCalendar_BillingFirstDay;
-            if (fieldName=='Last_Day__c') fieldLabel = System.Label.ISSP_OperationalCalendar_BillingLastDay;
             String fieldValue = getFieldValue(operation, f);
             description+= '<strong>' + fieldLabel + '</strong> ' + fieldValue + '</br>';
         }
@@ -418,23 +415,39 @@ global without sharing class ISSP_OperationalCalendarController {
         }
     }
     
+    public class TableDef {
+        public list<HeaderDef> headers;
+        public list<list<String>> data;
+    }
+    public class HeaderDef {
+        public String sTitle;
+        public String sType;
+        public Boolean bVisible;
+        public HeaderDef( String sTitle, String sType, Boolean bVisible) {
+            this.sTitle = sTitle;
+            this.sType = sType;
+            this.bVisible  = bVisible ;
+        }
+    }
+    
     /**
         Creates a JSON string having full data to populate the table
         first line is the header, and subsequent the data
     **/
     private static String serializeOperations(Boolean isAirline, String operationType, list<Operational_Calendar__c> listOperations) {
         Schema.FieldSet fieldset = getDescriptionFieldSet(isAirline, operationType);
-        list<list<String>> listResults = new list<list<String>>();
+        TableDef table = new TableDef();
         //headers
-        list<String> listHeaders = new list<String>();
+        table.headers = new list<HeaderDef>();
         // first 2 headers are empty for the extra colums for calculations
-        listHeaders.add('');
-        listHeaders.add('');
+        table.headers.add(new HeaderDef('','string',false));
+        table.headers.add(new HeaderDef('','string',false));
         for(Schema.FieldSetMember f : fieldset.getFields()) {
-            listHeaders.add(f.getLabel());
+            String stype = String.ValueOf(f.getType()).toLowerCase();
+            table.headers.add(new HeaderDef(f.getLabel(),stype,true));
         }
-        listResults.add(listHeaders);
         //data
+        table.data = new list<list<String>>();
         Integer numOfNonPastRow = 0;
         for (Operational_Calendar__c operation: listOperations) {
             list<String> listLine = new list<String>();
@@ -451,11 +464,11 @@ global without sharing class ISSP_OperationalCalendarController {
                 String fieldValue = getFieldValue(operation, f);
                 listLine.add(fieldValue);
             }
-            listResults.add(listLine);
+            table.data.add(listLine);
         }
-        return JSON.serialize(listResults,true);
+        return JSON.serialize(table,true);
     }
-
+    
     private class EventWrapper {
         public Integer id;
         public String title;
@@ -487,25 +500,10 @@ global without sharing class ISSP_OperationalCalendarController {
     public static String nvl(String input) {
         return input==null? '': input;
     }
-    public static String toString(Object input) {
-        return input==null? '': String.ValueOf(input);
-    }
-    public static String toString(Date input) {
-        return input==null? '': datetime.newInstance(input, Time.newInstance(12,0,0,0)).format('dd MMM YYYY');
-    }
-    public static String toString(DateTime input) {
-        return input==null? '': input.format('dd MMM YYYY');
-    }
     
     public static String getFieldValue(Operational_Calendar__c obj, Schema.FieldSetMember f) {
         try {
-            if (f.getType()==Schema.DisplayType.Date) {
-                return toString((Date)obj.get(f.getFieldPath()));
-            }
-            if (f.getType()==Schema.DisplayType.DateTime) {
-                return toString((DateTime)obj.get(f.getFieldPath()));
-            }
-            return toString(obj.get(f.getFieldPath()));
+            return String.ValueOf((obj.get(f.getFieldPath())));
             
         } catch (Exception e) {
             System.debug('**ERROR in getFieldValue ' + e.getMessage());

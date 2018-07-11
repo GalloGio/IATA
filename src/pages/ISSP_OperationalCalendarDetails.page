@@ -19,11 +19,12 @@
 <script src="{!URLFOR($Resource.ISSP_OperationalCalendar, '/js/buttons.colVis.min.js')}"></script>
 <script src="{!URLFOR($Resource.ISSP_OperationalCalendar, '/js/iata_logo.js')}"></script>
 
+<script src="//cdnjs.cloudflare.com/ajax/libs/moment.js/2.18.1/moment.min.js"></script>
+
 <link href="{!URLFOR($Resource.ISSP_OperationalCalendar, '/css/dataTables.bootstrap.min.css')}" rel="stylesheet"/>
 <link href="{!URLFOR($Resource.ISSP_OperationalCalendar, '/css/buttons.bootstrap.min.css')}" rel="stylesheet"/>
 <link href="{!URLFOR($Resource.ISSP_OperationalCalendar, '/css/details.min.css')}" rel="stylesheet"/>
 <link href="//fonts.googleapis.com/css?family=Roboto:100,400,500" rel="stylesheet"/>
-
 
 <script>
     var LIST_FILTERS = {!listFiltersJson};
@@ -55,7 +56,7 @@
             $("#frequencyFilter").prop('disabled', isCASS);
             updatePicklistsFromType();
             refreshDetails();
-            addPDFButton(isCASS);
+            addExportButtons();
         });
         $("#frequencyFilter").change(function() {
             updatePicklistsFromFrequency();
@@ -84,11 +85,6 @@
             refreshDetails();
         });
         $(".btn-default").toggleClass('btn-default btn-primary');
-        $(".buttons-csv").prepend( "<span class='glyphicon glyphicon-th' style='padding-right:2px;'></span>").prop("disabled","true");
-        $(".buttons-pdf").prop("disabled","true");
-        $(".buttons-csv").click(function() {
-            alert("{!$Label.ISSP_OperationalCalendar_Export_Disclaimer}");
-        });
     });
     
     function initFilters(){
@@ -133,50 +129,6 @@
         $("#frequencyFilter").prop("disabled",disabled);
         $("#currencyFilter").prop("disabled",disabled);
     }
-    function initTable() {
-        var table = $('.table-pagination').dataTable({
-            "dom": 'rtlp<"clear"i>',
-            "buttons": [
-                {
-                    extend: 'csvHtml5',
-                    exportOptions: {
-                        columns: ':visible'
-                    }
-                },
-                {
-                    extend: 'pdfHtml5',
-                    exportOptions: {
-                        columns: ':visible',
-                        footer: true 
-                    }
-                }
-            ],
-            "language": {
-                  "lengthMenu": "{!$Label.ISSP_Display_Records_per_page}",
-                  "zeroRecords": "{!$Label.ISSP_Nothing_found}",
-                  "info": "{!$Label.ISSP_Showing_total_records}",
-                  "infoEmpty": "{!$Label.ISSP_No_records_available}",
-                  "infoFiltered": "{!$Label.ISSP_filtered_from_total_records}",
-                  "search": "{!$Label.ISSP_Search}",
-                  "paginate": {
-                    "next": "{!$Label.ISSP_Next}",
-                    "previous": "{!$Label.ISSP_Previous}"
-                  }
-              },
-            "paging":   true,
-            "ordering": false,
-            "bAutoWidth": false,
-            "info": true
-        });
-        
-        new $.fn.dataTable.Buttons(table, {
-            buttons: [{
-                extend: 'csvHtml5',
-                exportOptions: {columns: ':visible'},
-                title: function () { return getExportFileNameCSV();}
-            }]
-        }).container().appendTo($('#exportCSV'));
-    }
     
     function setCalendarTitle() {
         var countryName = $('.countryFilter :selected').text();
@@ -195,6 +147,11 @@
         }
     }
     
+    var csvButton = {
+        extend: 'csvHtml5',
+        exportOptions: {columns: ':visible'},
+        title: function () { return getExportFileNameCSV();}
+    };
     var pdfButton = {
         extend: 'pdfHtml5',
         exportOptions: {columns: ':visible',footer: true },
@@ -235,12 +192,14 @@
         return lastModifiedDate;
     }
     
-    function addPDFButton(isCASS) {
-        if (isCASS) {
-            pdfButton.orientation = "landscape";
-        } else {
-            pdfButton.orientation = "portrait";
+    function addExportButtons() {
+        var table = $('.table-pagination').DataTable();
+        var colCount = 0;
+        for (var i=0; i<table.columns().count(); i++) {
+            if(table.column(i).visible()) colCount++;
         }
+        //PDF Button
+        pdfButton.orientation = colCount>6? "landscape": "portrait";
         var isDisabled = $(".buttons-pdf").prop("disabled");
         $(".buttons-pdf").remove();
         var table =  $('.table-pagination').dataTable();
@@ -252,6 +211,16 @@
             .toggleClass('btn-default btn-primary')
             .prop("disabled", isDisabled);
         $(".buttons-pdf").attr('onclick','alert("{!$Label.ISSP_OperationalCalendar_Export_Disclaimer}")');
+        // CSV Button
+        $(".buttons-csv").remove();
+        new $.fn.dataTable.Buttons(table, {
+            buttons: [csvButton]
+        }).container().appendTo($('#exportCSV'));
+        $(".buttons-csv")
+            .prepend( "<span class='glyphicon glyphicon-th' style='padding-right:2px;'></span>")
+            .toggleClass('btn-default btn-primary')
+            .prop("disabled", isDisabled);
+        $(".buttons-csv").attr('onclick','alert("{!$Label.ISSP_OperationalCalendar_Export_Disclaimer}")');
     }
     
     function containsInArray(array, match) {
@@ -361,37 +330,54 @@
         );
     }
     
-    function createDataTable(listLines){
+    function initTable(cols, data) {
+        var table = $('.table-pagination').DataTable({
+            "language": {
+                  "lengthMenu": "{!$Label.ISSP_Display_Records_per_page}",
+                  "zeroRecords": "{!$Label.ISSP_Nothing_found}",
+                  "info": "{!$Label.ISSP_Showing_total_records}",
+                  "infoEmpty": "{!$Label.ISSP_No_records_available}",
+                  "infoFiltered": "{!$Label.ISSP_filtered_from_total_records}",
+                  "search": "{!$Label.ISSP_Search}",
+                  "paginate": {
+                    "next": "{!$Label.ISSP_Next}",
+                    "previous": "{!$Label.ISSP_Previous}"
+                  }
+              },
+              "aoColumns": cols
+        });
+        $("table.dataTable>thead>tr>th").addClass("table-header");
+        return table;
+    }
+    
+    function createDataTable(tableDef){
         // recreate the table inside div table-container
         var container = $("div#table-container");
         container.empty();
-        var table = $('<table><thead><tr class="table-header"></tr></thead><tbody></tbody></table>').attr({ class: "table table-condensed table-pagination" });
-        container.append(table);
-        var header = table.find("tr");
-        var listHeaderLabels = listLines.shift();
-        var listHiddenColumns = [];
-        // populating headers
-        for(var i=0; i<listHeaderLabels.length; i++) {
-            var label = listHeaderLabels[i];
-            if (label=="") listHiddenColumns.push(i);
-            $("<th></th>").attr({ class: "table-header" }).text(label).appendTo(header);
-        }
-        // hidding columns without label in header (used for calculations)
-        var table = $('.table-pagination').DataTable();
-        for(var i=0; i<listHiddenColumns.length; i++) {
-            table.column(listHiddenColumns[i]).visible(false);
-        }
-        // populating data lines 
-        $.each(listLines, function (i, line) {
+        container.append( $('<table></table>').attr({ class: "table table-condensed table-pagination" }));
+        var table = initTable(tableDef.headers);
+        var colTypes = [];
+        $.each(tableDef.headers, function (i, line) {
+            if (tableDef.headers[i].bVisible)
+                colTypes.push(tableDef.headers[i].sType);
+        });
+        
+        $.each(tableDef.data, function (i, line) {
             var node = table.row.add(line).node();
+            $.each(node.cells, function (j, cell) {
+                if (colTypes[j]=="date") {
+                    var jcell = $(cell);
+                    jcell.attr("data-order",jcell.text());
+                    jcell.text(moment(jcell.text()).format('D MMM YYYY'));
+                }
+            });
             $(node).addClass(line[0]); //first column contains the class name to use in this row
         });
         table.draw();
         //PDF button depends on the operation type value
-        var isCASS = $("#typeFilter").val().includes("CASS");
-        addPDFButton(isCASS);
-        $(".buttons-csv").prop("disabled",listLines.length==0);
-        $(".buttons-pdf").prop("disabled",listLines.length==0);
+        addExportButtons();
+        $(".buttons-csv").prop("disabled",tableDef.data.length==0);
+        $(".buttons-pdf").prop("disabled",tableDef.data.length==0);
     }
     
     function showError(message) {
@@ -439,10 +425,6 @@
         }
         filename += " " + $("#billingPeriodFilter option:selected").text();
         return filename;
-    }
-    
-    function sleep (time) {
-      return new Promise((resolve) => setTimeout(resolve, time));
     }
 </script>
 
