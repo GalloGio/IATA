@@ -271,8 +271,8 @@ action="{!initActions}"
                                 <input type="button " id="newProductBtn" class="btn btn-block btn_iata_primary" onclick="openProdDetailPage(null);" value="Enroll New Product"/>
                             </div>
 
-                            <apex:pageBlock>
-                                <apex:form>
+                            <apex:pageBlock >
+                                <apex:form >
                                 <apex:actionFunction action="{!NewEditProduct}" name="openProdDetailPage">
                                 </apex:actionFunction>
                                    <apex:pageBlockTable value="{!products}" var="item" styleClass="table-hover table table-condensed table-responsive">
@@ -302,7 +302,7 @@ action="{!initActions}"
 
                                         <apex:column >
                                             <apex:facet name="header">
-                                                {!$ObjectType.Partner_products__c.fields.PP_Payment_network__c.label}
+                                                {!$ObjectType.Partner_products__c.fields.PP_Payment_Network__c.label}
                                             </apex:facet>
                                             {!item.PaymentNetwork} 
                                         </apex:column>
@@ -323,7 +323,7 @@ action="{!initActions}"
 
                                         <apex:column >
                                             <apex:facet name="header">
-                                                {!$ObjectType.Partner_products__c.fields.PP_status__c.label}
+                                                {!$ObjectType.Partner_products__c.fields.PP_Status__c.label}
                                             </apex:facet>
                                             {!item.status} 
                                         </apex:column>
