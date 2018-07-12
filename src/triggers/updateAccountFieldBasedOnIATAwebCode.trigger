@@ -162,7 +162,7 @@ trigger updateAccountFieldBasedOnIATAwebCode on Case (before insert, before upda
             // continue only if there are airline accounts
             if (!mapRelatedAirlineAccountsPerId.values().isEmpty()) {
                 // Get all the ISO Countries & create a map, using the Case BSP Country as key
-                List<IATA_ISO_Country__c> lstAllISOCountries = [SELECT Id, Case_BSP_Country__c, ISO_Code__c FROM IATA_ISO_Country__c];
+                List<IATA_ISO_Country__c> lstAllISOCountries = IATAIsoCountryDAO.getIsoCountries();
 
                 Map<String, String> mapCountryCodePerBSPName = new Map<String, String>();
                 for (IATA_ISO_Country__c ic : lstAllISOCountries) {

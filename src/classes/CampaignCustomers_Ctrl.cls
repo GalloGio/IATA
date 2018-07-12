@@ -79,8 +79,11 @@ public class CampaignCustomers_Ctrl
 
         //Countries
         availableCountries = new List<SelectOption>();
-        for(IATA_ISO_Country__c c : [Select Id, Name FROM IATA_ISO_Country__c WHERE Name != 'All Countries' ORDER BY Name])
-            availableCountries.add(new SelectOption(c.Id, c.Name));
+        for(IATA_ISO_Country__c c : IATAIsoCountryDAO.sortIATAIsoCountryList(IATAIsoCountryDAO.getIsoCountries(), 'Name')){
+            if(c.Name != 'All Countries'){
+                availableCountries.add(new SelectOption(c.Id, c.Name));
+            }
+        }
     }
 
     //Method called when click on  Generate Campaign Members button 

@@ -1426,6 +1426,7 @@ public with sharing class TestDataGenerator
             listCountry.add(new IATA_ISO_Country__c(Name='Mexico', ISO_Code__c='MX'));
             listCountry.add(new IATA_ISO_Country__c(Name='United States', ISO_Code__c='US'));
             Database.upsert(listCountry, IATA_ISO_Country__c.ISO_Code__c, false);
+
         }
         catch (Exception e) {}
         

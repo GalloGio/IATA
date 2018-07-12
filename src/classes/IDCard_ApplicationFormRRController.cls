@@ -1012,7 +1012,7 @@ public with sharing class IDCard_ApplicationFormRRController extends  IDCardAbst
   private IATA_ISO_Country__c GetIATAISOCountryOfContact(String iataCode) {
     Account theAccount = IDCardUtil.GetAccountObjectFromIATACode(iataCode);
 
-    IATA_ISO_Country__c[] listCountries = [Select i.Name, i.Id, i.ISO_Code__c, i.IATA_Regional_Office__c, i.AIMS_Area_Name__c From IATA_ISO_Country__c i where i.AIMS_Area_Name__c = :theAccount.BillingCountry];
+    IATA_ISO_Country__c[] listCountries = IATAIsoCountryDAO.getIsoCountriesByAIMSAreaName(theAccount.BillingCountry);
     if (listCountries == null || listCountries.size() == 0) {
       throw new IDCardApplicationException(string.format(Label.ID_Card_Invalid_ISO_Country, new string[] { theAccount.BillingCountry }));
     }

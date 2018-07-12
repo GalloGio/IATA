@@ -8,7 +8,7 @@ public with sharing class clsMassCaseCreationController {
     List<SelectOption> options = new List<SelectOption>();
     //Fill based on regions
     //Americas       where Region__c=:'Americas'
-    for (IATA_ISO_Country__c iso : [select Id, AIMS_Area_Name__c, ISO_Code__c from IATA_ISO_Country__c  order by AIMS_Area_Name__c]) {
+    for (IATA_ISO_Country__c iso : IATAIsoCountryDAO.sortIATAIsoCountryList(IATAIsoCountryDAO.getIsoCountries(), 'AIMS_Area_Name__c')) {
       options.add(new SelectOption(iso.AIMS_Area_Name__c, iso.AIMS_Area_Name__c));
     }
 
@@ -425,7 +425,7 @@ public with sharing class clsMassCaseCreationController {
       else if (email.equals('2'))
         openCasesReportURL += 'pn5=e';  // equals
       //openCasesReportURL += 'pv6=';     // Email equals/not equals null
-      List<IATA_ISO_Country__c> couutryName = [select Name from IATA_ISO_Country__c where Id = :country limit 1];
+      List<IATA_ISO_Country__c> couutryName = IATAIsoCountryDAO.getIsoCountriesByIds(new Set<String>{country});
       
       //openCasesReportURL += '&pv6=' + EncodingUtil.urlEncode(String.escapeSingleQuotes(country).trim(), 'UTF-8'); // provide the country
       openCasesReportURL += '&pv6=' + EncodingUtil.urlEncode(String.escapeSingleQuotes(couutryName[0].Name).trim(), 'UTF-8'); // provide the country

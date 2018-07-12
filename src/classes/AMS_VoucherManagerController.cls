@@ -74,7 +74,9 @@ public with sharing class AMS_VoucherManagerController {
 
                 Set<Id> setCountries = new Set<Id>();
 
-                List<IATA_ISO_Country__c> contrTmpLst = [select Id from IATA_ISO_Country__c where id in :countriesLst];
+                Set<String> countryList = new  Set<String>();
+                countryList.addAll(countriesLst);
+                List<IATA_ISO_Country__c> contrTmpLst = IATAIsoCountryDAO.getIsoCountriesByIds(countryList);
 
                 for(IATA_ISO_Country__c country: contrTmpLst){
                         setCountries.add(country.Id);
@@ -136,16 +138,18 @@ public with sharing class AMS_VoucherManagerController {
 
                 list<selectoption> options= new list<selectoption>();
 
-                list<IATA_ISO_Country__c> contr= [select Id, Name  from IATA_ISO_Country__c where Region__c = :region and AMS_Vouchers_Benchmark__c != null and AMS_Max_Vouchers_Per_Year__c != null and AMS_Max_Vouchers_Per_Year__c > 0];
+                list<IATA_ISO_Country__c> contr= IATAIsoCountryDAO.getIsoCountriesByRegion(new Set<String>{region});
 
                 if(contr.isEmpty()){
                     options.add(new selectoption('Select Country', 'Select Country'));
                     countriesLst.clear();
                     
                 }
-                for( IATA_ISO_Country__c c:contr){
+                for(IATA_ISO_Country__c c : contr){
 
+                    if(c.AMS_Vouchers_Benchmark__c != null && c.AMS_Max_Vouchers_Per_Year__c != null && c.AMS_Max_Vouchers_Per_Year__c > 0) {
                         options.add(new selectoption(c.Id,c.name));
+                    }
                 }
 
                 return options;

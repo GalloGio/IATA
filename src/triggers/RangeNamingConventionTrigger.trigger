@@ -15,16 +15,9 @@ trigger RangeNamingConventionTrigger on Code_Range__c (before insert, before upd
         newRangesPerRecordType.get(aRange.recordtypeId).add(aRange);
     }
     
-    Map<String , IATA_ISO_Country__c> countries  = new Map<String , IATA_ISO_Country__c>();
-    for(IATA_ISO_Country__c c:[select Id, Name ,ISO_Code__c from IATA_ISO_Country__c ])
-        countries.put(c.Id, c);
-    Map<String , IATA_ISO_State__c> states= new Map<String , IATA_ISO_State__c>();
-    for(IATA_ISO_State__c s:[select Id, Name ,ISO_Code__c from IATA_ISO_State__c])
-        states.put(s.Id, s);
-            
-    
-    //process Naming convention
-    
+    Map<ID , IATA_ISO_Country__c> countries  = new Map<ID , IATA_ISO_Country__c>(IATAIsoCountryDAO.getIsoCountries());
+    Map<String , IATA_ISO_State__c> states = new Map<String , IATA_ISO_State__c>(IATAIsoStateDAO.getIsoStates());           
+        
     //ITA CODE RANGE
     List<Code_Range__c > newIataCodeRange = newRangesPerRecordType.get(rangesRT.get('IATA_Code'));
     List<Code_Range__c > duplicateIataCodeRange = new List<Code_Range__c >();
@@ -41,12 +34,17 @@ trigger RangeNamingConventionTrigger on Code_Range__c (before insert, before upd
         newIataCodeRangePerName.put(aRange.Name, aRange);
     }
     
-    if(!currentIds.isEmpty())
-	    duplicateIataCodeRange  = [select Id, Name from Code_Range__c  where Name in :newIataCodeRangePerName.keySet() and id not in :currentIds];
-	else
-		duplicateIataCodeRange  = [select Id, Name from Code_Range__c  where Name in :newIataCodeRangePerName.keySet()];
+    if(!currentIds.isEmpty()){
+        for(Code_Range__c code : CodeRangeDAO.getCodeRangeByName(newIataCodeRangePerName.keySet())){
+	       if(!currentIds.contains(code.id)){
+                duplicateIataCodeRange.add(code);
+            }
+        }
+	}else{
+		duplicateIataCodeRange  = CodeRangeDAO.getCodeRangeByName(newIataCodeRangePerName.keySet());
+    }
     
-    for(Code_Range__c   dup:duplicateIataCodeRange  ){
+    for(Code_Range__c dup : duplicateIataCodeRange){
         newIataCodeRangePerName.get(dup.Name).addError('Range '+dup.Name+' cannot be create. An other range already exist with same name');
     }
     

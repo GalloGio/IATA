@@ -276,7 +276,10 @@ Trial__c trl ;
 	        	country.Tax_ID_Mandatory__c = true;
 	        country.Tax_1_Label__c = 'Tax 1 ID';
         	country.Tax_2_Label__c = 'Tax 2 ID';
+
 	        insert country;
+	        //allow to refresh Iso countries static map
+	        IATAIsoCountryDAO.resetMapIataIsoCountry();
 	        
 	        pgCont.oBillingAddress.ISO_Country__c = country.Id;
 	        

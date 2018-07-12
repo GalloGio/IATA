@@ -66,7 +66,7 @@ public with sharing class IDCard_ChecklistController  extends IdCardAbstractCont
         ////Checks if User can pay by Cheque
         // Map the account agent type to the Price Table agent type
         accountType = IDCardUtil.GetAgentTypeFromAccountType(theAccount.type);
-        IATA_ISO_Country__c contactCountry =  [Select i.Name, i.Id, i.ISO_Code__c, i.AIMS_Area_Name__c, IATA_Regional_Office__c From IATA_ISO_Country__c i where i.AIMS_Area_Name__c = :theAccount.BillingCountry];
+        IATA_ISO_Country__c contactCountry = IATAIsoCountryDAO.getIsoCountriesByAIMSAreaName(theAccount.BillingCountry)[0];
 
         isPictureOptionActive = true;
         isProofEmploymentOptionActive  = !keyAccount;//true;

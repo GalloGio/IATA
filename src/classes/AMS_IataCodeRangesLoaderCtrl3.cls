@@ -55,12 +55,12 @@ public class AMS_IataCodeRangesLoaderCtrl3{
 		aimsArea  ='1';
 		
 		//set the list of Country
-		for(IATA_ISO_Country__c c:[select Name,AIMS_Area_Name__c, Id,ISO_Code__c from IATA_ISO_Country__c ]){
+		for(IATA_ISO_Country__c c: IATAIsoCountryDAO.getIsoCountries()){
 			countryMap.put(c.ISO_Code__c.toLowerCase().trim() ,c);
 			countryMapPerId.put(c.id ,c);
 		}
 
-		for(IATA_ISO_State__c c:[select Name, Id,ISO_Code__c, IATA_ISO_Country__c from IATA_ISO_State__c])
+		for(IATA_ISO_State__c c : IATAIsoStateDAO.getIsoStates())
 			statesMap.put(c.ISO_Code__c.toLowerCase().trim(),c);
 	}
 
@@ -220,7 +220,8 @@ public class AMS_IataCodeRangesLoaderCtrl3{
 		}  
 
 		//clean DATA
-		List<Code_Range__c > crs =[select Id, name from Code_Range__c ];
+		List<Code_Range__c> crs = CodeRangeDAO.getAllCodeRanges();
+
 		System.debug('[IATA CODE GENERATION] Existing Ranges : '+crs.size());
 		for(Code_Range__c c:crs){
 			newIataCodeRanges.remove(c.Name);

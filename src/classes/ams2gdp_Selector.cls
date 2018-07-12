@@ -3,9 +3,8 @@ public class ams2gdp_Selector
 	public static Map<String, String> getCountryNameById(Set<String> countryIds)
 	{
 		Map<String, String> result = new Map<String, String>();
-		if(countryIds.size() > 0)
-		{
-			for(IATA_ISO_Country__c isoCountry : [SELECT Id, Name FROM IATA_ISO_Country__c WHERE Id IN :countryIds])
+		if (countryIds.size() > 0) {
+			for (IATA_ISO_Country__c isoCountry : IATAIsoCountryDAO.getIsoCountriesByIds(countryIds))
 				result.put(isoCountry.Id, isoCountry.Name);
 
 		}
@@ -15,9 +14,8 @@ public class ams2gdp_Selector
 	public static Map<String, String> getCountryIdByName(Set<String> countryNames)
 	{
 		Map<String, String> result = new Map<String, String>();
-		if(countryNames.size() > 0)
-		{
-			for(IATA_ISO_Country__c isoCountry : [SELECT Id, Name FROM IATA_ISO_Country__c WHERE Name IN :countryNames])
+		if (countryNames.size() > 0) {
+			for (IATA_ISO_Country__c isoCountry : IATAIsoCountryDAO.getIsoCountryByCountriesName(countryNames))
 				result.put(isoCountry.Name, isoCountry.Id);
 
 		}
@@ -27,9 +25,8 @@ public class ams2gdp_Selector
 	public static Map<String, String> getStateNameById(Set<String> stateIds)
 	{
 		Map<String, String> result = new Map<String, String>();
-		if(stateIds.size() > 0)
-		{
-			for(IATA_ISO_State__c isoState : [SELECT Id, Name FROM IATA_ISO_State__c WHERE Id IN :stateIds])
+		if (stateIds.size() > 0) {
+			for (IATA_ISO_State__c isoState : IATAIsoStateDAO.getIsoStatesByIds(stateIds))
 				result.put(isoState.Id, isoState.Name);
 
 		}
@@ -39,11 +36,9 @@ public class ams2gdp_Selector
 	public static Map<String, String> getStateIdByName(Set<String> stateNames)
 	{
 		Map<String, String> result = new Map<String, String>();
-		if(stateNames.size() > 0)
-		{
-			for(IATA_ISO_State__c isoState : [SELECT Id, Name FROM IATA_ISO_State__c WHERE Name IN :stateNames])
-			       result.put(isoState.Name, isoState.Id);
-
+		if (stateNames.size() > 0) {
+			for (IATA_ISO_State__c isoState :  IATAIsoStateDAO.getIsoStateByStateName(stateNames))
+				result.put(isoState.Name, isoState.Id);
 		}
 		return result;
 	}
@@ -130,8 +125,9 @@ public class ams2gdp_Selector
 	public static Map<String, String> getPhoneCodesByCountry()
 	{
 		Map<String, String> result = new Map<String, String>(); /*, Phone_Area_Codes__c*/
-		for(IATA_ISO_Country__c c : [SELECT ISO_Code__c, International_dialing_code_ISD__c	 FROM IATA_ISO_Country__c ORDER BY Name])
-		{ result.put(c.ISO_Code__c,c.International_dialing_code_ISD__c/*+':'+c.Phone_Area_Codes__c*/);}
+		for (IATA_ISO_Country__c c : IATAIsoCountryDAO.sortIATAIsoCountryList(IATAIsoCountryDAO.getIsoCountries(), 'Name')) {
+			result.put(c.ISO_Code__c, c.International_dialing_code_ISD__c);
+		}
 
 		return result;
 	}

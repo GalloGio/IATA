@@ -172,20 +172,9 @@ public class Enquiry_NewContact_Controller {
            Language =  Language <> null ?  Language.left(2) : 'en';
            string isoField =  ISOFIELDPERLANGUAGE.get(Language.toLowerCase());
            
-          for(IATA_ISO_Country__c iso:[SELECT Id,Name,ISO_Code__c,
-                                                                                        IATA_COUNTRY_EN__c,
-                                                                                                IATA_Contry_KR__c,
-                                                                                                IATA_Country_FR__c,
-                                                                                                IATA_Country_IT__c,
-                                                                                                IATA_Country_JP__c,
-                                                                                                IATA_Country_PT__c,
-                                                                                                IATA_Country_SP__c,
-                                                                                                IATA_Country_ZH__c
-                                                                         FROM IATA_ISO_Country__c 
-                                                                         ORDER BY Name]){
+          for (IATA_ISO_Country__c iso : IATAIsoCountryDAO.sortIATAIsoCountryList(IATAIsoCountryDAO.getIsoCountries(), 'Name')) {
                                                                                 
               if(String.isNotBlank(string.valueOf(iso.get(isoField)))){
-              //        ISOCountryName.add(new SelectOption(iso.Id,string.valueOf(iso.get(isoField))));
                 ISOCountry.add(new SelectOption(iso.Id,string.valueOf(iso.get(isoField))));
               }
           }
@@ -520,7 +509,7 @@ public class Enquiry_NewContact_Controller {
              
                page = 2;
 
-               IATA_ISO_Country__c iso = [select Id, Name from IATA_ISO_Country__c where id=: con.ISO_Country__c limit 1];
+               IATA_ISO_Country__c iso = IATAIsoCountryDAO.getIsoCountriesByIds(new Set<ID> {con.ISO_Country__c})[0];
                acc.BillingCountry = iso.Name;
                
          }else{
@@ -587,7 +576,7 @@ public class Enquiry_NewContact_Controller {
                    
                }else{
   
-                  IATA_ISO_Country__c iso = [select Id, Name from IATA_ISO_Country__c where Name=: acc.BillingCountry limit 1];
+                   IATA_ISO_Country__c iso = IATAIsoCountryDAO.getIsoCountryByCountriesName(new Set<String> {acc.BillingCountry})[0];
                    acc.IATA_ISO_Country__c =  iso.Id; // ISOCountry.getValue();//
     
                    acc.RecordTypeId = rtStandard ;

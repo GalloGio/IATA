@@ -755,10 +755,22 @@ public without sharing class OneIdVfDSEController {
 
                 //EM: Management of state/provinces picklists
                 if (!String.isBlank(acc.billingstate)) {
-                    List <IATA_ISO_State__c> states = [SELECT id FROM IATA_ISO_State__c WHERE IATA_ISO_Country__r.Name = :acc.billingcountry AND Informatica_value__c = :acc.billingstate LIMIT 1];
+                    List<IATA_ISO_State__c> states = new List<IATA_ISO_State__c>();
+                    for(IATA_ISO_State__c sta : IATAIsoStateDAO.getIsoStates()){
+                        if(sta.IATA_ISO_Country__r.Name == acc.billingcountry && sta.Informatica_value__c == acc.billingstate){
+                            states.add(sta);
+                            break;
+                        }
+                    }
+
                     system.debug('states 1+++ ' + states);
                     if (states.size() == 0) {
-                        states = [SELECT id FROM IATA_ISO_State__c WHERE IATA_ISO_Country__r.Name = :acc.billingcountry AND ISO_code__c = :acc.billingstate LIMIT 1];
+                        for(IATA_ISO_State__c sta : IATAIsoStateDAO.getIsoStatesByIds(new Set<String>{acc.billingstate})){
+                            if(sta.IATA_ISO_Country__r.Name == acc.billingcountry){
+                                states.add(sta);
+                                break;
+                            }
+                        }
                     }
                     system.debug('states 2+++ ' + states);
                     if (states.size()!=0)
@@ -769,9 +781,21 @@ public without sharing class OneIdVfDSEController {
                     if (acc.shippingstate == acc.billingstate && acc.shippingcountry == acc.billingcountry)
                         acc.IATA_ISO_Shipping_State__c = acc.IATA_ISO_Billing_State__c;
                     else {
-                        List <IATA_ISO_State__c> states = [SELECT id FROM IATA_ISO_State__c WHERE IATA_ISO_Country__r.Name = :acc.shippingcountry AND Informatica_value__c = :acc.shippingstate LIMIT 1];
+                        List<IATA_ISO_State__c> states = new List<IATA_ISO_State__c>();
+                        for(IATA_ISO_State__c sta : IATAIsoStateDAO.getIsoStates()){
+                            if(sta.IATA_ISO_Country__r.Name == acc.shippingcountry && sta.Informatica_value__c == acc.shippingstate){
+                                states.add(sta);
+                                break;
+                            }
+                        }
+
                         if (states.size() == 0) {
-                            states = [SELECT id FROM IATA_ISO_State__c WHERE IATA_ISO_Country__r.Name = :acc.shippingcountry AND ISO_code__c = :acc.shippingstate LIMIT 1];
+                            for(IATA_ISO_State__c sta : IATAIsoStateDAO.getIsoStatesByIds(new Set<String>{acc.shippingstate})){
+                                if(sta.IATA_ISO_Country__r.Name == acc.shippingcountry){
+                                    states.add(sta);
+                                    break;
+                                }
+                            }
                         }
                         if (states.size()!=0)
                             acc.IATA_ISO_Shipping_State__c = states[0].id;
@@ -966,7 +990,7 @@ public without sharing class OneIdVfDSEController {
         if (countryMapEmpty)
             countryMap = new Map<Id, String>();
 
-        for(IATA_ISO_Country__c iso:[select Id,Name,ISO_Code__c from IATA_ISO_Country__c order by Name]){
+        for(IATA_ISO_Country__c iso: IATAIsoCountryDAO.sortIATAIsoCountryList(IATAIsoCountryDAO.getIsoCountries(), 'Name')){
             if (iso.Name != 'All Countries'){
                 options.add(new SelectOption(iso.Id,iso.Name));
                 if (countryMapEmpty) {

@@ -730,7 +730,7 @@ public without sharing class IECTestUtil {
         IATA_ISO_Country__c country;
         try
         {
-            country = [select Id, ISO_Code__c, Name from IATA_ISO_Country__c where ISO_Code__c='CA' limit 1][0];
+            country = IATAIsoCountryDAO.getIsoCountryByIsoCodes(new Set<String>{'CA'})[0];
         }
         catch (Exception e)
         {

@@ -156,7 +156,11 @@ public  class AccountTriggerHelper {
 
       if (!AccountPerInteger.isEmpty() ) {
 
-        list<IATA_ISO_Country__c> isoCountries =  [SELECT Id, Name, AIMS_Area_Name__c FROM IATA_ISO_Country__c WHERE ID IN:IataIDs OR AIMS_Area_Name__c IN:billingNames];
+        list<IATA_ISO_Country__c> isoCountriesByID = IATAIsoCountryDAO.getIsoCountriesByIds(IataIDs);
+        list<IATA_ISO_Country__c> isoCountriesByAIMSAreaName = IATAIsoCountryDAO.getIsoCountriesByAIMSAreaName(billingNames);
+
+        Set<IATA_ISO_Country__c> isoCountries = new Set<IATA_ISO_Country__c>(isoCountriesByID);
+        isoCountries.addAll(isoCountriesByAIMSAreaName); 
 
         Map<Id, String> mapISOCountriesNamePerId = new   Map<Id, String>();
         Map<String, Id> IdPerMapISOCountriesName = new   Map<String, Id>();

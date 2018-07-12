@@ -19,7 +19,7 @@ private class AMS_AgencyAChangeCodeTest {
         Boolean isPax = true;
 
         ID rtAgency = Schema.SObjectType.Account.getRecordTypeInfosByName().get('Agency').getRecordTypeId();
-        IATA_ISO_Country__c italy = new IATA_ISO_Country__c(Name='Italy', ISO_Code__c='IT', Region__c='Europe', ISS_Office_Location__c='Italy');
+        IATA_ISO_Country__c italy = new IATA_ISO_Country__c(Name='Italy', ISO_Code__c='IT', AIMS_Area_Name__c = 'ITALY', Region__c='Europe', ISS_Office_Location__c='Italy');
         insert italy;
         
 

@@ -433,15 +433,13 @@ public with sharing class AMS_XML_Generator {
             setAddressStateKeys.add(add.State__c);
         }
 
-        //REFERENCE
-        lCountry = [SELECT AIMS_Area_ID__c,AIMS_Area_Name__c,AIMS_Region__c,BSP_Country_free_text__c,Case_BSP_Country__c,
-                CASS_Country_free_text__c,Country_Manager__c,IATA_Regional_Office__c,Id,International_dialing_code_ISD__c,
-                ISO_Code__c,Name,Region__c,SLA_Type__c,Sub_Region__c,Country_Manager__r.Name
-                FROM IATA_ISO_Country__c where Id in :setAddressCountryKeys or Id in :setAgencyCountryKeys];
+        Set<ID> globalCountryIDList = new Set<ID>();
+        globalCountryIDList.addAll(setAddressCountryKeys);
+        globalCountryIDList.addAll(setAgencyCountryKeys);
+        lCountry = IATAISOCountryDAO.getIsoCountriesByIds(globalCountryIDList);
         
         //REFERENCE
-        lState = [SELECT Name,ISO_Code__c,ISO_CODE_STANDARD__c FROM IATA_ISO_State__c where Id in :setAddressStateKeys];
-
+        lState = IATAIsoStateDAO.getIsoStatesByIds(setAddressStateKeys);
 
         lAgenciesContacts = [SELECT AccountId,AMS_isManager__c,AMS_isTicketingAgent__c,AMS_Position__c,
                             AMS_Valid__c,FirstName,Id,LastName,Name,Person__c,Status__c,Title,Email,

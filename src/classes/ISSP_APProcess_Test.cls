@@ -85,6 +85,17 @@ private class ISSP_APProcess_Test
 
     @isTest static void test_method_b()
     {
+
+        IATA_ISO_Country__c country = new IATA_ISO_Country__c(name = 'test', ISO_Code__c = 'CN', Case_BSP_Country__c = 'test');
+        insert country;
+
+        AP_Country_Cities__c csCity = new AP_Country_Cities__c(Country_ISO_Code__c = 'CN',
+                                                                Operation__c = 'BSP',
+                                                                City__c = 'test',
+                                                                Name = 'test1');
+        insert csCity;
+
+
         //ISSP_ObjectFactory.fiilIncludedFields();
         //Account parent =  (Account)ISSP_ObjectFactory.createSObject('Account',false,1);
         Account parent = ISSP_ObjectFactory.createNewAccount();
@@ -117,29 +128,6 @@ private class ISSP_APProcess_Test
         System.debug('newUser Id: ' + newUser.Id);
         con.OwnerId = newUser.Id;
         update con;
-
-        // AP_Process_Form__c ap = (AP_Process_Form__c)ISSP_ObjectFactory.createSObject('AP_Process_Form__c',false,1);
-        // ap.Case__c = testCase2.Id;
-        // ap.Accept_payment_Cards_for_BSP_ticket__c = 'Yes';
-        // ap.Accept_terms_and_conditions__c = true;
-
-        // ap.Contact_Resp_Job_Title__c = concernedCon.Title;
-        // ap.Contact_Resp_F_Name__c = concernedCon.FirstName;
-        // ap.Contact_Resp_L_Name__c = concernedCon.LastName;
-        // ap.Contact_Resp_Email__c = concernedCon.Email;
-        //
-        // insert ap;
-        // System.debug('ap Id: ' + ap.Id);
-
-        IATA_ISO_Country__c country = new IATA_ISO_Country__c(name = 'test', ISO_Code__c = 'CN', Case_BSP_Country__c = 'test');
-        insert country;
-
-        AP_Country_Cities__c csCity = new AP_Country_Cities__c(Country_ISO_Code__c = 'CN',
-                                                                Operation__c = 'BSP',
-                                                                City__c = 'test',
-                                                                Name = 'test1');
-        insert csCity;
-
 
         System.runAs(newUser)
         {

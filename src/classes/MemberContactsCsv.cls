@@ -37,7 +37,7 @@ public class MemberContactsCsv{
             
             //Country selection
             map<string, id> mapCountryCode = new map<string, id>();
-            for(IATA_ISO_Country__c c:[select id, ISO_Code__c from IATA_ISO_Country__c])
+            for(IATA_ISO_Country__c c:IATAIsoCountryDAO.getIsoCountries())
                 mapCountryCode.put(c.ISO_Code__c, c.Id);
             
             integer i = 0;

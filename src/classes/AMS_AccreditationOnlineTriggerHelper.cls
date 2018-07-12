@@ -44,9 +44,7 @@ public class AMS_AccreditationOnlineTriggerHelper {
             }        
         }
 
-        List<IATA_ISO_Country__c> lstCountries = [SELECT Id, Name, ISO_Code__c, AMS_Default_State__c
-                                                  FROM IATA_ISO_Country__c
-                                                  WHERE Id = :csw.isoCountriesIds];
+        List<IATA_ISO_Country__c> lstCountries = IATAIsoCountryDAO.getIsoCountriesByIds(csw.isoCountriesIds);
 
         for(IATA_ISO_Country__c country : lstCountries) {
             if(!String.isBlank(country.AMS_Default_State__c)) {
@@ -54,10 +52,11 @@ public class AMS_AccreditationOnlineTriggerHelper {
             }
         }
 
-        List<IATA_ISO_State__c> lstStates = [SELECT Id, ISO_Code__c, IATA_ISO_Country__c, IATA_ISO_Country__r.ISO_Code__c, Name 
-                                             FROM IATA_ISO_State__c
-                                             WHERE Id IN :csw.isoStatesIds OR ISO_Code__c IN :csw.defaultIsoStateCodes];
+        List<IATA_ISO_State__c> stateListByID = IATAIsoStateDAO.getIsoStatesByIds(csw.isoStatesIds);
+        List<IATA_ISO_State__c> stateListByIsoCodes = IATAIsoStateDAO.getIsoStateByIsoCodes(csw.defaultIsoStateCodes);
 
+        Set<IATA_ISO_State__c> lstStates = new Set<IATA_ISO_State__c>(stateListByID);
+        lstStates.addAll(stateListByIsoCodes);
 
         for(IATA_ISO_Country__c country : lstCountries) {
             csw.mapIsoCountries.put(country.Id, country);

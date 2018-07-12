@@ -121,11 +121,14 @@ private class ISSP_TD_Test {
     }
     
     static testMethod void myUnitTest_2() {
+
     	User thisUser = [ select Id from User where Id = :UserInfo.getUserId() ];
     	thisUser.TD_Team__c = true;
     	update thisUser;
     	thisUser = [ select Id from User where Id = :UserInfo.getUserId() ];
+
     	system.runAs(thisUser){
+    		Test.startTest();
 	    	String profileId = [SELECT Id FROM Profile WHERE Name = 'ISS Portal DPC' LIMIT 1].Id;
 	    	Account acc = ISSP_ObjectFactory.createNewAccount();
 			insert acc;
@@ -163,6 +166,7 @@ private class ISSP_TD_Test {
 	        update appRight;
 	        appRight.Right__c = 'Access Granted';
 	        update appRight;
+	        Test.stopTest();
     	}
     }
 }

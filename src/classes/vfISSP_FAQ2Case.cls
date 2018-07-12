@@ -644,11 +644,8 @@ public without sharing class vfISSP_FAQ2Case
 
             //if there is a mapping in iso country Object to its languages,
             //use that otherwise use country iso code for language code above
-            List<IATA_ISO_Country__c> countryAux =
-            [SELECT LVA_CountryLanguage__c FROM IATA_ISO_Country__c
-                    WHERE (    ISO_Code__c =:languageToConfigure
-                            OR ISO_Code__c =:languageToConfigure.toUpperCase() )
-            ];
+            List<IATA_ISO_Country__c> countryAux = IATAIsoCountryDAO.getIsoCountryByIsoCodes(new Set<String>{languageToConfigure, languageToConfigure.toUpperCase()});
+            
             if (    countryAux.size() > 0 &&
                     String.isNotBlank(countryAux[0].LVA_CountryLanguage__c)) {
                 choseenCountrySuppLangs = countryAux[0].LVA_CountryLanguage__c;
@@ -1160,10 +1157,7 @@ for (string topicver:listofAllowedTopics){
     private List<IATA_ISO_Country__c> countries{
         get{
             if (countries == null){
-                countries = [SELECT Id, Name, ISO_Code__c, Region__c
-                            FROM IATA_ISO_Country__c
-                            WHERE Case_BSP_Country__c != null AND Case_BSP_Country__c != ''
-                            LIMIT 10000 ];
+                countries = IATAIsoCountryDAO.getIsoCountriesByCaseBSPCountryNotNull();
             }
             return countries;
         }
@@ -1778,7 +1772,7 @@ for (string topicver:listofAllowedTopics){
         create();
 
         if(isCNS ) {
-            List<IATA_ISO_Country__c> lsIsoCountries = [SELECT Id, ISO_Code__c, Name FROM IATA_ISO_Country__c WHERE Name = 'United States' LIMIT 1];
+            List<IATA_ISO_Country__c> lsIsoCountries = IATAIsoCountryDAO.getIsoCountryByCountriesName(new Set<String>{'United States'});
             if(!lsIsoCountries.isEmpty()) {
                 this.newCase.IFAP_Country_ISO__c = lsIsoCountries[0].ISO_Code__c ;
                 this.newCase1.IFAP_Country_ISO__c = lsIsoCountries[0].ISO_Code__c ;
@@ -1878,7 +1872,7 @@ for (string topicver:listofAllowedTopics){
         system.debug('JK this.currentButtonsToShow: ' + this.currentButtonsToShow);
 
         if(selectDataCategory.CategoryName.startsWith('CNS')) {
-            List<IATA_ISO_Country__c> lsIsoCountries = [SELECT Id, ISO_Code__c, Name FROM IATA_ISO_Country__c WHERE Name = 'United States' LIMIT 1];
+            List<IATA_ISO_Country__c> lsIsoCountries = IATAIsoCountryDAO.getIsoCountryByCountriesName(new Set<String>{'United States'});
             if(!lsIsoCountries.isEmpty()) {
                 this.newCase.IFAP_Country_ISO__c = lsIsoCountries[0].ISO_Code__c ;
                 this.newCase1.IFAP_Country_ISO__c = lsIsoCountries[0].ISO_Code__c ;
@@ -1964,85 +1958,32 @@ for (string topicver:listofAllowedTopics){
         String currentLanguage = UserInfo.getLanguage();
         List<SelectOption> options = new List<SelectOption>();
         list<IATA_ISO_Country__c> isoList;
-        /*list<IATA_ISO_Country__c> isoList = [select Name,Id, IATA_Contry_KR__c, IATA_COUNTRY_EN__c,
-                                            IATA_Country_FR__c, IATA_Country_IT__c, IATA_Country_JP__c,
-                                            IATA_Country_PT__c, IATA_Country_SP__c, IATA_Country_ZH__c
-                                            from IATA_ISO_Country__c
-                                            where Case_BSP_Country__c!=null
-                                            and Case_BSP_Country__c!=''
-                                            order by Name];*/
+
         if (currentLanguage == 'es'){
-            isoList = [select Name,Id, IATA_Contry_KR__c, IATA_COUNTRY_EN__c,ISO_Code__c,
-                        IATA_Country_FR__c, IATA_Country_IT__c, IATA_Country_JP__c,
-                        IATA_Country_PT__c, IATA_Country_SP__c, IATA_Country_ZH__c
-                        from IATA_ISO_Country__c
-                        where Case_BSP_Country__c!=null
-                        and Case_BSP_Country__c!=''
-                        order by IATA_Country_SP__c];
+            isoList = IATAIsoCountryDAO.sortIATAIsoCountryList(IATAIsoCountryDAO.getIsoCountriesByCaseBSPCountryNotNull(), 'IATA_Country_SP__c');
         }
         else if (currentLanguage == 'ko'){
-            isoList = [select Name,Id, IATA_Contry_KR__c, IATA_COUNTRY_EN__c,ISO_Code__c,
-                        IATA_Country_FR__c, IATA_Country_IT__c, IATA_Country_JP__c,
-                        IATA_Country_PT__c, IATA_Country_SP__c, IATA_Country_ZH__c
-                        from IATA_ISO_Country__c
-                        where Case_BSP_Country__c!=null
-                        and Case_BSP_Country__c!=''
-                        order by IATA_Contry_KR__c];
+            isoList = IATAIsoCountryDAO.sortIATAIsoCountryList(IATAIsoCountryDAO.getIsoCountriesByCaseBSPCountryNotNull(), 'IATA_Contry_KR__c');
         }
         else if (currentLanguage == 'zh_CN'){
-            isoList = [select Name,Id, IATA_Contry_KR__c, IATA_COUNTRY_EN__c,ISO_Code__c,
-                        IATA_Country_FR__c, IATA_Country_IT__c, IATA_Country_JP__c,
-                        IATA_Country_PT__c, IATA_Country_SP__c, IATA_Country_ZH__c
-                        from IATA_ISO_Country__c
-                        where Case_BSP_Country__c!=null
-                        and Case_BSP_Country__c!=''
-                        order by IATA_Country_ZH__c];
+            isoList = IATAIsoCountryDAO.sortIATAIsoCountryList(IATAIsoCountryDAO.getIsoCountriesByCaseBSPCountryNotNull(), 'IATA_Country_ZH__c');
         }
         else if (currentLanguage == 'pt_BR'){
-            isoList = [select Name,Id, IATA_Contry_KR__c, IATA_COUNTRY_EN__c,ISO_Code__c,
-                        IATA_Country_FR__c, IATA_Country_IT__c, IATA_Country_JP__c,
-                        IATA_Country_PT__c, IATA_Country_SP__c, IATA_Country_ZH__c
-                        from IATA_ISO_Country__c
-                        where Case_BSP_Country__c!=null
-                        and Case_BSP_Country__c!=''
-                        order by IATA_Country_PT__c];
+            isoList = IATAIsoCountryDAO.sortIATAIsoCountryList(IATAIsoCountryDAO.getIsoCountriesByCaseBSPCountryNotNull(), 'IATA_Country_PT__c');
         }
         else if (currentLanguage == 'fr'){
-            isoList = [select Name,Id, IATA_Contry_KR__c, IATA_COUNTRY_EN__c,ISO_Code__c,
-                        IATA_Country_FR__c, IATA_Country_IT__c, IATA_Country_JP__c,
-                        IATA_Country_PT__c, IATA_Country_SP__c, IATA_Country_ZH__c
-                        from IATA_ISO_Country__c
-                        where Case_BSP_Country__c!=null
-                        and Case_BSP_Country__c!=''
-                        order by IATA_Country_FR__c];
+            isoList = IATAIsoCountryDAO.sortIATAIsoCountryList(IATAIsoCountryDAO.getIsoCountriesByCaseBSPCountryNotNull(), 'IATA_Country_FR__c');
         }
         else if (currentLanguage == 'ja'){
-            isoList = [select Name,Id, IATA_Contry_KR__c, IATA_COUNTRY_EN__c,ISO_Code__c,
-                        IATA_Country_FR__c, IATA_Country_IT__c, IATA_Country_JP__c,
-                        IATA_Country_PT__c, IATA_Country_SP__c, IATA_Country_ZH__c
-                        from IATA_ISO_Country__c
-                        where Case_BSP_Country__c!=null
-                        and Case_BSP_Country__c!=''
-                        order by IATA_Country_JP__c];
+            isoList = IATAIsoCountryDAO.sortIATAIsoCountryList(IATAIsoCountryDAO.getIsoCountriesByCaseBSPCountryNotNull(), 'IATA_Country_JP__c');
         }
         else if (currentLanguage == 'it'){
-            isoList = [select Name,Id, IATA_Contry_KR__c, IATA_COUNTRY_EN__c,ISO_Code__c,
-                        IATA_Country_FR__c, IATA_Country_IT__c, IATA_Country_JP__c,
-                        IATA_Country_PT__c, IATA_Country_SP__c, IATA_Country_ZH__c
-                        from IATA_ISO_Country__c
-                        where Case_BSP_Country__c!=null
-                        and Case_BSP_Country__c!=''
-                        order by IATA_Country_IT__c];
+            isoList = IATAIsoCountryDAO.sortIATAIsoCountryList(IATAIsoCountryDAO.getIsoCountriesByCaseBSPCountryNotNull(), 'IATA_Country_IT__c');
         }
         else{
-            isoList = [select Name,Id, IATA_Contry_KR__c, IATA_COUNTRY_EN__c,ISO_Code__c,
-                        IATA_Country_FR__c, IATA_Country_IT__c, IATA_Country_JP__c,
-                        IATA_Country_PT__c, IATA_Country_SP__c, IATA_Country_ZH__c
-                        from IATA_ISO_Country__c
-                        where Case_BSP_Country__c!=null
-                        and Case_BSP_Country__c!=''
-                        order by Name];
+            isoList = IATAIsoCountryDAO.sortIATAIsoCountryList(IATAIsoCountryDAO.getIsoCountriesByCaseBSPCountryNotNull(), 'Name');
         }
+
         options.add(new SelectOption('', '--None--'));
         for(IATA_ISO_Country__c iso : isoList){
             if (currentLanguage == 'es'){
@@ -2214,11 +2155,7 @@ for (string topicver:listofAllowedTopics){
     */
     public static list<IATA_ISO_Country__c> getIsoCountryList()
     {
-        return [SELECT Id, Name
-                FROM IATA_ISO_Country__c
-                WHERE Case_BSP_Country__c != null AND Case_BSP_Country__c != ''
-                ORDER BY Name
-                LIMIT 10000 ];
+        return IATAIsoCountryDAO.sortIATAIsoCountryList(IATAIsoCountryDAO.getIsoCountriesByCaseBSPCountryNotNull(), 'Name');
     }
 
     /**
@@ -2520,10 +2457,7 @@ for (string topicver:listofAllowedTopics){
         //String to be used in the LIKE query
         string varCountry = '%' + newCase.IFAP_Country_ISO__c + '%';
 
-        list<IATA_ISO_Country__c> lst_Country = new list<IATA_ISO_Country__c>([SELECT Id, Name , Case_BSP_Country__c , ISO_Code__c
-                                                                                FROM IATA_ISO_Country__c
-                                                                                WHERE ISO_Code__c  =: newCase.IFAP_Country_ISO__c
-                                                                                LIMIT 1 ]);
+        list<IATA_ISO_Country__c> lst_Country = IATAIsoCountryDAO.getIsoCountryByIsoCodes(new Set<String>{newCase.IFAP_Country_ISO__c});
         if(lst_Country != null && lst_Country.size() > 0){
             newCase.BSPCountry__c =  lst_Country[0].Case_BSP_Country__c ;
             newCase.Country_concerned_by_the_query__c = lst_Country[0].Case_BSP_Country__c ;

@@ -93,7 +93,7 @@ global class AMS_2_MDM_Schedule implements Schedulable {
             setAIMSRegion.add('China & North Asia');
         } 
 
-        List<IATA_ISO_Country__c> lIsoCountry = [SELECT ID FROM IATA_ISO_Country__c WHERE Region__c in :setAIMSRegion];
+        List<IATA_ISO_Country__c> lIsoCountry = IATAIsoCountryDAO.getIsoCountriesByRegion(setAIMSRegion);
 
         System.debug('lIsoCountry: ' + lIsoCountry);
           

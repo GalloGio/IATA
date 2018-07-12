@@ -15,7 +15,7 @@ trigger CaseBeforInsert on Case (before insert,after insert) {
             CountryNameSet.add(newCase.Country_concerned_by_the_query__c);
         }
         
-        for(IATA_ISO_Country__c iso : [select Id,ISO_Code__c,Name,Region__c,Case_BSP_Country__c from IATA_ISO_Country__c where Name in:CountryNameSet]){
+        for(IATA_ISO_Country__c iso : IATAIsoCountryDAO.getIsoCountryByCountriesName(CountryNameSet)){
             IATAISOCountryMap.put(iso.Name ,iso);
         }
         

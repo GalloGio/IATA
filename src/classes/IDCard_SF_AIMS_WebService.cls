@@ -71,7 +71,7 @@ global with sharing class IDCard_SF_AIMS_WebService {
             }
 
             ISOCountry_AIMSArea = new map<String, String>();
-            for (IATA_ISO_Country__c country : [Select i.AIMS_Area_Name__c, i.AIMS_Area_ID__c From IATA_ISO_Country__c i ]) {
+            for (IATA_ISO_Country__c country : IATAIsoCountryDAO.getIsoCountries()) {
                 ISOCountry_AIMSArea.put(country.AIMS_Area_Name__c, country.AIMS_Area_ID__c);
             }
 

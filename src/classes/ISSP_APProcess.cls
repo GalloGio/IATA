@@ -923,14 +923,8 @@ public without sharing class ISSP_APProcess {
         get {
             List<SelectOption> options = new List<SelectOption>();
             
-            list<IATA_ISO_Country__c> isoList;
-        
-            isoList = [SELECT Name,Id, IATA_Contry_KR__c, IATA_COUNTRY_EN__c,ISO_Code__c, AMS_Pilot_Country__c,
-                        IATA_Country_FR__c, IATA_Country_IT__c, IATA_Country_JP__c,
-                        IATA_Country_PT__c, IATA_Country_SP__c, IATA_Country_ZH__c
-                        FROM IATA_ISO_Country__c
-                        ORDER BY Name];
-            
+            list<IATA_ISO_Country__c> isoList = IATAIsoCountryDAO.sortIATAIsoCountryList(IATAIsoCountryDAO.getIsoCountries(), 'Name');
+                    
           options.add(new SelectOption('', Label.ISSP_SELECT_COUNTRY));
           for(IATA_ISO_Country__c iso : isoList){
             options.add(new SelectOption(iso.Name,iso.Name));
@@ -945,15 +939,7 @@ public without sharing class ISSP_APProcess {
         get {
             List<SelectOption> options = new List<SelectOption>();
             
-            list<IATA_ISO_Country__c> isoList;
-        
-            isoList = [SELECT Name,Id, IATA_Contry_KR__c, IATA_COUNTRY_EN__c,ISO_Code__c, AMS_Pilot_Country__c,
-                        IATA_Country_FR__c, IATA_Country_IT__c, IATA_Country_JP__c,
-                        IATA_Country_PT__c, IATA_Country_SP__c, IATA_Country_ZH__c
-                        FROM IATA_ISO_Country__c
-                        WHERE Case_BSP_Country__c!=null
-                        AND Case_BSP_Country__c!=''
-                        ORDER BY Name];
+            list<IATA_ISO_Country__c> isoList = IATAIsoCountryDAO.sortIATAIsoCountryList(IATAIsoCountryDAO.getIsoCountriesByCaseBSPCountryNotNull(), 'Name');
             
           options.add(new SelectOption('', Label.ISSP_SELECT_COUNTRY));
           for(IATA_ISO_Country__c iso : isoList){
@@ -978,32 +964,10 @@ public without sharing class ISSP_APProcess {
         }
         
         if(category <> 'IBCS consolidator'){
-        options.add(new SelectOption('CASS Export','CASS Export'));
-        options.add(new SelectOption('CASS Import','CASS Import'));
+            options.add(new SelectOption('CASS Export','CASS Export'));
+            options.add(new SelectOption('CASS Import','CASS Import'));
         }
-        
-        /**
-        if(strParentMembershipStatus=='IATA member') {
-            if(!isGSSAUser) {
-                options.add(new SelectOption('BSP Direct - Member','BSP'));
-                options.add(new SelectOption('CASS Direct - Member','CASS Export'));
-                options.add(new SelectOption('CASS Import Direct - Member','CASS Import'));
-            } else {
-                options.add(new SelectOption('CASS via GSSA - Member','CASS Export'));
-                options.add(new SelectOption('CASS Import via GHA - Member','CASS Import'));
-            }
-        } else { //IATA Non-Member
-            if(!isGSSAUser) {
-                options.add(new SelectOption('BSP Direct - Non-Member','BSP'));
-                options.add(new SelectOption('CASS Direct - Non-Member','CASS Export'));
-                options.add(new SelectOption('CASS Import Direct - Non-Member','CASS Import'));
-            } else {
-                options.add(new SelectOption('CASS via GSSA - Non-Member','CASS Export'));
-                options.add(new SelectOption('CASS Import via GHA - Non-Member','CASS Import'));
-            }
-        }
-    **/
-        
+                
         return options;
     }
     
@@ -1264,16 +1228,7 @@ public without sharing class ISSP_APProcess {
     }
     
     public IATA_ISO_Country__c fetchISOCountry(string isocode) {
-         
-        IATA_ISO_Country__c isocountry = [
-            SELECT Id, Name, CurrencyIsoCode, EU_Country__c, AMS_Pilot_Country__c, Case_BSP_Country__c,IATA_Country_FR__c,IATA_Country_SP__c,IATA_COUNTRY_EN__c,
-            IATA_Contry_KR__c,IATA_Country_IT__c,IATA_Country_JP__c,IATA_Country_PT__c,IATA_Country_ZH__c,
-            Tax_Number_label__c,Tax_number_format__c,Tax_number_help_text__c
-            FROM IATA_ISO_Country__c
-            WHERE ISO_Code__c = :isocode
-         ];
-          
-        return isocountry;
+        return IATAIsoCountryDAO.getIsoCountryByIsoCodes(new Set<String>{isocode}).get(0);
     }
     
     public List<SelectOption> getChangeItems() {

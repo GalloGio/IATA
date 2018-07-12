@@ -69,6 +69,7 @@ private class IDCard_Account_Renewal_Updater_SchdlrTst {
 		isoCountryCA.AIMS_Area_ID__c = '1'; //not real code
 		isoCountryCA.VAT_Validation_Required__c = true;
 		isoCountryCA.Tax_ID_Mandatory__c = false;
+		isoCountryCA.AIMS_Area_Name__c = 'CANADA';
 		insert isoCountryCA;
 
 		//List of Account Data

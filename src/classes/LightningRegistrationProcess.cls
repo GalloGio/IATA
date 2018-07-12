@@ -202,13 +202,9 @@ public without sharing class LightningRegistrationProcess{
     }
 
     @AuraEnabled
-    public Static List<String> GetFieldPicklistValuesCountry()
-    {
-      List <IATA_ISO_Country__c> countries = [SELECT Name from IATA_ISO_Country__c ORDER BY Name];
-      List <SelectOption> options = new List <SelectOption>();
-      //for (integer i=0;i<countries.size();i++) {
-    //  options.add(new SelectOption(countries[i].name,countries[i].name));
-        //}
+    public Static List<String> GetFieldPicklistValuesCountry(){
+        List <IATA_ISO_Country__c> countries = IATAIsoCountryDAO.sortIATAIsoCountryList(IATAIsoCountryDAO.getIsoCountries(), 'Name');
+  
         List <String> cnt = new List <String>();
         cnt.add('');
         for (integer i=0;i<countries.size();i++)
@@ -465,7 +461,7 @@ public without sharing class LightningRegistrationProcess{
                 
                 //Assign countries and states
                 if (!String.isBlank(acc.BillingCountry)) {
-                    List <Iata_Iso_Country__c> cn = [SELECT id FROM Iata_Iso_Country__c WHERE Name = :acc.BillingCountry LIMIT 1];
+                    List <Iata_Iso_Country__c> cn = IATAIsoCountryDAO.getIsoCountryByCountriesName(new Set<String>{acc.BillingCountry});
                     if (cn.size()!=0) {
                         acc.IATA_ISO_Country__c = acc.IATA_ISO_Shipping_Country__c = cn[0].id;
                     }

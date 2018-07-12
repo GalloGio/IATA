@@ -135,12 +135,18 @@ public class IDCardLoginControllerTest{
 
         // country not found
         delete country;
+        IATAIsoCountryDAO.resetMapIataIsoCountry();
+
         nextPage = idCardLoginController.verify();
+
         System.assert(checkMessages(ApexPages.getMessages(),'ISO Country not found for the following Account:' + idCardLoginController.IATACodeLocation ), 'ISO Country not found message should be added');
 
         // country found
         country.id = null;
         insert country;
+
+        //Work around to reset the static Iata Iso Country maps
+        IATAIsoCountryDAO.resetMapIataIsoCountry();
 
         // ID_Card__c.Blacklisted = true;
         String IDCardQuery = 'Select Id, Blacklisted__c, Card_Status__c From ID_Card__c where Related_Contact__c  = \'' + relatedContact[1].Id + '\' order by createddate desc';

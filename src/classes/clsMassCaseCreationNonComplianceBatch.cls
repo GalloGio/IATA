@@ -40,14 +40,13 @@ global class clsMassCaseCreationNonComplianceBatch implements Database.Batchable
              complianceCase.Origin = 'Internal Case';
              
              //Query to get BSP country and Region
-             //List<IATA_ISO_Country__c> isoCountry = [select Case_BSP_Country__c,Region__c  from IATA_ISO_Country__c where Name =: c.Account.BillingCountry limit 1];
-             List<IATA_ISO_Country__c> isoCountry = [select Case_BSP_Country__c,Region__c  from IATA_ISO_Country__c where AIMS_Area_Name__c =: c.Account.BillingCountry limit 1];
+             List<IATA_ISO_Country__c> isoCountry = IATAIsoCountryDAO.getIsoCountriesByAIMSAreaName(c.Account.BillingCountry);
              
             
              if (isoCountry[0].Case_BSP_Country__c != null && isoCountry[0].Case_BSP_Country__c != '')
              {
                System.debug('** setting country');
-              complianceCase.BSPCountry__c = isoCountry[0].Case_BSP_Country__c;
+               complianceCase.BSPCountry__c = isoCountry[0].Case_BSP_Country__c;
                complianceCase.Region__c = isoCountry[0].Region__c;
              }
              else

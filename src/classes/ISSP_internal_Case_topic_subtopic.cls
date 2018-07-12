@@ -222,10 +222,8 @@ public list<String> errorMessage {get; set;}
             //String to be used in the LIKE query 
             string varCountry = '%' + parentCase.IFAP_Country_ISO__c + '%';
 
-            list<IATA_ISO_Country__c> lst_Country = new list<IATA_ISO_Country__c>([SELECT Id, Name , Case_BSP_Country__c , ISO_Code__c
-                                                                                    FROM IATA_ISO_Country__c 
-                                                                                    WHERE ISO_Code__c  =: parentCase.IFAP_Country_ISO__c 
-                                                                                    LIMIT 1 ]);
+            list<IATA_ISO_Country__c> lst_Country = IATAIsoCountryDAO.getIsoCountryByIsoCodes(new Set<String>{parentCase.IFAP_Country_ISO__c});
+            
             if(lst_Country != null && lst_Country.size() > 0){
                 parentCase.BSPCountry__c =  lst_Country[0].Case_BSP_Country__c ;
                 parentCase.Country_concerned_by_the_query__c = lst_Country[0].Case_BSP_Country__c ;
