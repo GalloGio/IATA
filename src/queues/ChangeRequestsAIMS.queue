@@ -3,6 +3,11 @@
     <doesSendEmailToMembers>false</doesSendEmailToMembers>
     <email>biebuyckj@iata.org</email>
     <name>Change Requests - AIMS</name>
+    <queueMembers>
+        <publicGroups>
+            <publicGroup>IDFSPassengerSystemOwners</publicGroup>
+        </publicGroups>
+    </queueMembers>
     <queueSobject>
         <sobjectType>Case</sobjectType>
     </queueSobject>

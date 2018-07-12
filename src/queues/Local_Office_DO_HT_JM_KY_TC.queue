@@ -3,6 +3,11 @@
     <doesSendEmailToMembers>false</doesSendEmailToMembers>
     <email>vaneerdewijkr@iata.org</email>
     <name>Local Office - DO HT JM KY TC</name>
+    <queueMembers>
+        <publicGroups>
+            <publicGroup>IATAWesternCaribbean</publicGroup>
+        </publicGroups>
+    </queueMembers>
     <queueSobject>
         <sobjectType>Case</sobjectType>
     </queueSobject>

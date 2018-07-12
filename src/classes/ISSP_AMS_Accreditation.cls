@@ -3441,13 +3441,12 @@ public without sharing class ISSP_AMS_Accreditation {
         /*** AMSU-112 - Start ***/
 		//replace tab character
         checkTabCharacters(newForm, hqAccount, newContact);
-
 		//check non latin characters
-        if(!String.isBlank(newForm.Account_Name__c) && !p.matcher(newForm.Account_Name__c).matches()) {
+        if((!String.isBlank(newForm.Account_Name__c) && !p.matcher(newForm.Account_Name__c).matches()) || (!String.isBlank(hqAccount.Name) && !p.matcher(hqAccount.Name).matches())) {
 			newForm.Account_Name__c.addError(Label.ISSP_EnterValidString);
 			errorFound = true;
 		}
-		if(!String.isBlank(newForm.Trade_Name__c) && !p.matcher(newForm.Trade_Name__c).matches()) {
+		if((!String.isBlank(newForm.Trade_Name__c) && !p.matcher(newForm.Trade_Name__c).matches()) ||(!String.isBlank(hqAccount.TradeName__c) && !p.matcher(hqAccount.TradeName__c).matches())) {
 			newForm.Trade_Name__c.addError(Label.ISSP_EnterValidString);
 			errorFound = true;
 		}
@@ -3479,27 +3478,27 @@ public without sharing class ISSP_AMS_Accreditation {
 			newForm.ISSP_AMS_VAT_Number_Input__c.addError(Label.ISSP_EnterValidString);
 			errorFound = true;
 		}
-		if(!String.isBlank(newForm.ISSP_AMS_VAT_number__c) && !p.matcher(newForm.ISSP_AMS_VAT_number__c).matches()) {
+		if(!String.isBlank(newForm.ISSP_AMS_VAT_number__c) && !p.matcher(newForm.ISSP_AMS_VAT_number__c).matches()) { 
 			newForm.ISSP_AMS_VAT_number__c.addError(Label.ISSP_EnterValidString);
 			errorFound = true;
 		}
-		if(!String.isBlank(newForm.Shipping_Street__c) && !p.matcher(newForm.Shipping_Street__c).matches()) {
+		if((!String.isBlank(newForm.Shipping_Street__c) && !p.matcher(newForm.Shipping_Street__c).matches()) || (!String.isBlank(hqAccount.ShippingStreet) && !p.matcher(hqAccount.ShippingStreet).matches())) {
 			newForm.Shipping_Street__c.addError(Label.ISSP_EnterValidString);
 			errorFound = true;
 		}
-		if(!String.isBlank(newForm.Shipping_City__c) && !p.matcher(newForm.Shipping_City__c).matches()) {
+		if((!String.isBlank(newForm.Shipping_City__c) && !p.matcher(newForm.Shipping_City__c).matches()) || (!String.isBlank(hqAccount.ShippingCity) && !p.matcher(hqAccount.ShippingCity).matches())) {
 			newForm.Shipping_City__c.addError(Label.ISSP_EnterValidString);
 			errorFound = true;
 		}
-		if(!String.isBlank(newForm.Shipping_Postal_Code__c) && !p.matcher(newForm.Shipping_Postal_Code__c).matches()) {
+		if((!String.isBlank(newForm.Shipping_Postal_Code__c) && !p.matcher(newForm.Shipping_Postal_Code__c).matches()) || (!String.isBlank(hqAccount.ShippingPostalCode) && !p.matcher(hqAccount.ShippingPostalCode).matches())) {
 			newForm.Shipping_Postal_Code__c.addError(Label.ISSP_EnterValidString);
 			errorFound = true;
 		}
-		if(!String.isBlank(newForm.Shipping_State__c) && !p.matcher(newForm.Shipping_State__c).matches()) {
+		if((!String.isBlank(newForm.Shipping_State__c) && !p.matcher(newForm.Shipping_State__c).matches()) || (!String.isBlank(hqAccount.ShippingState) && !p.matcher(hqAccount.ShippingState).matches())) {
 			newForm.Shipping_State__c.addError(Label.ISSP_EnterValidString);
 			errorFound = true;
 		}
-		if(!String.isBlank(newForm.Shipping_Country__c) && !p.matcher(newForm.Shipping_Country__c).matches()) {
+		if((!String.isBlank(newForm.Shipping_Country__c) && !p.matcher(newForm.Shipping_Country__c).matches()) || (!String.isBlank(hqAccount.ShippingCountry) && !p.matcher(hqAccount.ShippingCountry).matches())) {
 			newForm.Shipping_Country__c.addError(Label.ISSP_EnterValidString);
 			errorFound = true;
 		}

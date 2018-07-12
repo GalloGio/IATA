@@ -3,6 +3,26 @@
     <doesSendEmailToMembers>false</doesSendEmailToMembers>
     <email>guy2@iata.org</email>
     <name>Local Office - China</name>
+    <queueMembers>
+        <roleAndSubordinatesInternal>
+            <roleAndSubordinateInternal>ChinaNAsiaAgencyManagementMgrI</roleAndSubordinateInternal>
+            <roleAndSubordinateInternal>ChinaNAsiaAgencyManagementStaffI</roleAndSubordinateInternal>
+            <roleAndSubordinateInternal>ChinaNAsiaASDStaffI</roleAndSubordinateInternal>
+            <roleAndSubordinateInternal>ChinaNAsiaASDSupervisorI</roleAndSubordinateInternal>
+            <roleAndSubordinateInternal>ChinaNAsiaBankingManagerI</roleAndSubordinateInternal>
+            <roleAndSubordinateInternal>China_N_Asia_Business_Delivery_Manager</roleAndSubordinateInternal>
+            <roleAndSubordinateInternal>China_N_Asia_Business_Delivery_Staff</roleAndSubordinateInternal>
+            <roleAndSubordinateInternal>ChinaNAsiaCustomerServiceManagerI</roleAndSubordinateInternal>
+            <roleAndSubordinateInternal>ChinaNAsiaCustomerServiceStaffI</roleAndSubordinateInternal>
+            <roleAndSubordinateInternal>ChinaNAsiaOperationalManagementI</roleAndSubordinateInternal>
+            <roleAndSubordinateInternal>ChinaNAsiaRSManagerI</roleAndSubordinateInternal>
+            <roleAndSubordinateInternal>ChinaNAsiaRSStaffI</roleAndSubordinateInternal>
+            <roleAndSubordinateInternal>ChinaNorthAsiaHubLeaderI</roleAndSubordinateInternal>
+            <roleAndSubordinateInternal>CountryManagerChinaI</roleAndSubordinateInternal>
+            <roleAndSubordinateInternal>IDFSChinaNorthAsiaRegionalOfficeI</roleAndSubordinateInternal>
+            <roleAndSubordinateInternal>StaffChinaI</roleAndSubordinateInternal>
+        </roleAndSubordinatesInternal>
+    </queueMembers>
     <queueSobject>
         <sobjectType>Case</sobjectType>
     </queueSobject>
