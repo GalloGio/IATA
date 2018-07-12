@@ -1,6 +1,6 @@
 trigger GlobalContactTrigger on Contact (after delete, after insert, after undelete, after update, before delete, before insert, before update) {   
 
-    ID standardContactRecordTypeID = clsContactTypeIDSingleton.getInstance().RecordTypes.get('Standard');
+    ID standardContactRecordTypeID = RecordTypeSingleton.getInstance().getRecordTypeId('Contact', 'Standard_Contact');
 
     boolean Contacts = true;
     boolean AMP_ContactTrigger = true;
@@ -179,7 +179,7 @@ trigger GlobalContactTrigger on Contact (after delete, after insert, after undel
                     //Shows a warning when the contact last name is update if an active IDCard is linked to the contact
                     Profile currentUserProfile = [SELECT ID, Name FROM Profile WHERE id = : UserInfo.getProfileId() limit 1];
                     Set<ID> ids = Trigger.newMap.keySet();
-                    ID rectypeid = Schema.SObjectType.ID_Card__c.getRecordTypeInfosByName().get('AIMS').getRecordTypeId();
+                    ID rectypeid = RecordTypeSingleton.getInstance().getRecordTypeId('ID_Card__c', 'AIMS');
                     List <ID_Card__c> IDCards = [Select i.Valid_To_Date__c , i.Related_Contact__r.Id From ID_Card__c i where i.Valid_To_Date__c > Today and i.Cancellation_Date__c = null  and i.Card_Status__c = 'Valid ID Card' and i.Related_Contact__c in : ids and  RecordTypeId = : rectypeid ];
                     for (Contact CurrentContact : standardContacts) {                
                         IDCardUtil.isFirstTime = false;

@@ -22,7 +22,8 @@
 @isTest
 private class trgCheckSISCaseRecycleBinAfterInsertTest {
 
-    static testMethod void myUnitTest() {
+    @isTest
+	static void myUnitTest() {
         // TO DO: implement unit test
         
         RecordType StandardContactRecordType = [Select r.Id, r.Name from RecordType r where r.Name = 'Standard' and r.SobjectType = 'Contact' limit 1];

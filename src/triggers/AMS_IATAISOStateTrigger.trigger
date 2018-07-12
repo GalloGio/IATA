@@ -5,13 +5,12 @@ trigger AMS_IATAISOStateTrigger on IATA_ISO_State__c (after insert) {
     	segmentCodes.add(isos.Iso_Code__c); 
     
     
-    Id statert = Schema.getGlobalDescribe().get('AMS_Segment__c').getDescribe().getRecordTypeInfosByName().get('Country State Area').getRecordTypeId();
+    Id statert = RecordTypeSingleton.getInstance().getRecordTypeId('AMS_Segment__c', 'Country_State_Area');
     Map<String, AMS_Segment__c> codeToSegment = new Map<String, AMS_Segment__c>();
     for(AMS_Segment__c seg : [SELECT ID, Label__c , CountryISOCode__c
     							FROM AMS_Segment__c 
                               WHERE CountryISOCode__c IN : segmentCodes]){
     	codeToSegment.put(seg.CountryISOCode__c, seg);
-                                  system.debug('-------- mappa: aggiungo chiave '+seg.CountryISOCode__c);
     }
 
 	List<AMS_Segment__c> newSegments = new List<AMS_Segment__c>(); 
@@ -33,8 +32,6 @@ trigger AMS_IATAISOStateTrigger on IATA_ISO_State__c (after insert) {
         				ISO_State__c = isoc.id,
             			Segment__c = codeToSegment.get(isoc.Iso_Code__c).id
         ));
-        system.debug('---------------  Cerco nella mappa la chiave '+isoc.Iso_Code__c);
-        system.debug('---------------  Inserisco NtoN con state '+isoc.id+' e segment '+codeToSegment.get(isoc.Iso_Code__c).id);
     }
     insert nton;
 }

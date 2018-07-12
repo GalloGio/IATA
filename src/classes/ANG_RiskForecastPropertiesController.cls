@@ -20,10 +20,6 @@ public with sharing class ANG_RiskForecastPropertiesController {
         set;
     }
 
-    //Case Record Types
-    public static final String SIDRA      = Schema.Case.sObjectType.getDescribe().getRecordTypeInfosByName().get('SIDRA').getRecordTypeId();
-    public static final String SIDRALITE   = Schema.Case.sObjectType.getDescribe().getRecordTypeInfosByName().get('SIDRA Lite').getRecordTypeId();
-
     public Boolean displayPopup {get;set;}
 
     public ANG_RiskForecastPropertiesController(ApexPages.StandardController stdController) {
@@ -143,49 +139,6 @@ public with sharing class ANG_RiskForecastPropertiesController {
             System.debug('New newRiskStatus:'+newRiskStatus);
 
     }
-
-    
-    /*
-    public static String fetchRiskStatus(String financialReviewResult, String riskHistoryAssessment){
-
-        ID riskStatusAssessmentRT = AMS_Utils.getRecordType('ANG_Agency_Risk_Calculation__c', 'Risk_Status_Assessment').Id;
-
-        List<ANG_Agency_Risk_Calculation__c> arcList = [SELECT Id, ANG_Financial_Review_Result__c , ANG_Risk_History_Assessment__c,ANG_Risk_History__c from ANG_Agency_Risk_Calculation__c where recordTypeId = :riskStatusAssessmentRT];
-        
-        Map<String,String> calculationTable = new Map<String,String>();
-
-        For(ANG_Agency_Risk_Calculation__c arc: arcList)
-            calculationTable.put(arc.ANG_Financial_Review_Result__c + arc.ANG_Risk_History_Assessment__c , arc.ANG_Risk_History__c);
-
-        System.debug('Fetching Risk history with values ' + financialReviewResult + ' and ' + riskHistoryAssessment);
-
-        String toReturn = calculationTable.get(financialReviewResult + riskHistoryAssessment);
-
-        System.debug('Returning ' + toReturn);
-        
-        return toReturn;
-
-    }
-    */
-
-    /*
-    public String fetchRiskHistoryAssessment(Account acct, String choosenRiskEventType, List<ANG_Agency_Risk_Event__c> riskEvents){
-
-        return new ANG_RiskAssessmentEngine(riskEvents, acct, new list<String>{choosenRiskEventType}).forecastAssessment();
-
-    }
-    */
-
-    /*
-    public boolean fetchCashCondition(String choosenRiskEventType){
-
-        List<ANG_Risk_Event_Type__c> retList = [SELECT Id , Limit_Cash_conditions__c from ANG_Risk_Event_Type__c where ANG_Risk_ID__c = :choosenRiskEventType];
-
-        if(retList.isEmpty())
-            return null;
-        else
-            return retList.get(0).Limit_Cash_conditions__c;
-    }*/
 
     public void showPopup(){
         

@@ -97,15 +97,6 @@ public class ANG_RiskEventGenerator {
 		}
 	}
 
-	private Map<String, Map<String, Id>> recordTypes{
-		get{
-			if(recordTypes == null){
-				recordTypes = TransformationHelper.RtIDsPerDeveloperNamePerObj(objectsiInvolved);
-			}
-			return recordTypes;
-		}
-		set;
-	}
 
 	private List<ANG_Risk_Event_Configuration__c> configs{
 		get{
@@ -142,7 +133,7 @@ public class ANG_RiskEventGenerator {
 
 		for(SObject o : newObjects){
 			for(ANG_Risk_Event_Configuration__c config : configs){
-				if((Id)o.get('RecordTypeId') == recordTypes.get(objectName).get(config.ANG_Object_Record_Type__c)){
+				if((Id)o.get('RecordTypeId') == RecordTypeSingleton.getInstance().getRecordTypeId(objectName, config.ANG_Object_Record_Type__c)){
 					if(objectIds.add(o.Id)) objToEvaluate.add(o);
 					
 					for(ANG_RiskEventConfigurationFields f : ANG_RiskEventConfigurationFields.getList()){
@@ -176,7 +167,7 @@ public class ANG_RiskEventGenerator {
 		Map<String, String> riskEventsToUpdate  = new Map<String, String>();
 		for(SObject o : objToEvaluate){
 			for(ANG_Risk_Event_Configuration__c config : configs){
-				if((Id)o.get('RecordTypeId') == recordTypes.get(objectName).get(config.ANG_Object_Record_Type__c) && checkRequisites(o, config)){
+				if((Id)o.get('RecordTypeId') == RecordTypeSingleton.getInstance().getRecordTypeId(objectName, config.ANG_Object_Record_Type__c) && checkRequisites(o, config)){
 					String uniqueKey = o.Id+
 									''+(config.ANG_TargetAgency__c == 'Selected Accounts' ? String.valueOf((Id)o.get(accountFields.get(objectName))) : '')+
 									config.ANG_Risk_Event_Type__r.ANG_Risk_ID__c;

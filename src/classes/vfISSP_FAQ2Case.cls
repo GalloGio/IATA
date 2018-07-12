@@ -2563,15 +2563,12 @@ for (string topicver:listofAllowedTopics){
             system.debug('basto1p: FinalMatch_Lst NOT EMPTY');
             ChoosenCS = FinalMatch_Lst[0];
             //Select the choosen Record Type
-            String recordType = ChoosenCS.RecordType__c;
-            List <RecordType> recordTypeList = [SELECT Id, Name FROM RecordType WHERE DeveloperName = :recordType AND sObjectType = 'Case'];
+            Id recordTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('Case', ChoosenCS.RecordType__c);
 
-            if (!recordTypeList.isEmpty()){
+            if (String.isNotBlank(recordTypeId)){
                 //Assign RecordType according to custom Settings
-                newCase.RecordTypeId = recordTypeList[0].Id;
+                newCase.RecordTypeId = recordTypeId;
 
-                system.debug('basto1p: FinalMatch_Lst recordType='+recordTypeList[0].Name);
-                
                 //Assign owenerId according to custom Settings
                 if (ChoosenCS.OwnerId__c != null && ChoosenCS.OwnerId__c != ''){
                     newCase.OwnerId = ChoosenCS.OwnerId__c;
@@ -2817,19 +2814,12 @@ for (string topicver:listofAllowedTopics){
     //Output : record Type ID
     @TestVisible
     private Id getCaseRecordTypeIdByName(String inRecordTypeName){
-        SObjectType ObjType;
-        map<String, Schema.RecordTypeInfo> TypeInfoMap;
-        Schema.RecordTypeInfo TypeInfo;
-        Id RecTypeId;
-
-        // use Account sObject type as an example
-        ObjType =  Case.SObjectType;
-        TypeInfoMap = ObjType.getDescribe().getRecordTypeInfosByName();
-        TypeInfo = TypeInfoMap.get(inRecordTypeName);
-        if (TypeInfo != null) {
-            return RecTypeId = TypeInfo.getRecordTypeId();
-        }
-        else return null ;
+        if (inRecordTypeName != null) {
+            return RecordTypeSingleton.getInstance().getRecordTypeId('Case', inRecordTypeName);
+        } else {
+            return null;
+        } 
+            
     }
 
 

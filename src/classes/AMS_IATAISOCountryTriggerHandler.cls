@@ -26,7 +26,7 @@ public class AMS_IATAISOCountryTriggerHandler {
         	segmentCodes.add(isoc.ISO_Code__c);
         }    
         
-        Id countryrt = Schema.getGlobalDescribe().get('AMS_Segment__c').getDescribe().getRecordTypeInfosByName().get('Country Area').getRecordTypeId();
+        Id countryrt = RecordTypeSingleton.getInstance().getRecordTypeId('AMS_Segment__c', 'Country_Area');
         Map<String, AMS_Segment__c> codeToSegment = new Map<String, AMS_Segment__c>();
         for(AMS_Segment__c seg : [SELECT ID, Label__c , CountryISOCode__c
         							FROM AMS_Segment__c 

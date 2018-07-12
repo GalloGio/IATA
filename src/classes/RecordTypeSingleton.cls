@@ -1,14 +1,120 @@
+/**
+ * Singleton class that contains the record types
+ */
 public class RecordTypeSingleton {
-
+	// private static variable referencing the class
     private static RecordTypeSingleton instance = null;
-	public Map<String,Map<String,Id>> RtIDsPerDeveloperNamePerObj {get;private set;}
+    // variable that contains the repord types by name per object type
+	private Map<String, Map<String, RecordType>> recordTypesByName;
 
+	/**
+	 * Private constructor
+	 * @return
+	 */
 	private RecordTypeSingleton(){
-		RtIDsPerDeveloperNamePerObj = TransformationHelper.RtIDsPerDeveloperNamePerObj(new list<string>{'Account','Contact','Case','Opportunity','Contract','ID_Card_Application__c','EmailTemplate__c','AMS_Country_Specific_Attribute__c', 'AMS_OSCAR__c', 'Agency_Applied_Change_code__c','ANG_Agency_Risk_Calculation__c', 'ANG_RHC_Information__c', 'ANG_Risk_Alert__c', 'Partner_products__c', 'TIP_BIN_Range__c'});
+		recordTypesByName = new Map<String, Map<String, RecordType>>();
+
+		for(RecordType rt : [SELECT Id, DeveloperName, SObjectType FROM RecordType]){
+			// checks if the sObjectType is already mapped
+			if(!recordTypesByName.containsKey(rt.SObjectType)){
+				// puts a new entry for the object type and instantiates the map that will contain the corresponding record types mapped by Name
+				recordTypesByName.put(rt.SObjectType, new Map<String, RecordType>());
+			}
+			// fills the maps of the record type per object type
+			recordTypesByName.get(rt.SObjectType).put(rt.DeveloperName, rt);
+		}
+
 	}
-	    
+	   
+	/**
+	 * Method that returns the instance of RecordTypeSingleton
+	 * @return instance of the singleton
+	 */
 	public static RecordTypeSingleton getInstance(){
-		if(instance == null) instance = new RecordTypeSingleton();
+		if(instance == null){
+			instance = new RecordTypeSingleton();
+		} 
+	    
 	    return instance;
 	}
+
+	/**
+	 * Method that returns the record type object
+	 * @param objectName  the name of the object
+	 * @param devName 	  the name of the record type (DeveloperName)
+	 * @return 			  record type object
+	 */
+	public RecordType getRecordType(String objectName, String devName){
+
+		return recordTypesByName.get(objectName).get(devName);
+
+	}
+
+
+	/**
+	 * Method that returns the Id of the record type
+	 * @param objectName the name of the object
+	 * @param devName 	 the name of the record type (DeveloperName)
+	 * @return 			 id of the record type object
+	 */
+	public Id getRecordTypeId(String objectName, String devName){
+
+		return recordTypesByName.get(objectName).get(devName).Id;
+
+	}
+
+
+	/**
+	 * Method that returns a list of record types for a specified object name
+	 * @param  objectName the name of the object
+	 * @return            the list of record types for the passed object name
+	 */
+	public List<RecordType> getRecordTypesBySObject(String objectName){
+
+		return recordTypesByName.get(objectName).values();
+
+	}
+
+
+	/**
+	 * Method that returns a list of record types Ids for a specified object and a list of developer names
+	 * @param  objectName  the name of the object
+	 * @param  devNameList List of the name of the record type (DeveloperName)
+	 * @return             List of record type Ids for the passed object name and list of record type names
+	 */
+	public List<Id> getRecordTypeObjIdListForSpecfifiedNames(String objectName, List<String> devNameList){
+
+		List<Id> returnRecTypeObjIdList = new List<Id>();
+
+		for(String devName : devNameList){
+
+			returnRecTypeObjIdList.add(getRecordTypeId(objectName, devName));
+		}
+
+		return returnRecTypeObjIdList;
+
+	}
+
+
+	/**
+	 * Method that returns a list of record types Ids for a specified object and that are not on the list of developer names
+	 * @param  objectName        the name of the object
+	 * @param  exceptDevNameList List of the name of the record type (DeveloperName) to exclude
+	 * @return                   List of record type Ids for the passed object name and that is not present on the list of record type names
+	 */
+	public List<Id> getRecordTypeObjIdListExceptPassedNames(String objectName, List<String> exceptDevNameList){
+
+		List<Id> returnRecTypeObjIdList = new List<Id>();
+
+		for(RecordType recType : recordTypesByName.get(objectName).values()){
+
+			if(!exceptDevNameList.contains(recType.DeveloperName)){
+
+				returnRecTypeObjIdList.add(recType.Id);
+			}
+		}
+
+		return returnRecTypeObjIdList;
+	}
+
 }

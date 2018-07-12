@@ -109,7 +109,7 @@ private class PlatformEvents_Helper_Test {
     	IATA_ISO_Country__c country = new IATA_ISO_Country__c (Name = 'US', ISO_Code__c = 'US');
         insert country;
 
-		Id paymentProviderRecordTypeId = RecordTypeSingleton.getInstance().RtIDsPerDeveloperNamePerObj.get('Account').get('TIP_Payment_Provider');
+		Id paymentProviderRecordTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('Account', 'TIP_Payment_Provider');
 
 		Account provider = new Account(Name = 'ProviderTest1',
 			TIP_Provider_Type__c = 'Open Loop',
@@ -164,7 +164,7 @@ private class PlatformEvents_Helper_Test {
     	IATA_ISO_Country__c country = new IATA_ISO_Country__c (Name = 'US', ISO_Code__c = 'US');
         insert country;
 
-		Id paymentProviderRecordTypeId = RecordTypeSingleton.getInstance().RtIDsPerDeveloperNamePerObj.get('Account').get('TIP_Payment_Provider');
+		Id paymentProviderRecordTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('Account', 'TIP_Payment_Provider');
 
 		Account provider = new Account(Name = 'ProviderTest1',
 					TIP_Provider_Type__c = 'Open Loop',

@@ -908,12 +908,12 @@ public without sharing class vfIECUserRegistration  extends IECPageController {
           userId= Comm_User_Helper.createNewUser(con,selectedCustomerType, 'IEC');
 
           if (userId != null) {
-            RecordType rt = [Select r.Id,r.Name, r.DeveloperName From RecordType r where  DeveloperName='Standard_Contact'];
+            Id rtId = RecordTypeSingleton.getInstance().getRecordTypeId('Contact', 'Standard_Contact');
 
             //conList = [select accountId,firstName,lastName,Email from Contact where Email =:con.email.trim() and RecordTypeId=:rt.Id];
                contact conIDCard = [select accountId,firstName,lastName,Email,User_Portal_Status__c,
                             (SELECT Id, Valid_To_Date__c FROM ID_Cards__r WHERE Is_Active_Card__c = true)
-                            from Contact where id =:con.id and RecordTypeId=:rt.Id];
+                            from Contact where id =:con.id and RecordTypeId=:rtId];
         
 
                 //TF - SP10-N2

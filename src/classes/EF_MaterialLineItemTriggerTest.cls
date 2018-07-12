@@ -14,7 +14,7 @@ public class EF_MaterialLineItemTriggerTest {
             //create account 
             Account client = new Account(
                 Name='Test Account client',
-                RecordTypeId = AMS_Utils.getId('Account', 'Standard_Account'),
+                RecordTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('Account', 'Standard_Account'),
                 Sector__c = 'IATA Supplier',
                 Category__c = 'ANSP',
                 EF_type__c = 'E&F Client',
@@ -29,7 +29,7 @@ public class EF_MaterialLineItemTriggerTest {
             //create account 
             Account client2 = new Account(
                 Name='Test Account client 2',
-                RecordTypeId = AMS_Utils.getId('Account', 'Standard_Account'),
+                RecordTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('Account', 'Standard_Account'),
                 Sector__c = 'IATA Supplier',
                 Category__c = 'ANSP',
                 EF_type__c = 'E&F Client',
@@ -44,7 +44,7 @@ public class EF_MaterialLineItemTriggerTest {
             //create account
             Account client3 = new Account(
                 Name='Test Account client 3',
-                RecordTypeId = AMS_Utils.getId('Account', 'Standard_Account'),
+                RecordTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('Account', 'Standard_Account'),
                 Sector__c = 'IATA Supplier',
                 Category__c = 'ANSP',
                 EF_type__c = 'E&F Client',
@@ -59,7 +59,7 @@ public class EF_MaterialLineItemTriggerTest {
             //create account 
             Account customer = new Account(
                 Name='Test Account customer',
-                RecordTypeId = AMS_Utils.getId('Account', 'Standard_Account'),
+                RecordTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('Account', 'Standard_Account'),
                 Sector__c = 'IATA Supplier',
                 Category__c = 'ANSP',
                 EF_type__c = 'E&F Operator',
@@ -79,7 +79,7 @@ public class EF_MaterialLineItemTriggerTest {
                 Budget_Section__c ='aaaa',
                 CCF_Amount__c = 250000,
                 ContractTerm = 12,
-                RecordTypeId = AMS_Utils.getId('Contract', 'EF_Client_Agreement'),
+                RecordTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('Contract', 'EF_Client_Agreement'),
                 StartDate = Date.today(),
                 Type__c ='Revenue',
                 EF_Status__c = 'Active',
@@ -96,7 +96,7 @@ public class EF_MaterialLineItemTriggerTest {
                 Budget_Section__c ='aaaa',
                 CCF_Amount__c = 250000,            
                 ContractTerm = 12,
-                RecordTypeId = AMS_Utils.getId('Contract', 'EF_Client_Agreement'),
+                RecordTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('Contract', 'EF_Client_Agreement'),
                 StartDate = Date.today(),
                 Type__c ='Revenue',
                 EF_Status__c = 'Active'
@@ -137,7 +137,7 @@ public class EF_MaterialLineItemTriggerTest {
             
     
             EF_Related_Records__c loc = new EF_Related_Records__c (
-                RecordTypeId = AMS_Utils.getId('EF_Related_Records__c', 'Location'),
+                RecordTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('EF_Related_Records__c', 'Location'),
                 name = 'Main'               
             );
             
@@ -169,7 +169,7 @@ public class EF_MaterialLineItemTriggerTest {
             
             List <EF_Material_Line_Item__c> mliList = new List <EF_Material_Line_Item__c> ();
             EF_Material_Line_Item__c mli = new EF_Material_Line_Item__c(
-                RecordTypeId = AMS_Utils.getId('EF_Material_Line_Item__c', 'Contract_Line_Item'),
+                RecordTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('EF_Material_Line_Item__c', 'Contract_Line_Item'),
                 Contract__c = contract.id,
                 EF_Material__c = prd.id            
                 );
@@ -177,7 +177,7 @@ public class EF_MaterialLineItemTriggerTest {
             mliList.add(mli);
             
             EF_Material_Line_Item__c mli2 = new EF_Material_Line_Item__c(
-                RecordTypeId = AMS_Utils.getId('EF_Material_Line_Item__c', 'Contract_Line_Item'),
+                RecordTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('EF_Material_Line_Item__c', 'Contract_Line_Item'),
                 Contract__c = contract.id,
                 EF_Material__c = prd3.id            
                 );
@@ -195,7 +195,7 @@ public class EF_MaterialLineItemTriggerTest {
         Product2 prd = [Select id From Product2 where Name = 'Test product 1'];
         
         EF_Material_Line_Item__c mli = new EF_Material_Line_Item__c(
-            RecordTypeId = AMS_Utils.getId('EF_Material_Line_Item__c', 'Relationship_Line_Item'),
+            RecordTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('EF_Material_Line_Item__c', 'Relationship_Line_Item'),
             EF_Relationship__c = rel.id,
             EF_Material__c = prd.id            
             );
@@ -215,7 +215,7 @@ public class EF_MaterialLineItemTriggerTest {
         Product2 prd = [Select id From Product2 where Name = 'Test product 2'];
         
         EF_Material_Line_Item__c mli = new EF_Material_Line_Item__c(
-            RecordTypeId = AMS_Utils.getId('EF_Material_Line_Item__c', 'Relationship_Line_Item'),
+            RecordTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('EF_Material_Line_Item__c', 'Relationship_Line_Item'),
             EF_Relationship__c = rel.id,
             EF_Material__c = prd.id
             );
@@ -238,7 +238,7 @@ public class EF_MaterialLineItemTriggerTest {
         Product2 prd2 = [Select id From Product2 where Name = 'Test product 2'];
                 
         EF_Material_Line_Item__c mli = new EF_Material_Line_Item__c(
-            RecordTypeId = AMS_Utils.getId('EF_Material_Line_Item__c', 'Relationship_Line_Item'),
+            RecordTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('EF_Material_Line_Item__c', 'Relationship_Line_Item'),
             EF_Relationship__c = rel.id,
             EF_Material__c = prd.id
             );
@@ -263,7 +263,7 @@ public class EF_MaterialLineItemTriggerTest {
         Product2 prd3 = [Select id From Product2 where Name = 'Test product 3'];
                 
         EF_Material_Line_Item__c mli = new EF_Material_Line_Item__c(
-            RecordTypeId = AMS_Utils.getId('EF_Material_Line_Item__c', 'Relationship_Line_Item'),
+            RecordTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('EF_Material_Line_Item__c', 'Relationship_Line_Item'),
             EF_Relationship__c = rel.id,
             EF_Material__c = prd.id
             );
@@ -288,13 +288,13 @@ public class EF_MaterialLineItemTriggerTest {
         Product2 prd2 = [Select id From Product2 where Name = 'Test product 2'];
                 
         EF_Material_Line_Item__c mli = new EF_Material_Line_Item__c(
-            RecordTypeId = AMS_Utils.getId('EF_Material_Line_Item__c', 'Relationship_Line_Item'),
+            RecordTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('EF_Material_Line_Item__c', 'Relationship_Line_Item'),
             EF_Relationship__c = rel.id,
             EF_Material__c = prd.id
             );
         
         EF_Material_Line_Item__c mli2 = new EF_Material_Line_Item__c(
-            RecordTypeId = AMS_Utils.getId('EF_Material_Line_Item__c', 'Relationship_Line_Item'),
+            RecordTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('EF_Material_Line_Item__c', 'Relationship_Line_Item'),
             EF_Relationship__c = rel.id,
             EF_Material__c = prd2.id
             );        
@@ -317,13 +317,13 @@ public class EF_MaterialLineItemTriggerTest {
         Product2 prd3 = [Select id From Product2 where Name = 'Test product 3'];
         
         EF_Material_Line_Item__c mli = new EF_Material_Line_Item__c(
-            RecordTypeId = AMS_Utils.getId('EF_Material_Line_Item__c', 'Relationship_Line_Item'),
+            RecordTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('EF_Material_Line_Item__c', 'Relationship_Line_Item'),
             EF_Relationship__c = rel.id,
             EF_Material__c = prd.id
             );
         
         EF_Material_Line_Item__c mli2 = new EF_Material_Line_Item__c(
-            RecordTypeId = AMS_Utils.getId('EF_Material_Line_Item__c', 'Relationship_Line_Item'),
+            RecordTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('EF_Material_Line_Item__c', 'Relationship_Line_Item'),
             EF_Relationship__c = rel.id,
             EF_Material__c = prd3.id
             );
@@ -351,19 +351,19 @@ public class EF_MaterialLineItemTriggerTest {
         Product2 prd3 = [Select id From Product2 where Name = 'Test product 3'];
                 
         EF_Material_Line_Item__c mli = new EF_Material_Line_Item__c(
-            RecordTypeId = AMS_Utils.getId('EF_Material_Line_Item__c', 'Relationship_Line_Item'),
+            RecordTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('EF_Material_Line_Item__c', 'Relationship_Line_Item'),
             EF_Relationship__c = rel.id,
             EF_Material__c = prd.id
             );
         
         EF_Material_Line_Item__c mli2 = new EF_Material_Line_Item__c(
-            RecordTypeId = AMS_Utils.getId('EF_Material_Line_Item__c', 'Relationship_Line_Item'),
+            RecordTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('EF_Material_Line_Item__c', 'Relationship_Line_Item'),
             EF_Relationship__c = rel.id,
             EF_Material__c = prd2.id
             );
                 
         EF_Material_Line_Item__c mli3 = new EF_Material_Line_Item__c(
-            RecordTypeId = AMS_Utils.getId('EF_Material_Line_Item__c', 'Relationship_Line_Item'),
+            RecordTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('EF_Material_Line_Item__c', 'Relationship_Line_Item'),
             EF_Relationship__c = rel.id,
             EF_Material__c = prd3.id
             );

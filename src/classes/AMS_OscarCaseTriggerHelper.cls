@@ -17,7 +17,7 @@ public class AMS_OscarCaseTriggerHelper {
         private set;
     }
 
-    private static Id OSCARCaseRecordTypeID = Schema.Case.sObjectType.getDescribe().getRecordTypeInfosByName().get('OSCAR Communication').getRecordTypeId();
+    private static Id OSCARCaseRecordTypeID = RecordTypeSingleton.getInstance().getRecordTypeId('Case', 'OSCAR_Communication');
 
     //remove OSCAR from child case, if case is being cloned from OSCAR parent
     public static void removeOscarFromChild(list<Case> triggerNew){
@@ -250,8 +250,8 @@ public class AMS_OscarCaseTriggerHelper {
     public static void checkIrregularityThreshold() {
         List<Case> triggerNew = (List<Case>)Trigger.new;
 
-        Id sidraRecTypeId = Schema.Case.sObjectType.getDescribe().getRecordTypeInfosByName().get('SIDRA').getRecordTypeId();
-        Id sidraLiteRecTypeId = RecordTypeSingleton.getInstance().RtIDsPerDeveloperNamePerObj.get('Case').get('SIDRA_Lite');
+        Id sidraRecTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('Case', 'SIDRA');
+        Id sidraLiteRecTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('Case', 'SIDRA_Lite');
 
         List<Case> newSidraCases = new List<Case>();
         Map<Id, Account> accounts = new Map<Id, Account>();
@@ -296,7 +296,7 @@ public class AMS_OscarCaseTriggerHelper {
         List<Case> IRRCases = new List<Case>();
         List<Case> IRRWDCases = new List<Case>();
 
-        Id sidraRecTypeId = Schema.Case.sObjectType.getDescribe().getRecordTypeInfosByName().get('SIDRA').getRecordTypeId();
+        Id sidraRecTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('Case', 'SIDRA');
         for(Case c : (List<Case>)Trigger.new){
             Case cOld = (Trigger.isInsert ? null : (Case)Trigger.oldMap.get(c.Id));
             if(c.RecordTypeId == sidraRecTypeId){
@@ -330,8 +330,8 @@ public class AMS_OscarCaseTriggerHelper {
     }
 
     
-    private static id RTSidra = RecordTypeSingleton.getInstance().RtIDsPerDeveloperNamePerObj.get('Case').get('SIDRA');
-    private static id RTSidraLite = RecordTypeSingleton.getInstance().RtIDsPerDeveloperNamePerObj.get('Case').get('SIDRA_Lite');
+    private static id RTSidra = RecordTypeSingleton.getInstance().getRecordTypeId('Case', 'SIDRA');
+    private static id RTSidraLite = RecordTypeSingleton.getInstance().getRecordTypeId('Case', 'SIDRA_Lite');
     
     public static void CreateRiskChangeCode(){
         if(AMS_OscarCase_RiskMgmt.runOnce()){

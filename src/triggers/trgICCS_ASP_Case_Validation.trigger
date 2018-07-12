@@ -8,9 +8,8 @@
  */
  
 trigger trgICCS_ASP_Case_Validation on Case (before insert, before update) {
-	//RecordType RT_ICCS_ASP = [SELECT Id FROM RecordType WHERE DeveloperName = 'FDS_ASP_Management'];
-	Id RT_ICCS_ASP_Id = Schema.SObjectType.Case.RecordTypeInfosByName.get('FDS ASP Management').getRecordTypeId() ;
-	ID AirlineCodingRTId = RecordTypeSingleton.getInstance().RtIDsPerDeveloperNamePerObj.get('Case').get('Airline_Coding_Application');
+	Id RT_ICCS_ASP_Id = RecordTypeSingleton.getInstance().getRecordTypeId('Case', 'FDS_ASP_Management');
+	ID AirlineCodingRTId = RecordTypeSingleton.getInstance().getRecordTypeId('Case', 'Airline_Coding_Application');
 	
 	// get a list of the Ids of all the Accounts linked to the Trigger cases
 	list<Id> lstRelatedAccountIds = new list<Id>();
@@ -18,7 +17,6 @@ trigger trgICCS_ASP_Case_Validation on Case (before insert, before update) {
 	set<Id> lstClosingCasesIds = new set<Id>();
 	
 	for (Case c : Trigger.new) {
-		system.debug(LoggingLevel.ERROR,'aqui ****************$$$$$$$$$$$$$$$$$********************case: ' + c.Previous_case_owner__c + ' owner ' + c.OwnerId);
 		if ((c.RecordTypeId == RT_ICCS_ASP_Id  &&  c.CaseArea__c == 'FDS - Create Authorized Signatories Package') ||
 			c.RecordTypeId == AirlineCodingRTId ) {
 			
@@ -32,7 +30,6 @@ trigger trgICCS_ASP_Case_Validation on Case (before insert, before update) {
 	// only continue if there are related accounts
 	set<Id> setRelatedAcctIds = new set<Id>();
 	setRelatedAcctIds.addAll(lstRelatedAccountIds);
-	//setRelatedAcctIds.addAll(lstClosedCasesAccountIds);
 	
 	// get a map of relevant cases per Account Id
 	Map<Id, Case> mapCasesPerAccountId = new Map<Id, Case>(); // for ICCS ASP

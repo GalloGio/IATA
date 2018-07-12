@@ -30,12 +30,6 @@ public with sharing class DAL_ISSP_Test {
 		//ISSP_PersonalInformationWithoutSharing.getPortalAdmins(emptyList);
 	}
 	
-	static testMethod void test_getRecordTypeId() {
-		DAL_ISSP.getRecordTypeId('');
-		DAL_ISSP.getRecordTypeId(null);
-		String RecordTypeName = [SELECT DeveloperName FROM RecordType LIMIT 1].DeveloperName;
-		DAL_ISSP.getRecordTypeId(RecordTypeName);
-	}
 	
 	static testMethod void test_getCase() {
 		Case cas = DAL_ISSP.getCase('');

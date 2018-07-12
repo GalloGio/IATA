@@ -5,8 +5,7 @@
 trigger trgCaseIFAP on Case (before insert, before update) {
     if (CaseChildHelper.noValidationsOnTrgCAseIFAP)return;
     // get the IFAP case recordtype
-    //ID IFAPcaseRecordTypeID = clsCaseRecordTypeIDSingleton.getInstance().RecordTypes.get('IATA Financial Review');
-    ID IFAPcaseRecordTypeID = RecordTypeSingleton.getInstance().RtIDsPerDeveloperNamePerObj.get('Case').get('IATA_Financial_Review');
+    ID IFAPcaseRecordTypeID = RecordTypeSingleton.getInstance().getRecordTypeId('Case', 'IATA_Financial_Review');
 
     Boolean isIFAp = false;
 

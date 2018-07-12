@@ -1,8 +1,7 @@
 trigger NewAttachment on Attachment (after insert) {
 	
 	List<Case> caseList = new List<Case>();
-	ID SISRecordTypeID = clsCaseRecordTypeIDSingleton.getInstance().RecordTypes.get('Cases - SIS Help Desk');
-	//RecordType rType = [Select id from RecordType where name = 'Cases - SIS Help Desk'];
+	ID SISRecordTypeID = RecordTypeSingleton.getInstance().getRecordTypeId('Case', 'Cases_SIS_Help_Desk');
 	for(Attachment a : Trigger.new){
 		
 		caseList = [Select id, casenumber, subject from Case where recordtypeId =: SISRecordTypeID and id =: a.ParentId limit 1 for update];

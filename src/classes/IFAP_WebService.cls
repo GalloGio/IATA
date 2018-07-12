@@ -136,8 +136,7 @@ global class IFAP_WebService {
 
     WebService static String generateURLForNewCaseFromSAAM(String saamCaseId) {
 
-        //ID IFAPcaseRecordTypeID = clsCaseRecordTypeIDSingleton.getInstance().RecordTypes.get('IATA Financial Review');
-        ID IFAPcaseRecordTypeID = RecordTypeSingleton.getInstance().RtIDsPerDeveloperNamePerObj.get('Case').get('IATA_Financial_Review');
+        ID IFAPcaseRecordTypeID = RecordTypeSingleton.getInstance().getRecordTypeId('Case', 'IATA_Financial_Review');
 
         String url = '/500/e?retURL=/' + saamCaseId + '&RecordType=' + IFAPcaseRecordTypeID;
 
@@ -196,8 +195,7 @@ global class IFAP_WebService {
     webService static string CallReassessmentApprovalProcess(String caseId, string QualityIssueID) {
 
         try {
-            //ID IFAPcaseRecordTypeID = clsCaseRecordTypeIDSingleton.getInstance().RecordTypes.get('IATA Financial Review');
-            ID IFAPcaseRecordTypeID = RecordTypeSingleton.getInstance().RtIDsPerDeveloperNamePerObj.get('Case').get('IATA_Financial_Review');
+            ID IFAPcaseRecordTypeID = RecordTypeSingleton.getInstance().getRecordTypeId('Case', 'IATA_Financial_Review');
 
             Case[] c = [Select c.Status, c.OwnerId From Case c where c.Id = :caseId and c.RecordTypeId = : IFAPcaseRecordTypeID limit 1];
             if (c.size() > 0 ) {

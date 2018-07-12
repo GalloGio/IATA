@@ -119,8 +119,9 @@ public with sharing class DeploymentPlanItemHelper {
 
     private static Boolean checkRecordType(Deployment_Plan_Item__c item) {
         if (checkRelatedObject(item)) {
-            List<RecordType> rt = [select id from RecordType where DeveloperName = :item.Element__c and SobjectType = :item.Related_Object__c];
-            if (rt.isEmpty()) {
+            
+            Id rtId = RecordTypeSingleton.getInstance().getRecordTypeId(item.Related_Object__c, item.Element__c);
+            if (String.isBlank(rtId)) {
                 item.Element__c.addError('Record type '+item.element__c+ ' doesn\'t exist for this object in this Org');
                 return false;
             }

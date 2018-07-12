@@ -7,8 +7,7 @@ public without sharing class LightningRegistrationProcess{
     @AuraEnabled
     public static String checkemail(String email) {
 
-        //acc.RecordTypeId = Schema.Account.sObjectType.getDescribe().getRecordTypeInfosByName().get('Standard Account').getRecordTypeId();
-        RecordType rt = [Select Id From RecordType WHERE SObjectType ='Contact' AND DeveloperName='Standard_Contact'];
+        ID rtId = RecordTypeSingleton.getInstance().getRecordTypeId('Contact', 'Standard_Contact');
         User [] u = [SELECT Id FROM User
               WHERE email =: email AND IsActive = true limit 1];
         Contact [] c = [SELECT Id, email, RecordType.Id FROM Contact
@@ -19,7 +18,7 @@ public without sharing class LightningRegistrationProcess{
             if(c.size() == 0){
                 System.Debug('create_contactanduser');
                 return 'create_contactanduser';
-            } else if(c[0].RecordType.Id == rt.Id){
+            } else if(c[0].RecordType.Id == rtId){
                 System.Debug('create_user');
                 return 'create_user';
             } else {
@@ -419,14 +418,14 @@ public without sharing class LightningRegistrationProcess{
     @AuraEnabled
     public Static void checkConAvailable (Contact con){
         System.debug('CheckConAvailable: ' + con);
-        RecordType rt = [Select Id From RecordType WHERE SObjectType ='Contact' AND DeveloperName='Standard_Contact'];        
+        Id rtId = RecordTypeSingleton.getInstance().getRecordTypeId('Contact', 'Standard_Contact');        
         Contact [] ec = [Select id, email, AccountId, RecordType.Id FROM Contact WHERE email =:con.email AND AccountId =:con.AccountId LIMIT 1];
-        System.debug('Record Type: ' + rt);
+        System.debug('Record Type: ' + rtId);
         
         if(ec.size() > 0){
             System.debug('Update Contact');
             con.Id = ec[0].Id;
-            con.RecordTypeId = rt.Id;
+            con.RecordTypeId = rtId;
             database.update(con);
         } else {
             System.debug('Insert new contact');
@@ -436,10 +435,8 @@ public without sharing class LightningRegistrationProcess{
 
     @AuraEnabled
     public Static String createContactAndAccount (Contact con, Account acc, String customerType) {
-        // ISSP_Registration registration = new ISSP_Registration();
-        // Boolean b = registration.pageIsValid();
-        RecordType rt = [Select Id From RecordType WHERE SObjectType ='Contact' AND DeveloperName='Standard_Contact'];
-        if(con.RecordType == null) con.RecordTypeId = rt.Id;
+        Id stdContactRtId = RecordTypeSingleton.getInstance().getRecordTypeId('Contact', 'Standard_Contact');
+        if(con.RecordType == null) con.RecordTypeId = stdContactRtId;
 
         //Debug
         System.debug('Contact ' + con);
@@ -451,11 +448,13 @@ public without sharing class LightningRegistrationProcess{
                 acc.Reason_for_creation__c = 'Created by customer';
                 //Since we need to create a portal user, we need to assign the account to a user with a specified role, otherwise an error is thrown
                 acc.ownerid = ISSP_Constant.newAccountOwnerId;
-                String recname = ISSP_Constant.accountDefaultRecordTypeByCustomerType.get(customerType);
-                List<RecordType> rtSet = [select id from RecordType where DeveloperName=:recname];
-                    if (rtSet!=null && rtSet.size()>0 && rtSet.get(0)!=null)
-                acc.recordtypeid = rtSet[0].id;
                 
+                String recname = ISSP_Constant.accountDefaultRecordTypeByCustomerType.get(customerType);
+                Id rtId = RecordTypeSingleton.getInstance().getRecordTypeId('Account', recname);
+                if (String.isNotBlank(rtId)){
+                    acc.recordtypeid = rtId;
+                }
+
                 if (!String.isBlank(acc.Category__c) && acc.Category__c != 'Other')
                     acc.Category_Other_Value__c = null;
                 

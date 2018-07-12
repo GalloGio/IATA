@@ -87,7 +87,7 @@ private class IDCard_SF_AIMS_WebService_Test {
     {   IATA_ISO_Country__c country_fr = new IATA_ISO_Country__c(Name = 'France', ISO_Code__c = 'FR', Region__c = 'Europe');
         insert country_fr;
 
-        ID rectypeid = Schema.SObjectType.Account.getRecordTypeInfosByName().get('Agency').getRecordTypeId();
+        ID rectypeid = RecordTypeSingleton.getInstance().getRecordTypeId('Account', 'IATA_Agency');
 
         Account aAccount = new Account();
         aAccount.Name = 'Unit Test Account 1';

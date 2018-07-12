@@ -297,7 +297,7 @@ public class ANG_RiskAssessmentEngine_Test{
         	ANG_Accreditation_Model__c ='Cash',
         	Status__c='Terminated',
         	ANG_HE_RiskHistoryAssessment__c='Passed',
-        	recordtypeId=RecordTypeSingleton.getInstance().RtIDsPerDeveloperNamePerObj.get('Account').get('IATA_Agency')
+        	recordtypeId=RecordTypeSingleton.getInstance().getRecordTypeID('Account', 'IATA_Agency')
         	);	
 
         insert acc;	

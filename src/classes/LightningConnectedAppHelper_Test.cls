@@ -24,7 +24,7 @@ private  class LightningConnectedAppHelper_Test {
 
         Profile p = [SELECT Id FROM Profile WHERE Name='Developer'];
         USER user = new USER (Alias = 'newUser',Email = 'ze@ze.pt', LastName = 'ze',  ProfileId = p.Id, UserName='ze@testorg.com',TimeZoneSidKey='America/Los_Angeles', LocaleSidKey='en_US',EmailEncodingKey='UTF-8', LanguageLocaleKey='en_US');
-        Id recTypeId = OneIdProvisioningDAO.AppRecordTypesConfig.get('One_Id_Service_Provider_Config__c').get('Service_Bundle');
+        Id recTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('One_Id_Service_Provider_Config__c', 'Service_Bundle');
         
         One_Id_Service_Provider_Config__c oi = new One_Id_Service_Provider_Config__c(Service_Provider_Name__c = 'Bundle',
                                                                                      License_Upgrade_Required__c= true,
@@ -96,7 +96,7 @@ private  class LightningConnectedAppHelper_Test {
     static testMethod void TestResetSCIMProvisioning(){
 
         List<PermissionSet> psIds = [SELECT Id,name FROM PermissionSet LIMIT 5];
-        Id recTypeId = OneIdProvisioningDAO.AppRecordTypesConfig.get('One_Id_Service_Provider_Config__c').get('Service_Bundle');
+        Id recTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('One_Id_Service_Provider_Config__c', 'Service_Bundle');
         One_Id_Service_Provider_Config__c oi = new One_Id_Service_Provider_Config__c(Service_Provider_Name__c = 'Bundle',
                 License_Upgrade_Required__c= true,
                 Profile_Id__c='a1',

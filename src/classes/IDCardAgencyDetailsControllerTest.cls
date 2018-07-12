@@ -80,7 +80,7 @@ public class IDCardAgencyDetailsControllerTest{
          Account acc = new Account(Name ='testAccount',
             IATACode__c = testData.IDCards_IDCardApplications[0].IATA_Code__c,
             ID_Card_KeyAccount_features__c = 'Prohibit Applicant to Apply',
-            RecordTypeID = Schema.SObjectType.Account.getRecordTypeInfosByName().get('Agency').getRecordTypeId(),
+            RecordTypeID = RecordTypeSingleton.getInstance().getRecordTypeId('Account', 'IATA_Agency'),
             Status__c = 'Listed',
             IDCard_Key_Account__c = true);
         insert acc;
@@ -104,7 +104,7 @@ public class IDCardAgencyDetailsControllerTest{
         Account acc = new Account(Name ='testAccount',
             IATACode__c = testData.IDCards_IDCardApplications[0].IATA_Code__c,
             ID_Card_KeyAccount_features__c = 'Prohibit Applicant to Apply',
-            RecordTypeID = Schema.SObjectType.Account.getRecordTypeInfosByName().get('Agency').getRecordTypeId(),
+            RecordTypeID = RecordTypeSingleton.getInstance().getRecordTypeId('Account', 'IATA_Agency'),
             Status__c = 'Listed');
         insert acc;
         Contact con = new Contact(FirstName = 'test',

@@ -19,9 +19,9 @@ private class AMS_Batch_AggregatePwcDataTest {
         currentDateTime = DateTime.now();
 
         // Required record types for AMS_Country_Specific_Attribute__c
-        RecordType recordTypeDefLfc = [SELECT Id FROM RecordType WHERE SobjectType = 'AMS_Country_Specific_Attribute__c' AND DeveloperName = 'DEF_LFC'];
-        RecordType recordTypeIrrsLfc = [SELECT Id FROM RecordType WHERE SobjectType = 'AMS_Country_Specific_Attribute__c' AND DeveloperName = 'IRRS_LFC'];
-        RecordType recordTypeIrrCpe = [SELECT Id FROM RecordType WHERE SobjectType = 'AMS_Country_Specific_Attribute__c' AND DeveloperName = 'IRR_CPE'];
+        Id recordTypeDefLfcId = RecordTypeSingleton.getInstance().getRecordTypeId('AMS_Country_Specific_Attribute__c', 'DEF_LFC');
+        Id recordTypeIrrsLfcId = RecordTypeSingleton.getInstance().getRecordTypeId('AMS_Country_Specific_Attribute__c', 'IRRS_LFC');
+        Id recordTypeIrrCpeId = RecordTypeSingleton.getInstance().getRecordTypeId('AMS_Country_Specific_Attribute__c', 'IRR_CPE');
 
         // Create ISO countries
         IATA_ISO_Country__c isoCountry1 = new IATA_ISO_Country__c();
@@ -57,22 +57,22 @@ private class AMS_Batch_AggregatePwcDataTest {
 
         // Create country specific attributes
         AMS_Country_Specific_Attribute__c countrySpecificAttribute1 = new AMS_Country_Specific_Attribute__c();
-        countrySpecificAttribute1.RecordTypeId = recordTypeDefLfc.Id;
+        countrySpecificAttribute1.RecordTypeId = recordTypeDefLfcId;
         countrySpecificAttribute1.IATA_ISO_Country__c = isoCountry3.Id;
         countrySpecificAttribute1.Location_Class__c = 'P';
         countrySpecificAttribute1.Months_Count__c = 36;
         AMS_Country_Specific_Attribute__c countrySpecificAttribute2 = new AMS_Country_Specific_Attribute__c();
-        countrySpecificAttribute2.RecordTypeId = recordTypeDefLfc.Id;
+        countrySpecificAttribute2.RecordTypeId = recordTypeDefLfcId;
         countrySpecificAttribute2.IATA_ISO_Country__c = isoCountry3.Id;
         countrySpecificAttribute2.Location_Class__c = 'C';
         countrySpecificAttribute2.Months_Count__c = 24;
         AMS_Country_Specific_Attribute__c countrySpecificAttribute3 = new AMS_Country_Specific_Attribute__c();
-        countrySpecificAttribute3.RecordTypeId = recordTypeIrrsLfc.Id;
+        countrySpecificAttribute3.RecordTypeId = recordTypeIrrsLfcId;
         countrySpecificAttribute3.IATA_ISO_Country__c = isoCountry2.Id;
         countrySpecificAttribute3.Location_Class__c = 'P';
         countrySpecificAttribute3.Months_Count__c = 24;
         AMS_Country_Specific_Attribute__c countrySpecificAttribute4 = new AMS_Country_Specific_Attribute__c();
-        countrySpecificAttribute4.RecordTypeId = recordTypeIrrCpe.Id;
+        countrySpecificAttribute4.RecordTypeId = recordTypeIrrCpeId;
         countrySpecificAttribute4.IATA_ISO_Country__c = isoCountry4.Id;
         countrySpecificAttribute4.Location_Class__c = 'D';
         countrySpecificAttribute4.Irregularity_Type__c = 'OV2';
@@ -123,104 +123,104 @@ private class AMS_Batch_AggregatePwcDataTest {
         account6 = [SELECT Id, IATA_ISO_Country__c FROM Account WHERE Name = 'AccountTest6'];
 
         // Required record types for Agency_Applied_Change_code__c
-        RecordType recordTypeStandard = [SELECT Id FROM RecordType WHERE SobjectType = 'Agency_Applied_Change_code__c' AND DeveloperName = 'Standard'];
-        RecordType recordTypeIrregularities = [SELECT Id FROM RecordType WHERE SobjectType = 'Agency_Applied_Change_code__c' AND DeveloperName = 'Irregularities'];
+        Id recordTypeStandardId = RecordTypeSingleton.getInstance().getRecordTypeId('Agency_Applied_Change_code__c', 'Standard');
+        Id recordTypeIrregularitiesId = RecordTypeSingleton.getInstance().getRecordTypeId('Agency_Applied_Change_code__c', 'Irregularities');
 
         // Create agency applied change codes for DEF & DEFNONPAY
         Agency_Applied_Change_code__c agencyAppliedChangeCode1 = new Agency_Applied_Change_code__c();
-        agencyAppliedChangeCode1.RecordTypeId = recordTypeStandard.Id;
+        agencyAppliedChangeCode1.RecordTypeId = recordTypeStandardId;
         agencyAppliedChangeCode1.Account__c = account1.Id;
         agencyAppliedChangeCode1.Change_Code__c = 'DEF';
         agencyAppliedChangeCode1.Reason_Description__c = 'DEFAULT-OVERDUE REMITTANCE';
         //agencyAppliedChangeCode1.DEF_Non_Payment__c = true;
         agencyAppliedChangeCode1.Date_time_of_change__c = currentDateTime;
         Agency_Applied_Change_code__c agencyAppliedChangeCode2 = new Agency_Applied_Change_code__c();
-        agencyAppliedChangeCode2.RecordTypeId = recordTypeStandard.Id;
+        agencyAppliedChangeCode2.RecordTypeId = recordTypeStandardId;
         agencyAppliedChangeCode2.Account__c = account1.Id;
         agencyAppliedChangeCode2.Change_Code__c = 'DEF';
         agencyAppliedChangeCode2.Reason_Description__c = 'nonnonpayment';
         //agencyAppliedChangeCode2.DEF_Non_Payment__c = false;
         agencyAppliedChangeCode2.Date_time_of_change__c = DateTime.newInstance(1970, 1, 1);
         Agency_Applied_Change_code__c agencyAppliedChangeCode3 = new Agency_Applied_Change_code__c();
-        agencyAppliedChangeCode3.RecordTypeId = recordTypeStandard.Id;
+        agencyAppliedChangeCode3.RecordTypeId = recordTypeStandardId;
         agencyAppliedChangeCode3.Account__c = account2.Id;
         agencyAppliedChangeCode3.Change_Code__c = 'DEF';
         agencyAppliedChangeCode3.Date_time_of_change__c = currentDateTime;
         Agency_Applied_Change_code__c agencyAppliedChangeCode4 = new Agency_Applied_Change_code__c();
-        agencyAppliedChangeCode4.RecordTypeId = recordTypeStandard.Id;
+        agencyAppliedChangeCode4.RecordTypeId = recordTypeStandardId;
         agencyAppliedChangeCode4.Account__c = account2.Id;
         agencyAppliedChangeCode4.Change_Code__c = 'DWD';
         agencyAppliedChangeCode4.Date_time_of_change__c = currentDateTime;
         Agency_Applied_Change_code__c agencyAppliedChangeCode5 = new Agency_Applied_Change_code__c();
-        agencyAppliedChangeCode5.RecordTypeId = recordTypeStandard.Id;
+        agencyAppliedChangeCode5.RecordTypeId = recordTypeStandardId;
         agencyAppliedChangeCode5.Account__c = account3.Id;
         agencyAppliedChangeCode5.Change_Code__c = 'DEF';
         agencyAppliedChangeCode5.Date_time_of_change__c = currentDateTime.addMonths(-35); // More than 12 but less than 36
         Agency_Applied_Change_code__c agencyAppliedChangeCode15 = new Agency_Applied_Change_code__c();
-        agencyAppliedChangeCode15.RecordTypeId = recordTypeStandard.Id;
+        agencyAppliedChangeCode15.RecordTypeId = recordTypeStandardId;
         agencyAppliedChangeCode15.Account__c = account6.Id;
         agencyAppliedChangeCode15.Change_Code__c = 'DEF';
         agencyAppliedChangeCode15.Date_time_of_change__c = currentDateTime;
         Agency_Applied_Change_code__c agencyAppliedChangeCode16 = new Agency_Applied_Change_code__c();
-        agencyAppliedChangeCode16.RecordTypeId = recordTypeStandard.Id;
+        agencyAppliedChangeCode16.RecordTypeId = recordTypeStandardId;
         agencyAppliedChangeCode16.Account__c = account6.Id;
         agencyAppliedChangeCode16.Change_Code__c = 'DEF';
         agencyAppliedChangeCode16.Date_time_of_change__c = currentDateTime;
         Agency_Applied_Change_code__c agencyAppliedChangeCode17 = new Agency_Applied_Change_code__c();
-        agencyAppliedChangeCode17.RecordTypeId = recordTypeStandard.Id;
+        agencyAppliedChangeCode17.RecordTypeId = recordTypeStandardId;
         agencyAppliedChangeCode17.Account__c = account6.Id;
         agencyAppliedChangeCode17.Change_Code__c = 'DWD';
         agencyAppliedChangeCode17.Date_time_of_change__c = currentDateTime;
 
         // Create agency applied change codes for IRRS also with some country exceptions
         Agency_Applied_Change_code__c agencyAppliedChangeCode6 = new Agency_Applied_Change_code__c();
-        agencyAppliedChangeCode6.RecordTypeId = recordTypeIrregularities.Id;
+        agencyAppliedChangeCode6.RecordTypeId = recordTypeIrregularitiesId;
         agencyAppliedChangeCode6.Account__c = account1.Id;
         agencyAppliedChangeCode6.Change_Code__c = 'IRR';
         agencyAppliedChangeCode6.Operation__c = 'A';
         agencyAppliedChangeCode6.Irregularities_Points__c = 10;
         agencyAppliedChangeCode6.Date_time_of_change__c = currentDateTime;
         Agency_Applied_Change_code__c agencyAppliedChangeCode7 = new Agency_Applied_Change_code__c();
-        agencyAppliedChangeCode7.RecordTypeId = recordTypeIrregularities.Id;
+        agencyAppliedChangeCode7.RecordTypeId = recordTypeIrregularitiesId;
         agencyAppliedChangeCode7.Account__c = account1.Id;
         agencyAppliedChangeCode7.Change_Code__c = 'IRR';
         agencyAppliedChangeCode7.Operation__c = '';
         agencyAppliedChangeCode7.Irregularities_Points__c = 5;
         agencyAppliedChangeCode7.Date_time_of_change__c = currentDateTime;
         Agency_Applied_Change_code__c agencyAppliedChangeCode8 = new Agency_Applied_Change_code__c();
-        agencyAppliedChangeCode8.RecordTypeId = recordTypeIrregularities.Id;
+        agencyAppliedChangeCode8.RecordTypeId = recordTypeIrregularitiesId;
         agencyAppliedChangeCode8.Account__c = account1.Id;
         agencyAppliedChangeCode8.Change_Code__c = 'IRR';
         agencyAppliedChangeCode8.Operation__c = 'W';
         agencyAppliedChangeCode8.Irregularities_Points__c = 3;
         agencyAppliedChangeCode8.Date_time_of_change__c = currentDateTime;
         Agency_Applied_Change_code__c agencyAppliedChangeCode9 = new Agency_Applied_Change_code__c();
-        agencyAppliedChangeCode9.RecordTypeId = recordTypeIrregularities.Id;
+        agencyAppliedChangeCode9.RecordTypeId = recordTypeIrregularitiesId;
         agencyAppliedChangeCode9.Account__c = account2.Id;
         agencyAppliedChangeCode9.Change_Code__c = 'IRS';
         agencyAppliedChangeCode9.Irregularities_Points__c = 10;
         agencyAppliedChangeCode9.Date_time_of_change__c = currentDateTime;
         Agency_Applied_Change_code__c agencyAppliedChangeCode10 = new Agency_Applied_Change_code__c();
-        agencyAppliedChangeCode10.RecordTypeId = recordTypeIrregularities.Id;
+        agencyAppliedChangeCode10.RecordTypeId = recordTypeIrregularitiesId;
         agencyAppliedChangeCode10.Account__c = account2.Id;
         agencyAppliedChangeCode10.Change_Code__c = 'IRW';
         agencyAppliedChangeCode10.Irregularities_Points__c = 5;
         agencyAppliedChangeCode10.Date_time_of_change__c = currentDateTime.addMonths(-23); // More than 12 but less than 24
         Agency_Applied_Change_code__c agencyAppliedChangeCode11 = new Agency_Applied_Change_code__c();
-        agencyAppliedChangeCode11.RecordTypeId = recordTypeIrregularities.Id;
+        agencyAppliedChangeCode11.RecordTypeId = recordTypeIrregularitiesId;
         agencyAppliedChangeCode11.Account__c = account4.Id;
         agencyAppliedChangeCode11.Change_Code__c = 'IRS';
         agencyAppliedChangeCode11.Irregularities_Points__c = 10;
         agencyAppliedChangeCode11.Date_time_of_change__c = currentDateTime;
         Agency_Applied_Change_code__c agencyAppliedChangeCode12 = new Agency_Applied_Change_code__c();
-        agencyAppliedChangeCode12.RecordTypeId = recordTypeIrregularities.Id;
+        agencyAppliedChangeCode12.RecordTypeId = recordTypeIrregularitiesId;
         agencyAppliedChangeCode12.Account__c = account4.Id;
         agencyAppliedChangeCode12.Change_Code__c = 'IRR';
         agencyAppliedChangeCode12.Operation__c = 'W';
         agencyAppliedChangeCode12.Irregularities_Points__c = 5;
         agencyAppliedChangeCode12.Date_time_of_change__c = currentDateTime;
         Agency_Applied_Change_code__c agencyAppliedChangeCode13 = new Agency_Applied_Change_code__c();
-        agencyAppliedChangeCode13.RecordTypeId = recordTypeIrregularities.Id;
+        agencyAppliedChangeCode13.RecordTypeId = recordTypeIrregularitiesId;
         agencyAppliedChangeCode13.Account__c = account4.Id;
         agencyAppliedChangeCode13.Change_Code__c = 'IRW';
         agencyAppliedChangeCode13.Irregularity_Type__c = 'OV2';
@@ -229,7 +229,7 @@ private class AMS_Batch_AggregatePwcDataTest {
 
         // Create agency applied change codes for own/share change & own/share last date
         Agency_Applied_Change_code__c agencyAppliedChangeCode14 = new Agency_Applied_Change_code__c();
-        agencyAppliedChangeCode14.RecordTypeId = recordTypeStandard.Id;
+        agencyAppliedChangeCode14.RecordTypeId = recordTypeStandardId;
         agencyAppliedChangeCode14.Account__c = account1.Id;
         agencyAppliedChangeCode14.Change_Code__c = 'CHO';
         agencyAppliedChangeCode14.Date_time_of_change__c = currentDateTime;

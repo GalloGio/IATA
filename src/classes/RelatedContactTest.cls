@@ -7,7 +7,7 @@ private class RelatedContactTest {
 	@testSetup static void setup(){
 		// Create accounts
 		list<Account> lsAccount = new list<Account>();
-        Id StandardAccount_RT_Id = RecordTypeSingleton.getInstance().RtIDsPerDeveloperNamePerObj.get('Account').get('Standard_Account');
+        Id StandardAccount_RT_Id = RecordTypeSingleton.getInstance().getRecordTypeId('Account', 'Standard_Account');
         lsAccount.add(new Account(Name = 'Qatar Airways', Airline_designator__c = 'QR', RecordTypeId = StandardAccount_RT_Id));
         lsAccount.add(new Account(Name = 'Qatar Airways France', Airline_designator__c = 'QR', RecordTypeId = StandardAccount_RT_Id));
         lsAccount.add(new Account(Name = 'Qatar Airways UK', Airline_designator__c = 'QR', RecordTypeId = StandardAccount_RT_Id));
@@ -17,7 +17,7 @@ private class RelatedContactTest {
 	
     static testMethod void myUnitTest() {
         // Create a contact linked to the first account
-        Id ContactStd_RT_Id = RecordTypeSingleton.getInstance().RtIDsPerDeveloperNamePerObj.get('Contact').get('Standard_Contact');
+        Id ContactStd_RT_Id = RecordTypeSingleton.getInstance().getRecordTypeId('Contact', 'Standard_Contact');
         
         Account a1;
         Account a2;

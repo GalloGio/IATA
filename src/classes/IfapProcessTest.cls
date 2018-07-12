@@ -106,7 +106,7 @@ public class IfapProcessTest {
 		);
 		insert contact;
 
-		ID IFAPcaseRecordTypeID = Schema.SObjectType.Case.getRecordTypeInfosByName().get('IATA Financial Review').getRecordTypeId();
+		ID IFAPcaseRecordTypeID = RecordTypeSingleton.getInstance().getRecordTypeId('Case', 'IATA_Financial_Review');
 		list<Case> listCases = new list<Case>();
 		for ( Integer i = 0; i < NUM_TEST_CASES; i++) {
 			listCases.add(new Case(

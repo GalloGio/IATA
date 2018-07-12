@@ -1,7 +1,8 @@
 @isTest
 private class trgCopyCountryISOTest {
 
-    static testMethod void notAIMSTest() {
+    @isTest
+	static void notAIMSTest() {
         
         map<string,id> developerNamePerId = developerNamePerIds();
         
@@ -35,7 +36,8 @@ private class trgCopyCountryISOTest {
     }
    
     
-       static testMethod void notDomainAIMSTest() {
+    @isTest
+	static void notDomainAIMSTest() {
         
        list<Id> developerNamePerId = notOurDomaindeveloperNamePerIds();
         
@@ -68,7 +70,8 @@ private class trgCopyCountryISOTest {
         
     } 
     
-     static testMethod void AIMSTest() {
+    @isTest
+	static void AIMSTest() {
            // System Administrator - automated processes
         profile pro = [select id from profile where name ='System Administrator - automated processes'];
 
@@ -125,7 +128,7 @@ private class trgCopyCountryISOTest {
     private static map<string,id> developerNamePerIds (){
     
         map<string,id> developerNamePerId = new map<string,id>();
-        set<String> developerNames = new set<String>{'IATA_Agency' ,'IATA_Airline_BR', 'IATA_Airline', 'IATA_GSA','IATA_GSA_BR', 'IATA','Others'}; 
+        set<String> developerNames = new set<String>{'IATA_Agency' ,'IATA_Airline_BR', 'IATA_Airline', 'IATA_GSA', 'IATA','Others'}; 
                 
         for(RecordType rT:[SELECT Id,DeveloperName FROM RecordType WHERE SObjectType = 'Account' AND DeveloperName IN: developerNames]){
                     developerNamePerId.put(rt.developername,rT.id);
@@ -137,7 +140,7 @@ private class trgCopyCountryISOTest {
     private static list<Id> notOurDomaindeveloperNamePerIds (){
     
         list<Id>  developerNamePerId = new list<Id>();
-        set<String> developerNames = new set<String>{'IATA_Agency' ,'IATA_Airline_BR', 'IATA_Airline', 'IATA_GSA','IATA_GSA_BR', 'IATA','Others'}; 
+        set<String> developerNames = new set<String>{'IATA_Agency' ,'IATA_Airline_BR', 'IATA_Airline', 'IATA_GSA', 'IATA','Others'}; 
                 
         for(RecordType rT:[SELECT Id,DeveloperName FROM RecordType WHERE SObjectType = 'Account' AND DeveloperName  NOT IN: developerNames ]){
                     developerNamePerId.add(rT.id);

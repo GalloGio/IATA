@@ -92,9 +92,9 @@ public with sharing class IDCard_CheckoutConfirmation extends IDCardAbstractCont
             System.debug('/*//*/* ' + idCardApp.Name);
             iDCardApplication = idCardApp;
 
-            String massAppRT = IDCardWebService.getIdCardAppRT('Mass_Order_Application');
+            String massAppRT = RecordTypeSingleton.getInstance().getRecordTypeId('ID_Card_Application__c', 'Mass_Order_Application');
             isMassApplicationPurchase = (massAppRT == idCardApp.RecordTypeId);
-            if (idCardApp.RecordTypeId == IDCardWebService.getIdCardAppRT('Single_ID_Card_Operation')) {
+            if (idCardApp.RecordTypeId == RecordTypeSingleton.getInstance().getRecordTypeId('ID_Card_Application__c', 'Single_ID_Card_Operation')) {
                 ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.ERROR, 'As a member of a Key Account, you shouln\'t have paid for a Single Application. Please contact IATA with ref: ' + idCardApp.Name));
                 success = false;
                 return;
@@ -298,9 +298,9 @@ public with sharing class IDCard_CheckoutConfirmation extends IDCardAbstractCont
         idCardApplicationCaseNumber = iDCardApplication.Case_Number__c;
         if (idCardApplicationCaseNumber == null || idCardApplicationCaseNumber == '' || idCardApplicationCaseNumber == 'Loading...') {
 
-            Id IDCardcaseRecordTypeID = clsCaseRecordTypeIDSingleton.getInstance().RecordTypes.get('ID Card Application');
+            Id IDCardcaseRecordTypeID = RecordTypeSingleton.getInstance().getRecordTypeId('Case', 'ID_Card_Application');
             if (isMassApplicationPurchase) {
-                IDCardcaseRecordTypeID = clsCaseRecordTypeIDSingleton.getInstance().RecordTypes.get('ID Card Mass Application');
+                IDCardcaseRecordTypeID = RecordTypeSingleton.getInstance().getRecordTypeId('Case', 'ID_Card_Mass_Application');
             }
             system.debug('[checkoutConfirmation] lookfor case: SELECT CaseNumber FROM Case c WHERE c.Related_ID_Card_Application__r.Id =' + iDCardApplication.Id + ' and c.RecordTypeId =' + IDCardcaseRecordTypeID + ' limit 1');
 

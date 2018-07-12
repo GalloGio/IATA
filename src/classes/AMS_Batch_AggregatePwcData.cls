@@ -21,9 +21,9 @@ global class AMS_Batch_AggregatePwcData implements Database.Batchable<Account> {
     //WHY THIS SET CONTAINS LESS ITEMS THEN THE ONE ABOVE IF THEY SHOULD CHECK THE SAME THING!?!?!
     //private static final List<String> ownShaLastDateCodes = new List<String> {'CHO', 'CHI', 'CIJ', 'COL', 'CON', 'COS', 'HIN', 'HIS', 'HNL', 'HSL', 'HSM', 'HSN', 'ONL', 'OSL', 'OSM', 'OSN'};
     private static final List<String> ownShaLastDateCodes = new List<String> {'CHC', 'CHO', 'CHI', 'CHJ', 'CCL', 'CCN', 'CIJ', 'CNL', 'COL', 'CON', 'COS', 'CSC', 'HIN', 'HIS', 'HNL', 'HSL', 'HSM', 'HSN', 'ONL', 'OSL', 'OSM', 'OSN', 'SCL', 'SCM', 'SCN'};
-    private static final Id recordTypeDefLfcId =  RecordTypeSingleton.getInstance().RtIDsPerDeveloperNamePerObj.get('AMS_Country_Specific_Attribute__c').get('DEF_LFC');
-    private static final Id recordTypeIrrsLfcId = RecordTypeSingleton.getInstance().RtIDsPerDeveloperNamePerObj.get('AMS_Country_Specific_Attribute__c').get('IRRS_LFC');
-    private static final Id recordTypeIrrCpeId = RecordTypeSingleton.getInstance().RtIDsPerDeveloperNamePerObj.get('AMS_Country_Specific_Attribute__c').get('IRR_CPE');
+    private static final Id recordTypeDefLfcId =  RecordTypeSingleton.getInstance().getRecordTypeId('AMS_Country_Specific_Attribute__c', 'DEF_LFC');
+    private static final Id recordTypeIrrsLfcId = RecordTypeSingleton.getInstance().getRecordTypeId('AMS_Country_Specific_Attribute__c', 'IRRS_LFC');
+    private static final Id recordTypeIrrCpeId = RecordTypeSingleton.getInstance().getRecordTypeId('AMS_Country_Specific_Attribute__c', 'IRR_CPE');
     private static final String emailTo = 'brueggerj@iata.org';
     private Map<Id, List<AMS_Country_Specific_Attribute__c>> lfcTimeframesByAccount;
     private Map<Id, List<AMS_Country_Specific_Attribute__c>> irregularityTypeExceptionsByAccount;

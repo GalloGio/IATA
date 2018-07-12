@@ -236,7 +236,6 @@ public without sharing class ISSP_Case {
     }
 
     public ISSP_Case() {
-        System.debug('xx2 Controller ');
         newCase = new Case();
 
         showAP = false;
@@ -247,7 +246,7 @@ public without sharing class ISSP_Case {
         popContact();
 
         //TF - SP9-C5
-        ID FDScaseRecordTypeID = RecordTypeSingleton.getInstance().RtIDsPerDeveloperNamePerObj.get('Case').get('FDS_ICCS_Email_to_Case');
+        ID FDScaseRecordTypeID = RecordTypeSingleton.getInstance().getRecordTypeId('Case', 'FDS_ICCS_Email_to_Case');
         String recordTypeId = ApexPages.currentPage().getParameters().get('recordTypeId');
 
         //AS - SP10; get the recordtyype name for new cases, esp. for SIS
@@ -619,7 +618,7 @@ public without sharing class ISSP_Case {
                 Boolean isIATA = false;
                 if(whoToContact == 'IATA') isIATA = true;
                 if(!isIATA ) {
-                    newCase.RecordTypeId = DAL_ISSP.getRecordTypeId('Inter_DPCs');
+                    newCase.RecordTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('Case', 'Inter_DPCs');
                     newCase.Account_Concerned__c = whoToContact;
                 }
                 List<Account> lsAccounts = new List<Account>();
@@ -837,10 +836,10 @@ public without sharing class ISSP_Case {
             Boolean isIATA = false;
             if(whoToContact == 'IATA') isIATA = true;
             if(!isIATA ) {
-                newCase.RecordTypeId = DAL_ISSP.getRecordTypeId('Inter_DPCs');
+                newCase.RecordTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('Case', 'Inter_DPCs');
                 newCase.Account_Concerned__c = whoToContact;
             } else {
-                newCase.RecordTypeId = DAL_ISSP.getRecordTypeId('IATA_Service_Request');
+                newCase.RecordTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('Case', 'IATA_Service_Request');
             }
             Database.DMLOptions dmo = new Database.DMLOptions();
             dmo.assignmentRuleHeader.useDefaultRule = true;
@@ -919,10 +918,10 @@ public without sharing class ISSP_Case {
             Boolean isIATA = false;
             if(whoToContact == 'IATA') isIATA = true;
             if(!isIATA ) {
-                newCase.RecordTypeId = DAL_ISSP.getRecordTypeId('Inter_DPCs');
+                newCase.RecordTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('Case', 'Inter_DPCs');
                 newCase.Account_Concerned__c = whoToContact;
             } else {
-                newCase.RecordTypeId = DAL_ISSP.getRecordTypeId('IATA_Service_Request');
+                newCase.RecordTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('Case', 'IATA_Service_Request');
             }
             Database.DMLOptions dmo = new Database.DMLOptions();
             dmo.assignmentRuleHeader.useDefaultRule = true;

@@ -6,7 +6,8 @@
 
 @isTest
 private class trgBankCodeCheckUniqueTest {
-    static testMethod void test() {
+    @isTest
+    static void test() {
         // Create a new ISO Country
         IATA_ISO_Country__c country = new IATA_ISO_Country__c(Name = 'France', ISO_Code__c = 'FR');
         insert country;

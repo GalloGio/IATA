@@ -25,7 +25,7 @@ public class ANG_RHC_Information_test{
             category__c = 'IATA Passenger Sales Agent',
             sector__c = 'Travel Agent',
             Company_Type__c='A',            
-            RecordTypeId = RecordTypeSingleton.getInstance().RtIDsPerDeveloperNamePerObj.get('Account').get('IATA_Agency')
+            RecordTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('Account', 'IATA_Agency')
         );
         insert a;
         
@@ -228,7 +228,7 @@ public class ANG_RHC_Information_test{
             category__c = 'IATA Passenger Sales Agent',
             sector__c = 'Travel Agent',
             Company_Type__c='A',
-            RecordTypeId = RecordTypeSingleton.getInstance().RtIDsPerDeveloperNamePerObj.get('Account').get('IATA_Agency')         
+            RecordTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('Account', 'IATA_Agency')         
         );
         insert a;
 
@@ -275,7 +275,7 @@ public class ANG_RHC_Information_test{
 
         IATA_ISO_Country__c ctry = [Select Id from IATA_ISO_Country__c];
 
-        Id accountRT = RecordTypeSingleton.getInstance().RtIDsPerDeveloperNamePerObj.get('Account').get('IATA_Agency');
+        Id accountRT = RecordTypeSingleton.getInstance().getRecordTypeId('Account', 'IATA_Agency');
 
         Map<String,Object> fieldsOfObject;
 
@@ -302,7 +302,7 @@ public class ANG_RHC_Information_test{
 
         insert rels;
 
-        Id formOfPaymentRT = AMS_Utils.getId('Agency_Authorization__c','FormOfPayment');
+        Id formOfPaymentRT = RecordTypeSingleton.getInstance().getRecordTypeId('Agency_Authorization__c','FormOfPayment');
 
         List<Agency_Authorization__c> authorizations = new List<Agency_Authorization__c>();
 

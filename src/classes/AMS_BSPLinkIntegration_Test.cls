@@ -2,7 +2,7 @@
 private class AMS_BSPLinkIntegration_Test {
 	@testsetup
 	static void CreateData(){
-		id SIDRALiteRTId = RecordTypeSingleton.getInstance().RtIDsPerDeveloperNamePerObj.get('Case').get('SIDRA_Lite');
+		id SIDRALiteRTId = RecordTypeSingleton.getInstance().getRecordTypeId('Case', 'SIDRA_Lite');
 		
 		//Create countries
 		list<IATA_ISO_Country__c> lsCountries = new list<IATA_ISO_Country__c>();
@@ -10,7 +10,7 @@ private class AMS_BSPLinkIntegration_Test {
 		insert lsCountries;
 		
 		//Create Accounts
-		id AgencyRecordTypeId = RecordTypeSingleton.getInstance().RtIDsPerDeveloperNamePerObj.get('Account').get('IATA_Agency') ;
+		id AgencyRecordTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('Account', 'IATA_Agency') ;
 		list<Account> lsAccntHO = new list<Account>();
 		lsAccntHO.add(new Account(Name='Accnt1', RecordTypeId = AgencyRecordTypeId, IATA_ISO_Country__c=lsCountries.get(0).Id, Location_Class__c='P', Location_type__c = 'HO', Status__c = 'Accredited', Reason__c = '90-MEETS CRITERIA', Sector__c='Travel Agent'));
 		lsAccntHO.add(new Account(Name='Accnt2', RecordTypeId = AgencyRecordTypeId, IATA_ISO_Country__c=lsCountries.get(0).Id, Location_Class__c='P', Location_type__c = 'HO', Status__c = 'Accredited', Reason__c = '90-MEETS CRITERIA', Sector__c='Travel Agent'));
@@ -26,7 +26,7 @@ private class AMS_BSPLinkIntegration_Test {
 		insert new Account(Name='Accnt3.1.1', RecordTypeId = AgencyRecordTypeId, IATA_ISO_Country__c=lsCountries.get(0).Id, Location_Class__c='P', Location_type__c = 'SA', Status__c = 'Accredited', Reason__c = '90-MEETS CRITERIA', ParentId = lsAccntBR.get(0).Id);
 		
 		list<Agency_Authorization__c> lsAuth = new list<Agency_Authorization__c>();
-		id RTId = [select id from recordtype WHERE SobjectType = 'Agency_Authorization__c' and DeveloperName='BSPLink'].get(0).Id;
+		id RTId = RecordTypeSingleton.getInstance().getRecordTypeId('Agency_Authorization__c', 'BSPLink');
 		lsAuth.add(new Agency_Authorization__c(Account__c = lsAccntHO.get(0).id, recordTypeId = RTId,Status__c = 'Active'));
 		lsAuth.add(new Agency_Authorization__c(Account__c = lsAccntHO.get(2).id, recordTypeId = RTId,Status__c = 'Active'));
 		lsAuth.add(new Agency_Authorization__c(Account__c = lsAccntHO.get(3).id, recordTypeId = RTId,Status__c = 'Active'));
@@ -289,7 +289,7 @@ private class AMS_BSPLinkIntegration_Test {
 
 		AMS_Oscar__c osc = [select Id, Account__c from AMS_Oscar__c where Account__r.Name='Accnt3.2'].get(0);
 
-		Case oscarCase = new Case(Oscar__c = osc.Id, RecordTypeId = AMS_Utils.getId('Case', 'OSCAR_Communication'), AccountId = osc.Account__c);
+		Case oscarCase = new Case(Oscar__c = osc.Id, RecordTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('Case', 'OSCAR_Communication'), AccountId = osc.Account__c);
         insert oscarCase;
 
 		test.startTest();
@@ -320,7 +320,7 @@ private class AMS_BSPLinkIntegration_Test {
     static testMethod void testBatch(){
     	id AccntId = [select Id from Account where name ='Accnt1'].get(0).Id;
     	id CountryId = [select id from IATA_ISO_Country__c limit 1].get(0).Id;
-    	id AgencyRecordTypeId = RecordTypeSingleton.getInstance().RtIDsPerDeveloperNamePerObj.get('Account').get('IATA_Agency') ;
+    	id AgencyRecordTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('Account', 'IATA_Agency') ;
     	list<Account> lsAccntBR = new list<Account>();
     	
     	for(integer i=0;i<85;i++){
@@ -330,7 +330,7 @@ private class AMS_BSPLinkIntegration_Test {
 		insert lsAccntBR;
 		
 		list<Agency_Authorization__c> lsAuth = new list<Agency_Authorization__c>();
-		id RTId = [select id from recordtype WHERE SobjectType = 'Agency_Authorization__c' and DeveloperName='BSPLink'].get(0).Id;
+		id RTId = RecordTypeSingleton.getInstance().getRecordTypeId('Agency_Authorization__c', 'BSPLink');
 		
 		for(Account accnt:lsAccntBR){
 			lsAuth.add(new Agency_Authorization__c(Account__c = accnt.id, recordTypeId = RTId,Status__c = 'Active'));

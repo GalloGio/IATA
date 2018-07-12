@@ -12,7 +12,7 @@ private class trgGDPContact_BeforeDeleteTest {
         List<Profile> profiles = [SELECT Id FROM Profile WHERE  Name = 'System Administrator' limit 1];       
         List<User> u = [SELECT Id FROM User WHERE ProfileId =: profiles[0].Id AND IsActive = true];
         
-        ID standardContactRecordTypeID = clsContactTypeIDSingleton.getInstance().RecordTypes.get('Standard');  
+        ID standardContactRecordTypeID = RecordTypeSingleton.getInstance().getRecordTypeId('Contact', 'Standard_Contact');  
         Contact con1 = new Contact();
         con1.FirstName = 'Name';
         con1.LastName = 'TestContact';

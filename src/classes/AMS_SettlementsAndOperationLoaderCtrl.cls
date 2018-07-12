@@ -55,8 +55,6 @@ public class AMS_SettlementsAndOperationLoaderCtrl{
 
     public Map<String, IATA_ISO_Country__c> countryMap = new Map<String, IATA_ISO_Country__c>();
     
-    private Map<string, Id> settlementRT = null;
-    
     private AMS_Settlement_System__c cassSettlement = null;
 
     public AMS_SettlementsAndOperationLoaderCtrl(){
@@ -71,7 +69,6 @@ public class AMS_SettlementsAndOperationLoaderCtrl{
         for(IATA_ISO_Country__c c: IATAIsoCountryDAO.getIsoCountries())
             countryMap.put(c.ISO_Code__c.trim() ,c);
         //load record types for Settlements
-        settlementRT  =  TransformationHelper.RtIDsPerDeveloperNamePerObj(new list<string> {'AMS_Settlement_System__c'}).get('AMS_Settlement_System__c');
         
         bspsPerName= new Map<String,AMS_Settlement_System__c>();
         cassPerName= new Map<String,AMS_Settlement_System__c >();
@@ -163,11 +160,11 @@ public class AMS_SettlementsAndOperationLoaderCtrl{
                if(csvRecordData[colIndex [INDEX_DPC_PROVIDER]]!=null && csvRecordData[colIndex [INDEX_DPC_PROVIDER]].equals('HP')){
                    system.debug('[ISS LOADING] Process as a CASS ');
                    aISS.Name='CASS-'+csvRecordData[colIndex[INDEX_ISO_COUNTRY_CODE ]];
-                   aISS.RecordTypeId = settlementRT.get('CASS');
+                   aISS.RecordTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('AMS_Settlement_System__c', 'CASS');
                }else {
                    
                    aISS.Name ='BSP-'+csvRecordData[colIndex [INDEX_ISO_COUNTRY_CODE ]];
-                   aISS.RecordTypeId = settlementRT.get('BSP');
+                   aISS.RecordTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('AMS_Settlement_System__c', 'BSP');
                    aISS.BSP_Billing__c =csvRecordData[colIndex [INDEX_ISO_COUNTRY_CODE ]];
                }
                //set the DPC

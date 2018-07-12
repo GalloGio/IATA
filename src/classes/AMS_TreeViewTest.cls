@@ -5,7 +5,7 @@ private class AMS_TreeViewTest {
         IATA_ISO_Country__c ctry = new IATA_ISO_Country__c (Name='US',ISO_Code__c='US')  ;
         insert ctry ;
 
-		Id standardAccountRt = AMS_Utils.getId('Account', 'Standard_Account');
+		Id standardAccountRt = RecordTypeSingleton.getInstance().getRecordTypeId('Account', 'Standard_Account');
         
         Account a1 = new Account(IATA_ISO_Country__c = ctry.id, RecordTypeId = standardAccountRt, Name='Test1 Agency', IATAcode__c = '1234567', Short_Name__c = 'Test1 Agency', /*Legacy_External_ID__c = '12345677',*/ Source_System__c = 'AIMS');
         Account a2 = new Account(IATA_ISO_Country__c = ctry.id, RecordTypeId = standardAccountRt, Name='Test2 Agency', IATAcode__c = '1234565', Short_Name__c = 'Test2 Agency', /*Legacy_External_ID__c = '12345678',*/ Source_System__c = 'AIMS');

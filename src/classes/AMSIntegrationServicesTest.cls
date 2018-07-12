@@ -5,20 +5,16 @@ private class AMSIntegrationServicesTest {
         IATA_ISO_Country__c isoc = new IATA_ISO_Country__c(Name = 'Test', ISO_Code__c = 'TS');
         insert isoc;
 
-        Map<string, Id> accountsRT = TransformationHelper.RtIDsPerDeveloperNamePerObj(new list<string> {'Account'}).get('Account');
-        Map<string, Id> settlementsRT = TransformationHelper.RtIDsPerDeveloperNamePerObj(new list<string> {'AMS_Settlement_System__c'}).get('AMS_Settlement_System__c');
-        Map<string, Id>  programRT  =  TransformationHelper.RtIDsPerDeveloperNamePerObj(new list<string> {'AMS_Segment__c'}).get('AMS_Segment__c');
-
-        Account acc1 = new Account(Sector__c = 'Travel Agent', Name='Test1 Account', recordTypeId = accountsRT.get('IATA_Agency'), IATAcode__c = '12345678', IATA_ISO_Country__c = isoc.id, AIMS_ID__c = '12345678', Source_System__c = 'AIMS2');
+        Account acc1 = new Account(Sector__c = 'Travel Agent', Name='Test1 Account', recordTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('Account', 'IATA_Agency'), IATAcode__c = '12345678', IATA_ISO_Country__c = isoc.id, AIMS_ID__c = '12345678', Source_System__c = 'AIMS2');
         insert acc1;
         
-        AMS_Settlement_System__c ass = new AMS_Settlement_System__c(Name = 'Test', recordTypeId = settlementsRT.get('BSP'));
+        AMS_Settlement_System__c ass = new AMS_Settlement_System__c(Name = 'Test', recordTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('AMS_Settlement_System__c', 'BSP'));
         insert ass;
         AMS_Operation__c op = new AMS_Operation__c(Settlement__c = ass.id, Country__c = isoc.id);
         insert op;
         GDP_Reference_Table__c gdp = new GDP_Reference_Table__c(Name = 'Test', Table__c = 'LOCTYP', Code__c = 'A');
         insert gdp;
-        AMS_Segment__c seg = new AMS_Segment__c(Label__c = 'Test', recordTypeId = programRT.get('IATA_Code_Programs'));
+        AMS_Segment__c seg = new AMS_Segment__c(Label__c = 'Test', recordTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('AMS_Segment__c', 'IATA_Code_Programs'));
         insert seg;
     }
 
@@ -36,7 +32,6 @@ private class AMSIntegrationServicesTest {
         String isoCountryId = [select id from IATA_ISO_Country__c where Name = 'Test'].id;
        
         Boolean result = AMSIntegrationServices.assignAgencyPerDPC(accountId, isoCountryId);
-        //System.assertEquals(true, result);
 
         Account a = [select id from Account];
         //AMS_Operation__c o = [select id from AMS_Operation__c];
@@ -51,7 +46,6 @@ private class AMSIntegrationServicesTest {
         String isoCountryId = [select id from IATA_ISO_Country__c where Name = 'Test'].id;
        
         Boolean result = AMSIntegrationServices.assignAgencyPerDPCandLegacyIDs('12345678', 'AIMS2', isoCountryId);
-        //System.assertEquals(true, result);
 
         Account a = [select id from Account];
         //AMS_Operation__c o = [select id from AMS_Operation__c];

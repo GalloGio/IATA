@@ -3,12 +3,12 @@ private class AMS_AccreditationContactHelperTest {
 	
 	@testSetup static void setup(){
 
-		Id ownerRtId = AMS_Utils.getId('AMS_Account_Role__c', 'Employee');
+		Id ownerRtId = RecordTypeSingleton.getInstance().getRecordTypeId('AMS_Account_Role__c', 'Employee');
 
         IATA_ISO_Country__c isoc = new IATA_ISO_Country__c(Name = 'Test', ISO_Code__c = 'TS');       
         insert isoc;
 
-        Id agencyRT = AMS_Utils.getId('Account', 'IATA_Agency');
+        Id agencyRT = RecordTypeSingleton.getInstance().getRecordTypeId('Account', 'IATA_Agency');
         Account acc1 = new Account(RecordTypeId=agencyRT, Status__c = 'Approved', Reason_for_creation__c = 'Headquarter is missing', Name='Test1 Account', Location_Type__c = 'HO', Type='CASS Associate', Sector__c = 'Travel Agent', IATA_ISO_Country__c = isoc.id, IATAcode__c = '12345678', AIMS_ID__c = '12345678', Source_System__c = 'AIMS2');
         insert acc1;
 
@@ -38,25 +38,26 @@ private class AMS_AccreditationContactHelperTest {
         testCase.QuantityProduct__c = '1';
         insert testCase;
 
- 		AMS_Pax_Accreditation_Form__c onlineAccreditation = new AMS_Pax_Accreditation_Form__c(IsGSA__c = 'No', CurrencyIsoCode = isoc.CurrencyIsoCode, SAAM_Case__c = testCase.Id, Account_Name__c = acc1.Name);
+ 		AMS_Pax_Accreditation_Form__c onlineAccreditation = new AMS_Pax_Accreditation_Form__c(IsGSA__c = 'No', CurrencyIsoCode = isoc.CurrencyIsoCode, 
+ 			SAAM_Case__c = testCase.Id, Account_Name__c = acc1.Name);
         insert onlineAccreditation;
         
         List<AMS_Accreditation_Contact__c> acList = new List<AMS_Accreditation_Contact__c>();
-        acList.add(new AMS_Accreditation_Contact__c(AMSPerson__c = p1.Id ,Contact__c =c1.Id, AMS_Pax_Accreditation_Form__c = onlineAccreditation.Id, Agency_owner__c = true, Company__c = acc1.id, First_name__c='NameToUse', Last_name__c='Last', Job_title__c='ABC', Mobile__c='+4112345678', Phone__c='3424322343', Email__c='unique@email.com', RecordTypeId=AMS_Utils.getId('AMS_Accreditation_Contact__c', 'Person')));
+        acList.add(new AMS_Accreditation_Contact__c(AMSPerson__c = p1.Id ,Contact__c =c1.Id, AMS_Pax_Accreditation_Form__c = onlineAccreditation.Id, 
+        	Agency_owner__c = true, Company__c = acc1.id, First_name__c='NameToUse', Last_name__c='Last', Job_title__c='ABC', 
+        	Mobile__c='+4112345678', Phone__c='3424322343', Email__c='unique@email.com', RecordTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('AMS_Accreditation_Contact__c', 'Person')));
 		
-		acList.add(new AMS_Accreditation_Contact__c(AMS_Pax_Accreditation_Form__c = onlineAccreditation.Id, Agency_owner__c = true, Company__c = acc1.id, First_name__c='NameToUse2', Last_name__c='Last2', Job_title__c='ABC2', Mobile__c='+4112745678', Phone__c='3424372343', Email__c='unique123@email.com', RecordTypeId=AMS_Utils.getId('AMS_Accreditation_Contact__c', 'Current_Company_Owner')));
+		acList.add(new AMS_Accreditation_Contact__c(AMS_Pax_Accreditation_Form__c = onlineAccreditation.Id, Agency_owner__c = true, Company__c = acc1.id, 
+			First_name__c='NameToUse2', Last_name__c='Last2', Job_title__c='ABC2', Mobile__c='+4112745678', Phone__c='3424372343', Email__c='unique123@email.com', 
+			RecordTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('AMS_Accreditation_Contact__c', 'Current_Company_Owner')));
 
         insert acList;
 
         AMS_OSCAR__c oscar = new AMS_OSCAR__c(Account__c = acc1.Id,  AMS_Online_Accreditation__c = onlineAccreditation.Id);
         insert oscar;
-        //Type_of_change__c = AMS_Utils.OWNERSHIP_IATA, AMS_Target_Agency__c= acc1.Id,
 
 		testCase.Oscar__c = oscar.Id;
 		update testCase;
-
-
-
 
 	}
 
@@ -65,7 +66,7 @@ private class AMS_AccreditationContactHelperTest {
 		
 		Test.startTest();
 
-		Id ownerRtId = AMS_Utils.getId('AMS_Account_Role__c', 'Employee');
+		Id ownerRtId = RecordTypeSingleton.getInstance().getRecordTypeId('AMS_Account_Role__c', 'Employee');
 
 		Set<String> emailSet = new Set<String>();
 

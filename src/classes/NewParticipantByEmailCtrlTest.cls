@@ -34,9 +34,9 @@ public class NewParticipantByEmailCtrlTest {
         ));
         insert isocs;
 
-        Id rtHQ =  Schema.SObjectType.Account.getRecordTypeInfosByName().get('Airline Headquarters').getRecordTypeId();
-        Id rtBr =  Schema.SObjectType.Account.getRecordTypeInfosByName().get('Airline Branch').getRecordTypeId();
-        Id rtOt =  Schema.SObjectType.Account.getRecordTypeInfosByName().get('Others').getRecordTypeId();
+        Id rtHQ =  RecordTypeSingleton.getInstance().getRecordTypeId('Account', 'IATA_Airline');
+        Id rtBr =  RecordTypeSingleton.getInstance().getRecordTypeId('Account', 'IATA_Airline_BR');
+        Id rtOt =  RecordTypeSingleton.getInstance().getRecordTypeId('Account', 'Others');
 
         system.runAs(users[0]){
 

@@ -6,7 +6,7 @@ public class AMS_AddressHelperTest {
         IATA_ISO_Country__c isoc = new IATA_ISO_Country__c(Name = 'Test', ISO_Code__c = 'TS');       
         insert isoc;
 
-        Id standardAccountRt = AMS_Utils.getId('Account', 'Standard_Account');
+        Id standardAccountRt = RecordTypeSingleton.getInstance().getRecordTypeId('Account', 'Standard_Account');
         
         Account ag = new Account(RecordTypeId = standardAccountRt, Name='Test Agency', IATAcode__c = '1234567', Short_Name__c = 'Test Agency', IATA_ISO_Country__c = isoc.id);
         insert ag;

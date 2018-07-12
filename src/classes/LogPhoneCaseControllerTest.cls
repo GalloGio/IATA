@@ -30,13 +30,13 @@ private class LogPhoneCaseControllerTest {
         insert country_fr;
         
         // Create an Airline HQ account
-        Id AirlineHQ_RT_Id = RecordTypeSingleton.getInstance().RtIDsPerDeveloperNamePerObj.get('Account').get('IATA_Airline');
+        Id AirlineHQ_RT_Id = RecordTypeSingleton.getInstance().getRecordTypeId('Account', 'IATA_Airline');
         Account acct_hq = new Account(Name = 'Qatar Airways', Airline_designator__c = 'QR', ICCS_Membership_Status__c = 'Member', Industry='Airline', Type='Passenger', 
                                 RecordTypeId = AirlineHQ_RT_Id, IATA_ISO_Country__c = country_fr.Id);
         insert acct_hq;
         
         // Create a new Contact for the Account
-        Id ContactStd_RT_Id = RecordTypeSingleton.getInstance().RtIDsPerDeveloperNamePerObj.get('Contact').get('Standard_Contact');
+        Id ContactStd_RT_Id = RecordTypeSingleton.getInstance().getRecordTypeId('Contact', 'Standard_Contact');
         Contact c = new Contact(FirstName = 'Test', LastName = 'Contact', email = 'test_LogPhoneCaseController@test.com', AccountId = acct_hq.Id, RecordTypeId = ContactStd_RT_Id);
         insert c;
         
@@ -79,13 +79,13 @@ private class LogPhoneCaseControllerTest {
         insert country_fr;
         
         // Create an Airline HQ account
-        Id AirlineHQ_RT_Id = RecordTypeSingleton.getInstance().RtIDsPerDeveloperNamePerObj.get('Account').get('IATA_Airline');
+        Id AirlineHQ_RT_Id = RecordTypeSingleton.getInstance().getRecordTypeId('Account', 'IATA_Airline');
         Account acct_hq = new Account(Name = 'Qatar Airways', Airline_designator__c = 'QR', ICCS_Membership_Status__c = 'Member', Industry='Airline', Type='Passenger', 
                                 RecordTypeId = AirlineHQ_RT_Id, IATA_ISO_Country__c = country_fr.Id);
         insert acct_hq;
         
         // Create a new Contact for the Account
-        Id ContactStd_RT_Id = RecordTypeSingleton.getInstance().RtIDsPerDeveloperNamePerObj.get('Contact').get('Standard_Contact');
+        Id ContactStd_RT_Id = RecordTypeSingleton.getInstance().getRecordTypeId('Contact', 'Standard_Contact');
         Contact c = new Contact(FirstName = 'Test', LastName = 'Contact', email = 'test_LogPhoneCaseController@test.com', AccountId = acct_hq.Id, RecordTypeId = ContactStd_RT_Id);
         insert c;
         
@@ -125,18 +125,18 @@ private class LogPhoneCaseControllerTest {
         insert country_fr;
         
         // Create an Airline HQ account
-        Id AirlineHQ_RT_Id = RecordTypeSingleton.getInstance().RtIDsPerDeveloperNamePerObj.get('Account').get('IATA_Airline');
+        Id AirlineHQ_RT_Id = RecordTypeSingleton.getInstance().getRecordTypeId('Account', 'IATA_Airline');
         Account acct_hq = new Account(Name = 'Qatar Airways', Airline_designator__c = 'QR', ICCS_Membership_Status__c = 'Member', Industry='Airline', Type='Passenger', 
                                 RecordTypeId = AirlineHQ_RT_Id, IATA_ISO_Country__c = country_fr.Id);
         insert acct_hq;
         
         // Create a new Contact for the Account
-        Id ContactStd_RT_Id = RecordTypeSingleton.getInstance().RtIDsPerDeveloperNamePerObj.get('Contact').get('Standard_Contact');
+        Id ContactStd_RT_Id = RecordTypeSingleton.getInstance().getRecordTypeId('Contact', 'Standard_Contact');
         Contact c = new Contact(FirstName = 'Test', LastName = 'Contact', email = 'test_LogPhoneCaseController@test.com', AccountId = acct_hq.Id, RecordTypeId = ContactStd_RT_Id);
         insert c;
         
         // create a query case for the account & contact
-        Id RT_CasesEurope_Id = RecordTypeSingleton.getInstance().RtIDsPerDeveloperNamePerObj.get('Case').get('CasesEurope');
+        Id RT_CasesEurope_Id = RecordTypeSingleton.getInstance().getRecordTypeId('Case', 'CasesEurope');
         Case cs = new Case(RecordTypeId = RT_CasesEurope_Id, Subject = 'test', Origin = 'Email', CaseArea__c = 'IATA General Information', Status = 'Open',
                         ContactId = c.Id, AccountId = acct_hq.Id, Reason1__c = 'General information');  
         insert cs;

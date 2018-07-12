@@ -49,8 +49,8 @@ public class NewLocalGroupMeetingCtrlTest{
             lg = new LocalGovernance__c(Cargo_Passenger__c='BSP', Local_Governance_type__c='ALWG', Country__c=isocs[0].Id, Active__c=true, recordtypeId=rtLG.Id);
             insert lg;
 
-            Id rtHQ =  Schema.SObjectType.Account.getRecordTypeInfosByName().get('Airline Headquarters').getRecordTypeId();
-            Id rtAG =  Schema.SObjectType.Account.getRecordTypeInfosByName().get('Agency').getRecordTypeId();
+            Id rtHQ =  RecordTypeSingleton.getInstance().getRecordTypeId('Account', 'IATA_Airline');
+            Id rtAG =  RecordTypeSingleton.getInstance().getRecordTypeId('Account', 'IATA_Agency');
             Account acc = new Account(Name='Lufthansa', RecordTypeId = rtHQ, IATA_ISO_Country__c = isocs[0].Id);
             insert acc;
 
@@ -173,7 +173,7 @@ public class NewLocalGroupMeetingCtrlTest{
             Test.startTest();
 
         	// Create a new Local Group
-        	NewLocalGroupCtrl lgctrl = new NewLocalGroupCtrl(new ApexPages.StandardController(new LocalGovernance__c(RecordTypeId = Schema.SObjectType.LocalGovernance__c.getRecordTypeInfosByName().get('Local Groups').getRecordTypeId())));
+        	NewLocalGroupCtrl lgctrl = new NewLocalGroupCtrl(new ApexPages.StandardController(new LocalGovernance__c(RecordTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('LocalGovernance__c', 'Local_Groups'))));
 
             lgctrl.lg.Cargo_Passenger__c = 'BSP';
             lgctrl.lg.Local_Governance_type__c = 'ICAP';

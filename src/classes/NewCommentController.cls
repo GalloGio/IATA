@@ -1,6 +1,5 @@
 public with sharing class NewCommentController {
 
-    public static final map<String,Schema.RecordTypeInfo> MAP_RT = Schema.SObjectType.Comment__c.getRecordTypeInfosByName();
     public Id objectiveId;
 
     public NewCommentController(ApexPages.standardController controller) {
@@ -11,11 +10,11 @@ public with sharing class NewCommentController {
         Comment__c comment = new Comment__c();
         if (this.objectiveId == null ){
             comment.Parent_Objective__c = null;
-            comment.RecordtypeId = MAP_RT.get('2. Independent').getRecordTypeId();
+            comment.RecordtypeId = RecordTypeSingleton.getInstance().getRecordTypeId('Comment__c', 'Objective_Independent');
             
         } else {
             comment.Parent_Objective__c = this.objectiveId;
-            comment.RecordtypeId = MAP_RT.get('1. Objective Related').getRecordTypeId();
+            comment.RecordtypeId = RecordTypeSingleton.getInstance().getRecordTypeId('Comment__c', 'Objective_Related');
         }
         insert comment;
 

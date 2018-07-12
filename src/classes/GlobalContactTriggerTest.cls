@@ -312,7 +312,7 @@ private class GlobalContactTriggerTest {
         Account acc = ISSP_ObjectFactory.createNewAccount();
         insert acc;
 
-        ID gdpContactRecordTypeID = clsContactTypeIDSingleton.getInstance().RecordTypes.get('GDP Contact');
+        ID gdpContactRecordTypeID = RecordTypeSingleton.getInstance().getRecordTypeId('Contact', 'GDP_Contact');
         Contact con = ISSP_ObjectFactory.createNewContact();
         con.AccountId= acc.Id;
         con.recordtypeid = gdpContactRecordTypeID;
@@ -492,7 +492,7 @@ private class GlobalContactTriggerTest {
         Account acc = ISSP_ObjectFactory.createNewAccount();
         insert acc;
 
-        ID gdpContactRecordTypeID = clsContactTypeIDSingleton.getInstance().RecordTypes.get('GDP Contact');
+        ID gdpContactRecordTypeID = RecordTypeSingleton.getInstance().getRecordTypeId('Contact', 'GDP_Contact');
         Contact con = ISSP_ObjectFactory.createNewContact();
         con.AccountId= acc.Id;
         con.Status__c = 'Active';

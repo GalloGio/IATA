@@ -361,7 +361,7 @@ public with sharing class MITA_AgreementsCtrl {
     }
     public void newContact(){
         resetContact();
-        ID rt = Schema.SObjectType.Contact.getRecordTypeInfosByName().get('Standard').getRecordTypeId();
+        ID rt = RecordTypeSingleton.getInstance().getRecordTypeId('Contact', 'Standard_Contact');
         this.c = new Contact(MITA_Contact__c=true, RecordTypeId = rt, Status__c='Active');
         chosenContact = true;
         editContactMode = true;

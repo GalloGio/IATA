@@ -53,7 +53,8 @@ private class vfIECGADAgencyDetailsComponent_tst {
         insert oGDPAccount2;
 	}
 	
-	static testMethod void testDisplayAgencyDetails() {
+	@isTest
+	static void testDisplayAgencyDetails() {
     	setupData();
         try {
      		vfIECGADAgencyDetailsComponent controller = new vfIECGADAgencyDetailsComponent();

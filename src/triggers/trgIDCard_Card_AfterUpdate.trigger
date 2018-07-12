@@ -18,8 +18,8 @@ trigger trgIDCard_Card_AfterUpdate on ID_Card__c (after insert, after update) {
 		List<ID_Card_Application__c> idcardAppToUpdate = new List<ID_Card_Application__c>();
 		
 		
-		String massAppRT = IDCardWebService.getIdCardAppRT('Mass_Order_Application');
-		String singleAppRT = IDCardWebService.getIdCardAppRT('Single_ID_Card_Operation');
+		String massAppRT = RecordTypeSingleton.getInstance().getRecordTypeId('ID_Card_Application__c', 'Mass_Order_Application');
+		String singleAppRT = RecordTypeSingleton.getInstance().getRecordTypeId('ID_Card_Application__c', 'Single_ID_Card_Operation');
 		system.debug('[ID CARD TRIGGER] [CONFIG] massAppRT = '+massAppRT+ ' singleAppRT = '+singleAppRT);
 		
 		

@@ -3,7 +3,7 @@ trigger trgIDCard_Contact_BeforeUpdate on Contact (before update, before insert)
     boolean CardToSync = false;
 
     // Get RecordTypeID
-    ID contactTypeID = clsContactTypeIDSingleton.getInstance().RecordTypes.get('Standard');
+    ID contactTypeID = RecordTypeSingleton.getInstance().getRecordTypeId('Contact', 'Standard_Contact');
 
     if (trigger.isInsert) {
         // force to sync ver num and ver num 2
@@ -41,7 +41,7 @@ trigger trgIDCard_Contact_BeforeUpdate on Contact (before update, before insert)
 
         Set<ID> ids = Trigger.newMap.keySet();
 
-        ID rectypeid = Schema.SObjectType.ID_Card__c.getRecordTypeInfosByName().get('AIMS').getRecordTypeId();
+        ID rectypeid = RecordTypeSingleton.getInstance().getRecordTypeId('ID_Card__c', 'AIMS');
         List <ID_Card__c> IDCards = [Select i.Valid_To_Date__c , i.Related_Contact__r.Id From ID_Card__c i where i.Valid_To_Date__c > Today and i.Cancellation_Date__c = null  and i.Card_Status__c = 'Valid ID Card' and i.Related_Contact__c in : ids and  RecordTypeId = : rectypeid ];
 
 

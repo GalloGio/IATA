@@ -36,7 +36,7 @@ private class ANG_RHCAlertTriggerHandler_test {
 			Remittance_frequency__c = 'M',
 			ANG_Accreditation_Model__c = 'Cash',
 			IATA_ISO_Country__c = country.Id,
-			RecordTypeId = RecordTypeSingleton.getInstance().RtIDsPerDeveloperNamePerObj.get('Account').get('IATA_Agency')
+			RecordTypeId = RecordTypeSingleton.getInstance().getRecordTypeID('Account', 'IATA_Agency')
 		);
 		insert a;
 		
@@ -45,7 +45,7 @@ private class ANG_RHCAlertTriggerHandler_test {
 			Subject = 'rception case', 
 			AccountId = a.Id, 
 			Status = 'Open', 
-			RecordTypeId = RecordTypeSingleton.getInstance().RtIDsPerDeveloperNamePerObj.get('Case').get('InternalCasesEuropeSCE') 
+			RecordTypeId = RecordTypeSingleton.getInstance().getRecordTypeID('Case', 'InternalCasesEuropeSCE') 
 		);
 		insert c;
 
@@ -95,7 +95,7 @@ private class ANG_RHCAlertTriggerHandler_test {
 		insert att;
 	}
 
-	private static testmethod voId test_sucess_legacy(){
+	private static testmethod void test_sucess_legacy(){
 
 		Test.startTest();
 
@@ -118,7 +118,7 @@ private class ANG_RHCAlertTriggerHandler_test {
 			ANG_Threshold_Level__c = '50%'
 		);
 
-		String processRecorType = RecordTypeSingleton.getInstance().RtIDsPerDeveloperNamePerObj.get('Case').get('CS_Process_IDFS_ISS');
+		String processRecorType = RecordTypeSingleton.getInstance().getRecordTypeID('Case', 'CS_Process_IDFS_ISS');
 
 		System.assertEquals(0, [SELECT Id FROM Case WHERE RecordTypeId = :processRecorType].size(), 'No process should be created at this time');
 		
@@ -216,7 +216,7 @@ private class ANG_RHCAlertTriggerHandler_test {
 
 		List<Agency_Authorization__c> authorizations = new List<Agency_Authorization__c>();
 
-		ID FormOfPaymentRT = AMS_Utils.getId('Agency_Authorization__c','FormOfPayment');
+		ID FormOfPaymentRT = RecordTypeSingleton.getInstance().getRecordTypeId('Agency_Authorization__c','FormOfPayment');
 
 		authorizations.add(new Agency_Authorization__c(Account__c = rhcInfo.ANG_AccountId__c, ANG_FormOfPayment_ID__c = 'CC', Status__c = 'Active', RecordTypeId = FormOfPaymentRT));
 		authorizations.add(new Agency_Authorization__c(Account__c = rhcInfo.ANG_AccountId__c, ANG_FormOfPayment_ID__c = 'CA', Status__c = 'Active', RecordTypeId = FormOfPaymentRT));
@@ -272,7 +272,7 @@ private class ANG_RHCAlertTriggerHandler_test {
 
 		List<Agency_Authorization__c> authorizations = new List<Agency_Authorization__c>();
 
-		ID FormOfPaymentRT = AMS_Utils.getId('Agency_Authorization__c','FormOfPayment');
+		ID FormOfPaymentRT = RecordTypeSingleton.getInstance().getRecordTypeId('Agency_Authorization__c','FormOfPayment');
 
 		authorizations.add(new Agency_Authorization__c(Account__c = rhcInfo.ANG_AccountId__c, ANG_FormOfPayment_ID__c = 'CC', Status__c = 'Non-Active', RecordTypeId = FormOfPaymentRT));
 		authorizations.add(new Agency_Authorization__c(Account__c = rhcInfo.ANG_AccountId__c, ANG_FormOfPayment_ID__c = 'CA', Status__c = 'Non-Active', RecordTypeId = FormOfPaymentRT));

@@ -80,13 +80,14 @@ private class ContractButtonsControllerTest {
             insert standardPrice1;
             
             // Create an Airline HQ account
-            Id AirlineHQ_RT_Id = RecordTypeSingleton.getInstance().RtIDsPerDeveloperNamePerObj.get('Account').get('IATA_Airline');
+            Id AirlineHQ_RT_Id = RecordTypeSingleton.getInstance().getRecordTypeId('Account', 'IATA_Airline');
             testAccount = new Account(Name = 'Qatar Airways', Airline_designator__c = 'QR', RecordTypeId = AirlineHQ_RT_Id, OwnerId = sm.Id);
             insert testAccount;
             
             
             // create 2 RCRM opportunities - 1 with renewal under Sales resp, the other under PM resp
-            RT_RCRM_Opportunity_Id = RecordTypeSingleton.getInstance().RtIDsPerDeveloperNamePerObj.get('Opportunity').get('RCRM_Opportunity');
+            RT_RCRM_Opportunity_Id = RecordTypeSingleton.getInstance().getRecordTypeId('Opportunity', 'RCRM_Opportunity');
+            
             system.runAs(sm) {
                 oppRCRM_1 = new Opportunity(Name = 'RCRM Opp P1', RecordTypeId = RT_RCRM_Opportunity_Id, AccountId = testAccount.Id, CurrencyIsoCode = 'USD', 
                         Product_Family__c = 'Fam1', CloseDate = date.today(), StageName = '3. Needs Assessment', Pricebook2Id = pricebookId,  

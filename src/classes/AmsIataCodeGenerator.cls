@@ -100,8 +100,6 @@ global class AmsIataCodeGenerator{
         
         Boolean isImportAgentWithLink = false;
         
-        //Map<string, Id>  agenciesRT  =  TransformationHelper.RtIDsPerDeveloperNamePerObj(new list<string> {'AMS_Agency__c'}).get('AMS_Agency__c');#AMSFTS
-        Id  programRT  =  TransformationHelper.RtIDsPerDeveloperNamePerObj(new list<string> {'AMS_Segment__c'}).get('AMS_Segment__c').get('IATA_Code_Programs');
         try
         {
 
@@ -183,7 +181,7 @@ global class AmsIataCodeGenerator{
                 theAccount.N_Code__c = theAccreditation.IATACode__c.subString(3, 7);
                 theAccount.IATACode__c = theAccreditation.IATACode__c;
                 
-                theAccount.RecordTypeId = AMS_Utils.getId('Account', 'IATA_Agency');
+                theAccount.RecordTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('Account', 'IATA_Agency');
                 if(theAccreditation.ANG_IsNewGenAgency__c) theAccount.Sector__c = AMS_Utils.SECTOR_PASSENGER;
                 if(allowedProgramCodes.contains(theAccreditation.Location_Class__c))
                 {
@@ -557,7 +555,7 @@ global class AmsIataCodeGenerator{
 
                             //theAccount.IATACode__c = theAccreditation.IATACode__c;
                             if(theAccreditation.ANG_IsNewGenAgency__c) theAccount.Sector__c = AMS_Utils.SECTOR_PASSENGER;
-                            theAccount.RecordTypeId = AMS_Utils.getId('Account', 'IATA_Agency');
+                            theAccount.RecordTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('Account', 'IATA_Agency');
                             if(allowedProgramCodes.contains(theAccreditation.Location_Class__c))
                             {
                                 if(theAccreditation.SAAM_Case__r.OSCAR__r.Process__c == AMS_Utils.new_GSSA && theAccount.Location_Class__c == 'G') {
@@ -578,13 +576,7 @@ global class AmsIataCodeGenerator{
                                     theAccount.Sector__c = programSectorMap.get(theAccount.Location_Class__c); // AMS Enhancements AMSU-24                                    
                                 }
                             }
-                            else
-                            {
-                                // TODO Later... These are already mapped, but there's no task to activate these yet
-                                // When the moment comes, we should remove the above IF and this ELSE
-                                
-                                // theAccount.Category__c = programCategoryMap.get(theAccount.Location_Class__c);
-                            }
+                            
                             System.debug('[generatedAgencyIATACode] storing accreditation with iata code: '+theAccreditation.IATACode__c);
                             List<Code_Range__c> codeRangesToLock = [select id, AMS_Deplicate_Prevention_Lock__c from Code_Range__c where id = :range.Id for update];
                             Code_Range__c codeRange = codeRangesToLock.get(0);
@@ -704,11 +696,8 @@ global class AmsIataCodeGenerator{
     Calculate the CheckDigit based on all elelment from IATA Code
     boolean parameter for to save or not the record
     */
-    //public static void checkDigitCreation(Ams_Agency__c agt, boolean saveRecord){#AMSTFS
     public static void checkDigitCreation(AMS_Pax_Accreditation_Form__c agt, Account act, boolean saveRecord){
-        //throw new TransformationException('checkDigit('+agt.Name+','+saverecord+')');
      
-        // #AMSFTS Map<string, Id>  agenciesRT  =  TransformationHelper.RtIDsPerDeveloperNamePerObj(new list<string> {'AMS_Agency__c'}).get('AMS_Agency__c');
         Map<String,String> letterIndex = new Map<String,String>{'A'=> '10','B'=> '11','C' => '','D'=> '13','E'=> '14','F'=> '15','G'=> '16','H'=> '17','I'=> '18','J'=> '19','K'=> '20','L'=> '21','M'=> '22','N'=> '23','O'=> '24','P'=> '25','Q'=> '26','R'=> '27','S'=> '28','T'=> '29','U'=> '30','V'=> '31','W'=> '32','X'=> '33','Y'=> '34','Z'=> '35'};
         String nACode = agt.A_code__c;
         String nCCode  ='' ; 
@@ -786,18 +775,6 @@ global class AmsIataCodeGenerator{
     {
         checkDigitCreation(agt, act, true);
     }
-    
-    /*#AMSFTSpublic static void checkDigitCreation(list<Ams_Agency__c> agts){
-        for(Ams_Agency__c agt:agts)
-            checkDigitCreation(agt);
-    }
-    
-     
-    public static void checkDigitCreation(list<Ams_Agency__c> agts,boolean saveRecord){
-        for(Ams_Agency__c agt:agts)
-            checkDigitCreation(agt,saveRecord);
-    }#AMSFTS*/
-    
     
     public static void sendLogsToUser(String body, String title)
     {

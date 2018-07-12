@@ -41,22 +41,6 @@ private class IDCard_Account_Renewal_Updater_SchdlrTst {
 
 		Test.stopTest();
 
-		// check if ID_Card_Corporate_Validation_Date__c was reset,
-		//if ID_Card_KeyAccount_features__c.contains(IDCardUtil.Key_Account_Feature_2_Years_validity) == false
-		// valDate = todayDate.addDays(2).addYears(1);
-		// accountToUpdate = [SELECT Id,ID_Card_Corporate_Validation_Date__c,ID_Card_KeyAccount_features__c
-		// 					FROM Account
-		// 					WHERE ID_Card_Corporate_Validation_Date__c!=null and ID_Card_Corporate_Validation_Date__c > TODAY
-		// 					and ID_Card_Corporate_Validation_Date__c = :valDate];
-
-		// System.assertEquals(accountToUpdate.size(), 1);
-
-		//if ID_Card_KeyAccount_features__c.contains(IDCardUtil.Key_Account_Feature_2_Years_validity) == true
-		// valDate = todayDate.addDays(2).addYears(2);
-		// accountToUpdate = [SELECT Id,ID_Card_Corporate_Validation_Date__c,ID_Card_KeyAccount_features__c
-		// 					FROM Account
-		// 					WHERE ID_Card_Corporate_Validation_Date__c!=null and ID_Card_Corporate_Validation_Date__c > TODAY
-		// 					and ID_Card_Corporate_Validation_Date__c = :valDate];
 	}
 
 	private static void generateData(){
@@ -73,8 +57,7 @@ private class IDCard_Account_Renewal_Updater_SchdlrTst {
 		insert isoCountryCA;
 
 		//List of Account Data
-		Map<string,Id> idcardAppRT =  TransformationHelper.RtIDsPerDeveloperNamePerObj(new list<string> {'Account'}).get('Account');
-		Id rtidca = idcardAppRT.get('IATA_Agency');
+		Id rtidca = RecordTypeSingleton.getInstance().getRecordTypeId('Account', 'IATA_Agency');
 
 		List<Account> accs = new List<Account>();
 

@@ -15,11 +15,11 @@ private class AMP_KeyAccountPlanExtensionTest {
 
 		System.runAs(testUser) {
 
-			Id accountRecordTypeId = [SELECT Id FROM RecordType WHERE Name ='Airline Headquarters'].Id;
+			Id accountRecordTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('Account', 'IATA_Airline');
 			Account a = new Account(name='testAccount', RecordTypeId=accountRecordTypeId);
 			insert a;
 
-			Id objectiveRecordTypeId = [SELECT Id FROM RecordType WHERE SObjectType = 'Objective__c' AND DeveloperName = 'Key_Account_Plan'].Id;
+			Id objectiveRecordTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('Objective__c', 'Key_Account_Plan');
 
 			Objective__c o = new Objective__c();
 			o.Account__c = a.Id;

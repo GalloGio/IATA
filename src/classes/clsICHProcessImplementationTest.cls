@@ -114,7 +114,7 @@ private class clsICHProcessImplementationTest {
 
 
         id rcrd;
-        rcrd = clsCaseRecordTypeIDSingleton.getInstance().RecordTypes.get('Cases - SIS Help Desk');
+        rcrd = RecordTypeSingleton.getInstance().getRecordTypeId('Case', 'Cases_SIS_Help_Desk');
         Case kCase = new Case();
         kCase.CaseArea__c = 'ICH';
         kCase.Subject = 'is this it';
@@ -204,7 +204,7 @@ private class clsICHProcessImplementationTest {
         cCase.Origin = 'E-mail to Case - IS Help Desk';
         cCase.Subject = 'RE: this is it';
         cCase.description = 'test';
-        cCase.RecordTypeId = clsCaseRecordTypeIDSingleton.getInstance().RecordTypes.get('Cases - SIS Help Desk');
+        cCase.RecordTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('Case', 'Cases_SIS_Help_Desk');
         cCase.suppliedemail = 'afarak@iata.org';
 
 

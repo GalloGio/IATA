@@ -5,7 +5,7 @@ public class EF_MaterialLineItemHandler
     public static List<EF_Material_Line_Item__c> identifyToApproveRecords(List<EF_Material_Line_Item__c> newValues)
     {
         List<EF_Material_Line_Item__c> toApproveList = new List<EF_Material_Line_Item__c>();
-        Id baMaterialRtId = AMS_Utils.getId('EF_Material_Line_Item__c', 'Relationship_Line_Item');
+        Id baMaterialRtId = RecordTypeSingleton.getInstance().getRecordTypeId('EF_Material_Line_Item__c', 'Relationship_Line_Item');
         for(EF_Material_Line_Item__c mat : newValues)
         {
             if(mat.RecordTypeId == baMaterialRtId)

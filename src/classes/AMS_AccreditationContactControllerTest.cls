@@ -17,9 +17,7 @@ private class AMS_AccreditationContactControllerTest
 		IATA_ISO_Country__c isoc = new IATA_ISO_Country__c(Name = 'Test', ISO_Code__c = 'TS');       
         insert isoc;
 
-        Map<string, Id> accountRoleRT = TransformationHelper.RtIDsPerDeveloperNamePerObj(new list<string> {'AMS_Account_Role__c'}).get('AMS_Account_Role__c');
-		
-		Id accRtId = AMS_Utils.getId('Account', 'IATA_Agency');
+		Id accRtId = RecordTypeSingleton.getInstance().getRecordTypeId('Account', 'IATA_Agency');
 
         List<Account> accs = new List<Account>();
 
@@ -47,31 +45,42 @@ private class AMS_AccreditationContactControllerTest
 		AMS_Pax_Accreditation_Form__c onlineAccreditation = new AMS_Pax_Accreditation_Form__c(IsGSA__c = 'No', CurrencyIsoCode = isoc.CurrencyIsoCode, SAAM_Case__c = testCase.Id);
 		insert onlineAccreditation;
 
-        Contact c1 = new Contact(AccountId = acc1.id, Firstname = 'John', Lastname='Doe', Phone = '911111111', MobilePhone = '911111111', Email = 'jd@test.com', Financial_Assessment_Contact__c = false, RecordTypeId = AMS_Utils.getId('Contact', 'Standard_Contact'));
+        Contact c1 = new Contact(AccountId = acc1.id, Firstname = 'John', Lastname='Doe', Phone = '911111111', MobilePhone = '911111111', Email = 'jd@test.com', 
+            Financial_Assessment_Contact__c = false, RecordTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('Contact', 'Standard_Contact'));
         insert c1;
 
         AMS_Person__c p1 = new AMS_Person__c(Name='Jane', LastName__c='Doe', First_Name__c='Jane', Email__c='janed@email.com');
         insert p1;
 		
 		List<AMS_Accreditation_Contact__c> acList = new List<AMS_Accreditation_Contact__c>();
-		acList.add(new AMS_Accreditation_Contact__c(AMS_Pax_Accreditation_Form__c = onlineAccreditation.Id, First_name__c='NameToUse', Last_name__c='Last', Job_title__c='ABC', Mobile__c='+4112345678', Phone__c='3424322343', Email__c='unique@email.com', RecordTypeId=AMS_Utils.getId('AMS_Accreditation_Contact__c', 'Person')));
+		acList.add(new AMS_Accreditation_Contact__c(AMS_Pax_Accreditation_Form__c = onlineAccreditation.Id, First_name__c = 'NameToUse', Last_name__c = 'Last', 
+            Job_title__c = 'ABC', Mobile__c = '+4112345678', Phone__c = '3424322343', Email__c = 'unique@email.com', 
+            RecordTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('AMS_Accreditation_Contact__c', 'Person')));
 
-        acList.add(new AMS_Accreditation_Contact__c(AMS_Pax_Accreditation_Form__c = onlineAccreditation.Id, First_name__c='NameToUse2', Last_name__c='Last2', Job_title__c='ABC2', Mobile__c='+41123456782', Phone__c='34243223432', Email__c='unique2@email.com', Contact__c = c1.Id, RecordTypeId=AMS_Utils.getId('AMS_Accreditation_Contact__c', 'Person')));
+        acList.add(new AMS_Accreditation_Contact__c(AMS_Pax_Accreditation_Form__c = onlineAccreditation.Id, First_name__c='NameToUse2', Last_name__c='Last2', 
+            Job_title__c='ABC2', Mobile__c='+41123456782', Phone__c='34243223432', Email__c='unique2@email.com', Contact__c = c1.Id, 
+            RecordTypeId=RecordTypeSingleton.getInstance().getRecordTypeId('AMS_Accreditation_Contact__c', 'Person')));
 
-        acList.add(new AMS_Accreditation_Contact__c(AMS_Pax_Accreditation_Form__c = onlineAccreditation.Id, First_name__c='NameToUse3', Last_name__c='Last3', Job_title__c='ABC3', Mobile__c='+41123456783', Phone__c='34243223433', Email__c='unique3@email.com', Person_AMS__c = p1.Id, RecordTypeId=AMS_Utils.getId('AMS_Accreditation_Contact__c', 'Person')));
+        acList.add(new AMS_Accreditation_Contact__c(AMS_Pax_Accreditation_Form__c = onlineAccreditation.Id, First_name__c='NameToUse3', 
+            Last_name__c='Last3', Job_title__c='ABC3', Mobile__c='+41123456783', Phone__c='34243223433', Email__c='unique3@email.com', Person_AMS__c = p1.Id, 
+            RecordTypeId=RecordTypeSingleton.getInstance().getRecordTypeId('AMS_Accreditation_Contact__c', 'Person')));
 
-        acList.add(new AMS_Accreditation_Contact__c(AMS_Pax_Accreditation_Form__c = onlineAccreditation.Id, First_name__c='Joan', Last_name__c='Wylde', Phone__c='323562762', Email__c='jw@email.com', Valid_Until__c = Date.today(), RecordTypeId=AMS_Utils.getId('AMS_Accreditation_Contact__c', 'Trained_Staff')));
+        acList.add(new AMS_Accreditation_Contact__c(AMS_Pax_Accreditation_Form__c = onlineAccreditation.Id, First_name__c='Joan', Last_name__c='Wylde', 
+            Phone__c='323562762', Email__c='jw@email.com', Valid_Until__c = Date.today(), 
+            RecordTypeId=RecordTypeSingleton.getInstance().getRecordTypeId('AMS_Accreditation_Contact__c', 'Trained_Staff')));
 
-        acList.add(new AMS_Accreditation_Contact__c(AMS_Pax_Accreditation_Form__c = onlineAccreditation.Id, Last_name__c = 'TEST', Financial_interest__c = 0, Company__c=acc2.Id, RecordTypeId=AMS_Utils.getId('AMS_Accreditation_Contact__c', 'Company')));
+        acList.add(new AMS_Accreditation_Contact__c(AMS_Pax_Accreditation_Form__c = onlineAccreditation.Id, Last_name__c = 'TEST', Financial_interest__c = 0, 
+            Company__c=acc2.Id, RecordTypeId=RecordTypeSingleton.getInstance().getRecordTypeId('AMS_Accreditation_Contact__c', 'Company')));
 
-        acList.add(new AMS_Accreditation_Contact__c(AMS_Pax_Accreditation_Form__c = onlineAccreditation.Id, Last_name__c = 'TEST2', Financial_interest__c = 0, RecordTypeId=AMS_Utils.getId('AMS_Accreditation_Contact__c', 'Company')));
+        acList.add(new AMS_Accreditation_Contact__c(AMS_Pax_Accreditation_Form__c = onlineAccreditation.Id, Last_name__c = 'TEST2', 
+            Financial_interest__c = 0, RecordTypeId=RecordTypeSingleton.getInstance().getRecordTypeId('AMS_Accreditation_Contact__c', 'Company')));
 
 		insert acList;
     }
 	
 	static void setup()
     {
-        accountAgencyRtId = AMS_Utils.getId('Account', 'IATA_Agency');
+        accountAgencyRtId = RecordTypeSingleton.getInstance().getRecordTypeId('Account', 'IATA_Agency');
         aoa = [select id from AMS_Pax_Accreditation_Form__c].get(0);
         ac = [select id from AMS_Accreditation_Contact__c].get(0);
         List<Account> accounts = [select id, Location_Type__c from Account];
@@ -84,7 +93,8 @@ private class AMS_AccreditationContactControllerTest
      	
     }
 
-    static testMethod void testAddingNewContactAndCompanyRowsSucceeds()
+    @isTest
+	static void testAddingNewContactAndCompanyRowsSucceeds()
     {
         setup();
         
@@ -114,7 +124,8 @@ private class AMS_AccreditationContactControllerTest
     }
     
     
-    static testMethod void testContactAndPersonLinkingSucceeds()
+    @isTest
+	static void testContactAndPersonLinkingSucceeds()
     {
         setup();
         
@@ -146,7 +157,8 @@ private class AMS_AccreditationContactControllerTest
         Test.stopTest();
     }
     
-    static testMethod void testAccountLinkingSucceeds()
+    @isTest
+	static void testAccountLinkingSucceeds()
     {
         setup();
         
@@ -169,11 +181,13 @@ private class AMS_AccreditationContactControllerTest
         Test.stopTest();
     }
     
-    static testMethod void testPopUpControllerWithContactSearch()
+    @isTest
+	static void testPopUpControllerWithContactSearch()
     {
         setup();
         
-        Contact c1 = new Contact(AccountId = acc.id, Firstname = 'c1ObsoleteName', Lastname='c1LastName', Phone = '911111111', MobilePhone = '911111111', Email = 'test@test.com', Financial_Assessment_Contact__c = false, RecordTypeId = AMS_Utils.getId('Contact', 'Standard_Contact'));
+        Contact c1 = new Contact(AccountId = acc.id, Firstname = 'c1ObsoleteName', Lastname='c1LastName', Phone = '911111111', MobilePhone = '911111111', 
+            Email = 'test@test.com', Financial_Assessment_Contact__c = false, RecordTypeId =RecordTypeSingleton.getInstance().getRecordTypeId('Contact', 'Standard_Contact'));
         insert c1;
         
         Test.startTest();
@@ -192,11 +206,13 @@ private class AMS_AccreditationContactControllerTest
         Test.stopTest();
     }
     
-    static testMethod void testPopUpControllerWithAccountSearch()
+    @isTest
+	static void testPopUpControllerWithAccountSearch()
     {
         setup();
         
-        Contact c1 = new Contact(AccountId = acc.id, Firstname = 'c1ObsoleteName', Lastname='c1LastName', Phone = '911111111', MobilePhone = '911111111', Email = 'test@test.com', Financial_Assessment_Contact__c = false, RecordTypeId = AMS_Utils.getId('Contact', 'Standard_Contact'));
+        Contact c1 = new Contact(AccountId = acc.id, Firstname = 'c1ObsoleteName', Lastname='c1LastName', Phone = '911111111', MobilePhone = '911111111', 
+            Email = 'test@test.com', Financial_Assessment_Contact__c = false, RecordTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('Contact', 'Standard_Contact'));
         insert c1;
         
         Test.startTest();
@@ -216,7 +232,8 @@ private class AMS_AccreditationContactControllerTest
         Test.stopTest();
     }
     
-    static testMethod void testPopUpControllerWithPersonSearch()
+    @isTest
+	static void testPopUpControllerWithPersonSearch()
     {
         setup();
         
@@ -239,7 +256,8 @@ private class AMS_AccreditationContactControllerTest
         Test.stopTest();
     }
 
-    static testMethod void testPopUpControllerErrors() {
+    @isTest
+	static void testPopUpControllerErrors() {
         setup();
         
         Test.startTest();
@@ -270,7 +288,8 @@ private class AMS_AccreditationContactControllerTest
         Test.stopTest();
     }
 
-    static testMethod void testaddTrainedStaff()
+    @isTest
+	static void testaddTrainedStaff()
     {
         setup();
         
@@ -324,37 +343,8 @@ private class AMS_AccreditationContactControllerTest
         Test.stopTest();
     }
 
-
-    //FM - AMSU-72 - since the fields now have the date picker, entering incorrect dates no longer occurs so this test is not necessary any more
-    //static testMethod void testIncorrectDate()
-    //{
-    //    setup();
-        
-    //    Test.startTest();
-    //        ApexPages.StandardController sc = new ApexPages.StandardController(aoa);
-    //        AMS_AccreditationContactController ctrl = new AMS_AccreditationContactController(sc);
-            
-    //        //add owner from contact
-    //        Contact c1 = new Contact(AccountId = acc.id, Firstname = 'c1ObsoleteName', Lastname='c1LastName', Phone = '911111111', MobilePhone = '911111111', Email = 'test@test.com', Financial_Assessment_Contact__c = false);
-    //        insert c1; 
-
-    //        ctrl.rowNumber = '00000000000000000000000000000000000000000000000000000000';
-    //        ctrl.linkedRecordId = c1.Id;
-    //        ctrl.acWrapper.get(0).ac.Financial_interest__c = 100;
-    //        ctrl.acWrapper.get(0).ac.Agency_owner__c = true;
-    //        ctrl.acWrapper.get(0).dateJoined = '20101-01-10';
-    //        ctrl.acWrapper.get(0).ac.Date_joined_agency__c = '20101-01-10';
-    //        ctrl.linkACwithContactOrPersonSelection();
-
-    //        ctrl.onSave();
-
-    //        System.assert(wasMessageAdded(new ApexPages.Message(ApexPages.Severity.Error, 'Please make sure the date field format is "YYYY-MM-DD". First error with: '+ctrl.acWrapper.get(0).ac.First_Name__c + ' '+ ctrl.acWrapper.get(0).ac.Last_Name__c + ' with date: 20101-01-10')));
-
-
-    //    Test.stopTest();
-    //}
-
-    static testMethod void testIncorrectDateTrainedStaff()
+    @isTest
+	static void testIncorrectDateTrainedStaff()
     {
         setup();
         
@@ -411,7 +401,8 @@ private class AMS_AccreditationContactControllerTest
         Test.stopTest();
     }
 
-    static testMethod void verifyOwnerFlagIsSelectIfFinancialInterestAboveZero(){
+    @isTest
+	static void verifyOwnerFlagIsSelectIfFinancialInterestAboveZero(){
 
         setup();
         
@@ -439,7 +430,8 @@ private class AMS_AccreditationContactControllerTest
 
     }
 
-    static testMethod void verifyDGRTrainedStaffValiduntilPopulated(){
+    @isTest
+	static void verifyDGRTrainedStaffValiduntilPopulated(){
 
         setup();
         
@@ -473,7 +465,8 @@ private class AMS_AccreditationContactControllerTest
 
     }
 
-    static testMethod void verifyAccountIdNull(){
+    @isTest
+	static void verifyAccountIdNull(){
 
         setup();
         
@@ -486,8 +479,9 @@ private class AMS_AccreditationContactControllerTest
         pageRef.getParameters().put('id', String.valueOf(aoa.Id));
         Test.setCurrentPage(pageRef);
 
-        Id accRtId = AMS_Utils.getId('Account', 'IATA_Agency');
-        Account acc3 = new Account(Name='LegalName3', Location_Type__c = 'HO', Email__c = 'test3@test.com', Type='CASS Associate', Sector__c = 'Travel Agent', IATAcode__c = '123456783', AIMS_ID__c = '123456783', Source_System__c = 'AIMS2', Legal_Name__c = 'LegalName3', RecordTypeId = accRtId);
+        Id accRtId = RecordTypeSingleton.getInstance().getRecordTypeId('Account', 'IATA_Agency');
+        Account acc3 = new Account(Name='LegalName3', Location_Type__c = 'HO', Email__c = 'test3@test.com', Type='CASS Associate', Sector__c = 'Travel Agent', 
+            IATAcode__c = '123456783', AIMS_ID__c = '123456783', Source_System__c = 'AIMS2', Legal_Name__c = 'LegalName3', RecordTypeId = accRtId);
         acc3.Id = null;
             
         ctrl.rowNumber = '20000000000000000000000000000000000000000000000000000000';
@@ -501,7 +495,8 @@ private class AMS_AccreditationContactControllerTest
 
     }
 
-    static testMethod void testBlockExistingEmails(){
+    @isTest
+	static void testBlockExistingEmails(){
 
         setup();
         
@@ -510,7 +505,9 @@ private class AMS_AccreditationContactControllerTest
         ApexPages.StandardController sc = new ApexPages.StandardController(aoa);
         AMS_AccreditationContactController ctrl = new AMS_AccreditationContactController(sc);
 
-        AMS_Accreditation_Contact__c acDupeEmail = new AMS_Accreditation_Contact__c(AMS_Pax_Accreditation_Form__c = aoa.Id, First_name__c='NameToUse3', Last_name__c='Last3', Job_title__c='ABC3', Mobile__c='+41123456783', Phone__c='34243223433', Email__c='jd@test.com', RecordTypeId=AMS_Utils.getId('AMS_Accreditation_Contact__c', 'Person'));
+        AMS_Accreditation_Contact__c acDupeEmail = new AMS_Accreditation_Contact__c(AMS_Pax_Accreditation_Form__c = aoa.Id, First_name__c='NameToUse3', Last_name__c='Last3', 
+            Job_title__c='ABC3', Mobile__c='+41123456783', Phone__c='34243223433', Email__c='jd@test.com', 
+            RecordTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('AMS_Accreditation_Contact__c', 'Person'));
         AMS_AccreditationContactController.AccreditationContactWrapper wrapDupeEmail = new AMS_AccreditationContactController.AccreditationContactWrapper(acDupeEmail);
         ctrl.acWrapper.add(wrapDupeEmail);
         ctrl.acWrapper.get(3).ac.Financial_interest__c = 100;

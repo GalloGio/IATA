@@ -319,21 +319,21 @@ trigger CaseAfterTrigger on Case (after delete, after insert, after undelete, af
     /**********************************************************************************************************************************/
     
     /*Record type*/
-    ID IFAPcaseRecordTypeID = clsCaseRecordTypeIDSingleton.getInstance().RecordTypes.get('IATA Financial Review');
-	Id sidraRecordTypeId = clsCaseRecordTypeIDSingleton.getInstance().RecordTypes.get('SIDRA');
-	ID FSMcaseRecordTypeID = clsCaseRecordTypeIDSingleton.getInstance().RecordTypes.get('IATA Financial Security Monitoring');
-	Id RT_ICCS_Id = RecordTypeSingleton.getInstance().RtIDsPerDeveloperNamePerObj.get('Case').get('FDS_ICCS_Product_Management');
-	Id RT_ICCS_BA_Id = RecordTypeSingleton.getInstance().RtIDsPerDeveloperNamePerObj.get('Case').get('FDS_ICCS_Bank_Account_Management');
-	Id RT_ICCS_ASP_Id = clsCaseRecordTypeIDSingleton.getInstance().RecordTypes.get('FDS ASP Management') ;
-    Id RT_ICC_Id = clsCaseRecordTypeIDSingleton.getInstance().RecordTypes.get('Invoicing Collection Cases') ;
-    ID RecId = RecordTypeSingleton.getInstance().RtIDsPerDeveloperNamePerObj.get('Case').get('Cases_SIS_Help_Desk');
-    Id RT_AirlineSuspension_Id = RecordTypeSingleton.getInstance().RtIDsPerDeveloperNamePerObj.get('Case').get('Airline_Suspension');
-	Id RT_AirlineDeactivation_Id = RecordTypeSingleton.getInstance().RtIDsPerDeveloperNamePerObj.get('Case').get('Airline_Deactivation');
-	Id RT_FundsManagement_Id = RecordTypeSingleton.getInstance().RtIDsPerDeveloperNamePerObj.get('Case').get('Funds_Management');
-	Id RT_DIP_Review_Id = RecordTypeSingleton.getInstance().RtIDsPerDeveloperNamePerObj.get('Case').get('DIP_Review_Process');
-	ID SISHelpDeskRecordtype = clsCaseRecordTypeIDSingleton.getInstance().RecordTypes.get('Cases - SIS Help Desk');
-	ID CSRcaseRecordTypeID = clsCaseRecordTypeIDSingleton.getInstance().RecordTypes.get('BSPlink Customer Service Requests (CSR)');
-	Id CaseSAAMId = Schema.SObjectType.Case.getRecordTypeInfosByName().get('SAAM').getRecordTypeId();
+    ID IFAPcaseRecordTypeID = RecordTypeSingleton.getInstance().getRecordTypeId('Case', 'IATA_Financial_Review');
+	Id sidraRecordTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('Case', 'SIDRA');
+	ID FSMcaseRecordTypeID = RecordTypeSingleton.getInstance().getRecordTypeId('Case', 'IATA_Financial_Security_Monitoring');
+	Id RT_ICCS_Id = RecordTypeSingleton.getInstance().getRecordTypeId('Case', 'FDS_ICCS_Product_Management');
+	Id RT_ICCS_BA_Id = RecordTypeSingleton.getInstance().getRecordTypeId('Case', 'FDS_ICCS_Bank_Account_Management');
+	Id RT_ICCS_ASP_Id = RecordTypeSingleton.getInstance().getRecordTypeId('Case', 'FDS_ASP_Management') ;
+    Id RT_ICC_Id = RecordTypeSingleton.getInstance().getRecordTypeId('Case', 'Invoicing_Collection_Cases') ;
+    ID RecId = RecordTypeSingleton.getInstance().getRecordTypeId('Case', 'Cases_SIS_Help_Desk');
+    Id RT_AirlineSuspension_Id = RecordTypeSingleton.getInstance().getRecordTypeId('Case', 'Airline_Suspension');
+	Id RT_AirlineDeactivation_Id = RecordTypeSingleton.getInstance().getRecordTypeId('Case', 'Airline_Deactivation');
+	Id RT_FundsManagement_Id = RecordTypeSingleton.getInstance().getRecordTypeId('Case', 'Funds_Management');
+	Id RT_DIP_Review_Id = RecordTypeSingleton.getInstance().getRecordTypeId('Case', 'DIP_Review_Process');
+	ID SISHelpDeskRecordtype = RecordTypeSingleton.getInstance().getRecordTypeId('Case', 'Cases_SIS_Help_Desk');
+	ID CSRcaseRecordTypeID = RecordTypeSingleton.getInstance().getRecordTypeId('Case', 'BSPlink_Customer_Service_Requests_CSR');
+	Id CaseSAAMId = RecordTypeSingleton.getInstance().getRecordTypeId('Case', 'ProcessEuropeSCE');//SAAM
     /*Record type*/	
     
     /*Variables*/
@@ -784,7 +784,6 @@ trigger CaseAfterTrigger on Case (after delete, after insert, after undelete, af
 			    	casesToTrigger.add(c);
 			}
 			if(!casesToTrigger.isEmpty()){
-			    map<string,id> AcccRtNamePerId = TransformationHelper.AccRtNamePerIds();
 			    set<String> ServicesToCheck = new set<String>();
 			    map<String,Case_Reason_Service__c> ServicesPerReason  = new map<String,Case_Reason_Service__c>();
 			    list<Case> USRRcases = new list<Case>();
@@ -813,7 +812,7 @@ trigger CaseAfterTrigger on Case (after delete, after insert, after undelete, af
 		            }
 		        }
 		       	if(caseMap.size()>0){ //validation and at the same time change of recordtype of the accts if they were standard 
-		        	map<Id,Case> casesWithErrorOnAcct = ServiceRenderedCaseLogic.changeRTtoBranchAccts(caseIdPerAccID, AcccRtNamePerId, caseMap);
+		        	map<Id,Case> casesWithErrorOnAcct = ServiceRenderedCaseLogic.changeRTtoBranchAccts(caseIdPerAccID, caseMap);
 					for (Id idc : caseMap.keySet()) {
 		            	if(casesWithErrorOnAcct.get(idc) <> null){  
 		                	casesWithErrorOnAcct.get(idc).addError(' Errors during the validation of the Account related to the case: Wrong recordtype or not linked to a proper Headquarter ');
@@ -958,7 +957,6 @@ trigger CaseAfterTrigger on Case (after delete, after insert, after undelete, af
 			for(Case newCaseObj : trigger.new){ 
 				isCaseMustBeDeleted = false;
 				//GM - IMPRO - START
-				//RecordType caseRecordType = [Select Id, Name from RecordType where Id=: newCaseObj.RecordTypeId];
 				// SIS email to case
 				if ((newCaseObj.Origin == 'E-mail to Case - IS Help Desk' || newCaseObj.Origin == 'E-mail to Case - SIS Help Desk') 
 						&& newCaseObj.RecordTypeid != null && newCaseObj.RecordTypeid == SISHelpDeskRecordtype) {

@@ -68,14 +68,6 @@ public with sharing class DAL_ISSP {
         
     }
     
-    
-    public static Id getRecordTypeId (String name) {
-        List<RecordType> recordTypes = [select id from RecordType where DeveloperName=:name];
-        if (recordTypes.size() > 0)
-            return recordTypes[0].Id;
-        return null;
-    }
-    
     public static Case getCase(String caseId) {
         List<Case> cases = [select  
                 (Select Id, IsPublished, CreatedDate From CaseComments),Product_Manager_ACR__c,ArchivedDate__c,Account.Type,Account.IATA_ISO_Country__c,account.IATA_ISO_Country__r.iso_code__c,

@@ -22,7 +22,8 @@
 @isTest
 private class SIDRARnSIntegrationWS_Test {
 
-    static testMethod void CreateCaseValidTest() {
+    @isTest
+    static void CreateCaseValidTest() {
         String RetVal = SIDRARnSIntegrationWS.CreateSidraCase('SIDRA', 'SIN', 'SE BSP RM 2011/02D 8021244',
                                                               'Follow Up Remittance 2011/02D 8021244 SYDAFRIKARESOR I HELSINGBORG AB','Nordic & Baltic', 'BSP', '8021244',
                                                               'Group', '2011/02D', '2011-03-15 18:00:00', '2011-03-15 18:00:00', '2011-03-17 18:00:00', 'SEK', '17768.0',
@@ -32,7 +33,8 @@ private class SIDRARnSIntegrationWS_Test {
         system.assertNotEquals(RetVal, '');
     }
 
-    static testMethod void CreateCaseFailedTest() {
+    @isTest
+		static void CreateCaseFailedTest() {
         // the date format will not be good for the field "ProposeIrregularity" '2011-03-16 10:51' instead of '2011-03-16 10:51:00'
         String RetVal = SIDRARnSIntegrationWS.CreateSidraCase('SIDRA', 'SIN' ,'SE BSP RM 2011/02D 8021244',
                                                               'Follow Up Remittance 2011/02D 8021244 SYDAFRIKARESOR I HELSINGBORG AB','Nordic & Baltic', 'BSP', '8021244',
@@ -43,7 +45,8 @@ private class SIDRARnSIntegrationWS_Test {
         system.assertNotEquals(RetVal, '');
     }
 
-    static testMethod void CreateCaseWithDisputedAmount() {
+    @isTest
+		static void CreateCaseWithDisputedAmount() {
         String RetVal = SIDRARnSIntegrationWS.CreateSidraCase('SIDRA', 'SIN', 'SE BSP RM 2011/02D 8021244',
                                                               'Follow Up Remittance 2011/02D 8021244 SYDAFRIKARESOR I HELSINGBORG AB','Nordic & Baltic', 'BSP', '8021244',
                                                               'Group', '2011/02D', '2011-03-15 18:00:00', '2011-03-15 18:00:00', '2011-03-17 18:00:00', 'SEK', '17768.0',
@@ -53,7 +56,8 @@ private class SIDRARnSIntegrationWS_Test {
         system.assertNotEquals(RetVal, '');
     }
 
-    static testMethod void CreateCaseBadDateTimeFormat1() {
+    @isTest
+    static void CreateCaseBadDateTimeFormat1() {
         String RetVal = SIDRARnSIntegrationWS.CreateSidraCase('SIDRA', 'SIN', 'SE BSP RM 2011/02D 8021244',
                                                               'Follow Up Remittance 2011/02D 8021244 SYDAFRIKARESOR I HELSINGBORG AB','Nordic & Baltic', 'BSP', '8021244',
                                                               'Group', '2011/02D', '2011-03', '2011-03-15 18:00:00', '2011-03-17 18:00:00', 'SEK', '17768.0',
@@ -63,7 +67,8 @@ private class SIDRARnSIntegrationWS_Test {
         system.assertNotEquals(RetVal, '');
     }
 
-    static testMethod void CreateCaseBadDateTimeFormat2() {
+    @isTest
+    static void CreateCaseBadDateTimeFormat2() {
         String RetVal = SIDRARnSIntegrationWS.CreateSidraCase('SIDRA', 'SIN', 'SE BSP RM 2011/02D 8021244',
                                                               'Follow Up Remittance 2011/02D 8021244 SYDAFRIKARESOR I HELSINGBORG AB','Nordic & Baltic', 'BSP', '8021244',
                                                               'Group', '2011/02D', '2011-03-15', '2011-03-15 18:00:00', '2011-03-17 18:00:00', 'SEK', '17768.0',
@@ -73,7 +78,8 @@ private class SIDRARnSIntegrationWS_Test {
         system.assertNotEquals(RetVal, '');
     }
 
-    static testMethod void CreateCaseWithoutSomeRequiredFields(){
+    @isTest
+    static void CreateCaseWithoutSomeRequiredFields(){
         string RetVal = SIDRARnSIntegrationWS.CreateSidraCase('SIDRA', 'SIN','',
                                                               'Follow Up Remittance 2011/02D 8021244 SYDAFRIKARESOR I HELSINGBORG AB','Nordic & Baltic', 'BSP', '8021244',
                                                               'Group', '2011/02D', '2011-03-15 18:00:00', '2011-03-15 18:00:00', '2011-03-17 18:00:00', 'SEK', '17768.0',
@@ -83,7 +89,8 @@ private class SIDRARnSIntegrationWS_Test {
         system.assertNotEquals(RetVal, '');
     }
 
-    static testMethod void CreateCaseInvalidCountry(){
+    @isTest
+    static void CreateCaseInvalidCountry(){
         string RetVal = SIDRARnSIntegrationWS.CreateSidraCase('SIDRA', 'SIN', 'Subject',
                                                               'Follow Up Remittance 2011/02D 8021244 SYDAFRIKARESOR I HELSINGBORG AB','shnhsh', 'BSP', '8021244',
                                                               'Group', '2011/02D', '2011-03-15 18:00:00', '2011-03-15 18:00:00', '2011-03-17 18:00:00', 'SEK', '17768.0',
@@ -93,7 +100,8 @@ private class SIDRARnSIntegrationWS_Test {
         system.assertNotEquals(RetVal, '');
     }
 
-    static testMethod void CreateCaseInvalidIrregularityType(){
+    @isTest
+    static void CreateCaseInvalidIrregularityType(){
         string RetVal = SIDRARnSIntegrationWS.CreateSidraCase('SIDRA', 'SIN', 'Subject',
                                                               'Follow Up Remittance 2011/02D 8021244 SYDAFRIKARESOR I HELSINGBORG AB','Nordic & Baltic', 'BSP', '8021244',
                                                               'Group', '2011/02D', '2011-03-15 18:00:00', '2011-03-15 18:00:00', '2011-03-17 18:00:00', 'SEK', '17768.0',
@@ -103,7 +111,8 @@ private class SIDRARnSIntegrationWS_Test {
         system.assertNotEquals(RetVal, '');
     }
 
-    static testMethod void CreateCaseInvalidRemittanceDate(){
+    @isTest
+    static void CreateCaseInvalidRemittanceDate(){
         string RetVal = SIDRARnSIntegrationWS.CreateSidraCase('SIDRA', 'SIN','Subject',
                                                               'Follow Up Remittance 2011/02D 8021244 SYDAFRIKARESOR I HELSINGBORG AB','Nordic & Baltic', 'BSP', '8021244',
                                                               'Group', '2011/02D', '2011-15-15 18:00:00', '2011-03-15 18:00:00', '2011-03-17 18:00:00', 'SEK', '17768.0',
@@ -113,7 +122,8 @@ private class SIDRARnSIntegrationWS_Test {
         system.assertNotEquals(RetVal, '');
     }
 
-    static testMethod void CreateCaseInvalidRemittanceDate2(){
+    @isTest
+    static void CreateCaseInvalidRemittanceDate2(){
         string RetVal = SIDRARnSIntegrationWS.CreateSidraCase('SIDRA', 'SIN','Subject',
                                                               'Follow Up Remittance 2011/02D 8021244 SYDAFRIKARESOR I HELSINGBORG AB','Nordic & Baltic', 'BSP', '8021244',
                                                               'Group', '2011/02D', '2011-02-30 18:00:00', '2011-03-15 18:00:00', '2011-03-17 18:00:00', 'SEK', '17768.0',
@@ -122,7 +132,9 @@ private class SIDRARnSIntegrationWS_Test {
 
         system.assertNotEquals(RetVal, '');
     }
-    static testMethod void CreateCaseInvalidShortPaymentDate(){
+
+    @isTest
+    static void CreateCaseInvalidShortPaymentDate(){
         string RetVal = SIDRARnSIntegrationWS.CreateSidraCase('SIDRA', 'SIN','Subject',
                                                               'Follow Up Remittance 2011/02D 8021244 SYDAFRIKARESOR I HELSINGBORG AB','Nordic & Baltic', 'BSP', '8021244',
                                                               'Group', '2011/02D', '2011-02-15 18:00:00', '2011-15-15 18:00:00', '2011-03-17 18:00:00', 'SEK', '17768.0',
@@ -132,7 +144,8 @@ private class SIDRARnSIntegrationWS_Test {
         system.assertNotEquals(RetVal, '');
     }
 
-    static testMethod void CreateCaseInvalidEndOfGracePeriod(){
+    @isTest
+    static void CreateCaseInvalidEndOfGracePeriod(){
         string RetVal = SIDRARnSIntegrationWS.CreateSidraCase('SIDRA', 'SIN','Subject',
                                                               'Follow Up Remittance 2011/02D 8021244 SYDAFRIKARESOR I HELSINGBORG AB','Nordic & Baltic', 'BSP', '8021244',
                                                               'Group', '2011/02D', '2011-02-15 18:00:00', '2011-02-15 18:00:00', '2011-15-17 18:00:00', 'SEK', '17768.0',
@@ -142,7 +155,8 @@ private class SIDRARnSIntegrationWS_Test {
         system.assertNotEquals(RetVal, '');
     }
 
-    static testMethod void CreateCaseInvalidProposeIrregularity(){
+    @isTest
+    static void CreateCaseInvalidProposeIrregularity(){
         string RetVal = SIDRARnSIntegrationWS.CreateSidraCase('SIDRA','SIN', 'Subject',
                                                               'Follow Up Remittance 2011/02D 8021244 SYDAFRIKARESOR I HELSINGBORG AB','Nordic & Baltic', 'BSP', '8021244',
                                                               'Group', '2011/02D', '2011-02-15 18:00:00', '2011-02-15 18:00:00', '2011-03-17 18:00:00', 'SEK', '17768.0',
@@ -152,7 +166,8 @@ private class SIDRARnSIntegrationWS_Test {
         system.assertNotEquals(RetVal, '');
     }
 
-    static testMethod void CreateCaseInvalidGroupSingle(){
+    @isTest
+    static void CreateCaseInvalidGroupSingle(){
         string RetVal = SIDRARnSIntegrationWS.CreateSidraCase('SIDRA','SIN', 'Subject',
                                                               'Follow Up Remittance 2011/02D 8021244 SYDAFRIKARESOR I HELSINGBORG AB','Nordic & Baltic', 'BSP', '8021244',
                                                               'Groupon', '2011/02D', '2011-02-15 18:00:00', '2011-02-15 18:00:00', '2011-03-17 18:00:00', 'SEK', '17768.0',
@@ -162,7 +177,8 @@ private class SIDRARnSIntegrationWS_Test {
         system.assertNotEquals(RetVal, '');
     }
 
-    static testMethod void CreateCaseInvalidBSPCassValue(){
+    @isTest
+    static void CreateCaseInvalidBSPCassValue(){
         string RetVal = SIDRARnSIntegrationWS.CreateSidraCase('SIDRA','SIN', 'Subject',
                                                               'Follow Up Remittance 2011/02D 8021244 SYDAFRIKARESOR I HELSINGBORG AB','Nordic & Baltic', 'BSPddd', '8021244',
                                                               'Group', '2011/02D', '2011-02-15 18:00:00', '2011-02-15 18:00:00', '2011-03-17 18:00:00', 'SEK', '17768.0',
@@ -172,7 +188,8 @@ private class SIDRARnSIntegrationWS_Test {
         system.assertNotEquals(RetVal, '');
     }
 
-    static testMethod void CreateCaseInvalidLatePaymentDate(){
+    @isTest
+    static void CreateCaseInvalidLatePaymentDate(){
         string RetVal = SIDRARnSIntegrationWS.CreateSidraCase('SIDRA', 'SIN', 'SE BSP RM 2011/02D 8021244',
                                                               'Follow Up Remittance 2011/02D 8021244 SYDAFRIKARESOR I HELSINGBORG AB','Nordic & Baltic', 'BSP', '8021244',
                                                               'Group', '2011/02D', '2011-03-15 18:00:00', '2011-03-15 18:00:00', '2011-03-17 18:00:00', 'SEK', '17768.0',
@@ -182,12 +199,13 @@ private class SIDRARnSIntegrationWS_Test {
         system.assertNotEquals(RetVal, '');
     }
 
-    static testMethod void UpdateCase(){
+    @isTest
+    static void UpdateCase(){
         Test.startTest();
 
         Case aCase = new Case();
 
-        acase.RecordTypeId = clsCaseRecordTypeIDSingleton.getInstance().RecordTypes.get('SIDRA');
+        acase.RecordTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('Case', 'SIDRA');
         acase.Subject = 'Test Case Subject';
         insert aCase;
 
@@ -198,10 +216,11 @@ private class SIDRARnSIntegrationWS_Test {
         Test.stopTest();
     }
 
-    static testMethod void UpdateCaseNullShortPayment(){
+    @isTest
+    static void UpdateCaseNullShortPayment(){
         Test.startTest();
         Case aCase = new Case();
-        acase.RecordTypeId = clsCaseRecordTypeIDSingleton.getInstance().RecordTypes.get('SIDRA');
+        acase.RecordTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('Case', 'SIDRA');
         acase.Subject = 'Test Case Subject';
         insert aCase;
 
@@ -212,10 +231,11 @@ private class SIDRARnSIntegrationWS_Test {
         Test.stopTest();
     }
 
-    static testMethod void UpdateCaseNullBillingAmount(){
+    @isTest
+    static void UpdateCaseNullBillingAmount(){
         Test.startTest();
         Case aCase = new Case();
-        acase.RecordTypeId = clsCaseRecordTypeIDSingleton.getInstance().RecordTypes.get('SIDRA');
+        acase.RecordTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('Case', 'SIDRA');
         acase.Subject = 'Test Case Subject';
         insert aCase;
 
@@ -226,10 +246,11 @@ private class SIDRARnSIntegrationWS_Test {
         Test.stopTest();
     }
 
-    static testMethod void UpdateCaseNullCollectedAmount(){
+    @isTest
+    static void UpdateCaseNullCollectedAmount(){
         Test.startTest();
         Case aCase = new Case();
-        acase.RecordTypeId = clsCaseRecordTypeIDSingleton.getInstance().RecordTypes.get('SIDRA');
+        acase.RecordTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('Case', 'SIDRA');
         acase.Subject = 'Test Case Subject';
         insert aCase;
 
@@ -240,10 +261,11 @@ private class SIDRARnSIntegrationWS_Test {
         Test.stopTest();
     }
 
-    static testMethod void UpdateCaseNullOutstandingAmount(){
+    @isTest
+    static void UpdateCaseNullOutstandingAmount(){
         Test.startTest();
         Case aCase = new Case();
-        acase.RecordTypeId = clsCaseRecordTypeIDSingleton.getInstance().RecordTypes.get('SIDRA');
+        acase.RecordTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('Case', 'SIDRA');
         acase.Subject = 'Test Case Subject';
         insert aCase;
 
@@ -254,10 +276,11 @@ private class SIDRARnSIntegrationWS_Test {
         Test.stopTest();
     }
 
-    static testMethod void UpdateCaseNullIataCharges(){
+    @isTest
+    static void UpdateCaseNullIataCharges(){
         Test.startTest();
         Case aCase = new Case();
-        acase.RecordTypeId = clsCaseRecordTypeIDSingleton.getInstance().RecordTypes.get('SIDRA');
+        acase.RecordTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('Case', 'SIDRA');
         acase.Subject = 'Test Case Subject';
         insert aCase;
 
@@ -268,14 +291,16 @@ private class SIDRARnSIntegrationWS_Test {
         Test.stopTest();
     }
 
-    static testMethod void UpdateCaseNullBadCaseNumber(){
+    @isTest
+    static void UpdateCaseNullBadCaseNumber(){
         string RetVal = SIDRARnSIntegrationWS.UpdateCase('11240044', '0', '0', '0', '0', '', '0', '', '0', '0');
     }
     
-    static testMethod void UpdateCaseInvalidGDIPremium(){
+    @isTest
+    static void UpdateCaseInvalidGDIPremium(){
         Test.startTest();
         Case aCase = new Case();
-        acase.RecordTypeId = clsCaseRecordTypeIDSingleton.getInstance().RecordTypes.get('SIDRA');
+        acase.RecordTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('Case', 'SIDRA');
         acase.Subject = 'Test Case Subject';
         insert aCase;
 
@@ -286,10 +311,11 @@ private class SIDRARnSIntegrationWS_Test {
         Test.stopTest();
     }
     
-    static testMethod void UpdateCaseInvalidAgencyFees(){
+    @isTest
+    static void UpdateCaseInvalidAgencyFees(){
         Test.startTest();
         Case aCase = new Case();
-        acase.RecordTypeId = clsCaseRecordTypeIDSingleton.getInstance().RecordTypes.get('SIDRA');
+        acase.RecordTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('Case', 'SIDRA');
         acase.Subject = 'Test Case Subject';
         insert aCase;
 
@@ -300,10 +326,11 @@ private class SIDRARnSIntegrationWS_Test {
         Test.stopTest();
     }
 
-    static testMethod void UpdateCaseInvalidLateDatePayment(){
+    @isTest
+    static void UpdateCaseInvalidLateDatePayment(){
         Test.startTest();
         Case aCase = new Case();
-        acase.RecordTypeId = clsCaseRecordTypeIDSingleton.getInstance().RecordTypes.get('SIDRA');
+        acase.RecordTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('Case', 'SIDRA');
         acase.Subject = 'Test Case Subject';
         insert aCase;
 
@@ -314,10 +341,11 @@ private class SIDRARnSIntegrationWS_Test {
         Test.stopTest();
     }
 
-    static testMethod void DailyUpdateValidCaseTest(){
+    @isTest
+    static void DailyUpdateValidCaseTest(){
         Test.startTest();
         Case aCase = new Case();
-        acase.RecordTypeId = clsCaseRecordTypeIDSingleton.getInstance().RecordTypes.get('SIDRA');
+        acase.RecordTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('Case', 'SIDRA');
         acase.Subject = 'Test Case Subject';
         insert aCase;
 
@@ -327,10 +355,11 @@ private class SIDRARnSIntegrationWS_Test {
         system.assertNotEquals(RetVal, '');
     }
 
-    static testMethod void DailyUpdateNullOutstandingAmountTest(){
+    @isTest
+    static void DailyUpdateNullOutstandingAmountTest(){
         Test.startTest();
         Case aCase = new Case();
-        acase.RecordTypeId = clsCaseRecordTypeIDSingleton.getInstance().RecordTypes.get('SIDRA');
+        acase.RecordTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('Case', 'SIDRA');
         acase.Subject = 'Test Case Subject';
         insert aCase;
 
@@ -340,10 +369,11 @@ private class SIDRARnSIntegrationWS_Test {
         system.assertNotEquals(RetVal, '');
     }
 
-    static testMethod void DailyUpdateNullDefaultedAmountTest(){
+    @isTest
+    static void DailyUpdateNullDefaultedAmountTest(){
         Test.startTest();
         Case aCase = new Case();
-        acase.RecordTypeId = clsCaseRecordTypeIDSingleton.getInstance().RecordTypes.get('SIDRA');
+        acase.RecordTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('Case', 'SIDRA');
         acase.Subject = 'Test Case Subject';
         insert aCase;
 
@@ -353,10 +383,11 @@ private class SIDRARnSIntegrationWS_Test {
         system.assertNotEquals(RetVal, '');
     }
 
-    static testMethod void DailyUpdateNullCollectedAmountTest(){
+    @isTest
+    static void DailyUpdateNullCollectedAmountTest(){
         Test.startTest();
         Case aCase = new Case();
-        acase.RecordTypeId = clsCaseRecordTypeIDSingleton.getInstance().RecordTypes.get('SIDRA');
+        acase.RecordTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('Case', 'SIDRA');
         acase.Subject = 'Test Case Subject';
         insert aCase;
 
@@ -366,10 +397,11 @@ private class SIDRARnSIntegrationWS_Test {
         system.assertNotEquals(RetVal, '');
     }
 
-    static testMethod void DailyUpdateNullProratedAmountTest(){
+    @isTest
+    static void DailyUpdateNullProratedAmountTest(){
         Test.startTest();
         Case aCase = new Case();
-        acase.RecordTypeId = clsCaseRecordTypeIDSingleton.getInstance().RecordTypes.get('SIDRA');
+        acase.RecordTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('Case', 'SIDRA');
         acase.Subject = 'Test Case Subject';
         insert aCase;
 
@@ -379,10 +411,11 @@ private class SIDRARnSIntegrationWS_Test {
         system.assertNotEquals(RetVal, '');
     }
 
-    static testMethod void DailyUpdateNullPaidBackAmountTest(){
+    @isTest
+    static void DailyUpdateNullPaidBackAmountTest(){
         Test.startTest();
         Case aCase = new Case();
-        acase.RecordTypeId = clsCaseRecordTypeIDSingleton.getInstance().RecordTypes.get('SIDRA');
+        acase.RecordTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('Case', 'SIDRA');
         acase.Subject = 'Test Case Subject';
         insert aCase;
 
@@ -392,10 +425,11 @@ private class SIDRARnSIntegrationWS_Test {
         system.assertNotEquals(RetVal, '');
     }
 
-    static testMethod void DailyUpdateNullSubsequentSalesTest(){
+    @isTest
+    static void DailyUpdateNullSubsequentSalesTest(){
         Test.startTest();
         Case aCase = new Case();
-        acase.RecordTypeId = clsCaseRecordTypeIDSingleton.getInstance().RecordTypes.get('SIDRA');
+        acase.RecordTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('Case', 'SIDRA');
         acase.Subject = 'Test Case Subject';
         insert aCase;
 
@@ -405,10 +439,11 @@ private class SIDRARnSIntegrationWS_Test {
         system.assertNotEquals(RetVal, '');
     }
 
-    static testMethod void DailyUpdateNullOutstandingAmountAllPeriodTest(){
+    @isTest
+    static void DailyUpdateNullOutstandingAmountAllPeriodTest(){
         Test.startTest();
         Case aCase = new Case();
-        acase.RecordTypeId = clsCaseRecordTypeIDSingleton.getInstance().RecordTypes.get('SIDRA');
+        acase.RecordTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('Case', 'SIDRA');
         acase.Subject = 'Test Case Subject';
         insert aCase;
 
@@ -418,10 +453,11 @@ private class SIDRARnSIntegrationWS_Test {
         system.assertNotEquals(RetVal, '');
     }
 
-    static testMethod void DailyUpdateNullCollectedAmountAllPeriodTest(){
+    @isTest
+    static void DailyUpdateNullCollectedAmountAllPeriodTest(){
         Test.startTest();
         Case aCase = new Case();
-        acase.RecordTypeId = clsCaseRecordTypeIDSingleton.getInstance().RecordTypes.get('SIDRA');
+        acase.RecordTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('Case', 'SIDRA');
         acase.Subject = 'Test Case Subject';
         insert aCase;
 
@@ -431,11 +467,12 @@ private class SIDRARnSIntegrationWS_Test {
         system.assertNotEquals(RetVal, '');
     }
 
-    static testMethod void DailyUpdateIndividualMovementValidCaseTest(){
+    @isTest
+    static void DailyUpdateIndividualMovementValidCaseTest(){
         Account accnt = new Account(Name='Test');
         insert accnt;
         Case aCase = new Case();
-        acase.RecordTypeId = clsCaseRecordTypeIDSingleton.getInstance().RecordTypes.get('SIDRA');
+        acase.RecordTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('Case', 'SIDRA');
         acase.Subject = 'Test Case Subject';
         acase.AccountId = accnt.id;
         insert aCase;
@@ -450,11 +487,12 @@ private class SIDRARnSIntegrationWS_Test {
         Test.stopTest();
     }
 
-    static testMethod void DailyUpdateIndividualMovementNoCaseTest(){
+    @isTest
+    static void DailyUpdateIndividualMovementNoCaseTest(){
         Account accnt = new Account(Name='Test');
         insert accnt;
         Case aCase = new Case();
-        acase.RecordTypeId = clsCaseRecordTypeIDSingleton.getInstance().RecordTypes.get('SIDRA');
+        acase.RecordTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('Case', 'SIDRA');
         acase.Subject = 'Test Case Subject';
         acase.AccountId = accnt.id;
         insert aCase;
@@ -469,11 +507,12 @@ private class SIDRARnSIntegrationWS_Test {
         Test.stopTest();
     }
 
-    static testMethod void DailyUpdateIndividualMovementNoAmountsTest(){
+    @isTest
+    static void DailyUpdateIndividualMovementNoAmountsTest(){
         Account accnt = new Account(Name='Test');
         insert accnt;
         Case aCase = new Case();
-        acase.RecordTypeId = clsCaseRecordTypeIDSingleton.getInstance().RecordTypes.get('SIDRA');
+        acase.RecordTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('Case', 'SIDRA');
         acase.Subject = 'Test Case Subject';
         acase.AccountId = accnt.id;
         insert aCase;
@@ -488,34 +527,40 @@ private class SIDRARnSIntegrationWS_Test {
         Test.stopTest();
     }
 
-    static testMethod void DeleteCasesByPeriodAllNull(){
+    @isTest
+    static void DeleteCasesByPeriodAllNull(){
         string RetVal = SIDRARnSIntegrationWS.DeleteCasesByPeriod('','','','','');
         system.assertNotEquals(RetVal, '');
     }
 
-    static testMethod void DeleteCasesByPeriodBSPNull(){
+    @isTest
+    static void DeleteCasesByPeriodBSPNull(){
         string RetVal = SIDRARnSIntegrationWS.DeleteCasesByPeriod('Italy','','RemittancePeriod','USD','SIDRA');
         system.assertNotEquals(RetVal, '');
     }
 
-    static testMethod void DeleteCasesByPeriodRemittancePeriodNull(){
+    @isTest
+    static void DeleteCasesByPeriodRemittancePeriodNull(){
         string RetVal = SIDRARnSIntegrationWS.DeleteCasesByPeriod('Italy','BSP','','USD','SIDRA');
         system.assertNotEquals(RetVal, '');
     }
 
-    static testMethod void DeleteCasesByPeriodCurrencyNull(){
+    @isTest
+    static void DeleteCasesByPeriodCurrencyNull(){
         string RetVal = SIDRARnSIntegrationWS.DeleteCasesByPeriod('Italy','BSP','RemittancePeriod','','SIDRA');
         system.assertNotEquals(RetVal, '');
     }
 
-    static testMethod void DeleteCasesByPeriodCaseTypeNull(){
+    @isTest
+    static void DeleteCasesByPeriodCaseTypeNull(){
         string RetVal = SIDRARnSIntegrationWS.DeleteCasesByPeriod('Italy','BSP','RemittancePeriod','USD','');
         system.assertNotEquals(RetVal, '');
     }
 
-    static testMethod void DeleteCasesByPeriodCaseOKTest(){
+    @isTest
+    static void DeleteCasesByPeriodCaseOKTest(){
         Test.startTest();
-        Case aCase = new Case(RecordTypeId = (clsCaseRecordTypeIDSingleton.getInstance().RecordTypes.get('SIDRA'))
+        Case aCase = new Case(RecordTypeId = (RecordTypeSingleton.getInstance().getRecordTypeId('Case', 'SIDRA'))
                               ,Subject = 'Test Case Subject'
                               ,BSP_CASS__c = 'BSP'
                               ,Currency__c = 'USD'
@@ -525,9 +570,10 @@ private class SIDRARnSIntegrationWS_Test {
         system.assertNotEquals(RetVal, '');
     }
 
-    static testMethod void DeleteCasesByPeriodCaseOKTest2(){
+    @isTest
+    static void DeleteCasesByPeriodCaseOKTest2(){
         Test.startTest();
-        Case aCase = new Case(RecordTypeId = (clsCaseRecordTypeIDSingleton.getInstance().RecordTypes.get('SIDRA'))
+        Case aCase = new Case(RecordTypeId = (RecordTypeSingleton.getInstance().getRecordTypeId('Case', 'SIDRA'))
                               ,Subject = 'Test Case Subject'
                               ,BSP_CASS__c = 'BSP'
                               ,Currency__c = 'USD'
@@ -538,9 +584,10 @@ private class SIDRARnSIntegrationWS_Test {
         system.assertNotEquals(RetVal, '');
     }
 
-    static testMethod void GetFSAmounts(){
+    @isTest
+    static void GetFSAmounts(){
 
-        Id rtacc = Schema.SObjectType.Account.getRecordTypeInfosByName().get('Agency').getRecordTypeId();
+        Id rtacc = RecordTypeSingleton.getInstance().getRecordTypeId('Account', 'IATA_Agency');
         Account acc1 = new Account(RecordTypeId = rtacc, Location_Type__c = 'HO', Name='Test1', IATACode__c = '1234567');
         Account acc2 = new Account(RecordTypeId = rtacc, Location_Type__c = 'HO', Name='Test2', IATACode__c = '1234568');
         insert acc1;

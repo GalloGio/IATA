@@ -10,7 +10,7 @@ private class LiveAgentPostChatControllerTest {
 		country.Case_BSP_Country__c  = 'United Kingdom';
 		insert country;
 
-		Id standardAccountRt = AMS_Utils.getId('Account', 'Standard_Account');
+		Id standardAccountRt = RecordTypeSingleton.getInstance().getRecordTypeId('Account', 'Standard_Account');
 		Account a = new Account(IATA_ISO_Country__c = country.id, RecordTypeId = standardAccountRt, Name='Test Agency', IATAcode__c = '1234567', Short_Name__c = 'Test Agency', Source_System__c = 'AIMS');
 		insert a;
 
@@ -23,7 +23,7 @@ private class LiveAgentPostChatControllerTest {
 			LocaleSidKey='en_US', ProfileId = testProfile.Id, TimeZoneSidKey='America/Los_Angeles', UserName='test.username@istest.com', License_Cost_Center__c = 'ISF005CH01');
 		Insert user;
 
-		Id caseRtId = RecordTypeSingleton.getInstance().RtIDsPerDeveloperNamePerObj.get('Case').get('CasesEurope');
+		Id caseRtId = RecordTypeSingleton.getInstance().getRecordTypeId('Case', 'CasesEurope');
 		Case relCase = new Case(RecordTypeId = caseRtId, AccountId = a.Id, ContactId = c.Id, Subject = 'testPostChat', Origin = 'Chat', Status= 'closed', OwnerId = user.Id);
 		Insert relCase;
 	}

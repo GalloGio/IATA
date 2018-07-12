@@ -25,7 +25,7 @@ public class vfIECEBC_TestSuite {
 //        
 
         Account a = new Account();
-        a.RecordTypeId = Schema.SObjectType.Account.getRecordTypeInfosByName().get('Standard Account').getRecordTypeId();
+        a.RecordTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('Account', 'Standard_Account');
         a.BillingStreet = '123 main street';
         a.BillingPostalCode = 'H0H 0H0';
         a.BillingCountry = 'Canada';
@@ -36,7 +36,7 @@ public class vfIECEBC_TestSuite {
         insert a;
         
         Contact c = new Contact();
-        c.RecordTypeId = Schema.SObjectType.Contact.getRecordTypeInfosByName().get('Standard').getRecordTypeId();
+        c.RecordTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('Contact', 'Standard_Contact');
         c.AccountId = a.Id;
         c.OwnerId = a.OwnerId;
         c.FirstName = 'Test';
@@ -1151,7 +1151,7 @@ public class vfIECEBC_TestSuite {
 
         EBC_Template__c tpl = new EBC_Template__c();
         tpl.Name = 'unittesttemplate';
-        tpl.RecordTypeId = Schema.SObjectType.EBC_Template__c.getRecordTypeInfosByName().get('Global').getRecordTypeId();
+        tpl.RecordTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('EBC_Template__c', 'Global');
         insert tpl;
         
         System.runAs(usr) {
@@ -1205,13 +1205,13 @@ public class vfIECEBC_TestSuite {
     public static void testMosaicoEditorSendTestSuccess() {
         EBC_Template__c parentTpl = new EBC_Template__c();
         parentTpl.Name = 'unittesttemplate';
-        parentTpl.RecordTypeId = Schema.SObjectType.EBC_Template__c.getRecordTypeInfosByName().get('Global').getRecordTypeId();
+        parentTpl.RecordTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('EBC_Template__c', 'Global');
         insert parentTpl;
         
         EBC_Template__c childTpl = new EBC_Template__c();
         childTpl.Name = 'User tpl';
         childTpl.Parent_Template__c = parentTpl.Id;
-        childTpl.RecordTypeId = Schema.SObjectType.EBC_Template__c.getRecordTypeInfosByName().get('User Templates').getRecordTypeId();
+        childTpl.RecordTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('EBC_Template__c', 'User_Templates');
         insert childTpl;
 
         PageReference pageRef = Page.IECEBC_MosaicoEditor;
@@ -1239,13 +1239,13 @@ public class vfIECEBC_TestSuite {
     public static void testMosaicoEditorSendTestListDetective() {
         EBC_Template__c parentTpl = new EBC_Template__c();
         parentTpl.Name = 'unittesttemplate';
-        parentTpl.RecordTypeId = Schema.SObjectType.EBC_Template__c.getRecordTypeInfosByName().get('Global').getRecordTypeId();
+        parentTpl.RecordTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('EBC_Template__c', 'Global');
         insert parentTpl;
         
         EBC_Template__c childTpl = new EBC_Template__c();
         childTpl.Name = 'User tpl';
         childTpl.Parent_Template__c = parentTpl.Id;
-        childTpl.RecordTypeId = Schema.SObjectType.EBC_Template__c.getRecordTypeInfosByName().get('User Templates').getRecordTypeId();
+        childTpl.RecordTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('EBC_Template__c', 'User_Templates');
         insert childTpl;
 
         PageReference pageRef = Page.IECEBC_MosaicoEditor;

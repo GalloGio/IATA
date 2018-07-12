@@ -80,7 +80,7 @@ public  class ACliMassUpdate {
          pageNumber = 0;
          tab  = '0';
          batchRunning = false;
-         HDq = TransformationHelper.RtIDsPerDeveloperNamePerObj(new list<string> {'Account'}).get('Account').get('IATA_Airline');
+         HDq = RecordTypeSingleton.getInstance().getRecordTypeId('Account', 'IATA_Airline');
          MINLEVEL =0;
          MAXLEVEL = OFFSET ;
            system.debug('ACliMassUpdate  MAX ='+MAXLEVEL );

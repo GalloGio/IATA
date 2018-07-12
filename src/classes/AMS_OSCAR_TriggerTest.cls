@@ -148,8 +148,8 @@
         IATA_ISO_State__c stt = new IATA_ISO_State__c(Name= 'FR20', ISO_Code__c = 'FR', IATA_ISO_Country__c = ctry.Id);
         insert stt;
         
-        Id accountRT = AMS_Utils.getId('Account', 'Standard_Account');
-        Id caseRT = AMS_Utils.getId('Case', 'OSCAR_Communication');
+        Id accountRT = RecordTypeSingleton.getInstance().getRecordTypeId('Account', 'Standard_Account');
+        Id caseRT = RecordTypeSingleton.getInstance().getRecordTypeId('Case', 'OSCAR_Communication');
         
         Account a1 = new Account(IATACode__c = '1234567', IATA_ISO_Country__c = ctry.id, RecordTypeId = accountRT ,Name='NewGenAgency',Short_Name__c='NewGenAgency', Location_Class__c = 'P', Location_Type__c = 'HE', Remittance_frequency__c = 'M', Sector__C = 'Travel Agent' , Category__C = 'Non-IATA Passenger Agent', Reason_for_creation__c = 'Account is missing' , Company_Type__c = 'A');
 
@@ -158,7 +158,7 @@
         Contact co1 = new Contact(AccountId = a1.id, Firstname = 'John', Lastname='Rambo', Phone = '666123456', MobilePhone = '911111111', Email = 'rambo.johnj@test.com', Financial_Assessment_Contact__c = false);
         insert co1;
 
-        ID oscarNewHeRt = Schema.SObjectType.AMS_OSCAR__c.getRecordTypeInfosByName().get('NEW').getRecordTypeId();
+        ID oscarNewHeRt = RecordTypeSingleton.getInstance().getRecordTypeId('AMS_OSCAR__c', 'NEW');
 
         AMS_OSCAR__c oscar = new AMS_OSCAR__c(Process__c = AMS_Utils.new_HO, Account__c = a1.id, Is_using_credit_card__c = true, RecordTypeId = oscarNewHeRt);
         oscar.STEP1__c = 'Passed';
@@ -192,7 +192,7 @@
         
         System.debug('CheckPoint 0');
 
-        ID rtNew = Schema.SObjectType.AMS_Pax_Accreditation_Form__c.getRecordTypeInfosByName().get('Travel Agent - Head Entity Standard no Cash').getRecordTypeId();
+        ID rtNew = RecordTypeSingleton.getInstance().getRecordTypeId('AMS_Pax_Accreditation_Form__c', 'Travel_Agent_Head_Entity_Standard_no_Cash');
 
         AMS_Pax_Accreditation_Form__c theAccreditation = new AMS_Pax_Accreditation_Form__c(RecordTypeId = rtNew);
 
@@ -216,7 +216,7 @@
 
         insert theAccreditation;
 
-        ID personRT = Schema.SObjectType.AMS_Accreditation_Contact__c.getRecordTypeInfosByName().get('Person').getRecordTypeId();
+        ID personRT = RecordTypeSingleton.getInstance().getRecordTypeId('AMS_Accreditation_Contact__c', 'Person');
 
         AMS_Accreditation_Contact__c acontact = new AMS_Accreditation_Contact__c(AMS_Pax_Accreditation_Form__c = theAccreditation.Id, 
             First_name__c='Bugs', Last_name__c='Bunny', Agency_owner__c = true, Email__c='bugsandbunny@imagsd.com' , PhoneNational__c = '123123123',
@@ -279,7 +279,7 @@
 
         Test.startTest();
         
-        Id oscarCommRecordTypeId = AMS_Utils.getId('Case', 'OSCAR_Communication');
+        Id oscarCommRecordTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('Case', 'OSCAR_Communication');
 
         Account a = [SELECT id from Account where Name = 'Test1 Agency' LIMIT 1];
 
@@ -390,7 +390,7 @@
         
         insert oscar;
          
-        Id oscarCommRecordTypeId = AMS_Utils.getId('Case', 'OSCAR_Communication');
+        Id oscarCommRecordTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('Case', 'OSCAR_Communication');
 
         Case newCase = new Case(Status = 'New', OSCAR__c = oscar.Id, RecordTypeID = oscarCommRecordTypeId);
 
@@ -445,7 +445,7 @@
         
         newCase = [SELECT id , OSCAR__c from Case where OSCAR__c <> null LIMIT 1];
         
-        Id oscarCommRecordTypeId2 = AMS_Utils.getId('Case', 'ID_Card_Mass_Application');
+        Id oscarCommRecordTypeId2 = RecordTypeSingleton.getInstance().getRecordTypeId('Case', 'ID_Card_Mass_Application');
         newCase.RecordTypeId = oscarCommRecordTypeId2;
         
         try {
@@ -500,8 +500,8 @@
         IATA_ISO_State__c stt = new IATA_ISO_State__c(Name= 'FR20', ISO_Code__c = 'FR', IATA_ISO_Country__c = ctry.Id);
         insert stt;
         
-        Id accountRT = AMS_Utils.getId('Account', 'Standard_Account');
-        Id caseRT = AMS_Utils.getId('Case', 'OSCAR_Communication');
+        Id accountRT = RecordTypeSingleton.getInstance().getRecordTypeId('Account', 'Standard_Account');
+        Id caseRT = RecordTypeSingleton.getInstance().getRecordTypeId('Case', 'OSCAR_Communication');
         
         Account a1 = new Account(IATACode__c = '1234567', IATA_ISO_Country__c = ctry.id, RecordTypeId = accountRT ,Name='NewGenAgency',Short_Name__c='NewGenAgency', Location_Class__c = 'P', Location_Type__c = 'HE', Remittance_frequency__c = 'M', Sector__C = 'Travel Agent' , Category__C = 'Non-IATA Passenger Agent', Reason_for_creation__c = 'Account is missing' , Company_Type__c = 'A');
 
@@ -510,7 +510,7 @@
         Contact co1 = new Contact(AccountId = a1.id, Firstname = 'John', Lastname='Rambo', Phone = '666123456', MobilePhone = '911111111', Email = 'rambo.johnj@test.com', Financial_Assessment_Contact__c = false);
         insert co1;
 
-        ID oscarNewHeRt = Schema.SObjectType.AMS_OSCAR__c.getRecordTypeInfosByName().get('NEW').getRecordTypeId();
+        ID oscarNewHeRt = RecordTypeSingleton.getInstance().getRecordTypeId('AMS_OSCAR__c', 'NEW');
 
         AMS_OSCAR__c oscar = new AMS_OSCAR__c(Process__c = AMS_Utils.new_HO, Account__c = a1.id, Is_using_credit_card__c = true, RecordTypeId = oscarNewHeRt);
 
@@ -531,7 +531,7 @@
         insert aFile;
         
 
-        ID rtNew = Schema.SObjectType.AMS_Pax_Accreditation_Form__c.getRecordTypeInfosByName().get('Travel Agent - Head Entity Standard no Cash').getRecordTypeId();
+        ID rtNew = RecordTypeSingleton.getInstance().getRecordTypeId('AMS_Pax_Accreditation_Form__c', 'Travel_Agent_Head_Entity_Standard_no_Cash');
 
         AMS_Pax_Accreditation_Form__c theAccreditation = new AMS_Pax_Accreditation_Form__c(RecordTypeId = rtNew);
 
@@ -555,7 +555,7 @@
 
         insert theAccreditation;
 
-        ID personRT = Schema.SObjectType.AMS_Accreditation_Contact__c.getRecordTypeInfosByName().get('Person').getRecordTypeId();
+        ID personRT = RecordTypeSingleton.getInstance().getRecordTypeId('AMS_Accreditation_Contact__c', 'Person');
 
         AMS_Accreditation_Contact__c acontact = new AMS_Accreditation_Contact__c(AMS_Pax_Accreditation_Form__c = theAccreditation.Id, 
             First_name__c='Bugs', Last_name__c='Bunny', Agency_owner__c = true, Email__c='bugsandbunny@imagsd.com' , PhoneNational__c = '123123123',
@@ -606,7 +606,7 @@
         
         Account a = [SELECT id,Status__c from Account where Name = 'Test1 Agency' LIMIT 1];
 
-        ID newRT = Schema.SObjectType.AMS_OSCAR__c.getRecordTypeInfosByName().get('NEW').getRecordTypeId();
+        ID newRT = RecordTypeSingleton.getInstance().getRecordTypeId('AMS_OSCAR__c', 'NEW');
 
         Test.startTest();
         
@@ -659,7 +659,7 @@
             Confirm_DD_setup_with_R_S__c,Confirm_DD_setup_with_agent__c,Confirm_DGR_DGA__c,Issue_rejection_notification_pack__c,
             Issue_billing_document__c,RPM_Approval__c, Validation_Status__c from AMS_OSCAR__c where Process__c = :AMS_Utils.new_HO limit 1];
 
-        ID newRT = Schema.SObjectType.AMS_OSCAR__c.getRecordTypeInfosByName().get('NEW').getRecordTypeId();
+        ID newRT = RecordTypeSingleton.getInstance().getRecordTypeId('AMS_OSCAR__c', 'NEW');
 
         oscar.STEP12__c = AMS_Utils.PASSED;
         oscar.Send_invoice__c = true;
@@ -717,7 +717,7 @@
 
         AMS_OSCAR__c oscar = [SELECT id, Status__c,OwnerId from AMS_OSCAR__c where Process__c = :AMS_Utils.new_HO limit 1];
 
-        ID newRT = Schema.SObjectType.AMS_OSCAR__c.getRecordTypeInfosByName().get('CHANGE').getRecordTypeId();
+        ID newRT = RecordTypeSingleton.getInstance().getRecordTypeId('AMS_OSCAR__c', 'CHANGE');
 
         oscar.recordTypeID = newRT;
         oscar.STEP6__c = AMS_Utils.PASSED;
@@ -876,15 +876,8 @@
 
         AMS_OSCAR__c oscar = [SELECT id, STEP30__c, STEP31__c, STEP32__c from AMS_OSCAR__c where Process__c = :AMS_Utils.new_HO limit 1];
 
-        Id volRelRT = Schema.SObjectType.AMS_OSCAR__c.getRecordTypeInfosByName().get('VOLUNTARY RELINQUISHMENT').getRecordTypeId();
+        Id volRelRT = RecordTypeSingleton.getInstance().getRecordTypeId('AMS_OSCAR__c', 'VOLUNTARY_RELINQUISHMENT');
 
-        /*ID rtAgencyInvolved = Schema.SObjectType.AMS_Process_Detail__c.getRecordTypeInfosByName().get('Agency Involved').getRecordTypeId();
-        
-        List<AMS_Process_Detail__c> agenciesinvolved = new List<AMS_Process_Detail__c>();
-        agenciesinvolved.add(new AMS_Process_Detail__c(RecordTypeId = rtAgencyInvolved, Oscar__c = oscar.Id, Account__c = a.Id));
-
-        insert agenciesinvolved;*/
-        
         Test.startTest();
 
         oscar.RecordTypeId = volRelRT;
@@ -958,13 +951,13 @@
         AMS_Agencies_relationhip__c ar1 = new AMS_Agencies_relationhip__c(Relationship_details__c='Test',Hierarchy__c=ah1.id,Child_Account__c=aBr.id,Parent_Account__c=aHo.id);
         insert ar1;
 
-        ID changeRT = Schema.SObjectType.AMS_OSCAR__c.getRecordTypeInfosByName().get('CHANGE').getRecordTypeId();
+        ID changeRT = RecordTypeSingleton.getInstance().getRecordTypeId('AMS_OSCAR__c', 'CHANGE');
 
         AMS_OSCAR__c oscar = new AMS_OSCAR__c(Account__c = aBr.id, OwnerId = UserInfo.getUserId(), Process__c = AMS_Utils.AGENCYCHANGES, RecordTypeId = changeRT);
         
         insert oscar;
          
-        Id oscarCommRecordTypeId = AMS_Utils.getId('Case', 'OSCAR_Communication');
+        Id oscarCommRecordTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('Case', 'OSCAR_Communication');
 
         Case newCase = new Case(Status = 'New', OSCAR__c = oscar.Id, RecordTypeID = oscarCommRecordTypeId);
 
@@ -1012,13 +1005,13 @@
         Account aHo = [SELECT id, Location_Type__c, Short_Name__c, Name from Account where Location_Type__c = 'HO' LIMIT 1];
         Account aBr = [SELECT id, Location_Type__c from Account where Location_Type__c = 'BR' LIMIT 1];
 
-        ID changeRT = Schema.SObjectType.AMS_OSCAR__c.getRecordTypeInfosByName().get('CHANGE').getRecordTypeId();
+        ID changeRT = RecordTypeSingleton.getInstance().getRecordTypeId('AMS_OSCAR__c', 'CHANGE');
 
         AMS_OSCAR__c oscar = new AMS_OSCAR__c(Account__c = aHo.id, OwnerId = UserInfo.getUserId(), Process__c = AMS_Utils.AGENCYCHANGES, RecordTypeId = changeRT);
         
         insert oscar;
          
-        Id oscarCommRecordTypeId = AMS_Utils.getId('Case', 'OSCAR_Communication');
+        Id oscarCommRecordTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('Case', 'OSCAR_Communication');
 
         Case newCase = new Case(Status = 'New', OSCAR__c = oscar.Id, RecordTypeID = oscarCommRecordTypeId);
 
@@ -1065,13 +1058,13 @@
 
         Account a = [SELECT id, Location_Type__c, Short_Name__c, Name from Account where Location_Type__c = 'HO' LIMIT 1];
 
-        ID changeRT = Schema.SObjectType.AMS_OSCAR__c.getRecordTypeInfosByName().get('CHANGE').getRecordTypeId();
+        ID changeRT = RecordTypeSingleton.getInstance().getRecordTypeId('AMS_OSCAR__c', 'CHANGE');
 
         AMS_OSCAR__c oscar = new AMS_OSCAR__c(Account__c = a.id, OwnerId = UserInfo.getUserId(), Process__c = AMS_Utils.AGENCYCHANGES, RecordTypeId = changeRT);
         
         insert oscar;
          
-        Id oscarCommRecordTypeId = AMS_Utils.getId('Case', 'OSCAR_Communication');
+        Id oscarCommRecordTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('Case', 'OSCAR_Communication');
 
         Case newCase = new Case(Status = 'New', OSCAR__c = oscar.Id, RecordTypeID = oscarCommRecordTypeId);
 
@@ -1121,13 +1114,13 @@
         aBr.Location_Type__c = AMS_Utils.SA;
         update aBr;
 
-        ID changeRT = Schema.SObjectType.AMS_OSCAR__c.getRecordTypeInfosByName().get('CHANGE').getRecordTypeId();
+        ID changeRT = RecordTypeSingleton.getInstance().getRecordTypeId('AMS_OSCAR__c', 'CHANGE');
 
         AMS_OSCAR__c oscar = new AMS_OSCAR__c(Account__c = aBr.id, OwnerId = UserInfo.getUserId(), Process__c = AMS_Utils.AGENCYCHANGES, RecordTypeId = changeRT);
         
         insert oscar;
          
-        Id oscarCommRecordTypeId = AMS_Utils.getId('Case', 'OSCAR_Communication');
+        Id oscarCommRecordTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('Case', 'OSCAR_Communication');
 
         Case newCase = new Case(Status = 'New', OSCAR__c = oscar.Id, RecordTypeID = oscarCommRecordTypeId);
 
@@ -1195,7 +1188,7 @@
     // CB - test AMS_OSCARTriggerHandler.createHoAdminNotifications
     @isTest static void test_createHoAdminNotifications() 
     {        
-        Id OSCAR_RECORD_TYPE_ID = Schema.SObjectType.Case.getRecordTypeInfosByName().get('OSCAR Communication').getRecordTypeId();
+        Id OSCAR_RECORD_TYPE_ID = RecordTypeSingleton.getInstance().getRecordTypeId('Case', 'OSCAR_Communication');
 
         IATA_ISO_Country__c country = new IATA_ISO_Country__c(name = 'test', IATA_Contry_KR__c = 'test',
                                     IATA_COUNTRY_EN__c = 'testEN' , IATA_Country_FR__c = 'testFR' , IATA_Country_ZH__c = 'testZH' ,

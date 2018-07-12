@@ -326,12 +326,11 @@ public without sharing class ISSP_Registration {
         //list<User> userList = [select Id from User where email =:con.email];
         list<User> userList = [select Id, isActive, Portal_User_Frozen_Checkbox__c, Email from User where Username =:IATAusername];
         list<Contact> conList;
-        RecordType rt = [Select r.Id,r.Name, r.DeveloperName From RecordType r where  DeveloperName='Standard_Contact'];
+        Id rtId = RecordTypeSingleton.getInstance().getRecordTypeId('Contact', 'Standard_Contact');
         if(con.Id == null) {
-            //conList = [select accountId,firstName,lastName,Email from Contact where Email =:con.email.trim() and RecordTypeId=:rt.Id];
             conList = [select accountId,firstName,lastName,Email,Salutation, Account.RecordType.DeveloperName,account.sector__c,account.category__c,
                 (SELECT Id, Valid_To_Date__c FROM ID_Cards__r WHERE Is_Active_Card__c = true)
-                from Contact where Email =:con.email.trim() and RecordTypeId=:rt.Id];
+                from Contact where Email =:con.email.trim() and RecordTypeId=:rtId];
         }
         else{
             con.account=acc; // related account information
@@ -340,7 +339,7 @@ public without sharing class ISSP_Registration {
 
         // new contact
         if (conList.size()==0) {
-            con.RecordTypeId = rt.id;
+            con.RecordTypeId = rtId;
             return Page.ISSP_CreateContact;
             // PageReference pageRef = Page.ISSP_CreateContact;
             // pageref.getParameters().put('country',country);
@@ -1048,7 +1047,7 @@ public without sharing class ISSP_Registration {
             }
             system.debug('RecordTypeId: ' + getRecordTypeCode(customerTypeCreate));
             system.debug('createBranch: ' + createBranch);
-            acc.RecordTypeId = Schema.Account.sObjectType.getDescribe().getRecordTypeInfosByName().get('Standard Account').getRecordTypeId();
+            acc.RecordTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('Account', 'Standard_Account');
             acc.OwnerId = ISSP_Constant.newAccountOwnerId;
             if (createBranch){
                 acc.Reason_for_creation__c = 'Branch is missing';
@@ -1297,9 +1296,10 @@ public without sharing class ISSP_Registration {
             return null;
         log(customerType + ', ' + devName);
         try {
-            List<RecordType> rtSet = [select id from RecordType where DeveloperName=:devName];
-            if (rtSet!=null && rtSet.size()>0 && rtSet.get(0)!=null)
-                return rtSet.get(0).id;
+            Id rtSetId = RecordTypeSingleton.getInstance().getRecordTypeId('Account', devName);
+            if(String.isNotBlank(rtSetId)){
+                return rtSetId;
+            }
         } catch (Exception e) {
             log('error getting type');
         }

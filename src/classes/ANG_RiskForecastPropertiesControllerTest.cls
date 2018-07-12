@@ -19,7 +19,7 @@ private class ANG_RiskForecastPropertiesControllerTest {
 
         list<ANG_Agency_Risk_Calculation__c> adjustmentList = new list<ANG_Agency_Risk_Calculation__c>();
 
-        Id risk_Status_AssessmentRTId =RecordTypeSingleton.getInstance().RtIDsPerDeveloperNamePerObj.get('ANG_Agency_Risk_Calculation__c').get('Risk_Status_Assessment');
+        Id risk_Status_AssessmentRTId =RecordTypeSingleton.getInstance().getRecordTypeId('ANG_Agency_Risk_Calculation__c', 'Risk_Status_Assessment');
 
         ANG_Agency_Risk_Calculation__c adj1= new ANG_Agency_Risk_Calculation__c(
             ANG_Financial_Review_Result__c = 'Satisfactory' ,

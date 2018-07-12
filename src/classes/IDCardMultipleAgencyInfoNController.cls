@@ -49,7 +49,7 @@ public with sharing class IDCardMultipleAgencyInfoNController extends IDCardAbst
             if (accounts.size() == 1 )
                 theAccount = accounts[0];
             // Get all the cards related to the contact information provided. The cards are sorted by VER_Number__c and Valid_To_Date__c
-            ID rectypeid = Schema.SObjectType.ID_Card__c.getRecordTypeInfosByName().get('AIMS').getRecordTypeId();
+            ID rectypeid = RecordTypeSingleton.getInstance().getRecordTypeId('ID_Card__c', 'AIMS');
 
             if (VER == '' || VER == null) {
 

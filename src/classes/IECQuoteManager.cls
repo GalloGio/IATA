@@ -145,11 +145,8 @@ public with sharing class IECQuoteManager {
      * Gets the record type for the opportunity
      */
     public static Id getOpportunityRecordType() {
-        List<RecordType> recordTypes = [Select r.Name, r.Id From RecordType r where r.DeveloperName = 'GDP_Opportunities' and SobjectType = 'Opportunity'];
-        if (recordTypes != null && recordTypes.size() > 0)
-            return recordTypes.get(0).Id;
             
-        return null;
+        return RecordTypeSingleton.getInstance().getRecordTypeId('Opportunity', 'GDP_Opportunities');
     }
     
     /**

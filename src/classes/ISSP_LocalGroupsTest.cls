@@ -32,7 +32,7 @@ public class ISSP_LocalGroupsTest {
             country.ISO_Code__c = 'XX';
             insert country;
             Account account = ISSP_ObjectFactory.createNewAccount();
-            account.RecordtypeId = RecordTypeSingleton.getInstance().RtIDsPerDeveloperNamePerObj.get('Account').get('IATA_Airline');
+            account.RecordtypeId = RecordTypeSingleton.getInstance().getRecordTypeId('Account', 'IATA_Airline');
             account.Name = 'Account1';
             account.IATA_ISO_Country__c = country.Id;
             insert account;

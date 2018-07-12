@@ -12,7 +12,6 @@ global class AMS_EmployeeHelper {
 		
 		//jfo 2015-10-27 adding the IDCARD <> new contact mnanagment
 		Map<String,AMS_Account_Role__c > employeeBySimplex = new Map<String,AMS_Account_Role__c >();
-		Map<string, Id> contactRT  =  TransformationHelper.RtIDsPerDeveloperNamePerObj(new list<string> {'Contact'}).get('Contact');
 		//List<AMS_Employee__c> listOfEmployees = [select id, Contact__c, Agency__c, Person__c, Person__r.Name, Person__r.DOB__c, Person__r.Email__c from AMS_Employee__c where id IN :employees];
 		Map<String,Contact> contactPerEmail = new Map<String,Contact>();
 		
@@ -34,33 +33,11 @@ global class AMS_EmployeeHelper {
 			emails.add(mapOfPersons.get(emp.Person__c).Email__c); 
 		}
 
-		// Retrieve the links Agency -> Account
-		/*#AMSFTS
-		for(AMS_Agency__c agency : [SELECT Account__c, Phone_Number__c FROM AMS_Agency__c WHERE ID IN :AgencyIDs])
-			AgencyToAccount.put(agency.ID,agency.Account__c);
-		#AMSFTS*/
-
 		List<String> iataCodeList = new list<String>();
-		//jfo 2015-10-28  due to too many contact we have to add filter..
-		/*#AMSFTS
-		for(Account acc:[select Id, IATACode__c  from Account where Id in :AgencyToAccount.values()])
-			iataCodeList .add(acc.IATACode__c  );
-		#AMSFTS*/
+		
 		for(Account acc:[select Id, IATACode__c  from Account where Id in :AccountIDs])
 			iataCodeList .add(acc.IATACode__c  );
 
-		// Look for existing Contacts 
-		/*#AMSFTS
-		for(Contact c : [SELECT AccountId, FirstName, LastName, Name, Birthdate, Email, Person__c,VER_Number_2__c 
-						 FROM Contact
-						 WHERE (AccountId IN : AgencyToAccount.values() 
-								AND LastName IN :LastNames
-								AND Birthdate IN :DoBs
-								AND Email IN :emails) 
-								or 
-								(VER_Number_2__c in :empSimplexes.keyset() 
-								AND AccountId IN : AgencyToAccount.values())])
-		#AMSFTS*/
 		for(Contact c : [SELECT AccountId, FirstName, LastName, Name, Birthdate, Email, Person__c,VER_Number_2__c
 						 FROM Contact 
 						 WHERE (AccountId IN : AccountIDs
@@ -117,7 +94,7 @@ global class AMS_EmployeeHelper {
 				newContacts.put(emp.Id,new Contact(AccountId=myAccount,
 				FirstName=mapOfPersons.get(emp.Person__c).First_Name__c,
 				LastName=mapOfPersons.get(emp.Person__c).Lastname__c,
-				recordtypeId =contactRT.get('Standard_Contact'),
+				recordtypeId =RecordTypeSingleton.getInstance().getRecordTypeId('Contact', 'Standard_Contact'),
 				Email=mapOfPersons.get(emp.Person__c).Email__c,
 				Birthdate=mapOfPersons.get(emp.Person__c).DOB__c,
 				Phone=mapOfPersons.get(emp.Person__c).Phone__c,
@@ -213,52 +190,6 @@ global class AMS_EmployeeHelper {
 		update listOfPersonsToUpdate;
 	}
 
-	/*#AMSFTS this field on the account should not be updated as we have the new AMS_Account_Role object
-
-	public static void updateAccountQTAemployee(Map<String , AMS_Employee__c> employeeMap){
-		List<Account> accounts2update =[select id,Qualified_ticketing_agent__c from Account where Id in:employeeMap.keySet()];
-		for(Account a:accounts2update )
-		a.Qualified_ticketing_agent__c  = employeeMap.get(a.Id).Id;
-		update accounts2update;
-	}
-	#AMSFTS */
-
-	/*#AMSFTS 
-	public static void EnsureMax1ManagerPerAgency(List<AMS_Employee__c> employees){
-		Map<Id,AMS_Employee__c> agencyIdToPerson = new Map<Id,AMS_Employee__c>();
-		for(AMS_Employee__c emp : employees){
-			if(agencyIdToPerson.get(emp.Agency__c)!=null){
-				emp.addError('There is already a Manager Person related to this Agency');
-				continue;
-			}
-			
-			agencyIdToPerson.put(emp.Agency__c,emp);
-		}
-		
-		List<AMS_Employee__c> alreadyRelated = [SELECT Id, Agency__c FROM AMS_Employee__c 
-												WHERE Agency__c IN :agencyIdToPerson.keySet()
-												AND isManager__c = true];
-		for(AMS_Employee__c emp : alreadyRelated){
-			AMS_Employee__c newEmp = agencyIdToPerson.get(emp.Agency__c);
-			newEmp.addError('There is already a Manager Person related to this Agency');
-		}
-		
-		return;
-	}
-	#AMSFTS*/
-
-	/*#AMSFTS
-	public static List<AMS_Employee__c> getAgencyEmployees(Id agencyId){
-		List<AMS_Employee__c> lAMS_Employee = [SELECT Agency__c,DUTY__c,Earning__c,Employee_type__c,Hours__c,Id,isManager__c,
-												isTicketingAgent__c,Name,Person__c,Position__c,Registration_Date__c,Stage__c,
-												Start_date__c,Termination_Date__c,Title__c,Valid__c,
-												Person__r.First_Name__c,Person__r.Lastname__c,Person__r.Language_of_correspondence__c 
-												FROM AMS_Employee__c
-												WHERE Agency__c = :agencyId];
-
-		return lAMS_Employee;
-	}
-	#AMSFTS*/
 
 	@ReadOnly
 	webservice static List<Id> retreiveIdCards(list<String> iataCodes, List<String> vernums){
@@ -274,93 +205,4 @@ global class AMS_EmployeeHelper {
 		return r;
 	}
 
-
-	/*#AMSFTS
-	public static void Ensure0to1ContactLookup(list<AMS_Employee__c> employees){
-		Map<Id,AMS_Employee__c> contactIdToPerson = new Map<Id,AMS_Employee__c>();
-
-		for(AMS_Employee__c emp : employees){
-			if(emp.Person__r.Contact__c!=null){
-				if(contactIdToPerson.get(emp.Person__r.Contact__c)!=null){
-					emp.addError('There is already an Person related to this Contact');
-					continue;
-				}
-			}else{
-				contactIdToPerson.put(emp.Person__r.Contact__c,emp);   
-			}
-		}
-
-		List<AMS_Person__c> alreadyRelated = [SELECT Id, Contact__c, Mobile__c, Fax__c FROM AMS_Person__c WHERE Contact__c IN :contactIdToPerson.keySet()];
-		for(AMS_Person__c p : alreadyRelated){
-			AMS_Employee__c newEmp = contactIdToPerson.get(p.Contact__c);
-			newEmp.addError('There is already an Person related to this Contact');
-		}
-
-		return;
-	}
-	#AMSFTS*/
-
-
-	/*
-	public static void addContactIfEmpty (list<AMS_Employee__c> employees){
-		Map<String,Contact> AccountAndNameToContact = new Map<String,Contact>();
-		Set<String> LastNames = new Set<String>();
-		Set<ID> AgencyIDs = new Set<ID>();
-		Map<ID,ID> AgencyToAccount = new Map<ID,ID>();
-		Map<string, Id> contactRT  =  TransformationHelper.RtIDsPerDeveloperNamePerObj(new list<string> {'Contact'}).get('Contact');
-	
-		for(AMS_Employee__c emp : employees){
-			AgencyIDs.add(emp.Agency__c);
-			LastNames.add(emp.Person__r.Lastname__c); 
-		}
-		
-		// Retrieve the links Agency -> Account
-		for(AMS_Agency__c agency : [SELECT Account__c FROM AMS_Agency__c WHERE ID IN :AgencyIDs])
-			AgencyToAccount.put(agency.ID,agency.Account__c);
-		
-		
-		// Look for existing Contacts 
-		for(Contact c : [SELECT AccountId, FirstName, LastName, Name, (SELECT Id FROM Contact.Persons__r) FROM Contact WHERE AccountId IN : AgencyToAccount.values() AND LastName IN :LastNames]){
-			AccountAndNameToContact.put(c.AccountId+'-'+c.FirstName+'-'+c.LastName, c);                          
-		}
-		
-		
-		// Try to match agents with existing contacts using AccountId-FirstName-LastName
-		Map<Id,Contact> newContacts = new Map<Id,Contact>();
-		for(AMS_Employee__c emp : employees){
-			ID myAccount = AgencyToAccount.get(emp.Agency__c);
-			Contact theContact = AccountAndNameToContact.get(myAccount+'-'+emp.Person__r.First_name__c +'-'+emp.Person__r.Lastname__c);
-			/*
-			if(theContact != null){
-				emp.Person__r.Contact__c = theContact.ID;
-		
-				if(theContact.Persons__r.size()>0)
-					emp.addError('There is already an Person related to the Contact '+theContact.FirstName+' '+theContact.LastName);
-			}
-		
-        	if(emp.Person__r.Contact__c == null){
-				newContacts.put(emp.Person__r.Id, new Contact(AccountId=myAccount, FirstName=emp.Person__r.First_Name__c, LastName=emp.Person__r.Lastname__c,recordtypeId =contactRT.get('Standard_Contact')));
-			}
-		}
-		
-		// If I needed to create new Contacts I'll insert them in DB and I'll reference them from the agents
-		list<AMS_Person__c> persons = new list<AMS_Person__c>();
-		if(newContacts.size()>0){
-		insert newContacts.values();
-		
-		boolean bToSave = false;
-		
-		for(AMS_Employee__c emp : employees){
-			if(emp.Person__r.Contact__c == null)
-				emp.Person__r.Contact__c = newContacts.get(emp.Person__r.ID).ID;
-		
-			AMS_Person__c p = emp.Person__r;
-			persons.add(p);
-			bToSave = true;
-		}
-		if(bToSave)
-			upsert persons;
-		}
-		return;
-	}*/
 }

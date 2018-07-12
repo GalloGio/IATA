@@ -494,17 +494,7 @@ public without sharing class IECUtil {
 	 * @param DevName: the developer name of record type
 	 */
 	public static Id GetRecordTypeId(String ObjName, String DevName) {
-		return TransformationHelper.RtIDsPerDeveloperNamePerObj(new list<string> {ObjName}).get(ObjName).get(DevName);
-		/*
-		USING SIngleton rather than previous class. 
-		List<RecordType> lstRecType =
-			[SELECT Id
-			FROM RecordType
-			WHERE DeveloperName = :DevName
-				AND SobjectType = :ObjName];
-		
-		return (lstRecType.size() > 0) ? lstRecType.get(0).Id : null;
-		*/
+		return RecordTypeSingleton.getInstance().getRecordTypeId(ObjName, DevName);
 	}
 	
 	/**

@@ -39,7 +39,7 @@ public with sharing class AMS_AccountRoleCreator
         String toReturn = '';
 
         for(String tp: types)
-            toReturn += '\'' + AMS_Utils.getId('AMS_Accreditation_Contact__c', tp) + '\'' + ',';
+            toReturn += '\'' + RecordTypeSingleton.getInstance().getRecordTypeId('AMS_Accreditation_Contact__c', tp) + '\'' + ',';
     
         return toReturn.removeEnd(',');
     }
@@ -232,7 +232,7 @@ public with sharing class AMS_AccountRoleCreator
             newCon.Training_dangerous_goods_completed__c = ac.Training_dangerous_goods_completed__c;
             newCon.list_Dangerous_Goods_Awareness__c = ac.list_Dangerous_Goods_Awareness__c;
             
-            newCon.RecordTypeId = AMS_Utils.getId('Contact', 'Standard_Contact');
+            newCon.RecordTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('Contact', 'Standard_Contact');
             newContacts.add(newCon);
         }
         return newContacts;
@@ -980,7 +980,7 @@ public with sharing class AMS_AccountRoleCreator
 
         if(ac.Agency_owner__c)
         {
-            role.RecordTypeId = AMS_Utils.getId('AMS_Account_Role__c', 'Ownership');
+            role.RecordTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('AMS_Account_Role__c', 'Ownership');
             role.Owner_Name__c      = (ac.First_Name__c == null ? '' : ac.First_Name__c  ) + (ac.Last_Name__c == null ? '' : ( ' ' + ac.Last_Name__c));
         }else
         {
@@ -1024,7 +1024,6 @@ public with sharing class AMS_AccountRoleCreator
 
         if(!newContactsToInsert.isEmpty()){
             AMS_Utils.runningContactInsertUpdateFromOSCAR = true;
-            system.debug('ANG INSERT 3');
             insert verifyNoDuplicateIFAPcontactExists(newContactsToInsert.values());
             AMS_Utils.runningContactInsertUpdateFromOSCAR = false;
         }
@@ -1085,7 +1084,7 @@ public with sharing class AMS_AccountRoleCreator
 
                 AMS_Account_Role__c role = new AMS_Account_Role__c();
 
-                role.RecordTypeId       = AMS_Utils.getId('AMS_Account_Role__c', 'Ownership');
+                role.RecordTypeId       = RecordTypeSingleton.getInstance().getRecordTypeId('AMS_Account_Role__c', 'Ownership');
 
                 role.Account__c         = accountId;
                 role.Duty__c            = ac.Job_Title__c;
@@ -1164,7 +1163,7 @@ public with sharing class AMS_AccountRoleCreator
 
                 AMS_Account_Role__c role = new AMS_Account_Role__c();
 
-                role.RecordTypeId       = AMS_Utils.getId('AMS_Account_Role__c', 'Ownership');
+                role.RecordTypeId       = RecordTypeSingleton.getInstance().getRecordTypeId('AMS_Account_Role__c', 'Ownership');
                 role.Account__c         = accountId;
                 role.Duty__c            = ac.Job_Title__c;
                 role.Employee_Name__c   = ac.First_Name__c + ' ' + ac.Last_Name__c;

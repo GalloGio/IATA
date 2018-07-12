@@ -94,8 +94,8 @@ public with sharing class IDCardAgencyDetailsController extends IDCardAbstractCo
             According to account type (Key Account or Not) we set the record type)
             */
 
-            String singleKAIDCAppId =  IDCardWebService.getIdCardAppRT('Single_ID_Card_Operation');
-            String defaultIDCApp =  IDCardWebService.getIdCardAppRT('Standard');
+            String singleKAIDCAppId =  RecordTypeSingleton.getInstance().getRecordTypeId('ID_Card_Application__c', 'Single_ID_Card_Operation');
+            String defaultIDCApp =  RecordTypeSingleton.getInstance().getRecordTypeId('ID_Card_Application__c', 'Standard');
             String feature = theAccount.ID_Card_KeyAccount_features__c;
             if (feature == null)feature = '';
             if (theAccount != null && theAccount.IDCard_Key_Account__c && !feature.contains(IDCardUtil.Key_Account_Feature_Allow_Personnal_Purchase)) {

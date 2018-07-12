@@ -168,9 +168,8 @@ global with sharing class IDCard_AdmUserListController extends IDCardAbstractCon
 
     }
     //process according to ID Card App pendign as a single application
-    Map<string, Id> idcardAppRT =  TransformationHelper.RtIDsPerDeveloperNamePerObj(new list<string> {'ID_Card_Application__c'}).get('ID_Card_Application__c');
-    String singeAppRT = idcardAppRT.get('Single_ID_Card_Operation');
-    String standardAppRT = idcardAppRT.get('Standard');
+    String singeAppRT = RecordTypeSingleton.getInstance().getRecordTypeId('ID_Card_Application__c','Single_ID_Card_Operation');
+    String standardAppRT = RecordTypeSingleton.getInstance().getRecordTypeId('ID_Card_Application__c','Standard');
 
     for (ID_Card_Application__c  idca : [Select i.VER_Number__c, i.Photo__c,  i.Type_of_application__c, i.Single_Application_Processing_Step__c, i.RecordTypeId,
                                          i.Mass_order_Application__c,  i.IATA_Code__c, i.Displayed_Name__c, i.Application_Status__c, i.Date_of_birth__c

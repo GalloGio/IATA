@@ -13,7 +13,7 @@ global class AMSIntegrationServices {
         try{
             system.debug('[assignAgency2Programs]Assigned programs '+programsName+' to AGT:'+agid);
             //configure segments
-            Id  programRT  =  TransformationHelper.RtIDsPerDeveloperNamePerObj(new list<string> {'AMS_Segment__c'}).get('AMS_Segment__c').get('IATA_Code_Programs');
+            Id  programRT  =  RecordTypeSingleton.getInstance().getRecordTypeId('AMS_Segment__c', 'IATA_Code_Programs');
             Map<String, AMS_Segment__c> programs = new Map<String,AMS_Segment__c>();
             List< AMS_Segment__c> newPrograms = new List< AMS_Segment__c>();
             Map<String, AMS_Segment__c> newProgramsPerNme= new Map<String,AMS_Segment__c>();
@@ -446,9 +446,9 @@ global class AMSIntegrationServices {
 
         Id rtId;
         if(isCass)
-            rtId = [Select Id From RecordType where sobjecttype = 'AMS_Settlement_System__c' and name = 'CASS'].id;
+            rtId = RecordTypeSingleton.getInstance().getRecordTypeId('AMS_Settlement_System__c', 'CASS');
         else
-            rtId = [Select Id From RecordType where sobjecttype = 'AMS_Settlement_System__c' and name = 'BSP'].id;
+            rtId = RecordTypeSingleton.getInstance().getRecordTypeId('AMS_Settlement_System__c', 'BSP');
 
         List<AMS_Operation__c> op = [select id from AMS_Operation__c where Settlement__c IN (select id from AMS_Settlement_System__c where Name = :Settlement and recordTypeId = :rtId) and Country__c = :isoCountryId];
 
@@ -477,9 +477,9 @@ global class AMSIntegrationServices {
         Account theAgency = acc.get(0);
         Id rtId;
         if(isCass)
-            rtId = [Select Id From RecordType where sobjecttype = 'AMS_Settlement_System__c' and name = 'CASS'].id;
+            rtId = RecordTypeSingleton.getInstance().getRecordTypeId('AMS_Settlement_System__c', 'CASS');
         else
-            rtId = [Select Id From RecordType where sobjecttype = 'AMS_Settlement_System__c' and name = 'BSP'].id;
+            rtId = RecordTypeSingleton.getInstance().getRecordTypeId('AMS_Settlement_System__c', 'BSP');
         List<AMS_Operation__c> op = [select id from AMS_Operation__c where Settlement__c IN (select id from AMS_Settlement_System__c where Name = :Settlement and recordTypeId = :rtId) and Country__c = :isoCountryId];
         if(op.size() == 0)
             return result;

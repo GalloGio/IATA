@@ -3,7 +3,7 @@ private class ANG_RHCHelperTest {
 	
 	static testMethod void rhcInfoInitialization() {
 
-		Id devRecordTypeId = Schema.SObjectType.AMS_Country_Specific_Attribute__c.getRecordTypeInfosByName().get('Minimum RHC Amount').getRecordTypeId();
+		Id devRecordTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('AMS_Country_Specific_Attribute__c', 'Minimum_RHC_Amount');
 
 		List<IATA_ISO_Country__c> ctry = new List<IATA_ISO_Country__c>();
 
@@ -25,7 +25,7 @@ private class ANG_RHCHelperTest {
 
         insert config;
 
-		Id accountAgencyRT = AMS_Utils.getId('Account', 'IATA_Agency');
+		Id accountAgencyRT = RecordTypeSingleton.getInstance().getRecordTypeId('Account', 'IATA_Agency');
 
 		Account a = new Account(IATA_ISO_Country__c = ctry[0].id, RecordTypeId = accountAgencyRT, IATACode__c='1234562',Location_Type__c='BR',Name='Test2 Agency OK',Short_Name__c='Test1 Agency', Sector__c = 'Travel Agent', Location_Class__c = 'P');
 
@@ -44,7 +44,7 @@ private class ANG_RHCHelperTest {
 
 	static testMethod void rhcInfoInitialization2() {
 
-		Id devRecordTypeId = Schema.SObjectType.AMS_Country_Specific_Attribute__c.getRecordTypeInfosByName().get('Minimum RHC Amount').getRecordTypeId();
+		Id devRecordTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('AMS_Country_Specific_Attribute__c', 'Minimum_RHC_Amount');
 
 		List<IATA_ISO_Country__c> ctry = new List<IATA_ISO_Country__c>();
 
@@ -66,7 +66,7 @@ private class ANG_RHCHelperTest {
 
         insert config;
 
-		Id accountAgencyRT = AMS_Utils.getId('Account', 'IATA_Agency');
+		Id accountAgencyRT = RecordTypeSingleton.getInstance().getRecordTypeId('Account', 'IATA_Agency');
 
 		Account a = new Account(IATA_ISO_Country__c = ctry[0].id, RecordTypeId = accountAgencyRT, IATACode__c='1234562',Location_Type__c='BR',Name='Test2 Agency OK',Short_Name__c='Test1 Agency', Sector__c = 'Travel Agent', Location_Class__c = 'P');
 

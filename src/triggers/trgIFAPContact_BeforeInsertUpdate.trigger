@@ -21,9 +21,6 @@ trigger trgIFAPContact_BeforeInsertUpdate on Contact (before insert, before upda
   //When contact is created from Portal self-registration this trigger have to be bypassed
   if (userinfo.getLastName() != 'Site Guest User') {
     system.debug('not guest user');
-    // get the Standard Contact recordtype
-    ID standardContactRecordTypeID = clsCaseRecordTypeIDSingleton.getInstance().RecordTypes.get('Standard');
-    system.debug('standardContactRecordTypeID: ' + standardContactRecordTypeID);
     // Get the list of Profiles that we allow to create an FA contact for BR
     //list<Profile> profs = [SELECT Name, Id FROM Profile WHERE Name = 'System Administrator' limit 1];
     String sysAdminProfileId = String.ValueOF(ISSP_CS__c.getValues('SysAdminProfileId').value__c);

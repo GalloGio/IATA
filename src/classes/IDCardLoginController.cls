@@ -118,7 +118,7 @@ public with sharing class IDCardLoginController extends IdCardAbstractController
                 return prApplicationForm;
             }
 
-            ID rectypeid = Schema.SObjectType.ID_Card__c.getRecordTypeInfosByName().get('AIMS').getRecordTypeId();
+            ID rectypeid = RecordTypeSingleton.getInstance().getRecordTypeId('ID_Card__c', 'AIMS');
 
             // Kofi: 12/09/2013. Card_Status__c is removed from the criteria.
             // INC183592
@@ -413,7 +413,7 @@ public with sharing class IDCardLoginController extends IdCardAbstractController
             +' and i.FirstName__c = \'' +FNAME.trim() + '\' and i.LastName__c = \'' + LNAME.trim() +'\' and i.Date_of_Birth__c = '+ parsedDtDOB.format('yyyy-MM-dd');
             */
 
-            ID rectypeid = Schema.SObjectType.ID_Card__c.getRecordTypeInfosByName().get('AIMS').getRecordTypeId();
+            ID rectypeid = RecordTypeSingleton.getInstance().getRecordTypeId('ID_Card__c', 'AIMS');
 
             String IDCardQuery = 'Select i.Related_Contact__c, i.Blacklisted__c, Card_Status__c '
                                  + ' From ID_Card__c i '

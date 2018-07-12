@@ -1,7 +1,8 @@
 @isTest(SeeAllData=true)
 public class EmailMessageViewConTest{
     
-    static testMethod void testEmailMessageViewCon()
+    @isTest
+    static void testEmailMessageViewCon()
     {
         Account account1 = new Account();
         account1.Name = 'Test account';
@@ -27,7 +28,7 @@ public class EmailMessageViewConTest{
         ca.accountId = account1.Id;
         ca.contactId = contact1.Id;
         ca.Region__c = 'Europe';
-        Id sMapRt = Schema.SObjectType.Case.getRecordTypeInfosByName().get('sMAP(sales Monitoring Alert Process)').getRecordTypeId();
+        Id sMapRt = RecordTypeSingleton.getInstance().getRecordTypeId('Case', 'sMAP_sales_Monitoring_Alert_Process');
         ca.RecordTypeId = sMapRt;
         Insert ca;
         

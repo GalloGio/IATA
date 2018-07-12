@@ -48,7 +48,7 @@ private class ISSP_ChangePassword_Test {
     	
     	// insert account
         Account newAccount = new Account();
-        newAccount.RecordTypeId = Schema.SObjectType.Account.getRecordTypeInfosByName().get('Standard Account').getRecordTypeId();
+        newAccount.RecordTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('Account', 'Standard_Account');
         newAccount.Name = 'Company';
         insert newAccount;
  

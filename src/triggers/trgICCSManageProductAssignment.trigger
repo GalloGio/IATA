@@ -11,10 +11,8 @@
 
 trigger trgICCSManageProductAssignment on Case (after insert, after update) {
   // Get the ICCS Case Record Type
-  //RecordType RT_ICCS = [SELECT Id FROM RecordType WHERE DeveloperName = 'FDS_ICCS_Product_Management'];
-  Id RT_ICCS_Id = RecordTypeSingleton.getInstance().RtIDsPerDeveloperNamePerObj.get('Case').get('FDS_ICCS_Product_Management');
-  //RecordType RT_ICCS_BA = [SELECT Id FROM RecordType WHERE DeveloperName = 'FDS_ICCS_Bank_Account_Management'];
-  Id RT_ICCS_BA_Id = RecordTypeSingleton.getInstance().RtIDsPerDeveloperNamePerObj.get('Case').get('FDS_ICCS_Bank_Account_Management');
+  Id RT_ICCS_Id = RecordTypeSingleton.getInstance().getRecordTypeId('Case', 'FDS_ICCS_Product_Management');
+  Id RT_ICCS_BA_Id = RecordTypeSingleton.getInstance().getRecordTypeId('Case', 'FDS_ICCS_Bank_Account_Management');
 
   Boolean ThereAreICCSProductManagementCases = false;
   Boolean ThereAreICCSBankAccountManagementCases = false;

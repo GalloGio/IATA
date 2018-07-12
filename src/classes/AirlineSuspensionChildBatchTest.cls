@@ -13,13 +13,13 @@ private class AirlineSuspensionChildBatchTest {
         insert country_qr;
 
         // Create an Airline HQ account
-        Id AirlineHQ_RT_Id = RecordTypeSingleton.getInstance().RtIDsPerDeveloperNamePerObj.get('Account').get('IATA_Airline');
+        Id AirlineHQ_RT_Id = RecordTypeSingleton.getInstance().getRecordTypeId('Account', 'IATA_Airline');
         Account acct_hq = new Account(Name = 'Qatar Airways', Airline_designator__c = 'QR', ICCS_Membership_Status__c = 'Member', Industry='Airline', Type='Passenger',
                                 RecordTypeId = AirlineHQ_RT_Id, IATA_ISO_Country__c = country_qr.Id);
         insert acct_hq;
 
         // Create an Airline BR account for the HQ above
-        Id AirlineBR_RT_Id = RecordTypeSingleton.getInstance().RtIDsPerDeveloperNamePerObj.get('Account').get('IATA_Airline_BR');
+        Id AirlineBR_RT_Id = RecordTypeSingleton.getInstance().getRecordTypeId('Account', 'IATA_Airline_BR');
         Account acct_br = new Account(Name = 'Qatar Airways FR', ParentId = acct_hq.Id, Airline_designator__c = 'QR', ICCS_Membership_Status__c = 'Member', Industry='Airline', Type='Passenger',
                                 RecordTypeId = AirlineBR_RT_Id, IATA_ISO_Country__c = country_fr.Id);
         insert acct_br;
@@ -30,19 +30,18 @@ private class AirlineSuspensionChildBatchTest {
         insert sr;
 
         // create an airline suspension case
-        Id AirlineSuspension_RT_Id = RecordTypeSingleton.getInstance().RtIDsPerDeveloperNamePerObj.get('Case').get('Airline_Suspension');
+        Id AirlineSuspension_RT_Id = RecordTypeSingleton.getInstance().getRecordTypeId('Case', 'Airline_Suspension');
         Case cs = new Case(RecordTypeId = AirlineSuspension_RT_Id, Subject = 'test', Origin = 'Airline Suspension', CaseArea__c = 'Airline Suspension Process', Status = 'Open',
                         AccountId = acct_hq.Id, Description='desc');
         insert cs;
 
         insert new Case_Reason_Service__c(Name = 'BSP Participation', Service__c = 'BSP Participation', Provider_Required__c = false);
 
-        //Airline_Suspension__c airline = new Airline_Suspension__c(Case__c = cs.id, Participates_in_IATA_Governance_Groups__c = 'Not Applicable' );
-        //insert airline;
         return cs;
     } 
     
-    public static testMethod void testBatch_CreateCountrySupensionCases() {
+    @isTest
+    public static void testBatch_CreateCountrySupensionCases() {
         Case cs = loadData();
         
         test.startTest();
@@ -66,9 +65,10 @@ private class AirlineSuspensionChildBatchTest {
         system.assertEquals(6, lstAllCases.size());
     }
     
-    public static testMethod void testBatch_CreateCountrySupensionCases_AirlineDeactivation() {
+    @isTest
+    public static void testBatch_CreateCountrySupensionCases_AirlineDeactivation() {
         Case cs = loadData();
-        Id AirlineDeactivationRT = RecordTypeSingleton.getInstance().RtIDsPerDeveloperNamePerObj.get('Case').get('Airline_Deactivation');
+        Id AirlineDeactivationRT = RecordTypeSingleton.getInstance().getRecordTypeId('Case', 'Airline_Deactivation');
         cs.RecordtypeId = AirlineDeactivationRT;
         update cs;
 
@@ -82,19 +82,13 @@ private class AirlineSuspensionChildBatchTest {
         test.stopTest();
     }
     
-    public static testMethod void testBatch_CloseAllChildSuspensionCases() {
+    @isTest
+    public static void testBatch_CloseAllChildSuspensionCases() {
         Case child = loadData();
         Case parent = child.clone();
         insert parent;
         child.ParentId = parent.Id;
         update child;
-        
-        //Airline_Suspension__c suspension = new Airline_Suspension__c();
-        //suspension.ChildSuspensionCasesGenerated__c = 'No';
-        //suspension.Reason_for_Suspension__c = 'Debt to IATA';
-        //suspension.Settle_Directly_To__c = 'IATA'; 
-        //suspension.Case__c = parent.Id;
-        //insert suspension;
 
         test.startTest();
         // instantiate the suspension page controller

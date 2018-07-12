@@ -9,7 +9,7 @@ trigger EF_RelatedRecordsTrigger on EF_Related_Records__c (
 )
 {
 	Set<Id> efRelationshipRtIds = new Set<Id>();
-	Id efRelationshipRtId = AMS_Utils.getId('EF_Related_Records__c', 'Relationship');
+	Id efRelationshipRtId = RecordTypeSingleton.getInstance().getRecordTypeId('EF_Related_Records__c', 'Relationship');
 	if(efRelationshipRtId != null)
 		efRelationshipRtIds.add(efRelationshipRtId);
 	

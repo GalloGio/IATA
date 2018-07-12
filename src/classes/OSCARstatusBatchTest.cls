@@ -12,7 +12,7 @@ private class OSCARstatusBatchTest {
 		Date today = System.today();
 		system.debug('Today:' + today);
 		
-		Id agencyRT = AMS_Utils.getId('Account', 'IATA_Agency');
+		Id agencyRT = RecordTypeSingleton.getInstance().getRecordTypeId('Account', 'IATA_Agency');
 		Account account = new Account(RecordTypeId = agencyRT, Name = 'Test Account');
 		insert account;
 		

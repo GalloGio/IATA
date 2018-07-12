@@ -4,9 +4,10 @@
 @IsTest
 private class OneIdProvisioningDaemonTest {
 
-    static testMethod void OneIdProvisioningDaemonTest1(){
+    @isTest
+    static void OneIdProvisioningDaemonTest1(){
         List<PermissionSet> psIds = [SELECT Id,name FROM PermissionSet LIMIT 5];
-        Id recTypeId = OneIdProvisioningDAO.AppRecordTypesConfig.get('One_Id_Service_Provider_Config__c').get('Service_Bundle');
+        Id recTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('One_Id_Service_Provider_Config__c', 'Service_Bundle');
         One_Id_Service_Provider_Config__c oi = new One_Id_Service_Provider_Config__c(Service_Provider_Name__c = 'Bundle',
                 License_Upgrade_Required__c= true,
                 Profile_Id__c='a1',

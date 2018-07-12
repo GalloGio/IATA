@@ -36,7 +36,7 @@ public class SidraLiteSendEmailControllerTest {
 
         Case cse = new Case(
             AccountId = account.Id,
-            RecordtypeId = Schema.SObjectType.Case.getRecordTypeInfosByName().get('SIDRA Lite').getRecordtypeId(),
+            RecordtypeId = RecordTypeSingleton.getInstance().getRecordTypeId('Case', 'SIDRA_Lite'),
             BSP_CASS__c = 'BSP',
             Region__c = 'Europe',
             BSPCountry__c = 'France'

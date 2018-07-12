@@ -9,9 +9,9 @@ public class ISSP_WS_KAVI {
 	private static String HEADQUARTER_RECORD_TYPE_ID;
 	static{
 		preventTrigger = false;
-		AGENCY_RECORD_TYPE_ID = TransformationHelper.RtIDsPerDeveloperNamePerObj(new list<string> {'Account'}).get('Account').get('IATA_Agency');
-		BRANCH_RECORD_TYPE_ID = TransformationHelper.RtIDsPerDeveloperNamePerObj(new list<string> {'Account'}).get('Account').get('IATA_Airline_BR');
-		HEADQUARTER_RECORD_TYPE_ID = TransformationHelper.RtIDsPerDeveloperNamePerObj(new list<string> {'Account'}).get('Account').get('IATA_Airline');
+		AGENCY_RECORD_TYPE_ID = RecordTypeSingleton.getInstance().getRecordTypeId('Account', 'IATA_Agency');
+		BRANCH_RECORD_TYPE_ID = RecordTypeSingleton.getInstance().getRecordTypeId('Account', 'IATA_Airline_BR');
+		HEADQUARTER_RECORD_TYPE_ID = RecordTypeSingleton.getInstance().getRecordTypeId('Account', 'IATA_Airline');
 	}
 
 	public static String CLIENT_KEY {       

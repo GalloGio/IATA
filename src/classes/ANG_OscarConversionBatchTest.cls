@@ -10,7 +10,7 @@ private class ANG_OscarConversionBatchTest {
         IATA_ISO_State__c stt = new IATA_ISO_State__c(Name= 'Test', ISO_Code__c = 'FR20', IATA_ISO_Country__c = ctry1.Id);
         insert stt;
 		
-		Id accountRT = AMS_Utils.getId('Account', 'Standard_Account');
+		Id accountRT = RecordTypeSingleton.getInstance().getRecordTypeId('Account', 'Standard_Account');
 		
 		Account acctHO = new Account(IATA_ISO_Country__c = ctry1.id, RecordTypeId = accountRT,	 Category__c = 'Non-IATA Travel Agent',
 									Name='Test HO',Short_Name__c='Test HO', Sector__c = 'Travel Agent', Location_Class__c = 'P', Location_type__c = 'HO', Reason_for_creation__c = 'none',
@@ -31,7 +31,7 @@ private class ANG_OscarConversionBatchTest {
 		Contact co1 = new Contact(AccountId = acctHO.id, Firstname = 'teste1', Lastname='test1', Phone = '911111111', MobilePhone = '911111111', Email = 'test@test.com', BSP_CASS_Payment_contact__c = true, User_Portal_Status__c = 'Approved Admin');
 		insert co1;
 		
-		Case oscarCase = new Case(Oscar__c = oscar.Id, RecordTypeId = AMS_Utils.getId('Case', 'OSCAR_Communication'));
+		Case oscarCase = new Case(Oscar__c = oscar.Id, RecordTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('Case', 'OSCAR_Communication'));
         oscarCase.AccountId = acctHO.Id;
         oscarCase.ContactId = co1.Id;
         oscarCase.Subject = 'New HO - Test HO';
@@ -69,7 +69,7 @@ private class ANG_OscarConversionBatchTest {
 		System.assertEquals('Accreditation Process', comCase.CaseArea__c);
 		System.assertEquals('New HE standard', comCase.Reason1__c);
 		
-		String RECTYPE_NEWHE= Schema.AMS_OSCAR__c.sObjectType.getDescribe().getRecordTypeInfosByName().get('NG New HE').getRecordTypeId();
+		String RECTYPE_NEWHE= RecordTypeSingleton.getInstance().getRecordTypeId('AMS_OSCAR__c', 'ANG_New_HE');
 
 		System.assertEquals(RECTYPE_NEWHE, oscar.RecordTypeId);
 		System.assertEquals('ANG.NEW.HE.STANDARD.1.0', oscar.Process__c);
@@ -89,7 +89,7 @@ private class ANG_OscarConversionBatchTest {
 		Contact co1 = new Contact(AccountId = acctHO.id, Firstname = 'teste1', Lastname='test1', Phone = '911111111', MobilePhone = '911111111', Email = 'test@test.com', BSP_CASS_Payment_contact__c = true, User_Portal_Status__c = 'Approved Admin');
 		insert co1;
 		
-		Case oscarCase = new Case(Oscar__c = oscar.Id, RecordTypeId = AMS_Utils.getId('Case', 'OSCAR_Communication'));
+		Case oscarCase = new Case(Oscar__c = oscar.Id, RecordTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('Case', 'OSCAR_Communication'));
         oscarCase.AccountId = acctHO.Id;
         oscarCase.ContactId = co1.Id;
         oscarCase.Subject = 'New HO - Test HO';

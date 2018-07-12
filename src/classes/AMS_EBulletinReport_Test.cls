@@ -70,7 +70,7 @@ private class AMS_EBulletinReport_Test {
         String CHANGELOCATIONTYPE = 'Location type';
         String CHANGEOWNERSHIPIATA= 'Ownership to IATA Agent';
         String CHANGEOWNERSHIPNONIATA= 'Ownership to non-IATA Agent';
-		ID rtAgency = Schema.SObjectType.Account.getRecordTypeInfosByName().get('Agency').getRecordTypeId();
+		ID rtAgency = RecordTypeSingleton.getInstance().getRecordTypeId('Account', 'IATA_Agency');
        
       
         Account acc1 = new Account(RecordTypeId = rtAgency, Name = 'My Travels', IATAcode__c = '1111110', IATA_ISO_Country__c = us.id, 
@@ -92,7 +92,7 @@ private class AMS_EBulletinReport_Test {
 		insert acctList;
 		//Account Owners
 
-        Id ownerRtId = AMS_Utils.getId('AMS_Account_Role__c', 'Ownership');
+        Id ownerRtId = RecordTypeSingleton.getInstance().getRecordTypeId('AMS_Account_Role__c', 'Ownership');
 		
 		List<AMS_Account_Role__c> ownersList = new List<AMS_Account_Role__c>();
         
@@ -178,7 +178,8 @@ private class AMS_EBulletinReport_Test {
 
 		//IRREGULARITIES
         
-        Agency_Applied_Change_code__c irr = new Agency_Applied_Change_code__c(Account__c = acc1.Id, RecordTypeId = AMS_Utils.getId('Agency_Applied_Change_code__c', 'Irregularities'), Change_Code__c = 'IRR', Operation__c = 'A', Irregularities_Points__c = 1, Irregularities_Expired__c = false);
+        Agency_Applied_Change_code__c irr = new Agency_Applied_Change_code__c(Account__c = acc1.Id, 
+        	RecordTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('Agency_Applied_Change_code__c', 'Irregularities'), Change_Code__c = 'IRR', Operation__c = 'A', Irregularities_Points__c = 1, Irregularities_Expired__c = false);
         aaccSet.add(irr);
 		
 		//REVIEWS/NOTICES OF TERM.

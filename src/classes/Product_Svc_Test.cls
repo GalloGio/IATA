@@ -315,7 +315,6 @@ private class Product_Svc_Test
         Test.startTest();
         List<Product_Record_Type_Mapping__c> listRTM = new List<Product_Record_Type_Mapping__c>();
         List<Product2> listProd = new List<Product2>();
-        Map<String, Id> mapRecordType_Id = Utility.getRTmapName_Id('Product2', null);
         
         TestDataGenerator.generateApexSetting();
         delete [select Id from Apex_Setting__c where Name = 'Zuora Exclude Product Record Type'];
@@ -334,16 +333,15 @@ private class Product_Svc_Test
         listProd.add(new Product2(Name='zzzTest 4', SAP_Sales_Channel_Code__c='channel 2',Accepted_Payment_Methods__c = 'Bank Transfer; Credit Card; IATA Clearing House'));
         insert listProd;
         listProd = [select RecordTypeId, Name from Product2 where Name like 'zzzTest%' order by Name];
-        system.assert(listProd[0].RecordTypeId == mapRecordType_Id.get('Publication'), 'Expected Publication RT ' + mapRecordType_Id.get('Publication') + ': ' + listProd[0].RecordTypeId);
-        system.assert(listProd[1].RecordTypeId == mapRecordType_Id.get('GDP'), 'Expected GDP RT ' + mapRecordType_Id.get('GDP') + ': ' + listProd[1].RecordTypeId);
-        system.assert(listProd[2].RecordTypeId == mapRecordType_Id.get('Unclassified'), 'Expected Unclassified RT ' + mapRecordType_Id.get('Unclassified') + ': ' + listProd[2].RecordTypeId);
-        system.assert(listProd[3].RecordTypeId == mapRecordType_Id.get('GDP'), 'Expected GDP RT ' + mapRecordType_Id.get('GDP') + ': ' + listProd[3].RecordTypeId);
+        system.assert(listProd[0].RecordTypeId == RecordTypeSingleton.getInstance().getRecordTypeId('Product2', 'Publication'), 'Expected Publication RT ' + RecordTypeSingleton.getInstance().getRecordTypeId('Product2', 'Publication') + ': ' + listProd[0].RecordTypeId);
+        system.assert(listProd[1].RecordTypeId == RecordTypeSingleton.getInstance().getRecordTypeId('Product2', 'GDP'), 'Expected GDP RT ' + RecordTypeSingleton.getInstance().getRecordTypeId('Product2', 'GDP') + ': ' + listProd[1].RecordTypeId);
+        system.assert(listProd[2].RecordTypeId == RecordTypeSingleton.getInstance().getRecordTypeId('Product2', 'Unclassified'), 'Expected Unclassified RT ' + RecordTypeSingleton.getInstance().getRecordTypeId('Product2', 'Unclassified') + ': ' + listProd[2].RecordTypeId);
+        system.assert(listProd[3].RecordTypeId == RecordTypeSingleton.getInstance().getRecordTypeId('Product2', 'GDP'), 'Expected GDP RT ' + RecordTypeSingleton.getInstance().getRecordTypeId('Product2', 'GDP') + ': ' + listProd[3].RecordTypeId);
         
         //*** invoking coverage for update event -> cannot cover because this portion is deactivated
         listProd[0].SAP_Sales_Channel_Code__c = 'channel 2'; 
         update listProd;
         listProd = [select RecordTypeId, Name from Product2 where Name like 'zzzTest%' order by Name];
-        //system.assert(listProd[0].RecordTypeId == mapRecordType_Id.get('Unclassified'), 'Expected Unclassified RT ' + mapRecordType_Id.get('Unclassified') + ': ' + listProd[0].RecordTypeId);
         Test.stopTest();
     } //*** end of "test_setRecordType"
 
