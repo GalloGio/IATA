@@ -1507,6 +1507,7 @@ public with sharing class ANG_AgencyChangesHelper {
     private static AChangeStructure applyFAOptOut(AMS_Oscar__c oscar, AChangeStructure changesContainer, List<Account> accountsInvolved, Boolean bOptOut){
 
 			Boolean valueToAgency;
+			String prevOptOut;
 
 			// check if we are forcing a value - depending on type of changes
 			if(bOptOut != null){
@@ -1517,6 +1518,9 @@ public with sharing class ANG_AgencyChangesHelper {
 			}
 
 			for (Account acc: accountsInvolved){
+
+				prevOptOut = String.valueOf(changesContainer.accountsMap.get(acc.Id).ANG_FA_Opt_out__c);
+
                 if (changesContainer.accountsMap.keySet().contains(acc.Id)){
                		changesContainer.accountsMap.get(acc.Id).ANG_FA_Opt_out__c = valueToAgency;
                 } else {
@@ -1524,7 +1528,15 @@ public with sharing class ANG_AgencyChangesHelper {
                 	changesContainer.accountsMap.put(acc.Id,acc);
                 }
                 changesContainer.accountsChanged.add(acc.id);
+	
+				// create history on change code
+				if (valueToAgency != null && prevOptOut != null && prevOptOut != '' && String.valueOf(valueToAgency) != prevOptOut){
+					AMS_ChangeCodesHelper.ObjectChange objectChange = new AMS_ChangeCodesHelper.ObjectChange('Account','ANG_FA_Opt_out__c', prevOptOut, String.valueOf(valueToAgency));
+	            	AMS_ChangeCodesHelper.ObjectChangesStruct objectChangeStruct = new AMS_ChangeCodesHelper.ObjectChangesStruct(new List<AMS_ChangeCodesHelper.ObjectChange>{objectChange});
+	            	changesContainer.changesStruct.put(acc.Id, objectChangeStruct);
+				}
 			}
+
 
 		return changesContainer;
     }
