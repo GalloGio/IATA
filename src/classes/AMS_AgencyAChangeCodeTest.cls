@@ -143,6 +143,10 @@ private class AMS_AgencyAChangeCodeTest {
         
         update accreditation;
 
+        Apex_Setting__c idAccountOwner = new Apex_Setting__c(Name = 'Stop Owner Alignment');
+        idAccountOwner.Text_1__c = '005w000000688eeAAA';
+        insert idAccountOwner;
+
         AMS_ChangeCodesHelper.createAAChangeCodes(new List<AMS_OSCAR_JSON.ChangeCode>{changeCode}, new List<AMS_OSCAR__c>{oscar}, new List<Account> {account}, true); 
 
         accountLst = [SELECT ID, Name, Short_Name__c , TradeName__c, BillingCity , Email__c  from Account ];
