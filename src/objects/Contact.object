@@ -3155,6 +3155,7 @@ IF(Authorized_Signatory__c,IMAGE(&quot;/resource/authsign&quot; ,&quot;&quot;,40
     </fields>
     <fields>
         <fullName>Available_Services_Images__c</fullName>
+        <description>This field contains the images of the portal services available to the current contact. This should be updated through a trigger</description>
         <externalId>false</externalId>
         <label>Available Services Images</label>
         <length>32768</length>
