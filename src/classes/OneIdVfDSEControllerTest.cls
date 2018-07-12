@@ -80,6 +80,8 @@ private class OneIdVfDSEControllerTest {
         ctrl.searchAccount();
         ctrl.searchIATACodeAirline = '100';
         ctrl.searchAccount();
+        Test.setCurrentPageReference(new PageReference('Page.myPage')); 
+        System.currentPageReference().getParameters().put('serviceName', 'idVariable');
         ctrl.register();
 
         ctrl.isAirline = true;
@@ -152,6 +154,8 @@ private class OneIdVfDSEControllerTest {
         ctrl.isAirline = true;
         ctrl.searchCountry = ISO_Country.Id;
         ctrl.selectedCustomerType = 'Airline';
+        Test.setCurrentPageReference(new PageReference('Page.myPage')); 
+        System.currentPageReference().getParameters().put('serviceName', 'idVariable');
         ctrl.register();
         ctrl.searchDesignatorCode = 'TT';
         ctrl.searchCountryAirline = ISO_Country.Id;
@@ -551,7 +555,7 @@ private class OneIdVfDSEControllerTest {
         ctrl.accList.add(anListAct[0]);     
         ctrl.nextAsGP();           
 
-    }         
+    }     
 
     public static void createTestData(){
 
@@ -571,6 +575,11 @@ private class OneIdVfDSEControllerTest {
         cs2.Name = 'Host';
         cs2.Value__c = 'test';
         csList.add(cs2);
+
+        ISSP_CS__c cs3 = new ISSP_CS__c();
+        cs3.Name = 'IdentityPortal';
+        cs3.Value__c = 'customer-portal-iata.force.com';
+        csList.add(cs3);
 
         List<Profile> profileList = [SELECT Id, Name FROM Profile WHERE Name LIKE 'ISS%'];
         for (Profile thisProfile : profileList){
@@ -677,6 +686,8 @@ private class OneIdVfDSEControllerTest {
         ctrl.searchCountry = ISO_Country.Id;
         ctrl.searchCompanyName = 'bla';
         ctrl.searchAccount();
+        Test.setCurrentPageReference(new PageReference('Page.myPage')); 
+        System.currentPageReference().getParameters().put('serviceName', 'idVariable');
         ctrl.register();
     }
 
@@ -728,8 +739,10 @@ private class OneIdVfDSEControllerTest {
         ctrl.isNotIATA = true;
         ctrl.isAirline = true;
         ctrl.searchCountry = ISO_Country.Id;
-        ctrl.selectedCustomerType = 'Airline';
-        ctrl.register();
+        ctrl.selectedCustomerType = 'Airline';        
+        Test.setCurrentPageReference(new PageReference('Page.myPage')); 
+        System.currentPageReference().getParameters().put('serviceName', 'idVariable');
+        ctrl.register();        
         ctrl.searchDesignatorCode = 'TT';
         ctrl.searchCountryAirline = ISO_Country.Id;
         ctrl.searchCountry = ISO_Country.Id;
@@ -753,4 +766,7 @@ private class OneIdVfDSEControllerTest {
         ctrl.searchCountry = ISO_Country.Id;
         ctrl.searchAccount();
     }
+    
+
+
 }
