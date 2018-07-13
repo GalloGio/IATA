@@ -28,7 +28,6 @@
         helper.getIsSelfRegistrationEnabled(component, event, helper);
         helper.getCommunityForgotPasswordUrl(component, event, helper);
         helper.getCommunitySelfRegisterUrl(component, event, helper);
-        helper.getSiteCompleteUrl(component, event, helper);
 
         
         helper.getShow90Days(component, event, helper);

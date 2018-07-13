@@ -8,4 +8,5 @@
     <style>none</style>
     <subject>Agency Accreditation Head Office Draft Application in IATA Customer Portal - case n°</subject>
     <type>visualforce</type>
+    <uiType>Aloha</uiType>
 </EmailTemplate>

@@ -77,15 +77,15 @@ public without sharing class OneIdLightningLoginFormController {
                     if(startUrl != 'mobileApp') pageLink = startUrl;
 
                     if( String.isNotBlank(serviceName) && serviceName == 'ISSP'){
-                       //pageLink = '/identity/apex/CommunitiesLanding?serviceName=ISSP&startUrl=' + startUrl;
-					   pageLink = '/apex/CommunitiesLanding?serviceName=ISSP&startUrl=' + startUrl;
+			//pageLink = '/identity/apex/CommunitiesLanding?serviceName=ISSP&startUrl=' + startUrl;
+			pageLink = '/apex/CommunitiesLanding?serviceName=ISSP&startUrl=' + startUrl;
                     }
 
                 }else if( String.isNotBlank(serviceName) && serviceName == 'ISSP'){
                 	 //pageLink = '/ISSP_Homepage';
                 	 //Let's leverage "standard" page's controller doing the magic. Just add the param, redirection will be done by the page controller
                 	 //pageLink = '/identity/apex/CommunitiesLanding?serviceName=ISSP';
-					 pageLink = '/apex/CommunitiesLanding?serviceName=ISSP';
+			pageLink = '/apex/CommunitiesLanding?serviceName=ISSP';
                 }
                 
                 if (oneUser.Portal_User_Frozen_Checkbox__c){
@@ -105,8 +105,13 @@ public without sharing class OneIdLightningLoginFormController {
                 
             username=null != oneUser ? oneUser.Username : username;
             system.debug('pageLink: ' + pageLink);
-            system.debug('serviceName '+serviceName);
             system.debug('Used Username: '+username);
+            
+            //Login on the portal community using a portal URL
+            if( String.isNotBlank(serviceName) && serviceName == 'ISSP'){
+                 String s = startUrl != null ? startUrl : '/ISSP_Homepage';
+                 ApexPages.PageReference lgnPortal = Site.login(username, password, OneIdUtils.getSiteCompleteUrl(OneIdUtils.Mode.ISSP) + s);
+            }
             
             //login in siteCompleteUrl
             ApexPages.PageReference lgn = Site.login(username, password, pageLink);
@@ -125,9 +130,8 @@ public without sharing class OneIdLightningLoginFormController {
             }
             
             //redirect to startUrl or some other page returned from the login 
-            //for different login cases scenarios                
-                aura.redirect(lgn);    
-            
+            //for different login cases scenarios
+            aura.redirect(lgn);
             
             //return null in case of login success
             return null;
@@ -292,7 +296,6 @@ public without sharing class OneIdLightningLoginFormController {
     }
     */
     
- 
     @AuraEnabled
     public static Boolean getShow90Days() {
         //show90Days=true;

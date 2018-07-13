@@ -71,9 +71,19 @@
         Test.startTest();
         Account a = [SELECT id from Account where Name = 'Test1 Agency' LIMIT 1];
                 
-        AMS_Oscar__c oscar = [SELECT id, STEP1__c, STEP10__c, STEP11__c, STEP12__c, STEP13__c, STEP14__c, STEP15__c, STEP16__c, STEP17__c, STEP18__c, STEP19__c, STEP2__c,STEP20__c,
-            STEP3__c, STEP4__c, STEP5__c, STEP6__c, STEP7__c, STEP8__c, STEP9__c, Status__c,OwnerId from AMS_OSCAR__c where Process__c = :AMS_Utils.new_HO limit 1];
-
+        AMS_Oscar__c oscar = [SELECT id, Account__c, STEP1__c, STEP10__c, STEP11__c, STEP12__c, STEP13__c, STEP14__c, STEP15__c, STEP16__c, STEP17__c, STEP18__c, STEP19__c, STEP2__c,STEP20__c,
+            STEP3__c, STEP4__c, STEP5__c, STEP6__c, STEP7__c, STEP8__c, STEP9__c, Status__c,OwnerId,Oscar_Communication_Case_Id__c from AMS_OSCAR__c where Process__c = :AMS_Utils.new_HO limit 1];
+        
+        Case oscarCase = [Select id from case where Oscar__c = :oscar.id];
+        
+        Attachment attc = new Attachment(
+          OwnerId = UserInfo.getUserId(),
+          IsPrivate = true,
+          ParentId = oscarCase.Id,
+          Body = Blob.valueOf('Test'),
+          Name = 'test'
+        );
+        insert attc;
 
         oscar.STEP6__c = 'Passed';
         oscar.STEP10__c = 'Passed';
@@ -180,7 +190,16 @@
         oscarCase.AccountId = a1.Id;
         oscarCase.ContactId = co1.Id;
         insert oscarCase;
-
+    
+        Attachment a = new Attachment(
+          OwnerId = UserInfo.getUserId(),
+          IsPrivate = true,
+          ParentId = oscarCase.Id,
+          Body = Blob.valueOf('Test'),
+          Name = 'test'
+        );
+        insert a;
+        
         EF_AttachmentListController.runningForEF = false;
         loadCredentials();
 
@@ -284,8 +303,19 @@
         Account a = [SELECT id from Account where Name = 'Test1 Agency' LIMIT 1];
 
         AMS_OSCAR__c oscar = [SELECT id, STEP1__c, STEP10__c, STEP11__c, STEP12__c, STEP13__c, STEP14__c, STEP15__c, STEP16__c, STEP17__c, STEP18__c, STEP19__c, STEP2__c,STEP20__c,
-            STEP3__c, STEP4__c, STEP5__c, STEP6__c, STEP7__c, STEP8__c, STEP9__c, Status__c,OwnerId from AMS_OSCAR__c where Process__c = :AMS_Utils.new_HO limit 1];
-
+            STEP3__c, STEP4__c, STEP5__c, STEP6__c, STEP7__c, STEP8__c, STEP9__c, Status__c,OwnerId,account__c from AMS_OSCAR__c where Process__c = :AMS_Utils.new_HO limit 1];
+    
+        Case oscarCase = [Select id from case where Oscar__c = :oscar.id];
+        
+        Attachment attc = new Attachment(
+          OwnerId = UserInfo.getUserId(),
+          IsPrivate = true,
+          ParentId = oscarCase.Id,
+          Body = Blob.valueOf('Test'),
+          Name = 'test'
+        );
+        insert attc;
+        
         oscar.STEP5__c = 'Passed';
         oscar.STEP6__c = 'Passed';
         oscar.STEP10__c = 'Passed';
@@ -716,7 +746,16 @@
         Account a = [SELECT id from Account where Name = 'Test1 Agency' LIMIT 1];
 
         AMS_OSCAR__c oscar = [SELECT id, Status__c,OwnerId from AMS_OSCAR__c where Process__c = :AMS_Utils.new_HO limit 1];
-
+        Case oscarCase = [Select id from case where Oscar__c = :oscar.id];
+        
+        Attachment attc = new Attachment(
+          OwnerId = UserInfo.getUserId(),
+          IsPrivate = true,
+          ParentId = oscarCase.Id,
+          Body = Blob.valueOf('Test'),
+          Name = 'test'
+        );
+        insert attc;
         ID newRT = Schema.SObjectType.AMS_OSCAR__c.getRecordTypeInfosByName().get('CHANGE').getRecordTypeId();
 
         oscar.recordTypeID = newRT;
@@ -973,7 +1012,15 @@
         newCase.setOptions(dmo);
 
         insert newCase;
-
+        
+        Attachment attc = new Attachment(
+          OwnerId = UserInfo.getUserId(),
+          IsPrivate = true,
+          ParentId = newCase.Id,
+          Body = Blob.valueOf('Test'),
+          Name = 'test'
+        );
+        insert attc;
 
         AMS_Pax_Accreditation_Form__c stagingArea = new AMS_Pax_Accreditation_Form__c(SAAM_Case__c = newCase.Id, Account_Name__c=aBr.Name, Short_Name__c=aBr.Short_Name__c );
         insert stagingArea;
@@ -1021,13 +1068,20 @@
         Id oscarCommRecordTypeId = AMS_Utils.getId('Case', 'OSCAR_Communication');
 
         Case newCase = new Case(Status = 'New', OSCAR__c = oscar.Id, RecordTypeID = oscarCommRecordTypeId);
-
+        
         Database.DMLOptions dmo = new Database.DMLOptions();
         dmo.assignmentRuleHeader.useDefaultRule= false;
         newCase.setOptions(dmo);
 
-        insert newCase;
-
+        insert newCase;        
+        Attachment attc = new Attachment(
+          OwnerId = UserInfo.getUserId(),
+          IsPrivate = true,
+          ParentId = newCase.Id,
+          Body = Blob.valueOf('Test'),
+          Name = 'test'
+        );
+        insert attc;
         AMS_Pax_Accreditation_Form__c stagingArea = new AMS_Pax_Accreditation_Form__c(SAAM_Case__c = newCase.Id, Account_Name__c=aHo.Name, Short_Name__c=aHo.Short_Name__c );
         insert stagingArea;
 
@@ -1080,7 +1134,15 @@
         newCase.setOptions(dmo);
 
         insert newCase;
-
+        
+        Attachment attc = new Attachment(
+          OwnerId = UserInfo.getUserId(),
+          IsPrivate = true,
+          ParentId = newCase.Id,
+          Body = Blob.valueOf('Test'),
+          Name = 'test'
+        );
+        insert attc;
         AMS_Pax_Accreditation_Form__c stagingArea = new AMS_Pax_Accreditation_Form__c(SAAM_Case__c = newCase.Id, Account_Name__c=a.Name, Short_Name__c=a.Short_Name__c );
         insert stagingArea;
 
@@ -1136,7 +1198,15 @@
         newCase.setOptions(dmo);
 
         insert newCase;
-
+        
+        Attachment attc = new Attachment(
+          OwnerId = UserInfo.getUserId(),
+          IsPrivate = true,
+          ParentId = newCase.Id,
+          Body = Blob.valueOf('Test'),
+          Name = 'test'
+        );
+        insert attc;
         AMS_Pax_Accreditation_Form__c stagingArea = new AMS_Pax_Accreditation_Form__c(SAAM_Case__c = newCase.Id, Account_Name__c=aBr.Name, Short_Name__c=aBr.Short_Name__c );
         insert stagingArea;
 
@@ -1250,6 +1320,8 @@
         oscar.STEP12__c = 'Passed';
         oscar.STEP15__c = 'Passed';
         insert oscar;
+        
+        Test.startTest();
 
         Case testCase2 = ISSP_ObjectFactory.createNewCase();
             testCase2.BSPCountry__c = 'Hong Kong (SAR), China';
@@ -1267,7 +1339,7 @@
             testCase2.RecordTypeId = OSCAR_RECORD_TYPE_ID;
         insert testCase2;
 
-        Test.startTest();
+        
         
         oscar.Process__c = AMS_Utils.BANKACCCHANGES;
         oscar.STEP16__c = AMS_Utils.PASSED;

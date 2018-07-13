@@ -3,6 +3,12 @@
     <doesSendEmailToMembers>false</doesSendEmailToMembers>
     <email>chauhanm@iata.org</email>
     <name>AIR Tech Zone Support</name>
+    <queueMembers>
+        <users>
+            <user>harriss@iata.org.prod</user>
+            <user>sanvincenv@iata.org</user>
+        </users>
+    </queueMembers>
     <queueSobject>
         <sobjectType>Case</sobjectType>
     </queueSobject>

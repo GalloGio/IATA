@@ -3,6 +3,11 @@
     <doesSendEmailToMembers>false</doesSendEmailToMembers>
     <email>zaharievd@iata.org</email>
     <name>Code Transfers &amp; Mergers - Head Office</name>
+    <queueMembers>
+        <publicGroups>
+            <publicGroup>IDFSDistributionAirlineManagement</publicGroup>
+        </publicGroups>
+    </queueMembers>
     <queueSobject>
         <sobjectType>Case</sobjectType>
     </queueSobject>

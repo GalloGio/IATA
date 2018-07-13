@@ -3,6 +3,12 @@
     <doesSendEmailToMembers>false</doesSendEmailToMembers>
     <email>allccsbo@iata.org</email>
     <name>Local Office - Venezuela</name>
+    <queueMembers>
+        <publicGroups>
+            <publicGroup>IATAVenezuela</publicGroup>
+            <publicGroup>IDFSAmericasCustomerService</publicGroup>
+        </publicGroups>
+    </queueMembers>
     <queueSobject>
         <sobjectType>Case</sobjectType>
     </queueSobject>

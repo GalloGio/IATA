@@ -157,6 +157,17 @@
         <type>Currency</type>
     </fields>
     <fields>
+        <fullName>ANG_IATA_Code__c</fullName>
+        <externalId>false</externalId>
+        <formula>ANG_AccountId__r.IATACode__c</formula>
+        <label>ANG IATA Code</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
         <fullName>ANG_Minimum_Financial_Security__c</fullName>
         <description>Holds the information in what is the minimum FS required for the agent. This information comes from a Case (IFAP or SAAM) and should not be updated manually</description>
         <externalId>false</externalId>

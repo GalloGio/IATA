@@ -100,9 +100,6 @@ public without sharing class ISSP_ChangePassword {
                     if(!isOneId || serviceName == 'ISSP'){
                         pageRef = new PageReference(OneIdUtils.getSiteCompleteUrl(OneIdUtils.Mode.ISSP) + '/ISSP_PersonalInformation?mid=M5S1&confirm=yes' + commParam);
                     }
-                    else if(serviceName == 'FRED'){                            
-                        pageRef = null;   
-                    }
                     else{
                         pageref = new PageReference(OneIdUtils.getSiteCompleteUrl(OneIdUtils.Mode.IDENTITY) + '?' + serviceNameParam);
                     }
@@ -118,8 +115,7 @@ public without sharing class ISSP_ChangePassword {
                         //system.debug('severity message: ' + thisMessage.getSeverity());
                         //system.debug('message: ' + thisMessage);
                         errorMessage.add(thisMessage.getSummary());
-
-                    }                    
+                    }
                     errorMessage.add(Label.ISSP_Old_Passwords);
                     fredError = false;
 

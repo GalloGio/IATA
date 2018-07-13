@@ -3,6 +3,12 @@
     <doesSendEmailToMembers>false</doesSendEmailToMembers>
     <email>allbuebo@iata.org</email>
     <name>Local Office - Argentina/PY/UY</name>
+    <queueMembers>
+        <publicGroups>
+            <publicGroup>IATAArgentina</publicGroup>
+            <publicGroup>IDFSAmericasCustomerService</publicGroup>
+        </publicGroups>
+    </queueMembers>
     <queueSobject>
         <sobjectType>Case</sobjectType>
     </queueSobject>
