@@ -7,7 +7,13 @@ public class TIP_Utils{
 	//Account RT's
     public static String STANDARD_ACCOUNT_RECORD_TYPE_ID = RecordTypeSingleton.getInstance().RtIDsPerDeveloperNamePerObj.get('Account').get('Standard_Account');  
     public static String PAYMENT_PROVIDER_RECORD_TYPE_ID = RecordTypeSingleton.getInstance().RtIDsPerDeveloperNamePerObj.get('Account').get('TIP_Payment_Provider');
-
+    
+    //Account Role RT
+    public static String ACCOUNT_ROLE_PAYMENT_PROVIDER_RECORDTYPE_ID = RecordTypeSingleton.getInstance().RtIDsPerDeveloperNamePerObj.get('Account_Role__c').get('TIP_Payment_Provider');
+    
+    //Account Contact Role RT
+	public static String ACCOUNT_CONTACT_ROLE_PAYMENT_PROVIDER_RECORDTYPE_ID = RecordTypeSingleton.getInstance().RtIDsPerDeveloperNamePerObj.get('Account').get('Account_Contact_Role__c');
+	
 	//Account Category
 	public static String ACCOUNT_CATEGORY_PAYMENT_PROVIDER = 'Payment Provider';
 
