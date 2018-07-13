@@ -37,6 +37,30 @@
         <template>ISS_Portal/Notify_contact_of_access_grantedVF_cns</template>
     </alerts>
     <alerts>
+        <fullName>Currency_Center_Access_Approved</fullName>
+        <description>Currency Center Access Approved</description>
+        <protected>false</protected>
+        <recipients>
+            <field>Contact__c</field>
+            <type>contactLookup</type>
+        </recipients>
+        <senderAddress>noreply@iata.org</senderAddress>
+        <senderType>OrgWideEmailAddress</senderType>
+        <template>ISS_Portal/Currency_center_portal_service_access_granted</template>
+    </alerts>
+    <alerts>
+        <fullName>Currency_Center_Inform_requester</fullName>
+        <description>Currency Center Inform requester</description>
+        <protected>false</protected>
+        <recipients>
+            <field>Contact__c</field>
+            <type>contactLookup</type>
+        </recipients>
+        <senderAddress>noreply@iata.org</senderAddress>
+        <senderType>OrgWideEmailAddress</senderType>
+        <template>ISS_Portal/ISS_Portal_Notify_of_Currency_Center_service_request</template>
+    </alerts>
+    <alerts>
         <fullName>ISSP_Alert_Treasury_Dashboard_Manager_of_access_request</fullName>
         <description>ISSP Alert Treasury Dashboard Manager of access request</description>
         <protected>false</protected>
@@ -282,6 +306,16 @@
         <targetObject>Contact__c</targetObject>
     </fieldUpdates>
     <fieldUpdates>
+        <fullName>Grant_Access</fullName>
+        <description>Change the app right status to &apos;Grant Access&apos;</description>
+        <field>Right__c</field>
+        <literalValue>Access Granted</literalValue>
+        <name>Grant Access</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>Literal</operation>
+        <protected>false</protected>
+    </fieldUpdates>
+    <fieldUpdates>
         <fullName>ISS_Portal_SIS_Portal_service_Inactiva</fullName>
         <field>Type_of_Contact__c</field>
         <name>ISS Portal - SIS Portal service Inactiva</name>
@@ -318,6 +352,26 @@
         <operation>LookupValue</operation>
         <protected>false</protected>
         <reevaluateOnChange>true</reevaluateOnChange>
+    </fieldUpdates>
+    <fieldUpdates>
+        <fullName>Reject_Access</fullName>
+        <description>Set the app right Access to &apos;Access Denied&apos;</description>
+        <field>Right__c</field>
+        <literalValue>Access Denied</literalValue>
+        <name>Reject Access</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>Literal</operation>
+        <protected>false</protected>
+    </fieldUpdates>
+    <fieldUpdates>
+        <fullName>Request_Access</fullName>
+        <description>Set the Portal application right in request status</description>
+        <field>Right__c</field>
+        <literalValue>Access Requested</literalValue>
+        <name>Request Access</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>Literal</operation>
+        <protected>false</protected>
     </fieldUpdates>
     <fieldUpdates>
         <fullName>Update_SIS_User</fullName>

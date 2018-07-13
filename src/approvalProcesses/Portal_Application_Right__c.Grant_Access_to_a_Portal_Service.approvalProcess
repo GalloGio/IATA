@@ -13,6 +13,10 @@
         <allowDelegate>false</allowDelegate>
         <assignedApprover>
             <approver>
+                <name>khattabil@iata.org.prod</name>
+                <type>user</type>
+            </approver>
+            <approver>
                 <name>larivaa@iata.org</name>
                 <type>user</type>
             </approver>
@@ -55,7 +59,7 @@
     <finalRejectionRecordLock>false</finalRejectionRecordLock>
     <initialSubmissionActions>
         <action>
-            <name>Inform_requester</name>
+            <name>Currency_Center_Inform_requester</name>
             <type>Alert</type>
         </action>
         <action>
