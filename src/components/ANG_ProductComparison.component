@@ -105,7 +105,12 @@
 										<apex:outputLabel value="{! cell.slabel}"/>
 										<apex:outPutpanel rendered="{!!(helper.costTooltip == '')}">
 
-											<a href="#" title="{!cell.name}" data-toggle="popover" data-trigger="hover" data-content="{!helper.costTooltip}"><apex:image value="/img/msg_icons/info16.png"/></a>
+											
+
+											<a href="#" data-html="true" data-toggle="popover" data-trigger="hover" 
+											   title="{!cell.name}" data-content="<div escape='false'>{!helper.costTooltip}</div>">
+											   <apex:image value="/img/msg_icons/info16.png"/>
+											</a>
 
 										</apex:outPutpanel>
 									</td>
