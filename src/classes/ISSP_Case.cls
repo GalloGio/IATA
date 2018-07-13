@@ -166,9 +166,15 @@ public without sharing class ISSP_Case {
                         PageReference pr = new PageReference('/ISSP_IFAPCases?id=' + caseId + commParam);
                         return pr;
                     }
-            }else if(newCase.RecordType.name == 'OSCAR Communication' && newCase.Origin == 'Massive FOP Creation' && newCase.Owner.Name.startsWith('NewGen PCI')){
+            }else if(newCase.RecordType.name == 'OSCAR Communication' && (newCase.Origin == 'Massive FOP Creation' || newCase.Origin == 'FoP automatic renewal') && newCase.Owner.Name.startsWith('NewGen PCI')){
                         PageReference pr = new PageReference('/ISSP_ANG_PCI?caseId=' + caseId + commParam);
                         return pr;
+            } else if (newCase.RecordType.name == 'OSCAR Communication' && newCase.Status == 'Draft' && (newCase.Reason1__c == AMS_Utils.CASE_REASON_FOR_MANAGEMENT || newCase.Reason1__c == AMS_Utils.CASE_REASON_PCI_DSS_COMPLIANT)) {
+                PageReference pr = new PageReference('/ISSP_ANG_PCI?caseId=' + caseId + commParam);
+                return pr;
+            }else if(newCase.RecordType.name == 'OSCAR Communication' && newCase.Reason1__c == 'Annual revalidation' && newCase.Owner.Name.startsWith('Annual Revalidation')){
+                PageReference pr = new PageReference('/ISSP_ANG_ANNUAL_REVALIDATION?caseId=' + caseId);
+                return pr;
             }
 
             showAlertMessage();
@@ -622,25 +628,28 @@ public without sharing class ISSP_Case {
                     newCase.RecordTypeId = DAL_ISSP.getRecordTypeId('Inter_DPCs');
                     newCase.Account_Concerned__c = whoToContact;
                 }
+                
                 List<Account> lsAccounts = new List<Account>();
                 if(accaRoleIds.Value__c != null && accaRoleIds.Value__c.contains(UserInfo.getUserRoleId().Substring(0,15))){
-                if(dpcRecordType.Value__c != null && dpcSector.Value__c != null && dpcCategory.Value__c != null) {
-                    list<String> listRecordTypes = dpcRecordType.Value__c.split(',');
-                    lsAccounts =
-                        [SELECT Id, Name FROM Account
-                        WHERE Recordtype.DeveloperName IN :listRecordTypes
-                        AND Sector__c = :dpcSector.Value__c
-                        AND Category__c = :dpcCategory.Value__c];
-                }
+                    if(dpcRecordType.Value__c != null && dpcSector.Value__c != null && dpcCategory.Value__c != null) {
+                        list<String> listRecordTypes = dpcRecordType.Value__c.split(',');
+                        lsAccounts =
+                            [SELECT Id, Name FROM Account
+                            WHERE Recordtype.DeveloperName IN :listRecordTypes
+                            AND Sector__c = :dpcSector.Value__c
+                            AND Category__c = :dpcCategory.Value__c];
+                    }
                 } else {
                     if(accaAccounts.Value__c != null ) lsAccountIds = accaAccounts.Value__c.split(',');
                     if(lsAccountIds != null ) {
-                    lsAccounts =
-                        [SELECT Id, Name FROM Account
-                        WHERE Id IN :lsAccountIds];
+                        lsAccounts =
+                            [SELECT Id, Name FROM Account
+                            WHERE Id IN :lsAccountIds];
                     }
-
                 }
+                
+                
+                
                 List<Contact> lsContacts = new list<Contact>();
                 for (User user: [SELECT ContactId, Contact.Name, Contact.Email, Contact.AccountId
                         FROM User
@@ -661,7 +670,9 @@ public without sharing class ISSP_Case {
                 this.lst_whoToContact.add(new SelectOption('',''));
                 Account iataAccount;
                 for(Account a : lsAccounts) {
-                    this.lst_whoToContact.add(new SelectOption(a.Id,a.Name));
+                    if (a.Id != this.con.AccountId) {
+                        this.lst_whoToContact.add(new SelectOption(a.Id,a.Name));
+                    }
                 }
                 this.lst_whoToContact.add(new SelectOption('IATA','IATA'));
             }
@@ -1595,12 +1606,12 @@ public without sharing class ISSP_Case {
             //finally sends an email to the full recipients list
             EmailTemplate template = [SELECT Id FROM EmailTemplate WHERE DeveloperName = 'New_DPC_Case'];
             sendMassEmail(newCase.Id,template.Id);
-            
+
         } catch (DMLException e) {
             Database.rollback(sp);
         }
     }
-    
+
     public static void sendMassEmail(Id caseId, Id templateId) {
         try {
             OrgWideEmailAddress orgAddress = [SELECT Id FROM OrgWideEmailAddress WHERE Address = 'noreply@iata.org'];

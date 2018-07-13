@@ -305,6 +305,8 @@ src/workflows/SIS_Escalated_case_notification_to_CS_Manager.workflow
 src/workflows/SIS_HD_New_case_comment_notification.workflow
 src/workflows/ZMG_Send_Survey_Email_to_Case_Contact_after_Case_Closed.workflow
 src/workflows/Send_an_email_as_soon_as_a_case_is_created_for_IDCard_Application.workflow
+src/workflows/RequestsForAccessSIQ.workflow
+src/workflows/StreamActivityAccess.workflow
 *.sublime-project
 *.sublime-settings
 *.sublime-workspace

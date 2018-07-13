@@ -31,6 +31,10 @@
                 <behavior>Edit</behavior>
                 <field>DDS_Enabled__c</field>
             </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>fred_icaomemberstate__c</field>
+            </layoutItems>
         </layoutColumns>
         <layoutColumns>
             <layoutItems>
@@ -192,10 +196,6 @@
                 <behavior>Edit</behavior>
                 <field>CNS_Country__c</field>
             </layoutItems>
-            <layoutItems>
-                <behavior>Edit</behavior>
-                <field>ANG_Portal_Service__c</field>
-            </layoutItems>
         </layoutColumns>
         <layoutColumns>
             <layoutItems>
@@ -237,17 +237,25 @@
         <customLabel>true</customLabel>
         <detailHeading>true</detailHeading>
         <editHeading>true</editHeading>
-        <label>New Gen</label>
+        <label>NewGen</label>
         <layoutColumns>
             <layoutItems>
                 <behavior>Edit</behavior>
                 <field>ANG_Enable_NewGen__c</field>
             </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>ANG_GDI_Enabled__c</field>
+            </layoutItems>
         </layoutColumns>
         <layoutColumns>
             <layoutItems>
                 <behavior>Edit</behavior>
-                <field>ANG_GDI_Enabled__c</field>
+                <field>ANG_Portal_Service__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>Airline_EasyPay_Opt_Out_Date__c</field>
             </layoutItems>
         </layoutColumns>
         <style>TwoColumnsLeftToRight</style>

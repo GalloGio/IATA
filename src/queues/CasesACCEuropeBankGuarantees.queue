@@ -3,6 +3,12 @@
     <doesSendEmailToMembers>false</doesSendEmailToMembers>
     <email>svetlanat@iata.org</email>
     <name>Cases - ACC Europe Bank Guarantees</name>
+    <queueMembers>
+        <publicGroups>
+            <publicGroup>HubMadridACC</publicGroup>
+            <publicGroup>IDFSEuropeallusers</publicGroup>
+        </publicGroups>
+    </queueMembers>
     <queueSobject>
         <sobjectType>Case</sobjectType>
     </queueSobject>

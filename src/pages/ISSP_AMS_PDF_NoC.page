@@ -118,8 +118,6 @@
         <apex:pageBlock >
         <apex:include pageName="ISSP_AMS_NoC_ReadOnly"/>
         <apex:form >
-            <apex:variable var="isPartnership" value="{!OR(hqAccount.Ownership='Partnership',newForm.ISSP_AMS_Legal_Status__c=='Partnership')}"/>
-            
             <div style="font-size:13px">             
                 <p style="display:{!IF(newForm.Is_change_ownership_or_shareholding__c,'','none')}">    
 <apex:outputText escape="false" value="{!IF(BEGINS(sectorValue,'Cargo_Agent'), IF(agencyCategory='IATA Cargo Agent', IF(isocountry.EACP_Country__c, $Label.ISSP_AMS_NoC_TC_Change_EACP, IF(newlabels, $Label.ISSP_AMS_NoC_TC_Change_CGO_New, $Label.ISSP_AMS_NoC_TC_Change_CGO)), $Label.ISSP_AMS_NoC_TC_Change_CASS), $Label.ISSP_AMS_NoC_Bank_Change1)}"/>
@@ -137,7 +135,7 @@
             </div>
 
         <!-- Signatures -->
-        <apex:outputPanel rendered="{!NOT(isPartnership)}">
+        <apex:outputPanel rendered="{!sectorValue!='Travel_Agent'}">
           <table border="0" cellpadding="3">
               <tr><th colspan="2">{!IF(newForm.Is_change_ownership_or_shareholding__c,$Label.ISSP_AMS_NoC_Transferor , $Label.ISSP_AMS_NoC_Authorized_Signature)}</th><th style="width:10%">&nbsp;</th><th>{!$Label.ISSP_AMS_NoC_Witness}</th><th></th></tr>
               <tr><td>{!$Label.ISSP_AMS_NoC_Signature}</td><td>________________________</td><td style="width:10%">&nbsp;</td><td>{!$Label.ISSP_AMS_NoC_Signature}</td><td>________________________</td></tr>
@@ -155,7 +153,7 @@
           </table>
           <br/>
         </apex:outputPanel>
-        <apex:outputPanel rendered="{!isPartnership}">
+        <apex:outputPanel rendered="{!sectorValue=='Travel_Agent'}">
             <apex:repeat value="{!List_PreviousOwners}" var="transferorOwner">
                 <div class="row" style="width:50%; float:left; page-break-inside:avoid; margin-top:20px;">
                     <table border="0" cellpadding="3">
