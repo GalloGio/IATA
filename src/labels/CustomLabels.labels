@@ -16275,7 +16275,7 @@ Also note that the data contained in ICE is provided to IATA by third parties at
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>ISSP Account Statements Disclaimer China Travel Agent</shortDescription>
-        <value>NOTE:  For BSP CN, billing amount shown above includes BOP sales. BSP CN agents only need to remit the supplement notice (BSP sales) to DD account in compliance with the notification downloaded from ASD.</value>
+        <value>NOTE: For BSP CN, billing amount shown above includes BOP sales. BSP CN agents only need to remit the Non- BOP Total (BALANCE PAYABLE) to your DD account.</value>
     </labels>
     <labels>
         <fullName>ISSP_Account_Statements_Title</fullName>
