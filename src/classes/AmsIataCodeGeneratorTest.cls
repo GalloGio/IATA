@@ -1551,10 +1551,6 @@ public class  AmsIataCodeGeneratorTest
 
         AMS_Accreditation_Contact__c ac3 = new AMS_Accreditation_Contact__c(AMS_Pax_Accreditation_Form__c = accreditationObj.Id, First_name__c='Joan', Last_name__c='Wylde', Phone__c='323562762', Email__c='jw@email.com', Valid_Until__c = (Date.today()+91), RecordTypeId=AMS_Utils.getId('AMS_Accreditation_Contact__c', 'Trained_Staff'), Type_Of_Certificate__c = 'DGR');
         insert ac3;
- 
-         oscar3.STEP6__c = 'Passed';
-
-        insert ac3;
 
         oscar3.STEP6__c = 'Passed';
         update oscar3;
