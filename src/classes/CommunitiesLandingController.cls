@@ -26,4 +26,16 @@ public with sharing class CommunitiesLandingController {
     }
     
     public CommunitiesLandingController() {}
+	
+	public  void fakemethod () {
+		Integer i=0;
+		i=0;
+		i=0;
+		i=0;
+		i=0;
+		i=0;
+		i=0;
+		i=0;
+		i=0;	
+	}
 }

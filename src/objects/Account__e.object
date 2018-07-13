@@ -2,6 +2,7 @@
 <CustomObject xmlns="http://soap.sforce.com/2006/04/metadata">
     <deploymentStatus>Deployed</deploymentStatus>
     <description>Platform event published when an account is created, updated, deleted or undeleted</description>
+    <eventType>StandardVolume</eventType>
     <fields>
         <fullName>AccountId__c</fullName>
         <externalId>false</externalId>

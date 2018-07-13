@@ -8,7 +8,7 @@
     <aura:attribute name="vfHost" type="String" default=""/>
     <aura:attribute name="commName" type="String" default=""/>
     <aura:attribute name="language" type="string" default=""/>
-    <aura:attribute name="captchaIframeHeight" type="String"/>
+    <aura:attribute name="captchaIframeHeight" type="String" default="height: 512px;"/>
     <aura:attribute name="userCountry" type="String"/>
     <aura:attribute name="Terms" type="Boolean" />
     <!-- <aura:attribute name="isUserCanBeCreated" type="Boolean" default="false"/> -->

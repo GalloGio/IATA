@@ -3,6 +3,12 @@
     <doesSendEmailToMembers>false</doesSendEmailToMembers>
     <email>norepy@iata.org</email>
     <name>ACR System Developments (Salesforce)</name>
+    <queueMembers>
+        <users>
+            <user>larivaa@iata.org</user>
+            <user>shalbakf@iata.org</user>
+        </users>
+    </queueMembers>
     <queueSobject>
         <sobjectType>Case</sobjectType>
     </queueSobject>

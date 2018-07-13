@@ -435,6 +435,7 @@ Should be one of - Daily, Weekly, Semi-Monthly, Monthly</inlineHelpText>
     </listViews>
     <listViews>
         <fullName>ZZZ_Deliveries_With_No_Link_to_Z_Sub</fullName>
+        <booleanFilter>1 OR 2</booleanFilter>
         <columns>NAME</columns>
         <columns>GSS_Subscription_Detail__c</columns>
         <columns>Subscription__c</columns>
@@ -475,7 +476,7 @@ Should be one of - Daily, Weekly, Semi-Monthly, Monthly</inlineHelpText>
         <filters>
             <field>GSS_Subscription_Detail__c</field>
             <operation>equals</operation>
-            <value>A-S00000306</value>
+            <value>A-S00001311</value>
         </filters>
         <filters>
             <field>Subscription__c</field>

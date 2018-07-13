@@ -1,4 +1,4 @@
-<apex:page controller="ISSP_TIP_Home_controller"
+<apex:page controller="ISSP_TIP_Home_Controller"
    cache="false"
    sidebar="false"
    showHeader="false"
@@ -404,7 +404,7 @@
                                              <apex:outputLabel value="{!$ObjectType.Account.fields.Legal_name__c.Label} *"/>
                                              <apex:outputPanel style="display: -webkit-inline-box;">
                                                <apex:inputField style="width: 200px;" styleclass="form-control recSearch" value="{!account.Name}" id="legalname"/>
-                                               <apex:image value="/img/msg_icons/info16.png" style="vertical-align: -webkit-baseline-middle;padding: 4px;" styleClass="selector" title="{!$label.ISSP_Portal_Provider_Legal_Name_Label}" html-data-placement="top" html-data-toggle="tooltip"/>
+                                               <apex:image value="/img/msg_icons/info16.png" style="vertical-align: -webkit-baseline-middle;padding: 4px;" styleClass="selector" title="{!$Label.ISSP_Portal_Provider_Legal_Name_Label}" html-data-placement="top" html-data-toggle="tooltip"/>
                                            </apex:outputPanel>
                                           </apex:pageBlockSectionItem>
                                           <apex:pageBlockSectionItem />
@@ -486,7 +486,7 @@
                                              </DSE:DS_DataQuality>
                                           </apex:pageBlockSectionItem>
                                        </apex:pageBlockSection>
-                                       <apex:pageBlockSection>
+                                       <apex:pageBlockSection >
                                        <apex:pageBlockSectionItem >
                                             <apex:outputLabel style="margin-right: 0px !important;" value="Location of Headquarter *"/>
                                             <apex:outputPanel style="display: -webkit-inline-box;">
@@ -494,14 +494,14 @@
                                                 
                                                  <apex:selectOptions value="{!ISOCountry}"/>
                                               </apex:selectList>
-                                              <apex:image value="/img/msg_icons/info16.png" style="padding: 4px" styleClass="selector" title="{!$label.ISSP_Portal_Provider_Headquarter_Location_Label}" html-data-placement="top" html-data-toggle="tooltip"/>
+                                              <apex:image value="/img/msg_icons/info16.png" style="padding: 4px" styleClass="selector" title="{!$Label.ISSP_Portal_Provider_Headquarter_Location_Label}" html-data-placement="top" html-data-toggle="tooltip"/>
                                             </apex:outputPanel>
                                        </apex:pageBlockSectionItem>
                                           <apex:pageBlockSectionItem >
                                              <apex:outputLabel value="{!$ObjectType.Account.fields.TIP_Documents__c.Label}"/>
                                                <apex:outputPanel style="display: -webkit-inline-box;">
                                                <apex:inputTextArea styleclass="form-control recSearch" style="width: 200px;"  value="{!account.TIP_Documents__c}"/>
-                                               <apex:image value="/img/msg_icons/info16.png" style="padding: 4px" styleClass="selector" title="{!$label.ISSP_Portal_Provider_Any_Other_Info_Label}" html-data-placement="top" html-data-toggle="tooltip"/>
+                                               <apex:image value="/img/msg_icons/info16.png" style="padding: 4px" styleClass="selector" title="{!$Label.ISSP_Portal_Provider_Any_Other_Info_Label}" html-data-placement="top" html-data-toggle="tooltip"/>
                                            </apex:outputPanel>
                                           </apex:pageBlockSectionItem>
                                        </apex:pageBlockSection>

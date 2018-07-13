@@ -1,8 +1,18 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Queue xmlns="http://soap.sforce.com/2006/04/metadata">
     <doesSendEmailToMembers>false</doesSendEmailToMembers>
-    <email>siddiqig@iata.org</email>
+    <email>noreply@iata.org</email>
     <name>Local Office - Pakistan</name>
+    <queueMembers>
+        <roleAndSubordinatesInternal>
+            <roleAndSubordinateInternal>CountryManagerPakistanI</roleAndSubordinateInternal>
+            <roleAndSubordinateInternal>StaffPakistanI</roleAndSubordinateInternal>
+        </roleAndSubordinatesInternal>
+        <roles>
+            <role>APCustomerServiceManagerA</role>
+            <role>APCustomerServiceStaffA</role>
+        </roles>
+    </queueMembers>
     <queueSobject>
         <sobjectType>Case</sobjectType>
     </queueSobject>

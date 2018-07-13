@@ -3,6 +3,12 @@
     <doesSendEmailToMembers>false</doesSendEmailToMembers>
     <email>aasarea2@iata.org</email>
     <name>Accreditation - Switzerland</name>
+    <queueMembers>
+        <publicGroups>
+            <publicGroup>IDFSEuropeRegionalOffice</publicGroup>
+            <publicGroup>IDFSSwitzerlandLiechtenstein</publicGroup>
+        </publicGroups>
+    </queueMembers>
     <queueSobject>
         <sobjectType>Case</sobjectType>
     </queueSobject>

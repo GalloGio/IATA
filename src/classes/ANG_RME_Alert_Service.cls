@@ -184,8 +184,20 @@ global class ANG_RME_Alert_Service {
 
 		WebserviceResult result = doRequest(acc.IATACode__c, 'BTN_Bal'); //results are saved on the private varible "result"
 
-		if(result.isSuccess) updateRHC(result.res, acc.RHC_Informations__r[0]);
+		if(result.isSuccess) {
 
+			if(result.res.iataCode != acc.IATACode__c){
+				log.Error_Code__c = 'Iata Code Mismatch';
+				result.isSuccess = false;
+			}
+			else if (result.res.storedBaseCurrency != acc.RHC_Informations__r[0].CurrencyIsoCode){
+				result.isSuccess = false;
+				log.Error_Code__c = 'Currency Mismatch';
+			}
+			else
+				updateRHC(result.res, acc.RHC_Informations__r[0]);
+
+		}
 		//
 		// To reset the singleton for future calls
 		//
