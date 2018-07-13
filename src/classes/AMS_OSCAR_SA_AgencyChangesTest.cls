@@ -251,7 +251,9 @@ public class AMS_OSCAR_SA_AgencyChangesTest {
 
         //system.assertEquals(HO1.Id, null);
 
-
+        Apex_Setting__c idAccountOwner = new Apex_Setting__c(Name = 'Stop Owner Alignment');
+        idAccountOwner.Text_1__c = '005w000000688eeAAA';
+        insert idAccountOwner;
     }
 
     //Scenario 1: Branch becomes an HeadOffice

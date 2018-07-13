@@ -128,7 +128,11 @@ private class ANG_OscarProcessHelperTest {
             )
         };
 
-        insert changeCodeList;		
+        insert changeCodeList;
+
+        Apex_Setting__c idAccountOwner = new Apex_Setting__c(Name = 'Stop Owner Alignment');
+        idAccountOwner.Text_1__c = '005w000000688eeAAA';
+        insert idAccountOwner;		
 	}
 
 	@isTest static void testIATACodeGenerationOKNoDueDiligenceCase() {
