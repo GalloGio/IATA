@@ -1,32 +1,5 @@
 ({
-	getHostURL: function(component, event) {
-        var vfOrigin = component.get("c.getHostURL");
-        vfOrigin.setCallback(this, function(response) {
-            component.set("v.vfHost", 'https://' + response.getReturnValue());
-        });
-        $A.enqueueAction(vfOrigin);
-
-    },
-
-    getCommunityName: function(component, event) {
-        var commName = component.get("c.getCommunityName");
-        commName.setCallback(this, function(response) {
-            component.set("v.commName", response.getReturnValue());
-        });
-        $A.enqueueAction(commName);
-
-    },
-
-    notifyStepCompletion: function(component) {
-        var cmpEvent = component.getEvent("StepCompletionNotification");
-        cmpEvent.setParams({
-            "stepNumber" : 1,
-            "isComplete" : true,
-             });
-        cmpEvent.fire();
-    },
-
-    validateEmail :function(component) {
+	validateEmail :function(component) {
         var emailCmp = component.find("email");
         var emailValue = emailCmp.get("v.value");
         var regExpEmailformat = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/; 
@@ -52,6 +25,8 @@
 
         var emailCmp = c.find("email");
         var emailValue = emailCmp.get("v.value");
+
+        //check if username is available (insert + rollback)
         var action = c.get("c.checkIsUsernameIsAvailableInGlobalSalesforce");
         action.setParams({
             "email":emailValue
@@ -61,22 +36,17 @@
             var isUserCanBeCreated = a.getReturnValue();
 
             if(isUserCanBeCreated){
-                // For verifier avoid captcha
-                if(c.get("v.isVerifierInvitation")) {
-                    this.notifyStepCompletion(c);
-                    c.find("email").set("v.disabled", true);
-                    c.find("termsaccepted").set("v.disabled", true);
-                    c.set("v.showCaptcha", false);
+                //notify parent component that step is completed
+                var e = component.getEvent("StepCompletionNotification");
+                e.setParams({
+                    "stepNumber" : 1,
+                    "isComplete" : true,
+                     });
+                e.fire();
 
-                } else {
-                    
-                    var isFromTosca = c.get("v.isFromTosca");
-                    var country = c.get("v.userCountry");
-                    var vfOrigin = c.get('v.vfHost');
-                    var vfWindow = c.find("vfFrame").getElement().contentWindow;
-                    vfWindow.postMessage({ action: "alohaCallingCAPTCHA",country : country, isFromTosca : isFromTosca }, vfOrigin);
-                    emailCmp.set("v.errors", null);
-                }
+                emailCmp.set("v.errors", null);
+                emailCmp.set("v.disabled", true);
+                c.find("termsaccepted").set("v.disabled", true);
             }else{
                 emailCmp.set("v.errors", [{message: $A.get("$Label.c.OneId_Registration_UserExist")}]);
                 c.set("v.Terms", false);

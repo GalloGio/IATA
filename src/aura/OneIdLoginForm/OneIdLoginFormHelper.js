@@ -1,6 +1,5 @@
-({
-    
-    handleLogin: function (component, event, helpler) {
+({    
+    handleLogin: function (component, event) {
         console.log('helper handleLogin');
 
         //Get parameters
@@ -45,7 +44,7 @@
         $A.enqueueAction(action);
     },
     
-   getClientIpAddressAjax : function (component, event, helpler) { 
+   getClientIpAddressAjax : function (component, event) { 
        var url;
        //url='https://oneidconde-customer-portal-iata.cs83.force.com/oneidentity/services/apexrest/OneIdGetHttpContext';
        url=$A.get("$Label.c.OneId_URL_javaScript") + '/services/apexrest/OneIdGetHttpContext';
@@ -85,7 +84,7 @@
          });
     },
     
-    getShow90Days : function (component, event, helpler) {
+    getShow90Days : function (component, event) {
         var action = component.get("c.getShow90Days");
         action.setCallback(this, function(a){
             var rtnValue = a.getReturnValue();
@@ -97,7 +96,7 @@
         $A.enqueueAction(action);
     },
     
-    getIsUsernamePasswordEnabled : function (component, event, helpler) {
+    getIsUsernamePasswordEnabled : function (component, event) {
         var action = component.get("c.getIsUsernamePasswordEnabled");
         action.setCallback(this, function(a){
             var rtnValue = a.getReturnValue();
@@ -108,7 +107,7 @@
         $A.enqueueAction(action);
     },
     
-    getIsSelfRegistrationEnabled : function (component, event, helpler) {
+    getIsSelfRegistrationEnabled : function (component, event) {
         var action = component.get("c.getIsSelfRegistrationEnabled");
         action.setCallback(this, function(a){
             var rtnValue = a.getReturnValue();
@@ -119,7 +118,7 @@
         $A.enqueueAction(action);
     },
     
-    getCommunityForgotPasswordUrl : function (component, event, helpler) {
+    getCommunityForgotPasswordUrl : function (component, event) {
         var action = component.get("c.getForgotPasswordUrl");
         action.setCallback(this, function(a){
             var rtnValue = a.getReturnValue();
@@ -130,25 +129,8 @@
         $A.enqueueAction(action);
     },
     
-    getCommunitySelfRegisterUrl : function (component, event, helpler) {
+    getCommunitySelfRegisterUrl : function (component, event) {
         var action = component.get("c.getSelfRegistrationUrl");
-
-        var urlParamEncoded = window.location.search.substring(1).toString();                
-        var urlParameters = decodeURIComponent(urlParamEncoded); // Right part after base URL  
-        console.log('aqui urlParamEncoded ' + urlParamEncoded);
-        console.log('aqui urlParameters ' + urlParameters);
-
-        if(urlParameters.indexOf('isFromTosca') > 0){
-            component.set("v.isFromTosca",true);
-        }
-
-        var tosca = component.get("v.isFromTosca");
-        var urlTosca = '';
-        console.log('aqui tosca ' + tosca);
-        
-        if(tosca == true){
-            urlTosca = '?isFromTosca&';
-        }
 
         action.setCallback(this, function(a){
             var rtnValue = a.getReturnValue();

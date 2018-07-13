@@ -47,9 +47,8 @@
                                             <span class="bulletv2">1</span>
                                             
                                             <span class="category">{!$Label.c.OneId_Contact_Association_Validation}</span>
-                                        
-                                        <span class="{!v.activeSection==1 ? 'icon icon-navArrowLeft' : 'icon icon-navArrowDown'}" />
-
+                                            
+                                            <span class="{!v.activeSection==1 ? 'icon icon-navArrowLeft' : 'icon icon-navArrowDown'}" />
                                         </span>
                                     </h3>
                                 </div>
@@ -57,7 +56,7 @@
                                 
                             </div>
                             <div aria-hidden="false" class="slds-accordion__content" id="step1">
-                                <c:OneId_EmailValidation contact="{!v.contact}" userCountry="{!v.userCountry}"/>
+                                <c:OneId_EmailValidation contact="{!v.contact}" />
                             </div>
                         </section>
                     </div>
@@ -70,8 +69,8 @@
                                             <span class="bulletv2">2</span>
                                             
                                             <span class="category">{!$Label.c.OneId_Contact_Creation}</span>
-                                        
-                                        <span class="{!v.activeSection==2 ? 'icon icon-navArrowLeft' : 'icon icon-navArrowDown'}" />
+                                            
+                                            <span class="{!v.activeSection==2 ? 'icon icon-navArrowLeft' : 'icon icon-navArrowDown'}" />
                                         </span>
                                     </h3>
                                 </div>
@@ -91,8 +90,8 @@
                                             <span class="bulletv2">3</span>
                                             
                                             <span class="category">{!$Label.c.OneId_Account_Association}</span>
-                                        
-                                        <span class="{!v.activeSection==3 ? 'icon icon-navArrowLeft' : 'icon icon-navArrowDown'}" />
+                                            
+                                            <span class="{!v.activeSection==3 ? 'icon icon-navArrowLeft' : 'icon icon-navArrowDown'}" />
                                         </span>
                                     </h3>
                                 </div>
