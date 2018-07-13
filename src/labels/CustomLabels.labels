@@ -1475,6 +1475,14 @@ Please &lt;a href=&quot;/ISSP_FAQ2Case?MainNav=Queries&amp;subNav=MyQueries&amp;
         <value>Country Specific Requirements</value>
     </labels>
     <labels>
+        <fullName>ANG_ISSP_ProductComparisonCountrySpecificRequirementsTooltip</fullName>
+        <categories>ISSP, ANG</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ANG_ISSP_ProductComparisonCountrySpecificRequirementsTooltip</shortDescription>
+        <value>Financial requirements for Accreditation applicable to agents in a given market.</value>
+    </labels>
+    <labels>
         <fullName>ANG_ISSP_ProductComparisonFeature1</fullName>
         <categories>ISSP</categories>
         <language>en_US</language>
@@ -1504,7 +1512,7 @@ Please &lt;a href=&quot;/ISSP_FAQ2Case?MainNav=Queries&amp;subNav=MyQueries&amp;
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>ANG_ISSP_ProductComparisonFeature1Tooltip</shortDescription>
-        <value>Feature 1 Tooltip</value>
+        <value>Available Form of Payment. Tickets issued on the customer’s debit/credit card and processed on the merchant agreement of the Airline. Payment is received directly by the Airline from its card processor.</value>
     </labels>
     <labels>
         <fullName>ANG_ISSP_ProductComparisonFeature2</fullName>
@@ -1520,7 +1528,7 @@ Please &lt;a href=&quot;/ISSP_FAQ2Case?MainNav=Queries&amp;subNav=MyQueries&amp;
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>ANG_ISSP_ProductComparisonFeature2Tooltip</shortDescription>
-        <value>Feature 2 Tooltip</value>
+        <value>Available Form of Payment. Tickets issued on the customer’s debit/credit card and processed on the merchant agreement of the Airline. Payment is received directly by the Airline from its card processor.</value>
     </labels>
     <labels>
         <fullName>ANG_ISSP_ProductComparisonFeature3</fullName>
@@ -1536,7 +1544,7 @@ Please &lt;a href=&quot;/ISSP_FAQ2Case?MainNav=Queries&amp;subNav=MyQueries&amp;
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>ANG_ISSP_ProductComparisonFeature3Tooltip</shortDescription>
-        <value>Feature 3 Tooltip</value>
+        <value>Available Form of Payment. Tickets for which the Agent receives payment directly from the customer and remits the amounts due to the BSP on an established remittance date.</value>
     </labels>
     <labels>
         <fullName>ANG_ISSP_ProductComparisonFeature4</fullName>
@@ -1552,7 +1560,7 @@ Please &lt;a href=&quot;/ISSP_FAQ2Case?MainNav=Queries&amp;subNav=MyQueries&amp;
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>ANG_ISSP_ProductComparisonFeature4Tooltip</shortDescription>
-        <value>Feature 4 Tooltip</value>
+        <value>Monetary threshold applicable to Agents for outstanding Cash sales to the BSP.</value>
     </labels>
     <labels>
         <fullName>ANG_ISSP_ProductComparisonFeature5</fullName>
@@ -1568,7 +1576,7 @@ Please &lt;a href=&quot;/ISSP_FAQ2Case?MainNav=Queries&amp;subNav=MyQueries&amp;
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>ANG_ISSP_ProductComparisonFeature5Tooltip</shortDescription>
-        <value>Feature 5 Tooltip</value>
+        <value>Financial Review mandatory for GoStandard Agents.</value>
     </labels>
     <labels>
         <fullName>ANG_ISSP_ProductComparisonFeature6</fullName>
@@ -1608,7 +1616,7 @@ Please &lt;a href=&quot;/ISSP_FAQ2Case?MainNav=Queries&amp;subNav=MyQueries&amp;
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>ANG_ISSP_ProductComparisonFeature8</shortDescription>
-        <value>Financial Security / Default Insurance</value>
+        <value>Financial Security</value>
     </labels>
     <labels>
         <fullName>ANG_ISSP_ProductComparisonFeature8Tooltip</fullName>
@@ -1616,7 +1624,7 @@ Please &lt;a href=&quot;/ISSP_FAQ2Case?MainNav=Queries&amp;subNav=MyQueries&amp;
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>ANG_ISSP_ProductComparisonFeature8Tooltip</shortDescription>
-        <value>Feature 8 Tooltip</value>
+        <value>Depending on the Agent’s Risk Status a Financial Security may have to be provided and will be calculated as per the Local Financial Criteria applicable to that market.  For GoLite Agents the amount will ensure coverage of any cash remittances resulting from ADMs.</value>
     </labels>
     <labels>
         <fullName>ANG_ISSP_ProductComparisonFeature9</fullName>
