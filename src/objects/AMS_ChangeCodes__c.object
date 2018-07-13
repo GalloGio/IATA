@@ -437,6 +437,8 @@ Values must be Separated by &quot;;&quot;</inlineHelpText>
         <fullName>ALL</fullName>
         <columns>NAME</columns>
         <columns>Change_Code__c</columns>
+        <columns>Reason_Code__c</columns>
+        <columns>Reason_Code_Description__c</columns>
         <columns>Record_Type__c</columns>
         <columns>Field1__c</columns>
         <columns>Field2__c</columns>
@@ -446,13 +448,11 @@ Values must be Separated by &quot;;&quot;</inlineHelpText>
         <columns>Field6__c</columns>
         <columns>Bulletin_Memo_Text__c</columns>
         <columns>Clear_Irregularities__c</columns>
-        <columns>Reason_Code__c</columns>
-        <columns>Reason_Code_Description__c</columns>
         <filterScope>Everything</filterScope>
         <filters>
             <field>Change_Code__c</field>
             <operation>equals</operation>
-            <value>IRR</value>
+            <value>CHL,CHO,CLF,CHF,FIN,CHV,CLC</value>
         </filters>
         <label>ALL</label>
         <language>en_US</language>
@@ -528,8 +528,8 @@ Values must be Separated by &quot;;&quot;</inlineHelpText>
         <filterScope>Everything</filterScope>
         <filters>
             <field>Reason_Code__c</field>
-            <operation>notEqual</operation>
-            <value>91,81,00,01,50,51,60,61,62,63,64,CURRENT,21,53,54,90,52,72</value>
+            <operation>equals</operation>
+            <value>71,72</value>
         </filters>
         <label>AMS_debug</label>
         <language>en_US</language>

@@ -2,6 +2,7 @@
 <CustomObject xmlns="http://soap.sforce.com/2006/04/metadata">
     <deploymentStatus>Deployed</deploymentStatus>
     <description>Platform event published when a contact is created, updated, deleted or undeleted</description>
+    <eventType>StandardVolume</eventType>
     <fields>
         <fullName>EventType__c</fullName>
         <description>The type of event which generated the event. It may be: Insert, Update, Delete, Undelete</description>

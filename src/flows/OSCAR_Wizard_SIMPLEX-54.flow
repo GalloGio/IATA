@@ -1827,22 +1827,22 @@
     <formulas>
         <name>AccountRoleFirstName</name>
         <dataType>String</dataType>
-        <expression>IF({!AMSAccountRoleToProcess.Contact__c} &lt;&gt; null , {!AMSAccountRoleToProcess.Contact__r.FirstName} ,IF (AMSAccountRoleToProcess.Person__c &lt;&gt; null , {!AMSAccountRoleToProcess.Person__r.First_Name__c} , &apos;&apos;))</expression>
+        <expression>IF({!AMSAccountRoleToProcess.Contact__c} &lt;&gt; null , {!AMSAccountRoleToProcess.Contact__r.FirstName} ,IF ({!AMSAccountRoleToProcess.Person__c} &lt;&gt; null , {!AMSAccountRoleToProcess.Person__r.First_Name__c} , &apos;&apos;))</expression>
     </formulas>
     <formulas>
         <name>AccountRoleId</name>
         <dataType>String</dataType>
-        <expression>AMSAccountRoleToProcess.Id</expression>
+        <expression>{!AMSAccountRoleToProcess.Id}</expression>
     </formulas>
     <formulas>
         <name>AccountRoleLastName</name>
         <dataType>String</dataType>
-        <expression>IF( ({!AMSAccountRoleToProcess.Owner_Account__c} = null &amp;&amp;  {!AMSAccountRoleToProcess.Contact__c} = null &amp;&amp; {!AMSAccountRoleToProcess.Person__c} = null ) , {!AMSAccountRoleToProcess.Owner_Name__c} , IF({!AMSAccountRoleToProcess.Contact__c} &lt;&gt; null , {!AMSAccountRoleToProcess.Contact__r.LastName},IF (AMSAccountRoleToProcess.Person__c &lt;&gt; null , IF({!AMSAccountRoleToProcess.Person__r.Lastname__c} = null , &apos;_&apos; , {!AMSAccountRoleToProcess.Person__r.Lastname__c}),&apos;_&apos;)))</expression>
+        <expression>IF( ({!AMSAccountRoleToProcess.Owner_Account__c} = null &amp;&amp;  {!AMSAccountRoleToProcess.Contact__c} = null &amp;&amp; {!AMSAccountRoleToProcess.Person__c} = null ) , {!AMSAccountRoleToProcess.Owner_Name__c} , IF({!AMSAccountRoleToProcess.Contact__c} &lt;&gt; null , {!AMSAccountRoleToProcess.Contact__r.LastName},IF ({!AMSAccountRoleToProcess.Person__c} &lt;&gt; null , IF({!AMSAccountRoleToProcess.Person__r.Lastname__c} = null , &apos;_&apos; , {!AMSAccountRoleToProcess.Person__r.Lastname__c}),&apos;_&apos;)))</expression>
     </formulas>
     <formulas>
         <name>AccreditationContactName</name>
         <dataType>String</dataType>
-        <expression>IF( ({!AMSAccountRoleToProcess.Owner_Account__c} = null &amp;&amp;  {!AMSAccountRoleToProcess.Contact__c} = null &amp;&amp; {!AMSAccountRoleToProcess.Person__c} = null ) , {!AMSAccountRoleToProcess.Owner_Name__c} , If({!AMSAccountRoleToProcess.Owner_Account__c} = null ,(IF({!AMSAccountRoleToProcess.Contact__c} != null , ({!AMSAccountRoleToProcess.Contact__r.FirstName} &amp; &apos; &apos; &amp; {!AMSAccountRoleToProcess.Contact__r.LastName}) ,IF (AMSAccountRoleToProcess.Person__c != null , {!AMSAccountRoleToProcess.Person__r.Name} ,  AMSAccountRoleToProcess.Owner_Name__c )) ) ,{!AMSAccountRoleToProcess.Owner_Account__r.Name}))</expression>
+        <expression>IF( ({!AMSAccountRoleToProcess.Owner_Account__c} = null &amp;&amp;  {!AMSAccountRoleToProcess.Contact__c} = null &amp;&amp; {!AMSAccountRoleToProcess.Person__c} = null ) , {!AMSAccountRoleToProcess.Owner_Name__c} , If({!AMSAccountRoleToProcess.Owner_Account__c} = null ,(IF({!AMSAccountRoleToProcess.Contact__c} != null , ({!AMSAccountRoleToProcess.Contact__r.FirstName} &amp; &apos; &apos; &amp; {!AMSAccountRoleToProcess.Contact__r.LastName}) ,IF ({!AMSAccountRoleToProcess.Person__c} != null , {!AMSAccountRoleToProcess.Person__r.Name} ,  {!AMSAccountRoleToProcess.Owner_Name__c} )) ) ,{!AMSAccountRoleToProcess.Owner_Account__r.Name}))</expression>
     </formulas>
     <formulas>
         <name>AccreditationContactNameFormula</name>
@@ -1857,7 +1857,7 @@
     <formulas>
         <name>AreThePremissesInAirportFormula</name>
         <dataType>String</dataType>
-        <expression>IF(AccountToProcess.In_a_Airport__c = true,&apos;Yes&apos;,&apos;No&apos;)</expression>
+        <expression>IF({!AccountToProcess.In_a_Airport__c} = true,&apos;Yes&apos;,&apos;No&apos;)</expression>
     </formulas>
     <formulas>
         <name>CaseArea</name>
@@ -3010,15 +3010,15 @@ IF(({!FinalLocationClass} = &apos;C&apos; &amp;&amp; {!Type_of_OSCAR_process_man
             </value>
         </inputAssignments>
         <inputAssignments>
-            <field>IATACodeProduct__c</field>
-            <value>
-                <elementReference>IATACodeToCase</elementReference>
-            </value>
-        </inputAssignments>
-        <inputAssignments>
             <field>Groups__c</field>
             <value>
                 <elementReference>CNSGroups</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>IATACodeProduct__c</field>
+            <value>
+                <elementReference>IATACodeToCase</elementReference>
             </value>
         </inputAssignments>
         <inputAssignments>
@@ -3831,6 +3831,26 @@ IF(({!FinalLocationClass} = &apos;C&apos; &amp;&amp; {!Type_of_OSCAR_process_man
         </outputAssignments>
     </recordLookups>
     <recordLookups>
+        <name>GetAccountRecordType</name>
+        <label>GetAccountRecordType</label>
+        <locationX>601</locationX>
+        <locationY>307</locationY>
+        <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
+        <connector>
+            <targetReference>Is_PCI_available</targetReference>
+        </connector>
+        <filters>
+            <field>Id</field>
+            <operator>EqualTo</operator>
+            <value>
+                <elementReference>AccountToProcess.RecordTypeId</elementReference>
+            </value>
+        </filters>
+        <object>RecordType</object>
+        <outputReference>AccountRecordType</outputReference>
+        <queriedFields>DeveloperName</queriedFields>
+    </recordLookups>
+    <recordLookups>
         <name>GetProductCategory</name>
         <label>GetProductCategory</label>
         <locationX>331</locationX>
@@ -3858,26 +3878,6 @@ IF(({!FinalLocationClass} = &apos;C&apos; &amp;&amp; {!Type_of_OSCAR_process_man
             <assignToReference>ProductCategoryId</assignToReference>
             <field>Id</field>
         </outputAssignments>
-    </recordLookups>
-    <recordLookups>
-        <name>GetAccountRecordType</name>
-        <label>GetAccountRecordType</label>
-        <locationX>601</locationX>
-        <locationY>307</locationY>
-        <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
-        <connector>
-            <targetReference>Is_PCI_available</targetReference>
-        </connector>
-        <filters>
-            <field>Id</field>
-            <operator>EqualTo</operator>
-            <value>
-                <elementReference>AccountToProcess.RecordTypeId</elementReference>
-            </value>
-        </filters>
-        <object>RecordType</object>
-        <outputReference>AccountRecordType</outputReference>
-        <queriedFields>DeveloperName</queriedFields>
     </recordLookups>
     <recordLookups>
         <name>OSCARCreatedLookup</name>
@@ -4486,6 +4486,8 @@ IF(({!FinalLocationClass} = &apos;C&apos; &amp;&amp; {!Type_of_OSCAR_process_man
             <fieldText>The Account {!AccountToProcess.Name} is marked as {!AccountToProcess.Location_Type__c} and does not have a parent Id. Please close the wizard and fill its Parent Id before continuing.</fieldText>
             <fieldType>DisplayText</fieldType>
         </fields>
+        <showFooter>true</showFooter>
+        <showHeader>true</showHeader>
     </screens>
     <screens>
         <name>BSPlinkServicesScreen</name>
@@ -4512,6 +4514,8 @@ IF(({!FinalLocationClass} = &apos;C&apos; &amp;&amp; {!Type_of_OSCAR_process_man
             <fieldType>RadioButtons</fieldType>
             <isRequired>true</isRequired>
         </fields>
+        <showFooter>true</showFooter>
+        <showHeader>true</showHeader>
     </screens>
     <screens>
         <name>ContactChooser</name>
@@ -4545,6 +4549,8 @@ IF(({!FinalLocationClass} = &apos;C&apos; &amp;&amp; {!Type_of_OSCAR_process_man
             <fieldText>&lt;SPAN ALIGN=&quot;LEFT&quot;&gt;&lt;FONT FACE=&quot;Arial&quot; STYLE=&quot;font-size:12px&quot; COLOR=&quot;#FF0000&quot; LETTERSPACING=&quot;0&quot; KERNING=&quot;0&quot;&gt;{!errormessagecontactlookup}&lt;/FONT&gt;&lt;/SPAN&gt;</fieldText>
             <fieldType>DisplayText</fieldType>
         </fields>
+        <showFooter>true</showFooter>
+        <showHeader>true</showHeader>
     </screens>
     <screens>
         <name>ContactChooserScreen</name>
@@ -4570,6 +4576,8 @@ IF(({!FinalLocationClass} = &apos;C&apos; &amp;&amp; {!Type_of_OSCAR_process_man
             <fieldType>DropdownBox</fieldType>
             <isRequired>false</isRequired>
         </fields>
+        <showFooter>true</showFooter>
+        <showHeader>true</showHeader>
     </screens>
     <screens>
         <name>ErrorBRWithoutParent</name>
@@ -4584,6 +4592,8 @@ IF(({!FinalLocationClass} = &apos;C&apos; &amp;&amp; {!Type_of_OSCAR_process_man
             <fieldText>The Account {!AccountToProcess.Name} does not have a Parent selected. Please close the wizard and fill its Parent Account before continuing.</fieldText>
             <fieldType>DisplayText</fieldType>
         </fields>
+        <showFooter>true</showFooter>
+        <showHeader>true</showHeader>
     </screens>
     <screens>
         <name>ErrorCNSValidation</name>
@@ -4598,6 +4608,8 @@ IF(({!FinalLocationClass} = &apos;C&apos; &amp;&amp; {!Type_of_OSCAR_process_man
             <fieldText>It is not possible to mix CNS Agencies with non-CNS Agencies within the same hierarchy.</fieldText>
             <fieldType>DisplayText</fieldType>
         </fields>
+        <showFooter>true</showFooter>
+        <showHeader>true</showHeader>
     </screens>
     <screens>
         <name>ErrorCNSwithBRabroad</name>
@@ -4612,6 +4624,8 @@ IF(({!FinalLocationClass} = &apos;C&apos; &amp;&amp; {!Type_of_OSCAR_process_man
             <fieldText>It&apos;s not possible to choose a branch abroad for a CNS Agency</fieldText>
             <fieldType>DisplayText</fieldType>
         </fields>
+        <showFooter>true</showFooter>
+        <showHeader>true</showHeader>
     </screens>
     <screens>
         <name>ErrorMessageNoValidProcessScreen</name>
@@ -4629,6 +4643,8 @@ IF(({!FinalLocationClass} = &apos;C&apos; &amp;&amp; {!Type_of_OSCAR_process_man
             <fieldText>&lt;SPAN ALIGN=&quot;LEFT&quot;&gt;&lt;FONT FACE=&quot;Arial&quot; STYLE=&quot;font-size:12px&quot; COLOR=&quot;#FF0000&quot; LETTERSPACING=&quot;0&quot; KERNING=&quot;0&quot;&gt;{!ErrorMessageFormula}&lt;/FONT&gt;&lt;/SPAN&gt;</fieldText>
             <fieldType>DisplayText</fieldType>
         </fields>
+        <showFooter>true</showFooter>
+        <showHeader>true</showHeader>
     </screens>
     <screens>
         <name>Process_Chooser_Accredited</name>
@@ -4670,6 +4686,8 @@ OSCAR stands for Online Solution for Customer Application Request, and must be l
             <fieldType>RadioButtons</fieldType>
             <isRequired>true</isRequired>
         </fields>
+        <showFooter>true</showFooter>
+        <showHeader>true</showHeader>
     </screens>
     <screens>
         <name>Process_Chooser_Accredited_noPCI</name>
@@ -4709,6 +4727,8 @@ OSCAR stands for Online Solution for Customer Application Request, and must be l
             <fieldType>RadioButtons</fieldType>
             <isRequired>true</isRequired>
         </fields>
+        <showFooter>true</showFooter>
+        <showHeader>true</showHeader>
     </screens>
     <screens>
         <name>Process_Chooser_not_Accredited</name>
@@ -4745,6 +4765,8 @@ OSCAR stands for Online Solution for Customer Application Request, and must be l
             <fieldType>RadioButtons</fieldType>
             <isRequired>true</isRequired>
         </fields>
+        <showFooter>true</showFooter>
+        <showHeader>true</showHeader>
     </screens>
     <screens>
         <name>ResultPage</name>
@@ -4759,6 +4781,8 @@ OSCAR stands for Online Solution for Customer Application Request, and must be l
             <fieldText>&lt;SPAN ALIGN=&quot;LEFT&quot;&gt;&lt;FONT FACE=&quot;Arial&quot; STYLE=&quot;font-size:12px&quot; COLOR=&quot;#000000&quot; LETTERSPACING=&quot;0&quot; KERNING=&quot;0&quot;&gt;&lt;B&gt;We are all set !&lt;/B&gt;&lt;/FONT&gt;&lt;/SPAN&gt;&lt;DIV ALIGN=&quot;LEFT&quot;&gt;&lt;FONT FACE=&quot;Arial&quot; STYLE=&quot;font-size:12px&quot; COLOR=&quot;#000000&quot; LETTERSPACING=&quot;0&quot; KERNING=&quot;0&quot;&gt;&lt;/FONT&gt;&lt;/DIV&gt;&lt;DIV ALIGN=&quot;LEFT&quot;&gt;&lt;FONT FACE=&quot;Arial&quot; STYLE=&quot;font-size:12px&quot; COLOR=&quot;#000000&quot; LETTERSPACING=&quot;0&quot; KERNING=&quot;0&quot;&gt;You&amp;apos;ve completed the wizard.&lt;/FONT&gt;&lt;/DIV&gt;</fieldText>
             <fieldType>DisplayText</fieldType>
         </fields>
+        <showFooter>true</showFooter>
+        <showHeader>true</showHeader>
     </screens>
     <screens>
         <name>VRProcessSelection</name>
@@ -4785,6 +4809,8 @@ OSCAR stands for Online Solution for Customer Application Request, and must be l
             <fieldType>RadioButtons</fieldType>
             <isRequired>true</isRequired>
         </fields>
+        <showFooter>true</showFooter>
+        <showHeader>true</showHeader>
     </screens>
     <startElementReference>isComingFromLeftSidePanelDec</startElementReference>
     <variables>
