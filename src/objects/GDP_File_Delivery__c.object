@@ -435,6 +435,7 @@ Should be one of - Daily, Weekly, Semi-Monthly, Monthly</inlineHelpText>
     </listViews>
     <listViews>
         <fullName>ZZZ_Deliveries_With_No_Link_to_Z_Sub</fullName>
+        <booleanFilter>1 OR 2</booleanFilter>
         <columns>NAME</columns>
         <columns>GSS_Subscription_Detail__c</columns>
         <columns>Subscription__c</columns>

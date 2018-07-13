@@ -78,7 +78,11 @@ global class AMS_OscarMigrationFromCase  implements Process.Plugin{
 			isFromPortal = true;
 		}
 
-        List<Case> caseList = Database.query('SELECT Id, CaseNumber, OSCAR__c , OSCAR__r.Id, Account_Concerned__c ' + caseFieldsStr + toMigrateFields + ' , Account.IATACode__c ,  Contact.Email, ContactId, Account.Category__c,Account.Location_Class__c,Account.ParentId,Account.Location_Type__c, Account.ANG_IsNewGenAgency__c FROM CASE WHERE Id = :caseId');
+        List<Case> caseList = Database.query('SELECT Id, CaseNumber, OSCAR__c , OSCAR__r.Id, Account_Concerned__c ' + caseFieldsStr + toMigrateFields + ' , Account.IATACode__c ,  Contact.Email, ContactId, Account.Category__c,Account.Location_Class__c,Account.Location_Type__c, Account.ANG_IsNewGenAgency__c, Account.Name, Account.Parent.Remittance_frequency__c, Account.Parent.ANG_Accreditation_Model__c, Account.Company_Type__c, Account.TradeName__c, Account.ParentId FROM CASE WHERE Id = :caseId');
+
+        System.debug('caseList is :' +caseList);
+        
+        System.debug('Account.Parent.ANG_Accreditation_Model__c is :' +caseList.get(0).Account.Parent.ANG_Accreditation_Model__c);
 
 		if(caseList.isEmpty()){
 	        oscarId = '';

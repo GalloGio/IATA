@@ -341,7 +341,7 @@
         <filters>
             <field>Services_Rendered_to_Airline__c</field>
             <operation>equals</operation>
-            <value>Jet Airways</value>
+            <value>Air France</value>
         </filters>
         <label>ZZ-BSP Participation - Search by Airline</label>
         <language>en_US</language>

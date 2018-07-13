@@ -7,6 +7,26 @@ public without sharing class AMS_MigrationToolHelper {
 
 	private static final Set<String> newgenProcesses = new Set<String>{'ANG.MAJOR.CHANGES.1.0','VR.1.0','CER.1.0','CORRECTION.1.0','BANK.ACCOUNT.CHANGES','NGFormsOfPayment','ANG_FS_OPTINOUT','ANG.NEW.HE.LITE.1.0','ANG.NEW.AE.1.0','ANG.NEW.HE.STANDARD.1.0'};
 
+	private static final Set<String> doesNotNeedStagingAreaProcesses = new Set<String>{'VR.1.0','VR.1.0.CA','CER.1.0',AMS_Utils.NGOPTINOUT,AMS_Utils.NGFOP,AMS_Utils.BANKACCCHANGES};
+	
+	private static Map<String,String> newgenCaseReason{
+		get{
+            return new Map<String, String> {
+			AMS_Utils.NEWHELITE => 'New HE lite',
+			AMS_Utils.NEWHESTANDARD => 'New HE standard',
+			AMS_Utils.NEWAE => 'New AE',
+			AMS_Utils.NGCHANGES => 'Agency changes',
+			AMS_Utils.NGCORRECTION => 'Corrections',
+			AMS_Utils.CERTIFICATION => 'PAX/CARGO Certificate',
+			AMS_Utils.VOLRELINQUISH => 'CLO - Closure',
+			AMS_Utils.BANKACCCHANGES => 'Agency changes',
+			AMS_Utils.NGFOP => 'FoP Management',
+			AMS_Utils.NGOPTINOUT => 'Financial review opt-in / opt-out'
+		};
+		}
+		set;
+	}
+
 	private static Map<String, Id> oscarNewgenRTMap {
 
 		get{
@@ -216,7 +236,7 @@ public without sharing class AMS_MigrationToolHelper {
 			update contactsToUpdate;
 	}
 
-	private static AMS_Pax_Accreditation_Form__c fillMissingFieldsOnAccreditation(AMS_Pax_Accreditation_Form__c accreditationObj, Id accountId , String processType, String caseId){
+	private static AMS_Pax_Accreditation_Form__c fillMissingFieldsOnAccreditation(AMS_Pax_Accreditation_Form__c accreditationObj, Id accountId , String processType, Case caseIn){
 
 		//	1.	The billing address was not displayed on the case while I see it on the portal online form.
 		//	2.	The account name was not populate either
@@ -227,18 +247,29 @@ public without sharing class AMS_MigrationToolHelper {
 		//	7.	Abbreviated name not populated
 		//	8.	Abbreviated address not populated
 
+		Id caseId = caseIn.Id;
+
+
+		if(processType == AMS_Utils.NEWAE){
+			accreditationObj.Remittance_frequency__c = caseIn.Account.Parent.Remittance_frequency__c;
+			accreditationObj.TradeName__c = caseIn.Account.TradeName__c;
+			accreditationObj.Trade_Name__c = caseIn.Account.TradeName__c;
+		}
+
 		Account acct = null;
 
-		List<Account> directAccountLst = [SELECT Id, ParentId , Abbreviated_address__c,Abbreviated_name__c,Name,BillingState,BillingCity,IATA_ISO_Country__c,Email__c,Fax,Phone,BillingPostalCode,BillingStreet,CASS_Number__c,IATACode__c,Iso_State__c,GDS__c,Company_Type__c,License_Number__c,In_a_Airport__c,VAT_Number__c,Is_your_firm_handling_Dangerous_Goods__c,Location_Class__c,Location_Type__c,Mobile__c,Operation__c,Remittance_frequency__c,ShippingCity,ShippingCountry,IATA_ISO_Shipping_Country__c,IATA_ISO_Shipping_State__c,ShippingPostalCode,ShippingState,ShippingStreet,Short_Name__c,Solicitation_Flag__c,TradeName__c,VAT_Number_2__c,Website from Account where Id = :accountId];
+		List<Account> directAccountLst = [SELECT Id,ANG_Accreditation_Model__c, ParentId , Abbreviated_address__c,Abbreviated_name__c,Name,BillingState,BillingCity,IATA_ISO_Country__c,Email__c,Fax,Phone,BillingPostalCode,BillingStreet,CASS_Number__c,IATACode__c,Iso_State__c,GDS__c,Company_Type__c,License_Number__c,In_a_Airport__c,VAT_Number__c,Is_your_firm_handling_Dangerous_Goods__c,Location_Class__c,Location_Type__c,Mobile__c,Operation__c,Remittance_frequency__c,ShippingCity,ShippingCountry,IATA_ISO_Shipping_Country__c,IATA_ISO_Shipping_State__c,ShippingPostalCode,ShippingState,ShippingStreet,Short_Name__c,Solicitation_Flag__c,TradeName__c,VAT_Number_2__c,Website from Account where Id = :accountId];
 
 		if(directAccountLst.isEmpty())
 			return null;
 
 		Account directAccount = directAccountLst.get(0);
 
-		if((processType != 'NEW.TIDS.1.0') && (directAccount.Location_Type__c == 'BR' || directAccount.Location_Type__c == 'SA')){
+		if((processType != 'NEW.TIDS.1.0') && (directAccount.Location_Type__c == 'BR' || directAccount.Location_Type__c == 'SA' || directAccount.Location_Type__c == 'AE')){
 
-			List<Account> parentAccountLst = [SELECT Id, ParentId , Abbreviated_address__c,Abbreviated_name__c,Name,BillingState,BillingCity,IATA_ISO_Country__c,Email__c,Fax,Phone,BillingPostalCode,BillingStreet,CASS_Number__c,IATACode__c,Iso_State__c,GDS__c,Company_Type__c,License_Number__c,In_a_Airport__c,VAT_Number__c,Is_your_firm_handling_Dangerous_Goods__c,Location_Class__c,Location_Type__c,Mobile__c,Operation__c,Remittance_frequency__c,ShippingCity,ShippingCountry,IATA_ISO_Shipping_Country__c,IATA_ISO_Shipping_State__c,ShippingPostalCode,ShippingState,ShippingStreet,Short_Name__c,Solicitation_Flag__c,TradeName__c,VAT_Number_2__c,Website from Account where Id = :directAccount.ParentId ];
+			List<Account> parentAccountLst = [SELECT Id, ANG_Accreditation_Model__c, ParentId , Abbreviated_address__c,Abbreviated_name__c,Name,BillingState,BillingCity,IATA_ISO_Country__c,Email__c,Fax,Phone,BillingPostalCode,BillingStreet,CASS_Number__c,IATACode__c,Iso_State__c,GDS__c,Company_Type__c,License_Number__c,In_a_Airport__c,VAT_Number__c,Is_your_firm_handling_Dangerous_Goods__c,Location_Class__c,Location_Type__c,Mobile__c,Operation__c,Remittance_frequency__c,ShippingCity,ShippingCountry,IATA_ISO_Shipping_Country__c,IATA_ISO_Shipping_State__c,ShippingPostalCode,ShippingState,ShippingStreet,Short_Name__c,Solicitation_Flag__c,TradeName__c,VAT_Number_2__c,Website from Account where Id = :directAccount.ParentId ];
+
+			System.debug('2parentAccountLst is:'+parentAccountLst);
 
 			if(parentAccountLst.isEmpty())
 				return null;
@@ -285,11 +316,11 @@ public without sharing class AMS_MigrationToolHelper {
 
         AMS_Pax_Accreditation_Form__c accreditationObj = null;
         
-        if(processType != 'VR.1.0' && processType != 'VR.1.0.CA' && processType != 'CER.1.0'){
+        if(!doesNotNeedStagingAreaProcesses.contains(processType)){
 
 			accreditationObj = fetchAccreditation(caseToProcess.Id);
 
-			accreditationObj = fillMissingFieldsOnAccreditation(accreditationObj,caseToProcess.AccountId, processType, caseToProcess.Id);
+			accreditationObj = fillMissingFieldsOnAccreditation(accreditationObj,caseToProcess.AccountId, processType, caseToProcess);
 
 			alignOwners(accreditationObj,caseToProcess);
 
@@ -313,7 +344,10 @@ public without sharing class AMS_MigrationToolHelper {
 			oscarId = oscar.Id;
 
 			caseToProcess.OSCAR__c = oscar.Id;
-			
+			caseToProcess.CaseArea__c = 'Accreditation Process';
+			caseToProcess.Reason1__c = newgenCaseReason.get(processType);
+			caseToProcess.Subject = caseToProcess.Reason1__c + ' - ' + caseToProcess.Account.Name;
+
 			update caseToProcess;
 		}
 
@@ -332,6 +366,8 @@ public without sharing class AMS_MigrationToolHelper {
 			accreditationObj.IATACode__c = caseToProcess.Account.IATACode__c;
 
 			update accreditationObj;
+		}else if(processType == AMS_Utils.NEWAE){
+			update accreditationObj;		   
 		}
 
 		return cont;
@@ -374,6 +410,7 @@ public without sharing class AMS_MigrationToolHelper {
 
 	private static AMS_Pax_Accreditation_Form__c fillAccreditation(AMS_Pax_Accreditation_Form__c accreditationObj, Account acct, Account directAccount, String processType, String caseId){
 
+		System.debug('Entering fill Accreditation with values:'+accreditationObj);
 
 		if(processType == 'NEW.SA.1.0'){
 
@@ -444,6 +481,10 @@ public without sharing class AMS_MigrationToolHelper {
 		accreditationObj.VAT_Number_2__c = accreditationObj.VAT_Number_2__c == null ? acct.VAT_Number_2__c : accreditationObj.VAT_Number_2__c;
 		accreditationObj.Website__c = accreditationObj.Website__c == null ? acct.Website : accreditationObj.Website__c;
 
+		if(processType == AMS_Utils.NEWAE){
+			accreditationObj.ANG_Accreditation_type__c = acct.ANG_Accreditation_Model__c;
+		}
+		
 		return accreditationObj;
 	}
 
@@ -486,17 +527,17 @@ public without sharing class AMS_MigrationToolHelper {
 
 		Account acct = null;
 
-		List<Account> directAccountLst = [SELECT Id, ParentId , Abbreviated_address__c,Abbreviated_name__c,Name,BillingState,BillingCity,IATA_ISO_Country__c,Email__c,Fax,Phone,BillingPostalCode,BillingStreet,CASS_Number__c,IATACode__c,Iso_State__c,GDS__c,Company_Type__c,License_Number__c,In_a_Airport__c,VAT_Number__c,Is_your_firm_handling_Dangerous_Goods__c,Location_Class__c,Location_Type__c,Mobile__c,Operation__c,Remittance_frequency__c,ShippingCity,ShippingCountry,IATA_ISO_Shipping_Country__c,IATA_ISO_Shipping_State__c,ShippingPostalCode,ShippingState,ShippingStreet,Short_Name__c,Solicitation_Flag__c,TradeName__c,VAT_Number_2__c,Website from Account where Id = :accountId];
+		List<Account> directAccountLst = [SELECT Id, ParentId , Abbreviated_address__c,Abbreviated_name__c,Name,BillingState,BillingCity,IATA_ISO_Country__c,Email__c,Fax,Phone,BillingPostalCode,BillingStreet,CASS_Number__c,IATACode__c,Iso_State__c,GDS__c,Company_Type__c,License_Number__c,In_a_Airport__c,VAT_Number__c,Is_your_firm_handling_Dangerous_Goods__c,Location_Class__c,Location_Type__c,Mobile__c,Operation__c,Remittance_frequency__c,ShippingCity,ShippingCountry,IATA_ISO_Shipping_Country__c,IATA_ISO_Shipping_State__c,ShippingPostalCode,ShippingState,ShippingStreet,Short_Name__c,Solicitation_Flag__c,TradeName__c,VAT_Number_2__c,Website,ANG_Accreditation_Model__c from Account where Id = :accountId];
 
 		if(directAccountLst.isEmpty())
 			return null;
 
 		Account directAccount = directAccountLst.get(0);
 
-		if( (processType != 'NEW.TIDS.1.0' && processType != 'CORRECTION.1.0' ) && (directAccount.Location_Type__c == 'BR' || directAccount.Location_Type__c == 'SA')){
+		if( (processType != 'NEW.TIDS.1.0' && processType != 'CORRECTION.1.0' ) && (directAccount.Location_Type__c == 'BR' || directAccount.Location_Type__c == 'SA' || directAccount.Location_Type__c == 'AE')){
 
-			List<Account> parentAccountLst = [SELECT Id, ParentId , Abbreviated_address__c,Abbreviated_name__c,Name,BillingState,BillingCity,IATA_ISO_Country__c,Email__c,Fax,Phone,BillingPostalCode,BillingStreet,CASS_Number__c,IATACode__c,Iso_State__c,GDS__c,Company_Type__c,License_Number__c,In_a_Airport__c,VAT_Number__c,Is_your_firm_handling_Dangerous_Goods__c,Location_Class__c,Location_Type__c,Mobile__c,Operation__c,Remittance_frequency__c,ShippingCity,ShippingCountry,IATA_ISO_Shipping_Country__c,IATA_ISO_Shipping_State__c,ShippingPostalCode,ShippingState,ShippingStreet,Short_Name__c,Solicitation_Flag__c,TradeName__c,VAT_Number_2__c,Website from Account where Id = :directAccount.ParentId ];
-
+			List<Account> parentAccountLst = [SELECT Id, ParentId , Abbreviated_address__c,Abbreviated_name__c,Name,BillingState,BillingCity,IATA_ISO_Country__c,Email__c,Fax,Phone,BillingPostalCode,BillingStreet,CASS_Number__c,IATACode__c,Iso_State__c,GDS__c,Company_Type__c,License_Number__c,In_a_Airport__c,VAT_Number__c,Is_your_firm_handling_Dangerous_Goods__c,Location_Class__c,Location_Type__c,Mobile__c,Operation__c,Remittance_frequency__c,ShippingCity,ShippingCountry,IATA_ISO_Shipping_Country__c,IATA_ISO_Shipping_State__c,ShippingPostalCode,ShippingState,ShippingStreet,Short_Name__c,Solicitation_Flag__c,TradeName__c,VAT_Number_2__c,Website,ANG_Accreditation_Model__c from Account where Id = :directAccount.ParentId ];
+		
 			if(parentAccountLst.isEmpty())
 				return null;
 
@@ -510,8 +551,14 @@ public without sharing class AMS_MigrationToolHelper {
 
 		accreditationObj = fillAccreditation(accreditationObj, acct, directAccount, processType, caseId);
 
+		if(processType == AMS_Utils.NEWAE){
+			accreditationObj.Remittance_frequency__c = acct.Remittance_frequency__c;
+			accreditationObj.TradeName__c = acct.TradeName__c;
+			accreditationObj.Trade_Name__c = acct.TradeName__c;
+		}
+	
 		insert accreditationObj;
-
+		
 		return accreditationObj;
 	}
 
@@ -685,11 +732,15 @@ public without sharing class AMS_MigrationToolHelper {
 
 		caseToProcess.RecordTypeId = rtCommCase;
 
+		caseToProcess.CaseArea__c = 'Accreditation Process';
+		caseToProcess.Reason1__c = newgenCaseReason.get(processTypeInput);
+		caseToProcess.Subject = caseToProcess.Reason1__c + ' - ' + caseToProcess.Account.Name;
+
         update caseToProcess;
 
         AMS_Pax_Accreditation_Form__c accreditationObj = null;
 
-		if(processType != 'VR.1.0' && processType != 'VR.1.0.CA' && processType != 'CER.1.0' && processType != AMS_RecordCreatorWebservice.IEP_BANK_ACCOUNT_SETUP){
+		if(!doesNotNeedStagingAreaProcesses.contains(processType) && processType != AMS_RecordCreatorWebservice.IEP_BANK_ACCOUNT_SETUP ){
         
 	        accreditationObj = createAccreditation(caseToProcess.Id,caseToProcess.AccountId,processType);
 
@@ -704,14 +755,20 @@ public without sharing class AMS_MigrationToolHelper {
 
 		}
 
-		if(processType != 'CERTIFICATION.1.0' && processType != 'VR.1.0' && processType != 'VR.1.0.CA' && processType != 'CER.1.0' 
-			&& processType != AMS_RecordCreatorWebservice.IEP_BANK_ACCOUNT_SETUP)
-			List<AMS_Accreditation_Contact__c> contacts = createAccreditationContacts(accreditationObj,caseToProcess.AccountId,processType);
+		if(!doesNotNeedStagingAreaProcesses.contains(processType)  && processType != AMS_RecordCreatorWebservice.IEP_BANK_ACCOUNT_SETUP){
 
+			List<AMS_Accreditation_Contact__c> contacts;
+
+			if(processType == AMS_Utils.NEWAE)
+				contacts = createAccreditationContacts(accreditationObj,caseToProcess.Account.ParentId,processType);
+			else
+				contacts = createAccreditationContacts(accreditationObj,caseToProcess.AccountId,processType);
+		}
+			
 
 		String oscarId = null;
 
-		if(processType != 'VR.1.0' && processType != 'VR.1.0.CA' && processType != 'CER.1.0' && processType != AMS_RecordCreatorWebservice.IEP_BANK_ACCOUNT_SETUP){
+		if(!doesNotNeedStagingAreaProcesses.contains(processType) && processType != AMS_RecordCreatorWebservice.IEP_BANK_ACCOUNT_SETUP){
 
 			oscarId = AMS_RecordCreatorWebservice.createAccreditation(caseToProcess.AccountId, accreditationObj.Id, processType, caseToProcess.Id);
 
@@ -808,7 +865,7 @@ public without sharing class AMS_MigrationToolHelper {
 			return 'The process only starts if the account has the proper process / location class.';
 		
 
-		if((acct.Location_Type__c == 'BR' || acct.Location_Type__c == 'SA' ) && acct.ParentId == null)
+		if((acct.Location_Type__c == 'BR' || acct.Location_Type__c == 'SA' || acct.Location_Type__c == 'AE') && acct.ParentId == null)
 			return 'The Account does not have a parent Id.';
 
 		return null;

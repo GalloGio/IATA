@@ -10,6 +10,7 @@ public with sharing class IEC_HomeController extends IEC_PageController
 
 	public PageReference onLoadAction()
 	{
+
         //-- New Releases
         newReleases = new Map<String, List<EComProduct_DTO>>();
         List<EComProduct_DTO> lst_releases = Product_Sel.getEComProduct(null, false, ' IsNewRelease__c = true ', 'LastModifiedDate') ;
