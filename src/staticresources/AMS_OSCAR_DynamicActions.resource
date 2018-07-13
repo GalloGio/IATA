@@ -239,6 +239,26 @@ var dyn_functions = {
         sforce.console.getEnclosingPrimaryTabId(openSubtab);
     
     },
+    //FM AMSU-1
+	checkAccountHierarchyCorrection:function (arg) {
+
+            var changeTab = function(result){
+                /*if(result.success == true){
+                    alert('Tab opened sucessfully');
+                }*/
+            };
+
+            // Use the results primary tab id and open a new subtab
+            var openSubtab = function(result)
+            {            
+                sforce.console.openSubtab(result.id, '/apex/AMS_AccountHierarchySelection?Id='+arg, true, 'Account Hierarchy Selection', null, changeTab);    
+            };
+
+            //if(confirm('Selected corrections will be applied to the choosen agencies including legal name, address if changed, would you still like to proceed ?')){
+                sforce.console.getEnclosingPrimaryTabId(openSubtab);
+            //}
+       
+		},
     ANG_checkAccountHierarchy:function (arg) {
         var changeTab = function(result){
             /*if(result.success == true){
@@ -542,7 +562,7 @@ var dyn_functions = {
 
     forecast:function (arg) {
         
-        var c = sforce.connection.query("SELECT Id FROM Case where OSCAR__c ='" + arg + "' AND ( ParentId = null or Parent.RecordType.Name != 'OSCAR Communication' ) LIMIT 1").getArray("records")[0];
+        var c = sforce.connection.query("SELECT Id FROM Case where OSCAR__c ='" + arg + "' AND ( ParentId = null or Parent.RecordType.Name != 'OSCAR Communication' or Parent.Reason1__c = 'Annual revalidation') LIMIT 1").getArray("records")[0];
 
         var w = 800;
         var h = 200;

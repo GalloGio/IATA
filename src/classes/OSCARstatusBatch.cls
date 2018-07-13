@@ -28,7 +28,7 @@ global class OSCARstatusBatch implements Database.Batchable<sObject> {
 					listToUpdate.add(oscarToUpdate);
 				}
 
-			} else if (oscarToUpdate.Recordtype.Developername == 'Change' && oscarToUpdate.Change_effective_as_of__c != null) {
+			} else if ((oscarToUpdate.Recordtype.Developername == 'Change' || oscarToUpdate.Recordtype.Developername == AMS_Utils.RECTYPE_NGCHANGES) && oscarToUpdate.Change_effective_as_of__c != null) {
 				if (oscarToUpdate.Change_effective_as_of__c == System.today()) {
 					oscarToUpdate.status__c = 'Open';
 					listToUpdate.add(oscarToUpdate);

@@ -3,6 +3,20 @@
     <doesSendEmailToMembers>false</doesSendEmailToMembers>
     <email>yulj@iata.org</email>
     <name>China &amp; North Asia PwC</name>
+    <queueMembers>
+        <roleAndSubordinatesInternal>
+            <roleAndSubordinateInternal>ChinaNAsiaAgencyManagementMgrI</roleAndSubordinateInternal>
+        </roleAndSubordinatesInternal>
+        <roles>
+            <role>China_N_Asia_Agency_Risk_Management_Staff</role>
+        </roles>
+        <users>
+            <user>wangc@iata.org</user>
+            <user>xuj@iata.org</user>
+            <user>yulj@iata.org</user>
+            <user>jiangxu@iata.org</user>
+        </users>
+    </queueMembers>
     <queueSobject>
         <sobjectType>Case</sobjectType>
     </queueSobject>

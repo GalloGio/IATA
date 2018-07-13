@@ -83,11 +83,10 @@ two record types:
         <fullName>Approving_Manager_s_Email__c</fullName>
         <externalId>false</externalId>
         <label>Approving Manager&apos;s Email</label>
-        <length>50</length>
         <required>false</required>
         <trackHistory>false</trackHistory>
         <trackTrending>false</trackTrending>
-        <type>Text</type>
+        <type>Email</type>
         <unique>false</unique>
     </fields>
     <fields>
@@ -299,11 +298,10 @@ two record types:
         <fullName>Email__c</fullName>
         <externalId>false</externalId>
         <label>Email</label>
-        <length>100</length>
         <required>false</required>
         <trackHistory>true</trackHistory>
         <trackTrending>false</trackTrending>
-        <type>Text</type>
+        <type>Email</type>
         <unique>false</unique>
     </fields>
     <fields>
@@ -320,7 +318,7 @@ two record types:
     <fields>
         <fullName>FirstName__c</fullName>
         <externalId>false</externalId>
-        <label>FirstName</label>
+        <label>First Name</label>
         <length>50</length>
         <required>false</required>
         <trackHistory>false</trackHistory>
@@ -345,12 +343,25 @@ two record types:
         <fullName>Gender__c</fullName>
         <externalId>false</externalId>
         <label>Gender</label>
-        <length>10</length>
         <required>false</required>
         <trackHistory>false</trackHistory>
         <trackTrending>false</trackTrending>
-        <type>Text</type>
-        <unique>false</unique>
+        <type>Picklist</type>
+        <valueSet>
+            <valueSetDefinition>
+                <sorted>false</sorted>
+                <value>
+                    <fullName>FEMALE</fullName>
+                    <default>false</default>
+                    <label>FEMALE</label>
+                </value>
+                <value>
+                    <fullName>MALE</fullName>
+                    <default>false</default>
+                    <label>Male</label>
+                </value>
+            </valueSetDefinition>
+        </valueSet>
     </fields>
     <fields>
         <fullName>HourWorkedCode__c</fullName>
@@ -461,15 +472,15 @@ IF(TODAY()&lt;= Valid_To_Date__c, TRUE,FALSE)
         <description>CAC Web Service Response for IDCard App</description>
         <externalId>false</externalId>
         <formula>&quot;\&quot;reason\&quot;:\&quot;&quot;+ IF (Json_Is_Active__c, &quot;VALID&quot;, &quot;INVALID&quot;) + &quot;\&quot;,&quot;+ 
-&quot;\&quot;cardholder-first-name\&quot;:\&quot;&quot;+ FirstName__c + &quot;\&quot;,&quot;+  
-&quot;\&quot;cardholder-last-name\&quot;:\&quot;&quot;+ LastName__c + &quot;\&quot;,&quot;+   
+&quot;\&quot;cardholder-first-name\&quot;:\&quot;&quot;+ FirstName__c + &quot;\&quot;,&quot;+ 
+&quot;\&quot;cardholder-last-name\&quot;:\&quot;&quot;+ LastName__c + &quot;\&quot;,&quot;+ 
 &quot;\&quot;cardholder-idcard-name\&quot;:\&quot;&quot;+ Name_on_ID_Card__c + &quot;\&quot;,&quot;+ 
 &quot;\&quot;card-expiry-date\&quot;:\&quot;&quot;+ TEXT(Month(Valid_To_Date__c))+ &quot;-&quot; +TEXT(Day(Valid_To_Date__c))+ &quot;-&quot; +TEXT(Year(Valid_To_Date__c)) + &quot;\&quot;,&quot;+ 
 &quot;\&quot;agency-code\&quot;:\&quot;&quot;+Agency_IATA_Code__c + &quot;\&quot;,&quot;+ 
 &quot;\&quot;agency-name\&quot;:\&quot;&quot;+Agency_Name__c + &quot;\&quot;,&quot;+ 
 &quot;\&quot;cardholder-photo\&quot;:\&quot;&quot;+Photo__c + &quot;\&quot;,&quot;+ 
 &quot;\&quot;card-type\&quot;:\&quot;&quot;+TEXT(Type_of_ID_Card__c) + &quot;\&quot;,&quot;+ 
-&quot;\&quot;cardholder-gender\&quot;:\&quot;&quot;+Gender__c + &quot;\&quot;,&quot;+ 
+&quot;\&quot;cardholder-gender\&quot;:\&quot;&quot;+TEXT(Gender__c) + &quot;\&quot;,&quot;+ 
 &quot;\&quot;weekly-hours\&quot;:\&quot;&quot;+Hours_per_week__c + &quot;\&quot;,&quot;+ 
 &quot;\&quot;cardholder-duties\&quot;:\&quot;&quot;+Duties__c + &quot;\&quot;,&quot;+ 
 &quot;\&quot;cardholder-position\&quot;:\&quot;&quot;+Position__c + &quot;\&quot;,&quot;+ 
@@ -521,7 +532,7 @@ IF(TODAY()&lt;= Valid_To_Date__c, TRUE,FALSE)
     <fields>
         <fullName>LastName__c</fullName>
         <externalId>false</externalId>
-        <label>LastName</label>
+        <label>Last Name</label>
         <length>50</length>
         <required>false</required>
         <trackHistory>false</trackHistory>
@@ -988,7 +999,8 @@ IF(TODAY()&lt;= Valid_To_Date__c, TRUE,FALSE)
         <columns>CREATEDBY_USER</columns>
         <columns>CREATED_DATE</columns>
         <columns>LAST_UPDATE</columns>
-        <columns>Nature_of_ID_Card__c</columns>
+        <columns>Agency_Name__c</columns>
+        <columns>Agency_IATA_Code__c</columns>
         <filterScope>Everything</filterScope>
         <filters>
             <field>Card_Status__c</field>
@@ -1126,6 +1138,17 @@ IF(TODAY()&lt;= Valid_To_Date__c, TRUE,FALSE)
             </values>
         </picklistValues>
         <picklistValues>
+            <picklist>Gender__c</picklist>
+            <values>
+                <fullName>FEMALE</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>MALE</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
             <picklist>Nature_of_ID_Card__c</picklist>
             <values>
                 <fullName>New</fullName>
@@ -1232,6 +1255,17 @@ IF(TODAY()&lt;= Valid_To_Date__c, TRUE,FALSE)
             </values>
             <values>
                 <fullName>Valid ID Card</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Gender__c</picklist>
+            <values>
+                <fullName>FEMALE</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>MALE</fullName>
                 <default>false</default>
             </values>
         </picklistValues>
