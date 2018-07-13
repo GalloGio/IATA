@@ -498,7 +498,7 @@ public with sharing class AMS_OSCAR_Case_Detail_Controller {
                     }
                 }
 
-                if(accounts.size() == 0){
+                if(accounts.size() < 2){
                     isSingleAccountHierarchy = true;
                 }
 
