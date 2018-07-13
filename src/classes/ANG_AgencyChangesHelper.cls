@@ -1519,7 +1519,7 @@ public with sharing class ANG_AgencyChangesHelper {
 
 			for (Account acc: accountsInvolved){
 
-				prevOptOut = String.valueOf(changesContainer.accountsMap.get(acc.Id).ANG_FA_Opt_out__c);
+				prevOptOut = String.valueOf(acc.ANG_FA_Opt_out__c);
 
                 if (changesContainer.accountsMap.keySet().contains(acc.Id)){
                		changesContainer.accountsMap.get(acc.Id).ANG_FA_Opt_out__c = valueToAgency;
