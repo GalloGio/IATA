@@ -43,6 +43,10 @@
             </layoutItems>
             <layoutItems>
                 <behavior>Edit</behavior>
+                <field>CNS_Account__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
                 <field>Link_agent_name__c</field>
             </layoutItems>
             <layoutItems>
@@ -692,6 +696,9 @@
     </relatedLists>
     <relatedLists>
         <fields>NAME</fields>
+        <fields>Integration_System__c</fields>
+        <fields>Update_Type__c</fields>
+        <fields>Status__c</fields>
         <relatedList>AMS_Agency_Updates__c.Account__c</relatedList>
     </relatedLists>
     <relatedLists>

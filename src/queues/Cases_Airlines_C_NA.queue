@@ -3,6 +3,11 @@
     <doesSendEmailToMembers>false</doesSendEmailToMembers>
     <email>noreply@iata.org</email>
     <name>Cases Airlines - C&amp;NA</name>
+    <queueMembers>
+        <publicGroups>
+            <publicGroup>Hub_BJS_Key_controls_CS</publicGroup>
+        </publicGroups>
+    </queueMembers>
     <queueSobject>
         <sobjectType>Case</sobjectType>
     </queueSobject>

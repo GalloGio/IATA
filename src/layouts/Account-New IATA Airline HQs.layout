@@ -5,9 +5,6 @@
     <customButtons>Chatter_Broadcast_Tool</customButtons>
     <customButtons>Key_Account_Plan</customButtons>
     <customButtons>Web_App_View</customButtons>
-    <excludeButtons>DataDotComAccountInsights</excludeButtons>
-    <excludeButtons>DataDotComClean</excludeButtons>
-    <excludeButtons>DataDotComCompanyHierarchy</excludeButtons>
     <excludeButtons>DisableCustomerPortalAccount</excludeButtons>
     <excludeButtons>DisablePartnerPortalAccount</excludeButtons>
     <excludeButtons>IncludeOffline</excludeButtons>
@@ -706,7 +703,7 @@
         <label>Services Rendered</label>
         <layoutColumns>
             <layoutItems>
-                <height>200</height>
+                <height>300</height>
                 <page>Airline_Services_Rendered_Account</page>
                 <showLabel>false</showLabel>
                 <showScrollbars>true</showScrollbars>
@@ -885,11 +882,23 @@
     <miniLayout>
         <fields>Name</fields>
         <fields>ParentId</fields>
+        <fields>Membership_status__c</fields>
+        <fields>ICH_Member__c</fields>
+        <fields>ACH_Member__c</fields>
+        <fields>ICCS_Membership_Status__c</fields>
+        <fields>Due_Diligence_Status__c</fields>
+        <fields>Due_Diligence_Remarks__c</fields>
+        <fields>Airline_BSP_Participations__c</fields>
+        <fields>Airline_CASS_Participations__c</fields>
+        <fields>IATA_ISO_Country__c</fields>
         <fields>EF_SIS_Designator__c</fields>
         <fields>EF_SIS_Code__c</fields>
         <fields>SIS_ID__c</fields>
         <fields>SIS_Status__c</fields>
         <fields>SIS_Sub_Status__c</fields>
+        <fields>BSP_CI_Valid__c</fields>
+        <fields>BSP_FOC_Valid__c</fields>
+        <fields>CASS_CI_Valid__c</fields>
     </miniLayout>
     <relatedLists>
         <fields>NAME</fields>

@@ -91,5 +91,21 @@
         <type>Checkbox</type>
     </fields>
     <label>ISSP Case List View</label>
+    <listViews>
+        <fullName>ALL</fullName>
+        <columns>NAME</columns>
+        <columns>Field_Set_API_Name__c</columns>
+        <columns>Label_API_name__c</columns>
+        <columns>isAdmin__c</columns>
+        <columns>SOQL_Filter__c</columns>
+        <columns>Profiles_Id__c</columns>
+        <columns>Permission_set__c</columns>
+        <filterScope>Everything</filterScope>
+        <label>ALL</label>
+        <language>en_US</language>
+        <sharedTo>
+            <allInternalUsers></allInternalUsers>
+        </sharedTo>
+    </listViews>
     <visibility>Public</visibility>
 </CustomObject>

@@ -734,7 +734,7 @@ background-color:#428bca;
         </li>
         <!-- * FM 31-07-2017 - AMSU-26 -->
         <li>
-    <a href="/ISSP_CertificationCases?MainNav=Services&subNav=TrainedStaff&mid=M4S7{!if(communityName=='CNS','&CommunityName='+communityName,'')}" id="M4S7" >
+    <a href="/ISSP_CertificationCases?MainNav=Services&subNav=TrainedStaff&mid=M4S7{!if(communityName=='CNS','&CommunityName='+communityName,'')}" id="M4S7" style="display:{!if(isCargoDGR,'','none')}"  >
                 <!--{-- ! $Label.ISSP_Manage_Services } - CREATE LABEL -->  
                 Trained Staff Certification 
                 </a>

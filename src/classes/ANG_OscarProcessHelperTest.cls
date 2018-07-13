@@ -99,6 +99,7 @@ private class ANG_OscarProcessHelperTest {
 		oscar.STEP6__c = AMS_Utils.PASSED;
 		oscar.AMS_Online_Accreditation__c = theAccreditation.Id;
 		oscar.Is_PCI_compliant__c = 'Yes';
+		oscar.ANG_PCI_compliance_expiry_date__c = Date.today();
         oscar.Oscar_Communication_Case_Id__c = oscarCase.Id;
 		update oscar;
 
@@ -121,11 +122,13 @@ private class ANG_OscarProcessHelperTest {
             ),
             new AMS_ChangeCodes__c(
                 Name = 'FPR', Change_Code__c = 'FPR', Integration_RecId__c = 'C',Bulletin_Memo_Text__c = 'Agent is restricted from using Cash form of payment method due to <SIDRA Lite Reason>.'
+            ),
+            new AMS_ChangeCodes__c(
+                Name = 'NEW-AMS', Change_Code__c = 'NEW', Integration_RecId__c = 'A'
             )
         };
 
-        insert changeCodeList;
-		
+        insert changeCodeList;		
 	}
 
 	@isTest static void testIATACodeGenerationOKNoDueDiligenceCase() {
@@ -143,7 +146,7 @@ private class ANG_OscarProcessHelperTest {
 
 		ANG_OscarProcessHelper.checkSFDCLimits();
 
-		System.assertEquals('0',result[0]);
+		System.assertEquals('0',result[0], result[1]);
 
 		oscar = [Select Id, Flag_IATACode__c, STEP10__c, Flag_Data_to_Account__c, Flag_Data_to_SAPECC__c FROM AMS_OSCAR__c LIMIT 1];
 
@@ -174,7 +177,7 @@ private class ANG_OscarProcessHelperTest {
 
 		ANG_OscarProcessHelper.checkSFDCLimits();
 
-		System.assertEquals('0',result[0]);
+		System.assertEquals('0',result[0], result[1]);
 		System.assertEquals('0',result[2]); // due diligence was created
 
 		oscar = [Select Id, Flag_IATACode__c, STEP10__c, Flag_Data_to_Account__c, Flag_Data_to_SAPECC__c FROM AMS_OSCAR__c LIMIT 1];
@@ -206,7 +209,7 @@ private class ANG_OscarProcessHelperTest {
 		system.debug('testIATACodeGenerationOKTwice Result code is:'+result[0]);
 		system.debug('testIATACodeGenerationOKTwice Result message is:'+result[1]);
 
-		System.assertEquals('0',result[0]);
+		System.assertEquals('0',result[0], result[1]);
 
 		ANG_OscarProcessHelper.checkSFDCLimits();
 
@@ -217,7 +220,7 @@ private class ANG_OscarProcessHelperTest {
 
 		ANG_OscarProcessHelper.checkSFDCLimits();
 
-		System.assertEquals('0',result[0]);
+		System.assertEquals('0',result[0], result[1]);
 
 		oscar = [Select Id, Flag_IATACode__c, STEP10__c, Flag_Data_to_Account__c, Flag_Data_to_SAPECC__c FROM AMS_OSCAR__c LIMIT 1];
 
@@ -251,7 +254,7 @@ private class ANG_OscarProcessHelperTest {
 
 		ANG_OscarProcessHelper.checkSFDCLimits();
 
-		System.assertEquals('0',result[0]);
+		System.assertEquals('0',result[0], result[1]);
 
 		oscar = [Select Id, Flag_IATACode__c, STEP10__c, Flag_Data_to_Account__c, Flag_Data_to_SAPECC__c FROM AMS_OSCAR__c LIMIT 1];
 
@@ -281,7 +284,7 @@ private class ANG_OscarProcessHelperTest {
 
 		ANG_OscarProcessHelper.checkSFDCLimits();
 
-		System.assertEquals('0',result[0]);
+		System.assertEquals('0',result[0], result[1]);
 
 		oscar = [Select Id, Flag_IATACode__c, STEP10__c, Flag_Data_to_Account__c, Flag_Data_to_SAPECC__c FROM AMS_OSCAR__c LIMIT 1];
 
@@ -319,7 +322,7 @@ private class ANG_OscarProcessHelperTest {
 
 		ANG_OscarProcessHelper.checkSFDCLimits();
 
-		System.assertEquals('0',result[0]);
+		System.assertEquals('0',result[0], result[1]);
 
 		oscar = [Select Id, Flag_IATACode__c, STEP10__c, Flag_Data_to_Account__c, Flag_Data_to_SAPECC__c FROM AMS_OSCAR__c LIMIT 1];
 
@@ -354,7 +357,7 @@ private class ANG_OscarProcessHelperTest {
 
 		ANG_OscarProcessHelper.checkSFDCLimits();
 
-		System.assertEquals('0',result[0]);
+		System.assertEquals('0',result[0], result[1]);
 
 		oscar = [Select Id, Flag_IATACode__c, STEP10__c, Flag_Data_to_Account__c, Flag_Data_to_SAPECC__c FROM AMS_OSCAR__c LIMIT 1];
 
@@ -529,9 +532,130 @@ private class ANG_OscarProcessHelperTest {
         Case c = [Select Id from Case LIMIT 1];
 
 		ANG_OscarProcessHelper.createFOPOscar(a.Id, c.Id);
+		ANG_OscarProcessHelper.fakemethod();
 
         Test.stopTest();
 	 }
+
+	@isTest static void testAnnualRevalidation() {
+
+		AMS_ChangeCodes__c configCC = new AMS_ChangeCodes__c (Name = 'ARV', Change_code__c = 'ARV', Bulletin_Memo_Text__c = 'Test Annual Revalidation Non-Compliance', Published_in_bulletin__c = true, Integration_RecId__c = 'c');
+
+		insert configCC;
+
+		Account a = [select Abbreviated_address__c, Abbreviated_name__c,
+						BillingState,
+						BillingCity,
+						Email__c,
+						Fax,
+						Phone,
+						BillingPostalCode,
+						BillingStreet,
+						CASS_Number__c,
+						BillingCountry,
+						Name,
+						Region_formula__c,
+						ANG_Accreditation_Model__c,
+						Id,
+						Iata_iso_country__c,
+						IATACode__c,
+						Iso_State__c,
+						GDS__c,
+						Company_Type__c,
+						License_Number__c,
+						VAT_Number__c,
+						Is_your_firm_handling_Dangerous_Goods__c,
+						Location_Class__c,
+						Location_Type__c,
+						Mobile__c,
+						Operation__c,
+						Remittance_frequency__c,
+						ShippingCity,
+						ShippingCountry,
+						IATA_ISO_Shipping_Country__c,
+						IATA_ISO_Shipping_State__c,
+						ShippingPostalCode,
+						ShippingState,
+						ShippingStreet,
+						Short_Name__c,
+						Solicitation_Flag__c,
+						TradeName__c,
+						VAT_Number_2__c,
+						Website from account limit 1];
+
+		a.IATACode__c = '7463812';
+		a.Reason__c = '91-ACCREDITED-MEET-STANDARDS';
+
+		update a;
+
+		a = [select Abbreviated_address__c, Abbreviated_name__c,
+						BillingState,
+						BillingCity,
+						Email__c,
+						Fax,
+						Phone,
+						BillingPostalCode,
+						BillingStreet,
+						CASS_Number__c,
+						BillingCountry,
+						Name,
+						Region_formula__c,
+						ANG_Accreditation_Model__c,
+						Id,
+						Iata_iso_country__c,
+						IATACode__c,
+						Iso_State__c,
+						GDS__c,
+						Company_Type__c,
+						License_Number__c,
+						VAT_Number__c,
+						Is_your_firm_handling_Dangerous_Goods__c,
+						Location_Class__c,
+						Location_Type__c,
+						Mobile__c,
+						Operation__c,
+						Remittance_frequency__c,
+						ShippingCity,
+						ShippingCountry,
+						IATA_ISO_Shipping_Country__c,
+						IATA_ISO_Shipping_State__c,
+						ShippingPostalCode,
+						ShippingState,
+						ShippingStreet,
+						Short_Name__c,
+						Solicitation_Flag__c,
+						TradeName__c,
+						VAT_Number_2__c,
+						Reason__c,
+						Website from account limit 1];
+        
+		List<Contact> conts = [select Id, Name, Email, Preferred_Language__c, BSP_CASS_Payment_contact__c, Financial_Assessment_Contact__c, User_Portal_Status__c from contact where accountid =:a.id];
+		
+		Test.startTest();
+
+		// Test Oscar Creation
+		String caseId = ANG_OscarProcessHelper.createRevalidationOscar(a, conts, true);
+
+		List<AMS_Oscar__c> oscars = [select id, step43__c, step44__c, (Select id from Cases__r) from AMS_Oscar__c where Account__c = :a.Id and Process__c = :AMS_Utils.NGANNUALREVAL];
+
+		System.assertEquals(1, oscars.size(), '1 Oscar record should to be created for this account');
+		System.assertEquals(1, oscars[0].cases__r.size(), '1 case record should to be created for the account');
+		
+		// test Change Code and SIDRA Lite creation
+		oscars[0].step43__c = 'Failed';
+		oscars[0].step44__c = 'Failed';
+
+		update oscars;
+
+		System.assertEquals(1, [Select id from Agency_Applied_Change_code__c where change_code__c = 'ARV'].size(), '1 ARV change code should be created');
+
+		AMS_OSCAR_Webservice.createSIDRALite(oscars[0].Id, '44',true);
+
+		System.assertEquals(1, [Select id from Case where SIDRA_lite_reason__c = 'Annual Revalidation Non-Compliance' and RecordType.Name= 'SIDRA Lite'].size(), '1 Sidra Lite Case should be created');
+
+		Test.stopTest();
+
+	}
 
 	 
 }
