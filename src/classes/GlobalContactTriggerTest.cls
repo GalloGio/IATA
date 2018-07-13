@@ -454,29 +454,34 @@ private class GlobalContactTriggerTest {
         con.status__c = 'Inactive';
         con.Kavi_User__c = testUser.id;
 
+        Test.startTest();
+        list<Portal_Applications__c> listApps = new list<Portal_Applications__c>();
         Portal_Applications__c PA = new Portal_Applications__c(
             Name = 'Test'
         );
-        insert PA;
+        listApps.add(PA);
 
         Portal_Applications__c PA2 = new Portal_Applications__c(
             Name = 'Standards Setting Workspace'
         );
-        insert PA2;
+        listApps.add(PA2);
+        insert listApps;
 
+        list<Portal_Application_Right__c> listAppRights = new list<Portal_Application_Right__c>();
         Portal_Application_Right__c PAR = new Portal_Application_Right__c(
             Contact__c = con.Id,
             Portal_Application__c = PA.id,
             Right__c = 'Access Granted'
         );
-        insert PAR;
+        listAppRights .add(PAR);
 
         Portal_Application_Right__c PAR2 = new Portal_Application_Right__c(
             Contact__c = con.Id,
             Portal_Application__c = PA2.id,
             Right__c = 'Access Granted'
         );
-        insert PAR2;
+        listAppRights .add(PAR2);
+        insert listAppRights ;
 
         try{
             update con;
@@ -485,6 +490,7 @@ private class GlobalContactTriggerTest {
             Boolean expectedExceptionThrown =  e.getMessage().contains('subscription') ? true : false;
             //System.AssertEquals(expectedExceptionThrown, true);
         }
+        Test.stopTest();
     }
 
     static testMethod void triggerTestAdd5() {
