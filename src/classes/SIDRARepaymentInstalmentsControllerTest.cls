@@ -32,7 +32,6 @@ private class SIDRARepaymentInstalmentsControllerTest {
         controller.AddNewPaymentInstalment(); 
         
         controller.Edit(); 
-        controller.Cancel();
         controller.Save();
         controller.DeleteRpi();
         

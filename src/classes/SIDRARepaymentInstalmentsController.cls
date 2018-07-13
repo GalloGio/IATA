@@ -33,34 +33,48 @@ public with sharing class SIDRARepaymentInstalmentsController {
     
     public SIDRARepaymentInstalmentsController (final ApexPages.StandardController controller) {
         if (controller.getRecord().Id != null ) {
-            cs = [SELECT Id, Currency__c FROM Case WHERE Id = :controller.getRecord().Id];
+            this.cs = [SELECT Id, Currency__c FROM Case WHERE Id = :controller.getRecord().Id];
+            this.lstRepaymentInstalments = getListInstalments(this.cs.Id);
+            this.isEditMode = ApexPages.currentPage().getParameters().get('isEditMode') == 'true';
             
-            // Get the repayment instalments related to this case
-            lstRepaymentInstalments = [SELECT Id, Currency__c, Amount_Expected__c, Payment_Status__c, Due_Date__c, Amount_Received__c, Date_received__c, CreatedDate 
-                                        FROM Case_Detail__c 
-                                        WHERE Case__c = :cs.Id
-                                        AND RecordTypeId = :RT_REPAYMENT_INSTALMENT.Id
-                                        ORDER BY CreatedDate ASC, Id ASC];
-            
-            isEditMode = ApexPages.currentPage().getParameters().get('isEditMode') == 'true' ? true : false;
         } else {
             lstRepaymentInstalments = new list<Case_Detail__c>();
             ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.ERROR,'Invalid Case ID'));
         }
     }
     
+    /**
+        Get the repayment instalments related to this case
+    **/
+    private static list<Case_Detail__c> getListInstalments(Id caseId) {
+        return [
+            SELECT Id, Currency__c, Amount_Expected__c, Payment_Status__c, Due_Date__c, Amount_Received__c, Date_received__c, CreatedDate 
+            FROM Case_Detail__c 
+            WHERE Case__c = :caseId
+            AND RecordTypeId = :RT_REPAYMENT_INSTALMENT.Id
+            ORDER BY CreatedDate ASC, Id ASC];
+    }
     
+    /**
+        Go to edit mode
+    **/
     public void Edit () {
-        isEditMode = true;
+        this.isEditMode = true;
     }
     
+    /**
+        Goes back to not edit mode
+    **/
     public PageReference Cancel () {
-        PageReference curPage = ApexPages.currentPage();
-        curPage.getParameters().put('isEditMode','false');
-        curPage.setRedirect(true);
-        return curPage;
+        this.lstRepaymentInstalments = getListInstalments(this.cs.Id);
+        this.isEditMode = false;
+        return null;
     }
-        
+    
+    /**
+        Save current repayment records, updating the status field
+        returns to page in edit mode
+    **/
     public PageReference Save () {
         if (netBalance <= 0) {
             for (Case_Detail__c ri : lstRepaymentInstalments) {
@@ -72,65 +86,52 @@ public with sharing class SIDRARepaymentInstalmentsController {
         
         try {
             update lstRepaymentInstalments;
+            this.isEditMode = false;
             
-            PageReference curPage = ApexPages.currentPage();
-            curPage.getParameters().put('isEditMode','false');
-            curPage.setRedirect(true);
-            return curPage;
         } catch (DMLException e) {
             ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.ERROR,e.getDmlMessage(0)));
-            return null;
         }
-        
+        return null;
     }
     
+    /**
+        Deletes selected repayment record
+    **/
     public void DeleteRpi () {
-        if ( rpiIdToDelete == null ) {
+        try {
+            delete new Case_Detail__c(Id=this.rpiIdToDelete);
+            this.lstRepaymentInstalments = getListInstalments(this.cs.Id);
+        } catch (Exception e) {
             ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.ERROR,'ERROR! Invalid Repayment Instalment ID. The operation could not be completed, no record has been deleted.'));
         }
-        for (Integer i=0;i<lstRepaymentInstalments.size();i++) {
-            Case_Detail__c rpi = lstRepaymentInstalments.get(i);
-            if (rpi.Id == this.rpiIdToDelete) {
-                lstRepaymentInstalments.remove(i);
-                delete rpi;
-                return;
-            }
-        }
     }
     
-    public PageReference AddNewPaymentInstalment () {
+    /**
+        Add repaymnet records to current case, first time 6 records,
+        and one more each subsequent time
+    **/
+    public void AddNewPaymentInstalment () {
         try {
             list<Case_Detail__c> lstRPIToInsert = new list<Case_Detail__c>();
             
-            if (lstRepaymentInstalments.isEmpty()) {
-                for (Integer i = 0; i < REPAYMENT_INSTALMENTS_QUANTITY; i++) {
-                    Case_Detail__c rpi = new Case_Detail__c(
-                        Case__c = cs.Id,
-                        RecordTypeId = RT_REPAYMENT_INSTALMENT.Id,
-                        Amount_Expected__c = 0,
-                        Due_Date__c = Date.today().addMonths(i+1)
-                    );
-                    lstRPIToInsert.add(rpi);
-                }
-            } else {
+            //if there are no instalment by default we create 6, but if thery 
+            //were already created then add 1 more
+            Integer quantityToCreate = lstRepaymentInstalments.isEmpty()? REPAYMENT_INSTALMENTS_QUANTITY: 1;
+            for (Integer i = 1; i <= quantityToCreate; i++) {
                 Case_Detail__c rpi = new Case_Detail__c(
                     Case__c = cs.Id,
                     RecordTypeId = RT_REPAYMENT_INSTALMENT.Id,
                     Amount_Expected__c = 0,
-                    Due_Date__c = Date.today().addMonths(1)
+                    Due_Date__c = Date.today().addMonths(i+1)
                 );
                 lstRPIToInsert.add(rpi);
             }
-            
             insert lstRPIToInsert;
+            this.lstRepaymentInstalments = getListInstalments(this.cs.Id);
+            this.isEditMode = true;
             
-            PageReference curPage = ApexPages.currentPage();
-            curPage.getParameters().put('isEditMode','true');
-            curPage.setRedirect(true);
-            return curPage;
         } catch (Exception e) {
             ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.ERROR,e.getMessage()));
-            return null;
         }
     }
 }
