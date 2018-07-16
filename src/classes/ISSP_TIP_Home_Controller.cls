@@ -196,9 +196,7 @@ public without sharing class ISSP_TIP_Home_Controller {
         fetchHQAccountDetails();
 
         btnEnabled = (account.recordtypeid == TIP_Utils.STANDARD_ACCOUNT_RECORD_TYPE_ID && account.category__c=='Payment Provider');
-        isPaymentProvider = (account.recordtypeid == TIP_Utils.PAYMENT_PROVIDER_RECORD_TYPE_ID);
-
-
+        //isPaymentProvider = (account.recordtypeid == TIP_Utils.PAYMENT_PROVIDER_RECORD_TYPE_ID);
     }
 
     public List<Case> getCases(){
@@ -487,10 +485,17 @@ public without sharing class ISSP_TIP_Home_Controller {
                                    LIMIT 1
                     ];
 		
+		set<string> setServiceProvided = new set<string>();
+		
 		if(Account!=null){
+			if(string.isNotBlank(Account.Service_Provided__c)){
+				setServiceProvided.addAll(Account.Service_Provided__c.split(';'));
+			}
 			if(Account.Account_Roles__r != null)
 				TheAccountRole = Account.Account_Roles__r;
 		}
+		
+		isPaymentProvider = setServiceProvided.contains(TIP_Utils.ACCOUNT_SERVICE_PROVIDED_PAYMENT_PROVIDER);
     }
     
     //Method invoked by Action on visualforce page
