@@ -153,6 +153,8 @@ public without sharing class ISSP_TIP_Home_Controller {
 	User user = DAL_ISSP.getUser(Userinfo.getUserId());
       
         try {
+        	CreateAccountRole(user);
+        	
             Portal_Application_Right__c appRight = [
                 Select Id, Terms_Acceptance__c, Terms_Acceptance_Date__c,Right__c
                 From Portal_Application_Right__c
@@ -473,35 +475,42 @@ public without sharing class ISSP_TIP_Home_Controller {
                         ShippingPostalCode, ShippingCountry, VAT_Number__c, Short_Name__c, Location_Class__c, IATA_ISO_Country__c,TIP_Documents__c,
                         Iso_State__c, Abbreviated_name__c, Abbreviated_Address__c, Remittance_frequency__c, Solicitation_Flag__c,
                         VAT_Number_2__c, CASS_Number__c,Company_Type__c,RecordTypeid, RecordType.DeveloperName,Status__c,IATA_ISO_Country__r.ISO_Code__c,ANG_Accreditation_Model__c,
-                        IATA_ISO_Country__r.Name, IATA_ISO_Country__r.region__c, TIP_HQ_Location__c,Country_ISO_Code__c, Service_Provided__c
+                        IATA_ISO_Country__r.Name, IATA_ISO_Country__r.region__c, TIP_HQ_Location__c,Country_ISO_Code__c, Service_Provided__c,
+                        (Select Account__c, Any_Other_Information__c, Effective_From_Date__c, Effective_To_Date__c, HQ_Location__c, 
+        					   Last_Review_Date__c, Provider_Code__c, Provider_Type__c, Status__c, UniqueKey__c
+        					   from Account_Roles__r
+        					   where RecordTypeId =: TIP_Utils.ACCOUNT_ROLE_PAYMENT_PROVIDER_RECORDTYPE_ID
+        					   limit 1
+						)
                         FROM Account
                         WHERE Id = :con.AccountId
                                    LIMIT 1
                     ];
 		
-		set<string> setServProv = new set<string>();
-		
 		if(Account!=null){
-			if(string.isNotBlank(Account.Service_Provided__c)){
-				setServProv.AddAll(Account.Service_Provided__c.split(';'));
-			}
+			if(Account.Account_Roles__r != null)
+				TheAccountRole = Account.Account_Roles__r;
 		}
-		
-       if(setServProv.contains(TIP_UTILS.ACCOUNT_SERVICE_PROVIDED_PAYMENT_PROVIDER)){
-        	TheAccountRole	= [Select Account__c, Any_Other_Information__c, Effective_From_Date__c, Effective_To_Date__c, HQ_Location__c, 
-        					   Last_Review_Date__c, Provider_Code__c, Provider_Type__c, Status__c, UniqueKey__c
-        					   from Account_Role__c
-        					   where RecordTypeId =: TIP_Utils.ACCOUNT_ROLE_PAYMENT_PROVIDER_RECORDTYPE_ID
-        					   and Account__c =:Account.Id
-        					   limit 1
-        					  ];
-        					  
-        	if(TheAccountRole==null){
-        		TheAccountRole = new Account_role__c(Account__c = Account.Id);
-        	}
-        }else{
-        	new Account_role__c(Account__c = Account.Id);
-        }
+    }
+    
+    //Method invoked by Action on visualforce page
+    //it checks if the Account Role with type Payment Provider already exist
+    //if not, it creates a new one
+    public void CreateAccountRole(user TheUser){
+    	Account acc = [select Id, 
+    						(Select Id From Account_Roles__r where RecordTypeId =: TIP_Utils.ACCOUNT_ROLE_PAYMENT_PROVIDER_RECORDTYPE_ID)
+    				   from Account 
+    				   where Id = :TheUser.Contact.AccountID limit 1];
+    	
+    	if(acc!= null){
+    		if(Acc.Account_Roles__r == null){
+    			try{
+    				insert new Account_role__c(Account__c = acc.Id, RecordTypeId = TIP_Utils.ACCOUNT_ROLE_PAYMENT_PROVIDER_RECORDTYPE_ID);
+    			}catch(exception  e){
+    				
+    			}
+    		}
+    	}
     }
 
     private void updateCase(){
