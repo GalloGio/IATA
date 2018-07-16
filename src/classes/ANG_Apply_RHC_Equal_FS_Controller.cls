@@ -5,18 +5,28 @@ public class ANG_Apply_RHC_Equal_FS_Controller {
 	public List<SelectOption> paginationSizeOptions {get; private set;}
 	public Integer size {get {return (size == null) ? 10 : size;} set;}
 	public String modeValue {get; private set;}
-	public String actionValue {get; set;}
+	public String actionValue {get; private set;}
 	public String bspValue {get; private set;}
 	public String iataCode {get; private set;}
-	public Boolean renderConfirmButton {get; private set;}
+	public String previousModeValue {get; private set;}
+	public String previousActionValue {get; private set;}
+	public String previousBspValue {get; private set;}
+	public String previousIataCode {get; private set;}
+	public Boolean renderConfirmButton {
+		get {
+			return (actionValue != '' && modeValue != '' && actionValue == previousActionValue && ((previousModeValue == 'BSP' && bspValue == previousBspValue && modeValue == 'BSP') || (previousModeValue == 'IATA_Code' && iataCode == previousIataCode && modeValue == 'IATA_Code')));
+		}
+		private set;
+	}
 	public Boolean agenciesFound {get; private set;}
 	public ApexPages.StandardSetController ssController {get; private set;}
 	public Boolean hasNext {get {return ssController.getHasNext();} set;}
     public Boolean hasPrevious {get {return ssController.getHasPrevious();} set;}
-	public List<Account> agencies {
-		get {return (ssController != null) ? (List<Account>)ssController.getRecords() : agencies;}
+	public List<ANG_RHC_Information__c> agencies {
+		get {return (ssController != null) ? (List<ANG_RHC_Information__c>)ssController.getRecords() : agencies;}
 		private set;
 	}
+	public Integer agenciesFetched {get; private set;}
 
 	public ANG_Apply_RHC_Equal_FS_Controller() {
 		populateModes();
@@ -72,22 +82,40 @@ public class ANG_Apply_RHC_Equal_FS_Controller {
     	ssController = null;
     	agencies = null;
     	renderConfirmButton = true;
+    	previousBspValue = bspValue;
+    	previousIataCode = iataCode;
+    	previousModeValue = modeValue;
+    	previousActionValue = actionValue;
+
+    	Boolean rhcFlag = actionValue == 'Apply_RHC' ? false : true;
 
     	if (modeValue == 'BSP') {
-    		agencies = [SELECT Id, Name, IATACode__c, Status__c, IATA_ISO_Country__c, Location_Type__c, Location_Class__c, IATA_ISO_Country__r.AMS_Settlement_System__c
-    					FROM Account 
-    					WHERE Status__c IN :AMS_Utils.activeAgencyStatus
-    						AND Location_Type__c = 'HE'
-    						AND Id IN (SELECT Account__c FROM AMS_Agency_Operations__c WHERE Operation__r.Settlement__r.Name = :bspValue)
-    					ORDER BY Name];
+    		agencies = [SELECT Id, ANG_RHC_Amount__c, ANG_Financial_Security__c, ANG_RHC_Amount_Equals_FS__c, ANG_AccountId__r.Id, ANG_AccountId__r.Name, 
+							ANG_AccountId__r.IATACode__c, ANG_AccountId__r.Status__c, ANG_AccountId__r.IATA_ISO_Country__c, ANG_AccountId__r.Location_Type__c, 
+							ANG_AccountId__r.Location_Class__c, ANG_AccountId__r.IATA_ISO_Country__r.AMS_Settlement_System__c 
+						FROM ANG_RHC_Information__c
+						WHERE ANG_RHC_Amount_Equals_FS__c = :rhcFlag
+							AND ANG_AccountId__r.Status__c IN :AMS_Utils.ACTIVEAGENCYSTATUS
+							AND ANG_AccountId__r.Location_Type__c = 'HE'
+							AND ANG_AccountId__r.ANG_IsNewGenAgency__c = true
+							AND ANG_AccountId__r.RecordTypeId = :AMS_Utils.RECTYPE_IATAAGENCY
+							AND ANG_AccountId__r.IATA_ISO_Country__r.AMS_Settlement_System__r.Name = :bspValue 
+						ORDER BY ANG_AccountId__r.Name];
     	} else if (modeValue == 'IATA_Code') {
-    		agencies = [SELECT Id, Name, IATACode__c, Status__c, IATA_ISO_Country__c, Location_Type__c, Location_Class__c, IATA_ISO_Country__r.AMS_Settlement_System__c 
-    					FROM Account 
-    					WHERE Status__c IN :AMS_Utils.activeAgencyStatus
-    						AND Location_Type__c = 'HE'
-    						AND IATACode__c = :iataCode
+    		agencies = [SELECT Id, ANG_RHC_Amount__c, ANG_Financial_Security__c, ANG_RHC_Amount_Equals_FS__c, ANG_AccountId__r.Id, ANG_AccountId__r.Name, 
+							ANG_AccountId__r.IATACode__c, ANG_AccountId__r.Status__c, ANG_AccountId__r.IATA_ISO_Country__c, ANG_AccountId__r.Location_Type__c, 
+							ANG_AccountId__r.Location_Class__c, ANG_AccountId__r.IATA_ISO_Country__r.AMS_Settlement_System__c  
+    					FROM ANG_RHC_Information__c 
+    					WHERE ANG_RHC_Amount_Equals_FS__c = :rhcFlag
+    						AND ANG_AccountId__r.Status__c IN :AMS_Utils.ACTIVEAGENCYSTATUS
+							AND ANG_AccountId__r.Location_Type__c = 'HE'
+							AND ANG_AccountId__r.ANG_IsNewGenAgency__c = true
+							AND ANG_AccountId__r.RecordTypeId = :AMS_Utils.RECTYPE_IATAAGENCY
+    						AND ANG_AccountId__r.IATACode__c = :iataCode
     					ORDER BY Name];
     	}
+
+    	agenciesFetched = agencies.size();
 
     	if (agencies.isEmpty()) {
     		ApexPages.addMessage(new ApexPages.message(ApexPages.severity.INFO, 'Your research has not matched the criteria'));
@@ -126,6 +154,11 @@ public class ANG_Apply_RHC_Equal_FS_Controller {
 		this.renderConfirmButton = false;
 	}
 
+	public void setActionValue (String actionValue) {
+		this.actionValue = actionValue;
+		this.renderConfirmButton = false;
+	}
+
 	public void setBspValue (String bspValue) {
 		this.bspValue = bspValue;
 		this.renderConfirmButton = false;
@@ -134,5 +167,16 @@ public class ANG_Apply_RHC_Equal_FS_Controller {
 	public void setIataCode (String iataCode) {
 		this.iataCode = iataCode;
 		this.renderConfirmButton = false;
+	}
+
+	public void acivateBatch() {
+		Set<String> modeToSend = new Set<String>();
+
+		if (modeValue == 'BSP') {
+			modeToSend.add(bspValue);
+		} else if (modeValue == 'IATA_Code') {
+			modeToSend.add(iataCode);
+		}
+		//ANG_RHCEqualFSBatch();
 	}
 }
