@@ -1,6 +1,6 @@
 public class ISSOperationTriggerHandler {
 	
-	public static final String RECTYPE_BSP;
+	public static final String RECTYPE_BSP = RecordTypeSingleton.getInstance().RtIDsPerDeveloperNamePerObj.get('AMS_Settlement_System__c').get('BSP');  
 
 	public static void handleAfterUpdate(List<AMS_Settlement_System__c> operations, Map<Id,AMS_Settlement_System__c> oldMap) {
 		updateISSOperationRHCInformationFSFlag(operations, oldMap);
