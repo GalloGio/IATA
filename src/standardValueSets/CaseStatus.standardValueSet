@@ -587,6 +587,6 @@
         <fullName>Closed_Disapproved</fullName>
         <default>false</default>
         <label>Closed_Disapproved</label>
-        <closed>false</closed>
+        <closed>true</closed>
     </standardValue>
 </StandardValueSet>
