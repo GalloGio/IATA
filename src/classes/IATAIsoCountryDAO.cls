@@ -380,12 +380,12 @@ public class IATAIsoCountryDAO {
 	    }
 	}
 
-
 	/**
-	 * Only used to refresh map IataIsoCountry.
+	 * Only used to refresh maps IataIsoCountry.
 	 * Just for testing
 	 */
-	public static void resetMapIataIsoCountry(){
+	@TestVisible
+	private static void resetMapIataIsoCountry(){
 		IATAIsoCountryDAO.mapIataIsoCountry = null ;
 		IATAIsoCountryDAO.mapIataIsoCountryByName = null; 
 		IATAIsoCountryDAO.mapIataIsoCountrybyIsoCode = null;
