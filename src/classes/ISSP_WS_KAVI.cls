@@ -265,14 +265,16 @@ public class ISSP_WS_KAVI {
 					for(User u: userGrantPS){		
 						listPsa.add(new PermissionSetAssignment (PermissionSetId = psID.id, AssigneeId = u.id));
 					}
-					if(!listPsa.isEmpty()){
+					if(!listPsa.isEmpty()){ 
 						if(action == 'grant'){
 							insert listPsa;
 						}
 					}
 					if(action == 'remove'){
 						listRemovePsa = [SELECT id from PermissionSetAssignment where AssigneeId in:userGrantPS and PermissionSetId =:psID.id];
+                        if(!listRemovePsa.isEmpty()){ 
 							delete listRemovePsa;
+                        }
 					}
 				}
 
