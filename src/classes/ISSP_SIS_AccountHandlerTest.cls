@@ -31,7 +31,7 @@ private class ISSP_SIS_AccountHandlerTest {
         IATA_ISO_Country__c country = [SELECT Id FROM IATA_ISO_Country__c WHERE ISO_Code__c='SP'];
         Account account = new Account(
             RecordtypeId=ISSP_SIS_AccountHandler.RT_AGENCY,
-            Status__c = '',
+            Status__c = 'Changes processed',
             IATA_ISO_Country__c = country.Id,
             Name = 'test'
         );
@@ -57,7 +57,7 @@ private class ISSP_SIS_AccountHandlerTest {
         IATA_ISO_Country__c country = [SELECT Id FROM IATA_ISO_Country__c WHERE ISO_Code__c='SP'];
         Account account = new Account(
             RecordtypeId=ISSP_SIS_AccountHandler.RT_AGENCY,
-            Status__c = '',
+            Status__c = 'Changes processed',
             IATA_ISO_Country__c = country.Id,
             Name = 'test',
             SIS_ID__c = testSISID
