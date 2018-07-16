@@ -21,7 +21,8 @@ public without sharing class AMS_MigrationToolHelper {
 			AMS_Utils.VOLRELINQUISH => 'CLO - Closure',
 			AMS_Utils.BANKACCCHANGES => 'Agency changes',
 			AMS_Utils.NGFOP => 'FoP Management',
-			AMS_Utils.NGOPTINOUT => 'Financial review opt-in / opt-out'
+			AMS_Utils.NGOPTINOUT => 'Financial review opt-in / opt-out',
+			AMS_RecordCreatorWebservice.IEP_BANK_ACCOUNT_SETUP => 'IEP Bank account setup'
 		};
 		}
 		set;
@@ -339,15 +340,24 @@ public without sharing class AMS_MigrationToolHelper {
 
 			AMS_OSCAR__c oscar = new AMS_OSCAR__c(Account__c = caseToProcess.AccountId, Process__c = processType, RecordTypeId =oscarRTId, Status__c = caseToProcess.Status, OwnerId = caseToProcess.OwnerId );
 
+			if(processType.equalsIgnoreCase('ANG.FS.OPTINOUT')){
+
+            	oscar.ANG_FA_Opt_out__c = caseToProcess.Account.ANG_FA_Opt_out__c == true ? 'Opt-In' : 'Opt-Out';
+        	}
+
 			insert oscar;
 
 			oscarId = oscar.Id;
 
 			caseToProcess.OSCAR__c = oscar.Id;
-			caseToProcess.CaseArea__c = 'Accreditation Process';
-			caseToProcess.Reason1__c = newgenCaseReason.get(processType);
-			caseToProcess.Subject = caseToProcess.Reason1__c + ' - ' + caseToProcess.Account.Name;
 
+			if(caseToProcess.Account.ANG_IsNewGenAgency__c){
+
+				caseToProcess.CaseArea__c = 'Accreditation Process';
+				caseToProcess.Reason1__c = newgenCaseReason.get(processType);
+				caseToProcess.Subject = caseToProcess.Reason1__c + ' - ' + caseToProcess.Account.Name;
+			}
+			
 			update caseToProcess;
 		}
 
@@ -732,9 +742,11 @@ public without sharing class AMS_MigrationToolHelper {
 
 		caseToProcess.RecordTypeId = rtCommCase;
 
-		caseToProcess.CaseArea__c = 'Accreditation Process';
-		caseToProcess.Reason1__c = newgenCaseReason.get(processTypeInput);
-		caseToProcess.Subject = caseToProcess.Reason1__c + ' - ' + caseToProcess.Account.Name;
+		if(isNewgenAccount){
+			caseToProcess.CaseArea__c = 'Accreditation Process';
+			caseToProcess.Reason1__c = newgenCaseReason.get(processTypeInput);
+			caseToProcess.Subject = caseToProcess.Reason1__c + ' - ' + caseToProcess.Account.Name;
+		}
 
         update caseToProcess;
 
@@ -792,6 +804,11 @@ public without sharing class AMS_MigrationToolHelper {
 				Account__c = caseToProcess.AccountId
 			);
 
+			if(processType.equalsIgnoreCase('ANG.FS.OPTINOUT')){
+
+            	oscar.ANG_FA_Opt_out__c = caseToProcess.Account.ANG_FA_Opt_out__c == true ? 'Opt-In' : 'Opt-Out';
+        	}
+			
 			insert oscar;
 
 			oscarId = oscar.Id;
