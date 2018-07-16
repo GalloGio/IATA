@@ -15898,10 +15898,10 @@ The applicant understands and agrees to pay the application, entry and annual fe
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>ISSP_ANG_ProdCompCostTooltip</shortDescription>
-        <value>All application fees are refundable, in the event accreditation is not achieved: &lt;br/&gt;
-Small – up to USD 200.000 gross annual sales &lt;br/&gt;
-Medium – USD 200.001 – USD 2.000.000 gross annual sales &lt;br/&gt;
-Large – more than USD 2.000.000 gross annual sales</value>
+        <value>All application fees are refundable in the event accreditation is not achieved. &lt;br/&gt; &lt;br/&gt;
+&lt;b&gt;Small Agents&lt;/b&gt; – up to USD 200.000 gross annual sales &lt;br/&gt;
+&lt;b&gt;Medium Agents&lt;/b&gt; – USD 200.001 – USD 2.000.000 gross annual sales &lt;br/&gt;
+&lt;b&gt;Large Agents&lt;/b&gt; – more than USD 2.000.000 gross annual sales</value>
     </labels>
     <labels>
         <fullName>ISSP_ANG_ProdCompCostTooltipConvert</fullName>
