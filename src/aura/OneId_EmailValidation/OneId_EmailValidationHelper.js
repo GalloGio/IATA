@@ -37,7 +37,7 @@
 
             if(isUserCanBeCreated){
                 //notify parent component that step is completed
-                var e = component.getEvent("StepCompletionNotification");
+                var e = c.getEvent("StepCompletionNotification");
                 e.setParams({
                     "stepNumber" : 1,
                     "isComplete" : true,
