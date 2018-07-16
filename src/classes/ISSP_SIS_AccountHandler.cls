@@ -48,7 +48,10 @@ public with sharing class ISSP_SIS_AccountHandler {
         list<Id> listInsertAccountId = new list<Id>();
         list<Id> listUpdateAccountId = new list<Id>();
         for (Account account: listAccount) {
-            if ( validSISAccount(account) && account.Status__c != 'Terminated') {
+            if (validSISAccount(account) && (account.Status__c == 'Approved' 
+                || account.Status__c == 'Cash basis/no commission' 
+                || account.Status__c == 'Cash basis/with commission' 
+                || account.Status__c == 'Changes processed')) {
                 if (String.isBlank(account.SIS_ID__c)) {
                     listInsertAccountId.add(account.Id);
                 } else {
