@@ -340,6 +340,11 @@ public without sharing class AMS_MigrationToolHelper {
 
 			AMS_OSCAR__c oscar = new AMS_OSCAR__c(Account__c = caseToProcess.AccountId, Process__c = processType, RecordTypeId =oscarRTId, Status__c = caseToProcess.Status, OwnerId = caseToProcess.OwnerId );
 
+			if(processType.equalsIgnoreCase('ANG.FS.OPTINOUT')){
+
+            	oscar.ANG_FA_Opt_out__c = caseToProcess.Account.ANG_FA_Opt_out__c == true ? 'Opt-In' : 'Opt-Out';
+        	}
+
 			insert oscar;
 
 			oscarId = oscar.Id;
@@ -799,6 +804,11 @@ public without sharing class AMS_MigrationToolHelper {
 				Account__c = caseToProcess.AccountId
 			);
 
+			if(processType.equalsIgnoreCase('ANG.FS.OPTINOUT')){
+
+            	oscar.ANG_FA_Opt_out__c = caseToProcess.Account.ANG_FA_Opt_out__c == true ? 'Opt-In' : 'Opt-Out';
+        	}
+			
 			insert oscar;
 
 			oscarId = oscar.Id;
