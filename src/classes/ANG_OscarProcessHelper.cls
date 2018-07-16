@@ -1314,37 +1314,44 @@ global class ANG_OscarProcessHelper {
 		}
 
 		if(notificationTemplate <> null)
-			createPortalNotifications(acctSet,casesMaps,notificationTemplate);
+			createPortalNotifications(acctSet,casesMaps,notificationTemplate,keyContactMap);
 
         return casesToUpdate;
     }
 
-    private static void createPortalNotifications(Set<Account> acctSet,  Map<Id,Case> acctIdCasesMap, Notification_Template__c notificationTemplate){
+      private static void createPortalNotifications(Set<Account> acctSet,  Map<Id,Case> acctIdCasesMap, Notification_Template__c notificationTemplate,Map<Id,List<Contact>> keyContactMap){
 		
 		List<Contact> contactsToSend = new List<Contact>();
 		Map<Id,Id> contactAccts = new Map<Id,Id>();
 		Map<Id,Contact> contactsMap = new Map<Id,Contact>();
 		List<String> contactNot = new List<String>();
 		Map<Id,Account> accounts = new Map<Id,Account>();
-
+		
+		Map<Id,Id> contactAccountsIds = new Map<Id,Id>();
+		
+		for(Id acctId : keyContactMap.KeySet()){
+			For(Contact c: keyContactMap.get(acctId))
+				contactAccountsIds.put(c.Id,acctId);
+		}
+		
 		for(Account acc: acctSet){
-			contactsToSend.addall(fetchKeyContactsForPCI(acc.Contacts));
+			contactsToSend.addall(keyContactMap.get(acc.Id));
 			accounts.put(acc.Id,acc);
 		}
 
     	for(Contact c: contactsToSend){
     		contactNot.add(c.Id+':'+notificationTemplate.Name);
-			contactAccts.put(c.Id,c.AccountId);
-    		contactsMap.put(c.Id,c);
+			contactAccts.put(c.Id,contactAccountsIds.get(c.Id));			
+			contactsMap.put(c.Id,c);
 
     	}
 
     	List<Notification__c> notifications = new List<Notification__c>();
 
 		for(Notification__c nt : ISSP_CreateNotification.createnotification(contactNot, false)){
-				
-			Account acct = accounts.get(contactAccts.get(nt.Contact__c));
-
+						
+			Account acct = accounts.get(contactAccountsIds.get(nt.Contact__c));
+						
 			String casenumbmer = acctIdCasesMap.get(contactAccts.get(nt.Contact__c)).CaseNumber;
 
 			nt.Message__c = nt.Message__c
