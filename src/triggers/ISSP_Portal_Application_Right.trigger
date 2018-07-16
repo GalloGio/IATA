@@ -1579,6 +1579,7 @@ trigger ISSP_Portal_Application_Right on Portal_Application_Right__c (after inse
     Map <Id, String> contactFedIdMap = new Map <Id, String>();
     Set <Id> contactBaggageAdd = new Set <Id>();
     Set <Id> contactKaviAdd = new Set <Id>();
+	Set <Id> removeKaviPermissionSet = new Set <Id>();
     Set <Id> contactBaggageRemove = new Set <Id>();
     Set <Id> manageAccessTDidSet = new Set <Id>();
 	Set <Id> ContactDelRightSet = new Set <Id>();
@@ -1730,6 +1731,8 @@ trigger ISSP_Portal_Application_Right on Portal_Application_Right__c (after inse
 				if (access.Right__c != oldAccess.Right__c){
 					if (access.Right__c == 'Access Granted'){
 						contactKaviAdd.add(access.Contact__c);
+					}else if (access.Right__c == 'Access Denied'){
+						removeKaviPermissionSet.add(access.Contact__c);
 					}
 				}
 			}
@@ -1868,14 +1871,21 @@ trigger ISSP_Portal_Application_Right on Portal_Application_Right__c (after inse
 		string kaviUser = [SELECT Kavi_User__c from Contact where Id in:contactKaviAdd limit 1].Kavi_User__c;
 		
 		if (kaviUser != null ){
-		ISSP_WS_KAVI.createOrUpdateKaviUsersAccounts('create2',contactKaviAdd);
+			ISSP_WS_KAVI.createOrUpdateKaviUsersAccounts('create2',contactKaviAdd);
 			}
 		else  
 		{
 			ISSP_WS_KAVI.createOrUpdateKaviUsersAccounts('create',contactKaviAdd);
-		}			
-		ISSP_WS_KAVI.addUserPSA(contactKaviAdd); 
+		}		
+		//RN-ENHC0012059 grant and remove the permission set to the user	
+		ISSP_WS_KAVI.addUserPSA(contactKaviAdd, 'grant'); 
 	}
+	//RN-ENHC0012059 grant and remove the permission set to the user
+	if(!removeKaviPermissionSet.isEmpty()){
+		ISSP_WS_KAVI.addUserPSA(removeKaviPermissionSet, 'remove');
+	}
+
+
 
 	/*
 	if (!contactBaggageAdd.isEmpty()){

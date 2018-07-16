@@ -201,8 +201,8 @@ public class ISSP_WS_KAVI {
 							for(String fieldApi :userFieldsList)
 								xmlBody += notNull(fieldApi, newUser.get(fieldApi));
 
-							String xmlRequest = '<?xml version="1.0" encoding="utf-8"?>'+ 
-									'<Request xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">'+
+							String xmlRequest = '<?xml version="1.0" encoding="utf-8"?>'+  
+									'<Request xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">'+ 
 									xmlBody +
 									notNull('EmailAddress', newUser.Email)+
 									notNull('Zip', newUser.PostalCode)+
@@ -255,16 +255,24 @@ public class ISSP_WS_KAVI {
 					}
 				}
 
-				@future(callout=true)
-				public static void addUserPSA(Set<Id> contactKaviAdd){					
+				//RN-ENHC0012059 grant and remove the permission set to the user
+				@future(callout=true) 
+				public static void addUserPSA(Set<Id> contactKaviAdd, String action){					
 					permissionset psID= [select id from permissionset where name = 'HL_UsersAccess'][0];
 					List<PermissionSetAssignment> listPsa = new List<PermissionSetAssignment>();
+					List<PermissionSetAssignment> listRemovePsa = new List<PermissionSetAssignment>();
 					List<User> userGrantPS = [SELECT id from User where ContactID in:contactKaviAdd];
 					for(User u: userGrantPS){		
 						listPsa.add(new PermissionSetAssignment (PermissionSetId = psID.id, AssigneeId = u.id));
 					}
 					if(!listPsa.isEmpty()){
-						insert listPsa;
+						if(action == 'grant'){
+							insert listPsa;
+						}
+					}
+					if(action == 'remove'){
+						listRemovePsa = [SELECT id from PermissionSetAssignment where AssigneeId in:userGrantPS and PermissionSetId =:psID.id];
+							delete listRemovePsa;
 					}
 				}
 
