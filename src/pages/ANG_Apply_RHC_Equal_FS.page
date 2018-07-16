@@ -53,17 +53,17 @@
             </apex:pageBlockButtons>
         </apex:pageBlock>
 
-        <apex:pageBlock mode="edit" id="searchResultsBlock" rendered="{!agencies != null}">
-            <apex:pageBlockSection columns="1" title="Results">
+        <apex:pageBlock mode="details" id="searchResultsBlock" rendered="{!agencies != null}">
+            <apex:pageBlockSection columns="1" title="Results ({!agenciesFetched})">
                 <apex:PageMessages id="msgs"/>
                 <apex:pageBlockTable value="{!agencies}" var="a" rendered="{!agenciesFound}">
-                    <apex:column value="{!a.Name}"/>
-                    <apex:column value="{!a.IATACode__c}"/>
-                    <apex:column value="{!a.Location_Class__c}"/>
-                    <apex:column value="{!a.Location_Type__c}"/>
-                    <apex:column value="{!a.Status__c}"/>
-                    <apex:column value="{!a.IATA_ISO_Country__c}"/>
-                    <apex:column value="{!a.IATA_ISO_Country__r.AMS_Settlement_System__c}"/>
+                    <apex:column value="{!a.ANG_AccountId__r.Name}"/>
+                    <apex:column value="{!a.ANG_AccountId__r.IATACode__c}"/>
+                    <apex:column value="{!a.ANG_AccountId__r.Location_Class__c}"/>
+                    <apex:column value="{!a.ANG_AccountId__r.Location_Type__c}"/>
+                    <apex:column value="{!a.ANG_AccountId__r.Status__c}"/>
+                    <apex:column value="{!a.ANG_AccountId__r.IATA_ISO_Country__c}"/>
+                    <apex:column value="{!a.ANG_AccountId__r.IATA_ISO_Country__r.AMS_Settlement_System__c}"/>
                 </apex:pageBlockTable>
             </apex:pageBlockSection>
             
