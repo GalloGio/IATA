@@ -20,6 +20,7 @@ public without sharing class ISSP_TIP_Home_Controller {
     public String conID {get; set;}
     public Contact newContact {get;set;} 
     public List <Contact> contactList {get; set;}
+    public list<Account_Contact_Role__c> AccountContactRoleList	{get; set;}
     public Boolean isEmailDuplicated {get; set;}
     public Account_Role__c TheAccountRole	{get; set;}
     public list<Account_Contact_Role__c> theContactsRole	{get; set;}
@@ -546,10 +547,21 @@ public without sharing class ISSP_TIP_Home_Controller {
     }
 
     private void fillContactList() {
+    	set<id> SetConId = new set<id>();
+    	//Looking into account Contact Role first
+    	AccountContactRoleList = [Select id, Account__c, Account_Role__c, Business_Phone__c, Contact__c, Contact_Role__c
+    							  , Email__c, First_Name__c, Last_Name__c, Service_Rendered__c, Contact__r.Primary_Contact__c
+    							  , Contact__r.Phone
+    							  from Account_Contact_Role__c
+    							  where Contact__r.Status__c = 'Active' and Contact__r.Accountid = :con.AccountId
+    							  and Service_Rendered__c =:TIP_Utils.ACCOUNT_CONTACT_ROLE_SERVICE_TIP];
+    	
+    	for(Account_Contact_Role__c acr:AccountContactRoleList)	SetConId.add(acr.Contact__c);
+    	
         contactList = [SELECT id,Name, Email,Salutation, FirstName, LastName, Phone, Primary_Contact__c,MobileNational__c,Membership_Function__c,Title,MobilePhone
-
                 FROM Contact
-                WHERE Status__c = 'Active' and Accountid = :con.AccountId];
+//                WHERE Status__c = 'Active' and Accountid = :con.AccountId];
+				where id in:SetConId];
     }
 
     public void updateRadioButtonStatus() {
@@ -557,6 +569,25 @@ public without sharing class ISSP_TIP_Home_Controller {
         for (Contact c: contactList) {
             c.Primary_Contact__c = false;
             if(c.id == contactID) c.Primary_Contact__c = true;
+        }
+        
+        //ACCOUNT_CONTACT_ROLE_PRIMARY
+        for (Account_Contact_Role__c conRole: AccountContactRoleList) {
+        	set<string> theRoles = new set<string>();
+        	if(string.IsNotBlank(conRole.Contact_Role__c))
+        		theRoles.addAll(conRole.Contact_Role__c.split(';'));
+        	
+        	conRole.Contact_Role__c = '';
+        	
+        	if(theRoles.contains(TIP_Utils.ACCOUNT_CONTACT_ROLE_PRIMARY))
+        		theRoles.remove(TIP_Utils.ACCOUNT_CONTACT_ROLE_PRIMARY);
+        	
+            //c.Primary_Contact__c = false;
+            if(conRole.Contact__c == contactID)
+				theRoles.add(TIP_Utils.ACCOUNT_CONTACT_ROLE_PRIMARY);
+			
+			for(string s:theRoles)
+				conRole.Contact_Role__c = conRole.Contact_Role__c + ';' + s;
         }
     }
 
@@ -567,9 +598,7 @@ public without sharing class ISSP_TIP_Home_Controller {
         try{
             upsert newContact;
             isEmailDuplicated = false;
-            
-            Account_Contact_Role__c theContactRole = new Account_Contact_Role__c();
-            
+            UpsertContactRole(newContact);
             system.debug('##done inserting: ' +isEmailDuplicated);
         }catch(Exception e){
             system.debug('##Error inserting: ' +isEmailDuplicated);
@@ -578,6 +607,16 @@ public without sharing class ISSP_TIP_Home_Controller {
         }
         fillContactList();
         newContact = new Contact();
+    }
+    
+    private void UpsertContactRole(Contact theCon){
+    	Account_Contact_Role__c theContactRole = new Account_Contact_Role__c();
+	        theContactRole.Account__c = con.AccountId;
+	        theContactRole.Contact__c = theCon.Id;
+	        theContactRole.Account_Role__c = TheAccountRole.Id;
+	        theContactRole.Service_Rendered__c = TIP_Utils.ACCOUNT_CONTACT_ROLE_SERVICE_TIP;
+	        theContactRole.UniqueKey__c = TIP_Utils.ACCOUNT_CONTACT_ROLE_SERVICE_TIP + '_' + theContactRole.Account_Role__c + '_' + theContactRole.Contact__c;
+       upsert theContactRole UniqueKey__c;
     }
 
     public Pagereference setContactToEdit(){

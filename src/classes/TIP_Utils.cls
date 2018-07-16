@@ -22,6 +22,10 @@ public class TIP_Utils{
 	
 	//Account service provided
 	public static string ACCOUNT_SERVICE_PROVIDED_PAYMENT_PROVIDER = 'Payment Provider';
+	
+	//Account Contact Role Helper
+	public static string ACCOUNT_CONTACT_ROLE_SERVICE_TIP = 'TIP';
+	public static string ACCOUNT_CONTACT_ROLE_PRIMARY = 'Primary Contact';
 
 	//Case RT's
 	public static String CASE_PROCESS_IDFS_RECORD_TYPE_ID = RecordTypeSingleton.getInstance().RtIDsPerDeveloperNamePerObj.get('Case').get('CS_Process_IDFS_ISS');

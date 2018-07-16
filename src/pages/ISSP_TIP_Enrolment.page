@@ -490,7 +490,8 @@
                                        <apex:pageBlockSectionItem >
                                             <apex:outputLabel style="margin-right: 0px !important;" value="Location of Headquarter *"/>
                                             <apex:outputPanel style="display: -webkit-inline-box;">
-                                              <apex:selectList styleclass="form-control recSearch" style="width: 200px;"  value="{!account.TIP_HQ_Location__c}" Label="Location of Headquarter *" size="1" >
+                                              <apex:selectList styleclass="form-control recSearch" style="width: 200px;"  value="{!TheAccountRole.HQ_Location__c}" Label="Location of Headquarter *" size="1" >
+                                                
                                                 
                                                  <apex:selectOptions value="{!ISOCountry}"/>
                                               </apex:selectList>
@@ -498,9 +499,9 @@
                                             </apex:outputPanel>
                                        </apex:pageBlockSectionItem>
                                           <apex:pageBlockSectionItem >
-                                             <apex:outputLabel value="{!$ObjectType.Account.fields.TIP_Documents__c.Label}"/>
+                                             <apex:outputLabel value="{!$ObjectType.Account_Role__c.fields.Any_Other_Information__c.Label}"/>
                                                <apex:outputPanel style="display: -webkit-inline-box;">
-                                               <apex:inputTextArea styleclass="form-control recSearch" style="width: 200px;"  value="{!account.TIP_Documents__c}"/>
+                                               <apex:inputTextArea styleclass="form-control recSearch" style="width: 200px;"  value="{!TheAccountRole.Any_Other_Information__c}"/>
                                                <apex:image value="/img/msg_icons/info16.png" style="padding: 4px" styleClass="selector" title="{!$Label.ISSP_Portal_Provider_Any_Other_Info_Label}" html-data-placement="top" html-data-toggle="tooltip"/>
                                            </apex:outputPanel>
                                           </apex:pageBlockSectionItem>
@@ -582,7 +583,7 @@
                                  <form >
                                     <apex:commandLink style="margin-right:5px" onclick="cleanModal();return false;"><span class="glyphicon glyphicon-plus"></span>Add Contact </apex:commandLink>
                                     <apex:actionFunction name="rerenderTopPanel" rerender="sectionTwo" />
-                                    <apex:pageBlockTable value="{!contactList}" var="con" id="contactList" styleClass="table-hover table table-condensed table-responsive">
+                                    <!--  <apex:pageBlockTable value="{!contactList}" var="con" id="contactList" styleClass="table-hover table table-condensed table-responsive">
                                        <apex:column headerValue="{!$ObjectType.Contact.fields.FirstName.Label}" value="{!con.FirstName}"/>
                                        <apex:column headerValue="{!$ObjectType.Contact.fields.LastName.Label}" value="{!con.LastName}"/>
                                        <apex:column headerValue="{!$ObjectType.Contact.fields.Phone.Label}" value="{!con.Phone}"/>
@@ -598,7 +599,25 @@
                                        <apex:column >
                                           <apex:commandLink onclick=" editContact('{!con.id}');return false;" styleClass="glyphicon glyphicon-pencil"  />
                                        </apex:column>
+                                    </apex:pageBlockTable>-->
+                                    <apex:pageBlockTable value="{!AccountContactRoleList}" var="conRole" id="contactList" styleClass="table-hover table table-condensed table-responsive">
+                                       <apex:column headerValue="{!$ObjectType.Contact.fields.FirstName.Label}" value="{!conRole.First_Name__c}"/>
+                                       <apex:column headerValue="{!$ObjectType.Contact.fields.LastName.Label}" value="{!conRole.Last_Name__c}"/>
+                                       <apex:column headerValue="{!$ObjectType.Contact.fields.Phone.Label}" value="{!conRole.Contact__r.Phone}"/>
+                                       <apex:column headerValue="{!$ObjectType.Contact.fields.Email.Label}" value="{!conRole.Email__c}"/>
+                                       <apex:column headerValue="Primary Contact">
+                                          <apex:outputPanel rendered="{!CONTAINS(conRole.Contact_Role__c, 'Primary Contact')}">
+                                             <input type="radio" id="primaryContactRadio" checked="checked" />
+                                          </apex:outputPanel>
+                                          <apex:outputPanel rendered="{!!CONTAINS(conRole.Contact_Role__c, 'Primary Contact')}" onclick=" refreshTable('{!conRole.Contact__c}'); ">
+                                             <input type="radio" id="primaryContactRadio"   />
+                                          </apex:outputPanel>
+                                       </apex:column>
+                                       <apex:column >
+                                          <apex:commandLink onclick=" editContact('{!conRole.Contact__c}');return false;" styleClass="glyphicon glyphicon-pencil"  />
+                                       </apex:column>
                                     </apex:pageBlockTable>
+                                    
                                     <apex:actionFunction action="{!updateRadioButtonStatus}" name="updateRadioButton" rerender="sectionTwo,ContactForm, ContactPanel">
                                        <apex:param id="contactIDtoPrimary" name="contactIDtoPrimary" value="" />
                                     </apex:actionFunction>
