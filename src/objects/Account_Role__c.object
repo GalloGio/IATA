@@ -45,6 +45,7 @@
     <deploymentStatus>Deployed</deploymentStatus>
     <enableActivities>false</enableActivities>
     <enableBulkApi>true</enableBulkApi>
+    <enableChangeDataCapture>false</enableChangeDataCapture>
     <enableFeeds>false</enableFeeds>
     <enableHistory>false</enableHistory>
     <enableReports>false</enableReports>
@@ -149,10 +150,12 @@
                 <value>
                     <fullName>Active</fullName>
                     <default>false</default>
+                    <label>Active</label>
                 </value>
                 <value>
                     <fullName>Inactive</fullName>
                     <default>false</default>
+                    <label>Inactive</label>
                 </value>
             </valueSetDefinition>
         </valueSet>
@@ -180,6 +183,17 @@
         <active>true</active>
         <label>Payment Provider</label>
         <picklistValues>
+            <picklist>Provider_Type__c</picklist>
+            <values>
+                <fullName>Closed Loop</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Open Loop</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
             <picklist>Status__c</picklist>
             <values>
                 <fullName>Active</fullName>
@@ -187,17 +201,6 @@
             </values>
             <values>
                 <fullName>Inactive</fullName>
-                <default>false</default>
-            </values>
-        </picklistValues>
-        <picklistValues>
-            <picklist>TIP_Provider_Type</picklist>
-            <values>
-                <fullName>Closed Loop</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Open Loop</fullName>
                 <default>false</default>
             </values>
         </picklistValues>
@@ -236,4 +239,5 @@
         <errorConditionFormula>AND(RecordType.DeveloperName=&quot;TIP_Payment_Provider&quot;, TEXT(Status__c)=&quot;Active&quot;, Effective_From_Date__c&gt;Today())</errorConditionFormula>
         <errorMessage>Can’t have active Payment Providers with Effective date From in the future</errorMessage>
     </validationRules>
+    <visibility>Public</visibility>
 </CustomObject>
