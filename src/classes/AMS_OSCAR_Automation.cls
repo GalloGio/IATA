@@ -64,7 +64,13 @@ public with sharing class AMS_OSCAR_Automation {
 
                         oscar.Sanity_check_deadline__c = Date.today() + 15;           
 
+                    } else if (oscar.Process__c == AMS_Utils.NGANNUALREVAL){
+
+                        oscar.Sanity_check_deadline__c = Date.today() + 15;
+                        oscar.Sanity_check_received__c = Date.today();
+
                     }
+
                 }
 
                 oscar.Sanity_check_results__c = AMS_Utils.FAILED;

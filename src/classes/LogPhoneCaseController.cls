@@ -14,7 +14,8 @@ public with sharing class LogPhoneCaseController {
 				'China & N. Asia' => 'Cases - China & North Asia',
 				'Africa & ME' => 'Cases - Africa & Middle East',
 				'A&P' => 'Cases - Asia & Pacific',
-				'Americas' => 'Cases - Americas'};
+				'Americas' => 'Cases - Americas',
+				'IATAN' => 'Cases - Americas'};
 	
 	
 	public LogPhoneCaseController() {

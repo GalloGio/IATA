@@ -438,7 +438,7 @@ public without sharing class ISSP_TIP_Home_Controller {
         upsert newCase;
 
         //assign to TIP HO queue
-        List<Group> groups =  [SELECT Id FROM Group WHERE Type = 'Queue' AND NAME = 'Cases_Transparency_in_Payment_Service' LIMIT 1];
+        List<Group> groups =  [SELECT Id FROM Group WHERE Type = 'Queue' AND developerName = 'Cases_Transparency_in_Payment_Service' LIMIT 1];
         
         if(groups == null || groups.isEmpty()) System.debug('ERROR! Cases_Transparency_in_Payment_Service Queue not found proceeding without assign');
         else{
@@ -447,7 +447,7 @@ public without sharing class ISSP_TIP_Home_Controller {
         }
 
         PageReference pr= Page.ISSP_TIP_Home;
-        pr.setRedirect(false);
+        pr.setRedirect(true);
         return pr; 
     }
 

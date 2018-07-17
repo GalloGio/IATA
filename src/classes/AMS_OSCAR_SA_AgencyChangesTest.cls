@@ -87,6 +87,16 @@ public class AMS_OSCAR_SA_AgencyChangesTest {
                                              AccountId = (oscarAccount.ParentId == null ? oscarAccount.Id : oscarAccount.ParentId), ContactId = C1.Id);
         insert theCommunicationCase;
 
+        Attachment a = new Attachment(
+          OwnerId = UserInfo.getUserId(),
+          IsPrivate = true,
+          ParentId = theCommunicationCase.Id,
+          Body = Blob.valueOf('Test'),
+          Name = 'test'
+        );
+        insert a;
+        
+        
         // Create the Staging area for the Account
         AMS_Pax_Accreditation_Form__c stagingArea = new  AMS_Pax_Accreditation_Form__c(Account_Name__c = oscarAccount.Name,
                 IATAcode__c = oscarAccount.IATAcode__c,

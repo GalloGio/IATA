@@ -253,6 +253,79 @@ global class AMS_OSCAR_Webservice {
         }
     }
 
+	/*OBSOLETE SIDRA LITE
+    WebService static String createSIDRALite(String oscarId) {
+
+        String result = '';
+
+        try {
+
+            ID sidraLiteRecType = Schema.Case.sObjectType.getDescribe().getRecordTypeInfosByName().get('SIDRA Lite').getRecordTypeId();
+
+            List<AMS_OSCAR__c> oscar = [select Name, Account__c, Account__r.Name, Account__r.IATA_ISO_Country__r.Region__c, Account__r.IATA_ISO_Country__r.Name, BusinessHours__c from AMS_OSCAR__c where Id = : oscarId];
+            if (oscar != null && oscar.size() > 0) {
+
+                List<Case> cases = [SELECT Id, AccountId, Account.Type, ContactId, Region__c, Reason1__c, BSPCountry__c, Account.Accumulated_Irregularities__c from Case where OSCAR__c = :oscar[0].Id AND ( ParentId = null or Parent.RecordType.Name != 'OSCAR Communication' ) limit 1];
+
+                if (cases == null || cases.isEmpty()) {
+                    result = 'Could not find a the Oscar Communication case related to this OSCAR.';
+                    return 'ERROR: ' + result;
+                }
+
+                Case oscarCommCase = cases[0];
+
+                Case sidraCase = new Case();
+                sidraCase.RecordTypeId = sidraLiteRecType;
+                //sidraCase.OSCAR__c = oscar[0].Id;
+                sidraCase.Subject = 'SIDRA Lite – Non-Compliance due to "' + oscarCommCase.Reason1__c + '"';
+                sidraCase.ParentId = oscarCommCase.Id;
+                sidraCase.AccountId = oscar[0].Account__c;
+                sidraCase.ContactId = oscarCommCase.ContactId;
+                sidraCase.Region__c = oscar[0].Account__r.IATA_ISO_Country__r.Region__c;
+                sidraCase.BSPCountry__c = oscarCommCase.BSPCountry__c;
+                sidraCase.Reason1__c = 'Late/Absence of Notification of Change';
+                //sidraCase.SIDRA_Lite_Reason__c = 'Late/Absence of Notification of Change';
+                //sidraCase.SIDRA_Lite_Default_Date__c = Date.Today();
+                sidraCase.Reason_for_Default__c = 'Disapproval of Change';
+                sidraCase.Total_Irregularities__c = String.ValueOf(oscarCommCase.account.Accumulated_Irregularities__c);
+
+                DateTime nextMonthEnd = DateTime.newInstance(AMS_Utils.lastDayOfMonth(System.today().addMonths(1)), DateTime.now().time());
+                sidraCase.Termination_date_manual_entry__c = BusinessHours.nextStartDate(oscar[0].BusinessHours__c, nextMonthEnd).date();
+
+                if ( oscarCommCase.account.Type == 'IATA Passenger Sales Agent' || oscarCommCase.account.Type == 'Domestic Agent' ) {
+                    sidraCase.BSP_CASS__c = 'BSP';
+                } else {
+                    sidraCase.BSP_CASS__c = 'CASS';
+                }
+
+                insert sidraCase;
+
+                //AMS_OSCAR_JSON.ChangeCode changeCode = new AMS_OSCAR_JSON.ChangeCode();
+
+                //changeCode.name = 'SRM';
+                //changeCode.reasonCode = '91';
+                //changeCode.memoText = 'to be defined';
+                //changeCode.reasonDesc  = 'SIDRA LITE CREATED';
+                //changeCode.status  = '7';
+
+                //Account acct = new Account(Id = oscar[0].Account__c);
+                //AMS_ChangeCodesHelper.createAAChangeCodes(new List<AMS_OSCAR_JSON.ChangeCode> {changeCode}, new List<AMS_OSCAR__c> {oscar[0]}, new List<Account> {acct}, true);
+
+                oscar[0].STEP26__c = 'In Progress';
+                update oscar;
+
+                return sidraCase.Id;
+
+            }
+
+            return 'ERROR: OSCAR not found.';
+
+        } catch (Exception ex) {
+            return AMS_Utils.errorMessageBeautifyer(ex);
+        }
+
+    }*/
+	
 	    /**
         Find the parent case related to an Oscar Id
     **/
@@ -260,7 +333,8 @@ global class AMS_OSCAR_Webservice {
         List<Case> cases = [
             SELECT Id, AccountId, Account.Type, ContactId, Region__c, Reason1__c, BSPCountry__c, Account.Accumulated_Irregularities__c,
             SIDRA_Lite_Reason__c, NOT_Date__c, BusinessHoursId,
-            oscar__r.Step6__c, oscar__r.Step9__c, oscar__r.Step11__c, oscar__r.Step12__c, oscar__r.Step14__c, oscar__r.Step26__c, oscar__r.Step35__c, oscar__r.RPM_Approval__c
+            oscar__r.Step6__c, oscar__r.Step9__c, oscar__r.Step11__c, oscar__r.Step12__c, oscar__r.Step14__c, oscar__r.Step26__c, oscar__r.Step35__c,
+            oscar__r.RPM_Approval__c, oscar__r.Step44__c
             FROM Case
             WHERE OSCAR__c = :oscarId AND ( ParentId = null or Parent.RecordType.Name != 'OSCAR Communication' )
             LIMIT 1];
@@ -297,8 +371,12 @@ global class AMS_OSCAR_Webservice {
             if (oscar.Step26__c == 'Failed') return;
             throw new OSCARException(message);
         }
-		if (step=='35') {
+        if (step=='35') {
             if (oscar.Step35__c == 'Failed') return;
+            throw new OSCARException(message);
+        }       
+        if (step=='44') {
+            if (oscar.Step44__c == 'Failed') return;
             throw new OSCARException(message);
         }
         if (step=='RPM') {
