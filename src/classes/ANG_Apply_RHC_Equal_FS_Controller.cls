@@ -1,4 +1,6 @@
 public class ANG_Apply_RHC_Equal_FS_Controller {
+	public static final Integer BATCH_SIZE = 200;
+
 	public List<SelectOption> modes {get; private set;}
 	public List<SelectOption> actions {get; private set;}
 	public List<SelectOption> bsps {get; private set;}
@@ -171,12 +173,16 @@ public class ANG_Apply_RHC_Equal_FS_Controller {
 
 	public void acivateBatch() {
 		Set<String> modeToSend = new Set<String>();
+		String actionToSend;
 
 		if (modeValue == 'BSP') {
+			actionToSend = actionValue == 'Apply_RHC' ? 'bsp-apply' : 'bsp-revert';
 			modeToSend.add(bspValue);
 		} else if (modeValue == 'IATA_Code') {
+			actionToSend = actionValue == 'Apply_RHC' ? 'iatacode-apply' : 'iatacode-revert';
 			modeToSend.add(iataCode);
 		}
-		//ANG_RHCEqualFSBatch();
+
+		Database.executeBatch(new ANG_RHCEqualFSBatch(actionToSend, modeToSend), BATCH_SIZE);
 	}
 }

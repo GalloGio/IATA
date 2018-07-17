@@ -49,7 +49,7 @@
 
             <apex:pageBlockButtons id="searchButtonBlock" location="bottom">
                 <apex:commandButton value="Search Agencies" id="searchButton" disabled="{!OR(OR(actionValue == '', modeValue == ''), AND(modeValue == 'BSP', bspValue == ''), AND(modeValue == 'IATA_Code', iataCode == null))}" action="{!fetchAgencies}" onclick="getAgenciesTable();"/>
-                <apex:commandButton value="{!IF(actionValue == 'Apply_RHC', 'Apply RHC equal FS', IF(actionValue == 'Revert_RHC', 'Revert RHC equal FS', 'No Action Selected'))}" id="confirmButton" disabled="{!OR(OR(actionValue == '', modeValue == ''), AND(modeValue == 'BSP', bspValue == ''), AND(modeValue == 'IATA_Code', iataCode == null), NOT(agenciesFound), NOT(renderConfirmButton))}"/>
+                <apex:commandButton value="{!IF(actionValue == 'Apply_RHC', 'Apply RHC equal FS', IF(actionValue == 'Revert_RHC', 'Revert RHC equal FS', 'No Action Selected'))}" id="confirmButton" disabled="{!OR(OR(actionValue == '', modeValue == ''), AND(modeValue == 'BSP', bspValue == ''), AND(modeValue == 'IATA_Code', iataCode == null), NOT(agenciesFound), NOT(renderConfirmButton))}" onclick="acivateBatch();"/>
             </apex:pageBlockButtons>
         </apex:pageBlock>
 
