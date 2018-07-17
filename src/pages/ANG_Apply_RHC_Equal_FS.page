@@ -1,11 +1,17 @@
 <apex:page controller="ANG_Apply_RHC_Equal_FS_Controller" showHeader="true" docType="html-5.0">
 
+	<style>
+    	.pbSubExtra {
+        	display:none;
+    	}
+	</style>
+
     <apex:sectionHeader title="Apply RHC equal FS" description="This will set RHC equals to Financial Security amount for all the selected agents. Existing rules will be overridden"/>
     <apex:form>
 
         <apex:actionFunction name="changeInput" reRender="actionModeBlock"/>
         <apex:actionFunction name="controlButtons" reRender="searchButton, confirmButton"/>
-        <apex:actionFunction name="getAgenciesTable" reRender="searchResultsBlock"/>
+        <apex:actionFunction name="getAgenciesTable" reRender="searchResultsBlock, statusPageBlock"/>
         <apex:actionFunction name="refreshPageSize" action="{!refreshPageSize}" status="fetchStatus" reRender="searchResultsBlock"/>
 
         <apex:pageBlock mode="edit">
@@ -48,12 +54,12 @@
             </apex:pageBlockSection>
 
             <apex:pageBlockButtons id="searchButtonBlock" location="bottom">
-                <apex:commandButton value="Search Agencies" id="searchButton" disabled="{!OR(OR(actionValue == '', modeValue == ''), AND(modeValue == 'BSP', bspValue == ''), AND(modeValue == 'IATA_Code', iataCode == null))}" action="{!fetchAgencies}" onclick="getAgenciesTable();"/>
-                <apex:commandButton value="{!IF(actionValue == 'Apply_RHC', 'Apply RHC equal FS', IF(actionValue == 'Revert_RHC', 'Revert RHC equal FS', 'No Action Selected'))}" id="confirmButton" disabled="{!OR(OR(actionValue == '', modeValue == ''), AND(modeValue == 'BSP', bspValue == ''), AND(modeValue == 'IATA_Code', iataCode == null), NOT(agenciesFound), NOT(renderConfirmButton))}" onclick="acivateBatch();"/>
+                <apex:commandButton value="Search Agencies" id="searchButton" disabled="{!OR(OR(actionValue == '', modeValue == ''), AND(modeValue == 'BSP', bspValue == ''), AND(modeValue == 'IATA_Code', iataCode == null), pollerBool)}" action="{!fetchAgencies}" onclick="getAgenciesTable();"/>
+                <apex:commandButton value="{!IF(actionValue == 'Apply_RHC', 'Apply RHC equal FS', IF(actionValue == 'Revert_RHC', 'Revert RHC equal FS', 'No Action Selected'))}" id="confirmButton" disabled="{!OR(OR(actionValue == '', modeValue == ''), AND(modeValue == 'BSP', bspValue == ''), AND(modeValue == 'IATA_Code', iataCode == null), NOT(agenciesFound), NOT(renderConfirmButton), batchStatusBool)}" action="{!applyOrRevertRHC}"/>
             </apex:pageBlockButtons>
         </apex:pageBlock>
 
-        <apex:pageBlock mode="details" id="searchResultsBlock" rendered="{!agencies != null}">
+        <apex:pageBlock mode="edit" id="searchResultsBlock" rendered="{!agencies != null}">
             <apex:pageBlockSection columns="1" title="Results ({!agenciesFetched})">
                 <apex:PageMessages id="msgs"/>
                 <apex:pageBlockTable value="{!agencies}" var="a" rendered="{!agenciesFound}">
@@ -83,5 +89,17 @@
             </apex:pageBlockButtons>
             
         </apex:pageBlock>
+
+        <apex:pageBlock mode="edit" id="statusPageBlock" rendered="{!batchStatusBool}">
+
+            <apex:pageBlockSection columns="1" title="Process Status">
+                <apex:actionStatus id="act" startText="Checking..." />
+                <apex:outputText styleClass="processText" value="{!IF(actionValue == 'Apply_RHC', 'Apply RHC equal FS',  'Revert RHC equal FS')} Process Status: {!batchJob.Status}"/>
+                <apex:outputText styleClass="processText" value="{!IF(actionValue == 'Apply_RHC', 'Apply RHC equal FS',  'Revert RHC equal FS')} {!IF(modeValue == 'BSP', 'BSPs', 'Agencies')} Proccessed: {!batchPercentage}%"/>
+                <apex:outputText styleClass="processText" value="Errors found: {!batchJob.NumberOfErrors}"/>
+                <apex:actionPoller interval="5" action="{!getBatchStatus}" enabled="{!pollerBool}" reRender="statusPageBlock, searchButton" status="act"/>
+            </apex:pageBlockSection>
+
+		</apex:pageBlock>
     </apex:form>
 </apex:page>
