@@ -4,11 +4,12 @@ public with sharing class SIDRAliteMassActionController {
     public static final Integer MAX_SEARCH_ELEMENTS =900;
     public Integer getMinCasesForBatch(){ return MIN_CASES_FOR_BATCH;}
 
-    public static final Id RECORDTYPE_IFAP_ID = RecordTypeSingleton.getInstance().getRecordTypeId('Case', 'IATA_Financial_Review');
-    public static final Id RECORDTYPE_SMAP_ID = RecordTypeSingleton.getInstance().getRecordTypeId('Case', 'sMAP_sales_Monitoring_Alert_Process');
-    public static final Id RECORDTYPE_SAAM_ID = RecordTypeSingleton.getInstance().getRecordTypeId('Case', 'ProcessEuropeSCE');//SAAM
-    public static final Id RECORDTYPE_OSCAR_ID = RecordTypeSingleton.getInstance().getRecordTypeId('Case', 'OSCAR_Communication');
-    public static final Id RECORDTYPE_INVOICING_ID = RecordTypeSingleton.getInstance().getRecordTypeId('Case', 'Invoicing_Collection_Cases');
+    public static final RecordType RECORDTYPE_IFAP = RecordTypeSingleton.getInstance().getRecordType('Case', 'IATA_Financial_Review');
+    public static final RecordType RECORDTYPE_SMAP = RecordTypeSingleton.getInstance().getRecordType('Case', 'sMAP_sales_Monitoring_Alert_Process');
+    public static final RecordType RECORDTYPE_SAAM = RecordTypeSingleton.getInstance().getRecordType('Case', 'ProcessEuropeSCE');//SAAM
+    public static final RecordType RECORDTYPE_OSCAR = RecordTypeSingleton.getInstance().getRecordType('Case', 'OSCAR_Communication');
+    public static final RecordType RECORDTYPE_INVOICING = RecordTypeSingleton.getInstance().getRecordType('Case', 'Invoicing_Collection_Cases');
+
 
     public static final set<String> TYPE_ACCOUNT_PAX =   SidraLiteUtil.TYPE_ACCOUNT_PAX;
     public static final set<String> TYPE_ACCOUNT_CARGO = SidraLiteUtil.TYPE_ACCOUNT_CARGO;
@@ -123,26 +124,26 @@ public with sharing class SIDRAliteMassActionController {
         // add filter for selected country
         String country = filter(this.filter.cse.BSPCountry__c);
         if (!isEmpty(country)) {
-            if (recordtypeId == RECORDTYPE_IFAP_ID) {
+            if (recordtypeId == RECORDTYPE_IFAP.Id) {
                 query += ' AND Account_Billing_Country__c = \'' + country + '\'';
             } else {
                 query += ' AND BSPCountry__c = \'' + country + '\'';
             }
         }
         // add Financial_Review_Type__c filter
-        if (recordtypeId == RECORDTYPE_IFAP_ID && filter(this.filter.cse.Financial_Review_Type__c) != '') {
+        if (recordtypeId == RECORDTYPE_IFAP.Id && filter(this.filter.cse.Financial_Review_Type__c) != '') {
             query += ' AND Financial_Review_Type__c = \'' + this.filter.cse.Financial_Review_Type__c + '\'';
         }
         // add Reason Filter
-        if (recordtypeId == RECORDTYPE_SAAM_ID || recordtypeId == RECORDTYPE_OSCAR_ID || recordtypeId == RECORDTYPE_INVOICING_ID) {
+        if (recordtypeId == RECORDTYPE_SAAM.Id || recordtypeId == RECORDTYPE_OSCAR.Id || recordtypeId == RECORDTYPE_INVOICING.Id) {
             String reason = filter(this.filter.cse.Reason1__c);
             if (isEmpty(reason)) {
                 list<String> allReasons = new list<String>();
-                if (recordtypeId == RECORDTYPE_SAAM_ID) {
+                if (recordtypeId == RECORDTYPE_SAAM.Id) {
                     allReasons.addAll(SidraLiteHelperForSAAM.VALID_REASONS);
-                } else if (recordtypeId == RECORDTYPE_OSCAR_ID) {
+                } else if (recordtypeId == RECORDTYPE_OSCAR.Id) {
                     allReasons.addAll(SidraLiteHelperForOSCAR.VALID_REASONS);
-                } else if (recordtypeId == RECORDTYPE_INVOICING_ID) {
+                } else if (recordtypeId == RECORDTYPE_INVOICING.Id) {
                     allReasons.addAll(SidraLiteHelperForInvoicing.VALID_REASONS);
                 }
                 query += ' AND Reason1__c IN ' + serialize(allReasons);
@@ -189,7 +190,7 @@ public with sharing class SIDRAliteMassActionController {
         list<Case> listCase3 = new list<Case>(); // list for 3th non compliance
         // IF FS
         if (isEmpty(this.filter.ifapType) || this.filter.ifapType == 'FS') {
-            String query1 = getBaseQuery(RECORDTYPE_IFAP_ID);
+            String query1 = getBaseQuery(RECORDTYPE_IFAP.Id);
             query1 += ' AND FS_Letter_Sent__c = true';
             query1 += ' AND Status in :STATUS_FOR_FS';
             query1 += ' AND firstFSnonComplianceDate__c = null';
@@ -201,7 +202,7 @@ public with sharing class SIDRAliteMassActionController {
             }
             listCase1.addAll(executeQuery(query1));
 
-            String query2 = getBaseQuery(RECORDTYPE_IFAP_ID);
+            String query2 = getBaseQuery(RECORDTYPE_IFAP.Id);
             query2 += ' AND Status in :STATUS_FOR_FS';
             query2 += ' AND firstFSnonComplianceDate__c != null';
             query2 += ' AND secondFSnonComplianceDate__c = null';
@@ -211,7 +212,7 @@ public with sharing class SIDRAliteMassActionController {
             }
             listCase2.addAll(executeQuery(query2));
 
-            String query3 = getBaseQuery(RECORDTYPE_IFAP_ID);
+            String query3 = getBaseQuery(RECORDTYPE_IFAP.Id);
             query3 += ' AND Status in :STATUS_FOR_FS';
             query3 += ' AND firstFSnonComplianceDate__c != null';
             query3 += ' AND secondFSnonComplianceDate__c != null';
@@ -224,7 +225,7 @@ public with sharing class SIDRAliteMassActionController {
         }
         //IF FA
         if (isEmpty(this.filter.ifapType) || this.filter.ifapType == 'FA') {
-            String query1 = getBaseQuery(RECORDTYPE_IFAP_ID);
+            String query1 = getBaseQuery(RECORDTYPE_IFAP.Id);
             query1 += ' AND FA_Letter_Sent__c = true';
             query1 += ' AND Status in :STATUS_FOR_FA';
             query1 += ' AND firstFAnonComplianceDate__c = null';
@@ -236,7 +237,7 @@ public with sharing class SIDRAliteMassActionController {
             }
             listCase1.addAll(executeQuery(query1));
 
-            String query2 = getBaseQuery(RECORDTYPE_IFAP_ID);
+            String query2 = getBaseQuery(RECORDTYPE_IFAP.Id);
             query2 += ' AND Status in :STATUS_FOR_FA';
             query2 += ' AND firstFAnonComplianceDate__c != null';
             query2 += ' AND secondFAnonComplianceDate__c = null';
@@ -246,7 +247,7 @@ public with sharing class SIDRAliteMassActionController {
             }
             listCase2.addAll(executeQuery(query2));
 
-            String query3 = getBaseQuery(RECORDTYPE_IFAP_ID);
+            String query3 = getBaseQuery(RECORDTYPE_IFAP.Id);
             query3 += ' AND Status in :STATUS_FOR_FA';
             query3 += ' AND firstFAnonComplianceDate__c != null';
             query3 += ' AND secondFAnonComplianceDate__c != null';
@@ -284,7 +285,7 @@ public with sharing class SIDRAliteMassActionController {
         SMAP process is only for Sidra Lite case creation
     **/
     private void searchSMAP(){
-        String query = getBaseQuery(RECORDTYPE_SMAP_ID);
+        String query = getBaseQuery(RECORDTYPE_SMAP.Id);
         query += ' AND Decision__c includes (\'Prejudiced Collection of Funds\')';
         query += ' AND Suspension_Date__c <= TODAY';
         if (!isEmpty(this.filter.dateFilter)) {
@@ -309,7 +310,7 @@ public with sharing class SIDRAliteMassActionController {
 
         // Financial Security
         if (isEmpty(this.filter.cse.Reason1__c) || SidraLiteHelperForSAAM.VALID_REASONS1.contains(this.filter.cse.Reason1__c)) {
-            String query1 = getBaseQuery(RECORDTYPE_SAAM_ID);
+            String query1 = getBaseQuery(RECORDTYPE_SAAM.Id);
             query1 += ' AND Reason1__c IN ' + serialize(SidraLiteHelperForSAAM.VALID_REASONS1);
             query1 += ' AND Bank_Guarantee_deadline__c < TODAY';
             query1 += ' AND Bank_Guarantee_received__c = null';
@@ -318,7 +319,7 @@ public with sharing class SIDRAliteMassActionController {
             }
             listCase1.addAll(executeQuery(query1));
 
-            String query2 = getBaseQuery(RECORDTYPE_SAAM_ID);
+            String query2 = getBaseQuery(RECORDTYPE_SAAM.Id);
             query2 += ' AND Reason1__c IN ' + serialize(SidraLiteHelperForSAAM.VALID_REASONS1);
             query2 += ' AND FS_Third_Deadline_Date__c = null';
             query2 += ' AND FS_Second_Deadline_Date__c < TODAY';
@@ -328,7 +329,7 @@ public with sharing class SIDRAliteMassActionController {
             }
             listCase2.addAll(executeQuery(query2));
 
-            String query3 = getBaseQuery(RECORDTYPE_SAAM_ID);
+            String query3 = getBaseQuery(RECORDTYPE_SAAM.Id);
             query3 += ' AND Reason1__c IN ' + serialize(SidraLiteHelperForSAAM.VALID_REASONS1);
             query3 += ' AND FS_third_non_compliance_date__c = null';
             query3 += ' AND FS_Third_Deadline_Date__c < TODAY';
@@ -340,7 +341,7 @@ public with sharing class SIDRAliteMassActionController {
         }
         // Certificate DGR
         if (isEmpty(this.filter.cse.Reason1__c) || SidraLiteHelperForSAAM.VALID_REASONS2.contains(this.filter.cse.Reason1__c)) {
-            String query1 = getBaseQuery(RECORDTYPE_SAAM_ID);
+            String query1 = getBaseQuery(RECORDTYPE_SAAM.Id);
             query1 += ' AND Reason1__c IN ' + serialize(SidraLiteHelperForSAAM.VALID_REASONS2);
             query1 += ' AND SAAM_Deadline_Date__c < TODAY';
             query1 += ' AND Termination_date__c = null';
@@ -350,7 +351,7 @@ public with sharing class SIDRAliteMassActionController {
             }
             listCase1.addAll(executeQuery(query1));
 
-            String query2 = getBaseQuery(RECORDTYPE_SAAM_ID);
+            String query2 = getBaseQuery(RECORDTYPE_SAAM.Id);
             query2 += ' AND Reason1__c IN ' + serialize(SidraLiteHelperForSAAM.VALID_REASONS2);
             query2 += ' AND Termination_date__c < TODAY';
             query2 += ' AND Documentation_Complete__c = null';
@@ -363,7 +364,7 @@ public with sharing class SIDRAliteMassActionController {
         }
         // Annual Fees
         if (isEmpty(this.filter.cse.Reason1__c) || SidraLiteHelperForSAAM.VALID_REASONS3.contains(this.filter.cse.Reason1__c)) {
-            String query1 = getBaseQuery(RECORDTYPE_SAAM_ID);
+            String query1 = getBaseQuery(RECORDTYPE_SAAM.Id);
             query1 += ' AND Reason1__c IN ' + serialize(SidraLiteHelperForSAAM.VALID_REASONS3);
             query1 += ' AND SAAM_Deadline_Date__c < TODAY';
             query1 += ' AND New_IFAP_deadline_Date__c = null';
@@ -375,7 +376,7 @@ public with sharing class SIDRAliteMassActionController {
             }
             listCase1.addAll(executeQuery(query1));
 
-            String query2 = getBaseQuery(RECORDTYPE_SAAM_ID);
+            String query2 = getBaseQuery(RECORDTYPE_SAAM.Id);
             query2 += ' AND Reason1__c IN ' + serialize(SidraLiteHelperForSAAM.VALID_REASONS3);
             query2 += ' AND (';
             query2 += '     (account.type IN :TYPE_ACCOUNT_PAX';
@@ -396,7 +397,7 @@ public with sharing class SIDRAliteMassActionController {
             query2 += ' AND isClosed = false';
             listCase2.addAll(executeQuery(query2));
 
-            String query3 = getBaseQuery(RECORDTYPE_SAAM_ID);
+            String query3 = getBaseQuery(RECORDTYPE_SAAM.Id);
             query3 += ' AND Reason1__c IN ' + serialize(SidraLiteHelperForSAAM.VALID_REASONS3);
             query3 += ' AND account.type IN :TYPE_ACCOUNT_PAX';
             query3 += ' AND Termination_date__c < TODAY';
@@ -439,7 +440,7 @@ public with sharing class SIDRAliteMassActionController {
 
         // Valid reasons 1
         if (isEmpty(this.filter.cse.Reason1__c) || SidraLiteHelperForOSCAR.VALID_REASONS1.contains(this.filter.cse.Reason1__c)) {
-            String query1 = getBaseQuery(RECORDTYPE_OSCAR_ID);
+            String query1 = getBaseQuery(RECORDTYPE_OSCAR.Id);
             query1 += ' AND Reason1__c IN ' + serialize(SidraLiteHelperForOSCAR.VALID_REASONS1);
             query1 += ' AND (OSCAR__r.Step6__c = \'Failed\'';
             query1 += ' OR OSCAR__r.Step9__c = \'Failed\'';
@@ -464,14 +465,14 @@ public with sharing class SIDRAliteMassActionController {
         list<Case> listCase2 = new list<Case>(); // list for 2nd non compliance
 
         if (isEmpty(this.filter.cse.Reason1__c) || SidraLiteHelperForOSCAR.VALID_REASONS2.contains(this.filter.cse.Reason1__c)) {
-            String query1 = getBaseQuery(RECORDTYPE_OSCAR_ID);
+            String query1 = getBaseQuery(RECORDTYPE_OSCAR.Id);
             query1 += ' AND Reason1__c IN ' + serialize(SidraLiteHelperForOSCAR.VALID_REASONS2);
             query1 += ' AND SAAM_Deadline_Date__c < TODAY';
             query1 += ' AND Termination_date__c = null';
             query1 += ' AND Documentation_Complete__c = null';
             listCase1.addAll(executeQuery(query1));
 
-            String query2 = getBaseQuery(RECORDTYPE_OSCAR_ID);
+            String query2 = getBaseQuery(RECORDTYPE_OSCAR.Id);
             query2 += ' AND Reason1__c IN ' + serialize(SidraLiteHelperForOSCAR.VALID_REASONS2);
             query2 += ' AND Termination_date__c < TODAY';
             query2 += ' AND Documentation_Complete__c = null';
@@ -503,7 +504,7 @@ public with sharing class SIDRAliteMassActionController {
         list<Case> listCase2 = new list<Case>(); // list for 2nd non compliance
         list<Case> listCase3 = new list<Case>(); // list for 3th non compliance
 
-        String query1 = getBaseQuery(RECORDTYPE_INVOICING_ID);
+        String query1 = getBaseQuery(RECORDTYPE_INVOICING.Id);
         query1 += ' AND SAAM_Deadline_Date__c < TODAY';
         query1 += ' AND (account.type IN :TYPE_ACCOUNT_PAX OR account.type IN :TYPE_ACCOUNT_CARGO OR account.type IN :TYPE_ACCOUNT_AGENT)';
         query1 += ' AND Has_the_agent_paid_invoice__c IN ' + serialize(SidraLiteHelperForInvoicing.VALID_AGENT_PAID);
@@ -512,7 +513,7 @@ public with sharing class SIDRAliteMassActionController {
         }
         listCase1 = executeQuery(query1);
 
-        String query2 = getBaseQuery(RECORDTYPE_INVOICING_ID);
+        String query2 = getBaseQuery(RECORDTYPE_INVOICING.Id);
         query2 += ' AND Termination_date__c = null';
         query2 += ' AND (';
         query2 += ' (account.type IN :TYPE_ACCOUNT_PAX';
@@ -531,7 +532,7 @@ public with sharing class SIDRAliteMassActionController {
         query2 += ' AND Has_the_agent_paid_invoice__c IN ' + serialize(SidraLiteHelperForInvoicing.VALID_AGENT_PAID);
         listCase2 = executeQuery(query2);
 
-        String query3 = getBaseQuery(RECORDTYPE_INVOICING_ID);
+        String query3 = getBaseQuery(RECORDTYPE_INVOICING.Id);
         query3 += ' AND account.type IN :TYPE_ACCOUNT_PAX';
         query3 += ' AND Termination_date__c < TODAY';
         query3 += ' AND Has_the_agent_paid_invoice__c IN ' + serialize(SidraLiteHelperForInvoicing.VALID_AGENT_PAID);
@@ -810,6 +811,18 @@ public with sharing class SIDRAliteMassActionController {
 
         }
 
+        public list<SelectOption> getListRecordtype() {
+            list<SelectOption> listOptions = new list<SelectOption>();
+            listOptions.add(new SelectOption('', '--None--'));
+            listOptions.add(new SelectOption(RECORDTYPE_IFAP.Id, RECORDTYPE_IFAP.Name));
+            listOptions.add(new SelectOption(RECORDTYPE_SMAP.Id, RECORDTYPE_SMAP.Name));
+            listOptions.add(new SelectOption(RECORDTYPE_SAAM.Id, RECORDTYPE_SAAM.Name));
+            listOptions.add(new SelectOption(RECORDTYPE_OSCAR.Id, RECORDTYPE_OSCAR.Name));
+            listOptions.add(new SelectOption(RECORDTYPE_INVOICING.Id, RECORDTYPE_INVOICING.Name));
+            
+            return listOptions;
+        }
+
         public list<SelectOption> getListReasons() {
             list<SelectOption> listOptions = new list<SelectOption>();
             if (getIsOSCAR()) {
@@ -852,23 +865,23 @@ public with sharing class SIDRAliteMassActionController {
 
 
         public Boolean getIsIFAP() {
-            return this.cse.RecordtypeId == RECORDTYPE_IFAP_ID;
+            return this.cse.RecordtypeId == RECORDTYPE_IFAP.Id;
         }
 
         public Boolean getIsSMAP() {
-            return this.cse.RecordtypeId == RECORDTYPE_SMAP_ID;
+            return this.cse.RecordtypeId == RECORDTYPE_SMAP.Id;
         }
 
         public Boolean getIsOSCAR() {
-            return this.cse.RecordtypeId == RECORDTYPE_OSCAR_ID;
+            return this.cse.RecordtypeId == RECORDTYPE_OSCAR.Id;
         }
 
         public Boolean getIsSAAM() {
-            return this.cse.RecordtypeId == RECORDTYPE_SAAM_ID;
+            return this.cse.RecordtypeId == RECORDTYPE_SAAM.Id;
         }
 
         public Boolean getIsInvoicing() {
-            return this.cse.RecordtypeId == RECORDTYPE_INVOICING_ID;
+            return this.cse.RecordtypeId == RECORDTYPE_INVOICING.Id;
         }
 
         public String getShortName() {

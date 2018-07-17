@@ -6,9 +6,9 @@ public class CodeRangeDAO_Test {
 	private static IATA_ISO_Country__c c2 = new IATA_ISO_Country__c (Name='FRANCE',ISO_Code__c='FR');
 	private static IATA_ISO_Country__c[] ctries = null;
 
-	private static Id programRT  =  TransformationHelper.RtIDsPerDeveloperNamePerObj(new list<string> {'AMS_Segment__c'}).get('AMS_Segment__c').get('IATA_Code_Programs');
-    private static Id codeRangeRT  =  TransformationHelper.RtIDsPerDeveloperNamePerObj(new list<string> {'Code_Range__c'}).get('Code_Range__c').get('IATA_Code');
-
+	private static Id programRT  =  RecordTypeSingleton.getInstance().getRecordTypeId('AMS_Segment__c', 'IATA_Code_Programs');
+    private static Id codeRangeRT  =  RecordTypeSingleton.getInstance().getRecordTypeId('Code_Range__c', 'IATA_Code');
+	
     private static AMS_Segment__c p1 = new AMS_Segment__c (label__c='A',RecordTypeId=programRT );
 
 
