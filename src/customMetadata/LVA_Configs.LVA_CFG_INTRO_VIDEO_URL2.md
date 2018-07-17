@@ -8,6 +8,6 @@
     </values>
     <values>
         <field>Value__c</field>
-        <value xsi:type="xsd:string">https://www.youtube.com/embed/GtSoD3xSUWY</value>
+        <value xsi:type="xsd:string">https://www.youtube.com/embed/bohppGp_khU</value>
     </values>
 </CustomMetadata>
