@@ -356,6 +356,8 @@ public without sharing class AMS_MigrationToolHelper {
 				caseToProcess.CaseArea__c = 'Accreditation Process';
 				caseToProcess.Reason1__c = newgenCaseReason.get(processType);
 				caseToProcess.Subject = caseToProcess.Reason1__c + ' - ' + caseToProcess.Account.Name;
+				if(processType == AMS_RecordCreatorWebservice.IEP_BANK_ACCOUNT_SETUP)
+					caseToProcess.Visible_on_ISS_Portal__c = true;
 			}
 			
 			update caseToProcess;
@@ -817,7 +819,7 @@ public without sharing class AMS_MigrationToolHelper {
 
 			//  For IEP BANK Acc Setup force flag to false by default ('ISS Portal - Make case invisible' worflow cannot run for this process)
 			if(processType == AMS_RecordCreatorWebservice.IEP_BANK_ACCOUNT_SETUP){
-				caseToProcess.Visible_on_ISS_Portal__c = false;
+				caseToProcess.Visible_on_ISS_Portal__c = true;
 				 //assign to queue
 		         Database.DMLOptions dmo = new Database.DMLOptions();
 		         dmo.assignmentRuleHeader.useDefaultRule = true;
