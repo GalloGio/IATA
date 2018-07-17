@@ -27,6 +27,11 @@ public class ANG_Apply_RHC_Equal_FS_Controller {
 		private set;
 	}
 	public Integer agenciesFetched {get; private set;}
+	public Integer batchPercentage {get; set;}
+	public AsyncApexJob batchJob {get; set;}
+	public Boolean pollerBool {get; set;}
+	public Boolean batchStatusBool {get; set;}
+	public Integer batchCounter {get; set;}
 
 	public ANG_Apply_RHC_Equal_FS_Controller() {
 		populateModes();
@@ -86,6 +91,8 @@ public class ANG_Apply_RHC_Equal_FS_Controller {
     	previousIataCode = iataCode;
     	previousModeValue = modeValue;
     	previousActionValue = actionValue;
+    	batchStatusBool = false;
+    	batchJob = null;
 
     	Boolean rhcFlag = actionValue == 'Apply_RHC' ? false : true;
 
@@ -169,14 +176,65 @@ public class ANG_Apply_RHC_Equal_FS_Controller {
 		this.renderConfirmButton = false;
 	}
 
-	public void acivateBatch() {
-		Set<String> modeToSend = new Set<String>();
+	public void applyOrRevertRHC() {
+		if (modeValue == 'IATA_Code') {
+  			List<String> iataCodesAndNames = new List<String>();
+  
+	  		try {
+	  			for (ANG_RHC_Information__c rhcInfo: agencies) {
+	  				iataCodesAndNames.add(rhcInfo.ANG_AccountId__r.IataCode__c + ' - ' + rhcInfo.ANG_AccountId__r.Name);
+	  				rhcInfo.ANG_RHC_Amount_Equals_FS__c = (actionValue == 'Apply_RHC');  
+	  			}
+	  
+	  			update agencies;
 
-		if (modeValue == 'BSP') {
-			modeToSend.add(bspValue);
-		} else if (modeValue == 'IATA_Code') {
-			modeToSend.add(iataCode);
+	  			batchStatusBool = true;
+  				pollerBool = true;
+  				batchCounter = 0;
+
+	  		} catch(Exception e) {
+	  			ApexPages.addMessage(new ApexPages.message(ApexPages.severity.ERROR, 'Error updating RHC Info for Agencies with Iata code(s): ' + String.join(iataCodesAndNames,',') + ' - ' + e.getMessage() + ' - ' + e.getStackTraceString()));
+	  		}
+  		} else {
+			List<AMS_Settlement_System__c> operationsToUpdate = [SELECT Id, Name, ANG_RHC_Amount_Equals_FS__c 
+   																 FROM AMS_Settlement_System__c 
+																 WHERE RecordType.Name = 'BSP'
+																	AND Name = :bspValue
+																	AND ANG_RHC_Amount_Equals_FS__c = :(actionValue != 'Apply_RHC')];
+
+		  	try {
+		  		for(AMS_Settlement_System__c bsp: operationsToUpdate) {
+		  			bsp.ANG_RHC_Amount_Equals_FS__c = (actionValue == 'Apply_RHC');
+		  		}
+
+		  		update operationsToUpdate;
+
+		  		batchStatusBool = true;
+  				pollerBool = true;
+  				batchCounter = 0;
+		 		
+		  	} catch(Exception e) {
+		  		ApexPages.addMessage(new ApexPages.message(ApexPages.severity.ERROR, 'Error updating RHC Info for BSP: ' + bspValue + ' - ' + e.getMessage() + ' - ' + e.getStackTraceString()));
+		  	}
+  		}
+	}
+
+	public void getBatchStatus() {
+		batchJob = [SELECT Id, Status, NumberOfErrors, JobItemsProcessed, TotalJobItems, CreatedBy.Email, ApexClass.Name
+					FROM AsyncApexJob 
+					WHERE ApexClass.Name = 'ANG_RHCEqualFSBatch'
+						AND CreatedById = :UserInfo.getUserId()
+					ORDER BY CreatedDate DESC][0];
+
+		if (batchJob != null) {
+			batchPercentage = 0;
+			if (batchJob.JobItemsProcessed > 0) {
+				batchPercentage = batchJob.JobItemsProcessed * 100 / batchJob.TotalJobItems;
+			}
 		}
-		//ANG_RHCEqualFSBatch();
+
+		pollerBool = (batchJob.status == 'Ended' || batchJob.status == 'Completed') ? false : true;
+
+		batchCounter++;
 	}
 }
