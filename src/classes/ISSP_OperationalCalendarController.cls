@@ -8,8 +8,20 @@ global without sharing class ISSP_OperationalCalendarController {
     
     public class OperationalCalendarException extends Exception {}
     
-    public static final list<String> AIRLINE_PROFILES = ISSP_CS__c.getValues('ISS Portal Airline Profiles').Value__c.split(',');
-    public static final list<String> AGENT_PROFILES = ISSP_CS__c.getValues('ISS Portal Agency Profiles').Value__c.split(',');
+    public static final list<String> AIRLINE_PROFILES = new list<String>();
+    public static final list<String> AGENT_PROFILES = new list<String>();
+    static {
+        try {
+            AIRLINE_PROFILES.addAll(ISSP_CS__c.getValues('ISS Portal Airline Profiles').Value__c.split(','));
+        } catch(Exception e) {
+            System.debug('No profiles found in ISSP_CS.ISS Portal Airline Profiles');
+        }
+        try {
+            AGENT_PROFILES.addAll(ISSP_CS__c.getValues('ISS Portal Agency Profiles').Value__c.split(','));
+        } catch(Exception e) {
+            System.debug('No profiles found in ISSP_CS.ISS Portal Agency Profiles');
+        }
+    }
     public static final map<String,String> MAP_OPERATION_TYPES = new map<String,String>{
         'P' => 'BSP International',
         'D' => 'BSP Domestic',
