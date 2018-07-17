@@ -168,7 +168,7 @@ public without sharing class OneId_RegistrationProcessController {
     @AuraEnabled
     public static CountryInformation getISOCountries() {
         List<IATA_ISO_Country__c> countries = new List<IATA_ISO_Country__c>();
-        for(IATA_ISO_Country__c iso:[select Id, Name, ISO_Code__c from IATA_ISO_Country__c order by Name]){
+        for(IATA_ISO_Country__c iso : IATAIsoCountryDAO.sortIATAIsoCountryList(IATAIsoCountryDAO.getIsoCountries(), 'Name')){
             if (iso.Name != 'All Countries'){
                 countries.add(iso);
             }
@@ -322,7 +322,7 @@ public without sharing class OneId_RegistrationProcessController {
                 
                 //Assign countries and states
                 if (!String.isBlank(acc.BillingCountry)) {
-                    List <Iata_Iso_Country__c> cn = [SELECT id FROM Iata_Iso_Country__c WHERE Name = :acc.BillingCountry LIMIT 1];
+                    List<Iata_Iso_Country__c> cn = IATAIsoCountryDAO.getIsoCountryByCountriesName(new Set<String>{acc.BillingCountry});
                     if (cn.size()!=0) {
                         acc.IATA_ISO_Country__c = acc.IATA_ISO_Shipping_Country__c = cn[0].id;
                     }

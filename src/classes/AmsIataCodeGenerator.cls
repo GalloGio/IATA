@@ -242,11 +242,7 @@ global class AmsIataCodeGenerator{
                 String isoState = theAccreditation.IATA_ISO_State__c;
                 if(isoState == null && theAccreditation.Branch_Office_Country__c != null)
                 {
-
-                    // Get the default state value for the accreditation's country -- unfortunately join subselect can't be used due to the SF limits...
-                    //List<IATA_ISO_Country__c> accreditationCountry = [select AMS_Default_State__c, name from iata_iso_country__c where id = :theAccreditation.Branch_Office_Country__c limit 1];
-                    
-                    //if(accreditationCountry.isEmpty()){
+         
                     if(theAccreditation.Branch_Office_Country__c == null || theAccreditation.Branch_Office_Country__r.AMS_Default_State__c == null){
                         System.debug(LoggingLevel.ERROR,'[generatedAgencyIATACode] The agency you were submitting does not have IATA ISO State set. The system failed to find a default one to use for your selected ISO Country. Please provide a State value as well and try generating the IATA code again, please.');
 
@@ -314,10 +310,6 @@ global class AmsIataCodeGenerator{
                 if(isoState == null && theAccreditation.Branch_Office_Country__c != null)
                 {
 
-                    // Get the default state value for the accreditation's country -- unfortunately join subselect can't be used due to the SF limits...
-                    //List<IATA_ISO_Country__c> accreditationCountry = [select AMS_Default_State__c, name from iata_iso_country__c where id = :theAccreditation.Branch_Office_Country__c limit 1];
-                    
-                    //if(accreditationCountry.isEmpty()){
                     if(theAccreditation.Branch_Office_Country__c == null || theAccreditation.Branch_Office_Country__r.AMS_Default_State__c == null){
                         System.debug(LoggingLevel.ERROR,'[generatedAgencyIATACode] The agency you were submitting does not have IATA ISO State set. The system failed to find a default one to use for your selected ISO Country. Please provide a State value as well and try generating the IATA code again, please.');
 

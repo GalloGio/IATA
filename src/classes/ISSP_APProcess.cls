@@ -1120,11 +1120,12 @@ public without sharing class ISSP_APProcess {
         List<String> countriesParam = (List<String>) System.JSON.deserialize(Apexpages.currentPage().getParameters().get('countriesParam'), List<String>.class);
         String effectiveDateParam = Apexpages.currentPage().getParameters().get('effectiveDateParam');
 
+        Set<String> countryParam = new Set<String>(countriesParam);
         String optInOutSubject = optInOutParam == 'OUT' ? 'Opt-Out' : 'Opt-In';
 
         retrieveHQAccountDetails(vHQAccountId);
 
-        Map<Id, IATA_ISO_Country__c> isoCountriesMap = new Map<Id, IATA_ISO_Country__c>([SELECT Id, ISO_Code__c, Region__c, Name FROM IATA_ISO_Country__c WHERE Id IN :countriesParam]);
+        Map<Id, IATA_ISO_Country__c> isoCountriesMap = new Map<Id, IATA_ISO_Country__c>(IATAIsoCountryDAO.getIsoCountriesByIds(countryParam));
         
         List<String> countryNames = new List<String>();
         for (IATA_ISO_Country__c country: isoCountriesMap.values()) countryNames.add(country.Name);

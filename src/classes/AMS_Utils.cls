@@ -5,7 +5,7 @@ public without sharing class AMS_Utils {
         get{
 
             if(mapCountries == null)
-                mapCountries = mapCountries = new map<String,IATA_ISO_Country__c>([SELECT Id, ISO_Code__c FROM IATA_ISO_Country__c]);
+                mapCountries = mapCountries = new map<String,IATA_ISO_Country__c>(IATAIsoCountryDAO.getIsoCountries());
 
             return mapCountries;
 
