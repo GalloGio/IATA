@@ -17,7 +17,7 @@ global class ANG_RHCEqualFSBatch implements Database.Batchable<Account>, Databas
 	
 	global Iterable<Account> start(Database.BatchableContext BC) {
 
-	    String queryRHCs = 'SELECT Id, Name, IATACode__c, IATA_ISO_Country__r.AMS_Settlement_System__r.ANG_RHC_Amount_Equals_FS__c '+
+	    String queryRHCs = 'SELECT Id, Name, IATACode__c, IATA_ISO_Country__r.AMS_Settlement_System__r.ANG_RHC_Amount_Equals_FS__c, '+
 	    		'(SELECT Id, ANG_RHC_Amount_Equals_FS__c FROM RHC_Informations__r)'+
 	    	'FROM Account '+
 	    	'WHERE RecordTypeId = :AGENCYRTID '+
