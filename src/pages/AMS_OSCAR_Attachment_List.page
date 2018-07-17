@@ -225,7 +225,8 @@
 
 <!--            BUTTONS -->
             <apex:pageblockButtons location="top" >
-                <c:UploadMultipleFileToAmazonButton sObjectId="{!caseId}" AmazonCredential="{!credentialName}" path="{!amazonPath}" uploaderWizard="AMS_File" sourceSystem="Internal" rendered="{!NOT(isReadOnly)}" />
+                <c:UploadMultipleFileToAmazonButton sObjectId="{!caseId}" AmazonCredential="{!credentialName}" path="{!amazonPath}" uploaderWizard="AMS_File" sourceSystem="Internal" rendered="{!NOT(isReadOnly)}" 
+                    sObjectOwnerId="{!caseOwnerId}"/> <!-- AMSU-154 -->
                 <apex:commandButton value="{!$Label.Transfer_Attachments}" onclick="redirect();" immediate="true" rendered="{!NOT(isReadOnly)}" />
                 <apex:commandButton value="{!$Label.Make_All_Public}" action="{!makeAllPublic}" oncomplete="refreshPage();" rendered="{!NOT(isReadOnly)}"  />
                 <apex:commandButton value="{!$Label.Make_All_Private}" action="{!makeAllPrivate}" oncomplete="refreshPage()" rendered="{!NOT(isReadOnly)}"  />
