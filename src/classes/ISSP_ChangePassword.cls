@@ -76,10 +76,10 @@ public with sharing class ISSP_ChangePassword {
                 if (pageRef != null){
                     
                     if(!isOneId || serviceName == 'ISSP'){
-                        pageRef = new PageReference(OneIdUtils.getSiteCompleteUrl(OneIdUtils.Mode.ISSP) + '/ISSP_PersonalInformation?mid=M5S1&confirm=yes' + commParam);
+                        pageRef = new PageReference(OneIdUtils.getCommunityRedirection(OneIdUtils.Mode.ISSP,'/ISSP_PersonalInformation?mid=M5S1&confirm=yes' + commParam));
                     }
                     else{
-                        pageref = new PageReference(OneIdUtils.getSiteCompleteUrl(OneIdUtils.Mode.IDENTITY) + '?' + serviceNameParam);
+                        pageref = new PageReference(OneIdUtils.getCommunityRedirection(OneIdUtils.Mode.IDENTITY,'/s/?'+serviceNameParam));
                     }
                     
                     if (tempPass) updateUsers();

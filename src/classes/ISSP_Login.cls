@@ -250,6 +250,7 @@ public without sharing class ISSP_Login {
         if(startUrl != null){            
             if(oneIDStatus == 'ON'){                
                 PageReference pr = new PageReference(OneIdUtils.getSiteCompleteUrl(OneIdUtils.Mode.IDENTITY) + '/login/?startURL='+startUrl+'&serviceName=ISSP');
+                PageReference pr = new PageReference(identityLogin+'?startURL='+startUrl+'&serviceName=ISSP');
                 pr.setRedirect(true);                        
                 return pr;    
             }else{                
@@ -258,7 +259,7 @@ public without sharing class ISSP_Login {
         }
         else if(communityName == null && startUrl == null){            
             if(oneIDStatus == 'ON'){                
-                PageReference pr = new PageReference(OneIdUtils.getSiteCompleteUrl(OneIdUtils.Mode.IDENTITY) + '/login/?startURL=%2F'+'ISSP_Homepage&serviceName=ISSP');
+                PageReference pr = new PageReference(identityLogin+'?startURL=%2F'+'ISSP_Homepage&serviceName=ISSP');
                 pr.setRedirect(true);
                 return pr;    
             }else{

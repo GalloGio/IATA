@@ -183,7 +183,7 @@ global without sharing class Comm_User_Helper {
                       link = OneIdUtils.getSiteCompleteUrl(OneIdUtils.Mode.ISSP) + '/ISSP_First_Login?c=' + encodedPart;
                       template = 'Identity_Portal_ISSP_New_User';
                     }else{
-                      link = OneIdUtils.getSiteCompleteUrl(OneIdUtils.Mode.IDENTITY) + '/IdentityFirstLogin?c=' + encodedPart;
+                      link = OneIdUtils.getSiteCompleteUrl(OneIdUtils.Mode.IDENTITY) + '/s/IdentityFirstLogin?c=' + encodedPart;
                       template = 'Identity_Portal_New_User';
                     }
 
@@ -566,7 +566,7 @@ global without sharing class Comm_User_Helper {
                   system.debug('prepare email body for: ' + ONEIDENTITY);
                   string prefix = OneIdUtils.getSiteCompleteUrl(OneIdUtils.Mode.IDENTITY);
                   String serviceNameParam = String.isNotEmpty(serviceName) ? '&serviceName='+serviceName : '';
-                  link = prefix + '/IdentityFirstLogin?'+encodedPart+serviceNameParam;
+                  link = prefix + '/s/IdentityFirstLogin?'+encodedPart+serviceNameParam;
                   //template = 'Communities_Forgot_Password_Email3';
                   if(serviceName == ISSP){
                     template = 'Identity_Changed_ISSP_Password_Email_Custom';
