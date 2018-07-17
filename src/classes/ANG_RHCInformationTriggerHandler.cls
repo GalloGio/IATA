@@ -32,7 +32,7 @@ public class ANG_RHCInformationTriggerHandler{
 		List<ANG_RHC_Information__c> updatedFlagsForRHCEqsFS = new List<ANG_RHC_Information__c>();
 		
 		for(ANG_RHC_Information__c rhc : triggerNew) 
-			if(rhc.ANG_RHC_Amount_Equals_FS__c != oldMap.get(rhc.id).ANG_RHC_Amount_Equals_FS__c && rhc.ANG_RHC_Amount_Equals_FS__c)
+			if(rhc.ANG_RHC_Amount_Equals_FS__c != oldMap.get(rhc.id).ANG_RHC_Amount_Equals_FS__c)
 				updatedFlagsForRHCEqsFS.add(rhc);
 
 		if (!updatedFlagsForRHCEqsFS.isEmpty()) ANG_RHCHelper.calculateRHCAmount(updatedFlagsForRHCEqsFS);
