@@ -18,13 +18,13 @@ global class ANG_RHCEqualFSBatch implements Database.Batchable<SObject>, Databas
 	
 	global Iterable<SObject> start(Database.BatchableContext BC) {
 
-	    String queryBSP = '[SELECT Id, Name, ANG_RHC_Amount_Equals_FS__c '+
+	    String queryBSP = 'SELECT Id, Name, ANG_RHC_Amount_Equals_FS__c '+
 	    	'FROM AMS_Settlement_System__c '+
 	    	'WHERE RecordType.Name = \'BSP\' '+
 	    	'AND Name IN :values '+
 	    	'AND ANG_RHC_Amount_Equals_FS__c = '+(mode.endsWithIgnoreCase('-apply') ? 'false' : 'true');
 
-	    String queryIataCodes = '[SELECT Id, Name, IATACode__c, '+
+	    String queryIataCodes = 'SELECT Id, Name, IATACode__c, '+
 	    	'(SELECT Id, ANG_RHC_Amount__c, ANG_Financial_Security__c, ANG_RHC_Amount_Equals_FS__c FROM RHC_Informations__r '+
 	    		'WHERE ANG_RHC_Amount_Equals_FS__c = '+(mode.endsWithIgnoreCase('-apply') ? 'false' : 'true')+') '+
 	    	'FROM Account '+
