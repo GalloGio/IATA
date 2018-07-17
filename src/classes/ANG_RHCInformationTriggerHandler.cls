@@ -28,6 +28,14 @@ public class ANG_RHCInformationTriggerHandler{
 		convertAndSumFS();
 		sumRHCAmount();
 		//analyzeConsumedRHCAdjustment(); as per NEWGEN-1085
+
+		List<ANG_RHC_Information__c> updatedFlagsForRHCEqsFS = new List<ANG_RHC_Information__c>();
+		
+		for(ANG_RHC_Information__c rhc : triggerNew) 
+			if(rhc.ANG_RHC_Amount_Equals_FS__c != oldMap.get(rhc.id).ANG_RHC_Amount_Equals_FS__c)
+				updatedFlagsForRHCEqsFS.add(rhc);
+
+		if (!updatedFlagsForRHCEqsFS.isEmpty()) ANG_RHCHelper.calculateRHCAmount(updatedFlagsForRHCEqsFS);
 	}
 	public void onAfterUpdate(){
 		new ANG_AgencyEventsGenerator(filterByIATACode(triggerNew),oldMap,'RHC_Information','ANG_AccountId__c').run();
