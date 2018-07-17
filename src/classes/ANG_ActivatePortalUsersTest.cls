@@ -65,10 +65,6 @@ private class ANG_ActivatePortalUsersTest {
         cs.add(new ISSP_CS__c(Name = 'Host',value__c = 'portal.iata.org'));
         insert cs;
 
-        Apex_Setting__c idAccountOwner = new Apex_Setting__c(Name = 'Stop Owner Alignment');
-        idAccountOwner.Text_1__c = '005w000000688eeAAA';
-        insert idAccountOwner;
-
     }
     
 	@isTest static void createPortalUserForNonExistingContact()

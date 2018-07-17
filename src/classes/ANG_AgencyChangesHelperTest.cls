@@ -50,10 +50,6 @@ public class ANG_AgencyChangesHelperTest {
 
 		insert new List<AMS_Agencies_relationhip__c>{r1,r2,r3};
 
-		Apex_Setting__c idAccountOwner = new Apex_Setting__c(Name = 'Stop Owner Alignment');
-        idAccountOwner.Text_1__c = '005w000000688eeAAA';
-        insert idAccountOwner;
-
 	}
 
 

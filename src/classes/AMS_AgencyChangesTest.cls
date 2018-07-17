@@ -247,10 +247,6 @@ public class AMS_AgencyChangesTest {
 	
 	static TestMethod void testChangeOfOwnershipNonIATABuysAllHierarchy(){
 		
-		Apex_Setting__c idAccountOwner = new Apex_Setting__c(Name = 'Stop Owner Alignment');
-        idAccountOwner.Text_1__c = '005w000000688eeAAA';
-        insert idAccountOwner;
-
 		// Initialize the hierarchy and create an OSCAR
 
 		init2Hierarchies(true);
