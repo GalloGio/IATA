@@ -1778,10 +1778,17 @@ trigger CaseBeforeTrigger on Case (before delete, before insert, before update) 
                 }
                 //Here we calculate the first contact with client in business hours
                 Case oldCase = System.Trigger.oldMap.get(updatedCase.Id);
-                if(updatedCase.BusinessHoursId <> null && updatedCase.First_Contact_with_Client__c <> null 
-                    && (updatedCase.First_Contact_w_Client_in_Business_Hours__c != oldCase.First_Contact_w_Client_in_Business_Hours__c 
-                    || updatedCase.First_Contact_w_Client_in_Business_Hours__c == null))
+                if(
+                    updatedCase.BusinessHoursId <> null
+                    && updatedCase.First_Contact_with_Client__c <> null 
+                    && (
+                        updatedCase.First_Contact_w_Client_in_Business_Hours__c != oldCase.First_Contact_w_Client_in_Business_Hours__c 
+                        || updatedCase.First_Contact_w_Client_in_Business_Hours__c == null
+                        || updatedCase.First_Contact_w_Client_in_Business_Hours__c < 0
+                    )
+                ) {
                     updatedCase.First_Contact_w_Client_in_Business_Hours__c = BusinessHours.diff(updatedCase.BusinessHoursId, updatedCase.CreatedDate, updatedCase.First_Contact_with_Client__c) / 3600000.0;
+                }
             }
             if (Trigger.isUpdate && (!transformationHelper.CalculateBusinessHoursAgesGet() || BusinessDays.isAllowedRunTwice)) { // we are on the update so we have the caseIDS!Hurra!!
                 system.debug('##ROW##');
