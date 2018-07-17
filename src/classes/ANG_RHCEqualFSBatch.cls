@@ -109,7 +109,7 @@ global class ANG_RHCEqualFSBatch implements Database.Batchable<SObject>, Databas
             mail.setSubject('RHC Equal to FS Batch completed' + (errors.isEmpty() ? ' successfully'  :' with errors'+' - End time: '+ System.now()));
             mail.setSenderDisplayName('Batch Processing Completed');
             mail.setPlainTextBody('Batch Process has been completed'+ (errors.isEmpty() ? ' successfully.'  : ' with errors: ') +
-            (errors.isEmpty() ?'':'\n\n\tERRORS:\n\n' +String.join(errors,'\n')));
+            (errors.isEmpty() ?'\n\nBSPs Processed: '+bspsProcessed+'\nIATA codes processed: '+agenciesProcessed :'\n\n\tERRORS:\n\n' +String.join(errors,'\n')));
             Messaging.sendEmail(new Messaging.SingleEmailMessage[] {mail});
         }
 
