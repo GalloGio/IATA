@@ -44,7 +44,6 @@ public without sharing class OneIdUtils {
     @AuraEnabled
     public Static String getCommunityRedirection (Mode m, String startUrl){
         String networdUrl = '/servlet/networks/switch?networkId=';
-        String netMode;
         String sUrl = '';
         
         if(startUrl != '') sUrl = '&startURL='+EncodingUtil.urlEncode(startUrl, 'UTF-8');        
@@ -52,6 +51,8 @@ public without sharing class OneIdUtils {
         System.debug(loggingLevel.FINE, '____ [cls OneIdUtils - getSiteCompleteUrl] Mode - ' + m);
         if(m == Mode.CURRENT) COMMUNITY_COMPLETE_URL = Site.getBaseUrl();
         else{            
+            String netMode;
+            
             if(m == Mode.ISSP) netMode = 'IATA Portal';
             if(m == Mode.IDENTITY) netMode = 'identity';
             
@@ -67,7 +68,7 @@ public without sharing class OneIdUtils {
             COMMUNITY_COMPLETE_URL= getOrgUrl()+(String.isEmpty(getCommunityUrlName()) ? '' : '/' + getCommunityUrlName());
         }
         
-        System.debug('____ [cls OneIdUtils - getSiteCompleteUrl] final URL - ' + COMMUNITY_COMPLETE_URL);
+        System.debug('____ [cls OneIdUtils - getCommunityRedirection] final URL - ' + COMMUNITY_COMPLETE_URL);
         
         return COMMUNITY_COMPLETE_URL;
     }

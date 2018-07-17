@@ -317,7 +317,6 @@ public without sharing class OneIdLightningLoginFormController {
     public static Boolean getIsUsernamePasswordEnabled() {
         Auth.AuthConfiguration authConfig = getAuthConfig();
 
-       // System.debug(loggingLevel.Debug, '____ [cls OneIdLightningLoginFormController - getIsUsernamePasswordEnabled] currentPage - ' + ApexPages.currentPage().getParameters());
         return authConfig.getUsernamePasswordEnabled();
     }
 
