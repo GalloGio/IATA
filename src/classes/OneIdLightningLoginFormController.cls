@@ -110,7 +110,7 @@ public without sharing class OneIdLightningLoginFormController {
             //Login on the portal community using a portal URL
             if( String.isNotBlank(serviceName) && serviceName == 'ISSP'){
                  String s = startUrl != null ? startUrl : '/ISSP_Homepage';
-                 ApexPages.PageReference lgnPortal = Site.login(username, password, OneIdUtils.getSiteCompleteUrl(OneIdUtils.Mode.ISSP) + s);
+                 ApexPages.PageReference lgnPortal = Site.login(username, password, OneIdUtils.getCommunityRedirection(OneIdUtils.Mode.ISSP,s));
             }
             
             //login in siteCompleteUrl
@@ -126,7 +126,7 @@ public without sharing class OneIdLightningLoginFormController {
             
             if (userListConfirmTempPassword[0].UID__c != '' && userListConfirmTempPassword[0].UID__c != null){
                 String serviceNameParam = String.isEmpty(serviceName) ? '' : '?serviceName='+serviceName;
-                lgn = Site.login(username, password, OneIdUtils.getSiteCompleteUrl(OneIdUtils.Mode.IDENTITY).removeEnd('/s') + '/OneId_ChangePassword'+serviceNameParam);
+                lgn = Site.login(username, password, OneIdUtils.getCommunityRedirection(OneIdUtils.Mode.IDENTITY,'/OneId_ChangePassword'+serviceNameParam));
             }
             
             //redirect to startUrl or some other page returned from the login 
@@ -316,6 +316,8 @@ public without sharing class OneIdLightningLoginFormController {
     @AuraEnabled
     public static Boolean getIsUsernamePasswordEnabled() {
         Auth.AuthConfiguration authConfig = getAuthConfig();
+
+       // System.debug(loggingLevel.Debug, '____ [cls OneIdLightningLoginFormController - getIsUsernamePasswordEnabled] currentPage - ' + ApexPages.currentPage().getParameters());
         return authConfig.getUsernamePasswordEnabled();
     }
 
