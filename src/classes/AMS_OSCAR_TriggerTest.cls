@@ -69,6 +69,7 @@
     @isTest static void updateOSCARTestOKFirstStep() {
 
         AMS_OSCAR_TestDataFactory.createOSCARwithInspectionsTestData();
+		loadCredentials();
 
         Test.startTest();
         Account a = [SELECT id from Account where Name = 'Test1 Agency' LIMIT 1];
@@ -297,6 +298,7 @@
     @isTest static void updateOSCARTestNOKSecondStep() {
 
         AMS_OSCAR_TestDataFactory.createOSCARwithInspectionsTestData();
+		loadCredentials();
 
         Test.startTest();
         
@@ -742,6 +744,7 @@
     static testMethod void triggerHandler() {
 
         AMS_OSCAR_TestDataFactory.createOSCARwithInspectionsTestData();
+		loadCredentials();
 
         insert new AMS_AgencyChangesConfig__c(Name = 'Test Combination', TC_Name__c = true);
 
@@ -955,15 +958,23 @@
         
 
         AMS_OSCAR_TestDataFactory.createCargoAgencyOSCARtestData();
+        loadCredentials();
          
         Account a = [SELECT id from Account where Name = 'Test Cargo HO' LIMIT 1];
 
-        AMS_OSCAR__c oscar = [SELECT id, STEP6__c from AMS_OSCAR__c where Account__c =: a.Id limit 1];
+        AMS_OSCAR__c oscar = [SELECT id, STEP6__c, (SELECT Id FROM Cases__r)  
+                              FROM AMS_OSCAR__c 
+                              WHERE Account__c =: a.Id and Id IN (SELECT OSCAR__c FROM Case) limit 1];
 
         AMS_Accreditation_Contact__c dgr = [SELECT Id, Type_Of_Certificate__c FROM AMS_Accreditation_Contact__c WHERE Last_name__c = 'Plitt'];
         dgr.Type_Of_Certificate__c = AMS_Utils.CERT_DGR;
         update dgr;        
         Test.startTest();
+		
+        /*** AMSU-34 ***/
+        AmazonFile__c file = new AmazonFile__c(Full_Name_Unique__c= 'Test', Case__c= oscar.Cases__r[0].Id); 
+        insert file;
+        
         oscar.STEP6__c = 'Passed';
         update oscar;
 
@@ -978,6 +989,7 @@
     @isTest static void testMCLocationType() {
 
         AMS_OSCAR_TestDataFactory.createOSCARwithInspectionsTestData();
+		loadCredentials();
 
         Test.startTest();
 
@@ -1046,6 +1058,7 @@
     @isTest static void testMCOwnershipToIATA() {
 
         AMS_OSCAR_TestDataFactory.createOSCARwithInspectionsTestData();
+		loadCredentials();
 
         Test.startTest();
 
@@ -1107,6 +1120,7 @@
     @isTest static void testMCOwnershipToNonIATA() {
 
         AMS_OSCAR_TestDataFactory.createOSCARwithInspectionsTestData();
+		loadCredentials();
 
         Test.startTest();
 
@@ -1167,6 +1181,7 @@
     @isTest static void testMCChangeOfLocation() {
 
         AMS_OSCAR_TestDataFactory.createOSCARwithInspectionsTestData();
+		loadCredentials();
 
         Test.startTest();
 
