@@ -3,6 +3,8 @@ global class ANG_RHCEqualFSBatch implements Database.Batchable<SObject>, Databas
 	private static final String AGENCYRTID = AMS_Utils.RECTYPE_IATAAGENCY;
 	private static final Set<String> ACTIVE_ACC_STATUS = AMS_Utils.ACTIVEAGENCYSTATUS;
 
+	List<SObject> sObjectToUpdate = new List<SObject>();
+
 	private List<String> errors = new List<String>();
 	private Integer agenciesProcessed = 0;
 	private Integer bspsProcessed = 0;
@@ -56,7 +58,8 @@ global class ANG_RHCEqualFSBatch implements Database.Batchable<SObject>, Databas
 					}						
 				}
 				if(!rhcInfosToUpdate.isEmpty()){
-					update rhcInfosToUpdate;
+					//update rhcInfosToUpdate;
+					sObjectToUpdate.addAll(rhcInfosToUpdate);
 					agenciesProcessed += rhcInfosToUpdate.size();
 				}
 
@@ -75,7 +78,8 @@ global class ANG_RHCEqualFSBatch implements Database.Batchable<SObject>, Databas
    				}
 
 	   			if(!operationsToUpdate.isEmpty()){
-	   				update operationsToUpdate;
+	   				sObjectToUpdate.addAll(operationsToUpdate);
+	   				//update operationsToUpdate;
 					bspsProcessed += operationsToUpdate.size();
 	   			}
 
@@ -86,6 +90,14 @@ global class ANG_RHCEqualFSBatch implements Database.Batchable<SObject>, Databas
 	}
 	
 	global void finish(Database.BatchableContext BC) {
+
+		if (!sObjectToUpdate.isEmpty()){
+			try{
+				update sObjectToUpdate;
+			}catch(Exception e){
+				errors.add('Error running batch: '+values+' - '+e.getMessage()+' - '+e.getStackTraceString());
+			}
+		}
 
 		String emailMessage = '';
 		List<String> emailAddresses = new List<String>();
