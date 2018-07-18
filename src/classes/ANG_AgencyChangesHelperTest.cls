@@ -20,7 +20,7 @@ public class ANG_AgencyChangesHelperTest {
 		account.Location_Class__c = 'P';
 		account.Location_Type__c = 'HE';
 		account.ANG_Accreditation_Model__c = 'Cashless';
-
+		account.IATA_ISO_Country__c = ctry.Id;
 		account.ANG_IEP_HE_AccntNum__c = '1232132323';
 		account.ANG_IEP_Status__c = 'Suspended' ;
 		account.ANG_HE_CashCondition__c = true;
