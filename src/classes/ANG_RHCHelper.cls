@@ -118,7 +118,9 @@ public class ANG_RHCHelper {
 
 		for(ANG_RHC_Information__c rhc : rhcInfo){
 
-			if(rhc.ANG_CashCondition__c && rhc.ANG_Financial_Security__c > 0){
+			if(rhc.ANG_RHC_Amount_Equals_FS__c) rhc.ANG_RHC_Amount__c = rhc.ANG_Financial_Security__c;
+
+			else if(rhc.ANG_CashCondition__c && rhc.ANG_Financial_Security__c > 0){
 				rhc.ANG_RHC_Amount__c = rhc.ANG_Financial_Security__c;
 				rhc.ANG_RHC_Amount_Forecasted__c = rhc.ANG_Financial_Security__c;
 			}else{

@@ -255,6 +255,8 @@ public without sharing class AMS_Utils {
     public static final String ACC_S8_CHANGESPROCESSED = 'Changes processed';
     public static final String ACC_S9_APPROVED = 'Approved';
 
+    public static final Set<String> ACTIVEAGENCYSTATUS = new Set<String>{ACC_S4_LISTED, ACC_S5_CASHNOCOMMISSION, ACC_S6_CASHWITHCOMMISSION, ACC_S7_UNDERREVIEW, ACC_S8_CHANGESPROCESSED, ACC_S9_APPROVED};
+
     public static final String AACC_INPROGRESS = 'in progress';
     public static final String AACC_FINALIZED = 'finalized';
     public static final String AACC_WITHDRAWAL = 'withdrawn';
