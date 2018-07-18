@@ -51,9 +51,9 @@ global class ANG_MassiveFOPCaseCreationBatch implements Database.Batchable<sObje
 			String queryContacts;
 
 			if(acct.ParentId == null)
-	            queryContacts = 'SELECT ' +String.join(fieldListContact, ', ') + ' FROM Contact where accountId = \''+acct.Id+'\'';
+	            queryContacts = 'SELECT ' +String.join(fieldListContact, ', ') + ' FROM Contact where Status__c = \'Active\' and accountId = \''+acct.Id+'\'';
 			else
-				queryContacts = 'SELECT ' +String.join(fieldListContact, ', ') + ' FROM Contact where accountId in (\''+acct.Id+'\',\''+acct.ParentId+'\')';
+				queryContacts = 'SELECT ' +String.join(fieldListContact, ', ') + ' FROM Contact where Status__c = \'Active\' and accountId in (\''+acct.Id+'\',\''+acct.ParentId+'\')';
 
         	System.debug('Query is:'+queryContacts);
         
