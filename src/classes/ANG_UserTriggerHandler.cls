@@ -23,6 +23,10 @@ public class ANG_UserTriggerHandler {
     }
 
     public void onBeforeUpdate(){ }
+    
+    public void onAfterUpdate(){ 
+        ANG_TrackingHistory.trackHistory(Trigger.newMap, Trigger.oldMap, 'User', 'User_History__c');
+    }
 
     public void onAfterInsert(){
     	assignUserFederationId();
