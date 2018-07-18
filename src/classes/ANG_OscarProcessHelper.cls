@@ -751,8 +751,27 @@ global class ANG_OscarProcessHelper {
 		for(Account acct: accounts)
 			accountIds.add(acct.Id);
 
-		List<Agency_Applied_Change_code__c> activeChangeCodes =
-		    new List<Agency_Applied_Change_code__c>([SELECT Id, Account__c, Reason_Code__c, Reason_Description__c, Bulletin_Information__c FROM Agency_Applied_Change_code__c WHERE Account__c IN :accountIds AND Active__c = true]);
+		List<Agency_Applied_Change_code__c> allChangeCodes =
+		    new List<Agency_Applied_Change_code__c>([SELECT Id, Account__c, Reason_Code__c, Reason_Description__c, Bulletin_Information__c, OSCAR__c, Active__c, Change_Code__c FROM Agency_Applied_Change_code__c WHERE Account__c IN :accountIds]);
+
+		List<Agency_Applied_Change_code__c> activeChangeCodes = new List<Agency_Applied_Change_code__c>();
+
+		/*
+		In the FoP OSCAR case, ensure that the same change code is not generated more than once.
+		In other words, before creating a change code, check that the same does not exist for the same OSCAR case.
+		*/
+		for(Agency_Applied_Change_code__c aacc: allChangeCodes){
+
+			if(aacc.OSCAR__c == theOscar.Id && changeCodeName == aacc.Change_Code__c){
+				System.debug('AMS_OscarProcessHelper: You cannot create the same change code for the same Oscar, exiting method without Change code Creation.');
+				return updater;
+
+			}
+
+			if(aacc.Active__c == true)
+				activeChangeCodes.add(Aacc);
+
+		}
 
 		//map accountId -> active change code
 		Map<Id, Agency_Applied_Change_code__c> accountsChangeCode = new Map<Id, Agency_Applied_Change_code__c>();
