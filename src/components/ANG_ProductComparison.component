@@ -99,14 +99,14 @@
 								</td>
 							</apex:outputPanel>
 
-							<apex:outputPanel rendered="{! cell.name != 'link' && cell.name != 'true' && cell.name != 'false' && cell.name != 'applyNow' && NOT cell.flagFees}">										{! cell.name }
+							<apex:outputPanel rendered="{! cell.name != 'link' && cell.name != 'true' && cell.name != 'false' && cell.name != 'applyNow' && NOT cell.flagFees}">									
 								<apex:outputPanel rendered="{! cell.name == 'Cost'}">
 									<td style="text-align: left; vertical-align: top; padding-right: 10px; padding-left: 10px;">
 										<apex:outputLabel value="{! cell.slabel}"/>
 										<apex:outPutpanel rendered="{!!(helper.costTooltip == '')}">
 
 											<a href="#" data-html="true" data-toggle="popover" data-trigger="hover" 
-											   title="{!cell.name}" data-content="<div escape='false'>{!helper.costTooltip}</div>">
+											   title="{!cell.slabel}" data-content="<div escape='false'>{!helper.costTooltip}</div>">
 											   <apex:image value="/img/msg_icons/info16.png"/>
 											</a>
 
@@ -123,7 +123,7 @@
 											<apex:outputLabel value = "{! cell.slabel}" />
 
 											<a href="#" data-html="true" data-toggle="popover" data-trigger="hover" 
-											   title="{!cell.name}" data-content="<div escape='false'>{!cell.tooltip}</div>">
+											   title="{!cell.slabel}" data-content="<div escape='false'>{!cell.tooltip}</div>">
 											   <apex:image value="/img/msg_icons/info16.png"/>
 											</a>
 										</apex:outPutpanel>
@@ -134,7 +134,7 @@
 										<apex:outputLabel value="{! cell.slabel}"/>
 
 										<a href="#" data-html="true" data-toggle="popover" data-trigger="hover" 
-											title="{!cell.name}" data-content="<div escape='false'>{!$Label.ANG_ISSP_ProductComparisonCountrySpecificRequirementsTooltip}</div>">
+											title="{!cell.slabel}" data-content="<div escape='false'>{!$Label.ANG_ISSP_ProductComparisonCountrySpecificRequirementsTooltip}</div>">
 											<apex:image value="/img/msg_icons/info16.png"/>
 										</a>
 										
