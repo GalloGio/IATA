@@ -7,6 +7,8 @@ CASE(relatedTo.Reason1__c,
 'New AE', $Label.ISSP_ANG_Email_AE_Subject,
 'New BR / IP', $Label.ISSP_AMS_Email_Branch_Subject,
 'New BR Abroad', $Label.ISSP_AMS_Email_Branch_Abroad_Subject,
+'PCI DSS Compliant',$Label.ISSP_Draft + ' - ' + $Label.ISSP_ANG_PCI_DSS_Compliant,
+'FoP Management', $Label.ISSP_Draft + ' - ' + $Label.ISSP_ANG_FoP_Management,
 $Label.ISSP_AMS_Email_Change_Subject),
 IF(relatedTo.CaseArea__c=='Transparency in Payments (TIP)', relatedTo.CaseArea__c + ' Draft Application',
 'BSP / CASS ' + relatedTo.CaseArea__c + ' Draft Application'))
@@ -21,9 +23,7 @@ IF(relatedTo.CaseArea__c=='Transparency in Payments (TIP)', relatedTo.CaseArea__
 {!$Label.ISSP_Email_Dear_Pre} {!relatedTo.Contact.Salutation} {!relatedTo.Contact.FirstName} {!relatedTo.Contact.LastName}{!$Label.ISSP_Email_Dear_Post}<BR/>
 <BR/>
 {!CASE(relatedTo.CaseArea__c,
-'Accreditation Process',
-IF(OR(relatedTo.Reason1__c=='New HO', relatedTo.Reason1__c=='New HE standard', relatedTo.Reason1__c=='New HE lite', relatedTo.Reason1__c=='New AE', relatedTo.Reason1__c=='New BR / IP', relatedTo.Reason1__c=='New BR Abroad'), relatedTo.Description, $Label.ISSP_Email_Draft_Change_Process),
-'Transparency in Payments (TIP)', 'Thank you for creating your draft Transparency in Payments (TIP) application request.', 
+'Accreditation Process', IF(OR(relatedTo.Reason1__c=='New HO', relatedTo.Reason1__c=='New HE standard', relatedTo.Reason1__c=='New HE lite', relatedTo.Reason1__c=='New AE', relatedTo.Reason1__c=='New BR / IP', relatedTo.Reason1__c=='New BR Abroad'), relatedTo.Description, $Label.ISSP_Email_Draft_Change_Process),
 'Airline Joining', 'Thank you for creating your Airline Joining BSP / CASS draft application.',
 'Thank you for creating your draft application request to change your Airline BSP / CASS details.')
 }

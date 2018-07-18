@@ -428,7 +428,7 @@ private class AMS_UtilsTest {
 
         try{
 
-            RecordType RT =RecordTypeSingleton.getInstance().getRecordTypeId('Account', 'Standard_Account');
+            Id RT = RecordTypeSingleton.getInstance().getRecordTypeId('Account', 'Standard_Account');
 
             RecordTypeSingleton.getInstance().getRecordTypeId('Account', 'Non_Existent_Record_Type');
 
@@ -624,7 +624,7 @@ private class AMS_UtilsTest {
      }
 
      @isTest
-     static void  copyDataFromAccount(){        
+     static void  copyDataFromAccount(){      
         Map<Id,AMS_ChangeCodesHelper.ObjectChangesStruct> accountsToUpdate = new Map<Id,AMS_ChangeCodesHelper.ObjectChangesStruct>();
         List<AMS_Pax_Accreditation_Form__c> onlineAccredsToUpdate = new List<AMS_Pax_Accreditation_Form__c>();
         String SECTORPAX = 'Travel Agent';

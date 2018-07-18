@@ -3,6 +3,11 @@
     <doesSendEmailToMembers>false</doesSendEmailToMembers>
     <email>macdonaldh@iata.org</email>
     <name>Local Office - Chile</name>
+    <queueMembers>
+        <publicGroups>
+            <publicGroup>IATAChile</publicGroup>
+        </publicGroups>
+    </queueMembers>
     <queueSobject>
         <sobjectType>Case</sobjectType>
     </queueSobject>

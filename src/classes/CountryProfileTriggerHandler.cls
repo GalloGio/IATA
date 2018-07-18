@@ -209,15 +209,13 @@ public class CountryProfileTriggerHandler{
 
     /*** Populate ISO Code on Country Profile from parent record ***/
     public static void PopulateIsoCode(List<Country_Profile__c> triggerNew){
-        List<Id> isoCountries = new List<Id>();
+        Set<Id> isoCountries = new Set<Id>();
 
         for(Country_Profile__c cp : triggerNew){
             isoCountries.add(cp.Country_Name__c);
         }
 
-        Map<Id,IATA_ISO_Country__c> parentAccounts = new Map<Id,IATA_ISO_Country__c>(
-                                                        [SELECT Id, ISO_Code__c FROM IATA_ISO_Country__c
-                                                        WHERE ID IN: isoCountries]);
+        Map<Id,IATA_ISO_Country__c> parentAccounts = new Map<Id,IATA_ISO_Country__c>(IATAIsoCountryDAO.getIsoCountriesByIds(isoCountries));
 
         for (Country_Profile__c cp : triggerNew){
             IATA_ISO_Country__c parentAccount = parentAccounts.get(cp.Country_Name__c);

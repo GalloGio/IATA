@@ -22,6 +22,9 @@ global without sharing class AMS_RecordCreatorWebservice {
     public static String MAJOR_CHANGESNEWGEN_PV = 'ANG.MAJOR.CHANGES.1.0';
     public static String NGFOP_PV = 'ANG.FOPMANAGEMENT.1.0';
     public static String IEP_BANK_ACCOUNT_SETUP = 'IEP.BANK.ACCOUNT.SETUP';
+    public static string OPTINOPTOUT = 'ANG.FS.OPTINOUT';
+    public static String PCI_COMPLIANT = 'PCI.COMPLIANT.1.0';
+
 
     public static Set<String> accountConcernedProcesses = new Set <String>{NEWBR_PV, NEWBRABRD_PV, MAJOR_CHANGES_PV, NEWSA_PV, NEWNAE, MAJOR_CHANGESNEWGEN_PV,IEP_BANK_ACCOUNT_SETUP, NEWVR_PV};
 
@@ -237,7 +240,7 @@ global without sharing class AMS_RecordCreatorWebservice {
         if(typeOfProcess.equalsIgnoreCase(NEWCORRECTION_PV))
             return RecordTypeSingleton.getInstance().getRecordTypeId('AMS_OSCAR__c', 'CORRECTION');
 
-        if(typeOfProcess.equalsIgnoreCase(NEWDGR_PV))
+        if(typeOfProcess.equalsIgnoreCase(NEWDGR_PV) || typeOfProcess.equalsIgnoreCase(PCI_COMPLIANT))
             return RecordTypeSingleton.getInstance().getRecordTypeId('AMS_OSCAR__c', 'CERTIFICATION');
 
         if(typeOfProcess.equalsIgnoreCase(NEWVR_PV) || typeOfProcess.equalsIgnoreCase(NEWVRCA_PV))
@@ -260,6 +263,9 @@ global without sharing class AMS_RecordCreatorWebservice {
 
         if(typeOfProcess.equalsIgnoreCase(AMS_Utils.NGFOP))
             return RecordTypeSingleton.getInstance().getRecordTypeId('AMS_OSCAR__c', 'NGFormsOfPayment');
+ 
+         if(typeOfProcess.equalsIgnoreCase(OPTINOPTOUT))
+            return RecordTypeSingleton.getInstance().getRecordTypeId('AMS_OSCAR__c', 'ANG_FS_OPTINOUT');
 
         return null;
 
@@ -291,7 +297,7 @@ global without sharing class AMS_RecordCreatorWebservice {
         else
             oscar = new AMS_OSCAR__c(Account__c = accountId, Process__c = processType, RecordTypeId =recordTypeId, Status__c = oscarStatus, OwnerId = owner );
 
-        if(processType != NEWVR_PV && processType != NEWVRCA_PV && processType != NEWCER_PV && processType != NGFOP_PV){
+        if(processType != NEWVR_PV && processType != NEWVRCA_PV && processType != NEWCER_PV && processType != NGFOP_PV && processType != OPTINOPTOUT){
             oscar.AMS_Online_Accreditation__c = accreditationId;
         }
 
@@ -300,7 +306,7 @@ global without sharing class AMS_RecordCreatorWebservice {
         }
 
         //Need to check if is a newgen process, cant use the process because voluntary relinquishment shares the same process and record type as AMS
-        Account acc = [SELECT ANG_IsNewGenAgency__c FROM Account WHERE Id =:accountId];
+        Account acc = [SELECT ANG_IsNewGenAgency__c, ANG_FA_Opt_out__c FROM Account WHERE Id =:accountId];
 
         if(processType.equalsIgnoreCase(NEWVR_PV)){
             accreditationObj = fetchAccreditationObject(accreditationId);
@@ -325,7 +331,7 @@ global without sharing class AMS_RecordCreatorWebservice {
             }
         }
 
-        Set<String> processesToUpdateCaseOnOscar = new Set<String>{AMS_Utils.NEWHESTANDARD,AMS_Utils.NEWHELITE, AMS_Utils.NEWAE, AMS_Utils.NGCORRECTION, AMS_Utils.NGCHANGES};
+        Set<String> processesToUpdateCaseOnOscar = new Set<String>{AMS_Utils.NEWHESTANDARD,AMS_Utils.NEWHELITE, AMS_Utils.NEWAE, AMS_Utils.NGCORRECTION, AMS_Utils.NGCHANGES, AMS_Utils.NGOPTINOUT};
         if(processesToUpdateCaseOnOscar.contains(processType)){
             oscar.Oscar_Communication_Case_Id__c = caseId;
         }
@@ -348,12 +354,26 @@ global without sharing class AMS_RecordCreatorWebservice {
             oscar.STEP39__c = AMS_Utils.NOT_APPLICABLE;
         }
 
+        if(processType.equalsIgnoreCase(OPTINOPTOUT)){
+
+            oscar.ANG_FA_Opt_out__c = acc.ANG_FA_Opt_out__c == true ? 'Opt-In' : 'Opt-Out';
+        }
+        
         insert oscar;
 
         if(( processType.equalsIgnoreCase(MAJOR_CHANGESNEWGEN_PV) || processType.equalsIgnoreCase(MAJOR_CHANGES_PV) || processType.equalsIgnoreCase(NGFOP_PV) || (processType.equalsIgnoreCase(NEWVR_PV) && acc.ANG_IsNewGenAgency__c)) && processType != NEWVRCA_PV && processType != NEWCER_PV){
             processOscarProcessDetail(oscar,accreditationObj,accountId);
         }
 
+        //commented as per NEWGEN-3265
+        /*if(processType.equalsIgnoreCase(OPTINOPTOUT)){
+        
+            Map<Id, Set<Id>> stagingToAccount = new Map<Id, Set<Id>>();
+            stagingToAccount.put(accreditationId, new Set<Id>{accountId});
+            AMS_AccountRoleCreator.runRoleCreatorForOnlineAccreditations(stagingToAccount);
+
+        }*/
+        
         return oscar.id;
     }
 

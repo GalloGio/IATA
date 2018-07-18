@@ -82,7 +82,7 @@ public class TIP_Utils{
 			for(Account acc : triggerNew){ 
 				if(!String.isBlank(acc.IATACode__c) && (acc.recordtypeid == TIP_Utils.PAYMENT_PROVIDER_RECORD_TYPE_ID || (acc.recordtypeid == TIP_Utils.STANDARD_ACCOUNT_RECORD_TYPE_ID && acc.Category__c == TIP_Utils.ACCOUNT_CATEGORY_PAYMENT_PROVIDER)) ){ 
 					mapIataCodeAccount.put(acc.IATACode__c,acc);
-					queryStringWhereClause += ', \''+ acc.IATACode__c + '\'';
+					//queryStringWhereClause += ', \''+ acc.IATACode__c + '\'';
 				}
 			}
 			if(!String.isEmpty(queryStringWhereClause)) queryString += 'AND IATACode__c NOT IN (\'\'' + queryStringWhereClause + ')' ;
@@ -108,8 +108,10 @@ public class TIP_Utils{
 		system.debug('##results:'+ tempAccs) ;
 		if(tempAccs!= null && !tempAccs.isEmpty() && !mapIataCodeAccount.isEmpty()){
 			for(Account accWithDuplicatedIATACode : tempAccs){
+				if(mapIataCodeAccount.get(accWithDuplicatedIATACode.IATACode__c) != null){
 				mapIataCodeAccount.get(accWithDuplicatedIATACode.IATACode__c).addError('Duplicated IATA Code: ' + accWithDuplicatedIATACode.IATACode__c + '. ID: ' + accWithDuplicatedIATACode.id);
-			}
+				}
+			}			
 		}
 	}
 

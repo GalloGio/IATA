@@ -2,7 +2,8 @@ public without sharing class ISSP_AMS_Accreditation {
     private static String SAAM_RECORD_TYPE_ID = RecordTypeSingleton.getInstance().getRecordTypeId('Case', 'ProcessEuropeSCE');//SAAM
     private static String OSCAR_RECORD_TYPE_ID = RecordTypeSingleton.getInstance().getRecordTypeId('Case', 'OSCAR_Communication');
     private static String RECORD_TYPE_ID = SAAM_RECORD_TYPE_ID;
-
+    
+    public static String FILE_ID_FOR_PARTNERSHIP  {get{ return 'Signed Application Form';}}
     public static  Integer MAX_IFAP_Contacts {get{ return 1;} private set;}
     private static integer MAX_AgencyAccount_LOOKUPS_ALLOWED = 20;
     private static final String WAREHOUSE_LEASE = 'WAREHOUSE_LEASE';
@@ -226,6 +227,18 @@ public without sharing class ISSP_AMS_Accreditation {
     }
 
     public ANG_ProductComparisonHelper helper {get; set;}
+
+    public Boolean flagShowOptInOutButton {get; set;}
+    public Boolean flagShowOptInOutButtonDisabled {get; set;}
+    public Boolean isIFAPContact {get; set;}
+    public String pEfectiveDateStr {get;set;}
+
+    public String optInOutMessage {get; set;}
+    public String optInOutModalTitle {get; set;}
+
+    public String optInOutSuccessMessage {get; set;}
+    public String optInOutBtn {get; set;}
+    public String optInOutErrorNoDate {get; set;}
 
     public ISSP_AMS_Accreditation() {
         system.debug('kerensen ISSP_AMS_Accreditation ctor');
@@ -1895,13 +1908,14 @@ public without sharing class ISSP_AMS_Accreditation {
             }
 
             upsert newForm;
+            if (!Test.IsRunningTest()) fetchAMSProcessForm();
 
         } catch (DmlException ex) {
             ApexPages.addMessages(ex);
         }
     }
 
-    private String mapCompanyTypes(String companyType) {
+    public static String mapCompanyTypes(String companyType) {
         if(companyType == 'A') {
             return 'Association';
         } else if (companyType == 'C') {
@@ -2737,8 +2751,9 @@ public without sharing class ISSP_AMS_Accreditation {
             newForm.Validation_ERRORS__c = FALSE;
             saveAMSForm();
 
-            if (!validateCharactersInForm())
+            if (!validateCharactersInForm() || !validateForm(true) ) {
                 return null;
+            }
 
             if (isNoticeOfChange && newForm.Is_change_ownership_or_shareholding__c) {
                 return goToStep5(); //No File Upload for NoC that isn't change of bank details
@@ -2946,7 +2961,7 @@ public without sharing class ISSP_AMS_Accreditation {
 
             return goToStep4();
         }
-
+        
         if (!newform.Accept_terms_and_conditions__c) {
             ApexPages.addmessage(new ApexPages.message(ApexPages.severity.ERROR, Label.ISSP_AMS_Accept_TOS));
             return null;
@@ -2975,6 +2990,18 @@ public without sharing class ISSP_AMS_Accreditation {
             System.Debug('isHOAccredited: ' + isHOAccredited);
 
             if (!isNoticeOfChange) {
+                //ONLY FOR PARTNERSHIP: Check if the signed PDF was uploaded to Amazon
+                if (getIsPartnership()) {
+                    list<AmazonFile__c> listAmazonFile = [
+                            SELECT Id
+                            FROM AmazonFile__c
+                            WHERE Case__c = :newCase.Id
+                            AND File_Identifier__c = :FILE_ID_FOR_PARTNERSHIP];
+                    if (listAmazonFile.isEmpty()) {
+                        ApexPages.addmessage(new ApexPages.message(ApexPages.severity.ERROR, Label.ISSP_AMS_Form_Missing_Signed_File));
+                        return null;
+                    }
+                }
                 if (amsOfficeType == 'Branch' || newCase.Reason1__c == AMS_Utils.CASE_REASON_BR_ABROAD) {
                     createBranchAccount();
                     if(newCase.Reason1__c == AMS_Utils.CASE_REASON_BR_ABROAD)
@@ -3408,13 +3435,12 @@ public without sharing class ISSP_AMS_Accreditation {
         /*** AMSU-112 - Start ***/
 		//replace tab character
         checkTabCharacters(newForm, hqAccount, newContact);
-
 		//check non latin characters
-        if(!String.isBlank(newForm.Account_Name__c) && !p.matcher(newForm.Account_Name__c).matches()) {
+        if((!String.isBlank(newForm.Account_Name__c) && !p.matcher(newForm.Account_Name__c).matches()) || (!String.isBlank(hqAccount.Name) && !p.matcher(hqAccount.Name).matches())) {
 			newForm.Account_Name__c.addError(Label.ISSP_EnterValidString);
 			errorFound = true;
 		}
-		if(!String.isBlank(newForm.Trade_Name__c) && !p.matcher(newForm.Trade_Name__c).matches()) {
+		if((!String.isBlank(newForm.Trade_Name__c) && !p.matcher(newForm.Trade_Name__c).matches()) ||(!String.isBlank(hqAccount.TradeName__c) && !p.matcher(hqAccount.TradeName__c).matches())) {
 			newForm.Trade_Name__c.addError(Label.ISSP_EnterValidString);
 			errorFound = true;
 		}
@@ -3446,27 +3472,27 @@ public without sharing class ISSP_AMS_Accreditation {
 			newForm.ISSP_AMS_VAT_Number_Input__c.addError(Label.ISSP_EnterValidString);
 			errorFound = true;
 		}
-		if(!String.isBlank(newForm.ISSP_AMS_VAT_number__c) && !p.matcher(newForm.ISSP_AMS_VAT_number__c).matches()) {
+		if(!String.isBlank(newForm.ISSP_AMS_VAT_number__c) && !p.matcher(newForm.ISSP_AMS_VAT_number__c).matches()) { 
 			newForm.ISSP_AMS_VAT_number__c.addError(Label.ISSP_EnterValidString);
 			errorFound = true;
 		}
-		if(!String.isBlank(newForm.Shipping_Street__c) && !p.matcher(newForm.Shipping_Street__c).matches()) {
+		if((!String.isBlank(newForm.Shipping_Street__c) && !p.matcher(newForm.Shipping_Street__c).matches()) || (!String.isBlank(hqAccount.ShippingStreet) && !p.matcher(hqAccount.ShippingStreet).matches())) {
 			newForm.Shipping_Street__c.addError(Label.ISSP_EnterValidString);
 			errorFound = true;
 		}
-		if(!String.isBlank(newForm.Shipping_City__c) && !p.matcher(newForm.Shipping_City__c).matches()) {
+		if((!String.isBlank(newForm.Shipping_City__c) && !p.matcher(newForm.Shipping_City__c).matches()) || (!String.isBlank(hqAccount.ShippingCity) && !p.matcher(hqAccount.ShippingCity).matches())) {
 			newForm.Shipping_City__c.addError(Label.ISSP_EnterValidString);
 			errorFound = true;
 		}
-		if(!String.isBlank(newForm.Shipping_Postal_Code__c) && !p.matcher(newForm.Shipping_Postal_Code__c).matches()) {
+		if((!String.isBlank(newForm.Shipping_Postal_Code__c) && !p.matcher(newForm.Shipping_Postal_Code__c).matches()) || (!String.isBlank(hqAccount.ShippingPostalCode) && !p.matcher(hqAccount.ShippingPostalCode).matches())) {
 			newForm.Shipping_Postal_Code__c.addError(Label.ISSP_EnterValidString);
 			errorFound = true;
 		}
-		if(!String.isBlank(newForm.Shipping_State__c) && !p.matcher(newForm.Shipping_State__c).matches()) {
+		if((!String.isBlank(newForm.Shipping_State__c) && !p.matcher(newForm.Shipping_State__c).matches()) || (!String.isBlank(hqAccount.ShippingState) && !p.matcher(hqAccount.ShippingState).matches())) {
 			newForm.Shipping_State__c.addError(Label.ISSP_EnterValidString);
 			errorFound = true;
 		}
-		if(!String.isBlank(newForm.Shipping_Country__c) && !p.matcher(newForm.Shipping_Country__c).matches()) {
+		if((!String.isBlank(newForm.Shipping_Country__c) && !p.matcher(newForm.Shipping_Country__c).matches()) || (!String.isBlank(hqAccount.ShippingCountry) && !p.matcher(hqAccount.ShippingCountry).matches())) {
 			newForm.Shipping_Country__c.addError(Label.ISSP_EnterValidString);
 			errorFound = true;
 		}
@@ -3642,7 +3668,9 @@ System.DEBUG('validateCharactersInForm  - 4 - errorFound: '+errorFound);
             return Label.ISSP_AMS_Head_Entity_No_Cash;
         } else if( r == AMS_UTILS.CASE_REASON_ASSOCIATE_ENTITY_STANDARD){
             return Label.ISSP_ANG_Assoc_Entity + getAccreditationModel(accreditationModel);
-        }else {
+        } else if(r == AMS_Utils.CASE_REASON_OPT_OUT) {
+            return Label.ANG_ISSP_CASE_REASON_OPT_OUT;
+        } else {
             return Label.ISSP_AMS_Reason_New_HO;
         }
     }
@@ -3861,7 +3889,7 @@ System.DEBUG('validateCharactersInForm  - 4 - errorFound: '+errorFound);
                         ShippingPostalCode, ShippingCountry, VAT_Number__c, Short_Name__c, Location_Class__c, IATA_ISO_Country__c,
                         Iso_State__c, Abbreviated_name__c, Abbreviated_Address__c, Remittance_frequency__c, Solicitation_Flag__c,
                         VAT_Number_2__c, CASS_Number__c,Company_Type__c,RecordType.DeveloperName,Status__c,IATA_ISO_Country__r.ISO_Code__c,ANG_Accreditation_Model__c,
-                        IATA_ISO_Shipping_Country__c, IATA_ISO_Shipping_State__c
+                        IATA_ISO_Shipping_Country__c, IATA_ISO_Shipping_State__c, Ownership
                         FROM Account
                         WHERE Id = :vHQAccountId
                                    LIMIT 1
@@ -4029,69 +4057,69 @@ System.DEBUG('validateCharactersInForm  - 4 - errorFound: '+errorFound);
         set{}
     }
 
-    public List<AMS_Accreditation_Contact__c> List_PreviousOwners {
+        public List<AMS_Accreditation_Contact__c> List_PreviousOwners {
 
-        get{
-            List<AMS_Accreditation_Contact__c> prevOwner = [
-                SELECT AMS_Pax_Accreditation_Form__c, Name, First_name__c, Last_name__c, Salutation__c, Agency_owner__c, Agency_role__c, Email__c,Phone__c,
-                Financial_interest__c, Contact_Id__c, Contact__c, AMS_OwnershipId__c, AMS_ContactId__c, Local_First_name__c, Local_Last_name__c, Number_Of_Shares__c,
-                AddressStreet__c, AddressCity__c, AddressCountry__c, AddressPostcode__c, Time_devoted_to_Agency_business__c
-                FROM AMS_Accreditation_Contact__c
-                WHERE AMS_Pax_Accreditation_Form__r.Id = :newForm.Id AND  RecordType.DeveloperName = 'Previous_Owner'
-                ORDER BY Name ASC
-            ];
-            return prevOwner;
+            get{
+                List<AMS_Accreditation_Contact__c> prevOwner = [
+                    SELECT AMS_Pax_Accreditation_Form__c, Name, First_name__c, Last_name__c, Salutation__c, Agency_owner__c, Agency_role__c, Email__c,Phone__c,
+                    Financial_interest__c, Contact_Id__c, Contact__c, AMS_OwnershipId__c, AMS_ContactId__c, Local_First_name__c, Local_Last_name__c, Number_Of_Shares__c,
+                    AddressStreet__c, AddressCity__c, AddressCountry__c, AddressPostcode__c, Time_devoted_to_Agency_business__c
+                    FROM AMS_Accreditation_Contact__c
+                    WHERE AMS_Pax_Accreditation_Form__r.Id = :newForm.Id AND  RecordType.DeveloperName = 'Previous_Owner'
+                    ORDER BY Name ASC
+                ];
+                return prevOwner;
 
+            }
+            set{}
         }
-        set{}
-    }
 
-    public List<AMS_Accreditation_Contact__c> List_CurrentOwners {
+        public List<AMS_Accreditation_Contact__c> List_CurrentOwners {
 
-        get{
-            List<AMS_Accreditation_Contact__c> currOwner = [
-                SELECT AMS_Pax_Accreditation_Form__c, Name, First_name__c, Last_name__c, Salutation__c, Agency_owner__c, Agency_role__c, Email__c,Phone__c,
-                Financial_interest__c, Contact_Id__c, AMS_OwnershipId__c, AMS_ContactId__c, Local_First_name__c, Local_Last_name__c, Number_Of_Shares__c,
-                AddressStreet__c, AddressCity__c, AddressCountry__c, AddressPostcode__c, Time_devoted_to_Agency_business__c
-                FROM AMS_Accreditation_Contact__c
-                WHERE AMS_Pax_Accreditation_Form__r.Id = :newForm.Id AND  RecordType.DeveloperName = 'Current_Owner'
-                ORDER BY Name ASC
-            ];
-            return currOwner;
+            get{
+                List<AMS_Accreditation_Contact__c> currOwner = [
+                    SELECT AMS_Pax_Accreditation_Form__c, Name, First_name__c, Last_name__c, Salutation__c, Agency_owner__c, Agency_role__c, Email__c,Phone__c,
+                    Financial_interest__c, Contact_Id__c, AMS_OwnershipId__c, AMS_ContactId__c, Local_First_name__c, Local_Last_name__c, Number_Of_Shares__c,
+                    AddressStreet__c, AddressCity__c, AddressCountry__c, AddressPostcode__c, Time_devoted_to_Agency_business__c
+                    FROM AMS_Accreditation_Contact__c
+                    WHERE AMS_Pax_Accreditation_Form__r.Id = :newForm.Id AND  RecordType.DeveloperName = 'Current_Owner'
+                    ORDER BY Name ASC
+                ];
+                return currOwner;
 
+            }
+            set{}
         }
-        set{}
-    }
 
-    public List<AMS_Accreditation_Contact__c> List_CurrentCompanies {
+        public List<AMS_Accreditation_Contact__c> List_CurrentCompanies {
 
-        get{
-            List<AMS_Accreditation_Contact__c> cons = [
-                SELECT Name, Financial_interest__c, Registration_number__c, IATAcode__c
-                FROM AMS_Accreditation_Contact__c
-                WHERE AMS_Pax_Accreditation_Form__c = :newForm.Id AND  RecordType.DeveloperName = 'Current_Company_Owner'
-                ORDER BY Name ASC
-            ];
-            return cons;
+            get{
+                List<AMS_Accreditation_Contact__c> cons = [
+                    SELECT Name, Financial_interest__c, Registration_number__c, IATAcode__c
+                    FROM AMS_Accreditation_Contact__c
+                    WHERE AMS_Pax_Accreditation_Form__c = :newForm.Id AND  RecordType.DeveloperName = 'Current_Company_Owner'
+                    ORDER BY Name ASC
+                ];
+                return cons;
 
+            }
+            set{}
         }
-        set{}
-    }
 
-    public List<AMS_Accreditation_Contact__c> List_PreviousCompanies {
+        public List<AMS_Accreditation_Contact__c> List_PreviousCompanies {
 
-        get{
-            List<AMS_Accreditation_Contact__c> cons = [
-                SELECT Name, Financial_interest__c, Registration_number__c, IATAcode__c
-                FROM AMS_Accreditation_Contact__c
-                WHERE AMS_Pax_Accreditation_Form__c = :newForm.Id AND  RecordType.DeveloperName = 'Previous_Company_Owner'
-                ORDER BY Name ASC
-            ];
-            return cons;
+            get{
+                List<AMS_Accreditation_Contact__c> cons = [
+                    SELECT Name, Financial_interest__c, Registration_number__c, IATAcode__c
+                    FROM AMS_Accreditation_Contact__c
+                    WHERE AMS_Pax_Accreditation_Form__c = :newForm.Id AND  RecordType.DeveloperName = 'Previous_Company_Owner'
+                    ORDER BY Name ASC
+                ];
+                return cons;
 
+            }
+            set{}
         }
-        set{}
-    }
 
     public List<AMS_Accreditation_Contact__c> List_AgencyCompanies {
 
@@ -4261,8 +4289,21 @@ System.DEBUG('validateCharactersInForm  - 4 - errorFound: '+errorFound);
                 setConn = new ApexPages.StandardSetController(Database.getQueryLocator(
                     [SELECT Id, CaseNumber, CreatedDate, Account.Name, Country_concerned_by_the_query__c, Subject, Status, Portal_Case_Status__c, Priority, Reason1__c, CaseArea__c, Account.Billing_Address_formated__c
                 FROM Case
-                WHERE RecordType.Name IN ('SAAM', 'OSCAR Communication') AND (Status = 'Draft' OR (Status Not In :closedStatusesList AND Case.ContactId = :con.Id)) AND Origin = 'Portal'
-                AND ((Case.AccountId = :con.AccountId) OR (Case.Account_Concerned__r.Top_Parent__c = :con.AccountId)) AND Case.Reason1__c IN (:AMS_Utils.CASE_REASON_NEW_HO, :AMS_Utils.CASE_REASON_BR_IP, :AMS_Utils.CASE_REASON_BR_ABROAD, 'CHL - Change of Location', 'CHN - Change of Name', 'CHO / CHS – Change of Ownership / Legal Status', 'Bank Detail Update', 'IRIS Bank Detail Update', 'Major Change', :AMS_Utils.CASE_REASON_HE_STANDARD, :AMS_Utils.CASE_REASON_HE_LITE, :AMS_Utils.CASE_REASON_ASSOCIATE_ENTITY_STANDARD , :AMS_UTILS.CASE_REASON_FOR_MANAGEMENT)
+                WHERE RecordType.Name IN ('SAAM', 'OSCAR Communication')
+                AND (Status = 'Draft' OR (Status Not In :closedStatusesList AND Case.ContactId = :con.Id))
+                AND Origin = 'Portal'
+                AND ((Case.AccountId = :con.AccountId) OR (Case.Account_Concerned__r.Top_Parent__c = :con.AccountId))
+                AND Case.Reason1__c IN (:AMS_Utils.CASE_REASON_NEW_HO,
+                                        :AMS_Utils.CASE_REASON_BR_IP,
+                                        :AMS_Utils.CASE_REASON_BR_ABROAD,
+                                        'CHL - Change of Location', 'CHN - Change of Name',
+                                        'CHO / CHS – Change of Ownership / Legal Status', 'Bank Detail Update',
+                                        'IRIS Bank Detail Update', 'Major Change',
+                                        :AMS_Utils.CASE_REASON_HE_STANDARD,
+                                        :AMS_Utils.CASE_REASON_HE_LITE,
+                                        :AMS_Utils.CASE_REASON_ASSOCIATE_ENTITY_STANDARD ,
+                                        :AMS_UTILS.CASE_REASON_FOR_MANAGEMENT,
+                                        :AMS_Utils.CASE_REASON_OPT_OUT)
                 ORDER BY CaseNumber DESC]));
             }
             return setConn;
@@ -4305,7 +4346,80 @@ System.DEBUG('validateCharactersInForm  - 4 - errorFound: '+errorFound);
 
     // Initialize setCon and return a list of records
     public List<Case> getAMSDraftCases() {
-        return (List<Case>) setConn.getRecords();
+
+        List<Case> l = (List<Case>) setConn.getRecords();
+
+        Boolean isOpt_IN_OUT_InProgress = false;
+
+        for(Case c : l) {
+            if(c.Reason1__c == AMS_Utils.CASE_REASON_OPT_OUT) {
+                isOpt_IN_OUT_InProgress = true;
+                break;
+            }
+        }
+
+        Boolean flagShowOptOutButton = (sector ==  AMS_Utils.SECTOR_PASSENGER && con.Account.Category__c == AMS_Utils.CATEGORY_PASSENGER_SALES_AGENT &&
+            isHOAccredited && isHOcontact && con.Account.ANG_Accreditation_Model__c == AMS_Utils.ACCREDITATIONMODEL_CASH && !con.Account.ANG_FA_Opt_out__c);
+
+        Boolean flagShowOptOutButtonDisabled = (flagShowOptOutButton && isOpt_IN_OUT_InProgress);
+
+        if(flagShowOptOutButtonDisabled) flagShowOptOutButton = false;
+
+        Boolean flagShowOptInButton = (sector ==  AMS_Utils.SECTOR_PASSENGER && con.Account.Category__c == AMS_Utils.CATEGORY_PASSENGER_SALES_AGENT &&
+            isHOAccredited && isHOcontact && con.Account.ANG_Accreditation_Model__c == AMS_Utils.ACCREDITATIONMODEL_CASH && con.Account.ANG_FA_Opt_out__c);
+
+        Boolean flagShowOptInButtonDisabled = (flagShowOptInButton && isOpt_IN_OUT_InProgress);
+
+        if(flagShowOptInButtonDisabled) flagShowOptInButton = false;
+
+        if(flagShowOptOutButton) optInOutSuccessMessage = Label.ISSP_ANG_OPT_OUT_SUCCESS_MESSAGE;
+
+        if(flagShowOptInButton) optInOutSuccessMessage = Label.ISSP_ANG_OPT_IN_SUCCESS_MESSAGE;
+
+        isIFAPContact = (con.Financial_Assessment_Contact__c);
+
+        if (flagShowOptInButton) {
+            optInOutErrorNoDate = Label.ANG_ISSP_OptInEmptyDateErrorMessage;
+            optInOutBtn = Label.ISSP_ANG_OPT_IN_FINANCIAL_REVIEW_BTN;
+            optInOutModalTitle = Label.ISSP_ANG_OPT_IN_MODAL_TITLE;
+            flagShowOptInOutButton = true;
+            if(isIFAPContact) {
+                if(bIsAdmin) {
+                    optInOutMessage = Label.ISSP_ANG_OPT_IN_FINANCIAL_MESSAGE_1;
+                } else {
+                    optInOutMessage = Label.ISSP_ANG_OPT_IN_FINANCIAL_MESSAGE_2 ;
+                }
+            } else {
+                if(bIsAdmin) {
+                    optInOutMessage = Label.ISSP_ANG_OPT_IN_FINANCIAL_MESSAGE_3;
+                } else {
+                    optInOutMessage = Label.ISSP_ANG_OPT_IN_FINANCIAL_MESSAGE_4 ;
+                }
+            }
+        }
+
+        if (flagShowOptOutButton) {
+            optInOutErrorNoDate = Label.ANG_ISSP_OptOutEmptyDateErrorMessage;
+            optInOutBtn = Label.ISSP_ANG_OPT_OUT_FINANCIAL_REVIEW_BTN;
+            flagShowOptInOutButton = true;
+            optInOutModalTitle = Label.ISSP_ANG_OPT_OUT_MODAL_TITLE;
+            if(isIFAPContact) {
+                optInOutMessage = Label.ISSP_ANG_OPT_OUT_MODAL_CONFIRMATION_TEXT;
+            } else {
+                optInOutMessage = Label.ISSP_ANG_OPT_OUT_NON_FINANCIAL_ASSESSEMENT_ERROR;
+            }
+        }
+
+        flagShowOptInOutButtonDisabled = (flagShowOptInButtonDisabled || flagShowOptOutButtonDisabled);
+
+        if(flagShowOptInButtonDisabled) {
+            optInOutBtn = Label.ISSP_ANG_OPT_IN_FINANCIAL_REVIEW_BTN;
+        }
+        if(flagShowOptOutButtonDisabled) {
+            optInOutBtn = Label.ISSP_ANG_OPT_OUT_FINANCIAL_REVIEW_BTN;
+        }
+
+        return l;
     }
 
     // ApexPages.StandardSetController must be instantiated
@@ -4317,7 +4431,19 @@ System.DEBUG('validateCharactersInForm  - 4 - errorFound: '+errorFound);
                     [SELECT Id, CaseNumber, CreatedDate, Account.Name, Country_concerned_by_the_query__c, Subject, Status, Portal_Case_Status__c, Priority, Reason1__c, CaseArea__c, Account.Billing_Address_formated__c
                 FROM Case
                 WHERE RecordType.Name IN ('SAAM', 'OSCAR Communication') AND (Status != 'Draft') AND Origin = 'Portal'
-                AND ((Case.AccountId = :con.AccountId) OR (Case.Account_Concerned__r.Top_Parent__c = :con.AccountId)) AND Case.Reason1__c IN (:AMS_Utils.CASE_REASON_NEW_HO, :AMS_Utils.CASE_REASON_BR_IP, :AMS_Utils.CASE_REASON_BR_ABROAD, 'CHL - Change of Location', 'CHN - Change of Name', 'CHO / CHS – Change of Ownership / Legal Status', 'IRIS Bank Detail Update', 'Bank Detail Update', 'Major Change', :AMS_Utils.CASE_REASON_HE_STANDARD, :AMS_Utils.CASE_REASON_HE_LITE, :AMS_Utils.CASE_REASON_ASSOCIATE_ENTITY_STANDARD)
+                AND ((Case.AccountId = :con.AccountId) OR (Case.Account_Concerned__r.Top_Parent__c = :con.AccountId))
+                AND Case.id = '5007E000006UizO'
+                AND Case.Reason1__c IN (:AMS_Utils.CASE_REASON_NEW_HO,
+                                        :AMS_Utils.CASE_REASON_BR_IP,
+                                        :AMS_Utils.CASE_REASON_BR_ABROAD,
+                                        'CHL - Change of Location',
+                                        'CHN - Change of Name', 'CHO / CHS – Change of Ownership / Legal Status',
+                                        'IRIS Bank Detail Update',
+                                        'Bank Detail Update',
+                                        'Major Change',
+                                        :AMS_Utils.CASE_REASON_HE_STANDARD,
+                                        :AMS_Utils.CASE_REASON_HE_LITE,
+                                        :AMS_Utils.CASE_REASON_ASSOCIATE_ENTITY_STANDARD)
                 ORDER BY CaseNumber DESC]));
             }
             return setConnNotDraft;
@@ -7508,13 +7634,13 @@ system.debug('aqui sectorValue ' + sectorValue);
 
                 if(type.equalsIgnoreCase('NoC')){
 
-                    lstAccreditationContact.add( setAccreditationContact(accRole, newForm.Id, rtAccreditContPreviousOwner, rtAccreditContPreviousCompanyOwner ) );
-                    lstAccreditationContact.add( setAccreditationContact(accRole, newForm.Id, rtAccreditContCurrentOwner, rtAccreditContCurrentCompanyOwner ) );
+                    lstAccreditationContact.add( ISSP_AMS_Accreditation.setAccreditationContact(accRole, newForm.Id, rtAccreditContPreviousOwner, rtAccreditContPreviousCompanyOwner ) );
+                    lstAccreditationContact.add( ISSP_AMS_Accreditation.setAccreditationContact(accRole, newForm.Id, rtAccreditContCurrentOwner, rtAccreditContCurrentCompanyOwner ) );
                 }
 
                 if(type.equalsIgnoreCase('Branch')){
 
-                    lstAccreditationContact.add( setAccreditationContact(accRole, newForm.Id, rtAccreditContPersonOwner, rtAccreditContCompanyOwner ) );
+                    lstAccreditationContact.add( ISSP_AMS_Accreditation.setAccreditationContact(accRole, newForm.Id, rtAccreditContPersonOwner, rtAccreditContCompanyOwner ) );
 
                 }
 
@@ -7526,7 +7652,7 @@ system.debug('aqui sectorValue ' + sectorValue);
     }
 
 
-    public AMS_Accreditation_Contact__c setAccreditationContact(AMS_Account_Role__c accRole, Id newFormId, Id rtRecordTypePerson, Id rtRecordTypeCompany){
+    public static AMS_Accreditation_Contact__c setAccreditationContact(AMS_Account_Role__c accRole, Id newFormId, Id rtRecordTypePerson, Id rtRecordTypeCompany){
 
         AMS_Accreditation_Contact__c auxAccreditCont = new AMS_Accreditation_Contact__c();
 
@@ -7963,5 +8089,51 @@ system.debug('aqui sectorValue ' + sectorValue);
         } else {
             system.debug('Add notification ERROR: no portal admins found on HO account');
         }
+    }
+    
+    /**
+        Return true if this forms is considered Partnership
+        There are some differences in the page and the final PDF whe the form is partnership
+        Those differences apply to both New Application and Notice Of Change
+    **/
+    public Boolean getIsPartnership() {
+        Boolean result = this.sectorValue=='Travel_Agent' && 
+            (this.hqAccount.Ownership=='Partnership' || this.newForm.ISSP_AMS_Legal_Status__c=='Partnership');
+        System.debug('**Is Partnership ' + result);
+        return result;
+    }
+
+    public Pagereference runOptInOut() {
+
+        //newForm.Effective_Date_Of_Change__c = Date.valueOf(pEfectiveDateStr);
+
+        newCase.RecordTypeId = AMS_Utils.OSCAR_COMUNICATION;
+        newCase.Status = AMS_Utils.OPEN;
+        newCase.CaseArea__c = AMS_Utils.CASE_AREA_AGENCY_RISK_MANAGEMENT;
+        newCase.Reason1__c = AMS_Utils.CASE_REASON_OPT_OUT;
+        newCase.Origin = AMS_Utils.CASE_ORIGIN_PORTAL;
+        newCase.Visible_on_ISS_Portal__c = true;
+
+        newCase.BSPCountry__c =  isocountry.Case_BSP_Country__c ;
+        newCase.Country_concerned_by_the_query__c = isocountry.Name;
+        newCase.Region__c = isocountry.Region__c;
+        newCase.Type_of_customer__c = AMS_Utils.CASE_TYPE_OF_CUSTOMER_IATA_TRAVEL_AGENT;
+        newCase.Account_Concerned__c = con.AccountId;
+        newCase.Product_Category_ID__c = '_';
+
+
+        newCase.Subject = getCaseReason(AMS_Utils.CASE_REASON_OPT_OUT, hqAccount.ANG_Accreditation_Model__c) + ' - ' + hqAccount.ANG_Accreditation_Model__c + ' - ' + hqAccount.name;
+
+        Database.DMLOptions dmo = new Database.DMLOptions();
+        dmo.assignmentRuleHeader.useDefaultRule = true;
+        newCase.setOptions(dmo);
+
+        upsert newCase;
+
+        saveAMSForm();
+
+        ISSP_AMS_Accreditation.OSCARIntegration(newCase.Account_Concerned__c, newForm.Id, AMS_Utils.NGOPTINOUT, newCase.Id);
+
+        return null;
     }
 }

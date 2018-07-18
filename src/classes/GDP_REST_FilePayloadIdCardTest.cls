@@ -331,7 +331,7 @@ private class GDP_REST_FilePayloadIdCardTest {
 					First_Name__c = relatedContact.FirstName
 					, Last_Name__c = relatedContact.LastName
 					, AgencyShare_Confirmation__c = true
-					, RecordTypeId = IDCardWebService.getIdCardAppRT('Mass_Order_Application')
+					, RecordTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('ID_Card_Application__c', 'Mass_Order_Application')
 					//, Agency_IATA_Code__c = '00000001' 
 					);
 		return newIdApplicationCard;

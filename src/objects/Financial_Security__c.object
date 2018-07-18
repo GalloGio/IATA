@@ -81,7 +81,6 @@
         <fullName>ANG_Minimum_Financial_Security__c</fullName>
         <externalId>false</externalId>
         <formula>Reception_Case__r.Financial_Security_Amount__c</formula>
-        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
         <label>Financial Security Amount (Minimum)</label>
         <precision>18</precision>
         <required>false</required>
