@@ -14,12 +14,15 @@
 <script src="{!URLFOR($Resource.ISSP_OperationalCalendar, '/js/ics.deps.min.js')}"></script>
 <script src="{!URLFOR($Resource.ISSP_OperationalCalendar, '/lib/qtip/jquery.qtip.min.js')}"></script>
 
+<script src="//cdnjs.cloudflare.com/ajax/libs/moment.js/2.22.2/moment-with-locales.min.js"></script>
+
 <apex:stylesheet value="{!URLFOR($Resource.fullcalendar, '/fullcalendar-3.9.0/fullcalendar.min.css')}"/>
 <apex:stylesheet value="{!URLFOR($Resource.ISSP_OperationalCalendar, '/css/main.min.css')}"/>
 <apex:stylesheet value="{!URLFOR($Resource.ISSP_OperationalCalendar, '/lib/qtip/jquery.qtip.min.css')}"/>
 <link href="//fonts.googleapis.com/css?family=Roboto:100,400,500" rel="stylesheet"/>
 
 <script>
+    moment.locale("{!UserLanguage}");
     var LIST_FILTERS = {!listFiltersJson};
     var MAP_FREQUENCIES = {!mapFrequenciesJson};
     var isAirline = {!isAirline};
@@ -281,7 +284,6 @@
             {escape: false}
         );
     }
-    
     function setCalendarEvents(listEvents){
         var calendar =  $('#calendar');
         //remove existing events
@@ -290,6 +292,14 @@
             enableTable(false);
             showError("{!$Label.ISSP_OperationalCalendar_No_Events}");
         } else {
+            // format dates
+            $.each(listEvents, function (i, item) {
+                item.description = item.description.replace(/<date>[0-9-: ]*<\/date>/gi, function (x) {
+                    var formattedDate = moment($(x).text()).format('D MMM YYYY');
+                    formattedDate = formattedDate=='Invalid date'? '': formattedDate;
+                    return formattedDate ;
+                });
+            });
             // add new events
             calendar.fullCalendar('renderEvents' , listEvents, true);
             enableTable(true);

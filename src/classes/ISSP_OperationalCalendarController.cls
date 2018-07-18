@@ -216,7 +216,7 @@ global without sharing class ISSP_OperationalCalendarController {
         for(Schema.FieldSetMember f : fieldset.getFields()) {
             String fieldName = f.getFieldPath();
             String fieldLabel = f.getLabel();
-            String fieldValue = getFieldValue(operation, f);
+            String fieldValue = '<date>' + getFieldValue(operation, f) + '</date>';
             description+= '<strong>' + fieldLabel + '</strong> ' + fieldValue + '</br>';
         }
         return description;
@@ -515,6 +515,7 @@ global without sharing class ISSP_OperationalCalendarController {
     
     public static String getFieldValue(Operational_Calendar__c obj, Schema.FieldSetMember f) {
         try {
+            if (obj.get(f.getFieldPath()) == null) return '';
             return String.ValueOf((obj.get(f.getFieldPath())));
             
         } catch (Exception e) {
@@ -542,5 +543,9 @@ global without sharing class ISSP_OperationalCalendarController {
             }
         } 
         return mapEvents.values();
+    }
+    
+    public string getUserLanguage() {
+        return UserInfo.getLanguage();
     }
 }

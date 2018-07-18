@@ -19,7 +19,7 @@
 <script src="{!URLFOR($Resource.ISSP_OperationalCalendar, '/js/buttons.colVis.min.js')}"></script>
 <script src="{!URLFOR($Resource.ISSP_OperationalCalendar, '/js/iata_logo.js')}"></script>
 
-<script src="//cdnjs.cloudflare.com/ajax/libs/moment.js/2.18.1/moment.min.js"></script>
+<script src="//cdnjs.cloudflare.com/ajax/libs/moment.js/2.22.2/moment-with-locales.min.js"></script>
 
 <link href="{!URLFOR($Resource.ISSP_OperationalCalendar, '/css/dataTables.bootstrap.min.css')}" rel="stylesheet"/>
 <link href="{!URLFOR($Resource.ISSP_OperationalCalendar, '/css/buttons.bootstrap.min.css')}" rel="stylesheet"/>
@@ -27,6 +27,7 @@
 <link href="//fonts.googleapis.com/css?family=Roboto:100,400,500" rel="stylesheet"/>
 
 <script>
+    moment.locale("{!UserLanguage}");
     var LIST_FILTERS = {!listFiltersJson};
     var MAP_FREQUENCIES = {!mapFrequenciesJson};
     var isAirline = {!isAirline};
@@ -149,12 +150,29 @@
     
     var csvButton = {
         extend: 'csvHtml5',
-        exportOptions: {columns: ':visible'},
+        exportOptions: {
+            columns: ':visible',
+            format: {
+                body: function ( data, row, column, node ) {
+                    var formattedDate = moment(data).format('D MMM YYYY');
+                    return formattedDate=='Invalid date'? data: formattedDate;
+                }
+            }
+        },
         title: function () { return getExportFileNameCSV();}
     };
     var pdfButton = {
         extend: 'pdfHtml5',
-        exportOptions: {columns: ':visible',footer: true },
+        exportOptions: {
+            columns: ':visible',
+            footer: true,
+            format: {
+                body: function ( data, row, column, node ) {
+                    var formattedDate = moment(data).format('D MMM YYYY');
+                    return formattedDate=='Invalid date'? data: formattedDate;
+                }
+            }
+        },
         title: function () { return getExportFileNamePDF();},
         orientation: "portrait",
         customize: function ( doc ) {
@@ -166,8 +184,8 @@
             doc['footer']=(function(page, pages) {
                 return {
                     columns: [
-                        '\n{!$Label.ISSP_OperationalCalendar_DownloadDate}: ' + new Date().toDateString(),
-                        '\n{!$Label.ISSP_OperationalCalendar_LastModifiedDate}: ' + getLastModifiedDate().toDateString(),
+                        '\n{!$Label.ISSP_OperationalCalendar_DownloadDate}: ' + moment().format('D MMM YYYY'),
+                        '\n{!$Label.ISSP_OperationalCalendar_LastModifiedDate}: ' + moment(getLastModifiedDate()).format('D MMM YYYY'),
                         {
                             alignment: 'right',
                             text: ['\n',{ text: page.toString() },  ' / ', { text: pages.toString() }]
