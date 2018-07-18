@@ -3,6 +3,16 @@
     <doesSendEmailToMembers>false</doesSendEmailToMembers>
     <email>e-invoicing-support@iata.org</email>
     <name>IATA IW Work Orders</name>
+    <queueMembers>
+        <publicGroups>
+            <publicGroup>IATAIWProjectTeam</publicGroup>
+        </publicGroups>
+        <roles>
+            <role>IATAInvoiceWorksA</role>
+            <role>IATAIWCallCentreA</role>
+            <role>iPayablesA</role>
+        </roles>
+    </queueMembers>
     <queueSobject>
         <sobjectType>Work_Order__c</sobjectType>
     </queueSobject>

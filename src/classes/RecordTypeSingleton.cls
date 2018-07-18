@@ -14,7 +14,7 @@ public class RecordTypeSingleton {
 	private RecordTypeSingleton(){
 		recordTypesByName = new Map<String, Map<String, RecordType>>();
 
-		for(RecordType rt : [SELECT Id, DeveloperName, SObjectType FROM RecordType]){
+		for(RecordType rt : [SELECT Id, Name, DeveloperName, SObjectType FROM RecordType]){
 			// checks if the sObjectType is already mapped
 			if(!recordTypesByName.containsKey(rt.SObjectType)){
 				// puts a new entry for the object type and instantiates the map that will contain the corresponding record types mapped by Name
@@ -72,6 +72,22 @@ public class RecordTypeSingleton {
 	public List<RecordType> getRecordTypesBySObject(String objectName){
 
 		return recordTypesByName.get(objectName).values();
+
+	}
+
+	/**
+	 * Method that returns a map of record types for a specified object name
+	 * @param  objectName the name of the object
+	 * @return            the map of record types for the passed object name
+	 */
+	public Map<String, String> getMapRecordTypesBySObject(String objectName){
+
+		Map<String, String> mapRecordType = new Map<String, String>();
+
+		for(RecordType rt : recordTypesByName.get(objectName).values()){
+			mapRecordType.put(rt.name, rt.Id);
+		}
+		return mapRecordType;
 
 	}
 

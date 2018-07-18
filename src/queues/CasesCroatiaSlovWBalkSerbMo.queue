@@ -3,6 +3,15 @@
     <doesSendEmailToMembers>false</doesSendEmailToMembers>
     <email>maodusb@iata.org</email>
     <name>Cases - Croatia, Slov, W. Balk, Serb, Mo</name>
+    <queueMembers>
+        <publicGroups>
+            <publicGroup>HUBMadrid</publicGroup>
+            <publicGroup>IDFSAllusersexcludingIWandACCA</publicGroup>
+            <publicGroup>IDFSCroatia</publicGroup>
+            <publicGroup>IDFSSerbiaMontenegro</publicGroup>
+            <publicGroup>IDFSSlovenia</publicGroup>
+        </publicGroups>
+    </queueMembers>
     <queueSobject>
         <sobjectType>Case</sobjectType>
     </queueSobject>

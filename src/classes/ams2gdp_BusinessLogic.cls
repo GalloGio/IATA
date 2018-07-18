@@ -670,7 +670,7 @@ public class ams2gdp_BusinessLogic {
 
 		Map<String, String> gdpProductIdByAccountId = ams2gdp_Selector.getGDP_Products_Account_View_By_Account(accountIds);
 		Map<String, Integer> rankByAccount = new Map<String, Integer>();
-		Map<String, String> recordTypes = ams2gdp_Utils.getRecordTypeIdByName('Accreditation__c');
+		Map<String, String> recordTypes = RecordTypeSingleton.getInstance().getMapRecordTypesBySObject('Accreditation__c');
 
 		//-- Build Accredition records for each AMS_Inspection record
 		for (Account acc : accounts) {
@@ -758,7 +758,7 @@ public class ams2gdp_BusinessLogic {
 
 		Map<String, GDP_Agency_Profile_Specialization__c> gdpRecordByAccount = ams2gdp_Selector.getGDPbyAccount(accountsAMS);
 		Map<String, GDP_Agency_Profile_Specialization__c> gdpRecordByProductsView = new Map<String, GDP_Agency_Profile_Specialization__c>();
-		Map<String, String> recordTypes = ams2gdp_Utils.getRecordTypeIdByName('GDP_Agency_Profile_Specialization__c');
+		Map<String, String> recordTypes = RecordTypeSingleton.getInstance().getMapRecordTypesBySObject('GDP_Agency_Profile_Specialization__c');
 		Map<String, String> gdpProductIdByAccountId = ams2gdp_Selector.getGDP_Products_Account_View_By_Account(accountIds);
 
 		for (AMS_Agency_Profile__c agencies : profiles) {

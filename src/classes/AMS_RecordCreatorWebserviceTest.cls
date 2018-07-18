@@ -583,4 +583,26 @@ private class AMS_RecordCreatorWebserviceTest {
 		Test.stopTest();
 	}
 
+	@isTest static void createOptinOptOut() {
+
+		List<Account> acctLst = [SELECT Id, Name, ParentId from Account];
+
+		Account acct = acctLst.get(0);
+
+		Id accountAgencyRT = AMS_Utils.getId('Account', 'IATA_Agency');
+
+		acct.RecordTypeId = accountAgencyRT;
+		acct.IATACODE__c = '1234567';
+		update acct;
+
+		Test.startTest();
+
+		Case caseCom = [SELECT Id from Case where AccountId = : acct.Id];
+
+		AMS_Pax_Accreditation_Form__c accr = [SELECT Id from AMS_Pax_Accreditation_Form__c where SAAM_Case__c = :caseCom.Id];
+
+		String oscarId = AMS_RecordCreatorWebservice.createAccreditation(acct.Id,accr.Id,'ANG.FS.OPTINOUT',caseCom.Id);
+		
+		Test.stopTest();
+	}
 }

@@ -81,11 +81,10 @@ public with sharing class DownloadAgentsCtrl {
             }
             if (email.equals('1')) {
                 soql += ' and Email != null';
-                //isSendEmailIsDisabled = false;
+                
             } else if (email.equals('2')) {
                 soql += ' and Email = null';
-                //isSendEmailIsDisabled = true;
-            }//else isSendEmailIsDisabled = true;
+            }
 
             //if (!yearend.equals('') && !yearend.equals('--All--'))   //phase 1 release 2
             //    soql += ' and Account.Financial_Year_End__c LIKE \''+String.escapeSingleQuotes(yearend)+'%\'';
@@ -199,14 +198,12 @@ public with sharing class DownloadAgentsCtrl {
             soql += ' and c.Contact.Account.Fin_statements_submission_deadline__c != \'\'';
         else if (yearend != '')
             soql += ' and c.Contact.Account.Fin_statements_submission_deadline__c LIKE \'' + String.escapeSingleQuotes(yearend) + '%\'';
-
-        // Location Type HO/ AO filter
-        soql += ' and (c.Contact.Account.Location_Type__c LIKE \'AO%\' OR c.Contact.Account.Location_Type__c LIKE \'HO%\' OR c.Contact.Account.Location_Type__c LIKE \'BR%\')';
+    
+        // Location Type HO/ AO filter     
+        soql += ' and (c.Contact.Account.Location_Type__c LIKE \'AO%\' OR c.Contact.Account.Location_Type__c LIKE \'HO%\' OR c.Contact.Account.Location_Type__c LIKE \'BR%\' OR c.Contact.Account.Location_Type__c LIKE \'HE%\'  OR c.Contact.Account.Location_Type__c LIKE \'AE%\')';
         casesQuery = soql;
 
-        for (Case c : Database.query(soql)) {
-            listAgentIdWithClosedCase.add(c.Contact.Account.Id);
-        }
+        for (Case c : Database.query(soql)) { listAgentIdWithClosedCase.add(c.Contact.Account.Id);}
     }
 
     public Boolean agentHasClosedCases(Id agentId) {

@@ -24,7 +24,7 @@ global class ams2gdp_Batch_AMS_Agency_Profile implements Database.Batchable<sObj
 		processNextBatch = runNext;
 		extraIds = ids;
 
-		Map<String, String> recordTypes = ams2gdp_Utils.getRecordTypeIdByName('Account');
+		Map<String, String> recordTypes = RecordTypeSingleton.getInstance().getMapRecordTypesBySObject('Account');
 
 		String fields = ' Id, GR_Item__c,GR_Code__c, AMS_Agency_Profile__c.Account__c';
 

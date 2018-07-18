@@ -118,7 +118,7 @@ trigger trgCaseIFAP_AfterInsertDeleteUpdateUndelete on Case (after delete, after
               
           if(!casesToUdpateTheAccts.isEmpty())  {              
                // throw new transformationException();
-                AcctToBeUpdatedPerId =IFAP_AfterTrigger.updateTheAcctsTrigger(casesToUdpateTheAccts);
+                //AcctToBeUpdatedPerId =IFAP_AfterTrigger.updateTheAcctsTrigger(casesToUdpateTheAccts);
             }
       }          
     } 

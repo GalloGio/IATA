@@ -1,12 +1,15 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <CustomApplication xmlns="http://soap.sforce.com/2006/04/metadata">
     <defaultLandingTab>standard-home</defaultLandingTab>
+    <formFactors>Large</formFactors>
+    <isNavAutoTempTabsDisabled>false</isNavAutoTempTabsDisabled>
+    <isNavPersonalizationDisabled>false</isNavPersonalizationDisabled>
     <label>PKB 2</label>
-    <tab>standard-Knowledge</tab>
-    <tab>PKB_2_Settings</tab>
-    <tab>PKB_Article_Feedback_Deflection__c</tab>
-    <tab>PKB_Featured__c</tab>
-    <tab>standard-KnowledgePublishing</tab>
-    <tab>Operational_Improvements__c</tab>
-    <tab>AMS_Account_Role__c</tab>
+    <tabs>standard-Knowledge</tabs>
+    <tabs>PKB_2_Settings</tabs>
+    <tabs>PKB_Article_Feedback_Deflection__c</tabs>
+    <tabs>PKB_Featured__c</tabs>
+    <tabs>standard-KnowledgePublishing</tabs>
+    <tabs>Operational_Improvements__c</tabs>
+    <tabs>AMS_Account_Role__c</tabs>
 </CustomApplication>

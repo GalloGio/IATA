@@ -360,7 +360,7 @@
             </layoutItems>
             <layoutItems>
                 <behavior>Edit</behavior>
-                <field>Financial_Assessment_compliant__c</field>
+                <field>Financial_Review_Result__c</field>
             </layoutItems>
             <layoutItems>
                 <behavior>Edit</behavior>

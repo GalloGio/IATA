@@ -43,11 +43,11 @@ global class SurveyBatch implements Database.Batchable<sObject>, Database.Statef
 
   // Mapping of the complaint queues per region
   global map<String, String> mapComplaintQueueNamePerRegion = new map<String, String> {
-    'Africa & Middle East' => 'CasesComplaintsAME',
-    'Americas' => 'Cases_Complaints_Americas',
+    'Africa & Middle East' => 'Cases_Complaints_GDC_MAD',
+    'Americas' => 'Cases_Complaints_GDC_MAD',
     'China & North Asia' => 'Cases_Complaints_BJS',
     'Asia & Pacific' => 'Cases_Complaints_SIN',
-    'Europe' => 'CasesOCITComplaints'
+    'Europe' => 'Cases_Complaints_GDC_MAD'
   };
 
   // List of the DeveloperNames of the Case record types that are in the scope of this customer recorvery process
@@ -676,7 +676,7 @@ global class SurveyBatch implements Database.Batchable<sObject>, Database.Statef
          c.Origin != 'Email' && c.Origin != 'Fax' && c.Origin != 'Funds Management' &&
          c.Origin != 'Internal Case' && c.Origin != 'IATA internal user' && c.Origin != 'Letter' && c.Origin != 'Monthly Report' &&
          c.Origin != 'myIATA' && c.Origin != 'New ISS Deployment' && c.Origin != 'OLS' &&
-         c.Origin != 'Other' && c.Origin != 'Walk-in' && c.Origin != 'Web SAF' &&
+         c.Origin != 'Other' && c.Origin != 'Walk-in' && c.Origin != 'Web SAF' && c.Origin != 'E&F Client – Email to Case' &&
          !c.Phone_Redirected_to_Web__c &&
          c.Case_Group__c == 'Query' &&
          RoleName != null)
@@ -727,8 +727,11 @@ global class SurveyBatch implements Database.Batchable<sObject>, Database.Statef
          //inc321684 verification for roleName = 'Staff - TIESS'
         else if (RoleName.contains('Staff - TIESS')) {
           template = templates.get('Clicktools_Contact_Email_CX_EN_AUG17');   
-        } 
+        }
+        else if (RoleName.contains('E&F')) {
+          template = templates.get('Clicktools_Contact_Email_CX_EN_AUG17');
 
+        }
         else if (
           RoleName.contains('China & N. Asia Customer Service') &&
           c.Region__c == 'China & North Asia' &&

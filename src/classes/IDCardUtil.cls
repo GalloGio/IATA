@@ -291,68 +291,6 @@ global with sharing class IDCardUtil {
         return detailledFee;
     }
 
-    /**
-     * Generates a new UIR based on an account
-     * Format: <countryISOcode><6digits_counter>
-     *//*
-public static String generateUIR(Account theAccount) {
-
-IATA_ISO_Country__c country = [Select i.Name, i.ISO_Code__c, i.AIMS_Area_ID__c From IATA_ISO_Country__c i where i.Name = :theAccount.BillingCountry limit 1];
-
-Integer countryAreaID = Integer.valueOf(country.AIMS_Area_ID__c);
-
-// select counter associated to the Area
-Area_Counter__c counter = [Select a.Next_Counter_Value__c From Area_Counter__c a where a.AIMS_Area_Id__c = :countryAreaID limit 1];
-if (counter == null) {
-    throw new IDCardApplicationException('No counter found for country ' + country.Name + ' (Area ' + country.AIMS_Area_ID__c + ')');
-}
-
-// reselect with FOR UPDATE
-counter = [Select a.Next_Counter_Value__c From Area_Counter__c a where a.AIMS_Area_Id__c = :countryAreaID limit 1 FOR UPDATE];
-
-// TODO: left pad de 6
-string formattedCounter = String.valueOf(counter.Next_Counter_Value__c).leftpad(6).replace(' ', '0');
-String newUIR = country.ISO_Code__c + formattedCounter;
-
-// TODO: check if UIR already exist for a contact
-
-// increment counter
-counter.Next_Counter_Value__c = counter.Next_Counter_Value__c + 1;
-update counter;
-
-return newUIR;
-}*/
-
-    /**
-     * Generates a new VER based on an account
-     * Format: 5<country_numeric_code><6digits_counter>
-     *//*
-public static String generateVER(Account theAccount) {
-
-IATA_ISO_Country__c country = [Select i.Name, i.ISO_Code_Numeric__c, i.AIMS_Area_ID__c From IATA_ISO_Country__c i where i.Name = :theAccount.BillingCountry limit 1];
-
-Integer countryAreaID = Integer.valueOf(country.AIMS_Area_ID__c);
-
-// select counter associated to the Area
-Area_Counter__c counter = [Select a.Next_Counter_Value__c From Area_Counter__c a where a.AIMS_Area_Id__c = :countryAreaID limit 1];
-if (counter == null) {
-    throw new IDCardApplicationException('No counter found for country ' + country.Name + ' (Area ' + country.AIMS_Area_ID__c + ')');
-}
-
-// reselect with FOR UPDATE
-counter = [Select a.Next_Counter_Value__c From Area_Counter__c a where a.AIMS_Area_Id__c = :countryAreaID limit 1 FOR UPDATE];
-
-string formattedIsoCodeNumeric = String.valueOf(country.ISO_Code_Numeric__c).leftpad(3).replace(' ', '0');
-string formattedCounter = String.valueOf(counter.Next_Counter_Value__c).leftpad(6).replace(' ', '0');
-string newVER = '5' + formattedIsoCodeNumeric + formattedCounter;
-
-// increment counter
-counter.Next_Counter_Value__c = counter.Next_Counter_Value__c + 1;
-update counter;
-
-return newVER;
-}*/
-
     public static void generateAndAssignVERandUIR(ID_Card_Application__c application, Account theAccount) {
         if (massCountry == null || massCountry.AIMS_Area_Name__c != theAccount.BillingCountry) {
             massCountry = IATAIsoCountryDAO.getIsoCountriesByAIMSAreaName(theAccount.BillingCountry)[0];
