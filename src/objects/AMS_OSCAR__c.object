@@ -6999,21 +6999,6 @@ if(Change_effective_as_of__c - today() &gt; 0,&quot;30&quot;,&quot;0&quot;)))</f
                     <default>false</default>
                     <label>Renewal not completed</label>
                 </value>
-                <value>
-                    <fullName>Input requested</fullName>
-                    <default>false</default>
-                    <label>Input requested</label>
-                </value>
-                <value>
-                    <fullName>Pending Reconsideration</fullName>
-                    <default>false</default>
-                    <label>Pending Reconsideration</label>
-                </value>
-                <value>
-                    <fullName>Closed_Disapproved</fullName>
-                    <default>false</default>
-                    <label>Closed_Disapproved</label>
-                </value>
             </valueSetDefinition>
         </valueSet>
     </fields>
@@ -7234,6 +7219,21 @@ if(Change_effective_as_of__c - today() &gt; 0,&quot;30&quot;,&quot;0&quot;)))</f
                     <fullName>Renewal not completed</fullName>
                     <default>false</default>
                     <label>Renewal not completed</label>
+                </value>
+                <value>
+                    <fullName>Input requested</fullName>
+                    <default>false</default>
+                    <label>Input requested</label>
+                </value>
+                <value>
+                    <fullName>Pending Reconsideration</fullName>
+                    <default>false</default>
+                    <label>Pending Reconsideration</label>
+                </value>
+                <value>
+                    <fullName>Closed_Disapproved</fullName>
+                    <default>false</default>
+                    <label>Closed_Disapproved</label>
                 </value>
             </valueSetDefinition>
         </valueSet>
