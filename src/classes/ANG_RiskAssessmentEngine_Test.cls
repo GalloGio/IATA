@@ -125,7 +125,8 @@ public class ANG_RiskAssessmentEngine_Test{
         	Location_Class__c= AMS_Utils.LC_PASSENGER,
         	Remittance_frequency__c=ANG_Risk_Helper.REMITTANCE_FREQUENCY_MONTHLY,
         	ANG_Accreditation_Model__c =AMS_Utils.ACCREDITATIONMODEL_CASH,
-        	recordtypeId=AMS_Utils.RECTYPE_IATAAGENCY
+        	recordtypeId=AMS_Utils.RECTYPE_IATAAGENCY,
+            IATA_ISO_Country__c = isoCountry.Id
         	);
         insert acc;
     }

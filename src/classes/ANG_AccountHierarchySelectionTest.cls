@@ -48,7 +48,7 @@ private class ANG_AccountHierarchySelectionTest {
 		HE.Location_Class__c = 'P';
 		HE.Location_Type__c = 'HE';
 		HE.ANG_Accreditation_Model__c = 'Cashless';
-
+		HE.IATA_ISO_Country__c = ctry.Id;
 		HE.ANG_IEP_HE_AccntNum__c = '1232132323';
 		HE.ANG_IEP_Status__c = 'Suspended' ;
 		HE.ANG_HE_CashCondition__c = true;
