@@ -6123,15 +6123,7 @@
               {
                 "Name": "STEP38",
                 "Required": [],
-                "Actions": [
-                  {
-                    "FunctionName": "aNG_RestrictFOP",
-                    "ActionLabel": "AMS_OSCAR_Action17",
-                    "args": [
-                      "oscarid"
-                    ]
-                  }  
-                ],
+                "Actions": [],
                 "Automations": [],
                 "DisplayFields": [
                   "ANG_Restrict_Cash__c",
@@ -6148,15 +6140,7 @@
               {
                 "Name": "STEP39",
                 "Required": [],
-                "Actions": [
-                  {
-                    "FunctionName": "aNG_RestoreFOP",
-                    "ActionLabel": "AMS_OSCAR_Action18",
-                    "args": [
-                      "oscarid"
-                    ]
-                  }
-                ],
+                "Actions": [],
                 "Automations": [],
                 "DisplayFields": [
                   "ANG_Restore_Cash__c",
