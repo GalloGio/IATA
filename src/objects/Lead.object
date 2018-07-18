@@ -5075,6 +5075,106 @@ albam@iata.org</description>
         <unique>false</unique>
     </fields>
     <fields>
+        <fullName>Training_Subject_area__c</fullName>
+        <description>Training subject areas for In-Company form on iata.org</description>
+        <externalId>false</externalId>
+        <label>Training Subject area</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <type>Picklist</type>
+        <valueSet>
+            <restricted>true</restricted>
+            <valueSetDefinition>
+                <sorted>false</sorted>
+                <value>
+                    <fullName>Air Navigation Services</fullName>
+                    <default>false</default>
+                    <label>Air Navigation Services</label>
+                </value>
+                <value>
+                    <fullName>Airline Business Management</fullName>
+                    <default>false</default>
+                    <label>Airline Business Management</label>
+                </value>
+                <value>
+                    <fullName>Airline Operations and Quality</fullName>
+                    <default>false</default>
+                    <label>Airline Operations and Quality</label>
+                </value>
+                <value>
+                    <fullName>Airport Planning, Operations and Management</fullName>
+                    <default>false</default>
+                    <label>Airport Planning, Operations and Management</label>
+                </value>
+                <value>
+                    <fullName>Management and Leadership</fullName>
+                    <default>false</default>
+                    <label>Management and Leadership</label>
+                </value>
+                <value>
+                    <fullName>Cargo</fullName>
+                    <default>false</default>
+                    <label>Cargo</label>
+                </value>
+                <value>
+                    <fullName>Civil Aviation Authorities</fullName>
+                    <default>false</default>
+                    <label>Civil Aviation Authorities</label>
+                </value>
+                <value>
+                    <fullName>Dangerous Goods Regulations</fullName>
+                    <default>false</default>
+                    <label>Dangerous Goods Regulations</label>
+                </value>
+                <value>
+                    <fullName>Environment</fullName>
+                    <default>false</default>
+                    <label>Environment</label>
+                </value>
+                <value>
+                    <fullName>Fares and Ticketing</fullName>
+                    <default>false</default>
+                    <label>Fares and Ticketing</label>
+                </value>
+                <value>
+                    <fullName>Finance and Accounting</fullName>
+                    <default>false</default>
+                    <label>Finance and Accounting</label>
+                </value>
+                <value>
+                    <fullName>Ground Operations</fullName>
+                    <default>false</default>
+                    <label>Ground Operations</label>
+                </value>
+                <value>
+                    <fullName>Law and Regulations</fullName>
+                    <default>false</default>
+                    <label>Law and Regulations</label>
+                </value>
+                <value>
+                    <fullName>Safety</fullName>
+                    <default>false</default>
+                    <label>Safety</label>
+                </value>
+                <value>
+                    <fullName>Sales &amp; Marketing</fullName>
+                    <default>false</default>
+                    <label>Sales &amp; Marketing</label>
+                </value>
+                <value>
+                    <fullName>Security</fullName>
+                    <default>false</default>
+                    <label>Security</label>
+                </value>
+                <value>
+                    <fullName>Travel and Tourism</fullName>
+                    <default>false</default>
+                    <label>Travel and Tourism</label>
+                </value>
+            </valueSetDefinition>
+        </valueSet>
+    </fields>
+    <fields>
         <fullName>Typeofcustomer__c</fullName>
         <externalId>false</externalId>
         <label>Type of customer</label>
@@ -5844,28 +5944,6 @@ albam@iata.org</description>
         <sharedTo>
             <group>MACSDirectSalesAll</group>
             <role>VPMACS</role>
-        </sharedTo>
-    </listViews>
-    <listViews>
-        <fullName>Created_Today1</fullName>
-        <columns>FULL_NAME</columns>
-        <columns>LEAD.COMPANY</columns>
-        <columns>LEAD.EMAIL</columns>
-        <columns>LEAD.STATUS</columns>
-        <columns>LEAD.CREATED_DATE</columns>
-        <columns>CORE.USERS.ALIAS</columns>
-        <columns>LEAD.UNREAD</columns>
-        <columns>CREATEDBY_USER.ALIAS</columns>
-        <filterScope>Everything</filterScope>
-        <filters>
-            <field>LEAD.CREATED_DATE</field>
-            <operation>equals</operation>
-            <value>TODAY</value>
-        </filters>
-        <label>Created Today</label>
-        <language>en_US</language>
-        <sharedTo>
-            <group>MACSAllIATACommercial</group>
         </sharedTo>
     </listViews>
     <listViews>
@@ -7111,6 +7189,77 @@ albam@iata.org</description>
             </values>
         </picklistValues>
         <picklistValues>
+            <picklist>Training_Subject_area__c</picklist>
+            <values>
+                <fullName>Air Navigation Services</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Airline Business Management</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Airline Operations and Quality</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Airport Planning%2C Operations and Management</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Cargo</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Civil Aviation Authorities</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Dangerous Goods Regulations</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Environment</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Fares and Ticketing</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Finance and Accounting</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Ground Operations</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Law and Regulations</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Management and Leadership</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Safety</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Sales %26 Marketing</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Security</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Travel and Tourism</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
             <picklist>Typeofcustomer__c</picklist>
             <values>
                 <fullName>Airline industry</fullName>
@@ -8280,6 +8429,77 @@ albam@iata.org</description>
             </values>
         </picklistValues>
         <picklistValues>
+            <picklist>Training_Subject_area__c</picklist>
+            <values>
+                <fullName>Air Navigation Services</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Airline Business Management</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Airline Operations and Quality</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Airport Planning%2C Operations and Management</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Cargo</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Civil Aviation Authorities</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Dangerous Goods Regulations</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Environment</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Fares and Ticketing</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Finance and Accounting</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Ground Operations</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Law and Regulations</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Management and Leadership</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Safety</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Sales %26 Marketing</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Security</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Travel and Tourism</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
             <picklist>Typeofcustomer__c</picklist>
             <values>
                 <fullName>Agent</fullName>
@@ -9269,6 +9489,77 @@ albam@iata.org</description>
             </values>
             <values>
                 <fullName>Pending</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Training_Subject_area__c</picklist>
+            <values>
+                <fullName>Air Navigation Services</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Airline Business Management</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Airline Operations and Quality</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Airport Planning%2C Operations and Management</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Cargo</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Civil Aviation Authorities</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Dangerous Goods Regulations</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Environment</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Fares and Ticketing</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Finance and Accounting</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Ground Operations</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Law and Regulations</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Management and Leadership</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Safety</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Sales %26 Marketing</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Security</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Travel and Tourism</fullName>
                 <default>false</default>
             </values>
         </picklistValues>
@@ -10353,6 +10644,77 @@ albam@iata.org</description>
             </values>
             <values>
                 <fullName>Pending</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Training_Subject_area__c</picklist>
+            <values>
+                <fullName>Air Navigation Services</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Airline Business Management</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Airline Operations and Quality</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Airport Planning%2C Operations and Management</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Cargo</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Civil Aviation Authorities</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Dangerous Goods Regulations</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Environment</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Fares and Ticketing</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Finance and Accounting</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Ground Operations</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Law and Regulations</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Management and Leadership</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Safety</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Sales %26 Marketing</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Security</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Travel and Tourism</fullName>
                 <default>false</default>
             </values>
         </picklistValues>
@@ -11518,6 +11880,77 @@ albam@iata.org</description>
             </values>
         </picklistValues>
         <picklistValues>
+            <picklist>Training_Subject_area__c</picklist>
+            <values>
+                <fullName>Air Navigation Services</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Airline Business Management</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Airline Operations and Quality</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Airport Planning%2C Operations and Management</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Cargo</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Civil Aviation Authorities</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Dangerous Goods Regulations</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Environment</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Fares and Ticketing</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Finance and Accounting</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Ground Operations</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Law and Regulations</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Management and Leadership</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Safety</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Sales %26 Marketing</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Security</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Travel and Tourism</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
             <picklist>Typeofcustomer__c</picklist>
             <values>
                 <fullName>Agent</fullName>
@@ -12643,6 +13076,77 @@ albam@iata.org</description>
             </values>
             <values>
                 <fullName>Pending</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Training_Subject_area__c</picklist>
+            <values>
+                <fullName>Air Navigation Services</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Airline Business Management</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Airline Operations and Quality</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Airport Planning%2C Operations and Management</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Cargo</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Civil Aviation Authorities</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Dangerous Goods Regulations</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Environment</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Fares and Ticketing</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Finance and Accounting</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Ground Operations</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Law and Regulations</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Management and Leadership</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Safety</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Sales %26 Marketing</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Security</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Travel and Tourism</fullName>
                 <default>false</default>
             </values>
         </picklistValues>

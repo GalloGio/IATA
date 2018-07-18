@@ -74,17 +74,15 @@ public with sharing class ISSP_ChangePassword {
                 }
                 
                 if (pageRef != null){
-                    if (tempPass){
-                        updateUsers();
-                        if(serviceName == 'ISSP' || !isOneId){
-                            pageRef = new PageReference('/ISSP_PersonalInformation?mid=M5S1&confirm=yes' + commParam);
-                        }
-                        else{
-                            pageref = new PageReference(OneIdUtils.getSiteCompleteUrl() +'/s?'+serviceNameParam);
-                        } 
-                    }else if(!isOneId){
-                        pageRef = new PageReference('/ISSP_PersonalInformation?mid=M5S1&confirm=yes' + commParam);
+                    
+                    if(!isOneId || serviceName == 'ISSP'){
+                        pageRef = new PageReference(OneIdUtils.getSiteCompleteUrl(OneIdUtils.Mode.ISSP) + '/ISSP_PersonalInformation?mid=M5S1&confirm=yes' + commParam);
                     }
+                    else{
+                        pageref = new PageReference(OneIdUtils.getSiteCompleteUrl(OneIdUtils.Mode.IDENTITY) + '?' + serviceNameParam);
+                    }
+                    
+                    if (tempPass) updateUsers();
                 }
                 else{
                     List <ApexPages.Message> allMessages = ApexPages.getMessages();

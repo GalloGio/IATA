@@ -3,6 +3,30 @@
     <doesSendEmailToMembers>false</doesSendEmailToMembers>
     <email>csnotificationsame@iata.org</email>
     <name>Cases - United Arab Emirates</name>
+    <queueMembers>
+        <publicGroups>
+            <publicGroup>IATAGulfArea</publicGroup>
+            <publicGroup>IDFSAfricaMECSFirstLevel</publicGroup>
+            <publicGroup>IDFSAfricaMECSSecondLevel</publicGroup>
+            <publicGroup>IDFSAfricaMEHUB</publicGroup>
+            <publicGroup>IDFSAfricaMEServiceCentre</publicGroup>
+            <publicGroup>IDFSAllusersexcludingIWandACCA</publicGroup>
+            <publicGroup>IDFS_HO_Business_Delivery</publicGroup>
+        </publicGroups>
+        <users>
+            <user>ghanema@iata.org</user>
+            <user>salaha@iata.org.inactive</user>
+            <user>akhtara@iata.org</user>
+            <user>elasadyi@iata.org</user>
+            <user>badawik@iata.org</user>
+            <user>hassanm@iata.org</user>
+            <user>lotfym@iata.org</user>
+            <user>assatin@iata.org</user>
+            <user>martinsp@iata.org</user>
+            <user>alostar@iata.org.inactive</user>
+            <user>mirzaz@iata.org</user>
+        </users>
+    </queueMembers>
     <queueSobject>
         <sobjectType>Case</sobjectType>
     </queueSobject>

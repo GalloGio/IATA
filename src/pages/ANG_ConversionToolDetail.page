@@ -1,5 +1,3 @@
-
-
 <apex:page controller="ANG_ConversionToolController" showHeader="true">
 
  <apex:includeScript value="/support/console/34.0/integration.js"/>

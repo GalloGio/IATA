@@ -3,6 +3,11 @@
     <doesSendEmailToMembers>false</doesSendEmailToMembers>
     <email>shalbakf@iata.org</email>
     <name>Local Office - North Africa</name>
+    <queueMembers>
+        <publicGroups>
+            <publicGroup>IDFSAfricaMEallusers</publicGroup>
+        </publicGroups>
+    </queueMembers>
     <queueSobject>
         <sobjectType>Case</sobjectType>
     </queueSobject>

@@ -3,6 +3,19 @@
     <doesSendEmailToMembers>false</doesSendEmailToMembers>
     <email>rovedaa@iata.org</email>
     <name>Other (All)</name>
+    <queueMembers>
+        <publicGroups>
+            <publicGroup>ChinaNorthAsiaRO</publicGroup>
+            <publicGroup>IDFSAfricaMERegionalOffice</publicGroup>
+            <publicGroup>IDFSAllusersexcludingIWandACCA</publicGroup>
+            <publicGroup>IDFSAmericasRegionalOffice</publicGroup>
+            <publicGroup>IDFSAsiaPacificRegionalOffice</publicGroup>
+        </publicGroups>
+        <roleAndSubordinatesInternal>
+            <roleAndSubordinateInternal>DistributionCustomerExperienceHOI</roleAndSubordinateInternal>
+            <roleAndSubordinateInternal>IDFSEuropeRegionalOfficeI</roleAndSubordinateInternal>
+        </roleAndSubordinatesInternal>
+    </queueMembers>
     <queueSobject>
         <sobjectType>Case</sobjectType>
     </queueSobject>

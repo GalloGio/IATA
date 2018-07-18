@@ -3,6 +3,32 @@
     <doesSendEmailToMembers>false</doesSendEmailToMembers>
     <email>usukhjargale@iata.org</email>
     <name>Local Office - Mongolia</name>
+    <queueMembers>
+        <roleAndSubordinatesInternal>
+            <roleAndSubordinateInternal>ChinaNAsiaAgencyManagementMgrI</roleAndSubordinateInternal>
+            <roleAndSubordinateInternal>ChinaNAsiaAgencyManagementStaffI</roleAndSubordinateInternal>
+            <roleAndSubordinateInternal>ChinaNAsiaASDStaffI</roleAndSubordinateInternal>
+            <roleAndSubordinateInternal>ChinaNAsiaASDSupervisorI</roleAndSubordinateInternal>
+            <roleAndSubordinateInternal>ChinaNAsiaBankingManagerI</roleAndSubordinateInternal>
+            <roleAndSubordinateInternal>China_N_Asia_Business_Delivery_Manager</roleAndSubordinateInternal>
+            <roleAndSubordinateInternal>China_N_Asia_Business_Delivery_Staff</roleAndSubordinateInternal>
+            <roleAndSubordinateInternal>ChinaNAsiaCustomerServiceManagerI</roleAndSubordinateInternal>
+            <roleAndSubordinateInternal>ChinaNAsiaCustomerServiceStaffI</roleAndSubordinateInternal>
+            <roleAndSubordinateInternal>ChinaNAsiaOperationalManagementI</roleAndSubordinateInternal>
+            <roleAndSubordinateInternal>ChinaNAsiaRSManagerI</roleAndSubordinateInternal>
+            <roleAndSubordinateInternal>ChinaNAsiaRSStaffI</roleAndSubordinateInternal>
+            <roleAndSubordinateInternal>ChinaNorthAsiaHubLeaderI</roleAndSubordinateInternal>
+            <roleAndSubordinateInternal>CountryManagerChinaI</roleAndSubordinateInternal>
+            <roleAndSubordinateInternal>CountryManagerHongKongI</roleAndSubordinateInternal>
+            <roleAndSubordinateInternal>CountryManagerMongoliaI</roleAndSubordinateInternal>
+            <roleAndSubordinateInternal>CountryManagerTaiwanI</roleAndSubordinateInternal>
+            <roleAndSubordinateInternal>IDFSChinaNorthAsiaRegionalOfficeI</roleAndSubordinateInternal>
+            <roleAndSubordinateInternal>StaffChinaI</roleAndSubordinateInternal>
+            <roleAndSubordinateInternal>StaffHongKongI</roleAndSubordinateInternal>
+            <roleAndSubordinateInternal>StaffMongoliaI</roleAndSubordinateInternal>
+            <roleAndSubordinateInternal>StaffTaiwanI</roleAndSubordinateInternal>
+        </roleAndSubordinatesInternal>
+    </queueMembers>
     <queueSobject>
         <sobjectType>Case</sobjectType>
     </queueSobject>

@@ -9,7 +9,7 @@
     <script src="//code.jquery.com/ui/1.11.4/jquery-ui.js"></script>
     <body>
         <script type="text/javascript">
-        document.addEventListener("DOMContentLoaded", function(event) { 
+        document.addEventListener("DOMContentLoaded", function(event) {
           fixMultipicklistArrowStyle();
           try {refreshSubtypePicklist();} catch(e){}
           changeSubsectionStyle();
@@ -383,7 +383,7 @@
                                             </apex:selectlist>
                                         </apex:outputpanel>
                                     </apex:pageblocksectionitem>
-                                    
+
                                     <apex:inputField value="{!newCase.CaseArea__c}" rendered="{!isDPCUser}" styleclass="form-control">
                                         <apex:actionSupport event="onchange" reRender="reason1Picklist"/>
                                     </apex:inputField>
@@ -498,7 +498,7 @@
                                         <apex:inputField id="subtypePicklist" value="{!newCase.Sub_Type__c}" required="false" rendered="{!isDPCUser}" styleclass="form-control" />
 
                                         <apex:inputfield value="{!newCase.BSP_s_concerned__c}" label="{!$Label.ISSP_BSP_Concerned}" required="false" rendered="{!isDPCUser}" styleclass="form-control" />
-                                        
+
                                         <apex:inputfield value="{!newCase.Priority}" required="true" rendered="{!isDPCUser}" styleclass="form-control" />
 
                                         <!-- CC Others info -->
@@ -737,7 +737,7 @@
                                                 {!CASE(newCase.Reason1__c, 'Minor database changes', 'Click here to continue with your BSP/CASS Change Request', 'Bank Account Instructions', 'Click here to continue with your BSP/CASS Bank Account Change',  $Label.ISSP_Click_Here)}
                                             </apex:outputlink>
                                         </apex:pageblocksectionitem>
-                                        
+
                                         <apex:pageblocksectionitem rendered="{!showAccreditation}">
                                             <apex:outputPanel >
                                             <apex:outputlabel value="{!$Label.ISSP_AMS_Form}" for="amsFormLink" rendered="{!OR(BEGINS(newCase.Reason1__c, 'New'),newCase.Reason1__c=='FoP Management')}"/>
@@ -759,7 +759,7 @@
                                         </apex:pageblocksectionitem>
                                         <!-- AMSU-119 - added isMSO Condition -->
                                         <!--apex:pageblocksectionitem rendered="{!AND(isOnlineOSCARCase, NOT(showAccreditation), newCase.Reason1__c!='FoP Management', newCase.Reason1__c!='CLO - Closure', newCase.Reason1__c <> 'New MSO')}"-->
-                                        <apex:pageblocksectionitem rendered="{!AND(isOnlineOSCARCase, NOT(showAccreditation), newCase.Reason1__c!='FoP Management', newCase.Reason1__c!='CLO - Closure', newCase.Reason1__c <> 'New MSO', NOT(isMSOcase))}">
+                                        <apex:pageblocksectionitem rendered="{!AND(isOnlineOSCARCase, NOT(showAccreditation), newCase.Reason1__c!='FoP Management', newCase.Reason1__c!='PCI DSS Compliant', newCase.Reason1__c!='CLO - Closure', newCase.Reason1__c <> 'New MSO', newCase.Reason1__c != 'Financial review opt-in / opt-out', newCase.Reason1__c != 'Annual revalidation', NOT(isMSOcase))}">
                                             <apex:image value="{!URLFOR($Resource.PDF_icon_large)}" />
                                             <apex:outputText >
                                                 <apex:outputlink value="{!IF(isTravelAccreditation,'/ISSP_AMS_PDF_ApplicationForm?caseId=', '/ISSP_AMS_PDF_CGO?caseId=') + newCase.Id}" id="amsFormLink" target="_new" rendered="{!AND(BEGINS(newCase.Reason1__c, 'New'), newCase.Reason1__c != 'New HE standard', newCase.Reason1__c != 'New HE lite', newCase.Reason1__c != 'New AE')}">
@@ -937,7 +937,7 @@
                                         <apex:inputfield value="{!newCase.Priority}" styleclass="form-control"  required="true" style="width: auto;" rendered="{!AND(isACCA,newCase.Status!='Closed')}"
                                             onfocus="this.oldValue=this.value" onchange="updatePritority(this);"/>
                                         <apex:outputfield value="{!newCase.Priority}" rendered="{!NOT(AND(isACCA,newCase.Status!='Closed'))}"/>
-                                        
+
                                         <apex:outputfield value="{!newCase.DPC_Software__c}" rendered="{!AND(NOT(IsInterDPCCase),caseType='DPCSR')}" />
                                         <apex:outputfield value="{!newCase.Status}" />
                                         <apex:outputfield value="{!newCase.CaseNumber}" />
@@ -956,7 +956,7 @@
                                         <apex:outputfield value="{!newCase.ACCA_Owner__c}" rendered="{!AND(isDPCUser,OR(caseType='ACR', caseType='IATASR'))}" />
                                         <apex:outputfield value="{!newCase.Type_of_customer__c}" rendered="{!NOT(caseType='DPCSR')}" />
                                         <apex:outputfield value="{!newCase.OwnerId}" rendered="{!caseType='DPCSR'}"/>
-                                        
+
                                         <!-- CC Others info -->
                                         <apex:pageblocksectionitem >
                                             <apex:outputlabel value="{!$Label.ISSP_CCOthers}" for="ccothers" />
@@ -1207,7 +1207,7 @@
 
                                 <!-- Case Comments -->
                                 <!--AMSU-119 : added MSO condition-->
-                                <apex:pageblock rendered="{!AND(NOT(isNewCase),NOT(isMSOCase),newCase.Status != 'Draft')}" id="CustomList" >   
+                                <apex:pageblock rendered="{!AND(NOT(isNewCase),NOT(isMSOCase),newCase.Status != 'Draft')}" id="CustomList" >
                                     <apex:pageBlockSection title="{!$Label.ISSP_Registration_Comments}" columns="1">
                                     <apex:commandbutton rendered="{!AND(NOT(disableCaseComments),NOT(HideForClosedCases))}" action="{!AddComment}" value="{!$Label.ISSP_btn_AddComment}" style="padding:5px" />
                                     <apex:pageblocktable value="{!List_CaseComment}" var="o" width="100%" rendered="{!IF(List_CaseComment.size > 0 , true , false)}">
