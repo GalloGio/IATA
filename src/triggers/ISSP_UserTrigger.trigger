@@ -1,4 +1,4 @@
-trigger ISSP_UserTrigger on User (before insert, before update, after insert) {
+trigger ISSP_UserTrigger on User (before insert, before update, after insert,after update) {
     
     if(ANG_UserTriggerHandler.doNotRun) return;
 
@@ -9,6 +9,7 @@ trigger ISSP_UserTrigger on User (before insert, before update, after insert) {
 		if(Trigger.isBefore && Trigger.isInsert) handler.onBeforeInsert();
 		if(Trigger.isBefore && Trigger.isUpdate) handler.onBeforeUpdate();
 		if(Trigger.isAfter && Trigger.isInsert) handler.onAfterInsert();
+        if(Trigger.isAfter && Trigger.isUpdate) handler.onAfterUpdate();
 	}
     
     if(ISSP_UserTriggerHandler.preventTrigger)
