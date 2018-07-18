@@ -6124,7 +6124,12 @@
                 "Name": "STEP38",
                 "Required": [],
                 "Actions": [],
-                "Automations": [],
+                "Automations": [
+                  {
+                    "Status": "Passed",
+                    "ClassName": "AMS_OSCAR_Automation.AMS_OSCAR_Step38_succeeded"
+                  }
+                ],
                 "DisplayFields": [
                   "ANG_Restrict_Cash__c",
                   "ANG_Restrict_Credit_Card__c",
@@ -6141,7 +6146,12 @@
                 "Name": "STEP39",
                 "Required": [],
                 "Actions": [],
-                "Automations": [],
+                "Automations": [
+                  {
+                    "Status": "Passed",
+                    "ClassName": "AMS_OSCAR_Automation.AMS_OSCAR_Step39_succeeded"
+                  }
+                ],
                 "DisplayFields": [
                   "ANG_Restore_Cash__c",
                   "ANG_Restore_Credit_Card__c",

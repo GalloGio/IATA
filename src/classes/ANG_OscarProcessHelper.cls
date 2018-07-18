@@ -548,10 +548,11 @@ global class ANG_OscarProcessHelper {
 		
 		try{
 
-	    	if(oscar.STEP38__c == AMS_Utils.PASSED){
+			//no need to check, running when step38 is being approved
+	    	/*if(oscar.STEP38__c == AMS_Utils.PASSED){
 	    		String exMessage = 'The status on this step is Passed, so no action will occur.';
 				return new String[]{'-1',exMessage};
-	    	}
+	    	}*/
 
 			Map<Id, List<AMS_Agencies_relationhip__c>> allRelationsOnHierarchy = AMS_HierarchyHelper.getAccountsHierarchies(new Set<Id>{oscar.Account__c});
 
@@ -595,13 +596,13 @@ global class ANG_OscarProcessHelper {
 				updater = createChangeCodeForFOP(updater, oscar, accountToCreateCC, changeCodeName );
 
 			}
-
-			updateUpdater(updater);
+			//no more need to do updates. Running from automation (Before Trigger)
+			//updateUpdater(updater);
 		
 		}catch(Exception ex){
 			
 			oscar.STEP38__c = AMS_Utils.FAILED;
-			update oscar;
+			//update oscar;
 
 			String exMessage = 'An error occured while restricting Forms of Payment:\n\r ' + AMS_Utils.errorMessageBeautifyer(ex);
 			return new String[]{'-1',exMessage};
@@ -622,12 +623,15 @@ global class ANG_OscarProcessHelper {
 
     	AMS_OSCAR__c oscar = [Select Id, Account__c,STEP39__c, Is_NewGen__c from AMS_OSCAR__c where Id = :oscarId LIMIT 1];
 
+    	
+
 		try{
 
-	    	if(oscar.STEP39__c == AMS_Utils.PASSED){
+			//no need to check, running when step39 is being approved
+	    	/*if(oscar.STEP39__c == AMS_Utils.PASSED){
 	    		String exMessage = 'The status on this step is Passed, so no action will occur.';
 				return new String[]{'-1',exMessage};
-	    	}
+	    	}*/
 
 			Map<Id, List<AMS_Agencies_relationhip__c>> allRelationsOnHierarchy = AMS_HierarchyHelper.getAccountsHierarchies(new Set<Id>{oscar.Account__c});
 
@@ -668,12 +672,13 @@ global class ANG_OscarProcessHelper {
 				updater = createChangeCodeForFOP(updater, oscar, accountToCreateCC, changeCodeName );
 			}
 
-			updateUpdater(updater);
+			//no more need to do updates. Running from automation (Before Trigger)
+			//updateUpdater(updater);
 
 		}catch(Exception ex){
 			
 			oscar.STEP39__c = AMS_Utils.FAILED;
-			update oscar;
+			//update oscar;
 
 			String exMessage = 'An error occured while restricting Forms of Payment:\n\r ' + AMS_Utils.errorMessageBeautifyer(ex);
 			return new String[]{'-1',exMessage};
