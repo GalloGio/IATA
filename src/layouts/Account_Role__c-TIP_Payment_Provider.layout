@@ -44,7 +44,7 @@
             </layoutItems>
             <layoutItems>
                 <behavior>Edit</behavior>
-                <field>TIP_Documents__c</field>
+                <field>Any_Other_Information__c</field>
             </layoutItems>
         </layoutColumns>
         <layoutColumns>
@@ -54,7 +54,7 @@
             </layoutItems>
             <layoutItems>
                 <behavior>Required</behavior>
-                <field>TIP_HQ_Location__c</field>
+                <field>HQ_Location__c</field>
             </layoutItems>
         </layoutColumns>
         <style>TwoColumnsLeftToRight</style>

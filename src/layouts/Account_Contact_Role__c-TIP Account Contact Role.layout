@@ -20,7 +20,7 @@
             </layoutItems>
             <layoutItems>
                 <behavior>Edit</behavior>
-                <field>TIP_Primary_Contact__c</field>
+                <field>Contact_Role__c</field>
             </layoutItems>
         </layoutColumns>
         <layoutColumns>

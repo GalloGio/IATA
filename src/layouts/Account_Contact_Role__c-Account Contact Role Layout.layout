@@ -23,10 +23,6 @@
                 <field>Contact__c</field>
             </layoutItems>
             <layoutItems>
-                <behavior>Edit</behavior>
-                <field>TIP_Primary_Contact__c</field>
-            </layoutItems>
-            <layoutItems>
                 <behavior>Required</behavior>
                 <field>Service_Rendered__c</field>
             </layoutItems>
