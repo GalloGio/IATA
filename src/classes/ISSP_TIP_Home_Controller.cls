@@ -23,7 +23,6 @@ public without sharing class ISSP_TIP_Home_Controller {
     public list<Account_Contact_Role__c> AccountContactRoleList	{get; set;}
     public Boolean isEmailDuplicated {get; set;}
     public Account_Role__c TheAccountRole	{get; set;}
-    public list<Account_Contact_Role__c> theContactsRole	{get; set;}
 
     public User user {get; set;}
 
@@ -151,6 +150,7 @@ public without sharing class ISSP_TIP_Home_Controller {
     //##======================Methods================================##  
 
     public Pagereference initActions(){
+    	system.debug('DTULLO START initActions');
 	User user = DAL_ISSP.getUser(Userinfo.getUserId());
       
         try {
@@ -436,6 +436,7 @@ public without sharing class ISSP_TIP_Home_Controller {
         newCase.setOptions(dmo);
 
         update account;
+        update theAccountRole;
         upsert newCase;
 
         //assign to TIP HO queue
@@ -456,6 +457,7 @@ public without sharing class ISSP_TIP_Home_Controller {
 
         updateCase();
         update account;
+        update theAccountRole;
         upsert newCase;
         try{
             upsert contactList;
@@ -492,7 +494,7 @@ public without sharing class ISSP_TIP_Home_Controller {
 			if(string.isNotBlank(Account.Service_Provided__c)){
 				setServiceProvided.addAll(Account.Service_Provided__c.split(';'));
 			}
-			if(Account.Account_Roles__r != null)
+			if(!Account.Account_Roles__r.isEmpty())
 				TheAccountRole = Account.Account_Roles__r;
 		}
 		
@@ -509,11 +511,14 @@ public without sharing class ISSP_TIP_Home_Controller {
     				   where Id = :TheUser.Contact.AccountID limit 1];
     	
     	if(acc!= null){
-    		if(Acc.Account_Roles__r == null){
+    		if(Acc.Account_Roles__r.isEmpty()){
     			try{
-    				insert new Account_role__c(Account__c = acc.Id, RecordTypeId = TIP_Utils.ACCOUNT_ROLE_PAYMENT_PROVIDER_RECORDTYPE_ID);
-    			}catch(exception  e){
+    				Account_Role__c accrole = new Account_Role__c(Account__c = acc.Id, RecordTypeId = TIP_Utils.ACCOUNT_ROLE_PAYMENT_PROVIDER_RECORDTYPE_ID);
+    				insert accrole;
     				
+    				insert new Account_Contact_Role__c(Contact__c = TheUser.ContactId, Service_Rendered__c = TIP_Utils.ACCOUNT_CONTACT_ROLE_SERVICE_TIP, Account__c = acc.Id, Contact_Role__c = TIP_Utils.ACCOUNT_CONTACT_ROLE_PRIMARY, Account_Role__c = accrole.Id);
+    			}catch(exception  e){
+    				system.debug('DTULLO --> exception while creating account role: ' + e.getMessage());
     			}
     		}
     	}
@@ -551,7 +556,7 @@ public without sharing class ISSP_TIP_Home_Controller {
     	//Looking into account Contact Role first
     	AccountContactRoleList = [Select id, Account__c, Account_Role__c, Business_Phone__c, Contact__c, Contact_Role__c
     							  , Email__c, First_Name__c, Last_Name__c, Service_Rendered__c, Contact__r.Primary_Contact__c
-    							  , Contact__r.Phone
+    							  , Contact__r.Phone, is_primary__c
     							  from Account_Contact_Role__c
     							  where Contact__r.Status__c = 'Active' and Contact__r.Accountid = :con.AccountId
     							  and Service_Rendered__c =:TIP_Utils.ACCOUNT_CONTACT_ROLE_SERVICE_TIP];
@@ -570,27 +575,21 @@ public without sharing class ISSP_TIP_Home_Controller {
             c.Primary_Contact__c = false;
             if(c.id == contactID) c.Primary_Contact__c = true;
         }
-        
-        //ACCOUNT_CONTACT_ROLE_PRIMARY
-        for (Account_Contact_Role__c conRole: AccountContactRoleList) {
-        	set<string> theRoles = new set<string>();
-        	if(string.IsNotBlank(conRole.Contact_Role__c))
-        		theRoles.addAll(conRole.Contact_Role__c.split(';'));
-        	
-        	conRole.Contact_Role__c = '';
-        	
-        	if(theRoles.contains(TIP_Utils.ACCOUNT_CONTACT_ROLE_PRIMARY))
-        		theRoles.remove(TIP_Utils.ACCOUNT_CONTACT_ROLE_PRIMARY);
-        	
-            //c.Primary_Contact__c = false;
-            if(conRole.Contact__c == contactID)
-				theRoles.add(TIP_Utils.ACCOUNT_CONTACT_ROLE_PRIMARY);
-			
-			for(string s:theRoles)
-				conRole.Contact_Role__c = conRole.Contact_Role__c + ';' + s;
-        }
-    }
 
+        //ACCOUNT_CONTACT_ROLE_PRIMARY
+        for (Account_Contact_Role__c conRole: AccountContactRoleList){
+        	if(conRole.Contact__c == contactID)
+        		conRole.Contact_Role__c = TIP_Utils.ManageMultiPicklist(conRole.Contact_Role__c, TIP_Utils.ACCOUNT_CONTACT_ROLE_PRIMARY, 'Add');
+        	else
+				conRole.Contact_Role__c = TIP_Utils.ManageMultiPicklist(conRole.Contact_Role__c, TIP_Utils.ACCOUNT_CONTACT_ROLE_PRIMARY, 'Remove');
+        }
+        
+        upsert AccountContactRoleList;
+        
+        fillContactList();
+    }
+    
+    
     public void createContact(){
 
         newContact.AccountId = con.AccountId;
@@ -598,7 +597,7 @@ public without sharing class ISSP_TIP_Home_Controller {
         try{
             upsert newContact;
             isEmailDuplicated = false;
-            UpsertContactRole(newContact);
+            UpsertContactRole(newContact, false);
             system.debug('##done inserting: ' +isEmailDuplicated);
         }catch(Exception e){
             system.debug('##Error inserting: ' +isEmailDuplicated);
@@ -609,13 +608,16 @@ public without sharing class ISSP_TIP_Home_Controller {
         newContact = new Contact();
     }
     
-    private void UpsertContactRole(Contact theCon){
+    private void UpsertContactRole(Contact theCon, boolean bIsPrimary){
     	Account_Contact_Role__c theContactRole = new Account_Contact_Role__c();
 	        theContactRole.Account__c = con.AccountId;
 	        theContactRole.Contact__c = theCon.Id;
 	        theContactRole.Account_Role__c = TheAccountRole.Id;
 	        theContactRole.Service_Rendered__c = TIP_Utils.ACCOUNT_CONTACT_ROLE_SERVICE_TIP;
 	        theContactRole.UniqueKey__c = TIP_Utils.ACCOUNT_CONTACT_ROLE_SERVICE_TIP + '_' + theContactRole.Account_Role__c + '_' + theContactRole.Contact__c;
+	        if(bIsPrimary){
+	        	theContactRole.Contact_Role__c = '';
+	        }
        upsert theContactRole UniqueKey__c;
     }
 

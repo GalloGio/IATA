@@ -133,4 +133,26 @@ public class TIP_Utils{
 			if(newAcc.recordtypeid == PAYMENT_PROVIDER_RECORD_TYPE_ID && triggerOld.get(newAcc.id).recordtypeid != newAcc.recordtypeid) newAcc.Assessment_Performed_Date__c = Date.today();
 		}	
 	}
+	
+	//method to manage multi picklist via code
+	//sFieldValue is the value of the field on the object
+	//sValue is the value to add or remove
+	//sAction is the action to perform: "Add" or "Remove"
+	public static string ManageMultiPicklist(string sFieldValue, string sValue, string sAction){
+		string sToReturn = '';
+		set<string> setValues = new set<string>();
+		if(string.IsNotBlank(sFieldValue))
+			setValues.addAll(sFieldValue.split(';'));
+		
+		if(setValues.contains(sValue) && sAction=='Remove')
+			setValues.remove(sValue);
+		
+		if(sAction=='Add')
+			setValues.add(sValue);
+		
+		if(!setValues.isEmpty())
+			sToReturn = string.join(new list<string>(setValues), ';');
+			
+		return sToReturn;
+	}
 }

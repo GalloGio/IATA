@@ -606,10 +606,10 @@
                                        <apex:column headerValue="{!$ObjectType.Contact.fields.Phone.Label}" value="{!conRole.Contact__r.Phone}"/>
                                        <apex:column headerValue="{!$ObjectType.Contact.fields.Email.Label}" value="{!conRole.Email__c}"/>
                                        <apex:column headerValue="Primary Contact">
-                                          <apex:outputPanel rendered="{!CONTAINS(conRole.Contact_Role__c, 'Primary Contact')}">
+                                          <apex:outputPanel rendered="{!conRole.is_primary__c}">
                                              <input type="radio" id="primaryContactRadio" checked="checked" />
                                           </apex:outputPanel>
-                                          <apex:outputPanel rendered="{!!CONTAINS(conRole.Contact_Role__c, 'Primary Contact')}" onclick=" refreshTable('{!conRole.Contact__c}'); ">
+                                          <apex:outputPanel rendered="{!!conRole.is_primary__c}" onclick=" refreshTable('{!conRole.Contact__c}'); ">
                                              <input type="radio" id="primaryContactRadio"   />
                                           </apex:outputPanel>
                                        </apex:column>
@@ -618,7 +618,7 @@
                                        </apex:column>
                                     </apex:pageBlockTable>
                                     
-                                    <apex:actionFunction action="{!updateRadioButtonStatus}" name="updateRadioButton" rerender="sectionTwo,ContactForm, ContactPanel">
+                                    <apex:actionFunction action="{!updateRadioButtonStatus}" name="updateRadioButton" rerender="sectionTwo,ContactForm, ContactPanel, contactList">
                                        <apex:param id="contactIDtoPrimary" name="contactIDtoPrimary" value="" />
                                     </apex:actionFunction>
                                     <apex:actionFunction action="{!setContactToEdit}" name="ActionEditContact" oncomplete="showContactDialog()" rerender="sectionTwo,ContactForm, ContactPanel">
