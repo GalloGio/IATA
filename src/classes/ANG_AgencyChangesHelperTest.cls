@@ -288,7 +288,7 @@ public class ANG_AgencyChangesHelperTest {
 		destinationAccount.Category__c = 'IATA Passenger Sales Agent';
 		destinationAccount.Location_Class__c = 'P';
 		destinationAccount.Location_Type__c = 'HE';
-
+		destinationAccount.IATA_ISO_Country__c = ctry.Id;
 		destinationAccount.ANG_IEP_HE_AccntNum__c = '12324353454';
 		destinationAccount.ANG_IEP_Status__c = 'Open' ;
 		destinationAccount.ANG_HE_CashCondition__c = true;
@@ -416,7 +416,7 @@ public class ANG_AgencyChangesHelperTest {
 		destinationAccount.Category__c = 'IATA Passenger Sales Agent';
 		destinationAccount.Location_Class__c = 'P';
 		destinationAccount.Location_Type__c = 'HE';
-
+		destinationAccount.IATA_ISO_Country__c = ctry.Id;
 		destinationAccount.ANG_IEP_HE_AccntNum__c = '12324353454';
 		destinationAccount.ANG_IEP_Status__c = 'Open' ;
 		destinationAccount.ANG_HE_CashCondition__c = true;
@@ -533,7 +533,7 @@ public class ANG_AgencyChangesHelperTest {
 		destinationAccount.Category__c = 'IATA Passenger Sales Agent';
 		destinationAccount.Location_Class__c = 'P';
 		destinationAccount.Location_Type__c = 'HE';
-
+		destinationAccount.IATA_ISO_Country__c = ctry.Id;
 		destinationAccount.ANG_IEP_HE_AccntNum__c = '12324353454';
 		destinationAccount.ANG_IEP_Status__c = 'Open' ;
 		destinationAccount.ANG_HE_CashCondition__c = true;
@@ -651,7 +651,7 @@ public class ANG_AgencyChangesHelperTest {
 		destinationAccount.Category__c = 'IATA Passenger Sales Agent';
 		destinationAccount.Location_Class__c = 'P';
 		destinationAccount.Location_Type__c = 'HE';
-
+		destinationAccount.IATA_ISO_Country__c = ctry.Id;
 		destinationAccount.ANG_IEP_HE_AccntNum__c = '12324353454';
 		destinationAccount.ANG_IEP_Status__c = 'Open' ;
 		destinationAccount.ANG_HE_CashCondition__c = true;
@@ -897,7 +897,7 @@ public class ANG_AgencyChangesHelperTest {
 		destinationAccount.Category__c = 'IATA Passenger Sales Agent';
 		destinationAccount.Location_Class__c = 'P';
 		destinationAccount.Location_Type__c = 'HE';
-
+		destinationAccount.IATA_ISO_Country__c = ctry.Id;
 		destinationAccount.ANG_IEP_HE_AccntNum__c = '15520003454';
 		destinationAccount.ANG_IEP_Status__c = 'Open' ;
 		destinationAccount.ANG_HE_CashCondition__c = true;
