@@ -4086,6 +4086,8 @@ IF(({!FinalLocationClass} = &apos;C&apos; &amp;&amp; {!Type_of_OSCAR_process_man
             <fieldText>The Account {!AccountToProcess.Name} is marked as {!AccountToProcess.Location_Type__c} and does not have a parent Id. Please close the wizard and fill its Parent Id before continuing.</fieldText>
             <fieldType>DisplayText</fieldType>
         </fields>
+        <showFooter>true</showFooter>
+        <showHeader>true</showHeader>
     </screens>
     <screens>
         <name>BSPlinkServicesScreen</name>
@@ -4112,6 +4114,8 @@ IF(({!FinalLocationClass} = &apos;C&apos; &amp;&amp; {!Type_of_OSCAR_process_man
             <fieldType>RadioButtons</fieldType>
             <isRequired>true</isRequired>
         </fields>
+        <showFooter>true</showFooter>
+        <showHeader>true</showHeader>
     </screens>
     <screens>
         <name>ContactChooser</name>
@@ -4145,6 +4149,8 @@ IF(({!FinalLocationClass} = &apos;C&apos; &amp;&amp; {!Type_of_OSCAR_process_man
             <fieldText>&lt;SPAN ALIGN=&quot;LEFT&quot;&gt;&lt;FONT FACE=&quot;Arial&quot; STYLE=&quot;font-size:12px&quot; COLOR=&quot;#FF0000&quot; LETTERSPACING=&quot;0&quot; KERNING=&quot;0&quot;&gt;{!errormessagecontactlookup}&lt;/FONT&gt;&lt;/SPAN&gt;</fieldText>
             <fieldType>DisplayText</fieldType>
         </fields>
+        <showFooter>true</showFooter>
+        <showHeader>true</showHeader>
     </screens>
     <screens>
         <name>ContactChooserScreen</name>
@@ -4170,6 +4176,8 @@ IF(({!FinalLocationClass} = &apos;C&apos; &amp;&amp; {!Type_of_OSCAR_process_man
             <fieldType>DropdownBox</fieldType>
             <isRequired>false</isRequired>
         </fields>
+        <showFooter>true</showFooter>
+        <showHeader>true</showHeader>
     </screens>
     <screens>
         <name>ErrorCNSValidation</name>
@@ -4184,6 +4192,8 @@ IF(({!FinalLocationClass} = &apos;C&apos; &amp;&amp; {!Type_of_OSCAR_process_man
             <fieldText>It is not possible to mix CNS Agencies with non-CNS Agencies within the same hierarchy.</fieldText>
             <fieldType>DisplayText</fieldType>
         </fields>
+        <showFooter>true</showFooter>
+        <showHeader>true</showHeader>
     </screens>
     <screens>
         <name>ErrorCNSwithBRabroad</name>
@@ -4198,6 +4208,8 @@ IF(({!FinalLocationClass} = &apos;C&apos; &amp;&amp; {!Type_of_OSCAR_process_man
             <fieldText>It&apos;s not possible to choose a branch abroad for a CNS Agency</fieldText>
             <fieldType>DisplayText</fieldType>
         </fields>
+        <showFooter>true</showFooter>
+        <showHeader>true</showHeader>
     </screens>
     <screens>
         <name>ErrorMessageNoValidProcessScreen</name>
@@ -4215,6 +4227,8 @@ IF(({!FinalLocationClass} = &apos;C&apos; &amp;&amp; {!Type_of_OSCAR_process_man
             <fieldText>&lt;SPAN ALIGN=&quot;LEFT&quot;&gt;&lt;FONT FACE=&quot;Arial&quot; STYLE=&quot;font-size:12px&quot; COLOR=&quot;#FF0000&quot; LETTERSPACING=&quot;0&quot; KERNING=&quot;0&quot;&gt;{!ErrorMessageFormula}&lt;/FONT&gt;&lt;/SPAN&gt;</fieldText>
             <fieldType>DisplayText</fieldType>
         </fields>
+        <showFooter>true</showFooter>
+        <showHeader>true</showHeader>
     </screens>
     <screens>
         <name>Process_Chooser_Accredited</name>
@@ -4255,6 +4269,8 @@ OSCAR stands for Online Solution for Customer Application Request, and must be l
             <fieldType>RadioButtons</fieldType>
             <isRequired>true</isRequired>
         </fields>
+        <showFooter>true</showFooter>
+        <showHeader>true</showHeader>
     </screens>
     <screens>
         <name>Process_Chooser_not_Accredited</name>
@@ -4291,6 +4307,8 @@ OSCAR stands for Online Solution for Customer Application Request, and must be l
             <fieldType>RadioButtons</fieldType>
             <isRequired>true</isRequired>
         </fields>
+        <showFooter>true</showFooter>
+        <showHeader>true</showHeader>
     </screens>
     <screens>
         <name>ResultPage</name>
@@ -4305,6 +4323,8 @@ OSCAR stands for Online Solution for Customer Application Request, and must be l
             <fieldText>&lt;SPAN ALIGN=&quot;LEFT&quot;&gt;&lt;FONT FACE=&quot;Arial&quot; STYLE=&quot;font-size:12px&quot; COLOR=&quot;#000000&quot; LETTERSPACING=&quot;0&quot; KERNING=&quot;0&quot;&gt;&lt;B&gt;We are all set !&lt;/B&gt;&lt;/FONT&gt;&lt;/SPAN&gt;&lt;DIV ALIGN=&quot;LEFT&quot;&gt;&lt;FONT FACE=&quot;Arial&quot; STYLE=&quot;font-size:12px&quot; COLOR=&quot;#000000&quot; LETTERSPACING=&quot;0&quot; KERNING=&quot;0&quot;&gt;&lt;/FONT&gt;&lt;/DIV&gt;&lt;DIV ALIGN=&quot;LEFT&quot;&gt;&lt;FONT FACE=&quot;Arial&quot; STYLE=&quot;font-size:12px&quot; COLOR=&quot;#000000&quot; LETTERSPACING=&quot;0&quot; KERNING=&quot;0&quot;&gt;You&amp;apos;ve completed the wizard.&lt;/FONT&gt;&lt;/DIV&gt;</fieldText>
             <fieldType>DisplayText</fieldType>
         </fields>
+        <showFooter>true</showFooter>
+        <showHeader>true</showHeader>
     </screens>
     <screens>
         <name>VRProcessSelection</name>
@@ -4331,6 +4351,8 @@ OSCAR stands for Online Solution for Customer Application Request, and must be l
             <fieldType>RadioButtons</fieldType>
             <isRequired>true</isRequired>
         </fields>
+        <showFooter>true</showFooter>
+        <showHeader>true</showHeader>
     </screens>
     <startElementReference>isComingFromLeftSidePanelDec</startElementReference>
     <variables>

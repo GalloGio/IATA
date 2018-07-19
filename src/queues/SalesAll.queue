@@ -3,6 +3,23 @@
     <doesSendEmailToMembers>false</doesSendEmailToMembers>
     <email>noreply@iata.org</email>
     <name>Sales All</name>
+    <queueMembers>
+        <roles>
+            <role>DirectSalesAlternateChannelsA</role>
+            <role>CoordinatorDirectSalesA</role>
+            <role>DirectSalesAssociateArea1A</role>
+            <role>DirectSalesAssociateArea2A</role>
+            <role>DirectSalesAssociateArea3A</role>
+            <role>SalesAssistantDirectorAmericasA</role>
+            <role>SalesAssistantDirectorEuropeA</role>
+            <role>SalesAssistantDirectorAsiaPacA</role>
+            <role>DirectSalesAssistantDirectorA</role>
+            <role>SalesDirectorA</role>
+            <role>SalesManagersAmericasA</role>
+            <role>SalesManagersAsiaPacA</role>
+            <role>SalesManagersEuropeA</role>
+        </roles>
+    </queueMembers>
     <queueSobject>
         <sobjectType>Lead</sobjectType>
     </queueSobject>

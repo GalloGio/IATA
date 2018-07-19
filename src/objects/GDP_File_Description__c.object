@@ -877,11 +877,6 @@
             <operation>equals</operation>
             <value>Reference - GSS Member Legacy</value>
         </filters>
-        <filters>
-            <field>NAME</field>
-            <operation>contains</operation>
-            <value>LEGACY</value>
-        </filters>
         <label>01 - GSS Member LEGACY</label>
         <language>en_US</language>
     </listViews>

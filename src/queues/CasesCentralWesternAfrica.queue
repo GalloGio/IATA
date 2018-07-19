@@ -3,6 +3,22 @@
     <doesSendEmailToMembers>false</doesSendEmailToMembers>
     <email>csnotificationsame@iata.org</email>
     <name>Cases - Central &amp; Western Africa</name>
+    <queueMembers>
+        <publicGroups>
+            <publicGroup>IATACentralandWesternAfrica</publicGroup>
+            <publicGroup>IDFS_Africa_ME_Business_Delivery</publicGroup>
+            <publicGroup>IDFSAfricaMECSFirstLevel</publicGroup>
+            <publicGroup>IDFSAfricaMECSSecondLevel</publicGroup>
+            <publicGroup>IDFSAfricaMEHUB</publicGroup>
+            <publicGroup>IDFSAfricaMEServiceCentre</publicGroup>
+            <publicGroup>IDFSAllusersexcludingIWandACCA</publicGroup>
+        </publicGroups>
+        <users>
+            <user>strydomk@iata.org</user>
+            <user>martinsp@iata.org</user>
+            <user>alostar@iata.org.inactive</user>
+        </users>
+    </queueMembers>
     <queueSobject>
         <sobjectType>Case</sobjectType>
     </queueSobject>

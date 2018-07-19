@@ -366,9 +366,9 @@
         <filters>
             <field>GDP_File_Description__c</field>
             <operation>equals</operation>
-            <value>Reference - GSS Member</value>
+            <value>Reference - GSS Member Legacy</value>
         </filters>
-        <label>01- Field Details - TXT - GSS Member</label>
+        <label>01- Field Details - TXT - GSS Member Leg</label>
         <language>en_US</language>
     </listViews>
     <listViews>
@@ -459,9 +459,9 @@
         <filters>
             <field>GDP_File_Description__c</field>
             <operation>equals</operation>
-            <value>Reference - GSS Member</value>
+            <value>Reference - GSS Member Legacy</value>
         </filters>
-        <label>90- Field Tracking - GSS Member</label>
+        <label>90- Field Tracking - GSS Member Legacy</label>
         <language>en_US</language>
     </listViews>
     <listViews>
