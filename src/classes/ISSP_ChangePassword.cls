@@ -100,6 +100,9 @@ public without sharing class ISSP_ChangePassword {
                     if(!isOneId || serviceName == 'ISSP'){
                         pageRef = new PageReference(OneIdUtils.getCommunityRedirection(OneIdUtils.Mode.ISSP,'/ISSP_PersonalInformation?mid=M5S1&confirm=yes' + commParam));
                     }
+                    else if(serviceName == 'FRED'){                            
+                        pageRef = null;   
+                    }
                     else{
                         pageref = new PageReference(OneIdUtils.getCommunityRedirection(OneIdUtils.Mode.IDENTITY,'/s/?'+serviceNameParam));
                     }
