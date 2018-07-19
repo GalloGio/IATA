@@ -589,7 +589,7 @@ private class AMS_RecordCreatorWebserviceTest {
 
 		Account acct = acctLst.get(0);
 
-		Id accountAgencyRT = AMS_Utils.getId('Account', 'IATA_Agency');
+		Id accountAgencyRT = RecordTypeSingleton.getInstance().getRecordTypeId('Account', 'IATA_Agency');
 
 		acct.RecordTypeId = accountAgencyRT;
 		acct.IATACODE__c = '1234567';

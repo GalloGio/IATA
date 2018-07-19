@@ -247,15 +247,13 @@ private class ServiceRenderedLogicTest {
         CaseChildHelper.noValidationsOnTrgCAseIFAP = true;     
         insertCustomSetting();
         
-        Map<String, Id> developerNamePerId = TransformationHelper.AccRtNamePerIds();
-
         Portal_Applications__c portalApp = new Portal_Applications__c(Name = 'Stuff');
         insert portalApp;
 
         List<Account> airlines = new List<Account>();
 
-        Id airlineBranchRT = RecordTypeSingleton.getInstance().RtIDsPerDeveloperNamePerObj.get('Account').get('IATA_Airline_BR');
-        Id airlineHeadquartersRT = RecordTypeSingleton.getInstance().RtIDsPerDeveloperNamePerObj.get('Account').get('IATA_Airline');
+        Id airlineBranchRT = RecordTypeSingleton.getInstance().getRecordTypeId('Account', 'IATA_Airline_BR');
+        Id airlineHeadquartersRT = RecordTypeSingleton.getInstance().getRecordTypeId('Account', 'IATA_Airline');
 
         Account headquarter = new Account(Name = 'Emirates',
                                           Field_Head_Office__c = 'Headquarter',
@@ -340,7 +338,7 @@ private class ServiceRenderedLogicTest {
 
         List<Case> cases = new List<Case>();
 
-        Id airlineParticipationProcessRT = RecordTypeSingleton.getInstance().RtIDsPerDeveloperNamePerObj.get('Case').get('IDFS_Airline_Participation_Process');
+        Id airlineParticipationProcessRT = RecordTypeSingleton.getInstance().getRecordTypeId('Case', 'IDFS_Airline_Participation_Process');
 
         Case optOutParentCase = new Case(RecordTypeId = airlineParticipationProcessRT,
                                            Description = 'test',

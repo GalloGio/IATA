@@ -1052,7 +1052,7 @@ global class ANG_OscarProcessHelper {
 
 			Case c = [Select Id , ContactId, Account.BillingCountry, Account.Region_formula__c, Account.IATACode__c, Account.Name, Reason1__c,SIDRA_Lite_Reason__c from Case where Id = :newAccr.SAAM_Case__c LIMIT 1 ];
 
-	        Id caseRT = AMS_Utils.getId('Case', 'OSCAR_Communication');
+	        Id caseRT = RecordTypeSingleton.getInstance().getRecordTypeId('Case', 'OSCAR_Communication');
 
 			Map<String,Object> fieldsOfObject = new Map<String,Object>();
 

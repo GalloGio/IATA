@@ -151,7 +151,7 @@ private class ANG_financialReviewOnCaseTest {
         system.assertEquals('B',beforeUpdateAcc.ANG_HE_RiskStatus__c);
         Test.startTest();
            Case c = new Case(
-                   RecordTypeId = RecordTypeSingleton.getInstance().RtIDsPerDeveloperNamePerObj.get('Case').get('ProcessEuropeSCE'),
+                   RecordTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('Case', 'ProcessEuropeSCE'),
                    AccountId = beforeUpdateAcc.Id, 
                    Subject = 'rception case2',
                    contactId=beforeUpdateAcc.contacts.get(0).Id,
