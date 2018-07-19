@@ -1811,7 +1811,7 @@ private class ANG_ConversionHelperEnhancedTest {
 		IATA_ISO_Country__c ctry = new IATA_ISO_Country__c (Name='US',BSP_Country_free_text__c='US' , ISO_Code__c = 'US')  ;
         insert ctry ;
 
-        Id accountAgencyRT = AMS_Utils.getId('Account', 'IATA_Agency');
+        Id accountAgencyRT = RecordTypeSingleton.getInstance().getRecordTypeId('Account', 'IATA_Agency');
 
         Account a1 = new Account(IATA_ISO_Country__c = ctry.id, RecordTypeId = accountAgencyRT, IATACode__c='1234561',Location_Type__c='HO',Name='Agency HO',Short_Name__c='Agency HO', Sector__c = 'Travel Agent', Location_Class__c = 'P', Status__c = AMS_Utils.ACC_S9_APPROVED);
 
@@ -1882,7 +1882,7 @@ private class ANG_ConversionHelperEnhancedTest {
 		IATA_ISO_Country__c ctry2 = new IATA_ISO_Country__c (Name='PK',BSP_Country_free_text__c='PK', ISO_Code__c = 'PK')  ;
         insert ctry2 ;
 
-        Id accountAgencyRT = AMS_Utils.getId('Account', 'IATA_Agency');
+        Id accountAgencyRT = RecordTypeSingleton.getInstance().getRecordTypeId('Account', 'IATA_Agency');
 
         Account a1 = new Account(IATA_ISO_Country__c = ctry.id, RecordTypeId = accountAgencyRT, IATACode__c='1234561',Location_Type__c='HO',Name='Agency HO',Short_Name__c='Agency HO', Sector__c = 'Travel Agent', Location_Class__c = 'P', Status__c = AMS_Utils.ACC_S9_APPROVED);
 
@@ -1985,7 +1985,7 @@ private class ANG_ConversionHelperEnhancedTest {
 		IATA_ISO_Country__c ctry2 = new IATA_ISO_Country__c (Name='PK',BSP_Country_free_text__c='PK', ISO_Code__c = 'PK')  ;
         insert ctry2 ;
 
-        Id accountAgencyRT = AMS_Utils.getId('Account', 'IATA_Agency');
+        Id accountAgencyRT = RecordTypeSingleton.getInstance().getRecordTypeId('Account', 'IATA_Agency');
 
         Account a1 = new Account(IATA_ISO_Country__c = ctry.id, RecordTypeId = accountAgencyRT, IATACode__c='1234561',Location_Type__c='HO',Name='Agency HO',Short_Name__c='Agency HO', Sector__c = 'Travel Agent', Location_Class__c = 'P', Status__c = AMS_Utils.ACC_S9_APPROVED);
 
@@ -2078,7 +2078,7 @@ private class ANG_ConversionHelperEnhancedTest {
 		IATA_ISO_Country__c ctry2 = new IATA_ISO_Country__c (Name='PK',BSP_Country_free_text__c='PK', ISO_Code__c = 'PK')  ;
         insert ctry2 ;
 
-        Id accountAgencyRT = AMS_Utils.getId('Account', 'IATA_Agency');
+        Id accountAgencyRT = RecordTypeSingleton.getInstance().getRecordTypeId('Account', 'IATA_Agency');
 
         Account a1 = new Account(IATA_ISO_Country__c = ctry.id, RecordTypeId = accountAgencyRT, IATACode__c='1234561',Location_Type__c='HO',Name='Agency HO',Short_Name__c='Agency HO', Sector__c = 'Travel Agent', Location_Class__c = 'P', Status__c = AMS_Utils.ACC_S9_APPROVED);
 
@@ -2172,7 +2172,7 @@ private class ANG_ConversionHelperEnhancedTest {
 		IATA_ISO_Country__c ctry2 = new IATA_ISO_Country__c (Name='PK',BSP_Country_free_text__c='PK', ISO_Code__c = 'PK')  ;
         insert ctry2 ;
 
-        Id accountAgencyRT = AMS_Utils.getId('Account', 'IATA_Agency');
+        Id accountAgencyRT = RecordTypeSingleton.getInstance().getRecordTypeId('Account', 'IATA_Agency');
 
         Account a1 = new Account(IATA_ISO_Country__c = ctry.id, RecordTypeId = accountAgencyRT, IATACode__c='1234561',Location_Type__c='HO',Name='Agency HO',Short_Name__c='Agency HO', Sector__c = 'Travel Agent', Location_Class__c = 'P', Status__c = AMS_Utils.ACC_S9_APPROVED);
 
