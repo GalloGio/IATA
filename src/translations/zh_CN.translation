@@ -137,6 +137,10 @@
         <name>AIMSAccountBeforeUpdate_AutoProcess_Restricted</name>
     </customLabels>
     <customLabels>
+        <label><!-- AMS_AttchNotifyOwner --></label>
+        <name>AMS_AttchNotifyOwner</name>
+    </customLabels>
+    <customLabels>
         <label><!-- AMS Conga Merge --></label>
         <name>AMS_Conga_Merge</name>
     </customLabels>
@@ -159,6 +163,14 @@
     <customLabels>
         <label><!-- AMS_New_Change_Code_Notification --></label>
         <name>AMS_New_Change_Code_Notification</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- AMS_NotificationSent --></label>
+        <name>AMS_NotificationSent</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- AMS_Notify_OSCAR_Owner --></label>
+        <name>AMS_Notify_OSCAR_Owner</name>
     </customLabels>
     <customLabels>
         <label><!-- AMS OSCAR AGENCYFEES --></label>
@@ -8745,7 +8757,7 @@ and
         <name>ISSP_Account_Statements_Disclaimer</name>
     </customLabels>
     <customLabels>
-        <label>参与中国BSP运作的代理人，若同时有BOP销售，请严格按照ASD下载的AGENT BOP SALES SUMMARY/ AGENT BOP SALES DETAILS《摘要补充账单/明细补充账单》中“非德付通金额 （BALANCE PAYABLE所对应的金额）”确保贵公司BSP票款专用账户足额。</label>
+        <label>请注意：参与中国BSP运作的代理人，若同时有BOP销售，请严格按照ASD下载的AGENT BOP SALES SUMMARY/ AGENT BOP SALES DETAILS《BOP销售摘要/ BOP销售明细》中“非德付通金额 （BALANCE PAYABLE所对应的金额）”确保贵公司BSP票款专用账户足额。</label>
         <name>ISSP_Account_Statements_Disclaimer_China_TravelAgent</name>
     </customLabels>
     <customLabels>
