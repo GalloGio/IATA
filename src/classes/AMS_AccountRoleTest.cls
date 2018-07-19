@@ -118,10 +118,6 @@ public class AMS_AccountRoleTest {
         
         system.debug('DTULLO 119 --> ' + parameter);
         
-        Apex_Setting__c idAccountOwner = new Apex_Setting__c(Name = 'Stop Owner Alignment');
-        idAccountOwner.Text_1__c = '005w000000688eeAAA';
-        insert idAccountOwner;
-        
         AMS_AccountRoleCreator.runRoleCreatorForOnlineAccreditations(parameter, true);
         
         // CHECK THE RESULTS
@@ -285,10 +281,6 @@ public class AMS_AccountRoleTest {
 
         Map<Id,Set<Id>> parameter = new Map<Id,Set<Id>>();
         parameter.put(theStagingAcc.Id, new Set<Id>{HO.Id, secondLevel[0].Id, secondLevel[1].Id});
-
-        Apex_Setting__c idAccountOwner = new Apex_Setting__c(Name = 'Stop Owner Alignment');
-        idAccountOwner.Text_1__c = '005w000000688eeAAA';
-        insert idAccountOwner;
         
         AMS_AccountRoleCreator.runRoleCreatorForOnlineAccreditations(parameter);
 

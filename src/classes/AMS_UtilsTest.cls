@@ -400,10 +400,6 @@ private class AMS_UtilsTest {
 
         Boolean isPax = true;
 
-        Apex_Setting__c idAccountOwner = new Apex_Setting__c(Name = 'Stop Owner Alignment');
-        idAccountOwner.Text_1__c = '005w000000688eeAAA';
-        insert idAccountOwner;
-
         ID rtAgency = Schema.SObjectType.Account.getRecordTypeInfosByName().get('Agency').getRecordTypeId();
         IATA_ISO_Country__c italy = new IATA_ISO_Country__c(Name='Italy', ISO_Code__c='IT', Region__c='Europe', ISS_Office_Location__c='Italy');
         insert italy;
