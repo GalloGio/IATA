@@ -476,7 +476,7 @@ public without sharing class ISSP_TIP_Home_Controller {
                         ShippingPostalCode, ShippingCountry, VAT_Number__c, Short_Name__c, Location_Class__c, IATA_ISO_Country__c,TIP_Documents__c,
                         Iso_State__c, Abbreviated_name__c, Abbreviated_Address__c, Remittance_frequency__c, Solicitation_Flag__c,
                         VAT_Number_2__c, CASS_Number__c,Company_Type__c,RecordTypeid, RecordType.DeveloperName,Status__c,IATA_ISO_Country__r.ISO_Code__c,ANG_Accreditation_Model__c,
-                        IATA_ISO_Country__r.Name, IATA_ISO_Country__r.region__c, TIP_HQ_Location__c,Country_ISO_Code__c, Service_Provided__c,
+                        IATA_ISO_Country__r.Name, IATA_ISO_Country__r.region__c, TIP_HQ_Location__c,Country_ISO_Code__c, Account_Role__c,
                         (Select Account__c, Any_Other_Information__c, Effective_From_Date__c, Effective_To_Date__c, HQ_Location__c, 
         					   Last_Review_Date__c, Provider_Code__c, Provider_Type__c, Status__c, UniqueKey__c
         					   from Account_Roles__r
@@ -491,8 +491,8 @@ public without sharing class ISSP_TIP_Home_Controller {
 		set<string> setServiceProvided = new set<string>();
 		
 		if(Account!=null){
-			if(string.isNotBlank(Account.Service_Provided__c)){
-				setServiceProvided.addAll(Account.Service_Provided__c.split(';'));
+			if(string.isNotBlank(Account.Account_Role__c)){
+				setServiceProvided.addAll(Account.Account_Role__c.split(';'));
 			}
 			if(!Account.Account_Roles__r.isEmpty())
 				TheAccountRole = Account.Account_Roles__r;
