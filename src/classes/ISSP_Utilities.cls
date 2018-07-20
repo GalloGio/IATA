@@ -38,7 +38,7 @@ public without sharing class ISSP_Utilities {
 	}
     
     public static string getContactTypeById(string conId){
-    	Contact con = [select Id,Account.RecordTypeId, Account.Sector__c from Contact where Id =:conId];
+    	Contact con = [select Id,Account.RecordTypeId, Account.Sector__c, Account.Category__c from Contact where Id =:conId];
     	RecordType rt = [select Name,DeveloperName from RecordType where Id=:con.Account.RecordTypeId];
     	string userType = ISSP_Constant.userTypeByAccountRtDeveloperNameMap.get(rt.DeveloperName);
     	if(userType!=null){
@@ -46,6 +46,10 @@ public without sharing class ISSP_Utilities {
     	}
     	else{
     		userType = ISSP_Constant.accountSectorType.get(con.Account.Sector__c);
+    		if(userType!=null){
+				return userType;
+			}
+    		userType = ISSP_Constant.accountCategoryType.get(con.Account.Category__c);
     		if(userType!=null){
 				return userType;
 			}
