@@ -154,8 +154,7 @@
             columns: ':visible',
             format: {
                 body: function ( data, row, column, node ) {
-                    var formattedDate = moment(data).format('D MMM YYYY');
-                    return formattedDate=='Invalid date'? data: formattedDate;
+                    return formatDate(data);
                 }
             }
         },
@@ -168,8 +167,7 @@
             footer: true,
             format: {
                 body: function ( data, row, column, node ) {
-                    var formattedDate = moment(data).format('D MMM YYYY');
-                    return formattedDate=='Invalid date'? data: formattedDate;
+                    return formatDate(data);
                 }
             }
         },
@@ -185,7 +183,7 @@
                 return {
                     columns: [
                         '\n{!$Label.ISSP_OperationalCalendar_DownloadDate}: ' + moment().format('D MMM YYYY'),
-                        '\n{!$Label.ISSP_OperationalCalendar_LastModifiedDate}: ' + moment(getLastModifiedDate()).format('D MMM YYYY'),
+                        '\n{!$Label.ISSP_OperationalCalendar_LastModifiedDate}: ' + formatDate(getLastModifiedDate()),
                         {
                             alignment: 'right',
                             text: ['\n',{ text: page.toString() },  ' / ', { text: pages.toString() }]
@@ -386,7 +384,7 @@
                 if (colTypes[j]=="date") {
                     var jcell = $(cell);
                     jcell.attr("data-order",jcell.text());
-                    jcell.text(moment(jcell.text()).format('D MMM YYYY'));
+                    jcell.text(formatDate(jcell.text()));
                 }
             });
             $(node).addClass(line[0]); //first column contains the class name to use in this row
@@ -443,6 +441,17 @@
         }
         filename += " " + $("#billingPeriodFilter option:selected").text();
         return filename;
+    }
+    
+    function formatDate(str){
+        try {
+            if (str==null) return '';
+            if (typeof str=='string' && str.trim()=='') return '';
+            var result = moment(str).format('D MMM YYYY');
+            return result=='Invalid date'? str: result;
+        }catch (e) {
+            return str;
+        }
     }
 </script>
 
