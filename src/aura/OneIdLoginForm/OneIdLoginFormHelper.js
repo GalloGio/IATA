@@ -135,7 +135,7 @@
         action.setCallback(this, function(a){
             var rtnValue = a.getReturnValue();
             if (rtnValue !== null) {
-                component.set('v.communitySelfRegisterUrl',rtnValue+urlTosca);
+                component.set('v.communitySelfRegisterUrl',rtnValue);
             }
         });
         $A.enqueueAction(action);
