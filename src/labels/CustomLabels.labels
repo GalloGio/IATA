@@ -25750,6 +25750,14 @@ If you continue to experience issues registering for the IATA Customer Portal th
         <value>Privacy Policy</value>
     </labels>
     <labels>
+        <fullName>OneId_Privacy_Policy_Link</fullName>
+        <categories>OneId</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>OneId_Privacy_Policy_Link</shortDescription>
+        <value>http://www.iata.org/privacy</value>
+    </labels>
+    <labels>
         <fullName>OneId_Profile_BillingCity</fullName>
         <language>en_US</language>
         <protected>false</protected>
