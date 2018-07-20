@@ -30,7 +30,7 @@ trigger ISSP_AttachmentAfterInsert on Attachment (after insert) {
     {
         String profileName = profileNames[0].Name;
         //Verify if user is a PWC profile
-        if(profileName.startsWith('ISS Portal DPC')){
+        if(profileName.startsWith('ISS Portal DPC Admin')){
                isPortalUser = false;
         }  
             
