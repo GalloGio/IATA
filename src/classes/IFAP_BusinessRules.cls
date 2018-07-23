@@ -251,11 +251,13 @@ public with sharing class IFAP_BusinessRules {
             || theContact.Agent_Type__c == 'IATA Cargo Agent'
             || theContact.Agent_Type__c == 'CASS Associate') {
 
-            List<Contact> AccountContacts = [Select Id, Financial_Assessment_Contact__c, AccountId From Contact 
-                                            Where AccountId = : theContact.AccountId 
-                                            And Id <>: theContact.Id AND Financial_Assessment_Contact__c = true];
+            Integer countAccountContacts = [SELECT Count()
+                                            FROM Contact 
+                                            WHERE AccountId = : theContact.AccountId 
+                                                AND Id <>: theContact.Id 
+                                                AND Financial_Assessment_Contact__c = true];
 
-            if (AccountContacts.size() > 0) {
+            if (countAccountContacts > 0) {
                 return true;
             }
         }

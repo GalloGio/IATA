@@ -76,40 +76,38 @@ trigger GlobalContactTrigger on Contact (after delete, after insert, after undel
 
                         for (Contact theContact : trigger.new) {
                             //Add to the list all the Contacts(trigger.new) with the Financial_Assessment_Contact__c = true
-                            if (theContact.Financial_Assessment_Contact__c)
+                            if (theContact.Financial_Assessment_Contact__c){
+                                // check if a financial assessment contact already exists for the same account
+                                if (IFAP_BusinessRules.CheckFinancialAssessmentContactExist(theContact)) {
+                                    theContact.addError(ERRORMSG);
+                                }
                                 lCons.add(theContact);
+                            }
                                 
                             AcctId.add(theContact.AccountId);
                         }
                         //************************ 
                         if(!lCons.isEmpty()){
-                            Cont2Account = [SELECT Location_type__c, Type FROM Account WHERE Id in :AcctId];
+                            Cont2Account = [SELECT Location_type__c, Type 
+                                            FROM Account 
+                                            WHERE Id in :AcctId 
+                                              AND Type not in ('IATA Passenger Sales Agent', 'IATA Cargo Agent', 'CASS Associate', 'Import Agent')];
                         }
                         //************************
     
-                        // For all contacts (Created or updated)
-                        for (Contact theContact : lCons) {
-                            try {
-                                // check if a financial assessment contact already exists for the same account
-                                if (IFAP_BusinessRules.CheckFinancialAssessmentContactExist(theContact)) {
-                                    theContact.addError(ERRORMSG);
-                                }
-
-                                // check the Agent Type of the Account
-                                for (Account Acct : Cont2Account){
+                        // check the Agent Type of the Account
+                        for (Account Acct : Cont2Account){
+                            // For all contacts (Created or updated)
+                            for (Contact theContact : lCons) {
+                                try {
                                     if(theContact.AccountId == Acct.id){
-                                        if (Acct.Type != 'IATA Passenger Sales Agent' 
-                                            && Acct.Type != 'IATA Cargo Agent' 
-                                            && Acct.Type != 'CASS Associate' 
-                                            && Acct.Type != 'Import Agent' 
-                                            && !ANG_OscarProcessHelper.isIATACodeGenerationRunning) {
-
+                                        if (!ANG_OscarProcessHelper.isIATACodeGenerationRunning) {
                                             theContact.addError('Cannot associate an IFAP Contact to an Account of type ' + Acct.Type);
                                         }
                                     }
+                                }catch (Exception e) {
+                                    theContact.adderror('An unhandled error has occured. Error Message: ' + e.getMessage());
                                 }
-                            }catch (Exception e) {
-                                theContact.adderror('An unhandled error has occured. Error Message: ' + e.getMessage());
                             }
                         }
                     }
@@ -175,8 +173,16 @@ trigger GlobalContactTrigger on Contact (after delete, after insert, after undel
                     Profile currentUserProfile = [SELECT ID, Name FROM Profile WHERE id = : UserInfo.getProfileId() limit 1];
                     Set<ID> ids = Trigger.newMap.keySet();
                     ID rectypeid = RecordTypeSingleton.getInstance().getRecordTypeId('ID_Card__c', 'AIMS');
-                    List <ID_Card__c> IDCards = [Select i.Valid_To_Date__c , i.Related_Contact__r.Id From ID_Card__c i where i.Valid_To_Date__c > Today and i.Cancellation_Date__c = null  and i.Card_Status__c = 'Valid ID Card' and i.Related_Contact__c in : ids and  RecordTypeId = : rectypeid ];
-                    for (Contact CurrentContact : standardContacts) {                
+
+                    List <ID_Card__c> IDCards = [Select i.Valid_To_Date__c , i.Related_Contact__r.Id 
+                                                From ID_Card__c i 
+                                                where i.Valid_To_Date__c > Today 
+                                                    and i.Cancellation_Date__c = null 
+                                                    and i.Card_Status__c = 'Valid ID Card' 
+                                                    and i.Related_Contact__c in : ids 
+                                                    and RecordTypeId = : rectypeid ];
+
+                    for (Contact CurrentContact : standardContacts) {            
                         IDCardUtil.isFirstTime = false;
                         Boolean isAdmin = false;
                         if (currentUserProfile.Name.toLowerCase().contains('system administrator'))
@@ -226,11 +232,17 @@ trigger GlobalContactTrigger on Contact (after delete, after insert, after undel
             if(trgGDPContact_BeforeDelete){
                 system.debug('trgGDPContact_BeforeDelete BeforeDelete');
                 // Get the list of Profiles that have deletion rights on contacts when the record type is equal to GDP Contact
-                List<Profile> profiles = [SELECT Name, Id FROM Profile WHERE  Name = 'GDP - Administrator' OR Name = 'System Administrator' ORDER BY Name DESC];
+                List<Profile> profiles = [SELECT Name, Id 
+                                          FROM Profile 
+                                          WHERE  Name = 'GDP - Administrator' 
+                                            OR Name = 'System Administrator' 
+                                          ORDER BY Name DESC];
                 
                 //Create list of contacts and their ID Cards
-                List<Contact> listcontacts = [SELECT Id, VER_Number__c, RecordTypeId, (SELECT Id, Related_Contact__c from ID_Cards__r) from Contact 
-                                          WHERE Id in : Trigger.oldMap.keySet()];
+                List<Contact> listcontacts = [SELECT Id, VER_Number__c, RecordTypeId, (SELECT Id, Related_Contact__c from ID_Cards__r) 
+                                              FROM Contact 
+                                              WHERE Id in : Trigger.oldMap.keySet()];
+
                 // add error message for each deletion of ID Card Contact
                 for (Contact c : listcontacts){
                     if( UserInfo.getProfileId() != profiles[0].Id && ((c.ID_Cards__r.size()>0) || (c.VER_Number__c != null && c.RecordTypeId == standardContactRecordTypeID))){ 
@@ -277,7 +289,9 @@ trigger GlobalContactTrigger on Contact (after delete, after insert, after undel
                     contactsToProcess.add(con.Id);
                 }
                 if (!contactsToProcess.isEmpty()){
-                    List <User> userList = [SELECT Id, Profile.Name, ContactId,ContactKaviId__c,Is_Kavi_Internal_User__c FROM User WHERE ContactId = :contactsToProcess OR ContactKaviId__c =:contactsToProcess];
+                    List <User> userList = [SELECT Id, Profile.Name, ContactId,ContactKaviId__c,Is_Kavi_Internal_User__c 
+                                            FROM User 
+                                            WHERE ContactId = :contactsToProcess OR ContactKaviId__c =:contactsToProcess];
                     if (!userList.isEmpty()){
                         for (User thisUser : userList){
                             if (thisUser.Profile.Name.startsWith('ISS')){
@@ -294,7 +308,7 @@ trigger GlobalContactTrigger on Contact (after delete, after insert, after undel
                     }
                 }
                     
-                for(Contact con:trigger.new){    
+                for(Contact con:trigger.new){   
                     if (contactsToProcessMap.containsKey(con.Id)){
                         system.debug('PROCESSING THIS CONTACT FOR PORTAL');
                         Contact oldCon;  
@@ -311,15 +325,19 @@ trigger GlobalContactTrigger on Contact (after delete, after insert, after undel
                             }
                         }
                         if((con.User_Portal_Status__c == 'Deactivate' || con.User_Portal_Status__c == 'Deactivated') 
-                                && con.User_Portal_Status__c!= oldCon.User_Portal_Status__c 
-                                || ((con.Status__c == 'Inactive' || con.Status__c == 'Retired' || con.Status__c == 'Left Company / Relocated' ) 
-                                && (trigger.isinsert || con.Status__c!= oldCon.Status__c))){
+                            && con.User_Portal_Status__c!= oldCon.User_Portal_Status__c 
+                            || ((con.Status__c == 'Inactive' || con.Status__c == 'Retired' || con.Status__c == 'Left Company / Relocated' ) 
+                            && (trigger.isinsert || con.Status__c!= oldCon.Status__c))){
+
                             contactsWithStatusEqualToInactivList.add(con);
                         }
                         
-                        if(((con.Status__c == 'Inactive') || (con.Kavi_User__c != null & (con.Status__c == 'Retired' || con.Status__c == 'Left Company / Relocated') ) )// || con.Status__c == 'Retired' || con.Status__c == 'Left Company / Relocated' ) 
-                                && (trigger.isinsert || con.Status__c!= oldCon.Status__c )){
+                        if(( (con.Status__c == 'Inactive') || 
+                             (con.Kavi_User__c != null & (con.Status__c == 'Retired' || con.Status__c == 'Left Company / Relocated') ) )
+                            && (trigger.isinsert || con.Status__c!= oldCon.Status__c )){
+
                             contactsForUserdeActivateIdSet.add(con.Id);
+
                             if (con.Kavi_User__c != null){
                                 contactsWithStatusEqualToInactivList.add(con);
                             }
@@ -333,8 +351,11 @@ trigger GlobalContactTrigger on Contact (after delete, after insert, after undel
                 
                 // Update Portal Application Rights - to Access Denide If contact Status is inactiv
                 system.debug('\n\n contactsWithStatusEqualToInactivList '+contactsWithStatusEqualToInactivList+'\n\n');
+
                 if(contactsWithStatusEqualToInactivList.size()>0){
-                    list<Portal_Application_Right__c> parList = [select Id,Right__c from Portal_Application_Right__c where Contact__c in:contactsWithStatusEqualToInactivList];
+                    list<Portal_Application_Right__c> parList = [SELECT Id,Right__c 
+                                                                FROM Portal_Application_Right__c 
+                                                                WHERE Contact__c in:contactsWithStatusEqualToInactivList];
                     for(Portal_Application_Right__c par :parList ){
                         par.Right__c = 'Access Denied';
                     }
@@ -347,23 +368,27 @@ trigger GlobalContactTrigger on Contact (after delete, after insert, after undel
                 }
                 
                 if (contactsToDisable_TD.size() > 0){
-                    list<Portal_Application_Right__c> tdList = [SELECT Id, Right__c FROM Portal_Application_Right__c WHERE Contact__c in:contactsToDisable_TD
-                                                AND Right__c = 'Access Granted' AND Portal_Application__r.Name LIKE 'Treasury Dashboard%'];
-                    if (!tdList.isEmpty()){
-                        for(Portal_Application_Right__c par : tdList){
-                            par.Right__c = 'Access Denied';
-                        }
-                        update tdList;
-                    }
 
-                    list<Portal_Application_Right__c> kaviList = [SELECT Id, Right__c, Contact__c FROM Portal_Application_Right__c WHERE Contact__c in:contactsToDisable_TD
-                                                AND Right__c = 'Access Granted' AND Portal_Application__r.Name LIKE 'Standards Setting Workspace%'];
-                    if (!kaviList.isEmpty()){
-                        for(Portal_Application_Right__c par : kaviList){
+                    list<Portal_Application_Right__c> portalAppList = [SELECT Id, Right__c, Contact__c 
+                                                                      FROM Portal_Application_Right__c 
+                                                                      WHERE Contact__c in:contactsToDisable_TD
+                                                                        AND Right__c = 'Access Granted']; 
+
+                    list<Portal_Application_Right__c> tdList = new list<Portal_Application_Right__c>();
+                    for(Portal_Application_Right__c par : portalAppList){
+
+                        if(par.Portal_Application__r.Name.startsWith('Treasury Dashboard')){
+                             par.Right__c = 'Access Denied';
+                             tdList.add(par);
+                        }
+                        else if(par.Portal_Application__r.Name.startsWith('Standards Setting Workspace')){
                             oldAccountByContactIdMap.put(par.Contact__c,trigger.oldMap.get(par.Contact__c).AccountId);
                             newAccountByContactIdMap.put(par.Contact__c,trigger.newMap.get(par.Contact__c).AccountId);
-                        }
+                        } 
                     }
+                    if(!tdList.isEmpty())
+                        update tdList;
+                    
                 }
 
                 if(ISSP_WS_KAVI.preventTrigger!=null) {
@@ -405,7 +430,7 @@ trigger GlobalContactTrigger on Contact (after delete, after insert, after undel
                 system.debug('ISSP_UpdateContacKaviIdOnUser AfterInsert');
                 for (Contact oneContact: Trigger.new){
                     //if Kaviuser Field has been modified launch the process of updating ContactKaviId field on User related record.
-                        ISSP_ContactTriggerHandler.updateKaviIdOnUser(trigger.new);
+                    ISSP_ContactTriggerHandler.updateKaviIdOnUser(trigger.new);
                 }
             }
             /*ISSP_UpdateContacKaviIdOnUser Trigger.AfterInsert*/
@@ -422,29 +447,25 @@ trigger GlobalContactTrigger on Contact (after delete, after insert, after undel
                 Set<Id> conEmailIdSet = new Set<Id>();//TF - SP9-A5
                 Map<Id, String> conFirstNameMap = new Map<Id, String>();//TF - SP9-A5
                 Map<Id, String> conLastNameMap = new Map<Id, String>();//TF - SP9-A5
-                /*IFG deployment
-                //Mconde
-                Set<Id> actListToReview = new Set<Id>();
-                /*IFG deployment*/
+
                 set<Id> conIdSet = new set<Id>();
                 //WMO-234 for user with SIS application changing its account
                 set<Id> setSISContactChangingAccount = new set<Id>();
 
                 for(Contact con : trigger.new){
-                    if((con.User_Portal_Status__c == 'Regional Administrator' && trigger.oldMap.get(con.Id).User_Portal_Status__c != 'Regional Administrator')
-                            || (con.User_Portal_Status__c == 'Regional Administrator' && con.Regional_Administrator_Countries__c != trigger.oldMap.get(con.Id).Regional_Administrator_Countries__c))
+
+                    if(con.User_Portal_Status__c == 'Regional Administrator'  
+                        && (trigger.oldMap.get(con.Id).User_Portal_Status__c != 'Regional Administrator' 
+                            || con.Regional_Administrator_Countries__c != trigger.oldMap.get(con.Id).Regional_Administrator_Countries__c)){
+                        
                         conIdSet.add(con.Id);
+                    }
 
-                    //TF - SP9-A5
-                    /*if ((con.Email != trigger.oldMap.get(con.Id).Email) && con.Email != ''){
-                        system.debug('ISSP_ContactUpdaetPortalUser, email being changed');
-                        if (!conEmailMap.containsKey(con.Id)){
-                            conEmailMap.put(con.Id, con.Email);
-                            conEmailIdSet.add(con.Id);
-                        }
-                    }*/
-
-                    if ((con.Email != '' && (con.Email != trigger.oldMap.get(con.Id).Email || con.FirstName != trigger.oldMap.get(con.Id).FirstName || con.LastName != trigger.oldMap.get(con.Id).LastName))){
+                    if ((con.Email != '' 
+                        && (con.Email != trigger.oldMap.get(con.Id).Email 
+                            || con.FirstName != trigger.oldMap.get(con.Id).FirstName 
+                            || con.LastName != trigger.oldMap.get(con.Id).LastName))){
+                        
                         if (!conEmailMap.containsKey(con.Id)){
                             conEmailMap.put(con.Id, con.Email);
                             conEmailIdSet.add(con.Id);
@@ -456,10 +477,7 @@ trigger GlobalContactTrigger on Contact (after delete, after insert, after undel
                     if (con.S_SIS__c>0 && con.AccountId != trigger.oldMap.get(con.Id).AccountId) {
                         setSISContactChangingAccount.add(con.Id);
                     }
-                    /*IFG deployment
-                    if(con.accountId != null) 
-                        actListToReview.add(con.accountId);
-                    /*IFG deployment*/
+
                 }
                 if(conIdSet.size()>0){
                     ISSP_Constant.UserAccountChangeParent = true;
@@ -469,16 +487,10 @@ trigger GlobalContactTrigger on Contact (after delete, after insert, after undel
                 //TF - SP9-A5
                 if (!conEmailMap.isEmpty()){
                     system.debug('Going to ISSP_UserTriggerHandler.changeEmailFromContact');
-                    system.debug('preventTrigger2: ' + ISSP_UserTriggerHandler.preventTrigger);
+             
                     if(!ISSP_UserTriggerHandler.preventTrigger)
                         ISSP_UserTriggerHandler.changeEmailFromContact (conEmailMap, conFirstNameMap, conLastNameMap, conEmailIdSet);
                 }
-                /*IFG deployment
-                //Mconde
-                if(actListToReview.size()> 0 && (!System.isFuture() && !System.isBatch())){
-                    SCIMServProvManager.reviewIFGAccountSharing(actListToReview);
-                }
-                /*IFG deployment*/
                 
                 //WMO-234
                 if (!setSISContactChangingAccount.isEmpty()) {
@@ -492,10 +504,13 @@ trigger GlobalContactTrigger on Contact (after delete, after insert, after undel
                 system.debug('ISSP_ContactStatusTrigger AfterUpdate');
                 Set<Id> contactIds = new Set<Id>();
                 Map<String, List<Id>> inactivationReasonMap = new Map<String, List<Id>> ();
+
                 for(Contact newCon : trigger.new){
                     Contact oldCon = trigger.oldMap.get(newCon.Id);
+
                     if (newCon.Status__c != oldCon.Status__c){
                         if (newCon.Status__c != 'Active'){
+
                             contactIds.add(newCon.Id);
                             system.debug('Inactivating contact');
                             if (!inactivationReasonMap.containsKey(newCon.Status__c)){
@@ -509,10 +524,13 @@ trigger GlobalContactTrigger on Contact (after delete, after insert, after undel
                 
                 if (!contactIds.isEmpty()){
                     List <Contact> contactList = [SELECT Id,
-                                                (SELECT Id, Valid_To_Date__c FROM ID_Cards__r WHERE NOT card_status__c like 'Cancelled%'),
-                                                (SELECT Id FROM IEC_Subscriptions_History__r)
-                                                from Contact where Id IN :contactIds];
+                                                    (SELECT Id, Valid_To_Date__c FROM ID_Cards__r WHERE NOT card_status__c like 'Cancelled%'),
+                                                    (SELECT Id FROM IEC_Subscriptions_History__r)
+                                                 FROM Contact 
+                                                 WHERE Id IN :contactIds];
+
                     for (Contact thisContact : contactList){
+
                         if (!thisContact.ID_Cards__r.isEmpty()){
                             for(Contact newCon : trigger.new){
                                 if (newCon.Id == thisContact.Id){
@@ -539,9 +557,9 @@ trigger GlobalContactTrigger on Contact (after delete, after insert, after undel
                             thisReason = 'UnknownContact';
                         }
                         for (Id thisId : contactIdList){
-                            system.debug('contactIds: ' + thisId);
                             contactIdSet.add(thisId);
                         }
+
                         ISSP_ContactList ctrl = new ISSP_ContactList();
                         ctrl.processMultiplePortalUserStatusChange(contactIdSet, 'Deactivated', thisReason);
                     }
