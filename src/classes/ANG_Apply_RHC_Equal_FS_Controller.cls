@@ -29,6 +29,7 @@ public class ANG_Apply_RHC_Equal_FS_Controller {
 	public Integer agenciesFetched {get; private set;}
 	public Integer batchPercentage {get; set;}
 	public AsyncApexJob batchJob {get; set;}
+	private List<AsyncApexJob> batchJobs {get; set;}
 	public Boolean pollerBool {get; set;}
 	public Boolean batchStatusBool {get; set;}
 	public Integer batchCounter {get; set;}
@@ -177,30 +178,30 @@ public class ANG_Apply_RHC_Equal_FS_Controller {
 	}
 
 	public void applyOrRevertRHC() {
+		batchJob = null;
 		if (modeValue == 'IATA_Code') {
   			List<String> iataCodesAndNames = new List<String>();
   
 	  		try {
 	  			for (ANG_RHC_Information__c rhcInfo: agencies) {
 	  				iataCodesAndNames.add(rhcInfo.ANG_AccountId__r.IataCode__c + ' - ' + rhcInfo.ANG_AccountId__r.Name);
-	  				rhcInfo.ANG_RHC_Amount_Equals_FS__c = (actionValue == 'Apply_RHC');  
+	  				rhcInfo.ANG_RHC_Amount_Equals_FS__c = (actionValue == 'Apply_RHC');
 	  			}
 	  
 	  			update agencies;
 
-	  			batchStatusBool = true;
-  				pollerBool = true;
-  				batchCounter = 0;
+	  			ApexPages.addMessage(new ApexPages.message(ApexPages.severity.CONFIRM, 'The changes were applied to this agency:'));
 
-	  		} catch(Exception e) {
-	  			ApexPages.addMessage(new ApexPages.message(ApexPages.severity.ERROR, 'Error updating RHC Info for Agencies with Iata code(s): ' + String.join(iataCodesAndNames,',') + ' - ' + e.getMessage() + ' - ' + e.getStackTraceString()));
-	  		}
+	  		} catch(Exception e) { ApexPages.addMessage(new ApexPages.message(ApexPages.severity.ERROR, 'Error updating RHC Info for Agencies with Iata code(s): ' + String.join(iataCodesAndNames,',') + ' - ' + e.getMessage() + ' - ' + e.getStackTraceString())); }
+	  		
   		} else {
+  			Boolean rhcFlag = actionValue == 'Apply_RHC' ? false : true;
+
 			List<AMS_Settlement_System__c> operationsToUpdate = [SELECT Id, Name, ANG_RHC_Amount_Equals_FS__c 
    																 FROM AMS_Settlement_System__c 
 																 WHERE RecordType.Name = 'BSP'
 																	AND Name = :bspValue
-																	AND ANG_RHC_Amount_Equals_FS__c = :(actionValue != 'Apply_RHC')];
+																	AND ANG_RHC_Amount_Equals_FS__c = :rhcFlag];
 
 		  	try {
 		  		for(AMS_Settlement_System__c bsp: operationsToUpdate) {
@@ -212,29 +213,37 @@ public class ANG_Apply_RHC_Equal_FS_Controller {
 		  		batchStatusBool = true;
   				pollerBool = true;
   				batchCounter = 0;
+  				batchPercentage = 0;
 		 		
-		  	} catch(Exception e) {
-		  		ApexPages.addMessage(new ApexPages.message(ApexPages.severity.ERROR, 'Error updating RHC Info for BSP: ' + bspValue + ' - ' + e.getMessage() + ' - ' + e.getStackTraceString()));
-		  	}
+		  	} catch(Exception e) { ApexPages.addMessage(new ApexPages.message(ApexPages.severity.ERROR, 'Error updating RHC Info for BSP: ' + bspValue + ' - ' + e.getMessage() + ' - ' + e.getStackTraceString())); }
   		}
 	}
 
 	public void getBatchStatus() {
-		batchJob = [SELECT Id, Status, NumberOfErrors, JobItemsProcessed, TotalJobItems, CreatedBy.Email, ApexClass.Name
-					FROM AsyncApexJob 
-					WHERE ApexClass.Name = 'ANG_RHCEqualFSBatch'
-						AND CreatedById = :UserInfo.getUserId()
-					ORDER BY CreatedDate DESC][0];
+		if (batchJob == null) {
+			batchJobs = [SELECT Id, Status, NumberOfErrors, JobItemsProcessed, TotalJobItems, CreatedBy.Email, ApexClass.Name
+						FROM AsyncApexJob 
+						WHERE ApexClass.Name = 'ANG_RHCEqualFSBatch'
+							AND CreatedById = :UserInfo.getUserId()
+							AND Status <> 'Completed'
+							AND Status <> 'Ended'
+						ORDER BY CreatedDate DESC];
 
-		if (batchJob != null) {
-			batchPercentage = 0;
-			if (batchJob.JobItemsProcessed > 0) {
-				batchPercentage = batchJob.JobItemsProcessed * 100 / batchJob.TotalJobItems;
-			}
+			if (!batchJobs.isEmpty()) batchJob = batchJobs[0];
+		} else {
+			batchJob = [SELECT Id, Status, NumberOfErrors, JobItemsProcessed, TotalJobItems, CreatedBy.Email, ApexClass.Name
+						FROM AsyncApexJob 
+						WHERE Id = :batchJob.Id];
+			
+			if (batchJob.JobItemsProcessed > 0) batchPercentage = batchJob.JobItemsProcessed * 100 / batchJob.TotalJobItems;
+
+			if (batchJob.status == 'Processing' && batchPercentage == 100) batchPercentage = 99;
+
+			pollerBool = (batchJob.status == 'Ended' || batchJob.status == 'Completed') ? false : true;
+
+			if (!pollerBool) ApexPages.addMessage(new ApexPages.message(ApexPages.severity.CONFIRM, 'The changes were applied to the following agencies:'));
+
+			batchCounter++;
 		}
-
-		pollerBool = (batchJob.status == 'Ended' || batchJob.status == 'Completed') ? false : true;
-
-		batchCounter++;
 	}
 }

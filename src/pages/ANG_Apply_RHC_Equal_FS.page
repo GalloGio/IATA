@@ -97,7 +97,7 @@
                 <apex:outputText styleClass="processText" value="{!IF(actionValue == 'Apply_RHC', 'Apply RHC equal FS',  'Revert RHC equal FS')} Process Status: {!batchJob.Status}"/>
                 <apex:outputText styleClass="processText" value="{!IF(actionValue == 'Apply_RHC', 'Apply RHC equal FS',  'Revert RHC equal FS')} {!IF(modeValue == 'BSP', 'BSPs', 'Agencies')} Proccessed: {!batchPercentage}%"/>
                 <apex:outputText styleClass="processText" value="Errors found: {!batchJob.NumberOfErrors}"/>
-                <apex:actionPoller interval="5" action="{!getBatchStatus}" enabled="{!pollerBool}" reRender="statusPageBlock, searchButton" status="act"/>
+                <apex:actionPoller interval="5" action="{!getBatchStatus}" enabled="{!pollerBool}" reRender="statusPageBlock, searchButton, searchResultsBlock" status="act"/>
             </apex:pageBlockSection>
 
 		</apex:pageBlock>

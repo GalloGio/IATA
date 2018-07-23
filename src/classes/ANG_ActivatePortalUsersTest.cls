@@ -3,7 +3,7 @@ private class ANG_ActivatePortalUsersTest {
 	
     @testSetup static void setup()
     {
-        IATA_ISO_Country__c isoc = new IATA_ISO_Country__c(Name = 'Westeros', ISO_Code__c = 'TS');       
+        IATA_ISO_Country__c isoc = new IATA_ISO_Country__c(Name = 'Westeros', ISO_Code__c = 'TS', ANG_Enable_NewGen__c = true);       
         insert isoc;
 
         IATA_ISO_State__c isos = new IATA_ISO_State__c(Name= 'Winterfell', ISO_Code__c = 'TS', IATA_Iso_Country__c = isoc.Id);

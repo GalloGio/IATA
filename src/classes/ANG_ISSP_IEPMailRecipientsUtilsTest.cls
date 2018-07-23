@@ -47,7 +47,8 @@ private class ANG_ISSP_IEPMailRecipientsUtilsTest {
         IATA_ISO_Country__c portugal = new IATA_ISO_Country__c (
                 Name = 'Portugal_test',
                 ISO_Code__c = 'PT',
-                ANG_Portal_Service__c = easyPay1.id
+                ANG_Portal_Service__c = easyPay1.id,
+                ANG_Enable_NewGen__c = true
             );   
 
 		insert portugal;                 

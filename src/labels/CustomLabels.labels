@@ -31,6 +31,13 @@
         <value>Restricted Profile - automated process</value>
     </labels>
     <labels>
+        <fullName>AMS_AttchNotifyOwner</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>AMS_AttchNotifyOwner</shortDescription>
+        <value>AMS_OSCARAttchOwnerNotification</value>
+    </labels>
+    <labels>
         <fullName>AMS_Conga_Merge</fullName>
         <language>en_US</language>
         <protected>false</protected>
@@ -71,6 +78,20 @@
         <protected>false</protected>
         <shortDescription>AMS_New_Change_Code_Notification</shortDescription>
         <value>One or more new change codes have been generated:</value>
+    </labels>
+    <labels>
+        <fullName>AMS_NotificationSent</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>AMS_NotificationSent</shortDescription>
+        <value>Notification sent to Case owner.</value>
+    </labels>
+    <labels>
+        <fullName>AMS_Notify_OSCAR_Owner</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>AMS_Notify_OSCAR_Owner</shortDescription>
+        <value>Notify OSCAR Owner</value>
     </labels>
     <labels>
         <fullName>AMS_OSCAR_AGENCYFEES</fullName>
