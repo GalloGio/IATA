@@ -566,7 +566,7 @@ public with sharing class ANG_AgencyChangesHelper {
 			Account newHEaccount = toReturn.accountsMap.get(oscarToProcess.New_parent__c);
 
 			if(newHEaccount == null)
-				newHEaccount = [Select Id , ANG_Accreditation_Model__c, Remittance_frequency__c, from Account where Id = :oscarToProcess.New_parent__c];
+				newHEaccount = [Select Id , ANG_Accreditation_Model__c, Remittance_frequency__c from Account where Id = :oscarToProcess.New_parent__c];
 
 			Account oscarAccount = toReturn.accountsMap.get(oscarToProcess.Account__c);
 
