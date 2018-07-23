@@ -596,8 +596,9 @@ global class ANG_OscarProcessHelper {
 				updater = createChangeCodeForFOP(updater, oscar, accountToCreateCC, changeCodeName );
 
 			}
-			//no more need to do updates. Running from automation (Before Trigger)
-			//updateUpdater(updater);
+			//no more need to update OSCAR. Running from automation (Before Trigger)
+			updater.oscarMap.remove(oscar.id);
+			updateUpdater(updater);
 		
 		}catch(Exception ex){
 			
@@ -672,8 +673,9 @@ global class ANG_OscarProcessHelper {
 				updater = createChangeCodeForFOP(updater, oscar, accountToCreateCC, changeCodeName );
 			}
 
-			//no more need to do updates. Running from automation (Before Trigger)
-			//updateUpdater(updater);
+			//no more need to OSCAR. Running from automation (Before Trigger)
+			updater.oscarMap.remove(oscar.id);
+			updateUpdater(updater);
 
 		}catch(Exception ex){
 			
