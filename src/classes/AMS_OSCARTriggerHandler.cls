@@ -2558,7 +2558,7 @@ public class AMS_OSCARTriggerHandler {
         else if(agencyType == AMS_Utils.NGANNUALREVAL && step == AMS_Utils.FAILED && !wasApproved) templateId  = 'ANG_Annual_Revalidation_Failed';
         else if(agencyType == AMS_Utils.NGANNUALREVAL && step == null) templateId  = 'ANG_Anual_Renewal_Case';
         else if(agencyType == AMS_Utils.NGFOP && step == null ) templateId  = 'ANG_FOP_OSCARCREATION';
-        else if((agencyType == AMS_Utils.NGFOP || agencyType == AMS_Utils.PCI_COMPLIANT ) && step == AMS_Utils.APPROVAL ) templateId  = 'ANG_FOP_OSCARCREATIONPORTAL';
+        else if(agencyType == AMS_Utils.NGFOP && step == AMS_Utils.APPROVAL ) templateId  = 'ANG_FOP_OSCARCREATIONPORTAL';
         else if(agencyType == ANG_FOPOSCARNotificationBatch.FOP_REMINDER_TEMPLATE_ID && step == null) templateId  = 'ANG_Mass_FOP_OSCAR_Reminder';
         else if(agencyType == ANG_FOPOSCARNotificationBatch.FOP_NONCOMPLIANCE_TEMPLATE_ID && step == null) templateId  = 'ANG_Mass_FOP_OSCAR_NonCompliance';
 
@@ -2692,22 +2692,6 @@ public class AMS_OSCARTriggerHandler {
 
     public static void handleSanityCheckValidations(List<AMS_OSCAR__c> oscars, Map<Id,AMS_OSCAR__c> oldMap){
 
-        	
-            Set<Id> oscarsFromPortal = new Set<Id>();
-            Set<Id> oscarsToInsertList = new Set<Id>();
-
-            For(AMS_Oscar__c oscar: oscars)
-                if(oscar.Process__c == AMS_Utils.PCI_COMPLIANT)
-                    oscarsToInsertList.add(oscar.Id);
-
-            if(!oscarsToInsertList.isEmpty()){
-
-                for(Case c : [Select Id, OSCAR__C from Case where OSCAR__c in:oscarsToInsertList AND RecordType.Name = 'OSCAR Communication' and Origin = 'Portal']){
-                    oscarsFromPortal.add(c.OSCAR__C);
-                }
-            
-            }
-
         //Validation: should not be possible to pass sanity checks without attachments - NEWGEN-1401
         for(AMS_Oscar__c oscar: oscars){
 
@@ -2796,9 +2780,6 @@ public class AMS_OSCARTriggerHandler {
                 validateShippingAddress(oscar, allOnlineAccr);
                 /*** AMSU-121 End ***/ 
 
-                // NEWGEN-2932
-                if(oscarsFromPortal.contains(oscar.Id))
-                    AMS_OSCARTriggerHandler.sendEmailAlert(oscar.Id, oscar.Oscar_Communication_Case_Id__c, oscar.Process__c, AMS_Utils.PASSED, false); 
             }
         }
     }
