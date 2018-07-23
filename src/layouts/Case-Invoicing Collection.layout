@@ -239,6 +239,10 @@
             </layoutItems>
             <layoutItems>
                 <behavior>Edit</behavior>
+                <field>CS_Contact_Result__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
                 <field>CS_Rep_Contact_Customer__c</field>
             </layoutItems>
         </layoutColumns>

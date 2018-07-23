@@ -1302,6 +1302,10 @@
         <sortOrder>Desc</sortOrder>
     </relatedLists>
     <relatedLists>
+        <fields>NAME</fields>
+        <relatedList>AMS_Process_Detail__c.Case__c</relatedList>
+    </relatedLists>
+    <relatedLists>
         <excludeButtons>New</excludeButtons>
         <fields>NAME</fields>
         <fields>ANG_Name_Link_FF__c</fields>
