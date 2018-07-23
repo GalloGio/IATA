@@ -1259,7 +1259,7 @@ public class ISSP_ANG_ANNUAL_REVALIDATION {
 				}
 			}
 
-			if (countryCheckList.License_required__c || countryCheckList.Registration_required__c) {
+			if (countryCheckList.Registration_required__c) {
         		if (currentAccount.fw.newForm.ISSP_AMS_Trade_Reg_No__c == null) {
         			currentAccount.fw.newform.ISSP_AMS_Trade_Reg_No__c.addError(Label.ISSP_YouMustEnter);
 					errorFound = true;
@@ -1268,20 +1268,17 @@ public class ISSP_ANG_ANNUAL_REVALIDATION {
         		if (currentAccount.fw.newForm.ISSP_AMS_Date_Registration_granted__c == null) {
         			currentAccount.fw.newform.ISSP_AMS_Date_Registration_granted__c.addError(Label.ISSP_YouMustEnter);
 					errorFound = true;
-        		}
+        		}        		
+        	}
 
-        		if (currentAccount.fw.newForm.ISSP_AMS_License_No__c == null) {
+        	if (countryCheckList.License_required__c) {
+				if (currentAccount.fw.newForm.ISSP_AMS_License_No__c == null) {
         			currentAccount.fw.newform.ISSP_AMS_License_No__c.addError(Label.ISSP_YouMustEnter);
 					errorFound = true;
         		}
 
         		if (currentAccount.fw.newForm.ISSP_AMS_Date_license_granted__c == null) {
         			currentAccount.fw.newform.ISSP_AMS_Date_license_granted__c.addError(Label.ISSP_YouMustEnter);
-					errorFound = true;
-        		}
-
-        		if (currentAccount.fw.newForm.Effective_Date_Of_Change__c == null) {
-        			currentAccount.fw.newform.Effective_Date_Of_Change__c.addError(Label.ISSP_YouMustEnter);
 					errorFound = true;
         		}
         	}
