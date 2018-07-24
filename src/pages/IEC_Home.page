@@ -166,11 +166,6 @@
                                                             {!prod.InventoryStatus}
                                                         </apex:outputPanel>
 
-                                                        <!-- Scenario 3: Pre-order -->
-                                                        <apex:outputPanel layout="block" styleClass="item-label pre-order" rendered="{!TODAY() <=prod.EffectiveFrom && prod.ProductInfoId == null}">
-                                                            <span class="text">{!$Label.Button_Pre_Order}</span>
-                                                        </apex:outputPanel>
-
                                                         <!-- Regular Price if exist -->
                                                         <apex:outputPanel styleClass="item-price regular-price {!IF(AND(prod.CustomerPrice!=null , prod.CustomerPrice>0),'line-stroke','')}" layout="block" rendered="{! prod.RegularPrice!=null && prod.RegularPrice > 0 && prod.ProductInfoId == null}">
                                                             <apex:outputText styleClass="price-value" value="{0, number, currency}">

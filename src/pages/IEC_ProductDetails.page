@@ -158,10 +158,6 @@
                                                             </time>
                                                         </apex:outputPanel>
 
-                                                        <!-- Scenario 3: Pre-order -->
-                                                        <apex:outputPanel layout="block" styleClass="item-label pre-order" rendered="{!bIsPreOrder}">
-                                                            <span class="text">{!$Label.Button_Pre_Order}</span>
-                                                        </apex:outputPanel>  
                                                         <apex:outputPanel layout="block" styleClass="availability-note" rendered="{!bIsPreOrder}">
                                                             <i>
                                                                 {!$Label.ReleaseDateMessage}&nbsp; 
