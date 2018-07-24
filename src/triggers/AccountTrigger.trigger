@@ -17,6 +17,8 @@ trigger AccountTrigger on Account (before insert, after insert, after update, be
     AccountTriggerHelper.SectorCatToIndType(trigger.New, trigger.OldMap);
    
     TIP_Utils.validateUniqueIATACodeForTIP(trigger.new, trigger.OldMap);
+
+    //TIP_Utils.validateUniqueIATACodeForTIP(trigger.new, trigger.OldMap);  //ACAMBAS - TIP-234
   }
 
   if(trigger.isAfter && trigger.isUpdate){

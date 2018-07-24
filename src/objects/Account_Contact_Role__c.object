@@ -46,7 +46,6 @@
     <description>Use to manage M:N contact with account.</description>
     <enableActivities>false</enableActivities>
     <enableBulkApi>true</enableBulkApi>
-    <enableChangeDataCapture>false</enableChangeDataCapture>
     <enableFeeds>false</enableFeeds>
     <enableHistory>true</enableHistory>
     <enableReports>false</enableReports>
@@ -110,7 +109,6 @@
                 <value>
                     <fullName>Primary Contact</fullName>
                     <default>false</default>
-                    <label>Primary Contact</label>
                 </value>
             </valueSetDefinition>
         </valueSet>
@@ -184,7 +182,6 @@
                 <value>
                     <fullName>TIP</fullName>
                     <default>false</default>
-                    <label>TIP</label>
                 </value>
             </valueSetDefinition>
         </valueSet>
@@ -206,7 +203,7 @@
         <fullName>is_primary__c</fullName>
         <externalId>false</externalId>
         <formula>IF(ISBLANK(Contact_Role__c), false, INCLUDES(Contact_Role__c, &quot;Primary Contact&quot;))</formula>
-        <label>is primary</label>
+        <label>Primary</label>
         <trackHistory>false</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Checkbox</type>
@@ -242,5 +239,4 @@
     </recordTypes>
     <searchLayouts/>
     <sharingModel>ControlledByParent</sharingModel>
-    <visibility>Public</visibility>
 </CustomObject>

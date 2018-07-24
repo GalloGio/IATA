@@ -45,7 +45,6 @@
     <deploymentStatus>Deployed</deploymentStatus>
     <enableActivities>false</enableActivities>
     <enableBulkApi>true</enableBulkApi>
-    <enableChangeDataCapture>false</enableChangeDataCapture>
     <enableFeeds>false</enableFeeds>
     <enableHistory>false</enableHistory>
     <enableReports>false</enableReports>
@@ -115,6 +114,20 @@
         <type>Date</type>
     </fields>
     <fields>
+        <fullName>Primary_Contact_Count__c</fullName>
+        <externalId>false</externalId>
+        <label>Primary Contact Count</label>
+        <summaryFilterItems>
+            <field>Account_Contact_Role__c.is_primary__c</field>
+            <operation>equals</operation>
+            <value>True</value>
+        </summaryFilterItems>
+        <summaryForeignKey>Account_Contact_Role__c.Account_Role__c</summaryForeignKey>
+        <summaryOperation>count</summaryOperation>
+        <trackTrending>false</trackTrending>
+        <type>Summary</type>
+    </fields>
+    <fields>
         <fullName>Provider_Code__c</fullName>
         <externalId>false</externalId>
         <label>Provider Code</label>
@@ -146,16 +159,18 @@
         <valueSet>
             <restricted>true</restricted>
             <valueSetDefinition>
-                <sorted>true</sorted>
+                <sorted>false</sorted>
+                <value>
+                    <fullName>In Progress</fullName>
+                    <default>false</default>
+                </value>
                 <value>
                     <fullName>Active</fullName>
                     <default>false</default>
-                    <label>Active</label>
                 </value>
                 <value>
                     <fullName>Inactive</fullName>
                     <default>false</default>
-                    <label>Inactive</label>
                 </value>
             </valueSetDefinition>
         </valueSet>
@@ -174,8 +189,9 @@
     </fields>
     <label>Account Role</label>
     <nameField>
+        <displayFormat>AR-{0000}</displayFormat>
         <label>Account Role Name</label>
-        <type>Text</type>
+        <type>AutoNumber</type>
     </nameField>
     <pluralLabel>Account Roles</pluralLabel>
     <recordTypes>
@@ -183,24 +199,28 @@
         <active>true</active>
         <label>Payment Provider</label>
         <picklistValues>
-            <picklist>Provider_Type__c</picklist>
-            <values>
-                <fullName>Closed Loop</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Open Loop</fullName>
-                <default>false</default>
-            </values>
-        </picklistValues>
-        <picklistValues>
             <picklist>Status__c</picklist>
             <values>
                 <fullName>Active</fullName>
                 <default>false</default>
             </values>
             <values>
+                <fullName>In Progress</fullName>
+                <default>false</default>
+            </values>
+            <values>
                 <fullName>Inactive</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>TIP_Provider_Type</picklist>
+            <values>
+                <fullName>Closed Loop</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Open Loop</fullName>
                 <default>false</default>
             </values>
         </picklistValues>
@@ -217,10 +237,23 @@
         <errorMessage>Effective From Date is mandatory for Payment Provider</errorMessage>
     </validationRules>
     <validationRules>
-        <fullName>TIP_PROVIDER_CODE_LENGTH</fullName>
+        <fullName>Primary_Contact_Mandatory</fullName>
         <active>true</active>
-        <description>For record-type payment provider, lenght of Provider Code must be 4 digits</description>
-        <errorConditionFormula>AND(NOT(ISBLANK(Provider_Code__c)), RecordType.DeveloperName=&quot;TIP_Payment_Provider&quot;, LEN( Provider_Code__c ) != 4)</errorConditionFormula>
+        <errorConditionFormula>AND(!(ISBLANK(TEXT(Status__c))), Primary_Contact_Count__c == 0)</errorConditionFormula>
+        <errorMessage>Ensure that accounts identified as Payment Providers have at least one Primary Contact.</errorMessage>
+    </validationRules>
+    <validationRules>
+        <fullName>TIP_HR_LOCATION_NOT_EMPTY</fullName>
+        <active>false</active>
+        <errorConditionFormula>AND(NOT(ISPICKVAL(Status__c, &quot;&quot;)),ISBLANK(HQ_Location__c), RecordType.DeveloperName=&quot;TIP_Payment_Provider&quot;)</errorConditionFormula>
+        <errorDisplayField>HQ_Location__c</errorDisplayField>
+        <errorMessage>HR Location is mandatory for payment providers.</errorMessage>
+    </validationRules>
+    <validationRules>
+        <fullName>TIP_PROVIDER_CODE_LENGTH</fullName>
+        <active>false</active>
+        <description>For record-type payment provider, Code is mandatory and its length must be 4 digits</description>
+        <errorConditionFormula>AND(NOT(ISPICKVAL(Status__c, &quot;&quot;)), RecordType.DeveloperName=&quot;TIP_Payment_Provider&quot;, LEN( Provider_Code__c ) != 4)</errorConditionFormula>
         <errorDisplayField>Provider_Code__c</errorDisplayField>
         <errorMessage>Invalid Provider Code. The Provider Code must contain exactly 4 characters</errorMessage>
     </validationRules>
@@ -234,10 +267,9 @@
     </validationRules>
     <validationRules>
         <fullName>Validate_Providers_Accreditation_Date</fullName>
-        <active>true</active>
+        <active>false</active>
         <description>Can’t have active Payment Providers with Effective date From in the future</description>
         <errorConditionFormula>AND(RecordType.DeveloperName=&quot;TIP_Payment_Provider&quot;, TEXT(Status__c)=&quot;Active&quot;, Effective_From_Date__c&gt;Today())</errorConditionFormula>
         <errorMessage>Can’t have active Payment Providers with Effective date From in the future</errorMessage>
     </validationRules>
-    <visibility>Public</visibility>
 </CustomObject>
