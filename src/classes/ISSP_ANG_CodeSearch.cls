@@ -203,7 +203,7 @@ public class ISSP_ANG_CodeSearch {
 
 					this.accreditationModel = AMS_Utils.officialAccreditationTypeMap.get(this.agency.ANG_Accreditation_Model__c);
 
-					this.showIrregularities = (!agency.IATA_ISO_Country__r.ANG_Enable_NewGen__c || !isTravel);
+					this.showIrregularities = (!agency.ANG_IsNewGenAgency__c || !isTravel);
 
 					this.status = translateAgencyStatus(agency);
 

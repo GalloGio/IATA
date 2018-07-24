@@ -696,10 +696,14 @@ global class ANG_OscarProcessHelper {
 
     		if( restrictCash || restrictCreditCard){
 
-	    		if(restrictCash && aa.ANG_FormOfPayment_ID__c == 'CA' && aa.Status__c != valueToAdd){
+	    		if(restrictCash && aa.ANG_FormOfPayment_ID__c == 'CA'){
+
+					if(aa.Status__c != valueToAdd){
 	    			aa.Status__c = valueToAdd;
-	    			aaLstToUpdate.add(aa);
 	    			accountIdsChanged.add(aa.Account__c);
+	    		}
+
+	    			aaLstToUpdate.add(aa);
 	    		}
 
 	    		if(restrictCreditCard && aa.ANG_FormOfPayment_ID__c == 'CC' && aa.Status__c != valueToAdd){
@@ -712,10 +716,11 @@ global class ANG_OscarProcessHelper {
 
     		if(restoreCash || restoreCreditCard){
 
-				if(restoreCash && aa.ANG_FormOfPayment_ID__c == 'CA' && aa.Status__c != valueToAdd){
+				if(restoreCash && aa.ANG_FormOfPayment_ID__c == 'CA'){
+
     				aa.Status__c = valueToAdd;
-    				aaLstToUpdate.add(aa);
     				accountIdsChanged.add(aa.Account__c);
+    				aaLstToUpdate.add(aa);
     			}
 
 	    		if(restoreCreditCard && aa.Account__r.Is_PCI_compliant__c == 'Yes' && aa.ANG_FormOfPayment_ID__c == 'CC' && aa.Status__c != valueToAdd){
@@ -1107,8 +1112,9 @@ global class ANG_OscarProcessHelper {
 			fieldsOfObject.put('Status__c','Open');			
 			fieldsOfObject.put('AMS_Online_Accreditation__c',newAccr.Id);
 			fieldsOfObject.put('Change_effective_as_of__c',newAccr.Effective_Date_Of_Change__c);
+	        fieldsOfObject.put('Oscar_Communication_Case_Id__c',newCaseOscar.id);
 
-			oscar = ANG_EntityCreator.createOscar(AMS_Utils.RECTYPE_NGCHANGES, c.AccountId, fieldsOfObject);
+			oscar = ANG_EntityCreator.createOscar(AMS_Utils.RECTYPE_NGCHANGES, newAccr.HO_Account__c, fieldsOfObject);
 
 			insert oscar;
 
