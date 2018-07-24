@@ -469,7 +469,7 @@ public without sharing class ISSP_TIP_Home_Controller {
 
     public void fetchHQAccountDetails () {
         account = [
-                        SELECT Id, Name, BillingStreet, BillingCity, BillingState, BillingPostalCode, BillingCountry, Legal_name__c,
+                        SELECT Id, Name, Quality__c, BillingStreet, BillingCity, BillingState, BillingPostalCode, BillingCountry, Legal_name__c,
                         TradeName__c, Membership_status__c, IATACode__c, Sector__c, Category__c, Due_Diligence_Status__c,
                         Due_Diligence_Remarks__c, Level_of_risk__c, Email__c, Website, Phone, PhoneNational__c, Fax, FaxNational__c,
                         Mobile__c, MobileNational__c , Location_Type__c, ParentId, ShippingStreet, ShippingCity, ShippingState,
@@ -499,6 +499,15 @@ public without sharing class ISSP_TIP_Home_Controller {
 		}
 		
 		isPaymentProvider = setServiceProvided.contains(TIP_Utils.ACCOUNT_SERVICE_PROVIDED_PAYMENT_PROVIDER);
+
+        //ACAMBAS - TIP-236 ---------
+        if(!String.isBlank(account.Quality__c)) {
+            isPaymentProvider = isPaymentProvider && account.Quality__c.contains('YES');
+        }
+        else {
+            isPaymentProvider = false;
+        }
+        //---------------------------
     }
     
     //Method invoked by Action on visualforce page
