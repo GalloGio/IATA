@@ -15820,6 +15820,14 @@ The applicant understands and agrees to pay the application, entry and annual fe
         <value>PCI Compliance</value>
     </labels>
     <labels>
+        <fullName>ISSP_ANG_PCI_DSS_Compliance</fullName>
+        <categories>ISSP, ANG</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_ANG_PCI_DSS_Compliance</shortDescription>
+        <value>PCI DSS compliance</value>
+    </labels>
+    <labels>
         <fullName>ISSP_ANG_PCI_DSS_Compliant</fullName>
         <categories>ISSP, ANG</categories>
         <language>en_US</language>

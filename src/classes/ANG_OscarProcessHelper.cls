@@ -1195,7 +1195,7 @@ global class ANG_OscarProcessHelper {
 		if (origin == AMS_Utils.ANG_MASSIVE_FOP)
 			identifier = 'NG_FOP_PortalNotification';
 		else if (origin == AMS_Utils.ANG_FOP_AUTOMATIC_RENEWAL)
-			identifier = 'NG_FOP_PortalNotification'; //change the identifier if we need to use another notification template
+			identifier = 'NG_FOP_PortalNotification'; //change the identifier id we need to use another notification template
 
 		Notification_Template__c notificationTemplate = null;
 
@@ -1227,7 +1227,7 @@ global class ANG_OscarProcessHelper {
 	        fieldsOfObject.put('CaseArea__c','Accreditation Process');
 	        fieldsOfObject.put('Origin', origin);
 	        fieldsOfObject.put('Reason1__c','FoP Management');
-	        fieldsOfObject.put('Subject','FoP Management - ' + acc.ANG_Accreditation_Model__c + ' - ' + acc.Name);
+	        fieldsOfObject.put('Subject','PCI DSS compliance - ' + acc.IataCode__c + ' - ' + acc.Name);
 	        fieldsOfObject.put('Type_of_customer__c','IATA Travel Agent');
 	        
 	       	Case cse = ANG_EntityCreator.createCase(AMS_Utils.RECTYPE_OSCARCOMM, acc.Id, fieldsOfObject);
