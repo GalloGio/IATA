@@ -525,9 +525,6 @@ private class AMS_AccreditationContactControllerTest
         Boolean bIsAllHierarchySelected = ctrl.isAllHierarchySelected;
         String sDateFormatToShow = ctrl.dateFormatToShow;
             
-        Boolean bIsAllHierarchySelected = ctrl.isAllHierarchySelected;
-        String sDateFormatToShow = ctrl.dateFormatToShow;
-            
         Test.stopTest();
 
     }
