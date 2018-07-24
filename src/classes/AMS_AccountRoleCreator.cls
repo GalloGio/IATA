@@ -295,16 +295,6 @@ public with sharing class AMS_AccountRoleCreator
         return arUpdateList;
     }
 
-    public static Map<Id,OldAndNewOwners> runRoleCreatorForOnlineAccreditations(Map<Id,Set<Id>> aoMap){
-        return runRoleCreatorForOnlineAccreditations(aoMap, false);
-    }
-
-    public static Map<Id,OldAndNewOwners> runRoleCreatorForOnlineAccreditations(Map<Id,Set<Id>> aoMap, boolean isCorrectionProcess){
-
-        return runRoleCreatorForOnlineAccreditations(aoMap,isCorrectionProcess, null);
-
-    }
-
     /**
     This method processes the staging area owners and contacts into the AMS Account roles in the affected agencies.
     If an Accreditation Contact has a direct link to the AMS_Account_role, it tries to update.
@@ -312,7 +302,7 @@ public with sharing class AMS_AccountRoleCreator
 
     The aoMap parameter has a map between the Accreditation Area and the Agencies (accounts) involved in the process.
     */
-    public static Map<Id,OldAndNewOwners> runRoleCreatorForOnlineAccreditations(Map<Id,Set<Id>> aoMap, boolean isCorrectionProcess, List<AMS_OSCAR__c> oscars){
+    public static Map<Id,OldAndNewOwners> runRoleCreatorForOnlineAccreditations(Map<Id,Set<Id>> aoMap, boolean isCorrectionProcess, List<AMS_OSCAR__c> oscars, Map<Id,String> locationTypeByOscar){
 
         System.debug('Starting to ajust the Owners in the selected hierarchies. isCorrectionProcess variable value is '+ isCorrectionProcess);
 
@@ -322,9 +312,6 @@ public with sharing class AMS_AccountRoleCreator
 
         Set<Id> accreditationAreaIds = aoMap.keyset();
         List<Id> accreditationAreaIdsLst= new List<Id>(accreditationAreaIds);
-
-        if(oscars == null)
-            oscars = [SELECT Id, STEP10__c, STEP6__c, RecordType.DeveloperName,Account__c,Account__r.Location_Type__c, Account__r.Top_Parent__r.Id, AMS_Online_Accreditation__c, AMS_Online_Accreditation__r.Id, Process__c from AMS_Oscar__c where AMS_Online_Accreditation__c in :accreditationAreaIdsLst];
         
         system.debug('### su' + oscars.size());
         Map<Id,String> accreditationAndOscars = new Map<Id,String>();
@@ -334,10 +321,10 @@ public with sharing class AMS_AccountRoleCreator
                         // OSCAR at a time, let's "assume" that there is only one Account involved.
         for(AMS_Oscar__c oscar: oscars){
 
-            if(processesBlockedToMigrateOwners.contains(oscar.Process__c) && !allowedLocationTypesForNewProcesses.contains(oscar.Account__r.Location_Type__c)){
+            if(processesBlockedToMigrateOwners.contains(oscar.Process__c) && !allowedLocationTypesForNewProcesses.contains(locationTypeByOscar.get(oscar.Id))){
 
 
-                accreditationAreaIdsLst = removeFromList(accreditationAreaIdsLst,oscar.AMS_Online_Accreditation__r.Id);
+                accreditationAreaIdsLst = removeFromList(accreditationAreaIdsLst,oscar.AMS_Online_Accreditation__c);
 
                 if(isCorrectionProcess && oscar.STEP10__c == 'Passed' && oscar.STEP6__c == 'Passed'){ // it's the last process to move the owners, so let's select the oscar's account to process.
                     System.debug('Adding the oscar ' + oscar + ' to the list to do migration.');
@@ -345,7 +332,7 @@ public with sharing class AMS_AccountRoleCreator
                 }
 
             }else{
-                accreditationAndOscars.put(oscar.AMS_Online_Accreditation__c, oscar.RecordType.DeveloperName);
+                accreditationAndOscars.put(oscar.AMS_Online_Accreditation__c, RecordTypeSingleton.getInstance().getRecordTypeDeveloperName('AMS_OSCAR__c', oscar.RecordTypeId));
                 accountId = oscar.Account__c;
                 oscarProcess = oscar.Process__c;
             }

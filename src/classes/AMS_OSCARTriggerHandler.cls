@@ -840,6 +840,8 @@ public class AMS_OSCARTriggerHandler {
 
         Map<Id, Account> accounts = getAccounts(accountIds);
 
+        Map<Id,String> locationTypeByOscar = new Map<Id,String>();
+
         //<Account Id, Current Location Type>
         // Get the Accounts location type in the beggining before its changed (as in the case of a change of Ownership to non IATA
         // )
@@ -878,6 +880,7 @@ public class AMS_OSCARTriggerHandler {
 
         for (AMS_OSCAR__c oscar : oscars) {
 
+            locationTypeByOscar.put(oscar.Id, accounts.get(oscar.Account__c).Location_Type__c);
             AMS_OSCAR__c oldOSCAR = oldMap.get(oscar.Id);
 
             system.debug('processAgencyChanges() --> oscar = ' + oscar.Type_of_change__c + ' - oscar.staging = ' + oscar.AMS_Online_Accreditation__c);
@@ -1277,7 +1280,7 @@ public class AMS_OSCARTriggerHandler {
             if (!accountsAffectedPerOnlineAccreditation.isEmpty()) {
                 system.debug('processAgencyChanges() --> accountsAffectedPerOnlineAccreditation = ' + accountsAffectedPerOnlineAccreditation);
 
-                oldAndNewOwnersMap = AMS_AccountRoleCreator.runRoleCreatorForOnlineAccreditations(accountsAffectedPerOnlineAccreditation, !isSanityCheck);
+                oldAndNewOwnersMap = AMS_AccountRoleCreator.runRoleCreatorForOnlineAccreditations(accountsAffectedPerOnlineAccreditation, !isSanityCheck, oscars, locationTypeByOscar);
 
                 //verify ownership alignment
                 if(accsToCompareOwnership.size()>0 && !AMS_HierarchyHelper.checkHierarchyIntegrity(accsToCompareOwnership))
@@ -3343,26 +3346,20 @@ public class AMS_OSCARTriggerHandler {
                         }
                     }
 
-					List<Account> accountsToCheck = [SELECT Id, Status__c, Reason__c FROM Account WHERE Id IN :allHierarchyAccountIds]; 
+                    Map<Id,Account> mapAccountsToCheck = new Map<Id,Account>([SELECT Id, Status__c, Reason__c, Location_Type__c FROM Account WHERE Id IN :allHierarchyAccountIds]);
+					List<Account> accountsToCheck = mapAccountsToCheck.values();
 
                     //Remove TERMINATED and NOT ACCREDITED Accounts from list
                     for(Account acc: accountsToCheck){
                         if(acc.Status__c == null || acc.Status__c.equalsIgnoreCase(AMS_Utils.ACC_S0_TERMINATED) || acc.Status__c.equalsIgnoreCase(AMS_Utils.ACC_S1_NOTACCREDITED)) allHierarchyAccountIds.remove(acc.Id);
                     }
 
-                    //RB: Bypass hierarchy verification when hierarchy is too big with many owners
-                    Apex_Setting__c idAccountOwner = Apex_Setting__c.getInstance('Stop Owner Alignment');
-                    system.debug('Stop Owner Verification: '+ idAccountOwner.Text_1__c);
-                    system.debug('Stop Owner Verification user ID: '+ UserInfo.getUserId());    
-
-                    if(idAccountOwner.Text_1__c != String.valueOf(UserInfo.getUserId())) {
-                        stagingToAccounts.put(updatedOscar.AMS_Online_Accreditation__c, allHierarchyAccountIds);
-                        system.debug('applyChangeCodesWithDependencies() -> move to MD contact data. Pass map: '+stagingToAccounts);
-                        AMS_AccountRoleCreator.runRoleCreatorForOnlineAccreditations(stagingToAccounts, true);
-                    }
-
+                    stagingToAccounts.put(updatedOscar.AMS_Online_Accreditation__c, allHierarchyAccountIds);
+                    system.debug('applyChangeCodesWithDependencies() -> move to MD contact data. Pass map: '+stagingToAccounts);
+                    AMS_AccountRoleCreator.runRoleCreatorForOnlineAccreditations(stagingToAccounts, true, new List<AMS_OSCAR__c>{updatedOscar}, new Map<Id,String>{updatedOscar.Id => mapAccountsToCheck.get(updatedOscar.Account__c).Location_Type__c});
+                    
                     //verify ownership alignment
-                    if(idAccountOwner.Text_1__c != String.valueOf(UserInfo.getUserId()) && allHierarchyAccountIds.size()>0 && !AMS_HierarchyHelper.checkHierarchyIntegrity(new Map<Id, Set<Id>>{updatedOscar.Id => allHierarchyAccountIds}))
+                    if(allHierarchyAccountIds.size()>0 && !AMS_HierarchyHelper.checkHierarchyIntegrity(new Map<Id, Set<Id>>{updatedOscar.Id => allHierarchyAccountIds}))
                         throw new AMS_ApplicationException('This operation cannot be performed because the ownership in this hierarchy is not aligned. It is advised to perform a change of ownership to align the owners in this hierarchy.');
 
                     if(updatedOscar.AMS_Correction_change_code__c == 'COR' || updatedOscar.AMS_Correction_change_code__c == 'CAD'){

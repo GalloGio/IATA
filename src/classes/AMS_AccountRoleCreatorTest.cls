@@ -203,6 +203,7 @@ public with sharing class AMS_AccountRoleCreatorTest {
         Test.startTest();
         
         List<AMS_Pax_Accreditation_Form__c> aoaList = [select id , SAAM_Case__r.AccountId from AMS_Pax_Accreditation_Form__c limit 1];
+        List<AMS_OSCAR__c> oscars = [SELECT ID, STEP10__c, STEP6__c, Account__c, Account__r.Location_Type__c, Account__r.Top_Parent__r.Id, AMS_Online_Accreditation__c, AMS_Online_Accreditation__r.Id, RecordTypeId, RecordType.DeveloperName, Process__c, Is_PCI_compliant__c from AMS_OSCAR__C where Account__c =: aoaList.get(0).SAAM_Case__r.AccountId];
 
         System.assertEquals(1, aoaList.size());
 
@@ -212,7 +213,7 @@ public with sharing class AMS_AccountRoleCreatorTest {
 
         aoMap.put(aoaList.get(0).Id, accountsInvolved);
         
-        AMS_AccountRoleCreator.runRoleCreatorForOnlineAccreditations(aoMap, isCorrectionProcess);
+        AMS_AccountRoleCreator.runRoleCreatorForOnlineAccreditations(aoMap, isCorrectionProcess, oscars, new Map<Id,String>{oscars.get(0).Id => oscars.get(0).Account__r.Location_Type__c});
         
         roleList = [select Contact__c, Percentage__c, Contact__r.Email, Person__c, Person__r.Email__c, Account__c, RecordType.DeveloperName, RecordTypeId from AMS_Account_Role__c order by RecordTypeId];
         
@@ -225,7 +226,7 @@ public with sharing class AMS_AccountRoleCreatorTest {
         update companyOwnershipAC;
         
         
-        AMS_AccountRoleCreator.runRoleCreatorForOnlineAccreditations(aoMap, isCorrectionProcess);
+        AMS_AccountRoleCreator.runRoleCreatorForOnlineAccreditations(aoMap, isCorrectionProcess, oscars, new Map<Id,String>{oscars.get(0).Id => oscars.get(0).Account__r.Location_Type__c});
         roleList = [select Percentage__c, Account__c, RecordType.DeveloperName, RecordTypeId from AMS_Account_Role__c order by RecordTypeId];
 
         System.assertEquals(1, roleList.size());
@@ -245,7 +246,7 @@ public with sharing class AMS_AccountRoleCreatorTest {
         
         update oscarToBR;
         
-        AMS_AccountRoleCreator.runRoleCreatorForOnlineAccreditations(aoMap, isCorrectionProcess);
+        AMS_AccountRoleCreator.runRoleCreatorForOnlineAccreditations(aoMap, isCorrectionProcess, oscars, new Map<Id,String>{oscars.get(0).Id => oscars.get(0).Account__r.Location_Type__c});
 
         List<AMS_Accreditation_Contact__c> aclistLinkOnly = AMS_AccountRoleCreator.getPersonLinkingOnly(acList);
         
@@ -283,13 +284,14 @@ public with sharing class AMS_AccountRoleCreatorTest {
         Test.startTest();
         
         List<AMS_Pax_Accreditation_Form__c> aoaList = [select id , SAAM_Case__r.AccountId from AMS_Pax_Accreditation_Form__c limit 1];
+        List<AMS_OSCAR__c> oscars = [SELECT ID, STEP10__c, STEP6__c, Account__c, Account__r.Location_Type__c, Account__r.Top_Parent__r.Id, AMS_Online_Accreditation__c, AMS_Online_Accreditation__r.Id, RecordTypeId, RecordType.DeveloperName, Process__c, Is_PCI_compliant__c from AMS_OSCAR__C where Account__c =: aoaList.get(0).SAAM_Case__r.AccountId];
 
         Set<Id> accountsInvolved = new Set<Id>();
         accountsInvolved.add(aoaList.get(0).SAAM_Case__r.AccountId);
 
         aoMap.put(aoaList.get(0).Id, accountsInvolved);
 
-        AMS_AccountRoleCreator.runRoleCreatorForOnlineAccreditations(aoMap, isCorrectionProcess);
+        AMS_AccountRoleCreator.runRoleCreatorForOnlineAccreditations(aoMap, isCorrectionProcess, oscars, new Map<Id,String>{oscars.get(0).Id => oscars.get(0).Account__r.Location_Type__c});
         
         roleList = [select Contact__c, Contact__r.Email, Termination_Date__c, Person__c, Person__r.Email__c, Account__c from AMS_Account_Role__c];
         
@@ -368,13 +370,14 @@ public with sharing class AMS_AccountRoleCreatorTest {
         
         Test.startTest();
         List<AMS_Pax_Accreditation_Form__c> aoaList = [select id , SAAM_Case__r.AccountId from AMS_Pax_Accreditation_Form__c limit 1];
+        List<AMS_OSCAR__c> oscars = [SELECT ID, STEP10__c, STEP6__c, Account__c, Account__r.Location_Type__c, Account__r.Top_Parent__r.Id, AMS_Online_Accreditation__c, AMS_Online_Accreditation__r.Id, RecordTypeId, RecordType.DeveloperName, Process__c, Is_PCI_compliant__c from AMS_OSCAR__C where Account__c =: aoaList.get(0).SAAM_Case__r.AccountId];
 
         accountsInvolved = new Set<Id>();
         accountsInvolved.add(aoaList.get(0).SAAM_Case__r.AccountId);
 
         aoMap.put(aoaList.get(0).Id, accountsInvolved);
 
-        AMS_AccountRoleCreator.runRoleCreatorForOnlineAccreditations(aoMap, false);
+        AMS_AccountRoleCreator.runRoleCreatorForOnlineAccreditations(aoMap, false, oscars, new Map<Id,String>{oscars.get(0).Id => oscars.get(0).Account__r.Location_Type__c});
         
         roleList = [select Contact__c, Contact__r.Email, Person__c, Person__r.Email__c, Account__c, RecordType.DeveloperName from AMS_Account_Role__c];
         System.assertEquals(1, roleList.size());
@@ -389,7 +392,7 @@ public with sharing class AMS_AccountRoleCreatorTest {
 
         aoMap.put(aoaList.get(0).Id, accountsInvolved);
 
-        AMS_AccountRoleCreator.runRoleCreatorForOnlineAccreditations(aoMap);
+        AMS_AccountRoleCreator.runRoleCreatorForOnlineAccreditations(aoMap, false, oscars, new Map<Id,String>{oscars.get(0).Id => oscars.get(0).Account__r.Location_Type__c});
         roleList = [select Contact__c, Contact__r.Email, Person__c, Person__r.Email__c, Account__c, RecordType.DeveloperName from AMS_Account_Role__c];
         System.assertEquals(2, roleList.size());
         //System.assertEquals('Ownership', roleList.get(0).RecordType.DeveloperName);
@@ -407,7 +410,7 @@ public with sharing class AMS_AccountRoleCreatorTest {
 
         aoMap.put(aoaList.get(0).Id, accountsInvolved);
 
-        AMS_AccountRoleCreator.runRoleCreatorForOnlineAccreditations(aoMap);
+        AMS_AccountRoleCreator.runRoleCreatorForOnlineAccreditations(aoMap, false, oscars, new Map<Id,String>{oscars.get(0).Id => oscars.get(0).Account__r.Location_Type__c});
 
         roleList = [select Contact__c, Contact__r.Email, Person__c, Person__r.Email__c, Account__c, RecordType.DeveloperName from AMS_Account_Role__c];
         System.assertEquals(3, roleList.size());
@@ -444,13 +447,14 @@ public with sharing class AMS_AccountRoleCreatorTest {
         Test.startTest();
 
         List<AMS_Pax_Accreditation_Form__c> aoaList = [select id , SAAM_Case__r.AccountId from AMS_Pax_Accreditation_Form__c limit 1];
+        List<AMS_OSCAR__c> oscars = [SELECT ID, STEP10__c, STEP6__c, Account__c, Account__r.Location_Type__c, Account__r.Top_Parent__r.Id, AMS_Online_Accreditation__c, AMS_Online_Accreditation__r.Id, RecordTypeId, RecordType.DeveloperName, Process__c, Is_PCI_compliant__c from AMS_OSCAR__C where Account__c =: aoaList.get(0).SAAM_Case__r.AccountId];
 
         accountsInvolved = new Set<Id>();
         accountsInvolved.add(aoaList.get(0).SAAM_Case__r.AccountId);
 
         aoMap.put(aoaList.get(0).Id, accountsInvolved);
 
-        AMS_AccountRoleCreator.runRoleCreatorForOnlineAccreditations(aoMap);
+        AMS_AccountRoleCreator.runRoleCreatorForOnlineAccreditations(aoMap, false, oscars, new Map<Id,String>{oscars.get(0).Id => oscars.get(0).Account__r.Location_Type__c});
         
         roleList = [select Contact__c, Contact__r.Email, Person__c, Person__r.Email__c, Account__c, RecordType.DeveloperName from AMS_Account_Role__c];
         //DT: Employee are no more created in the Role Object
@@ -465,7 +469,7 @@ public with sharing class AMS_AccountRoleCreatorTest {
 
         aoMap.put(aoaList.get(0).Id, accountsInvolved);
 
-        AMS_AccountRoleCreator.runRoleCreatorForOnlineAccreditations(aoMap);
+        AMS_AccountRoleCreator.runRoleCreatorForOnlineAccreditations(aoMap, false, oscars, new Map<Id,String>{oscars.get(0).Id => oscars.get(0).Account__r.Location_Type__c});
 
         roleList = [select Contact__c, Contact__r.Email, Person__c, Person__r.Email__c, Account__c, RecordType.DeveloperName from AMS_Account_Role__c];
         System.assertEquals(1, roleList.size());
@@ -484,7 +488,7 @@ public with sharing class AMS_AccountRoleCreatorTest {
 
         aoMap.put(aoaList.get(0).Id, accountsInvolved);
 
-        AMS_AccountRoleCreator.runRoleCreatorForOnlineAccreditations(aoMap);
+        AMS_AccountRoleCreator.runRoleCreatorForOnlineAccreditations(aoMap, false, oscars, new Map<Id,String>{oscars.get(0).Id => oscars.get(0).Account__r.Location_Type__c});
 
         roleList = [select Contact__c, Contact__r.Email, Person__c, Person__r.Email__c, Account__c, RecordType.DeveloperName from AMS_Account_Role__c];
         //DT: Employee are no more created in the Role Object
@@ -511,13 +515,14 @@ public with sharing class AMS_AccountRoleCreatorTest {
         Test.startTest();
 
         List<AMS_Pax_Accreditation_Form__c> aoaList = [select id , SAAM_Case__r.AccountId from AMS_Pax_Accreditation_Form__c limit 1];
+        List<AMS_OSCAR__c> oscars = [SELECT ID, STEP10__c, STEP6__c, Account__c, Account__r.Location_Type__c, Account__r.Top_Parent__r.Id, AMS_Online_Accreditation__c, AMS_Online_Accreditation__r.Id, RecordTypeId, RecordType.DeveloperName, Process__c, Is_PCI_compliant__c from AMS_OSCAR__C where Account__c =: aoaList.get(0).SAAM_Case__r.AccountId];
 
         accountsInvolved = new Set<Id>();
         accountsInvolved.add(aoaList.get(0).SAAM_Case__r.AccountId);
 
         aoMap.put(aoaList.get(0).Id, accountsInvolved);
 
-        AMS_AccountRoleCreator.runRoleCreatorForOnlineAccreditations(aoMap);
+        AMS_AccountRoleCreator.runRoleCreatorForOnlineAccreditations(aoMap, false, oscars, new Map<Id,String>{oscars.get(0).Id => oscars.get(0).Account__r.Location_Type__c});
         
         roleList = [select Contact__c, Contact__r.Email, Contact__r.FirstName, Person__c, Person__r.Email__c, Account__c from AMS_Account_Role__c];
 
@@ -551,13 +556,14 @@ public with sharing class AMS_AccountRoleCreatorTest {
         Test.startTest();
 
         List<AMS_Pax_Accreditation_Form__c> aoaList = [select id , SAAM_Case__r.AccountId from AMS_Pax_Accreditation_Form__c limit 1];
+        List<AMS_OSCAR__c> oscars = [SELECT ID, STEP10__c, STEP6__c, Account__c, Account__r.Location_Type__c, Account__r.Top_Parent__r.Id, AMS_Online_Accreditation__c, AMS_Online_Accreditation__r.Id, RecordTypeId, RecordType.DeveloperName, Process__c, Is_PCI_compliant__c from AMS_OSCAR__C where Account__c =: aoaList.get(0).SAAM_Case__r.AccountId];
 
         accountsInvolved = new Set<Id>();
         accountsInvolved.add(aoaList.get(0).SAAM_Case__r.AccountId);
 
         aoMap.put(aoaList.get(0).Id, accountsInvolved);
 
-        AMS_AccountRoleCreator.runRoleCreatorForOnlineAccreditations(aoMap);
+        AMS_AccountRoleCreator.runRoleCreatorForOnlineAccreditations(aoMap, false, oscars, new Map<Id,String>{oscars.get(0).Id => oscars.get(0).Account__r.Location_Type__c});
 
         roleList = [select Id, Contact__c, Contact__r.Email, Person__c, Person__r.Email__c, Account__c, RecordType.DeveloperName from AMS_Account_Role__c where Active__c = true];
 
@@ -565,7 +571,7 @@ public with sharing class AMS_AccountRoleCreatorTest {
         acList.get(0).Agency_Owner__c = true;
         update acList;
         
-        AMS_AccountRoleCreator.runRoleCreatorForOnlineAccreditations(aoMap);
+        AMS_AccountRoleCreator.runRoleCreatorForOnlineAccreditations(aoMap, false, oscars, new Map<Id,String>{oscars.get(0).Id => oscars.get(0).Account__r.Location_Type__c});
         roleList = [select Contact__c, Contact__r.Email, Person__c, Person__r.Email__c, Account__c, RecordType.DeveloperName from AMS_Account_Role__c where Active__c = true];
         System.assertEquals(1, roleList.size());
         System.assertEquals('Ownership', roleList.get(0).RecordType.DeveloperName);
@@ -577,7 +583,7 @@ public with sharing class AMS_AccountRoleCreatorTest {
                                                                                 Contact__c = newCon.Id, RecordTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('AMS_Accreditation_Contact__c', 'Person'));
         insert newAc;
         
-        AMS_AccountRoleCreator.runRoleCreatorForOnlineAccreditations(aoMap);
+        AMS_AccountRoleCreator.runRoleCreatorForOnlineAccreditations(aoMap, false, oscars, new Map<Id,String>{oscars.get(0).Id => oscars.get(0).Account__r.Location_Type__c});
         roleList = [select Contact__c, Contact__r.Email, Person__c, Person__r.Email__c, Account__c, RecordType.DeveloperName from AMS_Account_Role__c where Active__c = true];
 
 
@@ -607,6 +613,7 @@ public with sharing class AMS_AccountRoleCreatorTest {
         
         Test.startTest();
         List<AMS_Pax_Accreditation_Form__c> aoaList = [select id , SAAM_Case__r.AccountId from AMS_Pax_Accreditation_Form__c limit 1];
+        List<AMS_OSCAR__c> oscars = [SELECT ID, STEP10__c, STEP6__c, Account__c, Account__r.Location_Type__c, Account__r.Top_Parent__r.Id, AMS_Online_Accreditation__c, AMS_Online_Accreditation__r.Id, RecordTypeId, RecordType.DeveloperName, Process__c, Is_PCI_compliant__c from AMS_OSCAR__C where Account__c =: aoaList.get(0).SAAM_Case__r.AccountId];
 
         AMS_OSCAR__c oscar = [select AMS_Online_Accreditation__c from AMS_OSCAR__c limit 1];
         oscar.AMS_Online_Accreditation__c = aoaList.get(0).Id;
@@ -618,7 +625,7 @@ public with sharing class AMS_AccountRoleCreatorTest {
 
         aoMap.put(aoaList.get(0).Id, accountsInvolved);
 
-        AMS_AccountRoleCreator.runRoleCreatorForOnlineAccreditations(aoMap);
+        AMS_AccountRoleCreator.runRoleCreatorForOnlineAccreditations(aoMap, false, oscars, new Map<Id,String>{oscars.get(0).Id => oscars.get(0).Account__r.Location_Type__c});
         
         roleList = [select Contact__c, Contact__r.Email, Termination_Date__c, Person__c, Person__r.Email__c, Account__c from AMS_Account_Role__c];
         
@@ -801,13 +808,14 @@ public with sharing class AMS_AccountRoleCreatorTest {
         Test.startTest();
         
         List<AMS_Pax_Accreditation_Form__c> aoaList = [select id , SAAM_Case__r.AccountId from AMS_Pax_Accreditation_Form__c limit 1];
+        List<AMS_OSCAR__c> oscars = [SELECT ID, STEP10__c, STEP6__c, Account__c, Account__r.Location_Type__c, Account__r.Top_Parent__r.Id, AMS_Online_Accreditation__c, AMS_Online_Accreditation__r.Id, RecordTypeId, RecordType.DeveloperName, Process__c, Is_PCI_compliant__c from AMS_OSCAR__C where Account__c =: aoaList.get(0).SAAM_Case__r.AccountId];
 
         accountsInvolved = new Set<Id>();
         accountsInvolved.add(aoaList.get(0).SAAM_Case__r.AccountId);
 
         aoMap.put(aoaList.get(0).Id, accountsInvolved);
 
-        AMS_AccountRoleCreator.runRoleCreatorForOnlineAccreditations(aoMap);
+        AMS_AccountRoleCreator.runRoleCreatorForOnlineAccreditations(aoMap, false, oscars, new Map<Id,String>{oscars.get(0).Id => oscars.get(0).Account__r.Location_Type__c});
        
         roleList = [select Contact__c, Contact__r.Email, Person__c, Financial_Assessment_Contact__c, Termination_Date__c, Account__c from AMS_Account_Role__c];
         //DT: Employee are no more created in the Role Object

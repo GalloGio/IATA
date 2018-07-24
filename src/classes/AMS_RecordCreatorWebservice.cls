@@ -364,15 +364,6 @@ global without sharing class AMS_RecordCreatorWebservice {
         if(( processType.equalsIgnoreCase(MAJOR_CHANGESNEWGEN_PV) || processType.equalsIgnoreCase(MAJOR_CHANGES_PV) || processType.equalsIgnoreCase(NGFOP_PV) || (processType.equalsIgnoreCase(NEWVR_PV) && acc.ANG_IsNewGenAgency__c)) && processType != NEWVRCA_PV && processType != NEWCER_PV){
             processOscarProcessDetail(oscar,accreditationObj,accountId);
         }
-
-        //commented as per NEWGEN-3265
-        /*if(processType.equalsIgnoreCase(OPTINOPTOUT)){
-        
-            Map<Id, Set<Id>> stagingToAccount = new Map<Id, Set<Id>>();
-            stagingToAccount.put(accreditationId, new Set<Id>{accountId});
-            AMS_AccountRoleCreator.runRoleCreatorForOnlineAccreditations(stagingToAccount);
-
-        }*/
         
         return oscar.id;
     }

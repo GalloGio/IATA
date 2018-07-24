@@ -231,7 +231,7 @@ public without sharing class AMS_Utils {
     
     public static final String RECTYPE_IATAEASYPAY  = RecordTypeSingleton.getInstance().getRecordTypeId('AP_Process_Form__c', 'IATA_EasyPay_Opt_in_Out');
 
-    public static final Id OSCAR_COMUNICATION 	    = RecordTypeSingleton.getInstance().getRecordTypeId('Case', 'OSCAR Communication');
+    public static final Id OSCAR_COMUNICATION 	    = RecordTypeSingleton.getInstance().getRecordTypeId('Case', 'OSCAR_Communication');
 
     public static final Set<String> oscarAMSProcesses = new Set <String>{new_HO,new_BR,new_BR_ABROAD,new_TIDS,new_MSO,new_GSA,new_GSA_BSP,new_GSSA,new_AHA,new_AHA_BSP,new_SA, COR,NEWHELITE,NEWHESTANDARD};
 
@@ -1220,6 +1220,8 @@ public without sharing class AMS_Utils {
         List<Account> accountsToUpdate = new List<Account>();
         List<AMS_Pax_Accreditation_Form__c> onlineAccToCreateAccountRole = new List<AMS_Pax_Accreditation_Form__c>();
         Map<Id, Set<Id>> stagingToAccount = new Map<Id, Set<Id>>();
+        List<AMS_OSCAR__c> oscarsToCopy = new List<AMS_OSCAR__c>();
+        Map<Id,String> locationTypeByOscar = new Map<Id,String>();
 
         //DT: reindented and added 3 fields for iso shipping/billin
         Map<String, String> fieldsMapping = new Map<String, String> {'Name' => 'Account_Name__c'
@@ -1351,6 +1353,8 @@ public without sharing class AMS_Utils {
 
                 accountsToUpdate.add(acc);
                 stagingToAccount.put(onlineAcc.Id, new Set<Id>{oscar.Account__c});
+                oscarsToCopy.add(oscar);
+                locationTypeByOscar.put(oscar.Id, oscar.Account__r.Location_Type__c);
 
 
                 changes.add(new Ams_ChangeCodesHelper.ObjectChangesStruct(accChanges));
@@ -1366,7 +1370,7 @@ public without sharing class AMS_Utils {
                 update accountsToUpdate;
 
             if(!stagingToAccount.isEmpty() && runOwnershipMigration)
-                AMS_AccountRoleCreator.runRoleCreatorForOnlineAccreditations(stagingToAccount, true);
+                AMS_AccountRoleCreator.runRoleCreatorForOnlineAccreditations(stagingToAccount, true, oscarsToCopy, locationTypeByOscar);
 
             if(!createRHCInfo.isEmpty()) ANG_RHCHelper.createRHCInfo(createRHCInfo, false);
 
@@ -1505,12 +1509,8 @@ public without sharing class AMS_Utils {
                     accountFieldNewValue.put('BillingCountry', oscarOnlineAccreditation.Branch_Office_Country__r.Name);
                 if (fieldsToMigrate.contains('Shipping_ISO_Country__c'))
                     accountFieldNewValue.put('ShippingCountry', oscarOnlineAccreditation.Shipping_ISO_Country__r.Name);
-                //if (fieldsToMigrate.contains('Shipping_ISO_State__c'))/*** AMSU-121 ***/
-                //    accountFieldNewValue.put('ShippingState', oscarOnlineAccreditation.IATA_ISO_State__r.Valid_for_Address__c == true ? oscarOnlineAccreditation.Shipping_ISO_State__r.Name : null);
                 if (fieldsToMigrate.contains('IATA_ISO_State__c'))
                     accountFieldNewValue.put('BillingState', oscarOnlineAccreditation.IATA_ISO_State__r.Valid_for_Address__c == true ? oscarOnlineAccreditation.IATA_ISO_State__r.Name : null);
-                //if (fieldsToMigrate.contains('ISSP_AMS_Total_Ownership__c'))
-                    //AMS_AccountRoleCreator.runRoleCreatorForOnlineAccreditations(new List<AMS_Pax_Accreditation_Form__c>{onlineAcc}, accountsAffected);
 
                 for(Id accId: accountsAffected){
 
@@ -1689,8 +1689,6 @@ public without sharing class AMS_Utils {
                     accountFieldNewValue.put('ShippingState', oscarOnlineAccreditation.IATA_ISO_State__r.Valid_for_Address__c == true ? oscarOnlineAccreditation.Shipping_ISO_State__r.Name : null);
                 if (fieldsToMigrate.contains('IATA_ISO_State__c'))
                     accountFieldNewValue.put('BillingState', oscarOnlineAccreditation.IATA_ISO_State__r.Valid_for_Address__c == true ? oscarOnlineAccreditation.IATA_ISO_State__r.Name : null);
-                //if (fieldsToMigrate.contains('ISSP_AMS_Total_Ownership__c'))
-                    //AMS_AccountRoleCreator.runRoleCreatorForOnlineAccreditations(new List<AMS_Pax_Accreditation_Form__c>{onlineAcc}, accountsAffected);
 
 
                 for(Id accId: accountsAffected){
