@@ -365,9 +365,10 @@ public class ISSP_ANG_ANNUAL_REVALIDATION {
 
 		isoCountryMap = new Map<String, IATA_ISO_Country__c>();
 
-        List<IATA_ISO_Country__c> aux = [Select Id, ISO_Code__c, Local_language_Agency_details_required__c, EU_Country__c, EACP_Country__c, Hide_Tax_Number_VAT__c
-                                           From IATA_ISO_Country__c
-                                          Where ISO_Code__c In :isocodes];
+        List<IATA_ISO_Country__c> aux = [Select Id, ISO_Code__c, Local_language_Agency_details_required__c, EU_Country__c, EACP_Country__c, 
+        								Hide_Tax_Number_VAT__c, IATA_Contry_KR__c, IATA_Country_JP__c, IATA_Country_PT__c, IATA_Country_ZH__c
+                                        From IATA_ISO_Country__c
+                                        Where ISO_Code__c In :isocodes];
 
 		for(IATA_ISO_Country__c ic : aux) {
 			isoCountryMap.put(ic.ISO_Code__c, ic);
@@ -1230,6 +1231,11 @@ public class ISSP_ANG_ANNUAL_REVALIDATION {
 							errorFound = true;
 					}
 				}
+			}
+
+			if (currentAccount.isocountry.Local_language_Agency_details_required__c && currentAccount.fw.newform.Local_Legally_Registered_Name__c == null) {
+				currentAccount.fw.newform.Local_Legally_Registered_Name__c.addError(Label.ISSP_YouMustEnter);
+				errorFound = true;
 			}
 
 			/*if(currentAccount.isocountry.Local_language_Agency_details_required__c && currentAccount.fw.newform.Is_change_legal_name__c && currentAccount.fw.newform.Notify_Change_Legal_Details__c && currentAccount.fw.newform.Local_Legally_Registered_Name__c == null) {	
