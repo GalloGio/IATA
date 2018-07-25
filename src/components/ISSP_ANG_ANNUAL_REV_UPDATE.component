@@ -133,145 +133,6 @@
 
         </apex:pageBlockSection>
 
-        <!--                                  -->
-        <!-- Agency Details in Local language -->
-        <!--                                  -->
-
-        <apex:pageBlockSection columns="1" collapsible="false" rendered="{!ca.isocountry.Local_language_Agency_details_required__c}">
-            <div class="section-header">
-                <strong>{!$Label.ISSP_AMS_Local_Details_Title}</strong>
-            </div>
-        </apex:pageBlockSection>
-
-        <apex:pageBlockSection columns="1" collapsible="false">
-
-            <apex:outputPanel>
-                <apex:pageBlockSection columns="2">
-
-                    <apex:pageBlockSectionItem dataStyle="width:30%;">
-                        <apex:outputText value="{!$Label.ISSP_AMS_Local_Details_Change_Please_Enter}"/>
-                    </apex:pageBlockSectionItem>
-
-                    <apex:pageBlockSectionItem dataStyle="width:10%;">
-                        <apex:outputLabel style="color:black;font-size:110%" value="{!$Label.ISSP_AMS_Local_Details_Copy_Address}"/>
-                        <input type="checkbox" id="copyCheckBox" onChange="copyPhysicalAddress()"/>
-                    </apex:pageBlockSectionItem>
-
-                </apex:pageBlockSection>
-            </apex:outputPanel>
-            
-            <apex:outputPanel>
-                <apex:pageBlockSection columns="2" collapsible="false">
-
-                    <apex:pageBlockSectionItem>
-                        <apex:outputText value="{!$Label.ISSP_AMS_Local_Details_Physical_Address}" style="font-weight:bold; font-size:110%"/>
-                    </apex:pageBlockSectionItem>
-
-                    <apex:pageBlockSectionItem>
-                        <apex:outputText value="{!$Label.ISSP_AMS_Local_Details_Correspondence_Address}" style="font-weight:bold; font-size:110%"/>
-                    </apex:pageBlockSectionItem>
-
-                </apex:pageBlockSection>
-            </apex:outputPanel>
-
-            <apex:outputPanel>
-                <apex:pageBlockSection columns="2" collapsible="false">
-
-                    <apex:pageBlockSectionItem>
-                        <apex:outputLabel value="{!$ObjectType.AMS_Pax_Accreditation_Form__c.fields.Local_Physical_Address_Street__c.Label}"/>
-                        <apex:inputField value="{!ca.fw.newForm.Local_Physical_Address_Street__c}" onChange="copyPhysicalAddress()" styleClass="PhysicalStreet" id="PhysicalStreet"/>
-                    </apex:pageBlockSectionItem>
-
-                    <apex:pageBlockSectionItem>
-                        <apex:outputLabel value="{!$ObjectType.AMS_Pax_Accreditation_Form__c.fields.Local_Postal_Address_Street__c.Label}"/>
-                        <apex:inputField value="{!ca.fw.newform.Local_Postal_Address_Street__c}" styleClass="PostalStreet" id="PostalStreet"/>
-                    </apex:pageBlockSectionItem>
-
-                </apex:pageBlockSection>
-            </apex:outputPanel>
-
-            <apex:outputPanel>
-                <apex:pageBlockSection columns="2" collapsible="false">
-
-                    <apex:pageBlockSectionItem>
-                        <apex:outputLabel value="{!$ObjectType.AMS_Pax_Accreditation_Form__c.fields.Local_Physical_Address_City__c.Label}"/>
-                        <apex:inputField value="{!ca.fw.newForm.Local_Physical_Address_City__c}" onChange="copyPhysicalAddress()" styleClass="PhysicalCity"/>
-                    </apex:pageBlockSectionItem>
-
-                    <apex:pageBlockSectionItem>
-                        <apex:outputLabel value="{!$ObjectType.AMS_Pax_Accreditation_Form__c.fields.Local_Postal_Address_City__c.Label}"/>
-                        <apex:inputField value="{!ca.fw.newForm.Local_Postal_Address_City__c}" styleClass="PostalCity"/>
-                    </apex:pageBlockSectionItem>
-
-                </apex:pageBlockSection>
-            </apex:outputPanel>
-
-            <apex:outputPanel>
-                <apex:pageBlockSection columns="2" collapsible="false">
-
-                    <apex:pageBlockSectionItem>
-                        <apex:outputLabel value="{!$ObjectType.AMS_Pax_Accreditation_Form__c.fields.Local_Physical_Address_Postal_Code__c.Label}"/>
-                        <apex:inputField value="{!ca.fw.newForm.Local_Physical_Address_Postal_Code__c}" onChange="copyPhysicalAddress()" styleClass="PhysicalPostalCode"/>
-                    </apex:pageBlockSectionItem>
-
-                    <apex:pageBlockSectionItem>
-                        <apex:outputLabel value="{!$ObjectType.AMS_Pax_Accreditation_Form__c.fields.Local_Postal_Address_Postal_Code__c.Label}"/>
-                        <apex:inputField value="{!ca.fw.newForm.Local_Postal_Address_Postal_Code__c}" styleClass="PostalPostalCode"/>
-                    </apex:pageBlockSectionItem>
-
-                </apex:pageBlockSection>
-            </apex:outputPanel>
-
-            <apex:outputPanel>
-                <apex:pageBlockSection columns="2" collapsible="false">
-
-                    <apex:pageBlockSectionItem>
-                        <apex:outputLabel value="{!$ObjectType.AMS_Pax_Accreditation_Form__c.fields.Local_Physical_Address_Province__c.Label}"/>
-                        <apex:inputField value="{!ca.fw.newForm.Local_Physical_Address_Province__c}" onChange="copyPhysicalAddress()" styleClass="PhysicalProvince"/>
-                    </apex:pageBlockSectionItem>
-
-                    <apex:pageBlockSectionItem>
-                        <apex:outputLabel value="{!$ObjectType.AMS_Pax_Accreditation_Form__c.fields.Local_Postal_Address_Province__c.Label}"/>
-                        <apex:inputField value="{!ca.fw.newForm.Local_Postal_Address_Province__c}" styleClass="PostalProvince"/>
-                    </apex:pageBlockSectionItem>
-
-                </apex:pageBlockSection>
-            </apex:outputPanel>
-
-            <apex:outputPanel>
-                <apex:pageBlockSection columns="2" collapsible="false">
-
-                    <apex:pageBlockSectionItem>
-                        <apex:outputLabel value="{!$ObjectType.AMS_Pax_Accreditation_Form__c.fields.Local_Physical_Address_Area__c.Label}"/>
-                        <apex:inputField value="{!ca.fw.newForm.Local_Physical_Address_Area__c}" onChange="copyPhysicalAddress()" styleClass="PhysicalArea"/>
-                    </apex:pageBlockSectionItem>
-
-                    <apex:pageBlockSectionItem>
-                        <apex:outputLabel value="{!$ObjectType.AMS_Pax_Accreditation_Form__c.fields.Local_Postal_Address_Area__c.Label}"/>
-                        <apex:inputField value="{!ca.fw.newForm.Local_Postal_Address_Area__c}" styleClass="PostalArea"/>
-                    </apex:pageBlockSectionItem>
-
-                </apex:pageBlockSection>
-            </apex:outputPanel>
-
-            <apex:outputPanel>
-                <apex:pageBlockSection columns="2" collapsible="false">
-
-                    <apex:pageBlockSectionItem>
-                        <apex:outputLabel value="{!$ObjectType.AMS_Pax_Accreditation_Form__c.fields.Local_Physical_Address_Country__c.Label}"/>
-                        <apex:outputText value="{!CASE(ca.isocountry.ISO_Code__c, 'KR', ca.isocountry.IATA_Contry_KR__c, 'JP', ca.isocountry.IATA_Country_JP__c, 'BR', ca.isocountry.IATA_Country_PT__c, ca.isocountry.IATA_Country_ZH__c)}" label="Country"/>
-                    </apex:pageBlockSectionItem>
-
-                    <apex:pageBlockSectionItem>
-                        <apex:outputLabel value="{!$ObjectType.AMS_Pax_Accreditation_Form__c.fields.Local_Physical_Address_Country__c.Label}"/>
-                        <apex:outputText value="{!CASE(ca.isocountry.ISO_Code__c, 'KR', ca.isocountry.IATA_Contry_KR__c, 'JP', ca.isocountry.IATA_Country_JP__c, 'BR', ca.isocountry.IATA_Country_PT__c, ca.isocountry.IATA_Country_ZH__c)}" label="Country"/>
-                    </apex:pageBlockSectionItem>
-
-                </apex:pageBlockSection>
-            </apex:outputPanel>
-
-        </apex:pageBlockSection>
-
         <!--                 -->
         <!-- Agency Location -->
         <!--                 -->
@@ -401,6 +262,146 @@
 
             </apex:pageBlockSection>
         </apex:pageBlockSection>
+
+        <!--                                  -->
+        <!-- Agency Details in Local language -->
+        <!--                                  -->
+        <apex:outputPanel styleClass="agencyLocationComponent">
+            <apex:pageBlockSection columns="1" collapsible="false" rendered="{!ca.isocountry.Local_language_Agency_details_required__c}">
+                <div class="section-header">
+                    <strong>{!$Label.ISSP_AMS_Local_Details_Title}</strong>
+                </div>
+            </apex:pageBlockSection>
+
+            <apex:pageBlockSection columns="1" collapsible="false">
+
+                <apex:outputPanel>
+                    <apex:pageBlockSection columns="2">
+
+                        <apex:pageBlockSectionItem dataStyle="width:30%;">
+                            <apex:outputText value="{!$Label.ISSP_AMS_Local_Details_Change_Please_Enter}"/>
+                        </apex:pageBlockSectionItem>
+
+                        <apex:pageBlockSectionItem dataStyle="width:10%;">
+                            <apex:outputLabel style="color:black;font-size:110%" value="{!$Label.ISSP_AMS_Local_Details_Copy_Address}"/>
+                            <input type="checkbox" id="copyCheckBox" onChange="copyPhysicalAddress()" />
+                        </apex:pageBlockSectionItem>
+
+                    </apex:pageBlockSection>
+                </apex:outputPanel>
+                
+                <apex:outputPanel>
+                    <apex:pageBlockSection columns="2" collapsible="false">
+
+                        <apex:pageBlockSectionItem>
+                            <apex:outputText value="{!$Label.ISSP_AMS_Local_Details_Physical_Address}" style="font-weight:bold; font-size:110%"/>
+                        </apex:pageBlockSectionItem>
+
+                        <apex:pageBlockSectionItem>
+                            <apex:outputText value="{!$Label.ISSP_AMS_Local_Details_Correspondence_Address}" style="font-weight:bold; font-size:110%"/>
+                        </apex:pageBlockSectionItem>
+
+                    </apex:pageBlockSection>
+                </apex:outputPanel>
+
+                <apex:outputPanel>
+                    <apex:pageBlockSection columns="2" collapsible="false">
+
+                        <apex:pageBlockSectionItem>
+                            <apex:outputLabel value="{!$ObjectType.AMS_Pax_Accreditation_Form__c.fields.Local_Physical_Address_Street__c.Label}"/>
+                            <apex:inputField value="{!ca.fw.newForm.Local_Physical_Address_Street__c}" onChange="copyPhysicalAddress()" styleClass="PhysicalStreet" id="PhysicalStreet"/>
+                        </apex:pageBlockSectionItem>
+
+                        <apex:pageBlockSectionItem>
+                            <apex:outputLabel value="{!$ObjectType.AMS_Pax_Accreditation_Form__c.fields.Local_Postal_Address_Street__c.Label}"/>
+                            <apex:inputField value="{!ca.fw.newform.Local_Postal_Address_Street__c}" styleClass="PostalStreet" id="PostalStreet"/>
+                        </apex:pageBlockSectionItem>
+
+                    </apex:pageBlockSection>
+                </apex:outputPanel>
+
+                <apex:outputPanel>
+                    <apex:pageBlockSection columns="2" collapsible="false">
+
+                        <apex:pageBlockSectionItem>
+                            <apex:outputLabel value="{!$ObjectType.AMS_Pax_Accreditation_Form__c.fields.Local_Physical_Address_City__c.Label}"/>
+                            <apex:inputField value="{!ca.fw.newForm.Local_Physical_Address_City__c}" onChange="copyPhysicalAddress()" styleClass="PhysicalCity"/>
+                        </apex:pageBlockSectionItem>
+
+                        <apex:pageBlockSectionItem>
+                            <apex:outputLabel value="{!$ObjectType.AMS_Pax_Accreditation_Form__c.fields.Local_Postal_Address_City__c.Label}"/>
+                            <apex:inputField value="{!ca.fw.newForm.Local_Postal_Address_City__c}" styleClass="PostalCity"/>
+                        </apex:pageBlockSectionItem>
+
+                    </apex:pageBlockSection>
+                </apex:outputPanel>
+
+                <apex:outputPanel>
+                    <apex:pageBlockSection columns="2" collapsible="false">
+
+                        <apex:pageBlockSectionItem>
+                            <apex:outputLabel value="{!$ObjectType.AMS_Pax_Accreditation_Form__c.fields.Local_Physical_Address_Postal_Code__c.Label}"/>
+                            <apex:inputField value="{!ca.fw.newForm.Local_Physical_Address_Postal_Code__c}" onChange="copyPhysicalAddress()" styleClass="PhysicalPostalCode"/>
+                        </apex:pageBlockSectionItem>
+
+                        <apex:pageBlockSectionItem>
+                            <apex:outputLabel value="{!$ObjectType.AMS_Pax_Accreditation_Form__c.fields.Local_Postal_Address_Postal_Code__c.Label}"/>
+                            <apex:inputField value="{!ca.fw.newForm.Local_Postal_Address_Postal_Code__c}" styleClass="PostalPostalCode"/>
+                        </apex:pageBlockSectionItem>
+
+                    </apex:pageBlockSection>
+                </apex:outputPanel>
+
+                <apex:outputPanel>
+                    <apex:pageBlockSection columns="2" collapsible="false">
+
+                        <apex:pageBlockSectionItem>
+                            <apex:outputLabel value="{!$ObjectType.AMS_Pax_Accreditation_Form__c.fields.Local_Physical_Address_Province__c.Label}"/>
+                            <apex:inputField value="{!ca.fw.newForm.Local_Physical_Address_Province__c}" onChange="copyPhysicalAddress()" styleClass="PhysicalProvince"/>
+                        </apex:pageBlockSectionItem>
+
+                        <apex:pageBlockSectionItem>
+                            <apex:outputLabel value="{!$ObjectType.AMS_Pax_Accreditation_Form__c.fields.Local_Postal_Address_Province__c.Label}"/>
+                            <apex:inputField value="{!ca.fw.newForm.Local_Postal_Address_Province__c}" styleClass="PostalProvince"/>
+                        </apex:pageBlockSectionItem>
+
+                    </apex:pageBlockSection>
+                </apex:outputPanel>
+
+                <apex:outputPanel>
+                    <apex:pageBlockSection columns="2" collapsible="false">
+
+                        <apex:pageBlockSectionItem>
+                            <apex:outputLabel value="{!$ObjectType.AMS_Pax_Accreditation_Form__c.fields.Local_Physical_Address_Area__c.Label}"/>
+                            <apex:inputField value="{!ca.fw.newForm.Local_Physical_Address_Area__c}" onChange="copyPhysicalAddress()" styleClass="PhysicalArea"/>
+                        </apex:pageBlockSectionItem>
+
+                        <apex:pageBlockSectionItem>
+                            <apex:outputLabel value="{!$ObjectType.AMS_Pax_Accreditation_Form__c.fields.Local_Postal_Address_Area__c.Label}"/>
+                            <apex:inputField value="{!ca.fw.newForm.Local_Postal_Address_Area__c}" styleClass="PostalArea"/>
+                        </apex:pageBlockSectionItem>
+
+                    </apex:pageBlockSection>
+                </apex:outputPanel>
+
+                <apex:outputPanel>
+                    <apex:pageBlockSection columns="2" collapsible="false">
+
+                        <apex:pageBlockSectionItem>
+                            <apex:outputLabel value="{!$ObjectType.AMS_Pax_Accreditation_Form__c.fields.Local_Physical_Address_Country__c.Label}"/>
+                            <apex:outputText value="{!CASE(ca.isocountry.ISO_Code__c, 'KR', ca.isocountry.IATA_Contry_KR__c, 'JP', ca.isocountry.IATA_Country_JP__c, 'BR', ca.isocountry.IATA_Country_PT__c, ca.isocountry.IATA_Country_ZH__c)}" label="Country"/>
+                        </apex:pageBlockSectionItem>
+
+                        <apex:pageBlockSectionItem>
+                            <apex:outputLabel value="{!$ObjectType.AMS_Pax_Accreditation_Form__c.fields.Local_Physical_Address_Country__c.Label}"/>
+                            <apex:outputText value="{!CASE(ca.isocountry.ISO_Code__c, 'KR', ca.isocountry.IATA_Contry_KR__c, 'JP', ca.isocountry.IATA_Country_JP__c, 'BR', ca.isocountry.IATA_Country_PT__c, ca.isocountry.IATA_Country_ZH__c)}" label="Country"/>
+                        </apex:pageBlockSectionItem>
+
+                    </apex:pageBlockSection>
+                </apex:outputPanel>
+
+            </apex:pageBlockSection>
+        </apex:outputPanel>
 
         <!--                                                  -->
         <!-- Agency Ownership / Shareholding and Legal Status -->

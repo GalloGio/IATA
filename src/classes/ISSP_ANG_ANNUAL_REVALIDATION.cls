@@ -1263,6 +1263,38 @@ public class ISSP_ANG_ANNUAL_REVALIDATION {
 					currentAccount.fw.newform.Branch_Office_Email__c.addError(Label.ISSP_YouMustEnter);
 					errorFound = true;
 				}
+
+				if (currentAccount.isocountry.Local_language_Agency_details_required__c) {
+					if (currentAccount.fw.newform.Local_Physical_Address_Street__c == null) {
+						currentAccount.fw.newform.Local_Physical_Address_Street__c.addError(Label.ISSP_YouMustEnter);
+						errorFound = true;
+					}
+
+					if (currentAccount.fw.newform.Local_Postal_Address_Street__c == null) {
+						currentAccount.fw.newform.Local_Postal_Address_Street__c.addError(Label.ISSP_YouMustEnter);
+						errorFound = true;
+					} 
+
+					if (currentAccount.fw.newform.Local_Physical_Address_City__c == null) {
+						currentAccount.fw.newform.Local_Physical_Address_City__c.addError(Label.ISSP_YouMustEnter);
+						errorFound = true;
+					} 
+
+					if (currentAccount.fw.newform.Local_Postal_Address_City__c == null) {
+						currentAccount.fw.newform.Local_Postal_Address_City__c.addError(Label.ISSP_YouMustEnter);
+						errorFound = true;
+					} 
+
+					if (currentAccount.fw.newform.Local_Physical_Address_Province__c == null) {
+						currentAccount.fw.newform.Local_Physical_Address_Province__c.addError(Label.ISSP_YouMustEnter);
+						errorFound = true;
+					} 
+
+					if (currentAccount.fw.newform.Local_Postal_Address_Province__c == null) {
+						currentAccount.fw.newform.Local_Postal_Address_Province__c.addError(Label.ISSP_YouMustEnter);
+						errorFound = true;
+					}
+				}
 			}
 
 			if (countryCheckList.Registration_required__c) {
