@@ -121,7 +121,7 @@ public class ANG_RHCHelper {
 
 			if((rhc.ANG_CashCondition__c && rhc.ANG_Financial_Security__c > 0) || rhc.ANG_RHC_Amount_Equals_FS__c){
 				rhc.ANG_RHC_Amount__c = (rhc.ANG_Financial_Security__c == null ? 0 : rhc.ANG_Financial_Security__c);
-				rhc.ANG_RHC_Amount_Forecasted__c = rhc.ANG_Financial_Security__c;
+				rhc.ANG_RHC_Amount_Forecasted__c = (rhc.ANG_Financial_Security__c == null ? 0 : rhc.ANG_Financial_Security__c);
 			}else{
 				Decimal fsAmount = rhc.ANG_Financial_Security__c == null ? 0 : rhc.ANG_Financial_Security__c;
 				Decimal rmeAmount = rhc.ANG_RME_Amount__c == null ? 0 : rhc.ANG_RME_Amount__c;
