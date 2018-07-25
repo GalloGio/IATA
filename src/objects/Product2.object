@@ -817,9 +817,9 @@
   OR(SAP_Status_Code__c = &quot;A&quot;, SAP_Status_Code__c = &quot;Z4&quot;), 
   OR(
     Is_Electronic_Product__c = true, 
-    TEXT(Inventory_Status__c) = &quot;In stock&quot;, 
+    OR(TEXT(Inventory_Status__c) = &quot;In stock&quot;, TEXT(Inventory_Status__c) = &quot;Available Now&quot;), 
     AND(
-      TEXT(Inventory_Status__c) = &quot;Out of stock&quot;, 
+      OR(TEXT(Inventory_Status__c) = &quot;Coming Soon&quot;, TEXT(Inventory_Status__c) = &quot;Out of stock&quot;), 
       NOT(ISBLANK(Expected_Availability_Date__c))
     )
   ),
@@ -3324,9 +3324,19 @@ IF(Name = &quot;ICH&quot;, HYPERLINK(&quot;https://iata--iccs.cs18.my.salesforce
                     <label>In stock</label>
                 </value>
                 <value>
+                    <fullName>Available Now</fullName>
+                    <default>false</default>
+                    <label>Available Now</label>
+                </value>
+                <value>
                     <fullName>Out of stock</fullName>
                     <default>false</default>
                     <label>Out of stock</label>
+                </value>
+                <value>
+                    <fullName>Coming Soon</fullName>
+                    <default>false</default>
+                    <label>Coming Soon</label>
                 </value>
             </valueSetDefinition>
         </valueSet>
@@ -8233,6 +8243,14 @@ The product will only appear on the Online Store when the date entered in this f
         <picklistValues>
             <picklist>Inventory_Status__c</picklist>
             <values>
+                <fullName>Available Now</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Coming Soon</fullName>
+                <default>false</default>
+            </values>
+            <values>
                 <fullName>In stock</fullName>
                 <default>false</default>
             </values>
@@ -11206,6 +11224,14 @@ The product will only appear on the Online Store when the date entered in this f
         </picklistValues>
         <picklistValues>
             <picklist>Inventory_Status__c</picklist>
+            <values>
+                <fullName>Available Now</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Coming Soon</fullName>
+                <default>false</default>
+            </values>
             <values>
                 <fullName>In stock</fullName>
                 <default>false</default>
@@ -14288,6 +14314,14 @@ The product will only appear on the Online Store when the date entered in this f
         <picklistValues>
             <picklist>Inventory_Status__c</picklist>
             <values>
+                <fullName>Available Now</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Coming Soon</fullName>
+                <default>false</default>
+            </values>
+            <values>
                 <fullName>In stock</fullName>
                 <default>false</default>
             </values>
@@ -17309,6 +17343,14 @@ The product will only appear on the Online Store when the date entered in this f
         </picklistValues>
         <picklistValues>
             <picklist>Inventory_Status__c</picklist>
+            <values>
+                <fullName>Available Now</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Coming Soon</fullName>
+                <default>false</default>
+            </values>
             <values>
                 <fullName>In stock</fullName>
                 <default>false</default>

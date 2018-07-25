@@ -141,35 +141,36 @@
                                                 </apex:variable>
 
                                                 <!-- Availability -->
-                                                <tr>
-                                                    <th scope="row">{!$Label.Availability}</th>
-                                                    <td>
-                                                        <!-- Scenario 1: In Stock -->
-                                                        <apex:outputText styleClass="item-stock in-stock" rendered="{!bIsInStock}" value="{!product.InventoryStatus}" />
+                                                <apex:outputPanel rendered="{!IF (product.InventoryStatus != '',true, false )}">
+                                                    <tr>
+                                                        <th scope="row">{!$Label.Availability}</th>
+                                                        <td>
+                                                            <!-- Scenario 1: In Stock -->
+                                                            <apex:outputText styleClass="item-stock in-stock" rendered="{!bIsInStock}" value="{!product.InventoryStatus}" />
 
-                                                        <!-- Scenario 2: Out of Stock -->
-                                                        <apex:outputPanel layout="block" styleClass="item-stock" rendered="{!bIsOutOfStock}">
-                                                            <apex:outputText styleClass="out-of-stock"  value="{!product.InventoryStatus}" />
-                                                            &nbsp;- {!$Label.Available} 
-                                                            <time datetime="{!product.AvailabilityDate}">
-                                                                <apex:outputText value="{0, date, medium}" >
-                                                                    <apex:param value="{!product.AvailabilityDate}" /> 
-                                                                </apex:outputText>
-                                                            </time>
-                                                        </apex:outputPanel>
+                                                            <!-- Scenario 2: Out of Stock -->
+                                                            <apex:outputPanel layout="block" styleClass="item-stock" rendered="{!bIsOutOfStock}">
+                                                                <apex:outputText styleClass="out-of-stock"  value="{!product.InventoryStatus}" />
+                                                                &nbsp;- {!$Label.Available} 
+                                                                <time datetime="{!product.AvailabilityDate}">
+                                                                    <apex:outputText value="{0, date, medium}" >
+                                                                        <apex:param value="{!product.AvailabilityDate}" /> 
+                                                                    </apex:outputText>
+                                                                </time>
+                                                            </apex:outputPanel>
 
-                                                        <apex:outputPanel layout="block" styleClass="availability-note" rendered="{!bIsPreOrder}">
-                                                            <i>
-                                                                {!$Label.ReleaseDateMessage}&nbsp; 
-                                                                <apex:outputText value="{0, date, medium}" >
-                                                                    <apex:param value="{!product.EffectiveFrom}" /> 
-                                                                </apex:outputText>
-                                                            </i>
-                                                        </apex:outputPanel>
+                                                            <apex:outputPanel layout="block" styleClass="availability-note" rendered="{!bIsPreOrder}">
+                                                                <i>
+                                                                    {!$Label.ReleaseDateMessage}&nbsp; 
+                                                                    <apex:outputText value="{0, date, medium}" >
+                                                                        <apex:param value="{!product.EffectiveFrom}" /> 
+                                                                    </apex:outputText>
+                                                                </i>
+                                                            </apex:outputPanel>
 
-                                                    </td>
-                                                </tr>
-
+                                                        </td>
+                                                    </tr>
+                                                </apex:outputPanel>
                                                 <!-- Product Number  -->
                                                 <tr>
                                                     <th scope="row">{!$Label.Product_Number}</th>
