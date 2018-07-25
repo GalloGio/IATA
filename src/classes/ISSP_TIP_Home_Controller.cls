@@ -498,16 +498,11 @@ public without sharing class ISSP_TIP_Home_Controller {
 				TheAccountRole = Account.Account_Roles__r;
 		}
 		
-		isPaymentProvider = setServiceProvided.contains(TIP_Utils.ACCOUNT_SERVICE_PROVIDED_PAYMENT_PROVIDER);
-
         //ACAMBAS - TIP-236 ---------
-        if(!String.isBlank(account.Quality__c)) {
-            isPaymentProvider = isPaymentProvider && account.Quality__c.contains('YES');
-        }
-        else {
-            isPaymentProvider = false;
-        }
+		//isPaymentProvider = setServiceProvided.contains(TIP_Utils.ACCOUNT_SERVICE_PROVIDED_PAYMENT_PROVIDER);
+        isPaymentProvider = setServiceProvided.contains(TIP_Utils.ACCOUNT_SERVICE_PROVIDED_PAYMENT_PROVIDER) && !String.isBlank(account.Quality__c) ? account.Quality__c.contains('YES') : false;
         //---------------------------
+        
     }
     
     //Method invoked by Action on visualforce page

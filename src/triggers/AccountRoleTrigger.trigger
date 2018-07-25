@@ -7,11 +7,11 @@ trigger AccountRoleTrigger on Account_Role__c (before insert, after insert, befo
 	}
 
 	if(trigger.isAfter && trigger.isUpdate) {
-		AccountRoleHandler.manageAccountAsPaymentProviderUpdate(trigger.new, trigger.oldMap);
+		AccountRoleHandler.manageAccountAsPaymentProvider(trigger.new, 'Add');
 	}
 
 	if(trigger.isAfter && trigger.isDelete) {
-		AccountRoleHandler.manageAccountAsPaymentProviderDelete(trigger.old);
+		AccountRoleHandler.manageAccountAsPaymentProvider(trigger.old, 'Remove');
 	}
 
 }
