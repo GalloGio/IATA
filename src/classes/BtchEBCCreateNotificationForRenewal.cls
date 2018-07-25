@@ -142,11 +142,6 @@ global class BtchEBCCreateNotificationForRenewal implements Database.Batchable<s
 			+ ', Product_Rate_Plan_Charge__r.zqu__ProductRatePlan__r.Name '
 			//+ ', Product_Rate_Plan_Charge__r.zqu__ProductRatePlan__r.EBC_Cost_Per_Email__c '
 			+ ', Product_Rate_Plan_Charge__r.zqu__ProductRatePlan__r.EBC_SubscriptionType__c '
-			//+ ', Product_Rate_Plan_Charge__r.zqu__ProductRatePlan__r.zqu__ZProduct__c '
-			//+ ', Product_Rate_Plan_Charge__r.zqu__ProductRatePlan__r.zqu__ZProduct__r.Name '
-			//+ ', Product_Rate_Plan_Charge__r.zqu__ProductRatePlan__r.zqu__ZProduct__r.zqu__Description__c '
-			//+ ', Product_Rate_Plan_Charge__r.zqu__ProductRatePlan__r.zqu__ZProduct__r.zqu__EffectiveEndDate__c '
-			//+ ', Product_Rate_Plan_Charge__r.zqu__ProductRatePlan__r.zqu__ZProduct__r.ProductCategory__c '
 						
 			+ ' from Zuora__SubscriptionProductCharge__c '
 			+ ' where Product_Rate_Plan_Charge__r.zqu__Deleted__c = false '

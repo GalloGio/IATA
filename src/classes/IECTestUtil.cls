@@ -569,6 +569,32 @@ public without sharing class IECTestUtil {
             , Zuora__ProductEffectiveEndDate__c = oProduct.zqu__EffectiveEndDate__c
         );
     }
+
+    public static Zuora__SubscriptionProductCharge__c createSampleSubscriptionCharge2(Id subscriptionId, Date sEffectiveDate, Product2 oProduct, zqu__ProductRatePlan__c oProductRatePlan) {
+        string sZID = IECUtil.NewGuid().substring(0, 32);
+        return new Zuora__SubscriptionProductCharge__c(
+            Zuora__External_Id__c = sZID
+            , Zuora__Zuora_Id__c = sZID
+            , Name = 'CHARGETEST'
+            , Zuora__Subscription__c = subscriptionId
+            , Zuora__BillingPeriod__c = 'Annual'
+            , Zuora__EffectiveStartDate__c = sEffectiveDate
+            , Zuora__TotalContractValue__c = 25
+            , Zuora__MonthlyRecurringRevenue__c = 2
+            , Zuora__Price__c = 25
+            , Zuora__Quantity__c = 1
+            , Zuora__ExtendedAmount__c = 25
+            , Zuora__BillingPeriodStartDay__c = '19th of the month'
+            , Zuora__Model__c = IECConstants.ChargeModel_Zuora_FlatFeePricing
+            , Zuora__Type__c = 'Recurring'
+            , Zuora__RatePlanName__c = oProductRatePlan.Name
+            , Zuora__RatePlanDescription__c = oProductRatePlan.zqu__Description__c
+            , Zuora__RatePlanEffectiveEndDate__c = oProductRatePlan.zqu__EffectiveEndDate__c
+            , Zuora__ProductName__c = oProduct.Name
+            , Zuora__ProductSKU__c = oProduct.zqu__SKU2__c
+            , Zuora__ProductEffectiveEndDate__c = oProduct.zqu__EffectiveEndDate__c
+        );
+    }
     
     public static Zuora.zObject createSampleZuoraAccount() {
         return createSampleZuoraAccount(null, null, null);

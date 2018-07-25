@@ -1117,6 +1117,28 @@ public with sharing class TestDataGenerator
         return zRatePlans;
     }
 
+    public static List<zqu__ProductRatePlan__c> generateZRatePlans2(Id zProductId, Integer nb, Boolean doInsert)
+    {
+        List<zqu__ProductRatePlan__c> zRatePlans = new List<zqu__ProductRatePlan__c>();
+
+        for(Integer i=0; i < nb;  i++)
+        {
+            zRatePlans.add(new zqu__ProductRatePlan__c(
+                Name = 'ZRatePlan '+i,
+                zqu__Product__c = zProductId, 
+                zqu__EffectiveStartDate__c = DEFAULT_EFFECTIVE_START_DATE,
+                zqu__EffectiveEndDate__c = DEFAULT_EFFECTIVE_END_DATE,
+                zqu__Deleted__c = false,
+                zqu__ZuoraId__c = generateZuoraFakeId()
+            ));
+        }
+
+        if(doInsert)
+            insert zRatePlans;
+
+        return zRatePlans;
+    }
+
     /****************************************************************************************************
         Created by CGI, David D 2015-09-08
             Generate Zuora zqu__ProductRatePlanCharge__c records

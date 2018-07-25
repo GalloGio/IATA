@@ -97,17 +97,6 @@ private class IEC_Evt_Renew_ProcessPmt_Batch_Test {
 		oProduct.Line_of_Business__c = 'Publications';
  		update oProduct;
  		
-		//zqu__ZProduct__c zProduct = [SELECT Id, SAPProductMaterialNo__c FROM zqu__ZProduct__c WHERE Id = :oProduct.ZProduct__c];
-		//zProduct.SAPProductMaterialNo__c = '8888-98';
-    	//update zProduct;
- 		
- 		//Product2 p = [SELECT SAP_Material_Number__c
-		//		, Display_to_ECommerce__c
-		//		, Line_of_Business__c
-		//		, IEC_Parent_Product__c
-		//		, Restricted_Customer_Type__c
-		//	FROM Product2 WHERE ID = :oProduct.Id][0];
-
 
 		//Create IEC_Event_Subscription__c
 		lstSubscription = new List<IEC_Event_Subscription__c>();
