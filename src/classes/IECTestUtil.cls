@@ -71,6 +71,20 @@ public without sharing class IECTestUtil {
             return pi;
     }
     
+    public static Product_Information__c CreateSampleProductInfo2(String sName, Product_Category__c oProductCategory, Product2 oProduct) {
+        return CreateSampleProductInfo2(sName, oProductCategory, oProduct, IECConstants.ProductInformationAudience_DEFAULT);
+    }
+    
+    public static Product_Information__c CreateSampleProductInfo2(String sName, Product_Category__c oProductCategory, Product2 oProduct, String productAudience) {
+        Product_Information__c pi = new Product_Information__c();
+            pi.Name = sName;
+            pi.Related_Product_Category__c = oProductCategory.Id;
+            pi.Related_Product__c = oProduct.Id;
+            pi.Product_Audience__c = productAudience;
+
+            return pi;
+    }
+
     public static zqu__ZProduct__c CreateSampleProduct(String sName) {
         return new zqu__ZProduct__c(
             Name = sName
@@ -80,11 +94,33 @@ public without sharing class IECTestUtil {
             , zqu__SKU__c = 'SKU' + (Math.random()*1000000000)
         );
     }
+
+    public static Product2 CreateSampleProduct2(String sName) {
+        return new Product2(
+            Name = sName
+            , zqu__ZuoraId__c = 'P-' + (Math.random()*1000000000)
+            , zqu__EffectiveStartDate__c = Date.today().addDays(-15)
+            , zqu__EffectiveEndDate__c = Date.today().addDays(15)
+            , zqu__SKU2__c = 'SKU' + (Math.random()*1000000000)
+        );
+    }
     
     public static zqu__ProductRatePlan__c CreateSampleProductRatePlan(String sName, Boolean triable, zqu__ZProduct__c oProduct) {
         zqu__ProductRatePlan__c prp = new zqu__ProductRatePlan__c();
             prp.Name = sName;
             prp.zqu__ZProduct__c = oProduct.Id;
+            prp.zqu__ZuoraId__c = 'PRP' + (Math.random()*1000000000);
+            prp.zqu__EffectiveStartDate__c = Date.today().addDays(-15);
+            prp.zqu__EffectiveEndDate__c = Date.today().addDays(15);
+            prp.IsTriable__c = triable?'Yes':'No';
+            
+            return prp;
+    }
+
+    public static zqu__ProductRatePlan__c CreateSampleProductRatePlan2(String sName, Boolean triable, Product2 oProduct) {
+        zqu__ProductRatePlan__c prp = new zqu__ProductRatePlan__c();
+            prp.Name = sName;
+            prp.zqu__Product__c = oProduct.Id;
             prp.zqu__ZuoraId__c = 'PRP' + (Math.random()*1000000000);
             prp.zqu__EffectiveStartDate__c = Date.today().addDays(-15);
             prp.zqu__EffectiveEndDate__c = Date.today().addDays(15);

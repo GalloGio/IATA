@@ -96,14 +96,14 @@ public class GDP_CountryDefinitionWizard_Test{
         
         
         
-        List<zqu__ZProduct__c> zplist=new List<zqu__ZProduct__c>();
-        zqu__ZProduct__c zp1 =new zqu__ZProduct__c();
+        List<Product2> zplist = new List<Product2>();
+        Product2 zp1 = new Product2();
         zp1.Name='zProduct';  
-        zp1.zqu__SKU__c='SKU-00000981';
+        zp1.zqu__SKU2__c='SKU-00000981';
         zp1.zqu__ZuoraId__c='2c92c0f851b3afa80151cb4cc8be43f2';
         zp1.ProductCategory__c='GSS';
         zp1.ProductAudience__c='Member Airline';
-        zp1.zqu__Description__c = 'zProduct';
+        zp1.Description = 'zProduct';
         zp1.zqu__EffectiveStartDate__c=System.Today();
         zp1.zqu__EffectiveEndDate__c=System.Today().AddDays(365);
         zplist.add(zp1);
@@ -112,7 +112,7 @@ public class GDP_CountryDefinitionWizard_Test{
         List<zqu__ProductRatePlan__c> rplist=new List<zqu__ProductRatePlan__c>();
         zqu__ProductRatePlan__c rp1 = new zqu__ProductRatePlan__c();
         rp1.name='MyRatePlan';
-        rp1.zqu__ZProduct__c = zp1.id;
+        rp1.zqu__Product__c = zp1.id;
         rp1.zqu__ZuoraId__c='2c92c0f951b3bf4a0151cb4eb69b3d09';
         rplist.add(rp1);
         Insert rplist;            

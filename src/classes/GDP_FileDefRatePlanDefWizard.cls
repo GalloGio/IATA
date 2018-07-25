@@ -26,8 +26,8 @@ public with sharing class GDP_FileDefRatePlanDefWizard {
         idc=String.escapeSingleQuotes(controller.getRecord().Id);
         theObj = [select id
                         , Name
-                        , zqu__ZProduct__c
-                        , zqu__ZProduct__r.name
+                        , zqu__Product__c
+                        , zqu__Product__r.name
                    From zqu__ProductRatePlan__c
                    Where Id =:idc limit 1];
         LoadDLI(true);
