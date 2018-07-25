@@ -549,10 +549,11 @@ global class ANG_OscarProcessHelper {
 		
 		try{
 
-	    	if(oscar.STEP38__c == AMS_Utils.PASSED){
+			//no need to check, running when step38 is being approved
+	    	/*if(oscar.STEP38__c == AMS_Utils.PASSED){
 	    		String exMessage = 'The status on this step is Passed, so no action will occur.';
 				return new String[]{'-1',exMessage};
-	    	}
+	    	}*/
 
 			Map<Id, List<AMS_Agencies_relationhip__c>> allRelationsOnHierarchy = AMS_HierarchyHelper.getAccountsHierarchies(new Set<Id>{oscar.Account__c});
 
@@ -596,13 +597,14 @@ global class ANG_OscarProcessHelper {
 				updater = createChangeCodeForFOP(updater, oscar, accountToCreateCC, changeCodeName );
 
 			}
-
+			//no more need to update OSCAR. Running from automation (Before Trigger)
+			updater.oscarMap.remove(oscar.id);
 			updateUpdater(updater);
 		
 		}catch(Exception ex){
 			
 			oscar.STEP38__c = AMS_Utils.FAILED;
-			update oscar;
+			//update oscar;
 
 			String exMessage = 'An error occured while restricting Forms of Payment:\n\r ' + AMS_Utils.errorMessageBeautifyer(ex);
 			return new String[]{'-1',exMessage};
@@ -623,12 +625,15 @@ global class ANG_OscarProcessHelper {
 
     	AMS_OSCAR__c oscar = [Select Id, Account__c,STEP39__c, Is_NewGen__c from AMS_OSCAR__c where Id = :oscarId LIMIT 1];
 
+    	
+
 		try{
 
-	    	if(oscar.STEP39__c == AMS_Utils.PASSED){
+			//no need to check, running when step39 is being approved
+	    	/*if(oscar.STEP39__c == AMS_Utils.PASSED){
 	    		String exMessage = 'The status on this step is Passed, so no action will occur.';
 				return new String[]{'-1',exMessage};
-	    	}
+	    	}*/
 
 			Map<Id, List<AMS_Agencies_relationhip__c>> allRelationsOnHierarchy = AMS_HierarchyHelper.getAccountsHierarchies(new Set<Id>{oscar.Account__c});
 
@@ -669,12 +674,14 @@ global class ANG_OscarProcessHelper {
 				updater = createChangeCodeForFOP(updater, oscar, accountToCreateCC, changeCodeName );
 			}
 
+			//no more need to OSCAR. Running from automation (Before Trigger)
+			updater.oscarMap.remove(oscar.id);
 			updateUpdater(updater);
 
 		}catch(Exception ex){
 			
 			oscar.STEP39__c = AMS_Utils.FAILED;
-			update oscar;
+			//update oscar;
 
 			String exMessage = 'An error occured while restricting Forms of Payment:\n\r ' + AMS_Utils.errorMessageBeautifyer(ex);
 			return new String[]{'-1',exMessage};
@@ -752,8 +759,27 @@ global class ANG_OscarProcessHelper {
 		for(Account acct: accounts)
 			accountIds.add(acct.Id);
 
-		List<Agency_Applied_Change_code__c> activeChangeCodes =
-		    new List<Agency_Applied_Change_code__c>([SELECT Id, Account__c, Reason_Code__c, Reason_Description__c, Bulletin_Information__c FROM Agency_Applied_Change_code__c WHERE Account__c IN :accountIds AND Active__c = true]);
+		List<Agency_Applied_Change_code__c> allChangeCodes =
+		    new List<Agency_Applied_Change_code__c>([SELECT Id, Account__c, Reason_Code__c, Reason_Description__c, Bulletin_Information__c, OSCAR__c, Active__c, Change_Code__c FROM Agency_Applied_Change_code__c WHERE Account__c IN :accountIds]);
+
+		List<Agency_Applied_Change_code__c> activeChangeCodes = new List<Agency_Applied_Change_code__c>();
+
+		/*
+		In the FoP OSCAR case, ensure that the same change code is not generated more than once.
+		In other words, before creating a change code, check that the same does not exist for the same OSCAR case.
+		*/
+		for(Agency_Applied_Change_code__c aacc: allChangeCodes){
+
+			if(aacc.OSCAR__c == theOscar.Id && changeCodeName == aacc.Change_Code__c){
+				System.debug('AMS_OscarProcessHelper: You cannot create the same change code for the same Oscar, exiting method without Change code Creation.');
+				return updater;
+
+			}
+
+			if(aacc.Active__c == true)
+				activeChangeCodes.add(Aacc);
+
+		}
 
 		//map accountId -> active change code
 		Map<Id, Agency_Applied_Change_code__c> accountsChangeCode = new Map<Id, Agency_Applied_Change_code__c>();
@@ -1201,7 +1227,7 @@ global class ANG_OscarProcessHelper {
 	        fieldsOfObject.put('CaseArea__c','Accreditation Process');
 	        fieldsOfObject.put('Origin', origin);
 	        fieldsOfObject.put('Reason1__c','FoP Management');
-	        fieldsOfObject.put('Subject','FoP Management - ' + acc.ANG_Accreditation_Model__c + ' - ' + acc.Name);
+	        fieldsOfObject.put('Subject','PCI DSS compliance - ' + acc.IataCode__c + ' - ' + acc.Name);
 	        fieldsOfObject.put('Type_of_customer__c','IATA Travel Agent');
 	        
 	       	Case cse = ANG_EntityCreator.createCase(AMS_Utils.RECTYPE_OSCARCOMM, acc.Id, fieldsOfObject);
@@ -1315,37 +1341,44 @@ global class ANG_OscarProcessHelper {
 		}
 
 		if(notificationTemplate <> null)
-			createPortalNotifications(acctSet,casesMaps,notificationTemplate);
+			createPortalNotifications(acctSet,casesMaps,notificationTemplate,keyContactMap);
 
         return casesToUpdate;
     }
 
-    private static void createPortalNotifications(Set<Account> acctSet,  Map<Id,Case> acctIdCasesMap, Notification_Template__c notificationTemplate){
+      private static void createPortalNotifications(Set<Account> acctSet,  Map<Id,Case> acctIdCasesMap, Notification_Template__c notificationTemplate,Map<Id,List<Contact>> keyContactMap){
 		
 		List<Contact> contactsToSend = new List<Contact>();
 		Map<Id,Id> contactAccts = new Map<Id,Id>();
 		Map<Id,Contact> contactsMap = new Map<Id,Contact>();
 		List<String> contactNot = new List<String>();
 		Map<Id,Account> accounts = new Map<Id,Account>();
-
+		
+		Map<Id,Id> contactAccountsIds = new Map<Id,Id>();
+		
+		for(Id acctId : keyContactMap.KeySet()){
+			For(Contact c: keyContactMap.get(acctId))
+				contactAccountsIds.put(c.Id,acctId);
+		}
+		
 		for(Account acc: acctSet){
-			contactsToSend.addall(fetchKeyContactsForPCI(acc.Contacts));
+			contactsToSend.addall(keyContactMap.get(acc.Id));
 			accounts.put(acc.Id,acc);
 		}
 
     	for(Contact c: contactsToSend){
     		contactNot.add(c.Id+':'+notificationTemplate.Name);
-			contactAccts.put(c.Id,c.AccountId);
-    		contactsMap.put(c.Id,c);
+			contactAccts.put(c.Id,contactAccountsIds.get(c.Id));			
+			contactsMap.put(c.Id,c);
 
     	}
 
     	List<Notification__c> notifications = new List<Notification__c>();
 
 		for(Notification__c nt : ISSP_CreateNotification.createnotification(contactNot, false)){
-				
-			Account acct = accounts.get(contactAccts.get(nt.Contact__c));
-
+						
+			Account acct = accounts.get(contactAccountsIds.get(nt.Contact__c));
+						
 			String casenumbmer = acctIdCasesMap.get(contactAccts.get(nt.Contact__c)).CaseNumber;
 
 			nt.Message__c = nt.Message__c

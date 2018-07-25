@@ -53,6 +53,17 @@
     <enableSharing>true</enableSharing>
     <enableStreamingApi>true</enableStreamingApi>
     <fields>
+        <fullName>ANG_RHC_Amount_Equals_FS__c</fullName>
+        <defaultValue>false</defaultValue>
+        <description>If checked all agencies belonging to this Operation (BSP) will have the RHC Amount equal to the sum of the financial securities provided</description>
+        <externalId>false</externalId>
+        <inlineHelpText>If checked all agencies belonging to this Operation (BSP) will have the RHC Amount equal to the sum of the financial securities provided</inlineHelpText>
+        <label>RHC Amount Equals FS</label>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
         <fullName>BSP_Billing__c</fullName>
         <externalId>false</externalId>
         <label>BSP Billing</label>

@@ -35,7 +35,7 @@ public with sharing class ISSP_ANG_ANNUAL_REV_UPDATE {
         amsContactCountry =  ca.newContact.AddressCountry__c;
 	}
 
-    public AMS_Accreditation_Country_CheckList__c CountryCheckList {
+    public AMS_Accreditation_Country_CheckList__c countryCheckList {
 
         get{
 

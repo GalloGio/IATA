@@ -8,14 +8,17 @@ private class ANG_RiskAlertPurgeTest {
 	}
 
 	@testSetup static void createData() {
+
+		IATA_ISO_Country__c ctry = new IATA_ISO_Country__c (Name='US',ISO_Code__c='US', ANG_Enable_NewGen__c = true)  ;
+        insert ctry ;
 				
-		// Create an Airline HQ account
 		Account a = new Account(
 			Name = 'acc1',
 			Location_Type__c = 'HE',
 			Location_Class__c = 'P',
 			Remittance_frequency__c = 'M',
 			ANG_Accreditation_Model__c = 'Cash',
+			IATA_ISO_Country__c = ctry.Id,
 			RecordTypeId = RecordTypeSingleton.getInstance().RtIDsPerDeveloperNamePerObj.get('Account').get('IATA_Agency')
 		);
 		insert a;

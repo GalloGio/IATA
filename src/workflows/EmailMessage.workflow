@@ -516,7 +516,7 @@
             <type>FieldUpdate</type>
         </actions>
         <active>true</active>
-        <booleanFilter>1 AND 2 AND 3 AND 4 AND 5 AND 6 AND 7</booleanFilter>
+        <booleanFilter>1 AND 2 AND 3 AND 4 AND 5 AND (6 OR 8) AND 7</booleanFilter>
         <criteriaItems>
             <field>Case.RecordTypeId</field>
             <operation>equals</operation>
@@ -549,6 +549,11 @@
             <field>EmailMessage.CreatedById</field>
             <operation>notEqual</operation>
             <value>IATA System</value>
+        </criteriaItems>
+        <criteriaItems>
+            <field>Case.First_Contact_w_Client_in_Business_Hours__c</field>
+            <operation>lessThan</operation>
+            <value>0</value>
         </criteriaItems>
         <description>set the first contact with client after complaint logged automatically</description>
         <triggerType>onCreateOrTriggeringUpdate</triggerType>
