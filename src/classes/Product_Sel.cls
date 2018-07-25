@@ -79,7 +79,8 @@ public class Product_Sel extends Selector
             Product2.IEC_OrderBy__c,
             Product2.IEC_Page_Areas_of_Activity__c,
             Product2.IEC_Page_Content_Types__c,
-            Product2.IEC_Use_on_IATA_org__c
+            Product2.IEC_Use_on_IATA_org__c,
+            Product2.ImageFile__c
         };
     }
 
