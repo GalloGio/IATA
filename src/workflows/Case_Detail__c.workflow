@@ -92,11 +92,7 @@
         </actions>
         <active>true</active>
         <description>Updates the status of the repayment instalment record when the payment is received after the account is terminated.</description>
-        <formula>AND(
-   RecordType.DeveloperName = &quot;Repayment_Instalment&quot;,
-   NOT(ISNULL(Case__r.Update_AIMS_TER__c )),
-   DATEVALUE(Case__r.Update_AIMS_TER__c) &lt; Date_received__c
-)</formula>
+        <formula>AND(    RecordType.DeveloperName = &quot;Repayment_Instalment&quot;,    NOT(ISNULL(Case__r.Update_AIMS_TER__c )),    DATEVALUE(Case__r.Update_AIMS_TER__c) &lt; Date_received__c )</formula>
         <triggerType>onCreateOrTriggeringUpdate</triggerType>
     </rules>
     <rules>
@@ -107,14 +103,7 @@
         </actions>
         <active>true</active>
         <description>Notify the case owner when the admount received or the reception date have been changed after the due date.</description>
-        <formula>AND (
-  RecordType.DeveloperName = &quot;Repayment_Instalment&quot;,
-  Due_date__c &lt; Date_received__c,
-  OR (
-    ISCHANGED( Amount_Received__c ),
-    ISCHANGED( Date_received__c )
-  )
-)</formula>
+        <formula>AND (   RecordType.DeveloperName = &quot;Repayment_Instalment&quot;,   Due_date__c &lt; Date_received__c,   OR (     ISCHANGED( Amount_Received__c ),     ISCHANGED( Date_received__c )   ) )</formula>
         <triggerType>onAllChanges</triggerType>
     </rules>
     <rules>
@@ -125,10 +114,7 @@
         </actions>
         <active>true</active>
         <description>Clear the receved amount and received date when the due date is changed.</description>
-        <formula>AND(
-  RecordType.DeveloperName = &quot;Repayment_Instalment&quot;,
-  ISCHANGED( Due_date__c )
-)</formula>
+        <formula>AND(   RecordType.DeveloperName = &quot;Repayment_Instalment&quot;,   ISCHANGED( Due_date__c ) )</formula>
         <triggerType>onAllChanges</triggerType>
     </rules>
     <rules>
@@ -143,16 +129,7 @@
         </actions>
         <active>true</active>
         <description>If the Amount received equals the instalment amount, update the status to &quot;Received&quot;.</description>
-        <formula>AND (
-  RecordType.DeveloperName = &quot;Repayment_Instalment&quot;,
-  Amount_Expected__c &gt;0,
-  Amount_Received__c &gt;= Amount_Expected__c ,
-  Due_date__c &gt;= Date_received__c,
-  OR(
-    ISNULL(Case__r.Update_AIMS_TER__c ),
-    DATEVALUE(Case__r.Update_AIMS_TER__c) &gt; Date_received__c
-  )
-)</formula>
+        <formula>AND (   RecordType.DeveloperName = &quot;Repayment_Instalment&quot;,   Amount_Expected__c &gt;0,   Amount_Received__c &gt;= Amount_Expected__c ,   Due_date__c &gt;= Date_received__c,   OR(     ISNULL(Case__r.Update_AIMS_TER__c ),     DATEVALUE(Case__r.Update_AIMS_TER__c) &gt; Date_received__c   ) )</formula>
         <triggerType>onCreateOrTriggeringUpdate</triggerType>
     </rules>
     <rules>
@@ -167,22 +144,7 @@
         </actions>
         <active>true</active>
         <description>If the Amount received is less than the instalment amount, update the status to &quot;Not received by due date&quot;.</description>
-        <formula>AND(
-  RecordType.DeveloperName = &quot;Repayment_Instalment&quot;,
-  OR(
-    ISNULL(Case__r.Update_AIMS_TER__c ),
-    DATEVALUE(Case__r.Update_AIMS_TER__c) &gt; Date_received__c
-  ),
-  OR(
-    AND (
-      Amount_Received__c  &lt;  Amount_Expected__c,
-      Due_date__c &gt;= Date_received__c 
-    ),
-  AND (
-    NOT(ISBLANK(Date_received__c)),
-    Due_date__c &lt; Date_received__c)
-  )
-)</formula>
+        <formula>AND(   RecordType.DeveloperName = &quot;Repayment_Instalment&quot;,   OR(     ISNULL(Case__r.Update_AIMS_TER__c ),     DATEVALUE(Case__r.Update_AIMS_TER__c) &gt; Date_received__c   ),   OR(     AND (       Amount_Received__c  &lt;  Amount_Expected__c,       Due_date__c &gt;= Date_received__c      ),   AND (     NOT(ISBLANK(Date_received__c)),     Due_date__c &lt; Date_received__c)   ) )</formula>
         <triggerType>onCreateOrTriggeringUpdate</triggerType>
     </rules>
     <rules>
