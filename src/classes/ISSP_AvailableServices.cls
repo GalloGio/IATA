@@ -791,7 +791,9 @@ public with sharing class ISSP_AvailableServices{
         String appRight = 'Access Requested';
         if(applicationName=='Standards Setting Workspace')
             appRight = 'Access Granted';
-        insert new Portal_Application_Right__c(Contact__c = contactId,Portal_Application__c = applicationId,Right__c = appRight);
+        Portal_Application_Right__c app =  new Portal_Application_Right__c(Contact__c = contactId,Portal_Application__c = applicationId,Right__c = appRight);
+        insert app;
+        submitApprovalProcess(app.id);
         return 'ok';
     }
     
@@ -812,8 +814,22 @@ public with sharing class ISSP_AvailableServices{
         }
         System.debug('-->Insert');
         insert app;
+        submitApprovalProcess(app.id);
 
         return 'ok';             
+    }
+    
+    public static void submitApprovalProcess(Id objectId){
+        try {
+            Approval.ProcessSubmitRequest req1 = new Approval.ProcessSubmitRequest();
+            req1.setObjectId(objectId);
+            req1.setSubmitterId(UserInfo.getUserId());
+            Approval.ProcessResult result = Approval.process(req1);
+            System.debug('SUCESS, approval process submitted ' + result);
+
+        } catch (Exception e) {
+            System.debug('ERROR Approval Process: ' + e.getMessage());
+        }
     }
 
     public PageReference setPollerOff() {

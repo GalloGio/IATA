@@ -4,7 +4,7 @@
     <protected>false</protected>
     <values>
         <field>AvailableHours__c</field>
-        <value xsi:type="xsd:string">09:00 - 11:00 and 13.00 - 16.00  from Monday to Friday Beijing time</value>
+        <value xsi:type="xsd:string">09.00 - 17.00 From Monday to Friday Beijing time</value>
     </values>
     <values>
         <field>Business_Hours_Name__c</field>

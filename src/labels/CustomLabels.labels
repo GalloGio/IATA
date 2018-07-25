@@ -31,6 +31,13 @@
         <value>Restricted Profile - automated process</value>
     </labels>
     <labels>
+        <fullName>AMS_AttchNotifyOwner</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>AMS_AttchNotifyOwner</shortDescription>
+        <value>AMS_OSCARAttchOwnerNotification</value>
+    </labels>
+    <labels>
         <fullName>AMS_Conga_Merge</fullName>
         <language>en_US</language>
         <protected>false</protected>
@@ -71,6 +78,20 @@
         <protected>false</protected>
         <shortDescription>AMS_New_Change_Code_Notification</shortDescription>
         <value>One or more new change codes have been generated:</value>
+    </labels>
+    <labels>
+        <fullName>AMS_NotificationSent</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>AMS_NotificationSent</shortDescription>
+        <value>Notification sent to Case owner.</value>
+    </labels>
+    <labels>
+        <fullName>AMS_Notify_OSCAR_Owner</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>AMS_Notify_OSCAR_Owner</shortDescription>
+        <value>Notify OSCAR Owner</value>
     </labels>
     <labels>
         <fullName>AMS_OSCAR_AGENCYFEES</fullName>
@@ -16189,7 +16210,7 @@ Also note that the data contained in ICE is provided to IATA by third parties at
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>ISSP Account Statements Disclaimer China Travel Agent</shortDescription>
-        <value>NOTE:  For BSP CN, billing amount shown above includes BOP sales. BSP CN agents only need to remit the supplement notice (BSP sales) to DD account in compliance with the notification downloaded from ASD.</value>
+        <value>NOTE: For BSP CN, billing amount shown above includes BOP sales. BSP CN agents only need to remit the Non- BOP Total (BALANCE PAYABLE) to your DD account.</value>
     </labels>
     <labels>
         <fullName>ISSP_Account_Statements_Title</fullName>
