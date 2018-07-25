@@ -160,7 +160,7 @@ public class AMS_OSCARTriggerHandler {
 
     public static void handleAfterInsert() {
         /*** AMSU-134 Start ***/
-        createSavepoint((List<AMS_OSCAR__c>) Trigger.new);
+        //createSavepoint((List<AMS_OSCAR__c>) Trigger.new);
         /*** AMSU-134 End ***/
 
         updateCaseKPIFields();
@@ -179,7 +179,7 @@ public class AMS_OSCARTriggerHandler {
         handleChangeOfLocation((List<AMS_OSCAR__c>) Trigger.new, (Map<Id, AMS_OSCAR__c>) Trigger.oldMap);
         /*** AMSU-121 End ***/
         /*** AMSU-134 Start ***/
-        rollbackChanges((List<AMS_OSCAR__c>) Trigger.new, (Map<Id, AMS_OSCAR__c>) Trigger.oldMap, (Map<Id, AMS_OSCAR__c>) Trigger.newMap);
+        //rollbackChanges((List<AMS_OSCAR__c>) Trigger.new, (Map<Id, AMS_OSCAR__c>) Trigger.oldMap, (Map<Id, AMS_OSCAR__c>) Trigger.newMap);
         /*** AMSU-134 End ***/
     }
 
