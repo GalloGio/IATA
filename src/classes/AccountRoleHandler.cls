@@ -1,4 +1,4 @@
-public with sharing class AccountRoleHandler {
+public class AccountRoleHandler {
 
     public static void updatePaymentProviderStatus(list<Account_Role__c> NewARList, Map<Id,Account_Role__c> oldARMap) {
     	
