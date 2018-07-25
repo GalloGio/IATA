@@ -45,7 +45,7 @@
                 </apex:pageblockSectionItem>
 
                 <apex:pageblockSectionItem id="iataCodeText" rendered="{!modeValue == 'IATA_Code'}">
-                    <apex:outputLabel value="Please insert the IATA Code"/>
+                    <apex:outputLabel value="Please insert the IATA Code (8 Digit Code)"/>
                     <apex:outputPanel>
                         <apex:inputText value="{!iataCode}" id="iataCodeInput" onkeyup="controlButtons();"/>
                     </apex:outputPanel>
