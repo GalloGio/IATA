@@ -10062,7 +10062,7 @@ Você poderia por favor confimar de qual pais voce foi previamente atendido.</la
         <name>ISSP_F2CTitlePanel</name>
     </customLabels>
     <customLabels>
-        <label>ASSUNTO</label>
+        <label>Assunto</label>
         <name>ISSP_F2CTopic</name>
     </customLabels>
     <customLabels>
