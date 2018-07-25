@@ -449,11 +449,6 @@ Values must be Separated by &quot;;&quot;</inlineHelpText>
         <columns>Bulletin_Memo_Text__c</columns>
         <columns>Clear_Irregularities__c</columns>
         <filterScope>Everything</filterScope>
-        <filters>
-            <field>Change_Code__c</field>
-            <operation>equals</operation>
-            <value>CHL,CHO,CLF,CHF,FIN,CHV,CLC</value>
-        </filters>
         <label>ALL</label>
         <language>en_US</language>
         <sharedTo>
@@ -529,7 +524,7 @@ Values must be Separated by &quot;;&quot;</inlineHelpText>
         <filters>
             <field>Reason_Code__c</field>
             <operation>equals</operation>
-            <value>71,72</value>
+            <value>CURRENT</value>
         </filters>
         <label>AMS_debug</label>
         <language>en_US</language>
