@@ -8107,7 +8107,7 @@ system.debug('aqui sectorValue ' + sectorValue);
 
         //newForm.Effective_Date_Of_Change__c = Date.valueOf(pEfectiveDateStr);
 
-        newCase.RecordTypeId = AMS_Utils.OSCAR_COMUNICATION;
+        newCase.RecordTypeId = AMS_Utils.RECTYPE_OSCARCOMM;
         newCase.Status = AMS_Utils.OPEN;
         newCase.CaseArea__c = AMS_Utils.CASE_AREA_AGENCY_RISK_MANAGEMENT;
         newCase.Reason1__c = AMS_Utils.CASE_REASON_OPT_OUT;

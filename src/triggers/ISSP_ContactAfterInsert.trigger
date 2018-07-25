@@ -85,9 +85,6 @@ trigger ISSP_ContactAfterInsert on Contact (after insert,after update) {
         }
     }
     
-    //Mass User Creation
-    //if(contactsFromMigrationList.size()>0)
-    //    ISSP_PortalUserStatusChange.maasUserCreation(contactsFromMigrationList);
     
     // Update user by contact changes
     // Update Portal Application Rights - to Access Denide If contact Status is inactiv
