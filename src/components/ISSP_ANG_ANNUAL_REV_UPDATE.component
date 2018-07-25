@@ -266,8 +266,8 @@
         <!--                                  -->
         <!-- Agency Details in Local language -->
         <!--                                  -->
-        <apex:outputPanel styleClass="agencyLocationComponent">
-            <apex:pageBlockSection columns="1" collapsible="false" rendered="{!ca.isocountry.Local_language_Agency_details_required__c}">
+        <apex:outputPanel styleClass="agencyLocationComponent" rendered="{!ca.isocountry.Local_language_Agency_details_required__c}">
+            <apex:pageBlockSection columns="1" collapsible="false" >
                 <div class="section-header">
                     <strong>{!$Label.ISSP_AMS_Local_Details_Title}</strong>
                 </div>
