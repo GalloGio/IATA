@@ -275,15 +275,15 @@
 
             <apex:pageBlockSection columns="1" collapsible="false">
 
-                <apex:outputPanel>
+                <apex:outputPanel id="checkBoxAndInfo">
                     <apex:pageBlockSection columns="2">
 
                         <apex:pageBlockSectionItem dataStyle="width:30%;">
-                            <apex:outputText value="{!$Label.ISSP_AMS_Local_Details_Change_Please_Enter}"/>
+                            <apex:outputText id="localLanguageInfo" value="{!$Label.ISSP_AMS_Local_Details_Change_Please_Enter}"/>
                         </apex:pageBlockSectionItem>
 
                         <apex:pageBlockSectionItem dataStyle="width:10%;">
-                            <apex:outputLabel style="color:black;font-size:110%" value="{!$Label.ISSP_AMS_Local_Details_Copy_Address}"/>
+                            <apex:outputLabel style="color:black;font-size:110%" value="{!$Label.ISSP_AMS_Local_Details_Copy_Address}" />
                             <input type="checkbox" id="copyCheckBox" onChange="copyPhysicalAddress()" />
                         </apex:pageBlockSectionItem>
 
@@ -325,12 +325,12 @@
 
                         <apex:pageBlockSectionItem>
                             <apex:outputLabel value="{!$ObjectType.AMS_Pax_Accreditation_Form__c.fields.Local_Physical_Address_City__c.Label}"/>
-                            <apex:inputField value="{!ca.fw.newForm.Local_Physical_Address_City__c}" onChange="copyPhysicalAddress()" styleClass="PhysicalCity"/>
+                            <apex:inputField value="{!ca.fw.newForm.Local_Physical_Address_City__c}" onChange="copyPhysicalAddress()" styleClass="PhysicalCity" id="PhysicalCity"/>
                         </apex:pageBlockSectionItem>
 
                         <apex:pageBlockSectionItem>
                             <apex:outputLabel value="{!$ObjectType.AMS_Pax_Accreditation_Form__c.fields.Local_Postal_Address_City__c.Label}"/>
-                            <apex:inputField value="{!ca.fw.newForm.Local_Postal_Address_City__c}" styleClass="PostalCity"/>
+                            <apex:inputField value="{!ca.fw.newForm.Local_Postal_Address_City__c}" styleClass="PostalCity" id="PostalCity"/>
                         </apex:pageBlockSectionItem>
 
                     </apex:pageBlockSection>
@@ -341,12 +341,12 @@
 
                         <apex:pageBlockSectionItem>
                             <apex:outputLabel value="{!$ObjectType.AMS_Pax_Accreditation_Form__c.fields.Local_Physical_Address_Postal_Code__c.Label}"/>
-                            <apex:inputField value="{!ca.fw.newForm.Local_Physical_Address_Postal_Code__c}" onChange="copyPhysicalAddress()" styleClass="PhysicalPostalCode"/>
+                            <apex:inputField value="{!ca.fw.newForm.Local_Physical_Address_Postal_Code__c}" onChange="copyPhysicalAddress()" styleClass="PhysicalPostalCode" id="PhysicalPostalCode"/>
                         </apex:pageBlockSectionItem>
 
                         <apex:pageBlockSectionItem>
                             <apex:outputLabel value="{!$ObjectType.AMS_Pax_Accreditation_Form__c.fields.Local_Postal_Address_Postal_Code__c.Label}"/>
-                            <apex:inputField value="{!ca.fw.newForm.Local_Postal_Address_Postal_Code__c}" styleClass="PostalPostalCode"/>
+                            <apex:inputField value="{!ca.fw.newForm.Local_Postal_Address_Postal_Code__c}" styleClass="PostalPostalCode" id="PostalPostalCode"/>
                         </apex:pageBlockSectionItem>
 
                     </apex:pageBlockSection>
@@ -357,12 +357,12 @@
 
                         <apex:pageBlockSectionItem>
                             <apex:outputLabel value="{!$ObjectType.AMS_Pax_Accreditation_Form__c.fields.Local_Physical_Address_Province__c.Label}"/>
-                            <apex:inputField value="{!ca.fw.newForm.Local_Physical_Address_Province__c}" onChange="copyPhysicalAddress()" styleClass="PhysicalProvince"/>
+                            <apex:inputField value="{!ca.fw.newForm.Local_Physical_Address_Province__c}" onChange="copyPhysicalAddress()" styleClass="PhysicalProvince" id="PhysicalProvince"/>
                         </apex:pageBlockSectionItem>
 
                         <apex:pageBlockSectionItem>
                             <apex:outputLabel value="{!$ObjectType.AMS_Pax_Accreditation_Form__c.fields.Local_Postal_Address_Province__c.Label}"/>
-                            <apex:inputField value="{!ca.fw.newForm.Local_Postal_Address_Province__c}" styleClass="PostalProvince"/>
+                            <apex:inputField value="{!ca.fw.newForm.Local_Postal_Address_Province__c}" styleClass="PostalProvince" id="PostalProvince"/>
                         </apex:pageBlockSectionItem>
 
                     </apex:pageBlockSection>
@@ -373,12 +373,12 @@
 
                         <apex:pageBlockSectionItem>
                             <apex:outputLabel value="{!$ObjectType.AMS_Pax_Accreditation_Form__c.fields.Local_Physical_Address_Area__c.Label}"/>
-                            <apex:inputField value="{!ca.fw.newForm.Local_Physical_Address_Area__c}" onChange="copyPhysicalAddress()" styleClass="PhysicalArea"/>
+                            <apex:inputField value="{!ca.fw.newForm.Local_Physical_Address_Area__c}" onChange="copyPhysicalAddress()" styleClass="PhysicalArea" id="PhysicalArea"/>
                         </apex:pageBlockSectionItem>
 
                         <apex:pageBlockSectionItem>
                             <apex:outputLabel value="{!$ObjectType.AMS_Pax_Accreditation_Form__c.fields.Local_Postal_Address_Area__c.Label}"/>
-                            <apex:inputField value="{!ca.fw.newForm.Local_Postal_Address_Area__c}" styleClass="PostalArea"/>
+                            <apex:inputField value="{!ca.fw.newForm.Local_Postal_Address_Area__c}" styleClass="PostalArea" id="PostalArea"/>
                         </apex:pageBlockSectionItem>
 
                     </apex:pageBlockSection>
@@ -831,11 +831,18 @@
             });
 
             // checks initial state
+            initFieldsSettings();
             showForms();
             if('{!ca.isReadonly}' == 'true') {
                 setReadonly();
             }
         });
+
+        function initFieldsSettings() {
+            $(".country__c").val("{!ca.isocountry.Name}");
+            $(".country__c").attr('readonly', true);
+            $(".country__c").attr('disabled','disabled');
+        }
 
         function showForms() {
             $('[data-controls]').each(function(){
@@ -881,6 +888,19 @@
             $('[id$="Account_Name__c"]').prop('disabled', true);
             $('[id$="ISSP_AMS_Legal_Reg_Name_Address__c"]').prop('disabled', true);
             $('[id$="ISSP_AMS_GDS_with_signed_contract__c_unselected"]').prop('disabled', true);
+
+            $('[id$="PhysicalStreet"]').prop('disabled', true);
+            $('[id$="PostalStreet"]').prop('disabled', true);
+            $('[id$="PostalCity"]').prop('disabled', true);
+            $('[id$="PhysicalCity"]').prop('disabled', true);
+            $('[id$="PostalPostalCode"]').prop('disabled', true);
+            $('[id$="PhysicalPostalCode"]').prop('disabled', true);
+            $('[id$="PostalProvince"]').prop('disabled', true);
+            $('[id$="PhysicalProvince"]').prop('disabled', true);
+            $('[id$="PostalArea"]').prop('disabled', true);
+            $('[id$="PhysicalArea"]').prop('disabled', true);
+
+            $('[id$="checkBoxAndInfo"]').prop('hidden', true);
 
             $('[id$="newAddress"]' + " :input").attr("disabled", true);
             $('[id$="newEmail"]' + " :input").attr("disabled", true);
