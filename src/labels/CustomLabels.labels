@@ -25315,7 +25315,7 @@ msgErrorRenewalOrderExpired:Your renewal notification order link is either  expi
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>OneId_Account Association</shortDescription>
-        <value>Account Association</value>
+        <value>Company Details</value>
     </labels>
     <labels>
         <fullName>OneId_Account_Creation</fullName>
@@ -25393,7 +25393,7 @@ msgErrorRenewalOrderExpired:Your renewal notification order link is either  expi
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>OneId_Contact Association &amp; Validation</shortDescription>
-        <value>Contact Association &amp; Validation</value>
+        <value>Email Validation</value>
     </labels>
     <labels>
         <fullName>OneId_Contact_Creation</fullName>
@@ -25401,7 +25401,7 @@ msgErrorRenewalOrderExpired:Your renewal notification order link is either  expi
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>OneId_Contact Creation</shortDescription>
-        <value>Contact Creation</value>
+        <value>Contact Details</value>
     </labels>
     <labels>
         <fullName>OneId_CreateNew</fullName>
