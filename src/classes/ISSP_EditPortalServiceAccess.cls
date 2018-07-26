@@ -399,7 +399,7 @@ public with sharing class ISSP_EditPortalServiceAccess{
                 }
             }
             
-            List <Contact> processContactList = [SELECT Id, User_Portal_Status__c, Name FROM Contact WHERE Id IN :contactIdSet];
+            List <Contact> processContactList = [SELECT Id, User_Portal_Status__c, Name, Email FROM Contact WHERE Id IN :contactIdSet];
             List <String> activateIdList = new List <String>();
             List<Contact> cls = new List<Contact>();
             for (Contact thisContact : processContactList){

@@ -408,7 +408,8 @@ private class ISSP_PortalUserStatusChangeTest {
 
     }
 
-    Public static testMethod void testUpdateUser(){
+    @isTest
+    Public static void testUpdateUser(){
 
         Profile portalProfile = [SELECT Id, Name FROM Profile WHERE Name = 'ISS Portal (Partner)'][0];
 
@@ -442,13 +443,13 @@ private class ISSP_PortalUserStatusChangeTest {
                                 IsActive = true);
         insert newUser;
 
-        System.runAs(newUser){
-            Test.startTest();
+        //System.runAs(newUser){
+        Test.startTest();
 
-            ISSP_PortalUserStatusChange.updateUser(con.Id, true, con.Email, portalProfile.Id, '');
+        ISSP_PortalUserStatusChange.updateUser(con.Id, true, con.Email, portalProfile.Id, '');
 
-            Test.stopTest();
-        }
+        Test.stopTest();
+        //}
 
     }
 
