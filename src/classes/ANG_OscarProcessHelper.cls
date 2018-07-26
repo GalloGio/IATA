@@ -786,11 +786,11 @@ global class ANG_OscarProcessHelper {
 			changeCode.memoText = memoTextTemp;
 			changeCode.reasonDesc  = changeCodeConfig.Reason_Code_Description__c;
 			
-			if(changeCode.reasonCode == null && accountsChangeCode.get(acctToAddCC.Id) != null){
+			if(changeCode.reasonCode == null && accountsChangeCode.get(acctToAddCC.Id) != null || changeCode.reasonCode.toUpperCase()=='CURRENT' ){
 				changeCode.reasonCode = accountsChangeCode.get(acctToAddCC.Id).Reason_Code__c;
 			}
 
-			if(changeCode.reasonDesc == null && accountsChangeCode.get(acctToAddCC.Id) != null){
+			if(changeCode.reasonDesc == null && accountsChangeCode.get(acctToAddCC.Id) != null || changeCode.reasonDesc.toUpperCase()=='CURRENT'){
 				changeCode.reasonDesc = accountsChangeCode.get(acctToAddCC.Id).Reason_Description__c;
 			}
 
