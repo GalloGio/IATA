@@ -53,6 +53,7 @@
     <enableStreamingApi>true</enableStreamingApi>
     <fields>
         <fullName>Account__c</fullName>
+        <description>Account Id to account record</description>
         <externalId>false</externalId>
         <label>Account</label>
         <referenceTo>Account</referenceTo>
@@ -77,6 +78,7 @@
     </fields>
     <fields>
         <fullName>Effective_From_Date__c</fullName>
+        <description>Account role becomes active from this date</description>
         <externalId>false</externalId>
         <label>Effective From Date</label>
         <required>false</required>
@@ -85,6 +87,7 @@
     </fields>
     <fields>
         <fullName>Effective_To_Date__c</fullName>
+        <description>Account role becomes inactive after this date.</description>
         <externalId>false</externalId>
         <label>Effective To Date</label>
         <required>false</required>
@@ -107,6 +110,7 @@
     </fields>
     <fields>
         <fullName>Last_Review_Date__c</fullName>
+        <description>Date of the last review.</description>
         <externalId>false</externalId>
         <label>Last Review Date</label>
         <required>false</required>
@@ -115,6 +119,7 @@
     </fields>
     <fields>
         <fullName>Primary_Contact_Count__c</fullName>
+        <description>Roll-up field that count how many primary contacts are related with the account role.</description>
         <externalId>false</externalId>
         <label>Primary Contact Count</label>
         <summaryFilterItems>
@@ -129,6 +134,7 @@
     </fields>
     <fields>
         <fullName>Provider_Code__c</fullName>
+        <description>Code that identified the provider.</description>
         <externalId>false</externalId>
         <label>Provider Code</label>
         <length>17</length>
@@ -139,6 +145,7 @@
     </fields>
     <fields>
         <fullName>Provider_Type__c</fullName>
+        <description>Provider type picklist. Can assume Open Loop or Close Loop values.</description>
         <externalId>false</externalId>
         <label>Provider Type</label>
         <required>false</required>
@@ -151,6 +158,7 @@
     </fields>
     <fields>
         <fullName>Status__c</fullName>
+        <description>Satus of account role record</description>
         <externalId>false</externalId>
         <label>Status</label>
         <required>false</required>

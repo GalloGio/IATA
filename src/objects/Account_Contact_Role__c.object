@@ -201,6 +201,7 @@
     </fields>
     <fields>
         <fullName>is_primary__c</fullName>
+        <description>Indicates if the contact is the primary contact or not.</description>
         <externalId>false</externalId>
         <formula>IF(ISBLANK(Contact_Role__c), false, INCLUDES(Contact_Role__c, &quot;Primary Contact&quot;))</formula>
         <label>Primary</label>
