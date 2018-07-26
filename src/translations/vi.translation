@@ -11511,7 +11511,7 @@ Xin lưu ý nhiều hóa đơn IATA xuất cho các đại lý IATA đều đư�
         <name>ISSP_Registration_BusinessPhone</name>
     </customLabels>
     <customLabels>
-        <label><!-- ISSP_Registration --></label>
+        <label>Điện thoại Giao dịch không hợp lệ, xin vui lòng xác minh. Ngoài ra hãy kiểm tra quốc gia được chọn đúng bằng cách chọn một lá cờ từ danh sách HOẶC nhập mã quốc gia với tiền tố có dấu &apos;+&apos;.</label>
         <name>ISSP_Registration_BusinessPhone_Msg</name>
     </customLabels>
     <customLabels>
@@ -11587,7 +11587,7 @@ Xin lưu ý nhiều hóa đơn IATA xuất cho các đại lý IATA đều đư�
         <name>ISSP_Registration_Error_TypeofCustomer</name>
     </customLabels>
     <customLabels>
-        <label><!-- ISSP_Registration --></label>
+        <label>Điện thoại Fax không hợp lệ, xin vui lòng xác minh. Ngoài ra hãy kiểm tra quốc gia được chọn đúng bằng cách chọn một lá cờ từ danh sách HOẶC nhập mã quốc gia với tiền tố có dấu &apos;+&apos;.</label>
         <name>ISSP_Registration_FaxPhone_Msg</name>
     </customLabels>
     <customLabels>
@@ -11624,7 +11624,7 @@ Nếu bạn không có Mã IATA, xin vui lòng quay lại và chọn ‘Other Co
         <name>ISSP_Registration_MobilePhone</name>
     </customLabels>
     <customLabels>
-        <label><!-- ISSP_Registration --></label>
+        <label>Điện thoại Di động không hợp lệ, xin vui lòng xác minh. Ngoài ra hãy kiểm tra quốc gia được chọn đúng bằng cách chọn một lá cờ từ danh sách HOẶC nhập mã quốc gia với tiền tố có dấu &apos;+&apos;.</label>
         <name>ISSP_Registration_MobilePhone_Msg</name>
     </customLabels>
     <customLabels>
@@ -13368,7 +13368,7 @@ an IATA accredited agency, please press &quot;&quot;Back&quot;&quot; button and 
         <name>OneId_AccountSearchPlaceholder</name>
     </customLabels>
     <customLabels>
-        <label>Liên Kết Tài Khoản</label>
+        <label>Thông tin công ty</label>
         <name>OneId_Account_Association</name>
     </customLabels>
     <customLabels>
@@ -13408,11 +13408,11 @@ an IATA accredited agency, please press &quot;&quot;Back&quot;&quot; button and 
         <name>OneId_Community_Name</name>
     </customLabels>
     <customLabels>
-        <label>Xác Thực &amp; Liên Kết Liên Hệ</label>
+        <label>Xác nhận địa chỉ email</label>
         <name>OneId_Contact_Association_Validation</name>
     </customLabels>
     <customLabels>
-        <label>Tạo Liên Hệ</label>
+        <label>Thông tin cá nhân</label>
         <name>OneId_Contact_Creation</name>
     </customLabels>
     <customLabels>
@@ -13444,7 +13444,7 @@ an IATA accredited agency, please press &quot;&quot;Back&quot;&quot; button and 
         <name>OneId_GSAWarning</name>
     </customLabels>
     <customLabels>
-        <label>CỘNG ĐỒNG TRỢ GIÚP</label>
+        <label>TRUNG TÂM HỖ TRỢ</label>
         <name>OneId_Help_Community</name>
     </customLabels>
     <customLabels>
@@ -13636,7 +13636,10 @@ an IATA accredited agency, please press &quot;&quot;Back&quot;&quot; button and 
         <name>OneId_Registration_Error_BusinessPhone</name>
     </customLabels>
     <customLabels>
-        <label><!-- OneId_Registration_UserExist --></label>
+        <label>Email này đã được đăng ký với chúng tôi.
+Nếu bạn là người dùng Thương mại Điện tử, xin vui lòng sử dụng thông tin xác thực Thương mại Điện tử của bạn.
+Nếu bạn là một người dùng Cổng thông tin Khách hàng, xin vui lòng sử dụng thông tin xác thực Cổng thông tin Khách hàng của bạn.
+Nếu bạn muốn đặt lại mật khẩu, hãy quay lại màn hình đăng nhập và sử dụng chức năng “đã quên mật khẩu của bạn”.</label>
         <name>OneId_Registration_UserExist</name>
     </customLabels>
     <customLabels>
