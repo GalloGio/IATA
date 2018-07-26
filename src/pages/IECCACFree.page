@@ -69,7 +69,7 @@
                             </div>
                             <div class="content" style="height:231px;">
                                 <h2>Accepted formats are:</h2>
-                                <h3 class="newDim">Passengers Agency</h3>
+                                <h3 class="newDim">Passenger Agency</h3>
                                 <p>7 or 8 Digit Numeric Code</p>
                                 <h3 class="newDim">Cargo Agency</h3>
                                 <p>11 or 12 Digit Numeric Code</p>
