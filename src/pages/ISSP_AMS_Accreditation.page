@@ -515,7 +515,7 @@
                     </apex:outputPanel></apex:facet>
                 </apex:actionStatus>
             </apex:pageBlockButtons>
-         <apex:pageMessages ></apex:pageMessages>
+         <apex:pageMessages escape="false"></apex:pageMessages>
         <apex:outputPanel id="formContainer" rendered="{!NOT(amsIsGSA=='YES')}">
 
 
