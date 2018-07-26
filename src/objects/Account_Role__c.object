@@ -244,14 +244,14 @@
     </validationRules>
     <validationRules>
         <fullName>TIP_HR_LOCATION_NOT_EMPTY</fullName>
-        <active>false</active>
+        <active>true</active>
         <errorConditionFormula>AND(NOT(ISPICKVAL(Status__c, &quot;&quot;)),ISBLANK(HQ_Location__c), RecordType.DeveloperName=&quot;TIP_Payment_Provider&quot;)</errorConditionFormula>
         <errorDisplayField>HQ_Location__c</errorDisplayField>
         <errorMessage>HR Location is mandatory for payment providers.</errorMessage>
     </validationRules>
     <validationRules>
         <fullName>TIP_PROVIDER_CODE_LENGTH</fullName>
-        <active>false</active>
+        <active>true</active>
         <description>For record-type payment provider, Code is mandatory and its length must be 4 digits</description>
         <errorConditionFormula>AND(NOT(ISPICKVAL(Status__c, &quot;&quot;)), RecordType.DeveloperName=&quot;TIP_Payment_Provider&quot;, LEN( Provider_Code__c ) != 4)</errorConditionFormula>
         <errorDisplayField>Provider_Code__c</errorDisplayField>

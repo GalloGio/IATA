@@ -7,37 +7,16 @@ public class AccountRoleHandler {
 
     	for(Account_Role__c ar : NewARList) {
     		if(ar.RecordTypeId == TIP_UTils.ACCOUNT_ROLE_PAYMENT_PROVIDER_RECORDTYPE_ID) {
-    				ARsToProcess.Put(ar.Account__c, ar);
-    		}
+          if(ar.Effective_From_Date__c != null && (ar.Effective_From_Date__c != oldARMap.get(ar.Id).Effective_From_Date__c)) {
+            if(ar.Effective_From_Date__c <= Date.today()) {
+              ar.Status__c = TIP_UTils.PARTNER_STATUS_ACTIVE;
+            }
+            else if(ar.Effective_From_Date__c > Date.today()) {
+              ar.Status__c = TIP_UTils.PARTNER_STATUS_IN_PROGRESS;
+            }
+          }
+        }
       }
-
-     	for(Account_Role__c accRole : ARsToProcess.values()) {
-
-     		if(accRole.Effective_From_Date__c != null && (accRole.Effective_From_Date__c != oldARMap.get(accRole.Id).Effective_From_Date__c)) {
-     			if(accRole.Effective_From_Date__c <= Date.today()) {
-     				accRole.Status__c = TIP_UTils.PARTNER_STATUS_ACTIVE;
-     			}
-     			else if(accRole.Effective_From_Date__c > Date.today()) {
-     				accRole.Status__c = TIP_UTils.PARTNER_STATUS_IN_PROGRESS;
-     			}
-     		}
-     	}
-
-     	for(Account_Role__c accRole : ARsToProcess.values()) {
-
-     		if(!String.isBlank(accRole.Status__c)) { //Status not empty
-     			
-       		//Code must be 4 chars; and cannot be empty
-       		if(String.isBlank(accRole.Provider_Code__c) || accRole.Provider_Code__c.length() != 4) {
-       			accRole.addError('Code is mandatory and must contain exactly 4 digits.');
-       		}
-
-       		//Location HQ are not empty
-       		if(String.isBlank(accRole.HQ_Location__c)) {
-       			accRole.addError('HR Location is mandatory.');
-       		}
-       	}
-	    }
     }
 
 
