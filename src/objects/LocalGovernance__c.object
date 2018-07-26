@@ -1209,6 +1209,17 @@ Record Type + Group Type + ISO_Country_Name</description>
             </values>
         </picklistValues>
         <picklistValues>
+            <picklist>Managed_in_SSW__c</picklist>
+            <values>
+                <fullName>No</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Yes</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
             <picklist>Open_to__c</picklist>
             <values>
                 <fullName>Cargo Agency Associations</fullName>
