@@ -11509,7 +11509,7 @@ and
         <name>ISSP_Registration_BusinessPhone</name>
     </customLabels>
     <customLabels>
-        <label><!-- ISSP_Registration --></label>
+        <label>办公电话无效，请验证。另外，请从列表中选择国家/地区或输入国家/地区代码（前面加上“+”），确认已选择正确的国家/地区。</label>
         <name>ISSP_Registration_BusinessPhone_Msg</name>
     </customLabels>
     <customLabels>
@@ -11585,7 +11585,7 @@ and
         <name>ISSP_Registration_Error_TypeofCustomer</name>
     </customLabels>
     <customLabels>
-        <label><!-- ISSP_Registration --></label>
+        <label>传真号无效，请验证。另外，请从列表中选择国家/地区或输入国家/地区代码（前面加上“+”），确认已选择正确的国家/地区。</label>
         <name>ISSP_Registration_FaxPhone_Msg</name>
     </customLabels>
     <customLabels>
@@ -11617,7 +11617,7 @@ and
         <name>ISSP_Registration_MobilePhone</name>
     </customLabels>
     <customLabels>
-        <label><!-- ISSP_Registration --></label>
+        <label>该手机号码无效，请验证。另外，请从列表中选择国家/地区或输入国家/地区代码（前面加上“+”），确认已选择正确的国家/地区。</label>
         <name>ISSP_Registration_MobilePhone_Msg</name>
     </customLabels>
     <customLabels>
@@ -11931,7 +11931,7 @@ and
         <name>ISSP_SelectOnlyOneContact</name>
     </customLabels>
     <customLabels>
-        <label>选择代理人类型</label>
+        <label>代理机构类型</label>
         <name>ISSP_Select_Agency_Type</name>
     </customLabels>
     <customLabels>
@@ -13359,7 +13359,7 @@ an IATA accredited agency, please press &quot;&quot;Back&quot;&quot; button and 
         <name>OneId_AccountSearchPlaceholder</name>
     </customLabels>
     <customLabels>
-        <label>账户关联</label>
+        <label>公司信息</label>
         <name>OneId_Account_Association</name>
     </customLabels>
     <customLabels>
@@ -13399,11 +13399,11 @@ an IATA accredited agency, please press &quot;&quot;Back&quot;&quot; button and 
         <name>OneId_Community_Name</name>
     </customLabels>
     <customLabels>
-        <label>联系关联和验证</label>
+        <label>邮件验证</label>
         <name>OneId_Contact_Association_Validation</name>
     </customLabels>
     <customLabels>
-        <label>联系人创建</label>
+        <label>联系信息</label>
         <name>OneId_Contact_Creation</name>
     </customLabels>
     <customLabels>
@@ -13627,7 +13627,10 @@ an IATA accredited agency, please press &quot;&quot;Back&quot;&quot; button and 
         <name>OneId_Registration_Error_BusinessPhone</name>
     </customLabels>
     <customLabels>
-        <label><!-- OneId_Registration_UserExist --></label>
+        <label>此电子邮件已注册。
+如您是电子商务用户，请使用电子商务凭据。
+如果您是客户门户网站用户，请使用客户门户网站凭据。
+如您要重置密码，请返回登录界面，使用“忘记密码”功能。</label>
         <name>OneId_Registration_UserExist</name>
     </customLabels>
     <customLabels>

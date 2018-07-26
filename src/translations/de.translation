@@ -11515,7 +11515,7 @@ Bitte beachten Sie , dass viele IATA Rechnungen für akkreditierte Agenten durch
         <name>ISSP_Registration_BusinessPhone</name>
     </customLabels>
     <customLabels>
-        <label><!-- ISSP_Registration --></label>
+        <label>Die geschäftliche Telefonnummer ist ungültig, bitte überprüfen. Überprüfen Sie bitte auch, dass das richtige Land ausgewählt ist, indem Sie entweder eine Flagge aus der Liste wählen ODER die Ländervorwahl mit vorangestelltem „+“ eingeben.</label>
         <name>ISSP_Registration_BusinessPhone_Msg</name>
     </customLabels>
     <customLabels>
@@ -11591,7 +11591,7 @@ Bitte beachten Sie , dass viele IATA Rechnungen für akkreditierte Agenten durch
         <name>ISSP_Registration_Error_TypeofCustomer</name>
     </customLabels>
     <customLabels>
-        <label><!-- ISSP_Registration --></label>
+        <label>Die Faxnummer ist ungültig, bitte überprüfen. Überprüfen Sie bitte auch, dass das richtige Land ausgewählt ist, indem Sie entweder eine Flagge aus der Liste wählen ODER die Ländervorwahl mit vorangestelltem „+“ eingeben.</label>
         <name>ISSP_Registration_FaxPhone_Msg</name>
     </customLabels>
     <customLabels>
@@ -11628,7 +11628,7 @@ Wenn Sie keinen IATA-Code haben, gehen Sie zurück und wählen Sie „Anderes Un
         <name>ISSP_Registration_MobilePhone</name>
     </customLabels>
     <customLabels>
-        <label><!-- ISSP_Registration --></label>
+        <label>Die Handynummer ist ungültig, bitte überprüfen. Überprüfen Sie bitte auch, dass das richtige Land ausgewählt ist, indem Sie entweder eine Flagge aus der Liste wählen ODER die Ländervorwahl mit vorangestelltem „+“ eingeben.</label>
         <name>ISSP_Registration_MobilePhone_Msg</name>
     </customLabels>
     <customLabels>
@@ -13373,7 +13373,7 @@ einer von TIESS akkreditierten Agentur gehören, klicken Sie auf die Schaltfläc
         <name>OneId_AccountSearchPlaceholder</name>
     </customLabels>
     <customLabels>
-        <label>Kontozuordnung</label>
+        <label>Firmendaten</label>
         <name>OneId_Account_Association</name>
     </customLabels>
     <customLabels>
@@ -13413,11 +13413,11 @@ einer von TIESS akkreditierten Agentur gehören, klicken Sie auf die Schaltfläc
         <name>OneId_Community_Name</name>
     </customLabels>
     <customLabels>
-        <label>Kontaktzuordnung &amp; -überprüfung</label>
+        <label>E-Mail Validierung</label>
         <name>OneId_Contact_Association_Validation</name>
     </customLabels>
     <customLabels>
-        <label>Kontakt erstellen</label>
+        <label>Kontaktangaben</label>
         <name>OneId_Contact_Creation</name>
     </customLabels>
     <customLabels>
@@ -13641,7 +13641,10 @@ einer von TIESS akkreditierten Agentur gehören, klicken Sie auf die Schaltfläc
         <name>OneId_Registration_Error_BusinessPhone</name>
     </customLabels>
     <customLabels>
-        <label><!-- OneId_Registration_UserExist --></label>
+        <label>Diese E-Mail-Adresse ist bereits bei uns registriert.
+Wenn Sie ein E-Commerce-Nutzer sind, verwenden Sie bitte Ihre E-Commerce-Anmeldedaten.
+Wenn Sie ein Nutzer des Kundenportals sind, verwenden Sie bitte Ihre Anmeldedaten für das Kundenportal.
+Wenn Sie Ihr Passwort zurücksetzen möchten, gehen Sie bitte zum Log-in-Bildschirm zurück und nutzen Sie die Funktion „Passwort vergessen“.</label>
         <name>OneId_Registration_UserExist</name>
     </customLabels>
     <customLabels>
