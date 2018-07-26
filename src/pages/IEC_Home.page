@@ -158,11 +158,11 @@
                                                         </p>
                                                         <p class="item-description">{!prod.ProductShortDesc}</p>
                                                         <!-- Scenario 1: In Stock -->
-                                                        <apex:outputPanel layout="block" styleClass="item-stock in-stock" rendered="{!prod.InventoryStatus == 'In stock' && prod.ProductInfoId == null}">
+                                                        <apex:outputPanel layout="block" styleClass="item-stock in-stock" rendered="{!(prod.InventoryStatus == 'In stock' || prod.InventoryStatus == 'Available Now') && prod.ProductInfoId == null}">
                                                             {!prod.InventoryStatus}
                                                         </apex:outputPanel>
                                                         <!-- Scenario 2: Out of Stock -->
-                                                        <apex:outputPanel layout="block" styleClass="item-stock out-of-stock" rendered="{!AND(prod.InventoryStatus != 'In stock' , prod.AvailabilityDate !=null,prod.EffectiveFrom <=TODAY(),TODAY() <=prod.EffectiveTo, prod.ProductInfoId == null)}">
+                                                        <apex:outputPanel layout="block" styleClass="item-stock out-of-stock" rendered="{!AND(prod.InventoryStatus != 'In stock', prod.InventoryStatus != 'Available Now', prod.AvailabilityDate !=null,prod.EffectiveFrom <=TODAY(),TODAY() <=prod.EffectiveTo, prod.ProductInfoId == null)}">
                                                             {!prod.InventoryStatus}
                                                         </apex:outputPanel>
 

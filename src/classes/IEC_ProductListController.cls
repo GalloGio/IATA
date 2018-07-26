@@ -229,7 +229,25 @@ public with sharing class IEC_ProductListController extends IEC_PageController
             fw.label    = field.getLabel();
             fw.type_x   = field.getType().name();
 
-            if(fw.type_x =='PICKLIST')
+            if(fw.field == 'Inventory_Status__c'){
+                FilterWrapper fw2 = new FilterWrapper();
+                fw2.field = field.getFieldPath();
+                fw2.type_x = field.getType().name();
+                
+                fw.label  = 'Print & CDs Availability';
+                fw2.label = 'Digital';
+
+                fw.values = new List<SelectOption>(); 
+                fw.values.add(new SelectOption('In stock','In stock'));
+                fw.values.add(new SelectOption('Out of stock','Out of stock'));
+                
+                fw2.values = new List<SelectOption>(); 
+                fw2.values.add(new SelectOption('Available Now',' Available Now'));
+                fw2.values.add(new SelectOption('Coming Soon','Coming Soon'));
+
+                filters.add(fw2);
+            }
+            else if(fw.type_x =='PICKLIST')
             {
                 fw.values = Utility.getPicklistSelectOptions('Product2',fw.field,false);
             }  
