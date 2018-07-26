@@ -7,12 +7,25 @@ public class TIP_Utils{
 	//Account RT's
     public static String STANDARD_ACCOUNT_RECORD_TYPE_ID = RecordTypeSingleton.getInstance().RtIDsPerDeveloperNamePerObj.get('Account').get('Standard_Account');  
     public static String PAYMENT_PROVIDER_RECORD_TYPE_ID = RecordTypeSingleton.getInstance().RtIDsPerDeveloperNamePerObj.get('Account').get('TIP_Payment_Provider');
-
+    
+    //Account Role RT
+    public static String ACCOUNT_ROLE_PAYMENT_PROVIDER_RECORDTYPE_ID = RecordTypeSingleton.getInstance().RtIDsPerDeveloperNamePerObj.get('Account_Role__c').get('TIP_Payment_Provider');
+    
+    //Account Contact Role RT
+	public static String ACCOUNT_CONTACT_ROLE_PAYMENT_PROVIDER_RECORDTYPE_ID = RecordTypeSingleton.getInstance().RtIDsPerDeveloperNamePerObj.get('Account').get('Account_Contact_Role__c');
+	
 	//Account Category
 	public static String ACCOUNT_CATEGORY_PAYMENT_PROVIDER = 'Payment Provider';
 
 	//Account Sector
 	public static String ACCOUNT_SECTOR_FINANCIAL_INSTITUTION = 'Financial Institution';
+	
+	//Account service provided
+	public static string ACCOUNT_SERVICE_PROVIDED_PAYMENT_PROVIDER = 'Payment Provider';
+	
+	//Account Contact Role Helper
+	public static string ACCOUNT_CONTACT_ROLE_SERVICE_TIP = 'TIP';
+	public static string ACCOUNT_CONTACT_ROLE_PRIMARY = 'Primary Contact';
 
 	//Case RT's
 	public static String CASE_PROCESS_IDFS_RECORD_TYPE_ID = RecordTypeSingleton.getInstance().RtIDsPerDeveloperNamePerObj.get('Case').get('CS_Process_IDFS_ISS');
@@ -72,7 +85,7 @@ public class TIP_Utils{
 	public static String BIN_RANGE_PROVIDER_RECORD_TYPE_ID = RecordTypeSingleton.getInstance().RtIDsPerDeveloperNamePerObj.get('TIP_BIN_Range__c').get('Enrolled');
 
 	//TIP-49 - validate IATA code is unique for payment providers
-  	public static void validateUniqueIATACodeForTIP(List<Account> triggerNew,map<id, Account> triggerOld) {
+  	/*public static void validateUniqueIATACodeForTIP(List<Account> triggerNew,map<id, Account> triggerOld) {
 		  
 		Map<String,Account> mapIataCodeAccount = new Map<String,Account>(); //map of IATA Codes that should not exist already in the system
 		String queryString = 'SELECT ID, IATACode__c FROM Account WHERE ( recordtypeid = \''+TIP_Utils.PAYMENT_PROVIDER_RECORD_TYPE_ID + '\' OR (recordtypeid = \''+TIP_Utils.STANDARD_ACCOUNT_RECORD_TYPE_ID+'\' AND Category__c = \''+TIP_Utils.ACCOUNT_CATEGORY_PAYMENT_PROVIDER+'\') )';
@@ -113,11 +126,33 @@ public class TIP_Utils{
 				}
 			}			
 		}
-	}
+	}*/
 
 	public static void setAssessmentDate(List<Account> triggerNew,map<id, Account> triggerOld) {
 		for(Account newAcc : triggerNew){
 			if(newAcc.recordtypeid == PAYMENT_PROVIDER_RECORD_TYPE_ID && triggerOld.get(newAcc.id).recordtypeid != newAcc.recordtypeid) newAcc.Assessment_Performed_Date__c = Date.today();
 		}	
+	}
+	
+	//method to manage multi picklist via code
+	//sFieldValue is the value of the field on the object
+	//sValue is the value to add or remove
+	//sAction is the action to perform: "Add" or "Remove"
+	public static string ManageMultiPicklist(string sFieldValue, string sValue, string sAction){
+		string sToReturn = '';
+		set<string> setValues = new set<string>();
+		if(string.IsNotBlank(sFieldValue))
+			setValues.addAll(sFieldValue.split(';'));
+		
+		if(setValues.contains(sValue) && sAction=='Remove')
+			setValues.remove(sValue);
+		
+		if(sAction=='Add')
+			setValues.add(sValue);
+		
+		if(!setValues.isEmpty())
+			sToReturn = string.join(new list<string>(setValues), ';');
+			
+		return sToReturn;
 	}
 }

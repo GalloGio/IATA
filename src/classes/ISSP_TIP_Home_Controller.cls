@@ -20,7 +20,9 @@ public without sharing class ISSP_TIP_Home_Controller {
     public String conID {get; set;}
     public Contact newContact {get;set;} 
     public List <Contact> contactList {get; set;}
+    public list<Account_Contact_Role__c> AccountContactRoleList	{get; set;}
     public Boolean isEmailDuplicated {get; set;}
+    public Account_Role__c TheAccountRole	{get; set;}
 
     public User user {get; set;}
 
@@ -44,8 +46,6 @@ public without sharing class ISSP_TIP_Home_Controller {
 
     public list<string> selectProvConfigCountriesList{get;set;}
     public set<string> filterCountryList{get;set;}// list of countries that will be removed from the multiSelect for adding new product country config  
-
-
 
     public List<selectOption> paymentNetworkOptList{
         get{        
@@ -150,9 +150,12 @@ public without sharing class ISSP_TIP_Home_Controller {
     //##======================Methods================================##  
 
     public Pagereference initActions(){
+    	system.debug('DTULLO START initActions');
 	User user = DAL_ISSP.getUser(Userinfo.getUserId());
       
         try {
+        	CreateAccountRole(user);
+        	
             Portal_Application_Right__c appRight = [
                 Select Id, Terms_Acceptance__c, Terms_Acceptance_Date__c,Right__c
                 From Portal_Application_Right__c
@@ -194,9 +197,7 @@ public without sharing class ISSP_TIP_Home_Controller {
         fetchHQAccountDetails();
 
         btnEnabled = (account.recordtypeid == TIP_Utils.STANDARD_ACCOUNT_RECORD_TYPE_ID && account.category__c=='Payment Provider');
-        isPaymentProvider = (account.recordtypeid == TIP_Utils.PAYMENT_PROVIDER_RECORD_TYPE_ID);
-
-
+        //isPaymentProvider = (account.recordtypeid == TIP_Utils.PAYMENT_PROVIDER_RECORD_TYPE_ID);
     }
 
     public List<Case> getCases(){
@@ -343,7 +344,7 @@ public without sharing class ISSP_TIP_Home_Controller {
 
     //======================Enrollment Page Methods =====================================
     
-        public PageReference startEnrolmentAccount() {
+    public PageReference startEnrolmentAccount() {
 
         applyLanguage = UserInfo.getLanguage();
         displayLanguage = UserInfo.getLanguage();
@@ -435,6 +436,7 @@ public without sharing class ISSP_TIP_Home_Controller {
         newCase.setOptions(dmo);
 
         update account;
+        update theAccountRole;
         upsert newCase;
 
         //assign to TIP HO queue
@@ -455,6 +457,7 @@ public without sharing class ISSP_TIP_Home_Controller {
 
         updateCase();
         update account;
+        update theAccountRole;
         upsert newCase;
         try{
             upsert contactList;
@@ -466,18 +469,63 @@ public without sharing class ISSP_TIP_Home_Controller {
 
     public void fetchHQAccountDetails () {
         account = [
-                        SELECT Id, Name, BillingStreet, BillingCity, BillingState, BillingPostalCode, BillingCountry, Legal_name__c,
+                        SELECT Id, Name, Quality__c, BillingStreet, BillingCity, BillingState, BillingPostalCode, BillingCountry, Legal_name__c,
                         TradeName__c, Membership_status__c, IATACode__c, Sector__c, Category__c, Due_Diligence_Status__c,
                         Due_Diligence_Remarks__c, Level_of_risk__c, Email__c, Website, Phone, PhoneNational__c, Fax, FaxNational__c,
                         Mobile__c, MobileNational__c , Location_Type__c, ParentId, ShippingStreet, ShippingCity, ShippingState,
                         ShippingPostalCode, ShippingCountry, VAT_Number__c, Short_Name__c, Location_Class__c, IATA_ISO_Country__c,TIP_Documents__c,
                         Iso_State__c, Abbreviated_name__c, Abbreviated_Address__c, Remittance_frequency__c, Solicitation_Flag__c,
                         VAT_Number_2__c, CASS_Number__c,Company_Type__c,RecordTypeid, RecordType.DeveloperName,Status__c,IATA_ISO_Country__r.ISO_Code__c,ANG_Accreditation_Model__c,
-                        IATA_ISO_Country__r.Name, IATA_ISO_Country__r.region__c, TIP_HQ_Location__c,Country_ISO_Code__c
+                        IATA_ISO_Country__r.Name, IATA_ISO_Country__r.region__c, TIP_HQ_Location__c,Country_ISO_Code__c, Account_Role__c,
+                        (Select Account__c, Any_Other_Information__c, Effective_From_Date__c, Effective_To_Date__c, HQ_Location__c, 
+        					   Last_Review_Date__c, Provider_Code__c, Provider_Type__c, Status__c, UniqueKey__c
+        					   from Account_Roles__r
+        					   where RecordTypeId =: TIP_Utils.ACCOUNT_ROLE_PAYMENT_PROVIDER_RECORDTYPE_ID
+        					   limit 1
+						)
                         FROM Account
                         WHERE Id = :con.AccountId
                                    LIMIT 1
                     ];
+		
+		set<string> setServiceProvided = new set<string>();
+		
+		if(Account!=null){
+			if(string.isNotBlank(Account.Account_Role__c)){
+				setServiceProvided.addAll(Account.Account_Role__c.split(';'));
+			}
+			if(!Account.Account_Roles__r.isEmpty())
+				TheAccountRole = Account.Account_Roles__r;
+		}
+		
+        //ACAMBAS - TIP-236 ---------
+		//isPaymentProvider = setServiceProvided.contains(TIP_Utils.ACCOUNT_SERVICE_PROVIDED_PAYMENT_PROVIDER);
+        isPaymentProvider = setServiceProvided.contains(TIP_Utils.ACCOUNT_SERVICE_PROVIDED_PAYMENT_PROVIDER) && !String.isBlank(account.Quality__c) ? account.Quality__c.contains('YES') : false;
+        //---------------------------
+        
+    }
+    
+    //Method invoked by Action on visualforce page
+    //it checks if the Account Role with type Payment Provider already exist
+    //if not, it creates a new one
+    public void CreateAccountRole(user TheUser){
+    	Account acc = [select Id, 
+    						(Select Id From Account_Roles__r where RecordTypeId =: TIP_Utils.ACCOUNT_ROLE_PAYMENT_PROVIDER_RECORDTYPE_ID)
+    				   from Account 
+    				   where Id = :TheUser.Contact.AccountID limit 1];
+    	
+    	if(acc!= null){
+    		if(Acc.Account_Roles__r.isEmpty()){
+    			try{
+    				Account_Role__c accrole = new Account_Role__c(Account__c = acc.Id, RecordTypeId = TIP_Utils.ACCOUNT_ROLE_PAYMENT_PROVIDER_RECORDTYPE_ID);
+    				insert accrole;
+    				
+    				insert new Account_Contact_Role__c(Contact__c = TheUser.ContactId, Service_Rendered__c = TIP_Utils.ACCOUNT_CONTACT_ROLE_SERVICE_TIP, Account__c = acc.Id, Contact_Role__c = TIP_Utils.ACCOUNT_CONTACT_ROLE_PRIMARY, Account_Role__c = accrole.Id);
+    			}catch(exception  e){
+    				system.debug('DTULLO --> exception while creating account role: ' + e.getMessage());
+    			}
+    		}
+    	}
     }
 
     private void updateCase(){
@@ -508,10 +556,21 @@ public without sharing class ISSP_TIP_Home_Controller {
     }
 
     private void fillContactList() {
+    	set<id> SetConId = new set<id>();
+    	//Looking into account Contact Role first
+    	AccountContactRoleList = [Select id, Account__c, Account_Role__c, Business_Phone__c, Contact__c, Contact_Role__c
+    							  , Email__c, First_Name__c, Last_Name__c, Service_Rendered__c, Contact__r.Primary_Contact__c
+    							  , Contact__r.Phone, is_primary__c
+    							  from Account_Contact_Role__c
+    							  where Contact__r.Status__c = 'Active' and Contact__r.Accountid = :con.AccountId
+    							  and Service_Rendered__c =:TIP_Utils.ACCOUNT_CONTACT_ROLE_SERVICE_TIP];
+    	
+    	for(Account_Contact_Role__c acr:AccountContactRoleList)	SetConId.add(acr.Contact__c);
+    	
         contactList = [SELECT id,Name, Email,Salutation, FirstName, LastName, Phone, Primary_Contact__c,MobileNational__c,Membership_Function__c,Title,MobilePhone
-
                 FROM Contact
-                WHERE Status__c = 'Active' and Accountid = :con.AccountId];
+//                WHERE Status__c = 'Active' and Accountid = :con.AccountId];
+				where id in:SetConId];
     }
 
     public void updateRadioButtonStatus() {
@@ -520,8 +579,21 @@ public without sharing class ISSP_TIP_Home_Controller {
             c.Primary_Contact__c = false;
             if(c.id == contactID) c.Primary_Contact__c = true;
         }
-    }
 
+        //ACCOUNT_CONTACT_ROLE_PRIMARY
+        for (Account_Contact_Role__c conRole: AccountContactRoleList){
+        	if(conRole.Contact__c == contactID)
+        		conRole.Contact_Role__c = TIP_Utils.ManageMultiPicklist(conRole.Contact_Role__c, TIP_Utils.ACCOUNT_CONTACT_ROLE_PRIMARY, 'Add');
+        	else
+				conRole.Contact_Role__c = TIP_Utils.ManageMultiPicklist(conRole.Contact_Role__c, TIP_Utils.ACCOUNT_CONTACT_ROLE_PRIMARY, 'Remove');
+        }
+        
+        upsert AccountContactRoleList;
+        
+        fillContactList();
+    }
+    
+    
     public void createContact(){
 
         newContact.AccountId = con.AccountId;
@@ -529,6 +601,7 @@ public without sharing class ISSP_TIP_Home_Controller {
         try{
             upsert newContact;
             isEmailDuplicated = false;
+            UpsertContactRole(newContact, false);
             system.debug('##done inserting: ' +isEmailDuplicated);
         }catch(Exception e){
             system.debug('##Error inserting: ' +isEmailDuplicated);
@@ -537,6 +610,19 @@ public without sharing class ISSP_TIP_Home_Controller {
         }
         fillContactList();
         newContact = new Contact();
+    }
+    
+    private void UpsertContactRole(Contact theCon, boolean bIsPrimary){
+    	Account_Contact_Role__c theContactRole = new Account_Contact_Role__c();
+	        theContactRole.Account__c = con.AccountId;
+	        theContactRole.Contact__c = theCon.Id;
+	        theContactRole.Account_Role__c = TheAccountRole.Id;
+	        theContactRole.Service_Rendered__c = TIP_Utils.ACCOUNT_CONTACT_ROLE_SERVICE_TIP;
+	        theContactRole.UniqueKey__c = TIP_Utils.ACCOUNT_CONTACT_ROLE_SERVICE_TIP + '_' + theContactRole.Account_Role__c + '_' + theContactRole.Contact__c;
+	        if(bIsPrimary){
+	        	theContactRole.Contact_Role__c = '';
+	        }
+       upsert theContactRole UniqueKey__c;
     }
 
     public Pagereference setContactToEdit(){

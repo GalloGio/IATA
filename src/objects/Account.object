@@ -3306,6 +3306,29 @@
         <type>Picklist</type>
     </fields>
     <fields>
+        <fullName>Account_Role__c</fullName>
+        <description>The roles covered by the account (e.g. Payment Provider)</description>
+        <externalId>false</externalId>
+        <inlineHelpText>The roles covered by the account</inlineHelpText>
+        <label>Account Role</label>
+        <required>false</required>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackHistory>false</trackHistory>
+        <type>MultiselectPicklist</type>
+        <valueSet>
+            <restricted>true</restricted>
+            <valueSetDefinition>
+                <sorted>true</sorted>
+                <value>
+                    <fullName>Payment Provider</fullName>
+                    <default>false</default>
+                    <label>Payment Provider</label>
+                </value>
+            </valueSetDefinition>
+        </valueSet>
+        <visibleLines>4</visibleLines>
+    </fields>
+    <fields>
         <fullName>Account_Type__c</fullName>
         <externalId>false</externalId>
         <label>Account Type</label>
@@ -26051,6 +26074,13 @@ This field is kept up-to-date with the feedback of ITDI at least twice a year du
             </values>
         </picklistValues>
         <picklistValues>
+            <picklist>Account_Role__c</picklist>
+            <values>
+                <fullName>Payment Provider</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
             <picklist>Account_Type__c</picklist>
             <values>
                 <fullName>ATC</fullName>
@@ -28610,6 +28640,13 @@ This field is kept up-to-date with the feedback of ITDI at least twice a year du
             </values>
             <values>
                 <fullName>Suspended</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Account_Role__c</picklist>
+            <values>
+                <fullName>Payment Provider</fullName>
                 <default>false</default>
             </values>
         </picklistValues>
@@ -31815,6 +31852,13 @@ This field is kept up-to-date with the feedback of ITDI at least twice a year du
             </values>
         </picklistValues>
         <picklistValues>
+            <picklist>Account_Role__c</picklist>
+            <values>
+                <fullName>Payment Provider</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
             <picklist>Account_Type__c</picklist>
             <values>
                 <fullName>ATC</fullName>
@@ -34469,6 +34513,13 @@ This field is kept up-to-date with the feedback of ITDI at least twice a year du
             </values>
             <values>
                 <fullName>Word of mouth</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Account_Role__c</picklist>
+            <values>
+                <fullName>Payment Provider</fullName>
                 <default>false</default>
             </values>
         </picklistValues>
@@ -38479,6 +38530,13 @@ This field is kept up-to-date with the feedback of ITDI at least twice a year du
             </values>
         </picklistValues>
         <picklistValues>
+            <picklist>Account_Role__c</picklist>
+            <values>
+                <fullName>Payment Provider</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
             <picklist>Account_Type__c</picklist>
             <values>
                 <fullName>ATC</fullName>
@@ -40861,6 +40919,13 @@ This field is kept up-to-date with the feedback of ITDI at least twice a year du
             </values>
             <values>
                 <fullName>Word of mouth</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Account_Role__c</picklist>
+            <values>
+                <fullName>Payment Provider</fullName>
                 <default>false</default>
             </values>
         </picklistValues>
@@ -46253,6 +46318,13 @@ This field is kept up-to-date with the feedback of ITDI at least twice a year du
             </values>
         </picklistValues>
         <picklistValues>
+            <picklist>Account_Role__c</picklist>
+            <values>
+                <fullName>Payment Provider</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
             <picklist>Account_Type__c</picklist>
             <values>
                 <fullName>ATC</fullName>
@@ -49038,6 +49110,13 @@ This field is kept up-to-date with the feedback of ITDI at least twice a year du
             </values>
             <values>
                 <fullName>Word of mouth</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Account_Role__c</picklist>
+            <values>
+                <fullName>Payment Provider</fullName>
                 <default>false</default>
             </values>
         </picklistValues>
@@ -53522,6 +53601,13 @@ This field is kept up-to-date with the feedback of ITDI at least twice a year du
             </values>
         </picklistValues>
         <picklistValues>
+            <picklist>Account_Role__c</picklist>
+            <values>
+                <fullName>Payment Provider</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
             <picklist>Account_Type__c</picklist>
             <values>
                 <fullName>ATC</fullName>
@@ -57822,6 +57908,13 @@ This field is kept up-to-date with the feedback of ITDI at least twice a year du
             </values>
         </picklistValues>
         <picklistValues>
+            <picklist>Account_Role__c</picklist>
+            <values>
+                <fullName>Payment Provider</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
             <picklist>Account_Type__c</picklist>
             <values>
                 <fullName>ATC</fullName>
@@ -60631,6 +60724,13 @@ This field is kept up-to-date with the feedback of ITDI at least twice a year du
             </values>
         </picklistValues>
         <picklistValues>
+            <picklist>Account_Role__c</picklist>
+            <values>
+                <fullName>Payment Provider</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
             <picklist>Account_Type__c</picklist>
             <values>
                 <fullName>ATC</fullName>
@@ -63115,6 +63215,13 @@ This field is kept up-to-date with the feedback of ITDI at least twice a year du
             </values>
             <values>
                 <fullName>Suspended</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Account_Role__c</picklist>
+            <values>
+                <fullName>Payment Provider</fullName>
                 <default>false</default>
             </values>
         </picklistValues>
@@ -65726,6 +65833,13 @@ This field is kept up-to-date with the feedback of ITDI at least twice a year du
             </values>
             <values>
                 <fullName>Word of mouth</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Account_Role__c</picklist>
+            <values>
+                <fullName>Payment Provider</fullName>
                 <default>false</default>
             </values>
         </picklistValues>
@@ -73474,6 +73588,13 @@ This field is kept up-to-date with the feedback of ITDI at least twice a year du
             </values>
         </picklistValues>
         <picklistValues>
+            <picklist>Account_Role__c</picklist>
+            <values>
+                <fullName>Payment Provider</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
             <picklist>Account_Type__c</picklist>
             <values>
                 <fullName>ATC</fullName>
@@ -76427,6 +76548,13 @@ This field is kept up-to-date with the feedback of ITDI at least twice a year du
             </values>
             <values>
                 <fullName>Word of mouth</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Account_Role__c</picklist>
+            <values>
+                <fullName>Payment Provider</fullName>
                 <default>false</default>
             </values>
         </picklistValues>
@@ -84108,6 +84236,13 @@ This field is kept up-to-date with the feedback of ITDI at least twice a year du
             </values>
         </picklistValues>
         <picklistValues>
+            <picklist>Account_Role__c</picklist>
+            <values>
+                <fullName>Payment Provider</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
             <picklist>Account_Type__c</picklist>
             <values>
                 <fullName>ATC</fullName>
@@ -88445,6 +88580,13 @@ This field is kept up-to-date with the feedback of ITDI at least twice a year du
             </values>
             <values>
                 <fullName>Word of mouth</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Account_Role__c</picklist>
+            <values>
+                <fullName>Payment Provider</fullName>
                 <default>false</default>
             </values>
         </picklistValues>
@@ -93304,6 +93446,13 @@ This field is kept up-to-date with the feedback of ITDI at least twice a year du
             </values>
             <values>
                 <fullName>Word of mouth</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Account_Role__c</picklist>
+            <values>
+                <fullName>Payment Provider</fullName>
                 <default>false</default>
             </values>
         </picklistValues>
@@ -99799,6 +99948,13 @@ This field is kept up-to-date with the feedback of ITDI at least twice a year du
             </values>
             <values>
                 <fullName>Word of mouth</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Account_Role__c</picklist>
+            <values>
+                <fullName>Payment Provider</fullName>
                 <default>false</default>
             </values>
         </picklistValues>
