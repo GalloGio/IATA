@@ -489,6 +489,26 @@ public class AMS_OSCARTriggerHandler {
 
         List<AMS_OSCAR__c> oscars = new List<AMS_OSCAR__c>();
 
+        /*** AMSU-37 ***/
+        Set<Id> accountIds = new Set<Id>();
+        Set<String> reasonsToCheck = new Set<String> {AMS_Utils.APP_DISAPPROVED, AMS_Utils.APP_WITHDRAWN};
+        Set<Id> accountIdsToSkip = new Set<Id>();
+        for(AMS_OSCAR__c oscar : oscarsToInsert) {
+            if(reasonsToCheck.contains(oscar.Account_Reason__c)) {
+                accountIds.add(oscar.Account__c);
+            }
+        }
+
+        if(!accountIds.isEmpty()) {
+            Set<String> appliedChangeCodes = new Set<String> {'DIS', 'NWD'};
+            for(Account acc : [SELECT Id, (SELECT Id FROM Agencies_Applied_Change_codes__r WHERE Active__c = true AND Change_Code__c IN :appliedChangeCodes) FROM Account WHERE Id IN :accountIds]) {
+                if(!acc.Agencies_Applied_Change_codes__r.isEmpty()) {
+                    accountIdsToSkip.add(acc.Id);
+                }
+            }
+        }
+        
+
         for (AMS_OSCAR__c oscar : oscarsToInsert) {
             //set default name if no case is attached to the oscar
             oscar.Name = 'Wait for OSCAR Communication Case to be attached';
@@ -499,7 +519,8 @@ public class AMS_OSCARTriggerHandler {
 
                 oscar.put(step + '__c', 'Not Started');
                 //requirement to put iata code generator as passed if the account already as a iata code
-                if (step == 'STEP10' && oscar.Flag_IATACode_Formula__c) {
+
+                if (step == 'STEP10' && oscar.Flag_IATACode_Formula__c && !accountIdsToSkip.contains(oscar.Account__c)) {
                     oscar.put(step + '__c', 'Passed');
                 }
             }
