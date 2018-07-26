@@ -314,6 +314,11 @@ global class AMS_PCI_Complaint_Batch implements Database.Batchable<sObject>, Dat
 
         system.debug('before case: ' + theCommunicationCase);
         
+        /*** AMSU-159 ***/
+        Database.DMLOptions dmo = new Database.DMLOptions();
+        dmo.assignmentRuleHeader.useDefaultRule = true;
+        theCommunicationCase.setOptions(dmo);
+        
         insert theCommunicationCase;
 
         system.debug('after case: ' + theCommunicationCase);
