@@ -16,9 +16,7 @@
 		for(i = 0; i<imageDivs.length; i++){
 			var img = imageDivs[i].childNodes[0];
 			console.log("here: " , img);
-
-				img.style = "height: 100%;";
-
+			img.style = "height: 100%; width: 100%; object-fit: contain;";
 		}
 
 		};
