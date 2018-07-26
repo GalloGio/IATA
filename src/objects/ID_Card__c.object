@@ -93,19 +93,6 @@ two record types:
         <unique>false</unique>
     </fields>
     <fields>
-        <fullName>Agency_Short_Name__c</fullName>
-        <description>Agency Short Name taken from the related GDP Account View</description>
-        <externalId>false</externalId>
-        <formula>GDP_Products_Account_View__r.Agency_Short_Name__c</formula>
-        <inlineHelpText>Agency Short Name taken from the related GDP Account View</inlineHelpText>
-        <label>Agency Short Name</label>
-        <required>false</required>
-        <trackHistory>false</trackHistory>
-        <trackTrending>false</trackTrending>
-        <type>Text</type>
-        <unique>false</unique>
-    </fields>
-    <fields>
         <fullName>Agency_Status__c</fullName>
         <description>Agency Accreditation Status taken from the related GDP Account View</description>
         <externalId>false</externalId>
@@ -327,6 +314,19 @@ two record types:
 &quot; &quot;)</formula>
         <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
         <label>Duty Code</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>EBC_Agency_Name__c</fullName>
+        <description>EBC Agency Name taken from the related GDP Account View</description>
+        <externalId>false</externalId>
+        <formula>GDP_Products_Account_View__r.EBC_Agency_Name__c</formula>
+        <inlineHelpText>EBC Agency Name taken from the related GDP Account View</inlineHelpText>
+        <label>EBC Agency Name</label>
         <required>false</required>
         <trackHistory>false</trackHistory>
         <trackTrending>false</trackTrending>
