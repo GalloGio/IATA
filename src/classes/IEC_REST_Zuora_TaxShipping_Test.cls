@@ -86,11 +86,7 @@ public class IEC_REST_Zuora_TaxShipping_Test {
 		oProduct.Charge_Shipping__c = true;
 		insert oProduct;
 		
-		zqu__ZProduct__c zProduct =  IECTestUtil.CreateSampleProduct('ZProduct');
-		zProduct.SAPProductMaterialNo__c = 'TESTPRODCODE';
-		insert zProduct;
-		
-		zqu__ProductRatePlan__c zRatePlan = IECTestUtil.CreateSampleProductRatePlan('Rate Plan', false, zProduct);
+		zqu__ProductRatePlan__c zRatePlan = IECTestUtil.CreateSampleProductRatePlan2('Rate Plan', false, oProduct);
 		zRatePlan.zqu__ZuoraId__c = (String) zRatePlanMain.getValue('ProductRatePlanId');
 		insert zRatePlan;
 	}
@@ -276,11 +272,12 @@ public class IEC_REST_Zuora_TaxShipping_Test {
 			/********************************************************
 			** Initialize Product2 and ZProducts and related objects
 			********************************************************/
-			zqu__ZProduct__c zProduct =  IECTestUtil.CreateSampleProduct('ZProduct');
-			zProduct.SAPProductMaterialNo__c = 'TESTPRODCODE';
-			insert zProduct;
+			Product2 oProduct = TestDataGenerator.generateProducts(1, false)[0];
+			oProduct.SAP_Material_Number__c = 'TESTPRODCODE';
+			oProduct.Charge_Shipping__c = true;
+			insert oProduct;
 			
-			zqu__ProductRatePlan__c zRatePlan = IECTestUtil.CreateSampleProductRatePlan('Rate Plan', false, zProduct);
+			zqu__ProductRatePlan__c zRatePlan = IECTestUtil.CreateSampleProductRatePlan2('Rate Plan', false, oProduct);
 			zRatePlan.zqu__ZuoraId__c = (String) zRatePlanMain.getValue('ProductRatePlanId');
 			insert zRatePlan;
         	
@@ -290,10 +287,6 @@ public class IEC_REST_Zuora_TaxShipping_Test {
             System.assert(RestContext.response.responseBody.toString().contains('Unable to locate a Salesforce Product for the product code on the ZProduct. Product Code:'));
             System.assertEquals(424, RestContext.response.statusCode, 'Response must return an error result.');
 
-			Product2 oProduct = TestDataGenerator.generateProducts(1, false)[0];
-			oProduct.SAP_Material_Number__c = 'TESTPRODCODE';
-			oProduct.Charge_Shipping__c = true;
-			insert oProduct;
 			
             Test.setMock(WebServiceMock.class, new SAP_Freight_and_Tax_Mock());
 

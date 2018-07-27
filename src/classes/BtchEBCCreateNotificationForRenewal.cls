@@ -220,7 +220,7 @@ global class BtchEBCCreateNotificationForRenewal implements Database.Batchable<s
 			if ((accNotification != null) 
 				&& (accNotification.Subscription_End_Date__c == null || accNotification.Subscription_End_Date__c < subProdCharge.Zuora__Subscription__r.Zuora__TermEndDate__c))
 			{   // we select the subscription with last end date, 
-				// and it is safe to assume it is an EBC Subscription, i.e (subProdCharge.Product_Rate_Plan_Charge__r.zqu__ProductRatePlan__r.zqu__ZProduct__r.ProductCategory__c == 'eBroadcast')
+				// and it is safe to assume it is an EBC Subscription, i.e (subProdCharge.Product_Rate_Plan_Charge__r.zqu__ProductRatePlan__r.zqu__Product__r.ProductCategory__c == 'eBroadcast')
 				// this is for the EBC Subscription
 				accNotification.EBC_Subscription_Type__c = subProdCharge.Product_Rate_Plan_Charge__r.zqu__ProductRatePlan__r.EBC_SubscriptionType__c;
 				accNotification.EBC_Rate_Plan_Name__c = subProdCharge.Product_Rate_Plan_Charge__r.zqu__ProductRatePlan__r.Name;
@@ -229,38 +229,7 @@ global class BtchEBCCreateNotificationForRenewal implements Database.Batchable<s
 			} // end if accNotification
 		} //  end for Zuora__SubscriptionProductCharge__c
 		
-/*		
-		// collect the campaign statistics for relevant BillingAccounts
-		List<AggregateResult> campaignAggrList = [select Related_Billing_Account__c 
-				, sum(Total_Count__c) numOfEmailSent
-				, count(Id) numOfCampaigns
-				, calendar_year(Activity_Date_Time__c) year, calendar_month(Activity_Date_Time__c) month
-			from EBC_Activity__c
-			where Related_Billing_Account__c in : billingAccountIdToEbcAccountNotificationMap.keySet()
-				and Activity_Date_Time__c = LAST_MONTH
-				//and Activity_Type__c = 'Sent'
-				and EBC_Campaign__r.Status__c = 'SENT'
-			group by Related_Billing_Account__c
-					, calendar_year(Activity_Date_Time__c)
-					, calendar_month(Activity_Date_Time__c)
-			order by calendar_year(Activity_Date_Time__c), calendar_month(Activity_Date_Time__c)
-					, Related_Billing_Account__c
-			];
 
-		for (AggregateResult campaignAggr : campaignAggrList)
-		{
-			String billingAccountId = (String) campaignAggr.get('Related_Billing_Account__c');
-			if (billingAccountId != null) {
-				EBC_Account_Notification__c accNotification = billingAccountIdToEbcAccountNotificationMap.get(billingAccountId);
-				
-				Integer numOfEmailSent = (Integer) campaignAggr.get('numOfEmailSent');
-				accNotification.Number_of_Email_Recipients_Last_Month__c = numOfEmailSent;
-				
-				Integer numOfCampaigns =  (Integer) campaignAggr.get('numOfCampaigns');
-				accNotification.Number_of_Campaigns_Last_Month__c = numOfcampaigns;
-			} // end if
-		} // end of for campaignAggr
-*/		
 		// collect the user name relevant BillingAccounts
 		Map<Id,User> userIdToObjectMap = new Map<Id,User> ([select Id, ContactId, Email
 				from User

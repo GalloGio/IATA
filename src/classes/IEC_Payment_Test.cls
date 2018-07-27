@@ -461,35 +461,22 @@ private class IEC_Payment_Test {
 			IECOrder_Svc.addProductToCookie(orderItem.Product_Number__c, orderItem.Quantity, true);
 		}
 		
-		List<Product2> productList = [SELECT Id, SAP_Material_Number__c, ZProduct__c FROM Product2 WHERE Id IN :productIdSet];
-
-		List<zqu__ZProduct__c> zProductList = TestDataGenerator.generateZProducts(nb, false);
-
-		for (Integer x = 0; x < nb; x++) {
-			zqu__ZProduct__c zProduct = zProductList[x];
-
-			Product2 prod = productList[x];
-
-			zProduct.SAPProductMaterialNo__c = prod.SAP_Material_Number__c;
-		}
-		insert zProductList;
+		List<Product2> productList = [SELECT Id, SAP_Material_Number__c FROM Product2 WHERE Id IN :productIdSet];
 
 		List<zqu__ProductRatePlan__c> zRatePlanList = new List<zqu__ProductRatePlan__c>();
 
 		for (Integer x = 0; x < productList.size(); x++) {
 			Product2 prod = productList[x];
 
-			zqu__ZProduct__c zprod = zProductList[x];
-
-			zqu__ProductRatePlan__c unitPricePlan = TestDataGenerator.generateZRatePlans(zprod.Id, 1, false)[0];
-			zqu__ProductRatePlan__c zPlan = TestDataGenerator.generateZRatePlans(zprod.Id, 1, false)[0];
+			zqu__ProductRatePlan__c unitPricePlan = TestDataGenerator.generateZRatePlans2(prod.Id, 1, false)[0];
+			zqu__ProductRatePlan__c zPlan = TestDataGenerator.generateZRatePlans2(prod.Id, 1, false)[0];
 
 			zPlan.Couponcode__c = 'COUP123';
 			zRatePlanList.add(zPlan);
 			zRatePlanList.add(unitPricePlan);
 
-			prod.ZProduct__c = zprod.Id;
 		}
+
 		insert zRatePlanList;
 
 		List<zqu__ProductRatePlanCharge__c> zCharges = new List<zqu__ProductRatePlanCharge__c>();

@@ -7,7 +7,7 @@ public class vfIECEBC_TestPaymentSuite {
     
     public static Product_Category__c oProductCategory;
     public static Product_Information__c oProductInfo;
-    public static zqu__ZProduct__c oProduct;
+    public static Product2 oProduct;
     public static zqu__ProductRatePlan__c oProductRatePlan;
     public static zqu__ProductRatePlanCharge__c oProductRatePlanCharge;
     public static Product_Rate_Plan_Information__c oProductRatePlanInfo;
@@ -33,17 +33,17 @@ public class vfIECEBC_TestPaymentSuite {
         if (Scenario==10) oProductRatePlan = IECEBC_TestUtility.oEbcPayAsYouGoProductRatePlanMember;
         if (Scenario!=10) oProductRatePlan = IECEBC_TestUtility.lEbcProductRatePlanMember[0];
         			
-        oProductRatePlanCharge = IECEBC_TestUtility.CreateSampleProductRatePlanCharge(oProductRatePlan, 'CHARGETEST', 1);
+        oProductRatePlanCharge = IECTestUtil.createSampleProductRatePlanCharge(oProductRatePlan, 'CHARGETEST', 1);
         insert oProductRatePlanCharge;
         //zqu__ProductRatePlanCharge__c.zqu__ProductRatePlan__c
         
-        oProductRatePlanInfo = IECEBC_TestUtility.CreateSampleProductRatePlanInfo('Starter Edition', false, oProductRatePlan, oProductInfo);
+        oProductRatePlanInfo = IECTestUtil.CreateSampleProductRatePlanInfo('Starter Edition', false, oProductRatePlan, oProductInfo);
         insert oProductRatePlanInfo; 
         
         currentCustomer = IECCustomer.getCurrentIECCustomer(); 
         
         // create dummy subscription
-        subscription = IECEBC_TestUtility.createSampleSubscription(IECEBC_TestUtility.oBillingAccount.Zuora__Account__c, IECEBC_TestUtility.oBillingAccount.Id, 'Subs 01', Date.today().addMonths(6));
+        subscription = IECTestUtil.createSampleSubscription(IECEBC_TestUtility.oBillingAccount.Zuora__Account__c, IECEBC_TestUtility.oBillingAccount.Id, 'Subs 01', Date.today().addMonths(6));
         subscription.Product_Rate_Plan_Information__c = oProductRatePlanInfo.Id;
         subscription.Zuora__TermEndDate__c =null;
 		subscription.Zuora__SubscriptionStartDate__c =Date.today().addMonths(-6);
@@ -51,7 +51,7 @@ public class vfIECEBC_TestPaymentSuite {
         insert subscription;
         
         // create dummy subscription charge
-        subscriptionCharge = IECEBC_TestUtility.createSampleSubscriptionCharge(subscription.Id, Date.today().addMonths(-6), oProduct, oProductRatePlan);
+        subscriptionCharge = IECTestUtil.createSampleSubscriptionCharge2(subscription.Id, Date.today().addMonths(-6), oProduct, oProductRatePlan);
         subscriptionCharge.Product_Rate_Plan_Charge__c = oProductRatePlanCharge.Id;
         //zqu__ProductRatePlanCharge__c
         insert subscriptionCharge;
