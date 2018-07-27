@@ -431,7 +431,9 @@ public class AMS_OscarCaseTriggerHelper {
                 else if(oscars.get(c.Oscar__c).Account__r.ANG_IsNewGenAgency__c)
                     newCaseSubject = c.reason1__c + ' - ' + AMS_Utils.officialAccreditationTypeMap.get(oscars.get(c.Oscar__c).Account__r.ANG_Accreditation_Model__c) + ' - ' + oscars.get(c.Oscar__c).Account__r.Name;
                 else if(oscars.get(c.Oscar__c).Process__c == AMS_Utils.new_MSO || (c.Subject != null && c.Subject.startsWith('MSO code '))) //AMSU-119
-					newCaseSubject = null;
+                    newCaseSubject = null;
+                else if(oscars.get(c.Oscar__c).Process__c == AMS_Utils.NGANNUALREVAL)
+                    newCaseSubject = 'Annual PCI DSS compliance - ' + oscars.get(c.Oscar__c).Account__r.IATACode__c + ' - ' +oscars.get(c.Oscar__c).Account__r.Name;
 				else {
                     AMS_OSCAR__c oscar = oscars.get(c.Oscar__c); 
                     newCaseSubject = c.reason1__c + ' - ' + oscar.Account__r.Name;
