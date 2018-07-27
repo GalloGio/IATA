@@ -435,6 +435,10 @@
                 </div>
             </apex:outputpanel>
 
+            <apex:outputPanel id="ownershipMessage">
+                <apex:pageMessage severity="info" rendered="{!(ca.fw.newform.ISSP_AMS_Total_Current_Ownership_Company__c + ca.fw.newform.ISSP_AMS_Total_Current_Ownership_Individ__c) != 100}" summary="{!$Label.ISSP_ANG_ANNUAL_REV_OWNERSHIP}" strength="3"/>
+            </apex:outputPanel>
+
             <apex:outputPanel id="updated-person-owners" styleClass="agencyOwnershipComponent">
                 <div class="col-md-12 bg-warning"><strong>{!$Label.ISSP_AMS_NoC_Updated_Owners_Managers}</strong></div>
                 <div id="currmsgshareholdersdetails" class="bg-warning" style="margin-top:3px; margin-bottom:5px;{!IF(ca.fw.newForm.ISSP_AMS_Curr_Entity_with_listed_shares__c == 'No', 'border: 0px !important;', 'display:none')}">
@@ -442,7 +446,7 @@
                 </div>
                 <br/><br/>
 
-                <apex:commandLink rendered="{!NOT(ca.isReadonly)}" id="currentPersonAdd" action="{!newAgencyContact}" style="margin-left:20px" oncomplete="updateOwnerRT('Current Owner');showNewContactDialog();" rerender="currContactList, newContact">
+                <apex:commandLink rendered="{!NOT(ca.isReadonly)}" id="currentPersonAdd" action="{!newAgencyContact}" style="margin-left:20px" oncomplete="updateOwnerRT('Current Owner');showNewContactDialog();" rerender="currContactList, newContact, ownershipMessage">
                     <span class="glyphicon glyphicon-plus"></span>{!$Label.ISSP_AMS_Add_Person}
                 </apex:commandLink>
 
@@ -458,10 +462,18 @@
 
                     <apex:column headerValue="{!CASE(ca.ownerLabelTypeAfterChange, 'shareholder', $Label.ISSP_AMS_Shareholder, 'partner', $Label.ISSP_AMS_Partner, $Label.ISSP_AMS_Owner)}" value="{!agencycon.Agency_owner__c}" id="ownerTitle" />
                     <apex:column id="roleTitle" value="{!agencycon.Agency_role__c}" >
-                        <apex:facet name="header"><apex:outputText escape="false" value="{!CASE(ca.roleLabelTypeAfterChange, 'director', $Label.ISSP_AMS_Director, $Label.ISSP_AMS_Manager)}"/></apex:facet>
+                        <apex:facet name="header">
+                            <apex:outputText escape="false" value="{!CASE(ca.roleLabelTypeAfterChange, 'director', $Label.ISSP_AMS_Director, $Label.ISSP_AMS_Manager)}"/>
+                        </apex:facet>
+                        <apex:facet name="footer">
+                            <apex:outputText value="Total:"/>
+                        </apex:facet>
                     </apex:column>
                     <apex:column value="{!agencycon.Financial_interest__c}">
                         <apex:facet name="header"><apex:outputText escape="false" value="{!$Label.ISSP_AMS_Financial_Interest}"/></apex:facet>
+                        <apex:facet name="footer">
+                            <apex:outputText value="{!ca.fw.newform.ISSP_AMS_Total_Current_Ownership_Individ__c}%"/>
+                        </apex:facet>
                     </apex:column>
 
                     <apex:column >
@@ -472,7 +484,7 @@
                             </apex:facet>
                         </apex:actionStatus>
 
-                        <apex:commandLink rendered="{!NOT(ca.isReadonly)}" id="currentPersonEdit" action="{!editAgencyContact}" status="actEditCurrOwner" styleClass="glyphicon glyphicon-pencil" oncomplete="updateOwnerRT('Current Owner');showNewContactDialog();" rerender="currContactList, newContact">
+                        <apex:commandLink rendered="{!NOT(ca.isReadonly)}" id="currentPersonEdit" action="{!editAgencyContact}" status="actEditCurrOwner" styleClass="glyphicon glyphicon-pencil" oncomplete="updateOwnerRT('Current Owner');showNewContactDialog();" rerender="currContactList, newContact, ownershipMessage">
                             <apex:param value="{!agencycon.Id}" name="recordId" assignTo="{!editContactId}" />
                         </apex:commandLink>
 
@@ -508,18 +520,29 @@
 
                 <apex:commandLink rendered="{!NOT(ca.isReadonly)}" action="{!newAgencyContact}" id="c" style="margin-left:20px;display:{!IF(ca.fw.newForm.ISSP_AMS_Legal_Status__c=='Sole Proprietorship','none','')}"
                         oncomplete="updateCompanyOwnerRT('Current Company Owner');showNewCompanyDialog();"
-                        rerender="currCompanyList, newCompany, newOwnerQuestions">
+                        rerender="currCompanyList, newCompany, newOwnerQuestions, ownershipMessage">
                     <span class="glyphicon glyphicon-plus"></span>{!$Label.ISSP_AMS_ADD_COMPANY}
                 </apex:commandLink>
 
                 <apex:pageBlockTable value="{!ca.fw.currentCompanies}" var="agencycon" id="currCompanyList" styleClass="table-hover table table-condensed table-responsive">
                     <apex:column headerValue="{!$ObjectType.Account.fields.Legal_name__c.Label}" value="{!agencycon.Name}"/>
                     <apex:column value="{!agencycon.Registration_number__c}"/>
-                    <apex:column value="{!agencycon.IATACode__c}"/>
-                    <apex:column value="{!agencycon.Financial_interest__c}"/>
+                    <apex:column value="{!agencycon.IATACode__c}">
+                        
+                            <apex:facet name="footer">
+                                <apex:outputText value="Total: "/>
+                            </apex:facet>
+                       
+                    </apex:column>
+                    <apex:column value="{!agencycon.Financial_interest__c}">
+                        <apex:facet name="header"><apex:outputText escape="false" value="{!$Label.ISSP_AMS_Financial_Interest}"/></apex:facet>
+                        <apex:facet name="footer">
+                            <apex:outputText value="{!ca.fw.newform.ISSP_AMS_Total_Current_Ownership_Company__c}%"/>
+                        </apex:facet>
+                    </apex:column>
                     <apex:column >
 
-                        <apex:commandLink rendered="{!NOT(ca.isReadonly)}" id="currentCompaniesEdit" action="{!editAgencyContact}" styleClass="glyphicon glyphicon-pencil" oncomplete="updateCompanyOwnerRT('Current Company Owner');showNewCompanyDialog();" rerender="currCompanyList, newCompany, newOwnerQuestions">
+                        <apex:commandLink rendered="{!NOT(ca.isReadonly)}" id="currentCompaniesEdit" action="{!editAgencyContact}" styleClass="glyphicon glyphicon-pencil" oncomplete="updateCompanyOwnerRT('Current Company Owner');showNewCompanyDialog();" rerender="currCompanyList, newCompany, newOwnerQuestions, ownershipMessage">
                             <apex:param value="{!agencycon.Id}" name="recordId" assignTo="{!editContactId}" />
                         </apex:commandLink>
 

@@ -15264,6 +15264,14 @@ The applicant understands and agrees to pay the application, entry and annual fe
         <value>It is required to notify at least one change</value>
     </labels>
     <labels>
+        <fullName>ISSP_ANG_ANNUAL_REV_OWNERSHIP</fullName>
+        <categories>ISSP, ANG</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_ANG_ANNUAL_REV_OWNERSHIP</shortDescription>
+        <value>Total Ownership (Individuals + Companies) must equal 100% in order to submit to IATA (excluding Listed Corporations).</value>
+    </labels>
+    <labels>
         <fullName>ISSP_ANG_ANNUAL_REV_Q2</fullName>
         <categories>ISSP,ANG</categories>
         <language>en_US</language>
