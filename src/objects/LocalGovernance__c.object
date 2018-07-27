@@ -550,6 +550,32 @@
         </valueSet>
     </fields>
     <fields>
+        <fullName>Managed_in_SSW__c</fullName>
+        <description>Indicates if the group is managed in the Standard Setting Workspace (SSW) or not. FOR MORE DETAILS, CONTACT AMT.</description>
+        <externalId>false</externalId>
+        <label>Managed in SSW</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Picklist</type>
+        <valueSet>
+            <restricted>true</restricted>
+            <valueSetDefinition>
+                <sorted>false</sorted>
+                <value>
+                    <fullName>Yes</fullName>
+                    <default>false</default>
+                    <label>Yes</label>
+                </value>
+                <value>
+                    <fullName>No</fullName>
+                    <default>false</default>
+                    <label>No</label>
+                </value>
+            </valueSetDefinition>
+        </valueSet>
+    </fields>
+    <fields>
         <fullName>Maximum_Number_of_Participiants__c</fullName>
         <externalId>false</externalId>
         <inlineHelpText>Excluding Observers</inlineHelpText>
@@ -1183,6 +1209,17 @@ Record Type + Group Type + ISO_Country_Name</description>
             </values>
         </picklistValues>
         <picklistValues>
+            <picklist>Managed_in_SSW__c</picklist>
+            <values>
+                <fullName>No</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Yes</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
             <picklist>Open_to__c</picklist>
             <values>
                 <fullName>Cargo Agency Associations</fullName>
@@ -1495,6 +1532,17 @@ Record Type + Group Type + ISO_Country_Name</description>
             </values>
             <values>
                 <fullName>LCAG-P %2F Credit Card WG</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Managed_in_SSW__c</picklist>
+            <values>
+                <fullName>No</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Yes</fullName>
                 <default>false</default>
             </values>
         </picklistValues>
