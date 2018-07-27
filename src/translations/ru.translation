@@ -577,6 +577,14 @@
         <name>AMS_PERFORM_CORRECTION</name>
     </customLabels>
     <customLabels>
+        <label><!-- AMS_PendingHOAccr --></label>
+        <name>AMS_PendingHOAccr</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- AMS_RRejected --></label>
+        <name>AMS_RRejected</name>
+    </customLabels>
+    <customLabels>
         <label><!-- AMS_RollbackCase_Description --></label>
         <name>AMS_RollbackCase_Description</name>
     </customLabels>
