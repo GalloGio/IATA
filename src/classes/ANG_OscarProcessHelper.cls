@@ -400,6 +400,12 @@ global class ANG_OscarProcessHelper {
                 
             }
 
+            if (onlineAcc.SAAM_Case__r.OSCAR__r.Process__c == AMS_Utils.new_TIDS && onlineAcc.Location_Class__c == 'T') {
+                system.debug('RB: ENTROU NO DEBUG CLASS T: ' + onlineAcc.Location_Class__c );
+                acc.Category__c = 'TIDS Agent';
+                acc.Sector__c = 'Travel Agent';
+            }
+
             if(acc.ShippingState != onlineAcc.Shipping_ISO_State__r.Name){
                 acc.ShippingState = onlineAcc.IATA_ISO_State__r.Valid_for_Address__c == true ? onlineAcc.Shipping_ISO_State__r.Name : null;
             }
