@@ -291,6 +291,9 @@ global class AMS_PCI_Complaint_Batch implements Database.Batchable<sObject>, Dat
                                     Process__c = AMS_Utils.PCI_COMPLIANT, Status__c='Accepted_Future Date', ANG_PCI_compliance_expiry_date__c = accountData.ANG_PCI_compliance_expiry_date__c);
         
         theOscar.OSCAR_Deadline__c = Date.today().addDays(30);
+		/*** AMSU-159 ***/
+        AMS_OscarCaseTriggerHelper.assignOscarToRegionQueue(new List<AMS_OSCAR__c> {theOscar});
+
         insert theOscar;
 
         system.debug('createStagingArea oscar: '+ theOscar);
