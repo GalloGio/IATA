@@ -577,6 +577,14 @@
         <name>AMS_PERFORM_CORRECTION</name>
     </customLabels>
     <customLabels>
+        <label><!-- AMS_PendingHOAccr --></label>
+        <name>AMS_PendingHOAccr</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- AMS_RRejected --></label>
+        <name>AMS_RRejected</name>
+    </customLabels>
+    <customLabels>
         <label><!-- AMS_RollbackCase_Description --></label>
         <name>AMS_RollbackCase_Description</name>
     </customLabels>
@@ -11552,7 +11560,7 @@ Veuillez noter que de nombreuses factures de IATA pour les agents accrédités s
         <name>ISSP_Registration_BusinessPhone</name>
     </customLabels>
     <customLabels>
-        <label><!-- ISSP_Registration --></label>
+        <label>Le numéro de tél. bureau est incorrect, merci de vérifier. Vérifiez également le pays en choisissant un drapeau dans la liste OU en entrant le code pays précédé de « + ».</label>
         <name>ISSP_Registration_BusinessPhone_Msg</name>
     </customLabels>
     <customLabels>
@@ -11628,7 +11636,7 @@ Veuillez noter que de nombreuses factures de IATA pour les agents accrédités s
         <name>ISSP_Registration_Error_TypeofCustomer</name>
     </customLabels>
     <customLabels>
-        <label><!-- ISSP_Registration --></label>
+        <label>Le numéro de fax est incorrect, merci de vérifier. Vérifiez également le pays en choisissant un drapeau dans la liste OU en entrant le code pays précédé de « + ».</label>
         <name>ISSP_Registration_FaxPhone_Msg</name>
     </customLabels>
     <customLabels>
@@ -11665,7 +11673,7 @@ Si vous ne disposez pas du code IATA, veuillez sélectionner « Autre » pour 
         <name>ISSP_Registration_MobilePhone</name>
     </customLabels>
     <customLabels>
-        <label><!-- ISSP_Registration --></label>
+        <label>Le numéro de portable est incorrect, merci de vérifier. Vérifiez également le pays en choisissant un drapeau dans la liste OU en entrant le code pays précédé de « + ».</label>
         <name>ISSP_Registration_MobilePhone_Msg</name>
     </customLabels>
     <customLabels>
@@ -13408,7 +13416,7 @@ Le tableau de bord de la trésorerie IATA est un plateforme d&apos;information w
         <name>OneId_AccountSearchPlaceholder</name>
     </customLabels>
     <customLabels>
-        <label>Association de compte</label>
+        <label>Détails d&apos;entreprise</label>
         <name>OneId_Account_Association</name>
     </customLabels>
     <customLabels>
@@ -13448,11 +13456,11 @@ Le tableau de bord de la trésorerie IATA est un plateforme d&apos;information w
         <name>OneId_Community_Name</name>
     </customLabels>
     <customLabels>
-        <label>Association de contact et validation</label>
+        <label>Validation du courriel</label>
         <name>OneId_Contact_Association_Validation</name>
     </customLabels>
     <customLabels>
-        <label>Création de contact</label>
+        <label>Détails de contact</label>
         <name>OneId_Contact_Creation</name>
     </customLabels>
     <customLabels>
@@ -13676,7 +13684,10 @@ Le tableau de bord de la trésorerie IATA est un plateforme d&apos;information w
         <name>OneId_Registration_Error_BusinessPhone</name>
     </customLabels>
     <customLabels>
-        <label><!-- OneId_Registration_UserExist --></label>
+        <label>Cet e-mail a déjà été enregistré.
+Si vous êtes un utilisateur du commerce électronique, utilisez vos identifiants.
+Si vous êtes un utilisateur du Portail clients, utilisez vos identifiants.
+Pour réinitialiser votre mot de passe, retournez à l&apos;écran de connexion et cliquez sur « Mot de passe oublié ».</label>
         <name>OneId_Registration_UserExist</name>
     </customLabels>
     <customLabels>
