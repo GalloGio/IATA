@@ -847,7 +847,7 @@
                                             </td></tr>
                                         <tr id="personFax"><td class="modalrow">
                                             <apex:outputText value="{!$ObjectType.Contact.fields.Fax.Label}" /><br/>
-                                            <apex:inputField id="contactfaxinput" html-placeholder="" value="{!currentAccount.newContact.FAX__c}"  required="true"/>
+                                            <apex:inputField id="contactfaxinput" html-placeholder="" value="{!currentAccount.newContact.FAX__c}"  required="false"/>
                                             </td></tr>
 
                                     </table>
