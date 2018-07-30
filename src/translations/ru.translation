@@ -577,6 +577,14 @@
         <name>AMS_PERFORM_CORRECTION</name>
     </customLabels>
     <customLabels>
+        <label><!-- AMS_PendingHOAccr --></label>
+        <name>AMS_PendingHOAccr</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- AMS_RRejected --></label>
+        <name>AMS_RRejected</name>
+    </customLabels>
+    <customLabels>
         <label><!-- AMS_RollbackCase_Description --></label>
         <name>AMS_RollbackCase_Description</name>
     </customLabels>
@@ -11089,7 +11097,7 @@ IATA стремится обеспечить высочайшее качеств
         <name>ISSP_Ongoing_TIP_Requests</name>
     </customLabels>
     <customLabels>
-        <label>Сброс пароля</label>
+        <label>Переустановка</label>
         <name>ISSP_OperationalCalendar_Reset</name>
     </customLabels>
     <customLabels>
@@ -11515,7 +11523,7 @@ IATA стремится обеспечить высочайшее качеств
         <name>ISSP_Registration_BusinessPhone</name>
     </customLabels>
     <customLabels>
-        <label><!-- ISSP_Registration --></label>
+        <label>Неверно указан рабочий телефон. Пожалуйста, проверьте данные. Проверьте выбранную страну; для этого выберите нужный флаг из списка ИЛИ укажите код страны со знаком &apos;+&apos; впереди.</label>
         <name>ISSP_Registration_BusinessPhone_Msg</name>
     </customLabels>
     <customLabels>
@@ -11591,7 +11599,7 @@ IATA стремится обеспечить высочайшее качеств
         <name>ISSP_Registration_Error_TypeofCustomer</name>
     </customLabels>
     <customLabels>
-        <label><!-- ISSP_Registration --></label>
+        <label>Неверно указан номер факса. Пожалуйста, проверьте данные. Проверьте выбранную страну; для этого выберите нужный флаг из списка ИЛИ укажите код страны со знаком &apos;+&apos; впереди.</label>
         <name>ISSP_Registration_FaxPhone_Msg</name>
     </customLabels>
     <customLabels>
@@ -11629,7 +11637,7 @@ GSA - 3 буквы.
         <name>ISSP_Registration_MobilePhone</name>
     </customLabels>
     <customLabels>
-        <label><!-- ISSP_Registration --></label>
+        <label>Неверно указан мобильный телефон. Пожалуйста, проверьте данные. Проверьте выбранную страну; для этого выберите нужный флаг из списка ИЛИ укажите код страны со знаком &apos;+&apos; впереди.</label>
         <name>ISSP_Registration_MobilePhone_Msg</name>
     </customLabels>
     <customLabels>
@@ -13376,7 +13384,7 @@ IATA Treasury Dashboard — динамичный информационный в
         <name>OneId_AccountSearchPlaceholder</name>
     </customLabels>
     <customLabels>
-        <label>Привязка учетной записи</label>
+        <label>Сведения о компании</label>
         <name>OneId_Account_Association</name>
     </customLabels>
     <customLabels>
@@ -13416,11 +13424,11 @@ IATA Treasury Dashboard — динамичный информационный в
         <name>OneId_Community_Name</name>
     </customLabels>
     <customLabels>
-        <label>Привязка и проверка контактных лиц</label>
+        <label>Проверка емейла</label>
         <name>OneId_Contact_Association_Validation</name>
     </customLabels>
     <customLabels>
-        <label>Создание контактного лица</label>
+        <label>Контактная информация</label>
         <name>OneId_Contact_Creation</name>
     </customLabels>
     <customLabels>
@@ -13436,7 +13444,7 @@ IATA Treasury Dashboard — динамичный информационный в
         <name>OneId_Create_an_account</name>
     </customLabels>
     <customLabels>
-        <label>Введите свой адрес электронной почты</label>
+        <label>Введите адрес своей электронной почты</label>
         <name>OneId_EmailError</name>
     </customLabels>
     <customLabels>
@@ -13640,11 +13648,14 @@ IATA Treasury Dashboard — динамичный информационный в
         <name>OneId_RegistrationComplete</name>
     </customLabels>
     <customLabels>
-        <label>Введите номер своего рабочего телефона</label>
+        <label>Пожалуйста, введите номер своего рабочего телефона</label>
         <name>OneId_Registration_Error_BusinessPhone</name>
     </customLabels>
     <customLabels>
-        <label><!-- OneId_Registration_UserExist --></label>
+        <label>Данный адрес электронной почты уже зарегистрирован у нас в системе.
+Если вы являетесь пользователем E-Commerce, используйте свои учетные данные E-Commerce.
+Если вы являетесь пользователем Клиентского Портала, используйте свои учетные данные Клиентского портала.
+Если вы хотите обновить пароль, вернитесь на домашнюю страницу входа в систему и используйте функцию «Забыли пароль?».</label>
         <name>OneId_Registration_UserExist</name>
     </customLabels>
     <customLabels>
