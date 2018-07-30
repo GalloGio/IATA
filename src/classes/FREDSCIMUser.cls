@@ -24,10 +24,11 @@ global with sharing class FREDSCIMUser extends SCIMUser {
     }
 
 
-    public class Name { //OK
+    public class Name{ //OK
         public String formatted;
         public String familyName;
         public String givenName;
+        public String honorificPrefix;
     }
 
     /*
@@ -98,6 +99,11 @@ global with sharing class FREDSCIMUser extends SCIMUser {
         
         super.getSchemas().add('urn:scim:schemas:extension:enterprise:1.0');
  
+ 		super.name = null;
+		this.name = new Name();
+		if (familyName != null) this.name.familyName = familyName;
+		if (givenName != null) this.name.givenName = givenName;
+ 
      	if (email != null) {
             try { 
                 fillUpSCIMMessage(email);
@@ -109,29 +115,48 @@ global with sharing class FREDSCIMUser extends SCIMUser {
 
 
     private void fillUpSCIMMessage(String email){
-
         //basto1p added new required field for IFG
-        User userIn = [SELECT Id, name, contact.account.RecordType.DeveloperName,AccountId, contact.account.ICAO_designator__c, contact.account.Country_ISO_Code__c, contact.account.name, contact.account.IATACode__c, contact.account.sector__c, contact.account.category__c,FederationIdentifier, SmallPhotoUrl ,createdDate,lastModifiedDate,Phone,CommunityNickname, TimeZoneSidKey,LanguageLocaleKey,Title,MobilePhone from user where email = :email and IsActive = true limit 1];
+        User userIn = [SELECT Id, name, contact.account.RecordType.DeveloperName,AccountId, contact.account.ICAO_designator__c, contact.account.Country_ISO_Code__c, contact.account.name, contact.account.IATACode__c, contact.account.sector__c, contact.account.category__c,FederationIdentifier, SmallPhotoUrl ,createdDate,lastModifiedDate,contact.Phone,CommunityNickname, TimeZoneSidKey, LanguageLocaleKey, Title, Contact.MobilePhone, Contact.Fax, contact.Salutation from user where email = :email and IsActive = true limit 1];
 
-        // Check if the user has FRED primary permission set
-        Integer nbOfPrimaryInAccount = [SELECT count() FROM PermissionSetAssignment WHERE PermissionSet.Name = 'FRED_Primary_User' AND Assignee.AccountId =: userIn.Id];
-        Boolean isPrimaryUser = nbOfPrimaryInAccount > 0;
+
+        Boolean isPrimaryUser;
+
+		// If there is an Invitation__c related to this provisioning request, retrieve the role from the Invitation__c record
+		// This query will have to be updated when developing One Id generics as the Invitation__c object will have an additional field for the service and the same user could receive several invitations for different services
+		List<Invitation__c> invitations = [select Role__c from Invitation__c where Email__c =: email limit 1];
+
+		if(!invitations.isEmpty()){
+			isPrimaryUser = invitations[0].Role__c == 'Primary';
+		}
+		else{
+	        // Check if the some user in the account has FRED primary permission set. If not, this user we'll be primary
+	        Integer nbOfPrimaryInAccount = [SELECT count() FROM PermissionSetAssignment WHERE PermissionSet.Name = 'FRED_Primary_User' AND Assignee.AccountId =: userIn.AccountId];
+	        isPrimaryUser = nbOfPrimaryInAccount == 0;
+		}
+		
 
         if(userIn != null){
-            //this.id = userIn.id;
+            //this.id = userIn.id; 
  
             //this.nickName = userIn.CommunityNickname;
-            /*
-            PhoneNumbers  phones = new PhoneNumbers();
-            phones.type = 'mobile';
-            phones.value = userIn.MobilePhone;
+            
+            this.name.honorificPrefix = userIn.contact.Salutation;
+            
+			PhoneNumbers mobile = new PhoneNumbers();
+			mobile.value =  userIn.Contact.MobilePhone;
+			mobile.type = 'mobile';
+			
+			PhoneNumbers work = new PhoneNumbers();
+			work.value =  userIn.Contact.Phone;
+			work.type = 'work';
+			
+			PhoneNumbers fax = new PhoneNumbers();
+			fax.value =  userIn.Contact.Fax;
+			fax.type = 'fax';
+			
+            phoneNumbers = new List<PhoneNumbers>{mobile, work, fax};
 
-            List<phoneNumbers> phoneNumbersList= new List<phoneNumbers>();
-            phoneNumbersList.add(phones);
-            PhoneNumbers = phoneNumbersList;
-            */
-
-            //this.title = userIn.title;
+            this.title = userIn.title;
 
             this.preferredLanguage = userIn.LanguageLocaleKey;
             //this.active = true;
@@ -153,7 +178,7 @@ global with sharing class FREDSCIMUser extends SCIMUser {
             this.entitlements.add(enCode);
 
             enRequestedRole.type = 'Requested Role';
-            enRequestedRole.value = isPrimaryUser ? 'PRIMARY_USER' : 'SECONDARY_USER';
+            enRequestedRole.value = isPrimaryUser || userIn.contact.account.RecordType.DeveloperName == 'Verifiers' ? 'PRIMARY_USER' : 'SECONDARY_USER';
             this.entitlements.add(enRequestedRole);
 
             enName.type = 'NAME';
@@ -176,7 +201,7 @@ global with sharing class FREDSCIMUser extends SCIMUser {
             	enCountryCode.value = userIn.contact.account.Country_ISO_Code__c;
             	this.entitlements.add(enCountryCode);
             } else if(userIn.contact.account.RecordType.DeveloperName == 'Verifiers') {
-            	 enAccountType.value = 'ICAO_MEMBER_STATE';
+            	 enAccountType.value = 'VERIFIER';
             } 
             this.entitlements.add(enAccountType);
 
@@ -209,7 +234,6 @@ global with sharing class FREDSCIMUser extends SCIMUser {
             anEx.organization = userIn.contact.account.name;
             this.enx = anEx;
             */
-
          
           if (email != null) { 
 		    SCIMUser.Emails e = new SCIMUser.Emails();
@@ -224,8 +248,6 @@ global with sharing class FREDSCIMUser extends SCIMUser {
 
 		    super.Emails = new List<SCIMUser.Emails>{e,e2};
 		}
-
         }
-
     }
 }

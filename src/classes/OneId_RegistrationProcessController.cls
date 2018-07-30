@@ -524,9 +524,9 @@ public without sharing class OneId_RegistrationProcessController {
     }
 
      @AuraEnabled
-    public static Contact loadVerifierInfo (String invitationId){
+    public static Contact loadInvitationInfo (String invitationId){
         
-        list<Invitation__c> invitation = [select id,AccountId__c, Business_Fax__c, Business_Phone__c, 
+        List<Invitation__c> invitation = [select id,AccountId__c, Business_Fax__c, Business_Phone__c, 
         Email__c, First_Name__c, Job_Function__c, Job_Title__c, 
         Last_Name__c, Mobile_Phone__c, Name, Salutation__c from Invitation__c WHERE Id =: invitationId];        
         if(! invitation.isEmpty()) {

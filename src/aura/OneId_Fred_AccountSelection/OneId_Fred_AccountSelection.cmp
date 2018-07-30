@@ -31,7 +31,7 @@
   <aura:attribute name="userTypeToCreate" type="Integer" default="-1"/> <!-- 1=PRIMARY or 2=SECONDARY -->
   <aura:attribute type="Boolean" name="searching" default="false" access="private" />
 
-  <aura:attribute name="verifierId" type="String" /> <!-- veridfier id in the url -->
+  <aura:attribute name="invitationId" type="String" /> <!-- invitation id in the url -->
   
 
   
@@ -63,7 +63,7 @@
           <div class="slds-combobox__form-element slds-input-has-icon slds-input-has-icon_right" role="none">
            
 
-         <aura:if isTrue="{!v.isFredPrimaryUser || v.verifierId != undefined}" >
+         <aura:if isTrue="{!v.isFredPrimaryUser || v.invitationId != undefined}" >
             <lightning:input  aura:id="AI_userInput2" type="text" class="slds-input slds-combobox__input" value="{!v.userInput}" disabled="true"/>
             <aura:set attribute="else">
                <input aura:id="AI_userInput" type="text" class="slds-input slds-combobox__input" id="combobox-unique-id-32" aria-autocomplete="list" aria-controls="listbox-unique-id" autocomplete="off" role="textbox" placeholder="{!v.searchPlaceholder}"  onkeyup="{!c.onKeyUp}" value="{!v.userInput}" data-value="agencies" disabled="{!disableInput}"/>
