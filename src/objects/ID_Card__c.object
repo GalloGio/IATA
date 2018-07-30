@@ -58,6 +58,19 @@ two record types:
     <enableSharing>true</enableSharing>
     <enableStreamingApi>true</enableStreamingApi>
     <fields>
+        <fullName>Agency_Accreditation_Class__c</fullName>
+        <description>Agency Accreditation Class taken from the related GDP Account View</description>
+        <externalId>false</externalId>
+        <formula>GDP_Products_Account_View__r.Accreditation_Class__c</formula>
+        <inlineHelpText>Agency Accreditation Class taken from the related GDP Account View</inlineHelpText>
+        <label>Agency Accreditation Class</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
         <fullName>Agency_IATA_Code__c</fullName>
         <externalId>false</externalId>
         <label>Agency IATA Code</label>
@@ -75,6 +88,19 @@ two record types:
         <length>255</length>
         <required>false</required>
         <trackHistory>true</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Agency_Status__c</fullName>
+        <description>Agency Accreditation Status taken from the related GDP Account View</description>
+        <externalId>false</externalId>
+        <formula>GDP_Products_Account_View__r.Agency_Status__c</formula>
+        <inlineHelpText>Agency Accreditation Status taken from the related GDP Account View</inlineHelpText>
+        <label>Agency Status</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Text</type>
         <unique>false</unique>
@@ -288,6 +314,19 @@ two record types:
 &quot; &quot;)</formula>
         <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
         <label>Duty Code</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>EBC_Agency_Name__c</fullName>
+        <description>EBC Agency Name taken from the related GDP Account View</description>
+        <externalId>false</externalId>
+        <formula>GDP_Products_Account_View__r.EBC_Agency_Name__c</formula>
+        <inlineHelpText>EBC Agency Name taken from the related GDP Account View</inlineHelpText>
+        <label>EBC Agency Name</label>
         <required>false</required>
         <trackHistory>false</trackHistory>
         <trackTrending>false</trackTrending>
