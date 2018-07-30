@@ -357,6 +357,8 @@ public without sharing class OneId_Fred_AccountSelection_CTRL {
             String queryStr2 = ' FROM Account WHERE';
             //queryStr2 += ' RecordType.DeveloperName = \'IATA_Airline\'';
             queryStr2 += ' (RecordType.DeveloperName = \'IATA_Airline\' OR RecordType.DeveloperName = \'Operator\' )';
+            queryStr2 += ' AND (ICAO_designator__c <> \'\')';
+            queryStr2 += ' AND (ICAO_designator__c <> null )';
             queryStr2 += ' AND (Name like \'%' + userInput + '%\'';
             /*
             // Jira ISI-46: Search only by commercial name for aircraft operator
