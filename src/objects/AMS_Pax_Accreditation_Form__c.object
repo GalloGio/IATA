@@ -55,7 +55,7 @@
     <enableStreamingApi>true</enableStreamingApi>
     <fieldSets>
         <fullName>AMS_CorrectionAllHierarchy</fullName>
-        <description>This is used on the CORRECTION Process</description>
+        <description>This is used on the CORRECTION Process </description>
         <displayedFields>
             <field>Account_Name__c</field>
             <isFieldManaged>false</isFieldManaged>
