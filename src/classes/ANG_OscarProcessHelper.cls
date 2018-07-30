@@ -925,9 +925,7 @@ global class ANG_OscarProcessHelper {
 		if (toSendEmail)
 			accsToSendEmail.add(acc.Id);
 
-		Map<Id,List<Contact>> mapContactsAcc = new Map<Id,List<Contact>>();
-
-		return createRevalidationOscars(new List<Account>{acc}, mapContactsAcc, accsToSendEmail)[0].Id;
+		return createRevalidationOscars(new List<Account>{acc}, new Map<Id,List<Contact>>{acc.Id=>contactsAcc}, accsToSendEmail)[0].Id;
 
 	}
 
