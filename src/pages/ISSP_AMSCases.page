@@ -282,21 +282,21 @@
                         </div>
                                 
                         <div class="row">
-                            <div class="col-md-12">
+                            <div class="col-md-12" style="padding-bottom: 20px;">
                                 <input type="button" class="btn btn_iata_primary" onClick="checkEligibility('false');return false;" value="{!$Label.ISSP_AMS_Step0_Other_Changes}"/><br/>
                                     
-                                <apex:outputText rendered="{! NOT(namPaxAgent)}" escape="false" value="{!$Label.ISSP_AMS_Step0_Other_Changes_Msg}"/>
+                                <apex:outputText id="otherChangesNotPax" rendered="{! NOT(namPaxAgent)}" escape="false" value="{!$Label.ISSP_AMS_Step0_Other_Changes_Msg}"/><br/><br/>
                                     
-                                <apex:outputText rendered="{! namPaxAgent}" escape="false" value="{!$Label.ISSP_ANG_Step0_Other_Changes_Msg_NamPaxAgent}"/><br/><br/>
+                                <apex:outputText id="otherChangesPax" rendered="{! namPaxAgent}" escape="false" value="{!$Label.ISSP_ANG_Step0_Other_Changes_Msg_NamPaxAgent}"/><br/><br/>
 
-                                <apex:outputText escape="false" value="{!$Label.ISSP_AMS_Step0_Minor_Changes}" rendered="{!AND(isoCountry.Enable_Notice_of_Change__c,isoCountry.Enable_Minor_Changes_from_Portal__c,bIsAdmin)}"/>
+                                <apex:outputText id="minorChanges" escape="false" value="{!$Label.ISSP_AMS_Step0_Minor_Changes}" rendered="{!AND(isoCountry.Enable_Notice_of_Change__c,isoCountry.Enable_Minor_Changes_from_Portal__c,bIsAdmin)}"/>
                             </div>
                         </div>
                     </section>
                 </div>
                 
                 <div class="row">
-                    <section name="left-side-ongoing-apps" class="col-md-8" style="min-height: 350px;">
+                    <section name="left-side-ongoing-apps" class="col-md-8" style="min-height: 350px; padding-top: 20px">
                         <header>
                             <div class="section-header">
                                 <apex:image value="{!URLFOR($Resource.ISSP_RHC_Page_Icons,'img/RHC.png')}"/>
@@ -330,7 +330,7 @@
                             
                     </section>
                         
-                    <section name="right-side-other-forms" class="col-md-4" style="display:{!IF(isUserAccAccredited, '','none')}; margin-right: 0px; margin-left: 0px; min-height: 350px;">
+                    <section name="right-side-other-forms" class="col-md-4" style="display:{!IF(isUserAccAccredited, '','none')}; margin-right: 0px; margin-left: 0px; min-height: 350px; padding-top: 20px;">
                         <header>
                             <div class="section-header">
                                 <apex:image value="{!URLFOR($Resource.ISSP_RHC_Page_Icons,'img/RHC.png')}"/>
