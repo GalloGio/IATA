@@ -138,6 +138,7 @@
     }
     
     function enableFilters(enabled) {
+        if (isAirline) return;
         var disabled = !enabled;
         $(".countryFilter").prop("disabled",disabled);
         $("#typeFilter").prop("disabled",disabled);
