@@ -420,10 +420,10 @@ public class AMS_OscarCaseTriggerHelper {
             if(c.reason1__c != null)
                 if(oscars.get(c.Oscar__c).Process__c == AMS_Utils.NGVR && oscars.get(c.Oscar__c).Account__r.ANG_IsNewGenAgency__c)
                     newCaseSubject = c.reason1__c + ' - ' +oscars.get(c.Oscar__c).Account__r.Name;
+                else if(oscars.get(c.Oscar__c).Process__c == AMS_Utils.NGFOP && c.Origin == 'Internal User')
+                    newCaseSubject = c.reason1__c + ' - ' + oscars.get(c.Oscar__c).Account__r.IATACode__c + ' - ' +oscars.get(c.Oscar__c).Account__r.Name;
                 else if(oscars.get(c.Oscar__c).Process__c == AMS_Utils.NGANNUALREVAL || c.Origin == AMS_Utils.ANG_FOP_AUTOMATIC_RENEWAL || (oscars.get(c.Oscar__c).Process__c == AMS_Utils.NGFOP && c.Origin == 'portal'))
                     newCaseSubject = 'PCI DSS compliance - ' + oscars.get(c.Oscar__c).Account__r.IATACode__c + ' - ' +oscars.get(c.Oscar__c).Account__r.Name;
-                else if(oscars.get(c.Oscar__c).Process__c == AMS_Utils.NGFOP)
-                    newCaseSubject = c.reason1__c + ' - ' + oscars.get(c.Oscar__c).Account__r.IATACode__c + ' - ' +oscars.get(c.Oscar__c).Account__r.Name;
                 else if(oscars.get(c.Oscar__c).Process__c == AMS_Utils.NEWHELITE)
                     newCaseSubject = 'New Head Entity - GoLite - ' + oscars.get(c.Oscar__c).Account__r.IATA_ISO_Country__r.Name;
                 else if(oscars.get(c.Oscar__c).Process__c == AMS_Utils.NEWHESTANDARD)
