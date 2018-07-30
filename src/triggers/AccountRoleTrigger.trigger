@@ -2,8 +2,12 @@ trigger AccountRoleTrigger on Account_Role__c (before insert, after insert, befo
 
 	//AccountRoleHandler handler = new AccountRoleHandler();
 
-	if(trigger.isBefore && (trigger.isInsert || trigger.isUpdate)) {
-		AccountRoleHandler.updatePaymentProviderStatus(trigger.new, trigger.oldMap);
+	if(trigger.isBefore) {
+		if(trigger.isInsert)
+			AccountRoleHandler.updatePaymentProviderStatus(trigger.new, trigger.oldMap);
+		
+		if(trigger.isUpdate)
+			AccountRoleHandler.updatePaymentProviderStatus(trigger.new, trigger.oldMap);
 	}
 
 	if(trigger.isAfter && trigger.isUpdate) {
@@ -13,5 +17,15 @@ trigger AccountRoleTrigger on Account_Role__c (before insert, after insert, befo
 	if(trigger.isAfter && trigger.isDelete) {
 		AccountRoleHandler.manageAccountAsPaymentProvider(trigger.old, 'Remove');
 	}
+	
+	if(trigger.isBefore){
+    	if(trigger.isInsert){
+    		TIP_Utils.SyncAccountRoleOnProduct(trigger.new, null);
+    	}
+    	
+    	if(trigger.isUpdate){
+    		TIP_Utils.SyncAccountRoleOnProduct(trigger.new, trigger.oldMap);
+    	}
+    }
 
 }
