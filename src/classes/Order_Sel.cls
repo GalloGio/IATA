@@ -936,20 +936,29 @@ public without sharing class Order_Sel extends Selector{
         String quoteStatus = IECConstants.ORDER_TYPE_QUOTE;
         String orderType = 'Order';
         String bulkOrderType = 'Bulk Order';
+        String historyType = 'History';
+        
+        date dateToCompare = Date.today().addDays(-180);
+        List<String> expiredType   = new List<String>{orderType, renewStatus, quoteStatus};
+        List<String> expiredStatus = new List<String>{'New',cancelStatus,'Payment Failure', 'Ready for SAP', 'Pending Payment'};
+
          String query = String.format(
             'SELECT {0}' + 
             ', (select Product_Name__c, Product_Number__c, Quantity, UnitPrice, Freight_Charge__c, Tax__c, Total__c, ' +
-            'Carrier_Tracking_Number__c,Carrier_Tracking_URL__c, Coupon__c, Invoice_Number__c,Discount__c, Setup_Fee__c ' + 
-            ' from Orderitems) ' + 
-            'FROM {1} ' + 
-            'WHERE BillToContactId = :contactId and Status != :cancelStatus and Status != :renewStatus and Status != :quoteStatus ' +
-            'and (Type =:orderType OR Type =:bulkOrderType) ' +
+            'Carrier_Tracking_Number__c,Carrier_Tracking_URL__c, Coupon__c, Invoice_Number__c,Discount__c, Setup_Fee__c ' +
+            ' from Orderitems) ' +
+            'FROM {1} ' +
+            'WHERE BillToContactId = :contactId ' +
+            'AND SAP_Order_Number__c != null  AND SAP_Invoice__r.Contract_Number__c != null ' +
+            'AND ((type NOT IN :expiredType OR Status NOT IN :expiredStatus OR EffectiveDate > :dateToCompare) AND type != :historyType) ' +
+
             'ORDER BY Type,  CreatedDate DESC', 
             new List<String>{
                 String.join(getDefaultFields(), ', '),
                 getSObjectType().getDescribe().getName()
             }
         );
+         system.debug('### query: ' + query);
         return Database.query(query);
     }
 
