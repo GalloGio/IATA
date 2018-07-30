@@ -435,8 +435,15 @@
                 </div>
             </apex:outputpanel>
 
-            <apex:outputPanel id="ownershipMessage">
-                <apex:pageMessage severity="info" rendered="{!(ca.fw.newform.ISSP_AMS_Total_Current_Ownership_Company__c + ca.fw.newform.ISSP_AMS_Total_Current_Ownership_Individ__c) != 100}" summary="{!$Label.ISSP_ANG_ANNUAL_REV_OWNERSHIP}" strength="3"/>
+            <apex:outputPanel id="ownershipMessage" >
+                <script type="text/javascript">
+                    $('[data-toggle="popover"]').popover();
+                </script>
+                <apex:outputPanel rendered="{!(ca.fw.newform.ISSP_AMS_Total_Current_Ownership_Company__c + ca.fw.newform.ISSP_AMS_Total_Current_Ownership_Individ__c) != 100}">
+                    <a href="" data-html="true" data-toggle="popover" data-trigger="hover" title="TOTAL OWNERSHIP {!ca.fw.newform.ISSP_AMS_Total_Current_Ownership_Company__c + ca.fw.newform.ISSP_AMS_Total_Current_Ownership_Individ__c}%" data-content="<div escape='false'>{!$Label.ISSP_ANG_ANNUAL_REV_OWNERSHIP}</div>">
+                        <apex:image value="/img/msg_icons/info16.png"/>
+                    </a>
+                </apex:outputPanel>
             </apex:outputPanel>
 
             <apex:outputPanel id="updated-person-owners" styleClass="agencyOwnershipComponent">
@@ -696,6 +703,8 @@
         //console.log('***************** COMPONENT ******************');
 
         $(document).ready(function() {
+            $('[data-toggle="popover"]').popover();
+
             // binds on change to make checkbox function as radio buttons
             $('[data-group]').on('change', function() {
                 var $parent = $(this);
