@@ -21,12 +21,16 @@ private class trgCopyCountryISOTest {
         
         IATA_ISO_Country__c myIataIso2 = new IATA_ISO_Country__c(ISO_Code__c = '14',name = 'earth',AIMS_Area_Name__c='anotasdasdherCity');
         insert myIataIso2;
+
+        IATAIsoCountryDAO.resetMapIataIsoCountry();
         
         a.IATA_ISO_Country__c = myIataIso2.Id;
         update a;
         
         a = [SELECT Id, billingcountry FROM Account where id =: a.id];
         system.assertEquals(a.billingcountry, 'earth');
+
+        IATAIsoCountryDAO.resetMapIataIsoCountry();
         
         update a;
         
