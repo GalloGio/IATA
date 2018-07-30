@@ -278,9 +278,9 @@ public without sharing class OneId_Fred_AccountSelection_CTRL {
     }
 
     @AuraEnabled
-    public static InitParam initParams(Boolean isVerifierInvitation, String invitationId) {
+    public static InitParam initParams(Boolean isInvitation, String invitationId) {
         InitParam param = new InitParam();
-        param.isVerifierInvitation = isVerifierInvitation;
+        param.isInvitation = isInvitation;
 
         // is guest OR a connected partner user (like primare user)
         Integer nb = [SELECT count() FROM User WHERE Name = 'identity Site Guest User' AND Id =: UserInfo.getUserId()];
@@ -307,12 +307,12 @@ public without sharing class OneId_Fred_AccountSelection_CTRL {
             param.partnerAccount = null;
 
             // Get info from invitation
-            if(isVerifierInvitation) {
+            if(isInvitation) {
                 list<Invitation__c> invitation = [SELECT  AccountId__c FROM Invitation__c WHERE Id =: invitationId];
                 if(! invitation.isEmpty()) {
-                    list<Account> verifierAccount = [SELECT Id, Name, RecordType.Name FROM Account WHERE Id =: invitation[0].AccountId__c]; 
-                    if(! verifierAccount.isEmpty()) {
-                        param.partnerAccount = verifierAccount[0];
+                    list<Account> acct = [SELECT Id, Name, RecordType.Name FROM Account WHERE Id =: invitation[0].AccountId__c]; 
+                    if(! acct.isEmpty()) {
+                        param.partnerAccount = acct[0];
                     }
                 }
             }
@@ -335,7 +335,7 @@ public without sharing class OneId_Fred_AccountSelection_CTRL {
         @AuraEnabled
         Boolean createPrimary {get; set;}
         @AuraEnabled
-        Boolean isVerifierInvitation {get; set;}
+        Boolean isInvitation {get; set;}
     }
 
     

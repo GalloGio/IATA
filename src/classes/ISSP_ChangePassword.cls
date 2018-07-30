@@ -183,12 +183,27 @@ public without sharing class ISSP_ChangePassword {
         if(ISSP_CS__c.getValues('Fred_System').value__c != null)
             fredSystemURL = String.ValueOF(ISSP_CS__c.getValues('Fred_System').value__c);
             
-        List<UserProvisioningRequest> userProvisining = [Select id,State From UserProvisioningRequest where SalesforceUserId =:UserInfo.getUserId()];                
+        List<UserProvisioningRequest> userProvisining = [Select id,State, SalesforceUser.Email From UserProvisioningRequest where SalesforceUserId =:UserInfo.getUserId()];                
          
         if(userProvisining[0].State == 'Completed' ){
-            // Assign Primary permission set  if it's the 1st registred
+            // Assign Primary permission set  if it's the 1st registred or if there is a related Invitation__c with requested role = Primary
+
+			Boolean isPrimaryUser;
+
+			// This query will have to be updated when developing One Id generics as the Invitation__c object will have an additional field 
+			// for the service and the same user could receive several invitations for different services
+			List<Invitation__c> invitations = [select Role__c from Invitation__c where Email__c =: userProvisining[0].SalesforceUser.Email limit 1];
+	
+			if(!invitations.isEmpty()){
+				isPrimaryUser = invitations[0].Role__c == 'Primary';
+			}
+			else{
+		        // Check if the some user in the account has FRED primary permission set. If not, this user we'll be primary
             Integer nbOfPrimaryInAccount = [SELECT count() FROM PermissionSetAssignment WHERE PermissionSet.Name = 'FRED_Primary_User' AND Assignee.AccountId =: userList[0].contact.AccountId ];
-            if(nbOfPrimaryInAccount == 0) {
+		        isPrimaryUser = nbOfPrimaryInAccount == 0;
+			}
+            
+            if(isPrimaryUser) {
                 insert new PermissionSetAssignment(
                     AssigneeId = UserInfo.getUserId(),
                     PermissionSetId = [SELECT Id FROM PermissionSet WHERE Name='FRED_Primary_User' LIMIT 1].Id

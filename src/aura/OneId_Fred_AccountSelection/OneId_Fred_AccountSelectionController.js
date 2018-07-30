@@ -9,25 +9,24 @@
         var urlParameters = decodeURIComponent(urlParamEncoded); // Right part after base URL
         var paramsMap = JSON.parse((urlParameters == '') ? '{}' : decodeURIComponent('{"' + urlParamEncoded.replace(new RegExp('&', 'g'), '","').replace(new RegExp('=', 'g'),'":"') + '"}') );
                 
-
         // Get URL parameters
      
             var servName = paramsMap.serviceName;
             var userTypeToCreate = paramsMap.t; //t=1  (for primary) or t=2 (for secondary) 
-            var invitationId = paramsMap.token; //Verifier Invitation ID
+            var invitationId = paramsMap.token; //Invitation ID
 
             if(/\S/.test(servName)){
                 component.set("v.serviceName", servName);
                 if(! component.get("v.paramLoaded")) {
                     // Avoid multiple calls
                     component.set("v.paramLoaded", true);
-                    var isVerifierInvitation = false;
+                    var isInvitation = false;
                     if(/\S/.test(invitationId) && invitationId != undefined){
-                        isVerifierInvitation = true;
-                        component.set("v.verifierId", invitationId);
+                        isInvitation = true;
+                        component.set("v.invitationId", invitationId);
                     }
                     console.log('wwww');
-                    helper.initParams(component, isVerifierInvitation, invitationId);
+                    helper.initParams(component, isInvitation, invitationId);
                 }
             }
             // If registration comes from FRED (not a guest) by a primary user, I can create another primary or secondary user

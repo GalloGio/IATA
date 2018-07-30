@@ -24,11 +24,10 @@
         $A.enqueueAction(action);
   },
 
-  initParams: function(cmp, isVerifierInvitation, invitationId) {
-
+  initParams: function(cmp, isInvitation, invitationId) {
       var action = cmp.get("c.initParams");
         action.setParams({            
-            "isVerifierInvitation": isVerifierInvitation,
+            "isInvitation": isInvitation,
             "invitationId": invitationId
         });
         action.setCallback(this, function(resp) {
@@ -41,11 +40,11 @@
             cmp.set("v.isGuest", params.isGuest);
             cmp.set("v.createPrimary", params.createPrimary);
             
-            if(! params.isVerifierInvitation && !isFredPrimaryUser) // Load customer type if not a primary user
+            if(! params.isInvitation && !isFredPrimaryUser) // Load customer type if not a primary user
                this.getCustomerTypeAvailableByServiceName(cmp);
 
             // If primary user logged or invitation => Set user type and disable the field
-            if(! params.isGuest || params.isVerifierInvitation) {
+            if(! params.isGuest || params.isInvitation) {
                 cmp.set("v.customerType", partnerAccount.RecordType.Name);
                 var opts = [{ class: "uiInputSelectOption", label:partnerAccount.RecordType.Name, value: partnerAccount.RecordType.Name, selected: "true" }];
                 cmp.find("typeOfCustomer").set("v.options", opts);

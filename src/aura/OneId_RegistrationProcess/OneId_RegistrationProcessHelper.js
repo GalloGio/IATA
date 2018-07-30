@@ -12,17 +12,17 @@
         cmp.set("v.activeSection", step);
      },
 
-      loadVerifierInfo: function(cmp, invitationId) {
+      loadInvitationInfo: function(cmp, invitationId) {
           // Get invitation info and fill fiels but let it editable
-              var action = cmp.get("c.loadVerifierInfo");
+              var action = cmp.get("c.loadInvitationInfo");
                   action.setParams({            
                   "invitationId": invitationId
               });
               action.setCallback(this, function(resp) {
-                var verifierWrap = resp.getReturnValue();
+                var invitationWrap = resp.getReturnValue();
                 // Fill contact
-                cmp.set("v.contact", verifierWrap);
-                //cmp.set("v.account", verifierWrap.account);
+                cmp.set("v.contact", invitationWrap);
+                //cmp.set("v.account", invitationWrap.account);
               });
               $A.enqueueAction(action);
         },
