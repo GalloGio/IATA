@@ -15269,7 +15269,7 @@ The applicant understands and agrees to pay the application, entry and annual fe
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>ISSP_ANG_ANNUAL_REV_OWNERSHIP</shortDescription>
-        <value>Total Ownership (Individuals + Companies) must equal 100% in order to submit to IATA (excluding Listed Corporations).</value>
+        <value>Total Ownership (Individuals + Companies) must equal 100% in order to submit to IATA.</value>
     </labels>
     <labels>
         <fullName>ISSP_ANG_ANNUAL_REV_Q2</fullName>

@@ -440,7 +440,8 @@
                     $('[data-toggle="popover"]').popover();
                 </script>
                 <apex:outputPanel rendered="{!(ca.fw.newform.ISSP_AMS_Total_Current_Ownership_Company__c + ca.fw.newform.ISSP_AMS_Total_Current_Ownership_Individ__c) != 100}">
-                    <a href="" data-html="true" data-toggle="popover" data-trigger="hover" title="TOTAL OWNERSHIP {!ca.fw.newform.ISSP_AMS_Total_Current_Ownership_Company__c + ca.fw.newform.ISSP_AMS_Total_Current_Ownership_Individ__c}%" data-content="<div escape='false'>{!$Label.ISSP_ANG_ANNUAL_REV_OWNERSHIP}</div>">
+                    <apex:outputText value="TOTAL OWNERSHIP {!ca.fw.newform.ISSP_AMS_Total_Current_Ownership_Company__c + ca.fw.newform.ISSP_AMS_Total_Current_Ownership_Individ__c}%"/>
+                    <a href="" data-html="true" data-toggle="popover" data-trigger="hover" title="TOTAL OWNERSHIP" data-content="<div escape='false'>{!$Label.ISSP_ANG_ANNUAL_REV_OWNERSHIP}</div>">
                         <apex:image value="/img/msg_icons/info16.png"/>
                     </a>
                 </apex:outputPanel>
@@ -561,6 +562,32 @@
                     </apex:column>
                 </apex:pageBlockTable>
 
+                <apex:outputPanel id="newOwnerQuestions" rendered="{!ca.fw.currentCompanies.size > 0}">
+                    <div class="bg-warning col-md-12" style="margin-top:15px;"><strong>{!$Label.ISSP_AMS_NoC_Non_IATA_Owner_Title}</strong></div>
+                    <div class="col-md-12">
+                        <apex:outputText value="{!$Label.ISSP_AMS_NoC_Non_IATA_Owner_Estimates}" escape="false"/>
+                    </div>
+
+                    <apex:pageBlockSection columns="1">
+                        <apex:pageBlockSectionItem labelStyle="width:44%">
+                            <apex:outputLabel id="firstYearQ" value="{!$ObjectType.AMS_Pax_Accreditation_Form__c.fields.ISSP_AMS_Gross_Amnt_First_year__c.label}"/>
+                            <apex:outputPanel >
+                                <apex:inputField id="ISSP_AMS_Gross_Amnt_First_year__c" value="{!ca.fw.newForm.ISSP_AMS_Gross_Amnt_First_year__c}" />
+                                <apex:outputText id="y2CurrencyCode" value=" {!ca.fw.newForm.CurrencyIsoCode}"/>
+                            </apex:outputPanel>
+                        </apex:pageBlockSectionItem>
+
+                        <apex:pageBlockSectionItem labelStyle="width:44%">
+                            <apex:outputLabel id="secondYearQ" value="{!$ObjectType.AMS_Pax_Accreditation_Form__c.fields.ISSP_AMS_Gross_Amnt_Second_year__c.label}"/>
+                            <apex:outputPanel >
+                                <apex:inputField id="ISSP_AMS_Gross_Amnt_Second_year__c" value="{!ca.fw.newForm.ISSP_AMS_Gross_Amnt_Second_year__c}" />
+                                <apex:outputText id="y2CurrencyCode" value=" {!ca.fw.newForm.CurrencyIsoCode}"/>
+                            </apex:outputPanel>
+                        </apex:pageBlockSectionItem>
+                    </apex:pageBlockSection>
+
+                </apex:outputPanel>
+
                 <apex:outputPanel >
                     <div class="col-md-12 bg-warning"><strong>{!$Label.ISSP_AMS_NoC_Other_Owner}</strong></div>
 
@@ -578,31 +605,7 @@
                     </apex:pageBlockSection>
                 </apex:outputPanel>
 
-                <apex:outputPanel id="newOwnerQuestions" rendered="{!ca.fw.currentCompanies.size > 0}">
-                    <div class="bg-warning col-md-12" style="margin-top:15px;"><strong>{!$Label.ISSP_AMS_NoC_Non_IATA_Owner_Title}</strong></div>
-                    <div class="col-md-12">
-                        <apex:outputText value="{!$Label.ISSP_AMS_NoC_Non_IATA_Owner_Estimates}" escape="false"/>
-                    </div>
-
-                    <apex:pageBlockSection columns="1">
-                        <apex:pageBlockSectionItem labelStyle="width:44%">
-                            <apex:outputLabel value="{!$ObjectType.AMS_Pax_Accreditation_Form__c.fields.ISSP_AMS_Gross_Amnt_First_year__c.label}"/>
-                            <apex:outputPanel >
-                                <apex:inputField id="ISSP_AMS_Gross_Amnt_First_year__c" value="{!ca.fw.newForm.ISSP_AMS_Gross_Amnt_First_year__c}" />
-                                <apex:outputText id="y2CurrencyCode" value=" {!ca.fw.newForm.CurrencyIsoCode}"/>
-                            </apex:outputPanel>
-                        </apex:pageBlockSectionItem>
-
-                        <apex:pageBlockSectionItem labelStyle="width:44%">
-                            <apex:outputLabel value="{!$ObjectType.AMS_Pax_Accreditation_Form__c.fields.ISSP_AMS_Gross_Amnt_Second_year__c.label}"/>
-                            <apex:outputPanel >
-                                <apex:inputField id="ISSP_AMS_Gross_Amnt_Second_year__c" value="{!ca.fw.newForm.ISSP_AMS_Gross_Amnt_Second_year__c}" />
-                                <apex:outputText id="y2CurrencyCode" value=" {!ca.fw.newForm.CurrencyIsoCode}"/>
-                            </apex:outputPanel>
-                        </apex:pageBlockSectionItem>
-                    </apex:pageBlockSection>
-
-                </apex:outputPanel>
+                
 
             </apex:outputPanel>
         </apex:pageBlockSection>
@@ -722,6 +725,14 @@
             if('{!ca.isReadonly}' == 'true') {
                 setReadonly();
             }
+
+            $('[id$="firstYearQ"]').text(function () {
+                return $(this).text().replace("*", ""); 
+            });
+
+            $('[id$="secondYearQ"]').text(function () {
+                return $(this).text().replace("*", ""); 
+            });
         });
 
         function showForms() {
