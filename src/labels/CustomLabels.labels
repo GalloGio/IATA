@@ -25463,7 +25463,7 @@ msgErrorRenewalOrderExpired:Your renewal notification order link is either  expi
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>OneId_FRED_Terms_Of_Use_Link</shortDescription>
-        <value>http://www.iata.org/customer-portal/Pages/terms.aspx</value>
+        <value>http://www.iata.org</value>
     </labels>
     <labels>
         <fullName>OneId_GSAWarning</fullName>
