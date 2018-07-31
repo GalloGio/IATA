@@ -366,21 +366,21 @@ public with sharing class IECEBC_TestUtility {
 			mProductRatePlanIdToProductRatePlanInformationObj.put( oPrp.Id, oPrpi);
 			
 			// create product rate plan charge as needed.
-			if ( sProductIdWithRecurringFlatCharge.contains( oPrp.zqu__ZProduct__c)) {
+			if ( sProductIdWithRecurringFlatCharge.contains( oPrp.zqu__Product__c)) {
 				zqu__ProductRatePlanCharge__c oPrpCharge;
 				oPrpCharge = IECTestUtil.createSampleProductRatePlanCharge(oPrp, 'Charge Recurring Flat-' + oPrp.Name, 1);
 				oPrpCharge.zqu__Type__c = RATE_PLAN_CHARGE_TYPE_RECURRING;
 				oPrpCharge.zqu__Model__c = IECConstants.ChargeModel_Zuora_FlatFeePricing;
 				lEbcProductRatePlanCharge.add(oPrpCharge);
 			}
-			if ( sProductIdWithOneTimeFlatCharge.contains( oPrp.zqu__ZProduct__c)) {
+			if ( sProductIdWithOneTimeFlatCharge.contains( oPrp.zqu__Product__c)) {
 				zqu__ProductRatePlanCharge__c oPrpCharge;
 				oPrpCharge = IECTestUtil.createSampleProductRatePlanCharge(oPrp, 'Charge One Time Flat-' + oPrp.Name, 1);
 				oPrpCharge.zqu__Type__c = RATE_PLAN_CHARGE_TYPE_ONE_TIME;
 				oPrpCharge.zqu__Model__c = IECConstants.ChargeModel_Zuora_FlatFeePricing;
 				lEbcProductRatePlanCharge.add(oPrpCharge);
 			}
-			if ( sProductIdWithOneTimePerUnitCharge.contains( oPrp.zqu__ZProduct__c)) {
+			if ( sProductIdWithOneTimePerUnitCharge.contains( oPrp.zqu__Product__c)) {
 				zqu__ProductRatePlanCharge__c oPrpCharge;
 				oPrpCharge = IECTestUtil.createSampleProductRatePlanCharge(oPrp, 'Charge One Time Per Unit-' + oPrp.Name, 1);
 				oPrpCharge.zqu__Type__c = RATE_PLAN_CHARGE_TYPE_ONE_TIME;

@@ -73,7 +73,6 @@ private class Order_Ext_Test
 	{
 		//-- Products 
         List<Product2> products = TestDataGenerator.generateProducts(3,false);
-		List<zqu__ZProduct__c> zProducts = TestDataGenerator.generateZProducts(3, true);
 		List<zqu__ProductRatePlan__c> zRatePlans = new List<zqu__ProductRatePlan__c>();
 		List<zqu__ProductRatePlanCharge__c> zCharges = new List<zqu__ProductRatePlanCharge__c>();
 		List<PricebookEntry> lst_pbe = new List<PricebookEntry>();
@@ -81,11 +80,9 @@ private class Order_Ext_Test
 		for(Integer x = 0; x < products.size(); x++)
 		{
 			Product2 prod = products[x]; 
-			zqu__ZProduct__c zprod = zProducts[x];
-			zRatePlans.addAll(TestDataGenerator.generateZRatePlans(zprod.Id,1,false)); //1 rate plan per product
+			zRatePlans.addAll(TestDataGenerator.generateZRatePlans2(prod.Id,1,false)); //1 rate plan per product
 			prod.SAP_Status_Code__c = 'A';
 			prod.Post_to_Ecommerce_Date__c = System.today().addDays(-7);
-			prod.ZProduct__c = zprod.Id;
 		}
 
 		insert zRatePlans;

@@ -131,18 +131,18 @@ public without sharing class IECTestUtil {
     
     public static Product_Rate_Plan_Information__c CreateSampleProductRatePlanInfo(String sName, Boolean triable, zqu__ProductRatePlan__c oProductRatePlan, Product_Information__c oProductInfo) {
         Product_Rate_Plan_Information__c prpi = new Product_Rate_Plan_Information__c();
-            prpi.Name = sName;
-            prpi.Related_Product_Information__c = oProductInfo.Id;
-            prpi.Product_Rate_Plan__c = oProductRatePlan.Id;
-            prpi.Active__c = true;
-            prpi.Monthly_Price__c = 10.00;
-            prpi.Display_As_Monthly_Fee__c = !triable;
-            //prpi.User_Interface_Display__c = 'Yes';
-            prpi.Order__c = 1;
-            prpi.Short_Description__c = 'Sample Product Rate Plan Information';
-            prpi.Long_Description__c = 'long desc';
-            
-            return prpi;
+        prpi.Name = sName;
+        prpi.Related_Product_Information__c = oProductInfo.Id;
+        prpi.Product_Rate_Plan__c = oProductRatePlan.Id;
+        prpi.Active__c = true;
+        prpi.Monthly_Price__c = 10.00;
+        prpi.Display_As_Monthly_Fee__c = !triable;
+        //prpi.User_Interface_Display__c = 'Yes';
+        prpi.Order__c = 1;
+        prpi.Short_Description__c = 'Sample Product Rate Plan Information';
+        prpi.Long_Description__c = 'long desc';
+        
+        return prpi;
     }
     
     public static zqu__ProductRatePlanCharge__c createSampleProductRatePlanCharge(zqu__ProductRatePlan__c oRelatedRatePlan, String sName, double dPrice) {
@@ -276,17 +276,6 @@ public without sharing class IECTestUtil {
         insert u;
         trgPortalUserAfterInserUpdate = true;
         String userId = Site.createPortalUser(u, newAccount.Id, 'testpassword');
-      //  trgPortalUserAfterInserUpdate = false;
-        /*
-        // assign Permission Set to provide access to objects
-        Id permissionSetId = IECUserManager.getCustomerPermissionSetId();
-        if (permissionSetId != null) {
-            PermissionSetAssignment oPermissionSetAssignment = new PermissionSetAssignment();
-            oPermissionSetAssignment.AssigneeId = userId;
-            oPermissionSetAssignment.PermissionSetId = permissionSetId;
-            insert oPermissionSetAssignment;
-        }
-*/
          
         IECUserManager.login(u.Username, 'testpassword', null);
            
@@ -437,7 +426,7 @@ public without sharing class IECTestUtil {
         Zuora__Subscription__c subscription = new Zuora__Subscription__c();
         String zuoraId =  IECUtil.NewGuid();
         subscription.Zuora__External_Id__c = 
-            subscription.Zuora__Zuora_Id__c = zuoraId.substring(0, 32);
+        subscription.Zuora__Zuora_Id__c = zuoraId.substring(0, 32);
         subscription.Zuora__RenewalTerm__c = '12 Months';
         subscription.Zuora__Version__c = 1;
     

@@ -17,7 +17,7 @@ private class trgHndlrIECSubscriptionToDetailTest {
 	private static User usr;
 	private static Product_Category__c oProductCategory;
 	private static Product_Information__c oProductInfo;
-	private static zqu__ZProduct__c oProduct;
+	private static Product2 oProduct;
 	private static zqu__ProductRatePlan__c oProductRatePlan1;
 	private static zqu__ProductRatePlan__c oProductRatePlan2;
 	private static zqu__ProductRatePlan__c oProductRatePlan3;
@@ -55,16 +55,16 @@ private class trgHndlrIECSubscriptionToDetailTest {
 		
 		// --------------------------------------------------------------------
 		// create zuora product
-		oProduct = IECTestUtil.CreateSampleProduct('Product1');
+		oProduct = IECTestUtil.CreateSampleProduct2('Product1');
 		oProduct.ProductAudience__c = IECConstants.ProductAudience_Zuora_NONMEMBERSINGLE;
 		oProduct.ProductCategory__c = IECConstants.ProductCategory_SF_TEST;
 		insert oProduct;
 		
 		// --------------------------------------------------------------------
 		// create zuora rate plan
-		oProductRatePlan1 = IECTestUtil.CreateSampleProductRatePlan('Rate plan 1', false, oProduct);
-		oProductRatePlan2 = IECTestUtil.CreateSampleProductRatePlan('Rate plan 2', false, oProduct);
-		oProductRatePlan3 = IECTestUtil.CreateSampleProductRatePlan('Rate plan 3', false, oProduct);
+		oProductRatePlan1 = IECTestUtil.CreateSampleProductRatePlan2('Rate plan 1', false, oProduct);
+		oProductRatePlan2 = IECTestUtil.CreateSampleProductRatePlan2('Rate plan 2', false, oProduct);
+		oProductRatePlan3 = IECTestUtil.CreateSampleProductRatePlan2('Rate plan 3', false, oProduct);
 		List<zqu__ProductRatePlan__c> productRatePlanList = new List<zqu__ProductRatePlan__c> {oProductRatePlan1, oProductRatePlan2, oProductRatePlan3};
 		insert productRatePlanList;
 		
@@ -76,41 +76,6 @@ private class trgHndlrIECSubscriptionToDetailTest {
 		List<zqu__ProductRatePlanCharge__c> productRatePlanChargeList = new List<zqu__ProductRatePlanCharge__c> {oProductRatePlanCharge1,oProductRatePlanCharge2,oProductRatePlanCharge3};
 		insert productRatePlanChargeList;
 		
-		/*
-		// --------------------------------------------------------------------
-		// the following data preparation was been done in other test class, not sure its relevance here, but do it anyway.
-		// product category is used for creating product info
-		// create product category
-		oProductCategory = IECTestUtil.CreateSampleProductCategory(IECConstants.ProductCategory_SF_TEST, true);
-		oProductCategory.Active__c = true;
-		insert oProductCategory;
-		
-		// create dummy product info
-		oProductInfo = IECTestUtil.CreateSampleProductInfo('My product', oProductCategory, oProduct);
-		insert oProductInfo;
-		
-		// create dummy rate plan information
-		oProductRatePlanInfo1 = IECTestUtil.CreateSampleProductRatePlanInfo('Rate Plan Info 1', false, oProductRatePlan1, oProductInfo);
-		oProductRatePlanInfo1.Display_As_Monthly_Fee__c = false;
-		oProductRatePlanInfo1.Active__c = true;
-		oProductRatePlanInfo1.Order__c = 1;
-		oProductRatePlanInfo1.Subscription_Usage_Qty__c = QTY;
-		
-		oProductRatePlanInfo2 = IECTestUtil.CreateSampleProductRatePlanInfo('Rate Plan Info 2', false, oProductRatePlan2, oProductInfo);
-		oProductRatePlanInfo2.Display_As_Monthly_Fee__c = false;
-		oProductRatePlanInfo2.Active__c = true;
-		oProductRatePlanInfo2.Order__c = 2;
-		oProductRatePlanInfo2.Subscription_Usage_Qty__c = QTY * 2;
-		
-		oProductRatePlanInfo3 = IECTestUtil.CreateSampleProductRatePlanInfo('Rate Plan Info 3', false, oProductRatePlan3, oProductInfo);
-		oProductRatePlanInfo3.Display_As_Monthly_Fee__c = false;
-		oProductRatePlanInfo3.Active__c = true;
-		oProductRatePlanInfo3.Order__c = 3;
-		oProductRatePlanInfo3.Subscription_Usage_Qty__c = 0;
-		
-		List<Product_Rate_Plan_Information__c> productRatePlanInfoList = new List<Product_Rate_Plan_Information__c> {oProductRatePlanInfo1, oProductRatePlanInfo2, oProductRatePlanInfo3};
-		insert productRatePlanInfoList;
-		*/
 	} // end of dataPreparation
 	
 	
@@ -229,7 +194,7 @@ private class trgHndlrIECSubscriptionToDetailTest {
 			insert subscription;
 			
 			// create Zuora__SubscriptionProductCharge__c
-			subscriptionCharge = IECTestUtil.createSampleSubscriptionCharge(subscription.Id, Date.today().addMonths(-6), oProduct, oProductRatePlan1);
+			subscriptionCharge = IECTestUtil.createSampleSubscriptionCharge2(subscription.Id, Date.today().addMonths(-6), oProduct, oProductRatePlan1);
 			subscriptionCharge.Product_Rate_Plan_Charge__c = oProductRatePlanCharge1.Id;
 			insert subscriptionCharge;
 		}
@@ -283,10 +248,10 @@ private class trgHndlrIECSubscriptionToDetailTest {
 			insert subscriptionList;
 			
 			// create Zuora__SubscriptionProductCharge__c
-			subscriptionCharge = IECTestUtil.createSampleSubscriptionCharge(subscription.Id, Date.today().addMonths(-6), oProduct, oProductRatePlan1);
+			subscriptionCharge = IECTestUtil.createSampleSubscriptionCharge2(subscription.Id, Date.today().addMonths(-6), oProduct, oProductRatePlan1);
 			subscriptionCharge.Product_Rate_Plan_Charge__c = oProductRatePlanCharge1.Id;
 			
-			Zuora__SubscriptionProductCharge__c subscriptionCharge2 = IECTestUtil.createSampleSubscriptionCharge(subscription.Id, Date.today().addMonths(-6), oProduct, oProductRatePlan2);
+			Zuora__SubscriptionProductCharge__c subscriptionCharge2 = IECTestUtil.createSampleSubscriptionCharge2(subscription.Id, Date.today().addMonths(-6), oProduct, oProductRatePlan2);
 			subscriptionCharge2.Product_Rate_Plan_Charge__c = oProductRatePlanCharge2.Id;
 			List<Zuora__SubscriptionProductCharge__c> subscriptionProductChargeList = new List<Zuora__SubscriptionProductCharge__c>{subscriptionCharge,subscriptionCharge2 };
 			insert subscriptionProductChargeList;

@@ -139,14 +139,14 @@ private class vfIEC_CACWDetail_Test {
     oProductCategory.Display_Name__c = PRODUCT_CATEGORY_DISPLAY_NAME_01;
     insert oProductCategory;
     
-    zqu__ZProduct__c oProduct = IECTestUtil.CreateSampleProduct('PTST');
+    Product2 oProduct = IECTestUtil.CreateSampleProduct2('PTST');
     insert oProduct;
     
-    Product_Information__c oProductInfo = IECTestUtil.CreateSampleProductInfo('PITST', oProductCategory, oProduct);
+    Product_Information__c oProductInfo = IECTestUtil.CreateSampleProductInfo2('PITST', oProductCategory, oProduct);
     oProductInfo.Product_Audience__c = IECConstants.ProductInformationAudience_DEFAULT;
     insert oProductInfo;
     
-    zqu__ProductRatePlan__c oProductRatePlan = IECTestUtil.CreateSampleProductRatePlan(PRODUCT_RATE_PLAN_NAME_01, false, oProduct);
+    zqu__ProductRatePlan__c oProductRatePlan = IECTestUtil.CreateSampleProductRatePlan2(PRODUCT_RATE_PLAN_NAME_01, false, oProduct);
     insert oProductRatePlan;
     
     zqu__ProductRatePlanCharge__c oProductRatePlanCharge = IECTestUtil.CreateSampleProductRatePlanCharge(oProductRatePlan, 'CHARGETEST', 1);
@@ -167,7 +167,7 @@ private class vfIEC_CACWDetail_Test {
     insert oSubscription;
     
     // create test subscription charge
-    Zuora__SubscriptionProductCharge__c subscriptionCharge = IECTestUtil.createSampleSubscriptionCharge(oSubscription.Id, dEndOfSubscriptionProductChargeDate, oProduct, oProductRatePlan);
+    Zuora__SubscriptionProductCharge__c subscriptionCharge = IECTestUtil.createSampleSubscriptionCharge2(oSubscription.Id, dEndOfSubscriptionProductChargeDate, oProduct, oProductRatePlan);
     
     Contact oContact = [Select Id, Name, AccountId from Contact where Id = :testUser.ContactId limit 1];
     //Account oAccount = [Select Id, Name from Account where Id = :oContact.AccountId limit 1];

@@ -6,7 +6,6 @@ global class SchdlCACWSUsageUpdate_tst {
     public static IATA_ISO_Country__c myCountry;
     public static Account myAcct;
     public static Zuora__CustomerAccount__c myBillingAcct;
-    public static zqu__ZProduct__c myZProduct;
     public static Product_Category__c myProductCategory;
     public static Product_Information__c myProductInformation;
     public static Zuora__Subscription__c mySubscription;
@@ -39,12 +38,6 @@ global class SchdlCACWSUsageUpdate_tst {
             Zuora__Zuora_Id__c = '12345678901234567890123456789012'
         );
         Insert myBillingAcct;
-        
-        
-        // add a ZProduct
-        //myZProduct = IECTestUtil.CreateSampleProduct('Test zProduct');
-        //insert myZProduct;
-        
         
         // Create Product Information                 
         //myProductInformation = IECTestUtil.CreateSampleProductInfo('Test ProductInformation', myProductCategory, myZProduct);

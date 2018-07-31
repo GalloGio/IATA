@@ -17,7 +17,7 @@ private class OrderItemAcceptedPaymentMethBatch_Test {
 	private static Product_Information__c productInformation;
 	private static Product_Information__c productInformation2;
 	private static Product_Information__c productInformation3;
-	private static zqu__ZProduct__c product;
+	private static Product2 product;
 	private static zqu__ProductRatePlan__c productRatePlan;
 	private static zqu__ProductRatePlan__c productRatePlan2;
 	private static zqu__ProductRatePlan__c productRatePlan3;
@@ -42,21 +42,21 @@ private class OrderItemAcceptedPaymentMethBatch_Test {
 
 		insert billingAccount;
 
-		product = IECTestUtil.CreateSampleProduct('Product1');
+		product = IECTestUtil.CreateSampleProduct2('Product1');
 		product.ProductAudience__c = IECConstants.ProductAudience_Zuora_NONMEMBERSINGLE;
 		product.ProductCategory__c = IECConstants.ProductCategory_SF_TEST;
 
 		insert product;
 
-		productRatePlan = IECTestUtil.CreateSampleProductRatePlan('RatePlan1', false, product);
+		productRatePlan = IECTestUtil.CreateSampleProductRatePlan2('RatePlan1', false, product);
 		productRatePlan.zqu__Deleted__c = false;
 		insert productRatePlan;
 
-		productRatePlan2 = IECTestUtil.CreateSampleProductRatePlan('RatePlan2', false, product);
+		productRatePlan2 = IECTestUtil.CreateSampleProductRatePlan2('RatePlan2', false, product);
 		productRatePlan2.zqu__Deleted__c = false;
 		insert productRatePlan2;
 
-		productRatePlan3 = IECTestUtil.CreateSampleProductRatePlan('RatePlan3', false, product);
+		productRatePlan3 = IECTestUtil.CreateSampleProductRatePlan2('RatePlan3', false, product);
 		productRatePlan3.zqu__Deleted__c = false;
 		insert productRatePlan3;
 
@@ -76,7 +76,7 @@ private class OrderItemAcceptedPaymentMethBatch_Test {
 		productCategory.Active__c = true;
 		insert productCategory;
 
-		productInformation = IECTestUtil.CreateSampleProductInfo('ProductInfo', productCategory, product);
+		productInformation = IECTestUtil.CreateSampleProductInfo2('ProductInfo', productCategory, product);
 		insert productInformation;
 
 		productRatePlanInformation = IECTestUtil.CreateSampleProductRatePlanInfo('RatePlanInformation1', false, productRatePlan, productInformation);
@@ -86,7 +86,7 @@ private class OrderItemAcceptedPaymentMethBatch_Test {
 		productRatePlanInformation.Subscription_Usage_Qty__c = QTY;
 		insert productRatePlanInformation;
 
-		productInformation2 = IECTestUtil.CreateSampleProductInfo('ProductInfo2', productCategory, product);
+		productInformation2 = IECTestUtil.CreateSampleProductInfo2('ProductInfo2', productCategory, product);
 		insert productInformation2;
 
 		productRatePlanInformation2 = IECTestUtil.CreateSampleProductRatePlanInfo('RatePlanInformation2', false, productRatePlan2, productInformation2);
@@ -96,7 +96,7 @@ private class OrderItemAcceptedPaymentMethBatch_Test {
 		productRatePlanInformation2.Subscription_Usage_Qty__c = QTY * 2;
 		insert productRatePlanInformation2;
 
-		productInformation3 = IECTestUtil.CreateSampleProductInfo('ProductInfo3', productCategory, product);
+		productInformation3 = IECTestUtil.CreateSampleProductInfo2('ProductInfo3', productCategory, product);
 		insert productInformation3;
 
 		productRatePlanInformation3 = IECTestUtil.CreateSampleProductRatePlanInfo('RatePlanInformation3', false, productRatePlan3, productInformation3);
@@ -120,13 +120,10 @@ private class OrderItemAcceptedPaymentMethBatch_Test {
 		System.runAs(user) {
 			List<OrderItem> orderItemList = [SELECT Id, Product__c FROM OrderItem WHERE OrderId = :orderId];
 			Set<Id> productIdSet = new Set<Id>();
-			List<Product2> productList;
 
 			for (OrderItem orderItem : orderItemList) {
 				productIdSet.add(orderItem.Product__c);
 			}
-
-			productList = [SELECT Id, Accepted_Payment_Methods__c FROM Product2 WHERE Id IN :productIdSet];
 
 			Database.executeBatch(new OrderItemAcceptedPaymentMethodsBatch(productIdSet));
 		}
@@ -139,7 +136,7 @@ private class OrderItemAcceptedPaymentMethBatch_Test {
 		subscription.Zuora__CustomerAccount__c = billingAccount.Id;
 		insert subscription;
 
-		subscriptionProductCharge = IECTestUtil.createSampleSubscriptionCharge(subscription.Id, Date.today().addMonths(-6), product, productRatePlan);
+		subscriptionProductCharge = IECTestUtil.createSampleSubscriptionCharge2(subscription.Id, Date.today().addMonths(-6), product, productRatePlan);
 		insert subscriptionProductCharge;
 		
 		// Create Locations
@@ -190,34 +187,18 @@ private class OrderItemAcceptedPaymentMethBatch_Test {
 			IECOrder_Svc.addProductToCookie(orderItem.Product_Number__c, orderItem.Quantity, true);
 		}
 		
-		List<Product2> productList = [SELECT Id, SAP_Material_Number__c, ZProduct__c FROM Product2 WHERE Id IN :productIdSet];
-
-		List<zqu__ZProduct__c> zProductList = TestDataGenerator.generateZProducts(nb, false);
-
-		for (Integer x = 0; x < nb; x++) {
-			zqu__ZProduct__c zProduct = zProductList[x];
-
-			Product2 prod = productList[x];
-
-			zProduct.SAPProductMaterialNo__c = prod.SAP_Material_Number__c;
-		}
-		insert zProductList;
+		List<Product2> zProductList = TestDataGenerator.generateProducts(nb, true);
 
 		List<zqu__ProductRatePlan__c> zRatePlanList = new List<zqu__ProductRatePlan__c>();
 
-		for (Integer x = 0; x < productList.size(); x++) {
-			Product2 prod = productList[x];
-
-			zqu__ZProduct__c zprod = zProductList[x];
-
-			zqu__ProductRatePlan__c unitPricePlan = TestDataGenerator.generateZRatePlans(zprod.Id, 1, false)[0];
-			zqu__ProductRatePlan__c zPlan = TestDataGenerator.generateZRatePlans(zprod.Id, 1, false)[0];
+		for (Product2 zprod : zProductList) {
+			zqu__ProductRatePlan__c unitPricePlan = TestDataGenerator.generateZRatePlans2(zprod.Id, 1, false)[0];
+			zqu__ProductRatePlan__c zPlan = TestDataGenerator.generateZRatePlans2(zprod.Id, 1, false)[0];
 
 			zPlan.Couponcode__c = 'COUP123';
 			zRatePlanList.add(zPlan);
 			zRatePlanList.add(unitPricePlan);
 
-			prod.ZProduct__c = zprod.Id;
 		}
 		insert zRatePlanList;
 
@@ -241,8 +222,6 @@ private class OrderItemAcceptedPaymentMethBatch_Test {
 			else
 				zTiers.addAll(TestDataGenerator.generateZTiers(c.Id, 1, false));
 		insert zTiers;
-		
-		update ProductList;
 		
 		return order.Id;
 	}

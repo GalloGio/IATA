@@ -1933,7 +1933,7 @@ public with sharing class IECSubscriptionManager {
                                     , Zuora__Type__c, Zuora__BillingPeriod__c,Zuora__Subscription__c, Zuora__EffectiveStartDate__c, Zuora__EffectiveEndDate__c
                                     From Zuora__Subscription_Product_Charges__r
                                     //where Product_Rate_Plan_Charge__r.zqu__ZuoraId__c not in :lstExcludedCharge   //*** (Thai 2016-10-06) added to remove shipping & tax subscription
-                                    where Product_Rate_Plan_Charge__r.zqu__ProductRatePlan__r.zqu__ZProduct__c in :lstHierProductId)   //*** (Thai 2016-11-03) added to filter only hierarchy products
+                                    where Product_Rate_Plan_Charge__r.zqu__ProductRatePlan__r.zqu__Product__c in :lstHierProductId)   //*** (Thai 2016-11-03) added to filter only hierarchy products
                                 , Product_Rate_Plan_Information__r.Is_Triable__c
                                 , Product_Rate_Plan_Information__r.Product_Rate_Plan__r.Name
                                 , Product_Rate_Plan_Information__r.Related_Product_Information__c
@@ -2061,7 +2061,7 @@ public with sharing class IECSubscriptionManager {
                                 //(Select  Zuora__ProductName__c, Zuora__RatePlanName__c From Zuora__Subscription_Product_Charges__r LIMIT 1)
                                 (Select  Zuora__ProductName__c, Zuora__RatePlanName__c
                                  From Zuora__Subscription_Product_Charges__r
-                                 where Product_Rate_Plan_Charge__r.zqu__ProductRatePlan__r.zqu__ZProduct__c in :lstHierProductId
+                                 where Product_Rate_Plan_Charge__r.zqu__ProductRatePlan__r.zqu__Product__c in :lstHierProductId
                                  LIMIT 1)
                                 , Product_Rate_Plan_Information__r.Is_Triable__c
                                 , Product_Rate_Plan_Information__r.Product_Rate_Plan__r.Name

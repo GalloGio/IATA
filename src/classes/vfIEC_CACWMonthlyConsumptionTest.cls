@@ -15,7 +15,7 @@
 private class vfIEC_CACWMonthlyConsumptionTest {
     private static Product_Category__c oProductCategory;
     private static Product_Information__c oProductInfo;
-    private static zqu__ZProduct__c oProduct;
+    private static Product2 oProduct;
     private static zqu__ProductRatePlan__c oProductRatePlan;
     private static zqu__ProductRatePlanCharge__c oProductRatePlanCharge;
     private static Product_Rate_Plan_Information__c oProductRatePlanInfo;
@@ -35,14 +35,14 @@ private class vfIEC_CACWMonthlyConsumptionTest {
         oProductCategory = IECTestUtil.CreateSampleProductCategory(IECConstants.ProductCategory_SF_CACWEB, true);
         insert oProductCategory;
         
-        oProduct = IECTestUtil.CreateSampleProduct('PTST');
+        oProduct = IECTestUtil.CreateSampleProduct2('PTST');
         insert oProduct;
         
-        oProductInfo = IECTestUtil.CreateSampleProductInfo('PITST', oProductCategory, oProduct);
+        oProductInfo = IECTestUtil.CreateSampleProductInfo2('PITST', oProductCategory, oProduct);
         oProductInfo.Product_Audience__c = IECConstants.ProductInformationAudience_DEFAULT;
         insert oProductInfo;
         
-        oProductRatePlan = IECTestUtil.CreateSampleProductRatePlan('PRPTST', false, oProduct);
+        oProductRatePlan = IECTestUtil.CreateSampleProductRatePlan2('PRPTST', false, oProduct);
         insert oProductRatePlan;
         
         oProductRatePlanCharge = IECTestUtil.CreateSampleProductRatePlanCharge(oProductRatePlan, 'CHARGETEST', 1);
@@ -60,7 +60,7 @@ private class vfIEC_CACWMonthlyConsumptionTest {
         insert subscription;
         
         // create dummy subscription charge
-        subscriptionCharge = IECTestUtil.createSampleSubscriptionCharge(subscription.Id, Date.newInstance(2014, 12, 31), oProduct, oProductRatePlan);
+        subscriptionCharge = IECTestUtil.createSampleSubscriptionCharge2(subscription.Id, Date.newInstance(2014, 12, 31), oProduct, oProductRatePlan);
         insert subscriptionCharge;
         
         // Create dummy CAC Subscription Detail

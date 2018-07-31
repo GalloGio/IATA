@@ -9,7 +9,7 @@
 private class vfIEC_CACWKey_test {
     private static Product_Category__c oProductCategory;
     private static Product_Information__c oProductInfo;
-    private static zqu__ZProduct__c oProduct;
+    private static Product2 oProduct;
     private static zqu__ProductRatePlan__c oProductRatePlan;
     private static zqu__ProductRatePlanCharge__c oProductRatePlanCharge;
     private static Product_Rate_Plan_Information__c oProductRatePlanInfo;
@@ -29,14 +29,14 @@ private class vfIEC_CACWKey_test {
         oProductCategory = IECTestUtil.CreateSampleProductCategory(IECConstants.ProductCategory_SF_CACWEB, true);
         insert oProductCategory;
         
-        oProduct = IECTestUtil.CreateSampleProduct('PTST');
+        oProduct = IECTestUtil.CreateSampleProduct2('PTST');
         insert oProduct;
         
-        oProductInfo = IECTestUtil.CreateSampleProductInfo('PITST', oProductCategory, oProduct);
+        oProductInfo = IECTestUtil.CreateSampleProductInfo2('PITST', oProductCategory, oProduct);
         oProductInfo.Product_Audience__c = IECConstants.ProductInformationAudience_DEFAULT;
         insert oProductInfo;
         
-        oProductRatePlan = IECTestUtil.CreateSampleProductRatePlan('PRPTST', false, oProduct);
+        oProductRatePlan = IECTestUtil.CreateSampleProductRatePlan2('PRPTST', false, oProduct);
         insert oProductRatePlan;
         
         oProductRatePlanCharge = IECTestUtil.CreateSampleProductRatePlanCharge(oProductRatePlan, 'CHARGETEST', 1);
@@ -54,7 +54,7 @@ private class vfIEC_CACWKey_test {
         insert subscription;
         
         // create dummy subscription charge
-        subscriptionCharge = IECTestUtil.createSampleSubscriptionCharge(subscription.Id, Date.today().addMonths(-6), oProduct, oProductRatePlan);
+        subscriptionCharge = IECTestUtil.createSampleSubscriptionCharge2(subscription.Id, Date.today().addMonths(-6), oProduct, oProductRatePlan);
         insert subscriptionCharge;
         
         // Create dummy CAC Subscription Detail
@@ -112,25 +112,8 @@ private class vfIEC_CACWKey_test {
             
             system.debug('ListOfCACDetails Size' + ListOfCACDetails.size());
             system.debug('ListOfCACDetails Values' + ListOfCACDetails);
-            /*
-			id TestID;
-            for (CAC_Subscription_Detail__c cacd : ListOfCACDetails){
-                if(cacd.id != CAC_SubscriptionDetail.id )
-                    system.debug('ID Different');
-                else {
-                    system.debug('ID Found');
-                    TestId = cacd.id;
-                }      
-            }
-            
-            set<Id> CacDetailIdSet = new set<id>();            
-            for (CAC_Subscription_Detail__c cacd : ListOfCACDetails){
-                CacDetailIdSet.add(cacd.Id); 
-            }
-            System.Debug('CacDetailIdSet Contains inserted ID = ' + CacDetailIdSet.contains(CAC_SubscriptionDetail.Id));
-            System.Assert(CacDetailIdSet.contains(CAC_SubscriptionDetail.Id),'The CAC Subscription Detail Id inserted during the test method is expected to be returned by Controller ');
-			*/
         }
+
         System.debug('Unit Test: Finish: TestIEC_CACWKey');
         
     }

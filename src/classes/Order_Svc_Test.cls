@@ -85,20 +85,17 @@ private class Order_Svc_Test
         List<Product2> fullProducts = (List<Product2>) pSelector.selectSObjectById(productIds);
 
         //Generate price for the products 
-        List<zqu__ZProduct__c> zProducts = TestDataGenerator.generateZProducts(5, true);
         List<zqu__ProductRatePlan__c> zRatePlans = new List<zqu__ProductRatePlan__c>();
         List<zqu__ProductRatePlanCharge__c> zCharges = new List<zqu__ProductRatePlanCharge__c>();
 
         for(Integer x = 0; x < fullProducts.size(); x++)
         {
             Product2 prod = fullProducts[x]; 
-            zqu__ZProduct__c zprod = zProducts[x];
-            zRatePlans.addAll(TestDataGenerator.generateZRatePlans(zprod.Id,1,false)); //1 rate plan per product
+            zRatePlans.addAll(TestDataGenerator.generateZRatePlans2(prod.Id,1,false)); //1 rate plan per product
             prod.SAP_Status_Code__c = 'A';
             prod.Post_to_Ecommerce_Date__c = System.today().addDays(-7);
             prod.Sell_through_eCommerce__c = true;
             prod.Inventory_Status__c = 'In stock';
-            prod.ZProduct__c = zprod.Id;
         }
 
         insert zRatePlans;
@@ -338,7 +335,7 @@ private class Order_Svc_Test
 	@isTest (seeAllData=true)
 	static void test_zuoraSubscribeWithNewCustomer(){
 		//*** gererate Zuora products
-		List<zqu__ZProduct__c> lstZproducts = TestDataGenerator.generateZProducts(3, true);
+		List<Product2> lstZproducts = TestDataGenerator.generateProducts(3, true);
 
 		//*** generate Zuora rate plans
 		zqu__ProductRatePlan__c zPlanForUnitPrice = TestDataGenerator.generateZRatePlans(lstZproducts[0].Id, 1, false)[0];
@@ -431,8 +428,7 @@ private class Order_Svc_Test
 			                            //*** make product electronic and available for E-Commerce
 			                          , SAP_Status_Code__c='A', SAP_Product_Type_Code__c='07', Post_to_Ecommerce_Date__c= system.today(), Sell_through_eCommerce__c=true
 			                            //*** force to subscribe product to Zuora no matter of payment method
-			                          , Available_for_Subscription__c=true, Is_Shippable__c=false, Charge_Shipping__c=false, SAP_Media_Code__c='30', Number_of_months_of_subscription__c=1
-			                          , ZProduct__c=lstZproducts[oi.ServiceDate == system.today() ? 0 : (oi.ServiceDate == system.today().addDays(1) ? 1 : 2)].Id));
+			                          , Available_for_Subscription__c=true, Is_Shippable__c=false, Charge_Shipping__c=false, SAP_Media_Code__c='30', Number_of_months_of_subscription__c=1));
 		update lstProduct;
 
 		//*** generate payment information for credit card

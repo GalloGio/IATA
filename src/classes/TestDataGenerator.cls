@@ -961,7 +961,13 @@ public with sharing class TestDataGenerator
                 Sales_Channel__c                = Utility.getRandomPicklistValue('Product2','Sales_Channel__c'),
                 Status__c                       = Utility.getRandomPicklistValue('Product2','Status__c'),
                 Sales_Notification__c           = true,
-                Accepted_Payment_Methods__c     = 'Bank Transfer; Credit Card; IATA Clearing House'
+                Accepted_Payment_Methods__c     = 'Bank Transfer; Credit Card; IATA Clearing House',
+                zqu__SKU2__c                    = generateProductCode(),
+                zqu__EffectiveStartDate__c      = DEFAULT_EFFECTIVE_START_DATE,
+                zqu__EffectiveEndDate__c        = DEFAULT_EFFECTIVE_END_DATE,
+                zqu__Deleted__c                 = false,
+                zqu__ZuoraId__c                 = generateZuoraFakeId()
+
             ));
         }
 
@@ -1006,7 +1012,12 @@ public with sharing class TestDataGenerator
                 Sales_Channel__c                = Utility.getRandomPicklistValue('Product2','Sales_Channel__c'),
                 Status__c                       = Utility.getRandomPicklistValue('Product2','Status__c'),
                 Sales_Notification__c           = true,
-                Accepted_Payment_Methods__c     = 'Bank Transfer; Credit Card; IATA Clearing House'
+                Accepted_Payment_Methods__c     = 'Bank Transfer; Credit Card; IATA Clearing House',
+                zqu__SKU2__c                    = generateProductCode(),
+                zqu__EffectiveStartDate__c      = DEFAULT_EFFECTIVE_START_DATE,
+                zqu__EffectiveEndDate__c        = DEFAULT_EFFECTIVE_END_DATE,
+                zqu__Deleted__c                 = false,
+                zqu__ZuoraId__c                 = generateZuoraFakeId()
             ));
         }
 

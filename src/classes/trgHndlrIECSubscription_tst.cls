@@ -13,7 +13,7 @@ private class trgHndlrIECSubscription_tst {
 	private static User usr;
     private static Product_Category__c oProductCategory;
 	private static Product_Information__c oProductInfo;
-	private static zqu__ZProduct__c oProduct;
+	private static Product2 oProduct;
 	private static zqu__ProductRatePlan__c oProductRatePlan;
 	private static zqu__ProductRatePlan__c oProductRatePlan2;
 	private static zqu__ProductRatePlan__c oProductRatePlan3;
@@ -39,21 +39,21 @@ private class trgHndlrIECSubscription_tst {
 		insert oBillingAccount;
 
 		// create dummy Zuora product
-    	oProduct = IECTestUtil.CreateSampleProduct('Product1');
+    	oProduct = IECTestUtil.CreateSampleProduct2('Product1');
     	oProduct.ProductAudience__c = IECConstants.ProductAudience_Zuora_NONMEMBERSINGLE;
     	oProduct.ProductCategory__c = IECConstants.ProductCategory_SF_TEST;
     	insert oProduct;
     	
     	// create dummy Zuora rate plan
-    	oProductRatePlan = IECTestUtil.CreateSampleProductRatePlan('Rate plan 1', false, oProduct);
+    	oProductRatePlan = IECTestUtil.CreateSampleProductRatePlan2('Rate plan 1', false, oProduct);
     	oProductRatePlan.zqu__Deleted__c = false;
     	insert oProductRatePlan;
     	
-    	oProductRatePlan2 = IECTestUtil.CreateSampleProductRatePlan('Rate plan 2', false, oProduct);
+    	oProductRatePlan2 = IECTestUtil.CreateSampleProductRatePlan2('Rate plan 2', false, oProduct);
     	oProductRatePlan2.zqu__Deleted__c = false;
     	insert oProductRatePlan2;
     	
-    	oProductRatePlan3 = IECTestUtil.CreateSampleProductRatePlan('Rate plan 3', false, oProduct);
+    	oProductRatePlan3 = IECTestUtil.CreateSampleProductRatePlan2('Rate plan 3', false, oProduct);
     	oProductRatePlan3.zqu__Deleted__c = false;
     	insert oProductRatePlan3;
     	
@@ -76,7 +76,7 @@ private class trgHndlrIECSubscription_tst {
         insert oProductCategory;
         
         // create dummy product info
-        oProductInfo = IECTestUtil.CreateSampleProductInfo('My product', oProductCategory, oProduct);
+        oProductInfo = IECTestUtil.CreateSampleProductInfo2('My product', oProductCategory, oProduct);
         insert oProductInfo;
         
         // create dummy rate plan information
@@ -114,7 +114,7 @@ private class trgHndlrIECSubscription_tst {
 	        insert subscription;
 	        
 	        // create dummy subscription charge
-	        subscriptionCharge = IECTestUtil.createSampleSubscriptionCharge(subscription.Id, Date.today().addMonths(-6), oProduct, oProductRatePlan);
+	        subscriptionCharge = IECTestUtil.createSampleSubscriptionCharge2(subscription.Id, Date.today().addMonths(-6), oProduct, oProductRatePlan);
 	        insert subscriptionCharge;
 
 	        // Test #1 - check if the Product Access has been created

@@ -43,7 +43,7 @@ private class Pricebook_Sel_Test {
 				SELECT
 					Id,
 					zqu__ListPrice__c,
-					zqu__ProductRatePlan__r.zqu__ZProduct__c
+					zqu__ProductRatePlan__r.zqu__Product__c
 				FROM
 					zqu__ProductRatePlanCharge__c
 				WHERE
@@ -52,7 +52,7 @@ private class Pricebook_Sel_Test {
 					zqu__ListPrice__c != NULL
 			]
 		) {
-			Id zProductId = charge.zqu__ProductRatePlan__r.zqu__ZProduct__c;
+			Id zProductId = charge.zqu__ProductRatePlan__r.zqu__Product__c;
 			Id productId = productZProductMap.get(zProductId);
 
 			if (productId != null) {
