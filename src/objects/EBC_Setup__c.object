@@ -272,12 +272,12 @@
     </fields>
     <fields>
         <fullName>Member_Email_Block_Product__c</fullName>
-        <deleteConstraint>Restrict</deleteConstraint>
+        <deleteConstraint>SetNull</deleteConstraint>
         <description>This is the product that will be the base of the Rate Plans for the Email Blocks, for member</description>
         <externalId>false</externalId>
         <inlineHelpText>This is the product that will be the base of the Rate Plans for the Email Blocks, for member</inlineHelpText>
         <label>Member Email Block Product</label>
-        <referenceTo>zqu__ZProduct__c</referenceTo>
+        <referenceTo>Product2</referenceTo>
         <relationshipLabel>EBC Setups for Member Email Block Product</relationshipLabel>
         <relationshipName>Member_Email_Block_EBC_Setups</relationshipName>
         <required>false</required>
@@ -371,8 +371,8 @@ There is no recurring charge for this.</inlineHelpText>
         <externalId>false</externalId>
         <inlineHelpText>This is the product that will be the base of the Rate Plans for the Email Blocks, for non member</inlineHelpText>
         <label>Non Member Email Block Product</label>
-        <referenceTo>zqu__ZProduct__c</referenceTo>
-        <relationshipLabel>EBC Setups (Non Member Member Email Block Product)</relationshipLabel>
+        <referenceTo>Product2</referenceTo>
+        <relationshipLabel>EBC Setups (Non Member Email Block Product)</relationshipLabel>
         <relationshipName>Non_Member_Email_Block_EBC_Setups</relationshipName>
         <required>false</required>
         <trackHistory>false</trackHistory>

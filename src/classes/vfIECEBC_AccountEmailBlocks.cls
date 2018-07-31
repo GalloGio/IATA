@@ -46,7 +46,7 @@ global virtual with sharing class vfIECEBC_AccountEmailBlocks extends vfIECEBC_C
 	}
 	
 	// =======================================================================-
-	// zqu__ZProduct__c.Id related for the Email Block Product Rate Plan
+	// Product2.Id related for the Email Block Product Rate Plan
 	// this is based on what defined in EBC_Setup and whether the user is a member
 	private Id emailBlockProductId {
 		get{

@@ -113,7 +113,7 @@
         <deleteConstraint>SetNull</deleteConstraint>
         <externalId>false</externalId>
         <label>Product</label>
-        <referenceTo>zqu__ZProduct__c</referenceTo>
+        <referenceTo>Product2</referenceTo>
         <relationshipLabel>Invoice Items</relationshipLabel>
         <relationshipName>Invoice_Items</relationshipName>
         <required>false</required>

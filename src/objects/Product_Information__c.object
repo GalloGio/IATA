@@ -128,14 +128,24 @@
         <fullName>Related_Product__c</fullName>
         <deleteConstraint>SetNull</deleteConstraint>
         <externalId>false</externalId>
-        <inlineHelpText>Related Zuora&apos;s Product</inlineHelpText>
         <label>Related Product</label>
-        <referenceTo>zqu__ZProduct__c</referenceTo>
+        <referenceTo>Product2</referenceTo>
         <relationshipLabel>Products Information</relationshipLabel>
         <relationshipName>Products_Information</relationshipName>
         <required>false</required>
         <trackTrending>false</trackTrending>
         <type>Lookup</type>
+    </fields>
+    <fields>
+        <fullName>sfsync_unique_key__c</fullName>
+        <caseSensitive>true</caseSensitive>
+        <externalId>true</externalId>
+        <label>sfSync Unique Key</label>
+        <length>18</length>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>true</unique>
     </fields>
     <label>Product Information</label>
     <listViews>

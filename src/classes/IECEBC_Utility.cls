@@ -477,7 +477,7 @@ public class IECEBC_Utility {
                 , Member_Prepaid_Product_Rate_Plan_03__c
                 , Member_Prepaid_Product_Rate_Plan_04__c
                                                    
-                                , E_Member_Prepaid_Product_Rate_Plan_01__c
+                , E_Member_Prepaid_Product_Rate_Plan_01__c
                 , E_Member_Prepaid_Product_Rate_Plan_02__c
                 , E_Member_Prepaid_Product_Rate_Plan_03__c
                 , E_Member_Prepaid_Product_Rate_Plan_04__c
@@ -489,7 +489,7 @@ public class IECEBC_Utility {
                 , Non_Member_Prepaid_Product_Rate_Plan_03__c
                 , Non_Member_Prepaid_Product_Rate_Plan_04__c
                                                    
-                                , E_N_Member_Prepaid_Product_Rate_Plan_01__c
+                , E_N_Member_Prepaid_Product_Rate_Plan_01__c
                 , E_N_Member_Prepaid_Product_Rate_Plan_02__c
                 , E_N_Member_Prepaid_Product_Rate_Plan_03__c
                 , E_N_Member_Prepaid_Product_Rate_Plan_04__c
