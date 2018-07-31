@@ -179,7 +179,7 @@ public with sharing class AMS_XML_Generator {
 
 
         for(Case c: [Select Id, CaseNumber from Case where RecordTypeId = :AMS_Utils.OSCAR_COMUNICATION and OSCAR__c in: changeCodeOscarMap.Values() and ( ParentId = null or Parent.RecordTypeId != :AMS_Utils.OSCAR_COMUNICATION)]){
-            changeCodeCaseNumber.put(changeCodeOscarMap.get(c.OSCAR__c),c.CaseNumber);
+            changeCodeCaseNumber.put(changeCodeOscarMap.get(c.OSCAR__c),c.Id);
         }
         /*NEWGEN-3267 END*/
         
