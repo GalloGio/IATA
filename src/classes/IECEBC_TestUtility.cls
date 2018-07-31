@@ -55,7 +55,7 @@ public with sharing class IECEBC_TestUtility {
 	public static Product2 oEbcProductEmailBlock;
 	public static Product2 oEbcProductPayExactAmount;
 	public static List<Product_Information__c> lEbcProductInfo;
-	public static Map<Id,Product_Information__c> mProductIdToProductInfoObj; // map from ZProduct.Id to Product_Information
+	public static Map<Id,Product_Information__c> mProductIdToProductInfoObj; // map from Product.Id to Product_Information
 	
 	public static zqu__ProductRatePlan__c oEbcPayAsYouGoProductRatePlanMember {get;private set;}	// pay as you go EBC
 	public static zqu__ProductRatePlan__c oEbcPayAsYouGoProductRatePlanNonMember {get;private set;} // pay as you go EBC
@@ -397,7 +397,7 @@ public with sharing class IECEBC_TestUtility {
 	// ================================================================================
 	// create Subscription and related SubscriptionProductCharge
 	// for the test user (oUser, oAccount, oBillingAccount)
-	// input ProductRatePlan, ZProduct, EndSubscriptionDate
+	// input ProductRatePlan, Product, EndSubscriptionDate
 	// output oSubscription, oSubscriptionProductCharge
 	// return value: oSubscription
 	public static Zuora__Subscription__c createEbcSubscription(zqu__ProductRatePlan__c poProductRatePlan, Product2 poProduct, Date pdEndSubscriptionDate)

@@ -11,7 +11,7 @@ private class vfIECHistQuotes_tst {
     
     private static Product_Category__c oProductCategory;
     private static Product_Information__c oProductInfo;
-    private static zqu__ZProduct__c oProduct;
+    private static Product2 oProduct;
     private static zqu__ProductRatePlan__c oProductRatePlan;
     private static Product_Rate_Plan_Information__c oProductRatePlanInfo;
     private static Opportunity oOpportunity1;
@@ -44,14 +44,14 @@ private class vfIECHistQuotes_tst {
         oProductCategory = IECTestUtil.CreateSampleProductCategory('PCTST', true);
         insert oProductCategory;
         
-        oProduct = IECTestUtil.CreateSampleProduct('PTST');
+        oProduct = IECTestUtil.CreateSampleProduct2('PTST');
         insert oProduct;
 
-        oProductInfo = IECTestUtil.CreateSampleProductInfo('PITST', oProductCategory, oProduct);
+        oProductInfo = IECTestUtil.CreateSampleProductInfo2('PITST', oProductCategory, oProduct);
         oProductInfo.Product_Audience__c = IECConstants.ProductInformationAudience_DEFAULT;
         insert oProductInfo;
 
-        oProductRatePlan = IECTestUtil.CreateSampleProductRatePlan('PRPTST', false, oProduct);
+        oProductRatePlan = IECTestUtil.CreateSampleProductRatePlan2('PRPTST', false, oProduct);
         insert oProductRatePlan;
 
         oProductRatePlanInfo = IECTestUtil.CreateSampleProductRatePlanInfo('PCRPTST', false, oProductRatePlan, oProductInfo);

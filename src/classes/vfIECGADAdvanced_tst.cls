@@ -8,7 +8,7 @@
 private class vfIECGADAdvanced_tst {
 	private static Product_Category__c oProductCategory;
 	private static Product_Information__c oProductInfo;
-	private static zqu__ZProduct__c oProduct;
+	private static Product2 oProduct;
 	private static zqu__ProductRatePlan__c oProductRatePlan;
 	private static zqu__ProductRatePlanCharge__c oProductRatePlanCharge;
 	private static Product_Rate_Plan_Information__c oProductRatePlanInfo;
@@ -34,14 +34,14 @@ private class vfIECGADAdvanced_tst {
         oProductCategory = IECTestUtil.CreateSampleProductCategory(IECConstants.ProductCategory_SF_GAD, true);
 		insert oProductCategory;
 		
-		oProduct = IECTestUtil.CreateSampleProduct('PTST');
+		oProduct = IECTestUtil.CreateSampleProduct2('PTST');
 		insert oProduct;
 		
-		oProductInfo = IECTestUtil.CreateSampleProductInfo('PITST', oProductCategory, oProduct);
+		oProductInfo = IECTestUtil.CreateSampleProductInfo2('PITST', oProductCategory, oProduct);
 		oProductInfo.Product_Audience__c = IECConstants.ProductInformationAudience_DEFAULT;
 		insert oProductInfo;
 		
-		oProductRatePlan = IECTestUtil.CreateSampleProductRatePlan('PRPTST', false, oProduct);
+		oProductRatePlan = IECTestUtil.CreateSampleProductRatePlan2('PRPTST', false, oProduct);
 		insert oProductRatePlan;
 		
 		oProductRatePlanCharge = IECTestUtil.CreateSampleProductRatePlanCharge(oProductRatePlan, 'CHARGETEST', 1);
@@ -67,7 +67,7 @@ private class vfIECGADAdvanced_tst {
         insert subscription;
         
         // create dummy subscription charge
-        subscriptionCharge = IECTestUtil.createSampleSubscriptionCharge(subscription.Id, Date.today().addMonths(-6), oProduct, oProductRatePlan);
+        subscriptionCharge = IECTestUtil.createSampleSubscriptionCharge2(subscription.Id, Date.today().addMonths(-6), oProduct, oProductRatePlan);
         insert subscriptionCharge;
 
 		// Create a dummy country
@@ -162,79 +162,8 @@ private class vfIECGADAdvanced_tst {
 	        pgCont.saveFilter();
             System.debug(pgCont.ctrSavedFilters.lstSavedFilters.size());
             
-            /*
-	        system.assert(IECTestUtil.PageContainsMessage(ApexPages.getMessages(), Label.IEC_Error_Maximum5Filters));
-
-	        //Test 004: Save filter while 4 already exists
-	        delete filter1;
-	        pgCont.ctrSavedFilters.loadFilters();
-	        pgCont.saveFilter();
-
-	        //Test 006: Load sub-continent
-	        options = pgCont.getListOptionsSubContinent();
-	        
-	        //Test 007: Load country - SubContinent:All
-	        pgCont.filter.Sub_Continent__c = 'All';
-	        options = pgCont.getListOptionsCountry();
-
-			//Test 008: Load country - SubContinent:X
-	        pgCont.filter.Sub_Continent__c = gdpGeoDetail.Sub_Continent__c;
-	        options = pgCont.getListOptionsCountry();
-	        
-	        //Test 009: Load state - SubContinent:All, Country:All
-	        pgCont.filter.Sub_Continent__c = 'All';
-	        pgCont.filter.Country__c = 'All';
-	        options = pgCont.getListOptionsState();
-
-			//Test 010: Load state - SubContinent:X, Country:All
-	        pgCont.filter.Sub_Continent__c = gdpGeoDetail.Sub_Continent__c;
-	        pgCont.filter.Country__c = 'All';
-	        options = pgCont.getListOptionsState();
-
-			//Test 011: Load state - SubContinent:X, Country:Y
-	        pgCont.filter.Sub_Continent__c = gdpGeoDetail.Sub_Continent__c;
-	        pgCont.filter.Country__c = iataCountry.Name;
-	        options = pgCont.getListOptionsState();
-	        
-	        //Test 012: Load area of activity
-	        options = pgCont.getListOptionsAreaofActivity();
-	        
-	        //Test 013: Load agency program - Area Of Activity: All
-	        pgCont.filter.Area_of_Activity__c = 'All';
-	        options = pgCont.getListOptionsAgencyProgram();
-	        
-	        //Test 014: Load agency program - Area Of Activity: X
-	        pgCont.filter.Area_of_Activity__c = iecAgencyType.Area_of_Activity__c;
-	        options = pgCont.getListOptionsAgencyProgram();
-
-	        //Test 015: Search Agencies
-	        IEC_Application_Filter__c filterSystem = IECTestUtil.CreateSampleApplicationFilter(baseCont.loggedCustomer.RelatedContact);
-	        filterSystem.System_Generated__c = true;
-	        insert filterSystem;
-
-	        pgCont.filter = IECTestUtil.CreateSampleApplicationFilter(baseCont.loggedCustomer.RelatedContact);
-	        pgCont.searchAgencies();
-
-			//Test 016: Handle Brackets for Array variables
-	        IEC_Application_Filter__c filter = new IEC_Application_Filter__c();
-	        filter.Country__c = 'All';
-	        stringArray = pgCont.sCountry;
-	        filter.Country__c = '(All)';
-	        stringArray = pgCont.sCountry;
-
-
-			//Test 017: Load saved filter from URL
-	    	pgRef = Page.IECGADAdvanced;
-	    	Test.setCurrentPage(pgRef);
-	    	
-	    	pgRef.getParameters().put(IECConstants.PARAM_APPFILTER_ID, IECUtil.EncryptEncodeParameter(filter3.Id));
-	    	pgCont.pageLoad();
-
-	        // Misc Coverage
-	        pgCont.OnChangeCountry();
-	        pgCont.onClickOKError();
-*/
     	}
+    	
         System.debug('Unit Test: Finish: TestGADAdvanced');
     }
 

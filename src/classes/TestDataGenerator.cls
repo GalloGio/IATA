@@ -772,8 +772,7 @@ public with sharing class TestDataGenerator
         //-- Generate nb Products With Associated ZProducts 
         List<Product2> products = TestDataGenerator.generateProducts(nb,false);
 
-        List<zqu__ZProduct__c> zProducts = TestDataGenerator.generateZProducts(nb, true);
-        System.debug('zProducts generated::'+zProducts);
+        System.debug('Products generated::' + products);
 
         //-- Generate RatePlans & Charges & Tiers
         List<zqu__ProductRatePlan__c> zRatePlans = new List<zqu__ProductRatePlan__c>();
@@ -783,11 +782,10 @@ public with sharing class TestDataGenerator
 
         for(Integer x = 0; x < products.size(); x++)
         {
-            zRatePlans.addAll(TestDataGenerator.generateZRatePlans(zProducts[x].Id,1,false)); //1 rate plan per product
+            zRatePlans.addAll(TestDataGenerator.generateZRatePlans2(products[x].Id,1,false)); //1 rate plan per product
             products[x].Direct_Sales__c = true;
 
             products[x].Post_to_Ecommerce_Date__c = System.today().addDays(-7);
-            products[x].ZProduct__c = zProducts[x].Id;
         }
         
         //insert products;
@@ -844,17 +842,6 @@ public with sharing class TestDataGenerator
        //-- Generate nb Products With Aasociated ZProducts 
         List<Product2> products = TestDataGenerator.generateProducts(nb,false);
 
-        
-        List<zqu__ZProduct__c> zProducts = TestDataGenerator.generateZProducts(nb, false);
-
-        for(Integer x = 0; x < nb; x++)
-        {
-            zqu__ZProduct__c zProduct = zProducts[x];
-            Product2 prod = products[x]; 
-            zProduct.SAPProductMaterialNo__c = prod.SAP_Material_Number__c;
-        }
-        database.insert( zProducts,false);
-        
         //-- Generate RatePlans & Charges & Tiers
         List<zqu__ProductRatePlan__c> zRatePlans = new List<zqu__ProductRatePlan__c>();
         List<zqu__ProductRatePlanCharge__c> zCharges = new List<zqu__ProductRatePlanCharge__c>();
@@ -864,11 +851,9 @@ public with sharing class TestDataGenerator
         for(Integer x = 0; x < products.size(); x++)
         {
             Product2 prod = products[x]; 
-            zqu__ZProduct__c zprod = zProducts[x];
-            zRatePlans.addAll(TestDataGenerator.generateZRatePlans(zprod.Id,1,false)); //1 rate plan per product
+            zRatePlans.addAll(TestDataGenerator.generateZRatePlans2(prod.Id,1,false)); //1 rate plan per product
             prod.SAP_Status_Code__c = 'A';
             prod.Post_to_Ecommerce_Date__c = System.today().addDays(-7);
-            prod.ZProduct__c = zprod.Id;
         }
 
         database.insert(zRatePlans,false) ;

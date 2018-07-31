@@ -7,7 +7,7 @@ public class vfIECEBC_TestSuite1 {
     
     private static Product_Category__c oProductCategory { get { return vfIECEBC_TestSuite.oProductCategory; } set { vfIECEBC_TestSuite.oProductCategory = value; } }
     private static Product_Information__c oProductInfo { get { return vfIECEBC_TestSuite.oProductInfo; } set { vfIECEBC_TestSuite.oProductInfo = value; } }
-    private static zqu__ZProduct__c oProduct { get { return vfIECEBC_TestSuite.oProduct; } set { vfIECEBC_TestSuite.oProduct = value; } }
+    private static Product2 oProduct { get { return vfIECEBC_TestSuite.oProduct; } set { vfIECEBC_TestSuite.oProduct = value; } }
     private static zqu__ProductRatePlan__c oProductRatePlan { get { return vfIECEBC_TestSuite.oProductRatePlan; } set { vfIECEBC_TestSuite.oProductRatePlan = value; } }
     private static zqu__ProductRatePlanCharge__c oProductRatePlanCharge { get { return vfIECEBC_TestSuite.oProductRatePlanCharge; } set { vfIECEBC_TestSuite.oProductRatePlanCharge = value; } }
     private static Product_Rate_Plan_Information__c oProductRatePlanInfo { get { return vfIECEBC_TestSuite.oProductRatePlanInfo; } set { vfIECEBC_TestSuite.oProductRatePlanInfo = value; } }

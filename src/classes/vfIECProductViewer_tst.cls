@@ -10,7 +10,7 @@ private class vfIECProductViewer_tst {
     	System.debug('Unit Test: Start: TestProductViewer');
    	
     	// create dummy Zuora product
-    	zqu__ZProduct__c prod = IECTestUtil.CreateSampleProduct('Product1');
+    	Product2 prod = IECTestUtil.CreateSampleProduct2('Product1');
     	prod.ProductAudience__c = IECConstants.ProductAudience_Zuora_NONMEMBERSINGLE;
     	prod.ProductCategory__c = IECConstants.ProductCategory_SF_TEST;
     	insert prod;
@@ -19,7 +19,7 @@ private class vfIECProductViewer_tst {
     	Product_Category__c pc = IECTestUtil.CreateSampleProductCategory(IECConstants.ProductCategory_SF_TEST, true);
     	insert pc;
     	
-    	Product_Information__c pi = IECTestUtil.CreateSampleProductInfo('My product', pc, prod);
+    	Product_Information__c pi = IECTestUtil.CreateSampleProductInfo2('My product', pc, prod);
         pi.Product_Audience__c = IECConstants.ProductInformationAudience_DEFAULT;
         insert pi;
     	

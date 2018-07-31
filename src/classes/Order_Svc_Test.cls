@@ -338,9 +338,9 @@ private class Order_Svc_Test
 		List<Product2> lstZproducts = TestDataGenerator.generateProducts(3, true);
 
 		//*** generate Zuora rate plans
-		zqu__ProductRatePlan__c zPlanForUnitPrice = TestDataGenerator.generateZRatePlans(lstZproducts[0].Id, 1, false)[0];
-		zqu__ProductRatePlan__c zPlanForSetupFee = TestDataGenerator.generateZRatePlans(lstZproducts[1].Id, 1, false)[0];
-		zqu__ProductRatePlan__c zPlanForUnitPriceAndSetupFee = TestDataGenerator.generateZRatePlans(lstZproducts[2].Id, 1, false)[0];
+		zqu__ProductRatePlan__c zPlanForUnitPrice = TestDataGenerator.generateZRatePlans2(lstZproducts[0].Id, 1, false)[0];
+		zqu__ProductRatePlan__c zPlanForSetupFee = TestDataGenerator.generateZRatePlans2(lstZproducts[1].Id, 1, false)[0];
+		zqu__ProductRatePlan__c zPlanForUnitPriceAndSetupFee = TestDataGenerator.generateZRatePlans2(lstZproducts[2].Id, 1, false)[0];
 		insert new List<zqu__ProductRatePlan__c>{zPlanForUnitPrice, zPlanForSetupFee, zPlanForUnitPriceAndSetupFee};
 
 		//*** generate Zuora rate plan charges - charge 0 is for discount
@@ -486,12 +486,12 @@ private class Order_Svc_Test
 	@isTest (seeAllData=true)
 	static void test_zuoraSubscribeWithExistingCustomer(){
 		//*** gererate Zuora products
-		List<zqu__ZProduct__c> lstZproducts = TestDataGenerator.generateZProducts(3, true);
+		List<Product2> lstZproducts = TestDataGenerator.generateProducts(3, true);
 
 		//*** generate Zuora rate plans
-		zqu__ProductRatePlan__c zPlanForUnitPrice = TestDataGenerator.generateZRatePlans(lstZproducts[0].Id, 1, false)[0];
-		zqu__ProductRatePlan__c zPlanForSetupFee = TestDataGenerator.generateZRatePlans(lstZproducts[1].Id, 1, false)[0];
-		zqu__ProductRatePlan__c zPlanForUnitPriceAndSetupFee = TestDataGenerator.generateZRatePlans(lstZproducts[2].Id, 1, false)[0];
+		zqu__ProductRatePlan__c zPlanForUnitPrice = TestDataGenerator.generateZRatePlans2(lstZproducts[0].Id, 1, false)[0];
+		zqu__ProductRatePlan__c zPlanForSetupFee = TestDataGenerator.generateZRatePlans2(lstZproducts[1].Id, 1, false)[0];
+		zqu__ProductRatePlan__c zPlanForUnitPriceAndSetupFee = TestDataGenerator.generateZRatePlans2(lstZproducts[2].Id, 1, false)[0];
 		insert new List<zqu__ProductRatePlan__c>{zPlanForUnitPrice, zPlanForSetupFee, zPlanForUnitPriceAndSetupFee};
 
 		//*** generate Zuora rate plan charges - charge 0 is for discount
@@ -580,8 +580,7 @@ private class Order_Svc_Test
 			                            //*** make product electronic and available for E-Commerce
 			                          , SAP_Status_Code__c='A', SAP_Product_Type_Code__c='07', Post_to_Ecommerce_Date__c= system.today(), Sell_through_eCommerce__c=true
 			                            //*** force to subscribe product to Zuora no matter of payment method
-			                          , Available_for_Subscription__c=true, Is_Shippable__c=false, Charge_Shipping__c=false, SAP_Media_Code__c='30', Number_of_months_of_subscription__c=1
-			                          , ZProduct__c=lstZproducts[oi.ServiceDate == system.today() ? 0 : (oi.ServiceDate == system.today().addDays(1) ? 1 : 2)].Id));
+			                          , Available_for_Subscription__c=true, Is_Shippable__c=false, Charge_Shipping__c=false, SAP_Media_Code__c='30', Number_of_months_of_subscription__c=1));
 		update lstProduct;
 
 		//*** generate payment information for credit card

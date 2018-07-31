@@ -9,7 +9,7 @@ private class vfIECQuote_tst {
 
 	private static Product_Category__c oProductCategory;
 	private static Product_Information__c oProductInfo;
-	private static zqu__ZProduct__c oProduct;
+	private static Product2 oProduct;
 	private static zqu__ProductRatePlan__c oProductRatePlan;
 	private static zqu__ProductRatePlanCharge__c oProductRatePlanCharge;
 	private static Product_Rate_Plan_Information__c oProductRatePlanInfo;
@@ -30,14 +30,14 @@ private class vfIECQuote_tst {
 		oProductCategory = IECTestUtil.CreateSampleProductCategory('PCTST', true);
 		insert oProductCategory;
 		
-		oProduct = IECTestUtil.CreateSampleProduct('PTST');
+		oProduct = IECTestUtil.CreateSampleProduct2('PTST');
 		insert oProduct;
 
-		oProductInfo = IECTestUtil.CreateSampleProductInfo('PITST', oProductCategory, oProduct);
+		oProductInfo = IECTestUtil.CreateSampleProductInfo2('PITST', oProductCategory, oProduct);
 		oProductInfo.Product_Audience__c = IECConstants.ProductInformationAudience_DEFAULT;
 		insert oProductInfo;
 
-		oProductRatePlan = IECTestUtil.CreateSampleProductRatePlan('PRPTST', triable, oProduct);
+		oProductRatePlan = IECTestUtil.CreateSampleProductRatePlan2('PRPTST', triable, oProduct);
 		insert oProductRatePlan;
 
 		oProductRatePlanInfo = IECTestUtil.CreateSampleProductRatePlanInfo('PCRPTST', triable, oProductRatePlan, oProductInfo);
@@ -47,19 +47,6 @@ private class vfIECQuote_tst {
 		oProductRatePlanCharge = IECTestUtil.CreateSampleProductRatePlanCharge(oProductRatePlan, 'PRPC', 42);
 		insert oProductRatePlanCharge;
 
-		// create user
-		/*
-		oAccount = IECTestUtil.createSampleAccount();
-		insert oAccount;
-		
-		oBillingAccount = IECTestUtil.createSampleBillingAccount(oAccount);
-		insert oBillingAccount;
-		
-		oContact = IECTestUtil.createSampleContact(oAccount);
-		insert oContact;
-		*/
-		
-		
 	}
 
     static testMethod void testPage() {

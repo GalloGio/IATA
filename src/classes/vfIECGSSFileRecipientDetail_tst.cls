@@ -2,7 +2,7 @@
 private class vfIECGSSFileRecipientDetail_tst {
 	private static Product_Category__c oProductCategory;
 	private static Product_Information__c oProductInfo;
-	private static zqu__ZProduct__c oProduct;
+	private static Product2 oProduct;
 	private static zqu__ProductRatePlan__c oProductRatePlan;
 	private static zqu__ProductRatePlanCharge__c oProductRatePlanCharge;
 	private static Product_Rate_Plan_Information__c oProductRatePlanInfo;
@@ -39,14 +39,14 @@ private class vfIECGSSFileRecipientDetail_tst {
 		oProductCategory = IECTestUtil.CreateSampleProductCategory(IECConstants.ProductCategory_SF_GSS, true);
 		insert oProductCategory;
 		
-		oProduct = IECTestUtil.CreateSampleProduct('PTST');
+		oProduct = IECTestUtil.CreateSampleProduct2('PTST');
 		insert oProduct;
 		
-		oProductInfo = IECTestUtil.CreateSampleProductInfo('PITST', oProductCategory, oProduct);
+		oProductInfo = IECTestUtil.CreateSampleProductInfo2('PITST', oProductCategory, oProduct);
 		oProductInfo.Product_Audience__c = IECConstants.ProductInformationAudience_DEFAULT;
 		insert oProductInfo;
 		
-		oProductRatePlan = IECTestUtil.CreateSampleProductRatePlan('PRPTST', false, oProduct);
+		oProductRatePlan = IECTestUtil.CreateSampleProductRatePlan2('PRPTST', false, oProduct);
 		insert oProductRatePlan;
 		System.debug( 'oProductRatePlan inserted: '+ oProductRatePlan);
 		
@@ -80,7 +80,7 @@ private class vfIECGSSFileRecipientDetail_tst {
 		System.debug( 'Subscription '+ subscription.Id + '  as inserted: ' +  subscription );
 		
 		// create dummy subscription charge
-		subscriptionCharge = IECTestUtil.createSampleSubscriptionCharge(subscription.Id, Date.today().addMonths(-6), oProduct, oProductRatePlan);
+		subscriptionCharge = IECTestUtil.createSampleSubscriptionCharge2(subscription.Id, Date.today().addMonths(-6), oProduct, oProductRatePlan);
 		insert subscriptionCharge;
 		
 		List<GSS_Subscription_Detail__c> subDetailList = [select Id, Name, GDP_File_Description__c
