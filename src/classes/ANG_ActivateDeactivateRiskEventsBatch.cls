@@ -70,7 +70,11 @@ global class ANG_ActivateDeactivateRiskEventsBatch implements Database.Batchable
         }
         
         ANG_AccountTriggerHandler.isExpiration = true;
-        update scope;
+        try{
+            update scope;
+        }catch(Exception e){
+            ServiceNow_Helper.sendRequestToSNOW('Mulesoft', 'INT_068', 'requestBalanceUpdate', 'featurespace-system-service', 'RME',  e.getMessage(), 'false', 'Connectivity', 'Salesforce.com', 'Salesforce.com', 'Infrastructure Services', 'Mulesoft Support', '2', '2', '2', 'Failure');
+        }
     }
 
     public void finish(Database.BatchableContext context){
