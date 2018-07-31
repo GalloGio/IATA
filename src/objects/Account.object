@@ -3162,6 +3162,11 @@
                     <default>false</default>
                     <label>Rejected by IATA compliance team</label>
                 </value>
+                <value>
+                    <fullName>Declined by Agent</fullName>
+                    <default>false</default>
+                    <label>Declined by Agent</label>
+                </value>
             </valueSetDefinition>
         </valueSet>
     </fields>
@@ -34364,6 +34369,10 @@ This field is kept up-to-date with the feedback of ITDI at least twice a year du
             </values>
             <values>
                 <fullName>Closed %E2%80%93 3-month freeze period</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Declined by Agent</fullName>
                 <default>false</default>
             </values>
             <values>
