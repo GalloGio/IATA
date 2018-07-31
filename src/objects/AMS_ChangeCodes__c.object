@@ -522,9 +522,9 @@ Values must be Separated by &quot;;&quot;</inlineHelpText>
         <columns>CREATED_DATE</columns>
         <filterScope>Everything</filterScope>
         <filters>
-            <field>Reason_Code__c</field>
+            <field>Change_Code__c</field>
             <operation>equals</operation>
-            <value>CURRENT</value>
+            <value>VRR</value>
         </filters>
         <label>AMS_debug</label>
         <language>en_US</language>
