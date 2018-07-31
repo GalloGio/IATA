@@ -45,6 +45,7 @@
     <deploymentStatus>Deployed</deploymentStatus>
     <enableActivities>false</enableActivities>
     <enableBulkApi>true</enableBulkApi>
+    <enableChangeDataCapture>false</enableChangeDataCapture>
     <enableFeeds>false</enableFeeds>
     <enableHistory>false</enableHistory>
     <enableReports>false</enableReports>
@@ -171,14 +172,17 @@
                 <value>
                     <fullName>In Progress</fullName>
                     <default>false</default>
+                    <label>In Progress</label>
                 </value>
                 <value>
                     <fullName>Active</fullName>
                     <default>false</default>
+                    <label>Active</label>
                 </value>
                 <value>
                     <fullName>Inactive</fullName>
                     <default>false</default>
+                    <label>Inactive</label>
                 </value>
             </valueSetDefinition>
         </valueSet>
@@ -207,6 +211,17 @@
         <active>true</active>
         <label>Payment Provider</label>
         <picklistValues>
+            <picklist>Provider_Type__c</picklist>
+            <values>
+                <fullName>Closed Loop</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Open Loop</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
             <picklist>Status__c</picklist>
             <values>
                 <fullName>Active</fullName>
@@ -218,17 +233,6 @@
             </values>
             <values>
                 <fullName>Inactive</fullName>
-                <default>false</default>
-            </values>
-        </picklistValues>
-        <picklistValues>
-            <picklist>TIP_Provider_Type</picklist>
-            <values>
-                <fullName>Closed Loop</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Open Loop</fullName>
                 <default>false</default>
             </values>
         </picklistValues>
@@ -248,7 +252,7 @@
         <fullName>Primary_Contact_Mandatory</fullName>
         <active>true</active>
         <errorConditionFormula>AND(!(ISBLANK(TEXT(Status__c))), Primary_Contact_Count__c == 0)</errorConditionFormula>
-        <errorMessage>Ensure that accounts identified as Payment Providers have at least one Primary Contact.</errorMessage>
+        <errorMessage>Please first save without the Effective From Date, ensure that a Primary Contact is identified (Account Contact Role), and only then enter the Effective From Date.</errorMessage>
     </validationRules>
     <validationRules>
         <fullName>TIP_HR_LOCATION_NOT_EMPTY</fullName>
@@ -280,4 +284,5 @@
         <errorConditionFormula>AND(RecordType.DeveloperName=&quot;TIP_Payment_Provider&quot;, TEXT(Status__c)=&quot;Active&quot;, Effective_From_Date__c&gt;Today())</errorConditionFormula>
         <errorMessage>Can’t have active Payment Providers with Effective date From in the future</errorMessage>
     </validationRules>
+    <visibility>Public</visibility>
 </CustomObject>

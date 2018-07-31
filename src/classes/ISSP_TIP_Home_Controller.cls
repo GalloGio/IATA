@@ -410,16 +410,24 @@ public without sharing class ISSP_TIP_Home_Controller {
             return null;
         }
         
-        if(String.isEmpty(account.TIP_HQ_Location__c)){
+        //ACAMBAS - TIP-234 ----------
+        //if(String.isEmpty(account.TIP_HQ_Location__c)){
+        if(String.isEmpty(TheAccountRole.HQ_Location__c)){
+        //----------------------------
             account.TIP_HQ_Location__c.addError('Please Choose the Location of Headquarter');
             return null;
         }
 
         //confirm that primary contact is choosen
         Boolean hasPrimaryContact = false;
-        for(Contact c : contactList){
+        //ACAMBAS - TIP-234 ----------
+        /*for(Contact c : contactList){
             if (c.Primary_Contact__c) hasPrimaryContact = true;
+        }*/
+        for(Account_Contact_Role__c c : AccountContactRoleList){
+            if (c.is_primary__c) hasPrimaryContact = true;
         }
+        //----------------------------
 
         if(!hasPrimaryContact){
             ApexPages.addMessage(new ApexPages.message(ApexPages.severity.ERROR, 'Please select a primary contact'));
