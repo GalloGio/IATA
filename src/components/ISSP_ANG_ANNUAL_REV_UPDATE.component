@@ -568,8 +568,17 @@
                 </div>
             </apex:outputpanel>
 
-            <apex:outputPanel id="ownershipMessage">
-                <apex:pageMessage severity="info" rendered="{!(ca.fw.newform.ISSP_AMS_Total_Current_Ownership_Company__c + ca.fw.newform.ISSP_AMS_Total_Current_Ownership_Individ__c) != 100}" summary="{!$Label.ISSP_ANG_ANNUAL_REV_OWNERSHIP}" strength="3"/>
+            <apex:outputPanel id="ownershipMessage" >
+                <script type="text/javascript">
+                    $('[data-toggle="popover"]').popover();
+                </script>
+                <apex:outputPanel rendered="{!(ca.fw.newform.ISSP_AMS_Total_Current_Ownership_Company__c + ca.fw.newform.ISSP_AMS_Total_Current_Ownership_Individ__c) != 100}">
+                    <apex:outputLabel value="{!$Label.ISSP_ANG_ANNUAL_REV_OWNERSHIP_TOTAL} " style="font-weight: bold;"/>
+                    <apex:outputText value="{!ca.fw.newform.ISSP_AMS_Total_Current_Ownership_Company__c + ca.fw.newform.ISSP_AMS_Total_Current_Ownership_Individ__c}%"/>
+                    <a href="" data-html="true" data-toggle="popover" data-trigger="hover" title="TOTAL OWNERSHIP" data-content="<div escape='false'>{!$Label.ISSP_ANG_ANNUAL_REV_OWNERSHIP}</div>">
+                        <apex:image value="/img/msg_icons/info16.png"/>
+                    </a>
+                </apex:outputPanel>
             </apex:outputPanel>
 
             <apex:outputPanel id="updated-person-owners" styleClass="agencyOwnershipComponent">
@@ -687,6 +696,32 @@
                     </apex:column>
                 </apex:pageBlockTable>
 
+                <apex:outputPanel id="newOwnerQuestions" rendered="{!ca.fw.currentCompanies.size > 0}">
+                    <div class="bg-warning col-md-12" style="margin-top:15px;"><strong>{!$Label.ISSP_AMS_NoC_Non_IATA_Owner_Title}</strong></div>
+                    <div class="col-md-12">
+                        <apex:outputText value="{!$Label.ISSP_AMS_NoC_Non_IATA_Owner_Estimates}" escape="false"/>
+                    </div>
+
+                    <apex:pageBlockSection columns="1">
+                        <apex:pageBlockSectionItem labelStyle="width:44%">
+                            <apex:outputLabel id="firstYearQ" value="{!$ObjectType.AMS_Pax_Accreditation_Form__c.fields.ISSP_AMS_Gross_Amnt_First_year__c.label}"/>
+                            <apex:outputPanel >
+                                <apex:inputField id="ISSP_AMS_Gross_Amnt_First_year__c" value="{!ca.fw.newForm.ISSP_AMS_Gross_Amnt_First_year__c}" />
+                                <apex:outputText id="y2CurrencyCode" value=" {!ca.fw.newForm.CurrencyIsoCode}"/>
+                            </apex:outputPanel>
+                        </apex:pageBlockSectionItem>
+
+                        <apex:pageBlockSectionItem labelStyle="width:44%">
+                            <apex:outputLabel id="secondYearQ" value="{!$ObjectType.AMS_Pax_Accreditation_Form__c.fields.ISSP_AMS_Gross_Amnt_Second_year__c.label}"/>
+                            <apex:outputPanel >
+                                <apex:inputField id="ISSP_AMS_Gross_Amnt_Second_year__c" value="{!ca.fw.newForm.ISSP_AMS_Gross_Amnt_Second_year__c}" />
+                                <apex:outputText id="y2CurrencyCode" value=" {!ca.fw.newForm.CurrencyIsoCode}"/>
+                            </apex:outputPanel>
+                        </apex:pageBlockSectionItem>
+                    </apex:pageBlockSection>
+
+                </apex:outputPanel>
+
                 <apex:outputPanel >
                     <div class="col-md-12 bg-warning"><strong>{!$Label.ISSP_AMS_NoC_Other_Owner}</strong></div>
 
@@ -704,31 +739,7 @@
                     </apex:pageBlockSection>
                 </apex:outputPanel>
 
-                <apex:outputPanel id="newOwnerQuestions" rendered="{!ca.fw.currentCompanies.size > 0}">
-                    <div class="bg-warning col-md-12" style="margin-top:15px;"><strong>{!$Label.ISSP_AMS_NoC_Non_IATA_Owner_Title}</strong></div>
-                    <div class="col-md-12">
-                        <apex:outputText value="{!$Label.ISSP_AMS_NoC_Non_IATA_Owner_Estimates}" escape="false"/>
-                    </div>
-
-                    <apex:pageBlockSection columns="1">
-                        <apex:pageBlockSectionItem labelStyle="width:44%">
-                            <apex:outputLabel value="{!$ObjectType.AMS_Pax_Accreditation_Form__c.fields.ISSP_AMS_Gross_Amnt_First_year__c.label}"/>
-                            <apex:outputPanel >
-                                <apex:inputField id="ISSP_AMS_Gross_Amnt_First_year__c" value="{!ca.fw.newForm.ISSP_AMS_Gross_Amnt_First_year__c}" />
-                                <apex:outputText id="y2CurrencyCode" value=" {!ca.fw.newForm.CurrencyIsoCode}"/>
-                            </apex:outputPanel>
-                        </apex:pageBlockSectionItem>
-
-                        <apex:pageBlockSectionItem labelStyle="width:44%">
-                            <apex:outputLabel value="{!$ObjectType.AMS_Pax_Accreditation_Form__c.fields.ISSP_AMS_Gross_Amnt_Second_year__c.label}"/>
-                            <apex:outputPanel >
-                                <apex:inputField id="ISSP_AMS_Gross_Amnt_Second_year__c" value="{!ca.fw.newForm.ISSP_AMS_Gross_Amnt_Second_year__c}" />
-                                <apex:outputText id="y2CurrencyCode" value=" {!ca.fw.newForm.CurrencyIsoCode}"/>
-                            </apex:outputPanel>
-                        </apex:pageBlockSectionItem>
-                    </apex:pageBlockSection>
-
-                </apex:outputPanel>
+                
 
             </apex:outputPanel>
         </apex:pageBlockSection>
@@ -841,6 +852,8 @@
         //console.log('***************** COMPONENT ******************');
 
         $(document).ready(function() {
+            $('[data-toggle="popover"]').popover();
+
             // binds on change to make checkbox function as radio buttons
             $('[data-group]').on('change', function() {
                 var $parent = $(this);
@@ -859,6 +872,14 @@
             if('{!ca.isReadonly}' == 'true') {
                 setReadonly();
             }
+
+            $('[id$="firstYearQ"]').text(function () {
+                return $(this).text().replace("*", ""); 
+            });
+
+            $('[id$="secondYearQ"]').text(function () {
+                return $(this).text().replace("*", ""); 
+            });
         });
 
         function initFieldsSettings() {
