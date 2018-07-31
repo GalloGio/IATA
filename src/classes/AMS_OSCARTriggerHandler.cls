@@ -181,13 +181,16 @@ public class AMS_OSCARTriggerHandler {
         /*** AMSU-134 Start ***/
         rollbackChanges((List<AMS_OSCAR__c>) Trigger.new, (Map<Id, AMS_OSCAR__c>) Trigger.oldMap, (Map<Id, AMS_OSCAR__c>) Trigger.newMap);
         /*** AMSU-134 End ***/
+
+        performBackupANG((Map<Id, AMS_OSCAR__c>) Trigger.oldMap, (Map<Id, AMS_OSCAR__c>) Trigger.newMap);
+
     }
 
     /*** AMSU-134 Start ***/
     public static void createSavepoint(List<AMS_OSCAR__c> oscars) {
         Set<Id> oscarIds = new Set<Id>();
         for(AMS_Oscar__c oscar : oscars) {
-            if(oscar.Process__c == AMS_Utils.AGENCYCHANGES) {
+            if(oscar.Process__c == AMS_Utils.NGCHANGES) {
                 oscarIds.add(oscar.Id);
             }
         }
@@ -4108,6 +4111,27 @@ public class AMS_OSCARTriggerHandler {
         if(!listNewCCs.isEmpty())
             insert listNewCCs;
 
+    }
+
+    public static void performBackupANG(Map<Id, AMS_OSCAR__c> oldMap, Map<Id, AMS_OSCAR__c> newMap){
+        
+        List<Id> oscarsToProcess = new List<Id>();
+
+        for(ID oscarId:oldMap.keySet()){
+
+            if(newMap.get(oscarId).Process__c == AMS_Utils.NGCHANGES && oldMap.get(oscarId).ANG_Type_Of_Change__c != newMap.get(oscarId).ANG_Type_Of_Change__c)
+                oscarsToProcess.add(oscarId);
+
+        }
+
+        for(Id oscarId: oscarsToProcess){
+
+            ANG_BackupEngineHelper beh = new ANG_BackupEngineHelper(oscarId,true);
+            beh.executeAdhoc();
+            
+        }
+
+        
     }
 
 }
