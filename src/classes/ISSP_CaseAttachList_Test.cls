@@ -248,6 +248,34 @@ public class ISSP_CaseAttachList_Test {
         System.assert(!resultError);
         Test.stopTest() ;
     }
-
     
+    public static testMethod void myTest_5() {
+        Account acc = ISSP_ObjectFactory.createNewAccount();
+        insert acc;
+        
+        Contact contact = ISSP_ObjectFactory.createNewContact();
+        contact.AccountId = acc.Id;
+        insert contact;
+        
+        Test.startTest();
+        Case c=new Case(Subject='test 1',Status='Open', AccountId=acc.id, ContactId=contact.id,Region__c = 'Europe');
+        insert c;
+
+        Attachment attach=new Attachment();     
+        attach.Name='[UNITTEST][FILE][SMALL]';
+        Blob bodyBlob=Blob.valueOf('Unit Test Attachment Body');
+        attach.body=bodyBlob;
+        attach.parentId=c.Id;
+        insert attach;
+        
+        ArchiveAttachmentListController ctrl = new ArchiveAttachmentListController();
+        ctrl.setACaseId(c.Id);
+        String myCaseId = ctrl.getACaseId();
+        system.assertEquals(myCaseId, c.Id);
+        ctrl.loadAttachmentFromCaseId();
+                           Boolean resulterror = ArchiveAttachmentListController.deleteAttachmentAmazon(c.Id,'testname');
+        System.assert(!resultError);
+        Test.stopTest() ;
+    }
+
 }

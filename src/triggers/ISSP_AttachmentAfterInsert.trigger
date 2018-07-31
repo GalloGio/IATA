@@ -1,10 +1,11 @@
 trigger ISSP_AttachmentAfterInsert on Attachment (after insert) {
-        
+    
     set<Id> idSet = new set<Id>();
     list<EmailMessage> emailMessageList = new list<EmailMessage>();
     map<Id,Id> emailMessageCaseMapId = new map<Id,Id>();
     
-    boolean isPortalUser = !String.isBlank(Site.getName());
+    String siteName = Test.isRunningTest()? 'testsite': Site.getName();
+    boolean isPortalUser = !String.isBlank(siteName);
     Id profileId = userinfo.getProfileId();
     
     List<Profile> profileNames = [Select Id, Name from Profile where Id=:profileId];
