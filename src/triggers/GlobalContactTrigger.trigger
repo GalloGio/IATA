@@ -373,7 +373,7 @@ trigger GlobalContactTrigger on Contact (after delete, after insert, after undel
                 
                 if (contactsToDisable_TD.size() > 0){
 
-                    list<Portal_Application_Right__c> portalAppList = [SELECT Id, Right__c, Contact__c 
+                    list<Portal_Application_Right__c> portalAppList = [SELECT Id, Right__c, Contact__c, Portal_Application__r.Name
                                                                       FROM Portal_Application_Right__c 
                                                                       WHERE Contact__c in:contactsToDisable_TD
                                                                         AND Right__c = 'Access Granted']; 

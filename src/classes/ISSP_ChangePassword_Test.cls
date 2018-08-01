@@ -88,9 +88,8 @@ private class ISSP_ChangePassword_Test {
         String userId = Site.createPortalUser(u, newAccount.Id, 'testpassword');
         IECUserManager.login(u.Username, 'testpassword', null);
     	
-
+        ISSP_ChangePassword pgCont = new ISSP_ChangePassword();
     	System.runAs(u) {
-	        ISSP_ChangePassword pgCont = new ISSP_ChangePassword();
 	        
 	        // Test 001: Leave all fields blank
 	        pgCont.currentPassword = '';
@@ -133,8 +132,6 @@ private class ISSP_ChangePassword_Test {
 			PageReference pageRef = Page.ISSP_First_Login;
          	Test.setCurrentPage(pageRef);
 
-         	//ApexPages.currentPage().getParameters().put('un',EncodingUtil.urlEncode(Comm_User_Helper.EncryptString('topolino@iata.org'), 'UTF-8'));
-         	//ApexPages.currentPage().getParameters().put('pw',EncodingUtil.urlEncode(Comm_User_Helper.EncryptString('paperina'), 'UTF-8'));
          	String myUsername = Userinfo.getUsername();
          	string parameters =myUsername+Comm_User_Helper.SEPARATOR+'testpassword'+Comm_User_Helper.SEPARATOR+ UID;
          	ApexPages.currentPage().getParameters().put('c',Comm_User_Helper.EncryptString(parameters));
@@ -157,8 +154,6 @@ private class ISSP_ChangePassword_Test {
 		PageReference pageRef = Page.ISSP_First_Login;
         Test.setCurrentPage(pageRef);
 
-        //ApexPages.currentPage().getParameters().put('un',EncodingUtil.urlEncode(Comm_User_Helper.EncryptString('topolino@iata.org'), 'UTF-8'));
-        //ApexPages.currentPage().getParameters().put('pw',EncodingUtil.urlEncode(Comm_User_Helper.EncryptString('paperina'), 'UTF-8'));
         String UID =  Comm_User_Helper.NewGuid();
         String myUsername = Userinfo.getUsername();
         string parameters =myUsername+Comm_User_Helper.SEPARATOR+'testpassword'+Comm_User_Helper.SEPARATOR+ UID;
@@ -167,8 +162,6 @@ private class ISSP_ChangePassword_Test {
       	ISSP_First_Login ctrl = new ISSP_First_Login();
 	 	Pagereference pr = Page.ISSP_Login;
 	
-        //system.assertEquals('/apex/issp_login',ctrl.DoNext().getUrl());
-
 	}
 	
 	static testMethod void loginPage_ISSP_3() {

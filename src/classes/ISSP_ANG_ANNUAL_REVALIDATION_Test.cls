@@ -67,6 +67,7 @@ private class ISSP_ANG_ANNUAL_REVALIDATION_Test {
         account.IATACode__c = '12345678';
 		account.status__c = Ams_Utils.ACC_S9_APPROVED;
 		account.IATA_ISO_Country__c = country.Id;
+		account.Location_Class__c = 'P';
 
 		insert account;
 
@@ -116,6 +117,7 @@ private class ISSP_ANG_ANNUAL_REVALIDATION_Test {
         account.IATACode__c = '12345678';
 		account.status__c = Ams_Utils.ACC_S9_APPROVED;
 		account.IATA_ISO_Country__c = country.Id;
+		account.Location_Class__c = 'P';
 
 		insert account;
 
@@ -443,6 +445,7 @@ private class ISSP_ANG_ANNUAL_REVALIDATION_Test {
         account.IATACode__c = '12345678';
 		account.status__c = Ams_Utils.ACC_S9_APPROVED;
 		account.IATA_ISO_Country__c = country.Id;
+		account.Location_Class__c = 'P';
 
 		insert account;
 
@@ -598,6 +601,7 @@ private class ISSP_ANG_ANNUAL_REVALIDATION_Test {
         account.IATACode__c = '12345678';
 		account.status__c = Ams_Utils.ACC_S9_APPROVED;
 		account.IATA_ISO_Country__c = country.Id;
+		account.Location_Class__c = 'P';
 
 		insert account;
 
