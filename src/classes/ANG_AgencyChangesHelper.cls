@@ -105,6 +105,14 @@ public with sharing class ANG_AgencyChangesHelper {
 			return;
 		}
 
+		if((&& ((Map<Id,AMS_OSCAR__c>)Trigger.oldMap).get(oscar.Id).STEP6__c <> AMS_Utils.PASSED && ){
+			
+
+		if(oscar.Process__c == AMS_Utils.NGCHANGES && oscar.STEP6__c == AMS_Utils.PASSED  && oscar.ANG_Type_Of_Change__c != null && !isMigrationRunning && oscar.Backup_In_Progress__c){	
+			oscar.addError('There is a rollback in progress for this Oscar, please wait a few moments until it finishes.');
+			return;
+		}
+
 		if(oscar.Process__c == AMS_Utils.NGCHANGES && oscar.STEP6__c != AMS_Utils.PASSED && oscar.Change_effective_as_of__c > Date.today()) {
 			system.debug('oscar status before: '+ oscar.Status__c);
 			oscar.Status__c = 'Accepted_Future Date';

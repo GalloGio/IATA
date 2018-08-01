@@ -162,7 +162,6 @@ global without sharing class ANG_BackupEngineHelper implements Queueable{
 			accountIds.add(newParentHierarchyId);	
 		}
 
-		System.debug('accountIds are:'+accountIds);
 		entitiesToBackup.put('Account',getObject('Account',accountIds,toUpperCase(accountFields),whereClausesMap.get('ACCOUNT')));
 		// we are using DefaultChange in the Map, but later we need to define which entities should we backup for each type of change...
 
@@ -203,6 +202,9 @@ global without sharing class ANG_BackupEngineHelper implements Queueable{
 		if(!backupToInsert.isEmpty())
 			insert backupToInsert;
 
+		oscar.Backup_In_Progress__c	= false;
+		update oscar;
+
 	}
 
 	private Map<String,Object> serializeObject(String entity, sObject objectToSerialize){
@@ -228,9 +230,6 @@ global without sharing class ANG_BackupEngineHelper implements Queueable{
 
 
 	public List<sObject> getObject(String selectedObject, Set<Id> objectIds, Set<String> objectFields, String adhocConditions){
-		
-		System.debug('Querying the following object:'+selectedObject);
-		System.debug('Ids to query are:'+objectIds);
 
 		Map<String, Schema.SObjectType> gdMap = Schema.getGlobalDescribe();
 		Schema.Describesobjectresult dsr = gdMap.get(selectedObject).getDescribe();
@@ -258,8 +257,6 @@ global without sharing class ANG_BackupEngineHelper implements Queueable{
 
 		if(adhocConditions != null)
 			query += ' WHERE ' + adhocConditions;
-
-		System.debug('Query is:'+query);
 
 		return Database.query(query);
 
