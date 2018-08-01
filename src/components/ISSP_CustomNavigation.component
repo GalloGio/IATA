@@ -529,7 +529,7 @@
       </div>
       <div id="navbar" class="navbar-collapse collapse nav-header-issp">
          <ul class="nav navbar-nav navbar-nav-menu">
-            <li><a href="/ISSP_Homepage_New?mid=M0S1{!if(communityName=='CNS','&CommunityName='+communityName,'')}" id="M0"><span class="glyphicon glyphicon-home"  aria-hidden="true"></span> {!$Label.ISSP_Home}</a></li>
+            <li><a href="/ISSP_Homepage?mid=M0S1{!if(communityName=='CNS','&CommunityName='+communityName,'')}" id="M0"><span class="glyphicon glyphicon-home"  aria-hidden="true"></span> {!$Label.ISSP_Home}</a></li>
             <li>
                <a href="#" class="dropdown-toggle" data-toggle="dropdown" id="M1"><span class="glyphicon glyphicon-envelope"></span> {!$Label.LAQ_ContactUs} <span class="caret"></span></a>
                 <ul class="dropdown-menu" role="menu">
