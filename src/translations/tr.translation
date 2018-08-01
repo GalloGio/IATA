@@ -137,6 +137,10 @@
         <name>AIMSAccountBeforeUpdate_AutoProcess_Restricted</name>
     </customLabels>
     <customLabels>
+        <label><!-- AMS_AttchNotifyOwner --></label>
+        <name>AMS_AttchNotifyOwner</name>
+    </customLabels>
+    <customLabels>
         <label><!-- AMS Conga Merge --></label>
         <name>AMS_Conga_Merge</name>
     </customLabels>
@@ -159,6 +163,14 @@
     <customLabels>
         <label><!-- AMS_New_Change_Code_Notification --></label>
         <name>AMS_New_Change_Code_Notification</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- AMS_NotificationSent --></label>
+        <name>AMS_NotificationSent</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- AMS_Notify_OSCAR_Owner --></label>
+        <name>AMS_Notify_OSCAR_Owner</name>
     </customLabels>
     <customLabels>
         <label><!-- AMS OSCAR AGENCYFEES --></label>
@@ -563,6 +575,14 @@
     <customLabels>
         <label><!-- AMS_PERFORM_CORRECTION --></label>
         <name>AMS_PERFORM_CORRECTION</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- AMS_PendingHOAccr --></label>
+        <name>AMS_PendingHOAccr</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- AMS_RRejected --></label>
+        <name>AMS_RRejected</name>
     </customLabels>
     <customLabels>
         <label><!-- AMS_RollbackCase_Description --></label>
@@ -11502,7 +11522,7 @@ Akredite edilmiş acenteler için bir çok IATA faturası BPS/CASS yoluyla tahsi
         <name>ISSP_Registration_BusinessPhone</name>
     </customLabels>
     <customLabels>
-        <label><!-- ISSP_Registration --></label>
+        <label>İş Telefonu geçersiz, lütfen doğrulayın. Ayrıca listeden bir bayrak seçerek VEYA ülke kodunu önünde &apos;+&apos; ile yazarak, doğru ülkenin seçili olup olmadığını kontrol edin.</label>
         <name>ISSP_Registration_BusinessPhone_Msg</name>
     </customLabels>
     <customLabels>
@@ -11578,7 +11598,7 @@ Akredite edilmiş acenteler için bir çok IATA faturası BPS/CASS yoluyla tahsi
         <name>ISSP_Registration_Error_TypeofCustomer</name>
     </customLabels>
     <customLabels>
-        <label><!-- ISSP_Registration --></label>
+        <label>Faks Telefonu geçersiz, lütfen doğrulayın. Ayrıca listeden bir bayrak seçerek VEYA ülke kodunu önünde &apos;+&apos; ile yazarak, doğru ülkenin seçili olup olmadığını kontrol edin.</label>
         <name>ISSP_Registration_FaxPhone_Msg</name>
     </customLabels>
     <customLabels>
@@ -11616,7 +11636,7 @@ IATA Kodunuz yoksa, lütfen geri gidin ve ‘Müşteri Türü’ olarak ‘Diğe
         <name>ISSP_Registration_MobilePhone</name>
     </customLabels>
     <customLabels>
-        <label><!-- ISSP_Registration --></label>
+        <label>Cep Telefonu geçersiz, lütfen doğrulayın. Ayrıca listeden bir bayrak seçerek VEYA ülke kodunu önünde &apos;+&apos; ile yazarak, doğru ülkenin seçili olup olmadığını kontrol edin.</label>
         <name>ISSP_Registration_MobilePhone_Msg</name>
     </customLabels>
     <customLabels>
@@ -13363,7 +13383,7 @@ IATA Müşteri Portalına kaydolurken sorun yaşamaya devam ederseniz, lütfen &
         <name>OneId_AccountSearchPlaceholder</name>
     </customLabels>
     <customLabels>
-        <label>Hesap İlişkilendirme</label>
+        <label>Şirket Bilgileri</label>
         <name>OneId_Account_Association</name>
     </customLabels>
     <customLabels>
@@ -13403,11 +13423,11 @@ IATA Müşteri Portalına kaydolurken sorun yaşamaya devam ederseniz, lütfen &
         <name>OneId_Community_Name</name>
     </customLabels>
     <customLabels>
-        <label>Kişi İlişkilendirme ve Onay</label>
+        <label>Eposta Teyidi</label>
         <name>OneId_Contact_Association_Validation</name>
     </customLabels>
     <customLabels>
-        <label>Kişi Oluşturma</label>
+        <label>Kişisel Bilgiler</label>
         <name>OneId_Contact_Creation</name>
     </customLabels>
     <customLabels>
@@ -13631,7 +13651,10 @@ IATA Müşteri Portalına kaydolurken sorun yaşamaya devam ederseniz, lütfen &
         <name>OneId_Registration_Error_BusinessPhone</name>
     </customLabels>
     <customLabels>
-        <label><!-- OneId_Registration_UserExist --></label>
+        <label>Bu E-posta zaten sistemimizde kayıtlıdır.
+Bir E-Ticaret kullanıcısıysanız, lütfen E-Ticaret kimlik bilgilerinizi kullanın.
+Bir Müşteri Portalı kullanıcısıysanız, lütfen Müşteri Portalı kimlik bilgilerinizi kullanın.
+Parolanızı sıfırlamak istiyorsanız, oturum açma sayfasına geri dönün ve “parolayı unutma” işlevini kullanın.</label>
         <name>OneId_Registration_UserExist</name>
     </customLabels>
     <customLabels>

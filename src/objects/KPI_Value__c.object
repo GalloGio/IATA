@@ -531,9 +531,9 @@
         <columns>Year__c</columns>
         <columns>Region__c</columns>
         <columns>Value_Percentage__c</columns>
-        <columns>Not_Available__c</columns>
         <columns>Deadline__c</columns>
         <columns>Responsible__c</columns>
+        <columns>Not_Available__c</columns>
         <filterScope>Everything</filterScope>
         <filters>
             <field>FDS_KPI_Reporting__c</field>

@@ -93,6 +93,31 @@ private class ANG_RHCAlertTriggerHandler_test {
 		att.ANG_PortalNotificationTemplate__c = [SELECT Id, Name FROM Notification_template__c LIMIT 1].Name;
 		att.RecordTypeId = ANG_RHCHelper.RECTYPE_RHCATTRIBUTE;
 		insert att;
+
+
+		
+		List<AMS_ChangeCodes__c> changeCodeList = new List<AMS_ChangeCodes__c>{
+			new AMS_ChangeCodes__c(
+				Name = 'FOP', Change_Code__c = 'FOP', Integration_RecId__c = 'C',Bulletin_Memo_Text__c = 'Agent has complied to Agency Rules. Card payment methods are reinstated.'
+			),
+			new AMS_ChangeCodes__c(
+				Name = 'PCA', Change_Code__c = 'PCA', Integration_RecId__c = 'C',Bulletin_Memo_Text__c = 'Agent has complied to Agency Rules. Cash and Card payment methods are reinstated.'
+			),
+			new AMS_ChangeCodes__c(
+				Name = 'PCR', Change_Code__c = 'PCR', Integration_RecId__c = 'C',Bulletin_Memo_Text__c = 'Agent has complied to Agency Rules. Cash payment methods are reinstated.'
+			),
+			new AMS_ChangeCodes__c(
+				Name = 'CCA', Change_Code__c = 'CCA', Integration_RecId__c = 'C',Bulletin_Memo_Text__c = 'Agent is restricted from using Card form of payment method due to <SIDRA Lite Reason>.'
+			),
+			new AMS_ChangeCodes__c(
+				Name = 'CCR', Change_Code__c = 'CCR', Integration_RecId__c = 'C',Bulletin_Memo_Text__c = 'Agent is restricted from using Cash and Card payment methods due to <SIDRA Lite Reason>.'
+			),
+			new AMS_ChangeCodes__c(
+				Name = 'FPR', Change_Code__c = 'FPR', Integration_RecId__c = 'C',Bulletin_Memo_Text__c = 'Agent is restricted from using Cash form of payment method due to <SIDRA Lite Reason>.'
+			)
+		};
+
+		insert changeCodeList;
 	}
 
 	private static testmethod void test_sucess_legacy(){
@@ -124,6 +149,7 @@ private class ANG_RHCAlertTriggerHandler_test {
 		
 		insert ara;
 
+
 		System.assertEquals(1, [SELECT Id FROM Case WHERE RecordTypeId = :processRecorType].size(), 'There should one Process Case Created');
 		Test.stopTest();
 
@@ -131,6 +157,8 @@ private class ANG_RHCAlertTriggerHandler_test {
 	}
 
 	private static testmethod voId test_sucess_newgen(){
+
+		Test.startTest();
 
 		IATA_ISO_Country__c country = [SELECT Id FROM IATA_ISO_Country__c WHERE ISO_Code__c = 'FR'];
 		country.ANG_Enable_NewGen__c = true;
@@ -145,15 +173,15 @@ private class ANG_RHCAlertTriggerHandler_test {
 		);
 		insert contact;
 
-		Test.startTest();
-
 		ISSP_ObjectFactory.createPortalUser(contact);
 
 		Portal_Applications__c par = new Portal_Applications__c (Name = ANG_RHCHelper.RISK_PROFILE_AND_RHC_PORTAL_SERVICE);
 		insert par;
 
+
 		insert new Portal_Application_Right__c(Portal_Application__c = par.id, Right__c = 'Access Granted', Contact__c = contact.Id);
 
+        
 		ANG_RHC_Information__c rhcInfo=[SELECT Id,ANG_AccountId__c FROM ANG_RHC_Information__c LIMIT 1];
 		ANG_Risk_Alert__c ara = new ANG_Risk_Alert__c(
 			ANG_RHC_Information__c = rhcInfo.Id,
@@ -165,6 +193,7 @@ private class ANG_RHCAlertTriggerHandler_test {
 		insert ara;
 
 		Test.stopTest();
+
 		System.assert([SELECT Id,ANG_email_sent__c FROM ANG_Risk_Alert__c LIMIT 1].get(0).ANG_email_sent__c,'Email was not sent');
 	}
 
@@ -185,6 +214,7 @@ private class ANG_RHCAlertTriggerHandler_test {
 		Test.stopTest();
 	}
 
+/*
 	private static testmethod voId testRestrictFOPonRiskAlertCreation(){
 
 		Test.startTest();
@@ -296,4 +326,544 @@ private class ANG_RHCAlertTriggerHandler_test {
 
 
 	}
+
+	private static testmethod voId testRestoreFOPonRiskAlertCreation2(){
+
+		Test.startTest();
+
+		List<AMS_ChangeCodes__c> changeCodeList = new List<AMS_ChangeCodes__c>{
+			new AMS_ChangeCodes__c(
+				Name = 'FOP', Change_Code__c = 'FOP', Integration_RecId__c = 'C',Bulletin_Memo_Text__c = 'Agent has complied to Agency Rules. Card payment methods are reinstated.'
+			),
+			new AMS_ChangeCodes__c(
+				Name = 'PCA', Change_Code__c = 'PCA', Integration_RecId__c = 'C',Bulletin_Memo_Text__c = 'Agent has complied to Agency Rules. Cash and Card payment methods are reinstated.'
+			),
+			new AMS_ChangeCodes__c(
+				Name = 'PCR', Change_Code__c = 'PCR', Integration_RecId__c = 'C',Bulletin_Memo_Text__c = 'Agent has complied to Agency Rules. Cash payment methods are reinstated.'
+			),
+			new AMS_ChangeCodes__c(
+				Name = 'CCA', Change_Code__c = 'CCA', Integration_RecId__c = 'C',Bulletin_Memo_Text__c = 'Agent is restricted from using Card form of payment method due to <SIDRA Lite Reason>.'
+			),
+			new AMS_ChangeCodes__c(
+				Name = 'CCR', Change_Code__c = 'CCR', Integration_RecId__c = 'C',Bulletin_Memo_Text__c = 'Agent is restricted from using Cash and Card payment methods due to <SIDRA Lite Reason>.'
+			),
+			new AMS_ChangeCodes__c(
+				Name = 'FPR', Change_Code__c = 'FPR', Integration_RecId__c = 'C',Bulletin_Memo_Text__c = 'Agent is restricted from using Cash form of payment method due to <SIDRA Lite Reason>.'
+			)
+		};
+
+		insert changeCodeList;
+
+		ANG_RHC_Information__c rhcInfo=[SELECT Id,ANG_AccountId__c FROM ANG_RHC_Information__c LIMIT 1];
+
+		List<Agency_Authorization__c> authorizations = new List<Agency_Authorization__c>();
+
+		ID FormOfPaymentRT = AMS_Utils.getId('Agency_Authorization__c','FormOfPayment');
+
+		authorizations.add(new Agency_Authorization__c(Account__c = rhcInfo.ANG_AccountId__c, ANG_FormOfPayment_ID__c = 'CC', Status__c = 'Non-Active', RecordTypeId = FormOfPaymentRT));
+		authorizations.add(new Agency_Authorization__c(Account__c = rhcInfo.ANG_AccountId__c, ANG_FormOfPayment_ID__c = 'CA', Status__c = 'Non-Active', RecordTypeId = FormOfPaymentRT));
+		authorizations.add(new Agency_Authorization__c(Account__c = rhcInfo.ANG_AccountId__c, ANG_FormOfPayment_ID__c = 'EP', Status__c = 'Non-Active', RecordTypeId = FormOfPaymentRT));
+
+		insert authorizations;
+
+		ANG_Risk_Alert__c ara = new ANG_Risk_Alert__c(
+			ANG_RHC_Information__c = rhcInfo.Id,
+			ANG_Account__c = rhcInfo.ANG_AccountId__c,
+			ANG_Direction__c = ANG_RHCHelper.RISK_ALERT_DIRECTION_DOWN,
+			ANG_Threshold_Level__c = '50%'
+		);
+
+		insert ara;
+
+		System.assertEquals(1,[SELECT ID from Agency_Authorization__c where ANG_FormOfPayment_ID__c = 'CA' and Status__c = 'Active'].Size());
+		System.assertEquals(1,[SELECT ID from Agency_Applied_Change_code__c where Account__c = :rhcInfo.ANG_AccountId__c and Change_Code__c = 'PCR' and Active__c = true].Size());
+
+		System.assertEquals('RHC Alert',[SELECT ID, Source__c from Agency_Authorization__c where ANG_FormOfPayment_ID__c = 'CA' and Status__c = 'Active'].get(0).Source__c);
+
+		Test.stopTest();
+
+
+	}
+    
+	
+	private static testmethod voId testRestoreFOPonRiskAlertCreation3(){
+
+		Test.startTest();
+
+		List<AMS_ChangeCodes__c> changeCodeList = new List<AMS_ChangeCodes__c>{
+			new AMS_ChangeCodes__c(
+				Name = 'FOP', Change_Code__c = 'FOP', Integration_RecId__c = 'C',Bulletin_Memo_Text__c = 'Agent has complied to Agency Rules. Card payment methods are reinstated.'
+			),
+			new AMS_ChangeCodes__c(
+				Name = 'PCA', Change_Code__c = 'PCA', Integration_RecId__c = 'C',Bulletin_Memo_Text__c = 'Agent has complied to Agency Rules. Cash and Card payment methods are reinstated.'
+			),
+			new AMS_ChangeCodes__c(
+				Name = 'PCR', Change_Code__c = 'PCR', Integration_RecId__c = 'C',Bulletin_Memo_Text__c = 'Agent has complied to Agency Rules. Cash payment methods are reinstated.'
+			),
+			new AMS_ChangeCodes__c(
+				Name = 'CCA', Change_Code__c = 'CCA', Integration_RecId__c = 'C',Bulletin_Memo_Text__c = 'Agent is restricted from using Card form of payment method due to <SIDRA Lite Reason>.'
+			),
+			new AMS_ChangeCodes__c(
+				Name = 'CCR', Change_Code__c = 'CCR', Integration_RecId__c = 'C',Bulletin_Memo_Text__c = 'Agent is restricted from using Cash and Card payment methods due to <SIDRA Lite Reason>.'
+			),
+			new AMS_ChangeCodes__c(
+				Name = 'FPR', Change_Code__c = 'FPR', Integration_RecId__c = 'C',Bulletin_Memo_Text__c = 'Agent is restricted from using Cash form of payment method due to <SIDRA Lite Reason>.'
+			)
+		};
+
+		insert changeCodeList;
+
+		ANG_RHC_Information__c rhcInfo=[SELECT Id,ANG_AccountId__c FROM ANG_RHC_Information__c LIMIT 1];
+
+		List<Agency_Authorization__c> authorizations = new List<Agency_Authorization__c>();
+
+		ID FormOfPaymentRT = AMS_Utils.getId('Agency_Authorization__c','FormOfPayment');
+
+		authorizations.add(new Agency_Authorization__c(Account__c = rhcInfo.ANG_AccountId__c, ANG_FormOfPayment_ID__c = 'CC', Status__c = 'Non-Active', RecordTypeId = FormOfPaymentRT));
+		authorizations.add(new Agency_Authorization__c(Account__c = rhcInfo.ANG_AccountId__c, ANG_FormOfPayment_ID__c = 'CA', Status__c = 'Non-Active', RecordTypeId = FormOfPaymentRT));
+		authorizations.add(new Agency_Authorization__c(Account__c = rhcInfo.ANG_AccountId__c, ANG_FormOfPayment_ID__c = 'EP', Status__c = 'Non-Active', RecordTypeId = FormOfPaymentRT));
+
+		insert authorizations;
+
+		ANG_Risk_Alert__c ara = new ANG_Risk_Alert__c(
+			ANG_RHC_Information__c = rhcInfo.Id,
+			ANG_Account__c = rhcInfo.ANG_AccountId__c,
+			ANG_Direction__c = ANG_RHCHelper.RISK_ALERT_DIRECTION_DOWN,
+			ANG_Threshold_Level__c = '50%'
+		);
+
+		insert ara;
+
+		System.assertEquals(0,[SELECT ID from Agency_Authorization__c where ANG_FormOfPayment_ID__c = 'CA' and Status__c = 'Active'].Size());
+		System.assertEquals(0,[SELECT ID from Agency_Applied_Change_code__c where Account__c = :rhcInfo.ANG_AccountId__c and Change_Code__c = 'PCR' and Active__c = true].Size());
+
+		//System.assertEquals(null,[SELECT ID, Source__c from Agency_Authorization__c where ANG_FormOfPayment_ID__c = 'CA'].get(0).Source__c);
+
+		Test.stopTest();
+
+
+	}
+	*/
+
+
+	private static void createScenario1(){
+
+		/*
+			SCENARIO 1: 
+		- Accredited HE with accr. model = cash and FoP cash active 
+		- A 100% UP risk alert is created so Cash FoP will be deactivated 
+		- A 100% DOWN risk alert is created 
+
+		EXPECTED RESULT 
+		Cash will be restored 
+
+		*/
+
+		ANG_RHC_Information__c rhcInfo=[SELECT Id,ANG_AccountId__c FROM ANG_RHC_Information__c LIMIT 1];
+
+		List<Agency_Authorization__c> authorizations = new List<Agency_Authorization__c>();
+
+		ID FormOfPaymentRT = RecordTypeSingleton.getInstance().getRecordTypeID('Agency_Authorization__c', 'FormOfPayment');
+
+		authorizations.add(new Agency_Authorization__c(Account__c = rhcInfo.ANG_AccountId__c, ANG_FormOfPayment_ID__c = 'CA', Status__c = 'Active', RecordTypeId = FormOfPaymentRT));
+
+		insert authorizations;
+		
+		ANG_Risk_Alert__c ara = new ANG_Risk_Alert__c(
+			ANG_RHC_Information__c = rhcInfo.Id,
+			ANG_Account__c = rhcInfo.ANG_AccountId__c,
+			ANG_Direction__c = ANG_RHCHelper.RISK_ALERT_DIRECTION_UP,
+			ANG_Threshold_Level__c = '100%'
+		);
+
+		insert ara;
+
+		Agency_Authorization__c aa = [SELECT ID, Status__c from Agency_Authorization__c where ANG_FormOfPayment_ID__c = 'CA'];
+
+		System.assertEquals('Non-Active', aa.Status__c);
+
+		System.assertEquals(1,[SELECT ID from Agency_Applied_Change_code__c where Account__c = :rhcInfo.ANG_AccountId__c and Change_Code__c = 'PCA' and Active__c = true].Size());
+		
+		ara = new ANG_Risk_Alert__c(
+			ANG_RHC_Information__c = rhcInfo.Id,
+			ANG_Account__c = rhcInfo.ANG_AccountId__c,
+			ANG_Direction__c = ANG_RHCHelper.RISK_ALERT_DIRECTION_DOWN,
+			ANG_Threshold_Level__c = '100%'
+		);
+
+		insert ara;
+	
+		aa = [SELECT ID, Status__c from Agency_Authorization__c where ANG_FormOfPayment_ID__c = 'CA'];
+
+		System.assertEquals('Active', aa.Status__c);
+
+	}
+
+	private static testmethod voId scenario2Test(){
+
+		/*TEST SCENARIO 2: 
+			
+			- Accredited HE with accr. model = cash and FoP cash active 
+			- A 100% UP risk alert is created so Cash FoP will be deactivated 
+			- A 50% DOWN risk alert is created 
+
+			EXPECTED RESULT 
+			Cash will be restored 
+		*/
+
+		Test.startTest();
+	
+		ANG_RHC_Information__c rhcInfo=[SELECT Id,ANG_AccountId__c FROM ANG_RHC_Information__c LIMIT 1];
+
+		List<Agency_Authorization__c> authorizations = new List<Agency_Authorization__c>();
+
+		ID FormOfPaymentRT = RecordTypeSingleton.getInstance().getRecordTypeID('Agency_Authorization__c', 'FormOfPayment');
+
+		authorizations.add(new Agency_Authorization__c(Account__c = rhcInfo.ANG_AccountId__c, ANG_FormOfPayment_ID__c = 'CA', Status__c = 'Active', RecordTypeId = FormOfPaymentRT));
+
+		insert authorizations;
+		
+		ANG_Risk_Alert__c ara = new ANG_Risk_Alert__c(
+			ANG_RHC_Information__c = rhcInfo.Id,
+			ANG_Account__c = rhcInfo.ANG_AccountId__c,
+			ANG_Direction__c = ANG_RHCHelper.RISK_ALERT_DIRECTION_UP,
+			ANG_Threshold_Level__c = '100%'
+		);
+
+		insert ara;
+
+		Agency_Authorization__c aa = [SELECT ID, Status__c from Agency_Authorization__c where ANG_FormOfPayment_ID__c = 'CA'];
+
+		System.assertEquals('Non-Active', aa.Status__c);
+
+		System.assertEquals(1,[SELECT ID from Agency_Applied_Change_code__c where Account__c = :rhcInfo.ANG_AccountId__c and Change_Code__c = 'PCA' and Active__c = true].Size());
+		
+		ara = new ANG_Risk_Alert__c(
+			ANG_RHC_Information__c = rhcInfo.Id,
+			ANG_Account__c = rhcInfo.ANG_AccountId__c,
+			ANG_Direction__c = ANG_RHCHelper.RISK_ALERT_DIRECTION_DOWN,
+			ANG_Threshold_Level__c = '50%'
+		);
+
+		insert ara;
+	
+		aa = [SELECT ID,  Status__c from Agency_Authorization__c where ANG_FormOfPayment_ID__c = 'CA'];
+
+		System.assertEquals('Active', aa.Status__c);
+
+
+		Test.stopTest();
+
+	}
+
+	private static testmethod voId scenario3Test(){
+
+		/*
+		SCENARIO 3: 
+		- Accredited HE with accr. model = cash and FoP cash active 
+		- A 100% UP risk alert is created so Cash FoP will be deactivated 
+		- A 75% DOWN risk alert is created 
+
+		EXPECTED RESULT 
+		Cash will be restored 
+		*/
+
+		Test.startTest();
+		
+		ANG_RHC_Information__c rhcInfo=[SELECT Id,ANG_AccountId__c FROM ANG_RHC_Information__c LIMIT 1];
+
+		List<Agency_Authorization__c> authorizations = new List<Agency_Authorization__c>();
+
+		ID FormOfPaymentRT = RecordTypeSingleton.getInstance().getRecordTypeID('Agency_Authorization__c', 'FormOfPayment');
+
+		authorizations.add(new Agency_Authorization__c(Account__c = rhcInfo.ANG_AccountId__c, ANG_FormOfPayment_ID__c = 'CA', Status__c = 'Active', RecordTypeId = FormOfPaymentRT));
+
+		insert authorizations;
+
+		ANG_Risk_Alert__c ara = new ANG_Risk_Alert__c(
+			ANG_RHC_Information__c = rhcInfo.Id,
+			ANG_Account__c = rhcInfo.ANG_AccountId__c,
+			ANG_Direction__c = ANG_RHCHelper.RISK_ALERT_DIRECTION_UP,
+			ANG_Threshold_Level__c = '100%'
+		);
+
+		insert ara;
+
+		Agency_Authorization__c aa = [SELECT ID, Status__c from Agency_Authorization__c where ANG_FormOfPayment_ID__c = 'CA'];
+
+		System.assertEquals('Non-Active', aa.Status__c);
+
+		ara = new ANG_Risk_Alert__c(
+			ANG_RHC_Information__c = rhcInfo.Id,
+			ANG_Account__c = rhcInfo.ANG_AccountId__c,
+			ANG_Direction__c = ANG_RHCHelper.RISK_ALERT_DIRECTION_DOWN,
+			ANG_Threshold_Level__c = '75%'
+		);
+
+		insert ara;
+
+		Agency_Applied_Change_code__c aacc = [SELECT ID, Active__c from Agency_Applied_Change_code__c where Account__c = :rhcInfo.ANG_AccountId__c and Change_Code__c = 'PCR'];
+
+		System.assertEquals(aacc.Active__c,true);
+
+		aa = [SELECT ID,  Status__c from Agency_Authorization__c where ANG_FormOfPayment_ID__c = 'CA'];
+
+		System.assertEquals('Active', aa.Status__c);
+
+		Test.stopTest();
+
+	}
+
+	private static testmethod voId scenario4Test(){
+
+		/*SCENARIO 4: 
+		- Accredited HE with accr. model = cash and FoP cash active 
+		- A FoP OSCAR case is created and processed to restrict cash 
+		- A 100% DOWN risk alert is created 
+
+		EXPECTED RESULT 
+		Cash will NOT be restored 
+		*/ 
+
+		Test.startTest();
+
+		ANG_RHC_Information__c rhcInfo=[SELECT Id,ANG_AccountId__c FROM ANG_RHC_Information__c LIMIT 1];
+
+		List<Agency_Authorization__c> authorizations = new List<Agency_Authorization__c>();
+
+		ID FormOfPaymentRT = RecordTypeSingleton.getInstance().getRecordTypeID('Agency_Authorization__c', 'FormOfPayment');
+
+		authorizations.add(new Agency_Authorization__c(Account__c = rhcInfo.ANG_AccountId__c, ANG_FormOfPayment_ID__c = 'CA', Status__c = 'Active', RecordTypeId = FormOfPaymentRT));
+
+		insert authorizations;
+
+		AMS_OSCAR__c oscar = createOscarFOP();
+
+		ANG_OscarProcessHelper.processRestrictFOP(oscar.Id, false ,true);
+
+		Agency_Authorization__c aa = [SELECT ID, Status__c from Agency_Authorization__c where ANG_FormOfPayment_ID__c = 'CA'];
+
+		System.assertEquals('Non-Active', aa.Status__c);
+
+		System.assertEquals(1,[SELECT ID from Agency_Applied_Change_code__c where Account__c = :rhcInfo.ANG_AccountId__c and Change_Code__c = 'PCA' and Active__c = true].Size());
+	
+		ANG_Risk_Alert__c ara = new ANG_Risk_Alert__c(
+			ANG_RHC_Information__c = rhcInfo.Id,
+			ANG_Account__c = rhcInfo.ANG_AccountId__c,
+			ANG_Direction__c = ANG_RHCHelper.RISK_ALERT_DIRECTION_DOWN,
+			ANG_Threshold_Level__c = '100%'
+		);
+
+		insert ara;
+
+		aa = [SELECT ID, Status__c from Agency_Authorization__c where ANG_FormOfPayment_ID__c = 'CA'];
+
+		System.assertEquals('Non-Active', aa.Status__c);
+
+		Test.stopTest();
+
+	}
+
+	private static testmethod voId scenario5Test(){
+
+		/*	
+		SCENARIO 5: 
+
+		- Accredited HE with accr. model = cash and FoP cash active 
+		- A FoP OSCAR case is created and processed to restrict cash 
+		- A 50% DOWN risk alert is created 
+		- A 75% DOWN risk alert is created 
+		- A 100% DOWN risk alert is created 
+
+		EXPECTED RESULT 
+		Cash will NOT be restored 
+
+		 */ 
+
+		Test.startTest();
+
+		ANG_RHC_Information__c rhcInfo=[SELECT Id,ANG_AccountId__c FROM ANG_RHC_Information__c LIMIT 1];
+
+		List<Agency_Authorization__c> authorizations = new List<Agency_Authorization__c>();
+
+		ID FormOfPaymentRT = RecordTypeSingleton.getInstance().getRecordTypeID('Agency_Authorization__c', 'FormOfPayment');
+
+		authorizations.add(new Agency_Authorization__c(Account__c = rhcInfo.ANG_AccountId__c, ANG_FormOfPayment_ID__c = 'CA', Status__c = 'Active', RecordTypeId = FormOfPaymentRT));
+
+		insert authorizations;
+		
+		AMS_OSCAR__c oscar = createOscarFOP();
+
+		ANG_OscarProcessHelper.processRestrictFOP(oscar.Id, false ,true);
+
+		Agency_Authorization__c aa = [SELECT ID, Status__c from Agency_Authorization__c where ANG_FormOfPayment_ID__c = 'CA'];
+
+		System.assertEquals('Non-Active', aa.Status__c);
+
+		System.assertEquals(1,[SELECT ID from Agency_Applied_Change_code__c where Account__c = :rhcInfo.ANG_AccountId__c and Change_Code__c = 'PCA' and Active__c = true].Size());
+	
+		ANG_Risk_Alert__c ara = new ANG_Risk_Alert__c(
+			ANG_RHC_Information__c = rhcInfo.Id,
+			ANG_Account__c = rhcInfo.ANG_AccountId__c,
+			ANG_Direction__c = ANG_RHCHelper.RISK_ALERT_DIRECTION_DOWN,
+			ANG_Threshold_Level__c = '50%'
+		);
+
+		insert ara;
+
+		ara = new ANG_Risk_Alert__c(
+			ANG_RHC_Information__c = rhcInfo.Id,
+			ANG_Account__c = rhcInfo.ANG_AccountId__c,
+			ANG_Direction__c = ANG_RHCHelper.RISK_ALERT_DIRECTION_DOWN,
+			ANG_Threshold_Level__c = '75%'
+		);
+
+		insert ara;
+
+		ara = new ANG_Risk_Alert__c(
+			ANG_RHC_Information__c = rhcInfo.Id,
+			ANG_Account__c = rhcInfo.ANG_AccountId__c,
+			ANG_Direction__c = ANG_RHCHelper.RISK_ALERT_DIRECTION_DOWN,
+			ANG_Threshold_Level__c = '100%'
+		);
+
+		insert ara;
+
+		aa = [SELECT ID, Status__c from Agency_Authorization__c where ANG_FormOfPayment_ID__c = 'CA'];
+
+		System.assertEquals('Non-Active', aa.Status__c);
+
+		Test.stopTest();
+
+	}
+
+	private static testmethod voId scenario6Test(){
+
+
+		/*
+		SCENARIO 6: 
+		- Accredited HE with accr. model = cash and FoP cash active 
+		- A 100% UP risk alert is created so Cash FoP will be deactivated 
+		- A 50% DOWN risk alert is created 
+		- Here as in SCENARIO 2 cash is restored 
+		- A FoP OSCAR case is created and processed to restrict cash 
+		- A 75% DOWN risk alert is created 
+
+		EXPECTED RESULT 
+		Cash will NOT be restored (because the previous RHC alert was a 50% down and not a 100% up) 
+*/
+
+		Test.startTest();
+
+		ANG_RHC_Information__c rhcInfo=[SELECT Id,ANG_AccountId__c FROM ANG_RHC_Information__c LIMIT 1];
+
+		List<Agency_Authorization__c> authorizations = new List<Agency_Authorization__c>();
+
+		ID FormOfPaymentRT = RecordTypeSingleton.getInstance().getRecordTypeID('Agency_Authorization__c', 'FormOfPayment');
+
+		authorizations.add(new Agency_Authorization__c(Account__c = rhcInfo.ANG_AccountId__c, ANG_FormOfPayment_ID__c = 'CA', Status__c = 'Active', RecordTypeId = FormOfPaymentRT));
+
+		insert authorizations;
+
+        
+		ANG_Risk_Alert__c ara = new ANG_Risk_Alert__c(
+			ANG_RHC_Information__c = rhcInfo.Id,
+			ANG_Account__c = rhcInfo.ANG_AccountId__c,
+			ANG_Direction__c = ANG_RHCHelper.RISK_ALERT_DIRECTION_UP,
+			ANG_Threshold_Level__c = '100%'
+		);
+	
+		insert ara;
+	
+        
+		Agency_Authorization__c aa = [SELECT ID, Status__c from Agency_Authorization__c where ANG_FormOfPayment_ID__c = 'CA'];
+
+		System.assertEquals('Non-Active', aa.Status__c);
+
+
+		ara = new ANG_Risk_Alert__c(
+			ANG_RHC_Information__c = rhcInfo.Id,
+			ANG_Account__c = rhcInfo.ANG_AccountId__c,
+			ANG_Direction__c = ANG_RHCHelper.RISK_ALERT_DIRECTION_DOWN,
+			ANG_Threshold_Level__c = '50%'
+		);
+	
+		insert ara;
+
+		aa = [SELECT ID, Status__c from Agency_Authorization__c where ANG_FormOfPayment_ID__c = 'CA'];
+
+		System.assertEquals('Active', aa.Status__c);		
+
+        
+		AMS_OSCAR__c oscar = createOscarFOP();
+
+		ANG_OscarProcessHelper.processRestrictFOP(oscar.Id, false ,true);
+
+        
+		Test.stopTest();
+
+		aa = [SELECT ID, Status__c from Agency_Authorization__c where ANG_FormOfPayment_ID__c = 'CA'];
+
+		System.assertEquals('Non-Active', aa.Status__c);
+
+		ara = new ANG_Risk_Alert__c(
+			ANG_RHC_Information__c = rhcInfo.Id,
+			ANG_Account__c = rhcInfo.ANG_AccountId__c,
+			ANG_Direction__c = ANG_RHCHelper.RISK_ALERT_DIRECTION_DOWN,
+			ANG_Threshold_Level__c = '75%'
+		);
+	
+		insert ara;
+
+
+        
+		aa = [SELECT ID, Status__c from Agency_Authorization__c where ANG_FormOfPayment_ID__c = 'CA'];
+
+		System.assertEquals('Non-Active', aa.Status__c);
+
+	}
+
+	private static AMS_OSCAR__c createOscarFOP(){
+
+		Account a1 = [Select id From Account LIMIT 1];
+
+        Contact co1 = new Contact(AccountId = a1.id, Firstname = 'John', Lastname='Rambo', Phone = '666123456', MobilePhone = '911111111', Email = 'rambo.johnj@test.com', Financial_Assessment_Contact__c = false);
+		insert co1;
+
+		AMS_OSCAR__c oscar = new AMS_OSCAR__c(Process__c = AMS_Utils.NGFOP, Account__c = a1.id, RecordTypeId = AMS_Utils.RECTYPE_NEWGENFOP);
+
+		insert oscar;
+
+		ID caseRT = RecordTypeSingleton.getInstance().getRecordTypeID('Case', 'OSCAR_Communication');
+
+		Case oscarCase = new Case(Oscar__c = oscar.Id, RecordTypeId = caseRT);
+		oscarCase.AccountId = a1.Id;
+		oscarCase.ContactId = co1.Id;
+		insert oscarCase;
+	
+		ID rtNew = Schema.SObjectType.AMS_Pax_Accreditation_Form__c.getRecordTypeInfosByName().get('Travel Agent - Head Entity Standard no Cash').getRecordTypeId();
+
+		AMS_Pax_Accreditation_Form__c theAccreditation = new AMS_Pax_Accreditation_Form__c(RecordTypeId = rtNew);
+
+		theAccreditation.Account_Name__c='NEWGEN-559 HE5';
+		theAccreditation.ISSP_AMS_Legal_Status__c='Association';
+		theAccreditation.Branch_Office_Street_name_number__c='sdfsdf';
+		theAccreditation.Branch_Office_City__c='sdfsdfdf';
+		theAccreditation.Branch_Office_Email__c='sdfsdfgdg@f3434.com';
+		theAccreditation.Branch_Office_Phone__c='123123123';
+		theAccreditation.ISSP_AMS_Premises_located_at_airport__c='No';
+		theAccreditation.Abbreviated_name__c='NEWGEN-559 HE5';
+		theAccreditation.Abbreviated_Address__c='sdfsdf';
+		theAccreditation.Remittance_frequency__c='M';
+		theAccreditation.Solicitation_Flag__c=false;
+		theAccreditation.Location_Class__c='P';
+		theAccreditation.Location_Type__c='HE';
+		theAccreditation.SAAM_Case__c=oscarCase.Id;
+		theAccreditation.Account_Name__c = a1.Id;
+
+		insert theAccreditation;
+
+		return oscar;
+	}
+
 }

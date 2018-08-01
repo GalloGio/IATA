@@ -102,6 +102,7 @@ trigger CaseBeforeTrigger on Case (before delete, before insert, before update) 
     ID CSRcaseRecordTypeID = RecordTypeSingleton.getInstance().getRecordTypeId('Case', 'BSPlink_Customer_Service_Requests_CSR');
     ID PortalRecordTypeID  = RecordTypeSingleton.getInstance().getRecordTypeId('Case', 'External_Cases_InvoiceWorks');
     ID ifgCaseRecordTypeID = RecordTypeSingleton.getInstance().getRecordTypeId('Case', 'Cases_IFG');
+    ID caseSEDARecordTypeID = RecordTypeSingleton.getInstance().getRecordTypeId('Case', 'SEDA');
     /*Record type*/
 
     /*Variables*/
@@ -1237,6 +1238,11 @@ trigger CaseBeforeTrigger on Case (before delete, before insert, before update) 
                 if ((c.RecordTypeId == SIDRAcaseRecordTypeID || c.RecordTypeId == SEDAcaseRecordTypeID) && c.Currency__c != null) {//INC200638 - added SEDA record type
                     setCurrencies.add(c.Currency__c);
                 }
+                if (c.RecordTypeId == caseSEDARecordTypeID) {
+                    if (c.Demand_by_Email_Fax__c!=null) {
+                        c.CS_Rep_Contact_Customer__c = UserInfo.getUserId();
+                    }
+                }
             }
             map<String, CurrencyType> mapCurrencyTypePerCurrencyCode = new map<String, CurrencyType>();
             if (! setCurrencies.isEmpty()) {
@@ -1699,6 +1705,12 @@ trigger CaseBeforeTrigger on Case (before delete, before insert, before update) 
                 if (aCase.RecordTypeId == SIDRAcaseRecordTypeID && (aCase.IRR_Withdrawal_Reason__c == SMALLAMOUNT || aCase.IRR_Withdrawal_Reason__c == MINORPOLICY) && aCase.CreatedDate >= Last24Hours && aCase.AccountId != null) {
                     // We add the Account id to the set only if the current case is a Sidra Small amount case. Avoid unwanted Case record types
                     accountIds.add(aCase.AccountId);
+                }     
+                if (aCase.RecordTypeId == caseSEDARecordTypeID) {
+                    Case aCaseOld = Trigger.oldMap.get(aCase.Id);
+                    if (aCase.Demand_by_Email_Fax__c!=aCaseOld.Demand_by_Email_Fax__c) {
+                        aCase.CS_Rep_Contact_Customer__c = UserInfo.getUserId();
+                    }
                 }
             }
 
@@ -1762,10 +1774,17 @@ trigger CaseBeforeTrigger on Case (before delete, before insert, before update) 
                 }
                 //Here we calculate the first contact with client in business hours
                 Case oldCase = System.Trigger.oldMap.get(updatedCase.Id);
-                if (updatedCase.BusinessHoursId <> null && updatedCase.First_Contact_with_Client__c <> null
-                        && (updatedCase.First_Contact_w_Client_in_Business_Hours__c != oldCase.First_Contact_w_Client_in_Business_Hours__c
-                            || updatedCase.First_Contact_w_Client_in_Business_Hours__c == null))
+                if(
+                    updatedCase.BusinessHoursId <> null
+                    && updatedCase.First_Contact_with_Client__c <> null 
+                    && (
+                        updatedCase.First_Contact_w_Client_in_Business_Hours__c != oldCase.First_Contact_w_Client_in_Business_Hours__c 
+                        || updatedCase.First_Contact_w_Client_in_Business_Hours__c == null
+                        || updatedCase.First_Contact_w_Client_in_Business_Hours__c < 0
+                    )
+                ) {
                     updatedCase.First_Contact_w_Client_in_Business_Hours__c = BusinessHours.diff(updatedCase.BusinessHoursId, updatedCase.CreatedDate, updatedCase.First_Contact_with_Client__c) / 3600000.0;
+                }
             }
             if (Trigger.isUpdate && (!transformationHelper.CalculateBusinessHoursAgesGet() || BusinessDays.isAllowedRunTwice)) { // we are on the update so we have the caseIDS!Hurra!!
                 system.debug('##ROW##');
