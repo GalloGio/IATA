@@ -577,6 +577,14 @@
         <name>AMS_PERFORM_CORRECTION</name>
     </customLabels>
     <customLabels>
+        <label><!-- AMS_PendingHOAccr --></label>
+        <name>AMS_PendingHOAccr</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- AMS_RRejected --></label>
+        <name>AMS_RRejected</name>
+    </customLabels>
+    <customLabels>
         <label><!-- AMS_RollbackCase_Description --></label>
         <name>AMS_RollbackCase_Description</name>
     </customLabels>
@@ -11522,7 +11530,7 @@ Harap diperhatikan bahwa faktur (invoice) IATA untuk agen yang terakreditasi dik
         <name>ISSP_Registration_BusinessPhone</name>
     </customLabels>
     <customLabels>
-        <label><!-- ISSP_Registration --></label>
+        <label>Telepon Kantor tidak valid, mohon periksa kembali. Selain itu, periksa juga apakah negara yang benar sudah dipilih dengan cara memilih bendera dari daftar ATAU memasukkan kode negara diawali dengan &apos;+&apos;.</label>
         <name>ISSP_Registration_BusinessPhone_Msg</name>
     </customLabels>
     <customLabels>
@@ -11598,7 +11606,7 @@ Harap diperhatikan bahwa faktur (invoice) IATA untuk agen yang terakreditasi dik
         <name>ISSP_Registration_Error_TypeofCustomer</name>
     </customLabels>
     <customLabels>
-        <label><!-- ISSP_Registration --></label>
+        <label>Telepon Faks tidak valid, mohon periksa kembali. Selain itu, periksa juga apakah negara yang benar sudah dipilih dengan cara memilih bendera dari daftar ATAU memasukkan kode negara diawali dengan &apos;+&apos;.</label>
         <name>ISSP_Registration_FaxPhone_Msg</name>
     </customLabels>
     <customLabels>
@@ -11636,7 +11644,7 @@ If you do not have an IATA Code please go back and select ‘Other Company’ as
         <name>ISSP_Registration_MobilePhone</name>
     </customLabels>
     <customLabels>
-        <label><!-- ISSP_Registration --></label>
+        <label>Telepon Seluler tidak valid, mohon periksa kembali. Selain itu, periksa juga apakah negara yang benar sudah dipilih dengan cara memilih bendera dari daftar ATAU memasukkan kode negara diawali dengan &apos;+&apos;.</label>
         <name>ISSP_Registration_MobilePhone_Msg</name>
     </customLabels>
     <customLabels>
@@ -13375,7 +13383,7 @@ an IATA accredited agency, please press &quot;&quot;Back&quot;&quot; button and 
         <name>OneId_AccountSearchPlaceholder</name>
     </customLabels>
     <customLabels>
-        <label>Pengaitan Akun</label>
+        <label>Detail Perusahaan</label>
         <name>OneId_Account_Association</name>
     </customLabels>
     <customLabels>
@@ -13415,11 +13423,11 @@ an IATA accredited agency, please press &quot;&quot;Back&quot;&quot; button and 
         <name>OneId_Community_Name</name>
     </customLabels>
     <customLabels>
-        <label>Pengaitan &amp; Validasi Kontak</label>
+        <label>Validasi Email</label>
         <name>OneId_Contact_Association_Validation</name>
     </customLabels>
     <customLabels>
-        <label>Pembuatan Kontak</label>
+        <label>Detail Kontak</label>
         <name>OneId_Contact_Creation</name>
     </customLabels>
     <customLabels>
@@ -13643,7 +13651,10 @@ an IATA accredited agency, please press &quot;&quot;Back&quot;&quot; button and 
         <name>OneId_Registration_Error_BusinessPhone</name>
     </customLabels>
     <customLabels>
-        <label><!-- OneId_Registration_UserExist --></label>
+        <label>Email ini sudah terdaftar pada kami.
+Jika Anda seorang pengguna E-Commerce, gunakan data masuk E-Commerce Anda.
+Jika Anda pengguna Portal Pelanggan, gunakan data masuk Portal Pelanggan Anda.
+Jika Anda ingin mengganti kata sandi, kembali ke layar masuk lalu gunakan fungsi “lupa kata sandi”.</label>
         <name>OneId_Registration_UserExist</name>
     </customLabels>
     <customLabels>

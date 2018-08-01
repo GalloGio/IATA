@@ -5785,7 +5785,7 @@ Change the case status to “Agent Notified (mail)” if case status was “Agen
     <fieldUpdates>
         <fullName>IFAP_Update_FA_Submitted_Date</fullName>
         <field>Submitted_Date__c</field>
-        <formula>IF(Value(Mid(text(now()),12,2))&gt;21,DATEVALUE(Now()+1), DATEVALUE(Now()))</formula>
+        <formula>IF(Value(Mid(text(now()),12,2))&gt;14, if(Value(Mid(text(now()),0,2)) != day(DATEVALUE(Now())), DATEVALUE(Now()), DATEVALUE(Now()+1)), DATEVALUE(Now()))</formula>
         <name>IFAP Update FA Submitted Date</name>
         <notifyAssignee>false</notifyAssignee>
         <operation>Formula</operation>

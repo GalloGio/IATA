@@ -137,10 +137,6 @@
             <type>role</type>
         </recipients>
         <recipients>
-            <recipient>abulkheirk@iata.org</recipient>
-            <type>user</type>
-        </recipients>
-        <recipients>
             <recipient>astridgec@iata.org</recipient>
             <type>user</type>
         </recipients>
@@ -150,6 +146,10 @@
         </recipients>
         <recipients>
             <recipient>bertolusj@iata.org</recipient>
+            <type>user</type>
+        </recipients>
+        <recipients>
+            <recipient>deghelderc@iata.org</recipient>
             <type>user</type>
         </recipients>
         <recipients>
