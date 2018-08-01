@@ -206,6 +206,17 @@ public with sharing class ANG_AgencyChangesHelper {
 
 					performRiskEventActions(oscar,currHEAccount,isAllHierarchySelected);
 
+					if (changesContainer.accountsMap.get(oscar.Account__c).IATA_ISO_Country__r.Due_diligence_mandatory__c && oscar.STEP17__c != AMS_Utils.NOT_APPLICABLE && 
+						oscar.Type_of_change__c != AMS_Utils.ANG_LOCATION) {
+
+                        if(changesContainer.accountsMap.get(oscar.Account__c).Due_Diligence_Status__c == AMS_Utils.IN_PROGRESS) oscar.STEP17__c = AMS_Utils.IN_PROGRESS;
+                        else{
+                            String dlResult = AMS_OSCAR_Webservice.createAMLCaseWithNoOscarUpdate(oscar);
+                            if (dlResult.startsWith('ERROR')) oscar.addError(dlResult);
+                            else changesContainer.accountsMap.get(oscar.Account__c).Due_Diligence_Status__c = AMS_Utils.IN_PROGRESS;
+                        }
+                    }
+
 					System.debug('[ANG_AgencyChangesHelper] Risk Actions Ended');
 				}
 
@@ -908,6 +919,10 @@ public with sharing class ANG_AgencyChangesHelper {
                 if(oscarToProcess.Process__c ==  AMS_Utils.NGCORRECTION && oscarToProcess.Is_PCI_compliant__c != acc.Is_PCI_compliant__c){
                     acc.Is_PCI_compliant__c = oscarToProcess.Is_PCI_compliant__c;
                 }
+
+                if(oscarToProcess.Process__c ==  AMS_Utils.NGCORRECTION && oscarToProcess.ANG_PCI_compliance_expiry_date__c != acc.ANG_PCI_compliance_expiry_date__c){
+                    acc.ANG_PCI_compliance_expiry_date__c = oscarToProcess.ANG_PCI_compliance_expiry_date__c;
+                }
                     
 
 				for(String accFieldApiName: accountFieldNewValue.keySet())
@@ -1323,9 +1338,9 @@ public with sharing class ANG_AgencyChangesHelper {
 		        BillingCountry, BillingStreet, BillingPostalCode, BillingState, BillingCity, IATA_ISO_Country__c, Iso_State__c, ShippingCountry, Is_Branch_Abroad__c,
 		        ShippingStreet, ShippingPostalCode, ShippingState, ShippingCity, Email__c, Website, Phone, Fax, In_a_Airport__c, Abbreviated_name__c, Abbreviated_address__c,
 		        Remittance_frequency__c, Solicitation_Flag__c, VAT_Number_2__c, CASS_Number__c, Location_Class__c, Location_Type__c, Mobile__c, Is_your_firm_handling_Dangerous_Goods__c,
-		        Due_Diligence_Status__c, IATA_ISO_Shipping_State__r.Name, ISO_State__r.Name,IATA_ISO_Country__r.Name,IATA_ISO_Shipping_Country__c,IATA_ISO_Shipping_Country__r.Name,
+		        Due_Diligence_Status__c, IATA_ISO_Shipping_State__r.Name, ISO_State__r.Name,IATA_ISO_Country__r.Name,IATA_ISO_Country__r.Due_diligence_mandatory__c,IATA_ISO_Shipping_Country__c,IATA_ISO_Shipping_Country__r.Name,
 		        IATA_ISO_Billing_State__c,IATA_ISO_Billing_State__r.Name, ANG_Accreditation_Model__c, IATA_ISO_Country__r.CurrencyIsoCode, Is_PCI_compliant__c,IATA_ISO_Country__r.AMS_Settlement_System__r.CurrencyIsoCode, 
-		        ANG_IsNewGenAgency__c, ANG_FA_Opt_out__c, CNS_Agency__c
+		        ANG_IsNewGenAgency__c, ANG_FA_Opt_out__c, CNS_Agency__c, ANG_PCI_compliance_expiry_date__c, IATA_ISO_Country__r.AMS_Settlement_System__r.ANG_RHC_Amount_Equals_FS__c
 		         FROM Account WHERE Id IN :accountIds]);
 	}
 
@@ -1507,6 +1522,7 @@ public with sharing class ANG_AgencyChangesHelper {
     private static AChangeStructure applyFAOptOut(AMS_Oscar__c oscar, AChangeStructure changesContainer, List<Account> accountsInvolved, Boolean bOptOut){
 
 			Boolean valueToAgency;
+			String prevOptOut;
 
 			// check if we are forcing a value - depending on type of changes
 			if(bOptOut != null){
@@ -1517,6 +1533,9 @@ public with sharing class ANG_AgencyChangesHelper {
 			}
 
 			for (Account acc: accountsInvolved){
+
+				prevOptOut = String.valueOf(acc.ANG_FA_Opt_out__c);
+
                 if (changesContainer.accountsMap.keySet().contains(acc.Id)){
                		changesContainer.accountsMap.get(acc.Id).ANG_FA_Opt_out__c = valueToAgency;
                 } else {
@@ -1524,7 +1543,15 @@ public with sharing class ANG_AgencyChangesHelper {
                 	changesContainer.accountsMap.put(acc.Id,acc);
                 }
                 changesContainer.accountsChanged.add(acc.id);
+	
+				// create history on change code
+				if (valueToAgency != null && prevOptOut != null && prevOptOut != '' && String.valueOf(valueToAgency) != prevOptOut){
+					AMS_ChangeCodesHelper.ObjectChange objectChange = new AMS_ChangeCodesHelper.ObjectChange('Account','ANG_FA_Opt_out__c', prevOptOut, String.valueOf(valueToAgency));
+	            	AMS_ChangeCodesHelper.ObjectChangesStruct objectChangeStruct = new AMS_ChangeCodesHelper.ObjectChangesStruct(new List<AMS_ChangeCodesHelper.ObjectChange>{objectChange});
+	            	changesContainer.changesStruct.put(acc.Id, objectChangeStruct);
+				}
 			}
+
 
 		return changesContainer;
     }

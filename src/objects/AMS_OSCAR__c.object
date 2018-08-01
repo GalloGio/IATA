@@ -7190,6 +7190,11 @@ if(Change_effective_as_of__c - today() &gt; 0,&quot;30&quot;,&quot;0&quot;)))</f
                     <default>false</default>
                     <label>Open - EDMC</label>
                 </value>
+                <value>
+                    <fullName>Renewal not completed</fullName>
+                    <default>false</default>
+                    <label>Renewal not completed</label>
+                </value>
             </valueSetDefinition>
         </valueSet>
     </fields>
@@ -7810,6 +7815,15 @@ if(Change_effective_as_of__c - today() &gt; 0,&quot;30&quot;,&quot;0&quot;)))</f
         </sharedTo>
     </listViews>
     <listViews>
+        <fullName>Annual_Revalidation_AMS_OSCAR</fullName>
+        <filterScope>Queue</filterScope>
+        <label>Annual Revalidation</label>
+        <queue>Annual_Revalidation</queue>
+        <sharedTo>
+            <allInternalUsers></allInternalUsers>
+        </sharedTo>
+    </listViews>
+    <listViews>
         <fullName>Asia_Pacific_OSCAR_AMS_OSCAR</fullName>
         <filterScope>Queue</filterScope>
         <label>Asia &amp; Pacific [OSCAR]</label>
@@ -8045,10 +8059,10 @@ if(Change_effective_as_of__c - today() &gt; 0,&quot;30&quot;,&quot;0&quot;)))</f
     <recordTypeTrackFeedHistory>false</recordTypeTrackFeedHistory>
     <recordTypeTrackHistory>false</recordTypeTrackHistory>
     <recordTypes>
-        <fullName>ANG_Agency_Changes</fullName>
+        <fullName>ANG_ANNUAL_REVALIDATION</fullName>
         <active>true</active>
-        <description>New Gen Agency Changes Record Type</description>
-        <label>NG Agency Changes</label>
+        <description>Used for ANG.ANNUAL.REVALIDATION OSCAR process</description>
+        <label>ANG.ANNUAL.REVALIDATION</label>
         <picklistValues>
             <picklist>AML_result__c</picklist>
             <values>
@@ -8087,7 +8101,7 @@ if(Change_effective_as_of__c - today() &gt; 0,&quot;30&quot;,&quot;0&quot;)))</f
             <picklist>ANG_FA_Opt_out__c</picklist>
             <values>
                 <fullName>Not Applicable</fullName>
-                <default>true</default>
+                <default>false</default>
             </values>
             <values>
                 <fullName>Opt-In</fullName>
@@ -8153,10 +8167,6 @@ if(Change_effective_as_of__c - today() &gt; 0,&quot;30&quot;,&quot;0&quot;)))</f
             </values>
             <values>
                 <fullName>Ownership</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Trade name</fullName>
                 <default>false</default>
             </values>
             <values>
@@ -8839,7 +8849,7 @@ if(Change_effective_as_of__c - today() &gt; 0,&quot;30&quot;,&quot;0&quot;)))</f
         <picklistValues>
             <picklist>Change_of_location_type_behavior__c</picklist>
             <values>
-                <fullName>Don&apos;t change the parent</fullName>
+                <fullName>Don%27t change the parent</fullName>
                 <default>false</default>
             </values>
             <values>
@@ -9002,10 +9012,6 @@ if(Change_effective_as_of__c - today() &gt; 0,&quot;30&quot;,&quot;0&quot;)))</f
         <picklistValues>
             <picklist>Is_PCI_compliant__c</picklist>
             <values>
-                <fullName>Nil CC</fullName>
-                <default>false</default>
-            </values>
-            <values>
                 <fullName>No</fullName>
                 <default>false</default>
             </values>
@@ -9028,7 +9034,7 @@ if(Change_effective_as_of__c - today() &gt; 0,&quot;30&quot;,&quot;0&quot;)))</f
         <picklistValues>
             <picklist>Process__c</picklist>
             <values>
-                <fullName>ANG%2EMAJOR%2ECHANGES%2E1%2E0</fullName>
+                <fullName>ANG%2EANNUAL%2EREVALIDATION</fullName>
                 <default>false</default>
             </values>
         </picklistValues>
@@ -9040,6 +9046,18 @@ if(Change_effective_as_of__c - today() &gt; 0,&quot;30&quot;,&quot;0&quot;)))</f
             </values>
             <values>
                 <fullName>Authorize Disapproval</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Not Started</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Reject Disapproval</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Reject approval</fullName>
                 <default>false</default>
             </values>
             <values>
@@ -11000,6 +11018,44 @@ if(Change_effective_as_of__c - today() &gt; 0,&quot;30&quot;,&quot;0&quot;)))</f
             </values>
         </picklistValues>
         <picklistValues>
+            <picklist>STEP43__c</picklist>
+            <values>
+                <fullName>Failed</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>In Progress</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Not Applicable</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Passed</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>STEP44__c</picklist>
+            <values>
+                <fullName>Failed</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>In Progress</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Not Applicable</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Passed</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
             <picklist>STEP4__c</picklist>
             <values>
                 <fullName>Failed</fullName>
@@ -11263,10 +11319,10 @@ if(Change_effective_as_of__c - today() &gt; 0,&quot;30&quot;,&quot;0&quot;)))</f
         </picklistValues>
     </recordTypes>
     <recordTypes>
-        <fullName>ANG_ANNUAL_REVALIDATION</fullName>
+        <fullName>ANG_Agency_Changes</fullName>
         <active>true</active>
-        <description>Used for ANG.ANNUAL.REVALIDATION OSCAR process</description>
-        <label>ANG.ANNUAL.REVALIDATION</label>
+        <description>New Gen Agency Changes Record Type</description>
+        <label>NG Agency Changes</label>
         <picklistValues>
             <picklist>AML_result__c</picklist>
             <values>
@@ -11305,7 +11361,7 @@ if(Change_effective_as_of__c - today() &gt; 0,&quot;30&quot;,&quot;0&quot;)))</f
             <picklist>ANG_FA_Opt_out__c</picklist>
             <values>
                 <fullName>Not Applicable</fullName>
-                <default>false</default>
+                <default>true</default>
             </values>
             <values>
                 <fullName>Opt-In</fullName>
@@ -11371,6 +11427,10 @@ if(Change_effective_as_of__c - today() &gt; 0,&quot;30&quot;,&quot;0&quot;)))</f
             </values>
             <values>
                 <fullName>Ownership</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Trade name</fullName>
                 <default>false</default>
             </values>
             <values>
@@ -12053,7 +12113,7 @@ if(Change_effective_as_of__c - today() &gt; 0,&quot;30&quot;,&quot;0&quot;)))</f
         <picklistValues>
             <picklist>Change_of_location_type_behavior__c</picklist>
             <values>
-                <fullName>Don&apos;t change the parent</fullName>
+                <fullName>Don%27t change the parent</fullName>
                 <default>false</default>
             </values>
             <values>
@@ -12216,6 +12276,10 @@ if(Change_effective_as_of__c - today() &gt; 0,&quot;30&quot;,&quot;0&quot;)))</f
         <picklistValues>
             <picklist>Is_PCI_compliant__c</picklist>
             <values>
+                <fullName>Nil CC</fullName>
+                <default>false</default>
+            </values>
+            <values>
                 <fullName>No</fullName>
                 <default>false</default>
             </values>
@@ -12238,7 +12302,7 @@ if(Change_effective_as_of__c - today() &gt; 0,&quot;30&quot;,&quot;0&quot;)))</f
         <picklistValues>
             <picklist>Process__c</picklist>
             <values>
-                <fullName>ANG%2EANNUAL%2EREVALIDATION</fullName>
+                <fullName>ANG%2EMAJOR%2ECHANGES%2E1%2E0</fullName>
                 <default>false</default>
             </values>
         </picklistValues>
@@ -12250,18 +12314,6 @@ if(Change_effective_as_of__c - today() &gt; 0,&quot;30&quot;,&quot;0&quot;)))</f
             </values>
             <values>
                 <fullName>Authorize Disapproval</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Not Started</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Reject Disapproval</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Reject approval</fullName>
                 <default>false</default>
             </values>
             <values>
@@ -15317,7 +15369,7 @@ if(Change_effective_as_of__c - today() &gt; 0,&quot;30&quot;,&quot;0&quot;)))</f
         <picklistValues>
             <picklist>Change_of_location_type_behavior__c</picklist>
             <values>
-                <fullName>Don&apos;t change the parent</fullName>
+                <fullName>Don%27t change the parent</fullName>
                 <default>false</default>
             </values>
             <values>
@@ -17490,6 +17542,44 @@ if(Change_effective_as_of__c - today() &gt; 0,&quot;30&quot;,&quot;0&quot;)))</f
             </values>
         </picklistValues>
         <picklistValues>
+            <picklist>STEP43__c</picklist>
+            <values>
+                <fullName>Failed</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>In Progress</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Not Applicable</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Passed</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>STEP44__c</picklist>
+            <values>
+                <fullName>Failed</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>In Progress</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Not Applicable</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Passed</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
             <picklist>STEP4__c</picklist>
             <values>
                 <fullName>Failed</fullName>
@@ -18543,7 +18633,7 @@ if(Change_effective_as_of__c - today() &gt; 0,&quot;30&quot;,&quot;0&quot;)))</f
         <picklistValues>
             <picklist>Change_of_location_type_behavior__c</picklist>
             <values>
-                <fullName>Don&apos;t change the parent</fullName>
+                <fullName>Don%27t change the parent</fullName>
                 <default>false</default>
             </values>
             <values>
@@ -20708,6 +20798,44 @@ if(Change_effective_as_of__c - today() &gt; 0,&quot;30&quot;,&quot;0&quot;)))</f
             </values>
         </picklistValues>
         <picklistValues>
+            <picklist>STEP43__c</picklist>
+            <values>
+                <fullName>Failed</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>In Progress</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Not Applicable</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Passed</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>STEP44__c</picklist>
+            <values>
+                <fullName>Failed</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>In Progress</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Not Applicable</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Passed</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
             <picklist>STEP4__c</picklist>
             <values>
                 <fullName>Failed</fullName>
@@ -21714,7 +21842,7 @@ if(Change_effective_as_of__c - today() &gt; 0,&quot;30&quot;,&quot;0&quot;)))</f
         <picklistValues>
             <picklist>Change_of_location_type_behavior__c</picklist>
             <values>
-                <fullName>Don&apos;t change the parent</fullName>
+                <fullName>Don%27t change the parent</fullName>
                 <default>false</default>
             </values>
             <values>
@@ -23883,6 +24011,44 @@ if(Change_effective_as_of__c - today() &gt; 0,&quot;30&quot;,&quot;0&quot;)))</f
             </values>
         </picklistValues>
         <picklistValues>
+            <picklist>STEP43__c</picklist>
+            <values>
+                <fullName>Failed</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>In Progress</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Not Applicable</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Passed</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>STEP44__c</picklist>
+            <values>
+                <fullName>Failed</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>In Progress</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Not Applicable</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Passed</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
             <picklist>STEP4__c</picklist>
             <values>
                 <fullName>Failed</fullName>
@@ -24932,7 +25098,7 @@ if(Change_effective_as_of__c - today() &gt; 0,&quot;30&quot;,&quot;0&quot;)))</f
         <picklistValues>
             <picklist>Change_of_location_type_behavior__c</picklist>
             <values>
-                <fullName>Don&apos;t change the parent</fullName>
+                <fullName>Don%27t change the parent</fullName>
                 <default>false</default>
             </values>
             <values>
@@ -27197,6 +27363,44 @@ if(Change_effective_as_of__c - today() &gt; 0,&quot;30&quot;,&quot;0&quot;)))</f
             </values>
         </picklistValues>
         <picklistValues>
+            <picklist>STEP43__c</picklist>
+            <values>
+                <fullName>Failed</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>In Progress</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Not Applicable</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Passed</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>STEP44__c</picklist>
+            <values>
+                <fullName>Failed</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>In Progress</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Not Applicable</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Passed</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
             <picklist>STEP4__c</picklist>
             <values>
                 <fullName>Failed</fullName>
@@ -28235,7 +28439,7 @@ if(Change_effective_as_of__c - today() &gt; 0,&quot;30&quot;,&quot;0&quot;)))</f
         <picklistValues>
             <picklist>Change_of_location_type_behavior__c</picklist>
             <values>
-                <fullName>Don&apos;t change the parent</fullName>
+                <fullName>Don%27t change the parent</fullName>
                 <default>false</default>
             </values>
             <values>
@@ -29168,6 +29372,44 @@ if(Change_effective_as_of__c - today() &gt; 0,&quot;30&quot;,&quot;0&quot;)))</f
         </picklistValues>
         <picklistValues>
             <picklist>STEP40__c</picklist>
+            <values>
+                <fullName>Failed</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>In Progress</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Not Applicable</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Passed</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>STEP43__c</picklist>
+            <values>
+                <fullName>Failed</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>In Progress</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Not Applicable</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Passed</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>STEP44__c</picklist>
             <values>
                 <fullName>Failed</fullName>
                 <default>false</default>
@@ -30227,7 +30469,7 @@ if(Change_effective_as_of__c - today() &gt; 0,&quot;30&quot;,&quot;0&quot;)))</f
         <picklistValues>
             <picklist>Change_of_location_type_behavior__c</picklist>
             <values>
-                <fullName>Don&apos;t change the parent</fullName>
+                <fullName>Don%27t change the parent</fullName>
                 <default>false</default>
             </values>
             <values>
@@ -31156,6 +31398,44 @@ if(Change_effective_as_of__c - today() &gt; 0,&quot;30&quot;,&quot;0&quot;)))</f
         </picklistValues>
         <picklistValues>
             <picklist>STEP40__c</picklist>
+            <values>
+                <fullName>Failed</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>In Progress</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Not Applicable</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Passed</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>STEP43__c</picklist>
+            <values>
+                <fullName>Failed</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>In Progress</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Not Applicable</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Passed</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>STEP44__c</picklist>
             <values>
                 <fullName>Failed</fullName>
                 <default>false</default>
@@ -32196,7 +32476,7 @@ if(Change_effective_as_of__c - today() &gt; 0,&quot;30&quot;,&quot;0&quot;)))</f
         <picklistValues>
             <picklist>Change_of_location_type_behavior__c</picklist>
             <values>
-                <fullName>Don&apos;t change the parent</fullName>
+                <fullName>Don%27t change the parent</fullName>
                 <default>false</default>
             </values>
             <values>
@@ -33056,6 +33336,44 @@ if(Change_effective_as_of__c - today() &gt; 0,&quot;30&quot;,&quot;0&quot;)))</f
         </picklistValues>
         <picklistValues>
             <picklist>STEP40__c</picklist>
+            <values>
+                <fullName>Failed</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>In Progress</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Not Applicable</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Passed</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>STEP43__c</picklist>
+            <values>
+                <fullName>Failed</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>In Progress</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Not Applicable</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Passed</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>STEP44__c</picklist>
             <values>
                 <fullName>Failed</fullName>
                 <default>false</default>
@@ -34098,7 +34416,7 @@ if(Change_effective_as_of__c - today() &gt; 0,&quot;30&quot;,&quot;0&quot;)))</f
         <picklistValues>
             <picklist>Change_of_location_type_behavior__c</picklist>
             <values>
-                <fullName>Don&apos;t change the parent</fullName>
+                <fullName>Don%27t change the parent</fullName>
                 <default>false</default>
             </values>
             <values>
@@ -34931,6 +35249,44 @@ if(Change_effective_as_of__c - today() &gt; 0,&quot;30&quot;,&quot;0&quot;)))</f
         </picklistValues>
         <picklistValues>
             <picklist>STEP40__c</picklist>
+            <values>
+                <fullName>Failed</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>In Progress</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Not Applicable</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Passed</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>STEP43__c</picklist>
+            <values>
+                <fullName>Failed</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>In Progress</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Not Applicable</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Passed</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>STEP44__c</picklist>
             <values>
                 <fullName>Failed</fullName>
                 <default>false</default>
@@ -35975,7 +36331,7 @@ if(Change_effective_as_of__c - today() &gt; 0,&quot;30&quot;,&quot;0&quot;)))</f
         <picklistValues>
             <picklist>Change_of_location_type_behavior__c</picklist>
             <values>
-                <fullName>Don&apos;t change the parent</fullName>
+                <fullName>Don%27t change the parent</fullName>
                 <default>false</default>
             </values>
             <values>
@@ -36816,6 +37172,44 @@ if(Change_effective_as_of__c - today() &gt; 0,&quot;30&quot;,&quot;0&quot;)))</f
         </picklistValues>
         <picklistValues>
             <picklist>STEP40__c</picklist>
+            <values>
+                <fullName>Failed</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>In Progress</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Not Applicable</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Passed</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>STEP43__c</picklist>
+            <values>
+                <fullName>Failed</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>In Progress</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Not Applicable</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Passed</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>STEP44__c</picklist>
             <values>
                 <fullName>Failed</fullName>
                 <default>false</default>
@@ -37871,7 +38265,7 @@ if(Change_effective_as_of__c - today() &gt; 0,&quot;30&quot;,&quot;0&quot;)))</f
         <picklistValues>
             <picklist>Change_of_location_type_behavior__c</picklist>
             <values>
-                <fullName>Don&apos;t change the parent</fullName>
+                <fullName>Don%27t change the parent</fullName>
                 <default>false</default>
             </values>
             <values>
@@ -40002,6 +40396,44 @@ if(Change_effective_as_of__c - today() &gt; 0,&quot;30&quot;,&quot;0&quot;)))</f
             </values>
         </picklistValues>
         <picklistValues>
+            <picklist>STEP43__c</picklist>
+            <values>
+                <fullName>Failed</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>In Progress</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Not Applicable</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Passed</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>STEP44__c</picklist>
+            <values>
+                <fullName>Failed</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>In Progress</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Not Applicable</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Passed</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
             <picklist>STEP4__c</picklist>
             <values>
                 <fullName>Failed</fullName>
@@ -41055,7 +41487,7 @@ if(Change_effective_as_of__c - today() &gt; 0,&quot;30&quot;,&quot;0&quot;)))</f
         <picklistValues>
             <picklist>Change_of_location_type_behavior__c</picklist>
             <values>
-                <fullName>Don&apos;t change the parent</fullName>
+                <fullName>Don%27t change the parent</fullName>
                 <default>false</default>
             </values>
             <values>
@@ -43232,6 +43664,44 @@ if(Change_effective_as_of__c - today() &gt; 0,&quot;30&quot;,&quot;0&quot;)))</f
             </values>
         </picklistValues>
         <picklistValues>
+            <picklist>STEP43__c</picklist>
+            <values>
+                <fullName>Failed</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>In Progress</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Not Applicable</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Passed</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>STEP44__c</picklist>
+            <values>
+                <fullName>Failed</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>In Progress</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Not Applicable</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Passed</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
             <picklist>STEP4__c</picklist>
             <values>
                 <fullName>Failed</fullName>
@@ -44233,7 +44703,7 @@ if(Change_effective_as_of__c - today() &gt; 0,&quot;30&quot;,&quot;0&quot;)))</f
         <picklistValues>
             <picklist>Change_of_location_type_behavior__c</picklist>
             <values>
-                <fullName>Don&apos;t change the parent</fullName>
+                <fullName>Don%27t change the parent</fullName>
                 <default>false</default>
             </values>
             <values>
@@ -45081,6 +45551,44 @@ if(Change_effective_as_of__c - today() &gt; 0,&quot;30&quot;,&quot;0&quot;)))</f
             </values>
         </picklistValues>
         <picklistValues>
+            <picklist>STEP43__c</picklist>
+            <values>
+                <fullName>Failed</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>In Progress</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Not Applicable</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Passed</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>STEP44__c</picklist>
+            <values>
+                <fullName>Failed</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>In Progress</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Not Applicable</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Passed</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
             <picklist>STEP4__c</picklist>
             <values>
                 <fullName>Failed</fullName>
@@ -45483,6 +45991,16 @@ $Profile.Name = &apos;System Administrator - automated processes&apos;
 )</errorConditionFormula>
         <errorDisplayField>Financial_Review_Result__c</errorDisplayField>
         <errorMessage>To change the Financial Review Result you need to provide a reason for the change in &quot;Reason for change of Financial result&quot;.</errorMessage>
+    </validationRules>
+    <validationRules>
+        <fullName>Location_Type_verification</fullName>
+        <active>false</active>
+        <errorConditionFormula>AND(
+OR( ISPICKVAL(Account__r.Location_Type__c,&quot;HE&quot;),ISPICKVAL(Account__r.Location_Type__c,&quot;AE&quot;)),
+NOT( OR( ISPICKVAL(Account__r.Location_Class__c,&quot;P&quot;),ISPICKVAL(Account__r.Location_Class__c,&quot;D&quot;))
+)
+)</errorConditionFormula>
+        <errorMessage>Cannot set the account as HE or AE if its location class is not either &apos;P&apos; or &apos;D&apos;</errorMessage>
     </validationRules>
     <validationRules>
         <fullName>No_validation_or_approval</fullName>

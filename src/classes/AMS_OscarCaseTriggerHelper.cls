@@ -420,8 +420,10 @@ public class AMS_OscarCaseTriggerHelper {
             if(c.reason1__c != null)
                 if(oscars.get(c.Oscar__c).Process__c == AMS_Utils.NGVR && oscars.get(c.Oscar__c).Account__r.ANG_IsNewGenAgency__c)
                     newCaseSubject = c.reason1__c + ' - ' +oscars.get(c.Oscar__c).Account__r.Name;
-                else if(oscars.get(c.Oscar__c).Process__c == AMS_Utils.NGFOP)
+                else if((oscars.get(c.Oscar__c).Process__c == AMS_Utils.NGFOP || oscars.get(c.Oscar__c).Process__c == AMS_Utils.NGANNUALREVAL)  && c.Origin == 'Internal User')
                     newCaseSubject = c.reason1__c + ' - ' + oscars.get(c.Oscar__c).Account__r.IATACode__c + ' - ' +oscars.get(c.Oscar__c).Account__r.Name;
+                else if(oscars.get(c.Oscar__c).Process__c == AMS_Utils.NGANNUALREVAL || c.Origin == AMS_Utils.ANG_FOP_AUTOMATIC_RENEWAL || oscars.get(c.Oscar__c).Process__c == AMS_Utils.PCI_COMPLIANT || (oscars.get(c.Oscar__c).Process__c == AMS_Utils.NGFOP && c.Origin == 'Portal'))
+                    newCaseSubject = 'PCI DSS compliance - ' + oscars.get(c.Oscar__c).Account__r.IATACode__c + ' - ' +oscars.get(c.Oscar__c).Account__r.Name;
                 else if(oscars.get(c.Oscar__c).Process__c == AMS_Utils.NEWHELITE)
                     newCaseSubject = 'New Head Entity - GoLite - ' + oscars.get(c.Oscar__c).Account__r.IATA_ISO_Country__r.Name;
                 else if(oscars.get(c.Oscar__c).Process__c == AMS_Utils.NEWHESTANDARD)
@@ -431,7 +433,7 @@ public class AMS_OscarCaseTriggerHelper {
                 else if(oscars.get(c.Oscar__c).Account__r.ANG_IsNewGenAgency__c)
                     newCaseSubject = c.reason1__c + ' - ' + AMS_Utils.officialAccreditationTypeMap.get(oscars.get(c.Oscar__c).Account__r.ANG_Accreditation_Model__c) + ' - ' + oscars.get(c.Oscar__c).Account__r.Name;
                 else if(oscars.get(c.Oscar__c).Process__c == AMS_Utils.new_MSO || (c.Subject != null && c.Subject.startsWith('MSO code '))) //AMSU-119
-					newCaseSubject = null;
+                    newCaseSubject = null;
 				else {
                     AMS_OSCAR__c oscar = oscars.get(c.Oscar__c); 
                     newCaseSubject = c.reason1__c + ' - ' + oscar.Account__r.Name;

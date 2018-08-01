@@ -1,0 +1,105 @@
+<apex:page controller="ANG_Apply_RHC_Equal_FS_Controller" showHeader="true" docType="html-5.0">
+
+	<style>
+    	.pbSubExtra {
+        	display:none;
+    	}
+	</style>
+
+    <apex:sectionHeader title="Apply RHC equal FS" description="This will set RHC equals to Financial Security amount for all the selected agents. Existing rules will be overridden"/>
+    <apex:form>
+
+        <apex:actionFunction name="changeInput" reRender="actionModeBlock"/>
+        <apex:actionFunction name="controlButtons" reRender="searchButton, confirmButton"/>
+        <apex:actionFunction name="getAgenciesTable" reRender="searchResultsBlock, statusPageBlock"/>
+        <apex:actionFunction name="refreshPageSize" action="{!refreshPageSize}" status="fetchStatus" reRender="searchResultsBlock"/>
+
+        <apex:pageBlock mode="edit">
+            <apex:pageBlockSection columns="1" title="Action and Mode" id="actionModeBlock">
+
+                <apex:pageblockSectionItem id="actionSelection">
+                    <apex:outputLabel value="Action"/>
+                    <apex:outputPanel>
+                        <apex:selectList size="1" value="{!actionValue}" onchange="controlButtons();">
+                            <apex:selectoptions value="{!actions}"/>
+                        </apex:selectList>
+                    </apex:outputPanel>
+                </apex:pageblockSectionItem>
+
+                <apex:pageblockSectionItem id="modeSelection">
+                    <apex:outputLabel value="Mode"/>
+                    <apex:outputPanel>
+                        <apex:selectList size="1" value="{!modeValue}" onchange="changeInput(); controlButtons();">
+                            <apex:selectoptions value="{!modes}"/>
+                        </apex:selectList>
+                    </apex:outputPanel>
+                </apex:pageblockSectionItem>
+
+                <apex:pageblockSectionItem id="bspSelection" rendered="{!modeValue == 'BSP'}">
+                    <apex:outputLabel value="Select a BSP Code"/>
+                    <apex:outputPanel>
+                        <apex:selectList size="1" value="{!bspValue}" onchange="controlButtons();">
+                            <apex:selectoptions value="{!bsps}"/>
+                        </apex:selectList>
+                    </apex:outputPanel>
+                </apex:pageblockSectionItem>
+
+                <apex:pageblockSectionItem id="iataCodeText" rendered="{!modeValue == 'IATA_Code'}">
+                    <apex:outputLabel value="Please insert the IATA Code (8 Digit Code)"/>
+                    <apex:outputPanel>
+                        <apex:inputText value="{!iataCode}" id="iataCodeInput" onkeyup="controlButtons();"/>
+                    </apex:outputPanel>
+                </apex:pageblockSectionItem>
+                
+            </apex:pageBlockSection>
+
+            <apex:pageBlockButtons id="searchButtonBlock" location="bottom">
+                <apex:commandButton value="Search Agencies" id="searchButton" disabled="{!OR(OR(actionValue == '', modeValue == ''), AND(modeValue == 'BSP', bspValue == ''), AND(modeValue == 'IATA_Code', iataCode == null), pollerBool)}" action="{!fetchAgencies}" onclick="getAgenciesTable();"/>
+                <apex:commandButton value="{!IF(actionValue == 'Apply_RHC', 'Apply RHC equal FS', IF(actionValue == 'Revert_RHC', 'Revert RHC equal FS', 'No Action Selected'))}" id="confirmButton" disabled="{!OR(OR(actionValue == '', modeValue == ''), AND(modeValue == 'BSP', bspValue == ''), AND(modeValue == 'IATA_Code', iataCode == null), NOT(agenciesFound), NOT(renderConfirmButton), batchStatusBool)}" action="{!applyOrRevertRHC}"/>
+            </apex:pageBlockButtons>
+        </apex:pageBlock>
+
+        <apex:pageBlock mode="edit" id="searchResultsBlock" rendered="{!agencies != null}">
+            <apex:pageBlockSection columns="1" title="Results ({!agenciesFetched})">
+                <apex:PageMessages id="msgs"/>
+                <apex:pageBlockTable value="{!agencies}" var="a" rendered="{!agenciesFound}">
+                    <apex:column value="{!a.ANG_AccountId__r.Name}"/>
+                    <apex:column value="{!a.ANG_AccountId__r.IATACode__c}"/>
+                    <apex:column value="{!a.ANG_AccountId__r.Location_Class__c}"/>
+                    <apex:column value="{!a.ANG_AccountId__r.Location_Type__c}"/>
+                    <apex:column value="{!a.ANG_AccountId__r.Status__c}"/>
+                    <apex:column value="{!a.ANG_AccountId__r.IATA_ISO_Country__c}"/>
+                    <apex:column value="{!a.ANG_AccountId__r.IATA_ISO_Country__r.AMS_Settlement_System__c}"/>
+                </apex:pageBlockTable>
+            </apex:pageBlockSection>
+            
+            <apex:pageBlockButtons id="pageButtonBlock" location="bottom" rendered="{!AND(modeValue == 'BSP', agenciesFound)}">
+                Display records per page &nbsp;
+                <apex:selectList value="{!size}" size="1" onchange="refreshPageSize();">
+                    <apex:selectOptions value="{!paginationSizeOptions}"/>
+                </apex:selectList>
+                <apex:commandButton value="First Page" action="{!first}" disabled="{!ssController == null || NOT(ssController.hasPrevious)}" reRender="searchResultsBlock" rendered="{!ssController != null}"/>
+                
+                <apex:commandButton value="Previous Page" action="{!previous}" disabled="{!ssController == null || NOT(ssController.hasPrevious)}" reRender="searchResultsBlock" rendered="{!ssController != null}"/>
+                
+                <apex:commandButton value="Next Page" action="{!next}" disabled="{!ssController == null || NOT(ssController.hasNext)}" reRender="searchResultsBlock" rendered="{!ssController != null}"/>
+                
+                <apex:commandButton value="Last Page" action="{!last}" disabled="{!ssController == null || NOT(ssController.hasNext)}" reRender="searchResultsBlock" rendered="{!ssController != null}"/>
+                
+            </apex:pageBlockButtons>
+            
+        </apex:pageBlock>
+
+        <apex:pageBlock mode="edit" id="statusPageBlock" rendered="{!batchStatusBool}">
+
+            <apex:pageBlockSection columns="1" title="Process Status">
+                <apex:actionStatus id="act" startText="Checking..." />
+                <apex:outputText styleClass="processText" value="{!IF(actionValue == 'Apply_RHC', 'Apply RHC equal FS',  'Revert RHC equal FS')} Process Status: {!batchJob.Status}"/>
+                <apex:outputText styleClass="processText" value="{!IF(actionValue == 'Apply_RHC', 'Apply RHC equal FS',  'Revert RHC equal FS')} {!IF(modeValue == 'BSP', 'BSPs', 'Agencies')} Proccessed: {!batchPercentage}%"/>
+                <apex:outputText styleClass="processText" value="Errors found: {!batchJob.NumberOfErrors}"/>
+                <apex:actionPoller interval="5" action="{!getBatchStatus}" enabled="{!pollerBool}" reRender="statusPageBlock, searchButton, searchResultsBlock" status="act"/>
+            </apex:pageBlockSection>
+
+		</apex:pageBlock>
+    </apex:form>
+</apex:page>

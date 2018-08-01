@@ -148,6 +148,7 @@
     <listViews>
         <fullName>All</fullName>
         <columns>NAME</columns>
+        <columns>RECORDTYPE</columns>
         <columns>TIP_Range_Start__c</columns>
         <columns>TIP_Range_End__c</columns>
         <columns>TIP_Effective_From_Date__c</columns>

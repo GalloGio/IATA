@@ -6012,6 +6012,7 @@
                 ],
                 "DisplayFields": [
                   "Is_PCI_compliant__c",
+                  "ANG_PCI_compliance_expiry_date__c",
                   "ANG_Type_of_change_hidden__c",
                   "STEP6__c",
                   "AMS_Correction_change_code__c"
@@ -6036,6 +6037,10 @@
                   {
                     "Status": "Passed",
                     "ClassName": "AMS_OSCAR_Automation.AMS_OSCAR_Step6_succeeded"
+                  },
+                  {
+                    "Status": "Failed",
+                    "ClassName": "AMS_OSCAR_Automation.AMS_OSCAR_Step6_failed"
                   }
                 ],
                 "DisplayFields": [
@@ -6118,16 +6123,13 @@
               {
                 "Name": "STEP38",
                 "Required": [],
-                "Actions": [
+                "Actions": [],
+                "Automations": [
                   {
-                    "FunctionName": "aNG_RestrictFOP",
-                    "ActionLabel": "AMS_OSCAR_Action17",
-                    "args": [
-                      "oscarid"
-                    ]
-                  }  
+                    "Status": "Passed",
+                    "ClassName": "AMS_OSCAR_Automation.AMS_OSCAR_Step38_succeeded"
+                  }
                 ],
-                "Automations": [],
                 "DisplayFields": [
                   "ANG_Restrict_Cash__c",
                   "ANG_Restrict_Credit_Card__c",
@@ -6143,16 +6145,13 @@
               {
                 "Name": "STEP39",
                 "Required": [],
-                "Actions": [
+                "Actions": [],
+                "Automations": [
                   {
-                    "FunctionName": "aNG_RestoreFOP",
-                    "ActionLabel": "AMS_OSCAR_Action18",
-                    "args": [
-                      "oscarid"
-                    ]
+                    "Status": "Passed",
+                    "ClassName": "AMS_OSCAR_Automation.AMS_OSCAR_Step39_succeeded"
                   }
                 ],
-                "Automations": [],
                 "DisplayFields": [
                   "ANG_Restore_Cash__c",
                   "ANG_Restore_Credit_Card__c",

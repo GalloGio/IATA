@@ -1,42 +1,7 @@
 <table border="0" cellpadding="5" width="550" cellspacing="5" height="400" >
 <tr valign="top" height="400" >
 <td tEditID="c1r1" style=" background-color:#FFFFFF; bEditID:r3st1; color:#000000; bLabel:main; font-size:12pt; font-family:arial;" aEditID="c1r1" locked="0" >
-<![CDATA[<p class="MsoNormal" style="color: rgb(0, 0, 0); font-family: arial; font-size: 12pt; text-align: justify;"><p class="MsoNormal"><span lang="EN-GB" style="font-family:&quot;Arial&quot;,sans-serif"><o:p>&nbsp;</o:p></span></p>
-
-<p class="MsoNormal"><span lang="EN-GB" style="font-family:&quot;Arial&quot;,sans-serif"><span style="mso-tab-count:1">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span><span style="mso-tab-count:1">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span><b style="mso-bidi-font-weight:normal"><o:p></o:p></b></span></p>
-
-<p class="MsoSalutation" style="margin-right:172.45pt"><b><span lang="EN-GB" style="font-family:&quot;Arial&quot;,sans-serif;mso-no-proof:yes"><o:p>&nbsp;</o:p></span></b></p>
-
-<p class="MsoSalutation" style="margin-right:172.45pt"><b style="mso-bidi-font-weight:
-normal"><span lang="EN-GB" style="font-family:&quot;Arial&quot;,sans-serif;color:black;
-background:yellow;mso-highlight:yellow">{{ACCOUNT_NAME}}</span></b><b><span lang="EN-GB" style="font-family:&quot;Arial&quot;,sans-serif;background:yellow;mso-highlight:
-yellow;mso-no-proof:yes"><o:p></o:p></span></b></p>
-
-<p class="MsoSalutation" style="margin-right:163.45pt"><span lang="EN-GB" style="font-family:&quot;Arial&quot;,sans-serif;color:black;background:yellow;mso-highlight:
-yellow">{{Trade_Name}}</span><span lang="EN-GB" style="font-family:&quot;Arial&quot;,sans-serif;
-background:yellow;mso-highlight:yellow;mso-no-proof:yes"><o:p></o:p></span></p>
-
-<p class="MsoSalutation" style="margin-right:163.45pt"><span lang="EN-GB" style="font-family:&quot;Arial&quot;,sans-serif;color:black;background:yellow;mso-highlight:
-yellow">{{Billing_Street}}</span><span lang="EN-GB" style="font-family:&quot;Arial&quot;,sans-serif;
-background:yellow;mso-highlight:yellow;mso-no-proof:yes"><o:p></o:p></span></p>
-
-<p class="MsoSalutation" style="margin-right:163.45pt"><span lang="EN-GB" style="font-family:&quot;Arial&quot;,sans-serif;color:black;background:yellow;mso-highlight:
-yellow">{{Billing_City}}</span><span lang="EN-GB" style="font-family:&quot;Arial&quot;,sans-serif;
-background:yellow;mso-highlight:yellow;mso-no-proof:yes"> </span><span lang="EN-GB" style="font-family:&quot;Arial&quot;,sans-serif;color:black;background:yellow;
-mso-highlight:yellow">{{Billing_Zip/Postal_Code}}</span><span lang="EN-GB" style="font-family:&quot;Arial&quot;,sans-serif;background:yellow;mso-highlight:yellow;
-mso-no-proof:yes"><o:p></o:p></span></p>
-
-<p class="MsoNormal" style="margin-right:163.45pt;text-align:justify;text-justify:
-inter-ideograph;tab-stops:7.0cm"><span lang="EN-GB" style="font-family:&quot;Arial&quot;,sans-serif;
-mso-fareast-font-family:&quot;Times New Roman&quot;;color:black;background:yellow;
-mso-highlight:yellow">{{Billing_Country}}</span><span lang="EN-GB" style="font-family:&quot;Arial&quot;,sans-serif;color:red;mso-no-proof:yes"><o:p></o:p></span></p>
-
-<p class="MsoNormal"><b style="mso-bidi-font-weight:normal"><i style="mso-bidi-font-style:
-normal"><span lang="PT-BR" style="font-family:&quot;Arial&quot;,sans-serif;mso-ansi-language:
-PT-BR;mso-no-proof:yes">IATA Numeric Code: </span></i></b><b style="mso-bidi-font-weight:
-normal"><span lang="IT" style="font-family:&quot;Arial&quot;,sans-serif;mso-fareast-font-family:
-&quot;Times New Roman&quot;;color:black;background:yellow;mso-highlight:yellow;
-mso-ansi-language:IT">{{IATA_CODE}}</span></b><span lang="PT-BR" style="font-family:&quot;Arial&quot;,sans-serif;mso-ansi-language:PT-BR"><o:p></o:p></span></p>
+<![CDATA[<p class="MsoNormal" style="color: rgb(0, 0, 0); font-family: arial; font-size: 12pt; text-align: justify;"></p><p class="MsoNormal" style="font-size: 12pt;"><b style="font-family: Arial, sans-serif; background-color: rgb(255, 255, 255); font-size: 12pt;">{!Account.Name}</b></p><p class="MsoSalutation" style="font-size: 12pt; margin-right: 163.45pt;"><span lang="EN-GB" style="font-family: Arial, sans-serif; background: rgb(255, 255, 255);">{!Account.TradeName__c}</span></p><p class="MsoSalutation" style="font-size: 12pt; margin-right: 163.45pt;"><span lang="EN-GB" style="font-family: Arial, sans-serif; background: rgb(255, 255, 255);">{!Account.BillingStreet}</span></p><p class="MsoSalutation" style="font-size: 12pt; margin-right: 163.45pt;"><span style="background-color: rgb(255, 255, 255);"><span lang="EN-GB" style="font-family: Arial, sans-serif; background-image: initial; background-position: initial; background-size: initial; background-repeat: initial; background-attachment: initial; background-origin: initial; background-clip: initial;">{!Account.BillingCity}&nbsp;</span><span lang="EN-GB" style="font-family: Arial, sans-serif; background-image: initial; background-position: initial; background-size: initial; background-repeat: initial; background-attachment: initial; background-origin: initial; background-clip: initial;">{!Account.BillingPostalCode}</span></span></p><p class="MsoNormal" style="font-size: 12pt; margin-right: 163.45pt; text-align: justify;"><span lang="EN-GB" style="font-family: Arial, sans-serif; background: rgb(255, 255, 255);">{!Account.BillingCountry}</span></p><p class="MsoNormal"><span style="background-color: rgb(255, 255, 255);"><b style="font-size: 12pt;"><i><span lang="PT-BR" style="font-family: Arial, sans-serif;">IATA Numeric Code:&nbsp;</span></i></b></span><font face="Arial, sans-serif"><b>{!Account.IATACode__c}</b></font></p>
 
 <p class="MsoNormal" style="text-align:justify;text-justify:inter-ideograph"><b style="mso-bidi-font-weight:normal"><span lang="PT-BR" style="font-family:&quot;Arial&quot;,sans-serif;
 mso-ansi-language:PT-BR"><o:p>&nbsp;</o:p></span></b></p>
@@ -72,7 +37,7 @@ mso-ansi-language:EN-US"><o:p>&nbsp;</o:p></span></p>
 <p class="MsoNormal" style="text-align:justify;text-justify:inter-ideograph"><span lang="EN-US" style="font-family:&quot;Arial&quot;,sans-serif;mso-fareast-font-family:&quot;Times New Roman&quot;;
 mso-ansi-language:EN-US">Please note that you are therefore requested to
 provide your financial statements as per provisions of local financial criteria
-for <span style="background:yellow;mso-highlight:yellow">{{Billing_Country}}</span>.
+for <span style="background:yellow;mso-highlight:yellow"><span style="background-color: rgb(255, 255, 255);">{!Account.BillingCountry}</span></span>.
 <i style="mso-bidi-font-style:normal"><o:p></o:p></i></span></p>
 
 <p class="MsoNormal" style="text-align:justify;text-justify:inter-ideograph"><span lang="EN-US" style="font-family:&quot;Arial&quot;,sans-serif;mso-fareast-font-family:&quot;Times New Roman&quot;;
@@ -108,6 +73,6 @@ tab-stops:right 184.3pt"><span lang="EN-GB" style="font-family:&quot;Arial&quot;
 tab-stops:right 184.3pt"><span lang="EN-GB" style="font-family:&quot;Arial&quot;,sans-serif"><o:p>&nbsp;</o:p></span></p>
 
 <p class="MsoNormal" style="text-align:justify;text-justify:inter-ideograph"><b style="mso-bidi-font-weight:normal"><span lang="PT-BR" style="font-family:&quot;Arial&quot;,sans-serif;
-mso-ansi-language:PT-BR"><o:p>&nbsp;</o:p></span></b></p><br></p>]]></td>
+mso-ansi-language:PT-BR"><o:p>&nbsp;</o:p></span></b></p><br><p></p>]]></td>
 </tr>
 </table>

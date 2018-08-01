@@ -1,4 +1,4 @@
-public with sharing class ISSP_ANG_ANNUAL_REVALIDATION {
+public class ISSP_ANG_ANNUAL_REVALIDATION {
 	//statics for the modals
     public static  Integer MAX_IFAP_Contacts {get{ return 1;} private set;}
     private static final string ISO_8859_1_regEx = '^[\\x00-\\x7F\\xA0-\\xFF]+$';  //Reg exp to limit inputted chars to ISO-8859-1
@@ -332,7 +332,7 @@ public with sharing class ISSP_ANG_ANNUAL_REVALIDATION {
                     Specify_Legal_Status_After_Change__c, Issued_share_capital_After_Change__c, Trade_Name__c, ISSP_AMS_Curr_Entity_with_listed_shares__c, ISSP_AMS_Total_Current_Ownership__c, ISSP_AMS_Total_Previous_Ownership__c, Is_your_firm_handling_Dangerous_Goods__c, Country__c, Account_Name__c,Scope_of_Change__c,Agency_Codes_Concerned__c,Billing_State__c,Website__c,
                     Confirm_Legal_Details_are_correct__c,Notify_Change_Legal_Details__c,Confirm_Location_Details_are_correct__c,Notify_Change_Location__c,Confirm_Ownership_details_are_correct__c,Notify_Change_Ownership__c,Map_Company_Type_to_Legal_Status__c,New_Head_Office_IATA_Code__c,Shipping_Street__c,Shipping_City__c,Shipping_Postal_Code__c,Shipping_State__c,HO_Account__c,RecordTypeId,
                     IATAN_Code__c,IATA_Registered_IATAN_Agent__c,Enable_Credit_Card_FOP__c,IATAN_Agent_Account__c,AE_separate_Legal_Entity__c,ANG_AE_SameLegal__c,ANG_Accreditation_Model_to_Change__c, Notify_Change_Accreditation_Type__c, Confirm_accreditation_type_are_correct__c, Last_Scope_Of_Change__c, ANG_Accreditation_type__c,
-                    SAAM_Case__r.Reason1__c, Status__c
+                    SAAM_Case__r.Reason1__c, Status__c, ISSP_AMS_Total_Current_Ownership_Company__c, ISSP_AMS_Total_Current_Ownership_Individ__c
                     FROM AMS_Pax_Accreditation_Form__c
                     WHERE SAAM_Case__c = :newCase.Id
                 ];
@@ -365,9 +365,10 @@ public with sharing class ISSP_ANG_ANNUAL_REVALIDATION {
 
 		isoCountryMap = new Map<String, IATA_ISO_Country__c>();
 
-        List<IATA_ISO_Country__c> aux = [Select Id, ISO_Code__c, Local_language_Agency_details_required__c, EU_Country__c, EACP_Country__c, Hide_Tax_Number_VAT__c
-                                           From IATA_ISO_Country__c
-                                          Where ISO_Code__c In :isocodes];
+        List<IATA_ISO_Country__c> aux = [Select Id, ISO_Code__c, Local_language_Agency_details_required__c, EU_Country__c, EACP_Country__c, 
+        								Hide_Tax_Number_VAT__c, IATA_Contry_KR__c, IATA_Country_JP__c, IATA_Country_PT__c, IATA_Country_ZH__c, Name
+                                        From IATA_ISO_Country__c
+                                        Where ISO_Code__c In :isocodes];
 
 		for(IATA_ISO_Country__c ic : aux) {
 			isoCountryMap.put(ic.ISO_Code__c, ic);
@@ -984,7 +985,7 @@ public with sharing class ISSP_ANG_ANNUAL_REVALIDATION {
 		return [Select Id, AMS_Pax_Accreditation_Form__c, Name, First_name__c, Last_name__c, Salutation__c, Agency_owner__c, Agency_role__c, Email__c,Phone__c,
                        Financial_interest__c, Contact_Id__c, Contact__c, AMS_OwnershipId__c, AMS_ContactId__c, Local_First_name__c, Local_Last_name__c, Number_Of_Shares__c,
                        AddressStreet__c, AddressCity__c, AddressCountry__c, AddressPostcode__c, Time_devoted_to_Agency_business__c, IATAcode__c, Registration_number__c,
-					   PhoneNational__c, FAX__c
+					   PhoneNational__c, FAX__c, Company_Name_Local__c
                   From AMS_Accreditation_Contact__c
                  Where AMS_Pax_Accreditation_Form__c in :newFormIds
 				   And RecordTypeId = :rtAccreditContPreviousOwner
@@ -995,7 +996,7 @@ public with sharing class ISSP_ANG_ANNUAL_REVALIDATION {
 		return [Select Id, AMS_Pax_Accreditation_Form__c, Name, First_name__c, Last_name__c, Salutation__c, Agency_owner__c, Agency_role__c, Email__c,Phone__c,
                        Financial_interest__c, Contact_Id__c, AMS_OwnershipId__c, AMS_ContactId__c, Local_First_name__c, Local_Last_name__c, Number_Of_Shares__c,
                        AddressStreet__c, AddressCity__c, AddressCountry__c, AddressPostcode__c, Time_devoted_to_Agency_business__c, IATAcode__c, Registration_number__c,
-					   PhoneNational__c, FAX__c
+					   PhoneNational__c, FAX__c, Company_Name_Local__c
                   From AMS_Accreditation_Contact__c
                  Where AMS_Pax_Accreditation_Form__c in :newFormIds
 				   And RecordTypeId = :rtAccreditContCurrentOwner
@@ -1006,7 +1007,7 @@ public with sharing class ISSP_ANG_ANNUAL_REVALIDATION {
 		return [Select Id, AMS_Pax_Accreditation_Form__c, Name, First_name__c, Last_name__c, Salutation__c, Agency_owner__c, Agency_role__c, Email__c,Phone__c,
                        Financial_interest__c, Contact_Id__c, AMS_OwnershipId__c, AMS_ContactId__c, Local_First_name__c, Local_Last_name__c, Number_Of_Shares__c,
                        AddressStreet__c, AddressCity__c, AddressCountry__c, AddressPostcode__c, Time_devoted_to_Agency_business__c, IATAcode__c, Registration_number__c,
-					   PhoneNational__c, FAX__c
+					   PhoneNational__c, FAX__c, Company_Name_Local__c
                   From AMS_Accreditation_Contact__c
                  Where AMS_Pax_Accreditation_Form__c in :newFormIds
 				   And RecordTypeId = :rtAccreditContCurrentCompanyOwner
@@ -1017,7 +1018,7 @@ public with sharing class ISSP_ANG_ANNUAL_REVALIDATION {
 		return [Select Id, AMS_Pax_Accreditation_Form__c, Name, First_name__c, Last_name__c, Salutation__c, Agency_owner__c, Agency_role__c, Email__c,Phone__c,
                        Financial_interest__c, Contact_Id__c, AMS_OwnershipId__c, AMS_ContactId__c, Local_First_name__c, Local_Last_name__c, Number_Of_Shares__c,
                        AddressStreet__c, AddressCity__c, AddressCountry__c, AddressPostcode__c, Time_devoted_to_Agency_business__c, IATAcode__c, Registration_number__c,
-					   PhoneNational__c, FAX__c
+					   PhoneNational__c, FAX__c, Company_Name_Local__c
                   From AMS_Accreditation_Contact__c
                  Where AMS_Pax_Accreditation_Form__c in :newFormIds
 				   And RecordTypeId = :rtAccreditContPreviousCompanyOwner
@@ -1232,14 +1233,19 @@ public with sharing class ISSP_ANG_ANNUAL_REVALIDATION {
 				}
 			}
 
+			if (currentAccount.fw.newForm.Notify_Change_Legal_Details__c && currentAccount.isocountry.Local_language_Agency_details_required__c && currentAccount.fw.newform.Local_Legally_Registered_Name__c == null) {
+				currentAccount.fw.newform.Local_Legally_Registered_Name__c.addError(Label.ISSP_YouMustEnter);
+				errorFound = true;
+			}
+
 			/*if(currentAccount.isocountry.Local_language_Agency_details_required__c && currentAccount.fw.newform.Is_change_legal_name__c && currentAccount.fw.newform.Notify_Change_Legal_Details__c && currentAccount.fw.newform.Local_Legally_Registered_Name__c == null) {	
 				currentAccount.fw.newform.Local_Legally_Registered_Name__c.addError(Label.ISSP_YouMustEnter);
 				errorFound = true;
 			}*/
 
 			if (currentAccount.fw.newform.Is_change_location__c && currentAccount.fw.newform.Notify_Change_Location__c) {
-				if(currentAccount.fw.newform.Branch_Office_Street_name_number__c == null) {
-						currentAccount.fw.newform.Branch_Office_Street_name_number__c.addError(Label.ISSP_YouMustEnter);
+				if (currentAccount.fw.newform.Branch_Office_Street_name_number__c == null) {
+					currentAccount.fw.newform.Branch_Office_Street_name_number__c.addError(Label.ISSP_YouMustEnter);
 					errorFound = true;
 				}
 
@@ -1248,11 +1254,72 @@ public with sharing class ISSP_ANG_ANNUAL_REVALIDATION {
 					errorFound = true;
 				}
 
-			if (currentAccount.fw.newform.Branch_Office_Phone_National__c == null) {
-				currentAccount.fw.newform.Branch_Office_Phone_National__c.addError(Label.ISSP_YouMustEnter);
-				errorFound = true;
+				if (currentAccount.fw.newform.Branch_Office_Phone_National__c == null) {
+					currentAccount.fw.newform.Branch_Office_Phone_National__c.addError(Label.ISSP_YouMustEnter);
+					errorFound = true;
+				}
+
+				if (currentAccount.fw.newform.Branch_Office_Email__c == null) {
+					currentAccount.fw.newform.Branch_Office_Email__c.addError(Label.ISSP_YouMustEnter);
+					errorFound = true;
+				}
+
+				if (currentAccount.isocountry.Local_language_Agency_details_required__c) {
+					if (currentAccount.fw.newform.Local_Physical_Address_Street__c == null) {
+						currentAccount.fw.newform.Local_Physical_Address_Street__c.addError(Label.ISSP_YouMustEnter);
+						errorFound = true;
+					}
+
+					if (currentAccount.fw.newform.Local_Postal_Address_Street__c == null) {
+						currentAccount.fw.newform.Local_Postal_Address_Street__c.addError(Label.ISSP_YouMustEnter);
+						errorFound = true;
+					} 
+
+					if (currentAccount.fw.newform.Local_Physical_Address_City__c == null) {
+						currentAccount.fw.newform.Local_Physical_Address_City__c.addError(Label.ISSP_YouMustEnter);
+						errorFound = true;
+					} 
+
+					if (currentAccount.fw.newform.Local_Postal_Address_City__c == null) {
+						currentAccount.fw.newform.Local_Postal_Address_City__c.addError(Label.ISSP_YouMustEnter);
+						errorFound = true;
+					} 
+
+					if (currentAccount.fw.newform.Local_Physical_Address_Province__c == null) {
+						currentAccount.fw.newform.Local_Physical_Address_Province__c.addError(Label.ISSP_YouMustEnter);
+						errorFound = true;
+					} 
+
+					if (currentAccount.fw.newform.Local_Postal_Address_Province__c == null) {
+						currentAccount.fw.newform.Local_Postal_Address_Province__c.addError(Label.ISSP_YouMustEnter);
+						errorFound = true;
+					}
 				}
 			}
+
+			if (countryCheckList.Registration_required__c) {
+        		if (currentAccount.fw.newForm.ISSP_AMS_Trade_Reg_No__c == null) {
+        			currentAccount.fw.newform.ISSP_AMS_Trade_Reg_No__c.addError(Label.ISSP_YouMustEnter);
+					errorFound = true;
+        		}
+
+        		if (currentAccount.fw.newForm.ISSP_AMS_Date_Registration_granted__c == null) {
+        			currentAccount.fw.newform.ISSP_AMS_Date_Registration_granted__c.addError(Label.ISSP_YouMustEnter);
+					errorFound = true;
+        		}        		
+        	}
+
+        	if (countryCheckList.License_required__c) {
+				if (currentAccount.fw.newForm.ISSP_AMS_License_No__c == null) {
+        			currentAccount.fw.newform.ISSP_AMS_License_No__c.addError(Label.ISSP_YouMustEnter);
+					errorFound = true;
+        		}
+
+        		if (currentAccount.fw.newForm.ISSP_AMS_Date_license_granted__c == null) {
+        			currentAccount.fw.newform.ISSP_AMS_Date_license_granted__c.addError(Label.ISSP_YouMustEnter);
+					errorFound = true;
+        		}
+        	}
 
 			/*if (currentAccount.fw.newform.Is_change_location__c && currentAccount.fw.newform.Notify_Change_Location__c && currentAccount.isocountry.Local_language_Agency_details_required__c) {
 				if (currentAccount.fw.newform.Local_Physical_Address_Street__c == null) {
@@ -1320,6 +1387,11 @@ public with sharing class ISSP_ANG_ANNUAL_REVALIDATION {
 */
 			if (currentAccount.fw.newform.Notify_Change_Ownership__c && currentAccount.fw.newform.ISSP_AMS_Legal_Status__c == null) {
 				currentAccount.fw.newform.ISSP_AMS_Legal_Status__c.addError(Label.ISSP_YouMustEnter);
+				errorFound = true;
+			}
+
+			if (currentAccount.fw.newform.Notify_Change_Ownership__c && currentAccount.fw.newform.ISSP_AMS_Legal_Status__c == 'Corporation') {
+				currentAccount.fw.newform.ISSP_AMS_Paidup_capital__c.addError(Label.ISSP_YouMustEnter);
 				errorFound = true;
 			}
 
@@ -1842,7 +1914,7 @@ public with sharing class ISSP_ANG_ANNUAL_REVALIDATION {
         set;
     }
 
-    public AMS_Accreditation_Country_CheckList__c CountryCheckList {
+    public AMS_Accreditation_Country_CheckList__c countryCheckList {
 
         get{
 
@@ -1858,7 +1930,7 @@ public with sharing class ISSP_ANG_ANNUAL_REVALIDATION {
                 return null;
             }
         }
-        set{}
+        set;
     }
 
     public PageReference fetchAgentDetails() {

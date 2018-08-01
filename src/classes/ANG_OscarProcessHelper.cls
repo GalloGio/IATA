@@ -44,7 +44,8 @@ global class ANG_OscarProcessHelper {
 					Is_your_firm_handling_Dangerous_Goods__c, IATA_ISO_Billing_State__c, IATA_ISO_Shipping_Country__c, IATA_ISO_Shipping_Country__r.Name, IATA_ISO_Shipping_State__c,
 					IATA_ISO_Shipping_State__r.Name, ISO_State__r.Name, Link_agent_name__c, ANG_Accreditation_Model__c, IATA_ISO_Country__r.CurrencyIsoCode, IATA_ISO_Country__r.Due_diligence_mandatory__c,
 					IATA_ISO_Country__r.AMS_Settlement_System__r.CurrencyIsoCode,
-					(SELECT Id FROM RHC_Informations__r), Is_PCI_compliant__c,Link_agent_code__c, Sector__c, Category__c, Check_Digit__c, RecordTypeId,Due_Diligence_Status__c,CNS_Agency__c, GDP_Opt_In__c 
+					(SELECT Id FROM RHC_Informations__r), Is_PCI_compliant__c,Link_agent_code__c, Sector__c, Category__c, Check_Digit__c, RecordTypeId,Due_Diligence_Status__c,CNS_Agency__c, GDP_Opt_In__c,
+					IATA_ISO_Country__r.AMS_Settlement_System__r.ANG_RHC_Amount_Equals_FS__c 
 					FROM Account
 					WHERE Id =:accountId FOR UPDATE];
 
@@ -548,10 +549,11 @@ global class ANG_OscarProcessHelper {
 		
 		try{
 
-	    	if(oscar.STEP38__c == AMS_Utils.PASSED){
+			//no need to check, running when step38 is being approved
+	    	/*if(oscar.STEP38__c == AMS_Utils.PASSED){
 	    		String exMessage = 'The status on this step is Passed, so no action will occur.';
 				return new String[]{'-1',exMessage};
-	    	}
+	    	}*/
 
 			Map<Id, List<AMS_Agencies_relationhip__c>> allRelationsOnHierarchy = AMS_HierarchyHelper.getAccountsHierarchies(new Set<Id>{oscar.Account__c});
 
@@ -595,13 +597,14 @@ global class ANG_OscarProcessHelper {
 				updater = createChangeCodeForFOP(updater, oscar, accountToCreateCC, changeCodeName );
 
 			}
-
+			//no more need to update OSCAR. Running from automation (Before Trigger)
+			updater.oscarMap.remove(oscar.id);
 			updateUpdater(updater);
 		
 		}catch(Exception ex){
 			
 			oscar.STEP38__c = AMS_Utils.FAILED;
-			update oscar;
+			//update oscar;
 
 			String exMessage = 'An error occured while restricting Forms of Payment:\n\r ' + AMS_Utils.errorMessageBeautifyer(ex);
 			return new String[]{'-1',exMessage};
@@ -622,12 +625,15 @@ global class ANG_OscarProcessHelper {
 
     	AMS_OSCAR__c oscar = [Select Id, Account__c,STEP39__c, Is_NewGen__c from AMS_OSCAR__c where Id = :oscarId LIMIT 1];
 
+    	
+
 		try{
 
-	    	if(oscar.STEP39__c == AMS_Utils.PASSED){
+			//no need to check, running when step39 is being approved
+	    	/*if(oscar.STEP39__c == AMS_Utils.PASSED){
 	    		String exMessage = 'The status on this step is Passed, so no action will occur.';
 				return new String[]{'-1',exMessage};
-	    	}
+	    	}*/
 
 			Map<Id, List<AMS_Agencies_relationhip__c>> allRelationsOnHierarchy = AMS_HierarchyHelper.getAccountsHierarchies(new Set<Id>{oscar.Account__c});
 
@@ -668,12 +674,14 @@ global class ANG_OscarProcessHelper {
 				updater = createChangeCodeForFOP(updater, oscar, accountToCreateCC, changeCodeName );
 			}
 
+			//no more need to OSCAR. Running from automation (Before Trigger)
+			updater.oscarMap.remove(oscar.id);
 			updateUpdater(updater);
 
 		}catch(Exception ex){
 			
 			oscar.STEP39__c = AMS_Utils.FAILED;
-			update oscar;
+			//update oscar;
 
 			String exMessage = 'An error occured while restricting Forms of Payment:\n\r ' + AMS_Utils.errorMessageBeautifyer(ex);
 			return new String[]{'-1',exMessage};
@@ -689,7 +697,7 @@ global class ANG_OscarProcessHelper {
 
     	Set<Id> accountIdsChanged = new Set<Id>();
 
-    	List<Agency_Authorization__c> aaLst = [Select Id,RestrictedByRHCAlert__c,RestrictedByProcess__c, ANG_FormOfPayment_ID__c, Status__c, Account__c, Account__r.Is_PCI_compliant__c from Agency_Authorization__c where Account__c in :accounts];
+    	List<Agency_Authorization__c> aaLst = [Select Id, ANG_FormOfPayment_ID__c, Status__c, Account__c, Account__r.Is_PCI_compliant__c from Agency_Authorization__c where Account__c in :accounts];
     	List<Agency_Authorization__c> aaLstToUpdate = new List<Agency_Authorization__c>();
 
     	for(Agency_Authorization__c aa: aaLst){
@@ -699,11 +707,10 @@ global class ANG_OscarProcessHelper {
 	    		if(restrictCash && aa.ANG_FormOfPayment_ID__c == 'CA'){
 
 					if(aa.Status__c != valueToAdd){
-						aa.Status__c = valueToAdd;
-						accountIdsChanged.add(aa.Account__c);
-					}
+		    			aa.Status__c = valueToAdd;
+		    			accountIdsChanged.add(aa.Account__c);
+		    		}
 
-	    			aa.RestrictedByProcess__c = true;
 	    			aaLstToUpdate.add(aa);
 	    		}
 
@@ -719,12 +726,8 @@ global class ANG_OscarProcessHelper {
 
 				if(restoreCash && aa.ANG_FormOfPayment_ID__c == 'CA'){
 
-					if(!aa.RestrictedByRHCAlert__c){
-	    				aa.Status__c = valueToAdd;
-						accountIdsChanged.add(aa.Account__c);
-					}
-					
-	    			aa.RestrictedByProcess__c = false;
+    				aa.Status__c = valueToAdd;
+    				accountIdsChanged.add(aa.Account__c);
     				aaLstToUpdate.add(aa);
     			}
 
@@ -756,8 +759,27 @@ global class ANG_OscarProcessHelper {
 		for(Account acct: accounts)
 			accountIds.add(acct.Id);
 
-		List<Agency_Applied_Change_code__c> activeChangeCodes =
-		    new List<Agency_Applied_Change_code__c>([SELECT Id, Account__c, Reason_Code__c, Reason_Description__c, Bulletin_Information__c FROM Agency_Applied_Change_code__c WHERE Account__c IN :accountIds AND Active__c = true]);
+		List<Agency_Applied_Change_code__c> allChangeCodes =
+		    new List<Agency_Applied_Change_code__c>([SELECT Id, Account__c, Reason_Code__c, Reason_Description__c, Bulletin_Information__c, OSCAR__c, Active__c, Change_Code__c FROM Agency_Applied_Change_code__c WHERE Account__c IN :accountIds]);
+
+		List<Agency_Applied_Change_code__c> activeChangeCodes = new List<Agency_Applied_Change_code__c>();
+
+		/*
+		In the FoP OSCAR case, ensure that the same change code is not generated more than once.
+		In other words, before creating a change code, check that the same does not exist for the same OSCAR case.
+		*/
+		for(Agency_Applied_Change_code__c aacc: allChangeCodes){
+
+			if(aacc.OSCAR__c == theOscar.Id && changeCodeName == aacc.Change_Code__c){
+				System.debug('AMS_OscarProcessHelper: You cannot create the same change code for the same Oscar, exiting method without Change code Creation.');
+				return updater;
+
+			}
+
+			if(aacc.Active__c == true)
+				activeChangeCodes.add(Aacc);
+
+		}
 
 		//map accountId -> active change code
 		Map<Id, Agency_Applied_Change_code__c> accountsChangeCode = new Map<Id, Agency_Applied_Change_code__c>();
@@ -903,9 +925,7 @@ global class ANG_OscarProcessHelper {
 		if (toSendEmail)
 			accsToSendEmail.add(acc.Id);
 
-		Map<Id,List<Contact>> mapContactsAcc = new Map<Id,List<Contact>>{acc.Id => contactsAcc};
-
-		return createRevalidationOscars(new List<Account>{acc}, mapContactsAcc, accsToSendEmail)[0].Id;
+		return createRevalidationOscars(new List<Account>{acc}, new Map<Id,List<Contact>>{acc.Id=>contactsAcc}, accsToSendEmail)[0].Id;
 
 	}
 
@@ -918,24 +938,26 @@ global class ANG_OscarProcessHelper {
 
 		List<Case> casesToInsert = new List<Case>();
 
-		Contact keyContact;
+		Map<Id,List<Contact>> keyContactMap = new Map<Id,List<Contact>>();
 
 		//Case:
 		for(Account acc : accs){
 
 			System.debug('[ANG_OscarProcessHelper.createRevalidationOscar] - BEGINNING INSERTING for ACCOUNT: '+acc.Id+' - '+acc.Name+' - '+acc.IataCode__c);
 
-			keyContact = fetchKeyContact(acc, contactsAcc.get(acc.Id));
+			List<Contact> keyContactsLst = fetchKeyContacts(acc, contactsAcc.get(acc.Id));
 			
+			keyContactMap.put(acc.Id,keyContactsLst);
+
 			fieldsOfObject = new Map<String,Object>();
 	        fieldsOfObject.put('Account_Concerned__c',acc.Id);
-	      	fieldsOfObject.put('ContactId',keyContact.Id);
+	      	fieldsOfObject.put('ContactId',keyContactsLst.get(0).Id);
 	        fieldsOfObject.put('BSPCountry__c',acc.BillingCountry);
 	        fieldsOfObject.put('Region__c',acc.Region_formula__c);
 	        fieldsOfObject.put('CaseArea__c','Accreditation Process');
 	        fieldsOfObject.put('Origin','Internal User');
 	        fieldsOfObject.put('Reason1__c','Annual revalidation');
-	        fieldsOfObject.put('Subject','Annual revalidation - ' + acc.ANG_Accreditation_Model__c + ' - ' + acc.Name);
+	        fieldsOfObject.put('Subject','PCI DSS compliance - ' + acc.IATACode__c + ' - ' + acc.Name);
 	        fieldsOfObject.put('Type_of_customer__c','IATA Travel Agent');
 	        
 	       	Case cse = ANG_EntityCreator.createCase(AMS_Utils.RECTYPE_OSCARCOMM, acc.Id, fieldsOfObject);
@@ -947,7 +969,7 @@ global class ANG_OscarProcessHelper {
 
 	        oscarObjs = new OscarObjectsWrapper();
 	        oscarObjs.cse = cse;
-	        oscarObjs.con = keyContact;
+	        oscarObjs.con = keyContactsLst.get(0);
 
 	        accOscarObjsMap.put(acc.id,oscarObjs);
 	        casesToInsert.add(cse);
@@ -1011,13 +1033,14 @@ global class ANG_OscarProcessHelper {
 		for (Account acc: accs){
 
 			if(accsToSendEmail.contains(acc.Id))
-	            AMS_AgencyRegulationAutoRenewal.sendEmailAlert(new List<Contact>{accOscarObjsMap.get(acc.Id).con}, accOscarObjsMap.get(acc.Id).oscar.Id, AMS_OSCARTriggerHandler.ANGemailTemplates(AMS_Utils.NGANNUALREVAL, null, true), accOscarObjsMap.get(acc.Id).oscar.Oscar_Communication_Case_Id__c, owea[0], false);			
+	            AMS_AgencyRegulationAutoRenewal.sendEmailAlert(keyContactMap.get(acc.Id), accOscarObjsMap.get(acc.Id).oscar.Id, AMS_OSCARTriggerHandler.ANGemailTemplates(AMS_Utils.NGANNUALREVAL, null, true), accOscarObjsMap.get(acc.Id).oscar.Oscar_Communication_Case_Id__c, owea[0], false);			
 
 		}
 
         return casesToUpdate;
     }
 
+/*
 	private static Contact fetchKeyContact(Account acc, List<Contact> contacts){
 
 		if(contacts == null || contacts.isEmpty())
@@ -1037,7 +1060,7 @@ global class ANG_OscarProcessHelper {
  
 		return contacts[0];
 	}
-
+*/
 	webservice static String[] createOscarChangesCase(Id accreditationId){
 		
 		Savepoint sp = Database.setSavepoint();
@@ -1117,6 +1140,7 @@ global class ANG_OscarProcessHelper {
 			fieldsOfObject.put('Status__c','Open');			
 			fieldsOfObject.put('AMS_Online_Accreditation__c',newAccr.Id);
 			fieldsOfObject.put('Change_effective_as_of__c',newAccr.Effective_Date_Of_Change__c);
+	        fieldsOfObject.put('Oscar_Communication_Case_Id__c',newCaseOscar.id);
 
 			oscar = ANG_EntityCreator.createOscar(AMS_Utils.RECTYPE_NGCHANGES, newAccr.HO_Account__c, fieldsOfObject);
 
@@ -1162,8 +1186,6 @@ global class ANG_OscarProcessHelper {
 
 		List<Case> casesToInsert = new List<Case>();
 
-		Contact keyContact;
-
 		Map<Id,Account> accountMap = new Map<Id,Account>();
 
 		String identifier;
@@ -1171,7 +1193,7 @@ global class ANG_OscarProcessHelper {
 		if (origin == AMS_Utils.ANG_MASSIVE_FOP)
 			identifier = 'NG_FOP_PortalNotification';
 		else if (origin == AMS_Utils.ANG_FOP_AUTOMATIC_RENEWAL)
-			identifier = 'NG_FOP_PortalNotification'; //change the identifier if we need to use another notification template
+			identifier = 'NG_FOP_PortalNotification'; //change the identifier id we need to use another notification template
 
 		Notification_Template__c notificationTemplate = null;
 
@@ -1180,23 +1202,30 @@ global class ANG_OscarProcessHelper {
 		if(!notificationTemplates.isEmpty())
 			notificationTemplate = notificationTemplates.get(0);
 		//Case:
+
+		Map<Id,List<Contact>> keyContactMap = new Map<Id,List<Contact>>();
+
+
 		for(Account acc : accs){
 
 			accountMap.put(acc.Id,acc);
 
 			System.debug('[ANG_OscarProcessHelper.createPCIComplianceOscars] - Inserting PCI Oscar for Account: '+acc.Id+' - '+acc.Name+' - '+acc.IataCode__c);
 
-			keyContact = fetchKeyContactForPCI(acc, contactsAcc.get(acc.Id));
+
+			List<Contact> keyContactLst = fetchKeyContacts(acc, contactsAcc.get(acc.Id));
 			
+			keyContactMap.put(acc.Id, keyContactLst);
+
 			fieldsOfObject = new Map<String,Object>();
 	        fieldsOfObject.put('Account_Concerned__c',acc.Id);
-	      	fieldsOfObject.put('ContactId',keyContact.Id);
+	      	fieldsOfObject.put('ContactId',keyContactLst.get(0).Id);
 	        fieldsOfObject.put('BSPCountry__c',acc.BillingCountry);
 	        fieldsOfObject.put('Region__c',acc.Region_formula__c);
 	        fieldsOfObject.put('CaseArea__c','Accreditation Process');
 	        fieldsOfObject.put('Origin', origin);
 	        fieldsOfObject.put('Reason1__c','FoP Management');
-	        fieldsOfObject.put('Subject','FoP Management - ' + acc.ANG_Accreditation_Model__c + ' - ' + acc.Name);
+	        fieldsOfObject.put('Subject','PCI DSS compliance - ' + acc.IataCode__c + ' - ' + acc.Name);
 	        fieldsOfObject.put('Type_of_customer__c','IATA Travel Agent');
 	        
 	       	Case cse = ANG_EntityCreator.createCase(AMS_Utils.RECTYPE_OSCARCOMM, acc.Id, fieldsOfObject);
@@ -1208,7 +1237,7 @@ global class ANG_OscarProcessHelper {
 
 	        oscarObjs = new OscarObjectsWrapper();
 	        oscarObjs.cse = cse;
-	        oscarObjs.con = keyContact;
+	        oscarObjs.con = keyContactLst.get(0);
 
 	        accOscarObjsMap.put(acc.id,oscarObjs);
 	        casesToInsert.add(cse);
@@ -1300,7 +1329,7 @@ global class ANG_OscarProcessHelper {
 					attachments = new Messaging.EmailFileAttachment[]{attach};
 				}
                 
-               	AMS_AgencyRegulationAutoRenewal.sendEmailAlert(fetchKeyContactsForPCI(contactsAcc.get(acc.Id)), accOscarObjsMap.get(acc.Id).oscar.Id, AMS_OSCARTriggerHandler.ANGemailTemplates(AMS_Utils.NGFOP, null, true), accOscarObjsMap.get(acc.Id).oscar.Oscar_Communication_Case_Id__c, owea[0], false, attachments);  
+               	AMS_AgencyRegulationAutoRenewal.sendEmailAlert(keyContactMap.get(acc.Id), accOscarObjsMap.get(acc.Id).oscar.Id, AMS_OSCARTriggerHandler.ANGemailTemplates(AMS_Utils.NGFOP, null, true), accOscarObjsMap.get(acc.Id).oscar.Oscar_Communication_Case_Id__c, owea[0], false, attachments);  
 				//if we need a fallback contact:
                // AMS_AgencyRegulationAutoRenewal.sendEmailAlert((fetchKeyContactsForPCI(contactsAcc.get(acc.Id)).isEmpty() ? contactsAcc.get(acc.Id) : fetchKeyContactsForPCI(contactsAcc.get(acc.Id))), accOscarObjsMap.get(acc.Id).oscar.Id, AMS_OSCARTriggerHandler.ANGemailTemplates(AMS_Utils.NGFOP, null, true), accOscarObjsMap.get(acc.Id).oscar.Oscar_Communication_Case_Id__c, owea[0], false, attachments);  
 
@@ -1310,37 +1339,44 @@ global class ANG_OscarProcessHelper {
 		}
 
 		if(notificationTemplate <> null)
-			createPortalNotifications(acctSet,casesMaps,notificationTemplate);
+			createPortalNotifications(acctSet,casesMaps,notificationTemplate,keyContactMap);
 
         return casesToUpdate;
     }
 
-    private static void createPortalNotifications(Set<Account> acctSet,  Map<Id,Case> acctIdCasesMap, Notification_Template__c notificationTemplate){
+      private static void createPortalNotifications(Set<Account> acctSet,  Map<Id,Case> acctIdCasesMap, Notification_Template__c notificationTemplate,Map<Id,List<Contact>> keyContactMap){
 		
 		List<Contact> contactsToSend = new List<Contact>();
 		Map<Id,Id> contactAccts = new Map<Id,Id>();
 		Map<Id,Contact> contactsMap = new Map<Id,Contact>();
 		List<String> contactNot = new List<String>();
 		Map<Id,Account> accounts = new Map<Id,Account>();
-
+		
+		Map<Id,Id> contactAccountsIds = new Map<Id,Id>();
+		
+		for(Id acctId : keyContactMap.KeySet()){
+			For(Contact c: keyContactMap.get(acctId))
+				contactAccountsIds.put(c.Id,acctId);
+		}
+		
 		for(Account acc: acctSet){
-			contactsToSend.addall(fetchKeyContactsForPCI(acc.Contacts));
+			contactsToSend.addall(keyContactMap.get(acc.Id));
 			accounts.put(acc.Id,acc);
 		}
 
     	for(Contact c: contactsToSend){
     		contactNot.add(c.Id+':'+notificationTemplate.Name);
-			contactAccts.put(c.Id,c.AccountId);
-    		contactsMap.put(c.Id,c);
+			contactAccts.put(c.Id,contactAccountsIds.get(c.Id));			
+			contactsMap.put(c.Id,c);
 
     	}
 
     	List<Notification__c> notifications = new List<Notification__c>();
 
 		for(Notification__c nt : ISSP_CreateNotification.createnotification(contactNot, false)){
-				
-			Account acct = accounts.get(contactAccts.get(nt.Contact__c));
-
+						
+			Account acct = accounts.get(contactAccountsIds.get(nt.Contact__c));
+						
 			String casenumbmer = acctIdCasesMap.get(contactAccts.get(nt.Contact__c)).CaseNumber;
 
 			nt.Message__c = nt.Message__c
@@ -1356,32 +1392,69 @@ global class ANG_OscarProcessHelper {
 
 	}
 
-	private static Contact fetchKeyContactForPCI(Account acc, List<Contact> contacts){
+	public static List<Contact> fetchKeyContacts(Account acc, List<Contact> contacts){
 
 		if(contacts == null || contacts.isEmpty())
 			return null;
 
-		Contact adminCon;
-		Contact finAccessContact;
-		Contact bspContact;
-		Contact regularContact;
-		for (Contact con :contacts){
+		
+		List<ContactOrdered> contactsToReturn = new List<ContactOrdered>(); 
+		List<Contact> contactsToReturnLst = new List<Contact>();
+
+		List<Contact> contactsAccount = new List<Contact>();
+		List<Contact> contactsParentAccount = new List<Contact>();
+
+		for(Contact c: contacts)
+			if(c.accountId == acc.Id)
+				contactsAccount.add(c);
+			else 
+				contactsParentAccount.add(c);	
+			
+
+		for (Contact con :contactsAccount){
 
 			if(con.User_Portal_Status__c == 'Approved Admin')
-				adminCon = con;
+				contactsToReturn.add(new ContactOrdered(con,0));
 			if (con.Financial_Assessment_Contact__c)
-				finAccessContact = con;	
+				contactsToReturn.add(new ContactOrdered(con,10));
 			if(con.BSP_CASS_Payment_contact__c)
-				bspContact = con;
+				contactsToReturn.add(new ContactOrdered(con,20));
 			if(con.User_Portal_Status__c <> 'Approved Admin' && !con.Financial_Assessment_Contact__c &&  !con.BSP_CASS_Payment_contact__c)
-				regularContact = con;
+				contactsToReturn.add(new ContactOrdered(con,30));
 
 		} 
+
+		if(contactsToReturn.isEmpty()){
+
+			for (Contact con :contactsParentAccount){
+
+				if(con.User_Portal_Status__c == 'Approved Admin')
+					contactsToReturn.add(new ContactOrdered(con,0));
+				if (con.Financial_Assessment_Contact__c)
+					contactsToReturn.add(new ContactOrdered(con,10));
+				if(con.BSP_CASS_Payment_contact__c)
+					contactsToReturn.add(new ContactOrdered(con,20));
+				if(con.User_Portal_Status__c <> 'Approved Admin' && !con.Financial_Assessment_Contact__c &&  !con.BSP_CASS_Payment_contact__c)
+					contactsToReturn.add(new ContactOrdered(con,30));
+
+			} 
+
+		}
+
 		
-		Contact toReturn = adminCon <> null ? adminCon : finAccessContact <> null ? finAccessContact : bspContact <> null ? bspContact : regularContact;			
- 		
- 		return toReturn;
+		if(contactsToReturn.isEmpty())
+			return null;
+
+		contactsToReturn.sort();
+
+		For(ContactOrdered co : contactsToReturn){
+			contactsToReturnLst.add(co.c);
+		}
+
+ 		return contactsToReturnLst;
 	}
+
+	
 
 	private static List<Contact> fetchKeyContactsForPCI(List<Contact> contacts){
 
@@ -1407,6 +1480,7 @@ global class ANG_OscarProcessHelper {
  		return toReturn;
 	}
     
+
 	public static void sendFOPPortalNotificationAndEmail(Map<String,Map<Id,Case>> notifTempNameCaseMap, Map<String,Set<Id>> templateContIdMap){
 
 		List<String> notificationTargets = new List<String>();
@@ -1503,6 +1577,26 @@ global class ANG_OscarProcessHelper {
 
     }
 
+    public Class ContactOrdered implements Comparable{
+
+		private Contact c;
+		private Integer order;
+
+    	public ContactOrdered(Contact c, Integer order){
+			this.c = c;
+			this.order = order;
+		}
+
+		public Integer compareTo(Object instance){
+        
+			ContactOrdered that = (ContactOrdered)instance;
+        	if (this.order == that.order) return 0;
+        	if (this.order > that.order) return 1;
+        	return -1;
+    	}
+
+    }
+
     public static void createIEPAccountOscar(Map<Id,Account> accsMap){
 
     	List<Account> accs = accsMap.values();
@@ -1542,6 +1636,7 @@ global class ANG_OscarProcessHelper {
 	        fieldsOfObject.put('Reason1__c','IEP Bank account setup');
 	        fieldsOfObject.put('Subject','IEP Bank account setup - ' + acc.ANG_Accreditation_Model__c + ' - ' + acc.Name);
 	        fieldsOfObject.put('Type_of_customer__c','IATA Travel Agent');
+	        fieldsOfObject.put('Visible_on_ISS_Portal__c',true);
 	        
 	       	Case cse = ANG_EntityCreator.createCase(AMS_Utils.RECTYPE_OSCARCOMM, acc.Id, fieldsOfObject);
 
@@ -1623,7 +1718,7 @@ global class ANG_OscarProcessHelper {
         }
 
     }
-	
+
 	//EM - To be removed
 	public static void fakemethod () {
 		if (Test.isRunningTest()) {

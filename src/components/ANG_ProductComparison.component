@@ -47,6 +47,10 @@
 		    $('[data-toggle="tooltip"]').tooltip();   
 		});
 		*/
+
+		$(document).ready(function(){
+    		$('[data-toggle="popover"]').popover();   
+		});
 	</script>		
 
     <div class="col-md-12" id="productComparison">
@@ -95,17 +99,21 @@
 								</td>
 							</apex:outputPanel>
 
-							<apex:outputPanel rendered="{! cell.name != 'link' && cell.name != 'true' && cell.name != 'false' && cell.name != 'applyNow' && NOT cell.flagFees}">											
+							<apex:outputPanel rendered="{! cell.name != 'link' && cell.name != 'true' && cell.name != 'false' && cell.name != 'applyNow' && NOT cell.flagFees}">									
 								<apex:outputPanel rendered="{! cell.name == 'Cost'}">
 									<td style="text-align: left; vertical-align: top; padding-right: 10px; padding-left: 10px;">
 										<apex:outputLabel value="{! cell.slabel}"/>
-										<apex:outPutpanel rendered="{!!(helper.costTooltip == '')}">										
-											&nbsp;
-											<apex:image value="/img/msg_icons/info16.png" title="{! helper.costTooltip}" html-data-placement="right" html-data-toggle="tooltip"/>	
+										<apex:outPutpanel rendered="{!!(helper.costTooltip == '')}">
+
+											<a href="#" data-html="true" data-toggle="popover" data-trigger="hover" 
+											   title="{!cell.slabel}" data-content="<div escape='false'>{!helper.costTooltip}</div>">
+											   <apex:image value="/img/msg_icons/info16.png"/>
+											</a>
+
 										</apex:outPutpanel>
 									</td>
 								</apex:outputPanel>
-								<apex:outputPanel rendered="{! cell.name != 'Cost'}">
+								<apex:outputPanel rendered="{!AND(cell.name != 'Cost', cell.name != 'Country Specific Requirements')}">
 									<td style="text-align: left; padding-right: 10px; padding-left: 10px; max-width: 250px">
 										<apex:outPutpanel rendered="{!(cell.tooltip == '')}">
 											<apex:outputLabel value="{! cell.slabel}"/>
@@ -113,9 +121,23 @@
 
 										<apex:outPutpanel rendered="{!!(cell.tooltip == '')}">
 											<apex:outputLabel value = "{! cell.slabel}" />
-											&nbsp;
-											<apex:image value="/img/msg_icons/info16.png" title="{! cell.tooltip}" html-data-placement="right" html-data-toggle="tooltip"/>														
+
+											<a href="#" data-html="true" data-toggle="popover" data-trigger="hover" 
+											   title="{!cell.slabel}" data-content="<div escape='false'>{!cell.tooltip}</div>">
+											   <apex:image value="/img/msg_icons/info16.png"/>
+											</a>
 										</apex:outPutpanel>
+									</td>
+								</apex:outputPanel>
+								<apex:outputPanel rendered="{!cell.name == 'Country Specific Requirements'}">
+									<td style="text-align: left; padding-right: 10px; padding-left: 10px; max-width: 250px">
+										<apex:outputLabel value="{! cell.slabel}"/>
+
+										<a href="#" data-html="true" data-toggle="popover" data-trigger="hover" 
+											title="{!cell.slabel}" data-content="<div escape='false'>{!$Label.ANG_ISSP_ProductComparisonCountrySpecificRequirementsTooltip}</div>">
+											<apex:image value="/img/msg_icons/info16.png"/>
+										</a>
+										
 									</td>
 								</apex:outputPanel>
 							</apex:outputPanel>

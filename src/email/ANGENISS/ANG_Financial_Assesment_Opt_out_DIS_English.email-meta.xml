@@ -6,18 +6,38 @@
     <name>ANG Financial Assesment Opt-out DIS EN</name>
     <style>freeForm</style>
     <subject>Ref nr {!AMS_OSCAR__c.Name} – Financial Assesment Opt-out declined</subject>
-    <textOnly>Dear Sir/Madam,
+    <textOnly>{!Account.Name}
 
-Your agency changes process has been approved.
+{!Account.TradeName__c}
 
-Yours faithfully,
+{!Account.BillingStreet}
 
-Agency Management
-International Air Transport Association
------------------------------------------------------------------------------
-In order to obtain information or assistance from IATA, do not hesitate to access at any time our Customer Portal
+{!Account.BillingCity} {!Account.BillingPostalCode}
 
-{!AMS_OSCAR__c.Emails_reference_Id__c}</textOnly>
+{!Account.BillingCountry}
+
+IATA Numeric Code: {!Account.IATACode__c}
+
+
+Dear Sir/Madam,
+
+
+FINANCIAL ASSESSMENT OPT OUT - REJECTED
+
+
+We regret to advise that your request for opt out from financial statements evaluation by IATA cannot be accepted at this time as:
+
+
+- Your agency is at this time not providing a financial security to IATA.
+
+
+Please note that you are therefore requested to provide your financial statements as per provisions of local financial criteria for {!Account.BillingCountry}.
+
+
+
+Sincerely,
+
+IATA Global Delivery Center</textOnly>
     <type>html</type>
     <uiType>Aloha</uiType>
 </EmailTemplate>

@@ -948,7 +948,7 @@ trigger CaseBeforeTrigger on Case (before delete, before insert, before update) 
                     // get parent case
                     //GM - IMPRO - START
                     Case[] parentCase = [Select c.Id, c.FA_Letter_Sent__c, c.FS_Letter_Sent__c, c.Status, c.RecordTypeId, c.firstFSnonComplianceDate__c, c.secondFSnonComplianceDate__c, c.firstFAnonComplianceDate__c, 
-                            c.secondFAnonComplianceDate__c, c.Account.Type, c.Deadline_Date__c, c.FA_Second_Deadline_Date__c, c.Third_FA_non_Compliance_Date__c, c.FS_Deadline_Date__c, c.FA_Third_Deadline_Date__c, FS_Second_Deadline_Date__c 
+                            c.secondFAnonComplianceDate__c, c.Account.Type, c.Account.ANG_IsNewGenAgency__c, c.Deadline_Date__c, c.FA_Second_Deadline_Date__c, c.Third_FA_non_Compliance_Date__c, c.FS_Deadline_Date__c, c.FA_Third_Deadline_Date__c, FS_Second_Deadline_Date__c 
                             from Case c where c.Id =: newCase.ParentId];
                     if (parentCase != null && parentCase.size() > 0) {
                         // check if parent case is an IFAP case
@@ -993,10 +993,16 @@ trigger CaseBeforeTrigger on Case (before delete, before insert, before update) 
                                         }
                                         parentCase[0].firstFSnonComplianceDate__c = Date.today();
                                         // set 2nd FS deadline date for PAX and Domestic agents
+                                        
                                         if (isPassengerDomestic) {
                                             system.debug('##ROW##');
-                                            // business rule: 31 days after the non-compliance case is raised
-                                            parentCase[0].FS_Second_Deadline_Date__c = parentCase[0].firstFSnonComplianceDate__c.addDays(31);
+
+                                            //NEWGEN-3394 - deadline for NewGen to 60 days
+                                            if(parentCase[0].Account.ANG_IsNewGenAgency__c)
+                                                // business rule: 31 days after the non-compliance case is raised
+                                                parentCase[0].FS_Second_Deadline_Date__c = parentCase[0].firstFSnonComplianceDate__c.addDays(60);
+                                            else
+                                                parentCase[0].FS_Second_Deadline_Date__c = parentCase[0].firstFSnonComplianceDate__c.addDays(31);
                                             // business rule changed: the last day of the following month after the non-compliance case is raised
                                             //Date inTwoMonths = parentCase[0].firstFSnonComplianceDate__c.addMonths(2);
                                             //Date newDeadline = Date.newInstance(inTwoMonths.year(), inTwoMonths.month(), 1);
@@ -1243,6 +1249,11 @@ trigger CaseBeforeTrigger on Case (before delete, before insert, before update) 
             for (Case c: trigger.new){
                 if ((c.RecordTypeId == SIDRAcaseRecordTypeID || c.RecordTypeId == caseSEDARecordTypeID) && c.Currency__c != null) {//INC200638 - added SEDA record type
                     setCurrencies.add(c.Currency__c);
+                }
+                if (c.RecordTypeId == caseSEDARecordTypeID) {
+                    if (c.Demand_by_Email_Fax__c!=null) {
+                        c.CS_Rep_Contact_Customer__c = UserInfo.getUserId();
+                    }
                 }
             }
             map<String, CurrencyType> mapCurrencyTypePerCurrencyCode = new map<String, CurrencyType>(); 
@@ -1704,6 +1715,12 @@ trigger CaseBeforeTrigger on Case (before delete, before insert, before update) 
                     // We add the Account id to the set only if the current case is a Sidra Small amount case. Avoid unwanted Case record types
                     accountIds.add(aCase.AccountId);
                 }     
+                if (aCase.RecordTypeId == caseSEDARecordTypeID) {
+                    Case aCaseOld = Trigger.oldMap.get(aCase.Id);
+                    if (aCase.Demand_by_Email_Fax__c!=aCaseOld.Demand_by_Email_Fax__c) {
+                        aCase.CS_Rep_Contact_Customer__c = UserInfo.getUserId();
+                    }
+                }
             }
             
             if(accountIds.size() > 0){ // This list should be empty if all of the cases aren't related to the Sidra Small amount process
@@ -1767,10 +1784,17 @@ trigger CaseBeforeTrigger on Case (before delete, before insert, before update) 
                 }
                 //Here we calculate the first contact with client in business hours
                 Case oldCase = System.Trigger.oldMap.get(updatedCase.Id);
-                if(updatedCase.BusinessHoursId <> null && updatedCase.First_Contact_with_Client__c <> null 
-                    && (updatedCase.First_Contact_w_Client_in_Business_Hours__c != oldCase.First_Contact_w_Client_in_Business_Hours__c 
-                    || updatedCase.First_Contact_w_Client_in_Business_Hours__c == null))
+                if(
+                    updatedCase.BusinessHoursId <> null
+                    && updatedCase.First_Contact_with_Client__c <> null 
+                    && (
+                        updatedCase.First_Contact_w_Client_in_Business_Hours__c != oldCase.First_Contact_w_Client_in_Business_Hours__c 
+                        || updatedCase.First_Contact_w_Client_in_Business_Hours__c == null
+                        || updatedCase.First_Contact_w_Client_in_Business_Hours__c < 0
+                    )
+                ) {
                     updatedCase.First_Contact_w_Client_in_Business_Hours__c = BusinessHours.diff(updatedCase.BusinessHoursId, updatedCase.CreatedDate, updatedCase.First_Contact_with_Client__c) / 3600000.0;
+                }
             }
             if (Trigger.isUpdate && (!transformationHelper.CalculateBusinessHoursAgesGet() || BusinessDays.isAllowedRunTwice)) { // we are on the update so we have the caseIDS!Hurra!!
                 system.debug('##ROW##');

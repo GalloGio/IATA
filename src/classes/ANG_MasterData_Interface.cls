@@ -16,7 +16,7 @@ global class ANG_MasterData_Interface{
             
             if(sMode == null || sMode=='') sMode = 's';
             
-            list<Account> lsAccnt = [select ANG_IsNewGenAgency__c, Is_Branch_Abroad__c, Purge_Flag__c, Accreditation_date__c, Date_Organisation_Status_attained__c, Default_date__c, ANG_Accreditation_Model__c, billingCity, billingCountry, billingPostalCode,
+            list<Account> lsAccnt = [select Due_Diligence_Status__c, ANG_IsNewGenAgency__c, Is_Branch_Abroad__c, Purge_Flag__c, Accreditation_date__c, Date_Organisation_Status_attained__c, Default_date__c, ANG_Accreditation_Model__c, billingCity, billingCountry, billingPostalCode,
                                             billingState, billingStreet, IATA_ISO_Country__r.BSP_Country_free_text__c, IATA_ISO_Country__r.ISO_Code_Numeric__c, IATA_ISO_Country__r.ISO_Code__c, 
                                             Email__c, fax, IATACode__c, Id, ANG_IEP_Status_FF__c, Location_Class__c, Location_Type__c, Name, Parent.IATACode__c, phone, 
                                             IATA_ISO_Country__r.ANG_Portal_Service__r.Name, IATA_ISO_Country__r.Region__c, Reason__c, Remittance_frequency__c, Status__c, Tax_ID_1__c, TradeName__c, 
@@ -140,6 +140,7 @@ global class ANG_MasterData_Interface{
         public list<FOP> FormOfPayment;
         public RHCInfoClass RHCInfo;    //Risk Information
         public list<string> lsChildren; //List of Children IATA Code
+        public string dueDiligenceStatus;
         public boolean isNewGenAgency;
         
         
@@ -153,7 +154,7 @@ global class ANG_MasterData_Interface{
                 this.AccreditationDate = FormatDateMS(acc.Accreditation_date__c);
                 this.DefaultDate = FormatDateMS(acc.Default_date__c);
                 this.LastStatusChangeDate = String.ValueOf(acc.Date_Organisation_Status_attained__c) ;
-                
+                this.dueDiligenceStatus = acc.Due_Diligence_Status__c;
                 this.AccreditationType = acc.ANG_Accreditation_Model__c;
                 this.agencyType = '';
                 this.billingCity = acc.billingCity;
