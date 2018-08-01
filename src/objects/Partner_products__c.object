@@ -761,4 +761,16 @@ Specify if payment is guaranteed to the airline against: fraud dispute, commerci
         <showsStatus>false</showsStatus>
         <url>/00O1r00000BFv0K?pv0={!Partner_products__c.Id}&amp;pv1={!Partner_products__c.Name}</url>
     </webLinks>
+    <webLinks>
+        <fullName>Terminate_ATM_Product</fullName>
+        <availability>online</availability>
+        <displayType>button</displayType>
+        <encodingKey>UTF-8</encodingKey>
+        <height>600</height>
+        <linkType>url</linkType>
+        <masterLabel>Terminate ATM Product</masterLabel>
+        <openType>noSidebar</openType>
+        <protected>false</protected>
+        <url>/flow/TIP_Product_Termination?vProductId={!Partner_products__c.Id}&amp;retURL=/{!Partner_products__c.Id}</url>
+    </webLinks>
 </CustomObject>
