@@ -374,12 +374,18 @@
                                                 </apex:outputPanel> 
                                             </apex:outputPanel>
                                         </apex:pageBlockSectionItem>
+                                        <!-- //ACAMBAS - TIP-249 - Start -->
                                         <apex:pageBlockSectionItem labelStyle="width:26%" labelStyleClass="agencyLegalDetailsComponent" dataStyleClass="agencyLegalDetailsComponent" >
-                                            <apex:outputLabel value="{!$ObjectType.Partner_products__c.fields.PP_Payment_Product_Network_type__c.Label}"/>
+                                            <apex:outputLabel value="{!$ObjectType.Partner_products__c.fields.PP_Payment_Product_Network_type__c.Label}" html-class="mandFld"/>
                                             <apex:outputPanel style="display: -webkit-inline-box;">
-                                                <apex:outputField value="{!newpp.PP_Payment_Product_Network_type__c}"/>
+                                                <apex:outputPanel >                                    
+                                                <apex:inputField value="{!newpp.PP_Payment_Product_Network_type__c}" html-class="mandFld" rendered="{!editMode}" styleClass="sectionItem"/>
+                                                <apex:outputField value="{!newpp.PP_Payment_Product_Network_type__c}" rendered="{!!editMode}"/>
+                                                    <apex:image value="/img/msg_icons/info16.png" style="padding: 4px" styleClass="selector" title="TBD" html-data-placement="top" html-data-toggle="tooltip" rendered="{!editMode}"/>
+                                                </apex:outputPanel>
                                             </apex:outputPanel>
                                         </apex:pageBlockSectionItem>
+                                        <!-- //ACAMBAS - TIP-249 - End -->    
                                         <apex:pageBlockSectionItem labelStyle="width:26%" labelStyleClass="agencyLegalDetailsComponent" dataStyleClass="agencyLegalDetailsComponent" >
                                             <apex:outputLabel value="{!$ObjectType.Partner_products__c.fields.PP_Payment_Network__c.Label}" html-class="mandFld"/>
                                             <apex:outputPanel style="display: -webkit-inline-box;">                                        
