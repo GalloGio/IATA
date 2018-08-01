@@ -16,8 +16,8 @@
                 <field>Account__c</field>
             </layoutItems>
             <layoutItems>
-                <behavior>Readonly</behavior>
-                <field>Primary_Contact_Count__c</field>
+                <behavior>Edit</behavior>
+                <field>RecordTypeId</field>
             </layoutItems>
         </layoutColumns>
         <layoutColumns/>

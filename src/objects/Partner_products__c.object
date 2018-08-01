@@ -470,6 +470,19 @@ Specify if payment is guaranteed to the airline against: fraud dispute, commerci
         </valueSet>
     </fields>
     <fields>
+        <fullName>Payment_Provider_Account_Role__c</fullName>
+        <deleteConstraint>SetNull</deleteConstraint>
+        <description>Lookup to the Account Role record with record-type TIP (there is only one). Useful to simplify other logics (e.g. batch for activation/deactivation, integration with mulesoft, etc..)</description>
+        <externalId>false</externalId>
+        <label>Payment Provider Account Role</label>
+        <referenceTo>Account_Role__c</referenceTo>
+        <relationshipLabel>Partner Products</relationshipLabel>
+        <relationshipName>Partner_Products</relationshipName>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Lookup</type>
+    </fields>
+    <fields>
         <fullName>Product_Country_Configuration__c</fullName>
         <deleteConstraint>SetNull</deleteConstraint>
         <externalId>false</externalId>

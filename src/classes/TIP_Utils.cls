@@ -155,4 +155,49 @@ public class TIP_Utils{
 			
 		return sToReturn;
 	}
+	
+	//Used to prevent sync between accocunt role and product fired twice
+	public static boolean SyncFromAccountRole = false;
+	
+	//Used to keep in sync Account Role with Partner Product
+	//Scenario: a partner product is updated
+	public static void SyncAccountRoleOnProduct(list<Partner_products__c> trigNew, map<id, Partner_products__c> trigOld){
+		if(TIP_Utils.SyncFromAccountRole) return;
+		
+		map<id, id> mapAccountRole = new map<id, id>();
+		set<id> setAccntId = new set<id>();
+		
+		for(Partner_products__c pp:trigNew)	setAccntId.add(pp.Provider__c);
+		
+		for(Account_Role__c acr:[select id, Account__c from Account_Role__c where Account__c in : setAccntID and recordtypeid=:TIP_UTILS.ACCOUNT_ROLE_PAYMENT_PROVIDER_RECORDTYPE_ID])
+			mapAccountRole.put(acr.Account__c, acr.Id);
+		
+		for(Partner_products__c pp:trigNew){
+			if(trigOld == null || (trigOld.get(pp.Id).Payment_Provider_Account_Role__c != pp.Payment_Provider_Account_Role__c))
+				pp.Payment_Provider_Account_Role__c = mapAccountRole.get(pp.Provider__c);
+		}
+	}
+	
+	//Used to keep in sync Account Role with Partner Product
+	//Scenario: an account role is created or update. It has to update all existing product related to account
+	public static void SyncAccountRoleOnProduct(list<Account_Role__c> trigNew, map<id, Account_Role__c> trigOld){
+		TIP_Utils.SyncFromAccountRole = true;
+		map<id, id> mapAccountRole = new map<id, id>();
+		list<Partner_products__c> prodToUpdate = new list<Partner_products__c>();
+		
+		for(Account_Role__c acr:trigNew){
+			if(acr.recordtypeid == TIP_UTILS.ACCOUNT_ROLE_PAYMENT_PROVIDER_RECORDTYPE_ID)
+				if(trigOld == null || (trigOld != null && acr.Account__c != trigOld.get(acr.Id).Account__c))
+					mapAccountRole.put(acr.Account__c, acr.Id);
+		}
+		
+		if(!mapAccountRole.isEmpty()){
+			for(Partner_products__c pp:[select id, Payment_Provider_Account_Role__c, Provider__c from Partner_products__c where Provider__c in:mapAccountRole.keySet()]){
+				if(pp.Payment_Provider_Account_Role__c != mapAccountRole.get(pp.Provider__c))
+					prodToUpdate.add(new Partner_products__c(id=pp.Id, Payment_Provider_Account_Role__c = mapAccountRole.get(pp.Provider__c)));
+			}
+		}
+		
+		if(!prodToUpdate.isEmpty())	update prodToUpdate;
+	}
 }

@@ -1,17 +1,25 @@
 trigger AccountRoleTrigger on Account_Role__c (before insert, after insert, before update, after update, after delete) {
 
-	//AccountRoleHandler handler = new AccountRoleHandler();
+	AccountRoleHandler handler = new AccountRoleHandler();
 
-	if(trigger.isBefore && (trigger.isInsert || trigger.isUpdate)) {
-		AccountRoleHandler.updatePaymentProviderStatus(trigger.new, trigger.oldMap);
-	}
+	if(trigger.isBefore){
+    	if(trigger.isInsert){
+    		handler.onBeforeInsert();
+    		TIP_Utils.SyncAccountRoleOnProduct(trigger.new, null);
+    	}
+    	
+    	if(trigger.isUpdate){
+    		handler.onBeforeUpdate();
+    		TIP_Utils.SyncAccountRoleOnProduct(trigger.new, trigger.oldMap);
+    	}
+    }
 
 	if(trigger.isAfter && trigger.isUpdate) {
-		AccountRoleHandler.manageAccountAsPaymentProvider(trigger.new, 'Add');
+		handler.onAfterUpdate();
 	}
 
 	if(trigger.isAfter && trigger.isDelete) {
-		AccountRoleHandler.manageAccountAsPaymentProvider(trigger.old, 'Remove');
+		handler.onAfterDelete();
 	}
-
+	
 }
