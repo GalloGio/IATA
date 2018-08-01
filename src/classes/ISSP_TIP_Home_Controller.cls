@@ -478,6 +478,10 @@ public without sharing class ISSP_TIP_Home_Controller {
                         WHERE Id = :con.AccountId
                                    LIMIT 1
                     ];
+        //ACAMBAS - TIP-236 ---------
+        //isPaymentProvider = setServiceProvided.contains(TIP_Utils.ACCOUNT_SERVICE_PROVIDED_PAYMENT_PROVIDER);
+        isPaymentProvider = setServiceProvided.contains(TIP_Utils.ACCOUNT_SERVICE_PROVIDED_PAYMENT_PROVIDER) && !String.isBlank(account.Quality__c) ? account.Quality__c.contains('YES') : false;
+        //---------------------------
     }
 
     private void updateCase(){
