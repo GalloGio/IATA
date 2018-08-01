@@ -463,7 +463,7 @@ private class ANG_RHCAlertTriggerHandler_test {
 
 		List<Agency_Authorization__c> authorizations = new List<Agency_Authorization__c>();
 
-		ID FormOfPaymentRT = AMS_Utils.getId('Agency_Authorization__c','FormOfPayment');
+		ID FormOfPaymentRT = RecordTypeSingleton.getInstance().getRecordTypeID('Agency_Authorization__c', 'FormOfPayment');
 
 		authorizations.add(new Agency_Authorization__c(Account__c = rhcInfo.ANG_AccountId__c, ANG_FormOfPayment_ID__c = 'CA', Status__c = 'Active', RecordTypeId = FormOfPaymentRT));
 
@@ -517,7 +517,7 @@ private class ANG_RHCAlertTriggerHandler_test {
 
 		List<Agency_Authorization__c> authorizations = new List<Agency_Authorization__c>();
 
-		ID FormOfPaymentRT = AMS_Utils.getId('Agency_Authorization__c','FormOfPayment');
+		ID FormOfPaymentRT = RecordTypeSingleton.getInstance().getRecordTypeID('Agency_Authorization__c', 'FormOfPayment');
 
 		authorizations.add(new Agency_Authorization__c(Account__c = rhcInfo.ANG_AccountId__c, ANG_FormOfPayment_ID__c = 'CA', Status__c = 'Active', RecordTypeId = FormOfPaymentRT));
 
@@ -574,7 +574,7 @@ private class ANG_RHCAlertTriggerHandler_test {
 
 		List<Agency_Authorization__c> authorizations = new List<Agency_Authorization__c>();
 
-		ID FormOfPaymentRT = AMS_Utils.getId('Agency_Authorization__c','FormOfPayment');
+		ID FormOfPaymentRT = RecordTypeSingleton.getInstance().getRecordTypeID('Agency_Authorization__c', 'FormOfPayment');
 
 		authorizations.add(new Agency_Authorization__c(Account__c = rhcInfo.ANG_AccountId__c, ANG_FormOfPayment_ID__c = 'CA', Status__c = 'Active', RecordTypeId = FormOfPaymentRT));
 
@@ -631,7 +631,7 @@ private class ANG_RHCAlertTriggerHandler_test {
 
 		List<Agency_Authorization__c> authorizations = new List<Agency_Authorization__c>();
 
-		ID FormOfPaymentRT = AMS_Utils.getId('Agency_Authorization__c','FormOfPayment');
+		ID FormOfPaymentRT = RecordTypeSingleton.getInstance().getRecordTypeID('Agency_Authorization__c', 'FormOfPayment');
 
 		authorizations.add(new Agency_Authorization__c(Account__c = rhcInfo.ANG_AccountId__c, ANG_FormOfPayment_ID__c = 'CA', Status__c = 'Active', RecordTypeId = FormOfPaymentRT));
 
@@ -686,7 +686,7 @@ private class ANG_RHCAlertTriggerHandler_test {
 
 		List<Agency_Authorization__c> authorizations = new List<Agency_Authorization__c>();
 
-		ID FormOfPaymentRT = AMS_Utils.getId('Agency_Authorization__c','FormOfPayment');
+		ID FormOfPaymentRT = RecordTypeSingleton.getInstance().getRecordTypeID('Agency_Authorization__c', 'FormOfPayment');
 
 		authorizations.add(new Agency_Authorization__c(Account__c = rhcInfo.ANG_AccountId__c, ANG_FormOfPayment_ID__c = 'CA', Status__c = 'Active', RecordTypeId = FormOfPaymentRT));
 
@@ -759,7 +759,7 @@ private class ANG_RHCAlertTriggerHandler_test {
 
 		List<Agency_Authorization__c> authorizations = new List<Agency_Authorization__c>();
 
-		ID FormOfPaymentRT = AMS_Utils.getId('Agency_Authorization__c','FormOfPayment');
+		ID FormOfPaymentRT = RecordTypeSingleton.getInstance().getRecordTypeID('Agency_Authorization__c', 'FormOfPayment');
 
 		authorizations.add(new Agency_Authorization__c(Account__c = rhcInfo.ANG_AccountId__c, ANG_FormOfPayment_ID__c = 'CA', Status__c = 'Active', RecordTypeId = FormOfPaymentRT));
 
@@ -834,7 +834,7 @@ private class ANG_RHCAlertTriggerHandler_test {
 
 		insert oscar;
 
-		Id caseRT = AMS_Utils.getId('Case', 'OSCAR_Communication');
+		ID caseRT = RecordTypeSingleton.getInstance().getRecordTypeID('Case', 'OSCAR_Communication');
 
 		Case oscarCase = new Case(Oscar__c = oscar.Id, RecordTypeId = caseRT);
 		oscarCase.AccountId = a1.Id;

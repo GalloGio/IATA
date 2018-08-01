@@ -97,10 +97,6 @@ public without sharing class AMS_Utils {
         private set;
     }
 
-    private static Map<String, RecordType> currentCache = null;
-
-    public static String userSessionId = UserInfo.getSessionId();
-
     public static final String SANITYCHECK = 'Perform Sanity Check';
     public static final String APPROVAL = 'Manager Approval';
     public static final String WITHDRAWAL = 'Application Withdrawal';
