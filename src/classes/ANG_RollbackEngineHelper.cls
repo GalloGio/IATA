@@ -4,6 +4,8 @@ global without sharing class ANG_RollbackEngineHelper implements Queueable{
 
 	private Id oscarId;
 
+	private String oscarName;
+
 	private Set<Id> accountsRelated;
 
 	private Id newParentHierarchyId;
@@ -19,22 +21,32 @@ global without sharing class ANG_RollbackEngineHelper implements Queueable{
 	public void executeAdhoc(){
 
 		fetchTechnicalLogs(oscarId);
+
+		AMS_AgencyRelationshipTriggerHandler.AMS_HierarchyProcess = true;
+		AMS_AccountTriggerHandler.processMinorChangesValidationFlag = false;
 		rollbackData();
+		sendEmailConfirmation();
+		AMS_AgencyRelationshipTriggerHandler.AMS_HierarchyProcess = false;
+		AMS_AccountTriggerHandler.processMinorChangesValidationFlag = true;
+
+
 	}
 
 	public ANG_RollbackEngineHelper(Id oscarId){
 
 		this.oscarId = oscarId;
-		technicalLogsMap = new Map<String,List<String>>();
+		this.technicalLogsMap = new Map<String,List<String>>();
 
 		accountsRelated = new Set<Id>();
 		accountsRelated.addAll(fetchHierarchySelection(oscarId));
 
-		AMS_OSCAR__c oscar = [Select Account__c,New_parent__c from AMS_OSCAR__c where Id =:oscarId];
+		AMS_OSCAR__c oscar = [Select Name, Account__c,New_parent__c from AMS_OSCAR__c where Id =:oscarId];
+
+		this.oscarName = oscar.Name;
 
 		accountsRelated.add(oscar.Account__c);
 
-		newParentHierarchyId = oscar.New_parent__c;
+		this.newParentHierarchyId = oscar.New_parent__c;
 
 	}
 
@@ -81,9 +93,7 @@ global without sharing class ANG_RollbackEngineHelper implements Queueable{
 			accountsToRollback.add((Account) JSON.deserialize(acctStr, Account.class));
 
 		if(!accountsToRollback.isEmpty()){
-			AMS_AgencyRelationshipTriggerHandler.AMS_HierarchyProcess = true;
 			upsert accountsToRollback;
-			AMS_AgencyRelationshipTriggerHandler.AMS_HierarchyProcess = false;
 		}
 
 	}
@@ -179,7 +189,7 @@ global without sharing class ANG_RollbackEngineHelper implements Queueable{
 		List<AMS_Agencies_relationhip__c> relationsToRollback = new List<AMS_Agencies_relationhip__c>();
 		List<AMS_Agencies_Hierarchy__c> hierarchiesToRollback = new List<AMS_Agencies_Hierarchy__c>();
 
-		Map<Id,Id> relationsBetweenHierarchy = new Map<Id,Id>();
+		Map<Id,AMS_Agencies_Hierarchy__c> relationsBetweenHierarchy = new Map<Id,AMS_Agencies_Hierarchy__c>();
 
 		for(String hiearchy: hierarchyList){
 			AMS_Agencies_Hierarchy__c hierarchy = (AMS_Agencies_Hierarchy__c) JSON.deserialize(hiearchy, AMS_Agencies_Hierarchy__c.class);
@@ -189,14 +199,17 @@ global without sharing class ANG_RollbackEngineHelper implements Queueable{
 			hierarchy.Id = null;
 			insert hierarchy;
 
-			relationsBetweenHierarchy.put(oldHierarchyId,hierarchy.Id);
+			relationsBetweenHierarchy.put(oldHierarchyId,hierarchy);
 
 		}
+
+		if(!relationsBetweenHierarchy.values().isEmpty())
+			insert relationsBetweenHierarchy.values();
 
 		for(String relationStr: relationshipList){
 			AMS_Agencies_relationhip__c relation = (AMS_Agencies_relationhip__c) JSON.deserialize(relationStr, AMS_Agencies_relationhip__c.class);
 			relation.Id = null;
-			relation.Hierarchy__c = relationsBetweenHierarchy.get(relation.Hierarchy__c);
+			relation.Hierarchy__c = relationsBetweenHierarchy.get(relation.Hierarchy__c).Id;
 			relationsToRollback.add(relation);
 		}
 
@@ -214,5 +227,30 @@ global without sharing class ANG_RollbackEngineHelper implements Queueable{
 			accountIds.add(pd.Account__c);
 	
 		return accountIds;
+	}
+
+	private void sendEmailConfirmation(){
+
+		Messaging.SingleEmailMessage mail = new Messaging.SingleEmailMessage();
+
+		String userName = UserInfo.getUserName();
+		User activeUser = [Select Email From User where Username = : userName limit 1];
+		String userEmail = activeUser.Email;
+
+		//below code will send an email to User about the status
+		mail.setToAddresses( new String[] {userEmail} );
+		mail.setSenderDisplayName('Apex Newgen - Rollback process');
+		mail.setSubject('Apex Newgen - Rollback process');
+
+		String toReturnBody = 'The rollback process for Oscar Case '+oscarName+' has been completed.\n\n';
+		
+		mail.setPlainTextBody(toReturnBody);
+
+		 if(Test.isRunningTest()){
+		 	return;
+		 }
+
+		Messaging.sendEmail(new Messaging.Singleemailmessage [] {mail});
+
 	}
 }
