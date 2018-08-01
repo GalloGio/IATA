@@ -74,6 +74,31 @@
     <enableFeeds>true</enableFeeds>
     <enableHistory>true</enableHistory>
     <fieldSets>
+        <fullName>AMS_Oscar_Savepoint_Owner_fields</fullName>
+        <description>Used to know which fields needed for rollback</description>
+        <displayedFields>
+            <field>Id</field>
+            <isFieldManaged>false</isFieldManaged>
+            <isRequired>false</isRequired>
+        </displayedFields>
+        <displayedFields>
+            <field>Name</field>
+            <isFieldManaged>false</isFieldManaged>
+            <isRequired>false</isRequired>
+        </displayedFields>
+        <displayedFields>
+            <field>Legal_name__c</field>
+            <isFieldManaged>false</isFieldManaged>
+            <isRequired>false</isRequired>
+        </displayedFields>
+        <displayedFields>
+            <field>Registration_Number__c</field>
+            <isFieldManaged>false</isFieldManaged>
+            <isRequired>false</isRequired>
+        </displayedFields>
+        <label>AMS Oscar Savepoint Owner fields</label>
+    </fieldSets>
+    <fieldSets>
         <fullName>AMS_Oscar_Savepoint_fields</fullName>
         <description>Identify which fields are stored when oscar starts and which ones can be rolled back</description>
         <displayedFields>
