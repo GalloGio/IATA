@@ -187,7 +187,7 @@ public class TIP_Utils{
 		
 		for(Account_Role__c acr:trigNew){
 			if(acr.recordtypeid == TIP_UTILS.ACCOUNT_ROLE_PAYMENT_PROVIDER_RECORDTYPE_ID)
-				if(trigOld==null || (acr.Account__c != trigOld.get(acr.Account__c).Account__c))
+				if(trigOld == null || (trigOld != null && acr.Account__c != trigOld.get(acr.Id).Account__c))
 					mapAccountRole.put(acr.Account__c, acr.Id);
 		}
 		
