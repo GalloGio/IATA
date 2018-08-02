@@ -576,7 +576,7 @@ global without sharing class Comm_User_Helper {
                   //system.debug('basto1p: password='+password);
                   // OneIdEnh CSP-ID002: Change parameters according to service name
                   if(serviceName == ISSP)
-                      link = OneIdUtils.getSiteCompleteUrl(OneIdUtils.Mode.ISSP) + '/ISSP_First_Login?'+encodedPart;
+                      link = OneIdUtils.getSiteCompleteUrl(OneIdUtils.Mode.IDENTITY) + '/IdentityFirstLogin?'+encodedPart;
                   // OneIdEnh CSP-ID002: Added service name to method call
                   emailWrap = Comm_User_Helper.ISSP_PassWordBuilMessageWrapper( con ,  password ,  link, ONEIDENTITY, ServiceName);
               }
