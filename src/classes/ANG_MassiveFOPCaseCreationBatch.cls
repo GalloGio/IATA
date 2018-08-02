@@ -8,8 +8,10 @@ global class ANG_MassiveFOPCaseCreationBatch implements Database.Batchable<sObje
 
 	global List<String> fieldListContact;
 
+	private String errorMessages;
+
 	global ANG_MassiveFOPCaseCreationBatch(Set<Id> accountIdsIn) {
-		
+		errorMessages = '';
 		resultItems = new List<ANG_ConversionHelper.ConversionBatchItem>();
 
 		List<String> fieldListAcct = new List<String>();
@@ -112,8 +114,10 @@ global class ANG_MassiveFOPCaseCreationBatch implements Database.Batchable<sObje
 		toReturnBody+= ':: Errors Found ::'+'\n';
 
 		for(ANG_ConversionHelper.ConversionBatchItem item:resultItems) 
-			if(item.isError)
+			if(item.isError){
 				toReturnBody+=item+'\n';
+            	errorMessages += item.iataCode + ': ' + item.errorMessage + '\n';
+            }
 		
 		toReturnBody+= '\n\n';
 		toReturnBody+= ':: Accounts Processed ::'+'\n'; 
@@ -130,7 +134,7 @@ global class ANG_MassiveFOPCaseCreationBatch implements Database.Batchable<sObje
 
 		Messaging.sendEmail(new Messaging.Singleemailmessage [] {mail});
 
-		throw new MyException (toReturnBody);
+		throw new MyException (errorMessages);
 	}
 	
 	public class MyException extends Exception {}
