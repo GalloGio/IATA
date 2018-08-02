@@ -23,7 +23,7 @@ global without sharing class ANG_RollbackEngineHelper implements Queueable{
 		fetchTechnicalLogs(oscarId);
 
 		AMS_AgencyRelationshipTriggerHandler.AMS_HierarchyProcess = true;
-		AMS_AccountTriggerHandler.processMinorChangesValidationFlag = false;
+		AMS_AccountTriggerHandler.processMinorChangesValidationFlag = false; 
 		rollbackData();
 		sendEmailConfirmation();
 		AMS_AgencyRelationshipTriggerHandler.AMS_HierarchyProcess = false;

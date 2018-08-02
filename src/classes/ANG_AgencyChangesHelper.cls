@@ -104,9 +104,7 @@ public with sharing class ANG_AgencyChangesHelper {
 			oscar.addError('Cannot pass Sanity Check before choosing a type of change.');
 			return;
 		}
-
-		if((&& ((Map<Id,AMS_OSCAR__c>)Trigger.oldMap).get(oscar.Id).STEP6__c <> AMS_Utils.PASSED && ){
-			
+	
 
 		if(oscar.Process__c == AMS_Utils.NGCHANGES && oscar.STEP6__c == AMS_Utils.PASSED  && oscar.ANG_Type_Of_Change__c != null && !isMigrationRunning && oscar.Backup_In_Progress__c){	
 			oscar.addError('There is a rollback in progress for this Oscar, please wait a few moments until it finishes.');
