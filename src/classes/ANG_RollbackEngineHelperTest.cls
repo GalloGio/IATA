@@ -212,7 +212,18 @@ private class ANG_RollbackEngineHelperTest {
 		
 		List<Account> accts = [Select Id, Name, Short_Name__c,TradeName__c,Abbreviated_name__c from Account ];
 
-		AMS_OSCAR__c oscar = [Select Id from AMS_OSCAR__c];
+		Case c = [Select Id from Case LIMIT 1];
+
+		AMS_OSCAR__c oscar = [Select Id, Account__c from AMS_OSCAR__c];
+
+		List<AMS_Process_Detail__c> pdLst = new List<AMS_Process_Detail__c>();
+
+		for(Account acct: accts){
+			if(acct.Id != oscar.Account__c)
+				pdLst.add(new AMS_Process_Detail__c(Account__c = acct.Id, Case__c = c.Id,OSCAR__c =oscar.Id )) ;
+		}
+
+		insert pdLst;
 
 		oscar.ANG_Type_Of_Change__c = AMS_Utils.ANG_LEGAL_NAME + ';' + AMS_Utils.ANG_OWNERSHIP;
 		update oscar;
