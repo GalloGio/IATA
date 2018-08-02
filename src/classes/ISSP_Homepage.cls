@@ -416,4 +416,10 @@ public with sharing class ISSP_Homepage {
         return b;
     }set;}
 
+    /**
+        Returns true if current user is an Admin user according to ISSP_Constant class
+    **/
+    public Boolean getIsAdminUser() {
+        return ISSP_Constant.adminIdSet.contains(UserInfo.getProfileId());
+    }
 }
