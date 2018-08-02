@@ -212,7 +212,7 @@ global with sharing class ANG_AccreditationAreaViewer {
 
         //query is done using the same fields that will appear on the page
 
-        List<AMS_Pax_Accreditation_Form__c> accreditationLst = Database.query('SELECT Id, HO_Account__r.IATACODE__c, '+String.join(accreditationFieldNames, ', ')+' FROM AMS_Pax_Accreditation_Form__c WHERE Id = :accreditationId');
+        List<AMS_Pax_Accreditation_Form__c> accreditationLst = Database.query('SELECT Id, HO_Account__r.IATACODE__c,Confirm_Ownership_details_are_correct__c, '+String.join(accreditationFieldNames, ', ')+' FROM AMS_Pax_Accreditation_Form__c WHERE Id = :accreditationId');
 
         if(accreditationLst.isEmpty()) return null;
 

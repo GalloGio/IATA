@@ -1104,7 +1104,7 @@
                             </apex:outputpanel>
 
                             <!--AMSU-119 : added MSO condition-->
-                            <c:GenericAttachmentList rendered="{!AND(NOT(isNewCase),NOT(isMSOCase),NOT(isPWCProfile),NOT(isDPCUser),NOT(isIFAPCase))}" sobjectId="{!newCase.Id}" isPortal="true" showAttachFileButton="{!NOT(HideForClosedCases)}"/>
+                            <c:GenericAttachmentList rendered="{!AND(newCase.Status != 'Closed_Rejected', newCase.Status != 'Closed_Disapproved', NOT(isNewCase),NOT(isMSOCase),NOT(isPWCProfile),NOT(isDPCUser),NOT(isIFAPCase))}" sobjectId="{!newCase.Id}" isPortal="true" showAttachFileButton="{!NOT(HideForClosedCases)}"/>
 
                             <!--AMSU-119 : added MSO condition-->
                             <c:Archive_Attachment_List_Component rendered="{!AND(NOT(isNewCase),NOT(isMSOCase),OR(isPWCProfile,isDPCUser))}" caseid="{!newCase.Id}"></c:Archive_Attachment_List_Component>
