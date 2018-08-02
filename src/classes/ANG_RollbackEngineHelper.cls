@@ -197,7 +197,6 @@ global without sharing class ANG_RollbackEngineHelper implements Queueable{
 			Id oldHierarchyId = hierarchy.Id;
 
 			hierarchy.Id = null;
-			insert hierarchy;
 
 			relationsBetweenHierarchy.put(oldHierarchyId,hierarchy);
 
