@@ -669,7 +669,11 @@ public without sharing class ISSP_TIP_Home_Controller {
         applyLanguage = UserInfo.getLanguage();
         displayLanguage = UserInfo.getLanguage(); 
 
-        newpp= new Partner_products__c(PP_Payment_Product_Network_type__c=TIP_Utils.PARTNER_PRODUCT_NETWORK_TYPE_OPEN_LOOP);
+        //ACAMBAS - TIP-249 -----------------------
+        //newpp= new Partner_products__c(PP_Payment_Product_Network_type__c=TIP_Utils.PARTNER_PRODUCT_NETWORK_TYPE_OPEN_LOOP);
+        newpp= new Partner_products__c();
+        //-----------------------------------------
+        
         binRangeList= new list<BinRangeRec>();
         deletedBinRangeList= new list<TIP_BIN_Range__c>();
 
@@ -873,12 +877,14 @@ public without sharing class ISSP_TIP_Home_Controller {
             
             } 
 
-            if(binRangeList.isEmpty()){
+            //ACAMBAS - TIP-249 - Start
+            /*if(binRangeList.isEmpty()){
 
                  ApexPages.addmessage(new ApexPages.message(ApexPages.severity.ERROR,Label.ISSP_TIP_INSERT_BIN_RANGE));
                  return null;
              
-             } 
+            } */
+            //ACAMBAS - TIP-249 - End
 
 
             // Check Bin Range Sizes
