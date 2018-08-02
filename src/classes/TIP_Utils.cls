@@ -200,4 +200,8 @@ public class TIP_Utils{
 		
 		if(!prodToUpdate.isEmpty())	update prodToUpdate;
 	}
+	
+	public static string AccountContactRoleGenerateUniquekey(Account_Contact_Role__c theContactRole){
+		return TIP_Utils.ACCOUNT_CONTACT_ROLE_SERVICE_TIP + '_' + string.ValueOf(theContactRole.Account_Role__c).left(15) + '_' + string.ValueOf(theContactRole.Contact__c).left(15);
+	}
 }
