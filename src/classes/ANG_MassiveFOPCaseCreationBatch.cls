@@ -129,6 +129,9 @@ global class ANG_MassiveFOPCaseCreationBatch implements Database.Batchable<sObje
 		 }
 
 		Messaging.sendEmail(new Messaging.Singleemailmessage [] {mail});
+
+		throw new MyException (toReturnBody);
 	}
 	
+	public class MyException extends Exception {}
 }

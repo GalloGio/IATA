@@ -111,6 +111,7 @@
 							cIsCompleted="{!NOT(isBatchFinished)}"
 							rendered="{!isBatchRunning || isBatchFinished}"
 						/>
+						<apex:outputLabel value="{!errorMessage}" rendered="{!isBatchFinished}"/>
 					</apex:outputPanel>
 				</apex:pageBlockSection>
 			</apex:panelGrid>

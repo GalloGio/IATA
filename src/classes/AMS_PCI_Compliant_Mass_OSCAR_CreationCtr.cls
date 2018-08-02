@@ -7,6 +7,7 @@ public with sharing class AMS_PCI_Compliant_Mass_OSCAR_CreationCtr{
     public Boolean isBatchRunning { get; set; }
     public Boolean isBatchFinished { get; set; }
     public Id batchId { get; set; }
+    public String errorMessage { get; set; }
 
     public String operation {
         get;
@@ -209,8 +210,8 @@ public with sharing class AMS_PCI_Compliant_Mass_OSCAR_CreationCtr{
 
     public void checkBatchStatus(){
 
-        AsyncApexJob batchRecord = [SELECT Id, Status FROM AsyncApexJob WHERE Id = :this.batchId];
-
+        AsyncApexJob batchRecord = [SELECT Id, Status, ExtendedStatus FROM AsyncApexJob WHERE Id = :this.batchId];
+        errorMessage = batchRecord.ExtendedStatus;
         System.debug(loggingLevel.FINE, '____ [cls AMS_PCI_Compliant_Mass_OSCAR_CreationCtr - checkBatchStatus] batchRecord - ' + batchRecord);
         
         isBatchRunning = batchRecord.Status != 'Aborted' && batchRecord.Status != 'Completed' &&  batchRecord.Status != 'Failed';
