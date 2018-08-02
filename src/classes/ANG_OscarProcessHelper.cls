@@ -438,7 +438,7 @@ global class ANG_OscarProcessHelper {
 		System.debug('[ANG_OscarProcessHelper] Starting Ownership migration.');
 
 		if(!stagingToAccount.isEmpty() && runOwnershipMigration)
-			AMS_AccountRoleCreator.runRoleCreatorForOnlineAccreditations(stagingToAccount, true, new List<AMS_Oscar__c>{oscar}, new Map<Id,String>{oscar.Id => acc.Location_Type__c});
+			AMS_AccountRoleCreator.runRoleCreatorForOnlineAccreditations(stagingToAccount, true, new Map<Id,AMS_Oscar__c>{oscar.Id => oscar}, new Map<Id,String>{oscar.Id => acc.Location_Type__c});
 
 		System.debug('[ANG_OscarProcessHelper] Ownership migration completed.');
 

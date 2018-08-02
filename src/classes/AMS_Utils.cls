@@ -1369,8 +1369,15 @@ public without sharing class AMS_Utils {
             if (!accountsToUpdate.isEmpty())
                 update accountsToUpdate;
 
-            if(!stagingToAccount.isEmpty() && runOwnershipMigration)
-                AMS_AccountRoleCreator.runRoleCreatorForOnlineAccreditations(stagingToAccount, true, oscarsToCopy, locationTypeByOscar);
+            if(!stagingToAccount.isEmpty() && runOwnershipMigration){
+
+                Map<Id,AMS_OSCAR__c> mapOscars = new Map<Id,AMS_OSCAR__c>();
+
+                for(AMS_OSCAR__c oscar : oscarsToCopy)
+                    mapOscars.put(oscar.Id, oscar);
+
+                AMS_AccountRoleCreator.runRoleCreatorForOnlineAccreditations(stagingToAccount, true, mapOscars, locationTypeByOscar);
+            }
 
             if(!createRHCInfo.isEmpty()) ANG_RHCHelper.createRHCInfo(createRHCInfo, false);
 
