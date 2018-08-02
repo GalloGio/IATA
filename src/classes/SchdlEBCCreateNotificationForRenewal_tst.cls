@@ -62,6 +62,10 @@ private class SchdlEBCCreateNotificationForRenewal_tst {
 	// basic test: calling batch job, with single test data provided
 	@isTest (SeeAllData=false)	
 	static void test04_BasicTestOnBatchJobWithTestData() {
+
+		//Generate SAP Settings
+		TestDataGenerator.generateSAPSettings();
+
 		IECEBC_TestUtility.createEbcSetupAndRelatedData();
 		IECEBC_TestUtility.createTestUser();
 		Date dSubscriptionEndDate = Date.today().addDays(Integer.valueOf(IECEBC_TestUtility.EBC_RENEWAL_WINDOW));
