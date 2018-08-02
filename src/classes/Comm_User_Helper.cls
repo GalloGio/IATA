@@ -570,13 +570,9 @@ global without sharing class Comm_User_Helper {
                   if(serviceName == ISSP){
                     template = 'Identity_Changed_ISSP_Password_Email_Custom';
                   }else{
-                  template = 'Identity_Changed_Password_Email_Custom';
+                    template = 'Identity_Changed_Password_Email_Custom';
                   }
-                  
-                  //system.debug('basto1p: password='+password);
-                  // OneIdEnh CSP-ID002: Change parameters according to service name
-                  if(serviceName == ISSP)
-                      link = OneIdUtils.getSiteCompleteUrl(OneIdUtils.Mode.IDENTITY) + '/IdentityFirstLogin?'+encodedPart;
+                
                   // OneIdEnh CSP-ID002: Added service name to method call
                   emailWrap = Comm_User_Helper.ISSP_PassWordBuilMessageWrapper( con ,  password ,  link, ONEIDENTITY, ServiceName);
               }
