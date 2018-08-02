@@ -99,8 +99,6 @@ public without sharing class AMS_Utils {
 
     private static Map<String, RecordType> currentCache = null;
 
-    public static String userSessionId = UserInfo.getSessionId();
-
     public static final String SANITYCHECK = 'Perform Sanity Check';
     public static final String APPROVAL = 'Manager Approval';
     public static final String WITHDRAWAL = 'Application Withdrawal';
@@ -386,6 +384,11 @@ public without sharing class AMS_Utils {
     public static final String REJECTED = 'Rejected';
     public static final String REJECTED_CLOSED = 'Rejected Closed';
     public static final String ACCEPTED = 'Accepted';
+
+    /* AMSU-37 */
+    public static final String APP_DISAPPROVED = '12-APPLICATION DISAPPROVED';
+    public static final String APP_WITHDRAWN = '11-APPLICATION WITHDRAWN';
+
 
     static {
         refreshCache();

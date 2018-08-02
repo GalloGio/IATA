@@ -12383,6 +12383,7 @@ J-Joint Vent</inlineHelpText>
     </fields>
     <fields>
         <fullName>Payment_Term__c</fullName>
+		<defaultValue>&quot;Z001&quot;</defaultValue>
         <description>IEC - SAP payment term code to use when creates contracts</description>
         <externalId>false</externalId>
         <label>Payment Terms</label>

@@ -4,7 +4,7 @@
     <protected>false</protected>
     <values>
         <field>AvailableHours__c</field>
-        <value xsi:type="xsd:string">09.00 - 16.00 from Sunday to Thursday</value>
+        <value xsi:type="xsd:string">09.00 - 17.00 From Sunday to Thursday</value>
     </values>
     <values>
         <field>Business_Hours_Name__c</field>
