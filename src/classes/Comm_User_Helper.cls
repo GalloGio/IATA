@@ -178,12 +178,12 @@ global without sharing class Comm_User_Helper {
                 String template ='';
                 Map<String,String> emailWrap = new Map<String,String>();
 
-               if(community == ISSP || community == ONEIDENTITY){
-                  if(community == ISSP){
-                      link = OneIdUtils.getSiteCompleteUrl(OneIdUtils.Mode.ISSP) + '/ISSP_First_Login?c=' + encodedPart;
+                if(community == ISSP || community == ONEIDENTITY){
+                    link = OneIdUtils.getSiteCompleteUrl(OneIdUtils.Mode.IDENTITY) + '/IdentityFirstLogin?c=' + encodedPart;
+
+                    if(community == ISSP){
                       template = 'Identity_Portal_ISSP_New_User';
                     }else{
-                      link = OneIdUtils.getSiteCompleteUrl(OneIdUtils.Mode.IDENTITY) + '/IdentityFirstLogin?c=' + encodedPart;
                       template = 'Identity_Portal_New_User';
                     }
 
@@ -552,8 +552,8 @@ global without sharing class Comm_User_Helper {
                  emailWrap = Comm_User_Helper.IEC_builMessageWrapper( con ,  password ,  link);
 
               }else if(Community == ISSP){
-                  string prefix = Site.getBaseUrl() == null || Site.getBaseUrl() == '' ? OneIdUtils.getSiteCompleteUrl(OneIdUtils.Mode.ISSP) : Site.getBaseUrl();
-                  link = prefix + '/ISSP_First_Login?'+encodedPart;
+                  string prefix = OneIdUtils.getSiteCompleteUrl(OneIdUtils.Mode.IDENTITY);
+                  link = prefix + '/IdentityFirstLogin?'+encodedPart;
                   template = 'Communities_Forgot_Password_Email3';
                   emailWrap = Comm_User_Helper.ISSP_PassWordBuilMessageWrapper( con ,  password ,  link, 'ISSP');
               }else if(Community.contains('CNS')){
@@ -567,7 +567,6 @@ global without sharing class Comm_User_Helper {
                   string prefix = OneIdUtils.getSiteCompleteUrl(OneIdUtils.Mode.IDENTITY);
                   String serviceNameParam = String.isNotEmpty(serviceName) ? '&serviceName='+serviceName : '';
                   link = prefix + '/IdentityFirstLogin?'+encodedPart+serviceNameParam;
-                  //template = 'Communities_Forgot_Password_Email3';
                   if(serviceName == ISSP){
                     template = 'Identity_Changed_ISSP_Password_Email_Custom';
                   }else{
