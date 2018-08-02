@@ -523,7 +523,7 @@ public without sharing class ISSP_TIP_Home_Controller {
     				   where Id = :TheUser.Contact.AccountID limit 1];
     	
     	if(acc!= null){
-    		if(Acc.Account_Roles__r.isEmpty()){
+    		if(Acc.Account_Roles__r.isEmpty()) {
     			try{
     				Account_Role__c accrole = new Account_Role__c(Account__c = acc.Id, RecordTypeId = TIP_Utils.ACCOUNT_ROLE_PAYMENT_PROVIDER_RECORDTYPE_ID);
     				insert accrole;
@@ -534,6 +534,11 @@ public without sharing class ISSP_TIP_Home_Controller {
     			}
     		}
     	}
+
+        //ACAMBAS - TIP-236 ---------
+        //isPaymentProvider = setServiceProvided.contains(TIP_Utils.ACCOUNT_SERVICE_PROVIDED_PAYMENT_PROVIDER);
+        isPaymentProvider = setServiceProvided.contains(TIP_Utils.ACCOUNT_SERVICE_PROVIDED_PAYMENT_PROVIDER) && !String.isBlank(account.Quality__c) ? account.Quality__c.contains('YES') : false;
+        //---------------------------
     }
 
     private void updateCase(){
