@@ -11,8 +11,12 @@
     <c:iss_ap_css />
   </head>
 
-  <body>
+  <body class="bodyContainer">
     <style>
+      .bodyContainer {padding-left: initial !important; padding-right: initial !important;}
+
+      .header {background-color: #0a4279 !important; border: initial !important;}
+
       .section-header {
         background-color: rgb(43, 120, 228);
         color: white;
@@ -188,8 +192,9 @@
       }
 
     </style>
-    <main class="container">
-      <c:ISSP_CustomNavigation />
+    <c:ISSP_CustomNavigation />
+    <main class="container main-con">
+      
       <apex:form id="mainFrm">
       <div class="row">
         <!--
@@ -494,8 +499,9 @@
 
       </apex:form>
 
-      <c:ISSP_CustomFooter />
+      
     </main>
+<c:ISSP_CustomFooter />
 
     <script src="../../soap/ajax/41.0/connection.js" type="text/javascript" ></script>
     <script src="../../soap/ajax/41.0/apex.js" type="text/javascript" ></script>
