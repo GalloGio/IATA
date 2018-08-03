@@ -470,6 +470,12 @@
    }
    </style>
    <script>
+   		$(document).ready(function() {
+    		$('[id$="navbarSearchBtn"]').css({'background': 'initial', 'margin': '0', 'border-radius': '4px', 'margin-bottom': '0', 'background-color': '#fff', 'margin-left': '-1px', 'font-size': '14px', 'border-top-left-radius': '0', 'border-bottom-left-radius': '0', 'border-bottom-color': 'rgb(181, 181, 181)', 'border-color': '#ccc'});
+
+    		$('li').css('margin-left', 'initial');
+		});
+
       function transferSearchQuery() {
           //createCookie("searchInput", document.getElementById("searchInput").value, 1);
           //alert(document.cookie);
@@ -611,7 +617,7 @@
          <div class="input-group">
             <input id="searchInput" type="text" onkeypress="enterKey(event);" placeholder="{!$Label.ISSP_Search}" class="form-control"/>
             <div class="input-group-btn">
-               <button class="btn btn-default" style="padding:9px" type="submit" onclick="transferSearchQuery();">
+               <button id="navbarSearchBtn" class="btn btn-default" style="padding:9px !important" type="submit" onclick="transferSearchQuery();">
                <i class="glyphicon glyphicon-search"></i>
                </button>
             </div>

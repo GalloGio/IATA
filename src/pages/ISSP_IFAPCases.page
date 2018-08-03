@@ -1,9 +1,9 @@
 <apex:page controller="ISSP_IFAPCases"  showHeader="false" sidebar="false" standardStylesheets="true" 
-  applyBodyTag="false" applyHtmlTag="false" extensions="AmazonFinancialCtrl" id="thePage" action="{!checkRedirect}"   >
+  applyBodyTag="false" applyHtmlTag="false" extensions="AmazonFinancialCtrl" id="thePage" action="{!checkRedirect}">
 
     <html>
      
- <c:ISSP_Header ></c:ISSP_Header>
+ <c:ISSP_Header/>
  <body>
 
     <style>
@@ -49,10 +49,9 @@
  <apex:includeScript value="/soap/ajax/28.0/connection.js"/>
  <apex:includeScript value="/soap/ajax/28.0/apex.js"/>
 
-
-    <div class="container">
     <c:ISSP_CustomNavigation />
-        
+    <div class="container">
+    
         <apex:outputPanel rendered="{!IFAPCases.size > 1}" >
             <h3 class="form-control" >{!$Label.ISSP_IFAP_IATAFinancialAssessment}</h3>
         </apex:outputPanel>
@@ -734,8 +733,8 @@
             </div><!--end main col -->
         </div><!--end main row -->
         </apex:outputPanel>
- <c:ISSP_CustomFooter />
     </div><!-- end container-->
+    <c:ISSP_CustomFooter />
     </body>
     </html>
 </apex:page>
