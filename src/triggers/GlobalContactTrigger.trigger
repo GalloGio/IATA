@@ -452,18 +452,10 @@ trigger GlobalContactTrigger on Contact (after delete, after insert, after undel
                 Map<Id, String> conFirstNameMap = new Map<Id, String>();//TF - SP9-A5
                 Map<Id, String> conLastNameMap = new Map<Id, String>();//TF - SP9-A5
 
-                set<Id> conIdSet = new set<Id>();
                 //WMO-234 for user with SIS application changing its account
                 set<Id> setSISContactChangingAccount = new set<Id>();
 
                 for(Contact con : trigger.new){
-
-                    if(con.User_Portal_Status__c == 'Regional Administrator'  
-                        && (trigger.oldMap.get(con.Id).User_Portal_Status__c != 'Regional Administrator' 
-                            || con.Regional_Administrator_Countries__c != trigger.oldMap.get(con.Id).Regional_Administrator_Countries__c)){
-                        
-                        conIdSet.add(con.Id);
-                    }
 
                     if ((con.Email != '' && (con.Email != trigger.oldMap.get(con.Id).Email 
                             || con.FirstName != trigger.oldMap.get(con.Id).FirstName 
@@ -481,10 +473,6 @@ trigger GlobalContactTrigger on Contact (after delete, after insert, after undel
                         setSISContactChangingAccount.add(con.Id);
                     }
 
-                }
-                if(conIdSet.size()>0){
-                    ISSP_Constant.UserAccountChangeParent = true;
-                    update [select Id from User where ContactId in:conIdSet];
                 }
                 
                 //TF - SP9-A5
