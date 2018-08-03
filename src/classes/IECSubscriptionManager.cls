@@ -95,7 +95,7 @@ public with sharing class IECSubscriptionManager {
                 AND Related_Product_Information__r.Related_Product_Category__r.Active__c = true
                 AND Active__c = true
                 //AND User_Interface_Display__c = 'YES'
-                AND Product_Rate_Plan__r.zqu__ZProduct__r.zqu__EffectiveStartDate__c <= TODAY and Product_Rate_Plan__r.zqu__ZProduct__r.zqu__EffectiveEndDate__c >= TODAY
+                AND Product_Rate_Plan__r.zqu__Product__r.zqu__EffectiveStartDate__c <= TODAY and Product_Rate_Plan__r.zqu__Product__r.zqu__EffectiveEndDate__c >= TODAY
                 AND Product_Rate_Plan__r.zqu__EffectiveStartDate__c <= TODAY and Product_Rate_Plan__r.zqu__EffectiveEndDate__c >= TODAY
                 AND Product_Rate_Plan__r.zqu__Deleted__c = false
                 ];
@@ -2246,7 +2246,7 @@ public with sharing class IECSubscriptionManager {
             oSubHist.Purchased_Product_Category__c = lstRatePlanInfo.get(0).Related_Product_Information__r.Related_Product_Category__c;
             oSubHist.Purchased_Product_Information__c = lstRatePlanInfo.get(0).Related_Product_Information__c;
             oSubHist.Purchased_Product_Rate_Plan_Information__c = lstRatePlanInfo.get(0).Id;
-            oSubHist.Purchased_Product_SKU__c = lstRatePlanInfo.get(0).Related_Product_Information__r.Related_Product__r.zqu__SKU__c;
+            oSubHist.Purchased_Product_SKU__c = lstRatePlanInfo.get(0).Related_Product_Information__r.Related_Product__r.zqu__SKU2__c;
             oSubHist.Rate_Plan_Quantity__c = iQuantity;
             
             // fill subscription related info

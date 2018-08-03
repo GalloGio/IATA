@@ -84,7 +84,7 @@ global class IEC_ZuoraPricing2SAP_Batch implements Database.Batchable<sObject>, 
         IEC_ZuoraPricing2SAP_Svc svc = new IEC_ZuoraPricing2SAP_Svc();
         // save changed pricing information to tracking table 
         if (strProcessingStep == processingStep1 && scope.size() > 0)
-            svc.trackPricing2((List<zqu__ProductRatePlanChargeTier__c>)scope, mapProductId_Product);
+            svc.trackPricing((List<zqu__ProductRatePlanChargeTier__c>)scope, mapProductId_Product);
         // send pricing information to SAP
         else if (strProcessingStep == processingStep2 && scope.size() > 0)
             svc.sendPricing((List<IEC_ZuoraPricing2SAP_Tracking__c>)scope);

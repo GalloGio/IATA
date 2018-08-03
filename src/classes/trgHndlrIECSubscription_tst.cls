@@ -40,9 +40,16 @@ private class trgHndlrIECSubscription_tst {
 
 		// create dummy Zuora product
     	oProduct = IECTestUtil.CreateSampleProduct2('Product1');
+    	System.debug('angielaz, beggining test oProduct: ' + oProduct);
+
     	oProduct.ProductAudience__c = IECConstants.ProductAudience_Zuora_NONMEMBERSINGLE;
     	oProduct.ProductCategory__c = IECConstants.ProductCategory_SF_TEST;
+
+    	System.debug('angielaz, beggining test oProduct1: ' + oProduct);
+
     	insert oProduct;
+
+    	System.debug('angielaz, beggining test oProduct2: ' + oProduct);
     	
     	// create dummy Zuora rate plan
     	oProductRatePlan = IECTestUtil.CreateSampleProductRatePlan2('Rate plan 1', false, oProduct);
@@ -56,11 +63,15 @@ private class trgHndlrIECSubscription_tst {
     	oProductRatePlan3 = IECTestUtil.CreateSampleProductRatePlan2('Rate plan 3', false, oProduct);
     	oProductRatePlan3.zqu__Deleted__c = false;
     	insert oProductRatePlan3;
+
+    	System.debug('angielaz, oProduct1' + [Select ID, zqu__SKU2__c from Product2 where Id=:oProduct.Id]);
     	
     	// create dummy Zuora rate plan oProductRatePlanCharge
     	oProductRatePlanCharge = IECTestUtil.CreateSampleProductRatePlanCharge(oProductRatePlan, 'CHARGETEST', 42);
     	oProductRatePlanCharge.zqu__Deleted__c = false;
     	insert oProductRatePlanCharge;
+
+    	System.debug('angielaz, oProduct2' + [Select ID, zqu__SKU2__c from Product2 where Id=:oProduct.Id]);
     	
     	oProductRatePlanCharge2 = IECTestUtil.CreateSampleProductRatePlanCharge(oProductRatePlan2, 'CHARGETEST', 84);
     	oProductRatePlanCharge2.zqu__Deleted__c = false;
@@ -75,9 +86,14 @@ private class trgHndlrIECSubscription_tst {
         oProductCategory.Active__c = true;
         insert oProductCategory;
         
+        System.debug('angielaz, oProduct3' + [Select ID, zqu__SKU2__c from Product2 where Id=:oProduct.Id]);
+
         // create dummy product info
         oProductInfo = IECTestUtil.CreateSampleProductInfo2('My product', oProductCategory, oProduct);
         insert oProductInfo;
+
+
+        System.debug('angielaz, oProduct4' + [Select ID, zqu__SKU2__c from Product2 where Id=:oProduct.Id]);
         
         // create dummy rate plan information
         oProductRatePlanInfo = IECTestUtil.CreateSampleProductRatePlanInfo('Rate Plan Info 1', false, oProductRatePlan, oProductInfo);
@@ -87,6 +103,8 @@ private class trgHndlrIECSubscription_tst {
         oProductRatePlanInfo.Subscription_Usage_Qty__c = QTY;
         insert oProductRatePlanInfo;
         
+		System.debug('angielaz, oProduct5' + [Select ID, zqu__SKU2__c from Product2 where Id=:oProduct.Id]);
+
         oProductRatePlanInfo2 = IECTestUtil.CreateSampleProductRatePlanInfo('Rate Plan Info 2', false, oProductRatePlan2, oProductInfo);
         oProductRatePlanInfo2.Display_As_Monthly_Fee__c = false;
         oProductRatePlanInfo2.Active__c = true;
@@ -94,12 +112,17 @@ private class trgHndlrIECSubscription_tst {
         oProductRatePlanInfo2.Subscription_Usage_Qty__c = QTY * 2;
         insert oProductRatePlanInfo2;
         
+        System.debug('angielaz, oProduct6' + [Select ID, zqu__SKU2__c from Product2 where Id=:oProduct.Id]);
+
         oProductRatePlanInfo3 = IECTestUtil.CreateSampleProductRatePlanInfo('Rate Plan Info 3', false, oProductRatePlan3, oProductInfo);
         oProductRatePlanInfo3.Display_As_Monthly_Fee__c = false;
         oProductRatePlanInfo3.Active__c = true;
         oProductRatePlanInfo3.Order__c = 3;
         oProductRatePlanInfo3.Subscription_Usage_Qty__c = 0;
         insert oProductRatePlanInfo3;
+
+
+        System.debug('angielaz, oProduct7' + [Select ID, zqu__SKU2__c from Product2 where Id=:oProduct.Id]);
 	}
 	
     static testMethod void TestSubscription() {
@@ -111,14 +134,36 @@ private class trgHndlrIECSubscription_tst {
 	        // create dummy subscription
 	        subscription = IECTestUtil.createSampleSubscription(oAccount.Id, 'Subs 01', Date.today().addMonths(6));
 	        subscription.Zuora__CustomerAccount__c = oBillingAccount.Id;
+
+	        System.debug('angielaz, subscription: ' + subscription);
+
 	        insert subscription;
+
+	        System.debug('angielaz, oProduct8' + [Select ID, zqu__SKU2__c from Product2 where Id=:oProduct.Id]);
+
+			System.debug('angielaz, oProduct: ' + oProduct);
+			System.debug('angielaz, oProductRatePlan ' + oProductRatePlan);	        
 	        
 	        // create dummy subscription charge
 	        subscriptionCharge = IECTestUtil.createSampleSubscriptionCharge2(subscription.Id, Date.today().addMonths(-6), oProduct, oProductRatePlan);
+
+	        System.debug('angielaz, oProduct after createSampleSubscriptionCharge2: ' + oProduct);
+	        
+	        System.debug('angielaz, subscriptionCharge: ' + subscriptionCharge);
+
 	        insert subscriptionCharge;
 
+	        System.debug('angielaz, oProduct9' + [Select ID, zqu__SKU2__c from Product2 where Id=:oProduct.Id]);
+
+	        System.debug('angielaz, after insert subscriptionCharge-->oProduct: ' + oProduct);
+
+	        System.debug('angielaz, after insert subscriptionCharge: ' + subscriptionCharge);
+
+
 	        // Test #1 - check if the Product Access has been created
-	        List<IEC_Product_Access__c> lstProductAccess = [Select Id, Usage_Qty_Start__c, Usage_Qty_Left__c, Usage_Unlimited__c, Active__c, Related_Contact__c, Subscription_Number__c, Related_Rate_Plan_Info__c from IEC_Product_Access__c where Zuora_Subscription_Id__c =: subscription.Zuora__Zuora_Id__c];
+	        List<IEC_Product_Access__c> lstProductAccess = [Select Id, Usage_Qty_Start__c, Usage_Qty_Left__c, Usage_Unlimited__c, 
+	        Active__c, Related_Contact__c, Subscription_Number__c, Related_Rate_Plan_Info__c from IEC_Product_Access__c 
+	        where Zuora_Subscription_Id__c =: subscription.Zuora__Zuora_Id__c];
 	        system.assert(lstProductAccess.size() > 0, 'A Product Access should be found');
 	        
 	        IEC_Product_Access__c oProductAccess = lstProductAccess.get(0);

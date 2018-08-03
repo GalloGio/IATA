@@ -96,12 +96,15 @@ public without sharing class IECTestUtil {
     }
 
     public static Product2 createSampleProduct2(String sName) {
+        String sku = 'SKU' + (Math.random()*1000000000);
+
         return new Product2(
             Name = sName
             , zqu__ZuoraId__c = 'P-' + (Math.random()*1000000000)
             , zqu__EffectiveStartDate__c = Date.today().addDays(-15)
             , zqu__EffectiveEndDate__c = Date.today().addDays(15)
-            , zqu__SKU2__c = 'SKU' + (Math.random()*1000000000)
+            , zqu__SKU2__c = sku
+            , zqu__SKU__c = sku
         );
     }
     
@@ -517,6 +520,7 @@ public without sharing class IECTestUtil {
             , Zuora__ProductSKU__c = oProduct.zqu__SKU2__c
             , Zuora__ProductEffectiveEndDate__c = oProduct.zqu__EffectiveEndDate__c
         );
+        
     }
     
     public static Zuora.zObject createSampleZuoraAccount() {

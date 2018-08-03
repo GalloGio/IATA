@@ -214,7 +214,7 @@ public with sharing class IECProductManager {
                     , Related_Product_Information__r.Related_Product_Category__r.Product_Icon__c
                     , Related_Product_Information__r.Related_Product_Category__r.Show_price_on_eCommerce__c
                     , Related_Product_Information__c 
-                    , Related_Product_Information__r.Related_Product__r.zqu__SKU__c
+                    , Related_Product_Information__r.Related_Product__r.zqu__SKU2__c
                 FROM Product_Rate_Plan_Information__c
                 WHERE Id = :idProductRatePlan
                     AND Related_Product_Information__r.Related_Product_Category__r.Active__c = true

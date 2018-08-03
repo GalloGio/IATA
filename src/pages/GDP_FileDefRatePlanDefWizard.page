@@ -1,5 +1,5 @@
 <apex:page standardController="zqu__ProductRatePlan__c"  extensions="GDP_FileDefRatePlanDefWizard" sidebar="true" id="pageManageLine"
-    title="File Definition for Product Rate Plan : {!theObj.zqu__ZProduct__r.name} : {!zqu__ProductRatePlan__c.Name}"
+    title="File Definition for Product Rate Plan : {!theObj.zqu__Product__r.name} : {!zqu__ProductRatePlan__c.Name}"
 >
 <meta charset="utf-8" />
 <meta http-equiv="X-UA-Compatible" content="IE=edge" />
@@ -22,7 +22,7 @@
 <![endif]-->
 <script src="{!URLFOR($Resource.BootstrapCSS, 'js/jquery.js')}"></script>
 <script src="{!URLFOR($Resource.BootstrapCSS, 'js/bootstrap.min.js')}"></script>
-<apex:sectionHeader title="File Definition for Product Rate Plan : {!theObj.zqu__ZProduct__r.name} : {!zqu__ProductRatePlan__c.Name}" />
+<apex:sectionHeader title="File Definition for Product Rate Plan : {!theObj.zqu__Product__r.name} : {!zqu__ProductRatePlan__c.Name}" />
 <apex:messages style="color:red"/>
 <style>   
     .headerRow .headerSubStyle{background-color:#638658;color:#FFFFFF}     

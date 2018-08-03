@@ -1734,4 +1734,15 @@ public with sharing class TestDataGenerator
 
         return eventRelease;
     }
+
+
+    public static void generateCustomSettingDisableRecaptcha(){
+
+        UtilityCS__c disableRecaptcha = new UtilityCS__c(Name ='DisableRecaptcha', Value__c = 'false');
+
+        insert disableRecaptcha;
+
+    }
+
+
 }

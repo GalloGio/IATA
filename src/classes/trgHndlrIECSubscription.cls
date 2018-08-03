@@ -29,6 +29,8 @@ public with sharing class trgHndlrIECSubscription {
 	 */
 	private static void assignUsage(List<Zuora__Subscription__c> newRecords) {
 		Set<String> setSubscriptionNumber = new Set<String>();
+
+		System.debug('angielaz, assignUsage-->newRecords: ' + newRecords);
 		
 		// Get all orders related to the current subscription to determine whether
 		// to give access to the product based on the Order.Is Paid status

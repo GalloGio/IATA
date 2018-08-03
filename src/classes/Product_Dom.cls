@@ -47,6 +47,9 @@ private Map<Id, Product2> oldMap = new Map<Id, Product2>();
 ****************************************************************************************************/
 private void getData(Boolean newDataAvailable, Boolean oldDataAvailable) {
     if (newDataAvailable) {
+
+        System.debug('angielaz, inside getData-->trigger.new: ' + trigger.new);
+
         newList = (List<Product2>) trigger.new;
         newMap = (Map<Id, Product2>) trigger.newMap;
     }
@@ -62,7 +65,16 @@ private void getData(Boolean newDataAvailable, Boolean oldDataAvailable) {
         Method for event
 ****************************************************************************************************/
 private void onBeforeInsert() {
+
+
     getData(true, false);
+    
+
+
+    System.debug('angielaz, beggining Product trigger onBeforeInsert-->newList' + newList);
+    
+
+
     //*** set default values
     Product_Svc.setDefaultValue(newList);
     //*** set record type
@@ -78,6 +90,10 @@ private void onBeforeInsert() {
     */
     Product_Svc.setAcceptedPaymentMehodsDefaultValue(newList);    
     /** End INC335264**/
+
+    System.debug('angielaz, Product trigger onBeforeInsert-->newList' + newList);
+
+
 }
 private void onBeforeUpdate() {
     getData(true, true);
@@ -113,6 +129,9 @@ private void onAfterInsert()
 
     //Create PriceBookEntry for Phase 1 and 2 if not exist
     Product_Svc.createPriceBookEntry(newMap, oldMap, true);
+
+    System.debug('angielaz, Product trigger onAfterInsert-->newList' + newMap.values());
+
 }
 
 private void onAfterUpdate() {

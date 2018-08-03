@@ -211,7 +211,7 @@ private class Product_Svc_Test
         List<zqu__ProductRatePlan__c> lstprp = [select id from zqu__ProductRatePlan__c
                                                  where 
                                                  zqu__Deleted__c = false 
-                                                 and zqu__ZProduct__r.zqu__Deleted__c = false ];
+                                                 and zqu__Product__r.zqu__Deleted__c = false ];
 
         if(lstprp != null){
             //Create Product Rate Plan Information
