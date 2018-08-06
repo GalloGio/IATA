@@ -939,9 +939,11 @@ public without sharing class Order_Sel extends Selector{
         String historyType = 'History';
         
         date dateToCompare = Date.today().addDays(-180);
-        List<String> expiredType   = new List<String>{orderType, renewStatus, quoteStatus};
+        //List<String> expiredType   = new List<String>{orderType, renewStatus, quoteStatus};
         List<String> expiredStatus = new List<String>{'New',cancelStatus,'Payment Failure', 'Ready for SAP', 'Pending Payment'};
 
+            // 'AND SAP_Order_Number__c != null  AND SAP_Invoice__r.Contract_Number__c != null ' +
+            // 'AND ((type NOT IN :expiredType OR Status NOT IN :expiredStatus OR EffectiveDate > :dateToCompare) AND type != :historyType) ' +
          String query = String.format(
             'SELECT {0}' + 
             ', (select Product_Name__c, Product_Number__c, Quantity, UnitPrice, Freight_Charge__c, Tax__c, Total__c, ' +
@@ -949,8 +951,8 @@ public without sharing class Order_Sel extends Selector{
             ' from Orderitems) ' +
             'FROM {1} ' +
             'WHERE BillToContactId = :contactId ' +
-            'AND SAP_Order_Number__c != null  AND SAP_Invoice__r.Contract_Number__c != null ' +
-            'AND ((type NOT IN :expiredType OR Status NOT IN :expiredStatus OR EffectiveDate > :dateToCompare) AND type != :historyType) ' +
+           
+            'AND ((Status NOT IN :expiredStatus OR EffectiveDate > :dateToCompare) ) ' +
 
             'ORDER BY Type,  CreatedDate DESC', 
             new List<String>{
