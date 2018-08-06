@@ -1116,8 +1116,45 @@ private class CaseBeforeTriggerTest {
         break;
       }
     }
-    
-    @istest static void testInsertSeda() {
+
+    theCase.Billing_Amount__c = 400000;
+    theCase.Short_Payment_Amount__c = 500;
+    update theCase;
+
+
+    cases = [SELECT Id, Subject, IRR_Withdrawal_Reason__c FROM Case ORDER BY Subject];
+    countSA = 0; countN = 0; countMP = 0;
+    for (Case cs : cases) {
+      if (cs.IRR_Withdrawal_Reason__c == SMALLAMOUNT)  countSA++;
+      else if (cs.IRR_Withdrawal_Reason__c == MINORPOLICY) countMP++;
+      else    countN++;
+    }
+
+    system.assertEquals(1, countSA);
+    system.assertEquals(2, countMP);
+    system.assertEquals(4, countN);
+
+
+
+    cases = [SELECT Id, IRR_Withdrawal_Reason__c, Action_needed_Small_Amount__c
+             FROM Case
+             WHERE Subject = 'TestCase Sidra Small Amount 6' OR ID = :theCase.Id];
+    //system.debug(LoggingLevel.ERROR, '==================== '+cases+' ===========================');
+    system.assertEquals(2, cases.size());
+    system.assertEquals(true, cases[0].Action_needed_Small_Amount__c);
+    system.assertEquals(true, cases[1].Action_needed_Small_Amount__c);
+    system.assertEquals(null, cases[0].IRR_Withdrawal_Reason__c);
+    system.assertEquals(null, cases[1].IRR_Withdrawal_Reason__c);
+
+
+    cases = [SELECT Id, IRR_Withdrawal_Reason__c, Action_needed_Small_Amount__c
+             FROM Case
+             WHERE Action_needed_Small_Amount__c = true
+                 AND IRR_Withdrawal_Reason__c = null];
+    system.assertEquals(2, cases.size());
+  }
+
+      @istest static void testInsertSeda() {
     
         Profile testProfile = [SELECT Id FROM Profile WHERE Name = 'System Administrator'];
         User testUser = New User(
@@ -1212,43 +1249,6 @@ private class CaseBeforeTriggerTest {
         resultCase = [Select Id, CS_Rep_Contact_Customer__c FROM Case WHERE Id = :cas.Id];
         System.assertEquals(UserInfo.getUserId(),resultCase.CS_Rep_Contact_Customer__c);
     }
-
-    theCase.Billing_Amount__c = 400000;
-    theCase.Short_Payment_Amount__c = 500;
-    update theCase;
-
-
-    cases = [SELECT Id, Subject, IRR_Withdrawal_Reason__c FROM Case ORDER BY Subject];
-    countSA = 0; countN = 0; countMP = 0;
-    for (Case cs : cases) {
-      if (cs.IRR_Withdrawal_Reason__c == SMALLAMOUNT)  countSA++;
-      else if (cs.IRR_Withdrawal_Reason__c == MINORPOLICY) countMP++;
-      else    countN++;
-    }
-
-    system.assertEquals(1, countSA);
-    system.assertEquals(2, countMP);
-    system.assertEquals(4, countN);
-
-
-
-    cases = [SELECT Id, IRR_Withdrawal_Reason__c, Action_needed_Small_Amount__c
-             FROM Case
-             WHERE Subject = 'TestCase Sidra Small Amount 6' OR ID = :theCase.Id];
-    //system.debug(LoggingLevel.ERROR, '==================== '+cases+' ===========================');
-    system.assertEquals(2, cases.size());
-    system.assertEquals(true, cases[0].Action_needed_Small_Amount__c);
-    system.assertEquals(true, cases[1].Action_needed_Small_Amount__c);
-    system.assertEquals(null, cases[0].IRR_Withdrawal_Reason__c);
-    system.assertEquals(null, cases[1].IRR_Withdrawal_Reason__c);
-
-
-    cases = [SELECT Id, IRR_Withdrawal_Reason__c, Action_needed_Small_Amount__c
-             FROM Case
-             WHERE Action_needed_Small_Amount__c = true
-                 AND IRR_Withdrawal_Reason__c = null];
-    system.assertEquals(2, cases.size());
-  }
 
 
   // test new filter: only count minor error policy cases after the last reinstatement
