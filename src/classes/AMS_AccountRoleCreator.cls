@@ -289,20 +289,29 @@ public with sharing class AMS_AccountRoleCreator
     public static Map<Id,OldAndNewOwners> runRoleCreatorForOnlineAccreditations(Map<Id,Set<Id>> aoMap, Boolean isCorrectionProcess, Map<Id,AMS_OSCAR__c> oscars, Map<Id,String> locationTypeByOscar) {
 
         Map<Id,OldAndNewOwners> oldAndNewOwnersMap = new Map<Id,OldAndNewOwners>();
-        Set<Id> accountsToCloneOwnersFromHO = new Set<Id>();
+        Set<Id> accountsToCloneOwnersFromHO = new Set<Id>(); //accounts from new br/sa processes
+        Set<Id> accountsToCreateNewOwners = new Set<Id>(); //accounts from new ho/ao processes
+        Set<Id> accountsToChangeOwners = new Set<Id>(); //accounts from changes/correction processes
         Set<Id> accountIds = new Set<Id>();
-        Set<Id> personsIds = new Set<Id>();
+        Set<Id> personsIds = new Set<Id>();                                         
         Set<Id> rolesWithPersonsId = new Set<Id>();
-        Map<Id,AMS_Account_Role__c> rolesToUpsert = new Map<Id,AMS_Account_Role__c>();
+        Map<Id,AMS_Account_Role__c> rolesToUpsert = new Map<Id,AMS_Account_Role__c>(); //key is Id for Roles already existant and the accreditation contact id for the new ones
+        Map<Id,Id> accreditationContactWithRole = new Map<Id,Id>();
+        Map<Id,Set<Id>> parentAndChildAccounts = new Map<Id,Set<Id>>(); //top parent and respective accounts
 
         //check if the process should create new owners or if it's just to clone the owners from the HO
         for(AMS_OSCAR__c osc: oscars.values()) {
 
-            if(processesBlockedToMigrateOwners.contains(osc.Process__c) && !allowedLocationTypesForNewProcesses.contains(locationTypeByOscar.get(osc.Id))){
-                aoMap.remove(osc.AMS_Online_Accreditation__c);
+            if(processesBlockedToMigrateOwners.contains(osc.Process__c) && !allowedLocationTypesForNewProcesses.contains(locationTypeByOscar.get(osc.Id)) && isCorrectionProcess && osc.STEP10__c == 'Passed' && osc.STEP6__c == 'Passed') {
+                
+                accountsToCloneOwnersFromHO.add(osc.Account__c);
 
-                if(isCorrectionProcess && osc.STEP10__c == 'Passed' && osc.STEP6__c == 'Passed')
-                    accountsToCloneOwnersFromHO.add(osc.Account__c);
+            } else if(!processesBlockedToMigrateOwners.contains(osc.Process__c) && allowedLocationTypesForNewProcesses.contains(locationTypeByOscar.get(osc.Id))) {
+                
+                accountsToCreateNewOwners.add(osc.Account__c);
+
+            } else {
+                accountsToChangeOwners.addAll(aoMap.get(osc.AMS_Online_Accreditation__c));
             }
         }
 
@@ -346,7 +355,7 @@ public with sharing class AMS_AccountRoleCreator
         }
 
         //create a new bucket for each accreditation contact
-        Map<String,AccreditationContactBucket> accConBucketList = new Map<String,AccreditationContactBucket>(); //key = accreditationContactEmail+isCompany(T=true F=false)
+        Map<Id,AccreditationContactBucket> accConBucketList = new Map<Id,AccreditationContactBucket>(); 
         Map<Id,List<AccreditationContactBucket>> accConBucketPerAccount = new Map<Id,List<AccreditationContactBucket>>();
 
         for(AMS_Accreditation_Contact__c accreditationContact : accreditationContactsToProcess.values()) {
@@ -368,23 +377,26 @@ public with sharing class AMS_AccountRoleCreator
                     bucket.createNewContact();
             }
 
+            if(bucket.isOwner && !accountsToCloneOwnersFromHO.contains(bucket.accountId)) {
+
+                bucket.createNewRole();
+                rolesToUpsert.put(accreditationContact.Id, bucket.newRole);
+            } 
+            
+            if(accreditationContact.AMS_Ownership_Role__c != null)
+                accreditationContactWithRole.put(accreditationContact.Id, accreditationContact.AMS_Ownership_Role__c);
+            
             //check if there are persons to delete
             if(accreditationContact.Person_AMS__c != null) {
                 bucket.personId = accreditationContact.Person_AMS__c;
                 personsIds.add(accreditationContact.Person_AMS__c);
             }
 
-            String isCompanyString = bucket.isCompany ? 'T' : 'F';
-            accConBucketList.put(bucket.accreditationContact.Email__c + isCompanyString,bucket);
-
-            if(!accConBucketPerAccount.containsKey(bucket.accountId))
-                accConBucketPerAccount.put(bucket.accountId, new List<AccreditationContactBucket>());
-
-            accConBucketPerAccount.get(bucket.accountId).add(bucket);
+            accConBucketList.put(bucket.accreditationContact.Id,bucket);
         }
 
         //get all the roles from the affected accounts that there are active or the roles with persons to delete
-        Map<Id,AMS_Account_Role__c> activeRoles = new Map<Id,AMS_Account_Role__c>([SELECT Id, RecordTypeId, Termination_Date__c, Duty__c, Hours__c, IsManager__c, Percentage__c, Position__c, Account__c, Owner_Account__c, Contact__c, Person__c, Person__r.Contact__c, Legacy_External_ID__c, Legacy_System__c, Owner_Name__c,Owner_Account__r.Name FROM AMS_Account_role__c WHERE (Account__c IN :accountIds AND Active__c = true) OR Id IN :personsIds]);
+        Map<Id,AMS_Account_Role__c> activeRoles = new Map<Id,AMS_Account_Role__c>([SELECT Id, RecordTypeId, Termination_Date__c, Duty__c, Hours__c, IsManager__c, Percentage__c, Position__c, Account__c, Account__r.Top_Parent__c, Owner_Account__c, Contact__c, Person__c, Person__r.Contact__c, Legacy_External_ID__c, Legacy_System__c, Owner_Name__c,Owner_Account__r.Name FROM AMS_Account_role__c WHERE (Account__c IN :accountIds AND Active__c = true) OR Id IN :personsIds]);
 
         Map<Id,List<AMS_Account_Role__c>> rolesPerAccount = new Map<Id,List<AMS_Account_Role__c>>();
 
@@ -397,11 +409,37 @@ public with sharing class AMS_AccountRoleCreator
 
             if(role.Person__c != null && role.Person__r.Contact__c != null && !personsIds.isEmpty() && personsIds.contains(role.Person__c))
                 rolesWithPersonsId.add(role.Id);
+
+            if(role.Account__r.Top_Parent__c == null && !parentAndChildAccounts.containsKey(role.Account__c)) {
+
+                parentAndChildAccounts.put(role.Account__c, new Set<Id>());
+
+            } else if(role.Account__r.Top_Parent__c != null) {
+
+                if(!parentAndChildAccounts.containsKey(role.Account__r.Top_Parent__c))
+                    parentAndChildAccounts.put(role.Account__r.Top_Parent__c, new Set<Id>());
+
+                parentAndChildAccounts.get(role.Account__r.Top_Parent__c).add(role.Account__c);
+            }
         }
 
         //correct the roles with persons to delete
         if(!rolesWithPersonsId.isEmpty())
             rolesToUpsert.putAll(updateAMSRolesBeforePersonDeletion(activeRoles, rolesWithPersonsId, rolesToUpsert));
+
+        //delete persons
+        if(!personsIds.isEmpty())
+            delete [SELECT Id FROM AMS_Person__c WHERE Id IN :personsIds];
+
+        //link the accreditation contact role with the bucket
+        for(Id accContId : accreditationContactWithRole.keySet())
+            accConBucketList.get(accContId).oldRole = activeRoles.get(accreditationContactWithRole.get(accContId));
+        
+        //Register New and Old Owners for EBulletion Report purposes
+        for(AccreditationContactBucket accConBucket : accConBucketList.values())
+            oldAndNewOwnersMap.put(accConBucket.accreditationId,getNewAndOldOwnersForChangeCodeCreation(activeRoles.values(),accreditationContactsToProcess.values(),accountIds));
+
+        //
 
 
 
@@ -1186,7 +1224,8 @@ public with sharing class AMS_AccountRoleCreator
         private AMS_OSCAR__c oscar {get;set;}
         private Id accountId {get;set;}
         private Id accreditationId {get;set;}
-        private AMS_Account_Role__c role {get;set;}
+        private AMS_Account_Role__c oldRole {get;set;}
+        private AMS_Account_Role__c newRole {get;set;}
         private Contact contact {get;set;}
         private Id personId {get;set;}
         private Id companyId {get;set;}
@@ -1197,11 +1236,14 @@ public with sharing class AMS_AccountRoleCreator
         private Boolean isJustToClone {get;set;}
         private Boolean isOwner {get;set;}
 
-        public  AccreditationContactBucket(AMS_Account_Role__c role, AMS_OSCAR__c oscar) {
+        public AccreditationContactBucket(AMS_Accreditation_Contact__c accreditationContact,AMS_OSCAR__c oscar, AMS_Account_Role__c roleTopParent) {
+            this(accreditationContact,oscar);
             this.isJustToClone = true;
-            this.role = role;
-            this.oscar = oscar;
-            this.accreditationId = oscar.AMS_Online_Accreditation__c;
+
+            if(isSimilarToRole(roleTopParent))
+                createNewRole();
+            else
+                throw new AMS_ApplicationException('Sync Accreditations With Roles went wrong !' + accreditationContact);
         }
 
         public AccreditationContactBucket(AMS_Accreditation_Contact__c accreditationContact, AMS_OSCAR__c oscar) {
@@ -1232,28 +1274,48 @@ public with sharing class AMS_AccountRoleCreator
 
         public void createNewRole() {
 
-            role = new AMS_Account_Role__c();
-            role.RecordTypeId            = RecordTypeSingleton.getInstance().getRecordTypeId('AMS_Account_Role__c', 'Ownership');
-            role.Account__c              = accountId;
-            role.Duty__c                 = accreditationContact.Job_Title__c;
-            role.Employee_Name__c        = accreditationContact.First_Name__c + ' ' + accreditationContact.Last_Name__c;
-            role.Hours__c                = String.valueOf(accreditationContact.Time_devoted_to_Agency_business__c);
-            role.IsManager__c            = accreditationContact.Agency_role__c;
-            role.Percentage__c           = accreditationContact.Financial_Interest__c;
-            role.Position__c             = accreditationContact.Job_title__c;
-            role.Owner_Name__c           = (accreditationContact.First_Name__c == null ? '' : accreditationContact.First_Name__c  ) 
+            newRole = new AMS_Account_Role__c();
+            newRole.RecordTypeId            = RecordTypeSingleton.getInstance().getRecordTypeId('AMS_Account_Role__c', 'Ownership');
+            newRole.Account__c              = accountId;
+            newRole.Duty__c                 = accreditationContact.Job_Title__c;
+            newRole.Employee_Name__c        = accreditationContact.First_Name__c + ' ' + accreditationContact.Last_Name__c;
+            newRole.Hours__c                = String.valueOf(accreditationContact.Time_devoted_to_Agency_business__c);
+            newRole.IsManager__c            = accreditationContact.Agency_role__c;
+            newRole.Percentage__c           = accreditationContact.Financial_Interest__c;
+            newRole.Position__c             = accreditationContact.Job_title__c;
+            newRole.Owner_Name__c           = (accreditationContact.First_Name__c == null ? '' : accreditationContact.First_Name__c  ) 
                                               + (accreditationContact.Last_Name__c == null ? '' : ( ' ' + accreditationContact.Last_Name__c));
-            role.Legacy_External_Id__c   = accreditationContact.Legacy_External_Id__c;
+            newRole.Legacy_External_Id__c   = accreditationContact.Legacy_External_Id__c;
 
             if(isLinkedWithContactOrCompany) {
 
                 if(isCompany)
-                    role.Owner_Account__c = accreditationContact.Company__c;
+                    newRole.Owner_Account__c = accreditationContact.Company__c;
                 else
-                    role.Contact__c = accreditationContact.Contact__c == null ? accreditationContact.Person_AMS__r.Contact__c : accreditationContact.Contact__c;
+                    newRole.Contact__c = accreditationContact.Contact__c == null ? accreditationContact.Person_AMS__r.Contact__c : accreditationContact.Contact__c;
             }
         }
 
+        public Boolean isSimilarToRole(AMS_Account_Role__c roleTopParent) {
+
+            return accreditationContact.Job_Title__c                                                == roleTopParent.Duty__c
+                && (accreditationContact.First_Name__c + ' ' + accreditationContact.Last_Name__c)   == roleTopParent.Employee_Name__c
+                && String.valueOf(accreditationContact.Time_devoted_to_Agency_business__c)          == roleTopParent.Hours__c
+                && accreditationContact.Agency_role__c                                              == roleTopParent.IsManager__c
+                && accreditationContact.Financial_Interest__c                                       == roleTopParent.Percentage__c
+                && accreditationContact.Job_title__c                                                == roleTopParent.Position__c
+                && ((accreditationContact.First_Name__c == null 
+                    ? '' 
+                    : accreditationContact.First_Name__c  ) 
+                    + (accreditationContact.Last_Name__c == null 
+                    ? '' 
+                    : ( ' ' + accreditationContact.Last_Name__c)))                                  == roleTopParent.Owner_Name__c
+                && accreditationContact.Legacy_External_Id__c                                       == roleTopParent.Legacy_External_Id__c
+                && accreditationContact.Company__c                                                  == roleTopParent.Owner_Account__c
+                && (accreditationContact.Contact__c == null 
+                    ? accreditationContact.Person_AMS__r.Contact__c 
+                    : accreditationContact.Contact__c)                                              == roleTopParent.Contact__c;
+        } 
     }
 
 
