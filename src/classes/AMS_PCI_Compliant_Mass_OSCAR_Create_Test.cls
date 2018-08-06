@@ -38,6 +38,7 @@ private class AMS_PCI_Compliant_Mass_OSCAR_Create_Test {
 
 		ctrl.operation = 'PCI';
 		ctrl.region = 'Americas';
+		ctrl.selectedClasses.add(new SelectOption('P','P'));		
 
 		System.assertEquals(1, ctrl.availableCountries.size());
 		ctrl.selectedCountries = ctrl.availableCountries;

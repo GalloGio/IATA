@@ -329,9 +329,10 @@ public class AMS_OSCARTriggerHandler {
     /*** AMSU-113 Start ***/
     public static void processPCICompliant(List<AMS_OSCAR__c> oscars, Map<Id,AMS_OSCAR__c> oldMap) {
         System.debug('processPCICompliant - start ' );
+        Set<String> locations = new Set<String> {'P', 'D'};//AMSU-157
         for(AMS_Oscar__c oscar : oscars) {
             AMS_Oscar__c oldOscar = oldMap.get(oscar.Id);
-            if(!String.isBlank(oscar.Account__c) && pciCompliantProcesses.contains(oscar.Process__c) && oscar.Location_Class__c == AMS_Utils.LC_PASSENGER && oldOscar.STEP6__c != oscar.STEP6__c && oscar.STEP6__c == AMS_Utils.PASSED && oscar.Is_PCI_compliant__c == 'No') {
+            if(!String.isBlank(oscar.Account__c) && pciCompliantProcesses.contains(oscar.Process__c) && locations.contains(oscar.Location_Class__c) && oldOscar.STEP6__c != oscar.STEP6__c && oscar.STEP6__c == AMS_Utils.PASSED && oscar.Is_PCI_compliant__c == 'No') {
                 oscar.Change_Code__c = 'PCI';
                 System.debug('processPCICompliant - oscar: ' + oscar);
             }
@@ -340,9 +341,10 @@ public class AMS_OSCARTriggerHandler {
 
     public static void updateAccountPCICompliant(List<AMS_OSCAR__c> oscars, Map<Id, AMS_OSCAR__c> oldMap) {
         Map<Id, String> mapExpiryDates = new Map<Id,String>();
+        Set<String> locations = new Set<String> {'P', 'D'};//AMSU-157
         for(AMS_Oscar__c oscar : oscars) {
             AMS_OSCAR__c oldOscar = oldMap.get(oscar.id);
-            if(!String.isBlank(oscar.Account__c) && pciCompliantProcesses.contains(oscar.Process__c) && oscar.Location_Class__c == AMS_Utils.LC_PASSENGER && oldOscar.STEP6__c != oscar.STEP6__c && oscar.STEP6__c == AMS_Utils.PASSED) {
+            if(!String.isBlank(oscar.Account__c) && pciCompliantProcesses.contains(oscar.Process__c) && locations.contains(oscar.Location_Class__c) && oldOscar.STEP6__c != oscar.STEP6__c && oscar.STEP6__c == AMS_Utils.PASSED) {
                 //if(oscar.Is_PCI_compliant__c == 'Yes' || oscar.Is_PCI_compliant__c == 'Nil CC') {
                 if(AMS_Utils.oscarPCICompliantValidationExpiryDate.contains(oscar.Is_PCI_compliant__c) ) {
                     mapExpiryDates.put(oscar.Account__c, oscar.ANG_PCI_compliance_expiry_date__c + ',' + oscar.Is_PCI_compliant__c);
