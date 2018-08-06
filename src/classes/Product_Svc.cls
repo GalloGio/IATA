@@ -141,7 +141,7 @@ public class Product_Svc
            Call saveZProducts in queueable mode
     *****************************************************************************************************/
 
-     public class saveZProductsQueueable implements Queueable {
+     public class saveZProductsQueueable implements Queueable, Database.AllowsCallouts {
 
         private Set<Id> productIds;
 
