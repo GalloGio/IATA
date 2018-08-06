@@ -202,8 +202,8 @@ global class AmsIataCodeGenerator{
                         }
                     }
                     else {
-                        theAccount.Category__c = programCategoryMap.get(theAccount.Location_Class__c);
-                        theAccount.Sector__c = programSectorMap.get(theAccount.Location_Class__c); // AMS Enhancements AMSU-24                        
+                        theAccount.Category__c = programCategoryMap.get(theAccreditation.Location_Class__c);
+                        theAccount.Sector__c = programSectorMap.get(theAccreditation.Location_Class__c); // AMS Enhancements AMSU-24                        
                     }
                 }
                 else

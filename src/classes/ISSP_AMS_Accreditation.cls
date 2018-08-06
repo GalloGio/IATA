@@ -1301,6 +1301,24 @@ public without sharing class ISSP_AMS_Accreditation {
         }
     }
 
+    /*** AMSU-37 Start ***/
+    private List<String> hasPendingHOAccreditations(Case cse) {
+        List<String> res = new List<String>();
+        system.debug('hqAccount: ' + hqAccount);
+        system.debug('cse: ' + cse);
+        if(cse.id == null && String.isBlank(cse.CaseNumber) && cse.Reason1__c == 'New HO') {
+            List<Case> cases = [SELECT Id, CaseNumber FROM Case WHERE AccountId = :hqAccount.Id AND Reason1__c = 'New HO' AND IsClosed = false AND Type_of_customer__c = :cse.Type_of_customer__c LIMIT 1];
+
+            if(!cases.isEmpty()) {
+                res.add(cases[0].Id);
+                res.add(cases[0].CaseNumber);                
+            }
+        }
+
+        return res;
+    }
+    /*** AMSU-37 End ***/
+
     public Pagereference save() {
         SYSTEM.DEBUG('Saving Record - STEP A');
 
@@ -1426,6 +1444,16 @@ public without sharing class ISSP_AMS_Accreditation {
             //system.debug('isDupeSAAMCase: ' + isDupeSAAMCase);
             try {
                 String newIsoCountry = newCase.IFAP_Country_ISO__c;
+
+                /*** AMSU-37 Start ***/
+                system.debug('newCase: ' + newCase);
+                List<String> csNumber = hasPendingHOAccreditations(newCase);
+                if(!csNumber.isEmpty()) {
+                    ApexPages.addmessage(new ApexPages.message(ApexPages.severity.ERROR, String.format(Label.AMS_PendingHOAccr,csNumber)));
+                    return null;
+                }
+                /*** AMSU-37 End ***/
+
                 if ((draftHQCaseExists) || isDupeSAAMCase) {
                     agentType = amsLocationType.substring(amsLocationType.indexOf('-') + 1).trim();
                     newCase.Reason1__c = amsLocationType.left(amsLocationType.indexOf('-')).trim();

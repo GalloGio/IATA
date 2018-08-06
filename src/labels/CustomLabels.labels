@@ -830,6 +830,20 @@
         <value>Perform Correction</value>
     </labels>
     <labels>
+        <fullName>AMS_PendingHOAccr</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>AMS_PendingHOAccr</shortDescription>
+        <value>You cannot create &quot;New Head Office&quot; application while an another one is open. Check case &lt;a href=&quot;/ISSP_Case?caseId={0}&quot;&gt;&lt;strong&gt;{1}&lt;/strong&gt;&lt;a/&gt;</value>
+    </labels>
+    <labels>
+        <fullName>AMS_RRejected</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>AMS_RRejected</shortDescription>
+        <value>Request Rejected</value>
+    </labels>
+    <labels>
         <fullName>AMS_RollbackCase_Description</fullName>
         <language>en_US</language>
         <protected>false</protected>
@@ -25256,7 +25270,7 @@ msgErrorRenewalOrderExpired:Your renewal notification order link is either  expi
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>OneId_Account Association</shortDescription>
-        <value>Account Association</value>
+        <value>Company Details</value>
     </labels>
     <labels>
         <fullName>OneId_Account_Creation</fullName>
@@ -25334,7 +25348,7 @@ msgErrorRenewalOrderExpired:Your renewal notification order link is either  expi
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>OneId_Contact Association &amp; Validation</shortDescription>
-        <value>Contact Association &amp; Validation</value>
+        <value>Email Validation</value>
     </labels>
     <labels>
         <fullName>OneId_Contact_Creation</fullName>
@@ -25342,7 +25356,7 @@ msgErrorRenewalOrderExpired:Your renewal notification order link is either  expi
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>OneId_Contact Creation</shortDescription>
-        <value>Contact Creation</value>
+        <value>Contact Details</value>
     </labels>
     <labels>
         <fullName>OneId_CreateNew</fullName>
@@ -25673,6 +25687,14 @@ If you continue to experience issues registering for the IATA Customer Portal th
         <protected>false</protected>
         <shortDescription>OneId_Privacy_Policy</shortDescription>
         <value>Privacy Policy</value>
+    </labels>
+    <labels>
+        <fullName>OneId_Privacy_Policy_Link</fullName>
+        <categories>OneId</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>OneId_Privacy_Policy_Link</shortDescription>
+        <value>http://www.iata.org/privacy</value>
     </labels>
     <labels>
         <fullName>OneId_Profile_BillingCity</fullName>
