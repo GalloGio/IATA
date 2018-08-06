@@ -90,14 +90,14 @@ public without sharing class AMS_OSCAR_Savepoint implements Queueable {
 	private List<Technical_Logs__c> createAccountsSavepoint() {
 		List<Technical_Logs__c> result = new List<Technical_Logs__c>();
 		Set<Id> accountIds = mapAccountIdToOscarId.keySet();
-		String queryStr = 'SELECT BillingAddress, ShippingAddress';
 
 		List<Schema.FieldSetMember> fields = SObjectType.Account.FieldSets.AMS_Oscar_Savepoint_fields.getFields();
+		List<String> fieldsStr = new List<String>();
 		for(Schema.FieldSetMember f : fields) {
-			queryStr += ', ' + f.getFieldPath();
+			fieldsStr.add(f.getFieldPath());
 		}
 
-		queryStr += ' FROM Account WHERE Id IN :accountIds';
+		String queryStr =  'SELECT ' + String.join(fieldsStr, ', ') + ' FROM Account WHERE Id IN :accountIds';
 
 		List<Account> accounts = Database.query(queryStr);
 
