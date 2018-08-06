@@ -3832,8 +3832,10 @@ public class AMS_OSCARTriggerHandler {
             for(AMS_OSCAR__C oscar: oscarsToInsertList)
                 oscarIds.add(oscar.Id);
 
+            Map<Id,Id> oscarCaseMap = new Map<Id,Id>(); 
             for(Case c : [Select Id, OSCAR__C from Case where OSCAR__c in:oscarIds AND RecordType.Name = 'OSCAR Communication' and Origin = 'Portal']){
                 oscarsFromPortal.add(c.OSCAR__C);
+                oscarCaseMap.put(c.OSCAR__C, c.id);
             }
         
         }
@@ -3858,7 +3860,7 @@ public class AMS_OSCARTriggerHandler {
 
                 // NEWGEN-2932
                 if(oscarsFromPortal.contains(oscar.Id))
-                    AMS_OSCARTriggerHandler.sendEmailAlert(oscar.Id, oscar.Oscar_Communication_Case_Id__c, oscar.Process__c, AMS_Utils.PASSED, false);
+                    AMS_OSCARTriggerHandler.sendEmailAlert(oscar.Id, oscarCaseMap.get(oscar.id), oscar.Process__c, AMS_Utils.PASSED, false);
             
                 for(Id accId: oscarAccountsMap.get(oscar.Id)){
 
