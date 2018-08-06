@@ -469,7 +469,6 @@ public without sharing class IECApplicationsManager {
      * @param sStatusOfSearch Success or Fail (use IECConstants.IECUsageTrackerSearchStatus_Fail or IECConstants.IECUsageTrackerSearchStatus_Success)
      */          
     private static void trackAndConsumeUsage(IECCustomer oCustomer, String sProductCategoryCode, String sSearchTarget, String sStatusOfSearch) {
-        system.debug('angielaz: ' + oCustomer);
         trackAndConsumeUsage(oCustomer.RelatedContact.Id,  sProductCategoryCode,  sSearchTarget,  sStatusOfSearch);
     }
     

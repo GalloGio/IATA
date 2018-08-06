@@ -33,15 +33,8 @@ public with sharing class trgHndlrIECSubscriptionProductCharge {
                 AND zqu__ProductRatePlan__r.Name IN :setRatePlanName])
         {
 
-            System.debug('angielaz, ratePlanCharge: ' + ratePlanCharge);
-
-            System.debug('angielaz, ratePlanCharge.zqu__ProductRatePlan__r.zqu__Product__c: ' + ratePlanCharge.zqu__ProductRatePlan__r.zqu__Product__r);
-            System.debug('angielaz, ratePlanCharge.zqu__ProductRatePlan__r.zqu__Product__r.zqu__SKU2__c: ' + ratePlanCharge.zqu__ProductRatePlan__r.zqu__Product__r.zqu__SKU2__c);
-
             string key = ratePlanCharge.Name + '|' + ratePlanCharge.zqu__ProductRatePlan__r.Name + '|' + ratePlanCharge.zqu__ProductRatePlan__r.zqu__Product__r.Name + '|' + ratePlanCharge.zqu__ProductRatePlan__r.zqu__Product__r.zqu__SKU2__c;
             
-            System.debug('angielaz, key: ' + key);
-
             if(!mapRatePlanCharge.containsKey(key))
                 mapRatePlanCharge.put(key, ratePlanCharge);
         }
@@ -52,10 +45,6 @@ public with sharing class trgHndlrIECSubscriptionProductCharge {
         // Match the rateplan & product name against what is in salesforce to populate the "Product Rate Plan" & "Product Rate Plan Charge" fields
         for (Zuora__SubscriptionProductCharge__c charge : lstCharges) {
             string key = charge.Name + '|' + charge.Zuora__RatePlanName__c + '|' + charge.Zuora__ProductName__c + '|' + charge.Zuora__ProductSKU__c;
-
-            System.debug('angielaz, charge: ' + charge);
-
-            System.debug('angielaz, another key: ' + key);
 
             if (mapRatePlanCharge.containsKey(key)) {
                 zqu__ProductRatePlanCharge__c ratePlanCharge = mapRatePlanCharge.get(key);
@@ -69,8 +58,6 @@ public with sharing class trgHndlrIECSubscriptionProductCharge {
             }
         }
         
-        System.debug('angielaz, mapParentSubscription_to_RatePlanId.keySet(): ' + mapParentSubscription_to_RatePlanId.keySet());
-
         // Retrieve parent Subscription
         Map<Id, Zuora__Subscription__c> mapSubscription = new Map<Id, Zuora__Subscription__c> (
                 [SELECT Id, Product_Rate_Plan_Information__c

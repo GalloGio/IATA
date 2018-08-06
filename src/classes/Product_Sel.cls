@@ -669,13 +669,6 @@ public class Product_Sel extends Selector
 
                 PriceDetail_DTO priceDetail = priceByRatePlan.get(zTier.ZRatePlan_ZuoraId__c);
 
-               /* if(zTier.ZCharge_Model__c.contains(ZuoraUtil.ZCHARGE_MODEL_FLAT_FEE) && price.setupFee == null)
-                {
-                    price.setupFee = zTier.zqu__Price__c;
-                    price.setupFeePlanId = zTier.ZRatePlan_ZuoraId__c;
-                    price.setupFeeChargeId = zTier.ZCharge_ZuoraId__c;
-                }*/ 
-
                 //-- Set Standard Prices
                 if(ProductRatePlanChargeTier_Sel.isStandardPrice(zTier))
                 {
@@ -716,7 +709,6 @@ public class Product_Sel extends Selector
                     price.countryPrice.add(priceDetail);
                 }
                 //-- Coupon Code Prices
-                //else if(String.isNotBlank(zTier.ZRatePlan_CouponCode__c) && showAll==true)
                 else if(String.isNotBlank(zTier.ZRatePlan_CouponCode__c))
                 {
                     if(price.couponPrice == null)
@@ -863,7 +855,11 @@ public class Product_Sel extends Selector
             {
                 mapProductNumber_Price.put(p.SAP_Material_Number__c, null);
             }
-        }            
+        }   
+
+
+        System.debug('angielaz, Product_Sel-->mapProductNumber_Price.keySet(): ' + mapProductNumber_Price.keySet());
+        System.debug('angielaz, Product_Sel-->customerType: ' + customerType);         
 
         mapProductNumber_Price = exe.getProductPriceInfo(mapProductNumber_Price.keySet(), customerType, null, null, true);
 

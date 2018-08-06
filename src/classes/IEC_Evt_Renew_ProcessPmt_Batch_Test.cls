@@ -160,6 +160,8 @@ private class IEC_Evt_Renew_ProcessPmt_Batch_Test {
     	
     	InitializeData();
 
+    	System.debug('angielaz, oEventRelease: ' + oEventRelease);
+
 		Test.startTest();
 		IEC_Evt_Renew_ProcessPmt_Batch batch = new IEC_Evt_Renew_ProcessPmt_Batch(oEventRelease.Id);
 		Database.ExecuteBatch(batch,7);

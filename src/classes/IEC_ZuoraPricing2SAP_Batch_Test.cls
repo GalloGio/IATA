@@ -59,8 +59,6 @@ private class IEC_ZuoraPricing2SAP_Batch_Test
 
             Map<Id, Product2> mapProductId_Product = new IEC_ZuoraPricing2SAP_Svc().getTrackingProduct2();
 
-            System.debug('angielaz-->IEC_ZuoraPricing2SAP_Batch_Test-->mapProductId_Product: ' + mapProductId_Product);
-
             List<zqu__ProductRatePlanChargeTier__c> prpctList = [select Id, CurrencyIsoCode, IsDeleted
                       , LastModifiedDate
                       , zqu__Deleted__c
@@ -99,11 +97,7 @@ private class IEC_ZuoraPricing2SAP_Batch_Test
                              , zqu__Tier__c
                       ALL ROWS*/];
 
-            System.debug('angielaz-->IEC_ZuoraPricing2SAP_Batch_Test-->prpctList: ' + prpctList);
-            
             List<zqu__ProductRatePlan__c> prpList = [select Id, Name, zqu__Product__c, zqu__ZuoraId__c from zqu__ProductRatePlan__c];
-
-            System.debug('angielaz-->IEC_ZuoraPricing2SAP_Batch_Test-->prpList: ' + prpList);
 
             Database.executeBatch(new IEC_ZuoraPricing2SAP_Batch(IEC_ZuoraPricing2SAP_Batch.processingStep1), 2000);
             Database.executeBatch(new IEC_ZuoraPricing2SAP_Batch('error'), 2000);

@@ -50,6 +50,8 @@ public class IEC_EventRelease_Svc
                 }
         }
 
+        System.debug('angielaz, IEC_EventRelease_Svc-->productIds4PriceCheck: ' + productIds4PriceCheck);
+
         //-- 3. Validate Products has price
         List<EComProduct_DTO> ecomProducts = Product_Sel.getEComProduct(new List<Id>(productIds4PriceCheck), false,null, null);
          System.debug('ecomProducts::'+ecomProducts);
@@ -60,9 +62,14 @@ public class IEC_EventRelease_Svc
                 unitPriceByProductId.put(prod.ProductId, prod.UnitPrice);
         
         
+        System.debug('angielaz, IEC_EventRelease_Svc-->unitPriceByProductId: ' + unitPriceByProductId);
+
         for(IEC_Event_Release__c release : releases)
         {
             if (!setEventToSkip.contains(release.Id))
+
+                System.debug('angielaz, IEC_EventRelease_Svc-->release: ' + release);
+
                 if(!unitPriceByProductId.containsKey(release.Last_Version__c) && !unitPriceByProductId.containsKey(release.Swapped_Product__c))
                 {
                     String msg = (release.Swapped_Product__c != null)

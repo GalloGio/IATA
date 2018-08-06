@@ -296,12 +296,6 @@ private class IEC_ZuoraPricing2SAP_Svc_Test
         svc.trackPricing(mapZId_Tier.values(), mapZProductId_Product);
         Map<String, IEC_ZuoraPricing2SAP_Tracking__c> mapKey_Tracking = getTracking();
 
-        System.debug('angielaz, testTrackPricing-->mapZProductId_Product: ' + mapZProductId_Product);
-        System.debug('angielaz, testTrackPricing-->mapKey_Tracking: ' + mapKey_Tracking);
-        System.debug('angielaz, testTrackPricing-->mapZId_Tier: ' + mapZId_Tier);
-        System.debug('angielaz, testTrackPricing-->svc.sapPrice: ' + svc.sapPrice);
-
-
         for (String key : mapKey_Tracking.keySet())
             system.assertEquals(mapKey_Tracking.get(key).Operation__c, svc.sapOperation.get(IEC_ZuoraPricing2SAP_Svc.sapOT.INS), 'Should have operation INSERT');
         system.assertEquals(mapKey_Tracking.containsKey(svc.buildTrackingKey(mapZId_Tier.get('p1r1c1t1'))), false, 'Should not found deleted product');

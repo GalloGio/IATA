@@ -920,6 +920,7 @@ public with sharing class TestDataGenerator
 
             String productCode = generateProductCode();
             String activityCode = productCode.split('-')[0];
+            String sku = generateProductCode();
             products.add(new Product2(
                 Name                            = 'Product '+i,
                 Short_Title__c                  = 'P '+i,
@@ -947,7 +948,8 @@ public with sharing class TestDataGenerator
                 Status__c                       = Utility.getRandomPicklistValue('Product2','Status__c'),
                 Sales_Notification__c           = true,
                 Accepted_Payment_Methods__c     = 'Bank Transfer; Credit Card; IATA Clearing House',
-                zqu__SKU2__c                    = generateProductCode(),
+                zqu__SKU2__c                    = sku,
+                zqu__SKU__c                     = sku,
                 zqu__EffectiveStartDate__c      = DEFAULT_EFFECTIVE_START_DATE,
                 zqu__EffectiveEndDate__c        = DEFAULT_EFFECTIVE_END_DATE,
                 zqu__Deleted__c                 = false,
@@ -971,6 +973,7 @@ public with sharing class TestDataGenerator
         {
             String productCode = generateProductCode(); 
             String activityCode = productCode.split('-')[0];
+            String sku = generateProductCode();
             products.add(new Product2(
                 Name                            = 'Product '+i,
                 Short_Title__c                  = 'P '+i,
@@ -998,7 +1001,8 @@ public with sharing class TestDataGenerator
                 Status__c                       = Utility.getRandomPicklistValue('Product2','Status__c'),
                 Sales_Notification__c           = true,
                 Accepted_Payment_Methods__c     = 'Bank Transfer; Credit Card; IATA Clearing House',
-                zqu__SKU2__c                    = generateProductCode(),
+                zqu__SKU2__c                    = sku,
+                zqu__SKU__c                     = sku,
                 zqu__EffectiveStartDate__c      = DEFAULT_EFFECTIVE_START_DATE,
                 zqu__EffectiveEndDate__c        = DEFAULT_EFFECTIVE_END_DATE,
                 zqu__Deleted__c                 = false,

@@ -125,8 +125,6 @@ public class AuthorizedFormsOfPaymentTriggerTest {
 
 		List<GDP_Products_Account_View__c> gdpProdAccViewList = [Select Id from GDP_Products_Account_View__c limit 1];
 
-		System.debug('angielaz, teste before delete--> gdpProdAccViewList.get(0): ' + gdpProdAccViewList.get(0));
-
 		List<Authorized_Forms_Of_Payment__c> fopListBeforeUpdate = [Select Status_Code__c, Form_of_Payment_Code__c from Authorized_Forms_Of_Payment__c 
 														where Related_GDP_Products_Account_View__c = :gdpProdAccViewList.get(0).Id 
 														and Form_of_Payment_Code__c = :AMS_Utils.CC];
@@ -135,8 +133,6 @@ public class AuthorizedFormsOfPaymentTriggerTest {
 
 		List<GDP_Products_Account_View__c> gdpProdAccViewListAfterDelete = [Select Id, CA_FoP_Status__c, CC_FoP_Status__c, EP_FoP_Status__c from GDP_Products_Account_View__c limit 1];
 		
-		System.debug('angielaz, teste after delete--> gdpProdAccViewListAfterDelete.get(0): ' + gdpProdAccViewListAfterDelete.get(0));
-
 		System.assertEquals(null, gdpProdAccViewListAfterDelete.get(0).CC_FoP_Status__c);
 
 
