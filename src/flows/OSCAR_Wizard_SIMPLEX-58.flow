@@ -2022,11 +2022,10 @@ IF( ({!Type_of_OSCAR_process_man} = {!NewProcessGSSAValue} &amp;&amp;  {!Account
 IF( ({!Type_of_OSCAR_process_man} = {!NewProcessMSOValue} &amp;&amp;  {!AccountLocationClass}  != &apos;M&apos; ) , &apos;NOK&apos; , 
 IF( ({!Type_of_OSCAR_process_man} = {!NewProcessTIDSValue} &amp;&amp;  {!AccountLocationClass}  != &apos;T&apos; ) , &apos;NOK&apos; , 
 IF( ({!Type_of_OSCAR_process_man} = {!NewProcessAHAValue} &amp;&amp;  {!AccountLocationClass}  != &apos;X&apos; ), &apos;NOK&apos; , 
-IF( ({!Type_of_OSCAR_process_man} = {!Agency_ChangesValue} &amp;&amp;  {!AccountLocationClass}  == &apos;I&apos; ), &apos;NOK&apos; ,
 IF( ({!Type_of_OSCAR_process_man} = {!VoluntaryRelinquishmentValue} &amp;&amp; {!VRProcess} = {!VR_Passenger_Cargo}  &amp;&amp;  NOT(OR({!AccountLocationClass}  == &apos;C&apos;, {!AccountLocationClass}  == &apos;P&apos;, {!AccountLocationClass}  == &apos;D&apos;, {!AccountLocationClass}  == &apos;R&apos;, {!AccountLocationClass}  == &apos;I&apos;, {!AccountLocationClass}  == &apos;Q&apos; )) ), &apos;NOK&apos; , 
 IF( ({!Type_of_OSCAR_process_man} = {!VoluntaryRelinquishmentValue} &amp;&amp; {!VRProcess} = {!VR_Code_Assignment}  &amp;&amp;  NOT(OR({!AccountLocationClass}  == &apos;G&apos;, {!AccountLocationClass}  == &apos;M&apos;, {!AccountLocationClass}  == &apos;X&apos;, {!AccountLocationClass}  == &apos;T&apos; )) ), &apos;NOK&apos; , 
 IF( ({!Type_of_OSCAR_process_man} = {!NewProcessCertificateValue} &amp;&amp;  NOT(OR({!AccountLocationClass}  == &apos;C&apos;, {!AccountLocationClass}  == &apos;P&apos; )) ), &apos;NOK&apos; , 
-&apos;OK&apos; )))))))))</expression>
+&apos;OK&apos; ))))))))</expression>
     </formulas>
     <formulas>
         <name>NewProcessHoFormula</name>
