@@ -523,7 +523,7 @@ public without sharing class ISSP_TIP_Home_Controller {
     				   where Id = :TheUser.Contact.AccountID limit 1];
     	
     	if(acc!= null){
-    		if(Acc.Account_Roles__r.isEmpty()){
+    		if(Acc.Account_Roles__r.isEmpty()) {
     			try{
     				Account_Role__c accrole = new Account_Role__c(Account__c = acc.Id, RecordTypeId = TIP_Utils.ACCOUNT_ROLE_PAYMENT_PROVIDER_RECORDTYPE_ID);
     				insert accrole;
@@ -626,7 +626,7 @@ public without sharing class ISSP_TIP_Home_Controller {
 	        theContactRole.Contact__c = theCon.Id;
 	        theContactRole.Account_Role__c = TheAccountRole.Id;
 	        theContactRole.Service_Rendered__c = TIP_Utils.ACCOUNT_CONTACT_ROLE_SERVICE_TIP;
-	        theContactRole.UniqueKey__c = TIP_Utils.ACCOUNT_CONTACT_ROLE_SERVICE_TIP + '_' + theContactRole.Account_Role__c + '_' + theContactRole.Contact__c;
+	        theContactRole.UniqueKey__c = TIP_Utils.AccountContactRoleGenerateUniquekey(theContactRole);
 	        if(bIsPrimary){
 	        	theContactRole.Contact_Role__c = '';
 	        }
@@ -664,7 +664,11 @@ public without sharing class ISSP_TIP_Home_Controller {
         applyLanguage = UserInfo.getLanguage();
         displayLanguage = UserInfo.getLanguage(); 
 
-        newpp= new Partner_products__c(PP_Payment_Product_Network_type__c=TIP_Utils.PARTNER_PRODUCT_NETWORK_TYPE_OPEN_LOOP);
+        //ACAMBAS - TIP-249 -----------------------
+        //newpp= new Partner_products__c(PP_Payment_Product_Network_type__c=TIP_Utils.PARTNER_PRODUCT_NETWORK_TYPE_OPEN_LOOP);
+        newpp= new Partner_products__c();
+        //-----------------------------------------
+        
         binRangeList= new list<BinRangeRec>();
         deletedBinRangeList= new list<TIP_BIN_Range__c>();
 
@@ -868,12 +872,14 @@ public without sharing class ISSP_TIP_Home_Controller {
             
             } 
 
-            if(binRangeList.isEmpty()){
+            //ACAMBAS - TIP-249 - Start
+            /*if(binRangeList.isEmpty()){
 
                  ApexPages.addmessage(new ApexPages.message(ApexPages.severity.ERROR,Label.ISSP_TIP_INSERT_BIN_RANGE));
                  return null;
              
-             } 
+            } */
+            //ACAMBAS - TIP-249 - End
 
 
             // Check Bin Range Sizes

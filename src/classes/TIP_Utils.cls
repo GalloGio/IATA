@@ -187,7 +187,7 @@ public class TIP_Utils{
 		
 		for(Account_Role__c acr:trigNew){
 			if(acr.recordtypeid == TIP_UTILS.ACCOUNT_ROLE_PAYMENT_PROVIDER_RECORDTYPE_ID)
-				if(trigOld==null || (acr.Account__c != trigOld.get(acr.Account__c).Account__c))
+				if(trigOld == null || (trigOld != null && acr.Account__c != trigOld.get(acr.Id).Account__c))
 					mapAccountRole.put(acr.Account__c, acr.Id);
 		}
 		
@@ -199,5 +199,9 @@ public class TIP_Utils{
 		}
 		
 		if(!prodToUpdate.isEmpty())	update prodToUpdate;
+	}
+	
+	public static string AccountContactRoleGenerateUniquekey(Account_Contact_Role__c theContactRole){
+		return TIP_Utils.ACCOUNT_CONTACT_ROLE_SERVICE_TIP + '_' + string.ValueOf(theContactRole.Account_Role__c).left(15) + '_' + string.ValueOf(theContactRole.Contact__c).left(15);
 	}
 }
