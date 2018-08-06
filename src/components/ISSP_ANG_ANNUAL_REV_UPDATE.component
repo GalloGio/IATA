@@ -564,6 +564,15 @@
                 </apex:pageBlockTable>
 
                 <apex:outputPanel id="newOwnerQuestions" rendered="{!ca.fw.currentCompanies.size > 0}">
+                <script type="text/javascript">
+                    $('[id$="firstYearQ"]').text(function () {
+                        return $(this).text().replace("*", ""); 
+                    });
+
+                    $('[id$="secondYearQ"]').text(function () {
+                        return $(this).text().replace("*", ""); 
+                    });
+                </script>
                     <div class="bg-warning col-md-12" style="margin-top:15px;"><strong>{!$Label.ISSP_AMS_NoC_Non_IATA_Owner_Title}</strong></div>
                     <div class="col-md-12">
                         <apex:outputText value="{!$Label.ISSP_AMS_NoC_Non_IATA_Owner_Estimates}" escape="false"/>
@@ -726,14 +735,6 @@
             if('{!ca.isReadonly}' == 'true') {
                 setReadonly();
             }
-
-            $('[id$="firstYearQ"]').text(function () {
-                return $(this).text().replace("*", ""); 
-            });
-
-            $('[id$="secondYearQ"]').text(function () {
-                return $(this).text().replace("*", ""); 
-            });
         });
 
         function showForms() {
