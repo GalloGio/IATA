@@ -193,7 +193,7 @@ public with sharing class IEC_SearchResultsController extends IEC_PageController
                 fw2.field = field.getFieldPath();
                 fw2.type_x = field.getType().name();
                 
-                fw.label  = 'Print & CDs Availability';
+                fw.label  = 'Print & CDs';
                 fw2.label = 'Digital';
 
                 fw.values = new List<SelectOption>(); 

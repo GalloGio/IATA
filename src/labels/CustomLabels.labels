@@ -2444,7 +2444,7 @@ Payment required on receipt of this Payment Advice
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>Button Pre Order</shortDescription>
-        <value>Available to Pre-order</value>
+        <value>Pre-order</value>
     </labels>
     <labels>
         <fullName>Button_Previous</fullName>
@@ -27337,7 +27337,7 @@ Also, the package has changed the setting to prevent the creation of Contacts an
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>PreOrderAddToCart</shortDescription>
-        <value>Available to Pre-order</value>
+        <value>Pre-order</value>
     </labels>
     <labels>
         <fullName>Pricing_model_Charges</fullName>
