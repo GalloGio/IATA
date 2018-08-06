@@ -971,11 +971,9 @@
                                 <apex:inputField value="{!currentAccount.newContact.IATACode__c}" onblur="fetchTravelAgent3(this.value.trim())"/>
 
                                 <apex:actionStatus id="loadingDetailsCompanyModal" startStyleClass="bg-info">
-                                <!--
-                                    <apex:facet name="start" >
+                                    <apex:facet name="start">
                                         {!$Label.ISSP_Loading_Travel_Agency_Details}
                                     </apex:facet>
-                                    -->
                                 </apex:actionStatus>
 
                                 <apex:outputPanel id="companyModalIataCodeValidation">

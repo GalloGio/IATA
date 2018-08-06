@@ -1829,7 +1829,7 @@ Please &lt;a href=&quot;/ISSP_FAQ2Case?MainNav=Queries&amp;subNav=MyQueries&amp;
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>ANG ISSP RHC Information</shortDescription>
-        <value>RHC Information</value>
+        <value>Risk Profile and RHC</value>
     </labels>
     <labels>
         <fullName>ANG_ISSP_RHC_Request_Balance_Update</fullName>

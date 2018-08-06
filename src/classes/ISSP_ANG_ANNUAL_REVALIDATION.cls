@@ -1940,7 +1940,7 @@ public class ISSP_ANG_ANNUAL_REVALIDATION {
         companyModalAddress = '';
         companyModalNameOfEmployer = '';
 
-        if (iatacode == null)
+        if (iatacode == null || iatacode.length() < 7)
             return null;
 
         //Limit how many calls can be made to this service, to prevent a user from attempting to retrieve full list of agents
