@@ -227,22 +227,33 @@ public with sharing class OperationalCalendarHandler {
         inserted by MuleSoft 
     **/
     private static void populateMissingFields(list<Operational_Calendar__c> listOperations) {
-        list<String> listISSOperationNames = new list<String>();
+        list<String> listCountryCodes = new list<String>();
         list<CalendarFields> listCalendarFields = new list<CalendarFields>();
         for (Operational_Calendar__c operation: listOperations) {
             CalendarFields calendarFields = new CalendarFields(operation);
             listCalendarFields.add(calendarFields);
-            listISSOperationNames.add(calendarFields.ISSOperationName);
+            listCountryCodes.add(calendarFields.country);
         }
-        map<String,Id> mapISSoperations = new map<String,Id>();
-        for (AMS_Settlement_System__c ISSOperation: [SELECT Id,Name FROM AMS_Settlement_System__c WHERE Name IN :listISSOperationNames]) {
-            mapISSoperations.put(ISSOperation.Name, ISSOperation.Id);
+        map<String,IATA_ISO_Country__c> mapISSoperations = new map<String,IATA_ISO_Country__c>();
+        for (IATA_ISO_Country__c country:
+                [SELECT Id, ISO_Code__c, AMS_Settlement_System__c, AMS_Settlement_System_CASS__c
+                FROM IATA_ISO_Country__c
+                WHERE ISO_Code__c IN :listCountryCodes]) {
+            mapISSoperations.put( country.ISO_Code__c, country);
         }
         
         //populate Calendar fields from class CalendarFields
         for (CalendarFields calendarFields: listCalendarFields) {
-            Id ISSoperationId = mapISSoperations.get(calendarFields.issOperationName);
-            calendarFields.setISSOperation(ISSoperationId);
+            IATA_ISO_Country__c countryObject = mapISSoperations.get(calendarFields.country);
+            // set the ISS operation
+            if (countryObject!=null) {
+                if (calendarFields.bspCass == 'BSP') {
+                    calendarFields.setISSOperation(countryObject.AMS_Settlement_System__c);
+                }
+                if (calendarFields.bspCass == 'CASS') {
+                    calendarFields.setISSOperation(countryObject.AMS_Settlement_System_CASS__c);
+                }
+            }
             calendarFields.setCurrency();
             calendarFields.setFrequency();
             calendarFields.setOperationType();

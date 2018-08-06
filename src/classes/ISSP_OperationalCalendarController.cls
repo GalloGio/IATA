@@ -131,6 +131,14 @@ global without sharing class ISSP_OperationalCalendarController {
         }
     }
     
+    public Set<Id> getSetIds(list<sObject> listObject) {
+        try {
+            return (new Map<Id,SObject>(listObject)).keySet();
+        } catch(Exception e) {
+            return new set<Id>();
+        }
+    }
+    
     /**
         Initial values for picklists used in filter section
         this section is only visilbe for airline users
@@ -149,17 +157,17 @@ global without sharing class ISSP_OperationalCalendarController {
         
         set<Id> setCountryId = new set<Id>();
         for (AMS_Settlement_System__c op: listOp ) {
-            Id BSPCountryId = op.IATA_ISO_Countries__r.isEmpty()? null: op.IATA_ISO_Countries__r[0].Id;
-            Id CASSCountryId = op.CASS_COUNTRIES__r.isEmpty()? null: op.CASS_COUNTRIES__r[0].Id;
+            Set<Id> listBSPCountries = getSetIds(op.IATA_ISO_Countries__r);
+            Set<Id> listCASSCountries = getSetIds(op.IATA_ISO_Countries__r);
             for (Operational_Calendar__c operation: op.Operational_Calendars__r ) {
-                Id countryId = null;
+                list<Id> listCountryId = new list<Id>();
                 if (operation.Operation_Type__c.contains('BSP')) {
-                    countryId = BSPCountryId;
+                    listCountryId.addAll(listBSPCountries);
                 }
                 if (operation.Operation_Type__c.contains('CASS')) {
-                    countryId = CASSCountryId;
+                    listCountryId.addAll(listCASSCountries);
                 }
-                if (countryId!=null) {
+                for (Id countryId: listCountryId) {
                     String str = countryId + ',' + operation.Operation_Type__c + ',' + operation.frequency_code__c + ',' + operation.Operation_Currency__c;
                     this.setFilter.add(str);
                     setCountryId.add(countryId);

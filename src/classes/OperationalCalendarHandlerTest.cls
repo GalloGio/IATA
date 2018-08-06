@@ -21,8 +21,15 @@ private class OperationalCalendarHandlerTest {
     
     @isTest
     private static void testBeforeInsertForBSP() {
-        AMS_Settlement_System__c issOperation = new AMS_Settlement_System__c(Name = 'BSP-SP');
+        AMS_Settlement_System__c issOperation = new AMS_Settlement_System__c(Name = 'BSP-AD');
         insert issOperation;
+        
+        IATA_ISO_Country__c country = new IATA_ISO_Country__c(
+            Name='Spain',
+            ISO_Code__c = 'SP',
+            AMS_Settlement_System__c = issOperation.Id
+        );
+        insert country;
         
         Test.StartTest();
         Operational_Calendar__c operation = new Operational_Calendar__c(
@@ -47,8 +54,15 @@ private class OperationalCalendarHandlerTest {
     
     @isTest
     private static void testBeforeInsertForCASS() {
-        AMS_Settlement_System__c issOperation = new AMS_Settlement_System__c(Name = 'CASS-SP');
+        AMS_Settlement_System__c issOperation = new AMS_Settlement_System__c(Name = 'CASS-AD');
         insert issOperation;
+        
+        IATA_ISO_Country__c country = new IATA_ISO_Country__c(
+            Name='Spain',
+            ISO_Code__c = 'SP',
+            AMS_Settlement_System_CASS__c = issOperation.Id
+        );
+        insert country;
         
         Test.StartTest();
         Operational_Calendar__c operation = new Operational_Calendar__c(
@@ -75,8 +89,15 @@ private class OperationalCalendarHandlerTest {
     private static void testCreateNotificationtToAgencyCASSUser() {
         insert new Notification_template__c(Subject__c = 'Remittance change in Operational Calendar');
         
-        AMS_Settlement_System__c issOperation = new AMS_Settlement_System__c(Name = 'CASS-SP');
+        AMS_Settlement_System__c issOperation = new AMS_Settlement_System__c(Name = 'CASS-AN');
         insert issOperation;
+        
+        IATA_ISO_Country__c country = new IATA_ISO_Country__c(
+            Name='Spain',
+            ISO_Code__c = 'SP',
+            AMS_Settlement_System_CASS__c = issOperation.Id
+        );
+        insert country;
         
         // use a CASS location class
         String locationClass = 'C'; //CASS Export
@@ -90,13 +111,6 @@ private class OperationalCalendarHandlerTest {
             Operation_Type__c = ISSP_OperationalCalendarController.MAP_OPERATION_TYPES.get(locationClass)
         );
         insert operation;
-        
-        IATA_ISO_Country__c country = new IATA_ISO_Country__c(
-            Name='Spain',
-            ISO_Code__c = 'SP',
-            AMS_Settlement_System_CASS__c = issOperation.Id
-        );
-        insert country;
         
         Account account = new Account(
             Name = 'Test Account',
