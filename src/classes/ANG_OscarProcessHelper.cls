@@ -1412,7 +1412,7 @@ global class ANG_OscarProcessHelper {
 			nt.Message__c = nt.Message__c
 				.replace('#CONTACTNAME', contactsMap.get(nt.Contact__c).Name)
 				.replace('#IATACODE', acct.IataCode__c)
-				.replace('#TODAY30',String.valueOf(Datetime.now().addDays(30).format('dd/MM/yyyy')))
+				.replace('#TODAY30',String.valueOf(Datetime.now().addDays(30).format('dd MMMM yyyy')))
 				.replace('#CASENUMBER',acctIdCasesMap.get(contactAccts.get(nt.Contact__c)).CaseNumber);
 				
 				notifications.add(nt);
@@ -1537,7 +1537,7 @@ global class ANG_OscarProcessHelper {
 			nt.Message__c = nt.Message__c
 				.replace('#CONTACTNAME#',contacts.get(nt.Contact__c).Name)
 				.replace('#IATACODE#',contacts.get(nt.Contact__c).Account.IataCode__c)
-				.replace('#DEADLINEDATE#',String.valueOf(Datetime.now().addDays(15).format('dd/MM/yyyy')));
+				.replace('#DEADLINEDATE#',String.valueOf(Datetime.now().addDays(15).format('dd MMMM a')));
 		}
 
 		if (!notifications.isEmpty())
