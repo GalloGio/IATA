@@ -6,7 +6,7 @@ public without sharing class Account_Dom {
 	    //*** instantiate the domain class to prevent too many static methods
 	    Account_Dom exe = new Account_Dom();
 	    
-	    //*** call handler method corresponding to trigger event
+	    //*** call handler method corresponding to trigger event gdd
 	    if (trigger.isAfter)
 	    {
 	        if (trigger.isUpdate) exe.onAfterUpdate();
