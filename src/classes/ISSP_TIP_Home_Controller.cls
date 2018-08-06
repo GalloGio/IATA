@@ -14,6 +14,7 @@ public without sharing class ISSP_TIP_Home_Controller {
     public String communityName{ get{ return ApexPages.currentPage().getParameters().get('CommunityName'); }set;}
     public List<productWrapper> products {get ;set;}
     public boolean editMode{get;set;}
+    public boolean activeProduct{get;set;} //ACAMBAS - TIP-244
     public String binRangeChangeRequestText{get;Set;}
 
     //enrolment page
@@ -26,12 +27,15 @@ public without sharing class ISSP_TIP_Home_Controller {
 
     public User user {get; set;}
 
-    public Account account {get; set;}
+    public Account account {get; set;}   
     public Partner_products__c newpp {get; set;}
     private Case newCase {get; set;}
     public boolean isNew {get; set;}
     public list<BinRangeRec> binRangeList{get; set;}
     public BinRangeRec selectedBinRange{get;set;}
+    public String terminationReason {get; set;} //ACAMBAS - TIP-244
+    public String terminationDate {get; set;} //ACAMBAS - TIP-244
+    public Integer terminationMaxDays {get; set;} //ACAMBAS - TIP-244
 
     public String[] paymentGuaranteeVal{get;set;}
     public String[] acceptedTransactionVal{get;set;}
@@ -43,6 +47,7 @@ public without sharing class ISSP_TIP_Home_Controller {
     public list<ProvProdConfigRec> provProdConfList{get; set;}
     public ProvProdConfigRec selectedProvProdConf{get; set;}
     public boolean renderCountryCondifPopup{get;set;}
+    public boolean renderTerminateProdPopup{get;set;} //ACAMBAS - TIP-244
 
     public list<string> selectProvConfigCountriesList{get;set;}
     public set<string> filterCountryList{get;set;}// list of countries that will be removed from the multiSelect for adding new product country config  
@@ -679,7 +684,7 @@ public without sharing class ISSP_TIP_Home_Controller {
         String selectedProdId=System.currentPageReference().getParameters().get('prodId');
 
         if(!String.isBlank(selectedProdId)){
-            list<Partner_products__c> prodlist=[Select id,name,PP_Settlement_terms__c,PP_Issuer_name__c,is_PCI_DSS_required__c,PP_Chargeback_airlines__c,PP_Pay_in_model__c,PP_Category__c,PP_Banking_license__c,PP_Payment_Network__c,PP_GDS_Integration__c,PP_VAN_Type__c,PP_Interchange_fee__c,PP_Payment_guarantee__c,PP_Network_Fee__c,PP_Accepted_transactions__c,PP_Chargeback_airlines_duration__c,Provider__c,PP_status__c,PP_Payment_Product_Network_type__c,  
+            list<Partner_products__c> prodlist=[Select id,name,PP_Settlement_terms__c,PP_Issuer_name__c,is_PCI_DSS_required__c,PP_Chargeback_airlines__c,PP_Pay_in_model__c,PP_Category__c,PP_Banking_license__c,PP_Payment_Network__c,PP_GDS_Integration__c,PP_VAN_Type__c,PP_Interchange_fee__c,PP_Payment_guarantee__c,PP_Network_Fee__c,PP_Accepted_transactions__c,PP_Chargeback_airlines_duration__c,Provider__c,PP_status__c,PP_Payment_Product_Network_type__c,PP_Effective_to_Date__c, 
                                                     (select id,TIP_Range_Start__c,TIP_Range_End__c,ToLabel(TIP_Status__c) from BIN_Ranges__r),
                                                     (select id  from cases__r where RecordTypeId =: TIP_Utils.CASE_PROCESS_IDFS_RECORD_TYPE_ID AND
                                                         Reason1__c = :TIP_Utils.CASE_REASON_PRODUCT_MANAGEMENT AND
@@ -690,6 +695,7 @@ public without sharing class ISSP_TIP_Home_Controller {
                 isNew=false;
                 newpp= prodlist.get(0);
                 editMode=newpp.PP_status__c==TIP_Utils.PARTNER_PRODUCT_STATUS_DRAFT;
+                activeProduct=newpp.PP_status__c==TIP_Utils.PARTNER_PRODUCT_STATUS_ACTIVE; //ACAMBAS - TIP-244
                 integer pos=0;
                 if(!editMode) binRangeChangeRequestText = Label.ISSP_TIP_Submit_case_to_IATA_to_update_bin_range;
                 acceptedTransactionVal=String.isBlank(newpp.PP_Accepted_transactions__c)?null:newpp.PP_Accepted_transactions__c.split(';');
@@ -733,7 +739,8 @@ public without sharing class ISSP_TIP_Home_Controller {
             selectedBinRange= binRangeList.get(Integer.ValueOf(binRangeRecPos));
             selectedBinRange.action='M';            
         }
-        renderCountryCondifPopup=false;      
+        renderCountryCondifPopup=false; 
+        renderTerminateProdPopup=false; //ACAMBAS - TIP-244     
     }
 
     public void addUpdateBinRange(){
@@ -788,7 +795,8 @@ public without sharing class ISSP_TIP_Home_Controller {
             selectedProvProdConf.action='M';       
         }
         bspCountrList= refreshBspList();
-        renderCountryCondifPopup=true;  
+        renderCountryCondifPopup=true;
+        renderTerminateProdPopup=false; //ACAMBAS - TIP-244  
     }
 
     public void addUpdateCountryConfig(){
@@ -1046,4 +1054,50 @@ public without sharing class ISSP_TIP_Home_Controller {
         return pageref;
     }
 
+    // ACAMBAS - TIP-244 - Start -------------
+    //============================== TERMINATE PRODUT =============================
+
+    public void terminateProduct() {
+        renderTerminateProdPopup = true; 
+        renderCountryCondifPopup = false; 
+        terminationMaxDays = (Integer) TIP_Configuration__c.getOrgDefaults().Product_Termination_Max_Days__c; 
+    }
+
+    public Pagereference submitProductTerminationRequest() {
+
+        //Update or create case with status Open
+        updateCase();
+        newcase.Status = 'Open';
+        newcase.Subject = 'Product Termination Request - ' + account.name + ' / ' + newpp.name;
+        newcase.Description = terminationReason + ' - ' + terminationDate;
+        newcase.Reason1__c = TIP_Utils.CASE_REASON_PRODUCT_MANAGEMENT;
+        newcase.TIP_Partner_Product__c = newpp.Id;
+       
+        //assign to TIP HO queue
+        List<Group> groups =  [SELECT Id FROM Group WHERE Type = 'Queue' AND developerName = 'Cases_Transparency_in_Payment_Service' LIMIT 1];
+        
+        if(groups == null || groups.isEmpty()) {
+            System.debug('ERROR! Cases_Transparency_in_Payment_Service Queue not found proceeding without assign');
+        }
+        else {
+            newCase.OwnerId = groups[0].id;
+        }
+
+        //force case auto-response rules to fire
+        Database.DMLOptions dmo = new Database.DMLOptions();
+        dmo.EmailHeader.triggerAutoResponseEmail= true;
+        newCase.setOptions(dmo);
+
+        update newpp;
+        upsert newCase;
+
+
+        PageReference pr= Page.ISSP_TIP_Home;
+        pr.setRedirect(true);
+        return pr; 
+
+    }
+
+    // ACAMBAS - TIP-244 - End -----------------
+    
 }
