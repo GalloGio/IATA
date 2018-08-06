@@ -23,10 +23,6 @@ public class AccountRoleHandler {
     }
 
     public void updatePaymentProviderStatus() {
-        
-        //account_id / account role
-        Map<Id, Account_Role__c> ARsToProcess = new Map<Id, Account_Role__c>();
-
         for(Account_Role__c ar : triggerNew) {
            if(ar.RecordTypeId == TIP_UTils.ACCOUNT_ROLE_PAYMENT_PROVIDER_RECORDTYPE_ID) {
                 if(ar.Effective_From_Date__c != null) {
@@ -53,7 +49,9 @@ public class AccountRoleHandler {
         Map<Id, Account_Role__c> ARsToProcess = new Map<Id, Account_Role__c>();
         String action = 'Remove';
 
-        for(Account_Role__c ar : triggerNew) {
+        List<Account_Role__c> accRoleList = (trigger.isDelete) ? triggerOld : triggerNew;
+
+        for(Account_Role__c ar : accRoleList) {
             if(ar.RecordTypeId == TIP_UTils.ACCOUNT_ROLE_PAYMENT_PROVIDER_RECORDTYPE_ID) {
                 if(trigger.isUpdate) {
                     if(ar.Status__c == TIP_UTils.PARTNER_STATUS_ACTIVE) {
