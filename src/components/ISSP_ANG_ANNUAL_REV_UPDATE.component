@@ -802,10 +802,6 @@
                 </apex:outputPanel>
             </apex:pageblocksectionitem>
 
-            <apex:pageBlockSectionItem rendered="{!countryCheckList.License_required__c || countryCheckList.Registration_required__c}">
-                <apex:outputLabel value="{!$Label.ISSP_AMS_NoC_Provide_Registeration_Or_License}"/>
-            </apex:pageBlockSectionItem>
-
             <apex:outputPanel layout="block">
                 <apex:pageBlockSectionItem >
                     <apex:pageBlockSection columns="1">
