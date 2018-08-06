@@ -60,8 +60,21 @@
 							rendered="{!NOT(ISBLANK(operation))}"/>
 					</apex:pageBlockSectionItem>
 
+                    <apex:pageBlockSectionItem id="locationClasses" rendered="{!operation == 'PCI'}">
+                      <c:MultiselectPicklist 
+							leftLabel="Available Classes" 
+                            leftOptions="{!availableClasses}"
+                            rightLabel="Selected Classes"
+                            rightOptions="{!selectedClasses}"
+                            size="3"
+                            width="100px"
+                            btn_up_down="false"
+                            readonly="false"
+                            rendered="{!NOT(ISBLANK(operation))}"/>
+                    </apex:pageBlockSectionItem>
+
 					<apex:pageBlockSectionItem id="locationTypes">
-						<c:MultiselectPicklist 
+                        <c:MultiselectPicklist 
 							leftLabel="Available Locations" 
 							leftOptions="{!availableLocations}"
 							rightLabel="Selected Locations"

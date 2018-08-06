@@ -137,7 +137,7 @@
         </layoutColumns>
         <layoutColumns>
             <layoutItems>
-                <behavior>Readonly</behavior>
+                <behavior>Edit</behavior>
                 <field>Eligibility_Documents_Checklist_approved__c</field>
             </layoutItems>
         </layoutColumns>
