@@ -78,6 +78,27 @@ public with sharing class AMS_PCI_Compliant_Mass_OSCAR_CreationCtr{
         set;
     }
 
+    /*** AMSU-157 ***/
+    public List<SelectOption> selectedClasses {
+        get{
+            if(selectedClasses == null) selectedClasses = new List<SelectOption>();
+            return selectedClasses;
+        }
+        set;
+    }
+
+    public List<SelectOption> availableClasses {
+        get{
+            if(availableClasses == null){
+                availableClasses = new List<SelectOption>();
+                availableClasses.add(new SelectOption('P', 'P'));
+                availableClasses.add(new SelectOption('D', 'D'));
+            }
+            return availableClasses;
+        }
+        set;
+    }
+
     public List<CountrySummary> summary {
         get{
             return summaryMap.values();
@@ -143,6 +164,8 @@ public with sharing class AMS_PCI_Compliant_Mass_OSCAR_CreationCtr{
         selectedLocations = null;
         availableCountries = null;
         selectedCountries = null;
+        availableClasses = null;
+        selectedClasses = null;
         summaryMap = null;
         accountIds = null;
     }
@@ -153,6 +176,10 @@ public with sharing class AMS_PCI_Compliant_Mass_OSCAR_CreationCtr{
         //input validations
         if(selectedCountries.isEmpty()) ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.WARNING,'Select a Country'));
         if(selectedLocations.isEmpty()) ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.WARNING,'Select a Location'));
+        /*** AMSU-157 ***/
+        if(operation == 'PCI' && selectedClasses.isEmpty()) {
+            ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.WARNING,'Select a Location Class'));
+        }
 
         if(ApexPages.hasMessages()) return;
         
@@ -164,8 +191,12 @@ public with sharing class AMS_PCI_Compliant_Mass_OSCAR_CreationCtr{
         for(SelectOption c : selectedLocations) locations.add(c.getValue());
 
         Set<String> locationClass = new Set<String>();
+        if(operation == 'FOP') {
         locationClass.add(AMS_Utils.LC_PASSENGER);
-        if(operation == 'FOP') locationClass.add('D');
+            locationClass.add('D');
+        } else { //AMSU-157
+            for(SelectOption c : selectedClasses) locationClass.add(c.getValue());
+        }
 
         Set<String> statuses = new Set<String> {AMS_Utils.ACC_S9_APPROVED, AMS_Utils.ACC_S5_CASHNOCOMMISSION, AMS_Utils.ACC_S6_CASHWITHCOMMISSION, AMS_Utils.ACC_S8_CHANGESPROCESSED, AMS_Utils.ACC_S4_LISTED, AMS_Utils.ACC_S7_UNDERREVIEW, 'Review'};
 
