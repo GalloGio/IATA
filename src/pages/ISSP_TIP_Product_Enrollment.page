@@ -283,13 +283,13 @@
                                     <apex:pageBlockButtons >
                                         <apex:actionFunction name="submitProduct" action="{!submitProduct}"/>
                                         <apex:commandButton onclick="if(confirmSubmit())return true;" value="{!$Label.ISSP_TIP_SUBMIT_TO_IATA}" rendered="{!editMode}" reRender="inHid"   />
-                                        <apex:commandButton action="{!saveDraft}" value="{!$Label.ISSP_Save_Draft}" rendered="{!editMode}"/>
-                                        <!-- ACAMBAS - TIP-244 Start -->
-                                        <apex:commandButton action="{!terminateProduct}" value="{!$Label.ISSP_TIP_TERMINATE_PROD_BUTTON}" rendered="{!!editMode && !!activeProduct}" reRender="selectedBinRange,modalContentoutpanel" oncomplete="toggleDialog();"/>
-                                        <!-- ACAMBAS - TIP-244 End -->
+                                        <apex:commandButton action="{!saveDraft}" value="{!$Label.ISSP_Save_Draft}" rendered="{!editMode}"/> 
                                         <apex:commandButton onclick="confirmCancelExitPage();return false;"  value="{!$Label.ISSP_Cancel}" rendered="{!editMode}"/> 
                                         <apex:actionFunction name="cancelLeavePage" action="{!cancelNewEditProd}" immediate="true"/>
-                                        <apex:commandButton action="{!cancelNewEditProd}" immediate="true" value="{!$Label.ISSP_TIP_RETURN_HOMEPAGE}" rendered="{!!editMode}"/>                                                            
+                                        <apex:commandButton action="{!cancelNewEditProd}" immediate="true" value="{!$Label.ISSP_TIP_RETURN_HOMEPAGE}" rendered="{!!editMode}"/>
+                                        <!-- ACAMBAS - TIP-244 Start -->
+                                        <apex:commandButton action="{!terminateProduct}" value="{!$Label.ISSP_TIP_TERMINATE_PROD_BUTTON}" rendered="{!!editMode && !!activeProduct}" reRender="selectedBinRange,modalContentoutpanel" oncomplete="toggleDialog();"/>
+                                        <!-- ACAMBAS - TIP-244 End -->                                                            
                                     </apex:pageBlockButtons>    
                                     <apex:pageBlockSection columns="2" collapsible="true" title="{!$Label.ISSP_TIP_PRODUCT_DETAILS_SECTION}">
                                         <apex:pageBlockSectionItem labelStyle="width:26%" >
@@ -608,16 +608,6 @@
                                                     //ACAMBAS - TIP-244 - Start        
                                                     function checkTerminateProdMandatory() {
 
-                                                        if($('[id$="termReason"]').val() === null || $('[id$="termReason"]').val() =='' ) {
-                                                            if($('[id$="termReason"]').next('.errorMsg').val()==undefined)
-                                                                $('[id$="termReason"]').after('<div class="errorMsg">{!$Label.IEC_Required_Field_Error_Msg}</div>');
-                                                            stayOnModal=true;
-                                                            return;
-                                                        }
-                                                        else {
-                                                            clearErrorElement('[id$="termReason"]');
-                                                        }
-                                                        
                                                         if($('[id$="datepicker"]').val() === null || $('[id$="datepicker"]').val() =='' ) {
                                                             if($('[id$="datepicker"]').next('.errorMsg').val()==undefined) {
                                                                 $('[id$="datepicker"]').after('<div class="errorMsg">{!$Label.IEC_Required_Field_Error_Msg}</div>');
@@ -629,6 +619,18 @@
                                                             clearErrorElement('[id$="datepicker"]');
                                                         }
 
+                                                        if($('[id$="termReason"]').val() === null || $('[id$="termReason"]').val() =='' ) {
+                                                            if($('[id$="termReason"]').next('.errorMsg').val()==undefined)
+                                                                $('[id$="termReason"]').after('<div class="errorMsg">{!$Label.IEC_Required_Field_Error_Msg}</div>');
+                                                            stayOnModal=true;
+                                                            return;
+                                                        }
+                                                        else {
+                                                            clearErrorElement('[id$="termReason"]');
+                                                        }
+
+                                                        //document.querySelector("[Id$='submitProdTerminationBtn']").disabled = true;
+                                                        startLoading();
                                                         stayOnModal=false;
                                                         submitProductTermination(); 
                                                     }
@@ -926,35 +928,64 @@
                                                 <apex:pageblock id="terminateProd"> 
                                                     <script>
                                                         var date = new Date();
-                                                        var maxDay = date.getDate()+{!terminationMaxDays};
+                                                        var minDay = date.getDate()+{!terminationMaxDays};
                                                         $('[id$=datepicker]').datepicker( 
                                                             {
-                                                                "minDate": new Date(),
-                                                                "maxDate": new Date(date.getFullYear(), date.getMonth(), maxDay)});
+                                                                "minDate": new Date(date.getFullYear(), date.getMonth(), minDay)});
 
                                                         $('[id$=datepicker]').datepicker("option", $.datepicker.regional['en']);
+
+
+                                                        function startLoading() {
+                                                            $('.loadingBox').show();
+                                                        }
                                                     </script>
-                                                        <apex:PageMessages id="msgs"/>                           
-                                                        <apex:pageBlockSection columns="1" collapsible="false">
+                                                    <style>
+                                                      .overlay {
+                                                        display: none;
+                                                        height: 100%;
+                                                        left: 0;
+                                                        position: fixed;
+                                                        top: 0;
+                                                        opacity: 0.3;
+                                                        -moz-opacity: 0.3;
+                                                        width: 100%;
+                                                        -ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=30)";
+                                                        filter: alpha(opacity=30);
+                                                        background: #000;
+                                                        -khtml-opacity: 0.3;
+                                                        z-index: 1000;
+                                                      }
+                                                      .loader {
+                                                        background: url('/img/loading32.gif') scroll no-repeat 0 0;
+                                                        width: 32px;
+                                                        height: 32px;
+                                                        position: absolute;
+                                                        left: 50%;
+                                                        top: 150px;
+                                                      }
+                                                    </style>
+                                                    <apex:PageMessages id="msgs"/>                           
+                                                    <apex:pageBlockSection columns="1" collapsible="false">
 
-                                                          <apex:pageBlockSectionItem labelStyle="width:26%">
-                                                            <apex:outputLabel value="{!$Label.ISSP_TIP_TERMINATE_PROD_MSG}"/>
-                                                          </apex:pageBlockSectionItem>
+                                                      <apex:pageBlockSectionItem labelStyle="width:26%">
+                                                        <apex:outputLabel value="{!$Label.ISSP_TIP_TERMINATE_PROD_MSG}"/>
+                                                      </apex:pageBlockSectionItem>
 
-                                                          <br/>
+                                                      <br/>
 
-                                                          <apex:pageBlockSectionItem labelStyle="width:26%" >
-                                                            <apex:outputLabel value="{!$Label.ISSP_TIP_REASON_FOR_CANCEL}"/>
-                                                            <apex:inputTextarea id="termReason" value="{!terminationReason}"/>
-                                                          </apex:pageBlockSectionItem>
+                                                      <apex:pageBlockSectionItem labelStyle="width:26%" >
+                                                        <apex:outputLabel value="{!$Label.ISSP_TIP_EFFECTIVE_DATE}*"/>
+                                                        <apex:inputText value="{!terminationDate}" id="datepicker"/> 
+                                                        <!--div id="datepicker"></div-->
+                                                      </apex:pageBlockSectionItem>
 
-                                                          <apex:pageBlockSectionItem labelStyle="width:26%" >
-                                                            <apex:outputLabel value="{!$Label.ISSP_TIP_EFFECTIVE_DATE}"/>
-                                                            <apex:inputText value="{!terminationDate}" id="datepicker"/> 
-                                                            <!--div id="datepicker"></div-->
-                                                          </apex:pageBlockSectionItem>
+                                                      <apex:pageBlockSectionItem labelStyle="width:26%" >
+                                                        <apex:outputLabel value="{!$Label.ISSP_TIP_REASON_FOR_CANCEL}*"/>
+                                                        <apex:inputTextarea id="termReason" value="{!terminationReason}"/>
+                                                      </apex:pageBlockSectionItem>
 
-                                                        </apex:pageBlockSection>
+                                                    </apex:pageBlockSection>
                                                 </apex:pageblock>
                                               </div>
                                               <div class="modal-footer">
@@ -964,9 +995,11 @@
                                                           {!$Label.ISSP_Cancel}</a>
                                                     </div>
                                                     <div class="col-md-6">                                                
-                                                        <apex:actionFunction name="submitProductTermination" action="{!submitProductTerminationRequest}"  oncomplete="closeDialog()" reRender="binTable"/>
-                                                        <a class="btn_iata_confirm btn-block btn" onclick="checkTerminateProdMandatory()">{!$Label.ISSP_Submit}</a>
+                                                        <apex:actionFunction name="submitProductTermination" action="{!submitProductTerminationRequest}"  oncomplete="closeDialog();" reRender="binTable"/>
+                                                        <button type="button" id="submitProdTerminationBtn" onclick="checkTerminateProdMandatory(); return false;" class="btn_iata_submit btn-block btn">{!$Label.ISSP_Submit}</button>
                                                     </div>
+                                                    <div id="load_scrl" class="loadingBox loader" style="display:none;"> </div>
+                                                    <div class="loadingBox overlay"> </div>
                                                 </div>
                                               </div>
                                             </div>

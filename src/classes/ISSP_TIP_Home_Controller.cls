@@ -1069,7 +1069,7 @@ public without sharing class ISSP_TIP_Home_Controller {
         updateCase();
         newcase.Status = 'Open';
         newcase.Subject = 'Product Termination Request - ' + account.name + ' / ' + newpp.name;
-        newcase.Description = terminationReason + ' - ' + terminationDate;
+        newcase.Description = terminationReason + '\n\nResquested termination date:\n' + terminationDate + ' (mm/dd/yyyy)';
         newcase.Reason1__c = TIP_Utils.CASE_REASON_PRODUCT_MANAGEMENT;
         newcase.TIP_Partner_Product__c = newpp.Id;
        
