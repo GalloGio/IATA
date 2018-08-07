@@ -23,6 +23,7 @@ private class ISSP_ANG_ANNUAL_REVALIDATION_Test {
 			account.Name = 'test';
 			account.sector__c = 'Travel Agent';
 			account.Location_Type__c = 'HE';
+			account.Location_Class__c = 'P';
 			account.RecordTypeId = rtAgency ;
 			account.IATACode__c = '12345678';
 
@@ -67,6 +68,7 @@ private class ISSP_ANG_ANNUAL_REVALIDATION_Test {
         account.IATACode__c = '12345678';
 		account.status__c = Ams_Utils.ACC_S9_APPROVED;
 		account.IATA_ISO_Country__c = country.Id;
+		account.Location_Class__c = 'P';
 
 		insert account;
 
@@ -116,6 +118,7 @@ private class ISSP_ANG_ANNUAL_REVALIDATION_Test {
         account.IATACode__c = '12345678';
 		account.status__c = Ams_Utils.ACC_S9_APPROVED;
 		account.IATA_ISO_Country__c = country.Id;
+		account.Location_Class__c = 'P';
 
 		insert account;
 
@@ -130,6 +133,7 @@ private class ISSP_ANG_ANNUAL_REVALIDATION_Test {
 		child.parentId = account.id;
 		child.Top_Parent__c = account.id;
 		child.IATA_ISO_Country__c = country.Id;
+		account.Location_Class__c = 'P';
 
 		insert child;
 
@@ -443,6 +447,7 @@ private class ISSP_ANG_ANNUAL_REVALIDATION_Test {
         account.IATACode__c = '12345678';
 		account.status__c = Ams_Utils.ACC_S9_APPROVED;
 		account.IATA_ISO_Country__c = country.Id;
+		account.Location_Class__c = 'P';
 
 		insert account;
 
@@ -457,6 +462,7 @@ private class ISSP_ANG_ANNUAL_REVALIDATION_Test {
 		child.parentId = account.id;
 		child.Top_Parent__c = account.id;
 		child.IATA_ISO_Country__c = country.Id;
+		account.Location_Class__c = 'P';
 
 		insert child;
 
@@ -598,6 +604,7 @@ private class ISSP_ANG_ANNUAL_REVALIDATION_Test {
         account.IATACode__c = '12345678';
 		account.status__c = Ams_Utils.ACC_S9_APPROVED;
 		account.IATA_ISO_Country__c = country.Id;
+		account.Location_Class__c = 'P';
 
 		insert account;
 
@@ -612,6 +619,7 @@ private class ISSP_ANG_ANNUAL_REVALIDATION_Test {
 		child.parentId = account.id;
 		child.Top_Parent__c = account.id;
 		child.IATA_ISO_Country__c = country.Id;
+		account.Location_Class__c = 'P';
 
 		insert child;
 
