@@ -940,6 +940,7 @@ public without sharing class Order_Sel extends Selector{
     {
         List<String> expiredStatus = IECConstants.expiredStatus;
         Date dateToCompare = IECConstants.dateToCompare;
+        String historyType = 'History';
 
             // 'AND SAP_Order_Number__c != null  AND SAP_Invoice__r.Contract_Number__c != null ' +
             // 'AND ((type NOT IN :expiredType OR Status NOT IN :expiredStatus OR EffectiveDate > :dateToCompare) AND type != :historyType) ' +
@@ -951,7 +952,7 @@ public without sharing class Order_Sel extends Selector{
             'FROM {1} ' +
             'WHERE BillToContactId = :contactId ' +
            
-            'AND ((Status NOT IN :expiredStatus OR EffectiveDate > :dateToCompare) ) ' +
+            'AND ((Status NOT IN :expiredStatus OR EffectiveDate > :dateToCompare) ) AND type != :historyType ' +
 
             'ORDER BY Type,  CreatedDate DESC', 
             new List<String>{
