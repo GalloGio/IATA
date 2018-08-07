@@ -704,6 +704,17 @@ If( Contact.Account.ICH_Member__c = true,&quot;ICH&quot;, &quot;&quot;)</formula
         <unique>false</unique>
     </fields>
     <fields>
+        <fullName>Federation_ID__c</fullName>
+        <description>Shows the federation Id to the permission set manage external users</description>
+        <externalId>false</externalId>
+        <formula>FederationIdentifier</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>Federation ID</label>
+        <required>false</required>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
         <fullName>Functional_Expertise__c</fullName>
         <externalId>false</externalId>
         <label>Functional Expertise</label>
