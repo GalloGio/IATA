@@ -2,11 +2,8 @@
 private class GDS_DataExportSchedulerTest {
 
     private static void loadData() {
-        String libraryName = 'Test Library';
-        User user = [SELECT Id FROM User WHERE Id = :UserInfo.getUserId()];
-        System.runAs(user) {
-            insert new ContentWorkspace(Name = libraryName);
-        }
+        ContentWorkspace library = [SELECT Id, Name FROM ContentWorkspace LIMIT 1];
+        String libraryName = library.Name;
         insert new ISSP_CS__c(Name = GDS_DataExportScheduler.LIBRARY_CS_NAME,Value__c = libraryName);
         
         IATA_ISO_Country__c country = new IATA_ISO_Country__c(
