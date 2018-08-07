@@ -102,6 +102,7 @@ trigger CaseBeforeTrigger on Case (before delete, before insert, before update) 
     ID CSRcaseRecordTypeID = RecordTypeSingleton.getInstance().getRecordTypeId('Case', 'BSPlink_Customer_Service_Requests_CSR');
     ID PortalRecordTypeID  = RecordTypeSingleton.getInstance().getRecordTypeId('Case', 'External_Cases_InvoiceWorks');
     ID ifgCaseRecordTypeID = RecordTypeSingleton.getInstance().getRecordTypeId('Case', 'Cases_IFG');
+    ID caseSEDARecordTypeID = RecordTypeSingleton.getInstance().getRecordTypeId('Case', 'SEDA');
     /*Record type*/
 
     /*Variables*/

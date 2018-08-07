@@ -113,7 +113,7 @@ public with sharing class SIDRAliteMassActionController {
             + '     TER_Approval_Rejection__c, Termination_Reason__c, Propose_Default__c, NOT_Date__c,'
             + '     Account.Id, Account.Type, Account.Status__c, Comments__c'
             + '     from Cases'
-            + '     where RecordtypeId = :sidraLiteRTId '
+            + '     where RecordtypeId = \'' + sidraLiteRTId + '\''
             + ' )'
             + ' from Case'
             + ' Where RecordtypeId = \'' + recordtypeId + '\''

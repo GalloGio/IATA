@@ -436,6 +436,9 @@ private class ISSP_APProcess_Test
 
     @isTest static void test_method_e()
     {
+        IATA_ISO_Country__c country = new IATA_ISO_Country__c(name = 'Portugal', ISO_Code__c = 'PT', Case_BSP_Country__c = 'Portugal');
+        insert country;
+        
         Account parent = ISSP_ObjectFactory.createNewAccount();
         parent.BillingCity = 'test';
         parent.Name = 'test';
@@ -472,9 +475,6 @@ private class ISSP_APProcess_Test
                                                                 City__c = 'test3',
                                                                 Name = 'test3');
         insert csCity3;
-
-        IATA_ISO_Country__c country = new IATA_ISO_Country__c(name = 'Portugal', ISO_Code__c = 'PT', Case_BSP_Country__c = 'Portugal');
-        insert country;
 
         AP_Country_Requierment__c cReq = new AP_Country_Requierment__c(
                                         Country__c = country.Id,
@@ -656,6 +656,9 @@ private class ISSP_APProcess_Test
 
     @isTest static void test_method_1()
     {
+        IATA_ISO_Country__c country = new IATA_ISO_Country__c(name = 'Portugal', ISO_Code__c = 'PT', Case_BSP_Country__c = 'Portugal');
+        insert country;
+
         Account parent = ISSP_ObjectFactory.createNewAccount();
         parent.BillingCity = 'test';
         parent.Name = 'test';
@@ -692,9 +695,6 @@ private class ISSP_APProcess_Test
                                                                 City__c = 'test3',
                                                                 Name = 'test3');
         insert csCity3;
-
-        IATA_ISO_Country__c country = new IATA_ISO_Country__c(name = 'Portugal', ISO_Code__c = 'PT', Case_BSP_Country__c = 'Portugal');
-        insert country;
 
         AP_Country_Requierment__c cReq = new AP_Country_Requierment__c(
                                         Country__c = country.Id,
@@ -785,6 +785,9 @@ private class ISSP_APProcess_Test
 
     @isTest static void test_method_2() {
 
+        IATA_ISO_Country__c country = new IATA_ISO_Country__c(name = 'Portugal', ISO_Code__c = 'PT', Case_BSP_Country__c = 'Portugal');
+        insert country;
+
         Account parent = ISSP_ObjectFactory.createNewAccount();
         parent.BillingCity = 'test';
         parent.Name = 'test';
@@ -821,9 +824,6 @@ private class ISSP_APProcess_Test
                                                                 City__c = 'test3',
                                                                 Name = 'test3');
         insert csCity3;
-
-        IATA_ISO_Country__c country = new IATA_ISO_Country__c(name = 'Portugal', ISO_Code__c = 'PT', Case_BSP_Country__c = 'Portugal');
-        insert country;
 
         AP_Country_Requierment__c cReq = new AP_Country_Requierment__c(
                                         Country__c = country.Id,

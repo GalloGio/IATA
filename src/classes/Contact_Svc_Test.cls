@@ -12,6 +12,9 @@ static testMethod void test_AllMethod()
 	lstSetting.add(new Apex_Setting__c(Name='Contact fields to sync to SAP1', Text_1__c='FirstName,LastName,Title'));
 	lstSetting.add(new Apex_Setting__c(Name='Execute Trigger Contact', Number_1__c=1));
 	insert lstSetting;
+
+	//Generate SAP Settings
+	TestDataGenerator.generateSAPSettings();
 	
 	List<Account> lstAccount = TestDataGenerator.generateAccounts(3, true);
 	List<Contact> lstContact = new List<Contact>();

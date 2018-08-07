@@ -56,7 +56,7 @@ public class IATAIsoCountryDAO {
                                                         Enable_Notice_of_Change__c, SAAM_enable_non_IATA_Cargo_Agents__c,
                                                         Enable_Minor_Changes_from_Portal__c, AMS_Accreditation_New_Labels__c,
                                                         EBulletin_enabled__c, AMS_Vouchers_Benchmark__c, AMS_Max_Vouchers_Per_Year__c,
-                                                        LVA_CountryLanguage__c, CNS_Country__c, 
+                                                        LVA_CountryLanguage__c, CNS_Country__c, ANG_Portal_Service__c, 
 
                                                         (SELECT Id, Name, ISO_Code__c, IEC_Valid_SAP__c
                                                         FROM IATA_ISO_States__r
@@ -385,7 +385,8 @@ public class IATAIsoCountryDAO {
 	 * Only used to refresh map IataIsoCountry.
 	 * Just for testing
 	 */
-	public static void resetMapIataIsoCountry(){
+	@TestVisible
+	private static void resetMapIataIsoCountry(){
 		IATAIsoCountryDAO.mapIataIsoCountry = null ;
 		IATAIsoCountryDAO.mapIataIsoCountryByName = null; 
 		IATAIsoCountryDAO.mapIataIsoCountrybyIsoCode = null;

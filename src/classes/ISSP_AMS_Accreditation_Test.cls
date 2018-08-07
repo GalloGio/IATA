@@ -4923,7 +4923,7 @@ private class ISSP_AMS_Accreditation_Test {
             testCase.IFAP_Country_ISO__c = 'tq';
             testCase.Status = 'Draft';
             testCase.Origin = 'Portal';
-            testCase.RecordTypeId = AMS_Utils.OSCAR_COMUNICATION;
+            testCase.RecordTypeId = AMS_Utils.RECTYPE_OSCARCOMM;
             testCase.Reason1__c = AMS_Utils.CASE_REASON_OPT_OUT;
 
 
@@ -5261,7 +5261,7 @@ private class ISSP_AMS_Accreditation_Test {
             testCase.IFAP_Country_ISO__c = 'tq';
             testCase.Status = 'Draft';
             testCase.Origin = 'Portal';
-            testCase.RecordTypeId = AMS_Utils.OSCAR_COMUNICATION;
+            testCase.RecordTypeId = AMS_Utils.RECTYPE_OSCARCOMM;
             testCase.Reason1__c = AMS_Utils.CASE_REASON_OPT_OUT;
 
 

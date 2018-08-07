@@ -18,15 +18,17 @@ public class Product_Record_Type_Mapping_Sel {
         for (Integer i1 = 0; i1 < listRecordIndex.size(); i1++) {
             mapIndex_RecordTypeId.put(listRecordIndex[i1], RecordTypeSingleton.getInstance().getRecordTypeId('Product2', 'Unclassified'));
             mapKey_Index.put(listDivision[i1] + '/' + listChannel[i1], listRecordIndex[i1]);
+
+
         }
-        
         //*** build and map between profit center and product manager
         for (Product_Record_Type_Mapping__c rt : [select Division__c, Sales_Channel__c, Record_Type_for_Product__c
                                                   from Product_Record_Type_Mapping__c
                                                   where Record_Type_for_Product__c != null
                                                     and (Division__c = null or Division__c in :listDivision)
                                                     and (Sales_Channel__c = null or Sales_Channel__c in :listChannel)]){
-            if (mapKey_Index.containsKey(rt.Division__c + '/' + rt.Sales_Channel__c) && String.isBlank(rt.Record_Type_for_Product__c)){
+
+            if (mapKey_Index.containsKey(rt.Division__c + '/' + rt.Sales_Channel__c)){
                 mapIndex_RecordTypeId.put(mapKey_Index.get(rt.Division__c + '/' + rt.Sales_Channel__c), 
                                                     RecordTypeSingleton.getInstance().getRecordTypeId('Product2', rt.Record_Type_for_Product__c));
             }
