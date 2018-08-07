@@ -771,11 +771,12 @@ public without sharing class Order_Sel extends Selector{
     {
         String type = IECConstants.ORDER_TYPE_RENEWAL_NOTIFICATION;
         String cart_type = 'Cart';
-        String new_status = 'New';
 
         return [SELECT Id, OrderNumber, EffectiveDate, EndDate, Total_Amount__c, CreatedDate
             FROM Order
-            WHERE (Type = :type OR (Type=:cart_type AND IEC_Order_Previous_Type__c=:type AND Status=:new_status)) AND BillToContactId = :idContact
+            WHERE (Type = :type OR (Type=:cart_type AND IEC_Order_Previous_Type__c=:type )) 
+            AND ((Status NOT IN :IECConstants.expiredStatus OR EffectiveDate > :IECConstants.dateToCompare) )
+            AND BillToContactId = :idContact
             ORDER BY EffectiveDate DESC, OrderNumber DESC
         ];
 
@@ -794,8 +795,10 @@ public without sharing class Order_Sel extends Selector{
     public List<Order> getQuotes(Id idContact){
 
         String type = IECConstants.ORDER_TYPE_QUOTE;
+        List<String> expiredStatus = IECConstants.expiredStatus;
+        Date dateToCompare = IECConstants.dateToCompare;
+        
         String cart_type = 'Cart';
-        String new_status = 'New';
 
         String query = String.format(
             'SELECT {0}' + 
@@ -803,7 +806,11 @@ public without sharing class Order_Sel extends Selector{
             'Carrier_Tracking_Number__c,Carrier_Tracking_URL__c, Coupon__c, Invoice_Number__c, Discount__c, Setup_Fee__c ' + 
             ' from Orderitems) ' + 
             'FROM {1} ' +  
-            'WHERE (Type = :type OR (Type=:cart_type AND IEC_Order_Previous_Type__c=:type AND Status=:new_status)) AND BillToContactId = :idContact ORDER BY EffectiveDate DESC, OrderNumber DESC ' , 
+
+            'WHERE (Type = :type OR (Type=:cart_type AND IEC_Order_Previous_Type__c=:type)) ' +
+            ' AND ((Status NOT IN :expiredStatus OR EffectiveDate > :dateToCompare) ) '+ 
+            'AND BillToContactId = :idContact ORDER BY EffectiveDate DESC, OrderNumber DESC ' , 
+
             new List<String>{
                 String.join(getDefaultFields(), ', '),
                 getSObjectType().getDescribe().getName()
@@ -931,16 +938,8 @@ public without sharing class Order_Sel extends Selector{
     ****************************************************************************************************/
     public List<Order> getMyOrders(Id contactId)
     {
-        String cancelStatus = 'Cancelled';
-        String renewStatus = IECConstants.ORDER_TYPE_RENEWAL_NOTIFICATION;
-        String quoteStatus = IECConstants.ORDER_TYPE_QUOTE;
-        String orderType = 'Order';
-        String bulkOrderType = 'Bulk Order';
-        String historyType = 'History';
-        
-        date dateToCompare = Date.today().addDays(-180);
-        //List<String> expiredType   = new List<String>{orderType, renewStatus, quoteStatus};
-        List<String> expiredStatus = new List<String>{'New',cancelStatus,'Payment Failure', 'Ready for SAP', 'Pending Payment'};
+        List<String> expiredStatus = IECConstants.expiredStatus;
+        Date dateToCompare = IECConstants.dateToCompare;
 
             // 'AND SAP_Order_Number__c != null  AND SAP_Invoice__r.Contract_Number__c != null ' +
             // 'AND ((type NOT IN :expiredType OR Status NOT IN :expiredStatus OR EffectiveDate > :dateToCompare) AND type != :historyType) ' +
