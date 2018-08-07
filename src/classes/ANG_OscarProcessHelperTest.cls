@@ -543,6 +543,18 @@ private class ANG_OscarProcessHelperTest {
 
 		insert configCC;
 
+		List<Group> testGroupList = [SELECT name FROM Group WHERE Type = 'Queue' and Name = 'Cases - France'];
+		system.debug('Group :::: ' + testGroupList);
+
+		System.runAs(new User(Id=UserInfo.getUserId()))
+		{
+			List<QueuesObject> testQueuesList = new List<QueuesObject>();
+			testQueuesList.add(new QueueSObject(QueueId = testGroupList.get(0).id, SObjectType = 'AMS_OSCAR__c'));
+			testQueuesList.add(new QueueSObject(QueueId = testGroupList.get(0).id, SObjectType = 'Case'));
+			Database.insert(testQueuesList);
+		}
+
+
 		Account a = [select Abbreviated_address__c, Abbreviated_name__c,
 						BillingState,
 						BillingCity,
@@ -588,7 +600,7 @@ private class ANG_OscarProcessHelperTest {
 
 		update a;
 
-		a = [select Abbreviated_address__c, Abbreviated_name__c,
+	/*	a = [select Abbreviated_address__c, Abbreviated_name__c,
 						BillingState,
 						BillingCity,
 						Email__c,
@@ -627,7 +639,8 @@ private class ANG_OscarProcessHelperTest {
 						TradeName__c,
 						VAT_Number_2__c,
 						Reason__c,
-						Website from account limit 1];
+						Website from account limit 1]; 
+	*/
         
 		List<Contact> conts = [select Id, Name, Email, Preferred_Language__c, BSP_CASS_Payment_contact__c, Financial_Assessment_Contact__c, User_Portal_Status__c from contact where accountid =:a.id];
 		
