@@ -1083,11 +1083,6 @@ public without sharing class ISSP_TIP_Home_Controller {
             newCase.OwnerId = groups[0].id;
         }
 
-        //force case auto-response rules to fire
-        Database.DMLOptions dmo = new Database.DMLOptions();
-        dmo.EmailHeader.triggerAutoResponseEmail= true;
-        newCase.setOptions(dmo);
-
         update newpp;
         upsert newCase;
 
