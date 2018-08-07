@@ -58,7 +58,7 @@ global class AMS_PCI_Complaint_Batch implements Database.Batchable<sObject>, Dat
     }
     
     global Database.QueryLocator start(Database.BatchableContext BC) {
-        String location = AMS_Utils.LC_PASSENGER;
+        Set<String> locations = new Set<String> {AMS_Utils.LC_PASSENGER, 'D'};
         Id AGENCY_RECORDTYPE = Schema.SObjectType.Account.getRecordTypeInfosByName().get('Agency').getRecordtypeId();
         String reason = 'PCI DSS Compliant';
         Set<String> availableStatus = new Set<String> {AMS_Utils.ACC_S9_APPROVED, AMS_Utils.ACC_S5_CASHNOCOMMISSION, 
@@ -81,7 +81,7 @@ global class AMS_PCI_Complaint_Batch implements Database.Batchable<sObject>, Dat
         if(filteredAccounts != null && !filteredAccounts.isEmpty()) {
             query += ' Id IN :filteredAccounts';
         } else {
-            query += ' Location_Class__c = :location AND Status__c IN :availableStatus AND ANG_PCI_compliance_expiry_date__c = NEXT_N_DAYS:90' +
+            query += ' Location_Class__c IN :locations AND Status__c IN :availableStatus AND ANG_PCI_compliance_expiry_date__c = NEXT_N_DAYS:90' +
                      ' AND PCI_DSS_Compliant__c = NULL' +
                      ' AND Is_PCI_compliant__c IN :pciValues' +
                      ' AND RecordtypeId = :AGENCY_RECORDTYPE';
