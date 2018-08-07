@@ -10,6 +10,8 @@ global without sharing class ANG_RollbackEngineHelper implements Queueable{
 
 	private Id newParentHierarchyId;
 
+	private AMS_OSCAR__c oscar;
+
 	public void execute(QueueableContext context){
 		executeAdhoc();
 	}
@@ -25,6 +27,7 @@ global without sharing class ANG_RollbackEngineHelper implements Queueable{
 		AMS_AgencyRelationshipTriggerHandler.AMS_HierarchyProcess = true;
 		AMS_AccountTriggerHandler.processMinorChangesValidationFlag = false; 
 		rollbackData();
+		createWithdrawalCase();
 		sendEmailConfirmation();
 		AMS_AgencyRelationshipTriggerHandler.AMS_HierarchyProcess = false;
 		AMS_AccountTriggerHandler.processMinorChangesValidationFlag = true;
@@ -40,13 +43,13 @@ global without sharing class ANG_RollbackEngineHelper implements Queueable{
 		accountsRelated = new Set<Id>();
 		accountsRelated.addAll(fetchHierarchySelection(oscarId));
 
-		AMS_OSCAR__c oscar = [Select Name, Account__c,New_parent__c from AMS_OSCAR__c where Id =:oscarId];
+		this.oscar = [Select Name, Account__c,New_parent__c, Process__c, Account__r.Name, Account__r.Region__c, Account__r.IATA_ISO_Country__c from AMS_OSCAR__c where Id =:oscarId];
 
-		this.oscarName = oscar.Name;
+		this.oscarName = this.oscar.Name;
 
-		accountsRelated.add(oscar.Account__c);
+		accountsRelated.add(this.oscar.Account__c);
 
-		this.newParentHierarchyId = oscar.New_parent__c;
+		this.newParentHierarchyId = this.oscar.New_parent__c;
 
 	}
 
@@ -83,6 +86,16 @@ global without sharing class ANG_RollbackEngineHelper implements Queueable{
 		}
 
 
+	}
+
+	private void createWithdrawalCase() {
+		Case c = new Case(CaseArea__c = 'Invoicing',
+						  Subject = 'Major Changes - ' + this.oscar.Account__r.Name,	
+						  Description = 'Dear colleagues,\nPlease issue a Credit Note in order to refund the change fee.\n\nThanks,\nxxx',
+						  AccountId = this.oscar.Account__c,
+						  Region__c = this.oscar.Account__r.Region__c,
+						  BSP_Country__c = this.oscar.Account__r.IATA_ISO_Country__c);
+		insert c;
 	}
 
 	private void processRollbackAccounts(List<String> accountList){
