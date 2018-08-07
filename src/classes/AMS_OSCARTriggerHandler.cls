@@ -2616,7 +2616,7 @@ public class AMS_OSCARTriggerHandler {
         else if(agencyType == AMS_Utils.NGANNUALREVAL && step == AMS_Utils.FAILED && !wasApproved) templateId  = 'ANG_Annual_Revalidation_Failed';
         else if(agencyType == AMS_Utils.NGANNUALREVAL && step == null) templateId  = 'ANG_Anual_Renewal_Case';
         else if(agencyType == AMS_Utils.NGFOP && step == null ) templateId  = 'ANG_FOP_OSCARCREATION';
-        else if(agencyType == AMS_Utils.NGFOP && step == AMS_Utils.APPROVAL ) templateId  = 'ANG_FOP_OSCARCREATIONPORTAL';
+        else if(agencyType == AMS_Utils.NGFOP && step == AMS_Utils.PASSED ) templateId  = 'ANG_FOP_OSCARCREATIONPORTAL';
         else if(agencyType == ANG_FOPOSCARNotificationBatch.FOP_REMINDER_TEMPLATE_ID && step == null) templateId  = 'ANG_Mass_FOP_OSCAR_Reminder';
         else if(agencyType == ANG_FOPOSCARNotificationBatch.FOP_NONCOMPLIANCE_TEMPLATE_ID && step == null) templateId  = 'ANG_Mass_FOP_OSCAR_NonCompliance';
 
@@ -3827,6 +3827,7 @@ public class AMS_OSCARTriggerHandler {
         List<Agency_Authorization__c> formsOfPaymentList = [SELECT Id, Account__c, ANG_FormOfPayment_ID__c, Status__c, RecordTypeId FROM Agency_Authorization__c WHERE Account__c in :accountIdsInvolvedSet and RecordTypeId =: FormOfPaymentRT and ANG_FormOfPayment_ID__c = 'CC'];
 
         Set<Id> oscarsFromPortal = new Set<Id>();
+        Map<Id,Id> oscarCaseMap = new Map<Id,Id>(); 
 
         if(!oscarsToInsertList.isEmpty()){
             Set<Id> oscarIds = new Set<Id>();
@@ -3836,6 +3837,7 @@ public class AMS_OSCARTriggerHandler {
 
             for(Case c : [Select Id, OSCAR__C from Case where OSCAR__c in:oscarIds AND RecordType.Name = 'OSCAR Communication' and Origin = 'Portal']){
                 oscarsFromPortal.add(c.OSCAR__C);
+                oscarCaseMap.put(c.OSCAR__C, c.id);
             }
         
         }
@@ -3860,7 +3862,7 @@ public class AMS_OSCARTriggerHandler {
 
                 // NEWGEN-2932
                 if(oscarsFromPortal.contains(oscar.Id))
-                    AMS_OSCARTriggerHandler.sendEmailAlert(oscar.Id, oscar.Oscar_Communication_Case_Id__c, oscar.Process__c, AMS_Utils.PASSED, false);
+                    AMS_OSCARTriggerHandler.sendEmailAlert(oscar.Id, oscarCaseMap.get(oscar.id), oscar.Process__c, AMS_Utils.PASSED, false);
             
                 for(Id accId: oscarAccountsMap.get(oscar.Id)){
 
