@@ -10,8 +10,6 @@ global without sharing class ANG_RollbackEngineHelper implements Queueable{
 
 	private Id newParentHierarchyId;
 
-	private AMS_OSCAR__c oscar;
-
 	public void execute(QueueableContext context){
 		executeAdhoc();
 	}
@@ -43,13 +41,13 @@ global without sharing class ANG_RollbackEngineHelper implements Queueable{
 		accountsRelated = new Set<Id>();
 		accountsRelated.addAll(fetchHierarchySelection(oscarId));
 
-		this.oscar = [Select Name, Account__c,New_parent__c, Process__c, Account__r.Name, Account__r.Region_formula__c, Account__r.IATA_ISO_Country__r.Name from AMS_OSCAR__c where Id =:oscarId];
+		AMS_OSCAR__c oscar = [Select Name, Account__c,New_parent__c from AMS_OSCAR__c where Id =:oscarId];
 
-		this.oscarName = this.oscar.Name;
+		this.oscarName = oscar.Name;
 
-		accountsRelated.add(this.oscar.Account__c);
+		accountsRelated.add(oscar.Account__c);
 
-		this.newParentHierarchyId = this.oscar.New_parent__c;
+		this.newParentHierarchyId = oscar.New_parent__c;
 
 	}
 
