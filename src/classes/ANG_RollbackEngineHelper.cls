@@ -43,7 +43,7 @@ global without sharing class ANG_RollbackEngineHelper implements Queueable{
 		accountsRelated = new Set<Id>();
 		accountsRelated.addAll(fetchHierarchySelection(oscarId));
 
-		this.oscar = [Select Name, Account__c,New_parent__c, Process__c, Account__r.Name, Account__r.Region__c, Account__r.IATA_ISO_Country__c from AMS_OSCAR__c where Id =:oscarId];
+		this.oscar = [Select Name, Account__c,New_parent__c, Process__c, Account__r.Name, Account__r.Region_formula__c, Account__r.IATA_ISO_Country__r.Name from AMS_OSCAR__c where Id =:oscarId];
 
 		this.oscarName = this.oscar.Name;
 
@@ -93,8 +93,8 @@ global without sharing class ANG_RollbackEngineHelper implements Queueable{
 						  Subject = 'Major Changes - ' + this.oscar.Account__r.Name,	
 						  Description = 'Dear colleagues,\nPlease issue a Credit Note in order to refund the change fee.\n\nThanks,\nxxx',
 						  AccountId = this.oscar.Account__c,
-						  Region__c = this.oscar.Account__r.Region__c,
-						  BSP_Country__c = this.oscar.Account__r.IATA_ISO_Country__c);
+						  Region__c = this.oscar.Account__r.Region_formula__c,
+						  BSPCountry__c = this.oscar.Account__r.IATA_ISO_Country__r.Name);
 		insert c;
 	}
 
