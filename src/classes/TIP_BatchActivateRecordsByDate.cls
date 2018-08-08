@@ -82,7 +82,7 @@ global class TIP_BatchActivateRecordsByDate implements  Database.Batchable<sObje
 			+'Provider__r.Status__c = \''+TIP_Utils.PARTNER_STATUS_ACTIVE+ '\' AND PP_Status__c <> \''+TIP_Utils.PARTNER_PRODUCT_STATUS_REJECTED+ '\' AND (	 '
 			+    '(PP_Effective_from_Date__c > '  + system.now().format('yyyy-MM-dd') +' AND PP_status__c <> \''+ TIP_Utils.PARTNER_PRODUCT_STATUS_IN_PROGRESS +'\' ) '
 			+ 'OR (PP_Effective_to_Date__c <= '  + system.now().format('yyyy-MM-dd') +' AND PP_status__c <> \''+ TIP_Utils.PARTNER_PRODUCT_STATUS_INACTIVE +'\' ) '	//ACAMBAS - TIP-161
-			+ 'OR (PP_Effective_from_Date__c <= '  + system.now().format('yyyy-MM-dd') +' AND PP_status__c <> \''+TIP_Utils.PARTNER_PRODUCT_STATUS_ACTIVE+'\' ))';
+			+ 'OR (PP_Effective_from_Date__c <= '  + system.now().format('yyyy-MM-dd') +' AND PP_status__c <> \''+ TIP_Utils.PARTNER_PRODUCT_STATUS_ACTIVE +'\' ))';
 
 	public final static String QUERY_BIN_RANGES = 'SELECT ID, TIP_Status__c, TIP_Effective_From_Date_To_Show__c, TIP_Effective_To_Date__c FROM TIP_BIN_Range__c WHERE (TIP_Payment_Provider_Product__r.PP_status__c = \''+TIP_Utils.PARTNER_PRODUCT_STATUS_ACTIVE+ '\' AND ('
 			+    '(TIP_Effective_From_Date_To_Show__c > '  + system.now().format('yyyy-MM-dd') +' AND TIP_Status__c <> \''+ TIP_Utils.BIN_RANGE_STATUS_IN_PROGRESS +'\' ) '
