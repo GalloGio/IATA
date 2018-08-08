@@ -2607,6 +2607,11 @@
             <isRequired>false</isRequired>
         </displayedFields>
         <displayedFields>
+            <field>ACLI_SAP_Id__c</field>
+            <isFieldManaged>false</isFieldManaged>
+            <isRequired>false</isRequired>
+        </displayedFields>
+        <displayedFields>
             <field>ANG_HE_CashCondition__c</field>
             <isFieldManaged>false</isFieldManaged>
             <isRequired>false</isRequired>
