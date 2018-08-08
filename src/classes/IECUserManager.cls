@@ -330,14 +330,10 @@ public without sharing class IECUserManager {
     
     /**
      * Returns the OwnerId that must be associated to newly created Contacts
-     * TODO: maybe this should be configured somewhere else
+     * The OwnerId should be set on the custom setting IEC Settings 
      */
     public static Id getIECContactOwnerId() {
-
-        if (!Test.isRunningTest())//worst coding practices ever........
-            return IEC_Settings__c.getOrgDefaults().Contact_Owner_Id__c; //worst coding practices ever........
-        else
-            return '00520000002MSDBAA4'; //worst coding practices ever........
+        return IEC_Settings__c.getOrgDefaults().Contact_Owner_Id__c;
     }
     
     /**

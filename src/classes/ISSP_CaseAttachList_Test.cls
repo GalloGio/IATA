@@ -117,6 +117,9 @@ public class ISSP_CaseAttachList_Test {
                                 IsActive = true);
         insert newUser;
         
+        contact.OwnerId = newUser.Id;
+        update contact;
+        
         AttachmentListLimitedAccess__c access = new AttachmentListLimitedAccess__c();
         access.SetupOwnerId = profileId;
         insert access;
@@ -176,6 +179,9 @@ public class ISSP_CaseAttachList_Test {
                                 ProfileId = profileId,
                                 IsActive = true);
         insert newUser;
+        
+        contact.OwnerId = newUser.Id;
+        update contact;
         
         AttachmentListLimitedAccess__c access = new AttachmentListLimitedAccess__c();
         access.SetupOwnerId = profileId;

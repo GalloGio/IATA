@@ -129,6 +129,9 @@ public class ISSP_Portal_Application_RightTest {
     insert newContact;
 
     User newPortalUser = ISSP_ObjectFactory.createPortalUser(newContact);
+    
+    newContact.OwnerId = newPortalUser.Id;
+    update newContact;
 
     //Portal_Applications__c app = [SELECT Id,Name,Provisioning_Type__c FROM Portal_Applications__c WHERE Name =:'IFG Production' LIMIT 1];
 
