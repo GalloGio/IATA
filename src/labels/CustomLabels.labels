@@ -1563,7 +1563,7 @@ Please &lt;a href=&quot;/ISSP_FAQ2Case?MainNav=Queries&amp;subNav=MyQueries&amp;
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>ANG_ISSP_ProductComparisonFeature2Tooltip</shortDescription>
-        <value>Available Form of Payment. Tickets issued on the customer’s debit/credit card and processed on the merchant agreement of the Airline. Payment is received directly by the Airline from its card processor.</value>
+        <value>Available Form of Payment. Pay-as-you-go e-wallet solution.</value>
     </labels>
     <labels>
         <fullName>ANG_ISSP_ProductComparisonFeature3</fullName>
