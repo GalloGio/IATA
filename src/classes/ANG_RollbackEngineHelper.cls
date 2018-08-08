@@ -27,7 +27,7 @@ global without sharing class ANG_RollbackEngineHelper implements Queueable{
 		AMS_AgencyRelationshipTriggerHandler.AMS_HierarchyProcess = true;
 		AMS_AccountTriggerHandler.processMinorChangesValidationFlag = false; 
 		rollbackData();
-		createWithdrawalCase();
+		AMS_OscarChangesHelper.createInternalCase(new Set<Id>{oscarId});
 		sendEmailConfirmation();
 		AMS_AgencyRelationshipTriggerHandler.AMS_HierarchyProcess = false;
 		AMS_AccountTriggerHandler.processMinorChangesValidationFlag = true;
@@ -86,16 +86,6 @@ global without sharing class ANG_RollbackEngineHelper implements Queueable{
 		}
 
 
-	}
-
-	private void createWithdrawalCase() {
-		Case c = new Case(CaseArea__c = 'Invoicing',
-						  Subject = 'Major Changes - ' + this.oscar.Account__r.Name,	
-						  Description = 'Dear colleagues,\nPlease issue a Credit Note in order to refund the change fee.\n\nThanks,\nxxx',
-						  AccountId = this.oscar.Account__c,
-						  Region__c = this.oscar.Account__r.Region_formula__c,
-						  BSPCountry__c = this.oscar.Account__r.IATA_ISO_Country__r.Name);
-		insert c;
 	}
 
 	private void processRollbackAccounts(List<String> accountList){
