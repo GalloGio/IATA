@@ -56,7 +56,6 @@ private class ISSP_ChangePassword_Test {
         Contact newContact = new Contact();
         newContact.RecordTypeId = IECUserManager.getContactRecordTypeForIEC();
         newContact.AccountId = newAccount.Id;
-        newContact.OwnerId = IECUserManager.getIECContactOwnerId();
         newContact.FirstName = 'Test';
         newContact.LastName = 'User';
         newContact.Title = 'TestTitle';

@@ -54,6 +54,8 @@ private class IECUserManager_tst {
       Id recordTypeId;
       Id zid = IECUserManager.getContactId();
 
+	  currentContact.ownerid = currentUser.id;
+	  update currentContact;
 
       System.runAs(currentUser) {
         recordTypeId = IECUserManager.getAccountRecordTypeByName(IECConstants.Account_RecordType_Airline);
