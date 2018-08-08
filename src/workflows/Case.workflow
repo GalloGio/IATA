@@ -4948,6 +4948,15 @@
         <protected>false</protected>
     </fieldUpdates>
     <fieldUpdates>
+        <fullName>Clear_interaction_date</fullName>
+        <description>clear interaction date when clearing the new interaction</description>
+        <field>New_Interaction_Date__c</field>
+        <name>Clear interaction date</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>Null</operation>
+        <protected>false</protected>
+    </fieldUpdates>
+    <fieldUpdates>
         <fullName>Close_Case</fullName>
         <field>Status</field>
         <literalValue>Closed</literalValue>
@@ -11854,6 +11863,10 @@ Case(month(datevalue(now()))+1,1,31,2,28,3,31,4,30,5,31,6,30,7,31,8,31,9,30,10,3
     </rules>
     <rules>
         <fullName>FDS Delete New Interaction Info</fullName>
+        <actions>
+            <name>Clear_interaction_date</name>
+            <type>FieldUpdate</type>
+        </actions>
         <actions>
             <name>New_interaction_Blank</name>
             <type>FieldUpdate</type>
