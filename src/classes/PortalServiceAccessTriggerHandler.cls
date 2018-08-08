@@ -1,3 +1,6 @@
+/**
+    Handler class for trigger Portal_Application_Right__c
+**/
 public without sharing class PortalServiceAccessTriggerHandler {
 
     public static Boolean privetTrigger = false;
@@ -9,7 +12,18 @@ public without sharing class PortalServiceAccessTriggerHandler {
                                    , map<ID, Portal_Application_Right__c> newPortalApplicationRightMap) {
         
         SendEmailToPortalAdminToValidateRequest(newPortalApplicationRightList);
+        updateParentContactForInsert(newPortalApplicationRightList);
+    }
+    
+    public static void onAfterUpdate(map<ID, Portal_Application_Right__c> newPortalApplicationRightMap 
+                                   , map<ID, Portal_Application_Right__c> oldPortalApplicationRightMap) {
         
+        updateParentContactForUpdate(newPortalApplicationRightMap, oldPortalApplicationRightMap);
+    }
+    
+    public static void onAfterDelete(list<Portal_Application_Right__c> newPortalApplicationRightOld) {
+        
+        updateParentContactForInsert(newPortalApplicationRightOld);
     }
     
     public static void SendEmailToPortalAdminToValidateRequest(list<Portal_Application_Right__c> newPortalApplicationRightList) {
@@ -277,4 +291,65 @@ public without sharing class PortalServiceAccessTriggerHandler {
                 insert lstUserSubscriptions;
         }
     }
+    
+    /**
+        Find related contacts to update fields but only when the access is granted
+    **/
+    private static void updateParentContactForInsert(list<Portal_Application_Right__c> listRights) {
+        // find related contacts
+        list<Id> listContactId = new list<Id>();
+        for (Portal_Application_Right__c right: listRights) {
+            if (right.Right__c=='Access Granted') {
+                listContactId.add(right.Contact__c);
+            }
+        }
+        updateParentContactServices(listContactId);
+    }
+    
+    /**
+        Find related contacts to update fields but only for changes in Field Right__c
+    **/
+    private static void updateParentContactForUpdate( map<ID, Portal_Application_Right__c> mapNews, 
+                                            map<ID, Portal_Application_Right__c> mapOlds) {
+        // find related contacts
+        list<Id> listContactId = new list<Id>();
+        for (Portal_Application_Right__c rightNew: mapNews.values()) {
+            Portal_Application_Right__c rightOld = mapOlds.get(rightNew.Id);
+            if (rightNew.Right__c!=rightOld.Right__c) {
+                listContactId.add(rightNew.Contact__c);
+            }
+        }
+        updateParentContactServices(listContactId);
+    }
+    
+    /**
+        Query input contacts to update the field Available_Services__c
+    **/
+    public static void updateParentContactServices(list<Id> listContactId) {
+        if (listContactId.isEmpty()) return;
+        list<Contact> listContact = [
+            SELECT Id, ID_Card_Holder__c,
+                (SELECT Id, Application_Name__c,  Portal_Application__r.Application_icon_URL__c
+                FROM Portal_Application_Rights__r WHERE Right__c = 'Access Granted')
+            FROM Contact
+            WHERE Id IN :listContactId];
+        // assign services to these contacts
+        for (Contact contact: listContact) {
+            list<String> listServices = new list<String>();
+            list<String> listImages = new list<String>();
+            for (Portal_Application_Right__c right: contact.Portal_Application_Rights__r) {
+                listServices.add(right.Application_Name__c);
+                listImages.add('<img src="' + right.Portal_Application__r.Application_icon_URL__c + '" alt="' + right.Application_Name__c + '" title="' + right.Application_Name__c + '" border="0" height="40" width="40"/>');
+            }
+            //special service for ID Card Holder
+            if (contact.ID_Card_Holder__c) {
+                listServices.add(IdCardUtil.IDCARD_SERVICE_NAME);
+                listImages.add(IdCardUtil.getCardHolderImageHtml());
+            }
+            contact.Available_Services__c = String.join(listServices,';');
+            contact.Available_Services_Images__c = String.join(listImages,' ');
+        }
+        update listContact;
+    }
+
 }
