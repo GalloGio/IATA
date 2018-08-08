@@ -31,7 +31,7 @@
 	</script>
 
 	<apex:form id="mainForm">
-	    <apex:actionFunction name="confirmMessageIsForbatch" action="{!compareIDs}" reRender="" >
+	    <apex:actionFunction name="confirmMessageIsForbatch" action="{!compareIDs}" reRender="batchInfo" >
         	<apex:param id="batchid" name="batch" value="" />
             <apex:param id="messageid" name="message" value="" />
         </apex:actionFunction>
@@ -138,7 +138,7 @@
 							cIsCompleted="{!NOT(isBatchFinished)}"
 							rendered="{!isBatchRunning || isBatchFinished}"
 						/>
-						<apex:outputLabel value="{!errorMessage}" rendered="{!isBatchFinished}"/>
+						<apex:outputLabel value="{!errorMessage}" rendered="{!isBatchFinished}" escape="false"/>
 					</apex:outputPanel>
 				</apex:pageBlockSection>
 			</apex:panelGrid>

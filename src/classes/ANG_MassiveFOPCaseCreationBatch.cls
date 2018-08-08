@@ -127,7 +127,7 @@ global class ANG_MassiveFOPCaseCreationBatch implements Database.Batchable<sObje
 				toReturnBody+=item+'\n';
 
 		mail.setPlainTextBody(toReturnBody);
-		EventBus.publish(new Batch_Notification__e(Batch_id__c = BC.getJobId(), message__c = toReturnBody));
+		EventBus.publish(new Batch_Notification__e(Batch_id__c = BC.getJobId(), message__c = errorMessages));
 		
 		 if(Test.isRunningTest()){
 		 	return;

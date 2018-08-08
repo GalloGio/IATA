@@ -212,7 +212,9 @@ public with sharing class AMS_PCI_Compliant_Mass_OSCAR_CreationCtr{
         String receivedID = Apexpages.currentPage().getParameters().get('batch');
         String message = Apexpages.currentPage().getParameters().get('message');
         
-        if (receivedID == batchId) errorMessage = message; 
+        message = message.replaceAll('\n', '<br/>');
+        message = message.replaceAll('\r', '<br/>');
+        if (receivedID == batchId) errorMessage = 'Errors found: <br/>' + message; 
         else errorMessage = '';
     }
 
