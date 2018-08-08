@@ -20,7 +20,7 @@ global class ANG_MasterData_Interface{
                                             billingState, billingStreet, IATA_ISO_Country__r.BSP_Country_free_text__c, IATA_ISO_Country__r.ISO_Code_Numeric__c, IATA_ISO_Country__r.ISO_Code__c, 
                                             Email__c, fax, IATACode__c, Id, ANG_IEP_Status_FF__c, Location_Class__c, Location_Type__c, Name, Parent.IATACode__c, phone, 
                                             IATA_ISO_Country__r.ANG_Portal_Service__r.Name, IATA_ISO_Country__r.Region__c, Reason__c, Remittance_frequency__c, Status__c, Tax_ID_1__c, TradeName__c, 
-                                            VAT_Number__c, ANG_RiskStatus__c, Segmentation__c, Top_Parent__r.IATACode__c,IATA_ISO_Country__r.AMS_Settlement_System__r.CurrencyIsoCode, ParentId,
+                                            VAT_Number__c, ANG_RiskStatus__c, Segmentation__c, Top_Parent__r.IATACode__c,IATA_ISO_Country__r.AMS_Settlement_System__r.CurrencyIsoCode, Top_Parent__c,
                                             (Select Id, recordtype.developername, Email_Used_for_BSP_Creation__c, ANG_FormOfPayment_ID__c, Status__c From Agency_Authorizations__r where recordtype.developername in ('BSPLink','FormOfPayment')),  //Accelya Email + FOP
                                             (Select Id, IATACode__c, Status__c From ChildAccounts where Purge_Flag__c = false and IATACode__c != null and recordtype.developername= 'IATA_Agency'), //List of children
                                             (Select Id, ANG_RHC_Amount__c, CurrencyIsoCode, ANG_Financial_Security__c From RHC_Informations__r), //RHC Information
@@ -237,7 +237,7 @@ global class ANG_MasterData_Interface{
                 //Owners
                 this.owners = new List<Owner>();
                 List<AMS_Account_Role__c> roles = new List<AMS_Account_Role__c>();
-                roles = acc.AMS_Account_Roles__r.isEmpty() ? fetchOwners(acc.parentId) : acc.AMS_Account_Roles__r;
+                roles = acc.AMS_Account_Roles__r.isEmpty() ? fetchOwners(acc.Top_Parent__c) : acc.AMS_Account_Roles__r;
                 for(AMS_Account_Role__c role :roles){
                     this.owners.add(new Owner(role.Owner_Name__c, (double)role.Percentage__c));
                 }
