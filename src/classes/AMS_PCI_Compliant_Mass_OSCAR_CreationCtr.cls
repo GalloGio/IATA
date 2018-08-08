@@ -208,10 +208,17 @@ public with sharing class AMS_PCI_Compliant_Mass_OSCAR_CreationCtr{
         isBatchRunning = true;
     }
 
+    public void compareIDs(){
+        String receivedID = Apexpages.currentPage().getParameters().get('batch');
+        String message = Apexpages.currentPage().getParameters().get('message');
+        
+        if (receivedID == batchId) errorMessage = message; 
+        else errorMessage = '';
+    }
+
     public void checkBatchStatus(){
 
-        AsyncApexJob batchRecord = [SELECT Id, Status, ExtendedStatus FROM AsyncApexJob WHERE Id = :this.batchId];
-        errorMessage = batchRecord.ExtendedStatus;
+        AsyncApexJob batchRecord = [SELECT Id, Status FROM AsyncApexJob WHERE Id = :this.batchId];
         System.debug(loggingLevel.FINE, '____ [cls AMS_PCI_Compliant_Mass_OSCAR_CreationCtr - checkBatchStatus] batchRecord - ' + batchRecord);
         
         isBatchRunning = batchRecord.Status != 'Aborted' && batchRecord.Status != 'Completed' &&  batchRecord.Status != 'Failed';

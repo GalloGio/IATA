@@ -7,7 +7,34 @@
 	.resultsTable tfoot td:first-child { font-weight: bold; }
 	</style>
 
+    <apex:includeScript value="{!$Resource.cometd}"/>
+    <apex:includeScript value="{!$Resource.jquery}"/>
+    <apex:includeScript value="{!$Resource.json2}"/>
+    <apex:includeScript value="{!$Resource.jquery_cometd}"/>
+    <script>
+    	var j$ = jQuery.noConflict();
+    
+    	$.cometd.websocketEnabled = false;
+    
+        $.cometd.init({
+            url: window.location.protocol + '//' + window.location.hostname + '/cometd/43.0/',
+            requestHeaders: {
+                Authorization: 'OAuth {!$Api.Session_ID}'
+            }
+        });
+        
+        $.cometd.subscribe('/event/Batch_Notification__e', function(message){  
+            console.log(message.data.payload.Batch_id__c);
+            confirmMessageIsForbatch(message.data.payload.Batch_id__c , message.data.payload.message__c);
+        });
+
+	</script>
+
 	<apex:form id="mainForm">
+	    <apex:actionFunction name="confirmMessageIsForbatch" action="{!compareIDs}" reRender="" >
+        	<apex:param id="batchid" name="batch" value="" />
+            <apex:param id="messageid" name="message" value="" />
+        </apex:actionFunction>
 		<c:Loading />
 		<apex:pageBlock title="PCI Oscar mass creation" mode="edit">
 			<apex:pageMessages/>

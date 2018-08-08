@@ -127,15 +127,14 @@ global class ANG_MassiveFOPCaseCreationBatch implements Database.Batchable<sObje
 				toReturnBody+=item+'\n';
 
 		mail.setPlainTextBody(toReturnBody);
-
+		EventBus.publish(new Batch_Notification__e(Batch_id__c = BC.getJobId(), message__c = toReturnBody));
+		
 		 if(Test.isRunningTest()){
 		 	return;
 		 }
 
 		Messaging.sendEmail(new Messaging.Singleemailmessage [] {mail});
 
-		if(!String.isEmpty(errorMessages)) throw new ExtendedStatusException (errorMessages);
 	}
 	
-	public class ExtendedStatusException extends Exception {}
 }
