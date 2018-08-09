@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<EmailTemplate xmlns="http://soap.sforce.com/2006/04/metadata">
+    <available>true</available>
+    <encodingKey>UTF-8</encodingKey>
+    <letterhead>IATADynamicSkyLetterhead</letterhead>
+    <name>AMS PCI Renewal Compliant PT</name>
+    <style>freeForm</style>
+    <subject>Ref nr {!Case.CaseNumber} – PCI Compliant</subject>
+    <textOnly>Caro(a),
+
+
+Código IATA: {!Case.IATA_Code__c}
+
+Em referência ao aconselhamento dado à IATA relativo aos riscos associados às transações com cartões de pagamento e potenciais violações de dados, é necessário confirmar a conformidade das Agências Acreditadas que operam no BSP para serem compatíveis com a Norma de Segurança de Dados (DSS) da Indústria de Cartões de Pagamento (PCI)..
+
+Ao abrigo das Regras para Agências de Vendas a Passageiros, todas as Agências Acreditadas pela IATA têm de assegurar a sua total conformidade com a PCI DSS.
+
+A PCI DSS é uma norma global destinada a ajudar os comerciantes (Agência) a entenderem e a implementarem normas para políticas de segurança, tecnologias e processos contínuos que protegem os seus sistemas de pagamento contra violações e roubos de dados do titular do cartão.
+
+Tendo em conta o acima exposto, solicita-se que nos forneça o Atestado de Conformidade, a comprovar a conformidade da sua empresa.
+
+Gostaríamos de informá-lo que, de acordo com as diretrizes da PCI DSS, os certificados de conformidade não serão aceitos para a validação do PCI DSS.
+
+O único documento reconhecido para a validação da PCI DSS são os documentos oficiais do site da PCI SSC. Qualquer outro formulário, certificado ou documentação emitidos com o objetivo de comprovar a conformidade com PCI DSS ou qualquer outro PCI standard não está autorizado e não será considerado válido.
+
+O Atestado de Conformidade é o documento utilizado para indicar que o Relatório sobre a Conformidade ou Questionário de Autoavaliação adequado foi realizado e para certificar o estatuto de conformidade da sua organização com a PCI DSS.
+
+Para mais informações sobre como obter a conformidade PCI DSS, visite a nossa página Web dedicada à PCI DSS: http://www.iata.org/services/finance/Pages/pci-dss.aspx
+
+Caso não esteja, atualmente, a processar quaisquer transações através do BSP utilizando a forma de pagamento através de Cartão de Crédito, ou não pretenda fazê-lo, pode entregar a Declaração de Não Utilização do Cartão de Crédito, anexada a este comunicado.
+
+É de salientar que após preencher essa declaração, não será exigido à Agência qualquer outro elemento comprovativo de conformidade. Todavia, a forma de pagamento através de Cartão de Crédito será desativada da Agência, à data de migração do país onde opera, ao abrigo do ambiente NewGen e da resolução 812
+
+A documentação solicitada supracitada (Atestado de Conformidade ou Declaração de Não Utilização do Cartão de Crédito) deverá ser enviada à IATA através da nossa página Web do Portal de Atendimento ao Cliente: http://www.iata.org/cs o mais tardar até {!Today()+30}. Anexe uma cópia digitalizada ao processo {!Case.CaseNumber} (https://portal.iata.org/apex/ISSP_Case?caseId={!Case.Id}) visível na sua página inicial do portal, na secção ‘Os meus processos recentes’.
+
+As instruções sobre como entregar a sua documentação encontram-se em anexo a este comunicado.
+
+O Departamento de Gestão da Agência realizará uma análise e tomará uma decisão com base nos elementos disponíveis.
+
+-----------------------------------------------------------------------------------------------------------------
+Tenha em atenção que o incumprimento deste requisito, a pedido da IATA, resultará numa Notificação de Não Conformidade / Não Conformidade Administrativa emitida contra a Agência.
+-----------------------------------------------------------------------------------------------------------------
+
+Agradecíamos que dispensasse atenção imediata a este assunto. Caso necessite de mais informações da IATA, não hesite em inserir uma nova questão, iniciando sessão no Portal do Cliente: www.iata.org/cs.</textOnly>
+    <type>html</type>
+    <uiType>Aloha</uiType>
+</EmailTemplate>

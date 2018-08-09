@@ -12,7 +12,7 @@ public with sharing class ISSP_ChangePassword {
     public String commParam { get { if(communityName=='CNS'){ return '&CommunityName='+ communityName;} return ''; } set;}
 
     // 1ID
-    public Boolean isOneId { get{ return ApexPages.currentPage().getURL().contains('OneId');}}
+    public Boolean isOneId { get{ return ApexPages.currentPage().getURL().containsIgnoreCase('OneId');}}
     public String serviceName{ get{ return ApexPages.currentPage().getParameters().get('serviceName'); }set;}
     public String serviceNameParam { get { return String.isNotEmpty(serviceName) ? '&serviceName='+ serviceName : ''; } set;}
 
@@ -66,10 +66,10 @@ public with sharing class ISSP_ChangePassword {
                 if (pageRef != null){
                     
                     if(!isOneId || serviceName == 'ISSP'){
-                        pageRef = new PageReference(OneIdUtils.getSiteCompleteUrl(OneIdUtils.Mode.ISSP) + '/ISSP_PersonalInformation?mid=M5S1&confirm=yes' + commParam);
+                        pageRef = new PageReference(OneIdUtils.getCommunityRedirection(OneIdUtils.Mode.ISSP,'/ISSP_PersonalInformation?mid=M5S1&confirm=yes' + commParam));
                     }
                     else{
-                        pageref = new PageReference(OneIdUtils.getSiteCompleteUrl(OneIdUtils.Mode.IDENTITY) + '?' + serviceNameParam);
+                        pageref = new PageReference(OneIdUtils.getCommunityRedirection(OneIdUtils.Mode.IDENTITY,'/s/?'+serviceNameParam));
                     }
                     
                     if (tempPass) updateUsers();
