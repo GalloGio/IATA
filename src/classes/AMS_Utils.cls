@@ -1222,6 +1222,7 @@ public without sharing class AMS_Utils {
         Map<Id, Set<Id>> stagingToAccount = new Map<Id, Set<Id>>();
         List<AMS_OSCAR__c> oscarsToCopy = new List<AMS_OSCAR__c>();
         Map<Id,String> locationTypeByOscar = new Map<Id,String>();
+        Map<Id,Id> topParentByOscar = new Map<Id,Id>();
 
         //DT: reindented and added 3 fields for iso shipping/billin
         Map<String, String> fieldsMapping = new Map<String, String> {'Name' => 'Account_Name__c'
@@ -1271,7 +1272,7 @@ public without sharing class AMS_Utils {
             oscarOnlineAccredIds.add(oscar.AMS_Online_Accreditation__c);
         }
 
-        Map<Id, Account> accounts = new Map<Id, Account>([SELECT Name, IATACode__c, Company_Type__c, Short_Name__c, TradeName__c, License_Number__c, VAT_Number__c, GDS__c, Operation__c,
+        Map<Id, Account> accounts = new Map<Id, Account>([SELECT Name, Top_Parent__c, IATACode__c, Company_Type__c, Short_Name__c, TradeName__c, License_Number__c, VAT_Number__c, GDS__c, Operation__c,
                 BillingCountry, BillingStreet, BillingPostalCode, BillingState, BillingCity, IATA_ISO_Country__c, Iso_State__c, ShippingCountry,
                 ShippingStreet, ShippingPostalCode, ShippingState, ShippingCity, Email__c, Website, Phone, Fax, In_a_Airport__c, Abbreviated_name__c, Abbreviated_address__c,
                 Remittance_frequency__c, Solicitation_Flag__c, VAT_Number_2__c, CASS_Number__c, Location_Class__c, Location_Type__c, Mobile__c, Is_your_firm_handling_Dangerous_Goods__c
@@ -1354,7 +1355,8 @@ public without sharing class AMS_Utils {
                 accountsToUpdate.add(acc);
                 stagingToAccount.put(onlineAcc.Id, new Set<Id>{oscar.Account__c});
                 oscarsToCopy.add(oscar);
-                locationTypeByOscar.put(oscar.Id, oscar.Account__r.Location_Type__c);
+                locationTypeByOscar.put(oscar.Id, acc.Location_Type__c);
+                topParentByOscar.put(oscar.Id, acc.Top_Parent__c == null ? acc.Id : acc.Top_Parent__c);
 
 
                 changes.add(new Ams_ChangeCodesHelper.ObjectChangesStruct(accChanges));
@@ -1376,7 +1378,7 @@ public without sharing class AMS_Utils {
                 for(AMS_OSCAR__c oscar : oscarsToCopy)
                     mapOscars.put(oscar.Id, oscar);
 
-                AMS_AccountRoleCreator.runRoleCreatorForOnlineAccreditations(stagingToAccount, true, mapOscars, locationTypeByOscar);
+                AMS_AccountRoleCreator.runRoleCreatorForOnlineAccreditations(stagingToAccount, true, mapOscars, locationTypeByOscar, topParentByOscar);
             }
 
             if(!createRHCInfo.isEmpty()) ANG_RHCHelper.createRHCInfo(createRHCInfo, false);

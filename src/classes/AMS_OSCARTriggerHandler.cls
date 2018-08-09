@@ -841,6 +841,7 @@ public class AMS_OSCARTriggerHandler {
         Map<Id, Account> accounts = getAccounts(accountIds);
 
         Map<Id,String> locationTypeByOscar = new Map<Id,String>();
+        Map<Id,Id> topParentByOscar = new Map<Id,Id>();
 
         //<Account Id, Current Location Type>
         // Get the Accounts location type in the beggining before its changed (as in the case of a change of Ownership to non IATA
@@ -881,6 +882,8 @@ public class AMS_OSCARTriggerHandler {
         for (AMS_OSCAR__c oscar : oscars) {
 
             locationTypeByOscar.put(oscar.Id, accounts.get(oscar.Account__c).Location_Type__c);
+            topParentByOscar.put(oscar.Id, accounts.get(oscar.Account__c).Top_Parent__c == null ? oscar.Account__c : accounts.get(oscar.Account__c).Top_Parent__c);
+
             AMS_OSCAR__c oldOSCAR = oldMap.get(oscar.Id);
 
             system.debug('processAgencyChanges() --> oscar = ' + oscar.Type_of_change__c + ' - oscar.staging = ' + oscar.AMS_Online_Accreditation__c);
@@ -1284,7 +1287,7 @@ public class AMS_OSCARTriggerHandler {
                 for(AMS_OSCAR__c oscar : oscars)
                     mapOscars.put(oscar.Id, oscar);
 
-                oldAndNewOwnersMap = AMS_AccountRoleCreator.runRoleCreatorForOnlineAccreditations(accountsAffectedPerOnlineAccreditation, !isSanityCheck, mapOscars, locationTypeByOscar);
+                oldAndNewOwnersMap = AMS_AccountRoleCreator.runRoleCreatorForOnlineAccreditations(accountsAffectedPerOnlineAccreditation, !isSanityCheck, mapOscars, locationTypeByOscar, topParentByOscar);
 
                 //verify ownership alignment
                 if(accsToCompareOwnership.size()>0 && !AMS_HierarchyHelper.checkHierarchyIntegrity(accsToCompareOwnership))
@@ -3350,7 +3353,7 @@ public class AMS_OSCARTriggerHandler {
                         }
                     }
 
-                    Map<Id,Account> mapAccountsToCheck = new Map<Id,Account>([SELECT Id, Status__c, Reason__c, Location_Type__c FROM Account WHERE Id IN :allHierarchyAccountIds]);
+                    Map<Id,Account> mapAccountsToCheck = new Map<Id,Account>([SELECT Id, Status__c, Reason__c, Location_Type__c, Top_Parent__c FROM Account WHERE Id IN :allHierarchyAccountIds]);
 					List<Account> accountsToCheck = mapAccountsToCheck.values();
 
                     //Remove TERMINATED and NOT ACCREDITED Accounts from list
@@ -3360,7 +3363,10 @@ public class AMS_OSCARTriggerHandler {
 
                     stagingToAccounts.put(updatedOscar.AMS_Online_Accreditation__c, allHierarchyAccountIds);
                     system.debug('applyChangeCodesWithDependencies() -> move to MD contact data. Pass map: '+stagingToAccounts);
-                    AMS_AccountRoleCreator.runRoleCreatorForOnlineAccreditations(stagingToAccounts, true, new Map<Id,AMS_OSCAR__c>{updatedOscar.Id => updatedOscar}, new Map<Id,String>{updatedOscar.Id => mapAccountsToCheck.get(updatedOscar.Account__c).Location_Type__c});
+                    AMS_AccountRoleCreator.runRoleCreatorForOnlineAccreditations(stagingToAccounts, true, 
+                                                                                new Map<Id,AMS_OSCAR__c>{updatedOscar.Id => updatedOscar}, 
+                                                                                new Map<Id,String>{updatedOscar.Id => mapAccountsToCheck.get(updatedOscar.Account__c).Location_Type__c}, 
+                                                                                new Map<Id,Id>{updatedOscar.Id => mapAccountsToCheck.get(updatedOscar.Account__c).Top_Parent__c == null ? updatedOscar.Account__c : mapAccountsToCheck.get(updatedOscar.Account__c).Top_Parent__c});
                     
                     //verify ownership alignment
                     if(allHierarchyAccountIds.size()>0 && !AMS_HierarchyHelper.checkHierarchyIntegrity(new Map<Id, Set<Id>>{updatedOscar.Id => allHierarchyAccountIds}))
@@ -3667,7 +3673,6 @@ public class AMS_OSCARTriggerHandler {
                         AMS_ChangeCodesHelper.createAAChangeCodes(new List<AMS_OSCAR_JSON.ChangeCode> {changeCode}, new List<AMS_OSCAR__c> {updatedOscar}, new List<Account> {acct}, true);
                     
                         System.debug('updatedOscar.Is_PCI_compliant__c: criei CC' );
-                        //AMS_Utils.copyDataToAccount(new List<AMS_OSCAR__c>{updatedOscar}, false);
                     }
 
                 } catch (Exception ex) {
