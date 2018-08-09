@@ -736,7 +736,7 @@ Specify if payment is guaranteed to the airline against: fraud dispute, commerci
         <fullName>Provider_should_be_active</fullName>
         <active>true</active>
         <errorConditionFormula>AND(
-   NOT(ISPICKVAL(Provider__r.Status__c , &quot;active&quot;)),
+   NOT(ISPICKVAL(Payment_Provider_Account_Role__r.Status__c , &quot;active&quot;)),
    ISPICKVAL(PP_Status__c  , &quot;Active&quot;)
 )</errorConditionFormula>
         <errorMessage>Partner Product cannot be activated if Provider Account is not active</errorMessage>
