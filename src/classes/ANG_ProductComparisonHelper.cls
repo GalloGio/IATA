@@ -55,7 +55,7 @@ public with sharing class ANG_ProductComparisonHelper {
 										    	ANG_HE_AnnualFees_Large_Agents__c, ANG_AE_Application_Registration_Fees__c, ANG_AE_Fees_First_10_locations__c,
 										    	ANG_AE_Fees_Next_15_Locations__c, ANG_AE_Fees_Additional_Locations__c,
 										    	ANG_Fees_GoStandard_GoLite__c, ANG_Fees_GoLite_GoStandard__c,
-	    									    (select id, Related_Product__r.Name, ANG_Tooltip__c, ANG_Description__c, ANG_Description_Label__c from Product_BOM__r)
+	    									    (select id, Related_Product__r.Name, ANG_Tooltip__c, ANG_Description__c, ANG_Description_Label__c, Order__c from Product_BOM__r ORDER BY Order__c)
 	    								  from Product2 where id in:setProdId];
 	    		
 	    		if(!lsProd.isEmpty()) {
