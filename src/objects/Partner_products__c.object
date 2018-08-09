@@ -736,7 +736,7 @@ Specify if payment is guaranteed to the airline against: fraud dispute, commerci
         <fullName>Provider_should_be_active</fullName>
         <active>true</active>
         <errorConditionFormula>AND(
-   NOT(ISPICKVAL(Provider__r.Status__c , &quot;active&quot;)),
+   NOT(ISPICKVAL(Payment_Provider_Account_Role__r.Status__c , &quot;active&quot;)),
    ISPICKVAL(PP_Status__c  , &quot;Active&quot;)
 )</errorConditionFormula>
         <errorMessage>Partner Product cannot be activated if Provider Account is not active</errorMessage>
@@ -766,10 +766,9 @@ Specify if payment is guaranteed to the airline against: fraud dispute, commerci
         <availability>online</availability>
         <displayType>button</displayType>
         <encodingKey>UTF-8</encodingKey>
-        <height>600</height>
         <linkType>url</linkType>
         <masterLabel>Terminate ATM Product</masterLabel>
-        <openType>noSidebar</openType>
+        <openType>replace</openType>
         <protected>false</protected>
         <url>/flow/TIP_Product_Termination?vProductId={!Partner_products__c.Id}&amp;retURL=/{!Partner_products__c.Id}</url>
     </webLinks>
