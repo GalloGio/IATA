@@ -38,11 +38,14 @@ public class FinancialSecurityExpiredBatchTest {
                 Reasonforrequest__c = 'New Application', Reception_Case__c = c.Id);
         insert FS2;        
 
-        FinancialSecurityExpiredBatchAP obj1 = new FinancialSecurityExpiredBatchAP ();
-        DataBase.executeBatch(obj1);
+        
+        FinancialSecurityExpiredSchedulerAP bScheduler = new FinancialSecurityExpiredSchedulerAP();
+        String sch = '20 30 8 10 2 ?';
+        system.schedule('Test FinancialSecurityExpiredSchedulerAP', sch, bScheduler);
+      
 
-        FinancialSecurityExpiredBatchOthers obj2 = new FinancialSecurityExpiredBatchOthers ();
-        DataBase.executeBatch(obj2);
+        FinancialSecurityExpiredSchedulerOthers bOScheduler = new FinancialSecurityExpiredSchedulerOthers();
+        system.schedule('Test FinancialSecurityExpiredSchedulerOthers', sch, bOScheduler);
 
         Test.stopTest();
 

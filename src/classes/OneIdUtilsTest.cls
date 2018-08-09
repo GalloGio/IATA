@@ -13,6 +13,11 @@ private class OneIdUtilsTest {
         setting.Name = 'IdentityPortal';
         setting.Value__c = orgUrl;
         insert setting;
+
+        ISSP_CS__c setting3 = new ISSP_CS__c();
+        setting3.Name = 'Host';
+        setting3.Value__c = orgUrl;
+        insert setting3;
         
         OneId_Global_Settings__c setting2 = new OneId_Global_Settings__c();
         setting2.Community_Name__c = 'oneidentity';
@@ -23,10 +28,11 @@ private class OneIdUtilsTest {
         
         String UrlName = OneIdUtils.getCommunityUrlName();                
 
-        String methodUrl = OneIdUtils.getOrgUrl();     
-		OneIdUtils.fakemethod();
-        //String Siteurl=OneIdUtils.GetSiteCompleteUrl();
-        //String SiteurlSt = OneIdUtils.GetSiteCompleteUrl(OneIdUtils.GET_POR_URL_FROM_SITE);
+        String methodUrl = OneIdUtils.getOrgUrl();      
+        String communityRedirection = OneIdUtils.getCommunityRedirection(OneIdUtils.Mode.IDENTITY, methodUrl);      
+        String Siteurl=OneIdUtils.GetSiteCompleteUrl();
+        String SiteurlSt = OneIdUtils.GetSiteCompleteUrl(OneIdUtils.Mode.IDENTITY);
+        //String communityRedirection = OneIdUtils.getCommunityRedirection(OneIdUtils.Mode.IDENTITY, methodUrl);  
         
         //String SiteurlCs = OneIdUtils.GetSiteCompleteUrl(OneIdUtils.GET_POR_URL_FROM_ISSP_CS);
         //String SiteurlOrgCusTy = OneIdUtils.GetSiteCompleteUrl(OneIdUtils.GET_POR_URL_FROM_ORG_AND_CUM_NAME_CS);

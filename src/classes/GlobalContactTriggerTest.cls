@@ -443,48 +443,43 @@ private class GlobalContactTriggerTest {
             con.status__c = 'Inactive';
             con.Kavi_User__c = testUser.id;
 
-            List<Portal_Applications__c> portalAppList = new List<Portal_Applications__c>();
+        Test.startTest();
+        list<Portal_Applications__c> listApps = new list<Portal_Applications__c>();
+        Portal_Applications__c PA = new Portal_Applications__c(
+            Name = 'Test'
+        );
+        listApps.add(PA);
 
-            Portal_Applications__c PA = new Portal_Applications__c(
-                Name = 'Test'
-            );
-            portalAppList.add(PA);
+        Portal_Applications__c PA2 = new Portal_Applications__c(
+            Name = 'Standards Setting Workspace'
+        );
+        listApps.add(PA2);
+        insert listApps;
 
-            Portal_Applications__c PA2 = new Portal_Applications__c(
-                Name = 'Standards Setting Workspace'
-            );
-            portalAppList.add(PA2);
-            insert portalAppList;
+        list<Portal_Application_Right__c> listAppRights = new list<Portal_Application_Right__c>();
+        Portal_Application_Right__c PAR = new Portal_Application_Right__c(
+            Contact__c = con.Id,
+            Portal_Application__c = PA.id,
+            Right__c = 'Access Granted'
+        );
+        listAppRights .add(PAR);
 
-            Portal_Application_Right__c PAR = new Portal_Application_Right__c(
-                Contact__c = con.Id,
-                Portal_Application__c = PA.id,
-                Right__c = 'Access Granted'
-            );
+        Portal_Application_Right__c PAR2 = new Portal_Application_Right__c(
+            Contact__c = con.Id,
+            Portal_Application__c = PA2.id,
+            Right__c = 'Access Granted'
+        );
+        listAppRights .add(PAR2);
+        insert listAppRights ;
 
-            List<Portal_Application_Right__c> portalRightsList = new List<Portal_Application_Right__c>();
-            portalRightsList.add(PAR);
-
-            Portal_Application_Right__c PAR2 = new Portal_Application_Right__c(
-                Contact__c = con.Id,
-                Portal_Application__c = PA2.id,
-                Right__c = 'Access Granted'
-            );
-            portalRightsList.add(PAR2);
-            insert portalRightsList;
-
-           
-            try{
-                update con;
-            }
-            catch(Exception e){
-                Boolean expectedExceptionThrown =  e.getMessage().contains('subscription') ? true : false;
-                //System.AssertEquals(expectedExceptionThrown, true);
-            }
-            Test.stopTest();
-
+        try{
+            update con;
         }
-        
+        catch(Exception e){
+            Boolean expectedExceptionThrown =  e.getMessage().contains('subscription') ? true : false;
+            //System.AssertEquals(expectedExceptionThrown, true);
+        }
+        Test.stopTest();
     }
 
     static testMethod void triggerTestAdd5() {
@@ -515,5 +510,76 @@ private class GlobalContactTriggerTest {
             //System.AssertEquals(expectedExceptionThrown, true);
         }
 
+    }
+
+    static testMethod void triggerTestIdCardAvailableService1() {
+        Contact contact = new Contact();
+        contact.FirstName = 'first875454';
+        contact.LastName = 'last2343246';
+        contact.ID_Card_Holder__c = true;
+
+        Test.startTest();
+        insert contact;
+        Test.stopTest();
+
+        contact = [Select Id, Name, ID_Card_Holder__c, Available_Services__c, Available_Services_Images__c
+            FROM Contact
+            WHERE id = :contact.Id];
+        System.assertEquals(IdCardUtil.IDCARD_SERVICE_NAME, contact.Available_Services__c);
+        System.assert(contact.Available_Services_Images__c.contains(IdCardUtil.IDCARD_SERVICE_NAME));
+    }
+
+    static testMethod void triggerTestIdCardAvailableService2() {
+        Contact contact = new Contact();
+        contact.FirstName = 'first55667';
+        contact.LastName = 'last2344237';
+        contact.email = 'test98329832@email.com';
+        contact.ID_Card_Holder__c = false;
+        insert contact;
+
+        contact = [Select Id, Name, ID_Card_Holder__c, Available_Services__c, Available_Services_Images__c
+            FROM Contact
+            WHERE id = :contact.Id];
+        System.assertEquals(true,String.isBlank(contact.Available_Services__c));
+        System.assertEquals(true,String.isBlank(contact.Available_Services_Images__c));
+        System.debug('*** TEST START');
+        IDCardUtil.isFirstTime = true;
+        Test.startTest();
+        contact.ID_Card_Holder__c = true;
+        update contact;
+        Test.stopTest();
+
+        contact = [Select Id, Name, ID_Card_Holder__c, Available_Services__c, Available_Services_Images__c
+            FROM Contact
+            WHERE id = :contact.Id];
+        System.assertEquals(IdCardUtil.IDCARD_SERVICE_NAME, contact.Available_Services__c);
+        System.assert(contact.Available_Services_Images__c.contains(IdCardUtil.IDCARD_SERVICE_NAME), contact.Available_Services_Images__c);
+    }
+
+    static testMethod void triggerTestIdCardAvailableService3() {
+        Contact contact = new Contact();
+        contact.FirstName = 'first123123';
+        contact.LastName = 'last31232131';
+        contact.email = 'test98329833@email.com';
+        contact.ID_Card_Holder__c = true;
+        insert contact;
+
+        contact = [Select Id, Name, ID_Card_Holder__c, Available_Services__c, Available_Services_Images__c
+            FROM Contact
+            WHERE id = :contact.Id];
+        System.assertEquals(IdCardUtil.IDCARD_SERVICE_NAME, contact.Available_Services__c);
+        System.assert(contact.Available_Services_Images__c.contains(IdCardUtil.IDCARD_SERVICE_NAME));
+
+        IDCardUtil.isFirstTime = true;
+        Test.startTest();
+        contact.ID_Card_Holder__c = false;
+        update contact;
+        Test.stopTest();
+        
+        contact = [Select Id, Name, ID_Card_Holder__c, Available_Services__c, Available_Services_Images__c
+            FROM Contact
+            WHERE id = :contact.Id];
+        System.assertEquals(true,String.isBlank(contact.Available_Services__c));
+        System.assertEquals(true,String.isBlank(contact.Available_Services_Images__c));
     }
 }

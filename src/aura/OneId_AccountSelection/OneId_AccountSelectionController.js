@@ -11,6 +11,13 @@
             c.set("v.accountLabels", a.getReturnValue());
         });
         $A.enqueueAction(labelsAction);
+
+        var agencyTypes = [
+            {value : 'Travel Agent', label: $A.get('{!$Label.c.ISSP_Travel}')},
+            {value : 'Cargo Agent', label: $A.get('{!$Label.c.ISSP_Cargo}')}
+        ];
+
+        c.set("v.agencyTypes", agencyTypes);
 	},
 
 	handleItem : function (c,e,h) {

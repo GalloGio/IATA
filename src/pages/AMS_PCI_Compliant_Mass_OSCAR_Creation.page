@@ -11,6 +11,9 @@
 		<c:Loading />
 		<apex:pageBlock title="PCI Oscar mass creation" mode="edit">
 			<apex:pageMessages/>
+			<apex:pageMessage severity="warning" 
+					strength="1" 
+					summary="For PCI operation New Gen countries will be excluded"/>
 			<apex:panelGrid columns="2" rowClasses="alignTop">
 				<apex:pageBlockSection id="filters" title="Filters" columns="1">
 					
@@ -57,8 +60,21 @@
 							rendered="{!NOT(ISBLANK(operation))}"/>
 					</apex:pageBlockSectionItem>
 
+                    <apex:pageBlockSectionItem id="locationClasses" rendered="{!operation == 'PCI'}">
+                      <c:MultiselectPicklist 
+							leftLabel="Available Classes" 
+                            leftOptions="{!availableClasses}"
+                            rightLabel="Selected Classes"
+                            rightOptions="{!selectedClasses}"
+                            size="3"
+                            width="100px"
+                            btn_up_down="false"
+                            readonly="false"
+                            rendered="{!NOT(ISBLANK(operation))}"/>
+                    </apex:pageBlockSectionItem>
+
 					<apex:pageBlockSectionItem id="locationTypes">
-						<c:MultiselectPicklist 
+                        <c:MultiselectPicklist 
 							leftLabel="Available Locations" 
 							leftOptions="{!availableLocations}"
 							rightLabel="Selected Locations"
