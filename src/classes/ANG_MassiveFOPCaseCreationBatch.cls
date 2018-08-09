@@ -116,7 +116,7 @@ global class ANG_MassiveFOPCaseCreationBatch implements Database.Batchable<sObje
 		for(ANG_ConversionHelper.ConversionBatchItem item:resultItems) 
 			if(item.isError){
 				toReturnBody+=item+'\n';
-            	errorMessages += item.iataCode + ': ' + item.errorMessage + '\n';
+            	errorMessages = (String.isEmpty(errorMessages) ?  '[{"iataCode":"' + item.iataCode + '", "errorMessage":"' + item.errorMessage + '"}' : errorMessages + ', {"iataCode":"' + item.iataCode + '", "errorMessage":"' + item.errorMessage + '"}');         
             }
 		
 		toReturnBody+= '\n\n';
@@ -127,7 +127,7 @@ global class ANG_MassiveFOPCaseCreationBatch implements Database.Batchable<sObje
 				toReturnBody+=item+'\n';
 
 		mail.setPlainTextBody(toReturnBody);
-		EventBus.publish(new Batch_Notification__e(Batch_id__c = BC.getJobId(), message__c = errorMessages));
+		if(!String.isEmpty(errorMessages)) EventBus.publish(new Batch_Notification__e(Batch_id__c = BC.getJobId(), message__c = errorMessages + ']'));
 		
 		 if(Test.isRunningTest()){
 		 	return;
