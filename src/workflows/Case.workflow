@@ -798,6 +798,16 @@
         <template>AP_notification/IAPP_Notification_of_new_docs_received</template>
     </alerts>
     <alerts>
+        <fullName>IATA_iiNet_Service_Now</fullName>
+        <ccEmails>iata@service-now.com</ccEmails>
+        <ccEmails>iinetCare@iata.org</ccEmails>
+        <description>IATA iiNet Service Now</description>
+        <protected>false</protected>
+        <senderAddress>noreply@iata.org</senderAddress>
+        <senderType>OrgWideEmailAddress</senderType>
+        <template>IATA_iiNet/IATA_iiNet_Create_Service_Now_Incident</template>
+    </alerts>
+    <alerts>
         <fullName>ICCS_Contact_Notification_case_open_for_15_days</fullName>
         <description>ICCS Contact Notification case open for 15 days</description>
         <protected>false</protected>
