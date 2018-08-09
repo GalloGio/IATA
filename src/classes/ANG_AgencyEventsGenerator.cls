@@ -17,7 +17,10 @@ public class ANG_AgencyEventsGenerator{
         if(ANG_ConversionHelper.isMigrationTool && cmType !='ChangeCode' ) return; //in case of migrating account, prevents following code to be run
         list<ANG_CalloutMapping__c> calloutmappingList= new list<ANG_CalloutMapping__c>();
         for(ANG_CalloutMapping__c cm: ANG_CalloutMapping__c.getAll().values()){
-            if(cm.Type__c== cmType && (cm.Integration_System__c == 'SAP PI' && !cm.Event_type__c.equalsIgnoreCase('Update_Sent') && !cm.Event_type__c.equalsIgnoreCase('Invalid') && !cm.Event_type__c.equalsIgnoreCase('Deleted'))) calloutmappingList.add(cm);
+            if (cm.Integration_System__c == 'SAP PI') {
+                if (cm.Type__c == cmType && !cm.Event_type__c.equalsIgnoreCase('Update_Sent') && !cm.Event_type__c.equalsIgnoreCase('Invalid') && !cm.Event_type__c.equalsIgnoreCase('Deleted')) 
+                    calloutmappingList.add(cm);
+            } else if (cm.Type__c == cmType) calloutmappingList.add(cm);
         }
 
         set<string> insertedRecordsSet = new set<string>();
