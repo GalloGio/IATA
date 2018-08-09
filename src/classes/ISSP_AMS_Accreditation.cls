@@ -1307,7 +1307,7 @@ public without sharing class ISSP_AMS_Accreditation {
         system.debug('hqAccount: ' + hqAccount);
         system.debug('cse: ' + cse);
         if(cse.id == null && String.isBlank(cse.CaseNumber) && cse.Reason1__c == 'New HO') {
-            List<Case> cases = [SELECT Id, CaseNumber FROM Case WHERE AccountId = :hqAccount.Id AND IsClosed = false AND Type_of_customer__c = :cse.Type_of_customer__c LIMIT 1];
+            List<Case> cases = [SELECT Id, CaseNumber FROM Case WHERE AccountId = :hqAccount.Id AND Reason1__c = 'New HO' AND IsClosed = false AND Type_of_customer__c = :cse.Type_of_customer__c LIMIT 1];
 
             if(!cases.isEmpty()) {
                 res.add(cases[0].Id);

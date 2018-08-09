@@ -72,7 +72,7 @@
         <criteriaItems>
             <field>RecordTypeId</field>
             <operation>equals</operation>
-            <value>Operator,Standard Account,Others,General Sales Agent Headquarters,Agency,Airline Headquarters</value>
+            <value>Operator,Standard Account,Others,General Sales Agent Headquarters,Agency,IATA Standard Account,Airline Headquarters</value>
         </criteriaItems>
         <criteriaItems>
             <field>Category__c</field>

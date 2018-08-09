@@ -11,6 +11,7 @@ private class AMS_PCI_Batch_Remainder_Test {
 		
 		Case cse = (Case) JSON.deserialize('{"CreatedDate":"2018-04-13"}', Case.class);
 		cse.Id = '5009E000007bz32';
+		cse.Subject = 'PCI DSS Compliant';
 		cse.ContactId = UserInfo.getUserId();
 		cse.Contact = (Contact) JSON.deserialize('{"Name":"First Last", "Preferred_Language__c":"English", "Id":"'+cse.ContactId+'"}', Contact.class);
 		List<Case> cases = new List<Case> {cse};
