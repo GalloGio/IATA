@@ -511,4 +511,75 @@ private class GlobalContactTriggerTest {
         }
 
     }
+
+    static testMethod void triggerTestIdCardAvailableService1() {
+        Contact contact = new Contact();
+        contact.FirstName = 'first875454';
+        contact.LastName = 'last2343246';
+        contact.ID_Card_Holder__c = true;
+
+        Test.startTest();
+        insert contact;
+        Test.stopTest();
+
+        contact = [Select Id, Name, ID_Card_Holder__c, Available_Services__c, Available_Services_Images__c
+            FROM Contact
+            WHERE id = :contact.Id];
+        System.assertEquals(IdCardUtil.IDCARD_SERVICE_NAME, contact.Available_Services__c);
+        System.assert(contact.Available_Services_Images__c.contains(IdCardUtil.IDCARD_SERVICE_NAME));
+    }
+
+    static testMethod void triggerTestIdCardAvailableService2() {
+        Contact contact = new Contact();
+        contact.FirstName = 'first55667';
+        contact.LastName = 'last2344237';
+        contact.email = 'test98329832@email.com';
+        contact.ID_Card_Holder__c = false;
+        insert contact;
+
+        contact = [Select Id, Name, ID_Card_Holder__c, Available_Services__c, Available_Services_Images__c
+            FROM Contact
+            WHERE id = :contact.Id];
+        System.assertEquals(true,String.isBlank(contact.Available_Services__c));
+        System.assertEquals(true,String.isBlank(contact.Available_Services_Images__c));
+        System.debug('*** TEST START');
+        IDCardUtil.isFirstTime = true;
+        Test.startTest();
+        contact.ID_Card_Holder__c = true;
+        update contact;
+        Test.stopTest();
+
+        contact = [Select Id, Name, ID_Card_Holder__c, Available_Services__c, Available_Services_Images__c
+            FROM Contact
+            WHERE id = :contact.Id];
+        System.assertEquals(IdCardUtil.IDCARD_SERVICE_NAME, contact.Available_Services__c);
+        System.assert(contact.Available_Services_Images__c.contains(IdCardUtil.IDCARD_SERVICE_NAME), contact.Available_Services_Images__c);
+    }
+
+    static testMethod void triggerTestIdCardAvailableService3() {
+        Contact contact = new Contact();
+        contact.FirstName = 'first123123';
+        contact.LastName = 'last31232131';
+        contact.email = 'test98329833@email.com';
+        contact.ID_Card_Holder__c = true;
+        insert contact;
+
+        contact = [Select Id, Name, ID_Card_Holder__c, Available_Services__c, Available_Services_Images__c
+            FROM Contact
+            WHERE id = :contact.Id];
+        System.assertEquals(IdCardUtil.IDCARD_SERVICE_NAME, contact.Available_Services__c);
+        System.assert(contact.Available_Services_Images__c.contains(IdCardUtil.IDCARD_SERVICE_NAME));
+
+        IDCardUtil.isFirstTime = true;
+        Test.startTest();
+        contact.ID_Card_Holder__c = false;
+        update contact;
+        Test.stopTest();
+        
+        contact = [Select Id, Name, ID_Card_Holder__c, Available_Services__c, Available_Services_Images__c
+            FROM Contact
+            WHERE id = :contact.Id];
+        System.assertEquals(true,String.isBlank(contact.Available_Services__c));
+        System.assertEquals(true,String.isBlank(contact.Available_Services_Images__c));
+    }
 }
