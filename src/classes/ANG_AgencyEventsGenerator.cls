@@ -17,7 +17,7 @@ public class ANG_AgencyEventsGenerator{
         if(ANG_ConversionHelper.isMigrationTool && cmType !='ChangeCode' ) return; //in case of migrating account, prevents following code to be run
         list<ANG_CalloutMapping__c> calloutmappingList= new list<ANG_CalloutMapping__c>();
         for(ANG_CalloutMapping__c cm: ANG_CalloutMapping__c.getAll().values()){
-            if(cm.Type__c== cmType) calloutmappingList.add(cm);
+            if(cm.Type__c== cmType && (cm.Integration_System__c == 'SAP PI' && !cm.Event_type__c.equalsIgnoreCase('Update_Sent') && !cm.Event_type__c.equalsIgnoreCase('Invalid') && !cm.Event_type__c.equalsIgnoreCase('Deleted'))) calloutmappingList.add(cm);
         }
 
         set<string> insertedRecordsSet = new set<string>();
@@ -30,7 +30,7 @@ public class ANG_AgencyEventsGenerator{
                         AMS_Agency_Updates__c auRec = new AMS_Agency_Updates__c(
                             Account__c = String.ValueOf(obj.get(accField)), 
                             Update_Type__c = cm.Event_type__c,
-                            Integration_System__c='Mulesoft',
+                            Integration_System__c= cm.Integration_System__c,
                             Action_Type__c=cm.Action__c,
                             Change_Code__c=cm.Change_Code__c,
                             Agency_Applied_Change_code__c=cmType=='ChangeCode'?String.ValueOf(obj.get('id')):null,
