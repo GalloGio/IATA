@@ -1,0 +1,98 @@
+<apex:component controller="ISSP_SISMembershipApplicationForm_Ctrl">
+    <apex:attribute name="newForm" description="AP_Process_Form__c" type="AP_Process_Form__c" required="true"/>
+    <apex:attribute name="account" description="Account" type="account"/>
+
+<div id="form-container">
+
+    <apex:pageBlockSection columns="1" id="section1" collapsible="false">
+        <apex:facet name="header">
+            <apex:outputpanel >
+                Section 1 - Company information
+            </apex:outputpanel>
+        </apex:facet>
+
+        <tr><td colspan="4" class="blue-label">Airline Head Office Information:</td></tr>
+        <apex:outputText >Airline Information to be included in the invoices produced by SIS</apex:outputText>
+        
+
+        <apex:pageBlockSectionItem >
+            <apex:outputLabel value="Legal Name of the Company" />
+            <apex:outputText value="{!newForm.Legal_Name_of_company__c}"/>
+        </apex:pageBlockSectionItem>
+
+        <apex:pageBlockSectionItem >
+            <apex:outputLabel value="Company Registration ID" />
+            <apex:outputText value="{!newForm.Company_Registration_ID__c}"/>
+        </apex:pageBlockSectionItem>
+
+        <apex:pageBlockSectionItem >
+            <apex:outputLabel value="TAX/VAT Registration Number" />
+            <apex:outputText value="{!newForm.TAX_VAT_Registration_Number__c}"/>
+        </apex:pageBlockSectionItem>
+
+        <apex:pageBlockSectionItem >
+            <apex:outputLabel value="Address" />
+            <apex:outputText value="{!newForm.Company_address__c}"/>
+        </apex:pageBlockSectionItem>
+
+        <apex:pageBlockSectionItem >
+            <apex:outputLabel value="City Name" />
+            <apex:outputText value="{!newForm.Company_city__c}"/>
+        </apex:pageBlockSectionItem>
+
+        <apex:pageBlockSectionItem >
+            <apex:outputLabel value="Postal Code" />
+            <apex:outputText value="{!newForm.Postal_code__c}"/>
+        </apex:pageBlockSectionItem>
+
+        <apex:pageBlockSectionItem >
+            <apex:outputLabel value="State Name" />
+            <apex:outputText value="{!newForm.Company_State__c}"/>
+        </apex:pageBlockSectionItem>
+
+        <apex:pageBlockSectionItem >
+            <apex:outputLabel value="Country" />
+            <apex:outputText value="{!newForm.Company_Country__r.Name}"/>
+        </apex:pageBlockSectionItem>
+
+    </apex:pageBlockSection>
+
+    <apex:pageBlockSection columns="1" id="section2" collapsible="false">
+        <apex:facet name="header">
+            <apex:outputpanel >
+                Section 2 - Contact Person
+            </apex:outputpanel>
+        </apex:facet>
+
+        <apex:pageBlockSectionItem >
+            <apex:outputLabel value="First Name"/>
+            <apex:outputText value="{!newForm.Billing_File_Emrgcy_Contact_F_Name__c}"/>
+        </apex:pageBlockSectionItem>
+        <apex:pageBlockSectionItem >
+            <apex:outputLabel value="Email"/>
+            <apex:outputText value="{!newForm.Billing_File_Emrgcy_Contact_Email__c}"/>
+        </apex:pageBlockSectionItem>
+
+        <apex:pageBlockSectionItem >
+            <apex:outputLabel value="Last Name"/>
+            <apex:outputText styleclass="required" value="{!newForm.Billing_File_Emrgcy_Contact_L_Name__c}"/>
+        </apex:pageBlockSectionItem>
+        <apex:pageBlockSectionItem >
+            <apex:outputLabel value="Phone Number"/>
+            <apex:outputText value="{!newForm.Billing_File_Emrgcy_Contact_Number__c}"/>
+        </apex:pageBlockSectionItem>
+
+        <apex:pageBlockSectionItem >
+            <apex:outputLabel value="Title"/>
+            <apex:outputText value="{!newForm.Billing_File_Emrgcy_Contact_Job_Title__c}"/>
+        </apex:pageBlockSectionItem>
+        <apex:pageBlockSectionItem >
+            <apex:outputLabel value="Who requested your Company to join SIS as TOU?"/>
+            <apex:outputText value="{!newForm.Who_requested_to_join_TOU__c}"/>
+        </apex:pageBlockSectionItem>
+
+    </apex:pageBlockSection>
+
+</div>
+
+</apex:component>

@@ -71,6 +71,7 @@ public with sharing class ISSP_SIS_AccountHandler {
     **/
     public static void beforeUpdate(map<Id,Account> mapNews, map<Id,Account> mapOlds) {
         if (BLOCK_EXECUTION) return;
+        validateFieldAvailableSISManagement(mapNews, mapOlds);
         updateSISStatusFields(mapNews, mapOlds);
         
         if (!ISSP_WS_SIS_Callout_Common.SIS_CALLOUTS_ENABLED) return;
@@ -205,5 +206,29 @@ public with sharing class ISSP_SIS_AccountHandler {
         }
         // if no country is found use the setting with the keyword 'All'
         return allCountriesSettings;
+    }
+    
+    /**
+        Give_SIS_Membership__c can only be changed from empty to some value
+        if there is at least one portal contact having access to SIS Membership Application
+    **/
+    private static void validateFieldAvailableSISManagement(map<Id,Account> mapNews, map<Id,Account> mapOlds) {
+        list<Id> listAccountId = new list<Id>();
+        for (Account accountNew: mapNews.values()) {
+            Account accountOld = mapOlds.get(accountNew.Id);
+            if (accountOld.Give_SIS_Membership__c==null && accountNew.Give_SIS_Membership__c!=null) {
+                listAccountId.add(accountNew.Id);
+            }
+        }
+        if (listAccountId.isEmpty()) return;
+        list<Account> listQueryAccount = [
+            SELECT Id, (SELECT id, Available_Services__c FROM Contacts WHERE Available_Services__c INCLUDES ('SIS Membership Application'))
+            FROM Account
+            WHERE id IN :listAccountId];
+        for (Account account: listQueryAccount) {
+            if (account.Contacts.isEmpty()) {
+                mapNews.get(account.Id).Give_SIS_Membership__c.addError('Required at least one contact with "SIS Membership Application"');
+            } 
+        }
     }
 }

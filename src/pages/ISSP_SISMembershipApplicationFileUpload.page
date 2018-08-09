@@ -1,0 +1,28 @@
+<apex:page cache="false"
+           sidebar="false"
+           showHeader="false"
+           standardStylesheets="false">
+
+    <c:ISSP_Header ></c:ISSP_Header>
+
+    <style>
+        div#file-container {
+            margin: 5px;
+        }
+        .empty-list {
+            -webkit-box-shadow: 0px 0px 5px 1px #c00;
+            -moz-box-shadow: 0px 0px 5px 1px #c00;
+            box-shadow: 0px 0px 5px 1px #c00;
+        }
+    </style>
+
+    <div id="file-container">
+        <c:ISSP_AMS_FormUpload reqCnt="{!$CurrentPage.parameters.reqCnt}"
+        reqRequired="{!$CurrentPage.parameters.reqRequired}"
+        reqName="{!$CurrentPage.parameters.reqName}"
+        reqDescription="{!$CurrentPage.parameters.reqDescription}"
+        reqIdentifier="{!$CurrentPage.parameters.reqIdentifier}"
+        onlyOne="{!$CurrentPage.parameters.onlyOne}"
+        />
+    </div>
+</apex:page>

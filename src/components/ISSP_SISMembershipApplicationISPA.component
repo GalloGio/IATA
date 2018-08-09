@@ -1,0 +1,550 @@
+<apex:component controller="ISSP_SISMembershipApplicationForm_Ctrl">
+    <apex:attribute name="newForm" description="AP_Process_Form__c" type="AP_Process_Form__c" required="true"/>
+    <apex:attribute name="account" description="Account" type="account"/>
+
+    <link href="//cdnjs.cloudflare.com/ajax/libs/select2/4.0.0/css/select2.min.css" rel="stylesheet" />
+    <script src="//cdnjs.cloudflare.com/ajax/libs/select2/4.0.0/js/select2.min.js"></script>
+
+<script>
+    var EMAIL_PATTERN = "(?:[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?)";
+    $(document).ready(function() {
+       setRequired();
+       preventEnter();
+       $(".select2").select2();
+       setInvalidClass($("#form-container span.select2-selection"));
+       $("#form-container span.select2-selection").on('DOMSubtreeModified',function() {
+           setInvalidClass($(this));
+       });
+    });
+    function setInvalidClass(jobj) {
+       if(jobj.text()=="") {
+           jobj.addClass("invalid");
+       } else {
+           jobj.removeClass("invalid");
+       }
+    }
+    function setRequired() {
+         $("#form-container input.required").prop('required',true);
+         $("#form-container textarea.required").prop('required',true);
+         $("#form-container table.required input").prop('required',true);
+         $("#form-container select.required").prop('required',true);
+         $("#form-container input.email").prop('pattern',EMAIL_PATTERN);
+    }
+
+    function preventEnter() {
+        $(window).keydown(function(event){
+            if(event.keyCode == 13) {
+                event.preventDefault();
+                return false;
+            }
+        });
+    }
+
+    function section1CopyInfo() {
+        var legalName = "{!account.Legal_name__c}";
+        if (legalName=="") legalName = $(".form-origin-legalname").val();
+        $(".form-legalname").val(legalName);
+        $(".form-address").val("{!account.BillingStreet}");
+        $(".form-city").val("{!account.BillingCity}");
+        $(".form-state").val("{!account.BillingState}");
+        $(".form-postalcode").val("{!account.BillingPostalCode}");
+        $(".form-country").val("{!account.IATA_ISO_Country__c}").trigger("change");
+    }
+</script>
+
+<div id="form-container">
+
+    <apex:pageBlockSection columns="2" id="section1A" collapsible="false" rendered="{!account.Sector__c='Airline'}">
+        <apex:facet name="header">
+            <apex:outputpanel >
+                Section 1 - Company information
+            </apex:outputpanel>
+        </apex:facet>
+
+        <tr>
+            <td colspan="2"><div class="blue-label">Airline Head Office Information:</div></td>
+            <td colspan="2"><div class="blue-label">Airline Information to be included in the invoices produced by SIS:</div></td>
+        </tr>
+        <apex:outputpanel ></apex:outputpanel>
+
+        <apex:pageBlockSectionItem >
+            <apex:outputLabel value="Legal Name of the Airline"/>
+            <apex:pageBlockSectionItem >
+                <apex:outputField value="{!account.Legal_name__c}" rendered="{!account.Legal_name__c!=null}"/>
+                <apex:inputField styleclass="required form-origin-legalname" value="{!newForm.Legal_Name_of_account__c}" rendered="{!account.Legal_name__c==null}"/>
+            </apex:pageBlockSectionItem>
+        </apex:pageBlockSectionItem>
+        <apex:pageBlockSectionItem >
+            <apex:outputLabel value="Legal Name of the Airline" />
+            <apex:inputField styleclass="form-legalname required" value="{!newForm.Legal_Name_of_company__c}"/>
+        </apex:pageBlockSectionItem>
+
+        <apex:pageBlockSectionItem >
+        </apex:pageBlockSectionItem>
+        <apex:pageBlockSectionItem >
+            <apex:outputLabel value="Commercial Name" />
+            <apex:inputField value="{!newForm.Commercial_Name__c}" styleclass="required"/>
+        </apex:pageBlockSectionItem>
+
+        <apex:pageBlockSectionItem >
+            <apex:outputLabel value="Airline Designator Code"/>
+            <apex:outputField styleclass="" value="{!account.Airline_designator__c}" />
+        </apex:pageBlockSectionItem>
+        <apex:pageBlockSectionItem >
+        </apex:pageBlockSectionItem>
+
+        <apex:pageBlockSectionItem >
+            <apex:outputLabel value="Head Office Street"/>
+            <apex:outputField styleclass="account-field" value="{!account.BillingStreet}" />
+        </apex:pageBlockSectionItem>
+        <apex:pageBlockSectionItem >
+            <apex:outputLabel value="Head Office Street" />
+            <apex:inputField styleclass="form-address required" value="{!newForm.Company_address__c}"/>
+        </apex:pageBlockSectionItem>
+
+        <apex:pageBlockSectionItem >
+            <apex:outputLabel value="Head Office City Name"/>
+            <apex:outputField styleclass="account-field" value="{!account.BillingCity}" />
+        </apex:pageBlockSectionItem>
+        <apex:pageBlockSectionItem >
+            <apex:outputLabel value="Head Office City Name" />
+            <apex:inputField styleclass="form-city required" value="{!newForm.Company_city__c}"/>
+        </apex:pageBlockSectionItem>
+
+        <apex:pageBlockSectionItem >
+            <apex:outputLabel value="Head Office State Name"/>
+            <apex:outputField styleclass="account-field" value="{!account.BillingState}" />
+        </apex:pageBlockSectionItem>
+        <apex:pageBlockSectionItem >
+            <apex:outputLabel value="Head Office State Name" />
+            <apex:inputField styleclass="form-state" value="{!newForm.Company_State__c}" />
+        </apex:pageBlockSectionItem>
+
+        <apex:pageBlockSectionItem >
+            <apex:outputLabel value="Head Office Postal Code"/>
+            <apex:outputField styleclass="account-field" value="{!account.BillingPostalCode}" />
+        </apex:pageBlockSectionItem>
+        <apex:pageBlockSectionItem >
+            <apex:outputLabel value="Head Office Postal Code" />
+            <apex:inputField styleclass="form-postalcode" value="{!newForm.Postal_code__c}" />
+        </apex:pageBlockSectionItem>
+
+        <apex:pageBlockSectionItem >
+            <apex:outputLabel value="Head Office Country"/>
+            <apex:outputField styleclass="account-field" value="{!account.BillingCountry}" />
+        </apex:pageBlockSectionItem>
+        <apex:pageBlockSectionItem >
+            <apex:outputLabel value="Head Office Country" />
+            <apex:selectList value="{!newForm.Company_Country__c}" styleclass="form-country select2 required">
+                <apex:selectOptions value="{!ListCountryOptions}"/>
+            </apex:selectList>
+        </apex:pageBlockSectionItem>
+
+        <apex:pageBlockSectionItem >
+        </apex:pageBlockSectionItem>
+        <apex:pageBlockSectionItem >
+            <a target="_blank" onclick="section1CopyInfo()" class="copy-info">Copy Company Information »</a>
+        </apex:pageBlockSectionItem>
+
+    </apex:pageBlockSection>
+
+    <apex:pageBlockSection columns="2" id="section1B" collapsible="false" rendered="{!account.Sector__c!='Airline'}">
+        <apex:facet name="header">
+            <apex:outputpanel >
+                Section 1 - Company information
+            </apex:outputpanel>
+        </apex:facet>
+
+        <apex:pageBlockSectionItem >
+            <apex:outputLabel value="Legal Name of the Company"/>
+            <apex:inputField styleclass="form-legalname required" value="{!newForm.Legal_Name_of_company__c}"/>
+        </apex:pageBlockSectionItem>
+        <apex:pageBlockSectionItem >
+        </apex:pageBlockSectionItem>
+        
+        <apex:pageBlockSectionItem >
+            <apex:outputLabel value="Trade Name of Company"/>
+            <apex:inputField styleclass="required" value="{!newForm.Company_Trade_Name__c}"/>
+        </apex:pageBlockSectionItem>
+        <apex:pageBlockSectionItem >
+        </apex:pageBlockSectionItem>
+
+        <apex:pageBlockSectionItem >
+            <apex:outputLabel value="Incorporated under the laws of (Country)"/>
+            <apex:selectList value="{!newForm.Company_Country__c}" styleclass="select2" multiselect="false">
+                <apex:selectOptions value="{!ListCountryOptions}"/>
+            </apex:selectList>
+        </apex:pageBlockSectionItem>
+        <apex:pageBlockSectionItem >
+        </apex:pageBlockSectionItem>
+
+        <apex:pageBlockSectionItem >
+            <apex:outputLabel value="" />
+            <apex:inputField styleclass="form-state required" value="{!newForm.Company_State__c}"/>
+        </apex:pageBlockSectionItem>
+        <apex:pageBlockSectionItem >
+        </apex:pageBlockSectionItem>
+
+        <apex:pageBlockSectionItem >
+            <apex:outputLabel value="Head Office Postal Code"/>
+            <apex:inputField styleclass="form-postalcode" value="{!newForm.Postal_code__c}" />
+        </apex:pageBlockSectionItem>
+        <apex:pageBlockSectionItem >
+        </apex:pageBlockSectionItem>
+
+    </apex:pageBlockSection>
+
+    <apex:pageBlockSection columns="2" id="section2" collapsible="false">
+        <apex:facet name="header">
+            <apex:outputpanel >
+                Section 2 - Super User details
+            </apex:outputpanel>
+        </apex:facet>
+
+        <tr><td colspan="4"><div class="strong-label">SIS Participant must provide the following details with regards to the Member Super User for their company. Once this form is provided and the membership process completed, the super user will receive their access to SIS.</div></td></tr>
+        <apex:outputText ></apex:outputText>
+
+        <apex:pageBlockSectionItem >
+            <apex:outputLabel value="Salutation"/>
+            <apex:inputField value="{!newForm.Super_User_Salutation__c}" styleclass="required"/>
+        </apex:pageBlockSectionItem>
+        <apex:pageBlockSectionItem >
+        </apex:pageBlockSectionItem>
+
+        <apex:pageBlockSectionItem >
+            <apex:outputLabel value="First Name"/>
+            <apex:inputField styleclass="required" value="{!newForm.Super_User_First_Name__c}"/>
+        </apex:pageBlockSectionItem>
+        <apex:pageBlockSectionItem >
+            <apex:outputLabel value="Phone Number"/>
+            <apex:inputField value="{!newForm.Super_User_Phone_Number__c}"/>
+        </apex:pageBlockSectionItem>
+
+        <apex:pageBlockSectionItem >
+            <apex:outputLabel value="Last Name"/>
+            <apex:inputField styleclass="required" value="{!newForm.Super_User_Last_Name__c}"/>
+        </apex:pageBlockSectionItem>
+        <apex:pageBlockSectionItem >
+            <apex:outputLabel value="Mobile Number"/>
+            <apex:inputField value="{!newForm.Super_User_Mobile_Number__c}"/>
+        </apex:pageBlockSectionItem>
+        
+        <apex:pageBlockSectionItem >
+            <apex:outputLabel value="Email"/>
+            <apex:inputField styleclass="required email" value="{!newForm.Super_User_Email_Address__c}"/>
+        </apex:pageBlockSectionItem>
+        <apex:pageBlockSectionItem >
+            <apex:outputLabel value="Fax Number"/>
+            <apex:inputField value="{!newForm.Super_User_Fax_Number__c}"/>
+        </apex:pageBlockSectionItem>
+
+    </apex:pageBlockSection>
+
+    <apex:pageBlockSection columns="2" id="section3" collapsible="false">
+        <apex:facet name="header">
+            <apex:outputpanel >
+                Section 3 - Optional Services
+            </apex:outputpanel>
+        </apex:facet>
+
+        <apex:pageBlockSectionItem >
+            <apex:outputLabel value="{!$ObjectType.AP_Process_Form__c.fields.Is_AA_Member__c.label}"/>
+            <apex:actionRegion >
+                <apex:selectRadio value="{!newForm.Is_AA_Member__c}" styleclass="radio-short required">
+                    <apex:selectOption itemValue="Yes" itemLabel="Yes"/>
+                    <apex:selectOption itemValue="No" itemLabel="No"/>
+                    <apex:actionSupport event="onchange" rerender="section3"/>
+                </apex:selectRadio>
+                <apex:image value="/img/msg_icons/info16.png" title="{!$ObjectType.AP_Process_Form__c.fields.Is_AA_Member__c.InlineHelpText}"
+                    styleclass="help" html-data-html="true" html-data-placement="right" html-data-toggle="tooltip" />
+            </apex:actionRegion>
+        </apex:pageBlockSectionItem>
+        <apex:pageBlockSectionItem >
+        </apex:pageBlockSectionItem>
+
+        <apex:pageBlockSectionItem rendered="{!newForm.Is_AA_Member__c=='Yes'}">
+            <apex:outputLabel value="Digital Signature Application"/>
+            <apex:actionRegion >
+            <apex:selectRadio value="{!newForm.Digital_Signature_application__c}" styleclass="radio-short required">
+                <apex:selectOption itemValue="Yes" itemLabel="On"/>
+                <apex:selectOption itemValue="No" itemLabel="Off"/>
+                <apex:actionSupport event="onchange" rerender="section3"/>
+            </apex:selectRadio>
+            </apex:actionRegion>
+        </apex:pageBlockSectionItem>
+        <apex:pageBlockSectionItem rendered="{!newForm.Is_AA_Member__c=='Yes'}">
+            <apex:outputLabel value="Billing Value Determination"/>
+            <apex:actionRegion >
+            <apex:selectRadio value="{!newForm.Billing_Value_Determination__c}" styleclass="radio-short required">
+                <apex:selectOption itemValue="Yes" itemLabel="On"/>
+                <apex:selectOption itemValue="No" itemLabel="Off"/>
+                <apex:actionSupport event="onchange" rerender="section3"/>
+            </apex:selectRadio>
+            </apex:actionRegion>
+        </apex:pageBlockSectionItem>
+
+        <apex:pageBlockSectionItem rendered="{!newForm.Is_AA_Member__c=='Yes'}">
+            <apex:outputLabel value="Digital Signature Verification"/>
+            <apex:actionRegion >
+            <apex:selectRadio value="{!newForm.Digital_Signature_verification__c}" styleclass="radio-short required">
+                <apex:selectOption itemValue="Yes" itemLabel="On"/>
+                <apex:selectOption itemValue="No" itemLabel="Off"/>
+                <apex:actionSupport event="onchange" rerender="section3"/>
+            </apex:selectRadio>
+            </apex:actionRegion>
+        </apex:pageBlockSectionItem>
+        <apex:pageBlockSectionItem rendered="{!newForm.Is_AA_Member__c=='Yes'}">
+            <apex:outputLabel value="Billing Value Confirmation"/>
+            <apex:actionRegion >
+            <apex:selectRadio value="{!newForm.Billing_Value_Confirmation__c}" styleclass="radio-short required">
+                <apex:selectOption itemValue="Yes" itemLabel="On"/>
+                <apex:selectOption itemValue="No" itemLabel="Off"/>
+                <apex:actionSupport event="onchange" rerender="section3"/>
+            </apex:selectRadio>
+            </apex:actionRegion>
+        </apex:pageBlockSectionItem>
+
+        <apex:pageBlockSectionItem rendered="{!newForm.Is_AA_Member__c=='Yes'}">
+            <apex:outputLabel value="Legal Archiving"/>
+            <apex:actionRegion >
+            <apex:selectRadio value="{!newForm.Legal_Archiving__c}" styleclass="radio-short required">
+                <apex:selectOption itemValue="Yes" itemLabel="On"/>
+                <apex:selectOption itemValue="No" itemLabel="Off"/>
+                <apex:actionSupport event="onchange" rerender="section3"/>
+            </apex:selectRadio>
+            </apex:actionRegion>
+        </apex:pageBlockSectionItem>
+        <apex:pageBlockSectionItem rendered="{!newForm.Is_AA_Member__c=='Yes'}">
+            <apex:outputLabel value="Auto-billing"/>
+            <apex:actionRegion >
+            <apex:selectRadio value="{!newForm.Auto_billing__c}" styleclass="radio-short required">
+                <apex:selectOption itemValue="Yes" itemLabel="On"/>
+                <apex:selectOption itemValue="No" itemLabel="Off"/>
+                <apex:actionSupport event="onchange" rerender="section3"/>
+            </apex:selectRadio>
+            </apex:actionRegion>
+        </apex:pageBlockSectionItem>
+
+        <apex:outputPanel rendered="{!AND(newForm.Is_AA_Member__c=='Yes',OR(newForm.Billing_Value_Determination__c='Yes',newForm.Digital_Signature_verification__c='Yes',newForm.Billing_Value_Confirmation__c='Yes',newForm.Legal_Archiving__c='Yes',newForm.Auto_billing__c='Yes'))}">
+            Download File
+        </apex:outputPanel>
+
+        <apex:pageBlockSectionItem rendered="{!newForm.Is_AA_Member__c=='No'}">
+            <apex:outputLabel value="Digital Signature Application"/>
+            <apex:selectRadio value="{!newForm.Digital_Signature_application__c}" styleclass="radio-short required">
+                <apex:selectOption itemValue="Yes" itemLabel="On"/>
+                <apex:selectOption itemValue="No" itemLabel="Off"/>
+            </apex:selectRadio>
+        </apex:pageBlockSectionItem>
+        <apex:pageBlockSectionItem rendered="{!newForm.Is_AA_Member__c=='No'}">
+        </apex:pageBlockSectionItem>
+
+        <apex:pageBlockSectionItem rendered="{!newForm.Is_AA_Member__c=='No'}">
+            <apex:outputLabel value="Digital Signature Verification"/>
+            <apex:selectRadio value="{!newForm.Digital_Signature_verification__c}" styleclass="radio-short required">
+                <apex:selectOption itemValue="Yes" itemLabel="On"/>
+                <apex:selectOption itemValue="No" itemLabel="Off"/>
+            </apex:selectRadio>
+        </apex:pageBlockSectionItem>
+        <apex:pageBlockSectionItem rendered="{!newForm.Is_AA_Member__c=='No'}">
+        </apex:pageBlockSectionItem>
+
+        <apex:pageBlockSectionItem rendered="{!newForm.Is_AA_Member__c=='No'}">
+            <apex:outputLabel value="Legal Archiving"/>
+            <apex:selectRadio value="{!newForm.Legal_Archiving__c}" styleclass="radio-short required">
+                <apex:selectOption itemValue="Yes" itemLabel="On"/>
+                <apex:selectOption itemValue="No" itemLabel="Off"/>
+            </apex:selectRadio>
+        </apex:pageBlockSectionItem>
+        <apex:pageBlockSectionItem rendered="{!newForm.Is_AA_Member__c=='No'}">
+        </apex:pageBlockSectionItem>
+        <script>setRequired();</script>
+
+    </apex:pageBlockSection>
+
+    <apex:pageBlockSection columns="2" id="section4" collapsible="false">
+        <apex:facet name="header">
+            <apex:outputpanel >
+                Section 4 - iiNET
+            </apex:outputpanel>
+        </apex:facet>
+
+        <apex:pageBlockSectionItem >
+            <apex:outputLabel value="Do you have an iiNET account?"/>
+            <apex:actionRegion >
+                <apex:selectRadio value="{!newForm.Do_you_have_an_iiNET_account__c}" styleclass="radio-short required">
+                    <apex:selectOption itemValue="Yes" itemLabel="Yes"/>
+                    <apex:selectOption itemValue="No" itemLabel="No"/>
+                    <apex:actionSupport event="onchange" rerender="section4"/>
+                </apex:selectRadio>
+            </apex:actionRegion>
+        </apex:pageBlockSectionItem>
+        <apex:pageBlockSectionItem >
+        </apex:pageBlockSectionItem>
+
+        <apex:variable value="{!newForm.Do_you_have_an_iiNET_account__c=='Yes'}" var="showSection4"/>
+
+        <tr><td colspan="4" class="{!IF(showSection4,'','hidden')}">
+            <div class="strong-label">
+                Please provide your iiNET ID, in case you already have an existing iiNET connection. In order to setup a new iiNET Connection please contact iinetcare@iata.org
+            </div>
+        </td></tr>
+        <apex:outputText ></apex:outputText>
+
+        <apex:pageBlockSectionItem rendered="{!showSection4}">
+        </apex:pageBlockSectionItem>
+        <apex:pageBlockSectionItem rendered="{!showSection4}">
+            <apex:outputLabel value="iiNET Account Number"/>
+            <apex:inputField value="{!newForm.IINET_account_number__c}" styleclass="required" html-pattern="[A-Z]{2}[0-9]{2}" html-placeholder="Example: AA11"/>
+        </apex:pageBlockSectionItem>
+
+        <apex:pageBlockSectionItem rendered="{!showSection4}"/>
+        <apex:pageBlockSectionItem rendered="{!showSection4}"/>
+
+        <tr><td colspan="4" class="{!IF(showSection4,'','hidden')}">
+            <div class="strong-label">
+            Submission of billing data to SIS can be done manually over the IS-Web interface or through file submission (IS-IDEC, IS-XML).
+            For file submission prior testing and certification testing is required, and can be only done in the SIS Sandbox environment, through iiNET. Please refer to the SIS File Certification for detailed steps on how to perform testing and certification.
+            </div>
+        </td></tr>
+        <apex:outputText ></apex:outputText>
+        <script>setRequired();</script>
+
+    </apex:pageBlockSection>
+
+    <apex:pageBlockSection columns="1" id="section5" collapsible="false">
+        <apex:facet name="header">
+            <apex:outputpanel >
+                Section 5 - Corporate Documents
+            </apex:outputpanel>
+        </apex:facet>
+
+        <tr><td colspan="4">
+            <div class="strong-label">
+                Please attach a scanned copy of the following documents:
+            </div>
+        </td></tr>
+        <apex:outputText ></apex:outputText>
+
+        <apex:iframe scrolling="false"
+            src="/ISSP_SISMembershipApplicationFileUpload?caseId={!newform.Case__c}&reqCnt=0&reqRequired=Mandatory&reqName=Corporate Registration&reqDescription=Corporate Registration (COI) - Certificate of registration button to upload&reqIdentifier=COI&onlyOne=true"/>
+
+        <apex:iframe scrolling="false"
+            src="/ISSP_SISMembershipApplicationFileUpload?caseId={!newform.Case__c}&reqCnt=1&reqRequired=Mandatory&reqName=Shareholders List&reqDescription=Shareholding structure button to upload&reqIdentifier=Shareholders_List&onlyOne=true"/>
+
+        <tr><td colspan="4">
+            <div class="strong-label">
+                If the corporate documents are issued in any other language than French, English, Arabic, Italian, Portuguese or Spanish, please provide, in addition to the scanned copies of original documents, an official or notarized English translation of the same.
+            </div>
+        </td></tr>
+        <apex:outputText ></apex:outputText>
+
+    </apex:pageBlockSection>
+
+    <apex:pageBlockSection columns="2" id="section6" collapsible="false">
+        <apex:facet name="header">
+            <apex:outputpanel >
+                Section 6 - Local Bank Mandate Form
+            </apex:outputpanel>
+        </apex:facet>
+
+        <tr><td colspan="4">
+            <div class="strong-label">
+            The bank details, if provided, will be stored in the member profile and will be populated on invoices issued for bilateral settlement.
+            You may also use the same account you currently have for the ICH – in this case simply tick the box below.
+            </div>
+        </td></tr>
+        <apex:outputText ></apex:outputText>
+
+        <apex:pageBlockSectionItem >
+            <apex:outputLabel value="Is your company joining the Clearing House?"/>
+            <apex:actionRegion >
+                <apex:selectRadio value="{!newForm.Is_your_company_joining_the_Clearing_Hou__c}" styleclass="radio-short required">
+                    <apex:selectOption itemValue="Yes" itemLabel="Yes"/>
+                    <apex:selectOption itemValue="No" itemLabel="No"/>
+                    <apex:actionSupport event="onchange" rerender="section6"/>
+                </apex:selectRadio>
+            </apex:actionRegion>
+        </apex:pageBlockSectionItem>
+        <apex:outputText ></apex:outputText>
+
+        <apex:variable value="{!newForm.Is_your_company_joining_the_Clearing_Hou__c=='Yes'}" var="showSection6Yes"/>
+        <apex:variable value="{!newForm.Is_your_company_joining_the_Clearing_Hou__c=='No'}" var="showSection6No"/>
+
+        <apex:outputPanel rendered="{!showSection6Yes}">
+            <tr><td colspan="4" class="required"><div class="strong-label">Choose an option:</div></td></tr>
+            <apex:outputText ></apex:outputText>
+            <apex:actionRegion >
+                <apex:selectRadio styleClass="radio-select-bank-account required" layout="pageDirection" value="{!newForm.Select_Bank_Account__c}">
+                    <apex:selectOption itemValue="ICH Account" itemLabel="Use my ICH bank account"/>
+                    <apex:selectOption itemValue="New Account" itemLabel="Use a new Bank Account"/>
+                    <apex:actionSupport event="onchange" rerender="section6"/>
+                </apex:selectRadio>
+                <script>setRequired();</script>
+            </apex:actionRegion>
+
+            <apex:outputPanel rendered="{!newForm.Select_Bank_Account__c=='New Account'}">
+                <tr><td colspan="4" class="required"><div class="strong-label">Upload Files:</div></td></tr>
+                <apex:outputText ></apex:outputText>
+                <apex:iframe scrolling="false"
+                src="/ISSP_SISMembershipApplicationFileUpload?caseId={!newform.Case__c}&reqCnt=2&reqRequired=Mandatory&reqName=Bank Mandate Form&reqDescription={!$Label.ISSP_SISMembership_BankMandateDescription}&reqIdentifier=BankMandate&onlyOne=true"/>
+            </apex:outputPanel>
+        </apex:outputPanel>
+
+        <apex:outputPanel rendered="{!showSection6No}">
+            <tr><td colspan="4" class="required"><div class="strong-label">Upload Files:</div></td></tr>
+            <apex:outputText ></apex:outputText>
+            <tr><td colspan="4" class="required">
+                <apex:iframe scrolling="false"
+                src="/ISSP_SISMembershipApplicationFileUpload?caseId={!newform.Case__c}&reqCnt=3&reqRequired=Mandatory&reqName=Bank Mandate Form&reqDescription={!$Label.ISSP_SISMembership_BankMandateDescription}&reqIdentifier=BankMandate&onlyOne=true"/>
+            </td></tr>
+        </apex:outputPanel>
+
+    </apex:pageBlockSection>
+
+    <apex:pageBlockSection columns="1" id="section7" collapsible="false">
+        <apex:facet name="header">
+            <apex:outputpanel >
+                Section 7 - Additional questions
+            </apex:outputpanel>
+        </apex:facet>
+
+        <apex:pageBlockSectionItem >
+            <apex:outputLabel value="Is your company subject to EU data privacy laws?"/>
+            <apex:actionRegion >
+                <apex:selectRadio value="{!newForm.Is_company_subject_to_EU_laws__c}" styleclass="radio-short required">
+                    <apex:selectOption itemValue="Yes" itemLabel="Yes"/>
+                    <apex:selectOption itemValue="No" itemLabel="No"/>
+                    <apex:actionSupport event="onchange" rerender="section7"/>
+                </apex:selectRadio>
+            </apex:actionRegion>
+        </apex:pageBlockSectionItem>
+
+        <apex:variable value="{!newForm.Is_company_subject_to_EU_laws__c=='Yes'}" var="showSection7"/>
+
+        <apex:outputPanel rendered="{!showSection7}">
+            <tr><td colspan="4" class="required"><div class="strong-label">Choose an option:</div></td></tr>
+            <apex:outputText ></apex:outputText>
+            
+            <apex:actionRegion >
+                <apex:selectRadio styleClass="radio-data-privacy-laws required" layout="pageDirection" value="{!newForm.EU_Data_Privacy_Laws__c}">
+                    <apex:selectOption itemValue="A" itemLabel="EU Standard Contractual Clauses for processing between IATA and Participant (including the EU Standard Contractual Clauses for processing between IATA and Sub-processor. A signed copy is available upon request)."/>
+                    <apex:selectOption itemValue="B" itemLabel="(for use only in jurisdictions where a tripartite agreement is required): EU Standard Contractual Clauses for processing between IATA, Participant and Sub-processor"/>
+                    <apex:actionSupport event="onchange" rerender="section7"/>
+                </apex:selectRadio>
+            </apex:actionRegion>
+
+            <apex:outputPanel rendered="{!newForm.EU_Data_Privacy_Laws__c=='A'}">
+                Download Option A
+            </apex:outputPanel>
+            <apex:outputPanel rendered="{!newForm.EU_Data_Privacy_Laws__c=='B'}">
+                Download Option B
+            </apex:outputPanel>
+        </apex:outputPanel>
+        <script>setRequired();</script>
+
+    </apex:pageBlockSection>
+
+</div>
+
+</apex:component>

@@ -1,0 +1,162 @@
+<apex:component controller="ISSP_SISMembershipApplicationForm_Ctrl">
+    <apex:attribute name="newForm" description="AP_Process_Form__c" type="AP_Process_Form__c" required="true"/>
+
+    <link href="//cdnjs.cloudflare.com/ajax/libs/select2/4.0.0/css/select2.min.css" rel="stylesheet" />
+    <script src="//cdnjs.cloudflare.com/ajax/libs/select2/4.0.0/js/select2.min.js"></script>
+
+<script>
+    var EMAIL_PATTERN = "(?:[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?)";
+    $(document).ready(function() {
+       setRequired();
+       preventEnter();
+       $(".select2").select2();
+       setInvalidClass($("#form-container span.select2-selection"));
+       $("#form-container span.select2-selection").on('DOMSubtreeModified',function() {
+           setInvalidClass($(this));
+       });
+    });
+    function setInvalidClass(jobj) {
+       if(jobj.text()=="") {
+           jobj.addClass("invalid");
+       } else {
+           jobj.removeClass("invalid");
+       }
+    }
+    function setRequired() {
+         $("#form-container input.required").prop('required',true);
+         $("#form-container textarea.required").prop('required',true);
+         $("#form-container table.required input").prop('required',true);
+         $("#form-container select.required").prop('required',true);
+         $("#form-container input.email").prop('pattern',EMAIL_PATTERN);
+    }
+
+    function preventEnter() {
+        $(window).keydown(function(event){
+            if(event.keyCode == 13) {
+                event.preventDefault();
+                return false;
+            }
+        });
+    }
+
+    function section1CopyInfo() {
+        $(".form-legalname").val("{!account.Legal_name__c}");
+        $(".form-address").val("{!account.BillingStreet}");
+        $(".form-city").val("{!account.BillingCity}");
+        $(".form-state").val("{!account.BillingState}");
+        $(".form-postalcode").val("{!account.BillingPostalCode}");
+        //$(".form-country").val("{!account.BillingCountry}");
+        $(".form-country").val("{!account.IATA_ISO_Country__c}").trigger("change");
+    }
+</script>
+
+<div id="form-container">
+
+    <apex:pageBlockSection columns="2" id="section1" collapsible="false">
+        <apex:facet name="header">
+            <apex:outputpanel >
+                Section 1 - Company information
+            </apex:outputpanel>
+        </apex:facet>
+
+        <tr><td colspan="4"><div class="strong-label">Airline Head Office Information:</div></td></tr>
+        <apex:outputText >Airline Information to be included in the invoices produced by SIS</apex:outputText>
+        
+
+        <apex:pageBlockSectionItem >
+            <apex:outputLabel value="Legal Name of the Company" />
+            <apex:inputField styleclass="required" value="{!newForm.Legal_Name_of_company__c}"/>
+        </apex:pageBlockSectionItem>
+        <apex:pageBlockSectionItem >
+        </apex:pageBlockSectionItem>
+
+        <apex:pageBlockSectionItem >
+            <apex:outputLabel value="Company Registration ID" />
+            <apex:inputField value="{!newForm.Company_Registration_ID__c}"/>
+        </apex:pageBlockSectionItem>
+        <apex:pageBlockSectionItem >
+            <apex:outputLabel value="TAX/VAT Registration Number" />
+            <apex:inputField value="{!newForm.TAX_VAT_Registration_Number__c}"/>
+        </apex:pageBlockSectionItem>
+
+        <apex:pageBlockSectionItem >
+            <apex:outputLabel value="Address" />
+            <apex:inputField styleclass="required" value="{!newForm.Company_address__c}"/>
+        </apex:pageBlockSectionItem>
+        <apex:pageBlockSectionItem >
+            <apex:outputLabel value="City Name" />
+            <apex:inputField styleclass="required" value="{!newForm.Company_city__c}"/>
+        </apex:pageBlockSectionItem>
+
+        <apex:pageBlockSectionItem >
+            <apex:outputLabel value="Postal Code" />
+            <apex:inputField styleclass="required" value="{!newForm.Postal_code__c}"/>
+        </apex:pageBlockSectionItem>
+        <apex:pageBlockSectionItem >
+            <apex:outputLabel value="State Name" />
+            <apex:inputField styleclass="required" value="{!newForm.Company_State__c}"/>
+        </apex:pageBlockSectionItem>
+
+        <apex:pageBlockSectionItem >
+        </apex:pageBlockSectionItem>
+        <apex:pageBlockSectionItem >
+            <apex:outputLabel value="Country" />
+            <apex:selectList value="{!newForm.Company_Country__c}" styleclass="required select2">
+                <apex:selectOptions value="{!ListCountryOptions}"/>
+            </apex:selectList>
+        </apex:pageBlockSectionItem>
+
+    </apex:pageBlockSection>
+
+    <apex:pageBlockSection columns="2" id="section2" collapsible="false">
+        <apex:facet name="header">
+            <apex:outputpanel >
+                Section 2 - Contact Person
+            </apex:outputpanel>
+        </apex:facet>
+
+        <apex:pageBlockSectionItem >
+            <apex:outputLabel value="First Name"/>
+            <apex:inputField styleclass="required" value="{!newForm.Billing_File_Emrgcy_Contact_F_Name__c}"/>
+        </apex:pageBlockSectionItem>
+        <apex:pageBlockSectionItem >
+            <apex:outputLabel value="Email"/>
+            <apex:inputField styleclass="required email" value="{!newForm.Billing_File_Emrgcy_Contact_Email__c}" html-placeholder="Put a valid email"/>
+        </apex:pageBlockSectionItem>
+
+        <apex:pageBlockSectionItem >
+            <apex:outputLabel value="Last Name"/>
+            <apex:inputField styleclass="required" value="{!newForm.Billing_File_Emrgcy_Contact_L_Name__c}"/>
+        </apex:pageBlockSectionItem>
+        <apex:pageBlockSectionItem >
+            <apex:outputLabel value="Phone Number"/>
+            <apex:inputField value="{!newForm.Billing_File_Emrgcy_Contact_Number__c}"/>
+            <!--
+            <DSE:DS_DataQuality id="BranchAddress"
+                RecordRef="{!newForm.Billing_File_Emrgcy_Contact_Number__c}"
+                FieldGroupName="Branch Address"
+                Edit="true"
+                FormGroupStyle="form-group"
+                RowStyle="row"
+                LabelStyle="col-lg-4 adlabel"
+                InputStyle="col-lg-5 col-md-1 col-sm-1 col-xs-1"
+                StatusStyle="col-lg-1 col-md-1 col-sm-1 col-xs-1"
+                FormControlStyle="apcontainer">
+            </DSE:DS_DataQuality>
+            -->
+        </apex:pageBlockSectionItem>
+
+        <apex:pageBlockSectionItem >
+            <apex:outputLabel value="Title"/>
+            <apex:inputField value="{!newForm.Billing_File_Emrgcy_Contact_Job_Title__c}"/>
+        </apex:pageBlockSectionItem>
+        <apex:pageBlockSectionItem >
+            <apex:outputLabel value="Who requested your Company to join SIS as TOU?"/>
+            <apex:inputField value="{!newForm.Who_requested_to_join_TOU__c}"/>
+        </apex:pageBlockSectionItem>
+
+    </apex:pageBlockSection>
+
+</div>
+
+</apex:component>

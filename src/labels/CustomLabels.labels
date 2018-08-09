@@ -22349,6 +22349,86 @@ If you want to reset your password, go back to login screen and use &quot;forgot
         <value>SIS Help Desk</value>
     </labels>
     <labels>
+        <fullName>ISSP_SIS_Membership_Apply_Now</fullName>
+        <categories>ISSP SIS Membership</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP SIS Membership Apply Now</shortDescription>
+        <value>Apply Now</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_SIS_Membership_Description_ISPA</fullName>
+        <categories>ISSP SIS Membership</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP SIS Membership Description ISPA</shortDescription>
+        <value>Joining SIS instantly connects you with more than 420 airlines and intermodal entities exchanging interline billing data electronically. SIS eliminates the paper from the interline billing and settlement processes increasing efficiency and reducing costs; it enables processing automation which helps reduce billing duplication and simplifies reconciliation.</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_SIS_Membership_Description_ISUA</fullName>
+        <categories>ISSP SIS Membership</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP SIS Membership Description ISUA</shortDescription>
+        <value>By facilitating the exchange of billing data information and digital invoices, SIS enables airlines and aviation business partners such as ground handlers, maintenance companies, manufacturers, airports and others, to engage in business through a single channel, contributing to a simpler and more efficient environment.​​ Introduction to SIS e-Invoicing ​(pdf)</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_SIS_Membership_Description_TOU</fullName>
+        <categories>ISSP SIS Membership</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP SIS Membership Description TOU</shortDescription>
+        <value>Receiving only (PDF) Limited access to SIS to receive Non Transportation invoices only, free of charge</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_SIS_Membership_Features</fullName>
+        <categories>ISSP SIS Membership</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP SIS Membership Features</shortDescription>
+        <value>Features</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_SIS_Membership_Subtitle</fullName>
+        <categories>ISSP SIS Membership</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP SIS Membership Subtitle</shortDescription>
+        <value>ISSP SIS Membership  Subtitle</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_SIS_Membership_Title</fullName>
+        <categories>ISSP SIS Membership</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP SIS Membership Title</shortDescription>
+        <value>SIS Membership</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_SIS_Membership_Title_ISPA</fullName>
+        <categories>ISSP SIS Membership</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP SIS Membership Title ISPA</shortDescription>
+        <value>ISPA -  Integrated Settlement Participation Agreement</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_SIS_Membership_Title_ISUA</fullName>
+        <categories>ISSP SIS Membership</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP SIS Membership Title ISUA</shortDescription>
+        <value>ISUA - Integrated Settlement User Agreement</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_SIS_Membership_Title_TOU</fullName>
+        <categories>ISSP SIS Membership</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP SIS Membership Title TOU</shortDescription>
+        <value>TOU  - Terms Of Use</value>
+    </labels>
+    <labels>
         <fullName>ISSP_Salutation</fullName>
         <categories>ISSP, login</categories>
         <language>en_US</language>

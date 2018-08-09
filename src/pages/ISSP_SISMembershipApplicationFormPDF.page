@@ -1,0 +1,118 @@
+<apex:page renderas="pdf" controller="ISSP_SISMembershipApplicationForm_Ctrl"
+           cache="false"
+           sidebar="false"
+           showHeader="false"
+           standardStylesheets="false"
+           applyBodyTag="false"
+           >
+<head>
+    <style>
+        @page {
+            margin-top: 3.5cm;
+            margin-bottom: 2cm;
+            margin-left: 0.5cm;
+            margin-right: 0.5cm;
+            @top-center {content: element(header);}
+            @bottom-left {content: element(footer);font-size: 80%;}
+        }
+
+        body {
+            font-family: 'Arial Unicode MS';
+            font-size: 13px
+        }
+
+        div.header {padding: 10px;position: running(header);}
+        div.footer {display: block;padding: 5px;position: running(footer);}
+
+        .pagenumber:before {content: counter(page);}
+        .pagecount:before {content: counter(pages);}
+
+        .pbSubheader {
+            color: #fff;
+            padding-left:10px;
+            padding-top: 5px;
+            padding-bottom: 5px;
+            font-weight:700;
+            background-color: #337ab7;
+            width: 100%;
+            margin-top:10px;
+        }
+        th {
+            width: 190px;
+            text-align: right;
+            padding: 2px 10px 2px 2px;
+            margin: 2px;
+            font-size: 110%;
+        }
+        td {
+            width: 190px;
+            text-align: left;
+            padding: 2px 2px 2px 10px;
+            margin: 2px;
+        }
+        .blue-label {
+            background-color: rgb(217, 237, 247);
+            font-size: 13px;
+            width: 512px;
+            margin: 3px;
+            padding: 2px;
+            text-align: center;
+            font-weight: bold;
+            border: 10px solid white;
+        }
+
+    </style>
+</head>
+
+<body>
+
+    <div class="header">
+        <div><apex:image width="768" height="90" value="{!URLFOR($Resource.AP_PDF_Header)}"/></div>
+    </div>
+
+    <center>
+        <h2 class="panel-title"><apex:outputText escape="false" value=""/>{!$Label.ISSP_SIS_Membership_Title}</h2>
+        <h3 class="panel-title">{!$Label[sisType.MasterLabel]}</h3>
+    </center>
+
+    <div class="footer">
+        <table border="0" width="100%">
+            <tr>
+                <td width="33%" align="left">
+                    {!DAY(TODAY())}&nbsp;
+                    {!CASE(MONTH(TODAY()),
+                    1, "January",
+                    2, "February",
+                    3, "March",
+                    4, "April",
+                    5, "May",
+                    6, "June",
+                    7, "July",
+                    8, "August",
+                    9, "September",
+                    10, "October",
+                    11, "November",
+                    12, "December",
+                    "None")}&nbsp;{!YEAR(TODAY())}
+                </td>
+                <td width="33%" align="center">
+                    <a href="http://www.iata.org">www.iata.org</a>
+                </td>
+                <td width="33%" align="right">
+                    <apex:outputText value="{!$Label.ISSP_AMS_PDF_Initials_Here}"/><br/>
+                    <apex:outputText value="{!$Label.ISSP_AMS_PDF_Page}"/> <span class="pagenumber"/> of <span class="pagecount"/>
+                </td>
+            </tr>
+        </table>
+    </div>
+
+    <apex:pageBlock id="main-block">
+        <apex:form >
+            <c:ISSP_SISMembershipApplicationISPA_PDF newForm="{!newform}" account="{!account}" rendered="{!isISPA}"/>
+            <c:ISSP_SISMembershipApplicationISUA_PDF newForm="{!newform}" account="{!account}" rendered="{!isISUA}"/>
+            <c:ISSP_SISMembershipApplicationTOU_PDF newForm="{!newform}" account="{!account}" rendered="{!isTOU}"/>
+        </apex:form>
+    </apex:pageBlock>
+
+</body>
+</apex:page>

@@ -1,0 +1,80 @@
+<apex:component >
+    <apex:attribute name="newForm" description="AP_Process_Form__c" type="AP_Process_Form__c" required="true"/>
+    <apex:attribute name="showParticipation" description="show SIS Particiapation Agreement section" type="Boolean" required="true"/>
+
+<script>
+    $(document).ready(function() {
+       $(".required").prop('required',true);
+    });
+</script>
+
+<div id="form-container">
+
+    <apex:pageBlockSection columns="1" id="section" collapsible="false">
+        <apex:facet name="header">
+            <apex:outputpanel >
+                SIS Participation Agreement
+            </apex:outputpanel>
+        </apex:facet>
+
+        <tr><td colspan="4" class="aplabel">SIS Agreement:</td></tr>
+        <apex:outputText ></apex:outputText>
+
+        <apex:outputPanel>
+            <img src="{!URLFOR($Resource.PDF_icon_large)}" style="vertical-align:middle"/>
+            <a href="/ISSP_SISMembershipApplicationFormPDF?id={!newForm.Id}" target="_new" class="link-highlighted">{!$Label.ISSP_AMS_download_a_PDF_version}</a>
+            of the Membership
+        </apex:outputPanel>
+
+        <apex:iframe scrolling="false"
+            src="/ISSP_SISMembershipApplicationFileUpload?caseId={!newForm.Case__c}&reqCnt=5&reqRequired=Mandatory&reqName=SIS Membership Form&reqDescription={!$Label.ISSP_SISMembership_FormDescription}&reqIdentifier=SISMembershipForm&onlyOne=true"/>
+
+        <apex:outputpanel rendered="{!showParticipation}">
+            Originals should be sent to IATA Madrid office to the following address, but only after the approval of IATA:
+
+            <p>
+                IATA Global Delivery Center (GDC)<br/>
+                Attn: Participation Department<br/>
+                Torre Europa<br/>
+                Paseo de la Castellana, 95<br/>
+                28046 Madrid<br/>
+                Spain<br/>
+                Ref nr {!newForm.Case__r.CaseNumber}<br/>
+            </p>
+        </apex:outputpanel>
+
+    </apex:pageBlockSection>
+
+    <apex:pageBlockSection columns="1" id="section9" collapsible="false">
+        <apex:facet name="header">
+            <apex:outputpanel >
+                Terms &amp; Disclaimer
+            </apex:outputpanel>
+        </apex:facet>
+
+        <tr><td colspan="4" class="aplabel">Disclaimer BSP &amp; CASS Application</td></tr>
+        <apex:outputText ></apex:outputText>
+
+        <p>
+            By submitting the present application form to IATA, I hereby confirm that all information is correct; that I am aware of the local laws and regulations governing the operations of air carriers in Aruba and that the ISS Participant on whose behalf I am executing the present form, will hold IATA, its directors, officers, employees and agents free from any liability, costs and expenses in case of non-compliance with these laws, including without limitations, any reasonable legal expenses.
+        </p>
+        <p>
+            I hereby confirm to IATA and duly represent that I am duly authorized to submit this Participation Details Form on behalf of the ISS Participant, and that I am fully authorized to bind the ISS Participant, as provided herein, including the indemnity mentioned at the preceding paragraph.
+        </p>
+        <p>
+            I also confirm that said participation in the ISS system is not to be construed as an admission of any liability and acceptance of assumption of any responsibility whatsoever by IATA regarding any default or non- compliance by the ISS Participant with respect to the applicable laws and governmental regulations.
+        </p>
+        <p>
+            By signing I, the undersigned, confirm that the above information is correct and that I am duly authorized to submit this BSP Participation Details Form on behalf of my Airline. 
+        </p>
+
+        <apex:pageBlockSectionItem >
+            <apex:outputLabel value="Accept terms and Conditions"/>
+            <apex:inputCheckbox value="{!newForm.Accept_terms_and_conditions__c}" required="true" styleclass="required"/>
+        </apex:pageBlockSectionItem>
+
+    </apex:pageBlockSection>
+
+</div>
+
+</apex:component>

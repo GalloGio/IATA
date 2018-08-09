@@ -1,0 +1,383 @@
+<apex:component controller="ISSP_SISMembershipApplicationForm_Ctrl">
+    <apex:attribute name="newForm" description="AP_Process_Form__c" type="AP_Process_Form__c" required="true"/>
+    <apex:attribute name="account" description="Account" type="account"/>
+
+<div id="form-container">
+
+    <apex:pageBlockSection columns="2" id="section1A" collapsible="false" rendered="{!account.Sector__c='Airline'}">
+        <apex:facet name="header">
+            <apex:outputpanel >
+                Section 1 - Company information
+            </apex:outputpanel>
+        </apex:facet>
+
+        <tr>
+            <td colspan="2" class="blue-label">Airline Head Office Information:<br /></td>
+            <td colspan="2" class="blue-label">Airline Information to be included in the invoices produced by SIS:<br /></td>
+        </tr>
+        <apex:outputpanel ></apex:outputpanel>
+
+        <apex:pageBlockSectionItem>
+            <apex:outputLabel styleclass="account-field-label" value="Legal Name of the Airline"/>
+            <apex:pageBlockSectionItem>
+                <apex:outputText value="{!account.Legal_name__c}" rendered="{!account.Legal_name__c!=null}"/>
+                <apex:outputText value="{!newForm.Legal_Name_of_account__c}" rendered="{!account.Legal_name__c==null}"/>
+            </apex:pageBlockSectionItem>
+        </apex:pageBlockSectionItem>
+        <apex:pageBlockSectionItem>
+            <apex:outputLabel value="Legal Name of the Airline" />
+            <apex:outputText value="{!newForm.Legal_Name_of_company__c}"/>
+        </apex:pageBlockSectionItem>
+
+        <apex:pageBlockSectionItem>
+        </apex:pageBlockSectionItem>
+        <apex:pageBlockSectionItem>
+            <apex:outputLabel value="Commercial Name" />
+            <apex:outputText value="{!newForm.Commercial_Name__c}"/>
+        </apex:pageBlockSectionItem>
+
+        <apex:pageBlockSectionItem>
+            <apex:outputLabel value="Airline Designator Code"/>
+            <apex:outputText value="{!account.Airline_designator__c}" />
+        </apex:pageBlockSectionItem>
+        <apex:pageBlockSectionItem>
+        </apex:pageBlockSectionItem>
+
+        <apex:pageBlockSectionItem>
+            <apex:outputLabel value="Head Office Street"/>
+            <apex:outputText value="{!account.BillingStreet}" />
+        </apex:pageBlockSectionItem>
+        <apex:pageBlockSectionItem>
+            <apex:outputLabel value="Head Office Street" />
+            <apex:outputText value="{!newForm.Company_address__c}"/>
+        </apex:pageBlockSectionItem>
+
+        <apex:pageBlockSectionItem>
+            <apex:outputLabel value="Head Office City Name"/>
+            <apex:outputText value="{!account.BillingCity}" />
+        </apex:pageBlockSectionItem>
+        <apex:pageBlockSectionItem>
+            <apex:outputLabel value="Head Office City Name" />
+            <apex:outputText styleclass="form-city required" value="{!newForm.Company_city__c}"/>
+        </apex:pageBlockSectionItem>
+
+        <apex:pageBlockSectionItem>
+            <apex:outputLabel value="Head Office State Name"/>
+            <apex:outputText value="{!account.BillingState}" />
+        </apex:pageBlockSectionItem>
+        <apex:pageBlockSectionItem>
+            <apex:outputLabel value="Head Office State Name" />
+            <apex:outputText value="{!newForm.Company_State__c}" />
+        </apex:pageBlockSectionItem>
+
+        <apex:pageBlockSectionItem>
+            <apex:outputLabel value="Head Office Postal Code"/>
+            <apex:outputText value="{!account.BillingPostalCode}" />
+        </apex:pageBlockSectionItem>
+        <apex:pageBlockSectionItem>
+            <apex:outputLabel value="Head Office Postal Code" />
+            <apex:outputText value="{!newForm.Postal_code__c}" />
+        </apex:pageBlockSectionItem>
+
+        <apex:pageBlockSectionItem>
+            <apex:outputLabel value="Head Office Country"/>
+            <apex:outputText value="{!account.BillingCountry}" />
+        </apex:pageBlockSectionItem>
+        <apex:pageBlockSectionItem>
+            <apex:outputLabel value="Head Office Country" />
+            <apex:outputText value="{!newForm.Company_Country__r.Name}" />
+        </apex:pageBlockSectionItem>
+
+    </apex:pageBlockSection>
+
+    <apex:pageBlockSection columns="2" id="section1B" collapsible="false" rendered="{!account.Sector__c!='Airline'}">
+        <apex:facet name="header">
+            <apex:outputpanel >
+                Section 1 - Company information
+            </apex:outputpanel>
+        </apex:facet>
+
+        <apex:pageBlockSectionItem>
+            <apex:outputLabel value="Legal Name of the Company"/>
+            <apex:outputText value="{!newForm.Legal_Name_of_company__c}"/>
+        </apex:pageBlockSectionItem>
+        <apex:pageBlockSectionItem>
+        </apex:pageBlockSectionItem>
+        
+        <apex:pageBlockSectionItem>
+            <apex:outputLabel value="Trade Name of Company"/>
+            <apex:outputText value="{!newForm.Company_Trade_Name__c}"/>
+        </apex:pageBlockSectionItem>
+        <apex:pageBlockSectionItem>
+        </apex:pageBlockSectionItem>
+
+        <apex:pageBlockSectionItem>
+            <apex:outputLabel value="Incorporated under the laws of (Country)"/>
+            <apex:outputText value="{!newForm.Company_Country__r.Name}"/>
+        </apex:pageBlockSectionItem>
+        <apex:pageBlockSectionItem>
+        </apex:pageBlockSectionItem>
+
+        <apex:pageBlockSectionItem>
+            <apex:outputLabel value="" />
+            <apex:outputText value="{!newForm.Company_State__c}"/>
+        </apex:pageBlockSectionItem>
+        <apex:pageBlockSectionItem>
+        </apex:pageBlockSectionItem>
+
+        <apex:pageBlockSectionItem>
+            <apex:outputLabel value="Head Office Postal Code"/>
+            <apex:outputText value="{!newForm.Postal_code__c}" />
+        </apex:pageBlockSectionItem>
+        <apex:pageBlockSectionItem>
+        </apex:pageBlockSectionItem>
+
+    </apex:pageBlockSection>
+
+    <apex:pageBlockSection columns="2" id="section2" collapsible="false">
+        <apex:facet name="header">
+            <apex:outputpanel >
+                Section 2 - Super User details
+            </apex:outputpanel>
+        </apex:facet>
+
+        <tr><td colspan="4" class="blue-label">SIS Participant must provide the following details with regards to the Member Super User for their company. Once this form is provided and the membership process completed, the super user will receive their access to SIS.</td></tr>
+        <apex:outputText ></apex:outputText>
+
+        <apex:pageBlockSectionItem>
+            <apex:outputLabel value="Salutation"/>
+            <apex:outputText value="{!newForm.Super_User_Salutation__c}"/>
+        </apex:pageBlockSectionItem>
+        <apex:pageBlockSectionItem>
+        </apex:pageBlockSectionItem>
+
+        <apex:pageBlockSectionItem>
+            <apex:outputLabel value="First Name"/>
+            <apex:outputText value="{!newForm.Super_User_First_Name__c}"/>
+        </apex:pageBlockSectionItem>
+        <apex:pageBlockSectionItem>
+            <apex:outputLabel value="Phone Number"/>
+            <apex:outputText value="{!newForm.Super_User_Phone_Number__c}"/>
+        </apex:pageBlockSectionItem>
+
+        <apex:pageBlockSectionItem>
+            <apex:outputLabel value="Last Name"/>
+            <apex:outputText value="{!newForm.Super_User_Last_Name__c}"/>
+        </apex:pageBlockSectionItem>
+        <apex:pageBlockSectionItem>
+            <apex:outputLabel value="Mobile Number"/>
+            <apex:outputText value="{!newForm.Super_User_Mobile_Number__c}"/>
+        </apex:pageBlockSectionItem>
+        
+        <apex:pageBlockSectionItem>
+            <apex:outputLabel value="Email"/>
+            <apex:outputText styleclass="required email" value="{!newForm.Super_User_Email_Address__c}"/>
+        </apex:pageBlockSectionItem>
+        <apex:pageBlockSectionItem>
+            <apex:outputLabel value="Fax Number"/>
+            <apex:outputText value="{!newForm.Super_User_Fax_Number__c}"/>
+        </apex:pageBlockSectionItem>
+
+    </apex:pageBlockSection>
+
+    <apex:pageBlockSection columns="2" id="section3" collapsible="false">
+        <apex:facet name="header">
+            <apex:outputpanel >
+                Section 3 - Optional Services
+            </apex:outputpanel>
+        </apex:facet>
+
+        <apex:pageBlockSectionItem>
+            <apex:outputLabel value="{!$ObjectType.AP_Process_Form__c.fields.Is_AA_Member__c.label}"/>
+            <apex:outputText value="{!newForm.Is_AA_Member__c}"/>
+        </apex:pageBlockSectionItem>
+        <apex:pageBlockSectionItem>
+        </apex:pageBlockSectionItem>
+
+        <apex:pageBlockSectionItem rendered="{!newForm.Is_AA_Member__c=='Yes'}">
+            <apex:outputLabel value="Digital Signature Application"/>
+            <apex:outputText value="{!newForm.Digital_Signature_application__c}"/>
+        </apex:pageBlockSectionItem>
+        <apex:pageBlockSectionItem rendered="{!newForm.Is_AA_Member__c=='Yes'}">
+            <apex:outputLabel value="Billing Value Determination"/>
+            <apex:outputText value="{!newForm.Billing_Value_Determination__c}"/>
+        </apex:pageBlockSectionItem>
+
+        <apex:pageBlockSectionItem rendered="{!newForm.Is_AA_Member__c=='Yes'}">
+            <apex:outputLabel value="Digital Signature Verification"/>
+            <apex:outputText value="{!newForm.Digital_Signature_verification__c}"/>
+        </apex:pageBlockSectionItem>
+        <apex:pageBlockSectionItem rendered="{!newForm.Is_AA_Member__c=='Yes'}">
+            <apex:outputLabel value="Billing Value Confirmation"/>
+            <apex:outputText value="{!newForm.Billing_Value_Confirmation__c}"/>
+        </apex:pageBlockSectionItem>
+
+        <apex:pageBlockSectionItem rendered="{!newForm.Is_AA_Member__c=='Yes'}">
+            <apex:outputLabel value="Legal Archiving"/>
+            <apex:outputText value="{!newForm.Legal_Archiving__c}"/>
+        </apex:pageBlockSectionItem>
+        <apex:pageBlockSectionItem rendered="{!newForm.Is_AA_Member__c=='Yes'}">
+            <apex:outputLabel value="Auto-billing"/>
+            <apex:outputText value="{!newForm.Auto_billing__c}"/>
+        </apex:pageBlockSectionItem>
+
+        <apex:pageBlockSectionItem rendered="{!newForm.Is_AA_Member__c=='No'}">
+            <apex:outputLabel value="Digital Signature Application"/>
+            <apex:outputText value="{!newForm.Digital_Signature_application__c}"/>
+        </apex:pageBlockSectionItem>
+        <apex:pageBlockSectionItem rendered="{!newForm.Is_AA_Member__c=='No'}">
+        </apex:pageBlockSectionItem>
+
+        <apex:pageBlockSectionItem rendered="{!newForm.Is_AA_Member__c=='No'}">
+            <apex:outputLabel value="Digital Signature Verification"/>
+            <apex:outputText value="{!newForm.Digital_Signature_verification__c}"/>
+        </apex:pageBlockSectionItem>
+        <apex:pageBlockSectionItem rendered="{!newForm.Is_AA_Member__c=='No'}">
+        </apex:pageBlockSectionItem>
+
+        <apex:pageBlockSectionItem rendered="{!newForm.Is_AA_Member__c=='No'}">
+            <apex:outputLabel value="Legal Archiving"/>
+            <apex:outputText value="{!newForm.Legal_Archiving__c}"/>
+        </apex:pageBlockSectionItem>
+        <apex:pageBlockSectionItem rendered="{!newForm.Is_AA_Member__c=='No'}">
+        </apex:pageBlockSectionItem>
+
+    </apex:pageBlockSection>
+
+    <apex:pageBlockSection columns="2" id="section4" collapsible="false">
+        <apex:facet name="header">
+            <apex:outputpanel >
+                Section 4 - iiNET
+            </apex:outputpanel>
+        </apex:facet>
+
+        <apex:pageBlockSectionItem>
+            <apex:outputLabel value="Do you have an iiNET account?"/>
+            <apex:outputText value="{!newForm.Do_you_have_an_iiNET_account__c}"/>
+        </apex:pageBlockSectionItem>
+        <apex:pageBlockSectionItem>
+        </apex:pageBlockSectionItem>
+
+        <apex:variable value="{!newForm.Do_you_have_an_iiNET_account__c=='Yes'}" var="showSection4"/>
+
+        <tr><td colspan="4" class="blue-label {!IF(showSection4,'','hidden')}">
+            Please provide your iiNET ID, in case you already have an existing iiNET connection. In order to setup a new iiNET Connection please contact iinetcare@iata.org
+        </td></tr>
+        <apex:outputText ></apex:outputText>
+
+        <apex:pageBlockSectionItem rendered="{!showSection4}">
+        </apex:pageBlockSectionItem>
+        <apex:pageBlockSectionItem rendered="{!showSection4}">
+            <apex:outputLabel value="iiNET Account Number"/>
+            <apex:outputText value="{!newForm.IINET_account_number__c}"/>
+        </apex:pageBlockSectionItem>
+
+        <apex:pageBlockSectionItem rendered="{!showSection4}"/>
+        <apex:pageBlockSectionItem rendered="{!showSection4}"/>
+
+        <tr><td colspan="4" class="blue-label {!IF(showSection4,'','hidden')}">
+            Submission of billing data to SIS can be done manually over the IS-Web interface or through file submission (IS-IDEC, IS-XML).
+            For file submission prior testing and certification testing is required, and can be only done in the SIS Sandbox environment, through iiNET. Please refer to the SIS File Certification for detailed steps on how to perform testing and certification.
+        </td></tr>
+        <apex:outputText ></apex:outputText>
+
+    </apex:pageBlockSection>
+
+    <apex:pageBlockSection columns="1" id="section5" collapsible="false">
+        <apex:facet name="header">
+            <apex:outputpanel >
+                Section 5 - Corporate Documents
+            </apex:outputpanel>
+        </apex:facet>
+
+        <tr><td colspan="4" class="blue-label">
+            Please attach a scanned copy of the following documents:
+        </td></tr>
+        <apex:outputText ></apex:outputText>
+
+        <ul>
+          <li>Corporate Registration</li>
+          <li>Shareholders List</li>
+        </ul> 
+
+        <tr><td colspan="4" class="blue-label">
+            If the corporate documents are issued in any other language than French, English, Arabic, Italian, Portuguese or Spanish, please provide, in addition to the scanned copies of original documents, an official or notarized English translation of the same.
+        </td></tr>
+        <apex:outputText ></apex:outputText>
+
+    </apex:pageBlockSection>
+
+    <apex:pageBlockSection columns="2" id="section6" collapsible="false">
+        <apex:facet name="header">
+            <apex:outputpanel >
+                Section 6 - Local Bank Mandate Form
+            </apex:outputpanel>
+        </apex:facet>
+
+        <tr><td colspan="4">
+            <div class="strong-label">
+            The bank details, if provided, will be stored in the member profile and will be populated on invoices issued for bilateral settlement.
+            You may also use the same account you currently have for the ICH – in this case simply tick the box below.
+            </div>
+        </td></tr>
+
+        <apex:pageBlockSectionItem>
+            <apex:outputLabel value="Is your company joining the Clearing House?"/>
+            <apex:outputText value="{!newForm.Is_your_company_joining_the_Clearing_Hou__c}"/>
+        </apex:pageBlockSectionItem>
+        <apex:outputText ></apex:outputText>
+
+        <apex:variable value="{!newForm.Is_your_company_joining_the_Clearing_Hou__c=='Yes'}" var="showSection6Yes"/>
+        <apex:variable value="{!newForm.Is_your_company_joining_the_Clearing_Hou__c=='No'}" var="showSection6No"/>
+
+        <apex:outputPanel rendered="{!showSection6Yes}">
+            <tr><td colspan="4" class="blue-label required">Choose an option:</td></tr>
+            <apex:outputText ></apex:outputText>
+            <apex:outputText value="{!newForm.Select_Bank_Account__c}"/>
+
+            <apex:outputPanel rendered="{!newForm.Select_Bank_Account__c=='New Account'}">
+                <tr><td colspan="4" class="blue-label required">Upload Files:</td></tr>
+                <apex:outputText ></apex:outputText>
+                <apex:iframe scrolling="false"
+                src="/ISSP_SISMembershipApplicationFileUpload?caseId={!newform.Case__c}&reqCnt=2&reqRequired=Mandatory&reqName=Bank Mandate Form&reqDescription={!$Label.ISSP_SISMembership_BankMandateDescription}&reqIdentifier=BankMandate&onlyOne=true"/>
+            </apex:outputPanel>
+        </apex:outputPanel>
+
+        <apex:outputPanel rendered="{!showSection6No}">
+            <tr><td colspan="4" class="blue-label required">Upload Files:</td></tr>
+            <apex:outputText ></apex:outputText>
+            <ul>
+              <li>Bank Mandate</li>
+            </ul> 
+        </apex:outputPanel>
+
+    </apex:pageBlockSection>
+
+    <apex:pageBlockSection columns="1" id="section7" collapsible="false">
+        <apex:facet name="header">
+            <apex:outputpanel >
+                Section 7 - Additional questions
+            </apex:outputpanel>
+        </apex:facet>
+
+        <apex:pageBlockSectionItem>
+            <apex:outputLabel value="Is your company subject to EU data privacy laws?"/>
+            <apex:outputText value="{!newForm.Is_company_subject_to_EU_laws__c}"/>
+        </apex:pageBlockSectionItem>
+
+        <apex:variable value="{!newForm.Is_company_subject_to_EU_laws__c=='Yes'}" var="showSection7"/>
+
+        <apex:outputPanel rendered="{!showSection7}">
+            <apex:outputPanel rendered="{!newForm.EU_Data_Privacy_Laws__c=='A'}">
+                EU Standard Contractual Clauses for processing between IATA and Participant (including the EU Standard Contractual Clauses for processing between IATA and Sub-processor. A signed copy is available upon request).
+            </apex:outputPanel>
+            <apex:outputPanel rendered="{!newForm.EU_Data_Privacy_Laws__c=='B'}">
+                (for use only in jurisdictions where a tripartite agreement is required): EU Standard Contractual Clauses for processing between IATA, Participant and Sub-processor
+            </apex:outputPanel>
+        </apex:outputPanel>
+
+    </apex:pageBlockSection>
+
+</div>
+
+</apex:component>
