@@ -1,0 +1,30 @@
+<table border="0" cellpadding="5" width="550" cellspacing="5" height="400" >
+<tr valign="top" height="400" >
+<td tEditID="c1r1" style=" background-color:#FFFFFF; bEditID:r3st1; color:#000000; bLabel:main; font-size:12pt; font-family:arial;" aEditID="c1r1" locked="0" >
+<![CDATA[<p class="MsoNormal" style=""><font face="Arial, sans-serif"><span lang="ES" style="font-size: 10pt; line-height: 107%; color: rgb(31, 78, 121);">Estimado/a</span><span style="background-color: rgb(255, 255, 255); color: rgb(31, 78, 121); font-size: 13.3333px;">&nbsp;{!Case.Contact},</span></font></p><p class="MsoNormal" style=""><font face="Arial, sans-serif"><span style="color: rgb(31, 78, 121); font-size: 10pt;">Código de la IATA:&nbsp;</span><span style="background-color: rgb(255, 255, 255); color: rgb(31, 78, 121); font-size: 13.3333px;">{!Case.IATA_Code__c},</span></font></p><p class="MsoNormal" style=""><span lang="ES" style="font-size:10.0pt;line-height:107%;
+color:#1F4E79;mso-bidi-language:ES"><font face="Arial, sans-serif"><br></font></span></p>
+
+<p class="MsoNormal" style=""><span lang="ES" style="font-size:10.0pt;line-height:107%;
+color:#1F4E79;mso-bidi-language:ES"><font face="Arial, sans-serif">Nos permitimos recordarle que todavía no
+hemos recibido la Atestación de Cumplimiento de las DSS de la PCI o la
+Autodeclaración de No Utilización de Tarjetas de Crédito. Le recordamos que la
+fecha límite de envío es el&nbsp;<span style="font-size: 13.3333px; text-align: justify; background-color: rgb(255, 255, 255);">{!Case.CreatedDate+30}</span>. En el caso de ya nos haya remitido el
+documento, por favor, ignore este mensaje.<o:p></o:p></font></span></p><p class="MsoNormal" style=""><span lang="ES" style="font-size:10.0pt;line-height:107%;
+color:#1F4E79;mso-bidi-language:ES"><font face="Arial, sans-serif"><br></font></span></p>
+
+<p class="MsoNormal" style=""><span lang="ES" style="font-size:10.0pt;line-height:107%;
+color:#1F4E79;mso-bidi-language:ES"><font face="Arial, sans-serif">Si desea obtener más información acerca de
+los requisitos de cumplimiento de las DSS de la PCI, visite nuestra página web:<o:p></o:p></font></span></p>
+
+<p class="MsoNormal" style=""><span lang="ES"><font face="Arial, sans-serif"><span style="font-size:10.0pt;line-height:107%;mso-bidi-language:ES"><a href="http://www.iata.org/services/finance/Pages/pci-dss.aspx">http://www.iata.org/services/finance/Pages/pci-dss.aspx</a></span><o:p></o:p></font></span></p><p class="MsoNormal" style=""><span lang="ES"><font face="Arial, sans-serif"><br></font></span></p>
+
+<p class="MsoNormal" style=""><span lang="ES" style="font-size:10.0pt;line-height:107%;
+color:#1F4E79;mso-bidi-language:ES"><font face="Arial, sans-serif">Si necesita que la IATA le proporcione más
+información, no dude en realizar una nueva consulta a través de nuestro Portal
+del Cliente:&nbsp;<a href="http://www.iata.org/customer" title="http://www.iata.org/customer"><span style="color:#1F4E79;text-decoration:
+none;text-underline:none">www.iata.org/cs</span></a>.&nbsp;<o:p></o:p></font></span></p><p class="MsoNormal" style=""><span lang="ES" style="font-size:10.0pt;line-height:107%;
+color:#1F4E79;mso-bidi-language:ES"><font face="Arial, sans-serif"><br></font></span></p>
+
+<p class="MsoNormal" style=""><span lang="ES" style="font-size: 10pt; line-height: 107%; color: rgb(31, 78, 121);"><font face="Arial, sans-serif">Atentamente,</font><font face="arial"><o:p></o:p></font></span></p><div style="font-size: 12pt; background-color: rgb(255, 255, 255); margin: 0px;"><font size="2"><span style="font-size: 11pt;"><font color="#333399" face="Arial, sans-serif">Agency Management</font></span></font></div><div style="font-size: 12pt; background-color: rgb(255, 255, 255); margin: 0px;"><font size="2"><span style="font-size: 11pt;"><font color="#333399" face="Arial, sans-serif">International Air Transport Association</font></span></font></div><div style="font-size: 12pt; background-color: rgb(255, 255, 255); margin: 0px;"><font size="2" face="Arial, sans-serif"><span style="font-size: 11pt;">-----------------------------------------------------------------------------<font color="navy">&nbsp;</font></span></font></div><p class="MsoNormal" style="font-size: 12pt;"><font face="Arial, sans-serif"><span style="font-size: 10pt; line-height: 14.2667px; color: rgb(31, 78, 121);"></span></font></p><p class="MsoNormal"><span lang="ES" style="font-size: 10pt; line-height: 107%; color: rgb(31, 78, 121);"></span></p><div style="font-size: 12pt; background-color: rgb(255, 255, 255); margin: 0px;"><font size="2" face="Arial, sans-serif"><span style="font-size: 11pt;"><font color="navy">In order to obtain information or assistance from IATA, do not hesitate to access at any time our&nbsp;</font><a href="http://www.iata.org/cs" target="_blank">Customer Portal</a></span></font></div>]]></td>
+</tr>
+</table>
