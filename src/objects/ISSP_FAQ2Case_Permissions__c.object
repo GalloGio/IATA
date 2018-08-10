@@ -44,5 +44,19 @@
         <unique>false</unique>
     </fields>
     <label>ISSP FAQ2Case Permissions</label>
+    <listViews>
+        <fullName>DetailedView</fullName>
+        <columns>NAME</columns>
+        <columns>Sector_Permission__c</columns>
+        <columns>Topic__c</columns>
+        <columns>Subtopic__c</columns>
+        <columns>UPDATEDBY_USER</columns>
+        <columns>LAST_UPDATE</columns>
+        <columns>CREATED_DATE</columns>
+        <columns>ISO_Country__c</columns>
+        <filterScope>Everything</filterScope>
+        <label>DetailedView</label>
+        <language>en_US</language>
+    </listViews>
     <visibility>Public</visibility>
 </CustomObject>

@@ -293,6 +293,11 @@
                     <default>false</default>
                     <label>Central</label>
                 </value>
+                <value>
+                    <fullName>GDC Madrid</fullName>
+                    <default>false</default>
+                    <label>GDC Madrid</label>
+                </value>
             </valueSetDefinition>
         </valueSet>
     </fields>
@@ -397,7 +402,7 @@
         </sharedTo>
     </listViews>
     <listViews>
-        <fullName>All</fullName>
+        <fullName>Cesar</fullName>
         <columns>Area_Concerned__c</columns>
         <columns>NAME</columns>
         <columns>Region__c</columns>
@@ -411,11 +416,20 @@
         <columns>Responsible__c</columns>
         <columns>Reminder_sent_to_responsible__c</columns>
         <filterScope>Everything</filterScope>
-        <label>*All</label>
+        <filters>
+            <field>Deadline__c</field>
+            <operation>equals</operation>
+            <value>THIS_MONTH</value>
+        </filters>
+        <filters>
+            <field>Responsible__c</field>
+            <operation>contains</operation>
+            <value>CESAR</value>
+        </filters>
+        <label>Cesar</label>
         <language>en_US</language>
         <sharedTo>
-            <group>CS_Systems</group>
-            <group>FDS_KPI_Reporting_Team</group>
+            <role>DistributionAirlineManagementHO</role>
         </sharedTo>
     </listViews>
     <listViews>
@@ -517,9 +531,9 @@
         <columns>Year__c</columns>
         <columns>Region__c</columns>
         <columns>Value_Percentage__c</columns>
-        <columns>Not_Available__c</columns>
         <columns>Deadline__c</columns>
         <columns>Responsible__c</columns>
+        <columns>Not_Available__c</columns>
         <filterScope>Everything</filterScope>
         <filters>
             <field>FDS_KPI_Reporting__c</field>
@@ -958,7 +972,7 @@
     <validationRules>
         <fullName>KPI_No_entry_after_the_deadline_in_3d</fullName>
         <active>true</active>
-        <errorConditionFormula>TODAY() &gt;   Deadline__c +3 &amp;&amp; $User.ProfileId &lt;&gt; &quot;00ew0000001R6uT&quot; &amp;&amp; $User.ProfileId &lt;&gt; &quot;00e20000000h0gF&quot;</errorConditionFormula>
+        <errorConditionFormula>TODAY() &gt;   Deadline__c +3 &amp;&amp; $User.ProfileId &lt;&gt; &quot;00ew0000001R6uT&quot; &amp;&amp; $User.ProfileId &lt;&gt; &quot;00e20000000h0gF&quot; &amp;&amp; $User.Id &lt;&gt; &quot;0051r000007mhLq&quot;</errorConditionFormula>
         <errorMessage>You can not update this record 3 days after the deadline. Please contact the Workflow &amp; Metrics Team</errorMessage>
     </validationRules>
     <validationRules>
@@ -985,7 +999,7 @@
     <validationRules>
         <fullName>Perce_No_entry_after_the_deadline_in_3d</fullName>
         <active>true</active>
-        <errorConditionFormula>TODAY() &gt;   Deadline__c +3 &amp;&amp; $User.ProfileId &lt;&gt; &quot;00ew0000001R6uT&quot; &amp;&amp; $User.ProfileId &lt;&gt; &quot;00e20000000h0gF&quot;</errorConditionFormula>
+        <errorConditionFormula>TODAY() &gt;   Deadline__c +3 &amp;&amp; $User.ProfileId &lt;&gt; &quot;00ew0000001R6uT&quot; &amp;&amp; $User.ProfileId &lt;&gt; &quot;00e20000000h0gF&quot; &amp;&amp;  $User.Id &lt;&gt; &quot;0051r000007mhLq&quot;</errorConditionFormula>
         <errorDisplayField>Value_Percentage__c</errorDisplayField>
         <errorMessage>You can not update this record 3 days after the deadline. Please contact the Workflow &amp; Metrics Team</errorMessage>
     </validationRules>

@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<EmailTemplate xmlns="http://soap.sforce.com/2006/04/metadata">
+    <available>true</available>
+    <encodingKey>UTF-8</encodingKey>
+    <letterhead>IATADynamicSkyLetterhead</letterhead>
+    <name>ANG Anual Renewal Case EN</name>
+    <style>freeForm</style>
+    <subject>Ref nr {!AMS_OSCAR__c.Name} – Annual revalidation</subject>
+    <textOnly>Dear Sir/Madam,
+
+
+
+In accordance with the provisions of the IATA Passenger Sales Agency Rules, we hereby request your confirmation of the following information related to your Agency:
+
+
+
+a) Agent’s Legal Name
+
+b) VAT
+
+c) Company type
+
+d) Billing address
+
+e) Telephone and fax
+
+f) License number
+
+g) Ownership and % of shares
+
+h) Management details
+
+i) Details of the Agent’s IATA contact person(s)
+
+j) Agent website address
+
+k) GDS
+
+
+
+Please click here in order to submit your details. Failure to do so by the deadline given, would result in an administrative noncompliance being taken against your Agency.
+
+
+
+We trust you give to this matter your immediate attention.
+
+
+
+Please do not hesitate to contact us if you have any queries on this matter via our Customer Service Portal at http://www.iata.org/cs
+
+
+
+
+Yours faithfully,
+
+
+Agency Management
+International Air Transport Association
+-----------------------------------------------------------------------------
+In order to obtain information or assistance from IATA, do not hesitate to access at any time our Customer Portal
+
+{!AMS_OSCAR__c.Emails_reference_Id__c}</textOnly>
+    <type>html</type>
+    <uiType>Aloha</uiType>
+</EmailTemplate>

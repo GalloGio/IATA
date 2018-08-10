@@ -3,6 +3,12 @@
     <doesSendEmailToMembers>false</doesSendEmailToMembers>
     <email>allposbo@iata.org</email>
     <name>Local Office - Eastern Caribbean</name>
+    <queueMembers>
+        <publicGroups>
+            <publicGroup>IATAEasternCaribbean</publicGroup>
+            <publicGroup>IDFSAmericasCustomerService</publicGroup>
+        </publicGroups>
+    </queueMembers>
     <queueSobject>
         <sobjectType>Case</sobjectType>
     </queueSobject>

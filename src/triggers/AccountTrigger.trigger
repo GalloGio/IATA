@@ -1,5 +1,8 @@
 trigger AccountTrigger on Account (before insert, after insert, after update, before update, before delete, after delete){
   
+  NewGen_AccountRiskStatusTriggerHandler newgenHandler = new NewGen_AccountRiskStatusTriggerHandler();
+  NewGenApp_Custom_Settings__c newgenCS = NewGenApp_Custom_Settings__c.getOrgDefaults();
+
   if(!AMS_TriggerExecutionManager.checkExecution(Account.getSObjectType(), 'AccountTrigger')) { return; }
   
   //NOT NEEDED ANYMORE AS PER NEWGEN-796 - DTULLO: added to skip trigger execution if aggreagating data for PwC
@@ -13,12 +16,16 @@ trigger AccountTrigger on Account (before insert, after insert, after update, be
     AccountTriggerHelper.AccountNoDuplicateBranch(trigger.New, trigger.OldMap);
     AccountTriggerHelper.SectorCatToIndType(trigger.New, trigger.OldMap);
    
+    TIP_Utils.validateUniqueIATACodeForTIP(trigger.new, trigger.OldMap);
   }
 
   if(trigger.isAfter && trigger.isUpdate){
     //trgCopyInfoFromHQToBROnHQUpdate trgCopyInfoFromHQToBROnHQUpdatetest
     if(trigger.newmap <> null)
-    AccountTriggerHelper.CopyFromHqToBRAfterUpdate(trigger.newMap);  
+    AccountTriggerHelper.CopyFromHqToBRAfterUpdate(trigger.newMap);
+    if(newgenCS.Push_Notifications_State__c){
+      newgenHandler.onAfterUpdate(Trigger.old, Trigger.new, Trigger.oldMap);  
+    }
   }
 
 
@@ -31,6 +38,7 @@ trigger AccountTrigger on Account (before insert, after insert, after update, be
   }
   else if(Trigger.isBefore && Trigger.isUpdate){
     AMS_AccountTriggerHandler.handleBeforeUpdate(Trigger.new, Trigger.oldMap);
+    TIP_Utils.setAssessmentDate(Trigger.new, Trigger.oldMap);
   }
   else if(Trigger.isAfter && Trigger.isUpdate){
     AMS_AccountTriggerHandler.handleAfterUpdate(Trigger.new, Trigger.oldMap);
@@ -74,4 +82,8 @@ trigger AccountTrigger on Account (before insert, after insert, after update, be
     if(Trigger.isBefore && Trigger.isUpdate){
         ISSP_SIS_AccountHandler.beforeUpdate(Trigger.newMap, Trigger.oldMap);
     }
+    
+    //Trigger the platform events
+    if(trigger.isAfter)
+    	PlatformEvents_Helper.publishEvents((trigger.isDelete?trigger.OldMap:Trigger.newMap), 'Account__e', 'Account', trigger.isInsert, trigger.isUpdate, trigger.isDelete, trigger.isUndelete);
 }

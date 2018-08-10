@@ -521,7 +521,47 @@ private class AMS_AccreditationContactControllerTest
         ApexPages.Message errorMsg = new ApexPages.Message(ApexPages.Severity.Error,'People with the following emails already exist in the system. Please link them to their original records by selecting \"Choose an existing contact\".\n\n[jd@test.com]'); 
 
         System.assert(wasMessageAdded(errorMsg));
+
+        Boolean bIsAllHierarchySelected = ctrl.isAllHierarchySelected;
+        String sDateFormatToShow = ctrl.dateFormatToShow;
             
+        Test.stopTest();
+
+    }
+
+    //AMSU-132
+    static testMethod void testImportTrainedStaff(){
+        Test.startTest();
+        AMS_OSCAR_TestDataFactory.createCargoAgencyOSCARtestData();
+        
+        Account a = [SELECT id from Account where Name = 'Test Cargo HO' LIMIT 1];
+
+        AMS_OSCAR__c oscar = [SELECT id, AMS_Online_Accreditation__c,RecordTypeId from AMS_OSCAR__c where Account__c =: a.Id limit 1];
+
+        AMS_Pax_Accreditation_Form__c af = [SELECT id, Name, Account_Name__c, IATACode__c, Type_of_Operation__c, Shipping_Street__c, Shipping_Postal_Code__c, 
+                            Shipping_City__c, Shipping_State__c, Shipping_Country__c, SAAM_Case__r.AccountId, SAAM_Case__r.OSCAR__r.Account__c, 
+                            SAAM_Case__r.OSCAR__r.Account__r.Location_class__c, SAAM_Case__r.OSCAR__r.Account__r.CNS_Agency__c, 
+                            SAAM_Case__r.OSCAR__r.Account__r.Location_Type__c, SAAM_Case__r.OSCAR__r.Process__c, SAAM_Case__r.OSCAR__r.Type_of_change__c,
+                            SAAM_Case__r.OSCAR__r.Account__r.Sector__c, SAAM_Case__r.OSCAR__r.Account__r.Category__c,
+                            SAAM_Case__r.OSCAR__r.CNS_process__c, ANG_IsNewGenAgency__c,  SAAM_Case__r.OSCAR__r.ANG_Type_Of_Change__c, SAAM_Case__r.OSCAR__r.RecordTypeId,
+                            SAAM_Case__r.OSCAR__c from AMS_Pax_Accreditation_Form__c where id = :oscar.AMS_Online_Accreditation__c];
+    
+        ApexPages.StandardController sc = new ApexPages.StandardController(af);
+        AMS_AccreditationContactController ctrl = new AMS_AccreditationContactController(sc);
+
+        AMS_Agency_Regulation__c ar = new AMS_Agency_Regulation__c(Expiry_Date__c=(System.today()+91), Type_Of_Certificate__c = 'DGR', Account__c = af.SAAM_Case__r.OSCAR__r.Account__c, Last_name__c='test');
+        insert ar;
+        List<AMS_Agency_Regulation__c> lar = new List<AMS_Agency_Regulation__c>();
+        lar.add(ar);
+
+        List<AMS_AccreditationContactController.AgRegItemWrapper> agRegValuesForDisplaytest = ctrl.agRegValuesForDisplay;
+
+        ctrl.doSelectAll();
+        Boolean selectAllLocal = ctrl.selectAll;
+
+        ctrl.saveImport();
+        ctrl.convertExistingAgencyRegulationsToAccContact(af.id, lar);
+
         Test.stopTest();
 
     }

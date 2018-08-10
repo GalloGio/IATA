@@ -1,42 +1,76 @@
-<aura:component implements="forceCommunity:availableForAllPageTypes,force:hasRecordId,force:appHostable" access="global" controller="LightningConnectedAppHelper">
+<aura:component extends="c:Base" implements="forceCommunity:availableForAllPageTypes,force:hasRecordId,force:appHostable" access="global" controller="LightningConnectedAppHelper">
 	<aura:attribute name="greeting" type="String" default="OneId" access="global" />
 	<aura:handler name="init" value="{!this}" action="{!c.doInit}"/>
+    <aura:attribute name="customCommunity" type="Boolean" default="false" />
+    <aura:attribute name="serviceName" type="String" />
  	<aura:attribute name="today" type="Date" default=""/>
+    
+    <aura:registerEvent name="fetchParams" type="c:oneIdURLParams"/>
+	<aura:handler event="c:oneIdURLParams" action="{!c.renderPage}"/>
+	
+	<aura:attribute name="labelHelp" type="String" />
+    <aura:attribute name="labelHelpLink" type="String" />
+    <aura:attribute name="labelTermsOfUse" type="String" />
+    <aura:attribute name="labelTermsOfUseLink" type="String" />
+    
 	<div id="ft">
-		<div class="header">
+		<div class="header">            
 			<div class="widthLimiter centerAll">
 				<span class="icon icon-logo"></span>
 				<h2>{!$Label.c.OneId_IATA_represent_lead_and_serve_the_airline_industry}</h2>
 			</div>
 		</div>
-		<div class="widthLimiter centerAll">
-			<a class="footerEl" href="{!$Label.c.OneId_Help_Community_Link}" target="_blank">
-				<div class="iataItem_Icon">
+		<div class="slds-grid slds-grid_align-center slds-gutters_large slds-m-top_xx-large">
+
+			<a class="slds-col" href="{!$Label.c.OneId_Privacy_Policy_Link}" target="_blank">
+				<div class="footerIcon">
 					<span class="icon icon-community"></span>
 				</div>
-				<p class="icon_subTitle">
-					{!$Label.c.OneId_Help_Community}
-				</p>
+				<p class="footerIconSubtitle">{!$Label.c.OneId_Privacy_Policy}</p>
 			</a>
-			<a class="footerEl" href="{!$Label.c.OneId_Terms_of_Use_Link}" target="_blank">
-				<div class="iataItem_Icon">
-					<span class="icon icon-tick"></span>
-				</div>
-				<p class="icon_subTitle">
-					{!$Label.c.OneId_Terms_of_Use}
-				</p>
-			</a>
-			<a class="footerEl" href="{!$Label.c.OneId_Online_Help_Link}" target="_blank">
-				<div class="iataItem_Icon">
-					<span class="icon icon-questionMark"></span>
-				</div>
-				<p class="icon_subTitle">
-					{!$Label.c.OneId_Online_Help}
-				</p>
-			</a>
-			<div class="copyright clearfix">
-				<p> &copy; {!$Label.c.OneId_International_Air_Transport_Association_IATA}&nbsp;{!v.today}. {!$Label.c.OneId_All_rights_reserved}.</p>
+
+			<aura:if isTrue="{!and(v.customCommunity,!empty(v.serviceName))}">
+				<a class="slds-col" href="{!v.labelTermsOfUseLink}" target="_blank">
+					<div class="footerIcon">
+						<span class="icon icon-tick"></span>
+					</div>
+					<p class="footerIconSubtitle">{!$Label.c.OneId_Terms_of_Use}</p>
+				</a>
+				<aura:set attribute="else">
+					<a class="slds-col" href="{!$Label.c.OneId_Terms_of_Use_Link}" target="_blank">
+						<div class="footerIcon">
+							<span class="icon icon-tick"></span>
+						</div>
+						<p class="footerIconSubtitle">{!$Label.c.OneId_Terms_of_Use}</p>
+					</a>	
+				</aura:set>
+			</aura:if>
+
+            <aura:if isTrue="{!and(v.customCommunity, !empty(v.serviceName))}">
+                <!--<aura:if isTrue="{!equals(v.serviceName, 'ISSP')}">-->
+                    <a class="slds-col" href="{!v.labelHelpLink }" target="_blank">
+                        <div class="footerIcon">
+                            <span class="icon icon-questionMark"></span>
+                        </div>
+                        <p class="footerIconSubtitle">{!v.labelHelp}</p>
+                    </a>
+                <!--</aura:if>-->
+                <aura:set attribute="else">
+                    <a class="slds-col" href="{!$Label.c.OneId_Online_Help_Link}" target="_blank">
+                        <div class="footerIcon">
+                            <span class="icon icon-questionMark"></span>
+                        </div>
+                        <p class="footerIconSubtitle">{!$Label.c.OneId_Online_Help}</p>
+                    </a>
+                </aura:set>
+            </aura:if>
+			
+		</div>
+		<div class="slds-grid slds-grid_align-center">
+			<div class="slds-col slds-size_1-of-1 copyright">
+				<p> &copy; {!$Label.c.OneId_International_Air_Transport_Association_IATA}{!v.today}. {!$Label.c.OneId_All_rights_reserved}.</p>
 			</div>
-		</div> 
+
+		</div>
 	</div>
 </aura:component>

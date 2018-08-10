@@ -280,10 +280,36 @@ IF(RIGHT(AIMS_ID__c,3)=&quot;GDP&quot;,Left(AIMS_ID__c,LEN(AIMS_ID__c)-3),AIMS_I
         <unique>false</unique>
     </fields>
     <fields>
+        <fullName>CA_FoP_Status__c</fullName>
+        <description>Status of CASH Form of Payment</description>
+        <externalId>false</externalId>
+        <inlineHelpText>Status of CASH Form of Payment</inlineHelpText>
+        <label>CA FoP Status</label>
+        <length>10</length>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>CC_FoP_Status__c</fullName>
+        <description>Status of CREDIT CARD Form of Payment</description>
+        <externalId>false</externalId>
+        <inlineHelpText>Status of CREDIT CARD Form of Payment</inlineHelpText>
+        <label>CC FoP Status</label>
+        <length>10</length>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
         <fullName>Cash_Conditions_Override__c</fullName>
         <description>Formula on Related Accreditation (Cash_Conditions_Override__c)</description>
         <externalId>false</externalId>
-        <formula>IF( Related_Accreditation_Class__r.Cash_Conditions_Override__c , &quot;Y&quot;,&quot;N&quot;)</formula>
+        <formula>IF(Is_NewGen_Agency__c == &apos;Y&apos;, IF(Related_Accreditation_Class__r.Cash_Conditions_Override__c,&quot;Y&quot;,&quot;N&quot;),&apos;&apos;)</formula>
         <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
         <inlineHelpText>If Checked, RHC equals Financial Security Amount Provided.</inlineHelpText>
         <label>Cash Conditions Override</label>
@@ -422,6 +448,19 @@ IF Trading Name is NULL, use Legal Name for Agency Merge Field</inlineHelpText>
         <unique>false</unique>
     </fields>
     <fields>
+        <fullName>EP_FoP_Status__c</fullName>
+        <description>Status of EASYPAY Form of Payment</description>
+        <externalId>false</externalId>
+        <inlineHelpText>Status of EASYPAY Form of Payment</inlineHelpText>
+        <label>EP FoP Status</label>
+        <length>10</length>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
         <fullName>EasyPay_Account_Status__c</fullName>
         <deleteConstraint>SetNull</deleteConstraint>
         <description>Status of the EasyPay Account of the Agency 
@@ -532,7 +571,7 @@ The length is the total of the original fields (Area, Country_Code, Legal_Name, 
         <fullName>Is_NewGen_Agency__c</fullName>
         <description>Indicates if Agency falls under Reso 812 (NewGen ISS) or not.</description>
         <externalId>false</externalId>
-        <formula>IF(Related_Accreditation_Class__r.Is_NewGen_Agency__c ,&quot;Y&quot;,&quot;N&quot;)</formula>
+        <formula>IF(OR(Related_Accreditation_Class_Code__c == &apos;P&apos;,Related_Accreditation_Class_Code__c == &apos;V&apos;), IF(Related_Accreditation_Class__r.Is_NewGen_Agency__c ,&quot;Y&quot;,&quot;N&quot;),&apos;&apos;)</formula>
         <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
         <inlineHelpText>Indicates if Agency falls under Reso 812 (NewGen ISS) or not.</inlineHelpText>
         <label>Is NewGen Agency</label>
@@ -659,8 +698,10 @@ TEXT(Month(Related_Accreditation_Class__r.Original_approval_date__c)) +
     </fields>
     <fields>
         <fullName>Legal_Name__c</fullName>
+        <description>Concatenation of Fields Legal Name Upper 1+2+3</description>
         <externalId>false</externalId>
-        <formula>TRIM(Legal_Name_1__c + &apos; &apos; + Legal_Name_2__c + &apos; &apos; + Legal_Name_3__c)</formula>
+        <formula>TRIM(Legal_Name_1_Upper__c + &apos; &apos; + Legal_Name_2_Upper__c + &apos; &apos; + Legal_Name_3_Upper__c)</formula>
+        <inlineHelpText>Concatenation of Fields Legal Name Upper 1+2+3</inlineHelpText>
         <label>Legal Name</label>
         <required>false</required>
         <trackHistory>false</trackHistory>
@@ -814,7 +855,11 @@ The length is the total of the original fields (Area, Country_Code, Legal_Name, 
         <description>Indicator on the Agency Compliance to PCI DSS Rules. 
 Mapped to &quot; Is_PCI_compliant__c&quot; on AMS Account for Replication.</description>
         <externalId>false</externalId>
-        <inlineHelpText>Mapped to &quot; Is_PCI_compliant__c&quot; on AMS Account for Replication.</inlineHelpText>
+        <inlineHelpText>Mapped to &quot;Is_PCI_compliant__c&quot; on AMS Account for Replication.
+Y = Yes
+N = No
+C = Corporate Cards Only
+X = No Usage of Cards</inlineHelpText>
         <label>PCI Compliance</label>
         <required>false</required>
         <trackHistory>true</trackHistory>
@@ -838,6 +883,11 @@ Mapped to &quot; Is_PCI_compliant__c&quot; on AMS Account for Replication.</desc
                     <fullName>X</fullName>
                     <default>false</default>
                     <label>X</label>
+                </value>
+                <value>
+                    <fullName>C</fullName>
+                    <default>false</default>
+                    <label>C</label>
                 </value>
             </valueSetDefinition>
         </valueSet>
@@ -1209,8 +1259,10 @@ X = Not NewGen OR NewGen GoLite OR NewGen Financial Review Opt-Out</inlineHelpTe
     </fields>
     <fields>
         <fullName>Trading_Name__c</fullName>
+        <description>Concatenation of Fields Trading Name Upper 1+2</description>
         <externalId>false</externalId>
-        <formula>TRIM(Trading_Name_1__c + &apos; &apos; + Trading_Name_2__c)</formula>
+        <formula>TRIM(Trading_Name_1_Upper__c + &apos; &apos; + Trading_Name_2_Upper__c)</formula>
+        <inlineHelpText>Concatenation of Fields Trading Name Upper 1+2</inlineHelpText>
         <label>Trading Name</label>
         <required>false</required>
         <trackHistory>false</trackHistory>
@@ -1379,6 +1431,10 @@ X = Not NewGen OR NewGen GoLite OR NewGen Financial Review Opt-Out</inlineHelpTe
         </picklistValues>
         <picklistValues>
             <picklist>PCI_Compliance__c</picklist>
+            <values>
+                <fullName>C</fullName>
+                <default>false</default>
+            </values>
             <values>
                 <fullName>N</fullName>
                 <default>false</default>

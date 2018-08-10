@@ -52,9 +52,6 @@
             </containers>
         </subtabComponents>
     </customConsoleComponents>
-    <excludeButtons>DataDotComAccountInsights</excludeButtons>
-    <excludeButtons>DataDotComClean</excludeButtons>
-    <excludeButtons>DataDotComCompanyHierarchy</excludeButtons>
     <excludeButtons>Submit</excludeButtons>
     <layoutSections>
         <customLabel>true</customLabel>
@@ -127,7 +124,7 @@
                 <field>Is_DGR_Compliant__c</field>
             </layoutItems>
             <layoutItems>
-                <behavior>Edit</behavior>
+                <behavior>Readonly</behavior>
                 <field>ANG_Accreditation_Model__c</field>
             </layoutItems>
             <layoutItems>
@@ -655,6 +652,22 @@
         </layoutColumns>
         <style>OneColumn</style>
     </layoutSections>
+    <layoutSections>
+        <customLabel>true</customLabel>
+        <detailHeading>true</detailHeading>
+        <editHeading>false</editHeading>
+        <label>Owners</label>
+        <layoutColumns>
+            <layoutItems>
+                <height>300</height>
+                <page>AMS_AccountOwners</page>
+                <showLabel>false</showLabel>
+                <showScrollbars>true</showScrollbars>
+                <width>100%</width>
+            </layoutItems>
+        </layoutColumns>
+        <style>OneColumn</style>
+    </layoutSections>
     <miniLayout>
         <fields>Name</fields>
         <fields>ParentId</fields>
@@ -664,6 +677,10 @@
         <fields>Phone</fields>
         <fields>Location_Type__c</fields>
         <fields>Status__c</fields>
+        <fields>Reason__c</fields>
+        <fields>Sector__c</fields>
+        <fields>Category__c</fields>
+        <fields>Location_Class__c</fields>
     </miniLayout>
     <relatedLists>
         <relatedList>RelatedAccountSalesTeam</relatedList>
@@ -692,21 +709,6 @@
         <fields>User_Portal_Status__c</fields>
         <fields>CONTACT.LAST_ACTIVITY</fields>
         <relatedList>RelatedContactList</relatedList>
-    </relatedLists>
-    <relatedLists>
-        <excludeButtons>New</excludeButtons>
-        <fields>NAME</fields>
-        <fields>Active__c</fields>
-        <fields>RECORDTYPE</fields>
-        <fields>Unified_Owner_Name__c</fields>
-        <fields>Owner_Name__c</fields>
-        <fields>Owner_Account__c</fields>
-        <fields>Contact__c</fields>
-        <fields>Percentage__c</fields>
-        <fields>Termination_Date__c</fields>
-        <relatedList>AMS_Account_Role__c.Account__c</relatedList>
-        <sortField>Active__c</sortField>
-        <sortOrder>Desc</sortOrder>
     </relatedLists>
     <relatedLists>
         <fields>CASES.CASE_NUMBER</fields>

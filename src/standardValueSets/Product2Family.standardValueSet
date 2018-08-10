@@ -64,7 +64,7 @@
     <standardValue>
         <fullName>Cargo IS</fullName>
         <default>false</default>
-        <label>Cargo IS</label>
+        <label>CargoIS</label>
     </standardValue>
     <standardValue>
         <fullName>CASS</fullName>
@@ -195,6 +195,11 @@
         <fullName>Meetings and Conferen</fullName>
         <default>false</default>
         <label>Meetings and Conferen</label>
+    </standardValue>
+    <standardValue>
+        <fullName>MER (MER Division)</fullName>
+        <default>false</default>
+        <label>MER (MER Division)</label>
     </standardValue>
     <standardValue>
         <fullName>Meteorology</fullName>

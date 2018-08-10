@@ -39,6 +39,7 @@ public class ISSP_CaseTest {
         	cttr.edit();
         	ISSP_Case.getFieldMappedValue('test','test');
             cttr.updateCase();
+            String fullname = cttr.fullnameNOCFile;
         }
         Test.stopTest();
 	}
@@ -203,6 +204,12 @@ public class ISSP_CaseTest {
 	}
 
 	public static testMethod void testISSP_Case_4() {
+		dgAI2__DG_Disable_Features__c dg = dgAI2__DG_Disable_Features__c.getOrgDefaults();
+		dg.dgAI2__Disable_Case_Predictions__c = true;
+		dg.dgAI2__Disable_Case_Feedback__c = true;
+		dg.dgAI2__Disable_Prediction_On_Update__c = true;
+		upsert dg;
+		
 		Account account = ISSP_ObjectFactory.createNewAccount();
         account.Name = 'Account1';
         insert account;
@@ -541,7 +548,7 @@ public class ISSP_CaseTest {
         contact.Email = 'teamcontact@email.com';
         insert contact;
         Contact teamContact = ISSP_ObjectFactory.createNewContact();
-        teamContact.Email = contact.Email;
+        teamContact.Email = 'teamcontact2@email.com';
         insert teamContact;
         User thisUser = ISSP_ObjectFactory.createPortalUser(contact);
         contact.OwnerId = thisUser.Id;
@@ -658,6 +665,7 @@ public class ISSP_CaseTest {
             cttr.pageLoad();
             cttr.whoToContact = account.Id;
             cttr.save();
+            cttr.saveAttach();
             // test insert cc other
             cttr.inputccotheremail = user.Email;
             cttr.addCCOther();
@@ -666,6 +674,8 @@ public class ISSP_CaseTest {
 
             cttr.inputDelCCOther = user.Email;
             cttr.delCCOther();
+            cttr.InterDPCAccept();
+            cttr.getCustomLabel('ISSP_NewCase');
             // test delete cc other
             list<String> result2 = cttr.getListCCOther();
             System.assert(result2.isEmpty(),'wrong result ' + result2);
@@ -745,5 +755,61 @@ public class ISSP_CaseTest {
         }
         Test.stopTest();
     }
+
+
+    public static testMethod void tesTIP() {
+      
+       
+        Account account = ISSP_ObjectFactory.createNewAccount();
+        account.Name = 'Account1';
+        insert account;
+
+        Contact con = ISSP_ObjectFactory.createNewContact();
+        con.AccountId = account.Id;
+        insert con;
+
+        Case c = new Case();
+        c.Subject = 'test 1';
+        c.AccountId = account.id;
+        c.ContactId = con.id;
+        c.Region__c = 'Europe';
+        c.RecordTypeId = TIP_Utils.CASE_PROCESS_IDFS_RECORD_TYPE_ID;
+        c.Reason1__c = TIP_Utils.CASE_REASON_PRODUCT_MANAGEMENT;
+        c.status = TIP_Utils.CASE_STATUS_DRAFT;
+        c.CaseArea__c = TIP_Utils.CASE_AREA_TRANSPARENCY_IN_PAYMENTS;
+        c.Visible_on_ISS_Portal__c = true;
+       
+       
+
+       User user = ISSP_ObjectFactory.createPortalUser(con);
+
+       Portal_Applications__c pa = new Portal_Applications__c(name = TIP_Utils.PORTAL_SERVICE_NAME_TIP);
+       insert pa;
+         
+          ISSP_Portal_Service_Ids__c psi = new ISSP_Portal_Service_Ids__c(
+
+        TIP_Portal_Service_Id__c=pa.id
+        );
+       insert psi;
+
+       Portal_Application_Right__c appRight = new Portal_Application_Right__c (
+           Right__c = 'Access Granted', 
+           Contact__c = user.ContactId, 
+           Portal_Application__c = pa.id);
+       insert appRight;
+
+       con.OwnerId = user.Id;
+       update con;
+
+       
+       Test.startTest();
+        system.runAs(user) {
+             insert c;
+            ISSP_Case cttr = new ISSP_Case();
+            ApexPages.currentPage().getParameters().put('caseId', String.valueOf(c.Id));
+            cttr.pageLoad();
+        }
+       Test.stopTest();
+     }
 
  }

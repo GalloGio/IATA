@@ -3,6 +3,21 @@
     <doesSendEmailToMembers>false</doesSendEmailToMembers>
     <email>noreply@iata.org</email>
     <name>FDS ICCS - Head Office</name>
+    <queueMembers>
+        <users>
+            <user>barnesamy@iata.org</user>
+            <user>alcoyb@iata.org</user>
+            <user>bakyc@iata.org</user>
+            <user>jandjandricg@iata.org.prod</user>
+            <user>khattabil@iata.org.prod</user>
+            <user>luntrarum@iata.org.prod</user>
+            <user>kaluschkem@iata.org.prod</user>
+            <user>vargicovam@iata.org</user>
+            <user>oleksikr@iata.org.prod</user>
+            <user>pietranget@iata.org.prod</user>
+            <user>konuralpu@iata.org</user>
+        </users>
+    </queueMembers>
     <queueSobject>
         <sobjectType>Case</sobjectType>
     </queueSobject>

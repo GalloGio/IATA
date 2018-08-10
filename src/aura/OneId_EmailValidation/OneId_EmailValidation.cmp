@@ -1,0 +1,24 @@
+<aura:component controller="OneId_RegistrationProcessController">
+
+    <aura:registerEvent name="StepCompletionNotification" type="c:OneId_StepCompletion_EVT"/>
+    
+    <aura:attribute name="contact" type="Contact" default="{ 'sobjectType': 'Contact' }" />
+    <aura:attribute name="Terms" type="Boolean" />
+   
+    <div class="slds-grid slds-gutters slds-wrap ">
+        <div class="slds-col slds-col--padded">
+            <div class="slds-size--1-of-1 slds-m-bottom_large ">
+                <label class="slds-form-element__label"><abbr class="slds-required" title="required">*</abbr>{!$Label.c.ISSP_MyProfile_EMAIL}</label>
+                <ui:inputEmail aura:id="email" placeholder="test@email.com" value="{!v.contact.Email}" class="slds-input" required="true" />
+            </div>
+            
+            <div class="slds-size--1-of-1">
+                <ui:inputCheckbox value="{!v.Terms}" aura:id="termsaccepted" class="uiInput uiInputCheckbox uiInput--default uiInput--checkbox ckb" labelClass="slds-form-element__label" required="true" click="{!c.checkTerms}" />
+                <a class="terms" href="http://www.iata.org/customer-portal/Pages/terms.aspx" target="_blank">{!$Label.c.ISSP_Registration_acceptGeneralConditions}</a>
+            </div>
+        </div>
+    </div>
+    <div aura:id="loading" class="slds-hide">
+        <lightning:spinner />
+    </div>
+</aura:component>

@@ -54,6 +54,9 @@
                 font-size: 110%;
                 background-color: rgb(227,227,215)
             }
+            th {
+                font-size: 110%;
+            }
             
             @page {
             margin-top: 3.5cm;
@@ -117,43 +120,125 @@
         <apex:form >
             <div style="font-size:13px">             
                 <p style="display:{!IF(newForm.Is_change_ownership_or_shareholding__c,'','none')}">    
-{!IF(BEGINS(sectorValue,'Cargo_Agent'), IF(agencyCategory='IATA Cargo Agent', IF(isocountry.EACP_Country__c, $Label.ISSP_AMS_NoC_TC_Change_EACP, IF(newlabels, $Label.ISSP_AMS_NoC_TC_Change_CGO_New, $Label.ISSP_AMS_NoC_TC_Change_CGO)), $Label.ISSP_AMS_NoC_TC_Change_CASS), $Label.ISSP_AMS_NoC_Bank_Change1)}
+<apex:outputText escape="false" value="{!IF(BEGINS(sectorValue,'Cargo_Agent'), IF(agencyCategory='IATA Cargo Agent', IF(isocountry.EACP_Country__c, $Label.ISSP_AMS_NoC_TC_Change_EACP, IF(newlabels, $Label.ISSP_AMS_NoC_TC_Change_CGO_New, $Label.ISSP_AMS_NoC_TC_Change_CGO)), $Label.ISSP_AMS_NoC_TC_Change_CASS), $Label.ISSP_AMS_NoC_Bank_Change1)}"/>
                </p>
                 <p style="display:{!IF(newForm.Is_change_ownership_or_shareholding__c,'','none')}">
-{!IF(BEGINS(sectorValue,'Cargo_Agent'), IF(agencyCategory='IATA Cargo Agent', IF(isocountry.EACP_Country__c, $Label.ISSP_AMS_NoC_TC_Change_EACP2, IF(newlabels, $Label.ISSP_AMS_NoC_TC_Change_CGO2_New, $Label.ISSP_AMS_NoC_TC_Change_CGO2)), ''), $Label.ISSP_AMS_NoC_Bank_Change2)}
+<apex:outputText escape="false" value="{!IF(BEGINS(sectorValue,'Cargo_Agent'), IF(agencyCategory='IATA Cargo Agent', IF(isocountry.EACP_Country__c, $Label.ISSP_AMS_NoC_TC_Change_EACP2, IF(newlabels, $Label.ISSP_AMS_NoC_TC_Change_CGO2_New, $Label.ISSP_AMS_NoC_TC_Change_CGO2)), ''), $Label.ISSP_AMS_NoC_Bank_Change2)}"/>
                     </p>
                 <p style="display:{!IF(newForm.Is_change_ownership_or_shareholding__c,'','none')}">
-{!IF(BEGINS(sectorValue,'Cargo_Agent'), IF(agencyCategory='IATA Cargo Agent', IF(isocountry.EACP_Country__c, $Label.ISSP_AMS_NoC_TC_Change_EACP3, IF(newlabels, $Label.ISSP_AMS_NoC_TC_Change_CGO3_New, $Label.ISSP_AMS_NoC_TC_Change_CGO3)), ''), $Label.ISSP_AMS_NoC_Bank_Change3)}
+<apex:outputText escape="false" value="{!IF(BEGINS(sectorValue,'Cargo_Agent'), IF(agencyCategory='IATA Cargo Agent', IF(isocountry.EACP_Country__c, $Label.ISSP_AMS_NoC_TC_Change_EACP3, IF(newlabels, $Label.ISSP_AMS_NoC_TC_Change_CGO3_New, $Label.ISSP_AMS_NoC_TC_Change_CGO3)), ''), $Label.ISSP_AMS_NoC_Bank_Change3)}"/>
                     </p>
 
                 <p style="display:{!IF(newForm.Is_change_ownership_or_shareholding__c,'none','')}">
                 {!$Label.ISSP_AMS_NoC_TC}
                 </p>
-                
-<table border="0" cellpadding="3">
-      <tr><th></th><th>{!IF(newForm.Is_change_ownership_or_shareholding__c,$Label.ISSP_AMS_NoC_Transferor , $Label.ISSP_AMS_NoC_Authorized_Signature)}</th><th style="width:10%">&nbsp;</th><th>{!$Label.ISSP_AMS_NoC_Witness}</th><th></th></tr>
-      <tr><td>{!$Label.ISSP_AMS_NoC_Signature}</td><td>________________________</td><td style="width:10%">&nbsp;</td><td>{!$Label.ISSP_AMS_NoC_Signature}</td><td>________________________</td></tr>
-      <tr><td style="padding-bottom:15px">{!$Label.IFAP_name}</td><td>________________________<br/>{!$Label.ISSP_AMS_NoC_type_or_print}</td><td style="width:10%">&nbsp;</td><td style="padding-bottom:15px">{!$Label.ISSP_AMS_NoC_Name_address}</td><td>________________________</td></tr>
-    <tr><td style="padding-bottom:30px"><apex:outputText value="{!$Label.ISSP_AMS_NoC_title_or_capacity}" escape="false"/></td><td>________________________<br/>{!$Label.ISSP_AMS_NoC_type_or_print}</td><td style="width:10%">&nbsp;</td><td>&nbsp;</td><td>________________________</td></tr>
-      <tr><td>{!$Label.ISSP_Date}</td><td>________________________</td><td style="width:10%">&nbsp;</td><td>{!$Label.ISSP_Date}</td><td>________________________</td></tr>
-  </table>
-  <br/>  
-  <table style="display:{!IF(newForm.Is_change_ownership_or_shareholding__c,'','none')}" border="0" cellpadding="3">
-      <tr><th></th><th>{!$Label.ISSP_AMS_NoC_Transferee}</th><th style="width:10%">&nbsp;</th><th>{!$Label.ISSP_AMS_NoC_Witness}</th><th></th></tr>
-      <tr><td>{!$Label.ISSP_AMS_NoC_Signature}</td><td>________________________</td><td style="width:10%">&nbsp;</td><td>{!$Label.ISSP_AMS_NoC_Signature}</td><td>________________________</td></tr>
-      <tr><td style="padding-bottom:15px">{!$Label.IFAP_name}</td><td>________________________<br/>{!$Label.ISSP_AMS_NoC_type_or_print}</td><td style="width:10%">&nbsp;</td><td style="padding-bottom:15px">{!$Label.ISSP_AMS_NoC_Name_address}</td><td>________________________</td></tr>
-      <tr><td style="padding-bottom:30px"><apex:outputText value="{!$Label.ISSP_AMS_NoC_title_or_capacity}" escape="false"/></td><td>________________________<br/>{!$Label.ISSP_AMS_NoC_type_or_print}</td><td style="width:10%">&nbsp;</td><td>&nbsp;</td><td>________________________</td></tr>
-      <tr><td>{!$Label.ISSP_Date}</td><td>________________________</td><td style="width:10%">&nbsp;</td><td>{!$Label.ISSP_Date}</td><td>________________________</td></tr>
-  </table>
-  <br/>
-  <table style="display:{!IF(newForm.Is_change_ownership_or_shareholding__c,'','none')};border:1px solid #000;margin-left:100px" cellpadding="3">
-      <tr style="border:none;font-weight:bold;color:red"><td>{!$Label.ISSP_AMS_NoC_IATA_Only}</td></tr>
-      <tr style="border:none"><th>{!$Label.ISSP_AMS_NoC_IATA_Acknowledged}</th></tr>
-      <tr style="border:none"><td>____________________<br/>{!$Label.ISSP_AMS_NoC_IATA_Admin}</td></tr>
-      <tr style="border:none"><td>____________________<br/>{!$Label.ISSP_Date}</td></tr>
-  </table>
-            </div>   
-        </apex:form>
-        </apex:pageBlock>
-    </body>    
+            </div>
+
+        <!-- Signatures -->
+        <apex:outputPanel rendered="{!sectorValue!='Travel_Agent'}">
+          <table border="0" cellpadding="3">
+              <tr><th colspan="2">{!IF(newForm.Is_change_ownership_or_shareholding__c,$Label.ISSP_AMS_NoC_Transferor , $Label.ISSP_AMS_NoC_Authorized_Signature)}</th><th style="width:10%">&nbsp;</th><th>{!$Label.ISSP_AMS_NoC_Witness}</th><th></th></tr>
+              <tr><td>{!$Label.ISSP_AMS_NoC_Signature}</td><td>________________________</td><td style="width:10%">&nbsp;</td><td>{!$Label.ISSP_AMS_NoC_Signature}</td><td>________________________</td></tr>
+              <tr><td style="padding-bottom:15px">{!$Label.IFAP_name}</td><td>________________________<br/>{!$Label.ISSP_AMS_NoC_type_or_print}</td><td style="width:10%">&nbsp;</td><td style="padding-bottom:15px">{!$Label.ISSP_AMS_NoC_Name_address}</td><td>________________________</td></tr>
+            <tr><td style="padding-bottom:30px"><apex:outputText value="{!$Label.ISSP_AMS_NoC_title_or_capacity}" escape="false"/></td><td>________________________<br/>{!$Label.ISSP_AMS_NoC_type_or_print}</td><td style="width:10%">&nbsp;</td><td>&nbsp;</td><td>________________________</td></tr>
+              <tr><td>{!$Label.ISSP_Date}</td><td>________________________</td><td style="width:10%">&nbsp;</td><td>{!$Label.ISSP_Date}</td><td>________________________</td></tr>
+          </table>
+          <br/>  
+          <table style="display:{!IF(newForm.Is_change_ownership_or_shareholding__c,'','none')}" border="0" cellpadding="3">
+              <tr><th colspan="2">{!$Label.ISSP_AMS_NoC_Transferee}</th><th style="width:10%">&nbsp;</th><th>{!$Label.ISSP_AMS_NoC_Witness}</th><th></th></tr>
+              <tr><td>{!$Label.ISSP_AMS_NoC_Signature}</td><td>________________________</td><td style="width:10%">&nbsp;</td><td>{!$Label.ISSP_AMS_NoC_Signature}</td><td>________________________</td></tr>
+              <tr><td style="padding-bottom:15px">{!$Label.IFAP_name}</td><td>________________________<br/>{!$Label.ISSP_AMS_NoC_type_or_print}</td><td style="width:10%">&nbsp;</td><td style="padding-bottom:15px">{!$Label.ISSP_AMS_NoC_Name_address}</td><td>________________________</td></tr>
+              <tr><td style="padding-bottom:30px"><apex:outputText value="{!$Label.ISSP_AMS_NoC_title_or_capacity}" escape="false"/></td><td>________________________<br/>{!$Label.ISSP_AMS_NoC_type_or_print}</td><td style="width:10%">&nbsp;</td><td>&nbsp;</td><td>________________________</td></tr>
+              <tr><td>{!$Label.ISSP_Date}</td><td>________________________</td><td style="width:10%">&nbsp;</td><td>{!$Label.ISSP_Date}</td><td>________________________</td></tr>
+          </table>
+          <br/>
+        </apex:outputPanel>
+        <apex:outputPanel rendered="{!sectorValue=='Travel_Agent'}">
+            <apex:repeat value="{!List_PreviousOwners}" var="transferorOwner">
+                <div class="row" style="width:50%; float:left; page-break-inside:avoid; margin-top:20px;">
+                    <table border="0" cellpadding="3">
+                        <tr>
+                            <th colspan="2">{!IF(newForm.Is_change_ownership_or_shareholding__c,$Label.ISSP_AMS_NoC_Transferor , $Label.ISSP_AMS_NoC_Authorized_Signature)}</th>
+                        </tr>
+                        <tr>
+                            <td>{!$Label.ISSP_AMS_NoC_Signature}</td>
+                            <td>________________________</td>
+                        </tr>
+                        <tr>
+                            <td style="padding-bottom:15px">{!$Label.IFAP_name}</td>
+                            <td>________________________<br/>{!$Label.ISSP_AMS_NoC_type_or_print}</td>
+                        </tr>
+                        <tr>
+                            <td style="padding-bottom:30px"><apex:outputText value="{!$Label.ISSP_AMS_NoC_title_or_capacity}" escape="false"/></td>
+                            <td>________________________<br/>{!$Label.ISSP_AMS_NoC_type_or_print}</td>
+                        </tr>
+                        <tr>
+                            <td>{!$Label.ISSP_Date}</td>
+                            <td>________________________</td>
+                        </tr>
+                    </table>
+                </div>
+            </apex:repeat>
+            <apex:repeat value="{!List_CurrentOwners}" var="transfereeOwner">
+                <div class="row" style="width:50%; float:left; page-break-inside:avoid; margin-top:20px;">
+                    <table border="0" cellpadding="3">
+                        <tr>
+                            <th colspan="2">{!$Label.ISSP_AMS_NoC_Transferee}</th>
+                        </tr>
+                        <tr>
+                            <td>{!$Label.ISSP_AMS_NoC_Signature}</td>
+                            <td>________________________</td>
+                        </tr>
+                        <tr>
+                            <td style="padding-bottom:15px">{!$Label.IFAP_name}</td>
+                            <td>________________________<br/>{!$Label.ISSP_AMS_NoC_type_or_print}</td>
+                        </tr>
+                        <tr>
+                            <td style="padding-bottom:30px"><apex:outputText value="{!$Label.ISSP_AMS_NoC_title_or_capacity}" escape="false"/></td>
+                            <td>________________________<br/>{!$Label.ISSP_AMS_NoC_type_or_print}</td>
+                        </tr>
+                        <tr>
+                            <td>{!$Label.ISSP_Date}</td>
+                            <td>________________________</td>
+                        </tr>
+                    </table>
+                </div>
+            </apex:repeat>
+            <div class="row" style="width:100%; float:left; page-break-inside:avoid; margin-top:20px;">
+                <table border="0" cellpadding="3">
+                    <tr>
+                        <th colspan="2">{!$Label.ISSP_AMS_NoC_Witness}</th>
+                    </tr>
+                    <tr>
+                        <td>{!$Label.ISSP_AMS_NoC_Signature}</td>
+                        <td>________________________</td>
+                    </tr>
+                    <tr>
+                        <td style="padding-bottom:15px">{!$Label.ISSP_AMS_NoC_Name_address}</td>
+                        <td>________________________</td>
+                    </tr>
+                    <tr>
+                        <td>&nbsp;</td>
+                        <td>________________________</td>
+                    </tr>
+                    <tr>
+                        <td>{!$Label.ISSP_Date}</td>
+                        <td>________________________</td>
+                    </tr>
+                </table>
+            </div>
+        </apex:outputPanel>
+
+        <div class="row" style="width: 100%; float:left; page-break-inside:avoid; margin-top:30px;">
+          <table style="display:{!IF(newForm.Is_change_ownership_or_shareholding__c,'','none')};border:1px solid #000;margin-left:100px" cellpadding="3">
+              <tr style="border:none;font-weight:bold;color:red"><td>{!$Label.ISSP_AMS_NoC_IATA_Only}</td></tr>
+              <tr style="border:none"><th>{!$Label.ISSP_AMS_NoC_IATA_Acknowledged}</th></tr>
+              <tr style="border:none"><td>____________________<br/>{!$Label.ISSP_AMS_NoC_IATA_Admin}</td></tr>
+              <tr style="border:none"><td>____________________<br/>{!$Label.ISSP_Date}</td></tr>
+          </table>
+        </div>
+
+    </apex:form>
+    </apex:pageBlock>
+</body>
 </apex:page>

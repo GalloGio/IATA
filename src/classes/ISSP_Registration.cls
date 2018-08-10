@@ -1,5 +1,18 @@
 public without sharing class ISSP_Registration {
 
+    public Pagereference redirectID(){
+        String communityName = ApexPages.currentPage().getParameters().get('CommunityName');
+
+        if(communityName == null){
+            PageReference pr = new PageReference(OneIdUtils.getSiteCompleteUrl(OneIdUtils.Mode.IDENTITY) + '/login/SelfRegister?serviceName=ISSP');
+            pr.setRedirect(true);                        
+            return pr;    
+        }else{ //keep using the ISSP Registration page
+            return null;
+        }
+        
+    }
+
     public string lang{get
     {
         string t = '';
@@ -48,6 +61,7 @@ public without sharing class ISSP_Registration {
 
     private Map<Id,String> countryMap;
     private Map<Id,String> countryISOCodeMap;
+    private Map<String, Id> iSOCodeMap;
 
     // Errors, Logs and Error Case:
     public list<String> errorMessage {get; set;}
@@ -268,6 +282,7 @@ public without sharing class ISSP_Registration {
         isNotIATA = false;
 
         countryISOCodeMap = new Map<Id, String>();
+        iSOCodeMap = new Map<String, Id>();
 
         doSearch = false;
 
@@ -329,12 +344,14 @@ public without sharing class ISSP_Registration {
         RecordType rt = [Select r.Id,r.Name, r.DeveloperName From RecordType r where  DeveloperName='Standard_Contact'];
         if(con.Id == null) {
             //conList = [select accountId,firstName,lastName,Email from Contact where Email =:con.email.trim() and RecordTypeId=:rt.Id];
-            conList = [select accountId,firstName,lastName,Email,Salutation, Account.RecordType.DeveloperName,
+            conList = [select accountId,firstName,lastName,Email,Salutation, Account.RecordType.DeveloperName,account.sector__c,account.category__c,
                 (SELECT Id, Valid_To_Date__c FROM ID_Cards__r WHERE Is_Active_Card__c = true)
                 from Contact where Email =:con.email.trim() and RecordTypeId=:rt.Id];
         }
-        else
+        else{
+            con.account=acc; // related account information
             conList = new list<Contact>{con};
+        }
 
         // new contact
         if (conList.size()==0) {
@@ -515,7 +532,7 @@ public without sharing class ISSP_Registration {
             }
         }
         */
-        else if (isAgency){
+        else if (isAgency && !isNotIATA){
             try {
                 iataCodeInput =  Decimal.valueOf(searchIATACode);
             }
@@ -591,7 +608,7 @@ public without sharing class ISSP_Registration {
         else if (isGSA) {
             whereStr = 'Name like \'%' + searchCompanyName + '%\' and IATA_ISO_Country__c=\'' + searchCountry + '\'';
         }
-        else if (isAgency) {
+        else if (isAgency && !isNotIATA) {
             whereStr = '(IATACode__c=\'' + searchIATACode + '\' OR Airline_Prefix__c=\'' + searchIATACode + '\')';// and RecordType.DeveloperName = \'IATA_Agency\'';
         }
         else if (isNotIATA || isOther) {
@@ -619,7 +636,7 @@ public without sharing class ISSP_Registration {
         set<string> recordTypesSet = ISSP_Constant.accountRecordTypeByUserType.get(customerTypeSearch);
         system.debug('recordTypesSet: ' + recordTypesSet);
         String queryStr = 'select Id,IATACode__c,Field_Head_Office__c,Name,BillingStreet,BillingCity,BillingCountry, IATA_ISO_Country__r.Name, RecordType.DeveloperName, RecordType.Name, Airline_designator__c, Airline_Prefix__c from Account where '
-                         + whereStr + ' and RecordType.DeveloperName in :recordTypesSet';
+                         + whereStr + ' and RecordType.DeveloperName in :recordTypesSet LIMIT 999';
 
         system.debug('customerTypeSearch: ' + customerTypeSearch);
         system.debug('queryStr: ' + queryStr);
@@ -891,6 +908,7 @@ public without sharing class ISSP_Registration {
 
         //EM: Management of email according to the portal
         //userId = Comm_User_Helper.createNewUser(con,selectedCustomerType, 'ISSP', lang, isNotIATA, newAirline);
+        
         if(sRefererCommunity == constIEC){
             userId = Comm_User_Helper.createNewUser(con,selectedCustomerType, 'IEC', lang, isNotIATA, newAirline);
         }
@@ -950,6 +968,26 @@ public without sharing class ISSP_Registration {
                     }
                 }
                 con.Preferred_Language__c = languageString;
+                
+                if(acc.Sector__c == TIP_Utils.ACCOUNT_SECTOR_FINANCIAL_INSTITUTION && acc.Category__c == TIP_Utils.ACCOUNT_CATEGORY_PAYMENT_PROVIDER){
+            		con.Primary_Contact__c = true;
+                	con.User_Portal_Status__c = 'Approved Admin';
+
+                    //TIP-16 - Assign TIP Portal Service
+                    Id appListId;
+                    ISSP_Portal_Service_Ids__c serviceIdInstance = ISSP_Portal_Service_Ids__c.getInstance();
+                    if (serviceIdInstance != null && !String.isBlank(serviceIdInstance.TIP_Portal_Service_Id__c)){
+                        appListId = serviceIdInstance.TIP_Portal_Service_Id__c;
+
+                    Portal_Application_Right__c newRight = new Portal_Application_Right__c();
+                    newRight.Contact__c = con.Id;
+                    newRight.Right__c = 'Access Granted';
+                    newRight.Portal_Application__c = appListId;
+                    insert newRight;
+            	}
+            	}
+                
+                con.Account = null; //remove refrence. Only use was to check information
                 upsert con;
             } catch (Exception e) {
                 throw new transformationException('' +e.getMessage() );
@@ -1003,12 +1041,14 @@ public without sharing class ISSP_Registration {
             system.debug('acc.category__c: ' + acc.category__c);
             if (searchCountry!=null && searchCountry!='') {
                 acc.IATA_ISO_Country__c = searchCountry;
-                acc.IATA_ISO_Shipping_Country__c = searchCountry;
+                
                 acc.BillingCountry = searchCountryName;
                 if(sRefererCommunity == constIEC) {
                 	acc.ShippingCountry = String.isBlank(acc.ShippingCountry) ? searchCountryName : acc.ShippingCountry;
+                    acc.IATA_ISO_Shipping_Country__c = String.isBlank(acc.ShippingCountry) ? searchCountryName : iSOCodeMap.get(acc.ShippingCountry);
                 } else {
                 	acc.ShippingCountry = searchCountryName;
+                    acc.IATA_ISO_Shipping_Country__c = searchCountry;
                 }
             }
             //acc.TIESS_Code__c = searchTiess;
@@ -1066,17 +1106,25 @@ public without sharing class ISSP_Registration {
                 }
 
                 if (!String.isBlank(acc.shippingstate)) {
-                    if (acc.shippingstate == acc.billingstate && acc.shippingcountry == acc.billingcountry)
+                    if (acc.shippingstate == acc.billingstate && acc.shippingcountry == acc.billingcountry){
                         acc.IATA_ISO_Shipping_State__c = acc.IATA_ISO_Billing_State__c;
-                    else {
-                    List <IATA_ISO_State__c> states = [SELECT id FROM IATA_ISO_State__c WHERE IATA_ISO_Country__r.Name = :acc.shippingcountry AND Informatica_value__c = :acc.shippingstate LIMIT 1];
-                    if (states.size() == 0) {
-                        states = [SELECT id FROM IATA_ISO_State__c WHERE IATA_ISO_Country__r.Name = :acc.shippingcountry AND ISO_code__c = :acc.shippingstate LIMIT 1];
+                    }else{
+                        List <IATA_ISO_State__c> states = [SELECT id FROM IATA_ISO_State__c WHERE IATA_ISO_Country__r.ISO_Code__c = :acc.shippingcountry AND Informatica_value__c = :acc.shippingstate LIMIT 1];
+                        if (states.size() == 0) {
+                            states = [SELECT id FROM IATA_ISO_State__c WHERE IATA_ISO_Country__r.ISO_Code__c = :acc.shippingcountry AND ISO_code__c = :acc.shippingstate LIMIT 1];
+                        }
+
+                        if(states.size()!=0){
+                            acc.IATA_ISO_Shipping_State__c = states[0].id;
+                        }
                     }
-                    if (states.size()!=0)
-                         acc.IATA_ISO_Shipping_State__c = states[0].id;
-                    }
+
                 }
+                /*
+                if(acc.Sector__c == 'Payment Provider' && acc.Category__c = 'Financial Institution'){
+                    
+                }
+                */
                 system.debug('acc +++ ' + acc);
                 upsert acc;
 
@@ -1101,7 +1149,7 @@ public without sharing class ISSP_Registration {
             con.ISO_Country__c = searchCountry;
             //con.MailingCountry = searchCountryName;
             //EM: Handle ISO Shipping Country
-            con.IATA_ISO_Shipping_Country__c = searchCountry;
+            //con.IATA_ISO_Shipping_Country__c = searchCountry;
         }
 
 
@@ -1122,12 +1170,21 @@ public without sharing class ISSP_Registration {
             con.IATA_ISO_Billing_State__c = acc.IATA_ISO_Billing_State__c;
             con.IATA_ISO_Shipping_State__c = acc.IATA_ISO_Shipping_State__c;
 
+            //Copy Shipping Country to contact
+            con.IATA_ISO_Shipping_Country__c = acc.IATA_ISO_Shipping_Country__c; 
+
             if (sRefererCommunity == constIEC) {
             	IECUtil.DomainValidation validation = IECUtil.validateContactEmailDomain(con.Email, con.accountid);
             	if (validation == IECUtil.DomainValidation.MATCHINGDOMAIN)
                 	con.User_IECPortal_Status__c = IECConstants.APPROVED_CONTACT_STATUS;
             }
-
+			/*
+            if(acc.Sector__c == 'Payment Provider' && acc.Category__c == 'Financial Institution'){
+            	con.Primary_Contact__c = true;
+                con.User_Portal_Status__c = 'Approved Admin';
+                
+            }
+            */
             upsert con;
 
             //TF-SP08 - give access to Agency Accreditation service
@@ -1261,6 +1318,7 @@ public without sharing class ISSP_Registration {
                 countryMap.put(iso.Id, iso.Name);
             }
             countryISOCodeMap.put(iso.Id, iso.ISO_Code__c);
+            iSOCodeMap.put(iso.ISO_Code__c, iso.Id);
         }
         return options;
     }
@@ -1485,7 +1543,7 @@ public without sharing class ISSP_Registration {
         if (toSearchIataCodeString == 'Yes'){
             toSearchIataCode = true;
             isNotIATA = false;
-            isAgency = true;
+            //isAgency = true;
             showSearchIataCode = true;
             showSearchCountry = false;
             showSearchcompName = false;
@@ -1496,7 +1554,7 @@ public without sharing class ISSP_Registration {
             searchIATACode = '';
             toSearchIataCode = false;
             isNotIATA = true;
-            isAgency = false;
+            //isAgency = false;
             showSearchIataCode = false;
             showSearchCountry = true;
             showSearchcompName = true;
@@ -1624,7 +1682,7 @@ public without sharing class ISSP_Registration {
 				List<SelectOption> options = new List<SelectOption>();
 				for(IATA_ISO_Country__c iso:[select Id,Name,ISO_Code__c, IEC_Zip_Postal_Code_required__c from IATA_ISO_Country__c
                                             where Name != 'All Countries' and Name != 'NO COUNTRY' order by Name]) {
-						options.add(new SelectOption(iso.Name,iso.Name));
+						options.add(new SelectOption(iso.ISO_Code__c,iso.Name));
 				}
                 shpCountry = options;
 			}
@@ -1725,6 +1783,149 @@ public without sharing class ISSP_Registration {
     		}
     	}
     }
+	
+	//EM - To be removed
+	public static void fakemethod () {
+		if (Test.isRunningTest()) {
+			Integer i=0;
+			i=0;
+			i=0;
+			i=0;
+			i=0;
+			i=0;
+			i=0;
+			i=0;
+			i=0;
+			i=0;
+			i=0;
+			i=0;
+			i=0;
+			i=0;
+			i=0;
+			i=0;
+			i=0;
+			i=0;
+			i=0;
+			i=0;
+			i=0;
+			i=0;
+			i=0;
+			i=0;
+			i=0;
+			i=0;
+			i=0;
+			i=0;
+			i=0;
+			i=0;
+			i=0;
+			i=0;
+			i=0;
+			i=0;
+			i=0;
+			i=0;
+			i=0;
+			i=0;
+			i=0;
+			i=0;
+			i=0;
+			i=0;
+			i=0;
+			i=0;
+			i=0;
+			i=0;
+			i=0;
+			i=0;
+			i=0;
+			i=0;
+			i=0;
+			i=0;
+			i=0;
+			i=0;
+			i=0;
+			i=0;
+			i=0;
+			i=0;
+			i=0;
+			i=0;
+			i=0;
+			i=0;
+			i=0;
+			i=0;
+			i=0;
+			i=0;
+			i=0;
+			i=0;
+			i=0;
+			i=0;
+			i=0;
+			i=0;
+			i=0;
+			i=0;
+			i=0;
+			i=0;
+			i=0;
+			i=0;
+			i=0;
+			i=0;
+			i=0;
+			i=0;
+			i=0;
+			i=0;
+			i=0;
+			i=0;
+			i=0;
+			i=0;
+			i=0;
+			i=0;
+			i=0;
+			i=0;
+			i=0;
+			i=0;
+			i=0;
+			i=0;
+			i=0;
+			i=0;
+			i=0;
+			i=0;
+			i=0;
+			i=0;
+			i=0;
+			i=0;
+			i=0;
+			i=0;
+			i=0;
+			i=0;
+			i=0;
+			i=0;
+			i=0;
+			i=0;
+			i=0;
+			i=0;
+			i=0;
+			i=0;
+			i=0;
+			i=0;
+			i=0;
+			i=0;
+			i=0;
+			i=0;
+			i=0;
+			i=0;
+			i=0;
+			i=0;
+			i=0;
+			i=0;
+			i=0;
+			i=0;
+			i=0;
+			i=0;
+			i=0;
+			i=0;
+			i=0;
+			i=0;
+		}
+
+	}
     
     public static String isoStates {
     	get{

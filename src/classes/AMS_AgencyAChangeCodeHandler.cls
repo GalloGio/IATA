@@ -74,7 +74,7 @@ public class AMS_AgencyAChangeCodeHandler {
     //SUSANA ALVES: removed @future because we don't need to update account for minor changes 
     public static void updateAccountReason(set<id> setAACC, boolean bIsUpdate){
         system.debug('SALVES --> updateAccountReason - setAACC : ' + setAACC);
-    	list<Agency_Applied_Change_code__c> lsAACC = [select id, Reason_Code__c, Reason_Description__c, Active__c, Account__c, AccountNewStatus__c, Account__r.Reason__c, Account__r.Previous_Reason__c, Account__r.Status__c, Account__r.PreviousStatus__c  from Agency_Applied_Change_code__c where id in:setAACC];
+    	list<Agency_Applied_Change_code__c> lsAACC = [select id, Change_Code__c, Reason_Code__c, Reason_Description__c, Active__c, Account__c, AccountNewStatus__c, Account__r.Reason__c, Account__r.Previous_Reason__c, Account__r.Status__c, Account__r.PreviousStatus__c  from Agency_Applied_Change_code__c where id in:setAACC];
     	set<id> setAccntId = new set<id>();
     	map<id, account> mapAccntToUpdate = new map<id, account>();
     	
@@ -91,7 +91,7 @@ public class AMS_AgencyAChangeCodeHandler {
     		Account acc = new Account(id = aacc.Account__c);
     		if(!bIsUpdate) acc.Organization_Last_Change_Date__c = Date.Today();
     		if(sReason != '-'){
-    			if(aacc.Account__c != null && aacc.Active__c){
+    			if((aacc.Account__c != null && aacc.Active__c) || (aacc.Account__c != null && (aacc.Change_Code__c != 'IRR' || aacc.Change_Code__c != 'IRW'))){
 	    			string sAccntReason = aacc.Account__r.reason__c;
 	    			if(sReason != sAccntReason){
 	    				acc.reason__c = sReason;
@@ -103,7 +103,7 @@ public class AMS_AgencyAChangeCodeHandler {
     		
     		//Update Account Status, but only if it's blank and different from the previous one
     		if(sStatus != ''){
-    			if(aacc.Account__c != null && aacc.Active__c){
+    			if((aacc.Account__c != null && aacc.Active__c) || (aacc.Account__c != null && (aacc.Change_Code__c != 'IRR' || aacc.Change_Code__c != 'IRW'))){
 	    			string sAccntStatus = aacc.Account__r.status__c;
 	    			if(sAccntStatus != aacc.AccountNewStatus__c) {
                         acc.Date_Organisation_Status_attained__c = Date.Today();

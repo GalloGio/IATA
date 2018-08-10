@@ -75,11 +75,12 @@
                                 </apex:outputPanel>
                                 <br/>
                                 <div style="font-weight:bold;margin-left:100px;display:block">
-                                Airline Participation<br/>
-                                International Air Transport Association<br/>
-                                    33, Route de l'Aéroport<br/>
-                                    1215 Geneva<br/>
-                                    Switzerland<br/>
+                                    IATA Global Delivery Center (GDC)<br/>
+                                    Attn: Participation Department<br/>
+                                    Torre Europa<br/>
+                                    Paseo de la Castellana, 95, 4th floor<br/>
+                                    28046 Madrid<br/>
+                                    Spain<br/>
                                 </div>
                                 <br/>
                                 <div style="padding-bottom:5px"><b>NOTE:</b>&nbsp;For countries / operations with dual currencies, please submit separate bank mandates for each currency.</div>
@@ -220,6 +221,23 @@
                     
                 </apex:pageBlockSection>
                 
+                <!-- IATA EasyPay -->   
+                <apex:pageBlockSection title="IATA EasyPay" columns="1" rendered="{! AND(strOperationType = 'BSP', isoCountryEligible)}">
+                    <div class="aplabel">
+                        <p>Kindly note that IATA EasyPay is secure and voluntary payment method for agents to issue tickets through the BSP. IATA EasyPay is an industry standard, established in Resolution and available by default to all carriers in <b>{!apcountry}</b>. However, should your airline wish to opt out of accepting IATA EasyPay please notify IATA through written notice a minimum of 30 days prior to the opt-out taking effect. Prior to doing so, please also ensure that your airline has fully assessed the impact of opting out of this payment method. Your airline’s opt-out will be communicated to all Accredited Agents in the market.
+                        </p>
+
+                        <apex:pageBlockSectionItem >
+                            <apex:outputLabel value="* Will your Airline accept IATA EasyPay transactions in this BSP?" 
+                                style="color:#a31717; font-weight: bold !important;"/>
+                            <apex:inputField id="mandateSelectEasyPay" 
+                                value="{!newForm.ANG_Airline_accepts_EasyPay_tr_in_BSP__c}"
+                                label=""/>
+                        </apex:pageBlockSectionItem>      
+
+                    </div>
+                </apex:pageBlockSection>
+              
                 <!-- Accept terms and conditions -->   
                 <apex:pageBlockSection title="Terms and conditions" columns="1">
                     <div class="aplabel">

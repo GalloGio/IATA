@@ -364,6 +364,29 @@
         </sharedFrom>
     </sharingOwnerRules>
     <sharingOwnerRules>
+        <fullName>IATA_Training</fullName>
+        <accessLevel>Edit</accessLevel>
+        <description>IATA Training  support agent sharing rules</description>
+        <label>IATA Training</label>
+        <sharedTo>
+            <group>IATA_Training</group>
+        </sharedTo>
+        <sharedFrom>
+            <group>IATA_Training</group>
+        </sharedFrom>
+    </sharingOwnerRules>
+    <sharingOwnerRules>
+        <fullName>IATA_iiNet</fullName>
+        <accessLevel>Edit</accessLevel>
+        <label>IATA iiNet</label>
+        <sharedTo>
+            <roleAndSubordinatesInternal>iiNet_Business_Team</roleAndSubordinatesInternal>
+        </sharedTo>
+        <sharedFrom>
+            <roleAndSubordinatesInternal>iiNet_Business_Team</roleAndSubordinatesInternal>
+        </sharedFrom>
+    </sharingOwnerRules>
+    <sharingOwnerRules>
         <fullName>IDFSACCAADMTeam</fullName>
         <accessLevel>Edit</accessLevel>
         <label>IDFS ACCA ADM Team</label>

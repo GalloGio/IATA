@@ -2359,6 +2359,11 @@ SIS Charge Code Type.</description>
                     <label>IATA Rates of Exchange</label>
                 </value>
                 <value>
+                    <fullName>Infectious Substances Shipping Guidelines</fullName>
+                    <default>false</default>
+                    <label>Infectious Substances Shipping Guidelines</label>
+                </value>
+                <value>
                     <fullName>Integrated Risk Management Guidance</fullName>
                     <default>false</default>
                     <label>Integrated Risk Management Guidance</label>
@@ -2484,9 +2489,9 @@ SIS Charge Code Type.</description>
                     <label>Publications Online</label>
                 </value>
                 <value>
-                    <fullName>Reservations Services Manual</fullName>
+                    <fullName>Reservations Handbook</fullName>
                     <default>false</default>
-                    <label>Reservations Services Manual</label>
+                    <label>Reservations Handbook</label>
                 </value>
                 <value>
                     <fullName>Revenue Accounting Manual</fullName>
@@ -3955,6 +3960,14 @@ IF(Name = &quot;ICH&quot;, HYPERLINK(&quot;https://iata--iccs.cs18.my.salesforce
         <type>TextArea</type>
     </fields>
     <fields>
+        <fullName>NumberOfQuantityInstallments</fullName>
+        <trackHistory>false</trackHistory>
+    </fields>
+    <fields>
+        <fullName>NumberOfRevenueInstallments</fullName>
+        <trackHistory>false</trackHistory>
+    </fields>
+    <fields>
         <fullName>Number_Of_Editions_per_Year__c</fullName>
         <externalId>false</externalId>
         <label>Number Of Editions per Year</label>
@@ -4632,6 +4645,14 @@ The product will only appear on the Online Store when the date entered in this f
         </valueSet>
     </fields>
     <fields>
+        <fullName>QuantityInstallmentPeriod</fullName>
+        <trackHistory>false</trackHistory>
+    </fields>
+    <fields>
+        <fullName>QuantityScheduleType</fullName>
+        <trackHistory>false</trackHistory>
+    </fields>
+    <fields>
         <fullName>QuantityUnitOfMeasure</fullName>
         <trackHistory>false</trackHistory>
         <type>Picklist</type>
@@ -4851,6 +4872,14 @@ The product will only appear on the Online Store when the date entered in this f
             </valueSetDefinition>
         </valueSet>
         <visibleLines>4</visibleLines>
+    </fields>
+    <fields>
+        <fullName>RevenueInstallmentPeriod</fullName>
+        <trackHistory>false</trackHistory>
+    </fields>
+    <fields>
+        <fullName>RevenueScheduleType</fullName>
+        <trackHistory>false</trackHistory>
     </fields>
     <fields>
         <fullName>SAP_Contract_OrderReason__c</fullName>
@@ -6189,9 +6218,9 @@ The product will only appear on the Online Store when the date entered in this f
         <columns>IEC_Override_Profit_Center__c</columns>
         <filterScope>Everything</filterScope>
         <filters>
-            <field>SAP_Material_Number__c</field>
+            <field>PRODUCT2.NAME</field>
             <operation>contains</operation>
-            <value>752510</value>
+            <value>AgentExperience</value>
         </filters>
         <label>ZZ - GDP Search</label>
         <language>en_US</language>
@@ -7729,7 +7758,7 @@ The product will only appear on the Online Store when the date entered in this f
                 <default>false</default>
             </values>
             <values>
-                <fullName>Reservations Services Manual</fullName>
+                <fullName>Reservations Handbook</fullName>
                 <default>false</default>
             </values>
             <values>
@@ -10703,7 +10732,7 @@ The product will only appear on the Online Store when the date entered in this f
                 <default>false</default>
             </values>
             <values>
-                <fullName>Reservations Services Manual</fullName>
+                <fullName>Reservations Handbook</fullName>
                 <default>false</default>
             </values>
             <values>
@@ -13377,6 +13406,10 @@ The product will only appear on the Online Store when the date entered in this f
                 <default>false</default>
             </values>
             <values>
+                <fullName>MER %28MER Division%29</fullName>
+                <default>false</default>
+            </values>
+            <values>
                 <fullName>Market IS</fullName>
                 <default>false</default>
             </values>
@@ -13668,6 +13701,10 @@ The product will only appear on the Online Store when the date entered in this f
                 <default>false</default>
             </values>
             <values>
+                <fullName>Infectious Substances Shipping Guidelines</fullName>
+                <default>false</default>
+            </values>
+            <values>
                 <fullName>Integrated Risk Management Guidance</fullName>
                 <default>false</default>
             </values>
@@ -13768,7 +13805,7 @@ The product will only appear on the Online Store when the date entered in this f
                 <default>false</default>
             </values>
             <values>
-                <fullName>Reservations Services Manual</fullName>
+                <fullName>Reservations Handbook</fullName>
                 <default>false</default>
             </values>
             <values>
@@ -16427,6 +16464,10 @@ The product will only appear on the Online Store when the date entered in this f
                 <default>false</default>
             </values>
             <values>
+                <fullName>MER %28MER Division%29</fullName>
+                <default>false</default>
+            </values>
+            <values>
                 <fullName>Market IS</fullName>
                 <default>false</default>
             </values>
@@ -16794,7 +16835,7 @@ The product will only appear on the Online Store when the date entered in this f
                 <default>false</default>
             </values>
             <values>
-                <fullName>Reservations Services Manual</fullName>
+                <fullName>Reservations Handbook</fullName>
                 <default>false</default>
             </values>
             <values>

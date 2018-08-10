@@ -13081,6 +13081,7 @@ IF( Requested_Other__c = FALSE, TRUE, IF( Responded_Other__c = TRUE, TRUE, FALSE
         <columns>Exe_Category_New__c</columns>
         <columns>Exe_Category__c</columns>
         <columns>Exception_Type__c</columns>
+        <columns>DA_Closure_Date__c</columns>
         <columns>Region__c</columns>
         <columns>IATA_Country__c</columns>
         <columns>SOP_Type__c</columns>
@@ -13237,12 +13238,12 @@ IF( Requested_Other__c = FALSE, TRUE, IF( Responded_Other__c = TRUE, TRUE, FALSE
         <filters>
             <field>Status__c</field>
             <operation>equals</operation>
-            <value>Pending Closure,Pending Evidence Validation</value>
+            <value>Pending Closure,Pending Evidence Validation,Accepted - Active</value>
         </filters>
         <filters>
             <field>Deadline_for_Alignment__c</field>
             <operation>equals</operation>
-            <value>TODAY,NEXT_N_DAYS:3</value>
+            <value>TODAY,NEXT_N_DAYS:5</value>
         </filters>
         <filters>
             <field>Status__c</field>

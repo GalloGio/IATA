@@ -6,6 +6,12 @@ global with sharing class ANG_ConversionHelper {
 
     public static final Set<String> ALLOWEDRECORDTYPES = new Set<String>{ACCOUNT_AGENCY_RT,ACCOUNT_STANDARD_RT};
 
+    public static final Set<String> INVALIDAGENCYSTATUS = new Set<String>{AMS_utils.ACC_S2_NEWAPPLICATIONPENDING,AMS_utils.ACC_S1_NOTACCREDITED,'',null,AMS_utils.ACC_S3_NOTINOPERATION, 'Not Accredited'};
+
+    public static final Set<String> ACTIVEAGENCYSTATUS = new Set<String>{AMS_Utils.ACC_S9_APPROVED,AMS_Utils.ACC_S5_CASHNOCOMMISSION,AMS_Utils.ACC_S6_CASHWITHCOMMISSION,AMS_Utils.ACC_S8_CHANGESPROCESSED,AMS_Utils.ACC_S4_LISTED,AMS_Utils.ACC_S7_UNDERREVIEW,'Endorsed','On hold','Review'};
+    public static final Set<String> INACTIVEAGENCYSTATUS = new Set<String>{AMS_Utils.ACC_S1_NOTACCREDITED,'Not Accredited',AMS_Utils.ACC_S3_NOTINOPERATION,AMS_Utils.ACC_S0_TERMINATED};
+    public static final Set<String> BLANKAGENCYSTATUS = new Set<String>{'',null,AMS_Utils.ACC_S2_NEWAPPLICATIONPENDING};
+
     public static final Integer WRONGRECORDTYPE= -2;
     public static final Integer BRANCHABROAD= -3;
     public static final Integer WRONGLOCATIONCLASS= -4;
@@ -200,9 +206,11 @@ global with sharing class ANG_ConversionHelper {
 		System.debug('brAbroadInDiffCountries are:'+brAbroadInDiffCountries);
 
 		for(AMS_Agencies_relationhip__c relationShip: brAbroadInDiffCountries){
-			if(relationShip.Child_Account__r.Status__c == AMS_Utils.ACC_S0_TERMINATED)
+			
+			/*if(relationShip.Child_Account__r.Status__c == AMS_Utils.ACC_S0_TERMINATED)
 				if(relationShip.Child_Account__r.Expiry_Date__c < frontierDate)
 					continue;
+			*/
 			
 			if(validateBranchesAbroad(new List<AMS_Agencies_relationhip__c>{relationShip})){// it's a false positive
 				continue;
@@ -734,7 +742,7 @@ global with sharing class ANG_ConversionHelper {
 		Set<Account> accountsToReturn = new Set<Account>();
 
 		For(Account acct: accounts){
-			if(acct.Status__c == AMS_Utils.ACC_S0_TERMINATED || acct.Status__c == AMS_Utils.ACC_S1_NOTACCREDITED || acct.Status__c == '' || acct.Status__c == null)
+			if(INVALIDAGENCYSTATUS.contains(acct.Status__c) || acct.Status__c == AMS_utils.ACC_S0_TERMINATED)
 				continue;
 
 			accountsToReturn.add(acct);
@@ -857,10 +865,19 @@ global with sharing class ANG_ConversionHelper {
 
 		boolean hierarchyToDeleteAux = true;
 
+		boolean hierarchyWithBrOfCountryToBeMigrated = false;
+
 		if(struct.countryABR != null){
 
+			hierarchyWithBrOfCountryToBeMigrated = true;
 
 			List<Account> accountsToCreateNewHierarchy = new List<Account>();
+
+			System.debug('struct.relations is currently:'+struct.relations);
+
+			struct.relations = reOrderListForStatus(struct.relations);
+
+			System.debug('struct.relations is now:'+struct.relations);
 
 			for(AMS_Agencies_relationhip__c rel: struct.relations){ // first extract all accounts involved.
 
@@ -1085,7 +1102,7 @@ global with sharing class ANG_ConversionHelper {
 
 		struct.migrated = true;
 
-		if(!struct.isSingleAgencyHierarchy){
+		if(!struct.isSingleAgencyHierarchy && !hierarchyWithBrOfCountryToBeMigrated){
 			hierarchy.Migrated__c = true;
 		}
 
@@ -1103,11 +1120,15 @@ global with sharing class ANG_ConversionHelper {
 			Set<AMS_Agencies_relationhip__c> relationsTidsToSplitPerCountrySet = new Set<AMS_Agencies_relationhip__c>();
 			relationsTidsToSplitPerCountrySet.addAll(relationsTidsToSplitPerCountry);
 
-			List<AMS_Agencies_relationhip__c> relationsTidsToSplitLst = reOrderListForStatus(relationsTidsToSplitPerCountrySet);
+			System.debug('Relations to relationsTidsToSplitPerCountrySet are:'+relationsTidsToSplitPerCountrySet);
+
+			List<AMS_Agencies_relationhip__c> relationsTidsToSplitLst = reOrderListForStatusSet(relationsTidsToSplitPerCountrySet);
 
 			System.debug('Relations to Split are:'+relationsTidsToSplitLst);
 
 			for(AMS_Agencies_relationhip__c rel: relationsTidsToSplitLst){
+
+				System.debug('Analysing rel:'+rel);
 
 				if(!parentAdded){
 					parentAdded = true;
@@ -1124,12 +1145,20 @@ global with sharing class ANG_ConversionHelper {
 
 				}else{
 
-					allAgencies.get(rel.Child_Account__c).ParentId = allAgencies.get(parentRel.Child_Account__c).Id;
-					allAgencies.get(rel.Child_Account__c).Top_Parent__c = allAgencies.get(parentRel.Child_Account__c).Id;
-					allAgencies.get(rel.Child_Account__c).Location_Type__c = 'BR';
-					allAgencies.get(rel.Child_Account__c).Organization_Last_Change_Date__c = System.today();
+					if(allAgencies.get(rel.Child_Account__c).ParentId == allAgencies.get(rel.Child_Account__c).Top_Parent__c){
+						
+						System.debug('parentRel.Child_Account__c is ' + parentRel.Child_Account__c);
+						System.debug('allAgencies.get(parentRel.Child_Account__c).Id is:'+allAgencies.get(parentRel.Child_Account__c).Id);
 
-					relationsToAdd.add(new AMS_Agencies_relationhip__c(Parent_Account__c = parentRel.Child_Account__c, Child_Account__c = rel.Child_account__c, Hierarchy__c = newHierarchy.id));
+						allAgencies.get(rel.Child_Account__c).ParentId = allAgencies.get(parentRel.Child_Account__c).Id;
+						relationsToAdd.add(new AMS_Agencies_relationhip__c(Parent_Account__c = parentRel.Child_Account__c, Child_Account__c = rel.Child_account__c, Hierarchy__c = newHierarchy.id));
+					}else{
+						relationsToAdd.add(new AMS_Agencies_relationhip__c(Parent_Account__c = rel.Parent_Account__c, Child_Account__c = rel.Child_account__c, Hierarchy__c = newHierarchy.id));
+					}
+
+					allAgencies.get(rel.Child_Account__c).Top_Parent__c = allAgencies.get(parentRel.Child_Account__c).Id;
+					//allAgencies.get(rel.Child_Account__c).Location_Type__c = 'BR';
+					allAgencies.get(rel.Child_Account__c).Organization_Last_Change_Date__c = System.today();
 
 				}
 
@@ -1221,27 +1250,28 @@ global with sharing class ANG_ConversionHelper {
 
 	}
 
-	private static List<AMS_Agencies_relationhip__c> reOrderListForStatus(Set<AMS_Agencies_relationhip__c> relationsSet){
+	private static List<AMS_Agencies_relationhip__c> reOrderListForStatusSet(Set<AMS_Agencies_relationhip__c> relationsSet){
 
 		List<AMS_Agencies_relationhip__c> relations = new List<AMS_Agencies_relationhip__c>();
 		relations.addAll(relationsSet);
+		return reOrderListForStatus(relations);
 
-		for(Integer i = 0 ; i < relations.size() ; i++){
-
-			AMS_Agencies_relationhip__c rel = relations.get(i);
+	}
 
 
-			if(rel.Child_Account__r.Status__c <> AMS_Utils.ACC_S0_TERMINATED){
-				
-				if(i == 0)
-					return relations; // it's already on the first position.
+	@TestVisible private static List<AMS_Agencies_relationhip__c> reOrderListForStatus(List<AMS_Agencies_relationhip__c> relations){
 
-				relations.remove(i);
-				relations.add(0,rel);
+		List<OrderRelations> relationships = new List<OrderRelations>();
 
-				return relations;
-			}
-		}
+		for(AMS_Agencies_relationhip__c relation : relations)
+			relationships.add(new OrderRelations(relation));
+
+		relations.clear();
+
+		relationships.sort();
+
+		for(OrderRelations relationship : relationships)
+			relations.add(relationship.relation);
 
 		return relations;
 
@@ -1255,12 +1285,17 @@ global with sharing class ANG_ConversionHelper {
         
         List<Account> acctToInsert = [SELECT Id, IATACode__c, Status__c, Purge_Flag__c from Account where Id in:accts];
         
+        String statusAA = null;
+
         for(Account acct:acctToInsert){
 
         	if(isAcctElegibleToCreateAuthorization(acct)){
-        		authorizations.add(new Agency_Authorization__c(Account__c = acct.Id, ANG_FormOfPayment_ID__c = 'CC', Status__c = 'Active', RecordTypeId = FormOfPaymentRT));
-        		authorizations.add(new Agency_Authorization__c(Account__c = acct.Id, ANG_FormOfPayment_ID__c = 'CA', Status__c = 'Active', RecordTypeId = FormOfPaymentRT));
-        		authorizations.add(new Agency_Authorization__c(Account__c = acct.Id, ANG_FormOfPayment_ID__c = 'EP', Status__c = 'Active', RecordTypeId = FormOfPaymentRT));
+
+        		statusAA = acct.Status__c == AMS_utils.ACC_S0_TERMINATED ? 'Non-Active' :  'Active';
+
+        		authorizations.add(new Agency_Authorization__c(Account__c = acct.Id, ANG_FormOfPayment_ID__c = 'CC', Status__c = statusAA, RecordTypeId = FormOfPaymentRT));
+        		authorizations.add(new Agency_Authorization__c(Account__c = acct.Id, ANG_FormOfPayment_ID__c = 'CA', Status__c = statusAA, RecordTypeId = FormOfPaymentRT));
+        		authorizations.add(new Agency_Authorization__c(Account__c = acct.Id, ANG_FormOfPayment_ID__c = 'EP', Status__c = statusAA, RecordTypeId = FormOfPaymentRT));
 			}
 		}
 
@@ -1269,7 +1304,7 @@ global with sharing class ANG_ConversionHelper {
 
     public static boolean isAcctElegibleToCreateAuthorization(Account acct){
 
-    	return !(acct.IATACode__c == null ||  acct.Status__c == 'New application pending' || acct.Status__c == 'Not accreditated' || acct.Purge_Flag__c == true);
+    	return !(acct.IATACode__c == null ||  INVALIDAGENCYSTATUS.contains(acct.Status__c) || acct.Purge_Flag__c == true);
 
     }
 
@@ -1596,6 +1631,66 @@ global with sharing class ANG_ConversionHelper {
 		}
 
 
-	} 
+	}
+
+	global class OrderRelations implements Comparable{
+
+		private AMS_Agencies_relationhip__c relation;
+		private Integer statusWeight;
+		private Integer locationTypeWeight;
+
+		public OrderRelations(AMS_Agencies_relationhip__c relation){
+			this.relation = relation;
+			defineWeights(relation);
+		}
+
+		/**
+		*	Compares two relationships by Child Account Status and Location Type
+		*	Returns 0 if both relationships can be in the same position of the hierarchy
+		*	Returns 1 if the relationship can be parent of the compareTo
+		*	Returns -1 if the relationship cannot be parent of the compareTo
+		**/
+		public Integer compareTo(Object compareTo) {
+       
+            OrderRelations compareToOR = (OrderRelations)compareTo;
+
+            if(statusWeight == compareToOR.statusWeight) {
+
+            	if (locationTypeWeight == compareToOR.locationTypeWeight)
+            		return 0;
+        		else
+        			return locationTypeWeight < compareToOR.locationTypeWeight ? 1 : -1;
+
+            } else {
+
+            	return statusWeight < compareToOR.statusWeight ? 1 : -1;
+            }
+		}
+
+		/**
+		*	Define weights taking into consideration the Child Account Status and Location Type
+		**/
+		private void defineWeights(AMS_Agencies_relationhip__c relationship) {
+
+			//define status weight
+			if(ACTIVEAGENCYSTATUS.contains(relationship.Child_Account__r.Status__c))
+				statusWeight = 30;
+			else if(INACTIVEAGENCYSTATUS.contains(relationship.Child_Account__r.Status__c))
+				statusWeight = 20;
+			else if(BLANKAGENCYSTATUS.contains(relationship.Child_Account__r.Status__c))
+				statusWeight = 10;
+			else
+				statusWeight = 0;
+
+			//define location type weight
+			if(relationship.Child_Account__r.Location_Type__c == 'BR')
+				locationTypeWeight = 20;
+			else if(relationship.Child_Account__r.Location_Type__c == 'SA')
+				locationTypeWeight = 10;
+			else
+				locationTypeWeight = 0;
+		}
+
+	}
 
 }

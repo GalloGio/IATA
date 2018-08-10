@@ -416,6 +416,7 @@
                   "Update_AIMS_Rejection__c",
                   "Close_IFAP_Rejection__c",
                   "Cancel_Inspection_Requests_Rejection__c",
+                  "AMS_Rejection_Withdrawal_remarks__c",
                   "STEP18__c"
                 ],
                 "IsDependent": false
@@ -2090,42 +2091,6 @@
             ]
           },
           {
-            "Name": "AMS_OSCAR_ANTIMONEYLAUNDERING",
-            "Steps": [
-              {
-                "Name": "STEP17",
-                "Required": [],
-                "Actions": [
-                  {
-                    "FunctionName": "performAML",
-                    "ActionLabel": "AMS_OSCAR_Action4",
-                    "args": [
-                      "oscarid"
-                    ]
-                  }
-                ],
-                "Automations": [
-                  {
-                    "Status": "In Progress",
-                    "ClassName": "AMS_OSCAR_Automation.AMS_OSCAR_Step17_inProgress"
-                  },
-                  {
-                    "Status": "Passed",
-                    "ClassName": "AMS_OSCAR_Automation.AMS_OSCAR_Step17_succeeded"
-                  },
-                  {
-                    "Status": "Failed",
-                    "ClassName": "AMS_OSCAR_Automation.AMS_OSCAR_Step17_failed"
-                  }
-                ],
-                "DisplayFields": [
-                  "STEP17__c"
-                ],
-                "IsDependent": false
-              }
-            ]
-          },
-          {
             "Name": "AMS_OSCAR_AGENCYFEES",
             "Steps": [
               {
@@ -3729,7 +3694,13 @@
               {
                 "Name": "STEP6",
                 "Required": [],
-                "Actions": [],
+                "Actions": [
+                  {
+                    "FunctionName": "checkAccountHierarchyCorrection",
+                    "ActionLabel": "AMS_OSCAR_Action6_Corr",
+                    "args": ["oscarid"]
+                  }
+				],
                 "Automations": [
                   {
                     "Status": "Passed",
@@ -4063,6 +4034,7 @@
                 ],
                 "DisplayFields": [
                   "Is_PCI_compliant__c",
+                  "ANG_PCI_compliance_expiry_date__c",
                   "STEP6__c"
                 ],
                 "IsDependent": false
@@ -4515,6 +4487,7 @@
                 ],
                 "DisplayFields": [
                   "Is_PCI_compliant__c",
+                  "ANG_PCI_compliance_expiry_date__c",
                   "STEP6__c"
                 ],
                 "IsDependent": false
@@ -5019,6 +4992,7 @@
                 ],
                 "DisplayFields": [
                   "Is_PCI_compliant__c",
+                  "ANG_PCI_compliance_expiry_date__c",
                   "STEP6__c"
                 ],
                 "IsDependent": false
@@ -6289,7 +6263,72 @@
           }
       
       ]
-      } 
+      },
+      {
+        "Name": "ANG.ANNUAL.REVALIDATION",
+        "Flows": [
+          {
+            "Name": "ANG_NON_COMPLIANCE",
+            "Steps": [
+              {
+                "Name": "STEP43",
+                "Required": [],
+                "Actions": [],
+                "Automations": [],
+                "DisplayFields": [
+                  "ANG_Administrative_non_compliance_date__c",
+                  "STEP43__c"
+                ],
+                "IsDependent": false
+              },
+              {
+                "Name": "STEP44",
+                "Required": [],
+                "Actions": [
+                  {
+                    "FunctionName": "SIDRALiteAction",
+                    "ActionLabel": "AMS_OSCAR_Action7",
+                    "args": [
+                      "oscarid", "44"
+                    ]
+                  }
+                ],
+                "Automations": [],
+                "DisplayFields": [
+                  "STEP44__c"
+                ],
+                "IsDependent": false
+              }
+            ]
+          },
+          {
+            "Name": "AMS_OSCAR_APPLICATIONRECEIPT",
+            "Steps": [
+              {
+                "Name": "STEP6",
+                "Required": [],
+                "Actions": [],
+                "Automations": [
+                  {
+                    "Status": "Passed",
+                    "ClassName": "AMS_OSCAR_Automation.AMS_OSCAR_Step6_succeeded"
+                  },
+                  {
+                    "Status": "Failed",
+                    "ClassName": "AMS_OSCAR_Automation.AMS_OSCAR_Step6_failed"
+                  }
+                ],
+                "DisplayFields": [
+                "Documentation_remarks__c",
+                "New_docs_Received__c",
+                  "STEP6__c"                  
+                ],
+                "IsDependent": false
+              }
+            ]
+          }
+        ]
+      }   
     ]
   }
 }

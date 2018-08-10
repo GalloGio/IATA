@@ -103,6 +103,12 @@ public with sharing class ANG_AgencyChangesHelper {
 			return;
 		}
 
+		if(oscar.Process__c == AMS_Utils.NGCHANGES && oscar.STEP6__c != AMS_Utils.PASSED && oscar.Change_effective_as_of__c > Date.today()) {
+			system.debug('oscar status before: '+ oscar.Status__c);
+			oscar.Status__c = 'Accepted_Future Date';
+			system.debug('oscar status after: '+ oscar.Status__c);
+		}
+
 		if((oscar.Process__c == AMS_Utils.NGCHANGES || oscar.Process__c == AMS_Utils.NGCORRECTION) && oscar.ANG_Type_Of_Change__c != null){
 
 			System.debug('[ANG_AgencyChangesHelper][handleNewGenChangesProcess] -- PROCESSING agency changes');
@@ -197,12 +203,26 @@ public with sharing class ANG_AgencyChangesHelper {
 
 					performRiskEventActions(oscar,currHEAccount,isAllHierarchySelected);
 
+					if (changesContainer.accountsMap.get(oscar.Account__c).IATA_ISO_Country__r.Due_diligence_mandatory__c && oscar.STEP17__c != AMS_Utils.NOT_APPLICABLE && 
+						oscar.Type_of_change__c != AMS_Utils.ANG_LOCATION) {
+
+                        if(changesContainer.accountsMap.get(oscar.Account__c).Due_Diligence_Status__c == AMS_Utils.IN_PROGRESS) oscar.STEP17__c = AMS_Utils.IN_PROGRESS;
+                        else{
+                            String dlResult = AMS_OSCAR_Webservice.createAMLCaseWithNoOscarUpdate(oscar);
+                            if (dlResult.startsWith('ERROR')) oscar.addError(dlResult);
+                            else changesContainer.accountsMap.get(oscar.Account__c).Due_Diligence_Status__c = AMS_Utils.IN_PROGRESS;
+                        }
+                    }
+
 					System.debug('[ANG_AgencyChangesHelper] Risk Actions Ended');
 				}
 
 				if(oscar.Process__c == AMS_Utils.NGCORRECTION){
 
 					List<Account> accountsToUpdate = new List<Account>();
+
+					if (!new Set<String>{'COR','CAD','LET'}.contains(oscar.AMS_Correction_change_code__c))
+						oscar.addError('To pass sanity check a correction change code is required.');
 
 					if(oscar.AMS_Correction_change_code__c == 'COR' || oscar.AMS_Correction_change_code__c == 'CAD'){
 						AMS_OSCAR_JSON.ChangeCode changeCode = new AMS_OSCAR_JSON.ChangeCode();
@@ -246,6 +266,19 @@ public with sharing class ANG_AgencyChangesHelper {
 						changesContainer.accountsToApplyChangeCodes.add(changesContainer.accountsMap.get(oscar.Account__c));
 						changesContainer.changeCodesToCreateDef.add(changeCode);	
 					}
+
+					if(oscar.Is_PCI_compliant__c == 'Corporate Card'){
+                    	Date dt = Date.newInstance(2099, 12, 31);
+
+                    	for (Id accId : accountIdsInvolvedSet){
+
+	                    	if (changesContainer.accountsMap.get(accId) == null){
+	                    		changesContainer.addAccount(new Account(Id = accId, ANG_PCI_compliance_expiry_date__c = dt));
+	                    	}else{
+	                    		changesContainer.accountsMap.get(accId).ANG_PCI_compliance_expiry_date__c = dt;
+	                    	}
+	                    }
+                    }
 
 				}
 
@@ -1290,9 +1323,9 @@ public with sharing class ANG_AgencyChangesHelper {
 		        BillingCountry, BillingStreet, BillingPostalCode, BillingState, BillingCity, IATA_ISO_Country__c, Iso_State__c, ShippingCountry, Is_Branch_Abroad__c,
 		        ShippingStreet, ShippingPostalCode, ShippingState, ShippingCity, Email__c, Website, Phone, Fax, In_a_Airport__c, Abbreviated_name__c, Abbreviated_address__c,
 		        Remittance_frequency__c, Solicitation_Flag__c, VAT_Number_2__c, CASS_Number__c, Location_Class__c, Location_Type__c, Mobile__c, Is_your_firm_handling_Dangerous_Goods__c,
-		        Due_Diligence_Status__c, IATA_ISO_Shipping_State__r.Name, ISO_State__r.Name,IATA_ISO_Country__r.Name,IATA_ISO_Shipping_Country__c,IATA_ISO_Shipping_Country__r.Name,
+		        Due_Diligence_Status__c, IATA_ISO_Shipping_State__r.Name, ISO_State__r.Name,IATA_ISO_Country__r.Name,IATA_ISO_Country__r.Due_diligence_mandatory__c,IATA_ISO_Shipping_Country__c,IATA_ISO_Shipping_Country__r.Name,
 		        IATA_ISO_Billing_State__c,IATA_ISO_Billing_State__r.Name, ANG_Accreditation_Model__c, IATA_ISO_Country__r.CurrencyIsoCode, Is_PCI_compliant__c,IATA_ISO_Country__r.AMS_Settlement_System__r.CurrencyIsoCode, 
-		        ANG_IsNewGenAgency__c, ANG_FA_Opt_out__c
+		        ANG_IsNewGenAgency__c, ANG_FA_Opt_out__c, CNS_Agency__c
 		         FROM Account WHERE Id IN :accountIds]);
 	}
 

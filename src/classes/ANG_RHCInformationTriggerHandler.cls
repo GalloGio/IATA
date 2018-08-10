@@ -22,7 +22,7 @@ public class ANG_RHCInformationTriggerHandler{
 		for(ANG_RHC_Information__c rhcrec:triggerNew){
 			tempMap.put(rhcrec.id, new ANG_RHC_Information__c());
 		}
-		new ANG_AgencyEventsGenerator(triggerNew,tempMap,'RHC_Information','ANG_AccountId__c').run();
+		new ANG_AgencyEventsGenerator(filterByIATACode(triggerNew),tempMap,'RHC_Information','ANG_AccountId__c').run();
 	}
 	public void onBeforeUpdate(){
 		convertAndSumFS();
@@ -30,7 +30,7 @@ public class ANG_RHCInformationTriggerHandler{
 		//analyzeConsumedRHCAdjustment(); as per NEWGEN-1085
 	}
 	public void onAfterUpdate(){
-		new ANG_AgencyEventsGenerator(triggerNew,oldMap,'RHC_Information','ANG_AccountId__c').run();
+		new ANG_AgencyEventsGenerator(filterByIATACode(triggerNew),oldMap,'RHC_Information','ANG_AccountId__c').run();
 		refreshRMEData();
 	}
 
@@ -41,6 +41,17 @@ public class ANG_RHCInformationTriggerHandler{
 	// ********************* action methods ***********************
 	// ************************************************************
 
+
+	public static List<ANG_RHC_Information__c> filterByIATACode(List<ANG_RHC_Information__c> changeCodes){
+
+		List<ANG_RHC_Information__c> toReturn = new List<ANG_RHC_Information__c>();
+
+		for(ANG_RHC_Information__c rhc : changeCodes)
+			if(rhc.ANG_IATA_Code__c <> null)
+				toReturn.add(rhc);
+
+		return toReturn;
+	}
 
 	private void convertAndSumFS(){
 		set<id> accIdSet = new set<id>();		
@@ -104,7 +115,7 @@ public class ANG_RHCInformationTriggerHandler{
 			if(!r.ANG_CashCondition__c && oldMap.get(r.Id).ANG_CashCondition__c) accIds.add(r.ANG_AccountId__c);
 		}
 
-		if(!accIds.isEmpty()) System.enqueueJob(new ANG_UpdateRHCInformationBatch(accIds, ANG_UpdateRHCInformationBatch.Process.PROVISIONAL, true, 100));
+		if(!accIds.isEmpty()) System.enqueueJob(new ANG_UpdateRHCInformationBatch(accIds, ANG_UpdateRHCInformationBatch.Process.PROVISIONAL, true, 1));
 			
 	}
 
