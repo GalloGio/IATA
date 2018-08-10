@@ -78,6 +78,10 @@ global without sharing class ANG_RollbackEngineHelper implements Queueable{
 				processRollbackRoles(technicalLogsMap.get(entity));
 			if(entity == 'Agency_Authorization__c')
 				processRollbackFops(technicalLogsMap.get(entity));
+			if(entity == 'ANG_RHC_Information__c')
+				processRollbackRHCs(technicalLogsMap.get(entity));
+			if(entity == 'Financial_Security__c')
+				processRollbackFSs(technicalLogsMap.get(entity));
 			if(entity == 'AMS_Agencies_Hierarchy__c'){
 				processRollbackHierarchy(technicalLogsMap.get('AMS_Agencies_Hierarchy__c'),technicalLogsMap.get('AMS_Agencies_relationhip__c'));
 			}
@@ -159,6 +163,46 @@ global without sharing class ANG_RollbackEngineHelper implements Queueable{
 			upsert fopsToRollback;
 		}	
 
+	}
+	
+	private void processRollbackRHCs(List<String> RHCList){
+
+		List<ANG_RHC_Information__c> RHCsToRollback = new List<ANG_RHC_Information__c>();
+		Set<Id> RHCids = new Set<Id>();
+
+		for(String roleStr: RHCList){
+			
+			ANG_RHC_Information__c role = (ANG_RHC_Information__c) JSON.deserialize(roleStr, ANG_RHC_Information__c.class);
+			RHCids.add(role.Id);
+
+			RHCsToRollback.add(role);
+		}
+
+		delete [Select Id from ANG_RHC_Information__c where ANG_AccountId__c in:accountsRelated and Id not in: RHCids];
+
+		if(!RHCsToRollback.isEmpty()){
+			upsert RHCsToRollback;
+		}	
+	}
+
+	private void processRollbackFSs(List<String> FSsList){
+
+		List<Financial_Security__c> FSsToRollback = new List<Financial_Security__c>();
+		Set<Id> FSids = new Set<Id>();
+
+		for(String roleStr: FSsList){
+			
+			Financial_Security__c role = (Financial_Security__c) JSON.deserialize(roleStr, Financial_Security__c.class);
+			FSids.add(role.Id);
+
+			FSsToRollback.add(role);
+		}
+
+		delete [Select Id from Financial_Security__c where Account__c in:accountsRelated and Id not in: FSids];
+
+		if(!FSsToRollback.isEmpty()){
+			upsert FSsToRollback;
+		}	
 	}
 
 	private void processRollbackHierarchy(List<String> hierarchyList, List<String> relationshipList){
