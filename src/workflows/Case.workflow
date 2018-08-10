@@ -4936,6 +4936,16 @@
         <protected>false</protected>
     </fieldUpdates>
     <fieldUpdates>
+        <fullName>Check</fullName>
+        <description>For R&amp;S to confirm that all up-to-date outstanding amounts are paid using the case field &quot;Confirm ALL Outs. Amounts Paid&quot;.</description>
+        <field>R_S_feedback_pending__c</field>
+        <literalValue>Confirm outs. amounts</literalValue>
+        <name>SIDRA R&amp;S - Confirm ALL outs. amounts</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>Literal</operation>
+        <protected>false</protected>
+    </fieldUpdates>
+    <fieldUpdates>
         <fullName>Chg_owner_to_Airline_Suspension_Head</fullName>
         <description>change the case owner to Airline Suspension - Head if the outstanding amount &gt; USD1000</description>
         <field>OwnerId</field>
@@ -14314,7 +14324,7 @@ Case(month(datevalue(now()))+1,1,31,2,28,3,31,4,30,5,31,6,30,7,31,8,31,9,30,10,3
             <type>Alert</type>
         </actions>
         <actions>
-            <name>SIDRA_R_S_feedback_Check_repayment</name>
+            <name>Check</name>
             <type>FieldUpdate</type>
         </actions>
         <active>true</active>
