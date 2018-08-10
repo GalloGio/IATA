@@ -124,8 +124,10 @@ public class ANG_RHCInformationTriggerHandler{
 			if(!r.ANG_CashCondition__c && oldMap.get(r.Id).ANG_CashCondition__c) accIds.add(r.ANG_AccountId__c);
 		}
 
-		if(!accIds.isEmpty()) System.enqueueJob(new ANG_UpdateRHCInformationBatch(accIds, ANG_UpdateRHCInformationBatch.Process.PROVISIONAL, true, 1));
-			
+		if(!accIds.isEmpty()) {
+			if(Limits.getLimitQueueableJobs() < Limits.getQueueableJobs()) System.enqueueJob(new ANG_UpdateRHCInformationBatch(accIds, ANG_UpdateRHCInformationBatch.Process.PROVISIONAL, true, 1));
+			else Database.executeBatch(new ANG_UpdateRHCInformationBatch(accIds, ANG_UpdateRHCInformationBatch.Process.PROVISIONAL, true, 1));
+		}	
 	}
 
 	/* as per NEWGEN-1085
