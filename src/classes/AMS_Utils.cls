@@ -523,21 +523,21 @@ public without sharing class AMS_Utils {
 
         String sRes = '';
 
-        if (sChangeCode.equalsIgnoreCase('NEW')) {
+        if (sChangeCode.startsWithIgnoreCase('NEW')) {
             sRes = AACC_INPROGRESS;
-        } else if (sChangeCode.equalsIgnoreCase('FIN')) {
+        } else if (sChangeCode.startsWithIgnoreCase('FIN')) {
             sRes = AACC_FINALIZED;
         }
-        else if (sChangeCode.equalsIgnoreCase('DIS')) {
-            sRes = sChangeCode.endsWith('CNS-C') ? 'denied' : AACC_DISAPPROVED;
+        else if (sChangeCode.startsWithIgnoreCase('DIS')) {
+            sRes = (sChangeCode.indexOf('-CNS-')>0) ? 'denied' : AACC_DISAPPROVED;
         }
-        else if (sChangeCode.equalsIgnoreCase('REC')) {
-            sRes = sChangeCode.endsWith('CNS-C') ? 'under reconsideration' : AACC_RECONSIDERED;
+        else if (sChangeCode.startsWithIgnoreCase('REC')) {
+            sRes = (sChangeCode.indexOf('-CNS-')>0) ? 'under reconsideration' : AACC_RECONSIDERED;
         }
-        else if (sChangeCode.equalsIgnoreCase('NWD')) {
+        else if (sChangeCode.startsWithIgnoreCase('NWD')) {
             sRes = AACC_WITHDRAWAL;
         }
-        
+
         return sRes;
     }
     /**
@@ -1917,35 +1917,56 @@ public static boolean isAMSProfile(Id profileId) {
     return AMSPROFILES.contains(profileId);
 }
 
-//Get Change Code memo Text (All this configs should be passed for a Custom Setting)
+//TD 20180607: "old" method signature to avoid issues with classes
 public static String getChangeCodeMemoText(String process,String changeCodeId) {
+	return (getChangeCodeMemoText(process, changeCodeId, null));
+}
 
-    String memoText = 'New application';
+//Get Change Code memo Text (All this configs should be passed for a Custom Setting)
+//TD 2018067 - added custom setting field in input
+public static String getChangeCodeMemoText(String process,String changeCodeId, AMS_ChangeCodes__c CCConfig) {
+	if(changeCodeId.indexOf('-CNS-')>-1){
+		//CNS PROCESS. GET BULLETIN MEMO TEXT FROM CHANGE CODE CONFIGURATION
+		if(CCConfig==null)	CCConfig = AMS_ChangeCodes__c.getInstance(changeCodeId);
+		
+		if(CCConfig!=null){
+			string sMemoText = (string.isBlank(CCConfig.Bulletin_Memo_Text__c)?'':CCConfig.Bulletin_Memo_Text__c) 
+								+ (string.isBlank(CCConfig.Bulletin_Memo_Text2__c)?'':CCConfig.Bulletin_Memo_Text2__c) 
+								+ (string.isBlank(CCConfig.Bulletin_Memo_Text3__c)?'':CCConfig.Bulletin_Memo_Text3__c);
+			if(string.isNotBlank(sMemoText))
+				return sMemoText = sMemoText.toUpperCase();
+		}
+		return '';
+	}else{
+		//UNTOUCHED FOR NON CNS PROCESSES
+		String memoText = 'New application';
 
-    if(changeCodeId == 'FIN-CNS-C') memoText = 'New Endorsment';
-    if(changeCodeId.endsWithIgnoreCase('CNS-R')) return '';
-
-    if (process == new_HO || process == new_BR_ABROAD){
-        if(changeCodeId != 'NWD') memoText += ' - Head Office';
-    }else if (process == new_BR){
-        memoText += ' - Branch';
-    }else if (process == NEWHELITE || process == NEWHESTANDARD){
-        if(changeCodeId != 'NEW' && changeCodeId != 'NWD') memoText += ' - Head Entity';
-    }else if (process == NEWAE){
-        if(changeCodeId != 'NEW' && changeCodeId != 'NWD') memoText += ' - Associate Entity';
-    }else if (process == new_TIDS){
-        memoText += ' - TIDS';
-    }else if (process == new_SA){
-        memoText += ' - SA';
-    }else if (process == new_GSSA){
-        memoText += ' - GSSA';
-    }else if (process == new_GSA_BSP || process == new_GSA){
-        memoText += ' - GSA';
-    }else if (process == new_AHA_BSP || process == new_AHA){
-        memoText += ' - AHA';
-    }
- 
-    return memoText + ' ' + getStatusDescFromChangeCode(changeCodeId);
+		//Commented as CNS has been moved above
+	    //if(changeCodeId == 'FIN-CNS-C') memoText = 'New Endorsment';
+	    //if(changeCodeId.endsWithIgnoreCase('CNS-R')) return '';
+	
+	    if (process == new_HO || process == new_BR_ABROAD){
+	        if(changeCodeId != 'NWD') memoText += ' - Head Office';
+	    }else if (process == new_BR){
+	        memoText += ' - Branch';
+	    }else if (process == NEWHELITE || process == NEWHESTANDARD){
+	        if(changeCodeId != 'NEW' && changeCodeId != 'NWD') memoText += ' - Head Entity';
+	    }else if (process == NEWAE){
+	        if(changeCodeId != 'NEW' && changeCodeId != 'NWD') memoText += ' - Associate Entity';
+	    }else if (process == new_TIDS){
+	        memoText += ' - TIDS';
+	    }else if (process == new_SA){
+	        memoText += ' - SA';
+	    }else if (process == new_GSSA){
+	        memoText += ' - GSSA';
+	    }else if (process == new_GSA_BSP || process == new_GSA){
+	        memoText += ' - GSA';
+	    }else if (process == new_AHA_BSP || process == new_AHA){
+	        memoText += ' - AHA';
+	    }
+	 
+	    return memoText + ' ' + getStatusDescFromChangeCode(changeCodeId);
+	}
 }
 
 

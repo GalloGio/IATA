@@ -527,7 +527,7 @@ global without sharing class AMS_RecordCreatorWebservice {
             throw new CalloutException('Account Id must be filled.');
 
         Account account = new Account(Id = accountId);
-        Account a = [SELECT Id, CNS_Agency__c, Location_Class__c, (SELECT Reason_Code__c, Reason_Description__c FROM Agencies_Applied_Change_codes__r WHERE Active__c = TRUE) FROM Account WHERE Id = :accountId];
+        Account a = [SELECT Id, CNS_Agency__c, Location_Class__c, Status__c, (SELECT Reason_Code__c, Reason_Description__c FROM Agencies_Applied_Change_codes__r WHERE Active__c = TRUE) FROM Account WHERE Id = :accountId];
 
         if(a == null)
             throw new CalloutException('Account could not be found.');
@@ -542,7 +542,9 @@ global without sharing class AMS_RecordCreatorWebservice {
                         changeCodeTN.reasonDesc = a.Agencies_Applied_Change_codes__r[0].Reason_Description__c;
                 }
 
-                accountsToProcess.add(account);
+                //2080607 DT: switched to A
+	            //accountsToProcess.add(account);
+	            accountsToProcess.add(a);
                 changeCodesToProcess.add(changeCodeTN);
                 oscarsToProcess.add(null);
             }
@@ -558,7 +560,9 @@ global without sharing class AMS_RecordCreatorWebservice {
                     changeCode.reasonDesc = a.Agencies_Applied_Change_codes__r[0].Reason_Description__c;
             }
             
-            accountsToProcess.add(account);
+            //2080607 DT: switched to A
+            //accountsToProcess.add(account);
+            accountsToProcess.add(a);
             changeCodesToProcess.add(changeCode);
             oscarsToProcess.add(null);
         }

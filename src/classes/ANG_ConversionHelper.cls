@@ -1278,7 +1278,7 @@ global with sharing class ANG_ConversionHelper {
         Map<Id,Agency_Applied_Change_code__c> mapAACCAccounts = new Map<Id,Agency_Applied_Change_code__c>();
 
         //Accounts are reQueried to avoid conflicts with Risk Assessment (performed on an earlier step)
-		List<Account> accounts = [SELECT Id, Status__c, (SELECT Reason_Code__c, Reason_Description__c,Account__r.Status__c FROM Agencies_Applied_Change_codes__r WHERE Active__c = TRUE ORDER BY CreatedDate DESC) FROM Account WHERE Id in :accountsToApply];
+		List<Account> accounts = [SELECT Id, Status__c, CNS_Agency__c, (SELECT Reason_Code__c, Reason_Description__c,Account__r.Status__c FROM Agencies_Applied_Change_codes__r WHERE Active__c = TRUE ORDER BY CreatedDate DESC) FROM Account WHERE Id in :accountsToApply];
 
 		for(Account a : accounts){
 			if(!a.Agencies_Applied_Change_codes__r.isEmpty()) mapAACCAccounts.put(a.Id,a.Agencies_Applied_Change_codes__r[0]);

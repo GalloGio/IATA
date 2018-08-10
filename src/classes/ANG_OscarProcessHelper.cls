@@ -460,7 +460,12 @@ global class ANG_OscarProcessHelper {
 
         changeCode.name = n.Change_Code__c;
         changeCode.reasonCode = n.Reason_Code__c;
-        changeCode.memoText = AMS_Utils.getChangeCodeMemoText(theOSCAR.Process__c, changeCodeId);
+        //changeCode.memoText = AMS_Utils.getChangeCodeMemoText(theOSCAR.Process__c, changeCodeId);
+        if(n==null)
+        	changeCode.memoText = AMS_Utils.getChangeCodeMemoText(theOSCAR.Process__c, changeCodeId);
+        else
+        	changeCode.memoText = AMS_Utils.getChangeCodeMemoText(theOSCAR.Process__c, changeCodeId, n);
+        
         changeCode.reasonDesc  = n.Reason_Code_Description__c;
         changeCode.status  = n.Account_status_change__c;
         changeCode.publishedOnEBulletin = n.Published_in_bulletin__c;
@@ -571,7 +576,7 @@ global class ANG_OscarProcessHelper {
 
 			if(!accountIdsChanged.isEmpty()){
 
-				List<Account> accountToCreateCC = [Select Id, Status__c from Account where Id in :accountIdsChanged];
+				List<Account> accountToCreateCC = [Select Id, Status__c, CNS_Agency__c from Account where Id in :accountIdsChanged];
 
 				String changeCodeName= null;
 				
@@ -644,7 +649,7 @@ global class ANG_OscarProcessHelper {
 
 			if(!accountIdsChanged.isEmpty()){
 				
-				List<Account> accountToCreateCC = [Select Id, Status__c from Account where Id in :accountIdsChanged];
+				List<Account> accountToCreateCC = [Select Id, Status__c, CNS_Agency__c from Account where Id in :accountIdsChanged];
 
 				String changeCodeName= null;
 				

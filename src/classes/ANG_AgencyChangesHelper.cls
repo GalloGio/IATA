@@ -262,7 +262,7 @@ public with sharing class ANG_AgencyChangesHelper {
 
 				if (containsChange(New List<String>{AMS_Utils.ANG_HIERARCHY},oscar.ANG_Type_Of_Change__c)) {
 
-					hierarchyAccs = new Map<Id,Account>([SELECT Id, ANG_FA_Opt_out__c FROM Account WHERE Id = :oscar.New_parent__c OR Top_Parent__c = :oscar.New_parent__c]);
+					hierarchyAccs = new Map<Id,Account>([SELECT Id, ANG_FA_Opt_out__c, CNS_Agency__c FROM Account WHERE Id = :oscar.New_parent__c OR Top_Parent__c = :oscar.New_parent__c]);
 					
 					// If opt-out is not applicable we'll put the value of the new parent
 					if(oscar.ANG_FA_Opt_out__c == 'Not Applicable'){ 
@@ -290,7 +290,7 @@ public with sharing class ANG_AgencyChangesHelper {
 				}else if (oscar.ANG_FA_Opt_out__c == 'Opt-Out' || oscar.ANG_FA_Opt_out__c == 'Opt-In' && containsChange(new List<String>(AMS_Utils.ANG_OSCAR_MAJOR_CHANGES_PROCESSES), oscar.ANG_Type_Of_Change__c)){
 
 					String hierTopParent = changesContainer.accountsMap.get(oscar.Account__c).Top_Parent__c == null ? changesContainer.accountsMap.get(oscar.Account__c).Id : changesContainer.accountsMap.get(oscar.Account__c).Top_Parent__c;
-					hierarchyAccs = new Map<Id,Account>([SELECT Id, ANG_FA_Opt_out__c FROM Account WHERE Id = :hierTopParent OR Top_Parent__c = :hierTopParent]);
+					hierarchyAccs = new Map<Id,Account>([SELECT Id, ANG_FA_Opt_out__c, CNS_Agency__c FROM Account WHERE Id = :hierTopParent OR Top_Parent__c = :hierTopParent]);
 
 					changesContainer = applyFAOptOut(oscar, changesContainer, hierarchyAccs.values(), null);
 				}				
@@ -452,7 +452,7 @@ public with sharing class ANG_AgencyChangesHelper {
 
 			if(rel.Child_Account__c == oscarToProcess.Account__c){
 				
-				Account parentAccount = [Select Id, Location_Type__c, ParentId, ANG_IEP_HE_AccntNum__c, ANG_IEP_Status__c, ANG_HE_CashCondition__c, ANG_HE_RiskHistoryAssessment__c, ANG_HE_RiskStatus__c, Financial_Review_Result__c, (SELECT Id, ANG_AccountId__c FROM RHC_Informations__r) From Account where Id =:rel.Parent_Account__c];
+				Account parentAccount = [Select Id, Location_Type__c, ParentId, ANG_IEP_HE_AccntNum__c, ANG_IEP_Status__c, ANG_HE_CashCondition__c, ANG_HE_RiskHistoryAssessment__c, ANG_HE_RiskStatus__c, Financial_Review_Result__c, CNS_Agency__c, (SELECT Id, ANG_AccountId__c FROM RHC_Informations__r) From Account where Id =:rel.Parent_Account__c];
 
 				parentAccount.Location_Type__c = AMS_Utils.AE;
 				parentAccount.ParentId = oscarToProcess.Account__c;
@@ -530,12 +530,12 @@ public with sharing class ANG_AgencyChangesHelper {
 			Account newHEaccount = toReturn.accountsMap.get(oscarToProcess.New_parent__c);
 
 			if(newHEaccount == null)
-				newHEaccount = [Select Id , ANG_Accreditation_Model__c, Remittance_frequency__c from Account where Id = :oscarToProcess.New_parent__c];
+				newHEaccount = [Select Id , ANG_Accreditation_Model__c, Remittance_frequency__c, CNS_Agency__c from Account where Id = :oscarToProcess.New_parent__c];
 
 			Account oscarAccount = toReturn.accountsMap.get(oscarToProcess.Account__c);
 
 			if(oscarAccount == null)
-				oscarAccount = [Select Id , ANG_Accreditation_Model__c, Remittance_frequency__c from Account where Id = :oscarToProcess.Account__c];
+				oscarAccount = [Select Id , ANG_Accreditation_Model__c, Remittance_frequency__c, CNS_Agency__c from Account where Id = :oscarToProcess.Account__c];
 
 			if(!doesItContainAccreditationType && newHEaccount.ANG_Accreditation_Model__c != oscarAccount.ANG_Accreditation_Model__c){
 

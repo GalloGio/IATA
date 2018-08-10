@@ -230,7 +230,7 @@ global class AMS_OSCAR_Webservice {
     WebService static String createChangeCodeNEW(String oscarId) {
 
         try {
-            List<AMS_OSCAR__c> oscar = [select Account__c, Business_Process__c, Process__c, AMS_Online_Accreditation__c, recordTypeID, Is_NewGen__c from AMS_OSCAR__c where Id = : oscarId];
+            List<AMS_OSCAR__c> oscar = [select Account__c, Account__r.CNS_Agency__c, Business_Process__c, Process__c, AMS_Online_Accreditation__c, recordTypeID, Is_NewGen__c from AMS_OSCAR__c where Id = : oscarId];
 
             AMS_OSCAR__c theOSCAR = oscar[0];
 
@@ -242,7 +242,7 @@ global class AMS_OSCAR_Webservice {
 
             changeCode.name = n.Change_Code__c;
             changeCode.reasonCode = n.Reason_Code__c;
-            changeCode.memoText = AMS_Utils.getChangeCodeMemoText(theOSCAR.Process__c, changeCodeId);
+            changeCode.memoText = AMS_Utils.getChangeCodeMemoText(theOSCAR.Process__c, changeCodeId, n);
             changeCode.reasonDesc  = n.Reason_Code_Description__c;
             changeCode.status  = n.Account_status_change__c;
             changeCode.publishedOnEBulletin = n.Published_in_bulletin__c;
@@ -552,7 +552,9 @@ global class AMS_OSCAR_Webservice {
             System.enqueueJob(new AMS_CertificateHelper.CertificateCreation(request.Id, System.now().format('YYYY'), null));
 
             //creates change code
-            Account acct = new Account(Id = agencyId);
+            //Account acct = new Account(Id = agencyId);
+            //TD 2080607: CNS
+            Account acct = [Select id, CNS_Agency__c from account where id = :AgencyId];
             AMS_OSCAR__c oscar = new AMS_OSCAR__c(Id = oscarId);
 
             List<Agency_Applied_Change_code__c> accountActiveChangeCode = [SELECT Reason_Code__c, Reason_Description__c,Account__r.Status__c FROM Agency_Applied_Change_code__c WHERE Account__c =: agencyId AND Active__c = TRUE];

@@ -3034,63 +3034,45 @@ public class AMS_OSCARTriggerHandler {
         ID certRT = Schema.SObjectType.AMS_OSCAR__c.getRecordTypeInfosByName().get('CERTIFICATION').getRecordTypeId(); //FM AMSU-113
         
         if (updatedOscar.recordTypeID == newRT || updatedOscar.recordTypeID == newNGRT || updatedOSCAR.recordTypeID == AMS_Utils.RECTYPE_NEWAE){
+        	//TD2080607: partially refactored below code
+        	boolean bGenerateCC =  false;
+        	String changeCodeId = '';
             if (oldOSCAR.STEP2__c != 'Passed' && updatedOscar.STEP2__c == 'Passed') {
-                AMS_OSCAR_JSON.ChangeCode changeCode = new AMS_OSCAR_JSON.ChangeCode();
-                String changeCodeId = 'FIN-' + updatedOscar.Business_Process__c;
-                AMS_ChangeCodes__c n = AMS_ChangeCodes__c.getInstance(changeCodeId);
 
-                changeCode.name = n.Change_Code__c;
-                changeCode.reasonCode = n.Reason_Code__c;
-                changeCode.memoText = AMS_Utils.getChangeCodeMemoText(updatedOscar.Process__c, changeCodeId);
-                changeCode.reasonDesc  = n.Reason_Code_Description__c;
-                changeCode.status  = n.Account_status_change__c;
-                changeCode.publishedOnEBulletin = n.Published_in_bulletin__c;
-
-                AMS_ChangeCodesHelper.createAAChangeCodes(new List<AMS_OSCAR_JSON.ChangeCode> {changeCode}, new List<AMS_OSCAR__c> {updatedOscar}, (List<Account>)JSON.deserialize('[{"Id" : "'+ updatedOscar.Account__c +'", "CNS_Agency__c" : ' + accounts.get(updatedOscar.Account__c).CNS_Agency__c + ' }]', List<Account>.class), true);
-
-            } else if (oldOSCAR.STEP2__c != 'Failed' && updatedOscar.STEP2__c == 'Failed' && updatedOscar.RPM_Approval__c=='Authorize Disapproval') {
-
-                AMS_OSCAR_JSON.ChangeCode changeCode = new AMS_OSCAR_JSON.ChangeCode();
-                String changeCodeId = 'DIS-' + updatedOscar.Business_Process__c;
-                AMS_ChangeCodes__c n = AMS_ChangeCodes__c.getInstance(changeCodeId);
-
-                changeCode.name = n.Change_Code__c;
-                changeCode.reasonCode = n.Reason_Code__c;
-                changeCode.memoText = AMS_Utils.getChangeCodeMemoText(updatedOscar.Process__c, changeCodeId);
-                changeCode.reasonDesc  = n.Reason_Code_Description__c;
-                changeCode.status  = n.Account_status_change__c;
-                changeCode.publishedOnEBulletin = n.Published_in_bulletin__c;
-
-                AMS_ChangeCodesHelper.createAAChangeCodes(new List<AMS_OSCAR_JSON.ChangeCode> {changeCode}, new List<AMS_OSCAR__c> {updatedOscar}, (List<Account>)JSON.deserialize('[{"Id" : "'+ updatedOscar.Account__c +'", "CNS_Agency__c" : ' + accounts.get(updatedOscar.Account__c).CNS_Agency__c + ' }]', List<Account>.class), true);
+                /*** AMSU-31 Start ***/
+                Set<String> processesToCheck = new Set<String> {AMS_Utils.new_HO, AMS_Utils.new_BR, AMS_Utils.new_SA, AMS_Utils.new_BR_ABROAD};
+                Set<String> classesToCheck = new Set<String> {'P', 'D'}; 
+                if(classesToCheck.contains(updatedOscar.Location_Class__c) && processesToCheck.contains(updatedOscar.Process__c)) {
+                    oscarsToCreateAuth.add(updatedOscar);
+                }
+                /*** AMSU-31 End ***/
+            	bGenerateCC = true;
+                changeCodeId = 'FIN-' + updatedOscar.Business_Process__c;
+            }else if (oldOSCAR.STEP2__c != 'Failed' && updatedOscar.STEP2__c == 'Failed' && updatedOscar.RPM_Approval__c=='Authorize Disapproval') {
+				bGenerateCC = true;
+                changeCodeId = 'DIS-' + updatedOscar.Business_Process__c;
             }else if (oldOSCAR.STEP4__c != 'Passed' && updatedOscar.STEP4__c == 'Passed') {
-                AMS_OSCAR_JSON.ChangeCode changeCode = new AMS_OSCAR_JSON.ChangeCode();
-                String changeCodeId = 'NWD-' + updatedOscar.Business_Process__c;
-                AMS_ChangeCodes__c n = AMS_ChangeCodes__c.getInstance(changeCodeId);
-
-                changeCode.name = n.Change_Code__c;
-                changeCode.reasonCode = n.Reason_Code__c;
-                changeCode.memoText = AMS_Utils.getChangeCodeMemoText(updatedOscar.Process__c, changeCodeId);
-                changeCode.reasonDesc  = n.Reason_Code_Description__c;
-                changeCode.status  = n.Account_status_change__c;
-                changeCode.publishedOnEBulletin = n.Published_in_bulletin__c;
-
-                AMS_ChangeCodesHelper.createAAChangeCodes(new List<AMS_OSCAR_JSON.ChangeCode> {changeCode}, new List<AMS_OSCAR__c> {updatedOscar}, (List<Account>)JSON.deserialize('[{"Id" : "'+ updatedOscar.Account__c +'", "CNS_Agency__c" : ' + accounts.get(updatedOscar.Account__c).CNS_Agency__c + ' }]', List<Account>.class), true);
+            	bGenerateCC = true;
+                changeCodeId = 'NWD-' + updatedOscar.Business_Process__c;
             }else if (oldOSCAR.STEP5__c != 'Passed' && updatedOscar.STEP5__c == 'Passed') {
-                AMS_OSCAR_JSON.ChangeCode changeCode = new AMS_OSCAR_JSON.ChangeCode();
-                String changeCodeId = 'REC-' + updatedOscar.Business_Process__c;
-                AMS_ChangeCodes__c n = AMS_ChangeCodes__c.getInstance(changeCodeId);
+            	bGenerateCC = true;
+                changeCodeId = 'REC-' + updatedOscar.Business_Process__c;
+            }
+            
+            if(bGenerateCC){
+            	AMS_OSCAR_JSON.ChangeCode changeCode = new AMS_OSCAR_JSON.ChangeCode();
+            	AMS_ChangeCodes__c n = AMS_ChangeCodes__c.getInstance(changeCodeId);
 
                 changeCode.name = n.Change_Code__c;
                 changeCode.reasonCode = n.Reason_Code__c;
-                changeCode.memoText = AMS_Utils.getChangeCodeMemoText(updatedOscar.Process__c, changeCodeId);
+                //TD20180607 - Now passing the change code configuration
+                changeCode.memoText = AMS_Utils.getChangeCodeMemoText(updatedOscar.Process__c, changeCodeId, n);
                 changeCode.reasonDesc  = n.Reason_Code_Description__c;
                 changeCode.status  = n.Account_status_change__c;
                 changeCode.publishedOnEBulletin = n.Published_in_bulletin__c;
 
                 AMS_ChangeCodesHelper.createAAChangeCodes(new List<AMS_OSCAR_JSON.ChangeCode> {changeCode}, new List<AMS_OSCAR__c> {updatedOscar}, (List<Account>)JSON.deserialize('[{"Id" : "'+ updatedOscar.Account__c +'", "CNS_Agency__c" : ' + accounts.get(updatedOscar.Account__c).CNS_Agency__c + ' }]', List<Account>.class), true);
-
-
-            } 
+            }
         // Management of CORRECTION OSCARs
         }else if (updatedOscar.recordTypeID == corrRT){
             if (oldOSCAR.STEP6__c != 'Passed' && updatedOscar.STEP6__c == 'Passed'){

@@ -1461,7 +1461,7 @@ IF(Bank_Guarantee_received__c - Bank_Guarantee_requested__c =6, TEXT(4), TEXT((B
         <description>Technical field. Used to match custom settings on Change Code generation.</description>
         <externalId>false</externalId>
         <formula>IF(Account__r.CNS_Agency__c,
-				IF(ISPICKVAL(Account__r.Location_Class__c, &apos;C&apos;), &apos;CNS-C&apos;, &apos;CNS-R&apos;),
+				&apos;CNS-&apos; + TEXT(Account__r.Location_Type__c) + &apos;-&apos;+TEXT(Account__r.Location_Class__c),
 				&apos;AMS&apos;
 )</formula>
         <label>Business Process</label>
