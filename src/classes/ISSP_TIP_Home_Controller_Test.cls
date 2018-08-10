@@ -18,7 +18,7 @@ private class ISSP_TIP_Home_Controller_Test{
         AMS_Settlement_System__c as1 = new AMS_Settlement_System__c(name = 'test1', BSP_Billing__c = 'tq');
         insert as1;
       
-
+        //create account
         Account parent = ISSP_ObjectFactory.createNewAccount();
         parent.BillingCity = 'test';
         parent.Name = 'test';
@@ -29,8 +29,14 @@ private class ISSP_TIP_Home_Controller_Test{
         parent.IATA_ISO_Country__c = country.id;
         parent.category__c = TIP_Utils.ACCOUNT_CATEGORY_PAYMENT_PROVIDER;
         insert parent;
-        
 
+        //create account role
+        Account_Role__c ar = new Account_Role__c();
+        ar.Provider_Code__c = '1000';
+        ar.Account__c = parent.id;
+        ar.HQ_Location__c = country.Id;
+        insert ar;
+        
         //create case
         newcase.RecordTypeid = TIP_Utils.CASE_PROCESS_IDFS_RECORD_TYPE_ID;
         newcase.Reason1__c = TIP_Utils.CASE_REASON_PAYMENT_PROVIDER_MANAGMENT;
@@ -43,7 +49,7 @@ private class ISSP_TIP_Home_Controller_Test{
         newcase.BSPCountry__c = parent.IATA_ISO_Country__r.Name;
         newcase.Country_concerned_by_the_query__c = parent.IATA_ISO_Country__r.Name;    
         
-        
+        //create partner product
         prod.Name = 'test prod'; 
         prod.PP_Payment_network__c = 'AX';
         prod.PP_Payment_Product_Code__c = 'aa'; 
@@ -59,6 +65,7 @@ private class ISSP_TIP_Home_Controller_Test{
         prod.PP_Chargeback_airlines_duration__c = 1;
         prod.PP_Effective_from_Date__c = Date.newInstance(2019, 2, 2); 
         prod.RecordTypeid = TIP_Utils.PARTNER_PRODUCT_TIP_PRODUCT_RECORD_TYPE_ID; 
+        prod.Payment_Provider_Account_Role__c = ar.id;
         insert prod;
 /*
         TIP_BIN_Range__c br = new TIP_BIN_Range__c (TIP_Payment_Provider_Product__c = prod.id, TIP_Status__c = 'DRAFT',
@@ -76,6 +83,15 @@ private class ISSP_TIP_Home_Controller_Test{
         con.AccountId= parent.Id;
         con.Email = 'Test@test11.com';
         insert con;
+
+        //create account contact role
+        Account_Contact_Role__c acr = new Account_Contact_Role__c();
+        acr.Account__c = parent.id;
+        acr.Account_Role__c = ar.id;
+        //acr.Contact_Role__c = 'Primary Contact';
+        acr.Contact__c = con.Id;
+        acr.Service_Rendered__c = 'TIP';
+        insert acr;
 
        user = ISSP_ObjectFactory.createPortalUser(con);
        con.OwnerId = user.Id;
@@ -210,6 +226,7 @@ private class ISSP_TIP_Home_Controller_Test{
     @isTest
     static void testEditContact(){
         setupTest();
+        test.startTest();
         System.runAs(user){
             Apexpages.currentPage().getParameters().put('contactIDToEdit',[select id from contact limit 1].id);
             controller.startEnrolmentAccount();
@@ -221,6 +238,7 @@ private class ISSP_TIP_Home_Controller_Test{
             
             //controller.saveAccountEnrolmentAsDraft();
         }
+        test.stopTest();
     }
 
    
@@ -240,6 +258,7 @@ private class ISSP_TIP_Home_Controller_Test{
     @isTest
     static void testsubmitAccountEnrolmentToIATA(){
         setupTest();
+        test.startTest();
         System.runAs(user){
             controller.startEnrolmentAccount();
             //legal name missing
@@ -273,18 +292,21 @@ private class ISSP_TIP_Home_Controller_Test{
             controller.account.TIP_HQ_Location__c=[select id from IATA_ISO_Country__c limit 1].id;
 
             //Primary contact missing
-            controller.contactList.get(0).Primary_Contact__c=false;
+            //controller.contactList.get(0).Primary_Contact__c=false;
             controller.submitAccountEnrolmentToIATA();
 
-            Apexpages.currentPage().getParameters().put('contactIDToEdit',controller.contactList.get(0).id);
+            //Apexpages.currentPage().getParameters().put('contactIDToEdit',controller.contactList.get(0).id);
+            Apexpages.currentPage().getParameters().put('contactIDToEdit',controller.AccountContactRoleList.get(0).Contact__c);
             controller.updateRadioButtonStatus();
             
-            controller.contactList.get(0).Primary_Contact__c=true;
-            Test.startTest();
+            //controller.contactList.get(0).Primary_Contact__c=true;
+            controller.AccountContactRoleList.get(0).Contact_Role__c = 'Primary Contact';
+            //Test.startTest();
             controller.submitAccountEnrolmentToIATA();
-            Test.stopTest();
+            //Test.stopTest();
             //controller.saveAccountEnrolmentAsDraft();
         }
+        test.stopTest();
     }
     @isTest
     static void testsecurityCheck(){
@@ -433,4 +455,20 @@ private class ISSP_TIP_Home_Controller_Test{
         System.assertEquals(ar.Terms_Acceptance__c, true);
         
     }
+
+    @isTest
+    static void testTerminateProduct() {
+        setupTest();
+        ID prodid = [Select id from Partner_products__c limit 1].id;
+        System.currentPageReference().getParameters().put('prodId', prod.id);
+        controller.NewEditProduct();
+        controller.submitProduct();
+        controller.terminateProduct();
+        controller.terminationReason = 'Termination Reason';
+        controller.terminationDate = string.valueof(Date.today());
+        controller.submitProductTerminationRequest();
+
+        System.assertEquals('Product Termination Request - test / test prod', controller.newcase.Subject);
+    }
+
 }

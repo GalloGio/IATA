@@ -28,7 +28,7 @@ public without sharing class ISSP_TIP_Home_Controller {
 
     public Account account {get; set;}
     public Partner_products__c newpp {get; set;}
-    private Case newCase {get; set;}
+    public Case newCase {get; set;}
     public boolean isNew {get; set;}
     public list<BinRangeRec> binRangeList{get; set;}
     public BinRangeRec selectedBinRange{get;set;}
