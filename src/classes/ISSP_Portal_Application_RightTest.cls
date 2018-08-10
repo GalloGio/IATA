@@ -466,17 +466,110 @@ public class ISSP_Portal_Application_RightTest {
       ISSP_UserTriggerHandler.preventSISIntegration = false;
     }
 
-    ISSP_WS_SIS_Callout_ActivateUser.TEST_RESPONSE = '<Response><IsSuccess>true</IsSuccess></Response>';
-
-    delete [SELECT Id FROM ISSP_Web_Service_Log__c];
-
-    Test.startTest();
-    system.runAs(thisUser) {
-      appRight.Right__c = 'Access Denied';
-      update appRight;
+        ISSP_WS_SIS_Callout_ActivateUser.TEST_RESPONSE = '<Response><IsSuccess>true</IsSuccess></Response>';
+        
+        delete [SELECT Id FROM ISSP_Web_Service_Log__c];
+        
+        Test.startTest();
+        system.runAs(thisUser) {
+            appRight.Right__c = 'Access Denied';
+            update appRight;
+        }
+        Test.stopTest();
+        
+        checkLogs(true, 'DeactivateUser');
     }
-    Test.stopTest();
+    
+    static testMethod void testParentContactInsertService() {
+        Portal_Applications__c sisApp = new Portal_Applications__c(Name = 'SIS');
+        insert sisApp;
+        
+        Id recordtypeAgency = RecordTypeSingleton.getInstance().getRecordTypeId('Account','IATA_Agency');
+        Account acc = ISSP_ObjectFactory.createNewAccount();
+        acc.RecordTypeId = recordtypeAgency;
+        insert acc;
+        
+        Contact contact = ISSP_WS_Utilities.createContact('firstName', 'lastname', 'email@email.com', acc.Id, false);
+        insert contact;
+        
+        contact = [SELECT Available_Services__c FROM Contact WHERE Id = :contact.Id];
+        System.assert(String.isBlank(contact.Available_Services__c));
 
-    checkLogs(true, 'DeactivateUser');
-  }
+        Test.startTest();
+        Portal_Application_Right__c appRight = new Portal_Application_Right__c();
+        appRight.Portal_Application__c = sisApp.Id;
+        appRight.Right__c = 'Access Granted';
+        appRight.Contact__c = contact.Id;
+        insert appRight;
+        Test.stopTest();
+        
+        contact = [SELECT Available_Services__c FROM Contact WHERE Id = :contact.Id];
+        System.assertEquals(contact.Available_Services__c,sisApp.Name);
+    }
+    
+    static testMethod void testParentContactUpdateService() {
+        Portal_Applications__c sisApp = new Portal_Applications__c(Name = 'SIS');
+        insert sisApp;
+        
+        Id recordtypeAgency = RecordTypeSingleton.getInstance().getRecordTypeId('Account','IATA_Agency');
+        Account acc = ISSP_ObjectFactory.createNewAccount();
+        acc.RecordTypeId = recordtypeAgency;
+        insert acc;
+        
+        Contact contact = ISSP_WS_Utilities.createContact('firstName', 'lastname', 'email@email.com', acc.Id, false);
+        insert contact;
+        
+        contact = [SELECT Available_Services__c FROM Contact WHERE Id = :contact.Id];
+        System.assert(String.isBlank(contact.Available_Services__c));
+
+        Portal_Application_Right__c appRight = new Portal_Application_Right__c();
+        appRight.Portal_Application__c = sisApp.Id;
+        appRight.Right__c = 'Access Denied';
+        appRight.Contact__c = contact.Id;
+        insert appRight;
+        
+        contact = [SELECT Available_Services__c FROM Contact WHERE Id = :contact.Id];
+        System.assert(String.isBlank(contact.Available_Services__c));
+        
+        Test.startTest();
+        appRight.Right__c = 'Access Granted';
+        update appRight;
+        Test.stopTest();
+        
+        contact = [SELECT Available_Services__c FROM Contact WHERE Id = :contact.Id];
+        System.assertEquals(contact.Available_Services__c,sisApp.Name);
+    }
+    
+    static testMethod void testParentContactDeleteService() {
+        Portal_Applications__c sisApp = new Portal_Applications__c(Name = 'SIS');
+        insert sisApp;
+        
+        Id recordtypeAgency = RecordTypeSingleton.getInstance().getRecordTypeId('Account','IATA_Agency');
+        Account acc = ISSP_ObjectFactory.createNewAccount();
+        acc.RecordTypeId = recordtypeAgency;
+        insert acc;
+        
+        Contact contact = ISSP_WS_Utilities.createContact('firstName', 'lastname', 'email@email.com', acc.Id, false);
+        contact.ID_Card_Holder__c = true;
+        insert contact;
+        
+        contact = [SELECT Available_Services__c FROM Contact WHERE Id = :contact.Id];
+        System.assertEquals(IdCardUtil.IDCARD_SERVICE_NAME,contact.Available_Services__c);
+
+        Portal_Application_Right__c appRight = new Portal_Application_Right__c();
+        appRight.Portal_Application__c = sisApp.Id;
+        appRight.Right__c = 'Access Granted';
+        appRight.Contact__c = contact.Id;
+        insert appRight;
+        
+        contact = [SELECT Available_Services__c FROM Contact WHERE Id = :contact.Id];
+        System.assertEquals(sisApp.Name + ';' + IdCardUtil.IDCARD_SERVICE_NAME, contact.Available_Services__c);
+        
+        Test.startTest();
+        delete appRight;
+        Test.stopTest();
+        
+        contact = [SELECT Available_Services__c FROM Contact WHERE Id = :contact.Id];
+        System.assertEquals(IdCardUtil.IDCARD_SERVICE_NAME,contact.Available_Services__c);
+    }
 }

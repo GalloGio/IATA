@@ -984,6 +984,7 @@ public without sharing class ISSP_Registration {
             	}
             	}
                 
+                con.Account = null; //remove refrence. Only use was to check information
                 upsert con;
             } catch (Exception e) {
                 throw new transformationException('' +e.getMessage() );
@@ -1139,7 +1140,7 @@ public without sharing class ISSP_Registration {
                         }
                     }
                 }
-          
+
                 system.debug('acc +++ ' + acc);
                 upsert acc;
 

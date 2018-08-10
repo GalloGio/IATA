@@ -157,6 +157,27 @@ global with sharing class IDCardUtil {
     public static String Key_Account_Feature_2_Years_validity = 'ID Cards validity is extended to 2 years';
     public static final string single_application_status_waiting = 'Waiting for processing';
 
+    public static final String IDCARD_SERVICE_NAME = 'Id Card Holder';
+    /**
+        Get the Card holder Image Id running the query only once if required
+    **/
+    private static String CARD_HOLDER_IMAGE_ID = null;
+    public static String getCardHolderImageId() {
+        if (CARD_HOLDER_IMAGE_ID==null) {
+            try {
+                CARD_HOLDER_IMAGE_ID = [SELECT Id FROM Document WHERE DeveloperName = 'ID_card_PNG'].Id;
+            } catch (Exception e) {
+                CARD_HOLDER_IMAGE_ID = '';
+            }
+        }
+        return CARD_HOLDER_IMAGE_ID;
+    }
+    
+    public static String getCardHolderImageHtml() {
+        String imageUrl = '/servlet/servlet.FileDownload?file=' + getCardHolderImageId();
+        return '<img src="' + imageUrl + '" alt="' + IDCARD_SERVICE_NAME + '" title="' + IDCARD_SERVICE_NAME + '" border="0" height="40" width="40"/>';
+    }
+
     // Variables for storing information and limit the queries in case of mass use.
     public static Account massAccount {get; set;}
     public static IATA_ISO_Country__c massCountry {get; set;}
