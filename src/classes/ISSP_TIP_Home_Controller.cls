@@ -27,9 +27,9 @@ public without sharing class ISSP_TIP_Home_Controller {
 
     public User user {get; set;}
 
-    public Account account {get; set;}   
+    public Account account {get; set;}
     public Partner_products__c newpp {get; set;}
-    private Case newCase {get; set;}
+    @TestVisible private Case newCase {get; set;}
     public boolean isNew {get; set;}
     public list<BinRangeRec> binRangeList{get; set;}
     public BinRangeRec selectedBinRange{get;set;}
@@ -631,7 +631,7 @@ public without sharing class ISSP_TIP_Home_Controller {
 	        theContactRole.Contact__c = theCon.Id;
 	        theContactRole.Account_Role__c = TheAccountRole.Id;
 	        theContactRole.Service_Rendered__c = TIP_Utils.ACCOUNT_CONTACT_ROLE_SERVICE_TIP;
-	        theContactRole.UniqueKey__c = TIP_Utils.AccountContactRoleGenerateUniquekey(theContactRole);
+	        theContactRole.UniqueKey__c = TIP_Utils.ACCOUNT_CONTACT_ROLE_SERVICE_TIP + '_' + theContactRole.Account_Role__c + '_' + theContactRole.Contact__c;
 	        if(bIsPrimary){
 	        	theContactRole.Contact_Role__c = '';
 	        }
@@ -739,7 +739,7 @@ public without sharing class ISSP_TIP_Home_Controller {
             selectedBinRange= binRangeList.get(Integer.ValueOf(binRangeRecPos));
             selectedBinRange.action='M';            
         }
-        renderCountryCondifPopup=false; 
+        renderCountryCondifPopup=false;      
         renderTerminateProdPopup=false; //ACAMBAS - TIP-244     
     }
 
@@ -795,7 +795,7 @@ public without sharing class ISSP_TIP_Home_Controller {
             selectedProvProdConf.action='M';       
         }
         bspCountrList= refreshBspList();
-        renderCountryCondifPopup=true;
+        renderCountryCondifPopup=true;  
         renderTerminateProdPopup=false; //ACAMBAS - TIP-244  
     }
 
@@ -1083,8 +1083,7 @@ public without sharing class ISSP_TIP_Home_Controller {
             newCase.OwnerId = groups[0].id;
         }
 
-        update newpp;
-        upsert newCase;
+        insert newCase;
 
 
         PageReference pr= Page.ISSP_TIP_Home;
