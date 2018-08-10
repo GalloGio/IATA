@@ -22,4 +22,7 @@ trigger AccountRoleTrigger on Account_Role__c (before insert, after insert, befo
 		handler.onAfterDelete();
 	}
 	
+	//Trigger the platform events
+    if(trigger.isAfter)
+    	PlatformEvents_Helper.publishEvents((trigger.isDelete?trigger.OldMap:Trigger.newMap), 'AccountRole__e', 'Account_Role__c', trigger.isInsert, trigger.isUpdate, trigger.isDelete, trigger.isUndelete);
 }
