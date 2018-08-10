@@ -291,7 +291,7 @@ public class Product_Sel extends Selector
         }
         
         if(product.SAP_Material_Number__c != null)
-            ret.setValue('SAPProductMaterialNo__c', product.SAP_Material_Number__c);
+            ret.setValue('SAP_Material_Number__c', product.SAP_Material_Number__c);
         
         if(product.Effective_From__c != null)
             ret.setValue('EffectiveStartDate', Zuora.zUtil.getZuoraDate(product.Effective_From__c));

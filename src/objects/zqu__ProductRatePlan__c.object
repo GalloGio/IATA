@@ -400,7 +400,7 @@
     <fields>
         <fullName>Product_Number__c</fullName>
         <externalId>false</externalId>
-        <formula>zqu__ZProduct__r.SAPProductMaterialNo__c</formula>
+        <formula>zqu__Product__r.SAP_Material_Number__c</formula>
         <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
         <label>Product Number</label>
         <required>false</required>
@@ -473,7 +473,7 @@
     <fields>
         <fullName>ZProduct_Deleted__c</fullName>
         <externalId>false</externalId>
-        <formula>zqu__ZProduct__r.zqu__Deleted__c</formula>
+        <formula>zqu__Product__r.zqu__Deleted__c</formula>
         <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
         <label>ZProduct_Deleted</label>
         <trackTrending>false</trackTrending>
@@ -482,7 +482,7 @@
     <fields>
         <fullName>ZProduct_EffectiveEndDate__c</fullName>
         <externalId>false</externalId>
-        <formula>zqu__ZProduct__r.zqu__EffectiveEndDate__c</formula>
+        <formula>zqu__Product__r.zqu__EffectiveEndDate__c</formula>
         <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
         <label>ZProduct_EffectiveEndDate</label>
         <required>false</required>
@@ -492,7 +492,7 @@
     <fields>
         <fullName>ZProduct_EffectiveStartDate__c</fullName>
         <externalId>false</externalId>
-        <formula>zqu__ZProduct__r.zqu__EffectiveStartDate__c</formula>
+        <formula>zqu__Product__r.zqu__EffectiveStartDate__c</formula>
         <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
         <label>ZProduct_EffectiveStartDate</label>
         <required>false</required>
@@ -502,7 +502,7 @@
     <fields>
         <fullName>ZProduct_ZuoraId__c</fullName>
         <externalId>false</externalId>
-        <formula>zqu__ZProduct__r.zqu__ZuoraId__c</formula>
+        <formula>zqu__Product__r.zqu__ZuoraId__c</formula>
         <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
         <label>ZProduct_ZuoraId</label>
         <required>false</required>
@@ -580,6 +580,19 @@
         <type>Date</type>
     </fields>
     <fields>
+    <fields>
+        <fullName>zqu__Product__c</fullName>
+        <deleteConstraint>SetNull</deleteConstraint>
+        <deprecated>false</deprecated>
+        <externalId>false</externalId>
+        <label>Product</label>
+        <referenceTo>Product2</referenceTo>
+        <relationshipLabel>Product Rate Plans</relationshipLabel>
+        <relationshipName>Product_Rate_Plans</relationshipName>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Lookup</type>
+    </fields>
         <fullName>zqu__ZProduct__c</fullName>
         <deprecated>false</deprecated>
         <description>The ZProduct associated with this Rate Plan.</description>
@@ -618,12 +631,12 @@
     <listViews>
         <fullName>CAC</fullName>
         <columns>NAME</columns>
-        <columns>zqu__ZProduct__c</columns>
+        <columns>zqu__Product__c</columns>
         <columns>UIDisplay__c</columns>
         <columns>ZProduct_EffectiveEndDate__c</columns>
         <filterScope>Everything</filterScope>
         <filters>
-            <field>zqu__ZProduct__c</field>
+            <field>zqu__Product__c</field>
             <operation>contains</operation>
             <value>CheckACode Webservice</value>
         </filters>
@@ -633,14 +646,14 @@
     <listViews>
         <fullName>EBC</fullName>
         <columns>NAME</columns>
-        <columns>zqu__ZProduct__c</columns>
+        <columns>zqu__Product__c</columns>
         <columns>UIDisplay__c</columns>
         <columns>ZProduct_EffectiveEndDate__c</columns>
         <columns>EBC_Cost_Per_Email__c</columns>
         <columns>EBC_Email_Credit_Current_Offering__c</columns>
         <filterScope>Everything</filterScope>
         <filters>
-            <field>zqu__ZProduct__c</field>
+            <field>zqu__Product__c</field>
             <operation>contains</operation>
             <value>eBroadcast for</value>
         </filters>
@@ -650,11 +663,11 @@
     <listViews>
         <fullName>GSS</fullName>
         <columns>NAME</columns>
-        <columns>zqu__ZProduct__c</columns>
+        <columns>zqu__Product__c</columns>
         <columns>ZProduct_EffectiveEndDate__c</columns>
         <filterScope>Everything</filterScope>
         <filters>
-            <field>zqu__ZProduct__c</field>
+            <field>zqu__Product__c</field>
             <operation>contains</operation>
             <value>MDP</value>
         </filters>
@@ -669,11 +682,11 @@
     <listViews>
         <fullName>GSS_Single_License_for_Non_Members</fullName>
         <columns>NAME</columns>
-        <columns>zqu__ZProduct__c</columns>
+        <columns>zqu__Product__c</columns>
         <columns>ZProduct_EffectiveEndDate__c</columns>
         <filterScope>Everything</filterScope>
         <filters>
-            <field>zqu__ZProduct__c</field>
+            <field>zqu__Product__c</field>
             <operation>contains</operation>
             <value>GSS Single License for Non-Members</value>
         </filters>
@@ -692,11 +705,11 @@
     <listViews>
         <fullName>GSS_for_Franchise_and_Managed_Property_G</fullName>
         <columns>NAME</columns>
-        <columns>zqu__ZProduct__c</columns>
+        <columns>zqu__Product__c</columns>
         <columns>ZProduct_EffectiveEndDate__c</columns>
         <filterScope>Everything</filterScope>
         <filters>
-            <field>zqu__ZProduct__c</field>
+            <field>zqu__Product__c</field>
             <operation>contains</operation>
             <value>GSS for Franchise and Managed Property Groups</value>
         </filters>
@@ -711,11 +724,11 @@
     <listViews>
         <fullName>GSS_for_GDS</fullName>
         <columns>NAME</columns>
-        <columns>zqu__ZProduct__c</columns>
+        <columns>zqu__Product__c</columns>
         <columns>ZProduct_EffectiveEndDate__c</columns>
         <filterScope>Everything</filterScope>
         <filters>
-            <field>zqu__ZProduct__c</field>
+            <field>zqu__Product__c</field>
             <operation>contains</operation>
             <value>GSS for GDS</value>
         </filters>
@@ -734,11 +747,11 @@
     <listViews>
         <fullName>GSS_for_IATA_Member_Airlines</fullName>
         <columns>NAME</columns>
-        <columns>zqu__ZProduct__c</columns>
+        <columns>zqu__Product__c</columns>
         <columns>ZProduct_EffectiveEndDate__c</columns>
         <filterScope>Everything</filterScope>
         <filters>
-            <field>zqu__ZProduct__c</field>
+            <field>zqu__Product__c</field>
             <operation>contains</operation>
             <value>MDP</value>
         </filters>
@@ -753,11 +766,11 @@
     <listViews>
         <fullName>GSS_for_Processors</fullName>
         <columns>NAME</columns>
-        <columns>zqu__ZProduct__c</columns>
+        <columns>zqu__Product__c</columns>
         <columns>ZProduct_EffectiveEndDate__c</columns>
         <filterScope>Everything</filterScope>
         <filters>
-            <field>zqu__ZProduct__c</field>
+            <field>zqu__Product__c</field>
             <operation>contains</operation>
             <value>GSS for Processors</value>
         </filters>

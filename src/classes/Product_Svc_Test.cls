@@ -111,8 +111,8 @@ private class Product_Svc_Test
         //processZProductSaveResult(List<Product2> products, List<Zuora.zApi.SaveResult> results)
         List<Product2> products = TestDataGenerator.generateProducts(2, false); 
         List<Zuora.zObject> zobjects = TestDataGenerator.generateZProducts(2);
-        zobjects[0].setValue('SAPProductMaterialNo__c',products[0].SAP_Material_Number__c);
-        zobjects[1].setValue('SAPProductMaterialNo__c',products[1].SAP_Material_Number__c);
+        zobjects[0].setValue('SAP_Material_Number__c',products[0].SAP_Material_Number__c);
+        zobjects[1].setValue('SAP_Material_Number__c',products[1].SAP_Material_Number__c);
 
         //Inject error
         zobjects[1].setValue('EffectiveStartDate','');

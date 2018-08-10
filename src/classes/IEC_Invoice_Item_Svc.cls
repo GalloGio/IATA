@@ -143,7 +143,7 @@ global without sharing class IEC_Invoice_Item_Svc {
 					ItemInfo.ZSubscriptionId = invItem.Subscription_Zuora_ID__c;
 					ItemInfo.ZSubscriptionNumber = invItem.Subscription_Number__c;
 					ItemInfo.ZInvoiceItemNumber = invItem.Name;
-					ItemInfo.ZProductInfo = invItem.Product__r.Name + ' (' + invItem.Product__r.SAPProductMaterialNo__c + ')';
+					ItemInfo.ZProductInfo = invItem.Product__r.Name + ' (' + invItem.Product__r.SAP_Material_Number__c + ')';
 					mapInvZId_mapSubZId_mapZProdId_Data.get(invItem.Invoice__c).get(invItem.Subscription_Zuora_ID__c).put(invItem.Product__c, ItemInfo);
 				}
 				else
@@ -155,7 +155,7 @@ global without sharing class IEC_Invoice_Item_Svc {
 					lstInvoiceItemRequireOrder.add(invItem);
 					setAccoutId.add(invItem.Invoice__r.Zuora__Account__c);
 					setContactId.add(invItem.Invoice__r.Zuora__BillingAccount__r.Contact__c);
-					setProductNumber.add(invItem.Product__r.SAPProductMaterialNo__c);
+					setProductNumber.add(invItem.Product__r.SAP_Material_Number__c);
 					if (mapSubProdChargeZId_IsSetupFee.get(invItem.Subscription_Product_Charge_Zuora_ID__c) == true ||
 						mapSubProdChargeZId_IsSetupFee.get(invItem.Subscription_Zuora_ID__c + ',' + invItem.Product__c + ',' + invItem.Quantity__c + ',' + invItem.Unit_Price__c) == true)
 					{
@@ -211,7 +211,7 @@ global without sharing class IEC_Invoice_Item_Svc {
 				ItemInfo.idPriceBookEntry = mapProdId_PBE.get(mapProdRatePlanZId_Product.get(mapSubProdChargeZId_ProdRatePlanZId.get(strSearchKey)).Id).Id;
 			
 			//*** get price book entry from hierarchy product based on subscription and material
-			strSearchKey = invItem.Subscription_Zuora_ID__c + ',' + invItem.Product__r.SAPProductMaterialNo__c;
+			strSearchKey = invItem.Subscription_Zuora_ID__c + ',' + invItem.Product__r.SAP_Material_Number__c;
 			if (ItemInfo.idPriceBookEntry == null &&
 			    mapSubProdChargeZId_ProdRatePlanZId.containsKey(strSearchKey) &&
 			    mapProdRatePlanZId_Product.containsKey(mapSubProdChargeZId_ProdRatePlanZId.get(strSearchKey)) &&
@@ -220,12 +220,12 @@ global without sharing class IEC_Invoice_Item_Svc {
 			
 			//*** get price book entry from material number -> regular product
 			if (ItemInfo.idPriceBookEntry == null &&
-			    mapProdNum_Product.containsKey(invItem.Product__r.SAPProductMaterialNo__c) &&
-			    mapProdId_PBE.containsKey(mapProdNum_Product.get(invItem.Product__r.SAPProductMaterialNo__c).Id))
-				ItemInfo.idPriceBookEntry = mapProdId_PBE.get(mapProdNum_Product.get(invItem.Product__r.SAPProductMaterialNo__c).Id).Id;
+			    mapProdNum_Product.containsKey(invItem.Product__r.SAP_Material_Number__c) &&
+			    mapProdId_PBE.containsKey(mapProdNum_Product.get(invItem.Product__r.SAP_Material_Number__c).Id))
+				ItemInfo.idPriceBookEntry = mapProdId_PBE.get(mapProdNum_Product.get(invItem.Product__r.SAP_Material_Number__c).Id).Id;
 			
 			if (ItemInfo.idPriceBookEntry != null)
-				ItemInfo.chargeShipping = mapProdNum_Product.get(invItem.Product__r.SAPProductMaterialNo__c).Charge_Shipping__c;
+				ItemInfo.chargeShipping = mapProdNum_Product.get(invItem.Product__r.SAP_Material_Number__c).Charge_Shipping__c;
 		}
 
 		//*** check all lines have price book entry and special treatment for discount

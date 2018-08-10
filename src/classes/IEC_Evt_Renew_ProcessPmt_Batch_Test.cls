@@ -11,11 +11,11 @@ private class IEC_Evt_Renew_ProcessPmt_Batch_Test {
 	private static void InitializeData()
 	{
 		 //-- Generate Setting 
-        delete [select Id from Apex_Setting__c where Name like 'ECommerce Products Filter%'];
+        delete [select Id from Apex_Setting__c where Name like 'IEC evt renewal%'];
         List<Apex_Setting__c> lstSetting = new List<Apex_Setting__c>();
         lstSetting.add(new Apex_Setting__c(Name='IEC evt renewal batch size for taxes', Number_1__c=1));
         lstSetting.add(new Apex_Setting__c(Name='IEC evt renewal processPmt batch size', Number_1__c=5));
-        Database.insert(lstSetting, false);
+        upsert lstSetting;
         
 		/* Possible scenarios and generated errors in the batch are as follows
 			[0] ERROR - Tax and Shipping have not been calculated on the order

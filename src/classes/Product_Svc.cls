@@ -209,7 +209,7 @@ public class Product_Svc
             List<Zuora.zObject> zProducts = ZuoraUtil.zquery(zoql, 'Product', zuoraIds.size());
             
             for(Zuora.zObject o : zProducts)
-                zuoraIdByMaterialNumber.put((string) o.getValue('SAPProductMaterialNo__c'), (String) o.getValue('Id'));
+                zuoraIdByMaterialNumber.put((string) o.getValue('SAP_Material_Number__c'), (String) o.getValue('Id'));
             
             for(Product2 p : products)
             {
