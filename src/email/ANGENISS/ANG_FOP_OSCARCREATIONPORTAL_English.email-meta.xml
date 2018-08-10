@@ -33,7 +33,16 @@ Should you need any further information from IATA, please do not hesitate to log
 
 
 
-Yours sincerely,</textOnly>
+Yours sincerely,
+
+
+
+Agency Management
+International Air Transport Association
+-----------------------------------------------------------------------------
+In order to obtain information or assistance from IATA, do not hesitate to access at any time our Customer Portal
+
+{!AMS_OSCAR__c.Emails_reference_Id__c}</textOnly>
     <type>html</type>
     <uiType>Aloha</uiType>
 </EmailTemplate>
