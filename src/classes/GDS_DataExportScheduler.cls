@@ -21,10 +21,12 @@ global with sharing class GDS_DataExportScheduler implements Schedulable{
                 Account__r.IATA_ISO_Country__r.Name,
                 Change_Code__c
             FROM Agency_Applied_Change_code__c
-            WHERE CreatedDate = TODAY
+            WHERE CreatedDate = LAST_MONTH
             AND Change_Code__c = 'TER'
-            AND Account__r.Location_Class__c = 'P'
-            AND Account__r.Zuora__Active__c = 'True'
+            AND Account__r.Location_Class__c IN ('P','D')
+            AND Active__c = true
+            AND Account__r.Status__c = 'Terminated'
+            AND Account__r.Recordtype.DeveloperName = 'IATA_Agency'
             ORDER BY Account__r.IATACode__c ASC, Account__r.Name ASC];
         
         String csvContent = getCSVContent(listChangeCode);
@@ -55,10 +57,9 @@ global with sharing class GDS_DataExportScheduler implements Schedulable{
         list<String> listHeaders = new list<String>{
             accountFields.get('IATACode__c').getDescribe().getLabel(),
             accountFields.get('Name').getDescribe().getLabel(),
-            accountFields.get('Expiry_Date__c').getDescribe().getLabel(),
             accountFields.get('Status__c').getDescribe().getLabel(),
-            accountFields.get('IATA_ISO_Country__c').getDescribe().getLabel(),
-            changeCodefields.get('Change_Code__c').getDescribe().getLabel()
+            accountFields.get('Expiry_Date__c').getDescribe().getLabel(),
+            accountFields.get('IATA_ISO_Country__c').getDescribe().getLabel()
         };
         return String.join(listHeaders,',') + '\n';
     }
@@ -72,10 +73,9 @@ global with sharing class GDS_DataExportScheduler implements Schedulable{
             list<string> listCells = new list<String>{
                 stringToCSV(changeCode.Account__r.IATACode__c),
                 stringToCSV(changeCode.Account__r.Name),
-                stringToCSV(changeCode.Account__r.Expiry_Date__c),
                 stringToCSV(changeCode.Account__r.Status__c),
-                stringToCSV(changeCode.Account__r.IATA_ISO_Country__r.Name),
-                stringToCSV(changeCode.Change_Code__c)
+                stringToCSV(changeCode.Account__r.Expiry_Date__c),
+                stringToCSV(changeCode.Account__r.IATA_ISO_Country__r.Name)
             };
             contentData += String.join(listCells,',') + '\n';
         }
@@ -119,65 +119,4 @@ global with sharing class GDS_DataExportScheduler implements Schedulable{
             Database.rollback(sp);
         }
     }
-    
-    /***
-        Code using a Report
-    ***/
-    /**
-    public void runProcess() {
-        Reports.ReportResults report = runReport(REPORT_NAME);
-        String csvContent = getCSVContent(report);
-        String title = REPORT_NAME + ' - ' + DateTime.now().format('YYYY-MMM-dd') + '.csv';
-        createDocument(title, csvContent);
-    }
-    **/
-    
-    /**
-        Create a valid CSV file for input report name
-    private String getCSVContent(Reports.ReportResults report) {
-        String content = BOM_UTF8;
-        // addding csv header
-        content += getStringHeader(report);
-        // addding csv data
-        content += getStringRowData(report);
-        return content;
-    }
-    **/
-    
-    /**
-        Find and execute a report based on the input name
-    private Reports.ReportResults runReport(String reportName) {
-        Report report = [SELECT Id FROM Report WHERE Name = :reportName];
-        return Reports.ReportManager.runReport(report.id, true);
-    }
-    **/
-    
-    /*
-        Get report header name in a single string in CSV format
-    private String getStringHeader(Reports.ReportResults report) {
-        list<String> listHeaders = new list<String>();
-        for (String colName: report.getreportMetadata().getdetailColumns()) {
-            String header = report.getreportExtendedMetadata().getdetailColumnInfo().get(colName).getLabel();
-            listHeaders.add(stringToCSV(header));
-        }
-        return String.join(listHeaders,',') + '\n';
-    }
-    */
-    
-    /*
-        Get report data rows in a single string in CSV format
-    private String getStringRowData(Reports.ReportResults report) {
-        String contentData = '';
-        String factMapKey =  'T!T';
-        Reports.ReportFactWithDetails factDetails = (Reports.ReportFactWithDetails)report.getFactMap().get(factMapKey);
-        for (Reports.ReportDetailRow detailRow: factDetails.getRows()  ) {
-            list<string> listCells = new list<String>();
-            for (Reports.ReportDataCell dataCell: detailRow.getDataCells()  ) {
-                listCells.add(stringToCSV(dataCell.getLabel()));
-            }
-            contentData += String.join(listCells,',') + '\n';
-        }
-        return contentData;
-    }
-    */
 }
