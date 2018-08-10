@@ -82,6 +82,8 @@ global without sharing class ANG_RollbackEngineHelper implements Queueable{
 				processRollbackRHCs(technicalLogsMap.get(entity));
 			if(entity == 'Financial_Security__c')
 				processRollbackFSs(technicalLogsMap.get(entity));
+			if(entity == 'ANG_Agency_Risk_Event__c')
+				processRollbackREs(technicalLogsMap.get(entity));
 			if(entity == 'AMS_Agencies_Hierarchy__c'){
 				processRollbackHierarchy(technicalLogsMap.get('AMS_Agencies_Hierarchy__c'),technicalLogsMap.get('AMS_Agencies_relationhip__c'));
 			}
@@ -170,12 +172,12 @@ global without sharing class ANG_RollbackEngineHelper implements Queueable{
 		List<ANG_RHC_Information__c> RHCsToRollback = new List<ANG_RHC_Information__c>();
 		Set<Id> RHCids = new Set<Id>();
 
-		for(String roleStr: RHCList){
+		for(String RHCstring: RHCList){
 			
-			ANG_RHC_Information__c role = (ANG_RHC_Information__c) JSON.deserialize(roleStr, ANG_RHC_Information__c.class);
-			RHCids.add(role.Id);
+			ANG_RHC_Information__c rhc = (ANG_RHC_Information__c) JSON.deserialize(RHCstring, ANG_RHC_Information__c.class);
+			RHCids.add(rhc.Id);
 
-			RHCsToRollback.add(role);
+			RHCsToRollback.add(rhc);
 		}
 
 		delete [Select Id from ANG_RHC_Information__c where ANG_AccountId__c in:accountsRelated and Id not in: RHCids];
@@ -190,12 +192,12 @@ global without sharing class ANG_RollbackEngineHelper implements Queueable{
 		List<Financial_Security__c> FSsToRollback = new List<Financial_Security__c>();
 		Set<Id> FSids = new Set<Id>();
 
-		for(String roleStr: FSsList){
+		for(String fsStr: FSsList){
 			
-			Financial_Security__c role = (Financial_Security__c) JSON.deserialize(roleStr, Financial_Security__c.class);
-			FSids.add(role.Id);
+			Financial_Security__c fs = (Financial_Security__c) JSON.deserialize(fsStr, Financial_Security__c.class);
+			FSids.add(fs.Id);
 
-			FSsToRollback.add(role);
+			FSsToRollback.add(fs);
 		}
 
 		delete [Select Id from Financial_Security__c where Account__c in:accountsRelated and Id not in: FSids];
@@ -203,6 +205,27 @@ global without sharing class ANG_RollbackEngineHelper implements Queueable{
 		if(!FSsToRollback.isEmpty()){
 			upsert FSsToRollback;
 		}	
+	}
+
+	private void processRollbackREs(List<String> REList){
+	
+		List<ANG_Agency_Risk_Event__c> REToRollback = new List<ANG_Agency_Risk_Event__c>();
+		Set<Id> reIdSet = new Set<Id>();
+
+		for(String reStr: REList){
+			
+			ANG_Agency_Risk_Event__c re = (ANG_Agency_Risk_Event__c) JSON.deserialize(reStr, ANG_Agency_Risk_Event__c.class);
+			reIdSet.add(re.Id);
+
+			REToRollback.add(re);
+		}
+
+		delete [Select Id from ANG_Agency_Risk_Event__c where ANG_AccountId__c in:accountsRelated and Id not in: reIdSet];
+
+		if(!REToRollback.isEmpty()){
+			upsert REToRollback;
+		}		
+
 	}
 
 	private void processRollbackHierarchy(List<String> hierarchyList, List<String> relationshipList){
