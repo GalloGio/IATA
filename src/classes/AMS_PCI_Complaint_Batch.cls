@@ -59,6 +59,7 @@ global class AMS_PCI_Complaint_Batch implements Database.Batchable<sObject>, Dat
     
     global Database.QueryLocator start(Database.BatchableContext BC) {
         Set<String> locations = new Set<String> {AMS_Utils.LC_PASSENGER, 'D'};
+        String OSCARCOMMRTID = AMS_Utils.RECTYPE_OSCARCOMM;
         Id AGENCY_RECORDTYPE = Schema.SObjectType.Account.getRecordTypeInfosByName().get('Agency').getRecordtypeId();
         String reason = 'PCI DSS Compliant';
         Set<String> availableStatus = new Set<String> {AMS_Utils.ACC_S9_APPROVED, AMS_Utils.ACC_S5_CASHNOCOMMISSION, 
@@ -74,7 +75,7 @@ global class AMS_PCI_Complaint_Batch implements Database.Batchable<sObject>, Dat
                        ' ShippingPostalCode, ShippingState, ShippingStreet, Short_Name__c,' + 
                        ' Solicitation_Flag__c, TradeName__c, VAT_Number_2__c, Website, BillingCountry,' +
                        ' Region_formula__c, Legal_name__c, IATA_ISO_Country__r.Name,' +
-                       ' IATA_ISO_Country__r.ISO_Code__c, Company_Type__c, Status__c ' +
+                       ' IATA_ISO_Country__r.ISO_Code__c, Company_Type__c, Status__c, IATA_ISO_Country__r.ANG_Enable_NewGen__c, Top_Parent__c ' +
                        'FROM Account ' + 
                        'WHERE';
 
@@ -82,8 +83,10 @@ global class AMS_PCI_Complaint_Batch implements Database.Batchable<sObject>, Dat
             query += ' Id IN :filteredAccounts';
         } else {
             query += ' Location_Class__c IN :locations AND Status__c IN :availableStatus AND ANG_PCI_compliance_expiry_date__c = NEXT_N_DAYS:90' +
-                     ' AND PCI_DSS_Compliant__c = NULL' +
+                     /* ' AND PCI_DSS_Compliant__c = NULL' + *//* AMSU-159*/
                      ' AND Is_PCI_compliant__c IN :pciValues' +
+                     ' AND ANG_IsNewGenAgency__c = false ' +
+                     ' AND Id NOT IN (SELECT AccountId FROM Case WHERE RecordTypeId = :OSCARCOMMRTID AND Reason1__c = :reason AND IsClosed = false)' + /* AMSU-159 */
                      ' AND RecordtypeId = :AGENCY_RECORDTYPE';
 
             if(list_iata_iso_Country_id != null && list_iata_iso_Country_id.size() > 0) {
@@ -288,6 +291,9 @@ global class AMS_PCI_Complaint_Batch implements Database.Batchable<sObject>, Dat
                                     Process__c = AMS_Utils.PCI_COMPLIANT, Status__c='Accepted_Future Date', ANG_PCI_compliance_expiry_date__c = accountData.ANG_PCI_compliance_expiry_date__c);
         
         theOscar.OSCAR_Deadline__c = Date.today().addDays(30);
+		/*** AMSU-159 ***/
+        AMS_OscarCaseTriggerHelper.assignOscarToRegionQueue(new List<AMS_OSCAR__c> {theOscar});
+
         insert theOscar;
 
         system.debug('createStagingArea oscar: '+ theOscar);
@@ -310,6 +316,11 @@ global class AMS_PCI_Complaint_Batch implements Database.Batchable<sObject>, Dat
             theCommunicationCase.ContactId = communicationCaseContact.Id;
 
         system.debug('before case: ' + theCommunicationCase);
+        
+        /*** AMSU-159 ***/
+        Database.DMLOptions dmo = new Database.DMLOptions();
+        dmo.assignmentRuleHeader.useDefaultRule = true;
+        theCommunicationCase.setOptions(dmo);
         
         insert theCommunicationCase;
 
