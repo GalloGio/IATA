@@ -484,7 +484,7 @@ public class ISSP_Portal_Application_RightTest {
         Portal_Applications__c sisApp = new Portal_Applications__c(Name = 'SIS');
         insert sisApp;
         
-        Id recordtypeAgency = RecordTypeSingleton.getInstance().RtIDsPerDeveloperNamePerObj.get('Account').get('IATA_Agency') ;
+        Id recordtypeAgency = RecordTypeSingleton.getInstance().getRecordTypeId('Account','IATA_Agency');
         Account acc = ISSP_ObjectFactory.createNewAccount();
         acc.RecordTypeId = recordtypeAgency;
         insert acc;
@@ -511,7 +511,7 @@ public class ISSP_Portal_Application_RightTest {
         Portal_Applications__c sisApp = new Portal_Applications__c(Name = 'SIS');
         insert sisApp;
         
-        Id recordtypeAgency = RecordTypeSingleton.getInstance().RtIDsPerDeveloperNamePerObj.get('Account').get('IATA_Agency') ;
+        Id recordtypeAgency = RecordTypeSingleton.getInstance().getRecordTypeId('Account','IATA_Agency');
         Account acc = ISSP_ObjectFactory.createNewAccount();
         acc.RecordTypeId = recordtypeAgency;
         insert acc;
@@ -544,7 +544,7 @@ public class ISSP_Portal_Application_RightTest {
         Portal_Applications__c sisApp = new Portal_Applications__c(Name = 'SIS');
         insert sisApp;
         
-        Id recordtypeAgency = RecordTypeSingleton.getInstance().RtIDsPerDeveloperNamePerObj.get('Account').get('IATA_Agency') ;
+        Id recordtypeAgency = RecordTypeSingleton.getInstance().getRecordTypeId('Account','IATA_Agency');
         Account acc = ISSP_ObjectFactory.createNewAccount();
         acc.RecordTypeId = recordtypeAgency;
         insert acc;
