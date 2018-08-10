@@ -284,7 +284,15 @@
                         $j("[id$=email]").attr('readonly', false);
                     }
             
-               }
+                }
+
+                function startLoading() {
+                    $('.loadingBox').show();
+                }
+
+                function stopLoading() {
+                    $('.loadingBox').hide();
+                }
             
                 function setLengthPhone(e, i) {
                   var phoneVal = e.value;
@@ -648,6 +656,31 @@
                      </div>
                      <apex:pageMessages id="theMessages" />
                      <div class="modal-body">
+                        <style>
+                          .overlay {
+                            display: none;
+                            height: 100%;
+                            left: 0;
+                            position: fixed;
+                            top: 0;
+                            opacity: 0.3;
+                            -moz-opacity: 0.3;
+                            width: 100%;
+                            -ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=30)";
+                            filter: alpha(opacity=30);
+                            background: #000;
+                            -khtml-opacity: 0.3;
+                            z-index: 1000;
+                          }
+                          .loader {
+                            background: url('/img/loading32.gif') scroll no-repeat 0 0;
+                            width: 32px;
+                            height: 32px;
+                            position: absolute;
+                            left: 50%;
+                            top: 150px;
+                          }
+                        </style>
                         <apex:outputPanel id="ContactPanel">
                            <div class="form-group">
                               <label for="email"><span >*</span>{!$ObjectType.Contact.fields.Email.Label}</label>
@@ -721,11 +754,13 @@
                         </apex:outputPanel>
                      </div>
                      <div class="modal-footer">
-                        <apex:commandButton action="{!createContact}" onclick="rerenderModal();checkForSalutation();" status="WaitingStatus"  styleClass="btn btn-default"  value="{!$Label.ISSP_Submit}" oncomplete="saveContact('{!isEmailDuplicated}');rerenderContactSection();" >
+                        <apex:commandButton action="{!createContact}" onclick="startLoading();rerenderModal();checkForSalutation();" status="WaitingStatus"  styleClass="btn btn-default"  value="{!$Label.ISSP_Submit}" oncomplete="saveContact('{!isEmailDuplicated}');rerenderContactSection();stopLoading();" >
                         </apex:commandButton>
                         &nbsp;
                         <button type="button" class="btn btn-default" onclick="closeModal();return false;">
                         {!$Label.ISSP_Cancel} </button>
+                        <div id="load_scrl" class="loadingBox loader" style="display:none;"/>
+                        <div class="loadingBox overlay"/>
                      </div>
                   </div>
                </div>
