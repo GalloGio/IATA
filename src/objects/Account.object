@@ -18857,6 +18857,67 @@ This field is kept up-to-date with the feedback of ITDI at least twice a year du
         <unique>false</unique>
     </fields>
     <listViews>
+        <fullName>FREDAircraftOperators</fullName>
+        <columns>ACCOUNT.NAME</columns>
+        <columns>Quality__c</columns>
+        <columns>ACCOUNT.SITE</columns>
+        <columns>ACCOUNT.ADDRESS1_COUNTRY</columns>
+        <columns>ACCOUNT.PHONE1</columns>
+        <columns>ACCOUNT.TYPE</columns>
+        <columns>CORE.USERS.ALIAS</columns>
+        <columns>ACCOUNT.RECORDTYPE</columns>
+        <filterScope>Everything</filterScope>
+        <filters>
+            <field>ACCOUNT.RECORDTYPE</field>
+            <operation>equals</operation>
+            <value>Account.Operator,Account.IATA_Airline</value>
+        </filters>
+        <filters>
+            <field>fredp_aircraftoperator_eligibility__c</field>
+            <operation>equals</operation>
+            <value>1</value>
+        </filters>
+        <label>FRED+ - Aircraft Operators</label>
+        <language>en_US</language>
+        <sharedTo>
+            <group>FRED_Business_Team</group>
+        </sharedTo>
+    </listViews>
+    <listViews>
+        <fullName>FREDICAOMemberStates</fullName>
+        <columns>ACCOUNT.NAME</columns>
+        <columns>CORE.USERS.ALIAS</columns>
+        <columns>ACCOUNT.RECORDTYPE</columns>
+        <filterScope>Everything</filterScope>
+        <filters>
+            <field>ACCOUNT.RECORDTYPE</field>
+            <operation>equals</operation>
+            <value>Account.ICAO_Member_State</value>
+        </filters>
+        <label>FRED+ - ICAO Member States</label>
+        <language>en_US</language>
+        <sharedTo>
+            <group>FRED_Business_Team</group>
+        </sharedTo>
+    </listViews>
+    <listViews>
+        <fullName>FREDVerifiers</fullName>
+        <columns>ACCOUNT.NAME</columns>
+        <columns>CORE.USERS.ALIAS</columns>
+        <columns>ACCOUNT.RECORDTYPE</columns>
+        <filterScope>Everything</filterScope>
+        <filters>
+            <field>ACCOUNT.RECORDTYPE</field>
+            <operation>equals</operation>
+            <value>Account.Verifiers</value>
+        </filters>
+        <label>FRED+ - Verifiers</label>
+        <language>en_US</language>
+        <sharedTo>
+            <group>FRED_Business_Team</group>
+        </sharedTo>
+    </listViews>
+    <listViews>
         <fullName>AOC_Expiry_dates_Airline_Coding</fullName>
         <columns>ACCOUNT.NAME</columns>
         <columns>Airline_designator__c</columns>
