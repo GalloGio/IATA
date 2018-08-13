@@ -643,10 +643,7 @@ public without sharing class Utility {
         List<String> listSetting = getSeqTextSettingToArray(settingName);
         return ((listSetting.size() == 0) ? '' : String.join(listSetting, separator));
     } //*** end of "getSeqTextSetting"
-    //public static String getSeqTextSetting(String settingName, String fieldName, String separator) {
-    //    List<String> listSetting = getSeqTextSettingToArray(settingName, fieldName);
-    //    return ((listSetting.size() == 0) ? '' : String.join(listSetting, separator));
-    //} //*** end of "getSeqTextSetting"
+
     
     
     /****************************************************************************************************
