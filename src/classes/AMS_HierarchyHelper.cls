@@ -34,7 +34,8 @@ global class AMS_HierarchyHelper {
 		for (Id accountId : accountsIds)
 			result.put(accountId, new List<AMS_Agencies_relationhip__c>());
 
-		for (AMS_Agencies_relationhip__c r : [SELECT Hierarchy__c, Parent_Account__c,  Child_Account__c, Parent_Account__r.Location_Type__c,  Child_Account__r.Location_Type__c,  Child_Account__r.Status__c, Parent_Account__r.Status__c
+		for (AMS_Agencies_relationhip__c r : [SELECT Hierarchy__c, Parent_Account__c,  Child_Account__c, Parent_Account__r.Location_Type__c,  Child_Account__r.Location_Type__c, Child_Account__r.Status__c, Parent_Account__r.Status__c, 
+												Child_Account__r.Reason__c, Parent_Account__r.Reason__c //FM AMSU-1
 		                                      FROM AMS_Agencies_relationhip__c
 		                                      WHERE Hierarchy__c IN :hierarchyToAccounts.keyset() ]) {
 
@@ -468,9 +469,9 @@ global class AMS_HierarchyHelper {
 			//only active hierarchy agencies are to be considered
 			Account parent = accounts.get(parentId);
 			Account child = accounts.get(childId);
-			if (parent.Status__c != AMS_Utils.ACC_S0_TERMINATED && parent.Status__c != AMS_Utils.ACC_S1_NOTACCREDITED && !agenciesSelected.contains(parentId))
+			if (parent !=null && parent.Status__c != AMS_Utils.ACC_S0_TERMINATED && parent.Status__c != AMS_Utils.ACC_S1_NOTACCREDITED && !agenciesSelected.contains(parentId))
 				return false;
-			if (child.Status__c != AMS_Utils.ACC_S0_TERMINATED && child.Status__c != AMS_Utils.ACC_S1_NOTACCREDITED && child.Status__c != null && !agenciesSelected.contains(childId))
+			if (child !=null && child.Status__c != AMS_Utils.ACC_S0_TERMINATED && child.Status__c != AMS_Utils.ACC_S1_NOTACCREDITED && child.Status__c != null && !agenciesSelected.contains(childId))
 				return false;
 		}
 
@@ -599,7 +600,7 @@ global class AMS_HierarchyHelper {
 				if(!childAccounts.get(oscar.Id).containsKey(r.Parent_Account__c)) childAccounts.get(oscar.Id).put(r.Parent_Account__c, new Set<Id>());
 				if(!childAccounts.get(oscar.Id).containsKey(r.Child_Account__c)) childAccounts.get(oscar.Id).put(r.Child_Account__c, new Set<Id>());
 
-				if(r.Child_Account__r.Status__c != AMS_Utils.ACC_S0_TERMINATED && r.Child_Account__r.Status__c != AMS_Utils.ACC_S1_NOTACCREDITED && r.Child_Account__r.Status__c != '') childAccounts.get(oscar.Id).get(r.Parent_Account__c).add(r.Child_Account__c);
+				if(r.Child_Account__r.Status__c != null && r.Child_Account__r.Status__c != AMS_Utils.ACC_S0_TERMINATED && r.Child_Account__r.Status__c != AMS_Utils.ACC_S1_NOTACCREDITED && r.Child_Account__r.Status__c != '') childAccounts.get(oscar.Id).get(r.Parent_Account__c).add(r.Child_Account__c);
 			}
 		}
 

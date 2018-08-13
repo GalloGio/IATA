@@ -138,6 +138,10 @@
                 <behavior>Edit</behavior>
                 <field>IEC_Parent_Product__c</field>
             </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>ImageFile__c</field>
+            </layoutItems>
         </layoutColumns>
         <style>TwoColumnsTopToBottom</style>
     </layoutSections>
@@ -382,7 +386,7 @@
                 <field>SAP_Sales_Channel_Code__c</field>
             </layoutItems>
             <layoutItems>
-                <behavior>Readonly</behavior>
+                <behavior>Edit</behavior>
                 <field>Family</field>
             </layoutItems>
             <layoutItems>

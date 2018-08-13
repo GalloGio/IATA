@@ -6,6 +6,10 @@
   */
 global class IECConstants {
 
+  //use to fetch orders that are not expired
+  public static final Date dateToCompare = Date.today().addDays(-180);
+  public static final List<String> expiredStatus = new List<String>{'New','Cancelled','Payment Failure', 'Ready for SAP', 'Pending Payment'};
+
   //Order Status : add by CGI - David D 2015-10-16
   public static final String ORDER_STATUS_PAID       =  'Paid';//Used for credit card only
   public static final String ORDER_STATUS_READY_FOR_SAP   =   'Ready for SAP';

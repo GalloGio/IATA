@@ -3,8 +3,17 @@
     <doesSendEmailToMembers>false</doesSendEmailToMembers>
     <email>zhangq@iata.org</email>
     <name>Agency Management - China &amp; N. Asia</name>
+    <queueMembers>
+        <publicGroups>
+            <publicGroup>IDFSAllusersexcludingIWandACCA</publicGroup>
+            <publicGroup>IDFSChinaNAsiaallusers</publicGroup>
+        </publicGroups>
+    </queueMembers>
     <queueSobject>
         <sobjectType>AMS_OSCAR__c</sobjectType>
+    </queueSobject>
+    <queueSobject>
+        <sobjectType>AmazonFile__c</sobjectType>
     </queueSobject>
     <queueSobject>
         <sobjectType>Case</sobjectType>

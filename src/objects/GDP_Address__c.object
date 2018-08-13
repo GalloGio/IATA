@@ -78,7 +78,30 @@
     <fields>
         <fullName>Address_City_Uppercase__c</fullName>
         <externalId>false</externalId>
-        <formula>UPPER(SUBSTITUTE( Address_City__c , &apos;|&apos;, &apos;/&apos;))</formula>
+        <formula>UPPER(
+SUBSTITUTE( 
+SUBSTITUTE( 
+SUBSTITUTE( 
+SUBSTITUTE(
+SUBSTITUTE(
+SUBSTITUTE( 
+SUBSTITUTE( 
+SUBSTITUTE( 
+SUBSTITUTE( 
+SUBSTITUTE( 
+SUBSTITUTE(Address_City__c, 
+&apos;|&apos;, &apos;/&apos;),
+&apos;é&apos;, &apos;e&apos;),
+&apos;É&apos;, &apos;E&apos;),
+&apos;è&apos;, &apos;e&apos;),
+&apos;È&apos;, &apos;E&apos;),
+&apos;Ñ&apos;, &apos;N&apos;),
+&apos;ñ&apos;, &apos;n&apos;),
+&apos;á&apos;, &apos;a&apos;),
+&apos;Á&apos;, &apos;A&apos;),
+&apos;ç&apos;, &apos;c&apos;),
+&apos;Ç&apos;, &apos;C&apos;)
+)</formula>
         <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
         <inlineHelpText>Capitalization &amp; Substitution rule from “|” to “/” in Address City Uppercase.</inlineHelpText>
         <label>Address City Uppercase</label>
@@ -171,7 +194,30 @@ For UP (US Proctectorates), use the State Code, otherwise, it is equals to Addre
         <description>Remove bar from Address line 1. 
 This is needed because there is bad data with &apos;|&apos; in Address_Line_1__c.</description>
         <externalId>false</externalId>
-        <formula>UPPER(SUBSTITUTE( Address_Line_1__c, &apos;|&apos;, &apos;/&apos;))</formula>
+        <formula>UPPER(
+SUBSTITUTE( 
+SUBSTITUTE( 
+SUBSTITUTE( 
+SUBSTITUTE(
+SUBSTITUTE(
+SUBSTITUTE( 
+SUBSTITUTE( 
+SUBSTITUTE( 
+SUBSTITUTE( 
+SUBSTITUTE( 
+SUBSTITUTE(Address_Line_1__c, 
+&apos;|&apos;, &apos;/&apos;),
+&apos;é&apos;, &apos;e&apos;),
+&apos;É&apos;, &apos;E&apos;),
+&apos;è&apos;, &apos;e&apos;),
+&apos;È&apos;, &apos;E&apos;),
+&apos;Ñ&apos;, &apos;N&apos;),
+&apos;ñ&apos;, &apos;n&apos;),
+&apos;á&apos;, &apos;a&apos;),
+&apos;Á&apos;, &apos;A&apos;),
+&apos;ç&apos;, &apos;c&apos;),
+&apos;Ç&apos;, &apos;C&apos;)
+)</formula>
         <inlineHelpText>Capitalization &amp; Substitution rule from “|” to “/” in Address Line 1.</inlineHelpText>
         <label>Address Line 1 Clean</label>
         <required>false</required>
@@ -194,7 +240,30 @@ This is needed because there is bad data with &apos;|&apos; in Address_Line_1__c
     <fields>
         <fullName>Address_Line_2_Clean__c</fullName>
         <externalId>false</externalId>
-        <formula>UPPER(SUBSTITUTE( Address_Line_2__c, &apos;|&apos;, &apos;/&apos;))</formula>
+        <formula>UPPER(
+SUBSTITUTE( 
+SUBSTITUTE( 
+SUBSTITUTE( 
+SUBSTITUTE(
+SUBSTITUTE(
+SUBSTITUTE( 
+SUBSTITUTE( 
+SUBSTITUTE( 
+SUBSTITUTE( 
+SUBSTITUTE( 
+SUBSTITUTE(Address_Line_2__c, 
+&apos;|&apos;, &apos;/&apos;),
+&apos;é&apos;, &apos;e&apos;),
+&apos;É&apos;, &apos;E&apos;),
+&apos;è&apos;, &apos;e&apos;),
+&apos;È&apos;, &apos;E&apos;),
+&apos;Ñ&apos;, &apos;N&apos;),
+&apos;ñ&apos;, &apos;n&apos;),
+&apos;á&apos;, &apos;a&apos;),
+&apos;Á&apos;, &apos;A&apos;),
+&apos;ç&apos;, &apos;c&apos;),
+&apos;Ç&apos;, &apos;C&apos;)
+)</formula>
         <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
         <inlineHelpText>Capitalization &amp; Substitution rule from “|” to “/” in Address Line 2.</inlineHelpText>
         <label>Address Line 2 Clean</label>
@@ -218,7 +287,30 @@ This is needed because there is bad data with &apos;|&apos; in Address_Line_1__c
     <fields>
         <fullName>Address_Line_3_Clean__c</fullName>
         <externalId>false</externalId>
-        <formula>UPPER(SUBSTITUTE( Address_Line_3__c, &apos;|&apos;, &apos;/&apos;))</formula>
+        <formula>UPPER(
+SUBSTITUTE( 
+SUBSTITUTE( 
+SUBSTITUTE( 
+SUBSTITUTE(
+SUBSTITUTE(
+SUBSTITUTE( 
+SUBSTITUTE( 
+SUBSTITUTE( 
+SUBSTITUTE( 
+SUBSTITUTE( 
+SUBSTITUTE(Address_Line_3__c, 
+&apos;|&apos;, &apos;/&apos;),
+&apos;é&apos;, &apos;e&apos;),
+&apos;É&apos;, &apos;E&apos;),
+&apos;è&apos;, &apos;e&apos;),
+&apos;È&apos;, &apos;E&apos;),
+&apos;Ñ&apos;, &apos;N&apos;),
+&apos;ñ&apos;, &apos;n&apos;),
+&apos;á&apos;, &apos;a&apos;),
+&apos;Á&apos;, &apos;A&apos;),
+&apos;ç&apos;, &apos;c&apos;),
+&apos;Ç&apos;, &apos;C&apos;)
+)</formula>
         <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
         <inlineHelpText>Capitalization &amp; Substitution rule from “|” to “/” in Address Line 3.</inlineHelpText>
         <label>Address Line 3 Clean</label>
@@ -256,21 +348,22 @@ This is needed because there is bad data with &apos;|&apos; in Address_Line_1__c
 The source of information is taken from IATA_ISO_State.
 In case the dash (-) does not exist,  e.g. CA60, it will only display the Country ISO Code.</description>
         <externalId>false</externalId>
-        <formula>IF(
-				OR(IATA_ISO_Country__r.ISO_Code__c=&apos;US&apos;,
-							IATA_ISO_Country__r.ISO_Code__c=&apos;CA&apos;,
-							IATA_ISO_Country__r.ISO_Code__c=&apos;AU&apos;,
-							IATA_ISO_Country__r.ISO_Code__c=&apos;MX&apos;,
-							IATA_ISO_Country__r.ISO_Code__c=&apos;BR&apos;,
-                                                        IATA_ISO_Country__r.ISO_Code__c=&apos;UP&apos;,
-						        IATA_ISO_Country__r.ISO_Code__c=&apos;VE&apos;),
-    				
-				IF( CONTAINS(IATA_ISO_State__r.ISO_Code__c, &apos;-&apos;) 
-        , IF(LEN(IATA_ISO_State__r.ISO_Code__c) = 5,RIGHT(IATA_ISO_State__r.ISO_Code__c, 2), RIGHT(IATA_ISO_State__r.ISO_Code__c, 3))
-        , IATA_ISO_Country__r.ISO_Code__c 
-    ),
-				
-				NULL
+        <formula>IF( 
+OR(IATA_ISO_Country__r.ISO_Code__c=&apos;US&apos;, 
+IATA_ISO_Country__r.ISO_Code__c=&apos;CA&apos;, 
+IATA_ISO_Country__r.ISO_Code__c=&apos;AU&apos;, 
+IATA_ISO_Country__r.ISO_Code__c=&apos;MX&apos;, 
+IATA_ISO_Country__r.ISO_Code__c=&apos;BR&apos;, 
+IATA_ISO_Country__r.ISO_Code__c=&apos;AE&apos;, 
+IATA_ISO_Country__r.ISO_Code__c=&apos;UP&apos;, 
+IATA_ISO_Country__r.ISO_Code__c=&apos;VE&apos;), 
+
+IF( CONTAINS(IATA_ISO_State__r.ISO_Code__c, &apos;-&apos;) 
+, RIGHT(IATA_ISO_State__r.ISO_Code__c, LEN(IATA_ISO_State__r.ISO_Code__c) - FIND(&apos;-&apos;, IATA_ISO_State__r.ISO_Code__c)) 
+, IATA_ISO_Country__r.ISO_Code__c 
+), 
+
+NULL 
 )</formula>
         <inlineHelpText>State Code without the preceding country code. 
 The source of information is taken from IATA_ISO_State.</inlineHelpText>
@@ -285,7 +378,30 @@ The source of information is taken from IATA_ISO_State.</inlineHelpText>
         <fullName>Address_State_Name_Uppercase__c</fullName>
         <description>IATA_ISO_State Name in uppercase, this is intended for generating the GDP Files.</description>
         <externalId>false</externalId>
-        <formula>UPPER(Address_State_Name__c)</formula>
+        <formula>UPPER(
+SUBSTITUTE( 
+SUBSTITUTE( 
+SUBSTITUTE( 
+SUBSTITUTE(
+SUBSTITUTE(
+SUBSTITUTE( 
+SUBSTITUTE( 
+SUBSTITUTE( 
+SUBSTITUTE( 
+SUBSTITUTE( 
+SUBSTITUTE(Address_State_Name__c, 
+&apos;|&apos;, &apos;/&apos;),
+&apos;é&apos;, &apos;e&apos;),
+&apos;É&apos;, &apos;E&apos;),
+&apos;è&apos;, &apos;e&apos;),
+&apos;È&apos;, &apos;E&apos;),
+&apos;Ñ&apos;, &apos;N&apos;),
+&apos;ñ&apos;, &apos;n&apos;),
+&apos;á&apos;, &apos;a&apos;),
+&apos;Á&apos;, &apos;A&apos;),
+&apos;ç&apos;, &apos;c&apos;),
+&apos;Ç&apos;, &apos;C&apos;)
+)</formula>
         <inlineHelpText>IATA_ISO_State Name in uppercase</inlineHelpText>
         <label>Address State Name Uppercase</label>
         <required>false</required>
@@ -299,9 +415,11 @@ The source of information is taken from IATA_ISO_State.</inlineHelpText>
         <externalId>false</externalId>
         <formula>IF( 
 And( 
-OR(IATA_ISO_Country__r.ISO_Code__c=&apos;US&apos;, 
+OR(
+IATA_ISO_Country__r.ISO_Code__c=&apos;US&apos;, 
 IATA_ISO_Country__r.ISO_Code__c=&apos;CA&apos;, 
 IATA_ISO_Country__r.ISO_Code__c=&apos;AU&apos;, 
+IATA_ISO_Country__r.ISO_Code__c=&apos;AE&apos;, 
 IATA_ISO_Country__r.ISO_Code__c=&apos;MX&apos;, 
 IATA_ISO_Country__r.ISO_Code__c=&apos;UP&apos;, 
 IATA_ISO_Country__r.ISO_Code__c=&apos;BR&apos;, 
@@ -313,7 +431,7 @@ IATA_ISO_State__r.Name=&apos;VE95&apos;)
 IATA_ISO_State__r.Name, 
 NULL 
 )</formula>
-        <inlineHelpText>Conditional Lookup: IF Country = AU, BR, CA, MX, UP, US, VE, return IATA_ISO_State__r.Name</inlineHelpText>
+        <inlineHelpText>Conditional Lookup: IF Country = AU, BR, CA, AE, MX, UP, US, VE, return IATA_ISO_State__r.Name</inlineHelpText>
         <label>Address State Name</label>
         <required>false</required>
         <trackHistory>false</trackHistory>
@@ -529,6 +647,51 @@ NULL
             <value>Mailing</value>
         </filters>
         <label>AIMS Mailing address</label>
+        <language>en_US</language>
+    </listViews>
+    <listViews>
+        <fullName>Address_State_Codes_Accepted</fullName>
+        <columns>NAME</columns>
+        <columns>Related_Account__c</columns>
+        <columns>Related_GDP_Products_Account_View__c</columns>
+        <columns>IATA_ISO_State__c</columns>
+        <columns>Address_ISO_Country_Code__c</columns>
+        <columns>Address_State_Name__c</columns>
+        <columns>Address_State_Name_Uppercase__c</columns>
+        <filterScope>Everything</filterScope>
+        <filters>
+            <field>IATA_ISO_Country__c</field>
+            <operation>notEqual</operation>
+            <value>Australia,Brazil,Canada,Mexico,United States</value>
+        </filters>
+        <filters>
+            <field>Address_State_Code__c</field>
+            <operation>notEqual</operation>
+        </filters>
+        <filters>
+            <field>IATA_ISO_Country__c</field>
+            <operation>notEqual</operation>
+            <value>US TERRITORIES AND POSSESS,Venezuela</value>
+        </filters>
+        <label>Address State Codes Accepted</label>
+        <language>en_US</language>
+    </listViews>
+    <listViews>
+        <fullName>Address_State_Codes_UP</fullName>
+        <columns>NAME</columns>
+        <columns>Related_Account__c</columns>
+        <columns>Related_GDP_Products_Account_View__c</columns>
+        <columns>IATA_ISO_State__c</columns>
+        <columns>Address_ISO_Country_Code__c</columns>
+        <columns>Address_State_Name__c</columns>
+        <columns>Address_State_Name_Uppercase__c</columns>
+        <filterScope>Everything</filterScope>
+        <filters>
+            <field>Address_IATA_Custom_ISO_Country_Code__c</field>
+            <operation>equals</operation>
+            <value>UP</value>
+        </filters>
+        <label>Country Code UP</label>
         <language>en_US</language>
     </listViews>
     <listViews>

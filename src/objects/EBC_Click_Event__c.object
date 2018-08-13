@@ -155,73 +155,31 @@
     <label>EBC Click Event</label>
     <listViews>
         <fullName>All_EBC_Click_Events</fullName>
-        <columns>OBJECT_ID</columns>
         <columns>NAME</columns>
         <columns>EBC_Campaign__c</columns>
-        <columns>Event_Date__c</columns>
-        <columns>Event_Date_Timestamp__c</columns>
-        <columns>Related_Agency__c</columns>
-        <columns>Related_Agent__c</columns>
         <columns>Subscriber_Key__c</columns>
         <columns>URL__c</columns>
-        <columns>CREATED_DATE</columns>
-        <columns>CREATEDBY_USER</columns>
-        <columns>LAST_UPDATE</columns>
-        <columns>UPDATEDBY_USER</columns>
         <columns>External_Id__c</columns>
+        <columns>Event_Date__c</columns>
         <filterScope>Everything</filterScope>
-        <label>All EBC Click Events</label>
+        <label>00 - All EBC Click Events</label>
         <language>en_US</language>
     </listViews>
     <listViews>
-        <fullName>EBC_Click_Events_SilverCar_Campaign</fullName>
+        <fullName>EBC_Click_Events_Wave_2_NewGen_Campaign</fullName>
         <columns>NAME</columns>
         <columns>EBC_Campaign__c</columns>
         <columns>Subscriber_Key__c</columns>
         <columns>URL__c</columns>
-        <columns>Event_Date__c</columns>
-        <columns>Event_Date_Timestamp__c</columns>
-        <columns>CREATED_DATE</columns>
-        <columns>CREATEDBY_USER</columns>
-        <columns>LAST_UPDATE</columns>
-        <columns>UPDATEDBY_USER</columns>
         <columns>External_Id__c</columns>
+        <columns>Event_Date__c</columns>
         <filterScope>Everything</filterScope>
         <filters>
             <field>EBC_Campaign__c</field>
-            <operation>contains</operation>
-            <value>Silver</value>
+            <operation>equals</operation>
+            <value>Right Travel FAM Trips</value>
         </filters>
-        <label>EBC Click Events SilverCar Campaign</label>
-        <language>en_US</language>
-    </listViews>
-    <listViews>
-        <fullName>EBC_Click_Events_with_Agency_Agent_Relat</fullName>
-        <booleanFilter>1 OR 2</booleanFilter>
-        <columns>OBJECT_ID</columns>
-        <columns>NAME</columns>
-        <columns>EBC_Campaign__c</columns>
-        <columns>Event_Date__c</columns>
-        <columns>Event_Date_Timestamp__c</columns>
-        <columns>Related_Agency__c</columns>
-        <columns>Related_Agent__c</columns>
-        <columns>Subscriber_Key__c</columns>
-        <columns>URL__c</columns>
-        <columns>CREATED_DATE</columns>
-        <columns>CREATEDBY_USER</columns>
-        <columns>LAST_UPDATE</columns>
-        <columns>UPDATEDBY_USER</columns>
-        <columns>External_Id__c</columns>
-        <filterScope>Everything</filterScope>
-        <filters>
-            <field>Related_Agency__c</field>
-            <operation>notEqual</operation>
-        </filters>
-        <filters>
-            <field>Related_Agent__c</field>
-            <operation>notEqual</operation>
-        </filters>
-        <label>EBC Click Events with Agency/Agent Relat</label>
+        <label>ZZ - EBC Click Events Per Campaign</label>
         <language>en_US</language>
     </listViews>
     <nameField>

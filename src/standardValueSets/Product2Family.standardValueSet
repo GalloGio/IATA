@@ -64,7 +64,7 @@
     <standardValue>
         <fullName>Cargo IS</fullName>
         <default>false</default>
-        <label>Cargo IS</label>
+        <label>CargoIS</label>
     </standardValue>
     <standardValue>
         <fullName>CASS</fullName>
@@ -127,6 +127,21 @@
         <label>Financial Charges</label>
     </standardValue>
     <standardValue>
+        <fullName>FSS (FDS Division)</fullName>
+        <default>false</default>
+        <label>FSS (FDS Division)</label>
+    </standardValue>
+    <standardValue>
+        <fullName>FSS-Fraud (FDS Division)</fullName>
+        <default>false</default>
+        <label>FSS-Fraud (FDS Division)</label>
+    </standardValue>
+    <standardValue>
+        <fullName>FSS-Tools (FDS Division)</fullName>
+        <default>false</default>
+        <label>FSS-Tools (FDS Division)</label>
+    </standardValue>
+    <standardValue>
         <fullName>GAP</fullName>
         <default>false</default>
         <label>GAP</label>
@@ -152,6 +167,11 @@
         <label>ID Cards/TIDS</label>
     </standardValue>
     <standardValue>
+        <fullName>IFG (FDS Division)</fullName>
+        <default>false</default>
+        <label>IFG (FDS Division)</label>
+    </standardValue>
+    <standardValue>
         <fullName>Interest</fullName>
         <default>false</default>
         <label>Interest</label>
@@ -175,6 +195,11 @@
         <fullName>Meetings and Conferen</fullName>
         <default>false</default>
         <label>Meetings and Conferen</label>
+    </standardValue>
+    <standardValue>
+        <fullName>MER (MER Division)</fullName>
+        <default>false</default>
+        <label>MER (MER Division)</label>
     </standardValue>
     <standardValue>
         <fullName>Meteorology</fullName>
@@ -222,6 +247,11 @@
         <label>Pax IS</label>
     </standardValue>
     <standardValue>
+        <fullName>PBI (FDS Division)</fullName>
+        <default>false</default>
+        <label>PBI (FDS Division)</label>
+    </standardValue>
+    <standardValue>
         <fullName>Penalty</fullName>
         <default>false</default>
         <label>Penalty</label>
@@ -250,6 +280,11 @@
         <fullName>Security</fullName>
         <default>false</default>
         <label>Security</label>
+    </standardValue>
+    <standardValue>
+        <fullName>SFO (SFO Division)</fullName>
+        <default>false</default>
+        <label>SFO (SFO Division)</label>
     </standardValue>
     <standardValue>
         <fullName>Strategic Partnerships</fullName>

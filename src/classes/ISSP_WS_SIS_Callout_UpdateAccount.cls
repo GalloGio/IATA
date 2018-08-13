@@ -98,14 +98,10 @@ public with sharing class ISSP_WS_SIS_Callout_UpdateAccount {
             request.SISMemberID = nvl(account.SIS_ID__c);
             request.MemberCodeNumeric = nvl(account.IATACode__c).toUpperCase();
             request.MemberCodeAlpha = 'XB';
-            request.LegalName = nvl(account.Name);
-            String tradeName = nvl(account.TradeName__c);
+            request.LegalName = ISSP_WS_SIS_Callout_Common.cleanSpecialChars(account.Name);
+            String tradeName = ISSP_WS_SIS_Callout_Common.cleanSpecialChars(account.TradeName__c);
             request.CommercialName = tradeName==''? request.LegalName: tradeName;
-            if (account.Status__c == 'Terminated') {
-                request.ISMembershipStatus = 'TERMINATED';
-            } else {
-                request.ISMembershipStatus = nvl(account.SIS_Status__c);
-            }
+            request.ISMembershipStatus = nvl(account.SIS_Status__c);
             request.ISMembershipSubStatus = nvl(account.SIS_Sub_Status__c);
             request.RegistrationID = '';
             request.TaxVatRegistrationNumber = nvl(account.VAT_Number__c);
@@ -125,8 +121,8 @@ public with sharing class ISSP_WS_SIS_Callout_UpdateAccount {
                 request.AddressLine1 = fullAddress.mid(0,70);
                 request.AddressLine2 = fullAddress.mid(70,70);
                 request.AddressLine3 = fullAddress.mid(140,70);
-                request.CityName = nvl(account.BillingCity);
-                request.SubDivisionName = nvl(account.BillingState);
+                request.CityName = ISSP_WS_SIS_Callout_Common.cleanSpecialChars(account.BillingCity);
+                request.SubDivisionName = ISSP_WS_SIS_Callout_Common.cleanSpecialChars(account.BillingState);
                 request.PostalCode = nvl(account.BillingPostalCode);
                 request.CountryCode = nvl(account.Country_ISO_Code__c).toUpperCase();
             }

@@ -72,6 +72,40 @@
         <trackTrending>false</trackTrending>
         <type>Checkbox</type>
     </fields>
+    <fields>
+        <fullName>isMyAccount__c</fullName>
+        <defaultValue>false</defaultValue>
+        <description>check this to filter cases where the case owner is from the same account as the viewer</description>
+        <externalId>false</externalId>
+        <label>isMyAccount</label>
+        <trackTrending>false</trackTrending>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
+        <fullName>isOwnedByMe__c</fullName>
+        <defaultValue>false</defaultValue>
+        <description>check this to filter based on the case owner == Userinfo.getUserId()</description>
+        <externalId>false</externalId>
+        <label>isOwnedByMe</label>
+        <trackTrending>false</trackTrending>
+        <type>Checkbox</type>
+    </fields>
     <label>ISSP Case List View</label>
+    <listViews>
+        <fullName>ALL</fullName>
+        <columns>NAME</columns>
+        <columns>Field_Set_API_Name__c</columns>
+        <columns>Label_API_name__c</columns>
+        <columns>isAdmin__c</columns>
+        <columns>SOQL_Filter__c</columns>
+        <columns>Profiles_Id__c</columns>
+        <columns>Permission_set__c</columns>
+        <filterScope>Everything</filterScope>
+        <label>ALL</label>
+        <language>en_US</language>
+        <sharedTo>
+            <allInternalUsers></allInternalUsers>
+        </sharedTo>
+    </listViews>
     <visibility>Public</visibility>
 </CustomObject>

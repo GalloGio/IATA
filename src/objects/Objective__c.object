@@ -1358,6 +1358,11 @@ Object used to store objectives that can be independent, related to other object
                     <label>CS</label>
                 </value>
                 <value>
+                    <fullName>DG</fullName>
+                    <default>false</default>
+                    <label>DG</label>
+                </value>
+                <value>
                     <fullName>FDS</fullName>
                     <default>false</default>
                     <label>FDS</label>
@@ -1861,6 +1866,11 @@ Object used to store objectives that can be independent, related to other object
                     <fullName>At risk</fullName>
                     <default>false</default>
                     <label>At risk</label>
+                </value>
+                <value>
+                    <fullName>Not Delivered</fullName>
+                    <default>false</default>
+                    <label>Not Delivered</label>
                 </value>
             </valueSetDefinition>
         </valueSet>
@@ -3652,6 +3662,10 @@ AND(RecordType.DeveloperName == &quot;Account&quot;, Account__c == &quot;&quot;)
                 <default>false</default>
             </values>
             <values>
+                <fullName>DG</fullName>
+                <default>false</default>
+            </values>
+            <values>
                 <fullName>FDS</fullName>
                 <default>false</default>
             </values>
@@ -3661,14 +3675,6 @@ AND(RecordType.DeveloperName == &quot;Account&quot;, Account__c == &quot;&quot;)
             </values>
             <values>
                 <fullName>MER</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>PPD</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>RVPO</fullName>
                 <default>false</default>
             </values>
             <values>
@@ -6216,6 +6222,10 @@ AND(RecordType.DeveloperName == &quot;Account&quot;, Account__c == &quot;&quot;)
                 <default>false</default>
             </values>
             <values>
+                <fullName>DG</fullName>
+                <default>false</default>
+            </values>
+            <values>
                 <fullName>FDS</fullName>
                 <default>false</default>
             </values>
@@ -6225,14 +6235,6 @@ AND(RecordType.DeveloperName == &quot;Account&quot;, Account__c == &quot;&quot;)
             </values>
             <values>
                 <fullName>MER</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>PPD</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>RVPO</fullName>
                 <default>false</default>
             </values>
             <values>
@@ -6318,6 +6320,10 @@ AND(RecordType.DeveloperName == &quot;Account&quot;, Account__c == &quot;&quot;)
             </values>
             <values>
                 <fullName>Delivered</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Not Delivered</fullName>
                 <default>false</default>
             </values>
             <values>

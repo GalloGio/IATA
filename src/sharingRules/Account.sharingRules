@@ -72,7 +72,7 @@
         <criteriaItems>
             <field>RecordTypeId</field>
             <operation>equals</operation>
-            <value>Operator,Standard Account,Others,General Sales Agent Headquarters,Agency,Airline Headquarters</value>
+            <value>Operator,Standard Account,Others,General Sales Agent Headquarters,Agency,IATA Standard Account,Airline Headquarters</value>
         </criteriaItems>
         <criteriaItems>
             <field>Category__c</field>
@@ -506,6 +506,24 @@
         </criteriaItems>
     </sharingCriteriaRules>
     <sharingCriteriaRules>
+        <fullName>Payment_Providers</fullName>
+        <accessLevel>Edit</accessLevel>
+        <accountSettings>
+            <caseAccessLevel>Edit</caseAccessLevel>
+            <contactAccessLevel>Edit</contactAccessLevel>
+            <opportunityAccessLevel>None</opportunityAccessLevel>
+        </accountSettings>
+        <label>Payment Providers</label>
+        <sharedTo>
+            <group>IDFS_excl_GDP</group>
+        </sharedTo>
+        <criteriaItems>
+            <field>RecordTypeId</field>
+            <operation>equals</operation>
+            <value>Payment Provider</value>
+        </criteriaItems>
+    </sharingCriteriaRules>
+    <sharingCriteriaRules>
         <fullName>RW_access_for_IDFS_excl_GDP</fullName>
         <accessLevel>Edit</accessLevel>
         <accountSettings>
@@ -570,25 +588,6 @@
         <label>Read Only Country office Access For GDP</label>
         <sharedTo>
             <roleAndSubordinatesInternal>GDP</roleAndSubordinatesInternal>
-        </sharedTo>
-        <criteriaItems>
-            <field>Merged_Account__c</field>
-            <operation>notEqual</operation>
-            <value>Merged</value>
-        </criteriaItems>
-    </sharingCriteriaRules>
-    <sharingCriteriaRules>
-        <fullName>Read_Only_Country_office_Access_For_SIS</fullName>
-        <accessLevel>Read</accessLevel>
-        <accountSettings>
-            <caseAccessLevel>Edit</caseAccessLevel>
-            <contactAccessLevel>Edit</contactAccessLevel>
-            <opportunityAccessLevel>None</opportunityAccessLevel>
-        </accountSettings>
-        <description>Read-only access to accounts with the RT IATA COuntry Office for SIS users</description>
-        <label>Read Only Country office Access For SIS</label>
-        <sharedTo>
-            <roleAndSubordinatesInternal>SISCustomerSupport</roleAndSubordinatesInternal>
         </sharedTo>
         <criteriaItems>
             <field>Merged_Account__c</field>

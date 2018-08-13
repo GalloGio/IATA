@@ -246,7 +246,7 @@ public with sharing class ANG_AccountHierarchySelectionController {
 	
 	public Boolean showTopPanel{
 		get{
-			return true;
+			return oscar.RecordTypeId != AMS_Utils.RECTYPE_NEWGENFOP;
 		}
 		private set;
 	}
@@ -440,7 +440,7 @@ public with sharing class ANG_AccountHierarchySelectionController {
 
 			if(!processDetails.isEmpty()) delete processDetails.values();
 			if(!newProcessHierarchy.isEmpty()) insert newProcessHierarchy;
-			Id cId = [SELECT Id FROM Case WHERE Oscar__c = :oscarId AND RecordType.Name = 'OSCAR Communication' AND ( ParentId = null or Parent.RecordType.Name != 'OSCAR Communication' ) ].Id;
+			Id cId = [SELECT Id FROM Case WHERE Oscar__c = :oscarId AND RecordType.Name = 'OSCAR Communication' AND ( ParentId = null or Parent.RecordType.Name != 'OSCAR Communication' OR (Parent.RecordType.Name = 'OSCAR Communication' and Parent.Reason1__c = 'Annual revalidation'))  ].Id;
 			update new Case(Id = cId, AccountId = oscar.Account__c);
 		}catch(Exception e){
 			ApexPages.addMessage(new ApexPages.message(ApexPages.Severity.ERROR, 'Couldn\'t save changes '+ e.getMessage()));

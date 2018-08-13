@@ -12,7 +12,7 @@ public class ANG_AgencyAChangeCodeTriggerHandler{
 	public void onBeforeInsert(){
 	}
 	public void onAfterInsert() {
-		 new ANG_AgencyEventsGenerator(triggerNew,null,'ChangeCode','account__c', 'account__c').run();
+		 new ANG_AgencyEventsGenerator(filterByIATACode(triggerNew),null,'ChangeCode','account__c').run();
 	}
 
 	public void onBeforeUpdate(){
@@ -23,4 +23,15 @@ public class ANG_AgencyAChangeCodeTriggerHandler{
 
 	public void onBeforeDelete(){}
 	public void onAfterDelete() {}
+
+	public static List<Agency_Applied_Change_code__c> filterByIATACode(List<Agency_Applied_Change_code__c> changeCodes){
+
+		List<Agency_Applied_Change_code__c> toReturn = new List<Agency_Applied_Change_code__c>();
+
+		for(Agency_Applied_Change_code__c aacc : changeCodes)
+			if(aacc.IATA_Code__c <> null)
+				toReturn.add(aacc);
+
+		return toReturn;
+	}
 }

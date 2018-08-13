@@ -1,5 +1,7 @@
 global class AMS_OSCAR_Webservice {
 
+    public class OSCARException extends Exception{}
+
     WebService static String updateFormFields(String[] fieldsToUpdateKey, String[] fieldsToUpdateValue, String recordId) {
 
         Map<String, Schema.DisplayType> fTypes;
@@ -228,9 +230,11 @@ global class AMS_OSCAR_Webservice {
     WebService static String createChangeCodeNEW(String oscarId) {
 
         try {
-            List<AMS_OSCAR__c> oscar = [select Account__c, Process__c, AMS_Online_Accreditation__c, recordTypeID from AMS_OSCAR__c where Id = : oscarId];
+            List<AMS_OSCAR__c> oscar = [select Account__c, Process__c, AMS_Online_Accreditation__c, recordTypeID, Is_NewGen__c from AMS_OSCAR__c where Id = : oscarId];
 
             AMS_OSCAR__c theOSCAR = oscar[0];
+
+            //AMS_Utils.isNewgenProcess = (AMS_Utils.oscarNewGenProcesses.contains(theOSCAR.Process__c));
 
             AMS_OSCAR_JSON.ChangeCode changeCode = new AMS_OSCAR_JSON.ChangeCode();
 
@@ -249,6 +253,7 @@ global class AMS_OSCAR_Webservice {
         }
     }
 
+    /*OBSOLETE SIDRA LITE
     WebService static String createSIDRALite(String oscarId) {
 
         String result = '';
@@ -295,16 +300,16 @@ global class AMS_OSCAR_Webservice {
 
                 insert sidraCase;
 
-                /*AMS_OSCAR_JSON.ChangeCode changeCode = new AMS_OSCAR_JSON.ChangeCode();
+                //AMS_OSCAR_JSON.ChangeCode changeCode = new AMS_OSCAR_JSON.ChangeCode();
 
-                changeCode.name = 'SRM';
-                changeCode.reasonCode = '91';
-                changeCode.memoText = 'to be defined';
-                changeCode.reasonDesc  = 'SIDRA LITE CREATED';
-                changeCode.status  = '7';
+                //changeCode.name = 'SRM';
+                //changeCode.reasonCode = '91';
+                //changeCode.memoText = 'to be defined';
+                //changeCode.reasonDesc  = 'SIDRA LITE CREATED';
+                //changeCode.status  = '7';
 
-                Account acct = new Account(Id = oscar[0].Account__c);
-                AMS_ChangeCodesHelper.createAAChangeCodes(new List<AMS_OSCAR_JSON.ChangeCode> {changeCode}, new List<AMS_OSCAR__c> {oscar[0]}, new List<Account> {acct}, true);*/
+                //Account acct = new Account(Id = oscar[0].Account__c);
+                //AMS_ChangeCodesHelper.createAAChangeCodes(new List<AMS_OSCAR_JSON.ChangeCode> {changeCode}, new List<AMS_OSCAR__c> {oscar[0]}, new List<Account> {acct}, true);
 
                 oscar[0].STEP26__c = 'In Progress';
                 update oscar;
@@ -319,6 +324,112 @@ global class AMS_OSCAR_Webservice {
             return AMS_Utils.errorMessageBeautifyer(ex);
         }
 
+    }*/
+    
+        /**
+        Find the parent case related to an Oscar Id
+    **/
+    private static Case findOscarParentCase(Id oscarId) {
+        List<Case> cases = [
+            SELECT Id, AccountId, Account.Type, ContactId, Region__c, Reason1__c, BSPCountry__c, Account.Accumulated_Irregularities__c,
+            SIDRA_Lite_Reason__c, NOT_Date__c, BusinessHoursId,
+            oscar__r.Step6__c, oscar__r.Step9__c, oscar__r.Step11__c, oscar__r.Step12__c, oscar__r.Step14__c, oscar__r.Step26__c, oscar__r.Step35__c,
+            oscar__r.RPM_Approval__c, oscar__r.Step44__c
+            FROM Case
+            WHERE OSCAR__c = :oscarId AND ( ParentId = null or Parent.RecordType.Name != 'OSCAR Communication' )
+            LIMIT 1];
+        if (cases.isEmpty()) {
+            throw new OSCARException('Could not find a the Oscar Communication case related to this OSCAR');
+        }
+        return cases[0];
+    }
+    
+    private static void checkOscarStep(AMS_OSCAR__c oscar, String step) {
+        String reason = SidraLiteHelperForOSCAR.MAP_STEP_REASON.get(step);
+        String message = 'Sidra Lite for "' + reason + '" cannot be created if the status is not "Failed" in this step.';
+        if (step=='6') {
+            if (oscar.Step6__c == 'Failed') return;
+            throw new OSCARException(message);
+        }
+        if (step=='9') {
+            if (oscar.Step9__c == 'Failed') return;
+            throw new OSCARException(message);
+        }
+        if (step=='11') {
+            if (oscar.Step11__c == 'Failed') return;
+            throw new OSCARException(message);
+        }
+        if (step=='12') {
+            if (oscar.Step12__c == 'Failed') return;
+            throw new OSCARException(message);
+        }
+        if (step=='14') {
+            if (oscar.Step14__c == 'Failed') return;
+            throw new OSCARException(message);
+        }
+        if (step=='26') {
+            if (oscar.Step26__c == 'Failed') return;
+            throw new OSCARException(message);
+        }
+        if (step=='35') {
+            if (oscar.Step35__c == 'Failed') return;
+            throw new OSCARException(message);
+        }       
+        if (step=='44') {
+            if (oscar.Step44__c == 'Failed') return;
+            throw new OSCARException(message);
+        }
+        if (step=='RPM') {
+            if (oscar.RPM_Approval__c == 'Authorize Disapproval') return;
+            message = 'Sidra Lite for "' + reason + '" cannot be created if the status is not "Authorize Disapproval" in this step.';
+            throw new OSCARException(message);
+        }
+        if (step=='DGR') {
+            if (oscar.Step6__c == 'Failed') return;
+            throw new OSCARException(message);
+        }
+        throw new OSCARException('Step ' + step + ' is invalid');
+    }
+
+    WebService static String createSIDRALite(String oscarId, String step, Boolean createCase) {
+        try {
+            Case oscarCase = findOscarParentCase(oscarId);
+            checkOscarStep(oscarCase.oscar__r, step);
+            SidraLiteHelperForOSCAR.CHECK_STEP = step;
+            Case sidraCase = WSSidraLite.sidraLiteAction(oscarCase.Id);
+            
+            if (createCase) {
+                // change the reason and NOT date based on the selected step
+                sidraCase.SIDRA_Lite_Reason__c = SidraLiteHelperForOSCAR.MAP_STEP_REASON.get(step);
+                if (step == 'RPM') {
+                    sidraCase.NOT_Date__c = BusinessDays.addNBusinessDays(DateTime.now(),5,oscarCase.BusinessHoursId).date();
+                } else {
+                    sidraCase.NOT_Date__c = Date.today();
+                }
+                insert sidraCase;
+            }
+            return sidraCase.Id;
+
+        } catch (WSSidraLite.ShowConfirmationException confirmation) {
+            // this exception is not an actual error, it contains a message to ask the
+            // user if continue the process (using a javascript 'confirm' method)
+            throw(confirmation);
+
+        } catch (Exception ex) {
+            return AMS_Utils.errorMessageBeautifyer(ex);
+        }
+    }
+    
+    WebService static String updateSIDRALite(String oscarId, String step) {
+        try {
+            Case oscarCase = findOscarParentCase(oscarId);
+            checkOscarStep(oscarCase.oscar__r, step);
+            WSSidraLite.updateSecondAndThirdDeadline(oscarCase.Id);
+            return '';
+
+        } catch (Exception ex) {
+            return AMS_Utils.errorMessageBeautifyer(ex);
+        }
     }
 
     WebService static String createCommissionerCase(String oscarId) {

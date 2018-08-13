@@ -1,9 +1,12 @@
 ({
     doInit : function(component, event, helper) {
         var activity = component.get("v.activity");
+        var divisionValues = component.get("v.divisionValues");
         
         if(activity.Id === undefined) {
             component.set("v.isEditMode", true);
+            helper.fillDivisionOptions(component, divisionValues, activity.Division__c);
+
         } else {
             component.set("v.isEditMode", false);
         }
@@ -13,10 +16,11 @@
         statusValues.push('Delayed');
         statusValues.push('Delivered');
         statusValues.push('Cancelled');
-
+        statusValues.push('Not Delivered');
 
 		component.set("v.statusValues", statusValues);
     },
+
     switchToEditMode : function(component, event, helper) {
         component.set("v.isEditMode", true);
         console.log('going into edit mode...');
@@ -24,13 +28,18 @@
         var activity = component.get("v.activity");
         var status = activity.Status__c;
 
-console.log(JSON.stringify(activity));
+        console.log(JSON.stringify(activity));
 
         var statusValues = component.get("v.statusValues");
         if(status === undefined) status = statusValues[0];
 
         component.set("v.status", status);
-		console.log(status);
+        console.log(status);
+
+        var divisionValues = component.get("v.divisionValues");
+        var division = activity.Division__c;
+        helper.fillDivisionOptions(component, divisionValues, division);
+
     },
     cancelEditMode : function(component, event, helper) {
         var activity = component.get("v.activity");
@@ -51,6 +60,10 @@ console.log(JSON.stringify(activity));
         var statusValues = component.get("v.statusValues");
         if(status === undefined) status = statusValues[0];
         activity.Status__c = status;
+
+        //division
+        var division = component.find("divisionList").get("v.value");
+        activity.Division__c = division;
         
         var deadlineField = component.find("deadline");
         var benefitsField = component.find("benefits");
@@ -62,15 +75,12 @@ console.log(JSON.stringify(activity));
         } else if(deadlineField.get("v.value") === '') {
             deadlineField.set("v.errors", [{message:"Please enter a date" }]);
         
-        }else if (activity.Benefits_to_Account__c == "" && activity.Account_Issue_or_Priority__c == ""){ //Benefits_to_Account__c  
-            benefitsField.set("v.errors",  [{message:"Please enter either Account Issue or Benefits. "}]);
-  
-        } else {
+        }else {
             console.log(JSON.stringify(activity));
             var index = component.get("v.index");
             
             var updateEvent = component.getEvent("updateActivity");
-            updateEvent.setParams({ "issue": activity, "index":index }).fire();
+            updateEvent.setParams({ "issue": activity, "index":index}).fire();
             
             component.set("v.isEditMode", false);
         }

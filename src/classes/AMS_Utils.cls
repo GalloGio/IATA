@@ -1,12 +1,30 @@
 public without sharing class AMS_Utils {
 
+    public static Map<String,IATA_ISO_Country__c> mapCountries{
+
+        get{
+
+            if(mapCountries == null)
+                mapCountries = mapCountries = new map<String,IATA_ISO_Country__c>([SELECT Id, ISO_Code__c FROM IATA_ISO_Country__c]);
+
+            return mapCountries;
+
+        }
+
+    }
+
     public static Boolean runningContactInsertUpdateFromOSCAR = false;
+
+    //public static Boolean isNewGenProcess = false;
+
+    public static List<Profile> profiles;
 
     public static Set<Id> AMSPROFILES {
         get {
             Set<Id> toReturn = new Set<Id>();
 
-            List<Profile> profiles = [select ID from profile where Name IN ('FDS Hub Analyst ARM', 'FDS – Agency Management - Supervisor (Approver)', 'IDFS Americas - Hub CS Management', 'IDFS Americas - Hub Staff')];
+            if(profiles == null)
+                profiles = [select ID from profile where Name IN ('FDS Hub Analyst ARM', 'FDS – Agency Management - Supervisor (Approver)', 'IDFS Americas - Hub CS Management', 'IDFS Americas - Hub Staff')];
 
             for (Profile p : profiles)
                 toReturn.add(p.Id);
@@ -46,7 +64,7 @@ public without sharing class AMS_Utils {
     }
 
     public static List<AMS_ChangeCodes__c> CUSTOM_CHANGECODES {
-        get { 
+        get {
             if(CUSTOM_CHANGECODES == null){
                 CUSTOM_CHANGECODES = [SELECT Change_Code__c,Integration_RecId__c,Account_status_change__c,Billable__c,Bulletin_Memo_Text__c,
                                                                 Reason_Code__c, Reason_Code_Description__c
@@ -56,12 +74,12 @@ public without sharing class AMS_Utils {
         }
         private set;
     }
-    
+
     public static List<AMS_ChangeCodes_Integration__c> CUSTOM_CHANGECODES_INTEGRATION {
         get {
             if(CUSTOM_CHANGECODES_INTEGRATION == null){
                 CUSTOM_CHANGECODES_INTEGRATION = [SELECT RecId_A__c,RecId_B__c,RecId_Res__c FROM AMS_ChangeCodes_Integration__c];
-                
+
             }
             return CUSTOM_CHANGECODES_INTEGRATION;
         }
@@ -80,8 +98,6 @@ public without sharing class AMS_Utils {
     }
 
     private static Map<String, RecordType> currentCache = null;
-
-    public static String userSessionId = UserInfo.getSessionId();
 
     public static final String SANITYCHECK = 'Perform Sanity Check';
     public static final String APPROVAL = 'Manager Approval';
@@ -119,8 +135,12 @@ public without sharing class AMS_Utils {
     public static final String ANG_LOCATION_TYPE_DIFFLEGALENTITY =  'Location type to different legal entity';
     public static final String ANG_LOCATION =  'Location';
     public static final String ANG_HIERARCHY =  'Hierarchy';
+    public static final String ANG_TRADE_NAME = 'Trade name';
     public static final String ANG_VMFR =  'VMFR';
     public static final String ANG_ACCREDITATION_TYPE = 'Accreditation type';
+
+    public static final Set<String> ANG_OSCAR_MAJOR_CHANGES_PROCESSES = new Set<String>{ANG_OWNERSHIP, ANG_HIERARCHY, ANG_LOCATION_TYPE_DIFFLEGALENTITY, ANG_LEGAL_NAME,
+                                                                                ANG_LEGAL_STATUS, ANG_MAJOR_SHAREHOLDING, ANG_ACCREDITATION_TYPE};
 
     public static final String OSCAR_CLOSED = 'Closed';
 
@@ -154,6 +174,7 @@ public without sharing class AMS_Utils {
     public static final String BANKACCCHANGES   = 'BANK.ACCOUNT.CHANGES';
     public static final String CERTIFICATION    = 'CERTIFICATION.1.0';
     public static final String IEPBANKACCOUNTSETUP = 'IEP.BANK.ACCOUNT.SETUP';
+    public static final String PCI_COMPLIANT    = 'PCI.COMPLIANT.1.0';
 
     //Process of type NewGen
     public static final String NEWHELITE        = 'ANG.NEW.HE.LITE.1.0';
@@ -161,12 +182,23 @@ public without sharing class AMS_Utils {
     public static final String NEWAE            = 'ANG.NEW.AE.1.0';
     public static final String NGCHANGES        = 'ANG.MAJOR.CHANGES.1.0';
     public static final String NGCORRECTION     = 'NGCORRECTION.1.0';
+    public static final String NGFOP            = 'ANG.FOPMANAGEMENT.1.0';
+    public static final String NGVR             = 'VR.1.0';
+    public static final String NGOPTINOUT       = 'ANG.FS.OPTINOUT';
+    public static final String NGANNUALREVAL    = 'ANG.ANNUAL.REVALIDATION';
 
-    public static final Set<String> oscarNewGenProcesses = new Set <String>{NEWHELITE, NEWHESTANDARD, NEWAE, NGCHANGES, NGCORRECTION};
+    //AMSU-125
+    public static final Set<String> oscarNewProcesses = new Set<String> {new_HO, new_BR, new_BR_ABROAD, new_TIDS, new_MSO, new_GSA, new_GSA_BSP, new_GSSA, new_AHA, new_AHA_BSP, new_SA};
+
+    public static final Set<String> oscarNewGenProcesses = new Set <String>{NEWHELITE, NEWHESTANDARD, NEWAE, NGCHANGES, NGCORRECTION, NGOPTINOUT, NGFOP};
+    public static final Set<String> oscarNewGenNewAppProcesses = new Set <String>{NEWHELITE, NEWHESTANDARD, NEWAE};
+
     public static final Set<String> changesRequiringManagerApproval = new Set<String>{ANG_LEGAL_NAME,ANG_LEGAL_STATUS,ANG_MAJOR_SHAREHOLDING,
                                                                                     ANG_LOCATION_TYPE_DIFFLEGALENTITY,ANG_OWNERSHIP,ANG_HIERARCHY,ANG_ACCREDITATION_TYPE};
 
     public static final Set<String> oscarPCICompliantMigrationProcesses = new Set <String>{NEWHESTANDARD,NEWHELITE, NEWAE, NGCORRECTION};
+    public static final Set<String> oscarPCICompliantValidationAttachement = new Set <String>{'Yes','Nil CC','Corporate Card'};
+    public static final Set<String> oscarPCICompliantValidationExpiryDate = new Set <String>{'Yes','Nil CC'};
 
     //other types of process
     public static final String CERTIFICATE      = 'CER.1.0'         ;
@@ -186,12 +218,20 @@ public without sharing class AMS_Utils {
     public static final String RECTYPE_NGCHANGES    = RecordTypeSingleton.getInstance().RtIDsPerDeveloperNamePerObj.get('AMS_OSCAR__c').get('ANG_Agency_Changes');
     public static final String RECTYPE_NGCORRECTION = RecordTypeSingleton.getInstance().RtIDsPerDeveloperNamePerObj.get('AMS_OSCAR__c').get('NGCORRECTION');
     public static final String RECTYPE_CORRECTION   = Schema.AMS_OSCAR__c.sObjectType.getDescribe().getRecordTypeInfosByName().get('CORRECTION').getRecordTypeId();
+    public static final String RECTYPE_NEWGENFOP   = Schema.AMS_OSCAR__c.sObjectType.getDescribe().getRecordTypeInfosByName().get('NGFormsOfPayment').getRecordTypeId();
+    public static final String RECTYPE_NEWGENOPTINOUT   = Schema.AMS_OSCAR__c.sObjectType.getDescribe().getRecordTypeInfosByName().get('ANG.FS.OPTINOUT').getRecordTypeId();
+    public static final String RECTYPE_NEWGENANNUALREVAL   = Schema.AMS_OSCAR__c.sObjectType.getDescribe().getRecordTypeInfosByName().get('ANG.ANNUAL.REVALIDATION').getRecordTypeId();
 
     public static final String RECTYPE_OSCARCOMM    = RecordTypeSingleton.getInstance().RtIDsPerDeveloperNamePerObj.get('Case').get('OSCAR_Communication');
     public static final String RECTYPE_SIDRALITE    = RecordTypeSingleton.getInstance().RtIDsPerDeveloperNamePerObj.get('Case').get('SIDRA_Lite');
     public static final String RECTYPE_SAAM         = RecordTypeSingleton.getInstance().RtIDsPerDeveloperNamePerObj.get('Case').get('ProcessEuropeSCE');
     public static final String RECTYPE_SIDRA        = RecordTypeSingleton.getInstance().RtIDsPerDeveloperNamePerObj.get('Case').get('SIDRA');
+    public static final String RECTYPE_IFAP         = RecordTypeSingleton.getInstance().RtIDsPerDeveloperNamePerObj.get('Case').get('IATA_Financial_Review');
     public static final String RECTYPE_IATAAGENCY   = RecordTypeSingleton.getInstance().RtIDsPerDeveloperNamePerObj.get('Account').get('IATA_Agency');
+
+    public static final String RECTYPE_IATAEASYPAY  = RecordTypeSingleton.getInstance().RtIDsPerDeveloperNamePerObj.get('AP_Process_Form__c').get('IATA_EasyPay_Opt_in_Out');
+
+    public static final Id OSCAR_COMUNICATION = Schema.SObjectType.Case.getRecordTypeInfosByName().get('OSCAR Communication').getRecordTypeId();
 
     public static final Set<String> oscarAMSProcesses = new Set <String>{new_HO,new_BR,new_BR_ABROAD,new_TIDS,new_MSO,new_GSA,new_GSA_BSP,new_GSSA,new_AHA,new_AHA_BSP,new_SA, COR,NEWHELITE,NEWHESTANDARD};
 
@@ -208,14 +248,14 @@ public without sharing class AMS_Utils {
     public static final String ACC_S7_UNDERREVIEW = 'Under review';
     public static final String ACC_S8_CHANGESPROCESSED = 'Changes processed';
     public static final String ACC_S9_APPROVED = 'Approved';
-     
+
     public static final String AACC_INPROGRESS = 'in progress';
     public static final String AACC_FINALIZED = 'finalized';
     public static final String AACC_WITHDRAWAL = 'withdrawn';
     public static final String AACC_DISAPPROVED = 'disapproved';
     public static final Set<String> AACC_FINALS = new Set<String>{AACC_FINALIZED, AACC_DISAPPROVED, AACC_WITHDRAWAL};
-     
-    public static final String CHLOCTYPEBEHAVIOR_NOSWAP = 'Don’t change the parent';        
+
+    public static final String CHLOCTYPEBEHAVIOR_NOSWAP = 'Don’t change the parent';
     public static final String CHLOCTYPEBEHAVIOR_SWAP = 'Swap with the parent';
     public static final String CHLOCTYPEBEHAVIOR_STANDARD = CHLOCTYPEBEHAVIOR_SWAP;
     public static final String SECTOR_CARGO = 'Cargo Agent';
@@ -230,19 +270,40 @@ public without sharing class AMS_Utils {
     public static final String CASE_REASON_NEW_HO = 'New HO';
     public static final String CASE_REASON_AE_STANDARD = 'New AE standard';
     public static final String CASE_REASON_AE_LITE = 'New AE lite';
+
     public static final String CASE_REASON_BR_ABROAD = 'New BR Abroad';
-    public static final String CASE_REASON_BR_IP = 'New BR / IP';  
+    public static final String CASE_REASON_BR_IP = 'New BR / IP';
+    public static final String CASE_AREA_ACCREDITATION_PROCESS = 'Accreditation Process';
+    public static final String CASE_AREA_AGENCY_RISK_MANAGEMENT = 'Agency Risk Management';
+    public static final String CASE_REASON_FOR_MANAGEMENT = 'FoP Management';
+    public static final String CASE_REASON_VR_CLOSURE = 'CLO - Closure';
+    public static final String CASE_REASON_OPT_OUT = 'Financial review opt-in / opt-out';
+    public static final String CASE_REASON_PCI_DSS_COMPLIANT = 'PCI DSS Compliant';
+
+    // Case - Origin
+    public static final String CASE_ORIGIN_PORTAL = 'Portal';
+    public static final String ANG_MASSIVE_FOP = 'Massive FOP Creation';
+    public static final String ANG_FOP_AUTOMATIC_RENEWAL = 'FoP automatic renewal';
+
+    // Case - Status
+    public static final String CASE_STATUS_CLOSED = 'Closed';
+    public static final String CASE_STATUS_FINANCIAL_SECURITY_REQUESTED = 'Financial Security Requested';
+
+    //set with the ifap status to update the account's last financial review
+    public static final Set<String> CASE_STATUS_UPDATE_FINANCIAL_REVIEW_SET= new Set<string>{CASE_STATUS_CLOSED,CASE_STATUS_FINANCIAL_SECURITY_REQUESTED};
+
+    public static final String CASE_TYPE_OF_CUSTOMER_IATA_TRAVEL_AGENT = 'IATA Travel Agent';
 
     public static final String CATEGORY_TRAVEL_AGENT = 'Travel Agent';
     public static final String CATEGORY_PASSENGER_SALES_AGENT = 'IATA Passenger Sales Agent';
     public static final String CATEGORY_DOMESTIC_AGENT = 'Domestic Agent';
     public static final String CATEGORY_IMPORT_AGENT = 'Import Agent';
-    public static final String CATEGORY_COURIER = 'Courier';    
+    public static final String CATEGORY_COURIER = 'Courier';
 
     public static final String TYPECHANGE_OWNERIATA2IATA = 'Ownership to IATA Agent';
     public static final String TYPECHANGE_OWNERIATA2NONIATA = 'Ownership to non-IATA Agent';
     public static final String TYPECHANGE_LOCATION = 'Location';
-    public static final String TYPECHANGE_LOCATIONWITHINSPECTION = 'Location with inspection'; 
+    public static final String TYPECHANGE_LOCATIONWITHINSPECTION = 'Location with inspection';
     public static final Id AccreditationContactPersonRT = Schema.SObjectType.AMS_Accreditation_Contact__c.getRecordTypeInfosByName().get('Person').getRecordTypeId();
     public static final Id AccreditationContactCompanyRT = Schema.SObjectType.AMS_Accreditation_Contact__c.getRecordTypeInfosByName().get('Company').getRecordTypeId();
     public static final Id AccreditationContactTrainedStaffRT = Schema.SObjectType.AMS_Accreditation_Contact__c.getRecordTypeInfosByName().get('Trained Staff').getRecordTypeId();
@@ -290,16 +351,36 @@ public without sharing class AMS_Utils {
     public static final String TYPE_PAX_AE_CASH = buildOfficeType(CASE_REASON_ASSOCIATE_ENTITY_STANDARD, NEWFORM_AGENTTYPE_CASH);
     public static final String TYPE_PAX_AE_NO_CASH = buildOfficeType(CASE_REASON_ASSOCIATE_ENTITY_STANDARD, NEWFORM_AGENTTYPE_NO_CASH);
     public static final String TYPE_PAX_HO = buildOfficeType(CASE_REASON_NEW_HO, ACCREDITATIONMODEL_LEGACY);
-    public static final String TYPE_HE_ST_CASH = buildOfficeType(CASE_REASON_HE_STANDARD, AGENTTYPE_WITHCASH);    
-    public static final String TYPE_HE_LITE_NO_CASH = buildOfficeType(CASE_REASON_HE_LITE, AGENTTYPE_NOCASH); 
-    public static final Set<String> processesANGrequiredAttachValidation = new Set<String>{NEWHELITE,NEWHESTANDARD,NEWAE,NGCHANGES,VOLRELINQUISH};   
+    public static final String TYPE_HE_ST_CASH = buildOfficeType(CASE_REASON_HE_STANDARD, AGENTTYPE_WITHCASH);
+    public static final String TYPE_HE_LITE_NO_CASH = buildOfficeType(CASE_REASON_HE_LITE, AGENTTYPE_NOCASH);
+    public static final Set<String> processesANGrequiredAttachValidation = new Set<String>{NEWHELITE,NEWHESTANDARD,NEWAE,NGCHANGES}; 
+	public static final Set<String> processesAMSrequiredAttachValidation = new Set<String>{new_HO,new_BR,AGENCYCHANGES,CERTIFICATION,VOLRELINQUISH,PCI_COMPLIANT}; //AMSU-34
 
     public static final String OPEN = 'Open';
     public static final String NO_IEP_ACCOUNT = 'No IEP Account';
 
     public static final String CC = 'CC';
     public static final String CA = 'CA';
+    public static final string EP = 'EP';
     public static final String IATA_ACCREDITATION_AND_CHANGES = 'IATA Accreditation & Changes';
+    public static final String CGO_SIGNED_CONTRACT = 'CGO_SIGNED_CONTRACT';
+    public static final String NOC_SIGNED_CONTRACT = 'NOC_SIGNED_CONTRACT';
+    public static final String PCI_COMPLIANCE = 'PCI_COMPLIANCE';
+
+    public static final String RECTYPE_CASEIFAP   = RecordTypeSingleton.getInstance().RtIDsPerDeveloperNamePerObj.get('Case').get('IATA_Financial_Review');
+
+    //Mass created FOP case/OSCAR is assigned to one of theses queues when created:
+    public static final Set<String> MASS_FOP_QUEUES = new Set<String>{'NewGen PCI - Africa & Middle East','NewGen PCI - Americas','NewGen PCI - Asia & Pacific','NewGen PCI - China & North Asia','NewGen PCI - Europe'};
+	
+	/* AMSU-139 */
+    public static final String REJECTED = 'Rejected';
+    public static final String REJECTED_CLOSED = 'Rejected Closed';
+    public static final String ACCEPTED = 'Accepted';
+
+    /* AMSU-37 */
+    public static final String APP_DISAPPROVED = '12-APPLICATION DISAPPROVED';
+    public static final String APP_WITHDRAWN = '11-APPLICATION WITHDRAWN';
+
 
     static {
         refreshCache();
@@ -332,7 +413,7 @@ public without sharing class AMS_Utils {
         'TIDS Agent' => 'TIDS',
         'GSA General Sales Agent' =>    'General Sales Agent (GSA)',
         'GSSA Cargo' => 'GSSA Cargo'
-    };   
+    };
 
     public AMS_Utils() {}
     //private static final String ENCRYPTION_ALGORYTHM = 'AES128';
@@ -340,7 +421,7 @@ public without sharing class AMS_Utils {
     @future
     public static void sendEmailAmsSupport( string subject, string message) {
 
-        
+
 
         //List<ID> userIDs = getUserIds(getSupportEmails());
         List<ID> userIDs = new List<ID>();
@@ -367,13 +448,13 @@ public without sharing class AMS_Utils {
                 emailsToSend.add(mail);
 
             }
-            
+
             if (Test.isRunningTest() ) {
                 Messaging.sendEmail(emailsToSend);
                 System.debug('AMS_ApplicationException.SendEmailSupport skipped because this is a Test. Subject: ' + subject + ', message: ' + message);
                 return;
             }
-                
+
 
         } catch (Exception  e1) {
             system.debug('Failed to send email to users:' + e1.getMessage());
@@ -498,7 +579,7 @@ public without sharing class AMS_Utils {
         else if (sChangeCode.equalsIgnoreCase('DIS')) {
             sRes = AACC_DISAPPROVED;
         }
-        
+
         return sRes;
     }
     /**
@@ -544,7 +625,7 @@ public without sharing class AMS_Utils {
             sRes = 'A';
         } else if (sChangeCode.equalsIgnoreCase('NAC')) {
             sRes = 'A';
-        } 
+        }
         // «D» Section
         else if (sChangeCode.equalsIgnoreCase('DIS')) {
             sRes = 'D';
@@ -554,7 +635,7 @@ public without sharing class AMS_Utils {
             sRes = 'D';
         } else if (sChangeCode.equalsIgnoreCase('CLO')) {
             sRes = 'D';
-        } 
+        }
         // «C» Section
         else {
             sRes = 'C';
@@ -601,7 +682,7 @@ public without sharing class AMS_Utils {
         //System.debug(loggingLevel.Debug, '____ [cls AMS_Utils - isAddressEmpty] acc.ShippingStreet - ' + acc.ShippingStreet);
         //System.debug(loggingLevel.Debug, '____ [cls AMS_Utils - isAddressEmpty] acc.ShippingCity - ' + acc.ShippingCity);
         //System.debug(loggingLevel.Debug, '____ [cls AMS_Utils - isAddressEmpty] acc.ShippingPostalCode - ' + acc.ShippingPostalCode);
-        
+
         if(addressType.equalsIgnoreCase('Billing')){
             //R3.1 - removed the state validation
             //return ((acc.BillingStreet == null && acc.BillingCity == null && acc.BillingPostalCode == null) || acc.IATA_ISO_Country__c == null || acc.Iso_State__c == null);
@@ -612,8 +693,8 @@ public without sharing class AMS_Utils {
             //return ((acc.ShippingStreet == null && acc.ShippingCity == null && acc.ShippingPostalCode == null) );
             return ((acc.ShippingStreet == null && acc.ShippingCity == null) );
         }
-        
-        return false;   
+
+        return false;
     }
 
     //VALID = TRUE; INVALID = FALSE
@@ -624,7 +705,7 @@ public without sharing class AMS_Utils {
         state = state.toLowerCase().trim();
         if(AMS_Utils.iataIsoStates.get(state) == null){
             return false;
-        }        
+        }
         return true;
     }
 
@@ -636,7 +717,7 @@ public without sharing class AMS_Utils {
         country = country.toLowerCase().trim();
         if(AMS_Utils.iataIsoCountries.get(country) == null){
             return false;
-        }        
+        }
         return true;
     }
 
@@ -858,7 +939,7 @@ public without sharing class AMS_Utils {
                 oscarAgency.Annual_Renewal_Certificates__c = true;
                 toReturn = oscarAgency;
             }
-        }       
+        }
 
         if(aacNew.Change_Code__c == 'CER'){
             oscarAgency.Annual_Renewal_Certificates__c = true;
@@ -867,21 +948,21 @@ public without sharing class AMS_Utils {
         }
 
         if( aacNEW.Change_Code__c == 'FIN' ){
-            
+
             oscarAgency.Is_AIMS_Account__c = true;
-            oscarAgency.Accreditation_Date__c = Date.Today();            
+            oscarAgency.Accreditation_Date__c = Date.Today();
             toReturn = oscarAgency;
         }
 
         if( aacNEW.Change_Code__c == 'CLO' ){
-            
-            oscarAgency.Expiry_Date__c = Date.Today();            
+
+            oscarAgency.Expiry_Date__c = Date.Today();
             toReturn = oscarAgency;
         }
 
         if( aacNEW.Change_Code__c == 'REI' ){
-            
-            oscarAgency.Expiry_Date__c = null;            
+
+            oscarAgency.Expiry_Date__c = null;
             toReturn = oscarAgency;
         }
 
@@ -906,7 +987,7 @@ public without sharing class AMS_Utils {
             R = CassAssociate
             T-TIDS
             Q = Courier
-            V-Travel Service Intermediaries-TSI (USA Only) 
+            V-Travel Service Intermediaries-TSI (USA Only)
             X-Handling Agents and Shipping Lines
             J-Joint Vent
          */
@@ -1007,7 +1088,7 @@ public without sharing class AMS_Utils {
             return 'DEFAULT/SUSPENSION';
         else if (statusDesc == ACC_S6_CASHWITHCOMMISSION)
             return 'REVIEW/STDS REMOVAL/NOTICE OF TERMINATION';
-        
+
         return statusDesc;
     }
 
@@ -1045,51 +1126,90 @@ public without sharing class AMS_Utils {
 
     public static void syncOSCARwithIFAP(Case previousIFAPCase, Case updatedIFAPCase) {
 
+        syncOSCARwithIFAP(previousIFAPCase, updatedIFAPCase, null, true);
+    }
+
+    public static AMS_OSCAR__c syncOSCARwithIFAP(Case previousIFAPCase, Case updatedIFAPCase, AMS_OSCAR__c oscar, Boolean updateOscar) {
+
         Boolean mustUpdateOSCAR = false;
-        List<AMS_OSCAR__c> oscar = [select Financial_Assessment_requested__c, Financial_Assessment_deadline__c, Assessment_Performed_Date__c, Financial_Review_Result__c from AMS_OSCAR__c where Id = : updatedIFAPCase.OSCAR__c];
-        if (oscar != null || oscar.size() > 0) {
 
-            if (previousIFAPCase.Financial_Assessment_requested__c <> updatedIFAPCase.Financial_Assessment_requested__c) {
-                oscar[0].Financial_Assessment_requested__c = updatedIFAPCase.Financial_Assessment_requested__c;
-                mustUpdateOSCAR = true;
-            }
-
-            if (previousIFAPCase.Deadline_Date__c <> updatedIFAPCase.Deadline_Date__c) {
-                oscar[0].Financial_Assessment_deadline__c = updatedIFAPCase.Deadline_Date__c;
-                mustUpdateOSCAR = true;
-            }
-
-            if (previousIFAPCase.Assessment_Performed_Date__c <> updatedIFAPCase.Assessment_Performed_Date__c) {
-                oscar[0].Assessment_Performed_Date__c = updatedIFAPCase.Assessment_Performed_Date__c;
-                mustUpdateOSCAR = true;
-            }
-
-            if (previousIFAPCase.Financial_Review_Result__c <> updatedIFAPCase.Financial_Review_Result__c) {
-                oscar[0].Financial_Review_Result__c = updatedIFAPCase.Financial_Review_Result__c;
-                oscar[0].Reason_for_change_of_Financial_result__c = updatedIFAPCase.Reason_for_change_of_Financial_result__c;
-                mustUpdateOSCAR = true;
-            }
-
-            if (previousIFAPCase.Financial_Security_Amount__c <> updatedIFAPCase.Financial_Security_Amount__c) {
-                oscar[0].Bank_Guarantee_amount__c = updatedIFAPCase.Financial_Security_Amount__c;
-                oscar[0].Requested_Bank_Guarantee_amount__c = updatedIFAPCase.Financial_Security_Amount__c;
-                mustUpdateOSCAR = true;
-            }
-
-            if (previousIFAPCase.Financial_Security_Currency__c <> updatedIFAPCase.Financial_Security_Currency__c) {
-                oscar[0].Bank_Guarantee_Currency__c = updatedIFAPCase.Financial_Security_Currency__c;
-                oscar[0].Requested_Bank_Guarantee_Currency__c = updatedIFAPCase.Financial_Security_Currency__c;
-                mustUpdateOSCAR = true;
-            }
-
-            if (previousIFAPCase.FS_Deadline_Date__c <> updatedIFAPCase.FS_Deadline_Date__c) {
-                oscar[0].Bank_Guarantee_deadline__c = updatedIFAPCase.FS_Deadline_Date__c;
-                mustUpdateOSCAR = true;
-            }
-
-            if (mustUpdateOSCAR)
-                update oscar[0];
+        if(oscar == null){
+            List<AMS_OSCAR__c> oscarlst = [select Financial_Assessment_requested__c, Financial_Assessment_deadline__c, Assessment_Performed_Date__c, Financial_Review_Result__c,
+                                        Bank_Guarantee_amount__c, Reason_for_change_of_Financial_result__c, Requested_Bank_Guarantee_amount__c, Bank_Guarantee_Currency__c, Bank_Guarantee_deadline__c
+                                        from AMS_OSCAR__c where Id = : updatedIFAPCase.OSCAR__c];
+            if(!oscarlst.isEmpty())
+                oscar = oscarlst.get(0);
         }
+
+        if (oscar != null ) {
+
+            if (previousIFAPCase.Financial_Assessment_requested__c <> updatedIFAPCase.Financial_Assessment_requested__c &&
+                oscar.Financial_Assessment_requested__c <> updatedIFAPCase.Financial_Assessment_requested__c) {
+                oscar.Financial_Assessment_requested__c = updatedIFAPCase.Financial_Assessment_requested__c;
+                mustUpdateOSCAR = true;
+            }
+
+            if (previousIFAPCase.Deadline_Date__c <> updatedIFAPCase.Deadline_Date__c &&
+                oscar.Financial_Assessment_deadline__c <> updatedIFAPCase.Deadline_Date__c
+                ) {
+                oscar.Financial_Assessment_deadline__c = updatedIFAPCase.Deadline_Date__c;
+                mustUpdateOSCAR = true;
+            }
+
+            if (previousIFAPCase.Assessment_Performed_Date__c <> updatedIFAPCase.Assessment_Performed_Date__c &&
+                oscar.Assessment_Performed_Date__c <> updatedIFAPCase.Assessment_Performed_Date__c
+                ) {
+
+                oscar.Assessment_Performed_Date__c = updatedIFAPCase.Assessment_Performed_Date__c;
+                mustUpdateOSCAR = true;
+            }
+
+            if (previousIFAPCase.Financial_Review_Result__c <> updatedIFAPCase.Financial_Review_Result__c &&
+                (oscar.Financial_Review_Result__c <> updatedIFAPCase.Financial_Review_Result__c ||
+                 oscar.Reason_for_change_of_Financial_result__c <> updatedIFAPCase.Reason_for_change_of_Financial_result__c
+                )
+                ) {
+                oscar.Financial_Review_Result__c = updatedIFAPCase.Financial_Review_Result__c;
+                oscar.Reason_for_change_of_Financial_result__c = updatedIFAPCase.Reason_for_change_of_Financial_result__c;
+                mustUpdateOSCAR = true;
+            }
+
+            if (previousIFAPCase.Financial_Security_Amount__c <> updatedIFAPCase.Financial_Security_Amount__c &&
+                (oscar.Bank_Guarantee_amount__c <> updatedIFAPCase.Financial_Security_Amount__c ||
+                 oscar.Requested_Bank_Guarantee_amount__c <> updatedIFAPCase.Financial_Security_Amount__c
+                )
+                ) {
+                oscar.Bank_Guarantee_amount__c = updatedIFAPCase.Financial_Security_Amount__c;
+                oscar.Requested_Bank_Guarantee_amount__c = updatedIFAPCase.Financial_Security_Amount__c;
+                mustUpdateOSCAR = true;
+            }
+
+            if (previousIFAPCase.Financial_Security_Currency__c <> updatedIFAPCase.Financial_Security_Currency__c &&
+                (oscar.Bank_Guarantee_Currency__c <> updatedIFAPCase.Financial_Security_Currency__c ||
+                 oscar.Requested_Bank_Guarantee_Currency__c <> updatedIFAPCase.Financial_Security_Currency__c
+                )
+                ) {
+                oscar.Bank_Guarantee_Currency__c = updatedIFAPCase.Financial_Security_Currency__c;
+                oscar.Requested_Bank_Guarantee_Currency__c = updatedIFAPCase.Financial_Security_Currency__c;
+                mustUpdateOSCAR = true;
+            }
+
+            if (previousIFAPCase.FS_Deadline_Date__c <> updatedIFAPCase.FS_Deadline_Date__c &&
+                oscar.Bank_Guarantee_deadline__c <> updatedIFAPCase.FS_Deadline_Date__c) {
+                oscar.Bank_Guarantee_deadline__c = updatedIFAPCase.FS_Deadline_Date__c;
+                mustUpdateOSCAR = true;
+            }
+
+            if (mustUpdateOSCAR && updateOscar){
+                update oscar;
+                return null;
+            }
+        }
+
+        if(!mustUpdateOSCAR && !updateOscar)
+            return null;
+
+        return oscar;
 
     }
 
@@ -1109,7 +1229,7 @@ public without sharing class AMS_Utils {
         List<Account> accountsToUpdate = new List<Account>();
         List<AMS_Pax_Accreditation_Form__c> onlineAccToCreateAccountRole = new List<AMS_Pax_Accreditation_Form__c>();
         Map<Id, Set<Id>> stagingToAccount = new Map<Id, Set<Id>>();
-        
+
         //DT: reindented and added 3 fields for iso shipping/billin
         Map<String, String> fieldsMapping = new Map<String, String> {'Name' => 'Account_Name__c'
                                                                     ,'IATACode__c' => 'IATACode__c'
@@ -1183,7 +1303,7 @@ public without sharing class AMS_Utils {
 
         for (AMS_OSCAR__c oscar : oscars) {
 
-            Account acc = accounts.get(oscar.Account__c); 
+            Account acc = accounts.get(oscar.Account__c);
 
             AMS_Pax_Accreditation_Form__c onlineAcc = onlineAccreditations.get(oscar.AMS_Online_Accreditation__c);
 
@@ -1198,14 +1318,14 @@ public without sharing class AMS_Utils {
                     Object newValue = onlineAcc.get(onlineAccField);
 
                     if( acc.get(accfield) != newValue ){
-                        
+
                         if(AMS_AccountTriggerHandler.minorChangesAccountFields.contains(accfield.toLowerCase())){
                             accChanges.add(new AMS_ChangeCodesHelper.ObjectChange('Account', accfield, String.valueOf(acc.get(accfield)), String.valueOf(newValue)));
                         }
 
                         acc.put(accfield, newValue);
                     }
-                    
+
                     System.debug(accfield + ':' + newValue);
                 }
 
@@ -1225,7 +1345,7 @@ public without sharing class AMS_Utils {
                 acc.ShippingCountry = onlineAcc.Shipping_ISO_Country__r.Name;
                 acc.ShippingState = onlineAcc.IATA_ISO_State__r.Valid_for_Address__c == true ? onlineAcc.Shipping_ISO_State__r.Name : null;
                 acc.BillingState = onlineAcc.IATA_ISO_State__r.Valid_for_Address__c == true ? onlineAcc.IATA_ISO_State__r.Name : null;
-                
+
                 acc.ANG_Accreditation_Model__c = decodeAMFromOscarProcess(oscar.Process__c,acc.ANG_Accreditation_Model__c);
 
                 if(oscar.Process__c == NEWHESTANDARD && acc.RHC_Informations__r.isEmpty()) createRHCInfo.add(acc);
@@ -1234,6 +1354,8 @@ public without sharing class AMS_Utils {
 
                 if(oscarPCICompliantMigrationProcesses.contains(oscar.Process__c)){
                     acc.Is_PCI_compliant__c = oscar.Is_PCI_compliant__c;
+                    if(acc.Is_PCI_compliant__c == 'Corporate Card')
+                        acc.ANG_PCI_compliance_expiry_date__c = Date.newInstance(2099, 12, 31);
                 }
 
                 accountsToUpdate.add(acc);
@@ -1264,9 +1386,9 @@ public without sharing class AMS_Utils {
             Database.rollback(sp);
             throw ex;
         }
-        
+
         return null;
-        
+
     }
 
     public static string decodeAMFromOscarProcess(String oscarProcess, String oldAccountValue){
@@ -1274,7 +1396,7 @@ public without sharing class AMS_Utils {
         if(oscarProcess == NEWHELITE){
 
             return ACCREDITATIONMODEL_CASHLESS;
-        
+
         }else if(oscarProcess == NEWHESTANDARD){
 
             return ACCREDITATIONMODEL_CASH;
@@ -1321,6 +1443,149 @@ public without sharing class AMS_Utils {
         System.debug('AGENCY CHANGES: fields to migrate (' + fieldsToMigrate + ') for accounts: ' + accountsAffected);
 
         Map<ID,AMS_ChangeCodesHelper.ObjectChangesStruct> accountsToUpdate = new  Map<ID,AMS_ChangeCodesHelper.ObjectChangesStruct>();
+
+        Map<String, Schema.SObjectField>  acctFieldsMap= Schema.SObjectType.Account.fields.getMap();
+
+        //DT: Reindented and added 3 fields for addresses
+        // Account Fields => AMS Pax Accreditation Fields (Staging area)
+        Map<String, String> fieldsMapping = new Map<String, String> {'Name' => 'Account_Name__c'
+                                                                    ,'IATACode__c' => 'IATACode__c'
+                                                                    ,'Short_Name__c' => 'Short_Name__c'
+                                                                    ,'TradeName__c' => 'Trade_Name__c'
+                                                                    ,'License_Number__c' => 'ISSP_AMS_License_No__c'
+                                                                    ,'VAT_Number__c' => 'ISSP_AMS_VAT_number__c'
+                                                                    ,'BillingStreet' => 'Branch_Office_Street_name_number__c'
+                                                                    ,'Website' => 'Website__c'
+                                                                    ,'BillingPostalCode' => 'Branch_Office_Postal_code__c'
+                                                                    //,'BillingState' => 'Billing_State__c'
+                                                                    ,'BillingCity' => 'Branch_Office_City__c'
+                                                                    ,'IATA_ISO_Country__c' => 'Branch_Office_Country__c'
+                                                                    ,'Iso_State__c' => 'IATA_ISO_State__c'
+                                                                    //,'ShippingCountry' => 'Shipping_Country__c'
+                                                                    ,'ShippingStreet' => 'Shipping_Street__c'
+                                                                    ,'ShippingPostalCode' => 'Shipping_Postal_Code__c'
+                                                                    //,'ShippingState' => 'Shipping_State__c'
+                                                                    ,'Email__c' => 'Branch_Office_Email__c'
+                                                                    ,'Phone' => 'Branch_Office_Phone__c'
+                                                                    ,'Fax' => 'Branch_Office_FAX__c'
+                                                                    ,'ShippingCity' => 'Shipping_City__c'
+                                                                    ,'Operation__c' => 'Operation__c'
+                                                                    ,'Abbreviated_name__c' => 'Abbreviated_name__c'
+                                                                    ,'Abbreviated_address__c' => 'Abbreviated_Address__c'
+                                                                    ,'Remittance_frequency__c' => 'Remittance_frequency__c'
+                                                                    ,'Solicitation_Flag__c' => 'Solicitation_Flag__c'
+                                                                    ,'VAT_Number_2__c' => 'VAT_Number_2__c'
+                                                                    ,'CASS_Number__c' => 'CASS_Number__c'
+                                                                    ,'Location_Class__c' => 'Location_Class__c'
+                                                                    ,'Location_Type__c' => 'Location_Type__c'
+                                                                    ,'Mobile__c' => 'Mobile__c'
+                                                                    ,'Is_your_firm_handling_Dangerous_Goods__c' => 'Is_your_firm_handling_Dangerous_Goods__c'
+                                                                    ,'IATA_ISO_Billing_State__c' => 'IATA_ISO_State__c'
+                                                                    ,'IATA_ISO_Shipping_Country__c' => 'Shipping_ISO_Country__c'
+                                                                    ,'IATA_ISO_Shipping_State__c' => 'Shipping_ISO_State__c'
+                                                                    ,'Link_agent_name__c' => 'Link_agent_name__c'};
+
+        /*** AMSU-121 Start ***/
+        if(!oscarNewGenProcesses.contains(oscar.Process__c)) {
+            fieldsMapping.put('ShippingState', 'Shipping_State__c');
+        }
+        /*** AMSU-121 End ***/
+
+		if (fieldsToMigrate != null && oscarOnlineAccreditation != null) {
+                Map<String, Object> accountFieldNewValue = new Map<String,Object>();
+
+                for (String key : fieldsMapping.keySet()) {
+                    String value = fieldsMapping.get(key);
+                    if (fieldsToMigrate.contains(value)) {
+
+                        accountFieldNewValue.put(key, oscarOnlineAccreditation.get(value));
+                        System.debug(key + ':' + oscarOnlineAccreditation.get(value));
+                    }
+                }
+
+                //fields that require transformation
+                if (fieldsToMigrate.contains('ISSP_AMS_Premises_located_at_airport__c'))
+                    accountFieldNewValue.put('In_a_Airport__c', (oscarOnlineAccreditation.ISSP_AMS_Premises_located_at_airport__c == 'Yes') ? true : false);
+                if (fieldsToMigrate.contains('ISSP_AMS_Legal_Status__c'))
+                    accountFieldNewValue.put('Company_Type__c', transformCompanyType(oscarOnlineAccreditation.ISSP_AMS_Legal_Status__c));
+                if (fieldsToMigrate.contains('ISSP_AMS_GDS_with_signed_contract__c'))
+                    accountFieldNewValue.put('GDS__c', transformGDS(oscarOnlineAccreditation.ISSP_AMS_GDS_with_signed_contract__c));
+                if (fieldsToMigrate.contains('Branch_Office_Country__c'))
+                    accountFieldNewValue.put('BillingCountry', oscarOnlineAccreditation.Branch_Office_Country__r.Name);
+                if (fieldsToMigrate.contains('Shipping_ISO_Country__c'))
+                    accountFieldNewValue.put('ShippingCountry', oscarOnlineAccreditation.Shipping_ISO_Country__r.Name);
+                //if (fieldsToMigrate.contains('Shipping_ISO_State__c'))/*** AMSU-121 ***/
+                //    accountFieldNewValue.put('ShippingState', oscarOnlineAccreditation.IATA_ISO_State__r.Valid_for_Address__c == true ? oscarOnlineAccreditation.Shipping_ISO_State__r.Name : null);
+                if (fieldsToMigrate.contains('IATA_ISO_State__c'))
+                    accountFieldNewValue.put('BillingState', oscarOnlineAccreditation.IATA_ISO_State__r.Valid_for_Address__c == true ? oscarOnlineAccreditation.IATA_ISO_State__r.Name : null);
+                //if (fieldsToMigrate.contains('ISSP_AMS_Total_Ownership__c'))
+                    //AMS_AccountRoleCreator.runRoleCreatorForOnlineAccreditations(new List<AMS_Pax_Accreditation_Form__c>{onlineAcc}, accountsAffected);
+
+                for(Id accId: accountsAffected){
+
+                    List<AMS_ChangeCodesHelper.ObjectChange> objectChangesList = new List <AMS_ChangeCodesHelper.ObjectChange>();
+
+                    Account acc = accounts.get(accId);
+
+                    for(String accFieldApiName: accountFieldNewValue.keySet())
+                    {
+
+                        Schema.SObjectField field = acctFieldsMap.get(accFieldApiName);
+                        Schema.DisplayType fldType = field.getDescribe().getType();
+
+                        system.debug('DDD Field value to migrate to account: ' + accFieldApiName);
+                        system.debug('DDD Field Type to migrate to account: ' + fldType);
+
+                        //Add Account Changes to be used when generating the Change Codes History Entities
+
+                        String newValue,oldValue,oldValueLookupID,newValueLookupID;
+                        if (String.valueOf(fldType) == 'REFERENCE'){
+
+                            oldValue = String.valueOf(processParentDependecies(accFieldApiName.replace('__c','__r.Name'),acc));
+                            newValue = String.valueOf(processParentDependecies(fieldsMapping.get(accFieldApiName).replace('__c','__r.Name'),oscarOnlineAccreditation));
+                            oldValueLookupID = String.valueOf(acc.get(accFieldApiName));
+                            newValueLookupID = String.valueOf(accountFieldNewValue.get(accFieldApiName));
+
+                        }
+                        else{
+
+                            oldValue = String.valueOf(acc.get(accFieldApiName));
+                            newValue = String.valueOf(accountFieldNewValue.get(accFieldApiName));
+                       }
+
+                        system.debug('DDD oldValue:' + oldValue);
+                        system.debug('DDD newValue:' + newValue);
+
+                        if (oldValue != newValue)
+                            objectChangesList.add(new AMS_ChangeCodesHelper.ObjectChange('Account',accFieldApiName,oldValue,newValue,oldValueLookupID,newValueLookupID));
+
+
+                        acc.put(accFieldApiName, accountFieldNewValue.get(accFieldApiName));
+                    }
+
+                    AMS_ChangeCodesHelper.ObjectChangesStruct acctChangesStruct = new AMS_ChangeCodesHelper.ObjectChangesStruct(objectChangesList);
+
+                    accountsToUpdate.put(acc.Id,acctChangesStruct);
+                }
+
+        }
+
+    return accountsToUpdate;
+
+}
+    
+    //FM AMSU-1
+    //Map data from staging area (AMS Online Accreditation) to account
+    public static Map<ID,AMS_ChangeCodesHelper.ObjectChangesStruct> copyDataToAccountForAgencyCorrections(AMS_OSCAR__c oscar, Set<Id> accountsAffected, String typesOfChange, Map<Id, Account> accounts, AMS_Pax_Accreditation_Form__c oscarOnlineAccreditation) {
+
+        System.debug('AGENCY CHANGES: Types of Change (' + typesOfChange + ') ');
+
+        Set<String> fieldsToMigrate = AMS_AgencyChangesConfigHelper.getFieldsToMigrate(typesOfChange);
+
+        System.debug('AGENCY CHANGES: fields to migrate (' + fieldsToMigrate + ') for accounts: ' + accountsAffected);
+
+
+        Map<ID,AMS_ChangeCodesHelper.ObjectChangesStruct> accountsToUpdate = new  Map<ID,AMS_ChangeCodesHelper.ObjectChangesStruct>();
         
         Map<String, Schema.SObjectField>  acctFieldsMap= Schema.SObjectType.Account.fields.getMap();
         
@@ -1363,15 +1628,58 @@ public without sharing class AMS_Utils {
                                                                     ,'IATA_ISO_Shipping_State__c' => 'Shipping_ISO_State__c'
                                                                     ,'Link_agent_name__c' => 'Link_agent_name__c'};
 
+
         if (fieldsToMigrate != null && oscarOnlineAccreditation != null) {
+
+                string fieldsINtheQuery = '';
+                Set<String> changedFieldsToMigrate = AMS_AgencyChangesConfigHelper.getFieldsToMigrate(typesOfChange);
+          
                 Map<String, Object> accountFieldNewValue = new Map<String,Object>();
 
                 for (String key : fieldsMapping.keySet()) {
                     String value = fieldsMapping.get(key);
                     if (fieldsToMigrate.contains(value)) {
                     
-                        accountFieldNewValue.put(key, oscarOnlineAccreditation.get(value));
-                        System.debug(key + ':' + oscarOnlineAccreditation.get(value));
+                        //accountFieldNewValue.put(key, oscarOnlineAccreditation.get(value));
+                        //System.debug(key + ':' + oscarOnlineAccreditation.get(value));
+
+                        //get fields to query the oscar account in order to check what fields were changed
+                        fieldsINtheQuery += ',' + key;
+                    }
+                }
+                system.debug('copyDataToAccountForAgencyCorrections - fieldsINtheQuery: ' + fieldsINtheQuery);
+                system.debug('copyDataToAccountForAgencyCorrections - oscar.Account__c: ' + oscar.Account__c);
+
+                string query = 'SELECT id,recordTypeID,ParentId' + fieldsINtheQuery + ' FROM Account WHERE  ID = \''+oscar.Account__c +'\''; 
+                system.debug('copyDataToAccountForAgencyCorrections - query: ' + query);
+
+                Account oscarAcctDB = database.query(query);
+                system.debug('copyDataToAccountForAgencyCorrections - oscarAcctDB: ' + oscarAcctDB);
+
+                //Checks what fields were changed on the online form
+                //for (String key : fieldsToMigrate) {
+                //    System.debug('key :' + key);
+                //    System.debug('oscarAcctDB :' + oscarAcctDB.get(fieldsMapping.get(key)));
+                //    System.debug('oscarOnlineAccreditation :' + oscarOnlineAccreditation.get(key));
+                //    if(oscarAcctDB.get(fieldsMapping.get(key)) != oscarOnlineAccreditation.get(key)){
+
+                //        accountFieldNewValue.put(key, oscarOnlineAccreditation.get(key));
+                //        System.debug('ADDED ENTRY :' + key + ':' + oscarOnlineAccreditation.get(key));
+                //    }
+                //}
+
+                //Checks what fields were changed on the online form
+                for (String key : fieldsMapping.keySet()) {
+                    String value = fieldsMapping.get(key);
+                    if (fieldsToMigrate.contains(value)) {
+                        System.debug('key :' + key);
+                        System.debug('oscarAcctDB :' + oscarAcctDB.get(key));
+                        System.debug('oscarOnlineAccreditation :' + oscarOnlineAccreditation.get(value));
+                        if(oscarAcctDB.get(key) != oscarOnlineAccreditation.get(value)){
+
+                            accountFieldNewValue.put(key, oscarOnlineAccreditation.get(value));
+                            System.debug('ADDED ENTRY :' + value + ':' + oscarOnlineAccreditation.get(value));
+                    }
                     }
                 }
 
@@ -1392,6 +1700,7 @@ public without sharing class AMS_Utils {
                     accountFieldNewValue.put('BillingState', oscarOnlineAccreditation.IATA_ISO_State__r.Valid_for_Address__c == true ? oscarOnlineAccreditation.IATA_ISO_State__r.Name : null);
                 //if (fieldsToMigrate.contains('ISSP_AMS_Total_Ownership__c'))
                     //AMS_AccountRoleCreator.runRoleCreatorForOnlineAccreditations(new List<AMS_Pax_Accreditation_Form__c>{onlineAcc}, accountsAffected);
+
 
                 for(Id accId: accountsAffected){
 
@@ -1448,13 +1757,13 @@ public without sharing class AMS_Utils {
                         
 //Map data from staging area (AMS Online Accreditation) to account
     public static AMS_Pax_Accreditation_Form__c CopyDataFromAccountToStaging(String typesOfChange, Account account, AMS_Pax_Accreditation_Form__c onlineAccreditation) {
-                        
+
         System.debug('AGENCY CHANGES: Types of Change (' + typesOfChange + ') ');
 
         Set<String> fieldsToMigrate = AMS_AgencyChangesConfigHelper.getFieldsToMigrate(typesOfChange);
-                     
+
         System.debug('AGENCY CHANGES: fields to migrate (' + fieldsToMigrate + ') for accounts: ' + account);
-                           
+
         Map<String, String> fieldsMapping = new Map<String, String> {'Name' => 'Account_Name__c'
                                                                     ,'IATACode__c' => 'IATACode__c'
                                                                     ,'Short_Name__c' => 'Short_Name__c'
@@ -1487,10 +1796,10 @@ public without sharing class AMS_Utils {
                                                                     ,'IATA_ISO_Billing_State__c' => 'IATA_ISO_State__c'
                                                                     ,'IATA_ISO_Shipping_Country__c' => 'Shipping_ISO_Country__c'
                                                                     ,'IATA_ISO_Shipping_State__c' => 'Shipping_ISO_State__c'};
-                        
+
         if (fieldsToMigrate != null && onlineAccreditation != null) {
                 Map<String, Object> onlineAccreditationFieldNewValue = new Map<String,Object>();
-                            
+
                 for (String key : fieldsMapping.keySet()) {
                     String value = fieldsMapping.get(key);
                     if (fieldsToMigrate.contains(value)) {
@@ -1511,10 +1820,10 @@ public without sharing class AMS_Utils {
 
                 for(String accredFieldApiName: onlineAccreditationFieldNewValue.keySet())
                 {
-                    
+
                     Schema.SObjectField field = Schema.SObjectType.AMS_Pax_Accreditation_Form__c.fields.getMap().get(accredFieldApiName);
                     Schema.DisplayType fldType = field.getDescribe().getType();
-                        
+
                     system.debug('Field value to migrate to online accreditation: ' + accredFieldApiName);
                     system.debug('Field Type to migrate to online accreditation: ' + fldType);
 
@@ -1541,14 +1850,14 @@ public without sharing class AMS_Utils {
         {
 
             amsIns.Account__c = amsIns.OSCAR__r.Account__c;
-            
+
             amsIns.Date_Organisation_Status_attained__c = (amsIns.Date_Organisation_Status_attained__c == null) ? system.today() : amsIns.Date_Organisation_Status_attained__c;
             amsIns.Accreditation_Endorsement_Status_code__c = '9';
             amsIns.Last_synchronization__c = system.today();
-            
+
             lsInsToUpdate.add(amsIns);
         }
-        
+
         try {
             update lsInsToUpdate;
         } catch (DmlException e) {
@@ -1565,12 +1874,14 @@ public without sharing class AMS_Utils {
             for(AMS_Inspection__c insp: inspections)
             {
 
-                insp.Account__c = insp.OSCAR__r.Account__c;
+                if(String.isNotBlank(insp.OSCAR__c) && String.isNotBlank(insp.OSCAR__r.Account__c)){ 
+                    insp.Account__c = insp.OSCAR__r.Account__c;
+                }
                 
                 insp.Date_Organisation_Status_attained__c = (insp.Date_Organisation_Status_attained__c == null) ? system.today() : insp.Date_Organisation_Status_attained__c;
                 insp.Accreditation_Endorsement_Status_code__c = statusToApply;
                 insp.Last_synchronization__c = system.today();
-                
+
                 modifiedInspections.add(insp);
             }
 
@@ -1580,7 +1891,7 @@ public without sharing class AMS_Utils {
 
 
 /**
-    Method to help the transformation between Company Type (Acccount) and Specify Legal Status (AMS Online Accreditation) 
+    Method to help the transformation between Company Type (Acccount) and Specify Legal Status (AMS Online Accreditation)
     */
 public static String transformLegalStatus(String companyType) {
 
@@ -1900,7 +2211,7 @@ public static String getChangeCodeMemoText(String process,String changeCodeId) {
         memoText = 'New application - GSA';
     else if (process == AMS_Utils.new_AHA_BSP || process == AMS_Utils.new_AHA)
         memoText = 'New application - AHA';
- 
+
     return memoText + ' ' + getStatusDescFromChangeCode(changeCodeId);
 }
 
@@ -1913,7 +2224,7 @@ public static List<Integer> B64ToBytes (String sIn) {
 
     List<Integer> lstOut = new List<Integer>();
     if ( sIn == null || sIn == '' ) return lstOut;
-    
+
     sIn += '='.repeat( 4 - Math.mod( sIn.length(), 4) );
 
     for ( Integer idx=0; idx < sIn.length(); idx += 4 ) {
@@ -1960,7 +2271,7 @@ public class TPicklistEntry{
     public TPicklistEntry(){
     }
 }//TPicklistEntry
- 
+
 
 /**
 Process Dependent Picklists (Apex workaround)
@@ -1974,9 +2285,9 @@ public static Map<String,List<String>> GetDependentOptions(String pObjName, Stri
     Map<String, Schema.SObjectField> objFieldMap = pType.getDescribe().fields.getMap();
 
     //verify field names
-    if (!objFieldMap.containsKey(pControllingFieldName) || !objFieldMap.containsKey(pDependentFieldName)) return mapResults;     
+    if (!objFieldMap.containsKey(pControllingFieldName) || !objFieldMap.containsKey(pDependentFieldName)) return mapResults;
 
-    //get the control & dependent values   
+    //get the control & dependent values
     List<Schema.PicklistEntry> ctrl_ple = objFieldMap.get(pControllingFieldName).getDescribe().getPicklistValues();
     List<Schema.PicklistEntry> dep_ple = objFieldMap.get(pDependentFieldName).getDescribe().getPicklistValues();
 
@@ -1984,14 +2295,14 @@ public static Map<String,List<String>> GetDependentOptions(String pObjName, Stri
     objFieldMap = null;
 
     //initialize results mapping
-    for(Integer pControllingIndex=0; pControllingIndex<ctrl_ple.size(); pControllingIndex++){           
+    for(Integer pControllingIndex=0; pControllingIndex<ctrl_ple.size(); pControllingIndex++){
         mapResults.put( ctrl_ple[pControllingIndex].getLabel(), new List<String>());
     }
     //cater for null and empty
     mapResults.put('', new List<String>());
     mapResults.put(null, new List<String>());
 
-    //serialize dep entries        
+    //serialize dep entries
     List<TPicklistEntry> objDS_Entries = new List<TPicklistEntry>();
     objDS_Entries = (List<TPicklistEntry>)JSON.deserialize(JSON.serialize(dep_ple), List<TPicklistEntry>.class);
 
@@ -2001,7 +2312,7 @@ public static Map<String,List<String>> GetDependentOptions(String pObjName, Stri
         validIndexes = cnvBits(objDepPLE.validFor);
         //System.Debug('cnvBits: [' + objDepPLE.label + '] = ' + validIndexes);
 
-        for (Integer validIndex : validIndexes){                
+        for (Integer validIndex : validIndexes){
             mapResults.get( ctrl_ple[validIndex-1].getLabel() ).add( objDepPLE.label );
         }
     }
@@ -2027,10 +2338,10 @@ public static String fetchTypeOfCustomer (String locationType , String category)
     return categoryCustomerMap.get(category);
 
 }
-    
+
     /*
     public static final Date knownSunday = date.newInstance(2012, 7, 1);
-    
+
     private static Map<String, Set<Integer>> weekendDaysPerBusinessHours{
         get{
             if(weekendDaysPerBusinessHours == null) weekendDaysPerBusinessHours = new Map<String, Set<Integer>>();
@@ -2061,7 +2372,7 @@ public static String fetchTypeOfCustomer (String locationType , String category)
                     if(h.ThursdayStartTime == null) weekendDays.add(4);
                     if(h.FridayStartTime == null) weekendDays.add(5);
                     if(h.SaturdayStartTime == null) weekendDays.add(6);
-                    
+
                     if(h.Name == findBusinessHours) weekendDaysPerBusinessHours.put(h.Name, weekendDays);
                     else if(h.isDefault) weekendDaysPerBusinessHours.put('Default', weekendDays);
                 }
@@ -2070,12 +2381,12 @@ public static String fetchTypeOfCustomer (String locationType , String category)
                 System.debug(loggingLevel.ERROR, '____ [cls AMS_Utils - addBusinessHours] ************ no businessHours found for region -- copying default one ');
                     weekendDaysPerBusinessHours.put(findBusinessHours, weekendDaysPerBusinessHours.get('Default'));
                 }
-            }           
+            }
         }
 
         return weekendDaysPerBusinessHours.get(findBusinessHours);
     }
-    
+
 
     public static Boolean IsWeekendDay(Date dateParam, String businessHours){
         return IsWeekendDay(DateTime.newInstance(dateParam, Time.newInstance(0, 0, 0, 0)), businessHours);
@@ -2108,7 +2419,7 @@ public static String fetchTypeOfCustomer (String locationType , String category)
 
         Datetime finalDate = d;
 
-        //Add or decrease in businessDaysToAdd days 
+        //Add or decrease in businessDaysToAdd days
         Integer direction = businessDaysToAdd < 0 ? -1 : 1;
 
         while(businessDaysToAdd != 0){
@@ -2118,14 +2429,14 @@ public static String fetchTypeOfCustomer (String locationType , String category)
 
         System.debug(loggingLevel.Debug, '____ [cls AMS_Utils - AddBusinessDays] finalDate - ' + finalDate);
         return finalDate;
-    } 
+    }
     */
     public static Date lastDayOfMonth(Date dateField) {
         return dateField.addMonths(1).toStartOfMonth().addDays(-1);
     }
 
 
-    /** 
+    /**
         Process Parent Objects fields (up to 5 Parents?)
     */
     public static Object processParentDependecies(String field , sObject sObj)
@@ -2135,7 +2446,7 @@ public static String fetchTypeOfCustomer (String locationType , String category)
             {
                 //Get the Object directly related to the field
                 wrapperData wDObj = new wrapperData(sObj,field);
-                
+
                 return (wDObj.sObj == null || wDObj.sObj.get(wDObj.fieldName) == null ) ? '' :wDObj.sObj.get(wDObj.fieldName);
             }
 
@@ -2182,26 +2493,26 @@ public static String fetchTypeOfCustomer (String locationType , String category)
 
     */
     private class wrapperData {
-        
+
         private sObject sObj{get;set;}
         private String fieldName{get;set;}
-    /** 
+    /**
          Get Object for the Field  (up to 5 Parents?)
     */
         private wrapperData(SObject sObjParent, String field){
 
             List <String> strList = field.split('\\.');
             integer lastPos = strList.size() -1;
-        
+
             sObject sObj = sObjParent;
 
             for(integer i = 0 ; i < lastPos ; i++) //avoid last element
-            {               
+            {
                 sObj = sObj.getSObject(strList.get(i));
             }
 
             this.sObj   = sObj;
-            this.fieldName = strList.get(lastPos); 
+            this.fieldName = strList.get(lastPos);
 
         }
 
@@ -2210,9 +2521,9 @@ public static String fetchTypeOfCustomer (String locationType , String category)
         //invalid range
         if(maxRange-minRange < 0)
             return -1;
-    
+
         Integer candidate = minRange;
-        
+
         for(Integer occupiedSlot : orderedSlotsOccupied){
             if(occupiedSlot > candidate){
                 System.debug('Candidate found : ' + candidate);
@@ -2225,10 +2536,10 @@ public static String fetchTypeOfCustomer (String locationType , String category)
                 }
             }
         }
-        
+
         return candidate;
     }
-    
+
     public static String CASE_REF_FORMAT = 'ref:{0}.{1}:ref';
 
     @testVisible
@@ -2276,7 +2587,7 @@ public static String fetchTypeOfCustomer (String locationType , String category)
 
 
     public static boolean isProcessUsingAppointments(AMS_OSCAR__c oscar){
-        Set<String> oscarProcessesWithAppointments = new Set <String>{new_GSA,new_GSA_BSP,new_AHA,new_AHA_BSP,new_GSSA,new_MSO};
+        Set<String> oscarProcessesWithAppointments = new Set <String>{new_GSA,new_GSA_BSP,new_AHA,new_AHA_BSP,new_GSSA,new_MSO, VOLRELINQUISH_CA};
         Set<String> oscarCNSProcessesWithAppointments = new Set <String>{new_HO,new_BR,new_BR_ABROAD};
 
         return oscarProcessesWithAppointments.contains(oscar.Process__c) || (oscarCNSProcessesWithAppointments.contains(oscar.Process__c) && oscar.CNS_Process__c);
@@ -2293,11 +2604,11 @@ public static String fetchTypeOfCustomer (String locationType , String category)
 
         String reason_Code = '';
         String reason_Description = '';
-        
+
         //check parameter for null or empty value
         if(sReason == null || sReason.equalsIgnoreCase('')){
             return null;
-        }else 
+        }else
         //Check for char '-' in order to see if we can split by code and description
         if(sReason.indexOf('-') >= 0 && sReason.indexOf('-') <= 4){
 
@@ -2318,17 +2629,22 @@ public static String fetchTypeOfCustomer (String locationType , String category)
             lRes.add('');
             lRes.add(sReason);
         }
-        
+
         return lRes;
     }
 
-	//20-06-2017 - Change AMSU-93 - special chars replacement
+	//AMSU-112
+    public static String replaceTabCharcter(String str) {
+        return String.isBlank(str) ? str : str.replaceAll('\t', ' ');
+    }
+
+    //20-06-2017 - Change AMSU-93 - special chars replacement
     public static String cleanSpecialChars(String s){
 
         String sRes = '';
 
         try{
-            
+
             //Apply try catch{} return same string in case of error
 
             if(s == null){
@@ -2345,9 +2661,9 @@ public static String fetchTypeOfCustomer (String locationType , String category)
                 String regex = AMS_SAP_Settings__c.getOrgDefaults().RegEx_Special_Chars__c;
 
                 String specialCharsToEscape = AMS_SAP_Settings__c.getOrgDefaults().Special_Chars_to_Escape_List__c;
-                
-                //System.debug('specialCharsToEscape: ' + specialCharsToEscape); 
-                
+
+                //System.debug('specialCharsToEscape: ' + specialCharsToEscape);
+
                 sRes = s;
 
                 Matcher m = Pattern.compile(regex).matcher(s);
@@ -2355,14 +2671,14 @@ public static String fetchTypeOfCustomer (String locationType , String category)
                 //System.debug('m: ' + m);
                 //System.debug('m.groupCount(): ' + m.groupCount() );
 
-                //Pattern p = Pattern.compile('regex'); 
-                //Matcher mo = p.matcher('string'); 
-                while (m.find()) { 
-                    
-                    //System.debug('m.group: ' + m.group()); 
+                //Pattern p = Pattern.compile('regex');
+                //Matcher mo = p.matcher('string');
+                while (m.find()) {
+
+                    //System.debug('m.group: ' + m.group());
                     if(mSpecialChars.containsKey( m.group() )) {
-                        //System.debug('replace by value: ' + m.group() + ' by ' + mSpecialChars.get(m.group()) ); 
-                        //System.debug('contains by value: ' + m.group() + ' by ' + specialCharsToEscape.contains(m.group()) ); 
+                        //System.debug('replace by value: ' + m.group() + ' by ' + mSpecialChars.get(m.group()) );
+                        //System.debug('contains by value: ' + m.group() + ' by ' + specialCharsToEscape.contains(m.group()) );
                         //if(m.group() == '|'){
                         if(specialCharsToEscape.contains(m.group())){
                             sRes = sRes.replaceAll('\\'+m.group(), mSpecialChars.get(m.group()));
@@ -2370,25 +2686,25 @@ public static String fetchTypeOfCustomer (String locationType , String category)
                             sRes = sRes.replaceAll(m.group(), mSpecialChars.get(m.group()));
                         }
                     }else{
-                        //System.debug('replace by space: ' + m.group() + ' by ' + mSpecialChars.get('SPACE') ); 
+                        //System.debug('replace by space: ' + m.group() + ' by ' + mSpecialChars.get('SPACE') );
                         //sRes = sRes.replaceAll(m.group(), '_');
                         sRes = sRes.replaceAll(m.group(), mSpecialChars.get('SPACE'));
                         //System.debug('sRes1: ' + sRes);
                     }
- 
+
                 }
             }
             System.debug('sRes: ' + sRes);
 
         }catch(Exception e){
-            System.debug('Exception occurred: ' + e); 
+            System.debug('Exception occurred: ' + e);
             sRes = s;
         }
 
         return sRes;
 
-    }    
-    
+    }
+
 
     public static Map<String, String> loadJsonSpecialCharsFile(){
         /*
@@ -2397,7 +2713,7 @@ public static String fetchTypeOfCustomer (String locationType , String category)
         StaticResource jsonFile = [select Id , Name , Body from StaticResource where Name = 'AMS_SPECIAL_CHARS_MAP'];
 
         String JSONContent = EncodingUtil.urlDecode(jsonFile.Body.toString(), 'UTF-8');
-        
+
         Map<String, Object> m = (Map<String, Object>)JSON.deserializeUntyped(JSONContent);
 
         Map<String, String> mRes = new Map<String, String>();
@@ -2411,7 +2727,7 @@ public static String fetchTypeOfCustomer (String locationType , String category)
         return mRes;
         //return null;
     }
-    
+
 
     public class Utility_RowIterator implements Iterator<String>, Iterable<String>
     {
@@ -2421,11 +2737,11 @@ public static String fetchTypeOfCustomer (String locationType , String category)
 
        public Utility_RowIterator(String fileData)
        {
-          m_Data = fileData; 
+          m_Data = fileData;
        }
        public Utility_RowIterator(String fileData, String rowDelimiter)
        {
-          m_Data = fileData; 
+          m_Data = fileData;
           m_rowDelimiter = rowDelimiter;
        }
 
@@ -2434,7 +2750,7 @@ public static String fetchTypeOfCustomer (String locationType , String category)
           return m_index < m_Data.length() ? true : false;
        }
        public String next()
-       {     
+       {
           Integer key = m_Data.indexOf(m_rowDelimiter, m_index);
 
           if (key == -1)
@@ -2446,7 +2762,7 @@ public static String fetchTypeOfCustomer (String locationType , String category)
        }
        public Iterator<String> Iterator()
        {
-          return this;   
+          return this;
        }
     }
 
@@ -2456,6 +2772,7 @@ public static String fetchTypeOfCustomer (String locationType , String category)
     // if secondvalue < firstValuue , returns 2
     // if there is a rate problem, return -1
     // if there is a amount problem, return -2
+    /*NEWGEN-2809
     public static Integer compareRates(String firstCurrencyISOCode, Decimal firstValue,String secondCurrencyISOCode, Decimal secondValue ){
 
         if(firstValue == null || secondValue == null){
@@ -2475,7 +2792,7 @@ public static String fetchTypeOfCustomer (String locationType , String category)
         Map<String,Double> rates = new Map<String,Double>();
 
         rates.put(types.get(0).IsoCode, types.get(0).ConversionRate);
-        
+
         if(types.size() > 1)
             rates.put(types.get(1).IsoCode, types.get(1).ConversionRate);
 
@@ -2491,20 +2808,41 @@ public static String fetchTypeOfCustomer (String locationType , String category)
 
         System.debug('Returning 0');
         return 0;
-    
-    }
+
+    }*/
 
     public static Contact getIEPContact(String conId) {
         return [SELECT User_Portal_Status__c,
                        Authorized_Signatory__c,
                        Account.Location_Type__c,
-                       Account.Top_Parent__r.Location_Type__c, 
+                       Account.Top_Parent__r.Location_Type__c,
                        Account.ANG_IEP_Status_FF__c,
                        Account.Is_Branch_Abroad__c,
                        Account.Status__c
-                  FROM Contact WHERE Id = :conId limit 1];                  
+                  FROM Contact WHERE Id = :conId limit 1];
     }
-    
+
+    /**
+    Method to help the transformation of accrediation types to display on ebulletin
+    */
+    public static String transformAccreditationType(String accredType) {
+
+        String result = accredType;
+
+        if (result == null)
+            return null;
+
+        if (result.containsIgnoreCase('Cashless'))
+            result = result.replace('Cashless', 'GoLite');
+        if (result.containsIgnoreCase('Cash'))
+            result = result.replace('Cash', 'GoStandard');
+        if (result.containsIgnoreCase('Multicountry'))
+            result = result.replace('Multicountry', 'GoGlobal');
+
+        return result;
+
+    }
+
     public static Map<String, Schema.SObjectField> getOSCARFieldMap() {
 
         return Schema.getGlobalDescribe().get('AMS_OSCAR__c').getDescribe().fields.getMap();
@@ -2522,6 +2860,104 @@ public static String fetchTypeOfCustomer (String locationType , String category)
         }
 
         return oscarSteps;
+    }
+
+    public static Map<String, String> officialAccreditationTypeMap = new Map<String, String> {
+        'Legacy' => 'Legacy',
+        'Cashless' =>   'GoLite',
+        'Cash' =>   'GoStandard',
+        'Multicountry' => 'GoGlobal'
+    };
+
+    public static String getCustomLabel(String labelName) {
+        if(labelName != null && labelName != '') {
+            Component.Apex.OutputText output = new Component.Apex.OutputText();
+            output.expressions.value = '{!$Label.' + labelName + '}';
+            return string.valueOf(output.value);
+        } else {
+            return labelName;
+        }
+    }
+
+    public static Date getBiggestDate(Date date1, Date date2) {
+        if(date1 != null && date2 != null) return (date1 > date2) ? date1 : date2;
+        if(date1 != null && date2 == null) return date1;
+        if(date1 == null && date2 != null) return date2;
+        return null;
+    }
+
+    public static String notNull(String value) {
+        if (value == null) {
+            return '';
+        }
+        return value;
+    }
+
+    public static Id getRegionalQueue(Case newCase) {
+        //Available queue names
+        Id qId;
+
+        Set<String> queueNames = new Set<String> {'AgencyManagementAP', 'AgencyManagementAfricaME', 'AgencyManagementAmericas', 'AgencyManagementChinaNAsia', 'CasesACCEuropeOffOnshore'};
+        Map<String, QueueSobject> mapRegionalQueue = new Map<String, QueueSobject>();
+        //Build map queue.name -> queue
+        for (QueueSobject queue : [Select Queue.Id, Queue.DeveloperName From QueueSobject Where Queue.DeveloperName in: queueNames]) {
+            mapRegionalQueue.put(queue.Queue.DeveloperName, queue);
+        }
+
+        //Assigns queue according to region
+        if (newCase.Region__c == 'Africa & Middle East') {
+            if (mapRegionalQueue.get('AgencyManagementAfricaME') != null) {
+                qId = mapRegionalQueue.get('AgencyManagementAfricaME').Queue.Id;
+            }
+
+        } else if (newCase.Region__c == 'Americas') {
+            if (mapRegionalQueue.get('AgencyManagementAmericas') != null) {
+                qId = mapRegionalQueue.get('AgencyManagementAmericas').Queue.Id;
+            }
+
+        } else if (newCase.Region__c == 'Asia & Pacific') {
+            if (mapRegionalQueue.get('AgencyManagementAP') != null) {
+                qId = mapRegionalQueue.get('AgencyManagementAP').Queue.Id;
+            }
+        } else if (newCase.Region__c == 'China & North Asia') {
+            if (mapRegionalQueue.get('AgencyManagementChinaNAsia') != null) {
+                qId = mapRegionalQueue.get('AgencyManagementChinaNAsia').Queue.Id;
+            }
+        } else if (newCase.Region__c == 'Europe') {
+            if (mapRegionalQueue.get('CasesACCEuropeOffOnshore') != null) {
+                qId = mapRegionalQueue.get('CasesACCEuropeOffOnshore').Queue.Id;
+            }
+        }
+        System.DEBUG('Case region: ' + newCase.Region__c);
+        System.DEBUG('AM Queue returned: ' + qId);
+        return qId;
+    }
+
+    public static ANG_ISSP_AfpWrapper getANG_ISSP_AfpWrapper(Contact con, Account acc, Boolean isSearch) {
+        List<Agency_Authorization__c> authorizations = new List<Agency_Authorization__c>();
+        List<Portal_Application_Right__c> services = new List<Portal_Application_Right__c>();
+
+        authorizations = [SELECT Id,
+                                     ANG_FormOfPayment_ID__c
+                                FROM Agency_Authorization__c
+                               WHERE Account__c = :acc.Id AND Status__c = 'Active'];
+
+        if(con != null) {
+            services = [SELECT Id, Application_Name__c, Right__c, Application_Start_URL__c
+                          FROM Portal_Application_Right__c
+                         WHERE Contact__c = :con.Id];
+        }
+
+        return new ANG_ISSP_AfpWrapper(con, authorizations, services, acc, isSearch);
+    }
+
+    public static List<Account> fetchAgentDetails(String iataCode) {
+        return [Select Id, BillingStreet, BillingCity, BillingState, BillingPostalCode,
+                       BillingCountry, Name
+                  From Account
+                 Where RecordType.DeveloperName = 'IATA_Agency'
+                   And Sector__c = :AMS_Utils.SECTOR_PASSENGER  // agentSector
+                   And IATACode__c Like :iataCode];
     }
 
 }

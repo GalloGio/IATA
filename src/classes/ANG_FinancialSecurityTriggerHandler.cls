@@ -29,7 +29,7 @@ public class ANG_FinancialSecurityTriggerHandler{
 					}
 				}else{
 					for(Financial_Security__c fs:triggerNew){	
-						if(Trigger.isUpdate &&  fs.Amount__c == oldMap.get(fs.id).Amount__c && fs.CurrencyIsoCode == oldMap.get(fs.id).CurrencyIsoCode && fs.Security_Status__c ==oldMap.get(fs.id).Security_Status__c) continue;
+						if(Trigger.isUpdate &&  fs.Amount__c == oldMap.get(fs.id).Amount__c && fs.CurrencyIsoCode == oldMap.get(fs.id).CurrencyIsoCode && fs.Security_Status__c ==oldMap.get(fs.id).Security_Status__c && fs.Account__c ==oldMap.get(fs.id).Account__c) continue;
 						accIdSet.add(fs.Account__c);
 					}
 				}							
@@ -90,14 +90,14 @@ public class ANG_FinancialSecurityTriggerHandler{
 	private void updateMinimumFS(){
 		set<id> accIdFsSet= new set<id>();
 		for(Financial_Security__c fs:triggerNew){
-			if(fs.ANG_Minimum_Financial_Security__c !=null && fs.ANG_Financial_Security_Currency__c!=null && (Trigger.isInsert ||(Trigger.isUpdate && (fs.ANG_Minimum_Financial_Security__c != oldMap.get(fs.id).ANG_Minimum_Financial_Security__c || fs.ANG_Financial_Security_Currency__c != oldMap.get(fs.id).ANG_Financial_Security_Currency__c) )) && !fs.Unlimited_Security__c && fs.Security_Status__c=='Active'){
+			if(fs.ANG_Minimum_Financial_Security__c !=null && fs.ANG_Financial_Security_Currency__c!=null && (Trigger.isInsert ||(Trigger.isUpdate && (fs.ANG_Minimum_Financial_Security__c != oldMap.get(fs.id).ANG_Minimum_Financial_Security__c || fs.ANG_Financial_Security_Currency__c != oldMap.get(fs.id).ANG_Financial_Security_Currency__c) ))  && fs.Security_Status__c=='Active'){
 				accIdFsSet.add(fs.Account__c);
 			}
 		}
 		ANG_Risk_Helper.accIdSet=accIdFsSet;
 		list<ANG_RHC_Information__c> rhcList= new list<ANG_RHC_Information__c>();
 		for(Financial_Security__c fs:triggerNew){
-			if( fs.ANG_isToUpdateRHC__c && fs.ANG_Minimum_Financial_Security__c !=null && fs.ANG_Minimum_Financial_Security__c >0 && fs.ANG_Financial_Security_Currency__c!=null && (Trigger.isInsert ||(Trigger.isUpdate && (fs.ANG_Minimum_Financial_Security__c != oldMap.get(fs.id).ANG_Minimum_Financial_Security__c || fs.ANG_Financial_Security_Currency__c != oldMap.get(fs.id).ANG_Financial_Security_Currency__c) )) && !fs.Unlimited_Security__c && fs.Security_Status__c=='Active'){
+			if( fs.ANG_isToUpdateRHC__c && fs.ANG_Minimum_Financial_Security__c !=null && fs.ANG_Financial_Security_Currency__c!=null && (Trigger.isInsert ||(Trigger.isUpdate && (fs.ANG_Minimum_Financial_Security__c != oldMap.get(fs.id).ANG_Minimum_Financial_Security__c || fs.ANG_Financial_Security_Currency__c != oldMap.get(fs.id).ANG_Financial_Security_Currency__c) )) && fs.Security_Status__c=='Active'){
 				if( map2Insert.containsKey(fs.Account__c+ANG_RHCHelper.RHC_INFO_STD_RT)){
 					map2Insert.get(fs.Account__c+ANG_RHCHelper.RHC_INFO_STD_RT).ANG_Minimum_Financial_Security__c=ANG_Risk_Helper.currencyConverter(fs.ANG_Financial_Security_Currency__c , fs.ANG_Minimum_Financial_Security__c,ANG_Risk_Helper.accCurMap.get(fs.Account__c)!=null?ANG_Risk_Helper.accCurMap.get(fs.Account__c):fs.ANG_Financial_Security_Currency__c);
 				}else{

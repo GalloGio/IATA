@@ -3,8 +3,21 @@
     <doesSendEmailToMembers>false</doesSendEmailToMembers>
     <email>noreply@iata.org</email>
     <name>Agency Management - Europe</name>
+    <queueMembers>
+        <publicGroups>
+            <publicGroup>HUBMadrid</publicGroup>
+            <publicGroup>IDFSAllusersexcludingIWandACCA</publicGroup>
+            <publicGroup>IDFSEuropeallusers</publicGroup>
+        </publicGroups>
+        <roleAndSubordinatesInternal>
+            <roleAndSubordinateInternal>IDFSEuropeRegionalOfficeI</roleAndSubordinateInternal>
+        </roleAndSubordinatesInternal>
+    </queueMembers>
     <queueSobject>
         <sobjectType>AMS_OSCAR__c</sobjectType>
+    </queueSobject>
+    <queueSobject>
+        <sobjectType>AmazonFile__c</sobjectType>
     </queueSobject>
     <queueSobject>
         <sobjectType>Case</sobjectType>

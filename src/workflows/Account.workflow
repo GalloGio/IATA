@@ -37,19 +37,7 @@
             <type>user</type>
         </recipients>
         <recipients>
-            <recipient>kalajil@iata.org</recipient>
-            <type>user</type>
-        </recipients>
-        <recipients>
-            <recipient>osinskan@iata.org</recipient>
-            <type>user</type>
-        </recipients>
-        <recipients>
             <recipient>pietranget@iata.org.prod</recipient>
-            <type>user</type>
-        </recipients>
-        <recipients>
-            <recipient>szajkod@iata.org</recipient>
             <type>user</type>
         </recipients>
         <senderAddress>noreply@iata.org</senderAddress>
@@ -65,19 +53,7 @@
             <type>user</type>
         </recipients>
         <recipients>
-            <recipient>kalajil@iata.org</recipient>
-            <type>user</type>
-        </recipients>
-        <recipients>
-            <recipient>osinskan@iata.org</recipient>
-            <type>user</type>
-        </recipients>
-        <recipients>
             <recipient>pietranget@iata.org.prod</recipient>
-            <type>user</type>
-        </recipients>
-        <recipients>
-            <recipient>szajkod@iata.org</recipient>
             <type>user</type>
         </recipients>
         <senderAddress>noreply@iata.org</senderAddress>
@@ -824,7 +800,7 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
             <name>Update_Cash_Condition</name>
             <type>FieldUpdate</type>
         </actions>
-        <active>true</active>
+        <active>false</active>
         <criteriaItems>
             <field>Account.ANG_Limit_Cash_Condition__c</field>
             <operation>equals</operation>

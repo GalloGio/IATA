@@ -189,7 +189,6 @@
         <columns>ISO_Code__c</columns>
         <columns>ISO_CODE_STANDARD__c</columns>
         <columns>Local_Language__c</columns>
-        <columns>IEC_Valid_SAP__c</columns>
         <columns>Valid_for_GDP__c</columns>
         <columns>numeric_code__c</columns>
         <filterScope>Everything</filterScope>
@@ -198,7 +197,7 @@
             <operation>equals</operation>
             <value>1</value>
         </filters>
-        <label>Valid for EBC</label>
+        <label>Valid for EBC/GDP</label>
         <language>en_US</language>
     </listViews>
     <listViews>
@@ -217,6 +216,24 @@
             <value>1</value>
         </filters>
         <label>Valid for Ecommerce</label>
+        <language>en_US</language>
+    </listViews>
+    <listViews>
+        <fullName>ZZ_Search_By_Country</fullName>
+        <columns>NAME</columns>
+        <columns>IATA_ISO_Country__c</columns>
+        <columns>ISO_Code__c</columns>
+        <columns>ISO_CODE_STANDARD__c</columns>
+        <columns>Local_Language__c</columns>
+        <columns>Valid_for_GDP__c</columns>
+        <columns>numeric_code__c</columns>
+        <filterScope>Everything</filterScope>
+        <filters>
+            <field>IATA_ISO_Country__c</field>
+            <operation>equals</operation>
+            <value>Venezuela</value>
+        </filters>
+        <label>ZZ - Search By Country</label>
         <language>en_US</language>
     </listViews>
     <nameField>

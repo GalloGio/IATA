@@ -32,6 +32,7 @@ public with sharing class ISSP_PersonalInformation {
     public boolean isTerminatedAgent {get; set;}
     public boolean isTerminatedAgentBR {get; set;}
     public boolean isCNSAccount {get; set;}
+    public boolean isLegalNamePopulated {get; set;}
     private Id vHQAccountId;
 
      //CNS
@@ -46,7 +47,8 @@ public with sharing class ISSP_PersonalInformation {
 	public String ValidatedAirlineUser_Str {get;set;}
 	
 	public Boolean hasIdCard {get;set;}
-    public boolean showIEPStatus {get;set;}    
+    public boolean showIEPStatus {get;set;}
+    public Boolean flagCashOptedOutFinReview {get;set;}
     
     public List<AccountTeamMember> portalAdmins { 
         get {
@@ -92,6 +94,7 @@ public with sharing class ISSP_PersonalInformation {
         isTerminatedAgentBR = false;
         showIEPStatus = false;
         isCNSAccount = false;
+        isLegalNamePopulated = false;
         
     	String confirmParameter = ApexPages.currentPage().getParameters().get('confirm');
     	system.debug('confirmParameter: ' + confirmParameter);
@@ -133,7 +136,7 @@ public with sharing class ISSP_PersonalInformation {
         noirr = string.valueof(con.Account.Accumulated_Irregularities__c);
         FinSubmission  = string.valueof(con.Account.Fin_statements_submission_deadline__c);
         
-        if ( (con.Account.Sector__c=='Cargo Agent' || con.Account.Sector__c=='Travel Agent') && (con.User_Portal_Status__c=='Approved Admin' || con.BSP_CASS_Payment_contact__c || con.Financial_Assessment_Contact__c) && getPermissionForStandardAccount() == false && (!con.Account.CNS_Account__c)) {
+        if ( (con.Account.Sector__c=='Cargo Agent' || con.Account.Sector__c=='Travel Agent') && (con.User_Portal_Status__c=='Approved Admin' || con.BSP_CASS_Payment_contact__c || con.Financial_Assessment_Contact__c) && getPermissionForStandardAccount() == false && (!con.Account.CNS_Account__c) && !con.Account.IATA_ISO_Country__r.ANG_Enable_NewGen__c) {
                 showIrregularities = True;
         }
         else {
@@ -146,6 +149,10 @@ public with sharing class ISSP_PersonalInformation {
         if (con.Account.Sector__c=='Airline')
             isIATAAirlineAcct = true;
         system.debug('Sfi con2 ==>  '+con);
+
+        if (con.Account.Top_Parent__r.Legal_name__c != null) {
+            isLegalNamePopulated = true;
+        }
         
         //AS - SP11
         accountCountryISOCode = con.Account.IATA_ISO_Country__r.ISO_Code__c;
@@ -163,6 +170,8 @@ public with sharing class ISSP_PersonalInformation {
             showIEPStatus = true;
         }
        
+        flagCashOptedOutFinReview = (con.Account.ANG_Accreditation_Model__c == AMS_Utils.ACCREDITATIONMODEL_CASH && con.Account.ANG_FA_Opt_out__c);
+
         //AEF: portalAdmins is filled in extensions controller ISSP_PersonalInformationWithoutSharing 
     }
     
@@ -400,7 +409,7 @@ public with sharing class ISSP_PersonalInformation {
         					IATA_ISO_Country__r.Name, BillingStreet, BillingCity, BillingPostalCode, BillingState, BillingCountry,Sector__c,
                             Category__c,Location_Type__c, IATA_ISO_Country__r.ISO_Code__c, IATA_ISO_Country__r.OSCAR_enabled__c, 
                             IATA_ISO_Country__r.Enable_Minor_Changes_from_Portal__c, IATA_ISO_Country__r.Prevent_Portal_Trade_Name_Change__c,
-                            Website, Status__c
+                            Website, Status__c, Top_Parent__r.Name_on_AOC__c, Top_Parent__r.Legal_name__c
         					FROM Account
                             WHERE Id = :selectedBranchAccount];
         

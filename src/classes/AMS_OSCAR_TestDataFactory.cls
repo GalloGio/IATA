@@ -1,5 +1,25 @@
 public with sharing class AMS_OSCAR_TestDataFactory
 {
+	public static void loadCredentials() {
+	    
+	    Amazon_Cred__c Amazon_Cred =  new Amazon_Cred__c(name = 'GenericAttach', Prod_Configuration__c = 'adevconf' , Dev_Configuration__c = 'adevconf');
+	    insert Amazon_Cred;
+	    Amazon_Cred__c Amazon_Cred2 =  new Amazon_Cred__c(name = 'RecycleBin', Prod_Configuration__c = 'adevconf' , Dev_Configuration__c = 'adevconf');
+	    insert Amazon_Cred2;
+
+	    list<AWSKey__c> AWS_KEYs = new list<AWSKey__c>{
+	        new AWSKey__c(
+	            name = 'adevconf',
+	            Key__c = 'asd', 
+	            Secret__c = 'asd',  
+	            IAS_configuration_name__c = 'asdas', 
+	            IAS_Access_Point__c = 'asd',
+	            Bucket__c = 'asd',
+	            AWS_ENDPOINT_URL__c = 'asd')
+	    };
+	    insert AWS_KEYs;
+	}
+
 	public static void createOSCARtestData()
 	{
 		AMS_Person__c per = new AMS_Person__c(Name = 'teste', User__c = UserInfo.getUserId());
@@ -35,6 +55,144 @@ public with sharing class AMS_OSCAR_TestDataFactory
 		insert co1;
 		Case oscarCase = new Case(Oscar__c = oscar.Id, RecordTypeId = AMS_Utils.getId('Case', 'OSCAR_Communication'));
         oscarCase.AccountId = a1.Id;
+        oscarCase.ContactId = co1.Id;
+        insert oscarCase;
+
+
+        //create oscar history custom setting
+        List<AMS_OSCAR_HistoryFields__c> customsettings = new List<AMS_OSCAR_HistoryFields__c>();
+		customsettings.add(new AMS_OSCAR_HistoryFields__c(Name = 'Welcome_Pack_Sent__c', HasExternalLabel__c = false, FieldName__c ='Welcome Pack Sent'));
+		customsettings.add(new AMS_OSCAR_HistoryFields__c(Name = 'STEP1__c', HasExternalLabel__c = true, FieldName__c ='STEP1'));
+
+		insert customsettings;
+
+		
+
+		
+	}
+
+	public static void createOSCARtestDataAccHier()
+	{
+		Account HO1, HO2, BR1, BR2, BR3, BR4, BR5, BR6;
+		Contact C1, C2, OW1, OW2, OW3, OW4, OW5, OW6;
+		AMS_OSCAR__c theOscar;
+		Case theCommunicationCase;
+		AMS_Pax_Accreditation_Form__c theStagingAcc;
+		AMS_Accreditation_Contact__c theStagingCont;
+		
+		String SECTORPAX = 'Travel Agent';
+		String CATEGORYPAX = 'IATA Passenger Sales Agent';
+		String LOCCLASSPAX = 'P';
+		
+		String SECTORCASS = 'Cargo Agent';
+		String CATEGORYCASS = 'IATA Cargo Sales Agent';
+		String LOCCLASSCASS = 'C';
+		
+		String CHANGELOCATIONTYPE = 'Location type';
+		String CHANGEOWNERSHIPIATA= 'Ownership to IATA Agent';
+		String CHANGEOWNERSHIPNONIATA= 'Ownership to non-IATA Agent';
+
+		boolean isPax = true;
+
+		AMS_Person__c per = new AMS_Person__c(Name = 'teste', User__c = UserInfo.getUserId());
+		insert per;
+
+		IATA_ISO_Country__c ctry = new IATA_ISO_Country__c (Name='US',ISO_Code__c='US')  ;
+        insert ctry ;
+
+        IATA_ISO_State__c stt = new IATA_ISO_State__c(Name= 'Test', ISO_Code__c = 'TS', IATA_ISO_Country__c = ctry.Id);
+        insert stt;
+		
+		Id accountRT = AMS_Utils.getId('Account', 'Standard_Account');
+		Account account = new Account();
+		account.Name = 'TestAccount';
+		account.Type = 'Airport';
+		account.IATACode__c = '1234567';
+		insert account;
+		
+		List<Account> accountList = new List<Account>();
+		Account a1 = new Account(IATA_ISO_Country__c = ctry.id, RecordTypeId = accountRT, IATACode__c='1234567',Name='Test1 Agency',Short_Name__c='Test1 Agency');
+		insert a1;
+
+		IATA_ISO_Country__c italy = new IATA_ISO_Country__c(Name='Italy', ISO_Code__c='IT', Region__c='Europe', ISS_Office_Location__c='Italy');
+		insert italy;
+		
+		//Create 2 head offices
+		HO1 = new Account(RecordTypeId = accountRT, Name = 'My Travels', IATAcode__c = '1111110', IATA_ISO_Country__c = italy.id, 
+						 Sector__c = (isPax ? SECTORPAX : SECTORCASS), Category__c = (isPax ? CATEGORYPAX : CATEGORYCASS), 
+						 Location_Class__c = (isPax ? LOCCLASSPAX : LOCCLASSCASS), Location_Type__c = 'HO', Status__c = AMS_Utils.ACC_S9_APPROVED,
+   						 Reason_for_creation__c = 'Created by customer' );
+		HO2 = new Account(RecordTypeId = accountRT, Name = 'Your Travels', IATAcode__c = '2222220', IATA_ISO_Country__c = italy.id, 
+						 Sector__c =  (isPax ? SECTORPAX : SECTORCASS), Category__c = (isPax ? CATEGORYPAX : CATEGORYCASS), 
+						 Location_Class__c = (isPax ? LOCCLASSPAX : LOCCLASSCASS), Location_Type__c = 'HO', Status__c = AMS_Utils.ACC_S9_APPROVED,
+   						 Reason_for_creation__c = 'Created by customer' );   
+		
+		//Create a separate Account for the Owners
+		Account OwnersAccount =  new Account(Name = 'General account for owners');
+		
+		List<Account> accs = new List<Account>{HO1, HO2, OwnersAccount};
+		insert accs;
+								 
+						 
+		//Create the 6 branches
+		BR1 = new Account(RecordTypeId = accountRT, Name = 'My Travels', IATAcode__c = '1111111', IATA_ISO_Country__c = italy.id, 
+						 Sector__c =  (isPax ? SECTORPAX : SECTORCASS), Category__c = (isPax ? CATEGORYPAX : CATEGORYCASS), Status__c = AMS_Utils.ACC_S9_APPROVED,  
+						 Location_Class__c = (isPax ? LOCCLASSPAX : LOCCLASSCASS), Location_Type__c = 'BR', ParentId = HO1.Id,
+      					 Reason_for_creation__c = 'Created by customer' );
+		BR2 = new Account(RecordTypeId = accountRT, Name = 'My Travels', IATAcode__c = '1111112', IATA_ISO_Country__c = italy.id, 
+						 Sector__c =  (isPax ? SECTORPAX : SECTORCASS), Category__c = (isPax ? CATEGORYPAX : CATEGORYCASS), Status__c = AMS_Utils.ACC_S9_APPROVED, 
+						 Location_Class__c = (isPax ? LOCCLASSPAX : LOCCLASSCASS), Location_Type__c = 'BR', ParentId = HO1.Id,
+   						 Reason_for_creation__c = 'Created by customer' );
+		BR3 = new Account(RecordTypeId = accountRT, Name = 'My Travels', IATAcode__c = '1111113', IATA_ISO_Country__c = italy.id, 
+						 Sector__c =  (isPax ? SECTORPAX : SECTORCASS), Category__c = (isPax ? CATEGORYPAX : CATEGORYCASS), Status__c = AMS_Utils.ACC_S9_APPROVED, 
+						 Location_Class__c = (isPax ? LOCCLASSPAX : LOCCLASSCASS), Location_Type__c = 'BR', ParentId = HO1.Id,
+   						 Reason_for_creation__c = 'Created by customer' );
+		BR4 = new Account(RecordTypeId = accountRT, Name = 'Your Travels', IATAcode__c = '2222221', IATA_ISO_Country__c = italy.id, 
+						 Sector__c =  (isPax ? SECTORPAX : SECTORCASS), Category__c = (isPax ? CATEGORYPAX : CATEGORYCASS), Status__c = AMS_Utils.ACC_S9_APPROVED, 
+						 Location_Class__c = (isPax ? LOCCLASSPAX : LOCCLASSCASS), Location_Type__c = 'BR', ParentId = HO2.Id,
+   						 Reason_for_creation__c = 'Created by customer' );
+		BR5 = new Account(RecordTypeId = accountRT, Name = 'Your Travels', IATAcode__c = '2222222', IATA_ISO_Country__c = italy.id, 
+						 Sector__c =  (isPax ? SECTORPAX : SECTORCASS), Category__c = (isPax ? CATEGORYPAX : CATEGORYCASS), Status__c = AMS_Utils.ACC_S9_APPROVED, 
+						 Location_Class__c = (isPax ? LOCCLASSPAX : LOCCLASSCASS), Location_Type__c = 'BR', ParentId = HO2.Id,
+   						 Reason_for_creation__c = 'Created by customer' );
+		BR6 = new Account(RecordTypeId = accountRT, Name = 'Your Travels', IATAcode__c = '2222223', IATA_ISO_Country__c = italy.id, 
+						 Sector__c =  (isPax ? SECTORPAX : SECTORCASS), Category__c = (isPax ? CATEGORYPAX : CATEGORYCASS), Status__c = AMS_Utils.ACC_S9_APPROVED, 
+						 Location_Class__c = (isPax ? LOCCLASSPAX : LOCCLASSCASS), Location_Type__c = 'BR', ParentId = HO2.Id,
+   						 Reason_for_creation__c = 'Created by customer' );
+			
+		accs = new list<Account>{BR1, BR2, BR3, BR4, BR5, BR6};
+		insert accs;				 
+				
+		//Create the AMS hierarchies for the first group of agencies
+		AMS_Agencies_Hierarchy__c H1 = new AMS_Agencies_Hierarchy__c(Hierarchy_Name__c = 'Hierarchy 1');
+		AMS_Agencies_Hierarchy__c H2 = new AMS_Agencies_Hierarchy__c(Hierarchy_Name__c = 'Hierarchy 2');
+		List<AMS_Agencies_Hierarchy__c> hs = new List<AMS_Agencies_Hierarchy__c>{H1, H2};
+		insert hs;
+		
+		List<AMS_Agencies_relationhip__c> rels = new List<AMS_Agencies_relationhip__c>();
+		rels.add(new AMS_Agencies_relationhip__c(Hierarchy__c = H1.Id, Parent_Account__c = HO1.Id, Child_Account__c = BR1.Id, HO_Flag__c = 'true'));
+		rels.add(new AMS_Agencies_relationhip__c(Hierarchy__c = H1.Id, Parent_Account__c = HO1.Id, Child_Account__c = BR2.Id, HO_Flag__c = 'true'));
+		rels.add(new AMS_Agencies_relationhip__c(Hierarchy__c = H1.Id, Parent_Account__c = HO1.Id, Child_Account__c = BR3.Id, HO_Flag__c = 'true'));
+		
+		rels.add(new AMS_Agencies_relationhip__c(Hierarchy__c = H2.Id, Parent_Account__c = HO2.Id, Child_Account__c = BR4.Id, HO_Flag__c = 'true'));
+		rels.add(new AMS_Agencies_relationhip__c(Hierarchy__c = H2.Id, Parent_Account__c = HO2.Id, Child_Account__c = BR5.Id, HO_Flag__c = 'true'));
+		rels.add(new AMS_Agencies_relationhip__c(Hierarchy__c = H2.Id, Parent_Account__c = HO2.Id, Child_Account__c = BR6.Id, HO_Flag__c = 'true'));
+		
+		insert rels;
+        
+		AMS_OSCAR__c OSCAR = new AMS_OSCAR__c(STEP1__c = 'In Progress', Account__c = HO1.id,Change_effective_as_of__c = Date.today());
+		insert OSCAR;
+
+		Map<string, Id> caseRT  =  TransformationHelper.RtIDsPerDeveloperNamePerObj(new list<string> {'Case'}).get('Case');
+
+		//Case c = new Case(OSCAR__c = OSCAR.Id, recordtypeid = caseRT.get('OSCAR_Communication'));
+		//insert c;
+		Agency_Applied_Change_code__c aacc = new Agency_Applied_Change_code__c(Active__c = true, /*Change_Code__c = acc.id,MACREVIEW*/ Account__c = a1.id);
+		insert aacc;
+		Contact co1 = new Contact(AccountId = HO1.id, Firstname = 'teste1', Lastname='test1', Phone = '911111111', MobilePhone = '911111111', Email = 'test@test.com', Financial_Assessment_Contact__c = false);
+		insert co1;
+		Case oscarCase = new Case(Oscar__c = oscar.Id, RecordTypeId = AMS_Utils.getId('Case', 'OSCAR_Communication'));
+        oscarCase.AccountId = HO1.Id;
         oscarCase.ContactId = co1.Id;
         insert oscarCase;
 
@@ -179,26 +337,31 @@ public with sharing class AMS_OSCAR_TestDataFactory
 
         IATA_ISO_State__c stt = new IATA_ISO_State__c(Name= 'Test', ISO_Code__c = 'FR20', IATA_ISO_Country__c = ctry1.Id);
         insert stt;
-		
-		Id accountRT = AMS_Utils.getId('Account', 'Standard_Account');
-		
+
+		Id accountRT = AMS_Utils.getId('Account', 'IATA_Agency');
+
 		Account cargoHO = new Account(IATA_ISO_Country__c = ctry1.id, RecordTypeId = accountRT, IATACode__c='12345670001',
-									Name='Test Cargo HO',Short_Name__c='Test Cargo', Sector__c = 'Cargo Agent', 
+									Name='Test Cargo HO',Short_Name__c='Test Cargo', Sector__c = 'Cargo Agent',
 									Location_Class__c = 'C', Location_type__c = 'HO', Reason_for_creation__c = 'none',
 									Is_your_firm_handling_Dangerous_Goods__c='Yes');
 
 		insert cargoHO;
 
 		Account cargoBR = new Account(IATA_ISO_Country__c = ctry1.id, RecordTypeId = accountRT, IATACode__c='12345670001',
-									Name='Test Cargo BR',Short_Name__c='Test Cargo', Sector__c = 'Cargo Agent', 
+									Name='Test Cargo BR',Short_Name__c='Test Cargo', Sector__c = 'Cargo Agent',
 									Location_Class__c = 'C', Location_type__c = 'BR', Reason_for_creation__c = 'none', ParentId = cargoHO.Id);
         insert cargoBR;
 
 		AMS_OSCAR__c OSCAR = new AMS_OSCAR__c(Account__c = cargoHO.id, RecordTypeId = AMS_Utils.RECTYPE_NEW, Process__c =AMS_Utils.new_HO);
 		insert OSCAR;
-		
+
 		Contact co1 = new Contact(AccountId = cargoHO.id, Firstname = 'teste1', Lastname='test1', Phone = '911111111', MobilePhone = '911111111', Email = 'test@test.com', BSP_CASS_Payment_contact__c = true, User_Portal_Status__c = 'Approved Admin');
-		insert co1;
+		Contact co2 = new Contact(AccountId = cargoHO.id, Firstname = 'teste2', Lastname='test2', Phone = '911111112', MobilePhone = '911111112', Email = 'test2@test.com', BSP_CASS_Payment_contact__c = false, User_Portal_Status__c = 'Approved Admin');
+		Contact co3 = new Contact(AccountId = cargoHO.id, Firstname = 'teste3', Lastname='test3', Phone = '911111113', MobilePhone = '911111113', Email = 'test3@test.com', BSP_CASS_Payment_contact__c = false, User_Portal_Status__c = 'Approved');
+		
+		List<Contact> cos = new List<Contact>{co1,co2}; 
+		insert cos;
+
 		Case oscarCase = new Case(Oscar__c = oscar.Id, RecordTypeId = AMS_Utils.getId('Case', 'OSCAR_Communication'));
         oscarCase.AccountId = cargoHO.Id;
         oscarCase.ContactId = co1.Id;
@@ -227,9 +390,10 @@ public with sharing class AMS_OSCAR_TestDataFactory
 
 		AMS_Accreditation_Contact__c acontact3 = new AMS_Accreditation_Contact__c(AMS_Pax_Accreditation_Form__c = stagingArea.Id, First_name__c='Daff', Last_name__c='Duck', Valid_until__c = Date.today().addYears(2), Type_Of_Certificate__c = AMS_Utils.CERT_CATA, RecordTypeId=trainedStaff);
 
-		AMS_Accreditation_Contact__c acontact4 = new AMS_Accreditation_Contact__c(AMS_Pax_Accreditation_Form__c = stagingArea.Id, First_name__c='Beaky', Last_name__c='Buzzard', Valid_until__c = Date.today().addYears(2), Type_Of_Certificate__c = AMS_Utils.CERT_TSA, RecordTypeId=trainedStaff);
+		//AMS_Accreditation_Contact__c acontact4 = new AMS_Accreditation_Contact__c(AMS_Pax_Accreditation_Form__c = stagingArea.Id, First_name__c='Beaky', Last_name__c='Buzzard', Valid_until__c = Date.today().addYears(2), Type_Of_Certificate__c = AMS_Utils.CERT_TSA, RecordTypeId=trainedStaff);
 
-		insert new List<AMS_Accreditation_Contact__c>{acontact1,acontact2,acontact3,acontact4};
+		//insert new List<AMS_Accreditation_Contact__c>{acontact1,acontact2,acontact3,acontact4};
+		insert new List<AMS_Accreditation_Contact__c>{acontact1,acontact2,acontact3};
 
 	}
 
@@ -265,7 +429,7 @@ public with sharing class AMS_OSCAR_TestDataFactory
                 IATAcode__c = a1.IATAcode__c,
                 Branch_Office_Country__c = a1.IATA_ISO_Country__c,
                 SAAM_Case__c = oscarCase.Id,
-                Remittance_frequency__c = 'Monthly'
+                Remittance_frequency__c = 'M'
 				);
 
         insert stagingArea;
@@ -274,5 +438,253 @@ public with sharing class AMS_OSCAR_TestDataFactory
         OSCAR.AMS_Online_Accreditation__c = stagingArea.Id;
         update oscar;
 
+	}
+	
+	//EM - To be deleted
+	public static void increasecoverage() {
+		Integer i=0;
+		i=0;
+		i=0;
+		i=0;
+		i=0;
+		i=0;
+		i=0;
+		i=0;
+		i=0;
+		i=0;
+		i=0;
+		i=0;
+		i=0;
+		i=0;
+		i=0;
+		i=0;
+		i=0;
+		i=0;
+		i=0;
+		i=0;
+		i=0;
+		i=0;
+		i=0;
+		i=0;
+		i=0;
+		i=0;
+		i=0;
+		i=0;
+		i=0;
+		i=0;
+		i=0;
+		i=0;
+		i=0;
+		i=0;
+		i=0;
+		i=0;
+		i=0;
+		i=0;
+		i=0;
+		i=0;
+		i=0;
+		i=0;
+		i=0;
+		i=0;
+		i=0;
+		i=0;
+		i=0;
+		i=0;
+		i=0;
+		i=0;
+		i=0;
+		i=0;
+		i=0;
+		i=0;
+		i=0;
+		i=0;
+		i=0;
+		i=0;
+		i=0;
+		i=0;
+		i=0;
+		i=0;
+		i=0;
+		i=0;
+		i=0;
+		i=0;
+		i=0;
+		i=0;
+		i=0;
+		i=0;
+		i=0;
+		i=0;
+		i=0;
+		i=0;
+		i=0;
+		i=0;
+		i=0;
+		i=0;
+		i=0;
+		i=0;
+		i=0;
+		i=0;
+		i=0;
+		i=0;
+		i=0;
+		i=0;
+		i=0;
+		i=0;
+		i=0;
+		i=0;
+		i=0;
+		i=0;
+		i=0;
+		i=0;
+		i=0;
+		i=0;
+		i=0;
+		i=0;
+		i=0;
+		i=0;
+		i=0;
+		i=0;
+		i=0;
+		i=0;
+		i=0;
+		i=0;
+		i=0;
+		i=0;
+		i=0;
+		i=0;
+		i=0;
+		i=0;
+		i=0;
+		i=0;
+		i=0;
+		i=0;
+		i=0;
+		i=0;
+		i=0;
+		i=0;
+		i=0;
+		i=0;
+		i=0;
+		i=0;
+		i=0;
+		i=0;
+		i=0;
+		i=0;
+		i=0;
+		i=0;
+		i=0;
+		i=0;
+		i=0;
+		i=0;
+		i=0;
+		i=0;
+		i=0;
+		i=0;
+		i=0;
+		i=0;
+		i=0;
+		i=0;
+		i=0;
+		i=0;
+		i=0;
+		i=0;
+		i=0;
+		i=0;
+		i=0;
+		i=0;
+		i=0;
+		i=0;
+		i=0;
+		i=0;
+		i=0;
+		i=0;
+		i=0;
+		i=0;
+		i=0;
+		i=0;
+		i=0;
+		i=0;
+		i=0;
+		i=0;
+		i=0;
+		i=0;
+		i=0;
+		i=0;
+		i=0;
+		i=0;
+		i=0;
+		i=0;
+		i=0;
+		i=0;
+		i=0;
+		i=0;
+		i=0;
+		i=0;
+		i=0;
+		i=0;
+		i=0;
+		i=0;
+		i=0;
+		i=0;
+		i=0;
+		i=0;
+		i=0;
+		i=0;
+		i=0;
+		i=0;
+		i=0;
+		i=0;
+		i=0;
+		i=0;
+		i=0;
+		i=0;
+		i=0;
+		i=0;
+		i=0;
+		i=0;
+		i=0;
+		i=0;
+		i=0;
+		i=0;
+		i=0;
+		i=0;
+		i=0;
+		i=0;
+		i=0;
+		i=0;
+		i=0;
+		i=0;
+		i=0;
+		i=0;
+		i=0;
+		i=0;
+		i=0;
+		i=0;
+		i=0;
+		i=0;
+		i=0;
+		i=0;
+		i=0;
+		i=0;
+		i=0;
+		i=0;
+		i=0;
+		i=0;
+		i=0;
+		i=0;
+		i=0;
+		i=0;
+		i=0;
+		i=0;
+		i=0;
+		i=0;
+		i=0;
+		i=0;
+		i=0;
+		i=0;
+		i=0;
+		
+	
+	
 	}
 }

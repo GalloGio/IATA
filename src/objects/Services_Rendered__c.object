@@ -54,6 +54,17 @@
     <enableSharing>true</enableSharing>
     <enableStreamingApi>true</enableStreamingApi>
     <fields>
+        <fullName>ANG_IATA_EasyPay_Opt_out__c</fullName>
+        <defaultValue>false</defaultValue>
+        <description>Opt-out from IATA EasyPay</description>
+        <externalId>false</externalId>
+        <inlineHelpText>Opt-out from IATA EasyPay?</inlineHelpText>
+        <label>IATA EasyPay Opt-out</label>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
         <fullName>BSP_Country__c</fullName>
         <externalId>false</externalId>
         <formula>Services_Rendered_to_Airline__r.IATA_ISO_Country__r.BSP_Country_free_text__c</formula>
@@ -330,7 +341,7 @@
         <filters>
             <field>Services_Rendered_to_Airline__c</field>
             <operation>equals</operation>
-            <value>Vueling</value>
+            <value>Air France</value>
         </filters>
         <label>ZZ-BSP Participation - Search by Airline</label>
         <language>en_US</language>

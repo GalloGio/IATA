@@ -70,19 +70,23 @@ public class AMS_AccountHierarchySelectionController {
 		get{
 			notes = new Set<String>();
 
-			if(isVoluntaryRelinquishment) notes.add('Voluntary relinquishment: select from the below list all the agencies listed in the pdf form received as attachment of the OSCAR. All the selected Agencies will be processed in the same way, there is no distinction between Main Agency and the other ones.');
+			//FM AMSU-1 27-09-2017 - On Correction Process we don't show notes!
+			if(!isCorrection){
 
-			else if(oscar.Type_of_Change__c != null){
-				
-				if(tocList.contains(AMS_Utils.LEGAL_STATUS) || tocList.contains(AMS_Utils.NAME)) notes.add('Change of name/ legal status / vmfr will be applied to all the agencies selected');
-				if(tocList.contains(AMS_Utils.LOCATION) || tocList.contains(AMS_Utils.LOCATION_INSPECTION)) notes.add('The change of location will be applied only to the main agency. If the change is for an SA, the OSCAR opened for HO or BR, will also change the address for SAs associated to it, please make sure to select the SA Account also.');
-				//if(tocList.contains(AMS_Utils.LOCATION) || tocList.contains(AMS_Utils.LOCATION_INSPECTION)) notes.add('The change of location will be applied only to the main agency. If the change is for an SA, it is possible to select the HO or a BR as target agency. In this case the SA will be moved in the hierarchy to be placed under the selected agency');
-				if(tocList.contains(AMS_Utils.LOCATION_TYPE)) notes.add('Change of location type support only the selection of the main agency. It will be swapped with its parent or moved to the same level as the parent, according to the behavior selected');
-				if(tocList.contains(AMS_Utils.OWNERSHIP_IATA)) notes.add('Change of ownership to IATA will move all the agencies selected under the target agency');
-				if(tocList.contains(AMS_Utils.OWNERSHIP_NON_IATA)) notes.add('Change of ownership to non IATA will transform the main agency into the new HO. All the other agencies will keep their location type and will be put under the new HO');
-				if(tocList.contains(AMS_Utils.MAJ_SHAREHOLDING) || tocList.contains(AMS_Utils.MIN_SHAREHOLDING)) notes.add('Change of shareholding must be applied to all the hierarchy');
-				if(tocList.contains(AMS_Utils.VFMR)) notes.add('Change of remittance frequency must be applied to all the hierarchy (except for branches abroad)');
-				if(tocList.contains(AMS_Utils.REMOVALTRADENAME)) notes.add('The removal of trade name can be used only for CNS Agencies.');
+				if(isVoluntaryRelinquishment) notes.add('Voluntary relinquishment: select from the below list all the agencies listed in the pdf form received as attachment of the OSCAR. All the selected Agencies will be processed in the same way, there is no distinction between Main Agency and the other ones.');
+	
+				else if(oscar.Type_of_Change__c != null){
+					
+					if(tocList.contains(AMS_Utils.LEGAL_STATUS) || tocList.contains(AMS_Utils.NAME)) notes.add('Change of name/ legal status / vmfr will be applied to all the agencies selected');
+					if(tocList.contains(AMS_Utils.LOCATION) || tocList.contains(AMS_Utils.LOCATION_INSPECTION)) notes.add('The change of location will be applied only to the main agency. If the change is for an SA, the OSCAR opened for HO or BR, will also change the address for SAs associated to it, please make sure to select the SA Account also.');
+					//if(tocList.contains(AMS_Utils.LOCATION) || tocList.contains(AMS_Utils.LOCATION_INSPECTION)) notes.add('The change of location will be applied only to the main agency. If the change is for an SA, it is possible to select the HO or a BR as target agency. In this case the SA will be moved in the hierarchy to be placed under the selected agency');
+					if(tocList.contains(AMS_Utils.LOCATION_TYPE)) notes.add('Change of location type support only the selection of the main agency. It will be swapped with its parent or moved to the same level as the parent, according to the behavior selected');
+					if(tocList.contains(AMS_Utils.OWNERSHIP_IATA)) notes.add('Change of ownership to IATA will move all the agencies selected under the target agency');
+					if(tocList.contains(AMS_Utils.OWNERSHIP_NON_IATA)) notes.add('Change of ownership to non IATA will transform the main agency into the new HO. All the other agencies will keep their location type and will be put under the new HO');
+					if(tocList.contains(AMS_Utils.MAJ_SHAREHOLDING) || tocList.contains(AMS_Utils.MIN_SHAREHOLDING)) notes.add('Change of shareholding must be applied to all the hierarchy');
+					if(tocList.contains(AMS_Utils.VFMR)) notes.add('Change of remittance frequency must be applied to all the hierarchy (except for branches abroad)');
+					if(tocList.contains(AMS_Utils.REMOVALTRADENAME)) notes.add('The removal of trade name can be used only for CNS Agencies.');
+				}
 			}
 			return notes;
 		}
@@ -193,6 +197,13 @@ public class AMS_AccountHierarchySelectionController {
 		set;
 	}
 
+	//FM 01-03-2017 - Add Correction Process Check
+	public Boolean isCorrection{
+		get{
+			return (oscar.Process__c == AMS_Utils.COR);
+		}
+	}
+
 	public Boolean closeTab{
 		get{
 			if(closeTab == null) closeTab = false;
@@ -246,7 +257,13 @@ public class AMS_AccountHierarchySelectionController {
 
 	public Boolean showTopPanel{
 		get{
-			return !(isVoluntaryRelinquishment);
+			//FM 01-03-2017 - Add Correction Process validation, adding to the existing Voluntary Relinquishment condition
+			boolean bRes = true;
+			if(isVoluntaryRelinquishment || isCorrection)
+			//if(isVoluntaryRelinquishment )
+				bRes = false;
+
+			return bRes;
 		}
 		private set;
 	}
@@ -293,7 +310,7 @@ public class AMS_AccountHierarchySelectionController {
 					if(!childAccounts.containsKey(r.Parent_Account__c)) childAccounts.put(r.Parent_Account__c, new Set<Id>());
 					if(!childAccounts.containsKey(r.Child_Account__c)) childAccounts.put(r.Child_Account__c, new Set<Id>());
 
-					if(r.Child_Account__r.Status__c != AMS_Utils.ACC_S0_TERMINATED) childAccounts.get(r.Parent_Account__c).add(r.Child_Account__c);
+					if(r.Child_Account__r.Status__c != null && r.Child_Account__r.Status__c != AMS_Utils.ACC_S0_TERMINATED && r.Child_Account__r.Status__c != AMS_Utils.ACC_S1_NOTACCREDITED) childAccounts.get(r.Parent_Account__c).add(r.Child_Account__c);
 				}
 
 				for(Account a : Database.query('SELECT Id, '+String.join(accountFieldList, ',')+', CNS_Agency__c FROM Account WHERE Id IN :accountIds AND Status__c != \''+AMS_Utils.ACC_S0_TERMINATED+'\'' + ' AND Status__c != \''+AMS_Utils.ACC_S1_NOTACCREDITED+'\'' + ' AND Status__c != \'\'')){
@@ -492,9 +509,12 @@ public class AMS_AccountHierarchySelectionController {
 
 			if(!processDetails.isEmpty()) delete processDetails.values();
 			if(!newProcessHierarchy.isEmpty()) insert newProcessHierarchy;
-			Id cId = [SELECT Id FROM Case WHERE Oscar__c = :oscarId AND RecordType.Name = 'OSCAR Communication' AND ( ParentId = null or Parent.RecordType.Name != 'OSCAR Communication' ) ].Id;
-			update new Case(Id = cId, AccountId = oscar.Account__c);
+			List<Case> lstCases = [SELECT Id FROM Case WHERE Oscar__c = :oscarId AND RecordType.Name = 'OSCAR Communication' AND ( ParentId = null or Parent.RecordType.Name != 'OSCAR Communication' ) ];
+			if(!lstCases.isEmpty()) {
+				update new Case(Id = lstCases[0].Id, AccountId = oscar.Account__c);
+			}			
 		}catch(Exception e){
+			System.debug('updateRelatedRecords exception: ' + e + ' -- ' + e.getStackTraceString() );
 			ApexPages.addMessage(new ApexPages.message(ApexPages.Severity.ERROR, 'Couldn\'t save changes '+ e.getMessage()));
 			return false;
 		}
@@ -525,6 +545,37 @@ public class AMS_AccountHierarchySelectionController {
 	// ***********************************
 	// ********* action methods **********
 	// ***********************************
+
+	//AMSU-1
+	public void checkCorrectionProcess(){
+		
+		if(isCorrection){
+			//Check if all selected or not
+			Boolean allSelected = true;
+			for(HierarchyItem hi : hierarchyValues){
+				if(!hi.main && !hi.selected){
+					allSelected = false;
+					break;
+				}
+			}
+			//if all selected we want to deselect them and if only 1 selected we want to select all!
+			selectAll = !allSelected;
+			
+			doSelectAll();
+
+			//save();
+			Savepoint sp = Database.setSavepoint();
+			try {
+				//must be after save, to pass validations on the details
+				if(updateRelatedRecords()) closeTab = true;
+			} catch(Exception e) {
+				Database.rollback(sp);
+				//DML Exceptions are sometimes displayed on the page
+				if(e.getTypeName() != 'System.DmlException' || !ApexPages.hasMessages()) ApexPages.addMessage(new ApexPages.message(ApexPages.Severity.ERROR, 'Couldn\'t save changes '+ e.getMessage()));
+				System.debug('____ [cls AMS_AccountHierarchySelectionController - save] error - ' + e.getMessage());
+			}
+		}
+	}
 
 	public void selectMain() {
 		for(HierarchyItem hi : hierarchyValues){

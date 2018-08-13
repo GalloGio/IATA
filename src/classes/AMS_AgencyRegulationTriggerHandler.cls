@@ -114,6 +114,64 @@ public class AMS_AgencyRegulationTriggerHandler {
         }
     }
 
+    public static void countAccountDGR(List<AMS_Agency_Regulation__c> lsAgencyRegulations) {
+        List<Id> lsAccountIds = new List<Id>();
+        List<Account> lsAccounts = new List<Account>();
+        List<Account> lsAccountsToUpdate = new List<Account>();
+        for(AMS_Agency_Regulation__c ar : lsAgencyRegulations) {
+            lsAccountIds.add(ar.Account__c);
+        }
+        lsAccounts =
+            [SELECT Id, Location_type__c, Is_DGR_Compliant__c, IATA_ISO_Country__c, RecordType.DeveloperName, (SELECT Id FROM Cases WHERE OSCAR__r.Process__c LIKE '%NEW%')
+            FROM Account
+            WHERE Id IN :lsAccountIds
+            AND (RecordType.DeveloperName = 'IATA_Agency' 
+            OR (RecordType.DeveloperName = 'Standard_Account' 
+            AND (Location_type__c = 'HO' OR Location_type__c = 'BR')))
+            AND Location_Class__c = 'C'];
+        List<IATA_ISO_Country__c> lsCountries = [SELECT Id, Name FROM IATA_ISO_Country__c WHERE ISO_Code__c = 'CN'];
+        IATA_ISO_Country__c china;
+        if(!lsCountries.isEmpty()) { china = lsCountries[0];}
+        // fetch the existing regulations to make the count
+        List<AMS_Agency_Regulation__c> lsAllAgencyRegulations =
+            [SELECT Id, Account__c, Expired__c
+            FROM AMS_Agency_Regulation__c
+            WHERE Account__c IN :lsAccountIds
+            AND Expired__c = false
+            AND Type_Of_Certificate__c = 'DGR'];
+        for(Account a :lsAccounts) {
+
+            if(a.RecordType.DeveloperName == 'Standard_Account' && a.Cases.isEmpty())
+                continue;
+
+            Integer count = 0;
+            Boolean isCompliant = false;
+            for(AMS_Agency_Regulation__c ar : lsAllAgencyRegulations) {
+                if(a.Id == ar.Account__c) {
+                    count++;
+                }
+            }
+            if(china != null && a.IATA_ISO_Country__c == china.Id && count >= 3) {
+                isCompliant = true;
+            }
+            else if(a.Location_type__c == 'HO' && count >= 2) {
+                isCompliant = true;
+            }
+            else if(a.Location_type__c == 'BR' && count >= 1) {
+                isCompliant = true;
+            }
+            if(a.Is_DGR_Compliant__c != isCompliant) {
+                a.Is_DGR_Compliant__c = isCompliant;
+                lsAccountsToUpdate.add(a);
+            }
+        }
+        try {
+            if(!lsAccountsToUpdate.isEmpty()) update lsAccountsToUpdate;
+        } catch (Exception e) {
+            system.debug(e);
+        }
+    }
+
      public void isTestCompliant () {
         if (Test.isRunningTest()) {
             AMS_Oscar__c oscar = new AMS_Oscar__c();

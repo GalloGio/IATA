@@ -3,9 +3,24 @@
 **/
 public with sharing class SidraLiteHelperForOSCAR {
 
-    public static final set<String> VALID_REASONS = new set<String>{'CHO / CHS – Change of Ownership / Legal Status','CHC – Change of Shareholding','CHN - Change of Name','CHL - Change of Location','Certificate DGR','Major Change'};
-    public static final set<String> VALID_REASONS1 = new set<String>{'CHO / CHS – Change of Ownership / Legal Status','CHC – Change of Shareholding','CHN - Change of Name','CHL - Change of Location','Major Change'};
+    public static final set<String> VALID_REASONS = new set<String>{'CHO / CHS – Change of Ownership / Legal Status','CHC – Change of Shareholding','CHN - Change of Name','CHL - Change of Location','Certificate DGR','Major Change', 'Change of Hierarchy', 'Accreditation Type','Annual revalidation'};
+    public static final set<String> VALID_REASONS1 = new set<String>{'CHO / CHS – Change of Ownership / Legal Status','CHC – Change of Shareholding','CHN - Change of Name','CHL - Change of Location','Major Change', 'Change of Hierarchy', 'Accreditation Type','Annual revalidation'};
     public static final set<String> VALID_REASONS2 = new set<String>{'Certificate DGR'};
+    
+    public static String CHECK_STEP = null;
+
+    public static final map<String,String> MAP_STEP_REASON = new map<String,String>{
+        '6' => 'Non submission of supporting documents',
+        '9' => 'Non payment of change fees',
+        '11' => 'Financial Review Non-compliance (OSCAR Change)',
+        '12' => 'Financial Security Non-compliance (OSCAR Change)',
+        '14' => 'Non submission of PSAA',
+        '26' => 'Late/Absence of Notification of Change',
+        '35' => 'Financial Security Non-compliance (OSCAR Change)',
+        '44' => 'Annual Revalidation Non-Compliance',
+        'RPM' => 'Change Deficiency',
+        'DGR' => 'Failure to submit DGR certificate by deadline'
+    };
 
     public static void checkBussinessRules(Case cse) {
         try {
@@ -59,6 +74,7 @@ public with sharing class SidraLiteHelperForOSCAR {
         newCase.SIDRA_Lite_Reason__c = getOSCARReason(cse);
 
         if (SidraLiteUtil.isAccountActive(cse.account)) {
+            newCase.NOT_Date__c = Date.today();
             newCase.SIDRA_Lite_Default_Date__c = Date.Today();
             newCase.Reason_for_Default__c = 'Disapproval of Change';
             newCase.Termination_date_manual_entry__c = SidraLiteUtil.lastMonthDay(Date.today().addMonths(1));
@@ -106,37 +122,55 @@ public with sharing class SidraLiteHelperForOSCAR {
         AMS_OSCAR__c oscar = cse.OSCAR__r;
 
         if (oscar.Step6__c == 'Failed') {
-            String reason = 'Non submission of supporting documents';
+            String reason = MAP_STEP_REASON.get('6');
             if (!existentReasons.contains(reason) ) {
                 return reason;
             }
         }
         if (oscar.Step9__c == 'Failed') {
-            String reason = 'Non payment of change fees';
+            String reason = MAP_STEP_REASON.get('9');
             if (!existentReasons.contains(reason) ) {
                 return reason;
             }
         }
         if (oscar.Step11__c == 'Failed') {
-            String reason = 'Financial Review Non-compliance (OSCAR Change)';
+            String reason = MAP_STEP_REASON.get('11');
             if (!existentReasons.contains(reason) ) {
                 return reason;
             }
         }
         if (oscar.Step12__c == 'Failed') {
-            String reason = 'Financial Security Non-compliance (OSCAR Change)';
+            String reason = MAP_STEP_REASON.get('12');
             if (!existentReasons.contains(reason) ) {
                 return reason;
             }
         }
         if (oscar.Step14__c == 'Failed') {
-            String reason = 'Non submission of PSAA';
+            String reason = MAP_STEP_REASON.get('14');
+            if (!existentReasons.contains(reason) ) {
+                return reason;
+            }
+        }
+        if (oscar.Step26__c == 'Failed') {
+            String reason = MAP_STEP_REASON.get('26');
+            if (!existentReasons.contains(reason) ) {
+                return reason;
+            }
+        }
+        if (oscar.Step35__c == 'Failed') {
+            String reason = MAP_STEP_REASON.get('35');
+            if (!existentReasons.contains(reason) ) {
+                return reason;
+            }
+        }
+        if (oscar.Step44__c == 'Failed') {
+            String reason = MAP_STEP_REASON.get('44');
             if (!existentReasons.contains(reason) ) {
                 return reason;
             }
         }
         if (oscar.RPM_Approval__c == 'Authorize Disapproval') {
-            String reason = 'Change Deficiency';
+            String reason = MAP_STEP_REASON.get('RPM');
             if (!existentReasons.contains(reason) ) {
                 return reason;
             }
@@ -146,9 +180,14 @@ public with sharing class SidraLiteHelperForOSCAR {
 
     public static Case getRelatedCase(Case parentCase) {
         if (VALID_REASONS1.contains(parentCase.Reason1__c)) {
-            // for first valid reason we check a possible valid OSCAR reason
-            // if not possible it will throw an exception
-            getOSCARReason(parentCase);
+            String reasonToCheck = MAP_STEP_REASON.get(CHECK_STEP);
+            if (CHECK_STEP!=null) {
+                for (Case cse: parentCase.Cases) {
+                    if (cse.SIDRA_lite_Reason__c == reasonToCheck) {
+                        return cse;
+                    }
+                }
+            }
         } else if (VALID_REASONS2.contains(parentCase.Reason1__c)) {
             if (parentCase.Cases.size() > 0) {
                 return parentCase.Cases.get(0);

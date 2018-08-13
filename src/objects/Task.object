@@ -834,6 +834,10 @@
                 <default>false</default>
             </values>
             <values>
+                <fullName>Not Delivered</fullName>
+                <default>false</default>
+            </values>
+            <values>
                 <fullName>On Hold</fullName>
                 <default>false</default>
             </values>
@@ -1693,6 +1697,7 @@
             </values>
         </picklistValues>
     </recordTypes>
+    <searchLayouts/>
     <sharingModel>ControlledByParent</sharingModel>
     <validationRules>
         <fullName>Date_Mandatory_If_Communication_Sent</fullName>

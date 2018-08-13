@@ -1,0 +1,31 @@
+<messaging:emailTemplate subject="IMPORTANT NOTIFICATION : Remittance Holding Capacity Monitoring status - {!relatedTo.ANG_AccountId__r.IATACode__c}" recipientType="Contact" language="{!CASE(recipient.Preferred_Language__c, 'Chinese','zh_CN','Thai', 'th','Vietnamese', 'vi','Arabic', 'ar', 'Korean', 'ko', 'German','DE', 'English','EN', 'French','FR', 'Italian','IT', 'Danish','da', 'Spanish','es', 'Dutch','nl', 'Finnish','fi', 'Portuguese','pt', 'Swedish','sv', 'Polish','pl', 'Norweigian','no',  'Japanese','ja','Portuguese','pt','Indonesian', 'in',   'EN')}" relatedToType="ANG_RHC_Information__c">
+<messaging:htmlEmailBody >
+<div style="margin:auto; width:600px">
+ <span style="font-family:Open Sans,GillSansMT,Lucida Sans Unicode, Lucida Grande, sans-serif;color:#004577;">  
+ <apex:image value="https://iata--c.eu3.content.force.com/servlet/servlet.ImageServer?id=01520000000ej3A&oid=00D2000000008TF&lastMod=1246550288000"/>
+<!--<apex:image value="{!$Label.ISSP_Email_PortalUrl}servlet/servlet.ImageServer?id=0152000000111UE&oid=00D2000000008TF"/>--><BR/>
+<i>{!$Label.ISSP_Email_do_not_reply}</i><p />
+<BR/>
+{!$Label.ISSP_Email_Dear_Pre} {!recipient.Name}{!$Label.ISSP_Email_Dear_Post}<BR/>
+<BR/>
+We would like to inform you that according to our records you have reached <b><apex:outputText value="{0,number,###,###,###.00}"><apex:param value="{!relatedTo.ANG_ConsumedRHC_Percent__c}"/></apex:outputText>%</b> of your Remittance Holding Capacity (RHC).
+<BR/><BR/>
+It should be noted that your RHC amount is set at <b>{!relatedTo.CurrencyIsoCode} <apex:outputText value="{0,number,###,###,###.0000}"><apex:param value="{!relatedTo.ANG_RHC_Amount__c}"/></apex:outputText></b> and the currently used amount is <b>{!relatedTo.CurrencyIsoCode} <apex:outputText value="{0,number,###,###,###.0000}"><apex:param value="{!relatedTo.ANG_ConsumedRHC__c}" /> </apex:outputText></b>.
+<BR/><BR/>
+Please note that if your Agency’s total Cash amounts outstanding to the BSP reach 100% of your RHC,  Cash as a form of payment will be temporarily restricted until a remittance is received, although you will be able to continue issuing tickets through other forms of payment such as Credit Card (if applicable), IATA EasyPay and/or other alternative transfer methods.
+<BR/><BR/>
+You can consult your RHC usage at any time on the <a href="{!$Label.ISSP_Email_PortalUrl}ISSP_Login?retURL=/ISSP_ANG_RHC">IATA Customer Portal</a>.
+<BR/><BR/>
+
+{!$Label.ISSP_Email_ThankYou}
+<br/><br/>
+<b>IATA – Global Delivery Center</b>
+<br/>
+<br/>
+<apex:image value="https://iata--c.eu3.content.force.com/servlet/servlet.ImageServer?id=015w0000001yYtT&oid=00D2000000008TF&lastMod=1392385307000"/>
+<!--<apex:image value="{!$Label.ISSP_Email_PortalUrl}servlet/servlet.ImageServer?id=015w0000001yKkp&oid=00D2000000008TF"/>-->
+<br/>
+</span>
+</div>
+</messaging:htmlEmailBody>
+</messaging:emailTemplate>

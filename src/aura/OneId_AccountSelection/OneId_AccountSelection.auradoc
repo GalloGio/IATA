@@ -1,0 +1,13 @@
+<aura:documentation>
+	<aura:description>
+        <p>Component that handles the selection of an account based on Type of Customer and Country</p>
+        <p>You must pass a contact and an account for this component, they will be needed for the submit logic</p>
+        
+        <!-- TODO: 
+			Move search into another component, passing map of Type => lightning component for the search
+			Receive create account and selected account as event
+
+			For the search: send selected account and no results as events
+		-->
+    </aura:description>
+</aura:documentation>

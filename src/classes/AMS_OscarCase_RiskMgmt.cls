@@ -42,17 +42,29 @@ public class AMS_OscarCase_RiskMgmt {
     private static set<string> setTidsChangeCode = new set<string>{'REI','TER','RTE'};
     private static map<id, map<string, Agency_Applied_Change_code__c>> mapPrevReasonFromCC = new map<id, map<string, Agency_Applied_Change_code__c>>();
     private static final String NO_IRR_FOUND = ' No Irregularities Found!';
+    private static list<AMS_ChangeCodes__c> ListCCConfig;
 
     //Main Method
 	public static void CreateRiskChangeCode(map<id, case> mapTrgOld, map<id, case> mapTrgNew){
+
+		System.debug('[AMS_OscarCase_RiskMgmt] : Entering CreateRiskChangeCode');
 		map<id, list<AMS_ChangeCodes__c>> mapChangeCodeToCreate = new map<id, list<AMS_ChangeCodes__c>>(); //index is the Id of the case
 		set<string> setFSStatus = new set<string>{'Close to Expiry Date', 'Active', 'Encashed', 'Encashment in progress'};	//Financial Security status to be included in the memo text
 		//map<id, Case> mapCasePerAccount = new map<id, case>();
 
 		set<id> setAccntIdCase = new set<id>();
-		list<AMS_ChangeCodes__c> lsConf = ReadConfiguration();
 
-		if(!lsConf.isEmpty()){
+		ReadConfiguration();
+
+		list<AMS_ChangeCodes__c> lsConfAMS = ReadConfiguration(null);
+		list<AMS_ChangeCodes__c> lsConfNEWGEN = ReadConfiguration('NEWGEN');
+
+		System.debug('List of lsConfNEWGEN is:' + lsConfNEWGEN);
+
+		if(!lsConfAMS.isEmpty() || !lsConfNEWGEN.isEmpty()){
+
+			System.debug('[AMS_OscarCase_RiskMgmt] : Entering CreateRiskChangeCode STEP1');
+
 			list<case> lsAPDToCreate = new list<case>();
 			//INC305031 changed the query from for to list;
 			List<Case> listCases = [select id, AccountId, (select id from Hierarchy_Account_Selections__r) from Case where id in:mapTrgNew.keyset()];
@@ -209,16 +221,16 @@ public class AMS_OscarCase_RiskMgmt {
 
 			//Query the Cases and account info: from the trigger, I'm not getting all necessary lookup value. Trigger is always running AFTER
 			map<id, case> mapCases = new map<id, case>([
-			select id, recordType.DeveloperName, DEF_Withdrawal_Approval_Rejection__c, DEF_Withdrawal_Reason__c, DEF_Approval_Rejection__c, End_of_Grace_Period_Date__c,
+			select id, recordType.DeveloperName, DEF_Withdrawal_Approval_Rejection__c, Short_Payment_Date__c, DEF_Withdrawal_Reason__c, DEF_Approval_Rejection__c, End_of_Grace_Period_Date__c,
 								  Shut_Down_TKT_System_GDS_and_BSPlink__c, IRR_Approval_Rejection__c, IRR_Withdrawal_Approval_Rejection__c, IRR_Withdrawal_Reason__c, NOT_Date__c, NOT_Sent__c, NOT_Approval__c,
 								  Notify_Agreement_Approval_to_AG__c, Reason_for_Default__c, REI_ApprovalRejectin__c, Repayment_Schedule_Approval__c, SIDRA_Lite_Reason__c, TER_Approval_Rejection__c, Current_Outstanding_Amount_USD__c, Type_of_REI_WD__c,
 								  Termination_Reason__c, Ticketing_Authority_Re_assigned__c, Update_AIMS_DEF__c, Update_AIMS_IRR__c, Update_AIMS_IRRWITH__c, Update_AIMS_REI_DEFWITH__c,
 								  Update_AIMS_Repayment_agreed__c, Update_AIMS_TER__c, Parent.OSCAR__r.Type_of_change__c, Parent.OSCAR__c, Parent.Status, IRR_Approval_Rejection_Date__c, IRR_Type__c,
 								  Termination_date__c, Outstanding_Amount__c, Reason_of_REI_WD__c, External_ID__c,
 								  Account.Location_Class__c, AccountId, Account.Status__c, Account.PreviousStatus__c, Account.Previous_Reason__c, Account.Reason__c, Account.Accumulated_Irregularities__c
-								  , Account.IATA_ISO_Country__r.Enable_Risk_Change_Codes__c, Account.AIMS_ID__c, Account.WebStar_ID__c, Account.IATACode__c, Account.ParentId
+								  , Account.IATA_ISO_Country__r.Enable_Risk_Change_Codes__c, Account.AIMS_ID__c, Account.WebStar_ID__c, Account.IATACode__c, Account.ANG_IsNewGenAgency__c, Account.ParentId
 								  //DTULLO UNCOMMENT FOR CNS, COMMENT/DELETE SIMILAR LINES AFTER
-								  , Account.CNS_Agency__c
+								  , Account.CNS_Agency__c, Currency__c, OSCAR__r.ANG_Type_Of_Change__c
 								  from case where id in:mapTrgNew.keySet()]);
 
 			set<string> setOperationCalendarExtID = new set<string>();
@@ -241,6 +253,8 @@ public class AMS_OscarCase_RiskMgmt {
 
 				string sRecordTypeName = c.recordType.DeveloperName;
 
+				List<AMS_ChangeCodes__c> lsConf = c.Account.ANG_IsNewGenAgency__c ? lsConfNEWGEN : lsConfAMS;
+
 				for(AMS_ChangeCodes__c conf:lsConf){
 					set<string> setLocClass = new set<string>(conf.Class_Type__c.toUpperCase().split(';'));
 
@@ -254,6 +268,7 @@ public class AMS_OscarCase_RiskMgmt {
 					if(c.Account.CNS_Agency__c && !conf.Used_By_CNS__c)
 						continue;
 
+					System.debug('[AMS_OscarCase_RiskMgmt]: Entering conditions with Change code:'+conf);
 
 											  //Check that the same change code does not exists generated from the same SIDRA (Lite)
 					boolean CCToBeGenerated = bCheckCondition(c, null, 'NOT EXISTS:' + conf.Change_Code__c, null, mapExistingChangeCodes);
@@ -293,6 +308,7 @@ public class AMS_OscarCase_RiskMgmt {
 				}
 			}
 
+			System.debug('mapChangeCodeToCreate:'+mapChangeCodeToCreate);
 			system.debug(logginglevel.error, 'DTULLO 226 setOperationCalendarExtID --> ' + setOperationCalendarExtID);
 			if(!setOperationCalendarExtID.isEmpty()){
 				for(operational_Calendar__c oc:[select Operation_Period_code__c, First_Day__c, Last_Day__c from operational_Calendar__c where Operation_Period_code__c in:setOperationCalendarExtID])
@@ -340,13 +356,18 @@ public class AMS_OscarCase_RiskMgmt {
                     }
                 }
 
+                // get forms of payment for newgen accounts
+                Map<Id,List<Agency_Authorization__c>> fOPsMap = new Map<Id,List<Agency_Authorization__c>>();
+                if (mapCases.values()[0].Account.ANG_IsNewGenAgency__c)
+                    fOPsMap = AMS_ChangeCodesHelper.fetchFormsOfPayment(accountIds);
+
 				for(ID idCase:mapChangeCodeToCreate.keyset()){
 					for(AMS_ChangeCodes__c cc :mapChangeCodeToCreate.get(idCase)){
 						id CurrAccntId = mapCases.get(idCase).AccountId;
 						//DTULLO UNCOMMENT FOR CNS, COMMENT/DELETE SIMILAR LINES AFTER
 
 
-                        Agency_Applied_Change_code__c AACC = CreateChangeCode(mapCases, idCase, cc, null, mapCases.get(idCase).Account.CNS_Agency__c, aaccsPerAccount);
+                        Agency_Applied_Change_code__c AACC = CreateChangeCode(mapCases, idCase, cc, null, mapCases.get(idCase).Account.CNS_Agency__c, aaccsPerAccount, fOPsMap.get(CurrAccntId));
 
 
 						if(AACC!=null)
@@ -360,7 +381,7 @@ public class AMS_OscarCase_RiskMgmt {
 									if(HierAccnt.id!=CurrAccntId){
 										if(HIERAccnt.Location_Class__c != 'T' || (HIERAccnt.Location_Class__c == 'T' && setTidsChangeCode.contains(cc.Change_Code__c))){
 											//DTULLO UNCOMMENT FOR CNS, COMMENT/DELETE SIMILAR LINES AFTER
-											Agency_Applied_Change_code__c AACCHier = CreateChangeCode(mapCases, idCase, cc, HIERAccnt, HierAccnt.CNS_Agency__c, aaccsPerAccount);
+											Agency_Applied_Change_code__c AACCHier = CreateChangeCode(mapCases, idCase, cc, HIERAccnt, HierAccnt.CNS_Agency__c, aaccsPerAccount, fOPsMap.get(CurrAccntId));
 											//Agency_Applied_Change_code__c AACCHier = CreateChangeCode(mapCases, idCase, cc, HIERAccnt);
 											if(AACCHier!=null)
 												lsAACC.add(AACCHier);
@@ -445,7 +466,7 @@ public class AMS_OscarCase_RiskMgmt {
 	}
 
 	//DTULLO UNCOMMENT FOR CNS, COMMENT/DELETE SIMILAR LINES AFTER
-	private static Agency_Applied_Change_code__c CreateChangeCode(map<id, case> mapCases, id idCase, AMS_ChangeCodes__c cc, Account acc, boolean bIsCNS, Map<Id, List<Agency_Applied_Change_code__c>> aaccsPerAccount){
+	private static Agency_Applied_Change_code__c CreateChangeCode(map<id, case> mapCases, id idCase, AMS_ChangeCodes__c cc, Account acc, boolean bIsCNS, Map<Id, List<Agency_Applied_Change_code__c>> aaccsPerAccount, List<Agency_Authorization__c> fOPs) {
 	//private static Agency_Applied_Change_code__c CreateChangeCode(map<id, case> mapCases, id idCase, AMS_ChangeCodes__c cc, Account acc){
 		datetime dt = system.now();
 
@@ -493,6 +514,7 @@ public class AMS_OscarCase_RiskMgmt {
 		AACC.Irregularity_Sequence__c = (cc.Generate_Irregularity_Sequence__c && isHO && !mapIRRS.get(AccountId).isEmpty()) ? GenerateIrregularitySequence(mapIRRS.get(AccountId),mapCases.get(idCase)) : '';
 		AACC.End_of_Grace_Period_Date__c = (cc.Calculate_End_Grace_Period_Date__c && mapCases.get(idCase).End_of_Grace_Period_Date__c != null) ? GenerateDateForBulletin(mapCases.get(idCase).End_of_Grace_Period_Date__c) : '';
 		AACC.Termination_Date__c = (cc.Calculate_Termination_Date__c && mapCases.get(idCase).Termination_date__c != null) ? GenerateDateForBulletin(mapCases.get(idCase).Termination_date__c) : '';
+		AACC.Forms_of_Payment__c = AMS_ChangeCodesHelper.generateFOPString(fOPs, mapCases.get(idCase).Account.ANG_IsNewGenAgency__c, cc.Change_Code__c);
 		//AACC.Bulletin_Information__c = GenerateMemoText(mapCases.get(idCase), null
 		//												, cc.Bulletin_Memo_Text__c, cc.Bulletin_Memo_Text2__c, cc.Bulletin_Memo_Text3__c
 		//												, mapIRRS.get(AccountId), mapFinancialSecurity.get(AccountId)).toUpperCase();
@@ -982,14 +1004,33 @@ public class AMS_OscarCase_RiskMgmt {
 
 
 	//Retrieve configuration items, stored in custom setting AMS Change Codes
-	private static list<AMS_ChangeCodes__c> ReadConfiguration(){
-		return [select id, Billable__c, Change_Code__c, Published_in_bulletin__c, Reason_Code__c, Reason_Code_Description__c, Record_Type__c, Risk_ChangeCode__c,
+	private static void ReadConfiguration(){
+
+		ListCCConfig = [select id, Billable__c, Change_Code__c, Published_in_bulletin__c, Reason_Code__c, Reason_Code_Description__c, Record_Type__c, Risk_ChangeCode__c,
 			    Field1__c, Field1Values__c, Field2__c, Field2Values__c, Field3__c, Field3Values__c, Field4__c, Field4Values__c, Field5__c, Field5Values__c, Field6__c, Field6Values__c,
 			    Account_status_change__c, Class_Type__c, Bulletin_Memo_Text__c, Bulletin_Memo_Text2__c, Bulletin_Memo_Text3__c, Apply_to_hierarchy__c, Clear_Irregularities__c, Clear_Expiry_Date__c, Integration_RecId__c,
 			    Used_By_CNS__c, CNS_Bulletin_Memo_Text__c, CNS_Bulletin_Memo_Text2__c, CNS_Bulletin_Memo_Text3__c, Publish_HO_Only__c, Calculate_BG_to_HO__c, Extra_memo_text_for_HO__c, Calculate_Outstanding_Amount__c,
-				Calculate_Termination_Date__c, Calculate_End_Grace_Period_Date__c, Generate_Irregularity_Sequence__c
+				Calculate_Termination_Date__c, Calculate_End_Grace_Period_Date__c, Generate_Irregularity_Sequence__c, Accreditation_Model__c
 			    from AMS_ChangeCodes__c where Risk_ChangeCode__c=true];
 	}
+
+	private static List<AMS_ChangeCodes__c> ReadConfiguration(String accModel){
+
+		List<AMS_ChangeCodes__c> toReturn = new List<AMS_ChangeCodes__c>();
+
+		for(AMS_ChangeCodes__c cc: ListCCConfig){
+
+			if(cc.Accreditation_Model__c == accModel)
+				toReturn.add(cc);
+
+		}
+
+		return toReturn;
+
+	}
+
+
+
 
 
 	//Method generates the bulletin memo text. It reads the stored values and replace all <xxxxxx> value with corresponding real value
@@ -1065,6 +1106,15 @@ public class AMS_OscarCase_RiskMgmt {
 			if(sMemoText.containsIgnoreCase('<Inform GDS to Shut Down TKT System>')){
 				sMemoText = sMemoText.replace('<Inform GDS to Shut Down TKT System>', theCase.Shut_Down_TKT_System_GDS_and_BSPlink__c==null?'Nil':GenerateDateForBulletin(theCase.Shut_Down_TKT_System_GDS_and_BSPlink__c));
 			}
+
+			if(sMemoText.containsIgnoreCase('<Currency>')){
+				sMemoText = sMemoText.replace('<Currency>', theCase.Currency__c==null?'Nil':theCase.Currency__c);
+			}
+
+			if(sMemoText.containsIgnoreCase('<Oscar Type Of Change>')){
+				sMemoText = sMemoText.replace('<Oscar Type Of Change>', theCase.OSCAR__r.ANG_Type_Of_Change__c==null?'Nil':theCase.OSCAR__r.ANG_Type_Of_Change__c);
+			}
+			
 		}
 
 		sMemoText = extraMemoText != null ? (sMemoText + ' ' + extraMemoText) : sMemoText;

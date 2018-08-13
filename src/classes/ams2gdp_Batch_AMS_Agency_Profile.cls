@@ -73,7 +73,7 @@
 			{
 				//Run only on the deltas 
 				String deltaConditions = String.format('LastModifiedDate >= {0}'
-					,new List<String>{batchInfo.Last_Sync_Start_Date__c.addDays(-1).format('yyyy-MM-dd\'T\'hh:mm:ss\'Z\'','GMT')});
+					,new List<String>{batchInfo.Last_Sync_Start_Date__c.addDays(-2).format('yyyy-MM-dd\'T\'hh:mm:ss\'Z\'','GMT')});
 				if(String.isNotBlank(batchInfo.Failed_Records__c))
 				{
 					// Reprocess failed records 
@@ -179,7 +179,8 @@
 	}
 	
 	global void finish(Database.BatchableContext BC) {
-		if(processNextBatch)Database.executeBatch(new ams2gdp_Batch_Account(false, isManual, true));
+		// if(processNextBatch)Database.executeBatch(new ams2gdp_Batch_Account(false, isManual, true));
+        if(processNextBatch)Database.executeBatch(new ams2gdp_Batch_AMS_Agency_Authorization(true, isManual));
 		ams2gdp_Utils.upsertAMS_GDP_Batch(batchName, syncStartedDate, errorsCount, totalRecords, failed_records, isManual);		
 		//--Send completion notification 
 		ams2gdp_Utils.notifyBatchOutput(batchName, totalRecords, errorsCount, failed_records);

@@ -53,6 +53,26 @@
     <enableSharing>true</enableSharing>
     <enableStreamingApi>true</enableStreamingApi>
     <fields>
+        <fullName>AMS_Updated_By__c</fullName>
+        <description>The name of the user that accept or reject the file</description>
+        <externalId>false</externalId>
+        <label>AMS Updated By</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>TextArea</type>
+    </fields>
+    <fields>
+        <fullName>AMS_Updated_Date__c</fullName>
+        <description>The date when the file was accepted or rejected</description>
+        <externalId>false</externalId>
+        <label>AMS Updated Date</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>DateTime</type>
+    </fields>
+    <fields>
         <fullName>Additional_Information__c</fullName>
         <description>Additional information if the E&amp;F Category is Ad-Hoc Report or Miscellaneous</description>
         <externalId>false</externalId>
@@ -938,9 +958,54 @@
     </fields>
     <label>AmazonFile</label>
     <listViews>
+        <fullName>AgencyManagementAP_AmazonFile</fullName>
+        <filterScope>Queue</filterScope>
+        <label>Agency Management - A&amp;P</label>
+        <queue>AgencyManagementAP</queue>
+        <sharedTo>
+            <allInternalUsers></allInternalUsers>
+        </sharedTo>
+    </listViews>
+    <listViews>
+        <fullName>AgencyManagementAfricaME_AmazonFile</fullName>
+        <filterScope>Queue</filterScope>
+        <label>Agency Management - Africa &amp; ME</label>
+        <queue>AgencyManagementAfricaME</queue>
+        <sharedTo>
+            <allInternalUsers></allInternalUsers>
+        </sharedTo>
+    </listViews>
+    <listViews>
+        <fullName>AgencyManagementAmericas_AmazonFile</fullName>
+        <filterScope>Queue</filterScope>
+        <label>Agency Management - Americas</label>
+        <queue>AgencyManagementAmericas</queue>
+        <sharedTo>
+            <allInternalUsers></allInternalUsers>
+        </sharedTo>
+    </listViews>
+    <listViews>
+        <fullName>AgencyManagementChinaNAsia_AmazonFile</fullName>
+        <filterScope>Queue</filterScope>
+        <label>Agency Management - China &amp; N. Asia</label>
+        <queue>AgencyManagementChinaNAsia</queue>
+        <sharedTo>
+            <allInternalUsers></allInternalUsers>
+        </sharedTo>
+    </listViews>
+    <listViews>
         <fullName>All</fullName>
         <filterScope>Everything</filterScope>
         <label>All</label>
+    </listViews>
+    <listViews>
+        <fullName>CasesACCEuropeOffOnshore_AmazonFile</fullName>
+        <filterScope>Queue</filterScope>
+        <label>Agency Management - Europe</label>
+        <queue>CasesACCEuropeOffOnshore</queue>
+        <sharedTo>
+            <allInternalUsers></allInternalUsers>
+        </sharedTo>
     </listViews>
     <nameField>
         <label>AmazonFile Name</label>
@@ -1551,6 +1616,10 @@
                 <default>false</default>
             </values>
             <values>
+                <fullName>PCI_COMPLIANCE</fullName>
+                <default>false</default>
+            </values>
+            <values>
                 <fullName>PHOTOS_INT_EXT</fullName>
                 <default>false</default>
             </values>
@@ -1952,6 +2021,10 @@
             </values>
             <values>
                 <fullName>OFFICE_LEASE</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>PCI_COMPLIANCE</fullName>
                 <default>false</default>
             </values>
             <values>

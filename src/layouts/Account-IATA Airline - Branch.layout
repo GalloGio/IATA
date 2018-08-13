@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Layout xmlns="http://soap.sforce.com/2006/04/metadata">
-    <excludeButtons>DataDotComAccountInsights</excludeButtons>
+    <excludeButtons>DataDotComClean</excludeButtons>
+    <excludeButtons>DataDotComCompanyHierarchy</excludeButtons>
     <excludeButtons>DisableCustomerPortalAccount</excludeButtons>
     <excludeButtons>DisablePartnerPortalAccount</excludeButtons>
     <excludeButtons>IncludeOffline</excludeButtons>
-    <excludeButtons>Share</excludeButtons>
     <excludeButtons>Submit</excludeButtons>
     <layoutSections>
         <customLabel>true</customLabel>
@@ -453,6 +453,7 @@
         <fields>Services_Rendered_Type__c</fields>
         <fields>Services_Rendered_By__c</fields>
         <fields>Services_Rendered_Status__c</fields>
+        <fields>ANG_IATA_EasyPay_Opt_out__c</fields>
         <fields>ISO_Country_formula__c</fields>
         <relatedList>Services_Rendered__c.Services_Rendered_to_Airline__c</relatedList>
     </relatedLists>
