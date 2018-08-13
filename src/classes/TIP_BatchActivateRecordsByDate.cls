@@ -168,7 +168,7 @@ global class TIP_BatchActivateRecordsByDate implements  Database.Batchable<sObje
 		integer stat=DATE_STATUS_IN_PROGRESS;
 		if(startDate > System.Today()) stat=DATE_STATUS_IN_PROGRESS;
 		if(startDate <=System.Today()) stat=DATE_STATUS_ACTIVE;
-		if(endDate < System.Today()) stat=DATE_STATUS_INACTIVE; //ACAMBAS - TIP-161
+		if(endDate <= System.Today()) stat=DATE_STATUS_INACTIVE; //ACAMBAS - TIP-161
 		return stat ; 
 	}
 		
