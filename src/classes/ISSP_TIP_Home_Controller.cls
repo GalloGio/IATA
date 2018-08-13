@@ -631,7 +631,7 @@ public without sharing class ISSP_TIP_Home_Controller {
 	        theContactRole.Contact__c = theCon.Id;
 	        theContactRole.Account_Role__c = TheAccountRole.Id;
 	        theContactRole.Service_Rendered__c = TIP_Utils.ACCOUNT_CONTACT_ROLE_SERVICE_TIP;
-	        theContactRole.UniqueKey__c = TIP_Utils.ACCOUNT_CONTACT_ROLE_SERVICE_TIP + '_' + theContactRole.Account_Role__c + '_' + theContactRole.Contact__c;
+            theContactRole.UniqueKey__c = TIP_Utils.AccountContactRoleGenerateUniquekey(theContactRole);
 	        if(bIsPrimary){
 	        	theContactRole.Contact_Role__c = '';
 	        }
