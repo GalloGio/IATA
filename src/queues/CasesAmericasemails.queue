@@ -13,7 +13,7 @@
             <role>MADHubCSstaffA</role>
         </roles>
         <users>
-            <user>rodriguezp@iata.org</user>
+            <user>rodriguezp@iata.org.inactive</user>
         </users>
     </queueMembers>
     <queueSobject>
