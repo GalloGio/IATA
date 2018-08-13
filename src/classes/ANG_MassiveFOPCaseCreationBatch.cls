@@ -8,8 +8,10 @@ global class ANG_MassiveFOPCaseCreationBatch implements Database.Batchable<sObje
 
 	global List<String> fieldListContact;
 
+	private String errorMessages;
+
 	global ANG_MassiveFOPCaseCreationBatch(Set<Id> accountIdsIn) {
-		
+		errorMessages = '';
 		resultItems = new List<ANG_ConversionHelper.ConversionBatchItem>();
 
 		List<String> fieldListAcct = new List<String>();
@@ -112,8 +114,10 @@ global class ANG_MassiveFOPCaseCreationBatch implements Database.Batchable<sObje
 		toReturnBody+= ':: Errors Found ::'+'\n';
 
 		for(ANG_ConversionHelper.ConversionBatchItem item:resultItems) 
-			if(item.isError)
+			if(item.isError){
 				toReturnBody+=item+'\n';
+            	errorMessages = (String.isEmpty(errorMessages) ?  '[{"iataCode":"' + item.iataCode + '", "errorMessage":"' + item.errorMessage + '"}' : errorMessages + ', {"iataCode":"' + item.iataCode + '", "errorMessage":"' + item.errorMessage + '"}');         
+            }
 		
 		toReturnBody+= '\n\n';
 		toReturnBody+= ':: Accounts Processed ::'+'\n'; 
@@ -123,12 +127,14 @@ global class ANG_MassiveFOPCaseCreationBatch implements Database.Batchable<sObje
 				toReturnBody+=item+'\n';
 
 		mail.setPlainTextBody(toReturnBody);
-
+		if(!String.isEmpty(errorMessages)) EventBus.publish(new Batch_Notification__e(Batch_id__c = BC.getJobId(), message__c = errorMessages + ']'));
+		
 		 if(Test.isRunningTest()){
 		 	return;
 		 }
 
 		Messaging.sendEmail(new Messaging.Singleemailmessage [] {mail});
+
 	}
 	
 }
