@@ -1,5 +1,4 @@
 public class ANG_AgencyEventsGenerator{
-    public static Boolean runDelayed = false;
     private String cmType;
     private String accField;
     private list<sObject> newRecList;
@@ -14,6 +13,10 @@ public class ANG_AgencyEventsGenerator{
     }
 
     public void run(){
+        run(false);
+    }
+
+    public void run(Boolean runDelayed){
         
         if(ANG_ConversionHelper.isMigrationTool && cmType !='ChangeCode' ) return; //in case of migrating account, prevents following code to be run
         list<ANG_CalloutMapping__c> calloutmappingList= new list<ANG_CalloutMapping__c>();

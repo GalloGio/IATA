@@ -324,11 +324,10 @@ global without sharing class ANG_RollbackEngineHelper implements Queueable{
 
     private void generateAgencyEvents(Id oscarId){
 
-        ANG_AgencyEventsGenerator.runDelayed = true;
         List<Agency_Applied_Change_code__c> changeCodes = new List<Agency_Applied_Change_code__c>([SELECT Id, Change_Code__c, Account__c FROM Agency_Applied_Change_code__c WHERE OSCAR__c = :oscarId AND Change_Code__c = 'CWD']);
         
         if(!changeCodes.isEmpty())
-        	new ANG_AgencyEventsGenerator(changeCodes ,null,'ChangeCode','account__c').run();
+        	new ANG_AgencyEventsGenerator(changeCodes ,null,'ChangeCode','account__c').run(true);
         
     }
 }
