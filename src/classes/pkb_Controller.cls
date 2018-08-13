@@ -845,7 +845,7 @@ system.debug('\n\n===== sessionId :'+sessionId+'  contactId :'+contactId);
     set;
     get {
       if (currentSiteUrl == null) {
-        currentSiteUrl = Site.getCurrentSiteUrl();
+        currentSiteUrl = Site.getBaseUrl();
         if (!isSite) {
             if (Site.getTemplate().getUrl().endsWith('pkb_Template_fb'))
                currentSiteUrl = Page.pkb_Home_fb.getUrl();

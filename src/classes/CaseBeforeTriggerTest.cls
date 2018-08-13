@@ -1166,7 +1166,7 @@ private class CaseBeforeTriggerTest {
         );
         insert testUser;
         
-        Id RT_SEDA = clsCaseRecordTypeIDSingleton.getInstance().RecordTypes.get('SEDA');
+        Id RT_SEDA = RecordTypeSingleton.getInstance().getRecordTypeId('Case', 'SEDA');
         IATA_ISO_Country__c country = new IATA_ISO_Country__c(Name = 'France', ISO_Code__c = 'FR');
         insert country;
         
@@ -1212,7 +1212,7 @@ private class CaseBeforeTriggerTest {
         );
         insert testUser;
         
-        Id RT_SEDA = clsCaseRecordTypeIDSingleton.getInstance().RecordTypes.get('SEDA');
+        Id RT_SEDA = RecordTypeSingleton.getInstance().getRecordTypeId('Case', 'SEDA');
         IATA_ISO_Country__c country = new IATA_ISO_Country__c(Name = 'France', ISO_Code__c = 'FR');
         insert country;
         
