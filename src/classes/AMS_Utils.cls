@@ -1459,9 +1459,9 @@ public without sharing class AMS_Utils {
         System.debug('AGENCY CHANGES: fields to migrate (' + fieldsToMigrate + ') for accounts: ' + (new Map<Id, Account>(accounts).keySet()));
 
         Map<ID,AMS_ChangeCodesHelper.ObjectChangesStruct> accountsToUpdate = new  Map<ID,AMS_ChangeCodesHelper.ObjectChangesStruct>();
-
+        
         Map<String, Schema.SObjectField>  acctFieldsMap= Schema.SObjectType.Account.fields.getMap();
-
+        
         //DT: Reindented and added 3 fields for addresses
         // Account Fields => AMS Pax Accreditation Fields (Staging area)
         Map<String, String> fieldsMapping = new Map<String, String> {'Name' => 'Account_Name__c'
@@ -1506,14 +1506,14 @@ public without sharing class AMS_Utils {
             fieldsMapping.put('ShippingState', 'Shipping_State__c');
         }
         /*** AMSU-121 End ***/
-		
+        
         if (fieldsToMigrate != null && oscarOnlineAccreditation != null) {
             Map<String, Object> accountFieldNewValue = new Map<String,Object>();
 
             for (String key : fieldsMapping.keySet()) {
                 String value = fieldsMapping.get(key);
                 if (fieldsToMigrate.contains(value)) {
-                    
+                
                     accountFieldNewValue.put(key, oscarOnlineAccreditation.get(value));
                     System.debug(key + ':' + oscarOnlineAccreditation.get(value));
                 }
@@ -1537,57 +1537,52 @@ public without sharing class AMS_Utils {
             //if (fieldsToMigrate.contains('ISSP_AMS_Total_Ownership__c'))
                 //AMS_AccountRoleCreator.runRoleCreatorForOnlineAccreditations(new List<AMS_Pax_Accreditation_Form__c>{onlineAcc}, accountsAffected);
 
-                for(Id accId: accountsAffected){
+            for(Account acc : accounts){
 
-                    List<AMS_ChangeCodesHelper.ObjectChange> objectChangesList = new List <AMS_ChangeCodesHelper.ObjectChange>();
+                Account newAcc = new Account(Id = acc.Id);
+                List<AMS_ChangeCodesHelper.ObjectChange> objectChangesList = new List <AMS_ChangeCodesHelper.ObjectChange>();
 
-                    Account acc = accounts.get(accId);
+                for(String accFieldApiName: accountFieldNewValue.keySet())
+                {
+                    
+                    Schema.SObjectField field = acctFieldsMap.get(accFieldApiName);
+                    Schema.DisplayType fldType = field.getDescribe().getType();
+                    
+                    system.debug('DDD Field value to migrate to account: ' + accFieldApiName);
+                    system.debug('DDD Field Type to migrate to account: ' + fldType);
 
-                    for(String accFieldApiName: accountFieldNewValue.keySet())
-                    {
+                    //Add Account Changes to be used when generating the Change Codes History Entities
+                    
+                    String newValue,oldValue,oldValueLookupID,newValueLookupID;
+                    if (String.valueOf(fldType) == 'REFERENCE'){
 
-                        Schema.SObjectField field = acctFieldsMap.get(accFieldApiName);
-                        Schema.DisplayType fldType = field.getDescribe().getType();
-
-                        system.debug('DDD Field value to migrate to account: ' + accFieldApiName);
-                        system.debug('DDD Field Type to migrate to account: ' + fldType);
-
-                        //Add Account Changes to be used when generating the Change Codes History Entities
-
-                        String newValue,oldValue,oldValueLookupID,newValueLookupID;
-                        if (String.valueOf(fldType) == 'REFERENCE'){
-
-                            oldValue = String.valueOf(processParentDependecies(accFieldApiName.replace('__c','__r.Name'),acc));
-                            newValue = String.valueOf(processParentDependecies(fieldsMapping.get(accFieldApiName).replace('__c','__r.Name'),oscarOnlineAccreditation));
-                            oldValueLookupID = String.valueOf(acc.get(accFieldApiName));
-                            newValueLookupID = String.valueOf(accountFieldNewValue.get(accFieldApiName));
-
-                        }
-                        else{
-
-                            oldValue = String.valueOf(acc.get(accFieldApiName));
-                            newValue = String.valueOf(accountFieldNewValue.get(accFieldApiName));
-                       }
-
-                        system.debug('DDD oldValue:' + oldValue);
-                        system.debug('DDD newValue:' + newValue);
-
-                        if (oldValue != newValue)
-                            objectChangesList.add(new AMS_ChangeCodesHelper.ObjectChange('Account',accFieldApiName,oldValue,newValue,oldValueLookupID,newValueLookupID));
-
-
-                        acc.put(accFieldApiName, accountFieldNewValue.get(accFieldApiName));
+                        oldValue = String.valueOf(processParentDependecies(accFieldApiName.replace('__c','__r.Name'),acc));
+                        newValue = String.valueOf(processParentDependecies(fieldsMapping.get(accFieldApiName).replace('__c','__r.Name'),oscarOnlineAccreditation)); 
+                        oldValueLookupID = String.valueOf(acc.get(accFieldApiName));
+                        newValueLookupID = String.valueOf(accountFieldNewValue.get(accFieldApiName));
+                        
                     }
+                    else{
+                   
+                        oldValue = String.valueOf(acc.get(accFieldApiName));
+                        newValue = String.valueOf(accountFieldNewValue.get(accFieldApiName));
+                   }
+                    
+                    system.debug('DDD oldValue:' + oldValue);
+                    system.debug('DDD newValue:' + newValue);
+                    
+                    if (oldValue != newValue)
+                        objectChangesList.add(new AMS_ChangeCodesHelper.ObjectChange('Account',accFieldApiName,oldValue,newValue,oldValueLookupID,newValueLookupID));
+                        
 
-                    AMS_ChangeCodesHelper.ObjectChangesStruct acctChangesStruct = new AMS_ChangeCodesHelper.ObjectChangesStruct(objectChangesList);
-
-                    accountsToUpdate.put(acc.Id,acctChangesStruct);
+                    newAcc.put(accFieldApiName, accountFieldNewValue.get(accFieldApiName));
                 }
 
+                accountsToUpdate.put(acc.Id,new AMS_ChangeCodesHelper.ObjectChangesStruct(objectChangesList, newAcc));
+            }
         }
 
     return accountsToUpdate;
-
 }
     
     //FM AMSU-1
@@ -1718,52 +1713,57 @@ public without sharing class AMS_Utils {
                     //AMS_AccountRoleCreator.runRoleCreatorForOnlineAccreditations(new List<AMS_Pax_Accreditation_Form__c>{onlineAcc}, accountsAffected);
 
 
-            for(Account acc : accounts){
+                for(Id accId: accountsAffected){
 
-                Account newAcc = new Account(Id = acc.Id);
-                List<AMS_ChangeCodesHelper.ObjectChange> objectChangesList = new List <AMS_ChangeCodesHelper.ObjectChange>();
+                    List<AMS_ChangeCodesHelper.ObjectChange> objectChangesList = new List <AMS_ChangeCodesHelper.ObjectChange>();
 
-                for(String accFieldApiName: accountFieldNewValue.keySet())
-                {
-                    
-                    Schema.SObjectField field = acctFieldsMap.get(accFieldApiName);
-                    Schema.DisplayType fldType = field.getDescribe().getType();
-                    
-                    system.debug('DDD Field value to migrate to account: ' + accFieldApiName);
-                    system.debug('DDD Field Type to migrate to account: ' + fldType);
+                    Account acc = accounts.get(accId);
 
-                    //Add Account Changes to be used when generating the Change Codes History Entities
-                    
-                    String newValue,oldValue,oldValueLookupID,newValueLookupID;
-                    if (String.valueOf(fldType) == 'REFERENCE'){
-
-                        oldValue = String.valueOf(processParentDependecies(accFieldApiName.replace('__c','__r.Name'),acc));
-                        newValue = String.valueOf(processParentDependecies(fieldsMapping.get(accFieldApiName).replace('__c','__r.Name'),oscarOnlineAccreditation)); 
-                        oldValueLookupID = String.valueOf(acc.get(accFieldApiName));
-                        newValueLookupID = String.valueOf(accountFieldNewValue.get(accFieldApiName));
+                    for(String accFieldApiName: accountFieldNewValue.keySet())
+                    {
                         
+                        Schema.SObjectField field = acctFieldsMap.get(accFieldApiName);
+                        Schema.DisplayType fldType = field.getDescribe().getType();
+                        
+                        system.debug('DDD Field value to migrate to account: ' + accFieldApiName);
+                        system.debug('DDD Field Type to migrate to account: ' + fldType);
+
+                        //Add Account Changes to be used when generating the Change Codes History Entities
+                        
+                        String newValue,oldValue,oldValueLookupID,newValueLookupID;
+                        if (String.valueOf(fldType) == 'REFERENCE'){
+
+                            oldValue = String.valueOf(processParentDependecies(accFieldApiName.replace('__c','__r.Name'),acc));
+                            newValue = String.valueOf(processParentDependecies(fieldsMapping.get(accFieldApiName).replace('__c','__r.Name'),oscarOnlineAccreditation)); 
+                            oldValueLookupID = String.valueOf(acc.get(accFieldApiName));
+                            newValueLookupID = String.valueOf(accountFieldNewValue.get(accFieldApiName));
+                            
+                        }
+                        else{
+                       
+                            oldValue = String.valueOf(acc.get(accFieldApiName));
+                            newValue = String.valueOf(accountFieldNewValue.get(accFieldApiName));
+                       }
+                        
+                        system.debug('DDD oldValue:' + oldValue);
+                        system.debug('DDD newValue:' + newValue);
+                        
+                        if (oldValue != newValue)
+                            objectChangesList.add(new AMS_ChangeCodesHelper.ObjectChange('Account',accFieldApiName,oldValue,newValue,oldValueLookupID,newValueLookupID));
+                            
+
+                        acc.put(accFieldApiName, accountFieldNewValue.get(accFieldApiName));
                     }
-                    else{
-                   
-                        oldValue = String.valueOf(acc.get(accFieldApiName));
-                        newValue = String.valueOf(accountFieldNewValue.get(accFieldApiName));
-                   }
-                    
-                    system.debug('DDD oldValue:' + oldValue);
-                    system.debug('DDD newValue:' + newValue);
-                    
-                    if (oldValue != newValue)
-                        objectChangesList.add(new AMS_ChangeCodesHelper.ObjectChange('Account',accFieldApiName,oldValue,newValue,oldValueLookupID,newValueLookupID));
-                        
 
-                    newAcc.put(accFieldApiName, accountFieldNewValue.get(accFieldApiName));
+                    AMS_ChangeCodesHelper.ObjectChangesStruct acctChangesStruct = new AMS_ChangeCodesHelper.ObjectChangesStruct(objectChangesList);
+
+                    accountsToUpdate.put(acc.Id,acctChangesStruct);
                 }
 
-                accountsToUpdate.put(acc.Id,new AMS_ChangeCodesHelper.ObjectChangesStruct(objectChangesList, newAcc));
-            }
         }
 
     return accountsToUpdate;
+
 }
                         
 //Map data from staging area (AMS Online Accreditation) to account
