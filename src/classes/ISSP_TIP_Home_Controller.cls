@@ -472,6 +472,7 @@ public without sharing class ISSP_TIP_Home_Controller {
         update account;
         update theAccountRole;
         upsert newCase;
+          upsert AccountContactRoleList;
         try{
             upsert contactList;
         }catch(Exception e){}
@@ -601,9 +602,9 @@ public without sharing class ISSP_TIP_Home_Controller {
 				conRole.Contact_Role__c = TIP_Utils.ManageMultiPicklist(conRole.Contact_Role__c, TIP_Utils.ACCOUNT_CONTACT_ROLE_PRIMARY, 'Remove');
         }
         
-        upsert AccountContactRoleList;
+      
         
-        fillContactList();
+        //fillContactList();
     }
     
     
