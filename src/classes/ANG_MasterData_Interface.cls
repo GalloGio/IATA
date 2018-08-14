@@ -109,7 +109,7 @@ global class ANG_MasterData_Interface{
             } else if (role.Contact__c != null) {
                 this.name = role.Contact__r.Name;
             } else {
-                this.name = Owner_Name__c;
+                this.name = role.Owner_Name__c;
             }
 
             this.percentage = percentage == null ? 0 : percentage; 
