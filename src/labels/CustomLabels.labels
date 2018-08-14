@@ -22839,6 +22839,13 @@ This Dashboard allows each airline Treasury Team to gain full visibility of thei
         <value>All unsaved changes will be discarded. Are you sure you want to leave the page?</value>
     </labels>
     <labels>
+        <fullName>ISSP_TIP_EFFECTIVE_DATE</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_TIP_EFFECTIVE_DATE</shortDescription>
+        <value>Effective Date</value>
+    </labels>
+    <labels>
         <fullName>ISSP_TIP_HOLD_TO_MULTISELECT</fullName>
         <language>en_US</language>
         <protected>false</protected>
@@ -22956,6 +22963,13 @@ This Dashboard allows each airline Treasury Team to gain full visibility of thei
         <protected>false</protected>
         <shortDescription>ISSP_TIP_RANGE_TO_GREATER_RANGE_FROM</shortDescription>
         <value>&amp;lt;strong&amp;gt;Error:&amp;lt;/strong&amp;gt;Range To must be greater or equal than Range From</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_TIP_REASON_FOR_CANCEL</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_TIP_REASON_FOR_CANCEL</shortDescription>
+        <value>Reason for cancellation</value>
     </labels>
     <labels>
         <fullName>ISSP_TIP_RETURN_HOMEPAGE</fullName>

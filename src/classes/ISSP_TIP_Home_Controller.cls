@@ -938,6 +938,7 @@ public without sharing class ISSP_TIP_Home_Controller {
                 newpp.PP_Accepted_transactions__c=String.join(acceptedTransactionVal,';');
                 newpp.PP_Payment_guarantee__c=String.join(paymentGuaranteeVal,';');
                 newpp.PP_status__c=status;
+                newpp.Payment_Provider_Account_Role__c = TheAccountRole.id; //ACAMBAS
                 
                 insert newpp;
                 
