@@ -49,25 +49,26 @@ public without sharing class OneId_Fred_AccountSelection_CTRL {
             // Determine if is primary or a guest
             system.debug('@@@ isGuest '+isGuest);
             
-            Integer nbOfPrimaryInAccount = 0;
-            Integer nbOfSecondaryInAccount = 0;
+			// Retrieve the number of primary and secondary fred users for the selected account
+            list<PermissionSetAssignment> fredUsers = [SELECT AssigneeId, PermissionSet.Name FROM PermissionSetAssignment WHERE PermissionSet.Name in ('FRED_Primary_User', 'FRED_SSO') AND Assignee.AccountId =: acc.Id];
 
-            map<Id, User> userInAccount =  new map<Id, User>([SELECT id, name FROM User WHERE contact.accountId =: acc.Id AND isactive=true]);
-
-            list<PermissionSetAssignment> primaries = [SELECT AssigneeId FROM PermissionSetAssignment WHERE PermissionSet.Name = 'FRED_Primary_User' AND Assignee.AccountId =: acc.Id];
             set<Id> primariesIds = new set<Id>();
-            for(PermissionSetAssignment psa : primaries) {
-                primariesIds.add(psa.AssigneeId);
-            }
-            nbOfPrimaryInAccount = primariesIds.size();
-
-
-            if(! userInAccount.isEmpty()) {
-                for (Id userId :userInAccount.keySet()) {
-                    if(! primariesIds.contains(userId))
-                        nbOfSecondaryInAccount++;
+            set<Id> secondariesIds = new set<Id>();
+            
+            for(PermissionSetAssignment psa : fredUsers) {
+                if(psa.PermissionSet.Name == 'FRED_Primary_User'){
+	                primariesIds.add(psa.AssigneeId);
+                }
+                else{
+	                secondariesIds.add(psa.AssigneeId);
                 }
             }
+
+			// Remove from the secondaries set, the users identified as primary user (they should have both permission sets assigned)
+			secondariesIds.removeAll(primariesIds);
+
+            Integer nbOfPrimaryInAccount = primariesIds.size();
+            Integer nbOfSecondaryInAccount = secondariesIds.size();
 
             if(isGuest) {
                 // Get account and found any user that has primary user permission set
@@ -76,12 +77,23 @@ public without sharing class OneId_Fred_AccountSelection_CTRL {
                 system.debug('@@@ createPrimary? '+createPrimary);
             }
             
+
             // Load  FRED limit and compare to account number
-            One_Id_Service_Provider_Config__c config = [select id, Max_Number_Of_Primary_User__c, Max_Number_Of_Secondary_User__c, Service_Provider_Name__c, Service_Bundle__r.name, Customer_Type_Activation__c  FROM One_Id_Service_Provider_Config__c  WHERE Service_Provider_Name__c =: serviceName LIMIT 1];
+			List<RecordType> recordTypes = [SELECT Id FROM RecordType WHERE SObjectType = 'One_Id_Service_Provider_Config__c' AND DeveloperName = 'Service_Provider'];
+
+            One_Id_Service_Provider_Config__c config;
+
+			if(! recordTypes.isEmpty()){
+				config = [select Max_Number_Of_Primary_User__c, Max_Number_Of_Secondary_User__c FROM One_Id_Service_Provider_Config__c  WHERE Service_Provider_Name__c =: serviceName AND RecordTypeId =: recordTypes[0].Id LIMIT 1];
+			}
+			else{
+				config = [select id, Max_Number_Of_Primary_User__c, Max_Number_Of_Secondary_User__c FROM One_Id_Service_Provider_Config__c  WHERE Service_Provider_Name__c =: serviceName LIMIT 1];
+			}
+            
            
- System.debug('SMH LIMIT PRIMARY: '+nbOfPrimaryInAccount+'over'+config.Max_Number_Of_Primary_User__c);
- System.debug('SMH LIMIT SECONDARY: '+nbOfSecondaryInAccount+'over'+config.Max_Number_Of_Secondary_User__c);
-        System.debug('SMH isGuest '+isGuest);
+			System.debug('SMH LIMIT PRIMARY: '+nbOfPrimaryInAccount+' over '+config.Max_Number_Of_Primary_User__c);
+			System.debug('SMH LIMIT SECONDARY: '+nbOfSecondaryInAccount+' over '+config.Max_Number_Of_Secondary_User__c);
+			System.debug('SMH isGuest '+isGuest);
 
             if((createPrimary && nbOfPrimaryInAccount >= config.Max_Number_Of_Primary_User__c) || (!createPrimary && nbOfSecondaryInAccount >= config.Max_Number_Of_Secondary_User__c)) {
                 // Limit reached
