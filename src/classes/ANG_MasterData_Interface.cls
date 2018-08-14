@@ -57,6 +57,7 @@ global class ANG_MasterData_Interface{
     }
 
     private static List<AMS_Account_Role__c> fetchOwners(Id accountId){
+        if (accountId == null || accountId == '') return new List<AMS_Account_Role__c>();
         return [SELECT Id, Percentage__c, Owner_Name__c,Owner_Account__r.Name, Contact__r.Name FROM AMS_Account_Role__c WHERE Account__c = :accountId ];
     }
 
@@ -102,8 +103,15 @@ global class ANG_MasterData_Interface{
     private class Owner{
         public string name;
         public double percentage;
-        public Owner(string name, double percentage){ 
-            this.name = name == null ? '' : name;
+        public Owner(AMS_Account_Role__c role, double percentage){
+            if (role.Owner_Account__c != null) {
+                this.name = role.Owner_Account__r.Name;
+            } else if (role.Contact__c != null) {
+                this.name = role.Contact__r.Name;
+            } else {
+                this.name = role.Owner_Name__c;
+            }
+
             this.percentage = percentage == null ? 0 : percentage; 
         }
     }
@@ -239,7 +247,7 @@ global class ANG_MasterData_Interface{
                 List<AMS_Account_Role__c> roles = new List<AMS_Account_Role__c>();
                 roles = acc.AMS_Account_Roles__r.isEmpty() ? fetchOwners(acc.Top_Parent__c) : acc.AMS_Account_Roles__r;
                 for(AMS_Account_Role__c role :roles){
-                    this.owners.add(new Owner(role.Owner_Name__c, (double)role.Percentage__c));
+                    this.owners.add(new Owner(role, (double)role.Percentage__c));
                 }
 
             }
