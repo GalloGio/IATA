@@ -169,23 +169,27 @@ global without sharing class ANG_RollbackEngineHelper implements Queueable{
 	}
 	
 	private void processRollbackRHCs(List<String> RHCList){
-
-		List<ANG_RHC_Information__c> RHCsToRollback = new List<ANG_RHC_Information__c>();
-		Set<Id> RHCids = new Set<Id>();
+		Map<Id, ANG_RHC_Information__c> RHCsToRollback = new Map<Id, ANG_RHC_Information__c>();
 
 		for(String RHCstring: RHCList){
-			
 			ANG_RHC_Information__c rhc = (ANG_RHC_Information__c) JSON.deserialize(RHCstring, ANG_RHC_Information__c.class);
-			RHCids.add(rhc.Id);
 
-			RHCsToRollback.add(rhc);
+			RHCsToRollback.put(rhc.Id, rhc);
 		}
 
-		delete [Select Id from ANG_RHC_Information__c where ANG_AccountId__c in:accountsRelated and Id not in: RHCids];
+		Map<Id, ANG_RHC_Information__c> existingRHCs = new Map<Id, ANG_RHC_Information__c>([SELECT Id FROM ANG_RHC_Information__c WHERE Id IN :RHCsToRollback.keySet()]);
 
-		if(!RHCsToRollback.isEmpty()){
-			upsert RHCsToRollback;
-		}	
+		for (Id rhcId: RHCsToRollback.keySet()) {
+			if (!existingRHCs.keySet().contains(rhcId)) {
+				RHCsToRollback.get(rhcId).Id = null;
+			}
+		}
+
+		delete [Select Id from ANG_RHC_Information__c where ANG_AccountId__c in:accountsRelated and Id not in: RHCsToRollback.keySet()];
+
+		if(!RHCsToRollback.values().isEmpty()){
+			upsert RHCsToRollback.values();
+		}
 	}
 
 	private void processRollbackFSs(List<String> FSsList){
