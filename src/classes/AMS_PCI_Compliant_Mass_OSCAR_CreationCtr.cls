@@ -11,7 +11,15 @@ public with sharing class AMS_PCI_Compliant_Mass_OSCAR_CreationCtr{
     public list<jsonError> errorMessagesToShow { get; set; }
     private integer counter=0;  //keeps track of the offset
     private integer list_size=10; //sets the page size or number of rows
-    public boolean updateTable = false;
+    public boolean updateTable {
+        get{
+            if(updateTable == null)
+                this.updateTable = false;
+
+            return this.updateTable;
+        }
+        set;
+    }
 
     public String operation {
         get;
