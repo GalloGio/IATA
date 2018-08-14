@@ -22843,7 +22843,7 @@ This Dashboard allows each airline Treasury Team to gain full visibility of thei
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>ISSP_TIP_EFFECTIVE_DATE</shortDescription>
-        <value>Effective Date*</value>
+        <value>Effective Date</value>
     </labels>
     <labels>
         <fullName>ISSP_TIP_HOLD_TO_MULTISELECT</fullName>
@@ -22969,7 +22969,7 @@ This Dashboard allows each airline Treasury Team to gain full visibility of thei
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>ISSP_TIP_REASON_FOR_CANCEL</shortDescription>
-        <value>Reason for cancellation*</value>
+        <value>Reason for cancellation</value>
     </labels>
     <labels>
         <fullName>ISSP_TIP_RETURN_HOMEPAGE</fullName>
