@@ -824,6 +824,10 @@
                                         </apex:pageBlockSectionItem>
                                     </apex:pageBlockSection>
 
+                                </apex:pageblock>
+                                </apex:form>
+                                <apex:form >   
+                                <apex:pageblock > 
                                     <!-- ------------MODAL WIDOWN -------------------  -->
                                     <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
                                       <apex:outputPanel id="modalContentoutpanel">
