@@ -358,6 +358,7 @@ public with sharing class SCIMProvisioningRequestUpdateTest {
 				Provisioning_Type__c =:SCIMServProvManager.PROV_TYP_SCIM AND
 				SCIM_App_Name__c =:SCIMServProvManager.PRE_PROD_SRV_PROV];
 
+		Test.StartTest();
 		system.runAs(portalUser)
 		{
 			//INSERT access row in portal apllciation rights for contact 3
@@ -410,6 +411,7 @@ public with sharing class SCIMProvisioningRequestUpdateTest {
 			and Portal_Application__r.SCIM_App_Name__c=:SCIMServProvManager.PRE_PROD_SRV_PROV];
 			System.AssertEquals(PortAccRightRow.Technical_Provisioning_Status__c, SCIMServProvManager.TECH_STS_EXT_ACCESS_GRANTED);
 		}
+		Test.StopTest();
 	}
 
 	@IsTest
