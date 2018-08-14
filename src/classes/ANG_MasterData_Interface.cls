@@ -247,7 +247,7 @@ global class ANG_MasterData_Interface{
                 List<AMS_Account_Role__c> roles = new List<AMS_Account_Role__c>();
                 roles = acc.AMS_Account_Roles__r.isEmpty() ? fetchOwners(acc.Top_Parent__c) : acc.AMS_Account_Roles__r;
                 for(AMS_Account_Role__c role :roles){
-                    this.owners.add(new Owner(role.Owner_Name__c, (double)role.Percentage__c));
+                    this.owners.add(new Owner(role, (double)role.Percentage__c));
                 }
 
             }
