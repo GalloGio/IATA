@@ -424,7 +424,7 @@ Values must be Separated by &quot;;&quot;</inlineHelpText>
     </fields>
     <fields>
         <fullName>Used_By_CNS__c</fullName>
-        <defaultValue>true</defaultValue>
+        <defaultValue>false</defaultValue>
         <description>If false, means the change code is not generated for CNS agencies</description>
         <externalId>false</externalId>
         <inlineHelpText>If false, means the change code is not generated for CNS agencies</inlineHelpText>
