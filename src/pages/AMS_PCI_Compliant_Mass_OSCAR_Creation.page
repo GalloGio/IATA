@@ -11,6 +11,9 @@
 		<c:Loading />
 		<apex:pageBlock title="PCI Oscar mass creation" mode="edit">
 			<apex:pageMessages/>
+			<apex:pageMessage severity="warning" 
+					strength="1" 
+					summary="For PCI operation New Gen countries will be excluded"/>
 			<apex:panelGrid columns="2" rowClasses="alignTop">
 				<apex:pageBlockSection id="filters" title="Filters" columns="1">
 					

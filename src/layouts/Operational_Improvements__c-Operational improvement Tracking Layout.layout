@@ -330,6 +330,11 @@
     </relatedLists>
     <relatedLists>
         <fields>NAME</fields>
+        <fields>Description__c</fields>
+        <fields>Action_Owner__c</fields>
+        <fields>Closure_Date__c</fields>
+        <fields>Comment__c</fields>
+        <fields>Due_Date__c</fields>
         <relatedList>OI_Action_Plan__c.OI__c</relatedList>
     </relatedLists>
     <relatedLists>

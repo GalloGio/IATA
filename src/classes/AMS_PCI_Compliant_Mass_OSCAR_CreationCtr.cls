@@ -46,7 +46,9 @@ public with sharing class AMS_PCI_Compliant_Mass_OSCAR_CreationCtr{
                                                 AND Region__c = :region
                                                 AND Sub_Region__c not in ('USA')
                                                 ORDER BY Name]) {
-                    if(operation == 'PCI' || c.ANG_Enable_NewGen__c) availableCountries.add(new SelectOption(c.Id , c.Name));
+                    if((operation == 'PCI' && !c.ANG_Enable_NewGen__c) || (operation != 'PCI' && c.ANG_Enable_NewGen__c)) {//AMSU-159
+                        availableCountries.add(new SelectOption(c.Id , c.Name));
+                    }
                 }
                 if(availableCountries.isEmpty()){
                     availableCountries.add(new SelectOption('', '--- No country found ---'));
@@ -231,7 +233,7 @@ public with sharing class AMS_PCI_Compliant_Mass_OSCAR_CreationCtr{
 
     public void createOSCARs() {
 
-        if(operation == 'PCI') batchId = Database.executeBatch(new AMS_PCI_Complaint_Batch(1, null, accountIds), 1);
+        if(operation == 'PCI') batchId = Database.executeBatch(new AMS_PCI_Complaint_Batch(1, accountIds), 1);
         if(operation == 'FOP') batchId = Database.executeBatch(new ANG_MassiveFOPCaseCreationBatch(accountIds), 1);
 
         startTime = System.now();
