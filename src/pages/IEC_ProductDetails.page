@@ -99,7 +99,12 @@
 
                                     <div class="product-info">
                                         <figure class="product-image">
-                                            <img src="{!URLFOR($Resource.Product_Images, product.ImageName)}" alt="{!product.ProductName}" />
+                                            <apex:outputPanel rendered="{!product.imageFile != '' }">
+                                                <apex:outputText value="{!product.imageFile}" escape="false"/>
+                                            </apex:outputPanel>
+                                            <apex:outputPanel rendered="{!product.imageFile == '' }">
+                                                <img src="{!URLFOR($Resource.Product_Images, product.ImageName)}" alt="{!product.ProductName}" />
+                                            </apex:outputPanel>
                                         </figure>
 
                                         <div class="table-container">

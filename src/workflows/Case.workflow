@@ -798,6 +798,16 @@
         <template>AP_notification/IAPP_Notification_of_new_docs_received</template>
     </alerts>
     <alerts>
+        <fullName>IATA_iiNet_Service_Now</fullName>
+        <ccEmails>iata@service-now.com</ccEmails>
+        <ccEmails>iinetCare@iata.org</ccEmails>
+        <description>IATA iiNet Service Now</description>
+        <protected>false</protected>
+        <senderAddress>noreply@iata.org</senderAddress>
+        <senderType>OrgWideEmailAddress</senderType>
+        <template>IATA_iiNet/IATA_iiNet_Create_Service_Now_Incident</template>
+    </alerts>
+    <alerts>
         <fullName>ICCS_Contact_Notification_case_open_for_15_days</fullName>
         <description>ICCS Contact Notification case open for 15 days</description>
         <protected>false</protected>
@@ -4948,6 +4958,15 @@
         <protected>false</protected>
     </fieldUpdates>
     <fieldUpdates>
+        <fullName>Clear_interaction_date</fullName>
+        <description>clear interaction date when clearing the new interaction</description>
+        <field>New_Interaction_Date__c</field>
+        <name>Clear interaction date</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>Null</operation>
+        <protected>false</protected>
+    </fieldUpdates>
+    <fieldUpdates>
         <fullName>Close_Case</fullName>
         <field>Status</field>
         <literalValue>Closed</literalValue>
@@ -5485,23 +5504,25 @@ IF(IsClosed, &quot;Closed&quot;, &quot;Open&quot;)</formula>
     <fieldUpdates>
         <fullName>IDFS_CREATED_BY_ROLE</fullName>
         <field>Created_By_Role__c</field>
-        <formula>IF(OR(CONTAINS( $UserRole.Name, &quot;Customer Service&quot;),CONTAINS( $UserRole.Name, &quot;CS Manager&quot;)),&quot;Customer Service&quot;,
-(IF(OR(CONTAINS($UserRole.Name, &quot;CS Staff&quot;), CONTAINS ($UserRole.Name,&quot;CS staff&quot;)),&quot;Customer Service&quot;,
-(IF(OR(CONTAINS( $UserRole.Name, &quot;Risk Management&quot;),CONTAINS( $UserRole.Name, &quot;ARM Staff&quot;)),&quot;Risk Management&quot;,
-(IF(OR(CONTAINS( $UserRole.Name, &quot;Agency Management&quot;),CONTAINS( $UserRole.Name, &quot;ACC/ARM&quot;)),&quot;Agency Management&quot;,
-(IF(OR(CONTAINS( $UserRole.Name, &quot;ACC staff&quot;), CONTAINS($UserRole.Name,&quot;Acc Manager&quot;)),&quot;Agency Management&quot;,
-(IF(OR(CONTAINS( $UserRole.Name, &quot;R&amp;S Staff&quot;), CONTAINS($UserRole.Name,&quot;R&amp;S Manager&quot;)),&quot;Remittance &amp; Settlement&quot;,
-(IF(OR(CONTAINS( $UserRole.Name, &quot;I&amp;C&quot;), CONTAINS($UserRole.Name,&quot; Operations Manager&quot;)),&quot;Operations&quot;,
-(IF(OR(CONTAINS( $UserRole.Name, &quot;Operations Staff&quot;),CONTAINS( $UserRole.Name, &quot;Operational Management&quot;)),&quot;Operations&quot;,
-(IF(CONTAINS($UserRole.Name, &quot;ARM staff&quot;),&quot;Risk Management&quot;,
-(IF(CONTAINS( $UserRole.Name, &quot;R&amp;S staff&quot;),&quot;Remittance &amp; Settlement&quot;,
-(IF(CONTAINS( $UserRole.Name, &quot;Banking&quot;),&quot;Banking&quot;,
-(IF(CONTAINS( $UserRole.Name, &quot;Business Delivery&quot;),&quot;Business Delivery&quot;,
-(IF(CONTAINS($UserRole.Name, &quot;Acc Staff&quot;),&quot;Agency Management&quot;,
+        <formula>IF(OR(CONTAINS( $UserRole.Name, &quot;Customer Service&quot;),CONTAINS( $UserRole.Name, &quot;CS Manager&quot;)),&quot;Customer Service&quot;, 
+(IF(OR(CONTAINS($UserRole.Name, &quot;CS Staff&quot;), CONTAINS ($UserRole.Name,&quot;CS staff&quot;)),&quot;Customer Service&quot;, 
+(IF(OR(CONTAINS( $UserRole.Name, &quot;Risk Management&quot;),CONTAINS( $UserRole.Name, &quot;ARM Staff&quot;)),&quot;Risk Management&quot;, 
+(IF(OR(CONTAINS( $UserRole.Name, &quot;Agency Management&quot;),CONTAINS( $UserRole.Name, &quot;ACC/ARM&quot;)),&quot;Agency Management&quot;, 
+(IF(OR(CONTAINS( $UserRole.Name, &quot;ACC staff&quot;), CONTAINS($UserRole.Name,&quot;Acc Manager&quot;)),&quot;Agency Management&quot;, 
+(IF(OR(CONTAINS( $UserRole.Name, &quot;R&amp;S Staff&quot;), CONTAINS($UserRole.Name,&quot;R&amp;S Manager&quot;)),&quot;Remittance &amp; Settlement&quot;, 
+(IF(OR(CONTAINS( $UserRole.Name, &quot;I&amp;C&quot;), CONTAINS($UserRole.Name,&quot; Operations Manager&quot;)),&quot;Operations&quot;, 
+(IF(OR(CONTAINS( $UserRole.Name, &quot;Operations Staff&quot;),CONTAINS( $UserRole.Name, &quot;Operational Management&quot;)),&quot;Operations&quot;, 
+(IF(CONTAINS($UserRole.Name, &quot;ARM staff&quot;),&quot;Risk Management&quot;, 
+(IF(CONTAINS( $UserRole.Name, &quot;R&amp;S staff&quot;),&quot;Remittance &amp; Settlement&quot;, 
+(IF(CONTAINS( $UserRole.Name, &quot;Banking&quot;),&quot;Banking&quot;, 
+(IF(CONTAINS($UserRole.Name,&quot;E&amp;F Client Services&quot;),&quot;E&amp;F Client services&quot;, 
+(IF(CONTAINS($UserRole.Name,&quot;E&amp;F &quot;),&quot;E&amp;F Staff&quot;,
+(IF(CONTAINS( $UserRole.Name, &quot;Business Delivery&quot;),&quot;Business Delivery&quot;, 
+(IF(CONTAINS($UserRole.Name, &quot;Acc Staff&quot;),&quot;Agency Management&quot;, 
 (IF(OR(CONTAINS( $Profile.Name,&quot;ISS Portal&quot;),CONTAINS( $Profile.Name,&quot;IATA Portal1389712205152 Profile&quot;)),&quot;IATA Partner&quot;,
 (IF(AND(CONTAINS($UserRole.Name, &quot;Record owner&quot;),ISPICKVAL(Origin,&quot;Voicemail&quot;)),&quot;Voicemail&quot;,
 (IF(CONTAINS($UserRole.Name, &quot;Record owner&quot;),&quot;IATA System&quot;,
-(IF(CONTAINS($UserRole.Name, &quot;Distribution - Airline Management&quot;),&quot;Airline Management&quot;,&quot;IATA Other&quot;)))))))))))))))))))))))))))))))))</formula>
+(IF(CONTAINS($UserRole.Name, &quot;Distribution - Airline Management&quot;),&quot;Airline Management&quot;,&quot;IATA Other&quot;)))))))))))))))))))))))))))))))))))))</formula>
         <name>IDFS_CREATED_BY_ROLE</name>
         <notifyAssignee>false</notifyAssignee>
         <operation>Formula</operation>
@@ -11852,6 +11873,10 @@ Case(month(datevalue(now()))+1,1,31,2,28,3,31,4,30,5,31,6,30,7,31,8,31,9,30,10,3
     </rules>
     <rules>
         <fullName>FDS Delete New Interaction Info</fullName>
+        <actions>
+            <name>Clear_interaction_date</name>
+            <type>FieldUpdate</type>
+        </actions>
         <actions>
             <name>New_interaction_Blank</name>
             <type>FieldUpdate</type>
