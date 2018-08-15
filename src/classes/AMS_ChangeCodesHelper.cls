@@ -539,6 +539,9 @@ public class AMS_ChangeCodesHelper {
         codeToCreate.Change_Code__c = changeCodeConfig.Change_Code__c;
         codeToCreate.Bulletin_Information__c = changeCodeConfig.Bulletin_Memo_Text__c;
         codeToCreate.To_Publish_in_e_Bulletin__c = changeCodeConfig.Published_in_bulletin__c;
+        codeToCreate.Reason_Code__c = acc.Reason__c.left(2);
+        codeToCreate.Reason_Description__c = acc.Reason__c.right(acc.Reason__c.length()-3);
+        codeToCreate.AccountNewStatus__c = acc.Status__c;
         codeToCreate.Account__c = acc.Id;
         System.debug('## codeToCreate: '+codeToCreate);
 
