@@ -54,7 +54,7 @@ global without sharing class ANG_BackupEngineHelper implements Queueable{
 		'Location' => new List<String>{'ANG_RHC_Information__c'},
 		'Hierarchy' => new List<String>{'ANG_RHC_Information__c','AMS_Agencies_Hierarchy__c','AMS_Agencies_relationhip__c'},
 		'VMFR' => new List<String>{'ANG_RHC_Information__c'},
-		'Accreditation type' => new List<String>{'Agency_Authorization__c','ANG_RHC_Information__c'},
+		'Accreditation type' => new List<String>{'Agency_Authorization__c', 'Portal_Application_Right__c', 'ANG_RHC_Information__c'},
 		'Location type to different legal entity' => new List<String>{'Agency_Authorization__c','ANG_RHC_Information__c','AMS_Agencies_Hierarchy__c','AMS_Agencies_relationhip__c'},
 		'Trade name' => new List<String>{'ANG_RHC_Information__c'}
 	};
@@ -68,6 +68,7 @@ global without sharing class ANG_BackupEngineHelper implements Queueable{
 			'ANG_AGENCY_RISK_EVENT__C' => 'ANG_AccountId__c in:objectIds',
 //			'ANG_AGENCY_RISK_EVENT__C' => ' ANG_AccountId__c in:objectIds and ANG_OscarId__c =:oscarId',
 			'ACCOUNT' => ' Id in:objectIds',
+			'PORTAL_APPLICATION_RIGHT__C' => ' Contact__r.AccountId IN :objectIds AND Application_Name__c = \'IFAP\'',
 			'AMS_OSCAR__C' => ' Id =:oscarId',
 			'AMS_AGENCIES_HIERARCHY__C' => ' Id in (select Hierarchy__c  from AMS_AGENCIES_RELATIONHIP__C WHERE Child_Account__c in:objectIds or Parent_Account__c in:objectIds)',
 			'AMS_AGENCIES_RELATIONHIP__C' => ' Child_Account__c in:objectIds or Parent_Account__c in:objectIds '
