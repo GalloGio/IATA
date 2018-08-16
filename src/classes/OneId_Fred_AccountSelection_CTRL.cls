@@ -73,7 +73,7 @@ public without sharing class OneId_Fred_AccountSelection_CTRL {
             if(isGuest) {
                 // Get account and found any user that has primary user permission set
                 //Integer nbOfPrimaryInAccount = [SELECT count() FROM PermissionSetAssignment WHERE PermissionSet.Name = 'FRED_Primary_User' AND Assignee.AccountId =: acc.Id];
-                createPrimary = nbOfPrimaryInAccount == 0; // Account doesn't have primary user so I became the unique primary user
+                createPrimary = createPrimary || nbOfPrimaryInAccount == 0; // Account doesn't have primary user so I became the unique primary user
                 system.debug('@@@ createPrimary? '+createPrimary);
             }
             
@@ -318,18 +318,20 @@ public without sharing class OneId_Fred_AccountSelection_CTRL {
             param.primaryUserId = null;
             param.partnerAccount = null;
 
+            param.isFredPrimaryUser = false;
+            param.createPrimary = false;
+
             // Get info from invitation
             if(isInvitation) {
-                list<Invitation__c> invitation = [SELECT  AccountId__c FROM Invitation__c WHERE Id =: invitationId];
+                list<Invitation__c> invitation = [SELECT  AccountId__c, Role__c FROM Invitation__c WHERE Id =: invitationId];
                 if(! invitation.isEmpty()) {
                     list<Account> acct = [SELECT Id, Name, RecordType.Name FROM Account WHERE Id =: invitation[0].AccountId__c]; 
                     if(! acct.isEmpty()) {
                         param.partnerAccount = acct[0];
+						param.createPrimary = invitation[0].Role__c == 'Primary';
                     }
                 }
             }
-            param.isFredPrimaryUser = false;
-            param.createPrimary = false;
         }
         
         return param;
