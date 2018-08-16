@@ -330,8 +330,8 @@ public class ANG_RHCAlertTriggerHandler{
 
     public void createChangeCodeForFOP(Map<Id,String> accountsAndStatus) {
 
-        AMS_ChangeCodes__c changeCodeConfigPCA = AMS_ChangeCodesConfigHelper.getChangeCodeConfig('PCA');
-        AMS_ChangeCodes__c changeCodeConfigPCR = AMS_ChangeCodesConfigHelper.getChangeCodeConfig('PCR');
+        AMS_ChangeCodes__c changeCodeConfigPCA = AMS_ChangeCodes__c.getInstance('PCA');
+        AMS_ChangeCodes__c changeCodeConfigPCR = AMS_ChangeCodes__c.getInstance('PCR');
 
         Set<Id> accountIds = accountsAndStatus.keySet();
 
@@ -347,7 +347,7 @@ public class ANG_RHCAlertTriggerHandler{
                     accountsChangeCode.put(accId, changeCode);
         }
 
-        List<Account> accountToCreateCC = [Select Id, Status__c from Account where Id in :accountIds];
+        List<Account> accountToCreateCC = [Select Id, Status__c, CNS_Agency__c from Account where Id in :accountIds];
 
         List<AMS_OSCAR_JSON.ChangeCode> listOfCCToInsert = new List<AMS_OSCAR_JSON.ChangeCode>();
         List<AMS_OSCAR__c> oscarsToAdd = new List<AMS_OSCAR__c>();
