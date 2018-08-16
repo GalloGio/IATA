@@ -193,11 +193,19 @@
             <!-- /left part-->
 
             <apex:pageBlockSection columns="1" id="addressSection">
+                <script type="text/javascript">
+                    if('{!ca.isReadonly}' == 'true') {
+                        $(".branch_office_street_name_number__c").attr('disabled','disabled');
+                        $(".branch_office_city__c").attr('disabled','disabled');
+                        $(".branch_office_postal_code__c").attr('disabled','disabled');
+                        $(".state_province__c").attr('disabled','disabled');
+                        $(".branch_office_email__c").attr('disabled','disabled');
+                    }
+                </script>
 
                 <apex:outputPanel styleClass="agencyLocationComponent" id="newAddress" layout="block">
 
                     <DSE:DS_DataQuality id="BranchAddress"
-                        html-disabled="{!ca.isReadonly}"
                         RecordRef="{!ca.fw.newform}"
                         FieldGroupName="Branch Address"
                         Edit="true"
@@ -213,7 +221,6 @@
 
                 <apex:outputPanel styleClass="agencyLocationComponent" id="newEmail">
                     <DSE:DS_DataQuality id="BranchEmail"
-                        html-disabled="{!ca.isReadonly}"
                         RecordRef="{!ca.fw.newform}"
                         FieldGroupName="Branch Email"
                         Edit="true"
