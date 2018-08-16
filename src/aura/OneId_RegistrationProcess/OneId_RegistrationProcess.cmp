@@ -77,7 +77,7 @@
                                 
                             </div>
                             <div aria-hidden="true" class="slds-accordion__content" id="step2">
-                                <c:OneId_ContactForm contact="{!v.contact}" userCountry="{!v.userCountry}"/>
+                                <c:OneId_ContactForm contact="{!v.contact}" serviceName="{!v.serviceName}" userCountry="{!v.userCountry}"/>
                             </div>
                         </section>
                     </div>

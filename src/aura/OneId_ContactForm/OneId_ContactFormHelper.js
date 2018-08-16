@@ -74,23 +74,47 @@
             $A.util.removeClass(component.find("jobHelp"), "jobHelp");
         }
         
-        var phone = component.find("contactPhone");
-        var container = component.find("phoneContainer");
-        if($A.util.isEmpty(phone.get("v.value"))) {
-            var domPhone = phone.getElement();
-            var country = $(domPhone).intlTelInput("getSelectedCountryData").iso2;
-
-            phone.set("v.errors", [{message: $A.get("$Label.c.ISSP_Registration_Error_BusinessPhone")}]);
-            if(!$A.util.hasClass(container, 'slds-has-error')) $A.util.addClass(container, 'slds-has-error');
-            isAllFilled = false;
-
-            setTimeout(function(){
-                $(domPhone).intlTelInput("setCountry", "");
-                $(domPhone).intlTelInput("setCountry", country);
-            }, 100);
-        } else {
-            $A.util.removeClass(container, 'slds-has-error');
-            component.set("v.phoneErrors", '');
+        var serviceName = component.get("v.serviceName");
+        
+        if(serviceName == "FRED"){
+            var phone = component.find("contactMobilePhone");
+            var container = component.find("mobilePhoneContainer");
+            if($A.util.isEmpty(phone.get("v.value"))) {
+                var domPhone = phone.getElement();
+                var country = $(domPhone).intlTelInput("getSelectedCountryData").iso2;
+    
+                phone.set("v.errors", [{message:$A.get("$Label.c.ISSP_Registration_Error_MobilePhone")}]);
+                if(!$A.util.hasClass(container, 'slds-has-error')) $A.util.addClass(container, 'slds-has-error');
+                isAllFilled = false;
+    
+                setTimeout(function(){
+                    $(domPhone).intlTelInput("setCountry", "");
+                    $(domPhone).intlTelInput("setCountry", country);
+                }, 100);
+            } else {
+                $A.util.removeClass(container, 'slds-has-error');
+                component.set("v.phoneErrors", '');
+            }
+        }
+        else{
+            var phone = component.find("contactPhone");
+            var container = component.find("phoneContainer");
+            if($A.util.isEmpty(phone.get("v.value"))) {
+                var domPhone = phone.getElement();
+                var country = $(domPhone).intlTelInput("getSelectedCountryData").iso2;
+    
+                phone.set("v.errors", [{message:$A.get("$Label.c.ISSP_Registration_Error_BusinessPhone")}]);
+                if(!$A.util.hasClass(container, 'slds-has-error')) $A.util.addClass(container, 'slds-has-error');
+                isAllFilled = false;
+    
+                setTimeout(function(){
+                    $(domPhone).intlTelInput("setCountry", "");
+                    $(domPhone).intlTelInput("setCountry", country);
+                }, 100);
+            } else {
+                $A.util.removeClass(container, 'slds-has-error');
+                component.set("v.phoneErrors", '');
+            }
         }
 
         return isAllFilled;

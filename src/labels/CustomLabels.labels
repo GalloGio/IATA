@@ -21745,6 +21745,14 @@ If the product is an Agent&apos;s multi-use VANs, then it is an Agent&apos;s uni
         <value>Your login attempt has failed. Make sure the Email and Password are correct.</value>
     </labels>
     <labels>
+        <fullName>ISSP_Registration_Error_MobilePhone</fullName>
+        <categories>ISSP, login</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_Registration_Error_MobilePhone</shortDescription>
+        <value>Please enter your mobile phone number</value>
+    </labels>
+    <labels>
         <fullName>ISSP_Registration_Error_Password</fullName>
         <categories>ISSP, login</categories>
         <language>en_US</language>
