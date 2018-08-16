@@ -1,5 +1,7 @@
 global without sharing class ANG_BackupEngineHelper implements Queueable{
 
+	private static final Set<String> TOC_REQ_HIERARCHY_FETCH = new Set<String> {AMS_Utils.ANG_LOCATION_TYPE,AMS_Utils.ANG_LOCATION_TYPE_DIFFLEGALENTITY};
+
 		// Account -> AMS_Pax_Accreditation_Form__c
 	private	Map<String, String> fieldsMapping = new Map<String, String> {'Account_Name__c' => 'Name'
 																	,'IATACode__c' => 'IATACode__c'
@@ -135,7 +137,7 @@ global without sharing class ANG_BackupEngineHelper implements Queueable{
 		accountIds.addAll(fetchHierarchySelection(oscarId));
 		accountIds.add(oscar.account__c);
 
-		if(oscar.ANG_Type_Of_Change__c == AMS_Utils.ANG_LOCATION_TYPE){
+		if(TOC_REQ_HIERARCHY_FETCH.contains(oscar.ANG_Type_Of_Change__c)){
 
 			For(List<AMS_Agencies_relationhip__c> rels : AMS_HierarchyHelper.getAccountsHierarchies(accountIds).values()){
 				For(AMS_Agencies_relationhip__c rel: rels){
