@@ -67,7 +67,7 @@ global class ANG_OscarProcessHelper {
 					Is_PCI_compliant__c, Account__r.Top_Parent__r.Id , AMS_Online_Accreditation__r.Id,Account__r.Location_Type__c,RecordType.DeveloperName,
 					Flag_Data_to_SAPECC__c,ID, STEP10__c,STEP17__c,STEP8__c,Process_Start_Date__c, Account__r.Due_Diligence_Status__c, AMS_Online_Accreditation__r.Location_Class__c, 
 					AMS_Online_Accreditation__r.Link_agent_name__c , AMS_Online_Accreditation__r.Branch_Office_Country__r.Due_diligence_mandatory__c, Account__r.Location_Class__c,
-					Account__r.Sector__c , Account__r.Company_type__C, STEP6__c, Is_NewGen__c,ANG_PCI_compliance_expiry_date__c, Account__r.Top_Parent__r.Status__c,
+					Account__r.Sector__c , Account__r.Company_type__C, STEP6__c, Is_NewGen__c,ANG_PCI_compliance_expiry_date__c, Account__r.Top_Parent__r.Status__c, Business_Process__c,
 					(SELECT Id FROM Agencies_Applied_Change_codes__r) , (select Id from Appointments__r)
 					from AMS_OSCAR__c where Id = : oscarId LIMIT 1];
 
@@ -472,13 +472,21 @@ global class ANG_OscarProcessHelper {
 
 		Account acct = updater.acctMap.get(theOSCAR.account__r.id);
 
+		String changeCodeId = 'NEW-' + theOSCAR.Business_Process__c;
 		AMS_OSCAR_JSON.ChangeCode changeCode = new AMS_OSCAR_JSON.ChangeCode();
+        AMS_ChangeCodes__c n = AMS_ChangeCodes__c.getInstance(changeCodeId);
 
-		changeCode.name = 'NEW';
-		changeCode.reasonCode = '21';
-		changeCode.memoText = AMS_Utils.getChangeCodeMemoText(theOSCAR.Process__c, changeCode.name);
-		changeCode.reasonDesc  = 'NEW APPLICATION';
-		changeCode.status  = '2';
+        changeCode.name = n.Change_Code__c;
+        changeCode.reasonCode = n.Reason_Code__c;
+        //changeCode.memoText = AMS_Utils.getChangeCodeMemoText(theOSCAR.Process__c, changeCodeId);
+        if(n==null)
+        	changeCode.memoText = AMS_Utils.getChangeCodeMemoText(theOSCAR.Process__c, changeCodeId);
+        else
+        	changeCode.memoText = AMS_Utils.getChangeCodeMemoText(theOSCAR.Process__c, changeCodeId, n);
+        
+        changeCode.reasonDesc  = n.Reason_Code_Description__c;
+        changeCode.status  = n.Account_status_change__c;
+        changeCode.publishedOnEBulletin = n.Published_in_bulletin__c;
 		
 		List<Account> acctList = AMS_ChangeCodesHelper.createAAChangeCodes(new List<AMS_OSCAR_JSON.ChangeCode> {changeCode}, new List<AMS_OSCAR__c> {theOSCAR}, new List<Account> {acct}, false);
 
@@ -587,7 +595,7 @@ global class ANG_OscarProcessHelper {
 
 			if(!accountIdsChanged.isEmpty()){
 
-				List<Account> accountToCreateCC = [Select Id, Status__c, CNS_agency__c from Account where Id in :accountIdsChanged];
+				List<Account> accountToCreateCC = [Select Id, Status__c, CNS_Agency__c from Account where Id in :accountIdsChanged];
 
 				String changeCodeName= null;
 				
@@ -664,7 +672,7 @@ global class ANG_OscarProcessHelper {
 
 			if(!accountIdsChanged.isEmpty()){
 				
-				List<Account> accountToCreateCC = [Select Id, Status__c, CNS_agency__c from Account where Id in :accountIdsChanged];
+				List<Account> accountToCreateCC = [Select Id, Status__c, CNS_Agency__c from Account where Id in :accountIdsChanged];
 
 				String changeCodeName= null;
 				
@@ -803,7 +811,7 @@ global class ANG_OscarProcessHelper {
 		List<AMS_OSCAR_JSON.ChangeCode> listOfCCToInsert = new List<AMS_OSCAR_JSON.ChangeCode>();
 		List<AMS_OSCAR__c> oscarsToAdd = new List<AMS_OSCAR__c>();
 
-		AMS_ChangeCodes__c changeCodeConfig = AMS_ChangeCodesConfigHelper.getChangeCodeConfig(changeCodeName);
+		AMS_ChangeCodes__c changeCodeConfig = AMS_ChangeCodes__c.getInstance(changeCodeName);
 
 		For(Account acctToAddCC: accounts){
 
@@ -1013,11 +1021,10 @@ global class ANG_OscarProcessHelper {
 	        accOscarObjsMap.get(acc.Id).oscar = oscar;
     	}
 
-    	if(!oscarsToInsert.isEmpty())
+		if(!oscarsToInsert.isEmpty())
     		insert oscarsToInsert;
-
-
-    	OrgWideEmailAddress[] owea;
+		
+		OrgWideEmailAddress[] owea;
 
 		if(!accsToSendEmail.isEmpty()){
 			owea = [select Id from OrgWideEmailAddress where Address = 'agencymanagement@iata.org'];
@@ -1027,10 +1034,10 @@ global class ANG_OscarProcessHelper {
 
 		for (Account acc: accs){
 		// fields needed on contact: Id, Name, Email, Preferred_Language__c, BSP_CASS_Payment_contact__c, Financial_Assessment_Contact__c
-
+			
 			accOscarObjsMap.get(acc.Id).cse.Oscar__c = accOscarObjsMap.get(acc.Id).oscar.Id;
 			casesToUpdate.add(accOscarObjsMap.get(acc.Id).cse);
-
+			
 			//if(accsToSendEmail.contains(acc.Id))
 	            //AMS_AgencyRegulationAutoRenewal.sendEmailAlert(new List<Contact>{accOscarObjsMap.get(acc.Id).con}, accOscarObjsMap.get(acc.Id).oscar.Id, AMS_OSCARTriggerHandler.ANGemailTemplates(AMS_Utils.NGANNUALREVAL, null, true), accOscarObjsMap.get(acc.Id).oscar.Oscar_Communication_Case_Id__c, owea[0], false);			
 
