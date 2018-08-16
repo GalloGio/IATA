@@ -18,6 +18,11 @@ public without sharing class IEC_ShoppingCartController extends IEC_PageControll
 	}set;}
 
 	public Boolean bAreProductsCompliant { get; set; }
+
+
+	public String cartProducts {get;set;}
+
+
 	/**************************************************************************************************************
      *  IEC_ShoppingCartController: Class Constructor                                                             *
      *  Author: David Daboué                                                                                      *  
@@ -445,13 +450,31 @@ public without sharing class IEC_ShoppingCartController extends IEC_PageControll
      **************************************************************************************************************/
 	public void buildOrderItemFromCookie()
 	{
+		System.debug('JJ buildOrderItemFromCookie');
+
 		if(vfOrder == null) vfOrder = new Order_DTO();
 
 		if (newShoppingCart == false) {
+			System.debug('JJ newShoppingCart false');
 			vfOrder.orderItems = IECOrder_Svc.getOrderItemsInCookie();
 		} else {
+			System.debug('JJ newShoppingCart true');
 			vfOrder.orderItems = storeCart.getOrderItems();
 		}
+
+
+		cartProducts = '';
+		if(vfOrder.orderItems != null && !vfOrder.orderItems.isEmpty()){
+			List<String> lstProductNames = new List<String>();
+			for(OrderItem_DTO orderItemAux : vfOrder.orderItems){
+				lstProductNames.add(orderItemAux.productName);
+			}
+			cartProducts = String.join( lstProductNames,' - ');
+		}
+
+
+		System.debug(vfOrder.orderItems);
+
 	}
 
 

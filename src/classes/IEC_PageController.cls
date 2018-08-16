@@ -33,6 +33,8 @@ public virtual class IEC_PageController
 		}
 	}
 
+	public IEC_User_Utils userDetails {get;set;}
+
 	public Boolean hasError { get; protected set; }
 	public Boolean hasConfirm { get; protected set; } 
 	public Boolean hasWarning { get; protected set; }
@@ -251,6 +253,8 @@ public virtual class IEC_PageController
 		system.debug('IEC_PageController');
 		loggedCustomer = Customer_DTO.getLoggedCustomer();	
 		String url = Site.getBaseUrl();	
+
+		userDetails = IEC_User_Utils.getInstance();
 
 		Apexpages.currentPage().getHeaders().put('X-UA-Compatible', 'IE=10');
 	}

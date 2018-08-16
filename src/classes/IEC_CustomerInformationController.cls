@@ -32,6 +32,11 @@ global without sharing class IEC_CustomerInformationController extends IEC_PageC
 	//TC 
 	public Boolean unlockZipCode {
 		get{
+            System.debug('1 :'+vfOrder.billToAddress);
+			System.debug('2 :'+vfOrder.billToAddress.countryCode);
+			System.debug('3 :'+zipCodeApplicableMap.get(vfOrder.billToAddress.countryCode));
+			System.debug('4 :'+zipCodeApplicableMap);
+			System.debug('5 :'+vfOrder);
 			return vfOrder != null && vfOrder.billToAddress != null && !String.isBlank(vfOrder.billToAddress.countryCode) && 
 				zipCodeApplicableMap.get(vfOrder.billToAddress.countryCode) != null && zipCodeApplicableMap.get(vfOrder.billToAddress.countryCode);
 		}
@@ -57,6 +62,51 @@ global without sharing class IEC_CustomerInformationController extends IEC_PageC
 	public Map<String, String> errors{get;set;} //FIELD => ERROR MESSAGE
 
 	public Boolean stopProcess { get; set; }
+
+	//Used for google analytics
+	public String productWrapper {
+		get {
+			Map<String,Object> ecommObj = new Map<String,Object>();
+			Map<String,Object> checkoutObj = new Map<String,Object>();
+			Map<String,Object> actionObj = new Map<String,Object>();
+			Map<String,Object> prodObj = new Map<String,Object>();
+
+			ecommObj.put('checkout', checkoutObj);
+			actionObj.put('step',1);
+			checkoutObj.put('actionField', actionObj);
+			checkoutObj.put('products', new List<Object> {prodObj});
+
+			List<OrderItem_DTO> lstOrderItemsAux = storeCart.getOrderItems();
+			System.debug('JJ lstOrderItemsAux: ' + lstOrderItemsAux);
+
+			if(lstOrderItemsAux != null && !lstOrderItemsAux.isEmpty()){
+	            List<Object> lstOrderItems = new List<Object>();
+            	for(OrderItem_DTO orderItemDtoAux : lstOrderItemsAux){
+            		Map<String,Object> orderItemsObjMap = new Map<String,Object>();
+
+            		orderItemsObjMap.put('id', orderItemDtoAux.productNumber);
+					orderItemsObjMap.put('name', orderItemDtoAux.productName);
+					orderItemsObjMap.put('category', orderItemDtoAux.productCategory);
+					orderItemsObjMap.put('price', orderItemDtoAux.unitPrice == null ? 0.00 : orderItemDtoAux.unitPrice);
+		            orderItemsObjMap.put('brand', orderItemDtoAux.productBrand);
+		            orderItemsObjMap.put('quantity', orderItemDtoAux.quantity);
+		            orderItemsObjMap.put('dimension1', orderItemDtoAux.productEdition);
+		            orderItemsObjMap.put('dimension2', orderItemDtoAux.productLanguage);
+		            orderItemsObjMap.put('dimension3', orderItemDtoAux.productInventoryStatus);
+		            orderItemsObjMap.put('dimension4', orderItemDtoAux.productAvailabilityDate);
+		            orderItemsObjMap.put('dimension5', orderItemDtoAux.productMedia);
+		            orderItemsObjMap.put('dimension6', orderItemDtoAux.productEffectiveTo);
+
+					lstOrderItems.add(orderItemsObjMap);
+            	}
+            
+            	checkoutObj.put('products', lstOrderItems);
+            }
+
+			return JSON.serialize(ecommObj);
+		}
+		set;
+	}
 
 	
 	/**************************************************************************************************************
@@ -110,6 +160,10 @@ global without sharing class IEC_CustomerInformationController extends IEC_PageC
 		}
 
 		sfOrder = IECOrder_Svc.getPenddingOrder(true);
+
+		System.debug('JJ sfOrder: ' + sfOrder);
+		System.debug('JJ storeCart: ' + storeCart);
+
 		vfOrder = new Order_DTO(sfOrder);
 		initialOrder = new Order_DTO(sfOrder);
 
