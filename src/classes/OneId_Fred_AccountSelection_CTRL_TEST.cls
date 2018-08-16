@@ -7,10 +7,14 @@ private class OneId_Fred_AccountSelection_CTRL_TEST {
 
 	@testSetup
     static void setup() {
+
+		List<RecordType> recordTypes = [SELECT Id FROM RecordType WHERE SObjectType = 'One_Id_Service_Provider_Config__c' AND DeveloperName = 'Service_Provider'];
+
         //Create config service object
         One_Id_Service_Provider_Config__c serviceConfig = new One_Id_Service_Provider_Config__c();
         serviceConfig.Customer_Type_Activation__c = 'Aircraft Operator;ICAO Member State';
         serviceConfig.Service_Provider_Name__c = 'FRED';
+        serviceConfig.RecordTypeId = recordTypes[0].Id;
         Insert serviceConfig;
         
         //Create ICAO, Aircraft operators and verifier accounts
