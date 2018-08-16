@@ -5,6 +5,8 @@ global without sharing class ANG_RollbackEngineHelper implements Queueable{
     private Id oscarId;
 
     private String oscarName;
+    
+    private List<String> typesOfChange;
 
     private Set<Id> accountsRelated;
 
@@ -42,7 +44,11 @@ global without sharing class ANG_RollbackEngineHelper implements Queueable{
         accountsRelated = new Set<Id>();
         accountsRelated.addAll(fetchHierarchySelection(oscarId));
 
-        AMS_OSCAR__c oscar = [Select Name, Account__c,New_parent__c from AMS_OSCAR__c where Id =:oscarId];
+        AMS_OSCAR__c oscar = [Select Name, Account__c,New_parent__c, ANG_Type_Of_Change__c from AMS_OSCAR__c where Id =:oscarId];
+
+        this.typesOfChange = new List<String>();
+        if (oscar.ANG_Type_Of_Change__c.contains(';')) this.typesOfChange.addAll(oscar.ANG_Type_Of_Change__c.split(';'));
+        else this.typesOfChange.add(oscar.ANG_Type_Of_Change__c);
 
         this.oscarName = oscar.Name;
 
@@ -71,37 +77,43 @@ global without sharing class ANG_RollbackEngineHelper implements Queueable{
 
         For(String entity: technicalLogsMap.keySet()){
 
-			if(entity == 'Account')
-				processRollbackAccounts(technicalLogsMap.get(entity));
-			if(entity == 'Contact')
-				processRollbackContacts(technicalLogsMap.get(entity));
-			if(entity == 'AMS_Account_Role__c')
-				processRollbackRoles(technicalLogsMap.get(entity));
-			if(entity == 'Agency_Authorization__c')
-				processRollbackFops(technicalLogsMap.get(entity));
-			if(entity == 'ANG_RHC_Information__c')
-				processRollbackRHCs(technicalLogsMap.get(entity));
-			if(entity == 'Financial_Security__c')
-				processRollbackFSs(technicalLogsMap.get(entity));
-			if(entity == 'ANG_Agency_Risk_Event__c')
-				processRollbackREs(technicalLogsMap.get(entity));
-			if(entity == 'AMS_Agencies_Hierarchy__c'){
-				processRollbackHierarchy(technicalLogsMap.get('AMS_Agencies_Hierarchy__c'),technicalLogsMap.get('AMS_Agencies_relationhip__c'));
-			}
-		}
+            if(entity == 'Account')
+                processRollbackAccounts(technicalLogsMap.get(entity));
+            if(entity == 'Contact')
+                processRollbackContacts(technicalLogsMap.get(entity));
+            if(entity == 'AMS_Account_Role__c')
+                processRollbackRoles(technicalLogsMap.get(entity));
+            if(entity == 'Agency_Authorization__c')
+                processRollbackFops(technicalLogsMap.get(entity));
+            if(entity == 'ANG_RHC_Information__c')
+                processRollbackRHCs(technicalLogsMap.get(entity));
+            if(entity == 'Financial_Security__c')
+                processRollbackFSs(technicalLogsMap.get(entity));
+            if(entity == 'ANG_Agency_Risk_Event__c')
+                processRollbackREs(technicalLogsMap.get(entity));
+            if(entity == 'AMS_Agencies_Hierarchy__c')
+                processRollbackHierarchy(technicalLogsMap.get('AMS_Agencies_Hierarchy__c'),technicalLogsMap.get('AMS_Agencies_relationhip__c'));
+            if(entity == 'Portal_Application_Right__c')
+                processRollbackPortalAppRights(technicalLogsMap.get(entity));
+        }
 
 
     }
 
     private void processRollbackAccounts(List<String> accountList){
+        Map<Id, Account> accountsToRollback = new Map<Id, Account>();
 
-        List<Account> accountsToRollback = new List<Account>();
+        for(String acctStr: accountList) {
+            Account a = (Account) JSON.deserialize(acctStr, Account.class);
+            accountsToRollback.put(a.Id, a);
+        }
 
-        for(String acctStr: accountList)
-            accountsToRollback.add((Account) JSON.deserialize(acctStr, Account.class));
+        if (this.typesOfChange.contains(AMS_Utils.ANG_ACCREDITATION_TYPE)) {
+            delete [SELECT Id FROM ANG_RHC_Information__c WHERE ANG_AccountId__c IN (SELECT Id FROM Account WHERE ID IN :accountsToRollback.keySet() AND ANG_Accreditation_model__c = 'Cash')];
+        }
 
         if(!accountsToRollback.isEmpty()){
-            upsert accountsToRollback;
+            upsert accountsToRollback.values();
         }
 
     }
@@ -166,72 +178,95 @@ global without sharing class ANG_RollbackEngineHelper implements Queueable{
             upsert fopsToRollback;
         }   
 
-	}
-	
-	private void processRollbackRHCs(List<String> RHCList){
-		Map<Id, ANG_RHC_Information__c> RHCsToRollback = new Map<Id, ANG_RHC_Information__c>();
+    }
 
-		for(String RHCstring: RHCList){
-			ANG_RHC_Information__c rhc = (ANG_RHC_Information__c) JSON.deserialize(RHCstring, ANG_RHC_Information__c.class);
+    private void processRollbackPortalAppRights(List<String> parList) {
+        Map<Id, Portal_Application_Right__c> parsToRollback = new Map<Id, Portal_Application_Right__c>();
 
-			RHCsToRollback.put(rhc.Id, rhc);
-		}
+        for(String parString: parList){
+            Portal_Application_Right__c par = (Portal_Application_Right__c) JSON.deserialize(parString, Portal_Application_Right__c.class);
 
-		Map<Id, ANG_RHC_Information__c> existingRHCs = new Map<Id, ANG_RHC_Information__c>([SELECT Id FROM ANG_RHC_Information__c WHERE Id IN :RHCsToRollback.keySet()]);
+            parsToRollback.put(par.Id, par);
+        }
 
-		for (Id rhcId: RHCsToRollback.keySet()) {
-			if (!existingRHCs.keySet().contains(rhcId)) {
-				RHCsToRollback.get(rhcId).Id = null;
-			}
-		}
+        Map<Id, Portal_Application_Right__c> existingPARs = new Map<Id, Portal_Application_Right__c>([SELECT Id FROM Portal_Application_Right__c WHERE Id IN :parsToRollback.keySet()]);
 
-		delete [Select Id from ANG_RHC_Information__c where ANG_AccountId__c in:accountsRelated and Id not in: RHCsToRollback.keySet()];
+        for (Id parId: parsToRollback.keySet()) {
+            if (!existingPARs.keySet().contains(parId)) {
+                parsToRollback.get(parId).Id = null;
+            }
+        }
 
-		if(!RHCsToRollback.values().isEmpty()){
-			upsert RHCsToRollback.values();
-		}
-	}
+        delete [Select Id from Portal_Application_Right__c where Account__c in:accountsRelated and Id not in: parsToRollback.keySet()];
 
-	private void processRollbackFSs(List<String> FSsList){
+        if(!parsToRollback.values().isEmpty()){
+            upsert parsToRollback.values();
+        }
+    }
+    
+    private void processRollbackRHCs(List<String> RHCList){
+        Map<Id, ANG_RHC_Information__c> RHCsToRollback = new Map<Id, ANG_RHC_Information__c>();
 
-		List<Financial_Security__c> FSsToRollback = new List<Financial_Security__c>();
-		Set<Id> FSids = new Set<Id>();
+        for(String RHCstring: RHCList){
+            ANG_RHC_Information__c rhc = (ANG_RHC_Information__c) JSON.deserialize(RHCstring, ANG_RHC_Information__c.class);
+            RHCsToRollback.put(rhc.Id, rhc);
+        }
 
-		for(String fsStr: FSsList){
-			
-			Financial_Security__c fs = (Financial_Security__c) JSON.deserialize(fsStr, Financial_Security__c.class);
-			FSids.add(fs.Id);
+        Map<Id, ANG_RHC_Information__c> existingRHCs = new Map<Id, ANG_RHC_Information__c>([SELECT Id FROM ANG_RHC_Information__c WHERE Id IN :RHCsToRollback.keySet()]);
 
-			FSsToRollback.add(fs);
-		}
+        for (Id rhcId: RHCsToRollback.keySet()) {
+            if (!existingRHCs.keySet().contains(rhcId)) {
+                RHCsToRollback.get(rhcId).Id = null;
+            }
+        }
 
-		delete [Select Id from Financial_Security__c where Account__c in:accountsRelated and Id not in: FSids];
+        delete [Select Id from ANG_RHC_Information__c where ANG_AccountId__c in:accountsRelated and Id not in: RHCsToRollback.keySet()];
 
-		if(!FSsToRollback.isEmpty()){
-			upsert FSsToRollback;
-		}	
-	}
+        if(!RHCsToRollback.values().isEmpty()){
+            upsert RHCsToRollback.values();
+        }
+    }
 
-	private void processRollbackREs(List<String> REList){
-	
-		List<ANG_Agency_Risk_Event__c> REToRollback = new List<ANG_Agency_Risk_Event__c>();
-		Set<Id> reIdSet = new Set<Id>();
+    private void processRollbackFSs(List<String> FSsList){
 
-		for(String reStr: REList){
-			
-			ANG_Agency_Risk_Event__c re = (ANG_Agency_Risk_Event__c) JSON.deserialize(reStr, ANG_Agency_Risk_Event__c.class);
-			reIdSet.add(re.Id);
+        List<Financial_Security__c> FSsToRollback = new List<Financial_Security__c>();
+        Set<Id> FSids = new Set<Id>();
 
-			REToRollback.add(re);
-		}
+        for(String fsStr: FSsList){
+            
+            Financial_Security__c fs = (Financial_Security__c) JSON.deserialize(fsStr, Financial_Security__c.class);
+            FSids.add(fs.Id);
 
-		delete [Select Id from ANG_Agency_Risk_Event__c where ANG_AccountId__c in:accountsRelated and Id not in: reIdSet];
+            FSsToRollback.add(fs);
+        }
 
-		if(!REToRollback.isEmpty()){
-			upsert REToRollback;
-		}		
+        delete [Select Id from Financial_Security__c where Account__c in:accountsRelated and Id not in: FSids];
 
-	}
+        if(!FSsToRollback.isEmpty()){
+            upsert FSsToRollback;
+        }   
+    }
+
+    private void processRollbackREs(List<String> REList){
+    
+        List<ANG_Agency_Risk_Event__c> REToRollback = new List<ANG_Agency_Risk_Event__c>();
+        Set<Id> reIdSet = new Set<Id>();
+
+        for(String reStr: REList){
+            
+            ANG_Agency_Risk_Event__c re = (ANG_Agency_Risk_Event__c) JSON.deserialize(reStr, ANG_Agency_Risk_Event__c.class);
+            reIdSet.add(re.Id);
+
+            REToRollback.add(re);
+        }
+
+        delete [Select Id from ANG_Agency_Risk_Event__c where ANG_AccountId__c in:accountsRelated and Id not in: reIdSet];
+
+        if(!REToRollback.isEmpty()){
+            upsert REToRollback;
+        }       
+
+    }
 
     private void processRollbackHierarchy(List<String> hierarchyList, List<String> relationshipList){
 
@@ -331,7 +366,7 @@ global without sharing class ANG_RollbackEngineHelper implements Queueable{
         List<Agency_Applied_Change_code__c> changeCodes = new List<Agency_Applied_Change_code__c>([SELECT Id, Change_Code__c, Account__c FROM Agency_Applied_Change_code__c WHERE OSCAR__c = :oscarId AND Change_Code__c = 'CWD']);
         
         if(!changeCodes.isEmpty())
-        	new ANG_AgencyEventsGenerator(changeCodes ,null,'ChangeCode','account__c').run(true);
+            new ANG_AgencyEventsGenerator(changeCodes ,null,'ChangeCode','account__c').run(true);
         
     }
 }
