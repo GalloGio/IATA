@@ -1288,7 +1288,6 @@ private class Order_Svc_Test
     @isTest (seeAllData=true) static void test_setOrderItemToPaid()
     {
     	
-    	TestDataGenerator.generateApexSetting();
         TestDataGenerator.generateISOCountryState();
         
      	IECAddress__c oAddress = TestDataGenerator.generateAddresses(1, true)[0];
