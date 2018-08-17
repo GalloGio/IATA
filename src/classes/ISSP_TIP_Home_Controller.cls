@@ -10,6 +10,7 @@ public without sharing class ISSP_TIP_Home_Controller {
     public Contact con {get; set;}
     public boolean isPaymentProvider {get;set;} 
     public boolean btnEnabled {get;set;}
+    public boolean btnVoluntReliqEnabled {get;set;} //ACAMBAS . TIP-241   
     public boolean isAdmin {get; set;}     //identify if a user is an administrator or not
     public String communityName{ get{ return ApexPages.currentPage().getParameters().get('CommunityName'); }set;}
     public List<productWrapper> products {get ;set;}
@@ -36,6 +37,15 @@ public without sharing class ISSP_TIP_Home_Controller {
     public String terminationReason {get; set;} //ACAMBAS - TIP-244
     public String terminationDate {get; set;} //ACAMBAS - TIP-244
     public Integer terminationMaxDays {get; set;} //ACAMBAS - TIP-244
+    public String voluntaryReliqReason {get; set;} //ACAMBAS - TIP-241
+    public String voluntaryReliqDate {get; set;} //ACAMBAS - TIP-241
+    public Integer voluntaryReliqMinDays {
+        get {
+            if(voluntaryReliqMinDays == null) 
+                voluntaryReliqMinDays = (Integer) TIP_Configuration__c.getOrgDefaults().Voluntary_Reliquishment_Min_Days__c; 
+            return voluntaryReliqMinDays;  
+        } 
+        set;} //ACAMBAS - TIP-241
 
     public String[] paymentGuaranteeVal{get;set;}
     public String[] acceptedTransactionVal{get;set;}
@@ -48,7 +58,8 @@ public without sharing class ISSP_TIP_Home_Controller {
     public ProvProdConfigRec selectedProvProdConf{get; set;}
     public boolean renderCountryCondifPopup{get;set;}
     public boolean renderTerminateProdPopup{get;set;} //ACAMBAS - TIP-244
-
+    public boolean renderReqVoluntRelinq{get;set;} //ACAMBAS - TIP-241
+    
     public list<string> selectProvConfigCountriesList{get;set;}
     public set<string> filterCountryList{get;set;}// list of countries that will be removed from the multiSelect for adding new product country config  
 
@@ -149,7 +160,6 @@ public without sharing class ISSP_TIP_Home_Controller {
         //pre-load pages
         if (currentPage.getURL() == Page.ISSP_TIP_Enrolment.getURL() && !String.isBlank(Apexpages.currentPage().getParameters().get('caseId')))  startEnrolmentAccount();
         else if (currentPage.getURL() == Page.ISSP_TIP_Product_Enrollment.getURL() && !String.isBlank(Apexpages.currentPage().getParameters().get('prodId')))  NewEditProduct();
-        
     }
 
     //##======================Methods================================##  
@@ -202,6 +212,7 @@ public without sharing class ISSP_TIP_Home_Controller {
         fetchHQAccountDetails();
 
         btnEnabled = (account.recordtypeid == TIP_Utils.STANDARD_ACCOUNT_RECORD_TYPE_ID && account.category__c=='Payment Provider');
+        btnVoluntReliqEnabled = isAdmin && (TheAccountRole.Status__c == TIP_Utils.PARTNER_STATUS_ACTIVE); //ACAMBAS - TIP-241
         //isPaymentProvider = (account.recordtypeid == TIP_Utils.PAYMENT_PROVIDER_RECORD_TYPE_ID);
     }
 
@@ -939,7 +950,6 @@ public without sharing class ISSP_TIP_Home_Controller {
                 newpp.PP_Accepted_transactions__c=String.join(acceptedTransactionVal,';');
                 newpp.PP_Payment_guarantee__c=String.join(paymentGuaranteeVal,';');
                 newpp.PP_status__c=status;
-                newpp.Payment_Provider_Account_Role__c = TheAccountRole.id; //ACAMBAS
                 
                 insert newpp;
                 
@@ -1095,5 +1105,38 @@ public without sharing class ISSP_TIP_Home_Controller {
     }
 
     // ACAMBAS - TIP-244 - End -----------------
+    
+    // ACAMBAS - TIP-241 - Start -------------
+    //============================== VOLUNTARY RELINQUISHMENT =============================
+    
+    public Pagereference submitVoluntaryRelinquishmentReq() {
+
+        //Update or create case with status Open
+        updateCase();
+        newcase.Status = 'Open';
+        newcase.Subject = 'ATM Provide Account Closure - ' + account.name;
+        newcase.Description = voluntaryReliqReason + '\n\nResquested closure date:\n' + voluntaryReliqDate + ' (mm/dd/yyyy)';
+        newcase.Reason1__c = TIP_Utils.CASE_REASON_PAYMENT_PROVIDER_MANAGMENT;
+       
+        //assign to TIP HO queue
+        List<Group> groups =  [SELECT Id FROM Group WHERE Type = 'Queue' AND developerName = 'Cases_Transparency_in_Payment_Service' LIMIT 1];
+        
+        if(groups == null || groups.isEmpty()) {
+            System.debug('ERROR! Cases_Transparency_in_Payment_Service Queue not found proceeding without assign');
+        }
+        else {
+            newCase.OwnerId = groups[0].id;
+        }
+
+        insert newCase;
+
+
+        PageReference pr= Page.ISSP_TIP_Home;
+        pr.setRedirect(true);
+        return pr; 
+
+    }
+    
+    // ACAMBAS - TIP-241 - End -----------------
     
 }
