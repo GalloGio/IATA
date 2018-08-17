@@ -416,8 +416,6 @@ private class GlobalContactTriggerTest {
         User usr = [Select id from User where Id = :UserInfo.getUserId()];
         System.RunAs(usr){
 
-            Test.startTest();
-
             Account acc = ISSP_ObjectFactory.createNewAccount();
             insert acc;
 
