@@ -131,10 +131,10 @@
 					</div>
 				</apex:outputPanel>
 
-				<apex:pageBlockButtons >
+				<apex:pageBlockButtons id="spinner">
 					
 					<apex:commandButton value="Submit" action="{!calculate}" reRender="tables" disabled="{!running}"/>
-					<apex:image id="spinner" alt="running" value="/img/loading.gif" rendered="{!running}"/>
+					<apex:image  alt="running" value="/img/loading.gif" rendered="{!running}"/>
 					<!-- <apex:commandButton value="Check" action="{!fetchResults}" reRender="tables" rendered="{!running}"/> -->
 				</apex:pageBlockButtons>
 			</apex:pageBlock>
