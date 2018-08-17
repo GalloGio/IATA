@@ -503,7 +503,7 @@ global class ISSP_WS_DisableUser {
                             serviceId = serviceIdInstance.BSPLink__c;
                         }
 
-                        if (!thisUser.IsActive && !thisUser.Portal_User_Frozen_Checkbox__c){
+                        if (!thisUser.IsActive){
                             system.debug('thisUser >>> '+ thisUser);
                             reactivateUser = true;
                         }
@@ -595,14 +595,11 @@ global class ISSP_WS_DisableUser {
             }
         }
         newLog.Finished__c = system.now();
+        system.debug('##RN: theUser' + theUser);
         if (theUser != null && theUser != ''){
+            system.debug('##RN: reactivateUser' + reactivateUser);  
             if(reactivateUser){
-                User userToReactivate = new User(
-                    Id = theUser,
-                    IsActive = true,
-                    Portal_User_Frozen_Checkbox__c = false,
-                    Username = ISSP_Utilities.buildPortalUserName(emailForUsername));
-                update userToReactivate;
+               updateUser(theUser, emailForUsername);
             }
 
         newLog.User__c = theUser;
@@ -612,6 +609,16 @@ global class ISSP_WS_DisableUser {
         }
         insert newLog;
         return retResponseOne;
+    }
+
+    @future
+    public static void updateUser(String userID, String email) {
+        User userToReactivate = new User(
+            Id = userID,
+            IsActive = true,
+            Portal_User_Frozen_Checkbox__c = false,
+            Username = ISSP_Utilities.buildPortalUserName(email));
+            update userToReactivate;
     }
     
     // method to artificially increase test coverage, remove it asap
