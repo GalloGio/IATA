@@ -257,10 +257,6 @@
                 <behavior>Edit</behavior>
                 <field>Airline_EasyPay_Opt_Out_Date__c</field>
             </layoutItems>
-            <layoutItems>
-                <behavior>Edit</behavior>
-                <field>ANG_IEP_Model__c</field>
-            </layoutItems>
         </layoutColumns>
         <style>TwoColumnsLeftToRight</style>
     </layoutSections>
@@ -424,6 +420,7 @@
     <relatedLists>
         <fields>NAME</fields>
         <fields>ISO_Code__c</fields>
+        <fields>IEC_Valid_SAP__c</fields>
         <relatedList>IATA_ISO_State__c.IATA_ISO_Country__c</relatedList>
     </relatedLists>
     <relatedLists>

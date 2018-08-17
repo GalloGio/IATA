@@ -193,11 +193,19 @@
             <!-- /left part-->
 
             <apex:pageBlockSection columns="1" id="addressSection">
+                <script type="text/javascript">
+                    if('{!ca.isReadonly}' == 'true') {
+                        $(".branch_office_street_name_number__c").attr('disabled','disabled');
+                        $(".branch_office_city__c").attr('disabled','disabled');
+                        $(".branch_office_postal_code__c").attr('disabled','disabled');
+                        $(".state_province__c").attr('disabled','disabled');
+                        $(".branch_office_email__c").attr('disabled','disabled');
+                    }
+                </script>
 
                 <apex:outputPanel styleClass="agencyLocationComponent" id="newAddress" layout="block">
 
                     <DSE:DS_DataQuality id="BranchAddress"
-                        html-disabled="{!ca.isReadonly}"
                         RecordRef="{!ca.fw.newform}"
                         FieldGroupName="Branch Address"
                         Edit="true"
@@ -213,7 +221,6 @@
 
                 <apex:outputPanel styleClass="agencyLocationComponent" id="newEmail">
                     <DSE:DS_DataQuality id="BranchEmail"
-                        html-disabled="{!ca.isReadonly}"
                         RecordRef="{!ca.fw.newform}"
                         FieldGroupName="Branch Email"
                         Edit="true"
@@ -572,7 +579,7 @@
                 <script type="text/javascript">
                     $('[data-toggle="popover"]').popover();
                 </script>
-                <apex:outputPanel rendered="{!(ca.fw.newform.ISSP_AMS_Total_Current_Ownership_Company__c + ca.fw.newform.ISSP_AMS_Total_Current_Ownership_Individ__c) != 100}">
+                <apex:outputPanel>
                     <apex:outputLabel value="{!$Label.ISSP_ANG_ANNUAL_REV_OWNERSHIP_TOTAL} " style="font-weight: bold;"/>
                     <apex:outputText value="{!ca.fw.newform.ISSP_AMS_Total_Current_Ownership_Company__c + ca.fw.newform.ISSP_AMS_Total_Current_Ownership_Individ__c}%"/>
                     <a href="" data-html="true" data-toggle="popover" data-trigger="hover" title="TOTAL OWNERSHIP" data-content="<div escape='false'>{!$Label.ISSP_ANG_ANNUAL_REV_OWNERSHIP}</div>">
@@ -697,6 +704,15 @@
                 </apex:pageBlockTable>
 
                 <apex:outputPanel id="newOwnerQuestions" rendered="{!ca.fw.currentCompanies.size > 0}">
+                <script type="text/javascript">
+                    $('[id$="firstYearQ"]').text(function () {
+                        return $(this).text().replace("*", ""); 
+                    });
+
+                    $('[id$="secondYearQ"]').text(function () {
+                        return $(this).text().replace("*", ""); 
+                    });
+                </script>
                     <div class="bg-warning col-md-12" style="margin-top:15px;"><strong>{!$Label.ISSP_AMS_NoC_Non_IATA_Owner_Title}</strong></div>
                     <div class="col-md-12">
                         <apex:outputText value="{!$Label.ISSP_AMS_NoC_Non_IATA_Owner_Estimates}" escape="false"/>
@@ -802,10 +818,6 @@
                 </apex:outputPanel>
             </apex:pageblocksectionitem>
 
-            <apex:pageBlockSectionItem rendered="{!countryCheckList.License_required__c || countryCheckList.Registration_required__c}">
-                <apex:outputLabel value="{!$Label.ISSP_AMS_NoC_Provide_Registeration_Or_License}"/>
-            </apex:pageBlockSectionItem>
-
             <apex:outputPanel layout="block">
                 <apex:pageBlockSectionItem >
                     <apex:pageBlockSection columns="1">
@@ -872,14 +884,6 @@
             if('{!ca.isReadonly}' == 'true') {
                 setReadonly();
             }
-
-            $('[id$="firstYearQ"]').text(function () {
-                return $(this).text().replace("*", ""); 
-            });
-
-            $('[id$="secondYearQ"]').text(function () {
-                return $(this).text().replace("*", ""); 
-            });
         });
 
         function initFieldsSettings() {

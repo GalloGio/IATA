@@ -50,12 +50,12 @@ global without sharing class ANG_BackupEngineHelper implements Queueable{
 		'Minor shareholding' => new List<String>{'AMS_Account_Role__c','Contact','ANG_RHC_Information__c'},
 		'Major shareholding' => new List<String>{'AMS_Account_Role__c','Contact','ANG_RHC_Information__c'},
 		'Ownership' => new List<String>{'AMS_Account_Role__c','Contact','ANG_RHC_Information__c'},
-		'Location type' => new List<String>{'ANG_RHC_Information__c','AMS_Agencies_Hierarchy__c','AMS_Agencies_relationhip__c'},
+		'Location type' => new List<String>{'ANG_RHC_Information__c','Financial_Security__c','ANG_Agency_Risk_Event__c','AMS_Agencies_Hierarchy__c','AMS_Agencies_relationhip__c'},
 		'Location' => new List<String>{'ANG_RHC_Information__c'},
 		'Hierarchy' => new List<String>{'ANG_RHC_Information__c','AMS_Agencies_Hierarchy__c','AMS_Agencies_relationhip__c'},
 		'VMFR' => new List<String>{'ANG_RHC_Information__c'},
-		'Accreditation type' => new List<String>{'Agency_Authorization__c','ANG_RHC_Information__c'},
-		'Location type to different legal entity' => new List<String>{'Agency_Authorization__c','ANG_RHC_Information__c','AMS_Agencies_Hierarchy__c','AMS_Agencies_relationhip__c'},
+		'Accreditation type' => new List<String>{'Agency_Authorization__c', 'Portal_Application_Right__c', 'ANG_RHC_Information__c'},
+		'Location type to different legal entity' => new List<String>{'ANG_RHC_Information__c','Financial_Security__c','ANG_Agency_Risk_Event__c','AMS_Agencies_Hierarchy__c','AMS_Agencies_relationhip__c','Agency_Authorization__c'},
 		'Trade name' => new List<String>{'ANG_RHC_Information__c'}
 	};
 
@@ -64,8 +64,11 @@ global without sharing class ANG_BackupEngineHelper implements Queueable{
 			'AGENCY_AUTHORIZATION__C' => ' Account__c in:objectIds',
 			'CONTACT' => ' AccountId in:objectIds',
 			'ANG_RHC_INFORMATION__C' => ' ANG_AccountId__c in:objectIds',
+			'FINANCIAL_SECURITY__C' => ' Account__c in:objectIds',
+			'ANG_AGENCY_RISK_EVENT__C' => 'ANG_AccountId__c in:objectIds',
 //			'ANG_AGENCY_RISK_EVENT__C' => ' ANG_AccountId__c in:objectIds and ANG_OscarId__c =:oscarId',
 			'ACCOUNT' => ' Id in:objectIds',
+			'PORTAL_APPLICATION_RIGHT__C' => ' Contact__r.AccountId IN :objectIds AND Application_Name__c = \'IFAP\'',
 			'AMS_OSCAR__C' => ' Id =:oscarId',
 			'AMS_AGENCIES_HIERARCHY__C' => ' Id in (select Hierarchy__c  from AMS_AGENCIES_RELATIONHIP__C WHERE Child_Account__c in:objectIds or Parent_Account__c in:objectIds)',
 			'AMS_AGENCIES_RELATIONHIP__C' => ' Child_Account__c in:objectIds or Parent_Account__c in:objectIds '
@@ -132,7 +135,7 @@ global without sharing class ANG_BackupEngineHelper implements Queueable{
 		accountIds.addAll(fetchHierarchySelection(oscarId));
 		accountIds.add(oscar.account__c);
 
-		if(oscar.ANG_Type_Of_Change__c == AMS_Utils.ANG_LOCATION_TYPE){
+		if(oscar.ANG_Type_Of_Change__c.contains(AMS_Utils.ANG_LOCATION_TYPE) || oscar.ANG_Type_Of_Change__c.contains(AMS_Utils.ANG_LOCATION_TYPE_DIFFLEGALENTITY)){
 
 			For(List<AMS_Agencies_relationhip__c> rels : AMS_HierarchyHelper.getAccountsHierarchies(accountIds).values()){
 				For(AMS_Agencies_relationhip__c rel: rels){
@@ -152,6 +155,9 @@ global without sharing class ANG_BackupEngineHelper implements Queueable{
 		accountFields.add('ANG_FA_Opt_out__c');
 		accountFields.add('Is_PCI_compliant__c');
 		accountFields.add('ANG_PCI_compliance_expiry_date__c');
+		accountFields.add('Top_Parent__c');
+		accountFields.add('Financial_Review_Result__c');
+		accountFields.add('Assessment_Performed_Date__c');
 		
 		Set<String> entitiesToRollback = new Set<String>();
 

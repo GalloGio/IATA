@@ -1563,7 +1563,7 @@ Please &lt;a href=&quot;/ISSP_FAQ2Case?MainNav=Queries&amp;subNav=MyQueries&amp;
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>ANG_ISSP_ProductComparisonFeature2Tooltip</shortDescription>
-        <value>Available Form of Payment. Tickets issued on the customer’s debit/credit card and processed on the merchant agreement of the Airline. Payment is received directly by the Airline from its card processor.</value>
+        <value>Available Form of Payment. Pay-as-you-go e-wallet solution.</value>
     </labels>
     <labels>
         <fullName>ANG_ISSP_ProductComparisonFeature3</fullName>
@@ -1829,7 +1829,7 @@ Please &lt;a href=&quot;/ISSP_FAQ2Case?MainNav=Queries&amp;subNav=MyQueries&amp;
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>ANG ISSP RHC Information</shortDescription>
-        <value>RHC Information</value>
+        <value>Risk Profile and RHC</value>
     </labels>
     <labels>
         <fullName>ANG_ISSP_RHC_Request_Balance_Update</fullName>
@@ -2665,7 +2665,7 @@ Default,Default withdrawal,Review,Review withdrawal,Irregularity,Termination,Irr
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>CaseValidation - Area</shortDescription>
-        <value>Accreditation,Airlines GSA/MSO,Airline Management,BSPlink/ASD,Cargo Operations,CASSlink,Customer Portal Enquiry,IATA General Information,Invoicing,myIATA,Passenger Operations,Passenger Stock Management,Product Enquiry,Remittance &amp; Settlement,Risk Management,TIESS Support, MITA, Coding, Your VOICE - Annual Survey,IBSPs Migration, TASF, E&amp;F Services,E&amp;F Operations,Easy Pay,NewGen ISS</value>
+        <value>Accreditation,Airlines GSA/MSO,Airline Management,BSPlink/ASD,Cargo Operations,CASSlink,Customer Portal Enquiry,IATA General Information,iiNet,Invoicing,myIATA,Passenger Operations,Passenger Stock Management,Product Enquiry,Remittance &amp; Settlement,Risk Management,TIESS Support, MITA, Coding, Your VOICE - Annual Survey,IBSPs Migration, TASF, E&amp;F Services,E&amp;F Operations,Easy Pay,NewGen ISS</value>
     </labels>
     <labels>
         <fullName>CaseValidation_InDepthArea</fullName>
@@ -25371,7 +25371,7 @@ msgErrorRenewalOrderExpired:Your renewal notification order link is either  expi
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>OneId_Account Association</shortDescription>
-        <value>Account Association</value>
+        <value>Company Details</value>
     </labels>
     <labels>
         <fullName>OneId_Account_Creation</fullName>
@@ -25449,7 +25449,7 @@ msgErrorRenewalOrderExpired:Your renewal notification order link is either  expi
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>OneId_Contact Association &amp; Validation</shortDescription>
-        <value>Contact Association &amp; Validation</value>
+        <value>Email Validation</value>
     </labels>
     <labels>
         <fullName>OneId_Contact_Creation</fullName>
@@ -25457,7 +25457,7 @@ msgErrorRenewalOrderExpired:Your renewal notification order link is either  expi
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>OneId_Contact Creation</shortDescription>
-        <value>Contact Creation</value>
+        <value>Contact Details</value>
     </labels>
     <labels>
         <fullName>OneId_CreateNew</fullName>
@@ -25788,6 +25788,14 @@ If you continue to experience issues registering for the IATA Customer Portal th
         <protected>false</protected>
         <shortDescription>OneId_Privacy_Policy</shortDescription>
         <value>Privacy Policy</value>
+    </labels>
+    <labels>
+        <fullName>OneId_Privacy_Policy_Link</fullName>
+        <categories>OneId</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>OneId_Privacy_Policy_Link</shortDescription>
+        <value>http://www.iata.org/privacy</value>
     </labels>
     <labels>
         <fullName>OneId_Profile_BillingCity</fullName>
