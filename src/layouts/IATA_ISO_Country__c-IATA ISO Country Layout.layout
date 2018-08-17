@@ -257,6 +257,10 @@
                 <behavior>Edit</behavior>
                 <field>Airline_EasyPay_Opt_Out_Date__c</field>
             </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>ANG_IEP_Model__c</field>
+            </layoutItems>
         </layoutColumns>
         <style>TwoColumnsLeftToRight</style>
     </layoutSections>

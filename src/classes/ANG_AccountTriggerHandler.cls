@@ -29,7 +29,9 @@ public class ANG_AccountTriggerHandler {
 		adjustShortName();
 		updateRiskStatus();
 	}
-	public void onAfterInsert() {}
+	public void onAfterInsert() {
+		createIEPModelAOscars();
+	}
 
 	public void onBeforeUpdate(){
 		adjustShortName();
