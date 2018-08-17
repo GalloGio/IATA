@@ -24,7 +24,7 @@ global class ANG_MasterData_Interface{
                                             (Select Id, recordtype.developername, Email_Used_for_BSP_Creation__c, ANG_FormOfPayment_ID__c, Status__c From Agency_Authorizations__r where recordtype.developername in ('BSPLink','FormOfPayment')),  //Accelya Email + FOP
                                             (Select Id, IATACode__c, Status__c From ChildAccounts where Purge_Flag__c = false and IATACode__c != null and recordtype.developername= 'IATA_Agency'), //List of children
                                             (Select Id, ANG_RHC_Amount__c, CurrencyIsoCode, ANG_Financial_Security__c From RHC_Informations__r), //RHC Information
-                                            (Select Id, Percentage__c, Owner_Name__c,Owner_Account__r.Name, Contact__r.Name From AMS_Account_Roles__r where Active__c = true and RecordType.Name = 'Ownership') // List of Ownwer
+                                            (Select Id, Percentage__c, Owner_Name__c,Owner_Account__r.Name, Contact__r.Name From AMS_Account_Roles1__r where Active__c = true and RecordType.Name = 'Ownership') // List of Ownwer
                                      from Account 
                                      where recordtype.developername = 'IATA_Agency' and IATACode__c =:IATACode];
             
@@ -245,7 +245,7 @@ global class ANG_MasterData_Interface{
                 //Owners
                 this.owners = new List<Owner>();
                 List<AMS_Account_Role__c> roles = new List<AMS_Account_Role__c>();
-                roles = acc.AMS_Account_Roles__r.isEmpty() ? fetchOwners(acc.Top_Parent__c) : acc.AMS_Account_Roles__r;
+                roles = acc.AMS_Account_Roles1__r.isEmpty() ? fetchOwners(acc.Top_Parent__c) : acc.AMS_Account_Roles1__r;
                 for(AMS_Account_Role__c role :roles){
                     this.owners.add(new Owner(role, (double)role.Percentage__c));
                 }
