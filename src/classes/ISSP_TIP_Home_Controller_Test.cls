@@ -66,6 +66,7 @@ private class ISSP_TIP_Home_Controller_Test{
         prod.PP_Effective_from_Date__c = Date.newInstance(2019, 2, 2); 
         prod.RecordTypeid = TIP_Utils.PARTNER_PRODUCT_TIP_PRODUCT_RECORD_TYPE_ID; 
         prod.Payment_Provider_Account_Role__c = ar.id;
+        TIP_Utils.SyncFromAccountRole = false;
         insert prod;
 /*
         TIP_BIN_Range__c br = new TIP_BIN_Range__c (TIP_Payment_Provider_Product__c = prod.id, TIP_Status__c = 'DRAFT',
@@ -404,6 +405,12 @@ private class ISSP_TIP_Home_Controller_Test{
         system.assertEquals(1, Apexpages.getMessages().size());
 
         controller.newpp.PP_Settlement_terms__c = '2';
+        controller.newpp.is_PCI_DSS_required__c = 'YES';
+        controller.newpp.PP_Chargeback_airlines__c = 'N';
+        controller.newpp.PP_Pay_in_model__c = 'PREPAID';
+        controller.newpp.PP_Category__c = 'CONSUMER'; 
+        controller.newpp.PP_Payment_Product_Network_type__c = 'Open Loop';
+        
         controller.submitProduct();
 
 
