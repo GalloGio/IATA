@@ -4016,8 +4016,8 @@ public class AMS_OSCARTriggerHandler {
                 changeCode.reasonCode = accounts.get(acct.Id).Agencies_Applied_Change_codes__r[0].Reason_Code__c;
                 changeCode.reasonDesc  = accounts.get(acct.Id).Agencies_Applied_Change_codes__r[0].Reason_Description__c;
 
-               // AMS_ChangeCodesHelper.ObjectChange objectChange = new AMS_ChangeCodesHelper.ObjectChange('Account','ANG_FA_Opt_out__c', String.valueOf(!acct.ANG_FA_Opt_out__c), String.valueOf(acct.ANG_FA_Opt_out__c));
-                AMS_ChangeCodesHelper.ObjectChange objectChange = new AMS_ChangeCodesHelper.ObjectChange('Account','ANG_FA_Opt_out__c', String.valueOf(accountsFs.get(acct.Id).ANG_FA_Opt_out__c), String.valueOf(acct.ANG_FA_Opt_out__c));
+                AMS_ChangeCodesHelper.ObjectChange objectChange = new AMS_ChangeCodesHelper.ObjectChange('Account','ANG_FA_Opt_out__c', String.valueOf(!acct.ANG_FA_Opt_out__c), String.valueOf(acct.ANG_FA_Opt_out__c));
+                //AMS_ChangeCodesHelper.ObjectChange objectChange = new AMS_ChangeCodesHelper.ObjectChange('Account','ANG_FA_Opt_out__c', String.valueOf(accountsFs.get(acct.Id).ANG_FA_Opt_out__c), String.valueOf(acct.ANG_FA_Opt_out__c));
                 AMS_ChangeCodesHelper.ObjectChangesStruct objectChangeStruct = new AMS_ChangeCodesHelper.ObjectChangesStruct(new List<AMS_ChangeCodesHelper.ObjectChange>{objectChange});
 
                 AMS_ChangeCodesHelper.createAAChangeCodes(new List<AMS_ChangeCodesHelper.ObjectChangesStruct> {objectChangeStruct}, new List<AMS_OSCAR_JSON.ChangeCode> {changeCode}, new List<AMS_OSCAR__c> {accountsOscars.get(acct.Id)}, new List<Account> {acct}, true);
