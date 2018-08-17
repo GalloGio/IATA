@@ -130,9 +130,9 @@ public class ANG_RHCMassCalculation {
 		AsyncApexJob batchJob = [SELECT Id, Status, NumberOfErrors, JobItemsProcessed, TotalJobItems, CreatedBy.Email FROM AsyncApexJob WHERE Id = :batchId];
 
 		//while it does not complete, check for temporary results
-		for(ANG_RHC_Information__c r : [SELECT Id, ANG_AccountId__c FROM ANG_RHC_Information__c WHERE ANG_AccountId__c IN :selectedAgents.keySet() AND LastModifiedDate > :submitTime]) calculatedAgents.add(r.ANG_AccountId__c);
+		//for(ANG_RHC_Information__c r : [SELECT Id, ANG_AccountId__c FROM ANG_RHC_Information__c WHERE ANG_AccountId__c IN :selectedAgents.keySet() AND LastModifiedDate > :submitTime]) calculatedAgents.add(r.ANG_AccountId__c);
 
-		running = calculatedAgents.size() < selectedAgents.size();
+		running = (batchJob.status == 'Ended' || batchJob.status == 'Completed') ? false : true;
 
 		System.debug(loggingLevel.FINE, '____ [cls ANG_RHCMassCalculation - fetchResults] calculatedAgents - ' + calculatedAgents);
 
