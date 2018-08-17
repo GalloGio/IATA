@@ -7,7 +7,7 @@ private class TIP_BINRangeTriggerHandlerTest {
 		IATA_ISO_Country__c country = new IATA_ISO_Country__c (Name = 'US', ISO_Code__c = 'US');
         insert country;
 
-		Account provider = new Account(Name = 'ProviderTest1',
+		Account account = new Account(Name = 'ProviderTest1',
 			TIP_Provider_Type__c = 'Open Loop',
 			TIP_HQ_Location__c = country.Id,
 			RecordTypeId =TIP_Utils.PAYMENT_PROVIDER_RECORD_TYPE_ID,
@@ -16,12 +16,34 @@ private class TIP_BINRangeTriggerHandlerTest {
 			category__c = TIP_Utils.ACCOUNT_CATEGORY_PAYMENT_PROVIDER,
 			status__C='Active'
 			);
-		insert provider;
+		insert account;
+
+		Account_Role__c provider = new Account_Role__c();
+        provider.Account__c = account.Id;
+        provider.Provider_Code__c = '1000';
+        provider.HQ_Location__c = country.Id;
+        insert provider;
+
+        Contact contact = new Contact(LastName = 'Last Name');
+        insert contact;
+
+        Account_Contact_Role__c acr = new Account_Contact_Role__c();
+        acr.Account__c = account.Id;
+        acr.Account_Role__c = provider.Id;
+        acr.Contact_Role__c = 'Primary Contact';
+        acr.Contact__c = contact.Id;
+        acr.Service_Rendered__c = 'TIP';
+        insert acr;
+
+        //provider.Status__c = TIP_UTils.PARTNER_STATUS_ACTIVE;
+        provider.Effective_From_Date__c = System.today();
+		update provider;
 
 		Partner_products__c product = new Partner_products__c(Name = 'ProductTest1', 
 			PP_Payment_Product_Code__c = 'co',
 			PP_Form_of_payment__c = 'CC',
-			Provider__c = provider.Id,
+			Provider__c = account.Id,
+			Payment_Provider_Account_Role__c = provider.Id,
 			PP_Payment_guarantee__c = 'COMMERCIAL_DISPUTE',
 			PP_Accepted_transactions__c = 'PAYMENT',
 			PP_Pay_in_model__c = 'PREPAID',
@@ -31,7 +53,7 @@ private class TIP_BINRangeTriggerHandlerTest {
 			PP_Chargeback_airlines__c = 'NO',
 			PP_Interchange_fee__c = '12',
 			PP_Effective_from_Date__c = Date.today(),
-			PP_status__c = 'ACTIVE',
+			PP_status__c = 'Active',
 			PP_Payment_Network__c = 'AX',
 			PP_Category__c = 'CONSUMER');
 		insert product;
