@@ -11,6 +11,7 @@ public without sharing class ISSP_ChangePassword {
     public Boolean fredError{get;set;}
     public Boolean statusPoller{get;set;}
     public Boolean fredFirst{get;set;} 
+    public Boolean passwordChanged{get;set;} 
     private List <User> userList{get;set;}        
     User provUser;
 
@@ -35,6 +36,7 @@ public without sharing class ISSP_ChangePassword {
         statusPoller = false;
         fredFirst = false;
         provUser = new User();         
+        passwordChanged = false;
         errorMessage = new list<string>();
         integer passwordDays = integer.ValueOF(ISSP_CS__c.getValues('PasswordResetPeriod').value__c);
         userList = [SELECT Id, UID__c, LastPasswordChangeDate, Email, contact.AccountId 
@@ -81,13 +83,10 @@ public without sharing class ISSP_ChangePassword {
                 if(serviceName == 'FRED' && termsAndConditionChecked == false){
                     errorMessage.add(Label.ISSP_Accept_Terms_Warning);
                     fredError = true;
-                }
-                
-                if(fredError == false){ //this will prevent that the password change when we miss the Accept Terms and Condition
-                    pageRef = Site.changePassword(newPassword, confirmNewPassword, currentPassword);               
+                    pageref = null;
                 }
                 else{
-                    pageref = null;
+                    pageRef = Site.changePassword(newPassword, confirmNewPassword, currentPassword);               
                 }
                 
                 if(pageRef == null && newPassword == confirmNewPassword && Test.isRunningTest())
@@ -126,8 +125,9 @@ public without sharing class ISSP_ChangePassword {
                 }
                 fredFirst = true; 
                 if(errorMessage.isEmpty() && serviceName == 'FRED'){
-                    statusPoller = true;
+//                    statusPoller = true;
                     provisioning();                    
+                    passwordChanged = true;
                 }
 
                 System.debug(loggingLevel.FINE, '____ [cls ISSP_ChangePassword - changePassword] pageRef - ' + pageRef);

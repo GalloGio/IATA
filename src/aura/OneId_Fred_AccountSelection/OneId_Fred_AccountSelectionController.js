@@ -204,7 +204,6 @@
             if(!result) {
 
                console.log(a.getReturnValue());
-                $A.util.toggleClass(component.find("mySpinner"), "slds-hide");
                 alert(a.getReturnValue().error);
                 /*
                 // Show toast not working as guest (public pages)- Wok only when logged in

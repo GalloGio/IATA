@@ -20874,6 +20874,14 @@ If you continue to experience issues registering for the CNS Customer Portal the
         <value>Owner Name</value>
     </labels>
     <labels>
+        <fullName>ISSP_PasswordChanged_FRED</fullName>
+        <categories>ISSP, login</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_PasswordChanged_FRED</shortDescription>
+        <value>Your request has successfully been received and is currently being processed.</value>
+    </labels>
+    <labels>
         <fullName>ISSP_PAX_Validating_VAT_Number</fullName>
         <categories>ISSP, AMS</categories>
         <language>en_US</language>
@@ -25393,7 +25401,7 @@ msgErrorRenewalOrderExpired:Your renewal notification order link is either  expi
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>OneId Community Name</shortDescription>
-        <value>s</value>
+        <value>identity/s</value>
     </labels>
     <labels>
         <fullName>OneId_Contact_Association_Validation</fullName>
