@@ -44,7 +44,6 @@ public class ANG_AccountTriggerHandler {
 		new ANG_AgencyEventsGenerator(filterByIATACode(triggerNew),oldMap,'Account','id').run();
 		manageDowngrades();
 		manageUpgrades();
-		createIEPModelAOscars();
 	}
 
 	public void onBeforeDelete(){}
@@ -582,27 +581,4 @@ public class ANG_AccountTriggerHandler {
 		return remitFreq;
 	}
 
-	private void createIEPModelAOscars(){
-
-		Map<Id,Account> iepAccounts = new Map<Id,Account>();
-
-		for(Account a :triggerNew){
-
-			if(a.ANG_IEP_Status__c == 'In Progress' && oldMap.get(a.Id).ANG_IEP_Status__c != 'In Progress') 
-				iepAccounts.put(a.Id,a);
-
-		}
-
-		Map<Id,Account> modelACountriesAccs = new Map<Id,Account>([SELECT Id FROM Account WHERE Id IN :iepAccounts.keySet() AND IATA_ISO_Country__r.ANG_IEP_Model__c = 'Model A']);
-		
-		for(Id iepAcc: iepAccounts.keySet()){
-
-			If(!modelACountriesAccs.keySet().contains(iepAcc))
-				iepAccounts.remove(iepAcc);
-
-		}
-
-		if(!iepAccounts.isEmpty())
-			ANG_OscarProcessHelper.createIEPAccountOscar(iepAccounts);
-	}
 }
