@@ -246,8 +246,8 @@ public class ANG_RHCInformationTriggerHandler{
 /*
 	public void createChangeCodeForFOP(Map<Id,String> accountsAndStatus) {
 
-		AMS_ChangeCodes__c changeCodeConfigPCA = AMS_ChangeCodesConfigHelper.getChangeCodeConfig('PCA');
-		AMS_ChangeCodes__c changeCodeConfigPCR = AMS_ChangeCodesConfigHelper.getChangeCodeConfig('PCR');
+		AMS_ChangeCodes__c changeCodeConfigPCA = AMS_ChangeCodes__c.getInstance('PCA');
+		AMS_ChangeCodes__c changeCodeConfigPCR = AMS_ChangeCodes__c.getInstance('PCR');
 
 		Set<Id> accountIds = accountsAndStatus.keySet();
 
