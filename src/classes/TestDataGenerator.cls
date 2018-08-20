@@ -167,7 +167,7 @@ public with sharing class TestDataGenerator
             Zuora.zObject obj = new Zuora.zObject('Product');
                 obj.setValue('Id',generateZuoraFakeId());
                 obj.setValue('Name','Zuora Product '+i);
-                obj.setValue('SAP_Material_Number__c', generateProductCode());
+                obj.setValue('SAPProductMaterialNo__c', generateProductCode());
                 obj.setValue('EffectiveStartDate',Zuora.zUtil.getZuoraDate(DEFAULT_EFFECTIVE_START_DATE));
                 obj.setValue('EffectiveEndDate',Zuora.zUtil.getZuoraDate(DEFAULT_EFFECTIVE_END_DATE));
 

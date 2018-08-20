@@ -1,7 +1,7 @@
 @isTest
 private class Selector_Test
 {
-	@isTest(seeAllData=true)
+	@isTest
 	static void test_data_selection()
 	{
 		TestDataGenerator.generateUtilitySetting();
