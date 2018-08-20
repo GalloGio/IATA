@@ -184,10 +184,10 @@ public without sharing class IECTestUtil {
     }
     
     public static Contact createSampleContact(Account oAccount) {
-        return new Contact(
+    	
+        Contact contact = new Contact(
             RecordTypeId = RecordTypeSingleton.getInstance().getRecordTypeID('Contact', 'Standard_Contact')
             , AccountId = oAccount.Id
-            , OwnerId = IECUserManager.getIECContactOwnerId()
             , FirstName = 'Test'
             , LastName = 'User'
             , Title = 'TestTitle'
@@ -195,6 +195,15 @@ public without sharing class IECTestUtil {
             , Phone = '514123345'
             , User_IECPortal_Status__c = IECConstants.APPROVED_CONTACT_STATUS
         );
+        
+        Id ownerId = IECUserManager.getIECContactOwnerId();
+        
+        if(ownerId != null){
+        	contact.OwnerId = ownerId;
+        }
+        
+        return contact;
+        
     }
     
     public static User createSampleGuestUserAndLogin() {
