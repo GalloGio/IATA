@@ -18904,7 +18904,7 @@ This field is kept up-to-date with the feedback of ITDI at least twice a year du
         <filters>
             <field>ACCOUNT.RECORDTYPE</field>
             <operation>equals</operation>
-            <value>Account.IATA_Airline_Account,Account.Operator</value>
+            <value>Account.IATA_Airline,Account.Operator</value>
         </filters>
         <label>FRED+ - AO / All</label>
         <language>en_US</language>
@@ -18926,7 +18926,7 @@ This field is kept up-to-date with the feedback of ITDI at least twice a year du
         <filters>
             <field>ACCOUNT.RECORDTYPE</field>
             <operation>equals</operation>
-            <value>Account.IATA_Airline_Account,Account.Operator</value>
+            <value>Account.IATA_Airline,Account.Operator</value>
         </filters>
         <filters>
             <field>fredp_aircraftoperator_eligibility__c</field>
