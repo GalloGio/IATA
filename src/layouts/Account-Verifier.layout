@@ -3,9 +3,6 @@
     <excludeButtons>AccountHierarchy</excludeButtons>
     <excludeButtons>ChangeOwnerOne</excludeButtons>
     <excludeButtons>ChangeRecordType</excludeButtons>
-    <excludeButtons>DataDotComAccountInsights</excludeButtons>
-    <excludeButtons>DataDotComClean</excludeButtons>
-    <excludeButtons>DataDotComCompanyHierarchy</excludeButtons>
     <excludeButtons>DisableCustomerPortalAccount</excludeButtons>
     <excludeButtons>DisablePartnerPortalAccount</excludeButtons>
     <excludeButtons>IncludeOffline</excludeButtons>
@@ -52,7 +49,7 @@
         <label>Address</label>
         <layoutColumns>
             <layoutItems>
-                <behavior>Readonly</behavior>
+                <behavior>Edit</behavior>
                 <field>BillingAddress</field>
             </layoutItems>
             <layoutItems>
@@ -63,10 +60,6 @@
                 <behavior>Edit</behavior>
                 <field>Phone</field>
             </layoutItems>
-            <layoutItems>
-                <behavior>Edit</behavior>
-                <field>Fax</field>
-            </layoutItems>
         </layoutColumns>
         <layoutColumns>
             <layoutItems>
@@ -75,11 +68,11 @@
             </layoutItems>
             <layoutItems>
                 <behavior>Edit</behavior>
-                <field>IATA_ISO_Country__c</field>
+                <field>Mobile__c</field>
             </layoutItems>
             <layoutItems>
                 <behavior>Edit</behavior>
-                <field>Mobile__c</field>
+                <field>Fax</field>
             </layoutItems>
         </layoutColumns>
         <style>TwoColumnsTopToBottom</style>
@@ -97,7 +90,6 @@
     <miniLayout>
         <fields>Name</fields>
         <fields>ParentId</fields>
-        <fields>IATA_ISO_Country__c</fields>
     </miniLayout>
     <relatedLists>
         <fields>FULL_NAME</fields>
