@@ -936,6 +936,8 @@
             $('[id$="Account_Name__c"]').prop('disabled', true);
             $('[id$="ISSP_AMS_Legal_Reg_Name_Address__c"]').prop('disabled', true);
             $('[id$="ISSP_AMS_GDS_with_signed_contract__c_unselected"]').prop('disabled', true);
+            $('[id$="Local_Legally_Registered_Name__c"]').prop('disabled', true);
+            $('[id$="copyCheckBox"]').prop('disabled', true);
 
             $('[id$="PhysicalStreet"]').prop('disabled', true);
             $('[id$="PostalStreet"]').prop('disabled', true);
