@@ -56,7 +56,7 @@
                 <field>Reason_Description__c</field>
             </layoutItems>
             <layoutItems>
-                <behavior>Edit</behavior>
+                <behavior>Required</behavior>
                 <field>Reason_Code__c</field>
             </layoutItems>
         </layoutColumns>
@@ -98,6 +98,10 @@
             <layoutItems>
                 <behavior>Readonly</behavior>
                 <field>For_Integration__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Readonly</behavior>
+                <field>Created_Date_To_Show__c</field>
             </layoutItems>
         </layoutColumns>
         <layoutColumns>

@@ -1365,10 +1365,6 @@
             <type>user</type>
         </recipients>
         <recipients>
-            <recipient>rajputf@iata.org</recipient>
-            <type>user</type>
-        </recipients>
-        <recipients>
             <recipient>sadiqs@iata.org</recipient>
             <type>user</type>
         </recipients>
@@ -2878,10 +2874,6 @@
             <type>user</type>
         </recipients>
         <recipients>
-            <recipient>rajputf@iata.org</recipient>
-            <type>user</type>
-        </recipients>
-        <recipients>
             <recipient>sadiqs@iata.org</recipient>
             <type>user</type>
         </recipients>
@@ -3007,10 +2999,6 @@
         </recipients>
         <recipients>
             <recipient>rabahh@iata.org</recipient>
-            <type>user</type>
-        </recipients>
-        <recipients>
-            <recipient>rajputf@iata.org</recipient>
             <type>user</type>
         </recipients>
         <recipients>
