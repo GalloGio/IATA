@@ -285,4 +285,15 @@
         <errorMessage>Can’t have active Payment Providers with Effective date From in the future</errorMessage>
     </validationRules>
     <visibility>Public</visibility>
+    <webLinks>
+        <fullName>Terminate_Provider_Account</fullName>
+        <availability>online</availability>
+        <displayType>button</displayType>
+        <encodingKey>UTF-8</encodingKey>
+        <linkType>url</linkType>
+        <masterLabel>Terminate</masterLabel>
+        <openType>replace</openType>
+        <protected>false</protected>
+        <url>/flow/TIP_Payment_Provider_Termination?vAccountRoleId={!Account_Role__c.Id}&amp;retURL=/{!Account_Role__c.Id}</url>
+    </webLinks>
 </CustomObject>
