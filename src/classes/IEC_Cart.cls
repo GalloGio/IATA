@@ -99,9 +99,6 @@ public without sharing virtual class IEC_Cart {
 		}
 
 		for (PricebookEntry pricebookEntry : [SELECT Id, Pricebook2Id, Product2Id, UnitPrice FROM PricebookEntry WHERE Pricebook2Id = :standardPricebook.Id]) {
-			
-			System.debug('angielaz, IEC_Cart-->staticInitializer-->pricebookEntry: ' + pricebookEntry);	
-
 			pricebookEntryMap.put(pricebookEntry.Product2Id, pricebookEntry);
 		}
 
@@ -684,9 +681,6 @@ public without sharing virtual class IEC_Cart {
 				oi_dto.unitPrice = Order_Svc.getUnitPrice(ecomProduct.PriceInfo, oi_dto.quantity, customerType);
 				oi_dto.subTotal = (oi_dto.unitPrice != null) ? (oi_dto.unitPrice * quantity) + setupFee : setupFee;
 
-
-				System.debug('JJ ecomProduct: ' + ecomProduct);
-
 				//used for google analytics
 				oi_dto.productNumber = ecomProduct.ProductNumber;
     			oi_dto.productCategory = ecomProduct.Portfolio;
@@ -698,8 +692,6 @@ public without sharing virtual class IEC_Cart {
     			oi_dto.productMedia = ecomProduct.Media;
     			oi_dto.productEffectiveTo = ecomProduct.EffectiveTo;
 
-
-				System.debug('JJ oi_dto: ' + oi_dto);
 
 				orderItems.add(oi_dto);
 			}
@@ -794,13 +786,8 @@ public without sharing virtual class IEC_Cart {
 
 		System.debug('saveOrderAndCartItemsToDatabase start');
 
-		System.debug('angielaz, IEC_Cart-->saveOrderAndCartItemsToDatabase-->order: ' + order);
-		System.debug('angielaz, IEC_Cart-->saveOrderAndCartItemsToDatabase-->cartItemList: ' + cartItemList);
-
 		if (cartItemList != null && cartItemList.isEmpty() == false) {
 			for (CartItem cartItem : cartItemList) {
-				System.debug('cartItem: ' + cartItem);
-
 				cartItemByProductNumberMap.put(cartItem.productNumber, cartItem);
 			}
 
@@ -827,20 +814,14 @@ public without sharing virtual class IEC_Cart {
 
 			for (CartItem cartItem : cartItemList) {
 
-				System.debug('angielaz,  IEC_Cart-->saveOrderAndCartItemsToDatabase-->cartItem: ' + cartItem);
-
 				Product2 product = productMap.get(cartItem.productNumber);
 				PricebookEntry pricebookEntry;
 				EComProduct_DTO ecomProduct = ecomProductByProductNumberMap.get(cartItem.productNumber);
 
-				System.debug('angielaz,  IEC_Cart-->saveOrderAndCartItemsToDatabase-->product: ' + product);
-				System.debug('angielaz,  IEC_Cart-->saveOrderAndCartItemsToDatabase-->ecomProduct: ' + ecomProduct);
 				
 				if (product != null && ecomProduct != null) {
 					pricebookEntry = pricebookEntryMap.get(product.Id);
 
-					System.debug('angielaz,  IEC_Cart-->saveOrderAndCartItemsToDatabase-->pricebookEntry: ' + pricebookEntry);
-	
 					if (pricebookEntry != null) {	
 						OrderItem orderItem = new OrderItem();
 
@@ -859,8 +840,6 @@ public without sharing virtual class IEC_Cart {
 						orderItem.Coupon__c = cartItem.coupon;
 
 						orderItemList.add(orderItem);
-
-						System.debug('angielaz, IEC_Cart-->saveOrderAndCartItemsToDatabase-->orderItem inside for: ' + orderItem);
 
 					}
 				}
@@ -883,10 +862,6 @@ public without sharing virtual class IEC_Cart {
 			if (orderItem.Id == null) {
 				insertOrderItemList.add(orderItem);
 			} else {
-				
-				System.debug('angielaz, IEC_Cart-->saveOrderAndCartItemsToDatabase-->orderItem: ' + orderItem);
-
-
 				updateOrderItemList.add(orderItem);
 			}
 		}

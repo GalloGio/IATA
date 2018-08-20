@@ -450,15 +450,11 @@ public without sharing class IEC_ShoppingCartController extends IEC_PageControll
      **************************************************************************************************************/
 	public void buildOrderItemFromCookie()
 	{
-		System.debug('JJ buildOrderItemFromCookie');
-
 		if(vfOrder == null) vfOrder = new Order_DTO();
 
 		if (newShoppingCart == false) {
-			System.debug('JJ newShoppingCart false');
 			vfOrder.orderItems = IECOrder_Svc.getOrderItemsInCookie();
 		} else {
-			System.debug('JJ newShoppingCart true');
 			vfOrder.orderItems = storeCart.getOrderItems();
 		}
 
@@ -471,10 +467,6 @@ public without sharing class IEC_ShoppingCartController extends IEC_PageControll
 			}
 			cartProducts = String.join( lstProductNames,' - ');
 		}
-
-
-		System.debug(vfOrder.orderItems);
-
 	}
 
 

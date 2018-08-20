@@ -32,11 +32,6 @@ global without sharing class IEC_CustomerInformationController extends IEC_PageC
 	//TC 
 	public Boolean unlockZipCode {
 		get{
-            System.debug('1 :'+vfOrder.billToAddress);
-			System.debug('2 :'+vfOrder.billToAddress.countryCode);
-			System.debug('3 :'+zipCodeApplicableMap.get(vfOrder.billToAddress.countryCode));
-			System.debug('4 :'+zipCodeApplicableMap);
-			System.debug('5 :'+vfOrder);
 			return vfOrder != null && vfOrder.billToAddress != null && !String.isBlank(vfOrder.billToAddress.countryCode) && 
 				zipCodeApplicableMap.get(vfOrder.billToAddress.countryCode) != null && zipCodeApplicableMap.get(vfOrder.billToAddress.countryCode);
 		}
@@ -77,8 +72,6 @@ global without sharing class IEC_CustomerInformationController extends IEC_PageC
 			checkoutObj.put('products', new List<Object> {prodObj});
 
 			List<OrderItem_DTO> lstOrderItemsAux = storeCart.getOrderItems();
-			System.debug('JJ lstOrderItemsAux: ' + lstOrderItemsAux);
-
 			if(lstOrderItemsAux != null && !lstOrderItemsAux.isEmpty()){
 	            List<Object> lstOrderItems = new List<Object>();
             	for(OrderItem_DTO orderItemDtoAux : lstOrderItemsAux){
@@ -160,9 +153,6 @@ global without sharing class IEC_CustomerInformationController extends IEC_PageC
 		}
 
 		sfOrder = IECOrder_Svc.getPenddingOrder(true);
-
-		System.debug('JJ sfOrder: ' + sfOrder);
-		System.debug('JJ storeCart: ' + storeCart);
 
 		vfOrder = new Order_DTO(sfOrder);
 		initialOrder = new Order_DTO(sfOrder);

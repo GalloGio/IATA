@@ -48,8 +48,6 @@ public class IEC_ConfirmOrderController extends IEC_PageController
 
 
             List<OrderItem_DTO> lstOrderItemsAux = storeCart.getOrderItems();
-            System.debug('JJ lstOrderItemsAux: ' + lstOrderItemsAux);
-
             if(lstOrderItemsAux != null && !lstOrderItemsAux.isEmpty()){
                 List<Object> lstOrderItems = new List<Object>();
                 for(OrderItem_DTO orderItemDtoAux : lstOrderItemsAux){

@@ -124,8 +124,6 @@ global without sharing class IEC_ShippingController extends IEC_PageController
             checkoutObj.put('products', new List<Object> {prodObj});
 
             List<OrderItem_DTO> lstOrderItemsAux = storeCart.getOrderItems();
-            System.debug('JJ lstOrderItemsAux: ' + lstOrderItemsAux);
-
             if(lstOrderItemsAux != null && !lstOrderItemsAux.isEmpty()){
                 List<Object> lstOrderItems = new List<Object>();
                 for(OrderItem_DTO orderItemDtoAux : lstOrderItemsAux){

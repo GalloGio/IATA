@@ -138,13 +138,13 @@ public with sharing class IEC_SearchResultsController extends IEC_PageController
                 List<String> tmp = (filterConditions.containsKey(filter_parts[0])) ? filterConditions.get(filter_parts[0]) : new List<String>(); 
                     tmp.add(filter_parts[1]);
 
-                filterConditions.put(filter_parts[0], tmp);
+                filterConditions.put(filter_parts[0].replace('Inventory_Status__c1','Inventory_Status__c'), tmp);
             }
 
             Map<String, String> fieldType = new Map<String, String>(); //fild => type
             for(FilterWrapper fw : filters)
             {
-                fieldType.put(fw.field, fw.type_x);
+                fieldType.put(fw.field.replace('Inventory_Status__c1','Inventory_Status__c'), fw.type_x);
             }
 
             List<String> conditions = new List<String>();
@@ -188,7 +188,25 @@ public with sharing class IEC_SearchResultsController extends IEC_PageController
             fw.label    = field.getLabel();
             fw.type_x   = field.getType().name();
 
-            if(fw.type_x =='PICKLIST')
+			if(fw.field == 'Inventory_Status__c'){
+                FilterWrapper fw2 = new FilterWrapper();
+                fw2.field = field.getFieldPath()+'1';
+                fw2.type_x = field.getType().name();
+                
+                fw.label  = 'Print & CDs';
+                fw2.label = 'Digital';
+
+                fw.values = new List<SelectOption>(); 
+                fw.values.add(new SelectOption('In stock','In stock'));
+                fw.values.add(new SelectOption('Out of stock','Out of stock'));
+                
+                fw2.values = new List<SelectOption>(); 
+                fw2.values.add(new SelectOption('Available Now',' Available Now'));
+                fw2.values.add(new SelectOption('Coming Soon','Coming Soon'));
+
+                filters.add(fw2);
+            }
+            else if(fw.type_x =='PICKLIST')
             {
                 fw.values = Utility.getPicklistSelectOptions('Product2',fw.field,false);
             }  
@@ -251,8 +269,6 @@ public with sharing class IEC_SearchResultsController extends IEC_PageController
         List<Map<String,Object>> productsListWrapper = new List<Map<String,Object>>();
         Integer pos = 1;
         for(EComProduct_DTO prod : products) {
-            system.debug('prod_dto: ' + prod);
-
             Map<String,Object> prodObj = new Map<String,Object>();
             prodObj.put('id', prod.ProductNumber);
             prodObj.put('name', prod.ProductName);
