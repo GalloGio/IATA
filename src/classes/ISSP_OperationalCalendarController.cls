@@ -158,7 +158,7 @@ global without sharing class ISSP_OperationalCalendarController {
         set<Id> setCountryId = new set<Id>();
         for (AMS_Settlement_System__c op: listOp ) {
             Set<Id> listBSPCountries = getSetIds(op.IATA_ISO_Countries__r);
-            Set<Id> listCASSCountries = getSetIds(op.IATA_ISO_Countries__r);
+            Set<Id> listCASSCountries = getSetIds(op.CASS_COUNTRIES__r);
             for (Operational_Calendar__c operation: op.Operational_Calendars__r ) {
                 list<Id> listCountryId = new list<Id>();
                 if (operation.Operation_Type__c.contains('BSP')) {
