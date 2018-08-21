@@ -325,7 +325,7 @@ two record types:
         <description>EBC Agency Name taken from the related GDP Account View</description>
         <externalId>false</externalId>
         <formula>GDP_Products_Account_View__r.EBC_Agency_Name__c</formula>
-        <inlineHelpText>EBC Agency Name taken from the related GDP Account View</inlineHelpText>
+        <inlineHelpText>EBC Agency Name taken from the related GDP Account View. Displays Agency Trading Name OR Legal Name IF Trading Name is Blank.</inlineHelpText>
         <label>EBC Agency Name</label>
         <required>false</required>
         <trackHistory>false</trackHistory>
@@ -493,11 +493,11 @@ IF(TODAY()&lt;= Valid_To_Date__c, TRUE,FALSE)
         <fullName>JSON_WS_Complex__c</fullName>
         <description>CAC Web Service Complex Response for IDCard</description>
         <externalId>false</externalId>
-        <formula>&quot;\&quot;reason\&quot;:\&quot;&quot;
-+ IF (Json_Is_Active__c, &quot;VALID&quot;, &quot;INVALID&quot;) + &quot;\&quot;,&quot;+
-&quot;\&quot;cardholder-name\&quot;:\&quot;&quot;
-+  FirstName__c +&quot; &quot;+ LastName__c  + &quot;\&quot;,&quot;+
-&quot;\&quot;card-expiry-date\&quot;:\&quot;&quot;+ TEXT(Month(Valid_To_Date__c))+ &quot;-&quot; +TEXT(Day(Valid_To_Date__c))+ &quot;-&quot; +TEXT(Year(Valid_To_Date__c)) + &quot;\&quot;,&quot;+ &quot;\&quot;agency-code\&quot;:\&quot;&quot;+Agency_IATA_Code__c + &quot;\&quot;,&quot;+ &quot;\&quot;agency-name\&quot;:\&quot;&quot;+Agency_Name__c + &quot;\&quot;&quot;</formula>
+        <formula>&quot;\&quot;reason\&quot;:\&quot;&quot;+ IF (Json_Is_Active__c, &quot;VALID&quot;, &quot;INVALID&quot;) + &quot;\&quot;,&quot;+
+&quot;\&quot;cardholder-name\&quot;:\&quot;&quot;+ FirstName__c +&quot; &quot;+ LastName__c + &quot;\&quot;,&quot;+
+&quot;\&quot;card-expiry-date\&quot;:\&quot;&quot;+ TEXT(Month(Valid_To_Date__c))+ &quot;-&quot; +TEXT(Day(Valid_To_Date__c))+ &quot;-&quot; +TEXT(Year(Valid_To_Date__c)) + &quot;\&quot;,&quot;+ 
+&quot;\&quot;agency-code\&quot;:\&quot;&quot;+Agency_IATA_Code__c + &quot;\&quot;,&quot;+ 
+&quot;\&quot;agency-name\&quot;:\&quot;&quot;+EBC_Agency_Name__c + &quot;\&quot;&quot;</formula>
         <inlineHelpText>CAC Web Service Complex Response for IDCard</inlineHelpText>
         <label>JSON WS Complex</label>
         <required>false</required>
@@ -516,7 +516,7 @@ IF(TODAY()&lt;= Valid_To_Date__c, TRUE,FALSE)
 &quot;\&quot;cardholder-idcard-name\&quot;:\&quot;&quot;+ Name_on_ID_Card__c + &quot;\&quot;,&quot;+ 
 &quot;\&quot;card-expiry-date\&quot;:\&quot;&quot;+ TEXT(Month(Valid_To_Date__c))+ &quot;-&quot; +TEXT(Day(Valid_To_Date__c))+ &quot;-&quot; +TEXT(Year(Valid_To_Date__c)) + &quot;\&quot;,&quot;+ 
 &quot;\&quot;agency-code\&quot;:\&quot;&quot;+Agency_IATA_Code__c + &quot;\&quot;,&quot;+ 
-&quot;\&quot;agency-name\&quot;:\&quot;&quot;+Agency_Name__c + &quot;\&quot;,&quot;+ 
+&quot;\&quot;agency-name\&quot;:\&quot;&quot;+EBC_Agency_Name__c + &quot;\&quot;,&quot;+ 
 &quot;\&quot;cardholder-photo\&quot;:\&quot;&quot;+Photo__c + &quot;\&quot;,&quot;+ 
 &quot;\&quot;card-type\&quot;:\&quot;&quot;+TEXT(Type_of_ID_Card__c) + &quot;\&quot;,&quot;+ 
 &quot;\&quot;cardholder-gender\&quot;:\&quot;&quot;+TEXT(Gender__c) + &quot;\&quot;,&quot;+ 
@@ -1032,10 +1032,10 @@ IF(TODAY()&lt;= Valid_To_Date__c, TRUE,FALSE)
         <columns>Card_Status__c</columns>
         <columns>Is_Expedite__c</columns>
         <columns>Missing_Information__c</columns>
+        <columns>CREATEDBY_USER</columns>
         <columns>CIN__c</columns>
         <columns>Sent_to_AIMS_on__c</columns>
         <columns>Valid_To_Date__c</columns>
-        <columns>CREATEDBY_USER</columns>
         <columns>CREATED_DATE</columns>
         <columns>LAST_UPDATE</columns>
         <columns>Agency_Name__c</columns>

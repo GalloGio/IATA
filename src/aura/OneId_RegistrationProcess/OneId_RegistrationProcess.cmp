@@ -55,7 +55,7 @@
                                 
                             </div>
                             <div aria-hidden="false" class="slds-accordion__content" id="step1">
-                                <c:OneId_EmailValidation contact="{!v.contact}" userCountry="{!v.userCountry}"/>
+                                <c:OneId_EmailValidation contact="{!v.contact}" />
                             </div>
                         </section>
                     </div>
