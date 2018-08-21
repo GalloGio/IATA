@@ -2,8 +2,6 @@ global class ANG_OscarProcessHelper {
 
 	public static final Set<String> AMLCaseProcesses = new Set <String>{AMS_Utils.new_HO ,AMS_Utils.new_BR_ABROAD, AMS_Utils.NEWHELITE, AMS_Utils.NEWHESTANDARD};
 	public static final Set<String> SanityCheckVerificationProcesses = new Set <String>{AMS_Utils.NEWHELITE, AMS_Utils.NEWHESTANDARD, AMS_Utils.NEWAE};
-	/*** AMSU-162 ***/
-	public static final Set<String> AMS_ProcessesAddressToValidate = new Set<String> {AMS_Utils.new_HO, AMS_Utils.new_BR, AMS_Utils.new_BR_ABROAD, AMS_Utils.new_TIDS, AMS_Utils.new_GSA, AMS_Utils.new_GSA_BSP, AMS_Utils.new_GSSA, AMS_Utils.new_AHA, AMS_Utils.new_AHA_BSP, AMS_Utils.new_SA};
 
 	public static boolean isIATACodeGenerationRunning = false;
 
@@ -86,7 +84,7 @@ global class ANG_OscarProcessHelper {
 			updater.onlineAMap.put(theAccreditation.Id,theAccreditation);
 
 			/*** AMSU-162 ***/
-			if(!isShippingAddressValid(theAccreditation) && AMS_ProcessesAddressToValidate.contains(oscar.Process__c)) {
+			if(AMS_Utils.AMS_ProcessesAddressToValidate.contains(oscar.Process__c) && !isShippingAddressValid(theAccreditation)) {
 				isIATACodeGenerationRunning = false;
 				System.debug('[ANG_OscarProcessHelper] Incomplete shipping address.');
 				return new String[]{'-1','Incomplete shipping address.','-1'};
