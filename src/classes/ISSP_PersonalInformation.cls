@@ -284,6 +284,16 @@ public with sharing class ISSP_PersonalInformation {
         }
     }
 
+    public void cancelAccount() {
+        con.Account = [SELECT Id, Name, TradeName__c, IATACode__c, Phone, PhoneNational__c, Fax, FAXNational__c, Email__c,
+                            IATA_ISO_Country__r.Name, BillingStreet, BillingCity, BillingPostalCode, BillingState, BillingCountry,Sector__c,
+                            Category__c,Location_Type__c, IATA_ISO_Country__r.ISO_Code__c, IATA_ISO_Country__r.OSCAR_enabled__c, 
+                            IATA_ISO_Country__r.Enable_Minor_Changes_from_Portal__c, IATA_ISO_Country__r.Prevent_Portal_Trade_Name_Change__c,
+                            Website, Status__c, IATA_ISO_Country__r.ANG_Enable_NewGen__c, RecordTypeId, RecordType.DeveloperName, DDS_Status__c
+                        FROM Account 
+                        WHERE Id=:con.Account.Id LIMIT 1];
+    }
+
     public Pagereference saveAccount(){
         try {
             isEditMode = false;
