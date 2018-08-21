@@ -766,7 +766,7 @@ global with sharing class ANG_ConversionHelper {
 				accountIdsToSearch.add(struct.topParentId);
 		}
 
-		List<Account> accountsSearched = [SELECT Id, Name, Top_Parent__c, Top_Parent__r.Location_Type__c, Location_Type__c, Location_Class__c, ParentId, Status__c, IATA_ISO_Country__r.BSP_Country_free_text__c, IATA_ISO_Country__r.BSP__c, IATA_ISO_Country__r.ISO_Code__c, Remittance_frequency__c, Financial_Review_Result__c, IATA_ISO_Country__r.AMS_Settlement_System__r.CurrencyIsoCode, ANG_RiskStatus__c, ANG_Accreditation_Model__c, Email__c,ANG_CashCondition__c, IATACode__c, (select Id, ANG_Financial_Security__c, ANG_RHC_Amount__c from RHC_Informations__r), Guaranteed_amount__c,IATA_ISO_Country__r.CurrencyIsoCode, ANG_IEP_Status__c from Account where Id in :accountIdsToSearch];
+		List<Account> accountsSearched = [SELECT Id, Name, Top_Parent__c, Top_Parent__r.Location_Type__c, Location_Type__c, Location_Class__c, ParentId, Status__c, IATA_ISO_Country__r.BSP_Country_free_text__c, IATA_ISO_Country__r.BSP__c, IATA_ISO_Country__r.ISO_Code__c, Remittance_frequency__c, Financial_Review_Result__c, IATA_ISO_Country__r.AMS_Settlement_System__r.CurrencyIsoCode, ANG_RiskStatus__c, ANG_Accreditation_Model__c, Email__c,ANG_CashCondition__c, IATACode__c, (select Id, ANG_Financial_Security__c, ANG_RHC_Amount__c from RHC_Informations__r), Guaranteed_amount__c,IATA_ISO_Country__r.CurrencyIsoCode, ANG_IEP_Status__c, CNS_Agency__c from Account where Id in :accountIdsToSearch];
 
 		Map<Id,Account> accountsSearchedMap = new Map<Id,Account>();
 

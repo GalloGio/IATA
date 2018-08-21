@@ -2067,15 +2067,6 @@ public class ANG_AgencyChangesHelperTest {
 
 		ANG_AgencyChangesHelper.generateLNFChangeCode(oscar, new Map<Id, Agency_Applied_Change_code__c>{a1.Id => aacc1}, changesContainer);
 
-		Map<String, String> configCC = new Map<String, String>();
-		configCC.put('Manager approval','MA');
-		configCC.put('Manager disapproval','MD');
-		configCC.put('Application withdrawal','AW');
-
-		ANG_AgencyChangesConfigHelper.getManagerApprovalChangeCode(configCC);
-		ANG_AgencyChangesConfigHelper.getManagerDisapprovalChangeCode(configCC);
-		ANG_AgencyChangesConfigHelper.getWithdrawalChangeCode(configCC);
-
 		Test.stopTest();
 
 	}

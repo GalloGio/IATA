@@ -295,8 +295,12 @@ public class ISSP_Portal_Application_RightTest {
     User thisUser = [SELECT Id FROM User WHERE Id = :UserInfo.getUserId()];
     ISSP_WS_SIS_Callout_Common_Test.load_ISSP_CS();
     Id recordtypeAgency = RecordTypeSingleton.getInstance().getRecordTypeId('Account', 'IATA_Agency') ;
-    Portal_Applications__c sisApp = new Portal_Applications__c(Name = 'SIS');
-    insert sisApp;
+    List<Portal_Applications__c> lApp = new List<Portal_Applications__c>();        
+    lApp.add(new Portal_Applications__c (Name = 'Baggage Proration'));
+    lApp.add(new Portal_Applications__c (Name = 'Standards Setting Workspace'));
+    lApp.add(new Portal_Applications__c (Name = 'IATA Accreditation'));
+    lApp.add(new Portal_Applications__c (Name = 'SIS'));
+    insert lApp;
     ISSP_ObjectFactory.fiilIncludedFields();
 
     Account acc = ISSP_ObjectFactory.createNewAccount();
@@ -319,11 +323,24 @@ public class ISSP_Portal_Application_RightTest {
     Test.startTest();
     system.runAs(thisUser) {
       ISSP_UserTriggerHandler.preventTrigger = true;
-      Portal_Application_Right__c appRight = new Portal_Application_Right__c();
-      appRight.Portal_Application__c = sisApp.Id;
-      appRight.Right__c = 'Access Granted';
-      appRight.Contact__c = contact.Id;
+      List<Portal_Application_Right__c> appRight = new list<Portal_Application_Right__c>();
+      appRight.add(new Portal_Application_Right__c(Portal_Application__c = lApp[0].Id,
+      Right__c = 'Access Granted',
+      Contact__c = contact.Id));
+      /*appRight.add(new Portal_Application_Right__c(Portal_Application__c = lApp[1].Id,
+      Right__c = 'Access Granted',
+      Contact__c = contact.Id));*/
+      appRight.add(new Portal_Application_Right__c(Portal_Application__c = lApp[2].Id,
+      Right__c = 'Access Granted',
+      Contact__c = contact.Id));
+      appRight.add(new Portal_Application_Right__c(Portal_Application__c = lApp[3].Id,
+      Right__c = 'Access Granted',
+      Contact__c = contact.Id));
       insert appRight;
+
+       appRight[0].Right__c = 'Access Denied';
+       appRight[1].Right__c = 'Access Denied';
+       update appRight;
     }
     Test.stopTest();
 

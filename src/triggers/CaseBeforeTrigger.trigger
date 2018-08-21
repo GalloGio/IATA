@@ -189,7 +189,7 @@ trigger CaseBeforeTrigger on Case (before delete, before insert, before update) 
                         contacts = [Select c.Id, c.Agent_Type__c, c.AccountId From Contact c where Id IN : contactIds];
                     }
                     if(!IFAPaccountIds.isEmpty()){
-                        accounts = [Select a.Id, a.IATACode__c, a.BillingCountry, a.Type From Account a where Id IN : IFAPaccountIds];
+                        accounts = [Select a.Id, a.IATACode__c, a.BillingCountry, a.Type, a.RecordType.DeveloperName, a.CNS_Account__c From Account a where Id IN : IFAPaccountIds];
                     }
                     System.debug('QUERY DEBUG' + Limits.getQueryRows());
                     //GM - IMPRO - START
@@ -232,6 +232,9 @@ trigger CaseBeforeTrigger on Case (before delete, before insert, before update) 
                         for (Account aAccount : accounts) {
                             if (aAccount.Id == aCase.AccountId) {
                                 accountMap.put(aCase.id, aAccount);
+                                if(aAccount.RecordType.DeveloperName == 'IATA_Agency' && aAccount.CNS_Account__c){
+                                    aCase.CNSCase__c = true;
+                                }
                                 break;
                             }
                         }
