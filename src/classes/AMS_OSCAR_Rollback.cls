@@ -208,27 +208,35 @@ public without sharing class AMS_OSCAR_Rollback {
 		List<AMS_Agencies_relationhip__c> relations = mapOscarToRelations.get(oscarId);
 		
 		if(relations != null) {
-			res = new HierarchyWrapper(relations[0].Hierarchy__c);
+			res = new HierarchyWrapper(relations[0].Hierarchy__c, null);
 			for(AMS_Agencies_relationhip__c relation : relations) {
 				res.relations.add(relation);
 			}
+		} else {
+			res = new HierarchyWrapper(null, mapOscarToAccounts.get(oscarId)[0].Id);
 		}
 
 		return res;
 	}
 
 	private void rollbackHierarchy(List<HierarchyWrapper> hierarchies) {
+		System.debug('Starting Hierarchy Rollback...');
 		Set<Id> oldHierarchyIds = new Set<Id>();
 		Set<Id> accountIds = new Set<Id>();
 		List<AMS_Agencies_Hierarchy__c> hierarchiesToCreate = new List<AMS_Agencies_Hierarchy__c>();
 
 		for(HierarchyWrapper hierarchyW : hierarchies) {
+			System.debug('Hierarchy Wrapper: ' + hierarchyW);
+			if(hierarchyW.isEmptyHierarchy) {
+				accountIds.add(hierarchyW.accountId);	
+			} else {			
 			oldHierarchyIds.add(hierarchyW.orginalHierarchyId);
 			hierarchiesToCreate.add(hierarchyW.hierarchy);
 			for(AMS_Agencies_relationhip__c relation : hierarchyW.relations) {
 				accountIds.add(relation.Parent_Account__c);
 				accountIds.add(relation.Child_Account__c);
 			}
+		}
 		}
 
 		List<AMS_Agencies_Hierarchy__c> hierarchiesToDelete = [SELECT Id FROM AMS_Agencies_Hierarchy__c WHERE Id IN: oldHierarchyIds];
@@ -326,11 +334,15 @@ public without sharing class AMS_OSCAR_Rollback {
 		public AMS_Agencies_Hierarchy__c hierarchy {get;set;}
 		public List<AMS_Agencies_relationhip__c> relations {get;set;}
 		public Id orginalHierarchyId {get;set;}
+		public Id accountId {get;set;}
+		public Boolean isEmptyHierarchy {get;set;}
 
-		public HierarchyWrapper(Id orginalHierarchyId) {
+		public HierarchyWrapper(Id orginalHierarchyId, Id accountId) {
 			this.orginalHierarchyId = orginalHierarchyId;
 			this.hierarchy = new AMS_Agencies_Hierarchy__c(Hierarchy_Name__c= 'Hierarchy');
 			this.relations = new List<AMS_Agencies_relationhip__c>();
+			this.accountId = accountId;
+			this.isEmptyHierarchy = accountId <> null;
 		}
 	}
 
