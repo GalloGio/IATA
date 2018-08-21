@@ -2151,7 +2151,7 @@ SIS Charge Code Type.</description>
                 <value>
                     <fullName>Aircraft Reliability</fullName>
                     <default>false</default>
-                    <label>Aircraft Reliability</label>
+                    <label>Aircraft Reliability Guidelines</label>
                 </value>
                 <value>
                     <fullName>Airline Coding Directory</fullName>
@@ -2327,6 +2327,11 @@ SIS Charge Code Type.</description>
                     <fullName>Guide to Facilitation</fullName>
                     <default>false</default>
                     <label>Guide to Facilitation</label>
+                </value>
+                <value>
+                    <fullName>IATA and Aviation History</fullName>
+                    <default>false</default>
+                    <label>IATA and Aviation History</label>
                 </value>
                 <value>
                     <fullName>IATA Cargo Handling Manual</fullName>
@@ -13708,6 +13713,10 @@ The product will only appear on the Online Store when the date entered in this f
             </values>
             <values>
                 <fullName>IATA Rates of Exchange</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>IATA and Aviation History</fullName>
                 <default>false</default>
             </values>
             <values>

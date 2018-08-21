@@ -400,7 +400,7 @@ public class AMS_OscarCaseTriggerHelper {
 
         if(oscarCases.isEmpty()) return;
 
-        oscars = new Map<Id, AMS_OSCAR__c>([SELECT Id, OwnerId, Status__c, Account__r.Name, Account__r.Location_Type__c , Account__r.Category__c, Account__r.ANG_Accreditation_Model__c, Process__c, Account__r.IATACode__c, Account__r.IATA_ISO_Country__r.Name, Account__r.ANG_IsNewGenAgency__c, Type_of_change__c FROM AMS_OSCAR__c WHERE Id IN :oscars.keySet()]);
+        oscars = new Map<Id, AMS_OSCAR__c>([SELECT Id, OwnerId, Status__c, Account__r.Name, Account__r.Location_Type__c, Location_Class__c, Account__r.Category__c, Account__r.ANG_Accreditation_Model__c, Process__c, Account__r.IATACode__c, Account__r.IATA_ISO_Country__r.Name, Account__r.ANG_IsNewGenAgency__c, Type_of_change__c FROM AMS_OSCAR__c WHERE Id IN :oscars.keySet()]);
 
         for(Case c : oscarCases){
             
@@ -433,7 +433,9 @@ public class AMS_OscarCaseTriggerHelper {
                 else if(oscars.get(c.Oscar__c).Account__r.ANG_IsNewGenAgency__c)
                     newCaseSubject = c.reason1__c + ' - ' + AMS_Utils.officialAccreditationTypeMap.get(oscars.get(c.Oscar__c).Account__r.ANG_Accreditation_Model__c) + ' - ' + oscars.get(c.Oscar__c).Account__r.Name;
                 else if(oscars.get(c.Oscar__c).Process__c == AMS_Utils.new_MSO || (c.Subject != null && c.Subject.startsWith('MSO code '))) //AMSU-119
-                    newCaseSubject = null;
+					newCaseSubject = null;
+                else if(oscars.get(c.Oscar__c).Process__c == AMS_Utils.COR && oscars.get(c.Oscar__c).Location_Class__c == 'I' && c.Origin == 'Portal') //AMSU-140
+                    newCaseSubject = 'Agency Changes - ' +oscars.get(c.Oscar__c).Account__r.Name;
 				else {
                     AMS_OSCAR__c oscar = oscars.get(c.Oscar__c); 
                     newCaseSubject = c.reason1__c + ' - ' + oscar.Account__r.Name;
