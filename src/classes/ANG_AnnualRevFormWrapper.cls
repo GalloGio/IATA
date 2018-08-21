@@ -2,7 +2,7 @@
 	TEST CLASS : ISSP_ANG_ANNUAL_REVALIDATION_Test
 
 */
-public with sharing class ANG_AnnualRevFormWrapper {
+public without sharing class ANG_AnnualRevFormWrapper {
 	public AMS_Pax_Accreditation_Form__c newForm {get; set;}
 	public List<AMS_Accreditation_Contact__c> previousOwners {get; set;}
 	public List<AMS_Accreditation_Contact__c> previousCompanies {get; set;}

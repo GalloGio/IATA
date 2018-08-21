@@ -405,7 +405,7 @@
         <filters>
             <field>CREATED_DATE</field>
             <operation>equals</operation>
-            <value>YESTERDAY</value>
+            <value>8/16/2018 12:00 AM</value>
         </filters>
         <label>SIS</label>
         <language>en_US</language>
