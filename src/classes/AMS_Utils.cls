@@ -1667,7 +1667,10 @@ public without sharing class AMS_Utils {
             Set<Id> accountIds = new Set<Id>();
             accountIds.add(oscar.Account__c); 
             accountIds.addAll(accounts.keySet());
-            String query = 'SELECT id,recordTypeID,ParentId,Is_Branch_Abroad__c,IATA_ISO_Country__r.ISO_Code__c, Link_agent_name__r.Name, ';
+            String query = 'SELECT id,recordTypeID,ParentId,Is_Branch_Abroad__c,IATA_ISO_Country__r.ISO_Code__c, Link_agent_name__r.Name, Reason__c, ';
+            if(!fieldsINtheQuery.contains('Location_Type__c')){
+                query += 'Location_Type__c, ';                
+            }
             query += 'IATA_ISO_Shipping_State__r.Name, ISO_State__r.Name,IATA_ISO_Country__r.Name, IATA_ISO_Billing_State__r.Name,IATA_ISO_Shipping_Country__r.Name' + fieldsINtheQuery + ' FROM Account WHERE  Id IN :accountIds'; 
             List<Account> queryResult = Database.query(query);
             System.debug('queryResult: ' + queryResult);

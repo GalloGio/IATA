@@ -3584,7 +3584,7 @@ public class AMS_OSCARTriggerHandler {
                             changeCode.name = cad.Change_Code__c;
                             changeCode.memoText = cad.Bulletin_Memo_Text__c;
 							changeCode.publishedOnEBulletin = false;
-                        changeCode.name = 'CAD';
+
                             changeCodeHO.name = cad.Change_Code__c;
                             changeCodeHO.memoText = cad.Bulletin_Memo_Text__c;
                             changeCodeHO.publishedOnEBulletin = true;
@@ -3628,16 +3628,33 @@ public class AMS_OSCARTriggerHandler {
                             System.debug('forAccount: ' + forAccount );
 
                             AMS_OSCAR_JSON.ChangeCode auxChangeCode = changeCode.clone();
+                            AMS_OSCAR_JSON.ChangeCode auxChangeCodeHO = changeCodeHO.clone();
                             Account acct_reason = accounts.get(forAccount.Id);
                             List<String> lRes = new List<String>();
                             if(acct_reason.Reason__c != null) lRes = AMS_Utils.splitAccReason(acct_reason.Reason__c);
                             
                             System.debug('acct_reason.Reason__c: ' + acct_reason.Reason__c + '|| lRes: ' + lRes);
                             if(lRes != null && lRes.size() > 0){
+
+                                System.debug('AMS_Utils.LocationTypeAllHOTypes: ' + AMS_Utils.LocationTypeAllHOTypes );
+                                System.debug('acct_reason.Location_Type__c: ' + acct_reason.Location_Type__c );
+                                System.debug('AMS_Utils.LocationTypeAllHOTypes.contains(acct_reason.Location_Type__c): ' + AMS_Utils.LocationTypeAllHOTypes.contains(acct_reason.Location_Type__c) );
+
+                                if( AMS_Utils.LocationTypeAllHOTypes.contains(acct_reason.Location_Type__c)){
+                                    auxChangeCodeHO.reasonCode = (lRes.get(0) == null ? '': lRes.get(0));
+                                    auxChangeCodeHO.reasonDesc = (lRes.get(1) == null ? '': lRes.get(1));
+                                    lChangeCode.add(auxChangeCodeHO);
+                                }else{
                                 auxChangeCode.reasonCode = (lRes.get(0) == null ? '': lRes.get(0));
                                 auxChangeCode.reasonDesc = (lRes.get(1) == null ? '': lRes.get(1));
+                                    lChangeCode.add(auxChangeCode);
                             }
-                            lChangeCode.add(auxChangeCode);
+                            }
+
+                            System.debug('auxChangeCodeHO: ' + auxChangeCodeHO );
+                            System.debug('auxChangeCode: ' + auxChangeCode );
+
+                            //lChangeCode.add(auxChangeCode);
                             lOscars.add(updatedOscar);
 
                         }
