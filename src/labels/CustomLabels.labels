@@ -22972,6 +22972,13 @@ This Dashboard allows each airline Treasury Team to gain full visibility of thei
         <value>Reason for cancellation</value>
     </labels>
     <labels>
+        <fullName>ISSP_TIP_REASON_FOR_CLOSURE</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_TIP_REASON_FOR_CLOSURE</shortDescription>
+        <value>Reason for Closure</value>
+    </labels>
+    <labels>
         <fullName>ISSP_TIP_RETURN_HOMEPAGE</fullName>
         <language>en_US</language>
         <protected>false</protected>
@@ -23040,6 +23047,27 @@ This Dashboard allows each airline Treasury Team to gain full visibility of thei
         <protected>false</protected>
         <shortDescription>ISSP_TIP_VALUE_TOO_BIG_TO_PROVIDER</shortDescription>
         <value>&amp;lt;strong&amp;gt;Error:&amp;lt;/strong&amp;gt;This value is too big for this provider.</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_TIP_VOLUNT_RELINQ_BUTTON</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_TIP_VOLUNT_RELINQ_BUTTON</shortDescription>
+        <value>Request Voluntary Relinquishment</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_TIP_VOLUNT_RELINQ_MSG</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_TIP_VOLUNT_RELINQ_MSG</shortDescription>
+        <value>TBD</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_TIP_VOLUNT_RELINQ_TITLE</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_TIP_VOLUNT_RELINQ_TITLE</shortDescription>
+        <value>Voluntary Relinquishment</value>
     </labels>
     <labels>
         <fullName>ISSP_TOULink</fullName>
