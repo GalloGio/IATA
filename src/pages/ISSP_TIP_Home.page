@@ -26,6 +26,7 @@ action="{!initActions}"
 
             function changeRequestButtonStatus() {
                 document.getElementById("requestButton").disabled = {!!btnEnabled};
+                document.getElementById("requestVoluntaryRelinquishmentBtn").disabled = {!!btnVoluntReliqEnabled}; //ACAMBAS - TIP-241
             }
 
             function validateIfportalAdmin() {
@@ -60,6 +61,46 @@ action="{!initActions}"
                 }
                 return false;
             }
+
+            //ACAMBAS - TIP-241 - Start
+
+            function toggleDialog() {
+                $('#myModal').modal('toggle');
+            }
+
+            function closeDialog(){
+               toggleDialog();
+            } 
+
+            function clearErrorElement(elemFld){
+                $(elemFld).next('.errorMsg').remove();
+            }
+
+            function checkVoluntaryRelinqMandatory() {
+
+                if($('[id$="datepicker"]').val() === null || $('[id$="datepicker"]').val() =='' ) {
+                    if($('[id$="datepicker"]').next('.errorMsg').val()==undefined) {
+                        $('[id$="datepicker"]').after('<div class="errorMsg">{!$Label.IEC_Required_Field_Error_Msg}</div>');
+                    }
+                    return;
+                }
+                else {
+                    clearErrorElement('[id$="datepicker"]');
+                }
+
+                if($('[id$="closureReason"]').val() === null || $('[id$="closureReason"]').val() =='' ) {
+                    if($('[id$="closureReason"]').next('.errorMsg').val()==undefined)
+                        $('[id$="closureReason"]').after('<div class="errorMsg">{!$Label.IEC_Required_Field_Error_Msg}</div>');
+                    return;
+                }
+                else {
+                    clearErrorElement('[id$="closureReason"]');
+                }
+
+                startLoading();
+                submitVoluntaryRelinquishment(); 
+            }
+            //ACAMBAS - TIP-241 - End
 
         </script>
     </head>
@@ -203,9 +244,14 @@ action="{!initActions}"
                                 <button id="requestButton" onclick="validateIfportalAdmin(); return false;" class="btn btn-block btn_iata_primary">{!$label.ISSP_Button_Request_Enlistment}</button>
                             </div>
 
+                            <!-- ACAMBAS - TIP-241 Start -->
+                            <div style="padding-top: 10px;padding-bottom: 10px;" class="col-col-xs-12 col-md-8 col-md-offset-2">
+                                <button id="requestVoluntaryRelinquishmentBtn" onclick="toggleDialog();displayCalendar();return false;" class="btn btn-block btn_iata_primary" oncomplete="toggleDialog();" reRender="modalContentoutpanel">{!$Label.ISSP_TIP_VOLUNT_RELINQ_BUTTON}</button>
+                            </div>
+                            <!-- ACAMBAS - TIP-241 End -->
+
                         </section>
                     </div>
-
                     <div id='tipRequests' style="padding-top: 50px; padding-bottom: 200px;">
                         <section name="left-side" >
                             <section name="remittance-holding" class="row">
@@ -329,12 +375,116 @@ action="{!initActions}"
                                         </apex:column>
 
                                     </apex:pageBlockTable>
+                                    
+                                    
                                 </apex:form>
+
                             </apex:pageBlock>
                         </section>
+                        
                     </div>
                 </div>
             </div>
+                                    
+            <!-- ACAMBAS - TIP-241 Start -->
+                        <apex:form > 
+                                <apex:pageblock > 
+                                    <!-- ------------MODAL WIDOWN -------------------  -->
+                                    <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+                                      <apex:outputPanel id="modalContentoutpanel">
+                                          <apex:outputPanel layout="block" styleClass="modal-dialog" id="myModalContent3"> 
+                                            <div class="modal-content"> 
+                                              <div class="modal-header"> 
+                                                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                                                <h4 class="modal-title">{!$Label.ISSP_TIP_VOLUNT_RELINQ_TITLE}</h4>
+                                              </div>
+
+                                              <div class="modal-body" style="display:{!if(true,'','none')}">
+                                                <apex:pageblock id="terminateProd"> 
+                                                    <script>
+                                                        function displayCalendar() {
+                                                            var date = new Date();
+                                                            var minDay = date.getDate()+{!voluntaryReliqMinDays};
+                                                            $('[id$=datepicker]').datepicker( 
+                                                                {
+                                                                    "minDate": new Date(date.getFullYear(), date.getMonth(), minDay)});
+
+                                                            $('[id$=datepicker]').datepicker("option", $.datepicker.regional['en']);
+                                                        }
+                                                        
+
+                                                        function startLoading() {
+                                                            $('.loadingBox').show();
+                                                        }
+                                                    </script>
+                                                    <style>
+                                                      .overlay {
+                                                        display: none;
+                                                        height: 100%;
+                                                        left: 0;
+                                                        position: fixed;
+                                                        top: 0;
+                                                        opacity: 0.3;
+                                                        -moz-opacity: 0.3;
+                                                        width: 100%;
+                                                        -ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=30)";
+                                                        filter: alpha(opacity=30);
+                                                        background: #000;
+                                                        -khtml-opacity: 0.3;
+                                                        z-index: 1000;
+                                                      }
+                                                      .loader {
+                                                        background: url('/img/loading32.gif') scroll no-repeat 0 0;
+                                                        width: 32px;
+                                                        height: 32px;
+                                                        position: absolute;
+                                                        left: 50%;
+                                                        top: 150px;
+                                                      }
+                                                    </style>
+                                                    <apex:PageMessages id="msgs"/>                           
+                                                    <apex:pageBlockSection columns="1" collapsible="false">
+                                                      <apex:pageBlockSectionItem labelStyle="width:26%">
+                                                        <apex:outputLabel value="{!$Label.ISSP_TIP_VOLUNT_RELINQ_MSG}"/>
+                                                      </apex:pageBlockSectionItem>
+                                                      <br/>
+                                                      <apex:pageBlockSectionItem labelStyle="width:26%" >
+                                                        <apex:outputLabel value="{!$Label.ISSP_TIP_EFFECTIVE_DATE}*"/>
+                                                        <apex:inputText value="{!voluntaryReliqDate}" id="datepicker"/> 
+                                                      </apex:pageBlockSectionItem>
+                                                      <br/>  
+                                                      <apex:pageBlockSectionItem labelStyle="width:26%" >
+                                                        <apex:outputLabel value="{!$Label.ISSP_TIP_REASON_FOR_CLOSURE}*"/>
+                                                        <apex:inputTextarea id="voluntaryReliqReason" value="{!voluntaryReliqReason}"/>
+                                                      </apex:pageBlockSectionItem>
+                                                    </apex:pageBlockSection>
+                                                </apex:pageblock>
+                                              </div>
+                                              <div class="modal-footer">
+                                                <div class="row">
+                                                    <div class="col-md-6">
+                                                        <button type="button" onclick="toggleDialog(); return false;" class="btn_iata_cancel btn-block btn">{!$Label.ISSP_Cancel}</button>
+                                                    </div>
+                                                    <div class="col-md-6">                                                
+                                                        <button type="button" id="submitVoluntaryRelinqBtn" onclick="checkVoluntaryRelinqMandatory(); return false;" class="btn_iata_submit btn-block btn">{!$Label.ISSP_Submit}</button>
+                                                    </div>
+                                                    <div id="load_scrl" class="loadingBox loader" style="display:none;"> </div>
+                                                    <div class="loadingBox overlay"> </div>
+                                                </div>
+                                                <apex:actionFunction name="submitVoluntaryRelinquishment" action="{!submitVoluntaryRelinquishmentReq}"  oncomplete="closeDialog();"/>
+                                              </div>
+                                            </div>
+                                            <!-- /.modal-content -->
+                                          </apex:outputPanel>
+                                        </apex:outputPanel>
+                                        <!-- /.modal-dialog -->
+                                    </div>
+                                </apex:pageblock>
+
+                            </apex:form>  
+                            <!-- ACAMBAS - TIP-241 End -->
+
+            
             <div style="display: inline-block;">
                 <c:ISSP_CustomFooter communityName="{!communityName}" />
             </div>
