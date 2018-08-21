@@ -135,6 +135,11 @@ trigger GlobalContactTrigger on Contact (after delete, after insert, after undel
                     }else if (c.Ver_Number_2__c != '' && c.Ver_Number_2__c != null && !c.Ver_Number_2__c.startswith('Z')) {
                         c.Ver_Number__c = Decimal.valueOf(c.Ver_Number_2__c);
                     }
+                    // update available services field if IdCard Holder is active
+                    if (c.ID_Card_Holder__c) {
+                        c.Available_Services__c = IdCardUtil.IDCARD_SERVICE_NAME;
+                        c.Available_Services_Images__c = IdCardUtil.getCardHolderImageHtml();
+                    }
                 }
             }
             /*trgIDCard_Contact_BeforeUpdate Trigger.BeforeInsert*/  
@@ -173,6 +178,34 @@ trigger GlobalContactTrigger on Contact (after delete, after insert, after undel
                     }
                     if(c.RecordTypeId == standardContactRecordTypeID) 
                         standardContacts.add(c);
+                    // check id card service image if id card holder is active
+                    if (c.Available_Services__c==null) c.Available_Services__c = '';
+                    if (c.ID_Card_Holder__c && !c.Available_Services__c.contains(IdCardUtil.IDCARD_SERVICE_NAME)) {
+                        list<String> listServices = c.Available_Services__c.split(';');
+                        listServices.add(IdCardUtil.IDCARD_SERVICE_NAME);
+                        c.Available_Services__c = String.join(listServices,';');
+                        if (c.Available_Services_Images__c==null) c.Available_Services_Images__c='';
+                        c.Available_Services_Images__c += IdCardUtil.getCardHolderImageHtml();
+                    }
+                    // if ID card service is in the list but id card holder is false we need to remove it (both service value and image)
+                    else if (!c.ID_Card_Holder__c && c.Available_Services__c.contains(IdCardUtil.IDCARD_SERVICE_NAME)) {
+                        // remove from multipicklist
+                        list<String> listServices = new list<String>();
+                        for (String service: c.Available_Services__c.split(';')) {
+                            if (service!=IdCardUtil.IDCARD_SERVICE_NAME) {
+                                listServices.add(service);
+                            }
+                        }
+                        c.Available_Services__c = String.join(listServices,';');
+                        // remove from images
+                        list<String> listImages = new list<String>();
+                        for (String image: c.Available_Services_Images__c.split('<img')) {
+                            if (image!='' && !image.contains(IdCardUtil.IDCARD_SERVICE_NAME)) {
+                                listImages.add('<img' + image);
+                            }
+                        }
+                        c.Available_Services_Images__c = String.join(listImages,'');
+                    }
                 }
                 if(!standardContacts.isEmpty()){
                     //RA 7/8/2013

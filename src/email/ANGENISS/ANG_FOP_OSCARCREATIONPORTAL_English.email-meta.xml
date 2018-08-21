@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<EmailTemplate xmlns="http://soap.sforce.com/2006/04/metadata">
+    <available>true</available>
+    <encodingKey>UTF-8</encodingKey>
+    <letterhead>IATADynamicSkyLetterhead</letterhead>
+    <name>ANG FOP Creation From Portal</name>
+    <style>freeForm</style>
+    <subject>Receipt of PCI DSS Confirmation - {!AMS_OSCAR__c.IATACode__c} - {!AMS_OSCAR__c.Account__c}</subject>
+    <textOnly>Dear {!Contact.Name},
+
+
+
+IATA Code: {!AMS_OSCAR__c.IATACode__c}
+
+
+
+This is to inform you that we have received your PCI DSS Attestation of Compliance / Nil Credit Card Self-Declaration and that our records have been updated accordingly.
+
+
+
+We want to take this opportunity to thank you for having submitted the requested evidence within the deadline.
+
+
+
+We would like to remind you that your PCI DSS Attestation of Compliance has an expiration date and therefore it has to be renewed on annual basis.
+
+
+
+Should you need any further information from IATA, please do not hesitate to login a new query via our Customer Portal: www.iata.org/cs.
+
+
+
+
+
+
+Yours sincerely,
+
+
+
+Agency Management
+International Air Transport Association
+-----------------------------------------------------------------------------
+In order to obtain information or assistance from IATA, do not hesitate to access at any time our Customer Portal
+
+{!AMS_OSCAR__c.Emails_reference_Id__c}</textOnly>
+    <type>html</type>
+    <uiType>Aloha</uiType>
+</EmailTemplate>

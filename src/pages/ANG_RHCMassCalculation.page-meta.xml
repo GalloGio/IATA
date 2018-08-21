@@ -3,5 +3,5 @@
     <apiVersion>40.0</apiVersion>
     <availableInTouch>false</availableInTouch>
     <confirmationTokenRequired>false</confirmationTokenRequired>
-    <label>ISSP_ModelA_Onboarding</label>
+    <label>ANG_RHCMassCalculation</label>
 </ApexPage>

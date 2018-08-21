@@ -99,8 +99,6 @@ public without sharing class AMS_Utils {
 
     private static Map<String, RecordType> currentCache = null;
 
-    public static String userSessionId = UserInfo.getSessionId();
-
     public static final String SANITYCHECK = 'Perform Sanity Check';
     public static final String APPROVAL = 'Manager Approval';
     public static final String WITHDRAWAL = 'Application Withdrawal';
@@ -225,7 +223,6 @@ public without sharing class AMS_Utils {
     public static final String RECTYPE_NEWGENFOP   = Schema.AMS_OSCAR__c.sObjectType.getDescribe().getRecordTypeInfosByName().get('NGFormsOfPayment').getRecordTypeId();
     public static final String RECTYPE_NEWGENOPTINOUT   = Schema.AMS_OSCAR__c.sObjectType.getDescribe().getRecordTypeInfosByName().get('ANG.FS.OPTINOUT').getRecordTypeId();
     public static final String RECTYPE_NEWGENANNUALREVAL   = Schema.AMS_OSCAR__c.sObjectType.getDescribe().getRecordTypeInfosByName().get('ANG.ANNUAL.REVALIDATION').getRecordTypeId();
-    public static final String RECTYPE_IEPMODELA   = Schema.AMS_OSCAR__c.sObjectType.getDescribe().getRecordTypeInfosByName().get('BANK ACCOUNT SETUP').getRecordTypeId();
 
     public static final String RECTYPE_OSCARCOMM    = RecordTypeSingleton.getInstance().RtIDsPerDeveloperNamePerObj.get('Case').get('OSCAR_Communication');
     public static final String RECTYPE_SIDRALITE    = RecordTypeSingleton.getInstance().RtIDsPerDeveloperNamePerObj.get('Case').get('SIDRA_Lite');
@@ -263,6 +260,7 @@ public without sharing class AMS_Utils {
     public static final String AACC_FINALIZED = 'finalized';
     public static final String AACC_WITHDRAWAL = 'withdrawn';
     public static final String AACC_DISAPPROVED = 'disapproved';
+    public static final String AACC_RECONSIDERED = 'reconsidered';
     public static final Set<String> AACC_FINALS = new Set<String>{AACC_FINALIZED, AACC_DISAPPROVED, AACC_WITHDRAWAL};
 
     public static final String CHLOCTYPEBEHAVIOR_NOSWAP = 'Don’t change the parent';
@@ -386,6 +384,11 @@ public without sharing class AMS_Utils {
     public static final String REJECTED = 'Rejected';
     public static final String REJECTED_CLOSED = 'Rejected Closed';
     public static final String ACCEPTED = 'Accepted';
+
+    /* AMSU-37 */
+    public static final String APP_DISAPPROVED = '12-APPLICATION DISAPPROVED';
+    public static final String APP_WITHDRAWN = '11-APPLICATION WITHDRAWN';
+
 
     static {
         refreshCache();
@@ -576,13 +579,19 @@ public without sharing class AMS_Utils {
 
         String sRes = '';
 
-        if (sChangeCode.equalsIgnoreCase('NEW')) {
+        if (sChangeCode.startsWithIgnoreCase('NEW')) {
             sRes = AACC_INPROGRESS;
-        } else if (sChangeCode.equalsIgnoreCase('FIN')) {
+        } else if (sChangeCode.startsWithIgnoreCase('FIN')) {
             sRes = AACC_FINALIZED;
         }
-        else if (sChangeCode.equalsIgnoreCase('DIS')) {
-            sRes = AACC_DISAPPROVED;
+        else if (sChangeCode.startsWithIgnoreCase('DIS')) {
+            sRes = (sChangeCode.indexOf('-CNS-')>0) ? 'denied' : AACC_DISAPPROVED;
+        }
+        else if (sChangeCode.startsWithIgnoreCase('REC')) {
+            sRes = (sChangeCode.indexOf('-CNS-')>0) ? 'under reconsideration' : AACC_RECONSIDERED;
+        }
+        else if (sChangeCode.startsWithIgnoreCase('NWD')) {
+            sRes = AACC_WITHDRAWAL;
         }
 
         return sRes;
@@ -1080,7 +1089,7 @@ public without sharing class AMS_Utils {
             return '7';
         else if (statusDesc == ACC_S8_CHANGESPROCESSED)
             return '8';
-        else if (statusDesc == ACC_S9_APPROVED)
+        else if (statusDesc == ACC_S9_APPROVED || statusDesc == 'Active')
             return '9';
 
         return null;
@@ -1125,6 +1134,17 @@ public without sharing class AMS_Utils {
         }
 
         return null;
+    }
+
+    public static String getCNSReadableStatus(String code) {
+
+        String status;
+        if (code == '0') status = 'Terminated';
+        else if (code == '2') status = 'Pending';
+        else if (code == '9') status = 'Active';
+        else status = getIATAReadableStatus(code);
+
+        return status;
     }
 
     //OSCAR UTILS
@@ -1302,8 +1322,6 @@ public without sharing class AMS_Utils {
                 FROM AMS_Pax_Accreditation_Form__c
                 WHERE Id IN :oscarOnlineAccredIds]);
 
-        List<Map<String, String>> configs = AMS_AgencyChangesConfigHelper.getAgencyChangesConfigData();
-
         List<Ams_ChangeCodesHelper.ObjectChangesStruct> changes = new List<Ams_ChangeCodesHelper.ObjectChangesStruct>();
 
         for (AMS_OSCAR__c oscar : oscars) {
@@ -1439,18 +1457,18 @@ public without sharing class AMS_Utils {
     }
 
     //Map data from staging area (AMS Online Accreditation) to account
-    public static Map<ID,AMS_ChangeCodesHelper.ObjectChangesStruct> copyDataToAccountForAgencyChanges(AMS_OSCAR__c oscar, Set<Id> accountsAffected, String typesOfChange, Map<Id, Account> accounts, AMS_Pax_Accreditation_Form__c oscarOnlineAccreditation) {
+    public static Map<ID,AMS_ChangeCodesHelper.ObjectChangesStruct> copyDataToAccountForAgencyChanges(AMS_OSCAR__c oscar, List<Account> accounts, String typesOfChange, AMS_Pax_Accreditation_Form__c oscarOnlineAccreditation) {
 
         System.debug('AGENCY CHANGES: Types of Change (' + typesOfChange + ') ');
 
         Set<String> fieldsToMigrate = AMS_AgencyChangesConfigHelper.getFieldsToMigrate(typesOfChange);
 
-        System.debug('AGENCY CHANGES: fields to migrate (' + fieldsToMigrate + ') for accounts: ' + accountsAffected);
+        System.debug('AGENCY CHANGES: fields to migrate (' + fieldsToMigrate + ') for accounts: ' + (new Map<Id, Account>(accounts).keySet()));
 
         Map<ID,AMS_ChangeCodesHelper.ObjectChangesStruct> accountsToUpdate = new  Map<ID,AMS_ChangeCodesHelper.ObjectChangesStruct>();
-
+        
         Map<String, Schema.SObjectField>  acctFieldsMap= Schema.SObjectType.Account.fields.getMap();
-
+        
         //DT: Reindented and added 3 fields for addresses
         // Account Fields => AMS Pax Accreditation Fields (Staging area)
         Map<String, String> fieldsMapping = new Map<String, String> {'Name' => 'Account_Name__c'
@@ -1495,88 +1513,83 @@ public without sharing class AMS_Utils {
             fieldsMapping.put('ShippingState', 'Shipping_State__c');
         }
         /*** AMSU-121 End ***/
+        
+        if (fieldsToMigrate != null && oscarOnlineAccreditation != null) {
+            Map<String, Object> accountFieldNewValue = new Map<String,Object>();
 
-		if (fieldsToMigrate != null && oscarOnlineAccreditation != null) {
-                Map<String, Object> accountFieldNewValue = new Map<String,Object>();
+            for (String key : fieldsMapping.keySet()) {
+                String value = fieldsMapping.get(key);
+                if (fieldsToMigrate.contains(value)) {
+                
+                    accountFieldNewValue.put(key, oscarOnlineAccreditation.get(value));
+                    System.debug(key + ':' + oscarOnlineAccreditation.get(value));
+                }
+            }
 
-                for (String key : fieldsMapping.keySet()) {
-                    String value = fieldsMapping.get(key);
-                    if (fieldsToMigrate.contains(value)) {
+            //fields that require transformation
+            if (fieldsToMigrate.contains('ISSP_AMS_Premises_located_at_airport__c'))
+                accountFieldNewValue.put('In_a_Airport__c', (oscarOnlineAccreditation.ISSP_AMS_Premises_located_at_airport__c == 'Yes') ? true : false);
+            if (fieldsToMigrate.contains('ISSP_AMS_Legal_Status__c'))
+                accountFieldNewValue.put('Company_Type__c', transformCompanyType(oscarOnlineAccreditation.ISSP_AMS_Legal_Status__c));
+            if (fieldsToMigrate.contains('ISSP_AMS_GDS_with_signed_contract__c'))
+                accountFieldNewValue.put('GDS__c', transformGDS(oscarOnlineAccreditation.ISSP_AMS_GDS_with_signed_contract__c));
+            if (fieldsToMigrate.contains('Branch_Office_Country__c'))
+                accountFieldNewValue.put('BillingCountry', oscarOnlineAccreditation.Branch_Office_Country__r.Name);
+            if (fieldsToMigrate.contains('Shipping_ISO_Country__c'))
+                accountFieldNewValue.put('ShippingCountry', oscarOnlineAccreditation.Shipping_ISO_Country__r.Name);
+            //if (fieldsToMigrate.contains('Shipping_ISO_State__c'))/*** AMSU-121 ***/
+            //    accountFieldNewValue.put('ShippingState', oscarOnlineAccreditation.IATA_ISO_State__r.Valid_for_Address__c == true ? oscarOnlineAccreditation.Shipping_ISO_State__r.Name : null);
+            if (fieldsToMigrate.contains('IATA_ISO_State__c'))
+                accountFieldNewValue.put('BillingState', oscarOnlineAccreditation.IATA_ISO_State__r.Valid_for_Address__c == true ? oscarOnlineAccreditation.IATA_ISO_State__r.Name : null);
+            //if (fieldsToMigrate.contains('ISSP_AMS_Total_Ownership__c'))
+                //AMS_AccountRoleCreator.runRoleCreatorForOnlineAccreditations(new List<AMS_Pax_Accreditation_Form__c>{onlineAcc}, accountsAffected);
 
-                        accountFieldNewValue.put(key, oscarOnlineAccreditation.get(value));
-                        System.debug(key + ':' + oscarOnlineAccreditation.get(value));
+            for(Account acc : accounts){
+
+                Account newAcc = new Account(Id = acc.Id);
+                List<AMS_ChangeCodesHelper.ObjectChange> objectChangesList = new List <AMS_ChangeCodesHelper.ObjectChange>();
+
+                for(String accFieldApiName: accountFieldNewValue.keySet())
+                {
+                    
+                    Schema.SObjectField field = acctFieldsMap.get(accFieldApiName);
+                    Schema.DisplayType fldType = field.getDescribe().getType();
+                    
+                    system.debug('DDD Field value to migrate to account: ' + accFieldApiName);
+                    system.debug('DDD Field Type to migrate to account: ' + fldType);
+
+                    //Add Account Changes to be used when generating the Change Codes History Entities
+                    
+                    String newValue,oldValue,oldValueLookupID,newValueLookupID;
+                    if (String.valueOf(fldType) == 'REFERENCE'){
+
+                        oldValue = String.valueOf(processParentDependecies(accFieldApiName.replace('__c','__r.Name'),acc));
+                        newValue = String.valueOf(processParentDependecies(fieldsMapping.get(accFieldApiName).replace('__c','__r.Name'),oscarOnlineAccreditation)); 
+                        oldValueLookupID = String.valueOf(acc.get(accFieldApiName));
+                        newValueLookupID = String.valueOf(accountFieldNewValue.get(accFieldApiName));
+                        
                     }
+                    else{
+                   
+                        oldValue = String.valueOf(acc.get(accFieldApiName));
+                        newValue = String.valueOf(accountFieldNewValue.get(accFieldApiName));
+                   }
+                    
+                    system.debug('DDD oldValue:' + oldValue);
+                    system.debug('DDD newValue:' + newValue);
+                    
+                    if (oldValue != newValue)
+                        objectChangesList.add(new AMS_ChangeCodesHelper.ObjectChange('Account',accFieldApiName,oldValue,newValue,oldValueLookupID,newValueLookupID));
+                        
+
+                    newAcc.put(accFieldApiName, accountFieldNewValue.get(accFieldApiName));
                 }
 
-                //fields that require transformation
-                if (fieldsToMigrate.contains('ISSP_AMS_Premises_located_at_airport__c'))
-                    accountFieldNewValue.put('In_a_Airport__c', (oscarOnlineAccreditation.ISSP_AMS_Premises_located_at_airport__c == 'Yes') ? true : false);
-                if (fieldsToMigrate.contains('ISSP_AMS_Legal_Status__c'))
-                    accountFieldNewValue.put('Company_Type__c', transformCompanyType(oscarOnlineAccreditation.ISSP_AMS_Legal_Status__c));
-                if (fieldsToMigrate.contains('ISSP_AMS_GDS_with_signed_contract__c'))
-                    accountFieldNewValue.put('GDS__c', transformGDS(oscarOnlineAccreditation.ISSP_AMS_GDS_with_signed_contract__c));
-                if (fieldsToMigrate.contains('Branch_Office_Country__c'))
-                    accountFieldNewValue.put('BillingCountry', oscarOnlineAccreditation.Branch_Office_Country__r.Name);
-                if (fieldsToMigrate.contains('Shipping_ISO_Country__c'))
-                    accountFieldNewValue.put('ShippingCountry', oscarOnlineAccreditation.Shipping_ISO_Country__r.Name);
-                //if (fieldsToMigrate.contains('Shipping_ISO_State__c'))/*** AMSU-121 ***/
-                //    accountFieldNewValue.put('ShippingState', oscarOnlineAccreditation.IATA_ISO_State__r.Valid_for_Address__c == true ? oscarOnlineAccreditation.Shipping_ISO_State__r.Name : null);
-                if (fieldsToMigrate.contains('IATA_ISO_State__c'))
-                    accountFieldNewValue.put('BillingState', oscarOnlineAccreditation.IATA_ISO_State__r.Valid_for_Address__c == true ? oscarOnlineAccreditation.IATA_ISO_State__r.Name : null);
-                //if (fieldsToMigrate.contains('ISSP_AMS_Total_Ownership__c'))
-                    //AMS_AccountRoleCreator.runRoleCreatorForOnlineAccreditations(new List<AMS_Pax_Accreditation_Form__c>{onlineAcc}, accountsAffected);
-
-                for(Id accId: accountsAffected){
-
-                    List<AMS_ChangeCodesHelper.ObjectChange> objectChangesList = new List <AMS_ChangeCodesHelper.ObjectChange>();
-
-                    Account acc = accounts.get(accId);
-
-                    for(String accFieldApiName: accountFieldNewValue.keySet())
-                    {
-
-                        Schema.SObjectField field = acctFieldsMap.get(accFieldApiName);
-                        Schema.DisplayType fldType = field.getDescribe().getType();
-
-                        system.debug('DDD Field value to migrate to account: ' + accFieldApiName);
-                        system.debug('DDD Field Type to migrate to account: ' + fldType);
-
-                        //Add Account Changes to be used when generating the Change Codes History Entities
-
-                        String newValue,oldValue,oldValueLookupID,newValueLookupID;
-                        if (String.valueOf(fldType) == 'REFERENCE'){
-
-                            oldValue = String.valueOf(processParentDependecies(accFieldApiName.replace('__c','__r.Name'),acc));
-                            newValue = String.valueOf(processParentDependecies(fieldsMapping.get(accFieldApiName).replace('__c','__r.Name'),oscarOnlineAccreditation));
-                            oldValueLookupID = String.valueOf(acc.get(accFieldApiName));
-                            newValueLookupID = String.valueOf(accountFieldNewValue.get(accFieldApiName));
-
-                        }
-                        else{
-
-                            oldValue = String.valueOf(acc.get(accFieldApiName));
-                            newValue = String.valueOf(accountFieldNewValue.get(accFieldApiName));
-                       }
-
-                        system.debug('DDD oldValue:' + oldValue);
-                        system.debug('DDD newValue:' + newValue);
-
-                        if (oldValue != newValue)
-                            objectChangesList.add(new AMS_ChangeCodesHelper.ObjectChange('Account',accFieldApiName,oldValue,newValue,oldValueLookupID,newValueLookupID));
-
-
-                        acc.put(accFieldApiName, accountFieldNewValue.get(accFieldApiName));
-                    }
-
-                    AMS_ChangeCodesHelper.ObjectChangesStruct acctChangesStruct = new AMS_ChangeCodesHelper.ObjectChangesStruct(objectChangesList);
-
-                    accountsToUpdate.put(acc.Id,acctChangesStruct);
-                }
-
+                accountsToUpdate.put(acc.Id,new AMS_ChangeCodesHelper.ObjectChangesStruct(objectChangesList, newAcc));
+            }
         }
 
     return accountsToUpdate;
-
 }
     
     //FM AMSU-1
@@ -2180,44 +2193,60 @@ public class Container {
     }
 }
 
-//Agency Changes Config structure
-public class AgChangesConfig {
-
-    public String typesOfChange;
-    public Map<String, String> config;
-
-    public AgChangesConfig(String typesOfChange, Map<String, String> config) {
-        this.typesOfChange = typesOfChange;
-        this.config = config;
-    }
-}
-
 public static boolean isAMSProfile(Id profileId) {
     return AMSPROFILES.contains(profileId);
 }
 
-//Get Change Code memo Text (All this configs should be passed for a Custom Setting)
+//TD 20180607: "old" method signature to avoid issues with classes
 public static String getChangeCodeMemoText(String process,String changeCodeId) {
+	return (getChangeCodeMemoText(process, changeCodeId, null));
+}
 
-    String memoText = 'New application';
+//Get Change Code memo Text (All this configs should be passed for a Custom Setting)
+//TD 2018067 - added custom setting field in input
+public static String getChangeCodeMemoText(String process,String changeCodeId, AMS_ChangeCodes__c CCConfig) {
+	if(changeCodeId.indexOf('-CNS-')>-1){
+		//CNS PROCESS. GET BULLETIN MEMO TEXT FROM CHANGE CODE CONFIGURATION
+		if(CCConfig==null)	CCConfig = AMS_ChangeCodes__c.getInstance(changeCodeId);
+		
+		if(CCConfig!=null){
+			string sMemoText = (string.isBlank(CCConfig.Bulletin_Memo_Text__c)?'':CCConfig.Bulletin_Memo_Text__c) 
+								+ (string.isBlank(CCConfig.Bulletin_Memo_Text2__c)?'':CCConfig.Bulletin_Memo_Text2__c) 
+								+ (string.isBlank(CCConfig.Bulletin_Memo_Text3__c)?'':CCConfig.Bulletin_Memo_Text3__c);
+			if(string.isNotBlank(sMemoText))
+				return sMemoText = sMemoText.toUpperCase();
+		}
+		return '';
+	}else{
+		//UNTOUCHED FOR NON CNS PROCESSES
+		String memoText = 'New application';
 
-    if (process == AMS_Utils.new_HO || process == AMS_Utils.new_BR_ABROAD)
-
-        memoText = 'New application - Head Office';
-    else if (process == AMS_Utils.new_BR)
-        memoText = 'New application - Branch';
-    else if (process == AMS_Utils.new_TIDS)
-        memoText = 'New application - TIDS';
-    else if (process == AMS_Utils.new_SA)
-        memoText = 'New application - SA';
-    else if (process == AMS_Utils.new_GSSA)
-        memoText = 'New application - GSSA';
-    else if (process == AMS_Utils.new_GSA_BSP || process == AMS_Utils.new_GSA)
-        memoText = 'New application - GSA';
-    else if (process == AMS_Utils.new_AHA_BSP || process == AMS_Utils.new_AHA)
-        memoText = 'New application - AHA';
-
-    return memoText + ' ' + getStatusDescFromChangeCode(changeCodeId);
+		//Commented as CNS has been moved above
+	    //if(changeCodeId == 'FIN-CNS-C') memoText = 'New Endorsment';
+	    //if(changeCodeId.endsWithIgnoreCase('CNS-R')) return '';
+	
+	    if (process == new_HO || process == new_BR_ABROAD){
+	        if(changeCodeId != 'NWD') memoText += ' - Head Office';
+	    }else if (process == new_BR){
+	        memoText += ' - Branch';
+	    }else if (process == NEWHELITE || process == NEWHESTANDARD){
+	        if(changeCodeId != 'NEW' && changeCodeId != 'NWD') memoText += ' - Head Entity';
+	    }else if (process == NEWAE){
+	        if(changeCodeId != 'NEW' && changeCodeId != 'NWD') memoText += ' - Associate Entity';
+	    }else if (process == new_TIDS){
+	        memoText += ' - TIDS';
+	    }else if (process == new_SA){
+	        memoText += ' - SA';
+	    }else if (process == new_GSSA){
+	        memoText += ' - GSSA';
+	    }else if (process == new_GSA_BSP || process == new_GSA){
+	        memoText += ' - GSA';
+	    }else if (process == new_AHA_BSP || process == new_AHA){
+	        memoText += ' - AHA';
+	    }
+ 
+	    return memoText + ' ' + getStatusDescFromChangeCode(changeCodeId);
+	}
 }
 
 
@@ -2637,8 +2666,8 @@ public static String fetchTypeOfCustomer (String locationType , String category)
 
         return lRes;
     }
-
-	//AMSU-112
+	
+    //AMSU-112
     public static String replaceTabCharcter(String str) {
         return String.isBlank(str) ? str : str.replaceAll('\t', ' ');
     }

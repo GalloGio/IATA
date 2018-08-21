@@ -2607,6 +2607,11 @@
             <isRequired>false</isRequired>
         </displayedFields>
         <displayedFields>
+            <field>ACLI_SAP_Id__c</field>
+            <isFieldManaged>false</isFieldManaged>
+            <isRequired>false</isRequired>
+        </displayedFields>
+        <displayedFields>
             <field>ANG_HE_CashCondition__c</field>
             <isFieldManaged>false</isFieldManaged>
             <isRequired>false</isRequired>
@@ -3161,6 +3166,11 @@
                     <fullName>Rejected by IATA compliance team</fullName>
                     <default>false</default>
                     <label>Rejected by IATA compliance team</label>
+                </value>
+                <value>
+                    <fullName>Declined by Agent</fullName>
+                    <default>false</default>
+                    <label>Declined by Agent</label>
                 </value>
             </valueSetDefinition>
         </valueSet>
@@ -12378,6 +12388,7 @@ J-Joint Vent</inlineHelpText>
     </fields>
     <fields>
         <fullName>Payment_Term__c</fullName>
+        <defaultValue>&quot;Z001&quot;</defaultValue>
         <description>IEC - SAP payment term code to use when creates contracts</description>
         <externalId>false</externalId>
         <label>Payment Terms</label>
@@ -34364,6 +34375,10 @@ This field is kept up-to-date with the feedback of ITDI at least twice a year du
             </values>
             <values>
                 <fullName>Closed %E2%80%93 3-month freeze period</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Declined by Agent</fullName>
                 <default>false</default>
             </values>
             <values>

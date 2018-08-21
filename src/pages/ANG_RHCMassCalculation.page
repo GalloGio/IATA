@@ -1,0 +1,148 @@
+<apex:page controller="ANG_RHCMassCalculation" tabStyle="ANG_RHC_Information__c" docType="html-5.0" title="RHC Mass Recalculation">
+
+	<script>
+		function toggleAll(source) {
+			var checkboxes = document.querySelectorAll('input.itemCheck');
+			for(var i = 0; i < checkboxes.length; i++) checkboxes[i].checked = source.checked;
+		}
+	</script>
+
+	<apex:sectionHeader title="RHC Mass Recalculation"/>
+
+	<apex:form >
+		<apex:outputPanel id="tables">            
+			<apex:pageBlock title="Search">
+				<apex:pageBlockButtons location="bottom">
+					<apex:commandButton action="{!search}" reRender="tables" value="Search" disabled="{!running}"/>
+				</apex:pageBlockButtons>
+
+				<apex:pageBlockSection collapsible="false" columns="2">
+					
+					<apex:pageBlockSectionItem >
+						<apex:outputLabel >Region</apex:outputLabel>
+						<apex:selectList value="{!userRegion}" size="1" multiselect="false" disabled="{!OR(running, $Profile.Name != 'System Administrator')}">
+							<apex:selectOptions value="{!regions}"/>
+						</apex:selectList> 
+					</apex:pageBlockSectionItem>
+
+					<apex:pageBlockSectionItem >
+						<apex:outputLabel >Agents with IFAP closed whitin X days</apex:outputLabel>
+						<apex:input type="number" value="{!days}" html-min="0" html-step="1" disabled="{!running}"/>
+					</apex:pageBlockSectionItem>
+				</apex:pageBlockSection>
+			</apex:pageBlock>
+		
+			<!-- Show notice if related list has no records -->
+			<apex:pageBlock title="Results" rendered="{!searched}">
+				<apex:outputPanel layout="block" styleClass="noRecordsFound" rendered="{!agents.size == 0}">
+					No records to display
+				</apex:outputPanel>
+				<apex:pageBlockTable value="{!agents}" var="a" rendered="{!agents.size > 0}">
+
+					<apex:column >
+						<apex:facet name="header">
+							<apex:outputPanel >
+								<apex:inputCheckbox value="{!selectAll}" disabled="{!running}" styleClass="commandCheck" onclick="toggleAll(this);"/>
+								&nbsp;Action
+							</apex:outputPanel>
+						</apex:facet>
+
+						<apex:inputCheckbox value="{!a.selected}" disabled="{!running}" styleClass="itemCheck"/>
+					</apex:column>
+
+					<apex:column value="{!a.rhcInfo.ANG_AccountId__c}"/>
+					<apex:column value="{!a.rhcInfo.ANG_AccountId__r.IATACode__c}"/>
+					<apex:column value="{!a.rhcInfo.ANG_AccountId__r.IATA_ISO_Country__c}"/>
+					<apex:column headerValue="Current RHC Amount">
+						<apex:outputText value="{!a.rhcInfo.CurrencyIsoCode} {0, number, ###,###,###,##0.00}">
+							<apex:param value="{!a.currentAmount}"/>
+						</apex:outputText>
+					</apex:column>
+					<apex:column value="{!a.rhcInfo.ANG_RHC_Amount_Provisional__c}" rendered="{!a.hasResult}"/>
+					<apex:column value="{!a.rhcInfo.ANG_RHC_Amount_Forecasted__c}" rendered="{!a.hasResult}"/>
+					<apex:column value="{!a.rhcInfo.ANG_RHC_Amount__c}" rendered="{!a.hasResult}"/>
+
+				</apex:pageBlockTable>
+
+
+				<!-- Add pagination toolbar to bottom of table if pageSize is defined -->
+				<apex:outputPanel layout="block" styleClass="paginatorWrap" rendered="{!AND(agents.size > 0, NOT(running))}">
+					<div class="paginator">
+						<span class="prevNextLinks">
+							<!-- First Button -->
+							<span class="prevNext">
+								<!-- Show first button if page set has previous page-->
+								<apex:commandLink value="" action="{!first}" rendered="{!paginator.hasPrevious}" rerender="tables" title="First">
+									<img class="first" src="/s.gif" alt="" />
+								</apex:commandLink>
+
+								<!-- Show disabled first button page set is on page 1-->
+								<apex:outputPanel rendered="{!NOT(paginator.hasPrevious)}">
+									<img class="firstoff" src="/s.gif" alt="" />
+								</apex:outputPanel>
+							</span>
+
+							<!-- Previous Button -->
+							<span class="prevNext">
+								<!-- Show previous button page set has previous page-->
+								<apex:commandLink value="" action="{!previous}" rendered="{!paginator.hasPrevious}" rerender="tables">
+									<img class="prev" src="/s.gif" alt="" />Previous
+								</apex:commandLink>
+
+								<!-- Show disabled first button page set is on page 1-->
+								<apex:outputPanel rendered="{!NOT(paginator.hasPrevious)}">
+									<img class="prevoff" src="/s.gif" alt="" />Previous
+								</apex:outputPanel>
+							</span>
+
+							<!-- Next Button -->
+							<span class="prevNext">
+								<!-- Show next button if page set has next -->
+								<apex:commandLink value="" action="{!next}" rendered="{!paginator.hasNext}" rerender="tables">
+									Next<img class="next" alt="Next" title="Next" src="/s.gif" />
+								</apex:commandLink>
+
+								<!-- Show disabled next button if page set has no next -->
+								<apex:outputPanel rendered="{!NOT(paginator.hasNext)}">
+									Next<img class="nextOff" alt="Next" title="Next" src="/s.gif" />
+								</apex:outputPanel>
+							</span>
+
+							<!-- Last Button -->
+							<span class="prevNext">
+								<!-- Show last button if page set has next -->
+								<apex:commandLink value="" action="{!last}" rendered="{!paginator.hasNext}" rerender="tables" title="Last">
+									<img class="last" src="/s.gif" alt="" />
+								</apex:commandLink>
+
+								<!-- Show disabled last button if page set has no next -->
+								<apex:outputPanel rendered="{!NOT(paginator.hasNext)}">
+									<img class="lastoff" src="/s.gif" alt="" />
+								</apex:outputPanel>
+							</span>
+						</span>
+						<span class="right">
+							<!-- allow user to input page number of page set for direct navigation -->
+							Page&nbsp;
+							<apex:inputText value="{!pageNumber}" styleClass="pageInput">
+								<apex:actionSupport event="onchange" rerender="tables"/>
+							</apex:inputText>of {!totalPages}
+						</span>
+					</div>
+				</apex:outputPanel>
+
+				<apex:pageBlockButtons id="spinner">
+					
+					<apex:commandButton value="Submit" action="{!calculate}" reRender="tables" disabled="{!running}"/>
+					<apex:image  alt="running" value="/img/loading.gif" rendered="{!running}"/>
+					<!-- <apex:commandButton value="Check" action="{!fetchResults}" reRender="tables" rendered="{!running}"/> -->
+				</apex:pageBlockButtons>
+			</apex:pageBlock>
+
+			<apex:pageMessages />
+			<apex:actionRegion renderRegionOnly="false">
+				<apex:actionPoller action="{!fetchResults}" interval="5" enabled="{!running}" reRender="tables, spinner"/>
+			</apex:actionRegion>
+		</apex:outputPanel>
+	</apex:form>
+</apex:page>

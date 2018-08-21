@@ -187,7 +187,7 @@ public class CountryProfileTriggerHandler{
         if (!setRelatedContactIds.isEmpty()) {
             // Get the actual user IDs
             list<Id> lstRelatedUserIds = new list<Id>();
-            for (User usr : [SELECT Id, ContactId FROM User WHERE ContactId <> null AND ContactId IN :setRelatedContactIds]) {
+            for (User usr : [SELECT Id, ContactId FROM User WHERE IsActive = True AND ContactId <> null AND ContactId IN :setRelatedContactIds]) {
                 lstRelatedUserIds.add(usr.Id);
             }
 

@@ -190,16 +190,19 @@ global class ANG_RME_Alert_Service {
 				log.Error_Code__c = 'Iata Code Mismatch';
 				result.isSuccess = false;
 				ServiceNow_Helper.sendRequestToSNOW('Mulesoft', 'INT_068', 'requestBalanceUpdate', 'featurespace-system-service', 'RME', accountId + ' ' + log.Error_Code__c, String.valueOf(result), 'Connectivity', 'Salesforce.com', 'Salesforce.com', 'Infrastructure Services', 'Mulesoft Support', '2', '2', '2', 'Failure');
+				result.description = 'Error: '+log.Error_Code__c+'\nAn incident has been raised on Service Now.';
 			}
 			else if (result.res.storedBaseCurrency != acc.RHC_Informations__r[0].CurrencyIsoCode){
 				result.isSuccess = false;
 				log.Error_Code__c = 'Currency Mismatch';
 				ServiceNow_Helper.sendRequestToSNOW('Mulesoft', 'INT_068', 'requestBalanceUpdate', 'featurespace-system-service', 'RME', accountId + ' ' + log.Error_Code__c,  String.valueOf(result), 'Connectivity', 'Salesforce.com', 'Salesforce.com', 'Infrastructure Services', 'Mulesoft Support', '2', '2', '2', 'Failure');
+				result.description = 'Error: '+log.Error_Code__c+'\nAn incident has been raised on Service Now.';
 			}
 			else if (result.res.storedRHCValue != acc.RHC_Informations__r[0].ANG_RHC_Amount__c){
 				result.isSuccess = false;
 				log.Error_Code__c = 'RHC Value Mismatch';
 				ServiceNow_Helper.sendRequestToSNOW('Mulesoft', 'INT_068', 'requestBalanceUpdate', 'featurespace-system-service', 'RME', accountId + ' ' + log.Error_Code__c,  String.valueOf(result), 'Connectivity', 'Salesforce.com', 'Salesforce.com', 'Infrastructure Services', 'Mulesoft Support', '2', '2', '2', 'Failure');
+				result.description = 'Error: '+log.Error_Code__c+'\nAn incident has been raised on Service Now.';
 			}
 			else
 				updateRHC(result.res, acc.RHC_Informations__r[0]);
@@ -296,16 +299,17 @@ global class ANG_RME_Alert_Service {
 				log.Error_Code__c = String.valueOf(res.getStatusCode());
 				log.Error_Message__c = res.getBody();
 				if(res.getStatusCode() >= 400) ServiceNow_Helper.sendRequestToSNOW('Mulesoft', (params.name == 'BTN_Bal' ?  'INT_068': 'INT_033'), (params.name == 'BTN_Bal' ?  'INT_068': 'INT_033'), 'featurespace-system-service', 'RME', String.valueOf(result),  String.valueOf(result), 'Connectivity', 'Salesforce.com', 'Salesforce.com', 'Infrastructure Services', 'Mulesoft Support', '2', '2', '2', 'Failure');
+				result.description = 'An unexpected error ocurred while contacting the external system. An incident has been raised on Service Now.';
 			}
 		} catch(Exception e) {
 			result.isSuccess = false;
 
 			log.Error_Code__c = 'Unexpected Exception on Apex Class';
 			log.Error_Message__c = e.getMessage();
+			result.description = 'An unexpected error ocurred while contacting the external system. Please, try again later or contact your system admin';
 		}
 
 		log.Success__c = result.isSuccess;
-		if(!result.isSuccess) result.description = 'An unexpected error ocurred while contacting the external system. Please, try again later or contact your system admin';
 		
 		insert log;
 

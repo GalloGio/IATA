@@ -424,7 +424,7 @@ Values must be Separated by &quot;;&quot;</inlineHelpText>
     </fields>
     <fields>
         <fullName>Used_By_CNS__c</fullName>
-        <defaultValue>true</defaultValue>
+        <defaultValue>false</defaultValue>
         <description>If false, means the change code is not generated for CNS agencies</description>
         <externalId>false</externalId>
         <inlineHelpText>If false, means the change code is not generated for CNS agencies</inlineHelpText>
@@ -522,9 +522,9 @@ Values must be Separated by &quot;;&quot;</inlineHelpText>
         <columns>CREATED_DATE</columns>
         <filterScope>Everything</filterScope>
         <filters>
-            <field>Reason_Code__c</field>
+            <field>Change_Code__c</field>
             <operation>equals</operation>
-            <value>CURRENT</value>
+            <value>RWD</value>
         </filters>
         <label>AMS_debug</label>
         <language>en_US</language>
