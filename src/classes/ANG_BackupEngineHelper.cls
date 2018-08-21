@@ -52,7 +52,7 @@ global without sharing class ANG_BackupEngineHelper implements Queueable{
 		'Ownership' => new List<String>{'AMS_Account_Role__c','Contact','ANG_RHC_Information__c'},
 		'Location type' => new List<String>{'ANG_RHC_Information__c','Financial_Security__c','ANG_Agency_Risk_Event__c','AMS_Agencies_Hierarchy__c','AMS_Agencies_relationhip__c'},
 		'Location' => new List<String>{'ANG_RHC_Information__c'},
-		'Hierarchy' => new List<String>{'ANG_RHC_Information__c','AMS_Agencies_Hierarchy__c','AMS_Agencies_relationhip__c'},
+		'Hierarchy' => new List<String>{'Agency_Authorization__c','ANG_RHC_Information__c','AMS_Agencies_Hierarchy__c','AMS_Agencies_relationhip__c','Contact','Financial_Security__c'},
 		'VMFR' => new List<String>{'ANG_RHC_Information__c'},
 		'Accreditation type' => new List<String>{'Agency_Authorization__c', 'Portal_Application_Right__c', 'ANG_RHC_Information__c'},
 		'Location type to different legal entity' => new List<String>{'ANG_RHC_Information__c','Financial_Security__c','ANG_Agency_Risk_Event__c','AMS_Agencies_Hierarchy__c','AMS_Agencies_relationhip__c','Agency_Authorization__c'},
@@ -158,6 +158,7 @@ global without sharing class ANG_BackupEngineHelper implements Queueable{
 		accountFields.add('Top_Parent__c');
 		accountFields.add('Financial_Review_Result__c');
 		accountFields.add('Assessment_Performed_Date__c');
+		accountFields.add('ANG_Accreditation_Model__c');
 		
 		Set<String> entitiesToRollback = new Set<String>();
 
