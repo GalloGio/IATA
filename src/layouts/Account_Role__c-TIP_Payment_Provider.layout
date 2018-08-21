@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Layout xmlns="http://soap.sforce.com/2006/04/metadata">
+    <customButtons>Terminate_Provider_Account</customButtons>
     <excludeButtons>ChangeOwnerOne</excludeButtons>
     <excludeButtons>ChangeRecordType</excludeButtons>
     <excludeButtons>Clone</excludeButtons>
@@ -107,6 +108,13 @@
         <fields>Contact.ISSP_Contact_Name__c</fields>
         <fields>is_primary__c</fields>
         <relatedList>Account_Contact_Role__c.Account_Role__c</relatedList>
+    </relatedLists>
+    <relatedLists>
+        <fields>NAME</fields>
+        <fields>PP_Effective_from_Date__c</fields>
+        <fields>PP_Effective_to_Date__c</fields>
+        <fields>PP_Status__c</fields>
+        <relatedList>Partner_products__c.Payment_Provider_Account_Role__c</relatedList>
     </relatedLists>
     <showEmailCheckbox>false</showEmailCheckbox>
     <showHighlightsPanel>false</showHighlightsPanel>
