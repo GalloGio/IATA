@@ -53,9 +53,9 @@ global class ANG_AnualRevalCaseCreationBatch implements Database.Batchable<sObje
 			String queryContacts;
 
 			if(acct.ParentId == null)
-	            queryContacts = 'SELECT ' +String.join(fieldListContact, ', ') + ' FROM Contact where Status__c = \'Active\' and accountId = \''+acct.Id+'\' AND (Email != null OR Email != \'\')';
+	            queryContacts = 'SELECT ' +String.join(fieldListContact, ', ') + ' FROM Contact where Status__c = \'Active\' and accountId = \''+acct.Id+'\' AND (Email != null AND Email != \'\')';
 			else
-				queryContacts = 'SELECT ' +String.join(fieldListContact, ', ') + ' FROM Contact where Status__c = \'Active\' and accountId in (\''+acct.Id+'\',\''+acct.ParentId+'\') AND (Email != null OR Email != \'\')';
+				queryContacts = 'SELECT ' +String.join(fieldListContact, ', ') + ' FROM Contact where Status__c = \'Active\' and accountId in (\''+acct.Id+'\',\''+acct.ParentId+'\') AND (Email != null AND Email != \'\')';
 
         	System.debug('Query is:'+queryContacts);
         
