@@ -151,12 +151,13 @@ private class IEC_ConfirmOrderControllerTest
 		for(Integer x = 0; x < products.size(); x++)
 		{
 			Product2 prod = products[x]; 
-			zqu__ProductRatePlan__c unitPricePlan = TestDataGenerator.generateZRatePlans(prod.Id,1,false)[0];
-			zqu__ProductRatePlan__c zPlan = TestDataGenerator.generateZRatePlans(prod.Id,1,false)[0];
+			zqu__ProductRatePlan__c unitPricePlan = TestDataGenerator.generateZRatePlans2(prod.Id,1,false)[0];
+			zqu__ProductRatePlan__c zPlan = TestDataGenerator.generateZRatePlans2(prod.Id,1,false)[0];
 			zPlan.Couponcode__c = 'COUP123';
 			zRatePlans.add(zPlan); 
 			zRatePlans.add(unitPricePlan);
 		}
+
 		insert zRatePlans;
 		List<zqu__ProductRatePlanCharge__c> zCharges = new List<zqu__ProductRatePlanCharge__c>();
 		 //Create Unit Price Charge & Discount for each Plan 
@@ -263,8 +264,8 @@ private class IEC_ConfirmOrderControllerTest
 		for(Integer x = 0; x < products.size(); x++)
 		{
 			Product2 prod = products[x]; 
-			zqu__ProductRatePlan__c unitPricePlan = TestDataGenerator.generateZRatePlans(prod.Id,1,false)[0];
-			zqu__ProductRatePlan__c zPlan = TestDataGenerator.generateZRatePlans(prod.Id,1,false)[0];
+			zqu__ProductRatePlan__c unitPricePlan = TestDataGenerator.generateZRatePlans2(prod.Id,1,false)[0];
+			zqu__ProductRatePlan__c zPlan = TestDataGenerator.generateZRatePlans2(prod.Id,1,false)[0];
 			zPlan.Couponcode__c = 'COUP123';
 			zRatePlans.add(zPlan); 
 			zRatePlans.add(unitPricePlan);
@@ -435,8 +436,8 @@ private class IEC_ConfirmOrderControllerTest
 		for(Integer x = 0; x < products.size(); x++)
 		{
 			Product2 prod = products[x]; 
-			zqu__ProductRatePlan__c unitPricePlan = TestDataGenerator.generateZRatePlans(prod.Id,1,false)[0];
-			zqu__ProductRatePlan__c zPlan = TestDataGenerator.generateZRatePlans(prod.Id,1,false)[0];
+			zqu__ProductRatePlan__c unitPricePlan = TestDataGenerator.generateZRatePlans2(prod.Id,1,false)[0];
+			zqu__ProductRatePlan__c zPlan = TestDataGenerator.generateZRatePlans2(prod.Id,1,false)[0];
 			zPlan.Couponcode__c = 'COUP123';
 			zRatePlans.add(zPlan); 
 			zRatePlans.add(unitPricePlan);
@@ -542,8 +543,8 @@ private class IEC_ConfirmOrderControllerTest
 		for(Integer x = 0; x < products.size(); x++)
 		{
 			Product2 prod = products[x]; 
-			zqu__ProductRatePlan__c unitPricePlan = TestDataGenerator.generateZRatePlans(prod.Id,1,false)[0];
-			zqu__ProductRatePlan__c zPlan = TestDataGenerator.generateZRatePlans(prod.Id,1,false)[0];
+			zqu__ProductRatePlan__c unitPricePlan = TestDataGenerator.generateZRatePlans2(prod.Id,1,false)[0];
+			zqu__ProductRatePlan__c zPlan = TestDataGenerator.generateZRatePlans2(prod.Id,1,false)[0];
 			zPlan.Couponcode__c = 'COUP123';
 			zRatePlans.add(zPlan); 
 			zRatePlans.add(unitPricePlan);

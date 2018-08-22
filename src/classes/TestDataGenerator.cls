@@ -597,7 +597,6 @@ public with sharing class TestDataGenerator
             pricebookEntries.addAll(generatePricebookEntry(Test.getStandardPricebookId(),prod.Id,1,false));
         }
         insert pricebookEntries;
-        //insert pricebookEntries;
         
         for(Integer i = 0; i < nb; i++)
         {
@@ -770,7 +769,7 @@ public with sharing class TestDataGenerator
     {
         System.debug('generateDirectSaleProductsWithPrice STARTED =========');
         //-- Generate nb Products With Associated ZProducts 
-        List<Product2> products = TestDataGenerator.generateProducts(nb,false);
+        List<Product2> products = TestDataGenerator.generateProducts(nb, true);
 
         System.debug('Products generated::' + products);
 
@@ -788,8 +787,8 @@ public with sharing class TestDataGenerator
             products[x].Post_to_Ecommerce_Date__c = System.today().addDays(-7);
         }
         
-        //insert products;
-        upsert products SAP_Material_Number__c;
+        update products;
+        //upsert products SAP_Material_Number__c;
 
         System.debug('products generated::'+products);
 
@@ -839,7 +838,7 @@ public with sharing class TestDataGenerator
 
     public static List<Product2> generateProductsWithPrice(Integer nb)
     {
-       //-- Generate nb Products With Aasociated ZProducts 
+       //-- Generate nb Products
         List<Product2> products = TestDataGenerator.generateProducts(nb, true);
 
 
@@ -853,8 +852,8 @@ public with sharing class TestDataGenerator
         {
             Product2 prod = products[x]; 
             zRatePlans.addAll(TestDataGenerator.generateZRatePlans2(prod.Id,1,false)); //1 rate plan per product
-            prod.SAP_Status_Code__c = 'A';
-            prod.Post_to_Ecommerce_Date__c = System.today().addDays(-7);
+            //prod.SAP_Status_Code__c = 'A';
+            //prod.Post_to_Ecommerce_Date__c = System.today().addDays(-7);
         }
 
         insert zRatePlans;
@@ -931,6 +930,8 @@ public with sharing class TestDataGenerator
                 SAP_Status_Code__c              = 'A',
                 Is_Shippable__c                 = true,
                 Activity_Code__c                = activityCode,
+                SAP_Sales_Channel_Code__c       = '03',
+                SAP_Division_Code__c            = '01',
                 Post_to_Ecommerce_Date__c       = Date.today().addDays(-1),
                 Effective_From__c               = DEFAULT_EFFECTIVE_START_DATE,
                 Effective_To__c                 = DEFAULT_EFFECTIVE_END_DATE,
@@ -984,7 +985,9 @@ public with sharing class TestDataGenerator
                 SAP_Status_Code__c              = 'A',
                 Is_Shippable__c                 = true,
                 Activity_Code__c                = activityCode,
-                Post_to_Ecommerce_Date__c       = Date.today().addDays(-1),
+                SAP_Sales_Channel_Code__c       = '03',
+                SAP_Division_Code__c            = '01',
+                Post_to_Ecommerce_Date__c       = Date.today().addDays(-7),
                 Effective_From__c               = DEFAULT_EFFECTIVE_START_DATE,
                 Effective_To__c                 = DEFAULT_EFFECTIVE_END_DATE,
                 Zuora_Id__c                     = zId,

@@ -4058,6 +4058,77 @@ The product will only appear on the Online Store when the date entered in this f
         <unique>false</unique>
     </fields>
     <fields>
+        <fullName>ProductAudience__c</fullName>
+        <externalId>false</externalId>
+        <label>Product Audience</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <type>Picklist</type>
+        <valueSet>
+            <valueSetDefinition>
+                <sorted>false</sorted>
+                <value>
+                    <fullName>Member Airline</fullName>
+                    <default>false</default>
+                    <label>Member Airline</label>
+                </value>
+                <value>
+                    <fullName>Non-Member Single</fullName>
+                    <default>false</default>
+                    <label>Non-Member Single</label>
+                </value>
+                <value>
+                    <fullName>Non-Member GDS</fullName>
+                    <default>false</default>
+                    <label>Non-Member GDS</label>
+                </value>
+                <value>
+                    <fullName>Non-Member Processor</fullName>
+                    <default>false</default>
+                    <label>Non-Member Processor</label>
+                </value>
+                <value>
+                    <fullName>Non-Member Franchise</fullName>
+                    <default>false</default>
+                    <label>Non-Member Franchise</label>
+                </value>
+            </valueSetDefinition>
+        </valueSet>
+    </fields>
+    <fields>
+        <fullName>ProductCategory__c</fullName>
+        <externalId>false</externalId>
+        <label>Product Category</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <type>Picklist</type>
+        <valueSet>
+            <valueSetDefinition>
+                <sorted>false</sorted>
+                <value>
+                    <fullName>GSS</fullName>
+                    <default>false</default>
+                    <label>GSS</label>
+                </value>
+                <value>
+                    <fullName>MDP</fullName>
+                    <default>false</default>
+                    <label>MDP</label>
+                </value>
+                <value>
+                    <fullName>GAD</fullName>
+                    <default>false</default>
+                    <label>GAD</label>
+                </value>
+                <value>
+                    <fullName>CAC</fullName>
+                    <default>false</default>
+                    <label>CAC</label>
+                </value>
+            </valueSetDefinition>
+        </valueSet>
+    </fields>
+    <fields>
         <fullName>ProductCode</fullName>
         <trackHistory>false</trackHistory>
     </fields>
@@ -8629,6 +8700,48 @@ The product will only appear on the Online Store when the date entered in this f
             </values>
         </picklistValues>
         <picklistValues>
+            <picklist>ProductAudience__c</picklist>
+            <values>
+                <fullName>Member Airline</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Non-Member Franchise</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Non-Member GDS</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Non-Member Processor</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Non-Member Single</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>ProductCategory__c</picklist>
+            <values>
+                <fullName>CAC</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>GAD</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>GSS</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>MDP</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
             <picklist>Product_Manager__c</picklist>
             <values>
                 <fullName>Adelia Candido</fullName>
@@ -11595,6 +11708,48 @@ The product will only appear on the Online Store when the date entered in this f
             </values>
             <values>
                 <fullName>6</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>ProductAudience__c</picklist>
+            <values>
+                <fullName>Member Airline</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Non-Member Franchise</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Non-Member GDS</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Non-Member Processor</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Non-Member Single</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>ProductCategory__c</picklist>
+            <values>
+                <fullName>CAC</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>GAD</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>GSS</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>MDP</fullName>
                 <default>false</default>
             </values>
         </picklistValues>
@@ -14700,6 +14855,48 @@ The product will only appear on the Online Store when the date entered in this f
             </values>
         </picklistValues>
         <picklistValues>
+            <picklist>ProductAudience__c</picklist>
+            <values>
+                <fullName>Member Airline</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Non-Member Franchise</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Non-Member GDS</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Non-Member Processor</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Non-Member Single</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>ProductCategory__c</picklist>
+            <values>
+                <fullName>CAC</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>GAD</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>GSS</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>MDP</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
             <picklist>Product_Manager__c</picklist>
             <values>
                 <fullName>Adelia Candido</fullName>
@@ -17698,6 +17895,48 @@ The product will only appear on the Online Store when the date entered in this f
             </values>
             <values>
                 <fullName>6</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>ProductAudience__c</picklist>
+            <values>
+                <fullName>Member Airline</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Non-Member Franchise</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Non-Member GDS</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Non-Member Processor</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Non-Member Single</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>ProductCategory__c</picklist>
+            <values>
+                <fullName>CAC</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>GAD</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>GSS</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>MDP</fullName>
                 <default>false</default>
             </values>
         </picklistValues>

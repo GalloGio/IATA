@@ -400,8 +400,8 @@ public class Product_Sel extends Selector
         map<String,Product2> productCode_product = new map<String,Product2>();
         
         //get the list of Product by SAP material number
-        list<Product2> products = [SELECT id, SAP_Material_Number__c, IEC_Static_Cart_Quantity__c, ZProduct__c
-                                        , Charge_Shipping__c, Use_Contract_when_ordered__c
+        list<Product2> products = [SELECT id, SAP_Material_Number__c, IEC_Static_Cart_Quantity__c, 
+                                    Charge_Shipping__c, Use_Contract_when_ordered__c
                                     From Product2 
                                     where SAP_Material_Number__c in :productCode];
         
@@ -790,7 +790,9 @@ public class Product_Sel extends Selector
                     + '     , IEC_Product_Information__r.Related_Product_Category__r.Short_Description__c '
                     + '     , IEC_Product_Information__r.Related_Product_Category__r.Long_Description__c, imagefile__c '
                     + ' from Product2'
-                    + ' where SAP_Material_Number__c != null and Display_to_ECommerce__c = true ' + Utility.getSeqTextSetting('ECommerce Products Filter', '')
+                    + ' where SAP_Material_Number__c != null '
+                    + 'and Display_to_ECommerce__c = true ' 
+                    + Utility.getSeqTextSetting('ECommerce Products Filter', '')
                     + ((onlyParent) ? ' and IEC_Parent_Product__c = null' : '')
                     + ((listProductId == null || listProductId.size() == 0) ? '' : ' and Id in :listProductId');
                 
