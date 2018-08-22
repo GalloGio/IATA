@@ -82,7 +82,7 @@ private class ISSP_TIP_Home_Controller_Test{
         //insert contact
         Contact con = ISSP_ObjectFactory.createNewContact();
         con.AccountId= parent.Id;
-        con.Email = 'Test@test11.com';
+        con.Email = 'Test@test12.com';
         insert con;
 
         //create account contact role
