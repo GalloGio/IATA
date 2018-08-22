@@ -74,7 +74,6 @@ global without sharing class ANG_RollbackEngineHelper implements Queueable{
 
     private void rollbackData(){
 
-
         For(String entity: technicalLogsMap.keySet()){
 
             if(entity == 'Account')
@@ -91,11 +90,12 @@ global without sharing class ANG_RollbackEngineHelper implements Queueable{
                 processRollbackFSs(technicalLogsMap.get(entity));
             if(entity == 'ANG_Agency_Risk_Event__c')
                 processRollbackREs(technicalLogsMap.get(entity));
-            if(entity == 'AMS_Agencies_Hierarchy__c')
-                processRollbackHierarchy(technicalLogsMap.get('AMS_Agencies_Hierarchy__c'),technicalLogsMap.get('AMS_Agencies_relationhip__c'));
             if(entity == 'Portal_Application_Right__c')
                 processRollbackPortalAppRights(technicalLogsMap.get(entity));
         }
+
+        processRollbackHierarchy(technicalLogsMap.get('AMS_Agencies_Hierarchy__c'),technicalLogsMap.get('AMS_Agencies_relationhip__c'));
+
 
 
     }
@@ -293,6 +293,9 @@ global without sharing class ANG_RollbackEngineHelper implements Queueable{
         
         if(!hierarchiesToDeleteIds.isEmpty())
             delete [Select Id from AMS_Agencies_Hierarchy__c where Id in :hierarchiesToDeleteIds];
+
+        if(hierarchyList == null && relationshipList == null)
+            return;
 
         List<AMS_Agencies_relationhip__c> relationsToRollback = new List<AMS_Agencies_relationhip__c>();
         List<AMS_Agencies_Hierarchy__c> hierarchiesToRollback = new List<AMS_Agencies_Hierarchy__c>();
