@@ -24,13 +24,13 @@ public without sharing class ServiceNow_Helper {
             theBody.u_business_service = u_business_service;
             theBody.assignment_group = assignment_group;
 
-        if(trigger.isExecuting) sendRequestToSNOW_Future(JSON.serialize(theBody));
-        else if(system.isFuture()) sendRequestToSNOW_Immediate(JSON.serialize(theBody));
+        if(trigger.isExecuting && !(system.isFuture() || system.isBatch())) sendRequestToSNOW_Future(JSON.serialize(theBody));
+        else if(system.isFuture() || system.isBatch()) sendRequestToSNOW_Immediate(JSON.serialize(theBody));
         else sendRequestToSNOW_Future(JSON.serialize(theBody));
     }
     
     
-    @future
+    @future(callout=true)
     private static void sendRequestToSNOW_Future(string theBody){   sendRequest(theBody); }
     
     
