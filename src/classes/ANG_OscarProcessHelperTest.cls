@@ -642,7 +642,7 @@ private class ANG_OscarProcessHelperTest {
 						Website from account limit 1]; 
 	*/
         
-		List<Contact> conts = [select Id, Name, Email, Preferred_Language__c, BSP_CASS_Payment_contact__c, Financial_Assessment_Contact__c, User_Portal_Status__c from contact where accountid =:a.id];
+		List<Contact> conts = [select Id, Name, Email, Preferred_Language__c, BSP_CASS_Payment_contact__c, Financial_Assessment_Contact__c, User_Portal_Status__c, AccountId from contact where accountid =:a.id];
 		
 		Test.startTest();
 
