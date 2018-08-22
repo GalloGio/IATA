@@ -2775,7 +2775,7 @@ public class ANG_AgencyChangesHelperTest {
         oscar.STEP6__c = 'Passed';
 		oscar.Change_effective_as_of__c = System.today();
 		oscar.Is_PCI_compliant__c = 'Yes';
-		ANG_PCI_compliance_expiry_date__c = Date.today();
+		oscar.ANG_PCI_compliance_expiry_date__c = Date.today();
 		oscar.ANG_Type_Of_Change__c = AMS_Utils.ANG_HIERARCHY;
   	    
 		Blob pdfArchive = Blob.valueOf('Test content');
