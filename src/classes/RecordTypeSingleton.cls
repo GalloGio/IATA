@@ -151,11 +151,11 @@ public class RecordTypeSingleton {
 	 * Method that returns the Developer Name of the record type
 	 * @param objectName the name of the object
 	 * @param rtId 	 	 the id of the record type
-	 * @return 			 Developer Name of the record type object
+	 * @return 			 Record type object
 	 */
-	public String getRecordTypeDeveloperName(String objectName, Id rtId){
+	public RecordType getRecordTypeById(String objectName, Id rtId){
 
-		return recordTypesById.get(objectName).get(rtId).DeveloperName;
+		return recordTypesById.get(objectName).get(rtId);
 
 	}
 
