@@ -24,7 +24,7 @@ private class TIP_BINRangeTriggerHandlerTest {
         provider.HQ_Location__c = country.Id;
         insert provider;
 
-        Contact contact = new Contact(LastName = 'Last Name');
+        Contact contact = new Contact(LastName = 'Last Name2');
         insert contact;
 
         Account_Contact_Role__c acr = new Account_Contact_Role__c();
