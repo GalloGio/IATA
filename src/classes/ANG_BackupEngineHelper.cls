@@ -206,8 +206,10 @@ global without sharing class ANG_BackupEngineHelper implements Queueable{
 
 		}
 
-		if(!backupToInsert.isEmpty())
+		if(!backupToInsert.isEmpty()){
+			System.debug('backupToInsert are' + backupToInsert);
 			insert backupToInsert;
+		}
 
 		oscar.Backup_In_Progress__c	= false;
 		update oscar;
