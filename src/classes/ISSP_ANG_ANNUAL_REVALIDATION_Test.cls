@@ -133,7 +133,7 @@ private class ISSP_ANG_ANNUAL_REVALIDATION_Test {
 		child.parentId = account.id;
 		child.Top_Parent__c = account.id;
 		child.IATA_ISO_Country__c = country.Id;
-		account.Location_Class__c = 'P';
+		child.Location_Class__c = 'P';
 
 		insert child;
 
@@ -462,7 +462,7 @@ private class ISSP_ANG_ANNUAL_REVALIDATION_Test {
 		child.parentId = account.id;
 		child.Top_Parent__c = account.id;
 		child.IATA_ISO_Country__c = country.Id;
-		account.Location_Class__c = 'P';
+		child.Location_Class__c = 'P';
 
 		insert child;
 
@@ -619,7 +619,7 @@ private class ISSP_ANG_ANNUAL_REVALIDATION_Test {
 		child.parentId = account.id;
 		child.Top_Parent__c = account.id;
 		child.IATA_ISO_Country__c = country.Id;
-		account.Location_Class__c = 'P';
+		child.Location_Class__c = 'P';
 
 		insert child;
 

@@ -5,7 +5,10 @@ private class NewGen_AccountTriggerHandlerTest {
         Id accRT = AMS_Utils.RECTYPE_IATAAGENCY;
         Id riskStatusAssessmentRT = ANG_Risk_Helper.RECTYPE_RISKSTATUSASSESSMENT;
 
-		Account a = new Account(Name = 'Test', IATACode__c = '123', RecordTypeId = accRT, Location_Type__c = AMS_Utils.HE);
+		IATA_ISO_Country__c countryNew = new IATA_ISO_Country__c( Name = 'Switzerland', ISO_Code__c = 'CH', ANG_Enable_NewGen__c = true);
+		insert countryNew;
+
+		Account a = new Account(Name = 'Test', IATACode__c = '123', RecordTypeId = accRT, Location_Type__c = AMS_Utils.HE, Location_Class__c = 'P', IATA_ISO_Country__c = countryNew.id);
 		insert a;
 
 		insert new ANG_RHC_Information__c (ANG_AccountId__c = a.Id);
