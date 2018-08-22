@@ -1867,6 +1867,7 @@ public class ANG_AgencyChangesHelperTest {
         oscar.STEP6__c = 'Passed';
 		oscar.Change_effective_as_of__c = System.today();
 		oscar.Is_PCI_compliant__c = 'Yes';
+		oscar.ANG_PCI_compliance_expiry_date__c = Date.today();
 		oscar.ANG_Type_Of_Change__c = 'Location type';
 
 		update oscar;
@@ -2055,6 +2056,7 @@ public class ANG_AgencyChangesHelperTest {
         oscar.STEP6__c = 'Passed';
 		oscar.Change_effective_as_of__c = System.today();
 		oscar.Is_PCI_compliant__c = 'Yes';
+		oscar.ANG_PCI_compliance_expiry_date__c = Date.today();
 		oscar.ANG_Type_Of_Change__c = 'Location type';
   	    
 		Blob pdfArchive = Blob.valueOf('Test content');
@@ -2248,6 +2250,7 @@ public class ANG_AgencyChangesHelperTest {
         oscar.STEP6__c = 'Passed';
 		oscar.Change_effective_as_of__c = System.today();
 		oscar.Is_PCI_compliant__c = 'Yes';
+		oscar.ANG_PCI_compliance_expiry_date__c = Date.today();
 		oscar.ANG_Type_Of_Change__c = AMS_Utils.ANG_LOCATION;
 		oscar.AMS_Correction_change_code__c = 'COR';
   	    
@@ -2329,6 +2332,7 @@ public class ANG_AgencyChangesHelperTest {
         oscar2.STEP6__c = 'Passed';
 		oscar2.Change_effective_as_of__c = System.today();
 		oscar2.Is_PCI_compliant__c = 'Yes';
+		oscar2.ANG_PCI_compliance_expiry_date__c = Date.today();
 		oscar2.ANG_Type_Of_Change__c = AMS_Utils.ANG_LOCATION;
 		oscar2.AMS_Correction_change_code__c = 'CAD';
   	    
@@ -2490,6 +2494,7 @@ public class ANG_AgencyChangesHelperTest {
         oscar.STEP6__c = 'Passed';
 		oscar.Change_effective_as_of__c = System.today();
 		oscar.Is_PCI_compliant__c = 'Yes';
+		oscar.ANG_PCI_compliance_expiry_date__c = Date.today();
 		oscar.ANG_Type_Of_Change__c = AMS_Utils.ANG_LOCATION;
 		oscar.AMS_Correction_change_code__c = 'LET';
   	    
@@ -2633,6 +2638,7 @@ public class ANG_AgencyChangesHelperTest {
         oscar.STEP6__c = 'Passed';
 		oscar.Change_effective_as_of__c = System.today();
 		oscar.Is_PCI_compliant__c = 'Yes';
+		oscar.ANG_PCI_compliance_expiry_date__c = Date.today();
 		oscar.ANG_Type_Of_Change__c = AMS_Utils.ANG_HIERARCHY;
   	    
 		Blob pdfArchive = Blob.valueOf('Test content');
@@ -2769,6 +2775,7 @@ public class ANG_AgencyChangesHelperTest {
         oscar.STEP6__c = 'Passed';
 		oscar.Change_effective_as_of__c = System.today();
 		oscar.Is_PCI_compliant__c = 'Yes';
+		ANG_PCI_compliance_expiry_date__c = Date.today();
 		oscar.ANG_Type_Of_Change__c = AMS_Utils.ANG_HIERARCHY;
   	    
 		Blob pdfArchive = Blob.valueOf('Test content');
