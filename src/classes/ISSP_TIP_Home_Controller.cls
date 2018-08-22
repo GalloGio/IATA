@@ -482,7 +482,7 @@ public without sharing class ISSP_TIP_Home_Controller {
         updateCase();
         update account;
         upsert newCase;
-        upsert AccountContactRoleList;
+        upsert AccountContactRoleList;     
         try{
             update theAccountRole;
             upsert contactList;
@@ -574,7 +574,7 @@ public without sharing class ISSP_TIP_Home_Controller {
         List<SelectOption> options = new List<SelectOption>();      
         options.add(new SelectOption('',Label.ISSP_SELECT_COUNTRY));
         for(IATA_ISO_Country__c iso:[select Id,Name,ISO_Code__c, IEC_Zip_Postal_Code_required__c from IATA_ISO_Country__c
-                                    where Name != 'All Countries' and Name != 'NO COUNTRY' order by Name]){
+                                     where Name != 'All Countries' and Name != 'NO COUNTRY' order by Name]){
             options.add(new SelectOption(iso.Id,iso.Name));
         }
         return options;

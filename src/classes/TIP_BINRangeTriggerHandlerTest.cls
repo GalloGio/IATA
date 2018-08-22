@@ -19,6 +19,7 @@ private class TIP_BINRangeTriggerHandlerTest {
 		insert account;
 
 		Account_Role__c provider = new Account_Role__c();
+		provider.RecordTypeId = TIP_UTils.ACCOUNT_ROLE_PAYMENT_PROVIDER_RECORDTYPE_ID;
         provider.Account__c = account.Id;
         provider.Provider_Code__c = '1000';
         provider.HQ_Location__c = country.Id;
