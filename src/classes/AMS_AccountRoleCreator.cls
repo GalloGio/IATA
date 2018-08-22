@@ -297,9 +297,10 @@ public with sharing class AMS_AccountRoleCreator
             accountIds.addAll(aoMap.get(accId));
 
         String commaSeparatedFields = AMS_AccreditationContactHelper.loadFieldsDynamically('AMS_Accreditation_Contact__c');
+        Set<Id> accreditationFormIds = aoMap.keySet();
 
         String query = 'SELECT ' + commaSeparatedFields + ', AMS_Pax_Accreditation_Form__r.SAAM_Case__r.OSCAR__c, AMS_Pax_Accreditation_Form__r.SAAM_Case__r.OSCAR__r.Account__c, AMS_Pax_Accreditation_Form__r.SAAM_Case__r.OSCAR__r.Process__c, Person_AMS__r.Contact__c, RecordType.DeveloperName, AMS_Ownership_Role__r.Id, AMS_Ownership_Role__r.Duty__c,  AMS_Ownership_Role__r.Hours__c, AMS_Ownership_Role__r.IsManager__c, AMS_Ownership_Role__r.Percentage__c, AMS_Ownership_Role__r.Position__c, AMS_Ownership_Role__r.Owner_Account__c,Company__r.name, AMS_Pax_Accreditation_Form__r.ANG_IsNewGenAgency__c ';
-        query = query + ' FROM AMS_Accreditation_Contact__c WHERE AMS_Pax_Accreditation_Form__c IN :aoMap.keySet() AND (RecordTypeId in ';
+        query = query + ' FROM AMS_Accreditation_Contact__c WHERE AMS_Pax_Accreditation_Form__c IN :accreditationFormIds AND (RecordTypeId in ';
         query = query + '(' + recordTypesPerson +' ) ';
         query = query + ' OR RecordTypeId in ';
         query = query + '(' + recordTypesCompany+' ) ' + ')';
@@ -407,14 +408,14 @@ public with sharing class AMS_AccountRoleCreator
         //get all the roles from the affected accounts that there are active or the roles with persons to delete
         Map<Id,AMS_Account_Role__c> activeRoles = new Map<Id,AMS_Account_Role__c>([SELECT Id, RecordTypeId, Termination_Date__c, Duty__c, Hours__c, IsManager__c, Percentage__c, Position__c, Account__c, Owner_Account__c, Contact__c, Person__c, Person__r.Contact__c, Legacy_External_ID__c, Legacy_System__c, Owner_Name__c,Owner_Account__r.Name, Active__c FROM AMS_Account_role__c WHERE ((Account__c IN :accountIds OR Account__c IN :accountsToCopyOwners) AND Active__c = true) OR Id IN :personsIds]);
 
-        Map<Id,List<AMS_Account_Role__c>> rolesPerAccount = new Map<Id,List<AMS_Account_Role__c>>();
+        Map<Id,List<AMS_Account_Role__c>> oldRolesPerAccount = new Map<Id,List<AMS_Account_Role__c>>();
 
         for(AMS_Account_Role__c role : activeRoles.values()) {
 
-            if(!rolesPerAccount.containsKey(role.Account__c))
-                rolesPerAccount.put(role.Account__c, new List<AMS_Account_Role__c>());
+            if(!oldRolesPerAccount.containsKey(role.Account__c))
+                oldRolesPerAccount.put(role.Account__c, new List<AMS_Account_Role__c>());
 
-            rolesPerAccount.get(role.Account__c).add(role);
+            oldRolesPerAccount.get(role.Account__c).add(role);
 
             if(role.Person__c != null && role.Person__r.Contact__c != null && !personsIds.isEmpty() && personsIds.contains(role.Person__c))
                 rolesWithPersonsId.add(role.Id);
@@ -436,6 +437,8 @@ public with sharing class AMS_AccountRoleCreator
             else
                 throw new AMS_ApplicationException('Sync Accreditations With Roles went wrong !' + accreditationContactsToProcess.get(accContId));
         }
+
+        Map<Id,List<AMS_Account_Role__c>> newRolesPerAccount = new Map<Id,List<AMS_Account_Role__c>>();
         
         for(AccreditationContactBucket accConBucket : accConBucketList.values()) {
 
@@ -460,8 +463,10 @@ public with sharing class AMS_AccountRoleCreator
                 accreditationContactsToUpdate.put(accConBucket.accreditationContact.Id, accConBucket.accreditationContact);
                 accConBucket.isLinkedWithContactOrCompany = true;
 
-                //TODO!!!!!!!!!!!!!
-                //rolesPerAccount.put(accConBucket.accountId, accConBucket.newRole);
+                if(!newRolesPerAccount.containsKey(accConBucket.accountId))
+                    newRolesPerAccount.put(accConBucket.accountId, new List<AMS_Account_Role__c>());
+
+                newRolesPerAccount.get(accConBucket.accountId).add(accConBucket.newRole);
             }
 
         }
@@ -469,15 +474,46 @@ public with sharing class AMS_AccountRoleCreator
         //clone the roles for each account in the hierarchy
         List<AMS_Account_Role__c> listClonesRoles = new List<AMS_Account_Role__c>();
 
-        //clone the roles for the new BRs
+        for(Id acc : accountsToCloneRoles.keySet()) {
 
+            for(Id accToClone : accountsToCloneRoles.get(acc)) {
+
+                if(acc == accToClone)
+                    continue;
+
+                listClonesRoles.addAll(assignOwners(accToClone, newRolesPerAccount.get(acc)));
+            }
+        }
+
+        //clone the roles for the new BRs
+        for(Id brAcc : accountsToCloneOwnersFromHO)
+            listClonesRoles.addAll(assignOwners(brAcc, oldRolesPerAccount.get(accConBucketPerAccount.get(brAcc).get(0).topParent)));
+        
         //add a termination date to the previous roles
+        rolesToUpsert.putAll(updateRolesTerminationDate(rolesToUpsert, oldRolesPerAccount, accountsToChangeOwners));
 
         //upsert roles
+        listClonesRoles.addAll(rolesToUpsert.values());
+        upsert listClonesRoles;
 
         // fill the accreditation contacts with the new roles ids
+        for(AMS_Account_Role__c roleAfterUpsert : listClonesRoles) {
 
+            if(accConBucketPerAccount.containsKey(roleAfterUpsert.Account__c)) {
+
+                for(AccreditationContactBucket acBucket : accConBucketPerAccount.get(roleAfterUpsert.Account__c)) {
+
+                    if(acBucket.isOwner && ((acBucket.isCompany && roleAfterUpsert.Owner_Account__c == acBucket.newRole.Owner_Account__c) || (!acBucket.isCompany && roleAfterUpsert.Contact__c == acBucket.newRole.Contact__c))) {
+                        
+                        acBucket.accreditationContact.AMS_Ownership_Role__c = roleAfterUpsert.Id;
+                        accConToProcessAfterRoles.add(acBucket.accreditationContact);
+                    }
+                }
+            }
+        }
+        
         //update accreditation contacts
+        update accConToProcessAfterRoles;
 
         return oldAndNewOwnersMap;
 
@@ -498,6 +534,30 @@ public with sharing class AMS_AccountRoleCreator
 
         return toReturn;
 
+    }
+
+    public static Map<Id,AMS_Account_Role__c> updateRolesTerminationDate(Map<Id,AMS_Account_Role__c> rolesToUpsert, Map<Id,List<AMS_Account_Role__c>> oldRolesPerAccount, Set<Id> accountsToChangeOwners) {
+        
+        for(Id accToTerminate : oldRolesPerAccount.keySet()) {
+
+            if(accountsToChangeOwners.contains(accToTerminate)) {
+
+                for(AMS_Account_Role__c roleToTerminate : oldRolesPerAccount.get(accToTerminate)) {
+
+                    if(rolesToUpsert.containsKey(roleToTerminate.Id) && rolesToUpsert.get(roleToTerminate.Id).Active__c) {
+
+                        rolesToUpsert.get(roleToTerminate.Id).Termination_Date__c = Date.today();
+
+                    } else if(roleToTerminate.Active__c) {
+
+                        roleToTerminate.Termination_Date__c = Date.today();
+                        rolesToUpsert.put(roleToTerminate.Id, roleToTerminate);
+                    }
+                }
+            }
+        }
+
+        return rolesToUpsert;
     }
 
     public static Map<Id,AMS_Account_Role__c> updateAMSRolesBeforePersonDeletion(Map<Id,AMS_Account_Role__c> activeRoles, Set<Id> rolesWithPersonsId, Map<Id,AMS_Account_Role__c> rolesToUpsert) {
@@ -549,9 +609,11 @@ public with sharing class AMS_AccountRoleCreator
             this.oscar = oscar;
             this.accountId = oscar.Account__c;
             this.accreditationId = oscar.AMS_Online_Accreditation__c;
-            this.isCompany = recordTypesCompany.contains(AMS_AccreditationContactController.accreditationContactRT.get(accreditationContact.RecordTypeId));
-            this.isLinkedWithContactOrCompany = accreditationContact.Contact__c != null 
-                                                || accreditationContact.Company__c != null 
+            this.isCompany = AMS_AccountRoleCreator.recordTypesCompany.contains(accreditationContact.RecordTypeId);
+            if(this.isCompany) 
+                this.isLinkedWithContactOrCompany = accreditationContact.Company__c != null;
+            else
+                this.isLinkedWithContactOrCompany = accreditationContact.Contact__c != null 
                                                 || (accreditationContact.Person_AMS__c != null && accreditationContact.Person_AMS__r.Contact__c != null);
             this.isJustToClone = isJustToClone;
             this.isOwner = accreditationContact.Agency_owner__c;
