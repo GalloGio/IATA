@@ -116,12 +116,8 @@ global without sharing class ANG_BackupEngineHelper implements Queueable{
 	}
 
 	public void executeAdhoc(){
-
-		System.debug('Executing executeAdhoc');
 		initData();
 		backupData();
-		System.debug('END Executing executeAdhoc');
-
 	}
 
 	public void setNewParentHierarchyId(Id newParentHierarchyId){
