@@ -13,6 +13,7 @@ public with sharing class EComProduct_DTO
     public String Portfolio{get;set;}
     public String Language { get; set; }
     public String ImageName { get; set; }  //*** name of image in static resource
+    public String ImageFile { get; set; }  //*** image in product
     public Date EffectiveFrom { get; set; }
     public Date EffectiveTo { get; set; }
     public Boolean DisplayEffectiveTo { get; set; }
@@ -63,7 +64,7 @@ public with sharing class EComProduct_DTO
     public EComProduct_DTO(Product2 prod, Map<String, PriceInfo_DTO> mapProductInfo, Map<String, Map<String, String>> mapPickList_Label, Boolean includeBOM, String customerType)
     {   
         EComProduct_DTO component;
-        
+        ImageFile = prod.imageFile__c;
         ProductId = String.valueOf(prod.Id).left(15); 
         Is_Electronic_Product = prod.Is_Electronic_Product__c;
         ProductName = prod.Name;

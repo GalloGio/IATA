@@ -2632,6 +2632,11 @@
             <isRequired>false</isRequired>
         </displayedFields>
         <displayedFields>
+            <field>ACLI_SAP_Id__c</field>
+            <isFieldManaged>false</isFieldManaged>
+            <isRequired>false</isRequired>
+        </displayedFields>
+        <displayedFields>
             <field>ANG_HE_CashCondition__c</field>
             <isFieldManaged>false</isFieldManaged>
             <isRequired>false</isRequired>
@@ -12393,7 +12398,7 @@ J-Joint Vent</inlineHelpText>
     </fields>
     <fields>
         <fullName>Payment_Term__c</fullName>
-		<defaultValue>&quot;Z001&quot;</defaultValue>
+        <defaultValue>&quot;Z001&quot;</defaultValue>
         <description>IEC - SAP payment term code to use when creates contracts</description>
         <externalId>false</externalId>
         <label>Payment Terms</label>
