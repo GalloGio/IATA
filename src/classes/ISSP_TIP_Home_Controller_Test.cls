@@ -279,9 +279,9 @@ private class ISSP_TIP_Home_Controller_Test {
             controller.account.BillingCity = 'city test';
 
             //Location of Headquarter missing
-            controller.account.TIP_HQ_Location__c = null;
+            controller.TheAccountRole.HQ_Location__c = null;
             controller.submitAccountEnrolmentToIATA();
-            controller.account.TIP_HQ_Location__c = [select id from IATA_ISO_Country__c limit 1].id;
+            controller.TheAccountRole.HQ_Location__c = [select id from IATA_ISO_Country__c limit 1].id;
 
             //Primary contact missing
             //controller.contactList.get(0).Primary_Contact__c=false;
