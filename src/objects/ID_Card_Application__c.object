@@ -1335,6 +1335,7 @@ Completed: Process is complete</inlineHelpText>
         <fullName>For_specific_VER</fullName>
         <columns>CREATED_DATE</columns>
         <columns>NAME</columns>
+        <columns>VER_Number__c</columns>
         <columns>RECORDTYPE</columns>
         <columns>Application_Status__c</columns>
         <columns>IATA_Code__c</columns>
