@@ -80,7 +80,7 @@
                         "breadcrumb": "Home > {!selectedCategory.label} > {!selectedTopicLabel}", 
                         "language": "{!language}"
                     },
-                    "ecommerce": JSON.parse('{!productWrapper}')
+                    "ecommerce": {!productWrapper}
                 });
 
 

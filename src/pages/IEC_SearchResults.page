@@ -70,7 +70,7 @@
 					},
 					"ecommerce": {
                     	"currencyCode": "USD",
-                    	"impressions": JSON.parse('{!productListStr}')
+                    	"impressions": {!productListStr}
                     } 
 				});
 
@@ -325,7 +325,11 @@
 											<li class="list-item">
 												<div class="item-wrapper">
 													<figure class="item-image">
-														<a href="{!$Site.BaseUrl}/IEC_ProductDetails?id={!prod.ProductNumber}">
+														<a href="{!$Site.BaseUrl}/IEC_ProductDetails?id={!prod.ProductNumber}" onclick="
+                                                    		var product = {};
+                                                    		product.id = '{!prod.ProductNumber}';
+                                                    		product.name = '{!prod.ProductName}';
+                                                    		clickProductPush('{!prod.InventoryStatus}', product);" >
                                                             <apex:outputPanel layout="block" style="height: 180px;" rendered="{!prod.imageFile != '' }">
 
                                                             <div class="fileImage" layout="block" style="height: 180px;">

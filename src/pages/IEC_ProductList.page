@@ -70,7 +70,7 @@
                     },
                     "ecommerce": {
                     	"currencyCode": "USD",
-                    	"impressions": JSON.parse('{!productListStr}')
+                    	"impressions": {!productListStr}
                     }                    
                 });
 

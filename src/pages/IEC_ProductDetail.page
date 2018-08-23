@@ -79,7 +79,7 @@
                         "language": "{!language}",
                         "breadcrumb": "{!$Label.Home} > {!selectedCategory.label} > {!selectedTopicLabel} > {!ecomProduct.ProductName}"
                     },
-                    "ecommerce": JSON.parse('{!productWrapper}')
+                    "ecommerce": {!productWrapper}
                 });
 
 

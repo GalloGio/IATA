@@ -77,7 +77,7 @@
                         "breadcrumb": "Home > {!$Label.PageTitleConfirmOrder}", 
                         "language": "{!language}"
                     },
-                    "ecommerce": JSON.parse('{!productWrapper}')
+                    "ecommerce": {!productWrapper}
                 });
 
 	        </script>

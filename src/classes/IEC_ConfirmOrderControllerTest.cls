@@ -324,6 +324,8 @@ private class IEC_ConfirmOrderControllerTest
 				ctrl.onLoadAction();
 				ctrl.initorder();
 
+				String productWrapper = ctrl.productWrapper;
+
 				//-- without credit card
 				ctrl.sfOrder.Payment_Type__c = IECConstants.PaymentThresholdType_CreditCard;
 				ctrl.sfOrder.Zuora_Credit_Card_Id__c = null;

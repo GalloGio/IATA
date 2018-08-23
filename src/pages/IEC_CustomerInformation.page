@@ -74,7 +74,7 @@
                         "breadcrumb": "Home > {!$Label.PageTitleCustomerInformation}", 
                         "language": "{!language}"
                     },
-                    "ecommerce": JSON.parse('{!productWrapper}')
+                    "ecommerce": {!productWrapper}
                 });
             </script>
             <meta charset="UTF-8"/>

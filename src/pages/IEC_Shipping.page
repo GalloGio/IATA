@@ -75,7 +75,7 @@
                         "breadcrumb": "Home > {!$Label.PageTitleShippingPayment}", 
                         "language": "{!language}"
                     },
-                    "ecommerce": JSON.parse('{!productWrapper}')
+                    "ecommerce": {!productWrapper}
                 });
 
                 function updatePaymentMethodPush(paymentMehod){
