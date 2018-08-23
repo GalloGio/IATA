@@ -23,6 +23,7 @@ public class TIP_BatchActivateRecordsByDate_test {
 		//ACTIVE
 		Account acc1 = createAccount('acc1 active', System.today()-5, System.today()+5, '1001');
 		Account_Role__c ar1 = createAccountRole(acc1.Id);
+		ar1.RecordTypeId = TIP_UTils.ACCOUNT_ROLE_PAYMENT_PROVIDER_RECORDTYPE_ID;
 		Account_Contact_Role__c acr1 = createAccountContactRole(acc1.Id, ar1.Id);
 		ar1.Effective_From_Date__c = System.today()-5;
 		update ar1;
@@ -33,6 +34,7 @@ public class TIP_BatchActivateRecordsByDate_test {
 		//IN PROGRESS
 		Account acc2 = createAccount('acc3 in progress', System.today()+10,System.today()+20, '1002');
 		Account_Role__c ar2 = createAccountRole(acc2.Id);
+		ar2.RecordTypeId = TIP_UTils.ACCOUNT_ROLE_PAYMENT_PROVIDER_RECORDTYPE_ID;
 		Account_Contact_Role__c acr2 = createAccountContactRole(acc2.Id, ar2.Id);
 		ar2.Effective_From_Date__c = System.today()+10;
 		update ar2;
