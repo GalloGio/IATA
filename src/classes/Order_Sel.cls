@@ -965,6 +965,41 @@ public without sharing class Order_Sel extends Selector{
     }
 
     /****************************************************************************************************
+        Created 2018/08
+            Return list of orders of a specific contact for the order history page
+    ****************************************************************************************************/
+    public List<Order> getMyOrdersForOrderHistory(Id contactId)
+    {
+        List<String> expiredStatus = IECConstants.expiredStatus;
+        Date dateToCompare = IECConstants.dateToCompare;
+        List<String> historyType = new List<String>();
+        historyType.add('History');
+        historyType.add('Renewal Notification');
+        historyType.add('Quote');
+
+            // 'AND SAP_Order_Number__c != null  AND SAP_Invoice__r.Contract_Number__c != null ' +
+            // 'AND ((type NOT IN :expiredType OR Status NOT IN :expiredStatus OR EffectiveDate > :dateToCompare) AND type != :historyType) ' +
+         String query = String.format(
+            'SELECT {0}' + 
+            ', (select Product_Name__c, Product_Number__c, Quantity, UnitPrice, Freight_Charge__c, Tax__c, Total__c, ' +
+            'Carrier_Tracking_Number__c,Carrier_Tracking_URL__c, Coupon__c, Invoice_Number__c,Discount__c, Setup_Fee__c ' +
+            ' from Orderitems) ' +
+            'FROM {1} ' +
+            'WHERE BillToContactId = :contactId ' +
+           
+            'AND ((Status NOT IN :expiredStatus OR EffectiveDate > :dateToCompare) ) AND Type NOT IN :historyType ' +
+
+            'ORDER BY Type,  CreatedDate DESC', 
+            new List<String>{
+                String.join(getDefaultFields(), ', '),
+                getSObjectType().getDescribe().getName()
+            }
+        );
+         system.debug('### query: ' + query);
+        return Database.query(query);
+    }
+
+    /****************************************************************************************************
         Created by Kevin Ky 2016/03
             Return list of orders of a specific contact and Order number
     ****************************************************************************************************/

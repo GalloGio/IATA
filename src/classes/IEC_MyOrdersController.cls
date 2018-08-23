@@ -15,7 +15,7 @@ public class IEC_MyOrdersController   extends IEC_PageController
 
 		//-- Load My Orders 
 		Order_Sel oSelector =new Order_Sel();
-		myOrders = oSelector.getMyOrders(loggedCustomer.sfContact.Id);
+		myOrders = oSelector.getMyOrdersForOrderHistory(loggedCustomer.sfContact.Id);
 
 		return null;
 	}
