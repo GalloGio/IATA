@@ -22,8 +22,6 @@ global without sharing class ANG_RollbackEngineHelper implements Queueable{
     
     public void executeAdhoc(){
 
-        fetchTechnicalLogs(oscarId);
-
         AMS_AgencyRelationshipTriggerHandler.AMS_HierarchyProcess = true;
         AMS_AccountTriggerHandler.processMinorChangesValidationFlag = false; 
         rollbackData();
@@ -40,19 +38,19 @@ global without sharing class ANG_RollbackEngineHelper implements Queueable{
 
         this.oscarId = oscarId;
         this.technicalLogsMap = new Map<String,List<String>>();
-
-        accountsRelated = new Set<Id>();
-        accountsRelated.addAll(fetchHierarchySelection(oscarId));
+        fetchTechnicalLogs(oscarId);
 
         AMS_OSCAR__c oscar = [Select Name, Account__c,New_parent__c, ANG_Type_Of_Change__c from AMS_OSCAR__c where Id =:oscarId];
+
+        accountsRelated = new Set<Id>();
+        accountsRelated.addAll(fetchHierarchySelection(oscar.Account__c));
+		accountsRelated.add(oscar.account__c);
 
         this.typesOfChange = new List<String>();
         if (oscar.ANG_Type_Of_Change__c.contains(';')) this.typesOfChange.addAll(oscar.ANG_Type_Of_Change__c.split(';'));
         else this.typesOfChange.add(oscar.ANG_Type_Of_Change__c);
 
         this.oscarName = oscar.Name;
-
-        accountsRelated.add(oscar.Account__c);
 
         this.newParentHierarchyId = oscar.New_parent__c;
 
@@ -285,6 +283,8 @@ global without sharing class ANG_RollbackEngineHelper implements Queueable{
         if(newParentHierarchyId != null)
             accountsRelatedList.add(newParentHierarchyId);
 
+        System.debug('accountsRelatedList to rollback is:'+accountsRelatedList);
+
         Set<Id> hierarchiesToDeleteIds = new Set<Id>();
         Set<Id> relationsToDelete = new Set<Id>();
 
@@ -292,6 +292,8 @@ global without sharing class ANG_RollbackEngineHelper implements Queueable{
             relationsToDelete.add(rel.Id);
             hierarchiesToDeleteIds.add(rel.Hierarchy__c);
         }
+
+        System.debug('relationsToDelete are:'+relationsToDelete);
 
         if(!relationsToDelete.isEmpty())
             delete [Select Id from AMS_Agencies_relationhip__c where Id in :relationsToDelete];
@@ -334,6 +336,7 @@ global without sharing class ANG_RollbackEngineHelper implements Queueable{
     }
 
 
+/*
     private Set<Id> fetchHierarchySelection(Id oscarId){
 
         Set<Id> accountIds = new Set<Id>();
@@ -343,6 +346,34 @@ global without sharing class ANG_RollbackEngineHelper implements Queueable{
     
         return accountIds;
     }
+*/
+
+	private Set<Id> fetchHierarchySelection(Id accountOscar){
+
+		Set<Id> accountIds = new Set<Id>();
+		
+		Account acct = [Select Id, Location_Type__c, ParentId from Account where Id =:accountOscar];
+		Id accountId = acct.Id;
+		
+		if(acct.Location_Type__c <> AMS_Utils.HE)
+			accountId = acct.ParentId;
+
+		for(Account acctToSearch: [Select Id from Account where ParentId =:accountId])
+			accountIds.add(acctToSearch.Id);
+	
+		accountIds.add(accountId);
+
+        System.debug('technicalLogsMap are:'+technicalLogsMap);
+        
+        for(String acctStr : technicalLogsMap.get('Account')){
+
+            Account a = (Account) JSON.deserialize(acctStr, Account.class);
+
+            accountIds.add(a.Id);
+        }
+        
+		return accountIds;
+	}
 
     private void sendEmailConfirmation(){
 
