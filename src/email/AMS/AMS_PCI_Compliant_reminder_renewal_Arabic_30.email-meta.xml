@@ -3,7 +3,7 @@
     <available>true</available>
     <encodingKey>UTF-8</encodingKey>
     <letterhead>IATADynamicSkyLetterhead</letterhead>
-    <name>AMS_PCI Compliant reminder renewal AR</name>
+    <name>AMS_PCI Compliant reminder renewal AR 30</name>
     <style>freeForm</style>
     <subject>(PCI DSS)  إشعار تذكيري بإثبات الامتثال لمعايير أمن البيانات في قطاع بطاقات الدفع</subject>
     <textOnly>الأعزاء {!Case.Contact}،

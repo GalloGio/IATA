@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<EmailTemplate xmlns="http://soap.sforce.com/2006/04/metadata">
+    <available>true</available>
+    <encodingKey>UTF-8</encodingKey>
+    <letterhead>IATADynamicSkyLetterhead</letterhead>
+    <name>AMS_PCI Compliant reminder renewal DE 30</name>
+    <style>freeForm</style>
+    <subject>PCI DSS ERINNERUNG</subject>
+    <textOnly>Sehr geehrte/r {!Case.Contact},,
+
+IATA Code: {!Case.IATA_Code__c},
+
+
+
+dies ist eine freundliche Erinnerung, dass die PCI DSS Compliance-Bescheinigung oder Selbsterklärung Keine Kreditkartentransaktionen noch nicht eingegangen ist. Wir möchten darauf hinweisen, dass die Abgabefrist am {!Case.CreatedDate+30} endet. Falls Sie den Nachweis bereits erbracht haben, betrachten Sie dieses Schreiben als gegenstandslos.
+
+
+Wenn Sie mehr darüber erfahren möchten, wie Sie die PCI DSS Compliance erlangen, besuchen Sie bitte unsere Webseite.
+
+http://www.iata.org/services/finance/Pages/pci-dss.aspx
+
+
+
+Sollten Sie weitere Informationen von der IATA benötigen, zögern Sie bitte nicht, eine neue Anfrage über unser Kundenportal www.iata.org/cs zu stellen.
+
+
+Mit freundlichen Grüßen
+
+Agency Management
+International Air Transport Association
+-----------------------------------------------------------------------------
+
+
+
+In order to obtain information or assistance from IATA, do not hesitate to access at any time our Customer Portal</textOnly>
+    <type>html</type>
+    <uiType>Aloha</uiType>
+</EmailTemplate>
