@@ -56,13 +56,16 @@ global class AMS_HierarchyHelper {
 
 		// loop over all the relationships and switch the child with the parent
 		List<AMS_Agencies_relationhip__c> relToUpdate = new List<AMS_Agencies_relationhip__c>();
+		if(hierarchyRelationships.isEmpty()) return new HierarchyStruct(relToUpdate, null, null, null);
+ 
+		Id hierarchyHO = getHierarchyHO(hierarchyRelationships);
+		System.debug('Hierarchy HO: ' + accounts.get(hierarchyHO).Name + ' ('+accounts.get(hierarchyHO).IATACode__c+')');
 
 		for (AMS_Agencies_relationhip__c rel : hierarchyRelationships) {
 
-			System.debug('Processing relation: Parent -> ' + accounts.get(rel.Parent_Account__c).Name + ' Child -> ' + accounts.get(rel.Child_Account__c).Name);
-
-			Id hierarchyHO = getHierarchyHO(hierarchyRelationships);
-			System.debug('Hierarchy HO: ' + accounts.get(hierarchyHO).Name);
+			System.debug('Processing relation: '+
+				+' \nParent -> ' + accounts.get(rel.Parent_Account__c).Name + ' ('+accounts.get(rel.Parent_Account__c).IATACode__c+') '+
+				+' \nChild -> ' + accounts.get(rel.Child_Account__c).Name + ' ('+accounts.get(rel.Child_Account__c).IATACode__c+')');
 
 			Boolean relNeedsUpdate = false;
 
@@ -77,26 +80,26 @@ global class AMS_HierarchyHelper {
 				//relations having the parent equal to the old parent must be updated with the new parent
 				//child of the relation which have location type SA is an exception and should keep the parent UNLESS the new parent is an SA
 				if (rel.Parent_Account__c == oldParent && (accounts.get(rel.Child_Account__c).Location_Type__c != AMS_Utils.SA || /*rel.Child_Account__c == newParent || */accounts.get(newParent).Location_Type__c == AMS_Utils.SA)) {
-					System.debug('PARENT REPLACE: ' + accounts.get(rel.Parent_Account__c).Name + ' WITH ' + accounts.get(newParent).Name);
+					System.debug('PARENT REPLACE: ' + accounts.get(rel.Parent_Account__c).Name + ' ('+ accounts.get(rel.Parent_Account__c).IATACode__c + ') WITH ' + accounts.get(newParent).Name + ' (' + accounts.get(newParent).IATACode__c + ')');
 					rel.Parent_Account__c = newParent;
 					relNeedsUpdate = true;
 				}
 				//relations having the parent equal to the new parent must be updated with the old parent
 				//child of the relation which have location type SA is an exception and should keep the parent
 				else if (rel.Parent_Account__c == newParent && (accounts.get(rel.Child_Account__c).Location_Type__c != AMS_Utils.SA /*|| rel.Child_Account__c == newParent || accounts.get(newParent).Location_Type__c == AMS_Utils.SA*/)) {
-					System.debug('PARENT REPLACE: ' + accounts.get(rel.Parent_Account__c).Name + ' WITH ' + accounts.get(oldParent).Name);
+					System.debug('PARENT REPLACE: ' + accounts.get(rel.Parent_Account__c).Name + ' ('+ accounts.get(rel.Parent_Account__c).IATACode__c + ') WITH ' + accounts.get(oldParent).Name + ' (' + accounts.get(oldParent).IATACode__c + ')');
 					rel.Parent_Account__c = oldParent;
 					relNeedsUpdate = true;
 				}
 				//relations having the child equal to the new parent must be updated with the old parent
 				if (rel.Child_Account__c == newParent) {
-					System.debug('CHILD REPLACE: ' + accounts.get(rel.Child_Account__c).Name + ' WITH ' + accounts.get(oldParent).Name);
+					System.debug('CHILD REPLACE: ' + accounts.get(rel.Child_Account__c).Name + ' ('+ accounts.get(rel.Child_Account__c).IATACode__c + ') WITH ' + accounts.get(oldParent).Name + ' (' + accounts.get(oldParent).IATACode__c + ')');
 					rel.Child_Account__c = oldParent;
 					relNeedsUpdate = true;
 				}
 				//relations having the child equal to the old parent must be updated with the new parent
 				else if (rel.Child_Account__c == oldParent) {
-					System.debug('CHILD REPLACE: ' + accounts.get(rel.Child_Account__c).Name + ' WITH ' + accounts.get(newParent).Name);
+					System.debug('CHILD REPLACE: ' + accounts.get(rel.Child_Account__c).Name + ' ('+ accounts.get(rel.Child_Account__c).IATACode__c + ') WITH ' + accounts.get(newParent).Name + ' (' + accounts.get(newParent).IATACode__c + ')');
 					rel.Child_Account__c = newParent;
 					relNeedsUpdate = true;
 				}

@@ -2,7 +2,7 @@
 private class ISSP_WS_DisableUserTest {
 
     private static final Profile AIRLINE_PORTAL_PROFILE = [SELECT Id FROM Profile WHERE Name = 'ISS Portal Airline User (Partner)'];
-    private static final RecordType IATA_AIRLINE_RT = [SELECT Id, DeveloperName FROM RecordType WHERE DeveloperName = 'IATA_Airline'];
+    private static final RecordType IATA_AIRLINE_RT = RecordTypeSingleton.getInstance().getRecordType('Account', 'IATA_Airline');
     private static ISSP_Portal_Service_Ids__c APP_IDS;
     private static list<String> LIST_APP_NAMES = new list<String>{'CASS01', 'CASS02', 'CASS03', 'CASS04', 'SIS', 'ASD', 'BSPLINK'};
 

@@ -100,7 +100,7 @@ public class IDCardMultipleAgencyInfoNControllerTest{
          
          insert c;
          
-         ID AgencyRT =Schema.SObjectType.Account.RecordTypeInfosByName.get('Agency').RecordTypeId;
+         ID AgencyRT =RecordTypeSingleton.getInstance().getRecordTypeId('Account', 'IATA_Agency');
          Account theAccount = new Account(name ='testAgency',
                                       IATACode__c = '123',
                                       Status__c = 'Approved',

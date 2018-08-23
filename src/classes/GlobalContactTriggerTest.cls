@@ -51,14 +51,11 @@ private class GlobalContactTriggerTest {
 
     static testMethod void myUnitTest() {
 
-        //ISSP_ObjectFactory.fiilIncludedFields();
-        //Account acc =  (Account)ISSP_ObjectFactory.createSObject('Account',false,1);
         Account acc = ISSP_ObjectFactory.createNewAccount();
         acc.IATACode__c = '132';
-        acc.RecordTypeId = [SELECT Id FROM RecordType r WHERE SobjectType = 'Account' AND DeveloperName = 'IATA_Agency'][0].Id;
+        acc.RecordTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('Account', 'IATA_Agency');
         insert acc;
 
-        //Contact con = (Contact)ISSP_ObjectFactory.createSObject('Contact',false);
         Contact con = ISSP_ObjectFactory.createNewContact();
         con.Senior_Contact_Email__c = 'senior@dev.com';
         con.AccountId= acc.Id;
@@ -94,7 +91,7 @@ private class GlobalContactTriggerTest {
         //Account acc =  (Account)ISSP_ObjectFactory.createSObject('Account',false,1);
         Account acc = ISSP_ObjectFactory.createNewAccount();
         acc.IATACode__c = '132';
-        acc.RecordTypeId = [SELECT Id FROM RecordType r WHERE SobjectType = 'Account' AND DeveloperName = 'IATA_Agency'][0].Id;
+        acc.RecordTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('Account', 'IATA_Agency');
         insert acc;
 
         //Contact con = (Contact)ISSP_ObjectFactory.createSObject('Contact',false);
@@ -134,7 +131,7 @@ private class GlobalContactTriggerTest {
 
         Account acc = ISSP_ObjectFactory.createNewAccount();
         acc.IATACode__c = '132';
-        acc.RecordTypeId = [SELECT Id FROM RecordType r WHERE SobjectType = 'Account' AND DeveloperName = 'IATA_Agency'][0].Id;
+        acc.RecordTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('Account', 'IATA_Agency');
         insert acc;
 
         Contact con = ISSP_ObjectFactory.createNewContact();
@@ -193,7 +190,7 @@ private class GlobalContactTriggerTest {
 
         Account acc = ISSP_ObjectFactory.createNewAccount();
         acc.IATACode__c = '132';
-        acc.RecordTypeId = [SELECT Id FROM RecordType r WHERE SobjectType = 'Account' AND DeveloperName = 'IATA_Agency'][0].Id;
+        acc.RecordTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('Account', 'IATA_Agency');
         insert acc;
 
         Contact con = ISSP_ObjectFactory.createNewContact();
@@ -241,7 +238,7 @@ private class GlobalContactTriggerTest {
         Contact con = ISSP_ObjectFactory.createNewContact();
         con.AccountId= acc.Id;
         con.Status__c = 'Active';
-        con.RecordTypeId = [SELECT Id FROM RecordType r WHERE SobjectType = 'Contact' AND DeveloperName = 'Standard_Contact'][0].Id;
+        con.RecordTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('Contact', 'Standard_Contact');
         insert con;
 
         IEC_Subscription_History__c product = new IEC_Subscription_History__c();
@@ -289,7 +286,7 @@ private class GlobalContactTriggerTest {
         con.Financial_Assessment_Contact__c = true;
         con.function__c = 'Aeropolitical;Cargo';
         con.Membership_Function__c = 'Gen.Management;Commercial;Cargo;Finance;Aeropolitical;Environment';
-        con.RecordTypeId = [SELECT Id FROM RecordType r WHERE SobjectType = 'Contact' AND DeveloperName = 'Standard_Contact'][0].Id;
+        con.RecordTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('Contact', 'Standard_Contact');
         insert con;
 
         IEC_Subscription_History__c product = new IEC_Subscription_History__c();
@@ -320,7 +317,7 @@ private class GlobalContactTriggerTest {
         con.title = 'Monsieur';
         con.function__c = 'Aeropolitical;Cargo';
         con.Membership_Function__c = 'Gen.Management;Commercial;Cargo;Finance;Aeropolitical;Environment';
-        con.RecordTypeId = [SELECT Id FROM RecordType r WHERE SobjectType = 'Contact' AND DeveloperName = 'Standard_Contact'][0].Id;
+        con.RecordTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('Contact', 'Standard_Contact');
         insert con;
 
         delete con;
@@ -356,7 +353,7 @@ private class GlobalContactTriggerTest {
             con.title = 'Monsieur';
             con.function__c = 'Aeropolitical;Cargo';
             con.Membership_Function__c = 'Gen.Management;Commercial;Cargo;Finance;Aeropolitical;Environment';
-            con.RecordTypeId = [SELECT Id FROM RecordType r WHERE SobjectType = 'Contact' AND DeveloperName = 'Standard_Contact'][0].Id;
+            con.RecordTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('Contact', 'Standard_Contact');
             insert con;
 
             testUser.ContactId = con.id;
@@ -428,7 +425,7 @@ private class GlobalContactTriggerTest {
             con.function__c = 'Aeropolitical;Cargo';
             con.title = 'Monsieur';
             con.Membership_Function__c = 'Gen.Management;Commercial;Cargo;Finance;Aeropolitical;Environment';
-            con.RecordTypeId = [SELECT Id FROM RecordType r WHERE SobjectType = 'Contact' AND DeveloperName = 'Standard_Contact'][0].Id;
+            con.RecordTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('Contact', 'Standard_Contact');
             insert con;
 
             testUser.ContactId = con.id;

@@ -45,7 +45,7 @@ private class OneIdProfileCompanySettingsTest {
     }
      
 	@testSetup static void setup() {
-		String recordTypeId = [SELECT Id FROM RecordType WHERE DeveloperName = 'IATA_Airline'].Id;
+		Id recordTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('Account', 'IATA_Airline');
         Account acc = ISSP_ObjectFactory.createNewAccount();
         acc.RecordTypeId = recordTypeId;       
         insert acc;

@@ -4,9 +4,9 @@ private class AccountNoDuplicateBranchTest {
 
  static testMethod void noParentButReasonForCreationIsCreatedByCustomer() {
                 
-                ID standardRT =Schema.SObjectType.Account.RecordTypeInfosByName.get('Standard Account').RecordTypeId ;
-                ID Branch  =Schema.SObjectType.Account.RecordTypeInfosByName.get('Airline Branch').RecordTypeId ;
-                ID Hq  =Schema.SObjectType.Account.RecordTypeInfosByName.get('Airline Headquarters').RecordTypeId ;
+                ID standardRT =RecordTypeSingleton.getInstance().getRecordTypeId('Account', 'Standard_Account') ;
+                ID Branch  =RecordTypeSingleton.getInstance().getRecordTypeId('Account', 'IATA_Airline_BR') ;
+                ID Hq  =RecordTypeSingleton.getInstance().getRecordTypeId('Account', 'IATA_Airline') ;
 
                 
                 IATA_ISO_Country__c isoCountry = new IATA_ISO_Country__c(name = 'suisse',ISO_Code__c ='SS' );
@@ -47,9 +47,9 @@ private class AccountNoDuplicateBranchTest {
 
     static testMethod void noParent() {
                 
-                ID standardRT =Schema.SObjectType.Account.RecordTypeInfosByName.get('Standard Account').RecordTypeId ;
-                ID Branch  =Schema.SObjectType.Account.RecordTypeInfosByName.get('Airline Branch').RecordTypeId ;
-                ID Hq  =Schema.SObjectType.Account.RecordTypeInfosByName.get('Airline Headquarters').RecordTypeId ;
+                ID standardRT =RecordTypeSingleton.getInstance().getRecordTypeId('Account', 'Standard_Account') ;
+                ID Branch  =RecordTypeSingleton.getInstance().getRecordTypeId('Account', 'IATA_Airline_BR') ;
+                ID Hq  =RecordTypeSingleton.getInstance().getRecordTypeId('Account', 'IATA_Airline') ;
 
                 
                 IATA_ISO_Country__c isoCountry = new IATA_ISO_Country__c(name = 'suisse',ISO_Code__c ='SS' );
@@ -87,9 +87,9 @@ private class AccountNoDuplicateBranchTest {
     
        static testMethod void parentNoProperHq() {
                 
-                ID standardRT =Schema.SObjectType.Account.RecordTypeInfosByName.get('Standard Account').RecordTypeId ;
-                ID Branch  =Schema.SObjectType.Account.RecordTypeInfosByName.get('Airline Branch').RecordTypeId ;
-                ID Hq  =Schema.SObjectType.Account.RecordTypeInfosByName.get('Airline Headquarters').RecordTypeId ;
+                ID standardRT =RecordTypeSingleton.getInstance().getRecordTypeId('Account', 'Standard_Account') ;
+                ID Branch  =RecordTypeSingleton.getInstance().getRecordTypeId('Account', 'IATA_Airline_BR') ;
+                ID Hq  =RecordTypeSingleton.getInstance().getRecordTypeId('Account', 'IATA_Airline') ;
 
                 
                 IATA_ISO_Country__c isoCountry = new IATA_ISO_Country__c(name = 'suisse',ISO_Code__c ='SS' );
@@ -124,9 +124,9 @@ private class AccountNoDuplicateBranchTest {
     
          static testMethod void AirlineExists() {
                 
-                ID standardRT =Schema.SObjectType.Account.RecordTypeInfosByName.get('Standard Account').RecordTypeId ;
-                ID Branch  =Schema.SObjectType.Account.RecordTypeInfosByName.get('Airline Branch').RecordTypeId ;
-                ID Hq  =Schema.SObjectType.Account.RecordTypeInfosByName.get('Airline Headquarters').RecordTypeId ;
+                ID standardRT =RecordTypeSingleton.getInstance().getRecordTypeId('Account', 'Standard_Account') ;
+                ID Branch  =RecordTypeSingleton.getInstance().getRecordTypeId('Account', 'IATA_Airline_BR') ;
+                ID Hq  =RecordTypeSingleton.getInstance().getRecordTypeId('Account', 'IATA_Airline') ;
 
                 
                 IATA_ISO_Country__c isoCountry = new IATA_ISO_Country__c(name = 'suisse',ISO_Code__c ='SS' );
@@ -162,9 +162,9 @@ private class AccountNoDuplicateBranchTest {
     
          static testMethod void nothingHappens() {
                 
-                ID standardRT =Schema.SObjectType.Account.RecordTypeInfosByName.get('Standard Account').RecordTypeId ;
-                ID Branch  =Schema.SObjectType.Account.RecordTypeInfosByName.get('Airline Branch').RecordTypeId ;
-                ID Hq  =Schema.SObjectType.Account.RecordTypeInfosByName.get('Airline Headquarters').RecordTypeId ;
+                ID standardRT =RecordTypeSingleton.getInstance().getRecordTypeId('Account', 'Standard_Account') ;
+                ID Branch  =RecordTypeSingleton.getInstance().getRecordTypeId('Account', 'IATA_Airline_BR') ;
+                ID Hq  =RecordTypeSingleton.getInstance().getRecordTypeId('Account', 'IATA_Airline') ;
 
                 
                 IATA_ISO_Country__c isoCountry = new IATA_ISO_Country__c(name = 'suisse',ISO_Code__c ='SS' );

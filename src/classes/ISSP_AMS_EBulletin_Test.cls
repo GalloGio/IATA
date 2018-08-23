@@ -264,10 +264,7 @@ private class ISSP_AMS_EBulletin_Test {
                                     Region__c = 'China & North Asia');
         insert country4;
 
-		Id rtIdBr = [ SELECT Id FROM RecordType 
-		WHERE SobjectType = 'Account'
-		AND DeveloperName = 'IATA_Agency'][0].Id; 
-
+		Id rtIdBr = RecordTypeSingleton.getInstance().getRecordTypeId('Account', 'IATA_Agency');
 
 		Account parent = ISSP_ObjectFactory.createNewAccount();
         parent.BillingCity = 'test';
@@ -531,10 +528,7 @@ System.debug('mCountries 2: ' + bulletin_0.mCountries);
                                     Region__c = 'China & North Asia');
         insert country4;
 
-        Id rtIdBr = [ SELECT Id FROM RecordType 
-        WHERE SobjectType = 'Account'
-        AND DeveloperName = 'IATA_Agency'][0].Id; 
-
+        Id rtIdBr = RecordTypeSingleton.getInstance().getRecordTypeId('Account', 'IATA_Agency');
 
         Account parent = ISSP_ObjectFactory.createNewAccount();
         parent.BillingCity = 'test';

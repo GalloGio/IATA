@@ -629,7 +629,7 @@ background-color:#428bca;
       -->
       <apex:form id="LselectLanguage" rendered="{!communityName!='CNS'}">
       	<apex:selectList id="LanguageLocaleKeySelect" value="{!selectedLanguage}" size="1" onchange="changeLanguageLocaleKey(this);"> 
-              <apex:selectOption itemValue="-- Language --" itemLabel="Language"/>
+              <apex:selectOption itemValue="-- Language --" itemLabel="Language" itemDisabled="true"/>
               <apex:selectOptions value="{!languages}"/>
         </apex:selectList>
       </apex:form>

@@ -124,7 +124,8 @@ public with sharing class UserProvisioningTestUtils {
         
         insert ISO_Country;
         
-        String recordTypeId = [SELECT Id FROM RecordType WHERE DeveloperName = 'IATA_Airline'].Id;
+        ID recordTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('Account', 'IATA_Airline');
+        
         Account acc = ISSP_ObjectFactory.createNewAccount();
         acc.IATACode__c = '100';
         acc.IATA_ISO_Country__c = ISO_Country.Id;
@@ -132,10 +133,6 @@ public with sharing class UserProvisioningTestUtils {
         acc.Airline_designator__c = 'TT';
         acc.Name = 'TestAccount';
         insert acc;
-
-        RecordType rt = [Select r.Id,r.Name, r.DeveloperName From RecordType r where  DeveloperName='Standard_Contact'];
-
-
 
  		Contact c = new Contact ( accountid = acc.id, FirstName = 'AAAlberto'  , LastName = 'Borges' , Phone = 'phone' , Fax = 'fax', Title='jobtitle', Membership_Function__c = 'functionpick', Preferred_Language__c='preferredlanguage', email='testddd.fff@gmail.com');
   		insert c;

@@ -340,13 +340,9 @@ private class Faq2CaseTest {
     @isTest
     static void testFaq2CaseExt() 
     {
-        Id rtIdHq = [ SELECT Id FROM RecordType 
-        WHERE SobjectType = 'Account'
-        AND DeveloperName = 'IATA_Airline'][0].Id;
+        Id rtIdHq = RecordTypeSingleton.getInstance().getRecordTypeId('Account', 'IATA_Airline');
 
-        Id rtIdBr = [ SELECT Id FROM RecordType 
-        WHERE SobjectType = 'Account'
-        AND DeveloperName = 'IATA_Airline_BR'][0].Id;                       
+        Id rtIdBr = RecordTypeSingleton.getInstance().getRecordTypeId('Account', 'IATA_Airline_BR');                    
 
         Account parent = ISSP_ObjectFactory.createNewAccount();
         parent.BillingCity = 'test';
@@ -405,7 +401,7 @@ private class Faq2CaseTest {
         Contact contact = ISSP_ObjectFactory.createNewContact();
         insert contact;
         ISSP_Case cttr = new ISSP_Case();
-        String recordTypeId = [SELECT Id FROM RecordType WHERE Name = 'DPC Service Request'].Id;
+        Id recordTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('Case', 'DPC_Service_Request');
         Case c=new Case(Subject='test 1',Status='Open', AccountId=account.id, ContactId=contact.id,Region__c = 'Europe', RecordTypeId = recordTypeId);
         insert c;
         User currentUserInfo = [select LanguageLocaleKey from User where Id = :UserInfo.getUserId()];
@@ -647,7 +643,7 @@ private class Faq2CaseTest {
         IATA_ISO_Country__c country = new IATA_ISO_Country__c(name = 'test', ISO_Code__c = 't1', Case_BSP_Country__c = 'test1', Region__c = 'test');
         insert country;
 
-        String recordTypeId = [SELECT Id FROM RecordType WHERE Name = 'DPC Service Request'].Id;
+        Id recordTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('Case', 'DPC_Service_Request');
 
         Case c=new Case(Subject='test 1',Status='Open', AccountId=parent.id, ContactId=con.id,Region__c = 'Europe', IFAP_Country_ISO__c ='t1' , RecordTypeId = recordTypeId);
         insert c;
@@ -696,7 +692,7 @@ private class Faq2CaseTest {
 
     @isTest
 	static void testFaq2Case007() {
-		Id agencyRecordTypeId = [SELECT Id FROM RecordType WHERE SObjectType='Account' AND DeveloperName='IATA_Agency'].Id;
+		Id agencyRecordTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('Account', 'IATA_Agency');
 		Account testAccount = new Account(
 			name= 'testAccount',
 			CNS_Account__c = true,
@@ -707,7 +703,7 @@ private class Faq2CaseTest {
 		IATA_ISO_Country__c country = new IATA_ISO_Country__c(name = 'United States', ISO_Code__c = 't1', Case_BSP_Country__c = 'test1', Region__c = 'test');
 		insert country;
 
-		String recordTypeId = [SELECT Id FROM RecordType WHERE Name = 'DPC Service Request'].Id;
+		Id recordTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('Case', 'DPC_Service_Request');
 
         con.AccountId= testAccount.Id;
 		con.Email = 'Test@test11.com';
@@ -761,7 +757,7 @@ private class Faq2CaseTest {
 
     @isTest
     static void testFaq2Case008() {
-        Id agencyRecordTypeId = [SELECT Id FROM RecordType WHERE SObjectType='Account' AND DeveloperName='IATA_Agency'].Id;
+        Id agencyRecordTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('Account', 'IATA_Agency');
         Account testAccount = new Account(
             name= 'testAccount',
             CNS_Account__c = true,
@@ -772,7 +768,7 @@ private class Faq2CaseTest {
         IATA_ISO_Country__c country = new IATA_ISO_Country__c(name = 'Spain', ISO_Code__c = 't1', Case_BSP_Country__c = 'test1', Region__c = 'test');
         insert country;
 
-        String recordTypeId = [SELECT Id FROM RecordType WHERE Name = 'DPC Service Request'].Id;
+        Id recordTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('Case', 'DPC_Service_Request');
 
         con.AccountId= testAccount.Id;
         con.Email = 'Test@test11.com';
@@ -835,7 +831,7 @@ private class Faq2CaseTest {
         IATA_ISO_Country__c country = new IATA_ISO_Country__c(name = 'Spain', ISO_Code__c = 't1', Case_BSP_Country__c = 'test1', Region__c = 'test');
         insert country;
         
-        String recordTypeId = [SELECT Id FROM RecordType WHERE Name = 'DPC Service Request'].Id;
+        Id recordTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('Case', 'DPC_Service_Request');
         con.AccountId= testAccount.Id;
         con.Email = 'Test@test11.com';
         con.CNS_Contact__c = true;
@@ -941,7 +937,7 @@ private class Faq2CaseTest {
         system.debug('isoCisoC ' + isoC);
         
         //Account
-        Id agencyRecordTypeId = [SELECT Id FROM RecordType WHERE SObjectType='Account' AND DeveloperName='IATA_Airline'].Id;
+        Id agencyRecordTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('Account', 'IATA_Airline');
         Account testAccount = new Account(
             name= 'testAccount',
             RecordTypeId = agencyRecordTypeId,

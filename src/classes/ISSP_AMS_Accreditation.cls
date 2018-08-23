@@ -3,6 +3,8 @@ public without sharing class ISSP_AMS_Accreditation {
     private static String OSCAR_RECORD_TYPE_ID = RecordTypeSingleton.getInstance().getRecordTypeId('Case', 'OSCAR_Communication');
     private static String RECORD_TYPE_ID = SAAM_RECORD_TYPE_ID;
     
+    private Map<String, String> amsAccrContactRecordTypesMap = RecordTypeSingleton.getInstance().getMapRecordTypesBySObject('AMS_Accreditation_Contact__c');
+
     public static String FILE_ID_FOR_PARTNERSHIP  {get{ return 'Signed Application Form';}}
     public static  Integer MAX_IFAP_Contacts {get{ return 1;} private set;}
     private static integer MAX_AgencyAccount_LOOKUPS_ALLOWED = 20;
@@ -1658,6 +1660,12 @@ public without sharing class ISSP_AMS_Accreditation {
 
             fetchAccountConcernedDetails();
 
+            //AMSU-140 update newForm.location_class from the Account_Concerned
+            newForm.Location_Class__c = accountConcerned.Location_Class__c;
+            if(newForm.Location_Class__c == 'I'){  //AMSU-140
+                newCase.Visible_on_ISS_Portal__c = true;
+            }
+
             updateNoCReasonSubject();
 
             if (isocountry.OSCAR_enabled__c && (!isocountry.SAAM_enable_non_IATA_Cargo_Agents__c ||
@@ -2219,13 +2227,11 @@ public without sharing class ISSP_AMS_Accreditation {
                            AND RecordTypeId != :rtAccreditContPreviousOwner
                            ];
 
-        //System.Debug('Contact type:' + contactType);
         if (contactType == 'Company' || contactType == 'Current Company Owner') {
             newContact.First_name__c = '';
             newContact.Last_name__c = newContact.Name;
             newContact.Agency_owner__c = true;
-            //newContact.Phone__c = '000 000 00 00';
-            //newContact.Email__c = 'dummy@gmail.com';
+
             if (companyModalNameOfEmployer == '' && iatacode != '' && iatacode != null) {
                 myMsg = new ApexPages.Message(ApexPages.Severity.ERROR, Label.ISSP_AMS_Invalid_IATA_Code);
                 ApexPages.addMessage(myMsg);
@@ -2252,8 +2258,8 @@ public without sharing class ISSP_AMS_Accreditation {
             trainedStaffContact.Name = trainedStaffContact.First_name__c + ' ' + trainedStaffContact.Last_name__c;
         }
 
-        if (Test.IsRunningTest() == false) {
-            contactToUpsert.RecordTypeId = Schema.SObjectType.AMS_Accreditation_Contact__c.RecordTypeInfosByName.get(contactType).RecordTypeId;
+        if (!Test.IsRunningTest()) {
+            contactToUpsert.RecordTypeId = amsAccrContactRecordTypesMap.get(contactType);
         }
 
         if (sector == AMS_Utils.SECTOR_PASSENGER) {
@@ -3117,6 +3123,8 @@ public without sharing class ISSP_AMS_Accreditation {
                 //NEWGEN 683
                 if (getIsAccreditationModelNotNullOrLegacy()) {
                     typeOfProcess = AMS_UTILS.NGCHANGES;
+                } else if(newCase.Reason1__c == 'Corrections') {//AMSU-140
+                    typeOfProcess = AMS_Utils.COR;  
                 } else {
                     typeOfProcess = 'MAJOR.CHANGES';
                 }
@@ -3128,6 +3136,8 @@ public without sharing class ISSP_AMS_Accreditation {
                 typeOfProcess = 'ANG.NEW.HE.LITE.1.0';
             else if(newCase.Reason1__c == AMS_UTILS.CASE_REASON_ASSOCIATE_ENTITY_STANDARD)
               typeOfProcess = 'ANG.NEW.AE.1.0';
+            else if(newCase.Reason1__c == 'Corrections') //AMSU-140
+              typeOfProcess = AMS_Utils.COR;  
 
             SYSTEM.DEBUG('accountId for OSCAR: ' + accountId);
 
@@ -7224,6 +7234,9 @@ System.DEBUG('validateCharactersInForm  - 4 - errorFound: '+errorFound);
         if (isBankAccountChange) {
             newCase.Reason1__c = 'Bank Detail Update';
             newCase.Subject = Label.ISSP_AMS_NoC_Direct_Debit_Change + ' – ' + accountConcerned.IATACode__c + ' – ' + accountConcerned.Name;
+        } else if(newForm.Location_Class__c == 'I'){  //AMSU-140
+            newCase.Reason1__c = 'Corrections';
+            newCase.Subject =  'Agency Changes – ' + accountConcerned.Name;
         } else if ((newForm.Is_change_location__c && newForm.Is_change_legal_name__c) || (newForm.Is_change_location__c && newForm.Is_change_ownership_or_shareholding__c) || (newForm.Is_change_ownership_or_shareholding__c && newForm.Is_change_legal_name__c)) {
             newCase.Reason1__c = 'Major Change';
             newCase.Subject = Label.ISSP_AMS_NoC_Multiple_Changes + ' – ' + accountConcerned.IATACode__c + ' – ' + accountConcerned.Name;

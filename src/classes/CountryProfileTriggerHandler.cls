@@ -104,7 +104,7 @@ public class CountryProfileTriggerHandler{
         map<Id, String> mapNotificationsPerCountryProfileId = new map<Id, String>();
         List<Notification__c> lstNotificationsToInsert = new List<Notification__c>();
 
-        Id newsRtId = Schema.SObjectType.Comment__c.RecordTypeInfosByName.get('3. Country Profile News').RecordTypeId;
+        Id newsRtId = RecordTypeSingleton.getInstance().getRecordTypeId('Comment__c', 'Country_Profile_News');
         // We need to do another loop as it's independent from history, and will be executed even if there are no changes to other fields.
         for(Country_Profile__c newProfile : newItems.values()){
             /* NEWS Update */

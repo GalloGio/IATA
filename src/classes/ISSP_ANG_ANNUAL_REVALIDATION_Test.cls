@@ -1,9 +1,9 @@
 @isTest
 private class ISSP_ANG_ANNUAL_REVALIDATION_Test {
 
-	private static Id rtAgency = Schema.SObjectType.Account.getRecordTypeInfosByName().get('Agency').getRecordTypeId();
-	private static Id rtOscar = Schema.SObjectType.AMS_OSCAR__c.getRecordTypeInfosByName().get('ANG.ANNUAL.REVALIDATION').getRecordTypeId();
-	private static Id rtCase = Schema.SObjectType.Case.getRecordTypeInfosByName().get('OSCAR Communication').getRecordTypeId();
+	private static Id rtAgency = RecordTypeSingleton.getInstance().getRecordTypeId('Account', 'IATA_Agency');
+	private static Id rtOscar = RecordTypeSingleton.getInstance().getRecordTypeId('AMS_OSCAR__c', 'ANG_ANNUAL_REVALIDATION'); 
+	private static Id rtCase = RecordTypeSingleton.getInstance().getRecordTypeId('Case', 'OSCAR_Communication');
 
 	@isTest
 	static void test1() {

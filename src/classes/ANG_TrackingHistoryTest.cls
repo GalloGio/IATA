@@ -14,7 +14,7 @@ private class ANG_TrackingHistoryTest {
 		acc.Location_Class__c = 'P';
 		acc.IATA_ISO_Country__c = ctry.Id;
 		acc.Reason_for_creation__c = 'Account is missing';
-		acc.RecordTypeId = Schema.SObjectType.Account.RecordTypeInfosByName.get('Standard Account').RecordTypeId ;
+		acc.RecordTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('Account', 'Standard_Account') ;
 		acc.VAT_Number_2__c = '666';
 		acc.Abbreviated_address__c = 'Lisbon';
 		acc.Legal_Name__c = 'Winterfell';

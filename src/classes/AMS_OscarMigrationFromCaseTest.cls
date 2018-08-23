@@ -3,7 +3,7 @@ private class AMS_OscarMigrationFromCaseTest {
 	
     static testmethod void AMS_OscarMigrationFromCaseTestCase1() {
       
-      	RecordType SAAMcaseRecordType = [Select r.Id, r.Name from RecordType r where r.Name = 'SAAM' limit 1];
+      	Id SAAMcaseRecordTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('Case', 'ProcessEuropeSCE');
 
 		// create test account1
 		Account account1 = new Account();
@@ -32,7 +32,7 @@ private class AMS_OscarMigrationFromCaseTest {
 		saamCase.Subject = 'Test SAAM case';
 		saamCase.Description = 'Test SAAM case';
 		saamCase.Status = 'Open';
-		saamCase.RecordTypeId = SAAMcaseRecordType.Id;
+		saamCase.RecordTypeId = SAAMcaseRecordTypeId;
 		saamCase.Reason1__c = 'New HO';
 		insert saamCase;
 
@@ -56,7 +56,7 @@ private class AMS_OscarMigrationFromCaseTest {
 
         static testmethod void AMS_OscarMigrationFromCaseTestCaseError1() {
       
-      	RecordType SAAMcaseRecordType = [Select r.Id, r.Name from RecordType r where r.Name = 'SAAM' limit 1];
+      	Id SAAMcaseRecordTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('Case', 'ProcessEuropeSCE');
 
 		// create test account1
 		Account account1 = new Account();
@@ -85,7 +85,7 @@ private class AMS_OscarMigrationFromCaseTest {
 		saamCase.Subject = 'Test SAAM case';
 		saamCase.Description = 'Test SAAM case';
 		saamCase.Status = 'Open';
-		saamCase.RecordTypeId = SAAMcaseRecordType.Id;
+		saamCase.RecordTypeId = SAAMcaseRecordTypeId;
 		saamCase.Reason1__c = 'New HO wrong';
 		insert saamCase;
 
@@ -109,7 +109,7 @@ private class AMS_OscarMigrationFromCaseTest {
 	
 	static testmethod void AMS_OscarMigrationFromCaseTestCaseError2() {
       
-      	RecordType SAAMcaseRecordType = [Select r.Id, r.Name from RecordType r where r.Name = 'SAAM' limit 1];
+      	Id SAAMcaseRecordTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('Case', 'ProcessEuropeSCE');
 
 		// create test account1
 		Account account1 = new Account();
@@ -138,7 +138,7 @@ private class AMS_OscarMigrationFromCaseTest {
 		saamCase.Subject = 'Test SAAM case';
 		saamCase.Description = 'Test SAAM case';
 		saamCase.Status = 'Open';
-		saamCase.RecordTypeId = SAAMcaseRecordType.Id;
+		saamCase.RecordTypeId = SAAMcaseRecordTypeId;
 		saamCase.Reason1__c = 'New HO wrong';
 		insert saamCase;
 
@@ -163,7 +163,7 @@ private class AMS_OscarMigrationFromCaseTest {
 
     static testmethod void AMS_OscarMigrationFromCaseTestCaseBankChanges() {
     	insert new ISSP_CS__c(Name = 'No Notification Email Contact Id',Value__c = null);
-    	RecordType SAAMcaseRecordType = [Select r.Id, r.Name from RecordType r where r.Name = 'SAAM' limit 1];
+    	Id SAAMcaseRecordTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('Case', 'ProcessEuropeSCE');
 
     	IATA_ISO_Country__c country = new IATA_ISO_Country__c(name = 'test', IATA_Contry_KR__c = 'test',
                                     IATA_COUNTRY_EN__c = 'testEN' , IATA_Country_FR__c = 'testFR' , IATA_Country_ZH__c = 'testZH' ,
@@ -173,8 +173,7 @@ private class AMS_OscarMigrationFromCaseTest {
                                     Local_language_Agency_details_required__c = true);
         insert country;
 
-        Id rtIdBr = [ SELECT Id FROM RecordType WHERE SobjectType = 'Account' AND DeveloperName = 'IATA_Agency'][0].Id; 
-
+        Id rtIdBr = RecordTypeSingleton.getInstance().getRecordTypeId('Account', 'IATA_Agency');
 
         Account parent = ISSP_ObjectFactory.createNewAccount();
         parent.BillingCity = 'test';
@@ -221,7 +220,7 @@ private class AMS_OscarMigrationFromCaseTest {
 		saamCase.Subject = 'Test SAAM case';
 		saamCase.Description = 'Test SAAM case';
 		saamCase.Status = 'Open';
-		saamCase.RecordTypeId = SAAMcaseRecordType.Id;
+		saamCase.RecordTypeId = SAAMcaseRecordTypeId;
 		saamCase.Reason1__c = 'New HO';
 		saamCase.OwnerId = UserInfo.getUserId();
 		insert saamCase;
@@ -255,7 +254,7 @@ private class AMS_OscarMigrationFromCaseTest {
 
     static testmethod void testIEPBankAccountSetupMigrationProcess() {
     	//insert new ISSP_CS__c(Name = 'No Notification Email Contact Id',Value__c = null);
-    	RecordType SAAMcaseRecordType = [Select r.Id, r.Name from RecordType r where r.Name = 'SAAM' limit 1];
+    	Id SAAMcaseRecordTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('Case', 'ProcessEuropeSCE');
 
     	IATA_ISO_Country__c country = new IATA_ISO_Country__c(name = 'test', IATA_Contry_KR__c = 'test',
                                     IATA_COUNTRY_EN__c = 'testEN' , IATA_Country_FR__c = 'testFR' , IATA_Country_ZH__c = 'testZH' ,
@@ -265,8 +264,7 @@ private class AMS_OscarMigrationFromCaseTest {
                                     Local_language_Agency_details_required__c = true);
         insert country;
 
-        Id rtIdBr = [ SELECT Id FROM RecordType WHERE SobjectType = 'Account' AND DeveloperName = 'IATA_Agency'][0].Id; 
-
+        Id rtIdBr = RecordTypeSingleton.getInstance().getRecordTypeId('Account', 'IATA_Agency');
 
         Account agency = ISSP_ObjectFactory.createNewAccount();
         agency.BillingCity = 'test';
@@ -312,7 +310,7 @@ private class AMS_OscarMigrationFromCaseTest {
 		saamCase.Subject = 'Test SAAM case';
 		saamCase.Description = 'Test SAAM case';
 		saamCase.Status = 'Open';
-		saamCase.RecordTypeId = SAAMcaseRecordType.Id;
+		saamCase.RecordTypeId = SAAMcaseRecordTypeId;
 		saamCase.Type_of_customer__c = 'Auditors';
 		saamCase.OwnerId = UserInfo.getUserId();
 		saamCase.Origin = 'Email';

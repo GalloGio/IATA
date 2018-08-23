@@ -189,7 +189,7 @@ trigger CaseBeforeTrigger on Case (before delete, before insert, before update) 
                         contacts = [Select c.Id, c.Agent_Type__c, c.AccountId From Contact c where Id IN : contactIds];
                     }
                     if(!IFAPaccountIds.isEmpty()){
-                        accounts = [Select a.Id, a.IATACode__c, a.BillingCountry, a.Type From Account a where Id IN : IFAPaccountIds];
+                        accounts = [Select a.Id, a.IATACode__c, a.BillingCountry, a.Type, a.RecordType.DeveloperName, a.CNS_Account__c From Account a where Id IN : IFAPaccountIds];
                     }
                     System.debug('QUERY DEBUG' + Limits.getQueryRows());
                     //GM - IMPRO - START
@@ -232,6 +232,9 @@ trigger CaseBeforeTrigger on Case (before delete, before insert, before update) 
                         for (Account aAccount : accounts) {
                             if (aAccount.Id == aCase.AccountId) {
                                 accountMap.put(aCase.id, aAccount);
+                                if(aAccount.RecordType.DeveloperName == 'IATA_Agency' && aAccount.CNS_Account__c){
+                                    aCase.CNSCase__c = true;
+                                }
                                 break;
                             }
                         }
@@ -617,7 +620,7 @@ trigger CaseBeforeTrigger on Case (before delete, before insert, before update) 
             string airlineJoining = 'Airline Joining';
             string airlineSuspension = 'Airline Suspension Process';
             String separator = '%%%__%%%';
-            string APCaseRTID = Schema.SObjectType.Case.RecordTypeInfosByName.get('IDFS Airline Participation Process').RecordTypeId ;
+            Id APCaseRTID = RecordTypeSingleton.getInstance().getRecordTypeId('Case', 'IDFS_Airline_Participation_Process');
             //date pretrasfomrationDate =  date.newinstance(2013, 11, 30);
         list<case> casesToTrigger = new list<Case>();
         for (case c: trigger.new) {

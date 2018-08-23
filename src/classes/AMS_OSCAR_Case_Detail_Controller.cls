@@ -18,7 +18,7 @@ public with sharing class AMS_OSCAR_Case_Detail_Controller {
     public Boolean displayErrorMsg{get{return false;} set;}
 
     //FM AMSU-1
-    public ID corrRT {get{return Schema.SObjectType.AMS_OSCAR__c.getRecordTypeInfosByName().get('CORRECTION').getRecordTypeId();}set;}
+    public ID corrRT {get{return RecordTypeSingleton.getInstance().getRecordTypeId('AMS_OSCAR__c', 'CORRECTION');}set;}
         
 
         //this flag will controll if picklist or multipicklist is displayed for Remittance Frequency 

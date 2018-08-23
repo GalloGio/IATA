@@ -3,8 +3,7 @@ private class CaseFinancialSecuritiesCTRLTest {
         
     static testMethod void myUnitTest() {
                         
-        //ID hqrt =Schema.SObjectType.Account.RecordTypeInfosByName.get('Airline Headquarters').RecordTypeId ;
-		ID hqrt =Schema.SObjectType.Account.RecordTypeInfosByName.get('Agency').RecordTypeId ;
+		ID hqrt =RecordTypeSingleton.getInstance().getRecordTypeId('Account', 'IATA_Agency') ;
         ID IFAPcaseRecordTypeID = RecordTypeSingleton.getInstance().getRecordTypeId('Case', 'IATA_Financial_Review'); 
          
         IATA_ISO_Country__c isoCountry = new IATA_ISO_Country__c(name = 'suisse',ISO_Code__c ='SS',AIMS_Area_Name__c='suisse',AIMS_Area_ID__c= '1' );
