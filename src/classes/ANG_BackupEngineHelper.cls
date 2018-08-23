@@ -132,7 +132,7 @@ global without sharing class ANG_BackupEngineHelper implements Queueable{
 			return;
 
 		Set<Id> accountIds = new Set<Id>();
-		accountIds.addAll(fetchHierarchySelection(oscarId));
+		accountIds.addAll(fetchHierarchySelection(oscar.Account__c));
 		accountIds.add(oscar.account__c);
 
 		if(oscar.ANG_Type_Of_Change__c.contains(AMS_Utils.ANG_LOCATION_TYPE) || oscar.ANG_Type_Of_Change__c.contains(AMS_Utils.ANG_LOCATION_TYPE_DIFFLEGALENTITY)){
@@ -227,13 +227,21 @@ global without sharing class ANG_BackupEngineHelper implements Queueable{
 
 	}
 
-	private Set<Id> fetchHierarchySelection(Id oscarId){
+	private Set<Id> fetchHierarchySelection(Id accountOscar){
 
 		Set<Id> accountIds = new Set<Id>();
+		
+		Account acct = [Select Id, Location_Type__c, ParentId from Account where Id =:accountOscar];
+		Id accountId = acct.Id;
+		
+		if(acct.Location_Type__c <> AMS_Utils.HE)
+			accountId = acct.ParentId;
 
-		for(AMS_Process_Detail__c pd: [Select Id, Account__c from AMS_Process_Detail__c where OSCAR__c =:oscarId])
-			accountIds.add(pd.Account__c);
+		for(Account acctToSearch: [Select Id from Account where ParentId =:accountId])
+			accountIds.add(acctToSearch.Id);
 	
+		accountIds.add(accountId);
+
 		return accountIds;
 	}
 
