@@ -1560,13 +1560,13 @@ global class ANG_OscarProcessHelper {
 
 	    for (Id conId :templateContIdMap.keyset()){
 
-	    	if(conId == ANG_FOPOSCARNotificationBatch.FOP_REMINDER_TEMPLATE_ID)) AMS_AgencyRegulationAutoRenewal.sendEmailAlert(new List<Contact>{contacts.get(conId)}, contactCaseMap.get(conId).OSCAR__c, AMS_OSCARTriggerHandler.ANGemailTemplates(ANG_FOPOSCARNotificationBatch.FOP_REMINDER_TEMPLATE_ID, null, false), contactCaseMap.get(conId).Id, owea[0], false);
+	    	if(conId == ANG_FOPOSCARNotificationBatch.FOP_REMINDER_TEMPLATE_ID) AMS_AgencyRegulationAutoRenewal.sendEmailAlert(new List<Contact>{contacts.get(conId)}, contactCaseMap.get(conId).OSCAR__c, AMS_OSCARTriggerHandler.ANGemailTemplates(ANG_FOPOSCARNotificationBatch.FOP_REMINDER_TEMPLATE_ID, null, false), contactCaseMap.get(conId).Id, owea[0], false);
 
-	    	else if(conId == ANG_FOPOSCARNotificationBatch.FOP_NONCOMPLIANCE_TEMPLATE_ID)) AMS_AgencyRegulationAutoRenewal.sendEmailAlert(new List<Contact>{contacts.get(conId)}, contactCaseMap.get(conId).OSCAR__c, AMS_OSCARTriggerHandler.ANGemailTemplates(ANG_FOPOSCARNotificationBatch.FOP_NONCOMPLIANCE_TEMPLATE_ID, null, false), contactCaseMap.get(conId).Id, owea[0], false);			
+	    	else if(conId == ANG_FOPOSCARNotificationBatch.FOP_NONCOMPLIANCE_TEMPLATE_ID) AMS_AgencyRegulationAutoRenewal.sendEmailAlert(new List<Contact>{contacts.get(conId)}, contactCaseMap.get(conId).OSCAR__c, AMS_OSCARTriggerHandler.ANGemailTemplates(ANG_FOPOSCARNotificationBatch.FOP_NONCOMPLIANCE_TEMPLATE_ID, null, false), contactCaseMap.get(conId).Id, owea[0], false);			
 	    	
-	    	else if(conId == ANG_FOPOSCARNotificationBatch.RENEWAL_FOP_REMINDER_TEMPLATE_ID)) AMS_AgencyRegulationAutoRenewal.sendEmailAlert(new List<Contact>{contacts.get(conId)}, contactCaseMap.get(conId).OSCAR__c, AMS_OSCARTriggerHandler.ANGemailTemplates(ANG_FOPOSCARNotificationBatch.RENEWAL_FOP_REMINDER_TEMPLATE_ID, null, false), contactCaseMap.get(conId).Id, owea[0], false);
+	    	else if(conId == ANG_FOPOSCARNotificationBatch.RENEWAL_FOP_REMINDER_TEMPLATE_ID) AMS_AgencyRegulationAutoRenewal.sendEmailAlert(new List<Contact>{contacts.get(conId)}, contactCaseMap.get(conId).OSCAR__c, AMS_OSCARTriggerHandler.ANGemailTemplates(ANG_FOPOSCARNotificationBatch.RENEWAL_FOP_REMINDER_TEMPLATE_ID, null, false), contactCaseMap.get(conId).Id, owea[0], false);
 	    	
-	    	else if(conId == ANG_FOPOSCARNotificationBatch.FOP_NONCOMPLIANCE_TEMPLATE_ID)) AMS_AgencyRegulationAutoRenewal.sendEmailAlert(new List<Contact>{contacts.get(conId)}, contactCaseMap.get(conId).OSCAR__c, AMS_OSCARTriggerHandler.ANGemailTemplates(ANG_FOPOSCARNotificationBatch.RENEWAL_FOP_NONCOMPLIANCE_TEMPLATE_ID, null, false), contactCaseMap.get(conId).Id, owea[0], false)
+	    	else if(conId == ANG_FOPOSCARNotificationBatch.FOP_NONCOMPLIANCE_TEMPLATE_ID) AMS_AgencyRegulationAutoRenewal.sendEmailAlert(new List<Contact>{contacts.get(conId)}, contactCaseMap.get(conId).OSCAR__c, AMS_OSCARTriggerHandler.ANGemailTemplates(ANG_FOPOSCARNotificationBatch.RENEWAL_FOP_NONCOMPLIANCE_TEMPLATE_ID, null, false), contactCaseMap.get(conId).Id, owea[0], false);
 	    }
 
 	}
