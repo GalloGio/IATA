@@ -24614,7 +24614,7 @@ an IATA accredited agency, please press &quot;Back&quot; button and select anoth
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>OneId_FRED_ContactUs_Link</shortDescription>
-        <value>http://www.iata.org/whatwedo/environment/Pages/FRED+release-subscription.aspx</value>
+        <value>https://fred-qa.iata.org/contact</value>
     </labels>
     <labels>
         <fullName>OneId_FRED_Troubleshooting</fullName>
