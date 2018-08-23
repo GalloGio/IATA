@@ -125,7 +125,7 @@ public class ANG_RHCInformationTriggerHandler{
 		}
 
 		if(!accIds.isEmpty()) {
-			if(Limits.getLimitQueueableJobs() < Limits.getQueueableJobs()) System.enqueueJob(new ANG_UpdateRHCInformationBatch(accIds, ANG_UpdateRHCInformationBatch.Process.PROVISIONAL, true, 1));
+			if(Limits.getLimitQueueableJobs() > Limits.getQueueableJobs()) System.enqueueJob(new ANG_UpdateRHCInformationBatch(accIds, ANG_UpdateRHCInformationBatch.Process.PROVISIONAL, true, 1));
 			else Database.executeBatch(new ANG_UpdateRHCInformationBatch(accIds, ANG_UpdateRHCInformationBatch.Process.PROVISIONAL, true, 1));
 		}	
 	}
