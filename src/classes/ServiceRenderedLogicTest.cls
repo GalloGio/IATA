@@ -43,11 +43,11 @@ private class ServiceRenderedLogicTest {
         insert con;
 
 
-        recordType APCaseRT = [SELECT Id FROM RecordType WHERE SObjectType = 'Case' AND DeveloperName = 'IDFS_Airline_Participation_Process'];
+        Id APCaseRtId = RecordTypeSingleton.getInstance().getRecordTypeId('Case', 'IDFS_Airline_Participation_Process');
         date dateOFApp = date.newInstance(1980, 5, 14);
 
         Case c = new Case(CaseArea__c = 'Airline Joining',
-                          RecordTypeID =  APCaseRT.id,
+                          RecordTypeID =  APCaseRTId,
                           AccountId = Cons.id,
                           ContactId = con.Id,
                           Provider__c = prov.id,
@@ -95,11 +95,11 @@ private class ServiceRenderedLogicTest {
         insert Cons;
 
 
-        recordType APCaseRT = [SELECT Id FROM RecordType WHERE SObjectType = 'Case' AND DeveloperName = 'IDFS_Airline_Participation_Process'];
+        Id APCaseRtId = RecordTypeSingleton.getInstance().getRecordTypeId('Case', 'IDFS_Airline_Participation_Process');
         date dateOFApp = date.newInstance(1980, 5, 14);
 
         Case c = new Case(CaseArea__c = 'Airline Joining',
-                          RecordTypeID =  APCaseRT.id,
+                          RecordTypeID =  APCaseRTId,
                           AccountId = Cons.id,
                           Provider__c = prov.id,
                           Status = 'Approved',
@@ -138,11 +138,11 @@ private class ServiceRenderedLogicTest {
         insert con;
 
 
-        recordType APCaseRT = [SELECT Id FROM RecordType WHERE SObjectType = 'Case' AND DeveloperName = 'IDFS_Airline_Participation_Process'];
+        Id APCaseRtId = RecordTypeSingleton.getInstance().getRecordTypeId('Case', 'IDFS_Airline_Participation_Process');
         date dateOFApp = date.newInstance(1980, 5, 14);
 
         Case c = new Case(CaseArea__c = 'Airline Joining',
-                          RecordTypeID =  APCaseRT.id,
+                          RecordTypeID =  APCaseRTId,
                           AccountId = Cons.id,
                           ContactId = con.Id,
                           Provider__c = prov.id,
@@ -196,7 +196,7 @@ private class ServiceRenderedLogicTest {
 
         insert servizio;
 
-        recordType APCaseRT = [SELECT Id FROM RecordType WHERE SObjectType = 'Case' AND DeveloperName = 'IDFS_Airline_Participation_Process'];
+        Id APCaseRtId = RecordTypeSingleton.getInstance().getRecordTypeId('Case', 'IDFS_Airline_Participation_Process');
         date dateOFApp = date.newInstance(1980, 5, 14);
 
         TransformationHelper.trgAccountISSP_AfterBeforInsertDeleteUpdateUndelete = false;
@@ -204,7 +204,7 @@ private class ServiceRenderedLogicTest {
         CaseChildHelper.noValidationsOnTrgCAseIFAP  = false;
         test.startTest();
         Case c = new Case(CaseArea__c = 'Airline Leaving',
-                          RecordTypeID =  APCaseRT.id,
+                          RecordTypeID =  APCaseRTId,
                           AccountId = Cons.id,
                           ContactId = con.Id,
                           Provider__c = Cons.ID,

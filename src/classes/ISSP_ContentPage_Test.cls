@@ -15,7 +15,7 @@ private class ISSP_ContentPage_Test {
 	    topacc.IATACode__c = '222';
 	    topacc.IATA_ISO_Country__c = ISO_Country.Id;
 	    topacc.BillingCity = 'TestCountry';
-	    topacc.RecordTypeId = [SELECT Id FROM RecordType r WHERE SobjectType = 'Account' AND DeveloperName = 'IATA_Agency'][0].Id;
+	    topacc.RecordTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('Account', 'IATA_Agency');
 	    topacc.Name = 'SomeAccocunt Name';
 	    insert topacc;
 

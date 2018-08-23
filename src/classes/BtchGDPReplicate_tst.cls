@@ -30,14 +30,7 @@ private class BtchGDPReplicate_tst {
 	 @testSetup static void Init() {
 		insert new IEC_GDP_Replication__c(Schedule_Active__c = true, Schedule_Period__c = 24, System_Admin_Email__c = 'saieds@iata.org');
 		
-		//Use a map of RecordTypeid to avoid making too many SOQL calls
-		Map<string,id>  RecTypeMap = new Map<string,id>();
-		for(recordType RT : [SELECT id, DeveloperName, sObjectType FROM recordType])
-			RecTypeMap.put(RT.sObjectType+'.'+RT.DeveloperName, RT.Id);
-		
-		
 		list<sObject> sObjList = new list<sObject>();
-		
 		
 		GDP_Reference_Table__c refTableEndorser = new GDP_Reference_Table__c( Code__c = 'IATA', Name='IATA'
 			, Definition__c = 'Test IATA', System_ID__c='ORGABBIATA', System__c='Global', Table__c ='ORGABB');
@@ -48,21 +41,17 @@ private class BtchGDPReplicate_tst {
 		upsert refTable;
 		System.debug( 'GDP_Reference_Table upserted:' + refTable);
 		
-		
-		
 		// Live Data
 		Account oAccount1 = IECTestUtil.CreateSampleAccount();
 		//oAccount1.AIMS_ID__c = IECUtil.NewGuid().substring(0, 10);
 		oAccount1.AIMS_ID__c = aimsID_good;
-//		oAccount1.RecordTypeId = IECUtil.GetRecordTypeId('Account', 'IATA_Agency');
-		oAccount1.RecordTypeId = RecTypeMap.get('Account.IATA_Agency');
+		oAccount1.RecordTypeId = IECUtil.GetRecordTypeId('Account', 'IATA_Agency');
 		oAccount1.IATACode__c = '12345678';
 		sObjList.add(oAccount1);
 		 
 		Account oAccount2 = IECTestUtil.CreateSampleAccount();
 		oAccount2.WebStar_ID__c = IECUtil.NewGuid().substring(0, 10);
-//		oAccount2.RecordTypeId = IECUtil.GetRecordTypeId('Account', 'IATA_Agency');
-		oAccount2.RecordTypeId = RecTypeMap.get('Account.IATA_Agency');
+		oAccount2.RecordTypeId = IECUtil.GetRecordTypeId('Account', 'IATA_Agency');
 		oAccount2.IATACode__c = '87654321';
 		sObjList.add(oAccount2);
 
@@ -71,16 +60,14 @@ private class BtchGDPReplicate_tst {
 		
 		Account oAccount3 = IECTestUtil.CreateSampleAccount();
 		oAccount3.AIMS_ID__c = IECUtil.NewGuid().substring(0, 10);
-//		oAccount3.RecordTypeId = IECUtil.GetRecordTypeId('Account', 'IATA_Agency');
-		oAccount3.RecordTypeId = RecTypeMap.get('Account.IATA_Agency');
+		oAccount3.RecordTypeId = IECUtil.GetRecordTypeId('Account', 'IATA_Agency');
 		oAccount3.IATACode__c = '45698723';
 		oAccount3.ParentId = oAccount1.Id;
 		sObjList.add(oAccount3);
 		
 		Account oAccount4 = IECTestUtil.CreateSampleAccount();
 		oAccount4.WebStar_ID__c = IECUtil.NewGuid().substring(0, 10);
-//		oAccount4.RecordTypeId = IECUtil.GetRecordTypeId('Account', 'IATA_Agency');
-		oAccount4.RecordTypeId = RecTypeMap.get('Account.IATA_Agency');
+		oAccount4.RecordTypeId = IECUtil.GetRecordTypeId('Account', 'IATA_Agency');
 		oAccount4.IATACode__c = '32178945';
 		oAccount4.ParentId = oAccount2.Id;
 		sObjList.add(oAccount4);
@@ -190,24 +177,21 @@ private class BtchGDPReplicate_tst {
 		GDP_Products_Account_View__c oGDPAccount1 = IECTestUtil.createSampleGDPAccount('Account 1', '1234567'); // aimsID_good
 		oGDPAccount1.AIMS_ID__c = oAccount1.AIMS_ID__c + 'GDP';
 		oGDPAccount1.WebStar_ID__c = null;
-//		oGDPAccount1.RecordTypeId = IECUtil.GetRecordTypeId('GDP_Products_Account_View__c', 'GDP');
-		oGDPAccount1.RecordTypeId = RecTypeMap.get('GDP_Products_Account_View__c.GDP');
+		oGDPAccount1.RecordTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('GDP_Products_Account_View__c', 'GDP');
 		oGDPAccount1.IATA_Code__c = '1234561';
 		sObjList.add(oGDPAccount1);
 		
 		GDP_Products_Account_View__c oGDPAccount2 = IECTestUtil.createSampleGDPAccount('Account 1', '87654321');
 		oGDPAccount2.WebStar_ID__c = oAccount2.WebStar_ID__c + 'GDP';
 		oGDPAccount2.AIMS_ID__c = null;
-//		oGDPAccount2.RecordTypeId = IECUtil.GetRecordTypeId('GDP_Products_Account_View__c', 'GDP');
-		oGDPAccount2.RecordTypeId = RecTypeMap.get('GDP_Products_Account_View__c.GDP');
+		oGDPAccount2.RecordTypeId = IECUtil.GetRecordTypeId('GDP_Products_Account_View__c', 'GDP');
 		oGDPAccount2.IATA_Code__c = '1234562';
 		sObjList.add(oGDPAccount2);
 
 		GDP_Products_Account_View__c oGDPAccount3 = IECTestUtil.createSampleGDPAccount('Account 1', '45698723');
 		oGDPAccount3.AIMS_ID__c = oAccount3.AIMS_ID__c + 'GDP';
 		oGDPAccount3.WebStar_ID__c = null;
-//		oGDPAccount3.RecordTypeId = IECUtil.GetRecordTypeId('GDP_Products_Account_View__c', 'GDP');
-		oGDPAccount3.RecordTypeId = RecTypeMap.get('GDP_Products_Account_View__c.GDP');
+		oGDPAccount3.RecordTypeId = IECUtil.GetRecordTypeId('GDP_Products_Account_View__c', 'GDP');
 		oGDPAccount3.Parent_Account_AIMS_ID__c = oAccount1.AIMS_ID__c;
 		oGDPAccount3.IATA_Code__c = '1234563';
 		sObjList.add(oGDPAccount3);
@@ -215,8 +199,7 @@ private class BtchGDPReplicate_tst {
 		GDP_Products_Account_View__c oGDPAccount4 = IECTestUtil.createSampleGDPAccount('Account 1', '32178945');
 		oGDPAccount4.WebStar_ID__c = oAccount4.WebStar_ID__c + 'GDP';
 		oGDPAccount4.AIMS_ID__c = null;
-//		oGDPAccount4.RecordTypeId = IECUtil.GetRecordTypeId('GDP_Products_Account_View__c', 'GDP');
-		oGDPAccount4.RecordTypeId = RecTypeMap.get('GDP_Products_Account_View__c.GDP');
+		oGDPAccount4.RecordTypeId = IECUtil.GetRecordTypeId('GDP_Products_Account_View__c', 'GDP');
 		oGDPAccount4.Parent_Account_WebStar_ID__c = oAccount2.WebStar_ID__c;
 		oGDPAccount4.IATA_Code__c = '1234564';
 		sObjList.add(oGDPAccount4);

@@ -14,7 +14,7 @@ public class faq_Controller_Test {
 
 
     static testMethod void test1() {
-        String recordTypeId = [SELECT Id FROM RecordType WHERE DeveloperName = 'IATA_Airline'].Id;
+        Id recordTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('Account', 'IATA_Airline');
 
         Account acc = ISSP_ObjectFactory.createNewAccount();
         acc.IATACode__c = '100';
@@ -46,7 +46,7 @@ public class faq_Controller_Test {
     }
 
     static testMethod void test_searchString() {
-        String recordTypeId = [SELECT Id FROM RecordType WHERE DeveloperName = 'IATA_Airline'].Id;
+        Id recordTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('Account', 'IATA_Airline');
 
         Account acc = ISSP_ObjectFactory.createNewAccount();
         acc.IATACode__c = '100';

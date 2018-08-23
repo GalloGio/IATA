@@ -14,10 +14,7 @@ private class ISSP_AMS_Accreditation_Test {
         IATA_ISO_Country__c country2 = new IATA_ISO_Country__c(name = 'test2', ISO_Code__c = 't2', Case_BSP_Country__c = 'test2', CASS_Import__c = 'Yes');
         insert country2;
 
-        Id rtIdBr = [ SELECT Id FROM RecordType
-        WHERE SobjectType = 'Account'
-        AND DeveloperName = 'IATA_Agency'][0].Id;
-
+        Id rtIdBr = RecordTypeSingleton.getInstance().getRecordTypeId('Account', 'IATA_Agency');
 
         Account parent = ISSP_ObjectFactory.createNewAccount();
         parent.BillingCity = 'test';
@@ -106,10 +103,7 @@ private class ISSP_AMS_Accreditation_Test {
         IATA_ISO_Country__c country2 = new IATA_ISO_Country__c(name = 'test2', ISO_Code__c = 't2', Case_BSP_Country__c = 'test2');
         insert country2;
 
-        Id rtIdBr = [ SELECT Id FROM RecordType
-        WHERE SobjectType = 'Account'
-        AND DeveloperName = 'IATA_Agency'][0].Id;
-
+        Id rtIdBr = RecordTypeSingleton.getInstance().getRecordTypeId('Account', 'IATA_Agency');
 
         Account parent = ISSP_ObjectFactory.createNewAccount();
         parent.BillingCity = 'test';
@@ -223,10 +217,7 @@ private class ISSP_AMS_Accreditation_Test {
         IATA_ISO_Country__c country2 = new IATA_ISO_Country__c(name = 'test2', ISO_Code__c = 't2', Case_BSP_Country__c = 'test2');
         insert country2;
 
-        Id rtIdBr = [ SELECT Id FROM RecordType
-        WHERE SobjectType = 'Account'
-        AND DeveloperName = 'IATA_Agency'][0].Id;
-
+        Id rtIdBr = RecordTypeSingleton.getInstance().getRecordTypeId('Account', 'IATA_Agency');
 
         Account parent = ISSP_ObjectFactory.createNewAccount();
         parent.BillingCity = 'test';
@@ -317,10 +308,7 @@ private class ISSP_AMS_Accreditation_Test {
         IATA_ISO_Country__c country2 = new IATA_ISO_Country__c(name = 'test2', ISO_Code__c = 't2', Case_BSP_Country__c = 'test2');
         insert country2;
 
-        Id rtIdBr = [ SELECT Id FROM RecordType
-        WHERE SobjectType = 'Account'
-        AND DeveloperName = 'IATA_Agency'][0].Id;
-
+        Id rtIdBr = RecordTypeSingleton.getInstance().getRecordTypeId('Account', 'IATA_Agency');
 
         Account parent = ISSP_ObjectFactory.createNewAccount();
         parent.BillingCity = 'test';
@@ -413,10 +401,7 @@ private class ISSP_AMS_Accreditation_Test {
         IATA_ISO_Country__c country2 = new IATA_ISO_Country__c(name = 'test2', ISO_Code__c = 't2', Case_BSP_Country__c = 'test2');
         insert country2;
 
-        Id rtIdBr = [ SELECT Id FROM RecordType
-        WHERE SobjectType = 'Account'
-        AND DeveloperName = 'IATA_Agency'][0].Id;
-
+        Id rtIdBr = RecordTypeSingleton.getInstance().getRecordTypeId('Account', 'IATA_Agency');
 
         Account parent = ISSP_ObjectFactory.createNewAccount();
         parent.BillingCity = 'test';
@@ -509,10 +494,7 @@ private class ISSP_AMS_Accreditation_Test {
         IATA_ISO_Country__c country2 = new IATA_ISO_Country__c(name = 'test2', ISO_Code__c = 't2', Case_BSP_Country__c = 'test2', Local_language_Agency_details_required__c = true);
         insert country2;
 
-        Id rtIdBr = [ SELECT Id FROM RecordType
-        WHERE SobjectType = 'Account'
-        AND DeveloperName = 'IATA_Agency'][0].Id;
-
+        Id rtIdBr = RecordTypeSingleton.getInstance().getRecordTypeId('Account', 'IATA_Agency');
 
         Account parent = ISSP_ObjectFactory.createNewAccount();
         parent.BillingStreet = 'test';
@@ -738,10 +720,7 @@ private class ISSP_AMS_Accreditation_Test {
         IATA_ISO_Country__c country2 = new IATA_ISO_Country__c(name = 'test2', ISO_Code__c = 't2', Case_BSP_Country__c = 'test2');
         insert country2;
 
-        Id rtIdBr = [ SELECT Id FROM RecordType
-        WHERE SobjectType = 'Account'
-        AND DeveloperName = 'IATA_Agency'][0].Id;
-
+        Id rtIdBr = RecordTypeSingleton.getInstance().getRecordTypeId('Account', 'IATA_Agency');
 
         Account parent = ISSP_ObjectFactory.createNewAccount();
         parent.BillingCity = 'test';
@@ -912,10 +891,7 @@ private class ISSP_AMS_Accreditation_Test {
         IATA_ISO_Country__c country2 = new IATA_ISO_Country__c(name = 'test2', ISO_Code__c = 't2', Case_BSP_Country__c = 'test2', Local_language_Agency_details_required__c = true);
         insert country2;
 
-        Id rtIdBr = [ SELECT Id FROM RecordType
-        WHERE SobjectType = 'Account'
-        AND DeveloperName = 'IATA_Agency'][0].Id;
-
+        Id rtIdBr = RecordTypeSingleton.getInstance().getRecordTypeId('Account', 'IATA_Agency');
 
         Account parent = ISSP_ObjectFactory.createNewAccount();
         parent.BillingCity = 'test';
@@ -1083,10 +1059,7 @@ private class ISSP_AMS_Accreditation_Test {
         IATA_ISO_Country__c country2 = new IATA_ISO_Country__c(name = 'test2', ISO_Code__c = 't2', Case_BSP_Country__c = 'test2', Local_language_Agency_details_required__c = true);
         insert country2;
 
-        Id rtIdBr = [ SELECT Id FROM RecordType
-        WHERE SobjectType = 'Account'
-        AND DeveloperName = 'IATA_Agency'][0].Id;
-
+        Id rtIdBr = RecordTypeSingleton.getInstance().getRecordTypeId('Account', 'IATA_Agency');
 
         Account parent = ISSP_ObjectFactory.createNewAccount();
         parent.BillingCity = 'test';
@@ -1256,9 +1229,7 @@ private class ISSP_AMS_Accreditation_Test {
         IATA_ISO_Country__c country2 = new IATA_ISO_Country__c(name = 'test2', ISO_Code__c = 't2', Case_BSP_Country__c = 'test2', Local_language_Agency_details_required__c = true);
         insert country2;
 
-        Id rtIdBr = [ SELECT Id FROM RecordType
-        WHERE SobjectType = 'Account'
-        AND DeveloperName = 'IATA_Agency'][0].Id;
+        Id rtIdBr = RecordTypeSingleton.getInstance().getRecordTypeId('Account', 'IATA_Agency');
 
         Account parent = ISSP_ObjectFactory.createNewAccount();
         parent.BillingCity = 'test';
@@ -1465,22 +1436,13 @@ private class ISSP_AMS_Accreditation_Test {
         IATA_ISO_Country__c country2 = new IATA_ISO_Country__c(name = 'test2', ISO_Code__c = 't2', Case_BSP_Country__c = 'test2');
         insert country2;
 
-        Id rtIdBr = [ SELECT Id FROM RecordType
-        WHERE SobjectType = 'Account'
-        AND DeveloperName = 'IATA_Agency'][0].Id;
+        Id rtIdBr = RecordTypeSingleton.getInstance().getRecordTypeId('Account', 'IATA_Agency');
 
-        Id rtIdOff = [ SELECT Id FROM RecordType
-        WHERE SobjectType = 'AMS_Facility__c'
-        AND DeveloperName = 'Office'][0].Id;
+        Id rtIdOff = RecordTypeSingleton.getInstance().getRecordTypeId('AMS_Facility__c', 'Office');
 
-        Id rtIdWar = [ SELECT Id FROM RecordType
-        WHERE SobjectType = 'AMS_Facility__c'
-        AND DeveloperName = 'Warehouse'][0].Id;
+        Id rtIdWar = RecordTypeSingleton.getInstance().getRecordTypeId('AMS_Facility__c', 'Warehouse');
 
-        Id rtIdTS = [ SELECT Id FROM RecordType
-        WHERE SobjectType = 'AMS_Accreditation_Contact__c'
-        AND DeveloperName = 'Trained_Staff'][0].Id;
-
+        Id rtIdTS = RecordTypeSingleton.getInstance().getRecordTypeId('AMS_Accreditation_Contact__c', 'Trained_Staff');
 
         Account parent = ISSP_ObjectFactory.createNewAccount();
         parent.BillingCity = 'test';
@@ -1658,10 +1620,7 @@ private class ISSP_AMS_Accreditation_Test {
         IATA_ISO_Country__c country2 = new IATA_ISO_Country__c(name = 'test2', ISO_Code__c = 't2', Case_BSP_Country__c = 'test2');
         insert country2;
 
-        Id rtIdBr = [ SELECT Id FROM RecordType
-        WHERE SobjectType = 'Account'
-        AND DeveloperName = 'IATA_Agency'][0].Id;
-
+        Id rtIdBr = RecordTypeSingleton.getInstance().getRecordTypeId('Account', 'IATA_Agency');
 
         Account parent = ISSP_ObjectFactory.createNewAccount();
         parent.BillingCity = 'test';
@@ -1813,11 +1772,8 @@ private class ISSP_AMS_Accreditation_Test {
         IATA_ISO_Country__c country2 = new IATA_ISO_Country__c(name = 'test2', ISO_Code__c = 't2', Case_BSP_Country__c = 'test2');
         insert country2;
 
-        Id rtIdBr = [ SELECT Id FROM RecordType
-        WHERE SobjectType = 'Account'
-        AND DeveloperName = 'IATA_Agency'][0].Id;
-
-
+        Id rtIdBr = RecordTypeSingleton.getInstance().getRecordTypeId('Account', 'IATA_Agency');
+        
         Account parent = ISSP_ObjectFactory.createNewAccount();
         parent.BillingCity = 'test';
         parent.Name = 'test';
@@ -2081,11 +2037,8 @@ private class ISSP_AMS_Accreditation_Test {
         IATA_ISO_Country__c country2 = new IATA_ISO_Country__c(name = 'test2', ISO_Code__c = 't2', Case_BSP_Country__c = 'test2');
         insert country2;
 
-        Id rtIdBr = [ SELECT Id FROM RecordType
-        WHERE SobjectType = 'Account'
-        AND DeveloperName = 'IATA_Agency'][0].Id;
-
-
+        Id rtIdBr = RecordTypeSingleton.getInstance().getRecordTypeId('Account', 'IATA_Agency');
+        
         Account parent = ISSP_ObjectFactory.createNewAccount();
         parent.BillingCity = 'test';
         parent.Name = 'test';
@@ -2225,10 +2178,7 @@ private class ISSP_AMS_Accreditation_Test {
         IATA_ISO_Country__c country2 = new IATA_ISO_Country__c(name = 'test2', ISO_Code__c = 't2', Case_BSP_Country__c = 'test2');
         insert country2;
 
-        Id rtIdBr = [ SELECT Id FROM RecordType
-        WHERE SobjectType = 'Account'
-        AND DeveloperName = 'IATA_Agency'][0].Id;
-
+        Id rtIdBr = RecordTypeSingleton.getInstance().getRecordTypeId('Account', 'IATA_Agency');
 
         Account parent = ISSP_ObjectFactory.createNewAccount();
         parent.BillingCity = 'test';
@@ -2416,10 +2366,7 @@ private class ISSP_AMS_Accreditation_Test {
         IATA_ISO_Country__c country2 = new IATA_ISO_Country__c(name = 'test2', ISO_Code__c = 't2', Case_BSP_Country__c = 'test2');
         insert country2;
 
-        Id rtIdBr = [ SELECT Id FROM RecordType
-        WHERE SobjectType = 'Account'
-        AND DeveloperName = 'IATA_Agency'][0].Id;
-
+        Id rtIdBr = RecordTypeSingleton.getInstance().getRecordTypeId('Account', 'IATA_Agency');
 
         Account parent = ISSP_ObjectFactory.createNewAccount();
         parent.BillingCity = 'test';
@@ -2618,11 +2565,8 @@ private class ISSP_AMS_Accreditation_Test {
         IATA_ISO_Country__c country2 = new IATA_ISO_Country__c(name = 'test2', ISO_Code__c = 't2', Case_BSP_Country__c = 'test2');
         insert country2;
 
-        Id rtIdBr = [ SELECT Id FROM RecordType
-        WHERE SobjectType = 'Account'
-        AND DeveloperName = 'IATA_Agency'][0].Id;
-
-
+        Id rtIdBr = RecordTypeSingleton.getInstance().getRecordTypeId('Account', 'IATA_Agency');
+        
         Account parent = ISSP_ObjectFactory.createNewAccount();
         parent.BillingCity = 'test';
         parent.Name = 'test';
@@ -2894,10 +2838,7 @@ private class ISSP_AMS_Accreditation_Test {
         IATA_ISO_Country__c country2 = new IATA_ISO_Country__c(name = 'test2', ISO_Code__c = 't2', Case_BSP_Country__c = 'test2');
         insert country2;
 
-        Id rtIdBr = [ SELECT Id FROM RecordType
-        WHERE SobjectType = 'Account'
-        AND DeveloperName = 'IATA_Agency'][0].Id;
-
+        Id rtIdBr = RecordTypeSingleton.getInstance().getRecordTypeId('Account', 'IATA_Agency');
 
         Account parent = ISSP_ObjectFactory.createNewAccount();
         parent.BillingCity = 'test';
@@ -2993,10 +2934,7 @@ private class ISSP_AMS_Accreditation_Test {
         IATA_ISO_Country__c country2 = new IATA_ISO_Country__c(name = 'test2', ISO_Code__c = 't2', Case_BSP_Country__c = 'test2');
         insert country2;
 
-        Id rtIdBr = [ SELECT Id FROM RecordType
-        WHERE SobjectType = 'Account'
-        AND DeveloperName = 'IATA_Agency'][0].Id;
-
+        Id rtIdBr = RecordTypeSingleton.getInstance().getRecordTypeId('Account', 'IATA_Agency');
 
         Account parent = ISSP_ObjectFactory.createNewAccount();
         parent.BillingCity = 'test';
@@ -3118,10 +3056,7 @@ private class ISSP_AMS_Accreditation_Test {
         IATA_ISO_Country__c country2 = new IATA_ISO_Country__c(name = 'test2', ISO_Code__c = 't2', Case_BSP_Country__c = 'test2');
         insert country2;
 
-        Id rtIdBr = [ SELECT Id FROM RecordType
-        WHERE SobjectType = 'Account'
-        AND DeveloperName = 'IATA_Agency'][0].Id;
-
+        Id rtIdBr = RecordTypeSingleton.getInstance().getRecordTypeId('Account', 'IATA_Agency');
 
         Account parent = ISSP_ObjectFactory.createNewAccount();
         parent.BillingCity = 'test';
@@ -3391,11 +3326,8 @@ private class ISSP_AMS_Accreditation_Test {
         IATA_ISO_Country__c country2 = new IATA_ISO_Country__c(name = 'test2', ISO_Code__c = 't2', Case_BSP_Country__c = 'test2');
         insert country2;
 
-        Id rtIdBr = [ SELECT Id FROM RecordType
-        WHERE SobjectType = 'Account'
-        AND DeveloperName = 'IATA_Agency'][0].Id;
-
-
+        Id rtIdBr = RecordTypeSingleton.getInstance().getRecordTypeId('Account', 'IATA_Agency');
+        
         Account parent = ISSP_ObjectFactory.createNewAccount();
         parent.BillingCity = 'test';
         parent.Name = 'test';
@@ -3501,7 +3433,7 @@ private class ISSP_AMS_Accreditation_Test {
             newForm.IsGSA__c = 'No';
             newForm.CurrencyIsoCode = country.CurrencyIsoCode;
             newForm.SAAM_Case__c = testCase.Id;
-            newForm.RecordTypeId = Schema.SObjectType.AMS_Pax_Accreditation_Form__c.RecordTypeInfosByName.get('Change of Bank Account Details').RecordTypeId;
+            newForm.RecordTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('AMS_Pax_Accreditation_Form__c', 'Change_of_Bank_Account_Details');
             insert newForm ;
 
             System.debug('ISSP_AMS_Accreditation_Test_13 - newForm.RecordTypeId: ' + newForm.RecordTypeId);
@@ -3563,10 +3495,7 @@ private class ISSP_AMS_Accreditation_Test {
         IATA_ISO_Country__c country2 = new IATA_ISO_Country__c(name = 'test2', ISO_Code__c = 't2', Case_BSP_Country__c = 'test2');
         insert country2;
 
-        Id rtIdBr = [ SELECT Id FROM RecordType
-        WHERE SobjectType = 'Account'
-        AND DeveloperName = 'IATA_Agency'][0].Id;
-
+        Id rtIdBr = RecordTypeSingleton.getInstance().getRecordTypeId('Account', 'IATA_Agency');
 
         Account parent = ISSP_ObjectFactory.createNewAccount();
         parent.BillingCity = 'test';
@@ -3718,10 +3647,7 @@ private class ISSP_AMS_Accreditation_Test {
         IATA_ISO_Country__c country2 = new IATA_ISO_Country__c(name = 'test2', ISO_Code__c = 't2', Case_BSP_Country__c = 'test2');
         insert country2;
 
-        Id rtIdBr = [ SELECT Id FROM RecordType
-        WHERE SobjectType = 'Account'
-        AND DeveloperName = 'IATA_Agency'][0].Id;
-
+        Id rtIdBr = RecordTypeSingleton.getInstance().getRecordTypeId('Account', 'IATA_Agency');
 
         Account parent = ISSP_ObjectFactory.createNewAccount();
         parent.BillingCity = 'test';
@@ -3860,10 +3786,7 @@ private class ISSP_AMS_Accreditation_Test {
         IATA_ISO_Country__c country2 = new IATA_ISO_Country__c(name = 'test2', ISO_Code__c = 't2', Case_BSP_Country__c = 'test2');
         insert country2;
 
-        Id rtIdBr = [ SELECT Id FROM RecordType
-        WHERE SobjectType = 'Account'
-        AND DeveloperName = 'IATA_Agency'][0].Id;
-
+        Id rtIdBr = RecordTypeSingleton.getInstance().getRecordTypeId('Account', 'IATA_Agency');
 
         Account parent = ISSP_ObjectFactory.createNewAccount();
         parent.BillingCity = 'test';
@@ -4878,10 +4801,7 @@ private class ISSP_AMS_Accreditation_Test {
         IATA_ISO_Country__c country2 = new IATA_ISO_Country__c(name = 'test2', ISO_Code__c = 't2', Case_BSP_Country__c = 'test2', CASS_Import__c = 'Yes');
         insert country2;
 
-        Id rtIdBr = [ SELECT Id FROM RecordType
-        WHERE SobjectType = 'Account'
-        AND DeveloperName = 'IATA_Agency'][0].Id;
-
+        Id rtIdBr = RecordTypeSingleton.getInstance().getRecordTypeId('Account', 'IATA_Agency');
 
         Account parent = ISSP_ObjectFactory.createNewAccount();
         parent.BillingCity = 'test';
@@ -4955,10 +4875,7 @@ private class ISSP_AMS_Accreditation_Test {
         IATA_ISO_Country__c country2 = new IATA_ISO_Country__c(name = 'test2', ISO_Code__c = 't2', Case_BSP_Country__c = 'test2', CASS_Import__c = 'Yes');
         insert country2;
 
-        Id rtIdBr = [ SELECT Id FROM RecordType
-        WHERE SobjectType = 'Account'
-        AND DeveloperName = 'IATA_Agency'][0].Id;
-
+        Id rtIdBr = RecordTypeSingleton.getInstance().getRecordTypeId('Account', 'IATA_Agency');
 
         Account parent = ISSP_ObjectFactory.createNewAccount();
         parent.BillingCity = 'test';
@@ -5006,10 +4923,7 @@ private class ISSP_AMS_Accreditation_Test {
         IATA_ISO_Country__c country2 = new IATA_ISO_Country__c(name = 'test2', ISO_Code__c = 't2', Case_BSP_Country__c = 'test2', CASS_Import__c = 'Yes');
         insert country2;
 
-        Id rtIdBr = [ SELECT Id FROM RecordType
-        WHERE SobjectType = 'Account'
-        AND DeveloperName = 'IATA_Agency'][0].Id;
-
+        Id rtIdBr = RecordTypeSingleton.getInstance().getRecordTypeId('Account', 'IATA_Agency');
 
         Account parent = ISSP_ObjectFactory.createNewAccount();
         parent.BillingCity = 'test';
@@ -5057,10 +4971,7 @@ private class ISSP_AMS_Accreditation_Test {
         IATA_ISO_Country__c country2 = new IATA_ISO_Country__c(name = 'test2', ISO_Code__c = 't2', Case_BSP_Country__c = 'test2', CASS_Import__c = 'Yes');
         insert country2;
 
-        Id rtIdBr = [ SELECT Id FROM RecordType
-        WHERE SobjectType = 'Account'
-        AND DeveloperName = 'IATA_Agency'][0].Id;
-
+        Id rtIdBr = RecordTypeSingleton.getInstance().getRecordTypeId('Account', 'IATA_Agency');
 
         Account parent = ISSP_ObjectFactory.createNewAccount();
         parent.BillingCity = 'test';
@@ -5109,10 +5020,7 @@ private class ISSP_AMS_Accreditation_Test {
         IATA_ISO_Country__c country2 = new IATA_ISO_Country__c(name = 'test2', ISO_Code__c = 't2', Case_BSP_Country__c = 'test2', CASS_Import__c = 'Yes');
         insert country2;
 
-        Id rtIdBr = [ SELECT Id FROM RecordType
-        WHERE SobjectType = 'Account'
-        AND DeveloperName = 'IATA_Agency'][0].Id;
-
+        Id rtIdBr = RecordTypeSingleton.getInstance().getRecordTypeId('Account', 'IATA_Agency');
 
         Account parent = ISSP_ObjectFactory.createNewAccount();
         parent.BillingCity = 'test';
@@ -5162,10 +5070,7 @@ private class ISSP_AMS_Accreditation_Test {
         IATA_ISO_Country__c country2 = new IATA_ISO_Country__c(name = 'test2', ISO_Code__c = 't2', Case_BSP_Country__c = 'test2', CASS_Import__c = 'Yes');
         insert country2;
 
-        Id rtIdBr = [ SELECT Id FROM RecordType
-        WHERE SobjectType = 'Account'
-        AND DeveloperName = 'IATA_Agency'][0].Id;
-
+        Id rtIdBr = RecordTypeSingleton.getInstance().getRecordTypeId('Account', 'IATA_Agency');
 
         Account parent = ISSP_ObjectFactory.createNewAccount();
         parent.BillingCity = 'test';
@@ -5216,10 +5121,7 @@ private class ISSP_AMS_Accreditation_Test {
         IATA_ISO_Country__c country2 = new IATA_ISO_Country__c(name = 'test2', ISO_Code__c = 't2', Case_BSP_Country__c = 'test2', CASS_Import__c = 'Yes');
         insert country2;
 
-        Id rtIdBr = [ SELECT Id FROM RecordType
-        WHERE SobjectType = 'Account'
-        AND DeveloperName = 'IATA_Agency'][0].Id;
-
+        Id rtIdBr = RecordTypeSingleton.getInstance().getRecordTypeId('Account', 'IATA_Agency');
 
         Account parent = ISSP_ObjectFactory.createNewAccount();
         parent.BillingCity = 'test';
@@ -5286,11 +5188,7 @@ private class ISSP_AMS_Accreditation_Test {
 
     private static Account icc_testAccount(IATA_ISO_Country__c country) {
 
-
-        Id rtIdBr = [ SELECT Id FROM RecordType
-        WHERE SobjectType = 'Account'
-        AND DeveloperName = 'IATA_Agency'][0].Id;
-
+        Id rtIdBr = RecordTypeSingleton.getInstance().getRecordTypeId('Account', 'IATA_Agency');
 
         Account parent = ISSP_ObjectFactory.createNewAccount();
         parent.BillingCity = 'test';

@@ -38,7 +38,7 @@ private class ISSP_CurrencyCenterHomeControllerTest {
     @isTest static void testTDLink() {
         Test.startTest();
 
-        Id accRtId = [SELECT Id FROM RecordType WHERE DeveloperName ='Standard_Account' AND SobjectType = 'Account'].Id;
+        Id accRtId = RecordTypeSingleton.getInstance().getRecordTypeId('Account', 'Standard_Account');
 
         Account acc = new Account (
         RecordTypeId = accRtId,

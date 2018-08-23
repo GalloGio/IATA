@@ -35,12 +35,14 @@ public class ISSP_ANG_ANNUAL_REVALIDATION {
 		AMS_Utils.AE
     };
 
-	private static Id rtAccreditContPreviousOwner = Schema.SObjectType.AMS_Accreditation_Contact__c.getRecordTypeInfosByName().get('Previous Owner').getRecordTypeId();
-	private static Id rtAccreditContCurrentOwner = Schema.SObjectType.AMS_Accreditation_Contact__c.getRecordTypeInfosByName().get('Current Owner').getRecordTypeId();
-	private static Id rtAccreditContPreviousCompanyOwner = Schema.SObjectType.AMS_Accreditation_Contact__c.getRecordTypeInfosByName().get('Previous Company Owner').getRecordTypeId();
-	private static Id rtAccreditContCurrentCompanyOwner = Schema.SObjectType.AMS_Accreditation_Contact__c.getRecordTypeInfosByName().get('Current Company Owner').getRecordTypeId();
-	private static Id rtAnnualRevalidation = Schema.SObjectType.AMS_Pax_Accreditation_Form__c.getRecordTypeInfosByName().get('Annual Revalidation').getRecordTypeId();
-
+	private static Id rtAccreditContPreviousOwner = RecordTypeSingleton.getInstance().getRecordTypeId('AMS_Accreditation_Contact__c', 'Previous_Owner');
+	private static Id rtAccreditContCurrentOwner = RecordTypeSingleton.getInstance().getRecordTypeId('AMS_Accreditation_Contact__c', 'Current_Owner');
+	private static Id rtAccreditContPreviousCompanyOwner = RecordTypeSingleton.getInstance().getRecordTypeId('AMS_Accreditation_Contact__c', 'Previous_Company_Owner');
+	private static Id rtAccreditContCurrentCompanyOwner = RecordTypeSingleton.getInstance().getRecordTypeId('AMS_Accreditation_Contact__c', 'Current_Company_Owner');
+	private static Id rtAnnualRevalidation = RecordTypeSingleton.getInstance().getRecordTypeId('AMS_Pax_Accreditation_Form__c', 'Annual_Revalidation'); 
+	
+	private Map<String, String> amsAccrContactRecordTypesMap = RecordTypeSingleton.getInstance().getMapRecordTypesBySObject('AMS_Accreditation_Contact__c');
+	
 	public static String DEFAULT_ICON { get{ return 'glyphicon glyphicon-refresh text-primary';} set;}
 	public static String OK_ICON { get{ return 'glyphicon glyphicon-ok text-success';} set;}
 	public static String CONFIRMED_ICON { get{ return 'glyphicon glyphicon-flag text-danger';} set;}
@@ -912,7 +914,7 @@ public class ISSP_ANG_ANNUAL_REVALIDATION {
 
         List<AMS_Accreditation_Contact__c> lstAccreditationContact = new List<AMS_Accreditation_Contact__c>();
 
-        Id rtAccRoleOwnership = Schema.SObjectType.AMS_Account_Role__c.getRecordTypeInfosByName().get('Ownership').getRecordTypeId();
+        Id rtAccRoleOwnership = RecordTypeSingleton.getInstance().getRecordTypeId('AMS_Account_Role__c', 'Ownership');
 
 		List<AMS_Account_Role__c> amsOwners = [Select Account__c, Active__c, Employee_Name__c,Employee_type__c, Id,
 			                                          Owner_Account__c, Owner_Account__r.Name, Owner_Account__r.IATACode__c,
@@ -1482,8 +1484,6 @@ public class ISSP_ANG_ANNUAL_REVALIDATION {
 	//
 	public void createAgencyContact() {
 
-        Id rtAccreditContPreviousOwner = Schema.SObjectType.AMS_Accreditation_Contact__c.getRecordTypeInfosByName().get('Previous Owner').getRecordTypeId();
-
         integer cntOwners;
         integer cntEmailContacts;
         contactSaved = true;
@@ -1531,8 +1531,8 @@ public class ISSP_ANG_ANNUAL_REVALIDATION {
             }
         }
 
-        if (Test.IsRunningTest() == false) {
-            contactToUpsert.RecordTypeId = Schema.SObjectType.AMS_Accreditation_Contact__c.RecordTypeInfosByName.get(contactType).RecordTypeId;
+        if (!Test.IsRunningTest()) {
+            contactToUpsert.RecordTypeId = amsAccrContactRecordTypesMap.get(contactType);
         }
 
 		if (currentAccount.newContact.Agencies_prev_worked_for__c == ''  || currentAccount.newContact.Agencies_prev_worked_for__c == 'none') {

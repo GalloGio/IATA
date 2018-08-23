@@ -203,13 +203,13 @@ public class IFAP_BusinessRulesTest {
 
     @isTest
     static void testCheckFinancialAssessmentContactExist() {
-        RecordType StandardAccountRecordType = [Select r.Id, r.Name from RecordType r where r.Name = 'Standard Account' and r.SobjectType = 'Account' limit 1];
-        RecordType StandardContactRecordType = [Select r.Id, r.Name from RecordType r where r.Name = 'Standard' and r.SobjectType = 'Contact' limit 1];
+        ID StandardAccountRecordTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('Account', 'Standard_Account');
+        ID StandardContactRecordTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('Contact', 'Standard_Contact');
         ID IFAPcaseRecordTypeID = RecordTypeSingleton.getInstance().getRecordTypeId('Case', 'IATA_Financial_Review');
         List<Account> accounts = new List<Account>();
 
         Account aAccount = new Account();
-        aAccount.RecordTypeId = StandardAccountRecordType.Id;
+        aAccount.RecordTypeId = StandardAccountRecordTypeId;
         aAccount.Name = 'UnitTestAccount1';
         aAccount.BillingCity = 'Montreal';
         aAccount.BillingCountry = 'Canada';
@@ -219,7 +219,7 @@ public class IFAP_BusinessRulesTest {
         accounts.add(aAccount);
 
         aAccount = new Account();
-        aAccount.RecordTypeId = StandardAccountRecordType.Id;
+        aAccount.RecordTypeId = StandardAccountRecordTypeId;
         aAccount.Name = 'UnitTestAccount2';
         aAccount.BillingCity = 'Montreal';
         aAccount.BillingCountry = 'Canada';
@@ -235,17 +235,16 @@ public class IFAP_BusinessRulesTest {
 
         for (Account existingAccount : accounts) {
             aContact = new Contact();
-            aContact.RecordTypeId = StandardContactRecordType.Id;
+            aContact.RecordTypeId = StandardContactRecordTypeId;
             aContact.FirstName = 'Unit';
             aContact.LastName = 'Test Contact';
             aContact.AccountId = existingAccount.Id;
             acontact.Financial_Assessment_Contact__c = true;
 
-
             insert aContact;
 
             aContact = new Contact();
-            aContact.RecordTypeId = StandardContactRecordType.Id;
+            aContact.RecordTypeId = StandardContactRecordTypeId;
             aContact.FirstName = 'Unit';
             aContact.LastName = 'Test Contact #2';
             aContact.AccountId = existingAccount.Id;
@@ -268,14 +267,12 @@ public class IFAP_BusinessRulesTest {
         createIsoCountry();
 
         ID IFAPcaseRecordTypeID = RecordTypeSingleton.getInstance().getRecordTypeId('Case', 'IATA_Financial_Review');
-        List<RecordType> emailTemplateRecordTypes = [Select r.Name, r.Id From RecordType r where r.SobjectType = 'EmailTemplate__c' and r.Name = 'IFAP' limit 1];
-        ID IFAPEmailTemplateRecordTypeID = emailTemplateRecordTypes[0].Id;
+         ID IFAPEmailTemplateRecordTypeID = RecordTypeSingleton.getInstance().getRecordTypeId('EmailTemplate__c', 'IFAP');
 
         EmailTemplate__c e = new EmailTemplate__c();
         IATA_ISO_Country__c ic = new IATA_ISO_Country__c(Name = 'Test', ISO_Code__c = 'XY', AIMS_Area_Name__c = 'Test');
         insert ic;
         ic = [Select id, name, ISO_Code__c from IATA_ISO_Country__c where id = : ic.Id];
-        //e.recordType.Name = 'IFAP';
         e.RecordTypeId = IFAPEmailTemplateRecordTypeID;
         e.Agent_Types__c = 'IATA Cargo Agent';
         e.Review_Types__c = 'Annual';
@@ -597,8 +594,7 @@ public class IFAP_BusinessRulesTest {
     @isTest
     static void testEmailTemplateCountryValidation() {
         ID IFAPcaseRecordTypeID = RecordTypeSingleton.getInstance().getRecordTypeId('Case', 'IATA_Financial_Review');
-        List<RecordType> emailTemplateRecordTypes = [Select r.Name, r.Id From RecordType r where r.SobjectType = 'EmailTemplate__c' and r.Name = 'IFAP' limit 1];
-        ID IFAPEmailTemplateRecordTypeID = emailTemplateRecordTypes[0].Id;
+        ID IFAPEmailTemplateRecordTypeID = RecordTypeSingleton.getInstance().getRecordTypeId('EmailTemplate__c', 'IFAP');
         IATA_ISO_Country__c ic = new IATA_ISO_Country__c(Name = 'Test', ISO_Code__c = 'XY', AIMS_Area_Name__c = 'Test');
         insert ic;
 
@@ -725,8 +721,7 @@ public class IFAP_BusinessRulesTest {
         createIsoCountry();
 
         ID IFAPcaseRecordTypeID = RecordTypeSingleton.getInstance().getRecordTypeId('Case', 'IATA_Financial_Review');
-        List<RecordType> emailTemplateRecordTypes = [Select r.Name, r.Id From RecordType r where r.SobjectType = 'EmailTemplate__c' and r.Name = 'IFAP' limit 1];
-        ID IFAPEmailTemplateRecordTypeID = emailTemplateRecordTypes[0].Id;
+        ID IFAPEmailTemplateRecordTypeID = RecordTypeSingleton.getInstance().getRecordTypeId('EmailTemplate__c', 'IFAP');
         IATA_ISO_Country__c[] countryCA = [Select i.Name, i.ISO_Code__c From IATA_ISO_Country__c i where i.ISO_Code__c = 'CA'];
         IATA_ISO_Country__c[] countryFR = [Select i.Name, i.ISO_Code__c From IATA_ISO_Country__c i where i.ISO_Code__c = 'FR'];
 
@@ -869,7 +864,7 @@ public class IFAP_BusinessRulesTest {
 
         // get some recordtype IDs
         ID IFAPcaseRecordTypeID = RecordTypeSingleton.getInstance().getRecordTypeId('Case', 'IATA_Financial_Review');
-        RecordType SAAMcaseRecordType = [Select r.Id, r.Name from RecordType r where r.Name = 'SAAM' limit 1];
+        Id SAAMcaseRecordTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('Case', 'ProcessEuropeSCE');
 
         // create test account1
         Account account1 = createAccount();
@@ -884,7 +879,7 @@ public class IFAP_BusinessRulesTest {
         saamCase.Subject = 'Test SAAM case';
         saamCase.Description = 'Test SAAM case';
         saamCase.Status = 'Open';
-        saamCase.RecordTypeId = SAAMcaseRecordType.Id;
+        saamCase.RecordTypeId = SAAMcaseRecordTypeId;
         insert saamCase;
 
         Test.startTest();

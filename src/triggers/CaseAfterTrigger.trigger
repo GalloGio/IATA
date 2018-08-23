@@ -769,7 +769,7 @@ trigger CaseAfterTrigger on Case (after delete, after insert, after undelete, af
 			string airlineSuspension = 'Airline Suspension Process';
 			String airlineChange = 'Airline Change';
 			String separator = '%%%__%%%';
-			string APCaseRTID =Schema.SObjectType.Case.RecordTypeInfosByName.get('IDFS Airline Participation Process').RecordTypeId ;
+			Id APCaseRTID = RecordTypeSingleton.getInstance().getRecordTypeId('Case', 'IDFS_Airline_Participation_Process');
 			//date pretrasfomrationDate =  date.newinstance(2013, 11, 30);
 			list<case> casesToTrigger = new list<Case>();
 			List<Case> airlineChangeCasesToTrigger = new List<Case>();

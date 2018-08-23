@@ -14,7 +14,7 @@ private class OneIdVfDSEControllerTest {
         IATA_ISO_Country__c ISO_Country2 = new IATA_ISO_Country__c(ISO_Code__c='TP',Name='test2');
         insert ISO_Country2;
 
-        String recordTypeId = [SELECT Id FROM RecordType WHERE DeveloperName = 'IATA_Airline'].Id;
+        Id recordTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('Account', 'IATA_Airline');
         Account acc = ISSP_ObjectFactory.createNewAccount();
         acc.IATACode__c = '100';
         acc.IATA_ISO_Country__c = ISO_Country.Id;
@@ -22,12 +22,12 @@ private class OneIdVfDSEControllerTest {
         acc.Airline_designator__c = 'TT';
         insert acc;
 
-        RecordType rt = [Select r.Id,r.Name, r.DeveloperName From RecordType r where  DeveloperName='Standard_Contact'];
+        Id rtId = RecordTypeSingleton.getInstance().getRecordTypeId('Contact', 'Standard_Contact');
         Contact con = ISSP_ObjectFactory.createNewContact();
         con.AccountId = acc.Id;
         con.LastName = 'test';
         con.Email = 'test.issp.registration@testisspregistration.com';
-        con.RecordTypeId = rt.Id;
+        con.RecordTypeId = rtId;
         insert con;
 
         System.assert(con.id !=null,'Contact must be created');
@@ -116,7 +116,7 @@ private class OneIdVfDSEControllerTest {
         IATA_ISO_Country__c ISO_Country2 = new IATA_ISO_Country__c(ISO_Code__c = 'TP', Name = 'test2');
         insert ISO_Country2;
 
-        String recordTypeId = [SELECT Id FROM RecordType WHERE DeveloperName = 'IATA_Airline'].Id;
+        Id recordTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('Account', 'IATA_Airline');
         Account acc = ISSP_ObjectFactory.createNewAccount();
         acc.IATACode__c = '100';
         acc.IATA_ISO_Country__c = ISO_Country.Id;
@@ -127,12 +127,12 @@ private class OneIdVfDSEControllerTest {
         acc.name = 'Test';
         insert acc;
 
-        RecordType rt = [Select r.Id,r.Name, r.DeveloperName From RecordType r where  DeveloperName='Standard_Contact'];
+        Id rtId = RecordTypeSingleton.getInstance().getRecordTypeId('Contact', 'Standard_Contact');
         Contact con = ISSP_ObjectFactory.createNewContact();
         con.AccountId = acc.Id;
         con.LastName = 'test';
         con.Email = 'test.issp.registration@testisspregistration.com';
-        con.RecordTypeId = rt.Id;
+        con.RecordTypeId = rtId;
         insert con;
 
         OneIdVfDSEController ctrl = new OneIdVfDSEController();
@@ -187,12 +187,12 @@ private class OneIdVfDSEControllerTest {
         Account acc = ISSP_ObjectFactory.createNewAccount();
         insert acc;
 
-        RecordType rt = [Select r.Id,r.Name, r.DeveloperName From RecordType r where  DeveloperName='Standard_Contact'];
+        Id rtId = RecordTypeSingleton.getInstance().getRecordTypeId('Contact', 'Standard_Contact');
         Contact con = ISSP_ObjectFactory.createNewContact();
         con.AccountId = acc.Id;
         con.LastName = 'test';
         con.Email = 'test.issp.registration@testisspregistration.com';
-        con.RecordTypeId = rt.Id;
+        con.RecordTypeId = rtId;
         insert con;
 
         System.assert(con.id !=null,'Contact must be created');
@@ -382,12 +382,12 @@ private class OneIdVfDSEControllerTest {
         Account acc = ISSP_ObjectFactory.createNewAccount();
         insert acc;
 
-        RecordType rt = [Select r.Id,r.Name, r.DeveloperName From RecordType r where  DeveloperName='Standard_Contact'];
+        Id rtId = RecordTypeSingleton.getInstance().getRecordTypeId('Contact', 'Standard_Contact');
         Contact con = ISSP_ObjectFactory.createNewContact();
         con.AccountId = acc.Id;
         con.LastName = 'test';
         con.Email = 'test.issp.registration@testisspregistration.com';
-        con.RecordTypeId = rt.Id;
+        con.RecordTypeId = rtId;
         insert con;
 
         System.assert(con.id !=null,'Contact must be created');
@@ -449,25 +449,35 @@ private class OneIdVfDSEControllerTest {
         IATA_ISO_Country__c ISO_Country2 = new IATA_ISO_Country__c(ISO_Code__c='TP',Name='test2');
         insert ISO_Country2;
 
-        
         OneIdVfDSEControllerTest.createTestData();
 		List<Account> anListAct = new List<Account>();
-        for(RecordType a : [Select r.Id,r.Name, r.DeveloperName From RecordType r where r.SobjectType = 'Account' and r.isactive=true 
-                            and r.Developername in ('Others','IATA_Airline', 'Standard_Account', 'IATA_Agency', 'IATA')]){
+		
+		List<String> recTypesNamesLst = new List<String>
+		{ 	 
+			 'Others',
+			 'IATA_Airline', 
+			 'Standard_Account', 
+			 'IATA_Agency', 
+			 'IATA'
+		};
+		
+		List<Id> recordTypesIdLst = RecordTypeSingleton.getInstance().getRecordTypeObjIdListForSpecfifiedNames('Account', recTypesNamesLst);
+		
+        for(Id rtId : recordTypesIdLst){
         	Account acc = ISSP_ObjectFactory.createNewAccount();
-            acc.RecordTypeId = a.id;
+            acc.RecordTypeId = rtId;
             acc.IATA_ISO_Country__c = ISO_Country.id;
             anListAct.add(acc);
         }
         
         insert anListAct;
 
-        RecordType rt = [Select r.Id,r.Name, r.DeveloperName From RecordType r where  DeveloperName='Standard_Contact'];
+        Id rtId = RecordTypeSingleton.getInstance().getRecordTypeId('Contact', 'Standard_Contact');
         Contact con = ISSP_ObjectFactory.createNewContact();
         con.AccountId = anListAct[0].Id;
         con.LastName = 'test';
         con.Email = 'test.issp.registration@testisspregistration.com';
-        con.RecordTypeId = rt.Id;
+        con.RecordTypeId = rtId;
         insert con;
 
         System.assert(con.id !=null,'Contact must be created');
@@ -493,10 +503,6 @@ private class OneIdVfDSEControllerTest {
 
         OneIdVfDSEController ctrl = new OneIdVfDSEController();
         
-        
-        
-        
-
         ctrl.isAgency =true;
         ctrl.isGSA =false;
         ctrl.isNotIATA =false;
@@ -619,7 +625,7 @@ private class OneIdVfDSEControllerTest {
         IATA_ISO_Country__c ISO_Country = new IATA_ISO_Country__c(ISO_Code__c='TT',Name='test');
         insert ISO_Country;
         
-        String recordTypeId = [SELECT Id FROM RecordType WHERE DeveloperName = 'IATA_Airline'].Id;
+        Id recordTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('Account', 'IATA_Airline');
         Account acc = ISSP_ObjectFactory.createNewAccount();
         acc.IATACode__c = '100';
         acc.IATA_ISO_Country__c = ISO_Country.Id;
@@ -628,12 +634,12 @@ private class OneIdVfDSEControllerTest {
         acc.Name = 'TestAccount';
         insert acc;
 
-         RecordType rt = [Select r.Id,r.Name, r.DeveloperName From RecordType r where  DeveloperName='Standard_Contact'];
+         Id rtId = RecordTypeSingleton.getInstance().getRecordTypeId('Contact', 'Standard_Contact');
         Contact con = ISSP_ObjectFactory.createNewContact();
         con.AccountId = acc.Id;
         con.LastName = 'test';
         con.Email = 'test.issp.registration@testisspregistration.com';
-        con.RecordTypeId = rt.Id;
+        con.RecordTypeId = rtId;
         insert con;
 
         System.assert(con.id !=null,'Contact must be created');
@@ -693,7 +699,7 @@ private class OneIdVfDSEControllerTest {
         IATA_ISO_Country__c ISO_Country2 = new IATA_ISO_Country__c(ISO_Code__c = 'TP', Name = 'test2');
         insert ISO_Country2;
 
-        String recordTypeId = [SELECT Id FROM RecordType WHERE DeveloperName = 'Standard_Account'].Id;
+        Id recordTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('Account', 'Standard_Account');
         Account acc = ISSP_ObjectFactory.createNewAccount();
         acc.IATACode__c = '100';
         acc.IATA_ISO_Country__c = ISO_Country.Id;
@@ -704,12 +710,12 @@ private class OneIdVfDSEControllerTest {
         acc.name = 'Test';
         insert acc;
 
-        RecordType rt = [Select r.Id,r.Name, r.DeveloperName From RecordType r where  DeveloperName='Standard_Contact'];
+        Id rtId = RecordTypeSingleton.getInstance().getRecordTypeId('Contact', 'Standard_Contact');
         Contact con = ISSP_ObjectFactory.createNewContact();
         con.AccountId = acc.Id;
         con.LastName = 'test';
         con.Email = 'test.issp.registration@testisspregistration.com';
-        con.RecordTypeId = rt.Id;
+        con.RecordTypeId = rtId;
         insert con;
 
         OneIdVfDSEController ctrl = new OneIdVfDSEController();

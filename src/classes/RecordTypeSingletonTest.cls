@@ -4,7 +4,7 @@ private class RecordTypeSingletonTest {
 	@isTest 
 	private static void getRecordTypesTest() {
 		//Id retrieved using Schema class
-		Id rtId = Schema.Account.sObjectType.getDescribe().getRecordTypeInfosByName().get('Standard Account').getRecordTypeId();
+		Id rtId = RecordTypeSingleton.getInstance().getRecordTypeId('Account', 'Standard_Account');
 		
 		RecordType rtAccountStdd = RecordTypeSingleton.getInstance().getRecordType('Account', 'Standard_Account');
 		Id rtAccountStddId = RecordTypeSingleton.getInstance().getRecordTypeId('Account', 'Standard_Account');

@@ -1,15 +1,13 @@
 public without sharing class ISSP_Case {
 
-    private static String OSCAR_RECORD_TYPE_ID = Schema.SObjectType.Case.RecordTypeInfosByName.get('OSCAR Communication').RecordTypeId;
-    private static String AME_RECORD_TYPE_ID = Schema.SObjectType.Case.RecordTypeInfosByName.get('Cases - Africa & Middle East').RecordTypeId;
-    private static String AMERICAS_RECORD_TYPE_ID = Schema.SObjectType.Case.RecordTypeInfosByName.get('Cases - Americas').RecordTypeId;
-    private static String APAC_RECORD_TYPE_ID = Schema.SObjectType.Case.RecordTypeInfosByName.get('Cases - Asia & Pacific').RecordTypeId;
-    private static String CHINA_RECORD_TYPE_ID = Schema.SObjectType.Case.RecordTypeInfosByName.get('Cases - China & North Asia').RecordTypeId;
-    private static String EUROPE_RECORD_TYPE_ID = Schema.SObjectType.Case.RecordTypeInfosByName.get('Cases - Europe').RecordTypeId;
-    private static String IDFS_RECORD_TYPE_ID = Schema.SObjectType.Case.RecordTypeInfosByName.get('Complaint (IDFS ISS)').RecordTypeId;
-    private static String INTER_DPC_RECORD_TYPE_ID = Schema.SObjectType.Case.RecordTypeInfosByName.get('Inter DPCs').RecordTypeId;
-    //private static String AGENT_ACCREDITATION_PORTAL_SERVICE = 'Become an IATA Accredited Agent';
-    //private static String AIRLINE_PARTICIPATION_PORTAL_SERVICE = 'Join BSP / CASS';
+    private static Id OSCAR_RECORD_TYPE_ID = RecordTypeSingleton.getInstance().getRecordTypeId('Case', 'OSCAR_Communication');
+    private static Id AME_RECORD_TYPE_ID = RecordTypeSingleton.getInstance().getRecordTypeId('Case', 'CasesMENA');
+    private static Id AMERICAS_RECORD_TYPE_ID = RecordTypeSingleton.getInstance().getRecordTypeId('Case', 'CasesAmericas');
+    private static Id APAC_RECORD_TYPE_ID = RecordTypeSingleton.getInstance().getRecordTypeId('Case', 'ExternalCasesIDFSglobal');
+    private static Id CHINA_RECORD_TYPE_ID = RecordTypeSingleton.getInstance().getRecordTypeId('Case', 'Cases_China_North_Asia');
+    private static Id EUROPE_RECORD_TYPE_ID = RecordTypeSingleton.getInstance().getRecordTypeId('Case', 'CasesEurope');
+    private static Id IDFS_RECORD_TYPE_ID = RecordTypeSingleton.getInstance().getRecordTypeId('Case', 'ComplaintIDFS');
+    private static Id INTER_DPC_RECORD_TYPE_ID = RecordTypeSingleton.getInstance().getRecordTypeId('Case', 'Inter_DPCs');
     private static String AGENT_ACCREDITATION_PORTAL_SERVICE = ISSP_Portal_Service_Ids__c.getInstance().AgencyAccreditation__c;
     private static String AIRLINE_PARTICIPATION_PORTAL_SERVICE = ISSP_Portal_Service_Ids__c.getInstance().AirlineParticipation__c;
     private static String AIRLINE_PARTICIPATION_CHANGE_PORTAL_SERVICE = ISSP_Portal_Service_Ids__c.getInstance().AirlineParticipation_MinorChange__c;
@@ -258,18 +256,13 @@ public without sharing class ISSP_Case {
         //AS - SP10; get the recordtyype name for new cases, esp. for SIS
         String recordTypeName;
         If(recordTypeId <> null) {
-            recordTypeName = [SELECT DeveloperName, Name FROM RecordType WHERE Id = :recordTypeId].Name;
+            recordTypeName = RecordTypeSingleton.getInstance().getRecordTypeById('Case', recordTypeId).Name;
         }
 
         //get parameters
         String paramTopic = ApexPages.currentPage().getParameters().get('topic');
         String paramSubtopic = ApexPages.currentPage().getParameters().get('subtopic');
         if (paramTopic != null && paramSubtopic != null) {
-            //newCase.Description = Label.ISSP_F2CTopic + ' - '
-            //+ paramTopic.replace('+',' ') + '\n'
-            //+ Label.ISSP_F2CSubTopic + ' - '
-            //+ paramSubtopic.replace('+',' ');
-
             newCase.Type = EncodingUtil.urlDecode(paramSubtopic, 'UTF-8');
             caseTypeSelectionInit = EncodingUtil.urlDecode(paramSubtopic, 'UTF-8');
 

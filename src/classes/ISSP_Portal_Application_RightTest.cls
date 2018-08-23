@@ -12,27 +12,23 @@ public class ISSP_Portal_Application_RightTest {
   }
 
   public static testMethod void ISSP_Portal_Application_RightTest() {
-    RecordType rt = [select Id from RecordType where developerName = :'Biller_Direct'];
+    Id rtId = RecordTypeSingleton.getInstance().getRecordTypeId('Portal_Application_Right__c', 'Biller_Direct');
     User thisUser = [SELECT Id FROM User WHERE Id = :UserInfo.getUserId()];
     Contact contact;
     User newUser;
 
     system.runAs(thisUser) {
-      //ISSP_ObjectFactory.fiilIncludedFields();
 
       Account acc = ISSP_ObjectFactory.createNewAccount();
-      //(Account)ISSP_ObjectFactory.createSObject('Account',false,4);
       insert acc;
 
       SAP_Account__c sap = new SAP_Account__c();
-      //(SAP_Account__c)ISSP_ObjectFactory.createSObject('SAP_Account__c',false,3);
       sap.SAP_Account_type__c = 'test';
       sap.Account__c = acc.Id;
       sap.SAP_Id__c = '1234';
       insert sap;
 
       contact = ISSP_ObjectFactory.createNewContact();
-      //(Contact)ISSP_ObjectFactory.createSObject('Contact',false,1);
       contact.AccountId = acc.Id;
       insert contact;
 
@@ -57,12 +53,11 @@ public class ISSP_Portal_Application_RightTest {
     system.runAs(thisUser) {
       Portal_Applications__c app = new Portal_Applications__c(Name = 'Biller Direct');
       insert app;
-      //Portal_Application_Right__c par = (Portal_Application_Right__c)ISSP_ObjectFactory.createSObject('Portal_Application_Right__c',false,2);
       Portal_Application_Right__c par = new Portal_Application_Right__c();
       par.Contact__c = contact.Id;
       par.Portal_Application__c = app.Id;
       par.Right__c = 'Access Granted';
-      par.RecordTypeId = rt.Id;
+      par.RecordTypeId = rtId;
       par.Invoice_Type__c = 'test';
       insert par;
     }
@@ -159,18 +154,12 @@ public class ISSP_Portal_Application_RightTest {
   public static testMethod void ebulletinAccessDeniedTest() {
     User thisUser = [SELECT Id FROM User WHERE Id = :UserInfo.getUserId()];
     system.runAs(thisUser) {
-      RecordType rtPar = [select Id from RecordType where developerName = :'Application_rigth'];
-      RecordType rtWeekly = [select Id from RecordType where developerName = :'Weekly'];
-      RecordType rtDaily = [select Id from RecordType where developerName = :'Daily'];
+      Id rtParId = RecordTypeSingleton.getInstance().getRecordTypeId('Portal_Application_Right__c', 'Application_rigth');
+      Id rtWeeklyId = RecordTypeSingleton.getInstance().getRecordTypeId('AMS_eBulletin_Profile__c', 'Weekly');
+      Id rtDailyId = RecordTypeSingleton.getInstance().getRecordTypeId('AMS_eBulletin_Profile__c', 'Daily');
 
       Account acc = ISSP_ObjectFactory.createNewAccount();
       insert acc;
-
-      /*SAP_Account__c sap = new SAP_Account__c();
-      sap.SAP_Account_type__c = 'test';
-      sap.Account__c = acc.Id;
-      sap.SAP_Id__c = '1234';
-      insert sap;*/
 
       Contact contact = ISSP_ObjectFactory.createNewContact();
       contact.AccountId = acc.Id;
@@ -200,7 +189,7 @@ public class ISSP_Portal_Application_RightTest {
       par.Contact__c = contact.Id;
       par.Portal_Application__c = app.Id;
       par.Right__c = 'Access Granted';
-      par.RecordTypeId = rtPar.Id;
+      par.RecordTypeId = rtParId;
       insert par;
 
       AMS_eBulletin_Profile__c profDaily = new AMS_eBulletin_Profile__c(Area_2__c = true,
@@ -209,7 +198,7 @@ public class ISSP_Portal_Application_RightTest {
           Opt_out_Bulletin__c = false,
           Program_Passage__c = true,
           User__c = newUser.Id,
-          RecordTypeId = rtDaily.Id,
+          RecordTypeId = rtDailyId,
           Agency_Info_Irregularities__c = true);
       insert profDaily;
 
@@ -219,7 +208,7 @@ public class ISSP_Portal_Application_RightTest {
           Opt_out_Bulletin__c = false,
           Program_Passage__c = true,
           User__c = newUser.Id,
-          RecordTypeId = rtWeekly.Id,
+          RecordTypeId = rtWeeklyId,
           Agency_Info_Irregularities__c = true);
       insert profWeekly;
 

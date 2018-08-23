@@ -374,7 +374,7 @@ private class AMS_EBulletinReport_Test {
 		User newUser = [SELECT Id FROM User WHERE Alias = 'dsfsdfds' LIMIT 1];
 
 		eBulletinProfiles.add( 
-			new AMS_eBulletin_Profile__c( RecordTypeId  	  		 		  		= Schema.SObjectType.AMS_eBulletin_Profile__c.RecordTypeInfosByName.get('Daily').RecordTypeId,
+			new AMS_eBulletin_Profile__c( RecordTypeId  	  		 		  		= RecordTypeSingleton.getInstance().getRecordTypeId('AMS_eBulletin_Profile__c', 'Daily'),
 										  User__c       			 		  		= newUser.Id,
 										  TimeZone__c		  		 		  		= UserInfo.getTimeZone().toString(),
 										  Opt_in__c    		  		 		  		= true,
@@ -399,7 +399,7 @@ private class AMS_EBulletinReport_Test {
 			);
 
 		eBulletinProfiles.add(  
-			new AMS_eBulletin_Profile__c( RecordTypeId  							= Schema.SObjectType.AMS_eBulletin_Profile__c.RecordTypeInfosByName.get('Weekly').RecordTypeId,
+			new AMS_eBulletin_Profile__c( RecordTypeId  							= RecordTypeSingleton.getInstance().getRecordTypeId('AMS_eBulletin_Profile__c', 'Weekly'),
 										  User__c       			 		  		= newUser.Id,
 										  TimeZone__c		  		 		  		= UserInfo.getTimeZone().toString(),
 										  Opt_in__c    		  		 		  		= true,

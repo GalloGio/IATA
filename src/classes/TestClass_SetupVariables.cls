@@ -28,15 +28,13 @@ public class TestClass_SetupVariables {
     public static ID IATAServiceProviderAccountRecordTypeID {
         get
         {
-            List<RecordType> recTypId = [Select id, name from recordtype where name = 'IATA Service Provider Account' limit 1];
-            return recTypId.size() > 0 ? recTypId[0].Id : null;
+            return RecordTypeSingleton.getInstance().getRecordTypeId('Account', 'IATA_Service_Provider_Account');
         }
     }
     public static ID ExternalCasesInvoicesWorksID {
         get
         {
-            List<RecordType> recTypId = [select name from recordtype where name = 'External Cases (InvoiceWorks)' limit 1];
-            return recTypId.size() > 0 ? recTypId[0].Id : null;
+            return RecordTypeSingleton.getInstance().getRecordTypeId('Case', 'External_Cases_InvoiceWorks');
         }
     }
     public static ID HighVolumeCustomPortalID {
