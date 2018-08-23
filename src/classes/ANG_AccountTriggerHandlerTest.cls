@@ -218,6 +218,16 @@ private class ANG_AccountTriggerHandlerTest {
 
 		ANG_RHCHelper.createRHCInfo(new Set<Id>{a.Id}, false);
 
+		List<ANG_RHC_Information__c> rhcList1 = [Select ANG_RHC_Amount_Provisional__c,
+													   ANG_Provisional_RHC_Last_Update__c,
+													   ANG_RME_Amount__c
+												  from ANG_RHC_Information__c 
+												 Where ANG_AccountId__c =: a.id];
+        
+        rhcList1[0].CurrencyIsoCode = 'USD';
+        rhcList1[0].ANG_RME_Amount__c = 200;
+        upsert rhcList1[0];
+
 		ANG_RME_Alert_Service.RHCMessage message = new ANG_RME_Alert_Service.RHCMessage();
 
 		message.provisionalRHC = 300;
@@ -288,6 +298,16 @@ private class ANG_AccountTriggerHandlerTest {
 		insert cFS;
 
 		cFS.Status = AMS_Utils.CASE_STATUS_FINANCIAL_SECURITY_REQUESTED;
+
+		List<ANG_RHC_Information__c> rhcList1 = [Select ANG_RHC_Amount_Provisional__c,
+													   ANG_Provisional_RHC_Last_Update__c,
+													   ANG_RME_Amount__c
+												  from ANG_RHC_Information__c 
+												 Where ANG_AccountId__c =: a.id];
+        
+        rhcList1[0].CurrencyIsoCode = 'USD';
+        rhcList1[0].ANG_RME_Amount__c = 200;
+        upsert rhcList1[0];
 
 		ANG_RME_Alert_Service.RHCMessage message = new ANG_RME_Alert_Service.RHCMessage();
 
