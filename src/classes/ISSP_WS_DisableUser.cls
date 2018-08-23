@@ -143,7 +143,7 @@ global class ISSP_WS_DisableUser {
                     
                     return retResponseOne;
                 }
-                /*else if (!thisUser.IsActive && !thisUser.Portal_User_Frozen_Checkbox__c){
+                else if (!thisUser.IsActive && !thisUser.Portal_User_Frozen_Checkbox__c){
                     errorCode = '014';
                     errorMessage = ISSP_Int_Error__c.getValues('014').Error_Message__c;
                     retResponseOne.isSuccess = false;
@@ -158,7 +158,7 @@ global class ISSP_WS_DisableUser {
                     insert newLog;
                     
                     return retResponseOne;
-                }*/
+                }
                 else{
                     List <Contact> contactList = [SELECT Id FROM Contact WHERE Id = :thisUser.ContactId];
                     if (contactList.isEmpty()){
@@ -442,7 +442,7 @@ global class ISSP_WS_DisableUser {
                     return retResponseOne;
                 }
                 /*else if (!thisUser.IsActive){
-                    /*errorCode = '014';
+                    errorCode = '014';
                     errorMessage = ISSP_Int_Error__c.getValues('014').Error_Message__c;
                     retResponseOne.isSuccess = false;
                     retResponseOne.responseErrorCode = errorCode;
@@ -595,9 +595,7 @@ global class ISSP_WS_DisableUser {
             }
         }
         newLog.Finished__c = system.now();
-        system.debug('##RN: theUser' + theUser);
         if (theUser != null && theUser != ''){
-            system.debug('##RN: reactivateUser' + reactivateUser);  
             if(reactivateUser){
                updateUser(theUser, emailForUsername);
             }
