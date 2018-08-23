@@ -2600,6 +2600,7 @@ public class AMS_OSCARTriggerHandler {
         else if(agencyType == AMS_Utils.NGANNUALREVAL && step == null) templateId  = 'ANG_Anual_Renewal_Case';
         else if(agencyType == AMS_Utils.NGFOP && step == null ) templateId  = 'ANG_FOP_OSCARCREATION';
         else if(agencyType == AMS_Utils.NGFOP && step == AMS_Utils.PASSED ) templateId  = 'ANG_FOP_OSCARCREATIONPORTAL';
+        else if(agencyType == ANG_OscarProcessHelper.ANG_PCI_RENEWAL && step == null ) templateId  = 'ANG_PCI_RENEWAL';
         else if(agencyType == ANG_FOPOSCARNotificationBatch.FOP_REMINDER_TEMPLATE_ID && step == null) templateId  = 'ANG_Mass_FOP_OSCAR_Reminder';
         else if(agencyType == ANG_FOPOSCARNotificationBatch.FOP_NONCOMPLIANCE_TEMPLATE_ID && step == null) templateId  = 'ANG_Mass_FOP_OSCAR_NonCompliance';
 

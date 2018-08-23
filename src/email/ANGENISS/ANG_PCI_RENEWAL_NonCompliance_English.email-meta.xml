@@ -3,7 +3,7 @@
     <available>true</available>
     <encodingKey>UTF-8</encodingKey>
     <letterhead>IATADynamicSkyLetterhead</letterhead>
-    <name>ANG Mass FOP OSCAR NonCompliance EN</name>
+    <name>ANG PCI RENEWAL NonCompliance EN</name>
     <style>freeForm</style>
     <subject>Non compliance - Request for PCI DSS Attestation of Compliance / Nil Credit Card Self-Declaration - {!Account.IATACode__c} - {!Account.Name}</subject>
     <textOnly>Dear {!Contact.Name},
@@ -13,7 +13,7 @@ IATA Code: {!Account.IATACode__c}
 
 
 
-Under the Passenger Sales Agency Rules, all IATA Accredited Agents must ensure its full compliance with the Payment Card Industry Data Security Standards (PCI DSS).
+Under the Passenger Sales Agency Rules, all IATA Accredited Agents must ensure its full compliance with the Payment Card Industry Data Security Standards (PCI DSS) on annual basis.
 
 
 

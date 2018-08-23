@@ -3,23 +3,23 @@
     <available>true</available>
     <encodingKey>UTF-8</encodingKey>
     <letterhead>IATADynamicSkyLetterhead</letterhead>
-    <name>ANG Mass FOP OSCAR Reminder EN</name>
+    <name>ANG PCI RENEWAL Reminder EN</name>
     <style>freeForm</style>
-    <subject>Reminder - Request for PCI DSS Attestation of Compliance / Nil Credit Card Self-Declaration - {!Account.IATACode__c} - {!Account.Name}</subject>
+    <subject>Reminder - Your PCI DSS Compliance Renewal Request - {!Account.IATACode__c} - {!Account.Name}</subject>
     <textOnly>Dear {!Contact.Name},
 
 
 
 IATA Code: {!Account.IATACode__c}
 
-This is a friendly reminder that the PCI DSS Attestation of Compliance or Nil Credit Card Self-Declaration has to be uploaded according to the already communicated deadline. If you have submitted the evidence already, please disregard this message.
+This is a friendly reminder that the documentation for your Compliance with PCI DSS security standards renewal has not been received yet. If you have submitted the evidence already, please disregard this message.
 
 
 We would like highlight that the submission deadline date is {!TODAY()+15} (mm/dd/yyyy).
 
 
 
-If you want to learn more about how to become PCI DSS compliance, please visit our web page: http://www.iata.org/services/finance/Pages/pci-dss.aspx
+If you want to learn more about PCI DSS compliance, please visit our web page: http://www.iata.org/services/finance/Pages/pci-dss.aspx
 
 
 
