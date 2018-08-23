@@ -116,15 +116,12 @@
     </div>
 
     <div aura:id="registrationComplete" class="slds-text-align_center slds-p-around_large slds-hide">
-        
-        <aura:if isTrue="{!v.serviceName == 'FRED'}">
-            <h1 class="slds-m-bottom_medium">{!$Label.c.OneId_RegistrationComplete}. {!$Label.c.OneId_Authorization_Pending}</h1>            
-           <aura:set attribute="else">
-            <h1 class="slds-m-bottom_medium">{!$Label.c.OneId_RegistrationComplete}</h1>            
-           </aura:set> 
-        </aura:if>
-
-        <h3>{!$Label.c.OneId_CheckEmail}</h3>
-        
+		<aura:if isTrue="{!v.serviceName == 'FRED'}">
+			<h1 class="slds-m-bottom_medium">{!$Label.c.OneId_CheckEmail}</h1>
+			<aura:set attribute="else">
+            	<h1 class="slds-m-bottom_medium">{!$Label.c.OneId_RegistrationComplete}</h1>            
+		        <h3>{!$Label.c.OneId_CheckEmail}</h3>
+			</aura:set> 
+		</aura:if>
     </div>
 </aura:component>
