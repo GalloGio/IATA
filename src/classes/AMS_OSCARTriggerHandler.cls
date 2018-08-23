@@ -4107,6 +4107,9 @@ public class AMS_OSCARTriggerHandler {
 
     public static void performBackupANG(Map<Id, AMS_OSCAR__c> oldMap, Map<Id, AMS_OSCAR__c> newMap){
         
+        if(ANG_AgencyChangesHelper.testRunnningForNonBackup)
+            return;
+
         List<Id> oscarsToProcess = new List<Id>();
 
         if(Trigger.isInsert){
@@ -4142,6 +4145,9 @@ public class AMS_OSCARTriggerHandler {
 
      public static void performRollbackANG(Map<Id, AMS_OSCAR__c> oldMap, Map<Id, AMS_OSCAR__c> newMap){
         
+        if(ANG_AgencyChangesHelper.testRunnningForNonBackup)
+            return;
+
         List<Id> oscarsToProcess = new List<Id>();
 
         for(ID oscarId:oldMap.keySet()){

@@ -1,7 +1,7 @@
 @isTest
 private class ANG_RollbackEngineHelperTest {
 	
-	private static void setupData(){
+	private static void setupData(Boolean useAEAccount){
 		IATA_ISO_Country__c ctry = new IATA_ISO_Country__c (Name='US',ISO_Code__c='US',ANG_Enable_NewGen__c = true)  ;
         insert ctry ;
 
@@ -15,7 +15,7 @@ private class ANG_RollbackEngineHelperTest {
 			IATA_ISO_Country__c = ctry.id,
 			RecordTypeId = accountAgencyRT,
 			IATACode__c='1234561',
-			Location_Type__c='HE',
+			Location_Type__c='HE', 
 			Name='Test1 Agency OK',
 			Short_Name__c='Test1 Agency',
 			Sector__c = 'Travel Agent',
@@ -118,7 +118,7 @@ private class ANG_RollbackEngineHelperTest {
 		Id oscarRT = AMS_Utils.getId('AMS_OSCAR__c', 'ANG_Agency_Changes');
 
 		AMS_OSCAR__c oscar = new AMS_OSCAR__c(
-			Account__c = a1.id,
+			Account__c = useAEAccount ? a2.id : a1.id,
 			recordTypeId = oscarRT			
 		);
 
@@ -128,31 +128,33 @@ private class ANG_RollbackEngineHelperTest {
 		String OSCAR_RECORD_TYPE_ID = Schema.SObjectType.Case.RecordTypeInfosByName.get('OSCAR Communication').RecordTypeId;
 
 		Case oscarCase = new Case(Oscar__c = oscar.Id, RecordTypeId = OSCAR_RECORD_TYPE_ID);
-        oscarCase.AccountId = a1.Id;
+        oscarCase.AccountId = useAEAccount ? a2.id : a1.id;
         oscarCase.ContactId = newContact1.Id;
         insert oscarCase;
 
 		ID rtChangesStagingId = Schema.SObjectType.AMS_Pax_Accreditation_Form__c.getRecordTypeInfosByName().get('New Gen Changes').getRecordTypeId();
 
+		Account accountToUse = useAEAccount ? a2 : a1;
+
                  // Create the Staging area for the Account
         AMS_Pax_Accreditation_Form__c stagingArea = new  AMS_Pax_Accreditation_Form__c(
         		RecordTypeId = rtChangesStagingId,
-                IATAcode__c = a1.IATAcode__c,
-                Branch_Office_Country__c = a1.IATA_ISO_Country__c,
-                Location_Class__c = a1.Location_Class__c,
-                Location_Type__c = a1.Location_Type__c,
+                IATAcode__c = accountToUse.IATAcode__c,
+                Branch_Office_Country__c = accountToUse.IATA_ISO_Country__c,
+                Location_Class__c = accountToUse.Location_Class__c,
+                Location_Type__c = accountToUse.Location_Type__c,
                 SAAM_Case__c = oscarCase.Id,
-				Account_Name__c = a1.Name,
+				Account_Name__c = accountToUse.Name,
 				ISSP_AMS_Legal_Status__c = 'Association',
-				Short_Name__c = a1.Short_Name__c,
-				TradeName__c = a1.Name,
-				Trade_Name__c = a1.Name,
-				Branch_Office_Email__c = a1.Email__c,
-				Website__c = a1.Website,
-				Abbreviated_name__c = a1.Abbreviated_name__c,
-				VAT_Number_2__c = a1.VAT_Number__c,
-				ANG_Accreditation_type__c = a1.ANG_Accreditation_Model__c,
-				ISSP_AMS_License_No__c =  a1.License_Number__c
+				Short_Name__c = accountToUse.Short_Name__c,
+				TradeName__c = accountToUse.Name,
+				Trade_Name__c = accountToUse.Name,
+				Branch_Office_Email__c = accountToUse.Email__c,
+				Website__c = accountToUse.Website,
+				Abbreviated_name__c = accountToUse.Abbreviated_name__c,
+				VAT_Number_2__c = accountToUse.VAT_Number__c,
+				ANG_Accreditation_type__c = accountToUse.ANG_Accreditation_Model__c,
+				ISSP_AMS_License_No__c =  accountToUse.License_Number__c
                 );
 
 			insert stagingArea;
@@ -167,7 +169,7 @@ private class ANG_RollbackEngineHelperTest {
 
 		Test.startTest();
 
-		setupData();
+		setupData(false);
 
 		List<Account> accts = [Select Id, Name, Short_Name__c,TradeName__c,Abbreviated_name__c from Account ];
 
@@ -216,7 +218,7 @@ private class ANG_RollbackEngineHelperTest {
 		
 		Test.startTest();
 
-		setupData();
+		setupData(false);
 
 		List<Account> accts = [Select Id, Name, Short_Name__c,TradeName__c,Abbreviated_name__c from Account ];
 
@@ -327,7 +329,7 @@ private class ANG_RollbackEngineHelperTest {
 		
 		Test.startTest();
 
-		setupData();
+		setupData(false);
 
 		IATA_ISO_Country__c ctry = [Select Id from IATA_ISO_Country__c];
 
@@ -448,7 +450,7 @@ private class ANG_RollbackEngineHelperTest {
 		
 		Test.startTest();
 
-		setupData();
+		setupData(false);
 
 		Account setupAccountAE = [Select Id, ParentId, Location_Type__c,Top_Parent__c from Account where location_Type__c = 'AE' and IATAcode__c = '1234591'];
 		Account setupAccountAE2 = [Select Id, ParentId, Location_Type__c,Top_Parent__c from Account where location_Type__c = 'AE' and IATAcode__c = '1264011'];
@@ -674,4 +676,219 @@ private class ANG_RollbackEngineHelperTest {
 		System.debug('Technical_Logs__c are:' + [select Id, Log__c, Status__c, Record__c, Operation__c FROM Technical_Logs__c WHERE Record__c =:oscar.Id AND Operation__c = 'Rollback']);
 	}
 	
+	@isTest static void RollbackTest5() {
+		
+		Test.startTest();
+
+		setupData(true);
+
+		IATA_ISO_Country__c ctry = [Select Id from IATA_ISO_Country__c];
+
+        Id accountAgencyRT = AMS_Utils.getId('Account', 'IATA_Agency');
+
+        Account a1 = new Account(
+			Is_PCI_compliant__c = 'Yes',
+			ANG_HE_RiskStatus__c = 'B',
+			ANG_HE_RiskHistoryAssessment__c = 'Passed',
+			Remittance_frequency__c = 'Monthly',
+			IATA_ISO_Country__c = ctry.id,
+			RecordTypeId = accountAgencyRT,
+			IATACode__c='1234001',
+			Location_Type__c='HE',
+			Name='Test1 Agency OK NEW BIG BOSS',
+			Short_Name__c='Test1 Agency',
+			Sector__c = 'Travel Agent',
+			Location_Class__c = 'P',
+			Category__c = 'IATA Passenger Sales Agent',
+			Site = '123400',
+			Status__c = 'Approved',
+			ANG_Accreditation_Model__c = 'Cash',
+			Company_Type__c = 'A',
+			Email__c='ltg23@fefff2.com',
+			Website = 'wwww.asdasidsss12233.pt',
+			VAT_Number__c = '111222333',
+			License_Number__c = '111222333',
+			TradeName__c = 'Test1 Agency OK'
+			);
+
+		insert a1;
+
+		AMS_OSCAR__c oscar = [Select Id from AMS_OSCAR__c];
+
+		oscar.ANG_Type_Of_Change__c = AMS_Utils.ANG_HIERARCHY;
+		oscar.New_parent__c = a1.Id;
+
+		update oscar;
+		
+		Account setupAccountAE = [Select Id, ParentId, Location_Type__c,Top_Parent__c from Account where location_Type__c = 'AE' and IATAcode__c = '1234591'];
+
+		Test.StopTest();
+
+		delete [Select Id From AMS_Agencies_relationhip__c where Child_Account__c =:setupAccountAE.Id];
+
+		setupAccountAE.ParentId = a1.Id;
+		setupAccountAE.Top_Parent__c = a1.Id;
+
+		update setupAccountAE;
+
+		AMS_Agencies_Hierarchy__c hierarchy = new AMS_Agencies_Hierarchy__c(Hierarchy_Name__c = 'Hierarchy2');
+		insert hierarchy;
+
+		insert new AMS_Agencies_relationhip__c(Is_Newgen_Relation__c = true,Parent_Account__c = a1.Id, Child_Account__c = setupAccountAE.Id, Hierarchy__c = hierarchy.Id);
+
+		List<AMS_Agencies_relationhip__c> relationsAfterChange = [Select Id, Child_Account__c, Child_Account__r.IATACode__c, Child_Account__r.ParentId, Parent_Account__c,Parent_Account__r.IATAcode__c,Parent_Account__r.ParentId, Hierarchy__c from AMS_Agencies_relationhip__c];
+
+		List<AMS_Agencies_Hierarchy__c> hierarchiesAfterChange = [Select Id from AMS_Agencies_Hierarchy__c];
+
+
+		System.debug('relationsAfterChange are:'+relationsAfterChange);
+		System.debug('hierarchiesAfterChange are:'+hierarchiesAfterChange);
+
+		System.assertEquals(2,relationsAfterChange.size());
+		System.assertEquals(2,hierarchiesAfterChange.size());
+
+		ANG_RollbackEngineHelper reh = new ANG_RollbackEngineHelper(oscar.Id);
+		reh.setNewParentHierarchyId(a1.Id);
+
+		reh.executeAdhoc();
+
+		List<AMS_Agencies_relationhip__c> relationsAfterRollback = [Select Id, Child_Account__c, Child_Account__r.IATACode__c, Child_Account__r.ParentId, Parent_Account__c,Parent_Account__r.IATAcode__c,Parent_Account__r.ParentId, Hierarchy__c from AMS_Agencies_relationhip__c];
+
+		System.debug('relationsAfterRollback are:'+relationsAfterRollback);
+
+		System.assertEquals(2,relationsAfterRollback.size());
+
+		System.debug('Accounts are:' + [Select Id, Location_Type__c, IATAcode__c, ParentId, Top_Parent__c, Name from Account]);
+
+		hierarchiesAfterChange = [Select Id from AMS_Agencies_Hierarchy__c];
+		System.debug('hierarchiesAfterChange are:'+hierarchiesAfterChange);
+
+		System.assertEquals(1,hierarchiesAfterChange.size());
+
+
+	}
+
+	@isTest static void RollbackTest6() {
+		
+		Test.startTest();
+
+		setupData(true);
+
+		IATA_ISO_Country__c ctry = [Select Id from IATA_ISO_Country__c];
+
+        Id accountAgencyRT = AMS_Utils.getId('Account', 'IATA_Agency');
+
+        Account a1 = new Account(
+			Is_PCI_compliant__c = 'Yes',
+			ANG_HE_RiskStatus__c = 'B',
+			ANG_HE_RiskHistoryAssessment__c = 'Passed',
+			Remittance_frequency__c = 'Monthly',
+			IATA_ISO_Country__c = ctry.id,
+			RecordTypeId = accountAgencyRT,
+			IATACode__c='1234001',
+			Location_Type__c='HE',
+			Name='Test1 Agency OK NEW BIG BOSS',
+			Short_Name__c='Test1 Agency',
+			Sector__c = 'Travel Agent',
+			Location_Class__c = 'P',
+			Category__c = 'IATA Passenger Sales Agent',
+			Site = '123400',
+			Status__c = 'Approved',
+			ANG_Accreditation_Model__c = 'Cash',
+			Company_Type__c = 'A',
+			Email__c='ltg23@fefff2.com',
+			Website = 'wwww.asdasidsss12233.pt',
+			VAT_Number__c = '111222333',
+			License_Number__c = '111222333',
+			TradeName__c = 'Test1 Agency OK'
+			);
+
+		insert a1;
+
+        Account a2 = new Account(
+			Is_PCI_compliant__c = 'Yes',
+			ANG_HE_RiskStatus__c = 'B',
+			ANG_HE_RiskHistoryAssessment__c = 'Passed',
+			Remittance_frequency__c = 'Monthly',
+			IATA_ISO_Country__c = ctry.id,
+			RecordTypeId = accountAgencyRT,
+			IATACode__c='1234001',
+			Location_Type__c='HE',
+			Name='Test1 Agency OK NEW BIG BOSS',
+			Short_Name__c='Test1 Agency',
+			Sector__c = 'Travel Agent',
+			Location_Class__c = 'P',
+			Category__c = 'IATA Passenger Sales Agent',
+			Site = '123400',
+			Status__c = 'Approved',
+			ANG_Accreditation_Model__c = 'Cash',
+			Company_Type__c = 'A',
+			Email__c='ltg23@fefff2.com',
+			Website = 'wwww.asdasidsss12233.pt',
+			VAT_Number__c = '111222333',
+			License_Number__c = '111222333',
+			TradeName__c = 'Test1 Agency OK',
+			ParentId = a1.Id,
+			Top_Parent__c = a1.Id
+			);
+
+		insert a2;
+
+		AMS_Agencies_Hierarchy__c hierarchy = new AMS_Agencies_Hierarchy__c(Hierarchy_Name__c = 'Hierarchy2');
+		insert hierarchy;
+
+		insert new AMS_Agencies_relationhip__c(Is_Newgen_Relation__c = true,Parent_Account__c = a1.Id, Child_Account__c = a2.Id, Hierarchy__c = hierarchy.Id);
+
+
+		AMS_OSCAR__c oscar = [Select Id from AMS_OSCAR__c];
+
+		oscar.ANG_Type_Of_Change__c = AMS_Utils.ANG_HIERARCHY;
+		oscar.New_parent__c = a1.Id;
+
+		update oscar;
+		
+		Account setupAccountAE = [Select Id, ParentId, Location_Type__c,Top_Parent__c from Account where location_Type__c = 'AE' and IATAcode__c = '1234591'];
+
+		Test.StopTest();
+
+		delete [Select Id From AMS_Agencies_relationhip__c where Child_Account__c =:setupAccountAE.Id];
+
+		setupAccountAE.ParentId = a1.Id;
+		setupAccountAE.Top_Parent__c = a1.Id;
+
+		update setupAccountAE;
+
+		insert new AMS_Agencies_relationhip__c(Is_Newgen_Relation__c = true,Parent_Account__c = a1.Id, Child_Account__c = setupAccountAE.Id, Hierarchy__c = hierarchy.Id);
+
+		List<AMS_Agencies_relationhip__c> relationsAfterChange = [Select Id, Child_Account__c, Child_Account__r.IATACode__c, Child_Account__r.ParentId, Parent_Account__c,Parent_Account__r.IATAcode__c,Parent_Account__r.ParentId, Hierarchy__c from AMS_Agencies_relationhip__c];
+
+		List<AMS_Agencies_Hierarchy__c> hierarchiesAfterChange = [Select Id from AMS_Agencies_Hierarchy__c];
+
+
+		System.debug('relationsAfterChange are:'+relationsAfterChange);
+		System.debug('hierarchiesAfterChange are:'+hierarchiesAfterChange);
+
+		System.assertEquals(3,relationsAfterChange.size());
+		System.assertEquals(2,hierarchiesAfterChange.size());
+
+		ANG_RollbackEngineHelper reh = new ANG_RollbackEngineHelper(oscar.Id);
+		reh.setNewParentHierarchyId(a1.Id);
+
+		reh.executeAdhoc();
+
+		List<AMS_Agencies_relationhip__c> relationsAfterRollback = [Select Id, Child_Account__c, Child_Account__r.IATACode__c, Child_Account__r.ParentId, Parent_Account__c,Parent_Account__r.IATAcode__c,Parent_Account__r.ParentId, Hierarchy__c from AMS_Agencies_relationhip__c];
+
+		System.debug('relationsAfterRollback are:'+relationsAfterRollback);
+
+		System.assertEquals(3,relationsAfterRollback.size());
+
+		System.debug('Accounts are:' + [Select Id, Location_Type__c, IATAcode__c, ParentId, Top_Parent__c, Name from Account]);
+
+		hierarchiesAfterChange = [Select Id from AMS_Agencies_Hierarchy__c];
+		System.debug('hierarchiesAfterChange are:'+hierarchiesAfterChange);
+
+		System.assertEquals(2,hierarchiesAfterChange.size());
+
+
+	}
 }

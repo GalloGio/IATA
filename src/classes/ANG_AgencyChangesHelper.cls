@@ -1,5 +1,6 @@
 public with sharing class ANG_AgencyChangesHelper {
 
+	public static Boolean testRunnningForNonBackup = false;
 	public static Boolean isMigrationRunning = false;
 
 	public class AChangeStructure{
@@ -105,8 +106,8 @@ public with sharing class ANG_AgencyChangesHelper {
 	
 
 		if(oscar.Process__c == AMS_Utils.NGCHANGES && oscar.STEP6__c == AMS_Utils.PASSED  && oscar.ANG_Type_Of_Change__c != null && !isMigrationRunning && oscar.Backup_In_Progress__c){	
-			oscar.addError('There is a rollback in progress for this Oscar, please wait a few moments until it finishes.');
-			return;
+				oscar.addError('There is a backup in progress for this Oscar, please wait a few moments until it finishes.');
+				return;
 		}
 
 		if(oscar.Process__c == AMS_Utils.NGCHANGES && oscar.STEP6__c != AMS_Utils.PASSED && oscar.Change_effective_as_of__c > Date.today()) {
