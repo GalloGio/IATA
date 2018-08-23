@@ -73,6 +73,11 @@ global without sharing class ANG_RollbackEngineHelper implements Queueable{
     }
 
     private void rollbackData(){
+        
+        if(technicalLogsMap.isEmpty()){
+            System.System.debug('There is nothing to rollback, doing nothing here.');
+            return;
+        }
 
         For(String entity: technicalLogsMap.keySet()){
 
