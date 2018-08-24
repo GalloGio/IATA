@@ -273,10 +273,12 @@ public class Product_Sel extends Selector
     {
         Zuora.zObject ret = (Test.isRunningTest()) ? TestDataGenerator.generateZObject('Product') : new Zuora.zObject('Product'); 
 
-        if(product.Formula_Zuora_Id__c != null)
-            ret.setValue('Id', product.Formula_Zuora_Id__c);
-        else if(product.Zuora_Id__c != null)
-            ret.setValue('Id', product.Zuora_Id__c);
+        //if(product.Formula_Zuora_Id__c != null)
+        //    ret.setValue('Id', product.Formula_Zuora_Id__c);
+        //else if(product.zqu__ZuoraId__c != null)
+           
+
+        ret.setValue('Id', product.zqu__ZuoraId__c);
         
         if(product.Name != null)
             ret.setValue('Name', product.Name);

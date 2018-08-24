@@ -98,28 +98,6 @@ public class Product_Svc
             if(results.size() > 0) ret = processZProductSaveResult(products, results);
         }
 
-        //-- If there are Invalid Product: Send Notification to Support
-        //if(!productsWithoutCode.isEmpty())
-        //{
-        //    List<String> errorsList = new List<String>();
-        //    for(Product2 p : productsWithoutCode)
-        //    {
-        //        String productURL = URL.getSalesforceBaseUrl().toExternalForm() + '/' + p.Id;
-        //        String err = String.format('<a href="{0}">{1}</a>', new List<String>{
-        //            productURL,
-        //            p.Name
-        //        });
-        //        errorsList.add(err);
-        //    }
-
-        //    String errorsString = String.join(errorsList, '<br />') ;
-
-        //    String msg = Label.Error_Invalid_Product_Number + '<br />' + errorsString;            
-        //    ret = msg; 
-
-        //    errorLogs.add(IECErrorLogger.createErrorLog('Product_Svc/saveZProducts', msg, 'Product cannot be created in Zuora', null));      
-        //}
-
         if(errorLogs.size() > 0) IECErrorLogger.logErrors(errorLogs);
 
         return ret;
@@ -151,21 +129,21 @@ public class Product_Svc
         List<Zuora.zObject> allErrors = new List<Zuora.zObject>(); 
         
         //-- ZuoraIds return bu Zuora in case of success
-        Set<String> zuoraIds = new Set<String>();
+        //Set<String> zuoraIds = new Set<String>();
 
         for(Zuora.zApi.SaveResult sr : results)
         {
-            if(sr.Success)
-                zuoraIds.add(sr.Id);
-            else
+            if(!sr.Success)
                 allErrors.addAll(sr.Errors);
+            //else
+            //    allErrors.addAll(sr.Errors);
         }
 
         //-- Update Products with Zuora Id
-        if(!zuoraIds.isEmpty())
-        {
-            ret = updateProducts(zuoraIds, products);
-        }
+        //if(!zuoraIds.isEmpty())
+        //{
+        //    ret = updateProducts(zuoraIds, products);
+        //}
         
         //-- Proccess Errors 
         if(!allErrors.isEmpty())
