@@ -861,10 +861,6 @@ public class Product_Sel extends Selector
             }
         }   
 
-
-        System.debug('angielaz, Product_Sel-->mapProductNumber_Price.keySet(): ' + mapProductNumber_Price.keySet());
-        System.debug('angielaz, Product_Sel-->customerType: ' + customerType);         
-
         mapProductNumber_Price = exe.getProductPriceInfo(mapProductNumber_Price.keySet(), customerType, null, null, true);
 
         //*** get picklist translations
