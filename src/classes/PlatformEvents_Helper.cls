@@ -149,26 +149,4 @@ public class PlatformEvents_Helper {
     	}
     	return mapToRet;
     }
-    
-    
-    private static map<string, string> PEObjName(string sObj){
-        if(sObj=='Account__e'){
-            return new map<String,String>{
-                'Id' => 'AccountId__c',
-                'Recordtype' => 'Recordtype__c',
-                'EventType' => 'Type__c'
-            };
-        }
-        
-        if(sObj=='Contact__e' || sObj=='Product_Bin_Range__e' || sObj=='PartnerProduct__e' 
-        	|| sObj=='Product_Country_Config__e' || sObj=='AccountContactRole__e' || sObj=='AccountRole__e'){
-            return new map<String,String>{
-                'Id' => 'RecordId__c',
-                'Recordtype' => 'RecordType__c',
-                'EventType' => 'EventType__c'
-            };
-        }
-        
-        return null;
-    }
 }
