@@ -776,6 +776,16 @@ IMAGE(&quot;/servlet/servlet.FileDownload?file=015200000011tph&quot;,&quot;Reque
         <unique>false</unique>
     </fields>
     <fields>
+        <fullName>Two_months_passed_expiry__c</fullName>
+        <defaultValue>false</defaultValue>
+        <description>Used for flagging FS with first call letter required when two months of expiry date have passed. This info goes to the account and then to the case.</description>
+        <externalId>false</externalId>
+        <label>Two months passed expiry</label>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
         <fullName>Unlimited_Security__c</fullName>
         <defaultValue>false</defaultValue>
         <externalId>false</externalId>

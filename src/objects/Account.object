@@ -9893,12 +9893,17 @@ WSPN-Worldspan</inlineHelpText>
         <summaryFilterItems>
             <field>Financial_Security__c.Security_Status__c</field>
             <operation>equals</operation>
-            <value>Close to Expiry Date, Active</value>
+            <value>Close to Expiry Date, Active, Expired</value>
         </summaryFilterItems>
         <summaryFilterItems>
             <field>Financial_Security__c.First_Call_Letter_required1__c</field>
             <operation>equals</operation>
             <value>Yes</value>
+        </summaryFilterItems>
+        <summaryFilterItems>
+            <field>Financial_Security__c.Two_months_passed_expiry__c</field>
+            <operation>equals</operation>
+            <value>False</value>
         </summaryFilterItems>
         <summaryForeignKey>Financial_Security__c.Account__c</summaryForeignKey>
         <summaryOperation>count</summaryOperation>
