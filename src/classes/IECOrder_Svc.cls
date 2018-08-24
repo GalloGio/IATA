@@ -653,12 +653,17 @@ public with sharing class IECOrder_Svc {
         return orderItems;
     }
 
-    public static void changePenddingOrder(Order newPendding)
+    public static void changePenddingOrder(Order newPending)
     {
-        IEC_Cart cartInstance = IEC_Cart.getInstance();
+        //RN-INC421212
+        //IEC_Cart cartInstance = IEC_Cart.getInstance();
+        IEC_Cart cartInstance = IEC_Cart.initializer();
+        cartInstance.setPendingOrder(newPending);
+        
+
         IEC_Functionality functionality = IEC_Functionality.getInstance();
         Boolean newShoppingCart = functionality.isActive('New Shopping Cart');
-
+		
         Order o = getPenddingOrder(true);
         if(String.isBlank(o.IEC_Order_Previous_Type__c))
         {
