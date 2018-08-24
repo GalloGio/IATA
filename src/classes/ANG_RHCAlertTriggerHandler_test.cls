@@ -658,7 +658,6 @@ private class ANG_RHCAlertTriggerHandler_test {
 		System.assertEquals('Non-Active', aa.Status__c);
 
 		System.assertEquals(1,[SELECT ID from Agency_Applied_Change_code__c where Account__c = :rhcInfo.ANG_AccountId__c and Change_Code__c = 'PCA' and Active__c = true].Size());
-
 		ANG_Risk_Alert__c ara = new ANG_Risk_Alert__c(
 			ANG_RHC_Information__c = rhcInfo.Id,
 			ANG_Account__c = rhcInfo.ANG_AccountId__c,
@@ -711,6 +710,7 @@ private class ANG_RHCAlertTriggerHandler_test {
 		Agency_Authorization__c aa = [SELECT ID, Status__c from Agency_Authorization__c where ANG_FormOfPayment_ID__c = 'CA'];
 
 		System.assertEquals('Non-Active', aa.Status__c);
+
 
 		System.assertEquals(1,[SELECT ID from Agency_Applied_Change_code__c where Account__c = :rhcInfo.ANG_AccountId__c and Change_Code__c = 'PCA' and Active__c = true].Size());
 
