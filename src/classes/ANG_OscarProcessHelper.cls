@@ -1663,7 +1663,11 @@ global class ANG_OscarProcessHelper {
 
 			System.debug('[ANG_OscarProcessHelper.createIEPAccountOscar] - BEGINNING INSERTING for ACCOUNT: '+acc.Id+' - '+acc.Name+' - '+acc.IataCode__c);
 			
-            if(contactAcc.get(acc.Id) == null) acc.addError('An IEP Admin Contact is needed on this Account for the IEP Account OSCAR');
+            if(contactAcc.get(acc.Id) == null){
+            	acc.addError('An IEP Admin Contact is needed on this Account for the IEP Account OSCAR');
+            	return;
+            } 
+            	
             
 			fieldsOfObject = new Map<String,Object>();
 	        fieldsOfObject.put('Account_Concerned__c',acc.Id);
