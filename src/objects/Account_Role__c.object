@@ -291,7 +291,7 @@
         <displayType>button</displayType>
         <encodingKey>UTF-8</encodingKey>
         <linkType>url</linkType>
-        <masterLabel>Terminate</masterLabel>
+        <masterLabel>Terminate ATM Provider</masterLabel>
         <openType>replace</openType>
         <protected>false</protected>
         <url>/flow/TIP_Payment_Provider_Termination?vAccountRoleId={!Account_Role__c.Id}&amp;retURL=/{!Account_Role__c.Id}</url>
