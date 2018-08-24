@@ -107491,10 +107491,12 @@ This field is kept up-to-date with the feedback of ITDI at least twice a year du
         <fullName>ACLI_SAP_ID_format_validation</fullName>
         <active>true</active>
         <description>Validates that the ACLI SAP ID starts with &quot;00&quot; and has 10 characters</description>
-        <errorConditionFormula>OR(
-ISCHANGED(ACLI_SAP_Id__c),
-NOT(BEGINS(ACLI_SAP_Id__c,&quot;00&quot;)),
-LEN(ACLI_SAP_Id__c)&lt;&gt;10
+        <errorConditionFormula>NOT(
+  OR(
+    ACLI_SAP_Id__c==&quot;&quot;,
+    ISNULL(ACLI_SAP_Id__c),
+    REGEX(ACLI_SAP_Id__c, &quot;00[0-9][0-9][0-9][0-9][0-9][0-9][0-9][0-9]&quot;)
+  )
 )</errorConditionFormula>
         <errorDisplayField>ACLI_SAP_Id__c</errorDisplayField>
         <errorMessage>ACLI SAP ID has to start with &quot;00&quot; and be 10 characters long, please correct the format of the ID.</errorMessage>
