@@ -26,7 +26,14 @@ action="{!initActions}"
 
             function changeRequestButtonStatus() {
                 document.getElementById("requestButton").disabled = {!!btnEnabled};
-                document.getElementById("requestVoluntaryRelinquishmentBtn").disabled = {!!btnVoluntReliqEnabled}; //ACAMBAS - TIP-241
+                //ACAMBAS - TIP-241 - Start
+                if({!btnVoluntReliqEnabled}) {
+                    document.getElementById("requestVoluntaryRelinquishmentBtn").style.display = 'block';
+                }
+                else {
+                    document.getElementById("requestVoluntaryRelinquishmentBtn").style.display = 'none';
+                }
+                //ACAMBAS - TIP-241 - End
             }
 
             function validateIfportalAdmin() {
