@@ -22,7 +22,8 @@ private class ANG_IEP_CalloutHelperTest {
 		public HTTPResponse respond(HTTPRequest req) {
 			// Optionally, only send a mock response for a specific endpoint
 			// and method.
-			System.assertEquals('PUT', req.getMethod());
+            if (req.getEndpoint().contains('Mulesoft_Credential_Masterdata')) 
+				System.assertEquals('PUT', req.getMethod());
 			
 			// Create a fake response
 			HttpResponse res = new HttpResponse();
@@ -59,7 +60,7 @@ private class ANG_IEP_CalloutHelperTest {
 
 		//create custom setting
 		List<ANG_CalloutMapping__c> customsettings = new List<ANG_CalloutMapping__c>();
-		customsettings.add(new ANG_CalloutMapping__c(Name = 'IEP_1', Action__c = 'PUT' , CalloutClass__c = 'ANG_CalloutIEPMasterdata', Event_Type__C = 'Update', Change_code__c = 'IEP' ,Credential__c = '/agencies/v1/' , Named_Credential__c = 'Mulesoft_Credential_Masterdata',Type__c='ChangeCode',Field__c='' ));
+		customsettings.add(new ANG_CalloutMapping__c(Name = 'IEP_1',Integration_System__c='Mulesoft', Action__c = 'PUT' , CalloutClass__c = 'ANG_CalloutIEPMasterdata', Event_Type__C = 'Update', Change_code__c = 'IEP' ,Credential__c = '/agencies/v1/' , Named_Credential__c = 'Mulesoft_Credential_Masterdata',Type__c='ChangeCode',Field__c='' ));
 
 		insert customsettings;
 
