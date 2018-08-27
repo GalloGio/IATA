@@ -31,6 +31,13 @@
         <value>Restricted Profile - automated process</value>
     </labels>
     <labels>
+        <fullName>AMS_AttchNotifyOwner</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>AMS_AttchNotifyOwner</shortDescription>
+        <value>AMS_OSCARAttchOwnerNotification</value>
+    </labels>
+    <labels>
         <fullName>AMS_Conga_Merge</fullName>
         <language>en_US</language>
         <protected>false</protected>
@@ -71,6 +78,20 @@
         <protected>false</protected>
         <shortDescription>AMS_New_Change_Code_Notification</shortDescription>
         <value>One or more new change codes have been generated:</value>
+    </labels>
+    <labels>
+        <fullName>AMS_NotificationSent</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>AMS_NotificationSent</shortDescription>
+        <value>Notification sent to Case owner.</value>
+    </labels>
+    <labels>
+        <fullName>AMS_Notify_OSCAR_Owner</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>AMS_Notify_OSCAR_Owner</shortDescription>
+        <value>Notify OSCAR Owner</value>
     </labels>
     <labels>
         <fullName>AMS_OSCAR_AGENCYFEES</fullName>
@@ -807,6 +828,20 @@
         <protected>false</protected>
         <shortDescription>AMS_PERFORM_CORRECTION</shortDescription>
         <value>Perform Correction</value>
+    </labels>
+    <labels>
+        <fullName>AMS_PendingHOAccr</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>AMS_PendingHOAccr</shortDescription>
+        <value>You cannot create &quot;New Head Office&quot; application while an another one is open. Check case &lt;a href=&quot;/ISSP_Case?caseId={0}&quot;&gt;&lt;strong&gt;{1}&lt;/strong&gt;&lt;a/&gt;</value>
+    </labels>
+    <labels>
+        <fullName>AMS_RRejected</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>AMS_RRejected</shortDescription>
+        <value>Request Rejected</value>
     </labels>
     <labels>
         <fullName>AMS_RollbackCase_Description</fullName>
@@ -2622,7 +2657,7 @@ Default,Default withdrawal,Review,Review withdrawal,Irregularity,Termination,Irr
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>CaseValidation - Area</shortDescription>
-        <value>Accreditation,Airlines GSA/MSO,Airline Management,BSPlink/ASD,Cargo Operations,CASSlink,Customer Portal Enquiry,IATA General Information,Invoicing,myIATA,Passenger Operations,Passenger Stock Management,Product Enquiry,Remittance &amp; Settlement,Risk Management,TIESS Support, MITA, Coding, Your VOICE - Annual Survey,IBSPs Migration, TASF, E&amp;F Services,E&amp;F Operations,Easy Pay,NewGen ISS</value>
+        <value>Accreditation,Airlines GSA/MSO,Airline Management,BSPlink/ASD,Cargo Operations,CASSlink,Customer Portal Enquiry,IATA General Information,iiNet,Invoicing,myIATA,Passenger Operations,Passenger Stock Management,Product Enquiry,Remittance &amp; Settlement,Risk Management,TIESS Support, MITA, Coding, Your VOICE - Annual Survey,IBSPs Migration, TASF, E&amp;F Services,E&amp;F Operations,Easy Pay,NewGen ISS</value>
     </labels>
     <labels>
         <fullName>CaseValidation_InDepthArea</fullName>
@@ -20879,7 +20914,7 @@ If you continue to experience issues registering for the CNS Customer Portal the
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>ISSP_PasswordChanged_FRED</shortDescription>
-        <value>Your request has been received and you will be notified by email as soon as your access to FRED+ has been approved.</value>
+        <value>Your request has successfully been received and is currently being processed.</value>
     </labels>
     <labels>
         <fullName>ISSP_PAX_Validating_VAT_Number</fullName>
@@ -22376,14 +22411,6 @@ If you want to reset your password, go back to login screen and use &quot;forgot
         <protected>false</protected>
         <shortDescription>ISSP_Sanctions_Message</shortDescription>
         <value>Your computer IP has been identified as sourcing from one of the countries listed as embargoed by U.S. authorities.&lt;br/&gt;The platform supporting our Customer Portal complies with this U.S. regulations and thus, we are currently unable to provide access to Customer Portal from your current IP address.&lt;br/&gt;Click &lt;a href=&quot;http://www.iata.org/customer-portal/Pages/contactus-v2.aspx&quot; &gt;here&lt;/a&gt; to contact your regional IATA office.</value>
-    </labels>
-    <labels>
-        <fullName>Generic_Sanctions_Message</fullName>
-        <categories>ISSP_Login, s9</categories>
-        <language>en_US</language>
-        <protected>false</protected>
-        <shortDescription>Generic_Sanctions_Message</shortDescription>
-        <value>Your computer IP has been identified as sourcing from one of the countries listed as embargoed by U.S. authorities.&lt;br/&gt;The platform supporting our  Portal complies with this U.S. regulations and thus, we are currently unable to provide access to Portal from your current IP address.&lt;br/&gt;Click &lt;a href=&quot;http://www.iata.org/customer-portal/Pages/contactus-v2.aspx&quot; &gt;here&lt;/a&gt; to contact your regional IATA office.</value>
     </labels>
     <labels>
         <fullName>ISSP_Satisfactory</fullName>
@@ -24601,20 +24628,12 @@ an IATA accredited agency, please press &quot;Back&quot; button and select anoth
         <value>Other</value>
     </labels>
     <labels>
-        <fullName>OneId_Email_Header_Identity</fullName>
-        <categories>OneId</categories>
-        <language>en_US</language>
-        <protected>false</protected>
-        <shortDescription>OneId_Email_Header_Identity</shortDescription>
-        <value>https://iata--csp1idsre--c.cs88.content.force.com/servlet/servlet.ImageServer?id=0159E000000MCzW&amp;oid=00D9E0000001L6b&amp;lastMod=1522143388000</value>
-    </labels>
-    <labels>
         <fullName>OneId_FRED_ContactUs_Link</fullName>
         <categories>OneId</categories>
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>OneId_FRED_ContactUs_Link</shortDescription>
-        <value>https://fred-qa.iata.org/contact</value>
+        <value>http://www.iata.org/whatwedo/environment/Pages/FRED+release-subscription.aspx</value>
     </labels>
     <labels>
         <fullName>OneId_FRED_Troubleshooting</fullName>
