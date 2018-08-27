@@ -66,18 +66,7 @@
                         				<p class="errormsg" style="line-height: 26px;">{!$Label.ISSP_EnterValidString} </p>
                       				</div>
                                    	<span class="saveMode saveModeTradeName" style="line-height: 24px;">
-                                    	<apex:outputField value="{!con.Account.TradeName__c}"/>
-                                        <apex:outputLink value="#form" styleClass="saveMode" onclick="$('.saveModeTradeName').hide();$('.editModeTradeName').show();$('.editModeBtn').show();" rendered="{!AND(bIsAdmin,isIATAAgencyAcct,bIsMinorChangeEnabled,!isTerminatedAgent, NOT(bBlockTradeNameChange))}"> [{!$Label.ISSP_edit_lowercase}]</apex:outputLink>
-                                        </span>
-                                	</div>
-                                </div>
-                                <div class="col-lg-7">
-                                <apex:inputField styleclass="form-control editMode editModeTradeName latinonly" value="{!con.Account.TradeName__c}"/>
-                                <div class="hiddenerror" style="display: none;">
-                    				<p class="errormsg" style="line-height: 26px;">{!$Label.ISSP_EnterValidString} </p>
-                  				</div>
-                               	<span class="saveMode saveModeTradeName" style="line-height: 24px;">
-                                	<apex:outputField value="{!con.Account.TradeName__c}"/>
+                                 	<apex:outputField value="{!con.Account.TradeName__c}"/>
                                     <apex:outputLink value="#form" styleClass="saveMode" onclick="$('.saveModeTradeName').hide();$('.editModeTradeName').show();$('.editModeBtn').show();" rendered="{!canChangeTradeName}"> [{!$Label.ISSP_edit_lowercase}]</apex:outputLink>
                                     </span>
                             	</div>
