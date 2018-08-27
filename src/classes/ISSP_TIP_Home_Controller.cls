@@ -462,6 +462,7 @@ public without sharing class ISSP_TIP_Home_Controller {
         update account;
         update theAccountRole;
         upsert newCase;
+        if(AccountContactRoleList != null) upsert AccountContactRoleList;
 
         //assign to TIP HO queue
         List<Group> groups =  [SELECT Id FROM Group WHERE Type = 'Queue' AND developerName = 'Cases_Transparency_in_Payment_Service' LIMIT 1];
