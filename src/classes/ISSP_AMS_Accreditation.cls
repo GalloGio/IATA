@@ -3074,7 +3074,8 @@ public without sharing class ISSP_AMS_Accreditation {
             newForm.Submitted_to_IATA__c = TRUE;
 
             //RB-INC381175: Oscar fields Shipping ISO Country & Shipping ISO State not populated by the account's equivalent fields
-            if (newCase.RecordTypeId == OSCAR_RECORD_TYPE_ID && (newCase.Reason1__c == AMS_Utils.CASE_REASON_NEW_HO || newCase.Reason1__c == AMS_Utils.CASE_REASON_BR_IP)) {
+            if (newCase.RecordTypeId == OSCAR_RECORD_TYPE_ID && (newCase.Reason1__c == AMS_Utils.CASE_REASON_NEW_HO || newCase.Reason1__c == AMS_Utils.CASE_REASON_BR_IP
+                || newForm.Location_Type__c == 'AE' || newForm.Location_Type__c == 'HE')) {
                 if (newForm.Shipping_ISO_Country__c == null) {
                     system.DEBUG('Branch_Office_Country__c + Shipping_ISO_Country__c: ' + newForm.Branch_Office_Country__c + newForm.Shipping_ISO_Country__c);
                     newForm.Shipping_ISO_Country__c = newForm.Branch_Office_Country__c;
