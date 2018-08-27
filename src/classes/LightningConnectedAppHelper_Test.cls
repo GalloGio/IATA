@@ -190,7 +190,7 @@ private  class LightningConnectedAppHelper_Test {
         IATA_ISO_Country__c ISO_Country = new IATA_ISO_Country__c(ISO_Code__c='TT',Name='test');
         insert ISO_Country;
         
-        String recordTypeId = [SELECT Id FROM RecordType WHERE DeveloperName = 'IATA_Airline'].Id;
+        Id recordTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('Account', 'IATA_Airline');
         Account acc = ISSP_ObjectFactory.createNewAccount();
         acc.IATACode__c = '100';
         acc.IATA_ISO_Country__c = ISO_Country.Id;
@@ -199,12 +199,12 @@ private  class LightningConnectedAppHelper_Test {
         acc.Name = 'TestAccount';
         insert acc;
 
-         RecordType rt = [Select r.Id,r.Name, r.DeveloperName From RecordType r where  DeveloperName='Standard_Contact'];
+         Id rtId = RecordTypeSingleton.getInstance().getRecordTypeId('Contact', 'Standard_Contact');
         Contact con = ISSP_ObjectFactory.createNewContact();
         con.AccountId = acc.Id;
         con.LastName = 'test';
         con.Email = 'test.issp.registration@testisspregistration.com';
-        con.RecordTypeId = rt.Id;
+        con.RecordTypeId = rtId;
         insert con;
 
         System.assert(con.id !=null,'Contact must be created');

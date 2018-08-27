@@ -89,17 +89,13 @@ private class IECApplicationsManager_tst {
         oRefLocationType = IECTestUtil.createSampleGDPReferenceTableEntry('HO', 'Head Office');
         insert oRefLocationType;
         
-        List<RecordType> rtypes = [Select Name, Id 
-                                    From RecordType
-                                    where sObjectType='Account'
-                                        and Name = 'Agency'
-                                        and isActive = true];
+        Id rtypeId = RecordTypeSingleton.getInstance().getRecordTypeId('Account', 'IATA_Agency');
         
         oAgencyAccount = IECTestUtil.createSampleAccount();
         oAgencyAccount.Name = AGENCY1_NAME;
         oAgencyAccount.IATACode__c = AGENCY1_CODE;
         oAgencyAccount.Status__c = 'Approved';
-        oAgencyAccount.RecordTypeId = rtypes.get(0).Id;
+        oAgencyAccount.RecordTypeId = rtypeId;
         insert oAgencyAccount;
         
         // create GDP_Products_Account_View records 

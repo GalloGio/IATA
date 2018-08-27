@@ -13,8 +13,8 @@ private class trgBankCodeCheckUniqueTest {
         insert country;
         
         // Create a new Airline HQ account
-        RecordType hqRT = [SELECT Id FROM RecordType WHERE DeveloperName = 'IATA_Airline'];
-        Account a = new Account(Name='Test Airline HQ', RecordTypeId = hqRT.Id, IATA_ISO_Country__c = country.Id,
+        Id hqRTId = RecordTypeSingleton.getInstance().getRecordTypeId('Account', 'IATA_Airline');
+        Account a = new Account(Name='Test Airline HQ', RecordTypeId = hqRTId, IATA_ISO_Country__c = country.Id,
                         Airline_designator__c = 'AF');
         insert a;
         

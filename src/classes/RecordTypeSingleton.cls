@@ -7,12 +7,16 @@ public class RecordTypeSingleton {
     // variable that contains the repord types by name per object type
 	private Map<String, Map<String, RecordType>> recordTypesByName;
 
+	// variable that contains the repord types by id per object type
+	private Map<String, Map<Id, RecordType>> recordTypesById;
+
 	/**
 	 * Private constructor
 	 * @return
 	 */
 	private RecordTypeSingleton(){
 		recordTypesByName = new Map<String, Map<String, RecordType>>();
+		recordTypesById = new Map<String, Map<Id, RecordType>>();
 
 		for(RecordType rt : [SELECT Id, Name, DeveloperName, SObjectType FROM RecordType]){
 			// checks if the sObjectType is already mapped
@@ -22,6 +26,15 @@ public class RecordTypeSingleton {
 			}
 			// fills the maps of the record type per object type
 			recordTypesByName.get(rt.SObjectType).put(rt.DeveloperName, rt);
+
+
+			// checks if the sObjectType is already mapped
+			if(!recordTypesById.containsKey(rt.SObjectType)){
+				// puts a new entry for the object type and instantiates the map that will contain the corresponding record types mapped by Name
+				recordTypesById.put(rt.SObjectType, new Map<Id, RecordType>());
+			}
+			// fills the maps of the record type per object type
+			recordTypesById.get(rt.SObjectType).put(rt.Id, rt);
 		}
 
 	}
@@ -131,6 +144,19 @@ public class RecordTypeSingleton {
 		}
 
 		return returnRecTypeObjIdList;
+	}
+
+
+	/**
+	 * Method that returns the Developer Name of the record type
+	 * @param objectName the name of the object
+	 * @param rtId 	 	 the id of the record type
+	 * @return 			 Record type object
+	 */
+	public RecordType getRecordTypeById(String objectName, Id rtId){
+
+		return recordTypesById.get(objectName).get(rtId);
+
 	}
 
 }

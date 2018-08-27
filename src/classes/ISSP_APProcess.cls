@@ -4,7 +4,9 @@
 **/
 public without sharing class ISSP_APProcess {
 
-    private static String RECORD_TYPE_ID = Schema.SObjectType.Case.RecordTypeInfosByName.get('IDFS Airline Participation Process').RecordTypeId;
+    private static Id RECORD_TYPE_ID = RecordTypeSingleton.getInstance().getRecordTypeId('Case', 'IDFS_Airline_Participation_Process');
+    private Map<String, String> apProcessFormRecordTypesMap = RecordTypeSingleton.getInstance().getMapRecordTypesBySObject('AP_Process_Form__c');
+    
     @TestVisible private string vCaseId;
     private Id vHQAccountId;
     private Id vGSSAAccountId;
@@ -723,9 +725,9 @@ public without sharing class ISSP_APProcess {
 
             if(strAreaType == 'Airline Joining') {
                 SYSTEM.DEBUG('Record Type Name: ' + strLoB + ' Joining');
-              newForm.RecordTypeId = Schema.SObjectType.AP_Process_Form__c.RecordTypeInfosByName.get(strLoB + ' Joining').RecordTypeId;
+              newForm.RecordTypeId = apProcessFormRecordTypesMap.get(strLoB + ' Joining');
             } else {
-                newForm.RecordTypeId = Schema.SObjectType.AP_Process_Form__c.RecordTypeInfosByName.get(strLoB + ' Change').RecordTypeId;
+                newForm.RecordTypeId = apProcessFormRecordTypesMap.get(strLoB + ' Change');
             }
             
         }
@@ -838,9 +840,9 @@ public without sharing class ISSP_APProcess {
 
             newForm.Submitted_to_IATA__c = TRUE;
             if(strAreaType == 'Airline Joining') {
-                newForm.RecordTypeId = Schema.SObjectType.AP_Process_Form__c.RecordTypeInfosByName.get(strLoB + ' Joining').RecordTypeId;
+                newForm.RecordTypeId = apProcessFormRecordTypesMap.get(strLoB + ' Joining');
             } else {
-                newForm.RecordTypeId = Schema.SObjectType.AP_Process_Form__c.RecordTypeInfosByName.get(strLoB + ' Change').RecordTypeId;
+                newForm.RecordTypeId = apProcessFormRecordTypesMap.get(strLoB + ' Change');
             }
             upsert newForm;
             newCase.Status = 'For Review and Acceptance';
@@ -1341,7 +1343,7 @@ public without sharing class ISSP_APProcess {
             accountConcernedId = concernedAccount[0].Id;
         } else { //BR does not exist for this Airline, for this country of application, so create Unverified Account
             Account airlineBR = new Account();
-            airlineBR.RecordTypeId = Schema.SObjectType.Account.RecordTypeInfosByName.get('Standard Account').RecordTypeId;
+            airlineBR.RecordTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('Account', 'Standard_Account');
             airlineBR.Name = AL_Name;
             airlineBR.OwnerId = ISSP_Constant.newAccountOwnerId;
             airlineBR.ParentId = AL_Id;

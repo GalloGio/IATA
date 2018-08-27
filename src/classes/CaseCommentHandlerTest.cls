@@ -37,16 +37,16 @@ private class CaseCommentHandlerTest {
         contact.OwnerId = testUser.Id;
         update contact;
                 
-        RecordType RT = [SELECT Id FROM RecordType WHERE sObjectType = 'Case' AND DeveloperName = :EmailMessageHandler.LIST_VALID_RT.get(0)];
+        Id rtId = RecordTypeSingleton.getInstance().getRecordTypeId('Case', EmailMessageHandler.LIST_VALID_RT.get(0));
         
         Case caseClosed = createClosedCase();
-        caseClosed.RecordtypeId = RT.Id;
+        caseClosed.RecordtypeId = rtId;
         caseClosed.ContactId = contact.Id;
         caseClosed.AccountId = contact.AccountId;
         insert caseClosed;
         
         Case caseOpened = new Case();
-        caseOpened.RecordtypeId = RT.Id;
+        caseOpened.RecordtypeId = rtId;
         caseOpened.ContactId = contact.Id;
         caseOpened.AccountId = contact.AccountId;
         insert caseOpened;

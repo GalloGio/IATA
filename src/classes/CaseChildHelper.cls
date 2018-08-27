@@ -21,7 +21,7 @@ public  class CaseChildHelper {
     }
     
     public static boolean CreateChildCase(list<Case> olds, list<Case> news) {
-        Id IFAPrt =Schema.SObjectType.Case.RecordTypeInfosByName.get('IATA Financial Review').RecordTypeId ;
+        Id IFAPrt = RecordTypeSingleton.getInstance().getRecordTypeId('Case', 'IATA_Financial_Review');
     
         system.debug('---------- DEBUG: CreateChildCase()');
         // If I have not values in news somthing's wrong

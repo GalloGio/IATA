@@ -2,7 +2,7 @@ public with sharing class ISSP_ANG_PCI {
 
     public String communityName { get{ return ApexPages.currentPage().getParameters().get('CommunityName'); }set;}
     public String commParam { get { if(communityName=='CNS'){ return '&CommunityName='+ communityName;} return ''; } set;}
-    private static String OSCAR_RECORD_TYPE_ID = Schema.SObjectType.Case.RecordTypeInfosByName.get('OSCAR Communication').RecordTypeId;
+    private static Id OSCAR_RECORD_TYPE_ID = RecordTypeSingleton.getInstance().getRecordTypeId('Case', 'OSCAR_Communication');
 
 	public String sector                           						{get; set;}
 	public String stepNumber                        					{get; set;}
@@ -305,7 +305,7 @@ SYSTEM.DEBUG('getRelatedAccount starting... ');
 
         upsert newCase;
 
-        newForm.RecordTypeId = Schema.SObjectType.AMS_Pax_Accreditation_Form__c.RecordTypeInfosByName.get('PCI Compliance').RecordTypeId;
+        newForm.RecordTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('AMS_Pax_Accreditation_Form__c', 'PCI_Compliance');
         if (String.isBlank(String.ValueOf(newForm.SAAM_Case__c))) {
             newForm.SAAM_Case__c = newCase.Id;
         }

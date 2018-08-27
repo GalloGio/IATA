@@ -2,7 +2,7 @@
 private class ISSP_WS_SIS_NewUser_Test {
     
     private static final Profile AIRLINE_PORTAL_PROFILE = [SELECT Id FROM Profile WHERE Name = 'ISS Portal Airline User (Partner)'];
-    private static final RecordType IATA_AIRLINE_RT = [SELECT Id, DeveloperName FROM RecordType WHERE DeveloperName = 'IATA_Airline'];
+    private static final Id IATA_AIRLINE_RT_ID = RecordTypeSingleton.getInstance().getRecordTypeId('Account', 'IATA_Airline');
 
     @TestSetup
     private static void setup() {
@@ -176,29 +176,13 @@ private class ISSP_WS_SIS_NewUser_Test {
         
         checkLogs(false);
     }
-    // method commented due to an error in PP, probably related to process builder
-    /*
-    static testMethod void createSISUser_NoContactOrUser() {
-        ISSP_WS_SIS_NewUser.InputData inputData = createInputData();
-        
-        Account account = ISSP_ObjectFactory.createNewAccount();
-        account.SIS_ID__c = inputData.SISMemberID;
-        account.RecordTypeId = IATA_AIRLINE_RT.Id;
-        insert account;
-        
-        Test.startTest();
-        ISSP_WS_SIS_NewUser.ResponseData response = ISSP_WS_SIS_NewUser.newUser(inputData);
-        Test.stopTest();
-        
-        checkLogs(true);
-    }
-    */
+   
     static testMethod void createSISUser_NoUser() {
         ISSP_WS_SIS_NewUser.InputData inputData = createInputData();
         
         Account account = ISSP_ObjectFactory.createNewAccount();
         account.SIS_ID__c = inputData.SISMemberID;
-        account.RecordTypeId = IATA_AIRLINE_RT.Id;
+        account.RecordTypeId = IATA_AIRLINE_RT_ID;
         insert account;
         
         Contact contact = ISSP_ObjectFactory.createNewContact();
@@ -218,50 +202,5 @@ private class ISSP_WS_SIS_NewUser_Test {
         
         checkLogs(true);
     }
-    // method commented due to an error in PP, probably related to process builder
-    /*
-    static testMethod void createSISUser_ExistingUser() {
-        ISSP_WS_SIS_NewUser.InputData inputData = createInputData();
-        
-        Account account = ISSP_ObjectFactory.createNewAccount();
-        account.SIS_ID__c = inputData.SISMemberID;
-        account.RecordTypeId = IATA_AIRLINE_RT.Id;
-        insert account;
-        
-        Contact contact = ISSP_ObjectFactory.createNewContact();
-        contact.AccountId = account.Id;
-        contact.FirstName = inputData.FirstName;
-        contact.LastName = inputData.LastName;
-        contact.User_Portal_Status__c = ISSP_Constant.APPROVED_CONTACT_STATUS;
-        contact.Email = inputData.EmailAddress;
-        insert contact;
-        
-        //this call creates a user
-        ISSP_WS_SIS_NewUser.ResponseData response = ISSP_WS_SIS_NewUser.newUser(inputData);
-        System.assertEquals(true, response.IsSuccess);
-        //this call removes access to SIS
-        List <Portal_Application_Right__c> appRightList = [
-            SELECT Id, Right__c
-            FROM Portal_Application_Right__c
-            WHERE Contact__c = :contact.Id
-            AND Portal_Application__c = :ISSP_WS_SIS_Common.SIS_ID_PORTAL_APP];
-        for (Portal_Application_Right__c right: appRightList) {
-            right.Right__c = 'Access Denied';
-        }
-        update appRightList;
-
-        //clear logs to catch the right ones after the test
-        delete [SELECT id FROM ISSP_Web_Service_Log__c];
-
-        Test.startTest();
-        // second call detects exisitng user 
-        response = ISSP_WS_SIS_NewUser.newUser(inputData);
-        Test.stopTest();
-        
-        System.assertEquals(true, response.IsSuccess);
-        System.assertEquals(contact.Id, response.FederationID);
-        
-        checkLogs(true);
-    }
-    */
+    
 }

@@ -3,16 +3,12 @@ private class trgCopyInfoFromHQToBRonBRInsertTest {
 
     static testMethod void positiveTest() {
         
-        map<string,id> developerNamePerId= transformationTestHelper.AccRtNamePerIds();
-        
         IATA_ISO_Country__c myIataIso = new IATA_ISO_Country__c(ISO_Code__c = '12',name = 'moooon');
         insert myIataIso;
       
-         
-         
          Account head  = new Account(name = 'HEAD', Is_AIMS_Account__c = false,iatacode__C = 'maasda',
                                 IATA_ISO_Country__c = myIataIso.id, billingcity = 'Mars'
-                                , recordtypeId = developerNamePerId.get('IATA_Airline'),
+                                , recordtypeId = RecordTypeSingleton.getInstance().getRecordTypeId('Account', 'IATA_Airline'),
                                  Area_of_Operation__c = 'myhouse', Type_of_Service__c = 'service', 
                                  BSP_CI_Valid__c = true,
                                  BSP_FOC_Valid__c = false,
@@ -25,7 +21,7 @@ private class trgCopyInfoFromHQToBRonBRInsertTest {
          
         Account branch  = new Account(parentID = head.id, name = 'BRANCH', Is_AIMS_Account__c = false,
                                 IATA_ISO_Country__c = myIataIso.id, billingcity = 'Mars', iatacode__C = 'maasda',
-                                 recordtypeId = developerNamePerId.get('IATA_Airline_BR'));
+                                 recordtypeId = RecordTypeSingleton.getInstance().getRecordTypeId('Account', 'IATA_Airline_BR'));
         insert branch;
         
         
@@ -54,7 +50,7 @@ private class trgCopyInfoFromHQToBRonBRInsertTest {
        
         Account standard  = new Account(parentID = head.id, name = 'BRANCH', Is_AIMS_Account__c = false,
                                 IATA_ISO_Country__c = myIataIso.id, billingcity = 'Mars', iatacode__C = 'maasda',
-                                 recordtypeId  =    Schema.SObjectType.account.RecordTypeInfosByName.get('Standard Account').RecordTypeId );
+                                 recordtypeId  =    RecordTypeSingleton.getInstance().getRecordTypeId('Account', 'Standard_Account') );
         insert standard;
        
      
@@ -64,7 +60,7 @@ private class trgCopyInfoFromHQToBRonBRInsertTest {
                 FROM ACCOUNT 
                 WHERE ID =:standard.ID ];
       
-      standard.RecordTypeId =  developerNamePerId.get('IATA_Airline_BR');
+      standard.RecordTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('Account', 'IATA_Airline_BR');
        
       update standard;
        

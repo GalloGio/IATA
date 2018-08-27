@@ -140,14 +140,15 @@ public with sharing class NewParticipantByEmailCtrl {
     {
 
         String idGroup = ApexPages.currentPage().getParameters().get('paramTestGroup');
+        
         if(idGroup == null)
         {
             idGroup = p.Local_Governance__c;
         }
-        lg = [SELECT Name, Local_governance_type__c, RecordTypeId FROM LocalGovernance__c WHERE Id = :idGroup];
-        RecordType rtGroup = [SELECT Name FROM RecordType WHERE Id = :lg.RecordTypeId];
-        if(rtGroup.Name == 'Local Groups')
-        {
+        
+        lg = [SELECT Name, Local_governance_type__c, RecordTypeId, RecordType.Name FROM LocalGovernance__c WHERE Id = :idGroup];
+        
+        if(lg.RecordType.Name == 'Local Groups'){
             p.RecordTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('Participant__c', 'Local_Group_Participants');
         } else {
             p.RecordTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('Participant__c', 'Reg_Div_Group_Participants');

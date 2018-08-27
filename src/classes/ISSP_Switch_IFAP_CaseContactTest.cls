@@ -25,7 +25,7 @@ private class ISSP_Switch_IFAP_CaseContactTest {
 		contacts.add(new Contact(FirstName = 'firstName', Financial_Assessment_Contact__c = true, LastName = 'LastName 1', Email = 'test1@test.com', phone='(514) 111 2222', AccountId=acc.Id));
 		insert contacts;
 
-		Id rtid = Schema.SObjectType.Case.RecordTypeInfosByName.get('IATA Financial Review').RecordTypeId;
+		Id rtid = RecordTypeSingleton.getInstance().getRecordTypeId('Case', 'IATA_Financial_Review');
 		Case caseObj = new Case(RecordTypeId = rtid, AccountID = acc.id, Subject = 'Test Case 1', IFAP_Financial_Year__c = '2016', Financial_Review_Type__c = 'New applications', Description = 'Test Case 1');
 		insert caseObj;
 

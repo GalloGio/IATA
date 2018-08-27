@@ -28,7 +28,7 @@ private class ISSP_internal_Case_topic_subtopic_TEST {
         con.OwnerId = newUser.Id;
         update con;
 
-		String recordTypeId = [SELECT Id FROM RecordType WHERE Name = 'DPC Service Request'].Id;
+		Id recordTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('Case', 'DPC_Service_Request');
         Case c=new Case(Subject='test 1',Status='Open', AccountId=child.id, ContactId=con.id,Region__c = 'Europe', RecordTypeId = recordTypeId , Topic__c = 'Accreditation_Travel_Agent__c' ,subTopic__c = 'MITA Interline Agreements' , isComplaint__c = false ) ;
         insert c;
 

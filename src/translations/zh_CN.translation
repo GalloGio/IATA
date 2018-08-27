@@ -4253,7 +4253,7 @@ and
         <name>IFAP_2_Click_the_Upload_Financial_Documents_button</name>
     </customLabels>
     <customLabels>
-        <label>3. 에 문서가 발송되였습니다.</label>
+        <label>3. 当您的财务审计报告全部上传完毕后，请点击&quot;文件提交确认</label>
         <name>IFAP_3_When_you_finished_uploading_please_click_on_the_Confirm_submission_of_do</name>
     </customLabels>
     <customLabels>
@@ -13581,6 +13581,10 @@ an IATA accredited agency, please press &quot;&quot;Back&quot;&quot; button and 
     <customLabels>
         <label>保密政策</label>
         <name>OneId_Privacy_Policy</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- OneId_Privacy_Policy_Link --></label>
+        <name>OneId_Privacy_Policy_Link</name>
     </customLabels>
     <customLabels>
         <label><!-- OneId_Profile_BillingCity --></label>

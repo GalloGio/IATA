@@ -908,13 +908,9 @@ public with sharing class AMS_AccountRoleCreatorTest {
 
     @isTest static void test_CORCCCorrectionProcess(){
         
-        //AMS_OSCAR_TestDataFactory.createOSCARtestDataAccHier();
-        //AMS_OSCAR__c oscar = [SELECT Id, Account__c FROM AMS_OSCAR__c where Account__r.Name = 'My Travels' limit 1];
-        //Case c = [SELECT Id FROM Case WHERE Oscar__c = :oscar.Id];
-
         Test.startTest();
         
-        Id correctionOSCARRecTypeId = Schema.AMS_OSCAR__c.sObjectType.getDescribe().getRecordTypeInfosByName().get('CORRECTION').getRecordTypeId();
+        Id correctionOSCARRecTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('AMS_OSCAR__c', 'CORRECTION');
 
         AMS_OSCAR__c oscar = [select Id, Account__c, AMS_Online_Accreditation__c from AMS_OSCAR__c where Account__r.Name = 'My Travels' limit 1];
         System.debug('test_CADCCCorrectionProcess oscar: ' + oscar);
@@ -973,13 +969,9 @@ public with sharing class AMS_AccountRoleCreatorTest {
 
     @isTest static void test_CADCCCorrectionProcess2(){
         
-        //AMS_OSCAR_TestDataFactory.createOSCARtestDataAccHier();
-        //AMS_OSCAR__c oscar = [SELECT Id, Account__c FROM AMS_OSCAR__c where Account__r.Name = 'My Travels' limit 1];
-        //Case c = [SELECT Id FROM Case WHERE Oscar__c = :oscar.Id];
-
         Test.startTest();
         
-        Id correctionOSCARRecTypeId = Schema.AMS_OSCAR__c.sObjectType.getDescribe().getRecordTypeInfosByName().get('CORRECTION').getRecordTypeId();
+        Id correctionOSCARRecTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('AMS_OSCAR__c', 'CORRECTION');
 
         AMS_OSCAR__c oscar = [select Id, Account__c, AMS_Online_Accreditation__c from AMS_OSCAR__c where Account__r.Name = 'My Travels' limit 1];
         System.debug('test_CADCCCorrectionProcess oscar: ' + oscar);
