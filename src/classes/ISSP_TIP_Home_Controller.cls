@@ -212,7 +212,7 @@ public without sharing class ISSP_TIP_Home_Controller {
         fetchHQAccountDetails();
 
         btnEnabled = (account.recordtypeid == TIP_Utils.STANDARD_ACCOUNT_RECORD_TYPE_ID && account.category__c=='Payment Provider');
-        btnVoluntReliqEnabled = isAdmin && (TheAccountRole.Status__c == TIP_Utils.PARTNER_STATUS_ACTIVE); //ACAMBAS - TIP-241
+        btnVoluntReliqEnabled = isAdmin && ((TheAccountRole != null) ? (TheAccountRole.Status__c == TIP_Utils.PARTNER_STATUS_ACTIVE) : false); //ACAMBAS - TIP-241
         //isPaymentProvider = (account.recordtypeid == TIP_Utils.PAYMENT_PROVIDER_RECORD_TYPE_ID);
     }
 
