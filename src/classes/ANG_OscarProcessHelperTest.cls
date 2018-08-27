@@ -27,7 +27,7 @@ private class ANG_OscarProcessHelperTest {
 
 	@testSetup static void setup(){
 
-		IATA_ISO_Country__c ctry = new IATA_ISO_Country__c (Name='France',ISO_Code__c='FR', ANG_Enable_NewGen__c = true)  ;
+		IATA_ISO_Country__c ctry = new IATA_ISO_Country__c (Name='France',ISO_Code__c='FR', ANG_Enable_NewGen__c = true, Region__c = 'Europe')  ;
         insert ctry ;
 
         IATA_ISO_State__c stt = new IATA_ISO_State__c(Name= 'FR20', ISO_Code__c = 'FR', IATA_ISO_Country__c = ctry.Id);
@@ -543,6 +543,18 @@ private class ANG_OscarProcessHelperTest {
 
 		insert configCC;
 
+		List<Group> testGroupList = [SELECT name FROM Group WHERE Type = 'Queue' and Name = 'Cases - France'];
+		system.debug('Group :::: ' + testGroupList);
+
+		System.runAs(new User(Id=UserInfo.getUserId()))
+		{
+			List<QueuesObject> testQueuesList = new List<QueuesObject>();
+			testQueuesList.add(new QueueSObject(QueueId = testGroupList.get(0).id, SObjectType = 'AMS_OSCAR__c'));
+			testQueuesList.add(new QueueSObject(QueueId = testGroupList.get(0).id, SObjectType = 'Case'));
+			Database.insert(testQueuesList);
+		}
+
+
 		Account a = [select Abbreviated_address__c, Abbreviated_name__c,
 						BillingState,
 						BillingCity,
@@ -588,7 +600,7 @@ private class ANG_OscarProcessHelperTest {
 
 		update a;
 
-		a = [select Abbreviated_address__c, Abbreviated_name__c,
+	/*	a = [select Abbreviated_address__c, Abbreviated_name__c,
 						BillingState,
 						BillingCity,
 						Email__c,
@@ -627,9 +639,10 @@ private class ANG_OscarProcessHelperTest {
 						TradeName__c,
 						VAT_Number_2__c,
 						Reason__c,
-						Website from account limit 1];
+						Website from account limit 1]; 
+	*/
         
-		List<Contact> conts = [select Id, Name, Email, Preferred_Language__c, BSP_CASS_Payment_contact__c, Financial_Assessment_Contact__c, User_Portal_Status__c from contact where accountid =:a.id];
+		List<Contact> conts = [select Id, Name, Email, Preferred_Language__c, BSP_CASS_Payment_contact__c, Financial_Assessment_Contact__c, User_Portal_Status__c, AccountId from contact where accountid =:a.id];
 		
 		Test.startTest();
 

@@ -1301,6 +1301,24 @@ public without sharing class ISSP_AMS_Accreditation {
         }
     }
 
+    /*** AMSU-37 Start ***/
+    private List<String> hasPendingHOAccreditations(Case cse) {
+        List<String> res = new List<String>();
+        system.debug('hqAccount: ' + hqAccount);
+        system.debug('cse: ' + cse);
+        if(cse.id == null && String.isBlank(cse.CaseNumber) && cse.Reason1__c == 'New HO') {
+            List<Case> cases = [SELECT Id, CaseNumber FROM Case WHERE AccountId = :hqAccount.Id AND Reason1__c = 'New HO' AND IsClosed = false AND Type_of_customer__c = :cse.Type_of_customer__c LIMIT 1];
+
+            if(!cases.isEmpty()) {
+                res.add(cases[0].Id);
+                res.add(cases[0].CaseNumber);                
+            }
+        }
+
+        return res;
+    }
+    /*** AMSU-37 End ***/
+
     public Pagereference save() {
         SYSTEM.DEBUG('Saving Record - STEP A');
 
@@ -1426,6 +1444,16 @@ public without sharing class ISSP_AMS_Accreditation {
             //system.debug('isDupeSAAMCase: ' + isDupeSAAMCase);
             try {
                 String newIsoCountry = newCase.IFAP_Country_ISO__c;
+
+                /*** AMSU-37 Start ***/
+                system.debug('newCase: ' + newCase);
+                List<String> csNumber = hasPendingHOAccreditations(newCase);
+                if(!csNumber.isEmpty()) {
+                    ApexPages.addmessage(new ApexPages.message(ApexPages.severity.ERROR, String.format(Label.AMS_PendingHOAccr,csNumber)));
+                    return null;
+                }
+                /*** AMSU-37 End ***/
+
                 if ((draftHQCaseExists) || isDupeSAAMCase) {
                     agentType = amsLocationType.substring(amsLocationType.indexOf('-') + 1).trim();
                     newCase.Reason1__c = amsLocationType.left(amsLocationType.indexOf('-')).trim();
@@ -1635,6 +1663,12 @@ public without sharing class ISSP_AMS_Accreditation {
             SYSTEM.DEBUG('Account Concerned ID: ' + vAccountConcernedId);
 
             fetchAccountConcernedDetails();
+
+            //AMSU-140 update newForm.location_class from the Account_Concerned
+            newForm.Location_Class__c = accountConcerned.Location_Class__c;
+            if(newForm.Location_Class__c == 'I'){  //AMSU-140
+                newCase.Visible_on_ISS_Portal__c = true;
+            }
 
             updateNoCReasonSubject();
 
@@ -3095,6 +3129,8 @@ public without sharing class ISSP_AMS_Accreditation {
                 //NEWGEN 683
                 if (getIsAccreditationModelNotNullOrLegacy()) {
                     typeOfProcess = AMS_UTILS.NGCHANGES;
+                } else if(newCase.Reason1__c == 'Corrections') {//AMSU-140
+                    typeOfProcess = AMS_Utils.COR;  
                 } else {
                     typeOfProcess = 'MAJOR.CHANGES';
                 }
@@ -3106,6 +3142,8 @@ public without sharing class ISSP_AMS_Accreditation {
                 typeOfProcess = 'ANG.NEW.HE.LITE.1.0';
             else if(newCase.Reason1__c == AMS_UTILS.CASE_REASON_ASSOCIATE_ENTITY_STANDARD)
               typeOfProcess = 'ANG.NEW.AE.1.0';
+            else if(newCase.Reason1__c == 'Corrections') //AMSU-140
+              typeOfProcess = AMS_Utils.COR;  
 
             SYSTEM.DEBUG('accountId for OSCAR: ' + accountId);
 
@@ -7413,6 +7451,9 @@ System.DEBUG('validateCharactersInForm  - 4 - errorFound: '+errorFound);
         if (isBankAccountChange) {
             newCase.Reason1__c = 'Bank Detail Update';
             newCase.Subject = Label.ISSP_AMS_NoC_Direct_Debit_Change + ' – ' + accountConcerned.IATACode__c + ' – ' + accountConcerned.Name;
+        } else if(newForm.Location_Class__c == 'I'){  //AMSU-140
+            newCase.Reason1__c = 'Corrections';
+            newCase.Subject =  'Agency Changes – ' + accountConcerned.Name;
         } else if ((newForm.Is_change_location__c && newForm.Is_change_legal_name__c) || (newForm.Is_change_location__c && newForm.Is_change_ownership_or_shareholding__c) || (newForm.Is_change_ownership_or_shareholding__c && newForm.Is_change_legal_name__c)) {
             newCase.Reason1__c = 'Major Change';
             newCase.Subject = Label.ISSP_AMS_NoC_Multiple_Changes + ' – ' + accountConcerned.IATACode__c + ' – ' + accountConcerned.Name;

@@ -131,6 +131,42 @@
                 </apex:pageBlockSection>
             </apex:outputPanel>
 
+            <!--Line 5 VAT Number -->
+
+            <apex:outputPanel rendered="{!NOT(ca.isocountry.Hide_Tax_Number_VAT__c)}">
+
+                <apex:actionfunction name="validateVAT" action="{!validateVATNumber}" status="actValidVAT" rerender="VATNumberInput">
+                    <apex:param name="vatno" value="" assignto="{!vatNumber}" />
+                </apex:actionfunction>
+                
+                <apex:pageBlockSection columns="2">
+                
+                    <apex:pageBlockSectionItem>
+                        <apex:outputlabel value="{!IF(ca.isocountry.Tax_Number_label__c == null, $ObjectType.AMS_Pax_Accreditation_Form__c.fields.ISSP_AMS_VAT_Number_Input__c.Label, ca.isocountry.Tax_Number_label__c)}" />
+                        <apex:outputField value="{!ca.fw.newForm.ISSP_AMS_VAT_number__c}" />
+                    </apex:pageBlockSectionItem>
+
+                    <apex:pageBlockSectionItem labelStyleClass="agencyLegalDetailsComponent" dataStyleClass="agencyLegalDetailsComponent">
+                        <apex:outputlabel value="{!IF(ca.isocountry.Tax_Number_label__c == null, $ObjectType.AMS_Pax_Accreditation_Form__c.fields.ISSP_AMS_VAT_Number_Input__c.Label, ca.isocountry.Tax_Number_label__c)}" />
+
+                        <apex:outputPanel id="VATNumberInput">
+
+                            <span style="margin-left:{!If(ca.isocountry.EU_Country__c,'0px', '17px')};padding-right:2px;padding-top:3px;padding-bottom:3px; background-color:#EEEEEE;font-size:14px;">
+                                <apex:outputfield value="{!ca.isocountry.ISO_Code__c}" rendered="{!ca.isocountry.EU_Country__c}" />
+                            </span>
+
+                            <apex:inputfield id="vatinput" value="{!ca.fw.newForm.ISSP_AMS_VAT_Number_Input__c}" html-placeholder="{!ca.isocountry.Tax_number_format__c}" onblur="if(this.value != '' && {!ca.isocountry.EU_Country__c}) {validateVAT(this.value.trim());}" style="margin-left:0px"/>
+                            <apex:image value="/img/msg_icons/info16.png" style="margin-left:3px;" title="{!IF(ca.isocountry.Tax_number_help_text__c == null, txtHelpTaxNumber, ca.isocountry.Tax_number_help_text__c)}" html-data-html="true" html-data-placement="right" html-data-toggle="tooltip" />
+                            <apex:actionstatus id="actValidVAT" startstyleclass="bg-info">
+                                <apex:facet name="start">
+                                    {!$Label.ISSP_PAX_Validating_VAT_Number}
+                                </apex:facet>
+                            </apex:actionstatus>
+                    </apex:outputPanel>
+                    </apex:pageBlockSectionItem>
+                </apex:pageBlockSection>
+            </apex:outputPanel>
+
         </apex:pageBlockSection>
 
         <!--                 -->
@@ -193,11 +229,19 @@
             <!-- /left part-->
 
             <apex:pageBlockSection columns="1" id="addressSection">
+                <script type="text/javascript">
+                    if('{!ca.isReadonly}' == 'true') {
+                        $(".branch_office_street_name_number__c").attr('disabled','disabled');
+                        $(".branch_office_city__c").attr('disabled','disabled');
+                        $(".branch_office_postal_code__c").attr('disabled','disabled');
+                        $(".state_province__c").attr('disabled','disabled');
+                        $(".branch_office_email__c").attr('disabled','disabled');
+                    }
+                </script>
 
                 <apex:outputPanel styleClass="agencyLocationComponent" id="newAddress" layout="block">
 
                     <DSE:DS_DataQuality id="BranchAddress"
-                        html-disabled="{!ca.isReadonly}"
                         RecordRef="{!ca.fw.newform}"
                         FieldGroupName="Branch Address"
                         Edit="true"
@@ -213,7 +257,6 @@
 
                 <apex:outputPanel styleClass="agencyLocationComponent" id="newEmail">
                     <DSE:DS_DataQuality id="BranchEmail"
-                        html-disabled="{!ca.isReadonly}"
                         RecordRef="{!ca.fw.newform}"
                         FieldGroupName="Branch Email"
                         Edit="true"
@@ -426,16 +469,19 @@
                 <apex:pageBlockSection columns="1">
                     <apex:pageBlockSectionItem labelStyle="width:80%" dataStyle="width:10%;{!IF(AND(ca.errorFoundCheckBoxes, ca.fw.newForm.Confirm_Ownership_details_are_correct__c==false, ca.fw.newForm.Notify_Change_Ownership__c==false), 'border:2px red solid !important;margin-right:5px;', 'margin-right:5px')}">
                         <apex:outputLabel value="{!$Label.ISSP_AMS_NoC_Confirm_Ownership_details}" style="color:black;font-size:110%"/>
-                        <apex:inputCheckbox disabled="{!ca.isReadonly}" html-data-group="agencyOwnership" value="{!ca.fw.newForm.Confirm_Ownership_details_are_correct__c}"/>
+                        <apex:inputCheckbox disabled="{!ca.isReadonly}" html-data-group="agencyOwnership" value="{!ca.fw.newForm.Confirm_Ownership_details_are_correct__c}" onclick="$('[id$=currcorporatedetails]').hide();"/>
                     </apex:pageBlockSectionItem>
                 </apex:pageBlockSection>
             </apex:outputPanel>
 
             <apex:outputPanel >
+
+                
                 <apex:pageBlockSection columns="1">
                     <apex:pageBlockSectionItem labelStyle="width:80%" dataStyle="width:10%;{!IF(AND(ca.errorFoundCheckBoxes, ca.fw.newForm.Confirm_Ownership_details_are_correct__c==false, ca.fw.newForm.Notify_Change_Ownership__c==false), 'border:2px red solid !important;margin-right:5px;', 'margin-right:5px')}">
+                    
                         <apex:outputLabel value="{!$ObjectType.AMS_Pax_Accreditation_Form__c.fields.Notify_Change_Ownership__c.Label}" style="color:black;font-size:110%"/>
-                        <apex:inputCheckbox disabled="{!ca.isReadonly}" html-data-group="agencyOwnership" html-data-controls="agencyOwnershipComponent" value="{!ca.fw.newForm.Notify_Change_Ownership__c}"/>
+                        <apex:inputCheckbox disabled="{!ca.isReadonly}" html-data-group="agencyOwnership" html-data-controls="agencyOwnershipComponent" value="{!ca.fw.newForm.Notify_Change_Ownership__c}" onclick="showCurrCorporateDetails();"/>
                     </apex:pageBlockSectionItem>
                 </apex:pageBlockSection>
             </apex:outputPanel>
@@ -467,7 +513,7 @@
 
             <apex:outputPanel style="display:{!IF(ca.fw.newForm.ISSP_AMS_Legal_Status__c=='Corporation', '', 'none')}"></apex:outputPanel>
 
-            <apex:outputPanel id="currcorporatedetails" layout="block" style="display:{!IF(ca.fw.newForm.ISSP_AMS_Legal_Status__c=='Corporation', '', 'none')}" styleClass="agencyOwnershipComponent">
+            <apex:outputPanel id="currcorporatedetails" layout="block" style="display:{!IF(ca.fw.newForm.ISSP_AMS_Legal_Status__c=='Corporation', '', 'none')}">
                 <apex:pageBlockSection columns="1">
                     <apex:pageblocksectionitem >
                         <apex:outputlabel value="{!$Label.ISSP_Currency}" />
@@ -572,7 +618,7 @@
                 <script type="text/javascript">
                     $('[data-toggle="popover"]').popover();
                 </script>
-                <apex:outputPanel rendered="{!(ca.fw.newform.ISSP_AMS_Total_Current_Ownership_Company__c + ca.fw.newform.ISSP_AMS_Total_Current_Ownership_Individ__c) != 100}">
+                <apex:outputPanel>
                     <apex:outputLabel value="{!$Label.ISSP_ANG_ANNUAL_REV_OWNERSHIP_TOTAL} " style="font-weight: bold;"/>
                     <apex:outputText value="{!ca.fw.newform.ISSP_AMS_Total_Current_Ownership_Company__c + ca.fw.newform.ISSP_AMS_Total_Current_Ownership_Individ__c}%"/>
                     <a href="" data-html="true" data-toggle="popover" data-trigger="hover" title="TOTAL OWNERSHIP" data-content="<div escape='false'>{!$Label.ISSP_ANG_ANNUAL_REV_OWNERSHIP}</div>">
@@ -697,6 +743,15 @@
                 </apex:pageBlockTable>
 
                 <apex:outputPanel id="newOwnerQuestions" rendered="{!ca.fw.currentCompanies.size > 0}">
+                <script type="text/javascript">
+                    $('[id$="firstYearQ"]').text(function () {
+                        return $(this).text().replace("*", ""); 
+                    });
+
+                    $('[id$="secondYearQ"]').text(function () {
+                        return $(this).text().replace("*", ""); 
+                    });
+                </script>
                     <div class="bg-warning col-md-12" style="margin-top:15px;"><strong>{!$Label.ISSP_AMS_NoC_Non_IATA_Owner_Title}</strong></div>
                     <div class="col-md-12">
                         <apex:outputText value="{!$Label.ISSP_AMS_NoC_Non_IATA_Owner_Estimates}" escape="false"/>
@@ -802,10 +857,6 @@
                 </apex:outputPanel>
             </apex:pageblocksectionitem>
 
-            <apex:pageBlockSectionItem rendered="{!countryCheckList.License_required__c || countryCheckList.Registration_required__c}">
-                <apex:outputLabel value="{!$Label.ISSP_AMS_NoC_Provide_Registeration_Or_License}"/>
-            </apex:pageBlockSectionItem>
-
             <apex:outputPanel layout="block">
                 <apex:pageBlockSectionItem >
                     <apex:pageBlockSection columns="1">
@@ -852,8 +903,6 @@
         //console.log('***************** COMPONENT ******************');
 
         $(document).ready(function() {
-            $('[data-toggle="popover"]').popover();
-
             // binds on change to make checkbox function as radio buttons
             $('[data-group]').on('change', function() {
                 var $parent = $(this);
@@ -872,15 +921,19 @@
             if('{!ca.isReadonly}' == 'true') {
                 setReadonly();
             }
-
-            $('[id$="firstYearQ"]').text(function () {
-                return $(this).text().replace("*", ""); 
-            });
-
-            $('[id$="secondYearQ"]').text(function () {
-                return $(this).text().replace("*", ""); 
-            });
         });
+
+
+        function showCurrCorporateDetails() {
+            if("{!ca.fw.newForm.Notify_Change_Ownership__c}") {
+                if($('[id$=UpdatedLegalStatus]').val() == 'Corporation') {
+                    $('[id$=currcorporatedetails]').show();
+                }
+                else {
+                    $('[id$=currcorporatedetails]').hide();
+                }
+            }
+        }
 
         function initFieldsSettings() {
             $(".country__c").val("{!ca.isocountry.Name}");
@@ -932,6 +985,9 @@
             $('[id$="Account_Name__c"]').prop('disabled', true);
             $('[id$="ISSP_AMS_Legal_Reg_Name_Address__c"]').prop('disabled', true);
             $('[id$="ISSP_AMS_GDS_with_signed_contract__c_unselected"]').prop('disabled', true);
+            $('[id$="Local_Legally_Registered_Name__c"]').prop('disabled', true);
+            $('[id$="copyCheckBox"]').prop('disabled', true);
+            $('[id$="vatinput"]').prop('disabled', true);
 
             $('[id$="PhysicalStreet"]').prop('disabled', true);
             $('[id$="PostalStreet"]').prop('disabled', true);
@@ -1021,7 +1077,5 @@
     	}
 
     </script>
-
-
-
+    
 </apex:component>

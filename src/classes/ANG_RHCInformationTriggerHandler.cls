@@ -124,8 +124,10 @@ public class ANG_RHCInformationTriggerHandler{
 			if(!r.ANG_CashCondition__c && oldMap.get(r.Id).ANG_CashCondition__c) accIds.add(r.ANG_AccountId__c);
 		}
 
-		if(!accIds.isEmpty()) System.enqueueJob(new ANG_UpdateRHCInformationBatch(accIds, ANG_UpdateRHCInformationBatch.Process.PROVISIONAL, true, 1));
-			
+		if(!accIds.isEmpty()) {
+			if(Limits.getLimitQueueableJobs() <= Limits.getQueueableJobs()) Database.executeBatch(new ANG_UpdateRHCInformationBatch(accIds, ANG_UpdateRHCInformationBatch.Process.PROVISIONAL, true, 1));
+			else System.enqueueJob(new ANG_UpdateRHCInformationBatch(accIds, ANG_UpdateRHCInformationBatch.Process.PROVISIONAL, true, 1));
+		}	
 	}
 
 	/* as per NEWGEN-1085
@@ -255,8 +257,8 @@ public class ANG_RHCInformationTriggerHandler{
 /*
 	public void createChangeCodeForFOP(Map<Id,String> accountsAndStatus) {
 
-		AMS_ChangeCodes__c changeCodeConfigPCA = AMS_ChangeCodesConfigHelper.getChangeCodeConfig('PCA');
-		AMS_ChangeCodes__c changeCodeConfigPCR = AMS_ChangeCodesConfigHelper.getChangeCodeConfig('PCR');
+		AMS_ChangeCodes__c changeCodeConfigPCA = AMS_ChangeCodes__c.getInstance('PCA');
+		AMS_ChangeCodes__c changeCodeConfigPCR = AMS_ChangeCodes__c.getInstance('PCR');
 
 		Set<Id> accountIds = accountsAndStatus.keySet();
 

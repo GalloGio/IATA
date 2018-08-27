@@ -577,6 +577,14 @@
         <name>AMS_PERFORM_CORRECTION</name>
     </customLabels>
     <customLabels>
+        <label><!-- AMS_PendingHOAccr --></label>
+        <name>AMS_PendingHOAccr</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- AMS_RRejected --></label>
+        <name>AMS_RRejected</name>
+    </customLabels>
+    <customLabels>
         <label><!-- AMS_RollbackCase_Description --></label>
         <name>AMS_RollbackCase_Description</name>
     </customLabels>
@@ -10062,7 +10070,7 @@ Você poderia por favor confimar de qual pais voce foi previamente atendido.</la
         <name>ISSP_F2CTitlePanel</name>
     </customLabels>
     <customLabels>
-        <label>ASSUNTO</label>
+        <label>Assunto</label>
         <name>ISSP_F2CTopic</name>
     </customLabels>
     <customLabels>
@@ -11512,7 +11520,7 @@ Por favor note que muitas invoices IATA para agentes acreditados são cobradas a
         <name>ISSP_Registration_BusinessPhone</name>
     </customLabels>
     <customLabels>
-        <label><!-- ISSP_Registration --></label>
+        <label>Este telefone comercial é inválido, favor verificar. Verifique também se o país correto está selecionado, escolhendo uma bandeira na lista OU inserindo o código do país com prefixo “+”.</label>
         <name>ISSP_Registration_BusinessPhone_Msg</name>
     </customLabels>
     <customLabels>
@@ -11588,7 +11596,7 @@ Por favor note que muitas invoices IATA para agentes acreditados são cobradas a
         <name>ISSP_Registration_Error_TypeofCustomer</name>
     </customLabels>
     <customLabels>
-        <label><!-- ISSP_Registration --></label>
+        <label>Este número de fax é inválido, favor verificar. Verifique também se o país correto está selecionado, escolhendo uma bandeira na lista OU inserindo o código do país com prefixo “+”.</label>
         <name>ISSP_Registration_FaxPhone_Msg</name>
     </customLabels>
     <customLabels>
@@ -11625,7 +11633,7 @@ Se não tiver o Código IATA, selecione &quot;&quot;Outro&quot;&quot; como &quot
         <name>ISSP_Registration_MobilePhone</name>
     </customLabels>
     <customLabels>
-        <label><!-- ISSP_Registration --></label>
+        <label>Este número de celular é inválido, favor verificar. Verifique também se o país correto está selecionado, escolhendo uma bandeira na lista OU inserindo o código do país com prefixo “+”.</label>
         <name>ISSP_Registration_MobilePhone_Msg</name>
     </customLabels>
     <customLabels>
@@ -13369,7 +13377,7 @@ O painel permite que as tesourarias das empresas  aérea  ganhe visibilidade tot
         <name>OneId_AccountSearchPlaceholder</name>
     </customLabels>
     <customLabels>
-        <label>Associação de conta</label>
+        <label>Dados da empresa</label>
         <name>OneId_Account_Association</name>
     </customLabels>
     <customLabels>
@@ -13409,11 +13417,11 @@ O painel permite que as tesourarias das empresas  aérea  ganhe visibilidade tot
         <name>OneId_Community_Name</name>
     </customLabels>
     <customLabels>
-        <label>Entre em contato com Associação e Validação</label>
+        <label>Validação de email</label>
         <name>OneId_Contact_Association_Validation</name>
     </customLabels>
     <customLabels>
-        <label>Entre em contato com Criação</label>
+        <label>Dados de contacto</label>
         <name>OneId_Contact_Creation</name>
     </customLabels>
     <customLabels>
@@ -13585,6 +13593,10 @@ O painel permite que as tesourarias das empresas  aérea  ganhe visibilidade tot
         <name>OneId_Privacy_Policy</name>
     </customLabels>
     <customLabels>
+        <label><!-- OneId_Privacy_Policy_Link --></label>
+        <name>OneId_Privacy_Policy_Link</name>
+    </customLabels>
+    <customLabels>
         <label><!-- OneId_Profile_BillingCity --></label>
         <name>OneId_Profile_BillingCity</name>
     </customLabels>
@@ -13637,7 +13649,10 @@ O painel permite que as tesourarias das empresas  aérea  ganhe visibilidade tot
         <name>OneId_Registration_Error_BusinessPhone</name>
     </customLabels>
     <customLabels>
-        <label><!-- OneId_Registration_UserExist --></label>
+        <label>Este e-mail já está registrado conosco.
+Se você for usuário do E-Commerce, use suas credenciais do E-Commerce.
+Se você for usuário do Portal do cliente, use suas credenciais do Portal do cliente.
+Se quiser redefinir sua senha, volte à tela de login e use a função &quot;Esqueceu a senha?&quot;.</label>
         <name>OneId_Registration_UserExist</name>
     </customLabels>
     <customLabels>

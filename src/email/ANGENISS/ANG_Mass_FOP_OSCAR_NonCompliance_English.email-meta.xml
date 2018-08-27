@@ -13,7 +13,7 @@ IATA Code: {!Account.IATACode__c}
 
 
 
-Under the Passenger Sales Agency Rules, all IATA Accredited Agents must ensure its full compliance with the Payment Card Industry Data Security Standards (PCI DSS) on annual basis.
+Under the Passenger Sales Agency Rules, all IATA Accredited Agents must ensure its full compliance with the Payment Card Industry Data Security Standards (PCI DSS).
 
 
 

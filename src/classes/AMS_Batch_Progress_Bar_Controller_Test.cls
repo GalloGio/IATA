@@ -56,7 +56,7 @@ private class AMS_Batch_Progress_Bar_Controller_Test
 	static void batchStatusBarTest(){    
 	    Set<Id> filteredAccounts = new Map<Id, Account>([select id from Account where Name='Test1 Agency']).keySet();
 
-	    AMS_PCI_Complaint_Batch batchClass = new AMS_PCI_Complaint_Batch(1, null, filteredAccounts);
+	    AMS_PCI_Complaint_Batch batchClass = new AMS_PCI_Complaint_Batch(1, filteredAccounts);
 	    //batchId = Database.executeBatch(batchClass, 1);
 
 	    id batchInstance=database.executeBatch(batchClass);
@@ -68,7 +68,7 @@ private class AMS_Batch_Progress_Bar_Controller_Test
 	    controller.IsCompleted  = false;
 	    controller.getBatchJobs();
 	    
-	    batchClass = new AMS_PCI_Complaint_Batch(1, null, filteredAccounts);
+	    batchClass = new AMS_PCI_Complaint_Batch(1, filteredAccounts);
 	    id batchInstance2=database.executeBatch(batchClass);
 
 	    controller.batchId = batchInstance2;

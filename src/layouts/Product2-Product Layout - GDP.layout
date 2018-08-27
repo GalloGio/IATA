@@ -189,6 +189,10 @@
                 <behavior>Edit</behavior>
                 <field>Restricted_Customer_Type__c</field>
             </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>ImageFile__c</field>
+            </layoutItems>
         </layoutColumns>
         <style>TwoColumnsTopToBottom</style>
     </layoutSections>

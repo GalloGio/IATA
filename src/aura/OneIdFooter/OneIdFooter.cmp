@@ -20,52 +20,54 @@
 				<h2>{!$Label.c.OneId_IATA_represent_lead_and_serve_the_airline_industry}</h2>
 			</div>
 		</div>
-		<div class="widthLimiter centerAll">
+		<div class="slds-grid slds-grid_align-center slds-gutters_large slds-m-top_xx-large">
 
-			<a class="footerEl" href="{!$Label.c.OneId_Privacy_Policy_Link}" target="_blank">
-				<div class="iataItem_Icon">
+			<a class="slds-col" href="{!$Label.c.OneId_Privacy_Policy_Link}" target="_blank">
+				<div class="footerIcon">
 					<span class="icon icon-community"></span>
 				</div>
-				<p class="icon_subTitle">{!$Label.c.OneId_Privacy_Policy}</p>
+				<p class="footerIconSubtitle">{!$Label.c.OneId_Privacy_Policy}</p>
 			</a>
 
 			<aura:if isTrue="{!and(v.customCommunity,!empty(v.serviceName))}">
-				<a class="footerEl" href="{!v.labelTermsOfUseLink}" target="_blank">
-					<div class="iataItem_Icon">
+				<a class="slds-col" href="{!v.labelTermsOfUseLink}" target="_blank">
+					<div class="footerIcon">
 						<span class="icon icon-tick"></span>
 					</div>
-					<p class="icon_subTitle">{!$Label.c.OneId_Terms_of_Use}</p>
+					<p class="footerIconSubtitle">{!$Label.c.OneId_Terms_of_Use}</p>
 				</a>
 				<aura:set attribute="else">
-					<a class="footerEl" href="{!$Label.c.OneId_Terms_of_Use_Link}" target="_blank">
-						<div class="iataItem_Icon">
+					<a class="slds-col" href="{!$Label.c.OneId_Terms_of_Use_Link}" target="_blank">
+						<div class="footerIcon">
 							<span class="icon icon-tick"></span>
 						</div>
-						<p class="icon_subTitle">{!$Label.c.OneId_Terms_of_Use}</p>
+						<p class="footerIconSubtitle">{!$Label.c.OneId_Terms_of_Use}</p>
 					</a>	
 				</aura:set>
 			</aura:if>
 
             <aura:if isTrue="{!and(v.customCommunity, !empty(v.serviceName))}">
                 <!--<aura:if isTrue="{!equals(v.serviceName, 'ISSP')}">-->
-                    <a class="footerEl" href="{!v.labelHelpLink }" target="_blank">
-                        <div class="iataItem_Icon">
+                    <a class="slds-col" href="{!v.labelHelpLink }" target="_blank">
+                        <div class="footerIcon">
                             <span class="icon icon-questionMark"></span>
                         </div>
-                        <p class="icon_subTitle">{!v.labelHelp}</p>
+                        <p class="footerIconSubtitle">{!v.labelHelp}</p>
                     </a>
                 <!--</aura:if>-->
                 <aura:set attribute="else">
-                    <a class="footerEl" href="{!$Label.c.OneId_Online_Help_Link}" target="_blank">
-                        <div class="iataItem_Icon">
+                    <a class="slds-col" href="{!$Label.c.OneId_Online_Help_Link}" target="_blank">
+                        <div class="footerIcon">
                             <span class="icon icon-questionMark"></span>
                         </div>
-                        <p class="icon_subTitle">{!$Label.c.OneId_Online_Help}</p>
+                        <p class="footerIconSubtitle">{!$Label.c.OneId_Online_Help}</p>
                     </a>
                 </aura:set>
             </aura:if>
-
-			<div class="copyright clearfix">
+			
+		</div>
+		<div class="slds-grid slds-grid_align-center">
+			<div class="slds-col slds-size_1-of-1 copyright">
 				<p> &copy; {!$Label.c.OneId_International_Air_Transport_Association_IATA}{!v.today}. {!$Label.c.OneId_All_rights_reserved}.</p>
 			</div>
 

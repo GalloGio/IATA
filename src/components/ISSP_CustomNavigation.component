@@ -352,6 +352,7 @@
       #searchbox {
         top: 102px;
         padding-right:0px;
+        height:10px;
       }
        
       
@@ -421,12 +422,10 @@
        
       .navbar-right>li>a:hover  {
         background-color: white !important;
-        padding-bottom:0px
       }
        
       .navbar-right>li>a:focus  {
         background-color: white !important;
-       padding-bottom:0px
       }
        
        .navbar-nav>.active-nav>a {
@@ -436,10 +435,11 @@
         }
        
       .nav-header-issp {
-      background-color: #00305b;
-      width:100%;
-      position:absolute;
-      top:55px
+      	background-color: #00305b;
+      	width:100%;
+      	position:absolute;
+      	top:55px;
+      	height:47px;
       }
        
       .navbar-text {
@@ -527,19 +527,19 @@
          <span class="icon-bar"></span>
          </button>
          <div class="oiHeader cOneIdHeader">
-            <a class="homeIcon" href="/ISSP_HomePage" >
-            <div class="icon icon-logo"></div>
+            <a class="homeIcon" href="/ISSP_HomePage?mid=M0S1{!if(communityName=='CNS','&CommunityName='+communityName,'')}" >
+            <div class="{!if(communityName=='CNS', 'icon-cns', 'icon icon-logo')}"></div>
             <div class="subLogo"></div>
             </a>
          </div>
       </div>
-      <div id="navbar" class="navbar-collapse collapse nav-header-issp">
+      <div id="navbar" class="navbar-collapse nav-header-issp">
          <ul class="nav navbar-nav navbar-nav-menu">
             <li><a href="/ISSP_Homepage?mid=M0S1{!if(communityName=='CNS','&CommunityName='+communityName,'')}" id="M0"><span class="glyphicon glyphicon-home"  aria-hidden="true"></span> {!$Label.ISSP_Home}</a></li>
             <li>
                <a href="#" class="dropdown-toggle" data-toggle="dropdown" id="M1"><span class="glyphicon glyphicon-envelope"></span> {!$Label.LAQ_ContactUs} <span class="caret"></span></a>
                 <ul class="dropdown-menu" role="menu">
-                    <li><a href="/ISSP_FAQ2Case_New?MainNav=Queries&subNav=MyQueries&mid=M1S1{!if(communityName=='CNS','&CommunityName='+communityName,'')}" id="M1S1"> {!$Label.ISSP_Create_query}</a></li>
+                    <li><a href="/ISSP_FAQ2Case?MainNav=Queries&subNav=MyQueries&mid=M1S1{!if(communityName=='CNS','&CommunityName='+communityName,'')}" id="M1S1"> {!$Label.ISSP_Create_query}</a></li>
                     <li class="divider"></li>
                     <li><a href="/ISSP_CaseList?MainNav=Queries&subNav=MyQueries&mid=M1S2&admin=false{!if(communityName=='CNS','&CommunityName='+communityName,'')}" id="M1S2">{!$Label.ISSP_My_Cases}</a></li>
                 </ul>
@@ -552,13 +552,17 @@
                     <li><a href="/ISSP_ContentPage?MainNav=resources&subNav=Contentpage&mid=M2S2{!if(communityName=='CNS','&CommunityName='+communityName,'')}" id="M2S2"><!--{!$Label.ISSP_Resources}-->{!$Label.ISSP_Documents}<span class="sr-only">(current)</span></a></li>
                     <li class="{!IF(countryRequirementPermission,'','hide')} divider"></li>
                     <li class="{!IF(countryRequirementPermission,'','hide')}"  ><a href="/ISSP_Country_Requirements?MainNav=resources&subNav=CountryRequirements&mid=M2S3{!if(communityName=='CNS','&CommunityName='+communityName,'')}" id="M2S3">{!$Label.ISSP_Country_Requirements}<span class="sr-only"></span></a></li>
+                    <!--
+                    <li class="{!IF(operationalCalendarPermission,'','hide')} divider"></li>
+                    <li class="{!IF(operationalCalendarPermission,'','hide')}"  ><a href="/ISSP_OperationalCalendar?MainNav=resources&subNav=OperationalCalendar&mid=M2S4{!if(communityName=='CNS','&CommunityName='+communityName,'')}" id="M2S4">{!$Label.ISSP_OperationalCalendar}<span class="sr-only"></span></a></li>
+					-->
                 </ul>
             </li>
             <li class="{!if($Profile.Name == 'ISS Portal Agency Delegated Admin User' || $Profile.Name == 'ISS Portal Airline Delegated Admin User' || $Profile.Name == 'ISS Portal Delegated Admin User'  || $Profile.Name == 'ISS Portal GSA Delegated Admin User' || $Profile.Name == 'ISS Portal DPC' || $Profile.Name == 'ISS Portal PwC2','','hide')}">
                <a href="#" class="dropdown-toggle" data-toggle="dropdown" id="M3"><span class="glyphicon glyphicon-briefcase"></span>  {!$Label.ISSP_Available_services} <span class="caret"></span></a>
                  <ul class="dropdown-menu" role="menu">
-                    <li><a href="/ISSP_AccessToService?MainNav=Services&subNav=Access&mid=M4S2{!if(communityName=='CNS','&CommunityName='+communityName,'')}" id="M4S2" > {!$Label.ISSP_Access_to_services}</a></li>
-                    <li><a href="/ISSP_AvailableServices?MainNav=Services&subNav=Available&mid=M4S5{!if(communityName=='CNS','&CommunityName='+communityName,'')}" id="M4S5" > {!$Label.ISSP_Manage_Services}</a></li>
+                    <li><a href="/ISSP_AccessToService?MainNav=Services&subNav=Access&mid=M3S2{!if(communityName=='CNS','&CommunityName='+communityName,'')}" id="M4S2" > {!$Label.ISSP_Access_to_services}</a></li>
+                    <li><a href="/ISSP_AvailableServices?MainNav=Services&subNav=Available&mid=M3S5{!if(communityName=='CNS','&CommunityName='+communityName,'')}" id="M4S5" > {!$Label.ISSP_Manage_Services}</a></li>
                  </ul>    
             </li>
             <li class="{!if($Profile.Name == 'ISS Portal Agency Delegated Admin User' || $Profile.Name == 'ISS Portal Airline Delegated Admin User' || $Profile.Name == 'ISS Portal Delegated Admin User'  || $Profile.Name == 'ISS Portal GSA Delegated Admin User' || $Profile.Name == 'ISS Portal DPC' || $Profile.Name == 'ISS Portal PwC2','hide','')}">
@@ -588,7 +592,7 @@
                </apex:selectList>
             </apex:form>
             <li class="dropdown">
-               <a href="#" class="dropdown-toggle" data-toggle="dropdown"><span class="glyphicon glyphicon-user" aria-hidden="true" ></span> {!$User.FirstName} {!$User.LastName} <span class="caret"></span></a>
+               <a href="#" class="dropdown-toggle" data-toggle="dropdown" style="padding-bottom:0px"><span class="glyphicon glyphicon-user" aria-hidden="true"></span> {!$User.FirstName} {!$User.LastName} <span class="caret"></span></a>
                <ul class="dropdown-menu" role="menu">
                   <li><a href="/apex/ISSP_PersonalInformation?mid=M5S1{!if(communityName=='CNS','&CommunityName='+communityName,'')}"  data-target="#five" id="M5">{!$Label.ISSP_Registration_MyInformation}</a></li>
                   <li><a href="/apex/ISSP_CompanyInformation?mid=M5S2{!if(communityName=='CNS','&CommunityName='+communityName,'')}"   data-target="#five" id="M5">{!$Label.ISSP_CompanyInformation}</a></li>

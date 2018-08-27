@@ -1,0 +1,35 @@
+<table border="0" cellpadding="5" width="550" cellspacing="5" height="400" >
+<tr valign="top" height="400" >
+<td tEditID="c1r1" style=" background-color:#FFFFFF; bEditID:r3st1; color:#000000; bLabel:main; font-size:12pt; font-family:arial;" aEditID="c1r1" locked="0" >
+<![CDATA[<p class="MsoNormal" style="text-align: justify;"><span style="font-size: 12pt; font-family: Arial, sans-serif;">Dear {!Contact.Name}</span><span style="font-family: Arial, sans-serif; font-size: 13.3333px;">,</span></p><div style="font-size: 12pt; color: rgb(0, 0, 0); font-family: arial; text-align: justify;"><br></div><div style="font-size: 12pt; text-align: justify;"><p class="MsoNormal" style=""><span style="color: rgb(0, 0, 0); font-family: Arial, sans-serif; font-size: 12pt;">IATA
+Code:&nbsp;</span><font face="Arial, sans-serif">{!Account.IATACode__c}</font></p><p class="MsoNormal" style=""><font face="Arial, sans-serif"><br></font></p>
+
+<p class="MsoNormal" style="color: rgb(0, 0, 0); font-family: arial; font-size: 12pt;"><span style="font-family: Arial, sans-serif;">Under
+the Passenger Sales Agency Rules, all IATA Accredited Agents must ensure its
+full compliance with the Payment Card Industry Data Security Standards (PCI
+DSS) on annual basis.<o:p></o:p></span></p><p class="MsoNormal" style="color: rgb(0, 0, 0); font-family: arial; font-size: 12pt;"><span style="font-family: Arial, sans-serif;"><br></span></p>
+
+<p class="MsoNormal" style="color: rgb(0, 0, 0); font-family: arial; font-size: 12pt;"><span style="font-family: Arial, sans-serif;">Despite
+several reminders, we regret to inform you that according to our records we
+have not received evidence of your agency’s compliance with PCI DSS.<o:p></o:p></span></p><p class="MsoNormal" style="color: rgb(0, 0, 0); font-family: arial; font-size: 12pt;"><span style="font-family: Arial, sans-serif;"><br></span></p>
+
+<p class="MsoNormal" style="color: rgb(0, 0, 0); font-family: arial; font-size: 12pt;"><span style="font-family: Arial, sans-serif;">In
+accordance with the provisions of the IATA Passenger Sales Agency Rules, we
+have no alternative but to send you this Administrative of Non-Compliance. We
+urge you to remedy the situation within 30 days of this notice.<o:p></o:p></span></p><p class="MsoNormal" style="color: rgb(0, 0, 0); font-family: arial; font-size: 12pt;"><span style="font-family: Arial, sans-serif;"><br></span></p>
+
+<p class="MsoNormal" style="color: rgb(0, 0, 0); font-family: arial; font-size: 12pt;"><span style="font-family: Arial, sans-serif;">In
+case the evidence of PCI compliance is not submitted within the timeframe
+specified above, IATA will in those cases where the form of payment feature in
+the Electronic Ticketing System is enabled, immediately restrict the Agent’s
+use of the Customer Card Payment Method; such restriction will remain in place
+until the Agent has demonstrated to IATA’s satisfaction that the reason for the
+Administrative Non-Compliance has been remedied and the Agent is compliant with
+all applicable requirements for authorization to use the Customer Card Payment
+Method.<o:p></o:p></span></p><p class="MsoNormal" style="color: rgb(0, 0, 0); font-family: arial; font-size: 12pt;"><span style="font-family: Arial, sans-serif;"><br></span></p>
+
+<p class="MsoNormal" style="color: rgb(0, 0, 0); font-family: arial; font-size: 12pt;"><span style="font-family: Arial, sans-serif;">Please
+do not hesitate to contact us if you have any queries on this matter via our
+Customer Service Portal at <a href="http://www.iata.org/cs">http://www.iata.org/cs</a><o:p></o:p></span></p></div><p class="MsoNormal" style="font-size: 12pt; color: rgb(0, 0, 0); font-family: arial; text-align: justify;"><i style="font-size: 12pt;"><span lang="ES-TRAD" style="font-size: 10pt; font-family: Arial, sans-serif;">&nbsp;</span></i></p><p class="MsoNormal" style="font-size: 12pt; color: rgb(0, 0, 0); font-family: arial; text-align: justify;"></p><p class="MsoNormal" style="font-size: 12pt; color: rgb(0, 0, 0); font-family: arial; text-align: justify;"><span style="font-family: Arial, sans-serif;">Yours sincerely,</span></p><p class="MsoNormal" style="font-size: 12pt; color: rgb(0, 0, 0); font-family: arial; text-align: justify;"><br></p><div style="font-size: 12pt; color: rgb(0, 0, 0); font-family: &quot;Times New Roman&quot;; background-color: white; margin: 0px;"><font face="Calibri,sans-serif" size="2"><span style="font-size: 11pt;"><font face="Arial,sans-serif" color="#333399"><b>Agency Management</b></font></span></font></div><div style="font-size: 12pt; color: rgb(0, 0, 0); font-family: &quot;Times New Roman&quot;; background-color: white; margin: 0px;"><font face="Calibri,sans-serif" size="2"><span style="font-size: 11pt;"><font face="Arial,sans-serif" color="#333399"><b>International Air Transport Association</b></font></span></font></div><div style="font-size: 12pt; color: rgb(0, 0, 0); font-family: &quot;Times New Roman&quot;; background-color: rgb(255, 255, 255); margin: 0px;"><font face="Calibri,sans-serif" size="2"><span style="font-size: 11pt;"><font face="Arial,sans-serif">-----------------------------------------------------------------------------</font><font face="Arial,sans-serif" color="navy">&nbsp;</font></span></font></div><div style="font-size: 12pt; color: rgb(0, 0, 0); font-family: &quot;Times New Roman&quot;; background-color: rgb(255, 255, 255); margin: 0px;"><font face="Calibri,sans-serif" size="2"><span style="font-size: 11pt;"><font face="Arial,sans-serif" color="navy">In order to obtain information or assistance from IATA, do not hesitate to access at any time our&nbsp;</font><font face="Arial,sans-serif"><a href="http://www.iata.org/cs" target="_blank">Customer Portal</a></font></span></font></div><div style="font-size: 12pt; color: rgb(0, 0, 0); font-family: &quot;Times New Roman&quot;; background-color: rgb(255, 255, 255); margin: 0px;"><font face="Calibri,sans-serif" size="2"><span style="font-size: 11pt;"><br></span></font></div><div style="font-size: 12pt; color: rgb(0, 0, 0); font-family: arial; background-color: rgb(255, 255, 255); margin: 0px;"><font face="Calibri, sans-serif"><span style="font-size: 14.6667px;">{!AMS_OSCAR__c.Emails_reference_Id__c}</span></font></div>]]></td>
+</tr>
+</table>
