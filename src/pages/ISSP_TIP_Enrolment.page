@@ -274,7 +274,7 @@
                 }
                 
                 function showContactDialog() {
-                    checkForSalutation();
+                    //checkForSalutation();
                    $j( '#ContactModal').modal('show');
                    con = $j("[id$=email]").val();
                     if( isEdit){
@@ -345,7 +345,7 @@
 
                 }
 
-                function checkForSalutation(){
+                /*function checkForSalutation(){
                   if(!isValidSalutation)
                     $j("[id$=inSalutation]").after("<div class=\"errorMsg\"><strong>Error:</strong> You must enter a value</div>");
                   
@@ -355,7 +355,7 @@
                     isValidSalutation = true;
                   //$j("[id$=inSalutation]").addClass('errorMsg');
                   //isValidateSalutation = true;
-                }
+                }*/
 
                 function confirmCancelExitPage(){
                     var msg=null;
@@ -763,7 +763,7 @@
                         </apex:outputPanel>
                      </div>
                      <div class="modal-footer">
-                        <apex:commandButton action="{!createContact}" onclick="rerenderModal();checkContactMandatoryFields();" status="WaitingStatus"  styleClass="btn btn-default"  value="{!$Label.ISSP_Submit}" oncomplete="saveContact('{!isEmailDuplicated}');rerenderContactSection();" >
+                        <apex:commandButton action="{!createContact}" onclick="rerenderModal();checkContactMandatoryFields();" status="WaitingStatus"  styleClass="btn btn-default"  value="{!$Label.ISSP_Submit}" oncomplete="saveContact('{!isEmailDuplicated}');rerenderContactSection();stopLoading();" >
                         </apex:commandButton>
                         &nbsp;
                         <button type="button" class="btn btn-default" onclick="closeModal();return false;">
