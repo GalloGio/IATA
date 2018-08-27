@@ -85,13 +85,6 @@ private class OneId_Fred_AddNewUser_CTRL_TEST {
 
     	system.runAs(communityUser) {
 			OneId_Fred_AddNewUser_CTRL.isFredPrimaryUser();
-			
-
-/*        List<One_Id_App_Role_Config__c> toReturn = [select Role_Name__c, Role_Description__c, Bundle_Name__c
-            from One_Id_App_Role_Config__c];
-
-		System.assert(toReturn.size() > 0);
-	*/		
 			OneId_Fred_AddNewUser_CTRL.getroles('FRED');
     	}
     }
