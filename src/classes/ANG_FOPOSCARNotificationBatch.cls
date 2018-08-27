@@ -54,7 +54,7 @@ global class ANG_FOPOSCARNotificationBatch implements Database.Batchable<Case>, 
 				'FROM Case '+
 				'WHERE RecordtypeID = :RECTYPE_OSCARCOMM '+ 
 				'AND OSCAR__r.RecordTypeId = :RECTYPE_NEWGENFOP '+ 
-				'AND Origin = :MASSIVE_FOP_ORIGIN OR Origin = :AUTOMATIC_RENEWAL_FOP_ORIGIN'+
+				'AND (Origin = :MASSIVE_FOP_ORIGIN OR Origin = :AUTOMATIC_RENEWAL_FOP_ORIGIN)'+
 				'AND (DAY_ONLY(CreatedDate) = :dateReminder '+
 					'OR DAY_ONLY(CreatedDate) = :dateNonCompliance)';
 		}else{
@@ -63,7 +63,7 @@ global class ANG_FOPOSCARNotificationBatch implements Database.Batchable<Case>, 
 				'FROM Case '+
 				'WHERE RecordtypeID = :RECTYPE_OSCARCOMM '+ 
 				'AND OSCAR__r.RecordTypeId = :RECTYPE_NEWGENFOP '+ 
-				'AND Origin = :MASSIVE_FOP_ORIGIN OR Origin = :AUTOMATIC_RENEWAL_FOP_ORIGIN'+
+				'AND (Origin = :MASSIVE_FOP_ORIGIN OR Origin = :AUTOMATIC_RENEWAL_FOP_ORIGIN)'+
 				'AND Owner.Name IN :MASS_FOP_QUEUES '+
 				'AND (DAY_ONLY(CreatedDate) = :dateReminder '+
 					'OR DAY_ONLY(CreatedDate) = :dateNonCompliance)';
