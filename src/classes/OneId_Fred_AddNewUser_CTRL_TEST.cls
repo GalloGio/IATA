@@ -8,10 +8,32 @@ private class OneId_Fred_AddNewUser_CTRL_TEST {
 	@testSetup
     static void setup() {
         //Create config service object
-        One_Id_Service_Provider_Config__c serviceConfig = new One_Id_Service_Provider_Config__c();
-        serviceConfig.Customer_Type_Activation__c = 'Aircraft Operator;ICAO Member State';
-        serviceConfig.Service_Provider_Name__c = 'FRED';
+        One_Id_Service_Provider_Config__c serviceBundle = new One_Id_Service_Provider_Config__c(
+			Customer_Type_Activation__c = 'Aircraft Operator;ICAO Member State',
+			Is_Active__c = true,
+	        Service_Provider_Name__c = 'FRED');
+        Insert serviceBundle;
+        
+        //Create config service object
+        One_Id_Service_Provider_Config__c serviceConfig = new One_Id_Service_Provider_Config__c(
+	        Customer_Type_Activation__c = 'Aircraft Operator;ICAO Member State',
+        	Service_Provider_Name__c = 'FRED',
+        	Service_Bundle__c = serviceBundle.Id);
         Insert serviceConfig;
+        
+        One_Id_App_Config_Detail__c appConfig = new One_Id_App_Config_Detail__c(
+        	One_Id_Service_Provider_Config__c = serviceConfig.Id,
+        	Connected_App_Provisioning_Name__c = 'FRED',
+        	PermissionSet_Provisioning__c = 'FRED_Provisioning',
+        	PermissionSet_SSO__c = 'FRED_SSO'
+        );
+        insert appConfig;
+        
+        One_Id_App_Role_Config__c appRole = new One_Id_App_Role_Config__c(
+        	One_Id_App_Config_Detail__c = appConfig.Id,
+        	Role_Name__c = 'FRED Primary User'
+        );
+        insert appRole;
         
         //Create ICAO, Aircraft operators and verifier accounts
         insert new IATA_ISO_Country__c(ISO_Code__c='FR');
@@ -58,7 +80,19 @@ private class OneId_Fred_AddNewUser_CTRL_TEST {
 
     @isTest 
     static void loadComponent() {
-       OneId_Fred_AddNewUser_CTRL.isFredPrimaryUser();
-       OneId_Fred_AddNewUser_CTRL.getroles('FRED_SSO');
+
+    	User communityUser = [SELECT Id FROM User WHERE lastname = 'contact1' LIMIT 1][0];
+
+    	system.runAs(communityUser) {
+			OneId_Fred_AddNewUser_CTRL.isFredPrimaryUser();
+			
+
+/*        List<One_Id_App_Role_Config__c> toReturn = [select Role_Name__c, Role_Description__c, Bundle_Name__c
+            from One_Id_App_Role_Config__c];
+
+		System.assert(toReturn.size() > 0);
+	*/		
+			OneId_Fred_AddNewUser_CTRL.getroles('FRED');
+    	}
     }
 }
