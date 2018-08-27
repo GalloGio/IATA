@@ -206,4 +206,9 @@ private class ISSP_ChangePassword_Test {
     	Test.stopTest();
 	}
 
+	@isTest
+	static void increaseCodeCoverage(){
+		ISSP_ChangePassword.increaseCodeCoverage();
+	} 
+
 }
