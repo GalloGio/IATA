@@ -291,7 +291,7 @@ private class AMS_OscarMigrationFromCaseTest {
         iepVendor.Site = 'headSite';
         iepVendor.Sector__c = 'Travel Agent';
         iepVendor.IATA_ISO_Country__c = country.Id;
-        iepVendor.RecordTypeId = Schema.SObjectType.Account.getRecordTypeInfosByName().get('Others').getRecordTypeId();
+        iepVendor.RecordTypeId = rtIdBr;
         insert iepVendor;
 
 

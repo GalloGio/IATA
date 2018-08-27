@@ -903,8 +903,6 @@
         //console.log('***************** COMPONENT ******************');
 
         $(document).ready(function() {
-            $('[data-toggle="popover"]').popover();
-
             // binds on change to make checkbox function as radio buttons
             $('[data-group]').on('change', function() {
                 var $parent = $(this);
