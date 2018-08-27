@@ -2,21 +2,10 @@
            sidebar="false" showHeader="false" applyBodyTag="false" applyHtmlTag="false" 
            standardStylesheets="false">
   <html>
-
-  <head>
-    <meta charset="utf-8"/>
-    <meta name="viewport" content="width=device-width, initial-scale=1"/>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.css" />
-    <c:ISSP_Header></c:ISSP_Header>
-    <c:iss_ap_css />
-  </head>
-
-  <body class="bodyContainer">
+    <c:ISSP_Header ></c:ISSP_Header>
+ 
+  <body>
     <style>
-      .bodyContainer {padding-left: initial !important; padding-right: initial !important;}
-
-      .header {background-color: #0a4279 !important; border: initial !important;}
-
       .section-header {
         background-color: rgb(43, 120, 228);
         color: white;
@@ -153,7 +142,7 @@
       }
 
       /* The Modal (background) */
-      .modal-ErrorHandling {
+      .modal {
           display: none; /* Hidden by default */
           position: fixed; /* Stay in place */
           z-index: 1; /* Sit on top */
@@ -168,7 +157,7 @@
       }
 
       /* Modal Content */
-      #modal-content-ErrorHandling {
+      .modal-content {
           background-color: #fefefe;
           margin: auto;
           padding: 20px;
@@ -177,36 +166,36 @@
       }
 
       /* The Close Button */
-      #closeModal-ErrorHandling {
+      .closeModal {
           color: #aaaaaa;
           float: right;
           font-size: 28px;
           font-weight: bold;
       }
 
-      #closeModal-ErrorHandling:hover,
-      #closeModal-ErrorHandling:focus {
+      .closeModal:hover,
+      .closeModal:focus {
           color: #000;
           text-decoration: none;
           cursor: pointer;
       }
 
     </style>
-    <c:ISSP_CustomNavigation />
-    <main class="container main-con">
+      <c:ISSP_CustomNavigation />
       
+      <div class="container">
       <apex:form id="mainFrm">
       <div class="row">
         <!--
                 LEFT SECTION
         -->
-        <section name="left-side" class="col-md-8 col-sm-12">
+        <div name="left-side" class="col-md-8">
 
           <!--
                 RHC SECTION
           -->
 
-          <section name="remittance-holding" class="row" style="display: {!IF(isCashless,'none','block')}; min-height: 350px;">
+          <div name="remittance-holding" class="row" style="display: {!IF(isCashless,'none','block')}; min-height: 350px;">
             <header class="col-xs-12">
               <div class="section-header">
                 <apex:image value="{!URLFOR($Resource.ISSP_RHC_Page_Icons,'img/RHC.png')}"/>
@@ -215,7 +204,7 @@
               </div>
             </header>
             <apex:outputPanel layout="block" id="rhcInfoPanel" styleClass="row" style="margin-right: 15px;">
-              <section id="remittance-holding-table" class="col-md-8 col-sm-12">
+              <div id="remittance-holding-table" class="col-md-8 col-sm-12">
                 <table class="table borderless" style="margin-left: 13px;">
                   <tr style="display: {!IF(isCashless,'none','table-row')}">
                     <td>
@@ -260,8 +249,8 @@
                     <td>{!contact.Account.Remittance_frequency__c}</td>
                   </tr>
                 </table>
-              </section>
-              <section id="gaugeSection" class="col-md-4 col-sm-12" style="display: {!IF(isCashless,'none','block')}">
+              </div>
+              <div id="gaugeSection" class="col-md-4 col-sm-12" style="display: {!IF(isCashless,'none','block')}">
                 <canvas id="percentageUsageGauge"></canvas>
                 <br/>
                 <span>
@@ -277,7 +266,7 @@
                     <apex:param value="{!rhcInfo.ANG_ConsumedRHC_Last_Update__c}" />
                   </apex:outputText>
                 </span>
-              </section>
+              </div>
             </apex:outputPanel>
 
             <div class="row" style="display: {!IF(isCashless,'none','block')}">
@@ -288,8 +277,8 @@
             <div id="myModal" class="modal">
 
               <!-- Modal content -->
-              <div id="modal-content-ErrorHandling" class="modal-content">
-                <span id="closeModal-ErrorHandling" class="closeModal">&times;</span>
+              <div class="modal-content">
+                <span class="closeModal">&times;</span>
                 <p>There was an error in updating your balance. Please try again and if the issue persists contact <b><a href="/ISSP_FAQ2Case">customer support.</a></b></p>
               </div>
 
@@ -304,13 +293,13 @@
               </div>            
             </div>
 
-          </section>
+          </div>
 
           <!-- Risk Event History -->
 
           <!--section name="right-side" class="col-md-6 col-sm-12" -->
 
-          <section name="remittance-holding" class="row" style="display: {!IF(isCashless,'none','block')};">
+          <div name="remittance-holding" class="row" style="display: {!IF(isCashless,'none','block')};">
 
             <header class="col-xs-12">
               <div class="section-header">
@@ -320,7 +309,6 @@
               </div>
             </header>
 
-            <body class="col-xs-12">
               <table class="table" style="margin-left: 15px;">
                 <tr>
                   <td>
@@ -392,16 +380,15 @@
                   </td>
                 </tr>
               </table>
-            </body>
-          </section>
+          </div>
 
           <div style="display: {!IF(isCashless,'block','none')}; min-height: 350px;">
             <c:AFP_Component wrapperClass="{!afpWrapper}"/>
           </div>
 
-        </section> <!-- Left -->
+        </div> <!-- Left -->
 
-        <section name="right-side" class="col-md-4 col-sm-12">
+        <div name="right-side" class="col-md-4">
           <!-- Available forms of payment-->
 
           <div style="display: {!IF(isCashless,'none','block')}; min-height: 350px;">
@@ -410,7 +397,7 @@
 
           <!-- Risk Profile-->
 
-          <section name="risk-profile" class="row" style="margin-right: 0px; margin-left: 0px; min-height: 350px;">
+          <div name="risk-profile" class="row" style="margin-right: 0px; margin-left: 0px; min-height: 350px;">
 
             <table class="table" style="width: 100%">
               <tr>
@@ -475,8 +462,8 @@
                 </td>
               </tr>
             </table>
-          </section>
-        </section> <!-- right -->        
+          </div>
+        </div> <!-- right -->        
 
       </div>
 
@@ -498,10 +485,8 @@
       </div>
 
       </apex:form>
-
-      
-    </main>
-<c:ISSP_CustomFooter />
+    </div>
+    <c:ISSP_CustomFooter />
 
     <script src="../../soap/ajax/41.0/connection.js" type="text/javascript" ></script>
     <script src="../../soap/ajax/41.0/apex.js" type="text/javascript" ></script>
@@ -628,7 +613,7 @@
     var btn = document.getElementById("requestRME");
 
     // Get the <span> element that closes the modal
-    var span = document.getElementById("closeModal-ErrorHandling");
+    var span = document.getElementsByClassName("closeModal")[0];
 
     // When the user clicks on <span> (x), close the modal
     span.onclick = function() {
