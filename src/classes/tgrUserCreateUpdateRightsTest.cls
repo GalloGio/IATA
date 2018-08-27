@@ -2,7 +2,7 @@
 public class tgrUserCreateUpdateRightsTest {
 	static testMethod void test1() {
 
-        String profileId = [SELECT Id FROM Profile WHERE Name = 'ISS Portal DPC' LIMIT 1].Id;
+        String profileId = [SELECT Id FROM Profile WHERE Name = 'ISS Portal DPC Admin' LIMIT 1].Id;
 
         Account acc = ISSP_ObjectFactory.createNewAccount();
         insert acc;
