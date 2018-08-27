@@ -3,15 +3,11 @@
 
     <html>
      
- <c:ISSP_Header/>
+ <c:ISSP_Header />
  <body>
 
     <style>
-    ul li, ol li {
-        margin-left: inherit;
-        padding-left: inherit;
-    }
-        
+    
    .pbBody a {color:#337ab7;}
         
    html .brandTertiaryBgr {
@@ -51,7 +47,8 @@
 
     <c:ISSP_CustomNavigation />
     <div class="container">
-    
+    <div id="contentWrapper">
+        
         <apex:outputPanel rendered="{!IFAPCases.size > 1}" >
             <h3 class="form-control" >{!$Label.ISSP_IFAP_IATAFinancialAssessment}</h3>
         </apex:outputPanel>
@@ -733,6 +730,7 @@
             </div><!--end main col -->
         </div><!--end main row -->
         </apex:outputPanel>
+    </div>
     </div><!-- end container-->
     <c:ISSP_CustomFooter />
     </body>
