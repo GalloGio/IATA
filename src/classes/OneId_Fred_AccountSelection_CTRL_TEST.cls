@@ -77,6 +77,13 @@ private class OneId_Fred_AccountSelection_CTRL_TEST {
 	
       
     }
+    @isTest 
+
+    static void Base_CTRLTest() {
+    	Base_CTRL.loadConfig('FRED');
+
+    	Base_CTRL.loadConfig(null);
+    }
 
 	@isTest 
     static void registration() {
