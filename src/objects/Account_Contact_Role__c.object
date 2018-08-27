@@ -46,6 +46,7 @@
     <description>Use to manage M:N contact with account.</description>
     <enableActivities>false</enableActivities>
     <enableBulkApi>true</enableBulkApi>
+    <enableChangeDataCapture>false</enableChangeDataCapture>
     <enableFeeds>false</enableFeeds>
     <enableHistory>true</enableHistory>
     <enableReports>false</enableReports>
@@ -86,7 +87,7 @@
         <description>Phone of the related contact</description>
         <externalId>false</externalId>
         <formula>Contact__r.Phone</formula>
-        <label>Business Phone</label>
+        <label>Phone</label>
         <required>false</required>
         <trackHistory>false</trackHistory>
         <trackTrending>false</trackTrending>
@@ -109,6 +110,7 @@
                 <value>
                     <fullName>Primary Contact</fullName>
                     <default>false</default>
+                    <label>Primary Contact</label>
                 </value>
             </valueSetDefinition>
         </valueSet>
@@ -166,6 +168,17 @@
         <unique>false</unique>
     </fields>
     <fields>
+        <fullName>Position__c</fullName>
+        <externalId>false</externalId>
+        <formula>Contact__r.Title</formula>
+        <label>Position</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
         <fullName>Service_Rendered__c</fullName>
         <description>To Which Service the contact is associated</description>
         <externalId>false</externalId>
@@ -182,9 +195,21 @@
                 <value>
                     <fullName>TIP</fullName>
                     <default>false</default>
+                    <label>TIP</label>
                 </value>
             </valueSetDefinition>
         </valueSet>
+    </fields>
+    <fields>
+        <fullName>Title__c</fullName>
+        <externalId>false</externalId>
+        <formula>TEXT(Contact__r.Salutation)</formula>
+        <label>Title</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
     </fields>
     <fields>
         <fullName>UniqueKey__c</fullName>
@@ -240,4 +265,11 @@
     </recordTypes>
     <searchLayouts/>
     <sharingModel>ControlledByParent</sharingModel>
+    <validationRules>
+        <fullName>Mandatory_fields_for_primary_contact</fullName>
+        <active>true</active>
+        <errorConditionFormula>is_primary__c  &amp;&amp; ( First_Name__c = null || Last_Name__c = null || Email__c = null || Position__c = null || Title__c = null || Business_Phone__c = null)</errorConditionFormula>
+        <errorMessage>The following Contact fields cannot be empty for Primary Provider Contacts: First name, Last Name, Salutation, Title, Email &amp; Phone.</errorMessage>
+    </validationRules>
+    <visibility>Public</visibility>
 </CustomObject>
