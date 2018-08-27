@@ -3087,6 +3087,16 @@ public without sharing class ISSP_AMS_Accreditation {
                 }
             }
 
+            if (newCase.RecordTypeId == OSCAR_RECORD_TYPE_ID && (newCase.Reason1__c == 'Major Change')) {
+                if (newForm.Shipping_ISO_Country__c == null) {
+                    newForm.Shipping_ISO_Country__c = con.Account.IATA_ISO_Shipping_Country__c;
+                }
+
+                if (newForm.Shipping_ISO_State__c == null) {
+                    newForm.Shipping_ISO_State__c = con.Account.IATA_ISO_Shipping_State__c;
+                }
+            }
+
             upsert newForm;
 
             // AMSU-110 assign Case via assignment rules
