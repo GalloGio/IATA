@@ -65,7 +65,7 @@ public class AMS_OSCARTriggerHandler {
     /*** AMSU-113 Start ***/
     public static Set<String> pciCompliantProcesses {
         get {
-            return new Set<String> {AMS_Utils.new_HO, AMS_Utils.new_BR, AMS_Utils.PCI_COMPLIANT};
+            return new Set<String> {AMS_Utils.new_HO, AMS_Utils.new_BR, AMS_Utils.new_BR_ABROAD, AMS_Utils.PCI_COMPLIANT};
         }
         set;
     }
