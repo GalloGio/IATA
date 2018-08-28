@@ -26,8 +26,9 @@
            	.btn-success2 {color: #ffffff;background-color: #a1bc00;border: 1px solid #4E8E15;font-weight: bold;cursor: pointer;}
          	.required {color: #C90435;font-size: 24px;padding: 0 5px 0 0;}
     </style>
+     <c:ISSP_CustomNavigation communityName="{!communityName}"/>
     <div class="container">
-        <c:ISSP_CustomNavigation communityName="{!communityName}"/>
+     <div id="contentWrapper">
         <apex:messages />
         <div class="panel panel-primary">
             <div class="panel-heading head_panel_green">
@@ -323,8 +324,10 @@
             <!-- end panel body -->
         </div>
         <!-- end  div class="panel panel-primary"-->
-              <c:ISSP_CustomFooter communityName="{!communityName}"/>
-    </div>
+      </div>
+    </div> <!-- container -->
+     <c:ISSP_CustomFooter communityName="{!communityName}"/>    
+       
     <script>
       function validateUserProfile(){
       	var flag = true;
