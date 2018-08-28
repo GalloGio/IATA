@@ -15,7 +15,7 @@ IATA Code: {!Account.IATACode__c}
 This is a friendly reminder that the documentation for your Compliance with PCI DSS security standards renewal has not been received yet. If you have submitted the evidence already, please disregard this message.
 
 
-We would like highlight that the submission deadline date is {!TODAY()+15} (mm/dd/yyyy).
+We would like to highlight that the submission deadline date is {!TODAY()+15} (mm/dd/yyyy).
 
 
 
@@ -29,7 +29,7 @@ http://www.iata.org/cs
 
 
 
-Yours sincerily,
+Yours sincerely,
 
 
 
