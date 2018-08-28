@@ -19,9 +19,8 @@ function toggleAllCheckboxes(elem,divid){
 </head>
 
 <body>
+   	<c:ISSP_CustomNavigation />
 	<div class="container">
-
-		<c:ISSP_CustomNavigation />
 
 		<apex:form >
 			<!-- Header -->
@@ -124,10 +123,8 @@ function toggleAllCheckboxes(elem,divid){
 			</div>
 			
 		</apex:form>
-
-		<c:ISSP_CustomFooter />
-
-	</div>
+	</div> <!-- end container-->
+    <c:ISSP_CustomFooter />
 </body>
 
 </html>
