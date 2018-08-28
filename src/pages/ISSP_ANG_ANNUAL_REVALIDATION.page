@@ -331,10 +331,10 @@
 
         </script>
 
-        <c:ISSP_CustomNavigation communityName="{!communityName}" />
+
         <div class="container">
 
-            
+            <c:ISSP_CustomNavigation communityName="{!communityName}" />
 
             <div id="contentWrapper">
 
@@ -633,9 +633,9 @@
                 </apex:outputText>
             </div>
 
-            
+            <c:ISSP_CustomFooter />
         </div>
-        <c:ISSP_CustomFooter />
+
 
 
         <!-- MODALS MODALS MODALS MODALS MODALS MODALS MODALS MODALS MODALS MODALS MODALS MODALS MODALS MODALS MODALS MODALS MODALS MODALS MODALS MODALS MODALS -->
