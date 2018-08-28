@@ -2045,6 +2045,14 @@ Please &lt;a href=&quot;/ISSP_FAQ2Case?MainNav=Queries&amp;subNav=MyQueries&amp;
         <value>https://iata.my.salesforce.com/services/Soap/c/9.0</value>
     </labels>
     <labels>
+        <fullName>Acc_Fin_Mgmt_Agencies_Description</fullName>
+        <categories>IDCard</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Acc_Fin_Mgmt_Agencies_Description</shortDescription>
+        <value>Your agency’s financial health is key to the survival of your business; analyzing and controlling your finances leads to strong business plans and better strategic decisions… (&lt;a href=\&quot;http://www.iata.org/training/courses/Pages/accounting-financial-management-tttg93.aspx\&quot; target=\&quot;_blank\&quot;&gt;read more&lt;/a&gt;)</value>
+    </labels>
+    <labels>
         <fullName>Acceptance_date</fullName>
         <language>en_US</language>
         <protected>false</protected>
@@ -2157,6 +2165,13 @@ Please &lt;a href=&quot;/ISSP_FAQ2Case?MainNav=Queries&amp;subNav=MyQueries&amp;
         <value>An error occurred when editing your new address. Please try it again. Or you already have that address</value>
     </labels>
     <labels>
+        <fullName>Adv_Skills_Journey_Price_Ticket_Description</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Adv_Skills_Journey_Price_Ticket_Description</shortDescription>
+        <value>This course is for the travel professional with basic knowledge and skills in air journey pricing and ticketing who wants to be recognized as the company or office expert. You will gain confidence in pricing more complex journeys that apply exceptions to standard pricing principles. A key additional benefit are study units on ticket exchanges and reissues resulting in a refund or an additional collection for the new ticket price or a penalty fee collection... (&lt;a href=\&quot;http://www.iata.org/training/courses/Pages/journey-pricing-ticketing-tttg15.aspx\&quot; target=\&quot;_blank\&quot;&gt;read more&lt;/a&gt;)</value>
+    </labels>
+    <labels>
         <fullName>AirlineSuspensionContactId</fullName>
         <categories>0031100000uFe6s</categories>
         <language>en_US</language>
@@ -2220,6 +2235,14 @@ Please &lt;a href=&quot;/ISSP_FAQ2Case?MainNav=Queries&amp;subNav=MyQueries&amp;
         <protected>false</protected>
         <shortDescription>Ask Delete Attachment</shortDescription>
         <value>Are you sure you want to delete this Attachment?</value>
+    </labels>
+    <labels>
+        <fullName>Assist_Travelers_Special_Needs_Description</fullName>
+        <categories>IDCard</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Assist_Travelers_Special_Needs_Description</shortDescription>
+        <value>Special needs travelers represent a promising market for the travel industry. To unlock this business opportunity, travel suppliers and agents must first be able to identify customers who may have special travel needs. Then they must deliver the services that make their journey safe and pleasant... (&lt;a href=\&quot;http://www.iata.org/training/courses/Pages/travelers-special-needs-tttg98.aspx\&quot; target=\&quot;_blank\&quot;&gt;read more&lt;/a&gt;)</value>
     </labels>
     <labels>
         <fullName>Attachment_Name</fullName>
@@ -2657,7 +2680,7 @@ Default,Default withdrawal,Review,Review withdrawal,Irregularity,Termination,Irr
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>CaseValidation - Area</shortDescription>
-        <value>Accreditation,Airlines GSA/MSO,Airline Management,BSPlink/ASD,Cargo Operations,CASSlink,Customer Portal Enquiry,IATA General Information,iiNet,Invoicing,myIATA,Passenger Operations,Passenger Stock Management,Product Enquiry,Remittance &amp; Settlement,Risk Management,TIESS Support, MITA, Coding, Your VOICE - Annual Survey,IBSPs Migration, TASF, E&amp;F Services,E&amp;F Operations,Easy Pay,NewGen ISS</value>
+        <value>Accreditation,Airlines GSA/MSO,Airline Management,BSPlink/ASD,Cargo Operations,CASSlink,Customer Portal Enquiry,IATA General Information,Invoicing,myIATA,Passenger Operations,Passenger Stock Management,Product Enquiry,Remittance &amp; Settlement,Risk Management,TIESS Support, MITA, Coding, Your VOICE - Annual Survey,IBSPs Migration, TASF, E&amp;F Services,E&amp;F Operations,Easy Pay,NewGen ISS</value>
     </labels>
     <labels>
         <fullName>CaseValidation_InDepthArea</fullName>
@@ -3815,6 +3838,54 @@ Case description: {!Case.Description}
         <value>Can&apos;t select E&amp;F Material not present in the related Contract</value>
     </labels>
     <labels>
+        <fullName>EMPTY_FILE</fullName>
+        <categories>CMT</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CSV file is empty.</shortDescription>
+        <value>CSV file is empty.</value>
+    </labels>
+    <labels>
+        <fullName>ERROR_JSON_BAD_FORMAT</fullName>
+        <categories>CMT</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>The provided Json String was badly formatted.</shortDescription>
+        <value>The provided Json String was badly formatted.</value>
+    </labels>
+    <labels>
+        <fullName>ERROR_JSON_EMPTY</fullName>
+        <categories>CMT</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>No field values were found in the Json String.</shortDescription>
+        <value>No field values were found in the Json String.</value>
+    </labels>
+    <labels>
+        <fullName>ERROR_OP_FAILED</fullName>
+        <categories>CMT</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Operation failed, please check messages!</shortDescription>
+        <value>Operation failed, please check messages!</value>
+    </labels>
+    <labels>
+        <fullName>ERROR_REQUEST_FAILED_NO_ERROR</fullName>
+        <categories>CMT</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Request failed with no specified error.</shortDescription>
+        <value>Request failed with no specified error.</value>
+    </labels>
+    <labels>
+        <fullName>ERROR_UNAUTHORIZED_ENDPOINT</fullName>
+        <categories>CMT</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Unauthorized endpoint, please check Setup</shortDescription>
+        <value>Unauthorized endpoint, please check Setup</value>
+    </labels>
+    <labels>
         <fullName>E_mail_to_Case_IS_Help_Desk</fullName>
         <language>en_US</language>
         <protected>false</protected>
@@ -3985,6 +4056,14 @@ Message: {2}</value>
         <protected>false</protected>
         <shortDescription>Escalated</shortDescription>
         <value>Escalated</value>
+    </labels>
+    <labels>
+        <fullName>FILE_MISSING</fullName>
+        <categories>CMT</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Please provide a comma separated file.</shortDescription>
+        <value>Please provide a comma separated file.</value>
     </labels>
     <labels>
         <fullName>FTP_Attachment_Pro_URL</fullName>
@@ -8023,6 +8102,14 @@ In order to upload your financial documents, please, login to Customer Portal on
 You have just received an email confirming your request.
 Regards,
 IFG Customer Services</value>
+    </labels>
+    <labels>
+        <fullName>INVALID_FILE_ROW_SIZE_DOESNT_MATCH</fullName>
+        <categories>CMT</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>The number of field values does not match the number of header fields on line</shortDescription>
+        <value>The number of field values does not match the number of header fields on line</value>
     </labels>
     <labels>
         <fullName>ISSP</fullName>
@@ -25042,6 +25129,110 @@ msgErrorRenewalOrderExpired:Your renewal notification order link is either  expi
         <value>Logout</value>
     </labels>
     <labels>
+        <fullName>MSG_CHECK_API_NAMES</fullName>
+        <categories>CMT</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Please check the Api names!</shortDescription>
+        <value>Please check the Api names!</value>
+    </labels>
+    <labels>
+        <fullName>MSG_CS_MDT_EXISTS</fullName>
+        <categories>CMT</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Make sure Custom Setting and Custom Metadata Types exists in the org!</shortDescription>
+        <value>Make sure Custom Setting and Custom Metadata Types exists in the org!</value>
+    </labels>
+    <labels>
+        <fullName>MSG_CS_MDT_FIELD_NAME_FORMAT</fullName>
+        <categories>CMT</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Please check the format, Custom Setting.field and Custom Metadata Types.field</shortDescription>
+        <value>Please check the format, Custom Setting.field and Custom Metadata Types.field</value>
+    </labels>
+    <labels>
+        <fullName>MSG_CS_MDT_FIELD_NAME_REQ</fullName>
+        <categories>CMT</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Custom Setting Name/Field Name and CMT/Field Name names are required!</shortDescription>
+        <value>Custom Setting Name/Field Name and CMT/Field Name names are required!</value>
+    </labels>
+    <labels>
+        <fullName>MSG_CS_MDT_MAPPING_REQ</fullName>
+        <categories>CMT</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Custom Setting Name, Custom Metadata Types and Json Mapping names are required!</shortDescription>
+        <value>Custom Setting Name, Custom Metadata Types and Json Mapping names are required!</value>
+    </labels>
+    <labels>
+        <fullName>MSG_CS_MDT_REQ</fullName>
+        <categories>CMT</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Custom Setting Api Name and Custom Metadata Types Api names are required!</shortDescription>
+        <value>Custom Setting Api Name and Custom Metadata Types Api names are required!</value>
+    </labels>
+    <labels>
+        <fullName>MSG_CUSTOM_SETTINGS_EXISTS</fullName>
+        <categories>CMT</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Make sure Custom Setting exists in the org!</shortDescription>
+        <value>Make sure Custom Setting exists in the org!</value>
+    </labels>
+    <labels>
+        <fullName>MSG_JSON_API_NAMES</fullName>
+        <categories>CMT</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Please check the Api names in Json!</shortDescription>
+        <value>Please check the Api names in Json!</value>
+    </labels>
+    <labels>
+        <fullName>MSG_JSON_FORMAT</fullName>
+        <categories>CMT</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Please check the Json format!</shortDescription>
+        <value>Please check the Json format!</value>
+    </labels>
+    <labels>
+        <fullName>MSG_MDT_END</fullName>
+        <categories>CMT</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Custom Metadata Types name should end with</shortDescription>
+        <value>Custom Metadata Types name should end with</value>
+    </labels>
+    <labels>
+        <fullName>MSG_MIGRATION_COMPLETED</fullName>
+        <categories>CMT</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Migration Completed!</shortDescription>
+        <value>Migration Completed!</value>
+    </labels>
+    <labels>
+        <fullName>MSG_MIGRATION_IN_PROGRESS</fullName>
+        <categories>CMT</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Migration In Progress, check status under Deploy -&gt; Deployment Status, Job Id:</shortDescription>
+        <value>Migration In Progress, check status under Deploy -&gt; Deployment Status, Job Id:</value>
+    </labels>
+    <labels>
+        <fullName>MSG_NOT_SUPPORTED</fullName>
+        <categories>CMT</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Not Supported!!!</shortDescription>
+        <value>Not Supported!!!</value>
+    </labels>
+    <labels>
         <fullName>Make_All_Private</fullName>
         <categories>Generic Attachments</categories>
         <language>en_US</language>
@@ -25242,6 +25433,14 @@ msgErrorRenewalOrderExpired:Your renewal notification order link is either  expi
         <protected>false</protected>
         <shortDescription>No special characters</shortDescription>
         <value>Special characters &apos; and &amp; are not allowed, please rename the file.</value>
+    </labels>
+    <labels>
+        <fullName>Notions_Essentl_Tarif_Billet_Description</fullName>
+        <categories>IDCard</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Notions_Essentl_Tarif_Billet_Description</shortDescription>
+        <value>L’interprétation des règles tarifaires et des éléments de données du billet électronique est essentielle pour satisfaire et retenir les clients. Il existe une foule de tarifs et d’options complexes. Les clients s’attendent à avoir un service exact, rapide et abordable. Ce cours enseigne les principes de la construction tarifaire, qui vous permettront de fournir d’excellents conseils et le tarif le plus bas pour un voyage en avion. Vous allez acquérir, grâce à des exercices pratiques et au matériel de référence, de nouvelles compétences qui vous aideront à devenir un professionnel du voyage et accroître la confiance de vos clients... (&lt;a href=\&quot;http://www.iata.org/training/courses/Pages/notions-tarification-billeterie-tttg14-fr.aspx\&quot; target=\&quot;_blank\&quot;&gt;read more&lt;/a&gt;)</value>
     </labels>
     <labels>
         <fullName>OSCAR_RISK_WARNING</fullName>
@@ -27937,6 +28136,13 @@ title,Title,Name</value>
         <value>Services dates</value>
     </labels>
     <labels>
+        <fullName>Serving_The_Travel_Customer_Description</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Serving_The_Travel_Customer_Description</shortDescription>
+        <value>Gain essential strategies to ensure that the customer’s level of satisfaction will influence a purchase or repurchase decision by ensuring that your front-line contact with the customer is remarkable... (&lt;a href=\&quot;http://www.iata.org/training/courses/Pages/serving-travel-customer-tttg66.aspx&quot; target=\&quot;_blank\&quot;&gt;read more&lt;/a&gt;)</value>
+    </labels>
+    <labels>
         <fullName>Shipping</fullName>
         <language>en_US</language>
         <protected>false</protected>
@@ -28019,6 +28225,14 @@ title,Title,Name</value>
         <protected>false</protected>
         <shortDescription>SiteTitle</shortDescription>
         <value>IATA: International Air Transport Association</value>
+    </labels>
+    <labels>
+        <fullName>Social_Media_Travel_Industry_Description</fullName>
+        <categories>IDCard</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Social_Media_Travel_Industry_Description</shortDescription>
+        <value>This “how to” e-learning course is designed for travel professionals and highlights how to implement marketing activities through the four major social networking sites: Facebook, Twitter, YouTube and LinkedIn. You will learn essential theory about the role social media plays in the travel industry and, most importantly, how to implement social media strategies that can increase business opportunities... (&lt;a href=\&quot;http://www.iata.org/training/courses/Pages/social-media-travel-tttg69.aspx\&quot; target=\&quot;_blank\&quot;&gt;read more&lt;/a&gt;)</value>
     </labels>
     <labels>
         <fullName>SortBy</fullName>
@@ -28128,6 +28342,14 @@ title,Title,Name</value>
         <protected>false</protected>
         <shortDescription>SurveyCustomerRecoveriesAnnFARRELL</shortDescription>
         <value>005w0000003XCG8</value>
+    </labels>
+    <labels>
+        <fullName>TYPE_OPTION_NOT_SELECTED</fullName>
+        <categories>CMT</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Please choose a valid custom metadata type.</shortDescription>
+        <value>Please choose a valid custom metadata type.</value>
     </labels>
     <labels>
         <fullName>Taxes</fullName>

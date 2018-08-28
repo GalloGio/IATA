@@ -49,6 +49,14 @@ public with sharing class IDCard_ApplicationFormNRController  extends IDCardAbst
   public String repricingExchangeReissue_Description {get; set;}
   public String travelAgencyFees_Description {get; set;}
 
+  //RN-INC419676
+  public String assisttravelersspecialneeds_Description {get; set;}
+  public String notionsessentlentarifetbillet_Description {get; set;}
+  public String advskillsjourneypriceticket_Description {get; set;}
+  public String servingthetravelcustomer_Description {get; set;}
+  public String socialmediafortravelindustry_Description {get; set;}
+  public String accfinmgmtforagencies_Description {get; set;}
+
   private ID_Card__c[] idCardTemp;
   private Contact associatedContact {get; set;}
   private ID_Card__c associatedIDCard {get; set;}
@@ -87,11 +95,19 @@ public with sharing class IDCard_ApplicationFormNRController  extends IDCardAbst
     introduccionAlBSPlink_Description = Label.IDCard_IntroduccionAlBSPlink_Description;
     introduccionAlSistemaBSPyLenguajeBSP_Description = Label.IDCard_IntroduccionAlSistemaBSPyLenguajeBSP_Description;
     losInformesyLosProcedimientosDeFacturacionAgenteBSP_Description = Label.IDCard_LosInformesyLosProcedimientosDeFacturacionAgenteBSP_Description;
-    socialMediaForTheTravelIndustry_Description = Label.IDCard_SocialMediaForTheTravelIndustry_Description;
+    socialMediaForTheTravelIndustry_Description = Label.IDCard_SocialMediaForTheTravelIndustry_Description; 
 
     fundamentalsJourneyPricing_Description = Label.IDCard_FundamentalsJourneyPricing_Description;
     repricingExchangeReissue_Description = Label.IDCard_RepricingExchangeReissue_Description;
     travelAgencyFees_Description = Label.IDCard_Travel_Agency_Fees_Description;
+
+    //RN-INC419676
+    assisttravelersspecialneeds_Description = Label.Assist_Travelers_Special_Needs_Description; 
+    notionsessentlentarifetbillet_Description = Label.Notions_Essentl_Tarif_Billet_Description;
+    advskillsjourneypriceticket_Description = Label.Adv_Skills_Journey_Price_Ticket_Description;
+    servingthetravelcustomer_Description = Label.Serving_The_Travel_Customer_Description;
+    socialmediafortravelindustry_Description = Label.Social_Media_Travel_Industry_Description;
+    accfinmgmtforagencies_Description = Label.Acc_Fin_Mgmt_Agencies_Description;
 
     initialize();
 
