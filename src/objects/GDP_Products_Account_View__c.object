@@ -21,6 +21,10 @@
         <type>Default</type>
     </actionOverrides>
     <actionOverrides>
+        <actionName>Follow</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
         <actionName>List</actionName>
         <type>Default</type>
     </actionOverrides>
@@ -51,7 +55,6 @@
     <deploymentStatus>Deployed</deploymentStatus>
     <enableActivities>false</enableActivities>
     <enableBulkApi>true</enableBulkApi>
-    <enableChangeDataCapture>false</enableChangeDataCapture>
     <enableFeeds>false</enableFeeds>
     <enableHistory>true</enableHistory>
     <enableReports>true</enableReports>
@@ -405,31 +408,26 @@ Mapped to &quot; Due_Diligence_Status__c&quot; on AMS Account for Replication.</
         <inlineHelpText>Agency&apos;s AML Compliance
 Mapped to &quot; Due_Diligence_Status__c&quot; on AMS Account for Replication.</inlineHelpText>
         <label>Due Diligence Status</label>
+        <picklist>
+            <picklistValues>
+                <fullName>Cleared</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Sanctioned. Please contact compliance</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>In Progress</fullName>
+                <default>false</default>
+            </picklistValues>
+            <restrictedPicklist>true</restrictedPicklist>
+            <sorted>false</sorted>
+        </picklist>
         <required>false</required>
         <trackHistory>true</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Picklist</type>
-        <valueSet>
-            <restricted>true</restricted>
-            <valueSetDefinition>
-                <sorted>false</sorted>
-                <value>
-                    <fullName>Cleared</fullName>
-                    <default>false</default>
-                    <label>Cleared</label>
-                </value>
-                <value>
-                    <fullName>Sanctioned. Please contact compliance</fullName>
-                    <default>false</default>
-                    <label>Sanctioned. Please contact compliance</label>
-                </value>
-                <value>
-                    <fullName>In Progress</fullName>
-                    <default>false</default>
-                    <label>In Progress</label>
-                </value>
-            </valueSetDefinition>
-        </valueSet>
     </fields>
     <fields>
         <fullName>EBC_Agency_Name__c</fullName>
@@ -861,36 +859,30 @@ N = No
 C = Corporate Cards Only
 X = No Usage of Cards</inlineHelpText>
         <label>PCI Compliance</label>
+        <picklist>
+            <picklistValues>
+                <fullName>Y</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>N</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>X</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>C</fullName>
+                <default>false</default>
+            </picklistValues>
+            <restrictedPicklist>true</restrictedPicklist>
+            <sorted>false</sorted>
+        </picklist>
         <required>false</required>
         <trackHistory>true</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Picklist</type>
-        <valueSet>
-            <restricted>true</restricted>
-            <valueSetDefinition>
-                <sorted>false</sorted>
-                <value>
-                    <fullName>Y</fullName>
-                    <default>false</default>
-                    <label>Y</label>
-                </value>
-                <value>
-                    <fullName>N</fullName>
-                    <default>false</default>
-                    <label>N</label>
-                </value>
-                <value>
-                    <fullName>X</fullName>
-                    <default>false</default>
-                    <label>X</label>
-                </value>
-                <value>
-                    <fullName>C</fullName>
-                    <default>false</default>
-                    <label>C</label>
-                </value>
-            </valueSetDefinition>
-        </valueSet>
     </fields>
     <fields>
         <fullName>PCI_compliance_expiry_date__c</fullName>
@@ -1213,6 +1205,18 @@ X = Not NewGen OR NewGen GoLite OR NewGen Financial Review Opt-Out</inlineHelpTe
         <unique>false</unique>
     </fields>
     <fields>
+        <fullName>Total_Ownership_Percentage__c</fullName>
+        <externalId>false</externalId>
+        <inlineHelpText>Sum of all Percentages from related Agency Owners Records</inlineHelpText>
+        <label>Total Ownership Percentage</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>2</scale>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Percent</type>
+    </fields>
+    <fields>
         <fullName>Trading_Name_1_Upper__c</fullName>
         <externalId>false</externalId>
         <formula>UPPER(Trading_Name_1__c)</formula>
@@ -1459,5 +1463,4 @@ X = Not NewGen OR NewGen GoLite OR NewGen Financial Review Opt-Out</inlineHelpTe
         <searchResultsAdditionalFields>Accreditation_Class__c</searchResultsAdditionalFields>
     </searchLayouts>
     <sharingModel>ReadWrite</sharingModel>
-    <visibility>Public</visibility>
 </CustomObject>
