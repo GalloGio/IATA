@@ -4,10 +4,9 @@
  <body>
 
  	<apex:variable var="AdminOrNot" value="{!if($Profile.Name == 'ISS Portal Agency Delegated Admin User' || $Profile.Name == 'ISS Portal Airline Delegated Admin User' || $Profile.Name == 'ISS Portal Delegated Admin User'  || $Profile.Name == 'ISS Portal GSA Delegated Admin User','','none')}" />
-     
-  <div class="container">
-  <c:ISSP_CustomNavigation communityName="{!communityName}"/>
-
+   <c:ISSP_CustomNavigation communityName="{!communityName}"/>
+  	<div class="container">
+ 	<div id="contentWrapper">
     <apex:form id="caseListForm">
 
     <apex:actionFunction name="next" action="{!next}" rerender="Cases" />
@@ -53,7 +52,8 @@
         $('#testSelect').val( '{!selectedList}' );
         $('#selectorPageSize').val( '{!selectedPageSize}' );
         $(document).ready(function(){
-            $('[data-toggle="tooltip2"]').tooltip(); 
+            $('[data-toggle="tooltip2"]').tooltip();
+            $('.navbar-form').css('display','none');
         });
 
         //FM 04-10-2017 - new search functionality
@@ -269,8 +269,9 @@
     </apex:pageBlock> 
    
  </apex:form>
- <c:ISSP_CustomFooter communityName="{!communityName}"/>
+</div>
 </div><!-- end container-->
+ <c:ISSP_CustomFooter communityName="{!communityName}"/>
      </body>
     </html>
 </apex:page>
