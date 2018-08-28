@@ -6,8 +6,8 @@
            action="{!initAction}">
 
     <c:ISSP_Header ></c:ISSP_Header>
+    <c:ISSP_CustomNavigation />
     <div class="container">
-        <c:ISSP_CustomNavigation />
 
         <h4>
             {!$Label.ISSP_Company_Administration}
@@ -180,6 +180,6 @@
         </div>
         </apex:form>
 
-        <c:ISSP_CustomFooter />
-    </div>
+    </div> <!-- container -->
+     <c:ISSP_CustomFooter />
 </apex:page>
