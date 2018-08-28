@@ -9,10 +9,9 @@
 </head>
 
 <body>
+    <c:ISSP_CustomNavigation />
 	<div class="container">
-
-		<c:ISSP_CustomNavigation />
-
+	<div id="contentWrapper">
 		<apex:form >
 
 		<div class="row">
@@ -82,10 +81,9 @@
 
 			
 		</apex:form>
-
-		<c:ISSP_CustomFooter />
-
 	</div>
+   	</div> <!-- end container-->
+    <c:ISSP_CustomFooter />
 </body>
 
 </html>
