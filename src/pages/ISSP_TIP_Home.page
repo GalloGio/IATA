@@ -387,8 +387,33 @@ action="{!initActions}"
                                 </apex:form>
 
                             </apex:pageBlock>
-                        </section>
-                        
+
+                            <!--ACAMBAS - TIP-281 Start -->
+                            <apex:outputPanel rendered="{!isPaymentProvider}">
+                                <section name="remittance-holding" class="row">
+                                    <header class="col-xs-12">
+                                        <div class="section-header">
+                                            <i class="fa fa-line-chart" aria-hidden="true"></i> <strong>{!$label.ISSP_TIP_PROVIDER_DETAILS}</strong>
+                                        </div>
+                                    </header>
+                                </section>
+                                <br/>
+                                <apex:pageBlock>
+                                    <div>
+                                        <label>{!$label.ISSP_TIP_PRIMARY_CONTACTS}</label>
+                                    </div>
+                                    <apex:outputPanel id ="primaryConSection">
+                                        <apex:repeat var="primaryContact" value="{!primaryContacts}">
+                                            {!primaryContact.First_Name__c} {!primaryContact.Last_Name__c} (<a style="color:blue" href="mailto:{!primaryContact.Email__c}">{!primaryContact.Email__c}</a>)<br/>
+                                        </apex:repeat>
+                                    </apex:outputPanel>
+                                    <br/>  
+                                    <apex:outputText value="{!$label.ISSP_TIP_PRIMARY_CONTACTS_MSG}"/>
+                                </apex:pageBlock>
+                            </apex:outputPanel>
+                            <!--ACAMBAS - TIP-281 End -->
+
+                        </section>               
                     </div>
                 </div>
             </div>

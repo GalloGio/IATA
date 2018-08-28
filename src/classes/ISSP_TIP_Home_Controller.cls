@@ -14,6 +14,7 @@ public without sharing class ISSP_TIP_Home_Controller {
     public boolean isAdmin {get; set;}     //identify if a user is an administrator or not
     public String communityName{ get{ return ApexPages.currentPage().getParameters().get('CommunityName'); }set;}
     public List<productWrapper> products {get ;set;}
+    public List<Account_Contact_Role__c> primaryContacts {get ;set;} //ACAMBAS - TIP-281
     public boolean editMode{get;set;}
     public boolean activeProduct{get;set;} //ACAMBAS - TIP-244
     public String binRangeChangeRequestText{get;Set;}
@@ -150,8 +151,9 @@ public without sharing class ISSP_TIP_Home_Controller {
     public ISSP_TIP_Home_Controller(){
         popContact();
         fillProducts();
+        fillPrimaryContacts(); //ACAMBAS - TIP-281
 
-         pageReference currentPage = new PageReference(ApexPages.currentPage().getURL());
+        pageReference currentPage = new PageReference(ApexPages.currentPage().getURL());
         Map<String, String> params  =  currentPage.getParameters(); 
         params.remove('prodId');
         params.remove('caseId');
@@ -263,6 +265,14 @@ public without sharing class ISSP_TIP_Home_Controller {
             products.add(new productWrapper(p.id,p.name, p.PP_Payment_Network__c,p.PP_Effective_to_Date__c,p.PP_Effective_from_Date__c, p.PP_status__c));
         }
     }
+
+    //ACAMBAS - TIP-281 - Start 
+    private void fillPrimaryContacts() {
+        primaryContacts =  [SELECT id, First_Name__c, Last_Name__c, Email__c
+                            FROM Account_Contact_Role__c 
+                            WHERE Account_Role__c  = :TheAccountRole.Id AND is_primary__c = True];
+    }
+    //ACAMBAS - TIP-281 - End
 
     //##======================Sidekick classes=================================##
 
