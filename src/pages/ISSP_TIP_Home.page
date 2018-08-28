@@ -408,8 +408,17 @@ action="{!initActions}"
                                         </apex:repeat>
                                     </apex:outputPanel>
                                     <br/>  
-                                    <apex:outputText value="{!$label.ISSP_TIP_PRIMARY_CONTACTS_MSG}"/>
+                                    <apex:outputText escape="false" value="{!$label.ISSP_TIP_PRIMARY_CONTACTS_MSG}"/>
                                 </apex:pageBlock>
+                                <!--ACAMBAS - TIP-313 Start -->
+                                <apex:pageBlock>
+                                    <div style="margin-top: 20px;">
+                                        <label>{!$label.ISSP_TIP_UPDATE_PROV_ACC_DETAILS}</label>
+                                    </div>
+                                    <apex:outputText escape="false" value="{!$label.ISSP_TIP_UPDATE_PROV_ACC_DETAILS_MSG1}"/><br/><br/>
+                                    <apex:outputText escape="false" value="{!$label.ISSP_TIP_UPDATE_PROV_ACC_DETAILS_MSG2}"/>
+                                </apex:pageBlock>
+                                <!--ACAMBAS - TIP-313 End -->
                             </apex:outputPanel>
                             <!--ACAMBAS - TIP-281 End -->
 
