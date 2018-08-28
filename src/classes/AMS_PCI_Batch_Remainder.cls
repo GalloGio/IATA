@@ -138,9 +138,15 @@ global  class AMS_PCI_Batch_Remainder implements Database.Batchable<sObject>, Da
             } else if(cse.Account.ANG_PCI_compliance_expiry_date__c <> null && cse.EmailMessages.size() < 2) { /* renewal remainder */
                 Integer daysCounter = Date.today().daysBetween(cse.Account.ANG_PCI_compliance_expiry_date__c);
                 if(cse.EmailMessages.size() == 0 && daysCounter > 15) { /* 30 days remainder */
+                    System.debug('30 days reminder case: ' + cse);
                     res.add(cse);
                 } else if(cse.EmailMessages.size() < 2 && daysCounter < 16) { /* first remainder - 15 days */
+                    System.debug('15 days reminder case: ' + cse);
+                    if(cse.EmailMessages.size() == 1 && cse.EmailMessages[0].CreatedDate.date().daysBetween(cse.Account.ANG_PCI_compliance_expiry_date__c) > 15) {
                     res.add(cse);
+                    } else if(cse.EmailMessages.size() == 0) {
+                        res.add(cse);
+                    }                    
                 }
             }
         }
