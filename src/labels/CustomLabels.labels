@@ -22944,6 +22944,20 @@ This Dashboard allows each airline Treasury Team to gain full visibility of thei
         <value>New Product Country Configuration</value>
     </labels>
     <labels>
+        <fullName>ISSP_TIP_PRIMARY_CONTACTS</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_TIP_PRIMARY_CONTACTS</shortDescription>
+        <value>Primary Contact(s)</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_TIP_PRIMARY_CONTACTS_MSG</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_TIP_PRIMARY_CONTACTS_MSG</shortDescription>
+        <value>Please &lt;a style=&quot;color:blue&quot; href=&quot;/ISSP_FAQ2Case?topic=TIP%20HelpDesk&quot;&gt;submit a case to IATA&lt;/a&gt; if you wish to change your primary contact.</value>
+    </labels>
+    <labels>
         <fullName>ISSP_TIP_PRODUCT_DETAILS_SECTION</fullName>
         <language>en_US</language>
         <protected>false</protected>
@@ -22956,6 +22970,13 @@ This Dashboard allows each airline Treasury Team to gain full visibility of thei
         <protected>false</protected>
         <shortDescription>ISSP_TIP_PRODUCT_TITLE</shortDescription>
         <value>ATM Provider Product</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_TIP_PROVIDER_DETAILS</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_TIP_PROVIDER_DETAILS</shortDescription>
+        <value>Provider Details</value>
     </labels>
     <labels>
         <fullName>ISSP_TIP_RANGE_TO_GREATER_RANGE_FROM</fullName>
