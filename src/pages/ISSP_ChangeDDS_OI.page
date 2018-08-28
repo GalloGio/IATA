@@ -2,12 +2,11 @@
 
 <apex:page controller="ISSP_ChangeDDS_Ctrl" standardStylesheets="false" showHeader="false" sidebar="false"  applyBodyTag="false" applyHtmlTag="false">
 	<html>
-	<head>
-		<c:ISSP_Header_sansJQuery />
-	</head>
+	<c:ISSP_Header ></c:ISSP_Header>
 		<body>
+            <c:ISSP_CustomNavigation />
 			<div class="container">
-				<c:ISSP_CustomNavigation />
+              <div id="contentWrapper">
 				<c:Loading />
 				<div class="panel panel-primary">
 					<div class="panel-heading head_panel_green">
@@ -52,9 +51,9 @@
 						</apex:form>
 		            </div>
 				</div>
-
-				<c:ISSP_CustomFooter />
-			</div>
+			 </div>
+			</div> <!-- end container-->
+            <c:ISSP_CustomFooter />
 		</body>
 	</html>
 </apex:page>
