@@ -383,13 +383,13 @@
         position: absolute
       }
        
-       .navbar-nav>li {
+       /*.navbar-nav>li {
         margin-right:10px;
-       }
+       }*/
        
       .navbar-nav-menu>li>a {
         color:white;
-        font-size:110%;
+        font-size:100%;
         text-decoration: none;
         border-bottom: 3px solid transparent;
       }
@@ -449,7 +449,7 @@
        }
        
       .navbar-nav-menu {
-        margin-left:210px
+        margin-left:160px
       }
        
        .navbar-form {
@@ -474,6 +474,8 @@
     		$('[id$="navbarSearchBtn"]').css({'background': 'initial', 'margin': '0', 'border-radius': '4px', 'margin-bottom': '0', 'background-color': '#fff', 'margin-left': '-1px', 'font-size': '14px', 'border-top-left-radius': '0', 'border-bottom-left-radius': '0', 'border-bottom-color': 'rgb(181, 181, 181)', 'border-color': '#ccc'});
 
     		$('li').css('margin-left', 'initial');
+
+        $('.btn_iata_primary').css({'padding': '6px 12px !important'});
 		});
 
       function transferSearchQuery() {
@@ -562,6 +564,7 @@
                <a href="#" class="dropdown-toggle" data-toggle="dropdown" id="M3"><span class="glyphicon glyphicon-briefcase"></span>  {!$Label.ISSP_Available_services} <span class="caret"></span></a>
                  <ul class="dropdown-menu" role="menu">
                     <li><a href="/ISSP_AccessToService?MainNav=Services&subNav=Access&mid=M3S2{!if(communityName=='CNS','&CommunityName='+communityName,'')}" id="M4S2" > {!$Label.ISSP_Access_to_services}</a></li>
+                    <li class="divider"></li>
                     <li><a href="/ISSP_AvailableServices?MainNav=Services&subNav=Available&mid=M3S5{!if(communityName=='CNS','&CommunityName='+communityName,'')}" id="M4S5" > {!$Label.ISSP_Manage_Services}</a></li>
                  </ul>    
             </li>
