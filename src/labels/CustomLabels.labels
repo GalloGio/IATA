@@ -23063,6 +23063,27 @@ This Dashboard allows each airline Treasury Team to gain full visibility of thei
         <value>Product Termination Request</value>
     </labels>
     <labels>
+        <fullName>ISSP_TIP_UPDATE_PROV_ACC_DETAILS</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_TIP_UPDATE_PROV_ACC_DETAILS</shortDescription>
+        <value>Updates to your Provider Account details</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_TIP_UPDATE_PROV_ACC_DETAILS_MSG1</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_TIP_UPDATE_PROV_ACC_DETAILS_MSG1</shortDescription>
+        <value>You can view your account details on the &lt;a style=&quot;color:blue &quot; href=&quot;/ISSP_CaseList?MainNav=Queries&amp;subNav=MyQueries&amp;mid=M4S3&amp;admin=true&quot;&gt;Company Information&lt;/a&gt; page.</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_TIP_UPDATE_PROV_ACC_DETAILS_MSG2</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_TIP_UPDATE_PROV_ACC_DETAILS_MSG2</shortDescription>
+        <value>Please &lt;a style=&quot;color:blue &quot; href=&quot;/ISSP_FAQ2Case?topic=TIP%20HelpDesk&quot;&gt;Submit a case to IATA&lt;/a&gt; if you wish to make any changes.</value>
+    </labels>
+    <labels>
         <fullName>ISSP_TIP_VALUE_TOO_BIG_TO_PROVIDER</fullName>
         <language>en_US</language>
         <protected>false</protected>
