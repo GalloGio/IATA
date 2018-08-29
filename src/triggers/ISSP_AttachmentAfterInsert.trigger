@@ -1,11 +1,10 @@
 trigger ISSP_AttachmentAfterInsert on Attachment (after insert) {
-    
+        
     set<Id> idSet = new set<Id>();
     list<EmailMessage> emailMessageList = new list<EmailMessage>();
     map<Id,Id> emailMessageCaseMapId = new map<Id,Id>();
     
-    String siteName = Test.isRunningTest()? 'testsite': Site.getName();
-    boolean isPortalUser = !String.isBlank(siteName);
+    boolean isPortalUser = !String.isBlank(Site.getName());
     Id profileId = userinfo.getProfileId();
     
     List<Profile> profileNames = [Select Id, Name from Profile where Id=:profileId];
@@ -31,7 +30,7 @@ trigger ISSP_AttachmentAfterInsert on Attachment (after insert) {
     {
         String profileName = profileNames[0].Name;
         //Verify if user is a PWC profile
-        if(profileName.startsWith('ISS Portal DPC Admin')){
+        if(profileName.startsWith('ISS Portal DPC')){
                isPortalUser = false;
         }  
             
