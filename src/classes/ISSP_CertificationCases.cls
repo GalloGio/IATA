@@ -181,7 +181,7 @@ public with sharing class ISSP_CertificationCases {
             Id profileId=userinfo.getProfileId();
             String profileName=[Select Id,Name from Profile where Id=:profileId].Name;
             if(profileName.startsWith('ISS Portal PwC')){  isPWCProfile = true; }
-            if(profileName.startsWith('ISS Portal DPC') ){  isDPCUser= true; }
+            if(profileName.startsWith('ISS Portal DPC Admin') ){  isDPCUser= true; }
             
             isAdmin = ApexPages.currentPage().getParameters().get('admin') == 'true'  ? true : false ;
             

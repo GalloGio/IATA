@@ -46,7 +46,7 @@ public with sharing class ISSP_Homepage {
         }
         Id profileId=userinfo.getProfileId();
         String profileName=[Select Id,Name from Profile where Id=:profileId].Name;
-        isDPCUser = (profileName.startsWith('ISS Portal DPC'));
+        isDPCUser = (profileName.startsWith('ISS Portal DPC Admin'));
         isAdmin =(profileName.containsIgnoreCase('admin'));
 
         //Survey init
@@ -403,4 +403,10 @@ public with sharing class ISSP_Homepage {
         return b;
     }set;}
 
+    /**
+        Returns true if current user is an Admin user according to ISSP_Constant class
+    **/
+    public Boolean getIsAdminUser() {
+        return ISSP_Constant.adminIdSet.contains(UserInfo.getProfileId());
+    }
 }

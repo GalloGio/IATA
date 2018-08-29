@@ -106,6 +106,7 @@ private class ISSP_HomepageTest {
             Notification__c noti = new Notification__c(Contact__c=con.Id);
             insert noti;
             ISSP_Homepage.archiveNotification(noti.Id);
+            ctrl.getIsAdminUser();
             
         }
         

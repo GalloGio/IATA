@@ -22,7 +22,7 @@ private  class ISSP_UtilitiesTest {
 	static testMethod void ISSP_UtilitiesTest2() {
 		Id agencyRecordTypeId = [SELECT Id FROM RecordType WHERE SObjectType='Account' AND DeveloperName='IATA_Agency'].Id;
 		Id standardRecordTypeId = [SELECT Id FROM RecordType WHERE SObjectType='Account' AND DeveloperName='Standard_Account'].Id;
-		String profileId = [SELECT Id FROM Profile WHERE Name = 'ISS Portal DPC' LIMIT 1].Id;
+		String profileId = [SELECT Id FROM Profile WHERE Name = 'ISS Portal DPC Admin' LIMIT 1].Id;
 		Account acc = ISSP_ObjectFactory.createNewAccount();
 		acc.Name = 'test Account';
 		acc.CNS_Account__c = true;

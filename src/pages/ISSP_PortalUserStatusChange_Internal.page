@@ -75,7 +75,14 @@
         
         <div id="statusDiv" >
         <apex:pageBlockSection title="" columns="2">
-            <apex:inputField value="{!con.User_Portal_Status__c}" id="theStatus" onchange="showHideReason('{!$Component.theStatus}');" />
+            <apex:pageBlockSectionItem>
+                <apex:outputLabel value="{!$ObjectType.Contact.fields.User_Portal_Status__c.label}" rendered="{!hasIdCard}" />
+                <apex:selectList id="theStatus" value="{!con.User_Portal_Status__c}" size="1" styleClass="UserStatus form-control"
+                        onchange="showHideReason('{!$Component.theStatus}');">
+                    <apex:selectOptions value="{!portalStatusOptions}" />
+                </apex:selectList>
+            </apex:pageBlockSectionItem>
+            
             <apex:pageBlockSectionItem >
           <apex:outputText value="User Community" />
           <apex:outputPanel layout="block" styleClass="requiredInput">
