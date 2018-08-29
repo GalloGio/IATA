@@ -111,9 +111,10 @@
     </relatedLists>
     <relatedLists>
         <fields>NAME</fields>
+        <fields>PP_Status__c</fields>
+        <fields>RECORDTYPE</fields>
         <fields>PP_Effective_from_Date__c</fields>
         <fields>PP_Effective_to_Date__c</fields>
-        <fields>PP_Status__c</fields>
         <relatedList>Partner_products__c.Payment_Provider_Account_Role__c</relatedList>
     </relatedLists>
     <showEmailCheckbox>false</showEmailCheckbox>
