@@ -236,7 +236,7 @@ action="{!initActions}"
             <c:ISSP_CustomNavigation />
               <div class="row" >
                 <div class="col-md-5">
-                    <div id='enrolment_certification' style="padding-top: 50px; padding-bottom: 10px; ">
+                    <div id='enrolment_certification' style="padding-top: 50px; padding-bottom: 10px; min-height: 322px">
 
                         <section name="left-side" >
                             <section name="remittance-holding" class="row">
@@ -312,82 +312,80 @@ action="{!initActions}"
                 <div class="col-md-7">
                     <div id='tipProducts' style="padding-top: 50px; padding-bottom: 200px;">
                         <section name="left-side" >
-                            <section name="remittance-holding" class="row">
-                                <header class="col-xs-12">
-                                    <div class="section-header">
-                                        <i class="fa fa-line-chart" aria-hidden="true"></i> <strong>{!$label.ISSP_TIP_Home_Manage_Products}</strong>
-                                    </div>
-                                </header>
-                            </section>
+                            <div style="min-height: 270px;">
+                                <section name="remittance-holding" class="row">
+                                    <header class="col-xs-12">
+                                        <div class="section-header">
+                                            <i class="fa fa-line-chart" aria-hidden="true"></i> <strong>{!$label.ISSP_TIP_Home_Manage_Products}</strong>
+                                        </div>
+                                    </header>
+                                </section>
 
-                            <div style="float: right;padding: 20px;" class="col-col-xs-6 col-md-4 col-md-offset-2">
-                                <input type="button " id="newProductBtn" class="btn btn-block btn_iata_primary" onclick="openProdDetailPage(null);" value="Enroll New Product"/>
-                            </div>
+                                <div style="float: right;padding: 20px;" class="col-col-xs-6 col-md-4 col-md-offset-2">
+                                    <input type="button " id="newProductBtn" class="btn btn-block btn_iata_primary" onclick="openProdDetailPage(null);" value="Enroll New Product"/>
+                                </div>
 
-                            <apex:pageBlock >
-                                <apex:form >
-                                <apex:actionFunction action="{!NewEditProduct}" name="openProdDetailPage">
-                                </apex:actionFunction>
-                                   <apex:pageBlockTable value="{!products}" var="item" styleClass="table-hover table table-condensed table-responsive">
-                                        
-                                        <apex:column >
-                                            <apex:outputPanel rendered="{!item.status != 'Draft'}">
-                                                <apex:commandLink style="margin-right:5px" title="View/Update" rendered="{!(isAdmin && isPaymentProvider)}" action="{!NewEditProduct}">
-                                                <span class="glyphicon glyphicon-eye-open "/> 
-                                                <apex:param name="prodId" value="{!item.id}"/>
-                                                </apex:commandLink>
-                                            </apex:outputPanel>
-
-                                            <apex:outputPanel rendered="{!item.status == 'Draft'}">
-                                                <apex:commandLink style="margin-right:5px" title="Edit" rendered="{!(isAdmin && isPaymentProvider)}" action="{!NewEditProduct}">
-                                                    <span class="glyphicon glyphicon-pencil"/> 
+                                <apex:pageBlock >
+                                    <apex:form >
+                                    <apex:actionFunction action="{!NewEditProduct}" name="openProdDetailPage">
+                                    </apex:actionFunction>
+                                       <apex:pageBlockTable value="{!products}" var="item" styleClass="table-hover table table-condensed table-responsive">
+                                            
+                                            <apex:column >
+                                                <apex:outputPanel rendered="{!item.status != 'Draft'}">
+                                                    <apex:commandLink style="margin-right:5px" title="View/Update" rendered="{!(isAdmin && isPaymentProvider)}" action="{!NewEditProduct}">
+                                                    <span class="glyphicon glyphicon-eye-open "/> 
                                                     <apex:param name="prodId" value="{!item.id}"/>
-                                                </apex:commandLink>
-                                            </apex:outputPanel>
-                                        </apex:column> 
+                                                    </apex:commandLink>
+                                                </apex:outputPanel>
 
-                                        <apex:column >
-                                            <apex:facet name="header">
-                                                {!$ObjectType.Partner_products__c.fields.name.label}
-                                            </apex:facet>
-                                            {!item.name} 
-                                        </apex:column>
+                                                <apex:outputPanel rendered="{!item.status == 'Draft'}">
+                                                    <apex:commandLink style="margin-right:5px" title="Edit" rendered="{!(isAdmin && isPaymentProvider)}" action="{!NewEditProduct}">
+                                                        <span class="glyphicon glyphicon-pencil"/> 
+                                                        <apex:param name="prodId" value="{!item.id}"/>
+                                                    </apex:commandLink>
+                                                </apex:outputPanel>
+                                            </apex:column> 
 
-                                        <apex:column >
-                                            <apex:facet name="header">
-                                                {!$ObjectType.Partner_products__c.fields.PP_Payment_Network__c.label}
-                                            </apex:facet>
-                                            {!item.PaymentNetwork} 
-                                        </apex:column>
+                                            <apex:column >
+                                                <apex:facet name="header">
+                                                    {!$ObjectType.Partner_products__c.fields.name.label}
+                                                </apex:facet>
+                                                {!item.name} 
+                                            </apex:column>
 
-                                        <apex:column >
-                                            <apex:facet name="header">
-                                                {!$ObjectType.Partner_products__c.fields.PP_Effective_from_Date__c.label}
-                                            </apex:facet>
-                                            {!item.EffectiveFromDate} 
-                                        </apex:column>
+                                            <apex:column >
+                                                <apex:facet name="header">
+                                                    {!$ObjectType.Partner_products__c.fields.PP_Payment_Network__c.label}
+                                                </apex:facet>
+                                                {!item.PaymentNetwork} 
+                                            </apex:column>
 
-                                        <apex:column >
-                                            <apex:facet name="header">
-                                                {!$ObjectType.Partner_products__c.fields.PP_Effective_to_Date__c.label}
-                                            </apex:facet>
-                                            {!item.EffectiveToDate} 
-                                        </apex:column>
+                                            <apex:column >
+                                                <apex:facet name="header">
+                                                    {!$ObjectType.Partner_products__c.fields.PP_Effective_from_Date__c.label}
+                                                </apex:facet>
+                                                {!item.EffectiveFromDate} 
+                                            </apex:column>
 
-                                        <apex:column >
-                                            <apex:facet name="header">
-                                                {!$ObjectType.Partner_products__c.fields.PP_Status__c.label}
-                                            </apex:facet>
-                                            {!item.status} 
-                                        </apex:column>
+                                            <apex:column >
+                                                <apex:facet name="header">
+                                                    {!$ObjectType.Partner_products__c.fields.PP_Effective_to_Date__c.label}
+                                                </apex:facet>
+                                                {!item.EffectiveToDate} 
+                                            </apex:column>
 
-                                    </apex:pageBlockTable>
-                                    
-                                    
-                                </apex:form>
+                                            <apex:column >
+                                                <apex:facet name="header">
+                                                    {!$ObjectType.Partner_products__c.fields.PP_Status__c.label}
+                                                </apex:facet>
+                                                {!item.status} 
+                                            </apex:column>
 
-                            </apex:pageBlock>
-
+                                        </apex:pageBlockTable>
+                                    </apex:form>
+                                </apex:pageBlock>
+                            </div>
                             <!--ACAMBAS - TIP-281 Start -->
                             <apex:outputPanel rendered="{!isPaymentProvider}">
                                 <section name="remittance-holding" class="row">
