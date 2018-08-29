@@ -159,6 +159,8 @@ global without sharing class ANG_BackupEngineHelper implements Queueable{
 		accountFields.add('Financial_Review_Result__c');
 		accountFields.add('Assessment_Performed_Date__c');
 		accountFields.add('ANG_Accreditation_Model__c');
+		accountFields.add('ANG_IEP_Status__c');
+		accountFields.add('ANG_IEP_HE_AccntNum__c');
 		
 		Set<String> entitiesToRollback = new Set<String>();
 
