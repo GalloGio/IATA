@@ -3140,7 +3140,7 @@ public without sharing class ISSP_AMS_Accreditation {
                 //NEWGEN 683
                 if (getIsAccreditationModelNotNullOrLegacy()) {
                     typeOfProcess = AMS_UTILS.NGCHANGES;
-                } else if(newCase.Reason1__c == 'Corrections') {//AMSU-140
+                } else if(newCase.Reason1__c == AMS_Utils.CASE_REASON_CHG_DATA_MAINTENANCE) {//AMSU-140//AMSU-165
                     typeOfProcess = AMS_Utils.COR;  
                 } else {
                     typeOfProcess = 'MAJOR.CHANGES';
@@ -7463,7 +7463,7 @@ System.DEBUG('validateCharactersInForm  - 4 - errorFound: '+errorFound);
             newCase.Reason1__c = 'Bank Detail Update';
             newCase.Subject = Label.ISSP_AMS_NoC_Direct_Debit_Change + ' – ' + accountConcerned.IATACode__c + ' – ' + accountConcerned.Name;
         } else if(newForm.Location_Class__c == 'I'){  //AMSU-140
-            newCase.Reason1__c = 'Corrections';
+            newCase.Reason1__c = AMS_Utils.CASE_REASON_CHG_DATA_MAINTENANCE; //AMSU-165
             newCase.Subject =  'Agency Changes – ' + accountConcerned.Name;
         } else if ((newForm.Is_change_location__c && newForm.Is_change_legal_name__c) || (newForm.Is_change_location__c && newForm.Is_change_ownership_or_shareholding__c) || (newForm.Is_change_ownership_or_shareholding__c && newForm.Is_change_legal_name__c)) {
             newCase.Reason1__c = 'Major Change';
