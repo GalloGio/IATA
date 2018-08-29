@@ -160,7 +160,7 @@ public class AMS_OSCARTriggerHandler {
 
     public static void handleAfterInsert() {
         /*** AMSU-134 Start ***/
-        createSavepoint((List<AMS_OSCAR__c>) Trigger.new);
+        //createSavepoint((List<AMS_OSCAR__c>) Trigger.new);
         /*** AMSU-134 End ***/
 
         updateCaseKPIFields();
@@ -179,7 +179,7 @@ public class AMS_OSCARTriggerHandler {
         handleChangeOfLocation((List<AMS_OSCAR__c>) Trigger.new, (Map<Id, AMS_OSCAR__c>) Trigger.oldMap);
         /*** AMSU-121 End ***/
         /*** AMSU-134 Start ***/
-        rollbackChanges((List<AMS_OSCAR__c>) Trigger.new, (Map<Id, AMS_OSCAR__c>) Trigger.oldMap, (Map<Id, AMS_OSCAR__c>) Trigger.newMap);
+        //rollbackChanges((List<AMS_OSCAR__c>) Trigger.new, (Map<Id, AMS_OSCAR__c>) Trigger.oldMap, (Map<Id, AMS_OSCAR__c>) Trigger.newMap);
         /*** AMSU-134 End ***/
     }
 
@@ -489,6 +489,26 @@ public class AMS_OSCARTriggerHandler {
 
         List<AMS_OSCAR__c> oscars = new List<AMS_OSCAR__c>();
 
+        /*** AMSU-37 ***/
+        Set<Id> accountIds = new Set<Id>();
+        Set<String> reasonsToCheck = new Set<String> {AMS_Utils.APP_DISAPPROVED, AMS_Utils.APP_WITHDRAWN};
+        Set<Id> accountIdsToSkip = new Set<Id>();
+        for(AMS_OSCAR__c oscar : oscarsToInsert) {
+            if(reasonsToCheck.contains(oscar.Account_Reason__c)) {
+                accountIds.add(oscar.Account__c);
+            }
+        }
+
+        if(!accountIds.isEmpty()) {
+            Set<String> appliedChangeCodes = new Set<String> {'DIS', 'NWD'};
+            for(Account acc : [SELECT Id, (SELECT Id FROM Agencies_Applied_Change_codes__r WHERE Active__c = true AND Change_Code__c IN :appliedChangeCodes) FROM Account WHERE Id IN :accountIds]) {
+                if(!acc.Agencies_Applied_Change_codes__r.isEmpty()) {
+                    accountIdsToSkip.add(acc.Id);
+                }
+            }
+        }
+        
+
         for (AMS_OSCAR__c oscar : oscarsToInsert) {
             //set default name if no case is attached to the oscar
             oscar.Name = 'Wait for OSCAR Communication Case to be attached';
@@ -499,7 +519,8 @@ public class AMS_OSCARTriggerHandler {
 
                 oscar.put(step + '__c', 'Not Started');
                 //requirement to put iata code generator as passed if the account already as a iata code
-                if (step == 'STEP10' && oscar.Flag_IATACode_Formula__c) {
+
+                if (step == 'STEP10' && oscar.Flag_IATACode_Formula__c && !accountIdsToSkip.contains(oscar.Account__c)) {
                     oscar.put(step + '__c', 'Passed');
                 }
             }
@@ -2145,7 +2166,7 @@ public class AMS_OSCARTriggerHandler {
         system.debug('validateCertificates -> minimumBRDgrRequirements ' + minimumBRDgrRequirements);
 
         for(AMS_OSCAR__c oscar: oscarsList){
-            if(oscar.RecordTypeId == AMS_Utils.RECTYPE_NEW || oscar.RecordTypeId == AMS_Utils.RECTYPE_NEWHE){
+            if(oscar.RecordTypeId == AMS_Utils.RECTYPE_NEW || oscar.RecordTypeId == AMS_Utils.RECTYPE_NEWHE || oscar.RecordTypeId == AMS_Utils.RECTYPE_CERT){
                 String locationClass = oscar.AMS_Online_Accreditation__r.Location_Class__c;
                 String locationType = oscar.AMS_Online_Accreditation__r.Location_Type__c;
                 System.debug('OSCARTriggerHandler -> validateCertificates: all trained staff ' + trainedStaffPerAccount.get(oscar.Account__c));
@@ -2187,7 +2208,7 @@ public class AMS_OSCARTriggerHandler {
                         system.debug('Trained staff to remove: '+ trainedStaffDGR);
                         system.debug('All Trained staff: '+ allTrainedStaff);
 
-                        checkCertifications(trainedStaffDGR.get(oscar.Account__c), locationType, true, locationClass, countryCode, minDgrHO, minDgrBR, cassNumber);
+                        checkCertifications(trainedStaffDGR.get(oscar.Account__c), locationType, true, locationClass, countryCode, minDgrHO, minDgrBR, cassNumber, oscar.RecordTypeId);
                     }
                 }else{
                     for(AMS_OSCAR__c o : oscars){
@@ -2202,20 +2223,39 @@ public class AMS_OSCARTriggerHandler {
     }
 
     private static void checkCertifications(List<AMS_Accreditation_Contact__c> trainedStaff, String accountLocationType, boolean handling, String locationClass, String countryCode, Integer minimumHODgrRequirements, Integer minimumBRDgrRequirements, Integer cassNumber){
-
+		checkCertifications(trainedStaff, accountLocationType, handling, locationClass, countryCode, minimumHODgrRequirements, minimumBRDgrRequirements, cassNumber, null);
+		
+	}
+	
+	private static void checkCertifications(List<AMS_Accreditation_Contact__c> trainedStaff, String accountLocationType, boolean handling, String locationClass, String countryCode, Integer minimumHODgrRequirements, Integer minimumBRDgrRequirements, Integer cassNumber, Id oscarRecordType) {
         Integer numberDGR = 0;
         Integer numberDGA = 0;
         Integer numberCATA = 0;
 
-        if(trainedStaff != null)
-            for(AMS_Accreditation_Contact__c tStaff :trainedStaff){
-                if(tStaff.Type_Of_Certificate__c == AMS_Utils.CERT_DGR)
-                    numberDGR++;
-                else if(tStaff.Type_Of_Certificate__c == AMS_Utils.CERT_CATA)
-                    numberCATA++;
-                else if(tStaff.Type_Of_Certificate__c == AMS_Utils.CERT_DGA)
-                    numberDGA++;
-        }
+		
+		//AMSU-34
+		Date todayDate = System.today();
+		Boolean incorrectExpiryDate = false;
+		String incorrectExpiryDateError = ' Incorrect Expiry Date on DGR Certificate, less than 90 days!';
+		
+		System.debug('OSCARTriggerHandler -> checkCertifications: todayDate ' + todayDate);
+		
+		if(trainedStaff != null){
+				for(AMS_Accreditation_Contact__c tStaff :trainedStaff){
+					if(tStaff.Type_Of_Certificate__c == AMS_Utils.CERT_DGR) {
+						//AMSU-34
+						Date checkDate = tStaff.Valid_until__c.addDays(-90);
+						if(checkDate < todayDate){
+							incorrectExpiryDate = true;
+						} else {
+							numberDGR++;
+						}
+					} else if(tStaff.Type_Of_Certificate__c == AMS_Utils.CERT_CATA)
+						numberCATA++;
+					else if(tStaff.Type_Of_Certificate__c == AMS_Utils.CERT_DGA)
+						numberDGA++;
+			}
+		}
 
         System.debug('OSCARTriggerHandler -> checkCertifications: number of DGR ' + numberDGR);
         System.debug('OSCARTriggerHandler -> checkCertifications: number of DGA ' + numberDGA);
@@ -2224,25 +2264,32 @@ public class AMS_OSCARTriggerHandler {
         System.debug('CHECK VALUES countryCode' + countryCode + ' locationClass ' + locationClass + ' accountLocationType ' + accountLocationType + ' cassNumber ' + cassNumber);
 
         if(handling){
-            if(countryCode == 'CN' && locationClass == 'C' && (numberDGR < 3 || numberCATA < 1)){
-                throw new AMSException('##This agency must have at least 3 DGR and 1 CATA that are not expired.##');
+			//AMSU-34
+			if(oscarRecordType != null && oscarRecordType == AMS_Utils.RECTYPE_CERT){
+				if(incorrectExpiryDate){
+					throw new AMSException('##' + incorrectExpiryDateError + '##' );
+				}
+			} else { 
+				if(countryCode == 'CN' && locationClass == 'C' && (numberDGR < 3 || numberCATA < 1)){
+					throw new AMSException('##This agency must have at least 3 DGR and 1 CATA that are not expired.' + (incorrectExpiryDate ? incorrectExpiryDateError : '') + '##' );
 
-            }else if(countryCode == 'IN' && locationClass == 'C' && accountLocationType == AMS_Utils.BR && cassNumber >= 900 && cassNumber <= 999){
-                 //India has this particular exception to the normal behaviour, no check is to be done
-            }else if(locationClass == 'C'){
-                if(accountLocationType == AMS_Utils.HO && numberDGR < 2 )
-                    throw new AMSException('##An HO Agency handling dangerous goods must have at least 2 DGR that are not expired.##');
-                else if(accountLocationType == AMS_Utils.BR && numberDGR < 1)
-                    throw new AMSException('##A BR Agency handling dangerous goods must have at least 1 DGR that is not expired.##');
-            }else if(locationClass == 'R'){
-                system.debug('validateCertificates -> locationClass == R');
-                //Only America is using DGR for Cass associate.
-                if(accountLocationType == AMS_Utils.HO && numberDGR/* + numberDGA*/ < minimumHODgrRequirements )
-                    throw new AMSException('##This agency must have at least ' + minimumHODgrRequirements + ' DGR that are not expired.##');
-                else if(accountLocationType == AMS_Utils.BR && numberDGR/* + numberDGA*/ < minimumBRDgrRequirements){
-                    throw new AMSException('##This agency must have at least ' + minimumBRDgrRequirements + ' DGR that is not expired.##');
-                }
-            }
+				}else if(countryCode == 'IN' && locationClass == 'C' && accountLocationType == AMS_Utils.BR && cassNumber >= 900 && cassNumber <= 999){
+					 //India has this particular exception to the normal behaviour, no check is to be done
+				}else if(locationClass == 'C'){
+					if(accountLocationType == AMS_Utils.HO && numberDGR < 2 )
+						throw new AMSException('##An HO Agency handling dangerous goods must have at least 2 DGR that are not expired.' + (incorrectExpiryDate ? incorrectExpiryDateError : '') + '##' );
+					else if(accountLocationType == AMS_Utils.BR && numberDGR < 1)
+						throw new AMSException('##A BR Agency handling dangerous goods must have at least 1 DGR that is not expired.' + (incorrectExpiryDate ? incorrectExpiryDateError : '') + '##' );
+				}else if(locationClass == 'R'){
+					system.debug('validateCertificates -> locationClass == R');
+					//Only America is using DGR for Cass associate.
+					if(accountLocationType == AMS_Utils.HO && numberDGR/* + numberDGA*/ < minimumHODgrRequirements )
+						throw new AMSException('##This agency must have at least ' + minimumHODgrRequirements + ' DGR that are not expired.' + (incorrectExpiryDate ? incorrectExpiryDateError : '') + '##' );
+					else if(accountLocationType == AMS_Utils.BR && numberDGR/* + numberDGA*/ < minimumBRDgrRequirements){
+						throw new AMSException('##This agency must have at least ' + minimumBRDgrRequirements + ' DGR that is not expired.' + (incorrectExpiryDate ? incorrectExpiryDateError : '') + '##' );
+					}
+				}
+			}
         }
         else{
             if(locationClass == 'C'){
@@ -2704,7 +2751,8 @@ public class AMS_OSCARTriggerHandler {
 
             if(oldMap.get(oscar.Id).STEP6__c <> AMS_Utils.PASSED && oscar.STEP6__c == AMS_Utils.PASSED){
 
-                if(AMS_Utils.processesANGrequiredAttachValidation.contains(oscar.Process__c)){
+				//AMSU-34 - AMS gets to have the same validations as NG
+                if(AMS_Utils.processesANGrequiredAttachValidation.contains(oscar.Process__c) || AMS_Utils.processesAMSrequiredAttachValidation.contains(oscar.Process__c)){
                     
                     boolean isToValidate = true;
                     
@@ -3148,8 +3196,9 @@ public class AMS_OSCARTriggerHandler {
                 && !tocList.contains(AMS_Utils.NAME)
                 && !tocList.contains(AMS_Utils.LEGAL_STATUS)
                 && !tocList.contains(AMS_Utils.LOCATION)
+                && !tocList.contains(AMS_Utils.MIN_SHAREHOLDING)
             ){
-                updatedOSCAR.addError('Penalty fees can only be applied for \n-'+AMS_Utils.OWNERSHIP_IATA+'\n-'+AMS_Utils.OWNERSHIP_NON_IATA+'\n-'+AMS_Utils.MAJ_SHAREHOLDING+'\n-'+AMS_Utils.NAME+'\n-'+AMS_Utils.LEGAL_STATUS+'\n-'+AMS_Utils.LOCATION);
+                updatedOSCAR.addError('Penalty fees can only be applied for \n-'+AMS_Utils.OWNERSHIP_IATA+'\n-'+AMS_Utils.OWNERSHIP_NON_IATA+'\n-'+AMS_Utils.MAJ_SHAREHOLDING+'\n-'+AMS_Utils.NAME+'\n-'+AMS_Utils.LEGAL_STATUS+'\n-'+AMS_Utils.LOCATION+'\n-'+AMS_Utils.MIN_SHAREHOLDING);
             }
         }
 

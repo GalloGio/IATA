@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<EmailTemplate xmlns="http://soap.sforce.com/2006/04/metadata">
+    <available>true</available>
+    <description>Template sent to the customer when currency center services is granted</description>
+    <encodingKey>UTF-8</encodingKey>
+    <letterhead>IATADynamicSkyLetterhead</letterhead>
+    <name>Currency center portal service access granted</name>
+    <style>freeForm</style>
+    <subject>Access to Service Granted!</subject>
+    <textOnly>Dear {!Portal_Application_Right__c.Contact__c},
+
+Congratulations, your access to IATA’s new Currency Center has been granted! You are on your way to enjoy the benefits of this dynamic, global information tool.
+
+You will find attached the following documents that will guide you towards your first log in and navigation experience
+
+To organize a short training session via webinar, please feel free to contact us at: currencycenter@aiata.org
+
+Welcome to the Currency Center Community we look forward to hear your thoughts on this new tool.
+
+Regards,
+
+IATA Financial and Distribution Services</textOnly>
+    <type>html</type>
+    <uiType>Aloha</uiType>
+</EmailTemplate>

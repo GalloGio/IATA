@@ -29,7 +29,7 @@ public class ANG_FinancialSecurityTriggerHandler{
 					}
 				}else{
 					for(Financial_Security__c fs:triggerNew){	
-						if(Trigger.isUpdate &&  fs.Amount__c == oldMap.get(fs.id).Amount__c && fs.CurrencyIsoCode == oldMap.get(fs.id).CurrencyIsoCode && fs.Security_Status__c ==oldMap.get(fs.id).Security_Status__c) continue;
+						if(Trigger.isUpdate &&  fs.Amount__c == oldMap.get(fs.id).Amount__c && fs.CurrencyIsoCode == oldMap.get(fs.id).CurrencyIsoCode && fs.Security_Status__c ==oldMap.get(fs.id).Security_Status__c && fs.Account__c ==oldMap.get(fs.id).Account__c) continue;
 						accIdSet.add(fs.Account__c);
 					}
 				}							

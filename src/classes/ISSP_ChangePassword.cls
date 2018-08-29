@@ -131,7 +131,7 @@ public without sharing class ISSP_ChangePassword {
         user us = [Select Id, Username, LastLoginDate,UID__c from user where id =:UserInfo.getUserId()];     
         us.uid__c ='';
         if(!test.isRunningTest())
-            update us;        
+            update us;
     }
 
     public void showTCpopup() {    

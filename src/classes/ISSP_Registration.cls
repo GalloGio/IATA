@@ -4,7 +4,7 @@ public without sharing class ISSP_Registration {
         String communityName = ApexPages.currentPage().getParameters().get('CommunityName');
 
         if(communityName == null){
-            PageReference pr = new PageReference(OneIdUtils.getCommunityRedirection(OneIdUtils.Mode.IDENTITY,'/login/SelfRegister?serviceName=ISSP'));
+            PageReference pr = new PageReference(OneIdUtils.getSiteCompleteUrl(OneIdUtils.Mode.IDENTITY) + '/login/SelfRegister?serviceName=ISSP');
             pr.setRedirect(true);                        
             return pr;    
         }else{ //keep using the ISSP Registration page
@@ -636,7 +636,7 @@ public without sharing class ISSP_Registration {
         set<string> recordTypesSet = ISSP_Constant.accountRecordTypeByUserType.get(customerTypeSearch);
         system.debug('recordTypesSet: ' + recordTypesSet);
         String queryStr = 'select Id,IATACode__c,Field_Head_Office__c,Name,BillingStreet,BillingCity,BillingCountry, IATA_ISO_Country__r.Name, RecordType.DeveloperName, RecordType.Name, Airline_designator__c, Airline_Prefix__c from Account where '
-                         + whereStr + ' and RecordType.DeveloperName in :recordTypesSet';
+                         + whereStr + ' and RecordType.DeveloperName in :recordTypesSet LIMIT 999';
 
         system.debug('customerTypeSearch: ' + customerTypeSearch);
         system.debug('queryStr: ' + queryStr);

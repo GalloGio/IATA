@@ -32,6 +32,7 @@ public with sharing class ISSP_PersonalInformation {
     public boolean isTerminatedAgent {get; set;}
     public boolean isTerminatedAgentBR {get; set;}
     public boolean isCNSAccount {get; set;}
+    public boolean isLegalNamePopulated {get; set;}
     private Id vHQAccountId;
 
      //CNS
@@ -93,6 +94,7 @@ public with sharing class ISSP_PersonalInformation {
         isTerminatedAgentBR = false;
         showIEPStatus = false;
         isCNSAccount = false;
+        isLegalNamePopulated = false;
         
     	String confirmParameter = ApexPages.currentPage().getParameters().get('confirm');
     	system.debug('confirmParameter: ' + confirmParameter);
@@ -147,6 +149,10 @@ public with sharing class ISSP_PersonalInformation {
         if (con.Account.Sector__c=='Airline')
             isIATAAirlineAcct = true;
         system.debug('Sfi con2 ==>  '+con);
+
+        if (con.Account.Top_Parent__r.Legal_name__c != null) {
+            isLegalNamePopulated = true;
+        }
         
         //AS - SP11
         accountCountryISOCode = con.Account.IATA_ISO_Country__r.ISO_Code__c;
@@ -403,7 +409,7 @@ public with sharing class ISSP_PersonalInformation {
         					IATA_ISO_Country__r.Name, BillingStreet, BillingCity, BillingPostalCode, BillingState, BillingCountry,Sector__c,
                             Category__c,Location_Type__c, IATA_ISO_Country__r.ISO_Code__c, IATA_ISO_Country__r.OSCAR_enabled__c, 
                             IATA_ISO_Country__r.Enable_Minor_Changes_from_Portal__c, IATA_ISO_Country__r.Prevent_Portal_Trade_Name_Change__c,
-                            Website, Status__c
+                            Website, Status__c, Top_Parent__r.Name_on_AOC__c, Top_Parent__r.Legal_name__c
         					FROM Account
                             WHERE Id = :selectedBranchAccount];
         

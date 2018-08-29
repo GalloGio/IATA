@@ -14400,6 +14400,7 @@ J-Joint Vent</inlineHelpText>
     </fields>
     <fields>
         <fullName>Payment_Term__c</fullName>
+		<defaultValue>&quot;Z001&quot;</defaultValue>
         <description>IEC - SAP payment term code to use when creates contracts</description>
         <externalId>false</externalId>
         <label>Payment Terms</label>
@@ -22042,7 +22043,6 @@ This field is kept up-to-date with the feedback of ITDI at least twice a year du
         <columns>EF_SIS_Code__c</columns>
         <columns>EF_SIS_Designator__c</columns>
         <columns>EF_Status__c</columns>
-        <columns>EF_Client_Services_Specialist__c</columns>
         <filterScope>Everything</filterScope>
         <filters>
             <field>EF_Type__c</field>
@@ -22058,6 +22058,7 @@ This field is kept up-to-date with the feedback of ITDI at least twice a year du
         <language>en_US</language>
         <sharedTo>
             <group>EFServices</group>
+            <role>EFClientServices</role>
             <roleAndSubordinatesInternal>IDFSEFServices</roleAndSubordinatesInternal>
         </sharedTo>
     </listViews>

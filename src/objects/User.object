@@ -60,6 +60,26 @@
     <enableEnhancedLookup>true</enableEnhancedLookup>
     <enableFeeds>true</enableFeeds>
     <externalSharingModel>Private</externalSharingModel>
+    <fieldSets>
+        <fullName>TrackingHistory</fullName>
+        <description>used for tracking purposes</description>
+        <displayedFields>
+            <field>ToU_accepted__c</field>
+            <isFieldManaged>false</isFieldManaged>
+            <isRequired>false</isRequired>
+        </displayedFields>
+        <displayedFields>
+            <field>Date_ToU_accepted__c</field>
+            <isFieldManaged>false</isFieldManaged>
+            <isRequired>false</isRequired>
+        </displayedFields>
+        <displayedFields>
+            <field>Title</field>
+            <isFieldManaged>false</isFieldManaged>
+            <isRequired>false</isRequired>
+        </displayedFields>
+        <label>TrackingHistory</label>
+    </fieldSets>
     <fields>
         <fullName>AMP_Digest_Daily_or_Weekly__c</fullName>
         <description>option to receive the Chatter topic digest either daily or weekly</description>

@@ -137,6 +137,10 @@
         <name>AIMSAccountBeforeUpdate_AutoProcess_Restricted</name>
     </customLabels>
     <customLabels>
+        <label><!-- AMS_AttchNotifyOwner --></label>
+        <name>AMS_AttchNotifyOwner</name>
+    </customLabels>
+    <customLabels>
         <label><!-- AMS Conga Merge --></label>
         <name>AMS_Conga_Merge</name>
     </customLabels>
@@ -159,6 +163,14 @@
     <customLabels>
         <label><!-- AMS_New_Change_Code_Notification --></label>
         <name>AMS_New_Change_Code_Notification</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- AMS_NotificationSent --></label>
+        <name>AMS_NotificationSent</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- AMS_Notify_OSCAR_Owner --></label>
+        <name>AMS_Notify_OSCAR_Owner</name>
     </customLabels>
     <customLabels>
         <label><!-- AMS OSCAR AGENCYFEES --></label>
@@ -563,6 +575,14 @@
     <customLabels>
         <label><!-- AMS_PERFORM_CORRECTION --></label>
         <name>AMS_PERFORM_CORRECTION</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- AMS_PendingHOAccr --></label>
+        <name>AMS_PendingHOAccr</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- AMS_RRejected --></label>
+        <name>AMS_RRejected</name>
     </customLabels>
     <customLabels>
         <label><!-- AMS_RollbackCase_Description --></label>
@@ -11493,7 +11513,7 @@ and
         <name>ISSP_Registration_BusinessPhone</name>
     </customLabels>
     <customLabels>
-        <label><!-- ISSP_Registration --></label>
+        <label>رقم هاتف العمل غير صحيح، يرجى التحقق. تحقَّقوا أيضاً من اختيار البلد الصحيح إما باختيار علم الدولة أو بإدخال مفتاح الدولة مسبوقاً بعلامة &apos;+&apos;.</label>
         <name>ISSP_Registration_BusinessPhone_Msg</name>
     </customLabels>
     <customLabels>
@@ -11569,7 +11589,7 @@ and
         <name>ISSP_Registration_Error_TypeofCustomer</name>
     </customLabels>
     <customLabels>
-        <label><!-- ISSP_Registration --></label>
+        <label>رقم هاتف الفاكس غير صحيح، يرجى التحقق. تحقَّقوا أيضاً من اختيار البلد الصحيح إما باختيار علم الدولة أو بإدخال مفتاح الدولة مسبوقاً بعلامة &apos;+&apos;.</label>
         <name>ISSP_Registration_FaxPhone_Msg</name>
     </customLabels>
     <customLabels>
@@ -11601,7 +11621,7 @@ and
         <name>ISSP_Registration_MobilePhone</name>
     </customLabels>
     <customLabels>
-        <label><!-- ISSP_Registration --></label>
+        <label>رقم الهاتف الجوال غير صحيح، يرجى التحقق. تحقَّقوا أيضاً من اختيار البلد الصحيح إما باختيار علم الدولة أو بإدخال مفتاح الدولة مسبوقاً بعلامة &apos;+&apos;.</label>
         <name>ISSP_Registration_MobilePhone_Msg</name>
     </customLabels>
     <customLabels>
@@ -13343,7 +13363,7 @@ an IATA accredited agency, please press &quot;&quot;Back&quot;&quot; button and 
         <name>OneId_AccountSearchPlaceholder</name>
     </customLabels>
     <customLabels>
-        <label>ارتباط الحساب</label>
+        <label>معلومات الشركه</label>
         <name>OneId_Account_Association</name>
     </customLabels>
     <customLabels>
@@ -13383,11 +13403,11 @@ an IATA accredited agency, please press &quot;&quot;Back&quot;&quot; button and 
         <name>OneId_Community_Name</name>
     </customLabels>
     <customLabels>
-        <label>ارتباط جهة الاتصال والتحقق منها</label>
+        <label>التحقق من صحة البريد الإلكتروني</label>
         <name>OneId_Contact_Association_Validation</name>
     </customLabels>
     <customLabels>
-        <label>إنشاء جهة اتصال</label>
+        <label>معلومات جهه الاتصال</label>
         <name>OneId_Contact_Creation</name>
     </customLabels>
     <customLabels>
@@ -13611,7 +13631,10 @@ an IATA accredited agency, please press &quot;&quot;Back&quot;&quot; button and 
         <name>OneId_Registration_Error_BusinessPhone</name>
     </customLabels>
     <customLabels>
-        <label><!-- OneId_Registration_UserExist --></label>
+        <label>هذا البريد الإلكتروني مسجل لدينا بالفعل.
+إذا كنتم أحد مُستخدمي E-Commerce، يرجى استخدام معلومات تسجيل الدخول إلى E-Commerce الخاصة بكم.
+إذا كنتم أحد مُستخدمي بوابة العملاء، يرجى استخدام مفاتيح المرور لبوابة العملاء الخاصة بكم.
+إذا أردتم إعادة ضبط كلمة المرور، يرجى العودة إلى شاشة تسجيل الدخول واستخدام خاصية «نسيت كلمة مروري».</label>
         <name>OneId_Registration_UserExist</name>
     </customLabels>
     <customLabels>
