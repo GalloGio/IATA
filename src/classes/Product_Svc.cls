@@ -40,7 +40,7 @@ public class Product_Svc
         String excludeRecordType = Utility.getTextSetting('Zuora Exclude Product Record Type');
 
         //-- Validate products to be sent: Product must have SAP_Material_Number__c & Effective Dates
-        for(Product2 p : products)
+        for(Product2 p : products){
             if (p.RecordType.DeveloperName != null && !excludeRecordType.containsIgnoreCase(p.RecordType.DeveloperName))
             {
                 if(String.isNotBlank(p.SAP_Material_Number__c))
@@ -53,8 +53,14 @@ public class Product_Svc
                     }
 
                     //-- If product already has a ZuoraId then sent it to Zuora for Update 
-                    if(p.Zuora_Id__c != null || p.ZProduct__c != null) products2Update.add(p);
-                    else products2Create.add(p);  
+                    //if(p.Zuora_Id__c != null || p.ZProduct__c != null) products2Update.add(p);
+                    //-- If product already has a ZuoraId then sent it to Zuora for Update 
+                    if(String.isNotBlank(p.zqu__ZuoraId__c)){
+                        products2Update.add(p);
+                    }
+                    else{
+                        products2Create.add(p);  
+                    }
                 }
                 else
                 {
@@ -62,6 +68,7 @@ public class Product_Svc
                     productsWithoutCode.add(p);
                 }
             }
+        }
 
         //-- callouts Requests 
         if(products2Create.size() > 0  || products2Update.size() > 0)
@@ -195,16 +202,16 @@ public class Product_Svc
                     productByCode.put(p.SAP_Material_Number__c, p);
             }
 
-            for(String material_number : zuoraIdByMaterialNumber.keySet())
-            {
-                if(productByCode.containsKey(material_number))
-                {
-                    // Set Zuora Id of the Product
-                    Product2 p = productByCode.get(material_number);
-                        p.Zuora_Id__c = zuoraIdByMaterialNumber.get(material_number);
-                    products2Update.add(p);
-                }
-            }
+            //for(String material_number : zuoraIdByMaterialNumber.keySet())
+            //{
+            //    if(productByCode.containsKey(material_number))
+            //    {
+            //        // Set Zuora Id of the Product
+            //        Product2 p = productByCode.get(material_number);
+            //            p.Zuora_Id__c = zuoraIdByMaterialNumber.get(material_number);
+            //        products2Update.add(p);
+            //    }
+            //}
 
             //-- Update the products
             if(!products2Update.isEmpty()) update products2Update;
@@ -782,8 +789,8 @@ public class Product_Svc
             //*** default activity code
             if (newList[i1].SAP_Material_Number__c != null)
                 newList[i1].Activity_Code__c = newList[i1].SAP_Material_Number__c.left(4);
-            newList[i1].ZProduct__c = null;
-            newList[i1].Zuora_Id__c = null;
+            //newList[i1].ZProduct__c = null;
+            //newList[i1].Zuora_Id__c = null;
         }
     } //*** end of "setDefaultValue"
     

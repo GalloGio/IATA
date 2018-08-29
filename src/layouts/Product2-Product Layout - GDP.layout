@@ -298,16 +298,8 @@
                 <field>CreatedById</field>
             </layoutItems>
             <layoutItems>
-                <behavior>Edit</behavior>
-                <field>Zuora_Id__c</field>
-            </layoutItems>
-            <layoutItems>
                 <behavior>Readonly</behavior>
-                <field>Formula_Zuora_Id__c</field>
-            </layoutItems>
-            <layoutItems>
-                <behavior>Edit</behavior>
-                <field>ZProduct__c</field>
+                <field>zqu__ZuoraId__c</field>
             </layoutItems>
         </layoutColumns>
         <layoutColumns>

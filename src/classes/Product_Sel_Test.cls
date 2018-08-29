@@ -77,7 +77,7 @@ private class Product_Sel_Test
             
             Map<String, PriceInfo_DTO> result = pSelector.getProductPriceInfo(new Set<String>{'99999-99'}, null,null,null,true);
 
-            Map<Id,Product2> result1 = pSelector.getProductByZproduct(new List<Id>{product.Id});
+            //Map<Id,Product2> result1 = pSelector.getProductByZproduct(new List<Id>{product.Id});
 
             Map<String, Product2> result2 = Product_Sel.getProductsByProductRatePlan(new set<String>{'123456789'});
 
@@ -218,7 +218,7 @@ private class Product_Sel_Test
             Name = 'Product B',
             Description = 'Description for Product B',
             SAP_Material_Number__c = TestDataGenerator.generateProductCode(),
-            Zuora_Id__c = TestDataGenerator.generateZuoraFakeId(),
+            zqu__ZuoraId__c = TestDataGenerator.generateZuoraFakeId(),
             Effective_From__c = TestDataGenerator.DEFAULT_EFFECTIVE_START_DATE,
             Effective_To__c = TestDataGenerator.DEFAULT_EFFECTIVE_END_DATE,
             Accepted_Payment_Methods__c = 'Bank Transfer; Credit Card; IATA Clearing House'

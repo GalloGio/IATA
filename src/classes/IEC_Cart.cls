@@ -702,7 +702,7 @@ public without sharing virtual class IEC_Cart {
 
 		Map<Id, Product2> srcProductRatePlaneToProductMap = new Map<Id, Product2>();
 		//Source product from cartItem
-		List<Product2> srcProductList = new List<Product2>([SELECT id,SAP_Material_Number__c, ZProduct__c,IEC_Product_Rate_Plan_Information__c 
+		List<Product2> srcProductList = new List<Product2>([SELECT id,SAP_Material_Number__c, IEC_Product_Rate_Plan_Information__c 
 			FROM Product2 where SAP_Material_Number__c in :cartItemMap.keySet()]);
 
 		//Map of source ProductRatePlaces mapped by Product rate planes
@@ -721,7 +721,7 @@ public without sharing virtual class IEC_Cart {
 
 		for(Swap_Configuration__c swapConf : swapConfigurationList){
 			//Target product for the swap product rate plan information and available for the logged customer type.
-			List<Product2> trgProduct = new List<Product2>([SELECT Id,SAP_Material_Number__c, ZProduct__c,IEC_Product_Rate_Plan_Information__c 
+			List<Product2> trgProduct = new List<Product2>([SELECT Id, SAP_Material_Number__c, IEC_Product_Rate_Plan_Information__c 
 				FROM Product2 where IEC_Product_Rate_Plan_Information__c = :swapConf.Target_Product_Rate_Plan_Information__c and 
 				Restricted_Customer_Type__c includes (:oCurrentCustomer.customerType) limit 1]);
 
@@ -752,48 +752,7 @@ public without sharing virtual class IEC_Cart {
 	}
 
 
-	/**
-		Remove Inacessible Products from the Cart.
-
-	*/
-	/*@testVisible
-	private void filterInacessibleProducts() {
-		String customerType = loggedCustomer.sfAccount.Customer_Type__c;
-		Set<String> inacessibleProductNumberSet = new Set<String>();
-
-		System.debug('filterInacessibleProducts start');
-
-		if (String.isBlank(customerType)) {
-			customerType = IECConstants.PARAM_CUSTOMERTYPE_DEFAULT;
-		}
 	
-		for (String productNumber : cartItemMap.keySet()) {
-			Set<String> productAccessSet = productAccessMap.get(productNumber);
-
-			if (
-				productAccessSet == null
-				||
-				(
-					productAccessSet != null
-					&&
-					productAccessSet.contains(null) == false	// No Access for all Customer Types
-					&&
-					productAccessSet.contains(customerType) == false	// No Access for specific Customer Type
-				)
-			) {
-				// Remove inacessible product
-				inacessibleProductNumberSet.add(productNumber);
-			}
-		}
-
-		for (String productNumber : inacessibleProductNumberSet) {
-
-			cartItemMap.remove(productNumber);
-		}
-
-		System.debug('filterInacessibleProducts end');
-	}
-	*/
 
 	/**
 		Save Order and Cart Items to Database.
@@ -845,10 +804,10 @@ public without sharing virtual class IEC_Cart {
 				Product2 product = productMap.get(cartItem.productNumber);
 				PricebookEntry pricebookEntry;
 				EComProduct_DTO ecomProduct = ecomProductByProductNumberMap.get(cartItem.productNumber);
-				
+
 				if (product != null && ecomProduct != null) {
 					pricebookEntry = pricebookEntryMap.get(product.Id);
-	
+
 					if (pricebookEntry != null) {	
 						OrderItem orderItem = new OrderItem();
 

@@ -27,9 +27,6 @@ public class Product_Sel extends Selector
             Product2.Product_Segment__c,
             Product2.Formula_Activity_Code__c,
             Product2.Formula_Version_Number__c,
-            Product2.ZProduct__c,
-            Product2.Zuora_Id__c,
-            Product2.Formula_Zuora_Id__c,
             Product2.Effective_From__c,
             Product2.Effective_To__c,
             Product2.Family,
@@ -248,22 +245,22 @@ public class Product_Sel extends Selector
         return eComProducts;
     }
 
-    public Map<Id, Product2> getProductByZproduct(List<Id> zProductIdList)
-    {
-        Map<Id, Product2> ret = new Map<Id, Product2>();
+    //public Map<Id, Product2> getProductByZproduct(List<Id> zProductIdList)
+    //{
+    //    Map<Id, Product2> ret = new Map<Id, Product2>();
 
-        Set<String> zProductIds = new Set<String>();
-        for(Id zprodId : zProductIdList)
-            zProductIds.add((String) zprodId);
+    //    Set<String> zProductIds = new Set<String>();
+    //    for(Id zprodId : zProductIdList)
+    //        zProductIds.add((String) zprodId);
 
-        List<Product2> products = (List<Product2>) selectSObjectByField('ZProduct__c', zProductIds);
+    //    List<Product2> products = (List<Product2>) selectSObjectByField('ZProduct__c', zProductIds);
         
-        for(Product2 prod : products)
-        {
-            ret.put(prod.ZProduct__c, prod);
-        }
-        return ret;
-    }
+    //    for(Product2 prod : products)
+    //    {
+    //        ret.put(prod.ZProduct__c, prod);
+    //    }
+    //    return ret;
+    //}
 
     /****************************************************************************************************
         Created by CGI - David
@@ -272,11 +269,6 @@ public class Product_Sel extends Selector
     public Zuora.zObject format2zObject(Product2 product)
     {
         Zuora.zObject ret = (Test.isRunningTest()) ? TestDataGenerator.generateZObject('Product') : new Zuora.zObject('Product'); 
-
-        //if(product.Formula_Zuora_Id__c != null)
-        //    ret.setValue('Id', product.Formula_Zuora_Id__c);
-        //else if(product.zqu__ZuoraId__c != null)
-           
 
         ret.setValue('Id', product.zqu__ZuoraId__c);
         
@@ -287,7 +279,7 @@ public class Product_Sel extends Selector
             ret.setValue('Description', product.Description);
             
         //The Zuora ProductAudience__c and ProductCategory__c are required fields, for new product add default value for those fields
-        if(product.Formula_Zuora_Id__c == null && product.Zuora_Id__c == null){
+        if(product.zqu__ZuoraId__c == null){
             ret.setValue('ProductAudience__c', 'DO NOT DISPLAY');
             ret.setValue('ProductCategory__c', 'DO NOT DISPLAY');
         }
@@ -388,7 +380,7 @@ public class Product_Sel extends Selector
     
     //Return all Products for View All Products Page
     public static list<Product2> getViewAllProducts(String wherecriteria){
-        String query = 'SELECT Id,Family, Name,Media__c,Zuora_Id__c FROM Product2  where '+ wherecriteria  ;
+        String query = 'SELECT Id,Family, Name,Media__c,zqu__ZuoraId__c FROM Product2  where '+ wherecriteria  ;
         return (list<Product2>)Database.query(query);
     }
     
