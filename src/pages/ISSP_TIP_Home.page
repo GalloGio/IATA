@@ -95,13 +95,13 @@ action="{!initActions}"
                     clearErrorElement('[id$="datepicker"]');
                 }
 
-                if($('[id$="closureReason"]').val() === null || $('[id$="closureReason"]').val() =='' ) {
-                    if($('[id$="closureReason"]').next('.errorMsg').val()==undefined)
-                        $('[id$="closureReason"]').after('<div class="errorMsg">{!$Label.IEC_Required_Field_Error_Msg}</div>');
+                if($('[id$="voluntaryReliqReason"]').val() === null || $('[id$="voluntaryReliqReason"]').val() =='' ) {
+                    if($('[id$="voluntaryReliqReason"]').next('.errorMsg').val()==undefined)
+                        $('[id$="voluntaryReliqReason"]').after('<div class="errorMsg">{!$Label.IEC_Required_Field_Error_Msg}</div>');
                     return;
                 }
                 else {
-                    clearErrorElement('[id$="closureReason"]');
+                    clearErrorElement('[id$="voluntaryReliqReason"]');
                 }
 
                 startLoading();
@@ -228,6 +228,10 @@ action="{!initActions}"
             .last-updated {
                 font-size: 13px;
             }
+        }
+
+        .errorMsg {
+            color: rgb(220, 0, 0);;
         }
     </style>
 
