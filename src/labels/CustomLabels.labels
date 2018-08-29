@@ -23376,6 +23376,13 @@ CNS Customer Services</value>
         <value>These users cannot be inactivated because they currently have access to the following services:</value>
     </labels>
     <labels>
+        <fullName>ISSP_UserInactivation_ServiceMsg_5</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_UserInactivation_ServiceMsg_5</shortDescription>
+        <value>This contact is a Primary Contact for this account and so cannot be inactivated. Please designate a new Primary Contact before inactivating this one.</value>
+    </labels>
+    <labels>
         <fullName>ISSP_VR_Case_Submited</fullName>
         <categories>ISSP, PCI</categories>
         <language>en_US</language>
