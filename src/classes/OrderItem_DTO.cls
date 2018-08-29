@@ -71,6 +71,7 @@ public class OrderItem_DTO implements Comparable
     public Boolean availableForSubscription {get;set;}
 
     //used for google analytics
+    public String productNameAnalytic {get; set;}
     public String productNumber {get;set;}
     public String productCategory {get;set;}
     public String productBrand {get;set;}

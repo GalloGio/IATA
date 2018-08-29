@@ -90,8 +90,6 @@
 
 
                 function deleteProductFromCartPush(id,name,category,price,brand,quantity,edition,language,availability,availabilityDate,media,effectiveTo){
-                    //console.log('cenas');
-                    //console.log(JSON.parse(product));
                     dataLayer.push({
                         "event": "removeFromCart",
                         "ecommerce": {
@@ -299,7 +297,7 @@
                                                     </td>
                                                     <td class="product-number" style="text-align: left!important;">{!item.productCode}</td>
                                                     <td class="delete">
-                                                        <a href="javascript:deleteOrderItem('{!item.productCode}', '{!item.productNumber}', '{!item.productName}', '{!item.productCategory}', '{!item.unitPrice}', '{!item.productBrand}', '{!item.quantityStripped}', '{!item.productEdition}', '{!item.productLanguage}', '{!item.productInventoryStatus}', '{!item.productAvailabilityDate}', '{!item.productMedia}', '{!item.productEffectiveTo}')" class="icon delete"><span class="reader-only">Delete</span><i class="fa fa-trash-o"></i></a>
+                                                        <a href="javascript:deleteOrderItem('{!item.productCode}', '{!item.productNumber}', {!item.productNameAnalytic}, '{!item.productCategory}', '{!item.unitPrice}', '{!item.productBrand}', '{!item.quantityStripped}', '{!item.productEdition}', '{!item.productLanguage}', '{!item.productInventoryStatus}', '{!item.productAvailabilityDate}', '{!item.productMedia}', '{!item.productEffectiveTo}')" class="icon delete"><span class="reader-only">Delete</span><i class="fa fa-trash-o"></i></a>
                                                     </td>
                                                     <td class="quantity" style="text-align: left!important;">
                                                         <label for="quantity-cart-item-{!itemCount}" class="input-label quantity">Quantity: </label>

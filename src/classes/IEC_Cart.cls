@@ -682,6 +682,7 @@ public without sharing virtual class IEC_Cart {
 				oi_dto.subTotal = (oi_dto.unitPrice != null) ? (oi_dto.unitPrice * quantity) + setupFee : setupFee;
 
 				//used for google analytics
+				oi_dto.productNameAnalytic = JSON.serialize(ecomProduct.ProductName);
 				oi_dto.productNumber = ecomProduct.ProductNumber;
     			oi_dto.productCategory = ecomProduct.Portfolio;
     			oi_dto.productBrand = ecomProduct.ProductCategory;
