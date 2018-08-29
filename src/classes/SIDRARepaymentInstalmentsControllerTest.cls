@@ -54,7 +54,6 @@ private class SIDRARepaymentInstalmentsControllerTest {
         
         // test that new payment instalments are correctly created
         controller.AddNewPaymentInstalment();
-        controller.save();
         
         rpi = [SELECT Id FROM Case_Detail__c WHERE Case__c = :aCase.Id];
         system.assertEquals(SIDRARepaymentInstalmentsController.REPAYMENT_INSTALMENTS_QUANTITY, rpi.size());
@@ -82,7 +81,6 @@ private class SIDRARepaymentInstalmentsControllerTest {
         
         // test that new payment instalments are correctly created
         controller.AddNewPaymentInstalment();
-        controller.save();
         
         list<Case_Detail__c> rpi = [SELECT Id FROM Case_Detail__c WHERE Case__c = :aCase.Id];
         system.assertEquals(SIDRARepaymentInstalmentsController.REPAYMENT_INSTALMENTS_QUANTITY, rpi.size());
@@ -90,7 +88,6 @@ private class SIDRARepaymentInstalmentsControllerTest {
         Test.startTest();
         controller = new SIDRARepaymentInstalmentsController(stdc);
         controller.AddNewPaymentInstalment();
-        controller.save();
         
         rpi = [SELECT Id FROM Case_Detail__c WHERE Case__c = :aCase.Id];
         system.assertEquals(SIDRARepaymentInstalmentsController.REPAYMENT_INSTALMENTS_QUANTITY+1, rpi.size());
@@ -108,14 +105,13 @@ private class SIDRARepaymentInstalmentsControllerTest {
         
         // test that new payment instalments are correctly created
         controller.AddNewPaymentInstalment();
-        controller.save();
         
         list<Case_Detail__c> rpi = [SELECT Id FROM Case_Detail__c WHERE Case__c = :aCase.Id];
         system.assertEquals(SIDRARepaymentInstalmentsController.REPAYMENT_INSTALMENTS_QUANTITY, rpi.size());
         
         Test.startTest();
         controller = new SIDRARepaymentInstalmentsController(stdc);
-        controller.rpiIndexToDelete = 0;
+        controller.rpiIdToDelete = rpi.get(0).Id;
         controller.DeleteRpi();
         
         rpi = [SELECT Id FROM Case_Detail__c WHERE Case__c = :aCase.Id];
