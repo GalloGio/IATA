@@ -352,6 +352,7 @@ global without sharing class ANG_RollbackEngineHelper implements Queueable{
 
 		Set<Id> accountIds = new Set<Id>();
 		
+        /*
 		Account acct = [Select Id, Location_Type__c, ParentId from Account where Id =:accountOscar];
 		Id accountId = acct.Id;
 		
@@ -362,6 +363,7 @@ global without sharing class ANG_RollbackEngineHelper implements Queueable{
 			accountIds.add(acctToSearch.Id);
 	
 		accountIds.add(accountId);
+        */
 
         System.debug('technicalLogsMap are:'+technicalLogsMap);
         
