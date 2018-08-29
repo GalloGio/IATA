@@ -85,9 +85,6 @@
                     }
                 });
 
-                //console.log('{!vfOrder}');
-                //var order = JSON.parse('{!vfOrder}');
-
 
                 function deleteProductFromCartPush(id,name,category,price,brand,quantity,edition,language,availability,availabilityDate,media,effectiveTo){
                     dataLayer.push({
@@ -144,7 +141,7 @@
                 var deleteOrderItem = function(productCode, id,name,category,price,brand,quantity,edition,language,availability,availabilityDate,media,effectiveTo){
                     if(confirm("{!$Label.JS_Confirm_Cart_Item_Deletion}")){
                         deleteProductFromCartPush(id,name,category,price,brand,quantity,edition,language,availability,availabilityDate,media,effectiveTo);
-                        //removeProduct(productCode);
+                        removeProduct(productCode);
                     }
                 }
 
