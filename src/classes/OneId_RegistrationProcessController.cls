@@ -168,12 +168,8 @@ public without sharing class OneId_RegistrationProcessController {
 
     @AuraEnabled
     public static CountryInformation getISOCountries() {
-        List<IATA_ISO_Country__c> countries = new List<IATA_ISO_Country__c>();
-        for(IATA_ISO_Country__c iso:[select Id, Name, ISO_Code__c from IATA_ISO_Country__c order by Name]){
-            if (iso.Name != 'All Countries'){
-                countries.add(iso);
-            }
-        }
+        List<IATA_ISO_Country__c> countries = [select Id,Name,ISO_Code__c, IEC_Zip_Postal_Code_required__c from IATA_ISO_Country__c
+                                    where Name != 'All Countries' and Name != 'NO COUNTRY' order by Name];
         return new CountryInformation(countries);
     }
 
@@ -362,7 +358,7 @@ public without sharing class OneId_RegistrationProcessController {
             }else{
                 checkConAvailable(con);
             }
-            
+
 
             String thisNickname;
             if (String.isNotBlank(con.lastName) && con.lastName.length() > 3)

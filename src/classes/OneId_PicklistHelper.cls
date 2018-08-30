@@ -58,24 +58,37 @@ public class OneId_PicklistHelper {
 
     private static Map<String,List<Schema.PicklistEntry>> sectorValues{
         get{
+            //Map that has picklist API Names as keys and the picklist name that they correspond to as a value
+            Set<String> blacklist = new Set<String>();
+            for(PicklistBlacklist__mdt pb : [SELECT Id, Value_to_be_hidden__c, Field_name__c FROM PicklistBlacklist__mdt]){
+                blacklist.add(pb.Field_name__c+pb.Value_to_be_hidden__c);
+            }
+            
             if(sectorValues == null){
                 sectorValues = new Map<String,List<Schema.PicklistEntry>>();
 
                 List<Schema.PicklistEntry> sectorEntries = Account.Sector__c.getDescribe().getPicklistValues();
                 List<Schema.PicklistEntry> categoryEntries = Account.Category__c.getDescribe().getPicklistValues();
-
-                for(Schema.PicklistEntry p : sectorEntries) sectorValues.put(p.getValue(),new List<Schema.PicklistEntry>());
-
+                
+                for(Schema.PicklistEntry p : sectorEntries){
+                    if(p.isActive() && !blacklist.contains('Sector'+p.getValue())){
+                        sectorValues.put(p.getValue(),new List<Schema.PicklistEntry>());
+                    }                    
+                } 
+                
                 for(Schema.PicklistEntry p : categoryEntries){
-                    PicklistEntryDescribe picklistValue = (PicklistEntryDescribe)JSON.deserialize(JSON.serialize(p), PicklistEntryDescribe.class);
+                    if(p.isActive() && !blacklist.contains('Category'+p.getValue())){
+                        PicklistEntryDescribe picklistValue = (PicklistEntryDescribe)JSON.deserialize(JSON.serialize(p), PicklistEntryDescribe.class);
                     
-                    if (picklistValue.validFor==null || picklistValue.validFor=='') continue;
+                        if (picklistValue.validFor==null || picklistValue.validFor=='') continue;
 
-                    String validForBits = base64ToBits(picklistValue.validFor);
-                    for (Integer i = 0; i < validForBits.length(); i++) {
-                        // For each bit, in order: if it's a 1, add this label to the dependent list for the corresponding controlling value
-                        if (validForBits.mid(i, 1) == '1') sectorValues.get(sectorEntries[i].getValue()).add(p);
+                        String validForBits = base64ToBits(picklistValue.validFor);
+                        for (Integer i = 0; i < validForBits.length(); i++) {
+                            // For each bit, in order: if it's a 1, add this label to the dependent list for the corresponding controlling value
+                            if (validForBits.mid(i, 1) == '1') sectorValues.get(sectorEntries[i].getValue()).add(p);
+                        }
                     }
+                    
                 }
             }
             return sectorValues;
