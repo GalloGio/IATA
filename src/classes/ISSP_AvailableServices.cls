@@ -826,7 +826,7 @@ public with sharing class ISSP_AvailableServices{
 	        appRole = ISSP_ICCS_Utils.ICCS_ROLE_REGISTRATION;
         }
                     
-        Portal_Application_Right__c app =  new Portal_Application_Right__c(Contact__c = contactId,Portal_Application__c = applicationId,Right__c = , ANG_Portal_Service_Role__c = appRole);
+        Portal_Application_Right__c app =  new Portal_Application_Right__c(Contact__c = contactId,Portal_Application__c = applicationId,Right__c = appRight, ANG_Portal_Service_Role__c = appRole);
         insert app;
         submitApprovalProcess(app.id);
         return 'ok';
