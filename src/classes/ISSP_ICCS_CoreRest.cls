@@ -9,20 +9,20 @@ public class ISSP_ICCS_CoreRest{
 	public String username;
 	public String password;
 	public String serviceURL;
-
+	
 	public String token {
 		get{
 			if(token == null){
 				System.debug('***** ISSP_ICCS_CoreRest retrieving token *****');
 		
 		        HttpRequest req = new HttpRequest();
-		
+
 		        req.setEndpoint(tokenURL);
-		        req.setMethod('POST');
+		        req.setMethod('POST');	
 		        req.setHeader('Content-Type','application/x-www-form-urlencoded');
 		        req.setHeader('Authorization', 'Basic ' + EncodingUtil.base64Encode(Blob.valueOf(username + ':' + password)));
 		        req.setBody('grant_type=client_credentials');
-
+		        
 		        Http http = new Http();
 		        HttpResponse response;
 		        
@@ -41,7 +41,7 @@ public class ISSP_ICCS_CoreRest{
 		        System.debug('RESPONSE : ' + response);
 		        
 		        if(response == null){
-		        	throw new ICCS_Exception('ISSP_ICCS_CoreRest retrieving token : ' + CORE_EXCEPTION + 'No reponse from server');
+		        	throw new ICCS_Exception('ISSP_ICCS_CoreRest retrieving token : ' + CORE_EXCEPTION + ' No reponse from server');
 		        }
 		        else if(response.getStatusCode() != 200){
 		        	throw new ICCS_Exception('ISSP_ICCS_CoreRest retrieving token : ' + CORE_EXCEPTION + response.getStatusCode() + ' - ' + response.getStatus());
@@ -101,6 +101,8 @@ public class ISSP_ICCS_CoreRest{
 		        req.setHeader(key,headers.get(key));
         	}
         }
+
+		req.setTimeout(20000);
         
 		// Request body
         if(body != ''){
@@ -444,7 +446,18 @@ public class ISSP_ICCS_CoreRest{
 		
 		try{
 			String result = response.getBody().replaceAll('"BankAccountCode"', '"AccountCode"');
-			return (List<Participation>) JSON.deserialize(result, List<Participation>.class);
+			
+			List<Participation> unfilteredList = (List<Participation>) JSON.deserialize(result, List<Participation>.class);
+			
+			List<Participation> filteredList = new List<Participation>();
+			
+			for(Participation participation : unfilteredList){
+				if(participation.participant.code == pageController.participantId){
+					filteredList.add(participation);
+				}
+			}
+			
+			return filteredList;
         }
         catch(Exception e){
         	throw new ICCS_Exception(JSON_EXCEPTION + e.getMessage());
