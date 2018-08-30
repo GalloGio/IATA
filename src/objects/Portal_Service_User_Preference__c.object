@@ -75,6 +75,7 @@
     <fields>
         <fullName>Portal_Service_Access__c</fullName>
         <deleteConstraint>SetNull</deleteConstraint>
+        <description>Portal Service Access to which this User preference refers</description>
         <externalId>false</externalId>
         <label>Portal Service Access</label>
         <referenceTo>Portal_Application_Right__c</referenceTo>

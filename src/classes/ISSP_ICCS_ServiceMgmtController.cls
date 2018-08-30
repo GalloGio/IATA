@@ -57,21 +57,29 @@ public class ISSP_ICCS_ServiceMgmtController extends ISSP_ICCS_ComponentControll
 	public Boolean isParticipationTableExpanded {get;set;}
 
 	// Bank accounts table
+	public BankAccountTable completeBankAccountTable {
+		get{
+			if(completeBankAccountTable == null){
+				completeBankAccountTable = new BankAccountTable(this, pageController.coreRest.getBankAccountsCodes());
+			}
+			System.debug(completeBankAccountTable);
+			return completeBankAccountTable;
+		}
+		set;
+	}
+	
+	
 	public BankAccountTable bankAccountTable {
 		get{
-			if(transientBankAccountTable == null){
-				transientBankAccountTable = getTransientBankAccountTable();
-			}
-			
 			if(isBankAccountTableExpanded){
-				return transientBankAccountTable;
+				return completeBankAccountTable;
 			}
 			else{
 				BankAccountTable collapsedTable = new BankAccountTable(this);
 
 				Integer i = 0;
 				
-				for(BankAccountBlock block : transientBankAccountTable.bankAccountBlocks){
+				for(BankAccountBlock block : completeBankAccountTable.bankAccountBlocks){
 					collapsedTable.bankAccountBlocks.add(block);
 					i++;
 					
@@ -83,15 +91,10 @@ public class ISSP_ICCS_ServiceMgmtController extends ISSP_ICCS_ComponentControll
 			}
 		}
 	}
-	public transient BankAccountTable transientBankAccountTable;
 
 	public Boolean isBankAccountTableExpandable {
 		get{
-			if(transientBankAccountTable == null){
-				transientBankAccountTable = getTransientBankAccountTable();
-			}
-
-			return transientBankAccountTable.bankAccountBlocks.size() > ISSP_ICCS_Utils.COLLAPSED_TABLE_ROWS;
+			return completeBankAccountTable.bankAccountBlocks.size() > ISSP_ICCS_Utils.COLLAPSED_TABLE_ROWS;
 		}
 	}
 
@@ -140,8 +143,6 @@ public class ISSP_ICCS_ServiceMgmtController extends ISSP_ICCS_ComponentControll
 		}
 		requiresDataReset = true;
 
-		transientBankAccountTable = null;
-
 		/* Clear the parameters */
 
 		participationIdParameter = null;
@@ -152,16 +153,6 @@ public class ISSP_ICCS_ServiceMgmtController extends ISSP_ICCS_ComponentControll
 		bankAccountCodeIdParameter = null;
 	}
 	
-	public BankAccountTable getTransientBankAccountTable(){
-		try{
-			return new BankAccountTable(this, pageController.coreRest.getBankAccountsCodes());
-		}
-		catch(ISSP_ICCS_CoreRest.ICCS_Exception e){
-			pageController.setMessage(e.getMessage(), false);
-			return null;
-		}
-	}
-
 	public void expandCollapseParticipationTable(){
 		isParticipationTableExpanded = !isParticipationTableExpanded;
 	}

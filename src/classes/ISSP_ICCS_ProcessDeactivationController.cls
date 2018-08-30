@@ -143,12 +143,6 @@ public class ISSP_ICCS_ProcessDeactivationController extends ISSP_ICCS_CaseProce
         caseProcessesController.cse.Reason1__c = reason == ISSP_ICCS_Utils.NONE ? null : reason;
 	}
 	
-	public void rerenderDescription(){
-		if(reason != 'Other - Please Specify'){
-			description = '';
-		}
-	}
-
 	public override void fillAdditionalMessages(){
         caseProcessesController.displayMessages.put('reason', false);
         caseProcessesController.displayMessages.put('description', false);

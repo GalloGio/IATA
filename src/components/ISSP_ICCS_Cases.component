@@ -7,7 +7,7 @@
 
     <apex:form>
         <apex:pageBlock mode="maindetail" rendered="{! pageController.isSignatoryUser || pageController.isLevel1User || pageController.isReadOnlyUser}">
-            <div class="row margin-top-bottom no-mrgn">
+            <div class="row margin-top-bottom">
 	            <apex:outputPanel rendered="{! pageController.userMessage != null || pageController.displayCaseSavedMessage}" id="messagePanel">
 	                <br/>
 	                <div class="panel panel-default">

@@ -4,8 +4,6 @@ public class ISSP_ICCS_ProcessPartNewController extends ISSP_ICCS_CaseProcessCon
 
     public ISSP_ICCS_ProcessPartNewController thisCtrl {get{return this;}}
 
-    public String description {get;set;}
-
     public AP_Process_Form__c contactForm {get;set;}
 
 	public Map<String, String> categoryMap;
@@ -68,7 +66,6 @@ public class ISSP_ICCS_ProcessPartNewController extends ISSP_ICCS_CaseProcessCon
     }
 
 	public override void cleanController(){
-		description = null;
 		contactForm = null;
 		
 		categoryMap = null;
@@ -139,7 +136,6 @@ public class ISSP_ICCS_ProcessPartNewController extends ISSP_ICCS_CaseProcessCon
 			        Expected_Deadline__c, 
 			        Origin,
 			        CaseArea__c,
-			        Description,
 			        Reason1__c,
 			        ICCS_Product__c,
 			        ICCS_Country__c,
@@ -172,10 +168,7 @@ public class ISSP_ICCS_ProcessPartNewController extends ISSP_ICCS_CaseProcessCon
 	            }
 	        }
 			
-			description = caseProcessesController.cse.Description;
-//            selectedCategory = caseProcessesController.cse.ICCS_Product__c == null ? ISSP_ICCS_Utils.NONE : categoryMap.get(caseProcessesController.cse.ICCS_Product__c);
             selectedCategory = caseProcessesController.cse.ICCS_Product__c == null ? ISSP_ICCS_Utils.NONE : categoryMap.get(insensitiveCategoryMap.get(caseProcessesController.cse.ICCS_Product__c.toLowerCase()));
-//            selectedCountry = caseProcessesController.cse.ICCS_Country__c == null ? ISSP_ICCS_Utils.NONE : countryMap.get(caseProcessesController.cse.ICCS_Country__c);
             selectedCountry = caseProcessesController.cse.ICCS_Country__c == null ? ISSP_ICCS_Utils.NONE : countryMap.get(insensitiveCountryMap.get(caseProcessesController.cse.ICCS_Country__c.toLowerCase()));
             selectedCurrency = caseProcessesController.cse.ICCS_Currencies__c == null ? ISSP_ICCS_Utils.NONE : caseProcessesController.cse.ICCS_Currencies__c;
 		}
@@ -225,7 +218,6 @@ public class ISSP_ICCS_ProcessPartNewController extends ISSP_ICCS_CaseProcessCon
     }
 
 	public override void setCaseFieldValues(){
-		caseProcessesController.cse.Description = description;
 		caseProcessesController.cse.Expected_Deadline__c = caseProcessesController.cse.Expected_Deadline__c != null ? caseProcessesController.cse.Expected_Deadline__c : Date.today() + 15;
 
 		// Set ICCS_Product__c

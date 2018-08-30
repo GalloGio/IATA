@@ -230,14 +230,14 @@ public class ISSP_ICCS_ProfileControllerTest {
 			}
 		}
 		
-		for(ISSP_ICCS_PRofileController.UserWrapper wrappedUser : profileController.wrappedUsersList){
+/*		for(ISSP_ICCS_PRofileController.UserWrapper wrappedUser : profileController.wrappedUsersList){
 			if(wrappedUser.role == ISSP_ICCS_Utils.ICCS_ROLE_LEVEL1){
 				wrappedUser.updateUser();
 				wrappedUser.accessStatus = ISSP_ICCS_Utils.ACCESS_DENIED;
 				wrappedUser.save();
 				break;
 			}
-		}
+		}*/
 				
 		pageController.navigateToHomepage();
 		

@@ -11,6 +11,11 @@
 		$( function() {		
 			$( '[id$=datepicker]' ).datepicker();
 		} );
+		
+		function clearValue(inputTextId){
+			document.getElementById(inputTextId).value = '';
+			rerenderForm();
+		}
 	</script>
 
     <!----------------------->
@@ -26,7 +31,7 @@
                 <div class="col-md-6 col-sm-9 col-xs-6 center-card" style="padding-right:5px;padding-left:5px;">
                     <div class="bottom-box no-pddg no-border" stye="text-align: justify;text-justify: inter-word;">
                        <div class="table-form">
-                            <apex:pageBlockSection columns="1">
+                            <apex:pageBlockSection columns="1" id="leaveParticipationForm">
 			                    <apex:outputLabel value="{! $Label.ICCS_Category_Label}"/>
                                 <apex:outputLabel value="{! selectedProductType}" styleClass="selected-txt"/>
 
@@ -36,18 +41,22 @@
 			                    <apex:outputLabel value="{! $Label.ICCS_Currency_Label}"/>
 	                            <apex:outputLabel value="{! selectedCurrency}" styleClass="selected-txt"/>
 
-								<apex:outputLabel value="{! $Label.ICCS_Reason_Label} (*)"/>
+			                    <apex:outputLabel value="{! $Label.ICCS_Reason_Label} (*)"/>
 			                    <apex:outputPanel>
-				                    <apex:selectList value="{! reason}" multiselect="false" size="1">
-									    <apex:selectOptions value="{! reasonsList}"/>
+				                    <apex:selectList value="{! reason}" multiselect="false" size="1" onchange="clearValue('{! $Component.description}');">
+										<apex:selectOptions value="{! reasonsList}"/>
 			            	        </apex:selectList>
-                                    <apex:outputPanel styleClass="error-msg" rendered="{! caseProcessesController.displayMessages['reason']}">
+	                                <apex:outputPanel styleClass="error-msg" rendered="{! caseProcessesController.displayMessages['reason']}">
 										<apex:outputText value="{! $Label.ICCS_Reason_Label + ' ' + $Label.ICCS_Is_Mandatory}" escape="false"/>
 				                    </apex:outputPanel>
 			                    </apex:outputPanel>
-
-			                    <apex:outputLabel value="{! $Label.ICCS_Description_Label}"/>
-			                    <apex:inputTextarea rows="3" value="{! description}"/>
+			                    
+			                    <apex:actionFunction name="rerenderForm" rerender="leaveParticipationForm" status="processActStatusId"/>
+			                    
+			                    <apex:inputText id="description" value="{! description}"/>
+                                <apex:outputPanel styleClass="error-msg" rendered="{! caseProcessesController.displayMessages['description']}">
+									<apex:outputText value="{! $Label.ICCS_Reason_Label + ' ' + $Label.ICCS_Is_Mandatory}" escape="false"/>
+			                    </apex:outputPanel>
                                 
                                 <p>
                                 	<apex:outputText value="{! $Label.ICCS_Mandatory_Fields}" escape="false"/>

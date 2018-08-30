@@ -59,9 +59,6 @@
 									</apex:outputPanel>
 								</apex:outputPanel>
 
-			                    <apex:outputLabel value="{! $Label.ICCS_Description_Label}"/>
-			                    <apex:inputTextarea rows="3" value="{! description}"/>
-                                
                                 <p>
                                 	<apex:outputText value="{! $Label.ICCS_Mandatory_Fields}" escape="false"/>
                                 </p>

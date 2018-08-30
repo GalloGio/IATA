@@ -22,7 +22,7 @@
 				<apex:pageBlock id="si_form">
 					<div class="row margin-top-bottom no-mrgn">
 						<div class="col-md-12 col-sm-12 col-xs-12 text-center" style="padding-right:5px;padding-left:5px;">
-							<div class="section-title-gray srvc">
+							<div class="section-title-gray {! IF(settlementInstruction.type.code == siStandard, 'srvc', 'cycle')}">
 								<apex:image url="{! URLFOR($Resource.IATA_ICCS_icons_new, 'titles.png')}" height="48"/>
 								<apex:outputText value="{! siProcessTitle}" escape="false"/>
 							</div>

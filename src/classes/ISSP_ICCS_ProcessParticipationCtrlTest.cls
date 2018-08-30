@@ -170,7 +170,6 @@ public class ISSP_ICCS_ProcessParticipationCtrlTest {
         joinParticipationController.selectedCategory = productTypes.get(1).getValue();
         joinParticipationController.selectedCountry = countries.get(1).getValue();
         joinParticipationController.selectedCurrency = currencies.get(1).getValue();
-        joinParticipationController.description = 'Test';
 
         caseProcessesController.next();
 
@@ -308,7 +307,6 @@ public class ISSP_ICCS_ProcessParticipationCtrlTest {
         System.assertEquals(caseProcessesController.currentStep, 1);
 
         leaveParticipationController.reason = 'Test';
-        leaveParticipationController.description = 'Test';
 
         caseProcessesController.next();
         System.assertEquals(caseProcessesController.currentStep, 2);

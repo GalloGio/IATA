@@ -38,23 +38,23 @@
 						
 							<apex:pageBlockTable value="{! bankAccountTable.rowsToDisplay}" var="bankAccountRow" id="bankAccountTable">
 								<apex:column headerValue="{! $Label.ICCS_Bank_Account_Code_Label}">
-									<apex:outputText value="{! bankAccountRow.bankAccountCode.code}" style="font-weight: {! IF(bankAccountRow.bankAccountBlock.displayChildRows && bankAccountRow.isParentRow, 'bold', 'normal')}; padding-left:{! IF(bankAccountRow.isParentRow, '0', '1')}em;;"/>
+									<apex:outputText value="{! bankAccountRow.bankAccountCode.code}" style="color : {! IF(bankAccountRow.isParentRow, '#000000', '#999999')}"/>
 								</apex:column>
 	
 								<apex:column headerValue="{! $Label.ICCS_Currency_Label}">
-									<apex:outputText value="{! bankAccountRow.bankAccountCode.bankAccount.currency_x}" style="font-weight: {! IF(bankAccountRow.bankAccountBlock.displayChildRows && bankAccountRow.isParentRow, 'bold', 'normal')};"/>
+									<apex:outputText value="{! bankAccountRow.bankAccountCode.bankAccount.currency_x}" style="color : {! IF(bankAccountRow.isParentRow, '#000000', '#999999')}"/>
 								</apex:column>
 	
 								<apex:column headerValue="{! $Label.ICCS_Account_Number_Label}">
-									<apex:outputText value="{! bankAccountRow.bankAccountCode.bankAccount.number_x}" style="font-weight: {! IF(bankAccountRow.bankAccountBlock.displayChildRows && bankAccountRow.isParentRow, 'bold', 'normal')};"/>
+									<apex:outputText value="{! bankAccountRow.bankAccountCode.bankAccount.number_x}" style="color : {! IF(bankAccountRow.isParentRow, '#000000', '#999999')}"/>
 								</apex:column>
 	
 								<apex:column headerValue="{! $Label.ICCS_Bank_Name_Label}">
-									<apex:outputText value="{! bankAccountRow.bankAccountCode.bankAccount.bank.name}" style="font-weight: {! IF(bankAccountRow.bankAccountBlock.displayChildRows && bankAccountRow.isParentRow, 'bold', 'normal')};"/>
+									<apex:outputText value="{! bankAccountRow.bankAccountCode.bankAccount.bank.name}" style="color : {! IF(bankAccountRow.isParentRow, '#000000', '#999999')}"/>
 								</apex:column>
 	
 								<apex:column headerValue="{! $Label.ICCS_BIC_Label}">
-									<apex:outputText value="{! bankAccountRow.bankAccountCode.bankAccount.bank.bic}" style="font-weight: {! IF(bankAccountRow.bankAccountBlock.displayChildRows && bankAccountRow.isParentRow, 'bold', 'normal')};"/>
+									<apex:outputText value="{! bankAccountRow.bankAccountCode.bankAccount.bank.bic}" style="color : {! IF(bankAccountRow.isParentRow, '#000000', '#999999')}"/>
 								</apex:column>
 	
 	                            <apex:column headerValue="{! $Label.ICCS_Actions_Label}" rendered="{! pageController.isMembershipMember}">
@@ -65,8 +65,8 @@
 											<div class="v-line"></div>
 										</apex:outputPanel>
 	
-										<apex:commandLink style="white-space:nowrap;" action="{! bankAccountRow.showChildRows}" value="{! $Label.ICCS_Show_Child_Codes}" rendered="{! !bankAccountRow.bankAccountBlock.displayChildRows && bankAccountRow.bankAccountBlock.hasChildRows}" rerender="bankAccountTable"/>
-	                                    <apex:commandLink style="white-space:nowrap;" action="{! bankAccountRow.hideChildRows}" value="{! $Label.ICCS_Hide_Child_Codes}" rendered="{! bankAccountRow.bankAccountBlock.displayChildRows && bankAccountRow.bankAccountBlock.hasChildRows}" rerender="bankAccountTable"/>
+										<apex:commandLink style="white-space:nowrap;" action="{! bankAccountRow.showChildRows}" value="{! $Label.ICCS_Show_Child_Codes}" rendered="{! !bankAccountRow.bankAccountBlock.displayChildRows && bankAccountRow.bankAccountBlock.hasChildRows}" rerender="bankAccountTable" status="processActStatusId"/>
+	                                    <apex:commandLink style="white-space:nowrap;" action="{! bankAccountRow.hideChildRows}" value="{! $Label.ICCS_Hide_Child_Codes}" rendered="{! bankAccountRow.bankAccountBlock.displayChildRows && bankAccountRow.bankAccountBlock.hasChildRows}" rerender="bankAccountTable" status="processActStatusId"/>
 	                                </apex:outputPanel>
 	                            </apex:column>
 	                        </apex:pageBlockTable>

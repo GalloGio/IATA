@@ -19,12 +19,9 @@ public class ISSP_ICCS_ProcessPartDelController extends ISSP_ICCS_CaseProcessCon
             if(reasonsList == null){
                 reasonsList = new List<SelectOption>();
                 reasonsList.add(new SelectOption(ISSP_ICCS_Utils.NONE,ISSP_ICCS_Utils.NONE));
-                reasonsList.add(new SelectOption('Airline data changes','Airline data changes'));
-                reasonsList.add(new SelectOption('Airline leaving','Airline leaving'));
-                reasonsList.add(new SelectOption('Airline suspension','Airline suspension'));
-                reasonsList.add(new SelectOption('Other - General','Other - General'));
-                reasonsList.add(new SelectOption('Process update','Process update'));
-                reasonsList.add(new SelectOption('Product management','Product management'));
+                reasonsList.add(new SelectOption('Closing BSP/CASS','Closing BSP/CASS'));
+                reasonsList.add(new SelectOption('Switching to Local Bank Account','Switching to Local Bank Account'));
+                reasonsList.add(new SelectOption('Other - Please Specify','Other - Please Specify'));
             }
             return reasonsList;
         }
@@ -57,7 +54,8 @@ public class ISSP_ICCS_ProcessPartDelController extends ISSP_ICCS_CaseProcessCon
 
 	public override List<String> getCaseProcessDocuments(){
 	    return new List<String>{
-        	ISSP_ICCS_Utils.ICCS_DOCUMENT_LEAVE_PARTICIPATION};
+        	ISSP_ICCS_Utils.ICCS_DOCUMENT_LEAVE_PARTICIPATION,
+        	ISSP_ICCS_Utils.ICCS_DOCUMENT_BANK_ACCOUNTS};
 	}
 
 	public override Map<String, ISSP_ICCS_CaseProcessController.TypedDocument> getCaseProcessTypedDocumentMap(){
@@ -99,6 +97,7 @@ public class ISSP_ICCS_ProcessPartDelController extends ISSP_ICCS_CaseProcessCon
     public override void fillAdditionalMessages(){
         // step 1
         caseProcessesController.displayMessages.put('reason', false);
+        caseProcessesController.displayMessages.put('description', false);
 
         // step 2
         caseProcessesController.displayMessages.put('desiredStartDate', false);
@@ -212,9 +211,14 @@ public class ISSP_ICCS_ProcessPartDelController extends ISSP_ICCS_CaseProcessCon
     public override Boolean validateStep(){
         Boolean stepValid = true;
         if(caseProcessesController.currentStep == 1){
-            caseProcessesController.displayMessages.put('reason', reason == null || reason == ISSP_ICCS_Utils.NONE);
-            
-            return  !caseProcessesController.displayMessages.get('reason');
+
+	        Boolean reasonInvalid = reason == null || reason == ISSP_ICCS_Utils.NONE;
+	        caseProcessesController.displayMessages.put('reason', reasonInvalid);
+	        
+	        Boolean descriptionInvalid = reason == 'Other - Please Specify' && (description == null || description == '');
+	        caseProcessesController.displayMessages.put('description', descriptionInvalid);
+        
+			return !(reasonInvalid || descriptionInvalid);
         }
         else if(caseProcessesController.currentStep == 2){
             caseProcessesController.displayMessages.put('socialTitle', contactForm.Contact_Resp_Salutation__c == null);
@@ -245,7 +249,9 @@ public class ISSP_ICCS_ProcessPartDelController extends ISSP_ICCS_CaseProcessCon
     }
 
 	public override void setCaseFieldValues(){
-		caseProcessesController.cse.Description = description;
+		if(reason == 'Other - Please Specify'){
+			caseProcessesController.cse.Description = description;
+		}
 		caseProcessesController.cse.Reason1__c = reason == ISSP_ICCS_Utils.NONE ? null : reason;
 		caseProcessesController.cse.Expected_Deadline__c = caseProcessesController.cse.Expected_Deadline__c != null ? caseProcessesController.cse.Expected_Deadline__c : Date.today() + 15;
 		caseProcessesController.cse.ICCS_Product__c = selectedProductType == ISSP_ICCS_Utils.NONE ? null : selectedProductType;

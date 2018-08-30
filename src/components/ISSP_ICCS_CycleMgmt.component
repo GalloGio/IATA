@@ -26,7 +26,7 @@
                         	<apex:image url="{!URLFOR($Resource.IATA_ICCS_icons_new, 'titles.png')}" height="48"/>
                         	<apex:outputText value="{! $Label.ICCS_CycleMgmt_Adhoc_Table_Title}" escape="false"/>
                         </div>
-                        <div class="bottom-box pddg-bttm mrgn-l-r" style="text-align: justify;text-justify: inter-word;">
+                        <div class="bottom-box mrgn-l-r" style="text-align: justify;text-justify: inter-word;">
                             <div class="pddg-2">
 								<apex:outputText value="{! $Label.ICCS_CycleMgmt_AdHoc_Header}" escape="false"/>
 	                        </div>
@@ -181,7 +181,7 @@
                         	<apex:image url="{!URLFOR($Resource.IATA_ICCS_icons_new, 'titles.png')}" height="48"/>
                         	<apex:outputText value="{! $Label.ICCS_CycleMgmt_Future_Table_Title}" escape="false"/>
                         </div>
-                        <div class="bottom-box pddg-bttm mrgn-l-r" style="text-align: justify;text-justify: inter-word;">
+                        <div class="bottom-box mrgn-l-r" style="text-align: justify;text-justify: inter-word;">
                             <div class="pddg-2">
 								<apex:outputText value="{! $Label.ICCS_CycleMgmt_Future_Header}" escape="false"/>
 	                        </div>         
