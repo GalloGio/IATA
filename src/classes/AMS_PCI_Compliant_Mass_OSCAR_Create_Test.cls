@@ -54,6 +54,22 @@ private class AMS_PCI_Compliant_Mass_OSCAR_Create_Test {
 
 		Test.stopTest();
 		ctrl.checkBatchStatus();
+
+		for(Integer i = 0; i < 50; i++)
+			ctrl.allErrorMessages.add(new AMS_PCI_Compliant_Mass_OSCAR_CreationCtr.jsonError());
+
+
+		ctrl.setErrorToShow();
+		ctrl.Beginning();
+		ctrl.Next();
+		ctrl.End();
+		ctrl.Previous();
+		ctrl.getDisablePrevious();
+		ctrl.getDisableNext();
+		ctrl.getTotal_size();
+		ctrl.getPageNumber();
+		ctrl.getTotalPages();
+
 	}
 
 }

@@ -451,6 +451,8 @@ private class ISSP_ANG_ANNUAL_REVALIDATION_Test {
 
 		ctrl.confirmUpdate();
 
+		upd.validateVATNumber();
+
 	}
 
 	@isTest
