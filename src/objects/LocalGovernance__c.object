@@ -323,7 +323,7 @@
     <fields>
         <fullName>Group_Administrator__c</fullName>
         <deleteConstraint>SetNull</deleteConstraint>
-        <description>Person designated by the Group Owner to maintain the group information (TORs and participants).</description>
+        <description>Person designated by the Group Owner to maintain the group information (TORs and participants). FOR MORE DETAILS, CONTACT AMT</description>
         <externalId>false</externalId>
         <inlineHelpText>Person designated by the Group Owner to maintain the group information (TORs and participants).</inlineHelpText>
         <label>Group Administrator</label>

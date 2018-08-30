@@ -8,10 +8,19 @@ private class ISSP_CampaignNotificationTest {
         Campaign camp = new Campaign();    
         camp.Name = 'Test Campaign';
 		insert camp;
+
+		Account account = ISSP_ObjectFactory.createNewAccount();
+		insert account;
 		
         //Contact contact = (Contact)ISSP_ObjectFactory.createSObject('Contact',false,1);
         Contact contact = ISSP_ObjectFactory.createNewContact();
+        contact.AccountId = account.Id;
+        contact.Email = 'Test@test11.com';
         insert contact;
+
+        User newUser = ISSP_ObjectFactory.createPortalUser(contact);
+        contact.OwnerId = newUser.Id;
+        update contact;
 		
 		//CampaignMember cm = (CampaignMember)ISSP_ObjectFactory.createSObject('CampaignMember',false,1);//
 		CampaignMember cm = new CampaignMember();
