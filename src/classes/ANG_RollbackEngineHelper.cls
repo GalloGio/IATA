@@ -22,16 +22,23 @@ global without sharing class ANG_RollbackEngineHelper implements Queueable{
     
     public void executeAdhoc(){
 
-        AMS_AgencyRelationshipTriggerHandler.AMS_HierarchyProcess = true;
-        AMS_AccountTriggerHandler.processMinorChangesValidationFlag = false; 
-        rollbackData();
-        AMS_OscarChangesHelper.createInternalCase(new Set<Id>{oscarId});
-        sendEmailConfirmation();
-        AMS_AgencyRelationshipTriggerHandler.AMS_HierarchyProcess = false;
-        AMS_AccountTriggerHandler.processMinorChangesValidationFlag = true;
-        generateAgencyEvents(oscarId);
+   		System.SavePoint sp;
 
+        try{
+            sp = Database.setSavePoint();
+            AMS_AgencyRelationshipTriggerHandler.AMS_HierarchyProcess = true;
+            AMS_AccountTriggerHandler.processMinorChangesValidationFlag = false; 
+            rollbackData();
+            AMS_OscarChangesHelper.createInternalCase(new Set<Id>{oscarId});
+            sendEmailConfirmation(null);
+            AMS_AgencyRelationshipTriggerHandler.AMS_HierarchyProcess = false;
+            AMS_AccountTriggerHandler.processMinorChangesValidationFlag = true;
+            generateAgencyEvents(oscarId);
 
+        }catch(Exception e){
+            Database.rollback(sp);
+            sendEmailConfirmation(e);
+        }
     }
 
     public ANG_RollbackEngineHelper(Id oscarId){
@@ -377,7 +384,7 @@ global without sharing class ANG_RollbackEngineHelper implements Queueable{
 		return accountIds;
 	}
 
-    private void sendEmailConfirmation(){
+    private void sendEmailConfirmation(Exception e){
 
         Messaging.SingleEmailMessage mail = new Messaging.SingleEmailMessage();
 
@@ -390,8 +397,17 @@ global without sharing class ANG_RollbackEngineHelper implements Queueable{
         mail.setSenderDisplayName('Apex Newgen - Rollback process');
         mail.setSubject('Apex Newgen - Rollback process');
 
-        String toReturnBody = 'The rollback process for Oscar Case '+oscarName+' has been completed.\n\n';
-        
+        String toReturnBody;
+
+        if(e ==null)
+            toReturnBody = 'The rollback process for Oscar Case '+oscarName+' has been completed.\n\n';
+        else {
+           toReturnBody = 'There was an error with the rollback process regarding Oscar Case '+oscarName+'.\n\n';
+           toReturnBody+= 'Message:'+e.getMessage()+'\n\n';
+           toReturnBody+= 'Stacktrace:'+e.getStackTraceString()+'\n\n';
+           toReturnBody+= 'Please contact app support for further assistance';
+        }
+
         mail.setPlainTextBody(toReturnBody);
 
          if(Test.isRunningTest()){
