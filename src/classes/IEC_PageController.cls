@@ -377,4 +377,27 @@ public virtual class IEC_PageController
 			return null;
 		}
     }
+
+
+    public PageReference redirectToPage(String initialUrl){
+
+    	//get params from page and include
+    	Map<String,String> mapPageParameters = System.currentPageReference().getParameters();
+        String extraParamsStr = '';
+        if(mapPageParameters != null && mapPageParameters.keySet() != null && !mapPageParameters.keySet().isEmpty()){
+	        for(String pageParam : mapPageParameters.keySet()){
+	            if(pageParam.startsWith(IECConstants.PARAM_UTM)){
+	                extraParamsStr += '&' + pageParam + '=' + mapPageParameters.get(pageParam);
+	            }
+	        }
+	    }
+
+	    String finalURL = initialUrl + EncodingUtil.urlEncode(extraParamsStr, 'UTF-8');
+		PageReference pgRef = new PageReference(finalURL);
+		pgRef.setRedirect(true);
+    	return pgRef;
+
+
+    }
+
 }

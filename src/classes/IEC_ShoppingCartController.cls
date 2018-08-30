@@ -49,25 +49,19 @@ public without sharing class IEC_ShoppingCartController extends IEC_PageControll
 		if (loggedCustomer != null && (loggedCustomer.sfContact.BillTo_Location__c == null || loggedCustomer.sfContact.ShipTo_Location__c == null))
 			Location_Svc.initializeDefaultLocations(new List<Id>{loggedCustomer.sfContact.Id});
 
-		if(pageParams.containsKey('order'))
-		{			
+		if(pageParams.containsKey('order')){			
 			String orderNumber = pageParams.get('order');			
 			//orderId = pageParams.get('order');
 
 			//-- Customer come from Auto-Renewal link 
-			if(loggedCustomer == null)
-			{
-				//-- redfirect to login 
-				PageReference pgRef = new PageReference('/IEC_Login?returl=/IEC_ShoppingCart?order=' + orderNumber);
-				pgRef.setRedirect(true);
-	        	return pgRef;
-			}
+			if(loggedCustomer == null){
+				return this.redirectToPage('/IEC_Login?returl=/IEC_ShoppingCart?order=' + orderNumber);
+			} 
 
 			//--Validate customer has access to the order
 			//-- Change pendding Order to renewal 
 			List<Order> lstOrders = (List<Order>) new Order_Sel().selectSObjectByField('OrderNumber',new Set<String>{orderNumber});			
-			if(lstOrders.size() > 0)
-			{
+			if(lstOrders.size() > 0){
 				orderId = lstOrders[0].Id;
 	        	if(lstOrders[0].Type != 'Cart')
 	        		IECOrder_Svc.changePenddingOrder(lstOrders[0]);
