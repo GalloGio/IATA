@@ -1378,7 +1378,7 @@ public without sharing class AMS_Utils {
                 for(AMS_OSCAR__c oscar : oscarsToCopy)
                     mapOscars.put(oscar.Id, oscar);
 
-                AMS_AccountRoleCreator.runRoleCreatorForOnlineAccreditations(stagingToAccount, true, mapOscars, locationTypeByOscar, topParentByOscar);
+                AMS_AccountRoleCreator.runRoleCreatorForOnlineAccreditations(stagingToAccount, true, false, mapOscars, locationTypeByOscar, topParentByOscar);
             }
 
             if(!createRHCInfo.isEmpty()) ANG_RHCHelper.createRHCInfo(createRHCInfo, false);

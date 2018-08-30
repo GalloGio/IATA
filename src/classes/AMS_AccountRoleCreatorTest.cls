@@ -213,7 +213,7 @@ public with sharing class AMS_AccountRoleCreatorTest {
 
         aoMap.put(aoaList.get(0).Id, accountsInvolved);
         
-        AMS_AccountRoleCreator.runRoleCreatorForOnlineAccreditations(aoMap, isCorrectionProcess, oscars, new Map<Id,String>{oscars.values().get(0).Id => oscars.values().get(0).Account__r.Location_Type__c}, new Map<Id,Id>{oscars.values().get(0).Id => oscars.values().get(0).Account__r.Top_Parent__r.Id == null ? oscars.values().get(0).Account__c : oscars.values().get(0).Account__r.Top_Parent__r.Id});
+        AMS_AccountRoleCreator.runRoleCreatorForOnlineAccreditations(aoMap, isCorrectionProcess, true, oscars, new Map<Id,String>{oscars.values().get(0).Id => oscars.values().get(0).Account__r.Location_Type__c}, new Map<Id,Id>{oscars.values().get(0).Id => oscars.values().get(0).Account__r.Top_Parent__r.Id == null ? oscars.values().get(0).Account__c : oscars.values().get(0).Account__r.Top_Parent__r.Id});
         
         roleList = [select Contact__c, Percentage__c, Contact__r.Email, Person__c, Person__r.Email__c, Account__c, RecordType.DeveloperName, RecordTypeId from AMS_Account_Role__c order by RecordTypeId];
         
@@ -226,7 +226,7 @@ public with sharing class AMS_AccountRoleCreatorTest {
         update companyOwnershipAC;
         
         
-        AMS_AccountRoleCreator.runRoleCreatorForOnlineAccreditations(aoMap, isCorrectionProcess, oscars, new Map<Id,String>{oscars.values().get(0).Id => oscars.values().get(0).Account__r.Location_Type__c}, new Map<Id,Id>{oscars.values().get(0).Id => oscars.values().get(0).Account__r.Top_Parent__r.Id == null ? oscars.values().get(0).Account__c : oscars.values().get(0).Account__r.Top_Parent__r.Id});
+        AMS_AccountRoleCreator.runRoleCreatorForOnlineAccreditations(aoMap, isCorrectionProcess, true, oscars, new Map<Id,String>{oscars.values().get(0).Id => oscars.values().get(0).Account__r.Location_Type__c}, new Map<Id,Id>{oscars.values().get(0).Id => oscars.values().get(0).Account__r.Top_Parent__r.Id == null ? oscars.values().get(0).Account__c : oscars.values().get(0).Account__r.Top_Parent__r.Id});
         roleList = [select Percentage__c, Account__c, RecordType.DeveloperName, RecordTypeId from AMS_Account_Role__c order by RecordTypeId];
 
         System.assertEquals(1, roleList.size());
@@ -246,9 +246,7 @@ public with sharing class AMS_AccountRoleCreatorTest {
         
         update oscarToBR;
         
-        AMS_AccountRoleCreator.runRoleCreatorForOnlineAccreditations(aoMap, isCorrectionProcess, oscars, new Map<Id,String>{oscars.values().get(0).Id => oscars.values().get(0).Account__r.Location_Type__c}, new Map<Id,Id>{oscars.values().get(0).Id => oscars.values().get(0).Account__r.Top_Parent__r.Id == null ? oscars.values().get(0).Account__c : oscars.values().get(0).Account__r.Top_Parent__r.Id});
-
-        List<AMS_Accreditation_Contact__c> aclistLinkOnly = AMS_AccountRoleCreator.getPersonLinkingOnly(acList);
+        AMS_AccountRoleCreator.runRoleCreatorForOnlineAccreditations(aoMap, isCorrectionProcess, true, oscars, new Map<Id,String>{oscars.values().get(0).Id => oscars.values().get(0).Account__r.Location_Type__c}, new Map<Id,Id>{oscars.values().get(0).Id => oscars.values().get(0).Account__r.Top_Parent__r.Id == null ? oscars.values().get(0).Account__c : oscars.values().get(0).Account__r.Top_Parent__r.Id});
         
         Test.stopTest();
     }
@@ -291,7 +289,7 @@ public with sharing class AMS_AccountRoleCreatorTest {
 
         aoMap.put(aoaList.get(0).Id, accountsInvolved);
 
-        AMS_AccountRoleCreator.runRoleCreatorForOnlineAccreditations(aoMap, isCorrectionProcess, oscars, new Map<Id,String>{oscars.values().get(0).Id => oscars.values().get(0).Account__r.Location_Type__c}, new Map<Id,Id>{oscars.values().get(0).Id => oscars.values().get(0).Account__r.Top_Parent__r.Id == null ? oscars.values().get(0).Account__c : oscars.values().get(0).Account__r.Top_Parent__r.Id});
+        AMS_AccountRoleCreator.runRoleCreatorForOnlineAccreditations(aoMap, isCorrectionProcess, true, oscars, new Map<Id,String>{oscars.values().get(0).Id => oscars.values().get(0).Account__r.Location_Type__c}, new Map<Id,Id>{oscars.values().get(0).Id => oscars.values().get(0).Account__r.Top_Parent__r.Id == null ? oscars.values().get(0).Account__c : oscars.values().get(0).Account__r.Top_Parent__r.Id});
         
         roleList = [select Contact__c, Contact__r.Email, Termination_Date__c, Person__c, Person__r.Email__c, Account__c from AMS_Account_Role__c];
         
@@ -377,7 +375,7 @@ public with sharing class AMS_AccountRoleCreatorTest {
 
         aoMap.put(aoaList.get(0).Id, accountsInvolved);
 
-        AMS_AccountRoleCreator.runRoleCreatorForOnlineAccreditations(aoMap, false, oscars, new Map<Id,String>{oscars.values().get(0).Id => oscars.values().get(0).Account__r.Location_Type__c}, new Map<Id,Id>{oscars.values().get(0).Id => oscars.values().get(0).Account__r.Top_Parent__r.Id == null ? oscars.values().get(0).Account__c : oscars.values().get(0).Account__r.Top_Parent__r.Id});
+        AMS_AccountRoleCreator.runRoleCreatorForOnlineAccreditations(aoMap, false, false, oscars, new Map<Id,String>{oscars.values().get(0).Id => oscars.values().get(0).Account__r.Location_Type__c}, new Map<Id,Id>{oscars.values().get(0).Id => oscars.values().get(0).Account__r.Top_Parent__r.Id == null ? oscars.values().get(0).Account__c : oscars.values().get(0).Account__r.Top_Parent__r.Id});
         
         roleList = [select Contact__c, Contact__r.Email, Person__c, Person__r.Email__c, Account__c, RecordType.DeveloperName from AMS_Account_Role__c];
         System.assertEquals(1, roleList.size());
@@ -392,7 +390,7 @@ public with sharing class AMS_AccountRoleCreatorTest {
 
         aoMap.put(aoaList.get(0).Id, accountsInvolved);
 
-        AMS_AccountRoleCreator.runRoleCreatorForOnlineAccreditations(aoMap, false, oscars, new Map<Id,String>{oscars.values().get(0).Id => oscars.values().get(0).Account__r.Location_Type__c}, new Map<Id,Id>{oscars.values().get(0).Id => oscars.values().get(0).Account__r.Top_Parent__r.Id == null ? oscars.values().get(0).Account__c : oscars.values().get(0).Account__r.Top_Parent__r.Id});
+        AMS_AccountRoleCreator.runRoleCreatorForOnlineAccreditations(aoMap, false, false, oscars, new Map<Id,String>{oscars.values().get(0).Id => oscars.values().get(0).Account__r.Location_Type__c}, new Map<Id,Id>{oscars.values().get(0).Id => oscars.values().get(0).Account__r.Top_Parent__r.Id == null ? oscars.values().get(0).Account__c : oscars.values().get(0).Account__r.Top_Parent__r.Id});
         roleList = [select Contact__c, Contact__r.Email, Person__c, Person__r.Email__c, Account__c, RecordType.DeveloperName from AMS_Account_Role__c];
         System.assertEquals(2, roleList.size());
         //System.assertEquals('Ownership', roleList.get(0).RecordType.DeveloperName);
@@ -410,7 +408,7 @@ public with sharing class AMS_AccountRoleCreatorTest {
 
         aoMap.put(aoaList.get(0).Id, accountsInvolved);
 
-        AMS_AccountRoleCreator.runRoleCreatorForOnlineAccreditations(aoMap, false, oscars, new Map<Id,String>{oscars.values().get(0).Id => oscars.values().get(0).Account__r.Location_Type__c}, new Map<Id,Id>{oscars.values().get(0).Id => oscars.values().get(0).Account__r.Top_Parent__r.Id == null ? oscars.values().get(0).Account__c : oscars.values().get(0).Account__r.Top_Parent__r.Id});
+        AMS_AccountRoleCreator.runRoleCreatorForOnlineAccreditations(aoMap, false, false, oscars, new Map<Id,String>{oscars.values().get(0).Id => oscars.values().get(0).Account__r.Location_Type__c}, new Map<Id,Id>{oscars.values().get(0).Id => oscars.values().get(0).Account__r.Top_Parent__r.Id == null ? oscars.values().get(0).Account__c : oscars.values().get(0).Account__r.Top_Parent__r.Id});
 
         roleList = [select Contact__c, Contact__r.Email, Person__c, Person__r.Email__c, Account__c, RecordType.DeveloperName from AMS_Account_Role__c];
         System.assertEquals(3, roleList.size());
@@ -454,7 +452,7 @@ public with sharing class AMS_AccountRoleCreatorTest {
 
         aoMap.put(aoaList.get(0).Id, accountsInvolved);
 
-        AMS_AccountRoleCreator.runRoleCreatorForOnlineAccreditations(aoMap, false, oscars, new Map<Id,String>{oscars.values().get(0).Id => oscars.values().get(0).Account__r.Location_Type__c}, new Map<Id,Id>{oscars.values().get(0).Id => oscars.values().get(0).Account__r.Top_Parent__r.Id == null ? oscars.values().get(0).Account__c : oscars.values().get(0).Account__r.Top_Parent__r.Id});
+        AMS_AccountRoleCreator.runRoleCreatorForOnlineAccreditations(aoMap, false, false, oscars, new Map<Id,String>{oscars.values().get(0).Id => oscars.values().get(0).Account__r.Location_Type__c}, new Map<Id,Id>{oscars.values().get(0).Id => oscars.values().get(0).Account__r.Top_Parent__r.Id == null ? oscars.values().get(0).Account__c : oscars.values().get(0).Account__r.Top_Parent__r.Id});
         
         roleList = [select Contact__c, Contact__r.Email, Person__c, Person__r.Email__c, Account__c, RecordType.DeveloperName from AMS_Account_Role__c];
         //DT: Employee are no more created in the Role Object
@@ -469,7 +467,7 @@ public with sharing class AMS_AccountRoleCreatorTest {
 
         aoMap.put(aoaList.get(0).Id, accountsInvolved);
 
-        AMS_AccountRoleCreator.runRoleCreatorForOnlineAccreditations(aoMap, false, oscars, new Map<Id,String>{oscars.values().get(0).Id => oscars.values().get(0).Account__r.Location_Type__c}, new Map<Id,Id>{oscars.values().get(0).Id => oscars.values().get(0).Account__r.Top_Parent__r.Id == null ? oscars.values().get(0).Account__c : oscars.values().get(0).Account__r.Top_Parent__r.Id});
+        AMS_AccountRoleCreator.runRoleCreatorForOnlineAccreditations(aoMap, false, false, oscars, new Map<Id,String>{oscars.values().get(0).Id => oscars.values().get(0).Account__r.Location_Type__c}, new Map<Id,Id>{oscars.values().get(0).Id => oscars.values().get(0).Account__r.Top_Parent__r.Id == null ? oscars.values().get(0).Account__c : oscars.values().get(0).Account__r.Top_Parent__r.Id});
 
         roleList = [select Contact__c, Contact__r.Email, Person__c, Person__r.Email__c, Account__c, RecordType.DeveloperName from AMS_Account_Role__c];
         System.assertEquals(1, roleList.size());
@@ -488,7 +486,7 @@ public with sharing class AMS_AccountRoleCreatorTest {
 
         aoMap.put(aoaList.get(0).Id, accountsInvolved);
 
-        AMS_AccountRoleCreator.runRoleCreatorForOnlineAccreditations(aoMap, false, oscars, new Map<Id,String>{oscars.values().get(0).Id => oscars.values().get(0).Account__r.Location_Type__c}, new Map<Id,Id>{oscars.values().get(0).Id => oscars.values().get(0).Account__r.Top_Parent__r.Id == null ? oscars.values().get(0).Account__c : oscars.values().get(0).Account__r.Top_Parent__r.Id});
+        AMS_AccountRoleCreator.runRoleCreatorForOnlineAccreditations(aoMap, false, false, oscars, new Map<Id,String>{oscars.values().get(0).Id => oscars.values().get(0).Account__r.Location_Type__c}, new Map<Id,Id>{oscars.values().get(0).Id => oscars.values().get(0).Account__r.Top_Parent__r.Id == null ? oscars.values().get(0).Account__c : oscars.values().get(0).Account__r.Top_Parent__r.Id});
 
         roleList = [select Contact__c, Contact__r.Email, Person__c, Person__r.Email__c, Account__c, RecordType.DeveloperName from AMS_Account_Role__c];
         //DT: Employee are no more created in the Role Object
@@ -522,7 +520,7 @@ public with sharing class AMS_AccountRoleCreatorTest {
 
         aoMap.put(aoaList.get(0).Id, accountsInvolved);
 
-        AMS_AccountRoleCreator.runRoleCreatorForOnlineAccreditations(aoMap, false, oscars, new Map<Id,String>{oscars.values().get(0).Id => oscars.values().get(0).Account__r.Location_Type__c}, new Map<Id,Id>{oscars.values().get(0).Id => oscars.values().get(0).Account__r.Top_Parent__r.Id == null ? oscars.values().get(0).Account__c : oscars.values().get(0).Account__r.Top_Parent__r.Id});
+        AMS_AccountRoleCreator.runRoleCreatorForOnlineAccreditations(aoMap, false, false, oscars, new Map<Id,String>{oscars.values().get(0).Id => oscars.values().get(0).Account__r.Location_Type__c}, new Map<Id,Id>{oscars.values().get(0).Id => oscars.values().get(0).Account__r.Top_Parent__r.Id == null ? oscars.values().get(0).Account__c : oscars.values().get(0).Account__r.Top_Parent__r.Id});
         
         roleList = [select Contact__c, Contact__r.Email, Contact__r.FirstName, Person__c, Person__r.Email__c, Account__c from AMS_Account_Role__c];
 
@@ -563,7 +561,7 @@ public with sharing class AMS_AccountRoleCreatorTest {
 
         aoMap.put(aoaList.get(0).Id, accountsInvolved);
 
-        AMS_AccountRoleCreator.runRoleCreatorForOnlineAccreditations(aoMap, false, oscars, new Map<Id,String>{oscars.values().get(0).Id => oscars.values().get(0).Account__r.Location_Type__c}, new Map<Id,Id>{oscars.values().get(0).Id => oscars.values().get(0).Account__r.Top_Parent__r.Id == null ? oscars.values().get(0).Account__c : oscars.values().get(0).Account__r.Top_Parent__r.Id});
+        AMS_AccountRoleCreator.runRoleCreatorForOnlineAccreditations(aoMap, false, false, oscars, new Map<Id,String>{oscars.values().get(0).Id => oscars.values().get(0).Account__r.Location_Type__c}, new Map<Id,Id>{oscars.values().get(0).Id => oscars.values().get(0).Account__r.Top_Parent__r.Id == null ? oscars.values().get(0).Account__c : oscars.values().get(0).Account__r.Top_Parent__r.Id});
 
         roleList = [select Id, Contact__c, Contact__r.Email, Person__c, Person__r.Email__c, Account__c, RecordType.DeveloperName from AMS_Account_Role__c where Active__c = true];
 
@@ -571,7 +569,7 @@ public with sharing class AMS_AccountRoleCreatorTest {
         acList.get(0).Agency_Owner__c = true;
         update acList;
         
-        AMS_AccountRoleCreator.runRoleCreatorForOnlineAccreditations(aoMap, false, oscars, new Map<Id,String>{oscars.values().get(0).Id => oscars.values().get(0).Account__r.Location_Type__c}, new Map<Id,Id>{oscars.values().get(0).Id => oscars.values().get(0).Account__r.Top_Parent__r.Id == null ? oscars.values().get(0).Account__c : oscars.values().get(0).Account__r.Top_Parent__r.Id});
+        AMS_AccountRoleCreator.runRoleCreatorForOnlineAccreditations(aoMap, false, false, oscars, new Map<Id,String>{oscars.values().get(0).Id => oscars.values().get(0).Account__r.Location_Type__c}, new Map<Id,Id>{oscars.values().get(0).Id => oscars.values().get(0).Account__r.Top_Parent__r.Id == null ? oscars.values().get(0).Account__c : oscars.values().get(0).Account__r.Top_Parent__r.Id});
         roleList = [select Contact__c, Contact__r.Email, Person__c, Person__r.Email__c, Account__c, RecordType.DeveloperName from AMS_Account_Role__c where Active__c = true];
         System.assertEquals(1, roleList.size());
         System.assertEquals('Ownership', roleList.get(0).RecordType.DeveloperName);
@@ -583,7 +581,7 @@ public with sharing class AMS_AccountRoleCreatorTest {
                                                                                 Contact__c = newCon.Id, RecordTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('AMS_Accreditation_Contact__c', 'Person'));
         insert newAc;
         
-        AMS_AccountRoleCreator.runRoleCreatorForOnlineAccreditations(aoMap, false, oscars, new Map<Id,String>{oscars.values().get(0).Id => oscars.values().get(0).Account__r.Location_Type__c}, new Map<Id,Id>{oscars.values().get(0).Id => oscars.values().get(0).Account__r.Top_Parent__r.Id == null ? oscars.values().get(0).Account__c : oscars.values().get(0).Account__r.Top_Parent__r.Id});
+        AMS_AccountRoleCreator.runRoleCreatorForOnlineAccreditations(aoMap, false, false, oscars, new Map<Id,String>{oscars.values().get(0).Id => oscars.values().get(0).Account__r.Location_Type__c}, new Map<Id,Id>{oscars.values().get(0).Id => oscars.values().get(0).Account__r.Top_Parent__r.Id == null ? oscars.values().get(0).Account__c : oscars.values().get(0).Account__r.Top_Parent__r.Id});
         roleList = [select Contact__c, Contact__r.Email, Person__c, Person__r.Email__c, Account__c, RecordType.DeveloperName from AMS_Account_Role__c where Active__c = true];
 
 
@@ -625,7 +623,7 @@ public with sharing class AMS_AccountRoleCreatorTest {
 
         aoMap.put(aoaList.get(0).Id, accountsInvolved);
 
-        AMS_AccountRoleCreator.runRoleCreatorForOnlineAccreditations(aoMap, false, oscars, new Map<Id,String>{oscars.values().get(0).Id => oscars.values().get(0).Account__r.Location_Type__c}, new Map<Id,Id>{oscars.values().get(0).Id => oscars.values().get(0).Account__r.Top_Parent__r.Id == null ? oscars.values().get(0).Account__c : oscars.values().get(0).Account__r.Top_Parent__r.Id});
+        AMS_AccountRoleCreator.runRoleCreatorForOnlineAccreditations(aoMap, false, false, oscars, new Map<Id,String>{oscars.values().get(0).Id => oscars.values().get(0).Account__r.Location_Type__c}, new Map<Id,Id>{oscars.values().get(0).Id => oscars.values().get(0).Account__r.Top_Parent__r.Id == null ? oscars.values().get(0).Account__c : oscars.values().get(0).Account__r.Top_Parent__r.Id});
         
         roleList = [select Contact__c, Contact__r.Email, Termination_Date__c, Person__c, Person__r.Email__c, Account__c from AMS_Account_Role__c];
         
@@ -687,13 +685,6 @@ public with sharing class AMS_AccountRoleCreatorTest {
         query = query + ' from AMS_Accreditation_Contact__c where Email__c = \'unique@email.com\'';
         List<AMS_Accreditation_Contact__c> aoContactList = Database.query(query);
         system.debug('DTULLO 523 --> ' + aoContactList.size());
-        // Run the code, expecting to see the Contact record getting updated back to "NameToUse"
-        Map<String, AMS_Account_Role__c> roleContactMap = AMS_AccountRoleCreator.findRoleAndContactRecords(aoContactList);
-        system.debug('DTULLO 526 --> ' + roleContactMap.size());
-        List<Contact> newContacts = AMS_AccountRoleCreator.transformACsWithContactLinkingToUpdatedList(aoContactList, roleContactMap);
-        update newContacts;
-        List<AMS_Account_Role__c> updatedRoles = AMS_AccountRoleCreator.retrieveContactAgencyLinking_updateIfNecessary(newContacts, roleContactMap);
-
         
         c = [select id, FirstName from Contact where email = 'unique@email.com' limit 1];
         System.assertEquals(c.FirstName, 'NameToUse');
@@ -731,16 +722,8 @@ public with sharing class AMS_AccountRoleCreatorTest {
         String query = 'select ' + commaSeparatedFields + ', AMS_Pax_Accreditation_Form__r.SAAM_Case__r.OSCAR__r.Account__c ';
         query = query + ' from AMS_Accreditation_Contact__c where Email__c = \'unique@email.com\'';
         List<AMS_Accreditation_Contact__c> aoContactList = Database.query(query);
-        
-        // Run the code, expecting to see the Contact record getting updated back to "NameToUse"
         system.debug('DTULLO 587 -->' + aoContactList.size() + '; ' + aoContactList);
-        Map<String, AMS_Account_Role__c> roleContactMap = AMS_AccountRoleCreator.findRoleAndContactRecords(aoContactList);
-        system.debug('DTULLO 588 -->' + roleCOntactMap.size());
-        List<Contact> newContacts = AMS_AccountRoleCreator.transformACsWithContactLinkingToUpdatedList(aoContactList, roleContactMap);
-        update newContacts;
-        List<AMS_Account_Role__c> updatedRoles = AMS_AccountRoleCreator.retrieveContactAgencyLinking_updateIfNecessary(newContacts, roleContactMap);
 
-        
         c = [select id, FirstName from Contact where email = 'unique@email.com' limit 1];
         System.assertEquals(c.FirstName, 'NameToUse');
         Test.stopTest();
@@ -815,7 +798,7 @@ public with sharing class AMS_AccountRoleCreatorTest {
 
         aoMap.put(aoaList.get(0).Id, accountsInvolved);
 
-        AMS_AccountRoleCreator.runRoleCreatorForOnlineAccreditations(aoMap, false, oscars, new Map<Id,String>{oscars.values().get(0).Id => oscars.values().get(0).Account__r.Location_Type__c}, new Map<Id,Id>{oscars.values().get(0).Id => oscars.values().get(0).Account__r.Top_Parent__r.Id == null ? oscars.values().get(0).Account__c : oscars.values().get(0).Account__r.Top_Parent__r.Id});
+        AMS_AccountRoleCreator.runRoleCreatorForOnlineAccreditations(aoMap, false, false, oscars, new Map<Id,String>{oscars.values().get(0).Id => oscars.values().get(0).Account__r.Location_Type__c}, new Map<Id,Id>{oscars.values().get(0).Id => oscars.values().get(0).Account__r.Top_Parent__r.Id == null ? oscars.values().get(0).Account__c : oscars.values().get(0).Account__r.Top_Parent__r.Id});
        
         roleList = [select Contact__c, Contact__r.Email, Person__c, Financial_Assessment_Contact__c, Termination_Date__c, Account__c from AMS_Account_Role__c];
         //DT: Employee are no more created in the Role Object
@@ -841,34 +824,6 @@ public with sharing class AMS_AccountRoleCreatorTest {
         System.assertEquals(1, personList.size());
         
         Test.stopTest();
-    }
-    
-        
-    //DT: Seems that this method is no more used. Test on it anyway
-    @isTest static void test_MethodfindRoleAndPersonRecords(){
-        map<String, AMS_Account_Role__c> theMap = new map<String, AMS_Account_Role__c>();
-        list<AMS_Accreditation_Contact__c> theList = [select Id, Person_AMS__c, Email__c, Contact__c from AMS_Accreditation_Contact__c];
-        theMap = AMS_AccountRoleCreator.findRoleAndContactRecords(theList);
-        
-    }
-    
-    //DT: Seems that this method is no more used. Test on it anyway
-    @isTest static void test_MethodtransformACsWithPersonLinking_createContactList(){
-        List<Case> caseList = [select id from Case limit 2];
-        
-        AMS_Pax_Accreditation_Form__c onlineAccreditation = new AMS_Pax_Accreditation_Form__c(IsGSA__c = 'No', SAAM_Case__c = caseList.get(0).Id);
-        
-        insert onlineAccreditation;
-        
-        AMS_Accreditation_Contact__c accContact = new AMS_Accreditation_Contact__c(AMS_Pax_Accreditation_Form__c = onlineAccreditation.Id, 
-                                                                                    First_name__c = 'NameToUse', Last_name__c = 'Last', Job_title__c = 'ABC', 
-                                                                                    Mobile__c = '+4112345678', Phone__c = '3424322343', Email__c = 'ewrstdfgyhujntest@test.com', 
-                                                                                    RecordTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('AMS_Accreditation_Contact__c', 'Person'));
-        
-        insert accContact;
-
-        list<AMS_Accreditation_Contact__c> lsAccCont = [select Id, Person_AMS__c, Email__c, Contact__c from AMS_Accreditation_Contact__c];
-        list<Contact> lsContacts = AMS_AccountRoleCreator.transformACsWithPersonLinking_createContactList(lsAccCont, null); 
     }
 
     @isTest static void test_RoleCreationForCorrectionProcess(){
@@ -1059,15 +1014,6 @@ public with sharing class AMS_AccountRoleCreatorTest {
 
         For(Contact c: contacts)
             contactIDs.add(c.Id);
-
-        AMS_AccountRoleCreator.removeFromList(contactIDs,contacts.get(0).Id);
-
-        List<AMS_Accreditation_Contact__c> acontacts = [SELECT id, Person_AMS__c, Contact__c,Person_AMS__r.Contact__c from AMS_Accreditation_Contact__c];
-
-        AMS_AccountRoleCreator.getNoPersonNorContactLing(acontacts);
-
-        AMS_AccountRoleCreator.getContactLinking(acontacts);
-
 
         Test.stopTest();
 

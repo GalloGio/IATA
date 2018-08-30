@@ -1287,7 +1287,7 @@ public class AMS_OSCARTriggerHandler {
                 for(AMS_OSCAR__c oscar : oscars)
                     mapOscars.put(oscar.Id, oscar);
 
-                oldAndNewOwnersMap = AMS_AccountRoleCreator.runRoleCreatorForOnlineAccreditations(accountsAffectedPerOnlineAccreditation, !isSanityCheck, mapOscars, locationTypeByOscar, topParentByOscar);
+                oldAndNewOwnersMap = AMS_AccountRoleCreator.runRoleCreatorForOnlineAccreditations(accountsAffectedPerOnlineAccreditation, !isSanityCheck, false, mapOscars, locationTypeByOscar, topParentByOscar);
 
                 //verify ownership alignment
                 if(accsToCompareOwnership.size()>0 && !AMS_HierarchyHelper.checkHierarchyIntegrity(accsToCompareOwnership))
@@ -2505,7 +2505,7 @@ public class AMS_OSCARTriggerHandler {
     //*************************************
 
     private static Map<Id, Account> getAccounts(Set<Id> accountIds) {
-        return new Map<Id, Account>([SELECT Id, ParentId, Parent.Location_Type__c,Parent.IATACode__c, Status__c, Name, IATACode__c, Company_Type__c, Short_Name__c, TradeName__c, License_Number__c, VAT_Number__c, GDS__c, Operation__c,
+        return new Map<Id, Account>([SELECT Id, ParentId, Parent.Location_Type__c,Parent.IATACode__c, Top_Parent__c, Status__c, Name, IATACode__c, Company_Type__c, Short_Name__c, TradeName__c, License_Number__c, VAT_Number__c, GDS__c, Operation__c,
                 BillingCountry, BillingStreet, BillingPostalCode, BillingState, BillingCity, IATA_ISO_Country__c, Iso_State__c, ShippingCountry, Is_Branch_Abroad__c,
                 ShippingStreet, ShippingPostalCode, ShippingState, ShippingCity, Email__c, Website, Phone, Fax, In_a_Airport__c, Abbreviated_name__c, Abbreviated_address__c,
                 Remittance_frequency__c, Solicitation_Flag__c, VAT_Number_2__c, CASS_Number__c, Location_Class__c, Location_Type__c, Mobile__c, Is_your_firm_handling_Dangerous_Goods__c,
@@ -3363,7 +3363,7 @@ public class AMS_OSCARTriggerHandler {
 
                     stagingToAccounts.put(updatedOscar.AMS_Online_Accreditation__c, allHierarchyAccountIds);
                     system.debug('applyChangeCodesWithDependencies() -> move to MD contact data. Pass map: '+stagingToAccounts);
-                    AMS_AccountRoleCreator.runRoleCreatorForOnlineAccreditations(stagingToAccounts, true, 
+                    AMS_AccountRoleCreator.runRoleCreatorForOnlineAccreditations(stagingToAccounts, true, false,
                                                                                 new Map<Id,AMS_OSCAR__c>{updatedOscar.Id => updatedOscar}, 
                                                                                 new Map<Id,String>{updatedOscar.Id => mapAccountsToCheck.get(updatedOscar.Account__c).Location_Type__c}, 
                                                                                 new Map<Id,Id>{updatedOscar.Id => mapAccountsToCheck.get(updatedOscar.Account__c).Top_Parent__c == null ? updatedOscar.Account__c : mapAccountsToCheck.get(updatedOscar.Account__c).Top_Parent__c});

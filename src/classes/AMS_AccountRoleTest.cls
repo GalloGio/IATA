@@ -120,7 +120,7 @@ public class AMS_AccountRoleTest {
         
         system.debug('DTULLO 119 --> ' + parameter);
         
-        AMS_AccountRoleCreator.runRoleCreatorForOnlineAccreditations(parameter, true, oscars,  new Map<Id,String>{oscars.values().get(0).Id => HO.Location_Type__c}, new Map<Id,Id>{oscars.values().get(0).Id => oscars.values().get(0).Account__r.Top_Parent__r.Id == null ? oscars.values().get(0).Account__c : oscars.values().get(0).Account__r.Top_Parent__r.Id});
+        AMS_AccountRoleCreator.runRoleCreatorForOnlineAccreditations(parameter, true, true, oscars,  new Map<Id,String>{oscars.values().get(0).Id => HO.Location_Type__c}, new Map<Id,Id>{oscars.values().get(0).Id => oscars.values().get(0).Account__r.Top_Parent__r.Id == null ? oscars.values().get(0).Account__c : oscars.values().get(0).Account__r.Top_Parent__r.Id});
         
         // CHECK THE RESULTS
         List<Contact> newContacts = [SELECT FirstName, LastName, Email FROM Contact ORDER BY Email];
@@ -193,7 +193,7 @@ public class AMS_AccountRoleTest {
         theStagingConts[2].Financial_interest__c = 33.3;
         update theStagingConts;
 
-        AMS_AccountRoleCreator.runRoleCreatorForOnlineAccreditations(parameter, true, oscars,  new Map<Id,String>{oscars.values().get(0).Id => HO.Location_Type__c}, new Map<Id,Id>{oscars.values().get(0).Id => oscars.values().get(0).Account__r.Top_Parent__r.Id == null ? oscars.values().get(0).Account__c : oscars.values().get(0).Account__r.Top_Parent__r.Id});
+        AMS_AccountRoleCreator.runRoleCreatorForOnlineAccreditations(parameter, true, false, oscars,  new Map<Id,String>{oscars.values().get(0).Id => HO.Location_Type__c}, new Map<Id,Id>{oscars.values().get(0).Id => oscars.values().get(0).Account__r.Top_Parent__r.Id == null ? oscars.values().get(0).Account__c : oscars.values().get(0).Account__r.Top_Parent__r.Id});
 
 
         persons = [SELECT Id FROM AMS_Person__c];
@@ -226,7 +226,7 @@ public class AMS_AccountRoleTest {
         theStagingConts[2].Financial_interest__c = 10;
         update theStagingConts;
 
-        AMS_AccountRoleCreator.runRoleCreatorForOnlineAccreditations(parameter, false, oscars,  new Map<Id,String>{oscars.values().get(0).Id => HO.Location_Type__c}, new Map<Id,Id>{oscars.values().get(0).Id => oscars.values().get(0).Account__r.Top_Parent__r.Id == null ? oscars.values().get(0).Account__c : oscars.values().get(0).Account__r.Top_Parent__r.Id});
+        AMS_AccountRoleCreator.runRoleCreatorForOnlineAccreditations(parameter, false, false, oscars,  new Map<Id,String>{oscars.values().get(0).Id => HO.Location_Type__c}, new Map<Id,Id>{oscars.values().get(0).Id => oscars.values().get(0).Account__r.Top_Parent__r.Id == null ? oscars.values().get(0).Account__c : oscars.values().get(0).Account__r.Top_Parent__r.Id});
 
         persons = [SELECT Id FROM AMS_Person__c];
         system.assertEquals(0,persons.size(), 'testNewContactOwners(S3) -> the person should not have been recreated');
@@ -286,7 +286,7 @@ public class AMS_AccountRoleTest {
         Map<Id,Set<Id>> parameter = new Map<Id,Set<Id>>();
         parameter.put(theStagingAcc.Id, new Set<Id>{HO.Id, secondLevel[0].Id, secondLevel[1].Id});
         
-        AMS_AccountRoleCreator.runRoleCreatorForOnlineAccreditations(parameter, false, oscars,  new Map<Id,String>{oscars.values().get(0).Id => HO.Location_Type__c}, new Map<Id,Id>{oscars.values().get(0).Id => oscars.values().get(0).Account__r.Top_Parent__r.Id == null ? oscars.values().get(0).Account__c : oscars.values().get(0).Account__r.Top_Parent__r.Id});
+        AMS_AccountRoleCreator.runRoleCreatorForOnlineAccreditations(parameter, false, true, oscars, new Map<Id,String>{oscars.values().get(0).Id => HO.Location_Type__c}, new Map<Id,Id>{oscars.values().get(0).Id => oscars.values().get(0).Account__r.Top_Parent__r.Id == null ? oscars.values().get(0).Account__c : oscars.values().get(0).Account__r.Top_Parent__r.Id});
 
         // CHECK THE RESULTS
         
@@ -356,7 +356,7 @@ public class AMS_AccountRoleTest {
         update theStagingConts;
 
         system.debug('#### su parameter: ' + parameter);
-        AMS_AccountRoleCreator.runRoleCreatorForOnlineAccreditations(parameter, true,  oscars,  new Map<Id,String>{oscars.values().get(0).Id => HO.Location_Type__c}, new Map<Id,Id>{oscars.values().get(0).Id => oscars.values().get(0).Account__r.Top_Parent__r.Id == null ? oscars.values().get(0).Account__c : oscars.values().get(0).Account__r.Top_Parent__r.Id});
+        AMS_AccountRoleCreator.runRoleCreatorForOnlineAccreditations(parameter, true, false, oscars,  new Map<Id,String>{oscars.values().get(0).Id => HO.Location_Type__c}, new Map<Id,Id>{oscars.values().get(0).Id => oscars.values().get(0).Account__r.Top_Parent__r.Id == null ? oscars.values().get(0).Account__c : oscars.values().get(0).Account__r.Top_Parent__r.Id});
 
         owners = [SELECT Owner_Account__r.Name,  Percentage__c, Termination_Date__c
                     FROM AMS_Account_Role__c 
@@ -386,7 +386,7 @@ public class AMS_AccountRoleTest {
         theStagingConts[1].RecordTypeId = CompanyRT;
 
         update theStagingConts;
-        AMS_AccountRoleCreator.runRoleCreatorForOnlineAccreditations(parameter, false, oscars,  new Map<Id,String>{oscars.values().get(0).Id => HO.Location_Type__c}, new Map<Id,Id>{oscars.values().get(0).Id => oscars.values().get(0).Account__r.Top_Parent__r.Id == null ? oscars.values().get(0).Account__c : oscars.values().get(0).Account__r.Top_Parent__r.Id});
+        AMS_AccountRoleCreator.runRoleCreatorForOnlineAccreditations(parameter, false, false, oscars,  new Map<Id,String>{oscars.values().get(0).Id => HO.Location_Type__c}, new Map<Id,Id>{oscars.values().get(0).Id => oscars.values().get(0).Account__r.Top_Parent__r.Id == null ? oscars.values().get(0).Account__c : oscars.values().get(0).Account__r.Top_Parent__r.Id});
 
         owners = [SELECT Owner_Account__r.Name, Percentage__c, Termination_Date__c
                     FROM AMS_Account_Role__c 
