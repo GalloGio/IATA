@@ -18,7 +18,16 @@
 
         System.debug('DATA OF PORTAL :' + data);
         try{
-            insert new Portal_Application_Right__c(Contact__c = data.contactId,Portal_Application__c = data.portalId,Right__c = appRight);
+            List <Portal_Application_Right__c> portalAppRight = new List <Portal_Application_Right__c>([SELECT    Id 
+                                                                                                        FROM      Portal_Application_Right__c
+                                                                                                        WHERE     Contact__c =: data.contactId
+                                                                                                        AND       Portal_Application__c =: data.portalId]);
+            Id portalAppRightId = null;
+            if(portalAppRight != null && portalAppRight.size() == 1){
+                portalAppRightId = portalAppRight[0].Id;
+            }
+
+            upsert new Portal_Application_Right__c(Id = portalAppRightId, Contact__c = data.contactId,Portal_Application__c = data.portalId,Right__c = appRight);
         } 
         catch(exception e){
             System.Debug('ERROR : ' + e);

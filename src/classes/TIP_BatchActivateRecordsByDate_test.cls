@@ -179,10 +179,10 @@ public class TIP_BatchActivateRecordsByDate_test {
 	public static void testScheduledJobs (){
 		Test.startTest();
 		Time timeToExecute = Time.newInstance(10, 10, 0, 0);
-		Id jobID = TIP_BatchActivateRecordsByDate.scheduleJob(timeToExecute);
+		Id jobID = TIP_BatchActivateRecordsByDate.scheduleJob(timeToExecute);	
 		Test.stopTest();
-		system.debug('##test: ' +[SELECT name FROM CronJobDetail where id = :jobID]);
-		//System.assertEquals(1,[SELECT count() FROM CronJobDetail where name like '%TIP_BatchActivateRecordsByDate%']);
+		system.debug('##test: ' +[SELECT CronJobDetailId, State, TimesTriggered FROM CronTrigger where id =: jobID]);
+		System.assertEquals(1,[SELECT count() FROM CronTrigger where id =: jobID]);
 	}
 
 }
