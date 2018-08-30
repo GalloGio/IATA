@@ -4,7 +4,9 @@
 **/
 public without sharing class ISSP_APProcess {
 
-    private static String RECORD_TYPE_ID = Schema.SObjectType.Case.RecordTypeInfosByName.get('IDFS Airline Participation Process').RecordTypeId;
+    private static Id RECORD_TYPE_ID = RecordTypeSingleton.getInstance().getRecordTypeId('Case', 'IDFS_Airline_Participation_Process');
+    private Map<String, String> apProcessFormRecordTypesMap = RecordTypeSingleton.getInstance().getMapRecordTypesBySObject('AP_Process_Form__c');
+    
     @TestVisible private string vCaseId;
     private Id vHQAccountId;
     private Id vGSSAAccountId;
@@ -444,7 +446,7 @@ public without sharing class ISSP_APProcess {
             CASS_PH_Bilateral_Agreement__c,CASS_PH_Preferred_Billing_Currency__c,CASS_PH_Bilat_Agreement_Tax_Rate__c,Airline_Intra_Europe_Flights__c,BSP_UA_LocalReg_Number_EDRPOU__c,BSP_UA_BankCode_MFO__c,Ecuador_Legal_Forms_requirements__c,
             BSP_Russia_Double_Tax_avoiding_Treaty__c, Colombia_City_selection__c, Colombia_City_percentage__c, Name_Appearing_in_VAT__c, Colombia_Type_of_Contributor__c, Territory_Percentage__c,
             Canada_Has_Principal_Office__c,Canada_Provincial_Offices__c,Canada_LocalVAT_Info__c, GSSA_Legal_Name_Formula__c, GSSA_Address_Formula__c, Case__r.AccountId,
-            ANG_Airline_accepts_EasyPay_tr_in_BSP__c,Maximum_Commission_Rate__c, Default_Commission_Rate__c, Type_of_Change_Requested__c
+            ANG_Airline_accepts_EasyPay_tr_in_BSP__c,Minimum_Commission_Rate__c, Maximum_Commission_Rate__c, Default_Commission_Rate__c, Type_of_Change_Requested__c
             FROM AP_Process_Form__c
             WHERE Case__c = :newCase.Id
             LIMIT 1
@@ -723,9 +725,9 @@ public without sharing class ISSP_APProcess {
 
             if(strAreaType == 'Airline Joining') {
                 SYSTEM.DEBUG('Record Type Name: ' + strLoB + ' Joining');
-              newForm.RecordTypeId = Schema.SObjectType.AP_Process_Form__c.RecordTypeInfosByName.get(strLoB + ' Joining').RecordTypeId;
+              newForm.RecordTypeId = apProcessFormRecordTypesMap.get(strLoB + ' Joining');
             } else {
-                newForm.RecordTypeId = Schema.SObjectType.AP_Process_Form__c.RecordTypeInfosByName.get(strLoB + ' Change').RecordTypeId;
+                newForm.RecordTypeId = apProcessFormRecordTypesMap.get(strLoB + ' Change');
             }
             
         }
@@ -838,9 +840,9 @@ public without sharing class ISSP_APProcess {
 
             newForm.Submitted_to_IATA__c = TRUE;
             if(strAreaType == 'Airline Joining') {
-                newForm.RecordTypeId = Schema.SObjectType.AP_Process_Form__c.RecordTypeInfosByName.get(strLoB + ' Joining').RecordTypeId;
+                newForm.RecordTypeId = apProcessFormRecordTypesMap.get(strLoB + ' Joining');
             } else {
-                newForm.RecordTypeId = Schema.SObjectType.AP_Process_Form__c.RecordTypeInfosByName.get(strLoB + ' Change').RecordTypeId;
+                newForm.RecordTypeId = apProcessFormRecordTypesMap.get(strLoB + ' Change');
             }
             upsert newForm;
             newCase.Status = 'For Review and Acceptance';
@@ -1341,7 +1343,7 @@ public without sharing class ISSP_APProcess {
             accountConcernedId = concernedAccount[0].Id;
         } else { //BR does not exist for this Airline, for this country of application, so create Unverified Account
             Account airlineBR = new Account();
-            airlineBR.RecordTypeId = Schema.SObjectType.Account.RecordTypeInfosByName.get('Standard Account').RecordTypeId;
+            airlineBR.RecordTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('Account', 'Standard_Account');
             airlineBR.Name = AL_Name;
             airlineBR.OwnerId = ISSP_Constant.newAccountOwnerId;
             airlineBR.ParentId = AL_Id;

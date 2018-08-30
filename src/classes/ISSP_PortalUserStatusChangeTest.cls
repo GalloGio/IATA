@@ -22,13 +22,8 @@ private class ISSP_PortalUserStatusChangeTest {
         actionName = ISSP_PortalUserStatusChange.getActionName(controler.con.User_Portal_Status__c,'');
         ISSP_PortalUserStatusChange.preformAction(actionName,controler.con.Id,controler.con.User_Portal_Status__c);
 
-        //ISSP_PortalUserStatusChange.isUserDisabel(con.Id);
-        //ISSP_PortalUserStatusChange.disabelUser(con.Id);
         Set<String> setIds = new Set<String>();
         setIds.add(con.Id);
-
-        //ISSP_PortalUserStatusChange.futureDeactivateUsers(setIds);
-        //ISSP_PortalUserStatusChange.futureUpdateUsers(setIds);
 
         controler.con.User_Portal_Status__c = 'Approved Admin';
         actionName = ISSP_PortalUserStatusChange.getActionName(controler.con.User_Portal_Status__c,'');
@@ -413,7 +408,8 @@ private class ISSP_PortalUserStatusChangeTest {
 
     }
 
-    Public static testMethod void testUpdateUser(){
+    @isTest
+    Public static void testUpdateUser(){
 
         Profile portalProfile = [SELECT Id, Name FROM Profile WHERE Name = 'ISS Portal (Partner)'][0];
 
@@ -447,13 +443,13 @@ private class ISSP_PortalUserStatusChangeTest {
                                 IsActive = true);
         insert newUser;
 
-        System.runAs(newUser){
-            Test.startTest();
+        //System.runAs(newUser){
+        Test.startTest();
 
-            ISSP_PortalUserStatusChange.updateUser(con.Id, true, con.Email, portalProfile.Id, '');
+        ISSP_PortalUserStatusChange.updateUser(con.Id, true, con.Email, portalProfile.Id, '');
 
-            Test.stopTest();
-        }
+        Test.stopTest();
+        //}
 
     }
 

@@ -23,7 +23,7 @@
 private class InstantSurveyTriggerHelperTest {
 
     static testMethod void TestPreventMultipleSurveysOnSameCase() {
-        ID hqrt = Schema.SObjectType.Account.RecordTypeInfosByName.get('Airline Headquarters').RecordTypeId ;
+        ID hqrt = RecordTypeSingleton.getInstance().getRecordTypeId('Account', 'IATA_Airline') ;
         ID IFAPcaseRecordTypeID = RecordTypeSingleton.getInstance().getRecordTypeId('Case', 'IATA_Financial_Review');
         
         ID SF_ACR_RTId = RecordTypeSingleton.getInstance().getRecordTypeId('Case', 'Application_Change_Request_Salesforce');

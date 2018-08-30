@@ -42,7 +42,7 @@ public with sharing class DAL_ISSP_Test {
         Contact contact = ISSP_ObjectFactory.createNewContact();
         contact.AccountId = account.Id;
         insert contact;
-        String recordTypeId = [SELECT Id FROM RecordType WHERE Name = 'DPC Service Request'].Id;
+        Id recordTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('Case', 'DPC_Service_Request');
         Case c = new Case(Subject='test 1',Status='Open', AccountId=account.id, ContactId=contact.id,Region__c = 'Europe', RecordTypeId = recordTypeId);
         insert c;
         DAL_ISSP.getCase(c.Id);

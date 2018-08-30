@@ -1232,7 +1232,7 @@ public class VfIECShoppingCart extends IECPageController {
             errorCode = '';
             
             // create a dummy page reference just to parse the parameters returned by the HPM
-            PageReference curPage = new Pagereference(URL.getSalesforceBaseUrl().toExternalForm() + Site.getPrefix() + sErrorMsgFromHPM);
+            PageReference curPage = new Pagereference(URL.getSalesforceBaseUrl().toExternalForm() + Site.getPathPrefix() + sErrorMsgFromHPM);
             
             errorMessage = curPage.getParameters().get('errorMessage');
             errorCode = curPage.getParameters().get('errorCode');

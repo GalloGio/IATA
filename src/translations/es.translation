@@ -137,6 +137,10 @@
         <name>AIMSAccountBeforeUpdate_AutoProcess_Restricted</name>
     </customLabels>
     <customLabels>
+        <label><!-- AMS_AttchNotifyOwner --></label>
+        <name>AMS_AttchNotifyOwner</name>
+    </customLabels>
+    <customLabels>
         <label><!-- AMS Conga Merge --></label>
         <name>AMS_Conga_Merge</name>
     </customLabels>
@@ -159,6 +163,14 @@
     <customLabels>
         <label><!-- AMS_New_Change_Code_Notification --></label>
         <name>AMS_New_Change_Code_Notification</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- AMS_NotificationSent --></label>
+        <name>AMS_NotificationSent</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- AMS_Notify_OSCAR_Owner --></label>
+        <name>AMS_Notify_OSCAR_Owner</name>
     </customLabels>
     <customLabels>
         <label><!-- AMS OSCAR AGENCYFEES --></label>
@@ -563,6 +575,14 @@
     <customLabels>
         <label><!-- AMS_PERFORM_CORRECTION --></label>
         <name>AMS_PERFORM_CORRECTION</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- AMS_PendingHOAccr --></label>
+        <name>AMS_PendingHOAccr</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- AMS_RRejected --></label>
+        <name>AMS_RRejected</name>
     </customLabels>
     <customLabels>
         <label><!-- AMS_RollbackCase_Description --></label>
@@ -11528,7 +11548,7 @@ Tenga en cuenta que muchas facturas de IATA agentes acreditados se cobran a trav
         <name>ISSP_Registration_BusinessPhone</name>
     </customLabels>
     <customLabels>
-        <label><!-- ISSP_Registration --></label>
+        <label>Este número de teléfono de empresa no es válido. Compruébelo. Compruebe también que ha seleccionado el país correcto, ya sea eligiendo una bandera de la lista O introduciendo el código de país con un &apos;+&apos; en el prefijo.</label>
         <name>ISSP_Registration_BusinessPhone_Msg</name>
     </customLabels>
     <customLabels>
@@ -11604,7 +11624,7 @@ Tenga en cuenta que muchas facturas de IATA agentes acreditados se cobran a trav
         <name>ISSP_Registration_Error_TypeofCustomer</name>
     </customLabels>
     <customLabels>
-        <label><!-- ISSP_Registration --></label>
+        <label>Este número de Fax/Teléfono es inválido, verifíquelo, por favor. Compruebe también que ha seleccionado el país correcto, ya sea eligiendo una bandera de la lista O introduciendo el código de país con un &apos;+&apos; en el prefijo.</label>
         <name>ISSP_Registration_FaxPhone_Msg</name>
     </customLabels>
     <customLabels>
@@ -11641,7 +11661,7 @@ Si no posee un código IATA, seleccione &quot;&quot;Otro&quot;&quot; en &quot;&q
         <name>ISSP_Registration_MobilePhone</name>
     </customLabels>
     <customLabels>
-        <label><!-- ISSP_Registration --></label>
+        <label>Este número de teléfono móvil no es válido. Compruébelo. Compruebe también que ha seleccionado el país correcto, ya sea eligiendo una bandera de la lista O introduciendo el código de país con un &apos;+&apos; en el prefijo.</label>
         <name>ISSP_Registration_MobilePhone_Msg</name>
     </customLabels>
     <customLabels>
@@ -13384,7 +13404,7 @@ El Panel de contabilidad de IATA es una herramienta que contiene información di
         <name>OneId_AccountSearchPlaceholder</name>
     </customLabels>
     <customLabels>
-        <label>Asociación de cuenta</label>
+        <label>Datos de la empresa</label>
         <name>OneId_Account_Association</name>
     </customLabels>
     <customLabels>
@@ -13424,11 +13444,11 @@ El Panel de contabilidad de IATA es una herramienta que contiene información di
         <name>OneId_Community_Name</name>
     </customLabels>
     <customLabels>
-        <label>Asociación y validación de contactos</label>
+        <label>Verificación de e-mail</label>
         <name>OneId_Contact_Association_Validation</name>
     </customLabels>
     <customLabels>
-        <label>Creación de contactos</label>
+        <label>Datos personales</label>
         <name>OneId_Contact_Creation</name>
     </customLabels>
     <customLabels>
@@ -13600,6 +13620,10 @@ El Panel de contabilidad de IATA es una herramienta que contiene información di
         <name>OneId_Privacy_Policy</name>
     </customLabels>
     <customLabels>
+        <label><!-- OneId_Privacy_Policy_Link --></label>
+        <name>OneId_Privacy_Policy_Link</name>
+    </customLabels>
+    <customLabels>
         <label><!-- OneId_Profile_BillingCity --></label>
         <name>OneId_Profile_BillingCity</name>
     </customLabels>
@@ -13652,7 +13676,10 @@ El Panel de contabilidad de IATA es una herramienta que contiene información di
         <name>OneId_Registration_Error_BusinessPhone</name>
     </customLabels>
     <customLabels>
-        <label><!-- OneId_Registration_UserExist --></label>
+        <label>Este correo electrónico ya nos ha sido registrado.
+Si es un usuario de comercio electrónico, introduzca sus credenciales de comercio electrónico.
+Si es un usuario del Portal del Cliente, utilice sus credenciales de dicho Portal.
+Si desea restablecer su contraseña, vuelva a la pantalla de inicio de sesión y utilice la función: «¿Olvidó la contraseña?».</label>
         <name>OneId_Registration_UserExist</name>
     </customLabels>
     <customLabels>

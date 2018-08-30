@@ -265,7 +265,7 @@ public without sharing class AMS_OscarChangesHelper {
 		Database.DMLOptions dmo = new Database.DMLOptions();
 		dmo.assignmentRuleHeader.useDefaultRule= true;	
 
-		Id recordTypeId = Schema.SObjectType.Case.getRecordTypeInfosByName().get('Internal Cases (IDFS ISS)').getRecordTypeId();
+		Id recordTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('Case', 'InternalCasesEuropeSCE');
 		
 		for(AMS_ChangeCodes__c changeCode : [SELECT Change_Code__c FROM AMS_ChangeCodes__c where Billable__c = true]) {
 			billableChangeCodes.add(changeCode.Change_Code__c);

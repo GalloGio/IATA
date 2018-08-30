@@ -107,8 +107,8 @@ public class ANG_RHCAlertTriggerHandler{
         
         Map<String, Id> emailTemplates = new Map<String, Id>();
         if(!emailTemplateNames.isEmpty()){
-			for(EmailTemplate e : [SELECT Id, DeveloperName FROM EmailTemplate WHERE DeveloperName IN :emailTemplateNames AND isActive = true]){
-				emailTemplates.put(e.DeveloperName, e.Id);
+            for(EmailTemplate e : [SELECT Id, DeveloperName FROM EmailTemplate WHERE DeveloperName IN :emailTemplateNames AND isActive = true]){
+                emailTemplates.put(e.DeveloperName, e.Id);
             }
         }
 
@@ -220,18 +220,29 @@ public class ANG_RHCAlertTriggerHandler{
         Set<Id> toDeactivateAccounts = new Set<Id>(); 
         List<Agency_Authorization__c> toUpdate = new List<Agency_Authorization__c>();
 
+        Set<Id> accountIds = new Set<Id>();
+    
+        for(ANG_Risk_Alert__c ralert:triggerNew){
+            accountIds.add(ralert.ANG_Account__c);
+        }
+
+        Map<Id,ANG_Risk_Alert__c> accountAlerts = new Map<Id,ANG_Risk_Alert__c>();
+
+       for(ANG_Risk_Alert__c ralert : [Select Id, ANG_Direction__c, ANG_Account__c,ANG_Threshold_Level__c  from ANG_Risk_Alert__c where ANG_Account__c in: accountIds and Id not in:triggerNew Order by CreatedDate ASC])
+            accountAlerts.put(ralert.ANG_Account__c, ralert);
+        
         for(ANG_Risk_Alert__c ralert:triggerNew){
 
-            if(!(ralert.recordTypeId == ANG_RHCHelper.RECTYPE_RISKALERT_RHC && ralert.ANG_Threshold_Level__c == '100%' &&  (ralert.ANG_Direction__c == ANG_RHCHelper.RISK_ALERT_DIRECTION_UP || ralert.ANG_Direction__c == ANG_RHCHelper.RISK_ALERT_DIRECTION_DOWN )))
+            if(!(ralert.recordTypeId == ANG_RHCHelper.RECTYPE_RISKALERT_RHC && (ralert.ANG_Threshold_Level__c == '100%' && ralert.ANG_Direction__c == ANG_RHCHelper.RISK_ALERT_DIRECTION_UP) || (( ralert.ANG_Threshold_Level__c == '100%' || ralert.ANG_Threshold_Level__c == '75%' || ralert.ANG_Threshold_Level__c == '50%') && ralert.ANG_Direction__c == ANG_RHCHelper.RISK_ALERT_DIRECTION_DOWN )))
                 continue;
-
 
                 if(ralert.ANG_Direction__c == ANG_RHCHelper.RISK_ALERT_DIRECTION_UP){
                     toDeactivateAccounts.add(ralert.ANG_Account__c);
                 }
                 
                 if(ralert.ANG_Direction__c == ANG_RHCHelper.RISK_ALERT_DIRECTION_DOWN){
-                    toActivateAccounts.add(ralert.ANG_Account__c);  
+                    if(accountAlerts.get(ralert.ANG_Account__c) != null && accountAlerts.get(ralert.ANG_Account__c).ANG_Direction__c == ANG_RHCHelper.RISK_ALERT_DIRECTION_UP && accountAlerts.get(ralert.ANG_Account__c).ANG_Threshold_Level__c == '100%')
+                        toActivateAccounts.add(ralert.ANG_Account__c);  
                 }
             
         }
@@ -293,9 +304,18 @@ public class ANG_RHCAlertTriggerHandler{
 
         for(Agency_Authorization__c aa: aaLst){
             
-            if(aa.Status__c != statusFOP){
-                aa.Status__c = statusFOP;
+            if(aa.Status__c != statusFOP){ 
+                
+                if(action == LOWERFLUCTUATION){
+                    aa.Status__c = statusFOP;
+                }
+
+                if(action == UPPERFLUCTUATION){
+                    aa.Status__c = statusFOP;
+                }
+                
                 toReturn.add(aa);
+                
             }
 
         }
@@ -307,8 +327,8 @@ public class ANG_RHCAlertTriggerHandler{
 
     public void createChangeCodeForFOP(Map<Id,String> accountsAndStatus) {
 
-        AMS_ChangeCodes__c changeCodeConfigPCA = AMS_ChangeCodesConfigHelper.getChangeCodeConfig('PCA');
-        AMS_ChangeCodes__c changeCodeConfigPCR = AMS_ChangeCodesConfigHelper.getChangeCodeConfig('PCR');
+        AMS_ChangeCodes__c changeCodeConfigPCA = AMS_ChangeCodes__c.getInstance('PCA');
+        AMS_ChangeCodes__c changeCodeConfigPCR = AMS_ChangeCodes__c.getInstance('PCR');
 
         Set<Id> accountIds = accountsAndStatus.keySet();
 
@@ -324,7 +344,7 @@ public class ANG_RHCAlertTriggerHandler{
                     accountsChangeCode.put(accId, changeCode);
         }
 
-        List<Account> accountToCreateCC = [Select Id, Status__c from Account where Id in :accountIds];
+        List<Account> accountToCreateCC = [Select Id, Status__c, CNS_Agency__c from Account where Id in :accountIds];
 
         List<AMS_OSCAR_JSON.ChangeCode> listOfCCToInsert = new List<AMS_OSCAR_JSON.ChangeCode>();
         List<AMS_OSCAR__c> oscarsToAdd = new List<AMS_OSCAR__c>();

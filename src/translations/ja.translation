@@ -137,6 +137,10 @@
         <name>AIMSAccountBeforeUpdate_AutoProcess_Restricted</name>
     </customLabels>
     <customLabels>
+        <label><!-- AMS_AttchNotifyOwner --></label>
+        <name>AMS_AttchNotifyOwner</name>
+    </customLabels>
+    <customLabels>
         <label><!-- AMS Conga Merge --></label>
         <name>AMS_Conga_Merge</name>
     </customLabels>
@@ -159,6 +163,14 @@
     <customLabels>
         <label><!-- AMS_New_Change_Code_Notification --></label>
         <name>AMS_New_Change_Code_Notification</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- AMS_NotificationSent --></label>
+        <name>AMS_NotificationSent</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- AMS_Notify_OSCAR_Owner --></label>
+        <name>AMS_Notify_OSCAR_Owner</name>
     </customLabels>
     <customLabels>
         <label><!-- AMS OSCAR AGENCYFEES --></label>
@@ -563,6 +575,14 @@
     <customLabels>
         <label><!-- AMS_PERFORM_CORRECTION --></label>
         <name>AMS_PERFORM_CORRECTION</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- AMS_PendingHOAccr --></label>
+        <name>AMS_PendingHOAccr</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- AMS_RRejected --></label>
+        <name>AMS_RRejected</name>
     </customLabels>
     <customLabels>
         <label><!-- AMS_RollbackCase_Description --></label>
@@ -11501,7 +11521,7 @@ IATA公認代理店の多くのIATA請求書はBSP/CASSを通して徴収しま�
         <name>ISSP_Registration_BusinessPhone</name>
     </customLabels>
     <customLabels>
-        <label><!-- ISSP_Registration --></label>
+        <label>勤務先電話番号が無効です。ご確認ください。また、リストから国旗を選択するか、冒頭に「+」をつけた国コードを入力することによって、正しい国が選択されていることをご確認ください。</label>
         <name>ISSP_Registration_BusinessPhone_Msg</name>
     </customLabels>
     <customLabels>
@@ -11577,7 +11597,7 @@ IATA公認代理店の多くのIATA請求書はBSP/CASSを通して徴収しま�
         <name>ISSP_Registration_Error_TypeofCustomer</name>
     </customLabels>
     <customLabels>
-        <label><!-- ISSP_Registration --></label>
+        <label>ファックス番号が無効です。ご確認ください。また、リストから国旗を選択するか、冒頭に「+」をつけた国コードを入力することによって、正しい国が選択されていることをご確認ください。</label>
         <name>ISSP_Registration_FaxPhone_Msg</name>
     </customLabels>
     <customLabels>
@@ -11614,7 +11634,7 @@ IATAコードをお持ちでない場合は、［顧客タイプ］に［その�
         <name>ISSP_Registration_MobilePhone</name>
     </customLabels>
     <customLabels>
-        <label><!-- ISSP_Registration --></label>
+        <label>携帯電話番号が無効です。ご確認ください。また、リストから国旗を選択するか、冒頭に「+」をつけた国コードを入力することによって、正しい国が選択されていることをご確認ください。</label>
         <name>ISSP_Registration_MobilePhone_Msg</name>
     </customLabels>
     <customLabels>
@@ -13356,7 +13376,7 @@ IATA財務ダッシュボードは資金計画やキャッシュ・フロー予�
         <name>OneId_AccountSearchPlaceholder</name>
     </customLabels>
     <customLabels>
-        <label>アカウントの関連付け</label>
+        <label>会社情報</label>
         <name>OneId_Account_Association</name>
     </customLabels>
     <customLabels>
@@ -13396,11 +13416,11 @@ IATA財務ダッシュボードは資金計画やキャッシュ・フロー予�
         <name>OneId_Community_Name</name>
     </customLabels>
     <customLabels>
-        <label>連絡先の関連付けと認証</label>
+        <label>Eメール認証</label>
         <name>OneId_Contact_Association_Validation</name>
     </customLabels>
     <customLabels>
-        <label>連絡先の作成</label>
+        <label>個人情報</label>
         <name>OneId_Contact_Creation</name>
     </customLabels>
     <customLabels>
@@ -13572,6 +13592,10 @@ IATA財務ダッシュボードは資金計画やキャッシュ・フロー予�
         <name>OneId_Privacy_Policy</name>
     </customLabels>
     <customLabels>
+        <label><!-- OneId_Privacy_Policy_Link --></label>
+        <name>OneId_Privacy_Policy_Link</name>
+    </customLabels>
+    <customLabels>
         <label><!-- OneId_Profile_BillingCity --></label>
         <name>OneId_Profile_BillingCity</name>
     </customLabels>
@@ -13624,7 +13648,10 @@ IATA財務ダッシュボードは資金計画やキャッシュ・フロー予�
         <name>OneId_Registration_Error_BusinessPhone</name>
     </customLabels>
     <customLabels>
-        <label><!-- OneId_Registration_UserExist --></label>
+        <label>このEメールはIATAにすでに登録されています。
+あなたが電子商取引ユーザーである場合、あなたの電子商取引認証をご使用ください。
+カスタマーポータルのユーザーである場合は、カスタマーポータルの認証をご使用ください。
+パスワードをリセットしたい場合は、ログイン画面に戻り、「パスワードを忘れた場合」機能をご利用下さい。</label>
         <name>OneId_Registration_UserExist</name>
     </customLabels>
     <customLabels>

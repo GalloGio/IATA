@@ -45,12 +45,8 @@ private class CalculateBusinessHoursAgesTest {
         myCase.AccountId = a.id;
         myCase.ContactID = con.id;
 
-        List<RecordType> casert = [SELECT Id from RecordType WHERE DeveloperName = 'CasesEurope' limit 1];
-
-        if (casert.size() > 0) {
-            myCase.RecordTypeId = casert[0].Id;
-        }
-
+		myCase.RecordTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('Case', 'CasesEurope');
+		
         system.debug('ANTES DO UPDATE mycase.RecordTypeId    ++++++++++++++++++++++' +  mycase.RecordTypeId);
         system.debug('ANTES DO UPDATE mycase.ClosedSameDay__c    ++++++++++++++++++++++' +  mycase.ClosedSameDay__c);
         system.debug('ANTES DO UPDATE mycase.First_closure_date__c     ++++++++++++++++++++++' +  mycase.First_closure_date__c);

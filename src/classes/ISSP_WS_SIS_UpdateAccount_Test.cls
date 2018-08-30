@@ -2,7 +2,7 @@
 private class ISSP_WS_SIS_UpdateAccount_Test {
     
     private static final Profile AIRLINE_PORTAL_PROFILE = [SELECT Id FROM Profile WHERE Name = 'ISS Portal Airline User (Partner)'];
-    private static final RecordType IATA_AIRLINE_RT = [SELECT Id, DeveloperName FROM RecordType WHERE DeveloperName = 'IATA_Airline'];
+    private static final Id IATA_AIRLINE_RT_ID = RecordTypeSingleton.getInstance().getRecordTypeId('Account', 'IATA_Airline');
 
     @TestSetup
     private static void setup() {
@@ -227,7 +227,7 @@ private class ISSP_WS_SIS_UpdateAccount_Test {
         
         Account account = ISSP_ObjectFactory.createNewAccount();
         account.SIS_ID__c = inputData.SISMemberID;
-        account.RecordTypeId = IATA_AIRLINE_RT.Id;
+        account.RecordTypeId = IATA_AIRLINE_RT_ID;
         insert account;
         
         Test.startTest();

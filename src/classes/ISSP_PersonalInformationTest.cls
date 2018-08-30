@@ -6,7 +6,7 @@ private class ISSP_PersonalInformationTest {
 		Account acc1 = ISSP_ObjectFactory.createNewAccount();
         acc1.IATACode__c = '258';
         acc1.Status__c = 'Under review';
-        acc1.RecordTypeId = [SELECT Id FROM RecordType r WHERE SobjectType = 'Account' AND DeveloperName = 'IATA_Agency'][0].Id;
+        acc1.RecordTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('Account', 'IATA_Agency');
         insert acc1;
 		Account acc = ISSP_ObjectFactory.createNewAccount();
         acc.IATACode__c = '132';
@@ -78,7 +78,7 @@ private class ISSP_PersonalInformationTest {
 		Account acc = ISSP_ObjectFactory.createNewAccount();
         acc.IATACode__c = '132';
         acc.Sector__c = 'Cargo Agent';
-        acc.RecordTypeId = [SELECT Id FROM RecordType r WHERE SobjectType = 'Account' AND DeveloperName = 'IATA_Agency'][0].Id;
+        acc.RecordTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('Account', 'IATA_Agency');
         Test.startTest();
         insert acc;
         Test.stopTest();

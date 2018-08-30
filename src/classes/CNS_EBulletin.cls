@@ -1,7 +1,7 @@
 public with sharing class CNS_EBulletin {
 
-    private static String DAILY_RECORD_TYPE_ID = Schema.SObjectType.AMS_eBulletin_Profile__c.RecordTypeInfosByName.get('Daily').RecordTypeId;
-    private static String WEEKLY_RECORD_TYPE_ID = Schema.SObjectType.AMS_eBulletin_Profile__c.RecordTypeInfosByName.get('Weekly').RecordTypeId;
+    private static Id DAILY_RECORD_TYPE_ID = RecordTypeSingleton.getInstance().getRecordTypeId('AMS_eBulletin_Profile__c', 'Daily');
+    private static Id WEEKLY_RECORD_TYPE_ID = RecordTypeSingleton.getInstance().getRecordTypeId('AMS_eBulletin_Profile__c', 'Weekly');
 
     private static final string ISO_8859_1_regEx = '^[\\x00-\\x7F\\xA0-\\xFF]+$';  //Reg exp to limit inputted chars to ISO-8859-1
 

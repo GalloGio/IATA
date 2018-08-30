@@ -15,7 +15,7 @@ public class howto_Controller_Test {
 	
     @isTest
 	static void test1() {
-		String recordTypeId = [SELECT Id FROM RecordType WHERE DeveloperName = 'IATA_Airline'].Id;
+		Id recordTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('Account', 'IATA_Airline');
     	
     	Account acc = ISSP_ObjectFactory.createNewAccount();
     	acc.IATACode__c = '100';

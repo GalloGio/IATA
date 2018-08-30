@@ -184,6 +184,18 @@
         <type>Lookup</type>
     </fields>
     <fields>
+        <fullName>AMS_Rejection_Withdrawal_remarks__c</fullName>
+        <description>Text field to allow user to add rejection/withdrawal comments</description>
+        <externalId>false</externalId>
+        <label>Rejection / Withdrawal remarks</label>
+        <length>32768</length>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>LongTextArea</type>
+        <visibleLines>3</visibleLines>
+    </fields>
+    <fields>
         <fullName>AMS_Target_Agency__c</fullName>
         <deleteConstraint>SetNull</deleteConstraint>
         <externalId>false</externalId>
@@ -370,6 +382,19 @@ IF(INCLUDES( ANG_Type_Of_Change__c, &quot;Location type to different legal entit
 IF(INCLUDES( ANG_Type_Of_Change__c, &quot;VMFR&quot;), &quot;VMFR&quot;, NULL)</formula>
         <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
         <label>Type of change</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Account_Reason__c</fullName>
+        <externalId>false</externalId>
+        <formula>Account__r.Reason__c</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <inlineHelpText>Formula to Account Reason__c</inlineHelpText>
+        <label>Account Reason</label>
         <required>false</required>
         <trackHistory>false</trackHistory>
         <trackTrending>false</trackTrending>
@@ -1468,6 +1493,21 @@ IF(Bank_Guarantee_received__c - Bank_Guarantee_requested__c =6, TEXT(4), TEXT((B
         <trackHistory>false</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Lookup</type>
+    </fields>
+    <fields>
+        <fullName>Business_Process__c</fullName>
+        <description>Technical field. Used to match custom settings on Change Code generation.</description>
+        <externalId>false</externalId>
+        <formula>IF(Account__r.CNS_Agency__c,
+				&apos;CNS-&apos; + TEXT(Account__r.Location_Type__c) + &apos;-&apos;+TEXT(Account__r.Location_Class__c),
+				&apos;AMS&apos;
+)</formula>
+        <label>Business Process</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
     </fields>
     <fields>
         <fullName>CNS_process__c</fullName>
@@ -3418,7 +3458,7 @@ if(Change_effective_as_of__c - today() &gt; 0,&quot;30&quot;,&quot;0&quot;)))</f
     <fields>
         <fullName>RPM_Approval__c</fullName>
         <externalId>false</externalId>
-        <label>Manager Approval</label>
+        <label>Manager Approval/Disapproval</label>
         <required>false</required>
         <trackFeedHistory>false</trackFeedHistory>
         <trackHistory>false</trackHistory>
@@ -7194,6 +7234,21 @@ if(Change_effective_as_of__c - today() &gt; 0,&quot;30&quot;,&quot;0&quot;)))</f
                     <fullName>Renewal not completed</fullName>
                     <default>false</default>
                     <label>Renewal not completed</label>
+                </value>
+                <value>
+                    <fullName>Input requested</fullName>
+                    <default>false</default>
+                    <label>Input requested</label>
+                </value>
+                <value>
+                    <fullName>Pending Reconsideration</fullName>
+                    <default>false</default>
+                    <label>Pending Reconsideration</label>
+                </value>
+                <value>
+                    <fullName>Closed_Disapproved</fullName>
+                    <default>false</default>
+                    <label>Closed_Disapproved</label>
                 </value>
             </valueSetDefinition>
         </valueSet>
@@ -37379,11 +37434,19 @@ if(Change_effective_as_of__c - today() &gt; 0,&quot;30&quot;,&quot;0&quot;)))</f
                 <default>false</default>
             </values>
             <values>
+                <fullName>Closed_Disapproved</fullName>
+                <default>false</default>
+            </values>
+            <values>
                 <fullName>Closed_Rejected</fullName>
                 <default>false</default>
             </values>
             <values>
                 <fullName>Closed_Withdrawn</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Input requested</fullName>
                 <default>false</default>
             </values>
             <values>
@@ -37404,6 +37467,10 @@ if(Change_effective_as_of__c - today() &gt; 0,&quot;30&quot;,&quot;0&quot;)))</f
             </values>
             <values>
                 <fullName>Pending Approval</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Pending Reconsideration</fullName>
                 <default>false</default>
             </values>
             <values>
@@ -45994,7 +46061,7 @@ $Profile.Name = &apos;System Administrator - automated processes&apos;
     </validationRules>
     <validationRules>
         <fullName>Location_Type_verification</fullName>
-        <active>true</active>
+        <active>false</active>
         <errorConditionFormula>AND(
 OR( ISPICKVAL(Account__r.Location_Type__c,&quot;HE&quot;),ISPICKVAL(Account__r.Location_Type__c,&quot;AE&quot;)),
 NOT( OR( ISPICKVAL(Account__r.Location_Class__c,&quot;P&quot;),ISPICKVAL(Account__r.Location_Class__c,&quot;D&quot;))

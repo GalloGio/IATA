@@ -1,7 +1,7 @@
 @isTest
 public class SurveyBatchTest {
 
-  public static final ID hqrt = Schema.SObjectType.Account.RecordTypeInfosByName.get('Airline Headquarters').RecordTypeId ;
+  public static final ID hqrt = RecordTypeSingleton.getInstance().getRecordTypeId('Account', 'IATA_Airline') ;
   public static final ID IFAPcaseRecordTypeID = RecordTypeSingleton.getInstance().getRecordTypeId('Case', 'IATA_Financial_Review');
   public static final ID europeRTId = RecordTypeSingleton.getInstance().getRecordTypeId('Case', 'CasesEurope');
   public static final ID chinaRTID = RecordTypeSingleton.getInstance().getRecordTypeId('Case', 'Cases_China_North_Asia');

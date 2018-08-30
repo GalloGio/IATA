@@ -3,7 +3,7 @@ private class AMS_MigrationToolHelperTest {
 
 	@testSetup static void setup() {
 
-		RecordType SAAMcaseRecordType = [Select r.Id, r.Name from RecordType r where r.Name = 'SAAM' limit 1];
+		Id SAAMcaseRecordTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('Case', 'ProcessEuropeSCE');
 		Id agencyRT = RecordTypeSingleton.getInstance().getRecordTypeId('Account', 'IATA_Agency');
 
 		// create test account1
@@ -34,10 +34,9 @@ private class AMS_MigrationToolHelperTest {
 		saamCase.Subject = 'Test SAAM case';
 		saamCase.Description = 'Test SAAM case';
 		saamCase.Status = 'Open';
-		saamCase.RecordTypeId = SAAMcaseRecordType.Id;
+		saamCase.RecordTypeId = SAAMcaseRecordTypeId;
 		saamCase.Reason1__c = 'New HO';
 		insert saamCase;
-
 
 		List<Case> casesList = [SELECT id, Status, Financial_Assessment_received__c, Bank_Guarantee_amount__c, Bank_Guarantee_deadline__c, Bank_Guarantee_received__c, Bank_Guarantee_requested__c, Change_effective_as_of__c, Criteria_remarks__c, Documentation_remarks__c, Dossier_reception_date__c, Fees_refund_requested__c, Finalization_checklist__c, Financial_Assessment_deadline__c, Financial_Assessment_requested__c, Financial_Review_Result__c, Invoice_number__c, Local_Inspection_compliant__c, Local_Inspection_deadline__c, Local_Inspection_received__c, Local_Inspection_requested__c, Process_Start_Date__c, Proof_of_payment_received__c, PSAA_EACP_Agreement_received__c, PSAA_signed_copy_sent__c, SAAM_Deadline_Date__c, AIMS_updated__c, Finalized_in_AIMS__c from case];
 
@@ -290,7 +289,7 @@ private class AMS_MigrationToolHelperTest {
 
 		insert new List<AMS_Account_Role__c> {role1, role2, role3, role4, role5, role6};
 
-		RecordType SAAMcaseRecordType = [Select r.Id, r.Name from RecordType r where r.Name = 'SAAM' limit 1];
+		Id SAAMcaseRecordTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('Case', 'ProcessEuropeSCE');
 
 		Case saamCase = new Case();
 		saamCase.ContactId = contact1.Id;
@@ -298,11 +297,9 @@ private class AMS_MigrationToolHelperTest {
 		saamCase.Subject = 'Test SAAM case2';
 		saamCase.Description = 'Test SAAM case2';
 		saamCase.Status = 'Open';
-		saamCase.RecordTypeId = SAAMcaseRecordType.Id;
+		saamCase.RecordTypeId = SAAMcaseRecordTypeId;
 		saamCase.Reason1__c = 'New HO';
 		insert saamCase;
-
-
 
 		AMS_Pax_Accreditation_Form__c accreditationObj = new AMS_Pax_Accreditation_Form__c();
 
@@ -335,8 +332,6 @@ private class AMS_MigrationToolHelperTest {
 		AMS_MigrationToolHelper.decode('T');
 		AMS_MigrationToolHelper.decode('V');
 		AMS_MigrationToolHelper.decode('X');
-
-
 
 		Test.stopTest();
 	}
@@ -481,7 +476,7 @@ private class AMS_MigrationToolHelperTest {
 
 		insert new List<AMS_Account_Role__c> {role1, role2, role3, role4, role5, role6, role7};
 
-		RecordType SAAMcaseRecordType = [Select r.Id, r.Name from RecordType r where r.Name = 'SAAM' limit 1];
+		Id SAAMcaseRecordTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('Case', 'ProcessEuropeSCE');
 
 		Case saamCase = new Case();
 		saamCase.ContactId = contact1.Id;
@@ -489,7 +484,7 @@ private class AMS_MigrationToolHelperTest {
 		saamCase.Subject = 'Test SAAM case2';
 		saamCase.Description = 'Test SAAM case2';
 		saamCase.Status = 'Open';
-		saamCase.RecordTypeId = SAAMcaseRecordType.Id;
+		saamCase.RecordTypeId = SAAMcaseRecordTypeId;
 		saamCase.Reason1__c = 'New HO';
 		insert saamCase;
 

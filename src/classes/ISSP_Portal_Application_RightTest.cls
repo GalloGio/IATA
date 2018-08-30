@@ -12,27 +12,23 @@ public class ISSP_Portal_Application_RightTest {
   }
 
   public static testMethod void ISSP_Portal_Application_RightTest() {
-    RecordType rt = [select Id from RecordType where developerName = :'Biller_Direct'];
+    Id rtId = RecordTypeSingleton.getInstance().getRecordTypeId('Portal_Application_Right__c', 'Biller_Direct');
     User thisUser = [SELECT Id FROM User WHERE Id = :UserInfo.getUserId()];
     Contact contact;
     User newUser;
 
     system.runAs(thisUser) {
-      //ISSP_ObjectFactory.fiilIncludedFields();
 
       Account acc = ISSP_ObjectFactory.createNewAccount();
-      //(Account)ISSP_ObjectFactory.createSObject('Account',false,4);
       insert acc;
 
       SAP_Account__c sap = new SAP_Account__c();
-      //(SAP_Account__c)ISSP_ObjectFactory.createSObject('SAP_Account__c',false,3);
       sap.SAP_Account_type__c = 'test';
       sap.Account__c = acc.Id;
       sap.SAP_Id__c = '1234';
       insert sap;
 
       contact = ISSP_ObjectFactory.createNewContact();
-      //(Contact)ISSP_ObjectFactory.createSObject('Contact',false,1);
       contact.AccountId = acc.Id;
       insert contact;
 
@@ -57,12 +53,11 @@ public class ISSP_Portal_Application_RightTest {
     system.runAs(thisUser) {
       Portal_Applications__c app = new Portal_Applications__c(Name = 'Biller Direct');
       insert app;
-      //Portal_Application_Right__c par = (Portal_Application_Right__c)ISSP_ObjectFactory.createSObject('Portal_Application_Right__c',false,2);
       Portal_Application_Right__c par = new Portal_Application_Right__c();
       par.Contact__c = contact.Id;
       par.Portal_Application__c = app.Id;
       par.Right__c = 'Access Granted';
-      par.RecordTypeId = rt.Id;
+      par.RecordTypeId = rtId;
       par.Invoice_Type__c = 'test';
       insert par;
     }
@@ -129,6 +124,9 @@ public class ISSP_Portal_Application_RightTest {
     insert newContact;
 
     User newPortalUser = ISSP_ObjectFactory.createPortalUser(newContact);
+    
+    newContact.OwnerId = newPortalUser.Id;
+    update newContact;
 
     //Portal_Applications__c app = [SELECT Id,Name,Provisioning_Type__c FROM Portal_Applications__c WHERE Name =:'IFG Production' LIMIT 1];
 
@@ -156,18 +154,12 @@ public class ISSP_Portal_Application_RightTest {
   public static testMethod void ebulletinAccessDeniedTest() {
     User thisUser = [SELECT Id FROM User WHERE Id = :UserInfo.getUserId()];
     system.runAs(thisUser) {
-      RecordType rtPar = [select Id from RecordType where developerName = :'Application_rigth'];
-      RecordType rtWeekly = [select Id from RecordType where developerName = :'Weekly'];
-      RecordType rtDaily = [select Id from RecordType where developerName = :'Daily'];
+      Id rtParId = RecordTypeSingleton.getInstance().getRecordTypeId('Portal_Application_Right__c', 'Application_rigth');
+      Id rtWeeklyId = RecordTypeSingleton.getInstance().getRecordTypeId('AMS_eBulletin_Profile__c', 'Weekly');
+      Id rtDailyId = RecordTypeSingleton.getInstance().getRecordTypeId('AMS_eBulletin_Profile__c', 'Daily');
 
       Account acc = ISSP_ObjectFactory.createNewAccount();
       insert acc;
-
-      /*SAP_Account__c sap = new SAP_Account__c();
-      sap.SAP_Account_type__c = 'test';
-      sap.Account__c = acc.Id;
-      sap.SAP_Id__c = '1234';
-      insert sap;*/
 
       Contact contact = ISSP_ObjectFactory.createNewContact();
       contact.AccountId = acc.Id;
@@ -197,7 +189,7 @@ public class ISSP_Portal_Application_RightTest {
       par.Contact__c = contact.Id;
       par.Portal_Application__c = app.Id;
       par.Right__c = 'Access Granted';
-      par.RecordTypeId = rtPar.Id;
+      par.RecordTypeId = rtParId;
       insert par;
 
       AMS_eBulletin_Profile__c profDaily = new AMS_eBulletin_Profile__c(Area_2__c = true,
@@ -206,7 +198,7 @@ public class ISSP_Portal_Application_RightTest {
           Opt_out_Bulletin__c = false,
           Program_Passage__c = true,
           User__c = newUser.Id,
-          RecordTypeId = rtDaily.Id,
+          RecordTypeId = rtDailyId,
           Agency_Info_Irregularities__c = true);
       insert profDaily;
 
@@ -216,7 +208,7 @@ public class ISSP_Portal_Application_RightTest {
           Opt_out_Bulletin__c = false,
           Program_Passage__c = true,
           User__c = newUser.Id,
-          RecordTypeId = rtWeekly.Id,
+          RecordTypeId = rtWeeklyId,
           Agency_Info_Irregularities__c = true);
       insert profWeekly;
 
@@ -292,8 +284,12 @@ public class ISSP_Portal_Application_RightTest {
     User thisUser = [SELECT Id FROM User WHERE Id = :UserInfo.getUserId()];
     ISSP_WS_SIS_Callout_Common_Test.load_ISSP_CS();
     Id recordtypeAgency = RecordTypeSingleton.getInstance().getRecordTypeId('Account', 'IATA_Agency') ;
-    Portal_Applications__c sisApp = new Portal_Applications__c(Name = 'SIS');
-    insert sisApp;
+    List<Portal_Applications__c> lApp = new List<Portal_Applications__c>();        
+    lApp.add(new Portal_Applications__c (Name = 'Baggage Proration'));
+    lApp.add(new Portal_Applications__c (Name = 'Standards Setting Workspace'));
+    lApp.add(new Portal_Applications__c (Name = 'IATA Accreditation'));
+    lApp.add(new Portal_Applications__c (Name = 'SIS'));
+    insert lApp;
     ISSP_ObjectFactory.fiilIncludedFields();
 
     Account acc = ISSP_ObjectFactory.createNewAccount();
@@ -316,11 +312,24 @@ public class ISSP_Portal_Application_RightTest {
     Test.startTest();
     system.runAs(thisUser) {
       ISSP_UserTriggerHandler.preventTrigger = true;
-      Portal_Application_Right__c appRight = new Portal_Application_Right__c();
-      appRight.Portal_Application__c = sisApp.Id;
-      appRight.Right__c = 'Access Granted';
-      appRight.Contact__c = contact.Id;
+      List<Portal_Application_Right__c> appRight = new list<Portal_Application_Right__c>();
+      appRight.add(new Portal_Application_Right__c(Portal_Application__c = lApp[0].Id,
+      Right__c = 'Access Granted',
+      Contact__c = contact.Id));
+      /*appRight.add(new Portal_Application_Right__c(Portal_Application__c = lApp[1].Id,
+      Right__c = 'Access Granted',
+      Contact__c = contact.Id));*/
+      appRight.add(new Portal_Application_Right__c(Portal_Application__c = lApp[2].Id,
+      Right__c = 'Access Granted',
+      Contact__c = contact.Id));
+      appRight.add(new Portal_Application_Right__c(Portal_Application__c = lApp[3].Id,
+      Right__c = 'Access Granted',
+      Contact__c = contact.Id));
       insert appRight;
+
+       appRight[0].Right__c = 'Access Denied';
+       appRight[1].Right__c = 'Access Denied';
+       update appRight;
     }
     Test.stopTest();
 
@@ -463,17 +472,110 @@ public class ISSP_Portal_Application_RightTest {
       ISSP_UserTriggerHandler.preventSISIntegration = false;
     }
 
-    ISSP_WS_SIS_Callout_ActivateUser.TEST_RESPONSE = '<Response><IsSuccess>true</IsSuccess></Response>';
-
-    delete [SELECT Id FROM ISSP_Web_Service_Log__c];
-
-    Test.startTest();
-    system.runAs(thisUser) {
-      appRight.Right__c = 'Access Denied';
-      update appRight;
+        ISSP_WS_SIS_Callout_ActivateUser.TEST_RESPONSE = '<Response><IsSuccess>true</IsSuccess></Response>';
+        
+        delete [SELECT Id FROM ISSP_Web_Service_Log__c];
+        
+        Test.startTest();
+        system.runAs(thisUser) {
+            appRight.Right__c = 'Access Denied';
+            update appRight;
+        }
+        Test.stopTest();
+        
+        checkLogs(true, 'DeactivateUser');
     }
-    Test.stopTest();
+    
+    static testMethod void testParentContactInsertService() {
+        Portal_Applications__c sisApp = new Portal_Applications__c(Name = 'SIS');
+        insert sisApp;
+        
+        Id recordtypeAgency = RecordTypeSingleton.getInstance().getRecordTypeId('Account','IATA_Agency');
+        Account acc = ISSP_ObjectFactory.createNewAccount();
+        acc.RecordTypeId = recordtypeAgency;
+        insert acc;
+        
+        Contact contact = ISSP_WS_Utilities.createContact('firstName', 'lastname', 'email@email.com', acc.Id, false);
+        insert contact;
+        
+        contact = [SELECT Available_Services__c FROM Contact WHERE Id = :contact.Id];
+        System.assert(String.isBlank(contact.Available_Services__c));
 
-    checkLogs(true, 'DeactivateUser');
-  }
+        Test.startTest();
+        Portal_Application_Right__c appRight = new Portal_Application_Right__c();
+        appRight.Portal_Application__c = sisApp.Id;
+        appRight.Right__c = 'Access Granted';
+        appRight.Contact__c = contact.Id;
+        insert appRight;
+        Test.stopTest();
+        
+        contact = [SELECT Available_Services__c FROM Contact WHERE Id = :contact.Id];
+        System.assertEquals(contact.Available_Services__c,sisApp.Name);
+    }
+    
+    static testMethod void testParentContactUpdateService() {
+        Portal_Applications__c sisApp = new Portal_Applications__c(Name = 'SIS');
+        insert sisApp;
+        
+        Id recordtypeAgency = RecordTypeSingleton.getInstance().getRecordTypeId('Account','IATA_Agency');
+        Account acc = ISSP_ObjectFactory.createNewAccount();
+        acc.RecordTypeId = recordtypeAgency;
+        insert acc;
+        
+        Contact contact = ISSP_WS_Utilities.createContact('firstName', 'lastname', 'email@email.com', acc.Id, false);
+        insert contact;
+        
+        contact = [SELECT Available_Services__c FROM Contact WHERE Id = :contact.Id];
+        System.assert(String.isBlank(contact.Available_Services__c));
+
+        Portal_Application_Right__c appRight = new Portal_Application_Right__c();
+        appRight.Portal_Application__c = sisApp.Id;
+        appRight.Right__c = 'Access Denied';
+        appRight.Contact__c = contact.Id;
+        insert appRight;
+        
+        contact = [SELECT Available_Services__c FROM Contact WHERE Id = :contact.Id];
+        System.assert(String.isBlank(contact.Available_Services__c));
+        
+        Test.startTest();
+        appRight.Right__c = 'Access Granted';
+        update appRight;
+        Test.stopTest();
+        
+        contact = [SELECT Available_Services__c FROM Contact WHERE Id = :contact.Id];
+        System.assertEquals(contact.Available_Services__c,sisApp.Name);
+    }
+    
+    static testMethod void testParentContactDeleteService() {
+        Portal_Applications__c sisApp = new Portal_Applications__c(Name = 'SIS');
+        insert sisApp;
+        
+        Id recordtypeAgency = RecordTypeSingleton.getInstance().getRecordTypeId('Account','IATA_Agency');
+        Account acc = ISSP_ObjectFactory.createNewAccount();
+        acc.RecordTypeId = recordtypeAgency;
+        insert acc;
+        
+        Contact contact = ISSP_WS_Utilities.createContact('firstName', 'lastname', 'email@email.com', acc.Id, false);
+        contact.ID_Card_Holder__c = true;
+        insert contact;
+        
+        contact = [SELECT Available_Services__c FROM Contact WHERE Id = :contact.Id];
+        System.assertEquals(IdCardUtil.IDCARD_SERVICE_NAME,contact.Available_Services__c);
+
+        Portal_Application_Right__c appRight = new Portal_Application_Right__c();
+        appRight.Portal_Application__c = sisApp.Id;
+        appRight.Right__c = 'Access Granted';
+        appRight.Contact__c = contact.Id;
+        insert appRight;
+        
+        contact = [SELECT Available_Services__c FROM Contact WHERE Id = :contact.Id];
+        System.assertEquals(sisApp.Name + ';' + IdCardUtil.IDCARD_SERVICE_NAME, contact.Available_Services__c);
+        
+        Test.startTest();
+        delete appRight;
+        Test.stopTest();
+        
+        contact = [SELECT Available_Services__c FROM Contact WHERE Id = :contact.Id];
+        System.assertEquals(IdCardUtil.IDCARD_SERVICE_NAME,contact.Available_Services__c);
+    }
 }

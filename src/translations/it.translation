@@ -137,6 +137,10 @@
         <name>AIMSAccountBeforeUpdate_AutoProcess_Restricted</name>
     </customLabels>
     <customLabels>
+        <label><!-- AMS_AttchNotifyOwner --></label>
+        <name>AMS_AttchNotifyOwner</name>
+    </customLabels>
+    <customLabels>
         <label><!-- AMS Conga Merge --></label>
         <name>AMS_Conga_Merge</name>
     </customLabels>
@@ -159,6 +163,14 @@
     <customLabels>
         <label><!-- AMS_New_Change_Code_Notification --></label>
         <name>AMS_New_Change_Code_Notification</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- AMS_NotificationSent --></label>
+        <name>AMS_NotificationSent</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- AMS_Notify_OSCAR_Owner --></label>
+        <name>AMS_Notify_OSCAR_Owner</name>
     </customLabels>
     <customLabels>
         <label><!-- AMS OSCAR AGENCYFEES --></label>
@@ -563,6 +575,14 @@
     <customLabels>
         <label><!-- AMS_PERFORM_CORRECTION --></label>
         <name>AMS_PERFORM_CORRECTION</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- AMS_PendingHOAccr --></label>
+        <name>AMS_PendingHOAccr</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- AMS_RRejected --></label>
+        <name>AMS_RRejected</name>
     </customLabels>
     <customLabels>
         <label><!-- AMS_RollbackCase_Description --></label>
@@ -11504,7 +11524,7 @@ Tenga presente che molte fatture IATA vengono addebitate via BSP/CASS. La preghi
         <name>ISSP_Registration_BusinessPhone</name>
     </customLabels>
     <customLabels>
-        <label><!-- ISSP_Registration --></label>
+        <label>Il telefono aziendale non è valido, verifica. Verifica, inoltre, di aver selezionato il paese corretto scegliendo una bandiera dall’elenco oppure inserendo il codice dello Stato preceduto dal segno &apos;+&apos;.</label>
         <name>ISSP_Registration_BusinessPhone_Msg</name>
     </customLabels>
     <customLabels>
@@ -11580,7 +11600,7 @@ Tenga presente che molte fatture IATA vengono addebitate via BSP/CASS. La preghi
         <name>ISSP_Registration_Error_TypeofCustomer</name>
     </customLabels>
     <customLabels>
-        <label><!-- ISSP_Registration --></label>
+        <label>Il numero di fax non è valido, verifica. Verifica, inoltre, di aver selezionato il paese corretto scegliendo una bandiera dall’elenco oppure inserendo il codice dello Stato preceduto dal segno &apos;+&apos;.</label>
         <name>ISSP_Registration_FaxPhone_Msg</name>
     </customLabels>
     <customLabels>
@@ -11617,7 +11637,7 @@ Se non si dispone di un codice IATA, è necessario selezionare &quot;&quot;Altro
         <name>ISSP_Registration_MobilePhone</name>
     </customLabels>
     <customLabels>
-        <label><!-- ISSP_Registration --></label>
+        <label>Il telefono cellulare non è valido, verifica. Verifica, inoltre, di aver selezionato il paese corretto scegliendo una bandiera dall’elenco oppure inserendo il codice dello Stato preceduto dal segno &apos;+&apos;.</label>
         <name>ISSP_Registration_MobilePhone_Msg</name>
     </customLabels>
     <customLabels>
@@ -13360,7 +13380,7 @@ ll Dashboard di tesoreria IATA è uno strumento web dinamico  che assiste e supp
         <name>OneId_AccountSearchPlaceholder</name>
     </customLabels>
     <customLabels>
-        <label>Associazione account</label>
+        <label>Dati aziendali</label>
         <name>OneId_Account_Association</name>
     </customLabels>
     <customLabels>
@@ -13400,11 +13420,11 @@ ll Dashboard di tesoreria IATA è uno strumento web dinamico  che assiste e supp
         <name>OneId_Community_Name</name>
     </customLabels>
     <customLabels>
-        <label>Associazione e convalida contatto</label>
+        <label>Verifica Email</label>
         <name>OneId_Contact_Association_Validation</name>
     </customLabels>
     <customLabels>
-        <label>Creazione contatto</label>
+        <label>Dati di contatto</label>
         <name>OneId_Contact_Creation</name>
     </customLabels>
     <customLabels>
@@ -13576,6 +13596,10 @@ ll Dashboard di tesoreria IATA è uno strumento web dinamico  che assiste e supp
         <name>OneId_Privacy_Policy</name>
     </customLabels>
     <customLabels>
+        <label><!-- OneId_Privacy_Policy_Link --></label>
+        <name>OneId_Privacy_Policy_Link</name>
+    </customLabels>
+    <customLabels>
         <label><!-- OneId_Profile_BillingCity --></label>
         <name>OneId_Profile_BillingCity</name>
     </customLabels>
@@ -13628,7 +13652,10 @@ ll Dashboard di tesoreria IATA è uno strumento web dinamico  che assiste e supp
         <name>OneId_Registration_Error_BusinessPhone</name>
     </customLabels>
     <customLabels>
-        <label><!-- OneId_Registration_UserExist --></label>
+        <label>Questo indirizzo e-mail risulta già registrato.
+Se sei un utente E-Commerce, utilizza le tue credenziali di accesso E-Commerce.
+Se sei un utente del Portale clienti, utilizza le tue credenziali di accesso del Portale clienti.
+Se desideri ripristinare la password, torna alla schermata di accesso e utilizza la funzione &quot;password dimenticata&quot;.</label>
         <name>OneId_Registration_UserExist</name>
     </customLabels>
     <customLabels>

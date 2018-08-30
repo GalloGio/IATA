@@ -48,7 +48,7 @@ trigger CaseBeforeTrigger on Case (before delete, before insert, before update) 
     boolean AMS_OSCARCaseTrigger = true;
     boolean trgAccelyaRequestSetCountry = true;
     boolean trgCustomerPortalCaseSharing = true;
-    if (!Test.isRunningTest()) {
+    if(!Test.isRunningTest()){
         trgProcessISSCase = GlobalCaseTrigger__c.getValues('BT trgProcessISSCase').ON_OFF__c;                                       //55555555555555
         trgCase = GlobalCaseTrigger__c.getValues('BT trgCase').ON_OFF__c;                                                           //33333333333333
         trgCaseIFAP = GlobalCaseTrigger__c.getValues('BT trgCaseIFAP').ON_OFF__c;                                                   //44444444444444
@@ -102,6 +102,7 @@ trigger CaseBeforeTrigger on Case (before delete, before insert, before update) 
     ID CSRcaseRecordTypeID = RecordTypeSingleton.getInstance().getRecordTypeId('Case', 'BSPlink_Customer_Service_Requests_CSR');
     ID PortalRecordTypeID  = RecordTypeSingleton.getInstance().getRecordTypeId('Case', 'External_Cases_InvoiceWorks');
     ID ifgCaseRecordTypeID = RecordTypeSingleton.getInstance().getRecordTypeId('Case', 'Cases_IFG');
+    ID caseSEDARecordTypeID = RecordTypeSingleton.getInstance().getRecordTypeId('Case', 'SEDA');
     /*Record type*/
 
     /*Variables*/
@@ -159,9 +160,9 @@ trigger CaseBeforeTrigger on Case (before delete, before insert, before update) 
         //if (Trigger.isUpdate)  dgAI2.DG_PredictionTriggerHandler.doFeedback(trigger.new);
 
         /*trgCaseIFAP Trigger*/
-        if (trgCaseIFAP) { //FLAG
+        if(trgCaseIFAP){ //FLAG
             system.debug('trgCaseIFAP');
-            if (!CaseChildHelper.noValidationsOnTrgCAseIFAP) {
+            if (!CaseChildHelper.noValidationsOnTrgCAseIFAP){
                 system.debug('##ROW##');
                 Boolean isIFAp = false;
                 Set<Id> contactIds = new Set<Id>();
@@ -169,8 +170,8 @@ trigger CaseBeforeTrigger on Case (before delete, before insert, before update) 
                 List<Contact> contacts = new List<Contact>();
                 List<Account> accounts = new List<Account>();
                 for (Case aCase : trigger.New) {
-                    //GM - IMPRO - START
-                    //again the for loop doesn't work properly, if the first in the list is not ifap rt, it exits
+                //GM - IMPRO - START
+                //again the for loop doesn't work properly, if the first in the list is not ifap rt, it exits
                     if (aCase.RecordTypeId == IFAPcaseRecordTypeID) {
                         isIFAp = true;
                     } else {
@@ -184,11 +185,11 @@ trigger CaseBeforeTrigger on Case (before delete, before insert, before update) 
                 if (isIFAp) {
                     system.debug('##ROW##');
                     IFAPcurrentUserProfile = [SELECT ID, Name FROM Profile WHERE id = : UserInfo.getProfileId() limit 1];
-                    if (!contactIds.isEmpty()) {
+                    if(!contactIds.isEmpty()){
                         contacts = [Select c.Id, c.Agent_Type__c, c.AccountId From Contact c where Id IN : contactIds];
                     }
-                    if (!IFAPaccountIds.isEmpty()) {
-                        accounts = [Select a.Id, a.IATACode__c, a.BillingCountry, a.Type From Account a where Id IN : IFAPaccountIds];
+                    if(!IFAPaccountIds.isEmpty()){
+                        accounts = [Select a.Id, a.IATACode__c, a.BillingCountry, a.Type, a.RecordType.DeveloperName, a.CNS_Account__c From Account a where Id IN : IFAPaccountIds];
                     }
                     System.debug('QUERY DEBUG' + Limits.getQueryRows());
                     //GM - IMPRO - START
@@ -199,10 +200,10 @@ trigger CaseBeforeTrigger on Case (before delete, before insert, before update) 
                     //Ifap Authorized users have a specific permission set
                     /* START comment: fix too many soql queries - NEWGEN-3429
                     List<PermissionSet> PSet = [SELECT Id FROM PermissionSet WHERE Name = 'IFAP_Authorized_Users'];
-                    if (PSet <> null && PSet.size() > 0) {
+                    if(PSet <> null && PSet.size() > 0) {
                         ID PSetID = PSet[0].Id;
                         List<PermissionSetAssignment> authorizedUserIds = [SELECT AssigneeId FROM PermissionSetAssignment WHERE PermissionSet.ID = :PSetID];
-                        for (PermissionSetAssignment psa : authorizedUserIds) {
+                        for (PermissionSetAssignment psa : authorizedUserIds){
                             if (psa.AssigneeId == UserInfo.getUserId())
                                 isIfapAuthorizedUser = true;
                         }
@@ -231,6 +232,9 @@ trigger CaseBeforeTrigger on Case (before delete, before insert, before update) 
                         for (Account aAccount : accounts) {
                             if (aAccount.Id == aCase.AccountId) {
                                 accountMap.put(aCase.id, aAccount);
+                                if(aAccount.RecordType.DeveloperName == 'IATA_Agency' && aAccount.CNS_Account__c){
+                                    aCase.CNSCase__c = true;
+                                }
                                 break;
                             }
                         }
@@ -241,13 +245,13 @@ trigger CaseBeforeTrigger on Case (before delete, before insert, before update) 
         /*trgCaseIFAP Trigger*/
 
         /*UserInfoUpdate Trigger*/
-        if (UserInfoUpdate) { //FLAG
+        if(UserInfoUpdate){ //FLAG
             system.debug('##UserInfoUpdate');
             //IMPRO GM START
             //currentUser = [Select Id, FirstName, LastName, ProfileId from User where Id =: UserInfo.getUserId() limit 1];
             CurrUser = UserInfo.getUserId();
             Set<string> caseStatus = new set<string>();
-            for (CaseClosedStatus__c cs : CaseClosedStatus__c.getAll().values()) { //RN-INC347705 -> get isclosed cases status from custom Setting to remove a query
+            for(CaseClosedStatus__c cs : CaseClosedStatus__c.getAll().values()) { //RN-INC347705 -> get isclosed cases status from custom Setting to remove a query
                 caseStatus.add(cs.name);
             }
             //IMPRO GM END
@@ -616,7 +620,7 @@ trigger CaseBeforeTrigger on Case (before delete, before insert, before update) 
             string airlineJoining = 'Airline Joining';
             string airlineSuspension = 'Airline Suspension Process';
             String separator = '%%%__%%%';
-            string APCaseRTID = Schema.SObjectType.Case.RecordTypeInfosByName.get('IDFS Airline Participation Process').RecordTypeId ;
+            Id APCaseRTID = RecordTypeSingleton.getInstance().getRecordTypeId('Case', 'IDFS_Airline_Participation_Process');
             //date pretrasfomrationDate =  date.newinstance(2013, 11, 30);
         list<case> casesToTrigger = new list<Case>();
         for (case c: trigger.new) {
@@ -1237,6 +1241,11 @@ trigger CaseBeforeTrigger on Case (before delete, before insert, before update) 
                 if ((c.RecordTypeId == SIDRAcaseRecordTypeID || c.RecordTypeId == SEDAcaseRecordTypeID) && c.Currency__c != null) {//INC200638 - added SEDA record type
                     setCurrencies.add(c.Currency__c);
                 }
+                if (c.RecordTypeId == caseSEDARecordTypeID) {
+                    if (c.Demand_by_Email_Fax__c!=null) {
+                        c.CS_Rep_Contact_Customer__c = UserInfo.getUserId();
+                    }
+                }
             }
             map<String, CurrencyType> mapCurrencyTypePerCurrencyCode = new map<String, CurrencyType>();
             if (! setCurrencies.isEmpty()) {
@@ -1699,6 +1708,12 @@ trigger CaseBeforeTrigger on Case (before delete, before insert, before update) 
                 if (aCase.RecordTypeId == SIDRAcaseRecordTypeID && (aCase.IRR_Withdrawal_Reason__c == SMALLAMOUNT || aCase.IRR_Withdrawal_Reason__c == MINORPOLICY) && aCase.CreatedDate >= Last24Hours && aCase.AccountId != null) {
                     // We add the Account id to the set only if the current case is a Sidra Small amount case. Avoid unwanted Case record types
                     accountIds.add(aCase.AccountId);
+                }     
+                if (aCase.RecordTypeId == caseSEDARecordTypeID) {
+                    Case aCaseOld = Trigger.oldMap.get(aCase.Id);
+                    if (aCase.Demand_by_Email_Fax__c!=aCaseOld.Demand_by_Email_Fax__c) {
+                        aCase.CS_Rep_Contact_Customer__c = UserInfo.getUserId();
+                    }
                 }
             }
 
@@ -1762,10 +1777,17 @@ trigger CaseBeforeTrigger on Case (before delete, before insert, before update) 
                 }
                 //Here we calculate the first contact with client in business hours
                 Case oldCase = System.Trigger.oldMap.get(updatedCase.Id);
-                if (updatedCase.BusinessHoursId <> null && updatedCase.First_Contact_with_Client__c <> null
-                        && (updatedCase.First_Contact_w_Client_in_Business_Hours__c != oldCase.First_Contact_w_Client_in_Business_Hours__c
-                            || updatedCase.First_Contact_w_Client_in_Business_Hours__c == null))
+                if(
+                    updatedCase.BusinessHoursId <> null
+                    && updatedCase.First_Contact_with_Client__c <> null 
+                    && (
+                        updatedCase.First_Contact_w_Client_in_Business_Hours__c != oldCase.First_Contact_w_Client_in_Business_Hours__c 
+                        || updatedCase.First_Contact_w_Client_in_Business_Hours__c == null
+                        || updatedCase.First_Contact_w_Client_in_Business_Hours__c < 0
+                    )
+                ) {
                     updatedCase.First_Contact_w_Client_in_Business_Hours__c = BusinessHours.diff(updatedCase.BusinessHoursId, updatedCase.CreatedDate, updatedCase.First_Contact_with_Client__c) / 3600000.0;
+                }
             }
             if (Trigger.isUpdate && (!transformationHelper.CalculateBusinessHoursAgesGet() || BusinessDays.isAllowedRunTwice)) { // we are on the update so we have the caseIDS!Hurra!!
                 system.debug('##ROW##');
@@ -1777,7 +1799,7 @@ trigger CaseBeforeTrigger on Case (before delete, before insert, before update) 
                     Case oldCase = System.Trigger.oldMap.get(updatedCase.Id);
                     // this very next section is for the kpi
                     if ((oldCase.Status != updatedCase.Status) || (updatedCase.BusinessHoursId <> null && updatedCase.BusinessHoursId <> oldCase.BusinessHoursId)
-                            || (oldCase.First_Business_Day__c == null)) {
+                        || (oldCase.First_Business_Day__c == null)) {
                         casesIdSoCalculate.add(updatedCase.id);
                     }
                     // the following section is used for the

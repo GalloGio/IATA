@@ -8,7 +8,7 @@ private class Ifap_ReminderBatchTestClass {
 		CaseChildHelper.noValidationsOnTrgCAseIFAP  = true;
        
                      
-            ID hqrt =Schema.SObjectType.Account.RecordTypeInfosByName.get('Airline Headquarters').RecordTypeId ;
+            ID hqrt =RecordTypeSingleton.getInstance().getRecordTypeId('Account', 'IATA_Airline') ;
             ID IFAPcaseRecordTypeID = RecordTypeSingleton.getInstance().getRecordTypeId('Case', 'IATA_Financial_Review'); 
             
             List<IATA_ISO_Country__c> isoCountries = new List<IATA_ISO_Country__c>();

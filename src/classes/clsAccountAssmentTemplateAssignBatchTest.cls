@@ -24,9 +24,10 @@ private class clsAccountAssmentTemplateAssignBatchTest {
 
     static testMethod void myUnitTest() {
         // TO DO: implement unit test
-        List<RecordType> accountRecordTypes = [Select r.Id, r.Name From RecordType r Where r.SobjectType  = 'Account' and r.Name = 'Standard Account'];
+        Id accountRecordTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('Account', 'Standard_Account');
+        
         Account theAccount = new Account();
-		theAccount.RecordTypeId = accountRecordTypes.get(0).Id;
+		theAccount.RecordTypeId = accountRecordTypeId;
 		theAccount.Name = 'UnitTest Account';
 		theAccount.IATACode__c = '5553567';
 		theAccount.Industry = 'Cargo Agent';

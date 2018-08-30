@@ -11,7 +11,7 @@ private class AMS_UpdateCertificateCampaign_Test {
 	static final String LANGUAGE = 'en_US';
 	static final String TIMEZONE = 'Asia/Dubai';
 	static final String PORTAL_ROLE = 'Manager';
-	static final Id ACCOUNT_RECORD_TYPE_ID_IATA_AGENCY = Schema.SObjectType.Account.RecordTypeInfosByName.get('Agency').RecordTypeId;
+	static final Id ACCOUNT_RECORD_TYPE_ID_IATA_AGENCY = RecordTypeSingleton.getInstance().getRecordTypeId('Account', 'IATA_Agency');
 
 	static User testUser;
 	static Contact testContact;

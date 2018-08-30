@@ -66,9 +66,8 @@ private class AMS_Change_Code_Notification_Contr_Test {
 
 	@isTest static void test_Case_notification() {
 
-		Id conRtId = [SELECT Id FROM RecordType WHERE DeveloperName ='Standard_Contact' AND SobjectType = 'Contact'].Id;
-        //Id accRtId = [SELECT Id FROM RecordType WHERE DeveloperName ='IATA_Airline' AND SobjectType = 'Account'].Id;
-        Id agcRtId = [SELECT Id FROM RecordType WHERE DeveloperName ='IATA_Agency' AND SobjectType = 'Account'].Id;
+		Id conRtId = RecordTypeSingleton.getInstance().getRecordTypeId('Contact', 'Standard_Contact');
+        Id agcRtId = RecordTypeSingleton.getInstance().getRecordTypeId('Account', 'IATA_Agency');
 
         IATA_ISO_Country__c isoc = new IATA_ISO_Country__c(Name = 'Test', ISO_Code__c = 'TS');       
         insert isoc;
@@ -99,13 +98,11 @@ private class AMS_Change_Code_Notification_Contr_Test {
         ccase.Status = 'Open';
         insert ccase;
 
-
         Agency_Applied_Change_code__c ccode= new Agency_Applied_Change_code__c();
         ccode.Change_Code__c = 'TER';
         ccode.SIDRA_Case__c = ccase.Id;
         ccode.Account__c = msoAccount.Id;
         insert ccode;
-
 
         Test.startTest();
 

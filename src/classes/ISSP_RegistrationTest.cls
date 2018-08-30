@@ -10,12 +10,12 @@ private class ISSP_RegistrationTest {
 		Account acc = ISSP_ObjectFactory.createNewAccount();
 		insert acc;
 
-		RecordType rt = [Select r.Id,r.Name, r.DeveloperName From RecordType r where  DeveloperName='Standard_Contact'];
+		Id rtId = RecordTypeSingleton.getInstance().getRecordTypeId('Contact', 'Standard_Contact');
 		Contact con = ISSP_ObjectFactory.createNewContact();
     	con.AccountId = acc.Id;
     	con.LastName = 'test';
     	con.Email = 'test.issp.registration@testisspregistration.com';
-    	con.RecordTypeId = rt.Id;
+    	con.RecordTypeId = rtId;
 		insert con;
 
        	User newUser = new User(alias = 'dsfsdfds',
@@ -54,7 +54,7 @@ private class ISSP_RegistrationTest {
 		IATA_ISO_Country__c ISO_Country = new IATA_ISO_Country__c(ISO_Code__c='TT',Name='test');
         insert ISO_Country;
 
-        String recordTypeId = [SELECT Id FROM RecordType WHERE DeveloperName = 'IATA_Airline'].Id;
+        Id recordTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('Account', 'IATA_Airline');
         Account acc = ISSP_ObjectFactory.createNewAccount();
         acc.IATACode__c = '100';
         acc.IATA_ISO_Country__c = ISO_Country.Id;
@@ -106,12 +106,12 @@ private class ISSP_RegistrationTest {
 		Account acc = ISSP_ObjectFactory.createNewAccount();
 		insert acc;
 
-		RecordType rt = [Select r.Id,r.Name, r.DeveloperName From RecordType r where  DeveloperName='Standard_Contact'];
+		Id rtId = RecordTypeSingleton.getInstance().getRecordTypeId('Contact', 'Standard_Contact');
 		Contact con = ISSP_ObjectFactory.createNewContact();
     	con.AccountId = acc.Id;
     	con.LastName = 'test';
     	con.Email = 'test.issp.registration@testisspregistration.com';
-    	con.RecordTypeId = rt.Id;
+    	con.RecordTypeId = rtId;
 		insert con;
 
 		User newUser = new User(alias = 'dsfsdfds',
@@ -147,12 +147,12 @@ private class ISSP_RegistrationTest {
 			Account acc = ISSP_ObjectFactory.createNewAccount();
 			insert acc;
 
-			RecordType rt = [Select r.Id,r.Name, r.DeveloperName From RecordType r where  DeveloperName='Standard_Contact'];
+			Id rtId = RecordTypeSingleton.getInstance().getRecordTypeId('Contact', 'Standard_Contact');
 			Contact con = ISSP_ObjectFactory.createNewContact();
 	    	con.AccountId = acc.Id;
 	    	con.LastName = 'test';
 	    	con.Email = 'test.issp.registration@testisspregistration.com';
-	    	con.RecordTypeId = rt.Id;
+	    	con.RecordTypeId = rtId;
 			insert con;
 
 			User newUser = new User(alias = 'dsfsdfds',
@@ -188,12 +188,12 @@ private class ISSP_RegistrationTest {
 		Account acc = ISSP_ObjectFactory.createNewAccount();
 		insert acc;
 
-		RecordType rt = [Select r.Id,r.Name, r.DeveloperName From RecordType r where  DeveloperName='Standard_Contact'];
+		Id rtId = RecordTypeSingleton.getInstance().getRecordTypeId('Contact', 'Standard_Contact');
 		Contact con = ISSP_ObjectFactory.createNewContact();
     	con.AccountId = acc.Id;
     	con.LastName = 'test';
     	con.Email = 'test.issp.registration@testisspregistration.com';
-    	con.RecordTypeId = rt.Id;
+    	con.RecordTypeId = rtId;
 		insert con;
 
 		ISSP_Registration ctrl = new ISSP_Registration();
@@ -210,7 +210,7 @@ private class ISSP_RegistrationTest {
 		IATA_ISO_Country__c ISO_Country = new IATA_ISO_Country__c(ISO_Code__c='TT',Name='test');
         insert ISO_Country;
 
-        String recordTypeId = [SELECT Id FROM RecordType WHERE DeveloperName = 'IATA_Airline'].Id;
+        Id recordTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('Account', 'IATA_Airline');
         Account acc = ISSP_ObjectFactory.createNewAccount();
         acc.IATACode__c = '100';
         acc.IATA_ISO_Country__c = ISO_Country.Id;
@@ -254,7 +254,7 @@ private class ISSP_RegistrationTest {
 		IATA_ISO_Country__c ISO_Country = new IATA_ISO_Country__c(ISO_Code__c='TT',Name='test');
         insert ISO_Country;
 
-        String recordTypeId = [SELECT Id FROM RecordType WHERE DeveloperName = 'IATA_Airline'].Id;
+        Id recordTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('Account', 'IATA_Airline');
         Account acc = ISSP_ObjectFactory.createNewAccount();
         acc.IATACode__c = '100';
         acc.IATA_ISO_Country__c = ISO_Country.Id;
@@ -300,7 +300,7 @@ private class ISSP_RegistrationTest {
         IATA_ISO_Country__c ISO_Country2 = new IATA_ISO_Country__c(ISO_Code__c='TP',Name='test2');
         insert ISO_Country2;
 
-        String recordTypeId = [SELECT Id FROM RecordType WHERE DeveloperName = 'IATA_Airline'].Id;
+        Id recordTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('Account', 'IATA_Airline');
         Account acc = ISSP_ObjectFactory.createNewAccount();
         acc.IATACode__c = '100';
         acc.IATA_ISO_Country__c = ISO_Country.Id;
@@ -343,7 +343,7 @@ private class ISSP_RegistrationTest {
 		IATA_ISO_Country__c ISO_Country = new IATA_ISO_Country__c(ISO_Code__c='TT',Name='test');
         insert ISO_Country;
 
-        String recordTypeId = [SELECT Id FROM RecordType WHERE DeveloperName = 'IATA_Agency'].Id;
+        Id recordTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('Account', 'IATA_Agency');
         Account acc = ISSP_ObjectFactory.createNewAccount();
         acc.Name = 'TestAgency';
         acc.IATA_ISO_Country__c = ISO_Country.Id;
@@ -394,7 +394,7 @@ private class ISSP_RegistrationTest {
 		IATA_ISO_Country__c ISO_Country = new IATA_ISO_Country__c(ISO_Code__c='TT',Name='test');
         insert ISO_Country;
 
-        String recordTypeId = [SELECT Id FROM RecordType WHERE DeveloperName = 'IATA_Agency'].Id;
+        Id recordTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('Account', 'IATA_Agency');
         Account acc = ISSP_ObjectFactory.createNewAccount();
         acc.Name = 'TestAgency';
         acc.IATA_ISO_Country__c = ISO_Country.Id;
@@ -445,7 +445,7 @@ private class ISSP_RegistrationTest {
 		IATA_ISO_Country__c ISO_Country = new IATA_ISO_Country__c(ISO_Code__c='TT',Name='test');
         insert ISO_Country;
 
-        String recordTypeId = [SELECT Id FROM RecordType WHERE DeveloperName = 'Standard_Account'].Id;
+        Id recordTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('Account', 'Standard_Account');
         Account acc = ISSP_ObjectFactory.createNewAccount();
         acc.Name = 'TestAgency';
         acc.IATA_ISO_Country__c = ISO_Country.Id;
@@ -486,7 +486,7 @@ private class ISSP_RegistrationTest {
 		IATA_ISO_Country__c ISO_Country = new IATA_ISO_Country__c(ISO_Code__c='TT',Name='test');
         insert ISO_Country;
 
-        String recordTypeId = [SELECT Id FROM RecordType WHERE DeveloperName = 'Standard_Account'].Id;
+        Id recordTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('Account', 'Standard_Account');
         Account acc = ISSP_ObjectFactory.createNewAccount();
         acc.Name = 'TestAgency';
         acc.IATA_ISO_Country__c = ISO_Country.Id;
@@ -527,7 +527,7 @@ private class ISSP_RegistrationTest {
 		IATA_ISO_Country__c ISO_Country = new IATA_ISO_Country__c(ISO_Code__c='TT',Name='test');
         insert ISO_Country;
 
-        String recordTypeId = [SELECT Id FROM RecordType WHERE DeveloperName = 'IATA_Agency'].Id;
+        Id recordTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('Account', 'IATA_Agency');
         Account acc = ISSP_ObjectFactory.createNewAccount();
         acc.Name = 'TestAgency';
         acc.IATA_ISO_Country__c = ISO_Country.Id;
@@ -581,7 +581,7 @@ private class ISSP_RegistrationTest {
 		IATA_ISO_Country__c ISO_Country = new IATA_ISO_Country__c(ISO_Code__c='TT',Name='test');
         insert ISO_Country;
 
-        String recordTypeId = [SELECT Id FROM RecordType WHERE DeveloperName = 'IATA_Agency'].Id;
+        Id recordTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('Account', 'IATA_Agency');
         Account acc = ISSP_ObjectFactory.createNewAccount();
         acc.Name = 'TestAgency';
         acc.IATA_ISO_Country__c = ISO_Country.Id;
@@ -627,7 +627,7 @@ private class ISSP_RegistrationTest {
 		IATA_ISO_Country__c ISO_Country = new IATA_ISO_Country__c(ISO_Code__c='TT',Name='test');
         insert ISO_Country;
 
-        String recordTypeId = [SELECT Id FROM RecordType WHERE DeveloperName = 'IATA_Agency'].Id;
+        Id recordTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('Account', 'IATA_Agency');
         Account acc = ISSP_ObjectFactory.createNewAccount();
         acc.Name = 'TestAgency';
         acc.IATA_ISO_Country__c = ISO_Country.Id;
@@ -673,7 +673,7 @@ private class ISSP_RegistrationTest {
 		IATA_ISO_Country__c ISO_Country = new IATA_ISO_Country__c(ISO_Code__c='TT',Name='test');
         insert ISO_Country;
 
-        String recordTypeId = [SELECT Id FROM RecordType WHERE DeveloperName = 'IATA_Agency'].Id;
+        Id recordTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('Account', 'IATA_Agency');
         Account acc = ISSP_ObjectFactory.createNewAccount();
         acc.Name = 'TestAgency';
         acc.IATA_ISO_Country__c = ISO_Country.Id;
@@ -722,7 +722,7 @@ private class ISSP_RegistrationTest {
         IATA_ISO_Country__c ISO_Country2 = new IATA_ISO_Country__c(ISO_Code__c='TP',Name='test2');
         insert ISO_Country2;
 
-        String recordTypeId = [SELECT Id FROM RecordType WHERE DeveloperName = 'Standard_Account'].Id;
+        Id recordTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('Account', 'Standard_Account');
         Account acc = ISSP_ObjectFactory.createNewAccount();
         acc.Name = 'TestAgency';
         acc.IATA_ISO_Country__c = ISO_Country.Id;
@@ -789,7 +789,7 @@ private class ISSP_RegistrationTest {
         IATA_ISO_Country__c ISO_Country2 = new IATA_ISO_Country__c(ISO_Code__c='TP',Name='United States');
         insert ISO_Country2;
 
-        String recordTypeId = [SELECT Id FROM RecordType WHERE DeveloperName = 'Standard_Account'].Id;
+        Id recordTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('Account', 'Standard_Account');
         Account acc = ISSP_ObjectFactory.createNewAccount();
         acc.Name = 'TestAgency';
         acc.IATA_ISO_Country__c = ISO_Country.Id;

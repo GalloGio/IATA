@@ -7,13 +7,9 @@ private class clsSuspendAirlineButtonControllerTest {
         Test.setCurrentPage(pageRef);
   
       
-        Id rtIdHq = [ SELECT Id FROM RecordType 
-                                WHERE SobjectType = 'Account'
-                                AND DeveloperName = 'IATA_Airline'][0].Id;
+        Id rtIdHq = RecordTypeSingleton.getInstance().getRecordTypeId('Account', 'IATA_Airline');
                                 
-         Id rtIdBr = [ SELECT Id FROM RecordType 
-                                WHERE SobjectType = 'Account'
-                                AND DeveloperName = 'IATA_Airline_BR'][0].Id;                       
+         Id rtIdBr = RecordTypeSingleton.getInstance().getRecordTypeId('Account', 'IATA_Airline_BR');                      
                                 
        Account headQuarter = new Account(name = 'Hq', recordTypeId = rtIdHq);       
       insert  headQuarter;

@@ -1,9 +1,7 @@
 @isTest
 private class clsMassEmailReminderTest{
     
-    
     static testMethod void testMyController() {  
-        RecordType IFAPcaseRecordType = [Select r.Id, r.Name from RecordType r where r.Name = 'IATA Financial Review' limit 1];
         
         Account account1 = new Account();
         account1.Name = 'Test account';
@@ -35,12 +33,9 @@ private class clsMassEmailReminderTest{
         //Instantiate and construct the controller class.     
         clsMassEmailReminderController controller = new clsMassEmailReminderController();  
         
-        
-        
         BatchNumber__c batch = new BatchNumber__c();
         insert batch;
         controller.CaseParameter.BatchNumber__c= batch.Id;
-        
         
         // Set some properties  
         EmailTemplate__c e = new EmailTemplate__c();
@@ -150,10 +145,7 @@ private class clsMassEmailReminderTest{
         
     } 
     
-    
-    
     static testMethod void testTrackedEmails() {  
-        RecordType IFAPcaseRecordType = [Select r.Id, r.Name from RecordType r where r.Name = 'IATA Financial Review' limit 1];
         
         Account account1 = new Account();
         account1.Name = 'Test account';

@@ -1,0 +1,25 @@
+<table border="0" cellpadding="5" width="550" cellspacing="5" height="400" >
+<tr valign="top" height="400" >
+<td tEditID="c1r1" style=" background-color:#FFFFFF; bEditID:r3st1; color:#000000; bLabel:main; font-size:12pt; font-family:arial;" aEditID="c1r1" locked="0" >
+<![CDATA[<p class="MsoNormal">Dear {!Portal_Application_Right__c.Contact__c},<o:p></o:p></p>
+
+<p class="MsoNormal">Congratulations, your access to IATA’s new Currency Center
+has been granted! You are on your way to enjoy the benefits of this dynamic, global
+information tool.<o:p></o:p></p>
+
+<p class="MsoNormal">You will find attached the following documents that will
+guide you towards your first log in and navigation experience<o:p></o:p></p>
+
+<p class="MsoNormal">To organize a short training session via webinar, please
+feel free to contact us at: <a href="mailto:currencycenter@aiata.org"><span style="background:yellow;mso-highlight:yellow">currencycenter@aiata.org</span></a><o:p></o:p></p>
+
+<p class="MsoNormal"><span style="background:yellow;mso-highlight:yellow">Welcome
+to the Currency Center Community we look forward to </span>hear your thoughts
+on this new tool.<o:p></o:p></p>
+
+<p class="MsoListParagraphCxSpFirst" style="margin-left:0in;mso-add-space:auto">Regards,<o:p></o:p></p>
+
+<p class="MsoListParagraphCxSpLast" style="margin-left:0in;mso-add-space:auto">IATA
+Financial and Distribution Services<o:p></o:p></p>]]></td>
+</tr>
+</table>

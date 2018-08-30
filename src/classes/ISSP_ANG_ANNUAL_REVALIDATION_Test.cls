@@ -1,9 +1,9 @@
 @isTest
 private class ISSP_ANG_ANNUAL_REVALIDATION_Test {
 
-	private static Id rtAgency = Schema.SObjectType.Account.getRecordTypeInfosByName().get('Agency').getRecordTypeId();
-	private static Id rtOscar = Schema.SObjectType.AMS_OSCAR__c.getRecordTypeInfosByName().get('ANG.ANNUAL.REVALIDATION').getRecordTypeId();
-	private static Id rtCase = Schema.SObjectType.Case.getRecordTypeInfosByName().get('OSCAR Communication').getRecordTypeId();
+	private static Id rtAgency = RecordTypeSingleton.getInstance().getRecordTypeId('Account', 'IATA_Agency');
+	private static Id rtOscar = RecordTypeSingleton.getInstance().getRecordTypeId('AMS_OSCAR__c', 'ANG_ANNUAL_REVALIDATION'); 
+	private static Id rtCase = RecordTypeSingleton.getInstance().getRecordTypeId('Case', 'OSCAR_Communication');
 
 	@isTest
 	static void test1() {
@@ -23,6 +23,7 @@ private class ISSP_ANG_ANNUAL_REVALIDATION_Test {
 			account.Name = 'test';
 			account.sector__c = 'Travel Agent';
 			account.Location_Type__c = 'HE';
+			account.Location_Class__c = 'P';
 			account.RecordTypeId = rtAgency ;
 			account.IATACode__c = '12345678';
 
@@ -67,6 +68,7 @@ private class ISSP_ANG_ANNUAL_REVALIDATION_Test {
         account.IATACode__c = '12345678';
 		account.status__c = Ams_Utils.ACC_S9_APPROVED;
 		account.IATA_ISO_Country__c = country.Id;
+		account.Location_Class__c = 'P';
 
 		insert account;
 
@@ -116,6 +118,7 @@ private class ISSP_ANG_ANNUAL_REVALIDATION_Test {
         account.IATACode__c = '12345678';
 		account.status__c = Ams_Utils.ACC_S9_APPROVED;
 		account.IATA_ISO_Country__c = country.Id;
+		account.Location_Class__c = 'P';
 
 		insert account;
 
@@ -130,6 +133,7 @@ private class ISSP_ANG_ANNUAL_REVALIDATION_Test {
 		child.parentId = account.id;
 		child.Top_Parent__c = account.id;
 		child.IATA_ISO_Country__c = country.Id;
+		account.Location_Class__c = 'P';
 
 		insert child;
 
@@ -443,6 +447,7 @@ private class ISSP_ANG_ANNUAL_REVALIDATION_Test {
         account.IATACode__c = '12345678';
 		account.status__c = Ams_Utils.ACC_S9_APPROVED;
 		account.IATA_ISO_Country__c = country.Id;
+		account.Location_Class__c = 'P';
 
 		insert account;
 
@@ -457,6 +462,7 @@ private class ISSP_ANG_ANNUAL_REVALIDATION_Test {
 		child.parentId = account.id;
 		child.Top_Parent__c = account.id;
 		child.IATA_ISO_Country__c = country.Id;
+		account.Location_Class__c = 'P';
 
 		insert child;
 
@@ -598,6 +604,7 @@ private class ISSP_ANG_ANNUAL_REVALIDATION_Test {
         account.IATACode__c = '12345678';
 		account.status__c = Ams_Utils.ACC_S9_APPROVED;
 		account.IATA_ISO_Country__c = country.Id;
+		account.Location_Class__c = 'P';
 
 		insert account;
 
@@ -612,6 +619,7 @@ private class ISSP_ANG_ANNUAL_REVALIDATION_Test {
 		child.parentId = account.id;
 		child.Top_Parent__c = account.id;
 		child.IATA_ISO_Country__c = country.Id;
+		account.Location_Class__c = 'P';
 
 		insert child;
 

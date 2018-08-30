@@ -114,7 +114,7 @@ private class ISSP_NonTD_Report_Test {
     	thisUser = [ select Id from User where Id = :UserInfo.getUserId() ];
     	system.runAs(thisUser){
 	    	Account acc = ISSP_ObjectFactory.createNewAccount();
-	    	String recordTypeId = [SELECT Id FROM RecordType WHERE DeveloperName = 'IATA_Airline'].Id;
+	    	Id recordTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('Account', 'IATA_Airline');
 	    	acc.recordTypeId = recordTypeId;
 	    	acc.IATACode__c = '100';
 			insert acc;
@@ -163,7 +163,7 @@ private class ISSP_NonTD_Report_Test {
     	thisUser = [ select Id from User where Id = :UserInfo.getUserId() ];
     	system.runAs(thisUser){
 	    	Account acc = ISSP_ObjectFactory.createNewAccount();
-	    	String recordTypeId = [SELECT Id FROM RecordType WHERE DeveloperName = 'IATA_Airline'].Id;
+	    	Id recordTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('Account', 'IATA_Airline');
 	    	acc.recordTypeId = recordTypeId;
 	    	acc.IATACode__c = '100';
 			insert acc;
@@ -206,7 +206,7 @@ private class ISSP_NonTD_Report_Test {
     	insert errorList;
     	
     	Account acc = ISSP_ObjectFactory.createNewAccount();
-    	String recordTypeId = [SELECT Id FROM RecordType WHERE DeveloperName = 'IATA_Airline'].Id;
+    	Id recordTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('Account', 'IATA_Airline');
 	    acc.recordTypeId = recordTypeId;
     	acc.IATACode__c = '100';
         insert acc;

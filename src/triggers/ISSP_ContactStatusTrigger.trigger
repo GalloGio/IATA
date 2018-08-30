@@ -4,7 +4,7 @@ trigger ISSP_ContactStatusTrigger on Contact (after update) {
 		return;
 		
 	Set<Id> contactIds = new Set<Id>();
-	Map<String, List<Id>> inactivationReasonMap = new Map<String, List<Id>> ();
+	Map<String, List<Contact>> inactivationReasonMap = new Map<String, List<Contact>>();
 	for(Contact newCon : trigger.new){
 		Contact oldCon = trigger.oldMap.get(newCon.Id);
 		if (newCon.Status__c != oldCon.Status__c){
@@ -12,10 +12,10 @@ trigger ISSP_ContactStatusTrigger on Contact (after update) {
 				contactIds.add(newCon.Id);
 				system.debug('Inactivating contact');
 				if (!inactivationReasonMap.containsKey(newCon.Status__c)){
-					inactivationReasonMap.put(newCon.Status__c, new List<Id>{newCon.Id});
+					inactivationReasonMap.put(newCon.Status__c, new List<Contact>{newCon});
 				}
 				else{
-					inactivationReasonMap.get(newCon.Status__c).add(newCon.Id);
+					inactivationReasonMap.get(newCon.Status__c).add(newCon);
 				}
 			}
 		}
@@ -44,8 +44,8 @@ trigger ISSP_ContactStatusTrigger on Contact (after update) {
 		}
 		for (String thisReason : inactivationReasonMap.keySet()){
 			system.debug('thisReason: ' + thisReason);
-			Set <Id> contactIdSet = new Set <Id>();
-			List <Id> contactIdList = inactivationReasonMap.get(thisReason);
+			
+			List<Contact> cls = inactivationReasonMap.get(thisReason);
 			if (thisReason == 'Left Company / Relocated'){
 				thisReason = 'LeftCompany';
 			}
@@ -55,12 +55,8 @@ trigger ISSP_ContactStatusTrigger on Contact (after update) {
 			else if (thisReason == 'Inactive'){
 				thisReason = 'UnknownContact';
 			}
-			for (Id thisId : contactIdList){
-				system.debug('contactIds: ' + thisId);
-				contactIdSet.add(thisId);
-			}
 			ISSP_ContactList ctrl = new ISSP_ContactList();
-			ctrl.processMultiplePortalUserStatusChange(contactIdSet, 'Deactivated', thisReason);
+			ctrl.processMultiplePortalUserStatusChange(cls, 'Deactivated', thisReason);
 		}
 	}
 	

@@ -334,7 +334,7 @@ trigger CaseAfterTrigger on Case (after delete, after insert, after undelete, af
 	ID SISHelpDeskRecordtype = RecordTypeSingleton.getInstance().getRecordTypeId('Case', 'Cases_SIS_Help_Desk');
 	ID CSRcaseRecordTypeID = RecordTypeSingleton.getInstance().getRecordTypeId('Case', 'BSPlink_Customer_Service_Requests_CSR');
 	Id CaseSAAMId = RecordTypeSingleton.getInstance().getRecordTypeId('Case', 'ProcessEuropeSCE');//SAAM
-    Id OscarComRTId = RecordTypeSingleton.getInstance().getRecordTypeId('Case', 'OSCAR Communication');
+    Id OscarComRTId = RecordTypeSingleton.getInstance().getRecordTypeId('Case', 'OSCAR_Communication');
     
 /*Record type*/	
     
@@ -769,7 +769,7 @@ trigger CaseAfterTrigger on Case (after delete, after insert, after undelete, af
 			string airlineSuspension = 'Airline Suspension Process';
 			String airlineChange = 'Airline Change';
 			String separator = '%%%__%%%';
-			string APCaseRTID =Schema.SObjectType.Case.RecordTypeInfosByName.get('IDFS Airline Participation Process').RecordTypeId ;
+			Id APCaseRTID = RecordTypeSingleton.getInstance().getRecordTypeId('Case', 'IDFS_Airline_Participation_Process');
 			//date pretrasfomrationDate =  date.newinstance(2013, 11, 30);
 			list<case> casesToTrigger = new list<Case>();
 			List<Case> airlineChangeCasesToTrigger = new List<Case>();

@@ -147,9 +147,16 @@ public class ISO_Country_State_Helper {
 
 	//Get the list of iso State by Id
 	public static List<IATA_ISO_State__c> getIsoStateById(Id isoStateId){
-		return [select id,ISO_Code__c,Name from IATA_ISO_State__c where Id = :isoStateId and IEC_Valid_SAP__c = true];
-	} 
-	
+		
+		List<IATA_ISO_State__c> isoStatesLst = IATAIsoStateDAO.getIsoStatesByIds(new Set<Id>{isoStateId});
+		
+		if(isoStatesLst != null && isoStatesLst.size() > 0 && isoStatesLst.get(0).IEC_Valid_SAP__c){
+			return isoStatesLst;
+		}
+			
+		return new List<IATA_ISO_State__c>();
+		
+	}
 
 	//get the zipCode required countries
 	public static map<Id,IATA_ISO_Country__c> requiredCountriesZipCode(){
