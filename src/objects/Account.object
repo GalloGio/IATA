@@ -2821,6 +2821,7 @@
     </fields>
     <fields>
         <fullName>ACLI_SAP_Id__c</fullName>
+        <caseSensitive>true</caseSensitive>
         <description>The account&apos;s SAP ID as received in the ACLI file.</description>
         <externalId>false</externalId>
         <label>ACLI SAP Id</label>
@@ -2829,7 +2830,7 @@
         <trackFeedHistory>false</trackFeedHistory>
         <trackHistory>false</trackHistory>
         <type>Text</type>
-        <unique>false</unique>
+        <unique>true</unique>
     </fields>
     <fields>
         <fullName>ACLI_Status__c</fullName>
@@ -107511,6 +107512,20 @@ This field is kept up-to-date with the feedback of ITDI at least twice a year du
         <searchResultsAdditionalFields>CORE.USERS.LAST_NAME</searchResultsAdditionalFields>
     </searchLayouts>
     <sharingModel>Private</sharingModel>
+    <validationRules>
+        <fullName>ACLI_SAP_ID_format_validation</fullName>
+        <active>true</active>
+        <description>Validates that the ACLI SAP ID starts with &quot;00&quot; and has 10 characters</description>
+        <errorConditionFormula>NOT(
+  OR(
+    ACLI_SAP_Id__c==&quot;&quot;,
+    ISNULL(ACLI_SAP_Id__c),
+    REGEX(ACLI_SAP_Id__c, &quot;00[0-9][0-9][0-9][0-9][0-9][0-9][0-9][0-9]&quot;)
+  )
+)</errorConditionFormula>
+        <errorDisplayField>ACLI_SAP_Id__c</errorDisplayField>
+        <errorMessage>ACLI SAP ID has to start with &quot;00&quot; and be 10 characters long, please correct the format of the ID.</errorMessage>
+    </validationRules>
     <validationRules>
         <fullName>Account_Name_cannot_include_Ltd_or_Intl</fullName>
         <active>false</active>

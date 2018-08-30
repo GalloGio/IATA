@@ -84,6 +84,15 @@
         <type>Checkbox</type>
     </fields>
     <fields>
+        <fullName>Alert_Contact_By_Push_Notification__c</fullName>
+        <defaultValue>false</defaultValue>
+        <description>Alert contacts with a push notification on NewGen mobile app</description>
+        <externalId>false</externalId>
+        <label>Alert Contact By Push Notification</label>
+        <trackTrending>false</trackTrending>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
         <fullName>CriticalNotification__c</fullName>
         <defaultValue>false</defaultValue>
         <description>wf : to check send email box.
