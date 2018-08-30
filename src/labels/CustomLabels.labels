@@ -4809,7 +4809,7 @@ Please go to &lt;a href=&quot;/ISSP_CaseList&quot;&gt;My Cases&lt;/a&gt; in orde
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>ICCS Endpoint Password PROD</shortDescription>
-        <value>1234</value>
+        <value>lk75phqudnsrvnvo2nl53abikd3d234fbtbq81285kvcf2k3u71</value>
     </labels>
     <labels>
         <fullName>ICCS_Endpoint_Services_URL</fullName>
@@ -4841,7 +4841,7 @@ Please go to &lt;a href=&quot;/ISSP_CaseList&quot;&gt;My Cases&lt;/a&gt; in orde
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>ICCS Endpoint Token URL PROD</shortDescription>
-        <value>https://iccsdevqa-int.iata.org/oauth2/token</value>
+        <value>https://iata-iccs-api.auth.eu-west-1.amazoncognito.com/oauth2/token</value>
     </labels>
     <labels>
         <fullName>ICCS_Endpoint_Username</fullName>
@@ -4857,7 +4857,7 @@ Please go to &lt;a href=&quot;/ISSP_CaseList&quot;&gt;My Cases&lt;/a&gt; in orde
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>ICCS Endpoint Username PROD</shortDescription>
-        <value>test</value>
+        <value>7r48aodfie7aim0aqd153tckrn</value>
     </labels>
     <labels>
         <fullName>ICCS_Expected_Deadline</fullName>
