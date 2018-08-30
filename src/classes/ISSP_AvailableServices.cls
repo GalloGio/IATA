@@ -815,7 +815,7 @@ public with sharing class ISSP_AvailableServices{
     @RemoteAction
     public static string newAppsRequest (string applicationId, string applicationName, string contactId){
         String appRight = 'Access Requested';
-        String appRole = '';
+        String appRole = ''; 
         if(applicationName=='Standards Setting Workspace')
             appRight = 'Access Granted';
             
