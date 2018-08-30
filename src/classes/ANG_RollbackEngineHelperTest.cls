@@ -937,8 +937,6 @@ private class ANG_RollbackEngineHelperTest {
 
 		insert newContact1;
 
-		insert new Portal_Application_Right__c(Portal_Application__c = par.Id, Right__c = 'Access Granted', Contact__c = newContact1.Id);
-
 		Id ownerRtId = AMS_Utils.getId('AMS_Account_Role__c', 'Ownership');
         
         AMS_Account_Role__c role1 = new AMS_Account_Role__c(recordTypeId = ownerRtId, Account__c = a1.Id, Person__c = null, Contact__c = newContact1.Id, Percentage__c=100.0);
