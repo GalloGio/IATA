@@ -109,6 +109,12 @@
                 .margin-top-bottom {
                     margin: 24px 0;
                 }
+                .margin-top {
+                    margin: 24px 0 0 0;
+                }
+                .margin-bottom {
+                    margin: 0 0 24px 0;
+                }
                 .text-center {
                     margin: 0;
                     padding: 0 !important;
@@ -238,7 +244,7 @@
                 }
                 .border {
                     padding: 12px;
-                    margin-bottom: 12px;
+                    margin-bottom: 24px;
                     border-top: 1px solid #e5eaee;
                     border-left: 1px solid #e5eaee;
                     border-right: 1px solid #e5eaee;
@@ -257,7 +263,7 @@
                 }
                 .col, 
                 .line {
-                    width: 33.3%;
+                    width: 33%;
                     display: inline-block;
                     vertical-align: middle;
                 }
@@ -389,6 +395,7 @@
                     display: inline-block;
                     padding-right: 32px;
                     padding-top: 16px;
+                    padding-bottom: 16px;
                     font-size: 10pt;
                 }
                 button, 
@@ -505,6 +512,12 @@
                 }
                 .filter-2 {
                     margin: 24px;
+                    width: auto;
+                    text-align: right;
+                }
+                .filter-3 {
+                    margin: 0 24px 24px 24px;
+                    padding-top: 24px;
                     width: auto;
                     text-align: right;
                 }
