@@ -1,0 +1,280 @@
+<apex:component controller="ISSP_ICCS_CaseProcessesController" allowDML="true">
+    <apex:attribute name="pageCtrl" 
+                    type="ISSP_ICCS_ServiceController" 
+                    assignTo="{! pageController}" 
+                    required="true" 
+                    description="The controller for the page." />
+
+    <link href="//cdnjs.cloudflare.com/ajax/libs/select2/4.0.0/css/select2.min.css" rel="stylesheet" />
+    <script src="//cdnjs.cloudflare.com/ajax/libs/select2/4.0.0/js/select2.min.js"></script>
+
+    <style>
+        .pbTitle {
+        }
+        
+        .bPageBlock {
+            border-top-width : thin !important;
+        }
+        
+        ul li, ol li {
+            margin-left: inherit;
+            padding-left: inherit;
+        }
+        
+        #contentWrapper {  background: #fff !important; margin: 0 auto;max-width: 1170px;}
+        
+        .requiredText {display:none;}
+        
+        .errorMsg {color:#d74c3b}
+        
+        .progress-bar-off {
+            color:#6BBBEA;
+            font-weight:bold;
+            background-image:none !important;
+            background-color:transparent !important;
+            border-right:2px solid white;
+        }
+    </style>
+
+    <script>
+        function showFileUploadComponent(show) {
+            var value = show?"block":"none";
+            if(value=='block'){
+                $('html,body').scrollTop(0);
+                displayPanelAF();
+            }
+            $( document ).ready(function() {
+                document.getElementById('fileUploadPanel').style.display=value;
+                document.getElementById('fileUploadBackground').style.display=value;
+            });
+        }
+
+		function scrollToCaseProcessesPanel(){
+			$( document ).ready(function() {
+           		var elem = document.getElementById('{! $Component.caseProcessesPanel}');
+           
+           		var pos = $(elem).position();
+
+				$('html').scrollTop(pos.top);
+           });
+		}
+
+        function getS3LInk(fileName) {
+            ISSP_ICCS_CaseProcessesController.getExpiringLink(fileName,function(result, event){
+                var result2= result.replace("&amp;","&");
+                var newWin = window.open(result2);
+                if(!newWin || newWin.closed || typeof newWin.closed=='undefined'){
+                    alert('{!$Label.Check_popup_settings}');
+                }
+            }, {buffer: true, escape: false, timeout: 120000} );
+        }
+    </script>
+    
+    <apex:outputPanel id="caseProcessesPanel">
+        <div class="panel-primary">
+            <div class="panel-heading head_panel_green">
+				<apex:outputPanel rendered="{! cse.Id == null || cse.Status == 'Draft'}">
+	                <div class="panel-title-2">
+	                	<h3>
+	                		<apex:outputText value="{! caseProcessName + IF(cse.Id != null, ' - ' + $Label.ICCS_Case_Label + ' : ' + cse.CaseNumber, '')}"/>
+						</h3>
+	                </div>
+                </apex:outputPanel>
+            </div>
+            <div class="panel-body" id="body-enquiries">
+
+                <apex:outputPanel rendered="{! caseStatusBeforeSaving != 'OPEN' && !singleStep}">
+                    <div class="progress">
+                        <apex:repeat value="{! stepNumbers}" var="stepNumber">
+                            <div class="progress-bar {! IF(stepNumber != currentStep, '', 'progress-bar-active')}" role="progressbar" aria-valuenow="{! steps[stepNumber].ariaValuenow}" aria-valuemin="0" aria-valuemax="100" style="width: {! steps[stepNumber].width}%;">
+                                <apex:outputText value="{! steps[stepNumber].navTitle}"/>
+                            </div>
+                        </apex:repeat>
+                    </div>
+                </apex:outputPanel>
+
+                <c:ISSP_ICCS_FileUpload caseProcessesCtrl="{! thisCtrl}"/>
+
+                <apex:outputPanel rendered="{! showFileUploadComponent}">
+                    <script>
+                        showFileUploadComponent(true);
+                    </script>
+                </apex:outputPanel>
+
+				<apex:outputPanel rendered="{! scrollToCaseProcessesPanel}">
+				    <script>
+				    	scrollToCaseProcessesPanel();
+				    </script>
+			    </apex:outputPanel>
+
+                <apex:form styleClass="form-horizontal">
+                
+					<apex:outputPanel rendered="{! pageController.userMessage != null}" id="messagePanel">
+					    <br/>
+					    <div class="panel panel-default">
+					        <div class="panel-body" style="font-weight:bold;">
+								<div class="pddg">
+					            	<apex:outputText value="{! pageController.userMessage}" escape="false" style="color : {! IF(pageController.isSuccessMessage, '#000000', '#FF0000')};"/>
+								</div>
+					        </div>
+					    </div>
+					</apex:outputPanel>
+
+                    <c:ISSP_ICCS_ProcessRegistration caseProcessesCtrl="{! thisCtrl}" rendered="{! pageController.displayRegistration}" />
+                    <c:ISSP_ICCS_ProcessBankAccount caseProcessesCtrl="{! thisCtrl}" rendered="{! pageController.displayBankAccount}" />
+                    <c:ISSP_ICCS_ProcessPartNew caseProcessesCtrl="{! thisCtrl}" rendered="{! pageController.displayPartNew}" />
+                    <c:ISSP_ICCS_ProcessPartDel caseProcessesCtrl="{! thisCtrl}" rendered="{! pageController.displayPartDel}" />
+                    <c:ISSP_ICCS_ProcessDeactivation caseProcessesCtrl="{! thisCtrl}" rendered="{! pageController.displayDeactivation}" />
+                    <c:ISSP_ICCS_ProcessAspUpd caseProcessesCtrl="{! thisCtrl}" rendered="{! pageController.displayAspUpd}" />
+                    <c:ISSP_ICCS_ProcessNoa caseProcessesCtrl="{! thisCtrl}" rendered="{! pageController.displayNoa}" />
+                                
+					<apex:outputPanel rendered="{! cse.Id != null && cse.Status != 'Draft'}">
+						<div class="col-md-12 col-sm-12 col-xs-12 text-center" style="padding-right:5px;padding-left:5px;">
+							<div class="section-title-gray prfl">
+								<apex:image url="{! URLFOR($Resource.IATA_ICCS_icons_new, 'titles.png')}" height="48"/>
+								<apex:outputText value="{! $Label.ICCS_Attachments_Status}" escape="false"/>
+							</div>
+							<div class="bottom-box no-pddg mrgn" style="text-align: justify;text-justify: inter-word;">
+							    <apex:outputPanel id="amazonFilesPanel">
+							        <apex:pageBlock>
+							            <apex:pageBlockTable value="{! flattenedAmazonFileTable}" var="amazonFileRow">
+							                <apex:column headerValue="{! $Label.ICCS_Attachment_Type_Label}">
+							                    <apex:outputText value="{! amazonFileRow.typedDocument.documentType}" style="color : {! IF(amazonFileRow.isFirstRow, '#000000', '#999999')}"/>
+							                </apex:column>
+							
+							                <apex:column headerValue="{! $Label.ICCS_Name_Label}">
+							                    <apex:outputPanel rendered="{! amazonFileRow.amazonFile != null}">
+							                        <a title="view" escape="false" target="_blank" onclick="getS3LInk('{! amazonFileRow.fullUniqueName}');" style="color:#015ba7; cursor: pointer; text-decoration: underline;" >{! LEFT(amazonFileRow.name,30)}</a>
+							                    </apex:outputPanel>
+							                    <apex:outputPanel rendered="{! amazonFileRow.amazonFile == null}">
+							                        <apex:outputText value="{! amazonFileRow.name}"/>
+							                    </apex:outputPanel>
+							                </apex:column>
+							
+							                <apex:column headerValue="{! $Label.ICCS_New_Attachment_Label}" rendered="{! newAttachmentUploaded}">
+							                    <apex:outputPanel rendered="{! amazonFileRow.isFirstRow && (amazonFileRow.typedDocument.docId != null && amazonFileRow.typedDocument.docId != '')}">
+							                        <a href="/servlet/servlet.FileDownload?file={! amazonFileRow.typedDocument.docId}" target="_blank">{! LEFT(amazonFileRow.typedDocument.docName,30)}</a>
+							                    </apex:outputPanel>
+							                </apex:column>
+							
+							                <apex:column headerValue="{! $Label.ICCS_Label_Status}">
+							                    <apex:outputText value="{! amazonFileRow.status}" style="color : {! IF(amazonFileRow.isFirstRow, '#000000', '#999999')}"/>
+							                </apex:column>
+							
+							                <apex:column headerValue="{! $Label.ICCS_Original_Received_Status}">
+							                    <apex:inputCheckbox value="{! amazonFileRow.originalReceived}" disabled="true"/>
+							                </apex:column>
+							
+							                <apex:column headerValue="{! $Label.ICCS_Comments_Label}">
+							                    <apex:outputText value="{! amazonFileRow.comments}" style="color : {! IF(amazonFileRow.isFirstRow, '#000000', '#999999')}"/>
+							                </apex:column>
+							
+											<apex:column headerValue="{! $Label.ICCS_Created_Date_Label}">
+												<apex:outputText value="{0,date,yyyy-MM-dd}" style="color : {! IF(amazonFileRow.isFirstRow, '#000000', '#999999')}">
+													<apex:param value="{! amazonFileRow.createdDate}" />
+												</apex:outputText>
+											</apex:column>
+											
+											<apex:column headerValue="{! $Label.ICCS_Actions_Label}">
+												<apex:outputPanel rendered="{! amazonFileRow.isFirstRow}">
+								                    <apex:commandLink value="{! $Label.ICCS_Add_Action}" action="{! amazonFileRow.typedDocument.showFileUploadComponent}" rerender="caseProcessesPanel" rendered="{! amazonFileRow.amazonFile == null && (amazonFileRow.typedDocument.docId == null || amazonFileRow.typedDocument.docId == '')}"/>
+								                    <apex:commandLink value="{! $Label.ICCS_Replace_Action}" action="{! amazonFileRow.typedDocument.showFileUploadComponent}" rerender="caseProcessesPanel" rendered="{! amazonFileRow.status == 'Rejected' && (amazonFileRow.typedDocument.docId == null || amazonFileRow.typedDocument.docId == '')}"/>
+							                        <apex:commandLink value="{! $Label.ICCS_Cancel_Action} Upload" action="{! amazonFileRow.typedDocument.cancelReplacement}" rerender="amazonFilesPanel" rendered="{! amazonFileRow.typedDocument.docId != null || amazonFileRow.typedDocument.docId != ''}"/>
+							
+													<apex:outputPanel rendered="{! (amazonFileRow.amazonFile == null && (amazonFileRow.typedDocument.docId == null || amazonFileRow.typedDocument.docId == '')) || (amazonFileRow.status == 'Rejected' && (amazonFileRow.typedDocument.docId == null || amazonFileRow.typedDocument.docId == '')) || (amazonFileRow.typedDocument.docId != null || amazonFileRow.typedDocument.docId != '')}">
+														<br/>
+													</apex:outputPanel>
+												</apex:outputPanel>
+												
+												<apex:outputPanel rendered="{! amazonFileRow.isExpandable}">
+								                    <apex:commandLink value="{! $Label.ICCS_Show_Old_Files_Label}" action="{! amazonFileRow.expand}" rerender="amazonFilesPanel" rendered="{! !amazonFileRow.isExpanded}" status="processActStatusId"/>
+								                    <apex:commandLink value="{! $Label.ICCS_Hide_Old_Files_Label}" action="{! amazonFileRow.collapse}" rerender="amazonFilesPanel" rendered="{! amazonFileRow.isExpanded}" status="processActStatusId"/>
+												</apex:outputPanel>
+											</apex:column>
+							            </apex:pageBlockTable>
+							        </apex:pageBlock>
+							    </apex:outputPanel>
+							</div>
+						</div>
+	                
+			            <div class="col-md-12 col-sm-12 col-xs-12 text-center" style="padding-right:5px;padding-left:5px;">
+			                <div class="section-title-gray prfl">
+			                	<apex:image url="{! URLFOR($Resource.IATA_ICCS_icons_new, 'titles.png')}" height="48"/>
+			                	<apex:outputText value="{! $Label.ICCS_Case_Comments}" escape="false"/>
+			                </div>
+			                <div class="bottom-box no-pddg mrgn-2" style="text-align: justify;text-justify: inter-word;">
+							    <apex:pageBlock id="commentsBlock">
+							        <apex:pageBlockTable value="{! cseComments}" var="comm" rendered="{! cseCommentsSize > 0}">
+							            <apex:column headerValue="{! $Label.ICCS_Comment_Label}">
+							                <apex:outputField value="{! comm.CommentBody}"/>
+							            </apex:column>
+							
+							            <apex:column headerValue="{! $Label.ICCS_Author_Label}">
+							                <apex:outputText value="{! comm.CreatedBy.FirstName + ' ' + comm.CreatedBy.LastName}"/>
+							            </apex:column>
+							
+										<apex:column headerValue="{! $Label.ICCS_Created_Date_Label}">
+											<apex:outputText value="{0,date,yyyy-MM-dd}">
+												<apex:param value="{! comm.createdDate}" />
+											</apex:outputText>
+										</apex:column>
+							        </apex:pageBlockTable>
+							        
+									<apex:outputPanel rendered="{! cseCommentsSize == 0}">
+										<div class="pddg-2">
+									        <apex:outputText value="{! $Label.ICCS_Case_Not_Commented}"/>
+										</div>
+									</apex:outputPanel>
+							
+									<apex:outputPanel id="commentActions">
+							            <apex:inputField value="{! portalUserComment.CommentBody}" rendered="{! displayAddComment}"/>
+							            <div class="btn">
+								            <apex:commandButton rendered="{! displayAddComment}" styleclass="apbutton" value="{! $Label.ICCS_Cancel_Action}" action="{! hideAddComment}" rerender="commentActions"/>
+								        	<apex:commandButton rendered="{! !displayAddComment}" styleclass="apbutton" value="{! $Label.ICCS_Add_Comment}" action="{! showAddComment}" rerender="commentActions"/>
+							            </div>
+									</apex:outputPanel>
+							    </apex:pageBlock>
+			                </div>
+			            </div>
+		            </apex:outputPanel>
+
+                    <br/>
+                    <br/>
+                    <center>
+                        <apex:pageBlock id="processFormPageblockId">
+                            <div class="btn-2">
+                                <apex:commandButton styleclass="apbutton" value="{! $Label.ICCS_Cancel_Action}" action="{! pageController.cancel}" rerender="pageMainPanel" status="processActStatusId"/>
+                                <apex:commandButton styleclass="apbutton" value="{! $Label.ICCS_Previous_Action}" action="{! previous}" rendered="{! displayPrevious}" reRender="caseProcessesPanel" status="processActStatusId"/>
+                                <apex:commandButton styleclass="apbutton" value="{! $Label.ICCS_Next_Action}" action="{! next}" rendered="{! displayNext}" reRender="caseProcessesPanel" status="processActStatusId"/>
+                                <apex:commandButton styleclass="apbutton" value="{! $Label.ICCS_Save_and_Leave_Action}" action="{! saveAndLeave}" rendered="{! displaySaveAndLeave}" reRender="pageMainPanel" status="startOnly"/>
+                                <apex:commandButton styleclass="apbutton" value="{! $Label.ICCS_Submit_Action}" action="{! submit}" rendered="{! displaySubmit}" rerender="pageMainPanel" status="startOnly"/>
+                            </div>                            
+                        </apex:pageBlock>
+                    </center>
+                    
+					<apex:outputPanel rendered="{! savedOrSubmitted && !documentsUploaded}">
+						<script>
+							uploadToAmazon();
+						</script>
+					</apex:outputPanel>
+					
+					<apex:outputPanel rendered="{! documentsUploaded}">
+						<script>
+							closePage();
+						</script>
+					</apex:outputPanel>
+					
+					<apex:outputPanel rendered="{! submitFailed}">
+						<script>
+							stopStatus();
+						</script>
+					</apex:outputPanel>
+					
+					<apex:actionFunction name="uploadToAmazon" action="{! saveAttachmentsToAmazon}" reRender="caseProcessesPanel"/>
+					<apex:actionFunction name="closePage" action="{! closePage}" reRender="pageMainPanel" status="stopOnly"/>
+					<apex:actionFunction name="stopStatus" action="{! resetSubmitFailed}" reRender="caseProcessesPanel" status="stopOnly"/>
+                </apex:form>
+            </div>
+        </div>
+    </apex:outputPanel>
+</apex:component>

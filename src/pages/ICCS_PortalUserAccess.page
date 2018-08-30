@@ -1,0 +1,96 @@
+<apex:page standardController="Case" extensions="ICCS_PortalUserAccessController">
+
+    <apex:form id="form">
+        <apex:pageBlock rendered="{! !embedded}" title="ICCS Portal Service Users">
+            <apex:pageBlockSection columns="1" collapsible="false">
+                <apex:pageBlockSectionItem >
+                    <apex:outputLabel >Case</apex:outputLabel>
+                    <a href="/{!cse.Id}">{!cse.CaseNumber}</a>
+                </apex:pageBlockSectionItem>
+                <apex:pageBlockSectionItem >
+                    <apex:outputLabel >Account</apex:outputLabel>
+                    <a href="/{!cse.AccountId}">{!cse.Account.Name}</a>
+                </apex:pageBlockSectionItem>
+            </apex:pageBlockSection>
+        </apex:pageBlock>
+
+        <apex:pageBlock >
+            <apex:pageBlockButtons location="top">
+                <apex:commandButton value="New User Access" action="{!newUser}" reRender="portalUsersTable"/>
+            </apex:pageBlockButtons>
+
+            <apex:pageBlockTable value="{! wrappedPortalUsers}" var="wrappedPortalUser" rows="{!rowsDisplayed}" id="portalUsersTable">
+                <apex:column >
+                    <apex:facet name="header">Name</apex:facet>
+                    <apex:outputField value="{! wrappedPortalUser.usr.Contact__c}" rendered="{! wrappedPortalUser.usr.Id <> null}"/>
+                    <apex:inputField value="{! wrappedPortalUser.usr.Contact__c}" rendered="{! wrappedPortalUser.usr.Id == null}">
+                        <apex:actionSupport event="onchange" rerender="portalUsersTable"/>
+                    </apex:inputField>
+                </apex:column>
+
+                <apex:column >
+                    <apex:facet name="header">Email</apex:facet>
+                    <apex:outputField value="{! wrappedPortalUser.usr.Contact__r.Email}"/>
+                </apex:column>
+
+                <apex:column >
+                    <apex:facet name="header">Portal User Status</apex:facet>
+                    <apex:outputText value="{! wrappedPortalUser.portalUserStatus}" rendered="{! wrappedPortalUser.portalUserStatus != 'Not Selected'}"/>
+                    <apex:outputPanel style="color: #FF0000;" rendered="{! wrappedPortalUser.portalUserStatus == 'No User'}">
+                        <br/>
+                        <apex:outputText value="The selected Contact doesn't have a related  portal user. Please create it."/>
+                    </apex:outputPanel>
+                    <apex:outputPanel style="color: #FF0000;" rendered="{! wrappedPortalUser.portalUserStatus == 'Inactive'}">
+                        <br/>
+                        <apex:outputText value="The portal user related to the selected Contact is inactive. Please activate it."/>
+                    </apex:outputPanel>
+                </apex:column>
+
+                <apex:column >
+                    <apex:facet name="header">ICCS Portal Service Access Status</apex:facet>
+                    <apex:outputText value="{! wrappedPortalUser.usr.Right__c}" rendered="{! !wrappedPortalUser.editMode}"/>
+                    <apex:inputField value="{! wrappedPortalUser.usr.Right__c}" rendered="{! wrappedPortalUser.editMode}"/>
+                </apex:column>
+    
+                <apex:column >
+                    <apex:facet name="header">ICCS Portal Service Role</apex:facet>
+                    <apex:outputText value="{! wrappedPortalUser.usr.ANG_Portal_Service_Role__c}" rendered="{! !wrappedPortalUser.editMode}"/>
+                    <apex:selectList value="{! wrappedPortalUser.usr.ANG_Portal_Service_Role__c}" rendered="{! wrappedPortalUser.editMode}" multiselect="false" size="1">
+                        <apex:selectOptions value="{! ICCSPortalRoles}"/>
+                    </apex:selectList>
+                </apex:column>
+
+                <apex:column >
+                    <apex:facet name="header">Reason</apex:facet>
+                    <apex:outputText value="{! wrappedPortalUser.usr.Access_Status_Reason__c}" rendered="{! !wrappedPortalUser.editMode}"/>
+                    <apex:inputField value="{! wrappedPortalUser.usr.Access_Status_Reason__c}" rendered="{! wrappedPortalUser.editMode}"/>
+                </apex:column>
+                
+                <apex:column rendered="{!cse.CaseArea__c == 'ICCS – Join Service' || cse.CaseArea__c == 'FDS - Update Authorized Signatories Package'}">
+                    <apex:facet name="header">Actions</apex:facet>
+                    <apex:commandLink value="{! $Label.ICCS_Update_Label}" action="{! wrappedPortalUser.updateUser}" rendered="{! !wrappedPortalUser.editMode}" rerender="portalUsersTable"/>
+                    <apex:outputPanel rendered="{! wrappedPortalUser.editMode}">
+                        <apex:commandLink value="{! $Label.ICCS_Save_Action}" action="{! wrappedPortalUser.save}" rendered="{! wrappedPortalUser.portalUserStatus == 'Active'}" rerender="portalUsersTable"/>
+                        &nbsp;&nbsp;&nbsp;
+                        <apex:commandLink value="{! $Label.ICCS_Cancel_Action}" action="{! wrappedPortalUser.cancel}" rerender="portalUsersTable"/>
+                    </apex:outputPanel>
+                </apex:column>
+            </apex:pageBlockTable>
+
+            <apex:outputPanel rendered="{!rowsDisplayed < contactsSize}">
+                <a target="_parent" href="/apex/ICCS_PortalUserAccess?id={!cse.Id}&rows=all">Go to List ({!contactsSize})</a>
+            </apex:outputPanel>
+        </apex:pageBlock>
+    </apex:form>
+
+    <script type="application/javascript">
+        var aTags = document.getElementsByTagName('a');
+        for(var i = 0; i < aTags.length; i++) 
+            aTags[i].target = "_blank";
+    
+        function navigateToUrl (a){ 
+            window.top.location.href = a; 
+        }
+    </script>    
+    
+</apex:page>

@@ -1,0 +1,131 @@
+<apex:component controller="ISSP_ICCS_ProcessDeactivationController" allowDML="true">
+    <apex:attribute name="caseProcessesCtrl" 
+                    type="ISSP_ICCS_CaseProcessesController" 
+                    assignTo="{! caseProcessesController}" 
+                    required="true"
+                    description="The controller for the page." />
+
+	<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+	
+	<script>
+		$( function() {		
+			$( '[id$=datepicker]' ).datepicker();
+		} );
+		
+		function clearValue(inputTextId){
+			document.getElementById(inputTextId).value = '';
+			rerenderForm();
+		}
+	</script>
+
+    <!----------------------->
+    <!-- NEW OR DRAFT CASE -->
+    <!----------------------->
+
+    <apex:outputPanel rendered="{! caseProcessesController.cse.Id == null || caseProcessesController.cse.Status == 'Draft'}">
+        <!------------>
+        <!-- STEP 1 -->
+        <!------------>
+        <apex:outputPanel rendered="{! caseProcessesController.currentStep == 1}">
+            <apex:pageBlock>
+                 <div class="col-md-6 col-sm-9 col-xs-6 center-card" style="padding-right:5px;padding-left:5px;">
+                    <div class="bottom-box no-pddg no-border" stye="text-align: justify;text-justify: inter-word;">
+                       <div class="table-form">
+                            <apex:pageBlockSection columns="1" id="deactivationForm">
+			                    <apex:outputLabel value="{! $Label.ICCS_Subject_Label}"/>
+								<apex:outputLabel value="{! caseProcessesController.cse.Subject}" styleClass="selected-txt"/>
+			
+			                    <apex:outputLabel value="{! $Label.ICCS_Expected_Deadline}"/>
+			                    <apex:outputPanel>
+		                            <apex:inputField value="{! caseProcessesController.cse.Expected_Deadline__c}" id="datepicker"/>
+			                    </apex:outputPanel>
+			
+			                    <apex:outputLabel value="{! $Label.ICCS_Reason_Label} (*)"/>
+			                    <apex:outputPanel>
+				                    <apex:selectList value="{! reason}" multiselect="false" size="1" onchange="clearValue('{! $Component.description}');">
+			                            <!--apex:actionSupport event="oncomplete" reRender="deactivationForm" status="processActStatusId"/-->
+										<apex:selectOptions value="{! reasonsList}"/>
+			            	        </apex:selectList>
+	                                <apex:outputPanel styleClass="error-msg" rendered="{! caseProcessesController.displayMessages['reason']}">
+										<apex:outputText value="{! $Label.ICCS_Reason_Label + ' ' + $Label.ICCS_Is_Mandatory}" escape="false"/>
+				                    </apex:outputPanel>
+			                    </apex:outputPanel>
+			                    
+			                    <apex:actionFunction name="rerenderForm" rerender="deactivationForm" status="processActStatusId"/>
+			                    
+			                    <apex:inputText id="description" value="{! description}"/>
+                                <apex:outputPanel styleClass="error-msg" rendered="{! caseProcessesController.displayMessages['description']}">
+									<apex:outputText value="{! $Label.ICCS_Reason_Label + ' ' + $Label.ICCS_Is_Mandatory}" escape="false"/>
+			                    </apex:outputPanel>
+			                </apex:pageBlockSection>
+
+							<div class="divider-4"/>
+	
+							<div class="bold-txt">
+								<apex:outputText value="{! $Label.ICCS_Uploads_Label}" escape="false"/>
+							</div>
+
+							<br/>
+
+							<table>
+								<tr>
+									<td style="width: 1%;white-space: nowrap;">
+										Deactivation (*)
+									</td>
+									<td>
+										<c:ISSP_ICCS_TypedDocument docType="Deactivation" caseProcessCtrl="{! thisCtrl}"/>
+									</td>
+								</tr>
+							</table>
+
+							<br/>
+
+							<p>
+								<apex:outputText value="{! $Label.ICCS_Mandatory_Fields}" escape="false"/>
+							</p>
+                        </div>
+                    </div>
+                </div>
+            </apex:pageBlock>
+        </apex:outputPanel>    
+    </apex:outputPanel>
+
+    <!----------------->
+    <!-- OPENED CASE -->
+    <!----------------->
+	<apex:outputPanel rendered="{! caseProcessesController.cse.Id != null && caseProcessesController.cse.Status != 'Draft'}">
+		<apex:pageBlock>
+			<div class="col-md-6 col-sm-6 col-xs-6 text-center left-card" style="padding-right:5px;padding-left:5px;">
+				<div class="section-title-gray prfl">
+					<apex:image url="{! URLFOR($Resource.IATA_ICCS_icons_new, 'titles.png')}" height="48"/>
+					<apex:outputText value="{! $Label.ICCS_Case_Account_Contact_Information}" escape="false"/>
+				</div>
+				<div class="bottom-box no-pddg left-right" style="text-align: left;">
+					<apex:pageBlockSection columns="1">
+						<apex:outputField value="{! caseProcessesController.cse.Account.Name}"/>
+						<apex:outputField value="{! caseProcessesController.cse.IATA_Code__c}"/>
+						<apex:outputField value="{! caseProcessesController.cse.Contact.Name}"/>
+						<apex:outputField value="{! caseProcessesController.cse.Contact.Email}"/>
+						<apex:outputField value="{! caseProcessesController.cse.Contact.Phone}"/>
+					</apex:pageBlockSection>
+				</div>
+			</div>
+			
+			<div class="col-md-6 col-sm-6 col-xs-6 text-center right-card" style="padding-right:5px;padding-left:5px;">
+				<div class="section-title-gray cases">
+					<apex:image url="{! URLFOR($Resource.IATA_ICCS_icons_new, 'titles.png')}" height="48"/>
+					<apex:outputText value="{! $Label.ICCS_Case_Information}" escape="false"/>
+				</div>
+				<div class="bottom-box no-pddg left-right" style="text-align: left;">
+					<apex:pageBlockSection columns="1">
+						<apex:outputField value="{! caseProcessesController.cse.CaseNumber}"/>
+						<apex:outputField value="{! caseProcessesController.cse.Subject}"/>
+						<apex:outputField value="{! caseProcessesController.cse.Status}"/>
+						<apex:outputField value="{! caseProcessesController.cse.CaseArea__c}"/>
+						<apex:outputField value="{! caseProcessesController.cse.Expected_Deadline__c}"/>
+					</apex:pageBlockSection>
+				</div>
+			</div>
+		</apex:pageBlock>
+	</apex:outputPanel>
+</apex:component>

@@ -177,6 +177,17 @@ public without sharing class ISSP_Case {
                 return pr;
             }
 
+            // If Case is an ICCS Case, redirect to ICCS Service
+			Set<String> recordTypesSet = new Set<String>{
+				'FDS ASP Management',
+				'FDS ICCS Bank Account Management',
+				'FDS ICCS Membership Management',
+				'FDS ICCS Product Management'
+			};
+			if(newCase.Origin == 'Portal' && recordTypesSet.contains(newCase.RecordType.Name)){
+                PageReference pr = new PageReference('/ISSP_ICCS_Service?caseId=' + caseId);
+                return pr;
+			}
             showAlertMessage();
 
         }

@@ -1,0 +1,74 @@
+<apex:component controller="ISSP_ICCS_TypedDocumentController" allowDML="true">
+    <apex:attribute name="docType" 
+                    type="String" 
+                    assignTo="{! documentType}" 
+                    required="true" 
+                    description="" />
+
+    <apex:attribute name="caseProcessCtrl" 
+                    type="ISSP_ICCS_CaseProcessController" 
+                    assignTo="{! caseProcessController}" 
+                    required="true" 
+                    description="" />
+
+    <div>
+        <div style="display:inline-block;width:auto;">
+            <apex:outputPanel>
+                <apex:commandButton value="{! $Label.ICCS_Upload_Label}" action="{! showFileUploadComponent}" rerender="caseProcessesPanel"/>
+                <apex:outputPanel style="color:#FF0000;" rendered="{! caseProcessController.caseProcessesController.displayMessages[documentType]}">
+                    &nbsp;&nbsp;
+                    <apex:outputText value=" {!documentType + ' ' + $Label.ICCS_File_is_Mandatory_Message}" escape="false"/>
+                </apex:outputPanel>
+            </apex:outputPanel>
+
+            <apex:outputPanel>
+                <!-- If no file is stored yet and a file has been uploaded -->
+                <apex:outputPanel rendered="{! typedDocument.latestAmazonFile == null && typedDocument.docId != null}">
+                    <apex:outputlabel value="{! $Label.ICCS_Uploaded_File_Label}:" styleClass="file-lbl"/>
+                    <a href="/servlet/servlet.FileDownload?file={! typedDocument.docId}" target="_blank">
+                    	<apex:outputText value="{! typedDocument.docName}"/>
+                    </a> 
+                    <apex:commandButton value="{! $Label.ICCS_Delete_Label}" action="{! typedDocument.deleteDocument}" rerender="caseProcessesPanel" styleClass="dlt-btn"/>
+                </apex:outputPanel>
+
+                <!-- If a file is already stored -->
+                <apex:outputPanel rendered="{! typedDocument.latestAmazonFile != null}">
+                
+                    <!-- If no file has been uploaded -->
+                    <apex:outputPanel rendered="{! typedDocument.docId == null}">
+                        <apex:outputlabel value="{! $Label.ICCS_Uploaded_File_Label}" styleClass="file-lbl"/>
+	                    <a title="view" escape="false" target="_blank" onclick="getS3LInk('{! typedDocument.amazonFileUniqueName}');" style="color:#015ba7; cursor: pointer;" >
+	                    	<apex:outputText value="{! typedDocument.amazonFileName}"/>
+	                    </a>
+
+                        <!-- If stored file is not marked for deletion  -->
+                        <apex:outputPanel rendered="{! !typedDocument.markedForDeletion}">
+                            &nbsp;&nbsp;&nbsp;
+		                    <apex:commandButton value="{! $Label.ICCS_Delete_Label}" action="{! typedDocument.deleteDocument}" rerender="caseProcessesPanel" styleClass="dlt-btn"/>
+                        </apex:outputPanel>
+
+                        <!-- If stored file is marked for deletion  -->
+                        <apex:outputPanel rendered="{! typedDocument.markedForDeletion}">
+                        	&nbsp;&nbsp;&nbsp;<apex:outputText value="{! $Label.ICCS_Marked_for_Deletion_Label}" escape="false"/>&nbsp;&nbsp;&nbsp;
+		                    <apex:commandButton value="{! $Label.ICCS_Cancel_Action}" action="{! typedDocument.cancelDeletion}" rerender="caseProcessesPanel" styleClass="dlt-btn"/>
+                        </apex:outputPanel>
+                    </apex:outputPanel>
+
+                    <!-- If a file has been uploaded -->
+                    <apex:outputPanel rendered="{! typedDocument.docId != null}">
+                        <apex:outputlabel value="{! $Label.ICCS_Uploaded_File_Label}" styleClass="file-lbl"/>
+                        <a href="/servlet/servlet.FileDownload?file={! typedDocument.docId}" target="_blank">
+                        	<apex:outputText value="{! typedDocument.docName}"/>
+                        </a>
+                        &nbsp;&nbsp;&nbsp;<apex:outputText value="{! $Label.ICCS_will_replace_Label}"/>&nbsp;&nbsp;&nbsp;
+	                    <a title="view" escape="false" target="_blank" onclick="getS3LInk('{! typedDocument.amazonFileUniqueName}');" style="color:#015ba7; cursor: pointer;" >
+	                    	<apex:outputText value="{! typedDocument.amazonFileName}"/>
+	                    </a>
+                        &nbsp;&nbsp;&nbsp;
+	                    <apex:commandButton value="{! $Label.ICCS_Cancel_Action}" action="{! typedDocument.cancelReplacement}" rerender="caseProcessesPanel" styleClass="dlt-btn"/>
+                    </apex:outputPanel>
+                </apex:outputPanel>
+            </apex:outputPanel>
+        </div>
+    </div>
+</apex:component>
