@@ -29,7 +29,7 @@ public with sharing class SIDRARepaymentInstalmentsController {
             
             return totalAmount - received;
         } set;}
-    public Id rpiIdToDelete {get; set;}
+    public Integer rpiIndexToDelete {get; set;}
     
     public SIDRARepaymentInstalmentsController (final ApexPages.StandardController controller) {
         if (controller.getRecord().Id != null ) {
@@ -85,7 +85,7 @@ public with sharing class SIDRARepaymentInstalmentsController {
         }
         
         try {
-            update lstRepaymentInstalments;
+            upsert lstRepaymentInstalments;
             this.isEditMode = false;
             
         } catch (DMLException e) {
@@ -95,14 +95,17 @@ public with sharing class SIDRARepaymentInstalmentsController {
     }
     
     /**
-        Deletes selected repayment record
+        Removes selected repayment record from the list
+        If the record has an id then delete from the database as well
     **/
     public void DeleteRpi () {
         try {
-            delete new Case_Detail__c(Id=this.rpiIdToDelete);
-            this.lstRepaymentInstalments = getListInstalments(this.cs.Id);
+            Case_Detail__c instalmentToDelete = this.lstRepaymentInstalments.remove(this.rpiIndexToDelete);
+            if (instalmentToDelete.Id != null) {
+                delete instalmentToDelete;
+            }
         } catch (Exception e) {
-            ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.ERROR,'ERROR! Invalid Repayment Instalment ID. The operation could not be completed, no record has been deleted.'));
+            ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.ERROR,'ERROR! Invalid Repayment Instalment index. The operation could not be completed, no record has been deleted.'));
         }
     }
     
@@ -112,7 +115,7 @@ public with sharing class SIDRARepaymentInstalmentsController {
     **/
     public void AddNewPaymentInstalment () {
         try {
-            list<Case_Detail__c> lstRPIToInsert = new list<Case_Detail__c>();
+            this.lstRepaymentInstalments = getListInstalments(this.cs.Id);
             
             //if there are no instalment by default we create 6, but if thery 
             //were already created then add 1 more
@@ -124,14 +127,24 @@ public with sharing class SIDRARepaymentInstalmentsController {
                     Amount_Expected__c = 0,
                     Due_Date__c = Date.today().addMonths(i+1)
                 );
-                lstRPIToInsert.add(rpi);
+                this.lstRepaymentInstalments.add(rpi);
             }
-            insert lstRPIToInsert;
-            this.lstRepaymentInstalments = getListInstalments(this.cs.Id);
             this.isEditMode = true;
             
         } catch (Exception e) {
             ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.ERROR,e.getMessage()));
         }
+    }
+
+    public Boolean getIsUpdateable() {
+        return Schema.sObjectType.Case_Detail__c.isUpdateable();
+    }
+    
+    public Boolean getIsDeletable() {
+        return Schema.sObjectType.Case_Detail__c.isDeletable();
+    }
+    
+    public Boolean getIsCreateable() {
+        return Schema.sObjectType.Case_Detail__c.isCreateable();
     }
 }

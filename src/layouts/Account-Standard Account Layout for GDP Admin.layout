@@ -718,6 +718,7 @@
     </relatedLists>
     <relatedLists>
         <fields>NAME</fields>
+        <fields>Change_Code__c</fields>
         <fields>Integration_System__c</fields>
         <fields>Update_Type__c</fields>
         <fields>Status__c</fields>

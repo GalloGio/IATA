@@ -1,3 +1,7 @@
+/*
+	Class that sends massive campaing notifications to Portal Users
+	Used in Portal and NewGen APP (mobile)
+*/
 global with sharing class ISSP_CampaignNotificationBatch implements Database.Batchable<sObject>{
 
 	global string query = '';
@@ -28,9 +32,23 @@ global with sharing class ISSP_CampaignNotificationBatch implements Database.Bat
 			if(bIsDDS)
 				setAccntId.add(con.AccountId);
 		}
+
 		ISSP_CreateNotification.CreateNotificationForSobjectList(contactList);
 		//update contactList;
+		// Start NewGenApp
+		List<User> userList = [select Id, ContactId from user where ContactId in :contactIdSet];
 		
+		Notification_template__c template = [select Name, Id, Subject__c, Message__c from Notification_template__c where Name = :notificationId];
+
+		for(User user: userList){
+			set<String> userIdPush = new set<String>();
+			userIdPush.add(String.valueOf(user.Id));
+
+			NewGen_Account_Statement_Helper.sendPushNotification(userIdPush, template.subject__c, new List <String> {template.Message__c}, 'PUSH_NOTIFICATION');
+		}
+		// End NewGenApp
+
+
 		//DTULLO 20160208. DDS
 		if(bIsDDS && !setAccntId.isEmpty()){
 			list<Account> lsAccnt = [select Id, DDS_Last_Notification_Date__c, DDS_Status__c from Account where Id in:setAccntId];
