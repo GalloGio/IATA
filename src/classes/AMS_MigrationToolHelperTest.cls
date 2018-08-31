@@ -238,7 +238,7 @@ private class AMS_MigrationToolHelperTest {
 		Test.startTest();
 
 		RecordType SAAMcaseRecordType = [Select r.Id, r.Name from RecordType r where r.Name = 'SAAM' limit 1];
-		Id agencyRT = RecordTypeSingleton.getInstance().getRecordTypeId('Account', 'IATA_Agency');
+		Id agencyRT = AMS_Utils.getId('Account', 'IATA_Agency');
 
 		// create test account1
 		Account account1 = new Account();
