@@ -656,7 +656,8 @@ public with sharing class ANG_AgencyChangesHelper {
 					removeContactsFlag(accountsAffected); 
 
                     for(Id accountId: accountsAffected)
-                        toReturn.accountsMap.get(accountId).Has_a_Financial_Assessment_Contact__c = false;
+						if(toReturn.accountsMap.get(accountId) != null)
+    	                    toReturn.accountsMap.get(accountId).Has_a_Financial_Assessment_Contact__c = false;
 
 				}
 				if(newAccreditationModel ==  'Cash')
@@ -786,7 +787,8 @@ public with sharing class ANG_AgencyChangesHelper {
 				removeContactsFlag(accountsAffected);
 
                 for(Id accountId: accountsAffected)
-                    toReturn.accountsMap.get(accountId).Has_a_Financial_Assessment_Contact__c = false;
+					if(toReturn.accountsMap.get(accountId) != null)
+	                    toReturn.accountsMap.get(accountId).Has_a_Financial_Assessment_Contact__c = false;
 
 			}
 
@@ -1069,7 +1071,8 @@ public with sharing class ANG_AgencyChangesHelper {
         	removeContactsFlag(accountsAffected);
 
             for(Id accountId: accountsAffected)
-                toReturn.accountsMap.get(accountId).Has_a_Financial_Assessment_Contact__c = false;
+				if(toReturn.accountsMap.get(accountId) != null)
+	                toReturn.accountsMap.get(accountId).Has_a_Financial_Assessment_Contact__c = false;
 
         	ANG_RHCHelper.deactivateRHCInfo(new Set<Id>{oscarToProcess.Account__c});
         }
