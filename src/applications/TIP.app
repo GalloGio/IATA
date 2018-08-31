@@ -11,4 +11,5 @@
     <tabs>Partner_products__c</tabs>
     <tabs>TIP_BIN_Range__c</tabs>
     <tabs>TIP_Pay_Prov_Prod_Country_Config__c</tabs>
+    <tabs>standard-Case</tabs>
 </CustomApplication>
