@@ -25255,10 +25255,10 @@ msgErrorRenewalOrderExpired:Your renewal notification order link is either  expi
         <protected>false</protected>
         <shortDescription>NewGenApp_PortalUserRequested</shortDescription>
         <value>There are new Portal Users to be approved/rejected.</value>
-   </labels>
+    </labels>
     <labels>
         <fullName>NewGenApp_RHC_RiskAlert_Notification</fullName>
-		<categories>NewGenApp</categories>
+        <categories>NewGenApp</categories>
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>NewGenApp_RHC_RiskAlert_Notification</shortDescription>
