@@ -15,7 +15,8 @@ public class TIP_BatchActivateRecordsByDate_test {
         insert country;
 
         //contact for the account contact role. Required
-        contact = new Contact(LastName = 'Last Name');
+        contact = new Contact(FirstName = 'First Name', LastName = 'Last Name', Salutation = 'Mr.', 
+        					  Title = 'title', Email = 'abcde@test.org', Phone = '123456789');
         insert contact;
 		
 		//--------------CREATE ACCOUNTS--------------------

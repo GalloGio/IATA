@@ -129,10 +129,12 @@ private class ISSP_TIP_Home_Controller_Test {
         setupTest();
         controller.acceptedTransactionVal = new String[] {'Payment'} ;
         controller.paymentGuaranteeVal = new String[] {'COMMERCIAL_DISPUTE'};
+        Test.startTest();
         System.runAs(user) {
             controller.NewEditProduct();
             controller.saveDraft();
         }
+        Test.stopTest();
     }
 
     @isTest
@@ -451,9 +453,11 @@ private class ISSP_TIP_Home_Controller_Test {
         controller.terminateProduct();
         controller.terminationReason = 'Termination Reason';
         controller.terminationDate = string.valueof(Date.today());
+        Test.startTest();
         controller.submitProductTerminationRequest();
 
         System.assertEquals('Product Termination Request - test / test prod', controller.newcase.Subject);
+        Test.stopTest();
     }
 
 }
