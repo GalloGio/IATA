@@ -681,13 +681,13 @@ public with sharing class IECOrder_Svc {
             
         }
 
-        newPendding.IEC_Order_Previous_Type__c = newPendding.Type;
-        newPendding.Type = 'Cart';
-        newPendding.Status = 'New';
-        try{update newPendding;}catch(Exception ex){}  
+        newPending.IEC_Order_Previous_Type__c = newPending.Type;
+        newPending.Type = 'Cart';
+        newPending.Status = 'New';
+        try{update newPending;}catch(Exception ex){}  
 
         if (newShoppingCart == false) {
-            List<OrderItem> pendingOrderItems = new OrderItem_Sel().getOrderItems(newPendding.Id);
+            List<OrderItem> pendingOrderItems = new OrderItem_Sel().getOrderItems(newPending.Id);
             for(OrderItem oi : pendingOrderItems)
             {
                 IECOrder_Svc.addProductToCookie(oi.Product_Number__c, oi.Quantity, true);
