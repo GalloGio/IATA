@@ -11212,7 +11212,7 @@ IFG Customer Services</value>
     <labels>
         <fullName>ISSP_AMS_NOC_Instructions</fullName>
         <language>en_US</language>
-        <protected>false</protected>
+        <protected>false</protected> 
         <shortDescription>ISSP AMS NOC Instructions</shortDescription>
         <value>&lt;div&gt;
 For each section below either:&lt;br/&gt;
@@ -25444,9 +25444,9 @@ msgErrorRenewalOrderExpired:Your renewal notification order link is either  expi
     </labels>
     <labels>
         <fullName>OSCAR_RISK_WARNING</fullName>
-        <language>en_US</language>
+        <language>en_US</language> 
         <protected>false</protected>
-        <shortDescription>OSCAR_RISK_WARNING</shortDescription>
+        <shortDescription>OSCAR_RISK_WARNING</shortDescription> 
         <value>The approval of this application will have an impact on the Agency&apos;s risk properties: the new Risk Status will be &apos;B&apos; and the Cash conditions will be false.</value>
     </labels>
     <labels>
