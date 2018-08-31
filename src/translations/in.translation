@@ -13319,6 +13319,10 @@ an IATA accredited agency, please press &quot;&quot;Back&quot;&quot; button and 
         <name>NewGenApp_CashConditionsNotification</name>
     </customLabels>
     <customLabels>
+        <label><!-- NewGenApp_PortalUserRequested --></label>
+        <name>NewGenApp_PortalUserRequested</name>
+    </customLabels>
+    <customLabels>
         <label><!-- NewGenApp_RHC_RiskAlert_Notification --></label>
         <name>NewGenApp_RHC_RiskAlert_Notification</name>
     </customLabels>
@@ -13329,6 +13333,10 @@ an IATA accredited agency, please press &quot;&quot;Back&quot;&quot; button and 
     <customLabels>
         <label><!-- NewGenApp_ServiceAccepted --></label>
         <name>NewGenApp_ServiceAccepted</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- NewGenApp_ServiceRequested --></label>
+        <name>NewGenApp_ServiceRequested</name>
     </customLabels>
     <customLabels>
         <label><!-- New password --></label>
