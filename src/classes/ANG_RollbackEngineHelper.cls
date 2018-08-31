@@ -104,7 +104,8 @@ global without sharing class ANG_RollbackEngineHelper implements Queueable{
                 processRollbackPortalAppRights(technicalLogsMap.get(entity));
         }
 
-        processRollbackHierarchy(technicalLogsMap.get('AMS_Agencies_Hierarchy__c'),technicalLogsMap.get('AMS_Agencies_relationhip__c'));
+        if(technicalLogsMap.get('AMS_Agencies_Hierarchy__c') != null || technicalLogsMap.get('AMS_Agencies_relationhip__c') != null)
+            processRollbackHierarchy(technicalLogsMap.get('AMS_Agencies_Hierarchy__c'),technicalLogsMap.get('AMS_Agencies_relationhip__c'));
 
 
 
