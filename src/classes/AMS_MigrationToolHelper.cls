@@ -22,7 +22,8 @@ public without sharing class AMS_MigrationToolHelper {
 			AMS_Utils.BANKACCCHANGES => 'Agency changes',
 			AMS_Utils.NGFOP => 'FoP Management',
 			AMS_Utils.NGOPTINOUT => 'Financial review opt-in / opt-out',
-			AMS_RecordCreatorWebservice.IEP_BANK_ACCOUNT_SETUP => 'IEP Bank account setup'
+			AMS_RecordCreatorWebservice.IEP_BANK_ACCOUNT_SETUP => 'IEP Bank account setup',
+			AMS_RecordCreatorWebservice.IEP_MODEL_A_ACCOUNT_SETUP => 'IEP Model A account setup'
 		};
 		}
 		set;
@@ -356,7 +357,7 @@ public without sharing class AMS_MigrationToolHelper {
 				caseToProcess.CaseArea__c = 'Accreditation Process';
 				caseToProcess.Reason1__c = newgenCaseReason.get(processType);
 				caseToProcess.Subject = caseToProcess.Reason1__c + ' - ' + caseToProcess.Account.Name;
-				if(processType == AMS_RecordCreatorWebservice.IEP_BANK_ACCOUNT_SETUP)
+				if(processType == AMS_RecordCreatorWebservice.IEP_BANK_ACCOUNT_SETUP || processType == AMS_RecordCreatorWebservice.IEP_MODEL_A_ACCOUNT_SETUP)
 					caseToProcess.Visible_on_ISS_Portal__c = true;
 			}
 			
@@ -648,7 +649,7 @@ public without sharing class AMS_MigrationToolHelper {
 		oscar.Change_effective_as_of__c = saamCase.Change_effective_as_of__c;
 		oscar.Criteria_remarks__c = saamCase.Criteria_remarks__c;
 		oscar.Documentation_remarks__c = saamCase.Documentation_remarks__c;
-		oscar.Dossier_Reception_Date__c = (oscar.Process__c == AMS_RecordCreatorWebservice.IEP_BANK_ACCOUNT_SETUP && saamCase.Dossier_reception_date__c == null ? Date.today() : saamCase.Dossier_reception_date__c );
+		oscar.Dossier_Reception_Date__c = ((oscar.Process__c == AMS_RecordCreatorWebservice.IEP_BANK_ACCOUNT_SETUP || oscar.Process__c == AMS_RecordCreatorWebservice.IEP_MODEL_A_ACCOUNT_SETUP) && saamCase.Dossier_reception_date__c == null ? Date.today() : saamCase.Dossier_reception_date__c );
 		oscar.Fees_refund_requested__c = saamCase.Fees_refund_requested__c;
 		oscar.Finalization_checklist__c = saamCase.Finalization_checklist__c;
 		oscar.Financial_Assessment_deadline__c = saamCase.Financial_Assessment_deadline__c;
@@ -701,7 +702,7 @@ public without sharing class AMS_MigrationToolHelper {
 
 			oscar = updateDatesFromSAAM(oscar,oscarCase.Id);
 
-			if (oscar.Process__c == AMS_RecordCreatorWebservice.IEP_BANK_ACCOUNT_SETUP)
+			if (oscar.Process__c == AMS_RecordCreatorWebservice.IEP_BANK_ACCOUNT_SETUP || oscar.Process__c == AMS_RecordCreatorWebservice.IEP_MODEL_A_ACCOUNT_SETUP)
 				oscar.Oscar_Communication_Case_Id__c = oscarCase.Id;
 
 			if(oscar == null)
@@ -754,7 +755,7 @@ public without sharing class AMS_MigrationToolHelper {
 
         AMS_Pax_Accreditation_Form__c accreditationObj = null;
 
-		if(!doesNotNeedStagingAreaProcesses.contains(processType) && processType != AMS_RecordCreatorWebservice.IEP_BANK_ACCOUNT_SETUP ){
+		if(!doesNotNeedStagingAreaProcesses.contains(processType) && processType != AMS_RecordCreatorWebservice.IEP_MODEL_A_ACCOUNT_SETUP && processType != AMS_RecordCreatorWebservice.IEP_BANK_ACCOUNT_SETUP ){
         
 	        accreditationObj = createAccreditation(caseToProcess.Id,caseToProcess.AccountId,processType);
 
@@ -769,7 +770,7 @@ public without sharing class AMS_MigrationToolHelper {
 
 		}
 
-		if(!doesNotNeedStagingAreaProcesses.contains(processType)  && processType != AMS_RecordCreatorWebservice.IEP_BANK_ACCOUNT_SETUP){
+		if(!doesNotNeedStagingAreaProcesses.contains(processType) && processType != AMS_RecordCreatorWebservice.IEP_MODEL_A_ACCOUNT_SETUP && processType != AMS_RecordCreatorWebservice.IEP_BANK_ACCOUNT_SETUP){
 
 			List<AMS_Accreditation_Contact__c> contacts;
 
@@ -782,7 +783,7 @@ public without sharing class AMS_MigrationToolHelper {
 
 		String oscarId = null;
 
-		if(!doesNotNeedStagingAreaProcesses.contains(processType) && processType != AMS_RecordCreatorWebservice.IEP_BANK_ACCOUNT_SETUP){
+		if(!doesNotNeedStagingAreaProcesses.contains(processType) && processType != AMS_RecordCreatorWebservice.IEP_MODEL_A_ACCOUNT_SETUP && processType != AMS_RecordCreatorWebservice.IEP_BANK_ACCOUNT_SETUP){
 
 			oscarId = AMS_RecordCreatorWebservice.createAccreditation(caseToProcess.AccountId, accreditationObj.Id, processType, caseToProcess.Id);
 
@@ -798,7 +799,7 @@ public without sharing class AMS_MigrationToolHelper {
 				oscarRTId = oscarRT.get('VOLUNTARY_RELINQUISHMENT');
 			if(processType == 'CER.1.0')
 				oscarRTId = oscarRT.get('CERTIFICATE');
-			if(processType == AMS_RecordCreatorWebservice.IEP_BANK_ACCOUNT_SETUP || processType == 'BANK.ACCOUNT.CHANGES')
+			if(processType == AMS_RecordCreatorWebservice.IEP_BANK_ACCOUNT_SETUP || processType == AMS_RecordCreatorWebservice.IEP_MODEL_A_ACCOUNT_SETUP || processType == 'BANK.ACCOUNT.CHANGES')
 				oscarRTId = oscarRT.get('BANK_ACCOUNT_SETUP');
 
 			AMS_OSCAR__c oscar = new AMS_OSCAR__c( 
@@ -818,7 +819,7 @@ public without sharing class AMS_MigrationToolHelper {
 			caseToProcess.OSCAR__c = oscar.Id;
 
 			//  For IEP BANK Acc Setup force flag to false by default ('ISS Portal - Make case invisible' worflow cannot run for this process)
-			if(processType == AMS_RecordCreatorWebservice.IEP_BANK_ACCOUNT_SETUP){
+			if(processType == AMS_RecordCreatorWebservice.IEP_BANK_ACCOUNT_SETUP  || processType == AMS_RecordCreatorWebservice.IEP_MODEL_A_ACCOUNT_SETUP){
 				caseToProcess.Visible_on_ISS_Portal__c = true;
 				 //assign to queue
 		         Database.DMLOptions dmo = new Database.DMLOptions();
