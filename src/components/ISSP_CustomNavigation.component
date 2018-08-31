@@ -64,6 +64,19 @@
             $('.ps-scrollbar-x-rail').css('display','none');
         }
          $('.ico-home').addClass('active');
+
+         $(".navbar-collapse").on('show.bs.collapse', function () {
+            console.log('The collapsible content is about to be shown.');
+        	});
+        $(".navbar-collapse").on('shown.bs.collapse', function () {
+            console.log('The collapsible content is now fully shown.');
+        });
+        $(".navbar-collapse").on('hide.bs.collapse', function () {
+            console.log('The collapsible content is about to be hidden.');
+        });
+        $(".navbar-collapse").on('hidden.bs.collapse', function () {
+            console.log('The collapsible content is now hidden.');
+        });
       
       /*horizontal nav*/
       
@@ -357,10 +370,8 @@
        
       
       <!-- responsive adjustments -->
-      @media screen and (max-width: 768px){
-      #searchbox{
-        display:none;
-      }
+     @media screen and (max-width: 1300px){
+      
       .bPageBlock{
         overflow-x: auto;
       }
@@ -373,9 +384,101 @@
          padding: 0px 35px;
          margin-right:0px
        }
+
+       #searchbox{
+        	display:none;
+      	}
    }
+
+
+
+
+	@media (min-width: 768px) and (max-width: 1300px) {
+	    .navbar-collapse.collapse {
+	        display: none !important;
+	    }
+
+	    /*#navbar {
+	    	background-color: white !important;
+	    }*/
+	    
+	    .navbar-collapse.collapse.in {
+	        display: block !important;
+	    }
+	    
+	    .navbar-header .collapse, .navbar-toggle {
+	        display:block !important;
+	    }
+	    
+	    .navbar-header {
+	        float:none;
+	    }
+
+	    /*#searchbox {
+        	display:none;
+      	}
+
+      	#navbarMenu {
+      		float: none;
+      		margin-bottom: 7.5px;
+			margin-left: -15px;
+			margin-right: -15px;
+			margin-top: 7.5px;
+      	}*/
+
+      	
+	}
+
+	/*@media (min-width: 768px) and (max-width: 1300px) {
+		#navbarContainer {
+			margin-left: 0px;
+			margin-right: 0px;
+			padding-left: 15px;
+		}
+
+		#navbarHeader {
+			margin-bottom: 120px;
+			margin-left: -15px;
+			margin-right: -15px;
+		}
+
+		#navbarBurgerButton {
+			display: block;
+		}
+
+		#navbar {
+			background-color: rgba(0, 0, 0, 0);
+			border-top-color: rgba(0, 0, 0, 0);
+			border-top-style: solid;
+			border-top-width: 1px;
+			box-shadow: rgba(255, 255, 255, 0.1) 0px 1px 0px 0px inset;
+			display: none;
+			float: left;
+			height: auto;
+			margin-left: -15px;
+			margin-right: -15px;
+			position: static;
+			top: auto;
+			width: 100%;
+		}
+
+		#navbarMenu {
+			float: none;
+			margin-bottom: 7.5px;
+			margin-left: -15px;
+			margin-right: -15px;
+			margin-top: 7.5px;
+		}
+
+		#navbarRight {
+			margin-bottom: 7.5px;
+			margin-left: -15px;		
+			margin-top: 7.5px;
+		}
+	}*/
+
       
-      @media (min-width: 768px) {
+      @media screen and (min-width: 768px) {
       
        .navbar-right {
         top: -40px;
@@ -514,32 +617,33 @@
       
       var lang = getCookie('apex__lang');
       
-   </script>
+   	</script>
    
-   <div class="container-fluid" style="position:absolute;width:100%;height:47px;background-color:#00305b;top:55px;">
+   	<div class="container-fluid" style="position:absolute;width:100%;height:47px;background-color:#00305b;top:55px;">
        &nbsp;
    </div>
-
-   <div class="container container-issp" style="background-color:#fff">
-      <div class="navbar-header">
-         <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+   
+    <div id="navbarContainer" class="container container-issp" style="background-color:#fff">
+      <div id="navbarHeader" class="navbar-header">
+         <button id="navbarBurgerButton" type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false">
          <span class="sr-only">Toggle navigation</span>
          <span class="icon-bar"></span>
          <span class="icon-bar"></span>
          <span class="icon-bar"></span>
          </button>
-         <div class="oiHeader cOneIdHeader">
+         <div id="navbarLogo" class="oiHeader cOneIdHeader">
             <a class="homeIcon" href="/ISSP_HomePage?mid=M0S1{!if(communityName=='CNS','&CommunityName='+communityName,'')}" >
             <div class="{!if(communityName=='CNS', 'icon-cns', 'icon icon-logo')}"></div>
             <div class="subLogo"></div>
             </a>
          </div>
       </div>
-      <div id="navbar" class="navbar-collapse nav-header-issp">
-         <ul class="nav navbar-nav navbar-nav-menu">
-            <li><a href="/ISSP_Homepage?mid=M0S1{!if(communityName=='CNS','&CommunityName='+communityName,'')}" id="M0"><span class="glyphicon glyphicon-home"  aria-hidden="true"></span> {!$Label.ISSP_Home}</a></li>
+      
+      <div id="navbar" class="navbar-collapse nav-header-issp collapse" >
+         <ul id="navbarMenu" class="nav navbar-nav navbar-nav-menu">
+            <li><a href="/ISSP_Homepage?mid=M0S1{!if(communityName=='CNS','&CommunityName='+communityName,'')}" id="M0"><span class="glyphicon glyphicon-home navLink" aria-hidden="true"></span> {!$Label.ISSP_Home}</a></li>
             <li>
-               <a href="#" class="dropdown-toggle" data-toggle="dropdown" id="M1"><span class="glyphicon glyphicon-envelope"></span> {!$Label.LAQ_ContactUs} <span class="caret"></span></a>
+               <a href="#" class="dropdown-toggle navLink" data-toggle="dropdown" id="M1"><span class="glyphicon glyphicon-envelope"></span> {!$Label.LAQ_ContactUs} <span class="caret"></span></a>
                 <ul class="dropdown-menu" role="menu">
                     <li><a href="/ISSP_FAQ2Case?MainNav=Queries&subNav=MyQueries&mid=M1S1{!if(communityName=='CNS','&CommunityName='+communityName,'')}" id="M1S1"> {!$Label.ISSP_Create_query}</a></li>
                     <li class="divider"></li>
@@ -547,8 +651,8 @@
                 </ul>
             </li>
             <li>
-               <a href="#" class="dropdown-toggle" data-toggle="dropdown" id="M2"><span class="glyphicon glyphicon-book"></span> {!$Label.ISSP_Resources} <span class="caret"></span></a>
-                <ul class="dropdown-menu" role="menu">
+               <a href="#" class="dropdown-toggle navLink" data-toggle="dropdown" id="M2"><span class="glyphicon glyphicon-book"></span> {!$Label.ISSP_Resources} <span class="caret"></span></a>
+                <ul class="dropdown-menu navLink" role="menu">
                     <li><a href="/faq_home?MainNav=resources&subNav=faq&mid=M2S1{!if(communityName=='CNS','&CommunityName='+communityName,'')}" id="M2S1">{!$Label.PKB2_Category_Group_Label_1}</a></li>
                     <li class="divider"></li>
                     <li><a href="/ISSP_ContentPage?MainNav=resources&subNav=Contentpage&mid=M2S2{!if(communityName=='CNS','&CommunityName='+communityName,'')}" id="M2S2"><!--{!$Label.ISSP_Resources}-->{!$Label.ISSP_Documents}<span class="sr-only">(current)</span></a></li>
@@ -557,11 +661,11 @@
                     <!--
                     <li class="{!IF(operationalCalendarPermission,'','hide')} divider"></li>
                     <li class="{!IF(operationalCalendarPermission,'','hide')}"  ><a href="/ISSP_OperationalCalendar?MainNav=resources&subNav=OperationalCalendar&mid=M2S4{!if(communityName=='CNS','&CommunityName='+communityName,'')}" id="M2S4">{!$Label.ISSP_OperationalCalendar}<span class="sr-only"></span></a></li>
-					-->
+          -->
                 </ul>
             </li>
-            <li class="{!if($Profile.Name == 'ISS Portal Agency Delegated Admin User' || $Profile.Name == 'ISS Portal Airline Delegated Admin User' || $Profile.Name == 'ISS Portal Delegated Admin User'  || $Profile.Name == 'ISS Portal GSA Delegated Admin User' || $Profile.Name == 'ISS Portal DPC' || $Profile.Name == 'ISS Portal PwC2','','hide')}">
-               <a href="#" class="dropdown-toggle" data-toggle="dropdown" id="M3"><span class="glyphicon glyphicon-briefcase"></span>  {!$Label.ISSP_Available_services} <span class="caret"></span></a>
+            <li class="{!if($Profile.Name == 'ISS Portal Agency Delegated Admin User' || $Profile.Name == 'ISS Portal Airline Delegated Admin User' || $Profile.Name == 'ISS Portal Delegated Admin User'  || $Profile.Name == 'ISS Portal GSA Delegated Admin User' || $Profile.Name == 'ISS Portal DPC' || $Profile.Name == 'ISS Portal PwC2','','hide')} navLink">
+               <a href="#" class="dropdown-toggle navLink" data-toggle="dropdown" id="M3"><span class="glyphicon glyphicon-briefcase"></span>  {!$Label.ISSP_Available_services} <span class="caret"></span></a>
                  <ul class="dropdown-menu" role="menu">
                     <li><a href="/ISSP_AccessToService?MainNav=Services&subNav=Access&mid=M3S2{!if(communityName=='CNS','&CommunityName='+communityName,'')}" id="M4S2" > {!$Label.ISSP_Access_to_services}</a></li>
                     <li class="divider"></li>
@@ -572,7 +676,7 @@
                <a href="/ISSP_AvailableServices?MainNav=Services&subNav=Access&mid=M3S1{!if(communityName=='CNS','&CommunityName='+communityName,'')}" id="M3"><span class="glyphicon glyphicon-briefcase"></span>  {!$Label.ISSP_Available_services}</a>
             </li>
             <li class="{!if($Profile.Name == 'ISS Portal Agency Delegated Admin User' || $Profile.Name == 'ISS Portal Airline Delegated Admin User' || $Profile.Name == 'ISS Portal Delegated Admin User'  || $Profile.Name == 'ISS Portal GSA Delegated Admin User' || $Profile.Name == 'ISS Portal DPC' || $Profile.Name == 'ISS Portal PwC2','','hide')}">
-               <a href="#" class="dropdown-toggle" data-toggle="dropdown" id="M4"><span class="glyphicon glyphicon-wrench"></span> {!$Label.ISSP_Company_Administration} <span class="caret"></span></a>
+               <a href="#" class="dropdown-toggle navLink" data-toggle="dropdown" id="M4"><span class="glyphicon glyphicon-wrench"></span> {!$Label.ISSP_Company_Administration} <span class="caret"></span></a>
                <ul class="dropdown-menu" role="menu">
                   <li><a href="/ISSP_ContactList?MainNav=Admin&subNav=contacts&mid=M4S1{!if(communityName=='CNS','&CommunityName='+communityName,'')}"  id="M4S1" >{!$Label.ISSP_Contacts}</a></li>
                   <li class="divider"></li>
@@ -586,7 +690,7 @@
                </ul>
             </li>
          </ul>
-         <ul class="nav navbar-nav navbar-right">
+         <ul id="navbarRight" class="nav navbar-nav navbar-right">
             
             <apex:form id="LselectLanguage" rendered="{!communityName!='CNS'}" styleClass="navbar-form">
                <apex:selectList id="LanguageLocaleKeySelect" value="{!selectedLanguage}" size="1" onchange="changeLanguageLocaleKey(this);">
@@ -595,7 +699,7 @@
                </apex:selectList>
             </apex:form>
             <li class="dropdown">
-               <a href="#" class="dropdown-toggle" data-toggle="dropdown" style="padding-bottom:0px"><span class="glyphicon glyphicon-user" aria-hidden="true"></span> {!$User.FirstName} {!$User.LastName} <span class="caret"></span></a>
+               <a href="#" class="dropdown-toggle navLink" data-toggle="dropdown" style="padding-bottom:0px"><span class="glyphicon glyphicon-user" aria-hidden="true"></span> {!$User.FirstName} {!$User.LastName} <span class="caret"></span></a>
                <ul class="dropdown-menu" role="menu">
                   <li><a href="/apex/ISSP_PersonalInformation?mid=M5S1{!if(communityName=='CNS','&CommunityName='+communityName,'')}"  data-target="#five" id="M5">{!$Label.ISSP_Registration_MyInformation}</a></li>
                   <li><a href="/apex/ISSP_CompanyInformation?mid=M5S2{!if(communityName=='CNS','&CommunityName='+communityName,'')}"   data-target="#five" id="M5">{!$Label.ISSP_CompanyInformation}</a></li>
@@ -633,6 +737,12 @@
       </div>
       <!-- </form> -->
    </div>
+ 
+
+
+
+
+
    <div class="modal fade bootbox-confirm" id="ModalShowSurvey" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="false" data-backdrop="static" data-keyboard="false" >
       <div class="modal-dialog">
          <div class="modal-content">
