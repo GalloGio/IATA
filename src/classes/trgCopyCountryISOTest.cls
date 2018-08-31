@@ -57,7 +57,7 @@ private class trgCopyCountryISOTest {
          
         Account a  = new Account(name = 'NOTAIMS', Is_AIMS_Account__c = false
                                 ,IATA_ISO_Country__c = myIataIso.id, billingcity = 'Mars',billingcountry ='Universe',
-                                 recordtypeId = developerNamePerId[0]);
+                                 recordtypeId = developerNamePerId[0], iatacode__c = 'code');
         insert a;
         
         a = [SELECT Id, billingcountry FROM Account where id =: a.id];
