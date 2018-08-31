@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<EmailTemplate xmlns="http://soap.sforce.com/2006/04/metadata">
+    <available>true</available>
+    <description>Sent when IEP Bank Account Setup OSCAR is created</description>
+    <encodingKey>UTF-8</encodingKey>
+    <letterhead>IATADynamicSkyLetterhead</letterhead>
+    <name>IEP_Setup_Creation</name>
+    <style>freeForm</style>
+    <subject>Ref nr {!AMS_OSCAR__c.Name} – Registration of IEP Account</subject>
+    <textOnly>Dear Sir/Madam,
+
+
+We have well received your request for registering your Account for EasyPay services. Please proceed here to upload the requested documents.
+
+
+
+
+
+Thank you,
+
+
+
+IATA Customer Service Portal
+-----------------------------------------------------------------------------
+Here is a link to the portal where the agent can submit the documents
+
+
+
+{!AMS_OSCAR__c.Emails_reference_Id__c}</textOnly>
+    <type>html</type>
+    <uiType>Aloha</uiType>
+</EmailTemplate>

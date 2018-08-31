@@ -653,7 +653,11 @@ public with sharing class ANG_AgencyChangesHelper {
 
 				if(newAccreditationModel ==  'Cashless'){
 					toUpsert = performCashLessTransformation(accountsAffected);
-					removeContactsFlag(accountsAffected);
+					removeContactsFlag(accountsAffected); 
+
+                    for(Id accountId: accountsAffected)
+                        toReturn.accountsMap.get(accountId).Has_a_Financial_Assessment_Contact__c = false;
+
 				}
 				if(newAccreditationModel ==  'Cash')
 					toUpsert = performCashTransformation(accountsAffected);
@@ -778,13 +782,22 @@ public with sharing class ANG_AgencyChangesHelper {
 
 			if(newAccreditationModel ==  'Cashless'){
 				toUpsert = performCashLessTransformation(accountsAffected);
+
 				removeContactsFlag(accountsAffected);
+
+                for(Id accountId: accountsAffected)
+                    toReturn.accountsMap.get(accountId).Has_a_Financial_Assessment_Contact__c = false;
+
 			}
+
 			if(newAccreditationModel ==  'Cash')
 				toUpsert = performCashTransformation(accountsAffected);
 
-			if(!toUpsert.isEmpty())
+            if(!toUpsert.isEmpty()){
+
 				upsert toUpsert;
+
+            }
 		}
 
 		//Perform changes on RHC object
@@ -1050,9 +1063,13 @@ public with sharing class ANG_AgencyChangesHelper {
 		List<Agency_Authorization__c> toUpsert = new List<Agency_Authorization__c>();
 
         if(oscarOnlineAccreditation.ANG_Accreditation_Type__c ==  'Cashless'){
+            
         	toUpsert = performCashLessTransformation(accountsAffected);
 
         	removeContactsFlag(accountsAffected);
+
+            for(Id accountId: accountsAffected)
+                toReturn.accountsMap.get(accountId).Has_a_Financial_Assessment_Contact__c = false;
 
         	ANG_RHCHelper.deactivateRHCInfo(new Set<Id>{oscarToProcess.Account__c});
         }
@@ -1068,6 +1085,7 @@ public with sharing class ANG_AgencyChangesHelper {
 		return toReturn;
 	}
 
+    @future
 	public static void removeContactsFlag(Set<Id> accountsAffected){
 
 		List<Contact> contactsToUpdate = new List<Contact>();
@@ -1090,12 +1108,17 @@ public with sharing class ANG_AgencyChangesHelper {
 
 		}
 
+        updateContactsAndPortalRights(portalARtoUpdate, contactsToUpdate);
+ 
+    }
+
+    public static void updateContactsAndPortalRights(List<Portal_Application_Right__c> portalARtoUpdate, List<Contact> contactsToUpdate){
+
 		if(!portalARtoUpdate.isEmpty())
 			update portalARtoUpdate;
 
 		if(!contactsToUpdate.isEmpty())
 			update contactsToUpdate;
-
 	}
 
 	public static List<Agency_Authorization__c> performCashLessTransformation(Set<Id> accountsAffected){

@@ -1,4 +1,4 @@
-public class ANG_UpdateRHCInformationBatch implements Database.Batchable<sObject>, Queueable, Database.AllowsCallouts, Database.Stateful {
+public class ANG_UpdateRHCInformationBatch implements Database.Batchable<sObject>, Database.AllowsCallouts, Database.Stateful {
 
 	public enum Process {PROVISIONAL, CONSUMED}
 
@@ -28,10 +28,12 @@ public class ANG_UpdateRHCInformationBatch implements Database.Batchable<sObject
 	// *********************************************************
 	// ****************** Queuable method **********************
 	// *********************************************************
+	/* removed due to the Database.Stateful that conflicts with Queueable interface. // caused by: System.AsyncException: 
+		Queueable cannot be implemented with other system interfaces.
 	public void execute(QueueableContext context) {
 		Database.executeBatch(this, scopeSize);
 	}
-
+	*/
 
 	// *********************************************************
 	// ******************* Batch methods ***********************

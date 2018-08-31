@@ -104,9 +104,9 @@ public with sharing class IEC_ProductDetailsController extends IEC_PageControlle
 		    Product2 sfProduct = [SELECT Id, Sell_through_eCommerce__c, Display_Ecom_Topic__c FROM Product2 WHERE Id = :product.ProductId LIMIT 1];
 
 
-			bIsInStock 		= 	product.InventoryStatus == 'In stock';
-			bIsOutOfStock 	= 	product.InventoryStatus != 'In stock';
-			bIsPreOrder 	= 	(product.InventoryStatus != 'In stock' && !product.Is_Electronic_Product);
+			bIsInStock 		= 	(product.InventoryStatus == 'In stock' || product.InventoryStatus == 'Available Now');
+			bIsOutOfStock 	= 	(product.InventoryStatus != 'In stock' && product.InventoryStatus != 'Available Now');
+			bIsPreOrder 	= 	((product.InventoryStatus != 'In stock' && product.InventoryStatus != 'Available Now') && !product.Is_Electronic_Product);
 			bIsDirectSales 	= 	((product.RegularPrice==null && product.CustomerPrice==null) || !sfProduct.Sell_through_eCommerce__c);
 
 			//Product discounts

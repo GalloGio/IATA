@@ -88,12 +88,12 @@ private class ISSP_PortalUserStatusChangeTest {
                                 ProfileId = profileId,
                                 IsActive = true);
         insert newUser;
-
+		/*
         Test.startTest();
         ISSP_PortalUserStatusChange controler = new ISSP_PortalUserStatusChange(new Apexpages.Standardcontroller(contact));
         controler.contactId = contact.Id;
         controler.sendEmailToUser();
-
+		
         ISSP_PortalUserStatusChange.preformActionFuture(contact.Id,'Active','Approved User');
         ISSP_PortalUserStatusChange.preformActionImmediate(contact.Id,'Pending Approval','Approved User');
 
@@ -101,6 +101,7 @@ private class ISSP_PortalUserStatusChangeTest {
         action.processAction(contact.Id);
 
         Test.stopTest();
+		*/
     }
 
     public static testMethod void testISSP_PortalUserStatusChangeTest4() {

@@ -163,7 +163,7 @@ public class AMS_OSCARTriggerHandler {
 
     public static void handleAfterInsert() {
         /*** AMSU-134 Start ***/
-        //createSavepoint((List<AMS_OSCAR__c>) Trigger.new);
+        createSavepoint((List<AMS_OSCAR__c>) Trigger.new, null);
         /*** AMSU-134 End ***/
 
         updateCaseKPIFields();
@@ -185,7 +185,8 @@ public class AMS_OSCARTriggerHandler {
         handleChangeOfLocation((List<AMS_OSCAR__c>) Trigger.new, (Map<Id, AMS_OSCAR__c>) Trigger.oldMap);
         /*** AMSU-121 End ***/
         /*** AMSU-134 Start ***/
-        //rollbackChanges((List<AMS_OSCAR__c>) Trigger.new, (Map<Id, AMS_OSCAR__c>) Trigger.oldMap, (Map<Id, AMS_OSCAR__c>) Trigger.newMap);
+        createSavepoint((List<AMS_OSCAR__c>) Trigger.new, (Map<Id, AMS_OSCAR__c>) Trigger.oldMap);
+        rollbackChanges((List<AMS_OSCAR__c>) Trigger.new, (Map<Id, AMS_OSCAR__c>) Trigger.oldMap, (Map<Id, AMS_OSCAR__c>) Trigger.newMap);
         /*** AMSU-134 End ***/
 
         performRollbackANG((Map<Id, AMS_OSCAR__c>) Trigger.oldMap, (Map<Id, AMS_OSCAR__c>) Trigger.newMap);
@@ -193,16 +194,23 @@ public class AMS_OSCARTriggerHandler {
     }
 
     /*** AMSU-134 Start ***/
-    public static void createSavepoint(List<AMS_OSCAR__c> oscars) {
+    public static void createSavepoint(List<AMS_OSCAR__c> oscars, Map<Id, AMS_OSCAR__c> oldMap) {
         Set<Id> oscarIds = new Set<Id>();
         for(AMS_Oscar__c oscar : oscars) {
-            if(oscar.Process__c == AMS_Utils.AGENCYCHANGES) {
+            AMS_Oscar__c oldOscar = oldMap != null ? oldMap.get(oscar.Id) : null;
+            Boolean isAgencyChange = oscar.Process__c == AMS_Utils.AGENCYCHANGES;
+            Boolean hasTypeOfchange = (String.isNotBlank(oscar.Type_of_change__c) && oldOscar == null) || 
+                (String.isNotBlank(oscar.Type_of_change__c) && oscar.Type_of_change__c <> oldOscar.Type_of_change__c);
+            Boolean sanityCheckNotPassed = oscar.STEP6__c <> AMS_Utils.PASSED;
+            if(isAgencyChange && hasTypeOfchange && sanityCheckNotPassed) {
                 oscarIds.add(oscar.Id);
             }
         }
 
-        if(!system.isBatch() && !system.isFuture()) {
-            AMS_OscarChangesHelper.createSavepoint(oscarIds);
+        if(!system.isBatch() && !system.isFuture() && !oscarIds.isEmpty()) {
+            //AMS_OscarChangesHelper.createSavepoint(oscarIds);
+            AMS_OSCAR_Savepoint oscarSavepoint = new AMS_OSCAR_Savepoint(oscars);
+            System.enqueueJob(oscarSavepoint);
         }
     }
 
@@ -229,7 +237,8 @@ public class AMS_OSCARTriggerHandler {
         }
         
         if(!oscarIds.isEmpty() && !system.isBatch() && !system.isFuture()) {
-            AMS_OscarChangesHelper.rollbackOscarChanges(oscarIds);
+            AMS_OSCAR_Rollback rbk = new AMS_OSCAR_Rollback(oscars);
+            rbk.rollbackOSCAR();
         }
     }
     /*** AMSU-134 End ***/
@@ -2588,6 +2597,7 @@ public class AMS_OSCARTriggerHandler {
         else if(agencyType == AMS_Utils.NGCHANGES && step == AMS_Utils.SANITYCHECK) templateId                  = 'ANG_Changes_SanityCheck_Passed';
         else if(agencyType == AMS_Utils.NGCHANGES && step == AMS_Utils.APPROVAL && wasApproved) templateId      = 'ANG_Changes_APP';
         else if(agencyType == AMS_Utils.NGCHANGES && step == AMS_Utils.APPROVAL && !wasApproved) templateId     = 'ANG_Changes_DIS';
+        else if(agencyType == AMS_Utils.IEPBANKACCOUNTSETUP && step == 'Creation') templateId    = 'IEP_Setup_Creation';
         else if(agencyType == AMS_Utils.IEPBANKACCOUNTSETUP && step == AMS_Utils.SANITYCHECK) templateId    = 'IEP_Setup_SanityCheck_Passed';
         else if(agencyType == AMS_Utils.IEPBANKACCOUNTSETUP && step == 'closed' && wasApproved) templateId  = 'IEP_Setup_Finalization_Passed';
         else if(agencyType == AMS_Utils.IEPBANKACCOUNTSETUP && step == 'closed' && !wasApproved) templateId  = 'IEP_Setup_Finalization_Failed';
