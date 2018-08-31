@@ -132,8 +132,9 @@
 </script>
 
  <body>
+  <c:ISSP_CustomNavigation communityName="{!communityName}"/>
   <div class="container">
-      <c:ISSP_CustomNavigation communityName="{!communityName}"/>
+    <div id="contentWrapper">
           <div class="panel panel-primary">
               <div class="panel-heading head_panel_green">
                   <h3 class="panel-title">{!$Label.ISSP_Add_User_to_this_service} - {!Operation}</h3>
@@ -431,8 +432,7 @@
                                 <br/>
                               </div>
                               <div class="modal-footer">
-                                <apex:commandButton 
-                                  action="{!activateUsers}"
+                                <apex:commandButton action="{!activateUsers}"
                                   onclick="closeIataIepRequestAccessModal();" value="{!$Label.LAQ_Close}" 
                                   oncomplete="onComplete();"
                                   status="loadStatusSpinner"
@@ -449,8 +449,6 @@
                </div>
            </apex:define>
           </div><!-- end  div class="panel panel-primary"-->
-
-      <c:ISSP_CustomFooter communityName="{!communityName}" />      
 
       <div id="load_scrl" class="loadingBox loader" style="display:none;"> </div>
       <div class="loadingBox overlay"> </div>
@@ -491,9 +489,9 @@
                $('.loadingBox').hide();
           }
       </script>
-
-  </div><!-- end container-->  
-  
+	</div>
+  	</div><!-- end container-->  
+ 	 <c:ISSP_CustomFooter communityName="{!communityName}" />      
         </body>
     </html>
 </apex:page>

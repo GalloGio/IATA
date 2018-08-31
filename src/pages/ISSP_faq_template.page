@@ -30,9 +30,8 @@
 	})
 
 	</script>  
-    
-     <div class="container">   
-         <c:ISSP_CustomNavigation communityName="{!communityName}"/>
+     <c:ISSP_CustomNavigation communityName="{!communityName}"/>
+     <div class="container">
      <apex:outputText rendered="{!viewingArticle}">
         <apex:variable var="typeName" value="{!SUBSTITUTE(pkbCon.theKad.articleTypeName, pkbCon.kavExtension, '')}" />
         <apex:variable var="articleURL" value="{!pkbCon.currentSiteUrl}articles{!pkbCon.selectedLanguageURL}{!typeName}/{!pkbCon.theKad.urlName}" />
@@ -105,9 +104,8 @@
                         </div>
                     </div>
                </div>
-               <div style="clear: both;"><c:ISSP_CustomFooter communityName="{!communityName}"/></div>
          </div><!-- end container-->
-
+         <c:ISSP_CustomFooter communityName="{!communityName}"/>
   </body>
     
 </html>

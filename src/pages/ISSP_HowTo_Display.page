@@ -80,9 +80,9 @@
     }
     </script>
  
-
+	<c:ISSP_CustomNavigation communityName="{!communityName}"/>
     <div class="container">
-        <c:ISSP_CustomNavigation communityName="{!communityName}"/>
+    <div id="contentWrapper">
      <div>
         <div id="left_column">
         	<apex:outputPanel styleClass="relatedArticles" layout="block">
@@ -195,6 +195,7 @@
             
     </div>
     </div> <!-- end right content-->
+    </div>
     </div>
     </div><!-- end container-->
     
