@@ -148,7 +148,7 @@
         <filters>
             <field>Record__c</field>
             <operation>contains</operation>
-            <value>14317010013</value>
+            <value>67980032</value>
         </filters>
         <label>AMS - 1 record</label>
         <language>en_US</language>
