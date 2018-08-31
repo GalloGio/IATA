@@ -247,7 +247,8 @@ private class ANG_AccountTriggerHandlerTest {
 		update a;
 
 		//forcing call as test will not "chain" processes
-		new ANG_UpdateRHCInformationBatch(new Set<Id>{a.Id}, ANG_UpdateRHCInformationBatch.Process.PROVISIONAL, true, 100).execute(null);
+		//new ANG_UpdateRHCInformationBatch(new Set<Id>{a.Id}, ANG_UpdateRHCInformationBatch.Process.PROVISIONAL, true, 100).execute(null); 
+		new ANG_UpdateRHCInformationQueueable(new Set<Id>{a.Id}, ANG_UpdateRHCInformationBatch.Process.PROVISIONAL, true, 100).execute(null); 
 		Test.stopTest();
 
 		List<ANG_RHC_Information__c> rhcList = [Select ANG_RHC_Amount_Provisional__c,
@@ -324,7 +325,8 @@ private class ANG_AccountTriggerHandlerTest {
 		update cFS;
 
 		//forcing call as test will not "chain" processes
-        new ANG_UpdateRHCInformationBatch(new Set<Id>{a.Id}, ANG_UpdateRHCInformationBatch.Process.PROVISIONAL, true, 100).execute(null);
+        //new ANG_UpdateRHCInformationBatch(new Set<Id>{a.Id}, ANG_UpdateRHCInformationBatch.Process.PROVISIONAL, true, 100).execute(null);
+		new ANG_UpdateRHCInformationQueueable(new Set<Id>{a.Id}, ANG_UpdateRHCInformationBatch.Process.PROVISIONAL, true, 100).execute(null);
 		Test.stopTest();
 
 		List<ANG_RHC_Information__c> rhcList = [Select ANG_RHC_Amount_Provisional__c,
