@@ -1231,8 +1231,8 @@ public class ISSP_ANG_ANNUAL_REVALIDATION {
             		errorFound = true;
 				}
 
-				if (currentAccount.fw.newform.ISSP_AMS_VAT_number__c == null && currentAccount.isocountry.Hide_Tax_Number_VAT__c == false) {
-					currentAccount.fw.newform.ISSP_AMS_VAT_number__c.addError(Label.ISSP_YouMustEnter);
+				if (currentAccount.fw.newform.ISSP_AMS_VAT_Number_Input__c == null && currentAccount.isocountry.Hide_Tax_Number_VAT__c == false) {
+					currentAccount.fw.newform.ISSP_AMS_VAT_Number_Input__c.addError(Label.ISSP_YouMustEnter);
 					errorFound = true;
 				} else if (currentAccount.fw.newForm.INVALID_Tax_Number__c && currentAccount.isocountry.Hide_Tax_Number_VAT__c == false) {
 					currentAccount.fw.newform.ISSP_AMS_VAT_Number_Input__c.addError(Label.ISSP_PAX_Validating_VAT_Number_error);
