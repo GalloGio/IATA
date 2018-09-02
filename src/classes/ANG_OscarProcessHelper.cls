@@ -1232,7 +1232,7 @@ global class ANG_OscarProcessHelper {
 		if (origin == AMS_Utils.ANG_MASSIVE_FOP)
 			identifier = 'NG_FOP_PortalNotification';
 		else if (origin == AMS_Utils.ANG_FOP_AUTOMATIC_RENEWAL)
-			identifier = 'NG_FOP_PortalNotification'; //change the identifier id we need to use another notification template
+			identifier = 'ANG_PCI_RENEWAL';
 
 		Notification_Template__c notificationTemplate = null;
 
@@ -1421,6 +1421,7 @@ global class ANG_OscarProcessHelper {
 			nt.Message__c = nt.Message__c
 				.replace('#CONTACTNAME', contactsMap.get(nt.Contact__c).Name)
 				.replace('#IATACODE', acct.IataCode__c)
+				.replace('#ACCOUNTNAME', acct.Name)
 				.replace('#TODAY30',String.valueOf(Datetime.now().addDays(30).format('MM/dd/yyyy')))
 				.replace('#CASENUMBER',acctIdCasesMap.get(contactAccts.get(nt.Contact__c)).CaseNumber);
 				
@@ -1544,9 +1545,10 @@ global class ANG_OscarProcessHelper {
 
 		for (Notification__c nt :notifications){
 			nt.Message__c = nt.Message__c
-				.replace('#CONTACTNAME#',contacts.get(nt.Contact__c).Name)
-				.replace('#IATACODE#',contacts.get(nt.Contact__c).Account.IataCode__c)
-				.replace('#DEADLINEDATE#',String.valueOf(Datetime.now().addDays(15).format('MM/dd/yyyy')));
+				.replace('#CONTACTNAME',contacts.get(nt.Contact__c).Name)
+				.replace('#IATACODE',contacts.get(nt.Contact__c).Account.IataCode__c)
+				.replace('#ACCOUNTNAME', acct.Name)
+				.replace('#DEADLINEDATE',String.valueOf(Datetime.now().addDays(15).format('MM/dd/yyyy')));
 		}
 
 		if (!notifications.isEmpty())
