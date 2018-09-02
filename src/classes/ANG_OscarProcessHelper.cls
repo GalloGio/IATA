@@ -1232,7 +1232,7 @@ global class ANG_OscarProcessHelper {
 		if (origin == AMS_Utils.ANG_MASSIVE_FOP)
 			identifier = 'NG_FOP_PortalNotification';
 		else if (origin == AMS_Utils.ANG_FOP_AUTOMATIC_RENEWAL)
-			identifier = 'ANG_PCI_RENEWAL';
+			identifier = ANG_PCI_RENEWAL;
 
 		Notification_Template__c notificationTemplate = null;
 
