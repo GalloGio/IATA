@@ -23338,7 +23338,7 @@ CNS Customer Services</value>
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>ISSP_UserInactivation_ServiceMsg_5</shortDescription>
-        <value>This contact is a Primary Contact for this account and so cannot be inactivated. Please designate a new Primary Contact before inactivating this one.</value>
+        <value>The following contact is a Primary Contact for your Organization and so cannot be inactivated. Please &lt;a style=&quot;color:blue &quot; href=&quot;/ISSP_FAQ2Case?topic=TIP%20HelpDesk&quot;&gt;contact IATA Customer Service&lt;/a&gt; to designate a new Primary Contact.</value>
     </labels>
     <labels>
         <fullName>ISSP_VR_Case_Submited</fullName>
