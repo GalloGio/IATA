@@ -23,7 +23,7 @@ public without sharing class AMS_MigrationToolHelper {
 			AMS_Utils.NGFOP => 'FoP Management',
 			AMS_Utils.NGOPTINOUT => 'Financial review opt-in / opt-out',
 			AMS_RecordCreatorWebservice.IEP_BANK_ACCOUNT_SETUP => 'IEP Bank account setup',
-			AMS_RecordCreatorWebservice.IEP_MODEL_A_ACCOUNT_SETUP => 'IEP Model A account setup'
+			AMS_RecordCreatorWebservice.IEP_MODEL_A_ACCOUNT_SETUP => 'Onboarding IEP Model A'
 		};
 		}
 		set;
