@@ -318,8 +318,7 @@ private class ICCS_Case_Triggers_Test {
         //Id ICCS_RT_Id = Schema.SObjectType.Case.RecordTypeInfosByName.get('FDS ICCS Product Management').RecordTypeId ;
         Id ICCS_RT_Id = RecordTypeSingleton.getInstance().RtIDsPerDeveloperNamePerObj.get('Case').get('FDS_ICCS_Product_Management');
         Case cs = new Case(RecordTypeId = ICCS_RT_Id, Subject = 'test', Origin = 'Email', CaseArea__c = 'ICCS – Assign Product', Status = 'Open',
-                        ContactId = c.Id, AccountId = a.Id, ICCS_Product__c = 'BSP', ICCS_Country__c = 'France', ICCS_Currencies__c = 'USD', 
-                        Accelerated_Function__c = true);  
+                        ContactId = c.Id, AccountId = a.Id, ICCS_Product__c = 'BSP', ICCS_Country__c = 'France', ICCS_Currencies__c = 'USD');  
         insert cs;
         
         List<Case> lstCases = [SELECT Id FROM Case];
@@ -337,10 +336,9 @@ private class ICCS_Case_Triggers_Test {
         system.assertEquals('Closed', cs.Status);
         system.assertEquals(true, cs.isClosed);
         
-        List<Product_Assignment__c> lstPAs = [SELECT Id, Status__c, Accelerated_Function__c FROM Product_Assignment__c];
+        List<Product_Assignment__c> lstPAs = [SELECT Id, Status__c FROM Product_Assignment__c];
         system.assertEquals(1, lstPAs.size());
-        system.assertEquals('Active', lstPAs[0].Status__c);
-        system.assertEquals(true, lstPAs[0].Accelerated_Function__c);
+        system.assertEquals('Active', lstPAs[0].Status__c);        
         
         // Try to create an assignment case with the same product combination and test that it is not inserted
         try {
