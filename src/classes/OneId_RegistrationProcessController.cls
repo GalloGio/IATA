@@ -142,10 +142,11 @@ public without sharing class OneId_RegistrationProcessController {
         Map<String, PicklistEntry> values =  new  Map<String, PicklistEntry>();
         values.put('', new PicklistEntry(System.Label.ISSP_Registration_None, ''));
 
-        for (Schema.PicklistEntry p : Schema.Account.Sector__c.getDescribe().getPickListValues()){
+
+        for (Schema.PicklistEntry p : OneId_PicklistHelper.sectorValues.keySet()){
             PicklistEntry e = new PicklistEntry(p.getLabel(), p.getValue());
 
-            for(Schema.PicklistEntry dp : OneId_PicklistHelper.getDependentValues(p.getValue())){
+            for(Schema.PicklistEntry dp : OneId_PicklistHelper.sectorValues.get(p)){
                 e.dependentValues.add(new PicklistEntry(dp.getLabel(), dp.getValue()));
             }
 
