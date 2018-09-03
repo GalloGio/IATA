@@ -23102,7 +23102,7 @@ This Dashboard allows each airline Treasury Team to gain full visibility of thei
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>ISSP_TIP_VOLUNT_RELINQ_MSG</shortDescription>
-        <value>TBD</value>
+        <value>By voluntarily removing yourself from the TIP program you will remove all your Products currently enrolled, and as a consequence cannot be used by Agents anymore.</value>
     </labels>
     <labels>
         <fullName>ISSP_TIP_VOLUNT_RELINQ_TITLE</fullName>
