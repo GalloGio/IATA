@@ -187,8 +187,8 @@
                                                             <span class="price-label">{!$Label.Direct_Sales}</span>
                                                         </apex:outputPanel>
                                                     
-                                                        <a class="button" href="{!$Site.BaseUrl}/IEC_ProductDetails?id={!prod.ProductNumber}"> {! IF(prod.InventoryStatus == 'In stock', $Label.Button_Select, $Label.PreOrderAddToCart)}</a>
-                                                    </div>
+                                                        <a class="button" href="{!$Site.BaseUrl}/IEC_ProductDetails?id={!prod.ProductNumber}"> {! IF(OR(prod.InventoryStatus == 'Out of Stock',prod.InventoryStatus == 'Coming Soon'), $Label.PreOrderAddToCart, $Label.Button_Select)}</a>
+                                                    </div> 
                                                 </li>
                                             </apex:repeat>
                                         </ul>
