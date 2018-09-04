@@ -109,13 +109,11 @@
     /* Jquery tootip style customization */
     .tooltip {font-size:13px;}
 
-    @media (min-width: 1300px) {
+    @media (min-width: 992px) {
     	#navbar {
     		height: 47px !important;
     	}
     }
-
-
     </style>
 
     <apex:form id="contactListForm">
