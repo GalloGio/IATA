@@ -2588,7 +2588,9 @@ public class AMS_OSCARTriggerHandler {
         else if(agencyType == AMS_Utils.NGCHANGES && step == AMS_Utils.SANITYCHECK) templateId                  = 'ANG_Changes_SanityCheck_Passed';
         else if(agencyType == AMS_Utils.NGCHANGES && step == AMS_Utils.APPROVAL && wasApproved) templateId      = 'ANG_Changes_APP';
         else if(agencyType == AMS_Utils.NGCHANGES && step == AMS_Utils.APPROVAL && !wasApproved) templateId     = 'ANG_Changes_DIS';
-        else if(agencyType == AMS_Utils.IEPBANKACCOUNTSETUP && step == 'Creation') templateId    = 'IEP_Setup_Creation';
+        else if(agencyType == AMS_Utils.IEPMODELAACCOUNTSETUP && step == 'Creation') templateId    = 'IEP_Setup_Creation';
+        else if(agencyType == AMS_Utils.IEPMODELAACCOUNTSETUP && step == AMS_Utils.SANITYCHECK) templateId    = 'IEP_Model_A_SanityCheck_Passed';
+		else if(agencyType == AMS_Utils.IEPBANKACCOUNTSETUP && step == 'Creation') templateId    = 'IEP_Setup_Creation';
         else if(agencyType == AMS_Utils.IEPBANKACCOUNTSETUP && step == AMS_Utils.SANITYCHECK) templateId    = 'IEP_Setup_SanityCheck_Passed';
         else if(agencyType == AMS_Utils.IEPBANKACCOUNTSETUP && step == 'closed' && wasApproved) templateId  = 'IEP_Setup_Finalization_Passed';
         else if(agencyType == AMS_Utils.IEPBANKACCOUNTSETUP && step == 'closed' && !wasApproved) templateId  = 'IEP_Setup_Finalization_Failed';
@@ -3063,7 +3065,7 @@ public class AMS_OSCARTriggerHandler {
 
         }
 
-        if(updatedOscar.Process__c == AMS_Utils.IEPBANKACCOUNTSETUP && oldOSCAR.STEP6__c <> updatedOscar.STEP6__c && updatedOscar.STEP6__c == 'Passed'){
+        if((updatedOscar.Process__c == AMS_Utils.IEPBANKACCOUNTSETUP || updatedOscar.Process__c == AMS_Utils.IEPMODELAACCOUNTSETUP) && oldOSCAR.STEP6__c <> updatedOscar.STEP6__c && updatedOscar.STEP6__c == 'Passed'){
 
             System.debug('Sending the email for the user to anounce Sanity Check Passing of the IEP bank account setup oscar');
 

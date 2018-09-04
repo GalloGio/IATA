@@ -176,6 +176,7 @@ public without sharing class AMS_Utils {
     public static final String BANKACCCHANGES   = 'BANK.ACCOUNT.CHANGES';
     public static final String CERTIFICATION    = 'CERTIFICATION.1.0';
     public static final String IEPBANKACCOUNTSETUP = 'IEP.BANK.ACCOUNT.SETUP';
+    public static final String IEPMODELAACCOUNTSETUP = 'IEP.MODEL.A.ACCOUNT.SETUP';
     public static final String PCI_COMPLIANT    = 'PCI.COMPLIANT.1.0';
 
     //Process of type NewGen
