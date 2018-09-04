@@ -97,7 +97,7 @@ public without sharing class IECApplicationsManager {
         
         if (CASSCode == null || CASSCode == '') {
             lstAgency = 
-                [SELECT g.Name, g.Trading_Name__c, g.Legal_Name__c, g.Last_Date_of_Update__c, g.Agency_Code__c,
+                [SELECT g.Name, g.Trading_Name__c, g.Legal_Name__c, g.Last_Date_of_Update__c, g.Agency_Code__c, g.Accreditation_Model__c,
                     g.Related_Accreditation_Class__r.Status__r.Name, g.Related_Accreditation_Class__r.Status__r.Definition__c, g.Related_Accreditation_Class__r.Status__r.Code__c, g.Related_Accreditation_Class__r.Class__r.Name , g.Related_Accreditation_Class__r.Class__r.Definition__c, 
                     g.Incorporation_Type__r.Name, g.Incorporation_Type__r.Definition__c, 
                     g.Location_Type__r.Name, g.Location_Type__r.Definition__c, g.Related_Main_Phone__r.Number__c, g.Related_Main_Phone__r.Name, g.Related_Accreditation_Class__r.Date__c,
@@ -111,7 +111,7 @@ public without sharing class IECApplicationsManager {
             CASSCode = CASSCode.trim();
             
             lstAgency = 
-                [SELECT g.Name, g.Trading_Name__c, g.Legal_Name__c, g.Last_Date_of_Update__c, g.Agency_Code__c,
+                [SELECT g.Name, g.Trading_Name__c, g.Legal_Name__c, g.Last_Date_of_Update__c, g.Agency_Code__c, g.Accreditation_Model__c,
                     g.Related_Accreditation_Class__r.Status__r.Name, g.Related_Accreditation_Class__r.Status__r.Definition__c, g.Related_Accreditation_Class__r.Status__r.Code__c,  g.Related_Accreditation_Class__r.Class__r.Name , g.Related_Accreditation_Class__r.Class__r.Definition__c,
                     g.Incorporation_Type__r.Name, g.Incorporation_Type__r.Definition__c, 
                     g.Location_Type__r.Name, g.Location_Type__r.Definition__c, g.Related_Main_Phone__r.Number__c, g.Related_Main_Phone__r.Name, g.Related_Accreditation_Class__r.Date__c,
@@ -121,7 +121,7 @@ public without sharing class IECApplicationsManager {
                 WHERE g.IATA_Code__c = :IATACode AND g.CASS_Number__c = : CASSCode
                     AND Related_Accreditation_Class__r.Class__r.Code__c NOT IN :CACCodesList limit 2];
         }
-
+        System.debug('lstAgency vals in List ::: ' + lstAgency);
         return (!lstAgency.isEmpty()) ? lstAgency : null;
     }
     
@@ -131,7 +131,7 @@ public without sharing class IECApplicationsManager {
      * @return A GDP_Products_Account_View__c object
      */
     public static GDP_Products_Account_View__c getAgencyByID(String sAgencyID) {
-        return [SELECT IATA_Code__c, Name, Trading_Name__c, Legal_Name__c, Last_Date_of_Update__c, Agency_Code__c,
+        return [SELECT IATA_Code__c, Name, Trading_Name__c, Legal_Name__c, Last_Date_of_Update__c, Agency_Code__c, Accreditation_Model__c,
                     Related_Accreditation_Class__r.Status__r.Name, Related_Accreditation_Class__r.Status__r.Definition__c, Related_Accreditation_Class__r.Status__r.Code__c, Country_Name__c,
                     Incorporation_Type__r.Name, Incorporation_Type__r.Definition__c, Sub_Continent__c, City__c,
                     Location_Type__r.Name, Location_Type__r.Definition__c, State_Province__c, Location_Address__c,
@@ -163,7 +163,7 @@ public without sharing class IECApplicationsManager {
             if (CASSCode == null || CASSCode == '') {
                 //No CASS Code --> Query for IATA + Check codes
                 lstAgency = 
-                    [SELECT g.Name, g.Trading_Name__c, g.Legal_Name__c, g.Last_Date_of_Update__c, g.Agency_Code__c,
+                    [SELECT g.Name, g.Trading_Name__c, g.Legal_Name__c, g.Last_Date_of_Update__c, g.Agency_Code__c, g.Accreditation_Model__c,
                         g.Related_Accreditation_Class__r.Status__r.Name, g.Related_Accreditation_Class__r.Status__r.Definition__c, g.Related_Accreditation_Class__r.Status__r.Code__c,  g.Related_Accreditation_Class__r.Class__r.Name , g.Related_Accreditation_Class__r.Class__r.Definition__c,
                         g.Incorporation_Type__r.Name, g.Incorporation_Type__r.Definition__c, 
                         g.Location_Type__r.Name, g.Location_Type__r.Definition__c, g.Related_Main_Phone__r.Number__c, g.Related_Main_Phone__r.Name, g.Related_Accreditation_Class__r.Date__c,
@@ -183,7 +183,7 @@ public without sharing class IECApplicationsManager {
                 String searchCode = agencyCode  + CASSCode + checkCode;
                 
                 lstAgency = 
-                    [SELECT g.Name, g.Trading_Name__c, g.Legal_Name__c, g.Last_Date_of_Update__c, g.Agency_Code__c,
+                    [SELECT g.Name, g.Trading_Name__c, g.Legal_Name__c, g.Last_Date_of_Update__c, g.Agency_Code__c, g.Accreditation_Model__c,
                         g.Related_Accreditation_Class__r.Status__r.Name, g.Related_Accreditation_Class__r.Status__r.Definition__c, g.Related_Accreditation_Class__r.Status__r.Code__c,  g.Related_Accreditation_Class__r.Class__r.Name , g.Related_Accreditation_Class__r.Class__r.Definition__c,
                         g.Incorporation_Type__r.Name, g.Incorporation_Type__r.Definition__c, 
                         g.Location_Type__r.Name, g.Location_Type__r.Definition__c, g.Related_Main_Phone__r.Number__c, g.Related_Main_Phone__r.Name, g.Related_Accreditation_Class__r.Date__c,
@@ -200,7 +200,7 @@ public without sharing class IECApplicationsManager {
         else {
             //Query for Agency Code
             lstAgency = 
-                [SELECT g.Name, g.Trading_Name__c, g.Legal_Name__c, g.Last_Date_of_Update__c, g.Agency_Code__c,
+                [SELECT g.Name, g.Trading_Name__c, g.Legal_Name__c, g.Last_Date_of_Update__c, g.Agency_Code__c, g.Accreditation_Model__c,
                     g.Related_Accreditation_Class__r.Status__r.Name, g.Related_Accreditation_Class__r.Status__r.Definition__c, g.Related_Accreditation_Class__r.Status__r.Code__c,  g.Related_Accreditation_Class__r.Class__r.Name , g.Related_Accreditation_Class__r.Class__r.Definition__c,
                     g.Incorporation_Type__r.Name, g.Incorporation_Type__r.Definition__c, 
                     g.Location_Type__r.Name, g.Location_Type__r.Definition__c, g.Related_Main_Phone__r.Number__c, g.Related_Main_Phone__r.Name, g.Related_Accreditation_Class__r.Date__c,
@@ -211,7 +211,7 @@ public without sharing class IECApplicationsManager {
                     AND Related_Accreditation_Class__r.Class__r.Code__c NOT IN :CACCodesList limit 2];
 
         }
-                
+        System.debug('lstAgency vals in List ::: ' + lstAgency);
         return (!lstAgency.isEmpty()) ? lstAgency : null;
     }
     
@@ -316,7 +316,7 @@ public without sharing class IECApplicationsManager {
             
             if (String.isNotBlank(oAdvancedFilters.IATA_Code__c)) {
                 if (sProductCategoryCode == IECConstants.ProductCategory_SF_CAL) {
-                	sQueryWhereClauses.add('Agency_Code__c LIKE \'' + oAdvancedFilters.IATA_Code__c + '%\'');
+                    sQueryWhereClauses.add('Agency_Code__c LIKE \'' + oAdvancedFilters.IATA_Code__c + '%\'');
                 } else {
                     if (oAdvancedFilters.IATA_Code__c.length() == 7) {
                         sQueryWhereClauses.add('IATA_Code__c = \'' + oAdvancedFilters.IATA_Code__c + '\'');
@@ -327,7 +327,7 @@ public without sharing class IECApplicationsManager {
                     }
                     // simulate Starts With
                     else {
-                    	sQueryWhereClauses.add('IATA_Code__c LIKE \'' + oAdvancedFilters.IATA_Code__c + '%\'');
+                        sQueryWhereClauses.add('IATA_Code__c LIKE \'' + oAdvancedFilters.IATA_Code__c + '%\'');
                     }
                 }
             }
@@ -667,7 +667,7 @@ public without sharing class IECApplicationsManager {
      */
     /*@future (callout=true)*/
     public static void createProductAccessOnNewSubscription(Id sContactId, Zuora__Subscription__c oSubscription, String sInvoiceNumber) {
-    	createProductAccessOnNewSubscription(sContactId, oSubscription, sInvoiceNumber, true);
+        createProductAccessOnNewSubscription(sContactId, oSubscription, sInvoiceNumber, true);
     }
 
     /*@future (callout=true)*/
@@ -732,7 +732,7 @@ public without sharing class IECApplicationsManager {
                 Product_Rate_Plan_Information__c oProductRatePlan = lstRatePlanInfos.get(0);
                 if (oProductRatePlan.Related_Product_Information__r.Related_Product_Category__r.Name != IECConstants.ProductCategory_SF_EBROADCAST) 
                 {
-                	throw new IECApplicationException( 'Product Access is null for non EBROADCAST SubscriptionId:' + oSubscription.Id);
+                    throw new IECApplicationException( 'Product Access is null for non EBROADCAST SubscriptionId:' + oSubscription.Id);
                 }
                 // Subscription Product Category is EBROADCAST, do nothing and return.  
                 return;
@@ -840,7 +840,7 @@ public without sharing class IECApplicationsManager {
      */
     private static List<String> getSubscriptionEvergreenNameListByBillingContactId(Id idContact) {
         List<Zuora__Subscription__c> subscriptionList = [SELECT Id, Name, Zuora__Zuora_Id__c
-                	//,  Zuora__TermSettingType__c
+                    //,  Zuora__TermSettingType__c
                 FROM Zuora__Subscription__c
                 WHERE Zuora__CustomerAccount__r.Contact__c = :idContact
                      AND Zuora__TermSettingType__c = 'EVERGREEN'
@@ -1411,33 +1411,33 @@ public without sharing class IECApplicationsManager {
      * isEbcAccessGrantedForContact returns true if the idContact (community user) has access to eBroadcast
      * oBillingAccount is used only to cache the last Zuora__CustomerAccount__c for isEbcAccessGrantedForContact 
      */
-	private static Zuora__CustomerAccount__c oBillingAccount;
-	// isEbcAccessGrantedForContact with option to refresh the previously cached resetBillingAccount
-	public static Boolean isEbcAccessGrantedForContact(Id idContact, Boolean resetBillingAccount)
-	{
-		if (resetBillingAccount) {
-			oBillingAccount = null;
-		}
-		return isEbcAccessGrantedForContact(idContact);
-	} // isBillingAccountEbcChecked
-	
-	public static Boolean isEbcAccessGrantedForContact(Id idContact)
-	{
-		if (oBillingAccount == null || oBillingAccount.Contact__c != idContact)
-		{ // initialize oBillingAccount if necessary
-			List<Zuora__CustomerAccount__c> oZBillingAcctList = [select Id
-					, eBroadcast_Product_Access__c
-					// , eBroadcast_Add_On_Access__c
-				from Zuora__CustomerAccount__c
-				where Contact__c = : idContact
-					and  Zuora__Status__c = 'Active'
-				order by CreatedDate desc limit 1];
-			oBillingAccount = ( oZBillingAcctList.size()==0) ? null : oZBillingAcctList[0]; 
-		}
-		Boolean result = (oBillingAccount != null) && (oBillingAccount.eBroadcast_Product_Access__c);
-		return result;
-	} // isBillingAccountEbcChecked
-	
-	
+    private static Zuora__CustomerAccount__c oBillingAccount;
+    // isEbcAccessGrantedForContact with option to refresh the previously cached resetBillingAccount
+    public static Boolean isEbcAccessGrantedForContact(Id idContact, Boolean resetBillingAccount)
+    {
+        if (resetBillingAccount) {
+            oBillingAccount = null;
+        }
+        return isEbcAccessGrantedForContact(idContact);
+    } // isBillingAccountEbcChecked
+    
+    public static Boolean isEbcAccessGrantedForContact(Id idContact)
+    {
+        if (oBillingAccount == null || oBillingAccount.Contact__c != idContact)
+        { // initialize oBillingAccount if necessary
+            List<Zuora__CustomerAccount__c> oZBillingAcctList = [select Id
+                    , eBroadcast_Product_Access__c
+                    // , eBroadcast_Add_On_Access__c
+                from Zuora__CustomerAccount__c
+                where Contact__c = : idContact
+                    and  Zuora__Status__c = 'Active'
+                order by CreatedDate desc limit 1];
+            oBillingAccount = ( oZBillingAcctList.size()==0) ? null : oZBillingAcctList[0]; 
+        }
+        Boolean result = (oBillingAccount != null) && (oBillingAccount.eBroadcast_Product_Access__c);
+        return result;
+    } // isBillingAccountEbcChecked
+    
+    
 
 }
