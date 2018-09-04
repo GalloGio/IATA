@@ -48,6 +48,8 @@ global without sharing class ANG_SAP_PPA {
                 
                 theOscar.Billing_Document_Number__c = ppaNumber;
                 update theOscar;
+                theCase.New_interaction__c = 'New Attachment';
+                update theCase;
             }else {
                 if (!Test.isRunningTest()) ServiceNow_Helper.sendRequestToSNOW('SAP', 'SAP PPA', 'SAP PPA', 'SAP-PI', 'SAP', 'Error while getting PPA from SAP', 'Error: Amazon file not Uploaded - ISSP_AMS_Accreditation.cls', 'Connectivity', 'Salesforce.com', 'Salesforce.com', 'Infrastructure Services', 'Salesforce Support', '2', '2', '2', 'Failure');
             }
