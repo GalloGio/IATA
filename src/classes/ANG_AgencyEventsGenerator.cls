@@ -17,19 +17,26 @@ public class ANG_AgencyEventsGenerator{
     }
 
     public void run(Boolean runDelayed){
-        
         if(ANG_ConversionHelper.isMigrationTool && cmType !='ChangeCode' ) return; //in case of migrating account, prevents following code to be run
-        list<ANG_CalloutMapping__c> calloutmappingList= new list<ANG_CalloutMapping__c>();
+        
+        Set<String> setAccntId = new Set<String>();
+        Set<String> setAccntIdWithSAPUpdate = new Set<String>();
+        
+    	for(sObject obj: newRecList)	setAccntId.add(String.ValueOf(obj.get(accField)));
+    	
+    	for(AMS_Agency_Updates__c aau: [select Account__c, id from AMS_Agency_Updates__c where Integration_System__c = 'SAP PI' and Account__c in :setAccntId and Update_Type__c not in ('Update_Sent','Invalid','Deleted')]){
+    		setAccntIdWithSAPUpdate.add(string.valueOf(aau.Account__c).left(15));
+    	}
+        
+        List<ANG_CalloutMapping__c> calloutmappingList = new List<ANG_CalloutMapping__c>();
+
         for(ANG_CalloutMapping__c cm: ANG_CalloutMapping__c.getAll().values()){
-            if (cm.Integration_System__c == 'SAP PI') {
-                if (cm.Type__c == cmType && !cm.Event_type__c.equalsIgnoreCase('Update_Sent') && !cm.Event_type__c.equalsIgnoreCase('Invalid') && !cm.Event_type__c.equalsIgnoreCase('Deleted')) 
-                    calloutmappingList.add(cm);
-            }
-            if (cm.Type__c == cmType && cm.Integration_System__c == 'Mulesoft') calloutmappingList.add(cm);
+            if(cm.Type__c== cmType)
+                calloutmappingList.add(cm);
         }
 
-        set<string> insertedRecordsSet = new set<string>();
-        list<AMS_Agency_Updates__c> agencyEventsList = new list<AMS_Agency_Updates__c>();   
+        Set<string> insertedRecordsSet = new Set<string>();
+        List<AMS_Agency_Updates__c> agencyEventsList = new List<AMS_Agency_Updates__c>();   
         
         for(sObject obj: newRecList){
             for(ANG_CalloutMapping__c cm:calloutmappingList){
@@ -44,8 +51,11 @@ public class ANG_AgencyEventsGenerator{
                             Agency_Applied_Change_code__c=cmType=='ChangeCode'?String.ValueOf(obj.get('id')):null,
                             ConfigurationID__c=cm.id
                         );
-                        insertedRecordsSet.add(String.valueOf(auRec.account__c)+auRec.Update_Type__c+auRec.Integration_System__c);
-                        agencyEventsList.add(auRec);
+                        
+                        if(cm.Integration_System__c == 'Mulesoft' || (cm.Integration_System__c == 'SAP PI' && !setAccntIdWithSAPUpdate.contains( String.ValueOf(obj.get(accField)).left(15) ))){
+	                        insertedRecordsSet.add(String.valueOf(auRec.account__c)+auRec.Update_Type__c+auRec.Integration_System__c);
+    	                    agencyEventsList.add(auRec);
+                        }
                     }
                 }
             }
