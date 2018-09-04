@@ -157,7 +157,8 @@ public with sharing class ANG_AgencyChangesHelper {
                 if(!validateTypeOfChange(oscar))
                     return;
                     
-				sanityCheckValidations(oscar, changesContainer, oscarOnlineAccreditation);
+				if(!sanityCheckValidations(oscar, changesContainer, oscarOnlineAccreditation))
+					return;
 
 				changesContainer = applyChangeOfFields(oscar, accountIdsInvolvedSet, changesContainer, oscarOnlineAccreditation);
 
@@ -1329,12 +1330,16 @@ public with sharing class ANG_AgencyChangesHelper {
 
 	}
 
-	public static void sanityCheckValidations(AMS_OSCAR__c oscar, AChangeStructure changesContainer, AMS_Pax_Accreditation_Form__c oscarOnlineAccreditation){
+	public static boolean sanityCheckValidations(AMS_OSCAR__c oscar, AChangeStructure changesContainer, AMS_Pax_Accreditation_Form__c oscarOnlineAccreditation){
 
 		if(oscar.ANG_Type_of_change__c.containsIgnoreCase(AMS_Utils.ANG_ACCREDITATION_TYPE)){
-			if(changesContainer.accountsMap.get(oscar.Account__c).ANG_Accreditation_Model__c == oscarOnlineAccreditation.ANG_Accreditation_type__c)
+			if(changesContainer.accountsMap.get(oscar.Account__c).ANG_Accreditation_Model__c == oscarOnlineAccreditation.ANG_Accreditation_type__c){
 				oscar.addError('To pass sanity checks when type of change includes "Accreditation Type", this value must be modified.');
+				return false;
+			}
 		}
+
+		return true;
 
 	}
 
