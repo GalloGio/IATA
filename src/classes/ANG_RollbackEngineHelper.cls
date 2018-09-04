@@ -12,6 +12,8 @@ global without sharing class ANG_RollbackEngineHelper implements Queueable{
 
     private Id newParentHierarchyId;
 
+    private boolean isHierarchyChange;
+
     public void execute(QueueableContext context){
         executeAdhoc();
     }
@@ -61,6 +63,8 @@ global without sharing class ANG_RollbackEngineHelper implements Queueable{
 
         this.newParentHierarchyId = oscar.New_parent__c;
 
+        isHierarchyChange = oscar.ANG_Type_Of_Change__c.contains(AMS_Utils.ANG_HIERARCHY);
+
     }
 
     private void fetchTechnicalLogs(Id oscarId){
@@ -104,7 +108,7 @@ global without sharing class ANG_RollbackEngineHelper implements Queueable{
                 processRollbackPortalAppRights(technicalLogsMap.get(entity));
         }
 
-        if(technicalLogsMap.get('AMS_Agencies_Hierarchy__c') != null || technicalLogsMap.get('AMS_Agencies_relationhip__c') != null)
+        if(technicalLogsMap.get('AMS_Agencies_Hierarchy__c') != null || technicalLogsMap.get('AMS_Agencies_relationhip__c') != null || isHierarchyChange)
             processRollbackHierarchy(technicalLogsMap.get('AMS_Agencies_Hierarchy__c'),technicalLogsMap.get('AMS_Agencies_relationhip__c'));
 
 
