@@ -181,6 +181,7 @@ global class ANG_RME_Alert_Service {
 		webservice Boolean isSuccess;
 		webservice String description;
 		webservice String iataCode;
+		webservice ISSP_Web_Service_Log__c log; 
 
 		private RHCMessage res;
 
@@ -194,7 +195,7 @@ global class ANG_RME_Alert_Service {
 
 		Account acc = [SELECT Id, IATACode__c, (SELECT Id, CurrencyIsoCode, ANG_RHC_Amount__c, ANG_AccountId__c FROM RHC_Informations__r) FROM Account where Id = :accountId];
 
-		WebserviceResult result = doRequest(acc.IATACode__c, 'BTN_Bal'); //results are saved on the private varible "result"
+		WebserviceResult result = doRequest(acc.IATACode__c, 'BTN_Bal', false); //results are saved on the private varible "result"
 
 		if(result.isSuccess) {
 
@@ -220,6 +221,10 @@ global class ANG_RME_Alert_Service {
 				updateRHC(result.res, acc.RHC_Informations__r[0]);
 
 		}
+
+		if(result.log != null)
+			insert result.log;
+
 		//
 		// To reset the singleton for future calls
 		//
@@ -273,6 +278,10 @@ global class ANG_RME_Alert_Service {
 	}
 
 	private static WebserviceResult doRequest(String iataCode, String mappingName){
+		return doRequest(iataCode, mappingName, true);
+	}
+
+	private static WebserviceResult doRequest(String iataCode, String mappingName, boolean commitLog){
 
 		ANG_CalloutMapping__c params = ANG_CalloutMapping__c.getInstance(mappingName);
 
@@ -324,7 +333,10 @@ global class ANG_RME_Alert_Service {
 
 		log.Success__c = result.isSuccess;
 		
-		insert log;
+		if(commitLog)
+			insert log;
+
+		result.log = log;
 
 		System.debug(loggingLevel.FINE, '____ [cls ANG_RME_Alert_Service - doRequest] log - ' + log);
 		System.debug(loggingLevel.FINE, '____ [cls ANG_RME_Alert_Service - doRequest] result - ' + result);
