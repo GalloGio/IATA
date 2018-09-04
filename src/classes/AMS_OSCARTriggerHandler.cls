@@ -3534,7 +3534,7 @@ public class AMS_OSCARTriggerHandler {
                         if(!isAllHierarchySelected && isAccNameSpecialCase) {
                             sType_of_change += '-ACCNAME';
                         }
-                        if(isAllHierarchySelected && isVATnumberSpecialCase) {
+                        if(isAllHierarchySelected && !isSingleAccountHierarchy && isVATnumberSpecialCase) {
                             sType_of_change += '-REMOVE_VAT';
                         }
 
