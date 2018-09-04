@@ -119,11 +119,11 @@
 					productListPush();
                 }
 
-                function clickProductPush(type, product) {
+                function clickProductPush(type, id, name) {
                 	if(type == 'In stock') {
-                		selectPush(product.id)
+                		selectPush(id)
                 	} else {
-                		preOrderPush(product.name, product.id);
+                		preOrderPush(name, id);
                 	}
                 }
 
@@ -341,7 +341,7 @@
 								        	<li class="list-item">
 												<div class="item-wrapper">
 													<figure class="item-image">
-														<a href="{!$Site.BaseUrl}/IEC_ProductDetails?id={!prod.ProductNumber}">
+														<a href="{!$Site.BaseUrl}/IEC_ProductDetails?id={!prod.ProductNumber}" onclick="clickProductPush('{!prod.InventoryStatus}','{!prod.ProductNumber}' ,{!prod.productNameAnalytic});">
                                                             <apex:outputPanel layout="block" style="height: 180px;" rendered="{!prod.imageFile != '' }">
 
                                                             <div class="fileImage" layout="block" style="height: 180px;">
@@ -354,7 +354,7 @@
 														</a>
 													</figure>
 													<h2 class="item-name">
-														<a href="{!$Site.BaseUrl}/IEC_ProductDetails?id={!prod.ProductNumber}">{!prod.ProductName}</a>
+														<a href="{!$Site.BaseUrl}/IEC_ProductDetails?id={!prod.ProductNumber}" onclick="clickProductPush('{!prod.InventoryStatus}','{!prod.ProductNumber}' ,{!prod.productNameAnalytic});">{!prod.ProductName}</a>
 													</h2>
 													<h3 class="item-description-title">{!prod.Media}</h3>
                                                     <p class="item-description" style="{! IF(prod.ProductInfoId == null, '', 'display:none')}">
@@ -395,11 +395,7 @@
 													</apex:outputPanel>
 
                                                     <a class="button" href="{!$Site.BaseUrl}/IEC_ProductDetails?id={!prod.ProductNumber}" 
-                                                    	onclick="
-                                                    		var product = {};
-                                                    		product.id = '{!prod.ProductNumber}';
-                                                    		product.name = '{!prod.ProductName}';
-                                                    		clickProductPush('{!prod.InventoryStatus}', product);">
+                                                    	onclick="clickProductPush('{!prod.InventoryStatus}','{!prod.ProductNumber}' ,{!prod.productNameAnalytic});">
                                                     	{! IF(prod.InventoryStatus == 'In stock', $Label.Button_Select, $Label.PreOrderAddToCart)}
                                                 	</a>
 												</div>
