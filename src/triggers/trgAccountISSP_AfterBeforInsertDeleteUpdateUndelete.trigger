@@ -5,7 +5,6 @@ after update, before delete, before insert, before update) {
     
     if(TransformationHelper.trgAccountISSP_AfterBeforInsertDeleteUpdateUndeleteGet()) return ; 
 
-   
     List<Account> accountsToChange;
     List<Account> acctToUpdate;
     
@@ -14,27 +13,24 @@ after update, before delete, before insert, before update) {
         if(!accountsToChange.isEmpty()) 
             ISSP_FillTopParent.accountsBeforeInsertTopParent(accountsToChange);
     }
-    else if(trigger.isUpdate && trigger.isAfter){
-        // Get accts to update 
-        acctToUpdate = ISSP_FillTopParent.getAcctsToUpdate(trigger.newMap, trigger.oldMap);
-        if(!acctToUpdate.isEmpty())
-            ISSP_FillTopParent.accountsAfterUpdateTopParent(acctToUpdate, trigger.newMap, trigger.oldMap);
-    }
     else if(trigger.isBefore && trigger.isDelete){
         ISSP_FillTopParent.accountsAfterDeleteTopParent(trigger.oldMap);
     }
     else if(trigger.isBefore && trigger.isUpdate){
+
         system.debug('CHECK OUT TopParentBeforeUpdate');
         if(!AMS_AgencyRelationshipTriggerHandler.AMS_HierarchyProcess){
             system.debug('CHECK IN TopParentBeforeUpdate');
-            acctToUpdate = // Get accts to update 
-                ISSP_FillTopParent.getAcctsToUpdate(trigger.newMap, trigger.oldMap);
-            // Update the accounts:
+            acctToUpdate = ISSP_FillTopParent.getAcctsToUpdate(trigger.newMap, trigger.oldMap);
             ISSP_FillTopParent.accountsBeforeUpdateTopParent(acctToUpdate, trigger.oldMap, trigger.newMap);
         }
     }
+    else if(trigger.isUpdate && trigger.isAfter){
+        acctToUpdate = ISSP_FillTopParent.getAcctsToUpdate(trigger.newMap, trigger.oldMap);
+        if(!acctToUpdate.isEmpty())
+            ISSP_FillTopParent.accountsAfterUpdateTopParent(acctToUpdate, trigger.oldMap);
+    }
     
-        
     set<Id> accIdSet = new set<Id>();
     
     if(trigger.isInsert && trigger.isBefore){
