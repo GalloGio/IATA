@@ -10,18 +10,11 @@
     <textOnly>Dear Sir/Madam,
 
 
-Thank you for submitting your request to activate the IATA EasyPay form of payment for your agency.
 
+Thank you for submitting your request to register your Bank Account for IATA EasyPay services. This is to confirm that the documentation was well received for the process to be initiated. We will inform you as soon as the registration is completed.
 
+Should you need any further information from IATA, please do not hesitate to log a new query via our Customer Portal.
 
-Attached you can find all the information related to the IATA EasyPay payment method, including instructions on how to create an IATA EasyPay Account.
-
-
-Should you require additional information, please reply to this e-mail. We will soon contact you with an update on your request.
-
-
-
-Thanks in advance for your cooperation.
 
 
 Kind Regards,
@@ -30,15 +23,10 @@ Kind Regards,
 
 
 IATA Customer Service Portal
------------------------------------------------------------------------------
-Here is a link to the portal where the agent can submit the documents
 
 
 
-{!AMS_OSCAR__c.Emails_reference_Id__c}
-
-
-https://portal.iata.org/faq/articles/en_US/FAQ/How-can-I-open-an-IATA-EasyPay-account/?l=en_US&amp;c=FAQs%3AIATA_EasyPay&amp;fs=Search&amp;pn=1</textOnly>
+{!AMS_OSCAR__c.Emails_reference_Id__c}</textOnly>
     <type>html</type>
     <uiType>Aloha</uiType>
 </EmailTemplate>
