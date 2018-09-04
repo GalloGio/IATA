@@ -1454,11 +1454,11 @@ global class ANG_OscarProcessHelper {
 
 			if(con.User_Portal_Status__c == 'Approved Admin')
 				contactsToReturn.add(new ContactOrdered(con,0));
-			if (con.Financial_Assessment_Contact__c)
+			else if (con.Financial_Assessment_Contact__c)
 				contactsToReturn.add(new ContactOrdered(con,10));
-			if(con.BSP_CASS_Payment_contact__c)
+			else if(con.BSP_CASS_Payment_contact__c)
 				contactsToReturn.add(new ContactOrdered(con,20));
-			if(con.User_Portal_Status__c <> 'Approved Admin' && !con.Financial_Assessment_Contact__c &&  !con.BSP_CASS_Payment_contact__c)
+			else if(con.User_Portal_Status__c <> 'Approved Admin' && !con.Financial_Assessment_Contact__c &&  !con.BSP_CASS_Payment_contact__c)
 				contactsToReturn.add(new ContactOrdered(con,30));
 
 		} 
@@ -1469,11 +1469,11 @@ global class ANG_OscarProcessHelper {
 
 				if(con.User_Portal_Status__c == 'Approved Admin')
 					contactsToReturn.add(new ContactOrdered(con,0));
-				if (con.Financial_Assessment_Contact__c)
+				else if (con.Financial_Assessment_Contact__c)
 					contactsToReturn.add(new ContactOrdered(con,10));
-				if(con.BSP_CASS_Payment_contact__c)
+				else if(con.BSP_CASS_Payment_contact__c)
 					contactsToReturn.add(new ContactOrdered(con,20));
-				if(con.User_Portal_Status__c <> 'Approved Admin' && !con.Financial_Assessment_Contact__c &&  !con.BSP_CASS_Payment_contact__c)
+				else if(con.User_Portal_Status__c <> 'Approved Admin' && !con.Financial_Assessment_Contact__c &&  !con.BSP_CASS_Payment_contact__c)
 					contactsToReturn.add(new ContactOrdered(con,30));
 
 			} 
