@@ -564,7 +564,7 @@ public without sharing class ISSP_TIP_Home_Controller {
     	}
     }
 
-    private void updateCase(){
+    public void updateCase(){
 
         if (newCase == null) newCase = new Case();
         newcase.RecordTypeid = TIP_Utils.CASE_PROCESS_IDFS_RECORD_TYPE_ID;
