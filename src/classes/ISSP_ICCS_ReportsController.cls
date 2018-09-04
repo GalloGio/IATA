@@ -138,7 +138,10 @@ public class ISSP_ICCS_ReportsController extends ISSP_ICCS_ComponentController{
 
 				try{
 					// Prepare the reportType parameter
-					String reportTypeFilter;
+					String reportTypeFilter = '';
+					
+					// Reset pageNumbers list
+					pageNumbers = new List<Integer>();
 					
 					// If no report type is selected, retrieve all the report types the account subscribed to
 					if(selectedReportType == '' || selectedReportType == null){
@@ -156,44 +159,45 @@ public class ISSP_ICCS_ReportsController extends ISSP_ICCS_ComponentController{
 					}
 					
 					// Retrieve the list of reports from the Core
-					ISSP_ICCS_CoreRest.Reports reports = pageController.coreRest.getReports(selectedPage, REPORTS_PER_PAGE, selectedCycleId, selectedFromDate, selectedToDate, reportTypeFilter);
-		
-					for(ISSP_ICCS_CoreRest.Report report : reports.reports){
-						reportsList.add(new ReportWrapper(this, report));
-					}
+					if(reportTypeFilter != ''){
+						ISSP_ICCS_CoreRest.Reports reports = pageController.coreRest.getReports(selectedPage, REPORTS_PER_PAGE, selectedCycleId, selectedFromDate, selectedToDate, reportTypeFilter);
+			
+						for(ISSP_ICCS_CoreRest.Report report : reports.reports){
+							reportsList.add(new ReportWrapper(this, report));
+						}
+							
+						// Pagination setup
+						Integer pages = 0;
 						
-					// Pagination setup
-					pageNumbers = new List<Integer>();
-					Integer pages = 0;
-					
-					if(Math.mod(reports.pagingInfo.records, REPORTS_PER_PAGE) > 0){
-						pages = reports.pagingInfo.records / REPORTS_PER_PAGE + 1;
-					}
-					else{
-						pages = reports.pagingInfo.records / REPORTS_PER_PAGE;
-					}
-					
-					if(pages < 9){
-						for(Integer i = 1; i <= pages; i++){
-							pageNumbers.add(i);
+						if(Math.mod(reports.pagingInfo.records, REPORTS_PER_PAGE) > 0){
+							pages = reports.pagingInfo.records / REPORTS_PER_PAGE + 1;
 						}
-					}
-					else{
-						pageNumbers.add(1);
-		
-						Boolean lastItemIsZero = false;
-						for(Integer i = 2; i < pages; i++){
-							if(i == selectedPage - 1 || i == selectedPage || i == selectedPage + 1){
+						else{
+							pages = reports.pagingInfo.records / REPORTS_PER_PAGE;
+						}
+						
+						if(pages < 9){
+							for(Integer i = 1; i <= pages; i++){
 								pageNumbers.add(i);
-								lastItemIsZero = false;
-							}
-							else if(!lastItemIsZero){
-								pageNumbers.add(0);
-								lastItemIsZero = true;
 							}
 						}
-						pageNumbers.add(pages);
-					}			
+						else{
+							pageNumbers.add(1);
+			
+							Boolean lastItemIsZero = false;
+							for(Integer i = 2; i < pages; i++){
+								if(i == selectedPage - 1 || i == selectedPage || i == selectedPage + 1){
+									pageNumbers.add(i);
+									lastItemIsZero = false;
+								}
+								else if(!lastItemIsZero){
+									pageNumbers.add(0);
+									lastItemIsZero = true;
+								}
+							}
+							pageNumbers.add(pages);
+						}
+					}
 				}
 				catch(ISSP_ICCS_CoreRest.ICCS_Exception e){
 					pageController.setMessage(e.getMessage(), false);
