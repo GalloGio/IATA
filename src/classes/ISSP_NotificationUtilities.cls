@@ -24,22 +24,9 @@ public class ISSP_NotificationUtilities
      * Modified By: Niv.Goldenberg 13-12-2014
      */
 	public static void sendNotification(List<Contact> lstContacts, Notification_template__c notificationTemplate, 
-                                        Map<String, String> messagesByGroupMap, String contactGroupField)
-	{
-		List<Id> lstContactIds = new List<Id>();
-		for (Contact con : lstContacts)
-		{
-			lstContactIds.add(con.Id);
-		}
-
-        if (!lstContactIds.isEmpty())
-        {
-    		String inList = generateInListForDynamicQuery(lstContactIds);
-            
-            String queryString = 'SELECT ' + String.join(ISSP_NotificationUtilities.getAllContactFields(), ',') + ' FROM Contact WHERE Id IN ' + inList;
-            List<Contact> contactList = Database.query(queryString);
-            ISSP_NotificationUtilities.insertNotifications(contactList, notificationTemplate, messagesByGroupMap, contactGroupField);
-
+                                        Map<String, String> messagesByGroupMap, String contactGroupField){
+        if (!lstContacts.isEmpty()){
+            ISSP_NotificationUtilities.insertNotifications(lstContacts, notificationTemplate, messagesByGroupMap, contactGroupField);
         }
 	}
 

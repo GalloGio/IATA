@@ -23,17 +23,18 @@ public class PlatformEvents_Helper {
             for(Id ObjId : ObjectMap.keySet()){
                 SObject sObj = Schema.getGlobalDescribe().get(PE_Name).newSObject();
     
-                for(string FieldSource:MapMapping.keyset()){
+                for(String FieldSource : MapMapping.keyset()){
                     if(FieldSource=='Recordtype')
                         if(mapRT.size()>1) //master is there. check if there is anything else. if no other recortyoe but master, field "RecorDTypeId" doesn't exist....
                             sObj.put(MapMapping.get(FieldSource) , RTName(ObjSource, (Id)(ObjectMap.get(ObjId).get('RecordtypeId'))));
                         else
                             sObj.put(MapMapping.get(FieldSource), null);
                         
-                    if(FieldSource=='EventType')
-                        sObj.put(MapMapping.get(FieldSource) , sEventType);
+                    else if(FieldSource=='EventType')
+                        sObj.put(MapMapping.get(FieldSource), sEventType);
                     
-                    if(FieldSource=='Id')   sObj.put(MapMapping.get(FieldSource) , ObjId);
+                    else if(FieldSource=='Id')
+                        sObj.put(MapMapping.get(FieldSource), ObjId);
                 }
                 
                 lstSObjs.add(sObj);

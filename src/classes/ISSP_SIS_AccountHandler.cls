@@ -156,15 +156,9 @@ public with sharing class ISSP_SIS_AccountHandler {
         }
         updateSISStatusFields(listAccount);
     }    
+    
     // for insert
     private static void updateSISStatusFields(list<Account> listAccount) {
-        //get countries map
-        set<Id> setCountryId = new set<Id>();
-        for (Account account: listAccount) {
-            setCountryId.add(account.IATA_ISO_Country__c);
-        }
-        map<String,IATA_ISO_Country__c> mapCountries = new map<String,IATA_ISO_Country__c>(IATAIsoCountryDAO.getIsoCountriesByIds(setCountryId));
-        
         for (Account account: listAccount) {
             // include country objetct in the account
             account.IATA_ISO_Country__r = AMS_utils.mapCountries.get(account.IATA_ISO_Country__c);

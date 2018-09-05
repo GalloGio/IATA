@@ -64,11 +64,15 @@ trigger trgICCS_ASP_CaseClosed on Case (after insert, after update) {
 		if (!accountNotificationIdSet.isEmpty()) {
 			ISSP_UserTriggerHandler.preventOtherTrigger = true;
 			system.debug('accountNotificationIdSet: ' + accountNotificationIdSet);
-			List <Contact> contactNotificationList =
-			    [SELECT Id FROM Contact
-			     WHERE User_Portal_Status__c = 'Approved Admin'
-			                                   AND (AccountId IN :accountNotificationIdSet
-			                                        OR Account.Top_Parent__c IN :accountNotificationIdSet)];
+
+
+			String queryString = 'SELECT ' + String.join(ISSP_NotificationUtilities.getAllContactFields(), ',') 
+							   + ' FROM Contact '
+							   + ' WHERE User_Portal_Status__c = \'Approved Admin \'' 
+							   + ' AND (AccountId IN :accountNotificationIdSet OR Account.Top_Parent__c IN :accountNotificationIdSet)';
+							      
+			List <Contact> contactNotificationList = Database.query(queryString);
+
 			if (!contactNotificationList.isEmpty()) {
 				if (ISSP_Notifications_Trigger__c.getValues('Outstanding invoice') != null) {
 					String templateId = ISSP_Notifications_Trigger__c.getValues('Outstanding invoice').Notification_Template_Id__c;

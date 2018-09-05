@@ -5,10 +5,9 @@ public without sharing class AMS_Utils {
         get{
 
             if(mapCountries == null)
-                mapCountries = mapCountries = new map<String,IATA_ISO_Country__c>(IATAIsoCountryDAO.getIsoCountries());
+                mapCountries = new map<String,IATA_ISO_Country__c>(IATAIsoCountryDAO.getIsoCountries());
 
             return mapCountries;
-
         }
 
     }
