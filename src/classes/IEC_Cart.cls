@@ -207,6 +207,15 @@ public without sharing virtual class IEC_Cart {
 		return cartInstance;
 	}
 
+	//RN-INC421212
+	public static IEC_Cart initializer(){
+		if (cartInstance == null) {
+			cartInstance = new IEC_Cart();
+		} 
+
+		return cartInstance;
+	}
+
 	/**
 		Get the Serialization String for a Cart Item.
 
@@ -966,6 +975,12 @@ public without sharing virtual class IEC_Cart {
 		System.debug('getCartOrder() returning: ' + pendingOrder);
 
 		return pendingOrder;
+	}
+
+	//RN-INC421212
+	public void setPendingOrder(Order pendingOrder){
+		pendingOrder = pendingOrder;
+
 	}
 
 	/**

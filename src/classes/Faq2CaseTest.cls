@@ -1309,6 +1309,170 @@ private class Faq2CaseTest {
         Test.StopTest();
     }
     
+
+    static testMethod void testDoGet() {
+        //Custom settings 1
+        LiveAgent_Countries_Per_Button__c LAcountriesPB = new LiveAgent_Countries_Per_Button__c();
+        LAcountriesPB.Button_Name__c = 'AirlinePortugueseEurope';
+        LAcountriesPB.Country__c = 'Albania';
+        LAcountriesPB.Iso_Code__c = 'AL';
+        LAcountriesPB.Region__c = 'Europe';
+        LAcountriesPB.Sector__c = '';
+        LAcountriesPB.Name = 'AirlinePortugueseEurope';
+        insert LAcountriesPB;
+        
+        //Custom settings 2
+        LiveAgentButtonSettings__c  LAbtnSettings = new LiveAgentButtonSettings__c();
+        LAbtnSettings.ButtonId__c= '5739E00000000R0QAI';
+        LAbtnSettings.DeploymentId__c='572w0000000CdgF';
+        LAbtnSettings.Language__c='ar';
+        LAbtnSettings.Region__c='Africa & Middle East';
+        LAbtnSettings.Sectors__c='Airline';
+        LAbtnSettings.Name='AirlineArabEurope';
+        insert LAbtnSettings;
+        
+        //Custom settings 3
+        ISSP_FAQ2CaseLiveAgentTopics__c LAtopics =  new ISSP_FAQ2CaseLiveAgentTopics__c();
+        LAtopics.value__c='AIRLINE_General_Information__c';
+        //LAtopics.LVA_ButtomCategories__c= 'BUT_CAT_4_EMERGENCY,BUT_CAT_ALL,BUT_CAT_1_PORTAL,BUT_CAT_2_COUNTRY,BUT_CAT_3_ENGLISH,BUTTON_NOT_ALLOWED';
+        LAtopics.LVA_ButtomCategories__c= 'BUT_CAT_EMERGENCY,BUT_CAT_ALL,BUT_CAT_PORTAL,BUT_CAT_COUNTRY,BUT_CAT_ENGLISH,BUTTON_NOT_ALLOWED';
+        LAtopics.Name = '23';
+        insert LAtopics;
+        List <String> splitButtomCategories = (LAtopics.LVA_ButtomCategories__c).split(',');
+        
+        //ISO Country        
+        IATA_ISO_Country__c isoC = new IATA_ISO_Country__c();
+        isoC.name = 'United Arab Emirates';
+        isoC.ISO_Code__c = 'AE';
+        isoC.Case_BSP_Country__c = 'United Arab Emirates';
+        isoC.Region__c = 'Africa & Middle East';
+        insert isoC;
+        
+        //Account
+        Id agencyRecordTypeId = [SELECT Id FROM RecordType WHERE SObjectType='Account' AND DeveloperName='IATA_Airline'].Id;
+        Account testAccount = new Account(
+            name= 'testAccount',
+            RecordTypeId = agencyRecordTypeId,
+            IATAcode__c = '047',
+            IATA_ISO_Country__r = isoC
+        );
+        insert testAccount;
+        system.debug('testAccount zzzzzz ' + testAccount.IATA_ISO_Country__r.Case_BSP_Country__c);   
+        
+        //Contact
+        Contact con = ISSP_ObjectFactory.createNewContact();
+        con.AccountId= testAccount.Id;
+        con.Email = 'fake@email.com';
+        con.CNS_Contact__c = true;
+        insert con;
+        system.debug('con zzzzzz ' + con);
+        
+        //User
+        User newUser = ISSP_ObjectFactory.createPortalUser(con);
+        con.OwnerId = newUser.Id;
+        update con;
+        system.debug('newUser zzzzzz ' + newUser);
+        
+        RestRequest req = new RestRequest();
+        RestResponse res = new RestResponse();
+        req.requestURI = '/newgenapp/v1/contactSupport';
+        req.httpMethod = 'GET';
+
+        RestContext.request = req;
+        RestContext.response= res;
+
+        System.runAs(newUser){
+            Test.startTest();
+                vfISSP_FAQ2Case.CustomerSupporWrapperGet customerSupportInfo = vfISSP_FAQ2Case.doGet();
+                // should have topics to choose
+                System.assert(customerSupportInfo.topicsMap != null && customerSupportInfo.topicsMap.size() > 0);
+                // should have subtopics to choose
+                System.assert(customerSupportInfo.subTopicsMap != null && customerSupportInfo.subTopicsMap.size() > 0);
+                // should have countries to choose
+                System.assert(customerSupportInfo.countryMap != null && customerSupportInfo.countryMap.size() > 0);
+            Test.stopTest();
+        }
+    }
+
+    static testMethod void testDoPost() {
+        //Custom settings 1
+        LiveAgent_Countries_Per_Button__c LAcountriesPB = new LiveAgent_Countries_Per_Button__c();
+        LAcountriesPB.Button_Name__c = 'AirlinePortugueseEurope';
+        LAcountriesPB.Country__c = 'Albania';
+        LAcountriesPB.Iso_Code__c = 'AL';
+        LAcountriesPB.Region__c = 'Europe';
+        LAcountriesPB.Sector__c = '';
+        LAcountriesPB.Name = 'AirlinePortugueseEurope';
+        insert LAcountriesPB;
+        
+        //Custom settings 2
+        LiveAgentButtonSettings__c  LAbtnSettings = new LiveAgentButtonSettings__c();
+        LAbtnSettings.ButtonId__c= '5739E00000000R0QAI';
+        LAbtnSettings.DeploymentId__c='572w0000000CdgF';
+        LAbtnSettings.Language__c='ar';
+        LAbtnSettings.Region__c='Africa & Middle East';
+        LAbtnSettings.Sectors__c='Airline';
+        LAbtnSettings.Name='AirlineArabEurope';
+        insert LAbtnSettings;
+        
+        //Custom settings 3
+        ISSP_FAQ2CaseLiveAgentTopics__c LAtopics =  new ISSP_FAQ2CaseLiveAgentTopics__c();
+        LAtopics.value__c='AIRLINE_General_Information__c';
+        //LAtopics.LVA_ButtomCategories__c= 'BUT_CAT_4_EMERGENCY,BUT_CAT_ALL,BUT_CAT_1_PORTAL,BUT_CAT_2_COUNTRY,BUT_CAT_3_ENGLISH,BUTTON_NOT_ALLOWED';
+        LAtopics.LVA_ButtomCategories__c= 'BUT_CAT_EMERGENCY,BUT_CAT_ALL,BUT_CAT_PORTAL,BUT_CAT_COUNTRY,BUT_CAT_ENGLISH,BUTTON_NOT_ALLOWED';
+        LAtopics.Name = '23';
+        insert LAtopics;
+        List <String> splitButtomCategories = (LAtopics.LVA_ButtomCategories__c).split(',');
+        
+        //ISO Country        
+        IATA_ISO_Country__c isoC = new IATA_ISO_Country__c();
+        isoC.name = 'United Arab Emirates';
+        isoC.ISO_Code__c = 'AE';
+        isoC.Case_BSP_Country__c = 'United Arab Emirates';
+        isoC.Region__c = 'Africa & Middle East';
+        insert isoC;
+        
+        //Account
+        Id agencyRecordTypeId = [SELECT Id FROM RecordType WHERE SObjectType='Account' AND DeveloperName='IATA_Airline'].Id;
+        Account testAccount = new Account(
+            name= 'testAccount',
+            RecordTypeId = agencyRecordTypeId,
+            IATAcode__c = '047',
+            IATA_ISO_Country__r = isoC
+        );
+        insert testAccount;
+        system.debug('testAccount zzzzzz ' + testAccount.IATA_ISO_Country__r.Case_BSP_Country__c);   
+        
+        //Contact
+        Contact con = ISSP_ObjectFactory.createNewContact();
+        con.AccountId= testAccount.Id;
+        con.Email = 'fake@email.com';
+        con.CNS_Contact__c = true;
+        insert con;
+        system.debug('con zzzzzz ' + con);
+        
+        //User
+        User newUser = ISSP_ObjectFactory.createPortalUser(con);
+        con.OwnerId = newUser.Id;
+        update con;
+        system.debug('newUser zzzzzz ' + newUser);
+        
+        RestRequest req = new RestRequest();
+        RestResponse res = new RestResponse();
+        req.requestURI = '/newgenapp/v1/contactSupport';
+        req.httpMethod = 'POST';
+
+        RestContext.request = req;
+        RestContext.response= res;
+
+        System.runAs(newUser){
+            Test.startTest();
+                vfISSP_FAQ2Case.CustomerSupporWrapperPost customerSupportInfo = vfISSP_FAQ2Case.doPost('0', 'CGO_Accreditations_Fees__c', 'AE', '', 'This is a test subject',
+                                                                                    'This is a test description', 'Phone [NewGenAPP - Android]');
+            Test.stopTest();
+        }
+    }
+    
     private static void setCCOthersEmail(vfISSP_FAQ2Case controller, String email) {
         for (vfISSP_FAQ2Case.sectionRecordWrapper section : controller.fullList) {
             for (vfISSP_FAQ2Case.fieldRecordWrapper thisField : section.fieldList) {
