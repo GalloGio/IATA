@@ -35,16 +35,20 @@ global with sharing class ISSP_CampaignNotificationBatch implements Database.Bat
 
 		ISSP_CreateNotification.CreateNotificationForSobjectList(contactList);
 		//update contactList;
+
 		// Start NewGenApp
-		List<User> userList = [select Id, ContactId from user where ContactId in :contactIdSet];
-		
-		Notification_template__c template = [select Name, Id, Subject__c, Message__c from Notification_template__c where Name = :notificationId];
+		NewGenApp_Custom_Settings__c newgenCS = NewGenApp_Custom_Settings__c.getOrgDefaults();
+		if(newgenCS != null && newgenCS.Push_Notifications_State__c){
+			List<User> userList = [select Id, ContactId from user where ContactId in :contactIdSet];
+			
+			Notification_template__c template = [select Name, Id, Subject__c, Message__c from Notification_template__c where Name = :notificationId];
 
-		for(User user: userList){
-			set<String> userIdPush = new set<String>();
-			userIdPush.add(String.valueOf(user.Id));
+			for(User user: userList){
+				set<String> userIdPush = new set<String>();
+				userIdPush.add(String.valueOf(user.Id));
 
-			NewGen_Account_Statement_Helper.sendPushNotification(userIdPush, template.subject__c, new List <String> {template.Message__c}, 'PUSH_NOTIFICATION');
+				NewGen_Account_Statement_Helper.sendPushNotification(userIdPush, template.subject__c, new List <String> {template.Message__c}, 'PUSH_NOTIFICATION');
+			}
 		}
 		// End NewGenApp
 
