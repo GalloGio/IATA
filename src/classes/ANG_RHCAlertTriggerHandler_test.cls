@@ -764,8 +764,7 @@ private class ANG_RHCAlertTriggerHandler_test {
 		EXPECTED RESULT 
 		Cash will NOT be restored (because the previous RHC alert was a 50% down and not a 100% up) 
 		*/
-
-		Test.startTest();
+		
 
 		ANG_RHC_Information__c rhcInfo=[SELECT Id,ANG_AccountId__c FROM ANG_RHC_Information__c LIMIT 1];
 
@@ -807,6 +806,8 @@ private class ANG_RHCAlertTriggerHandler_test {
 		System.assertEquals('Active', aa.Status__c);		
 
 
+		Test.startTest();
+        
 		AMS_OSCAR__c oscar = createOscarFOP();
 
 		ANG_OscarProcessHelper.processRestrictFOP(oscar.Id, false ,true);
