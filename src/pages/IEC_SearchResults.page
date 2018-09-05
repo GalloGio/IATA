@@ -209,12 +209,17 @@
 													<p class="item-description">{!prod.ProductShortDesc}</p>
 													
 													<!-- Scenario 1: In Stock -->
-													<apex:outputPanel layout="block" styleClass="item-stock in-stock" rendered="{!(prod.InventoryStatus == 'In stock' || prod.InventoryStatus == 'Available Now') && prod.ProductInfoId == null}">
+													<apex:outputPanel layout="block" styleClass="item-stock in-stock" rendered="{!prod.InventoryStatus == 'In stock' && prod.ProductInfoId == null}">
 		                                                {!prod.InventoryStatus}
 		                                            </apex:outputPanel>
 		                                            <!-- Scenario 2: Out of Stock -->
-													<apex:outputPanel layout="block" styleClass="item-stock out-of-stock" rendered="{!(prod.InventoryStatus != 'In stock' && prod.InventoryStatus != 'Available Now') && prod.ProductInfoId == null}">
+													<apex:outputPanel layout="block" styleClass="item-stock out-of-stock" rendered="{!prod.InventoryStatus != 'In stock' && prod.ProductInfoId == null}">
 		                                                {!prod.InventoryStatus}
+		                                            </apex:outputPanel>
+
+		                                            <!-- Scenario 3: Pre-order -->
+		                                            <apex:outputPanel layout="block" styleClass="item-label pre-order" rendered="{!prod.InventoryStatus != 'In stock' && prod.Is_Electronic_Product != true && prod.ProductInfoId == null}">
+		                                                <span class="text">{!$Label.Button_Pre_Order}</span>
 		                                            </apex:outputPanel>
 
 		                                            <!-- Regular Price if exist -->
@@ -238,7 +243,7 @@
 														<span class="price-label">{!$Label.Direct_Sales}</span>
 													</apex:outputPanel>
 
-													<a class="button" href="{!$Site.BaseUrl}/IEC_ProductDetails?id={!prod.ProductNumber}">{! IF(prod.InventoryStatus == 'In stock', $Label.Button_Select, $Label.PreOrderAddToCart)}</a>
+													<a class="button" href="{!$Site.BaseUrl}/IEC_ProductDetails?id={!prod.ProductNumber}">{!$Label.Select}</a>
 												</div>
 											</li>
 										</apex:repeat>

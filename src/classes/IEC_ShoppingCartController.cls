@@ -64,6 +64,7 @@ public without sharing class IEC_ShoppingCartController extends IEC_PageControll
 			if(lstOrders.size() > 0)
 			{
 				orderId = lstOrders[0].Id;
+                Order_Svc.getSAP_Freight_Tax(orderId);  //*** re-calculate shipping and tax
 	        	if(lstOrders[0].Type != 'Cart')
 	        		IECOrder_Svc.changePenddingOrder(lstOrders[0]);
 	        	
@@ -77,7 +78,6 @@ public without sharing class IEC_ShoppingCartController extends IEC_PageControll
 					buildOrderItemFromCookie();
 				}
 
-				Order_Svc.getSAP_Freight_Tax(orderId);  //*** re-calculate shipping and tax
 			}
 		}
 		else if(loggedCustomer != null)

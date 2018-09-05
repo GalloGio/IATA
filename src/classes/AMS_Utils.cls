@@ -1632,6 +1632,7 @@ public without sharing class AMS_Utils {
                                                                     ,'IATA_ISO_Shipping_Country__c' => 'Shipping_ISO_Country__c'
                                                                     ,'IATA_ISO_Shipping_State__c' => 'Shipping_ISO_State__c'
                                                                 ,'Link_agent_name__c' => 'Link_agent_name__c'
+                                                                ,'In_a_Airport__c' => 'ISSP_AMS_Premises_located_at_airport__c'
                                                                 ,'Company_Type__c' => 'ISSP_AMS_Legal_Status__c'}; //AMSU-151
 
         if (fieldsToMigrate != null && oscarOnlineAccreditation != null) {
