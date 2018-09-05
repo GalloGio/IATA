@@ -653,12 +653,17 @@ public with sharing class IECOrder_Svc {
         return orderItems;
     }
 
-    public static void changePenddingOrder(Order newPendding)
+    public static void changePenddingOrder(Order newPending)
     {
-        IEC_Cart cartInstance = IEC_Cart.getInstance();
+        //RN-INC421212
+        //IEC_Cart cartInstance = IEC_Cart.getInstance();
+        IEC_Cart cartInstance = IEC_Cart.initializer();
+        cartInstance.setPendingOrder(newPending);
+        
+
         IEC_Functionality functionality = IEC_Functionality.getInstance();
         Boolean newShoppingCart = functionality.isActive('New Shopping Cart');
-
+		
         Order o = getPenddingOrder(true);
         if(String.isBlank(o.IEC_Order_Previous_Type__c))
         {
@@ -676,13 +681,13 @@ public with sharing class IECOrder_Svc {
             
         }
 
-        newPendding.IEC_Order_Previous_Type__c = newPendding.Type;
-        newPendding.Type = 'Cart';
-        newPendding.Status = 'New';
-        try{update newPendding;}catch(Exception ex){}  
+        newPending.IEC_Order_Previous_Type__c = newPending.Type;
+        newPending.Type = 'Cart';
+        newPending.Status = 'New';
+        try{update newPending;}catch(Exception ex){}  
 
         if (newShoppingCart == false) {
-            List<OrderItem> pendingOrderItems = new OrderItem_Sel().getOrderItems(newPendding.Id);
+            List<OrderItem> pendingOrderItems = new OrderItem_Sel().getOrderItems(newPending.Id);
             for(OrderItem oi : pendingOrderItems)
             {
                 IECOrder_Svc.addProductToCookie(oi.Product_Number__c, oi.Quantity, true);
