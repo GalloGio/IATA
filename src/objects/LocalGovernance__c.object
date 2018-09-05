@@ -321,6 +321,20 @@
         <visibleLines>3</visibleLines>
     </fields>
     <fields>
+        <fullName>Group_Administrator__c</fullName>
+        <deleteConstraint>SetNull</deleteConstraint>
+        <description>Person designated by the Group Owner to maintain the group information (TORs and participants). FOR MORE DETAILS, CONTACT AMT</description>
+        <externalId>false</externalId>
+        <inlineHelpText>Person designated by the Group Owner to maintain the group information (TORs and participants).</inlineHelpText>
+        <label>Group Administrator</label>
+        <referenceTo>User</referenceTo>
+        <relationshipName>Industry_Groups</relationshipName>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Lookup</type>
+    </fields>
+    <fields>
         <fullName>Group_Owner_Text__c</fullName>
         <description>Group owner in free text for Reg/Div Groups</description>
         <externalId>false</externalId>
