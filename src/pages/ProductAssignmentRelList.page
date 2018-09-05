@@ -52,10 +52,6 @@
                  <apex:facet name="header">{!$ObjectType.Product_Assignment__c.fields.Third_Party_Payment__c.Label}</apex:facet>
                  <apex:outputField value="{!pa.Third_Party_Payment__c}"/>
             </apex:column>
-            <apex:column title="Accelerated Function">
-                 <apex:facet name="header">{!$ObjectType.Product_Assignment__c.fields.Accelerated_Function__c.Label}</apex:facet>
-                 <apex:outputField value="{!pa.Accelerated_Function__c}"/>
-            </apex:column>
             <apex:column title="Status">
                  <apex:facet name="header">{!$ObjectType.Product_Assignment__c.fields.Status__c.Label}</apex:facet>
                  <apex:outputField value="{!pa.Status__c}"/>

@@ -11,20 +11,31 @@ public class AMS_AgencyAChangeCodeHandler {
         if(!ANG_OscarProcessHelper.isIATACodeGenerationRunning)
             verifyActiveAACCuniqueness(aacc);
         set<id> setIdAACC = new set<id>();
+        
         Id irregRtId = AMS_Utils.getId('Agency_Applied_Change_code__c', 'Irregularities');
         List<Agency_Applied_Change_code__c> aaccToBeProcessed = new List<Agency_Applied_Change_code__c>();
+         //INC415109 - Account Reason cannot be empty when agency status becomes New application pending
+        set<id> setIdAACCForNewApplicationPending = new set<id>();
+
         for(Agency_Applied_Change_Code__c aaccRecord : aacc) {
         	setIdAACC.add(aaccRecord.id);
             if(aaccRecord.RecordTypeId == irregRtId)
             {
                 aaccToBeProcessed.add(aaccRecord);
             }
+            //INC415109 - Account Reason cannot be empty when agency status becomes New application pending
+            if(aaccRecord.Change_Code__c == 'NEW' && aaccRecord.AccountNewStatus__c == 'New application pending' && aaccRecord.Reason_Code__c == '21')
+                setIdAACCForNewApplicationPending.add(aaccRecord.id);
         }
         AMS_Irregularities_Utils.CalculateAccumulatedIrregularitiesFromChangeCode(aaccToBeProcessed);
 		system.debug('SALVES handleAfterInsert -->  processMinorChangesValidationFlag: ' + AMS_AccountTriggerHandler.processMinorChangesValidationFlag);
         system.debug('SALVES handleAfterInsert -->  minorChangesComingFromOSCAR: ' + AMS_AccountTriggerHandler.minorChangesComingFromOSCAR);
-        if(AMS_AccountTriggerHandler.processMinorChangesValidationFlag || AMS_AccountTriggerHandler.minorChangesComingFromOSCAR)
-		  updateAccountReason(setIdAACC, false);
+        if(AMS_AccountTriggerHandler.processMinorChangesValidationFlag || AMS_AccountTriggerHandler.minorChangesComingFromOSCAR){
+		   updateAccountReason(setIdAACC, false);
+        }else{
+             if(!setIdAACCForNewApplicationPending.isEmpty()) 
+                updateAccountReason(setIdAACCForNewApplicationPending, true);
+        }
 		
         //FM 22-09-2016 - Create "Agency Update" records
         if(!ANG_OscarProcessHelper.isIATACodeGenerationRunning)
@@ -38,6 +49,8 @@ public class AMS_AgencyAChangeCodeHandler {
     public static void handleAfterUpdate(List<Agency_Applied_Change_code__c> aacc, map<Id, Agency_Applied_Change_code__c> triggerOldMap) {
         verifyActiveAACCuniqueness(aacc);
         set<id> setIdAACC = new set<id>();
+        //INC415109 - Account Reason cannot be empty when agency status becomes New application pending
+        set<id> setIdAACCForNewApplicationPending = new set<id>();
         Id irregRtId = AMS_Utils.getId('Agency_Applied_Change_code__c', 'Irregularities');
         List<Agency_Applied_Change_code__c> aaccToBeProcessed = new List<Agency_Applied_Change_code__c>();
         for(Agency_Applied_Change_Code__c aaccRecord : aacc)
@@ -51,13 +64,22 @@ public class AMS_AgencyAChangeCodeHandler {
             {
                 aaccToBeProcessed.add(aaccRecord);
             }
+
+            if(aaccRecord.Change_Code__c == 'NEW' && aaccRecord.AccountNewStatus__c == 'New application pending' && aaccRecord.Reason_Code__c == '21')
+                setIdAACCForNewApplicationPending.add(aaccRecord.id);
         }
         AMS_Irregularities_Utils.CalculateAccumulatedIrregularitiesFromChangeCode(aaccToBeProcessed);
         
         system.debug('SALVES handleAfterUpdate -->  processMinorChangesValidationFlag: ' + AMS_AccountTriggerHandler.processMinorChangesValidationFlag);
         system.debug('SALVES handleAfterUpdate -->  minorChangesComingFromOSCAR: ' + AMS_AccountTriggerHandler.minorChangesComingFromOSCAR);
         if(!setIdAACC.isEmpty() && (AMS_AccountTriggerHandler.processMinorChangesValidationFlag || AMS_AccountTriggerHandler.minorChangesComingFromOSCAR)){
-	        updateAccountReason(setIdAACC, true);
+	        if(!setIdAACCForNewApplicationPending.isEmpty()) 
+                setIdAACC.addAll(setIdAACCForNewApplicationPending);
+
+            updateAccountReason(setIdAACC, true);
+        } else {
+             if(!setIdAACCForNewApplicationPending.isEmpty()) 
+                updateAccountReason(setIdAACCForNewApplicationPending, true);
         }
     }
 
