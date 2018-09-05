@@ -492,7 +492,7 @@
                                                                     <apex:commandButton styleclass="btn btn-default"
                                                                         action="{!saveDraft}" onclick=""
                                                                         status="WaitingStatus"
-                                                                        reRender="treeArea, componentsArea, buttonsArea"
+                                                                        reRender="componentsArea, buttonsArea"
                                                                         value="{!$Label.ISSP_ANG_ANNUAL_REV_SAVE_CHANGES_BTN}"/>
 
                                                                 </div>
