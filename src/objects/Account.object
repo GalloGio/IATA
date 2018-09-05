@@ -90758,6 +90758,10 @@ This field is kept up-to-date with the feedback of ITDI at least twice a year du
         <picklistValues>
             <picklist>Is_PCI_compliant__c</picklist>
             <values>
+                <fullName>Nil CC</fullName>
+                <default>false</default>
+            </values>
+            <values>
                 <fullName>No</fullName>
                 <default>false</default>
             </values>

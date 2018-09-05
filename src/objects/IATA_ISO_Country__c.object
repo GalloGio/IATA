@@ -159,7 +159,7 @@ Default state must NOT be set for countries that have it mandatory (US, Canada, 
         <relationshipLabel>IATA ISO Countries</relationshipLabel>
         <relationshipName>IATA_ISO_Countries</relationshipName>
         <required>false</required>
-        <trackHistory>false</trackHistory>
+        <trackHistory>true</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Lookup</type>
     </fields>
