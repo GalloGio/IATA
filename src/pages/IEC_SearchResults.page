@@ -121,7 +121,7 @@
 
                 function clickProductPush(type, id, name) {
                 	if(type == 'In stock') {
-                		selectPush(product.id)
+                		selectPush(id)
                 	} else {
                 		preOrderPush(name, id);
                 	}
