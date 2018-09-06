@@ -78,5 +78,43 @@ private class AMS_OSCAR_AttachmentsTest {
 	System.assert(!AMS_OSCAR_Attachments.deleteAttachment(att.Id, att.Name));
 	System.assert(!AMS_OSCAR_Attachments.deleteAttachment(amazonFile.getId(), amazonFile.getFullName()));
 	}
+
+	static testMethod void AMS_OSCAR_Attachments_2() {
+		AMS_Oscar__c oscar = [SELECT Id FROM AMS_Oscar__c LIMIT 1];
+		Case cse = [SELECT Id FROM Case WHERE OSCAR__c = :oscar.Id];
+		AmazonFile amazonFile = WrapperAttachTest.createAmazonFile(cse);
+
+		Attachment a = new Attachment(
+			OwnerId = UserInfo.getUserId(),
+			IsPrivate = true,
+			ParentId = cse.Id,
+			Body = Blob.valueOf('Test'),
+			Name = 'test'
+		);
+		insert a;
+
+		Archived_Attachment__c att = new Archived_Attachment__c(
+			Case__c = cse.Id,
+			Bucket__c = 'bucket',
+			Name = 'testname'
+		);
+		insert att;
+
+		EF_AttachmentListController.runningForEF = false;
+
+		PageReference pg = Page.AMS_OSCAR_Attachment_List;
+		pg.getParameters().put('Id', oscar.Id);
+		Test.setCurrentPage(pg);
+
+		AMS_OSCAR_Attachments con = new AMS_OSCAR_Attachments();
+		Test.startTest();
+		con.listAttachments[0].isSelected = true;
+		con.acceptFiles();
+		System.assertEquals('Accepted', con.listAttachments[0].reviewStatus);
+		con.listAttachments[0].isSelected = true;
+		con.rejectFiles();	
+		System.assertEquals('Rejected', con.listAttachments[0].reviewStatus);	
+		Test.stopTest();
+	}
 	
 }
