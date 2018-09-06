@@ -256,12 +256,12 @@ private class TIP_BINRangeTriggerHandlerTest {
 			TIP_Status__c='ACTIVE');
 
 		TIP_BIN_Range__c mixedInsert3 = new TIP_BIN_Range__c(TIP_Payment_Provider_Product__c = product.Id,
-			TIP_Effective_From_Date__c = Date.today(),
+			TIP_Effective_From_Date__c = Date.today()+1,
 			TIP_Range_Start__c = '7500',
 			TIP_Range_End__c = '7800',
 			RecordTypeId = listedByIATARecordTypeId,
 			TIP_Effective_To_Date__c = Date.today() + 2,
-			TIP_Status__c='ACTIVE');
+			TIP_Status__c='IN_PROGRESS');
 
 		TIP_BIN_Range__c mixedInsert4 = new TIP_BIN_Range__c(TIP_Payment_Provider_Product__c = product.Id,
 			TIP_Effective_From_Date__c = Date.today() + 3,
@@ -280,12 +280,12 @@ private class TIP_BINRangeTriggerHandlerTest {
 			TIP_Status__c='INACTIVE');
 
 		TIP_BIN_Range__c mixedInsert6 = new TIP_BIN_Range__c(TIP_Payment_Provider_Product__c = product.Id,
-			TIP_Effective_From_Date__c = Date.today(),
+			TIP_Effective_From_Date__c = Date.today()+1,
 			TIP_Range_Start__c = '8000',
 			TIP_Range_End__c = '8100',
 			RecordTypeId = listedByIATARecordTypeId,
 			TIP_Effective_To_Date__c = Date.today() + 1,
-			TIP_Status__c='ACTIVE');
+			TIP_Status__c='IN_PROGRESS');
 
 		overlapBinRanges.add(mixedInsert1);
 		overlapBinRanges.add(mixedInsert2);
