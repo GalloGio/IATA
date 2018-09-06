@@ -563,6 +563,16 @@
         <type>Date</type>
     </fields>
     <fields>
+        <fullName>Visible_on_the_portal__c</fullName>
+        <defaultValue>false</defaultValue>
+        <description>Used to show/hide the record on the customer service portal. This field is unchecked by default</description>
+        <externalId>false</externalId>
+        <label>Visible on the portal</label>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
         <fullName>frequency_code__c</fullName>
         <externalId>false</externalId>
         <label>Remittance Frequency Code</label>

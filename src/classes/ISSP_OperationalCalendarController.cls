@@ -151,7 +151,8 @@ global without sharing class ISSP_OperationalCalendarController {
                 ( SELECT Id FROM CASS_COUNTRIES__r),
                 ( SELECT frequency_code__c, Operation_Currency__c, Operation_Type__c
                     FROM Operational_Calendars__r
-                    WHERE First_Day__c >= LAST_YEAR)
+                    WHERE First_Day__c >= LAST_YEAR
+                    AND Visible_on_the_portal__c=true)
             FROM AMS_Settlement_System__c 
         ];
         
@@ -345,6 +346,7 @@ global without sharing class ISSP_OperationalCalendarController {
             + '     SELECT ' + lookupField
             + '     FROM IATA_ISO_Country__c'
             + '     WHERE Id = \'' + country + '\')'
+            + ' AND Visible_on_the_portal__c = true'
             + ' AND Operation_Type__c = \'' + operationType + '\'';
             
             if (String.isNotBlank(frequency)) {
