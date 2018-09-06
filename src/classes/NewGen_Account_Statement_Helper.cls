@@ -13,7 +13,7 @@ public with sharing class NewGen_Account_Statement_Helper {
     public static final String NAVIGATE_TO_RHC_RISK_PROFILE = 'NAVIGATE_TO_RHC_RISK_PROFILE';
     public static final String NAVIGATE_TO_USER_REQUEST_ADMIN = 'NAVIGATE_TO_USER_REQUEST_ADMIN';
     public static final String NAVIGATE_TO_SERVICE_REQUEST_ADMIN = 'NAVIGATE_TO_SERVICE_REQUEST_ADMIN';
-    public static final String RECTYPE_PUSH_NOTIFICATION_ATTRIBUTE = RecordTypeSingleton.getInstance().RtIDsPerDeveloperNamePerObj.get('AMS_Country_Specific_Attribute__c').get('Push_Notification');
+    public static final String RECTYPE_PUSH_NOTIFICATION_ATTRIBUTE = RecordTypeSingleton.getInstance().getRecordTypeId('AMS_Country_Specific_Attribute__c', 'Push_Notification');
 
     /*
         Get a map containing all account in the input account hirarchy

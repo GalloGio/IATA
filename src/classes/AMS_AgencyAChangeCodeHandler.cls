@@ -49,6 +49,7 @@ public class AMS_AgencyAChangeCodeHandler {
         verifyActiveAACCuniqueness(aacc);
         set<id> setIdAACC = new set<id>();
         Id irregRtId = RecordTypeSingleton.getInstance().getRecordTypeId('Agency_Applied_Change_code__c', 'Irregularities');
+        set<id> setIdAACCForNewApplicationPending = new set<id>();
         List<Agency_Applied_Change_code__c> aaccToBeProcessed = new List<Agency_Applied_Change_code__c>();
         for(Agency_Applied_Change_Code__c aaccRecord : aacc)
         {
