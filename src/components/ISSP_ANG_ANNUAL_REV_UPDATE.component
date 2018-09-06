@@ -888,6 +888,8 @@
 
     <script>
 
+        $('[data-toggle="popover"]').popover();
+
         function copyPhysicalAddress() {
             var checkBox = document.getElementById('copyCheckBox');
             if (checkBox.checked){
@@ -1046,7 +1048,9 @@
             utilsScript: "{!URLFOR($Resource.InternationalPhoneNumberFormat, '/intl-tel-input-master/lib/libphonenumber/build/utils.js')}"
         });
 
-        natphoneacct1.intlTelInput("setNumber", phoneacct1.val());
+        var phoneacct1NotUndefined = phoneacct1.val() == undefined ? '' : phoneacct1.val();
+
+        natphoneacct1.intlTelInput("setNumber", phoneacct1NotUndefined);
 
         function setInternationalAccountPhoneInfo(p) {
             if(p=='phone') {
