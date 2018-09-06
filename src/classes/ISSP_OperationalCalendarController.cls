@@ -29,6 +29,9 @@ global without sharing class ISSP_OperationalCalendarController {
         'R' => 'CASS Export',
         'I' => 'CASS Import'
     };
+    // These countries in the Caribbean region have a special treatment in the query
+    public static final map<Id,IATA_ISO_Country__c> SPECIAL_CASE_COUNTRIES = new map<Id,IATA_ISO_Country__c>(
+        [SELECT Id, ISO_Code__c FROM IATA_ISO_Country__c WHERE AMS_Settlement_System__r.Name = 'BSP-BQ']);
     
     public static final Map<String, Schema.SObjectField> MAP_CALENDAR_FIELDS =
         Schema.getGlobalDescribe().get('operational_Calendar__c').getDescribe().fields.getMap();
@@ -149,7 +152,7 @@ global without sharing class ISSP_OperationalCalendarController {
             SELECT Id, Name,  
                 ( SELECT Id FROM IATA_ISO_Countries__r),
                 ( SELECT Id FROM CASS_COUNTRIES__r),
-                ( SELECT frequency_code__c, Operation_Currency__c, Operation_Type__c
+                ( SELECT frequency_code__c, Operation_Currency__c, Operation_Type__c, Operation_Code__c
                     FROM Operational_Calendars__r
                     WHERE First_Day__c >= LAST_YEAR
                     AND Visible_on_the_portal__c=true)
@@ -159,7 +162,7 @@ global without sharing class ISSP_OperationalCalendarController {
         set<Id> setCountryId = new set<Id>();
         for (AMS_Settlement_System__c op: listOp ) {
             Set<Id> listBSPCountries = getSetIds(op.IATA_ISO_Countries__r);
-            Set<Id> listCASSCountries = getSetIds(op.IATA_ISO_Countries__r);
+            Set<Id> listCASSCountries = getSetIds(op.CASS_COUNTRIES__r);
             for (Operational_Calendar__c operation: op.Operational_Calendars__r ) {
                 list<Id> listCountryId = new list<Id>();
                 if (operation.Operation_Type__c.contains('BSP')) {
@@ -169,9 +172,20 @@ global without sharing class ISSP_OperationalCalendarController {
                     listCountryId.addAll(listCASSCountries);
                 }
                 for (Id countryId: listCountryId) {
-                    String str = countryId + ',' + operation.Operation_Type__c + ',' + operation.frequency_code__c + ',' + operation.Operation_Currency__c;
-                    this.setFilter.add(str);
-                    setCountryId.add(countryId);
+                    // special case for caribean countries, use only currencies from operations 
+                    //with the OperationCode starting with the country Code
+                    if (SPECIAL_CASE_COUNTRIES.containsKey(countryId)) {
+                        String isocode=SPECIAL_CASE_COUNTRIES.get(countryId).ISO_Code__c;
+                        if (operation.Operation_Code__c!=null && operation.Operation_Code__c.startsWith(isocode)) {
+                            String str = countryId + ',' + operation.Operation_Type__c + ',' + operation.frequency_code__c + ',' + operation.Operation_Currency__c;
+                            this.setFilter.add(str);
+                            setCountryId.add(countryId);
+                        }
+                    } else {
+                        String str = countryId + ',' + operation.Operation_Type__c + ',' + operation.frequency_code__c + ',' + operation.Operation_Currency__c;
+                        this.setFilter.add(str);
+                        setCountryId.add(countryId);
+                    }
                 }
             }
         }
@@ -336,7 +350,8 @@ global without sharing class ISSP_OperationalCalendarController {
         Generate the query string and runs it, used only by queryListOperations()
     **/
     private static list<Operational_Calendar__c> runQuery(String country, String frequency, String operationType, String currencyCode, Integer billingPeriod) {
-        String lookupField = operationType.contains('CASS')? 'AMS_Settlement_System_CASS__c': 'AMS_Settlement_System__c';
+        Boolean isBSP = operationType.contains('BSP');
+        String lookupField = isBSP? 'AMS_Settlement_System__c': 'AMS_Settlement_System_CASS__c';
         String query = 'SELECT Id,RecordTypeId,First_Day__c,Frequency_code__c,HAR_Day__c,ISS_operation__c,Last_Day__c,Name,Operation_Code__c,'
             + ' Operation_Currency__c,Operation_Period_code__c,Operation_Type__c,Period_Code__c,Remittance_Day__c,Settlement_Day__c,'
             + ' EP_Settlement_date__c, Billing_Availability__c, Airline_Input_Upload_Cut_Off__c, CASS_reports_Availability__c,'
@@ -348,7 +363,11 @@ global without sharing class ISSP_OperationalCalendarController {
             + '     WHERE Id = \'' + country + '\')'
             + ' AND Visible_on_the_portal__c = true'
             + ' AND Operation_Type__c = \'' + operationType + '\'';
-            
+            // for some countries we have to find only those records where the operation code starts with the country code
+            if (isBSP && SPECIAL_CASE_COUNTRIES.containsKey(country)) {
+                String isocode=SPECIAL_CASE_COUNTRIES.get(country).ISO_Code__c;
+                query += ' AND Operation_Code__c LIKE \'' + isocode + '%\'';
+            }
             if (String.isNotBlank(frequency)) {
                 query += ' AND frequency_code__c = \'' + frequency + '\'';
             }
