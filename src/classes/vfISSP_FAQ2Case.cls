@@ -1,8 +1,13 @@
+/*
+    Class that exposes contact support functionalities for Portal and NewGen APP (mobile), like Live Chat, Call Information and Case Creation.
+    Used in ICE service and NewGen APP (mobile)
+*/
 //TRANSFORM 02/03/15 ==> includes new functionality algorithm  provided by Elliot ,
 /**
  * Last update by Nurit and Niv 11/16/2014
  */
-public without sharing class vfISSP_FAQ2Case
+@RestResource(urlMapping='/newgenapp/v1/contactSupport/*')
+global class vfISSP_FAQ2Case
 {
     public class ButtonsInfoType{
         public Integer Order { get; set; }
@@ -135,7 +140,17 @@ public without sharing class vfISSP_FAQ2Case
 
     public String iataCode {get;set;}
     //CNS
-    public String communityName{ get{ return ApexPages.currentPage().getParameters().get('CommunityName'); }set;}
+    public String communityName{ 
+        get {
+            if(callApexPagesParameters){
+                return ApexPages.currentPage().getParameters().get('CommunityName'); 
+            }
+            else{
+                return '';
+            }
+        }
+        set;
+    }
     public String commParam { get { if(communityName=='CNS'){ return '&CommunityName='+ communityName;} return ''; } set;}
 
     //basto1p live agent v2
@@ -158,6 +173,8 @@ public without sharing class vfISSP_FAQ2Case
         }
         set;}
     public String callUsFinalString {get; set;}
+    // Map < Phone number, Available hours >
+    public Map <String, String> callUsMap { get; set; }
 
     public Boolean isToShowFAQs {
         get{
@@ -292,6 +309,16 @@ public without sharing class vfISSP_FAQ2Case
         set;
     }
 
+    // Added for NewGen APP - when a REST is called, there's no ApexPages Parameters and because of that
+    // this was getting NullPointerException. 
+    public Boolean callApexPagesParameters {
+        get {
+            // by default, call every Apex Pages Parameters
+            return callApexPagesParameters == null ? true : callApexPagesParameters;
+        }
+        set;
+    }
+
 
 	public void livAgentIntroVidCloseAndDontRemenber(){
 		String cookieNameStr=LVA_COOK_INTRO_VIDEO+UserInfo.getUserId()+livAgentIntroVidUrl;
@@ -309,7 +336,153 @@ public without sharing class vfISSP_FAQ2Case
         this.resetLiveAgentVars();
     }
 
+    global class CustomerSupporWrapperGet {
+        global Map <String, String> topicsMap { get; set; }
+        global Map <String, String> subTopicsMap { get; set; }
+        global Map <String, String> countryMap { get; set; }
 
+        global CustomerSupporWrapperGet(){
+            topicsMap = new Map <String, String>();
+            subTopicsMap = new Map <String, String>();
+            countryMap = new Map <String, String>();
+        }
+    }
+
+    /**
+    *    Get method for NewGenAPP mobile to have topic, subtopic and countries picklists
+    **/
+    @HttpGet
+    global static CustomerSupporWrapperGet doGet(){
+        CustomerSupporWrapperGet customerSupport = new CustomerSupporWrapperGet();
+
+        vfISSP_FAQ2Case faq2Case = new vfISSP_FAQ2Case();
+        faq2Case.pageLoad();
+        // after page load, all the countries should be now in countryList list.
+        if(faq2Case.countryList != null){
+            for (SelectOption countrySelectOpt : faq2Case.countryList){
+                // discard default values
+                if(countrySelectOpt.getValue() == ''){
+                    continue;
+                }
+                // create country map with calculated selectOption
+                customerSupport.countryMap.put(countrySelectOpt.getValue(), countrySelectOpt.getLabel());
+            }
+        }
+        // after page load, all the topics should be now in lst_selectTopics list.
+        if(faq2Case.lst_selectTopics != null){
+            for (SelectOption topicSelectOpt : faq2Case.lst_selectTopics){
+                // discard default values
+                if(topicSelectOpt.getLabel() == Env.SelectOptionDefaultValue){
+                    continue;
+                }
+                // create topics map with calculated selectOption
+                customerSupport.topicsMap.put(topicSelectOpt.getValue(), topicSelectOpt.getLabel());
+
+                faq2Case.topic = topicSelectOpt.getValue();
+
+                // calculate sub topic for each topic 
+
+                faq2Case.lst_selectsubTopics = new list<SelectOption>();
+                Integer index = Integer.valueOf(faq2Case.topic.trim());
+
+                clsDataCategory selectDataCategory = faq2Case.DataCategoryContainer.lst_DataCategories[index];
+
+                if (selectDataCategory.lst_childs.size() > 0){
+                    for(Integer cIndex = 0; cIndex < selectDataCategory.lst_childs.size(); cIndex++){
+                        clsDataCategory.CategoryChildWrapper childCat = selectDataCategory.lst_childs[cIndex];
+                        faq2Case.lst_selectsubTopics.add(new SelectOption(childCat.CategoryName, childCat.CategoryLabel));
+                    }
+
+                    faq2Case.subtopic = selectDataCategory.CategoryName;
+                }
+                else{
+                    faq2Case.lst_selectsubTopics.add(new SelectOption(Env.SelectOptionEmptyValue, Env.SelectOptionEmptyValue));
+                    faq2Case.subtopic = selectDataCategory.CategoryName;
+                }
+
+                faq2Case.setSubTopicByPermissions();
+
+                if(faq2Case.lst_selectsubTopics != null){
+                    for (SelectOption subTopicSelectOpt : faq2Case.lst_selectsubTopics){
+                        // discard default values
+                        if(subTopicSelectOpt.getLabel() == Env.SelectOptionDefaultValue){
+                            continue;
+                        }
+                        // create subtopics map with calculated selectOption
+                        customerSupport.subTopicsMap.put(topicSelectOpt.getValue() + '#' + subTopicSelectOpt.getValue(), subTopicSelectOpt.getLabel());
+                    }
+                }
+
+            }
+        }
+
+        return customerSupport;
+    }
+
+    global class CustomerSupporWrapperPost {
+        global Map <String, buttonsInfoType> csButtonsMap { get; set; }
+        global Map <String, String> callUsMap { get; set; }
+        global String region { get; set; }
+        global Case newCase { get; set; }
+
+        global CustomerSupporWrapperPost(){
+            csButtonsMap = new Map <String, buttonsInfoType>();
+            callUsMap = new Map <String, String>();
+            region = '';
+        }
+    }
+
+    /**
+    *    Post method for NewGenAPP mobile to have the live agent button and phone contact information 
+    *       according to selected topic, subtopic and country
+    *    If subject and description fields have value, it means that the user is trying to create a case
+    **/
+    @HttpPost
+    global static CustomerSupporWrapperPost doPost(String topicCode, String subTopicCode, String countryIsoCode, 
+                                String aditionalRecipients, String subject, String description, String origin){
+        CustomerSupporWrapperPost customerSupport = new CustomerSupporWrapperPost();
+
+        vfISSP_FAQ2Case faq2Case = new vfISSP_FAQ2Case();
+        // bypass any apex page parametes calls, otherwise will get NullPointerException
+        faq2Case.callApexPagesParameters = false;
+        faq2Case.pageLoad();
+        // set choosen topic, subtopic and country
+        faq2Case.topic = topicCode;
+        faq2Case.refreshTopicPickList();
+        faq2Case.subtopic = subTopicCode;
+        faq2Case.refreshSubTopicPickList();
+        faq2Case.newCase.IFAP_Country_ISO__c = countryIsoCode;
+        // calculate buttons and phone contact information
+        faq2Case.setLiveAgentButtonsNames();
+
+        customerSupport.csButtonsMap = faq2Case.csButtonsList;
+        customerSupport.callUsMap = faq2Case.callUsMap;
+        customerSupport.region = faq2Case.region;
+
+        if(!String.isEmpty(subject) && !String.isEmpty(description)){
+            faq2Case.newCase.subject = subject;
+            faq2Case.newCase.description = description;
+            for (sectionRecordWrapper section : faq2Case.fullList) {
+                for (fieldRecordWrapper thisField : section.fieldList) {
+                    if (thisField.fieldType == 'ccothers') {
+                        thisField.fieldValueEntered = aditionalRecipients;
+                    }
+                }
+            }
+            faq2Case.newCase.Origin = origin;
+            
+            faq2Case.save();
+
+            faq2Case.newCase = [SELECT  Id, Status, CaseNumber, Area_of_Concern__c, BSPCountry__c, Case_Language__c, Country_concerned_by_the_query__c,
+                                    Description, IFAP_Country_ISO__c, Origin, Subject, SubTopic__c, Topic__c
+                                FROM    Case 
+                                WHERE   Id =: faq2Case.newCase.Id];
+        }
+
+        customerSupport.newCase = faq2Case.newCase;
+
+        return customerSupport;
+    }
 
     /*******************************************************************************************************
     * @description Loads all live agent configurations from LVA_Configs__mdt metadata type
@@ -436,6 +609,7 @@ public without sharing class vfISSP_FAQ2Case
         isIATAServiceRequest= false ;
         isPWCServiceRequest = false ;
         isDPCServiceRequest = false ;
+        callUsMap = new Map <String, String>();
 
         //isComplain = false;
         newCase.Description = '';
@@ -476,7 +650,9 @@ public without sharing class vfISSP_FAQ2Case
         //Call for the new method that arrange the fields according to the Custom settings
         GenerateFieldsBySettings();
 
-        myTopic = ApexPages.currentPage().getParameters().get('topic');
+        if(ApexPages.currentPage() != null){
+            myTopic = ApexPages.currentPage().getParameters().get('topic');
+        }
         this.currentButtonsToShow = OnlyCancel;
         SHowButtons = false ;
         labelSubTopic = Label.ISSP_F2CSubTopic;
@@ -867,6 +1043,7 @@ public without sharing class vfISSP_FAQ2Case
     * 2017-09-29   paulo.bastos@rightitservices.com  Creation
     ********************************************************************************************************/
     public String createCallUsString(LVA_CallUsConfig__mdt item){
+	callUsMap.put(item.PhoneNumber__c, item.AvailableHours__c);
         String retVal=Label.LVA_CallUsThruPhoneNum+' <b>'+item.PhoneNumber__c +'</b>'+
                 '<br/>'+Label.LVA_CallUsAvailableHours+' <b>'+item.AvailableHours__c+'</b>';
 
@@ -2442,8 +2619,11 @@ for (string topicver:listofAllowedTopics){
             this.topic = '0';
         }
 
-        //Set Origin to be PORTAL
-        newCase.Origin = 'Portal';
+        // NewGenAPP when is called by APP, don't write on Origin field.
+        if(callApexPagesParameters){
+            //Set Origin to be PORTAL
+            newCase.Origin = 'Portal';
+        }
 
 
         Integer index = Integer.valueOf(topic.trim());

@@ -7,6 +7,7 @@ public class AMS_AgencyRegulationTriggerHandler {
     public static void handleBeforeUpdate() {
 
         processPostNotifSentActions((List<AMS_Agency_Regulation__c>)Trigger.New, (Map<Id,AMS_Agency_Regulation__c>)Trigger.oldMap);
+        processRenewals((List<AMS_Agency_Regulation__c>)Trigger.New, (Map<Id,AMS_Agency_Regulation__c>)Trigger.oldMap);
 
     }
 
@@ -111,6 +112,24 @@ public class AMS_AgencyRegulationTriggerHandler {
             system.debug('keyContactsPerAccount ' + keyContactsPerAccount);
             AMS_AgencyRegulationAutoRenewal b = new AMS_AgencyRegulationAutoRenewal(dgrRegulationsExpiringIn90Days, keyContactsPerAccount, renewalCertPerAccount);
             database.executebatch(b,1);
+        }
+    }
+
+    //clean the Notification Date for manually changed agency regulations
+    public static void processRenewals(List<AMS_Agency_Regulation__c> agencyRegulations, Map<Id,AMS_Agency_Regulation__c> oldAgRegulationValues) {
+        
+        List<AMS_Agency_Regulation__c> agencyRegulationsToUpdate = new List<AMS_Agency_Regulation__c>();
+
+        for(AMS_Agency_Regulation__c agReg : agencyRegulations) {
+
+            if(agReg.Expiry_Date__c != oldAgRegulationValues.get(agReg.Id).Expiry_Date__c 
+                && agReg.Notification_Sent__c == false 
+                && agReg.Notification_Sent__c != oldAgRegulationValues.get(agReg.Id).Notification_Sent__c
+                && agReg.Notification_Date__c != null) {
+
+                agReg.Notification_Date__c = null;
+            }
+
         }
     }
 

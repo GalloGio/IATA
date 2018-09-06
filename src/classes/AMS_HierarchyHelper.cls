@@ -33,9 +33,10 @@ global class AMS_HierarchyHelper {
 
 		for (Id accountId : accountsIds)
 			result.put(accountId, new List<AMS_Agencies_relationhip__c>());
-
-		for (AMS_Agencies_relationhip__c r : [SELECT Hierarchy__c, Parent_Account__c,  Child_Account__c, Parent_Account__r.Location_Type__c,  Child_Account__r.Location_Type__c, Child_Account__r.Status__c, Parent_Account__r.Status__c, 
-												Child_Account__r.Reason__c, Parent_Account__r.Reason__c //FM AMSU-1
+		//AMSU-134 added HO_Flag__c,Parent_agency__c, Child_Agency__c, Is_Newgen_Relation__c
+		for (AMS_Agencies_relationhip__c r : [SELECT Hierarchy__c, Parent_Account__c, Child_Account__c, Parent_Account__r.Location_Type__c,  Child_Account__r.Location_Type__c,  
+												Child_Account__r.Status__c, Parent_Account__r.Status__c, Child_Account__r.Reason__c, Parent_Account__r.Reason__c,
+												HO_Flag__c, Parent_agency__c, Child_Agency__c, Is_Newgen_Relation__c
 		                                      FROM AMS_Agencies_relationhip__c
 		                                      WHERE Hierarchy__c IN :hierarchyToAccounts.keyset() ]) {
 
@@ -464,20 +465,38 @@ global class AMS_HierarchyHelper {
 
 	// return null if the incomplete migration is valid, a string with the error message otherwise
 	public static Boolean isAllHierarchySelected(Set<Id> agenciesSelected, List<AMS_Agencies_relationhip__c> hierarchyRelationships, Map<Id, Account> accounts) {
-
 		for (AMS_Agencies_relationhip__c rel : hierarchyRelationships) {
 			Id parentId = rel.Parent_Account__c;
 			Id childId = rel.Child_Account__c;
-
 			//only active hierarchy agencies are to be considered
-			Account parent = accounts.get(parentId);
+			Account parent = accounts.get(parentId); 
 			Account child = accounts.get(childId);
-			if (parent !=null && parent.Status__c != AMS_Utils.ACC_S0_TERMINATED && parent.Status__c != AMS_Utils.ACC_S1_NOTACCREDITED && !agenciesSelected.contains(parentId))
+			if (parent !=null && parent.Status__c != AMS_Utils.ACC_S0_TERMINATED && parent.Status__c != AMS_Utils.ACC_S1_NOTACCREDITED && !agenciesSelected.contains(parentId)){
 				return false;
-			if (child !=null && child.Status__c != AMS_Utils.ACC_S0_TERMINATED && child.Status__c != AMS_Utils.ACC_S1_NOTACCREDITED && child.Status__c != null && !agenciesSelected.contains(childId))
+			}
+			if (child !=null && child.Status__c != AMS_Utils.ACC_S0_TERMINATED && child.Status__c != AMS_Utils.ACC_S1_NOTACCREDITED && child.Status__c != null && !agenciesSelected.contains(childId)){				
 				return false;
+			}
 		}
+		return true;
+	}
 
+	public static Boolean isAllHierarchySelectedExcludeAbroad(Set<Id> agenciesSelected, List<AMS_Agencies_relationhip__c> hierarchyRelationships, Map<Id, Account> accounts) {
+		for (AMS_Agencies_relationhip__c rel : hierarchyRelationships) {
+			Id parentId = rel.Parent_Account__c;
+			Id childId = rel.Child_Account__c;
+			//only active hierarchy agencies are to be considered
+			Account parent = accounts.get(parentId); 
+			Account child = accounts.get(childId);
+			if(child.Is_Branch_Abroad__c != 'Yes'){
+				if (parent !=null && parent.Status__c != AMS_Utils.ACC_S0_TERMINATED && parent.Status__c != AMS_Utils.ACC_S1_NOTACCREDITED && !agenciesSelected.contains(parentId)){
+					return false;
+				}
+				if (child !=null && child.Status__c != AMS_Utils.ACC_S0_TERMINATED && child.Status__c != AMS_Utils.ACC_S1_NOTACCREDITED && child.Status__c != null && !agenciesSelected.contains(childId)){				
+					return false;
+				}
+			}
+		}
 		return true;
 	}
 

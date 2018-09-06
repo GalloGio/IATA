@@ -13,6 +13,7 @@ trigger GlobalContactTrigger on Contact (after delete, after insert, after undel
     boolean ISSP_ContactStatusTrigger = true;
     boolean ISSP_ContactAfterInsert = true;
     boolean trgIECContact = true;
+    boolean sendPushNotificationsToAdmin = true;
 
     /*Values of flags can be found inside the custom setting Global Case Trigger, created for case project and reused for contacts GM*/
     if(!Test.isRunningTest()){
@@ -27,6 +28,7 @@ trigger GlobalContactTrigger on Contact (after delete, after insert, after undel
         ISSP_ContactStatusTrigger = GlobalCaseTrigger__c.getValues('CON ISSP_ContactStatusTrigger').ON_OFF__c;
         ISSP_ContactAfterInsert = GlobalCaseTrigger__c.getValues('CON ISSP_ContactAfterInsert').ON_OFF__c;
         trgIECContact = GlobalCaseTrigger__c.getValues('CON trgIECContact').ON_OFF__c;
+        sendPushNotificationsToAdmin = NewGenApp_Custom_Settings__c.getOrgDefaults().Push_Notifications_State__c;
     }
     
     /*BEFORE*/
@@ -452,6 +454,16 @@ trigger GlobalContactTrigger on Contact (after delete, after insert, after undel
                 }
             } 
             /*ISSP_CreateNotificationForContact Trigger.AfterInsert*/
+
+            // NewGen Mobile APP Start
+            if(sendPushNotificationsToAdmin){
+                for (Contact con : Trigger.new) {
+                    if(con.User_Portal_Status__c == ISSP_Constant.NEW_CONTACT_STATUS || (con.Community__c != null && con.Community__c.startswith('ISS'))){
+                        NewGen_Account_Statement_Helper.sendPushNotificationToAdmins(trigger.new);
+                    }
+                }
+            }
+            // NewGen Mobile APP End
 
             /*Contacts Trigger.AfterInsert*/
             if(Contacts) {
