@@ -86,6 +86,7 @@ public class ANG_RHCAlertTriggerHandler{
         Map<ANG_Risk_Alert__c, AMS_Country_Specific_Attribute__c> alertsToNotify = new Map<ANG_Risk_Alert__c, AMS_Country_Specific_Attribute__c>();
         Set<String> emailTemplateNames = new Set<String>();
         Set<String> notificationTemplates = new Set<String>();
+        map<id,ANG_Risk_Alert__c> riskAlertMap = new map<id,ANG_Risk_Alert__c>();
 
         for(ANG_Risk_Alert__c a : triggerNew){
             String key = countries.get(a.ANG_Account__c) + a.ANG_Direction__c + a.ANG_Threshold_Level__c;
@@ -95,6 +96,7 @@ public class ANG_RHCAlertTriggerHandler{
                 AMS_Country_Specific_Attribute__c config = configs.get(key);
 
                 alertsToNotify.put(a, config);
+        	riskAlertMap.put(a.ANG_Account__c,a);
 
                 if(String.isNotEmpty(config.ANG_EmailTemplate_Legacy__c)) emailTemplateNames.add(config.ANG_EmailTemplate_Legacy__c);
                 if(String.isNotEmpty(config.ANG_EmailTemplate_NG__c)) emailTemplateNames.add(config.ANG_EmailTemplate_NG__c);
@@ -125,7 +127,8 @@ public class ANG_RHCAlertTriggerHandler{
             rhcInfo.put(r.ANG_AccountId__c, r);
         }
 
-        Map<String, Set<Id>> rhcContacts = ANG_ISSP_IEPMailRecipientsUtils.getRecipientsPortalServices(newGenAccounts,new set<String>{ANG_RHCHelper.RISK_PROFILE_AND_RHC_PORTAL_SERVICE} ); //this sets use the 15 char id
+        List<Portal_Applications__c> rhcServices = [SELECT Id FROM Portal_Applications__c WHERE Name =:ANG_RHCHelper.RISK_PROFILE_AND_RHC_PORTAL_SERVICE];
+        Map<String, Set<Id>> rhcContacts = ANG_ISSP_IEPMailRecipientsUtils.getRecipientsPortalServices(newGenAccounts, new Map<Id, Portal_Applications__c>(rhcServices).keySet()); //this sets use the 15 char id
 
         Map<Id, Set<Id>> portalAdmins = new Map<Id, Set<Id>>();
         for(Contact c : [SELECT Id, AccountId, Account.Top_Parent__c FROM Contact WHERE User_Portal_Status__c = :ANG_Risk_Helper.USER_PORTAL_STATUS_APPROVED_ADIM AND (Account.Top_Parent__c IN :legacyAccounts OR AccountId IN :legacyAccounts)]){
@@ -192,6 +195,18 @@ public class ANG_RHCAlertTriggerHandler{
                 processCases.add(c);
             }
         }
+
+        //NewGenApp Start
+        System.Debug('NewGenApp Start');
+		Map <Id, Account> accountMap = NewGen_Account_Statement_Helper.getAllHierarchies(accounts.keySet());
+        Map <Id, Set <String>> usersPerAccount = NewGen_Account_Statement_Helper.getUsersPerAccount(accountMap.keySet(), NewGen_Account_Statement_Helper.SERVICE_RHC);
+
+        for (Id accountId : accounts.keySet()) {
+		NewGen_Account_Statement_Helper.sendPushNotification(usersPerAccount.get(accountId), Label.NewGenApp_RHC_RiskAlert_Notification, 
+                new List <String> { riskAlertMap.get(accountId).ANG_Threshold_Level__c, riskAlertMap.get(accountId).ANG_Direction__c }, NewGen_Account_Statement_Helper.NAVIGATE_TO_RHC_HOME);
+        }
+        System.Debug('NewGenApp End');
+		//NewGenApp End  
 
         if(!processCases.isEmpty()) insert processCases;
         if(!mailList.isEmpty()) System.enqueueJob(new ANG_RHCHelper.RiskAlertMailService(mailList, notifiedAlerts));

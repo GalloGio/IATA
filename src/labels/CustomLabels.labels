@@ -25148,7 +25148,16 @@ msgErrorRenewalOrderExpired:Your renewal notification order link is either  expi
         <value>RHC: There was an update on Cash Conditions</value>
     </labels>
     <labels>
+        <fullName>NewGenApp_PortalUserRequested</fullName>
+        <categories>NewGenApp</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>NewGenApp_PortalUserRequested</shortDescription>
+        <value>There are new Portal Users to be approved/rejected.</value>
+    </labels>
+    <labels>
         <fullName>NewGenApp_RHC_RiskAlert_Notification</fullName>
+        <categories>NewGenApp</categories>
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>NewGenApp_RHC_RiskAlert_Notification</shortDescription>
@@ -25169,6 +25178,14 @@ msgErrorRenewalOrderExpired:Your renewal notification order link is either  expi
         <protected>false</protected>
         <shortDescription>NewGenApp_ServiceAccepted</shortDescription>
         <value>{0} service request approved</value>
+    </labels>
+    <labels>
+        <fullName>NewGenApp_ServiceRequested</fullName>
+        <categories>NewGenApp</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>NewGenApp_ServiceRequested</shortDescription>
+        <value>{0} service have new requests to be approved/rejected.</value>
     </labels>
     <labels>
         <fullName>New_password</fullName>
