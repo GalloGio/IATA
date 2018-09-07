@@ -9,7 +9,11 @@
 
     <c:ISSP_Header />
 
-    
+    <style type="text/css">
+        #navbarSearchBtn {
+            height: 34px;
+        }
+    </style>
     
     <script type="text/javascript">
 
