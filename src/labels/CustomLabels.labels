@@ -26073,6 +26073,28 @@ If you want to reset your password, go back to login screen and use &quot;forgot
         <value>Type</value>
     </labels>
     <labels>
+        <fullName>OneId_UneligibleExistingUserError</fullName>
+        <categories>OneId</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>OneId_UneligibleExistingUserError</shortDescription>
+        <value>This Email is already registered with us, but the related user is not eligible for FRED+.
+&lt;br/&gt;
+If you believe that it&apos;s a mistake, please follow this &lt;a href=&quot;http://www.google.com&quot;&gt;link&lt;/a&gt; to contact us.</value>
+    </labels>
+    <labels>
+        <fullName>OneId_UneligibleLoggedUserRegisteringError</fullName>
+        <categories>OneId</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>OneId_UneligibleLoggedUserRegisteringError</shortDescription>
+        <value>You already have an active 1ID session opened. 
+&lt;br/&gt;
+Note that your user is not eligible for FRED+ access.
+&lt;br/&gt;
+If you believe that it&apos;s a mistake, please follow this &lt;a href=&quot;http://www.google.com&quot;&gt;link&lt;/a&gt; to contact us.</value>
+    </labels>
+    <labels>
         <fullName>OneId_URL_javaScript</fullName>
         <categories>OneId</categories>
         <language>en_US</language>
