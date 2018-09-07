@@ -25517,6 +25517,30 @@ If you are a Customer Portal user, please use your Customer Portal credentials.
 Follow this &lt;a href=&quot;http://www.google.com&quot;&gt;link&lt;/a&gt; to login.</value>
     </labels>
     <labels>
+        <fullName>OneId_FRED_ContactUs_Link</fullName>
+        <categories>OneId</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>OneId_FRED_ContactUs_Link</shortDescription>
+        <value>https://fred-qa.iata.org/contact</value>
+    </labels>
+    <labels>
+        <fullName>OneId_FRED_Troubleshooting</fullName>
+        <categories>OneId</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>OneId_FRED_Troubleshooting</shortDescription>
+        <value>Troubleshooting</value>
+    </labels>
+    <labels>
+        <fullName>OneId_FRED_Troubleshooting_Link</fullName>
+        <categories>OneId</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>OneId_FRED_Troubleshooting_Link</shortDescription>
+        <value>https://fred.aws-sword.net/contact</value>
+    </labels>
+    <labels>
         <fullName>OneId_ForgotPassword</fullName>
         <categories>OneId</categories>
         <language>en_US</language>
@@ -25723,6 +25747,13 @@ Note that your account is not eligible for FRED+. If you think that it is a mist
         <shortDescription>OneId_LoginUserWithoutFredAccessMessage</shortDescription>
         <value>You don&apos;t have access to FRED+ yet and will be redirected to 1ID homepage.
 From there, you can request access to FRED+ by clicking the &quot;Request Access to a new Service&quot; button.</value>
+    </labels>
+    <labels>
+        <fullName>OneId_Max_Account_Reached</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>OneId_Max_Account_Reached</shortDescription>
+        <value>Maximum number of accounts reached. Please click on troubleshooting link in the page footer</value>
     </labels>
     <labels>
         <fullName>OneId_My_available_applications</fullName>
