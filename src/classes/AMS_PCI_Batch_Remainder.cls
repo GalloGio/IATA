@@ -2,19 +2,15 @@ global  class AMS_PCI_Batch_Remainder implements Database.Batchable<sObject>, Da
 
     private Integer batchScope {get;set;}
     global List<ResultWrapper> lstResult {get;set;}
-    global Map<String, EmailTemplate> mapTemplates {get;set;}
-    global Map<Id,List<Attachment>> mapAttachements {get;set;}
 
     global AMS_PCI_Batch_Remainder() {
         this.batchScope = 200;
         this.lstResult = new List<ResultWrapper>();
-        loadInitData();
     }
 
     global AMS_PCI_Batch_Remainder(Integer batchScope) {
         this.batchScope = batchScope;
         this.lstResult = new List<ResultWrapper>();        
-        loadInitData();
     }
 
     public static void start(String cron, Integer scope) {
@@ -25,13 +21,13 @@ global  class AMS_PCI_Batch_Remainder implements Database.Batchable<sObject>, Da
         }        
     }
 
-    private void loadInitData() {
-        this.mapTemplates = new Map<String, EmailTemplate>();
-        this.mapAttachements = new Map<Id,List<Attachment>>();
+    public static List<Object> loadInitData() {
+        Map<String, EmailTemplate> mapTemplates = new Map<String, EmailTemplate>();
+        Map<Id,List<Attachment>> mapAttachements = new Map<Id,List<Attachment>>();
         List<EmailTemplate> templates = getEmailTemplates('AMS_PCI_Compliant_reminder_%');
         for(EmailTemplate template : templates) {
-            this.mapTemplates.put(template.DeveloperName, template);
-            this.mapAttachements.put(template.Id, new List<Attachment>());
+            mapTemplates.put(template.DeveloperName, template);
+            mapAttachements.put(template.Id, new List<Attachment>());
         }
 
         List<Attachment> attachments = [SELECT Id, Name, ParentId, Body, ContentType
@@ -39,8 +35,10 @@ global  class AMS_PCI_Batch_Remainder implements Database.Batchable<sObject>, Da
                                         WHERE ParentId IN :templates];
 
         for(Attachment attch : attachments) {
-            this.mapAttachements.get(attch.ParentId).add(attch);
+            mapAttachements.get(attch.ParentId).add(attch);
         }
+
+        return new List<Object> {mapTemplates, mapAttachements};
     }
 
     public static void stop(){
@@ -65,8 +63,12 @@ global  class AMS_PCI_Batch_Remainder implements Database.Batchable<sObject>, Da
     global Database.QueryLocator start(Database.BatchableContext BC) {
         Id recordTypeId = Schema.SObjectType.Case.getRecordTypeInfosByName().get('OSCAR Communication').getRecordTypeId();
         String accountStatus = AMS_Utils.ACC_S0_TERMINATED;
-        String reason = 'PCI DSS Compliant';
-        
+        String reason = 'PCI DSS Compliant';        
+
+        List<Object> initLst = loadInitData();
+        Map<String, EmailTemplate> mapTemplates = (Map<String, EmailTemplate>) initLst[0];
+        Map<Id,List<Attachment>> mapAttachements = (Map<Id,List<Attachment>>) initLst[1];      
+
         List<EmailTemplate> templates = mapTemplates.values();
         List<String> subjects = new List<String>();
 
@@ -92,6 +94,10 @@ global  class AMS_PCI_Batch_Remainder implements Database.Batchable<sObject>, Da
     }
 
     global void execute(Database.BatchableContext BC, List<Case> scope) {
+        List<Object> initLst = loadInitData();
+        Map<String, EmailTemplate> mapTemplates = (Map<String, EmailTemplate>) initLst[0];
+        Map<Id,List<Attachment>> mapAttachements = (Map<Id,List<Attachment>>) initLst[1];
+
         System.debug('Templates: ' + mapTemplates.size());
         System.debug('Attachments: ' + mapAttachements.values().size());
 
@@ -143,7 +149,7 @@ global  class AMS_PCI_Batch_Remainder implements Database.Batchable<sObject>, Da
                 } else if(cse.EmailMessages.size() < 2 && daysCounter < 16) { /* first remainder - 15 days */
                     System.debug('15 days reminder case: ' + cse);
                     if(cse.EmailMessages.size() == 1 && cse.EmailMessages[0].CreatedDate.date().daysBetween(cse.Account.ANG_PCI_compliance_expiry_date__c) > 15) {
-                    res.add(cse);
+                        res.add(cse);
                     } else if(cse.EmailMessages.size() == 0) {
                         res.add(cse);
                     }                    
