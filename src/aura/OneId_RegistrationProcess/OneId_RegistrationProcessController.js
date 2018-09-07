@@ -1,6 +1,7 @@
 ({
-    doInit: function(c, e, h) {
+    doInit: function(c, e, helper) {
         $A.get("e.c:oneIdURLParams").setParams({"state":"fetch"}).fire();
+		helper.getUserInformation(c);
     },
     jsLoaded: function(component, event, helper){
         // uses jquery to find the user IP and Country
@@ -46,6 +47,7 @@
                 helper.loadInvitationInfo(c, invitationId);
                 
             }
+
         }
     },
     section1 : function(cmp, evt, hlp) {

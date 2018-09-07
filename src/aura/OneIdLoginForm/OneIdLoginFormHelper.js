@@ -1,4 +1,71 @@
 ({    
+
+    handlePreLogin: function (component, event, helper) {
+        console.log('helper handlePreLogin');
+
+        //Get parameters
+        var username = component.find("username").get("v.value");
+        var password =  component.find("password").get("v.value");
+        var startUrl = decodeURIComponent(component.get("v.startUrl"));
+        var serviceName = component.get("v.serviceName");    
+
+        component.set("v.errorMessage",'');
+        component.set("v.showError",false);
+        
+        if(username == ''){
+            component.set("v.errorMessage",$A.get("$Label.c.OneId_Username_ErrorBlank"));
+            component.set("v.showError",true);
+            
+            return;
+        }
+        else if (password == ''){
+            component.set("v.errorMessage",$A.get("$Label.c.OneId_Password_ErrorBlank"));
+            component.set("v.showError",true);
+            
+            return;
+        }
+
+        if(component.get("v.serviceName") =='FRED'){
+	        var action = component.get("c.getUserInformationFromEmail");
+            
+            //check if username is available (insert + rollback), 
+            //it should not, but we're interested in fred's related information
+            var action = component.get("c.getUserInformationFromEmail");
+            action.setParams({
+                "email":username,
+                "serviceName":component.get("v.serviceName")
+            });
+    
+            var isServiceUser;
+            var isServiceEligible;
+            
+            action.setCallback(this, function(resp) {
+                var params = resp.getReturnValue();
+                console.log('ooo'+params);
+                isServiceUser = params.isServiceUser;
+                isServiceEligible = params.isServiceEligible;
+
+                if(isServiceUser == false){
+					component.set("v.startUrl",'');
+					var message;
+                    if(isServiceEligible == true){
+                        message = "You don't have access to FRED+ yet and will be redirected to 1ID homepage.\nFrom there, you can request access to FRED+ by clicking the \"Request New App\" button"; 
+                    }
+                    else{
+                        message = "You don't have access to FRED+ yet and will be redirected to 1ID homepage.\nYour account is not eligible for FRED+. If you think that it is a mistake, please copy and follow the link below";
+                        message += "\n\n" + $A.get("$Label.c.OneId_FRED_Troubleshooting_Link");
+                    }
+					alert(message);
+                }
+				helper.handleLogin(component, event);
+            });
+            $A.enqueueAction(action);       
+        }
+        else{
+            helper.handleLogin(component, event);
+        }
+    },
+    
     handleLogin: function (component, event) {
         console.log('helper handleLogin');
 

@@ -1,4 +1,20 @@
 ({
+
+	getUserInformation: function(cmp) {
+        var action = cmp.get("c.getUserInformation");
+        action.setParams({
+			"serviceName": cmp.get("v.serviceName")
+		});
+		action.setCallback(this, function(resp) {
+			var params = resp.getReturnValue();
+            console.log('ooo'+params);
+            cmp.set("v.isGuest", params.isGuest);
+            cmp.set("v.isServiceUser", params.isServiceUser);
+            cmp.set("v.isServiceEligible", params.isServiceEligible);
+        });
+		$A.enqueueAction(action);
+	},
+    
      openStep: function(cmp, step) {
          var section = 'section'+step;
         var sec = cmp.find(section);

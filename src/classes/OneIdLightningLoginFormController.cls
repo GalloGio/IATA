@@ -157,6 +157,11 @@ public without sharing class OneIdLightningLoginFormController {
     }
 
     @AuraEnabled
+    public static OneId_RegistrationProcessController.UserInformation getUserInformationFromEmail(String email, String serviceName){
+        return OneId_RegistrationProcessController.getUserInformationFromEmail(email, serviceName);
+    }
+
+    @AuraEnabled
     public static Boolean getFindLocation(Boolean saveLog, String ipAddress){           
         sanctionCountry = false;
         country = '';
