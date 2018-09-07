@@ -49,10 +49,10 @@
 					component.set("v.startUrl",'');
 					var message;
                     if(isServiceEligible == true){
-                        message = "You don't have access to FRED+ yet and will be redirected to 1ID homepage.\nFrom there, you can request access to FRED+ by clicking the \"Request New App\" button"; 
+                        message = $A.get("$Label.c.OneId_LoginUserWithoutFredAccessMessage");
                     }
                     else{
-                        message = "You don't have access to FRED+ yet and will be redirected to 1ID homepage.\nYour account is not eligible for FRED+. If you think that it is a mistake, please copy and follow the link below";
+                        message = $A.get("$Label.c.OneId_LoginUserNotEligibleForFredMessage");
                         message += "\n\n" + $A.get("$Label.c.OneId_FRED_Troubleshooting_Link");
                     }
 					alert(message);
@@ -68,7 +68,6 @@
     
     handleLogin: function (component, event) {
         console.log('helper handleLogin');
-
         //Get parameters
         var username = component.find("username").get("v.value");
         var password =  component.find("password").get("v.value");

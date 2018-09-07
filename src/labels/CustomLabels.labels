@@ -25462,6 +25462,32 @@ msgErrorRenewalOrderExpired:Your renewal notification order link is either  expi
         <value>Registration Process</value>
     </labels>
     <labels>
+        <fullName>OneId_EligibleExistingUserError</fullName>
+        <categories>OneId</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>OneId_EligibleExistingUserError</shortDescription>
+        <value>This Email is already registered with us.
+&lt;br/&gt;
+If you are an E-Commerce user, please use your E-Commerce credentials.
+&lt;br/&gt;
+If you are a Customer Portal user, please use your Customer Portal credentials.
+&lt;br/&gt;
+From 1ID homepage you will be able to request access to FRED+.
+&lt;br/&gt;
+Follow this &lt;a href=&quot;http://www.google.com&quot;&gt;link&lt;/a&gt; to proceed.</value>
+    </labels>
+    <labels>
+        <fullName>OneId_EligibleLoggedUserRegisteringError</fullName>
+        <categories>OneId</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>OneId_EligibleLoggedUserRegisteringError</shortDescription>
+        <value>You already have an active 1ID session opened. 
+&lt;br/&gt;
+To request access to FRED+ from 1ID homepage, please follow this &lt;a href=&quot;http://www.google.com&quot;&gt;link&lt;/a&gt;.</value>
+    </labels>
+    <labels>
         <fullName>OneId_EmailError</fullName>
         <language>en_US</language>
         <protected>false</protected>
@@ -25475,6 +25501,20 @@ msgErrorRenewalOrderExpired:Your renewal notification order link is either  expi
         <protected>false</protected>
         <shortDescription>OneId_Email_Header_Identity</shortDescription>
         <value>https://iata--csp1idsre--c.cs88.content.force.com/servlet/servlet.ImageServer?id=0159E000000MCzW&amp;oid=00D9E0000001L6b&amp;lastMod=1522143388000</value>
+    </labels>
+    <labels>
+        <fullName>OneId_ExistingUserWithFredAccessError</fullName>
+        <categories>OneId</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>OneId_ExistingUserWithFredAccessError</shortDescription>
+        <value>This Email is already registered with us and has access to FRED+.
+&lt;br/&gt;
+If you are an E-Commerce user, please use your E-Commerce credentials.
+&lt;br/&gt;
+If you are a Customer Portal user, please use your Customer Portal credentials.
+&lt;br/&gt;
+Follow this &lt;a href=&quot;http://www.google.com&quot;&gt;link&lt;/a&gt; to login.</value>
     </labels>
     <labels>
         <fullName>OneId_ForgotPassword</fullName>
@@ -25641,6 +25681,16 @@ msgErrorRenewalOrderExpired:Your renewal notification order link is either  expi
         <value>Job Function</value>
     </labels>
     <labels>
+        <fullName>OneId_LoggedUserWithServiceAccessRegisteringError</fullName>
+        <categories>OneId</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>OneId_LoggedUserWithServiceAccessRegisteringError</shortDescription>
+        <value>You already have an active 1ID  session opened and have access to FRED+.
+&lt;br/&gt;
+Please follow this &lt;a href=&quot;http://www.google.com&quot;&gt;link&lt;/a&gt; to log in FRED+.</value>
+    </labels>
+    <labels>
         <fullName>OneId_Login</fullName>
         <categories>OneId</categories>
         <language>en_US</language>
@@ -25655,6 +25705,24 @@ msgErrorRenewalOrderExpired:Your renewal notification order link is either  expi
         <protected>false</protected>
         <shortDescription>OneId_LoginFail</shortDescription>
         <value>Your login attempt has failed. Make sure the email and password are correct.</value>
+    </labels>
+    <labels>
+        <fullName>OneId_LoginUserNotEligibleForFredMessage</fullName>
+        <categories>OneId</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>OneId_LoginUserNotEligibleForFredMessage</shortDescription>
+        <value>You don&apos;t have access to FRED+ and will be redirected to 1ID homepage.
+Note that your account is not eligible for FRED+. If you think that it is a mistake, please copy and follow the link below.</value>
+    </labels>
+    <labels>
+        <fullName>OneId_LoginUserWithoutFredAccessMessage</fullName>
+        <categories>OneId</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>OneId_LoginUserWithoutFredAccessMessage</shortDescription>
+        <value>You don&apos;t have access to FRED+ yet and will be redirected to 1ID homepage.
+From there, you can request access to FRED+ by clicking the &quot;Request Access to a new Service&quot; button.</value>
     </labels>
     <labels>
         <fullName>OneId_My_available_applications</fullName>
