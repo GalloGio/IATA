@@ -372,6 +372,8 @@
                                     <apex:param name="isAddCompanyModal" assignTo="{!isAddCompanyModal}" value="true"/>
                                 </apex:actionFunction>
 
+                                <apex:actionFunction name="rerenderTreeArea" rerender="treeArea" />
+
                                 <apex:pageBlock id="step1Block" mode="edit">
                                     <div class="progress">
                                         <div class="progress-bar progress-bar" role="progressbar" aria-valuenow="20" aria-valuemin="0" aria-valuemax="100" style="width: 22%">
@@ -416,7 +418,7 @@
 
                                                         $j('#frmt').on("changed.jstree", function (e, data) {
                                                             //console.log('flag : ' + flag);
-                                                            if(data.selected.length == 1 && flag == 1 && '{!errorFound}' != 'true') {
+                                                            if(data.selected.length == 1 && flag == 1) {
                                                                 var iataCode = data.instance.get_node(data.selected[0]).text;
 
                                                                 $('[id$=currentIataCode]').val(iataCode);
@@ -523,9 +525,9 @@
 
                                                                     <div class="center" style="display:{!IF(currentAccount.status == 'UP','inline-block','none')}">
                                                                         <apex:commandButton styleclass="btn btn-default"
-                                                                            action="{!confirmUpdate}" onclick=""
+                                                                            action="{!confirmUpdate}" oncomplete="if(!{!errorFound}) {rerenderTreeArea();}"
                                                                             status="WaitingStatus"
-                                                                            reRender="treeArea, componentsArea, buttonsArea"
+                                                                            reRender="componentsArea, buttonsArea"
                                                                             value="{!$Label.ISSP_ANG_ANNUAL_REV_CONFIRM_UPD_BTN}"/>
 
                                                                         <apex:commandButton styleclass="btn btn-default"
