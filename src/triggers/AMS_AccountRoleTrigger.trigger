@@ -1,13 +1,33 @@
-trigger AMS_AccountRoleTrigger on AMS_Account_Role__c (before update, after update , before insert, after insert, after delete) {
+trigger AMS_AccountRoleTrigger on AMS_Account_Role__c (before update, after update , before insert, after insert, after delete, after undelete) {
 
    
 
 if(!AMS_TriggerExecutionManager.checkExecution(AMS_Account_Role__c.getSObjectType(), 'AMS_AccountRoleTrigger')) { return; }
 
-
-    //Delete Agency Owner created by AMS AccountRole
-    if(Trigger.isAfter && Trigger.isDelete) ams2gdp_TriggerHelper.crossDeleteAgencyOwners(Trigger.old);
-
+    /*** AMSU-171 ***/
+    if(Trigger.isAfter) {
+        if(Trigger.isInsert) {
+            //merge owners coming from AIMS. (AIMS sometimes split records that have long names)
+            AMS_AccountRoleHelper handler = new AMS_AccountRoleHelper();
+            handler.aimsOwnerMerge();
+            /*** AMSU-171 ***/
+            AMS_AccountRoleHelper.calculateCoveredOwnership(Trigger.new, null);
+        } else if(Trigger.isUpdate) {
+            //merge owners coming from AIMS. (AIMS sometimes split records that have long names)
+            AMS_AccountRoleHelper handler = new AMS_AccountRoleHelper();
+            handler.aimsOwnerMerge();
+            /*** AMSU-171 ***/
+            AMS_AccountRoleHelper.calculateCoveredOwnership(Trigger.new, Trigger.oldMap);
+        } else if(Trigger.isDelete) {
+    		//Delete Agency Owner created by AMS AccountRole
+            ams2gdp_TriggerHelper.crossDeleteAgencyOwners(Trigger.old);
+            /*** AMSU-171 ***/
+            AMS_AccountRoleHelper.calculateCoveredOwnership(Trigger.old, null);
+        } else { /*** After Undelete ***/
+            /*** AMSU-171 ***/
+            AMS_AccountRoleHelper.calculateCoveredOwnership(Trigger.new, null);
+        }
+    }
     
     if(Trigger.isBefore && (Trigger.isInsert || Trigger.isUpdate))
         for(AMS_Account_Role__c ar : Trigger.new){
@@ -42,12 +62,6 @@ if(!AMS_TriggerExecutionManager.checkExecution(AMS_Account_Role__c.getSObjectTyp
         // AMS_AccountRoleHelper handler = new AMS_AccountRoleHelper();
         // handler.verifyAccountRole(Trigger.new);
 
-    }
-
-    //merge owners coming from AIMS. (AIMS sometimes split records that have long names)
-    if(Trigger.isAfter && (Trigger.isInsert || trigger.isUpdate)){
-        AMS_AccountRoleHelper handler = new AMS_AccountRoleHelper();
-        handler.aimsOwnerMerge();
     }
 
 }

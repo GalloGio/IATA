@@ -7466,6 +7466,18 @@ V - Co-operative</inlineHelpText>
         <type>Checkbox</type>
     </fields>
     <fields>
+        <fullName>Covered_Ownership__c</fullName>
+        <description>The sum of percentage of all &quot;AMS Account Role&quot; with record type Ownership and &quot;Active&quot; = true</description>
+        <externalId>false</externalId>
+        <label>Covered Ownership</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>2</scale>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackHistory>false</trackHistory>
+        <type>Percent</type>
+    </fields>
+    <fields>
         <fullName>CurrencyIsoCode</fullName>
         <trackFeedHistory>false</trackFeedHistory>
         <trackHistory>false</trackHistory>
