@@ -64,7 +64,7 @@
         if(String.isNotBlank(bundleId)){
             Id recTypeId = OneIdProvisioningDAO.AppRecordTypesConfig.get('One_Id_Service_Provider_Config__c').get('Service_Bundle');
 
-            toReturn = [select id, Service_Provider_Name__c, Profile_Id__c, Terms_Custom_Label_1__c, Terms_Custom_Label_2__c, Terms_Custom_Label_3__c
+            toReturn = [select id, Service_Provider_Name__c, Profile_Id__c, Terms_Custom_Label_1__c, Terms_Custom_Label_2__c, Terms_Custom_Label_3__c, Additional_Terms_Custom_Labels__c
             from One_Id_Service_Provider_Config__c
             where id= :bundleId limit 1];
         }
@@ -97,8 +97,27 @@
         for(One_Id_Service_Provider_Config__c testBundle : bundlesAvailable){
             System.debug('testBundle ' + testBundle);
             if(!usrMap.containsKey(testBundle.id)){
-                toReturn.add(testBundle);
-            }
+                // Not all users can have access to FRED
+                if(testBundle.Service_Provider_Name__c == 'FRED'){
+                    Boolean isServiceEligible = false;
+                    User usr = [SELECT AccountId FROM User where Id =: UserInfo.getUserId()];
+                    Account acc = [SELECT RecordTypeId, fredp_aircraftoperator_eligibility__c, RecordType.DeveloperName FROM Account where Id =: usr.AccountId];
+            
+                    if((acc.RecordType.DeveloperName == 'IATA_Airline' ||  acc.RecordType.DeveloperName == 'Operator') && acc.fredp_aircraftoperator_eligibility__c){
+                        isServiceEligible = true;
+                    }
+                    else if(acc.RecordType.DeveloperName == 'ICAO_Member_State' || acc.RecordType.DeveloperName == 'Verifiers'){
+                        isServiceEligible = true;
+                    }
+                    
+                    if(isServiceEligible){
+                        toReturn.add(testBundle);
+                    }
+                }
+                else{
+                    toReturn.add(testBundle);
+                }
+			}
         }
         return toReturn;
 
