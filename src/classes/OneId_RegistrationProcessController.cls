@@ -35,6 +35,84 @@ public without sharing class OneId_RegistrationProcessController {
     }    
 
     @AuraEnabled
+    public static UserInformation getUserInformation(String serviceName){
+        UserInformation userInformation = new UserInformation();
+        Integer guestUser = [SELECT count() FROM User WHERE Name = 'identity Site Guest User' AND Id =: UserInfo.getUserId()];
+
+        userInformation.isGuest = guestUser > 0;
+
+		// This part has to be made generic, using the serviceName parameter
+        if(!userInformation.isGuest && serviceName == 'FRED'){
+            Integer fredAccess = [SELECT count() FROM PermissionSetAssignment WHERE AssigneeId =: UserInfo.getUserId() AND PermissionSet.Name = 'FRED_SSO'];
+            
+            userInformation.isServiceUser = fredAccess > 0;
+
+	        if(!userInformation.isServiceUser){
+                User usr = [SELECT Account.RecordTypeId, Account.fredp_aircraftoperator_eligibility__c, Account.RecordType.DeveloperName FROM User where Id =: UserInfo.getUserId()];
+        
+                if((usr.Account.RecordType.DeveloperName == 'IATA_Airline' ||  usr.Account.RecordType.DeveloperName == 'Operator') && usr.Account.fredp_aircraftoperator_eligibility__c){
+                    userInformation.isServiceEligible = true;
+                }
+                else if(usr.Account.RecordType.DeveloperName == 'ICAO_Member_State' || usr.Account.RecordType.DeveloperName == 'Verifiers'){
+                    userInformation.isServiceEligible = true;
+                }
+                else{
+                    userInformation.isServiceEligible = false;
+                }
+            }
+        }
+        return userInformation;
+    }
+
+    public class UserInformation {
+        @AuraEnabled
+        Boolean isGuest {get; set;}
+        @AuraEnabled
+        Boolean isEmailAddressAvailable {get; set;}
+        @AuraEnabled
+        Boolean isServiceUser {get; set;}
+        @AuraEnabled
+        Boolean isServiceEligible {get; set;}
+    }
+
+	@AuraEnabled
+    public static UserInformation getUserInformationFromEmail(String email, String serviceName) {
+        UserInformation userInformation = new UserInformation();
+		userInformation.isEmailAddressAvailable = checkIsUsernameIsAvailableInGlobalSalesforce(email);
+        
+        if(!userInformation.isEmailAddressAvailable){
+            // Retrieve existing user information
+            List<User> usrs = [SELECT Id, AccountId FROM User where Email =: email];
+            if(!usrs.isEmpty()){
+                User usr = usrs[0];
+                Account acc = [SELECT RecordTypeId, fredp_aircraftoperator_eligibility__c, RecordType.DeveloperName FROM Account WHERE Id =: usr.AccountId];
+    
+                // This part has to be made generic, using the serviceName parameter
+                if(serviceName == 'FRED'){
+                    Integer fredAccess = [SELECT count() FROM PermissionSetAssignment WHERE AssigneeId =: usr.Id AND PermissionSet.Name = 'FRED_SSO'];
+                    
+                    userInformation.isServiceUser = fredAccess > 0;
+                    
+                    if(!userInformation.isServiceUser){
+                        if((acc.RecordType.DeveloperName == 'IATA_Airline' ||  acc.RecordType.DeveloperName == 'Operator') && acc.fredp_aircraftoperator_eligibility__c){
+                            userInformation.isServiceEligible = true;
+                        }
+                        else if(acc.RecordType.DeveloperName == 'ICAO_Member_State' || acc.RecordType.DeveloperName == 'Verifiers'){
+                            userInformation.isServiceEligible = true;
+                        }
+                        else{
+                            userInformation.isServiceEligible = false;
+                        }
+                    }
+                }
+            }
+        }
+
+        return userInformation;            
+    }
+
+    
+    @AuraEnabled
     public static boolean checkIsUsernameIsAvailableInGlobalSalesforce(String email) {
         // Method to test if another user existin in all SF instances to avoid having an error at the end of the process
         Savepoint sp = Database.setSavepoint();

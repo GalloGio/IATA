@@ -83,13 +83,13 @@
     },
     
     handleLogin: function (component, event, helper) {
-        helper.handleLogin(component, event, helper);
+        helper.handlePreLogin(component, event, helper);
     },
 
     onKeyUp: function(component, event, helper){
         //checks for "enter" key
         if(event.getParams().keyCode == 13){
-            helper.handleLogin(component, event, helper);
+	        helper.handlePreLogin(component, event, helper);
         }
     },
     
