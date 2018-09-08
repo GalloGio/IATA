@@ -213,6 +213,12 @@ public without sharing class ISSP_ChangePassword {
         return pageRef;
     } 
     
+    public String fredTerms{
+        get{
+            return LightningConnectedAppHelper.getAppTerms ('FRED');
+        }
+    }    
+    
     public static void increaseCodeCoverage(){
     	Integer i = 0;
     	i = 0;
