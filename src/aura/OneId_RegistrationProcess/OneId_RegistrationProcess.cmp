@@ -45,12 +45,19 @@
                     	<li class="form-element__help">
 							<aura:if isTrue="{! v.isServiceUser}">
 	                            <aura:unescapedHTML value="{! $Label.c.OneId_LoggedUserWithServiceAccessRegisteringError}"/>
+                                <br/>
+                                <a href="{!'/' + $Label.c.OneId_Community_Name}">Home</a>
                                 
                                 <aura:set attribute="else">
                                     <aura:if isTrue="{! v.isServiceEligible}">
                                         <aura:unescapedHTML value="{! $Label.c.OneId_EligibleLoggedUserRegisteringError}"/>
+		                                <br/>
+		                                <a href="{!'/' + $Label.c.OneId_Community_Name}">Home</a>
+
                                         <aura:set attribute="else">
 	                                        <aura:unescapedHTML value="{! $Label.c.OneId_UneligibleLoggedUserRegisteringError}"/>
+		                                    <br/>
+		                                    <a href="{! $Label.c.OneId_FRED_Troubleshooting_Link}" target="_blank">{! $Label.c.OneId_FRED_Troubleshooting_Link}</a>
                                         </aura:set>
                                     </aura:if>                                
                                 </aura:set>

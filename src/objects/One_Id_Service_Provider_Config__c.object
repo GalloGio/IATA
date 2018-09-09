@@ -158,6 +158,16 @@
         <type>Checkbox</type>
     </fields>
     <fields>
+        <fullName>Is_Role_Selectable__c</fullName>
+        <defaultValue>true</defaultValue>
+        <description>Determines if a user requesting access to the service can select his role</description>
+        <externalId>false</externalId>
+        <label>Is Role Selectable</label>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
         <fullName>License_Upgrade_Required__c</fullName>
         <defaultValue>false</defaultValue>
         <externalId>false</externalId>

@@ -25769,9 +25769,7 @@ If you are an E-Commerce user, please use your E-Commerce credentials.
 &lt;br/&gt;
 If you are a Customer Portal user, please use your Customer Portal credentials.
 &lt;br/&gt;
-From 1ID homepage you will be able to request access to FRED+.
-&lt;br/&gt;
-Follow this &lt;a href=&quot;http://www.google.com&quot;&gt;link&lt;/a&gt; to proceed.</value>
+Please follow the link below to login. From 1ID homepage, you will be able to request access to FRED+.</value>
     </labels>
     <labels>
         <fullName>OneId_EligibleLoggedUserRegisteringError</fullName>
@@ -25779,9 +25777,9 @@ Follow this &lt;a href=&quot;http://www.google.com&quot;&gt;link&lt;/a&gt; to pr
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>OneId_EligibleLoggedUserRegisteringError</shortDescription>
-        <value>You already have an active 1ID session opened. 
+        <value>You already have an active 1ID session opened.
 &lt;br/&gt;
-To request access to FRED+ from 1ID homepage, please follow this &lt;a href=&quot;http://www.google.com&quot;&gt;link&lt;/a&gt;.</value>
+Please follow the link below to access 1ID homepage. From there, you will be able to request access to FRED+.</value>
     </labels>
     <labels>
         <fullName>OneId_EmailError</fullName>
@@ -25810,7 +25808,7 @@ If you are an E-Commerce user, please use your E-Commerce credentials.
 &lt;br/&gt;
 If you are a Customer Portal user, please use your Customer Portal credentials.
 &lt;br/&gt;
-Follow this &lt;a href=&quot;http://www.google.com&quot;&gt;link&lt;/a&gt; to login.</value>
+Please follow the link below to login. From 1ID homepage, click the FRED+ Service in &quot;My available services&quot; section to access FRED+ system.</value>
     </labels>
     <labels>
         <fullName>OneId_FRED_ContactUs_Link</fullName>
@@ -26008,7 +26006,7 @@ Follow this &lt;a href=&quot;http://www.google.com&quot;&gt;link&lt;/a&gt; to lo
         <shortDescription>OneId_LoggedUserWithServiceAccessRegisteringError</shortDescription>
         <value>You already have an active 1ID  session opened and have access to FRED+.
 &lt;br/&gt;
-Please follow this &lt;a href=&quot;http://www.google.com&quot;&gt;link&lt;/a&gt; to log in FRED+.</value>
+Please follow the link below to access 1ID homepage. From there, click the FRED+ Service in &quot;My available services&quot; section to access FRED+ system.</value>
     </labels>
     <labels>
         <fullName>OneId_Login</fullName>
@@ -26407,7 +26405,7 @@ If you want to reset your password, go back to login screen and use &quot;forgot
         <shortDescription>OneId_UneligibleExistingUserError</shortDescription>
         <value>This Email is already registered with us, but the related user is not eligible for FRED+.
 &lt;br/&gt;
-If you believe that it&apos;s a mistake, please follow this &lt;a href=&quot;http://www.google.com&quot;&gt;link&lt;/a&gt; to contact us.</value>
+If you believe that it is a mistake, please follow the link below to contact us.</value>
     </labels>
     <labels>
         <fullName>OneId_UneligibleLoggedUserRegisteringError</fullName>
@@ -26419,7 +26417,7 @@ If you believe that it&apos;s a mistake, please follow this &lt;a href=&quot;htt
 &lt;br/&gt;
 Note that your user is not eligible for FRED+ access.
 &lt;br/&gt;
-If you believe that it&apos;s a mistake, please follow this &lt;a href=&quot;http://www.google.com&quot;&gt;link&lt;/a&gt; to contact us.</value>
+If you believe that it is a mistake, please follow the link below to contact us.</value>
     </labels>
     <labels>
         <fullName>OneId_URL_javaScript</fullName>
