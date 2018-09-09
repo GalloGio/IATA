@@ -83,7 +83,7 @@
         List<One_Id_User_Applications__c> userAppsList = [select One_Id_App_Bundle__c, id, Application__c,One_Id_Service_Provider_Config__c, User_Provisioning_Request__c from One_Id_User_Applications__c
         where Identity_User__c = :UserInfo.getUserId() and Provisioning_Status__c <> 'Deleted' order by createdDate limit 100];
 
-        bundlesAvailable = [select id, Service_Provider_Name__c,Description__c,App_Picture_Url__c, License_Upgrade_Required__c, Profile_Id__c
+        bundlesAvailable = [select id, Service_Provider_Name__c,Description__c,App_Picture_Url__c, License_Upgrade_Required__c, Profile_Id__c, Is_Role_Selectable__c
         from One_Id_Service_Provider_Config__c where Is_Active__c = true and Portal_Visible__c = true
         and RecordTypeid = :recTypeId order by createdDate desc limit 500];
 
@@ -192,6 +192,24 @@
         return toReturn;
 
     }
+
+
+    public static List<One_Id_Service_Provider_Config__c> getAppRoleSelectibilityForAppPicker(String bundleName){
+        List<One_Id_Service_Provider_Config__c> toReturn = new List<One_Id_Service_Provider_Config__c>();
+
+        if(String.isNotBlank(bundleName)) {
+
+            Id recTypeId = OneIdProvisioningDAO.AppRecordTypesConfig.get('One_Id_Service_Provider_Config__c').get(
+                'Service_Bundle');
+
+            toReturn = [select id, Is_Role_Selectable__c
+            from One_Id_Service_Provider_Config__c where Is_Active__c = true and Portal_Visible__c = true
+            and RecordTypeid = :recTypeId and Service_Provider_Name__c = :bundleName limit 1];
+        }
+
+        return toReturn;
+    }     
+     
     public static List<One_Id_App_Config_Detail__c> getAppPermissionSetListForAppicker(String bundleName){
 
 
