@@ -85,6 +85,13 @@ global class ANG_OscarProcessHelper {
 			updater.acctMap.put(theAccount.Id,theAccount);
 			updater.onlineAMap.put(theAccreditation.Id,theAccreditation);
 
+			/*** AMSU-162 ***/
+			if(AMS_Utils.AMS_ProcessesAddressToValidate.contains(oscar.Process__c) && !isShippingAddressValid(theAccreditation)) {
+				isIATACodeGenerationRunning = false;
+				System.debug('[ANG_OscarProcessHelper] Incomplete shipping address.');
+				return new String[]{'-1','Incomplete shipping address.','-1'};
+			}
+
             if(theAccount.CNS_Agency__c == false && oscar.STEP6__c != AMS_Utils.PASSED && SanityCheckVerificationProcesses.contains(oscar.Process__c)) {
 				isIATACodeGenerationRunning = false;
 				System.debug('[ANG_OscarProcessHelper] In order to generate a IATA code you must first pass the Sanity Check.');
@@ -318,6 +325,26 @@ global class ANG_OscarProcessHelper {
 
 		return new String[]{'0',returnMessage,dueDiligence ? '0' : '-1',caseId};
 
+	}
+
+	/*** AMSU-162 ***/
+	public static Boolean isShippingAddressValid(AMS_Pax_Accreditation_Form__c accreditation) {
+		String street = accreditation.Shipping_Street__c; 
+        String city = accreditation.Shipping_City__c;
+        String state = accreditation.Shipping_State__c;
+        String zipCode = accreditation.Shipping_Postal_Code__c;
+        Id isoState = accreditation.Shipping_ISO_State__c;
+        Id isoCountry = accreditation.Shipping_ISO_Country__c;
+
+        if(String.isBlank(street) && String.isBlank(city) && String.isBlank(state) && String.isBlank(zipCode) && isoState == null && isoCountry == null) {
+            return true;
+        }
+
+        if(!String.isBlank(street) && !String.isBlank(city) && !String.isBlank(isoState) && !String.isBlank(isoCountry)) {
+            return true;
+        }
+
+		return false;
 	}
 
 	public static void updateUpdater(EntityUpdater updater){
