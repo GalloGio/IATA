@@ -45,8 +45,12 @@
 
             // If primary user logged or invitation => Set user type and disable the field
             if(! params.isGuest || params.isInvitation) {
-                cmp.set("v.customerType", partnerAccount.RecordType.Name);
-                var opts = [{ class: "uiInputSelectOption", label:partnerAccount.RecordType.Name, value: partnerAccount.RecordType.Name, selected: "true" }];
+            	var accountType = partnerAccount.RecordType.Name;
+            	if(accountType == 'Airline Headquarters' || accountType == 'Operator'){
+            		accountType = 'Aircraft Operator';
+            	}
+                cmp.set("v.customerType", accountType);
+                var opts = [{ class: "uiInputSelectOption", label:accountType, value: accountType, selected: "true" }];
                 cmp.find("typeOfCustomer").set("v.options", opts);
                 
                  // Set input with selected value
