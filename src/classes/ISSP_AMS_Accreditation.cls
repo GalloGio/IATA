@@ -1310,7 +1310,7 @@ public without sharing class ISSP_AMS_Accreditation {
             List<Case> cases = [SELECT Id, CaseNumber 
                                 FROM Case 
                                 WHERE (AccountId = :hqAccount.Id OR ContactId = :cse.ContactId) AND Reason1__c = 'New HO' AND 
-                                    (IsClosed = false OR Owner.Name LIKE '%Recycle%') AND 
+                                    (IsClosed = false AND (NOT Owner.Name LIKE '%Recycle%')) AND 
                                     Type_of_customer__c = :cse.Type_of_customer__c  LIMIT 1];
 
             if(!cases.isEmpty()) {
