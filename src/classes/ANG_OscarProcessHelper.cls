@@ -1451,8 +1451,12 @@ global class ANG_OscarProcessHelper {
 				.replace('#ACCOUNTNAME', acct.Name)
 				.replace('#TODAY30',String.valueOf(Datetime.now().addDays(30).format('MM/dd/yyyy')))
 				.replace('#CASENUMBER',acctIdCasesMap.get(contactAccts.get(nt.Contact__c)).CaseNumber);
-				
-				notifications.add(nt);
+
+			nt.Subject__c = nt.Subject__c
+				.replace('#IATACODE', acct.IataCode__c)
+				.replace('#ACCOUNTNAME', acct.Name);
+
+			notifications.add(nt);
     	}		
 
 		if(!notifications.isEmpty()) insert notifications;
@@ -1574,8 +1578,12 @@ global class ANG_OscarProcessHelper {
 			nt.Message__c = nt.Message__c
 				.replace('#CONTACTNAME',contacts.get(nt.Contact__c).Name)
 				.replace('#IATACODE',contacts.get(nt.Contact__c).Account.IataCode__c)
-				.replace('#ACCOUNTNAME', acct.Name)
+				.replace('#ACCOUNTNAME', contacts.get(nt.Contact__c).Account.Name)
 				.replace('#DEADLINEDATE',String.valueOf(Datetime.now().addDays(15).format('MM/dd/yyyy')));
+
+			nt.Subject__c = nt.Subject__c
+				.replace('#IATACODE', contacts.get(nt.Contact__c).Account.IataCode__c)
+				.replace('#ACCOUNTNAME',contacts.get(nt.Contact__c).Account.Name);
 		}
 
 		if (!notifications.isEmpty())
