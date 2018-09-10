@@ -814,28 +814,28 @@ public without sharing class AMS_MigrationToolHelper {
 
 			
 			update caseToProcess;
-		}
-
-		ID caseOwnerId = [SELECT OwnerId FROM CASE WHERE ID = :caseToProcess.ID].OwnerId;
-
-		AMS_OSCAR__c oscar = new AMS_OSCAR__c( 
-			Process__c = processType, RecordTypeId =oscarRTId, Status__c = caseToProcess.Status, OwnerId = caseToProcess.OwnerId,		
-			Account__c = caseToProcess.AccountId
-		);
-
-		if(processType.equalsIgnoreCase('ANG.FS.OPTINOUT')){
-
-        	oscar.ANG_FA_Opt_out__c = caseToProcess.Account.ANG_FA_Opt_out__c == true ? 'Opt-In' : 'Opt-Out';
-    	}
 		
-		insert oscar;
+			ID caseOwnerId = [SELECT OwnerId FROM CASE WHERE ID = :caseToProcess.ID].OwnerId;
 
-		oscarId = oscar.Id;
+			AMS_OSCAR__c oscar = new AMS_OSCAR__c( 
+				Process__c = processType, RecordTypeId =oscarRTId, Status__c = caseToProcess.Status, OwnerId = caseOwnerId,		
+				Account__c = caseToProcess.AccountId
+			);
 
-		caseToProcess.OSCAR__c = oscar.Id;
+			if(processType.equalsIgnoreCase('ANG.FS.OPTINOUT')){
 
-		update caseToProcess;
+	        	oscar.ANG_FA_Opt_out__c = caseToProcess.Account.ANG_FA_Opt_out__c == true ? 'Opt-In' : 'Opt-Out';
+	    	}
+			
+			insert oscar;
 
+			oscarId = oscar.Id;
+
+			caseToProcess.OSCAR__c = oscar.Id;
+
+			update caseToProcess;
+		}
+		
 		AMS_OSCAR__c oscarUpdated = postOscarUpdate(oscarId,caseToProcess.CaseNumber, caseToProcess.AccountId, false,caseStatus,caseToProcess);
 
         if(oscarUpdated == null){
