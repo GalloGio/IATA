@@ -2808,6 +2808,15 @@ public class AMS_OSCARTriggerHandler {
                         }
                     }
                 }
+
+                /*** AMSU-166 ***/
+                if(oscar.Process__c == AMS_Utils.COR || oscar.Process__c == AMS_Utils.AGENCYCHANGES) {
+                    allOnlineAccr = allOnlineAccr == null ? getAllAccreditations(oscars) : allOnlineAccr;
+                    List<String> errorMessages = AMS_Utils.validateCharacters(allOnlineAccr.get(oscar.AMS_Online_Accreditation__c), AMS_Utils.STAGING_AREA_FIELDS_TO_VALIDATE);
+                    if(!errorMessages.isEmpty()) {
+                        oscar.addError(String.join(errorMessages, '\n'));
+                    }
+                }
                 
                 /*** AMSU-121 Start ***/
                 Boolean isNewAccreditaion = AMS_Utils.AMS_ProcessesAddressToValidate.contains(oscar.Process__c);
