@@ -2651,7 +2651,7 @@ Default,Default withdrawal,Review,Review withdrawal,Irregularity,Termination,Irr
         <protected>false</protected>
         <shortDescription>CaseTypeRecordTypeList</shortDescription>
         <value>CasesMENA,CasesAmericas,Cases_China_North_Asia,ExternalCasesIDFSglobal,CasesEurope,External_Cases_ACCA,ComplaintIDFS</value>
-    </labels>
+    </labels> 
     <labels>
         <fullName>CaseValidation_Area</fullName>
         <language>en_US</language>
@@ -5191,7 +5191,7 @@ Please, if it&apos;s the first time you are applying for an ID Card, confirm tha
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>IDCard_ITDICourse</shortDescription>
-        <value>ITDI Course (Optional)</value>
+        <value>IATA Training Courses (Optional)</value> 
     </labels>
     <labels>
         <fullName>IDCard_ITDICourses</fullName>
@@ -6762,14 +6762,14 @@ Your ID Card application manager has been informed of your request.</value>
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>ID Card Package Travel Professionals 1</shortDescription>
-        <value>Take advantage of the reduced price for any two of the following IATA Training courses. The price will be added to the Fees below. Upon approval of your ID Card application, you will be contacted by IATA Training for access to the selected courses.</value>
+        <value>Take advantage of the reduced price for any two of the following IATA Training courses. &lt;u&gt; The price will be added to the Fees below &lt;/u&gt;. Upon approval of your ID Card application, you will be contacted by IATA Training for access to the selected courses.</value>
     </labels>
     <labels>
         <fullName>ID_Card_Package_Travel_Professionals_2</fullName>
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>ID Card Package Travel Professionals 2</shortDescription>
-        <value>please select your courses here:</value>
+        <value>&lt;span style="margin:3px;"&gt; Please select your courses here:&lt;/span&gt;</value>
     </labels>
     <labels>
         <fullName>ID_Card_Photo_Disclaimer</fullName>
