@@ -150,7 +150,14 @@
                         <div class="slds-text-heading--large">{!$Label.c.issp_apppicker_request_new_application}</div>
                     <div aura:id="requestSent" class="requestSent">
                             <h2>{!$Label.c.OneId_Your_request_has_been_successfully_sent}</h2>
-                            <p>{!$Label.c.OneId_Thank_you_for_requesting_access_to_our_service}</p>
+							<aura:if isTrue="{! v.activeApp == 'FRED'}">
+	                            <p>{!$Label.c.OneId_Thank_you_Fred_Access_Request}</p>
+							
+								<aura:set attribute="else">
+		                            <p>{!$Label.c.OneId_Thank_you_for_requesting_access_to_our_service}</p>
+								</aura:set>
+							</aura:if>
+
                             <div class="barButton">
                                 <button class="sfdc_button uiButton" aria-live="off" type="button" data-aura-class="uiButton--default uiButton" onclick="{!c.closeRequest}"><span class="label bBody truncate" dir="ltr" alternativeText="{!$Label.c.ISSP_Submit}">Close</span></button>
                             </div>

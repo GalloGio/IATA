@@ -15,11 +15,6 @@
             helper.getAppRoleSelectibility(component);
 		});
     	$A.enqueueAction(action);
-
-
-		});
-    	$A.enqueueAction(action);
-
 	},
 	handleClick : function(component, event, helper) {
 		console.log('clicked');
@@ -132,7 +127,7 @@
 					var results = a.getReturnValue();
                     
                     if(results == ''){
-						alert('max reached');
+						alert($A.get("$Label.c.OneId_Max_Account_Reached2") + '\n' + $A.get("$Label.c.OneId_FRED_Troubleshooting_Link"));
                     }
                     else{
                         component.set("v.selectedRole", results);

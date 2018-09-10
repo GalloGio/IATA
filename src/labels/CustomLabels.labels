@@ -26367,6 +26367,14 @@ If you want to reset your password, go back to login screen and use &quot;forgot
         <value>http://www.iata.org/</value>
     </labels>
     <labels>
+        <fullName>OneId_Thank_you_Fred_Access_Request</fullName>
+        <categories>OneId</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>OneId_Thank_you_Fred_Access_Request</shortDescription>
+        <value>Thank you for requesting access to our service. You will be informed by email shortly about the status of your request.</value>
+    </labels>
+    <labels>
         <fullName>OneId_Thank_you_for_requesting_access_to_our_service</fullName>
         <categories>Oneid</categories>
         <language>en_US</language>
