@@ -35,13 +35,17 @@ global class ANG_ActivatePortalUsersBatch implements Database.Batchable<sObject>
             string userType = ISSP_Utilities.getContactTypeById(conId);
             string profileName = ISSP_Constant.profilNameByUserTypeMap.get('Admin').get(userType);
             string profileId = ISSP_Constant.profileIdByProfileNameMap.get(profileName);
-            List <Contact> conList = [SELECT Id, Status__c FROM Contact WHERE Id = :conId];
+            List <Contact> conList = [SELECT Id, Status__c, Community__c FROM Contact WHERE Id = :conId];
             if (!conList.isEmpty()){
                 try{
-                    conList[0].Status__c = 'Active';
-                    conList[0].Email = currentEmail;
-                    conList[0].User_Portal_Status__c = 'Approved Admin';
-                    update conList[0];
+                    Contact contactToUpdate = conList[0];
+                    if(String.isBlank(contactToUpdate.Community__c)) {/*** AMSU-163 in case of empty community set as ISSP ***/
+                        contactToUpdate.Community__c = 'ISSP';
+                    }
+                    contactToUpdate.Status__c = 'Active';
+                    contactToUpdate.Email = currentEmail;
+                    contactToUpdate.User_Portal_Status__c = 'Approved Admin';
+                    update contactToUpdate;
                 }
                 catch(Exception e){
                     system.debug('ERROR: ' + e.getMessage());
@@ -50,7 +54,7 @@ global class ANG_ActivatePortalUsersBatch implements Database.Batchable<sObject>
                 
                 List <User> userList = [select Id, ContactId, UserType from User where ContactId = :conId AND UserType = 'PowerPartner'];
                 if (!userList.isEmpty()){
-                    ISSP_PortalUserStatusChange.updateUser(conId, true, currentEmail, profileId, '');
+                    ISSP_PortalUserStatusChange.updateUserSync(conId, true, currentEmail, profileId, ''); /*** AMSU-163 changed to be synchronous ***/
                     //ISSP_HierarchyAccountTeamAccounts.HierarchyAccountTeamMemberAccounts(new Set<Id>{userList[0].Id});
                 }
                 else{

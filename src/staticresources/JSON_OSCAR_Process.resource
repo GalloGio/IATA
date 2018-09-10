@@ -416,6 +416,7 @@
                   "Update_AIMS_Rejection__c",
                   "Close_IFAP_Rejection__c",
                   "Cancel_Inspection_Requests_Rejection__c",
+                  "AMS_Rejection_Withdrawal_remarks__c",
                   "STEP18__c"
                 ],
                 "IsDependent": false
@@ -432,14 +433,7 @@
                 "Automations": [
                   {
                     "Status": "Passed",
-                    "ClassName": "AMS_OSCAR_Automation.AMS_OSCAR_Step4_succeeded",
-                    "ChangeCode": {
-                      "Name": "NWD",
-                      "ReasonCode": "11",
-                      "MemoText": "New application withdrawn",
-                      "ReasonDesc": "APPLICATION WITHDRAWN",
-                      "Status": "1"
-                    }
+                    "ClassName": "AMS_OSCAR_Automation.AMS_OSCAR_Step4_succeeded"
                   },
                   {
                     "Status": "Failed",
@@ -470,14 +464,7 @@
                 "Automations": [
                   {
                     "Status": "Passed",
-                    "ClassName": "AMS_OSCAR_Automation.AMS_OSCAR_Step5_succeeded",
-                    "ChangeCode": {
-                      "Name": "REC",
-                      "ReasonCode": "22",
-                      "MemoText": "New application - Head Office reconsidered",
-                      "ReasonDesc": "APPLICATION BEING RECONSIDERED",
-                      "Status": "2"
-                    }
+                    "ClassName": "AMS_OSCAR_Automation.AMS_OSCAR_Step5_succeeded"
                   },
                   {
                     "Status": "Failed",
@@ -896,14 +883,7 @@
                 "Automations": [
                   {
                     "Status": "Passed",
-                    "ClassName": "AMS_OSCAR_Automation.AMS_OSCAR_Step4_succeeded",
-                    "ChangeCode": {
-                      "Name": "NWD",
-                      "ReasonCode": "11",
-                      "MemoText": "New application - Branch withdrawn",
-                      "ReasonDesc": "APPLICATION WITHDRAWN",
-                      "Status": "1"
-                    }
+                    "ClassName": "AMS_OSCAR_Automation.AMS_OSCAR_Step4_succeeded"
                   },
                   {
                     "Status": "Failed",
@@ -934,14 +914,7 @@
                 "Automations": [
                   {
                     "Status": "Passed",
-                    "ClassName": "AMS_OSCAR_Automation.AMS_OSCAR_Step5_succeeded",
-                    "ChangeCode": {
-                      "Name": "REC",
-                      "ReasonCode": "22",
-                      "MemoText": "New application - Branch reconsidered",
-                      "ReasonDesc": "APPLICATION BEING RECONSIDERED",
-                      "Status": "2"
-                    }
+                    "ClassName": "AMS_OSCAR_Automation.AMS_OSCAR_Step5_succeeded"
                   },
                   {
                     "Status": "Failed",
@@ -1601,6 +1574,8 @@
                   }
                 ],
                 "DisplayFields": [
+                  "Is_PCI_compliant__c",
+                  "ANG_PCI_compliance_expiry_date__c",
                   "STEP6__c"
                 ],
                 "IsDependent": false
@@ -2009,14 +1984,7 @@
                 "Automations": [
                   {
                     "Status": "Passed",
-                    "ClassName": "AMS_OSCAR_Automation.AMS_OSCAR_Step4_succeeded",
-                    "ChangeCode": {
-                      "Name": "NWD",
-                      "ReasonCode": "11",
-                      "MemoText": "New application withdrawn",
-                      "ReasonDesc": "APPLICATION WITHDRAWN",
-                      "Status": "1"
-                    }
+                    "ClassName": "AMS_OSCAR_Automation.AMS_OSCAR_Step4_succeeded"
                   },
                   {
                     "Status": "Failed",
@@ -2047,14 +2015,7 @@
                 "Automations": [
                   {
                     "Status": "Passed",
-                    "ClassName": "AMS_OSCAR_Automation.AMS_OSCAR_Step5_succeeded",
-                    "ChangeCode": {
-                      "Name": "REC",
-                      "ReasonCode": "22",
-                      "MemoText": "New application - Head Office reconsidered",
-                      "ReasonDesc": "APPLICATION BEING RECONSIDERED",
-                      "Status": "2"
-                    }
+                    "ClassName": "AMS_OSCAR_Automation.AMS_OSCAR_Step5_succeeded"
                   },
                   {
                     "Status": "Failed",
@@ -3675,14 +3636,7 @@
                 "Automations": [
                   {
                     "Status": "Passed",
-                    "ClassName": "AMS_OSCAR_Automation.AMS_OSCAR_Step4_succeeded",
-                    "ChangeCode": {
-                      "Name": "NWD",
-                      "ReasonCode": "11",
-                      "MemoText": "New application - SA withdrawn",
-                      "ReasonDesc": "APPLICATION WITHDRAWN",
-                      "Status": "1"
-                    }
+                    "ClassName": "AMS_OSCAR_Automation.AMS_OSCAR_Step4_succeeded"
                   },
                   {
                     "Status": "Failed",
@@ -3713,14 +3667,7 @@
                 "Automations": [
                   {
                     "Status": "Passed",
-                    "ClassName": "AMS_OSCAR_Automation.AMS_OSCAR_Step5_succeeded",
-                    "ChangeCode": {
-                      "Name": "REC",
-                      "ReasonCode": "22",
-                      "MemoText": "New application - SA reconsidered",
-                      "ReasonDesc": "APPLICATION BEING RECONSIDERED",
-                      "Status": "2"
-                    }
+                    "ClassName": "AMS_OSCAR_Automation.AMS_OSCAR_Step5_succeeded"
                   },
                   {
                     "Status": "Failed",
@@ -4469,14 +4416,7 @@
                 "Automations": [
                   {
                     "Status": "Passed",
-                    "ClassName": "AMS_OSCAR_Automation.AMS_OSCAR_Step4_succeeded",
-                    "ChangeCode": {
-                      "Name": "NWD",
-                      "ReasonCode": "11",
-                      "MemoText": "New application withdrawn",
-                      "ReasonDesc": "APPLICATION WITHDRAWN",
-                      "Status": "1"
-                    }
+                    "ClassName": "AMS_OSCAR_Automation.AMS_OSCAR_Step4_succeeded"
                   },
                   {
                     "Status": "Failed",
@@ -4507,14 +4447,7 @@
                 "Automations": [
                   {
                     "Status": "Passed",
-                    "ClassName": "AMS_OSCAR_Automation.AMS_OSCAR_Step5_succeeded",
-                    "ChangeCode": {
-                      "Name": "REC",
-                      "ReasonCode": "22",
-                      "MemoText": "New application - Head Entity reconsidered",
-                      "ReasonDesc": "APPLICATION BEING RECONSIDERED",
-                      "Status": "2"
-                    }
+                    "ClassName": "AMS_OSCAR_Automation.AMS_OSCAR_Step5_succeeded"
                   },
                   {
                     "Status": "Failed",
@@ -4988,14 +4921,7 @@
                 "Automations": [
                   {
                     "Status": "Passed",
-                    "ClassName": "AMS_OSCAR_Automation.AMS_OSCAR_Step4_succeeded",
-                    "ChangeCode": {
-                      "Name": "NWD",
-                      "ReasonCode": "11",
-                      "MemoText": "New application withdrawn",
-                      "ReasonDesc": "APPLICATION WITHDRAWN",
-                      "Status": "1"
-                    }
+                    "ClassName": "AMS_OSCAR_Automation.AMS_OSCAR_Step4_succeeded"
                   },
                   {
                     "Status": "Failed",
@@ -5026,14 +4952,7 @@
                 "Automations": [
                   {
                     "Status": "Passed",
-                    "ClassName": "AMS_OSCAR_Automation.AMS_OSCAR_Step5_succeeded",
-                    "ChangeCode": {
-                      "Name": "REC",
-                      "ReasonCode": "22",
-                      "MemoText": "New application - Head Entity reconsidered",
-                      "ReasonDesc": "APPLICATION BEING RECONSIDERED",
-                      "Status": "2"
-                    }
+                    "ClassName": "AMS_OSCAR_Automation.AMS_OSCAR_Step5_succeeded"
                   },
                   {
                     "Status": "Failed",
@@ -5369,14 +5288,7 @@
                 "Automations": [
                   {
                     "Status": "Passed",
-                    "ClassName": "AMS_OSCAR_Automation.AMS_OSCAR_Step4_succeeded",
-                    "ChangeCode": {
-                      "Name": "NWD",
-                      "ReasonCode": "11",
-                      "MemoText": "New application withdrawn",
-                      "ReasonDesc": "APPLICATION WITHDRAWN",
-                      "Status": "1"
-                    }
+                    "ClassName": "AMS_OSCAR_Automation.AMS_OSCAR_Step4_succeeded"
                   },
                   {
                     "Status": "Failed",
@@ -5406,14 +5318,7 @@
                 "Automations": [
                   {
                     "Status": "Passed",
-                    "ClassName": "AMS_OSCAR_Automation.AMS_OSCAR_Step5_succeeded",
-                    "ChangeCode": {
-                      "Name": "REC",
-                      "ReasonCode": "22",
-                      "MemoText": "New application - Associate Entity reconsidered",
-                      "ReasonDesc": "APPLICATION BEING RECONSIDERED",
-                      "Status": "2"
-                    }
+                    "ClassName": "AMS_OSCAR_Automation.AMS_OSCAR_Step5_succeeded"
                   },
                   {
                     "Status": "Failed",

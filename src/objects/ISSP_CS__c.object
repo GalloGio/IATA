@@ -17,6 +17,8 @@
         <fullName>All_Fields</fullName>
         <columns>NAME</columns>
         <columns>Value__c</columns>
+        <columns>LAST_UPDATE</columns>
+        <columns>UPDATEDBY_USER</columns>
         <filterScope>Everything</filterScope>
         <label>All Fields</label>
         <language>en_US</language>

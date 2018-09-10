@@ -798,6 +798,16 @@
         <template>AP_notification/IAPP_Notification_of_new_docs_received</template>
     </alerts>
     <alerts>
+        <fullName>IATA_iiNet_Service_Now</fullName>
+        <ccEmails>iata@service-now.com</ccEmails>
+        <ccEmails>iinetCare@iata.org</ccEmails>
+        <description>IATA iiNet Service Now</description>
+        <protected>false</protected>
+        <senderAddress>noreply@iata.org</senderAddress>
+        <senderType>OrgWideEmailAddress</senderType>
+        <template>IATA_iiNet/IATA_iiNet_Create_Service_Now_Incident</template>
+    </alerts>
+    <alerts>
         <fullName>ICCS_Contact_Notification_case_open_for_15_days</fullName>
         <description>ICCS Contact Notification case open for 15 days</description>
         <protected>false</protected>
@@ -1352,10 +1362,6 @@
         </recipients>
         <recipients>
             <recipient>rabahh@iata.org</recipient>
-            <type>user</type>
-        </recipients>
-        <recipients>
-            <recipient>rajputf@iata.org</recipient>
             <type>user</type>
         </recipients>
         <recipients>
@@ -2868,10 +2874,6 @@
             <type>user</type>
         </recipients>
         <recipients>
-            <recipient>rajputf@iata.org</recipient>
-            <type>user</type>
-        </recipients>
-        <recipients>
             <recipient>sadiqs@iata.org</recipient>
             <type>user</type>
         </recipients>
@@ -2997,10 +2999,6 @@
         </recipients>
         <recipients>
             <recipient>rabahh@iata.org</recipient>
-            <type>user</type>
-        </recipients>
-        <recipients>
-            <recipient>rajputf@iata.org</recipient>
             <type>user</type>
         </recipients>
         <recipients>
@@ -4926,6 +4924,16 @@
         <protected>false</protected>
     </fieldUpdates>
     <fieldUpdates>
+        <fullName>Check</fullName>
+        <description>For R&amp;S to confirm that all up-to-date outstanding amounts are paid using the case field &quot;Confirm ALL Outs. Amounts Paid&quot;.</description>
+        <field>R_S_feedback_pending__c</field>
+        <literalValue>Confirm outs. amounts</literalValue>
+        <name>SIDRA R&amp;S - Confirm ALL outs. amounts</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>Literal</operation>
+        <protected>false</protected>
+    </fieldUpdates>
+    <fieldUpdates>
         <fullName>Chg_owner_to_Airline_Suspension_Head</fullName>
         <description>change the case owner to Airline Suspension - Head if the outstanding amount &gt; USD1000</description>
         <field>OwnerId</field>
@@ -4945,6 +4953,15 @@
         <name>Chg owner to Fraction (&lt;1USD) Closed</name>
         <notifyAssignee>false</notifyAssignee>
         <operation>LookupValue</operation>
+        <protected>false</protected>
+    </fieldUpdates>
+    <fieldUpdates>
+        <fullName>Clear_interaction_date</fullName>
+        <description>clear interaction date when clearing the new interaction</description>
+        <field>New_Interaction_Date__c</field>
+        <name>Clear interaction date</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>Null</operation>
         <protected>false</protected>
     </fieldUpdates>
     <fieldUpdates>
@@ -5485,23 +5502,25 @@ IF(IsClosed, &quot;Closed&quot;, &quot;Open&quot;)</formula>
     <fieldUpdates>
         <fullName>IDFS_CREATED_BY_ROLE</fullName>
         <field>Created_By_Role__c</field>
-        <formula>IF(OR(CONTAINS( $UserRole.Name, &quot;Customer Service&quot;),CONTAINS( $UserRole.Name, &quot;CS Manager&quot;)),&quot;Customer Service&quot;,
-(IF(OR(CONTAINS($UserRole.Name, &quot;CS Staff&quot;), CONTAINS ($UserRole.Name,&quot;CS staff&quot;)),&quot;Customer Service&quot;,
-(IF(OR(CONTAINS( $UserRole.Name, &quot;Risk Management&quot;),CONTAINS( $UserRole.Name, &quot;ARM Staff&quot;)),&quot;Risk Management&quot;,
-(IF(OR(CONTAINS( $UserRole.Name, &quot;Agency Management&quot;),CONTAINS( $UserRole.Name, &quot;ACC/ARM&quot;)),&quot;Agency Management&quot;,
-(IF(OR(CONTAINS( $UserRole.Name, &quot;ACC staff&quot;), CONTAINS($UserRole.Name,&quot;Acc Manager&quot;)),&quot;Agency Management&quot;,
-(IF(OR(CONTAINS( $UserRole.Name, &quot;R&amp;S Staff&quot;), CONTAINS($UserRole.Name,&quot;R&amp;S Manager&quot;)),&quot;Remittance &amp; Settlement&quot;,
-(IF(OR(CONTAINS( $UserRole.Name, &quot;I&amp;C&quot;), CONTAINS($UserRole.Name,&quot; Operations Manager&quot;)),&quot;Operations&quot;,
-(IF(OR(CONTAINS( $UserRole.Name, &quot;Operations Staff&quot;),CONTAINS( $UserRole.Name, &quot;Operational Management&quot;)),&quot;Operations&quot;,
-(IF(CONTAINS($UserRole.Name, &quot;ARM staff&quot;),&quot;Risk Management&quot;,
-(IF(CONTAINS( $UserRole.Name, &quot;R&amp;S staff&quot;),&quot;Remittance &amp; Settlement&quot;,
-(IF(CONTAINS( $UserRole.Name, &quot;Banking&quot;),&quot;Banking&quot;,
-(IF(CONTAINS( $UserRole.Name, &quot;Business Delivery&quot;),&quot;Business Delivery&quot;,
-(IF(CONTAINS($UserRole.Name, &quot;Acc Staff&quot;),&quot;Agency Management&quot;,
+        <formula>IF(OR(CONTAINS( $UserRole.Name, &quot;Customer Service&quot;),CONTAINS( $UserRole.Name, &quot;CS Manager&quot;)),&quot;Customer Service&quot;, 
+(IF(OR(CONTAINS($UserRole.Name, &quot;CS Staff&quot;), CONTAINS ($UserRole.Name,&quot;CS staff&quot;)),&quot;Customer Service&quot;, 
+(IF(OR(CONTAINS( $UserRole.Name, &quot;Risk Management&quot;),CONTAINS( $UserRole.Name, &quot;ARM Staff&quot;)),&quot;Risk Management&quot;, 
+(IF(OR(CONTAINS( $UserRole.Name, &quot;Agency Management&quot;),CONTAINS( $UserRole.Name, &quot;ACC/ARM&quot;)),&quot;Agency Management&quot;, 
+(IF(OR(CONTAINS( $UserRole.Name, &quot;ACC staff&quot;), CONTAINS($UserRole.Name,&quot;Acc Manager&quot;)),&quot;Agency Management&quot;, 
+(IF(OR(CONTAINS( $UserRole.Name, &quot;R&amp;S Staff&quot;), CONTAINS($UserRole.Name,&quot;R&amp;S Manager&quot;)),&quot;Remittance &amp; Settlement&quot;, 
+(IF(OR(CONTAINS( $UserRole.Name, &quot;I&amp;C&quot;), CONTAINS($UserRole.Name,&quot; Operations Manager&quot;)),&quot;Operations&quot;, 
+(IF(OR(CONTAINS( $UserRole.Name, &quot;Operations Staff&quot;),CONTAINS( $UserRole.Name, &quot;Operational Management&quot;)),&quot;Operations&quot;, 
+(IF(CONTAINS($UserRole.Name, &quot;ARM staff&quot;),&quot;Risk Management&quot;, 
+(IF(CONTAINS( $UserRole.Name, &quot;R&amp;S staff&quot;),&quot;Remittance &amp; Settlement&quot;, 
+(IF(CONTAINS( $UserRole.Name, &quot;Banking&quot;),&quot;Banking&quot;, 
+(IF(CONTAINS($UserRole.Name,&quot;E&amp;F Client Services&quot;),&quot;E&amp;F Client services&quot;, 
+(IF(CONTAINS($UserRole.Name,&quot;E&amp;F &quot;),&quot;E&amp;F Staff&quot;,
+(IF(CONTAINS( $UserRole.Name, &quot;Business Delivery&quot;),&quot;Business Delivery&quot;, 
+(IF(CONTAINS($UserRole.Name, &quot;Acc Staff&quot;),&quot;Agency Management&quot;, 
 (IF(OR(CONTAINS( $Profile.Name,&quot;ISS Portal&quot;),CONTAINS( $Profile.Name,&quot;IATA Portal1389712205152 Profile&quot;)),&quot;IATA Partner&quot;,
 (IF(AND(CONTAINS($UserRole.Name, &quot;Record owner&quot;),ISPICKVAL(Origin,&quot;Voicemail&quot;)),&quot;Voicemail&quot;,
 (IF(CONTAINS($UserRole.Name, &quot;Record owner&quot;),&quot;IATA System&quot;,
-(IF(CONTAINS($UserRole.Name, &quot;Distribution - Airline Management&quot;),&quot;Airline Management&quot;,&quot;IATA Other&quot;)))))))))))))))))))))))))))))))))</formula>
+(IF(CONTAINS($UserRole.Name, &quot;Distribution - Airline Management&quot;),&quot;Airline Management&quot;,&quot;IATA Other&quot;)))))))))))))))))))))))))))))))))))))</formula>
         <name>IDFS_CREATED_BY_ROLE</name>
         <notifyAssignee>false</notifyAssignee>
         <operation>Formula</operation>
@@ -5785,7 +5804,7 @@ Change the case status to “Agent Notified (mail)” if case status was “Agen
     <fieldUpdates>
         <fullName>IFAP_Update_FA_Submitted_Date</fullName>
         <field>Submitted_Date__c</field>
-        <formula>IF(Value(Mid(text(now()),12,2))&gt;21,DATEVALUE(Now()+1), DATEVALUE(Now()))</formula>
+        <formula>IF(Value(Mid(text(now()),12,2))&gt;14, if(Value(Mid(text(now()),0,2)) != day(DATEVALUE(Now())), DATEVALUE(Now()), DATEVALUE(Now()+1)), DATEVALUE(Now()))</formula>
         <name>IFAP Update FA Submitted Date</name>
         <notifyAssignee>false</notifyAssignee>
         <operation>Formula</operation>
@@ -11853,12 +11872,16 @@ Case(month(datevalue(now()))+1,1,31,2,28,3,31,4,30,5,31,6,30,7,31,8,31,9,30,10,3
     <rules>
         <fullName>FDS Delete New Interaction Info</fullName>
         <actions>
+            <name>Clear_interaction_date</name>
+            <type>FieldUpdate</type>
+        </actions>
+        <actions>
             <name>New_interaction_Blank</name>
             <type>FieldUpdate</type>
         </actions>
         <active>true</active>
         <description>Clear New interaction field when Query is closed. It is necessary when query  had another Record Type with New Interaction Info</description>
-        <formula>AND(OR ( RecordType.DeveloperName = &quot;OSCAR_Communication&quot;, RecordType.DeveloperName = &quot;CasesAmericas&quot;, RecordType.DeveloperName = &quot;CasesEurope&quot;, RecordType.DeveloperName = &quot;InternalCasesEuropeSCE&quot; , RecordType.DeveloperName = &quot;CasesMENA&quot; , RecordType.DeveloperName = &quot;ExternalCasesIDFSglobal&quot;, RecordType.DeveloperName = &quot;Cases_China_North_Asia&quot;, RecordType.DeveloperName = &quot;ProcessEuropeSCE&quot;, RecordType.DeveloperName = &quot;sMAP_sales_Monitoring_Alert_Process&quot;, RecordType.DeveloperName = &quot;ComplaintIDFS&quot;, RecordType.DeveloperName = &quot;IDFS_Airline_Participation_Process&quot;, RecordType.DeveloperName = &quot;CS_Process_IDFS_ISS&quot;, RecordType.DeveloperName =&quot;IATA_Financial_Review&quot;, RecordType.DeveloperName =&quot;ID_Card_Application&quot;, RecordType.DeveloperName =&apos;Airline_Coding_Application&apos;) , OwnerId = LastModifiedById, contains(TEXT(Status),&quot;Closed&quot;), not(ispickval(New_interaction__c, &quot;&quot;)))</formula>
+        <formula>AND(OR ( RecordType.DeveloperName = &quot;OSCAR_Communication&quot;, RecordType.DeveloperName = &quot;CasesAmericas&quot;, RecordType.DeveloperName = &quot;CasesEurope&quot;, RecordType.DeveloperName = &quot;InternalCasesEuropeSCE&quot; , RecordType.DeveloperName = &quot;CasesMENA&quot; , RecordType.DeveloperName = &quot;ExternalCasesIDFSglobal&quot;, RecordType.DeveloperName = &quot;Cases_China_North_Asia&quot;, RecordType.DeveloperName = &quot;ProcessEuropeSCE&quot;, RecordType.DeveloperName = &quot;sMAP_sales_Monitoring_Alert_Process&quot;, RecordType.DeveloperName = &quot;ComplaintIDFS&quot;, RecordType.DeveloperName = &quot;IDFS_Airline_Participation_Process&quot;, RecordType.DeveloperName = &quot;CS_Process_IDFS_ISS&quot;, RecordType.DeveloperName =&quot;IATA_Financial_Review&quot;, RecordType.DeveloperName =&quot;ID_Card_Application&quot;, RecordType.DeveloperName =&apos;Airline_Coding_Application&apos;,RecordType.DeveloperName =&apos;DPC_Service_Request&apos;) , OwnerId = LastModifiedById, contains(TEXT(Status),&quot;Closed&quot;), not(ispickval(New_interaction__c, &quot;&quot;)))</formula>
         <triggerType>onCreateOrTriggeringUpdate</triggerType>
     </rules>
     <rules>
@@ -14289,7 +14312,7 @@ Case(month(datevalue(now()))+1,1,31,2,28,3,31,4,30,5,31,6,30,7,31,8,31,9,30,10,3
             <type>Alert</type>
         </actions>
         <actions>
-            <name>SIDRA_R_S_feedback_Check_repayment</name>
+            <name>Check</name>
             <type>FieldUpdate</type>
         </actions>
         <active>true</active>
@@ -15145,7 +15168,7 @@ Change the case status to “Agent Notified (mail)” if case status was “Agen
             <type>FieldUpdate</type>
         </actions>
         <active>true</active>
-        <booleanFilter>(1 AND 2 AND 3 AND 4 AND (5 OR (6 AND 7)) AND (10 OR (11 AND 12 AND 13 AND 17 AND 20)) AND 16 AND 18 AND 19 AND 21 AND 22) OR 8 OR 9 OR (14 AND 15)</booleanFilter>
+        <booleanFilter>(1 AND 2 AND 3 AND 4 AND (5 OR (6 AND 7)) AND (10 OR (11 AND 12 AND 13 AND 17 AND 20 AND (NOT(23) AND 15))) AND 16 AND 18 AND 19 AND 21 AND 22) OR 8 OR 9 OR (14 AND 15)</booleanFilter>
         <criteriaItems>
             <field>Case.RecordTypeId</field>
             <operation>notEqual</operation>
@@ -15219,7 +15242,7 @@ Change the case status to “Agent Notified (mail)” if case status was “Agen
         <criteriaItems>
             <field>Case.Reason1__c</field>
             <operation>equals</operation>
-            <value>Customer Charge Request</value>
+            <value>Customer Charge Request,Corrections</value>
         </criteriaItems>
         <criteriaItems>
             <field>Case.RecordTypeId</field>
@@ -15229,7 +15252,7 @@ Change the case status to “Agent Notified (mail)” if case status was “Agen
         <criteriaItems>
             <field>Case.Reason1__c</field>
             <operation>notEqual</operation>
-            <value>Request of PSSA / Agreement,GSA / MSO / Handling Agent,New GSA,Massive e-mail</value>
+            <value>Request of PSSA / Agreement,GSA / MSO / Handling Agent,New GSA,Massive e-mail,Accreditation Type</value>
         </criteriaItems>
         <criteriaItems>
             <field>Case.Reason1__c</field>
@@ -15256,6 +15279,11 @@ Change the case status to “Agent Notified (mail)” if case status was “Agen
             <operation>notEqual</operation>
             <value>Annual revalidation</value>
         </criteriaItems>
+        <criteriaItems>
+            <field>Case.Origin</field>
+            <operation>equals</operation>
+            <value>Portal</value>
+        </criteriaItems>
         <description>If the case should be invisible on the portal uncheck the field &quot;Visible on ISS Portal&quot;</description>
         <triggerType>onAllChanges</triggerType>
     </rules>
@@ -15266,7 +15294,7 @@ Change the case status to “Agent Notified (mail)” if case status was “Agen
             <type>FieldUpdate</type>
         </actions>
         <active>true</active>
-        <booleanFilter>((1 OR 2 OR (3 AND (21 AND 22)) OR 4 OR (10 AND (11 OR 12 OR 16 OR 17 OR 19 OR 20))) AND ((5 AND 6) OR (17 AND 18))) OR ((7 AND 8 AND 9) AND 6) OR (13 AND 14) OR 15</booleanFilter>
+        <booleanFilter>((1 OR 2 OR (3 AND (21 AND 22)) OR 4 OR (10 AND (11 OR 12 OR 16 OR 17 OR 19 OR 20 OR (23 AND 24)))) AND ((5 AND 6) OR (17 AND 18))) OR ((7 AND 8 AND 9) AND 6) OR (13 AND 14) OR 15</booleanFilter>
         <criteriaItems>
             <field>Case.RecordTypeId</field>
             <operation>equals</operation>
@@ -15345,7 +15373,7 @@ Change the case status to “Agent Notified (mail)” if case status was “Agen
         <criteriaItems>
             <field>Case.Reason1__c</field>
             <operation>equals</operation>
-            <value>FoP Management</value>
+            <value>FoP Management,Accreditation Type</value>
         </criteriaItems>
         <criteriaItems>
             <field>Case.Reason1__c</field>
@@ -15376,6 +15404,16 @@ Change the case status to “Agent Notified (mail)” if case status was “Agen
             <field>Case.Reason1__c</field>
             <operation>notEqual</operation>
             <value>IATA Easy Pay</value>
+        </criteriaItems>
+        <criteriaItems>
+            <field>Case.Origin</field>
+            <operation>equals</operation>
+            <value>Portal</value>
+        </criteriaItems>
+        <criteriaItems>
+            <field>Case.Reason1__c</field>
+            <operation>equals</operation>
+            <value>Corrections</value>
         </criteriaItems>
         <description>Enables the &quot;Visible on ISS Portal&quot;  checkbox for case record types that should by default be visible on the portal. Users can then change this option to hide the record on the portal.</description>
         <triggerType>onCreateOrTriggeringUpdate</triggerType>

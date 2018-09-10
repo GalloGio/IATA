@@ -321,6 +321,20 @@
         <visibleLines>3</visibleLines>
     </fields>
     <fields>
+        <fullName>Group_Administrator__c</fullName>
+        <deleteConstraint>SetNull</deleteConstraint>
+        <description>Person designated by the Group Owner to maintain the group information (TORs and participants). FOR MORE DETAILS, CONTACT AMT</description>
+        <externalId>false</externalId>
+        <inlineHelpText>Person designated by the Group Owner to maintain the group information (TORs and participants).</inlineHelpText>
+        <label>Group Administrator</label>
+        <referenceTo>User</referenceTo>
+        <relationshipName>Industry_Groups</relationshipName>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Lookup</type>
+    </fields>
+    <fields>
         <fullName>Group_Owner_Text__c</fullName>
         <description>Group owner in free text for Reg/Div Groups</description>
         <externalId>false</externalId>
@@ -547,6 +561,32 @@
                 <controllingFieldValue>Cargo</controllingFieldValue>
                 <valueName>LCAG-C</valueName>
             </valueSettings>
+        </valueSet>
+    </fields>
+    <fields>
+        <fullName>Managed_in_SSW__c</fullName>
+        <description>Indicates if the group is managed in the Standard Setting Workspace (SSW) or not. FOR MORE DETAILS, CONTACT AMT.</description>
+        <externalId>false</externalId>
+        <label>Managed in SSW</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Picklist</type>
+        <valueSet>
+            <restricted>true</restricted>
+            <valueSetDefinition>
+                <sorted>false</sorted>
+                <value>
+                    <fullName>Yes</fullName>
+                    <default>false</default>
+                    <label>Yes</label>
+                </value>
+                <value>
+                    <fullName>No</fullName>
+                    <default>false</default>
+                    <label>No</label>
+                </value>
+            </valueSetDefinition>
         </valueSet>
     </fields>
     <fields>
@@ -1183,6 +1223,17 @@ Record Type + Group Type + ISO_Country_Name</description>
             </values>
         </picklistValues>
         <picklistValues>
+            <picklist>Managed_in_SSW__c</picklist>
+            <values>
+                <fullName>No</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Yes</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
             <picklist>Open_to__c</picklist>
             <values>
                 <fullName>Cargo Agency Associations</fullName>
@@ -1495,6 +1546,17 @@ Record Type + Group Type + ISO_Country_Name</description>
             </values>
             <values>
                 <fullName>LCAG-P %2F Credit Card WG</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Managed_in_SSW__c</picklist>
+            <values>
+                <fullName>No</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Yes</fullName>
                 <default>false</default>
             </values>
         </picklistValues>

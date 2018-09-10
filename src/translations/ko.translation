@@ -577,6 +577,14 @@
         <name>AMS_PERFORM_CORRECTION</name>
     </customLabels>
     <customLabels>
+        <label><!-- AMS_PendingHOAccr --></label>
+        <name>AMS_PendingHOAccr</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- AMS_RRejected --></label>
+        <name>AMS_RRejected</name>
+    </customLabels>
+    <customLabels>
         <label><!-- AMS_RollbackCase_Description --></label>
         <name>AMS_RollbackCase_Description</name>
     </customLabels>
@@ -11515,7 +11523,7 @@ IATA 고객 포털(IATA Customer Portal) 등록 과정에 계속 문제가 발�
         <name>ISSP_Registration_BusinessPhone</name>
     </customLabels>
     <customLabels>
-        <label><!-- ISSP_Registration --></label>
+        <label>업무용 전화번호가 잘못되었습니다. 확인해 주십시오. 또한 목록에서 국기를 선택하거나 ‘+’ 다음에 국가 코드를 기입하여 정확한 국가를 선택했는지 확인해 주십시오.</label>
         <name>ISSP_Registration_BusinessPhone_Msg</name>
     </customLabels>
     <customLabels>
@@ -11591,7 +11599,7 @@ IATA 고객 포털(IATA Customer Portal) 등록 과정에 계속 문제가 발�
         <name>ISSP_Registration_Error_TypeofCustomer</name>
     </customLabels>
     <customLabels>
-        <label><!-- ISSP_Registration --></label>
+        <label>팩스 번호가 잘못되었습니다. 확인해 주십시오. 또한 목록에서 국기를 선택하거나 ‘+’ 다음에 국가 코드를 기입하여 정확한 국가를 선택했는지 확인해 주십시오.</label>
         <name>ISSP_Registration_FaxPhone_Msg</name>
     </customLabels>
     <customLabels>
@@ -11628,7 +11636,7 @@ If 귀하는 IATA 코드가 없습니다. &quot;&quot;고객 유형&quot;&quot;�
         <name>ISSP_Registration_MobilePhone</name>
     </customLabels>
     <customLabels>
-        <label><!-- ISSP_Registration --></label>
+        <label>휴대폰 번호가 잘못되었습니다. 확인해 주십시오. 또한 목록에서 국기를 선택하거나 ‘+’ 다음에 국가 코드를 기입하여 정확한 국가를 선택했는지 확인해 주십시오.</label>
         <name>ISSP_Registration_MobilePhone_Msg</name>
     </customLabels>
     <customLabels>
@@ -13305,6 +13313,10 @@ If 귀하는 IATA 코드가 없습니다. &quot;&quot;고객 유형&quot;&quot;�
         <name>NewGenApp_CashConditionsNotification</name>
     </customLabels>
     <customLabels>
+        <label><!-- NewGenApp_PortalUserRequested --></label>
+        <name>NewGenApp_PortalUserRequested</name>
+    </customLabels>
+    <customLabels>
         <label><!-- NewGenApp_RHC_RiskAlert_Notification --></label>
         <name>NewGenApp_RHC_RiskAlert_Notification</name>
     </customLabels>
@@ -13315,6 +13327,10 @@ If 귀하는 IATA 코드가 없습니다. &quot;&quot;고객 유형&quot;&quot;�
     <customLabels>
         <label><!-- NewGenApp_ServiceAccepted --></label>
         <name>NewGenApp_ServiceAccepted</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- NewGenApp_ServiceRequested --></label>
+        <name>NewGenApp_ServiceRequested</name>
     </customLabels>
     <customLabels>
         <label><!-- New password --></label>
@@ -13369,7 +13385,7 @@ If 귀하는 IATA 코드가 없습니다. &quot;&quot;고객 유형&quot;&quot;�
         <name>OneId_AccountSearchPlaceholder</name>
     </customLabels>
     <customLabels>
-        <label>계정 연계</label>
+        <label>회사 상세</label>
         <name>OneId_Account_Association</name>
     </customLabels>
     <customLabels>
@@ -13409,11 +13425,11 @@ If 귀하는 IATA 코드가 없습니다. &quot;&quot;고객 유형&quot;&quot;�
         <name>OneId_Community_Name</name>
     </customLabels>
     <customLabels>
-        <label>연락처 연계 및 확인</label>
+        <label>이메일 계정 확인</label>
         <name>OneId_Contact_Association_Validation</name>
     </customLabels>
     <customLabels>
-        <label>연락처 만들기</label>
+        <label>연락처 상세</label>
         <name>OneId_Contact_Creation</name>
     </customLabels>
     <customLabels>
@@ -13585,6 +13601,10 @@ If 귀하는 IATA 코드가 없습니다. &quot;&quot;고객 유형&quot;&quot;�
         <name>OneId_Privacy_Policy</name>
     </customLabels>
     <customLabels>
+        <label><!-- OneId_Privacy_Policy_Link --></label>
+        <name>OneId_Privacy_Policy_Link</name>
+    </customLabels>
+    <customLabels>
         <label><!-- OneId_Profile_BillingCity --></label>
         <name>OneId_Profile_BillingCity</name>
     </customLabels>
@@ -13637,7 +13657,10 @@ If 귀하는 IATA 코드가 없습니다. &quot;&quot;고객 유형&quot;&quot;�
         <name>OneId_Registration_Error_BusinessPhone</name>
     </customLabels>
     <customLabels>
-        <label><!-- OneId_Registration_UserExist --></label>
+        <label>이 이메일은 이미 저희에게 등록되어 있습니다.
+전자상거래(E-Commerce) 이용자는 본인의 전자상거래 인증서를 이용해 주시기 바랍니다.
+귀사가 고객 포털 사용자라면 귀사의 고객 포털 자격증명을 이용해 주십시오.
+비밀번호를 재설정하고 싶으신 경우 로그인 화면으로 돌아가서 “비밀번호 분실” 기능을 이용해 주시기 바랍니다.</label>
         <name>OneId_Registration_UserExist</name>
     </customLabels>
     <customLabels>
