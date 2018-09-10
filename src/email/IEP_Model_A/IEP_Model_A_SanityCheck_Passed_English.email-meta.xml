@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<EmailTemplate xmlns="http://soap.sforce.com/2006/04/metadata">
+    <available>true</available>
+    <description>Sent when IEP Model A Account Setup OSCAR passes sanity check</description>
+    <encodingKey>UTF-8</encodingKey>
+    <letterhead>IATADynamicSkyLetterhead</letterhead>
+    <name>IEP Model A SanityCheck Passed</name>
+    <style>freeForm</style>
+    <subject>Ref nr {!AMS_OSCAR__c.Name} – Registration of IEP Account</subject>
+    <textOnly>Dear Sir/Madam,
+
+
+
+Thank you for submitting your request to register your Bank Account for IATA EasyPay services. This is to confirm that the documentation was well received for the process to be initiated. We will inform you as soon as the registration is completed.
+
+Should you need any further information from IATA, please do not hesitate to log a new query via our Customer Portal.
+
+
+
+Kind Regards,
+
+
+
+
+IATA Customer Service Portal
+
+
+
+{!AMS_OSCAR__c.Emails_reference_Id__c}</textOnly>
+    <type>html</type>
+    <uiType>Aloha</uiType>
+</EmailTemplate>
