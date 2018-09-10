@@ -1451,8 +1451,12 @@ global class ANG_OscarProcessHelper {
 				.replace('#ACCOUNTNAME', acct.Name)
 				.replace('#TODAY30',String.valueOf(Datetime.now().addDays(30).format('MM/dd/yyyy')))
 				.replace('#CASENUMBER',acctIdCasesMap.get(contactAccts.get(nt.Contact__c)).CaseNumber);
-				
-				notifications.add(nt);
+
+			nt.Subject__c = nt.Subject__c
+				.replace('#IATACODE', acct.IataCode__c)
+				.replace('#ACCOUNTNAME', acct.Name);
+
+			notifications.add(nt);
     	}		
 
 		if(!notifications.isEmpty()) insert notifications;
@@ -1558,7 +1562,7 @@ global class ANG_OscarProcessHelper {
 			conIds.addAll(templateContIdMap.get(key));
 		}
 
-		Map<Id,Contact> contacts = new Map<Id,Contact>([SELECT Id, Name, Email, Preferred_Language__c, BSP_CASS_Payment_contact__c, Financial_Assessment_Contact__c, Account.IataCode__c, Account.Name 
+		Map<Id,Contact> contacts = new Map<Id,Contact>([SELECT Id, Name, Email, Preferred_Language__c, BSP_CASS_Payment_contact__c, Financial_Assessment_Contact__c, Account.IataCode__c, Account.Name
 														FROM Contact WHERE Id IN :conIds]); 
 
 		for(String key :notifTempNameCaseMap.keySet()){
@@ -1576,6 +1580,10 @@ global class ANG_OscarProcessHelper {
 				.replace('#IATACODE',contacts.get(nt.Contact__c).Account.IataCode__c)
 				.replace('#ACCOUNTNAME', contacts.get(nt.Contact__c).Account.Name)
 				.replace('#DEADLINEDATE',String.valueOf(Datetime.now().addDays(15).format('MM/dd/yyyy')));
+
+			nt.Subject__c = nt.Subject__c
+				.replace('#IATACODE', contacts.get(nt.Contact__c).Account.IataCode__c)
+				.replace('#ACCOUNTNAME',contacts.get(nt.Contact__c).Account.Name);
 		}
 
 		if (!notifications.isEmpty())
@@ -1589,11 +1597,11 @@ global class ANG_OscarProcessHelper {
 
 		// casesByTemplateName map {TemplateId, Map<CaseId,Case>}
 
-	
+
 	    for (String conId :templateContIdMap.keyset()){
-			
+
 			for(Id caseId: notifTempNameCaseMap.get(conId).KeySet()){
-				
+	    	
 				Case caseToProcess = notifTempNameCaseMap.get(conId).get(caseId);
 
                 List<Contact> contactIdList = new List<Contact>();
@@ -1602,8 +1610,8 @@ global class ANG_OscarProcessHelper {
 				AMS_AgencyRegulationAutoRenewal.sendEmailAlert(contactIdList, contactCaseMap.get(caseToProcess.ContactId).OSCAR__c, AMS_OSCARTriggerHandler.ANGemailTemplates(mapNotificationsTemplates.get(conId), null, false), caseToProcess.Id, owea[0], false);
 
 			}
-	    
-		}
+	    	
+	    }
 
 	}
 
