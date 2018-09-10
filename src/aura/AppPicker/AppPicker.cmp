@@ -147,7 +147,9 @@
                 </aura:if>
                 
                 <aura:set attribute="else">
+                	<div class="slds-grid">
                         <div class="slds-text-heading--large">{!$Label.c.issp_apppicker_request_new_application}</div>
+                    </div>
                     <div aura:id="requestSent" class="requestSent">
                             <h2>{!$Label.c.OneId_Your_request_has_been_successfully_sent}</h2>
 							<aura:if isTrue="{! v.activeApp == 'FRED'}">
