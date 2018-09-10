@@ -91,7 +91,7 @@ private class ISSP_SIS_AccountHandlerTest {
         
         Test.startTest();
         account.RecordtypeId=ISSP_SIS_AccountHandler.RT_AGENCY;
-        account.Status__c = '';
+        account.Status__c = 'Changes processed';
         account.IATA_ISO_Country__c = country.Id;
         account.TradeName__c = 'TradeName';
         update account;
@@ -125,6 +125,7 @@ private class ISSP_SIS_AccountHandlerTest {
         Test.startTest();
         account.IATA_ISO_Country__c = country.Id;
         account.BillingCity = 'City';
+        account.Status__c = 'Changes processed';
         update account;
         Test.stopTest();
         
