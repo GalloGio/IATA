@@ -250,9 +250,13 @@
         return result;
     };
     
+    function nvl(value) {
+        return value==null? "": value;
+    }
+    
     function updatePicklistsFromCountry() {
-        var country = $(".countryFilter").val();
-        var opertionType = $("#typeFilter").val();
+        var country = nvl($(".countryFilter").val());
+        var opertionType = nvl($("#typeFilter").val());
         var filter = country + "," + opertionType;
         var listValues = containsInArray(LIST_FILTERS,filter);
         updatePicklist($("#typeFilter"), listValues,1,opertionType);
@@ -261,8 +265,8 @@
     }
     
     function updatePicklistsFromType(position) {
-        var country = $(".countryFilter").val();
-        var opertionType = $("#typeFilter").val();
+        var country = nvl($(".countryFilter").val());
+        var opertionType = nvl($("#typeFilter").val());
         var filter = country + ",";
         if (opertionType!=undefined) {
             filter+= opertionType + ",";
@@ -276,9 +280,9 @@
     }
     
     function updatePicklistsFromFrequency() {
-        var country = $(".countryFilter").val();
-        var opertionType = $("#typeFilter").val();
-        var frequency = $("#frequencyFilter").val();
+        var country = nvl($(".countryFilter").val());
+        var opertionType = nvl($("#typeFilter").val());
+        var frequency = nvl($("#frequencyFilter").val());
         var filter = country + "," + opertionType + ",";
         if (frequency>"") {
              filter+= frequency + ",";
