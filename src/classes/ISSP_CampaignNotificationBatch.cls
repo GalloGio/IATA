@@ -18,6 +18,7 @@ global with sharing class ISSP_CampaignNotificationBatch implements Database.Bat
     global void execute(Database.BatchableContext BC, List<sObject> scope){
     	notificationCampagneName = vNotificationCampagneName;
     	set<Id> contactIdSet = new set<Id>();
+
     	//DTULLO: Added for DDS
     	set<Id> setAccntId = new set<Id>();
 		for(CampaignMember cm : (list<CampaignMember>)scope){
@@ -25,6 +26,7 @@ global with sharing class ISSP_CampaignNotificationBatch implements Database.Bat
 			contactIdSet.add(cm.ContactId);
 		}
 		list<Contact> contactList = [select Id,Notification_template__c, AccountId from Contact where Id in:contactIdSet];
+
 		for(Contact con : contactList){
 			con.Notification_template__c = notificationId;
 			
