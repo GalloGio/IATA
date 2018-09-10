@@ -52,7 +52,7 @@ global without sharing class ANG_BackupEngineHelper implements Queueable{
 		'Ownership' => new List<String>{'AMS_Account_Role__c','Contact','ANG_RHC_Information__c'},
 		'Location type' => new List<String>{'ANG_RHC_Information__c','Financial_Security__c','ANG_Agency_Risk_Event__c','AMS_Agencies_Hierarchy__c','AMS_Agencies_relationhip__c'},
 		'Location' => new List<String>{'ANG_RHC_Information__c'},
-		'Hierarchy' => new List<String>{'Agency_Authorization__c','ANG_Agency_Risk_Event__c','ANG_RHC_Information__c','AMS_Agencies_Hierarchy__c','AMS_Agencies_relationhip__c','Contact','Financial_Security__c'},
+		'Hierarchy' => new List<String>{'Agency_Authorization__c','ANG_Agency_Risk_Event__c','ANG_RHC_Information__c','AMS_Agencies_Hierarchy__c','AMS_Agencies_relationhip__c','Contact','Financial_Security__c','Portal_Application_Right__c'},
 		'VMFR' => new List<String>{'ANG_RHC_Information__c'},
 		'Accreditation type' => new List<String>{'Agency_Authorization__c', 'Portal_Application_Right__c', 'ANG_RHC_Information__c'},
 		'Location type to different legal entity' => new List<String>{'ANG_RHC_Information__c','Financial_Security__c','ANG_Agency_Risk_Event__c','AMS_Agencies_Hierarchy__c','AMS_Agencies_relationhip__c','Agency_Authorization__c'},
@@ -132,7 +132,7 @@ global without sharing class ANG_BackupEngineHelper implements Queueable{
 			return;
 
 		Set<Id> accountIds = new Set<Id>();
-		accountIds.addAll(fetchHierarchySelection(oscarId));
+		accountIds.addAll(fetchHierarchySelection(oscar.Account__c));
 		accountIds.add(oscar.account__c);
 
 		if(oscar.ANG_Type_Of_Change__c.contains(AMS_Utils.ANG_LOCATION_TYPE) || oscar.ANG_Type_Of_Change__c.contains(AMS_Utils.ANG_LOCATION_TYPE_DIFFLEGALENTITY)){
@@ -159,6 +159,8 @@ global without sharing class ANG_BackupEngineHelper implements Queueable{
 		accountFields.add('Financial_Review_Result__c');
 		accountFields.add('Assessment_Performed_Date__c');
 		accountFields.add('ANG_Accreditation_Model__c');
+		accountFields.add('ANG_IEP_Status__c');
+		accountFields.add('ANG_IEP_HE_AccntNum__c');
 		
 		Set<String> entitiesToRollback = new Set<String>();
 
@@ -227,13 +229,21 @@ global without sharing class ANG_BackupEngineHelper implements Queueable{
 
 	}
 
-	private Set<Id> fetchHierarchySelection(Id oscarId){
+	private Set<Id> fetchHierarchySelection(Id accountOscar){
 
 		Set<Id> accountIds = new Set<Id>();
+		
+		Account acct = [Select Id, Location_Type__c, ParentId from Account where Id =:accountOscar];
+		Id accountId = acct.Id;
+		
+		if(acct.Location_Type__c <> AMS_Utils.HE)
+			accountId = acct.ParentId;
 
-		for(AMS_Process_Detail__c pd: [Select Id, Account__c from AMS_Process_Detail__c where OSCAR__c =:oscarId])
-			accountIds.add(pd.Account__c);
+		for(Account acctToSearch: [Select Id from Account where ParentId =:accountId])
+			accountIds.add(acctToSearch.Id);
 	
+		accountIds.add(accountId);
+
 		return accountIds;
 	}
 

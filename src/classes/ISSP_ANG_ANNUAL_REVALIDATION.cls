@@ -366,7 +366,7 @@ public class ISSP_ANG_ANNUAL_REVALIDATION {
 		isoCountryMap = new Map<String, IATA_ISO_Country__c>();
 
         List<IATA_ISO_Country__c> aux = [Select Id, ISO_Code__c, Local_language_Agency_details_required__c, EU_Country__c, EACP_Country__c, 
-        								Hide_Tax_Number_VAT__c, IATA_Contry_KR__c, IATA_Country_JP__c, IATA_Country_PT__c, IATA_Country_ZH__c, Name
+        								Hide_Tax_Number_VAT__c, IATA_Contry_KR__c, IATA_Country_JP__c, IATA_Country_PT__c, IATA_Country_ZH__c, Name, Tax_Number_label__c, Tax_number_help_text__c, Tax_number_format__c
                                         From IATA_ISO_Country__c
                                         Where ISO_Code__c In :isocodes];
 
@@ -435,6 +435,21 @@ public class ISSP_ANG_ANNUAL_REVALIDATION {
 
 		return null;
 	}
+
+	public Boolean vatNumberValidation (String vatNumber, String countryISO) {
+        IECVATUtil.VATWebService ws = new IECVATUtil.VATWebService();
+        try {
+            if (currentAccount.isocountry.EU_Country__c && vatNumber != '') {
+                IECVATUtil.VATResponse res = ws.ValidateVAT(countryISO, vatNumber);
+                return res.valid;
+            }
+        } catch (System.CalloutException ex) {
+            ApexPages.Message myMsg = new ApexPages.Message(ApexPages.Severity.ERROR, Label.ISSP_PAX_Validating_VAT_Number_error);
+            ApexPages.addMessage(myMsg);
+        }
+
+        return false;
+    }
 
 	public PageReference discardDetails() {
 
@@ -996,7 +1011,7 @@ public class ISSP_ANG_ANNUAL_REVALIDATION {
 		return [Select Id, AMS_Pax_Accreditation_Form__c, Name, First_name__c, Last_name__c, Salutation__c, Agency_owner__c, Agency_role__c, Email__c,Phone__c,
                        Financial_interest__c, Contact_Id__c, AMS_OwnershipId__c, AMS_ContactId__c, Local_First_name__c, Local_Last_name__c, Number_Of_Shares__c,
                        AddressStreet__c, AddressCity__c, AddressCountry__c, AddressPostcode__c, Time_devoted_to_Agency_business__c, IATAcode__c, Registration_number__c,
-					   PhoneNational__c, FAX__c, Company_Name_Local__c
+					   PhoneNational__c, FAX__c, Company_Name_Local__c, Contact__c
                   From AMS_Accreditation_Contact__c
                  Where AMS_Pax_Accreditation_Form__c in :newFormIds
 				   And RecordTypeId = :rtAccreditContCurrentOwner
@@ -1007,7 +1022,7 @@ public class ISSP_ANG_ANNUAL_REVALIDATION {
 		return [Select Id, AMS_Pax_Accreditation_Form__c, Name, First_name__c, Last_name__c, Salutation__c, Agency_owner__c, Agency_role__c, Email__c,Phone__c,
                        Financial_interest__c, Contact_Id__c, AMS_OwnershipId__c, AMS_ContactId__c, Local_First_name__c, Local_Last_name__c, Number_Of_Shares__c,
                        AddressStreet__c, AddressCity__c, AddressCountry__c, AddressPostcode__c, Time_devoted_to_Agency_business__c, IATAcode__c, Registration_number__c,
-					   PhoneNational__c, FAX__c, Company_Name_Local__c
+					   PhoneNational__c, FAX__c, Company_Name_Local__c, Contact__c
                   From AMS_Accreditation_Contact__c
                  Where AMS_Pax_Accreditation_Form__c in :newFormIds
 				   And RecordTypeId = :rtAccreditContCurrentCompanyOwner
@@ -1018,7 +1033,7 @@ public class ISSP_ANG_ANNUAL_REVALIDATION {
 		return [Select Id, AMS_Pax_Accreditation_Form__c, Name, First_name__c, Last_name__c, Salutation__c, Agency_owner__c, Agency_role__c, Email__c,Phone__c,
                        Financial_interest__c, Contact_Id__c, AMS_OwnershipId__c, AMS_ContactId__c, Local_First_name__c, Local_Last_name__c, Number_Of_Shares__c,
                        AddressStreet__c, AddressCity__c, AddressCountry__c, AddressPostcode__c, Time_devoted_to_Agency_business__c, IATAcode__c, Registration_number__c,
-					   PhoneNational__c, FAX__c, Company_Name_Local__c
+					   PhoneNational__c, FAX__c, Company_Name_Local__c, Contact__c
                   From AMS_Accreditation_Contact__c
                  Where AMS_Pax_Accreditation_Form__c in :newFormIds
 				   And RecordTypeId = :rtAccreditContPreviousCompanyOwner
@@ -1179,6 +1194,7 @@ public class ISSP_ANG_ANNUAL_REVALIDATION {
 	public void validateForm() {
 
 		errorFound = false;
+		Pattern iso8859 = Pattern.compile(ISO_8859_1_regEx);
 
 		if(!currentAccount.fw.newForm.Confirm_Legal_Details_are_correct__c && !currentAccount.fw.newForm.Notify_Change_Legal_Details__c &&
 			!currentAccount.fw.newForm.Confirm_Location_Details_are_correct__c && !currentAccount.fw.newForm.Notify_Change_Location__c &&
@@ -1205,15 +1221,24 @@ public class ISSP_ANG_ANNUAL_REVALIDATION {
 				if(currentAccount.fw.newform.Account_Name__c == null) {
 					currentAccount.fw.newform.Account_Name__c.addError(Label.ISSP_YouMustEnter);
 					errorFound = true;
+				} else if (currentAccount.fw.newform.Account_Name__c != null && !iso8859.matcher(currentAccount.fw.newform.Account_Name__c).matches()) {
+					currentAccount.fw.newform.Account_Name__c.addError(Label.ISSP_EnterValidString);
+            		errorFound = true;
 				}
-/*
-				check with Adrian
+
+				if (currentAccount.fw.newform.Trade_Name__c != null && !iso8859.matcher(currentAccount.fw.newform.Trade_Name__c).matches()) {
+					currentAccount.fw.newform.Trade_Name__c.addError(Label.ISSP_EnterValidString);
+            		errorFound = true;
+				}
 
 				if (currentAccount.fw.newform.ISSP_AMS_VAT_Number_Input__c == null && currentAccount.isocountry.Hide_Tax_Number_VAT__c == false) {
 					currentAccount.fw.newform.ISSP_AMS_VAT_Number_Input__c.addError(Label.ISSP_YouMustEnter);
 					errorFound = true;
+				} else if (currentAccount.fw.newForm.INVALID_Tax_Number__c && currentAccount.isocountry.Hide_Tax_Number_VAT__c == false) {
+					currentAccount.fw.newform.ISSP_AMS_VAT_Number_Input__c.addError(Label.ISSP_PAX_Validating_VAT_Number_error);
+					errorFound = true;
 				}
-*/
+
 			}
 
 			if (currentAccount.fw.newform.ISSP_AMS_GDS_with_signed_contract__c == null) {
@@ -1238,20 +1263,21 @@ public class ISSP_ANG_ANNUAL_REVALIDATION {
 				errorFound = true;
 			}
 
-			/*if(currentAccount.isocountry.Local_language_Agency_details_required__c && currentAccount.fw.newform.Is_change_legal_name__c && currentAccount.fw.newform.Notify_Change_Legal_Details__c && currentAccount.fw.newform.Local_Legally_Registered_Name__c == null) {	
-				currentAccount.fw.newform.Local_Legally_Registered_Name__c.addError(Label.ISSP_YouMustEnter);
-				errorFound = true;
-			}*/
-
 			if (currentAccount.fw.newform.Is_change_location__c && currentAccount.fw.newform.Notify_Change_Location__c) {
 				if (currentAccount.fw.newform.Branch_Office_Street_name_number__c == null) {
 					currentAccount.fw.newform.Branch_Office_Street_name_number__c.addError(Label.ISSP_YouMustEnter);
 					errorFound = true;
+				} else if (currentAccount.fw.newform.Branch_Office_Street_name_number__c != null && !iso8859.matcher(currentAccount.fw.newform.Branch_Office_Street_name_number__c).matches()) {
+					currentAccount.fw.newform.Branch_Office_Street_name_number__c.addError(Label.ISSP_EnterValidString);
+            		errorFound = true;
 				}
 
 				if (currentAccount.fw.newform.Branch_Office_City__c == null) {
 					currentAccount.fw.newform.Branch_Office_City__c.addError(Label.ISSP_YouMustEnter);
 					errorFound = true;
+				} else if (currentAccount.fw.newform.Branch_Office_City__c != null && !iso8859.matcher(currentAccount.fw.newform.Branch_Office_City__c).matches()) {
+					currentAccount.fw.newform.Branch_Office_City__c.addError(Label.ISSP_EnterValidString);
+            		errorFound = true;
 				}
 
 				if (currentAccount.fw.newform.Branch_Office_Phone_National__c == null) {
@@ -1259,9 +1285,42 @@ public class ISSP_ANG_ANNUAL_REVALIDATION {
 					errorFound = true;
 				}
 
+				Pattern validEmail = Pattern.compile( '([a-zA-Z0-9_\\-\\.]+)@(((\\[a-z]{1,3}\\.[a-z]{1,3}\\.[a-z]{1,3}\\.)|(([a-zA-Z0-9\\-]+\\.)+))([a-zA-Z]{2,6}|[0-9]{1,6}))');
+
 				if (currentAccount.fw.newform.Branch_Office_Email__c == null) {
 					currentAccount.fw.newform.Branch_Office_Email__c.addError(Label.ISSP_YouMustEnter);
 					errorFound = true;
+				} else if (currentAccount.fw.newForm.Branch_Office_Email__c != null && !validEmail.matcher(currentAccount.fw.newForm.Branch_Office_Email__c).matches()) {
+					currentAccount.fw.newForm.Branch_Office_Email__c.addError(Label.ISSP_AMS_Invalid_Email);
+	                errorFound = true;
+				} else if (currentAccount.fw.newform.Branch_Office_Email__c != null && !iso8859.matcher(currentAccount.fw.newform.Branch_Office_Email__c).matches()) {
+					currentAccount.fw.newform.Branch_Office_Email__c.addError(Label.ISSP_EnterValidString);
+            		errorFound = true;
+				}
+
+				Pattern validUrl = Pattern.compile(ISSP_CS__c.getValues('ISSP AMS ALLOWED AGENCY URL').Value__c);
+
+				if (currentAccount.fw.newform.Website__c != null && !validUrl.matcher(currentAccount.fw.newForm.Website__c.toLowerCase()).matches()) {
+					currentAccount.fw.newForm.Website__c.addError(Label.ISSP_AMS_Valid_URL);
+		            errorFound = true;
+				} else if (currentAccount.fw.newform.Website__c != null && !iso8859.matcher(currentAccount.fw.newform.Website__c).matches()) {
+					currentAccount.fw.newform.Website__c.addError(Label.ISSP_EnterValidString);
+            		errorFound = true;
+				}
+
+				if (currentAccount.fw.newform.Branch_Office_Postal_code__c != null && !iso8859.matcher(currentAccount.fw.newform.Branch_Office_Postal_code__c).matches()) {
+					currentAccount.fw.newform.Branch_Office_Postal_code__c.addError(Label.ISSP_EnterValidString);
+            		errorFound = true;
+				}
+
+				if (currentAccount.fw.newform.State_Province__c != null && !iso8859.matcher(currentAccount.fw.newform.State_Province__c).matches()) {
+					currentAccount.fw.newform.State_Province__c.addError(Label.ISSP_EnterValidString);
+            		errorFound = true;
+				}
+
+				if (currentAccount.fw.newform.Branch_Office_Country__c != null && !iso8859.matcher(currentAccount.fw.newform.Branch_Office_Country__c).matches()) {
+					currentAccount.fw.newform.Branch_Office_Country__c.addError(Label.ISSP_EnterValidString);
+            		errorFound = true;
 				}
 
 				if (currentAccount.isocountry.Local_language_Agency_details_required__c) {
@@ -1321,38 +1380,6 @@ public class ISSP_ANG_ANNUAL_REVALIDATION {
         		}
         	}
 
-			/*if (currentAccount.fw.newform.Is_change_location__c && currentAccount.fw.newform.Notify_Change_Location__c && currentAccount.isocountry.Local_language_Agency_details_required__c) {
-				if (currentAccount.fw.newform.Local_Physical_Address_Street__c == null) {
-					currentAccount.fw.newform.Local_Physical_Address_Street__c.addError(Label.ISSP_YouMustEnter);
-					errorFound = true;
-				}
-
-				if (currentAccount.fw.newform.Local_Physical_Address_City__c == null) {
-					currentAccount.fw.newform.Local_Physical_Address_City__c.addError(Label.ISSP_YouMustEnter);
-					errorFound = true;
-				}
-
-				if (currentAccount.fw.newform.Local_Physical_Address_Province__c == null) {
-					currentAccount.fw.newform.Local_Physical_Address_Province__c.addError(Label.ISSP_YouMustEnter);
-					errorFound = true;
-				}
-
-				if (currentAccount.fw.newform.Local_Postal_Address_Street__c == null) {
-					currentAccount.fw.newform.Local_Postal_Address_Street__c.addError(Label.ISSP_YouMustEnter);
-					errorFound = true;
-				}
-
-				if (currentAccount.fw.newform.Local_Postal_Address_City__c == null) {
-					currentAccount.fw.newform.Local_Postal_Address_City__c.addError(Label.ISSP_YouMustEnter);
-					errorFound = true;
-				}
-
-				if (currentAccount.fw.newform.Local_Postal_Address_Province__c == null) {
-					currentAccount.fw.newform.Local_Postal_Address_Province__c.addError(Label.ISSP_YouMustEnter);
-					errorFound = true;
-				}
-			}*/ //EO check for Change of Location & Local Agency Details fields
-
 /*
 			check with Adrian
 
@@ -1390,7 +1417,7 @@ public class ISSP_ANG_ANNUAL_REVALIDATION {
 				errorFound = true;
 			}
 
-			if (currentAccount.fw.newform.Notify_Change_Ownership__c && currentAccount.fw.newform.ISSP_AMS_Legal_Status__c == 'Corporation') {
+			if (currentAccount.fw.newform.Notify_Change_Ownership__c && currentAccount.fw.newform.ISSP_AMS_Legal_Status__c == 'Corporation' && currentAccount.fw.newform.ISSP_AMS_Paidup_capital__c == null) {
 				currentAccount.fw.newform.ISSP_AMS_Paidup_capital__c.addError(Label.ISSP_YouMustEnter);
 				errorFound = true;
 			}

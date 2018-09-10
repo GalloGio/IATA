@@ -59,6 +59,7 @@ private class ANG_ISSP_IEPMailRecipientsUtilsTest {
                 Sector__c = ANG_ISSP_PortalServiceHelper.TRAVEL_AGENT,
                 ANG_IEP_Status__c = ANG_ISSP_PortalServiceHelper.STATUS_OPEN,
                 Location_type__c = 'HE',
+                Location_Class__c = 'P',
                 OwnerId = UserInfo.getUserId()
             );
 
@@ -71,7 +72,8 @@ private class ANG_ISSP_IEPMailRecipientsUtilsTest {
                 ANG_IEP_Status__c = ANG_ISSP_PortalServiceHelper.STATUS_OPEN,
                 Location_type__c = 'HE',
                 OwnerId = UserInfo.getUserId(),
-                Top_Parent__c = topParent.id
+                Top_Parent__c = topParent.id,
+                Location_Class__c = 'P'
             );
 
 		insert a;

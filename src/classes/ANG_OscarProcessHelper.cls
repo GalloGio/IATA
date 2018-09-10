@@ -85,6 +85,13 @@ global class ANG_OscarProcessHelper {
 			updater.acctMap.put(theAccount.Id,theAccount);
 			updater.onlineAMap.put(theAccreditation.Id,theAccreditation);
 
+			/*** AMSU-162 ***/
+			if(AMS_Utils.AMS_ProcessesAddressToValidate.contains(oscar.Process__c) && !isShippingAddressValid(theAccreditation)) {
+				isIATACodeGenerationRunning = false;
+				System.debug('[ANG_OscarProcessHelper] Incomplete shipping address.');
+				return new String[]{'-1','Incomplete shipping address.','-1'};
+			}
+
             if(theAccount.CNS_Agency__c == false && oscar.STEP6__c != AMS_Utils.PASSED && SanityCheckVerificationProcesses.contains(oscar.Process__c)) {
 				isIATACodeGenerationRunning = false;
 				System.debug('[ANG_OscarProcessHelper] In order to generate a IATA code you must first pass the Sanity Check.');
@@ -318,6 +325,26 @@ global class ANG_OscarProcessHelper {
 
 		return new String[]{'0',returnMessage,dueDiligence ? '0' : '-1',caseId};
 
+	}
+
+	/*** AMSU-162 ***/
+	public static Boolean isShippingAddressValid(AMS_Pax_Accreditation_Form__c accreditation) {
+		String street = accreditation.Shipping_Street__c; 
+        String city = accreditation.Shipping_City__c;
+        String state = accreditation.Shipping_State__c;
+        String zipCode = accreditation.Shipping_Postal_Code__c;
+        Id isoState = accreditation.Shipping_ISO_State__c;
+        Id isoCountry = accreditation.Shipping_ISO_Country__c;
+
+        if(String.isBlank(street) && String.isBlank(city) && String.isBlank(state) && String.isBlank(zipCode) && isoState == null && isoCountry == null) {
+            return true;
+        }
+
+        if(!String.isBlank(street) && !String.isBlank(city) && !String.isBlank(isoState) && !String.isBlank(isoCountry)) {
+            return true;
+        }
+
+		return false;
 	}
 
 	public static void updateUpdater(EntityUpdater updater){
@@ -1232,7 +1259,7 @@ global class ANG_OscarProcessHelper {
 		if (origin == AMS_Utils.ANG_MASSIVE_FOP)
 			identifier = 'NG_FOP_PortalNotification';
 		else if (origin == AMS_Utils.ANG_FOP_AUTOMATIC_RENEWAL)
-			identifier = 'NG_FOP_PortalNotification'; //change the identifier id we need to use another notification template
+			identifier = ANG_PCI_RENEWAL;
 
 		Notification_Template__c notificationTemplate = null;
 
@@ -1421,6 +1448,7 @@ global class ANG_OscarProcessHelper {
 			nt.Message__c = nt.Message__c
 				.replace('#CONTACTNAME', contactsMap.get(nt.Contact__c).Name)
 				.replace('#IATACODE', acct.IataCode__c)
+				.replace('#ACCOUNTNAME', acct.Name)
 				.replace('#TODAY30',String.valueOf(Datetime.now().addDays(30).format('MM/dd/yyyy')))
 				.replace('#CASENUMBER',acctIdCasesMap.get(contactAccts.get(nt.Contact__c)).CaseNumber);
 				
@@ -1454,11 +1482,11 @@ global class ANG_OscarProcessHelper {
 
 			if(con.User_Portal_Status__c == 'Approved Admin')
 				contactsToReturn.add(new ContactOrdered(con,0));
-			if (con.Financial_Assessment_Contact__c)
+			else if (con.Financial_Assessment_Contact__c)
 				contactsToReturn.add(new ContactOrdered(con,10));
-			if(con.BSP_CASS_Payment_contact__c)
+			else if(con.BSP_CASS_Payment_contact__c)
 				contactsToReturn.add(new ContactOrdered(con,20));
-			if(con.User_Portal_Status__c <> 'Approved Admin' && !con.Financial_Assessment_Contact__c &&  !con.BSP_CASS_Payment_contact__c)
+			else if(con.User_Portal_Status__c <> 'Approved Admin' && !con.Financial_Assessment_Contact__c &&  !con.BSP_CASS_Payment_contact__c)
 				contactsToReturn.add(new ContactOrdered(con,30));
 
 		} 
@@ -1469,11 +1497,11 @@ global class ANG_OscarProcessHelper {
 
 				if(con.User_Portal_Status__c == 'Approved Admin')
 					contactsToReturn.add(new ContactOrdered(con,0));
-				if (con.Financial_Assessment_Contact__c)
+				else if (con.Financial_Assessment_Contact__c)
 					contactsToReturn.add(new ContactOrdered(con,10));
-				if(con.BSP_CASS_Payment_contact__c)
+				else if(con.BSP_CASS_Payment_contact__c)
 					contactsToReturn.add(new ContactOrdered(con,20));
-				if(con.User_Portal_Status__c <> 'Approved Admin' && !con.Financial_Assessment_Contact__c &&  !con.BSP_CASS_Payment_contact__c)
+				else if(con.User_Portal_Status__c <> 'Approved Admin' && !con.Financial_Assessment_Contact__c &&  !con.BSP_CASS_Payment_contact__c)
 					contactsToReturn.add(new ContactOrdered(con,30));
 
 			} 
@@ -1544,9 +1572,10 @@ global class ANG_OscarProcessHelper {
 
 		for (Notification__c nt :notifications){
 			nt.Message__c = nt.Message__c
-				.replace('#CONTACTNAME#',contacts.get(nt.Contact__c).Name)
-				.replace('#IATACODE#',contacts.get(nt.Contact__c).Account.IataCode__c)
-				.replace('#DEADLINEDATE#',String.valueOf(Datetime.now().addDays(15).format('MM/dd/yyyy')));
+				.replace('#CONTACTNAME',contacts.get(nt.Contact__c).Name)
+				.replace('#IATACODE',contacts.get(nt.Contact__c).Account.IataCode__c)
+				.replace('#ACCOUNTNAME', acct.Name)
+				.replace('#DEADLINEDATE',String.valueOf(Datetime.now().addDays(15).format('MM/dd/yyyy')));
 		}
 
 		if (!notifications.isEmpty())

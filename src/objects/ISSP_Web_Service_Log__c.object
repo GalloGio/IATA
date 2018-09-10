@@ -464,7 +464,7 @@
         <filters>
             <field>CREATED_DATE</field>
             <operation>equals</operation>
-            <value>7/5/2018 12:00 AM</value>
+            <value>8/31/2018 12:00 AM</value>
         </filters>
         <filters>
             <field>Method__c</field>
@@ -486,10 +486,14 @@
     </nameField>
     <pluralLabel>ISSP Web Service Logs</pluralLabel>
     <searchLayouts>
-        <searchResultsAdditionalFields>Success__c</searchResultsAdditionalFields>
-        <searchResultsAdditionalFields>System__c</searchResultsAdditionalFields>
         <searchResultsAdditionalFields>Web_Service__c</searchResultsAdditionalFields>
-        <searchResultsAdditionalFields>CREATED_DATE</searchResultsAdditionalFields>
+        <searchResultsAdditionalFields>Agency_Applied_Change_code__c</searchResultsAdditionalFields>
+        <searchResultsAdditionalFields>Response__c</searchResultsAdditionalFields>
+        <searchResultsAdditionalFields>Method__c</searchResultsAdditionalFields>
+        <searchResultsAdditionalFields>Started__c</searchResultsAdditionalFields>
+        <searchResultsAdditionalFields>Account__c</searchResultsAdditionalFields>
+        <searchResultsAdditionalFields>OBJECT_ID</searchResultsAdditionalFields>
+        <searchResultsAdditionalFields>Input_Description__c</searchResultsAdditionalFields>
     </searchLayouts>
     <sharingModel>ReadWrite</sharingModel>
     <startsWith>Vowel</startsWith>

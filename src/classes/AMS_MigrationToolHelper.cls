@@ -9,7 +9,7 @@ public without sharing class AMS_MigrationToolHelper {
 
 	private static final Set<String> doesNotNeedStagingAreaProcesses = new Set<String>{'VR.1.0','VR.1.0.CA','CER.1.0',AMS_Utils.NGOPTINOUT,AMS_Utils.NGFOP,AMS_Utils.BANKACCCHANGES};
 	
-	private static Map<String,String> newgenCaseReason{
+	public static Map<String,String> newgenCaseReason{
 		get{
             return new Map<String, String> {
 			AMS_Utils.NEWHELITE => 'New HE lite',
@@ -28,7 +28,7 @@ public without sharing class AMS_MigrationToolHelper {
 		set;
 	}
 
-	private static Map<String, Id> oscarNewgenRTMap {
+	public static Map<String, Id> oscarNewgenRTMap {
 
 		get{
             return new Map<String, String> {
@@ -44,7 +44,7 @@ public without sharing class AMS_MigrationToolHelper {
 		set;
 	}
 
-    private static Map<String, String> processTypeMapNewgen {
+    public static Map<String, String> processTypeMapNewgen {
         get {
             return new Map<String, String> {
 			'Change of Hierarchy' => 'ANG.MAJOR.CHANGES.1.0',
@@ -798,7 +798,7 @@ public without sharing class AMS_MigrationToolHelper {
 				oscarRTId = oscarRT.get('VOLUNTARY_RELINQUISHMENT');
 			if(processType == 'CER.1.0')
 				oscarRTId = oscarRT.get('CERTIFICATE');
-			if(processType == AMS_RecordCreatorWebservice.IEP_BANK_ACCOUNT_SETUP )
+			if(processType == AMS_RecordCreatorWebservice.IEP_BANK_ACCOUNT_SETUP || processType == 'BANK.ACCOUNT.CHANGES')
 				oscarRTId = oscarRT.get('BANK_ACCOUNT_SETUP');
 
 			AMS_OSCAR__c oscar = new AMS_OSCAR__c( 
@@ -890,8 +890,8 @@ public without sharing class AMS_MigrationToolHelper {
 		return null;
 	}
 
-
-	private static AMS_Pax_Accreditation_Form__c fetchAccreditation(Id caseId){
+	
+	public static AMS_Pax_Accreditation_Form__c fetchAccreditation(Id caseId){
 
 		List<AMS_Pax_Accreditation_Form__c> toReturn = new List<AMS_Pax_Accreditation_Form__c>([SELECT Id , Abbreviated_Address__c,Abbreviated_name__c,Accept_terms_and_conditions__c,Account_Name__c,Billing_State__c,Branch_Office_City__c,Branch_Office_Country__c,Branch_Office_Email__c,Branch_Office_FAX__c,Branch_Office_Phone__c,Branch_Office_Postal_code__c,Branch_Office_Street_name_number__c,CASS_Number__c,IATACode__c,IATA_ISO_State__c,ISSP_AMS_GDS_with_signed_contract__c,ISSP_AMS_Legal_Status__c,ISSP_AMS_License_No__c,ISSP_AMS_Premises_located_at_airport__c,ISSP_AMS_VAT_number__c,Is_your_firm_handling_Dangerous_Goods__c,Location_Class__c,Location_Type__c,Mobile__c,Operation__c,RecordTypeId,Remittance_frequency__c,SAAM_Case__c,Shipping_City__c,Shipping_Country__c,Shipping_ISO_Country__c,Shipping_ISO_State__c,Shipping_Postal_Code__c,Shipping_State__c,Shipping_Street__c,Short_Name__c,Solicitation_Flag__c,Submitted_to_IATA__c,Trade_Name__c,VAT_Number_2__c,Website__c from AMS_Pax_Accreditation_Form__c where SAAM_Case__c = :caseId]);
 	

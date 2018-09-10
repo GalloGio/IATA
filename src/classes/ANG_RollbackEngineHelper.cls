@@ -12,6 +12,8 @@ global without sharing class ANG_RollbackEngineHelper implements Queueable{
 
     private Id newParentHierarchyId;
 
+    private boolean isHierarchyChange;
+
     public void execute(QueueableContext context){
         executeAdhoc();
     }
@@ -22,29 +24,36 @@ global without sharing class ANG_RollbackEngineHelper implements Queueable{
     
     public void executeAdhoc(){
 
-        fetchTechnicalLogs(oscarId);
+   		System.SavePoint sp;
 
-        AMS_AgencyRelationshipTriggerHandler.AMS_HierarchyProcess = true;
-        AMS_AccountTriggerHandler.processMinorChangesValidationFlag = false; 
-        rollbackData();
-        AMS_OscarChangesHelper.createInternalCase(new Set<Id>{oscarId});
-        sendEmailConfirmation();
-        AMS_AgencyRelationshipTriggerHandler.AMS_HierarchyProcess = false;
-        AMS_AccountTriggerHandler.processMinorChangesValidationFlag = true;
-        generateAgencyEvents(oscarId);
+        try{
+            sp = Database.setSavePoint();
+            AMS_AgencyRelationshipTriggerHandler.AMS_HierarchyProcess = true;
+            AMS_AccountTriggerHandler.processMinorChangesValidationFlag = false; 
+            rollbackData();
+            AMS_OscarChangesHelper.createInternalCase(new Set<Id>{oscarId});
+            sendEmailConfirmation(null);
+            AMS_AgencyRelationshipTriggerHandler.AMS_HierarchyProcess = false;
+            AMS_AccountTriggerHandler.processMinorChangesValidationFlag = true;
+            generateAgencyEvents(oscarId);
 
-
+        }catch(Exception e){
+            Database.rollback(sp);
+            sendEmailConfirmation(e);
+        }
     }
 
     public ANG_RollbackEngineHelper(Id oscarId){
 
         this.oscarId = oscarId;
         this.technicalLogsMap = new Map<String,List<String>>();
-
-        accountsRelated = new Set<Id>();
-        accountsRelated.addAll(fetchHierarchySelection(oscarId));
+        fetchTechnicalLogs(oscarId);
 
         AMS_OSCAR__c oscar = [Select Name, Account__c,New_parent__c, ANG_Type_Of_Change__c from AMS_OSCAR__c where Id =:oscarId];
+
+        accountsRelated = new Set<Id>();
+        accountsRelated.addAll(fetchHierarchySelection(oscar.Account__c));
+		accountsRelated.add(oscar.account__c);
 
         this.typesOfChange = new List<String>();
         if (oscar.ANG_Type_Of_Change__c.contains(';')) this.typesOfChange.addAll(oscar.ANG_Type_Of_Change__c.split(';'));
@@ -52,9 +61,9 @@ global without sharing class ANG_RollbackEngineHelper implements Queueable{
 
         this.oscarName = oscar.Name;
 
-        accountsRelated.add(oscar.Account__c);
-
         this.newParentHierarchyId = oscar.New_parent__c;
+
+        isHierarchyChange = oscar.ANG_Type_Of_Change__c.contains(AMS_Utils.ANG_HIERARCHY);
 
     }
 
@@ -73,6 +82,11 @@ global without sharing class ANG_RollbackEngineHelper implements Queueable{
     }
 
     private void rollbackData(){
+        
+        if(technicalLogsMap.isEmpty()){
+            System.System.debug('There is nothing to rollback, doing nothing here.');
+            return;
+        }
 
         For(String entity: technicalLogsMap.keySet()){
 
@@ -94,7 +108,8 @@ global without sharing class ANG_RollbackEngineHelper implements Queueable{
                 processRollbackPortalAppRights(technicalLogsMap.get(entity));
         }
 
-        processRollbackHierarchy(technicalLogsMap.get('AMS_Agencies_Hierarchy__c'),technicalLogsMap.get('AMS_Agencies_relationhip__c'));
+        if(technicalLogsMap.get('AMS_Agencies_Hierarchy__c') != null || technicalLogsMap.get('AMS_Agencies_relationhip__c') != null || isHierarchyChange)
+            processRollbackHierarchy(technicalLogsMap.get('AMS_Agencies_Hierarchy__c'),technicalLogsMap.get('AMS_Agencies_relationhip__c'));
 
 
 
@@ -280,6 +295,8 @@ global without sharing class ANG_RollbackEngineHelper implements Queueable{
         if(newParentHierarchyId != null)
             accountsRelatedList.add(newParentHierarchyId);
 
+        System.debug('accountsRelatedList to rollback is:'+accountsRelatedList);
+
         Set<Id> hierarchiesToDeleteIds = new Set<Id>();
         Set<Id> relationsToDelete = new Set<Id>();
 
@@ -287,6 +304,8 @@ global without sharing class ANG_RollbackEngineHelper implements Queueable{
             relationsToDelete.add(rel.Id);
             hierarchiesToDeleteIds.add(rel.Hierarchy__c);
         }
+
+        System.debug('relationsToDelete are:'+relationsToDelete);
 
         if(!relationsToDelete.isEmpty())
             delete [Select Id from AMS_Agencies_relationhip__c where Id in :relationsToDelete];
@@ -329,6 +348,7 @@ global without sharing class ANG_RollbackEngineHelper implements Queueable{
     }
 
 
+/*
     private Set<Id> fetchHierarchySelection(Id oscarId){
 
         Set<Id> accountIds = new Set<Id>();
@@ -338,8 +358,38 @@ global without sharing class ANG_RollbackEngineHelper implements Queueable{
     
         return accountIds;
     }
+*/
 
-    private void sendEmailConfirmation(){
+	private Set<Id> fetchHierarchySelection(Id accountOscar){
+
+		Set<Id> accountIds = new Set<Id>();
+		
+        /*
+		Account acct = [Select Id, Location_Type__c, ParentId from Account where Id =:accountOscar];
+		Id accountId = acct.Id;
+		
+		if(acct.Location_Type__c <> AMS_Utils.HE)
+			accountId = acct.ParentId;
+
+		for(Account acctToSearch: [Select Id from Account where ParentId =:accountId])
+			accountIds.add(acctToSearch.Id);
+	
+		accountIds.add(accountId);
+        */
+
+        System.debug('technicalLogsMap are:'+technicalLogsMap);
+        
+        for(String acctStr : technicalLogsMap.get('Account')){
+
+            Account a = (Account) JSON.deserialize(acctStr, Account.class);
+
+            accountIds.add(a.Id);
+        }
+        
+		return accountIds;
+	}
+
+    private void sendEmailConfirmation(Exception e){
 
         Messaging.SingleEmailMessage mail = new Messaging.SingleEmailMessage();
 
@@ -352,8 +402,17 @@ global without sharing class ANG_RollbackEngineHelper implements Queueable{
         mail.setSenderDisplayName('Apex Newgen - Rollback process');
         mail.setSubject('Apex Newgen - Rollback process');
 
-        String toReturnBody = 'The rollback process for Oscar Case '+oscarName+' has been completed.\n\n';
-        
+        String toReturnBody;
+
+        if(e ==null)
+            toReturnBody = 'The rollback process for Oscar Case '+oscarName+' has been completed.\n\n';
+        else {
+           toReturnBody = 'There was an error with the rollback process regarding Oscar Case '+oscarName+'.\n\n';
+           toReturnBody+= 'Message:'+e.getMessage()+'\n\n';
+           toReturnBody+= 'Stacktrace:'+e.getStackTraceString()+'\n\n';
+           toReturnBody+= 'Please contact app support for further assistance';
+        }
+
         mail.setPlainTextBody(toReturnBody);
 
          if(Test.isRunningTest()){

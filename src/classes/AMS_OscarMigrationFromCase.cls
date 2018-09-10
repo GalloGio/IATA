@@ -80,10 +80,6 @@ global class AMS_OscarMigrationFromCase  implements Process.Plugin{
 
         List<Case> caseList = Database.query('SELECT Id, CaseNumber, account.ANG_FA_Opt_out__c, OSCAR__c , OSCAR__r.Id, Account_Concerned__c ' + caseFieldsStr + toMigrateFields + ' , Account.IATACode__c ,  Contact.Email, ContactId, Account.Category__c,Account.Location_Class__c,Account.Location_Type__c, Account.ANG_IsNewGenAgency__c, Account.Name, Account.Parent.Remittance_frequency__c, Account.Parent.ANG_Accreditation_Model__c, Account.Company_Type__c, Account.TradeName__c, Account.ParentId FROM CASE WHERE Id = :caseId');
 
-        System.debug('caseList is :' +caseList);
-        
-        System.debug('Account.Parent.ANG_Accreditation_Model__c is :' +caseList.get(0).Account.Parent.ANG_Accreditation_Model__c);
-
 		if(caseList.isEmpty()){
 	        oscarId = '';
 	        errorMessage = 'Could not find Case to match the id provided: ' + caseId;
@@ -123,7 +119,9 @@ global class AMS_OscarMigrationFromCase  implements Process.Plugin{
 
 		System.debug('Starting SAAM case migration for case ' + caseToMigrate.Id + ' with comingFromPortal=' + isFromPortal);
 
+        AMS_OscarMigrationFromCase.changeSubject = true;
 		container = AMS_MigrationToolHelper.migratecases(container,processType);
+        AMS_OscarMigrationFromCase.changeSubject = false;
 
 		changeSubject = true;
 

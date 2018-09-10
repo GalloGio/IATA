@@ -1,5 +1,6 @@
 public with sharing class ANG_AgencyChangesHelper {
 
+	public static Boolean testRunnningForNonBackup = false;
 	public static Boolean isMigrationRunning = false;
 
 	public class AChangeStructure{
@@ -105,8 +106,8 @@ public with sharing class ANG_AgencyChangesHelper {
 	
 
 		if(oscar.Process__c == AMS_Utils.NGCHANGES && oscar.STEP6__c == AMS_Utils.PASSED  && oscar.ANG_Type_Of_Change__c != null && !isMigrationRunning && oscar.Backup_In_Progress__c){	
-			oscar.addError('There is a rollback in progress for this Oscar, please wait a few moments until it finishes.');
-			return;
+				oscar.addError('There is a backup in progress for this Oscar, please wait a few moments until it finishes.');
+				return;
 		}
 
 		if(oscar.Process__c == AMS_Utils.NGCHANGES && oscar.STEP6__c != AMS_Utils.PASSED && oscar.Change_effective_as_of__c > Date.today()) {
@@ -156,7 +157,8 @@ public with sharing class ANG_AgencyChangesHelper {
                 if(!validateTypeOfChange(oscar))
                     return;
                     
-				sanityCheckValidations(oscar, changesContainer, oscarOnlineAccreditation);
+				if(!sanityCheckValidations(oscar, changesContainer, oscarOnlineAccreditation))
+					return;
 
 				changesContainer = applyChangeOfFields(oscar, accountIdsInvolvedSet, changesContainer, oscarOnlineAccreditation);
 
@@ -652,7 +654,12 @@ public with sharing class ANG_AgencyChangesHelper {
 
 				if(newAccreditationModel ==  'Cashless'){
 					toUpsert = performCashLessTransformation(accountsAffected);
-					removeContactsFlag(accountsAffected);
+					removeContactsFlag(accountsAffected); 
+
+                    for(Id accountId: accountsAffected)
+						if(toReturn.accountsMap.get(accountId) != null)
+    	                    toReturn.accountsMap.get(accountId).Has_a_Financial_Assessment_Contact__c = false;
+
 				}
 				if(newAccreditationModel ==  'Cash')
 					toUpsert = performCashTransformation(accountsAffected);
@@ -777,13 +784,23 @@ public with sharing class ANG_AgencyChangesHelper {
 
 			if(newAccreditationModel ==  'Cashless'){
 				toUpsert = performCashLessTransformation(accountsAffected);
+
 				removeContactsFlag(accountsAffected);
+
+                for(Id accountId: accountsAffected)
+					if(toReturn.accountsMap.get(accountId) != null)
+	                    toReturn.accountsMap.get(accountId).Has_a_Financial_Assessment_Contact__c = false;
+
 			}
+
 			if(newAccreditationModel ==  'Cash')
 				toUpsert = performCashTransformation(accountsAffected);
 
-			if(!toUpsert.isEmpty())
+            if(!toUpsert.isEmpty()){
+
 				upsert toUpsert;
+
+            }
 		}
 
 		//Perform changes on RHC object
@@ -1049,9 +1066,14 @@ public with sharing class ANG_AgencyChangesHelper {
 		List<Agency_Authorization__c> toUpsert = new List<Agency_Authorization__c>();
 
         if(oscarOnlineAccreditation.ANG_Accreditation_Type__c ==  'Cashless'){
+            
         	toUpsert = performCashLessTransformation(accountsAffected);
 
         	removeContactsFlag(accountsAffected);
+
+            for(Id accountId: accountsAffected)
+				if(toReturn.accountsMap.get(accountId) != null)
+	                toReturn.accountsMap.get(accountId).Has_a_Financial_Assessment_Contact__c = false;
 
         	ANG_RHCHelper.deactivateRHCInfo(new Set<Id>{oscarToProcess.Account__c});
         }
@@ -1067,6 +1089,7 @@ public with sharing class ANG_AgencyChangesHelper {
 		return toReturn;
 	}
 
+    @future
 	public static void removeContactsFlag(Set<Id> accountsAffected){
 
 		List<Contact> contactsToUpdate = new List<Contact>();
@@ -1089,12 +1112,17 @@ public with sharing class ANG_AgencyChangesHelper {
 
 		}
 
+        updateContactsAndPortalRights(portalARtoUpdate, contactsToUpdate);
+ 
+    }
+
+    public static void updateContactsAndPortalRights(List<Portal_Application_Right__c> portalARtoUpdate, List<Contact> contactsToUpdate){
+
 		if(!portalARtoUpdate.isEmpty())
 			update portalARtoUpdate;
 
 		if(!contactsToUpdate.isEmpty())
 			update contactsToUpdate;
-
 	}
 
 	public static List<Agency_Authorization__c> performCashLessTransformation(Set<Id> accountsAffected){
@@ -1302,12 +1330,16 @@ public with sharing class ANG_AgencyChangesHelper {
 
 	}
 
-	public static void sanityCheckValidations(AMS_OSCAR__c oscar, AChangeStructure changesContainer, AMS_Pax_Accreditation_Form__c oscarOnlineAccreditation){
+	public static boolean sanityCheckValidations(AMS_OSCAR__c oscar, AChangeStructure changesContainer, AMS_Pax_Accreditation_Form__c oscarOnlineAccreditation){
 
 		if(oscar.ANG_Type_of_change__c.containsIgnoreCase(AMS_Utils.ANG_ACCREDITATION_TYPE)){
-			if(changesContainer.accountsMap.get(oscar.Account__c).ANG_Accreditation_Model__c == oscarOnlineAccreditation.ANG_Accreditation_type__c)
+			if(changesContainer.accountsMap.get(oscar.Account__c).ANG_Accreditation_Model__c == oscarOnlineAccreditation.ANG_Accreditation_type__c){
 				oscar.addError('To pass sanity checks when type of change includes "Accreditation Type", this value must be modified.');
+				return false;
+			}
 		}
+
+		return true;
 
 	}
 

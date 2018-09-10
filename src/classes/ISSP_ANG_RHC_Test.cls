@@ -22,7 +22,8 @@ public class ISSP_ANG_RHC_Test {
         IATA_ISO_Country__c portugal = new IATA_ISO_Country__c (
                 Name = 'Portugal_test',
                 ISO_Code__c = 'PT',
-                ANG_Portal_Service__c = s1.id
+                ANG_Portal_Service__c = s1.id,
+                ANG_Enable_NewGen__c = true
             );
 
         insert new List<IATA_ISO_Country__c>{portugal};
@@ -36,7 +37,8 @@ public class ISSP_ANG_RHC_Test {
                 IATACode__c = '1234567890',
                 ANG_Accreditation_Model__c = 'Cash',
                 Status__c = 'Approved',
-                OwnerId = UserInfo.getUserId()
+                OwnerId = UserInfo.getUserId(),
+                Location_Class__c = 'P'
             );
 
         insert new List<Account>{a};
@@ -151,7 +153,8 @@ public class ISSP_ANG_RHC_Test {
         IATA_ISO_Country__c portugal = new IATA_ISO_Country__c (
                 Name = 'Portugal_test',
                 ISO_Code__c = 'PT',
-                ANG_Portal_Service__c = s1.id
+                ANG_Portal_Service__c = s1.id,
+                ANG_Enable_NewGen__c = true
             );
 
         insert new List<IATA_ISO_Country__c>{portugal};
@@ -165,7 +168,8 @@ public class ISSP_ANG_RHC_Test {
                 IATACode__c = '1234567890',
                 ANG_Accreditation_Model__c = 'Cash',
                 Status__c = 'Approved',
-                OwnerId = UserInfo.getUserId()
+                OwnerId = UserInfo.getUserId(),
+                Location_Class__c = 'P'
             );
 
         insert new List<Account>{a};
@@ -283,7 +287,8 @@ public class ISSP_ANG_RHC_Test {
         IATA_ISO_Country__c portugal = new IATA_ISO_Country__c (
                 Name = 'Portugal_test',
                 ISO_Code__c = 'PT',
-                ANG_Portal_Service__c = s1.id
+                ANG_Portal_Service__c = s1.id,
+                ANG_Enable_NewGen__c = true
             );
 
         insert new List<IATA_ISO_Country__c>{portugal};
@@ -298,7 +303,8 @@ public class ISSP_ANG_RHC_Test {
                 ANG_Accreditation_Model__c = 'Cashless',
                 Status__c = 'Approved',
                 OwnerId = UserInfo.getUserId(),
-                Financial_Review_Result__c = 'Unsatisfactory'
+                Financial_Review_Result__c = 'Unsatisfactory',
+                Location_Class__c = 'P'
             );
 
         insert new List<Account>{a};
