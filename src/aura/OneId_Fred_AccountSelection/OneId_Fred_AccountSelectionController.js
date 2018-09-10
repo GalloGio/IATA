@@ -62,9 +62,9 @@
                     component.set("v.response", accountSuggested);
                    
                 } else {
-                    var noResult = {'Name':'No result found...', 'Airline_designator__c':'-', 'ICAO_Member__r.ICAO_Iso_3_Code__c':'-', 'ICAO_Member__r.State_Name__c':'-'};
+                    var noResult = {'Name':'No result found...', 'Airline_designator__c':'-', 'ICAO_Member__r.ICAO_Iso_3_Code__c':'-', 'ICAO_Member__r.Name':'-'};
                     if(component.get("v.customerType")=='ICAO Member State')
-                        noResult = {'State_Name__c':'No result found...', 'ICAO_Iso_2_Code__c':'-', 'ICAO_Iso_3_Code__c':'-'};
+                        noResult = {'Name':'No result found...', 'ICAO_Iso_2_Code__c':'-', 'ICAO_Iso_3_Code__c':'-'};
                     var suggestions = [];
                     suggestions.push(noResult);
                     component.set("v.response",suggestions);

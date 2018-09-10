@@ -308,7 +308,7 @@ public without sharing class OneId_Fred_AccountSelection_CTRL {
             // Get account linked to primary user - To block account selection
             User u = [SELECT AccountId FROM User WHERE Id =: UserInfo.getUserId()];
             if(u!=null && u.AccountId != null) {
-                param.partnerAccount = [SELECT RecordType.DeveloperName, RecordType.Name, Id, Name, IATACode__c, ICAO_designator__c, Airline_designator__c, State_Name__c, ICAO_Iso_2_Code__c, ICAO_Iso_3_Code__c FROM Account WHERE Id =: u.AccountId LIMIT 1];
+                param.partnerAccount = [SELECT RecordType.DeveloperName, RecordType.Name, Id, Name, IATACode__c, ICAO_designator__c, Airline_designator__c, ICAO_Iso_2_Code__c, ICAO_Iso_3_Code__c FROM Account WHERE Id =: u.AccountId LIMIT 1];
 
                 // To change when implemnting another primary
                 Integer nbOfPrimaryInAccount = [SELECT count() FROM PermissionSetAssignment WHERE PermissionSet.Name = 'FRED_Primary_User' AND Assignee.AccountId =: u.AccountId];
@@ -387,10 +387,10 @@ public without sharing class OneId_Fred_AccountSelection_CTRL {
         }
 
         if(customerType=='ICAO Member State') {
-            queryStr = 'SELECT Id, State_Name__c, ICAO_Iso_2_Code__c, ICAO_Iso_3_Code__c, IATA_ISO_Country__r.ISO_Code__c ';
+            queryStr = 'SELECT Id, Name, ICAO_Iso_2_Code__c, ICAO_Iso_3_Code__c, IATA_ISO_Country__r.ISO_Code__c ';
             String queryStr2 = ' FROM Account WHERE';
             queryStr2 += ' RecordType.DeveloperName = \'ICAO_Member_State\'';
-            queryStr2 += ' AND (State_Name__c like \'%' + userInput + '%\'';
+            queryStr2 += ' AND (Name like \'%' + userInput + '%\'';
             queryStr2 += ' OR ICAO_Iso_2_Code__c like \'%' + userInput + '%\'';
             queryStr2 += ' OR ICAO_Iso_3_Code__c like \'%' + userInput + '%\')';
             
