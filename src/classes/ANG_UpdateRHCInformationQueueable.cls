@@ -13,13 +13,10 @@ public class ANG_UpdateRHCInformationQueueable implements Queueable {
 	}
 
 	public ANG_UpdateRHCInformationQueueable(Set<Id> accIdsIn, ANG_UpdateRHCInformationBatch.Process pIn, Boolean rIn){
-		this.accIds = accIdsIn;
-		this.p = pIn;
-		this.runEverything = rIn;
-		this.batchSize = 1;
+		this(accIdsIn, pIn, rIn, 1);
 	}
 
 	public void execute(QueueableContext context) {
-		Database.executeBatch(new ANG_UpdateRHCInformationBatch(accIds, ANG_UpdateRHCInformationBatch.Process.PROVISIONAL, runEverything, batchSize));
+		Database.executeBatch(new ANG_UpdateRHCInformationBatch(accIds, p, runEverything, batchSize));
 	}
 }
