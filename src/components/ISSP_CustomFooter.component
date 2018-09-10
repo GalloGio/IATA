@@ -232,7 +232,6 @@ function getCookie(name) {
     return null;
 }
 
-$ =  jQuery.noConflict();
 $('.sidebarCell').hide();$('.caseTab input[name="save_close"]').hide();
 
 $("#cas7_ilecell").prop("onclick", null);
