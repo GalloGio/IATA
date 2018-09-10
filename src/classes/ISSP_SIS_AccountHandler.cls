@@ -137,10 +137,15 @@ public with sharing class ISSP_SIS_AccountHandler {
                 return true; // if the status changing to Terminated then update it
             }
         }
-        for (String fieldName: ISSP_WS_SIS_Callout_CreateAccount.LIST_FIELD_NAMES) {
-            if (fieldName!='BillingAddress')
-            if (accountNew.get(fieldName) != accountOld.get(fieldName)) {
-                return true;
+        if(accountnew.Status__c == 'Approved' 
+                || accountnew.Status__c == 'Cash basis/no commission' 
+                || accountnew.Status__c == 'Cash basis/with commission' 
+                || accountnew.Status__c == 'Changes processed') {
+            for (String fieldName: ISSP_WS_SIS_Callout_CreateAccount.LIST_FIELD_NAMES) {
+                if (fieldName!='BillingAddress')
+                if (accountNew.get(fieldName) != accountOld.get(fieldName)) {
+                    return true;
+                }
             }
         }
         return false;
