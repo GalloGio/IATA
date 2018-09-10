@@ -802,21 +802,6 @@ public without sharing class AMS_MigrationToolHelper {
 			if(processType == AMS_RecordCreatorWebservice.IEP_BANK_ACCOUNT_SETUP || processType == AMS_RecordCreatorWebservice.IEP_MODEL_A_ACCOUNT_SETUP || processType == 'BANK.ACCOUNT.CHANGES')
 				oscarRTId = oscarRT.get('BANK_ACCOUNT_SETUP');
 
-			AMS_OSCAR__c oscar = new AMS_OSCAR__c( 
-				Process__c = processType, RecordTypeId =oscarRTId, Status__c = caseToProcess.Status, OwnerId = caseToProcess.OwnerId,		
-				Account__c = caseToProcess.AccountId
-			);
-
-			if(processType.equalsIgnoreCase('ANG.FS.OPTINOUT')){
-
-            	oscar.ANG_FA_Opt_out__c = caseToProcess.Account.ANG_FA_Opt_out__c == true ? 'Opt-In' : 'Opt-Out';
-        	}
-			
-			insert oscar;
-
-			oscarId = oscar.Id;
-
-			caseToProcess.OSCAR__c = oscar.Id;
 
 			//  For IEP BANK Acc Setup force flag to false by default ('ISS Portal - Make case invisible' worflow cannot run for this process)
 			if(processType == AMS_RecordCreatorWebservice.IEP_BANK_ACCOUNT_SETUP  || processType == AMS_RecordCreatorWebservice.IEP_MODEL_A_ACCOUNT_SETUP){
@@ -830,6 +815,26 @@ public without sharing class AMS_MigrationToolHelper {
 			
 			update caseToProcess;
 		}
+
+		ID caseOwnerId = [SELECT OwnerId FROM CASE WHERE ID = :caseToProcess.ID].OwnerId;
+
+		AMS_OSCAR__c oscar = new AMS_OSCAR__c( 
+			Process__c = processType, RecordTypeId =oscarRTId, Status__c = caseToProcess.Status, OwnerId = caseToProcess.OwnerId,		
+			Account__c = caseToProcess.AccountId
+		);
+
+		if(processType.equalsIgnoreCase('ANG.FS.OPTINOUT')){
+
+        	oscar.ANG_FA_Opt_out__c = caseToProcess.Account.ANG_FA_Opt_out__c == true ? 'Opt-In' : 'Opt-Out';
+    	}
+		
+		insert oscar;
+
+		oscarId = oscar.Id;
+
+		caseToProcess.OSCAR__c = oscar.Id;
+
+		update caseToProcess;
 
 		AMS_OSCAR__c oscarUpdated = postOscarUpdate(oscarId,caseToProcess.CaseNumber, caseToProcess.AccountId, false,caseStatus,caseToProcess);
 
