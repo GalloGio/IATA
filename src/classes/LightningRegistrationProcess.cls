@@ -1,4 +1,5 @@
 public without sharing class LightningRegistrationProcess{
+    public static String serviceName {get;set;}
     @AuraEnabled
     public static contact createcontact() {
         return new Contact();
@@ -437,6 +438,114 @@ public without sharing class LightningRegistrationProcess{
             database.upsert(con);
         }
     }
+
+    @AuraEnabled    
+    public Static String createContactAndAccount (Contact con, Account acc, String customerType, String servName) {
+        // ISSP_Registration registration = new ISSP_Registration();
+        // Boolean b = registration.pageIsValid();
+        serviceName = servName;
+        RecordType rt = [Select Id From RecordType WHERE SObjectType ='Contact' AND DeveloperName='Standard_Contact'];
+        if(con.RecordType == null) con.RecordTypeId = rt.Id;
+
+        //Debug
+        System.debug('Contact ' + con);
+        System.debug('Account ' + acc);
+        try {
+            if(acc.Id == null) {
+                //acc.phone = null;
+                acc.name = acc.Legal_name__c;
+                acc.Reason_for_creation__c = 'Created by customer';
+                //Since we need to create a portal user, we need to assign the account to a user with a specified role, otherwise an error is thrown
+                acc.ownerid = ISSP_Constant.newAccountOwnerId;
+                String recname = ISSP_Constant.accountDefaultRecordTypeByCustomerType.get(customerType);
+                List<RecordType> rtSet = [select id from RecordType where DeveloperName=:recname];
+                    if (rtSet!=null && rtSet.size()>0 && rtSet.get(0)!=null)
+                acc.recordtypeid = rtSet[0].id;
+                
+                if (!String.isBlank(acc.Category__c) && acc.Category__c != 'Other')
+                    acc.Category_Other_Value__c = null;
+                
+                //Assign countries and states
+                if (!String.isBlank(acc.BillingCountry)) {
+                    List <Iata_Iso_Country__c> cn = [SELECT id FROM Iata_Iso_Country__c WHERE Name = :acc.BillingCountry LIMIT 1];
+                    if (cn.size()!=0) {
+                        acc.IATA_ISO_Country__c = acc.IATA_ISO_Shipping_Country__c = cn[0].id;
+                    }
+                }
+                
+                database.insert(acc);
+            }
+            List <Account> lstacc = [select id from account where id=:acc.id];
+            system.debug('aqui funcioana ' + lstacc[0].Id);
+            if(!lstacc.isEmpty()) {
+                con.AccountId = lstacc[0].Id;
+                if(! String.isBlank(acc.Iata_Iso_Country__c)) {
+                    con.ISO_Country__c = acc.Iata_Iso_Country__c;
+                    if(! String.isBlank(acc.IATA_ISO_Shipping_Country__c))
+                        con.IATA_ISO_Shipping_Country__c = acc.IATA_ISO_Shipping_Country__c;
+                }
+                checkConAvailable(con);
+                //database.upsert(con);
+            }
+            String thisNickname;
+            if (String.isNotBlank(con.lastName) && con.lastName.length() > 3)
+                thisNickname = con.lastName.substring(0,3)+Datetime.now().formatLong();
+            else
+                thisNickname = con.lastName+Datetime.now().formatLong();
+
+            system.debug('NICKNAME 1: ' + thisNickname);
+            system.debug('NICKNAME 1 length: ' + thisNickname.length());
+            if (thisNickname.length() > 40){
+                system.debug('more than 40');
+                thisNickname = thisNickname.left(40);
+            }
+            else{
+                system.debug('not more than 40');
+                thisNickname = thisNickname;
+            }
+
+            System.debug('>>con ' + con);
+
+            string UID = Comm_User_Helper.NewGuid();
+            User u = new User ( CommunityNickname= thisNickname , title=con.title, contactid = con.id, Firstname = con.firstname, lastname = con.lastname, emailencodingkey = 'UTF-8', localesidkey = 'en_US', email = con.email, username=ISSP_Utilities.buildPortalUserName(con.email), Alias = ISSP_Utilities.buildPortalUserName(con.email).left(5), timezonesidkey = 'America/Los_Angeles', languagelocalekey = 'en_US',Date_ToU_accepted__c = system.Now(), ToU_accepted__c = true, UID__c = UID);
+            //User u = new User (CommunityNickname= thisNickname , contactid = con.id, Firstname = con.firstname, lastname = con.lastname, emailencodingkey = 'UTF-8', localesidkey = 'en_US', email = con.email, username=ISSP_Utilities.buildPortalUserName(con.email), languagelocalekey = 'en_US', Date_ToU_accepted__c = system.Now(), ToU_accepted__c = true);
+           
+            
+            if(servName == 'ISSP' || servName == 'FRED')
+                u.Community__c = servName;
+
+            if(servName == 'FRED') {
+                // Set Fred profile 
+                //u.ProfileID = [SELECT Id FROM profile WHERE name = 'FRED Portal (Partner)' LIMIT 1][0].Id;
+                // Mehdi request to use existing profile so above line is commented
+            }
+           
+
+            System.debug('User ' + u);
+            System.debug('con.accountId ' + con.accountId);            
+            String password = Comm_User_Helper.generateRandomString(6) + '1a';
+            System.debug('password ' + password);
+            String userId = Site.createPortalUser(u, con.accountId, password, false);
+            System.debug('userId ' + userId);
+            
+            //String userId = Site.createExternalUser( u, con.accountId, password, false);
+
+            /*if(String.isNotBlank(userId))
+                setFederationId(userId, con.email);
+            */
+            System.debug('Done Registration UserId: what 2' + u);
+            
+            
+            sendWelcomeEmail(con, u, password);
+            
+            return userid;
+            
+
+        } catch (Exception e) {
+            return e.getMessage() + ' - line: ' + e.getLineNumber();
+        }
+        
+    } 
 
     @AuraEnabled
     public Static String createContactAndAccount (Contact con, Account acc, String customerType) {
