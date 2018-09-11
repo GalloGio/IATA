@@ -380,7 +380,7 @@
 
                                                     <a class="button" href="{!$Site.BaseUrl}/IEC_ProductDetails?id={!prod.ProductNumber}"
                                                     	onclick="clickProductPush('{!prod.InventoryStatus}','{!prod.ProductNumber}' ,{!prod.productNameAnalytic});">
-                                                    	{! IF(prod.InventoryStatus == 'In stock' || prod.InventoryStatus == 'Available Now' , $Label.Button_Select, $Label.PreOrderAddToCart)}
+                                                    	{! IF(OR(prod.InventoryStatus == 'Out of stock', prod.InventoryStatus == 'Coming Soon'), $Label.PreOrderAddToCart, $Label.Button_Select)}
                                                     </a>
 												</div>
 											</li>
