@@ -342,15 +342,6 @@ public without sharing class ISSP_AMS_MSO_Request_Controller {
 
         if (accountId == null || accreditationId == null || oscarID == null)  return false;
 
-        /*String[] generateResult = AmsIataCodeGenerator.generatedAgencyIATACode(accountId, accreditationId);
-        if (generateResult[0] != '1') return false;
-
-        String copyResult = AMS_OSCAR_Webservice.copyDataToAccount(oscarId);
-        if (copyResult != 'OK') return false;
-
-        String changeCodeResult = AMS_OSCAR_Webservice.createChangeCodeNEW(oscarId);
-        if (changeCodeResult != 'OK') return false;*/
-
         String[] result = ANG_OscarProcessHelper.processIATACodeGeneration(accountId, accreditationId,oscarId);
         if (result[0] != '0') return false;
 

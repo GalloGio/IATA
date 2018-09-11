@@ -1237,6 +1237,9 @@ public without sharing class AMS_Utils {
         List<Account> accountsToUpdate = new List<Account>();
         List<AMS_Pax_Accreditation_Form__c> onlineAccToCreateAccountRole = new List<AMS_Pax_Accreditation_Form__c>();
         Map<Id, Set<Id>> stagingToAccount = new Map<Id, Set<Id>>();
+        List<AMS_OSCAR__c> oscarsToCopy = new List<AMS_OSCAR__c>();
+        Map<Id,String> locationTypeByOscar = new Map<Id,String>();
+        Map<Id,Id> topParentByOscar = new Map<Id,Id>();
 
         //DT: reindented and added 3 fields for iso shipping/billin
         Map<String, String> fieldsMapping = new Map<String, String> {'Name' => 'Account_Name__c'
@@ -1286,7 +1289,7 @@ public without sharing class AMS_Utils {
             oscarOnlineAccredIds.add(oscar.AMS_Online_Accreditation__c);
         }
 
-        Map<Id, Account> accounts = new Map<Id, Account>([SELECT Name, IATACode__c, Company_Type__c, Short_Name__c, TradeName__c, License_Number__c, VAT_Number__c, GDS__c, Operation__c,
+        Map<Id, Account> accounts = new Map<Id, Account>([SELECT Name, Top_Parent__c, IATACode__c, Company_Type__c, Short_Name__c, TradeName__c, License_Number__c, VAT_Number__c, GDS__c, Operation__c,
                 BillingCountry, BillingStreet, BillingPostalCode, BillingState, BillingCity, IATA_ISO_Country__c, Iso_State__c, ShippingCountry,
                 ShippingStreet, ShippingPostalCode, ShippingState, ShippingCity, Email__c, Website, Phone, Fax, In_a_Airport__c, Abbreviated_name__c, Abbreviated_address__c,
                 Remittance_frequency__c, Solicitation_Flag__c, VAT_Number_2__c, CASS_Number__c, Location_Class__c, Location_Type__c, Mobile__c, Is_your_firm_handling_Dangerous_Goods__c
@@ -1366,6 +1369,9 @@ public without sharing class AMS_Utils {
 
                 accountsToUpdate.add(acc);
                 stagingToAccount.put(onlineAcc.Id, new Set<Id>{oscar.Account__c});
+                oscarsToCopy.add(oscar);
+                locationTypeByOscar.put(oscar.Id, acc.Location_Type__c);
+                topParentByOscar.put(oscar.Id, acc.Top_Parent__c == null ? acc.Id : acc.Top_Parent__c);
 
 
                 changes.add(new Ams_ChangeCodesHelper.ObjectChangesStruct(accChanges));
@@ -1380,8 +1386,15 @@ public without sharing class AMS_Utils {
             if (!accountsToUpdate.isEmpty())
                 update accountsToUpdate;
 
-            if(!stagingToAccount.isEmpty() && runOwnershipMigration)
-                AMS_AccountRoleCreator.runRoleCreatorForOnlineAccreditations(stagingToAccount, true);
+            if(!stagingToAccount.isEmpty() && runOwnershipMigration){
+
+                Map<Id,AMS_OSCAR__c> mapOscars = new Map<Id,AMS_OSCAR__c>();
+
+                for(AMS_OSCAR__c oscar : oscarsToCopy)
+                    mapOscars.put(oscar.Id, oscar);
+
+                AMS_AccountRoleCreator.runRoleCreatorForOnlineAccreditations(stagingToAccount, true, false, mapOscars, locationTypeByOscar, topParentByOscar);
+            }
 
             if(!createRHCInfo.isEmpty()) ANG_RHCHelper.createRHCInfo(createRHCInfo, false);
 
@@ -1509,23 +1522,19 @@ public without sharing class AMS_Utils {
                 }
             }
 
-            //fields that require transformation
-            if (fieldsToMigrate.contains('ISSP_AMS_Premises_located_at_airport__c'))
-                accountFieldNewValue.put('In_a_Airport__c', (oscarOnlineAccreditation.ISSP_AMS_Premises_located_at_airport__c == 'Yes') ? true : false);
-            if (fieldsToMigrate.contains('ISSP_AMS_Legal_Status__c'))
-                accountFieldNewValue.put('Company_Type__c', transformCompanyType(oscarOnlineAccreditation.ISSP_AMS_Legal_Status__c));
-            if (fieldsToMigrate.contains('ISSP_AMS_GDS_with_signed_contract__c'))
-                accountFieldNewValue.put('GDS__c', transformGDS(oscarOnlineAccreditation.ISSP_AMS_GDS_with_signed_contract__c));
-            if (fieldsToMigrate.contains('Branch_Office_Country__c'))
-                accountFieldNewValue.put('BillingCountry', oscarOnlineAccreditation.Branch_Office_Country__r.Name);
-            if (fieldsToMigrate.contains('Shipping_ISO_Country__c'))
-                accountFieldNewValue.put('ShippingCountry', oscarOnlineAccreditation.Shipping_ISO_Country__r.Name);
-            //if (fieldsToMigrate.contains('Shipping_ISO_State__c'))/*** AMSU-121 ***/
-            //    accountFieldNewValue.put('ShippingState', oscarOnlineAccreditation.IATA_ISO_State__r.Valid_for_Address__c == true ? oscarOnlineAccreditation.Shipping_ISO_State__r.Name : null);
-            if (fieldsToMigrate.contains('IATA_ISO_State__c'))
-                accountFieldNewValue.put('BillingState', oscarOnlineAccreditation.IATA_ISO_State__r.Valid_for_Address__c == true ? oscarOnlineAccreditation.IATA_ISO_State__r.Name : null);
-            //if (fieldsToMigrate.contains('ISSP_AMS_Total_Ownership__c'))
-                //AMS_AccountRoleCreator.runRoleCreatorForOnlineAccreditations(new List<AMS_Pax_Accreditation_Form__c>{onlineAcc}, accountsAffected);
+                //fields that require transformation
+                if (fieldsToMigrate.contains('ISSP_AMS_Premises_located_at_airport__c'))
+                    accountFieldNewValue.put('In_a_Airport__c', (oscarOnlineAccreditation.ISSP_AMS_Premises_located_at_airport__c == 'Yes') ? true : false);
+                if (fieldsToMigrate.contains('ISSP_AMS_Legal_Status__c'))
+                    accountFieldNewValue.put('Company_Type__c', transformCompanyType(oscarOnlineAccreditation.ISSP_AMS_Legal_Status__c));
+                if (fieldsToMigrate.contains('ISSP_AMS_GDS_with_signed_contract__c'))
+                    accountFieldNewValue.put('GDS__c', transformGDS(oscarOnlineAccreditation.ISSP_AMS_GDS_with_signed_contract__c));
+                if (fieldsToMigrate.contains('Branch_Office_Country__c'))
+                    accountFieldNewValue.put('BillingCountry', oscarOnlineAccreditation.Branch_Office_Country__r.Name);
+                if (fieldsToMigrate.contains('Shipping_ISO_Country__c'))
+                    accountFieldNewValue.put('ShippingCountry', oscarOnlineAccreditation.Shipping_ISO_Country__r.Name);
+                if (fieldsToMigrate.contains('IATA_ISO_State__c'))
+                    accountFieldNewValue.put('BillingState', oscarOnlineAccreditation.IATA_ISO_State__r.Valid_for_Address__c == true ? oscarOnlineAccreditation.IATA_ISO_State__r.Name : null);
 
             for(Account acc : accounts){
 
