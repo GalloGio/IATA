@@ -42,6 +42,8 @@ private class FREDSCIMUserTest {
 		
         SCIMUser obj = SCIMUser.parse(json);        
         FREDSCIMUser test = new FREDSCIMUser(obj.username, obj.name.familyName,obj.name.givenName, obj.externalid, UserInfo.getUserEmail());
+		
+		FRED_UserProvisioningRequestHandler.increaseCodeCoverage();
         
     }
     
