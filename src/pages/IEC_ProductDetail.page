@@ -395,11 +395,13 @@
                                 </section>
 
                                 <!-- Interactive Maps -->
-                                <section class="section-container resources" id="interactiveMap">
-                                    <h2 class="section-title">Interactive Statistics</h2>
-                                    <p class="light">IATA agencies on maps and charts</p>
-                                    <a class="button" href="{!$Site.BaseUrl}/IECGADMaps">View now</a>
-                                </section>
+                                <apex:outputPanel rendered="{!bSection7Show}">
+                                    <section class="section-container resources" id="interactiveMap">
+                                        <h2 class="section-title">Interactive Statistics</h2>
+                                        <p class="light">IATA agencies on maps and charts</p>
+                                        <a class="button" href="{!$Site.BaseUrl}/IECGADMaps">View now</a>
+                                    </section>
+                                </apex:outputPanel>
                             </section>
                         </div>
                     </main>
