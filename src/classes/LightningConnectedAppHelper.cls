@@ -521,27 +521,4 @@ public without sharing class LightningConnectedAppHelper {
         delete listOne;
     }
 
-    @AuraEnabled
-    public static String confirmTCondition(){        
-        String userF = '';
-        Id uId = UserInfo.getUserId();
-
-        User user = [SELECT id, FRED_T_Cond__c FROM USER WHERE id = :uId];
-        user.FRED_T_Cond__c = true;
-
-        update user;
-        return userF;
-    }
-
-    @AuraEnabled
-    public static Boolean checkTCondition(){        
-        Boolean accepted = false;
-        Id uId = UserInfo.getUserId();
-
-        User user = [SELECT id, FRED_T_Cond__c FROM USER WHERE id = :uId];
-        if(user.FRED_T_Cond__c == true)
-            accepted = true;                           
-
-        return accepted;
-    }
 }

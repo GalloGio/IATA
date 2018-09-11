@@ -38,16 +38,6 @@
         setTimeout(function(){
             component.set("v.loaded", true);
         }, 2000);
-
-        //tosca
-        var urlParamEncoded = window.location.search.substring(1).toString();                
-        var urlParameters = decodeURIComponent(urlParamEncoded); // Right part after base URL  
-        console.log('aqui urlParamEncoded ' + urlParamEncoded);
-        console.log('aqui urlParameters ' + urlParameters);
-
-        if(urlParameters.indexOf('isFromTosca') > 0){
-            component.set("v.isFromTosca",true);
-        }
     },
    
     renderPage : function (component, event, helper){

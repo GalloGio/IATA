@@ -26262,13 +26262,6 @@ If you continue to experience issues registering for the IATA Customer Portal th
         <value>Registration completed successfully</value>
     </labels>
     <labels>
-        <fullName>OneId_Authorization_Pending</fullName>
-        <language>en_US</language>
-        <protected>false</protected>
-        <shortDescription>OneId_Authorization_Pending</shortDescription>
-        <value>Authorization Pending.</value>
-    </labels>
-    <labels>
         <fullName>OneId_Registration_Error_BusinessPhone</fullName>
         <categories>OneId</categories>
         <language>en_US</language>
