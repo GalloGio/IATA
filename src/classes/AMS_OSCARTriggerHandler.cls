@@ -3085,12 +3085,17 @@ public class AMS_OSCARTriggerHandler {
         }
 
         //NEWGEN-2473 - if due diligence step is failed automatically close the OSCAR/case
-        if(updatedOscar.Process__c == AMS_Utils.IEPBANKACCOUNTSETUP && oldOSCAR.STEP17__c <> updatedOscar.STEP17__c && updatedOscar.STEP17__c == 'Failed') updatedOscar.Status__c = 'Closed';
+        if(updatedOscar.Process__c == AMS_Utils.IEPBANKACCOUNTSETUP && oldOSCAR.STEP17__c <> updatedOscar.STEP17__c && updatedOscar.STEP17__c == 'Failed'){
+            //updatedOscar.Status__c = 'Closed';
+            
+            System.debug('Sending the email for the user to anounce Finalization Passing/Falling of the IEP bank account setup oscar');
+            AMS_OSCARTriggerHandler.sendEmailAlert(updatedOscar.Id, updatedOscar.Oscar_Communication_Case_Id__c, updatedOscar.Process__c, 'closed', false);
+        } 
         
         //NEWGEN-2473 - Send an email notification on case closure (passed or failed)
         if(updatedOscar.Process__c == AMS_Utils.IEPBANKACCOUNTSETUP && updatedOscar.Status__c == 'Closed'){
 
-            System.debug('Sending the email for the user to anounce Finalization Passing/Falling of the IEP bank account setup oscar');
+            System.debug('Sending the email for the user to anounce Finalization Passing of the IEP bank account setup oscar');
 
             //using an already existing method to send email alert to user.
             AMS_OSCARTriggerHandler.sendEmailAlert(updatedOscar.Id, updatedOscar.Oscar_Communication_Case_Id__c, updatedOscar.Process__c, 'closed', (updatedOscar.STEP17__c == 'Passed' && updatedOscar.STEP41__c == 'Passed'));
