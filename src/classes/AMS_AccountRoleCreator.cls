@@ -512,27 +512,6 @@ public with sharing class AMS_AccountRoleCreator
 
             return role;
         }
-
-        /*public Boolean isSimilarToRole(AMS_Account_Role__c roleTopParent) {
-
-            return accreditationContact.Job_Title__c                                                == roleTopParent.Duty__c
-                && (accreditationContact.First_Name__c + ' ' + accreditationContact.Last_Name__c)   == roleTopParent.Employee_Name__c
-                && String.valueOf(accreditationContact.Time_devoted_to_Agency_business__c)          == roleTopParent.Hours__c
-                && accreditationContact.Agency_role__c                                              == roleTopParent.IsManager__c
-                && accreditationContact.Financial_Interest__c                                       == roleTopParent.Percentage__c
-                && accreditationContact.Job_title__c                                                == roleTopParent.Position__c
-                && ((accreditationContact.First_Name__c == null 
-                    ? '' 
-                    : accreditationContact.First_Name__c  ) 
-                    + (accreditationContact.Last_Name__c == null 
-                    ? '' 
-                    : ( ' ' + accreditationContact.Last_Name__c)))                                  == roleTopParent.Owner_Name__c
-                && accreditationContact.Legacy_External_Id__c                                       == roleTopParent.Legacy_External_Id__c
-                && accreditationContact.Company__c                                                  == roleTopParent.Owner_Account__c
-                && (accreditationContact.Contact__c == null 
-                    ? accreditationContact.Person_AMS__r.Contact__c 
-                    : accreditationContact.Contact__c)                                              == roleTopParent.Contact__c;
-        }*/ 
     }
 
 
