@@ -770,11 +770,10 @@ public without sharing class Order_Sel extends Selector{
     public static List<Order> getCustomerRenewalNotices(Id idContact)
     {
         String type = IECConstants.ORDER_TYPE_RENEWAL_NOTIFICATION;
-        String cart_type = 'Cart';
 
         return [SELECT Id, OrderNumber, EffectiveDate, EndDate, Total_Amount__c, CreatedDate
             FROM Order
-            WHERE (Type = :type OR (Type=:cart_type AND IEC_Order_Previous_Type__c=:type )) 
+            WHERE Type = :type 
             AND ((Status NOT IN :IECConstants.expiredStatus OR EffectiveDate > :IECConstants.dateToCompare) )
             AND BillToContactId = :idContact
             ORDER BY EffectiveDate DESC, OrderNumber DESC
@@ -798,8 +797,6 @@ public without sharing class Order_Sel extends Selector{
         List<String> expiredStatus = IECConstants.expiredStatus;
         Date dateToCompare = IECConstants.dateToCompare;
         
-        String cart_type = 'Cart';
-
         String query = String.format(
             'SELECT {0}' + 
             ', (select Product_Name__c, Product_Number__c, Quantity, UnitPrice, Freight_Charge__c, Tax__c, Total__c, ' +
@@ -807,8 +804,8 @@ public without sharing class Order_Sel extends Selector{
             ' from Orderitems) ' + 
             'FROM {1} ' +  
 
-            'WHERE (Type = :type OR (Type=:cart_type AND IEC_Order_Previous_Type__c=:type)) ' +
-            ' AND ((Status NOT IN :expiredStatus OR EffectiveDate > :dateToCompare) ) '+ 
+            'WHERE Type = :type ' +
+            'AND ((Status NOT IN :expiredStatus OR EffectiveDate > :dateToCompare) ) '+ 
             'AND BillToContactId = :idContact ORDER BY EffectiveDate DESC, OrderNumber DESC ' , 
 
             new List<String>{
@@ -973,9 +970,10 @@ public without sharing class Order_Sel extends Selector{
         List<String> expiredStatus = IECConstants.expiredStatus;
         Date dateToCompare = IECConstants.dateToCompare;
         List<String> historyType = new List<String>();
-        historyType.add('History');
+        historyType.add('History'); 
         historyType.add('Renewal Notification');
         historyType.add('Quote');
+        historyType.add('Cart');
 
             // 'AND SAP_Order_Number__c != null  AND SAP_Invoice__r.Contract_Number__c != null ' +
             // 'AND ((type NOT IN :expiredType OR Status NOT IN :expiredStatus OR EffectiveDate > :dateToCompare) AND type != :historyType) ' +
