@@ -43,6 +43,93 @@
     <!--<![endif]-->
 
         <head>
+            <!-- Google Tag Manager -->     
+            <script>
+                (function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+                new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+                j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+                'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+                })(window,document,'script','dataLayer','GTM-PWSNSM3');
+            </script>
+            <!-- End Google Tag Manager -->
+            <script>
+                function getDevice() {
+                    if (navigator.userAgent.match(/Tablet|Nexus|iPad/i)) {
+                        return "Tablet";
+                    } else if(navigator.userAgent.match(/Mobile|Windows Phone|Lumia|Android|webOS|iPhone|iPod|Blackberry|PlayBook|BB10|Opera Mini|\bCrMo\/|Opera Mobi/i) ) {
+                        return "Mobile";
+                    } else {
+                        return "Desktop";
+                    }
+                }
+
+                window.dataLayer = window.dataLayer||[];
+                dataLayer.push({
+                    "user": {
+                        "email": "{!userDetails.userEmail}",
+                        "loginStatus": "{!userDetails.userLoginStatus}",
+                        "userId": "{!userDetails.userId}",   
+                        "zipCode": "{!userDetails.userZipCode}",
+                        "city": "{!userDetails.userCity}",
+                        "region": "{!userDetails.userRegion}",
+                        "country": "{!userDetails.userCountry}",
+                        "companyName": "{!userDetails.userCompany}",
+                        "userMemberStatus": "{!userDetails.userMemberStatus}",
+                        "userGender": "{!userDetails.userGender}"
+                    },
+                    "page": {
+                        "requestURI": window.location.pathname + window.location.search,
+                        "device": getDevice(),
+                        "breadcrumb": "Home > {!$Label.PageTitleShoppingCart}", 
+                        "language": "{!language}"
+                    }
+                });
+
+
+                function deleteProductFromCartPush(id,name,category,price,brand,quantity,edition,language,availability,availabilityDate,media,effectiveTo){
+                    dataLayer.push({
+                        "event": "removeFromCart",
+                        "ecommerce": {
+                            "remove": {
+                                "products": [{
+                                    "id": id,
+                                    "name": name,
+                                    "category": category,
+                                    "price": price,
+                                    "brand": brand,
+                                    "quantity": quantity,
+                                    "dimension1": edition,
+                                    "dimension2": language,
+                                    "dimension3": availability,
+                                    "dimension4": availabilityDate,
+                                    "dimension5": media,
+                                    "dimension6": effectiveTo
+                                }]
+                            }
+                        }
+                    });
+                }
+
+                function updateQuantityPush(){
+                    dataLayer.push({
+                        "event": "userAction",
+                        "eventCategory": "Cart Page",
+                        "eventAction": "Update Quantity",
+                        "eventLabel": "{!cartProducts}"
+                    });
+                }
+
+                function clickOnContinuePush(){
+                    dataLayer.push({
+                        "event": "userAction",
+                        "eventCategory": "Cart Page",
+                        "eventAction": "Click on Continue Shopping",
+                        "eventLabel": "{!cartProducts}"
+                    });
+                }
+
+
+            </script>
             <meta charset="UTF-8"/>
             <meta name="viewport" content="width=device-width, initial-scale=1"/>
             <apex:stylesheet value="{!URLFOR($Resource.EcommerceAssets, 'css/styles.min.css')}" />
@@ -51,8 +138,9 @@
             <title>{!$Label.PageTitleShoppingCart} - {!$Label.SiteTitle}</title>
 
             <script type="text/javascript">
-                var deleteOrderItem = function(productCode){
+                var deleteOrderItem = function(productCode, id,name,category,price,brand,quantity,edition,language,availability,availabilityDate,media,effectiveTo){
                     if(confirm("{!$Label.JS_Confirm_Cart_Item_Deletion}")){
+                        deleteProductFromCartPush(id,name,category,price,brand,quantity,edition,language,availability,availabilityDate,media,effectiveTo);
                         removeProduct(productCode);
                     }
                 }
@@ -67,6 +155,7 @@
                         }
                     }
                     if(updateQyt){
+                        updateQuantityPush();
                         updateProductQuantity(productCode, $('#quantity-cart-item-'+index).val());
                     }else{
                         $('.alert.success').css('display','None');
@@ -84,7 +173,10 @@
         </head>
 
         <body data-media-size="" class="page-checkout" id="page-top">
-
+            <!-- Google Tag Manager (noscript) -->
+            <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-PWSNSM3"
+            height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+            <!-- End Google Tag Manager (noscript) -->
             <div id="js-breakpoint-finder">
                 <span class="device-xs screen-xsmall"/>
                 <span class="device-sm screen-small"/>
@@ -202,7 +294,7 @@
                                                     </td>
                                                     <td class="product-number" style="text-align: left!important;">{!item.productCode}</td>
                                                     <td class="delete">
-                                                        <a href="javascript:deleteOrderItem('{!item.productCode}')" class="icon delete"><span class="reader-only">Delete</span><i class="fa fa-trash-o"></i></a>
+                                                        <a href="javascript:deleteOrderItem('{!item.productCode}', '{!item.productNumber}', {!item.productNameAnalytic}, '{!item.productCategory}', '{!item.unitPrice}', '{!item.productBrand}', '{!item.quantityStripped}', '{!item.productEdition}', '{!item.productLanguage}', '{!item.productInventoryStatus}', '{!item.productAvailabilityDate}', '{!item.productMedia}', '{!item.productEffectiveTo}')" class="icon delete"><span class="reader-only">Delete</span><i class="fa fa-trash-o"></i></a>
                                                     </td>
                                                     <td class="quantity" style="text-align: left!important;">
                                                         <label for="quantity-cart-item-{!itemCount}" class="input-label quantity">Quantity: </label>
@@ -263,7 +355,7 @@
 
                                 <div class="footer-actions">
                                     <ul class="list actions">
-                                        <li><a href="{!$Site.BaseUrl}/IEC_ProductList?category=publications&topic=New" class="button secondary">{!$Label.Button_Continue_Shopping}</a></li>
+                                        <li><a onclick="clickOnContinuePush();" href="{!$Site.BaseUrl}/IEC_ProductList?category=publications&topic=New" class="button secondary">{!$Label.Button_Continue_Shopping}</a></li>
                                         <li>
                                             <!--
                                             <button class="button" onclick="startCheckout();">

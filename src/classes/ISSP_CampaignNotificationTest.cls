@@ -3,6 +3,10 @@ private class ISSP_CampaignNotificationTest {
 	
 	static testMethod void testCampaignNotification() {
 		//ISSP_ObjectFactory.fiilIncludedFields();
+
+		NewGenApp_Custom_Settings__c newgenCS = new NewGenApp_Custom_Settings__c();
+        newgenCS.Push_Notifications_State__c = true;
+        insert newgenCS;
          
         //Campaign camp = (Campaign)ISSP_ObjectFactory.createSObject('Campaign',false,1);
         Campaign camp = new Campaign();    
