@@ -81,6 +81,34 @@ public class IEC_ProductDetailController  extends IEC_PageController
 	
 	public String selectedTopic{get;set;}
 	public String selectedTopicLabel{get;set;}
+
+	public String productWrapper {
+		get {
+			Map<String,Object> ecommObj = new Map<String,Object>();
+			Map<String,Object> detailObj = new Map<String,Object>();
+			Map<String,Object> actionObj = new Map<String,Object> {'list' => selectedCategory.getLabel() + ' > ' + selectedTopicLabel};
+			Map<String,Object> prodObj = new Map<String,Object>();
+
+			ecommObj.put('detail', detailObj);
+			detailObj.put('actionField', actionObj);
+			detailObj.put('products', new List<Object> {prodObj});
+
+			prodObj.put('id', ecomProduct.ProductNumber);
+			prodObj.put('name', ecomProduct.ProductName);
+			prodObj.put('category', ecomProduct.Portfolio);
+			prodObj.put('price', ecomProduct.unitPrice == null ? 0.00 : ecomProduct.unitPrice);    
+            prodObj.put('brand', ecomProduct.ProductCategory);        
+            prodObj.put('dimension1', ecomProduct.Edition);
+            prodObj.put('dimension2', ecomProduct.Language);
+            prodObj.put('dimension3', ecomProduct.InventoryStatus);
+            prodObj.put('dimension4', ecomProduct.AvailabilityDate);
+            prodObj.put('dimension5', ecomProduct.Media);
+            prodObj.put('dimension6', ecomProduct.EffectiveTo);
+
+			return JSON.serialize(ecommObj);
+		}
+		set;
+	}
 	
 
 	public IEC_ProductDetailController() 
