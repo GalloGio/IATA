@@ -42,6 +42,8 @@ private class IEC_ProductDetailsControllerTest {
 			ctrl = new IEC_ProductDetailsController();
 			ctrl.onLoadAction();
 			ctrl.discounts = null;
+
+			String productWrapper = ctrl.productWrapper;
 			//ctrl.addToCart();
 		}
 

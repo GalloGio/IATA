@@ -65,7 +65,7 @@ public class AMS_OSCARTriggerHandler {
     /*** AMSU-113 Start ***/
     public static Set<String> pciCompliantProcesses {
         get {
-            return new Set<String> {AMS_Utils.new_HO, AMS_Utils.new_BR, AMS_Utils.PCI_COMPLIANT};
+            return new Set<String> {AMS_Utils.new_HO, AMS_Utils.new_BR, AMS_Utils.new_BR_ABROAD, AMS_Utils.PCI_COMPLIANT};
         }
         set;
     }
@@ -1735,11 +1735,10 @@ public class AMS_OSCARTriggerHandler {
         if (tocList.contains(AMS_Utils.VFMR) ) {
             System.debug('Agencies Affected: ' + agenciesToMigrate);
             System.debug('Hierarchy Agencies: ' + accountHierarchyRelationships.get(oscar.Account__c));
-            if(!AMS_HierarchyHelper.isAllHierarchySelected(agenciesToMigrate, accountHierarchyRelationships.get(oscar.Account__c), accounts)){
+            if(!AMS_HierarchyHelper.isAllHierarchySelectedExcludeAbroad(agenciesToMigrate, accountHierarchyRelationships.get(oscar.Account__c), accounts)){                 
                 oscar.addError('When performing a change of remittance frequency (VMFR) all the active agencies in the hierarchy must be selected. Only branches abroad can be excluded');
                 validationsPassed=false;
             }
-
         }
 
         return validationsPassed;
@@ -2809,21 +2808,30 @@ public class AMS_OSCARTriggerHandler {
                         }
                     }
                 }
+
+                /*** AMSU-166 ***/
+                if(oscar.Process__c == AMS_Utils.COR || oscar.Process__c == AMS_Utils.AGENCYCHANGES) {
+                    allOnlineAccr = allOnlineAccr == null ? getAllAccreditations(oscars) : allOnlineAccr;
+                    List<String> errorMessages = AMS_Utils.validateCharacters(allOnlineAccr.get(oscar.AMS_Online_Accreditation__c), AMS_Utils.STAGING_AREA_FIELDS_TO_VALIDATE);
+                    if(!errorMessages.isEmpty()) {
+                        oscar.addError(String.join(errorMessages, '\n'));
+                    }
+                }
                 
                 /*** AMSU-121 Start ***/
-                allOnlineAccr = allOnlineAccr == null ? getAllAccreditations(oscars) : allOnlineAccr;
-                validateShippingAddress(oscar, allOnlineAccr);
+                Boolean isNewAccreditaion = AMS_Utils.AMS_ProcessesAddressToValidate.contains(oscar.Process__c);
+                Boolean isCorrection = oscar.Process__c == AMS_Utils.COR;
+                Boolean isChangeOfLocation = oscar.Process__c == AMS_Utils.AGENCYCHANGES && String.isNotBlank(oscar.Type_of_change__c) && oscar.Type_of_change__c.contains(AMS_Utils.Location);
+                if(isNewAccreditaion || isCorrection || isChangeOfLocation) {
+                	allOnlineAccr = allOnlineAccr == null ? getAllAccreditations(oscars) : allOnlineAccr;
+                	validateShippingAddress(oscar, allOnlineAccr);
+                }
                 /*** AMSU-121 End ***/ 
             }
         }
     }
     /*** AMSU-121 Start ***/
     private static void validateShippingAddress(AMS_OSCAR__c oscar, Map<Id, AMS_Pax_Accreditation_Form__c> accreditations) {
-        Boolean currIsChangeOfLocation = String.isBlank(oscar.Type_of_change__c) ? false : new Set<String>(oscar.Type_of_change__c.split(';')).contains(AMS_Utils.Location);
-        if(!AMS_Utils.oscarNewProcesses.contains(oscar.Process__c)  && !currIsChangeOfLocation) {
-            return;
-        }
-
         AMS_Pax_Accreditation_Form__c accreditation = accreditations.get(oscar.AMS_Online_Accreditation__c);
         System.debug('Shipping validation -> ' + accreditation);
         if(accreditation != null) {
@@ -2843,7 +2851,7 @@ public class AMS_OSCARTriggerHandler {
                 return;
             }
 
-            oscar.addError('Error - Incomplete shipping address.');
+            oscar.addError('Incomplete shipping address.');
         }        
     }
     /*** AMSU-121 End ***/ 
@@ -3534,7 +3542,7 @@ public class AMS_OSCARTriggerHandler {
                         if(!isAllHierarchySelected && isAccNameSpecialCase) {
                             sType_of_change += '-ACCNAME';
                         }
-                        if(isAllHierarchySelected && isVATnumberSpecialCase) {
+                        if(isAllHierarchySelected && !isSingleAccountHierarchy && isVATnumberSpecialCase) {
                             sType_of_change += '-REMOVE_VAT';
                         }
 

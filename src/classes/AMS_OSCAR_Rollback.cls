@@ -14,6 +14,7 @@ public without sharing class AMS_OSCAR_Rollback {
 	private Map<Id,List<AMS_Account_Role__c>> mapOscarToOwners {get;set;}
 	private List<Account> accountOwners {get;set;}
 	private List<Contact> contactOwners {get;set;}
+	private Boolean hasData {get;set;}
 
 	public AMS_OSCAR_Rollback(List<AMS_OSCAR__c> oscars) {
 		this.mapIdToOscar = new Map<Id,RollbackConfig>();
@@ -47,6 +48,7 @@ public without sharing class AMS_OSCAR_Rollback {
 
 	private void retriveBackupData() {
 		List<Technical_Logs__c> dataRecords = [SELECT Log__c, Status__c, Record__c FROM Technical_Logs__c WHERE Record__c IN :mapIdToOscar.keySet() AND Operation__c = 'Rollback'];
+		this.hasData = !dataRecords.isEmpty();
 		for(Technical_Logs__c data : dataRecords) {
 			Id oscarId = data.Record__c;
 			if(data.Status__c == 'Account') {
@@ -85,6 +87,12 @@ public without sharing class AMS_OSCAR_Rollback {
 	}
 
 	public void rollbackOSCAR() {
+		if(!this.hasData) {
+			system.debug('No backup data retrieved');
+			return;
+		}
+
+
 		List<Account> accountsToUpdate = new List<Account>();
 		List<HierarchyWrapper> hierarchyToUpdate = new List<HierarchyWrapper>();
 		List<AMS_Account_Role__c> ownersToUpdate = new List<AMS_Account_Role__c>();
