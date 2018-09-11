@@ -1704,8 +1704,6 @@ public without sharing class AMS_Utils {
 
                 if (fieldsToMigrate.contains('ISSP_AMS_Premises_located_at_airport__c'))
                     accountFieldNewValue.put('In_a_Airport__c', (oscarOnlineAccreditation.ISSP_AMS_Premises_located_at_airport__c == 'Yes') ? true : false);
-                if (fieldsToMigrate.contains('ISSP_AMS_Legal_Status__c'))
-                    accountFieldNewValue.put('Company_Type__c', transformCompanyType(oscarOnlineAccreditation.ISSP_AMS_Legal_Status__c));
                 if (fieldsToMigrate.contains('ISSP_AMS_GDS_with_signed_contract__c'))
                     accountFieldNewValue.put('GDS__c', transformGDS(oscarOnlineAccreditation.ISSP_AMS_GDS_with_signed_contract__c));
                 if (fieldsToMigrate.contains('Branch_Office_Country__c'))
