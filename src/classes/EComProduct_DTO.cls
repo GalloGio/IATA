@@ -53,6 +53,8 @@ public with sharing class EComProduct_DTO
     public List<EComProduct_DTO> ProductComponent { get; set; }
     public Boolean Is_Electronic_Product{get;set;}
     public Boolean Sell_Through_eCommerce{get;set;}
+
+    public String productNameAnalytic {get; set;}
     
     //*** constructor
     public EComProduct_DTO() 
@@ -68,6 +70,7 @@ public with sharing class EComProduct_DTO
         ProductId = String.valueOf(prod.Id).left(15); 
         Is_Electronic_Product = prod.Is_Electronic_Product__c;
         ProductName = prod.Name;
+        productNameAnalytic = JSON.serialize(prod.Name);
         ProductNumber = prod.SAP_Material_Number__c;
         ProductCategory = mapPickList_Label.get('Category').get(prod.Line_of_Business__c);
         // Special handling required for the GDP products to retrieve information from different location
