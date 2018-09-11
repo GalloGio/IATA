@@ -64,7 +64,7 @@ public class AMS_AccountRoleTest {
         }
 
         ID rtChange = RecordTypeSingleton.getInstance().getRecordTypeId('AMS_OSCAR__c', 'CHANGE');
-        theOscar = new AMS_OSCAR__c(RecordTypeId = rtChange, Account__c = HO.Id);
+        theOscar = new AMS_OSCAR__c(RecordTypeId = rtChange, Account__c = HO.Id, Process__c = 'MAJOR.CHANGES');
         insert theOscar;
 
         ID rtCommCase = RecordTypeSingleton.getInstance().getRecordTypeId('Case', 'OSCAR_Communication');
@@ -110,6 +110,9 @@ public class AMS_AccountRoleTest {
             AMS_Pax_Accreditation_Form__c = theStagingAcc.Id,  Financial_interest__c = 20, RecordTypeId=rtPerson));
         
         insert theStagingConts;
+
+        oscars.values().get(0).AMS_Online_Accreditation__c = theStagingAcc.Id;
+        update oscars.values();
         
         system.debug('DTULLO 112 -> ' + [select Id, AMS_Pax_Accreditation_Form__c, First_name__c, Last_Name__c, Email__c, Financial_interest__c from AMS_Accreditation_Contact__c]);
 
@@ -120,7 +123,7 @@ public class AMS_AccountRoleTest {
         
         system.debug('DTULLO 119 --> ' + parameter);
         
-        AMS_AccountRoleCreator.runRoleCreatorForOnlineAccreditations(parameter, true, true, oscars,  new Map<Id,String>{oscars.values().get(0).Id => HO.Location_Type__c}, new Map<Id,Id>{oscars.values().get(0).Id => oscars.values().get(0).Account__r.Top_Parent__r.Id == null ? oscars.values().get(0).Account__c : oscars.values().get(0).Account__r.Top_Parent__r.Id});
+        AMS_AccountRoleCreator.runRoleCreatorForOnlineAccreditations(parameter, true, false, oscars,  new Map<Id,String>{oscars.values().get(0).Id => HO.Location_Type__c}, new Map<Id,Id>{oscars.values().get(0).Id => oscars.values().get(0).Account__r.Top_Parent__r.Id == null ? oscars.values().get(0).Account__c : oscars.values().get(0).Account__r.Top_Parent__r.Id});
         
         // CHECK THE RESULTS
         List<Contact> newContacts = [SELECT FirstName, LastName, Email FROM Contact ORDER BY Email];
@@ -208,12 +211,6 @@ public class AMS_AccountRoleTest {
                     ORDER BY Contact__r.Email];
         system.assertEquals(9,owners.size(), 'testNewContactOwners(S2) -> the method should have updated all the 9 roles with the new percentage');
 
-        owners = [SELECT Contact__r.Email,  Percentage__c, Termination_Date__c
-                    FROM AMS_Account_Role__c 
-                    WHERE RecordType.Name = 'Ownership' AND Termination_Date__c <> NULL
-                    ORDER BY Contact__r.Email];
-        system.assertEquals(0, owners.size(), 'testNewContactOwners(S2) -> the method should not have deactivated any owner');
-
 
         // I WILL RESET THE LOOKUP AMS_OWNERSHIP_ROLE__c TO SIMULATE A NEW OSCAR, AND CHANGE THE PERCENTAGES IN THE OWNERSHIPS
         theStagingConts = [SELECT Id FROM AMS_Accreditation_Contact__c ORDER BY Email__c];
@@ -272,13 +269,16 @@ public class AMS_AccountRoleTest {
         ID rtCompany = RecordTypeSingleton.getInstance().getRecordTypeId('AMS_Accreditation_Contact__c', 'Company');
         
         List<AMS_Accreditation_Contact__c> theStagingConts= new List<AMS_Accreditation_Contact__c>();
-        theStagingConts.add(new AMS_Accreditation_Contact__c(Last_Name__c='dummy1', Agency_owner__c = true,
+        theStagingConts.add(new AMS_Accreditation_Contact__c(Name= aowners[0].Name, Last_Name__c='dummy1', Agency_owner__c = true,
             Company__c = aowners[0].Id, AMS_Pax_Accreditation_Form__c = theStagingAcc.Id, Financial_interest__c = 60, RecordTypeId=rtCompany));
         
-        theStagingConts.add(new AMS_Accreditation_Contact__c(Last_Name__c='dummy2', Agency_owner__c = true,
+        theStagingConts.add(new AMS_Accreditation_Contact__c(Name= aowners[1].Name, Last_Name__c='dummy2', Agency_owner__c = true,
             Company__c = aowners[1].Id, AMS_Pax_Accreditation_Form__c = theStagingAcc.Id, Financial_interest__c = 40, RecordTypeId=rtCompany));
         
         insert theStagingConts;
+
+        oscars.values().get(0).AMS_Online_Accreditation__c = theStagingAcc.Id;
+        update oscars.values();
 
 
         Test.startTest();
@@ -286,7 +286,7 @@ public class AMS_AccountRoleTest {
         Map<Id,Set<Id>> parameter = new Map<Id,Set<Id>>();
         parameter.put(theStagingAcc.Id, new Set<Id>{HO.Id, secondLevel[0].Id, secondLevel[1].Id});
         
-        AMS_AccountRoleCreator.runRoleCreatorForOnlineAccreditations(parameter, false, true, oscars, new Map<Id,String>{oscars.values().get(0).Id => HO.Location_Type__c}, new Map<Id,Id>{oscars.values().get(0).Id => oscars.values().get(0).Account__r.Top_Parent__r.Id == null ? oscars.values().get(0).Account__c : oscars.values().get(0).Account__r.Top_Parent__r.Id});
+        AMS_AccountRoleCreator.runRoleCreatorForOnlineAccreditations(parameter, false, false, oscars, new Map<Id,String>{oscars.values().get(0).Id => HO.Location_Type__c}, new Map<Id,Id>{oscars.values().get(0).Id => oscars.values().get(0).Account__r.Top_Parent__r.Id == null ? oscars.values().get(0).Account__c : oscars.values().get(0).Account__r.Top_Parent__r.Id});
 
         // CHECK THE RESULTS
         
@@ -332,19 +332,14 @@ public class AMS_AccountRoleTest {
         system.assertEquals(40, owners[1].Percentage__c, 'testOwnersRTCompany(S1) -> the second owner has a percentage of 40');
 
 
-
-
         theStagingConts = [SELECT Id FROM AMS_Accreditation_Contact__c WHERE AMS_Ownership_Role__c <> NULL];
         system.assertEquals(2,theStagingConts.size(), 'testOwnersRTCompany(S1) -> the method should have updated the accreditation contacts with a link to the ams role created');
         system.assertEquals(2,theStagingConts.size(), 'testOwnersRTCompany(S1) -> the method should have inserted 3 owners for the second branch');
 
 
-        ID PersonRT = RecordTypeSingleton.getInstance().getRecordTypeId('AMS_Accreditation_Contact__c', 'Person');
         // I WILL CHANGE THE PERCENTAGES IN THE OWNERSHIPS
         theStagingConts[0].Financial_interest__c = 50;
         theStagingConts[1].Financial_interest__c = 50;
-        theStagingConts[0].RecordTypeId = PersonRT;
-        theStagingConts[1].RecordTypeId = PersonRT;
         theStagingConts[0].Last_name__c = 'LN 0';
         theStagingConts[1].Last_name__c = 'LN 1';
         theStagingConts[0].First_name__c = 'FN 0';
@@ -362,15 +357,9 @@ public class AMS_AccountRoleTest {
                     FROM AMS_Account_Role__c 
                     WHERE Owner_Account__c <> NULL AND RecordType.Name = 'Ownership' AND Termination_Date__c = NULL AND Percentage__c = 50
                     ORDER BY Owner_Account__r.Name];
+
         system.assertEquals(6,owners.size(), 'testOwnersRTCompany(S2) -> the method should have updated all the 6 roles with the new percentage');
 
-        owners = [SELECT Owner_Account__r.Name,  Percentage__c, Termination_Date__c
-                    FROM AMS_Account_Role__c 
-                    WHERE RecordType.Name = 'Ownership' AND Termination_Date__c <> NULL
-                    ORDER BY Owner_Account__r.Name];
-        system.assertEquals(0, owners.size(), 'testOwnersRTCompany(S2) -> the method should not have deactivated any owner');
-
-        ID CompanyRT = RecordTypeSingleton.getInstance().getRecordTypeId('AMS_Accreditation_Contact__c', 'Company');
         // I WILL RESET THE LOOKUP AMS_OWNERSHIP_ROLE__c TO SIMULATE A NEW OSCAR, AND CHANGE THE PERCENTAGES IN THE OWNERSHIPS
         theStagingConts = [SELECT Id FROM AMS_Accreditation_Contact__c ORDER BY Email__c];
         theStagingConts[0].AMS_Ownership_Role__c = NULL;
@@ -382,15 +371,12 @@ public class AMS_AccountRoleTest {
         theStagingConts[0].Agency_owner__c = true;
         theStagingConts[1].Agency_owner__c = true;
 
-        theStagingConts[0].RecordTypeId = CompanyRT;
-        theStagingConts[1].RecordTypeId = CompanyRT;
-
         update theStagingConts;
         AMS_AccountRoleCreator.runRoleCreatorForOnlineAccreditations(parameter, false, false, oscars,  new Map<Id,String>{oscars.values().get(0).Id => HO.Location_Type__c}, new Map<Id,Id>{oscars.values().get(0).Id => oscars.values().get(0).Account__r.Top_Parent__r.Id == null ? oscars.values().get(0).Account__c : oscars.values().get(0).Account__r.Top_Parent__r.Id});
 
         owners = [SELECT Owner_Account__r.Name, Percentage__c, Termination_Date__c
                     FROM AMS_Account_Role__c 
-                    WHERE Owner_Account__c <> NULL AND RecordType.Name = 'Ownership' /*AND Termination_Date__c = NULL */
+                    WHERE Owner_Account__c <> NULL AND RecordType.Name = 'Ownership' AND Termination_Date__c = NULL
                     ORDER BY Owner_Account__r.Name];
         system.assertEquals(6,owners.size(), 'testOwnersRTCompany(S3) -> the method should have inserted 6 new roles with the new percentage');
 

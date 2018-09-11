@@ -24,9 +24,9 @@ public with sharing class AMS_AccountRoleCreator
     public static final Map<String,String> personDeveloperName = new Map<String,String>{'Person' => 'Person','Current_Owner' => 'Current_Owner'};
     public static final Map<String,String> companyDeveloperName = new Map<String,String>{'Company' => 'Company','Current_Company_Owner' => 'Current_Company_Owner'};
 
-    public static final Set<String> processesBlockedToMigrateOwners = new Set<String>{'NEW.BR' ,'NEW.BR.ABROAD','NEW.TIDS.1.0','NEW.MSO.1.0','NEW.GSA.1.0','NEW.GSSA.1.0','NEW.AHA.1.0','NEW.SA.1.0','NEW.AHA.1.0.BSP','NEW.GSA.1.0.BSP', AMS_Utils.NEWAE};
+    public static final Set<String> processesBlockedToMigrateOwners = new Set<String>{'NEW.BR' ,'NEW.BR.ABROAD','NEW.TIDS.1.0','NEW.MSO.1.0','NEW.GSA.1.0','NEW.GSSA.1.0','NEW.AHA.1.0','NEW.SA.1.0','NEW.AHA.1.0.BSP','NEW.GSA.1.0.BSP'};
 
-    public static final Set<String> allowedLocationTypesForNewProcesses = new Set<String>{'HO','AO', 'HE'};
+    public static final Set<String> allowedLocationTypesForNewProcesses = new Set<String>{'HO','AO', 'HE', 'AE'};
 
     private static String createContactRecordTypes(List<String> types){
         String toReturn = '';
@@ -63,6 +63,7 @@ public with sharing class AMS_AccountRoleCreator
         Map<Id,Id> accreditationContactWithRole = new Map<Id,Id>();
         Map<Id,Set<Id>> accountsToCloneRoles = new Map<Id,Set<Id>>(); //oscar account with the other accounts in the hierarchy
         Set<Id> rolesToCorrect = new Set<Id>();
+        Map<Id,String> duplicateContactsInAccCon = new Map<Id,String>(); //map to prevent duplicate contacts in accreditation contacts
 
         //check if the process should create new owners or if it's just to clone the owners from the HO
         for(AMS_OSCAR__c osc: oscars.values()) {
@@ -162,7 +163,12 @@ public with sharing class AMS_AccountRoleCreator
 
                     bucket.contact = allContactsFromAccount.get(accreditationContact.Contact__c == null ? accreditationContact.Person_AMS__r.Contact__c : accreditationContact.Contact__c);
                     bucket.updateTheContact(bucket.contact.Id);
+
+                    if(duplicateContactsInAccCon.containsKey(bucket.contact.Id))
+                        throw new AMS_ApplicationException('Duplicated Contact with Id: ' + bucket.contact.Id + ' in the Accreditation Contacts: ' + bucket.accreditationContact.First_Name__c + ' ' + bucket.accreditationContact.Last_Name__c + ' and ' + duplicateContactsInAccCon.get(bucket.contact.Id));
+
                     contactsToUpsert.put(bucket.accreditationContact.Email__c, bucket.contact);
+                    duplicateContactsInAccCon.put(bucket.contact.Id, bucket.accreditationContact.First_Name__c + ' ' + bucket.accreditationContact.Last_Name__c);
 
                 } else {
 
@@ -283,6 +289,9 @@ public with sharing class AMS_AccountRoleCreator
             }
 
         }
+
+        if(newRolesPerAccount.isEmpty() && accountsToCloneOwnersFromHO.isEmpty())
+            return oldAndNewOwnersMap;
 
         //clone the roles for each account in the hierarchy
         List<AMS_Account_Role__c> listClonesRoles = new List<AMS_Account_Role__c>();
