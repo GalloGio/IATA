@@ -229,7 +229,25 @@ public with sharing class IEC_ProductListController extends IEC_PageController
             fw.label    = field.getLabel();
             fw.type_x   = field.getType().name();
 
-            if(fw.type_x =='PICKLIST')
+            if(fw.field == 'Inventory_Status__c'){
+                FilterWrapper fw2 = new FilterWrapper();
+                fw2.field = field.getFieldPath()+'1';
+                fw2.type_x = field.getType().name();
+                
+                fw.label  = 'Print & CDs';
+                fw2.label = 'Digital';
+                
+                fw.values = new List<SelectOption>(); 
+                fw.values.add(new SelectOption('In stock','In stock'));
+                fw.values.add(new SelectOption('Out of stock','Out of stock'));
+                
+                fw2.values = new List<SelectOption>(); 
+                fw2.values.add(new SelectOption('Available Now',' Available Now'));
+                fw2.values.add(new SelectOption('Coming Soon','Coming Soon'));
+
+                filters.add(fw2);
+            }
+            else if(fw.type_x =='PICKLIST')
             {
                 fw.values = Utility.getPicklistSelectOptions('Product2',fw.field,false);
             }  
@@ -263,13 +281,13 @@ public with sharing class IEC_ProductListController extends IEC_PageController
                 List<String> tmp = (filterConditions.containsKey(filter_parts[0])) ? filterConditions.get(filter_parts[0]) : new List<String>(); 
                     tmp.add(filter_parts[1]);
 
-                filterConditions.put(filter_parts[0], tmp);
+                filterConditions.put(filter_parts[0].replace('Inventory_Status__c1','Inventory_Status__c'), tmp);
             }
 
             Map<String, String> fieldType = new Map<String, String>(); //fild => type
             for(FilterWrapper fw : filters)
             {
-                fieldType.put(fw.field, fw.type_x);
+                fieldType.put(fw.field.replace('Inventory_Status__c1','Inventory_Status__c'), fw.type_x);
             }
 
             for(String field : filterConditions.keySet())
@@ -437,8 +455,40 @@ public with sharing class IEC_ProductListController extends IEC_PageController
         system.debug('### productRecordsList productList :: ' + productList);
         system.debug('### productRecordsList productList size :: ' + productList.size());
         system.debug('### productRecordsList end ');
+
+        /*** ENHCS-2018-7 ***/
+        List<Map<String,Object>> productsListWrapper = new List<Map<String,Object>>();
+        Integer pos = 1;
+        String lst = selectedCategory.getLabel() + ' > ' + (String.isBlank(selectedTopicLabel) ? 'All' : selectedTopicLabel);
+        for(EComProduct_DTO prod : productList) {
+            system.debug('prod_dto: ' + prod);
+
+            Map<String,Object> prodObj = new Map<String,Object>();
+            prodObj.put('id', prod.ProductNumber);
+            prodObj.put('name', prod.ProductName);
+            prodObj.put('category', prod.Portfolio);            
+            prodObj.put('price', prod.unitPrice == null ? 0.00 : prod.unitPrice);    
+            prodObj.put('brand', prod.ProductCategory);        
+            prodObj.put('list', lst); 
+            prodObj.put('position', pos);
+            prodObj.put('dimension1', prod.Edition);
+            prodObj.put('dimension2', prod.Language);
+            prodObj.put('dimension3', prod.InventoryStatus);
+            prodObj.put('dimension4', prod.AvailabilityDate);
+            prodObj.put('dimension5', prod.Media);
+            prodObj.put('dimension6', prod.EffectiveTo);
+
+            pos++;
+            productsListWrapper.add(prodObj);
+        }
+        productListStr = JSON.serialize(productsListWrapper);
+
         return productList;
     }
+
+
+    /*** ENHCS-2018-7 ***/
+    public String productListStr {get;set;}
 
 
     
@@ -476,6 +526,10 @@ public with sharing class IEC_ProductListController extends IEC_PageController
         Integer pageNum = productRecords.getPageNumber();
         currentPageNumber = pageNum+1;
         productRecords.next();
+        for(SObject p : productRecords.getRecords()) {
+             system.debug(p);
+        }
+       
     }
 
     //Page number of the current displaying records
