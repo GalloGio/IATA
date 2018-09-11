@@ -983,10 +983,6 @@ public with sharing class ANG_AgencyChangesHelper {
 		//Map<ID,AMS_ChangeCodesHelper.ObjectChangesStruct> objectChanges = new  Map<ID,AMS_ChangeCodesHelper.ObjectChangesStruct>();
 		Map<Id,AMS_AccountRoleCreator.OldAndNewOwners> oldAndNewOwnersMap = new Map<Id,AMS_AccountRoleCreator.OldAndNewOwners>();
 
-		System.debug('SS## toReturn: ' + toReturn);
-		System.debug('SS## oscarToProcess: ' + oscarToProcess);		
-		System.debug('SS## accountsAffected: ' + accountsAffected);		
-
 		oldAndNewOwnersMap = AMS_AccountRoleCreator.runRoleCreatorForOnlineAccreditations(stagingToAccount, isCorrection, false, new Map<Id,AMS_OSCAR__c>{oscarToProcess.Id => oscarToProcess}, 
 			new Map<Id,String>{oscarToProcess.Id => toReturn.accountsMap.get(oscarToProcess.Account__c).Location_Type__c},
 			new Map<Id,Id>{oscarToProcess.Id => toReturn.accountsMap.get(oscarToProcess.Account__c).Top_Parent__c == null ? oscarToProcess.Account__c : toReturn.accountsMap.get(oscarToProcess.Account__c).Top_Parent__c});
