@@ -48,12 +48,15 @@ public without sharing class OneId_RegistrationProcessController {
             userInformation.isServiceUser = fredAccess > 0;
 
 	        if(!userInformation.isServiceUser){
-                User usr = [SELECT Account.RecordTypeId, Account.fredp_aircraftoperator_eligibility__c, Account.RecordType.DeveloperName FROM User where Id =: UserInfo.getUserId()];
+                User usr = [SELECT AccountId FROM User where Id =: UserInfo.getUserId()];
+
+                Account acc = [SELECT RecordTypeId, fredp_aircraftoperator_eligibility__c, RecordType.DeveloperName FROM Account WHERE Id =: usr.AccountId];
+
         
-                if((usr.Account.RecordType.DeveloperName == 'IATA_Airline' ||  usr.Account.RecordType.DeveloperName == 'Operator') && usr.Account.fredp_aircraftoperator_eligibility__c){
+                if((acc.RecordType.DeveloperName == 'IATA_Airline' ||  acc.RecordType.DeveloperName == 'Operator') && acc.fredp_aircraftoperator_eligibility__c){
                     userInformation.isServiceEligible = true;
                 }
-                else if(usr.Account.RecordType.DeveloperName == 'ICAO_Member_State' || usr.Account.RecordType.DeveloperName == 'Verifiers'){
+                else if(acc.RecordType.DeveloperName == 'ICAO_Member_State' || acc.RecordType.DeveloperName == 'Verifiers'){
                     userInformation.isServiceEligible = true;
                 }
                 else{
