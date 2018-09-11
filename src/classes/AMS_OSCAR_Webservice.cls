@@ -486,7 +486,7 @@ global class AMS_OSCAR_Webservice {
             //creates change code
             //Account acct = new Account(Id = agencyId);
             //TD 2080607: CNS
-            Account acct = [Select id, CNS_Agency__c from account where id = :AgencyId];
+            Account acct = [Select id, CNS_Agency__c, Status__c from account where id = :AgencyId];
             AMS_OSCAR__c oscar = new AMS_OSCAR__c(Id = oscarId);
 
             List<Agency_Applied_Change_code__c> accountActiveChangeCode = [SELECT Reason_Code__c, Reason_Description__c,Account__r.Status__c FROM Agency_Applied_Change_code__c WHERE Account__c =: agencyId AND Active__c = TRUE];

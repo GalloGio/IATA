@@ -400,7 +400,7 @@ public with sharing class AMS_AccreditationContactController {
 
         }
 
-        if(numberPortalAdmin > 1 && isNewGenProcess){
+        if(numberPortalAdmin > 1 /*&& isNewGenProcess AMSU-163*/){
             ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.Error, 'A maximum of 1 portal administrator is allowed on this page.'));
             return null;
         }

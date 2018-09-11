@@ -1133,6 +1133,11 @@ public with sharing class ISSP_PortalUserStatusChange {
     
     @future
     public static void updateUser(String conId, Boolean isActive, String email, String profileId, String firstCommunity){
+        updateUserSync(conId, isActive, email, profileId, firstCommunity);
+    }
+
+    /*** AMSU-163 ***/
+    public static void updateUserSync(String conId, Boolean isActive, String email, String profileId, String firstCommunity){
         list <User> usersToUpdate = [Select u.Id, u.IsActive, u.IsPortalEnabled, u.Email, u.Contact.Email, u.Community__c
                                      from User u where contactId =:conId];
 

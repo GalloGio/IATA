@@ -5,10 +5,6 @@ trigger AccountTrigger on Account (before insert, after insert, after update, be
 
   if (!AMS_TriggerExecutionManager.checkExecution(Account.getSObjectType(), 'AccountTrigger')) { return; }
 
-  //NOT NEEDED ANYMORE AS PER NEWGEN-796 - DTULLO: added to skip trigger execution if aggreagating data for PwC
-  //if(AMS_Batch_AggregatePwcData.bIsAMS_Batch_AggregatePwcDataRunning){return;}
-
-
   if (trigger.isBefore && (trigger.isInsert || trigger.isupdate )) {
 
     AccountTriggerHelper.copyInfoFromHqToBranchOnInsertAndUpdate(trigger.New, trigger.OldMap);
@@ -20,7 +16,6 @@ trigger AccountTrigger on Account (before insert, after insert, after update, be
   }
 
   if (trigger.isAfter && trigger.isUpdate) {
-    //trgCopyInfoFromHQToBROnHQUpdate trgCopyInfoFromHQToBROnHQUpdatetest
     if (trigger.newmap <> null)
       AccountTriggerHelper.CopyFromHqToBRAfterUpdate(trigger.newMap);
     if (newgenCS.Push_Notifications_State__c) {

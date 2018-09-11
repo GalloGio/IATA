@@ -223,4 +223,35 @@ public class ANG_RME_Alert_Service_Test {
 
 		System.assert(!result.isSuccess);
 	}
+	static testMethod void testDoPost() {
+		List <Account> accountList = new List <Account> ([SELECT Id FROM Account LIMIT 1]);
+		ANG_RME_Alert_Service.RHCMessage message = new ANG_RME_Alert_Service.RHCMessage();
+		message.iataCode = '1234562';
+		message.eventId = 'AlertRequest';
+		message.eventType = 'TestCall';
+		message.schemaVersion = 2;
+		message.eventTime = System.now();
+
+		message.storedBaseCurrency = 'USD';
+		message.storedRHCValue = 0;
+		message.consumedRHCAmount = 200;
+		message.consumedRHCPercentage = 0.5;
+
+		req.requestBody = Blob.valueOf(JSON.serialize(message));
+		req.params.put('eventType', 'TestCall');
+
+		Test.setMock(HttpCalloutMock.class, new HttpResponseGenerator(200, JSON.serialize(message)));
+
+        RestRequest req = new RestRequest();
+        RestResponse res = new RestResponse();
+        req.requestURI = '/RME_ALERT_BALANCEUPDATE';
+        req.httpMethod = 'POST';
+
+        RestContext.request = req;
+        RestContext.response= res;
+
+        Test.startTest();
+            ANG_RME_Alert_Service.doPost(accountList[0].Id);
+        Test.stopTest();
+    }
 }

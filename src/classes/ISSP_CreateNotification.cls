@@ -1,3 +1,7 @@
+/*
+    Class that create a notification to Portal Users
+    Used in Portal and NewGen APP (mobile)
+*/
 public with sharing class ISSP_CreateNotification {
 
     public static Boolean privetTrigger = false;
@@ -74,9 +78,9 @@ public with sharing class ISSP_CreateNotification {
             
             list <Notification_template__c> NotificationTemplateList = 
                 [Select n.Subject__c, n.Name, n.Message__c, n.Language__c,Type__c,Notification_color__c,Alert_Contact_By_Email__c,
-                    Expire_in_days__c, CriticalNotification__c,
+                    Expire_in_days__c, CriticalNotification__c,Alert_Contact_By_Push_Notification__c, 
                     (Select Subject__c, Name, Message__c, Language__c,Type__c,Notification_color__c,Alert_Contact_By_Email__c,
-                    Expire_in_days__c, CriticalNotification__c From Notification_templates__r)
+                    Expire_in_days__c, CriticalNotification__c, Alert_Contact_By_Push_Notification__c From Notification_templates__r)
                      From Notification_template__c n  where  Name in:notificationNameSet ];
             for(Notification_template__c nt: NotificationTemplateList){
                 notificationTemplateMap.put(nt.Name,nt);
@@ -95,6 +99,7 @@ public with sharing class ISSP_CreateNotification {
                         Contact__c = parentId,
                         Message__c = nt.Message__c,
                         Alert_Contact_By_Email__c = nt.Alert_Contact_By_Email__c,
+                        Alert_Contact_By_Push_Notification__c = nt.Alert_Contact_By_Push_Notification__c,
                         Subject__c = nt.Subject__c
                         ,Type__c = nt.Type__c
                         ,Notificatin_color__c = nt.Notification_color__c 
@@ -182,7 +187,6 @@ public with sharing class ISSP_CreateNotification {
         System.debug('templateId==>'+templateId);
         if(String.isBlank(templateId)) {
             system.debug(LoggingLevel.ERROR, 'Email template ' + ENV.EmailTemplateData.NotifyAdminNewContact + ' not found');   
-            return;
         }
         Set<ID> accountIDs = new Set<ID>();
         for(Contact con : newPortalContactList) {
@@ -209,6 +213,8 @@ public with sharing class ISSP_CreateNotification {
                      
             Set<ID> portalAdminUserIDs = accIdToUserIdMap.get(con.AccountId);
             if(null == portalAdminUserIDs) continue;
+            
+            if(String.isNotBlank(templateId)) {
                 for(ID userId : portalAdminUserIDs) {
                     Messaging.SingleEmailMessage emailMsg = new Messaging.SingleEmailMessage(); 
                     emailMsg.setTemplateId(templateId);
@@ -224,7 +230,13 @@ public with sharing class ISSP_CreateNotification {
                     emailMsg.setWhatId(con.id); 
                     msgList.add(emailMsg);
                 }
-        
+            }
+
+            // NewGen Mobile APP Start
+            Set <String> portalAdminUserIDsAsString = (Set<String>)JSON.deserialize(JSON.serialize(portalAdminUserIDs), Set<String>.class);
+            NewGen_Account_Statement_Helper.sendPushNotification(portalAdminUserIDsAsString, Label.NewGenApp_PortalUserRequested, 
+                null, NewGen_Account_Statement_Helper.NAVIGATE_TO_USER_REQUEST_ADMIN);
+            // NewGen Mobile APP End
         }
         System.debug('zZzZ msgList==>'+msgList);
         if(!msgList.isEmpty()){
