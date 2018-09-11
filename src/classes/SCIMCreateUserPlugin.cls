@@ -27,8 +27,6 @@ global class SCIMCreateUserPlugin extends UserProvisioning.UserProvisioningPlugi
         Boolean isDebug = SCIMUsersUtility.isDebug();
         UserProvisioningUtils userProvUtils = new UserProvisioningUtils(isDebug);
         userProvUtils.debug('Inside SCIMCreateUserPlugin invoke()');
-         userProvUtils.debug('Inside SCIMCreateUserPlugin invoke() '+userPayload);
-
             
         // input validation - note SCIM is different than Salesforce
         Map<String,String> inputParamValues = new Map<String,String>();
@@ -42,7 +40,6 @@ global class SCIMCreateUserPlugin extends UserProvisioning.UserProvisioningPlugi
             SCIMUsersUtility.endPoint = userProvUtils.getNamedCredential();
 
             String params = (String)request.inputParameters.get(UserProvisioningUtils.PARAM_CALLPARAMS);
-            userProvUtils.debug('Inside SCIMCreateUserPlugin invoke() params '+params);
             if(params != null) SCIMUsersUtility.createParams = (Map<String,String>)JSON.deserialize(params, Map<String, String>.class);
 
             System.debug(loggingLevel.FINEST, '____ [cls SCIMCreateUserPlugin - invoke] params - ' + params);
@@ -53,18 +50,7 @@ global class SCIMCreateUserPlugin extends UserProvisioning.UserProvisioningPlugi
 
             Boolean isSuccess = (Boolean)callResult.get('isSuccess');
             String responseStr = (String)callResult.get('httpResponseStr');
-
-            // STUB START
-            /*
-            // STUB: TO BE REMOVED WHEN MULSOFT WILL BE READY:
-            Simulate that user creation return 200 from Mulesoft
-            */
-            isSuccess = true;
-            double rand = Math.random();
-            responseStr = '{"id":"Stub_value'+rand+'", "userName":"Stub_value'+rand+'@stub.com", "active":"true"}';
-            // STUB END
             if (isSuccess) {
-
                 result.put(UserProvisioningUtils.PARAM_STATUS, 'Completed');
 
                 SCIMCreateUserResponse respObj = SCIMCreateUserResponse.parse(responseStr);
@@ -72,16 +58,12 @@ global class SCIMCreateUserPlugin extends UserProvisioning.UserProvisioningPlugi
                 result.put(UserProvisioningUtils.PARAM_EXTERNAL_USERID, respObj.id);
                 result.put(UserProvisioningUtils.PARAM_EXTERNAL_USERNAME, respObj.userName);
 
-                
-                
                 //MConde
                 userProvUtils.addExternalResponse(respObj);
 
                 assignDerivedOutputParameters(result, userPayload);
 
                 result.put(UserProvisioningUtils.PARAM_DETAILS,'User created successfully with ExternalUserId=' + result.get(UserProvisioningUtils.PARAM_EXTERNAL_USERID) + ', and ExternalUsername=' + result.get(UserProvisioningUtils.PARAM_EXTERNAL_USERNAME));
-
-                System.debug(loggingLevel.FINEST, '____ [cls SCIMCreateUserPlugin - invoke] result - ' + result);
             }
         } catch(Exception e) {
             userProvUtils.handleException(result, 'Exception found when calling service: ', e);

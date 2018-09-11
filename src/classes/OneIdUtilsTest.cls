@@ -7,33 +7,35 @@ private class OneIdUtilsTest {
         String orgUrl = URL.getSalesforceBaseUrl().getHost();
         
         //TODO: Set portal context
-        String comunityUrl=Site.getBaseUrl();
+   		String comunityUrl=Site.getBaseUrl();
        
         ISSP_CS__c setting = new ISSP_CS__c();
         setting.Name = 'IdentityPortal';
         setting.Value__c = orgUrl;
         insert setting;
+
+        ISSP_CS__c setting3 = new ISSP_CS__c();
+        setting3.Name = 'Host';
+        setting3.Value__c = orgUrl;
+        insert setting3;
         
         OneId_Global_Settings__c setting2 = new OneId_Global_Settings__c();
         setting2.Community_Name__c = 'oneidentity';
         insert setting2;
-
-        ISSP_CS__c cs = new ISSP_CS__c();
-        cs.Name='Host';
-        cs.Value__c='csp1idsre-customer-portal-iata.cs88.force.com';
-        insert cs;        
+        
         
         test.startTest();
         
         String UrlName = OneIdUtils.getCommunityUrlName();                
 
-        String methodUrl = OneIdUtils.getOrgUrl();     
-
+        String methodUrl = OneIdUtils.getOrgUrl();      
+        String communityRedirection = OneIdUtils.getCommunityRedirection(OneIdUtils.Mode.IDENTITY, methodUrl);      
         String Siteurl=OneIdUtils.GetSiteCompleteUrl();
-        //String SiteurlSt = OneIdUtils.GetSiteCompleteUrl(OneIdUtils.GET_POR_URL_FROM_SITE);
+        String SiteurlSt = OneIdUtils.GetSiteCompleteUrl(OneIdUtils.Mode.IDENTITY);
+        //String communityRedirection = OneIdUtils.getCommunityRedirection(OneIdUtils.Mode.IDENTITY, methodUrl);  
         
-        String SiteurlCs = OneIdUtils.GetSiteCompleteUrl();
-        String SiteurlOrgCusTy = OneIdUtils.GetSiteCompleteUrl();
+        //String SiteurlCs = OneIdUtils.GetSiteCompleteUrl(OneIdUtils.GET_POR_URL_FROM_ISSP_CS);
+        //String SiteurlOrgCusTy = OneIdUtils.GetSiteCompleteUrl(OneIdUtils.GET_POR_URL_FROM_ORG_AND_CUM_NAME_CS);
         
         test.stopTest();
         system.assertEquals(methodUrl, orgUrl);
