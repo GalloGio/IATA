@@ -92,6 +92,7 @@ public class ISSP_Portal_Application_RightTest {
   			Is_Active__c = true,
   			Portal_Visible__c = false,
   			RecordTypeid = recTypeId,
+        Customer_Type_Activation__c = 'Aircraft Operator;ICAO Member State',
   			App_Picture_Url__c='oi');
   		insert oi;
 
@@ -103,6 +104,7 @@ public class ISSP_Portal_Application_RightTest {
   			Is_Active__c = true,
   			Portal_Visible__c = false,
   			RecordTypeid = recTypeId,
+        Customer_Type_Activation__c = 'Aircraft Operator;ICAO Member State',
   			Service_Bundle__c=oi.id);
   		insert rr;
 

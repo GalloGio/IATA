@@ -11,9 +11,12 @@
 			<br/>
 			<h2 class="terms_title">{!$Label.c.OneId_TermsAndConditions}</h2>
 			<br/>
-			<div class="terms">{!v.appinfo[1]}</div>
-			<div class="terms">{!v.appinfo[2]}</div>
-			<div class="terms">{!v.appinfo[3]}</div>
+            <aura:iteration items="{!v.appinfo}" var="item" indexVar="index">
+                <aura:if isTrue="{! index != 0}">
+                    <div class="terms">{!item}</div>
+                    <br/>
+                </aura:if>                
+            </aura:iteration>
 			<br/>
 			<br/>
 		</div>
