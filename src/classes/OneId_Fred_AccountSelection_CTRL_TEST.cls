@@ -48,7 +48,7 @@ private class OneId_Fred_AccountSelection_CTRL_TEST {
         insert invitation;
 
         // Create a community user
-        Id p = [select id from profile where name='FRED Portal (Partner)'].id;
+        Id p = [select id from profile where name='ISS Portal (Partner)'].id;
         icaoMember = accs[1] ;
         communityUserContact = new Contact(LastName ='contact1',AccountId = icaoMember.Id);
         insert communityUserContact;
