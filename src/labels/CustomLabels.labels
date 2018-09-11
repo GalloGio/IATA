@@ -25388,7 +25388,7 @@ msgErrorRenewalOrderExpired:Your renewal notification order link is either  expi
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>OneId Community Name</shortDescription>
-        <value>identity/s</value>
+        <value>s</value>
     </labels>
     <labels>
         <fullName>OneId_Contact_Association_Validation</fullName>
