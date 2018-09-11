@@ -44,6 +44,7 @@ global class IECConstants {
   public static final string PARAM_RESETPASSWORD =    'respw';
   public static final string PARAM_APPFILTER_ID =      'appfid';
   public static final string PARAM_LIMITTOIDS =      'limittoids'; // Added by Mathieu Beausoleil
+  public static final string PARAM_UTM =              'utm_';
   
   //Get customer types constants
   public static final string PARAM_CUSTOMERTYPE_AIRLINE =     'Airline';
