@@ -651,7 +651,8 @@ global class AmsIataCodeGenerator{
     {
         checkDigitCreation(agt, act, false);
         
-        if(agt.Location_Class__c.equalsIgnoreCase('P') || agt.Location_Class__c.equalsIgnoreCase('M') || (agt.Location_Class__c.equalsIgnoreCase('G') && act.Sector__c == 'Travel Agent') || agt.Location_Class__c.equalsIgnoreCase('X') || agt.Location_Class__c.equalsIgnoreCase('T') || agt.Location_Class__c.equalsIgnoreCase('D'))
+        Boolean isGSA = agt.SAAM_Case__r.OSCAR__r.Process__c == AMS_Utils.new_GSA || agt.SAAM_Case__r.OSCAR__r.Process__c == AMS_Utils.new_GSA_BSP;   
+        if(agt.Location_Class__c.equalsIgnoreCase('P') || agt.Location_Class__c.equalsIgnoreCase('M') || (agt.Location_Class__c.equalsIgnoreCase('G') && isGSA) || agt.Location_Class__c.equalsIgnoreCase('X') || agt.Location_Class__c.equalsIgnoreCase('T') || agt.Location_Class__c.equalsIgnoreCase('D'))
         {
             agt.IATACode__c = agt.C_Code__c +agt.A_Code__c+agt.N_Code__c+agt.Chk_Dgt__c;
             act.Site = agt.C_Code__c +agt.A_Code__c+agt.N_Code__c;
