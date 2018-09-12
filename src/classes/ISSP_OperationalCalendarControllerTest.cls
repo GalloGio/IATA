@@ -178,6 +178,7 @@ public class ISSP_OperationalCalendarControllerTest {
         String operationType = ISSP_OperationalCalendarController.MAP_OPERATION_TYPES.get(user.contact.account.Location_Class__c);
         list<Operational_Calendar__c> listOpCalendar = new list<Operational_Calendar__c>();
         listOpCalendar.add(new Operational_Calendar__c(
+            Visible_on_the_portal__c = true,
             Operation_Currency__c = 'EUR',
             Settlement_Day__c = Date.today(),
             Airline_Input_Upload_Cut_Off__c = Date.today(),
@@ -217,6 +218,7 @@ public class ISSP_OperationalCalendarControllerTest {
         String operationType = ISSP_OperationalCalendarController.MAP_OPERATION_TYPES.get(user.contact.account.Location_Class__c);
         list<Operational_Calendar__c> listOpCalendar = new list<Operational_Calendar__c>();
         listOpCalendar.add(new Operational_Calendar__c(
+            Visible_on_the_portal__c = true,
             Operation_Currency__c = 'EUR',
             Settlement_Day__c = Date.today(),
             Airline_Input_Upload_Cut_Off__c = Date.today(),
@@ -257,6 +259,7 @@ public class ISSP_OperationalCalendarControllerTest {
         String operationType = ISSP_OperationalCalendarController.MAP_OPERATION_TYPES.get(user.contact.account.Location_Class__c);
         list<Operational_Calendar__c> listOpCalendar = new list<Operational_Calendar__c>();
         listOpCalendar.add(new Operational_Calendar__c(
+            Visible_on_the_portal__c = true,
             Settlement_Day__c = Date.today(),
             Airline_Input_Upload_Cut_Off__c = Date.today(),
             Airline_Correction_Response_Cut_Off__c = Date.today(),
@@ -295,6 +298,7 @@ public class ISSP_OperationalCalendarControllerTest {
         String operationType = ISSP_OperationalCalendarController.MAP_OPERATION_TYPES.get(user.contact.account.Location_Class__c);
         list<Operational_Calendar__c> listOpCalendar = new list<Operational_Calendar__c>();
         listOpCalendar.add(new Operational_Calendar__c(
+            Visible_on_the_portal__c = true,
             Settlement_Day__c = Date.today(),
             Airline_Input_Upload_Cut_Off__c = Date.today(),
             Airline_Correction_Response_Cut_Off__c = Date.today(),

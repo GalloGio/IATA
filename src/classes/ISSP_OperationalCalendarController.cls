@@ -382,7 +382,12 @@ global without sharing class ISSP_OperationalCalendarController {
             } else {
                 query += ' AND First_Day__c >= LAST_YEAR';
             }
-            query += ' ORDER BY Period_Code__c ASC';
+            //query += ' ORDER BY Period_Code__c ASC';
+            if (IS_AIRLINE) {
+                query += ' ORDER BY Settlement_Day__c ASC';
+            } else {
+                query += ' ORDER BY Remittance_Day__c ASC';
+            }
             
             System.debug('QUERY: ' + query);
             return Database.query(query);

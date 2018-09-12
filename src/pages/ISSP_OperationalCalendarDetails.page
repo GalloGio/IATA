@@ -257,7 +257,7 @@
     function updatePicklistsFromCountry() {
         var country = nvl($(".countryFilter").val());
         var opertionType = nvl($("#typeFilter").val());
-        var filter = country + "," + opertionType;
+        var filter = country + ",";
         var listValues = containsInArray(LIST_FILTERS,filter);
         updatePicklist($("#typeFilter"), listValues,1,opertionType);
         updatePicklist($("#frequencyFilter"), listValues,2,'');
@@ -379,10 +379,14 @@
         container.append( $('<table></table>').attr({ class: "table table-condensed table-pagination" }));
         var table = initTable(tableDef.headers);
         var colTypes = [];
+        var firstVisibleCol = null;
         $.each(tableDef.headers, function (i, line) {
-            if (tableDef.headers[i].bVisible)
-                colTypes.push(tableDef.headers[i].sType);
+            if (line.bVisible) {
+                colTypes.push(line.sType);
+                if (firstVisibleCol==null) firstVisibleCol=i;
+            }
         });
+        console.log(firstVisibleCol);
         
         $.each(tableDef.data, function (i, line) {
             var node = table.row.add(line).node();
@@ -395,7 +399,7 @@
             });
             $(node).addClass(line[0]); //first column contains the class name to use in this row
         });
-        table.order([ 0, 'desc']).draw();
+        table.order([ firstVisibleCol, 'asc']).draw();
         //PDF button depends on the operation type value
         addExportButtons();
         $(".buttons-csv").prop("disabled",tableDef.data.length==0);
@@ -488,7 +492,7 @@
             </div>
         </div>
         <div class="row">
-            <apex:form>
+            <apex:form >
                 <div class="col-sm-2">
                     <apex:outputPanel layout="block" styleclass="form-group">
                         <label for="countryFilterInput">{!$Label.ISSP_OperationalCalendar_CountryFilter}</label>
